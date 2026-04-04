@@ -5,7 +5,8 @@
 <title>Parcels — Vicinity Deals</title>
 <link rel="stylesheet" href="_shared.css">
 <style>
-.drawer-overlay { display: flex; }
+/* Drawer hidden by default — click a row to open */
+.drawer-overlay { display: none; }
 .field-row .field-override { display: flex; align-items: center; gap: 6px; }
 .reset-link { font-size: 11px; color: var(--accent); cursor: pointer; text-decoration: underline; opacity: 0.7; }
 .reset-link:hover { opacity: 1; }
@@ -58,10 +59,11 @@
         <option>Has Linked Deal</option>
         <option>No Linked Deal</option>
       </select>
+      <!-- Jurisdiction filter — reflects legal city, not postal city -->
       <select class="filter-select">
         <option>All Jurisdictions</option>
-        <option>Portland Maps</option>
-        <option>Gresham ArcGIS</option>
+        <option>City of Portland</option>
+        <option>City of Gresham</option>
         <option>Clackamas County</option>
         <option>Oregon City</option>
       </select>
@@ -73,84 +75,88 @@
           <tr>
             <th class="sortable sorted">APN <span class="sort-arrow">▲</span></th>
             <th class="sortable">Address</th>
-            <th>Owner</th>
+            <th>Addr. City</th>
+            <th>Jurisdiction</th>
             <th>Zoning</th>
             <th class="sortable col-right">Lot SqFt</th>
             <th class="sortable col-right">Assessed</th>
             <th class="sortable">Year Built</th>
-            <th>Overrides</th>
           </tr>
         </thead>
         <tbody>
-          <tr style="background:var(--accent-light)" onclick="">
+          <tr onclick="openDrawer()">
             <td class="text-mono">R123400010</td>
             <td>
               <div style="font-weight:600">N Interstate Ave</div>
               <div class="text-small text-muted">Portland, OR 97217</div>
             </td>
-            <td class="text-small">Tower Holdings LLC</td>
+            <td class="text-small">Portland</td>
+            <td class="text-small">City of Portland</td>
             <td><span class="badge badge-purple">CM2</span></td>
             <td class="col-right text-mono">22,450</td>
             <td class="col-right text-mono">$2,100,000</td>
             <td>1968</td>
-            <td><span class="badge badge-orange" title="2 fields user-edited">2 custom</span></td>
           </tr>
-          <tr onclick="">
+          <tr onclick="openDrawer()">
             <td class="text-mono">R698400130</td>
             <td>
               <div style="font-weight:600">619 NE 190th Ave</div>
               <div class="text-small text-muted">Gresham, OR 97030</div>
             </td>
-            <td class="text-small">Oak Properties</td>
+            <td class="text-small">Gresham</td>
+            <td class="text-small">City of Gresham</td>
             <td><span class="badge badge-blue">R2</span></td>
             <td class="col-right text-mono">8,500</td>
             <td class="col-right text-mono">$485,000</td>
             <td>1962</td>
-            <td><span class="text-muted text-small">—</span></td>
           </tr>
-          <tr onclick="">
+          <tr onclick="openDrawer()">
             <td class="text-mono">R245600044</td>
             <td>
               <div style="font-weight:600">4821 SE Powell Blvd</div>
               <div class="text-small text-muted">Portland, OR 97206</div>
             </td>
-            <td class="text-small">Powell Holdings Inc.</td>
+            <td class="text-small">Portland</td>
+            <td class="text-small">City of Portland</td>
             <td><span class="badge badge-purple">CM1</span></td>
             <td class="col-right text-mono">4,200</td>
             <td class="col-right text-mono">$720,000</td>
             <td>1978</td>
-            <td><span class="badge badge-orange" title="1 field user-edited">1 custom</span></td>
           </tr>
-          <tr onclick="">
-            <td class="text-mono">R112300088</td>
+          <!-- Example: postal city ≠ jurisdiction city -->
+          <tr onclick="openDrawer()" style="background:#FFFBEB">
+            <td class="text-mono">R889100033</td>
             <td>
-              <div style="font-weight:600">1142 E Burnside St</div>
-              <div class="text-small text-muted">Portland, OR 97214</div>
+              <div style="font-weight:600">16111 E Burnside St</div>
+              <div class="text-small text-muted">Portland, OR 97233</div>
             </td>
-            <td class="text-small">Burnside Prop. Trust</td>
-            <td><span class="badge badge-green">R3</span></td>
-            <td class="col-right text-mono">3,200</td>
-            <td class="col-right text-mono">$390,000</td>
-            <td>1945</td>
-            <td><span class="text-muted text-small">—</span></td>
+            <td class="text-small">Portland</td>
+            <td class="text-small" style="display:flex;align-items:center;gap:5px">
+              City of Gresham
+              <span title="Postal city differs from jurisdiction" style="color:var(--warning);font-size:12px;cursor:help">⚠</span>
+            </td>
+            <td><span class="badge badge-blue">R2</span></td>
+            <td class="col-right text-mono">5,800</td>
+            <td class="col-right text-mono">$320,000</td>
+            <td>1951</td>
           </tr>
-          <tr onclick="">
+          <tr onclick="openDrawer()">
             <td class="text-mono">R567800012</td>
             <td>
               <div style="font-weight:600">4405 SE Woodstock Blvd</div>
               <div class="text-small text-muted">Portland, OR 97206</div>
             </td>
-            <td class="text-small">Woodstock RE LLC</td>
+            <td class="text-small">Portland</td>
+            <td class="text-small">City of Portland</td>
             <td><span class="badge badge-purple">CM2</span></td>
             <td class="col-right text-mono">6,100</td>
             <td class="col-right text-mono">$510,000</td>
             <td>1938</td>
-            <td><span class="text-muted text-small">—</span></td>
           </tr>
         </tbody>
       </table>
       <div class="table-footer">
-        <span>Showing 5 of 31 parcels</span>
+        <span>Showing 5 of 31 parcels · 1 with jurisdiction mismatch</span>
         <div style="display:flex;gap:8px">
           <button class="btn btn-secondary btn-sm">← Prev</button>
           <button class="btn btn-secondary btn-sm">Next →</button>
@@ -160,15 +166,15 @@
   </div>
 </div>
 
-<!-- Parcel Detail Drawer -->
-<div class="drawer-overlay" onclick="this.style.display='none'">
+<!-- Parcel Detail Drawer — opens on row click -->
+<div class="drawer-overlay" id="drawer" onclick="this.style.display='none'">
   <div class="drawer" onclick="event.stopPropagation()">
     <div class="drawer-header">
       <div>
         <div class="drawer-title">R123400010</div>
         <div class="text-small text-muted">N Interstate Ave, Portland OR 97217</div>
       </div>
-      <span class="drawer-close" onclick="document.querySelector('.drawer-overlay').style.display='none'">×</span>
+      <span class="drawer-close" onclick="document.getElementById('drawer').style.display='none'">×</span>
     </div>
     <div class="drawer-body">
 
@@ -186,6 +192,14 @@
       <div class="field-row">
         <div class="field-key">APN</div>
         <div class="field-value text-mono">R123400010</div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">Address City</div>
+        <div class="field-value">Portland <span class="text-small text-muted">(postal)</span></div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">Jurisdiction</div>
+        <div class="field-value">City of Portland · Multnomah County</div>
       </div>
       <div class="field-row">
         <div class="field-key">Owner</div>
@@ -235,7 +249,7 @@
       </div>
       <div class="field-row">
         <div class="field-key">Last GIS Refresh</div>
-        <div class="field-value text-muted">Mar 10, 2026 — Gresham ArcGIS</div>
+        <div class="field-value text-muted">Mar 10, 2026 — Portland Maps</div>
       </div>
 
       <div class="divider"></div>
@@ -245,6 +259,12 @@
     </div>
   </div>
 </div>
+
+<script>
+function openDrawer() {
+  document.getElementById('drawer').style.display = 'flex';
+}
+</script>
 
 </body>
 </html>
