@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vicinity Deals — Select User</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #111827;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}
+
+.brand {
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+
+.brand span { color: #60A5FA; }
+
+.subtitle {
+  font-size: 14px;
+  color: #6B7280;
+  margin-bottom: 48px;
+}
+
+.prompt {
+  font-size: 13px;
+  font-weight: 600;
+  color: #9CA3AF;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 20px;
+}
+
+.user-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  width: 100%;
+  max-width: 640px;
+}
+
+.user-card {
+  background: #1F2937;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  padding: 24px 16px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+}
+
+.user-card:hover {
+  border-color: #2563EB;
+  background: #1E3A5F;
+  transform: translateY(-2px);
+}
+
+.user-card.selected {
+  border-color: #2563EB;
+  background: #1E3A5F;
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #F3F4F6;
+  text-align: center;
+}
+
+.user-role {
+  font-size: 11px;
+  color: #6B7280;
+  text-align: center;
+}
+
+.btn-enter {
+  margin-top: 36px;
+  padding: 12px 40px;
+  background: #2563EB;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.btn-enter:hover { background: #1D4ED8; }
+
+.footer-note {
+  margin-top: 48px;
+  font-size: 11px;
+  color: #374151;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+<div class="brand">Vicinity <span>Deals</span></div>
+<div class="subtitle">Ketch Media RE Modeling Platform</div>
+
+<div class="prompt">Who's working today?</div>
+
+<div class="user-grid">
+  <div class="user-card selected">
+    <div class="avatar" style="background:#2563EB">SK</div>
+    <div class="user-name">Steph K.</div>
+    <div class="user-role">Principal</div>
+  </div>
+  <div class="user-card">
+    <div class="avatar" style="background:#7C3AED">MR</div>
+    <div class="user-name">Marcus R.</div>
+    <div class="user-role">Analyst</div>
+  </div>
+  <div class="user-card">
+    <div class="avatar" style="background:#16A34A">JT</div>
+    <div class="user-name">Jamie T.</div>
+    <div class="user-role">Analyst</div>
+  </div>
+  <div class="user-card">
+    <div class="avatar" style="background:#D97706">AL</div>
+    <div class="user-name">Alex L.</div>
+    <div class="user-role">Intern</div>
+  </div>
+</div>
+
+<button class="btn-enter">Continue as Steph K. →</button>
+
+<div class="footer-note">
+  Your session is saved locally in this browser.<br>
+  Not you? <a href="#" style="color:#4B5563;text-decoration:underline">Switch user</a> at any time.
+</div>
+
+</body>
+</html>

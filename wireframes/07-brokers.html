@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Brokers — Vicinity Deals</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+.drawer-overlay { display: flex; }
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-logo"><div class="brand">Vicinity <span>Deals</span></div></div>
+  <div class="sidebar-user">
+    <div class="user-avatar" style="background:#2563EB">SK</div>
+    <div><div class="user-name">Steph K.</div><div class="user-switch">switch</div></div>
+  </div>
+  <nav class="nav">
+    <div class="nav-section-label">Workspace</div>
+    <a href="01-deals.html" class="nav-item"><span class="nav-icon">🏠</span> Deals</a>
+    <a href="03-buildings.html" class="nav-item"><span class="nav-icon">🏢</span> Buildings</a>
+    <a href="04-parcels.html" class="nav-item"><span class="nav-icon">📐</span> Parcels</a>
+    <a href="05-listings.html" class="nav-item"><span class="nav-icon">📋</span> Listings</a>
+    <a href="07-brokers.html" class="nav-item active"><span class="nav-icon">👤</span> Brokers</a>
+    <div class="nav-section-label">Operations</div>
+    <a href="06-dedup.html" class="nav-item"><span class="nav-icon">⚡</span> De-duplication <span class="nav-badge">4</span></a>
+  </nav>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title">Brokers</div>
+    <div class="topbar-actions">
+      <button class="btn btn-secondary btn-sm">⚙ Columns</button>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="toolbar">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input class="search-input" type="text" placeholder="Search by name or company…">
+      </div>
+      <select class="filter-select">
+        <option>Any Deal Status</option>
+        <option>Has Linked Deal</option>
+        <option>No Linked Deal</option>
+      </select>
+    </div>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th class="sortable sorted">Broker <span class="sort-arrow">▲</span></th>
+            <th class="sortable">Company</th>
+            <th class="sortable col-right">Listings</th>
+            <th class="sortable col-right">Deals</th>
+            <th class="sortable">Last Seen</th>
+            <th>Contact</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background:var(--accent-light)" onclick="">
+            <td>
+              <div style="display:flex;align-items:center;gap:10px">
+                <div style="width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0">DS</div>
+                <div>
+                  <div style="font-weight:600">David Seto</div>
+                  <div class="text-small text-muted">OR Lic. 201234</div>
+                </div>
+              </div>
+            </td>
+            <td>Pacific NW Commercial</td>
+            <td class="col-right">4</td>
+            <td class="col-right"><a href="#" style="color:var(--accent)">2</a></td>
+            <td class="text-small text-muted">Apr 1, 2026</td>
+            <td class="text-small">d.seto@pnwcomm.com · (503) 555-0182</td>
+          </tr>
+          <tr onclick="">
+            <td>
+              <div style="display:flex;align-items:center;gap:10px">
+                <div style="width:32px;height:32px;border-radius:50%;background:#7C3AED;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0">KW</div>
+                <div>
+                  <div style="font-weight:600">Karen Wu</div>
+                  <div class="text-small text-muted">OR Lic. 198812</div>
+                </div>
+              </div>
+            </td>
+            <td>Marcus RE Group</td>
+            <td class="col-right">6</td>
+            <td class="col-right"><a href="#" style="color:var(--accent)">1</a></td>
+            <td class="text-small text-muted">Mar 28, 2026</td>
+            <td class="text-small">k.wu@marcusre.com</td>
+          </tr>
+          <tr onclick="">
+            <td>
+              <div style="display:flex;align-items:center;gap:10px">
+                <div style="width:32px;height:32px;border-radius:50%;background:#16A34A;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0">TN</div>
+                <div>
+                  <div style="font-weight:600">Tom Nakamura</div>
+                  <div class="text-small text-muted">OR Lic. 203499</div>
+                </div>
+              </div>
+            </td>
+            <td>Cascade Commercial RE</td>
+            <td class="col-right">3</td>
+            <td class="col-right"><span class="text-muted">0</span></td>
+            <td class="text-small text-muted">Mar 14, 2026</td>
+            <td class="text-small">t.nakamura@cascadecomm.com</td>
+          </tr>
+          <tr onclick="">
+            <td>
+              <div style="display:flex;align-items:center;gap:10px">
+                <div style="width:32px;height:32px;border-radius:50%;background:#D97706;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0">SR</div>
+                <div>
+                  <div style="font-weight:600">Sandra Reyes</div>
+                  <div class="text-small text-muted">WA Lic. 119823</div>
+                </div>
+              </div>
+            </td>
+            <td>NW Realty Partners</td>
+            <td class="col-right">2</td>
+            <td class="col-right"><span class="text-muted">0</span></td>
+            <td class="text-small text-muted">Feb 20, 2026</td>
+            <td class="text-small">s.reyes@nwrp.com · (206) 555-0441</td>
+          </tr>
+          <tr onclick="">
+            <td>
+              <div style="display:flex;align-items:center;gap:10px">
+                <div style="width:32px;height:32px;border-radius:50%;background:#374151;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0">JH</div>
+                <div>
+                  <div style="font-weight:600">James Hardy</div>
+                  <div class="text-small text-muted">OR Lic. 201009</div>
+                </div>
+              </div>
+            </td>
+            <td>Interstate Commercial</td>
+            <td class="col-right">1</td>
+            <td class="col-right"><span class="text-muted">0</span></td>
+            <td class="text-small text-muted">Jan 8, 2026</td>
+            <td class="text-small">j.hardy@interstateco.com</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="table-footer">
+        <span>Showing 5 of 12 brokers</span>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-secondary btn-sm">← Prev</button>
+          <button class="btn btn-secondary btn-sm">Next →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Broker detail drawer (default open) -->
+<div class="drawer-overlay" onclick="this.style.display='none'">
+  <div class="drawer" onclick="event.stopPropagation()">
+    <div class="drawer-header">
+      <div class="drawer-title">David Seto</div>
+      <span class="drawer-close" onclick="document.querySelector('.drawer-overlay').style.display='none'">×</span>
+    </div>
+    <div class="drawer-body">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+        <div style="width:48px;height:48px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px">DS</div>
+        <div>
+          <div style="font-weight:700;font-size:15px">David Seto</div>
+          <div class="text-small text-muted">Pacific NW Commercial</div>
+        </div>
+        <button class="btn btn-secondary btn-sm" style="margin-left:auto">✏ Edit</button>
+      </div>
+
+      <div class="section-title mb-12">Contact</div>
+      <div class="field-row"><div class="field-key">Email</div><div class="field-value">d.seto@pnwcomm.com</div></div>
+      <div class="field-row"><div class="field-key">Phone</div><div class="field-value">(503) 555-0182</div></div>
+      <div class="field-row"><div class="field-key">License</div><div class="field-value text-mono">OR 201234</div></div>
+      <div class="field-row"><div class="field-key">Company</div><div class="field-value">Pacific NW Commercial</div></div>
+      <div class="field-row"><div class="field-key">Co. Address</div><div class="field-value text-muted">1234 SW 5th Ave, Portland OR 97201</div></div>
+
+      <div class="divider"></div>
+      <div class="section-title mb-12">Linked Listings (4)</div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <div style="font-size:13px;padding:8px;background:var(--surface-raised);border-radius:var(--radius-sm)">619 NE 190th Ave, Gresham <span class="badge badge-orange" style="margin-left:4px">LoopNet</span></div>
+        <div style="font-size:13px;padding:8px;background:var(--surface-raised);border-radius:var(--radius-sm)">N Interstate Ave, Portland <span class="badge badge-blue" style="margin-left:4px">Crexi</span></div>
+        <div style="font-size:13px;padding:8px;background:var(--surface-raised);border-radius:var(--radius-sm)">2211 NE Broadway, Portland <span class="badge badge-blue" style="margin-left:4px">Crexi</span></div>
+        <div style="font-size:13px;padding:8px;background:var(--surface-raised);border-radius:var(--radius-sm)">4821 SE Powell Blvd <span class="badge badge-orange" style="margin-left:4px">LoopNet</span></div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section-title mb-12">Linked Deals (2)</div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <a href="02-deal-detail.html" style="font-size:13px;padding:8px;background:var(--accent-light);border-radius:var(--radius-sm);color:var(--accent);text-decoration:none;display:block">Tower + Ash &amp; Pine →</a>
+        <a href="#" style="font-size:13px;padding:8px;background:var(--accent-light);border-radius:var(--radius-sm);color:var(--accent);text-decoration:none;display:block">Oak Ave 12-Unit →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

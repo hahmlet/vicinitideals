@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Deals — Vicinity Deals</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+.status-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin-right: 5px; flex-shrink: 0; }
+.deal-name { font-weight: 600; }
+.deal-address { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+.irr-value { font-weight: 700; color: var(--success); }
+.hide-btn { opacity: 0; }
+tr:hover .hide-btn { opacity: 1; }
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-logo"><div class="brand">Vicinity <span>Deals</span></div></div>
+  <div class="sidebar-user">
+    <div class="user-avatar" style="background:#2563EB">SK</div>
+    <div><div class="user-name">Steph K.</div><div class="user-switch">switch</div></div>
+  </div>
+  <nav class="nav">
+    <div class="nav-section-label">Workspace</div>
+    <a href="01-deals.html" class="nav-item active"><span class="nav-icon">🏠</span> Deals</a>
+    <a href="03-buildings.html" class="nav-item"><span class="nav-icon">🏢</span> Buildings</a>
+    <a href="04-parcels.html" class="nav-item"><span class="nav-icon">📐</span> Parcels</a>
+    <a href="05-listings.html" class="nav-item"><span class="nav-icon">📋</span> Listings</a>
+    <a href="07-brokers.html" class="nav-item"><span class="nav-icon">👤</span> Brokers</a>
+    <div class="nav-section-label">Operations</div>
+    <a href="06-dedup.html" class="nav-item"><span class="nav-icon">⚡</span> De-duplication <span class="nav-badge">4</span></a>
+  </nav>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title">Deals</div>
+    <div class="topbar-actions">
+      <button class="btn btn-secondary btn-sm">⚙ Columns</button>
+      <button class="btn btn-primary">+ New Deal</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- Stats row -->
+    <div class="card-grid mb-16" style="grid-template-columns: repeat(4, 1fr)">
+      <div class="stat-card">
+        <div class="stat-label">Total Deals</div>
+        <div class="stat-value">14</div>
+        <div class="stat-sub">3 active models</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Avg Levered IRR</div>
+        <div class="stat-value" style="color:var(--success)">17.4%</div>
+        <div class="stat-sub">across modeled deals</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Pipeline Value</div>
+        <div class="stat-value">$24.1M</div>
+        <div class="stat-sub">total acquisition cost</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Pending Review</div>
+        <div class="stat-value" style="color:var(--warning)">5</div>
+        <div class="stat-sub">no model yet</div>
+      </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input class="search-input" type="text" placeholder="Search deals, addresses…">
+      </div>
+      <select class="filter-select">
+        <option>All Statuses</option>
+        <option>Hypothetical</option>
+        <option>Active</option>
+        <option>Under Contract</option>
+        <option>Closed</option>
+        <option>Archived</option>
+      </select>
+      <select class="filter-select">
+        <option>All Sources</option>
+        <option>LoopNet</option>
+        <option>Crexi</option>
+        <option>Manual</option>
+      </select>
+      <select class="filter-select">
+        <option>Any Model</option>
+        <option>Has Model</option>
+        <option>No Model</option>
+      </select>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th class="sortable sorted">Deal Name <span class="sort-arrow">▲</span></th>
+            <th>Status</th>
+            <th class="sortable">Building</th>
+            <th class="sortable">Active Model</th>
+            <th class="sortable col-right">NOI</th>
+            <th class="sortable col-right">IRR (L)</th>
+            <th class="sortable col-right">Equity ×</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr onclick="window.location='02-deal-detail.html'">
+            <td>
+              <div class="deal-name">Tower + Ash &amp; Pine</div>
+              <div class="deal-address">N Interstate Ave, Portland, OR 97217</div>
+            </td>
+            <td><span class="badge badge-green"><span class="status-dot" style="background:var(--success)"></span>Active</span></td>
+            <td><span class="text-small">121-unit hotel conv.</span></td>
+            <td><span class="text-small text-muted">Base Case v3</span></td>
+            <td class="col-right text-mono">$468,240</td>
+            <td class="col-right irr-value">18.4%</td>
+            <td class="col-right text-mono">2.3×</td>
+            <td><button class="btn btn-ghost btn-sm hide-btn">Hide</button></td>
+          </tr>
+
+          <tr>
+            <td>
+              <div class="deal-name">Oak Ave 12-Unit</div>
+              <div class="deal-address">619 NE 190th Ave, Gresham, OR 97030</div>
+            </td>
+            <td><span class="badge badge-blue">Hypothetical</span></td>
+            <td><span class="text-small">12-unit conversion</span></td>
+            <td><span class="text-small text-muted">Conservative v1</span></td>
+            <td class="col-right text-mono">$168,480</td>
+            <td class="col-right irr-value">14.2%</td>
+            <td class="col-right text-mono">1.9×</td>
+            <td><button class="btn btn-ghost btn-sm hide-btn">Hide</button></td>
+          </tr>
+
+          <tr>
+            <td>
+              <div class="deal-name">Powell Blvd Retail Conv.</div>
+              <div class="deal-address">4821 SE Powell Blvd, Portland, OR 97206</div>
+            </td>
+            <td><span class="badge badge-yellow">Under Contract</span></td>
+            <td><span class="text-small">8-unit conversion</span></td>
+            <td><span class="text-small text-muted">Base Case v2</span></td>
+            <td class="col-right text-mono">$92,400</td>
+            <td class="col-right irr-value">16.7%</td>
+            <td class="col-right text-mono">2.1×</td>
+            <td><button class="btn btn-ghost btn-sm hide-btn">Hide</button></td>
+          </tr>
+
+          <tr>
+            <td>
+              <div class="deal-name">Division St New Const.</div>
+              <div class="deal-address">3308 SE Division St, Portland, OR 97202</div>
+            </td>
+            <td><span class="badge badge-blue">Hypothetical</span></td>
+            <td><span class="text-small">24-unit new const.</span></td>
+            <td><span class="badge badge-gray">No model</span></td>
+            <td class="col-right col-muted">—</td>
+            <td class="col-right col-muted">—</td>
+            <td class="col-right col-muted">—</td>
+            <td><button class="btn btn-ghost btn-sm hide-btn">Hide</button></td>
+          </tr>
+
+          <tr>
+            <td>
+              <div class="deal-name">Burnside Reno 6-plex</div>
+              <div class="deal-address">1142 E Burnside St, Portland, OR 97214</div>
+            </td>
+            <td><span class="badge badge-gray">Archived</span></td>
+            <td><span class="text-small">6-unit minor reno</span></td>
+            <td><span class="text-small text-muted">Base Case v1</span></td>
+            <td class="col-right text-mono">$54,600</td>
+            <td class="col-right" style="color:var(--warning)">9.8%</td>
+            <td class="col-right text-mono">1.4×</td>
+            <td><button class="btn btn-ghost btn-sm hide-btn">Hide</button></td>
+          </tr>
+
+          <tr>
+            <td>
+              <div class="deal-name">Woodstock Lot Assembly</div>
+              <div class="deal-address">4405 SE Woodstock Blvd, Portland, OR 97206</div>
+            </td>
+            <td><span class="badge badge-blue">Hypothetical</span></td>
+            <td><span class="text-small">3-parcel assembly</span></td>
+            <td><span class="badge badge-gray">No model</span></td>
+            <td class="col-right col-muted">—</td>
+            <td class="col-right col-muted">—</td>
+            <td class="col-right col-muted">—</td>
+            <td><button class="btn btn-ghost btn-sm hide-btn">Hide</button></td>
+          </tr>
+
+        </tbody>
+      </table>
+      <div class="table-footer">
+        <span>Showing 6 of 14 deals (3 hidden)</span>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-secondary btn-sm">← Prev</button>
+          <button class="btn btn-secondary btn-sm">Next →</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

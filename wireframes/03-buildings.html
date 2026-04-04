@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Buildings — Vicinity Deals</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+/* Drawer shown by default in wireframe to show state */
+.drawer-overlay { display: flex; }
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-logo"><div class="brand">Vicinity <span>Deals</span></div></div>
+  <div class="sidebar-user">
+    <div class="user-avatar" style="background:#2563EB">SK</div>
+    <div><div class="user-name">Steph K.</div><div class="user-switch">switch</div></div>
+  </div>
+  <nav class="nav">
+    <div class="nav-section-label">Workspace</div>
+    <a href="01-deals.html" class="nav-item"><span class="nav-icon">🏠</span> Deals</a>
+    <a href="03-buildings.html" class="nav-item active"><span class="nav-icon">🏢</span> Buildings</a>
+    <a href="04-parcels.html" class="nav-item"><span class="nav-icon">📐</span> Parcels</a>
+    <a href="05-listings.html" class="nav-item"><span class="nav-icon">📋</span> Listings</a>
+    <a href="07-brokers.html" class="nav-item"><span class="nav-icon">👤</span> Brokers</a>
+    <div class="nav-section-label">Operations</div>
+    <a href="06-dedup.html" class="nav-item"><span class="nav-icon">⚡</span> De-duplication <span class="nav-badge">4</span></a>
+  </nav>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title">Buildings</div>
+    <div class="topbar-actions">
+      <button class="btn btn-secondary btn-sm">⚙ Columns</button>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="toolbar">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input class="search-input" type="text" placeholder="Search by address…">
+      </div>
+      <select class="filter-select">
+        <option>All Statuses</option>
+        <option>Existing</option>
+        <option>Archived</option>
+      </select>
+      <select class="filter-select">
+        <option>All Sources</option>
+        <option>LoopNet</option>
+        <option>Crexi</option>
+        <option>Manual</option>
+      </select>
+    </div>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th class="sortable sorted">Address <span class="sort-arrow">▲</span></th>
+            <th>Status</th>
+            <th class="sortable">Units</th>
+            <th class="sortable">Bldg SqFt</th>
+            <th class="sortable">Year Built</th>
+            <th class="sortable">Source</th>
+            <th class="sortable">Scraped</th>
+            <th>Linked Deal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="selected-row" style="background:var(--accent-light)" onclick="">
+            <td>
+              <div style="font-weight:600">N Interstate Ave (Tower)</div>
+              <div class="text-small text-muted">Portland, OR 97217</div>
+            </td>
+            <td><span class="badge badge-green">Existing</span></td>
+            <td>65</td>
+            <td class="text-mono">33,636 sf</td>
+            <td>1968</td>
+            <td><span class="badge badge-blue">Crexi</span></td>
+            <td class="text-muted text-small">Mar 10, 2026</td>
+            <td><a href="02-deal-detail.html" style="color:var(--accent);font-size:12px">Tower + A&amp;P →</a></td>
+          </tr>
+          <tr onclick="">
+            <td>
+              <div style="font-weight:600">619 NE 190th Ave</div>
+              <div class="text-small text-muted">Gresham, OR 97030</div>
+            </td>
+            <td><span class="badge badge-green">Existing</span></td>
+            <td>12</td>
+            <td class="text-mono">6,200 sf</td>
+            <td>1962</td>
+            <td><span class="badge badge-orange">LoopNet</span></td>
+            <td class="text-muted text-small">Mar 14, 2026</td>
+            <td><a href="02-deal-detail.html" style="color:var(--accent);font-size:12px">Oak Ave 12-Unit →</a></td>
+          </tr>
+          <tr onclick="">
+            <td>
+              <div style="font-weight:600">4821 SE Powell Blvd</div>
+              <div class="text-small text-muted">Portland, OR 97206</div>
+            </td>
+            <td><span class="badge badge-green">Existing</span></td>
+            <td>0</td>
+            <td class="text-mono">4,800 sf</td>
+            <td>1978</td>
+            <td><span class="badge badge-blue">Crexi</span></td>
+            <td class="text-muted text-small">Mar 21, 2026</td>
+            <td><a href="#" style="color:var(--accent);font-size:12px">Powell Retail →</a></td>
+          </tr>
+          <tr onclick="">
+            <td>
+              <div style="font-weight:600">1142 E Burnside St</div>
+              <div class="text-small text-muted">Portland, OR 97214</div>
+            </td>
+            <td><span class="badge badge-gray">Archived</span></td>
+            <td>6</td>
+            <td class="text-mono">3,900 sf</td>
+            <td>1945</td>
+            <td><span class="badge badge-orange">LoopNet</span></td>
+            <td class="text-muted text-small">Feb 5, 2026</td>
+            <td><a href="#" style="color:var(--accent);font-size:12px">Burnside Reno →</a></td>
+          </tr>
+          <tr onclick="">
+            <td>
+              <div style="font-weight:600">3308 SE Division St</div>
+              <div class="text-small text-muted">Portland, OR 97202</div>
+            </td>
+            <td><span class="badge badge-green">Existing</span></td>
+            <td>0</td>
+            <td class="text-mono">5,100 sf</td>
+            <td>1952</td>
+            <td><span class="badge badge-gray">Manual</span></td>
+            <td class="text-muted text-small">Apr 1, 2026</td>
+            <td><span class="text-muted text-small">—</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="table-footer">
+        <span>Showing 5 of 18 buildings</span>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-secondary btn-sm">← Prev</button>
+          <button class="btn btn-secondary btn-sm">Next →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Building Detail Drawer (shown by default in wireframe) -->
+<div class="drawer-overlay" onclick="this.style.display='none'">
+  <div class="drawer" onclick="event.stopPropagation()">
+    <div class="drawer-header">
+      <div class="drawer-title">N Interstate Ave (Tower)</div>
+      <span class="drawer-close" onclick="document.querySelector('.drawer-overlay').style.display='none'">×</span>
+    </div>
+    <div class="drawer-body">
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:16px">
+        <span class="badge badge-green">Existing</span>
+        <span class="badge badge-blue">Crexi</span>
+        <button class="btn btn-ghost btn-sm" style="margin-left:auto">🔗 Link to Deal</button>
+      </div>
+
+      <div style="background:var(--surface-raised);border-radius:var(--radius);height:100px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:28px">🏨</div>
+
+      <div class="section-title mb-12">Property Details</div>
+      <div class="field-row"><div class="field-key">Address</div><div class="field-value">N Interstate Ave, Portland, OR 97217</div></div>
+      <div class="field-row"><div class="field-key">Units</div><div class="field-value">65 (post-conversion)</div></div>
+      <div class="field-row"><div class="field-key">Bldg SqFt</div><div class="field-value">33,636 sf</div></div>
+      <div class="field-row"><div class="field-key">Year Built</div><div class="field-value">1968</div></div>
+      <div class="field-row"><div class="field-key">Current Use</div><div class="field-value">Hotel / Motel</div></div>
+      <div class="field-row"><div class="field-key">Status</div><div class="field-value"><span class="badge badge-green">Existing</span></div></div>
+
+      <div class="divider"></div>
+      <div class="section-title mb-12">Source Listing</div>
+      <div class="field-row"><div class="field-key">Platform</div><div class="field-value">Crexi</div></div>
+      <div class="field-row"><div class="field-key">Asking Price</div><div class="field-value">$4,200,000</div></div>
+      <div class="field-row"><div class="field-key">Scraped</div><div class="field-value">Mar 10, 2026</div></div>
+      <div class="mt-8"><a href="05-listings.html" class="text-small" style="color:var(--accent)">View raw listing →</a></div>
+
+      <div class="divider"></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-secondary" style="flex:1">✏ Edit Details</button>
+        <button class="btn btn-danger btn-sm">Archive</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

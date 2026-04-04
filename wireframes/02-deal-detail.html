@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Deal Detail — Vicinity Deals</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.parcel-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; }
+.parcel-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.model-row { display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; background: var(--surface); }
+.model-row:hover { border-color: var(--accent); cursor: pointer; }
+.model-row.active-model { border-color: var(--accent); background: var(--accent-light); }
+.building-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; background: var(--surface); }
+.building-img { width: 100%; height: 120px; background: var(--surface-raised); border-radius: var(--radius-sm); margin-bottom: 12px; display: flex; align-items: center; justify-content: center; color: var(--text-light); font-size: 24px; }
+.broker-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; background: var(--surface); display: flex; gap: 14px; align-items: flex-start; }
+.broker-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-logo"><div class="brand">Vicinity <span>Deals</span></div></div>
+  <div class="sidebar-user">
+    <div class="user-avatar" style="background:#2563EB">SK</div>
+    <div><div class="user-name">Steph K.</div><div class="user-switch">switch</div></div>
+  </div>
+  <nav class="nav">
+    <div class="nav-section-label">Workspace</div>
+    <a href="01-deals.html" class="nav-item active"><span class="nav-icon">🏠</span> Deals</a>
+    <a href="03-buildings.html" class="nav-item"><span class="nav-icon">🏢</span> Buildings</a>
+    <a href="04-parcels.html" class="nav-item"><span class="nav-icon">📐</span> Parcels</a>
+    <a href="05-listings.html" class="nav-item"><span class="nav-icon">📋</span> Listings</a>
+    <a href="07-brokers.html" class="nav-item"><span class="nav-icon">👤</span> Brokers</a>
+    <div class="nav-section-label">Operations</div>
+    <a href="06-dedup.html" class="nav-item"><span class="nav-icon">⚡</span> De-duplication <span class="nav-badge">4</span></a>
+  </nav>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-breadcrumb">
+      <a href="01-deals.html">Deals</a>
+      <span class="sep">/</span>
+      <span>Tower + Ash &amp; Pine</span>
+    </div>
+    <div class="topbar-actions">
+      <span class="badge badge-green">Active</span>
+      <button class="btn btn-secondary btn-sm">⋯ More</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="tabs">
+      <div class="tab active" onclick="showTab('overview')">Overview</div>
+      <div class="tab" onclick="showTab('building')">Building</div>
+      <div class="tab" onclick="showTab('parcels')">Parcels</div>
+      <div class="tab" onclick="showTab('broker')">Broker</div>
+      <div class="tab" onclick="showTab('models')">Financial Models</div>
+    </div>
+
+    <!-- Overview tab -->
+    <div id="tab-overview" class="tab-content active">
+      <div class="two-col">
+        <div class="card">
+          <div class="section-header mb-12">
+            <div class="section-title">Deal Info</div>
+            <button class="btn btn-secondary btn-sm">✏ Edit</button>
+          </div>
+          <div class="field-row">
+            <div class="field-key">Deal Name</div>
+            <div class="field-value">Tower + Ash &amp; Pine</div>
+          </div>
+          <div class="field-row">
+            <div class="field-key">Status</div>
+            <div class="field-value"><span class="badge badge-green">Active</span></div>
+          </div>
+          <div class="field-row">
+            <div class="field-key">Type</div>
+            <div class="field-value">Acquisition — Conversion (Hotel → Studio)</div>
+          </div>
+          <div class="field-row">
+            <div class="field-key">Source</div>
+            <div class="field-value"><span class="badge badge-blue">Manual</span></div>
+          </div>
+          <div class="field-row">
+            <div class="field-key">Created</div>
+            <div class="field-value text-muted">Mar 15, 2026</div>
+          </div>
+          <div class="field-row">
+            <div class="field-key">Notes</div>
+            <div class="field-value text-muted text-small">Two sub-projects under one portfolio. Independent debt service per entity required.</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title mb-12">Active Model Summary</div>
+          <div class="three-col" style="grid-template-columns:1fr 1fr; gap:12px">
+            <div>
+              <div class="stat-label">Levered IRR</div>
+              <div class="stat-value" style="font-size:20px;color:var(--success)">18.4%</div>
+            </div>
+            <div>
+              <div class="stat-label">Equity ×</div>
+              <div class="stat-value" style="font-size:20px">2.3×</div>
+            </div>
+            <div>
+              <div class="stat-label">NOI (Stab.)</div>
+              <div class="stat-value" style="font-size:20px">$468K</div>
+            </div>
+            <div>
+              <div class="stat-label">DSCR</div>
+              <div class="stat-value" style="font-size:20px">1.38</div>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <div class="text-small text-muted">Base Case v3 · Last computed Apr 2, 2026</div>
+          <div class="mt-8">
+            <button class="btn btn-primary btn-sm">View Full Model →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Building tab -->
+    <div id="tab-building" class="tab-content">
+      <div class="two-col">
+        <div class="building-card">
+          <div class="building-img">🏨</div>
+          <div class="section-header">
+            <div>
+              <div class="section-title">Tower (Hotel)</div>
+              <div class="text-small text-muted">N Interstate Ave, Portland, OR 97217</div>
+            </div>
+            <div style="display:flex;gap:6px">
+              <span class="badge badge-green">Existing</span>
+              <button class="btn btn-secondary btn-sm">Detach</button>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <div class="field-row"><div class="field-key">Units</div><div class="field-value">65 studios (after conversion)</div></div>
+          <div class="field-row"><div class="field-key">Building SqFt</div><div class="field-value">33,636 sf</div></div>
+          <div class="field-row"><div class="field-key">Year Built</div><div class="field-value">1968</div></div>
+          <div class="field-row"><div class="field-key">Current Use</div><div class="field-value">Hotel / Motel</div></div>
+          <div class="field-row"><div class="field-key">Source</div><div class="field-value"><span class="badge badge-blue">Crexi</span> · scraped Mar 10, 2026</div></div>
+          <div class="divider"></div>
+          <a href="#" class="text-small" style="color:var(--accent)">View source listing →</a>
+        </div>
+
+        <div class="building-card">
+          <div class="building-img">🏗</div>
+          <div class="section-header">
+            <div>
+              <div class="section-title">Ash &amp; Pine (New Const.)</div>
+              <div class="text-small text-muted">Adjacent lot, Portland, OR 97217</div>
+            </div>
+            <div style="display:flex;gap:6px">
+              <span class="badge badge-gray">Future</span>
+              <button class="btn btn-secondary btn-sm">Detach</button>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <div class="field-row"><div class="field-key">Units</div><div class="field-value">56 (5 unit types, new const.)</div></div>
+          <div class="field-row"><div class="field-key">Building SqFt</div><div class="field-value">56,723 sf (planned)</div></div>
+          <div class="field-row"><div class="field-key">Year Built</div><div class="field-value">—  (planned 2028)</div></div>
+          <div class="field-row"><div class="field-key">Current Use</div><div class="field-value">Surface parking lot</div></div>
+          <div class="field-row"><div class="field-key">Source</div><div class="field-value"><span class="badge badge-gray">Manual</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Parcels tab -->
+    <div id="tab-parcels" class="tab-content">
+      <div class="section-header mb-16">
+        <div class="section-title">Linked Parcels (3)</div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-secondary btn-sm">🔄 Pull GIS Refresh</button>
+          <button class="btn btn-secondary btn-sm">+ Link Parcel</button>
+        </div>
+      </div>
+
+      <div class="parcel-card">
+        <div class="parcel-card-header">
+          <div>
+            <div class="section-title">R123400010 — Tower Site</div>
+            <div class="text-small text-muted">N Interstate Ave lot 1</div>
+          </div>
+          <div style="display:flex;gap:6px">
+            <span class="badge badge-blue">Unchanged</span>
+            <button class="btn btn-secondary btn-sm">Details</button>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+          <div><div class="stat-label">Lot SqFt</div><div style="font-weight:600;margin-top:2px">22,450 sf</div></div>
+          <div><div class="stat-label">Zoning</div><div style="font-weight:600;margin-top:2px">CM2</div></div>
+          <div><div class="stat-label">Assessed</div><div style="font-weight:600;margin-top:2px">$2.1M</div></div>
+          <div><div class="stat-label">Owner</div><div style="font-weight:600;margin-top:2px">Tower Holdings LLC</div></div>
+        </div>
+      </div>
+
+      <div class="parcel-card">
+        <div class="parcel-card-header">
+          <div>
+            <div class="section-title">R123400020 — A&amp;P Parcel</div>
+            <div class="text-small text-muted">Adjacent parking lot</div>
+          </div>
+          <div style="display:flex;gap:6px">
+            <span class="badge badge-orange">Merged In</span>
+            <button class="btn btn-secondary btn-sm">Details</button>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+          <div><div class="stat-label">Lot SqFt</div><div style="font-weight:600;margin-top:2px">18,200 sf</div></div>
+          <div><div class="stat-label">Zoning</div><div style="font-weight:600;margin-top:2px">CM2</div></div>
+          <div><div class="stat-label">Assessed</div><div style="font-weight:600;margin-top:2px">$890K</div></div>
+          <div><div class="stat-label">Owner</div><div style="font-weight:600;margin-top:2px">Tower Holdings LLC</div></div>
+        </div>
+      </div>
+
+      <div class="card mt-16">
+        <div class="section-title mb-12">Parcel Transformation</div>
+        <div class="field-row"><div class="field-key">Type</div><div class="field-value">Lot Merger</div></div>
+        <div class="field-row"><div class="field-key">Input APNs</div><div class="field-value text-mono">R123400010, R123400020</div></div>
+        <div class="field-row"><div class="field-key">Output APNs</div><div class="field-value text-muted">Pending city recording</div></div>
+        <div class="field-row"><div class="field-key">Effective Lot</div><div class="field-value">40,650 sf (user-set)</div></div>
+        <div class="field-row"><div class="field-key">Effective Date</div><div class="field-value text-muted">TBD — pre-construction close</div></div>
+      </div>
+    </div>
+
+    <!-- Broker tab -->
+    <div id="tab-broker" class="tab-content">
+      <div class="section-header mb-16">
+        <div class="section-title">Listing Broker</div>
+        <button class="btn btn-secondary btn-sm">🔗 Link Different Broker</button>
+      </div>
+      <div class="broker-card">
+        <div class="broker-avatar">DS</div>
+        <div style="flex:1">
+          <div style="font-weight:700;font-size:15px">David Seto</div>
+          <div class="text-muted text-small">Pacific NW Commercial · License OR 201234</div>
+          <div class="divider" style="margin:10px 0"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div class="field-row"><div class="field-key">Email</div><div class="field-value">d.seto@pnwcomm.com</div></div>
+            <div class="field-row"><div class="field-key">Phone</div><div class="field-value">(503) 555-0182</div></div>
+            <div class="field-row"><div class="field-key">Listings</div><div class="field-value">4 linked listings</div></div>
+            <div class="field-row"><div class="field-key">Deals</div><div class="field-value">2 linked deals</div></div>
+          </div>
+        </div>
+        <div>
+          <button class="btn btn-secondary btn-sm">✏ Edit</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Models tab -->
+    <div id="tab-models" class="tab-content">
+      <div class="section-header mb-16">
+        <div class="section-title">Financial Models</div>
+        <button class="btn btn-primary btn-sm">+ New Model</button>
+      </div>
+
+      <div class="model-row active-model">
+        <div style="flex:1">
+          <div style="font-weight:700">Base Case v3</div>
+          <div class="text-small text-muted">Acquisition · Conversion · Last run Apr 2, 2026</div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:center">
+          <div class="text-small"><span class="text-muted">IRR</span> <strong>18.4%</strong></div>
+          <div class="text-small"><span class="text-muted">×</span> <strong>2.3</strong></div>
+          <div class="text-small"><span class="text-muted">NOI</span> <strong>$468K</strong></div>
+          <span class="badge badge-green">Active</span>
+        </div>
+        <button class="btn btn-primary btn-sm">Open →</button>
+      </div>
+
+      <div class="model-row">
+        <div style="flex:1">
+          <div style="font-weight:700">Conservative v2</div>
+          <div class="text-small text-muted">Exit cap 6.5% · Hold 8yr · Last run Mar 28, 2026</div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:center">
+          <div class="text-small"><span class="text-muted">IRR</span> <strong>13.1%</strong></div>
+          <div class="text-small"><span class="text-muted">×</span> <strong>1.8</strong></div>
+          <div class="text-small"><span class="text-muted">NOI</span> <strong>$468K</strong></div>
+          <span class="badge badge-gray">Draft</span>
+        </div>
+        <button class="btn btn-secondary btn-sm">Open →</button>
+      </div>
+
+      <div class="model-row">
+        <div style="flex:1">
+          <div style="font-weight:700">Upside Scenario v1</div>
+          <div class="text-small text-muted">Higher rents · Tighter cap · Last run Feb 14, 2026</div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:center">
+          <div class="text-small"><span class="text-muted">IRR</span> <strong>22.8%</strong></div>
+          <div class="text-small"><span class="text-muted">×</span> <strong>2.9</strong></div>
+          <div class="text-small"><span class="text-muted">NOI</span> <strong>$512K</strong></div>
+          <span class="badge badge-gray">Draft</span>
+        </div>
+        <button class="btn btn-secondary btn-sm">Open →</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab').forEach((t, i) => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  const tabMap = ['overview','building','parcels','broker','models'];
+  const idx = tabMap.indexOf(id);
+  document.querySelectorAll('.tab')[idx].classList.add('active');
+  document.getElementById('tab-' + id).classList.add('active');
+}
+</script>
+
+</body>
+</html>

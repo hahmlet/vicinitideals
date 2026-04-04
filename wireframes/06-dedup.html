@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>De-duplication — Vicinity Deals</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.compare-col { }
+.compare-col-header { padding: 12px 16px; font-weight: 700; font-size: 13px; background: var(--surface-raised); border-bottom: 1px solid var(--border); }
+.compare-col:first-child .compare-col-header { border-right: 1px solid var(--border); }
+.compare-field { display: flex; gap: 0; border-bottom: 1px solid var(--border); }
+.compare-field:last-child { border-bottom: none; }
+.cf-key { width: 130px; flex-shrink: 0; padding: 9px 12px; font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; background: #FAFAFA; border-right: 1px solid var(--border); }
+.cf-val { padding: 9px 12px; font-size: 13px; flex: 1; }
+.cf-diff { background: #FFFBEB; }
+.cf-diff-b { background: #FFFBEB; }
+.action-row { display: flex; gap: 10px; margin-top: 20px; }
+.selected-row-highlight { background: var(--accent-light) !important; }
+.tab-bar { display: flex; gap: 0; margin-bottom: 16px; border-bottom: 2px solid var(--border); }
+.tab-btn { padding: 9px 18px; font-size: 13px; font-weight: 500; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-logo"><div class="brand">Vicinity <span>Deals</span></div></div>
+  <div class="sidebar-user">
+    <div class="user-avatar" style="background:#2563EB">SK</div>
+    <div><div class="user-name">Steph K.</div><div class="user-switch">switch</div></div>
+  </div>
+  <nav class="nav">
+    <div class="nav-section-label">Workspace</div>
+    <a href="01-deals.html" class="nav-item"><span class="nav-icon">🏠</span> Deals</a>
+    <a href="03-buildings.html" class="nav-item"><span class="nav-icon">🏢</span> Buildings</a>
+    <a href="04-parcels.html" class="nav-item"><span class="nav-icon">📐</span> Parcels</a>
+    <a href="05-listings.html" class="nav-item"><span class="nav-icon">📋</span> Listings</a>
+    <a href="07-brokers.html" class="nav-item"><span class="nav-icon">👤</span> Brokers</a>
+    <div class="nav-section-label">Operations</div>
+    <a href="06-dedup.html" class="nav-item active"><span class="nav-icon">⚡</span> De-duplication <span class="nav-badge">4</span></a>
+  </nav>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title">De-duplication</div>
+    <div class="topbar-actions">
+      <span class="badge badge-yellow">4 pending review</span>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="tab-bar">
+      <div class="tab-btn active">Pending (4)</div>
+      <div class="tab-btn">Resolved (28)</div>
+    </div>
+
+    <!-- Two-panel layout -->
+    <div style="display:grid;grid-template-columns:340px 1fr;gap:20px">
+
+      <!-- Left: candidates list -->
+      <div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Candidate</th>
+                <th>Confidence</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Selected -->
+              <tr class="selected-row-highlight" onclick="">
+                <td>
+                  <div style="font-weight:600;font-size:12px">619 NE 190th Ave</div>
+                  <div style="font-size:11px;color:var(--text-muted)">Listing vs. Listing</div>
+                </td>
+                <td>
+                  <div class="conf-bar-wrap conf-high" style="width:120px">
+                    <div class="conf-bar"><div class="conf-fill" style="width:88%"></div></div>
+                    <span style="font-size:11px;font-weight:700">0.88</span>
+                  </div>
+                </td>
+              </tr>
+              <tr onclick="">
+                <td>
+                  <div style="font-weight:600;font-size:12px">4821 SE Powell Blvd</div>
+                  <div style="font-size:11px;color:var(--text-muted)">Listing vs. Listing</div>
+                </td>
+                <td>
+                  <div class="conf-bar-wrap conf-med" style="width:120px">
+                    <div class="conf-bar"><div class="conf-fill" style="width:72%"></div></div>
+                    <span style="font-size:11px;font-weight:700">0.72</span>
+                  </div>
+                </td>
+              </tr>
+              <tr onclick="">
+                <td>
+                  <div style="font-weight:600;font-size:12px">N Interstate Ave</div>
+                  <div style="font-size:11px;color:var(--text-muted)">Listing vs. Listing</div>
+                </td>
+                <td>
+                  <div class="conf-bar-wrap conf-med" style="width:120px">
+                    <div class="conf-bar"><div class="conf-fill" style="width:65%"></div></div>
+                    <span style="font-size:11px;font-weight:700">0.65</span>
+                  </div>
+                </td>
+              </tr>
+              <tr onclick="">
+                <td>
+                  <div style="font-weight:600;font-size:12px">3308 SE Division St</div>
+                  <div style="font-size:11px;color:var(--text-muted)">Listing vs. Listing</div>
+                </td>
+                <td>
+                  <div class="conf-bar-wrap conf-low" style="width:120px">
+                    <div class="conf-bar"><div class="conf-fill" style="width:61%"></div></div>
+                    <span style="font-size:11px;font-weight:700">0.61</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Right: comparison view -->
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <div style="font-size:15px;font-weight:700">619 NE 190th Ave, Gresham, OR 97030</div>
+          <span class="badge badge-green">0.88 — High</span>
+          <div style="margin-left:auto;font-size:12px;color:var(--text-muted)">
+            Signals: <strong>address_fuzzy 0.93</strong> · unit_count_match 0.15 · price_range 0.10
+          </div>
+        </div>
+
+        <div class="compare-grid">
+          <div class="compare-col">
+            <div class="compare-col-header">Record A — LoopNet <span class="badge badge-gray" style="margin-left:6px">Mar 14, 2026</span></div>
+            <div class="compare-field">
+              <div class="cf-key">Address</div>
+              <div class="cf-val">619 NE 190th Ave, Gresham OR 97030</div>
+            </div>
+            <div class="compare-field">
+              <div class="cf-key">Units</div>
+              <div class="cf-val">12</div>
+            </div>
+            <div class="compare-field">
+              <div class="cf-key">Asking Price</div>
+              <div class="cf-val cf-diff">$825,000</div>
+            </div>
+            <div class="compare-field">
+              <div class="cf-key">Cap Rate</div>
+              <div class="cf-val">6.2%</div>
+            </div>
+            <div class="compare-field">
+              <div class="cf-key">Bldg SqFt</div>
+              <div class="cf-val">6,200 sf</div>
+            </div>
+            <div class="compare-field">
+              <div class="cf-key">Broker</div>
+              <div class="cf-val cf-diff">David Seto · Pacific NW Commercial</div>
+            </div>
+            <div class="compare-field">
+              <div class="cf-key">Listing URL</div>
+              <div class="cf-val"><a href="#" style="color:var(--accent);font-size:11px">loopnet.com/listing/…</a></div>
+            </div>
+          </div>
+          <div class="compare-col">
+            <div class="compare-col-header">Record B — Crexi <span class="badge badge-gray" style="margin-left:6px">Apr 1, 2026</span></div>
+            <div class="compare-field">
+              <div class="cf-key">Address</div>
+              <div class="cf-val">619 Northeast 190th Avenue, Gresham, OR</div>
+            </div>
+            <div class="compare-field">
+              <div class="cf-key">Units</div>
+              <div class="cf-val">12</div>
+            </div>
+            <div class="compare-field">
+              <div class="cf-key">Asking Price</div>
+              <div class="cf-val cf-diff-b">$849,000</div>
+            </div>
+            <div class="compare-field">
+              <div class="cf-key">Cap Rate</div>
+              <div class="cf-val">6.1%</div>
+            </div>
+            <div class="compare-field">
+              <div class="cf-key">Bldg SqFt</div>
+              <div class="cf-val">6,200 sf</div>
+            </div>
+            <div class="compare-field">
+              <div class="cf-key">Broker</div>
+              <div class="cf-val cf-diff-b">D. Seto · PNW Commercial Realty</div>
+            </div>
+            <div class="compare-field">
+              <div class="cf-key">Listing URL</div>
+              <div class="cf-val"><a href="#" style="color:var(--accent);font-size:11px">crexi.com/properties/…</a></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="action-row">
+          <button class="btn btn-primary">✓ Merge (keep Record A)</button>
+          <button class="btn btn-secondary">⇄ Swap &amp; Merge (keep Record B)</button>
+          <button class="btn btn-secondary">✕ Keep Separate</button>
+          <span style="margin-left:auto;font-size:12px;color:var(--text-muted)">Decision is permanent and logged.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

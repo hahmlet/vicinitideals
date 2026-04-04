@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Parcels — Vicinity Deals</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+.drawer-overlay { display: flex; }
+.field-row .field-override { display: flex; align-items: center; gap: 6px; }
+.reset-link { font-size: 11px; color: var(--accent); cursor: pointer; text-decoration: underline; opacity: 0.7; }
+.reset-link:hover { opacity: 1; }
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-logo"><div class="brand">Vicinity <span>Deals</span></div></div>
+  <div class="sidebar-user">
+    <div class="user-avatar" style="background:#2563EB">SK</div>
+    <div><div class="user-name">Steph K.</div><div class="user-switch">switch</div></div>
+  </div>
+  <nav class="nav">
+    <div class="nav-section-label">Workspace</div>
+    <a href="01-deals.html" class="nav-item"><span class="nav-icon">🏠</span> Deals</a>
+    <a href="03-buildings.html" class="nav-item"><span class="nav-icon">🏢</span> Buildings</a>
+    <a href="04-parcels.html" class="nav-item active"><span class="nav-icon">📐</span> Parcels</a>
+    <a href="05-listings.html" class="nav-item"><span class="nav-icon">📋</span> Listings</a>
+    <a href="07-brokers.html" class="nav-item"><span class="nav-icon">👤</span> Brokers</a>
+    <div class="nav-section-label">Operations</div>
+    <a href="06-dedup.html" class="nav-item"><span class="nav-icon">⚡</span> De-duplication <span class="nav-badge">4</span></a>
+  </nav>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title">Parcels</div>
+    <div class="topbar-actions">
+      <button class="btn btn-secondary btn-sm">⚙ Columns</button>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="toolbar">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input class="search-input" type="text" placeholder="Search by APN or address…">
+      </div>
+      <select class="filter-select">
+        <option>All Zoning</option>
+        <option>CM2</option>
+        <option>R2</option>
+        <option>R3</option>
+        <option>EX</option>
+        <option>CX</option>
+      </select>
+      <select class="filter-select">
+        <option>Any Deal</option>
+        <option>Has Linked Deal</option>
+        <option>No Linked Deal</option>
+      </select>
+      <select class="filter-select">
+        <option>All Jurisdictions</option>
+        <option>Portland Maps</option>
+        <option>Gresham ArcGIS</option>
+        <option>Clackamas County</option>
+        <option>Oregon City</option>
+      </select>
+    </div>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th class="sortable sorted">APN <span class="sort-arrow">▲</span></th>
+            <th class="sortable">Address</th>
+            <th>Owner</th>
+            <th>Zoning</th>
+            <th class="sortable col-right">Lot SqFt</th>
+            <th class="sortable col-right">Assessed</th>
+            <th class="sortable">Year Built</th>
+            <th>Overrides</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background:var(--accent-light)" onclick="">
+            <td class="text-mono">R123400010</td>
+            <td>
+              <div style="font-weight:600">N Interstate Ave</div>
+              <div class="text-small text-muted">Portland, OR 97217</div>
+            </td>
+            <td class="text-small">Tower Holdings LLC</td>
+            <td><span class="badge badge-purple">CM2</span></td>
+            <td class="col-right text-mono">22,450</td>
+            <td class="col-right text-mono">$2,100,000</td>
+            <td>1968</td>
+            <td><span class="badge badge-orange" title="2 fields user-edited">2 custom</span></td>
+          </tr>
+          <tr onclick="">
+            <td class="text-mono">R698400130</td>
+            <td>
+              <div style="font-weight:600">619 NE 190th Ave</div>
+              <div class="text-small text-muted">Gresham, OR 97030</div>
+            </td>
+            <td class="text-small">Oak Properties</td>
+            <td><span class="badge badge-blue">R2</span></td>
+            <td class="col-right text-mono">8,500</td>
+            <td class="col-right text-mono">$485,000</td>
+            <td>1962</td>
+            <td><span class="text-muted text-small">—</span></td>
+          </tr>
+          <tr onclick="">
+            <td class="text-mono">R245600044</td>
+            <td>
+              <div style="font-weight:600">4821 SE Powell Blvd</div>
+              <div class="text-small text-muted">Portland, OR 97206</div>
+            </td>
+            <td class="text-small">Powell Holdings Inc.</td>
+            <td><span class="badge badge-purple">CM1</span></td>
+            <td class="col-right text-mono">4,200</td>
+            <td class="col-right text-mono">$720,000</td>
+            <td>1978</td>
+            <td><span class="badge badge-orange" title="1 field user-edited">1 custom</span></td>
+          </tr>
+          <tr onclick="">
+            <td class="text-mono">R112300088</td>
+            <td>
+              <div style="font-weight:600">1142 E Burnside St</div>
+              <div class="text-small text-muted">Portland, OR 97214</div>
+            </td>
+            <td class="text-small">Burnside Prop. Trust</td>
+            <td><span class="badge badge-green">R3</span></td>
+            <td class="col-right text-mono">3,200</td>
+            <td class="col-right text-mono">$390,000</td>
+            <td>1945</td>
+            <td><span class="text-muted text-small">—</span></td>
+          </tr>
+          <tr onclick="">
+            <td class="text-mono">R567800012</td>
+            <td>
+              <div style="font-weight:600">4405 SE Woodstock Blvd</div>
+              <div class="text-small text-muted">Portland, OR 97206</div>
+            </td>
+            <td class="text-small">Woodstock RE LLC</td>
+            <td><span class="badge badge-purple">CM2</span></td>
+            <td class="col-right text-mono">6,100</td>
+            <td class="col-right text-mono">$510,000</td>
+            <td>1938</td>
+            <td><span class="text-muted text-small">—</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="table-footer">
+        <span>Showing 5 of 31 parcels</span>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-secondary btn-sm">← Prev</button>
+          <button class="btn btn-secondary btn-sm">Next →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Parcel Detail Drawer -->
+<div class="drawer-overlay" onclick="this.style.display='none'">
+  <div class="drawer" onclick="event.stopPropagation()">
+    <div class="drawer-header">
+      <div>
+        <div class="drawer-title">R123400010</div>
+        <div class="text-small text-muted">N Interstate Ave, Portland OR 97217</div>
+      </div>
+      <span class="drawer-close" onclick="document.querySelector('.drawer-overlay').style.display='none'">×</span>
+    </div>
+    <div class="drawer-body">
+
+      <div style="display:flex;gap:8px;margin-bottom:16px;align-items:center">
+        <span class="badge badge-purple">CM2</span>
+        <span class="badge badge-orange">2 custom fields</span>
+        <button class="btn btn-ghost btn-sm" style="margin-left:auto">🔗 Link to Deal</button>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <div class="section-title">GIS Data</div>
+        <button class="btn btn-secondary btn-sm">🔄 Pull GIS Refresh</button>
+      </div>
+
+      <div class="field-row">
+        <div class="field-key">APN</div>
+        <div class="field-value text-mono">R123400010</div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">Owner</div>
+        <div class="field-value">
+          <div class="field-override">
+            Tower Holdings LLC
+            <span class="field-custom">custom</span>
+            <span class="reset-link">Reset to GIS</span>
+          </div>
+          <div class="text-small text-muted mt-4">GIS value: "Tower Hotel Properties Inc."</div>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">Owner Address</div>
+        <div class="field-value">PO Box 1204, Portland OR 97201</div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">Lot SqFt</div>
+        <div class="field-value">
+          <div class="field-override">
+            22,450 sf
+            <span class="field-custom">custom</span>
+            <span class="reset-link">Reset to GIS</span>
+          </div>
+          <div class="text-small text-muted mt-4">GIS value: 22,112 sf</div>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">Zoning</div>
+        <div class="field-value">CM2 — Central Mixed Use 2</div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">Current Use</div>
+        <div class="field-value">Hotel / Motel</div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">Assessed (Land)</div>
+        <div class="field-value text-mono">$1,400,000</div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">Assessed (Impr.)</div>
+        <div class="field-value text-mono">$700,000</div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">Year Built</div>
+        <div class="field-value">1968</div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">Last GIS Refresh</div>
+        <div class="field-value text-muted">Mar 10, 2026 — Gresham ArcGIS</div>
+      </div>
+
+      <div class="divider"></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-secondary" style="flex:1">✏ Edit Fields</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
