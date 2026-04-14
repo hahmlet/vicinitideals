@@ -3792,6 +3792,8 @@ def _capital_total(modules: list) -> float | None:
     total = 0.0
     for m in modules:
         if m.source and isinstance(m.source, dict):
+            if m.source.get("is_bridge"):
+                continue
             amt = m.source.get("amount")
             if amt:
                 total += float(amt)
