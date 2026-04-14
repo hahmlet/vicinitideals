@@ -154,6 +154,16 @@ async def compute_cash_flows(
     cumulative_cash_flow = total_sources
     stabilized_noi_monthly: Decimal | None = None
     period = 0
+    _operating_reserve_seeded = False
+
+    # Resolve operating reserve amount once — used to reset capital balance at
+    # start of first operational phase so the invariant holds:
+    #   Capital Balance[first stab month] = reserve + min(0, NCF)
+    _op_reserve_amount = next(
+        (_to_decimal(ul.amount) for ul in use_lines
+         if getattr(ul, "label", "") == "Operating Reserve"),
+        ZERO,
+    )
 
     for phase in phases:
         for month_index in range(phase.months):
@@ -178,10 +188,15 @@ async def compute_cash_flows(
             # Cumulative cash balance:
             #   Pre-stabilization + exit: accumulate fully (capital deployment / sale proceeds).
             #   Post-stabilization (lease_up / stabilized):
+            #     - At the first operational period, reset to the operating reserve so the
+            #       capital balance represents the reserve account, not the pre-stab residual.
             #     - Positive NCF is distributable profit — do NOT add to balance.
             #     - Negative NCF drains the operating reserve — DO subtract from balance.
             _is_operating = phase.period_type in {PeriodType.lease_up, PeriodType.stabilized}
             _ncf = period_result["net_cash_flow"]
+            if _is_operating and not _operating_reserve_seeded:
+                cumulative_cash_flow = _op_reserve_amount
+                _operating_reserve_seeded = True
             if not _is_operating:
                 cumulative_cash_flow += _ncf
             elif _ncf < 0:
