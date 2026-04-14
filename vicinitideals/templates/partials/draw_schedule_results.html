@@ -1,0 +1,216 @@
+{# Draw Schedule results — included into draw_schedule_panel.html when schedule is present #}
+{# Context: schedule (DrawSchedule), model #}
+
+{% set s = schedule %}
+{# Filter out sources with no actual draws (total_drawn == 0) #}
+{% set active_summaries = s.source_summaries | selectattr('total_drawn', 'gt', 0) | list %}
+{% set active_source_keys = active_summaries | map(attribute='source_key') | list %}
+{% set active_events = s.events | selectattr('source_key', 'in', active_source_keys) | list %}
+<div style="border-top:2px solid var(--border);padding-top:16px;margin-top:8px">
+
+{# ── Unfunded Uses alert ── #}
+{% if unfunded_uses is defined and unfunded_uses %}
+<div style="margin-bottom:16px;padding:12px 14px;border-radius:6px;background:#fffbeb;border:1px solid #fcd34d;color:#92400e;font-size:13px">
+  <strong>⚠ Unfunded Uses</strong>
+  <div style="font-size:12px;margin-top:4px;color:#78350f">
+    The following costs occur at milestones not covered by any source's active window.
+    <a href="{{ request.url.path }}?module=sources" style="color:#b45309;font-weight:600">Adjust source timing in Sources →</a>
+  </div>
+  <table style="width:100%;margin-top:8px;font-size:12px;border-collapse:collapse">
+    <thead>
+      <tr style="border-bottom:1px solid #fcd34d">
+        <th style="text-align:left;padding:3px 0;color:#92400e">Use Item</th>
+        <th style="text-align:left;padding:3px 0;color:#92400e">Milestone</th>
+        <th style="text-align:right;padding:3px 0;color:#92400e">Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for uf in unfunded_uses %}
+      <tr style="border-bottom:1px solid #fef3c7">
+        <td style="padding:4px 0">{{ uf.label }}</td>
+        <td style="padding:4px 0">{{ uf.milestone_label }}</td>
+        <td style="padding:4px 0;text-align:right;font-variant-numeric:tabular-nums">{{ uf.amount | currency }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr style="font-weight:700;border-top:2px solid #fcd34d">
+        <td colspan="2" style="padding:5px 0">Total Unfunded</td>
+        <td style="padding:5px 0;text-align:right">{{ unfunded_uses | sum(attribute='amount') | currency }}</td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+{% endif %}
+
+{# ── Validity banner ── #}
+{% if not s.is_valid %}
+<div style="margin-bottom:16px;padding:12px 14px;border-radius:6px;background:#fef2f2;border:1px solid #fca5a5;color:#dc2626;font-size:13px">
+  <strong>⚠ Cash Balance Violations ({{ s.violations | length }})</strong>
+  <ul style="margin:6px 0 0;padding-left:18px;font-size:12px">
+    {% for v in s.violations %}
+    <li>{{ v.date.strftime('%b %Y') }} — balance {{ v.cash_balance | currency }}, need {{ v.required_reserve | currency }} (shortfall {{ v.shortfall | currency }})</li>
+    {% endfor %}
+  </ul>
+</div>
+{% else %}
+<div style="margin-bottom:16px;padding:10px 14px;border-radius:6px;background:#f0fdf4;border:1px solid #86efac;color:#166534;font-size:13px;font-weight:600">
+  ✓ Cash balance valid — no reserve violations
+</div>
+{% endif %}
+
+{# ── Summary stat row ── #}
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:20px">
+  <div class="stat-card">
+    <div class="stat-label">Total Uses</div>
+    <div class="stat-value" style="font-size:15px">{{ s.total_uses | currency }}</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Carry Cost</div>
+    <div class="stat-value" style="font-size:15px;color:var(--warning,#d97706)">{{ s.total_carry_cost | currency }}</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Total Required</div>
+    <div class="stat-value" style="font-size:15px;font-weight:700">{{ s.total_sources_required | currency }}</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Equity</div>
+    <div class="stat-value" style="font-size:15px;color:var(--success,#16a34a)">{{ s.total_equity | currency }}</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Debt</div>
+    <div class="stat-value" style="font-size:15px;color:var(--accent,#2563eb)">{{ s.total_debt | currency }}</div>
+  </div>
+</div>
+
+{# ── Sources & Uses summary table ── #}
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+
+  {# Uses by category #}
+  <div>
+    <div class="ds-section-title" style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);margin-bottom:6px">Uses by Category</div>
+    <table style="width:100%;border-collapse:collapse;font-size:12px">
+      {% for cat in s.uses_by_category %}
+      <tr style="border-bottom:1px solid var(--border-faint,#f0f0f0)">
+        <td style="padding:5px 0;color:var(--text-secondary)">{{ cat.category | replace('_',' ') | title }}</td>
+        <td style="padding:5px 0;text-align:right;font-variant-numeric:tabular-nums">{{ cat.total_amount | currency }}</td>
+      </tr>
+      {% endfor %}
+      <tr style="font-weight:700;border-top:2px solid var(--border)">
+        <td style="padding:6px 0">Total Uses</td>
+        <td style="padding:6px 0;text-align:right">{{ s.total_uses | currency }}</td>
+      </tr>
+    </table>
+  </div>
+
+  {# Sources summary #}
+  <div>
+    <div class="ds-section-title" style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);margin-bottom:6px">Sources Summary</div>
+    <table style="width:100%;border-collapse:collapse;font-size:12px">
+      {% for ss in active_summaries %}
+      <tr style="border-bottom:1px solid var(--border-faint,#f0f0f0)">
+        <td style="padding:5px 0">
+          <span class="ds-type-badge ds-type-{{ ss.source_type }}" style="font-size:10px">{{ ss.source_type | title }}</span>
+          <span style="margin-left:6px;color:var(--text-secondary)">{{ ss.source_label }}</span>
+        </td>
+        <td style="padding:5px 0;text-align:right;font-variant-numeric:tabular-nums">{{ ss.total_drawn | currency }}</td>
+      </tr>
+      {% if ss.total_carry_cost and ss.total_carry_cost | float > 0 %}
+      <tr style="border-bottom:1px solid var(--border-faint,#f0f0f0)">
+        <td style="padding:3px 0 3px 12px;font-size:11px;color:var(--warning,#d97706)">↳ Carry ({{ ss.draw_count }} draw{{ 's' if ss.draw_count != 1 else '' }})</td>
+        <td style="padding:3px 0;text-align:right;font-size:11px;color:var(--warning,#d97706)">{{ ss.total_carry_cost | currency }}</td>
+      </tr>
+      {% endif %}
+      {% endfor %}
+      <tr style="font-weight:700;border-top:2px solid var(--border)">
+        <td style="padding:6px 0">Total Sources</td>
+        <td style="padding:6px 0;text-align:right">{{ s.total_sources_required | currency }}</td>
+      </tr>
+    </table>
+  </div>
+
+</div>
+
+{# ── Draw events table ── #}
+<div style="margin-bottom:20px">
+  <div class="ds-section-title" style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);margin-bottom:6px">Draw Schedule</div>
+  <div style="overflow-x:auto;max-height:360px">
+  <table class="line-table" style="font-size:12px;white-space:nowrap">
+    <thead style="position:sticky;top:0;background:var(--surface,#fff);z-index:1">
+      <tr>
+        <th style="text-align:left">Source</th>
+        <th style="text-align:center">#</th>
+        <th style="text-align:left">Date</th>
+        <th class="col-right">Uses Funded</th>
+        <th class="col-right">Payoff</th>
+        <th class="col-right">Carry</th>
+        <th class="col-right" style="font-weight:700">Total Draw</th>
+        <th class="col-right">Balance After</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for ev in active_events %}
+    <tr>
+      <td>
+        <span class="ds-type-badge ds-type-{{ 'debt' if ev.carry_cost and ev.carry_cost | float > 0 else 'equity' }}" style="font-size:10px">
+          {{ ev.source_label }}
+        </span>
+      </td>
+      <td style="text-align:center;color:var(--text-muted)">{{ ev.draw_number }}</td>
+      <td>{{ ev.draw_date.strftime('%b %Y') }}</td>
+      <td class="col-right text-mono">{{ ev.uses_funded | currency if ev.uses_funded | float != 0 else '—' }}</td>
+      <td class="col-right text-mono" style="color:var(--warning,#d97706)">{{ ev.prior_source_payoff | currency if ev.prior_source_payoff | float != 0 else '—' }}</td>
+      <td class="col-right text-mono" style="color:var(--warning,#d97706)">{{ ev.carry_cost | currency if ev.carry_cost | float != 0 else '—' }}</td>
+      <td class="col-right text-mono" style="font-weight:700">{{ ev.total_draw | currency }}</td>
+      <td class="col-right text-mono" style="color:var(--accent,#2563eb)">{{ ev.balance_after | currency }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot style="border-top:2px solid var(--border);font-weight:700;background:var(--surface,#fff)">
+      <tr>
+        <td colspan="3" style="padding:6px 8px">Total</td>
+        <td class="col-right">{{ active_events | sum(attribute='uses_funded') | currency }}</td>
+        <td class="col-right">{{ active_events | sum(attribute='prior_source_payoff') | currency }}</td>
+        <td class="col-right" style="color:var(--warning,#d97706)">{{ active_summaries | sum(attribute='total_carry_cost') | currency }}</td>
+        <td class="col-right" style="font-weight:700">{{ active_summaries | sum(attribute='total_drawn') | currency }}</td>
+        <td></td>
+      </tr>
+    </tfoot>
+  </table>
+  </div>
+</div>
+
+{# ── Cash flow mini chart ── #}
+<div>
+  <div class="ds-section-title" style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);margin-bottom:6px">Monthly Cash Balance</div>
+  <div style="overflow-x:auto;max-height:240px">
+  <table class="line-table" style="font-size:11px;white-space:nowrap">
+    <thead style="position:sticky;top:0;background:var(--surface,#fff);z-index:1">
+      <tr>
+        <th style="text-align:left">Month</th>
+        <th class="col-right">Draw In</th>
+        <th class="col-right">Uses Out</th>
+        <th class="col-right">Net</th>
+        <th class="col-right">Balance</th>
+        <th class="col-right">Reserve Floor</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for cf in s.monthly_cash_flows %}
+    <tr style="{% if cf.is_violation %}background:#fef2f2{% endif %}">
+      <td>{{ cf.date.strftime('%b %Y') }}</td>
+      <td class="col-right text-mono" style="color:var(--success,#16a34a)">{{ cf.draw_received | currency if cf.draw_received | float != 0 else '—' }}</td>
+      <td class="col-right text-mono" style="color:var(--danger,#dc2626)">{{ ('(%s)' | format(cf.uses_paid | currency)) if cf.uses_paid | float != 0 else '—' }}</td>
+      <td class="col-right text-mono" style="{% if cf.net | float < 0 %}color:var(--danger,#dc2626){% endif %}">{{ cf.net | currency }}</td>
+      <td class="col-right text-mono" style="font-weight:{% if cf.is_violation %}700{% else %}400{% endif %};{% if cf.is_violation %}color:var(--danger,#dc2626){% endif %}">{{ cf.cash_balance | currency }}</td>
+      <td class="col-right text-mono text-muted">{{ cf.required_reserve | currency if cf.required_reserve | float != 0 else '—' }}</td>
+      <td style="width:16px;text-align:center">{% if cf.is_violation %}⚠{% endif %}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+
+</div>{# /border-top wrapper #}

@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Buildings — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div class="topbar">
+</div>
+
+<div class="content">
+  <div class="toolbar">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" type="search" placeholder="Search by address…"
+             hx-get="/ui/buildings/rows" hx-trigger="input delay:300ms" hx-target="#buildings-tbody"
+             hx-include="[name='source']" name="q">
+    </div>
+    <select class="filter-select" name="source"
+            hx-get="/ui/buildings/rows" hx-trigger="change" hx-target="#buildings-tbody"
+            hx-include="[name='q']">
+      <option value="">All Sources</option>
+      <option value="crexi">Crexi</option>
+      <option value="loopnet">LoopNet</option>
+    </select>
+  </div>
+
+  <div class="table-wrap">
+    <div class="col-picker-wrap">
+      <button class="btn btn-secondary btn-sm" data-col-picker data-table-id="buildings-tbody" data-table-key="buildings">⚙ Columns</button>
+    </div>
+    <table class="data-table" data-table-key="buildings">
+      <thead>
+        <tr>
+          <th class="sortable sorted" data-col="address">Address <span class="sort-arrow">▲</span></th>
+          <th data-col="sale_status">Sale Status</th>
+          <th class="sortable col-right" data-col="units">Existing Units</th>
+          <th class="sortable col-right" data-col="sqft">Bldg SqFt</th>
+          <th class="sortable" data-col="year_built">Year Built</th>
+          <th data-col="source">Source</th>
+          <th data-col="deal">Linked Deal</th>
+          <th class="col-right" data-col="asking_price" data-hidden>Asking Price</th>
+          <th class="col-right" data-col="cap_rate" data-hidden>Cap Rate</th>
+          <th data-col="property_type" data-hidden>Property Type</th>
+          <th data-col="broker" data-hidden>Broker</th>
+          <th data-col="brokerage" data-hidden>Brokerage</th>
+          <th data-col="first_seen" data-hidden>First Seen</th>
+          <th data-col="last_seen" data-hidden>Last Seen</th>
+        </tr>
+      </thead>
+      <tbody id="buildings-tbody">
+        {% include "partials/buildings_rows.html" %}
+      </tbody>
+    </table>
+    <div class="table-footer">
+      <span>Showing {{ buildings | length }} of {{ total_count }} buildings</span>
+    </div>
+  </div>
+</div>
+
+<!-- Building detail drawer -->
+<div class="drawer-overlay" id="building-drawer" style="display:none">
+  <div class="drawer">
+    <div class="drawer-header">
+      <div>
+        <div class="drawer-title" id="building-drawer-title">Building</div>
+        <div class="text-small text-muted" id="building-drawer-sub"></div>
+      </div>
+      <span class="drawer-close" onclick="closeDrawer('building-drawer')">×</span>
+    </div>
+    <div class="drawer-body" id="building-drawer-body">
+      <div class="text-muted text-small">Loading…</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function openBuilding(id, title, sub) {
+  document.getElementById('building-drawer-title').textContent = title;
+  document.getElementById('building-drawer-sub').textContent = sub || '';
+  htmx.ajax('GET', '/ui/buildings/' + id + '/detail', {target: '#building-drawer-body', swap: 'innerHTML'});
+  openDrawer('building-drawer');
+}
+</script>
+{% endblock %}

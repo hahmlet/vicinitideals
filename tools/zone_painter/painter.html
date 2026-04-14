@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fairview Zone Painter</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; display: flex; height: 100vh; overflow: hidden; }
+
+    /* ── Sidebar ── */
+    #sidebar {
+      width: 280px; flex-shrink: 0;
+      background: #1a1d23; color: #e2e8f0;
+      display: flex; flex-direction: column;
+      padding: 16px; gap: 14px; overflow-y: auto;
+    }
+    #sidebar h1 { font-size: 15px; font-weight: 700; color: #fff; }
+    #sidebar h1 span { color: #60a5fa; }
+
+    .stat-row { display: flex; gap: 8px; }
+    .stat {
+      flex: 1; background: #2d3748; border-radius: 6px;
+      padding: 8px 10px; text-align: center;
+    }
+    .stat .num { font-size: 22px; font-weight: 700; color: #fff; }
+    .stat .lbl { font-size: 10px; color: #94a3b8; text-transform: uppercase; letter-spacing: .04em; }
+
+    label { font-size: 12px; color: #94a3b8; margin-bottom: 3px; display: block; }
+
+    select, input[type=text] {
+      width: 100%; background: #2d3748; border: 1px solid #4a5568;
+      color: #e2e8f0; border-radius: 6px; padding: 8px 10px;
+      font-size: 13px; appearance: none;
+    }
+    select:focus, input[type=text]:focus { outline: none; border-color: #60a5fa; }
+    optgroup { color: #94a3b8; font-size: 11px; }
+    option  { color: #e2e8f0; background: #2d3748; }
+
+    #mode-select { border-color: #60a5fa; background: #1e3a5f; font-weight: 600; }
+
+    .mode-banner {
+      font-size: 11px; color: #60a5fa; background: #1e3a5f;
+      border-radius: 4px; padding: 5px 8px; line-height: 1.4;
+    }
+
+    #selection-badge {
+      background: #2d4a7a; border: 1px solid #3b6cb7;
+      border-radius: 6px; padding: 10px;
+      font-size: 13px; color: #93c5fd;
+      min-height: 38px;
+    }
+    #selection-badge span { font-weight: 700; color: #fff; }
+
+    #paint-btn {
+      background: #2563eb; color: #fff;
+      border: none; border-radius: 6px;
+      padding: 11px; font-size: 14px; font-weight: 600;
+      cursor: pointer; transition: background .15s;
+    }
+    #paint-btn:hover:not(:disabled) { background: #1d4ed8; }
+    #paint-btn:disabled { background: #374151; color: #6b7280; cursor: not-allowed; }
+
+    #clear-btn {
+      background: transparent; color: #94a3b8;
+      border: 1px solid #4a5568; border-radius: 6px;
+      padding: 7px; font-size: 12px; cursor: pointer;
+    }
+    #clear-btn:hover { background: #2d3748; color: #e2e8f0; }
+
+    .toggle-row { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #94a3b8; }
+    .toggle-row input[type=checkbox] { accent-color: #60a5fa; width: 14px; height: 14px; }
+
+    #toast {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      background: #065f46; color: #d1fae5; border-radius: 8px;
+      padding: 10px 20px; font-size: 13px; font-weight: 600;
+      display: none; z-index: 9999; white-space: nowrap;
+    }
+    #toast.error { background: #7f1d1d; color: #fecaca; }
+
+    .instructions {
+      font-size: 11px; color: #64748b; line-height: 1.5;
+      border-top: 1px solid #2d3748; padding-top: 10px;
+    }
+    .instructions kbd {
+      background: #374151; border-radius: 3px; padding: 1px 4px;
+      font-family: monospace; font-size: 10px;
+    }
+
+    /* ── Map ── */
+    #map { flex: 1; }
+  </style>
+</head>
+<body>
+
+<div id="sidebar">
+  <h1>Fairview<br><span>Zone Painter</span></h1>
+
+  <div>
+    <label>Mode</label>
+    <select id="mode-select">
+      <option value="zoning_code">Zoning</option>
+      <option value="enterprise_zone_name">Enterprise Zone</option>
+      <option value="cultural_sensitivity">Cultural Sensitivity</option>
+    </select>
+  </div>
+
+  <div class="mode-banner" id="mode-banner"></div>
+
+  <div class="stat-row">
+    <div class="stat"><div class="num" id="stat-painted">–</div><div class="lbl">Painted</div></div>
+    <div class="stat"><div class="num" id="stat-total">–</div><div class="lbl">Total</div></div>
+    <div class="stat"><div class="num" id="stat-pct">–</div><div class="lbl">Done</div></div>
+  </div>
+
+  <div>
+    <label id="value-label">Zone Code</label>
+    <div id="value-picker"></div>
+  </div>
+
+  <div id="selection-badge">No parcels selected</div>
+
+  <button id="paint-btn" disabled>Paint selected parcels</button>
+  <button id="clear-btn">Clear selection</button>
+
+  <div class="toggle-row">
+    <input type="checkbox" id="hide-painted">
+    <label for="hide-painted" style="margin:0">Hide already-painted parcels</label>
+  </div>
+  <div class="toggle-row">
+    <input type="checkbox" id="show-tooltips">
+    <label for="show-tooltips" style="margin:0">Show parcel info on hover</label>
+  </div>
+
+  <div class="instructions">
+    <strong style="color:#94a3b8">How to use:</strong><br>
+    Click a parcel to select it.<br>
+    <kbd>Ctrl</kbd> + click to add/remove from selection.<br>
+    <kbd>Shift</kbd> + drag to box-select parcels.<br>
+    Choose a value, then click <strong>Paint</strong>.<br><br>
+    <span style="color:#4ade80">■</span> Green = already painted<br>
+    <span style="color:#fb923c">■</span> Orange = currently selected<br>
+    <span style="color:#93c5fd">■</span> Blue = no value yet
+  </div>
+</div>
+
+<div id="map"></div>
+<div id="toast"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// ---------------------------------------------------------------------------
+// Mode definitions
+// ---------------------------------------------------------------------------
+const MODES = {
+  zoning_code: {
+    label: 'Zoning',
+    valueLabel: 'Zone Code',
+    banner: 'Painting zoning codes. Green = zone assigned.',
+    pickerHTML: `
+      <select id="value-select">
+        <option value="">— select zone —</option>
+        <optgroup label="Residential">
+          <option value="R-6">R-6 — Residential</option>
+          <option value="R-7.5">R-7.5 — Residential</option>
+          <option value="R-10">R-10 — Residential</option>
+          <option value="RM">RM — Residential Medium Density</option>
+          <option value="RM/TOZ">RM/TOZ — Res/Medium Density Townhouse Overlay</option>
+          <option value="R/MH">R/MH — Residential / Manufactured Home Park</option>
+          <option value="R/CSP">R/CSP — Residential / Community Service Parks</option>
+          <option value="R/SFLD">R/SFLD — Res / South Fairview Lake Design Overlay</option>
+          <option value="VSF">VSF — Village Single Family</option>
+          <option value="VTH">VTH — Village Townhouse</option>
+          <option value="VA">VA — Village Apartment</option>
+        </optgroup>
+        <optgroup label="Commercial / Mixed Use">
+          <option value="CC">CC — Corridor Commercial</option>
+          <option value="TCC">TCC — Town Center Commercial</option>
+          <option value="VC">VC — Village Commercial</option>
+          <option value="FLX">FLX — Village Flex</option>
+          <option value="VMU">VMU — Village Mixed Use</option>
+          <option value="VO">VO — Village Office</option>
+        </optgroup>
+        <optgroup label="Industrial">
+          <option value="GI">GI — General Industrial</option>
+          <option value="LI">LI — Light Industrial</option>
+        </optgroup>
+        <optgroup label="Other">
+          <option value="AH">AH — Agricultural Holding</option>
+        </optgroup>
+      </select>`,
+  },
+  enterprise_zone_name: {
+    label: 'Enterprise Zone',
+    valueLabel: 'Enterprise Zone',
+    banner: 'Painting enterprise zone membership. Green = assigned to a zone.',
+    pickerHTML: `
+      <select id="value-select">
+        <option value="">— select zone —</option>
+        <option value="Columbia Cascade Enterprise Zone">Columbia Cascade Enterprise Zone</option>
+      </select>`,
+  },
+  cultural_sensitivity: {
+    label: 'Cultural Sensitivity',
+    valueLabel: 'Designation',
+    banner: 'Painting cultural sensitivity lands. Green = designated.',
+    pickerHTML: `
+      <select id="value-select">
+        <option value="">— select designation —</option>
+        <option value="Cultural Sensitivity Lands">Cultural Sensitivity Lands</option>
+      </select>`,
+  },
+};
+
+// ---------------------------------------------------------------------------
+// Map init
+// ---------------------------------------------------------------------------
+const map = L.map('map', { zoomControl: true });
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap contributors',
+  maxZoom: 20,
+}).addTo(map);
+
+// ---------------------------------------------------------------------------
+// State
+// ---------------------------------------------------------------------------
+let geoLayer   = null;
+let selected   = new Set();
+let allFeatures = {};
+let activeMode = 'zoning_code';
+
+// ---------------------------------------------------------------------------
+// Styling — keyed on painted_value from current mode
+// ---------------------------------------------------------------------------
+function styleFor(feature, isSelected) {
+  const painted = !!feature.properties.painted_value;
+  if (isSelected) return { color: '#f97316', weight: 2, fillColor: '#fed7aa', fillOpacity: 0.7 };
+  if (painted)    return { color: '#16a34a', weight: 1, fillColor: '#bbf7d0', fillOpacity: 0.5 };
+  return                 { color: '#3b82f6', weight: 1, fillColor: '#bfdbfe', fillOpacity: 0.35 };
+}
+
+// ---------------------------------------------------------------------------
+// Mode switching — reloads parcels for the new field
+// ---------------------------------------------------------------------------
+function applyMode(mode) {
+  activeMode = mode;
+  const def = MODES[mode];
+  document.getElementById('mode-banner').textContent = def.banner;
+  document.getElementById('value-label').textContent = def.valueLabel;
+  document.getElementById('value-picker').innerHTML = def.pickerHTML;
+  document.getElementById('value-select').addEventListener('change', updateSelectionUI);
+  // Reset hide-painted and reload parcels
+  document.getElementById('hide-painted').checked = false;
+  clearSelection();
+  loadParcels();
+}
+
+document.getElementById('mode-select').addEventListener('change', e => {
+  applyMode(e.target.value);
+});
+
+// ---------------------------------------------------------------------------
+// Load parcels
+// ---------------------------------------------------------------------------
+async function loadParcels() {
+  if (geoLayer) { map.removeLayer(geoLayer); geoLayer = null; }
+  allFeatures = {};
+
+  const resp = await fetch(`/parcels.geojson?field=${activeMode}`);
+  const geojson = await resp.json();
+
+  geoLayer = L.geoJSON(geojson, {
+    style: f => styleFor(f, false),
+    onEachFeature(feature, layer) {
+      allFeatures[feature.properties.id] = layer;
+
+      if (document.getElementById('show-tooltips').checked) bindTooltip(layer);
+
+      layer.on('click', e => {
+        const ctrl = e.originalEvent.ctrlKey || e.originalEvent.metaKey;
+        if (ctrl) {
+          toggleSelect(feature.properties.id, layer, feature);
+        } else {
+          clearSelection();
+          toggleSelect(feature.properties.id, layer, feature);
+        }
+      });
+    },
+  }).addTo(map);
+
+  if (geoLayer.getLayers().length > 0) {
+    map.fitBounds(geoLayer.getBounds(), { padding: [20, 20] });
+  }
+  refreshStats();
+}
+
+// ---------------------------------------------------------------------------
+// Selection
+// ---------------------------------------------------------------------------
+function toggleSelect(id, layer, feature) {
+  if (selected.has(id)) {
+    selected.delete(id);
+    layer.setStyle(styleFor(feature, false));
+  } else {
+    selected.add(id);
+    layer.setStyle(styleFor(feature, true));
+  }
+  updateSelectionUI();
+}
+
+function clearSelection() {
+  for (const id of selected) {
+    const layer = allFeatures[id];
+    if (layer) layer.setStyle(styleFor(layer.feature, false));
+  }
+  selected.clear();
+  updateSelectionUI();
+}
+
+function updateSelectionUI() {
+  const count = selected.size;
+  const badge = document.getElementById('selection-badge');
+  const btn   = document.getElementById('paint-btn');
+  const vsel  = document.getElementById('value-select');
+  const val   = vsel ? vsel.value : '';
+
+  badge.innerHTML = count === 0
+    ? 'No parcels selected'
+    : `<span>${count}</span> parcel${count === 1 ? '' : 's'} selected`;
+
+  btn.disabled = count === 0 || !val;
+  btn.textContent = count > 0 ? `Paint ${count} parcel${count === 1 ? '' : 's'}` : 'Paint selected parcels';
+}
+
+// ---------------------------------------------------------------------------
+// Paint
+// ---------------------------------------------------------------------------
+document.getElementById('paint-btn').addEventListener('click', async () => {
+  const vsel = document.getElementById('value-select');
+  const val  = vsel ? vsel.value : '';
+  if (!val || selected.size === 0) return;
+
+  const ids = [...selected];
+  const resp = await fetch('/assign', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ parcel_ids: ids, field_name: activeMode, value: val }),
+  });
+
+  if (!resp.ok) { showToast('Error assigning values', true); return; }
+  const data = await resp.json();
+
+  const hidePainted = document.getElementById('hide-painted').checked;
+  for (const id of ids) {
+    const layer = allFeatures[id];
+    if (layer) {
+      layer.feature.properties.painted_value = val;
+      if (document.getElementById('show-tooltips').checked) bindTooltip(layer);
+      layer.setStyle(hidePainted ? { opacity: 0, fillOpacity: 0 } : styleFor(layer.feature, false));
+    }
+  }
+
+  selected.clear();
+  updateSelectionUI();
+  showToast(`Painted ${data.updated} parcel${data.updated === 1 ? '' : 's'} → ${val}`);
+  refreshStats();
+});
+
+// ---------------------------------------------------------------------------
+// Clear selection button
+// ---------------------------------------------------------------------------
+document.getElementById('clear-btn').addEventListener('click', clearSelection);
+
+// ---------------------------------------------------------------------------
+// Tooltip helpers
+// ---------------------------------------------------------------------------
+function tooltipContent(props) {
+  return `<strong>${props.apn}</strong><br>` +
+    `${props.address || ''}<br>` +
+    `${MODES[activeMode].valueLabel}: ${props.painted_value || '<em>unset</em>'}`;
+}
+
+function bindTooltip(layer) {
+  layer.bindTooltip(tooltipContent(layer.feature.properties), { sticky: true, opacity: 0.9 });
+}
+
+document.getElementById('show-tooltips').addEventListener('change', e => {
+  if (!geoLayer) return;
+  geoLayer.eachLayer(layer => {
+    if (e.target.checked) bindTooltip(layer);
+    else layer.unbindTooltip();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Hide painted toggle
+// ---------------------------------------------------------------------------
+document.getElementById('hide-painted').addEventListener('change', e => {
+  if (!geoLayer) return;
+  geoLayer.eachLayer(layer => {
+    const painted    = !!layer.feature.properties.painted_value;
+    const isSelected = selected.has(layer.feature.properties.id);
+    if (e.target.checked && painted && !isSelected) {
+      layer.setStyle({ opacity: 0, fillOpacity: 0 });
+    } else {
+      layer.setStyle(styleFor(layer.feature, isSelected));
+    }
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Stats
+// ---------------------------------------------------------------------------
+async function refreshStats() {
+  const resp = await fetch(`/stats?field=${activeMode}`);
+  const s = await resp.json();
+  document.getElementById('stat-painted').textContent = s.painted;
+  document.getElementById('stat-total').textContent   = s.total;
+  const pct = s.total > 0 ? Math.round(s.painted / s.total * 100) : 0;
+  document.getElementById('stat-pct').textContent = pct + '%';
+}
+
+// ---------------------------------------------------------------------------
+// Box select (Shift + drag)
+// ---------------------------------------------------------------------------
+let _boxStart = null;
+let _boxRect  = null;
+let _boxing   = false;
+
+map.on('mousedown', e => {
+  if (!e.originalEvent.shiftKey) return;
+  L.DomEvent.preventDefault(e.originalEvent);
+  L.DomEvent.stopPropagation(e.originalEvent);
+  map.dragging.disable();
+  _boxing   = true;
+  _boxStart = e.latlng;
+  _boxRect  = L.rectangle([_boxStart, _boxStart], {
+    color: '#f97316', weight: 2, dashArray: '5 4',
+    fillColor: '#fed7aa', fillOpacity: 0.15, interactive: false,
+  }).addTo(map);
+});
+
+map.on('mousemove', e => {
+  if (!_boxing || !_boxRect) return;
+  _boxRect.setBounds(L.latLngBounds(_boxStart, e.latlng));
+});
+
+map.on('mouseup', e => {
+  if (!_boxing) return;
+  _boxing = false;
+  map.dragging.enable();
+  if (!_boxRect) return;
+
+  const bounds = _boxRect.getBounds();
+  map.removeLayer(_boxRect);
+  _boxRect = null;
+
+  const additive = e.originalEvent.ctrlKey || e.originalEvent.metaKey;
+  if (!additive) clearSelection();
+
+  if (!geoLayer) return;
+  geoLayer.eachLayer(layer => {
+    if (!layer.getBounds) return;
+    if (!bounds.intersects(layer.getBounds())) return;
+    const opts = layer.options;
+    if (opts.opacity === 0 && opts.fillOpacity === 0) return;
+    const id = layer.feature.properties.id;
+    if (!selected.has(id)) {
+      selected.add(id);
+      layer.setStyle(styleFor(layer.feature, true));
+    }
+  });
+  updateSelectionUI();
+});
+
+map.on('click', e => {
+  if (e.originalEvent.shiftKey) L.DomEvent.stopPropagation(e.originalEvent);
+});
+
+// ---------------------------------------------------------------------------
+// Toast
+// ---------------------------------------------------------------------------
+function showToast(msg, isError = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = isError ? 'error' : '';
+  t.style.display = 'block';
+  setTimeout(() => { t.style.display = 'none'; }, 3000);
+}
+
+// ---------------------------------------------------------------------------
+// Boot
+// ---------------------------------------------------------------------------
+applyMode('zoning_code');
+</script>
+</body>
+</html>

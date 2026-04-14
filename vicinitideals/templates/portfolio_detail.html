@@ -1,0 +1,280 @@
+{% extends "base.html" %}
+{% block title %}{{ portfolio_name }} — Portfolios — Viciniti Deals{% endblock %}
+
+{% block head %}
+<style>
+/* ── Gantt v2 ── */
+.g2-wrap { position: relative; overflow-x: auto; padding-bottom: 8px; min-width: 520px; }
+.g2-axis {
+  display: flex; border-bottom: 2px solid var(--border); margin-bottom: 4px;
+  background: var(--surface); position: relative; z-index: 2;
+}
+.g2-axis-spacer { width: 130px; flex-shrink: 0; }
+.g2-axis-track { flex: 1; position: relative; }
+.g2-years { position: relative; height: 24px; border-bottom: 1px solid var(--border); overflow: hidden; }
+.g2-year-span {
+  position: absolute; top: 0; bottom: 0; display: flex; align-items: center;
+  padding-left: 6px; font-size: 14px; font-weight: 700; color: var(--text);
+  border-left: 1px solid var(--border); white-space: nowrap; overflow: hidden; box-sizing: border-box;
+}
+.g2-months { position: relative; height: 20px; }
+.g2-month {
+  position: absolute; top: 0; font-size: 12px; color: var(--text-muted);
+  transform: translateX(-50%); line-height: 20px; white-space: nowrap; user-select: none;
+}
+.g2-month-year { color: var(--text); font-weight: 700; }
+.g2-vlines { position: absolute; left: 130px; top: 0; right: 0; bottom: 0; pointer-events: none; z-index: 0; }
+.g2-vline { position: absolute; top: 0; bottom: 0; width: 1px; background: rgba(0,0,0,0.05); }
+.g2-vline-year { background: rgba(0,0,0,0.11); }
+.g2-project-hdr { display: flex; align-items: center; padding: 10px 0 4px 0; margin-top: 2px; }
+.g2-project-hdr-name {
+  width: 130px; flex-shrink: 0; font-size: 13px; font-weight: 700; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 8px; box-sizing: border-box;
+}
+.g2-project-hdr-line { flex: 1; height: 1px; background: var(--border); }
+.g2-row { display: flex; align-items: center; gap: 12px; margin-bottom: 5px; position: relative; z-index: 1; }
+.g2-label {
+  width: 130px; flex-shrink: 0; font-size: 14px; color: var(--text-muted);
+  text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  padding-left: 16px; box-sizing: border-box;
+}
+.g2-track { flex: 1; position: relative; height: 32px; }
+.g2-bar {
+  position: absolute; top: 3px; height: 26px; border-radius: 4px;
+  display: flex; align-items: center; padding: 0 8px;
+  font-size: 13px; font-weight: 600; color: #fff;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  transition: opacity 0.1s; cursor: default;
+}
+.g2-bar:hover { opacity: 0.85; }
+.gantt-phase-offer        { background: #7c3aed; }
+.gantt-phase-contract     { background: #db2777; }
+.gantt-phase-close        { background: #dc2626; }
+.gantt-phase-predev       { background: #d97706; }
+.gantt-phase-construction { background: #059669; }
+.gantt-phase-leaseup      { background: #0284c7; }
+.gantt-phase-stabilized   { background: #2563eb; }
+.gantt-phase-exit         { background: #374151; }
+.gantt-phase-other        { background: #6b7280; }
+.stat-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px;
+}
+.stat-card-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px; }
+.stat-card-value { font-size: 22px; font-weight: 700; color: var(--text); }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Header -->
+<div class="detail-header" style="display:flex;align-items:flex-start;gap:14px;padding:20px 24px 16px;border-bottom:1px solid var(--border);background:var(--surface)">
+  <div style="flex:1;min-width:0">
+    <div class="detail-breadcrumb" style="font-size:12px;color:var(--text-muted);margin-bottom:4px">
+      <a href="/portfolios" style="color:var(--text-muted);text-decoration:none">Portfolios</a> / {{ portfolio_name }}
+    </div>
+    <div style="font-size:20px;font-weight:700;color:var(--text)">{{ portfolio_name }}</div>
+  </div>
+  <div style="display:flex;gap:8px">
+    <button class="btn btn-primary" onclick="openDrawer('add-deal-drawer')">+ Add Deal</button>
+  </div>
+</div>
+
+<!-- Stats bar -->
+{% if stats.deal_count > 0 %}
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;padding:16px 24px;background:var(--surface);border-bottom:1px solid var(--border)">
+  <div class="stat-card">
+    <div class="stat-card-label">Deals</div>
+    <div class="stat-card-value">{{ stats.deal_count }}</div>
+  </div>
+  {% if stats.avg_irr is not none %}
+  <div class="stat-card">
+    <div class="stat-card-label">Avg IRR</div>
+    <div class="stat-card-value" style="color:var(--success)">{{ "%.1f"|format(stats.avg_irr) }}%</div>
+  </div>
+  {% endif %}
+  {% if stats.total_equity is not none %}
+  <div class="stat-card">
+    <div class="stat-card-label">Total Equity</div>
+    <div class="stat-card-value" style="font-size:16px">{{ stats.total_equity | currency }}</div>
+  </div>
+  {% endif %}
+  {% if stats.total_noi is not none %}
+  <div class="stat-card">
+    <div class="stat-card-label">Total NOI</div>
+    <div class="stat-card-value" style="font-size:16px">{{ stats.total_noi | currency }}</div>
+  </div>
+  {% endif %}
+</div>
+{% endif %}
+
+<div style="padding:24px">
+
+  {# ── Multi-deal Gantt v2 ── #}
+  {% if gantt_data %}
+  <div class="section-title mb-12">Portfolio Timeline</div>
+
+  {% if not gantt_data.has_dates %}
+  <div style="font-size:12px;color:var(--warning,#d97706);margin-bottom:10px">
+    No anchor dates set on any deal — showing relative durations only.
+  </div>
+  {% endif %}
+
+  <div class="g2-wrap" style="margin-bottom:24px">
+    <!-- Time axis -->
+    <div class="g2-axis">
+      <div class="g2-axis-spacer"></div>
+      <div class="g2-axis-track">
+        <div class="g2-years">
+          {% for ys in gantt_data.year_spans %}
+          <div class="g2-year-span" style="left:{{ ys.left_pct }}%;width:{{ ys.width_pct }}%">{{ ys.label }}</div>
+          {% endfor %}
+        </div>
+        <div class="g2-months">
+          {% for tick in gantt_data.month_ticks %}
+          <div class="g2-month{% if tick.is_year_start %} g2-month-year{% endif %}" style="left:{{ tick.left_pct }}%">{{ tick.label }}</div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <!-- Vertical grid lines -->
+    <div class="g2-vlines">
+      {% for tick in gantt_data.month_ticks %}
+      <div class="g2-vline{% if tick.is_year_start %} g2-vline-year{% endif %}" style="left:{{ tick.left_pct }}%"></div>
+      {% endfor %}
+    </div>
+    <!-- Rows -->
+    {% for row in gantt_data.rows %}
+    {% if row.type == "project_header" %}
+    <div class="g2-project-hdr">
+      <div class="g2-project-hdr-name" title="{{ row.name }}">{{ row.name }}</div>
+      <div class="g2-project-hdr-line"></div>
+    </div>
+    {% else %}
+    <div class="g2-row">
+      <div class="g2-label" title="{{ row.label }}">{{ row.label }}</div>
+      <div class="g2-track">
+        <div class="g2-bar {{ row.color_class }}"
+             style="left:{{ row.left_pct }}%;width:{{ row.width_pct }}%;{% if row.is_truncated %}border-radius:3px 0 0 3px{% endif %}"
+             title="{{ row.label }}{% if row.start_fmt %} · {{ row.start_fmt }}{% if row.end_fmt %} → {{ row.end_fmt }}{% endif %}{% if row.is_truncated %} ({{ (row.duration_days / 30.4) | round(0) | int }}mo, display capped){% endif %}{% endif %}">
+          {% if row.width_pct > 5 %}{{ row.label }}{% endif %}
+          {% if row.is_truncated %}<div style="position:absolute;right:0;top:0;bottom:0;width:10%;background:linear-gradient(to right,rgba(255,255,255,0) 0%,rgba(255,255,255,0.7) 100%)"></div>{% endif %}
+        </div>
+        {% if row.is_truncated and row.end_fmt %}
+        <span style="position:absolute;left:calc({{ row.left_pct }}% + {{ row.width_pct }}% + 3px);font-size:9px;color:var(--text-muted);white-space:nowrap;top:50%;transform:translateY(-50%)">→ {{ row.end_fmt }}</span>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+
+  {% else %}
+  <div style="background:var(--surface);border:1px dashed var(--border);border-radius:8px;padding:24px;text-align:center;margin-bottom:24px;color:var(--text-muted);font-size:13px">
+    Timeline will appear here once deals have milestone dates configured.
+  </div>
+  {% endif %}
+
+  {# ── Deal table ── #}
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+    <div class="section-title" style="margin:0">Deals ({{ deal_rows | length }})</div>
+  </div>
+
+  {% if deal_rows %}
+  <table class="data-table" style="width:100%">
+    <thead>
+      <tr>
+        <th>Opportunity</th>
+        <th>Model</th>
+        <th class="col-right">NOI</th>
+        <th class="col-right">IRR</th>
+        <th class="col-right">Equity</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in deal_rows %}
+      <tr>
+        <td>
+          <a href="/deals?q={{ r.opportunity_name | urlencode }}" style="font-weight:600;color:var(--text);text-decoration:none">
+            {{ r.opportunity_name }}
+          </a>
+        </td>
+        <td>
+          {% if r.scenario_id %}
+          <a href="/models/{{ r.scenario_id }}/builder" style="font-size:12px;color:var(--text-muted);text-decoration:none">
+            {{ r.scenario_name or "—" }} →
+          </a>
+          {% else %}<span class="text-muted">—</span>{% endif %}
+        </td>
+        <td class="col-right text-mono">{{ r.noi | currency }}</td>
+        <td class="col-right {% if r.irr %}irr-value{% else %}col-muted{% endif %}">{{ r.irr | pct }}</td>
+        <td class="col-right text-mono">{{ r.equity_required | currency }}</td>
+        <td>
+          <form method="post" action="/ui/portfolios/{{ portfolio_id }}/remove-deal" style="display:inline">
+            <input type="hidden" name="opportunity_id" value="{{ r.opportunity_id }}">
+            <button type="submit" class="btn btn-ghost btn-sm"
+                    onclick="return confirm('Remove this deal from the portfolio?')">Remove</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty-panel" style="text-align:center;padding:48px 24px;color:var(--text-muted)">
+    <div style="font-size:32px;margin-bottom:8px">🏠</div>
+    <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px">No deals yet</div>
+    <div style="font-size:13px;margin-bottom:16px">Add deals to this portfolio to start comparing them.</div>
+    <button class="btn btn-primary" onclick="openDrawer('add-deal-drawer')">+ Add Deal</button>
+  </div>
+  {% endif %}
+
+</div>
+
+<!-- Add Deal drawer -->
+<div class="drawer-overlay" id="add-deal-drawer" style="display:none">
+  <div class="drawer">
+    <div class="drawer-header">
+      <div>
+        <div class="drawer-title">Add Deal to Portfolio</div>
+        <div class="text-small text-muted">Search by deal name</div>
+      </div>
+      <span class="drawer-close" onclick="closeDrawer('add-deal-drawer')">×</span>
+    </div>
+    <div class="drawer-body">
+      <form method="post" action="/ui/portfolios/{{ portfolio_id }}/add-deal"
+            style="display:flex;flex-direction:column;gap:14px">
+        <input type="hidden" name="deal_id" id="deal-id-input">
+        <div style="position:relative">
+          <label class="field-label">Deal Name</label>
+          <input class="filter-input" style="width:100%;margin-top:4px" type="text"
+                 id="deal-search-display"
+                 placeholder="Start typing to search…"
+                 autocomplete="off"
+                 hx-get="/ui/deals/search"
+                 hx-trigger="keyup changed delay:250ms"
+                 hx-target="#deal-search-results"
+                 hx-include="[name='q_deal']"
+                 oninput="this.form.querySelector('[name=q_deal]').value=this.value"
+                 >
+          <input type="hidden" name="q_deal" value="">
+          <ul id="deal-search-results"
+              style="position:absolute;z-index:200;background:var(--surface);border:1px solid var(--border);border-radius:6px;width:100%;list-style:none;padding:0;margin:2px 0;max-height:220px;overflow-y:auto;box-shadow:0 4px 16px rgba(0,0,0,.12)">
+          </ul>
+        </div>
+        <div style="font-size:11px;color:var(--text-muted)">
+          Select a deal from the dropdown, then click Add.
+        </div>
+        <div style="display:flex;gap:8px;margin-top:6px">
+          <button type="submit" class="btn btn-primary"
+                  onclick="if(!document.getElementById('deal-id-input').value){alert('Please select a deal first.');return false}">
+            Add Deal
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="closeDrawer('add-deal-drawer')">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

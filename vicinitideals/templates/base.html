@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Viciniti Deals{% endblock %}</title>
+<link rel="stylesheet" href="/static/app.css">
+<script src="https://unpkg.com/htmx.org@1.9.12" defer></script>
+<style>
+.settings-menu-wrap { position: relative; }
+.settings-btn {
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+}
+.settings-popup {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 16px rgba(0,0,0,.25);
+  z-index: 200;
+  overflow: hidden;
+}
+.settings-popup-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  font-size: 13px;
+  color: var(--text);
+  text-decoration: none;
+  transition: background .12s;
+}
+.settings-popup-item:hover { background: var(--bg); }
+</style>
+{% block head %}{% endblock %}
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-logo"><div class="brand">Viciniti <span>Deals</span></div></div>
+
+  <nav class="nav">
+    <a href="/deals" class="nav-item {% if active_nav == 'deals' %}active{% endif %}">
+      <span class="nav-icon">🏠</span> Deals
+    </a>
+    <a href="/opportunities" class="nav-item {% if active_nav == 'opportunities' %}active{% endif %}">
+      <span class="nav-icon">🏢</span> Opportunities
+    </a>
+    <a href="/parcels" class="nav-item {% if active_nav == 'parcels' %}active{% endif %}">
+      <span class="nav-icon">📐</span> Parcels
+    </a>
+    <a href="/listings" class="nav-item {% if active_nav == 'listings' %}active{% endif %}">
+      <span class="nav-icon">📋</span> Listings
+    </a>
+    <a href="/brokers" class="nav-item {% if active_nav == 'brokers' %}active{% endif %}">
+      <span class="nav-icon">👤</span> Brokers
+    </a>
+    <a href="/portfolios" class="nav-item {% if active_nav == 'portfolios' %}active{% endif %}">
+      <span class="nav-icon">📊</span> Portfolios
+    </a>
+  </nav>
+
+  <div class="sidebar-bottom">
+    {% set cleanup_count = (dedup_count or 0) + (address_issues_count or 0) %}
+    {% if cleanup_count > 0 %}
+    <a href="/dedup" class="nav-item {% if active_nav == 'dedup' %}active{% endif %}" style="color:var(--warning)">
+      <span class="nav-icon">⚠</span> Data Cleanup
+      <span class="nav-badge nav-badge-alert">{{ cleanup_count if cleanup_count <= 99 else "99+" }}</span>
+    </a>
+    {% endif %}
+    {% if user_name == 'Stephen Ketch' %}
+    <div class="settings-menu-wrap" id="settingsMenuWrap">
+      <div class="settings-popup" id="settingsPopup" style="display:none">
+        <a href="/tools/zone-painter" class="settings-popup-item">
+          <span>🗺</span> Zone Painter
+        </a>
+        <a href="/settings/scraping-services" class="settings-popup-item">
+          <span>🛰</span> Scraping Services
+        </a>
+        <a href="/settings/data-sources" class="settings-popup-item">
+          <span>🧭</span> Data Sources
+        </a>
+      </div>
+      <button type="button" class="nav-item nav-item-muted settings-btn" onclick="toggleSettingsMenu()" id="settingsBtn">
+        <span class="nav-icon">⚙</span> Settings <span id="app-version" style="opacity:.45;font-size:10px"></span>
+      </button>
+    </div>
+    {% else %}
+    <a href="#" class="nav-item nav-item-muted">
+      <span class="nav-icon">⚙</span> Settings <span id="app-version" style="opacity:.45;font-size:10px"></span>
+    </a>
+    {% endif %}
+    <div class="sidebar-user">
+      <div class="user-avatar" style="background:{{ user_color }}">{{ user_initials }}</div>
+      <div>
+        <div class="user-name">{{ user_name }}</div>
+        <a href="/splash" class="user-switch">switch user</a>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<div class="main">
+  {% block content %}{% endblock %}
+</div>
+
+<!-- Deploy toast -->
+<div id="deploy-toast" style="display:none;position:fixed;bottom:24px;right:24px;z-index:9999;
+  background:var(--accent);color:#fff;padding:12px 18px;border-radius:var(--radius);
+  box-shadow:0 4px 16px rgba(0,0,0,.3);font-size:13px;font-weight:600;
+  align-items:center;gap:12px">
+  <span style="cursor:pointer" onclick="location.reload()">🚀 Update deployed — click to reload</span>
+  <span onclick="document.getElementById('deploy-toast').style.display='none'"
+        style="cursor:pointer;opacity:.6;font-size:16px;line-height:1;font-weight:400"
+        title="Dismiss">×</span>
+</div>
+
+<script>
+(function() {
+  var startedAt = null;
+  function poll() {
+    fetch('/health').then(function(r) { return r.json(); }).then(function(d) {
+      var data = d && d.detail;
+      if (!data) return;
+      // Populate version label once
+      var vEl = document.getElementById('app-version');
+      if (vEl && data.version && !vEl.textContent) vEl.textContent = '(v' + data.version + ')';
+      // Deploy toast
+      var sa = data.started_at;
+      if (sa === undefined) return;
+      if (startedAt === null) { startedAt = sa; return; }
+      if (sa !== startedAt) {
+        document.getElementById('deploy-toast').style.display = 'flex';
+      }
+    }).catch(function(){});
+  }
+  setInterval(poll, 10000);
+  poll();
+})();
+</script>
+
+<script>
+function openDrawer(overlayId) {
+  document.getElementById(overlayId).style.display = 'flex';
+}
+function closeDrawer(overlayId) {
+  document.getElementById(overlayId).style.display = 'none';
+}
+// Drawer overlay: close only when the click STARTED on the overlay (not dragged from inside).
+// Tracks pointerdown origin so text-selection drags don't accidentally close the drawer.
+var _drawerPdTarget = null;
+document.addEventListener('pointerdown', function(e) {
+  _drawerPdTarget = e.target;
+});
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('drawer-overlay')) {
+    if (_drawerPdTarget !== e.target) return;
+    closeDrawer(e.target.id);
+  }
+  if (e.target.id === 'source-wizard-overlay') {
+    if (_drawerPdTarget !== e.target) return;
+    if (typeof closeSourceWizard === 'function') closeSourceWizard();
+  }
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.drawer-overlay').forEach(function(d) {
+      d.style.display = 'none';
+    });
+    document.querySelectorAll('.col-picker-panel.open').forEach(function(p) {
+      p.classList.remove('open');
+    });
+    var sw = document.getElementById('source-wizard-overlay');
+    if (sw && sw.style.display !== 'none') {
+      if (typeof closeSourceWizard === 'function') closeSourceWizard();
+    }
+  }
+});
+
+// ── Settings popup ──
+function toggleSettingsMenu() {
+  var popup = document.getElementById('settingsPopup');
+  if (!popup) return;
+  var isOpen = popup.style.display !== 'none';
+  popup.style.display = isOpen ? 'none' : 'block';
+}
+document.addEventListener('click', function(e) {
+  var btn = document.getElementById('settingsBtn');
+  var popup = document.getElementById('settingsPopup');
+  if (!popup || popup.style.display === 'none') return;
+  if (btn && (btn === e.target || btn.contains(e.target))) return;
+  popup.style.display = 'none';
+});
+
+// ── Table sorting ──
+(function() {
+  function parseVal(text) {
+    var t = (text || '').replace(/\s+/g, ' ').trim();
+    if (!t || t === '—' || t === '--') return null;
+    var stripped = t.replace(/[$,]/g, '').replace(/%$/, '').trim();
+    var n = parseFloat(stripped);
+    return isNaN(n) ? t.toLowerCase() : n;
+  }
+
+  function doSort(table, th, dir) {
+    var ths = Array.from(table.querySelectorAll('thead tr:first-child th'));
+    var colIdx = ths.indexOf(th);
+    if (colIdx < 0) return;
+    table.querySelectorAll('tbody').forEach(function(tbody) {
+      var rows = Array.from(tbody.querySelectorAll('tr'));
+      rows.sort(function(a, b) {
+        var av = parseVal(a.cells[colIdx] ? a.cells[colIdx].textContent : '');
+        var bv = parseVal(b.cells[colIdx] ? b.cells[colIdx].textContent : '');
+        if (av === null && bv === null) return 0;
+        if (av === null) return dir === 'asc' ? -1 : 1;
+        if (bv === null) return dir === 'asc' ? 1 : -1;
+        if (typeof av === 'number' && typeof bv !== 'number') return dir === 'asc' ? -1 : 1;
+        if (typeof av !== 'number' && typeof bv === 'number') return dir === 'asc' ? 1 : -1;
+        if (av < bv) return dir === 'asc' ? -1 : 1;
+        if (av > bv) return dir === 'asc' ? 1 : -1;
+        return 0;
+      });
+      rows.forEach(function(r) { tbody.appendChild(r); });
+    });
+    table.querySelectorAll('thead th[data-col] .sort-arrow').forEach(function(s) { s.textContent = '▼'; });
+    table.querySelectorAll('thead th[data-col]').forEach(function(h) { h.classList.remove('sorted'); });
+    th.classList.add('sorted');
+    var arrow = th.querySelector('.sort-arrow');
+    if (arrow) arrow.textContent = dir === 'asc' ? '▲' : '▼';
+    table._sortTh = th;
+    table._sortDir = dir;
+  }
+
+  function initTable(table) {
+    table.querySelectorAll('thead th[data-col]').forEach(function(th) {
+      if (!th.classList.contains('sortable')) th.classList.add('sortable');
+      if (!th.querySelector('.sort-arrow')) {
+        var sp = document.createElement('span');
+        sp.className = 'sort-arrow';
+        sp.textContent = '▼';
+        th.appendChild(document.createTextNode('\u00a0'));
+        th.appendChild(sp);
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('table.data-table').forEach(initTable);
+  });
+
+  document.addEventListener('click', function(e) {
+    var th = e.target.closest('th[data-col]');
+    if (!th) return;
+    var table = th.closest('table.data-table');
+    if (!table) return;
+    var dir = (table._sortTh === th && table._sortDir === 'asc') ? 'desc' : 'asc';
+    doSort(table, th, dir);
+  });
+
+  document.addEventListener('htmx:afterSwap', function(e) {
+    var target = e.detail && e.detail.target;
+    if (!target) return;
+    var table = target.closest ? target.closest('table.data-table') : null;
+    if (table && table._sortTh) doSort(table, table._sortTh, table._sortDir);
+  });
+})();
+
+// ── Column picker ──
+(function() {
+  function getHidden(tableKey) {
+    try { return JSON.parse(localStorage.getItem('colhide_' + tableKey) || '[]'); }
+    catch(e) { return []; }
+  }
+  function saveHidden(tableKey, arr) {
+    localStorage.setItem('colhide_' + tableKey, JSON.stringify(arr));
+  }
+  function getStyleEl(tableKey) {
+    var id = 'col-hide-' + tableKey;
+    var el = document.getElementById(id);
+    if (!el) { el = document.createElement('style'); el.id = id; document.head.appendChild(el); }
+    return el;
+  }
+  function applyHidden(tableKey) {
+    var btn = document.querySelector('[data-col-picker][data-table-key="' + tableKey + '"]');
+    if (!btn) return;
+    var tbody = document.getElementById(btn.dataset.tableId);
+    var table = tbody ? tbody.closest('table') : null;
+    if (!table) return;
+    var hidden = getHidden(tableKey);
+    var ths = Array.from(table.querySelectorAll('thead tr th'));
+    var rules = '';
+    table.querySelectorAll('thead th[data-col]').forEach(function(th) {
+      if (hidden.indexOf(th.dataset.col) !== -1) {
+        var n = ths.indexOf(th) + 1;
+        var sel = 'table[data-table-key="' + tableKey + '"]';
+        rules += sel + ' thead th:nth-child(' + n + '){display:none}\n';
+        rules += sel + ' tbody td:nth-child(' + n + '){display:none}\n';
+      }
+    });
+    getStyleEl(tableKey).textContent = rules;
+  }
+  function buildPanel(btn) {
+    var tableKey = btn.dataset.tableKey;
+    var tbody = document.getElementById(btn.dataset.tableId);
+    var table = tbody ? tbody.closest('table') : null;
+    if (!table) return null;
+    var hidden = getHidden(tableKey);
+    var panel = document.createElement('div');
+    panel.className = 'col-picker-panel';
+    table.querySelectorAll('thead th[data-col]').forEach(function(th) {
+      var colKey = th.dataset.col;
+      var label = th.textContent.replace(/[▲▼]/g, '').trim();
+      var item = document.createElement('label');
+      item.className = 'col-picker-item';
+      var cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.checked = hidden.indexOf(colKey) === -1;
+      cb.addEventListener('change', function() {
+        var h = getHidden(tableKey);
+        if (cb.checked) { h = h.filter(function(k) { return k !== colKey; }); }
+        else if (h.indexOf(colKey) === -1) { h.push(colKey); }
+        saveHidden(tableKey, h);
+        applyHidden(tableKey);
+      });
+      item.appendChild(cb);
+      item.appendChild(document.createTextNode(label));
+      panel.appendChild(item);
+    });
+    return panel;
+  }
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('[data-col-picker]');
+    if (btn) {
+      e.stopPropagation();
+      var wrap = btn.closest('.col-picker-wrap');
+      var panel = wrap.querySelector('.col-picker-panel');
+      if (!panel) { panel = buildPanel(btn); if (panel) wrap.appendChild(panel); }
+      if (panel) {
+        if (!panel.classList.contains('open')) {
+          var r = btn.getBoundingClientRect();
+          panel.style.top = (r.bottom + 4) + 'px';
+          panel.style.right = (window.innerWidth - r.right) + 'px';
+        }
+        panel.classList.toggle('open');
+      }
+      return;
+    }
+    document.querySelectorAll('.col-picker-panel.open').forEach(function(p) {
+      p.classList.remove('open');
+    });
+  });
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-col-picker]').forEach(function(btn) {
+      var tableKey = btn.dataset.tableKey;
+      if (localStorage.getItem('colhide_' + tableKey) === null) {
+        var tbody = document.getElementById(btn.dataset.tableId);
+        var table = tbody ? tbody.closest('table') : null;
+        if (table) {
+          var defaults = [];
+          table.querySelectorAll('thead th[data-col][data-hidden]').forEach(function(th) {
+            defaults.push(th.dataset.col);
+          });
+          if (defaults.length) saveHidden(tableKey, defaults);
+        }
+      }
+      applyHidden(tableKey);
+    });
+  });
+})();
+</script>
+
+<!-- ══ Parcel Map Modal ══ -->
+<div id="parcel-map-modal" style="display:none;position:fixed;inset:0;z-index:8900;
+     flex-direction:column;background:var(--bg)">
+
+  <!-- Header -->
+  <div style="display:flex;align-items:center;justify-content:space-between;
+              padding:10px 16px;border-bottom:1px solid var(--border);
+              background:var(--surface);flex-shrink:0">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="font-size:15px;font-weight:700" id="pmap-title">Parcel Map</span>
+      <span id="pmap-jurisdiction" style="font-size:11px;color:var(--text-muted)"></span>
+    </div>
+    <button onclick="closeParcelMap()"
+            style="background:none;border:1px solid var(--border);border-radius:4px;
+                   color:var(--text-muted);padding:4px 10px;cursor:pointer;font-size:13px">
+      ✕ Close
+    </button>
+  </div>
+
+  <!-- Body -->
+  <div style="display:flex;flex:1;overflow:hidden">
+
+    <!-- Sidebar -->
+    <div id="pmap-sidebar" style="width:260px;flex-shrink:0;overflow-y:auto;padding:14px 16px;
+         border-right:1px solid var(--border);background:var(--surface);font-size:13px">
+      <div id="pmap-sidebar-inner" style="color:var(--text-muted)">Loading…</div>
+    </div>
+
+    <!-- Map -->
+    <div id="pmap-container" style="flex:1;position:relative">
+      <div id="pmap-loading" style="position:absolute;inset:0;display:flex;align-items:center;
+           justify-content:center;background:var(--bg);z-index:10;font-size:13px;color:var(--text-muted)">
+        Loading map…
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function() {
+  var _mapInstance = null;
+  var _parcelLayers = {};
+  var _overlayLayers = {};
+  var _currentData = null;
+  var _leafletLoaded = false;
+
+  window.openParcelMap = function(contextType, contextId, title) {
+    var modal = document.getElementById('parcel-map-modal');
+    modal.style.display = 'flex';
+    document.getElementById('pmap-title').textContent = title || 'Parcel Map';
+    document.getElementById('pmap-jurisdiction').textContent = '';
+    document.getElementById('pmap-sidebar-inner').innerHTML = '<div style="color:var(--text-muted)">Loading…</div>';
+    document.getElementById('pmap-loading').style.display = 'flex';
+
+    if (!_leafletLoaded || !window.L) {
+      _loadLeaflet(function() { _fetchAndRender(contextType, contextId); });
+    } else {
+      _fetchAndRender(contextType, contextId);
+    }
+  };
+
+  window.closeParcelMap = function() {
+    document.getElementById('parcel-map-modal').style.display = 'none';
+  };
+
+  function _loadLeaflet(cb) {
+    if (window.L) { _leafletLoaded = true; cb(); return; }
+    var css = document.createElement('link');
+    css.rel = 'stylesheet';
+    css.href = '/static/vendor/leaflet.css';
+    document.head.appendChild(css);
+    var js = document.createElement('script');
+    js.src = '/static/vendor/leaflet.js';
+    js.onload = function() { _leafletLoaded = true; cb(); };
+    js.onerror = function() { console.error('Failed to load Leaflet'); };
+    document.head.appendChild(js);
+  }
+
+  function _fetchAndRender(contextType, contextId) {
+    var url = '/ui/map/context?' + contextType + '_id=' + contextId;
+    fetch(url)
+      .then(function(r) { return r.json(); })
+      .then(function(data) { _renderMap(data); })
+      .catch(function(err) {
+        document.getElementById('pmap-sidebar-inner').innerHTML =
+          '<div style="color:var(--danger,#ef4444)">Failed to load map data.</div>';
+        document.getElementById('pmap-loading').style.display = 'none';
+      });
+  }
+
+  function _renderMap(data) {
+    _currentData = data;
+    document.getElementById('pmap-loading').style.display = 'none';
+
+    if (data.jurisdiction) {
+      document.getElementById('pmap-jurisdiction').textContent = '(' + data.jurisdiction + ')';
+    }
+
+    // Init or reset map
+    var container = document.getElementById('pmap-container');
+    if (_mapInstance) {
+      _mapInstance.remove();
+      _mapInstance = null;
+    }
+    _parcelLayers = {};
+    _overlayLayers = {};
+
+    var map = L.map(container, {zoomControl: true});
+    _mapInstance = map;
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      maxZoom: 20,
+    }).addTo(map);
+
+    // Render parcel polygons
+    for (var i = 0; i < (data.parcels || []).length; i++) {
+      var p = data.parcels[i];
+      if (p.geojson) {
+        var layer = L.geoJSON({type: 'Feature', geometry: p.geojson}, {
+          style: {color: '#f97316', weight: 3, fillColor: '#fed7aa', fillOpacity: 0.45}
+        }).addTo(map);
+        _parcelLayers[p.id] = layer;
+      }
+    }
+
+    // Render overlay layers
+    for (var key in (data.overlays || {})) {
+      var ol = data.overlays[key];
+      if (ol.features && ol.features.length) {
+        var fc = {type: 'FeatureCollection', features: ol.features};
+        var olayer = L.geoJSON(fc, {
+          style: {color: ol.color, weight: 1.5, fillColor: ol.color, fillOpacity: 0.2}
+        });
+        if (ol.default_on) olayer.addTo(map);
+        _overlayLayers[key] = olayer;
+      }
+    }
+
+    // Fit bounds
+    if (data.bbox && data.bbox.length === 2) {
+      map.fitBounds(data.bbox);
+    } else if (data.centroid) {
+      map.setView(data.centroid, 16);
+    } else {
+      map.setView([45.52, -122.47], 12); // Portland default
+    }
+
+    _buildSidebar(data, map);
+  }
+
+  function _buildSidebar(data, map) {
+    var html = '';
+
+    // Parcel info
+    var parcels = data.parcels || [];
+    if (parcels.length) {
+      html += '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:8px">Parcels</div>';
+      for (var i = 0; i < parcels.length; i++) {
+        var p = parcels[i];
+        html += '<div style="margin-bottom:10px;padding:8px 10px;background:var(--bg);border:1px solid var(--border);border-radius:6px">';
+        html += '<div style="font-weight:600;font-size:12px">' + _esc(p.apn || '—') + '</div>';
+        if (p.address) html += '<div style="color:var(--text-muted);font-size:11px;margin-top:2px">' + _esc(p.address) + '</div>';
+        var meta = [];
+        if (p.lot_sqft) meta.push(_fmt(p.lot_sqft) + ' sf');
+        if (p.zoning) meta.push(p.zoning);
+        if (meta.length) html += '<div style="font-size:11px;color:var(--text-muted);margin-top:3px">' + meta.join(' · ') + '</div>';
+        if (!p.has_geometry) html += '<div style="font-size:11px;color:var(--warning,#f59e0b);margin-top:4px">⚠ No geometry stored</div>';
+        html += '</div>';
+      }
+    }
+
+    // Layer toggles + assessment pills
+    var overlays = data.overlays || {};
+    var layerKeys = Object.keys(overlays);
+    if (layerKeys.length) {
+      html += '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin:12px 0 8px">Overlays</div>';
+      for (var ki = 0; ki < layerKeys.length; ki++) {
+        var k = layerKeys[ki];
+        var ol = overlays[k];
+        var hasFeatures = ol.features && ol.features.length > 0;
+        var isRef = !!ol.reference;
+        var checkId = 'pmap-toggle-' + k;
+        html += '<label style="display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;cursor:pointer">';
+        html += '<input type="checkbox" id="' + checkId + '" data-layer-key="' + k + '"'
+          + ((ol.default_on && hasFeatures) ? ' checked' : '')
+          + (!hasFeatures && !isRef ? ' disabled' : '')
+          + ' style="margin-top:2px;cursor:pointer" onchange="window._pmapToggleLayer(this)">';
+        html += '<div style="flex:1">';
+        html += '<div style="display:flex;align-items:center;gap:6px">';
+        html += '<span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:' + ol.color + ';flex-shrink:0"></span>';
+        html += '<span style="font-size:12px">' + _esc(ol.label) + '</span>';
+        if (!hasFeatures && !isRef) html += '<span style="font-size:10px;color:var(--text-muted)">— no data</span>';
+        if (!hasFeatures && isRef) html += '<span style="font-size:10px;color:var(--text-muted)">— none nearby</span>';
+        html += '</div>';
+        // Assessment pills
+        for (var pi = 0; pi < parcels.length; pi++) {
+          var pid = parcels[pi].id;
+          var assess = (data.assessments && data.assessments[pid] && data.assessments[pid][k]);
+          if (assess) {
+            var pillColor = assess.status === 'definitely_yes' ? '#7f1d1d'
+                          : assess.status === 'maybe' ? '#78350f'
+                          : '#14532d';
+            var pillLabel = assess.status === 'definitely_yes' ? 'Yes'
+                          : assess.status === 'maybe' ? 'Maybe'
+                          : 'No';
+            var pct = assess.overlap_pct != null ? ' (' + assess.overlap_pct + '%)' : '';
+            html += '<div style="margin-top:3px;font-size:11px">';
+            html += '<span style="display:inline-block;padding:2px 6px;border-radius:999px;background:' + pillColor + ';color:#fff;font-size:10px">' + pillLabel + pct + '</span>';
+            if (parcels.length > 1) html += ' <span style="color:var(--text-muted)">' + _esc(parcels[pi].apn || '') + '</span>';
+            html += '</div>';
+          }
+        }
+        html += '</div></label>';
+      }
+    } else if (parcels.length && !parcels[0].has_geometry) {
+      html += '<div style="color:var(--text-muted);font-size:12px;margin-top:8px">Overlay data requires parcel geometry. <a href="/parcels" style="color:var(--accent)">Pull GIS data</a> to enable overlays.</div>';
+    } else if (parcels.length === 0) {
+      html += '<div style="color:var(--text-muted);font-size:12px">No parcels found for this context.</div>';
+    }
+
+    document.getElementById('pmap-sidebar-inner').innerHTML = html;
+  }
+
+  window._pmapToggleLayer = function(checkbox) {
+    if (!_mapInstance) return;
+    var key = checkbox.dataset.layerKey;
+    var layer = _overlayLayers[key];
+    if (!layer) return;
+    if (checkbox.checked) {
+      _mapInstance.addLayer(layer);
+    } else {
+      _mapInstance.removeLayer(layer);
+    }
+  };
+
+  function _esc(s) {
+    return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function _fmt(n) {
+    return Number(n).toLocaleString('en-US', {maximumFractionDigits: 0});
+  }
+
+  // Close on Escape (piggyback on existing handler)
+  var _origKeydown = document.onkeydown;
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var modal = document.getElementById('parcel-map-modal');
+      if (modal && modal.style.display !== 'none') closeParcelMap();
+    }
+  });
+})();
+</script>
+</body>
+</html>

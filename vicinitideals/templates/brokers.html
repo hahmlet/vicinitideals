@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}Brokers — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div class="topbar">
+</div>
+
+<div class="content">
+  <form id="broker-filters"
+        hx-get="/ui/brokers/rows"
+        hx-trigger="input delay:300ms, change"
+        hx-target="#brokers-tbody"
+        hx-swap="innerHTML">
+    <div class="toolbar">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input class="search-input" type="search" name="q" value="{{ q }}" placeholder="Search by name or company…">
+      </div>
+      <input class="filter-input" type="search" name="company" placeholder="Company…" style="width:150px" value="{{ company }}">
+      <select class="filter-select" name="listings_op" style="width:100px">
+        <option value="" {% if not listings_op %}selected{% endif %}>Listings</option>
+        <option value="gte" {% if listings_op == 'gte' %}selected{% endif %}>≥</option>
+        <option value="lte" {% if listings_op == 'lte' %}selected{% endif %}>≤</option>
+        <option value="eq" {% if listings_op == 'eq' %}selected{% endif %}>=</option>
+      </select>
+      <input class="filter-input" type="number" name="listings_val" placeholder="count" style="width:70px"
+             value="{{ listings_val }}" min="0">
+    </div>
+  </form>
+
+  <div class="table-wrap">
+    <div class="col-picker-wrap">
+      <button class="btn btn-secondary btn-sm" data-col-picker data-table-id="brokers-tbody" data-table-key="brokers">⚙ Columns</button>
+    </div>
+    <table class="data-table" data-table-key="brokers">
+      <thead>
+        <tr>
+          <th class="sortable sorted" data-col="name">Name <span class="sort-arrow">▲</span></th>
+          <th data-col="company">Company</th>
+          <th data-col="email">Email</th>
+          <th data-col="phone">Phone</th>
+          <th class="sortable col-right" data-col="listings">Listings</th>
+          <th data-col="license">License</th>
+          <th class="col-right" data-col="assets" data-hidden>Assets</th>
+        </tr>
+      </thead>
+      <tbody id="brokers-tbody">
+        {% include "partials/brokers_rows.html" %}
+      </tbody>
+    </table>
+    <div class="table-footer">
+      <span>Showing {{ brokers | length }} of {{ total_count }} brokers</span>
+    </div>
+  </div>
+</div>
+
+<!-- Broker detail drawer -->
+<div class="drawer-overlay" id="broker-drawer" style="display:none">
+  <div class="drawer">
+    <div class="drawer-header">
+      <div>
+        <div class="drawer-title" id="broker-drawer-title">Broker</div>
+        <div class="text-small text-muted" id="broker-drawer-sub"></div>
+      </div>
+      <span class="drawer-close" onclick="closeDrawer('broker-drawer')">×</span>
+    </div>
+    <div class="drawer-body" id="broker-drawer-body">
+      <div class="text-muted text-small">Loading…</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function openBroker(id, name, company) {
+  document.getElementById('broker-drawer-title').textContent = name;
+  document.getElementById('broker-drawer-sub').textContent = company || '';
+  htmx.ajax('GET', '/ui/brokers/' + id + '/detail', {target: '#broker-drawer-body', swap: 'innerHTML'});
+  openDrawer('broker-drawer');
+}
+</script>
+{% endblock %}

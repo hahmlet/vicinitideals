@@ -1,0 +1,1 @@
+# vicinitideals package

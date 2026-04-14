@@ -1,0 +1,63 @@
+{% for p in parcels %}
+<tr onclick="openParcel('{{ p.id }}', '{{ p.apn }}', '{{ p.address }}')">
+  <td class="text-mono">{{ p.apn }}</td>
+  <td>
+    <div style="font-weight:600">{{ p.street or p.address }}</div>
+    <div class="text-small text-muted">{{ p.city_state_zip }}</div>
+  </td>
+  <td class="text-small">{{ p.jurisdiction or "—" }}</td>
+  <td>
+    {% if p.zoning_code %}
+    <span class="badge badge-purple">{{ p.zoning_code }}</span>
+    {% else %}—{% endif %}
+  </td>
+  <td class="text-small text-muted">{{ p.zoning_description or "—" }}</td>
+  <td class="text-small text-muted">{{ p.state_class_label or p.state_class or "—" }}</td>
+  <td class="text-small text-muted">{{ p.current_use or "—" }}</td>
+  <td class="col-right text-mono">{{ "%.2f"|format(p.gis_acres) if p.gis_acres else "—" }}</td>
+  <td class="col-right text-mono">{{ p.assessed_value_land | currency if p.assessed_value_land else "—" }}</td>
+  <td class="col-right text-mono">{{ p.assessed_value_improvements | currency if p.assessed_value_improvements else "—" }}</td>
+  <td>{{ p.year_built or "—" }}</td>
+</tr>
+{% else %}
+<tr><td colspan="11">
+  <div class="empty-state">
+    <div class="empty-icon">📐</div>
+    <div class="empty-title">No parcels found</div>
+  </div>
+</td></tr>
+{% endfor %}
+{% if filtered_count is defined %}
+{% set prev_offset = [offset - page_size, 0] | max %}
+{% set next_offset = offset + page_size %}
+{% set all_filters %}q={{ q }}&jurisdiction={{ jurisdiction }}&use_group={{ use_group }}&min_acres={{ min_acres }}&max_acres={{ max_acres }}&min_year={{ min_year }}&max_year={{ max_year }}{% for z in zoning %}&zoning={{ z }}{% endfor %}{% endset %}
+<tr style="background:transparent">
+  <td colspan="11" style="padding:8px 12px;border-top:1px solid var(--border)">
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-muted)">
+      <span>
+        Showing {{ offset + 1 }}–{{ offset + parcels | length }} of
+        {% if filtered_count != total_count %}{{ filtered_count | number_fmt }} filtered ({{ total_count | number_fmt }} total){% else %}{{ filtered_count | number_fmt }}{% endif %}
+        parcels
+      </span>
+      <span style="margin-left:auto;display:flex;gap:6px">
+        {% if offset > 0 %}
+        <button class="btn btn-secondary btn-sm"
+                hx-get="/parcels?{{ all_filters }}&offset={{ prev_offset }}"
+                hx-target="#parcels-tbody" hx-select="#parcels-tbody" hx-swap="outerHTML"
+                hx-push-url="true">
+          ← Prev
+        </button>
+        {% endif %}
+        {% if next_offset < filtered_count %}
+        <button class="btn btn-secondary btn-sm"
+                hx-get="/parcels?{{ all_filters }}&offset={{ next_offset }}"
+                hx-target="#parcels-tbody" hx-select="#parcels-tbody" hx-swap="outerHTML"
+                hx-push-url="true">
+          Next →
+        </button>
+        {% endif %}
+      </span>
+    </div>
+  </td>
+</tr>
+{% endif %}

@@ -1,0 +1,606 @@
+{% extends "base.html" %}
+{% block title %}{{ deal_name }} — Viciniti Deals{% endblock %}
+
+{% block head %}
+<style>
+.detail-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.detail-breadcrumb {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+.detail-breadcrumb a { color: var(--text-muted); text-decoration: none; }
+.detail-breadcrumb a:hover { color: var(--text); }
+.detail-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.detail-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+
+.detail-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  padding: 0 24px;
+}
+.detail-tab {
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.1s;
+}
+.detail-tab:hover { color: var(--text); }
+.detail-tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.detail-body { padding: 24px; }
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.info-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+.info-card-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+.info-card-value { font-size: 20px; font-weight: 700; color: var(--text); }
+.info-card-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+.model-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: border-color 0.1s;
+}
+.model-row:hover { border-color: var(--accent); }
+.model-row-active { border-color: var(--accent); background: var(--accent-soft, #eff6ff); }
+.model-name { font-weight: 600; font-size: 14px; }
+.model-meta { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.model-metrics { margin-left: auto; display: flex; gap: 24px; align-items: center; }
+.metric-pill { text-align: right; }
+.metric-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; }
+.metric-value { font-size: 14px; font-weight: 700; }
+.metric-irr { color: var(--success); }
+
+.parcel-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  background: var(--surface);
+  margin-bottom: 8px;
+}
+.parcel-card-apn { font-size: 11px; color: var(--text-muted); font-family: var(--font-mono, monospace); }
+.parcel-card-address { font-size: 14px; font-weight: 600; margin: 4px 0; }
+
+.empty-panel {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--text-muted);
+}
+.empty-panel-icon { font-size: 32px; margin-bottom: 8px; }
+.empty-panel-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+
+/* ── Gantt v2 ── */
+.g2-wrap { position: relative; overflow-x: auto; padding-bottom: 8px; min-width: 520px; }
+.g2-axis {
+  display: flex; border-bottom: 2px solid var(--border); margin-bottom: 4px;
+  background: var(--surface); position: relative; z-index: 2;
+}
+.g2-axis-spacer { width: 130px; flex-shrink: 0; }
+.g2-axis-track { flex: 1; position: relative; }
+.g2-years { position: relative; height: 24px; border-bottom: 1px solid var(--border); overflow: hidden; }
+.g2-year-span {
+  position: absolute; top: 0; bottom: 0; display: flex; align-items: center;
+  padding-left: 6px; font-size: 14px; font-weight: 700; color: var(--text);
+  border-left: 1px solid var(--border); white-space: nowrap; overflow: hidden; box-sizing: border-box;
+}
+.g2-months { position: relative; height: 20px; }
+.g2-month {
+  position: absolute; top: 0; font-size: 12px; color: var(--text-muted);
+  transform: translateX(-50%); line-height: 20px; white-space: nowrap; user-select: none;
+}
+.g2-month-year { color: var(--text); font-weight: 700; }
+.g2-vlines {
+  position: absolute; left: 130px; top: 0; right: 0; bottom: 0; pointer-events: none; z-index: 0;
+}
+.g2-vline { position: absolute; top: 0; bottom: 0; width: 1px; background: rgba(0,0,0,0.05); }
+.g2-vline-year { background: rgba(0,0,0,0.11); }
+.g2-project-hdr { display: flex; align-items: center; padding: 10px 0 4px 0; margin-top: 2px; }
+.g2-project-hdr-name {
+  width: 130px; flex-shrink: 0; font-size: 13px; font-weight: 700; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 8px; box-sizing: border-box;
+}
+.g2-project-hdr-line { flex: 1; height: 1px; background: var(--border); }
+.g2-row { display: flex; align-items: center; gap: 12px; margin-bottom: 5px; position: relative; z-index: 1; }
+.g2-label {
+  width: 130px; flex-shrink: 0; font-size: 14px; color: var(--text-muted);
+  text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  padding-left: 16px; box-sizing: border-box;
+}
+.g2-track { flex: 1; position: relative; height: 32px; }
+.g2-bar {
+  position: absolute; top: 3px; height: 26px; border-radius: 4px;
+  display: flex; align-items: center; padding: 0 8px;
+  font-size: 13px; font-weight: 600; color: #fff;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  transition: opacity 0.1s; cursor: default;
+}
+.g2-bar:hover { opacity: 0.85; }
+.gantt-phase-offer        { background: #7c3aed; }
+.gantt-phase-contract     { background: #db2777; }
+.gantt-phase-close        { background: #dc2626; }
+.gantt-phase-predev       { background: #d97706; }
+.gantt-phase-construction { background: #059669; }
+.gantt-phase-leaseup      { background: #0284c7; }
+.gantt-phase-stabilized   { background: #2563eb; }
+.gantt-phase-exit         { background: #374151; }
+.gantt-phase-other        { background: #6b7280; }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Header -->
+<div class="detail-header">
+  <div style="flex:1;min-width:0">
+    <div class="detail-breadcrumb">
+      <a href="/deals">Deals</a> / {{ deal_name }}
+    </div>
+    <div class="detail-title">
+      {{ deal_name }}
+      <span class="badge {{ status_badge }}" style="font-size:12px;font-weight:500">{{ status_display }}</span>
+    </div>
+  </div>
+  <div class="detail-actions">
+    {% if primary_model_id %}
+    <a href="/models/{{ primary_model_id }}/builder" class="btn btn-primary">Open Model Builder →</a>
+    {% else %}
+    <button class="btn btn-primary" onclick="openDrawer('new-model-drawer')">+ New Model</button>
+    {% endif %}
+    <button class="btn btn-secondary" onclick="openDrawer('edit-deal-drawer')">✏ Edit</button>
+    <a href="/deals/{{ deal_id }}/export/json" download="deal-{{ deal_id }}.json" class="btn btn-secondary">⬇ Export JSON</a>
+  </div>
+</div>
+
+<!-- Tab nav -->
+<div class="detail-tabs">
+  <a href="/deals/{{ deal_id }}?tab=overview"
+     class="detail-tab {% if active_tab == 'overview' %}active{% endif %}">Overview</a>
+  <a href="/deals/{{ deal_id }}?tab=models"
+     class="detail-tab {% if active_tab == 'models' %}active{% endif %}">
+    Financial Models
+    {% if models %}<span style="font-size:11px;margin-left:4px;color:var(--text-muted)">({{ models | length }})</span>{% endif %}
+  </a>
+  <a href="/deals/{{ deal_id }}?tab=parcels"
+     class="detail-tab {% if active_tab == 'parcels' %}active{% endif %}">
+    Parcels
+    {% if parcels %}<span style="font-size:11px;margin-left:4px;color:var(--text-muted)">({{ parcels | length }})</span>{% endif %}
+  </a>
+  <a href="/deals/{{ deal_id }}?tab=buildings"
+     class="detail-tab {% if active_tab == 'buildings' %}active{% endif %}">
+    Buildings
+    {% if buildings %}<span style="font-size:11px;margin-left:4px;color:var(--text-muted)">({{ buildings | length }})</span>{% endif %}
+  </a>
+  <a href="/deals/{{ deal_id }}?tab=timeline"
+     class="detail-tab {% if active_tab == 'timeline' %}active{% endif %}">Timeline</a>
+</div>
+
+<div class="detail-body">
+
+{% if flash_error %}
+{% set _err_msgs = {
+  'parcel_not_found': 'Parcel not found — verify the APN and try again.',
+  'no_opportunity': 'No property linked to this deal.',
+} %}
+<div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:12px 16px;margin-bottom:16px;color:#dc2626;font-size:13px">
+  ⚠ {{ _err_msgs.get(flash_error, flash_error) }}
+</div>
+{% endif %}
+
+{# ── Overview Tab ── #}
+{% if active_tab == 'overview' %}
+
+  {% if models %}
+  {# Key metrics from primary (first active) model #}
+  {% set pm = models[0] %}
+  <div class="info-grid" style="margin-bottom:24px">
+    <div class="info-card">
+      <div class="info-card-label">Stabilized NOI</div>
+      <div class="info-card-value">{{ pm.noi | currency }}</div>
+      <div class="info-card-sub">{{ pm.name }}</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">Levered IRR</div>
+      <div class="info-card-value" style="color:var(--success)">{{ pm.irr | pct }}</div>
+      <div class="info-card-sub">primary model</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">Equity Required</div>
+      <div class="info-card-value">{{ pm.equity_required | currency }}</div>
+      <div class="info-card-sub">project equity</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">Deal Type</div>
+      <div class="info-card-value" style="font-size:14px">{{ pm.type_display }}</div>
+      <div class="info-card-sub">{{ models | length }} model{{ 's' if models | length != 1 else '' }}</div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Deal info fields -->
+  <div class="section-title mb-12">Deal Details</div>
+  <div style="max-width:480px">
+    <div class="field-row"><div class="field-key">Name</div><div class="field-value">{{ deal_name }}</div></div>
+    <div class="field-row"><div class="field-key">Status</div>
+      <div class="field-value"><span class="badge {{ status_badge }}">{{ status_display }}</span></div>
+    </div>
+    {% if opp_name %}
+    <div class="field-row"><div class="field-key">Property</div><div class="field-value">{{ opp_name }}</div></div>
+    {% endif %}
+    {% if opp and opp.source %}
+    <div class="field-row"><div class="field-key">Source</div><div class="field-value">{{ opp.source.value | title }}</div></div>
+    {% endif %}
+    <div class="field-row"><div class="field-key">Created</div>
+      <div class="field-value">{{ deal.created_at.strftime('%b %-d, %Y') if deal.created_at else '—' }}</div>
+    </div>
+    {% if parcels %}
+    <div class="field-row"><div class="field-key">Address</div>
+      <div class="field-value">{{ parcels[0].address }}</div>
+    </div>
+    {% endif %}
+  </div>
+
+{# ── Models Tab ── #}
+{% elif active_tab == 'models' %}
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+    <div class="section-title" style="margin:0">Financial Models</div>
+    <button class="btn btn-primary btn-sm" onclick="openDrawer('new-model-drawer')">+ New Model</button>
+  </div>
+
+  {% if models %}
+  {% for m in models %}
+  <div class="model-row {% if m.is_active and loop.first %}model-row-active{% endif %}"
+       onclick="window.location='/models/{{ m.id }}/builder'">
+    <div>
+      <div class="model-name">
+        {{ m.name }}
+        {% if m.is_active and loop.first %}<span style="font-size:10px;color:var(--accent);margin-left:6px">● ACTIVE</span>{% endif %}
+      </div>
+      <div class="model-meta">v{{ m.version }} · {{ m.type_display }} · {{ m.project_name }}</div>
+    </div>
+    <div class="model-metrics">
+      {% if m.noi is not none %}
+      <div class="metric-pill">
+        <div class="metric-label">NOI</div>
+        <div class="metric-value">{{ m.noi | currency }}</div>
+      </div>
+      {% endif %}
+      {% if m.irr is not none %}
+      <div class="metric-pill">
+        <div class="metric-label">IRR (L)</div>
+        <div class="metric-value metric-irr">{{ m.irr | pct }}</div>
+      </div>
+      {% endif %}
+      {% if m.equity_required is not none %}
+      <div class="metric-pill">
+        <div class="metric-label">Equity</div>
+        <div class="metric-value">{{ m.equity_required | currency }}</div>
+      </div>
+      {% endif %}
+      <a href="/models/{{ m.id }}/builder" class="btn btn-secondary btn-sm"
+         onclick="event.stopPropagation()">Open →</a>
+    </div>
+  </div>
+  {% endfor %}
+  {% else %}
+  <div class="empty-panel">
+    <div class="empty-panel-icon">📊</div>
+    <div class="empty-panel-title">No financial models yet</div>
+    <div style="font-size:13px;margin-bottom:16px">Create a model to start building your deal analysis.</div>
+    <button class="btn btn-primary" onclick="openDrawer('new-model-drawer')">+ Create First Model</button>
+  </div>
+  {% endif %}
+
+{# ── Parcels Tab ── #}
+{% elif active_tab == 'parcels' %}
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+    <div class="section-title" style="margin:0">Linked Parcels</div>
+    <button class="btn btn-secondary btn-sm" onclick="openDrawer('link-parcel-drawer')">+ Link Parcel</button>
+  </div>
+
+  {% if parcels %}
+  {% for p in parcels %}
+  <div class="parcel-card" style="cursor:pointer" onclick="window.location='/parcels?q={{ p.apn | urlencode }}'">
+    <div class="parcel-card-apn">{{ p.apn }}</div>
+    <div class="parcel-card-address">{{ p.address or '—' }}</div>
+    <div style="display:flex;gap:16px;margin-top:8px;flex-wrap:wrap">
+      {% if p.zoning_code %}
+      <div style="font-size:12px"><span class="text-muted">Zoning</span> {{ p.zoning_code }}</div>
+      {% endif %}
+      {% if p.lot_sqft %}
+      <div style="font-size:12px"><span class="text-muted">Lot</span> {{ p.lot_sqft | number_fmt }} sf</div>
+      {% endif %}
+      {% if p.total_assessed_value %}
+      <div style="font-size:12px"><span class="text-muted">Assessed</span> {{ p.total_assessed_value | currency }}</div>
+      {% endif %}
+      {% if p.owner_name %}
+      <div style="font-size:12px"><span class="text-muted">Owner</span> {{ p.owner_name }}</div>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+  {% else %}
+  <div class="empty-panel">
+    <div class="empty-panel-icon">📐</div>
+    <div class="empty-panel-title">No parcels linked</div>
+    <div style="font-size:13px;margin-bottom:16px">Link a parcel by APN to connect GIS data to this deal.</div>
+    <button class="btn btn-secondary" onclick="openDrawer('link-parcel-drawer')">+ Link Parcel</button>
+  </div>
+  {% endif %}
+
+{# ── Buildings Tab ── #}
+{% elif active_tab == 'buildings' %}
+
+  <div class="section-title mb-12">Linked Buildings</div>
+
+  {% if buildings %}
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px">
+    {% for b in buildings %}
+    <div class="parcel-card" style="cursor:pointer" onclick="window.location='/buildings?q={{ b.address | urlencode }}'">
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+        {% if b.sale_status == 'Active' %}<span class="badge badge-green">● Active</span>
+        {% elif b.sale_status == 'Under Contract' %}<span class="badge badge-yellow">● Under Contract</span>
+        {% elif b.sale_status %}<span class="badge badge-gray">{{ b.sale_status }}</span>
+        {% else %}<span class="badge badge-gray">Off Market</span>{% endif %}
+        {% if b.source %}<span class="badge badge-outline" style="font-size:10px">{{ b.source | title }}</span>{% endif %}
+      </div>
+      <div class="parcel-card-address">{{ b.name }}</div>
+      {% if b.address and b.address != b.name %}
+      <div style="font-size:12px;color:var(--text-muted);margin-top:2px">{{ b.address }}</div>
+      {% endif %}
+      <div style="display:flex;gap:16px;margin-top:8px;flex-wrap:wrap">
+        {% if b.unit_count %}<div style="font-size:12px"><span class="text-muted">Units</span> {{ b.unit_count }}</div>{% endif %}
+        {% if b.building_sqft %}<div style="font-size:12px"><span class="text-muted">SqFt</span> {{ b.building_sqft | number_fmt }}</div>{% endif %}
+        {% if b.year_built %}<div style="font-size:12px"><span class="text-muted">Built</span> {{ b.year_built }}</div>{% endif %}
+        {% if b.asking_price %}<div style="font-size:12px"><span class="text-muted">Ask</span> {{ b.asking_price | currency }}</div>{% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-panel">
+    <div class="empty-panel-icon">🏢</div>
+    <div class="empty-panel-title">No buildings linked</div>
+    <div style="font-size:13px">Buildings are linked automatically when a listing is connected to this deal.</div>
+  </div>
+  {% endif %}
+
+{# ── Timeline / Gantt Tab ── #}
+{% elif active_tab == 'timeline' %}
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+    <div>
+      <div class="section-title" style="margin:0">Project Timeline</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:2px">
+        Phase schedule for the active scenario
+        {% if gantt_rows and not gantt_rows[0].has_dates %}
+          · <span style="color:var(--warning,#d97706)">No anchor date set — showing relative durations.
+            <a href="/models/{{ primary_model_id }}/builder?module=timeline" style="color:inherit;text-decoration:underline">Set dates →</a></span>
+        {% endif %}
+      </div>
+    </div>
+    {% if primary_model_id %}
+    <a href="/models/{{ primary_model_id }}/builder?module=timeline" class="btn btn-secondary btn-sm">Edit Timeline →</a>
+    {% endif %}
+  </div>
+
+  {% if gantt_data %}
+  {% if not gantt_data.has_dates %}
+  <div style="font-size:12px;color:var(--warning,#d97706);margin-bottom:10px">
+    No anchor date set — showing relative durations.
+    {% if primary_model_id %}<a href="/models/{{ primary_model_id }}/builder?module=timeline" style="color:inherit;text-decoration:underline">Set dates →</a>{% endif %}
+  </div>
+  {% endif %}
+
+  <div class="g2-wrap">
+    <!-- Time axis -->
+    <div class="g2-axis">
+      <div class="g2-axis-spacer"></div>
+      <div class="g2-axis-track">
+        <div class="g2-years">
+          {% for ys in gantt_data.year_spans %}
+          <div class="g2-year-span" style="left:{{ ys.left_pct }}%;width:{{ ys.width_pct }}%">{{ ys.label }}</div>
+          {% endfor %}
+        </div>
+        <div class="g2-months">
+          {% for tick in gantt_data.month_ticks %}
+          <div class="g2-month{% if tick.is_year_start %} g2-month-year{% endif %}" style="left:{{ tick.left_pct }}%">{{ tick.label }}</div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <!-- Vertical month grid lines -->
+    <div class="g2-vlines">
+      {% for tick in gantt_data.month_ticks %}
+      <div class="g2-vline{% if tick.is_year_start %} g2-vline-year{% endif %}" style="left:{{ tick.left_pct }}%"></div>
+      {% endfor %}
+    </div>
+    <!-- Phase rows -->
+    {% for row in gantt_data.rows %}
+    {% if row.type == "project_header" %}
+    <div class="g2-project-hdr">
+      <div class="g2-project-hdr-name" title="{{ row.name }}">{{ row.name }}</div>
+      <div class="g2-project-hdr-line"></div>
+    </div>
+    {% else %}
+    <div class="g2-row">
+      <div class="g2-label" title="{{ row.label }}">{{ row.label }}</div>
+      <div class="g2-track">
+        <div class="g2-bar {{ row.color_class }}"
+             style="left:{{ row.left_pct }}%;width:{{ row.width_pct }}%;{% if row.is_truncated %}border-radius:3px 0 0 3px{% endif %}"
+             title="{{ row.label }}{% if row.start_fmt %} · {{ row.start_fmt }}{% if row.end_fmt %} → {{ row.end_fmt }}{% endif %}{% if row.is_truncated %} ({{ (row.duration_days / 30.4) | round(0) | int }}mo, display capped){% endif %}{% endif %}">
+          {% if row.width_pct > 5 %}{{ row.label }}{% endif %}
+          {% if row.is_truncated %}<div style="position:absolute;right:0;top:0;bottom:0;width:10%;background:linear-gradient(to right,rgba(255,255,255,0) 0%,rgba(255,255,255,0.7) 100%)"></div>{% endif %}
+        </div>
+        {% if row.is_truncated and row.end_fmt %}
+        <span style="position:absolute;left:calc({{ row.left_pct }}% + {{ row.width_pct }}% + 3px);font-size:9px;color:var(--text-muted);white-space:nowrap;top:50%;transform:translateY(-50%)">→ {{ row.end_fmt }}</span>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+
+  {% else %}
+  <div class="empty-panel">
+    <div class="empty-panel-icon">📅</div>
+    <div class="empty-panel-title">No timeline configured</div>
+    <div style="font-size:13px;margin-bottom:16px">Set up milestones in the model builder to see the project Gantt chart.</div>
+    {% if primary_model_id %}
+    <a href="/models/{{ primary_model_id }}/builder?module=timeline" class="btn btn-primary">Configure Timeline →</a>
+    {% endif %}
+  </div>
+  {% endif %}
+
+{% endif %}
+</div>
+
+<!-- Edit Deal drawer -->
+<div class="drawer-overlay" id="edit-deal-drawer" style="display:none">
+  <div class="drawer">
+    <div class="drawer-header">
+      <div>
+        <div class="drawer-title">Edit Deal</div>
+        <div class="text-small text-muted">Update deal name and status</div>
+      </div>
+      <span class="drawer-close" onclick="closeDrawer('edit-deal-drawer')">×</span>
+    </div>
+    <div class="drawer-body">
+      <form method="post" action="/ui/deals/{{ deal_id }}/update" style="display:flex;flex-direction:column;gap:14px">
+        <div>
+          <label class="field-label">Deal Name</label>
+          <input class="filter-input" style="width:100%;margin-top:4px" type="text" name="name"
+                 value="{{ deal_name }}" required>
+        </div>
+        <div>
+          <label class="field-label">Status</label>
+          <select class="filter-select" style="width:100%;margin-top:4px" name="status">
+            <option value="hypothetical" {% if status_key == 'hypothetical' %}selected{% endif %}>Evaluation</option>
+            <option value="active" {% if status_key == 'active' %}selected{% endif %}>Execution</option>
+            <option value="archived" {% if status_key == 'archived' %}selected{% endif %}>Archived</option>
+          </select>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:6px">
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+          <button type="button" class="btn btn-secondary" onclick="closeDrawer('edit-deal-drawer')">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- New Model drawer -->
+<div class="drawer-overlay" id="new-model-drawer" style="display:none">
+  <div class="drawer">
+    <div class="drawer-header">
+      <div>
+        <div class="drawer-title">New Financial Model</div>
+        <div class="text-small text-muted">Add a scenario model to this deal</div>
+      </div>
+      <span class="drawer-close" onclick="closeDrawer('new-model-drawer')">×</span>
+    </div>
+    <div class="drawer-body">
+      <form method="post" action="/ui/deals/create-model" style="display:flex;flex-direction:column;gap:14px">
+        <input type="hidden" name="opportunity_id" value="{{ opp_id }}">
+        <div>
+          <label class="field-label">Model Name</label>
+          <input class="filter-input" style="width:100%;margin-top:4px" type="text" name="name"
+                 value="Base Case" required>
+        </div>
+        <div>
+          <label class="field-label">Deal Type</label>
+          <select class="filter-select" style="width:100%;margin-top:4px" name="deal_type">
+            <option value="acquisition_minor_reno">Acquisition — Minor Renovation</option>
+            <option value="acquisition_major_reno">Acquisition — Major Renovation</option>
+            <option value="acquisition_conversion">Acquisition — Conversion</option>
+            <option value="new_construction">New Construction</option>
+          </select>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:6px">
+          <button type="submit" class="btn btn-primary">Create Model →</button>
+          <button type="button" class="btn btn-secondary" onclick="closeDrawer('new-model-drawer')">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Link Parcel drawer -->
+<div class="drawer-overlay" id="link-parcel-drawer" style="display:none">
+  <div class="drawer">
+    <div class="drawer-header">
+      <div>
+        <div class="drawer-title">Link Parcel</div>
+        <div class="text-small text-muted">Connect a parcel to this deal by APN</div>
+      </div>
+      <span class="drawer-close" onclick="closeDrawer('link-parcel-drawer')">×</span>
+    </div>
+    <div class="drawer-body">
+      <form method="post" action="/ui/deals/{{ deal_id }}/link-parcel"
+            style="display:flex;flex-direction:column;gap:14px">
+        <div>
+          <label class="field-label">APN (Assessor Parcel Number)</label>
+          <input class="filter-input" style="width:100%;margin-top:4px" type="text" name="apn"
+                 placeholder="e.g. R698400130" required>
+        </div>
+        <div>
+          <label class="field-label">Relationship</label>
+          <select class="filter-select" style="width:100%;margin-top:4px" name="relationship">
+            <option value="unchanged">Unchanged</option>
+            <option value="merged_in">Merged In</option>
+            <option value="split_from">Split From</option>
+          </select>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:6px">
+          <button type="submit" class="btn btn-primary">Link Parcel</button>
+          <button type="button" class="btn btn-secondary" onclick="closeDrawer('link-parcel-drawer')">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

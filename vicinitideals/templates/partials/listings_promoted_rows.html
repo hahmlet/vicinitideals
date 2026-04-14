@@ -1,0 +1,14 @@
+{# Promoted table body rows (hx-target="#promoted-tbody") #}
+{% if promoted_listings %}
+  {% for l in promoted_listings %}
+    {% include "partials/listings_promoted_row.html" %}
+  {% endfor %}
+{% else %}
+<tr><td colspan="18">
+  <div class="empty-state">
+    <div class="empty-icon">📋</div>
+    <div class="empty-title">No promoted listings</div>
+    <div class="empty-desc">No listings have been promoted to Opportunities yet.</div>
+  </div>
+</td></tr>
+{% endif %}

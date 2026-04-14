@@ -1,0 +1,56 @@
+{% for deal in deals %}
+<tr onclick="window.location='/deals/{{ deal.id }}'">
+  <td>
+    <div class="deal-name">{{ deal.name }}</div>
+    {% if deal.address %}<div class="deal-address">{{ deal.address }}</div>{% endif %}
+  </td>
+  <td>
+    <span class="badge {{ deal.status_badge }}">{{ deal.status_display }}</span>
+  </td>
+  <td><span class="text-small text-muted">{{ deal.type_display }}</span></td>
+  <td><span class="text-small">{{ deal.building_description or "—" }}</span></td>
+  <td>
+    {% if deal.primary_model_name and deal.primary_model_id %}
+    <a href="/models/{{ deal.primary_model_id }}/builder"
+       class="primary-model"
+       style="text-decoration:none;color:inherit"
+       onclick="event.stopPropagation()">
+      <span class="primary-dot"></span>
+      <span class="text-muted">{{ deal.primary_model_name }}</span>
+      <span style="font-size:10px;color:var(--accent);margin-left:4px">Open →</span>
+    </a>
+    {% elif deal.primary_model_name %}
+    <div class="primary-model">
+      <span class="primary-dot"></span>
+      <span class="text-muted">{{ deal.primary_model_name }}</span>
+    </div>
+    {% else %}
+    <span class="badge badge-gray">No model</span>
+    {% endif %}
+  </td>
+  <td class="col-right text-mono">{{ deal.noi | currency }}</td>
+  <td class="col-right {% if deal.irr %}irr-value{% else %}col-muted{% endif %}">
+    {{ deal.irr | pct }}
+  </td>
+  <td class="col-right text-mono {% if deal.equity_multiple %}{% else %}col-muted{% endif %}">
+    {% if deal.equity_multiple %}{{ "%.2fx"|format(deal.equity_multiple) }}{% else %}—{% endif %}
+  </td>
+  <td class="text-small text-muted">{{ deal.last_updated_fmt or "—" }}</td>
+  <td>
+    <button class="btn btn-ghost btn-sm archive-btn"
+            onclick="event.stopPropagation(); if(confirm('Archive this deal?')) { fetch('/ui/deals/{{ deal.id }}/archive', {method:'POST'}).then(() => window.location.reload()); }">
+      Archive
+    </button>
+  </td>
+</tr>
+{% else %}
+<tr>
+  <td colspan="10">
+    <div class="empty-state">
+      <div class="empty-icon">🏠</div>
+      <div class="empty-title">No deals yet</div>
+      <div class="empty-desc">Create your first deal to get started.</div>
+    </div>
+  </td>
+</tr>
+{% endfor %}

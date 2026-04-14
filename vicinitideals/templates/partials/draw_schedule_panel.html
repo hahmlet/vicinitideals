@@ -1,0 +1,196 @@
+{# Draw Schedule panel — source Gantt + reserve config + inline results #}
+{# Context: model, draw_sources, milestones_dated, reserve_construction, reserve_operational,
+            builder_gantt_data, source_gantt_rows, schedule (optional — set after Calculate) #}
+
+<style>
+.ds-section { margin-bottom: 24px; }
+.ds-section-title {
+  font-size: 12px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .05em; color: var(--text-muted); margin-bottom: 10px;
+}
+.ds-source-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ds-source-table th {
+  text-align: left; font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .04em; color: var(--text-muted); padding: 4px 8px; border-bottom: 1px solid var(--border);
+}
+.ds-source-table td { padding: 7px 8px; border-bottom: 1px solid var(--border-faint, #f0f0f0); vertical-align: middle; }
+.ds-source-table tr:last-child td { border-bottom: none; }
+.ds-type-badge {
+  display: inline-flex; align-items: center; padding: 2px 8px;
+  border-radius: 10px; font-size: 11px; font-weight: 600; white-space: nowrap;
+}
+.ds-type-equity { background: #d1fae5; color: #065f46; }
+.ds-type-debt   { background: #dbeafe; color: #1e40af; }
+.ds-reserve-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 16px; }
+.ds-reserve-field { display: flex; flex-direction: column; gap: 4px; }
+.ds-reserve-label { font-size: 12px; font-weight: 600; color: var(--text-secondary); }
+.ds-input { font-size: 13px; padding: 5px 8px; border: 1px solid var(--border); border-radius: 4px; }
+.ds-input-prefix { display: flex; align-items: center; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+.ds-input-prefix span { padding: 5px 8px; background: var(--surface-2,#f3f4f6); font-size: 13px; color: var(--text-muted); border-right: 1px solid var(--border); }
+.ds-input-prefix input { border: none; outline: none; padding: 5px 8px; font-size: 13px; width: 120px; }
+.ds-window-select { font-size: 12px; padding: 3px 5px; border: 1px solid var(--border); border-radius: 4px; color: var(--text-secondary); max-width: 120px; }
+/* Source Gantt — reuse g2- classes from timeline */
+.g2-row-source .g2-label { font-size: 11px; font-weight: 600; }
+.g2-bar-equity { background: var(--success, #16a34a); opacity: .75; }
+.g2-bar-debt   { background: var(--accent, #2563eb); opacity: .75; }
+</style>
+
+<div class="module-panel-header">
+  <div>
+    <div class="module-panel-title">Draw Schedule</div>
+    <div class="module-panel-desc">Auto-sized draws every N months. Each draw covers Uses + carry, solved self-referentially so the draw fully funds its own interest.</div>
+  </div>
+  <div class="module-panel-actions">
+    <button class="btn btn-sm btn-primary" id="ds-compute-btn"
+            hx-post="/api/models/{{ model.id }}/compute"
+            hx-swap="none"
+            hx-indicator="#ds-calc-spin"
+            hx-on::after-request="if(event.detail.successful) htmx.ajax('POST', '/ui/models/{{ model.id }}/draw-schedule/calculate', {target:'#module-panel-content', swap:'innerHTML'})">
+      ▶ Compute
+    </button>
+    <span id="ds-calc-spin" class="htmx-indicator text-small text-muted">Computing…</span>
+  </div>
+</div>
+
+<div class="module-panel-body" id="ds-panel-body">
+
+{# ── Reserve floors — read-only; manage in Uses module ── #}
+<div class="ds-section">
+  <div class="ds-section-title">Reserve Floors
+    <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-muted)">
+      — <a href="{{ request.url.path }}?module=uses" style="color:var(--accent)">manage in Uses →</a>
+    </span>
+  </div>
+  <div class="ds-reserve-row">
+    <div class="ds-reserve-field">
+      <div class="ds-reserve-label">Construction Reserve</div>
+      <div style="font-size:14px;font-weight:600;color:var(--text)">
+        {{ reserve_construction | currency if reserve_construction | float > 0 else '—' }}
+      </div>
+    </div>
+    <div class="ds-reserve-field">
+      <div class="ds-reserve-label">Operational Reserve</div>
+      <div style="font-size:14px;font-weight:600;color:var(--text)">
+        {{ reserve_operational | currency if reserve_operational | float > 0 else '—' }}
+      </div>
+    </div>
+  </div>
+</div>
+
+{# ── Sources table ── #}
+<div class="ds-section">
+  <div class="ds-section-title">Funding Sources
+    <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-muted)">
+      — <a href="{{ request.url.path }}?module=sources" style="color:var(--accent)">manage in Sources →</a>
+    </span>
+  </div>
+
+  {% if draw_sources %}
+  <table class="ds-source-table" style="margin-bottom:8px">
+    <thead>
+      <tr>
+        <th>Label</th>
+        <th>Type</th>
+        <th>Draw Freq</th>
+        <th>Rate</th>
+        <th>Active From</th>
+        <th>Active To</th>
+        <th>Commitment</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for ds in draw_sources %}
+    <tr>
+      <td style="font-weight:500">{{ ds.label }}</td>
+      <td><span class="ds-type-badge ds-type-{{ ds.source_type }}">{{ ds.source_type | title }}</span></td>
+      <td class="text-small">Every {{ ds.draw_every_n_months }} mo</td>
+      <td class="text-small text-mono">
+        {%- set rate_pct = ds.annual_interest_rate | float * 100 -%}
+        {{ '%.2f%%' | format(rate_pct) if rate_pct > 0 else '—' }}
+      </td>
+      {# Active window — read-only here; edit in the Sources drawer #}
+      <td class="text-small text-muted">{{ milestone_label_map.get(ds.active_from_milestone, ds.active_from_milestone) }}</td>
+      <td class="text-small text-muted">
+        {{ milestone_label_map.get(ds.active_to_milestone, ds.active_to_milestone) }}
+        {% if ds.active_to_milestone == 'maturity' %}<span style="color:var(--text-muted);font-size:10px">→</span>{% endif %}
+      </td>
+      <td class="text-small text-mono">
+        {{ ds.total_commitment | currency if ds.total_commitment else 'Auto' }}
+      </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div style="font-size:13px;color:var(--text-muted);padding:12px;background:var(--surface-2,#f8f8f8);border-radius:6px">
+    No sources yet. <a href="{{ request.url.path }}?module=sources" style="color:var(--accent)">Add sources in the Sources module →</a>
+  </div>
+  {% endif %}
+</div>
+
+{# ── Source Gantt — uses timeline g2- classes ── #}
+{% if builder_gantt_data and draw_sources %}
+<div class="ds-section">
+  <div class="ds-section-title">Source Gantt</div>
+  <div class="g2-wrap">
+    <!-- Time axis -->
+    <div class="g2-axis">
+      <div class="g2-axis-spacer"></div>
+      <div class="g2-axis-track">
+        <div class="g2-years">
+          {% for ys in builder_gantt_data.year_spans %}
+          <div class="g2-year-span" style="left:{{ ys.left_pct }}%;width:{{ ys.width_pct }}%">{{ ys.label }}</div>
+          {% endfor %}
+        </div>
+        <div class="g2-months">
+          {% for tick in builder_gantt_data.month_ticks %}
+          <div class="g2-month{% if tick.is_year_start %} g2-month-year{% endif %}" style="left:{{ tick.left_pct }}%">{{ tick.label }}</div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <!-- Vertical grid lines -->
+    <div class="g2-vlines">
+      {% for tick in builder_gantt_data.month_ticks %}
+      <div class="g2-vline{% if tick.is_year_start %} g2-vline-year{% endif %}" style="left:{{ tick.left_pct }}%"></div>
+      {% endfor %}
+    </div>
+    <!-- Timeline phase rows (reference, muted) -->
+    {% for row in builder_gantt_data.rows %}
+    <div class="g2-row" style="opacity:.4">
+      <div class="g2-label" style="font-size:10px;color:var(--text-muted)">{{ row.label }}</div>
+      <div class="g2-track">
+        <div class="g2-bar {{ row.color_class }}" style="left:{{ row.left_pct }}%;width:{{ row.width_pct }}%"></div>
+      </div>
+    </div>
+    {% endfor %}
+    <!-- Source rows (filtered server-side to active sources post-compute) -->
+    {% for row in source_gantt_rows %}
+    <div class="g2-row g2-row-source">
+      <div class="g2-label">{{ row.label }}</div>
+      <div class="g2-track">
+        <div class="g2-bar g2-bar-{{ row.source_type }}"
+             style="left:{{ row.left_pct }}%;width:{{ row.width_pct }}%;position:relative;overflow:hidden"
+             title="{{ row.label }}">
+          {% if row.width_pct > 8 %}{{ row.label }}{% endif %}
+          {% if row.fade_right %}
+          <span style="position:absolute;right:0;top:0;bottom:0;width:36px;background:linear-gradient(to right,transparent,rgba(255,255,255,.75));pointer-events:none"></span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+{# ── Results (shown after Compute) ── #}
+{% if schedule is defined and schedule %}
+{% include 'partials/draw_schedule_results.html' %}
+{% else %}
+<div style="font-size:13px;color:var(--text-muted);padding:16px 0;border-top:1px solid var(--border-faint,#f0f0f0);margin-top:8px">
+  Click <strong>▶ Compute</strong> above to run the draw schedule.
+</div>
+{% endif %}
+
+</div>{# /module-panel-body #}

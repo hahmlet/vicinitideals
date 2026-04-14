@@ -1,0 +1,251 @@
+{% extends "base.html" %}
+{% block title %}Data Sources — Viciniti Deals{% endblock %}
+
+{% block head %}
+<style>
+.ds-group {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.ds-group + .ds-group { margin-top: 10px; }
+
+.ds-group-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  cursor: pointer;
+  user-select: none;
+  border-bottom: 1px solid transparent;
+  transition: background .1s;
+}
+.ds-group-header:hover { background: var(--surface-alt); }
+.ds-group.open .ds-group-header { border-bottom-color: var(--border); }
+
+.ds-chevron {
+  font-size: 10px;
+  color: var(--text-muted);
+  transition: transform .18s;
+  flex-shrink: 0;
+}
+.ds-group.open .ds-chevron { transform: rotate(90deg); }
+
+.ds-group-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  flex: 1;
+}
+.ds-group-provider {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.ds-group-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.ds-layer-count {
+  font-size: 11px;
+  color: var(--text-muted);
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 1px 8px;
+}
+.ds-review-flag {
+  font-size: 11px;
+  font-weight: 600;
+  color: #d97706;
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+  border-radius: 4px;
+  padding: 1px 7px;
+  white-space: nowrap;
+}
+
+.ds-group-body {
+  display: none;
+  overflow: auto;
+}
+.ds-group.open .ds-group-body { display: block; }
+
+.ds-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.ds-table th {
+  text-align: left;
+  padding: 8px 14px;
+  background: var(--surface-alt);
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.ds-table td {
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--border-faint, var(--border));
+  vertical-align: top;
+}
+.ds-table tr:last-child td { border-bottom: none; }
+.ds-table tr:hover td { background: var(--surface-alt); }
+
+.ds-name { font-weight: 600; color: var(--text); }
+.ds-slug { font-size: 10px; color: var(--text-muted); font-family: monospace; margin-top: 2px; }
+
+.ds-type {
+  font-size: 11px;
+  color: var(--text-muted);
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 6px;
+  white-space: nowrap;
+}
+
+.ds-notes { color: var(--text-secondary, var(--text-muted)); line-height: 1.5; }
+
+/* Status badges */
+.ds-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 4px;
+  padding: 2px 8px;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.ds-badge-active   { background: var(--success-light, #dcfce7); color: var(--success, #16a34a); border-color: #bbf7d0; }
+.ds-badge-cached   { background: #dbeafe; color: #1d4ed8; border-color: #93c5fd; }
+.ds-badge-manual   { background: #f3e8ff; color: #7c3aed; border-color: #c4b5fd; }
+.ds-badge-disabled { background: var(--surface-alt); color: var(--text-muted); border-color: var(--border); }
+.ds-badge-planned  { background: #fef3c7; color: #d97706; border-color: #fcd34d; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div style="display:flex;flex-direction:column;flex:1;overflow:hidden;height:100%">
+<div class="page-header" style="display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid var(--border);background:var(--surface);flex-shrink:0">
+  <div>
+    <div class="page-title" style="font-size:20px;font-weight:700;color:var(--text)">GIS Data Sources</div>
+    <div style="font-size:12px;color:var(--text-muted);margin-top:2px">Cached layers, enrichment feeds, and reference data powering parcel screening — heartbeat schedule: weekly minimum</div>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center">
+    <button type="button" class="btn btn-secondary" style="font-size:12px;padding:5px 10px" onclick="setAllGroups(true)">Expand All</button>
+    <button type="button" class="btn btn-secondary" style="font-size:12px;padding:5px 10px" onclick="setAllGroups(false)">Collapse All</button>
+    <a href="/deals" class="btn btn-secondary">Back to Deals</a>
+  </div>
+</div>
+
+<div style="padding:24px;max-width:1200px;overflow-y:auto;flex:1">
+  {% for group in groups %}
+  {# — Compute review flag for this group — #}
+  {% set ns = namespace(needs_review=false) %}
+  {% for layer in group.layers %}
+    {% if layer.status not in ['Active', 'Cached', 'Manual', 'Planned'] %}{% set ns.needs_review = true %}{% endif %}
+    {% if layer.ping_host and not layer.heartbeat_ok %}{% set ns.needs_review = true %}{% endif %}
+    {% if layer.last_pull == 'Not cached' %}{% set ns.needs_review = true %}{% endif %}
+  {% endfor %}
+
+  <div class="ds-group" id="ds-{{ group.id }}">
+    <div class="ds-group-header" onclick="toggleGroup('{{ group.id }}')">
+      <span class="ds-chevron">▶</span>
+      <span class="ds-group-title">{{ group.title }}</span>
+      {% if group.provider %}
+      <span class="ds-group-provider">{{ group.provider }}</span>
+      {% endif %}
+      <div class="ds-group-meta">
+        {% if ns.needs_review %}
+        <span class="ds-review-flag">⚠ Review</span>
+        {% endif %}
+        <span class="ds-layer-count">{{ group.layers | length }} layer{{ 's' if group.layers | length != 1 else '' }}</span>
+      </div>
+    </div>
+    <div class="ds-group-body">
+      <table class="ds-table">
+        <thead>
+          <tr>
+            <th style="width:220px">Layer</th>
+            <th style="width:110px">Type</th>
+            <th style="width:80px">Status</th>
+            <th>Notes</th>
+            <th style="width:140px">Last Pull</th>
+            <th style="width:130px">Heartbeat</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for layer in group.layers %}
+          <tr>
+            <td>
+              <div class="ds-name">{{ layer.name }}</div>
+              {% if layer.slug and layer.slug != '—' %}
+              <div class="ds-slug">{{ layer.slug }}</div>
+              {% endif %}
+            </td>
+            <td><span class="ds-type">{{ layer.type }}</span></td>
+            <td>
+              {% set s = layer.status %}
+              {% if s == 'Active' %}
+                <span class="ds-badge ds-badge-active">Active</span>
+              {% elif s == 'Cached' %}
+                <span class="ds-badge ds-badge-cached">Cached</span>
+              {% elif s == 'Manual' %}
+                <span class="ds-badge ds-badge-manual">Manual</span>
+              {% elif s == 'Disabled' %}
+                <span class="ds-badge ds-badge-disabled">Disabled</span>
+              {% elif s == 'Planned' %}
+                <span class="ds-badge ds-badge-planned">Planned</span>
+              {% else %}
+                <span class="ds-badge ds-badge-disabled">{{ s }}</span>
+              {% endif %}
+            </td>
+            <td class="ds-notes">{{ layer.notes }}</td>
+            <td style="white-space:nowrap;font-size:11px;color:var(--text-muted)">
+              {{ layer.last_pull or '—' }}
+            </td>
+            <td style="white-space:nowrap">
+              {% if layer.ping_host %}
+                {% if layer.heartbeat_ok %}
+                  <span class="ds-badge ds-badge-active" style="font-size:10px;padding:1px 6px">OK</span>
+                {% else %}
+                  <span class="ds-badge" style="font-size:10px;padding:1px 6px;background:#fee2e2;color:#dc2626;border-color:#fca5a5">Fail</span>
+                {% endif %}
+                <div style="font-size:10px;color:var(--text-muted);margin-top:2px">{{ layer.heartbeat_ts or '' }}</div>
+              {% else %}
+                <span style="font-size:11px;color:var(--text-muted)">—</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+</div>
+
+<script>
+function toggleGroup(id) {
+  document.getElementById('ds-' + id).classList.toggle('open');
+}
+function setAllGroups(open) {
+  document.querySelectorAll('.ds-group').forEach(function(g) {
+    g.classList.toggle('open', open);
+  });
+}
+// Open first group by default
+document.addEventListener('DOMContentLoaded', function() {
+  var first = document.querySelector('.ds-group');
+  if (first) first.classList.add('open');
+});
+</script>
+{% endblock %}

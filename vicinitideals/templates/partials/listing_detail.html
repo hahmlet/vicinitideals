@@ -1,0 +1,104 @@
+<!-- Actions -->
+<div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+  {% if l.linked_opportunity_id %}
+  <a href="/opportunities/{{ l.linked_opportunity_id }}" class="btn btn-primary btn-sm">View Opportunity →</a>
+  {% else %}
+  <form method="post" action="/ui/listings/{{ l.id }}/promote-redirect" style="display:inline">
+    <button type="submit" class="btn btn-primary btn-sm">+ Create Opportunity</button>
+  </form>
+  {% endif %}
+  <button type="button" class="btn btn-secondary btn-sm"
+          onclick="openParcelMap('listing','{{ l.id }}','{{ (l.address_normalized or l.address_raw or '') | replace("'","\\'")|safe }}')">
+    🗺 Map
+  </button>
+</div>
+
+<!-- Status + source chip -->
+<div style="display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap">
+  {% if l.status == "Active" %}
+    <span class="badge badge-green">● Active</span>
+  {% elif l.status == "Under Contract" %}
+    <span class="badge badge-yellow">● Under Contract</span>
+  {% elif l.status and l.status|lower in ("sold", "closed") %}
+    <span class="badge badge-red">● {{ l.status }}</span>
+  {% elif l.status %}
+    <span class="badge badge-gray">{{ l.status }}</span>
+  {% endif %}
+  {% if l.source_url %}
+  <a href="{{ l.source_url }}" target="_blank" class="badge badge-blue" style="text-decoration:none">
+    {{ l.source_label }} ↗
+  </a>
+  {% endif %}
+  {% if l.is_new %}<span class="badge badge-yellow">New</span>{% endif %}
+  {% if l.priority_bucket %}
+    {% set _bc = {"prime":"badge-green","target":"badge-blue","contextual":"badge-purple","out_of_market":"badge-gray","ineligible":"badge-muted","unclassified":"badge-orange"}.get(l.priority_bucket,"badge-orange") %}
+    {% set _bl = {"prime":"Prime","target":"Target","contextual":"Contextual","out_of_market":"Out of Market","ineligible":"Ineligible","unclassified":"Unclassified"}.get(l.priority_bucket, l.priority_bucket) %}
+    <span class="badge {{ _bc }}" title="Priority bucket">{{ _bl }}</span>
+  {% endif %}
+</div>
+
+<div class="section-title mb-12">Pricing</div>
+<div class="field-row"><div class="field-key">Asking Price</div><div class="field-value text-mono">{{ l.asking_price | currency if l.asking_price else "—" }}</div></div>
+<div class="field-row"><div class="field-key">Price / Unit</div><div class="field-value text-mono">{{ l.price_per_unit | currency if l.price_per_unit else "—" }}</div></div>
+<div class="field-row"><div class="field-key">Cap Rate (Ask)</div><div class="field-value">{{ l.cap_rate | pct if l.cap_rate else "—" }}</div></div>
+<div class="field-row"><div class="field-key">Cap Rate (Pro Forma)</div><div class="field-value">{{ l.proforma_cap_rate | pct if l.proforma_cap_rate else "—" }}</div></div>
+<div class="field-row"><div class="field-key">NOI</div><div class="field-value text-mono">{{ l.noi | currency if l.noi else "—" }}</div></div>
+<div class="field-row"><div class="field-key">NOI (Pro Forma)</div><div class="field-value text-mono">{{ l.proforma_noi | currency if l.proforma_noi else "—" }}</div></div>
+
+<div class="divider"></div>
+<div class="section-title mb-12">Property</div>
+<div class="field-row"><div class="field-key">Property Type</div><div class="field-value">{{ l.property_type or "—" }}</div></div>
+{% if l.class_ %}<div class="field-row"><div class="field-key">Class</div><div class="field-value">{{ l.class_ }}</div></div>{% endif %}
+<div class="field-row"><div class="field-key">Units</div><div class="field-value">{{ l.units or "—" }}</div></div>
+{% if l.buildings %}<div class="field-row"><div class="field-key">Buildings</div><div class="field-value">{{ l.buildings }}</div></div>{% endif %}
+{% if l.stories %}<div class="field-row"><div class="field-key">Stories</div><div class="field-value">{{ l.stories }}</div></div>{% endif %}
+{% if l.occupancy_pct is not none and l.occupancy_pct %}<div class="field-row"><div class="field-key">Occupancy</div><div class="field-value">{{ l.occupancy_pct | pct }}</div></div>{% endif %}
+<div class="field-row"><div class="field-key">Building SqFt</div><div class="field-value">{% if l.building_sqft %}{{ l.building_sqft | number_fmt }} sf{% else %}—{% endif %}</div></div>
+{% if l.net_rentable_sqft %}<div class="field-row"><div class="field-key">Net Rentable SqFt</div><div class="field-value">{{ l.net_rentable_sqft | number_fmt }} sf</div></div>{% endif %}
+<div class="field-row"><div class="field-key">Lot SqFt</div><div class="field-value">{% if l.lot_sqft %}{{ l.lot_sqft | number_fmt }} sf{% else %}—{% endif %}</div></div>
+{% if l.price_per_sqft %}<div class="field-row"><div class="field-key">Price / SqFt</div><div class="field-value text-mono">{{ l.price_per_sqft | currency }}</div></div>{% endif %}
+{% if l.parking_spaces %}<div class="field-row"><div class="field-key">Parking Spaces</div><div class="field-value">{{ l.parking_spaces }}</div></div>{% endif %}
+<div class="field-row"><div class="field-key">Year Built</div><div class="field-value">{{ l.year_built or "—" }}</div></div>
+{% if l.year_renovated %}<div class="field-row"><div class="field-key">Year Renovated</div><div class="field-value">{{ l.year_renovated }}</div></div>{% endif %}
+{% if l.zoning %}<div class="field-row"><div class="field-key">Zoning</div><div class="field-value">{{ l.zoning }}</div></div>{% endif %}
+{% if l.apn %}<div class="field-row"><div class="field-key">APN</div><div class="field-value text-mono" style="font-size:12px">{{ l.apn }}</div></div>{% endif %}
+
+{% if l.description %}
+<div class="divider"></div>
+<div class="section-title mb-12">Description</div>
+<div style="font-size:13px;color:var(--text);line-height:1.5;white-space:pre-wrap">{{ l.description }}</div>
+{% endif %}
+
+{% if l.broker_name %}
+<div class="divider"></div>
+<div class="section-title mb-12">Broker</div>
+<div class="field-row">
+  <div class="field-key">Name</div>
+  <div class="field-value">
+    <a href="/brokers?q={{ l.broker_name | urlencode }}" style="color:var(--accent)">{{ l.broker_name }}</a>
+  </div>
+</div>
+{% if l.brokerage_name %}
+<div class="field-row">
+  <div class="field-key">Company</div>
+  <div class="field-value">
+    <a href="/brokers?q={{ l.brokerage_name | urlencode }}" style="color:var(--accent)">{{ l.brokerage_name }}</a>
+  </div>
+</div>
+{% endif %}
+{% if l.broker_phone %}<div class="field-row"><div class="field-key">Phone</div><div class="field-value">{{ l.broker_phone }}</div></div>{% endif %}
+{% if l.broker_email %}<div class="field-row"><div class="field-key">Email</div><div class="field-value"><a href="mailto:{{ l.broker_email }}" style="color:var(--accent)">{{ l.broker_email }}</a></div></div>{% endif %}
+{% endif %}
+
+<!-- Scrape metadata at bottom -->
+<div style="border-top:1px solid var(--border);padding-top:10px;margin-top:16px">
+  <div class="field-row" style="font-size:11px;color:var(--text-muted)">
+    <div class="field-key">First Seen</div><div class="field-value">{{ l.first_seen_fmt or "—" }}</div>
+  </div>
+  <div class="field-row" style="font-size:11px;color:var(--text-muted)">
+    <div class="field-key">Last Updated</div><div class="field-value">{{ l.last_updated_fmt or "—" }}</div>
+  </div>
+  <div class="field-row" style="font-size:11px;color:var(--text-muted)">
+    <div class="field-key">Last Checked</div><div class="field-value">{{ l.last_checked_fmt or "—" }}</div>
+  </div>
+</div>

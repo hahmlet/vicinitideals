@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% block title %}{{ opp.name }} — Viciniti Deals{% endblock %}
+
+{% block head %}
+<style>
+.opp-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+.building-detail-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 18px;
+}
+.building-detail-card .bdc-title {
+  font-size: 14px; font-weight: 700; margin: 0 0 4px;
+}
+.building-detail-card .bdc-meta {
+  font-size: 12px; color: var(--text-muted); margin-bottom: 12px;
+}
+.bdc-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.bdc-field-label { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.bdc-field-value { font-size: 13px; font-weight: 500; }
+.deal-link-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  padding: 12px 16px; display: flex; align-items: center; justify-content: space-between;
+  text-decoration: none; color: inherit; transition: background .1s;
+  margin-bottom: 8px;
+}
+.deal-link-card:hover { background: var(--hover); }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="topbar">
+  <div style="display:flex;align-items:center;gap:8px">
+    <a href="/opportunities" style="color:var(--text-muted);text-decoration:none;font-size:13px">← Opportunities</a>
+    <span style="color:var(--border)">/</span>
+    <span style="font-size:13px">{{ opp.name }}</span>
+  </div>
+  <div style="display:flex;gap:8px">
+    <a href="/ui/opportunities/wizard?opp_id={{ opp.id }}&step=2" class="btn btn-secondary">Edit Buildings</a>
+    {% if opp.project_parcels %}
+    <button type="button" class="btn btn-secondary"
+            onclick="openParcelMap('opportunity','{{ opp.id }}','{{ opp.name | replace("'","\\'") | safe }}')">
+      🗺 Parcels
+    </button>
+    {% endif %}
+    {% if opp.source_type == 'scraped' %}
+    <form method="post" action="/ui/opportunities/{{ opp.id }}/dissolve" style="margin:0"
+          onsubmit="return confirm('Dissolve this opportunity? The underlying listing and buildings will not be affected.')">
+      <button type="submit" class="btn btn-danger btn-sm">Dissolve</button>
+    </form>
+    {% elif opp.status != 'archived' %}
+    <form method="post" action="/ui/opportunities/{{ opp.id }}/archive" style="margin:0">
+      <button type="submit" class="btn btn-secondary btn-sm">Archive</button>
+    </form>
+    {% endif %}
+    <a href="/deals/new?opp_id={{ opp.id }}" class="btn btn-primary">+ New Deal</a>
+  </div>
+</div>
+
+<div class="content">
+
+  {% if bare_parcels %}
+  <div style="background:#fef3c7;border:1px solid #f59e0b;border-radius:8px;
+              padding:10px 16px;margin-bottom:16px;font-size:13px;color:#92400e">
+    <strong>⚠ Missing building data:</strong>
+    {% for p in bare_parcels %}
+    Parcel {{ p.apn or p.id }}
+    {% if not loop.last %}, {% endif %}
+    {% endfor %}
+    has no building record. Add building details to use this parcel in financial modeling.
+    <a href="/ui/opportunities/wizard?opp_id={{ opp.id }}&step=2"
+       style="color:#92400e;font-weight:600;margin-left:8px">Add Buildings →</a>
+  </div>
+  {% endif %}
+
+  <!-- Header -->
+  <div class="card" style="margin-bottom:16px">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px">
+      <div>
+        <h1 style="font-size:22px;font-weight:700;margin:0 0 4px">{{ opp.name }}</h1>
+        <div style="font-size:13px;color:var(--text-muted)">
+          {{ buildings | length }} building{{ 's' if buildings | length != 1 else '' }}
+          {% if opp.source %} · {{ opp.source | title }}{% endif %}
+          · Created {{ opp.created_at.strftime('%b %d, %Y') if opp.created_at else '—' }}
+        </div>
+      </div>
+      <span class="badge {% if opp.status == 'active' %}badge-green{% elif opp.status == 'archived' %}badge-gray{% else %}badge-blue{% endif %}">
+        {{ opp.status | title if opp.status else '—' }}
+      </span>
+    </div>
+  </div>
+
+  <div class="opp-detail-grid">
+
+    <!-- Left: Buildings -->
+    <div>
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:10px">
+        Buildings ({{ buildings | length }})
+      </div>
+
+      {% if buildings %}
+        {% for b in buildings %}
+        <div class="building-detail-card" style="margin-bottom:12px">
+          <div class="bdc-title">{{ b.address_display }}</div>
+          <div class="bdc-meta">
+            {% if b.property_type %}{{ b.property_type }}{% endif %}
+            {% if b.current_use %} · {{ b.current_use }}{% endif %}
+          </div>
+          <div class="bdc-fields">
+            <div>
+              <div class="bdc-field-label">Units</div>
+              <div class="bdc-field-value">{{ b.unit_count or '—' }}</div>
+            </div>
+            <div>
+              <div class="bdc-field-label">Bldg Sqft{% if b.net_rentable_sqft %} (gross){% endif %}</div>
+              <div class="bdc-field-value">{{ "{:,.0f}".format(b.building_sqft | float) if b.building_sqft else '—' }}</div>
+            </div>
+            {% if b.net_rentable_sqft %}
+            <div>
+              <div class="bdc-field-label">Net Rentable</div>
+              <div class="bdc-field-value">{{ "{:,.0f}".format(b.net_rentable_sqft | float) }}</div>
+            </div>
+            {% endif %}
+            <div>
+              <div class="bdc-field-label">Year Built</div>
+              <div class="bdc-field-value">{{ b.year_built or '—' }}</div>
+            </div>
+            <div>
+              <div class="bdc-field-label">Status</div>
+              <div class="bdc-field-value">{{ b.status | title if b.status else '—' }}</div>
+            </div>
+          </div>
+          {% if b.notes %}
+          <div style="margin-top:8px;font-size:12px;color:var(--text-muted)">{{ b.notes }}</div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      {% else %}
+        <div class="card" style="text-align:center;padding:24px;color:var(--text-muted)">
+          No buildings defined yet.
+          <a href="/ui/opportunities/wizard?opp_id={{ opp.id }}&step=2">Add buildings →</a>
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Right: Deals + Parcels -->
+    <div>
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:10px">
+        Deals ({{ opp.deal_opportunities | length }})
+      </div>
+
+      {% if opp.deal_opportunities %}
+        {% for do in opp.deal_opportunities %}
+        <a class="deal-link-card" href="/deals/{{ do.deal_id }}">
+          <div>
+            <div style="font-weight:600;font-size:13px">{{ do.deal.name if do.deal else do.deal_id }}</div>
+          </div>
+          <span style="font-size:11px;color:var(--text-muted)">→</span>
+        </a>
+        {% endfor %}
+      {% else %}
+        <div class="card" style="padding:16px;color:var(--text-muted);font-size:13px">
+          No deals yet. <a href="/deals/new?opp_id={{ opp.id }}">Create a deal →</a>
+        </div>
+      {% endif %}
+
+      {% if opp.scraped_listings %}
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin:20px 0 10px">
+        Source Listings ({{ opp.scraped_listings | length }})
+      </div>
+      {% for listing in opp.scraped_listings %}
+      <a href="/listings?q={{ (listing.address_normalized or listing.address_raw or '') | urlencode }}" class="card" style="display:block;padding:10px 14px;margin-bottom:8px;font-size:12px;text-decoration:none;color:inherit">
+        <div style="font-weight:600">{{ listing.address_normalized or listing.address_raw or 'Unknown' }}</div>
+        <div style="color:var(--text-muted)">{{ listing.source | title if listing.source else '' }} · Scraped {{ listing.scraped_at.strftime('%b %d') if listing.scraped_at else '—' }}</div>
+      </a>
+      {% endfor %}
+      {% endif %}
+    </div>
+
+  </div>
+</div>
+{% endblock %}

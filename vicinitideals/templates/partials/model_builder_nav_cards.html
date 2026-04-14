@@ -1,0 +1,101 @@
+{# Module nav cards — included in model_builder.html and served standalone by /ui/models/{id}/module-nav #}
+{# Required context: active_module, locked, deal_setup_complete, capital_module_count, capital_total,
+   use_line_count, uses_total, income_stream_count, revenue_annual, expense_line_count, opex_annual,
+   carrying_annual, equity_ownership, org_owner_fallback, deferred_uses, deferred_total, profit_total,
+   divestment_total, phase_summaries, outputs, nav_base_path #}
+
+{% set setup_locked = locked or not deal_setup_complete %}
+
+<a href="{{ nav_base_path }}?module=sources_uses"
+   class="module-card {% if active_module in ('sources_uses','uses','sources') %}active{% endif %} {% if setup_locked %}locked{% endif %}">
+  <div class="module-icon module-icon-sources">💰</div>
+  <div class="module-info">
+    <div class="module-label">1 · Sources &amp; Uses</div>
+    <div class="module-meta">{{ capital_module_count }} funder{{ 's' if capital_module_count != 1 else '' }} · {{ use_line_count }} use line{{ 's' if use_line_count != 1 else '' }}</div>
+  </div>
+  <div class="module-total">{{ uses_total | currency if uses_total else '—' }}</div>
+</a>
+
+<a href="{{ nav_base_path }}?module=revenue"
+   class="module-card {% if active_module == 'revenue' %}active{% endif %} {% if setup_locked %}locked{% endif %}">
+  <div class="module-icon module-icon-revenue">📈</div>
+  <div class="module-info">
+    <div class="module-label">2 · Revenue</div>
+    <div class="module-meta">{{ income_stream_count }} stream{{ 's' if income_stream_count != 1 else '' }}</div>
+  </div>
+  <div class="module-total">{{ revenue_annual | currency if revenue_annual else '—' }}/yr</div>
+</a>
+
+<a href="{{ nav_base_path }}?module=opex"
+   class="module-card {% if active_module == 'opex' %}active{% endif %} {% if setup_locked %}locked{% endif %}">
+  <div class="module-icon module-icon-opex">📋</div>
+  <div class="module-info">
+    <div class="module-label">3 · OpEx</div>
+    <div class="module-meta">{{ expense_line_count }} line{{ 's' if expense_line_count != 1 else '' }}</div>
+  </div>
+  <div class="module-total">{{ opex_annual | currency if opex_annual else '—' }}/yr</div>
+</a>
+
+<a href="{{ nav_base_path }}?module=carrying"
+   class="module-card {% if active_module == 'carrying' %}active{% endif %} {% if setup_locked %}locked{% endif %}">
+  <div class="module-icon module-icon-carrying">🏦</div>
+  <div class="module-info">
+    <div class="module-label">4 · Carrying</div>
+    <div class="module-meta">Debt service only</div>
+  </div>
+  <div class="module-total">{{ carrying_annual | currency if carrying_annual else '—' }}/yr</div>
+</a>
+
+<a href="{{ nav_base_path }}?module=owners_profit"
+   class="module-card {% if active_module == 'owners_profit' %}active{% endif %} {% if setup_locked %}locked{% endif %}">
+  <div class="module-icon module-icon-owners">🏆</div>
+  <div class="module-info">
+    <div class="module-label">5 · Owners &amp; Profit</div>
+    <div class="module-meta">
+      {% if equity_ownership %}{{ equity_ownership | length }} owner{{ 's' if equity_ownership | length != 1 else '' }}{% elif org_owner_fallback %}Sponsor Owned{% else %}No equity defined{% endif %}
+      {% if deferred_uses %} · DDF {{ deferred_total | currency }}{% endif %}
+    </div>
+  </div>
+  <div class="module-total">{{ profit_total | currency if profit_total else '—' }}</div>
+</a>
+
+{% if phase_summaries.has_divestment %}
+<a href="{{ nav_base_path }}?module=divestment"
+   class="module-card {% if active_module == 'divestment' %}active{% endif %} {% if setup_locked %}locked{% endif %}">
+  <div class="module-icon module-icon-div-uses">🏷</div>
+  <div class="module-info">
+    <div class="module-label">7 · Divestment Uses</div>
+    <div class="module-meta">Exit costs</div>
+  </div>
+  <div class="module-total">{{ divestment_total | currency if divestment_total else '—' }}</div>
+</a>
+
+<a href="{{ nav_base_path }}?module=divestment_waterfall"
+   class="module-card {% if active_module == 'divestment_waterfall' %}active{% endif %} {% if setup_locked %}locked{% endif %}">
+  <div class="module-icon module-icon-owners" style="background:#fce7f3">🔀</div>
+  <div class="module-info">
+    <div class="module-label">8 · Divestment Waterfall</div>
+    <div class="module-meta">{{ capital_module_count }} funder{{ 's' if capital_module_count != 1 else '' }} in stack order</div>
+  </div>
+  <div class="module-total"></div>
+</a>
+{% endif %}
+
+<!-- Cash Flow output — always available after compute -->
+<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border)">
+<a href="{{ nav_base_path }}?module=cashflow"
+   class="module-card {% if active_module in ('cashflow','draw_schedule') %}active{% endif %}">
+  <div class="module-icon" style="background:#f0fdf4;font-size:14px">📈</div>
+  <div class="module-info">
+    <div class="module-label">Cash Flow</div>
+    <div class="module-meta">Draw schedule + operating cash flow</div>
+  </div>
+  <div class="module-total">
+    {% if outputs %}
+    <span class="badge badge-green" style="font-size:10px">Computed</span>
+    {% else %}
+    <span style="font-size:10px;color:var(--text-muted)">Run first</span>
+    {% endif %}
+  </div>
+</a>
+</div>

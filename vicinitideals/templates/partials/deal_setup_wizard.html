@@ -1,0 +1,581 @@
+{# Deal Setup Wizard — rendered in place of the builder-layout when deal_setup_complete=False #}
+{# Required context: model, inputs, step (1-4) #}
+{# Each step POSTs to /ui/models/{model.id}/setup/step and receives the next step as innerHTML swap #}
+
+<style>
+.wizard-shell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 40px 20px 60px;
+  flex: 1;
+  overflow-y: auto;
+}
+.wizard-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 640px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.06);
+  overflow: hidden;
+}
+.wizard-progress {
+  display: flex;
+  align-items: center;
+  padding: 20px 28px 0;
+  gap: 0;
+  margin-bottom: 4px;
+}
+.wizard-step-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+  background: var(--bg);
+  color: var(--text-muted);
+  position: relative;
+  z-index: 1;
+}
+.wizard-step-dot.active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+.wizard-step-dot.done {
+  border-color: var(--success);
+  background: var(--success);
+  color: #fff;
+}
+.wizard-step-line {
+  flex: 1;
+  height: 2px;
+  background: var(--border);
+  margin: 0 4px;
+}
+.wizard-step-line.done { background: var(--success); }
+.wizard-header {
+  padding: 20px 28px 0;
+}
+.wizard-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+.wizard-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0 0 20px;
+}
+.wizard-body {
+  padding: 20px 28px 8px;
+}
+.wizard-footer {
+  padding: 16px 28px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--border);
+  margin-top: 16px;
+}
+/* Option cards for debt structure */
+.option-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.option-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color .12s, background .12s;
+}
+.option-card:hover { border-color: var(--accent); background: var(--accent-faint); }
+.option-card input[type="radio"] { margin-top: 3px; flex-shrink: 0; accent-color: var(--accent); }
+.option-card.selected { border-color: var(--accent); background: var(--accent-faint); }
+.option-card-title { font-size: 14px; font-weight: 600; margin: 0 0 2px; }
+.option-card-desc  { font-size: 12px; color: var(--text-muted); margin: 0; }
+/* Field rows */
+.field-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+.field-row .field-group { flex: 1; }
+.field-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.field-group input[type="number"],
+.field-group input[type="text"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 14px;
+  background: var(--bg);
+  color: var(--text);
+}
+.field-group .field-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+.field-group input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-faint);
+}
+.section-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--text-muted);
+  margin: 16px 0 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+}
+/* Toggle-style sizing mode */
+.toggle-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.toggle-opt {
+  flex: 1;
+  padding: 12px 14px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  transition: border-color .12s, background .12s;
+}
+.toggle-opt:hover { border-color: var(--accent); background: var(--accent-faint); }
+.toggle-opt input { display: none; }
+.toggle-opt.selected { border-color: var(--accent); background: var(--accent-faint); }
+.toggle-opt-title { font-size: 13px; font-weight: 600; margin: 0 0 2px; }
+.toggle-opt-desc  { font-size: 11px; color: var(--text-muted); margin: 0; }
+/* Review table */
+.review-table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+.review-table td { padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+.review-table td:first-child { color: var(--text-muted); width: 55%; }
+.review-table td:last-child  { font-weight: 600; text-align: right; }
+.review-table tr:last-child td { border-bottom: none; }
+</style>
+
+{% set _step = (step | default(1)) | int %}
+{% set _ds   = inputs.debt_structure if inputs else '' %}
+{% set _has_constr = _ds in ('construction_to_perm', 'construction_and_perm') %}
+
+<div class="wizard-shell" id="deal-setup-wizard">
+
+  <div style="text-align:center;margin-bottom:24px">
+    <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted)">Deal Setup</div>
+    <div style="font-size:22px;font-weight:700;margin-top:4px">{{ model.name }}</div>
+  </div>
+
+  <div class="wizard-card">
+
+    {# ── Progress indicator (hidden for step 0 — pre-check) ── #}
+    {% if _step > 0 %}
+    <div class="wizard-progress">
+      {% for i in range(1, 5) %}
+        <div class="wizard-step-dot {% if i < _step %}done{% elif i == _step %}active{% endif %}">
+          {% if i < _step %}✓{% else %}{{ i }}{% endif %}
+        </div>
+        {% if not loop.last %}
+          <div class="wizard-step-line {% if i < _step %}done{% endif %}"></div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {# ════════════════════════════════════════════════════════════════ STEP 0 — Missing building data #}
+    {% if _step == 0 %}
+    <div class="wizard-header">
+      <div class="wizard-title">Building Data Needed</div>
+      <div class="wizard-subtitle">Some assigned buildings are missing data required for financial modeling.</div>
+    </div>
+    <form hx-post="/ui/models/{{ model.id }}/setup/step"
+          hx-target="#deal-setup-wizard"
+          hx-swap="outerHTML">
+      <input type="hidden" name="step" value="0">
+      <div class="wizard-body">
+        {% for b in (missing_building_data or []) %}
+        <div style="border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:10px">
+          <div style="font-size:13px;font-weight:600;margin-bottom:10px">{{ b.label }}</div>
+          <div class="field-row">
+            {% if 'unit_count' in b.fields %}
+            <div class="field-group">
+              <label for="unit_count_{{ b.id }}">Unit Count</label>
+              <input type="number" id="unit_count_{{ b.id }}" name="unit_count_{{ b.id }}"
+                     min="1" step="1" placeholder="e.g. 24">
+              <div class="field-hint">Total rentable units in this building</div>
+            </div>
+            {% endif %}
+            {% if 'building_sqft' in b.fields %}
+            <div class="field-group">
+              <label for="building_sqft_{{ b.id }}">Gross Bldg Sq Ft</label>
+              <input type="number" id="building_sqft_{{ b.id }}" name="building_sqft_{{ b.id }}"
+                     min="1" step="1" placeholder="e.g. 18500">
+              <div class="field-hint">Total gross area including common/mechanical</div>
+            </div>
+            {% endif %}
+            <div class="field-group">
+              <label for="net_rentable_sqft_{{ b.id }}">Net Rentable Sq Ft <span style="font-weight:400;opacity:.6">(optional)</span></label>
+              <input type="number" id="net_rentable_sqft_{{ b.id }}" name="net_rentable_sqft_{{ b.id }}"
+                     min="1" step="1" placeholder="e.g. 16200" value="{{ b.net_rentable_sqft or '' }}">
+              <div class="field-hint">Leasable area — $/rentable sqft metric</div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="wizard-footer">
+        <span></span>
+        <button type="submit" class="btn btn-primary">Save &amp; Continue →</button>
+      </div>
+    </form>
+
+    {# ════════════════════════════════════════════════════════════════ STEP 1 #}
+    {% elif _step == 1 %}
+    <div class="wizard-header">
+      <div class="wizard-title">Debt Structure</div>
+      <div class="wizard-subtitle">How is this project's debt financing structured?</div>
+    </div>
+    <form hx-post="/ui/models/{{ model.id }}/setup/step"
+          hx-target="#deal-setup-wizard"
+          hx-swap="outerHTML">
+      <input type="hidden" name="step" value="1">
+      <div class="wizard-body">
+        <div class="option-grid" id="debt-struct-grid">
+
+          <label class="option-card {% if _ds == 'perm_only' %}selected{% endif %}">
+            <input type="radio" name="debt_structure" value="perm_only"
+                   {% if _ds == 'perm_only' %}checked{% endif %}
+                   onchange="selectOption(this)">
+            <div>
+              <div class="option-card-title">Permanent Debt Only</div>
+              <div class="option-card-desc">Acquisition or stabilized purchase. One amortizing loan from day one. No IO construction phase.</div>
+            </div>
+          </label>
+
+          <label class="option-card {% if _ds == 'construction_to_perm' %}selected{% endif %}">
+            <input type="radio" name="debt_structure" value="construction_to_perm"
+                   {% if _ds == 'construction_to_perm' %}checked{% endif %}
+                   onchange="selectOption(this)">
+            <div>
+              <div class="option-card-title">Construction-to-Perm</div>
+              <div class="option-card-desc">One loan (e.g. a municipal bond) funds construction and converts to permanent debt at certificate of occupancy.</div>
+            </div>
+          </label>
+
+          <label class="option-card {% if _ds == 'construction_and_perm' %}selected{% endif %}">
+            <input type="radio" name="debt_structure" value="construction_and_perm"
+                   {% if _ds == 'construction_and_perm' %}checked{% endif %}
+                   onchange="selectOption(this)">
+            <div>
+              <div class="option-card-title">Construction + Permanent (Separate)</div>
+              <div class="option-card-desc">A construction loan is taken out at completion by a permanent loan. Two separate loans, two separate debt service periods.</div>
+            </div>
+          </label>
+
+        </div>
+      </div>
+      <div class="wizard-footer">
+        <a href="/deals/{{ model.deal_id }}" class="btn btn-ghost" style="font-size:12px;color:var(--text-muted)">✕ Cancel</a>
+        <button type="submit" class="btn btn-primary">Next →</button>
+      </div>
+    </form>
+
+    {# ════════════════════════════════════════════════════════════════ STEP 2 #}
+    {% elif _step == 2 %}
+    <div class="wizard-header">
+      <div class="wizard-title">Debt Terms</div>
+      <div class="wizard-subtitle">
+        {% if _ds == 'perm_only' %}Permanent debt terms.
+        {% elif _ds == 'construction_to_perm' %}Bond / construction-to-perm terms. IO during construction, P&I after CO.
+        {% else %}Construction loan IO terms, then permanent loan P&I terms.
+        {% endif %}
+      </div>
+    </div>
+    {% set _dt = inputs.debt_terms or {} %}
+    <form hx-post="/ui/models/{{ model.id }}/setup/step"
+          hx-target="#deal-setup-wizard"
+          hx-swap="outerHTML">
+      <input type="hidden" name="step" value="2">
+      <div class="wizard-body">
+
+        {% if _ds == 'construction_to_perm' %}
+        <div class="section-label">Bond / Construction-to-Perm</div>
+        <div class="field-row">
+          <div class="field-group">
+            <label>Construction IO Rate</label>
+            <input type="number" name="construction_rate_pct" step="0.125" min="0" max="30"
+                   value="{{ _dt.construction_rate_pct or 4.5 }}" placeholder="4.5">
+            <div class="field-hint">% per annum during construction</div>
+          </div>
+          <div class="field-group">
+            <label>Perm Rate</label>
+            <input type="number" name="perm_rate_pct" step="0.125" min="0" max="30"
+                   value="{{ _dt.perm_rate_pct or _dt.construction_rate_pct or 4.5 }}" placeholder="4.5">
+            <div class="field-hint">% per annum after CO (often same rate)</div>
+          </div>
+          <div class="field-group">
+            <label>Amortization</label>
+            <input type="number" name="perm_amort_years" step="1" min="1" max="40"
+                   value="{{ _dt.perm_amort_years or 30 }}" placeholder="30">
+            <div class="field-hint">Years (P&I period)</div>
+          </div>
+        </div>
+
+        {% elif _ds == 'construction_and_perm' %}
+        <div class="section-label">Construction Loan</div>
+        <div class="field-row">
+          <div class="field-group">
+            <label>IO Rate</label>
+            <input type="number" name="construction_rate_pct" step="0.125" min="0" max="30"
+                   value="{{ _dt.construction_rate_pct or 6.0 }}" placeholder="6.0">
+            <div class="field-hint">% per annum during construction</div>
+          </div>
+        </div>
+        <div class="section-label">Permanent Loan</div>
+        <div class="field-row">
+          <div class="field-group">
+            <label>Perm Rate</label>
+            <input type="number" name="perm_rate_pct" step="0.125" min="0" max="30"
+                   value="{{ _dt.perm_rate_pct or 5.0 }}" placeholder="5.0">
+            <div class="field-hint">% per annum</div>
+          </div>
+          <div class="field-group">
+            <label>Amortization</label>
+            <input type="number" name="perm_amort_years" step="1" min="1" max="40"
+                   value="{{ _dt.perm_amort_years or 30 }}" placeholder="30">
+            <div class="field-hint">Years</div>
+          </div>
+        </div>
+
+        {% else %}{# perm_only #}
+        <div class="section-label">Permanent Debt</div>
+        <div class="field-row">
+          <div class="field-group">
+            <label>Interest Rate</label>
+            <input type="number" name="perm_rate_pct" step="0.125" min="0" max="30"
+                   value="{{ _dt.perm_rate_pct or 5.0 }}" placeholder="5.0">
+            <div class="field-hint">% per annum</div>
+          </div>
+          <div class="field-group">
+            <label>Amortization</label>
+            <input type="number" name="perm_amort_years" step="1" min="1" max="40"
+                   value="{{ _dt.perm_amort_years or 30 }}" placeholder="30">
+            <div class="field-hint">Years</div>
+          </div>
+        </div>
+        {% endif %}
+
+      </div>
+      <div class="wizard-footer">
+        <button type="button" class="btn btn-secondary"
+                hx-get="/ui/models/{{ model.id }}/setup?step=1"
+                hx-target="#deal-setup-wizard" hx-swap="outerHTML">← Back</button>
+        <button type="submit" class="btn btn-primary">Next →</button>
+      </div>
+    </form>
+
+    {# ════════════════════════════════════════════════════════════════ STEP 3 #}
+    {% elif _step == 3 %}
+    <div class="wizard-header">
+      <div class="wizard-title">Debt Sizing</div>
+      <div class="wizard-subtitle">How should the model determine the debt amount?</div>
+    </div>
+    {% set _dsm = inputs.debt_sizing_mode or 'gap_fill' %}
+    {% set _dscr_min = inputs.dscr_minimum | float if inputs and inputs.dscr_minimum else 1.15 %}
+    <form hx-post="/ui/models/{{ model.id }}/setup/step"
+          hx-target="#deal-setup-wizard"
+          hx-swap="outerHTML">
+      <input type="hidden" name="step" value="3">
+      <div class="wizard-body">
+
+        <div class="toggle-row">
+          <label class="toggle-opt {% if _dsm == 'gap_fill' %}selected{% endif %}"
+                 id="opt-gap-fill" onclick="selectToggle('debt_sizing_mode','gap_fill')">
+            <input type="radio" name="debt_sizing_mode" value="gap_fill"
+                   {% if _dsm == 'gap_fill' %}checked{% endif %}>
+            <div class="toggle-opt-title">Gap-Fill</div>
+            <div class="toggle-opt-desc">Debt will be sized to match Sources. This may result in an insufficient DSCR.</div>
+          </label>
+          <label class="toggle-opt {% if _dsm == 'dscr_capped' %}selected{% endif %}"
+                 id="opt-dscr-capped" onclick="selectToggle('debt_sizing_mode','dscr_capped')">
+            <input type="radio" name="debt_sizing_mode" value="dscr_capped"
+                   {% if _dsm == 'dscr_capped' %}checked{% endif %}>
+            <div class="toggle-opt-title">DSCR-Capped</div>
+            <div class="toggle-opt-desc">Debt will be sized to meet Minimum DSCR. This may result in a Sources Gap.</div>
+          </label>
+        </div>
+
+        <div class="field-row" style="align-items:flex-end">
+          <div class="field-group" style="max-width:160px">
+            <label>Minimum DSCR</label>
+            <input type="number" name="dscr_minimum" step="0.01" min="1.0" max="3.0"
+                   value="{{ _dscr_min }}" placeholder="1.15">
+          </div>
+        </div>
+
+      </div>
+      <div class="wizard-footer">
+        <button type="button" class="btn btn-secondary"
+                hx-get="/ui/models/{{ model.id }}/setup?step=2"
+                hx-target="#deal-setup-wizard" hx-swap="outerHTML">← Back</button>
+        <button type="submit" class="btn btn-primary">Next →</button>
+      </div>
+    </form>
+
+    {# ════════════════════════════════════════════════════════════════ STEP 4 #}
+    {% elif _step == 4 %}
+    <div class="wizard-header">
+      <div class="wizard-title">Reserves & Floors</div>
+      <div class="wizard-subtitle">Minimum cash balances the debt must fund.</div>
+    </div>
+    {% set _cf_pct = inputs.construction_floor_pct | float if inputs and inputs.construction_floor_pct else 5.0 %}
+    {% set _or_mo  = inputs.operation_reserve_months | int if inputs and inputs.operation_reserve_months else 6 %}
+    <form hx-post="/ui/models/{{ model.id }}/setup/step"
+          hx-target="#deal-setup-wizard"
+          hx-swap="outerHTML">
+      <input type="hidden" name="step" value="4">
+      <div class="wizard-body">
+
+        {% if _has_constr %}
+        <div class="section-label">Construction Floor</div>
+        <div class="field-row" style="align-items:flex-start">
+          <div class="field-group" style="max-width:180px">
+            <label>Floor (% of Total Project Cost)</label>
+            <input type="number" name="construction_floor_pct" step="0.5" min="0" max="25"
+                   value="{{ _cf_pct }}" placeholder="5.0">
+            <div class="field-hint">Minimum cash balance during construction. Covers IO timing gaps and cost overrun buffer. Typical: 5–10%.</div>
+          </div>
+        </div>
+        {% endif %}
+
+        <div class="section-label">Operating Reserve</div>
+        <div class="field-row" style="align-items:flex-start">
+          <div class="field-group" style="max-width:180px">
+            <label>Reserve (months)</label>
+            <input type="number" name="operation_reserve_months" step="1" min="0" max="24"
+                   value="{{ _or_mo }}" placeholder="6">
+            <div class="field-hint">Sized as the greater of N months of OpEx or N months of debt service. Lender-required. Typical: 6–12 months.</div>
+          </div>
+        </div>
+
+      </div>
+      <div class="wizard-footer">
+        <button type="button" class="btn btn-secondary"
+                hx-get="/ui/models/{{ model.id }}/setup?step=3"
+                hx-target="#deal-setup-wizard" hx-swap="outerHTML">← Back</button>
+        <button type="submit" class="btn btn-primary">Review →</button>
+      </div>
+    </form>
+
+    {# ════════════════════════════════════════════════════════════════ REVIEW #}
+    {% elif _step == 5 %}
+    {% set _dt  = inputs.debt_terms or {} %}
+    {% set _dsm = inputs.debt_sizing_mode or 'gap_fill' %}
+    <div class="wizard-header">
+      <div class="wizard-title">Review Setup</div>
+      <div class="wizard-subtitle">Confirm your deal structure. The primary debt source will be created automatically.</div>
+    </div>
+    <form hx-post="/ui/models/{{ model.id }}/setup/complete"
+          hx-target="body"
+          hx-swap="none">
+      <div class="wizard-body">
+
+        <table class="review-table">
+          <tr>
+            <td>Debt structure</td>
+            <td>
+              {% if _ds == 'perm_only' %}Permanent Debt Only
+              {% elif _ds == 'construction_to_perm' %}Construction-to-Perm
+              {% else %}Construction + Permanent (Separate)
+              {% endif %}
+            </td>
+          </tr>
+          {% if _has_constr %}
+          <tr><td>Construction IO rate</td><td>{{ _dt.construction_rate_pct }}%</td></tr>
+          {% endif %}
+          <tr><td>Perm rate</td><td>{{ _dt.perm_rate_pct }}%</td></tr>
+          <tr><td>Amortization</td><td>{{ _dt.perm_amort_years }} years</td></tr>
+          <tr>
+            <td>Debt sizing mode</td>
+            <td>{% if _dsm == 'gap_fill' %}Gap-Fill (advisory DSCR){% else %}DSCR-Capped{% endif %}</td>
+          </tr>
+          <tr>
+            <td>Minimum DSCR</td>
+            <td>{{ inputs.dscr_minimum | float }}×</td>
+          </tr>
+          {% if _has_constr %}
+          <tr>
+            <td>Construction floor</td>
+            <td>{{ inputs.construction_floor_pct | float }}% of TPC</td>
+          </tr>
+          {% endif %}
+          <tr>
+            <td>Operating reserve</td>
+            <td>{{ inputs.operation_reserve_months }} months debt service</td>
+          </tr>
+        </table>
+
+        <div style="background:var(--accent-faint);border:1px solid var(--accent);border-radius:8px;padding:12px 14px;font-size:12px;margin-top:8px">
+          <strong>What happens next:</strong> The primary debt source will be added to Sources with the terms above.
+          Debt amount is computed automatically at Compute time based on Uses, reserves, and the IO period.
+          You can edit the debt source in the Sources module at any time.
+        </div>
+
+      </div>
+      <div class="wizard-footer">
+        <button type="button" class="btn btn-secondary"
+                hx-get="/ui/models/{{ model.id }}/setup?step=4"
+                hx-target="#deal-setup-wizard" hx-swap="outerHTML">← Back</button>
+        <button type="submit" class="btn btn-primary">Finish Setup →</button>
+      </div>
+    </form>
+    {% endif %}
+
+  </div>{# /.wizard-card #}
+</div>{# /.wizard-shell #}
+
+<script>
+function selectOption(radio) {
+  document.querySelectorAll('#debt-struct-grid .option-card').forEach(function(card) {
+    card.classList.remove('selected');
+  });
+  radio.closest('.option-card').classList.add('selected');
+}
+function selectToggle(name, val) {
+  document.querySelectorAll('.toggle-opt').forEach(function(opt) {
+    opt.classList.remove('selected');
+    var r = opt.querySelector('input[type="radio"]');
+    if (r && r.name === name) {
+      r.checked = (r.value === val);
+      if (r.value === val) opt.classList.add('selected');
+    }
+  });
+}
+</script>

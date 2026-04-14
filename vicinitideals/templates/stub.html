@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{{ label }} — Vicinity Deals{% endblock %}
+
+{% block content %}
+<div class="topbar">
+  <div class="topbar-title">{{ label }}</div>
+</div>
+<div class="content">
+  <div class="empty-state" style="margin-top: 80px">
+    <div class="empty-icon">{{ icon }}</div>
+    <div class="empty-title">{{ label }} — Coming Soon</div>
+    <div class="empty-desc">This page is being built. Check back soon.</div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% if b.number_of_assets %}
+<div style="margin-bottom:16px">
+  <span class="badge badge-blue">{{ b.number_of_assets }} assets</span>
+</div>
+{% endif %}
+
+<div class="section-title mb-12">Contact</div>
+<div class="field-row">
+  <div class="field-key">Full Name</div>
+  <div class="field-value">
+    <a href="/brokers?q={{ b.full_name | urlencode }}" style="color:var(--accent)">{{ b.full_name }}</a>
+  </div>
+</div>
+<div class="field-row">
+  <div class="field-key">Company</div>
+  <div class="field-value">
+    {% if b.brokerage_name %}
+    <a href="/brokers?q={{ b.brokerage_name | urlencode }}" style="color:var(--accent)">{{ b.brokerage_name }}</a>
+    {% else %}—{% endif %}
+  </div>
+</div>
+<div class="field-row"><div class="field-key">Email</div><div class="field-value">
+  {% if b.email %}<a href="mailto:{{ b.email }}" style="color:var(--accent)">{{ b.email }}</a>{% else %}—{% endif %}
+</div></div>
+<div class="field-row"><div class="field-key">Phone</div><div class="field-value">{{ b.phone or "—" }}</div></div>
+<div class="field-row"><div class="field-key">License</div><div class="field-value">
+  {% if b.license_number %}{{ b.license_number }}{% if b.license_state %} · {{ b.license_state }}{% endif %}{% else %}—{% endif %}
+</div></div>
+
+{% if b.listings %}
+<div class="divider"></div>
+<div class="section-title mb-12">Listings ({{ b.listings | length }})</div>
+{% for l in b.listings %}
+<div style="padding:6px 0;border-bottom:1px solid var(--border);font-size:13px">
+  <div style="font-weight:500">
+    <a href="/listings?q={{ l.address | urlencode }}" style="color:var(--accent)">{{ l.address }}</a>
+  </div>
+  <div class="text-small text-muted">{{ l.source | title }} · {{ l.asking_price | currency if l.asking_price else "—" }}</div>
+</div>
+{% endfor %}
+{% endif %}
+
+<div class="divider"></div>
+<button class="btn btn-secondary" style="width:100%">✏ Edit Contact</button>

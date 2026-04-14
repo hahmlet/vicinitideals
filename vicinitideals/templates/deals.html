@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block title %}Deals — Viciniti Deals{% endblock %}
+
+{% block head %}
+<style>
+.deal-name { font-weight: 600; }
+.deal-address { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+.irr-value { font-weight: 700; color: var(--success); }
+.archive-btn { opacity: 0; transition: opacity 0.1s; }
+tr:hover .archive-btn { opacity: 1; }
+.primary-model { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; }
+.primary-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+.archived-toggle { display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-muted);white-space:nowrap }
+.archived-toggle input { cursor:pointer }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="topbar">
+  <a href="/opportunities" class="btn btn-primary">+ New Deal</a>
+</div>
+
+<div class="content">
+
+  <!-- Stats row -->
+  <div class="card-grid mb-16" style="grid-template-columns: repeat(4, 1fr)">
+    <div class="stat-card">
+      <div class="stat-label">Pipeline Deals</div>
+      <div class="stat-value">{{ stats.pipeline_count }}</div>
+      <div class="stat-sub">evaluation → closed</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Avg Levered IRR</div>
+      <div class="stat-value" style="color:var(--success)">{{ stats.avg_irr | pct }}</div>
+      <div class="stat-sub">primary models only</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Pipeline Value</div>
+      <div class="stat-value">{{ stats.pipeline_value | currency_m }}</div>
+      <div class="stat-sub">total acquisition cost</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">No Model Yet</div>
+      <div class="stat-value" style="color:var(--warning)">{{ stats.no_model_count }}</div>
+      <div class="stat-sub">need primary model</div>
+    </div>
+  </div>
+
+  <!-- Toolbar with HTMX live filtering -->
+  <form id="deal-filters"
+        hx-get="/ui/deals/rows"
+        hx-trigger="change, input delay:300ms from:[type=search]"
+        hx-target="#deals-tbody"
+        hx-swap="innerHTML">
+    <div class="toolbar">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input class="search-input" type="search" name="q" value="{{ q }}" placeholder="Search deals, addresses…">
+      </div>
+      <select class="filter-select" name="status">
+        <option value="" {% if not status %}selected{% endif %}>All Active Statuses</option>
+        <option value="evaluation" {% if status == 'evaluation' %}selected{% endif %}>Evaluation</option>
+        <option value="execution" {% if status == 'execution' %}selected{% endif %}>Execution</option>
+        <option value="under_contract" {% if status == 'under_contract' %}selected{% endif %}>Under Contract</option>
+        <option value="closed" {% if status == 'closed' %}selected{% endif %}>Closed</option>
+      </select>
+      <select class="filter-select" name="type">
+        <option value="" {% if not deal_type %}selected{% endif %}>All Types</option>
+        <option value="acquisition_minor_reno" {% if deal_type == 'acquisition_minor_reno' %}selected{% endif %}>Minor Renovation</option>
+        <option value="acquisition_major_reno" {% if deal_type == 'acquisition_major_reno' %}selected{% endif %}>Major Renovation</option>
+        <option value="acquisition_conversion" {% if deal_type == 'acquisition_conversion' %}selected{% endif %}>Conversion</option>
+        <option value="new_construction" {% if deal_type == 'new_construction' %}selected{% endif %}>New Construction</option>
+      </select>
+      <select class="filter-select" name="model">
+        <option value="" {% if not model_filter %}selected{% endif %}>Any Model</option>
+        <option value="has" {% if model_filter == 'has' %}selected{% endif %}>Has Primary Model</option>
+        <option value="none" {% if model_filter == 'none' %}selected{% endif %}>No Model</option>
+      </select>
+      <label class="archived-toggle">
+        <input type="checkbox" name="include_archived" value="1" {% if include_archived %}checked{% endif %}>
+        Include Archived
+      </label>
+    </div>
+  </form>
+
+  <!-- Table -->
+  <div class="table-wrap">
+    <div class="col-picker-wrap">
+      <button class="btn btn-secondary btn-sm" data-col-picker data-table-id="deals-tbody" data-table-key="deals">⚙ Columns</button>
+    </div>
+    <table class="data-table" data-table-key="deals">
+      <thead>
+        <tr>
+          <th class="sortable sorted" data-col="name">Deal Name <span class="sort-arrow">▲</span></th>
+          <th data-col="status">Status</th>
+          <th data-col="type">Deal Type</th>
+          <th class="sortable" data-col="building">Building</th>
+          <th class="sortable" data-col="model">Primary Model</th>
+          <th class="sortable col-right" data-col="noi">NOI</th>
+          <th class="sortable col-right" data-col="irr">IRR (L)</th>
+          <th class="sortable col-right" data-col="equity_x">Equity ×</th>
+          <th class="sortable" data-col="updated">Last Updated</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="deals-tbody">
+        {% include "partials/deals_rows.html" %}
+      </tbody>
+    </table>
+    <div class="table-footer">
+      <span>
+        Showing {{ deals | length }} of {{ total_count }} deals
+        {% if archived_count > 0 and not include_archived %}
+        · <span style="color:var(--text-muted);font-size:12px">{{ archived_count }} archived</span>
+        {% endif %}
+      </span>
+      {% if total_count > deals | length %}
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-secondary btn-sm">← Prev</button>
+        <button class="btn btn-secondary btn-sm">Next →</button>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+</div>
+{% endblock %}

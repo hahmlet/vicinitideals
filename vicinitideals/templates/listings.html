@@ -1,0 +1,554 @@
+{% extends "base.html" %}
+{% block title %}Listings — Viciniti Deals{% endblock %}
+
+{% block head %}
+<style>
+.json-pre { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11px; background: #1E293B; color: #E2E8F0; padding: 14px; border-radius: var(--radius); overflow-x: auto; line-height: 1.6; white-space: pre; }
+.section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); margin: 24px 0 10px; }
+details.archive-section > summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: 8px; }
+details.archive-section > summary::-webkit-details-marker { display: none; }
+details.archive-section > summary .chevron { font-size: 10px; color: var(--text-muted); transition: transform .15s; }
+details.archive-section[open] > summary .chevron { transform: rotate(90deg); }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="topbar">
+  <div style="font-size:15px;font-weight:700">Listings</div>
+  <div class="topbar-actions" style="position:relative;display:flex;gap:8px;align-items:center">
+
+    {# ── Realie enrichment button ── #}
+    <span id="realie-btn-wrap" style="display:inline-block;position:relative">
+      <button id="realie-btn" class="btn btn-secondary"
+              hx-post="/api/realie/enrich"
+              hx-swap="none"
+              {% if realie_locked %}disabled title="Monthly quota reached ({{ realie_calls_used }}/{{ realie_call_limit }})"{% endif %}>
+        ✦ Enrich
+        <span id="realie-counter" style="font-size:11px;opacity:.7;margin-left:2px;{% if realie_locked %}color:var(--warning,#f59e0b){% endif %}">({{ realie_calls_used }}/{{ realie_call_limit }})</span>
+      </button>
+      <div id="realie-popup" style="
+        display:none;position:absolute;top:calc(100% + 8px);right:0;z-index:500;
+        background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+        box-shadow:0 4px 16px rgba(0,0,0,.25);padding:12px 14px;min-width:240px;
+        font-size:12px;line-height:1.7;white-space:nowrap">
+      </div>
+    </span>
+
+    {# ── Ingest button ── #}
+    <span id="ingest-btn-wrap" style="display:inline-block">
+      <button id="ingest-btn" class="btn btn-primary"
+              hx-post="/api/scraper/run"
+              hx-swap="none">▶ Trigger Ingest</button>
+    </span>
+    <div id="ingest-popup" style="
+      display:none;position:absolute;top:calc(100% + 8px);right:0;z-index:500;
+      background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+      box-shadow:0 4px 16px rgba(0,0,0,.25);padding:12px 14px;min-width:220px;
+      font-size:12px;line-height:1.7;white-space:nowrap">
+    </div>
+  </div>
+</div>
+
+<div class="content">
+
+  {# ── Shared filter bar (applies to New table) ── #}
+  <form id="listing-filters"
+        hx-get="/ui/listings/rows"
+        hx-trigger="change, input delay:300ms from:[type=search]"
+        hx-target="#new-listings-tbody"
+        hx-swap="innerHTML"
+        hx-include="this">
+    <div class="toolbar">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input class="search-input" type="search" name="q" value="{{ q }}" placeholder="Search by address…">
+      </div>
+      <select class="filter-select" name="source">
+        <option value="" {% if not source %}selected{% endif %}>All Sources</option>
+        <option value="crexi" {% if source == 'crexi' %}selected{% endif %}>Crexi</option>
+        <option value="loopnet" {% if source == 'loopnet' %}selected{% endif %}>LoopNet</option>
+      </select>
+      <select class="filter-select" name="property_type">
+        <option value="" {% if not property_type %}selected{% endif %}>All Types</option>
+        {% for pt in property_types %}
+        <option value="{{ pt }}" {% if property_type == pt %}selected{% endif %}>{{ pt }}</option>
+        {% endfor %}
+      </select>
+      <input class="filter-input" type="number" name="min_units" value="{{ min_units }}" placeholder="Min units" min="0" style="width:90px">
+      <input class="filter-input" type="number" name="max_units" value="{{ max_units }}" placeholder="Max units" min="0" style="width:90px">
+      <select class="filter-select" name="priority_bucket">
+        <option value="" {% if not priority_bucket %}selected{% endif %}>All Buckets</option>
+        <option value="prime" {% if priority_bucket == 'prime' %}selected{% endif %}>Prime</option>
+        <option value="target" {% if priority_bucket == 'target' %}selected{% endif %}>Target</option>
+        <option value="contextual" {% if priority_bucket == 'contextual' %}selected{% endif %}>Contextual</option>
+        <option value="out_of_market" {% if priority_bucket == 'out_of_market' %}selected{% endif %}>Out of Market</option>
+        <option value="ineligible" {% if priority_bucket == 'ineligible' %}selected{% endif %}>Ineligible</option>
+        <option value="unclassified" {% if priority_bucket == 'unclassified' %}selected{% endif %}>Unclassified</option>
+      </select>
+    </div>
+  </form>
+
+  {# ── Table 1: New ── #}
+  <div class="section-label">
+    New ({{ new_listings | length }})
+    <span style="font-weight:400;text-transform:none;font-size:12px;color:var(--text-muted)"> — unseen listings, stays here until you promote or archive</span>
+  </div>
+  <div class="table-wrap">
+    <div class="col-picker-wrap">
+      <button class="btn btn-secondary btn-sm" data-col-picker data-table-id="new-listings-tbody" data-table-key="listings">⚙ Columns</button>
+    </div>
+    <table class="data-table" data-table-key="listings">
+      <thead>
+        <tr>
+          <th class="sortable sorted" data-col="address">Address <span class="sort-arrow">▼</span></th>
+          <th class="sortable col-right" data-col="price">Asking Price</th>
+          <th class="sortable col-right" data-col="units">Units</th>
+          <th class="sortable col-right" data-col="cap_rate">Cap Rate</th>
+          <th class="sortable" data-col="year_built">Year Built</th>
+          <th data-col="status">Status</th>
+          <th class="sortable" data-col="first_seen">First Seen</th>
+          <th class="sortable" data-col="updated">Last Updated</th>
+          <th class="col-right" data-col="price_per_unit" data-hidden>Price / Unit</th>
+          <th class="col-right" data-col="proforma_cap_rate" data-hidden>Cap Rate (PF)</th>
+          <th class="col-right" data-col="noi" data-hidden>NOI</th>
+          <th class="col-right" data-col="proforma_noi" data-hidden>NOI (Pro Forma)</th>
+          <th class="col-right" data-col="building_sqft" data-hidden>Bldg SqFt</th>
+          <th class="col-right" data-col="lot_sqft" data-hidden>Lot SqFt</th>
+          <th data-col="property_type" data-hidden>Property Type</th>
+          <th data-col="broker" data-hidden>Broker</th>
+          <th data-col="brokerage" data-hidden>Brokerage</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="new-listings-tbody">
+        {% with new_listings=new_listings %}
+          {% include "partials/listings_rows.html" %}
+        {% endwith %}
+      </tbody>
+    </table>
+    <div class="table-footer">
+      <span>{{ new_listings | length }} new · {{ total_count }} total</span>
+    </div>
+  </div>
+
+  {# ── Table 2: Promoted ── #}
+  <form id="promoted-filters"
+        hx-get="/ui/listings/promoted/rows"
+        hx-trigger="change, input delay:300ms from:[type=search]"
+        hx-target="#promoted-tbody"
+        hx-swap="innerHTML"
+        style="margin-top:32px">
+    <div class="section-label" style="margin-bottom:10px">
+      Promoted ({{ promoted_listings | length }})
+      <span style="font-weight:400;text-transform:none;font-size:12px;color:var(--text-muted)"> — linked to an Opportunity</span>
+    </div>
+    <div class="toolbar">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input class="search-input" type="search" name="q_promoted" placeholder="Search promoted…">
+      </div>
+      <select class="filter-select" name="promoted_source">
+        <option value="">All Sources</option>
+        <option value="crexi">Crexi</option>
+        <option value="loopnet">LoopNet</option>
+      </select>
+      <select class="filter-select" name="promoted_property_type">
+        <option value="">All Types</option>
+        {% for pt in property_types %}
+        <option value="{{ pt }}">{{ pt }}</option>
+        {% endfor %}
+      </select>
+      <input class="filter-input" type="number" name="promoted_min_units" placeholder="Min units" min="0" style="width:90px">
+      <input class="filter-input" type="number" name="promoted_max_units" placeholder="Max units" min="0" style="width:90px">
+    </div>
+  </form>
+  <div class="table-wrap">
+    <div class="col-picker-wrap">
+      <button class="btn btn-secondary btn-sm" data-col-picker data-table-id="promoted-tbody" data-table-key="listings-promoted">⚙ Columns</button>
+    </div>
+    <table class="data-table" data-table-key="listings-promoted">
+      <thead>
+        <tr>
+          <th class="sortable sorted" data-col="address">Address <span class="sort-arrow">▼</span></th>
+          <th class="sortable col-right" data-col="price">Asking Price</th>
+          <th class="sortable col-right" data-col="units">Units</th>
+          <th class="sortable col-right" data-col="cap_rate">Cap Rate</th>
+          <th class="sortable" data-col="year_built">Year Built</th>
+          <th data-col="status">Status</th>
+          <th class="sortable" data-col="first_seen">First Seen</th>
+          <th class="sortable" data-col="updated">Last Updated</th>
+          <th class="col-right" data-col="price_per_unit" data-hidden>Price / Unit</th>
+          <th class="col-right" data-col="proforma_cap_rate" data-hidden>Cap Rate (PF)</th>
+          <th class="col-right" data-col="noi" data-hidden>NOI</th>
+          <th class="col-right" data-col="proforma_noi" data-hidden>NOI (Pro Forma)</th>
+          <th class="col-right" data-col="building_sqft" data-hidden>Bldg SqFt</th>
+          <th class="col-right" data-col="lot_sqft" data-hidden>Lot SqFt</th>
+          <th data-col="property_type" data-hidden>Property Type</th>
+          <th data-col="broker" data-hidden>Broker</th>
+          <th data-col="brokerage" data-hidden>Brokerage</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="promoted-tbody">
+        {% for l in promoted_listings %}
+          {% include "partials/listings_promoted_row.html" %}
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="table-footer">
+      <span>{{ promoted_listings | length }} promoted</span>
+    </div>
+  </div>
+
+  {# ── Table 3: Archived (collapsed) ── #}
+  <details class="archive-section" style="margin-top:32px">
+    <summary>
+      <span class="chevron">▶</span>
+      <span class="section-label" style="margin:0">Archived ({{ archived_listings | length }})</span>
+      <span style="font-weight:400;font-size:12px;color:var(--text-muted);text-transform:none"> — dismissed listings; restore or promote any time</span>
+    </summary>
+    <div class="table-wrap" style="margin-top:10px">
+      <div class="col-picker-wrap">
+        <button class="btn btn-secondary btn-sm" data-col-picker data-table-id="archived-tbody" data-table-key="listings-archived">⚙ Columns</button>
+      </div>
+      <table class="data-table" data-table-key="listings-archived">
+        <thead>
+          <tr>
+            <th class="sortable sorted" data-col="address">Address <span class="sort-arrow">▼</span></th>
+            <th class="sortable col-right" data-col="price">Asking Price</th>
+            <th class="sortable col-right" data-col="units">Units</th>
+            <th class="sortable col-right" data-col="cap_rate">Cap Rate</th>
+            <th class="sortable" data-col="year_built">Year Built</th>
+            <th data-col="status">Status</th>
+            <th class="sortable" data-col="first_seen">First Seen</th>
+            <th class="sortable" data-col="updated">Last Updated</th>
+            <th class="col-right" data-col="price_per_unit" data-hidden>Price / Unit</th>
+            <th class="col-right" data-col="proforma_cap_rate" data-hidden>Cap Rate (PF)</th>
+            <th class="col-right" data-col="noi" data-hidden>NOI</th>
+            <th class="col-right" data-col="proforma_noi" data-hidden>NOI (Pro Forma)</th>
+            <th class="col-right" data-col="building_sqft" data-hidden>Bldg SqFt</th>
+            <th class="col-right" data-col="lot_sqft" data-hidden>Lot SqFt</th>
+            <th data-col="property_type" data-hidden>Property Type</th>
+            <th data-col="broker" data-hidden>Broker</th>
+            <th data-col="brokerage" data-hidden>Brokerage</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="archived-tbody">
+          {% for l in archived_listings %}
+            {% include "partials/listings_archived_row.html" %}
+          {% endfor %}
+        </tbody>
+      </table>
+      <div class="table-footer">
+        <span>{{ archived_listings | length }} archived</span>
+      </div>
+    </div>
+  </details>
+
+</div>
+
+<!-- Listing detail drawer -->
+<div class="drawer-overlay" id="listing-drawer" style="display:none">
+  <div class="drawer">
+    <div class="drawer-header">
+      <div>
+        <div class="drawer-title" id="listing-drawer-title">Listing</div>
+        <div class="text-small text-muted" id="listing-drawer-sub"></div>
+      </div>
+      <span class="drawer-close" onclick="closeDrawer('listing-drawer')">×</span>
+    </div>
+    <div class="drawer-body" id="listing-drawer-body">
+      <div class="text-muted text-small">Loading…</div>
+    </div>
+  </div>
+</div>
+
+<!-- Raw JSON drawer -->
+<div class="drawer-overlay" id="json-drawer" style="display:none">
+  <div class="drawer" style="width:500px">
+    <div class="drawer-header">
+      <div>
+        <div class="drawer-title" id="json-drawer-title">Raw Listing Data</div>
+        <div class="text-small text-muted" id="json-drawer-sub"></div>
+      </div>
+      <span class="drawer-close" onclick="closeDrawer('json-drawer')">×</span>
+    </div>
+    <div class="drawer-body">
+      <pre class="json-pre" id="json-content">Loading…</pre>
+    </div>
+  </div>
+</div>
+
+<script>
+function openListing(id, address, source) {
+  document.getElementById('listing-drawer-title').textContent = address;
+  document.getElementById('listing-drawer-sub').textContent = source || '';
+  htmx.ajax('GET', '/ui/listings/' + id + '/detail', {target: '#listing-drawer-body', swap: 'innerHTML'});
+  openDrawer('listing-drawer');
+}
+function openJson(event, id, title, sub) {
+  event.stopPropagation();
+  document.getElementById('json-drawer-title').textContent = title;
+  document.getElementById('json-drawer-sub').textContent = sub || '';
+  document.getElementById('json-content').textContent = 'Loading…';
+  openDrawer('json-drawer');
+  fetch('/ui/listings/' + id + '/raw')
+    .then(r => r.text())
+    .then(t => { document.getElementById('json-content').textContent = t; });
+}
+
+// ── Ingest button status popup ──
+(function() {
+  var _pollInterval = null;
+  var _popupVisible = false;
+  var _lastData = null;
+
+  var btn, popup;
+
+  function _renderPopup(d) {
+    if (!d || d.status === 'idle') {
+      popup.innerHTML = '<span style="color:var(--text-muted)">No recent ingest</span>';
+      return;
+    }
+    var statusColor = d.status === 'completed' ? 'var(--success,#22c55e)'
+                    : d.status === 'failed'    ? 'var(--danger,#ef4444)'
+                    : 'var(--warning,#f59e0b)';
+    var rows = [];
+    rows.push('<div style="display:flex;justify-content:space-between;gap:24px;margin-bottom:4px">'
+      + '<span style="font-weight:700;color:' + statusColor + ';text-transform:capitalize">' + d.status + '</span>'
+      + (d.source ? '<span style="color:var(--text-muted)">' + d.source + '</span>' : '')
+      + '</div>');
+    if (d.records_fetched != null || d.records_new != null || d.records_duplicate != null) {
+      var fetchedLabel = (d.source_total != null && d.source_total > 0)
+        ? 'Fetched (' + d.records_fetched + ' of ' + d.source_total + ' on Crexi)'
+        : 'Fetched';
+      var fetchedVal = (d.source_total != null && d.source_total > 0) ? null : d.records_fetched;
+      rows.push('<div style="display:flex;gap:16px;padding:6px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin:4px 0;flex-wrap:wrap">'
+        + (fetchedVal !== null ? _stat('Fetched', fetchedVal) : '<div style="display:flex;flex-direction:column;align-items:center"><span style="font-size:18px;font-weight:700;color:var(--text)">' + d.records_fetched + '</span><span style="font-size:10px;color:var(--warning,#f59e0b);text-transform:uppercase;letter-spacing:.04em">of ' + d.source_total + ' on Crexi</span></div>')
+        + _stat('New', d.records_new)
+        + _stat('Updated', d.records_duplicate)
+        + '</div>');
+    }
+    if (d.started_at) {
+      var dt = new Date(d.started_at);
+      rows.push('<div style="color:var(--text-muted);font-size:11px">Started ' + dt.toLocaleTimeString() + '</div>');
+    }
+    popup.innerHTML = rows.join('');
+  }
+
+  function _stat(label, val) {
+    return '<div style="text-align:center"><div style="font-size:14px;font-weight:700">'
+      + (val != null ? val : '—') + '</div><div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em">'
+      + label + '</div></div>';
+  }
+
+  function _showPopup() {
+    _popupVisible = true;
+    if (_lastData) _renderPopup(_lastData);
+    popup.style.display = 'block';
+  }
+
+  function _hidePopup() {
+    _popupVisible = false;
+    popup.style.display = 'none';
+  }
+
+  function _poll() {
+    fetch('/api/ingest/latest')
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        var data = (d && d.data) ? d.data : d;
+        _lastData = data;
+        if (_popupVisible) _renderPopup(data);
+        if (data && (data.status === 'completed' || data.status === 'failed')) {
+          _stopPoll(data);
+        }
+      })
+      .catch(function() {});
+  }
+
+  function _stopPoll(finalData) {
+    if (_pollInterval) { clearInterval(_pollInterval); _pollInterval = null; }
+    btn.disabled = false;
+    btn.classList.add('btn-primary');
+    btn.classList.remove('btn-secondary');
+    var ok = finalData && finalData.status === 'completed';
+    btn.textContent = ok ? '✓ Ingest done' : (finalData && finalData.status === 'failed' ? '✗ Failed' : '▶ Trigger Ingest');
+    setTimeout(function() { btn.textContent = '▶ Trigger Ingest'; }, 5000);
+    // Refresh the New listings table so new rows appear without a full reload
+    if (ok) {
+      htmx.ajax('GET', '/ui/listings/rows', {target: '#new-listings-tbody', swap: 'innerHTML'});
+    }
+  }
+
+  function _startPoll() {
+    if (_pollInterval) clearInterval(_pollInterval);
+    btn.disabled = true;
+    btn.textContent = '⟳ Ingesting…';
+    btn.classList.remove('btn-primary');
+    btn.classList.add('btn-secondary');
+    _lastData = null;
+    if (_popupVisible) popup.innerHTML = '<span style="color:var(--text-muted)">Starting…</span>';
+    // Small delay to let the IngestJob record get created
+    setTimeout(function() {
+      _poll();
+      _pollInterval = setInterval(_poll, 3000);
+    }, 1500);
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    btn = document.getElementById('ingest-btn');
+    popup = document.getElementById('ingest-popup');
+    var wrap = document.getElementById('ingest-btn-wrap');
+    if (!btn || !popup || !wrap) return;
+
+    // Show/hide popup on hover over the whole topbar-actions area
+    wrap.addEventListener('mouseenter', _showPopup);
+    wrap.addEventListener('mouseleave', function(e) {
+      // Keep open if moving into the popup itself
+      if (e.relatedTarget && popup.contains(e.relatedTarget)) return;
+      _hidePopup();
+    });
+    popup.addEventListener('mouseleave', function(e) {
+      if (e.relatedTarget && wrap.contains(e.relatedTarget)) return;
+      _hidePopup();
+    });
+
+    btn.addEventListener('htmx:afterRequest', function(e) {
+      if (e.detail.successful) _startPoll();
+    });
+  });
+})();
+
+// ── Realie enrichment button ──
+(function() {
+  var _pollInterval = null;
+  var _popupVisible = false;
+
+  var btn, popup, counter;
+
+  function _renderPopup(d) {
+    if (!d) { popup.innerHTML = '<span style="color:var(--text-muted)">No enrichment data</span>'; return; }
+    var rows = [];
+    var statusColor = (d.locked || d.calls_remaining === 0) ? 'var(--warning,#f59e0b)' : 'var(--success,#22c55e)';
+    rows.push('<div style="display:flex;justify-content:space-between;gap:16px;margin-bottom:6px">'
+      + '<span style="font-weight:700">Realie Usage</span>'
+      + '<span style="color:' + statusColor + ';font-weight:600">' + d.month + '</span>'
+      + '</div>');
+    rows.push('<div style="display:flex;gap:16px;padding:6px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin:4px 0">'
+      + _stat('Used', d.calls_used)
+      + _stat('Limit', d.call_limit)
+      + _stat('Left', d.calls_remaining)
+      + '</div>');
+    if (d.locked || d.calls_remaining === 0) {
+      rows.push('<div style="color:var(--warning,#f59e0b);font-size:11px;margin-top:4px">Quota reached — resets next month</div>');
+    }
+    if (d.last_call_at) {
+      var dt = new Date(d.last_call_at);
+      rows.push('<div style="color:var(--text-muted);font-size:11px">Last call ' + dt.toLocaleDateString() + '</div>');
+    }
+    popup.innerHTML = rows.join('');
+  }
+
+  function _stat(label, val) {
+    return '<div style="text-align:center"><div style="font-size:14px;font-weight:700">'
+      + (val != null ? val : '—') + '</div><div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em">'
+      + label + '</div></div>';
+  }
+
+  function _updateCounter(d) {
+    if (!counter || !d) return;
+    counter.textContent = '(' + d.calls_used + '/' + d.call_limit + ')';
+    if (d.locked || d.calls_remaining === 0) {
+      counter.style.color = 'var(--warning,#f59e0b)';
+      btn.disabled = true;
+      btn.title = 'Monthly quota reached (' + d.calls_used + '/' + d.call_limit + ')';
+    }
+  }
+
+  function _fetchStatus() {
+    fetch('/api/realie/status')
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (_popupVisible) _renderPopup(d);
+        _updateCounter(d);
+      })
+      .catch(function() {});
+  }
+
+  function _startPoll() {
+    if (_pollInterval) clearInterval(_pollInterval);
+    btn.disabled = true;
+    btn.textContent = '⟳ Enriching…';
+    if (counter) btn.appendChild(counter);
+    if (_popupVisible) popup.innerHTML = '<span style="color:var(--text-muted)">Running…</span>';
+    setTimeout(function() {
+      _fetchStatus();
+      _pollInterval = setInterval(function() {
+        _fetchStatus();
+        // Stop polling after 5 minutes (enrichment runs in background)
+        // Status is reflected via the counter update
+      }, 4000);
+      // Auto-stop poll after 5 min max
+      setTimeout(function() {
+        if (_pollInterval) { clearInterval(_pollInterval); _pollInterval = null; }
+        btn.disabled = false;
+        btn.innerHTML = '✦ Enrich';
+        if (counter) btn.appendChild(counter);
+        htmx.ajax('GET', '/ui/listings/rows', {target: '#new-listings-tbody', swap: 'innerHTML'});
+      }, 300000);
+    }, 1500);
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    btn = document.getElementById('realie-btn');
+    popup = document.getElementById('realie-popup');
+    counter = document.getElementById('realie-counter');
+    var wrap = document.getElementById('realie-btn-wrap');
+    if (!btn || !popup || !wrap) return;
+
+    // Fetch live status on page load to ensure counter is current
+    _fetchStatus();
+
+    wrap.addEventListener('mouseenter', function() {
+      _popupVisible = true;
+      _fetchStatus();
+      popup.style.display = 'block';
+    });
+    wrap.addEventListener('mouseleave', function(e) {
+      if (e.relatedTarget && popup.contains(e.relatedTarget)) return;
+      _popupVisible = false;
+      popup.style.display = 'none';
+    });
+    popup.addEventListener('mouseleave', function(e) {
+      if (e.relatedTarget && wrap.contains(e.relatedTarget)) return;
+      _popupVisible = false;
+      popup.style.display = 'none';
+    });
+
+    btn.addEventListener('htmx:afterRequest', function(e) {
+      if (e.detail.successful) {
+        _startPoll();
+      } else if (e.detail.xhr && e.detail.xhr.status === 429) {
+        var err = JSON.parse(e.detail.xhr.responseText || '{}');
+        var detail = err.detail || {};
+        popup.innerHTML = '<span style="color:var(--warning,#f59e0b)">Quota exceeded: '
+          + (detail.calls_used || '?') + '/' + (detail.call_limit || 25) + ' calls used</span>';
+        popup.style.display = 'block';
+        setTimeout(function() { popup.style.display = 'none'; }, 4000);
+      }
+    });
+  });
+})();
+
+// ── Auto-open listing from ?open= param (e.g. deep-link from dedup page) ──
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var openId = params.get('open');
+  if (openId) {
+    openListing(openId, '…', '');
+  }
+})();
+</script>
+{% endblock %}

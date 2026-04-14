@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block title %}Parcels — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div class="topbar">
+  <div class="topbar-actions" style="margin-left:0"></div>
+</div>
+
+<div class="content">
+  {# ── Filter bar ────────────────────────────────────────────────────────── #}
+  <form class="toolbar" style="flex-wrap:wrap;gap:8px" id="parcel-filters"
+        hx-get="/parcels" hx-target="#parcels-tbody" hx-select="#parcels-tbody"
+        hx-swap="outerHTML" hx-push-url="true" hx-select-oob="#zoning-options:outerHTML"
+        hx-trigger="change, input delay:400ms from:[name=q]">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" type="search" placeholder="Search APN or address…"
+             name="q" value="{{ q }}">
+    </div>
+
+    <select class="filter-select" name="jurisdiction"
+            onchange="document.querySelectorAll('#zoning-options input[type=checkbox]').forEach(cb => cb.checked = false)">
+      <option value="">All Jurisdictions</option>
+      {% for j in jurisdictions %}
+      <option value="{{ j }}"{% if j == jurisdiction %} selected{% endif %}>{{ j | title }}</option>
+      {% endfor %}
+    </select>
+
+    <select class="filter-select" name="use_group">
+      <option value="">All Use Types</option>
+      {% for val, label in use_group_options %}
+      <option value="{{ val }}"{% if val == use_group %} selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+    </select>
+
+    <div id="zoning-options" style="display:flex;flex-wrap:wrap;gap:3px;align-items:center;max-width:420px;max-height:72px;overflow-y:auto">
+      {% for z in zoning_codes %}
+      <label style="display:inline-flex;align-items:center;font-size:11px;padding:2px 7px;border:1px solid var(--border);border-radius:3px;cursor:pointer;white-space:nowrap;user-select:none;{% if z in zoning %}background:var(--accent);color:#fff;border-color:var(--accent);{% endif %}">
+        <input type="checkbox" name="zoning" value="{{ z }}"{% if z in zoning %} checked{% endif %} style="display:none"
+               onchange="this.parentElement.style.cssText=this.checked?'display:inline-flex;align-items:center;font-size:11px;padding:2px 7px;border:1px solid var(--accent);border-radius:3px;cursor:pointer;white-space:nowrap;user-select:none;background:var(--accent);color:#fff':'display:inline-flex;align-items:center;font-size:11px;padding:2px 7px;border:1px solid var(--border);border-radius:3px;cursor:pointer;white-space:nowrap;user-select:none'">
+        {{ z }}
+      </label>
+      {% endfor %}
+    </div>
+
+    <div style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text-muted)">
+      <span>Acres</span>
+      <input class="filter-input" type="number" name="min_acres" placeholder="min" step="0.1" min="0"
+             value="{{ min_acres }}" style="width:64px">
+      <span>–</span>
+      <input class="filter-input" type="number" name="max_acres" placeholder="max" step="0.1" min="0"
+             value="{{ max_acres }}" style="width:64px">
+    </div>
+
+    <div style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text-muted)">
+      <span>Built</span>
+      <input class="filter-input" type="number" name="min_year" placeholder="from" min="1800" max="2030"
+             value="{{ min_year }}" style="width:64px">
+      <span>–</span>
+      <input class="filter-input" type="number" name="max_year" placeholder="to" min="1800" max="2030"
+             value="{{ max_year }}" style="width:64px">
+    </div>
+
+    {% if q or zoning or jurisdiction or use_group or min_acres or max_acres or min_year or max_year %}
+    <a href="/parcels" class="btn btn-secondary btn-sm" style="align-self:center">✕ Clear</a>
+    {% endif %}
+
+    <input type="hidden" name="offset" value="0">
+  </form>
+
+  <div class="table-wrap">
+    <div class="col-picker-wrap">
+      <button class="btn btn-secondary btn-sm" data-col-picker data-table-id="parcels-tbody" data-table-key="parcels">⚙ Columns</button>
+    </div>
+    <table class="data-table" data-table-key="parcels">
+      <thead>
+        <tr>
+          <th class="sortable sorted" data-col="apn">APN <span class="sort-arrow">▲</span></th>
+          <th class="sortable" data-col="address">Address</th>
+          <th data-col="jurisdiction">City Juris.</th>
+          <th data-col="zoning">Zoning</th>
+          <th data-col="zoning_desc">Zoning Desc.</th>
+          <th data-col="use_type">Use Type</th>
+          <th data-col="current_use">Current Use</th>
+          <th class="sortable col-right" data-col="acres">Acres</th>
+          <th class="sortable col-right" data-col="assessed_land">Assessed Land</th>
+          <th class="sortable col-right" data-col="assessed_improv">Assessed Improv.</th>
+          <th class="sortable" data-col="year_built">Year Built</th>
+        </tr>
+      </thead>
+      <tbody id="parcels-tbody">
+        {% include "partials/parcels_rows.html" %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Parcel detail drawer -->
+<div class="drawer-overlay" id="parcel-drawer" style="display:none">
+  <div class="drawer">
+    <div class="drawer-header">
+      <div>
+        <div class="drawer-title" id="parcel-drawer-title">Parcel</div>
+        <div class="text-small text-muted" id="parcel-drawer-sub"></div>
+      </div>
+      <span class="drawer-close" onclick="closeDrawer('parcel-drawer')">×</span>
+    </div>
+    <div class="drawer-body" id="parcel-drawer-body">
+      <div class="text-muted text-small">Loading…</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function openParcel(id, apn, address) {
+  document.getElementById('parcel-drawer-title').textContent = apn;
+  document.getElementById('parcel-drawer-sub').textContent = address || '';
+  htmx.ajax('GET', '/ui/parcels/' + id + '/detail', {target: '#parcel-drawer-body', swap: 'innerHTML'});
+  openDrawer('parcel-drawer');
+}
+</script>
+{% endblock %}

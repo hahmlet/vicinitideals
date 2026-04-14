@@ -1,0 +1,1520 @@
+{% extends "base.html" %}
+{% block title %}{{ model.name }} — Model Builder{% endblock %}
+
+{% block head %}
+<style>
+/* ── Model Builder layout ── */
+.builder-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 0;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ── Module stack (left panel) ── */
+.module-stack {
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+}
+.module-stack-header {
+  padding: 16px 16px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.module-stack-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.module-card {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background .12s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+.module-card:hover { background: var(--hover); }
+.module-card.active { background: var(--accent-faint); border-left: 3px solid var(--accent); padding-left: 13px; }
+.module-card.active .module-label { color: var(--accent); font-weight: 600; }
+
+.module-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.module-icon-sources  { background: #dbeafe; }
+.module-icon-uses     { background: #fce7f3; }
+.module-icon-revenue  { background: #d1fae5; }
+.module-icon-opex     { background: #fef3c7; }
+.module-icon-carrying { background: #e0e7ff; }
+.module-icon-div-uses { background: #fde8d8; }
+.module-icon-profit   { background: #f0fdf4; }
+.module-icon-owners    { background: #f3e8ff; }
+.module-icon-timeline  { background: #e0f2fe; }
+
+/* ── Timeline gate banner ── */
+.timeline-gate-banner {
+  margin: 8px 16px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fcd34d;
+}
+.timeline-gate-banner.approved {
+  background: #d1fae5;
+  color: #065f46;
+  border-color: #6ee7b7;
+}
+
+/* ── Locked module card ── */
+.module-card.locked {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.module-card.locked .module-label::after {
+  content: ' 🔒';
+  font-size: 11px;
+}
+
+.module-info { flex: 1; min-width: 0; }
+.module-label { font-size: 13px; font-weight: 500; line-height: 1.2; }
+.module-meta  { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.module-total {
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+/* balance indicator */
+.balance-bar {
+  margin: 0 16px 8px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.balance-bar.balanced   { background: #d1fae5; color: #065f46; }
+.balance-bar.unbalanced { background: #fef3c7; color: #92400e; }
+.balance-bar.deficit    { background: #fee2e2; color: #991b1b; }
+
+/* ── Active module panel (right) ── */
+.module-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#module-panel-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+#module-panel-content.htmx-settling {
+  animation: panelFadeIn 0.15s ease-out;
+}
+@keyframes panelFadeIn {
+  from { opacity: 0.4; }
+  to   { opacity: 1;   }
+}
+.module-panel-header {
+  padding: 16px 20px 14px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.module-panel-title { font-size: 18px; font-weight: 700; }
+.module-panel-desc  { font-size: 13px; color: var(--text-muted); margin-top: 3px; }
+.module-panel-actions { display: flex; gap: 8px; flex-shrink: 0; }
+
+.module-panel-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px;
+}
+
+/* ── Line item table ── */
+.line-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.line-table thead th {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+.line-table thead th.col-right { text-align: right; }
+.line-table tbody tr {
+  border-bottom: 1px solid var(--border-faint, var(--border));
+  cursor: pointer;
+  transition: background .1s;
+}
+.line-table tbody tr:hover { background: var(--hover); }
+.line-table tbody td { padding: 10px 10px; font-size: 13px; }
+.line-table tbody td.col-right { text-align: right; font-variant-numeric: tabular-nums; }
+
+.line-badge {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 500;
+}
+.badge-phase-acquisition  { background:#dbeafe; color:#1e40af; }
+.badge-phase-pre_construction { background:#e0e7ff; color:#3730a3; }
+.badge-phase-construction { background:#fce7f3; color:#9d174d; }
+.badge-phase-renovation   { background:#fef3c7; color:#92400e; }
+.badge-phase-conversion   { background:#d1fae5; color:#065f46; }
+.badge-phase-operation    { background:#ede9fe; color:#5b21b6; }
+.badge-phase-exit         { background:#fee2e2; color:#991b1b; }
+.badge-phase-other        { background:#f3f4f6; color:#6b7280; }
+.badge-deferred           { background:#f3e8ff; color:#6d28d9; }
+
+.line-table-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0 4px;
+}
+.line-total-label { font-size: 12px; color: var(--text-muted); }
+.line-total-amount { font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* ── Empty state ── */
+.module-empty {
+  text-align: center;
+  padding: 56px 24px;
+  color: var(--text-muted);
+}
+.module-empty-icon { font-size: 36px; margin-bottom: 12px; }
+.module-empty-title { font-size: 15px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; }
+.module-empty-desc  { font-size: 13px; line-height: 1.5; }
+
+/* ── Model selector topbar ── */
+.builder-topbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 20px;
+  height: 52px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  background: var(--surface);
+}
+.builder-breadcrumb { font-size: 18px; font-weight: 600; color: var(--text-primary); }
+.builder-breadcrumb a { color: inherit; text-decoration: none; }
+.builder-breadcrumb a:hover { text-decoration: underline; }
+.builder-topbar-right { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+
+/* ── Deal variation tabs row ── */
+.deal-tabs-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  padding: 0 20px 0 0;
+  height: 40px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  background: var(--surface);
+  overflow-x: auto;
+}
+.deal-tab {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  border-right: 1px solid var(--border);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background .1s, color .1s;
+  border-bottom: 3px solid transparent;
+}
+.deal-tab:hover { background: var(--hover); color: var(--text-primary); }
+.deal-tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  background: var(--accent-faint);
+  font-weight: 600;
+}
+
+/* Variant row (Row 1) — higher-level container, slightly subdued background */
+.deal-tabs-row-variants {
+  background: var(--surface-raised, #f3f4f6);
+}
+.deal-tabs-row-variants .deal-tab {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.deal-tabs-row-variants .deal-tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  background: var(--accent-faint);
+  font-weight: 700;
+}
+.deal-tabs-row-variants .deal-tab.active::before {
+  content: '● ';
+  font-size: 8px;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+/* Project row (Row 2) — standard */
+.deal-tabs-row-projects { height: 38px; }
+
+/* Add-item tab button — muted dashed style */
+.deal-tab.deal-tab-add {
+  color: var(--text-muted);
+  font-size: 12px;
+  border-right: none;
+}
+.deal-tab.deal-tab-add:hover { color: var(--accent); background: var(--accent-faint); }
+
+/* ── Editable model name in sidebar ── */
+.module-name-editable {
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 2px 6px;
+  transition: background .12s;
+  text-align: center;
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.module-name-editable:hover { background: var(--hover); }
+.module-name-editable:focus { outline: 2px solid var(--accent); background: white; }
+
+/* ── Sources total pill in panel header ── */
+.sources-total-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #d1fae5;
+  color: #065f46;
+  border: 1px solid #6ee7b7;
+  border-radius: 6px;
+  padding: 5px 14px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* ── Shared wizard styles (source wizard + timeline wizard) ── */
+.wizard-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.55);
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wizard-box {
+  background: var(--bg, #fff);
+  border-radius: 12px;
+  box-shadow: 0 24px 64px rgba(0,0,0,.25);
+  width: 62%;
+  max-width: 780px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.wizard-header {
+  padding: 24px 28px 16px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.wizard-step-indicator { display: flex; gap: 6px; margin-bottom: 12px; }
+.wizard-step-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--border);
+  transition: background .2s;
+}
+.wizard-step-dot.active   { background: var(--accent); }
+.wizard-step-dot.done     { background: #6ee7b7; }
+.wizard-step-dot.disabled { background: var(--border); opacity: 0.3; }
+.wizard-title    { font-size: 20px; font-weight: 700; }
+.wizard-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+.wizard-body { flex: 1; overflow-y: auto; padding: 20px 28px; }
+.wizard-footer {
+  padding: 16px 28px;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center; gap: 10px;
+  flex-shrink: 0;
+}
+/* ── Gantt v2 (timeline panel) ── */
+.g2-wrap { position: relative; overflow-x: auto; padding-bottom: 4px; }
+.g2-axis { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 4px; background: var(--surface); position: relative; z-index: 2; }
+.g2-axis-spacer { width: 110px; flex-shrink: 0; }
+.g2-axis-track { flex: 1; position: relative; }
+.g2-years { position: relative; height: 22px; border-bottom: 1px solid var(--border); overflow: hidden; }
+.g2-year-span {
+  position: absolute; top: 0; bottom: 0; display: flex; align-items: center;
+  padding-left: 5px; font-size: 13px; font-weight: 700; color: var(--text);
+  border-left: 1px solid var(--border); white-space: nowrap; overflow: hidden; box-sizing: border-box;
+}
+.g2-months { position: relative; height: 18px; }
+.g2-month {
+  position: absolute; top: 0; font-size: 11px; color: var(--text-muted);
+  transform: translateX(-50%); line-height: 18px; white-space: nowrap; user-select: none;
+}
+.g2-month-year { color: var(--text); font-weight: 700; }
+.g2-vlines { position: absolute; left: 110px; top: 0; right: 0; bottom: 0; pointer-events: none; z-index: 0; }
+.g2-vline { position: absolute; top: 0; bottom: 0; width: 1px; background: rgba(0,0,0,0.05); }
+.g2-vline-year { background: rgba(0,0,0,0.11); }
+.g2-project-hdr { display: flex; align-items: center; padding: 8px 0 3px 0; }
+.g2-project-hdr-name {
+  width: 110px; flex-shrink: 0; font-size: 12px; font-weight: 700; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 6px; box-sizing: border-box;
+}
+.g2-project-hdr-line { flex: 1; height: 1px; background: var(--border); }
+.g2-row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; position: relative; z-index: 1; }
+.g2-label {
+  width: 110px; flex-shrink: 0; font-size: 13px; color: var(--text-muted);
+  text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  padding-left: 12px; box-sizing: border-box;
+}
+.g2-track { flex: 1; position: relative; height: 28px; }
+.g2-bar {
+  position: absolute; top: 3px; height: 22px; border-radius: 3px;
+  display: flex; align-items: center; padding: 0 6px;
+  font-size: 12px; font-weight: 600; color: #fff;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  transition: opacity 0.1s; cursor: default;
+}
+.g2-bar:hover { opacity: 0.85; }
+.gantt-phase-offer        { background: #7c3aed; }
+.gantt-phase-contract     { background: #db2777; }
+.gantt-phase-close        { background: #dc2626; }
+.gantt-phase-predev       { background: #d97706; }
+.gantt-phase-construction { background: #059669; }
+.gantt-phase-leaseup      { background: #0284c7; }
+.gantt-phase-stabilized   { background: #2563eb; }
+.gantt-phase-exit         { background: #374151; }
+.gantt-phase-other        { background: #6b7280; }
+.g2-row-source .g2-label  { font-size: 11px; font-weight: 600; }
+.g2-bar-equity { background: var(--success, #16a34a); opacity: .75; }
+.g2-bar-debt   { background: var(--accent, #2563eb); opacity: .75; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="builder-topbar">
+  <div class="builder-breadcrumb">
+    {% if parent_deal_id %}
+    <a href="/deals/{{ parent_deal_id }}" style="font-size:12px;color:var(--text-muted);font-weight:400">← Deal</a>
+    <span style="color:var(--text-muted);margin:0 6px;font-weight:400">/</span>
+    {% endif %}
+    <span>{{ project.name if project else model.name }}</span>
+  </div>
+  <div class="builder-topbar-right">
+    <span class="badge {{ 'badge-green' if model.is_active else 'badge-gray' }}">
+      {{ 'Active' if model.is_active else 'Inactive' }}
+    </span>
+    <a class="btn btn-sm btn-secondary" href="/ui/models/{{ model.id }}/export.xlsx" download title="Download Excel workbook (round-trip capable)">↓ Excel</a>
+    <button type="button" class="btn btn-sm btn-secondary" title="View parcels on map"
+            onclick="openParcelMap('project','{{ active_project_id }}','{{ model.name | replace("'","\\'") | safe }}')">🗺</button>
+    <button class="btn btn-sm btn-secondary" onclick="openDrawer('model-settings-drawer')">⚙ Settings</button>
+    <button class="btn btn-sm btn-primary"
+       hx-post="/api/models/{{ model.id }}/compute"
+       hx-swap="none"
+       hx-indicator="#compute-spinner"
+       hx-on::after-request="handleComputeResult(event)">
+      ▶ Compute
+    </button>
+    <span id="compute-spinner" class="htmx-indicator text-small text-muted">Computing…</span>
+    <span id="compute-result"></span>
+<script>
+function handleComputeResult(evt) {
+  const el = document.getElementById('compute-result');
+  if (!el) return;
+  if (evt.detail.successful) {
+    try {
+      const d = JSON.parse(evt.detail.xhr.responseText);
+      const noi = d.noi_stabilized != null ? '$' + Math.round(d.noi_stabilized).toLocaleString() : null;
+      const irr = d.project_irr_levered != null ? parseFloat(d.project_irr_levered).toFixed(1)+'%' : null;
+      const parts = ['✓ Computed'];
+      if (noi) parts.push('NOI ' + noi);
+      if (irr) parts.push('IRR ' + irr);
+      el.innerHTML = '<span class="badge badge-green" style="font-size:11px">' + parts.join(' · ') + '</span>';
+    } catch {
+      el.innerHTML = '<span class="badge badge-green" style="font-size:11px">✓ Computed</span>';
+    }
+    // Refresh balance bar directly — auto-sized debt amounts change after compute
+    htmx.ajax('GET', '/ui/models/{{ model.id }}/balance-bar', {
+      target: '#balance-bar-container', swap: 'innerHTML'
+    });
+    // Refresh the current panel — use htmx.ajax directly (no dependency on refreshPanel being defined)
+    var _m = new URLSearchParams(window.location.search).get('module') || 'owners_profit';
+    htmx.ajax('GET', '/ui/panel/{{ model.id }}?module=' + encodeURIComponent(_m), {
+      target: '#module-panel-content', swap: 'innerHTML'
+    });
+    // Fade the badge out after 5s
+    setTimeout(() => { el.innerHTML = ''; }, 5000);
+  } else {
+    let msg = 'Compute failed';
+    try { msg = JSON.parse(evt.detail.xhr.responseText).detail || msg; } catch {}
+    el.innerHTML = '<span class="badge badge-red" style="font-size:11px">✗ ' + msg + '</span>';
+  }
+}
+</script>
+  </div>
+</div>
+
+{# ── Row 1: Deal variants ── #}
+<div class="deal-tabs-row deal-tabs-row-variants">
+  {% for d in deal_variants %}
+  <a href="/models/{{ d.id }}/builder"
+     class="deal-tab {% if d.id == model.id %}active{% endif %}">
+    {{ d.name }}
+  </a>
+  {% endfor %}
+  <button type="button" class="deal-tab deal-tab-add" onclick="openDrawer('create-variant-drawer')">+ New Variant</button>
+</div>
+
+{# ── Row 2: Projects in active deal ── #}
+<div style="display:flex;align-items:stretch;overflow:hidden">
+  <div class="deal-tabs-row deal-tabs-row-projects" style="flex:1;min-width:0">
+    {% for p in deal_projects %}
+    <a href="/models/{{ model.id }}/builder?project={{ p.id }}"
+       class="deal-tab {% if p.id | string == active_project_id %}active{% endif %}">
+      {{ p.name }}
+    </a>
+    {% endfor %}
+    {% if deal_projects | length < 5 %}
+    <button type="button" class="deal-tab deal-tab-add" onclick="openDrawer('add-project-drawer')">+ Add Project</button>
+    {% endif %}
+  </div>
+  {% if deal_projects | length >= 2 %}
+  <button type="button" class="deal-tab deal-tab-add" style="flex-shrink:0;border-left:1px solid var(--border)"
+          onclick="openDrawer('clone-project-drawer')">⎘ Clone From</button>
+  {% endif %}
+</div>
+
+{% if multi_parcel_apns %}
+<div id="multiparcel-banner" style="
+  margin:0 0 0 0;padding:10px 16px;
+  background:#fef3c7;border-bottom:1px solid #f59e0b;
+  display:flex;align-items:center;gap:12px;font-size:13px;color:#92400e">
+  <span>⬡ This listing includes {{ multi_parcel_apns | length }} parcels
+    ({{ multi_parcel_apns | join(', ') }}).
+    Model as one combined project, or split into staged development projects?
+  </span>
+  <button class="btn btn-sm btn-primary"
+          hx-post="/ui/deals/{{ model.id }}/split-projects"
+          hx-target="#multiparcel-banner"
+          hx-swap="outerHTML"
+          hx-confirm="Create {{ multi_parcel_apns | length }} separate projects? This cannot be undone.">
+    Split into {{ multi_parcel_apns | length }} Projects
+  </button>
+  <button class="btn btn-sm btn-secondary"
+          hx-post="/ui/deals/{{ model.id }}/dismiss-multiparcel"
+          hx-target="#multiparcel-banner"
+          hx-swap="outerHTML">
+    Keep Combined
+  </button>
+</div>
+{% endif %}
+
+{% if active_module == 'deal_setup' %}
+{# ── Deal Setup Wizard — full-width, replaces normal builder layout ── #}
+<div style="display:flex;flex:1;overflow:hidden">
+  {% include 'partials/deal_setup_wizard.html' %}
+</div>
+
+{% else %}
+<div class="builder-layout">
+  <!-- Left: module stack -->
+  <div class="module-stack">
+
+    {# ── Timeline — always first, gates everything else ── #}
+    <a href="{{ request.url.path }}?module=timeline"
+       class="module-card {% if active_module == 'timeline' %}active{% endif %}">
+      <div class="module-icon module-icon-timeline">📅</div>
+      <div class="module-info">
+        <div class="module-label">Timeline</div>
+        <div class="module-meta">{{ (milestones | length) if milestones is defined else 0 }} milestone{{ 's' if (milestones | length if milestones is defined else 0) != 1 else '' }}</div>
+      </div>
+      <div class="module-total">
+        {% if timeline_approved %}<span style="color:var(--success);font-size:11px;font-weight:600">Approved</span>{% endif %}
+      </div>
+    </a>
+
+    {% if not timeline_approved %}
+    <div class="timeline-gate-banner">
+      ⚠ Review and approve the timeline to unlock model inputs.
+    </div>
+    {% endif %}
+
+    {# ── Deal Setup — shown after timeline approval, gates modules ── #}
+    {% if timeline_approved %}
+    <a href="{{ request.url.path }}?module=deal_setup"
+       class="module-card {% if active_module == 'deal_setup' %}active{% endif %}">
+      <div class="module-icon" style="background:#fef3c7;font-size:14px">⚙</div>
+      <div class="module-info">
+        <div class="module-label">Deal Setup</div>
+        <div class="module-meta">Debt structure &amp; sizing</div>
+      </div>
+      <div class="module-total">
+        {% if deal_setup_complete %}<span style="color:var(--success);font-size:11px;font-weight:600">Done</span>
+        {% else %}<span style="color:#92400e;font-size:11px;font-weight:600">Required</span>{% endif %}
+      </div>
+    </a>
+    {% if not deal_setup_complete %}
+    <div class="timeline-gate-banner">
+      ⚙ Complete Deal Setup to unlock model inputs.
+    </div>
+    {% endif %}
+    {% endif %}
+
+    <div style="height:1px;background:var(--border);margin:0;flex-shrink:0"></div>
+
+    {# ── Model modules — locked until timeline approved AND deal setup complete ── #}
+    {% set locked = not timeline_approved or not deal_setup_complete %}
+
+    {% set uses_total = (use_lines | sum(attribute='amount') | float) %}
+    {% set bal = (capital_total | float if capital_total else 0.0) - uses_total %}
+
+    {% set bal_cents = (bal * 100) | round | int %}
+    <div id="balance-bar-container">
+    {% if timeline_approved and (uses_total > 0 or capital_total) %}
+    <div class="balance-bar {% if bal_cents == 0 %}balanced{% elif bal_cents > 0 %}unbalanced{% else %}deficit{% endif %}">
+      {% if bal_cents == 0 %}✓ Sources = Uses
+      {% elif bal_cents > 0 %}↑ Surplus {{ bal | currency }}
+      {% else %}⚠ Gap {{ (bal * -1) | currency }}{% endif %}
+    </div>
+    {% endif %}
+    </div>
+
+    <div id="module-nav-cards">
+    {% set nav_base_path = request.url.path %}
+    {% include 'partials/model_builder_nav_cards.html' %}
+    </div>
+  </div>
+
+  <!-- Right: active module panel -->
+  <div class="module-panel">
+    <div id="module-panel-content">
+      {% include "partials/model_builder_panel.html" %}
+    </div>
+  </div>
+</div>
+{% endif %}{# end deal_setup vs builder-layout #}
+
+<!-- Model settings drawer -->
+<div class="drawer-overlay" id="model-settings-drawer"
+    
+     style="display:none">
+  <div class="drawer">
+    <div class="drawer-header">
+      <div>
+        <div class="drawer-title">Model Settings</div>
+        <div class="text-small text-muted">{{ model.name }}</div>
+      </div>
+      <span class="drawer-close" onclick="closeDrawer('model-settings-drawer')">×</span>
+    </div>
+    <div class="drawer-body">
+      <form method="post" action="/ui/models/{{ model.id }}/settings"
+            style="display:flex;flex-direction:column;gap:14px">
+        <div>
+          <label class="field-label">Model Name</label>
+          <input class="filter-input" style="width:100%;margin-top:4px" name="name"
+                 value="{{ model.name }}" required>
+        </div>
+        <div>
+          <label class="field-label">Deal Type</label>
+          <select class="filter-select" style="width:100%;margin-top:4px" name="deal_type">
+            {% set _pt = model.project_type.value if model.project_type is not string else model.project_type %}
+            <option value="acquisition_minor_reno" {% if _pt == 'acquisition_minor_reno' %}selected{% endif %}>Acquisition — Minor Renovation</option>
+            <option value="acquisition_major_reno" {% if _pt == 'acquisition_major_reno' %}selected{% endif %}>Acquisition — Major Renovation</option>
+            <option value="acquisition_conversion" {% if _pt == 'acquisition_conversion' %}selected{% endif %}>Acquisition — Conversion</option>
+            <option value="new_construction" {% if _pt == 'new_construction' %}selected{% endif %}>New Construction</option>
+          </select>
+        </div>
+        <div class="divider"></div>
+        <div style="font-size:12px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">Hold &amp; Exit</div>
+        <div>
+          <label class="field-label">Expense Growth Rate (%/yr)</label>
+          <input class="filter-input" type="number" step="0.1" style="width:100%;margin-top:4px"
+                 name="expense_growth_rate_pct_annual"
+                 value="{{ inputs.expense_growth_rate_pct_annual | round(1) if inputs else 3.0 }}"
+                 placeholder="3.0">
+        </div>
+        <div>
+          <label class="field-label">Exit Cap Rate (%)</label>
+          <input class="filter-input" type="number" step="0.1" style="width:100%;margin-top:4px"
+                 name="exit_cap_rate_pct"
+                 value="{{ inputs.exit_cap_rate_pct | round(1) if inputs and inputs.exit_cap_rate_pct else '' }}"
+                 placeholder="5.5">
+        </div>
+        <div>
+          <label class="field-label">Hold Period (years)</label>
+          <input class="filter-input" type="number" step="0.5" style="width:100%;margin-top:4px"
+                 name="hold_period_years"
+                 value="{{ inputs.hold_period_years | round(1) if inputs else 5 }}"
+                 placeholder="5">
+        </div>
+        {% if inputs and inputs.deal_setup_complete %}
+        <div class="divider"></div>
+        <div style="font-size:12px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">Debt Structure</div>
+        {% set _dt = inputs.debt_terms or {} %}
+        <div>
+          <label class="field-label">Structure</label>
+          <select class="filter-select" style="width:100%;margin-top:4px" name="debt_structure">
+            <option value="perm_only" {% if inputs.debt_structure == 'perm_only' %}selected{% endif %}>Permanent debt only</option>
+            <option value="construction_to_perm" {% if inputs.debt_structure == 'construction_to_perm' %}selected{% endif %}>Construction-to-perm (bond)</option>
+            <option value="construction_and_perm" {% if inputs.debt_structure == 'construction_and_perm' %}selected{% endif %}>Separate construction + perm</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label">Debt Sizing</label>
+          <select class="filter-select" style="width:100%;margin-top:4px" name="debt_sizing_mode">
+            <option value="gap_fill" {% if (inputs.debt_sizing_mode or 'gap_fill') == 'gap_fill' %}selected{% endif %}>Gap-fill (Uses − Equity)</option>
+            <option value="dscr_capped" {% if inputs.debt_sizing_mode == 'dscr_capped' %}selected{% endif %}>DSCR-capped (max debt from NOI)</option>
+          </select>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div>
+            <label class="field-label">DSCR Minimum</label>
+            <input class="filter-input" type="number" step="0.01" style="width:100%;margin-top:4px"
+                   name="dscr_minimum" value="{{ inputs.dscr_minimum | round(2) if inputs.dscr_minimum else 1.15 }}" placeholder="1.15">
+          </div>
+          <div>
+            <label class="field-label">Reserve (months)</label>
+            <input class="filter-input" type="number" step="1" style="width:100%;margin-top:4px"
+                   name="operation_reserve_months" value="{{ inputs.operation_reserve_months or 6 }}" placeholder="6">
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+          {% if inputs.debt_structure in ('construction_to_perm', 'construction_and_perm') %}
+          <div>
+            <label class="field-label">Constr. Rate (%)</label>
+            <input class="filter-input" type="number" step="0.125" style="width:100%;margin-top:4px"
+                   name="construction_rate_pct" value="{{ _dt.get('construction_rate_pct', '') }}" placeholder="6.5">
+          </div>
+          {% endif %}
+          <div>
+            <label class="field-label">Perm Rate (%)</label>
+            <input class="filter-input" type="number" step="0.125" style="width:100%;margin-top:4px"
+                   name="perm_rate_pct" value="{{ _dt.get('perm_rate_pct', '') }}" placeholder="5.5">
+          </div>
+          <div>
+            <label class="field-label">Amort (yrs)</label>
+            <input class="filter-input" type="number" step="5" style="width:100%;margin-top:4px"
+                   name="perm_amort_years" value="{{ _dt.get('perm_amort_years', '') }}" placeholder="30">
+          </div>
+        </div>
+        {% endif %}
+        <div style="display:flex;gap:8px;margin-top:4px">
+          <button type="submit" class="btn btn-primary">Save Settings</button>
+          <button type="button" class="btn btn-secondary" onclick="closeDrawer('model-settings-drawer')">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+function closeSourceWizard() {
+  document.getElementById('source-wizard-overlay').style.display = 'none';
+  document.getElementById('source-wizard-body').innerHTML = '<div class="text-muted text-small">Loading\u2026</div>';
+}
+function closeMilestoneWizard() {
+  document.getElementById('milestone-wizard-overlay').style.display = 'none';
+  document.getElementById('milestone-wizard-body').innerHTML = '<div class="text-muted text-small">Loading\u2026</div>';
+}
+function closeUsesWizard() {
+  document.getElementById('uses-wizard-overlay').style.display = 'none';
+  document.getElementById('uses-wizard-body').innerHTML = '<div class="text-muted text-small">Loading\u2026</div>';
+}
+
+const _originalModelName = {{ model.name | tojson }};
+function startEditingName(el) {
+  el.contentEditable = 'true';
+  el.focus();
+  const range = document.createRange();
+  range.selectNodeContents(el);
+  window.getSelection().removeAllRanges();
+  window.getSelection().addRange(range);
+  el.addEventListener('blur', () => saveModelName(el), { once: true });
+  el.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); el.blur(); }
+    if (e.key === 'Escape') { el.textContent = _originalModelName; el.blur(); }
+  }, { once: true });
+}
+function saveModelName(el) {
+  el.contentEditable = 'false';
+  const name = el.textContent.trim();
+  if (!name || name === _originalModelName) { el.textContent = _originalModelName; return; }
+  fetch('/api/models/{{ model.id }}', {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name })
+  }).then(r => {
+    if (!r.ok) { el.textContent = _originalModelName; }
+  });
+}
+</script>
+
+<!-- Line item add/edit drawer -->
+<div class="drawer-overlay" id="line-item-drawer"
+    
+     style="display:none">
+  <div class="drawer">
+    <div class="drawer-header">
+      <div>
+        <div class="drawer-title" id="line-item-drawer-title">Add Line</div>
+      </div>
+      <span class="drawer-close" onclick="closeDrawer('line-item-drawer')">×</span>
+    </div>
+    <div class="drawer-body" id="line-item-drawer-body">
+      <div class="text-muted text-small">Loading…</div>
+    </div>
+  </div>
+</div>
+
+<!-- Source wizard (center-screen modal) -->
+<div class="wizard-overlay" id="source-wizard-overlay" style="display:none">
+  <div class="wizard-box" style="max-width:680px">
+    <div class="wizard-header" style="display:flex;align-items:flex-start;justify-content:space-between">
+      <div id="source-wizard-header-content">
+        <div class="wizard-title">Add Capital Source</div>
+      </div>
+      <span style="font-size:22px;cursor:pointer;line-height:1;color:var(--text-muted)"
+            onclick="closeSourceWizard()">×</span>
+    </div>
+    <div class="wizard-body" id="source-wizard-body">
+      <div class="text-muted text-small">Loading…</div>
+    </div>
+  </div>
+</div>
+
+<!-- Uses wizard (center-screen modal) -->
+<div class="wizard-overlay" id="uses-wizard-overlay" style="display:none">
+  <div class="wizard-box" style="max-width:540px">
+    <div class="wizard-header" style="display:flex;align-items:flex-start;justify-content:space-between">
+      <div id="uses-wizard-header-content">
+        <div class="wizard-title">Add Use Line</div>
+      </div>
+      <span style="font-size:22px;cursor:pointer;line-height:1;color:var(--text-muted)"
+            onclick="closeUsesWizard()">×</span>
+    </div>
+    <div class="wizard-body" id="uses-wizard-body">
+      <div class="text-muted text-small">Loading…</div>
+    </div>
+  </div>
+</div>
+
+<!-- Milestone wizard (center-screen modal) -->
+<div class="wizard-overlay" id="milestone-wizard-overlay" style="display:none">
+  <div class="wizard-box" style="max-width:540px">
+    <div class="wizard-header" style="display:flex;align-items:flex-start;justify-content:space-between">
+      <div>
+        <div class="wizard-title">Add Milestone</div>
+        <div class="wizard-subtitle" style="margin-top:4px;font-size:13px;color:var(--text-muted)">Define the phase, timing, and duration</div>
+      </div>
+      <span style="font-size:22px;cursor:pointer;line-height:1;color:var(--text-muted)"
+            onclick="closeMilestoneWizard()">×</span>
+    </div>
+    <div class="wizard-body" id="milestone-wizard-body">
+      <div class="text-muted text-small">Loading…</div>
+    </div>
+  </div>
+</div>
+
+<!-- Create Variant drawer -->
+<div class="drawer-overlay" id="create-variant-drawer"
+    
+     style="display:none">
+  <div class="drawer">
+    <div class="drawer-header">
+      <div>
+        <div class="drawer-title">Create Deal Variant</div>
+        <div class="text-small text-muted">Copies all projects and settings into a new independent deal</div>
+      </div>
+      <span class="drawer-close" onclick="closeDrawer('create-variant-drawer')">×</span>
+    </div>
+    <div class="drawer-body">
+      <form method="post" action="/ui/deals/{{ model.id }}/variant" style="display:flex;flex-direction:column;gap:14px">
+        <div>
+          <label class="field-label">Deal Name</label>
+          <input class="filter-input" style="width:100%;margin-top:4px"
+                 type="text" name="name" required
+                 value="{{ model.name }} (Copy)"
+                 placeholder="e.g. Conservative Scenario">
+          <div style="font-size:12px;color:var(--text-muted);margin-top:6px">Once created, the new deal is fully independent — change anything without affecting this one.</div>
+        </div>
+        {% if deal_projects | length > 1 %}
+        <div>
+          <label class="field-label">Projects to Include</label>
+          <div style="margin-top:6px;display:flex;flex-direction:column;gap:6px">
+            {% for p in deal_projects %}
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer">
+              <input type="checkbox" name="project_ids" value="{{ p.id }}" checked
+                     style="width:14px;height:14px;cursor:pointer">
+              {{ p.name }}
+            </label>
+            {% endfor %}
+          </div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:6px">Uncheck projects to exclude them from the variant.</div>
+        </div>
+        {% endif %}
+        <div style="display:flex;gap:8px;margin-top:6px">
+          <button type="submit" class="btn btn-primary">Create Variant →</button>
+          <button type="button" class="btn btn-secondary" onclick="closeDrawer('create-variant-drawer')">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Add Project drawer -->
+<div class="drawer-overlay" id="add-project-drawer"
+    
+     style="display:none">
+  <div class="drawer">
+    <div class="drawer-header">
+      <div>
+        <div class="drawer-title">Add Project</div>
+        <div class="text-small text-muted">Add a second development component to this deal (max 5)</div>
+      </div>
+      <span class="drawer-close" onclick="closeDrawer('add-project-drawer')">×</span>
+    </div>
+    <div class="drawer-body">
+      <form method="post" action="/ui/deals/{{ model.id }}/new-project" style="display:flex;flex-direction:column;gap:14px">
+        <div>
+          <label class="field-label">Project Name</label>
+          <input class="filter-input" style="width:100%;margin-top:4px"
+                 type="text" name="name" required
+                 value="Project {{ (deal_projects | length) + 1 }}"
+                 placeholder="e.g. Tower, Building A">
+        </div>
+        <div>
+          <label class="field-label">Project Type</label>
+          <select class="filter-select" style="width:100%;margin-top:4px" name="deal_type">
+            <option value="acquisition_minor_reno" {% if model.project_type | string | replace('ProjectType.','') == 'acquisition_minor_reno' %}selected{% endif %}>Minor Renovation</option>
+            <option value="acquisition_major_reno" {% if model.project_type | string | replace('ProjectType.','') == 'acquisition_major_reno' %}selected{% endif %}>Major Renovation</option>
+            <option value="acquisition_conversion" {% if model.project_type | string | replace('ProjectType.','') == 'acquisition_conversion' %}selected{% endif %}>Conversion</option>
+            <option value="new_construction" {% if model.project_type | string | replace('ProjectType.','') == 'new_construction' %}selected{% endif %}>New Construction</option>
+          </select>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:6px">You'll set up this project's timeline after creating it.</div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:6px">
+          <button type="submit" class="btn btn-primary">Create Project →</button>
+          <button type="button" class="btn btn-secondary" onclick="closeDrawer('add-project-drawer')">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="drawer-overlay" id="clone-project-drawer" style="display:none">
+  <div class="drawer">
+    <div class="drawer-header">
+      <div>
+        <div class="drawer-title">Clone From Project</div>
+        <div class="text-small text-muted">Copy another project's financial model into this one</div>
+      </div>
+      <span class="drawer-close" onclick="closeDrawer('clone-project-drawer')">×</span>
+    </div>
+    <div class="drawer-body">
+      <form id="clone-from-form" style="display:flex;flex-direction:column;gap:14px"
+            onsubmit="submitCloneFrom(event)">
+        <div>
+          <label class="field-label">Copy data from</label>
+          <select id="clone-source-select" class="filter-select" style="width:100%;margin-top:4px" required>
+            <option value="">— select a project —</option>
+            {% for p in deal_projects %}
+            {% if p.id | string != active_project_id %}
+            <option value="{{ p.id }}">{{ p.name }}</option>
+            {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+        <div style="background:var(--surface-alt,#1e293b);border:1px solid var(--border);
+                    border-radius:6px;padding:10px 12px;font-size:12px;color:var(--warning,#f59e0b)">
+          ⚠ This will overwrite all milestones, use lines, income streams, expense lines, unit mix,
+          and operational inputs in <strong>{{ active_project.name if active_project else 'this project' }}</strong>.
+          The project name, parcel data, and opportunity will not change.
+        </div>
+        <div style="display:flex;gap:8px;margin-top:6px">
+          <button type="submit" class="btn btn-primary">Clone Data →</button>
+          <button type="button" class="btn btn-secondary" onclick="closeDrawer('clone-project-drawer')">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+function submitCloneFrom(e) {
+  e.preventDefault();
+  var srcId = document.getElementById('clone-source-select').value;
+  if (!srcId) return;
+  var dstId = '{{ active_project_id }}';
+  var dealId = '{{ model.id }}';
+  if (!confirm('Copy all model data from the selected project into {{ active_project.name if active_project else "this project" }}? This cannot be undone.')) return;
+  fetch('/ui/deals/' + dealId + '/project/' + dstId + '/clone-from', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body: 'source_project_id=' + encodeURIComponent(srcId)
+  }).then(function(r) {
+    if (r.redirected) { window.location.href = r.url; }
+    else { window.location.reload(); }
+  });
+}
+</script>
+
+{% if wizard_needed %}
+{# ── Timeline setup wizard ────────────────────────────────────────────────── #}
+<style>
+.ms-type-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+.ms-type-card {
+  border: 2px solid var(--border); border-radius: 8px;
+  padding: 10px 14px; cursor: pointer;
+  transition: border-color .15s, background .15s;
+  display: flex; align-items: center; gap: 10px;
+}
+.ms-type-card:hover { background: var(--hover); }
+.ms-type-card.selected { border-color: var(--accent); background: var(--accent-faint); }
+.ms-type-card input[type=radio] { accent-color: var(--accent); flex-shrink: 0; }
+.ms-type-label { font-size: 13px; font-weight: 500; }
+.ms-type-phase { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+.ms-phase-group { margin-bottom: 18px; }
+.ms-phase-group-title {
+  font-size: 11px; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px;
+}
+.ms-check-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px; border: 1px solid var(--border);
+  border-radius: 6px; margin-bottom: 5px; transition: background .12s;
+}
+.ms-check-item:hover { background: var(--hover); }
+.ms-check-item input[type=checkbox] { accent-color: var(--accent); flex-shrink: 0; }
+.ms-check-item.is-anchor { background: var(--accent-faint); border-color: var(--accent); }
+.ms-check-item label { font-size: 13px; font-weight: 500; cursor: pointer; flex: 1; }
+.ms-check-hint { font-size: 11px; color: var(--text-muted); }
+</style>
+
+{% set _all_phases = [
+  ('offer_made',           'Offer Made',           'Pre-Dev'),
+  ('under_contract',       'Under Contract',       'Pre-Dev'),
+  ('close',                'Close / Acquisition',  'Pre-Dev'),
+  ('pre_development',      'Pre-Development',      'Pre-Dev'),
+  ('construction',         'Construction',         'Construction'),
+  ('operation_lease_up',   'Lease-Up',             'Operation'),
+  ('operation_stabilized', 'Stabilized Operations','Operation'),
+  ('divestment',           'Divestment / Exit',    'Divestment'),
+] %}
+
+<div class="wizard-overlay" id="timeline-wizard">
+  <div class="wizard-box">
+    <div class="wizard-header">
+      <div class="wizard-step-indicator">
+        {% if new_deal %}<div class="wizard-step-dot active" id="wdot-0"></div>{% endif %}
+        <div class="wizard-step-dot {% if not new_deal %}active{% endif %}" id="wdot-1"></div>
+        <div class="wizard-step-dot" id="wdot-2"></div>
+        <div class="wizard-step-dot" id="wdot-3"></div>
+      </div>
+      <div class="wizard-title" id="wizard-title">{% if new_deal %}Name your deal{% else %}What phase does your project start?{% endif %}</div>
+      <div class="wizard-subtitle" id="wizard-subtitle">{% if new_deal %}Give this deal a name and choose the project type.{% else %}Select the first milestone — this becomes your timeline anchor.{% endif %}</div>
+    </div>
+
+    <div class="wizard-body">
+
+      {# ── Step 0: Name + Type (new deals only) ── #}
+      {% if new_deal %}
+      <div id="wstep-0">
+        <div style="display:flex;flex-direction:column;gap:20px;margin-top:4px">
+          <div>
+            <label class="field-label" style="display:block;margin-bottom:6px">Deal Name</label>
+            <input class="filter-input" type="text" id="wizard-deal-name"
+                   value="{{ project.name if project else 'New Deal' }}"
+                   oninput="_wizardValidate()"
+                   style="width:100%;font-size:15px;padding:9px 12px"
+                   placeholder="e.g. Oak Ave 12-Unit Conversion">
+          </div>
+          <div>
+            <label class="field-label" style="display:block;margin-bottom:6px">Deal Type</label>
+            <select class="filter-select" id="wizard-deal-type"
+                    style="width:100%;font-size:14px;padding:9px 12px">
+              {% set _wdt = wizard_deal_type | string | replace('ProjectType.','') %}
+              <option value="acquisition_minor_reno" {% if _wdt == 'acquisition_minor_reno' %}selected{% endif %}>Acquisition — Minor Renovation</option>
+              <option value="acquisition_major_reno" {% if _wdt == 'acquisition_major_reno' %}selected{% endif %}>Acquisition — Major Renovation</option>
+              <option value="acquisition_conversion" {% if _wdt == 'acquisition_conversion' %}selected{% endif %}>Acquisition — Conversion</option>
+              <option value="new_construction" {% if _wdt == 'new_construction' %}selected{% endif %}>New Construction</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+      {# ── Step 1 ── #}
+      <div id="wstep-1" {% if new_deal %}style="display:none"{% endif %}>
+        <div class="ms-type-grid">
+          {% for value, label, phase in _all_phases %}
+          <label class="ms-type-card" onclick="selectAnchor('{{ value }}', this)">
+            <input type="radio" name="_anchor_ui" value="{{ value }}">
+            <div>
+              <div class="ms-type-label">{{ label }}</div>
+              <div class="ms-type-phase">{{ phase }}</div>
+            </div>
+          </label>
+          {% endfor %}
+        </div>
+      </div>
+
+      {# ── Step 2 ── #}
+      <div id="wstep-2" style="display:none">
+        <div style="max-width:360px;margin-top:8px;display:flex;flex-direction:column;gap:16px">
+          <div>
+            <label class="field-label" style="display:block;margin-bottom:6px">Start Date</label>
+            <input class="filter-input" type="date" id="wizard-anchor-date"
+                   style="width:100%;font-size:15px;padding:9px 12px">
+            <div style="font-size:12px;color:var(--text-muted);margin-top:6px">Fixed anchor — all other milestones position relative to this.</div>
+          </div>
+          <div>
+            <label class="field-label" style="display:block;margin-bottom:6px">Duration (days)</label>
+            <input class="filter-input" type="number" id="wizard-anchor-duration"
+                   min="1" step="1" placeholder="e.g. 45"
+                   style="width:100%;font-size:15px;padding:9px 12px">
+            <div style="font-size:12px;color:var(--text-muted);margin-top:6px">How long does this phase last? The next phase chains from its end date.</div>
+          </div>
+        </div>
+      </div>
+
+      {# ── Step 3 ── #}
+      <div id="wstep-3" style="display:none">
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px">Check every phase that applies. Your anchor is already included — you'll set durations and relative triggers in the next step.</p>
+        {% set _groups = [
+          ('Pre-Dev',      ['offer_made','under_contract','close','pre_development']),
+          ('Construction', ['construction']),
+          ('Operation',    ['operation_lease_up','operation_stabilized']),
+          ('Divestment',   ['divestment']),
+        ] %}
+        {% for group_name, group_values in _groups %}
+        <div class="ms-phase-group">
+          <div class="ms-phase-group-title">{{ group_name }}</div>
+          {% for value, label, phase in _all_phases if value in group_values %}
+          {% set is_default = value in wizard_default_types
+                              or value == 'under_contract'
+                              or (value == 'pre_development' and wizard_deal_type in ('acquisition_major_reno','acquisition_conversion','new_construction')) %}
+          <div class="ms-check-item" id="mscheck-{{ value }}">
+            <input type="checkbox" id="wms-{{ value }}" name="milestone_types" value="{{ value }}"
+                   {% if is_default %}checked{% endif %}>
+            <label for="wms-{{ value }}">{{ label }}</label>
+            {% if is_default %}<span class="ms-check-hint">recommended</span>
+          {% elif value == 'operation_lease_up' %}<span class="ms-check-hint" style="color:var(--text-muted)">optional — if absent, stabilization is immediate</span>
+          {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+        {% endfor %}
+      </div>
+
+    </div>{# /wizard-body #}
+
+    <div class="wizard-footer">
+      <a href="{{ '/deals/' + parent_deal_id if parent_deal_id else '/deals' }}" class="btn btn-ghost" id="wizard-cancel"
+         style="font-size:12px;color:var(--text-muted)">✕ Cancel</a>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button type="button" class="btn btn-secondary" id="wizard-back"
+                style="display:none" onclick="wizardBack()">← Back</button>
+        <button type="button" class="btn btn-primary" id="wizard-next"
+                onclick="wizardNext()" disabled>Continue →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form method="post" action="/ui/projects/{{ default_project_id }}/timeline-wizard"
+      id="wizard-form" style="display:none">
+  <input type="hidden" name="anchor_type" id="wizard-anchor-type-input">
+  <input type="hidden" name="anchor_date" id="wizard-anchor-date-input">
+  <input type="hidden" name="anchor_duration_days" id="wizard-anchor-duration-input">
+  {% if new_deal %}
+  <input type="hidden" name="new_name" id="wizard-new-name-input">
+  <input type="hidden" name="new_deal_type" id="wizard-new-deal-type-input">
+  {% endif %}
+</form>
+
+<script>
+var _wizardStep = {{ '0' if new_deal else '1' }};
+var _wizardAnchor = 'offer_made';
+var _newDeal = {{ 'true' if new_deal else 'false' }};
+var _wizardTitles = {
+  0: ['Name your deal',                      'Give this deal a name and choose the project type.'],
+  1: ['What phase does your project start?', 'Select the first milestone — this becomes your timeline anchor.'],
+  2: ['When does it start?',                 'Set the anchor date. Everything else is positioned relative to this.'],
+  3: ['Select all phases in this project',   "Check every phase that applies. You'll set durations after."],
+};
+
+function _wShow(step) {
+  var allSteps = _newDeal ? [0,1,2,3] : [1,2,3];
+  allSteps.forEach(function(s) {
+    var el = document.getElementById('wstep-'+s);
+    if (el) el.style.display = s === step ? '' : 'none';
+    var dot = document.getElementById('wdot-'+s);
+    if (dot) dot.className = 'wizard-step-dot' + (s < step ? ' done' : s === step ? ' active' : '');
+  });
+  document.getElementById('wizard-title').textContent = _wizardTitles[step][0];
+  document.getElementById('wizard-subtitle').textContent = _wizardTitles[step][1];
+  var firstStep = _newDeal ? 0 : 1;
+  document.getElementById('wizard-back').style.display = step > firstStep ? '' : 'none';
+  document.getElementById('wizard-next').textContent = step === 3 ? 'Set Up Timeline →' : 'Continue →';
+  _wizardStep = step;
+  _wizardValidate();
+}
+
+function _wizardValidate() {
+  var ok = false;
+  if (_wizardStep === 0) {
+    var nameEl = document.getElementById('wizard-deal-name');
+    ok = !!(nameEl && nameEl.value.trim());
+  } else if (_wizardStep === 1) {
+    ok = !!_wizardAnchor;
+  } else if (_wizardStep === 2) {
+    var dateOk = !!document.getElementById('wizard-anchor-date').value;
+    var durOk  = parseInt(document.getElementById('wizard-anchor-duration').value, 10) > 0;
+    ok = dateOk && durOk;
+  } else if (_wizardStep === 3) {
+    ok = document.querySelectorAll('#wstep-3 input[type=checkbox]:checked').length > 0;
+  }
+  document.getElementById('wizard-next').disabled = !ok;
+}
+
+function selectAnchor(val, el) {
+  _wizardAnchor = val;
+  document.querySelectorAll('.ms-type-card').forEach(function(c) { c.classList.remove('selected'); });
+  el.classList.add('selected');
+  _wizardValidate();
+}
+
+function updateWizardDealType(dealType) {
+  var phasesForType = {
+    'acquisition_minor_reno': ['offer_made','under_contract','close','operation_stabilized'],
+    'acquisition_major_reno': ['offer_made','under_contract','close','pre_development','construction','operation_stabilized'],
+    'acquisition_conversion': ['offer_made','under_contract','close','pre_development','operation_stabilized'],
+    'new_construction':       ['offer_made','under_contract','close','pre_development','construction','operation_stabilized'],
+  };
+  var defaults = phasesForType[dealType] || [];
+  document.querySelectorAll('#wstep-3 input[type=checkbox]').forEach(function(cb) {
+    if (cb.disabled) return;
+    cb.checked = defaults.indexOf(cb.value) !== -1;
+  });
+  _wizardValidate();
+}
+
+function wizardNext() {
+  if (_wizardStep === 0) {
+    var nameEl = document.getElementById('wizard-deal-name');
+    var typeEl = document.getElementById('wizard-deal-type');
+    document.getElementById('wizard-new-name-input').value = nameEl ? nameEl.value.trim() : '';
+    document.getElementById('wizard-new-deal-type-input').value = typeEl ? typeEl.value : '';
+    if (typeEl) updateWizardDealType(typeEl.value);
+    _wShow(1);
+    return;
+  }
+  if (_wizardStep === 1) {
+    document.querySelectorAll('.ms-check-item').forEach(function(item) {
+      item.classList.remove('is-anchor');
+    });
+    var cb = document.getElementById('wms-' + _wizardAnchor);
+    if (cb) {
+      cb.checked = true;
+      cb.disabled = true;
+      var anchorItem = document.getElementById('mscheck-' + _wizardAnchor);
+      anchorItem.classList.add('is-anchor');
+      var hint = anchorItem.querySelector('.ms-check-hint');
+      if (hint) { hint.textContent = 'anchor — required'; hint.style.color = 'var(--accent)'; hint.style.fontWeight = '600'; }
+      else {
+        var h = document.createElement('span');
+        h.className = 'ms-check-hint'; h.textContent = 'anchor — required';
+        h.style.color = 'var(--accent)'; h.style.fontWeight = '600';
+        anchorItem.appendChild(h);
+      }
+    }
+    _wShow(2);
+    return;
+  }
+  if (_wizardStep === 2) {
+    _wShow(3);
+    return;
+  }
+  // Step 3: submit
+  var form = document.getElementById('wizard-form');
+  document.getElementById('wizard-anchor-type-input').value = _wizardAnchor;
+  document.getElementById('wizard-anchor-date-input').value = document.getElementById('wizard-anchor-date').value;
+  document.getElementById('wizard-anchor-duration-input').value = document.getElementById('wizard-anchor-duration').value;
+  document.querySelectorAll('#wstep-3 input[type=checkbox]:checked').forEach(function(cb) {
+    var h = document.createElement('input');
+    h.type = 'hidden'; h.name = 'milestone_types'; h.value = cb.value;
+    form.appendChild(h);
+  });
+  form.submit();
+}
+
+function wizardBack() {
+  var firstStep = _newDeal ? 0 : 1;
+  if (_wizardStep > firstStep) _wShow(_wizardStep - 1);
+}
+
+document.getElementById('wizard-anchor-date').addEventListener('input', _wizardValidate);
+document.getElementById('wizard-anchor-duration').addEventListener('input', _wizardValidate);
+document.querySelectorAll('#wstep-3 input[type=checkbox]').forEach(function(cb) {
+  cb.addEventListener('change', _wizardValidate);
+});
+_wShow(_wizardStep);
+(function() {
+  var defaultCard = document.querySelector('.ms-type-card input[value="offer_made"]');
+  if (defaultCard) {
+    defaultCard.checked = true;
+    selectAnchor('offer_made', defaultCard.closest('.ms-type-card'));
+  }
+})();
+</script>
+{% endif %}
+
+<script>
+// Always-on: handle all post-swap side-effects in one place
+var _MS_PRED = {
+  'under_contract':'offer_made','close':'under_contract',
+  'pre_development':'close','construction':'pre_development',
+  'operation_lease_up':'construction','operation_stabilized':'operation_lease_up',
+  'divestment':'operation_stabilized'
+};
+function _applyMsPredecessor(typeVal) {
+  var tr = document.getElementById('ms-trigger');
+  if (!tr) return;
+  var preferred = _MS_PRED[typeVal];
+  var opts = tr.querySelectorAll('option[data-ms-type]');
+  var found = false;
+  if (preferred) {
+    for (var i = 0; i < opts.length; i++) {
+      if (opts[i].getAttribute('data-ms-type') === preferred && !opts[i].disabled) {
+        tr.value = opts[i].value; found = true; break;
+      }
+    }
+  }
+  if (!found && opts.length) {
+    var lv = '';
+    for (var j = 0; j < opts.length; j++) { if (!opts[j].disabled) lv = opts[j].value; }
+    if (lv) tr.value = lv;
+  }
+}
+function _initMilestoneForm() {
+  var typeEl = document.getElementById('ms-type');
+  if (!typeEl) return;
+  _applyMsPredecessor(typeEl.value);
+  typeEl.addEventListener('change', function() { _applyMsPredecessor(this.value); });
+}
+
+document.body.addEventListener('htmx:afterSwap', function(evt) {
+  var tgt = evt.detail.target;
+  if (!tgt) return;
+  if (tgt.id === 'module-panel-content') {
+    // Refresh balance bar and module nav totals
+    htmx.ajax('GET', '/ui/models/{{ model.id }}/balance-bar', {
+      target: '#balance-bar-container', swap: 'innerHTML'
+    });
+    var m = new URLSearchParams(window.location.search).get('module') || '';
+    htmx.ajax('GET', '/ui/models/{{ model.id }}/module-nav?module=' + encodeURIComponent(m), {
+      target: '#module-nav-cards', swap: 'innerHTML'
+    });
+    // Re-init drag handles if sources panel is now visible
+    _initSourcesDrag();
+  }
+  if (tgt.id === 'line-item-drawer-body') {
+    _initMilestoneForm();
+  }
+});
+
+// Also init on full page load (non-HTMX navigation)
+document.addEventListener('DOMContentLoaded', _initSourcesDrag);
+
+function _initSourcesDrag() {
+  var tbody = document.getElementById('sources-drag-tbody');
+  if (!tbody) return;
+  var _dragging = null;
+
+  tbody.querySelectorAll('tr[data-module-id]').forEach(function(row) {
+    row.addEventListener('dragstart', function(e) {
+      _dragging = row;
+      e.dataTransfer.effectAllowed = 'move';
+      setTimeout(function() { row.style.opacity = '0.4'; }, 0);
+    });
+    row.addEventListener('dragend', function() {
+      row.style.opacity = '';
+      tbody.querySelectorAll('tr').forEach(function(r) { r.classList.remove('drag-over'); });
+      _dragging = null;
+    });
+    row.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      if (!_dragging || row === _dragging) return;
+      var rect = row.getBoundingClientRect();
+      var mid = rect.top + rect.height / 2;
+      tbody.querySelectorAll('tr').forEach(function(r) { r.classList.remove('drag-over'); });
+      if (e.clientY < mid) {
+        tbody.insertBefore(_dragging, row);
+      } else {
+        tbody.insertBefore(_dragging, row.nextSibling);
+      }
+    });
+  });
+
+  tbody.addEventListener('drop', function(e) {
+    e.preventDefault();
+    if (!_dragging) return;
+    var ids = Array.from(tbody.querySelectorAll('tr[data-module-id]')).map(function(r) {
+      return r.dataset.moduleId;
+    });
+    var fd = new FormData();
+    ids.forEach(function(id) { fd.append('order', id); });
+    fetch('/ui/models/{{ model.id }}/capital-modules/reorder', { method: 'POST', body: fd })
+      .then(function(r) { return r.text(); })
+      .then(function(html) {
+        var panel = document.getElementById('module-panel-content');
+        panel.innerHTML = html;
+        htmx.process(panel);
+        _initSourcesDrag();
+        // refresh balance bar
+        htmx.ajax('GET', '/ui/models/{{ model.id }}/balance-bar', {
+          target: '#balance-bar-container', swap: 'innerHTML'
+        });
+      });
+  });
+}
+</script>
+
+<script>
+// Auto-format dollar amount inputs with comma separators.
+// Targets number inputs whose name contains 'amount', 'price', 'cost', 'value', or 'reserve'.
+const _MONEY_NAMES = /amount|price|cost|value|reserve/i;
+
+function _isMoney(el) {
+  return el.type === 'number' && el.step === '1' && _MONEY_NAMES.test(el.name || '');
+}
+
+function _fmtComma(n) {
+  if (n === '' || n === null || isNaN(n)) return n;
+  return Number(n).toLocaleString('en-US', {maximumFractionDigits: 0});
+}
+
+function _applyMoneyFormat(el) {
+  const raw = el.value.replace(/,/g, '');
+  if (raw === '' || isNaN(raw)) return;
+  // Switch to text display with commas
+  el.dataset.rawValue = raw;
+  el.type = 'text';
+  el.value = _fmtComma(raw);
+}
+
+function _stripMoneyFormat(el) {
+  const raw = (el.dataset.rawValue || el.value.replace(/,/g, '')).trim();
+  el.type = 'number';
+  el.value = raw;
+  delete el.dataset.rawValue;
+}
+
+// Apply formatting to drawer contents when loaded
+document.addEventListener('htmx:afterSwap', function(e) {
+  const container = e.detail.target || document;
+  container.querySelectorAll('input').forEach(el => {
+    if (_isMoney(el) && el.value !== '') _applyMoneyFormat(el);
+  });
+});
+
+// Focus: show raw number for editing
+document.addEventListener('focus', function(e) {
+  if (_isMoney(e.target)) _stripMoneyFormat(e.target);
+}, true);
+
+// Blur: show formatted value
+document.addEventListener('blur', function(e) {
+  if (e.target.type === 'number' && _MONEY_NAMES.test(e.target.name || '') && e.target.value !== '') {
+    _applyMoneyFormat(e.target);
+  }
+}, true);
+
+// Before submit: strip commas so server gets plain numbers.
+// We handle BOTH htmx:configRequest (fires before HTMX sends the request,
+// so HTMX reads clean values) AND the standard DOM submit event (fallback
+// for any non-HTMX forms).
+document.body.addEventListener('htmx:configRequest', function(e) {
+  var params = e.detail.parameters;
+  if (!params) return;
+  Object.keys(params).forEach(function(k) {
+    if (_MONEY_NAMES.test(k) && typeof params[k] === 'string') {
+      params[k] = params[k].replace(/,/g, '');
+    }
+  });
+});
+
+document.addEventListener('submit', function(e) {
+  e.target.querySelectorAll('input').forEach(el => {
+    if (_MONEY_NAMES.test(el.name || '')) {
+      el.value = el.value.replace(/,/g, '');
+    }
+  });
+});
+
+// Commit focused input before submit button click.
+// Browsers fire click on mouseup but blur on mousedown — however HTMX may
+// capture the form value between the two. Explicitly blur the active element
+// on mousedown of any submit button so the value is committed first.
+document.addEventListener('mousedown', function(e) {
+  var btn = e.target.closest('button[type="submit"], input[type="submit"], [role="button"]');
+  if (!btn) return;
+  var active = document.activeElement;
+  if (active && active !== btn && active !== document.body) {
+    active.blur();
+  }
+}, true);
+</script>
+
+{% endblock %}

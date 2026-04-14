@@ -1,0 +1,52 @@
+{# Opportunities table rows — loaded by GET /ui/opportunities/rows #}
+{% if opps %}
+  {% for opp in opps %}
+  {% set buildings = opp.opportunity_buildings | map(attribute='building') | list %}
+  {% set primary_addr = buildings[0].address_display if buildings else '—' %}
+  <tr style="cursor:pointer" onclick="window.location='/opportunities/{{ opp.id }}'">
+    <td>
+      <div style="font-weight:600">{{ opp.name }}</div>
+      <div class="opp-address">{{ primary_addr }}{% if buildings | length > 1 %} + {{ buildings | length - 1 }} more{% endif %}</div>
+    </td>
+    <td>
+      {% for ob in opp.opportunity_buildings %}
+      <span class="building-pill">{{ ob.building.unit_count or '?' }}u</span>
+      {% endfor %}
+      {% if not opp.opportunity_buildings %}
+      <span style="color:var(--text-muted);font-size:12px">No buildings</span>
+      {% endif %}
+    </td>
+    <td>
+      <span class="badge {% if opp.status == 'active' %}badge-green{% elif opp.status == 'archived' %}badge-gray{% else %}badge-blue{% endif %}">
+        {{ opp.status | title if opp.status else '—' }}
+      </span>
+    </td>
+    <td style="font-size:12px;color:var(--text-muted)">{{ opp.source | title if opp.source else 'Manual' }}</td>
+    <td style="font-size:12px">
+      {% if opp.deal_opportunities %}
+        {{ opp.deal_opportunities | length }}
+      {% else %}
+        <span style="color:var(--text-muted)">—</span>
+      {% endif %}
+    </td>
+    <td style="font-size:12px;color:var(--text-muted)">{{ opp.created_at.strftime('%b %d, %Y') if opp.created_at else '—' }}</td>
+    <td>
+      {% if opp.source_type == 'scraped' %}
+      <button class="btn btn-ghost btn-sm archive-btn"
+              onclick="event.stopPropagation(); if(confirm('Dissolve this opportunity? The listing will not be affected.')) { fetch('/ui/opportunities/{{ opp.id }}/dissolve', {method:'POST'}).then(() => htmx.trigger('#opp-filters','change')); }">
+        Dissolve
+      </button>
+      {% elif opp.status != 'archived' %}
+      <button class="btn btn-ghost btn-sm archive-btn"
+              onclick="event.stopPropagation(); fetch('/ui/opportunities/{{ opp.id }}/archive', {method:'POST'}).then(() => htmx.trigger('#opp-filters','change'));">
+        Archive
+      </button>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+{% else %}
+  <tr><td colspan="6" style="text-align:center;padding:32px;color:var(--text-muted)">
+    No opportunities yet. <a href="/ui/opportunities/wizard">Create your first →</a>
+  </td></tr>
+{% endif %}

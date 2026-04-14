@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Opportunities — Viciniti Deals{% endblock %}
+
+{% block head %}
+<style>
+.opp-address { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+.building-pill {
+  display: inline-block; padding: 1px 7px;
+  border-radius: 10px; background: var(--accent-faint);
+  color: var(--accent); font-size: 11px; font-weight: 600;
+  margin-right: 3px;
+}
+.archive-btn { opacity: 0; transition: opacity 0.1s; }
+tr:hover .archive-btn { opacity: 1; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="topbar">
+  <a href="/ui/opportunities/wizard" class="btn btn-primary">+ New Opportunity</a>
+</div>
+
+<div class="content">
+
+  <!-- Toolbar -->
+  <form id="opp-filters"
+        hx-get="/ui/opportunities/rows"
+        hx-trigger="change, input delay:300ms from:[type=search]"
+        hx-target="#opps-tbody"
+        hx-swap="innerHTML">
+    <div class="toolbar">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input class="search-input" type="search" name="q" value="{{ q or '' }}" placeholder="Search name, address…">
+      </div>
+      <select class="filter-select" name="status">
+        <option value="">All Statuses</option>
+        <option value="hypothetical" {% if status == 'hypothetical' %}selected{% endif %}>Hypothetical</option>
+        <option value="active"       {% if status == 'active'       %}selected{% endif %}>Active</option>
+        <option value="archived"     {% if status == 'archived'     %}selected{% endif %}>Archived</option>
+      </select>
+      <select class="filter-select" name="source">
+        <option value="">All Sources</option>
+        <option value="manual"  {% if source == 'manual'  %}selected{% endif %}>Manual</option>
+        <option value="loopnet" {% if source == 'loopnet' %}selected{% endif %}>LoopNet</option>
+        <option value="crexi"   {% if source == 'crexi'   %}selected{% endif %}>Crexi</option>
+      </select>
+    </div>
+  </form>
+
+  <div class="card" style="padding:0">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Opportunity</th>
+          <th>Buildings</th>
+          <th>Status</th>
+          <th>Source</th>
+          <th>Deals</th>
+          <th>Created</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="opps-tbody">
+        {% include 'partials/opportunities_rows.html' %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+{% endblock %}

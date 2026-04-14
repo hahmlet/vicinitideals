@@ -1,0 +1,42 @@
+{# Building form fields partial — used inside opportunity_wizard.html step 2 building cards.
+   Context: b (Building), loop.index0 (idx) #}
+{% set idx = loop.index0 %}
+{% if b.id %}<input type="hidden" name="building_id_{{ idx }}" value="{{ b.id }}">{% endif %}
+<input type="hidden" name="building_idx[]" value="{{ idx }}">
+<div class="field-row">
+  <div class="fg">
+    <label>Address</label>
+    <input type="text" name="b_address_{{ idx }}" value="{{ b.address_line1 or '' }}" placeholder="123 Main St">
+  </div>
+</div>
+<div class="field-row">
+  <div class="fg"><label>City</label><input type="text" name="b_city_{{ idx }}" value="{{ b.city or '' }}" placeholder="Gresham"></div>
+  <div class="fg" style="max-width:80px"><label>State</label><input type="text" name="b_state_{{ idx }}" value="{{ b.state or '' }}" placeholder="OR" maxlength="2"></div>
+  <div class="fg" style="max-width:100px"><label>Zip</label><input type="text" name="b_zip_{{ idx }}" value="{{ b.zip_code or '' }}" placeholder="97030"></div>
+</div>
+<div class="field-row">
+  <div class="fg"><label>Units</label><input type="number" name="b_units_{{ idx }}" value="{{ b.unit_count or '' }}" min="0" placeholder="12"></div>
+  <div class="fg"><label>Bldg Sqft</label><input type="number" name="b_sqft_{{ idx }}" value="{{ b.building_sqft or '' }}" min="0" placeholder="8500"></div>
+  <div class="fg"><label>Year Built</label><input type="number" name="b_year_{{ idx }}" value="{{ b.year_built or '' }}" min="1800" max="2030" placeholder="1965"></div>
+</div>
+<div class="field-row">
+  <div class="fg">
+    <label>Property Type</label>
+    <select name="b_type_{{ idx }}">
+      <option value="">— Select —</option>
+      {% for pt in ['Multifamily','Mixed Use','Commercial','Retail','Industrial','Single Family','Vacant Land','Other'] %}
+      <option value="{{ pt }}" {% if b.property_type == pt %}selected{% endif %}>{{ pt }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="fg">
+    <label>Current Use</label>
+    <input type="text" name="b_use_{{ idx }}" value="{{ b.current_use or '' }}" placeholder="e.g. Residential Income">
+  </div>
+</div>
+<div class="field-row">
+  <div class="fg">
+    <label>Notes</label>
+    <input type="text" name="b_notes_{{ idx }}" value="{{ b.notes or '' }}" placeholder="Optional building-level notes">
+  </div>
+</div>

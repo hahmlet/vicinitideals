@@ -1,0 +1,1379 @@
+{# Active module content panel — included by model_builder.html and swapped via HTMX #}
+{# All mutations post to /api/... JSON endpoints; on success, refreshPanel() fetches this partial #}
+
+{% if active_module == 'sources_uses' %}
+
+{# ── Sort helper (Sources & Uses panel) ── #}
+<script>
+(function(){
+  var _suSort = {};
+  var MS_ORDER = ['close','pre_development','construction','operation_lease_up','operation_stabilized','divestment','maturity'];
+  window.suSortTable = function(tbodyId, col, type) {
+    var st = _suSort[tbodyId] || {col:null, dir:1};
+    st.dir = (st.col === col) ? -st.dir : 1;
+    st.col = col;
+    _suSort[tbodyId] = st;
+    var tbody = document.getElementById(tbodyId);
+    if (!tbody) return;
+    var rows = Array.from(tbody.querySelectorAll('tr'));
+    rows.sort(function(a,b){
+      var av = a.dataset[col] || '', bv = b.dataset[col] || '';
+      var r = 0;
+      if (type === 'num')   r = (parseFloat(av)||0) - (parseFloat(bv)||0);
+      else if (type === 'ms') r = (MS_ORDER.indexOf(av)||99) - (MS_ORDER.indexOf(bv)||99);
+      else r = av.toLowerCase() < bv.toLowerCase() ? -1 : av.toLowerCase() > bv.toLowerCase() ? 1 : 0;
+      return r * st.dir;
+    });
+    rows.forEach(function(r){ tbody.appendChild(r); });
+    tbody.closest('table').querySelectorAll('th[data-sort-col]').forEach(function(th){
+      var arrow = th.querySelector('.sort-arrow');
+      if (arrow) arrow.textContent = th.dataset.sortCol === col ? (st.dir===1 ? ' ↑' : ' ↓') : ' ↕';
+    });
+  };
+})();
+</script>
+
+{# ── Sources & Uses combined panel ── #}
+<div class="module-panel-header">
+  <div>
+    <div class="module-panel-title">Sources &amp; Uses</div>
+    <div class="module-panel-desc">Capital sources auto-size to Uses + carrying costs when you Compute.</div>
+  </div>
+</div>
+<div class="module-panel-body">
+
+{# ── Sources = Uses check ── #}
+{% if uses_total and capital_total %}
+{% if (uses_total | float - capital_total | float) | abs < 1 %}
+<div style="margin-bottom:14px;padding:8px 12px;border-radius:6px;background:#f0fdf4;border:1px solid #86efac;color:#166534;font-size:12px;font-weight:600">
+  ✓ Sources = Uses
+</div>
+{% else %}
+<div style="margin-bottom:14px;padding:8px 12px;border-radius:6px;background:#fffbeb;border:1px solid #fcd34d;color:#92400e;font-size:12px">
+  <strong>Gap:</strong> Sources {{ capital_total | currency }} vs Uses {{ uses_total | currency }}
+  — recompute to auto-size sources.
+</div>
+{% endif %}
+{% endif %}
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+
+{# ── Left: Uses ── #}
+<div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted)">Uses</div>
+    <button class="btn btn-sm btn-secondary" style="font-size:11px;padding:2px 8px" onclick="openAddLine('uses')">+ Use</button>
+  </div>
+  {% if use_lines %}
+  <table class="line-table" style="font-size:12px">
+    <thead>
+      <tr>
+        <th data-sort-col="label" onclick="suSortTable('uses-tbody','label','str')" style="cursor:pointer;user-select:none">Label<span class="sort-arrow"> ↕</span></th>
+        <th data-sort-col="ms" onclick="suSortTable('uses-tbody','ms','ms')" style="cursor:pointer;user-select:none">Milestone<span class="sort-arrow"> ↕</span></th>
+        <th data-sort-col="amt" class="col-right" onclick="suSortTable('uses-tbody','amt','num')" style="cursor:pointer;user-select:none">Amount<span class="sort-arrow"> ↕</span></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="uses-tbody">
+      {% for line in use_lines %}
+      {%- set _ms_key = line.milestone_key or (line.phase | string).replace('UseLinePhase.','') -%}
+      <tr data-label="{{ line.label | lower }}" data-ms="{{ _ms_key }}" data-amt="{{ line.amount or 0 }}"
+          onclick="openEditLine('use_lines', '{{ line.id }}', '{{ model.id }}')">
+        <td style="font-weight:500">{{ line.label }}</td>
+        <td><span class="text-small text-muted" style="font-size:11px">
+          {% if line.milestone_key %}{{ line.milestone_key | replace('_',' ') | title }}{% if line.milestone_key_to %} → {{ line.milestone_key_to | replace('_',' ') | title }}{% endif %}
+          {% else %}{{ (line.phase | string).replace('UseLinePhase.','') | replace('_',' ') | title }}{% endif %}
+        </span></td>
+        <td class="col-right text-mono">{{ line.amount | currency }}</td>
+        <td style="width:28px;text-align:right">
+          <button class="btn btn-sm btn-ghost"
+                  hx-delete="/api/models/{{ model.id }}/use-lines/{{ line.id }}"
+                  hx-confirm="Delete '{{ line.label }}'?"
+                  hx-on::after-request="if(event.detail.successful) refreshPanel('sources_uses')"
+                  onclick="event.stopPropagation()">✕</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="line-table-footer">
+    <span class="line-total-label">Total Uses</span>
+    <span class="line-total-amount">{{ use_lines | sum(attribute='amount') | currency }}</span>
+  </div>
+  {% else %}
+  <div class="module-empty" style="padding:24px 0">
+    <div class="module-empty-icon">🔨</div>
+    <div class="module-empty-title" style="font-size:13px">No uses yet</div>
+  </div>
+  {% endif %}
+</div>
+
+{# ── Right: Sources ── #}
+<div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted)">Sources</div>
+    <button class="btn btn-sm btn-primary" style="font-size:11px;padding:2px 8px" onclick="openAddLine('sources')">+ Source</button>
+  </div>
+  {% if capital_modules %}
+  <table class="line-table" style="font-size:12px">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th data-sort-col="label" onclick="suSortTable('sources-tbody','label','str')" style="cursor:pointer;user-select:none">Label<span class="sort-arrow"> ↕</span></th>
+        <th data-sort-col="ftype" onclick="suSortTable('sources-tbody','ftype','str')" style="cursor:pointer;user-select:none">Type<span class="sort-arrow"> ↕</span></th>
+        <th data-sort-col="amt" class="col-right" onclick="suSortTable('sources-tbody','amt','num')" style="cursor:pointer;user-select:none">Commitment*<span class="sort-arrow"> ↕</span></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="sources-tbody">
+      {% for m in capital_modules | sort(attribute='stack_position') %}
+      {%- set _src_amt = (m.source.amount | float) if (m.source and m.source.get('amount')) else 0 -%}
+      {%- set _is_equity = (m.funder_type in ('common_equity', 'preferred_equity', 'equity')) -%}
+      {%- set _ns_eq = namespace(equity_residual=none) -%}
+      {%- if _is_equity and not _src_amt and uses_total -%}
+        {%- set _ns_debt = namespace(t=0) -%}
+        {%- for _dm in capital_modules -%}
+          {%- if _dm.funder_type not in ('common_equity', 'preferred_equity', 'equity') -%}
+            {%- set _ns_debt.t = _ns_debt.t + ((_dm.source.amount | float) if (_dm.source and _dm.source.get('amount')) else 0) -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- set _ns_eq.equity_residual = (uses_total | float) - _ns_debt.t -%}
+      {%- endif -%}
+      <tr draggable="true" data-module-id="{{ m.id }}"
+          data-label="{{ m.label | lower }}" data-ftype="{{ (m.funder_type or '') | lower }}" data-amt="{{ _src_amt }}"
+          onclick="openEditLine('capital_modules', '{{ m.id }}', '{{ model.id }}')">
+        <td class="text-muted text-small">{{ m.stack_position or '?' }}</td>
+        <td style="font-weight:500">{{ m.label }}</td>
+        <td><span class="text-small text-muted" style="font-size:10px">{{ m.funder_type | replace('_', ' ') | title if m.funder_type else '—' }}</span></td>
+        <td class="col-right text-mono">
+          {% if _src_amt %}{{ _src_amt | currency }}
+          {% elif _ns_eq.equity_residual is not none %}
+            <span title="Residual = Uses − Debt Sources (pre-compute estimate)">
+              {{ _ns_eq.equity_residual | currency }}
+              <span style="color:var(--text-muted);font-size:10px"> est.</span>
+            </span>
+          {% else %}<span style="color:var(--text-muted);font-size:11px">Compute →</span>{% endif %}
+        </td>
+        <td style="width:28px;text-align:right">
+          <button class="btn btn-sm btn-ghost"
+                  hx-delete="/api/models/{{ model.id }}/capital-modules/{{ m.id }}"
+                  hx-confirm="Delete '{{ m.label }}'?"
+                  hx-on::after-request="if(event.detail.successful) refreshPanel('sources_uses')"
+                  onclick="event.stopPropagation()">✕</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="line-table-footer">
+    <span class="line-total-label">Total Sources</span>
+    <span class="line-total-amount">
+      {% set ns = namespace(total=0) %}
+      {% for m in capital_modules %}{% if m.source and m.source.get('amount') %}{% set ns.total = ns.total + (m.source.amount | float) %}{% endif %}{% endfor %}
+      {% if ns.total %}{{ ns.total | currency }}
+      {% else %}<span style="color:var(--text-muted);font-size:11px">Compute →</span>{% endif %}
+    </span>
+  </div>
+  {% else %}
+  <div class="module-empty" style="padding:24px 0">
+    <div class="module-empty-icon">💰</div>
+    <div class="module-empty-title" style="font-size:13px">No sources yet</div>
+  </div>
+  {% endif %}
+</div>
+
+</div>{# /grid #}
+
+{# ── Gantt (timeline phases) — only shown once timeline is approved ── #}
+{% if builder_gantt_data and timeline_approved %}
+<div style="margin-top:20px">
+  <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);margin-bottom:8px">Timeline</div>
+  <div class="g2-wrap">
+    <div class="g2-axis">
+      <div class="g2-axis-spacer"></div>
+      <div class="g2-axis-track">
+        <div class="g2-years">
+          {% for ys in builder_gantt_data.year_spans %}
+          <div class="g2-year-span" style="left:{{ ys.left_pct }}%;width:{{ ys.width_pct }}%">{{ ys.label }}</div>
+          {% endfor %}
+        </div>
+        <div class="g2-months">
+          {% for tick in builder_gantt_data.month_ticks %}
+          <div class="g2-month{% if tick.is_year_start %} g2-month-year{% endif %}" style="left:{{ tick.left_pct }}%">{{ tick.label }}</div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="g2-vlines">
+      {% for tick in builder_gantt_data.month_ticks %}
+      <div class="g2-vline{% if tick.is_year_start %} g2-vline-year{% endif %}" style="left:{{ tick.left_pct }}%"></div>
+      {% endfor %}
+    </div>
+    {% for row in builder_gantt_data.rows %}
+    <div class="g2-row">
+      <div class="g2-label" title="{{ row.label }}">{{ row.label }}</div>
+      <div class="g2-track">
+        <div class="g2-bar {{ row.color_class }}"
+             style="left:{{ row.left_pct }}%;width:{{ row.width_pct }}%;{% if row.is_truncated %}border-radius:2px 0 0 2px{% endif %}"
+             title="{{ row.label }}{% if row.start_fmt %} · {{ row.start_fmt }}{% if row.end_fmt %} – {{ row.end_fmt }}{% endif %}{% endif %}">
+          {% if row.width_pct > 6 %}{{ row.label }}{% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    {% if capital_module_gantt_rows %}
+    <div class="g2-row" style="height:6px;pointer-events:none"><div class="g2-label"></div><div class="g2-track"></div></div>
+    {% for row in capital_module_gantt_rows %}
+    <div class="g2-row g2-row-source">
+      <div class="g2-label" title="{{ row.label }}">{{ row.label }}</div>
+      <div class="g2-track">
+        <div class="g2-bar g2-bar-{{ row.source_type }}"
+             style="left:{{ row.left_pct }}%;width:{{ row.width_pct }}%;position:relative;overflow:hidden"
+             title="{{ row.label }}">
+          {% if row.fade_right %}
+          <span style="position:absolute;right:0;top:0;bottom:0;width:36px;
+                       background:linear-gradient(to right,transparent,rgba(255,255,255,.75));
+                       pointer-events:none"></span>
+          {% endif %}
+          {% if row.width_pct > 8 %}<span style="padding-left:6px;font-size:10px">{{ row.label }}</span>{% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+
+</div>{# /module-panel-body #}
+
+{% elif active_module == 'uses' %}
+
+<div class="module-panel-header">
+  <div>
+    <div class="module-panel-title">Uses</div>
+    <div class="module-panel-desc">One-time capital expenditures — acquisition, construction, renovation, operation reserves, exit costs.</div>
+  </div>
+  <div class="module-panel-actions">
+    <a class="btn btn-sm btn-secondary" href="/ui/models/{{ model.id }}/import-template.xlsx" download>⬇ Excel Template</a>
+    <button class="btn btn-sm btn-primary" onclick="openAddLine('uses')">+ Add Line</button>
+  </div>
+</div>
+<div class="module-panel-body">
+  {% if use_lines %}
+  <table class="line-table">
+    <thead>
+      <tr>
+        <th>Label</th>
+        <th>Milestone</th>
+        <th>Timing</th>
+        <th class="col-right">Amount</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for line in use_lines %}
+      {%- set _timing = (line.timing_type | string).replace('UseLineTiming.','') if line.timing_type else 'first_day' -%}
+      <tr onclick="openEditLine('use_lines', '{{ line.id }}', '{{ model.id }}')">
+        <td>
+          <span style="font-weight:500">{{ line.label }}</span>
+          {% if line.is_deferred %}<span class="line-badge badge-deferred" style="margin-left:6px">Deferred</span>{% endif %}
+          {% if line.notes and line.notes | string | lower not in ('none', '') %}<div class="text-small text-muted" style="margin-top:2px">{{ line.notes }}</div>{% endif %}
+        </td>
+        <td class="text-small text-muted">
+          {% if line.milestone_key %}
+            {{ line.milestone_key | replace('_',' ') | title }}{% if line.milestone_key_to %} → {{ line.milestone_key_to | replace('_',' ') | title }}{% endif %}
+          {% else %}{{ (line.phase | string).replace('UseLinePhase.','') | replace('_',' ') | title }}{% endif %}
+        </td>
+        <td class="text-small text-muted">{{ 'Spread' if _timing == 'spread' else 'Day 1' }}</td>
+        <td class="col-right">{{ line.amount | currency }}</td>
+        <td style="width:32px;text-align:right">
+          <button class="btn btn-sm btn-ghost"
+                  hx-delete="/api/models/{{ model.id }}/use-lines/{{ line.id }}"
+                  hx-confirm="Delete '{{ line.label }}'?"
+                  hx-on::after-request="if(event.detail.successful) refreshPanel('uses')"
+                  onclick="event.stopPropagation()">✕</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="line-table-footer">
+    <span class="line-total-label">Total Uses</span>
+    <span class="line-total-amount">{{ use_lines | sum(attribute='amount') | currency }}</span>
+  </div>
+  {% else %}
+  <div class="module-empty">
+    <div class="module-empty-icon">🔨</div>
+    <div class="module-empty-title">No use lines yet</div>
+    <div class="module-empty-desc">Add line items for acquisition costs, construction, soft costs, operation reserves, closing costs, and exit expenses.</div>
+    <button class="btn btn-primary" style="margin-top:16px" onclick="openAddLine('uses')">+ Add First Line</button>
+  </div>
+  {% endif %}
+</div>
+
+{% elif active_module == 'revenue' %}
+
+<div class="module-panel-header">
+  <div>
+    <div class="module-panel-title">Revenue</div>
+    <div class="module-panel-desc">Income streams during the hold period — rents, parking, ancillary income.</div>
+  </div>
+  <div class="module-panel-actions">
+    <button class="btn btn-sm btn-primary" onclick="openAddLine('revenue')">+ Add Stream</button>
+  </div>
+</div>
+<div class="module-panel-body">
+  {% if income_streams %}
+  <table class="line-table">
+    <thead>
+      <tr>
+        <th>Label</th>
+        <th>Type</th>
+        <th class="col-right">Units</th>
+        <th class="col-right">$/Unit/Mo</th>
+        <th class="col-right">Occupancy</th>
+        <th class="col-right">Escalation</th>
+        <th class="col-right">Annual (stabilized)</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in income_streams %}
+      {% set monthly = (s.unit_count or 1) * (s.amount_per_unit_monthly or s.amount_fixed_monthly or 0) * ((s.stabilized_occupancy_pct or 95) / 100) %}
+      {% set annual = monthly * 12 %}
+      <tr onclick="openEditLine('income_streams', '{{ s.id }}', '{{ model.id }}')">
+        <td style="font-weight:500">{{ s.label }}</td>
+        <td><span class="text-small text-muted">{{ s.stream_type | replace('_', ' ') | title }}</span></td>
+        <td class="col-right">{{ s.unit_count or '—' }}</td>
+        <td class="col-right">{{ s.amount_per_unit_monthly | currency if s.amount_per_unit_monthly else (s.amount_fixed_monthly | currency if s.amount_fixed_monthly else '—') }}</td>
+        <td class="col-right">{{ s.stabilized_occupancy_pct | pct }}</td>
+        <td class="col-right">{{ s.escalation_rate_pct_annual | pct }}</td>
+        <td class="col-right">{{ annual | currency }}</td>
+        <td style="width:32px;text-align:right">
+          <button class="btn btn-sm btn-ghost"
+                  hx-delete="/api/models/{{ model.id }}/income-streams/{{ s.id }}"
+                  hx-confirm="Delete '{{ s.label }}'?"
+                  hx-on::after-request="if(event.detail.successful) refreshPanel('revenue')"
+                  onclick="event.stopPropagation()">✕</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="line-table-footer">
+    <span class="line-total-label">Annual Revenue (stabilized, approx)</span>
+    <span class="line-total-amount">{{ revenue_annual | currency if revenue_annual else '—' }}</span>
+  </div>
+  {% else %}
+  <div class="module-empty">
+    <div class="module-empty-icon">📈</div>
+    <div class="module-empty-title">No revenue streams yet</div>
+    <div class="module-empty-desc">Add income streams: residential rent, parking, laundry, storage, and other ancillary income.</div>
+    <button class="btn btn-primary" style="margin-top:16px" onclick="openAddLine('revenue')">+ Add First Stream</button>
+  </div>
+  {% endif %}
+</div>
+
+{% elif active_module == 'opex' %}
+
+<div class="module-panel-header">
+  <div>
+    <div class="module-panel-title">Operating Expenses</div>
+    <div class="module-panel-desc">Recurring costs that reduce NOI — insurance, taxes, management, utilities, reserves.</div>
+  </div>
+  <div class="module-panel-actions">
+    <a class="btn btn-sm btn-secondary" href="/ui/models/{{ model.id }}/import-template.xlsx" download>⬇ Excel Template</a>
+    <button class="btn btn-sm btn-primary" onclick="openAddLine('opex')">+ Add Line</button>
+  </div>
+</div>
+<div class="module-panel-body">
+  {% if expense_lines %}
+  <table class="line-table">
+    <thead>
+      <tr>
+        <th>Label</th>
+        <th class="col-right">Annual Amount</th>
+        <th class="col-right">Escalation</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for e in expense_lines %}
+      <tr onclick="openEditLine('expense_lines', '{{ e.id }}', '{{ model.id }}')">
+        <td>
+          <span style="font-weight:500">{{ e.label }}</span>
+          {% if e.notes %}<div class="text-small text-muted" style="margin-top:2px">{{ e.notes }}</div>{% endif %}
+        </td>
+        <td class="col-right">{{ e.annual_amount | currency }}</td>
+        <td class="col-right">{{ e.escalation_rate_pct_annual | pct }}</td>
+        <td style="width:32px;text-align:right">
+          <button class="btn btn-sm btn-ghost"
+                  hx-delete="/api/models/{{ model.id }}/expense-lines/{{ e.id }}"
+                  hx-confirm="Delete '{{ e.label }}'?"
+                  hx-on::after-request="if(event.detail.successful) refreshPanel('opex')"
+                  onclick="event.stopPropagation()">✕</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="line-table-footer">
+    <span class="line-total-label">Total Annual OpEx</span>
+    <span class="line-total-amount">{{ opex_annual | currency if opex_annual else '—' }}</span>
+  </div>
+  {% else %}
+  <div class="module-empty">
+    <div class="module-empty-icon">📋</div>
+    <div class="module-empty-title">No expense lines yet</div>
+    <div class="module-empty-desc">Add line items for property taxes, insurance, management fees, maintenance, utilities, and CapEx reserves.</div>
+    <div style="display:flex;gap:10px;justify-content:center;margin-top:16px">
+      <button class="btn btn-primary" onclick="openAddLine('opex')">+ Add Line</button>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+{% elif active_module == 'sources' %}
+
+<div class="module-panel-header" style="align-items:center">
+  <div style="display:flex;align-items:center;gap:12px">
+    <div class="sources-total-box">
+      Sources{% if capital_total %}&ensp;<strong>{{ capital_total | currency }}</strong>{% endif %}
+    </div>
+  </div>
+  <div class="module-panel-actions">
+    <button class="btn btn-primary" onclick="openAddLine('sources')">+ Add Source</button>
+  </div>
+</div>
+<div class="module-panel-body">
+  {% if capital_modules %}
+
+  <table class="line-table">
+    <thead>
+      <tr>
+        <th style="width:24px"></th>
+        <th>#</th>
+        <th>Label</th>
+        <th>Type</th>
+        <th class="col-right">Amount</th>
+        <th>Carry</th>
+        <th>Exit</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="sources-drag-tbody">
+      {% for m in capital_modules | sort(attribute='stack_position') %}
+      <tr draggable="true" data-module-id="{{ m.id }}"
+          onclick="openEditLine('capital_modules', '{{ m.id }}', '{{ model.id }}')">
+        <td style="cursor:grab;color:var(--text-muted);font-size:16px;padding-right:4px;user-select:none"
+            title="Drag to reorder" onclick="event.stopPropagation()">⠿</td>
+        <td class="text-muted text-small">{{ m.stack_position or '?' }}</td>
+        <td style="font-weight:500">{{ m.label }}</td>
+        <td><span class="text-small text-muted">{{ m.funder_type | replace('_', ' ') | title }}</span></td>
+        <td class="col-right">
+          {% if m.source and m.source.get('amount') %}{{ m.source.amount | currency }}
+          {% elif m.source and m.source.get('pct_of_total_cost') %}{{ m.source.pct_of_total_cost }}% of costs
+          {% else %}—{% endif %}
+        </td>
+        <td class="text-small text-muted">
+          {%- set ns = namespace(pre='', ops='') -%}
+          {%- if m.carry and m.carry.get('phases') -%}
+            {%- for _cp in m.carry.phases -%}
+              {%- if _cp.get('name') in ('pre_operations','construction') -%}{%- set ns.pre = _cp.get('carry_type','') -%}{%- endif -%}
+              {%- if _cp.get('name') == 'operation' -%}{%- set ns.ops = _cp.get('carry_type','') -%}{%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+          {%- if ns.pre and ns.ops and ns.pre != ns.ops -%}
+            {{ ns.pre | replace('_',' ') | title }} / {{ ns.ops | replace('_',' ') | title }}
+          {%- elif ns.pre or ns.ops -%}
+            {{ (ns.pre or ns.ops) | replace('_',' ') | title }}
+          {%- else -%}—{%- endif -%}
+        </td>
+        <td class="text-small text-muted">{{ m.exit_terms.exit_type | replace('_', ' ') | title if m.exit_terms and m.exit_terms.get('exit_type') else '—' }}</td>
+        <td style="width:32px;text-align:right">
+          <button class="btn btn-sm btn-ghost"
+                  hx-delete="/api/models/{{ model.id }}/capital-modules/{{ m.id }}"
+                  hx-confirm="Delete '{{ m.label }}'?"
+                  hx-on::after-request="if(event.detail.successful) refreshPanel('sources')"
+                  onclick="event.stopPropagation()">✕</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="module-empty">
+    <div class="module-empty-icon">💰</div>
+    <div class="module-empty-title">No capital sources yet</div>
+    <div class="module-empty-desc">Add funders: senior debt, construction loans, equity investors, grants, or soft loans.</div>
+    <button class="btn btn-primary" style="margin-top:16px" onclick="openAddLine('sources')">+ Add Source</button>
+  </div>
+  {% endif %}
+</div>
+
+{% elif active_module == 'carrying' %}
+
+<div class="module-panel-header">
+  <div>
+    <div class="module-panel-title">Carrying Costs</div>
+    <div class="module-panel-desc">Debt Service Only</div>
+  </div>
+</div>
+<div class="module-panel-body">
+  {%- set debt_modules = capital_modules | selectattr('funder_type', 'in', ['senior_debt','mezzanine_debt','bridge','soft_loan','construction_loan','bond','permanent_debt']) | list -%}
+  {% if not debt_modules %}
+  <div class="timeline-gate-banner" style="margin-bottom:16px">
+    ⚠ No debt sources defined yet. Add a debt funder in
+    <a href="{{ request.url.path }}?module=sources" style="color:inherit;text-decoration:underline">Sources (Module 1)</a>
+    first — carrying costs are derived from the capital stack.
+  </div>
+  <div class="module-empty">
+    <div class="module-empty-icon">🏦</div>
+    <div class="module-empty-title">No debt sources configured</div>
+    <div class="module-empty-desc">Add senior debt, construction loans, bridge loans, soft loans, or bonds in Sources to see carrying cost rows here.</div>
+    <a href="{{ request.url.path }}?module=sources" class="btn btn-secondary" style="margin-top:16px">Go to Sources</a>
+  </div>
+  {% else %}
+  <div style="background:var(--surface-alt,#f9fafb);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:16px">
+    <div class="text-small text-muted">Carrying costs are computed from your Sources. Rows are grouped by carry type — one row per type across all funders. Run Compute Carry after adding or editing a source.</div>
+  </div>
+  {#— Build grouped rows: one per (carry_type × phase) combination across all debt modules —#}
+  {%- set rows = [] -%}
+  {%- for m in debt_modules -%}
+    {%- if m.carry and m.carry.get('phases') -%}
+      {#— Phased carry format: {"phases": [{name, carry_type, payment_frequency}, ...]} —#}
+      {%- for _cp in m.carry.phases -%}
+        {%- set _ct = _cp.get('carry_type','none') -%}
+        {%- set _ph = _cp.get('name','') -%}
+        {%- set _pf = _cp.get('payment_frequency','monthly') -%}
+        {%- if _ct and _ct != 'none' -%}
+          {%- set _ = rows.append({'carry_type': _ct, 'phase': _ph, 'payment_frequency': _pf, 'funders': [m.label], 'module_id': m.id | string}) -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- elif m.carry and m.carry.get('carry_type') and m.carry.get('carry_type') != 'none' -%}
+      {#— Flat carry format (auto-created debt): {"carry_type": "pi", ...} — treat as operations phase —#}
+      {%- set _ = rows.append({'carry_type': m.carry.get('carry_type'), 'phase': 'operation', 'payment_frequency': m.carry.get('payment_frequency','monthly'), 'funders': [m.label], 'module_id': m.id | string}) -%}
+    {%- else -%}
+      {%- set _ = rows.append({'carry_type': 'unset', 'phase': '', 'payment_frequency': '', 'funders': [m.label], 'module_id': m.id | string}) -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  <table class="line-table">
+    <thead>
+      <tr>
+        <th>Carry Type</th>
+        <th>Phase</th>
+        <th>Funders</th>
+        <th>Payment</th>
+        <th class="col-right">Est. Annual Service</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%- for row in rows -%}
+      <tr style="cursor:pointer" title="Click to edit carry terms for this funder"
+          onclick="openEditLine('capital_modules', '{{ row.module_id }}', '{{ model.id }}')">
+        <td style="font-weight:500">
+          {%- if row.carry_type == 'unset' -%}<span class="text-muted">Not configured</span>
+          {%- elif row.carry_type == 'io_only' -%}I&amp;O Only
+          {%- elif row.carry_type == 'pi' -%}P&amp;I
+          {%- else -%}{{ row.carry_type | replace('_',' ') | title }}{%- endif -%}
+        </td>
+        <td class="text-small text-muted">
+          {%- if row.phase in ('pre_operations','construction') -%}Pre-Operations
+          {%- elif row.phase == 'operation' -%}Operations
+          {%- else -%}—{%- endif -%}
+        </td>
+        <td class="text-small">{{ row.funders | join(', ') }}</td>
+        <td class="text-small text-muted">{{ row.payment_frequency | replace('_',' ') | title if row.payment_frequency else '—' }}</td>
+        <td class="col-right text-muted text-small">
+          {%- set _row_amt = (carrying_detail or {}).get(row.module_id, {}).get(row.phase) -%}
+          {%- if _row_amt is not none -%}{{ _row_amt | currency }}{%- else -%}—{%- endif -%}
+        </td>
+      </tr>
+      {%- endfor -%}
+    </tbody>
+  </table>
+  <div class="line-table-footer">
+    <span class="line-total-label">Est. Annual Debt Service</span>
+    <span style="display:flex;align-items:center;gap:10px">
+      {% if carrying_annual is not none %}
+      <span class="line-total-amount">{{ carrying_annual | currency }}</span>
+      {% endif %}
+      <button class="btn btn-sm btn-primary"
+              hx-post="/api/models/{{ model.id }}/compute"
+              hx-swap="none"
+              hx-indicator="#carry-compute-spin"
+              hx-on::after-request="if(event.detail.successful) refreshPanel('carrying')">
+        ▶ Compute Carry
+      </button>
+      <span id="carry-compute-spin" class="htmx-indicator text-small text-muted">Computing…</span>
+    </span>
+  </div>
+  {% endif %}
+</div>
+
+{% elif active_module == 'divestment' %}
+
+<div class="module-panel-header">
+  <div>
+    <div class="module-panel-title">Divestment Uses</div>
+    <div class="module-panel-desc">Exit assumptions and sale costs — broker commissions, transfer taxes, closing costs, prepayment penalties.</div>
+  </div>
+  <div class="module-panel-actions">
+    <button class="btn btn-sm btn-primary" onclick="openAddExitLine()">+ Add Exit Cost</button>
+  </div>
+</div>
+
+{# Exit Assumptions — exit cap rate, hold period, selling costs #}
+<div class="carry-assumptions-block" style="margin-bottom:18px">
+  <div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);margin-bottom:10px">Exit Assumptions</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+    <label class="carry-field-label">
+      <span>Hold Period (yrs)</span>
+      <input class="form-input carry-inline-input" type="number" step="1" min="1"
+             value="{{ inputs.hold_period_years if inputs and inputs.hold_period_years is not none else '' }}"
+             placeholder="e.g. 7"
+             hx-trigger="change"
+             hx-put="/api/models/{{ model.id }}/inputs"
+             hx-vals="js:{hold_period_years: parseFloat(event.target.value) || null}"
+             hx-swap="none"
+             hx-on::after-request="if(event.detail.successful) refreshPanel('divestment')">
+    </label>
+    <label class="carry-field-label">
+      <span>Exit Cap Rate (%)</span>
+      <input class="form-input carry-inline-input" type="number" step="0.1" min="0"
+             value="{{ inputs.exit_cap_rate_pct if inputs and inputs.exit_cap_rate_pct is not none else '' }}"
+             placeholder="e.g. 5.5"
+             hx-trigger="change"
+             hx-put="/api/models/{{ model.id }}/inputs"
+             hx-vals="js:{exit_cap_rate_pct: parseFloat(event.target.value) || null}"
+             hx-swap="none"
+             hx-on::after-request="if(event.detail.successful) refreshPanel('divestment')">
+    </label>
+    <label class="carry-field-label">
+      <span>Selling Costs (%)</span>
+      <input class="form-input carry-inline-input" type="number" step="0.1" min="0"
+             value="{{ inputs.selling_costs_pct if inputs and inputs.selling_costs_pct is not none else '' }}"
+             placeholder="e.g. 3.0"
+             hx-trigger="change"
+             hx-put="/api/models/{{ model.id }}/inputs"
+             hx-vals="js:{selling_costs_pct: parseFloat(event.target.value) || null}"
+             hx-swap="none"
+             hx-on::after-request="if(event.detail.successful) refreshPanel('divestment')">
+    </label>
+  </div>
+  {% if inputs and inputs.exit_cap_rate_pct %}
+  {%- set _exit_noi = outputs.noi_stabilized if outputs and outputs.noi_stabilized else none -%}
+  {% if _exit_noi %}
+  <div style="margin-top:10px;font-size:13px;color:var(--text-muted)">
+    Estimated sale price: <strong style="color:var(--text-primary)">{{ (_exit_noi / (inputs.exit_cap_rate_pct / 100)) | currency }}</strong>
+    {% if inputs.selling_costs_pct %}
+    — net of {{ inputs.selling_costs_pct }}% selling costs:
+    <strong style="color:var(--text-primary)">{{ (_exit_noi / (inputs.exit_cap_rate_pct / 100) * (1 - inputs.selling_costs_pct / 100)) | currency }}</strong>
+    {% endif %}
+  </div>
+  {% endif %}
+  {% else %}
+  <div style="margin-top:8px;font-size:12px;color:var(--color-warning,#f59e0b)">
+    ⚠ Exit cap rate not set — sale proceeds will be $0 and IRR will be incorrect.
+  </div>
+  {% endif %}
+</div>
+
+<div class="module-panel-body">
+  {% set exit_lines = use_lines | selectattr('phase', 'equalto', 'exit') | list %}
+  {% if exit_lines %}
+  <table class="line-table">
+    <thead>
+      <tr>
+        <th>Label</th>
+        <th class="col-right">Amount</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for line in exit_lines %}
+      <tr onclick="openEditLine('use_lines', '{{ line.id }}', '{{ model.id }}')">
+        <td style="font-weight:500">{{ line.label }}</td>
+        <td class="col-right">{{ line.amount | currency }}</td>
+        <td style="width:32px;text-align:right">
+          <button class="btn btn-sm btn-ghost"
+                  hx-delete="/api/models/{{ model.id }}/use-lines/{{ line.id }}"
+                  hx-confirm="Delete '{{ line.label }}'?"
+                  hx-on::after-request="if(event.detail.successful) refreshPanel('divestment')"
+                  onclick="event.stopPropagation()">✕</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="line-table-footer">
+    <span class="line-total-label">Total Exit Costs</span>
+    <span class="line-total-amount">{{ exit_lines | sum(attribute='amount') | currency }}</span>
+  </div>
+  {% else %}
+  <div class="module-empty">
+    <div class="module-empty-icon">🏷</div>
+    <div class="module-empty-title">No exit costs yet</div>
+    <div class="module-empty-desc">Add broker commission, transfer taxes, closing costs, and any loan prepayment penalties.</div>
+    <button class="btn btn-primary" style="margin-top:16px" onclick="openAddExitLine()">+ Add Exit Cost</button>
+  </div>
+  {% endif %}
+</div>
+
+{% elif active_module == 'owners_profit' %}
+
+<div class="module-panel-header">
+  <div>
+    <div class="module-panel-title">Owners &amp; Profit</div>
+    <div class="module-panel-desc">Equity ownership, DDF repayment, and computed project returns.</div>
+  </div>
+  <div class="module-panel-actions">
+    <button class="btn btn-sm btn-primary"
+            hx-post="/api/models/{{ model.id }}/compute"
+            hx-on::after-request="if(event.detail.successful) refreshPanel('owners_profit')"
+            hx-indicator="#compute-spin">
+      ▶ Run Compute
+    </button>
+    <span id="compute-spin" class="htmx-indicator text-small text-muted">Computing…</span>
+  </div>
+</div>
+<div class="module-panel-body">
+
+  {% if carrying_annual is none %}
+  <div class="timeline-gate-banner" style="margin-bottom:16px">
+    ⚠ Carrying costs not yet computed — profit figures do not reflect debt service.
+    <a href="{{ request.url.path }}?module=carrying" style="color:inherit;text-decoration:underline">Compute Carry first</a>.
+  </div>
+  {% endif %}
+
+  {# ── Ownership section ── #}
+  <div style="margin-bottom:24px">
+    <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px">Ownership</div>
+    {% if equity_ownership %}
+    <table class="line-table">
+      <thead>
+        <tr>
+          <th>Funder</th>
+          <th>Type</th>
+          <th class="col-right">Invested</th>
+          <th class="col-right">Ownership %</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in equity_ownership %}
+        <tr onclick="openEditLine('capital_modules', '{{ row.module.id }}', '{{ model.id }}')">
+          <td style="font-weight:500">{{ row.module.label }}</td>
+          <td class="text-small text-muted">{{ row.module.funder_type | replace('_',' ') | title }}</td>
+          <td class="col-right">{{ row.amount | currency if row.amount else '—' }}</td>
+          <td class="col-right" style="font-weight:600">{{ '%.1f%%' | format(row.pct) if row.pct else '—' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="text-small text-muted" style="margin-top:8px">Ownership % = invested amount ÷ total equity. Click a row to edit source details.</div>
+    {% elif org_owner_fallback %}
+    <table class="line-table">
+      <thead>
+        <tr>
+          <th>Owner</th>
+          <th>Type</th>
+          <th class="col-right">Invested</th>
+          <th class="col-right">Ownership %</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-weight:500">{{ org_name }}</td>
+          <td class="text-small text-muted">Owner</td>
+          <td class="col-right text-muted">—</td>
+          <td class="col-right" style="font-weight:600">100.0%</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="text-small text-muted" style="margin-top:8px">
+      100% Sponsor Owned.
+      <a href="{{ request.url.path }}?module=sources" style="color:var(--accent)">Add equity partners in Sources</a> to split ownership.
+    </div>
+    {% else %}
+    <div style="padding:16px;background:var(--surface-alt,#f9fafb);border:1px solid var(--border);border-radius:8px;font-size:13px;color:var(--text-muted)">
+      No equity sources defined yet. Add preferred equity, common equity, or owner investment in
+      <a href="{{ request.url.path }}?module=sources" style="color:var(--accent)">Sources</a>.
+    </div>
+    {% endif %}
+  </div>
+
+  {# ── Deferred Developer Fee (auto — if any deferred UseLines exist) ── #}
+  {% if deferred_uses %}
+  <div style="margin-bottom:24px">
+    <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px">Deferred Developer Fee</div>
+    <div style="background:#f3e8ff;border:1px solid #c4b5fd;border-radius:8px;padding:14px 16px;display:flex;align-items:flex-start;gap:12px">
+      <div style="font-size:20px;flex-shrink:0">🔄</div>
+      <div>
+        <div style="font-weight:600;font-size:13px">{{ deferred_total | currency }} deferred</div>
+        <div class="text-small text-muted" style="margin-top:4px">
+          Auto-repaid from distributable cash flow before equity distributions.
+          {% for u in deferred_uses %}<a href="#" onclick="openEditLine('use_lines','{{ u.id }}','{{ model.id }}');return false" style="color:var(--accent)">{{ u.label }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {# ── Profit metrics ── #}
+  <div>
+    <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px">Profit Metrics</div>
+    {% if outputs %}
+    {%- set _noi_mo = (outputs.noi_stabilized | float / 12) if outputs.noi_stabilized else none -%}
+    {%- set _tpc = outputs.total_project_cost | float if outputs.total_project_cost else none -%}
+    {%- set _rev_ann = revenue_annual | float if revenue_annual else none -%}
+    {%- set _opex_ann = opex_annual | float if opex_annual else none -%}
+    {%- set _carry_ann = carrying_annual | float if carrying_annual else none -%}
+    {%- set _hold_yrs = (inputs.hold_period_years | float) if inputs and inputs.hold_period_years else none -%}
+    {%- set _exit_cap = (inputs.exit_cap_rate_pct | float) if inputs and inputs.exit_cap_rate_pct else none -%}
+    {%- set _mo1 = stabilized_month1_ncf | float if stabilized_month1_ncf is not none else none -%}
+    {%- set _yr1 = stabilized_year1_ncf | float if stabilized_year1_ncf is not none else none -%}
+    {# Row 1: stabilized profit — first month and first year #}
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+      <div class="stat-card" style="cursor:help;{% if _mo1 and _mo1 > 0 %}border-color:var(--success,#16a34a);{% elif _mo1 and _mo1 < 0 %}border-color:var(--danger,#dc2626);{% endif %}"
+           title="Net cash flow in the first stabilized month (Revenue − OpEx − Debt Service).&#10;&#10;This is the monthly distributable profit at stabilization — before escalation. Positive = cash-flowing.">
+        <div class="stat-label">Profit — Mo. 1 (Stabilized)</div>
+        <div class="stat-value" style="{% if _mo1 and _mo1 > 0 %}color:var(--success,#16a34a){% elif _mo1 and _mo1 < 0 %}color:var(--danger,#dc2626){% endif %}">
+          {%- if _mo1 is not none -%}
+            {%- if _mo1 < 0 -%}(${{ '{:,.0f}'.format(_mo1 | abs) }}){%- else -%}${{ '{:,.0f}'.format(_mo1) }}{%- endif -%}
+          {%- else -%}—{%- endif -%}
+        </div>
+        <div style="font-size:10px;color:var(--text-muted);margin-top:2px">after debt service</div>
+      </div>
+      <div class="stat-card" style="cursor:help;{% if _yr1 and _yr1 > 0 %}border-color:var(--success,#16a34a);{% elif _yr1 and _yr1 < 0 %}border-color:var(--danger,#dc2626);{% endif %}"
+           title="Sum of net cash flow over the first 12 stabilized months (Year 1 distributable).&#10;&#10;Includes rent escalation within year 1 but no vacancy bump or major OpEx changes.">
+        <div class="stat-label">Profit — Yr. 1 (Stabilized)</div>
+        <div class="stat-value" style="{% if _yr1 and _yr1 > 0 %}color:var(--success,#16a34a){% elif _yr1 and _yr1 < 0 %}color:var(--danger,#dc2626){% endif %}">
+          {%- if _yr1 is not none -%}
+            {%- if _yr1 < 0 -%}(${{ '{:,.0f}'.format(_yr1 | abs) }}){%- else -%}${{ '{:,.0f}'.format(_yr1) }}{%- endif -%}
+          {%- else -%}—{%- endif -%}
+        </div>
+        <div style="font-size:10px;color:var(--text-muted);margin-top:2px">first 12 stabilized months</div>
+      </div>
+    </div>
+    {# Row 2: NOI, cap rate, DSCR #}
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px">
+      <div class="stat-card" style="cursor:help"
+           title="Annual NOI at first stabilized month.&#10;&#10;{{ 'Revenue (EGI): ' + (_rev_ann | currency) + '/yr' if _rev_ann else 'Revenue: unknown' }}&#10;{{ '− OpEx: ' + (_opex_ann | currency) + '/yr' if _opex_ann else '− OpEx: unknown' }}&#10;{{ '= Est. NOI: ' + ((_rev_ann - _opex_ann) | currency) + '/yr' if (_rev_ann and _opex_ann) else '' }}&#10;&#10;Note: engine-computed NOI may differ due to escalation at the stabilized month.">
+        <div class="stat-label">NOI (Stabilized)</div>
+        <div class="stat-value">{{ outputs.noi_stabilized | currency if outputs.noi_stabilized else '—' }}</div>
+        {% if _noi_mo %}<div style="font-size:10px;color:var(--text-muted);margin-top:2px">{{ _noi_mo | currency }}/mo</div>{% endif %}
+      </div>
+      <div class="stat-card" style="cursor:help"
+           title="NOI ÷ Total Project Cost × 100.&#10;&#10;{{ (outputs.noi_stabilized | currency) + ' ÷ ' + (_tpc | currency) + ' = ' + ('%.2f' | format(outputs.cap_rate_on_cost_pct | float)) + '%' if (outputs.noi_stabilized and _tpc) else 'Requires NOI and Total Cost.' }}&#10;&#10;A cap rate above your exit cap rate means you are creating value.">
+        <div class="stat-label">Cap Rate on Cost</div>
+        <div class="stat-value">{{ '%.1f%%' | format(outputs.cap_rate_on_cost_pct | float) if outputs.cap_rate_on_cost_pct else '—' }}</div>
+        {% if _exit_cap %}<div style="font-size:10px;color:var(--text-muted);margin-top:2px">Exit cap: {{ '%.1f%%' | format(_exit_cap) }}</div>{% endif %}
+      </div>
+      <div class="stat-card" style="cursor:help"
+           title="Debt Service Coverage Ratio = NOI ÷ Annual Debt Service.&#10;&#10;{{ 'NOI: ' + (outputs.noi_stabilized | currency) + '/yr' if outputs.noi_stabilized else '' }}&#10;{{ '÷ Debt Service: ' + (_carry_ann | currency) + '/yr' if _carry_ann else '÷ Debt Service: (none entered)' }}&#10;&#10;Lenders typically require DSCR ≥ 1.20–1.25.&#10;Note: DSCR shown is placeholder until full debt service computation is implemented.">
+        <div class="stat-label">DSCR</div>
+        <div class="stat-value">{{ '%.2f×' | format(outputs.dscr | float) if outputs.dscr else '—' }}</div>
+      </div>
+      <div class="stat-card" style="cursor:help"
+           title="Internal Rate of Return on levered equity cash flows.&#10;&#10;Computed over {{ outputs.total_timeline_months }} months using pyxirr on monthly net cash flows after debt service.{{ '&#10;Hold period: ' + ('%.1f' | format(_hold_yrs)) + ' years' if _hold_yrs else '' }}{{ '&#10;Exit cap rate: ' + ('%.1f%%' | format(_exit_cap)) if _exit_cap else '' }}&#10;&#10;Negative IRR indicates exit proceeds do not recover invested capital — check exit cap rate and hold period in Divestment.">
+        <div class="stat-label">Project IRR (Levered)</div>
+        <div class="stat-value">{{ '%.1f%%' | format(outputs.project_irr_levered | float) if outputs.project_irr_levered else '—' }}</div>
+      </div>
+      <div class="stat-card" style="cursor:help"
+           title="Sum of all Use line items across all phases.&#10;&#10;{{ 'Acquisition + Construction + other Uses = ' + (_tpc | currency) if _tpc else 'Run Compute to calculate.' }}&#10;&#10;Used as the denominator for Cap Rate on Cost.">
+        <div class="stat-label">Total Project Cost</div>
+        <div class="stat-value">{{ outputs.total_project_cost | currency if outputs.total_project_cost else '—' }}</div>
+      </div>
+      <div class="stat-card" style="cursor:help"
+           title="Maximum negative cumulative cash balance across the project timeline — the peak capital that must be funded by equity (Sources minus debt).&#10;&#10;This is the amount sources must exceed debt to fund the project without a gap.">
+        <div class="stat-label">Equity Required</div>
+        <div class="stat-value">{{ outputs.equity_required | currency if outputs.equity_required else '—' }}</div>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--text-muted)">Computed {{ outputs.computed_at.strftime('%b %-d, %Y %H:%M') if outputs.computed_at else '' }}</div>
+    {% else %}
+    <div style="padding:16px;background:var(--surface-alt,#f9fafb);border:1px solid var(--border);border-radius:8px;text-align:center">
+      <div style="font-size:13px;color:var(--text-muted);margin-bottom:12px">Fill in Sources, Uses, Revenue, and OpEx then run Compute to see profit metrics.</div>
+      <button class="btn btn-primary"
+              hx-post="/api/models/{{ model.id }}/compute"
+              hx-on::after-request="if(event.detail.successful) refreshPanel('owners_profit')">
+        ▶ Run Compute
+      </button>
+    </div>
+    {% endif %}
+  </div>
+
+</div>
+
+{% elif active_module == 'divestment_waterfall' %}
+
+<div class="module-panel-header">
+  <div>
+    <div class="module-panel-title">Divestment Waterfall</div>
+    <div class="module-panel-desc">Sources paid off at exit, in stack order. Click a row to edit exit terms.</div>
+  </div>
+</div>
+<div class="module-panel-body">
+  {% if capital_modules %}
+  <div style="background:var(--surface-alt,#f9fafb);border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:var(--text-muted)">
+    Payoff order follows stack position set in <a href="{{ request.url.path }}?module=sources" style="color:var(--accent)">Sources</a>. Edit exit terms by clicking a row.
+  </div>
+  <table class="line-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Funder</th>
+        <th>Type</th>
+        <th class="col-right">Amount</th>
+        <th>Exit Type</th>
+        <th>Trigger</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for m in capital_modules | sort(attribute='stack_position') %}
+      <tr style="cursor:pointer" onclick="openEditLine('capital_modules', '{{ m.id }}', '{{ model.id }}')">
+        <td class="text-muted text-small">{{ m.stack_position or '?' }}</td>
+        <td style="font-weight:500">{{ m.label }}</td>
+        <td class="text-small text-muted">{{ m.funder_type | replace('_',' ') | title }}</td>
+        <td class="col-right">
+          {% if m.source and m.source.get('amount') %}{{ m.source.amount | currency }}
+          {% elif m.source and m.source.get('pct_of_total_cost') %}{{ m.source.pct_of_total_cost }}% of costs
+          {% else %}—{% endif %}
+        </td>
+        <td class="text-small">{{ m.exit_terms.exit_type | replace('_',' ') | title if m.exit_terms and m.exit_terms.get('exit_type') else '—' }}</td>
+        <td class="text-small text-muted">{{ m.exit_terms.trigger if m.exit_terms and m.exit_terms.get('trigger') else '—' }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="module-empty">
+    <div class="module-empty-icon">🏷</div>
+    <div class="module-empty-title">No sources defined</div>
+    <div class="module-empty-desc">Add capital sources first, then configure exit terms for each.</div>
+    <a href="{{ request.url.path }}?module=sources" class="btn btn-secondary" style="margin-top:16px">Go to Sources</a>
+  </div>
+  {% endif %}
+</div>
+
+{% elif active_module == 'timeline' %}
+
+<div class="module-panel-header">
+  <div>
+    <div class="module-panel-title">Timeline</div>
+    <div class="module-panel-desc">Project milestones and durations — defines the full hold period from acquisition to exit.</div>
+  </div>
+  <div class="module-panel-actions">
+    <button class="btn btn-secondary" onclick="openAddLine('milestones')">+ Add Milestone</button>
+    {% if not timeline_approved and milestones %}
+    <form method="post" action="/ui/projects/{{ default_project_id }}/approve-timeline" style="display:inline">
+      <button type="submit" class="btn btn-primary"
+              {% if not timeline_approvable %}disabled title="Every milestone needs a position and a duration before approving"{% endif %}>
+        Approve Timeline →
+      </button>
+    </form>
+    {% endif %}
+  </div>
+</div>
+<div class="module-panel-body">
+  {% if not timeline_approved %}
+  <div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:flex-start;gap:10px">
+    <span style="font-size:18px;flex-shrink:0">⚠</span>
+    <div>
+      <div style="font-weight:600;font-size:13px;color:#92400e">Timeline needs your review</div>
+      {% if not timeline_approvable %}
+      <div style="font-size:12px;color:#b45309;margin-top:3px">
+        Every milestone needs a start position and a duration before approving.
+        {% if timeline_missing_position %}
+        <br><strong>No position:</strong>
+        {% for m in timeline_missing_position %}{{ m.milestone_type | string | replace('MilestoneType.', '') | replace('_', ' ') | title }}{% if not loop.last %}, {% endif %}{% endfor %}.
+        {% endif %}
+        {% if timeline_missing_duration %}
+        <br><strong>No duration:</strong>
+        {% for m in timeline_missing_duration %}{{ m.milestone_type | string | replace('MilestoneType.', '') | replace('_', ' ') | title }}{% if not loop.last %}, {% endif %}{% endfor %}.
+        {% endif %}
+      </div>
+      {% else %}
+      <div style="font-size:12px;color:#b45309;margin-top:3px">All milestones look good — click <strong>Approve Timeline</strong> to unlock the rest of the model inputs.</div>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+
+  {# ── Phase summary boxes ── #}
+  {% macro phase_box(title, summary, open_ended=false) %}
+  <div style="background:var(--surface-alt,#f9fafb);border:1px solid var(--border);border-radius:8px;padding:8px 14px;text-align:center;white-space:nowrap">
+    <div style="font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:5px">{{ title }}</div>
+    <div style="font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.2">
+      {{ summary.start.strftime('%b %Y') if summary.start else '—' }}
+    </div>
+    <div style="font-size:11px;color:var(--text-muted);margin-top:2px">
+      {% if open_ended %}∞
+      {% elif summary.duration_days %}{{ (summary.duration_days / 30.4) | round(0) | int }} mo
+      {% else %}—{% endif %}
+    </div>
+  </div>
+  {% endmacro %}
+
+  {% set op_open = not phase_summaries.has_divestment %}
+  <div style="display:flex;gap:10px;margin-bottom:16px;justify-content:center;flex-wrap:wrap">
+    {{ phase_box('Pre-Dev', phase_summaries.pre_dev) }}
+    {{ phase_box('Construction', phase_summaries.construction) }}
+    {{ phase_box('Operation', phase_summaries.operation, open_ended=op_open) }}
+    {% if phase_summaries.has_divestment %}
+    {{ phase_box('Divestment', phase_summaries.divestment) }}
+    {% endif %}
+  </div>
+  {% if milestone_rows %}
+  <table class="line-table" style="table-layout:fixed;max-width:640px">
+    <colgroup>
+      <col style="width:auto">
+      <col style="width:130px">
+      <col style="width:90px">
+      <col style="width:130px">
+      <col style="width:36px">
+    </colgroup>
+    <thead>
+      <tr>
+        <th>Phase</th>
+        <th class="col-right">Start Date</th>
+        <th class="col-right">Duration</th>
+        <th class="col-right">End Date</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in milestone_rows %}
+      {% set ms = row.ms %}
+      <tr onclick="openEditLine('milestones', '{{ ms.id }}', '{{ model.id }}')">
+        <td><span class="text-small text-muted">{{ ms.milestone_type | replace('_', ' ') | title }}</span></td>
+        <td class="col-right">
+          {% if row.start %}<span style="font-variant-numeric:tabular-nums">{{ row.start.strftime('%b %-d, %Y') }}</span>
+          {% else %}<span class="text-muted text-small">—</span>{% endif %}
+        </td>
+        <td class="col-right text-small text-muted">{{ ms.duration_days ~ 'd' if ms.duration_days else '—' }}</td>
+        <td class="col-right text-small text-muted">
+          {% if row.end %}{{ row.end.strftime('%b %-d, %Y') }}
+          {% else %}—{% endif %}
+        </td>
+        <td style="width:32px;text-align:right">
+          <button class="btn btn-sm btn-ghost"
+                  hx-delete="/ui/forms/{{ model.id }}/milestones/{{ ms.id }}"
+                  hx-confirm="Delete this milestone?"
+                  hx-target="#module-panel-content"
+                  hx-swap="innerHTML"
+                  onclick="event.stopPropagation()">✕</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="line-table-footer">
+    <span class="line-total-label text-muted text-small">Ordered by start date · concurrent phases allowed</span>
+  </div>
+
+  {# ── Inline Gantt v2 — only shown after timeline is approved ── #}
+  {% if builder_gantt_data and timeline_approved %}
+  <div style="margin-top:20px">
+    <div class="g2-wrap">
+      <!-- Time axis -->
+      <div class="g2-axis">
+        <div class="g2-axis-spacer"></div>
+        <div class="g2-axis-track">
+          <div class="g2-years">
+            {% for ys in builder_gantt_data.year_spans %}
+            <div class="g2-year-span" style="left:{{ ys.left_pct }}%;width:{{ ys.width_pct }}%">{{ ys.label }}</div>
+            {% endfor %}
+          </div>
+          <div class="g2-months">
+            {% for tick in builder_gantt_data.month_ticks %}
+            <div class="g2-month{% if tick.is_year_start %} g2-month-year{% endif %}" style="left:{{ tick.left_pct }}%">{{ tick.label }}</div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <!-- Vertical grid lines -->
+      <div class="g2-vlines">
+        {% for tick in builder_gantt_data.month_ticks %}
+        <div class="g2-vline{% if tick.is_year_start %} g2-vline-year{% endif %}" style="left:{{ tick.left_pct }}%"></div>
+        {% endfor %}
+      </div>
+      <!-- Phase rows -->
+      {% for row in builder_gantt_data.rows %}
+      <div class="g2-row">
+        <div class="g2-label" title="{{ row.label }}">{{ row.label }}</div>
+        <div class="g2-track">
+          <div class="g2-bar {{ row.color_class }}"
+               style="left:{{ row.left_pct }}%;width:{{ row.width_pct }}%;{% if row.is_truncated %}border-radius:2px 0 0 2px{% endif %}"
+               title="{{ row.label }}{% if row.start_fmt %} · {{ row.start_fmt }}{% if row.end_fmt %} – {{ row.end_fmt }}{% endif %}{% if row.is_truncated %} ({{ (row.duration_days / 30.4) | round(0) | int }}mo, capped){% endif %}{% endif %}">
+            {% if row.width_pct > 6 %}{{ row.label }}{% endif %}
+            {% if row.is_truncated %}<div style="position:absolute;right:0;top:0;bottom:0;width:10%;background:linear-gradient(to right,rgba(255,255,255,0) 0%,rgba(255,255,255,0.7) 100%)"></div>{% endif %}
+          </div>
+          {% if row.is_truncated and row.end_fmt %}
+          <span style="position:absolute;left:calc({{ row.left_pct }}% + {{ row.width_pct }}% + 3px);font-size:8px;color:var(--text-muted);white-space:nowrap;top:50%;transform:translateY(-50%)">→ {{ row.end_fmt }}</span>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+  {% endif %}
+
+  {% else %}
+  <div class="module-empty">
+    <div class="module-empty-icon">📅</div>
+    <div class="module-empty-title">No milestones yet</div>
+    <div class="module-empty-desc">Define project phases: close, pre-development, construction, lease-up, stabilized operations, and exit.</div>
+    <button class="btn btn-primary" style="margin-top:16px" onclick="openAddLine('milestones')">+ Add First Milestone</button>
+  </div>
+  {% endif %}
+</div>
+
+{% elif active_module == 'cashflow' %}
+
+<div class="module-panel-header">
+  <div>
+    <div class="module-panel-title">Cash Flow</div>
+    <div class="module-panel-desc">Monthly operating cash flow across all phases.</div>
+  </div>
+  <div class="module-panel-actions">
+    <button class="btn btn-sm btn-primary"
+            hx-post="/api/models/{{ model.id }}/compute"
+            hx-on::after-request="if(event.detail.successful) refreshPanel('cashflow')"
+            hx-indicator="#cf-compute-spin">
+      ▶ Recompute
+    </button>
+    <span id="cf-compute-spin" class="htmx-indicator text-small text-muted">Computing…</span>
+  </div>
+</div>
+<div class="module-panel-body">
+
+{# ── Draw Schedule results (Phase 6: shown above operating cash flow) ── #}
+{% if schedule is defined and schedule %}
+{% include 'partials/draw_schedule_results.html' %}
+<div style="margin:24px 0;border-top:2px solid var(--border);padding-top:4px">
+  <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted)">Operating Cash Flow</div>
+</div>
+{% endif %}
+
+{% set cf_rows = cash_flow_rows if cash_flow_rows is defined else [] %}
+
+{% if cf_rows %}
+
+{# ── Summary stat bar ── #}
+{% if outputs %}
+{%- set _op_reserve_line = use_lines | selectattr('label','equalto','Operating Reserve') | first | default(none) -%}
+{%- set _reserve_months = (inputs.operation_reserve_months | int) if inputs and inputs.operation_reserve_months else 6 -%}
+{# Find first stabilized/lease-up period's monthly debt service for DS-basis reserve estimate #}
+{%- set _ops_phases = ['lease_up', 'stabilized'] -%}
+{%- set _ns_rsv = namespace(monthly_ds=none) -%}
+{%- for row in cf_rows -%}
+  {%- set _rpt = row.period_type.value if row.period_type and row.period_type.value is defined else row.period_type | string -%}
+  {%- if _ns_rsv.monthly_ds is none and _rpt in _ops_phases and row.debt_service -%}
+    {%- set _ns_rsv.monthly_ds = (row.debt_service | float) | abs -%}
+  {%- endif -%}
+{%- endfor -%}
+{#- Reserve: budgeted use line (if exists) → N months × monthly DS → '—' -#}
+{%- set _rsv_display = (_op_reserve_line.amount | float) if _op_reserve_line else none -%}
+{%- if _rsv_display is none and _ns_rsv.monthly_ds -%}
+  {%- set _rsv_display = _ns_rsv.monthly_ds * _reserve_months -%}
+{%- endif -%}
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px">
+  <div class="stat-card" title="{{ 'Budgeted operating reserve (from Uses)' if _op_reserve_line else (_reserve_months | string + '-month DS reserve estimate') }}">
+    <div class="stat-label">Operating Reserve</div>
+    <div class="stat-value" style="font-size:16px">{{ _rsv_display | currency if _rsv_display is not none else '—' }}</div>
+    <div style="font-size:10px;color:var(--text-muted);margin-top:2px">
+      {%- if _op_reserve_line -%}
+        {%- set _basis = 'DS' if (_op_reserve_line.notes and 'Debt Service' in _op_reserve_line.notes) else ('OpEx' if (_op_reserve_line.notes and 'OpEx' in _op_reserve_line.notes) else 'budgeted') -%}
+        {{ _basis }} basis
+      {%- elif _rsv_display is not none -%}
+        {{ _reserve_months }}mo DS est.
+      {%- endif -%}
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Stabilized NOI</div>
+    <div class="stat-value" style="font-size:16px">{{ outputs.noi_stabilized | currency if outputs.noi_stabilized else '—' }}</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Project IRR (L)</div>
+    <div class="stat-value" style="font-size:16px;color:var(--success)">{{ '%.1f%%' | format(outputs.project_irr_levered | float) if outputs.project_irr_levered else '—' }}</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Total Cost</div>
+    <div class="stat-value" style="font-size:16px">{{ outputs.total_project_cost | currency if outputs.total_project_cost else '—' }}</div>
+  </div>
+</div>
+{% endif %}
+
+{# ── Cash flow table ── #}
+{# Macro: format an outflow as ($1,234) — used for vacancy, opex, debt service, capital #}
+{%- macro neg(val) -%}
+  {%- if val and val | float != 0 -%}(${{ '{:,.0f}'.format(val | float | abs) }}){%- else -%}—{%- endif -%}
+{%- endmacro -%}
+<div style="overflow:auto;max-height:58vh">
+<table class="line-table" style="font-size:11px;white-space:nowrap">
+  <thead style="position:sticky;top:0;z-index:1;background:var(--surface,#fff)">
+    <tr>
+      <th style="width:40px">Mo.</th>
+      <th>Phase</th>
+      <th class="col-right">Gross Rev</th>
+      <th class="col-right">Vacancy</th>
+      <th class="col-right">EGI</th>
+      <th class="col-right">OpEx</th>
+      <th class="col-right">NOI</th>
+      <th class="col-right">Debt Svc</th>
+      <th class="col-right" title="Use line outflows and capital events (sale proceeds at exit)">Capital</th>
+      <th class="col-right">Net CF</th>
+      <th class="col-right" title="Capital balance: starts at total sources, draws down through construction, spikes at exit (sale proceeds). Flat during operations — distributable cash flow is shown in Net CF column.">Capital Balance</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% set ns = namespace(cur_phase='', first_positive_done=false) %}
+    {% for row in cf_rows %}
+    {% set phase = row.period_type.value if row.period_type and row.period_type.value is defined else row.period_type | string %}
+    {% set phase_label = phase | replace('_',' ') | title %}
+    {%- set ncf = row.net_cash_flow | float -%}
+    {%- set capital_col = ncf - (row.noi | float) + (row.capex_reserve | float) + (row.debt_service | float) -%}
+    {%- set is_first_positive = (not ns.first_positive_done) and ncf > 0 -%}
+    {%- if is_first_positive -%}{%- set ns.first_positive_done = true -%}{%- endif -%}
+    {% if phase != ns.cur_phase %}
+    <tr style="background:var(--surface-2,#f3f4f6)">
+      <td colspan="11" style="font-size:10px;font-weight:700;letter-spacing:.05em;color:var(--text-muted);padding:6px 8px;text-transform:uppercase">
+        {{ phase_label }}
+      </td>
+    </tr>
+    {% set ns.cur_phase = phase %}
+    {% endif %}
+    <tr style="{% if is_first_positive %}background:rgba(34,197,94,0.12);font-weight:600{% elif ncf < 0 %}color:var(--danger,#dc2626){% endif %}">
+      <td class="text-mono text-small" style="color:var(--text-muted)">{{ row.period }}</td>
+      <td class="text-small text-muted">{{ phase_label }}</td>
+      <td class="col-right text-mono">{{ row.gross_revenue | currency if row.gross_revenue and row.gross_revenue | float != 0 else '—' }}</td>
+      <td class="col-right text-mono" style="color:var(--warning,#d97706)">{{ neg(row.vacancy_loss) }}</td>
+      <td class="col-right text-mono">{{ row.effective_gross_income | currency if row.effective_gross_income and row.effective_gross_income | float != 0 else '—' }}</td>
+      <td class="col-right text-mono" style="color:var(--danger,#dc2626)">{{ neg(row.operating_expenses) }}</td>
+      <td class="col-right text-mono" style="font-weight:600">{{ row.noi | currency if row.noi and row.noi | float != 0 else '—' }}</td>
+      <td class="col-right text-mono" style="color:var(--danger,#dc2626)">{{ neg(row.debt_service) }}</td>
+      <td class="col-right text-mono" style="{% if capital_col < -1 %}color:var(--danger,#dc2626){% elif capital_col > 1 %}color:var(--success,#16a34a){% endif %}">
+        {%- if capital_col < -1 -%}(${{ '{:,.0f}'.format(capital_col | abs) }}){%- elif capital_col > 1 -%}${{ '{:,.0f}'.format(capital_col) }}{%- else -%}—{%- endif -%}
+      </td>
+      <td class="col-right text-mono" style="font-weight:600">
+        {%- if ncf < 0 -%}(${{ '{:,.0f}'.format(ncf | abs) }}){%- elif ncf > 0 -%}${{ '{:,.0f}'.format(ncf) }}{%- else -%}—{%- endif -%}
+      </td>
+      <td class="col-right text-mono text-small" style="color:var(--text-muted)">
+        {%- set ccf = row.cumulative_cash_flow | float -%}
+        {%- if ccf < 0 -%}(${{ '{:,.0f}'.format(ccf | abs) }}){%- elif ccf > 0 -%}${{ '{:,.0f}'.format(ccf) }}{%- else -%}—{%- endif -%}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+
+{% else %}
+<div style="padding:32px 24px;text-align:center">
+  <div style="font-size:32px;margin-bottom:8px">📊</div>
+  <div style="font-size:14px;font-weight:600;margin-bottom:6px">No cash flow data yet</div>
+  <div style="font-size:13px;color:var(--text-muted);margin-bottom:16px">
+    Fill in Sources, Uses, Revenue, and OpEx — then run Compute to generate the monthly cash flow table.
+  </div>
+  <button class="btn btn-primary"
+          hx-post="/api/models/{{ model.id }}/compute"
+          hx-on::after-request="if(event.detail.successful) refreshPanel('cashflow')">
+    ▶ Run Compute
+  </button>
+</div>
+{% endif %}
+
+</div>
+
+{% elif active_module == 'draw_schedule' %}
+
+{# Draw Schedule — loaded via dedicated route, included inline #}
+{% include 'partials/draw_schedule_panel.html' %}
+
+{% else %}
+
+<div class="module-panel-header">
+  <div>
+    <div class="module-panel-title">Select a Module</div>
+    <div class="module-panel-desc">Click a module in the left panel to view and edit its line items.</div>
+  </div>
+</div>
+<div class="module-panel-body">
+  <div class="module-empty">
+    <div class="module-empty-icon">👈</div>
+    <div class="module-empty-title">Choose a module</div>
+    <div class="module-empty-desc">Select Sources, Uses, Revenue, OpEx, Carrying, Divestment Uses, Profit, or Owners from the left to get started.</div>
+  </div>
+</div>
+
+{% endif %}
+
+<script>
+function refreshPanel(module) {
+  htmx.ajax('GET', '/ui/panel/{{ model.id }}?module=' + (module || '{{ active_module }}'), {
+    target: '#module-panel-content',
+    swap: 'innerHTML'
+  });
+  htmx.ajax('GET', '/ui/models/{{ model.id }}/balance-bar', {
+    target: '#balance-bar-container',
+    swap: 'innerHTML'
+  });
+}
+function openAddLine(type) {
+  if (type === 'sources') {
+    htmx.ajax('GET', '/ui/models/{{ model.id }}/line-form?type=sources', {
+      target: '#source-wizard-body', swap: 'innerHTML'
+    });
+    document.getElementById('source-wizard-overlay').style.display = 'flex';
+    return;
+  }
+  if (type === 'milestones') {
+    htmx.ajax('GET', '/ui/models/{{ model.id }}/line-form?type=milestones', {
+      target: '#milestone-wizard-body', swap: 'innerHTML'
+    });
+    document.getElementById('milestone-wizard-overlay').style.display = 'flex';
+    return;
+  }
+  if (type === 'uses') {
+    htmx.ajax('GET', '/ui/models/{{ model.id }}/line-form?type=uses', {
+      target: '#uses-wizard-body', swap: 'innerHTML'
+    });
+    document.getElementById('uses-wizard-overlay').style.display = 'flex';
+    return;
+  }
+  var titles = {
+    'uses': 'Add Use Line', 'revenue': 'Add Revenue Stream',
+    'opex': 'Add Expense Line', 'opex_templates': 'OpEx Templates',
+    'waterfall': 'Add Waterfall Tier',
+  };
+  document.getElementById('line-item-drawer-title').textContent = titles[type] || 'Add Line';
+  htmx.ajax('GET', '/ui/models/{{ model.id }}/line-form?type=' + type, {
+    target: '#line-item-drawer-body', swap: 'innerHTML'
+  });
+  openDrawer('line-item-drawer');
+}
+function openAddExitLine() {
+  document.getElementById('line-item-drawer-title').textContent = 'Add Exit Cost';
+  htmx.ajax('GET', '/ui/models/{{ model.id }}/line-form?type=uses&phase=exit', {
+    target: '#line-item-drawer-body', swap: 'innerHTML'
+  });
+  openDrawer('line-item-drawer');
+}
+var _editTitles = {
+  'capital_modules': 'Edit Source', 'use_lines': 'Edit Use Line',
+  'income_streams': 'Edit Revenue Stream', 'expense_lines': 'Edit Expense Line',
+  'waterfall_tiers': 'Edit Waterfall Tier', 'milestones': 'Edit Milestone',
+};
+function openEditLine(table, id, modelId) {
+  document.getElementById('line-item-drawer-title').textContent = _editTitles[table] || 'Edit Line';
+  htmx.ajax('GET', '/ui/models/' + modelId + '/line-form?type=' + table + '&id=' + id, {
+    target: '#line-item-drawer-body', swap: 'innerHTML'
+  });
+  openDrawer('line-item-drawer');
+}
+</script>

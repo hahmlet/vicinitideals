@@ -1,0 +1,153 @@
+<style>
+.cmp-grid { display:grid; grid-template-columns:160px 1fr 1fr; width:100%; border-collapse:collapse; }
+.cmp-hdr  { padding:12px 16px; font-size:12px; font-weight:700; text-transform:uppercase;
+  letter-spacing:.05em; background:var(--surface-alt,#1e293b); border-bottom:1px solid var(--border); }
+.cmp-hdr-src { display:flex; flex-direction:column; gap:3px; }
+.cmp-src-badge { display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px;
+  font-weight:700; background:var(--accent); color:#fff; width:fit-content; }
+.cmp-src-addr { font-size:11px; color:var(--text-muted); font-weight:400; text-transform:none;
+  letter-spacing:0; margin-top:2px; }
+
+.cmp-row { display:contents; }
+.cmp-label { padding:9px 16px; font-size:12px; color:var(--text-muted); font-weight:500;
+  border-bottom:1px solid var(--border); white-space:nowrap; }
+.cmp-val   { padding:9px 14px; font-size:13px; border-bottom:1px solid var(--border); }
+.cmp-val label { display:flex; align-items:center; gap:8px; cursor:pointer; }
+.cmp-val label input[type=radio] { accent-color:var(--accent); flex-shrink:0; }
+
+.cmp-conflict .cmp-label { background:rgba(245,158,11,.08); color:var(--warning,#f59e0b); }
+.cmp-conflict .cmp-val   { background:rgba(245,158,11,.05); }
+.cmp-conflict .cmp-val:hover { background:rgba(245,158,11,.10); }
+
+.cmp-section-hdr { grid-column:1/-1; padding:8px 16px 6px; font-size:11px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.06em; color:var(--text-muted);
+  background:var(--surface,#0f172a); border-bottom:1px solid var(--border); margin-top:4px; }
+
+.cmp-winner-row { grid-column:1/-1; padding:12px 16px; background:var(--surface-alt,#1e293b);
+  border-bottom:1px solid var(--border); display:flex; align-items:center; gap:24px;
+  font-size:13px; }
+.cmp-winner-row label { display:flex; align-items:center; gap:7px; cursor:pointer; font-weight:500; }
+.cmp-winner-row input[type=radio] { accent-color:var(--accent); }
+
+.cmp-actions { padding:16px; display:flex; gap:10px; border-top:1px solid var(--border);
+  background:var(--surface,#0f172a); position:sticky; bottom:0; }
+
+.match-toggle { grid-column:1/-1; padding:10px 16px; font-size:12px; color:var(--text-muted);
+  cursor:pointer; display:flex; align-items:center; gap:6px; border-bottom:1px solid var(--border); }
+.match-toggle:hover { color:var(--text); }
+</style>
+
+<form id="dedup-resolve-form"
+      hx-post="/ui/dedup/{{ candidate_id }}/resolve"
+      hx-target="#dedup-row-{{ candidate_id }}"
+      hx-swap="outerHTML"
+      hx-on::after-request="if(event.detail.successful) closeDrawer('dedup-drawer')">
+
+  <div class="cmp-grid">
+
+    {# ── Source headers ── #}
+    <div class="cmp-hdr" style="color:var(--text-muted)">Field</div>
+    <div class="cmp-hdr">
+      <div class="cmp-hdr-src">
+        <span class="cmp-src-badge">{{ src_a }}</span>
+        <span class="cmp-src-addr">{{ addr_a }}</span>
+      </div>
+    </div>
+    <div class="cmp-hdr">
+      <div class="cmp-hdr-src">
+        <span class="cmp-src-badge" style="background:var(--text-muted)">{{ src_b }}</span>
+        <span class="cmp-src-addr">{{ addr_b }}</span>
+      </div>
+    </div>
+
+    {# ── Preferred source row ── #}
+    <div class="cmp-winner-row">
+      <span style="color:var(--text-muted);font-size:11px;text-transform:uppercase;
+                   letter-spacing:.05em;font-weight:700;min-width:120px">Preferred source</span>
+      <label>
+        <input type="radio" name="winner" value="a" checked
+               onchange="setDefaultChoices('a')">
+        Use <strong>{{ src_a }}</strong> as primary
+      </label>
+      <label>
+        <input type="radio" name="winner" value="b"
+               onchange="setDefaultChoices('b')">
+        Use <strong>{{ src_b }}</strong> as primary
+      </label>
+    </div>
+
+    {# ── Conflicting fields ── #}
+    {% if conflicts %}
+    <div class="cmp-section-hdr">
+      ⚠ {{ conflicts | length }} Conflicting Field{{ 's' if conflicts | length != 1 else '' }}
+      — select which value to keep
+    </div>
+    {% for f in conflicts %}
+    <div class="cmp-row cmp-conflict">
+      <div class="cmp-label">{{ f.label }}</div>
+      <div class="cmp-val">
+        <label>
+          <input type="radio" name="field_{{ f.field }}" value="a" checked>
+          <span>{{ f.val_a }}</span>
+        </label>
+      </div>
+      <div class="cmp-val">
+        <label>
+          <input type="radio" name="field_{{ f.field }}" value="b">
+          <span>{{ f.val_b }}</span>
+        </label>
+      </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="cmp-section-hdr" style="color:var(--success,#22c55e)">
+      ✓ No conflicting fields — these appear to be exact duplicates
+    </div>
+    {% endif %}
+
+    {# ── Matching fields (collapsed) ── #}
+    {% if matches %}
+    <div class="match-toggle" id="match-toggle" onclick="toggleMatches()">
+      <span id="match-chevron" style="font-size:10px">▶</span>
+      {{ matches | length }} matching field{{ 's' if matches | length != 1 else '' }} (same in both sources)
+    </div>
+    <div id="match-rows" style="display:contents">
+      {% for f in matches %}
+      <div class="cmp-row" style="display:none" data-match-row>
+        <div class="cmp-label">{{ f.label }}</div>
+        <div class="cmp-val" style="color:var(--text-muted)">{{ f.val_a }}</div>
+        <div class="cmp-val" style="color:var(--text-muted)">{{ f.val_b }}</div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+  </div>{# /cmp-grid #}
+
+  <div class="cmp-actions">
+    <button type="submit" name="action" value="merge" class="btn btn-primary">
+      Merge Records
+    </button>
+    <button type="submit" name="action" value="keep_separate" class="btn btn-secondary">
+      Not a Duplicate
+    </button>
+  </div>
+
+</form>
+
+<script>
+function toggleMatches() {
+  var rows = document.querySelectorAll('[data-match-row]');
+  var chevron = document.getElementById('match-chevron');
+  var visible = rows[0] && rows[0].style.display !== 'none';
+  rows.forEach(function(r) { r.style.display = visible ? 'none' : 'contents'; });
+  if (chevron) chevron.textContent = visible ? '▶' : '▼';
+}
+
+// When user changes "preferred source", default all conflict radio buttons to that source
+function setDefaultChoices(src) {
+  document.querySelectorAll('.cmp-conflict input[type=radio]').forEach(function(radio) {
+    if (radio.value === src) radio.checked = true;
+  });
+}
+</script>

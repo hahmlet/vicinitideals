@@ -1,0 +1,69 @@
+<!-- Sale status badge (colored) + source chip -->
+<div style="display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap">
+  {% if b.sale_status == "Active" %}
+    <span class="badge badge-green">● Active</span>
+  {% elif b.sale_status == "Under Contract" %}
+    <span class="badge badge-yellow">● Under Contract</span>
+  {% elif b.sale_status and b.sale_status|lower in ("sold", "closed") %}
+    <span class="badge badge-red">● Sold / Closed</span>
+  {% elif b.sale_status %}
+    <span class="badge badge-gray">{{ b.sale_status }}</span>
+  {% else %}
+    <span class="badge badge-gray">Off Market</span>
+  {% endif %}
+  {% if b.source_url %}
+  <a href="{{ b.source_url }}" target="_blank" class="badge badge-blue" style="text-decoration:none">
+    Listing ↗
+  </a>
+  {% elif b.source %}
+  <span class="badge badge-outline">{{ b.source | title }}</span>
+  {% endif %}
+</div>
+
+<div class="section-title mb-12">Property Details</div>
+<div class="field-row"><div class="field-key">Units</div><div class="field-value">{{ b.unit_count or "—" }}</div></div>
+<div class="field-row"><div class="field-key">Bldg SqFt</div><div class="field-value">{% if b.building_sqft %}{{ b.building_sqft | number_fmt }} sf{% else %}—{% endif %}</div></div>
+<div class="field-row"><div class="field-key">Year Built</div><div class="field-value">{{ b.year_built or "—" }}</div></div>
+<div class="field-row"><div class="field-key">Property Type</div><div class="field-value">{{ b.property_type or "—" }}</div></div>
+<div class="field-row"><div class="field-key">Jurisdiction</div><div class="field-value">{{ b.jurisdiction or "—" }}</div></div>
+
+<div class="divider"></div>
+<div class="section-title mb-12">Listing Info</div>
+<div class="field-row"><div class="field-key">Asking Price</div><div class="field-value">{{ b.asking_price | currency if b.asking_price else "—" }}</div></div>
+<div class="field-row"><div class="field-key">Cap Rate</div><div class="field-value">{{ b.cap_rate | pct if b.cap_rate else "—" }}</div></div>
+
+{% if b.broker_name %}
+<div class="divider"></div>
+<div class="section-title mb-12">Broker</div>
+<div class="field-row">
+  <div class="field-key">Name</div>
+  <div class="field-value">
+    <a href="/brokers?q={{ b.broker_name | urlencode }}" style="color:var(--accent)">{{ b.broker_name }}</a>
+  </div>
+</div>
+{% if b.brokerage_name %}
+<div class="field-row">
+  <div class="field-key">Company</div>
+  <div class="field-value">
+    <a href="/brokers?q={{ b.brokerage_name | urlencode }}" style="color:var(--accent)">{{ b.brokerage_name }}</a>
+  </div>
+</div>
+{% endif %}
+{% if b.broker_phone %}<div class="field-row"><div class="field-key">Phone</div><div class="field-value">{{ b.broker_phone }}</div></div>{% endif %}
+{% endif %}
+
+<div class="divider"></div>
+<div style="display:flex;gap:8px;margin-bottom:16px">
+  <button class="btn btn-secondary" style="flex:1">✏ Edit Details</button>
+  <button class="btn btn-danger btn-sm">Archive</button>
+</div>
+
+<!-- Scrape metadata — less prominent, at the bottom -->
+<div style="border-top:1px solid var(--border);padding-top:10px;margin-top:4px">
+  <div class="field-row" style="font-size:11px;color:var(--text-muted)">
+    <div class="field-key">First Seen</div><div class="field-value">{{ b.first_seen_at or "—" }}</div>
+  </div>
+  <div class="field-row" style="font-size:11px;color:var(--text-muted)">
+    <div class="field-key">Last Checked</div><div class="field-value">{{ b.last_seen_at or "—" }}</div>
+  </div>
+</div>

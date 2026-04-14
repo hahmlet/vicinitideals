@@ -1,0 +1,51 @@
+{# Single unpromoted listing row — also used by the promote/revert endpoints for OOB swap #}
+<tr id="listing-row-{{ l.id }}"
+    onclick="openListing('{{ l.id }}', '{{ l.address | replace("'", "\\'") }}', '{{ l.source_label }}')">
+  <td>
+    <div style="display:flex;align-items:center;gap:6px">
+      <div style="font-weight:600">{{ l.address }}</div>
+      {% if l.is_new %}<span class="badge badge-yellow" style="font-size:10px">New</span>{% endif %}
+    </div>
+    <div class="text-small text-muted" style="margin-top:2px">{{ l.source_label }}</div>
+  </td>
+  <td class="col-right text-mono">{{ l.asking_price | currency if l.asking_price else "—" }}</td>
+  <td class="col-right">{{ l.units or "—" }}</td>
+  <td class="col-right {% if l.cap_rate %}text-mono{% else %}text-muted{% endif %}">{{ l.cap_rate | pct if l.cap_rate else "—" }}</td>
+  <td class="text-small text-muted">{{ l.year_built or "—" }}</td>
+  <td>
+    {% if l.status == "Active" %}<span class="badge badge-green">Active</span>
+    {% elif l.status == "Under Contract" %}<span class="badge badge-yellow">Under Contract</span>
+    {% elif l.status and l.status|lower in ("sold", "closed") %}<span class="badge badge-red">{{ l.status }}</span>
+    {% elif l.status %}<span class="badge badge-gray">{{ l.status }}</span>
+    {% else %}<span class="text-muted text-small">—</span>{% endif %}
+  </td>
+  <td class="text-small text-muted">{{ l.first_seen_fmt or "—" }}</td>
+  <td class="text-small {% if l.updated_highlight %}text-mono{% else %}text-muted{% endif %}"
+      {% if l.updated_highlight %}style="color:var(--accent);font-weight:600"{% endif %}>
+    {{ l.last_updated_fmt or "—" }}{% if l.updated_highlight %} ↑{% endif %}
+  </td>
+  <td class="col-right text-mono">{{ l.price_per_unit | currency if l.price_per_unit else "—" }}</td>
+  <td class="col-right {% if l.proforma_cap_rate %}text-mono{% else %}text-muted{% endif %}">{{ l.proforma_cap_rate | pct if l.proforma_cap_rate else "—" }}</td>
+  <td class="col-right text-mono">{{ l.noi | currency if l.noi else "—" }}</td>
+  <td class="col-right text-mono">{{ l.proforma_noi | currency if l.proforma_noi else "—" }}</td>
+  <td class="col-right text-mono">{{ l.building_sqft | number_fmt if l.building_sqft else "—" }}</td>
+  <td class="col-right text-mono">{{ l.lot_sqft | number_fmt if l.lot_sqft else "—" }}</td>
+  <td class="text-small">{{ l.property_type or "—" }}</td>
+  <td class="text-small">{{ l.broker_name or "—" }}</td>
+  <td class="text-small">{{ l.brokerage_name or "—" }}</td>
+  <td>
+    <div style="display:flex;gap:4px;align-items:center" onclick="event.stopPropagation()">
+      <button class="btn btn-ghost btn-sm"
+              onclick="openJson(event, '{{ l.id }}', '{{ l.address | replace("'", "\\'") }}', '{{ l.source_label }}')">
+        { }
+      </button>
+      <button class="btn btn-sm btn-secondary"
+              hx-post="/ui/listings/{{ l.id }}/promote"
+              hx-target="#listing-row-{{ l.id }}"
+              hx-swap="outerHTML"
+              title="Promote to Opportunity">
+        → Opp
+      </button>
+    </div>
+  </td>
+</tr>

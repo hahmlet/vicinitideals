@@ -1,0 +1,1392 @@
+{# Add/edit drawer form for all line item types.
+   All forms submit to /ui/forms/{model_id}/{item_type}[/{id}]
+   which handles form data (not JSON) and returns refreshed panel HTML. #}
+
+<style>
+.form-field { margin-bottom: 14px; }
+.form-label { display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 4px; letter-spacing:.03em; text-transform:uppercase; }
+.form-input { width: 100%; padding: 7px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; background: var(--bg); color: var(--text); }
+.form-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(37,99,235,.15); }
+.form-select { width: 100%; padding: 7px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; background: var(--bg); color: var(--text); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-actions { display: flex; gap: 8px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
+.form-hint { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+</style>
+
+{% if form_type in ('uses', 'use_lines') %}
+{# ── Use Line form ── #}
+
+{% if existing %}
+{# ── Edit mode: flat form ── #}
+<form hx-put="/ui/forms/{{ model.id }}/use-lines/{{ existing.id }}"
+      hx-target="#module-panel-content"
+      hx-swap="innerHTML"
+      hx-on::after-request="if(event.detail.successful) closeDrawer('line-item-drawer')"
+      style="padding-bottom:8px">
+
+  <div class="form-field">
+    <label class="form-label">Label</label>
+    <input class="form-input" type="text" name="label" required value="{{ existing.label }}">
+  </div>
+  <div class="form-row" style="margin-bottom:8px">
+    <div class="form-field">
+      <label class="form-label">Amount ($)</label>
+      <input class="form-input" type="number" name="amount" step="1" min="0" required
+             value="{{ existing.amount | int }}" placeholder="0">
+    </div>
+  </div>
+  <div class="form-field" style="margin-bottom:8px">
+    <label class="form-label">Timing</label>
+    <div style="display:flex;gap:12px;margin-top:4px">
+      {%- set _timing = (existing.timing_type | string).replace('UseLineTiming.','') -%}
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer">
+        <input type="radio" name="timing_type" value="first_day" {% if _timing != 'spread' %}checked{% endif %} onchange="ulTimingChanged(this.value)">Lump Sum
+      </label>
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer">
+        <input type="radio" name="timing_type" value="spread" {% if _timing == 'spread' %}checked{% endif %} onchange="ulTimingChanged(this.value)">Spread Across Range
+      </label>
+    </div>
+  </div>
+  {% if milestones_dated_ds %}
+  {%- set _cur_ms = existing.milestone_key if existing.milestone_key else '' -%}
+  {%- set _cur_ms_to = existing.milestone_key_to if existing.milestone_key_to else '' -%}
+  <div class="form-row" id="ul-milestone-row">
+    <div class="form-field">
+      <label class="form-label">Active From</label>
+      <select class="form-select" name="milestone_key">
+        {% for ms in milestones_dated_ds if ms.date %}
+        <option value="{{ ms.key }}" {% if ms.key == _cur_ms %}selected{% endif %}>{{ ms.label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-field" id="ul-ms-to-field">
+      <label class="form-label" style="display:flex;align-items:center;gap:4px">
+        Active To <span id="ul-ms-to-hint" style="font-weight:400;color:var(--text-muted);font-size:10px">{{ '(spread)' if _timing == 'spread' else '(optional)' }}</span>
+      </label>
+      <select class="form-select" name="milestone_key_to" id="ul-ms-to-select"
+              style="{{ '' if _timing == 'spread' else 'opacity:0.5' }}">
+        <option value="">— same as From —</option>
+        {% for ms in milestones_dated_ds if ms.date %}
+        <option value="{{ ms.key }}" {% if ms.key == _cur_ms_to %}selected{% endif %}>{{ ms.label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  {% else %}
+  <input type="hidden" name="milestone_key" value="">
+  <input type="hidden" name="milestone_key_to" value="">
+  {% endif %}
+  <div class="form-field">
+    <label class="form-label" style="display:flex;align-items:center;gap:8px;cursor:pointer">
+      <input type="checkbox" name="is_deferred" value="true" {% if existing.is_deferred %}checked{% endif %}>
+      Deferred Developer Fee
+    </label>
+    <div class="form-hint">Check if this fee is deferred — a matching Source (soft loan) will be needed to keep Sources = Uses balanced.</div>
+  </div>
+  <div class="form-field">
+    <label class="form-label">Notes (optional)</label>
+    <input class="form-input" type="text" name="notes" value="{{ existing.notes or '' }}" placeholder="e.g. Per appraisal estimate">
+  </div>
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <button type="button" class="btn btn-secondary" onclick="closeDrawer('line-item-drawer')">Cancel</button>
+    <button type="button" class="btn btn-danger" style="margin-left:auto"
+            hx-delete="/ui/forms/{{ model.id }}/use-lines/{{ existing.id }}"
+            hx-confirm="Delete '{{ existing.label }}'?"
+            hx-target="#module-panel-content" hx-swap="innerHTML"
+            hx-on::after-request="if(event.detail.successful) closeDrawer('line-item-drawer')">Delete</button>
+  </div>
+</form>
+
+<script>
+function ulTimingChanged(val) {
+  var s = document.getElementById('ul-ms-to-select');
+  var h = document.getElementById('ul-ms-to-hint');
+  if (s) s.style.opacity = val === 'spread' ? '1' : '0.5';
+  if (h) h.textContent = val === 'spread' ? '(spread)' : '(optional)';
+}
+</script>
+
+{% else %}
+{# ── Create mode: 2-step wizard ── #}
+<div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px">
+  <div class="wizard-step-dot active" id="uw-dot-1"></div>
+  <div class="wizard-step-dot" id="uw-dot-2"></div>
+  <span style="font-size:11px;color:var(--text-muted);margin-left:4px" id="uw-step-label">Step 1 of 2</span>
+  <span style="margin-left:auto;font-size:13px;font-weight:600" id="uw-step-title">Name &amp; Amount</span>
+</div>
+
+<form hx-post="/ui/forms/{{ model.id }}/use-lines"
+      hx-target="#module-panel-content" hx-swap="innerHTML"
+      hx-on::after-request="if(event.detail.successful) closeUsesWizard()"
+      id="uw-form" style="padding-bottom:8px">
+
+  {# ── Step 1: Name, Amount, Deferred flag ── #}
+  <div id="uw-step-1">
+    <div class="form-field">
+      <label class="form-label">Label</label>
+      <input class="form-input" type="text" name="label" id="uw-label" required
+             placeholder="e.g. Land Acquisition, Hard Construction Costs">
+    </div>
+    <div class="form-field">
+      <label class="form-label">Amount ($)</label>
+      <input class="form-input" type="number" name="amount" step="1" min="0" required
+             placeholder="0">
+    </div>
+    <div class="form-field">
+      <label class="form-label" style="display:flex;align-items:center;gap:8px;cursor:pointer;text-transform:none;font-size:13px;font-weight:500;color:var(--text)">
+        <input type="checkbox" name="is_deferred" value="true" id="uw-deferred">
+        Deferred Developer Fee
+      </label>
+      <div class="form-hint">Check if this fee is deferred — a matching Source (soft loan) will be needed to keep Sources = Uses balanced.</div>
+    </div>
+    <div class="form-field">
+      <label class="form-label">Notes (optional)</label>
+      <input class="form-input" type="text" name="notes" placeholder="e.g. Per appraisal estimate">
+    </div>
+  </div>
+
+  {# ── Step 2: Timing & Milestones ── #}
+  <div id="uw-step-2" style="display:none">
+    <div class="form-field" style="margin-bottom:12px">
+      <label class="form-label">Timing</label>
+      <div style="display:flex;gap:12px;margin-top:4px">
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer">
+          <input type="radio" name="timing_type" value="first_day" checked id="uw-timing-first" onchange="uwTimingChanged(this.value)">Lump Sum
+        </label>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer">
+          <input type="radio" name="timing_type" value="spread" id="uw-timing-spread" onchange="uwTimingChanged(this.value)">Spread Across Range
+        </label>
+      </div>
+    </div>
+    {% if milestones_dated_ds %}
+    <div class="form-row">
+      <div class="form-field">
+        <label class="form-label">Active From</label>
+        <select class="form-select" name="milestone_key">
+          {% for ms in milestones_dated_ds if ms.date %}
+          <option value="{{ ms.key }}">{{ ms.label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-field">
+        <label class="form-label" style="display:flex;align-items:center;gap:4px">
+          Active To <span id="uw-ms-to-hint" style="font-weight:400;color:var(--text-muted);font-size:10px">(optional)</span>
+        </label>
+        <select class="form-select" name="milestone_key_to" id="uw-ms-to-select" style="opacity:0.5">
+          <option value="">— same as From —</option>
+          {% for ms in milestones_dated_ds if ms.date %}
+          <option value="{{ ms.key }}">{{ ms.label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    {% else %}
+    <div style="padding:8px 10px;background:var(--bg-muted,#f5f5f5);border-radius:6px;font-size:12px;color:var(--text-muted);margin-bottom:8px">
+      No milestones yet — add them in Timeline first.
+    </div>
+    <input type="hidden" name="milestone_key" value="">
+    <input type="hidden" name="milestone_key_to" value="">
+    {% endif %}
+  </div>
+
+  <div id="uw-error" style="display:none;color:#dc2626;font-size:12px;font-weight:500;margin-top:10px;padding:8px 10px;background:#fee2e2;border-radius:6px;border:1px solid #fca5a5"></div>
+
+  <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px;padding-top:12px;border-top:1px solid var(--border)">
+    <button type="button" id="uw-back" style="display:none" class="btn btn-secondary" onclick="uwBack()">← Back</button>
+    <button type="button" class="btn btn-secondary" onclick="closeUsesWizard()">Cancel</button>
+    <button type="button" class="btn btn-primary" id="uw-next" onclick="uwNext()">Continue →</button>
+  </div>
+</form>
+
+<script>
+(function(){
+  var _step = 1;
+  function _show(s) {
+    document.getElementById('uw-step-1').style.display = s === 1 ? '' : 'none';
+    document.getElementById('uw-step-2').style.display = s === 2 ? '' : 'none';
+    document.getElementById('uw-dot-1').className = 'wizard-step-dot' + (s === 1 ? ' active' : ' done');
+    document.getElementById('uw-dot-2').className = 'wizard-step-dot' + (s === 2 ? ' active' : '');
+    document.getElementById('uw-step-label').textContent = 'Step ' + s + ' of 2';
+    document.getElementById('uw-step-title').textContent = s === 1 ? 'Name & Amount' : 'Timing & Milestones';
+    document.getElementById('uw-back').style.display = s > 1 ? '' : 'none';
+    var btn = document.getElementById('uw-next');
+    btn.textContent = s === 2 ? 'Add Use' : 'Continue →';
+    btn.onclick = s === 2 ? uwSubmit : uwNext;
+    _step = s;
+  }
+  window.uwNext = function() {
+    if (_step === 1) {
+      var lbl = document.getElementById('uw-label');
+      if (!lbl || !lbl.value.trim()) {
+        var err = document.getElementById('uw-error');
+        if (err) { err.textContent = 'Name is required.'; err.style.display = ''; }
+        lbl && lbl.focus();
+        return;
+      }
+    }
+    document.getElementById('uw-error').style.display = 'none';
+    _show(2);
+  };
+  window.uwBack = function() { _show(1); };
+  window.uwSubmit = function() { document.getElementById('uw-form').requestSubmit(); };
+  window.uwTimingChanged = function(val) {
+    var s = document.getElementById('uw-ms-to-select');
+    var h = document.getElementById('uw-ms-to-hint');
+    if (s) s.style.opacity = val === 'spread' ? '1' : '0.5';
+    if (h) h.textContent = val === 'spread' ? '(spread)' : '(optional)';
+  };
+  _show(1);
+})();
+</script>
+
+{% endif %}
+
+{% elif form_type in ('revenue', 'income_streams') %}
+{# ── Revenue Stream form ── #}
+<form {% if existing %}hx-put="/ui/forms/{{ model.id }}/income-streams/{{ existing.id }}"{% else %}hx-post="/ui/forms/{{ model.id }}/income-streams"{% endif %}
+      hx-target="#module-panel-content"
+      hx-swap="innerHTML"
+      hx-on::after-request="if(event.detail.successful) closeDrawer('line-item-drawer')"
+      style="padding-bottom:8px">
+
+  <div class="form-row">
+    <div class="form-field">
+      <label class="form-label">Label</label>
+      <input class="form-input" type="text" name="label" required
+             value="{{ existing.label if existing else '' }}"
+             placeholder="e.g. 1BR Units, Parking">
+    </div>
+    <div class="form-field">
+      <label class="form-label">Type</label>
+      <select class="form-select" name="stream_type">
+        {% for t in ['residential_rent','commercial_rent','parking','laundry','utility_water','utility_electric','utility_gas','utility_internet','storage','pet_fee','deposit_forfeit','other'] %}
+        <option value="{{ t }}" {% if existing and existing.stream_type|string in (t, 'IncomeStreamType.' + t) %}selected{% endif %}>
+          {{ t | replace('_', ' ') | title }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  {%- set _rev_is_flat = existing and existing.amount_fixed_monthly and not existing.amount_per_unit_monthly -%}
+  <div class="form-row" style="align-items:flex-end">
+    <div class="form-field">
+      <label class="form-label">Amount Type</label>
+      <select class="form-select" name="amount_type" id="rev-amount-type"
+              onchange="(function(v){
+                document.getElementById('rev-perunit-row').style.display = v==='per_unit'?'':'none';
+                document.getElementById('rev-flat-row').style.display   = v==='flat'  ?'':'none';
+              })(this.value)">
+        <option value="per_unit" {% if not _rev_is_flat %}selected{% endif %}>Per Unit / Space</option>
+        <option value="flat"     {% if _rev_is_flat %}selected{% endif %}>Fixed Monthly (Flat)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-row" id="rev-perunit-row" {% if _rev_is_flat %}style="display:none"{% endif %}>
+    <div class="form-field">
+      <label class="form-label">Units / Spaces</label>
+      <input class="form-input" type="number" name="unit_count" min="0"
+             value="{{ existing.unit_count if existing else '' }}" placeholder="leave blank = 1 unit">
+    </div>
+    <div class="form-field">
+      <label class="form-label">$/Unit/Month</label>
+      <input class="form-input" type="number" name="amount_per_unit_monthly" step="0.01" min="0"
+             value="{{ existing.amount_per_unit_monthly if existing else '' }}" placeholder="0.00">
+    </div>
+  </div>
+
+  <div class="form-row" id="rev-flat-row" {% if not _rev_is_flat %}style="display:none"{% endif %}>
+    <div class="form-field">
+      <label class="form-label">Fixed Monthly ($)</label>
+      <input class="form-input" type="number" name="amount_fixed_monthly" step="0.01" min="0"
+             value="{{ existing.amount_fixed_monthly if existing else '' }}" placeholder="0.00">
+      <div class="form-hint">Total monthly amount, no unit multiplication</div>
+    </div>
+    <div class="form-field">
+      <label class="form-label">Occupancy (%)</label>
+      <input class="form-input" type="number" name="stabilized_occupancy_pct" step="0.1" min="0" max="100"
+             value="{{ existing.stabilized_occupancy_pct | round(1) if existing else 95 }}" placeholder="95">
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-field">
+      <label class="form-label">Escalation (%/yr)</label>
+      <input class="form-input" type="number" name="escalation_rate_pct_annual" step="0.1" min="0"
+             value="{{ existing.escalation_rate_pct_annual | round(1) if existing else 3.0 }}" placeholder="3.0">
+    </div>
+    <div class="form-field">
+      <label class="form-label">Active Phases</label>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px">
+        {%- set _rev_aip = existing.active_in_phases if existing else ['stabilized'] -%}
+        {%- for _ph, _ph_label in [('lease_up','Lease-Up'),('stabilized','Stabilized')] %}
+        <label style="display:flex;align-items:center;gap:4px;font-size:13px;cursor:pointer">
+          <input type="checkbox" name="active_in_phases" value="{{ _ph }}"
+                 {% if _ph in _rev_aip %}checked{% endif %}
+                 style="accent-color:var(--accent)">
+          {{ _ph_label }}
+        </label>
+        {%- endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="form-field">
+    <label class="form-label">Notes (optional)</label>
+    <input class="form-input" type="text" name="notes"
+           value="{{ existing.notes if existing else '' }}">
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">{% if existing %}Save Changes{% else %}Add Stream{% endif %}</button>
+    <button type="button" class="btn btn-secondary" onclick="closeDrawer('line-item-drawer')">Cancel</button>
+    {% if existing %}
+    <button type="button" class="btn btn-danger" style="margin-left:auto"
+            hx-delete="/ui/forms/{{ model.id }}/income-streams/{{ existing.id }}"
+            hx-confirm="Delete '{{ existing.label }}'?"
+            hx-target="#module-panel-content"
+            hx-swap="innerHTML"
+            hx-on::after-request="if(event.detail.successful) closeDrawer('line-item-drawer')">Delete</button>
+    {% endif %}
+  </div>
+</form>
+
+{% elif form_type in ('opex', 'expense_lines') %}
+{# ── OpEx Line form ── #}
+<form {% if existing %}hx-put="/ui/forms/{{ model.id }}/expense-lines/{{ existing.id }}"{% else %}hx-post="/ui/forms/{{ model.id }}/expense-lines"{% endif %}
+      hx-target="#module-panel-content"
+      hx-swap="innerHTML"
+      hx-on::after-request="if(event.detail.successful) closeDrawer('line-item-drawer')"
+      style="padding-bottom:8px">
+
+  <div class="form-field">
+    <label class="form-label">Label</label>
+    <input class="form-input" type="text" name="label" required
+           value="{{ existing.label if existing else '' }}"
+           placeholder="e.g. Property Tax, Insurance, Property Management">
+  </div>
+
+  {%- set _opex_per_val = existing.per_value if existing and existing.per_value else (existing.annual_amount if existing and existing.annual_amount else '') -%}
+  {%- set _opex_per_type = existing.per_type if existing and existing.per_type else 'flat' -%}
+  <div class="form-row">
+    <div class="form-field">
+      <label class="form-label">Amount</label>
+      <input class="form-input" type="number" name="per_value" step="1" min="0" required
+             value="{{ _opex_per_val | int if _opex_per_val else '' }}" placeholder="0"
+             id="opex-per-value">
+    </div>
+    <div class="form-field">
+      <label class="form-label">Per</label>
+      <select class="form-select" name="per_type" id="opex-per-type">
+        <option value="flat" {% if _opex_per_type == 'flat' %}selected{% endif %}>Flat / year</option>
+        <option value="per_unit" {% if _opex_per_type == 'per_unit' %}selected{% endif %}>$ / unit / year</option>
+        <option value="per_sqft_residential" {% if _opex_per_type == 'per_sqft_residential' %}selected{% endif %}>$ / sqft residential / year</option>
+        <option value="per_sqft_commercial" {% if _opex_per_type == 'per_sqft_commercial' %}selected{% endif %}>$ / sqft commercial / year</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-field">
+      <label class="form-label">Escalation (%/yr)</label>
+      <input class="form-input" type="number" name="escalation_rate_pct_annual" step="0.1" min="0"
+             value="{{ existing.escalation_rate_pct_annual | round(1) if existing else 3.0 }}" placeholder="3.0">
+    </div>
+    <div class="form-field" style="display:flex;flex-direction:column;justify-content:flex-end">
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;margin-bottom:6px">
+        <input type="checkbox" name="scale_with_lease_up" id="opex-scale-chk"
+               {% if existing and existing.scale_with_lease_up %}checked{% endif %}
+               style="accent-color:var(--accent)"
+               onchange="document.getElementById('opex-floor-row').style.display=this.checked?'':'none'">
+        Scale with Lease-Up
+      </label>
+    </div>
+  </div>
+
+  <div class="form-row" id="opex-floor-row" style="display:{% if existing and existing.scale_with_lease_up %}{% else %}none{% endif %}">
+    <div class="form-field">
+      <label class="form-label">Lease-Up Floor (%)</label>
+      <input class="form-input" type="number" name="lease_up_floor_pct" step="1" min="0" max="100"
+             value="{{ existing.lease_up_floor_pct | int if existing and existing.lease_up_floor_pct else 0 }}"
+             placeholder="0">
+      <div class="form-hint">Minimum expense as % of stabilized when vacant</div>
+    </div>
+    <div class="form-field"></div>
+  </div>
+
+  <div class="form-field">
+    <label class="form-label">Active Phases</label>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px">
+      {%- set _opex_aip = existing.active_in_phases if existing else ['stabilized'] -%}
+      {%- for _ph, _ph_label in [('construction','Construction'),('lease_up','Lease-Up'),('stabilized','Stabilized')] %}
+      <label style="display:flex;align-items:center;gap:4px;font-size:13px;cursor:pointer">
+        <input type="checkbox" name="active_in_phases" value="{{ _ph }}"
+               {% if _ph in _opex_aip %}checked{% endif %}
+               style="accent-color:var(--accent)">
+        {{ _ph_label }}
+      </label>
+      {%- endfor %}
+    </div>
+  </div>
+
+  <input type="hidden" name="annual_amount" value="0">
+
+  <div class="form-field">
+    <label class="form-label">Notes (optional)</label>
+    <input class="form-input" type="text" name="notes"
+           value="{{ existing.notes if existing else '' }}">
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">{% if existing %}Save Changes{% else %}Add Line{% endif %}</button>
+    <button type="button" class="btn btn-secondary" onclick="closeDrawer('line-item-drawer')">Cancel</button>
+    {% if existing %}
+    <button type="button" class="btn btn-danger" style="margin-left:auto"
+            hx-delete="/ui/forms/{{ model.id }}/expense-lines/{{ existing.id }}"
+            hx-confirm="Delete '{{ existing.label }}'?"
+            hx-target="#module-panel-content"
+            hx-swap="innerHTML"
+            hx-on::after-request="if(event.detail.successful) closeDrawer('line-item-drawer')">Delete</button>
+    {% endif %}
+  </div>
+</form>
+
+{% elif form_type == 'opex_templates' %}
+{# ── OpEx template picker ── #}
+{% set tpl_list = [
+  ('Property Tax', 18000, 3.0),
+  ('Insurance', 9600, 3.0),
+  ('Property Management', 12000, 3.0),
+  ('Utilities — Electric', 4800, 3.0),
+  ('Utilities — Water/Sewer', 3600, 3.0),
+  ('Repairs & Maintenance', 6000, 3.0),
+  ('Landscaping', 2400, 3.0),
+  ('CapEx Reserve', 7200, 3.0),
+  ('Garbage / Refuse', 1800, 3.0),
+  ('Accounting & Legal', 3000, 3.0),
+  ('Advertising & Leasing', 2400, 3.0),
+  ('Unit Turnover', 4800, 3.0),
+  ('Resident Services', 3600, 3.0),
+  ('Internet — Common', 1200, 3.0),
+] %}
+<p class="text-small text-muted" style="margin-bottom:12px">Click to add. You can edit amounts after adding.</p>
+<div style="display:flex;flex-direction:column;gap:6px">
+  {% for label, amount, esc in tpl_list %}
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--border);border-radius:6px">
+    <div>
+      <div style="font-size:13px;font-weight:500">{{ label }}</div>
+      <div class="text-small text-muted">${{ '{:,.0f}'.format(amount) }}/yr · {{ esc }}% esc.</div>
+    </div>
+    <button class="btn btn-sm btn-secondary"
+            hx-post="/ui/forms/{{ model.id }}/expense-lines"
+            hx-vals='{"label": "{{ label }}", "annual_amount": "{{ amount }}", "escalation_rate_pct_annual": "{{ esc }}", "active_in_phases": "stabilized"}'
+            hx-target="#module-panel-content"
+            hx-swap="innerHTML"
+            hx-on::after-request="if(event.detail.successful) closeDrawer('line-item-drawer')">+ Add</button>
+  </div>
+  {% endfor %}
+</div>
+<div class="form-actions">
+  <button type="button" class="btn btn-secondary" onclick="closeDrawer('line-item-drawer')">Done</button>
+</div>
+
+{% elif form_type in ('sources', 'capital_modules') %}
+{# ── Capital Source form ── #}
+
+{#- Shared macros and data ─────────────────────────────────────────────────── #}
+{%- set _FT_LABELS = {
+  'permanent_debt':'Permanent Debt','senior_debt':'Senior Debt','mezzanine_debt':'Mezzanine Debt',
+  'bridge':'Bridge Loan','construction_loan':'Construction Loan',
+  'soft_loan':'Soft Loan','bond':'Bond',
+  'preferred_equity':'Preferred Equity','common_equity':'Common Equity',
+  'owner_loan':'Owner Loan','owner_investment':'Owner Investment',
+  'grant':'Grant','tax_credit':'Tax Credit','other':'Other',
+} -%}
+{# permanent_debt: amortizing long-term loan — no exit trigger, exits at end of amortization #}
+{%- set _ALL_TYPES = ['permanent_debt','senior_debt','mezzanine_debt','bridge','construction_loan','soft_loan','bond',
+                      'preferred_equity','common_equity','owner_loan','owner_investment',
+                      'grant','tax_credit'] -%}
+{%- set _SIMPLE_TYPES = ['grant','tax_credit'] -%}
+{%- set _NO_CARRY_TYPES = ['grant','tax_credit','owner_investment'] -%}
+{%- set _NO_EXIT_TYPES = ['permanent_debt'] -%}
+
+{%- macro exit_fields(et_val, trig_val) %}
+<div class="form-row">
+  <div class="form-field">
+    <label class="form-label">Exit Type</label>
+    <select class="form-select" name="exit_type">
+      {% for et in ['full_payoff','tranche_payoff','equity_conversion','profit_share','forgiven'] %}
+      <option value="{{ et }}" {% if et_val == et %}selected{% endif %}>{{ et | replace('_',' ') | title }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="form-field">
+    <label class="form-label">Exit Trigger</label>
+    <select class="form-select" name="exit_trigger">
+      {% for trig in ['sale','refinance','construction_completion','stabilization','maturity','partner_buyout','call_option'] %}
+      <option value="{{ trig }}" {% if trig_val == trig %}selected{% endif %}>{{ trig | replace('_',' ') | title }}</option>
+      {% endfor %}
+    </select>
+  </div>
+</div>
+{%- endmacro %}
+
+{%- macro permanent_debt_fields(term_val, rate_val, cp_val, stack_val) %}
+<div class="form-row" style="margin-bottom:12px">
+  <div class="form-field">
+    <label class="form-label">Amortization Term (years)</label>
+    <input class="form-input" type="number" name="amort_term_years" step="1" min="1"
+           value="{{ term_val }}" placeholder="30">
+  </div>
+  <div class="form-field">
+    <label class="form-label">Interest Rate (%)</label>
+    <input class="form-input" type="number" name="source_interest_rate" step="0.1" min="0"
+           value="{{ rate_val }}" placeholder="e.g. 6.5">
+  </div>
+</div>
+<div class="form-row">
+  <div class="form-field">
+    <label class="form-label">Stack Position <span style="font-weight:400;font-size:11px;color:var(--text-muted)">1 = most senior</span></label>
+    <input class="form-input" type="number" name="stack_position" step="1" min="1"
+           value="{{ stack_val }}" placeholder="1">
+  </div>
+  <div class="form-field">
+    <label class="form-label">Compounding</label>
+    <select class="form-select" name="compounding_period">
+      {% for cp in ['monthly','quarterly','semi_annual','annual'] %}
+      <option value="{{ cp }}" {% if cp_val == cp %}selected{% endif %}>{{ cp | replace('_',' ') | title }}</option>
+      {% endfor %}
+    </select>
+  </div>
+</div>
+{%- endmacro %}
+
+{%- macro stack_interest_fields(stack_val, rate_val, cp_val) %}
+<div class="form-row" style="margin-bottom:12px">
+  <div class="form-field">
+    <label class="form-label">Stack Position <span style="font-weight:400;font-size:11px;color:var(--text-muted)">1 = most senior</span></label>
+    <input class="form-input" type="number" name="stack_position" step="1" min="1"
+           value="{{ stack_val }}" placeholder="1">
+  </div>
+  <div class="form-field">
+    <label class="form-label">Interest Rate (%)</label>
+    <input class="form-input" type="number" name="source_interest_rate" step="0.1" min="0"
+           value="{{ rate_val }}" placeholder="Leave blank for equity">
+  </div>
+</div>
+<div class="form-row">
+  <div class="form-field">
+    <label class="form-label">Compounding</label>
+    <select class="form-select" name="compounding_period">
+      {% for cp in ['daily','weekly','monthly','quarterly','semi_annual','annual','continuous','simple'] %}
+      <option value="{{ cp }}" {% if cp_val == cp %}selected{% endif %}>{{ cp | replace('_',' ') | title }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="form-field"></div>
+</div>
+{%- endmacro %}
+
+{%- macro carry_fields(pre_ops, ops, funder_type='') %}
+{%- set _amort_types = ['permanent_debt','bond','senior_debt'] -%}
+{%- set _ops_default = 'pi' if (funder_type in _amort_types and not ops.get('carry_type')) else ops.get('carry_type','none') -%}
+<div style="font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px">Pre-Operations Phase</div>
+<div class="form-row" style="margin-bottom:8px">
+  <div class="form-field">
+    <label class="form-label">Carry Type</label>
+    <select class="form-select" name="construction_carry_type" onchange="(function(s){var c=document.getElementById('constr-perm-fields');if(c)c.style.display=s.value==='converts_to_permanent'?'':'none';})(this)">
+      {% for ct in ['none','io_only','pi','capitalized_interest','accruing','converts_to_permanent'] %}
+      <option value="{{ ct }}" {% if pre_ops.get('carry_type','none') == ct %}selected{% endif %}>
+        {%- if ct == 'io_only' %}I&O Only
+        {%- elif ct == 'pi' %}P&I
+        {%- elif ct == 'converts_to_permanent' %}Construction-to-Perm Conversion
+        {%- else %}{{ ct | replace('_',' ') | title }}{% endif %}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="form-field">
+    <label class="form-label">Payment Frequency</label>
+    <select class="form-select" name="construction_payment_frequency">
+      {% for pf in ['monthly','quarterly','annual','at_exit'] %}
+      <option value="{{ pf }}" {% if pre_ops.get('payment_frequency','monthly') == pf %}selected{% endif %}>{{ pf | replace('_',' ') | title }}</option>
+      {% endfor %}
+    </select>
+  </div>
+</div>
+{%- set _show_c2p = pre_ops.get('carry_type') == 'converts_to_permanent' -%}
+<div id="constr-perm-fields" style="margin-bottom:16px;padding:12px;background:var(--surface-alt,#f9fafb);border:1px solid var(--border);border-radius:6px;{% if not _show_c2p %}display:none{% endif %}">
+  <div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:8px">Permanent Loan Terms (after conversion)</div>
+  <div class="form-row">
+    <div class="form-field">
+      <label class="form-label">Perm Rate (%)</label>
+      <input class="form-input" type="number" name="perm_rate_pct" step="0.1" min="0"
+             value="{{ pre_ops.get('perm_rate_pct', '') }}" placeholder="e.g. 6.5">
+    </div>
+    <div class="form-field">
+      <label class="form-label">Perm Term (years)</label>
+      <input class="form-input" type="number" name="perm_term_years" step="1" min="1"
+             value="{{ pre_ops.get('perm_term_years', '') }}" placeholder="30">
+    </div>
+  </div>
+  <div class="form-field" style="margin-top:8px">
+    <label class="form-label">Conversion Trigger</label>
+    <select class="form-select" name="perm_conversion_trigger">
+      {% for trig in ['construction_completion','certificate_of_occupancy','stabilization','lease_up_complete'] %}
+      <option value="{{ trig }}" {% if pre_ops.get('perm_conversion_trigger') == trig %}selected{% endif %}>{{ trig | replace('_',' ') | title }}</option>
+      {% endfor %}
+    </select>
+  </div>
+</div>
+<div style="font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px">Operations Phase</div>
+<div class="form-row">
+  <div class="form-field">
+    <label class="form-label">Carry Type</label>
+    <select class="form-select" name="operation_carry_type">
+      {% for ct in ['none','io_only','pi','capitalized_interest','accruing'] %}
+      <option value="{{ ct }}" {% if _ops_default == ct %}selected{% endif %}>
+        {%- if ct == 'io_only' %}I&O Only{%- elif ct == 'pi' %}P&I{%- else %}{{ ct | replace('_',' ') | title }}{%- endif %}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="form-field">
+    <label class="form-label">Payment Frequency</label>
+    <select class="form-select" name="operation_payment_frequency">
+      {% for pf in ['monthly','quarterly','annual','at_exit'] %}
+      <option value="{{ pf }}" {% if ops.get('payment_frequency','monthly') == pf %}selected{% endif %}>{{ pf | replace('_',' ') | title }}</option>
+      {% endfor %}
+    </select>
+  </div>
+</div>
+{%- endmacro %}
+
+{%- if existing %}
+{# ══════════════════════════════════════════════════════════════════════════════
+   EDIT MODE — locked type, all relevant fields visible
+   ════════════════════════════════════════════════════════════════════════════ #}
+{%- set _ft = existing.funder_type | string | replace('FunderType.','') -%}
+{%- set _is_perm_debt = _ft in _NO_EXIT_TYPES -%}
+{%- set _show_exit = _ft not in _SIMPLE_TYPES and not _is_perm_debt -%}
+{%- set _show_carry = _ft not in _NO_CARRY_TYPES -%}
+{%- set c_phases = existing.carry.phases if (existing.carry and existing.carry.get('phases')) else [] -%}
+{%- set c_pre_ops = (c_phases | selectattr('name','equalto','pre_operations') | list | first)
+                 or (c_phases | selectattr('name','equalto','construction')    | list | first)
+                 or {} -%}
+{%- set c_ops = (c_phases | selectattr('name','equalto','operation') | list | first) if c_phases else {} -%}
+
+<form hx-put="/ui/forms/{{ model.id }}/capital-modules/{{ existing.id }}"
+      hx-target="#module-panel-content" hx-swap="innerHTML"
+      hx-on::after-request="if(event.detail.successful) closeDrawer('line-item-drawer')"
+      style="padding-bottom:8px">
+  <input type="hidden" name="funder_type" value="{{ _ft }}">
+
+  {# Locked type pill #}
+  <div style="margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--border)">
+    <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px">Type</div>
+    <span style="display:inline-block;padding:4px 12px;border-radius:20px;background:var(--accent-faint);border:1px solid var(--accent);color:var(--accent);font-size:13px;font-weight:600">
+      {{ _FT_LABELS.get(_ft, _ft | replace('_',' ') | title) }}
+    </span>
+    <div style="font-size:11px;color:var(--text-muted);margin-top:5px">To change type, delete this source and add a new one.</div>
+  </div>
+
+  {# Name & Stack Position #}
+  <div class="form-field" style="margin-bottom:12px">
+    <label class="form-label">Name</label>
+    <input class="form-input" type="text" name="label" required value="{{ existing.label }}">
+  </div>
+  <div class="form-row" style="margin-bottom:16px">
+    {% if existing.source and existing.source.get('amount') %}
+    <div class="form-field">
+      <label class="form-label">Commitment <span style="font-weight:400;font-size:11px;color:var(--text-muted)">auto-calculated</span></label>
+      <div style="padding:8px 10px;background:var(--bg-muted,#f5f5f5);border-radius:6px;font-size:14px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--text-secondary)">
+        {{ existing.source.amount | currency }}
+      </div>
+    </div>
+    {% endif %}
+    {% if _show_exit %}{# stack position only for non-simple types #}
+    <div class="form-field">
+      <label class="form-label">Stack Position <span style="font-weight:400;font-size:11px;color:var(--text-muted)">1=most senior</span></label>
+      <input class="form-input" type="number" name="stack_position" step="1" min="1"
+             value="{{ existing.stack_position if existing.stack_position else 1 }}">
+    </div>
+    {% else %}
+    <input type="hidden" name="stack_position" value="0">
+    {% endif %}
+  </div>
+
+  {% if _is_perm_debt %}
+  {# Permanent debt: amortization term + interest rate, no exit trigger #}
+  <input type="hidden" name="exit_type" value="full_payoff">
+  <input type="hidden" name="exit_trigger" value="maturity">
+  <div class="form-section">
+    <div class="form-section-title">Loan Terms</div>
+    {{ permanent_debt_fields(
+        existing.source.amort_term_years if existing.source and existing.source.get('amort_term_years') else '',
+        existing.source.interest_rate_pct if existing.source and existing.source.get('interest_rate_pct') else '',
+        existing.source.compounding_period if existing.source and existing.source.get('compounding_period') else 'monthly',
+        existing.stack_position if existing.stack_position else 1
+    ) }}
+  </div>
+  {% elif _show_exit %}
+  <div class="form-section">
+    <div class="form-section-title">Exit</div>
+    {{ exit_fields(
+        existing.exit_terms.get('exit_type','') if existing.exit_terms else '',
+        existing.exit_terms.get('trigger','')   if existing.exit_terms else ''
+    ) }}
+  </div>
+  <div class="form-section {% if not _show_carry %}border-none{% endif %}">
+    <div class="form-section-title">Interest</div>
+    {{ stack_interest_fields(
+        existing.stack_position if existing.stack_position else 1,
+        existing.source.interest_rate_pct if existing.source and existing.source.get('interest_rate_pct') else '',
+        existing.source.compounding_period if existing.source and existing.source.get('compounding_period') else 'monthly'
+    ) }}
+  </div>
+  {% else %}
+  <input type="hidden" name="exit_type" value="forgiven">
+  <input type="hidden" name="exit_trigger" value="">
+  <input type="hidden" name="source_interest_rate" value="">
+  <input type="hidden" name="compounding_period" value="simple">
+  {% endif %}
+
+  {% if _show_carry %}
+  <div class="form-section" style="border-bottom:none;margin-bottom:0;padding-bottom:0">
+    <div class="form-section-title">Carry</div>
+    {{ carry_fields(c_pre_ops, c_ops, _ft) }}
+  </div>
+  {% else %}
+  <input type="hidden" name="construction_carry_type" value="none">
+  <input type="hidden" name="construction_payment_frequency" value="monthly">
+  <input type="hidden" name="operation_carry_type" value="none">
+  <input type="hidden" name="operation_payment_frequency" value="monthly">
+  {% endif %}
+
+  {# ── Draw Schedule Settings ── always shown when milestones available #}
+  {% if milestones_dated_ds %}
+  <div class="form-section" style="margin-bottom:0;padding-bottom:0;border-bottom:none">
+    <div class="form-section-title">Draw Schedule</div>
+    <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px">
+      Controls when and how often this source draws funds.
+    </div>
+    {% if draw_source_window %}
+    <input type="hidden" name="ds_id" value="{{ draw_source_window.id }}">
+    {% endif %}
+    <div class="form-field" style="margin-bottom:12px">
+      <label class="form-label">Draw Frequency</label>
+      <select class="form-select" name="ds_draw_every_n_months">
+        {% set _freq = draw_source_window.draw_every_n_months if draw_source_window else 1 %}
+        <option value="1" {% if _freq == 1 %}selected{% endif %}>Monthly</option>
+        <option value="2" {% if _freq == 2 %}selected{% endif %}>Bi-Monthly</option>
+        <option value="3" {% if _freq == 3 %}selected{% endif %}>Quarterly</option>
+        <option value="6" {% if _freq == 6 %}selected{% endif %}>Semi-Annual</option>
+        <option value="12" {% if _freq == 12 %}selected{% endif %}>Annual</option>
+      </select>
+    </div>
+    <div class="form-row" style="margin-bottom:8px">
+      <div class="form-field">
+        <label class="form-label">Active From</label>
+        <select class="form-select" name="ds_active_from_milestone">
+          {% for ms in milestones_dated_ds if ms.date %}
+          <option value="{{ ms.key }}" {% if draw_source_window and ms.key == draw_source_window.active_from_milestone %}selected{% endif %}>{{ ms.label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-field" style="max-width:100px">
+        <label class="form-label">+ Days</label>
+        <input class="form-input" type="number" name="ds_active_from_offset_days" step="1" min="0"
+               value="{{ draw_source_window.active_from_offset_days if draw_source_window else 0 }}"
+               placeholder="0">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-field">
+        <label class="form-label">Active To</label>
+        <select class="form-select" name="ds_active_to_milestone">
+          {% for ms in milestones_dated_ds %}
+          <option value="{{ ms.key }}" {% if draw_source_window and ms.key == draw_source_window.active_to_milestone %}selected{% endif %}>
+            {{ ms.label }}{% if ms.key == 'maturity' %} →{% endif %}
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-field" style="max-width:100px">
+        <label class="form-label">+ Days</label>
+        <input class="form-input" type="number" name="ds_active_to_offset_days" step="1" min="0"
+               value="{{ draw_source_window.active_to_offset_days if draw_source_window else 0 }}"
+               placeholder="0">
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <button type="button" class="btn btn-secondary" onclick="closeDrawer('line-item-drawer')">Cancel</button>
+    <button type="button" class="btn btn-danger" style="margin-left:auto"
+            hx-delete="/ui/forms/{{ model.id }}/capital-modules/{{ existing.id }}"
+            hx-confirm="Delete '{{ existing.label }}'?"
+            hx-target="#module-panel-content" hx-swap="innerHTML"
+            hx-on::after-request="if(event.detail.successful) closeDrawer('line-item-drawer')">Delete</button>
+  </div>
+</form>
+
+{%- else %}
+{# ══════════════════════════════════════════════════════════════════════════════
+   ADD WIZARD MODE — 4 steps, type-driven
+   ════════════════════════════════════════════════════════════════════════════ #}
+
+{# Wizard header (outside form so it stays fixed at top of drawer body) #}
+<div style="margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border)">
+  <div style="display:flex;align-items:center;gap:5px;margin-bottom:10px">
+    <div class="wizard-step-dot active" id="sw-dot-1"></div>
+    <div class="wizard-step-dot" id="sw-dot-2"></div>
+    <div class="wizard-step-dot" id="sw-dot-3"></div>
+    <div class="wizard-step-dot" id="sw-dot-4"></div>
+    <div class="wizard-step-dot" id="sw-dot-5"></div>
+    <span style="font-size:11px;color:var(--text-muted);margin-left:6px" id="sw-step-label">Step 1 of 5</span>
+  </div>
+  <div style="font-size:16px;font-weight:700" id="sw-step-title">Funding Details</div>
+  <div style="font-size:12px;color:var(--text-muted);margin-top:3px" id="sw-step-subtitle">Name and type</div>
+</div>
+
+<form hx-post="/ui/forms/{{ model.id }}/capital-modules"
+      hx-target="#module-panel-content" hx-swap="innerHTML"
+      hx-on::after-request="if(event.detail.successful) closeSourceWizard()"
+      id="sw-form">
+
+  {# ── Step 1: Name / Type ── #}
+  <div id="sw-step-1">
+    <div class="form-field" style="margin-bottom:12px">
+      <label class="form-label">Name</label>
+      <input class="form-input" type="text" name="label" id="sw-label"
+             placeholder="e.g. Senior Loan, City Grant, LP Equity">
+    </div>
+    <div class="form-field" style="margin-bottom:12px">
+      <label class="form-label">Type</label>
+      <select class="form-select" name="funder_type" id="sw-type" onchange="swTypeChanged(this.value)">
+        {% for t in _ALL_TYPES %}
+        <option value="{{ t }}">{{ _FT_LABELS.get(t, t | replace('_',' ') | title) }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-hint" style="margin-top:4px;font-size:12px;color:var(--text-muted)">
+      Source amount is auto-calculated from Uses + carrying costs when you Compute.
+    </div>
+    {# Permanent debt: amortization term only — interest rate is in step 3 #}
+    <div id="sw-perm-fields" style="display:none">
+      <div class="form-field" style="margin-top:12px">
+        <label class="form-label">Amortization Term (years)</label>
+        <input class="form-input" type="number" name="amort_term_years" step="1" min="1" placeholder="30">
+      </div>
+      <div class="form-hint" style="margin-top:4px">Permanent debt exits at end of amortization — no exit trigger needed.</div>
+    </div>
+  </div>
+
+  {# ── Step 2: Exit ── #}
+  <div id="sw-step-2" style="display:none">
+    {{ exit_fields('full_payoff', 'sale') }}
+  </div>
+
+  {# ── Step 3: Interest / Loan Terms (stack position auto-assigned) ── #}
+  <div id="sw-step-3" style="display:none">
+    <input type="hidden" name="stack_position" value="">
+    {# Amortization term — shown only for permanent_debt #}
+    <div class="form-row" id="sw-amort-row" style="display:none;margin-bottom:12px">
+      <div class="form-field">
+        <label class="form-label">Amortization Term (years)</label>
+        <input class="form-input" type="number" name="amort_term_years" step="1" min="1"
+               value="" placeholder="30">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Stack Position <span style="font-weight:400;font-size:10px;color:var(--text-muted)">1=most senior</span></label>
+        <input class="form-input" type="number" name="stack_position" step="1" min="1"
+               value="" placeholder="1">
+      </div>
+    </div>
+    <div class="form-row" style="margin-bottom:12px">
+      <div class="form-field">
+        <label class="form-label">Interest Rate (%)</label>
+        <input class="form-input" type="number" name="source_interest_rate" step="0.1" min="0"
+               value="" placeholder="Leave blank for equity">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Compounding</label>
+        <select class="form-select" name="compounding_period">
+          {% for cp in ['daily','weekly','monthly','quarterly','semi_annual','annual','continuous','simple'] %}
+          <option value="{{ cp }}" {% if cp == 'monthly' %}selected{% endif %}>{{ cp | replace('_',' ') | title }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+  </div>
+
+  {# ── Step 4: Carry ── #}
+  <div id="sw-step-4" style="display:none">
+    {{ carry_fields({}, {}, sw_funder_type | default('')) }}
+  </div>
+
+  {# ── Step 5: Draw Schedule ── #}
+  <div id="sw-step-5" style="display:none">
+    <div class="form-field" style="margin-bottom:12px">
+      <label class="form-label">Draw Frequency</label>
+      <select class="form-select" name="ds_draw_every_n_months">
+        <option value="1" selected>Monthly</option>
+        <option value="2">Bi-Monthly</option>
+        <option value="3">Quarterly</option>
+        <option value="6">Semi-Annual</option>
+        <option value="12">Annual</option>
+      </select>
+    </div>
+    {% if milestones_dated_ds %}
+    <div class="form-row" style="margin-bottom:8px">
+      <div class="form-field">
+        <label class="form-label">Active From</label>
+        <select class="form-select" name="ds_active_from_milestone">
+          {% for ms in milestones_dated_ds if ms.date %}
+          <option value="{{ ms.key }}">{{ ms.label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-field" style="max-width:100px">
+        <label class="form-label">+ Days</label>
+        <input class="form-input" type="number" name="ds_active_from_offset_days" step="1" min="0" value="0" placeholder="0">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-field">
+        <label class="form-label">Active To</label>
+        <select class="form-select" name="ds_active_to_milestone">
+          {% for ms in milestones_dated_ds %}
+          <option value="{{ ms.key }}" {% if ms.key == 'maturity' %}selected{% endif %}>
+            {{ ms.label }}{% if ms.key == 'maturity' %} →{% endif %}
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-field" style="max-width:100px">
+        <label class="form-label">+ Days</label>
+        <input class="form-input" type="number" name="ds_active_to_offset_days" step="1" min="0" value="0" placeholder="0">
+      </div>
+    </div>
+    {% else %}
+    <div class="form-hint" style="color:var(--warning,#d97706)">
+      Add milestones to the Timeline first to configure the draw window.
+    </div>
+    <input type="hidden" name="ds_active_from_milestone" value="construction">
+    <input type="hidden" name="ds_active_to_milestone" value="maturity">
+    {% endif %}
+  </div>
+
+  {# Footer #}
+  <div id="sw-error-msg" style="display:none;color:#dc2626;font-size:12px;font-weight:500;margin-top:12px;padding:8px 10px;background:#fee2e2;border-radius:6px;border:1px solid #fca5a5"></div>
+  <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
+    <button type="button" class="btn btn-secondary" id="sw-back" style="display:none" onclick="swBack()">← Back</button>
+    <button type="button" class="btn btn-secondary" onclick="closeSourceWizard()">Cancel</button>
+    <button type="button" class="btn btn-primary" id="sw-next" onclick="swNext()">Continue →</button>
+  </div>
+</form>
+
+<script>
+(function() {
+  var _SIMPLE    = ['grant','tax_credit'];
+  var _NO_CARRY  = ['grant','tax_credit','owner_investment'];
+  var _PERM_DEBT = ['permanent_debt'];
+  var _TITLES = {
+    1: ['Funding Details',    'Name and type'],
+    2: ['Exit Terms',         'How does this source exit the deal?'],
+    3: ['Loan Terms',         'Interest rate, compounding, and amortization'],
+    4: ['Carry',              'Debt service during Pre-Operations and Operations'],
+    5: ['Draw Schedule',      'When and how often this source draws funds'],
+  };
+
+  var _step = 1;
+  var _type = document.getElementById('sw-type').value;
+
+  function _stepsFor(t) {
+    if (_SIMPLE.indexOf(t) >= 0)    return [1, 5];           // grant/tax_credit: name + draw
+    if (_PERM_DEBT.indexOf(t) >= 0) return [1, 3, 4, 5];    // permanent_debt: loan terms + carry + draw
+    if (_NO_CARRY.indexOf(t) >= 0)  return [1, 2, 3, 5];    // owner_investment: exit + interest, no carry
+    return [1, 2, 3, 4, 5];
+  }
+
+  function _updateStep3ForType(t) {
+    var amortRow = document.getElementById('sw-amort-row');
+    if (amortRow) amortRow.style.display = (_PERM_DEBT.indexOf(t) >= 0) ? '' : 'none';
+  }
+
+  function _show(step) {
+    var steps = _stepsFor(_type);
+    var total = steps.length;
+    var pos   = steps.indexOf(step) + 1;
+    [1,2,3,4,5].forEach(function(s) {
+      document.getElementById('sw-step-'+s).style.display = s === step ? '' : 'none';
+      var dot = document.getElementById('sw-dot-'+s);
+      if (dot) {
+        var inSteps = steps.indexOf(s) >= 0;
+        var idx     = steps.indexOf(s);
+        var curIdx  = steps.indexOf(step);
+        dot.className = 'wizard-step-dot' +
+          (!inSteps ? ' disabled' :
+           idx < curIdx ? ' done' :
+           idx === curIdx ? ' active' : '');
+      }
+    });
+    document.getElementById('sw-step-label').textContent = 'Step ' + pos + ' of ' + total;
+    document.getElementById('sw-step-title').textContent    = _TITLES[step][0];
+    document.getElementById('sw-step-subtitle').textContent = _TITLES[step][1];
+    document.getElementById('sw-back').style.display = pos > 1 ? '' : 'none';
+    var isLast = pos === total;
+    var btn = document.getElementById('sw-next');
+    btn.textContent = isLast ? 'Add Source' : 'Continue →';
+    btn.onclick     = isLast ? swSubmit : swNext;
+    _step = step;
+    _swError(null);  // clear any validation error on step change
+  }
+
+  function _swError(msg) {
+    var el = document.getElementById('sw-error-msg');
+    if (!el) return;
+    if (msg) { el.textContent = msg; el.style.display = ''; }
+    else      { el.style.display = 'none'; }
+  }
+
+  function _swValidate() {
+    // Just keeps the error cleared on input — actual validation happens on Next click
+    _swError(null);
+  }
+
+  function _swCheck() {
+    if (_step === 1) {
+      var lbl = document.getElementById('sw-label');
+      if (!lbl || !lbl.value.trim()) {
+        _swError('Name is required before you can continue.');
+        lbl && lbl.focus();
+        return false;
+      }
+    }
+    return true;
+  }
+
+  window.swTypeChanged = function(val) {
+    _type = val;
+    var permFields = document.getElementById('sw-perm-fields');
+    if (permFields) permFields.style.display = (val === 'permanent_debt') ? '' : 'none';
+    _updateStep3ForType(val);
+    _show(1);
+  };
+
+  window.swNext = function() {
+    if (!_swCheck()) return;
+    _swError(null);
+    var steps = _stepsFor(_type);
+    var idx   = steps.indexOf(_step);
+    if (idx < steps.length - 1) _show(steps[idx + 1]);
+  };
+
+  window.swBack = function() {
+    var steps = _stepsFor(_type);
+    var idx   = steps.indexOf(_step);
+    if (idx > 0) _show(steps[idx - 1]);
+  };
+
+  window.swSubmit = function() {
+    document.getElementById('sw-form').requestSubmit();
+  };
+
+  document.getElementById('sw-label').addEventListener('input', function() { _swError(null); });
+  _updateStep3ForType(_type);
+  _show(1);
+})();
+</script>
+{%- endif %}
+
+{% elif form_type in ('waterfall', 'waterfall_tiers') %}
+{# ── Waterfall Tier form ── #}
+<form {% if existing %}hx-put="/ui/forms/{{ model.id }}/waterfall-tiers/{{ existing.id }}"{% else %}hx-post="/ui/forms/{{ model.id }}/waterfall-tiers"{% endif %}
+      hx-target="#module-panel-content"
+      hx-swap="innerHTML"
+      hx-on::after-request="if(event.detail.successful) closeDrawer('line-item-drawer')"
+      style="padding-bottom:8px">
+
+  <div class="form-row">
+    <div class="form-field">
+      <label class="form-label">Priority</label>
+      <input class="form-input" type="number" name="priority" step="1" min="1" required
+             value="{{ existing.priority if existing else 1 }}" placeholder="1">
+      <div class="form-hint">1 = paid first</div>
+    </div>
+    <div class="form-field">
+      <label class="form-label">Tier Type</label>
+      <select class="form-select" name="tier_type" id="waterfall-tier-type">
+        {% for tt in ['debt_service','pref_return','return_of_equity','catch_up','irr_hurdle_split','deferred_developer_fee','residual'] %}
+        <option value="{{ tt }}" {% if existing and existing.tier_type|string in (tt, 'WaterfallTierType.' + tt) %}selected{% endif %}>
+          {{ tt | replace('_', ' ') | title }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  <div class="form-field">
+    <label class="form-label">Description</label>
+    <input class="form-input" type="text" name="description"
+           value="{{ existing.description if existing else '' }}"
+           placeholder="e.g. 8% pref return to LP, DDF repayment">
+  </div>
+
+  <div class="form-row">
+    <div class="form-field">
+      <label class="form-label">LP Split (%)</label>
+      <input class="form-input" type="number" name="lp_split_pct" step="0.1" min="0" max="100"
+             value="{{ existing.lp_split_pct | round(1) if existing else 100 }}" placeholder="100">
+    </div>
+    <div class="form-field">
+      <label class="form-label">GP Split (%)</label>
+      <input class="form-input" type="number" name="gp_split_pct" step="0.1" min="0" max="100"
+             value="{{ existing.gp_split_pct | round(1) if existing else 0 }}" placeholder="0">
+    </div>
+  </div>
+
+  <div class="form-field" style="max-width:50%">
+    <label class="form-label">IRR Hurdle (%)</label>
+    <input class="form-input" type="number" name="irr_hurdle_pct" step="0.1" min="0"
+           value="{{ existing.irr_hurdle_pct | round(1) if existing else '' }}"
+           placeholder="e.g. 8.0 — leave blank if N/A">
+  </div>
+
+  <div id="ddf-fields" style="display:{% if existing and existing.tier_type|string in ('deferred_developer_fee','WaterfallTierType.deferred_developer_fee') %}block{% else %}none{% endif %}">
+    <div class="form-row">
+      <div class="form-field">
+        <label class="form-label">Max % of Distributable</label>
+        <input class="form-input" type="number" name="max_pct_of_distributable" step="1" min="0" max="100"
+               value="{{ existing.max_pct_of_distributable if existing and existing.max_pct_of_distributable else 75 }}"
+               placeholder="75">
+        <div class="form-hint">% of distributable cash reserved for DDF repayment per period</div>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Accrual Rate (%/yr)</label>
+        <input class="form-input" type="number" name="interest_rate_pct" step="0.1" min="0"
+               value="{{ existing.interest_rate_pct if existing and existing.interest_rate_pct else '' }}"
+               placeholder="0 — blank for no accrual">
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">{% if existing %}Save Changes{% else %}Add Tier{% endif %}</button>
+    <button type="button" class="btn btn-secondary" onclick="closeDrawer('line-item-drawer')">Cancel</button>
+    {% if existing %}
+    <button type="button" class="btn btn-danger" style="margin-left:auto"
+            hx-delete="/ui/forms/{{ model.id }}/waterfall-tiers/{{ existing.id }}"
+            hx-confirm="Delete this waterfall tier?"
+            hx-target="#module-panel-content"
+            hx-swap="innerHTML"
+            hx-on::after-request="if(event.detail.successful) closeDrawer('line-item-drawer')">Delete</button>
+    {% endif %}
+  </div>
+</form>
+
+<script>
+(function() {
+  var sel = document.getElementById('waterfall-tier-type');
+  var ddf = document.getElementById('ddf-fields');
+  if (sel && ddf) {
+    sel.addEventListener('change', function() {
+      ddf.style.display = sel.value === 'deferred_developer_fee' ? 'block' : 'none';
+    });
+  }
+})();
+</script>
+
+{% elif form_type in ('milestones', 'timeline') %}
+{# ── Milestone form ── #}
+{%- set _cur_type = existing.milestone_type | string | replace('MilestoneType.','') if existing else '' -%}
+{%- set _cur_label = phase_labels.get(_cur_type, _cur_type | replace('_',' ') | title) if existing else '' -%}
+{%- set _is_anchor = (existing and existing.trigger_milestone_id is none and existing.target_date) -%}
+{%- set _cur_trigger_id = existing.trigger_milestone_id | string if existing and existing.trigger_milestone_id else '' -%}
+
+<form {% if existing %}hx-put="/ui/forms/{{ model.id }}/milestones/{{ existing.id }}"{% else %}hx-post="/ui/forms/{{ model.id }}/milestones"{% endif %}
+      hx-target="#module-panel-content"
+      hx-swap="innerHTML"
+      hx-on::after-request="if(event.detail.successful) { {% if existing %}closeDrawer('line-item-drawer'){% else %}closeMilestoneWizard(){% endif %}; }"
+      style="padding-bottom:8px">
+
+  {# Phase — read-only when editing #}
+  {% if existing %}
+  <div class="form-field" style="margin-bottom:16px">
+    <label class="form-label">Phase</label>
+    <div style="display:flex;align-items:center;gap:8px;margin-top:4px">
+      <div style="padding:7px 12px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-weight:600;background:var(--surface-alt,#f9fafb)">
+        {{ _cur_label }}
+      </div>
+      {% if _is_anchor %}<span style="font-size:11px;background:#d1fae5;color:#065f46;padding:2px 8px;border-radius:10px;font-weight:600">Anchor</span>{% endif %}
+    </div>
+    <div class="form-hint" style="margin-top:4px">To change phase, delete this milestone and add a new one.</div>
+    <input type="hidden" name="milestone_type" value="{{ _cur_type }}">
+  </div>
+  {% else %}
+  <div class="form-field" style="margin-bottom:16px">
+    <label class="form-label">Phase</label>
+    <select class="form-select" name="milestone_type" id="ms-type" style="margin-top:4px">
+      {% for mt, lbl in phase_labels.items() %}
+      <option value="{{ mt }}">{{ lbl }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  {% endif %}
+
+  {# Anchor: date picker. Non-anchor: trigger dropdown + offset #}
+  {% if _is_anchor %}
+  {# Anchor milestone — fixed date, no trigger #}
+  <input type="hidden" name="trigger_milestone_id" value="">
+  <input type="hidden" name="trigger_offset_days" value="0">
+  <div class="form-field" style="margin-bottom:16px">
+    <label class="form-label">Start Date <span style="font-weight:400;font-size:11px;color:var(--text-muted)">(anchor — fixed)</span></label>
+    <input class="form-input" type="date" name="target_date" id="ms-start"
+           value="{{ existing.target_date.strftime('%Y-%m-%d') if existing and existing.target_date else '' }}"
+           style="margin-top:4px">
+  </div>
+  {% else %}
+  {# Trigger-based milestone #}
+  <input type="hidden" name="target_date" value="">
+  <div class="form-field" style="margin-bottom:12px">
+    <label class="form-label">Starts After</label>
+    <select class="form-select" name="trigger_milestone_id" id="ms-trigger" style="margin-top:4px">
+      <option value="">— select a phase —</option>
+      {% for sib in sibling_milestones %}
+      {%- set sib_type = sib.milestone_type | string | replace('MilestoneType.','') -%}
+      {%- set sib_label = phase_labels.get(sib_type, sib_type | replace('_',' ') | title) -%}
+      {%- set is_circular = sib.id in circular_ids -%}
+      <option value="{{ sib.id }}"
+              data-ms-type="{{ sib_type }}"
+              {% if sib.id | string == _cur_trigger_id %}selected{% endif %}
+              {% if is_circular %}disabled style="color:#9ca3af"{% endif %}>
+        {{ sib_label }}{% if is_circular %} (circular){% endif %}
+      </option>
+      {% endfor %}
+    </select>
+    <div class="form-hint">This phase starts when the selected phase ends</div>
+  </div>
+  <div class="form-field" style="margin-bottom:16px;max-width:180px">
+    <label class="form-label">+ Offset Days</label>
+    <input class="form-input" type="number" name="trigger_offset_days" id="ms-offset"
+           step="1" min="0"
+           value="{{ existing.trigger_offset_days if existing else 0 }}"
+           placeholder="0"
+           style="margin-top:4px">
+    <div class="form-hint">Days after the trigger's end date</div>
+  </div>
+  {% endif %}
+
+  <div class="form-row">
+    <div class="form-field">
+      {% if lock_duration %}
+      <label class="form-label">Duration (days) <span style="font-weight:400;font-size:11px;color:var(--text-muted)">auto · 30 yrs</span></label>
+      <input class="form-input" type="number" name="duration_days" id="ms-duration"
+             readonly value="10950"
+             style="margin-top:4px;background:var(--surface-alt,#f9fafb);color:var(--text-muted);cursor:default">
+      {% else %}
+      <label class="form-label">Duration (days)</label>
+      <input class="form-input" type="number" name="duration_days" id="ms-duration"
+             step="1" min="0"
+             value="{{ existing.duration_days if existing and existing.duration_days else '' }}"
+             placeholder="e.g. 90"
+             style="margin-top:4px">
+      {% endif %}
+    </div>
+    <div class="form-field">
+      <label class="form-label">End Date</label>
+      <input class="form-input" type="text" id="ms-end-date" readonly
+             value="—"
+             style="margin-top:4px;background:var(--surface-alt,#f9fafb);color:var(--text-muted);cursor:default">
+    </div>
+  </div>
+
+<script>
+(function() {
+  var isAnchor      = {{ 'true' if _is_anchor else 'false' }};
+  var triggerEndIso = {{ trigger_end_date | tojson }};  // ISO string or null
+  var startEl  = document.getElementById('ms-start');
+  var durEl    = document.getElementById('ms-duration');
+  var offsetEl = document.getElementById('ms-offset');
+  var endEl    = document.getElementById('ms-end-date');
+
+  function fmtDate(d) {
+    return d.toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'});
+  }
+  function updateEnd() {
+    var dur = parseInt(durEl ? durEl.value : '0', 10) || 0;
+    if (isAnchor) {
+      if (startEl && startEl.value && dur > 0) {
+        var d = new Date(startEl.value + 'T00:00:00');
+        d.setDate(d.getDate() + dur);
+        endEl.value = fmtDate(d);
+      } else {
+        endEl.value = '—';
+      }
+    } else {
+      // Trigger mode: triggerEnd + offset + duration
+      if (triggerEndIso && dur > 0) {
+        var offset = parseInt(offsetEl ? offsetEl.value : '0', 10) || 0;
+        var d = new Date(triggerEndIso + 'T00:00:00');
+        d.setDate(d.getDate() + offset + dur);
+        endEl.value = fmtDate(d);
+      } else {
+        endEl.value = '—';
+      }
+    }
+  }
+  if (startEl)  startEl.addEventListener('change', updateEnd);
+  if (durEl)    durEl.addEventListener('input',    updateEnd);
+  if (offsetEl) offsetEl.addEventListener('input', updateEnd);
+  updateEnd();  // run once on load in case values already set
+})();
+</script>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">{% if existing %}Save Changes{% else %}Add Milestone{% endif %}</button>
+    <button type="button" class="btn btn-secondary"
+            onclick="{% if existing %}closeDrawer('line-item-drawer'){% else %}closeMilestoneWizard(){% endif %}">Cancel</button>
+    {% if existing %}
+    <button type="button" class="btn btn-danger" style="margin-left:auto"
+            hx-delete="/ui/forms/{{ model.id }}/milestones/{{ existing.id }}"
+            hx-confirm="Delete '{{ _cur_label }}'?"
+            hx-target="#module-panel-content"
+            hx-swap="innerHTML"
+            hx-on::after-request="if(event.detail.successful) closeDrawer('line-item-drawer')">Delete</button>
+    {% endif %}
+  </div>
+
+{% if not existing %}
+<script>
+(function() {
+  var _SPHASE_ORDER = ['offer_made','under_contract','close','pre_development',
+                       'construction','operation_lease_up','operation_stabilized','divestment'];
+  function _msAutoTrigger() {
+    var typeEl    = document.getElementById('ms-type');
+    var triggerEl = document.getElementById('ms-trigger');
+    if (!typeEl || !triggerEl) return;
+    var selIdx  = _SPHASE_ORDER.indexOf(typeEl.value);
+    var bestOpt = null, bestIdx = -1;
+    triggerEl.querySelectorAll('option[data-ms-type]').forEach(function(opt) {
+      if (opt.disabled) return;
+      var idx = _SPHASE_ORDER.indexOf(opt.getAttribute('data-ms-type'));
+      if (idx < selIdx && idx > bestIdx) { bestIdx = idx; bestOpt = opt; }
+    });
+    if (bestOpt) triggerEl.value = bestOpt.value;
+  }
+  var typeEl = document.getElementById('ms-type');
+  if (typeEl) {
+    typeEl.addEventListener('change', _msAutoTrigger);
+    _msAutoTrigger();  // run on load to pre-select best predecessor
+  }
+})();
+</script>
+{% endif %}
+</form>
+
+{% else %}
+<div class="text-muted text-small" style="padding:16px">Unknown form type: {{ form_type }}</div>
+{% endif %}

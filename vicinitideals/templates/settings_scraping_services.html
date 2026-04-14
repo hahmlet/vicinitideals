@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Scraping Services — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div class="page-header" style="display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid var(--border);background:var(--surface)">
+  <div>
+    <div class="page-title" style="font-size:20px;font-weight:700;color:var(--text)">Scraping Services</div>
+    <div style="font-size:12px;color:var(--text-muted);margin-top:2px">Service status, cadence, and proxy routing</div>
+  </div>
+  <a href="/deals" class="btn btn-secondary">Back to Deals</a>
+</div>
+
+<div style="padding:24px;display:grid;gap:16px">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px">
+      <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em">Residential Proxy</div>
+      <div style="font-size:18px;font-weight:700;color:var(--text);margin-top:4px">{{ residential_status }}</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Set PROXYON_RESIDENTIAL_USERNAME + PASSWORD in .env</div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px">
+      <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em">Account Balance</div>
+      <div style="font-size:18px;font-weight:700;color:var(--text);margin-top:4px">{{ residential_gb_remaining or "Unavailable" }}</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:2px">{{ residential_last_checked }}</div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px">
+      <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em">Datacenter Pool</div>
+      <div style="font-size:18px;font-weight:700;color:var(--text);margin-top:4px">{{ datacenter_count }} proxy{{ "ies" if datacenter_count != 1 else "" }}</div>
+    </div>
+  </div>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:auto">
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead>
+        <tr style="background:var(--surface-alt)">
+          <th style="text-align:left;padding:10px 12px;border-bottom:1px solid var(--border)">Service</th>
+          <th style="text-align:left;padding:10px 12px;border-bottom:1px solid var(--border)">Description</th>
+          <th style="text-align:left;padding:10px 12px;border-bottom:1px solid var(--border)">Status</th>
+          <th style="text-align:left;padding:10px 12px;border-bottom:1px solid var(--border)">Cadence</th>
+          <th style="text-align:left;padding:10px 12px;border-bottom:1px solid var(--border)">Proxy Type</th>
+          <th style="text-align:left;padding:10px 12px;border-bottom:1px solid var(--border)">Last Run</th>
+          <th style="text-align:left;padding:10px 12px;border-bottom:1px solid var(--border)">Last Result</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for svc in services %}
+        <tr>
+          <td style="padding:10px 12px;border-bottom:1px solid var(--border-faint);font-weight:600">{{ svc.name }}</td>
+          <td style="padding:10px 12px;border-bottom:1px solid var(--border-faint);color:var(--text-secondary)">{{ svc.description }}</td>
+          <td style="padding:10px 12px;border-bottom:1px solid var(--border-faint)">
+            {% if svc.status == "Healthy" %}
+              <span class="badge" style="background:var(--success-light);color:var(--success);border:1px solid #bbf7d0">{{ svc.status }}</span>
+            {% elif svc.status == "Stale" %}
+              <span class="badge" style="background:var(--warning-light);color:var(--warning);border:1px solid #fcd34d">{{ svc.status }}</span>
+            {% elif svc.status == "Disabled" %}
+              <span class="badge" style="background:var(--surface-alt);color:var(--text-muted);border:1px solid var(--border)">{{ svc.status }}</span>
+            {% else %}
+              <span class="badge" style="background:var(--surface-alt);color:var(--text-muted);border:1px solid var(--border)">{{ svc.status }}</span>
+            {% endif %}
+          </td>
+          <td style="padding:10px 12px;border-bottom:1px solid var(--border-faint)">{{ svc.schedule }}</td>
+          <td style="padding:10px 12px;border-bottom:1px solid var(--border-faint)">{{ svc.proxy }}</td>
+          <td style="padding:10px 12px;border-bottom:1px solid var(--border-faint)">{{ svc.last_run }}</td>
+          <td style="padding:10px 12px;border-bottom:1px solid var(--border-faint)">{{ svc.last_result }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

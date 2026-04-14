@@ -1,0 +1,27 @@
+{% for b in brokers %}
+<tr onclick="openBroker('{{ b.id }}', '{{ b.full_name }}', '{{ b.brokerage_name or '' }}')">
+  <td>
+    <div style="font-weight:600">{{ b.full_name }}</div>
+  </td>
+  <td class="text-small">{{ b.brokerage_name or "—" }}</td>
+  <td class="text-small">
+    {% if b.email %}<a href="mailto:{{ b.email }}" style="color:var(--accent)" onclick="event.stopPropagation()">{{ b.email }}</a>
+    {% else %}—{% endif %}
+  </td>
+  <td class="text-small">{{ b.phone or "—" }}</td>
+  <td class="col-right">{{ b.listing_count }}</td>
+  <td class="text-small text-muted">
+    {% if b.license_number %}{{ b.license_number }}{% if b.license_state %} ({{ b.license_state }}){% endif %}
+    {% else %}—{% endif %}
+  </td>
+  <td class="col-right">{{ b.number_of_assets or "—" }}</td>
+</tr>
+{% else %}
+<tr><td colspan="7">
+  <div class="empty-state">
+    <div class="empty-icon">👤</div>
+    <div class="empty-title">No brokers yet</div>
+    <div class="empty-desc">Brokers are added automatically when listings are imported.</div>
+  </div>
+</td></tr>
+{% endfor %}

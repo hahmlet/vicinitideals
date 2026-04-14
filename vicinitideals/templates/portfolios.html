@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Portfolios — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div class="page-header" style="display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid var(--border);background:var(--surface)">
+  <div>
+    <div class="page-title" style="font-size:20px;font-weight:700;color:var(--text)">Portfolios</div>
+    <div style="font-size:12px;color:var(--text-muted);margin-top:2px">
+      {{ portfolios | length }} portfolio{{ 's' if portfolios | length != 1 else '' }}
+    </div>
+  </div>
+  <button class="btn btn-primary" onclick="openDrawer('new-portfolio-drawer')">+ New Portfolio</button>
+</div>
+
+<div style="padding:24px">
+  {% if portfolios %}
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px">
+    {% for p in portfolios %}
+    <a href="/portfolios/{{ p.id }}" style="text-decoration:none;color:inherit">
+      <div class="parcel-card" style="cursor:pointer;transition:border-color 0.1s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div style="font-size:15px;font-weight:700;color:var(--text)">{{ p.name }}</div>
+          <span class="badge badge-blue">{{ p.deal_count }} deal{{ 's' if p.deal_count != 1 else '' }}</span>
+        </div>
+        <div style="display:flex;gap:24px;margin-top:12px">
+          {% if p.avg_irr is not none %}
+          <div>
+            <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em">Avg IRR</div>
+            <div style="font-size:16px;font-weight:700;color:var(--success)">{{ "%.1f"|format(p.avg_irr) }}%</div>
+          </div>
+          {% endif %}
+        </div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:10px">Created {{ p.created_at_fmt or '—' }}</div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state" style="text-align:center;padding:64px 24px">
+    <div style="font-size:40px;margin-bottom:12px">📊</div>
+    <div style="font-size:16px;font-weight:600;margin-bottom:6px">No portfolios yet</div>
+    <div style="font-size:13px;color:var(--text-muted);margin-bottom:20px">Create a portfolio to group deals and visualize their timelines together.</div>
+    <button class="btn btn-primary" onclick="openDrawer('new-portfolio-drawer')">+ Create First Portfolio</button>
+  </div>
+  {% endif %}
+</div>
+
+<!-- New Portfolio drawer -->
+<div class="drawer-overlay" id="new-portfolio-drawer" style="display:none">
+  <div class="drawer">
+    <div class="drawer-header">
+      <div>
+        <div class="drawer-title">New Portfolio</div>
+        <div class="text-small text-muted">Group deals for timeline and performance analysis</div>
+      </div>
+      <span class="drawer-close" onclick="closeDrawer('new-portfolio-drawer')">×</span>
+    </div>
+    <div class="drawer-body">
+      <form method="post" action="/ui/portfolios/create" style="display:flex;flex-direction:column;gap:14px">
+        <div>
+          <label class="field-label">Portfolio Name</label>
+          <input class="filter-input" style="width:100%;margin-top:4px" type="text" name="name"
+                 placeholder="e.g. Q1 2026 Acquisitions" required>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:6px">
+          <button type="submit" class="btn btn-primary">Create Portfolio →</button>
+          <button type="button" class="btn btn-secondary" onclick="closeDrawer('new-portfolio-drawer')">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

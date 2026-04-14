@@ -1,0 +1,27 @@
+{# New listings tbody rows (hx-target="#new-listings-tbody") #}
+{% if new_listings %}
+  {% for l in new_listings %}
+    {% include "partials/listings_new_row.html" %}
+  {% endfor %}
+{% else %}
+<tr><td colspan="18">
+  <div class="empty-state">
+    <div class="empty-icon">📋</div>
+    <div class="empty-title">No new listings</div>
+    <div class="empty-desc">Trigger an ingest to fetch new listings.</div>
+  </div>
+</td></tr>
+{% endif %}
+
+{% if oob %}
+<tbody id="promoted-tbody" hx-swap-oob="true">
+  {% for l in promoted_listings %}
+    {% include "partials/listings_promoted_row.html" %}
+  {% endfor %}
+</tbody>
+<tbody id="archived-tbody" hx-swap-oob="true">
+  {% for l in archived_listings %}
+    {% include "partials/listings_archived_row.html" %}
+  {% endfor %}
+</tbody>
+{% endif %}

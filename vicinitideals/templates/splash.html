@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Select User — Vicinity Deals</title>
+<link rel="stylesheet" href="/static/app.css">
+<style>
+body { display: flex; align-items: center; justify-content: center; background: var(--bg); }
+.splash-wrap { text-align: center; max-width: 480px; width: 100%; padding: 40px 24px; }
+.splash-logo { font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.splash-logo span { color: var(--accent); }
+.splash-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 40px; }
+.user-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+.user-card {
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 16px;
+  cursor: pointer;
+  background: var(--surface);
+  transition: border-color 0.15s, box-shadow 0.15s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.user-card:hover { border-color: var(--accent); box-shadow: var(--shadow-md); }
+.user-card .avatar {
+  width: 48px; height: 48px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 700; color: #fff;
+}
+.user-card .name { font-size: 13px; font-weight: 600; color: var(--text); }
+.no-users { color: var(--text-muted); font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="splash-wrap">
+  <div class="splash-logo">Vicinity <span>Deals</span></div>
+  <div class="splash-sub">Who's working today?</div>
+
+  {% if users %}
+  <div class="user-grid">
+    {% for user in users %}
+    <form action="/splash/select" method="post">
+      <input type="hidden" name="user_id" value="{{ user.id }}">
+      <button type="submit" class="user-card">
+        <div class="avatar" style="background:{{ user.display_color or '#2563EB' }}">
+          {{ user.name[:2].upper() }}
+        </div>
+        <div class="name">{{ user.name }}</div>
+      </button>
+    </form>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="no-users">
+    No users found. Create a user via the API to get started.
+  </div>
+  {% endif %}
+</div>
+</body>
+</html>

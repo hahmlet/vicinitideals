@@ -1,0 +1,389 @@
+{
+  "organization": {
+    "name": "Tower + A&P Imported Deals",
+    "slug": "tower-ap-import",
+    "user_name": "Tower + A&P Importer"
+  },
+  "portfolio_name": "Tower + A&P Portfolio",
+  "projects": [
+    {
+      "project": {
+        "name": "Tower",
+        "status": "active",
+        "project_category": "historical",
+        "source": "manual"
+      },
+      "deal_model": {
+        "name": "Tower",
+        "project_type": "acquisition_minor_reno"
+      },
+      "operational_inputs": {
+        "purchase_price": 4100000,
+        "closing_costs_pct": 1.8,
+        "renovation_cost_total": 900000,
+        "renovation_months": 7,
+        "lease_up_months": 4,
+        "unit_count_existing": 65,
+        "initial_occupancy_pct": 82,
+        "opex_per_unit_annual": 0,
+        "expense_growth_rate_pct_annual": 3,
+        "mgmt_fee_pct": 0,
+        "property_tax_annual": 0,
+        "insurance_annual": 0,
+        "capex_reserve_per_unit_annual": 0,
+        "carrying_cost_pct_annual": 0.75,
+        "hold_period_years": 7,
+        "exit_cap_rate_pct": 5.25,
+        "selling_costs_pct": 2.5,
+        "milestone_dates": {
+          "acquisition_start": "2026-04-01",
+          "close_date": "2026-04-15",
+          "construction_start": "2026-05-01",
+          "lease_up_start": "2026-12-01",
+          "stabilized_start": "2027-03-01",
+          "exit_date": "2034-03-01"
+        }
+      },
+      "income_streams": [
+        {
+          "stream_type": "residential_rent",
+          "label": "Tower Small",
+          "unit_count": 25,
+          "amount_per_unit_monthly": 760.5,
+          "stabilized_occupancy_pct": 95,
+          "escalation_rate_pct_annual": 2.5,
+          "active_in_phases": ["lease_up", "stabilized", "exit"]
+        },
+        {
+          "stream_type": "residential_rent",
+          "label": "Tower Medium",
+          "unit_count": 29,
+          "amount_per_unit_monthly": 840.13,
+          "stabilized_occupancy_pct": 95,
+          "escalation_rate_pct_annual": 2.5,
+          "active_in_phases": ["lease_up", "stabilized", "exit"]
+        },
+        {
+          "stream_type": "residential_rent",
+          "label": "Tower Large",
+          "unit_count": 11,
+          "amount_per_unit_monthly": 929.5,
+          "stabilized_occupancy_pct": 95,
+          "escalation_rate_pct_annual": 2.5,
+          "active_in_phases": ["lease_up", "stabilized", "exit"]
+        },
+        {
+          "stream_type": "parking",
+          "label": "Tower Parking",
+          "unit_count": 65,
+          "amount_per_unit_monthly": 40,
+          "stabilized_occupancy_pct": 95,
+          "escalation_rate_pct_annual": 2,
+          "active_in_phases": ["lease_up", "stabilized", "exit"]
+        },
+        {
+          "stream_type": "storage",
+          "label": "Tower Storage",
+          "amount_fixed_monthly": 8000,
+          "escalation_rate_pct_annual": 2,
+          "active_in_phases": ["lease_up", "stabilized", "exit"]
+        },
+        {
+          "stream_type": "laundry",
+          "label": "Tower Laundry",
+          "amount_fixed_monthly": 1560,
+          "escalation_rate_pct_annual": 1.5,
+          "active_in_phases": ["lease_up", "stabilized", "exit"]
+        },
+        {
+          "stream_type": "deposit_forfeit",
+          "label": "Tower Turnover Deposits",
+          "amount_fixed_monthly": 450,
+          "escalation_rate_pct_annual": 0,
+          "active_in_phases": ["lease_up", "stabilized", "exit"]
+        }
+      ],
+      "expense_lines": [
+        {"label": "Payroll & Benefits", "annual_amount": 42480, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Management & Admin", "annual_amount": 24780, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Marketing & Leasing", "annual_amount": 5310, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Repairs & Maintenance", "annual_amount": 21240, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Unit Turnover", "annual_amount": 8850, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Contract Services", "annual_amount": 6490, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Janitorial", "annual_amount": 5605, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Landscaping", "annual_amount": 5015, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Security", "annual_amount": 4248, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Water & Sewer", "annual_amount": 31860, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Trash", "annual_amount": 8555, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Electric Common", "annual_amount": 10915, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Gas & Heating", "annual_amount": 7080, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Internet & Cable", "annual_amount": 3540, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Property Insurance", "annual_amount": 10325, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Property Taxes", "annual_amount": 40120, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Permits & Licenses", "annual_amount": 1475, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Legal & Professional", "annual_amount": 3835, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Accounting", "annual_amount": 1888, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Office & Admin", "annual_amount": 1062, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Replacement Reserve", "annual_amount": 8260, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Miscellaneous", "annual_amount": 2478, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]}
+      ],
+      "capital_modules": [
+        {
+          "label": "Tower Municipal Bond",
+          "funder_type": "bond",
+          "stack_position": 1,
+          "source": {"amount": 1050000, "interest_rate_pct": 4.5},
+          "carry": {"carry_type": "pi", "payment_frequency": "monthly"},
+          "exit_terms": {"exit_type": "full_payoff", "trigger": "sale"},
+          "active_phase_start": "acquisition",
+          "active_phase_end": "exit"
+        },
+        {
+          "label": "Tower Permanent Debt",
+          "funder_type": "senior_debt",
+          "stack_position": 2,
+          "source": {"amount": 1750000, "interest_rate_pct": 4.5},
+          "carry": {"carry_type": "pi", "payment_frequency": "monthly"},
+          "exit_terms": {"exit_type": "full_payoff", "trigger": "sale"},
+          "active_phase_start": "acquisition",
+          "active_phase_end": "exit"
+        },
+        {
+          "label": "Tower OR Grants",
+          "funder_type": "grant",
+          "stack_position": 3,
+          "source": {"amount": 1480000},
+          "carry": {"carry_type": "none", "payment_frequency": "at_exit"},
+          "exit_terms": {"exit_type": "forgiven", "trigger": "placed_in_service"},
+          "active_phase_start": "acquisition",
+          "active_phase_end": "exit"
+        },
+        {
+          "label": "Tower Equity Investment",
+          "funder_type": "preferred_equity",
+          "stack_position": 4,
+          "source": {"pct_of_total_cost": 100, "interest_rate_pct": 12},
+          "carry": {"carry_type": "io_only", "payment_frequency": "monthly"},
+          "exit_terms": {"exit_type": "profit_share", "trigger": "sale", "profit_share_pct": 100},
+          "active_phase_start": "acquisition",
+          "active_phase_end": "exit"
+        }
+      ],
+      "waterfall_tiers": [
+        {"priority": 1, "tier_type": "debt_service", "description": "Tower municipal bond debt service", "capital_module_label": "Tower Municipal Bond"},
+        {"priority": 2, "tier_type": "debt_service", "description": "Tower permanent debt service", "capital_module_label": "Tower Permanent Debt"},
+        {"priority": 3, "tier_type": "return_of_equity", "lp_split_pct": 100, "gp_split_pct": 0, "description": "Return equity"},
+        {"priority": 4, "tier_type": "residual", "lp_split_pct": 90, "gp_split_pct": 10, "description": "Residual split"}
+      ],
+      "expected": {
+        "cashflow": {
+          "noi_stabilized": {"value": 508823.316216},
+          "project_irr_unlevered": {"value": 16.158591}
+        },
+        "waterfall": {
+          "dscr": {"value": 4.03828},
+          "equity_multiple": {"value": 11.852782},
+          "project_irr_levered": {"value": 10.091104}
+        }
+      }
+    },
+    {
+      "project": {
+        "name": "A&P",
+        "status": "active",
+        "project_category": "historical",
+        "source": "manual"
+      },
+      "deal_model": {
+        "name": "A&P",
+        "project_type": "acquisition_conversion"
+      },
+      "operational_inputs": {
+        "purchase_price": 5500000,
+        "closing_costs_pct": 2,
+        "hold_phase_enabled": true,
+        "hold_months": 2,
+        "entitlement_months": 4,
+        "entitlement_cost": 180000,
+        "construction_months": 9,
+        "conversion_cost_per_unit": 32500,
+        "unit_count_existing": 56,
+        "unit_count_after_conversion": 56,
+        "lease_up_months": 4,
+        "initial_occupancy_pct": 55,
+        "opex_per_unit_annual": 0,
+        "expense_growth_rate_pct_annual": 3,
+        "mgmt_fee_pct": 0,
+        "property_tax_annual": 0,
+        "insurance_annual": 0,
+        "capex_reserve_per_unit_annual": 0,
+        "carrying_cost_pct_annual": 0.75,
+        "hold_period_years": 7,
+        "exit_cap_rate_pct": 5.35,
+        "selling_costs_pct": 2.5,
+        "milestone_dates": {
+          "acquisition_start": "2026-06-01",
+          "close_date": "2026-06-15",
+          "pre_construction_start": "2026-08-01",
+          "construction_start": "2026-12-01",
+          "lease_up_start": "2027-09-01",
+          "stabilized_start": "2028-01-01",
+          "exit_date": "2035-01-01"
+        }
+      },
+      "income_streams": [
+        {
+          "stream_type": "residential_rent",
+          "label": "A Units",
+          "unit_count": 19,
+          "amount_per_unit_monthly": 1350,
+          "stabilized_occupancy_pct": 95,
+          "escalation_rate_pct_annual": 2.5,
+          "active_in_phases": ["lease_up", "stabilized", "exit"]
+        },
+        {
+          "stream_type": "residential_rent",
+          "label": "B Units",
+          "unit_count": 19,
+          "amount_per_unit_monthly": 1350,
+          "stabilized_occupancy_pct": 95,
+          "escalation_rate_pct_annual": 2.5,
+          "active_in_phases": ["lease_up", "stabilized", "exit"]
+        },
+        {
+          "stream_type": "residential_rent",
+          "label": "C Units",
+          "unit_count": 6,
+          "amount_per_unit_monthly": 1625,
+          "stabilized_occupancy_pct": 95,
+          "escalation_rate_pct_annual": 2.5,
+          "active_in_phases": ["lease_up", "stabilized", "exit"]
+        },
+        {
+          "stream_type": "residential_rent",
+          "label": "D Units",
+          "unit_count": 6,
+          "amount_per_unit_monthly": 1869,
+          "stabilized_occupancy_pct": 95,
+          "escalation_rate_pct_annual": 2.5,
+          "active_in_phases": ["lease_up", "stabilized", "exit"]
+        },
+        {
+          "stream_type": "residential_rent",
+          "label": "E Units",
+          "unit_count": 6,
+          "amount_per_unit_monthly": 1869,
+          "stabilized_occupancy_pct": 95,
+          "escalation_rate_pct_annual": 2.5,
+          "active_in_phases": ["lease_up", "stabilized", "exit"]
+        },
+        {
+          "stream_type": "parking",
+          "label": "A&P Parking",
+          "unit_count": 56,
+          "amount_per_unit_monthly": 55,
+          "stabilized_occupancy_pct": 95,
+          "escalation_rate_pct_annual": 2,
+          "active_in_phases": ["lease_up", "stabilized", "exit"]
+        },
+        {
+          "stream_type": "laundry",
+          "label": "A&P Laundry",
+          "amount_fixed_monthly": 1250,
+          "escalation_rate_pct_annual": 1.5,
+          "active_in_phases": ["lease_up", "stabilized", "exit"]
+        },
+        {
+          "stream_type": "deposit_forfeit",
+          "label": "A&P Turnover Deposits",
+          "amount_fixed_monthly": 800,
+          "escalation_rate_pct_annual": 0,
+          "active_in_phases": ["lease_up", "stabilized", "exit"]
+        }
+      ],
+      "expense_lines": [
+        {"label": "Payroll & Benefits", "annual_amount": 72000, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Management & Admin", "annual_amount": 42000, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Marketing & Leasing", "annual_amount": 9000, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Repairs & Maintenance", "annual_amount": 36000, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Unit Turnover", "annual_amount": 15000, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Contract Services", "annual_amount": 11000, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Janitorial", "annual_amount": 9500, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Landscaping", "annual_amount": 8500, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Security", "annual_amount": 7200, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Water & Sewer", "annual_amount": 54000, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Trash", "annual_amount": 14500, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Electric Common", "annual_amount": 18500, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Gas & Heating", "annual_amount": 12000, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Internet & Cable", "annual_amount": 6000, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Property Insurance", "annual_amount": 17500, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Property Taxes", "annual_amount": 68000, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Permits & Licenses", "annual_amount": 2500, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Legal & Professional", "annual_amount": 6500, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Accounting", "annual_amount": 3200, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Office & Admin", "annual_amount": 1800, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Replacement Reserve", "annual_amount": 14000, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]},
+        {"label": "Miscellaneous", "annual_amount": 4200, "escalation_rate_pct_annual": 3, "active_in_phases": ["lease_up", "stabilized", "exit"]}
+      ],
+      "capital_modules": [
+        {
+          "label": "A&P Municipal Bond",
+          "funder_type": "bond",
+          "stack_position": 1,
+          "source": {"amount": 1250000, "interest_rate_pct": 4.5},
+          "carry": {"carry_type": "pi", "payment_frequency": "monthly"},
+          "exit_terms": {"exit_type": "full_payoff", "trigger": "sale"},
+          "active_phase_start": "acquisition",
+          "active_phase_end": "exit"
+        },
+        {
+          "label": "A&P Permanent Debt",
+          "funder_type": "senior_debt",
+          "stack_position": 2,
+          "source": {"amount": 2250000, "interest_rate_pct": 4.5},
+          "carry": {"carry_type": "pi", "payment_frequency": "monthly"},
+          "exit_terms": {"exit_type": "full_payoff", "trigger": "sale"},
+          "active_phase_start": "acquisition",
+          "active_phase_end": "exit"
+        },
+        {
+          "label": "A&P OR Grants",
+          "funder_type": "grant",
+          "stack_position": 3,
+          "source": {"amount": 1480000},
+          "carry": {"carry_type": "none", "payment_frequency": "at_exit"},
+          "exit_terms": {"exit_type": "forgiven", "trigger": "placed_in_service"},
+          "active_phase_start": "acquisition",
+          "active_phase_end": "exit"
+        },
+        {
+          "label": "A&P Equity Investment",
+          "funder_type": "preferred_equity",
+          "stack_position": 4,
+          "source": {"pct_of_total_cost": 100, "interest_rate_pct": 12},
+          "carry": {"carry_type": "io_only", "payment_frequency": "monthly"},
+          "exit_terms": {"exit_type": "profit_share", "trigger": "sale", "profit_share_pct": 100},
+          "active_phase_start": "acquisition",
+          "active_phase_end": "exit"
+        }
+      ],
+      "waterfall_tiers": [
+        {"priority": 1, "tier_type": "debt_service", "description": "A&P municipal bond debt service", "capital_module_label": "A&P Municipal Bond"},
+        {"priority": 2, "tier_type": "debt_service", "description": "A&P permanent debt service", "capital_module_label": "A&P Permanent Debt"},
+        {"priority": 3, "tier_type": "return_of_equity", "lp_split_pct": 100, "gp_split_pct": 0, "description": "Return equity"},
+        {"priority": 4, "tier_type": "residual", "lp_split_pct": 90, "gp_split_pct": 10, "description": "Residual split"}
+      ],
+      "expected": {
+        "cashflow": {
+          "noi_stabilized": {"value": 596888.468076},
+          "project_irr_unlevered": {"value": 10.333694}
+        },
+        "waterfall": {
+          "dscr": {"value": 3.789768},
+          "equity_multiple": {"value": 3.971278},
+          "project_irr_levered": {"value": 4.566515}
+        }
+      }
+    }
+  ]
+}

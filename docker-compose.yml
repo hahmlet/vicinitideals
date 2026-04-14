@@ -1,0 +1,152 @@
+services:
+  api:
+    build:
+      context: .
+      target: api
+    container_name: vicinitideals-api
+    # Port 8001 → container 8000. Port 8000 is occupied by Apprise on this host.
+    # NGINX on LXC 109 proxies deals.ketch.media → 192.168.1.28:8001
+    ports:
+      - "8001:8000"
+    env_file: .env
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - vicinitideals-network
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import os, urllib.request; req = urllib.request.Request('http://127.0.0.1:8000/health', headers={'X-API-Key': os.environ.get('VICINITIDEALS_API_KEY', '')}); urllib.request.urlopen(req, timeout=5)",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+
+  worker-default:
+    build:
+      context: .
+      target: worker
+    container_name: vicinitideals-worker-default
+    command: celery -A vicinitideals.tasks.celery_app worker -Q default -c 2
+    env_file: .env
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - vicinitideals-network
+    restart: unless-stopped
+
+  worker-scraping:
+    build:
+      context: .
+      target: worker
+    container_name: vicinitideals-worker-scraping
+    command: celery -A vicinitideals.tasks.celery_app worker -Q scraping -c 1
+    env_file: .env
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - vicinitideals-network
+    restart: unless-stopped
+
+  worker-analysis:
+    build:
+      context: .
+      target: worker
+    container_name: vicinitideals-worker-analysis
+    command: celery -A vicinitideals.tasks.celery_app worker -Q analysis -c 2
+    env_file: .env
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - vicinitideals-network
+    restart: unless-stopped
+
+  beat:
+    build:
+      context: .
+      target: worker
+    container_name: vicinitideals-beat
+    command: celery -A vicinitideals.tasks.celery_app beat --loglevel=info
+    env_file: .env
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - vicinitideals-network
+    restart: unless-stopped
+
+  static-files:
+    image: nginx:alpine
+    container_name: vicinitideals-static
+    volumes:
+      - ./static:/usr/share/nginx/html/static:ro
+    ports:
+      - "8002:80"
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16
+    container_name: re-modeling-postgres
+    environment:
+      POSTGRES_DB: re_modeling
+      POSTGRES_USER: re_modeling
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - vicinitideals-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U re_modeling -d re_modeling"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: re-modeling-redis
+    networks:
+      - vicinitideals-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+networks:
+  vicinitideals-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+    name: re-modeling-postgres-data

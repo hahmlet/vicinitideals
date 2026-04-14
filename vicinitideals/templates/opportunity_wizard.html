@@ -1,0 +1,373 @@
+{% extends "base.html" %}
+{% block title %}New Opportunity — Viciniti Deals{% endblock %}
+
+{% block head %}
+<style>
+.opp-wizard-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px 80px;
+  overflow-y: auto;
+  flex: 1;
+}
+.opp-wizard-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 680px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.06);
+  overflow: hidden;
+}
+/* Progress */
+.wiz-progress {
+  display: flex;
+  align-items: center;
+  padding: 20px 28px 0;
+}
+.wiz-step-dot {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; flex-shrink: 0;
+  background: var(--bg); color: var(--text-muted); z-index: 1;
+}
+.wiz-step-dot.active { border-color: var(--accent); background: var(--accent); color: #fff; }
+.wiz-step-dot.done   { border-color: var(--success); background: var(--success); color: #fff; }
+.wiz-step-line { flex: 1; height: 2px; background: var(--border); margin: 0 4px; }
+.wiz-step-line.done { background: var(--success); }
+.wiz-header { padding: 20px 28px 0; }
+.wiz-title    { font-size: 20px; font-weight: 700; margin: 0 0 4px; }
+.wiz-subtitle { font-size: 13px; color: var(--text-muted); margin: 0 0 20px; }
+.wiz-body   { padding: 20px 28px 8px; }
+.wiz-footer {
+  padding: 16px 28px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 1px solid var(--border); margin-top: 16px;
+}
+/* Field helpers */
+.field-row { display: flex; gap: 14px; margin-bottom: 14px; }
+.field-row .fg { flex: 1; }
+.fg label {
+  display: block; font-size: 12px; font-weight: 600;
+  color: var(--text-secondary); margin-bottom: 4px;
+  text-transform: uppercase; letter-spacing: .04em;
+}
+.fg input, .fg select, .fg textarea {
+  width: 100%; box-sizing: border-box;
+  padding: 8px 10px; border: 1px solid var(--border);
+  border-radius: 6px; font-size: 14px;
+  background: var(--bg); color: var(--text);
+}
+.fg input:focus, .fg select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-faint); }
+.fg .hint { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+.section-label {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .06em; color: var(--text-muted);
+  margin: 16px 0 8px; padding-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+}
+/* Building cards (step 2) */
+.building-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+.building-card {
+  border: 1px solid var(--border); border-radius: 8px;
+  overflow: hidden;
+}
+.building-card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 14px; background: var(--surface-alt, #f8f9fa);
+  cursor: pointer; user-select: none;
+}
+.building-card-header .bc-title { font-size: 13px; font-weight: 600; }
+.building-card-header .bc-meta  { font-size: 11px; color: var(--text-muted); }
+.building-card-body { padding: 14px; border-top: 1px solid var(--border); }
+.building-card-body.collapsed { display: none; }
+.remove-building-btn {
+  background: none; border: none; cursor: pointer;
+  color: var(--text-muted); font-size: 16px; line-height: 1;
+  padding: 0 4px;
+}
+.remove-building-btn:hover { color: var(--error); }
+/* Review table */
+.review-table { width: 100%; border-collapse: collapse; }
+.review-table td { padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+.review-table td:first-child { color: var(--text-muted); width: 50%; }
+.review-table td:last-child  { font-weight: 600; text-align: right; }
+.review-table tr:last-child td { border-bottom: none; }
+.review-building {
+  background: var(--surface);
+  border: 1px solid var(--border); border-radius: 8px;
+  padding: 12px 14px; margin-bottom: 8px;
+}
+.review-building-title { font-size: 13px; font-weight: 600; margin: 0 0 4px; }
+.review-building-meta  { font-size: 12px; color: var(--text-muted); }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="opp-wizard-wrap">
+
+  <div style="text-align:center;margin-bottom:24px">
+    <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted)">New Opportunity</div>
+    <div style="font-size:22px;font-weight:700;margin-top:4px">{{ title or "Create Opportunity" }}</div>
+  </div>
+
+  <div class="opp-wizard-card">
+
+    {# Progress dots: 1 = Details, 2 = Buildings, 3 = Review #}
+    <div class="wiz-progress">
+      {% set total_steps = 3 %}
+      {% for i in range(1, total_steps + 1) %}
+        <div class="wiz-step-dot {% if i < step %}done{% elif i == step %}active{% endif %}">
+          {% if i < step %}✓{% else %}{{ i }}{% endif %}
+        </div>
+        {% if not loop.last %}<div class="wiz-step-line {% if i < step %}done{% endif %}"></div>{% endif %}
+      {% endfor %}
+    </div>
+
+    {# ════ STEP 1 — Opportunity Details ════ #}
+    {% if step == 1 %}
+    <div class="wiz-header">
+      <div class="wiz-title">Opportunity Details</div>
+      <div class="wiz-subtitle">Basic information about this purchase opportunity.</div>
+    </div>
+    <form method="post" action="/ui/opportunities/wizard/step">
+      <input type="hidden" name="step" value="1">
+      {% if opp_id %}<input type="hidden" name="opp_id" value="{{ opp_id }}">{% endif %}
+      <div class="wiz-body">
+
+        <div class="field-row">
+          <div class="fg">
+            <label>Opportunity Name <span style="color:var(--error)">*</span></label>
+            <input type="text" name="name" required
+                   value="{{ opp.name if opp else '' }}"
+                   placeholder="e.g. Oak Ave Portfolio — 10 Buildings">
+            <div class="hint">Use a name that identifies the seller or address grouping.</div>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="fg">
+            <label>Deal Type <span style="color:var(--error)">*</span></label>
+            <select name="deal_type">
+              {% set _dt = deal_type or '' %}
+              <option value="acquisition_minor_reno" {% if _dt == 'acquisition_minor_reno' %}selected{% endif %}>Acquisition — Minor Renovation</option>
+              <option value="acquisition_major_reno" {% if _dt == 'acquisition_major_reno' %}selected{% endif %}>Acquisition — Major Renovation</option>
+              <option value="acquisition_conversion" {% if _dt == 'acquisition_conversion' %}selected{% endif %}>Acquisition — Conversion</option>
+              <option value="new_construction"       {% if _dt == 'new_construction' %}selected{% endif %}>New Construction</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>Status</label>
+            <select name="status">
+              {% set _st = opp.status if opp else 'hypothetical' %}
+              <option value="hypothetical" {% if _st == 'hypothetical' %}selected{% endif %}>Hypothetical</option>
+              <option value="active"       {% if _st == 'active' %}selected{% endif %}>Active</option>
+              <option value="archived"     {% if _st == 'archived' %}selected{% endif %}>Archived</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="fg">
+            <label>Asking Price</label>
+            <input type="text" name="asking_price"
+                   value="{{ opp_asking_price or '' }}"
+                   placeholder="e.g. 4,500,000">
+            <div class="hint">Total asking price for all buildings in this opportunity.</div>
+          </div>
+          <div class="fg">
+            <label>Source</label>
+            <select name="source">
+              {% set _src = opp.source if opp else 'manual' %}
+              <option value="manual"       {% if _src == 'manual' %}selected{% endif %}>Manual</option>
+              <option value="loopnet"      {% if _src == 'loopnet' %}selected{% endif %}>LoopNet</option>
+              <option value="crexi"        {% if _src == 'crexi' %}selected{% endif %}>Crexi</option>
+              <option value="user_generated" {% if _src == 'user_generated' %}selected{% endif %}>User Generated</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="fg">
+            <label>Notes</label>
+            <textarea name="notes" rows="2" placeholder="Seller context, deal notes, etc.">{{ opp_notes or '' }}</textarea>
+          </div>
+        </div>
+
+      </div>
+      <div class="wiz-footer">
+        <a href="/opportunities" class="btn btn-secondary">Cancel</a>
+        <div style="font-size:12px;color:var(--text-muted)">Step 1 of 3</div>
+        <button type="submit" class="btn btn-primary">Next: Buildings →</button>
+      </div>
+    </form>
+
+    {# ════ STEP 2 — Buildings ════ #}
+    {% elif step == 2 %}
+    <div class="wiz-header">
+      <div class="wiz-title">Buildings</div>
+      <div class="wiz-subtitle">Define the building(s) included in this opportunity. Add as many as needed.</div>
+    </div>
+    <form method="post" action="/ui/opportunities/wizard/step" id="buildings-form">
+      <input type="hidden" name="step" value="2">
+      <input type="hidden" name="opp_id" value="{{ opp_id }}">
+      <div class="wiz-body">
+
+        <div class="building-list" id="building-list">
+          {% for b in buildings %}
+          <div class="building-card" id="bcard-{{ loop.index0 }}">
+            <div class="building-card-header" onclick="toggleBuildingCard({{ loop.index0 }})">
+              <div>
+                <div class="bc-title">Building {{ loop.index }}: {{ b.address_line1 or '(no address)' }}</div>
+                <div class="bc-meta">{{ b.unit_count or '?' }} units · {{ b.property_type or 'Type not set' }}</div>
+              </div>
+              <button type="button" class="remove-building-btn" onclick="event.stopPropagation(); removeBuilding({{ loop.index0 }})">×</button>
+            </div>
+            <div class="building-card-body" id="bbody-{{ loop.index0 }}">
+              {% include 'partials/building_form_fields.html' with context %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <button type="button" class="btn btn-secondary" onclick="addBuilding()" style="width:100%">
+          + Add Building
+        </button>
+
+      </div>
+      <div class="wiz-footer">
+        <button type="button" class="btn btn-secondary"
+                onclick="window.location='/ui/opportunities/wizard/step?opp_id={{ opp_id }}&back=1'">
+          ← Back
+        </button>
+        <div style="font-size:12px;color:var(--text-muted)">Step 2 of 3</div>
+        <button type="submit" class="btn btn-primary">Review →</button>
+      </div>
+    </form>
+
+    {# ════ STEP 3 — Review & Create ════ #}
+    {% elif step == 3 %}
+    <div class="wiz-header">
+      <div class="wiz-title">Review &amp; Create</div>
+      <div class="wiz-subtitle">Confirm your opportunity details before creating.</div>
+    </div>
+    <form method="post" action="/ui/opportunities/wizard/complete">
+      <input type="hidden" name="opp_id" value="{{ opp_id }}">
+      <div class="wiz-body">
+
+        <div class="section-label">Opportunity</div>
+        <table class="review-table">
+          <tr><td>Name</td><td>{{ opp.name }}</td></tr>
+          <tr><td>Deal Type</td><td>{{ deal_type_label }}</td></tr>
+          <tr><td>Status</td><td>{{ opp.status | title if opp.status else '—' }}</td></tr>
+          {% if opp_asking_price %}
+          <tr><td>Asking Price</td><td>${{ "{:,.0f}".format(opp_asking_price | float) }}</td></tr>
+          {% endif %}
+        </table>
+
+        <div class="section-label">{{ buildings | length }} Building{{ 's' if buildings | length != 1 else '' }}</div>
+        {% for b in buildings %}
+        <div class="review-building">
+          <div class="review-building-title">{{ b.address_line1 or b.name or 'Building ' ~ loop.index }}</div>
+          <div class="review-building-meta">
+            {{ b.unit_count or '?' }} units
+            {% if b.building_sqft %} · {{ "{:,.0f}".format(b.building_sqft | float) }} sqft{% endif %}
+            {% if b.year_built %} · Built {{ b.year_built }}{% endif %}
+            {% if b.property_type %} · {{ b.property_type }}{% endif %}
+          </div>
+        </div>
+        {% endfor %}
+
+        <div style="background:var(--accent-faint);border:1px solid var(--accent);border-radius:8px;padding:12px 14px;font-size:12px;margin-top:12px">
+          <strong>What happens next:</strong> The opportunity and all buildings are created.
+          You can then create a Deal and financial model against this opportunity.
+        </div>
+
+      </div>
+      <div class="wiz-footer">
+        <a href="/ui/opportunities/wizard?opp_id={{ opp_id }}&step=2" class="btn btn-secondary">← Back</a>
+        <div style="font-size:12px;color:var(--text-muted)">All set</div>
+        <button type="submit" class="btn btn-primary">Create Opportunity →</button>
+      </div>
+    </form>
+    {% endif %}
+
+  </div>{# /.opp-wizard-card #}
+</div>{# /.opp-wizard-wrap #}
+
+<script>
+var _buildingCount = {{ buildings | length }};
+
+function toggleBuildingCard(idx) {
+  var body = document.getElementById('bbody-' + idx);
+  if (body) body.classList.toggle('collapsed');
+}
+
+function removeBuilding(idx) {
+  var card = document.getElementById('bcard-' + idx);
+  if (card) card.remove();
+}
+
+function addBuilding() {
+  var idx = _buildingCount++;
+  var html = `
+    <div class="building-card" id="bcard-${idx}">
+      <div class="building-card-header" onclick="toggleBuildingCard(${idx})">
+        <div>
+          <div class="bc-title">Building ${idx + 1}: (new)</div>
+          <div class="bc-meta">Fill in details below</div>
+        </div>
+        <button type="button" class="remove-building-btn" onclick="event.stopPropagation(); removeBuilding(${idx})">×</button>
+      </div>
+      <div class="building-card-body" id="bbody-${idx}">
+        <input type="hidden" name="building_idx[]" value="${idx}">
+        <div class="field-row">
+          <div class="fg">
+            <label>Address</label>
+            <input type="text" name="b_address_${idx}" placeholder="123 Main St">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="fg"><label>City</label><input type="text" name="b_city_${idx}" placeholder="Gresham"></div>
+          <div class="fg" style="max-width:80px"><label>State</label><input type="text" name="b_state_${idx}" placeholder="OR" maxlength="2"></div>
+          <div class="fg" style="max-width:100px"><label>Zip</label><input type="text" name="b_zip_${idx}" placeholder="97030"></div>
+        </div>
+        <div class="field-row">
+          <div class="fg"><label>Units</label><input type="number" name="b_units_${idx}" min="0" placeholder="12"></div>
+          <div class="fg"><label>Bldg Sqft</label><input type="number" name="b_sqft_${idx}" min="0" placeholder="8500"></div>
+          <div class="fg"><label>Year Built</label><input type="number" name="b_year_${idx}" min="1800" max="2030" placeholder="1965"></div>
+        </div>
+        <div class="field-row">
+          <div class="fg">
+            <label>Property Type</label>
+            <select name="b_type_${idx}">
+              <option value="">— Select —</option>
+              <option value="Multifamily">Multifamily</option>
+              <option value="Mixed Use">Mixed Use</option>
+              <option value="Commercial">Commercial</option>
+              <option value="Retail">Retail</option>
+              <option value="Industrial">Industrial</option>
+              <option value="Single Family">Single Family</option>
+              <option value="Vacant Land">Vacant Land</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>Current Use</label>
+            <input type="text" name="b_use_${idx}" placeholder="e.g. Residential Income">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="fg">
+            <label>Notes</label>
+            <input type="text" name="b_notes_${idx}" placeholder="Optional building-level notes">
+          </div>
+        </div>
+      </div>
+    </div>`;
+  document.getElementById('building-list').insertAdjacentHTML('beforeend', html);
+}
+</script>
+{% endblock %}

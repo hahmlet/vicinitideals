@@ -1,0 +1,60 @@
+name: vicinitideals CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  dev-gates:
+    name: Dev promotion gates
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Install dependencies
+        run: uv sync --extra dev
+
+      - name: Prepare environment file
+        run: cp .env.example .env
+
+      - name: Run dev promotion gates
+        run: uv run python -m vicinitideals.scripts.check_promotion_gates --environment dev
+
+  staging-gates:
+    name: Staging promotion gates
+    runs-on: ubuntu-latest
+    needs: dev-gates
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Install dependencies
+        run: uv sync --extra dev
+
+      - name: Prepare environment file
+        run: cp .env.example .env
+
+      - name: Start required services
+        run: docker compose up -d --build postgres redis api
+
+      - name: Run staging promotion gates
+        run: uv run python -m vicinitideals.scripts.check_promotion_gates --environment staging
+
+      - name: Show Docker Compose status on failure
+        if: failure()
+        run: |
+          docker compose ps
+          docker compose logs --tail=100 api postgres redis

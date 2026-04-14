@@ -1,0 +1,621 @@
+{% extends "base.html" %}
+
+{% block title %}Zone Painter — Viciniti Deals{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<style>
+  /* Override .main to be full-height flex so the map can fill it */
+  .main { display: flex; flex-direction: column; padding: 0; overflow: hidden; }
+
+  #painter-wrap {
+    display: flex; flex: 1; min-height: 0;
+  }
+
+  /* ── Painter sidebar ── */
+  #psidebar {
+    width: 260px; flex-shrink: 0;
+    background: #1a1d23; color: #e2e8f0;
+    display: flex; flex-direction: column;
+    padding: 14px; gap: 12px; overflow-y: auto;
+    border-right: 1px solid #2d3748;
+  }
+  #psidebar h2 { font-size: 13px; font-weight: 700; color: #fff; letter-spacing: .02em; }
+
+  .p-stat-row { display: flex; gap: 6px; }
+  .p-stat {
+    flex: 1; background: #2d3748; border-radius: 5px;
+    padding: 7px 8px; text-align: center;
+  }
+  .p-stat .num { font-size: 18px; font-weight: 700; color: #fff; }
+  .p-stat .lbl { font-size: 10px; color: #94a3b8; text-transform: uppercase; letter-spacing: .04em; }
+
+  .p-label { font-size: 11px; color: #94a3b8; margin-bottom: 3px; display: block; }
+
+  .p-select {
+    width: 100%; background: #2d3748; border: 1px solid #4a5568;
+    color: #e2e8f0; border-radius: 5px; padding: 7px 9px;
+    font-size: 12px; appearance: none;
+  }
+  .p-select:focus { outline: none; border-color: #60a5fa; }
+  #mode-select { border-color: #60a5fa; background: #1e3a5f; font-weight: 600; }
+  optgroup { color: #94a3b8; font-size: 11px; }
+  option { color: #e2e8f0; background: #2d3748; }
+
+  .p-banner {
+    font-size: 11px; color: #60a5fa; background: #1e3a5f;
+    border-radius: 4px; padding: 5px 8px; line-height: 1.4;
+  }
+
+  #p-badge {
+    background: #2d4a7a; border: 1px solid #3b6cb7;
+    border-radius: 5px; padding: 8px 10px;
+    font-size: 12px; color: #93c5fd; min-height: 34px;
+  }
+  #p-badge span { font-weight: 700; color: #fff; }
+
+  #paint-btn {
+    background: #2563eb; color: #fff; border: none; border-radius: 5px;
+    padding: 10px; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: background .15s;
+  }
+  #paint-btn:hover:not(:disabled) { background: #1d4ed8; }
+  #paint-btn:disabled { background: #374151; color: #6b7280; cursor: not-allowed; }
+
+  #clear-btn {
+    background: transparent; color: #94a3b8;
+    border: 1px solid #4a5568; border-radius: 5px;
+    padding: 6px; font-size: 11px; cursor: pointer;
+  }
+  #clear-btn:hover { background: #2d3748; color: #e2e8f0; }
+
+  .p-toggle { display: flex; align-items: center; gap: 7px; font-size: 11px; color: #94a3b8; }
+  .p-toggle input[type=checkbox] { accent-color: #60a5fa; width: 13px; height: 13px; }
+
+  .p-instructions {
+    font-size: 10px; color: #4b5563; line-height: 1.5;
+    border-top: 1px solid #2d3748; padding-top: 8px;
+  }
+  .p-instructions kbd {
+    background: #374151; border-radius: 3px; padding: 1px 3px;
+    font-family: monospace; font-size: 9px;
+  }
+
+  #p-viewport-info {
+    font-size: 10px; color: #4b5563; text-align: center; min-height: 14px;
+  }
+  #p-viewport-info.warn { color: #f59e0b; }
+
+  #p-toast {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: #065f46; color: #d1fae5; border-radius: 8px;
+    padding: 10px 20px; font-size: 13px; font-weight: 600;
+    display: none; z-index: 9999; white-space: nowrap;
+  }
+  #p-toast.error { background: #7f1d1d; color: #fecaca; }
+
+  #pmap { flex: 1; position: relative; }
+
+  /* Zoom-gate overlay shown when map is too far out */
+  #zoom-gate {
+    position: absolute; inset: 0; z-index: 500;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(15,20,30,.7); pointer-events: none;
+  }
+  #zoom-gate-msg {
+    background: #1a1d23; border: 1px solid #4a5568; border-radius: 8px;
+    padding: 18px 24px; font-size: 13px; color: #94a3b8; text-align: center;
+    max-width: 260px; line-height: 1.6;
+  }
+  #zoom-gate-msg strong { color: #e2e8f0; display: block; margin-bottom: 4px; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="painter-wrap">
+  <div id="psidebar">
+    <h2>🎨 Zone Painter</h2>
+
+    <div>
+      <span class="p-label">Mode</span>
+      <select id="mode-select" class="p-select">
+        {% for mode in modes %}
+        <option value="{{ mode.id }}">{{ mode.label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div>
+      <span class="p-label">Jurisdiction</span>
+      <select id="jurisdiction-select" class="p-select">
+        <optgroup label="East Multnomah County">
+          <option value="fairview">Fairview</option>
+          <option value="wood village">Wood Village</option>
+          <option value="troutdale">Troutdale</option>
+          <option value="maywood park">Maywood Park</option>
+          <option value="unincorporated_multnomah">Unincorporated Multnomah Co.</option>
+        </optgroup>
+        <optgroup label="Gresham">
+          <option value="gresham">Gresham</option>
+        </optgroup>
+        <optgroup label="Clackamas County">
+          <option value="oregon city">Oregon City</option>
+          <option value="milwaukie">Milwaukie</option>
+          <option value="happy valley">Happy Valley</option>
+          <option value="west linn">West Linn</option>
+          <option value="lake oswego">Lake Oswego</option>
+          <option value="gladstone">Gladstone</option>
+          <option value="wilsonville">Wilsonville</option>
+          <option value="canby">Canby</option>
+          <option value="unincorporated_clackamas">Unincorporated Clackamas Co.</option>
+        </optgroup>
+      </select>
+    </div>
+
+    <div class="p-banner" id="mode-banner"></div>
+
+    <div class="p-stat-row">
+      <div class="p-stat"><div class="num" id="stat-painted">–</div><div class="lbl">Painted</div></div>
+      <div class="p-stat"><div class="num" id="stat-total">–</div><div class="lbl">Total</div></div>
+      <div class="p-stat"><div class="num" id="stat-pct">–</div><div class="lbl">Done</div></div>
+    </div>
+
+    <div id="p-viewport-info"></div>
+
+    <div>
+      <span class="p-label" id="value-label">Zone Code</span>
+      <div id="value-picker"></div>
+    </div>
+
+    <div id="p-badge">No parcels selected</div>
+
+    <button id="paint-btn" disabled>Paint selected parcels</button>
+    <button id="clear-btn">Clear selection</button>
+
+    <div class="p-toggle">
+      <input type="checkbox" id="hide-painted">
+      <label for="hide-painted" style="margin:0">Hide already-painted parcels</label>
+    </div>
+    <div class="p-toggle">
+      <input type="checkbox" id="show-tooltips">
+      <label for="show-tooltips" style="margin:0">Show parcel info on hover</label>
+    </div>
+
+    <div class="p-instructions">
+      Click to select &nbsp;·&nbsp; <kbd>Ctrl</kbd>+click add/remove<br>
+      <kbd>Shift</kbd>+drag to box-select<br>
+      Choose a value → Paint
+      <br><br>
+      <span style="color:#4ade80">■</span> Painted &nbsp;
+      <span style="color:#fb923c">■</span> Selected &nbsp;
+      <span style="color:#93c5fd">■</span> Unset
+    </div>
+  </div>
+
+  <div id="pmap">
+    <div id="zoom-gate" style="display:none">
+      <div id="zoom-gate-msg">
+        <strong>Zoom in to load parcels</strong>
+        Zoom to level 14 or closer to render parcels in the current view.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="p-toast"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// ---------------------------------------------------------------------------
+// Constants
+// ---------------------------------------------------------------------------
+const MIN_ZOOM = 14;
+
+// Default view per jurisdiction: [lat, lng, zoom]
+const JURISDICTION_VIEWS = {
+  'fairview':                  [45.535,  -122.430, 14],
+  'wood village':              [45.531,  -122.418, 15],
+  'troutdale':                 [45.539,  -122.387, 14],
+  'maywood park':              [45.549,  -122.554, 16],
+  'unincorporated_multnomah':  [45.538,  -122.375, 14],
+  'gresham':                   [45.499,  -122.430, 13],
+  'oregon city':               [45.357,  -122.606, 14],
+  'milwaukie':                 [45.446,  -122.640, 14],
+  'happy valley':              [45.440,  -122.516, 13],
+  'west linn':                 [45.364,  -122.647, 13],
+  'lake oswego':               [45.421,  -122.671, 13],
+  'gladstone':                 [45.382,  -122.594, 15],
+  'wilsonville':               [45.297,  -122.776, 14],
+  'canby':                     [45.264,  -122.692, 14],
+  'unincorporated_clackamas':  [45.390,  -122.480, 13],
+};
+
+const MODES = {
+  zoning_code: {
+    label: 'Zoning',
+    valueLabel: 'Zone Code',
+    banner: 'Painting zoning codes. Green = zone assigned.',
+    pickerHTML: `
+      <select id="value-select" class="p-select">
+        <option value="">— select zone —</option>
+        <optgroup label="Residential">
+          <option value="R-6">R-6 — Residential</option>
+          <option value="R-7.5">R-7.5 — Residential</option>
+          <option value="R-10">R-10 — Residential</option>
+          <option value="RM">RM — Residential Medium Density</option>
+          <option value="RM/TOZ">RM/TOZ — Res/Medium Density Townhouse Overlay</option>
+          <option value="R/MH">R/MH — Residential / Manufactured Home Park</option>
+          <option value="R/CSP">R/CSP — Residential / Community Service Parks</option>
+          <option value="R/SFLD">R/SFLD — Res / South Fairview Lake Design Overlay</option>
+          <option value="VSF">VSF — Village Single Family</option>
+          <option value="VTH">VTH — Village Townhouse</option>
+          <option value="VA">VA — Village Apartment</option>
+        </optgroup>
+        <optgroup label="Commercial / Mixed Use">
+          <option value="CC">CC — Corridor Commercial</option>
+          <option value="TCC">TCC — Town Center Commercial</option>
+          <option value="VC">VC — Village Commercial</option>
+          <option value="FLX">FLX — Village Flex</option>
+          <option value="VMU">VMU — Village Mixed Use</option>
+          <option value="VO">VO — Village Office</option>
+        </optgroup>
+        <optgroup label="Industrial">
+          <option value="GI">GI — General Industrial</option>
+          <option value="LI">LI — Light Industrial</option>
+        </optgroup>
+        <optgroup label="Other">
+          <option value="AH">AH — Agricultural Holding</option>
+        </optgroup>
+      </select>`,
+  },
+  enterprise_zone_name: {
+    label: 'Enterprise Zone',
+    valueLabel: 'Enterprise Zone',
+    banner: 'Painting enterprise zone membership. Green = assigned.',
+    pickerHTML: `
+      <select id="value-select" class="p-select">
+        <option value="">— select zone —</option>
+        <option value="Columbia Cascade Enterprise Zone">Columbia Cascade Enterprise Zone</option>
+      </select>`,
+  },
+  cultural_sensitivity: {
+    label: 'Cultural Sensitivity',
+    valueLabel: 'Designation',
+    banner: 'Painting cultural sensitivity lands. Green = designated.',
+    pickerHTML: `
+      <select id="value-select" class="p-select">
+        <option value="">— select designation —</option>
+        <option value="Cultural Sensitivity Lands">Cultural Sensitivity Lands</option>
+      </select>`,
+  },
+};
+
+// ---------------------------------------------------------------------------
+// Map
+// ---------------------------------------------------------------------------
+const map = L.map('pmap', { zoomControl: true });
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap contributors', maxZoom: 20,
+}).addTo(map);
+
+// Default overview: Portland metro
+map.setView([45.48, -122.52], 11);
+
+let geoLayer = null;
+let selected = new Set();
+let allFeatures = {};
+let activeMode = 'zoning_code';
+let activeJurisdiction = 'fairview';
+let _loadDebounce = null;
+let _loadSerial = 0;  // discard stale responses
+
+function styleFor(feature, isSelected) {
+  const painted = !!feature.properties.painted_value;
+  if (isSelected) return { color: '#f97316', weight: 2, fillColor: '#fed7aa', fillOpacity: 0.7 };
+  if (painted)    return { color: '#16a34a', weight: 1, fillColor: '#bbf7d0', fillOpacity: 0.5 };
+  return                 { color: '#3b82f6', weight: 1, fillColor: '#bfdbfe', fillOpacity: 0.35 };
+}
+
+// ---------------------------------------------------------------------------
+// Zoom gate
+// ---------------------------------------------------------------------------
+function updateZoomGate() {
+  const zoom = map.getZoom();
+  const gate = document.getElementById('zoom-gate');
+  gate.style.display = zoom < MIN_ZOOM ? 'flex' : 'none';
+}
+
+map.on('zoomend', updateZoomGate);
+updateZoomGate();
+
+// ---------------------------------------------------------------------------
+// Viewport-based parcel loading
+// ---------------------------------------------------------------------------
+function scheduleLoad() {
+  clearTimeout(_loadDebounce);
+  _loadDebounce = setTimeout(() => {
+    if (map.getZoom() < MIN_ZOOM) return;
+    loadParcels();
+  }, 350);
+}
+
+map.on('moveend', scheduleLoad);
+map.on('zoomend', scheduleLoad);
+
+async function loadParcels() {
+  if (map.getZoom() < MIN_ZOOM) return;
+
+  const serial = ++_loadSerial;
+  const bounds = map.getBounds();
+  const bbox = [
+    bounds.getWest(), bounds.getSouth(),
+    bounds.getEast(), bounds.getNorth(),
+  ].map(n => n.toFixed(6)).join(',');
+
+  const url = `/tools/zone-painter/parcels.geojson` +
+    `?field=${activeMode}` +
+    `&jurisdiction=${encodeURIComponent(activeJurisdiction)}` +
+    `&bbox=${bbox}`;
+
+  setViewportInfo('Loading…');
+  let geojson;
+  try {
+    const resp = await fetch(url);
+    geojson = await resp.json();
+  } catch (e) {
+    setViewportInfo('Load error', true);
+    return;
+  }
+  if (serial !== _loadSerial) return;  // superseded
+
+  // Remove old layer but preserve selection state for features still in view
+  const prevSelected = new Set(selected);
+  if (geoLayer) { map.removeLayer(geoLayer); geoLayer = null; }
+  selected.clear();
+  allFeatures = {};
+
+  const hidePainted = document.getElementById('hide-painted').checked;
+
+  geoLayer = L.geoJSON(geojson, {
+    style: f => {
+      if (prevSelected.has(f.properties.id)) return styleFor(f, true);
+      const painted = !!f.properties.painted_value;
+      if (hidePainted && painted) return { opacity: 0, fillOpacity: 0 };
+      return styleFor(f, false);
+    },
+    onEachFeature(feature, layer) {
+      const id = feature.properties.id;
+      allFeatures[id] = layer;
+      if (prevSelected.has(id)) selected.add(id);
+      if (document.getElementById('show-tooltips').checked) bindTooltip(layer);
+      layer.on('click', e => {
+        const ctrl = e.originalEvent.ctrlKey || e.originalEvent.metaKey;
+        if (ctrl) toggleSelect(id, layer, feature);
+        else { clearSelection(); toggleSelect(id, layer, feature); }
+      });
+    },
+  }).addTo(map);
+
+  const count = geojson.features.length;
+  const truncated = geojson.truncated;
+  if (truncated) {
+    setViewportInfo(`${count} parcels (cap reached — zoom in more)`, true);
+  } else {
+    setViewportInfo(`${count} parcel${count === 1 ? '' : 's'} in view`);
+  }
+
+  updateSelectionUI();
+}
+
+function setViewportInfo(msg, warn = false) {
+  const el = document.getElementById('p-viewport-info');
+  el.textContent = msg;
+  el.className = warn ? 'warn' : '';
+}
+
+// ---------------------------------------------------------------------------
+// Mode + jurisdiction
+// ---------------------------------------------------------------------------
+function applyMode(mode, jurisdiction) {
+  activeMode = mode;
+  activeJurisdiction = jurisdiction;
+  const def = MODES[mode];
+  document.getElementById('mode-banner').textContent = def.banner;
+  document.getElementById('value-label').textContent = def.valueLabel;
+  document.getElementById('value-picker').innerHTML = def.pickerHTML;
+  document.getElementById('value-select').addEventListener('change', updateSelectionUI);
+  document.getElementById('hide-painted').checked = false;
+  clearSelection();
+  refreshStats();
+  scheduleLoad();
+}
+
+function applyJurisdiction(jurisdiction) {
+  activeJurisdiction = jurisdiction;
+  clearSelection();
+  refreshStats();
+
+  const view = JURISDICTION_VIEWS[jurisdiction];
+  if (view) {
+    const zoom = Math.max(view[2], MIN_ZOOM);
+    map.setView([view[0], view[1]], zoom);
+    // setView triggers moveend → scheduleLoad
+  } else {
+    scheduleLoad();
+  }
+}
+
+document.getElementById('mode-select').addEventListener('change', e => {
+  applyMode(e.target.value, activeJurisdiction);
+});
+document.getElementById('jurisdiction-select').addEventListener('change', e => {
+  applyJurisdiction(e.target.value);
+});
+
+// ---------------------------------------------------------------------------
+// Selection
+// ---------------------------------------------------------------------------
+function toggleSelect(id, layer, feature) {
+  if (selected.has(id)) { selected.delete(id); layer.setStyle(styleFor(feature, false)); }
+  else                  { selected.add(id);    layer.setStyle(styleFor(feature, true)); }
+  updateSelectionUI();
+}
+
+function clearSelection() {
+  for (const id of selected) {
+    const l = allFeatures[id];
+    if (l) l.setStyle(styleFor(l.feature, false));
+  }
+  selected.clear();
+  updateSelectionUI();
+}
+
+function updateSelectionUI() {
+  const count = selected.size;
+  const badge = document.getElementById('p-badge');
+  const btn   = document.getElementById('paint-btn');
+  const vsel  = document.getElementById('value-select');
+  const val   = vsel ? vsel.value : '';
+  badge.innerHTML = count === 0
+    ? 'No parcels selected'
+    : `<span>${count}</span> parcel${count === 1 ? '' : 's'} selected`;
+  btn.disabled = count === 0 || !val;
+  btn.textContent = count > 0 ? `Paint ${count} parcel${count === 1 ? '' : 's'}` : 'Paint selected parcels';
+}
+
+// ---------------------------------------------------------------------------
+// Paint
+// ---------------------------------------------------------------------------
+document.getElementById('paint-btn').addEventListener('click', async () => {
+  const vsel = document.getElementById('value-select');
+  const val  = vsel ? vsel.value : '';
+  if (!val || selected.size === 0) return;
+
+  const ids = [...selected];
+  const resp = await fetch('/tools/zone-painter/assign', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ parcel_ids: ids, field_name: activeMode, value: val, jurisdiction: activeJurisdiction }),
+  });
+  if (!resp.ok) { showToast('Error assigning values', true); return; }
+  const data = await resp.json();
+
+  const hidePainted = document.getElementById('hide-painted').checked;
+  for (const id of ids) {
+    const layer = allFeatures[id];
+    if (layer) {
+      layer.feature.properties.painted_value = val;
+      if (document.getElementById('show-tooltips').checked) bindTooltip(layer);
+      layer.setStyle(hidePainted ? { opacity: 0, fillOpacity: 0 } : styleFor(layer.feature, false));
+    }
+  }
+  selected.clear();
+  updateSelectionUI();
+  showToast(`Painted ${data.updated} parcel${data.updated === 1 ? '' : 's'} → ${val}`);
+  refreshStats();
+});
+
+document.getElementById('clear-btn').addEventListener('click', clearSelection);
+
+// ---------------------------------------------------------------------------
+// Tooltips
+// ---------------------------------------------------------------------------
+function tooltipContent(props) {
+  return `<strong>${props.apn}</strong><br>${props.address || ''}<br>` +
+    `${MODES[activeMode].valueLabel}: ${props.painted_value || '<em>unset</em>'}`;
+}
+function bindTooltip(layer) {
+  layer.bindTooltip(tooltipContent(layer.feature.properties), { sticky: true, opacity: 0.9 });
+}
+document.getElementById('show-tooltips').addEventListener('change', e => {
+  if (!geoLayer) return;
+  geoLayer.eachLayer(l => e.target.checked ? bindTooltip(l) : l.unbindTooltip());
+});
+
+// ---------------------------------------------------------------------------
+// Hide painted
+// ---------------------------------------------------------------------------
+document.getElementById('hide-painted').addEventListener('change', e => {
+  if (!geoLayer) return;
+  geoLayer.eachLayer(layer => {
+    const painted    = !!layer.feature.properties.painted_value;
+    const isSelected = selected.has(layer.feature.properties.id);
+    if (e.target.checked && painted && !isSelected) layer.setStyle({ opacity: 0, fillOpacity: 0 });
+    else layer.setStyle(styleFor(layer.feature, isSelected));
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Stats
+// ---------------------------------------------------------------------------
+async function refreshStats() {
+  const resp = await fetch(`/tools/zone-painter/stats?field=${activeMode}&jurisdiction=${encodeURIComponent(activeJurisdiction)}`);
+  const s = await resp.json();
+  document.getElementById('stat-painted').textContent = s.painted;
+  document.getElementById('stat-total').textContent   = s.total;
+  document.getElementById('stat-pct').textContent = s.total > 0 ? Math.round(s.painted / s.total * 100) + '%' : '–';
+}
+
+// ---------------------------------------------------------------------------
+// Box select (Shift + drag)
+// ---------------------------------------------------------------------------
+let _boxStart = null, _boxRect = null, _boxing = false;
+
+map.on('mousedown', e => {
+  if (!e.originalEvent.shiftKey) return;
+  L.DomEvent.preventDefault(e.originalEvent);
+  L.DomEvent.stopPropagation(e.originalEvent);
+  map.dragging.disable();
+  _boxing = true; _boxStart = e.latlng;
+  _boxRect = L.rectangle([_boxStart, _boxStart], {
+    color: '#f97316', weight: 2, dashArray: '5 4',
+    fillColor: '#fed7aa', fillOpacity: 0.15, interactive: false,
+  }).addTo(map);
+});
+map.on('mousemove', e => { if (_boxing && _boxRect) _boxRect.setBounds(L.latLngBounds(_boxStart, e.latlng)); });
+map.on('mouseup', e => {
+  if (!_boxing) return;
+  _boxing = false; map.dragging.enable();
+  if (!_boxRect) return;
+  const bounds = _boxRect.getBounds();
+  map.removeLayer(_boxRect); _boxRect = null;
+  if (!e.originalEvent.ctrlKey && !e.originalEvent.metaKey) clearSelection();
+  if (!geoLayer) return;
+  geoLayer.eachLayer(layer => {
+    if (!layer.getBounds) return;
+    if (!bounds.intersects(layer.getBounds())) return;
+    const opts = layer.options;
+    if (opts.opacity === 0 && opts.fillOpacity === 0) return;
+    const id = layer.feature.properties.id;
+    if (!selected.has(id)) { selected.add(id); layer.setStyle(styleFor(layer.feature, true)); }
+  });
+  updateSelectionUI();
+});
+map.on('click', e => { if (e.originalEvent.shiftKey) L.DomEvent.stopPropagation(e.originalEvent); });
+
+// ---------------------------------------------------------------------------
+// Toast
+// ---------------------------------------------------------------------------
+function showToast(msg, isError = false) {
+  const t = document.getElementById('p-toast');
+  t.textContent = msg; t.className = isError ? 'error' : '';
+  t.style.display = 'block';
+  setTimeout(() => { t.style.display = 'none'; }, 3000);
+}
+
+// ---------------------------------------------------------------------------
+// Boot — init mode picker then fly to default jurisdiction
+// ---------------------------------------------------------------------------
+(function boot() {
+  const def = MODES['zoning_code'];
+  document.getElementById('mode-banner').textContent = def.banner;
+  document.getElementById('value-label').textContent = def.valueLabel;
+  document.getElementById('value-picker').innerHTML = def.pickerHTML;
+  document.getElementById('value-select').addEventListener('change', updateSelectionUI);
+  refreshStats();
+  // Fly to Fairview at zoom 14 — triggers moveend → loadParcels
+  const view = JURISDICTION_VIEWS['fairview'];
+  map.setView([view[0], view[1]], view[2]);
+})();
+</script>
+{% endblock %}

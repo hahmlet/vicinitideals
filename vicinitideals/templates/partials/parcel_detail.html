@@ -1,0 +1,72 @@
+<div style="display:flex;gap:8px;margin-bottom:16px;align-items:center;flex-wrap:wrap">
+  {% if p.priority_bucket %}
+    {% set _bucket_class = {
+      "prime":          "badge-green",
+      "target":         "badge-blue",
+      "contextual":     "badge-purple",
+      "out_of_market":  "badge-gray",
+      "ineligible":     "badge-muted",
+      "unclassified":   "badge-orange",
+    }.get(p.priority_bucket, "badge-orange") %}
+    {% set _bucket_label = {
+      "prime": "Prime",
+      "target": "Target",
+      "contextual": "Contextual",
+      "out_of_market": "Out of Market",
+      "ineligible": "Ineligible",
+      "unclassified": "Unclassified",
+    }.get(p.priority_bucket, p.priority_bucket) %}
+    <span class="badge {{ _bucket_class }}" title="Priority bucket">{{ _bucket_label }}</span>
+  {% endif %}
+  {% if p.zoning_code %}<span class="badge badge-purple">{{ p.zoning_code }}</span>{% endif %}
+  {% if p.overridden_fields %}<span class="badge badge-orange">{{ p.overridden_fields | length }} custom field{{ 's' if p.overridden_fields | length != 1 }}</span>{% endif %}
+  <button class="btn btn-ghost btn-sm" style="margin-left:auto">🔗 Link to Deal</button>
+</div>
+
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+  <div class="section-title">GIS Data</div>
+  <div style="display:flex;gap:6px">
+    <button class="btn btn-secondary btn-sm"
+            onclick="openParcelMap('parcel','{{ p.id }}','{{ (p.address_normalized or p.apn) | replace("'","\\'") | safe }}')">
+      🗺 Map
+    </button>
+    <button class="btn btn-secondary btn-sm"
+            hx-post="/ui/parcels/{{ p.id }}/gis-refresh"
+            hx-target="closest .drawer-body"
+            hx-swap="innerHTML"
+            hx-indicator="#gis-refresh-spinner-{{ p.id }}">
+      🔄 Pull GIS Refresh
+    </button>
+    <span id="gis-refresh-spinner-{{ p.id }}" class="htmx-indicator text-muted" style="font-size:11px">refreshing…</span>
+  </div>
+</div>
+
+<div class="field-row"><div class="field-key">APN</div><div class="field-value text-mono">{{ p.apn }}</div></div>
+<div class="field-row"><div class="field-key">Postal City</div><div class="field-value">{{ p.address_city or "—" }}</div></div>
+<div class="field-row"><div class="field-key">City Juris.</div><div class="field-value">{{ p.jurisdiction or p.address_city or "—" }}</div></div>
+<div class="field-row"><div class="field-key">Owner</div><div class="field-value">{{ p.owner_name or "—" }}</div></div>
+{% if p.owner_mailing_address %}
+<div class="field-row"><div class="field-key">Owner Address</div><div class="field-value">{{ p.owner_mailing_address }}</div></div>
+{% endif %}
+<div class="field-row">
+  <div class="field-key">Lot SqFt</div>
+  <div class="field-value">{{ p.lot_sqft | number_fmt if p.lot_sqft else "—" }} sf</div>
+</div>
+<div class="field-row"><div class="field-key">Zoning</div><div class="field-value">{{ p.zoning_code or "—" }}{% if p.zoning_description %} — {{ p.zoning_description }}{% endif %}</div></div>
+<div class="field-row"><div class="field-key">Current Use</div><div class="field-value">{{ p.current_use or "—" }}</div></div>
+<div class="field-row"><div class="field-key">Assessed (Land)</div><div class="field-value text-mono">{{ p.assessed_value_land | currency if p.assessed_value_land else "—" }}</div></div>
+<div class="field-row"><div class="field-key">Assessed (Impr.)</div><div class="field-value text-mono">{{ p.assessed_value_improvements | currency if p.assessed_value_improvements else "—" }}</div></div>
+<div class="field-row"><div class="field-key">Year Built</div><div class="field-value">{{ p.year_built or "—" }}</div></div>
+
+<div class="divider"></div>
+<div style="display:flex;gap:8px;margin-bottom:16px">
+  <button class="btn btn-secondary" style="flex:1">✏ Edit Fields</button>
+</div>
+
+<!-- GIS metadata at bottom -->
+<div style="border-top:1px solid var(--border);padding-top:10px;margin-top:4px">
+  <div class="field-row" style="font-size:11px;color:var(--text-muted)">
+    <div class="field-key">Last GIS Refresh</div>
+    <div class="field-value">{{ p.scraped_at_fmt or "Never" }}</div>
+  </div>
+</div>

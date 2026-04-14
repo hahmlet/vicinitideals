@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+{% block title %}Data Cleanup — Viciniti Deals{% endblock %}
+
+{% block head %}
+<style>
+.tab-bar { display:flex; gap:2px; margin-bottom:20px; border-bottom:1px solid var(--border); }
+.tab-link { padding:8px 16px; font-size:13px; font-weight:500; color:var(--text-muted);
+  border-bottom:2px solid transparent; cursor:pointer; text-decoration:none; margin-bottom:-1px; }
+.tab-link:hover { color:var(--text); }
+.tab-link.active { color:var(--accent); border-bottom-color:var(--accent); }
+.tab-badge { display:inline-flex; align-items:center; justify-content:center;
+  background:var(--accent); color:#fff; border-radius:10px; font-size:10px;
+  font-weight:700; padding:1px 6px; margin-left:5px; }
+
+.conf-badge { display:inline-block; padding:2px 7px; border-radius:10px; font-size:11px; font-weight:700; }
+.conf-high { background:#fef3c7; color:#92400e; }  /* amber — auto-merge territory */
+.conf-mid  { background:#dbeafe; color:#1e40af; }  /* blue — needs review */
+.conf-low  { background:#f1f5f9; color:var(--text-muted); }
+
+.signal-chip { display:inline-block; background:var(--surface-alt,#1e293b); color:var(--text-muted);
+  border:1px solid var(--border); border-radius:4px; font-size:10px; padding:1px 5px; margin:1px; }
+
+.dedup-row { cursor:pointer; }
+.dedup-row:hover td { background:var(--hover,rgba(255,255,255,.04)); }
+
+.empty-dedup { padding:60px 0; text-align:center; color:var(--text-muted); }
+.empty-dedup .empty-icon { font-size:40px; margin-bottom:12px; }
+.empty-dedup .empty-title { font-size:15px; font-weight:600; color:var(--text); margin-bottom:6px; }
+.empty-dedup .empty-sub { font-size:13px; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="topbar">
+  <div style="font-size:15px;font-weight:700">
+    Data Cleanup
+    {% set total_issues = dedup_count + address_issues_count %}
+    {% if total_issues > 0 %}
+    <span class="tab-badge" style="background:var(--warning,#f59e0b);margin-left:8px">{{ total_issues }}</span>
+    {% endif %}
+  </div>
+</div>
+
+<div class="content">
+
+  <div class="tab-bar">
+    <a href="/dedup?tab=pending" class="tab-link {% if tab == 'pending' %}active{% endif %}">
+      Pending{% if dedup_count > 0 %}<span class="tab-badge">{{ dedup_count }}</span>{% endif %}
+    </a>
+    <a href="/dedup?tab=resolved" class="tab-link {% if tab == 'resolved' %}active{% endif %}">
+      Resolved
+    </a>
+    <a href="/dedup?tab=address_issues" class="tab-link {% if tab == 'address_issues' %}active{% endif %}">
+      Address Issues{% if address_issues_count > 0 %}<span class="tab-badge" style="background:#f59e0b">{{ address_issues_count }}</span>{% endif %}
+    </a>
+  </div>
+
+  {# ── Address Issues tab ── #}
+  {% if tab == 'address_issues' %}
+  {% if not address_issues %}
+  <div class="empty-dedup">
+    <div class="empty-icon">✓</div>
+    <div class="empty-title">No address issues found</div>
+    <div class="empty-sub">Listings with unresolvable addresses will appear here.</div>
+  </div>
+  {% else %}
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Street</th>
+          <th style="width:140px">City</th>
+          <th style="width:150px">Issue</th>
+          <th style="width:200px">APN</th>
+          <th style="width:130px">Realie</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for listing in address_issues %}
+        <tr>
+          <td style="font-size:13px"><a href="/listings?open={{ listing.id }}" style="color:inherit;text-decoration:underline;text-decoration-color:var(--border)">{{ listing.street or listing.address_raw or '—' }}</a></td>
+          <td class="text-small text-muted">{{ listing.city or '—' }}</td>
+          <td>
+            {% set s = listing.street or '' %}
+            {% if not s.strip() %}
+            <span class="signal-chip">no street</span>
+            {% elif s.strip()[0].isdigit() == false %}
+            <span class="signal-chip">no street number</span>
+            {% elif s[:3].upper() in ['TL ', 'T/L', 'V/L'] %}
+            <span class="signal-chip">tl prefix</span>
+            {% elif '(' in s %}
+            <span class="signal-chip">parenthetical</span>
+            {% elif '&' in s or '/' in s %}
+            <span class="signal-chip">multi parcel</span>
+            {% else %}
+            <span class="signal-chip">range address</span>
+            {% endif %}
+          </td>
+          <td class="text-small text-muted" style="font-family:monospace;font-size:11px">{{ listing.apn or '—' }}</td>
+          <td>
+            <button id="skip-btn-{{ listing.id }}"
+                    hx-post="/ui/listings/{{ listing.id }}/realie-skip"
+                    hx-swap="outerHTML"
+                    hx-target="#skip-btn-{{ listing.id }}"
+                    class="btn btn-sm btn-secondary"
+                    style="{% if listing.realie_skip %}color:var(--warning,#f59e0b){% endif %}">
+              {% if listing.realie_skip %}Skip Realie{% else %}Enable Realie{% endif %}
+            </button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="table-footer">
+      <span>{{ address_issues | length }} address issues</span>
+    </div>
+  </div>
+  {% endif %}
+
+  {# ── Dedup tabs (pending / resolved) ── #}
+  {% else %}
+  {% if not candidates %}
+  <div class="empty-dedup">
+    <div class="empty-icon">✓</div>
+    <div class="empty-title">{% if tab == 'resolved' %}No resolved items yet{% else %}No items pending review{% endif %}</div>
+    <div class="empty-sub">{% if tab == 'pending' %}Data cleanup candidates appear here after each ingest run.{% endif %}</div>
+  </div>
+
+  {% else %}
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th style="width:80px">Confidence</th>
+          <th style="width:130px">Type</th>
+          <th>Record A</th>
+          <th>Record B</th>
+          <th>Signals</th>
+          {% if tab == 'pending' %}<th style="width:110px"></th>{% else %}<th style="width:120px">Resolved</th>{% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in candidates %}
+        <tr id="dedup-row-{{ c.id }}"
+            class="dedup-row"
+            {% if tab == 'pending' %}onclick="openDedup('{{ c.id }}')"{% endif %}>
+
+          <td>
+            <span class="conf-badge conf-{{ c.tier }}">{{ "%.0f"|format(c.confidence * 100) }}%</span>
+          </td>
+
+          <td class="text-small text-muted">{{ c.conflict_type }}</td>
+
+          <td>
+            <div style="font-size:13px">{{ c.record_a_address }}</div>
+            <div class="text-small text-muted">{{ c.record_a_source }}</div>
+          </td>
+
+          <td>
+            <div style="font-size:13px">{{ c.record_b_address }}</div>
+            <div class="text-small text-muted">{{ c.record_b_source }}</div>
+          </td>
+
+          <td>
+            {% for signal, score in c.match_signals.items() %}
+            {% if score and score > 0 %}
+            <span class="signal-chip">{{ signal | replace("_", " ") }}</span>
+            {% endif %}
+            {% endfor %}
+          </td>
+
+          <td onclick="event.stopPropagation()">
+            {% if tab == 'pending' %}
+            <button class="btn btn-sm btn-secondary"
+                    hx-post="/ui/dedup/{{ c.id }}/keep-separate"
+                    hx-target="#dedup-row-{{ c.id }}"
+                    hx-swap="outerHTML"
+                    title="Mark as two separate records — not duplicates">
+              Not a dup
+            </button>
+            {% else %}
+            <span class="text-small text-muted" style="text-transform:capitalize">
+              {{ c.status | replace("_", " ") }}
+            </span>
+            {% endif %}
+          </td>
+
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="table-footer">
+      <span>{{ candidates | length }} {{ 'pending' if tab == 'pending' else 'resolved' }}</span>
+    </div>
+  </div>
+  {% endif %}
+  {% endif %}
+
+</div>
+
+<!-- Compare / resolve drawer -->
+<div class="drawer-overlay" id="dedup-drawer" style="display:none">
+  <div class="drawer" style="width:min(92vw,820px)">
+    <div class="drawer-header">
+      <div>
+        <div class="drawer-title">Compare &amp; Resolve</div>
+        <div class="text-small text-muted" id="dedup-drawer-sub"></div>
+      </div>
+      <span class="drawer-close" onclick="closeDrawer('dedup-drawer')">×</span>
+    </div>
+    <div class="drawer-body" id="dedup-compare-body" style="padding:0">
+      <div class="text-muted text-small" style="padding:20px">Loading…</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function openDedup(id) {
+  document.getElementById('dedup-drawer-sub').textContent = '';
+  document.getElementById('dedup-compare-body').innerHTML =
+    '<div class="text-muted text-small" style="padding:20px">Loading…</div>';
+  htmx.ajax('GET', '/ui/dedup/' + id + '/compare', {
+    target: '#dedup-compare-body', swap: 'innerHTML'
+  });
+  openDrawer('dedup-drawer');
+}
+</script>
+{% endblock %}

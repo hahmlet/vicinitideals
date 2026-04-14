@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block title %}New Deal — Viciniti Deals{% endblock %}
+
+{% block head %}
+<style>
+.new-deal-shell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 60px 20px 80px;
+  flex: 1;
+  overflow-y: auto;
+}
+.new-deal-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 540px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.06);
+  overflow: hidden;
+}
+.new-deal-header {
+  padding: 28px 32px 0;
+}
+.new-deal-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+.new-deal-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0 0 24px;
+}
+.new-deal-body {
+  padding: 20px 32px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.new-deal-footer {
+  padding: 16px 32px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--border);
+  margin-top: 16px;
+}
+.nd-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.nd-field input[type="text"],
+.nd-field select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 14px;
+  background: var(--bg);
+  color: var(--text);
+}
+.nd-field input[type="text"]:focus,
+.nd-field select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-faint);
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="topbar">
+  <div style="font-size:15px;font-weight:700">New Deal</div>
+</div>
+
+<div class="new-deal-shell">
+
+  <div class="new-deal-card">
+    <div class="new-deal-header">
+      <div class="new-deal-title">Create a New Deal</div>
+      <div class="new-deal-subtitle">Give it a name and choose the project type. You can change these later.</div>
+    </div>
+
+    <form method="post" action="/ui/deals/create">
+      {% if opp_id %}<input type="hidden" name="opportunity_id" value="{{ opp_id }}">{% endif %}
+      <div class="new-deal-body">
+
+        {% if opp_id %}
+        <div style="padding:8px 12px;border-radius:6px;background:#f0fdf4;border:1px solid #86efac;color:#166534;font-size:12px">
+          Linked to opportunity: <strong>{{ opp_name }}</strong>
+        </div>
+        {% endif %}
+
+        <div class="nd-field">
+          <label>Deal Name</label>
+          <input type="text" name="name" required autofocus
+                 value="{{ opp_name }}"
+                 placeholder="e.g. Oak Ave 12-Unit Conversion">
+        </div>
+
+        <div class="nd-field">
+          <label>Deal Type</label>
+          <select name="deal_type">
+            <option value="acquisition_minor_reno">Acquisition — Minor Renovation</option>
+            <option value="acquisition_major_reno">Acquisition — Major Renovation</option>
+            <option value="acquisition_conversion">Acquisition — Conversion</option>
+            <option value="new_construction">New Construction</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="new-deal-footer">
+        <a href="/deals" class="btn btn-ghost" style="font-size:13px;color:var(--text-muted)">✕ Cancel</a>
+        <button type="submit" class="btn btn-primary">Create Deal →</button>
+      </div>
+    </form>
+  </div>
+
+</div>
+{% endblock %}
