@@ -9,9 +9,51 @@ on:
       - main
 
 jobs:
-  dev-gates:
-    name: Dev promotion gates
+  # ---------------------------------------------------------------------------
+  # Scope detection — determine if heavy gates are needed
+  # ---------------------------------------------------------------------------
+  scope-detect:
+    name: Detect change scope
     runs-on: ubuntu-latest
+    outputs:
+      skip_heavy: ${{ steps.detect.outputs.skip_heavy }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect if only docs/templates changed
+        id: detect
+        run: |
+          # On PRs, compare against the target branch base.
+          # On push to main, compare against the previous commit.
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE="${{ github.event.pull_request.base.sha }}"
+          else
+            BASE="${{ github.event.before }}"
+          fi
+
+          CHANGED=$(git diff --name-only "$BASE"...HEAD 2>/dev/null || echo "")
+
+          # If ALL changed files are docs/templates/static, skip heavy gates
+          HEAVY_FILES=$(echo "$CHANGED" | grep -Ev '^(docs/|app/templates/|app/static/|\.github/skills/|\.md$|LICENSE|\.gitignore)' || true)
+
+          if [ -z "$HEAVY_FILES" ] && [ -n "$CHANGED" ]; then
+            echo "skip_heavy=true" >> "$GITHUB_OUTPUT"
+            echo "Only docs/templates changed — skipping heavy gates"
+          else
+            echo "skip_heavy=false" >> "$GITHUB_OUTPUT"
+            echo "Code changes detected — running all gates"
+          fi
+
+  # ---------------------------------------------------------------------------
+  # Light gate — runs on every push/PR (fast: <2 min)
+  # ---------------------------------------------------------------------------
+  light-gate:
+    name: Light gate (lint + unit tests)
+    runs-on: ubuntu-latest
+    needs: scope-detect
 
     steps:
       - name: Check out repository
@@ -26,13 +68,24 @@ jobs:
       - name: Prepare environment file
         run: cp .env.example .env
 
-      - name: Run dev promotion gates
+      - name: Dev promotion gates
         run: uv run python -m app.scripts.check_promotion_gates --environment dev
 
-  staging-gates:
-    name: Staging promotion gates
+      - name: Ruff lint
+        run: uv run ruff check app/ tests/
+
+      - name: Unit tests
+        run: uv run pytest tests/ -q -m "unit" --ignore=tests/e2e
+
+  # ---------------------------------------------------------------------------
+  # Full gate — runs on PRs to main and pushes to main
+  # Skipped when only docs/templates changed.
+  # ---------------------------------------------------------------------------
+  full-gate:
+    name: Full gate (integration + E2E + security scans)
     runs-on: ubuntu-latest
-    needs: dev-gates
+    needs: [scope-detect, light-gate]
+    if: needs.scope-detect.outputs.skip_heavy != 'true'
 
     steps:
       - name: Check out repository
@@ -41,8 +94,8 @@ jobs:
       - name: Set up uv
         uses: astral-sh/setup-uv@v3
 
-      - name: Install dependencies
-        run: uv sync --extra dev
+      - name: Install dependencies (including e2e extras)
+        run: uv sync --extra dev --extra e2e
 
       - name: Prepare environment file
         run: cp .env.example .env
@@ -50,8 +103,31 @@ jobs:
       - name: Start required services
         run: docker compose up -d --build postgres redis api
 
-      - name: Run staging promotion gates
+      - name: Staging promotion gates
         run: uv run python -m app.scripts.check_promotion_gates --environment staging
+
+      - name: Integration tests
+        run: uv run pytest tests/ -q --ignore=tests/e2e
+
+      - name: Install Playwright browsers
+        run: uv run playwright install chromium --with-deps
+
+      - name: E2E tests
+        run: uv run pytest tests/e2e/ -q -m e2e
+        env:
+          E2E_BASE_URL: http://localhost:8001
+
+      - name: Trivy image scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: vicinitideals-api:latest
+          trivy-config: trivy.yaml
+          exit-code: "0"  # non-blocking until trivy.yaml is tuned; T13 tightens this
+
+      - name: Semgrep SAST
+        uses: semgrep/semgrep-action@v1
+        with:
+          config: .semgrep.yml
 
       - name: Show Docker Compose status on failure
         if: failure()

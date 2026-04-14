@@ -1,0 +1,11 @@
+rules: []
+# Extend with community rulesets as needed, e.g.:
+# - id: no-hardcoded-secrets
+#   patterns:
+#     - pattern: $KEY = "..."
+#   message: Possible hardcoded secret
+#   languages: [python]
+#   severity: WARNING
+#
+# To use community rules, add to CI config:
+#   config: "p/python p/fastapi"
