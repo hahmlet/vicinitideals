@@ -15,7 +15,7 @@ echo "==> Building Docker images..."
 docker compose build
 
 echo "==> Running database migrations..."
-docker compose run --rm api alembic upgrade head
+docker compose run --rm api python -m alembic upgrade head
 
 echo "==> Starting containers..."
 docker compose up -d
