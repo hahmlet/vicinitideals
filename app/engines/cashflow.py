@@ -704,6 +704,26 @@ async def _auto_size_debt_modules(
         if "stabilized" in active:
             opex_monthly_pre += _q(_to_decimal(line.annual_amount) / Decimal("12"))
 
+    # For Construction + Permanent (Separate), the construction loan is a bridge that
+    # gets taken out by the permanent loan.  Only the perm leg should gap-fill total
+    # uses; the construction loan principal mirrors the perm amount.  If we let both
+    # independently gap-fill, Sources = 2×Uses, driving equity deeply negative.
+    debt_structure = getattr(inputs, "debt_structure", None) or "perm_only"
+    _bridge_module: object = None
+    if debt_structure == "construction_and_perm":
+        _perm_mod = next(
+            (m for m in auto_modules if str(getattr(m, "funder_type", "")) == "permanent_debt"),
+            None,
+        )
+        _constr_mod = next(
+            (m for m in auto_modules if str(getattr(m, "funder_type", "")) == "construction_loan"),
+            None,
+        )
+        if _perm_mod and _constr_mod:
+            _bridge_module = _constr_mod
+            # Exclude the bridge from the gap-fill loop so only perm sizes to TPC.
+            auto_modules = [m for m in auto_modules if m is not _constr_mod]
+
     for module in auto_modules:
         src = dict(module.source or {})
         carry = module.carry or {}
@@ -796,6 +816,22 @@ async def _auto_size_debt_modules(
             sa_update(CapitalModule).where(CapitalModule.id == module.id).values(source=src)
         )
         module.source = src  # keep in-memory view consistent
+
+    # For construction_and_perm: mirror perm amount to the bridge construction loan.
+    # The bridge is marked is_bridge=True so the Sources & Uses display excludes it
+    # from the debt total (avoiding double-counting vs the perm leg).
+    if _bridge_module is not None and _perm_mod is not None:
+        perm_src = dict(_perm_mod.source or {})
+        perm_amount = perm_src.get("amount", "0")
+        bridge_src = dict(_bridge_module.source or {})
+        bridge_src["amount"] = perm_amount
+        bridge_src["is_bridge"] = True
+        await session.execute(
+            sa_update(CapitalModule)
+            .where(CapitalModule.id == _bridge_module.id)
+            .values(source=bridge_src)
+        )
+        _bridge_module.source = bridge_src
 
     # Compute actual reserve (max of OpEx vs actual debt service, × reserve months)
     # opex_monthly_pre already computed above; re-use it here.

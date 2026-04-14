@@ -133,7 +133,7 @@
       {%- if _is_equity and not _src_amt and uses_total -%}
         {%- set _ns_debt = namespace(t=0) -%}
         {%- for _dm in capital_modules -%}
-          {%- if _dm.funder_type not in ('common_equity', 'preferred_equity', 'equity') -%}
+          {%- if _dm.funder_type not in ('common_equity', 'preferred_equity', 'equity') and not (_dm.source and _dm.source.get('is_bridge')) -%}
             {%- set _ns_debt.t = _ns_debt.t + ((_dm.source.amount | float) if (_dm.source and _dm.source.get('amount')) else 0) -%}
           {%- endif -%}
         {%- endfor -%}
@@ -169,7 +169,7 @@
     <span class="line-total-label">Total Sources</span>
     <span class="line-total-amount">
       {% set ns = namespace(total=0) %}
-      {% for m in capital_modules %}{% if m.source and m.source.get('amount') %}{% set ns.total = ns.total + (m.source.amount | float) %}{% endif %}{% endfor %}
+      {% for m in capital_modules %}{% if m.source and m.source.get('amount') and not m.source.get('is_bridge') %}{% set ns.total = ns.total + (m.source.amount | float) %}{% endif %}{% endfor %}
       {% if ns.total %}{{ ns.total | currency }}
       {% else %}<span style="color:var(--text-muted);font-size:11px">Compute →</span>{% endif %}
     </span>
