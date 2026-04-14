@@ -149,4 +149,5 @@ networks:
 
 volumes:
   postgres-data:
+    external: true
     name: re-modeling-postgres-data

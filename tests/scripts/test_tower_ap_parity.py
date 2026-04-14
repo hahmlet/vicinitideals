@@ -43,8 +43,8 @@ async def session_factory() -> AsyncGenerator[async_sessionmaker[AsyncSession], 
 async def test_tower_ap_formulas_parity_validates_excel_targets(
     session_factory: async_sessionmaker[AsyncSession],
 ) -> None:
-    formulas_path = Path(__file__).resolve().parents[2] / "formulas.json"
-    assert formulas_path.exists(), "Expected REAL-73 formulas fixture at re-modeling/formulas.json"
+    formulas_path = Path(__file__).resolve().parents[2] / "data" / "formulas.json"
+    assert formulas_path.exists(), "Expected REAL-73 formulas fixture at data/formulas.json"
 
     payload = load_formulas_payload(formulas_path)
 
