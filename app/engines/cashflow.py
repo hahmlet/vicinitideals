@@ -984,6 +984,9 @@ def _compute_period(
         vacancy_loss = ZERO
         effective_gross_income = _noi_monthly
         operating_expenses = ZERO
+        # Zero-initialize legacy scalar variables so unconditional code below doesn't raise UnboundLocalError
+        units_operating = ZERO
+        property_tax = insurance = operating_expense = management_fee = carrying_cost = ZERO
         line_items.append(
             CashFlowLineItem(
                 scenario_id=deal_model_id,
