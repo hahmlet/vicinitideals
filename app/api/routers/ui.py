@@ -1844,6 +1844,24 @@ async def create_deal(
     await _auto_assign_opportunity_to_project(opportunity, dev_project, session)
     for milestone in _seed_milestones(dev_project, deal_type):
         session.add(milestone)
+
+    # Auto-seed the Acquisition use line from the linked opportunity.
+    # Price: first scraped listing's asking_price if available, else 0 (user fills in later).
+    # Label: "{opportunity name} - Acquisition"
+    acq_price = 0
+    if opportunity.scraped_listings:
+        sl = opportunity.scraped_listings[0]
+        if sl.asking_price is not None:
+            acq_price = sl.asking_price
+    session.add(UseLine(
+        project_id=dev_project.id,
+        label=f"{opportunity.name} - Acquisition",
+        phase=UseLinePhase.acquisition,
+        milestone_key="close",
+        amount=acq_price,
+        timing_type="first_day",
+    ))
+
     await session.commit()
 
     redirect_url = f"/models/{scenario.id}/builder" + ("?new=1" if new == "1" else "")
@@ -3864,6 +3882,9 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
 
     project_id: if provided, load data for that specific Project; else default to first.
     """
+    # Load the scenario (DealModel) to access income_mode and deal_id
+    _scenario = await session.get(DealModel, model_id)
+
     # Resolve active Project for this Scenario
     default_project = None
     if project_id is not None:
@@ -4239,6 +4260,7 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
             "acquisition_conversion": "Conversion",
             "new_construction": "New Construction",
         }.get(default_project.deal_type if default_project else "", "Project"),
+        "income_mode": (_scenario.income_mode if _scenario else "revenue_opex") or "revenue_opex",
     }
 
 
@@ -5377,6 +5399,39 @@ async def deal_setup_wizard_get(
     })
 
 
+async def _prefill_noi_from_listing(
+    model: "DealModel",
+    default_project: "Project",
+    inputs: "OperationalInputs",
+    session: "AsyncSession",
+) -> None:
+    """If the deal's opportunity has a scraped listing with NOI data, pre-fill
+    OperationalInputs.noi_stabilized_input.  Does nothing if already set or no
+    listing data is found.  Uses proforma_noi first, falls back to noi."""
+    if inputs.noi_stabilized_input is not None:
+        return  # already set — don't overwrite a previous entry
+    # Resolve opportunity via DealOpportunity join
+    opp_row = (await session.execute(
+        select(DealOpportunity)
+        .where(DealOpportunity.deal_id == model.deal_id)
+        .limit(1)
+    )).scalar_one_or_none()
+    if opp_row is None:
+        return
+    listing = (await session.execute(
+        select(ScrapedListing)
+        .where(ScrapedListing.linked_project_id == opp_row.opportunity_id)
+        .order_by(ScrapedListing.last_seen_at.desc())
+        .limit(1)
+    )).scalar_one_or_none()
+    if listing is None:
+        return
+    noi_value = listing.proforma_noi if listing.proforma_noi is not None else listing.noi
+    if noi_value is not None:
+        inputs.noi_stabilized_input = noi_value
+        session.add(inputs)
+
+
 @router.post("/ui/models/{model_id}/setup/step", response_class=HTMLResponse)
 async def deal_setup_wizard_step(
     request: Request,
@@ -5434,20 +5489,30 @@ async def deal_setup_wizard_step(
             "missing_building_data": missing_building_data,
         })
     elif step == 1:
-        inputs.debt_structure = form.get("debt_structure") or inputs.debt_structure
+        # Income mode selection (new step 1)
+        income_mode = str(form.get("income_mode") or "revenue_opex")
+        if income_mode not in ("revenue_opex", "noi"):
+            income_mode = "revenue_opex"
+        model.income_mode = income_mode
+        session.add(model)
+        # Pre-fill NOI from linked opportunity's scraped listing
+        if income_mode == "noi":
+            await _prefill_noi_from_listing(model, default_project, inputs, session)
     elif step == 2:
+        inputs.debt_structure = form.get("debt_structure") or inputs.debt_structure
+    elif step == 3:
         dt = dict(inputs.debt_terms or {})
         for key in ("construction_rate_pct", "perm_rate_pct", "perm_amort_years"):
             val = form.get(key)
             if val:
                 dt[key] = float(val)
         inputs.debt_terms = dt
-    elif step == 3:
+    elif step == 4:
         inputs.debt_sizing_mode = form.get("debt_sizing_mode") or inputs.debt_sizing_mode
         dscr_val = form.get("dscr_minimum")
         if dscr_val:
             inputs.dscr_minimum = Decimal(dscr_val)
-    elif step == 4:
+    elif step == 5:
         cf_pct = form.get("construction_floor_pct")
         if cf_pct:
             inputs.construction_floor_pct = Decimal(cf_pct)
@@ -5458,10 +5523,9 @@ async def deal_setup_wizard_step(
     session.add(inputs)
     await session.commit()
     await session.refresh(inputs)
+    await session.refresh(model)
 
-    # Determine next step (skip step 5 if no construction debt for floor question)
     next_step = step + 1
-    # step 4 advances to review (step 5)
     missing_building_data = await _get_missing_building_data(default_project, session)
     return templates.TemplateResponse(request, "partials/deal_setup_wizard.html", {
         "request": request, "model": model, "inputs": inputs, "step": next_step,
@@ -5644,12 +5708,13 @@ async def deal_setup_wizard_complete(
             existing_unit_mix = []  # will be flushed; reload below via refresh
 
     # ── Revenue: seed one IncomeStream per UnitMix row ──────────────────────
+    # Skip entirely in NOI mode — Revenue module is not used
     # Only seed if no income streams exist yet
     existing_income = (await session.execute(
         select(IncomeStream).where(IncomeStream.project_id == default_project.id).limit(1)
     )).scalar_one_or_none()
 
-    if existing_income is None:
+    if existing_income is None and model.income_mode != "noi":
         # Flush so UnitMix rows are visible
         await session.flush()
         unit_mix_rows = list((await session.execute(
@@ -5683,6 +5748,7 @@ async def deal_setup_wizard_complete(
             ))
 
     # ── OpEx: seed 19 standard lines ────────────────────────────────────────
+    # Skip entirely in NOI mode — OpEx module is not used
     # Skip individual labels that already exist (idempotent re-run)
     existing_opex_labels = set((await session.execute(
         select(OperatingExpenseLine.label).where(
@@ -5714,7 +5780,7 @@ async def deal_setup_wizard_complete(
     ]
 
     for label, per_type, scale, floor_pct, phases in _OPEX_SEEDS:
-        if label in existing_opex_labels:
+        if label in existing_opex_labels or model.income_mode == "noi":
             continue
         session.add(OperatingExpenseLine(
             project_id=default_project.id,
@@ -5729,10 +5795,11 @@ async def deal_setup_wizard_complete(
 
     await session.commit()
 
-    # Redirect to builder at uses module
+    # Redirect to builder — NOI mode lands on the NOI module first, else Uses
+    _first_module = "noi" if model.income_mode == "noi" else "uses"
     from starlette.responses import Response as StarletteResponse
     response = StarletteResponse(status_code=204)
-    response.headers["HX-Redirect"] = f"/models/{model_id}/builder?module=uses"
+    response.headers["HX-Redirect"] = f"/models/{model_id}/builder?module={_first_module}"
     return response
 
 
@@ -5971,6 +6038,7 @@ async def model_module_nav(
             "equity_ownership", "org_owner_fallback",
             "deferred_uses", "deferred_total", "profit_total",
             "divestment_total", "phase_summaries", "outputs",
+            "income_mode",
         )},
     }
     return templates.TemplateResponse(request, "partials/model_builder_nav_cards.html", ctx)
@@ -6112,6 +6180,72 @@ async def download_import_template(model_id: UUID) -> StreamingResponse:
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         headers={"Content-Disposition": "attachment; filename=import-template.xlsx"},
     )
+
+
+@router.post("/ui/models/{model_id}/noi-inputs", response_class=HTMLResponse)
+async def save_noi_inputs(
+    request: Request,
+    model_id: UUID,
+    session: DBSession,
+) -> HTMLResponse:
+    """Save NOI mode inputs (stabilized NOI + escalation rate) and return refreshed form."""
+    model = await session.get(DealModel, model_id)
+    if model is None:
+        return HTMLResponse("Not found", status_code=404)
+    default_project = (await session.execute(
+        select(Project).where(Project.scenario_id == model_id).order_by(Project.created_at).limit(1)
+    )).scalar_one_or_none()
+    if default_project is None:
+        return HTMLResponse("No project", status_code=400)
+    inputs = (await session.execute(
+        select(OperationalInputs).where(OperationalInputs.project_id == default_project.id)
+    )).scalar_one_or_none()
+    if inputs is None:
+        return HTMLResponse("No inputs", status_code=400)
+
+    form = await request.form()
+    noi_raw = form.get("noi_stabilized_input", "")
+    esc_raw = form.get("noi_escalation_rate_pct", "3")
+    try:
+        inputs.noi_stabilized_input = Decimal(str(noi_raw)) if noi_raw else None
+    except Exception:
+        inputs.noi_stabilized_input = None
+    try:
+        inputs.noi_escalation_rate_pct = Decimal(str(esc_raw)) if esc_raw else Decimal("3")
+    except Exception:
+        inputs.noi_escalation_rate_pct = Decimal("3")
+    session.add(inputs)
+    await session.commit()
+    await session.refresh(inputs)
+
+    _noi_val = float(inputs.noi_stabilized_input) if inputs.noi_stabilized_input else ""
+    _esc_val = float(inputs.noi_escalation_rate_pct) if inputs.noi_escalation_rate_pct else 3.0
+    html = f"""<form hx-post="/ui/models/{model_id}/noi-inputs"
+        hx-target="this"
+        hx-swap="outerHTML"
+        style="max-width:480px">
+    <div style="background:var(--success-faint,#f0fdf4);border:1px solid var(--success,#22c55e);border-radius:6px;padding:8px 12px;margin-bottom:16px;font-size:12px;color:var(--success,#16a34a)">
+      ✓ NOI inputs saved.
+    </div>
+    <div class="field-group" style="margin-bottom:20px">
+      <label style="display:block;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text-secondary);margin-bottom:4px">Stabilized NOI (Annual)</label>
+      <input type="number" name="noi_stabilized_input" step="1000" min="0"
+             value="{_noi_val}" placeholder="e.g. 500000"
+             style="width:100%;box-sizing:border-box;padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:14px;background:var(--bg);color:var(--text)">
+      <div style="font-size:11px;color:var(--text-muted);margin-top:3px">Net Operating Income at stabilization — pre-debt service, post-OpEx (even though OpEx is not modeled separately).</div>
+    </div>
+    <div class="field-group" style="margin-bottom:20px">
+      <label style="display:block;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text-secondary);margin-bottom:4px">Annual NOI Escalation Rate (%)</label>
+      <input type="number" name="noi_escalation_rate_pct" step="0.25" min="0" max="20"
+             value="{_esc_val}" placeholder="3.0"
+             style="width:140px;box-sizing:border-box;padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:14px;background:var(--bg);color:var(--text)">
+      <div style="font-size:11px;color:var(--text-muted);margin-top:3px">Compound annual growth applied to NOI each year. Typical: 2–4%.</div>
+    </div>
+    <div>
+      <button type="submit" class="btn btn-primary">Save NOI Inputs</button>
+    </div>
+  </form>"""
+    return HTMLResponse(html)
 
 
 @router.get("/ui/models/{model_id}/line-form", response_class=HTMLResponse)

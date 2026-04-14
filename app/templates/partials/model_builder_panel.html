@@ -312,6 +312,41 @@
   {% endif %}
 </div>
 
+{% elif active_module == 'noi' %}
+
+<div class="module-panel-header">
+  <div>
+    <div class="module-panel-title">NOI (Stabilized)</div>
+    <div class="module-panel-desc">Enter the stabilized Net Operating Income and annual escalation rate. Revenue and OpEx modules are not used in this mode.</div>
+  </div>
+</div>
+<div class="module-panel-body">
+  {% set _noi_val = inputs.noi_stabilized_input | float if inputs and inputs.noi_stabilized_input else '' %}
+  {% set _esc_val = inputs.noi_escalation_rate_pct | float if inputs and inputs.noi_escalation_rate_pct else 3.0 %}
+  <form hx-post="/ui/models/{{ model.id }}/noi-inputs"
+        hx-target="this"
+        hx-swap="outerHTML"
+        style="max-width:480px">
+    <div class="field-group" style="margin-bottom:20px">
+      <label style="display:block;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text-secondary);margin-bottom:4px">Stabilized NOI (Annual)</label>
+      <input type="number" name="noi_stabilized_input" step="1000" min="0"
+             value="{{ _noi_val }}" placeholder="e.g. 500000"
+             style="width:100%;box-sizing:border-box;padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:14px;background:var(--bg);color:var(--text)">
+      <div style="font-size:11px;color:var(--text-muted);margin-top:3px">Net Operating Income at stabilization — pre-debt service, post-OpEx (even though OpEx is not modeled separately).</div>
+    </div>
+    <div class="field-group" style="margin-bottom:20px">
+      <label style="display:block;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text-secondary);margin-bottom:4px">Annual NOI Escalation Rate (%)</label>
+      <input type="number" name="noi_escalation_rate_pct" step="0.25" min="0" max="20"
+             value="{{ _esc_val }}" placeholder="3.0"
+             style="width:140px;box-sizing:border-box;padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:14px;background:var(--bg);color:var(--text)">
+      <div style="font-size:11px;color:var(--text-muted);margin-top:3px">Compound annual growth applied to NOI each year. Typical: 2–4%.</div>
+    </div>
+    <div>
+      <button type="submit" class="btn btn-primary">Save NOI Inputs</button>
+    </div>
+  </form>
+</div>
+
 {% elif active_module == 'revenue' %}
 
 <div class="module-panel-header">

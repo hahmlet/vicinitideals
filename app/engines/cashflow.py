@@ -116,10 +116,13 @@ async def compute_cash_flows(
     )).scalar_one_or_none()
     prev_noi_stabilized = _to_decimal(prev_outputs.noi_stabilized) if prev_outputs else None
 
+    income_mode: str = (deal_model.income_mode or "revenue_opex")
+
     # Pre-size any auto_size=True debt modules before computing debt service
     await _auto_size_debt_modules(
         capital_modules, inputs, streams, expense_lines, use_lines, phases, session,
         prev_noi_stabilized=prev_noi_stabilized,
+        income_mode=income_mode,
     )
 
     # Reload module.source from DB after auto-sizing: SQLAlchemy's bulk UPDATE
@@ -166,6 +169,7 @@ async def compute_cash_flows(
                 stabilized_noi_monthly=stabilized_noi_monthly,
                 construction_debt_monthly=construction_debt_monthly,
                 operation_debt_monthly=operation_debt_monthly,
+                income_mode=income_mode,
             )
 
             if phase.period_type == PeriodType.stabilized and stabilized_noi_monthly is None:
@@ -609,6 +613,7 @@ async def _auto_size_debt_modules(
     phases: list,
     session: "AsyncSession",
     prev_noi_stabilized: Decimal | None = None,
+    income_mode: str = "revenue_opex",
 ) -> None:
     """Pre-size CapitalModules that have source.auto_size=True.
 
@@ -665,7 +670,11 @@ async def _auto_size_debt_modules(
                 total += Decimal(str(amt))
         return total
 
-    if prev_noi_stabilized is not None and prev_noi_stabilized > ZERO:
+    if income_mode == "noi":
+        # NOI mode: use the user-entered stabilized NOI directly
+        _noi_input = _to_decimal(inputs.noi_stabilized_input) if inputs.noi_stabilized_input else ZERO
+        noi_annual = _noi_input
+    elif prev_noi_stabilized is not None and prev_noi_stabilized > ZERO:
         # Use the previously computed NOI — more accurate than the estimator because
         # it includes escalation carry-in and capex reserve deductions.
         noi_annual = prev_noi_stabilized
@@ -794,7 +803,12 @@ async def _auto_size_debt_modules(
                 ay2 = int((op_carry2 or {}).get("amort_term_years") or src2.get("amort_term_years") or 30)
                 phase_rate2 = (op_carry2 or {}).get("io_rate_pct") if op_carry2 else None
                 ds_monthly += _monthly_pmt(p2, phase_rate2 or rate2, ay2)
-    actual_reserve = _q(max(opex_monthly, ds_monthly) * Decimal(reserve_months))
+    # In NOI mode there is no separate OpEx figure — size reserve on DS only
+    actual_reserve = _q(
+        ds_monthly * Decimal(reserve_months)
+        if income_mode == "noi"
+        else max(opex_monthly, ds_monthly) * Decimal(reserve_months)
+    )
 
     # Compute actual construction IO across all auto-sized modules
     # = sum(principal × constr_rate/12 × constr_months) — already embedded in principal sizing
@@ -820,10 +834,15 @@ async def _auto_size_debt_modules(
     project_id = getattr(use_lines[0], "project_id", None) if use_lines else None
 
     # Update or create Operating Reserve use line
-    _reserve_basis = "Debt Service" if ds_monthly >= opex_monthly else "OpEx"
+    if income_mode == "noi":
+        _reserve_basis = "Debt Service"
+        _reserve_amount_basis = ds_monthly
+    else:
+        _reserve_basis = "Debt Service" if ds_monthly >= opex_monthly else "OpEx"
+        _reserve_amount_basis = max(opex_monthly, ds_monthly)
     _reserve_notes = (
         f"Auto-computed ({_reserve_basis} basis): "
-        f"${max(opex_monthly, ds_monthly):,.0f}/mo × {reserve_months} months"
+        f"${_reserve_amount_basis:,.0f}/mo × {reserve_months} months"
     )
     op_reserve_found = False
     for ul in use_lines:
@@ -936,6 +955,7 @@ def _compute_period(
     stabilized_noi_monthly: Decimal | None,
     construction_debt_monthly: Decimal = ZERO,
     operation_debt_monthly: Decimal = ZERO,
+    income_mode: str = "revenue_opex",
 ) -> dict[str, Any]:
     gross_revenue = ZERO
     vacancy_loss = ZERO
@@ -951,137 +971,166 @@ def _compute_period(
     capital_outflow = ZERO
     line_items: list[CashFlowLineItem] = []
 
-    for stream in streams:
-        base_amount = _stream_base_amount(stream)
-        escalation_factor = _growth_factor(stream.escalation_rate_pct_annual, period)
+    _is_operational_phase = phase.period_type in {PeriodType.lease_up, PeriodType.stabilized}
 
-        active = _is_stream_active(stream, phase.period_type)
-        if active:
-            escalated_amount = _q(base_amount * escalation_factor)
-            occupancy_pct = _stream_occupancy_pct(stream, phase, month_index, inputs)
-            net_income = _q(escalated_amount * occupancy_pct)
-            vacancy = _q(escalated_amount - net_income)
-        else:
-            escalated_amount = ZERO
-            occupancy_pct = ZERO
-            net_income = ZERO
-            vacancy = ZERO
-
-        gross_revenue += escalated_amount
-        vacancy_loss += vacancy
-        effective_gross_income += net_income
-
+    if income_mode == "noi" and _is_operational_phase:
+        # NOI mode: skip stream/expense loops. Compute monthly NOI from the stabilized input
+        # with compound annual escalation: noi_monthly = (noi_annual/12) × (1+rate)^(period/12)
+        _noi_annual = _to_decimal(inputs.noi_stabilized_input) if inputs.noi_stabilized_input else ZERO
+        _esc_rate = _to_decimal(inputs.noi_escalation_rate_pct) if inputs.noi_escalation_rate_pct else Decimal("3")
+        _esc_factor = _growth_factor(_esc_rate, period)
+        _noi_monthly = _q(_noi_annual / Decimal("12") * _esc_factor)
+        gross_revenue = _noi_monthly
+        vacancy_loss = ZERO
+        effective_gross_income = _noi_monthly
+        operating_expenses = ZERO
         line_items.append(
             CashFlowLineItem(
                 scenario_id=deal_model_id,
                 period=period,
-                income_stream_id=stream.id,
                 category=LineItemCategory.income,
-                label=stream.label,
-                base_amount=_q(base_amount),
-                adjustments=_json_ready(
+                label="NOI (Stabilized)",
+                base_amount=_q(_noi_annual / Decimal("12")),
+                adjustments=_json_ready({
+                    "phase": phase.period_type.value,
+                    "escalation_factor": _esc_factor,
+                    "income_mode": "noi",
+                }),
+                net_amount=_noi_monthly,
+            )
+        )
+    else:
+        for stream in streams:
+            base_amount = _stream_base_amount(stream)
+            escalation_factor = _growth_factor(stream.escalation_rate_pct_annual, period)
+
+            active = _is_stream_active(stream, phase.period_type)
+            if active:
+                escalated_amount = _q(base_amount * escalation_factor)
+                occupancy_pct = _stream_occupancy_pct(stream, phase, month_index, inputs)
+                net_income = _q(escalated_amount * occupancy_pct)
+                vacancy = _q(escalated_amount - net_income)
+            else:
+                escalated_amount = ZERO
+                occupancy_pct = ZERO
+                net_income = ZERO
+                vacancy = ZERO
+
+            gross_revenue += escalated_amount
+            vacancy_loss += vacancy
+            effective_gross_income += net_income
+
+            line_items.append(
+                CashFlowLineItem(
+                    scenario_id=deal_model_id,
+                    period=period,
+                    income_stream_id=stream.id,
+                    category=LineItemCategory.income,
+                    label=stream.label,
+                    base_amount=_q(base_amount),
+                    adjustments=_json_ready(
+                        {
+                            "phase": phase.period_type.value,
+                            "active": active,
+                            "units": stream.unit_count or 0,
+                            "occupancy_pct": occupancy_pct * HUNDRED,
+                            "escalation_factor": escalation_factor,
+                            "vacancy_loss": vacancy,
+                        }
+                    ),
+                    net_amount=net_income,
+                )
+            )
+
+        expense_growth = _growth_factor(inputs.expense_growth_rate_pct_annual, period)
+        units_operating = _operating_unit_count(inputs, phase.period_type)
+
+        property_tax = _monthly_expense(inputs.property_tax_annual, expense_growth)
+        insurance = _monthly_expense(inputs.insurance_annual, expense_growth)
+        operating_expense = (
+            _q((_to_decimal(inputs.opex_per_unit_annual) * units_operating / Decimal("12")) * expense_growth)
+            if _phase_is_operational(phase.period_type)
+            else ZERO
+        )
+        itemized_operating_expense = ZERO
+        for expense_line in expense_lines:
+            line_growth = _growth_factor(expense_line.escalation_rate_pct_annual, period)
+            line_active = _is_expense_line_active(expense_line, phase.period_type)
+            if line_active:
+                line_base = _monthly_expense(expense_line.annual_amount, line_growth)
+                # During lease-up, scale occupancy-sensitive lines by the same ramp used for revenue
+                lease_up_scale = ONE
+                if phase.period_type == PeriodType.lease_up and expense_line.scale_with_lease_up:
+                    floor_pct = _percent(expense_line.lease_up_floor_pct, default=ZERO)
+                    initial_occ = _percent(inputs.initial_occupancy_pct, default=Decimal("50"))
+                    stabilized_occ = Decimal("0.95")  # default stabilized occupancy
+                    if phase.months <= 1:
+                        ramp_occ = stabilized_occ
+                    else:
+                        step = (stabilized_occ - initial_occ) / Decimal(phase.months - 1)
+                        ramp_occ = _clamp(initial_occ + step * Decimal(month_index), ZERO, stabilized_occ)
+                    lease_up_scale = _clamp(ramp_occ, floor_pct, ONE)
+                line_amount = _q(line_base * lease_up_scale)
+            else:
+                line_base = ZERO
+                line_amount = ZERO
+                lease_up_scale = ZERO
+            itemized_operating_expense += line_amount
+            line_items.append(
+                _expense_line_item(
+                    deal_model_id,
+                    period,
+                    LineItemCategory.expense,
+                    expense_line.label,
+                    line_amount,
                     {
                         "phase": phase.period_type.value,
-                        "active": active,
-                        "units": stream.unit_count or 0,
-                        "occupancy_pct": occupancy_pct * HUNDRED,
-                        "escalation_factor": escalation_factor,
-                        "vacancy_loss": vacancy,
-                    }
-                ),
-                net_amount=net_income,
+                        "active": line_active,
+                        "annual_amount": expense_line.annual_amount,
+                        "escalation_factor": line_growth,
+                        "lease_up_scale": float(lease_up_scale) if phase.period_type == PeriodType.lease_up else None,
+                        "expense_line_id": str(expense_line.id),
+                    },
+                )
             )
+        management_fee = _q(effective_gross_income * _percent(inputs.mgmt_fee_pct))
+        carrying_cost = (
+            _q(_to_decimal(inputs.purchase_price) * _percent(inputs.carrying_cost_pct_annual) / Decimal("12"))
+            if phase.period_type
+            in {
+                PeriodType.hold,
+                PeriodType.pre_construction,
+                PeriodType.minor_renovation,
+                PeriodType.major_renovation,
+                PeriodType.conversion,
+                PeriodType.construction,
+                PeriodType.lease_up,
+            }
+            else ZERO
         )
 
-    expense_growth = _growth_factor(inputs.expense_growth_rate_pct_annual, period)
-    units_operating = _operating_unit_count(inputs, phase.period_type)
-
-    property_tax = _monthly_expense(inputs.property_tax_annual, expense_growth)
-    insurance = _monthly_expense(inputs.insurance_annual, expense_growth)
-    operating_expense = (
-        _q((_to_decimal(inputs.opex_per_unit_annual) * units_operating / Decimal("12")) * expense_growth)
-        if _phase_is_operational(phase.period_type)
-        else ZERO
-    )
-    itemized_operating_expense = ZERO
-    for expense_line in expense_lines:
-        line_growth = _growth_factor(expense_line.escalation_rate_pct_annual, period)
-        line_active = _is_expense_line_active(expense_line, phase.period_type)
-        if line_active:
-            line_base = _monthly_expense(expense_line.annual_amount, line_growth)
-            # During lease-up, scale occupancy-sensitive lines by the same ramp used for revenue
-            lease_up_scale = ONE
-            if phase.period_type == PeriodType.lease_up and expense_line.scale_with_lease_up:
-                floor_pct = _percent(expense_line.lease_up_floor_pct, default=ZERO)
-                initial_occ = _percent(inputs.initial_occupancy_pct, default=Decimal("50"))
-                stabilized_occ = Decimal("0.95")  # default stabilized occupancy
-                if phase.months <= 1:
-                    ramp_occ = stabilized_occ
-                else:
-                    step = (stabilized_occ - initial_occ) / Decimal(phase.months - 1)
-                    ramp_occ = _clamp(initial_occ + step * Decimal(month_index), ZERO, stabilized_occ)
-                lease_up_scale = _clamp(ramp_occ, floor_pct, ONE)
-            line_amount = _q(line_base * lease_up_scale)
-        else:
-            line_base = ZERO
-            line_amount = ZERO
-            lease_up_scale = ZERO
-        itemized_operating_expense += line_amount
-        line_items.append(
-            _expense_line_item(
-                deal_model_id,
-                period,
-                LineItemCategory.expense,
-                expense_line.label,
-                line_amount,
-                {
-                    "phase": phase.period_type.value,
-                    "active": line_active,
-                    "annual_amount": expense_line.annual_amount,
-                    "escalation_factor": line_growth,
-                    "lease_up_scale": float(lease_up_scale) if phase.period_type == PeriodType.lease_up else None,
-                    "expense_line_id": str(expense_line.id),
-                },
-            )
+        operating_expenses += (
+            property_tax
+            + insurance
+            + operating_expense
+            + itemized_operating_expense
+            + management_fee
+            + carrying_cost
         )
-    management_fee = _q(effective_gross_income * _percent(inputs.mgmt_fee_pct))
-    carrying_cost = (
-        _q(_to_decimal(inputs.purchase_price) * _percent(inputs.carrying_cost_pct_annual) / Decimal("12"))
-        if phase.period_type
-        in {
-            PeriodType.hold,
-            PeriodType.pre_construction,
-            PeriodType.minor_renovation,
-            PeriodType.major_renovation,
-            PeriodType.conversion,
-            PeriodType.construction,
-            PeriodType.lease_up,
-        }
-        else ZERO
-    )
 
-    operating_expenses += (
-        property_tax
-        + insurance
-        + operating_expense
-        + itemized_operating_expense
-        + management_fee
-        + carrying_cost
-    )
-
-    # Legacy scalar fields (property_tax_annual, insurance_annual, opex_per_unit_annual,
-    # mgmt_fee_pct, carrying_cost_pct_annual on OperationalInputs) are superseded by
-    # OperatingExpenseLine rows. Only write line items when non-zero to avoid duplicates
-    # and noise on deals that have migrated to line-item OpEx.
-    for _lbl, _amt, _meta in [
-        ("Property Tax",       property_tax,     {"phase": phase.period_type.value, "annual_amount": inputs.property_tax_annual or ZERO}),
-        ("Insurance",          insurance,         {"phase": phase.period_type.value, "annual_amount": inputs.insurance_annual or ZERO}),
-        ("Operating Expenses", operating_expense, {"phase": phase.period_type.value, "units": units_operating}),
-        ("Management Fee",     management_fee,    {"phase": phase.period_type.value, "mgmt_fee_pct": inputs.mgmt_fee_pct or ZERO}),
-        ("Carrying Cost",      carrying_cost,     {"phase": phase.period_type.value, "carrying_cost_pct_annual": inputs.carrying_cost_pct_annual or ZERO}),
-    ]:
-        if _amt > ZERO:
-            line_items.append(_expense_line_item(deal_model_id, period, LineItemCategory.expense, _lbl, _amt, _meta))
+        # Legacy scalar fields (property_tax_annual, insurance_annual, opex_per_unit_annual,
+        # mgmt_fee_pct, carrying_cost_pct_annual on OperationalInputs) are superseded by
+        # OperatingExpenseLine rows. Only write line items when non-zero to avoid duplicates
+        # and noise on deals that have migrated to line-item OpEx.
+        for _lbl, _amt, _meta in [
+            ("Property Tax",       property_tax,     {"phase": phase.period_type.value, "annual_amount": inputs.property_tax_annual or ZERO}),
+            ("Insurance",          insurance,         {"phase": phase.period_type.value, "annual_amount": inputs.insurance_annual or ZERO}),
+            ("Operating Expenses", operating_expense, {"phase": phase.period_type.value, "units": units_operating}),
+            ("Management Fee",     management_fee,    {"phase": phase.period_type.value, "mgmt_fee_pct": inputs.mgmt_fee_pct or ZERO}),
+            ("Carrying Cost",      carrying_cost,     {"phase": phase.period_type.value, "carrying_cost_pct_annual": inputs.carrying_cost_pct_annual or ZERO}),
+        ]:
+            if _amt > ZERO:
+                line_items.append(_expense_line_item(deal_model_id, period, LineItemCategory.expense, _lbl, _amt, _meta))
 
     if phase.period_type in {PeriodType.lease_up, PeriodType.stabilized, PeriodType.exit}:
         capex_reserve = _q(

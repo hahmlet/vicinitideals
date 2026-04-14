@@ -24,3 +24,9 @@ data/gis_cache/*.geojson
 tests/e2e/auth-state.json
 tests/e2e/playwright-report/
 tests/e2e/.playwright-cli/
+
+# Scratch / temp files (screenshots, dumps, one-off scripts)
+tmp/
+
+# Brainstorming session files (visual companion)
+.superpowers/

@@ -175,6 +175,8 @@ class Scenario(Base):
     is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
     # Kept for backward compat / single-project scenarios — canonical location is Project.deal_type
     project_type: Mapped[ProjectType] = mapped_column(String(60), nullable=False)
+    # "revenue_opex" (default) | "noi" — controls which income path the cashflow engine uses
+    income_mode: Mapped[str] = mapped_column(String(20), nullable=False, default="revenue_opex")
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
@@ -314,6 +316,14 @@ class OperationalInputs(Base):
     # debt terms for auto-created CapitalModule(s)
     # {"perm_rate_pct": 4.5, "perm_amort_years": 30, "construction_rate_pct": 4.5}
     debt_terms: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+
+    # ── NOI mode inputs (only used when DealModel.income_mode == 'noi') ──────
+    # Annual stabilized NOI entered/pre-filled from listing; NULL = not yet set
+    noi_stabilized_input: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
+    # Annual escalation rate applied month-by-month to the NOI input
+    noi_escalation_rate_pct: Mapped[object] = mapped_column(
+        Numeric(18, 6), nullable=False, default=Decimal("3")
+    )
 
     # Relationships
     project: Mapped["Project"] = relationship(  # type: ignore[name-defined]

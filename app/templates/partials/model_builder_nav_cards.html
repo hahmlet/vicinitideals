@@ -2,7 +2,7 @@
 {# Required context: active_module, locked, deal_setup_complete, capital_module_count, capital_total,
    use_line_count, uses_total, income_stream_count, revenue_annual, expense_line_count, opex_annual,
    carrying_annual, equity_ownership, org_owner_fallback, deferred_uses, deferred_total, profit_total,
-   divestment_total, phase_summaries, outputs, nav_base_path #}
+   divestment_total, phase_summaries, outputs, nav_base_path, income_mode #}
 
 {% set setup_locked = locked or not deal_setup_complete %}
 
@@ -16,6 +16,17 @@
   <div class="module-total">{{ uses_total | currency if uses_total else '—' }}</div>
 </a>
 
+{% if income_mode == 'noi' %}
+<a href="{{ nav_base_path }}?module=noi"
+   class="module-card {% if active_module == 'noi' %}active{% endif %} {% if setup_locked %}locked{% endif %}">
+  <div class="module-icon module-icon-revenue">📊</div>
+  <div class="module-info">
+    <div class="module-label">2 · NOI</div>
+    <div class="module-meta">Stabilized NOI · escalation rate</div>
+  </div>
+  <div class="module-total">—/yr</div>
+</a>
+{% else %}
 <a href="{{ nav_base_path }}?module=revenue"
    class="module-card {% if active_module == 'revenue' %}active{% endif %} {% if setup_locked %}locked{% endif %}">
   <div class="module-icon module-icon-revenue">📈</div>
@@ -35,6 +46,7 @@
   </div>
   <div class="module-total">{{ opex_annual | currency if opex_annual else '—' }}/yr</div>
 </a>
+{% endif %}
 
 <a href="{{ nav_base_path }}?module=carrying"
    class="module-card {% if active_module == 'carrying' %}active{% endif %} {% if setup_locked %}locked{% endif %}">

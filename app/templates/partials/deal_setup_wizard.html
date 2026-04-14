@@ -1,5 +1,5 @@
 {# Deal Setup Wizard — rendered in place of the builder-layout when deal_setup_complete=False #}
-{# Required context: model, inputs, step (1-4) #}
+{# Required context: model, inputs, step (1-6) #}
 {# Each step POSTs to /ui/models/{model.id}/setup/step and receives the next step as innerHTML swap #}
 
 <style>
@@ -198,7 +198,7 @@
     {# ── Progress indicator (hidden for step 0 — pre-check) ── #}
     {% if _step > 0 %}
     <div class="wizard-progress">
-      {% for i in range(1, 5) %}
+      {% for i in range(1, 7) %}
         <div class="wizard-step-dot {% if i < _step %}done{% elif i == _step %}active{% endif %}">
           {% if i < _step %}✓{% else %}{{ i }}{% endif %}
         </div>
@@ -258,6 +258,48 @@
 
     {# ════════════════════════════════════════════════════════════════ STEP 1 #}
     {% elif _step == 1 %}
+    {% set _im = model.income_mode if model.income_mode else 'revenue_opex' %}
+    <div class="wizard-header">
+      <div class="wizard-title">Income Mode</div>
+      <div class="wizard-subtitle">How will operating income be modeled for this deal?</div>
+    </div>
+    <form hx-post="/ui/models/{{ model.id }}/setup/step"
+          hx-target="#deal-setup-wizard"
+          hx-swap="outerHTML">
+      <input type="hidden" name="step" value="1">
+      <div class="wizard-body">
+        <div class="option-grid">
+
+          <label class="option-card {% if _im == 'revenue_opex' %}selected{% endif %}">
+            <input type="radio" name="income_mode" value="revenue_opex"
+                   {% if _im == 'revenue_opex' %}checked{% endif %}
+                   onchange="selectOption(this)">
+            <div>
+              <div class="option-card-title">Revenue / OpEx</div>
+              <div class="option-card-desc">Model income streams and operating expenses line-by-line. NOI is computed from Revenue minus OpEx. Best for detailed underwriting.</div>
+            </div>
+          </label>
+
+          <label class="option-card {% if _im == 'noi' %}selected{% endif %}">
+            <input type="radio" name="income_mode" value="noi"
+                   {% if _im == 'noi' %}checked{% endif %}
+                   onchange="selectOption(this)">
+            <div>
+              <div class="option-card-title">NOI (Stabilized)</div>
+              <div class="option-card-desc">Enter a single stabilized NOI figure that escalates annually. Revenue and OpEx modules are replaced by a single NOI input. Ideal for acquisition underwriting from a listing NOI.</div>
+            </div>
+          </label>
+
+        </div>
+      </div>
+      <div class="wizard-footer">
+        <a href="/deals/{{ model.deal_id }}" class="btn btn-ghost" style="font-size:12px;color:var(--text-muted)">✕ Cancel</a>
+        <button type="submit" class="btn btn-primary">Next →</button>
+      </div>
+    </form>
+
+    {# ════════════════════════════════════════════════════════════════ STEP 2 #}
+    {% elif _step == 2 %}
     <div class="wizard-header">
       <div class="wizard-title">Debt Structure</div>
       <div class="wizard-subtitle">How is this project's debt financing structured?</div>
@@ -265,7 +307,7 @@
     <form hx-post="/ui/models/{{ model.id }}/setup/step"
           hx-target="#deal-setup-wizard"
           hx-swap="outerHTML">
-      <input type="hidden" name="step" value="1">
+      <input type="hidden" name="step" value="2">
       <div class="wizard-body">
         <div class="option-grid" id="debt-struct-grid">
 
@@ -302,13 +344,15 @@
         </div>
       </div>
       <div class="wizard-footer">
-        <a href="/deals/{{ model.deal_id }}" class="btn btn-ghost" style="font-size:12px;color:var(--text-muted)">✕ Cancel</a>
+        <button type="button" class="btn btn-secondary"
+                hx-get="/ui/models/{{ model.id }}/setup?step=1"
+                hx-target="#deal-setup-wizard" hx-swap="outerHTML">← Back</button>
         <button type="submit" class="btn btn-primary">Next →</button>
       </div>
     </form>
 
-    {# ════════════════════════════════════════════════════════════════ STEP 2 #}
-    {% elif _step == 2 %}
+    {# ════════════════════════════════════════════════════════════════ STEP 3 #}
+    {% elif _step == 3 %}
     <div class="wizard-header">
       <div class="wizard-title">Debt Terms</div>
       <div class="wizard-subtitle">
@@ -322,7 +366,7 @@
     <form hx-post="/ui/models/{{ model.id }}/setup/step"
           hx-target="#deal-setup-wizard"
           hx-swap="outerHTML">
-      <input type="hidden" name="step" value="2">
+      <input type="hidden" name="step" value="3">
       <div class="wizard-body">
 
         {% if _ds == 'construction_to_perm' %}
@@ -395,14 +439,14 @@
       </div>
       <div class="wizard-footer">
         <button type="button" class="btn btn-secondary"
-                hx-get="/ui/models/{{ model.id }}/setup?step=1"
+                hx-get="/ui/models/{{ model.id }}/setup?step=2"
                 hx-target="#deal-setup-wizard" hx-swap="outerHTML">← Back</button>
         <button type="submit" class="btn btn-primary">Next →</button>
       </div>
     </form>
 
-    {# ════════════════════════════════════════════════════════════════ STEP 3 #}
-    {% elif _step == 3 %}
+    {# ════════════════════════════════════════════════════════════════ STEP 4 #}
+    {% elif _step == 4 %}
     <div class="wizard-header">
       <div class="wizard-title">Debt Sizing</div>
       <div class="wizard-subtitle">How should the model determine the debt amount?</div>
@@ -412,7 +456,7 @@
     <form hx-post="/ui/models/{{ model.id }}/setup/step"
           hx-target="#deal-setup-wizard"
           hx-swap="outerHTML">
-      <input type="hidden" name="step" value="3">
+      <input type="hidden" name="step" value="4">
       <div class="wizard-body">
 
         <div class="toggle-row">
@@ -443,14 +487,14 @@
       </div>
       <div class="wizard-footer">
         <button type="button" class="btn btn-secondary"
-                hx-get="/ui/models/{{ model.id }}/setup?step=2"
+                hx-get="/ui/models/{{ model.id }}/setup?step=3"
                 hx-target="#deal-setup-wizard" hx-swap="outerHTML">← Back</button>
         <button type="submit" class="btn btn-primary">Next →</button>
       </div>
     </form>
 
-    {# ════════════════════════════════════════════════════════════════ STEP 4 #}
-    {% elif _step == 4 %}
+    {# ════════════════════════════════════════════════════════════════ STEP 5 #}
+    {% elif _step == 5 %}
     <div class="wizard-header">
       <div class="wizard-title">Reserves & Floors</div>
       <div class="wizard-subtitle">Minimum cash balances the debt must fund.</div>
@@ -460,7 +504,7 @@
     <form hx-post="/ui/models/{{ model.id }}/setup/step"
           hx-target="#deal-setup-wizard"
           hx-swap="outerHTML">
-      <input type="hidden" name="step" value="4">
+      <input type="hidden" name="step" value="5">
       <div class="wizard-body">
 
         {% if _has_constr %}
@@ -481,21 +525,25 @@
             <label>Reserve (months)</label>
             <input type="number" name="operation_reserve_months" step="1" min="0" max="24"
                    value="{{ _or_mo }}" placeholder="6">
+            {% if model.income_mode == 'noi' %}
+            <div class="field-hint">Sized as N months of debt service (NOI mode — OpEx is not available). Lender-required. Typical: 6–12 months.</div>
+            {% else %}
             <div class="field-hint">Sized as the greater of N months of OpEx or N months of debt service. Lender-required. Typical: 6–12 months.</div>
+            {% endif %}
           </div>
         </div>
 
       </div>
       <div class="wizard-footer">
         <button type="button" class="btn btn-secondary"
-                hx-get="/ui/models/{{ model.id }}/setup?step=3"
+                hx-get="/ui/models/{{ model.id }}/setup?step=4"
                 hx-target="#deal-setup-wizard" hx-swap="outerHTML">← Back</button>
         <button type="submit" class="btn btn-primary">Review →</button>
       </div>
     </form>
 
     {# ════════════════════════════════════════════════════════════════ REVIEW #}
-    {% elif _step == 5 %}
+    {% elif _step == 6 %}
     {% set _dt  = inputs.debt_terms or {} %}
     {% set _dsm = inputs.debt_sizing_mode or 'gap_fill' %}
     <div class="wizard-header">
@@ -508,6 +556,10 @@
       <div class="wizard-body">
 
         <table class="review-table">
+          <tr>
+            <td>Income mode</td>
+            <td>{% if model.income_mode == 'noi' %}NOI (Stabilized){% else %}Revenue / OpEx{% endif %}</td>
+          </tr>
           <tr>
             <td>Debt structure</td>
             <td>
@@ -551,7 +603,7 @@
       </div>
       <div class="wizard-footer">
         <button type="button" class="btn btn-secondary"
-                hx-get="/ui/models/{{ model.id }}/setup?step=4"
+                hx-get="/ui/models/{{ model.id }}/setup?step=5"
                 hx-target="#deal-setup-wizard" hx-swap="outerHTML">← Back</button>
         <button type="submit" class="btn btn-primary">Finish Setup →</button>
       </div>
