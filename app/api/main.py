@@ -47,6 +47,20 @@ _UI_PATH_PREFIXES = (
     "/health",
     "/api/",  # HTMX calls from browser templates don't carry an API key
     "/tools/",
+    "/login",
+    "/logout",
+    "/register",
+    "/profile",
+)
+
+# Paths that don't require an authenticated session (public)
+_AUTH_EXEMPT_PATHS = (
+    "/static/",
+    "/health",
+    "/login",
+    "/logout",
+    "/register",
+    "/api/",
 )
 
 STATUS_CODES: dict[int, str] = {
@@ -202,8 +216,38 @@ def create_app() -> FastAPI:
             "version": _pkg.__version__ if hasattr(_pkg, "__version__") else "0.1.0",
         })
 
+    @app.middleware("http")
+    async def require_auth_for_ui(request: Request, call_next):
+        """Redirect unauthenticated browser requests to /login.
+
+        Exempts: auth pages, static assets, /health, /api/* (HTMX calls carry
+        the session cookie from the browser context so they're fine).
+        HTMX fragment requests (hx-request header) are allowed through so
+        partial swaps don't redirect mid-page.
+        """
+        path = request.url.path
+        is_exempt = any(path.startswith(p) for p in _AUTH_EXEMPT_PATHS) or path == "/"
+        is_htmx = request.headers.get("hx-request") == "true"
+        if is_exempt or is_htmx:
+            return await call_next(request)
+
+        from app.api.auth import decode_session_token, COOKIE_NAME
+        token = request.cookies.get(COOKIE_NAME)
+        # Also accept legacy vd_user_id cookie so existing sessions aren't broken
+        if token and decode_session_token(token) is not None:
+            return await call_next(request)
+        if request.cookies.get("vd_user_id"):
+            return await call_next(request)
+
+        from fastapi.responses import RedirectResponse as _RR
+        return _RR(url=f"/login?next={request.url.path}", status_code=303)
+
     for router in ROUTERS:
         app.include_router(router, prefix="/api")
+
+    # Auth router — login, logout, register, profile
+    from app.api.routers.auth_routes import router as auth_router
+    app.include_router(auth_router)
 
     # UI router — HTML pages, no API key required
     from app.api.routers.ui import router as ui_router

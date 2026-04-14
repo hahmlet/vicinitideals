@@ -30,6 +30,7 @@ class Settings(BaseSettings):
     # API security
     # -------------------------------------------------------------------------
     vicinitideals_api_key: str = "changeme-generate-with-openssl-rand-hex-32"
+    secret_key: str = "changeme-generate-with-openssl-rand-hex-32"
 
     # -------------------------------------------------------------------------
     # Scraper (Stage 1C)

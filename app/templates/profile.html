@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Profile — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div class="topbar">
+  <div class="topbar-title">Profile</div>
+</div>
+<div class="content">
+  <div style="max-width:480px;padding:32px 24px">
+    <div style="font-size:18px;font-weight:700;margin-bottom:20px">Your Account</div>
+
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div>
+        <div class="field-label">Name</div>
+        <div style="font-size:14px;margin-top:4px">{{ user.name }}</div>
+      </div>
+      {% if user.email %}
+      <div>
+        <div class="field-label">Email</div>
+        <div style="font-size:14px;margin-top:4px">{{ user.email }}</div>
+      </div>
+      {% endif %}
+      {% if user.last_login %}
+      <div>
+        <div class="field-label">Last sign-in</div>
+        <div style="font-size:14px;margin-top:4px;color:var(--text-muted)">
+          {{ user.last_login.strftime('%b %-d, %Y at %-I:%M %p') }}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+
+    <div style="margin-top:32px;padding-top:20px;border-top:1px solid var(--border)">
+      <form method="post" action="/logout">
+        <button class="btn" type="submit" style="color:var(--danger)">Sign out</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

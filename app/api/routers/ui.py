@@ -753,14 +753,29 @@ def _build_portfolio_gantt(portfolio_entries: "list[tuple[str, str, Deal]]") -> 
     return {"has_dates": any_has_dates, "month_ticks": month_ticks, "year_spans": year_spans, "rows": rows}
 
 
-async def _get_user(session: DBSession, user_id: str | None) -> User | None:
-    if not user_id:
-        return None
-    try:
-        uid = UUID(user_id)
-    except ValueError:
-        return None
-    return await session.get(User, uid)
+async def _get_user(session: DBSession, request: Request) -> User | None:
+    """Resolve the current user from the session cookie.
+
+    Checks vd_session (new signed cookie) first, falls back to vd_user_id
+    (legacy splash-screen cookie) so existing sessions keep working.
+    """
+    from app.api.auth import COOKIE_NAME, decode_session_token
+
+    token = request.cookies.get(COOKIE_NAME)
+    if token:
+        uid = decode_session_token(token)
+        if uid is not None:
+            return await session.get(User, uid)
+
+    # Legacy fallback — vd_user_id cookie set by the splash screen
+    legacy = request.cookies.get("vd_user_id")
+    if legacy:
+        try:
+            uid = UUID(legacy)
+            return await session.get(User, uid)
+        except ValueError:
+            pass
+    return None
 
 
 async def _get_dedup_count(session: DBSession) -> int:
@@ -990,7 +1005,7 @@ async def settings_scraping_services(
     session: DBSession,
     vd_user_id: str | None = Cookie(default=None),
 ) -> HTMLResponse:
-    user = await _get_user(session, vd_user_id)
+    user = await _get_user(session, request)
     _require_settings_owner(user)
     dedup_count = await _get_dedup_count(session)
     address_issues_count = await _get_address_issues_count(session)
@@ -1059,7 +1074,7 @@ async def settings_data_sources(
     session: DBSession,
     vd_user_id: str | None = Cookie(default=None),
 ) -> HTMLResponse:
-    user = await _get_user(session, vd_user_id)
+    user = await _get_user(session, request)
     _require_settings_owner(user)
     dedup_count = await _get_dedup_count(session)
     address_issues_count = await _get_address_issues_count(session)
@@ -1506,7 +1521,7 @@ async def admin_rlis_refresh(
     Returns the Celery task ID.
     """
     from app.tasks.parcel_seed import rlis_quarterly_refresh_task
-    user = await _get_user(session, vd_user_id)
+    user = await _get_user(session, request)
     _require_settings_owner(user)
     result = rlis_quarterly_refresh_task.delay()
     return JSONResponse({"task_id": result.id, "status": "queued"})
@@ -1520,7 +1535,7 @@ async def admin_seed_rlis(
 ) -> JSONResponse:
     """Dispatch seed_rlis_task — re-seeds parcels from the cached taxlot GeoJSON."""
     from app.tasks.parcel_seed import seed_rlis_task
-    user = await _get_user(session, vd_user_id)
+    user = await _get_user(session, request)
     _require_settings_owner(user)
     result = seed_rlis_task.delay()
     return JSONResponse({"task_id": result.id, "status": "queued"})
@@ -1575,7 +1590,7 @@ async def admin_classify_parcels(
 ) -> JSONResponse:
     """Dispatch classify_parcels_task — classifies parcels with data but no bucket."""
     from app.tasks.parcel_seed import classify_parcels_task
-    user = await _get_user(session, vd_user_id)
+    user = await _get_user(session, request)
     _require_settings_owner(user)
     result = classify_parcels_task.delay()
     return JSONResponse({"task_id": result.id, "status": "queued"})
@@ -1589,7 +1604,7 @@ async def deals_new_page(
     opp_id: str = Query(default=""),
 ) -> HTMLResponse:
     """Full-page wizard for creating a new deal (name + type)."""
-    user = await _get_user(session, vd_user_id)
+    user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
     ctx = _base_ctx(user, dedup_count, "deals")
     # Pre-populate name and pass opp_id so the form can link to an existing opportunity.
@@ -1617,7 +1632,7 @@ async def deals_page(
     model: str = Query(default=""),
     include_archived: str = Query(default=""),
 ) -> HTMLResponse:
-    user = await _get_user(session, vd_user_id)
+    user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
 
     archived = include_archived == "1"
@@ -1721,7 +1736,7 @@ async def create_deal(
     if not name:
         return HTMLResponse("<p class='text-muted'>Deal name is required.</p>", status_code=400)
 
-    user = await _get_user(session, vd_user_id)
+    user = await _get_user(session, request)
 
     # Resolve org_id: form value → user's org → first org
     org_id = None
@@ -1844,7 +1859,7 @@ async def deal_detail(
     tab: str = Query(default="overview"),
     error: str = Query(default=""),
 ) -> HTMLResponse:
-    user = await _get_user(session, vd_user_id)
+    user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
 
     deal = await session.get(
@@ -2013,7 +2028,7 @@ async def create_model_for_deal(
     if opportunity is None:
         return HTMLResponse("<p class='text-muted'>Opportunity not found.</p>", status_code=404)
 
-    user = await _get_user(session, vd_user_id)
+    user = await _get_user(session, request)
     try:
         deal_type = ProjectType(deal_type_raw)
     except ValueError:
@@ -2163,7 +2178,7 @@ async def opportunities_page(
     status: str = Query(default=""),
     source: str = Query(default=""),
 ) -> HTMLResponse:
-    user = await _get_user(session, vd_user_id)
+    user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
     opps = await _query_opportunities(session, q=q, status=status, source=source)
     return templates.TemplateResponse(request, "opportunities.html", {
@@ -2233,7 +2248,7 @@ async def opportunity_wizard_get(
     step: int = Query(default=1),
     opp_id: str = Query(default=""),
 ) -> HTMLResponse:
-    user = await _get_user(session, vd_user_id)
+    user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
     opp = None
     buildings: list[Building] = []
@@ -2270,7 +2285,7 @@ async def opportunity_wizard_step(
     form = await request.form()
     step = int(form.get("step", 1))
     opp_id_str = str(form.get("opp_id", "") or "")
-    user = await _get_user(session, vd_user_id)
+    user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
 
     _deal_type_labels = {
@@ -2458,7 +2473,7 @@ async def opportunity_detail(
 ) -> HTMLResponse:
     """Opportunity detail page — shows buildings inline."""
     from sqlalchemy.orm import selectinload as _sl
-    user = await _get_user(session, vd_user_id)
+    user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
     from app.models.parcel import Parcel as _Parcel
     opp = (await session.execute(
@@ -2548,7 +2563,7 @@ async def buildings_page(
     q: str = Query(default=""),
     source: str = Query(default=""),
 ) -> HTMLResponse:
-    user = await _get_user(session, vd_user_id)
+    user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
     stmt = (
         select(Building)
@@ -2749,7 +2764,7 @@ async def parcels_page(
     max_year: str = Query(default=""),
     offset: int = Query(default=0, ge=0),
 ) -> HTMLResponse:
-    user = await _get_user(session, vd_user_id)
+    user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
     base = _parcel_base_stmt(q, zoning, jurisdiction, use_group, min_acres, max_acres, min_year, max_year)
     filtered_count, total = await asyncio.gather(
@@ -2966,7 +2981,7 @@ async def listings_page(
     max_units: str = Query(default=""),
     priority_bucket: str = Query(default=""),
 ) -> HTMLResponse:
-    user = await _get_user(session, vd_user_id)
+    user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
     all_listings = list((await session.execute(
         _listings_base_stmt(q, source, "", property_type, min_units, max_units, priority_bucket)
@@ -3462,7 +3477,7 @@ async def create_deal_from_listing(
     except ValueError:
         deal_type = ProjectType.acquisition_major_reno
 
-    user = await _get_user(session, vd_user_id)
+    user = await _get_user(session, request)
     from app.models.org import Organization
     org = (await session.execute(select(Organization).limit(1))).scalar_one_or_none()
     if org is None:
@@ -3682,7 +3697,7 @@ async def brokers_page(
     listings_op: str = Query(default=""),
     listings_val: str = Query(default=""),
 ) -> HTMLResponse:
-    user = await _get_user(session, vd_user_id)
+    user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
     stmt = _broker_stmt(q, company, listings_op, listings_val)
     brokers_list = list((await session.execute(stmt)).scalars().unique())
@@ -4736,7 +4751,7 @@ async def create_deal_copy(
     if source is None:
         return HTMLResponse("<p class='text-muted'>Deal not found.</p>", status_code=404)
 
-    user = await _get_user(session, vd_user_id)
+    user = await _get_user(session, request)
     form = await request.form()
     variant_name = str(form.get("name", "")).strip() or f"{source.name} (Copy)"
     selected_project_ids = set(form.getlist("project_ids"))
@@ -5744,7 +5759,7 @@ async def model_builder(
         await session.get(Opportunity, _first_proj.opportunity_id)
         if _first_proj and _first_proj.opportunity_id else None
     )
-    user = await _get_user(session, vd_user_id)
+    user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
     address_issues_count = await _get_address_issues_count(session)
 
@@ -6315,7 +6330,7 @@ async def portfolios_page(
     session: DBSession,
     vd_user_id: str | None = Cookie(default=None),
 ) -> HTMLResponse:
-    user = await _get_user(session, vd_user_id)
+    user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
 
     portfolios_result = await session.execute(
@@ -6399,7 +6414,7 @@ async def create_portfolio(
     if not name:
         return HTMLResponse("<p class='text-muted'>Portfolio name is required.</p>", status_code=400)
 
-    user = await _get_user(session, vd_user_id)
+    user = await _get_user(session, request)
     org_id = user.org_id if user else None
     if org_id is None:
         from app.models.org import Organization
@@ -6421,7 +6436,7 @@ async def portfolio_detail(
     session: DBSession,
     vd_user_id: str | None = Cookie(default=None),
 ) -> HTMLResponse:
-    user = await _get_user(session, vd_user_id)
+    user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
 
     portfolio = await session.get(
@@ -6590,7 +6605,7 @@ async def dedup_page(
     tab: str = Query(default="pending"),
     vd_user_id: str | None = Cookie(default=None),
 ) -> HTMLResponse:
-    user = await _get_user(session, vd_user_id)
+    user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
     address_issues_count = await _get_address_issues_count(session)
 
@@ -6681,7 +6696,7 @@ async def ui_dedup_keep_separate(
     candidate = await session.get(DedupCandidate, candidate_id)
     if candidate is None:
         return HTMLResponse("")
-    user = await _get_user(session, vd_user_id)
+    user = await _get_user(session, request)
     candidate.status = DedupStatus.kept_separate
     candidate.resolved_by_user_id = user.id if user else None
     candidate.resolved_at = datetime.now(UTC)
@@ -6705,7 +6720,7 @@ async def ui_dedup_resolve(
     form = await request.form()
     action = str(form.get("action", "keep_separate"))
     winner = str(form.get("winner", "a"))
-    user = await _get_user(session, vd_user_id)
+    user = await _get_user(session, request)
 
     if action == "keep_separate":
         candidate.status = DedupStatus.kept_separate
