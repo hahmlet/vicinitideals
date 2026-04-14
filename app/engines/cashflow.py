@@ -984,8 +984,10 @@ def _compute_period(
         vacancy_loss = ZERO
         effective_gross_income = _noi_monthly
         operating_expenses = ZERO
-        # Zero-initialize legacy scalar variables so unconditional code below doesn't raise UnboundLocalError
+        # Zero-initialize variables only assigned in the else branch so unconditional
+        # code below (legacy scalar loop, capex reserve) doesn't raise UnboundLocalError.
         units_operating = ZERO
+        expense_growth = ONE
         property_tax = insurance = operating_expense = management_fee = carrying_cost = ZERO
         line_items.append(
             CashFlowLineItem(
