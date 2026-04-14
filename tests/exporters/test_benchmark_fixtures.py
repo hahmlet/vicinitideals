@@ -11,13 +11,13 @@ from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.pool import StaticPool
 
-from vicinitideals.engines.cashflow import compute_cash_flows
-from vicinitideals.engines.waterfall import compute_waterfall
-from vicinitideals.exporters import export_deal_model_json, import_deal_from_json, validate_deal_import_payload
-from vicinitideals.models import Base  # imports all ORM models, enabling create_all
-from vicinitideals.models.capital import CapitalModule, FunderType, WaterfallResult, WaterfallTier, WaterfallTierType
-from vicinitideals.models.cashflow import CashFlow, CashFlowLineItem, OperationalOutputs
-from vicinitideals.models.deal import (
+from app.engines.cashflow import compute_cash_flows
+from app.engines.waterfall import compute_waterfall
+from app.exporters import export_deal_model_json, import_deal_from_json, validate_deal_import_payload
+from app.models import Base  # imports all ORM models, enabling create_all
+from app.models.capital import CapitalModule, FunderType, WaterfallResult, WaterfallTier, WaterfallTierType
+from app.models.cashflow import CashFlow, CashFlowLineItem, OperationalOutputs
+from app.models.deal import (
     Deal,
     DealModel,
     DealOpportunity,
@@ -27,8 +27,8 @@ from vicinitideals.models.deal import (
     OperationalInputs,
     ProjectType,
 )
-from vicinitideals.models.org import Organization, User
-from vicinitideals.models.project import Opportunity, Project
+from app.models.org import Organization, User
+from app.models.project import Opportunity, Project
 
 FIXTURE_DIR = Path(__file__).resolve().parents[1] / "fixtures"
 FIXTURE_NAMES = (

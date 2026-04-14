@@ -12,10 +12,10 @@
 
 ## Key Directories
 
-- `vicinitideals/` — Python package (FastAPI app, engines, scrapers, tasks, models)
-- `vicinitideals/api/routers/ui.py` — HTMX UI routes (~6800 lines, most active file)
-- `vicinitideals/engines/` — Financial computation (cashflow, draw_schedule, waterfall, etc.)
-- `vicinitideals/models/` — SQLAlchemy ORM models
+- `app/` — Python package (FastAPI app, engines, scrapers, tasks, models)
+- `app/api/routers/ui.py` — HTMX UI routes (~6800 lines, most active file)
+- `app/engines/` — Financial computation (cashflow, draw_schedule, waterfall, etc.)
+- `app/models/` — SQLAlchemy ORM models
 - `alembic/` — Database migrations
 - `tests/` — Unit + integration tests
 - `docs/` — Project documentation

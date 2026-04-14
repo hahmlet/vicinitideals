@@ -9,12 +9,12 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.pool import StaticPool
 
-from vicinitideals.engines.waterfall import compute_waterfall
-from vicinitideals.models.capital import CapitalModule, FunderType, WaterfallResult, WaterfallTier
-from vicinitideals.models.cashflow import CashFlow, OperationalOutputs, PeriodType
-from vicinitideals.models.deal import DealModel, ProjectType
-from vicinitideals.models.org import Organization, User
-from vicinitideals.models.project import (
+from app.engines.waterfall import compute_waterfall
+from app.models.capital import CapitalModule, FunderType, WaterfallResult, WaterfallTier
+from app.models.cashflow import CashFlow, OperationalOutputs, PeriodType
+from app.models.deal import DealModel, ProjectType
+from app.models.org import Organization, User
+from app.models.project import (
     Opportunity,
     OpportunityCategory,
     OpportunitySource,
@@ -24,7 +24,7 @@ from vicinitideals.models.project import (
 
 @pytest.fixture
 async def db_session() -> AsyncGenerator[AsyncSession, None]:
-    from vicinitideals.models import Base  # noqa: F401 — ensures all tables are registered
+    from app.models import Base  # noqa: F401 — ensures all tables are registered
 
     engine = create_async_engine(
         "sqlite+aiosqlite:///:memory:",
@@ -417,7 +417,7 @@ async def test_irr_hurdle_split_waits_until_lp_hurdle_is_met(db_session: AsyncSe
 
 
 async def _seed_base_deal(session: AsyncSession) -> DealModel:
-    from vicinitideals.models.deal import Deal, DealOpportunity
+    from app.models.deal import Deal, DealOpportunity
     org = Organization(id=uuid4(), name="Test Org", slug=f"test-org-{uuid4().hex[:8]}")
     user = User(id=uuid4(), org_id=org.id, name="Test User", display_color="#3366FF")
     opportunity = Opportunity(

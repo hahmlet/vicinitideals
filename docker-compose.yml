@@ -37,7 +37,7 @@ services:
       context: .
       target: worker
     container_name: vicinitideals-worker-default
-    command: celery -A vicinitideals.tasks.celery_app worker -Q default -c 2
+    command: celery -A app.tasks.celery_app worker -Q default -c 2
     env_file: .env
     volumes:
       - ./data:/app/data
@@ -55,7 +55,7 @@ services:
       context: .
       target: worker
     container_name: vicinitideals-worker-scraping
-    command: celery -A vicinitideals.tasks.celery_app worker -Q scraping -c 1
+    command: celery -A app.tasks.celery_app worker -Q scraping -c 1
     env_file: .env
     volumes:
       - ./data:/app/data
@@ -73,7 +73,7 @@ services:
       context: .
       target: worker
     container_name: vicinitideals-worker-analysis
-    command: celery -A vicinitideals.tasks.celery_app worker -Q analysis -c 2
+    command: celery -A app.tasks.celery_app worker -Q analysis -c 2
     env_file: .env
     volumes:
       - ./data:/app/data
@@ -91,7 +91,7 @@ services:
       context: .
       target: worker
     container_name: vicinitideals-beat
-    command: celery -A vicinitideals.tasks.celery_app beat --loglevel=info
+    command: celery -A app.tasks.celery_app beat --loglevel=info
     env_file: .env
     volumes:
       - ./data:/app/data

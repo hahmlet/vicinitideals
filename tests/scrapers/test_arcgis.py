@@ -3,7 +3,7 @@ from __future__ import annotations
 import httpx
 import pytest
 
-from vicinitideals.scrapers.arcgis import ArcGISLookupError, lookup_gresham_parcels
+from app.scrapers.arcgis import ArcGISLookupError, lookup_gresham_parcels
 
 
 def _response(url: str, payload: dict, status_code: int = 200) -> httpx.Response:

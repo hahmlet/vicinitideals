@@ -5,9 +5,9 @@ from decimal import Decimal
 
 import pytest
 
-from vicinitideals.schemas.broker import BrokerCreate
-from vicinitideals.schemas.scraped_listing import ScrapedListingCreate
-from vicinitideals.scrapers.crexi import CrxiScraper, _broker_key, _parse_summary_details
+from app.schemas.broker import BrokerCreate
+from app.schemas.scraped_listing import ScrapedListingCreate
+from app.scrapers.crexi import CrxiScraper, _broker_key, _parse_summary_details
 
 
 class _FakeResponse:
@@ -194,8 +194,8 @@ async def test_fetch_all_paginates_maps_listings_and_deduplicates_brokers(monkey
     async def _fake_sleep(delay: float) -> None:
         _FakeAsyncSession.sleep_calls.append(delay)
 
-    monkeypatch.setattr("vicinitideals.scrapers.crexi.AsyncSession", _FakeAsyncSession)
-    monkeypatch.setattr("vicinitideals.scrapers.crexi.asyncio.sleep", _fake_sleep)
+    monkeypatch.setattr("app.scrapers.crexi.AsyncSession", _FakeAsyncSession)
+    monkeypatch.setattr("app.scrapers.crexi.asyncio.sleep", _fake_sleep)
 
     scraper = CrxiScraper(page_size=2, batch_size=2, batch_delay_seconds=0.3)
     listings, brokers = await scraper.fetch_all()

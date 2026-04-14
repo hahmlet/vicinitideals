@@ -3,7 +3,7 @@ from __future__ import annotations
 import pytest
 from httpx import AsyncClient
 
-from vicinitideals.config import settings
+from app.config import settings
 
 EXPECTED_PATHS = [
     "/api/projects",

@@ -7,8 +7,8 @@ import pytest
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 
-from vicinitideals.models.deal import Deal, DealOpportunity, ProjectType, Scenario
-from vicinitideals.models.project import Project
+from app.models.deal import Deal, DealOpportunity, ProjectType, Scenario
+from app.models.project import Project
 from tests.conftest import seed_deal_model, seed_deal_model_with_financials, seed_opportunity, seed_org
 
 

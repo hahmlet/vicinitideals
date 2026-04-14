@@ -437,11 +437,11 @@ def _dispatch_db_task() -> None:
     try:
         from celery import Celery as _Celery
         app = _Celery(broker=broker)
-        app.send_task("vicinitideals.tasks.parcel_seed.rlis_quarterly_refresh_task")
+        app.send_task("app.tasks.parcel_seed.rlis_quarterly_refresh_task")
         print(f"Dispatched rlis_quarterly_refresh_task to {broker}")
     except Exception as exc:
         print(f"  [warn] Could not dispatch Celery task: {exc}")
-        print("  Run manually: celery call vicinitideals.tasks.parcel_seed.rlis_quarterly_refresh_task")
+        print("  Run manually: celery call app.tasks.parcel_seed.rlis_quarterly_refresh_task")
 
 
 def main() -> None:

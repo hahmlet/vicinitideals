@@ -27,7 +27,7 @@ jobs:
         run: cp .env.example .env
 
       - name: Run dev promotion gates
-        run: uv run python -m vicinitideals.scripts.check_promotion_gates --environment dev
+        run: uv run python -m app.scripts.check_promotion_gates --environment dev
 
   staging-gates:
     name: Staging promotion gates
@@ -51,7 +51,7 @@ jobs:
         run: docker compose up -d --build postgres redis api
 
       - name: Run staging promotion gates
-        run: uv run python -m vicinitideals.scripts.check_promotion_gates --environment staging
+        run: uv run python -m app.scripts.check_promotion_gates --environment staging
 
       - name: Show Docker Compose status on failure
         if: failure()

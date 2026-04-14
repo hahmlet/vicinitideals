@@ -387,7 +387,7 @@ NAVIGATOR_LAYERS: list[LayerSpec] = [
 ]
 
 # Oregon Navigator geocoder — called on-demand, not cached as GeoJSON.
-# Use vicinitideals.utils.geocoder.geocode_oregon_address() to resolve listing addresses.
+# Use app.utils.geocoder.geocode_oregon_address() to resolve listing addresses.
 NAVIGATOR_GEOCODER_URL = "https://navigator.state.or.us/arcgis/rest/services/Locators/OregonAddress/GeocodeServer"
 
 PLANNED_SOURCES: list[LayerSpec] = [

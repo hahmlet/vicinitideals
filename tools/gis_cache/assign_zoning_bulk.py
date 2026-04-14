@@ -229,7 +229,7 @@ async def run_jurisdiction(
 
 async def main_async(jurisdictions: list[str], overwrite: bool, dry_run: bool) -> None:
     import asyncpg
-    from vicinitideals.config import settings
+    from app.config import settings
 
     dsn = str(settings.database_url).replace("postgresql+asyncpg://", "postgresql://")
     conn = await asyncpg.connect(dsn)

@@ -11,12 +11,12 @@ import pytest
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
-from vicinitideals.models.base import Base
-from vicinitideals.models.cashflow import CashFlow, OperationalOutputs
-from vicinitideals.models.deal import Deal, DealModel, DealOpportunity, OperationalInputs, ProjectType
-from vicinitideals.models.manifest import WorkflowRunManifest
-from vicinitideals.models.org import Organization, User
-from vicinitideals.models.project import (
+from app.models.base import Base
+from app.models.cashflow import CashFlow, OperationalOutputs
+from app.models.deal import Deal, DealModel, DealOpportunity, OperationalInputs, ProjectType
+from app.models.manifest import WorkflowRunManifest
+from app.models.org import Organization, User
+from app.models.project import (
     Opportunity,
     OpportunityCategory,
     OpportunitySource,
@@ -26,8 +26,8 @@ from vicinitideals.models.project import (
     ProjectSource,
     ProjectStatus,
 )
-from vicinitideals.models.scenario import Scenario, ScenarioResult, ScenarioStatus
-from vicinitideals.tasks.scenario import run_scenario
+from app.models.scenario import Scenario, ScenarioResult, ScenarioStatus
+from app.tasks.scenario import run_scenario
 
 
 @pytest.fixture
@@ -80,10 +80,10 @@ async def test_run_scenario_writes_one_result_per_step(
     caplog: pytest.LogCaptureFixture,
 ) -> None:
     observed_values: list[Decimal] = []
-    caplog.set_level(logging.INFO, logger="vicinitideals.tasks.scenario")
+    caplog.set_level(logging.INFO, logger="app.tasks.scenario")
 
     monkeypatch.setattr(
-        "vicinitideals.tasks.scenario.AsyncSessionLocal",
+        "app.tasks.scenario.AsyncSessionLocal",
         test_session_factory,
     )
 
@@ -110,11 +110,11 @@ async def test_run_scenario_writes_one_result_per_step(
         }
 
     monkeypatch.setattr(
-        "vicinitideals.tasks.scenario.compute_cash_flows",
+        "app.tasks.scenario.compute_cash_flows",
         fake_compute_cash_flows,
     )
     monkeypatch.setattr(
-        "vicinitideals.tasks.scenario.compute_waterfall",
+        "app.tasks.scenario.compute_waterfall",
         fake_compute_waterfall,
     )
 
@@ -175,7 +175,7 @@ async def test_run_scenario_preserves_prior_results_with_incremented_run_number(
     test_session_factory,
 ) -> None:
     monkeypatch.setattr(
-        "vicinitideals.tasks.scenario.AsyncSessionLocal",
+        "app.tasks.scenario.AsyncSessionLocal",
         test_session_factory,
     )
 
@@ -194,11 +194,11 @@ async def test_run_scenario_preserves_prior_results_with_incremented_run_number(
         }
 
     monkeypatch.setattr(
-        "vicinitideals.tasks.scenario.compute_cash_flows",
+        "app.tasks.scenario.compute_cash_flows",
         fake_compute_cash_flows,
     )
     monkeypatch.setattr(
-        "vicinitideals.tasks.scenario.compute_waterfall",
+        "app.tasks.scenario.compute_waterfall",
         fake_compute_waterfall,
     )
 
@@ -269,7 +269,7 @@ async def test_run_scenario_marks_invalid_variable_failed(
     calls = 0
 
     monkeypatch.setattr(
-        "vicinitideals.tasks.scenario.AsyncSessionLocal",
+        "app.tasks.scenario.AsyncSessionLocal",
         test_session_factory,
     )
 
@@ -279,7 +279,7 @@ async def test_run_scenario_marks_invalid_variable_failed(
         return {}
 
     monkeypatch.setattr(
-        "vicinitideals.tasks.scenario.compute_cash_flows",
+        "app.tasks.scenario.compute_cash_flows",
         fake_compute_cash_flows,
     )
 

@@ -16,9 +16,9 @@ Run the same gate bundle locally or on VM 114:
 
 ```bash
 cd /root/stacks/ketch-media-ai/re-modeling
-python -m vicinitideals.scripts.check_promotion_gates --environment dev
-python -m vicinitideals.scripts.check_promotion_gates --environment staging
-python -m vicinitideals.scripts.check_promotion_gates --environment production --manual-approval CHANGE-1234
+python -m app.scripts.check_promotion_gates --environment dev
+python -m app.scripts.check_promotion_gates --environment staging
+python -m app.scripts.check_promotion_gates --environment production --manual-approval CHANGE-1234
 ```
 
 ## Gate details

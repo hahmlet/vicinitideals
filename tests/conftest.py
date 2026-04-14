@@ -37,10 +37,10 @@ from sqlalchemy.ext.asyncio import (
 )
 from sqlalchemy.pool import StaticPool
 
-from vicinitideals.api.deps import get_db
-from vicinitideals.api.main import create_app
-from vicinitideals.models import Base  # imports all ORM models, enabling create_all
-from vicinitideals.models.deal import (
+from app.api.deps import get_db
+from app.api.main import create_app
+from app.models import Base  # imports all ORM models, enabling create_all
+from app.models.deal import (
     Deal,
     DealModel,
     DealOpportunity,
@@ -50,8 +50,8 @@ from vicinitideals.models.deal import (
     OperationalInputs,
     ProjectType,
 )
-from vicinitideals.models.org import Organization, User
-from vicinitideals.models.project import (
+from app.models.org import Organization, User
+from app.models.project import (
     Opportunity,
     OpportunityCategory,
     OpportunitySource,
@@ -139,7 +139,7 @@ async def client(session: AsyncSession) -> AsyncGenerator[AsyncClient, None]:
 
 @pytest.fixture
 def api_key() -> str:
-    from vicinitideals.config import settings
+    from app.config import settings
     return settings.vicinitideals_api_key
 
 
@@ -242,7 +242,7 @@ async def seed_deal_model_with_financials(
 
     Returns (deal_model, inputs, income_stream, opex_line).
     """
-    from vicinitideals.models.project import Project
+    from app.models.project import Project
 
     deal_model = await seed_deal_model(session, opportunity, user)
 

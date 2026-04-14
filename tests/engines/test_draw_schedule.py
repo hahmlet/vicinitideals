@@ -5,7 +5,7 @@ from decimal import Decimal
 
 import pytest
 
-from vicinitideals.engines.draw_schedule import (
+from app.engines.draw_schedule import (
     BalanceViolation,
     DealMilestone,
     DrawScheduleCalculator,

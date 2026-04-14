@@ -8,11 +8,11 @@ import pytest
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
-from vicinitideals.models.base import Base
-from vicinitideals.models.ingestion import DedupCandidate, DedupStatus, IngestJob
-from vicinitideals.models.org import Organization, User
-from vicinitideals.models.project import Project, ScrapedListing
-from vicinitideals.scrapers.dedup import _score_pair, deduplicate_batch
+from app.models.base import Base
+from app.models.ingestion import DedupCandidate, DedupStatus, IngestJob
+from app.models.org import Organization, User
+from app.models.project import Project, ScrapedListing
+from app.scrapers.dedup import _score_pair, deduplicate_batch
 
 
 @pytest.fixture

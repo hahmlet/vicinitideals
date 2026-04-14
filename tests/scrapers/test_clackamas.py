@@ -3,7 +3,7 @@ from __future__ import annotations
 import httpx
 import pytest
 
-from vicinitideals.scrapers.clackamas import lookup_clackamas_parcel
+from app.scrapers.clackamas import lookup_clackamas_parcel
 
 
 def _response(url: str, payload: dict, status_code: int = 200) -> httpx.Response:

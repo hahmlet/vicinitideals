@@ -5,14 +5,14 @@ from datetime import datetime
 
 import pytest
 
-from vicinitideals.engines.underwriting import (
+from app.engines.underwriting import (
     DealInputs,
     UnderwritingEngine,
     CashFlowCalculator,
     MetricsCalculator,
     Phase,
 )
-from vicinitideals.engines.sensitivity import SensitivityAnalyzer
+from app.engines.sensitivity import SensitivityAnalyzer
 
 
 @pytest.fixture
@@ -251,7 +251,7 @@ class TestBreakpoints:
 
     def test_find_breakeven_cap(self, tower_deal):
         """Test binary search for breakeven exit cap."""
-        from vicinitideals.engines.sensitivity import BreakpointFinder
+        from app.engines.sensitivity import BreakpointFinder
 
         target_irr = Decimal("0.10")  # Find cap rate for 10% IRR
         breakeven_cap = BreakpointFinder.find_breakeven_exit_cap(

@@ -79,11 +79,11 @@ from httpx import ASGITransport, AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.pool import StaticPool
 
-from vicinitideals.api.deps import get_db
-from vicinitideals.api.main import create_app
-from vicinitideals.config import settings
-from vicinitideals.models.base import Base
-from vicinitideals.models.org import Organization, User
+from app.api.deps import get_db
+from app.api.main import create_app
+from app.config import settings
+from app.models.base import Base
+from app.models.org import Organization, User
 
 
 @pytest.fixture
@@ -209,7 +209,7 @@ Start at 60% floor. Raise it as coverage improves. Don't aim for 100% — scrape
 # tests/engines/test_cashflow.py
 
 import pytest
-from vicinitideals.engines.cashflow import compute_cash_flows
+from app.engines.cashflow import compute_cash_flows
 
 @pytest.mark.integration
 async def test_compute_generates_rows(db, session):
@@ -259,14 +259,14 @@ Replace 100-line seed functions with composable builders:
 ```python
 # tests/conftest.py (continued)
 
-from vicinitideals.models.deal import Deal, OperationalInputs, IncomeStream, UseLine, OperatingExpenseLine
-from vicinitideals.models.project import Opportunity, Project
-from vicinitideals.models.capital import CapitalModule
+from app.models.deal import Deal, OperationalInputs, IncomeStream, UseLine, OperatingExpenseLine
+from app.models.project import Opportunity, Project
+from app.models.capital import CapitalModule
 
 
 async def seed_opportunity(session, **overrides) -> Opportunity:
     """Create an Opportunity with sensible defaults. Override any field."""
-    from vicinitideals.models.org import Organization
+    from app.models.org import Organization
     org = (await session.execute(select(Organization).limit(1))).scalar_one()
     defaults = dict(
         org_id=org.id,
@@ -387,7 +387,7 @@ This tests pure math — no DB needed.
 
 from decimal import Decimal
 import pytest
-from vicinitideals.engines.waterfall import allocate_tier
+from app.engines.waterfall import allocate_tier
 
 
 @pytest.mark.unit
@@ -509,7 +509,7 @@ class TestDealDetailPage:
         assert "Renamed Deal" in detail.text
 
     async def test_link_parcel_to_deal(self, client: AsyncClient, db):
-        from vicinitideals.models.parcel import Parcel
+        from app.models.parcel import Parcel
         async with db() as session:
             deal = await seed_deal(session)
             opp_id = deal.opportunity_id

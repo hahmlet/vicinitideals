@@ -9,16 +9,16 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.pool import StaticPool
 
-from vicinitideals.models.cashflow import CashFlow, CashFlowLineItem, OperationalOutputs, PeriodType
-from vicinitideals.models.deal import (
+from app.models.cashflow import CashFlow, CashFlowLineItem, OperationalOutputs, PeriodType
+from app.models.deal import (
     DealModel,
     IncomeStream,
     OperatingExpenseLine,
     OperationalInputs,
     ProjectType,
 )
-from vicinitideals.models.org import Organization, User
-from vicinitideals.models.project import (
+from app.models.org import Organization, User
+from app.models.project import (
     Opportunity,
     OpportunityCategory,
     OpportunitySource,
@@ -26,7 +26,7 @@ from vicinitideals.models.project import (
     Project,
 )
 
-from vicinitideals.engines.cashflow import PhaseSpec, _build_phase_plan, _compute_period, compute_cash_flows
+from app.engines.cashflow import PhaseSpec, _build_phase_plan, _compute_period, compute_cash_flows
 
 
 # ---------------------------------------------------------------------------
@@ -36,7 +36,7 @@ from vicinitideals.engines.cashflow import PhaseSpec, _build_phase_plan, _comput
 
 @pytest.fixture
 async def db_session() -> AsyncGenerator[AsyncSession, None]:
-    from vicinitideals.models import Base  # noqa: F401
+    from app.models import Base  # noqa: F401
 
     engine = create_async_engine(
         "sqlite+aiosqlite:///:memory:",
@@ -304,7 +304,7 @@ async def _seed_cashflow_deal(session: AsyncSession) -> UUID:
         source=OpportunitySource.manual,
         created_by_user_id=user.id,
     )
-    from vicinitideals.models.deal import Deal, DealOpportunity
+    from app.models.deal import Deal, DealOpportunity
     top_deal = Deal(id=uuid4(), org_id=org.id, name="Base Case", created_by_user_id=user.id)
     deal = DealModel(
         id=uuid4(),

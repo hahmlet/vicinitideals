@@ -17,12 +17,12 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.pool import StaticPool
 
-from vicinitideals.api.deps import get_db
-from vicinitideals.api.main import create_app
-from vicinitideals.models.base import Base
-from vicinitideals.models.capital import CapitalModule, FunderType, WaterfallResult, WaterfallTier, WaterfallTierType
-from vicinitideals.models.cashflow import CashFlow, CashFlowLineItem, OperationalOutputs, PeriodType
-from vicinitideals.models.deal import (
+from app.api.deps import get_db
+from app.api.main import create_app
+from app.models.base import Base
+from app.models.capital import CapitalModule, FunderType, WaterfallResult, WaterfallTier, WaterfallTierType
+from app.models.cashflow import CashFlow, CashFlowLineItem, OperationalOutputs, PeriodType
+from app.models.deal import (
     Deal,
     DealModel,
     DealOpportunity,
@@ -32,16 +32,16 @@ from vicinitideals.models.deal import (
     OperationalInputs,
     ProjectType,
 )
-from vicinitideals.models.ingestion import DedupCandidate, DedupStatus, IngestJob, RecordType
-from vicinitideals.models.manifest import WorkflowRunManifest
-from vicinitideals.models.org import Organization, ProjectVisibility, User
-from vicinitideals.models.parcel import Parcel, ParcelTransformation, ProjectParcel
-from vicinitideals.models.portfolio import GanttEntry, Portfolio, PortfolioProject
-from vicinitideals.models.project import Opportunity, Project, ScrapedListing
-from vicinitideals.models.scenario import Scenario, ScenarioResult, ScenarioStatus
-from vicinitideals.schemas.parcel import ClackamasParcelResult, OregonCityParcelResult, PortlandParcelResult
-from vicinitideals.scrapers.arcgis import ArcGISLookupError
-from vicinitideals.tasks.scenario import run_scenario
+from app.models.ingestion import DedupCandidate, DedupStatus, IngestJob, RecordType
+from app.models.manifest import WorkflowRunManifest
+from app.models.org import Organization, ProjectVisibility, User
+from app.models.parcel import Parcel, ParcelTransformation, ProjectParcel
+from app.models.portfolio import GanttEntry, Portfolio, PortfolioProject
+from app.models.project import Opportunity, Project, ScrapedListing
+from app.models.scenario import Scenario, ScenarioResult, ScenarioStatus
+from app.schemas.parcel import ClackamasParcelResult, OregonCityParcelResult, PortlandParcelResult
+from app.scrapers.arcgis import ArcGISLookupError
+from app.tasks.scenario import run_scenario
 
 
 @pytest.fixture
@@ -135,7 +135,7 @@ async def client(test_session_factory: async_sessionmaker[AsyncSession]) -> Asyn
 
 @pytest.fixture
 def auth_headers() -> dict[str, str]:
-    from vicinitideals.config import settings
+    from app.config import settings
 
     return {
         "X-API-Key": settings.vicinitideals_api_key,
@@ -717,7 +717,7 @@ async def test_post_project_scenarios_accepts_valid_range(
         project_id = opportunity.id
         model_id = model.id
 
-    with patch("vicinitideals.api.routers.scenarios.sweep_variable.apply_async") as mocked_apply_async:
+    with patch("app.api.routers.scenarios.sweep_variable.apply_async") as mocked_apply_async:
         mocked_apply_async.return_value.id = "scenario-task-123"
 
         response = await client.post(
@@ -805,7 +805,7 @@ async def test_get_scenario_status_includes_model_version_snapshot_after_run(
         project_id = opportunity.id
         model_id = model.id
 
-    with patch("vicinitideals.api.routers.scenarios.sweep_variable.apply_async") as mocked_apply_async:
+    with patch("app.api.routers.scenarios.sweep_variable.apply_async") as mocked_apply_async:
         mocked_apply_async.return_value.id = "scenario-task-456"
         create_response = await client.post(
             f"/api/projects/{project_id}/scenarios",
@@ -837,9 +837,9 @@ async def test_get_scenario_status_includes_model_version_snapshot_after_run(
         }
 
     with (
-        patch("vicinitideals.tasks.scenario.AsyncSessionLocal", test_session_factory),
-        patch("vicinitideals.tasks.scenario.compute_cash_flows", fake_compute_cash_flows),
-        patch("vicinitideals.tasks.scenario.compute_waterfall", fake_compute_waterfall),
+        patch("app.tasks.scenario.AsyncSessionLocal", test_session_factory),
+        patch("app.tasks.scenario.compute_cash_flows", fake_compute_cash_flows),
+        patch("app.tasks.scenario.compute_waterfall", fake_compute_waterfall),
     ):
         await asyncio.to_thread(cast(Any, run_scenario), scenario_id)
 
@@ -1844,7 +1844,7 @@ async def test_post_project_parcels_resolves_lookup_and_lists_linked_parcels(
             }
         ]
 
-    with patch("vicinitideals.api.routers.projects.lookup_gresham_candidates", new=fake_lookup_gresham_candidates):
+    with patch("app.api.routers.projects.lookup_gresham_candidates", new=fake_lookup_gresham_candidates):
         response = await client.post(
             f"/api/projects/{project_id}/parcels",
             json={
@@ -2034,7 +2034,7 @@ async def test_post_project_parcels_rejects_ambiguous_address_lookup(
             {"apn": "R2", "address_normalized": "2 MAIN ST", "address_raw": "2 Main St"},
         ]
 
-    with patch("vicinitideals.api.routers.projects.lookup_gresham_candidates", new=fake_lookup_gresham_candidates):
+    with patch("app.api.routers.projects.lookup_gresham_candidates", new=fake_lookup_gresham_candidates):
         response = await client.post(
             f"/api/projects/{project_id}/parcels",
             json={"address": "Main", "relationship_type": "unchanged"},
@@ -2110,7 +2110,7 @@ async def test_post_parcels_lookup_returns_batched_results_and_persists_matches(
             },
         ]
 
-    with patch("vicinitideals.api.routers.parcels.lookup_gresham_parcels", new=fake_lookup_gresham_parcels):
+    with patch("app.api.routers.parcels.lookup_gresham_parcels", new=fake_lookup_gresham_parcels):
         response = await client.post(
             "/api/parcels/lookup",
             json={"addresses": ["21255 se stark st", "404 missing st", "400 multi match ave"]},
@@ -2149,7 +2149,7 @@ async def test_post_parcels_lookup_returns_502_when_arcgis_fails(
     async def fake_lookup_gresham_parcels(addresses: list[str]):
         raise ArcGISLookupError("REST API unavailable")
 
-    with patch("vicinitideals.api.routers.parcels.lookup_gresham_parcels", new=fake_lookup_gresham_parcels):
+    with patch("app.api.routers.parcels.lookup_gresham_parcels", new=fake_lookup_gresham_parcels):
         response = await client.post(
             "/api/parcels/lookup",
             json={"addresses": ["21255 SE STARK ST"]},
@@ -2997,7 +2997,7 @@ async def test_post_parcels_lookup_clackamas_returns_normalized_result(
             ugb_status="outside",
         )
 
-    with patch("vicinitideals.api.routers.parcels.lookup_clackamas_parcel", new=fake_lookup_clackamas_parcel):
+    with patch("app.api.routers.parcels.lookup_clackamas_parcel", new=fake_lookup_clackamas_parcel):
         response = await client.post(
             "/api/parcels/lookup/clackamas",
             json={"address": address},
@@ -3034,7 +3034,7 @@ async def test_post_parcels_lookup_oregoncity_returns_normalized_result(
             ugb_status="inside",
         )
 
-    with patch("vicinitideals.api.routers.parcels.lookup_oregoncity_parcel", new=fake_lookup_oregoncity_parcel):
+    with patch("app.api.routers.parcels.lookup_oregoncity_parcel", new=fake_lookup_oregoncity_parcel):
         response = await client.post(
             "/api/parcels/lookup/oregoncity",
             json={"address": address},
@@ -3069,7 +3069,7 @@ async def test_post_parcels_lookup_portland_returns_normalized_result(
             council_district="4",
         )
 
-    with patch("vicinitideals.api.routers.parcels.lookup_portland_parcel", new=fake_lookup_portland_parcel):
+    with patch("app.api.routers.parcels.lookup_portland_parcel", new=fake_lookup_portland_parcel):
         response = await client.post(
             "/api/parcels/lookup/portland",
             json={"address": address},
@@ -3106,7 +3106,7 @@ async def test_post_scraper_run_enqueues_crexi_task(
             assert queue == "scraping"
             return _FakeAsyncResult()
 
-    with patch("vicinitideals.api.routers.ingest.scrape_crexi", new=_FakeTask()):
+    with patch("app.api.routers.ingest.scrape_crexi", new=_FakeTask()):
         response = await client.post("/api/scraper/run", headers=auth_headers)
 
     assert response.status_code == 200

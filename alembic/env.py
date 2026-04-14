@@ -9,8 +9,8 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
 # Import all models so Alembic autogenerate can detect them
-from vicinitideals.models import Base  # noqa: F401  (also imports all sub-models)
-from vicinitideals.config import settings
+from app.models import Base  # noqa: F401  (also imports all sub-models)
+from app.config import settings
 
 # ---------------------------------------------------------------------------
 # Alembic Config object

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from vicinitideals.scripts.check_promotion_gates import (
+from app.scripts.check_promotion_gates import (
     GateDefinition,
     GateResult,
     build_gate_plan,

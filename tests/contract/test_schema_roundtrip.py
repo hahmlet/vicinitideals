@@ -6,7 +6,7 @@ from uuid import uuid4
 
 import pytest
 
-from vicinitideals.schemas.capital import (
+from app.schemas.capital import (
     CapitalModuleCreate,
     CapitalModuleRead,
     CapitalModuleUpdate,
@@ -15,7 +15,7 @@ from vicinitideals.schemas.capital import (
     WaterfallTierRead,
     WaterfallTierUpdate,
 )
-from vicinitideals.schemas.deal import (
+from app.schemas.deal import (
     DealModelCreate,
     DealModelRead,
     IncomeStreamCreate,
@@ -28,7 +28,7 @@ from vicinitideals.schemas.deal import (
     OperationalInputsRead,
     OperationalOutputsRead,
 )
-from vicinitideals.schemas.project import ProjectCreate, ProjectRead
+from app.schemas.project import ProjectCreate, ProjectRead
 
 NOW = datetime(2026, 4, 3, 12, 0, tzinfo=UTC).isoformat()
 PROJECT_ID = str(uuid4())

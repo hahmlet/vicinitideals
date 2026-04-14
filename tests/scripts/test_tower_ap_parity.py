@@ -10,11 +10,11 @@ from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.pool import StaticPool
 
-from vicinitideals.models import Base  # imports all ORM models, enabling create_all
-from vicinitideals.models.deal import OperatingExpenseLine
-from vicinitideals.models.org import Organization, User
-from vicinitideals.models.project import Project
-from vicinitideals.scripts.import_tower_ap_deal import import_tower_ap_deal, load_formulas_payload
+from app.models import Base  # imports all ORM models, enabling create_all
+from app.models.deal import OperatingExpenseLine
+from app.models.org import Organization, User
+from app.models.project import Project
+from app.scripts.import_tower_ap_deal import import_tower_ap_deal, load_formulas_payload
 
 
 @pytest.fixture

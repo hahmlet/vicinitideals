@@ -162,7 +162,7 @@ def main() -> None:
 
     import asyncio
     import asyncpg
-    from vicinitideals.config import settings
+    from app.config import settings
 
     # asyncpg DSN: strip the +asyncpg dialect prefix
     dsn = str(settings.database_url).replace("postgresql+asyncpg://", "postgresql://")

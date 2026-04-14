@@ -4,7 +4,7 @@ Use this go/no-go checklist before marking any release as `Released` in Plane. T
 
 > A release should not move forward until every required item is checked off or a waiver is explicitly documented with an owner and rationale.
 
-Optional helper: `python -m vicinitideals.scripts.check_promotion_gates --environment staging --json` can be used to collect test/lint/compose/migration evidence, but the final go/no-go decision still requires human review.
+Optional helper: `python -m app.scripts.check_promotion_gates --environment staging --json` can be used to collect test/lint/compose/migration evidence, but the final go/no-go decision still requires human review.
 
 ## Release Metadata
 

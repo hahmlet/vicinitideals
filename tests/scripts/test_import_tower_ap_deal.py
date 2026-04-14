@@ -8,7 +8,7 @@ import pytest
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.pool import StaticPool
 
-from vicinitideals.models import Base  # imports all ORM models, enabling create_all
+from app.models import Base  # imports all ORM models, enabling create_all
 
 
 @pytest.fixture
@@ -167,7 +167,7 @@ async def test_import_tower_ap_deal_creates_two_projects_and_one_portfolio(
     formulas_path = tmp_path / "formulas.json"
     formulas_path.write_text(json.dumps(formulas), encoding="utf-8")
 
-    from vicinitideals.scripts.import_tower_ap_deal import import_tower_ap_deal
+    from app.scripts.import_tower_ap_deal import import_tower_ap_deal
 
     async with session_factory() as session:
         summary = await import_tower_ap_deal(formulas_path, session=session)

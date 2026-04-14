@@ -11,14 +11,14 @@ import pytest
 from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
-from vicinitideals.models.base import Base
-from vicinitideals.models.broker import Broker, Brokerage
-from vicinitideals.models.ingestion import DedupCandidate, DedupStatus, IngestJob, SavedSearchCriteria
-from vicinitideals.models.org import Organization, User
-from vicinitideals.models.project import Project, ScrapedListing
-from vicinitideals.schemas.broker import BrokerCreate
-from vicinitideals.schemas.scraped_listing import ScrapedListingCreate
-from vicinitideals.tasks.scraper import (
+from app.models.base import Base
+from app.models.broker import Broker, Brokerage
+from app.models.ingestion import DedupCandidate, DedupStatus, IngestJob, SavedSearchCriteria
+from app.models.org import Organization, User
+from app.models.project import Project, ScrapedListing
+from app.schemas.broker import BrokerCreate
+from app.schemas.scraped_listing import ScrapedListingCreate
+from app.tasks.scraper import (
     _build_listing_values,
     _scrape_crexi,
     _scrape_listings,
@@ -93,27 +93,27 @@ async def test_scrape_listings_proxy_routing_and_persistence(
     captured: dict[str, object] = {}
 
     monkeypatch.setattr(
-        "vicinitideals.tasks.scraper.settings.lxc134_scrapling_url",
+        "app.tasks.scraper.settings.lxc134_scrapling_url",
         "http://scrapling.test",
     )
     monkeypatch.setattr(
-        "vicinitideals.tasks.scraper.settings.proxyon_residential_username",
+        "app.tasks.scraper.settings.proxyon_residential_username",
         username,
     )
     monkeypatch.setattr(
-        "vicinitideals.tasks.scraper.settings.proxyon_residential_password",
+        "app.tasks.scraper.settings.proxyon_residential_password",
         password,
     )
     monkeypatch.setattr(
-        "vicinitideals.tasks.scraper.settings.proxyon_residential_host",
+        "app.tasks.scraper.settings.proxyon_residential_host",
         "residential.proxyon.io",
     )
     monkeypatch.setattr(
-        "vicinitideals.tasks.scraper.settings.proxyon_residential_port",
+        "app.tasks.scraper.settings.proxyon_residential_port",
         1111,
     )
 
-    monkeypatch.setattr("vicinitideals.tasks.scraper.AsyncSessionLocal", test_session_factory)
+    monkeypatch.setattr("app.tasks.scraper.AsyncSessionLocal", test_session_factory)
 
     async def fake_post(self, url: str, *, json=None, **kwargs):  # type: ignore[no-untyped-def]
         captured["url"] = url
@@ -391,7 +391,7 @@ async def test_scrape_crexi_returns_ingest_summary(
     monkeypatch: pytest.MonkeyPatch,
     test_session_factory,
 ) -> None:
-    monkeypatch.setattr("vicinitideals.tasks.scraper.AsyncSessionLocal", test_session_factory)
+    monkeypatch.setattr("app.tasks.scraper.AsyncSessionLocal", test_session_factory)
 
     async def fake_fetch_all(self) -> tuple[list[ScrapedListingCreate], list[BrokerCreate]]:
         return (
@@ -426,7 +426,7 @@ async def test_scrape_crexi_returns_ingest_summary(
             ],
         )
 
-    monkeypatch.setattr("vicinitideals.tasks.scraper.CrxiScraper.fetch_all", fake_fetch_all)
+    monkeypatch.setattr("app.tasks.scraper.CrxiScraper.fetch_all", fake_fetch_all)
 
     result = await _scrape_crexi(triggered_by="pytest")
 
@@ -452,10 +452,10 @@ async def test_scrape_listings_marks_matching_saved_search_criteria(
     listing_url = f"https://example.com/listings/{uuid4().hex}"
 
     monkeypatch.setattr(
-        "vicinitideals.tasks.scraper.settings.lxc134_scrapling_url",
+        "app.tasks.scraper.settings.lxc134_scrapling_url",
         "http://scrapling.test",
     )
-    monkeypatch.setattr("vicinitideals.tasks.scraper.AsyncSessionLocal", test_session_factory)
+    monkeypatch.setattr("app.tasks.scraper.AsyncSessionLocal", test_session_factory)
 
     async with test_session_factory() as session:
         user = (await session.execute(select(User))).scalar_one()
@@ -519,7 +519,7 @@ async def test_scrape_crexi_creates_pending_dedup_candidates_for_new_vs_existing
     monkeypatch: pytest.MonkeyPatch,
     test_session_factory,
 ) -> None:
-    monkeypatch.setattr("vicinitideals.tasks.scraper.AsyncSessionLocal", test_session_factory)
+    monkeypatch.setattr("app.tasks.scraper.AsyncSessionLocal", test_session_factory)
 
     async with test_session_factory() as session:
         prior_job = IngestJob(source="loopnet", triggered_by="seed", status="completed")
@@ -562,7 +562,7 @@ async def test_scrape_crexi_creates_pending_dedup_candidates_for_new_vs_existing
             [],
         )
 
-    monkeypatch.setattr("vicinitideals.tasks.scraper.CrxiScraper.fetch_all", fake_fetch_all)
+    monkeypatch.setattr("app.tasks.scraper.CrxiScraper.fetch_all", fake_fetch_all)
 
     result = await _scrape_crexi(triggered_by="pytest")
     ingest_job_id = UUID(result["ingest_job_id"])
