@@ -23,7 +23,7 @@ from sqlalchemy import func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-import vicinitideals as _pkg
+import app as _pkg
 from app.api.deps import DBSession
 from app.config import settings
 from app.models.broker import Broker, Brokerage

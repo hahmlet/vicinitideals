@@ -12,7 +12,7 @@ from fastapi.exceptions import HTTPException as FastAPIHTTPException, RequestVal
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
-import vicinitideals as _pkg
+import app as _pkg
 from app.api.routers import ROUTERS
 
 _PROCESS_STARTED_AT = __import__("time").time()
