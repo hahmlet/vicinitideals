@@ -128,17 +128,6 @@
     <tbody id="sources-tbody">
       {% for m in capital_modules | sort(attribute='stack_position') %}
       {%- set _src_amt = (m.source.amount | float) if (m.source and m.source.get('amount')) else 0 -%}
-      {%- set _is_equity = (m.funder_type in ('common_equity', 'preferred_equity', 'equity')) -%}
-      {%- set _ns_eq = namespace(equity_residual=none) -%}
-      {%- if _is_equity and not _src_amt and uses_total -%}
-        {%- set _ns_debt = namespace(t=0) -%}
-        {%- for _dm in capital_modules -%}
-          {%- if _dm.funder_type not in ('common_equity', 'preferred_equity', 'equity') and not (_dm.source and _dm.source.get('is_bridge')) -%}
-            {%- set _ns_debt.t = _ns_debt.t + ((_dm.source.amount | float) if (_dm.source and _dm.source.get('amount')) else 0) -%}
-          {%- endif -%}
-        {%- endfor -%}
-        {%- set _ns_eq.equity_residual = (uses_total | float) - _ns_debt.t -%}
-      {%- endif -%}
       <tr draggable="true" data-module-id="{{ m.id }}"
           data-label="{{ m.label | lower }}" data-ftype="{{ (m.funder_type or '') | lower }}" data-amt="{{ _src_amt }}"
           onclick="openEditLine('capital_modules', '{{ m.id }}', '{{ model.id }}')">
@@ -147,12 +136,8 @@
         <td><span class="text-small text-muted" style="font-size:10px">{{ m.funder_type | replace('_', ' ') | title if m.funder_type else '—' }}</span></td>
         <td class="col-right text-mono">
           {% if _src_amt %}{{ _src_amt | currency }}
-          {% elif _ns_eq.equity_residual is not none %}
-            <span title="Residual = Uses − Debt Sources (pre-compute estimate)">
-              {{ _ns_eq.equity_residual | currency }}
-              <span style="color:var(--text-muted);font-size:10px"> est.</span>
-            </span>
-          {% else %}<span style="color:var(--text-muted);font-size:11px">Compute →</span>{% endif %}
+          {% elif m.source and m.source.get('auto_size') %}<span style="color:var(--text-muted);font-size:11px">Compute →</span>
+          {% else %}—{% endif %}
         </td>
         <td style="width:28px;text-align:right">
           <button class="btn btn-sm btn-ghost"
