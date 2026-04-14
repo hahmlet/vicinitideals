@@ -4261,6 +4261,7 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
             "new_construction": "New Construction",
         }.get(default_project.deal_type if default_project else "", "Project"),
         "income_mode": (_scenario.income_mode if _scenario else "revenue_opex") or "revenue_opex",
+        "noi_annual": float(inputs.noi_stabilized_input) if inputs and inputs.noi_stabilized_input is not None else None,
     }
 
 
@@ -6038,7 +6039,7 @@ async def model_module_nav(
             "equity_ownership", "org_owner_fallback",
             "deferred_uses", "deferred_total", "profit_total",
             "divestment_total", "phase_summaries", "outputs",
-            "income_mode",
+            "income_mode", "noi_annual",
         )},
     }
     return templates.TemplateResponse(request, "partials/model_builder_nav_cards.html", ctx)

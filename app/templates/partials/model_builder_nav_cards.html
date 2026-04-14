@@ -24,7 +24,7 @@
     <div class="module-label">2 · NOI</div>
     <div class="module-meta">Stabilized NOI · escalation rate</div>
   </div>
-  <div class="module-total">—/yr</div>
+  <div class="module-total">{{ noi_annual | currency if noi_annual else '—' }}/yr</div>
 </a>
 {% else %}
 <a href="{{ nav_base_path }}?module=revenue"
