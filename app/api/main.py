@@ -93,6 +93,9 @@ def _is_ui_path(path: str) -> bool:
 
 def create_app() -> FastAPI:
     """Create and configure the FastAPI application instance."""
+    from app.sentry_setup import init_sentry
+    init_sentry()
+
     _static_dir = Path(_pkg.__file__).parent / "static"
 
     app = FastAPI(

@@ -33,6 +33,12 @@ class Settings(BaseSettings):
     secret_key: str = "changeme-generate-with-openssl-rand-hex-32"
 
     # -------------------------------------------------------------------------
+    # Error monitoring (BugSink — Sentry-SDK compatible)
+    # -------------------------------------------------------------------------
+    sentry_dsn: str | None = None
+    environment: str = "production"
+
+    # -------------------------------------------------------------------------
     # Scraper (Stage 1C)
     # -------------------------------------------------------------------------
     lxc134_scrapling_url: str = "http://192.168.1.134:8191"

@@ -20,8 +20,9 @@ docker compose run --rm api python -m alembic upgrade head
 echo "==> Starting containers..."
 docker compose up -d
 
-echo "==> Verifying health..."
+echo "==> Running post-deploy smoke checks..."
 sleep 5
-curl -sf http://localhost:8001/health && echo "" && echo "Health check passed." || echo "WARNING: health check failed — check logs"
+docker compose run --rm -e POST_DEPLOY_BASE_URL=http://127.0.0.1:8000 api python scripts/post_deploy_smoke.py \
+  || echo "WARNING: post-deploy smoke check failed — check logs above"
 
 echo "==> Deploy complete."
