@@ -18,8 +18,9 @@ from app.models.capital import (
     WaterfallTierType,
 )
 from app.models.cashflow import CashFlow, OperationalOutputs, PeriodType
-from app.models.deal import Scenario
+from app.models.deal import Scenario, UseLine
 from app.models.manifest import WorkflowRunManifest
+from app.models.project import Project
 from app.schemas.capital import CapitalCarrySchema, CapitalExitSchema, CapitalSourceSchema
 
 try:
@@ -538,6 +539,24 @@ async def _apply_levered_metrics(
         if _amt:
             total_sources += _q(_to_decimal(_amt))
 
+    # Resolve Operating Reserve amount — same seeding invariant as cashflow engine:
+    #   Capital Balance[first stab month] = reserve + min(0, NCF)
+    _op_reserve_row = (
+        await session.execute(
+            select(UseLine.amount)
+            .join(Project, Project.id == UseLine.project_id)
+            .where(
+                Project.scenario_id == deal_model_id,
+                UseLine.label == "Operating Reserve",
+            )
+            .limit(1)
+        )
+    ).scalar_one_or_none()
+    _op_reserve_amount = _to_decimal(_op_reserve_row) if _op_reserve_row is not None else ZERO
+
+    _operating_reserve_seeded = False
+    _operating_period_types = {PeriodType.lease_up.value, PeriodType.stabilized.value}
+
     running_cumulative = total_sources
     levered_cashflows: dict[int, Decimal] = {}
     for cash_flow in cash_flows:
@@ -555,9 +574,17 @@ async def _apply_levered_metrics(
         cash_flow.net_cash_flow = _q(
             _to_decimal(cash_flow.noi) - debt_service + non_operating_adjustments
         )
-        running_cumulative = _q(running_cumulative + _to_decimal(cash_flow.net_cash_flow))
+        _ncf = _to_decimal(cash_flow.net_cash_flow)
+        _is_operating = _enum_value(cash_flow.period_type) in _operating_period_types
+        if _is_operating and not _operating_reserve_seeded:
+            running_cumulative = _op_reserve_amount
+            _operating_reserve_seeded = True
+        if not _is_operating:
+            running_cumulative = _q(running_cumulative + _ncf)
+        elif _ncf < ZERO:
+            running_cumulative = _q(running_cumulative + _ncf)
         cash_flow.cumulative_cash_flow = running_cumulative
-        levered_cashflows[cash_flow.period] = _to_decimal(cash_flow.net_cash_flow)
+        levered_cashflows[cash_flow.period] = _ncf
 
     if outputs.noi_stabilized is None:
         stabilized_noi_annual = _annualized_median(
