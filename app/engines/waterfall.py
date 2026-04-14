@@ -555,7 +555,7 @@ async def _apply_levered_metrics(
     _op_reserve_amount = _to_decimal(_op_reserve_row) if _op_reserve_row is not None else ZERO
 
     _operating_reserve_seeded = False
-    _operating_period_types = {PeriodType.lease_up.value, PeriodType.stabilized.value}
+    _stabilized_value = PeriodType.stabilized.value
 
     running_cumulative = total_sources
     levered_cashflows: dict[int, Decimal] = {}
@@ -575,13 +575,14 @@ async def _apply_levered_metrics(
             _to_decimal(cash_flow.noi) - debt_service + non_operating_adjustments
         )
         _ncf = _to_decimal(cash_flow.net_cash_flow)
-        _is_operating = _enum_value(cash_flow.period_type) in _operating_period_types
-        if _is_operating and not _operating_reserve_seeded:
+        _is_stabilized = _enum_value(cash_flow.period_type) == _stabilized_value
+        if _is_stabilized and not _operating_reserve_seeded:
             running_cumulative = _op_reserve_amount
             _operating_reserve_seeded = True
-        if not _is_operating:
-            running_cumulative = _q(running_cumulative + _ncf)
-        elif _ncf < ZERO:
+        elif _operating_reserve_seeded:
+            if _ncf < ZERO:
+                running_cumulative = _q(running_cumulative + _ncf)
+        else:
             running_cumulative = _q(running_cumulative + _ncf)
         cash_flow.cumulative_cash_flow = running_cumulative
         levered_cashflows[cash_flow.period] = _ncf

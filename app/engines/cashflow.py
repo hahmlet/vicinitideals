@@ -186,21 +186,23 @@ async def compute_cash_flows(
                 stabilized_noi_monthly = period_result["noi"]
 
             # Cumulative cash balance:
-            #   Pre-stabilization + exit: accumulate fully (capital deployment / sale proceeds).
-            #   Post-stabilization (lease_up / stabilized):
-            #     - At the first operational period, reset to the operating reserve so the
-            #       capital balance represents the reserve account, not the pre-stab residual.
-            #     - Positive NCF is distributable profit — do NOT add to balance.
-            #     - Negative NCF drains the operating reserve — DO subtract from balance.
-            _is_operating = phase.period_type in {PeriodType.lease_up, PeriodType.stabilized}
+            #   Pre-stabilized (construction, lease-up) + exit: accumulate NCF fully.
+            #   First stabilized period: reset to the operating reserve.  The debt is
+            #     sized so that cash flows through lease-up land exactly at the reserve
+            #     amount when stabilization begins.
+            #   Post-seed (stabilized): positive NCF is distributable profit — do NOT
+            #     add to balance.  Negative NCF drains the reserve — DO subtract.
+            _is_stabilized = phase.period_type == PeriodType.stabilized
             _ncf = period_result["net_cash_flow"]
-            if _is_operating and not _operating_reserve_seeded:
+            if _is_stabilized and not _operating_reserve_seeded:
                 cumulative_cash_flow = _op_reserve_amount
                 _operating_reserve_seeded = True
-            if not _is_operating:
-                cumulative_cash_flow += _ncf
-            elif _ncf < 0:
-                # Reserve drain: negative operating cashflow draws down the capital balance
+            elif _operating_reserve_seeded:
+                # Post-seed: only drain on negative NCF
+                if _ncf < 0:
+                    cumulative_cash_flow += _ncf
+            else:
+                # Pre-seed (acquisition, construction, lease-up): accumulate all NCF
                 cumulative_cash_flow += _ncf
             cash_flow_rows.append(
                 CashFlow(
@@ -652,6 +654,14 @@ async def _auto_size_debt_modules(
         p.months for p in phases if p.period_type in _CONSTRUCTION_PERIOD_TYPES
     )
 
+    # Count lease-up months — the perm debt must also cover these shortfalls so that
+    # the cash balance at the first Stabilized period equals the Operating Reserve.
+    # Income during lease-up is modelled as a linear ramp: 0 → full NOI, so the
+    # average is 50 % of stabilized NOI.  This is used to reduce the gross shortfall.
+    lease_up_months = sum(
+        p.months for p in phases if p.period_type == PeriodType.lease_up
+    )
+
     # System-managed balance-only labels — excluded from total_uses (handled in sizing directly)
     _BALANCE_ONLY_LABELS = {"Operating Reserve", "Construction Interest Reserve"}
 
@@ -756,11 +766,24 @@ async def _auto_size_debt_modules(
         fixed = _fixed_sources(module)
         divisor = ONE - constr_io_factor
 
-        # Closed-form solve: reserve = max(opex, DS) × months; DS = principal × pmt_factor
-        # When DS > opex (typical with debt): reserve = principal × pmt_factor × months
-        # Substituting into principal = (uses - fixed + reserve) / (1 - io_factor):
-        #   principal = (uses - fixed) / (1 - io_factor - pmt_factor × months)
-        # This eliminates the iterative approximation and produces an exact solution.
+        # Closed-form solve targeting Operating Reserve at first Stabilized period.
+        #
+        # The debt must cover: TPC + construction IO + lease-up debt service
+        #                      - lease-up income + reserve at stabilization
+        #
+        # Let P = principal, f_c = constr_io_factor, f_m = pmt_factor, L = lease_up_months,
+        #     R = reserve_months, I_lu = avg lease-up income (50 % of stabilized NOI).
+        #
+        #   P = TPC + P·f_c + P·f_m·L − I_lu·L + P·f_m·R
+        #   P·(1 − f_c − f_m·(L + R)) = TPC − I_lu·L
+        #   P = (TPC − I_lu·L) / (1 − f_c − f_m·(L + R))
+        #
+        # When L = 0 this collapses to the original formula.
+        noi_monthly_est = noi_annual / Decimal("12") if noi_annual > ZERO else ZERO
+        # 50 % ramp assumption: average lease-up income = half of stabilized NOI
+        lease_up_income_offset = _q(noi_monthly_est * Decimal("0.5") * Decimal(lease_up_months))
+        effective_uses = total_uses - fixed - lease_up_income_offset
+
         if rate_pct:
             monthly_rate = Decimal(str(rate_pct)) / HUNDRED / Decimal("12")
             n = amort_years * 12
@@ -770,17 +793,17 @@ async def _auto_size_debt_modules(
             else:
                 pmt_factor = ONE / Decimal(n) if n > 0 else ZERO
 
-            # Try closed-form DS-based reserve first
-            ds_divisor = divisor - pmt_factor * Decimal(reserve_months)
+            # Try closed-form DS-based reserve (reserve sized at stabilization)
+            ds_divisor = divisor - pmt_factor * Decimal(reserve_months + lease_up_months)
             if ds_divisor > ZERO:
-                principal = _q((total_uses - fixed) / ds_divisor)
+                principal = _q(effective_uses / ds_divisor)
                 ds_check = _q(principal * pmt_factor)
                 if ds_check < opex_monthly_pre:
                     # OpEx is actually larger — fall back to opex-based reserve
                     reserve = _q(opex_monthly_pre * Decimal(reserve_months))
                     principal = _q((total_uses - fixed + reserve) / divisor) if divisor > ZERO else total_uses - fixed + reserve
             else:
-                # Degenerate: divisor ≤ 0 means reserve rate eats all IO capacity; use opex reserve
+                # Degenerate: divisor ≤ 0; use opex reserve without lease-up adjustment
                 reserve = _q(opex_monthly_pre * Decimal(reserve_months))
                 principal = _q((total_uses - fixed + reserve) / divisor) if divisor > ZERO else total_uses - fixed + reserve
         else:
