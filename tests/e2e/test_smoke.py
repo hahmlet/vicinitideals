@@ -46,30 +46,30 @@ def test_health_returns_ok(http: httpx.Client) -> None:
 # 2-6. Nav pages load (sidebar present, no 4xx/5xx)
 # ---------------------------------------------------------------------------
 
-def test_deals_page_loads(page, base_url: str) -> None:
-    page.goto(f"{base_url}/deals")
-    page.wait_for_selector(".sidebar", timeout=10_000)
-    page.wait_for_selector("#deals-tbody", timeout=10_000)
+def test_deals_page_loads(logged_in_page, base_url: str) -> None:
+    logged_in_page.goto(f"{base_url}/deals")
+    logged_in_page.wait_for_selector(".sidebar", timeout=10_000)
+    logged_in_page.wait_for_selector("#deals-tbody", timeout=10_000)
 
 
-def test_opportunities_page_loads(page, base_url: str) -> None:
-    page.goto(f"{base_url}/opportunities")
-    page.wait_for_selector(".sidebar", timeout=10_000)
+def test_opportunities_page_loads(logged_in_page, base_url: str) -> None:
+    logged_in_page.goto(f"{base_url}/opportunities")
+    logged_in_page.wait_for_selector(".sidebar", timeout=10_000)
 
 
-def test_parcels_page_loads(page, base_url: str) -> None:
-    page.goto(f"{base_url}/parcels")
-    page.wait_for_selector(".sidebar", timeout=10_000)
+def test_parcels_page_loads(logged_in_page, base_url: str) -> None:
+    logged_in_page.goto(f"{base_url}/parcels")
+    logged_in_page.wait_for_selector(".sidebar", timeout=10_000)
 
 
-def test_listings_page_loads(page, base_url: str) -> None:
-    page.goto(f"{base_url}/listings")
-    page.wait_for_selector(".sidebar", timeout=10_000)
+def test_listings_page_loads(logged_in_page, base_url: str) -> None:
+    logged_in_page.goto(f"{base_url}/listings")
+    logged_in_page.wait_for_selector(".sidebar", timeout=10_000)
 
 
-def test_portfolios_page_loads(page, base_url: str) -> None:
-    page.goto(f"{base_url}/portfolios")
-    page.wait_for_selector(".sidebar", timeout=10_000)
+def test_portfolios_page_loads(logged_in_page, base_url: str) -> None:
+    logged_in_page.goto(f"{base_url}/portfolios")
+    logged_in_page.wait_for_selector(".sidebar", timeout=10_000)
 
 
 # ---------------------------------------------------------------------------
@@ -86,8 +86,8 @@ def test_static_css_loads(http: httpx.Client) -> None:
 # 8. New deal wizard page (no data required)
 # ---------------------------------------------------------------------------
 
-def test_new_deal_wizard_loads(page, base_url: str) -> None:
-    page.goto(f"{base_url}/deals/new")
-    page.wait_for_selector(".sidebar", timeout=10_000)
+def test_new_deal_wizard_loads(logged_in_page, base_url: str) -> None:
+    logged_in_page.goto(f"{base_url}/deals/new")
+    logged_in_page.wait_for_selector(".sidebar", timeout=10_000)
     # Wizard has a deal-name input
-    page.wait_for_selector("[name=name]", timeout=10_000)
+    logged_in_page.wait_for_selector("[name=name]", timeout=10_000)

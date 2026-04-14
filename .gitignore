@@ -19,3 +19,8 @@ data/gis_cache/*.geojson
 
 # Claude Code
 .claude/
+
+# E2E test artifacts
+tests/e2e/auth-state.json
+tests/e2e/playwright-report/
+tests/e2e/.playwright-cli/
