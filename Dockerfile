@@ -21,6 +21,9 @@ COPY alembic.ini .
 # Copy tests so they're available in the image
 COPY tests/ tests/
 
+# Copy deploy/ops scripts
+COPY scripts/ scripts/
+
 # -------------------------------------------------------------------------
 # API stage
 # -------------------------------------------------------------------------

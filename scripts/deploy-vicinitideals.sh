@@ -22,7 +22,7 @@ docker compose up -d
 
 echo "==> Running post-deploy smoke checks..."
 sleep 5
-docker compose run --rm -e POST_DEPLOY_BASE_URL=http://127.0.0.1:8000 api python scripts/post_deploy_smoke.py \
+docker compose run --rm -e POST_DEPLOY_BASE_URL=http://api:8000 api python scripts/post_deploy_smoke.py \
   || echo "WARNING: post-deploy smoke check failed — check logs above"
 
 echo "==> Deploy complete."
