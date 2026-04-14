@@ -69,6 +69,10 @@ dev = [
     "openpyxl>=3.1",
     "ruff>=0.11",
 ]
+e2e = [
+    "pytest-playwright>=0.4",
+    "playwright>=1.44",
+]
 
 [tool.hatch.build.targets.wheel]
 packages = ["app"]
@@ -80,6 +84,7 @@ markers = [
     "unit: pure logic tests — no DB, no network (fast, <5s total)",
     "integration: tests that use the in-memory DB or the ASGI app",
     "slow: tests that are intentionally slow (scenario sweeps, benchmark fixtures)",
+    "e2e: end-to-end browser tests via Playwright (requires live app)",
 ]
 
 [tool.coverage.run]
