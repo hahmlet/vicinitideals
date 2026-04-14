@@ -10,7 +10,7 @@ import uuid
 from pathlib import Path
 
 from fastapi import APIRouter, Cookie, Query, Request
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, Response
 from fastapi.templating import Jinja2Templates
 from sqlalchemy import select
 
@@ -58,7 +58,7 @@ async def login_post(
     request: Request,
     session: DBSession,
     next: str = Query(default="/deals"),
-) -> HTMLResponse | RedirectResponse:
+) -> Response:
     form = await request.form()
     email = str(form.get("email", "")).strip().lower()
     password = str(form.get("password", ""))
@@ -147,7 +147,7 @@ async def register_get(
 async def register_post(
     request: Request,
     session: DBSession,
-) -> HTMLResponse | RedirectResponse:
+) -> Response:
     form = await request.form()
     name = str(form.get("name", "")).strip()
     email = str(form.get("email", "")).strip().lower()
@@ -222,7 +222,7 @@ async def register_post(
 async def profile_get(
     request: Request,
     session: DBSession,
-) -> HTMLResponse | RedirectResponse:
+) -> Response:
     user = await get_current_user(request, session)
     if user is None:
         return RedirectResponse(url="/login?next=/profile", status_code=303)
