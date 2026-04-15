@@ -830,6 +830,15 @@ async def _auto_size_debt_modules(
                 # Exclude the bridge from the gap-fill loop so only perm sizes to TPC.
                 auto_modules = [m for m in auto_modules if m is not _constr_mod]
 
+    # When bridge loans carry their own IO (new multi-debt path), the gap-fill module
+    # (e.g. permanent debt) must pay off those bridge loans at retirement, including
+    # accrued IO.  Add captured bridge IO to total_uses so perm sizes to cover it.
+    # This is safe: bridge IO amounts are already finalized above before the gap-fill loop.
+    if debt_types_list and _bridge_io:
+        for _bio_ft, _bio_amt in _bridge_io.items():
+            if _bio_amt > ZERO:
+                total_uses += _bio_amt
+
     # Lease-Up Reserve = perm debt service during lease-up minus ~1/3 stabilized NOI (phantom CF avg).
     # Computed inside the loop when the gap-fill DS path is active; written as a use
     # line after the loop so S&U always balances.
