@@ -735,7 +735,7 @@ async def _auto_size_debt_modules(
             # Exclude the bridge from the gap-fill loop so only perm sizes to TPC.
             auto_modules = [m for m in auto_modules if m is not _constr_mod]
 
-    # Lease-Up Reserve = perm debt service during lease-up minus 50% NOI ramp income.
+    # Lease-Up Reserve = perm debt service during lease-up minus ~1/3 stabilized NOI (phantom CF avg).
     # Computed inside the loop when the gap-fill DS path is active; written as a use
     # line after the loop so S&U always balances.
     _lease_up_carry: Decimal = ZERO
@@ -778,16 +778,46 @@ async def _auto_size_debt_modules(
         #                      - lease-up income + reserve at stabilization
         #
         # Let P = principal, f_c = constr_io_factor, f_m = pmt_factor, L = lease_up_months,
-        #     R = reserve_months, I_lu = avg lease-up income (50 % of stabilized NOI).
+        #     R = reserve_months, I_lu = avg lease-up income (≈ 1/3 of stabilized NOI/mo).
         #
         #   P = TPC + P·f_c + P·f_m·L − I_lu·L + P·f_m·R
         #   P·(1 − f_c − f_m·(L + R)) = TPC − I_lu·L
         #   P = (TPC − I_lu·L) / (1 − f_c − f_m·(L + R))
         #
         # When L = 0 this collapses to the original formula.
+        #
+        # LEASE-UP INCOME FACTOR = 1/3  (derived from phantom cash flow analysis)
+        # ─────────────────────────────────────────────────────────────────────────
+        # Assumptions: 60/40 revenue/opex split at stabilization; revenue ramps
+        # linearly 0 → 100% over L months; opex ramps linearly 50 → 100% (fixed
+        # costs persist at low occupancy).
+        #
+        #   Avg revenue  = 50% of stabilized revenue  (linear 0 → 100%)
+        #   Avg opex     = 75% of stabilized opex     (linear 50% → 100%)
+        #
+        # For a $500k NOI example (revenue $833k, opex $333k, L = 9 months):
+        #   Month | Rev%  | OpEx%  |  Revenue  |   OpEx   |    NOI
+        #     1   |   0%  |  50%   |        $0 |  $13,889 | −$13,889
+        #     2   |  13%  |  56%   |    $8,681 |  $15,625 |  −$6,944
+        #     3   |  25%  |  63%   |   $17,361 |  $17,361 |       $0
+        #     4   |  38%  |  69%   |   $26,042 |  $19,097 |   $6,944
+        #     5   |  50%  |  75%   |   $34,722 |  $20,833 |  $13,889
+        #     6   |  63%  |  81%   |   $43,403 |  $22,569 |  $20,833
+        #     7   |  75%  |  88%   |   $52,083 |  $24,306 |  $27,778
+        #     8   |  88%  |  94%   |   $60,764 |  $26,042 |  $34,722
+        #     9   | 100%  | 100%   |   $69,444 |  $27,778 |  $41,667
+        #                                          Total NOI: $125,000
+        #
+        #   Avg monthly NOI = $125,000 / 9 = $13,889 = 33.3% of stabilized $41,667
+        #
+        # Algebraically: (0.5·R − 0.75·E) / (R − E)
+        #              = (0.5·833k − 0.75·333k) / 500k = 167k / 500k = 1/3
+        #
+        # Using 50% (naive linear revenue average) overstates income by ~$62k over
+        # 9 months because it ignores sticky fixed costs at low occupancy.
+        _LEASE_UP_INCOME_FACTOR = Decimal("1") / Decimal("3")
         noi_monthly_est = noi_annual / Decimal("12") if noi_annual > ZERO else ZERO
-        # 50 % ramp assumption: average lease-up income = half of stabilized NOI
-        lease_up_income_offset = _q(noi_monthly_est * Decimal("0.5") * Decimal(lease_up_months))
+        lease_up_income_offset = _q(noi_monthly_est * _LEASE_UP_INCOME_FACTOR * Decimal(lease_up_months))
         effective_uses = total_uses - fixed - lease_up_income_offset
 
         if rate_pct:
@@ -985,7 +1015,7 @@ async def _auto_size_debt_modules(
         if getattr(ul, "label", "") == "Lease-Up Reserve":
             if _lease_up_carry > ZERO:
                 ul.amount = _lease_up_carry
-                ul.notes = f"Auto-computed: perm debt service during {lease_up_months}-month lease-up net of 50% NOI ramp"
+                ul.notes = f"Auto-computed: perm debt service during {lease_up_months}-month lease-up net of ~1/3 stabilized NOI (phantom CF avg, 60/40 split, opex 50→100%)"
                 session.add(ul)
             else:
                 await session.delete(ul)
@@ -999,7 +1029,7 @@ async def _auto_size_debt_modules(
             phase="operation_lease_up",
             amount=_lease_up_carry,
             timing_type="first_day",
-            notes=f"Auto-computed: perm debt service during {lease_up_months}-month lease-up net of 50% NOI ramp",
+            notes=f"Auto-computed: perm debt service during {lease_up_months}-month lease-up net of ~1/3 stabilized NOI (phantom CF avg, 60/40 split, opex 50→100%)",
         )
         session.add(new_lu)
         use_lines.append(new_lu)
