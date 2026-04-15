@@ -5799,6 +5799,18 @@ async def deal_setup_wizard_complete(
                 active_phase_end="stabilized",
             ))
 
+    # Sync debt_structure from debt_types for engine backward compat.
+    # Phase B will generalise the engine to use debt_types directly; until then
+    # the sizing function gates on debt_structure to detect construction+perm bridges.
+    if debt_types:
+        if "construction_to_perm" in debt_types:
+            inputs.debt_structure = "construction_to_perm"
+        elif "construction_loan" in debt_types and "permanent_debt" in debt_types:
+            inputs.debt_structure = "construction_and_perm"
+        elif debt_types == ["permanent_debt"]:
+            inputs.debt_structure = "perm_only"
+        # Other combinations (pre_development, acquisition, bridge) left as-is until Phase B
+
     inputs.deal_setup_complete = True
     session.add(inputs)
 
