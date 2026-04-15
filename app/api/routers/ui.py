@@ -4198,8 +4198,9 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
                 _width = max(100.0 - _left, 1.5)
                 _fade = True
             _ft = str(_cm.funder_type).replace("FunderType.", "")
+            _label = (_cm.label or _ft).replace(" (auto)", "").strip()
             _cm_gantt_rows.append({
-                "label": _cm.label or _ft,
+                "label": _label,
                 "source_type": "equity" if "equity" in _ft.lower() else "debt",
                 "funder_type": _ft,
                 "left_pct": _left,
