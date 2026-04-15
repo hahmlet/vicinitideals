@@ -664,7 +664,7 @@ async def _auto_size_debt_modules(
 
     # System-managed balance-only labels — excluded from total_uses (handled in sizing directly)
     # Lease-Up Reserve is also excluded: it's derived from P after solving, not an input to it.
-    _BALANCE_ONLY_LABELS = {"Operating Reserve", "Construction Interest Reserve", "Lease-Up Reserve"}
+    _BALANCE_ONLY_LABELS = {"Operating Reserve", "Capitalized Construction Interest", "Lease-Up Reserve"}
 
     # Sum all non-exit use_lines as total project cost proxy
     total_uses = ZERO
@@ -989,10 +989,10 @@ async def _auto_size_debt_modules(
         session.add(new_op)
         use_lines.append(new_op)
 
-    # Update or create Construction Interest Reserve use line (balance-only: not a cash outflow)
+    # Update or create Capitalized Construction Interest use line (balance-only: not a cash outflow)
     constr_reserve_found = False
     for ul in use_lines:
-        if getattr(ul, "label", "") == "Construction Interest Reserve":
+        if getattr(ul, "label", "") == "Capitalized Construction Interest":
             ul.amount = total_constr_io
             session.add(ul)
             constr_reserve_found = True
@@ -1000,7 +1000,7 @@ async def _auto_size_debt_modules(
     if not constr_reserve_found and project_id and total_constr_io > ZERO:
         new_ul = UseLine(
             project_id=project_id,
-            label="Construction Interest Reserve",
+            label="Capitalized Construction Interest",
             phase="construction",
             amount=total_constr_io,
             timing_type="first_day",
@@ -1321,9 +1321,9 @@ def _compute_period(
             capital_outflow += _to_decimal(item.net_amount)
 
     # UseLine outflows: first_day fires at month_index==0; spread fires every month.
-    # Balance-only lines (Operating Reserve, Construction Interest Reserve) are excluded —
+    # Balance-only lines (Operating Reserve, Capitalized Construction Interest) are excluded —
     # their costs are already captured via cash balance residual and debt_service respectively.
-    _BALANCE_ONLY = {"Operating Reserve", "Construction Interest Reserve"}
+    _BALANCE_ONLY = {"Operating Reserve", "Capitalized Construction Interest"}
     if use_lines:
         for ul in use_lines:
             if getattr(ul, "label", "") in _BALANCE_ONLY:

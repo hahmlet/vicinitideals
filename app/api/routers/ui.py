@@ -7242,7 +7242,7 @@ async def _load_draw_schedule_ctx(
         for ul in use_lines_db:
             lbl = (ul.label or "").strip()
             amt = Decimal(str(ul.amount or 0))
-            if reserve_construction == 0 and lbl == "Construction Interest Reserve":
+            if reserve_construction == 0 and lbl == "Capitalized Construction Interest":
                 reserve_construction = amt
             elif reserve_operational == 0 and lbl == "Operating Reserve":
                 reserve_operational = amt
