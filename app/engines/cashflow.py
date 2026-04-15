@@ -1136,15 +1136,39 @@ async def _auto_size_debt_modules(
             principal = _q((total_uses - fixed + reserve) / divisor) if divisor > ZERO else total_uses - fixed + reserve
 
         if debt_sizing_mode == "dscr_capped":
-            # Check whether gap-fill principal keeps DSCR ≥ min.
-            # If yes: use gap-fill (Sources = Uses, DSCR satisfied).
-            # If no: cap at DSCR max (real funding gap, show deficit).
+            # ── DSCR-capped sizing with closing-cost parity ─────────────────
+            # Invariant: whether the cap binds or not, P always satisfies two
+            # parallel constraints (both or either):
+            #   (a) DSCR:            P × f_m × 12 ≤ NOI / DSCR_min
+            #   (b) Gap-fill solve:  P × (1 − f_c − f_m·(R+L) − perm_pct) = effective_uses
+            #
+            # When both are feasible, pick the smaller: the hard lender cap binds.
+            # When (b) ≤ (a), pick (b): DSCR is slack, sizing fits.
+            #
+            # Closing-cost parity: both P_gapfill and P_capped are full loan
+            # amounts the lender actually funds (including the financed
+            # origination fee).  The DSCR check uses DS on the full P, matching
+            # the lender's view.  No hidden re-inflation.
+            #
+            # When the cap binds, the orig fee written to the Use line is
+            # P_capped × perm_pct — honest cost based on what the lender funded.
+            # The resulting Sources gap = (TPC + flat_costs + P_capped·perm_pct
+            # + reserve) − P_capped − fixed is a real funding gap the user
+            # must resolve via equity/scope.
             if rate_pct and principal > ZERO and noi_annual > ZERO and dscr_min > ZERO:
                 gf_ds_monthly = _monthly_pmt(principal, rate_pct, amort_years)
-                gf_dscr = noi_annual / (gf_ds_monthly * Decimal("12")) if gf_ds_monthly > ZERO else Decimal("999")
+                gf_dscr = (
+                    noi_annual / (gf_ds_monthly * Decimal("12"))
+                    if gf_ds_monthly > ZERO
+                    else Decimal("999")
+                )
                 if gf_dscr < dscr_min:
+                    # Hard cap binds: compute P at exactly DSCR_min
                     target_monthly_ds = _q(noi_annual / dscr_min / Decimal("12"))
                     principal = _pv_from_pmt(target_monthly_ds, rate_pct, amort_years)
+                    # Note: no closing-cost re-inflation here. The lender's cap
+                    # is on DS(P), not on P·(1−perm_pct).  Any closing cost
+                    # shortfall surfaces as a real Sources gap downstream.
 
             if principal < ZERO:
                 principal = ZERO

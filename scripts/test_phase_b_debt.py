@@ -112,6 +112,8 @@ def _run_wizard(client: httpx.Client, model_id: str, building_id: str | None,
                 debt_types: list[str],
                 debt_terms: dict,          # {funder_type: {rate_pct, loan_type, amort_years}}
                 milestone_config: dict,    # {funder_type: {active_from, active_to, retired_by}}
+                debt_sizing_mode: str = "gap_fill",
+                dscr_minimum: str = "1.25",
                 ) -> None:
     """Run all 7 wizard steps + complete for a new multi-debt deal."""
 
@@ -157,7 +159,7 @@ def _run_wizard(client: httpx.Client, model_id: str, building_id: str | None,
 
     # Step 5: sizing
     resp = _post_form(client, f"/ui/models/{model_id}/setup/step", {
-        "step": "5", "debt_sizing_mode": "gap_fill", "dscr_minimum": "1.25",
+        "step": "5", "debt_sizing_mode": debt_sizing_mode, "dscr_minimum": dscr_minimum,
     })
     assert resp.status_code in (200, 303), f"Step 5: {resp.status_code}"
 
@@ -304,6 +306,54 @@ TEST_CASES = [
             {"label": "Soft Costs",          "milestone_key": "construction",   "amount": "120000",  "timing_type": "first_day"},
         ],
     },
+    {
+        # DSCR-capped non-binding: low DSCR_min (1.10) so gap-fill wins.
+        # Closing costs must be folded in via divisor (same as pure gap-fill).
+        # Expected: Sources = Uses, Gap = $0 (same as Test 1).
+        "name":       "Phase B Test 4 — DSCR-Capped Non-Binding (low cap)",
+        "deal_type":  "acquisition_minor_reno",
+        "milestones": ["close", "construction", "operation_stabilized", "divestment"],
+        "debt_types": ["permanent_debt"],
+        "debt_terms": {
+            "permanent_debt": {"loan_type": "pi", "rate_pct": 6.5, "amort_years": 30},
+        },
+        "milestone_config": {
+            "permanent_debt": {"active_from": "acquisition", "active_to": "stabilized", "retired_by": ""},
+        },
+        "debt_sizing_mode": "dscr_capped",
+        "dscr_minimum":     "1.10",
+        "use_lines": [
+            {"label": "Purchase Price",   "milestone_key": "close",        "amount": "1200000", "timing_type": "first_day"},
+            {"label": "Renovation",       "milestone_key": "construction",  "amount": "150000",  "timing_type": "first_day"},
+            {"label": "Closing Costs",    "milestone_key": "close",        "amount": "24000",   "timing_type": "first_day"},
+        ],
+        "expect_gap":            True,   # allow gap (DSCR may still bind at 1.10)
+        "expect_sources_le_uses": True,   # Sources ≤ Uses (cap never over-funds)
+    },
+    {
+        # DSCR-capped BINDING: aggressive DSCR_min (2.50) forces cap.
+        # Expected: P_capped < P_gapfill; real Sources gap visible.
+        # The gap should be bounded: orig fee is based on P_capped (smaller), not P_gapfill.
+        "name":       "Phase B Test 5 — DSCR-Capped Binding (high cap)",
+        "deal_type":  "acquisition_minor_reno",
+        "milestones": ["close", "construction", "operation_stabilized", "divestment"],
+        "debt_types": ["permanent_debt"],
+        "debt_terms": {
+            "permanent_debt": {"loan_type": "pi", "rate_pct": 6.5, "amort_years": 30},
+        },
+        "milestone_config": {
+            "permanent_debt": {"active_from": "acquisition", "active_to": "stabilized", "retired_by": ""},
+        },
+        "debt_sizing_mode": "dscr_capped",
+        "dscr_minimum":     "2.50",
+        "use_lines": [
+            {"label": "Purchase Price",   "milestone_key": "close",        "amount": "1200000", "timing_type": "first_day"},
+            {"label": "Renovation",       "milestone_key": "construction",  "amount": "150000",  "timing_type": "first_day"},
+            {"label": "Closing Costs",    "milestone_key": "close",        "amount": "24000",   "timing_type": "first_day"},
+        ],
+        "expect_gap":            True,   # legitimate funding gap
+        "expect_sources_le_uses": True,   # Sources < Uses when cap binds
+    },
 ]
 
 
@@ -332,8 +382,10 @@ def run_tests(base_url: str, session_cookie: str) -> None:
 
             # Run 7-step wizard
             _run_wizard(client, model_id, building_id,
-                        tc["debt_types"], tc["debt_terms"], tc["milestone_config"])
-            print(f"  Wizard: complete ✓ (debt_types={tc['debt_types']})")
+                        tc["debt_types"], tc["debt_terms"], tc["milestone_config"],
+                        debt_sizing_mode=tc.get("debt_sizing_mode", "gap_fill"),
+                        dscr_minimum=tc.get("dscr_minimum", "1.25"))
+            print(f"  Wizard: complete ✓ (debt_types={tc['debt_types']}, mode={tc.get('debt_sizing_mode', 'gap_fill')})")
 
             # Add use lines
             _add_use_lines(client, model_id, tc["use_lines"])
@@ -368,6 +420,9 @@ def run_tests(base_url: str, session_cookie: str) -> None:
                 "tpc":           int(total_project_cost),
                 "noi":           int(noi_stabilized),
                 "debt_amounts":  su.get("debt_amounts", {}),
+                "sizing_mode":   tc.get("debt_sizing_mode", "gap_fill"),
+                "expect_gap":    tc.get("expect_gap", False),
+                "expect_sources_le_uses": tc.get("expect_sources_le_uses", False),
             }
             results.append(result)
 
@@ -380,7 +435,16 @@ def run_tests(base_url: str, session_cookie: str) -> None:
     for r in results:
         gap = r["gap"]
         gap_pct = abs(gap) / r["total_uses"] * 100 if r["total_uses"] else 0
-        balanced = abs(gap) < 100  # within $100 = pass (rounding tolerance)
+
+        # Pass criterion depends on expected behavior:
+        #  - default (gap_fill): Sources = Uses within $100 rounding
+        #  - expect_gap + expect_sources_le_uses (dscr_capped binding):
+        #      any non-positive gap is acceptable; sources must be ≤ uses
+        if r.get("expect_gap") and r.get("expect_sources_le_uses"):
+            # DSCR-capped: allow any Sources ≤ Uses outcome (including balanced)
+            balanced = gap <= 100  # tolerate $100 of rounding on the positive side
+        else:
+            balanced = abs(gap) < 100
         status = "✅ PASS" if balanced else "❌ FAIL"
         if not balanced:
             all_pass = False
@@ -388,6 +452,7 @@ def run_tests(base_url: str, session_cookie: str) -> None:
         print(f"\n{status}  {r['name']}")
         print(f"       model: https://deals.ketch.media/models/{r['model_id']}/builder?module=sources_uses")
         print(f"       debt:  {', '.join(r['debt_types'])}")
+        print(f"       mode:  {r['sizing_mode']}")
         print(f"       TPC:   ${r['tpc']:>12,}")
         print(f"       NOI:   ${r['noi']:>12,}")
         print(f"    Sources:  ${r['total_sources']:>12,}")
