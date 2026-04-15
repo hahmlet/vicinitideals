@@ -664,7 +664,14 @@ async def _auto_size_debt_modules(
 
     # System-managed balance-only labels — excluded from total_uses (handled in sizing directly)
     # Lease-Up Reserve is also excluded: it's derived from P after solving, not an input to it.
-    _BALANCE_ONLY_LABELS = {"Operating Reserve", "Capitalized Construction Interest", "Lease-Up Reserve"}
+    # "Construction Interest Reserve" is the legacy label (renamed → Capitalized Construction Interest).
+    # Keep it here so pre-rename DB rows don't get counted in the gap-fill total.
+    _BALANCE_ONLY_LABELS = {
+        "Operating Reserve",
+        "Capitalized Construction Interest",
+        "Construction Interest Reserve",   # legacy label — aliased for backward compat
+        "Lease-Up Reserve",
+    }
 
     # Sum all non-exit use_lines as total project cost proxy
     total_uses = ZERO
@@ -990,9 +997,11 @@ async def _auto_size_debt_modules(
         use_lines.append(new_op)
 
     # Update or create Capitalized Construction Interest use line (balance-only: not a cash outflow)
+    # Also matches legacy label "Construction Interest Reserve" and renames it on first write.
     constr_reserve_found = False
     for ul in use_lines:
-        if getattr(ul, "label", "") == "Capitalized Construction Interest":
+        if getattr(ul, "label", "") in ("Capitalized Construction Interest", "Construction Interest Reserve"):
+            ul.label = "Capitalized Construction Interest"
             ul.amount = total_constr_io
             session.add(ul)
             constr_reserve_found = True
@@ -1008,6 +1017,13 @@ async def _auto_size_debt_modules(
         )
         session.add(new_ul)
         use_lines.append(new_ul)
+
+    # Delete any orphaned legacy "Construction Interest Reserve" lines that survived a rename
+    # (can appear if the line was created before the label was changed and not yet migrated)
+    for ul in list(use_lines):
+        if getattr(ul, "label", "") == "Construction Interest Reserve":
+            await session.delete(ul)
+            use_lines.remove(ul)
 
     # Update or create Lease-Up Reserve use line (balance-only: perm DS shortfall during lease-up)
     lu_reserve_found = False
@@ -1323,7 +1339,7 @@ def _compute_period(
     # UseLine outflows: first_day fires at month_index==0; spread fires every month.
     # Balance-only lines (Operating Reserve, Capitalized Construction Interest) are excluded —
     # their costs are already captured via cash balance residual and debt_service respectively.
-    _BALANCE_ONLY = {"Operating Reserve", "Capitalized Construction Interest"}
+    _BALANCE_ONLY = {"Operating Reserve", "Capitalized Construction Interest", "Construction Interest Reserve"}
     if use_lines:
         for ul in use_lines:
             if getattr(ul, "label", "") in _BALANCE_ONLY:
