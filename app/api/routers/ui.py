@@ -5467,6 +5467,10 @@ async def deal_setup_wizard_step(
     """Save a wizard step's data and return the next step fragment."""
     form = await request.form()
     step = int(form.get("step", 1))
+    # Field-level validation errors collected during the step handler.
+    # Keyed by funder_type (or "_form" for cross-cutting errors).  When
+    # non-empty, the same step is re-rendered instead of advancing.
+    wizard_errors: dict[str, str] = {}
 
     model = await session.get(DealModel, model_id)
     if model is None:
@@ -5535,33 +5539,87 @@ async def deal_setup_wizard_step(
             inputs.debt_types = selected
     elif step == 3:
         # Per-debt milestone & retirement config
+        # Validate phase sequencing: active_from must precede active_to.
+        # "perpetuity" and "" are treated as "open-ended" and always valid.
+        _PHASE_ORDER = {
+            "pre_construction": 0, "close": 1, "acquisition": 1,
+            "construction": 2, "lease_up": 3, "operation_lease_up": 3,
+            "stabilized": 4, "operation_stabilized": 4, "exit": 5, "divestment": 5,
+        }
         dmc: dict = {}
         for ft in (inputs.debt_types or []):
             active_from = form.get(f"{ft}_active_from") or ""
             active_to   = form.get(f"{ft}_active_to")   or ""
             retired_by  = form.get(f"{ft}_retired_by")  or ""
+            if active_from and active_to and active_to not in ("perpetuity", ""):
+                _from_rank = _PHASE_ORDER.get(active_from)
+                _to_rank   = _PHASE_ORDER.get(active_to)
+                if _from_rank is not None and _to_rank is not None and _from_rank > _to_rank:
+                    wizard_errors[ft] = (
+                        f"Active period is backwards: '{active_from}' comes after '{active_to}'. "
+                        f"Set active_to to a later phase, or use 'perpetuity' if the loan never retires."
+                    )
+                    continue
             if active_from or active_to or retired_by:
                 dmc[ft] = {
                     "active_from": active_from,
                     "active_to":   active_to,
                     "retired_by":  retired_by,
                 }
-        if dmc:
+        if wizard_errors:
+            # Re-render step 3 with errors; do not advance
+            pass
+        elif dmc:
             inputs.debt_milestone_config = dmc
     elif step == 4:
         # Per-debt terms: loan type, rate, amort years
+        # Validate with explicit try/except and range checks so bad input
+        # surfaces as a field error, not a 500.
+        _VALID_LOAN_TYPES = {
+            "io_only", "interest_reserve", "capitalized_interest",
+            "pi", "io_then_pi",
+        }
         dt_terms = dict(inputs.debt_terms or {})
         for ft in (inputs.debt_types or []):
             loan_type   = form.get(f"{ft}_loan_type")
-            rate_pct    = form.get(f"{ft}_rate_pct")
-            amort_years = form.get(f"{ft}_amort_years")
-            if loan_type or rate_pct:
-                entry = dict(dt_terms.get(ft, {}))
-                if loan_type:   entry["loan_type"]   = loan_type
-                if rate_pct:    entry["rate_pct"]    = float(rate_pct)
-                if amort_years: entry["amort_years"] = int(amort_years)
+            rate_raw    = form.get(f"{ft}_rate_pct")
+            amort_raw   = form.get(f"{ft}_amort_years")
+            entry = dict(dt_terms.get(ft, {}))
+
+            if loan_type:
+                if loan_type not in _VALID_LOAN_TYPES:
+                    wizard_errors[ft] = f"Unknown loan type: {loan_type!r}"
+                    continue
+                entry["loan_type"] = loan_type
+
+            if rate_raw:
+                try:
+                    rate_val = float(rate_raw)
+                except (TypeError, ValueError):
+                    wizard_errors[ft] = f"Interest rate must be a number (got {rate_raw!r})"
+                    continue
+                if rate_val < 0 or rate_val > 30:
+                    wizard_errors[ft] = (
+                        f"Interest rate {rate_val}% is outside 0–30%. Enter a realistic rate."
+                    )
+                    continue
+                entry["rate_pct"] = rate_val
+
+            if amort_raw:
+                try:
+                    amort_val = int(amort_raw)
+                except (TypeError, ValueError):
+                    wizard_errors[ft] = f"Amortization must be a whole number of years (got {amort_raw!r})"
+                    continue
+                if amort_val < 1 or amort_val > 40:
+                    wizard_errors[ft] = f"Amortization {amort_val} years is outside 1–40 years."
+                    continue
+                entry["amort_years"] = amort_val
+
+            if entry:
                 dt_terms[ft] = entry
-        inputs.debt_terms = dt_terms
+        if not wizard_errors:
+            inputs.debt_terms = dt_terms
     elif step == 5:
         # Per-debt sizing approach; perm gap-fill / dscr-capped mode
         dt_terms = dict(inputs.debt_terms or {})
@@ -5588,6 +5646,15 @@ async def deal_setup_wizard_step(
         or_months = form.get("operation_reserve_months")
         if or_months:
             inputs.operation_reserve_months = int(or_months)
+
+    # If validation failed, don't persist and re-render the same step with errors
+    if wizard_errors:
+        missing_building_data = await _get_missing_building_data(default_project, session)
+        return templates.TemplateResponse(request, "partials/deal_setup_wizard.html", {
+            "request": request, "model": model, "inputs": inputs, "step": step,
+            "missing_building_data": missing_building_data,
+            "wizard_errors": wizard_errors,
+        })
 
     session.add(inputs)
     await session.commit()
@@ -5667,8 +5734,10 @@ async def deal_setup_wizard_complete(
             "permanent_debt":       "Permanent Debt",
             "construction_to_perm": "Construction-to-Perm",
         }
+        # Defaults must match deal_setup_wizard.html Step 4 (_dt_default_*).
+        # Any mismatch means wizard re-runs show ghost field changes.
         _DEFAULT_RATE: dict[str, float] = {
-            "pre_development_loan": 7.0,
+            "pre_development_loan": 8.0,
             "acquisition_loan":     6.5,
             "construction_loan":    6.0,
             "bridge":               7.5,
@@ -5676,10 +5745,10 @@ async def deal_setup_wizard_complete(
             "construction_to_perm": 5.0,
         }
         _DEFAULT_LOAN_TYPE: dict[str, str] = {
-            "pre_development_loan": "io_only",
-            "acquisition_loan":     "io_only",
-            "construction_loan":    "io_only",
-            "bridge":               "io_only",
+            "pre_development_loan": "interest_reserve",
+            "acquisition_loan":     "interest_reserve",
+            "construction_loan":    "interest_reserve",
+            "bridge":               "interest_reserve",
             "permanent_debt":       "pi",
             "construction_to_perm": "io_then_pi",
         }

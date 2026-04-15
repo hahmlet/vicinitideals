@@ -441,6 +441,16 @@
           hx-swap="outerHTML">
       <input type="hidden" name="step" value="3">
       <div class="wizard-body">
+        {% if wizard_errors %}
+        <div style="background:#fef2f2;border:1px solid #fca5a5;color:#991b1b;padding:12px 14px;border-radius:8px;margin-bottom:16px;font-size:13px">
+          <div style="font-weight:600;margin-bottom:6px">Please fix the following before continuing:</div>
+          <ul style="margin:0;padding-left:18px">
+          {% for ft, msg in wizard_errors.items() %}
+            <li><b>{{ _dt_labels.get(ft, ft) }}:</b> {{ msg }}</li>
+          {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
         <table style="width:100%;border-collapse:collapse;font-size:13px">
           <thead>
             <tr style="border-bottom:2px solid var(--border)">
@@ -531,6 +541,16 @@
           hx-swap="outerHTML">
       <input type="hidden" name="step" value="4">
       <div class="wizard-body">
+        {% if wizard_errors %}
+        <div style="background:#fef2f2;border:1px solid #fca5a5;color:#991b1b;padding:12px 14px;border-radius:8px;margin-bottom:16px;font-size:13px">
+          <div style="font-weight:600;margin-bottom:6px">Please fix the following before continuing:</div>
+          <ul style="margin:0;padding-left:18px">
+          {% for ft, msg in wizard_errors.items() %}
+            <li><b>{{ _dt_labels.get(ft, ft) }}:</b> {{ msg }}</li>
+          {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
         {% for dt in _debt_types %}
         {%- set _dt_cfg = _dterms.get(dt, {}) -%}
         {%- set _rate   = _dt_cfg.get('rate_pct')    or _dt_default_rates.get(dt, 5.0) -%}
@@ -753,13 +773,28 @@
         'construction_to_perm': 'Construction-to-Perm',
     } -%}
     {%- set _phase_labels = {
-        'pre_construction': 'Pre-Development',
-        'acquisition':      'Close',
-        'construction':     'Construction Start',
-        'lease_up':         'CO',
-        'stabilized':       'Stabilization',
-        'exit':             'Exit',
-        'perpetuity':       'Perpetuity',
+        'pre_construction':     'Pre-Development',
+        'acquisition':          'Close',
+        'close':                'Close',
+        'construction':         'Construction Start',
+        'lease_up':             'CO',
+        'operation_lease_up':   'CO',
+        'stabilized':           'Stabilization',
+        'operation_stabilized': 'Stabilization',
+        'exit':                 'Exit',
+        'divestment':           'Exit',
+        'perpetuity':           'Perpetuity',
+    } -%}
+    {# Closing cost defaults — keep in sync with:
+       app/engines/cashflow.py:_DEFAULT_LOAN_COSTS
+       app/api/routers/ui.py:_CC_PRELOAD_COSTS #}
+    {%- set _cc_defaults = {
+        'construction_loan':    [('Origination Fee', '1.0%'), ('Lender Legal', '$5,000'),  ('Title / Survey', '$3,500'), ('Environmental Phase I', '$2,500')],
+        'permanent_debt':       [('Origination Fee', '0.5%'), ('Lender Legal', '$5,000'),  ('Appraisal',      '$3,500'), ('Title',                 '$2,500')],
+        'pre_development_loan': [('Origination Fee', '1.5%'), ('Lender Legal', '$3,000')],
+        'acquisition_loan':     [('Origination Fee', '1.0%'), ('Lender Legal', '$5,000'),  ('Title / Survey', '$3,500')],
+        'bridge':               [('Origination Fee', '1.5%'), ('Lender Legal', '$3,000')],
+        'construction_to_perm': [('Bond Issuance Fee','1.0%'),('Bond Counsel Legal','$15,000')],
     } -%}
     {% set _dsm = inputs.debt_sizing_mode or 'gap_fill' %}
     <div class="wizard-header">
@@ -785,6 +820,8 @@
         {% for dt in _debt_types %}
         {%- set _cfg = _dmc.get(dt, {}) -%}
         {%- set _dt_cfg = _dterms.get(dt, {}) -%}
+        {%- set _lt = _dt_cfg.get('loan_type') -%}
+        {%- set _amort = _dt_cfg.get('amort_years', 30) -%}
         <div class="section-label" style="margin-top:12px">{{ _dt_labels.get(dt, dt) }}</div>
         <table class="review-table">
           <tr>
@@ -799,32 +836,56 @@
           <tr>
             <td>Rate / type</td>
             <td>{{ _dt_cfg.get('rate_pct', '—') }}%
-              — {% if _dt_cfg.get('loan_type') == 'interest_reserve' %}Interest Reserve
-                 {% elif _dt_cfg.get('loan_type') == 'io_only' %}I&amp;O Payment
-                 {% elif _dt_cfg.get('loan_type') == 'capitalized_interest' %}Capitalized Interest
-                 {% elif _dt_cfg.get('loan_type') == 'pi' %}P&amp;I {{ _dt_cfg.get('amort_years', 30) }}yr
-                 {% elif _dt_cfg.get('loan_type') == 'io_then_pi' %}IO then P&amp;I {{ _dt_cfg.get('amort_years', 30) }}yr
+              — {% if _lt == 'interest_reserve' %}Interest Reserve
+                 {% elif _lt == 'io_only' %}I&amp;O Payment (True IO)
+                 {% elif _lt == 'capitalized_interest' %}Capitalized Interest (PIK)
+                 {% elif _lt == 'pi' %}P&amp;I
+                 {% elif _lt == 'io_then_pi' %}IO then P&amp;I
                  {% else %}—{% endif %}
             </td>
           </tr>
+          {% if _lt in ('pi', 'io_then_pi') %}
+          <tr>
+            <td>Amortization</td>
+            <td>{{ _amort }} years</td>
+          </tr>
+          {% endif %}
+          {% if _cc_defaults.get(dt) %}
+          <tr>
+            <td>Closing costs</td>
+            <td style="font-size:12px;line-height:1.5">
+              {% for cc_name, cc_amt in _cc_defaults.get(dt) -%}
+              {{ cc_name }} <span style="color:var(--text-muted)">({{ cc_amt }})</span>{% if not loop.last %}, {% endif %}
+              {%- endfor %}
+              <div class="field-hint" style="margin-top:2px">Auto-created at $0; computed from sized principal on Compute. Editable.</div>
+            </td>
+          </tr>
+          {% endif %}
         </table>
         {% endfor %}
 
-        <table class="review-table" style="margin-top:12px">
+        <div class="section-label" style="margin-top:16px">Sizing &amp; Reserves</div>
+        <table class="review-table">
           <tr>
             <td>Perm sizing mode</td>
-            <td>{% if _dsm == 'gap_fill' %}Gap-Fill (advisory DSCR){% else %}DSCR-Capped ({{ inputs.dscr_minimum | float }}×){% endif %}</td>
+            <td>
+              {% if _dsm == 'gap_fill' %}
+                Gap-Fill (perm sizes to cover remaining TPC)
+              {% else %}
+                DSCR-Capped at {{ inputs.dscr_minimum | float }}×
+                <div class="field-hint">If the gap-fill principal produces DSCR &lt; {{ inputs.dscr_minimum | float }}×, perm will be capped and a Sources gap will appear.</div>
+              {% endif %}
+            </td>
           </tr>
           {% if _has_constr %}
           <tr><td>Construction floor</td><td>{{ inputs.construction_floor_pct | float }}% of TPC</td></tr>
           {% endif %}
-          <tr><td>Operating reserve</td><td>{{ inputs.operation_reserve_months }} months</td></tr>
+          <tr><td>Operating reserve</td><td>{{ inputs.operation_reserve_months }} months of max(OpEx, DS)</td></tr>
         </table>
 
-        <div style="background:var(--accent-faint);border:1px solid var(--accent);border-radius:8px;padding:12px 14px;font-size:12px;margin-top:12px">
-          <strong>What happens next:</strong> {{ _debt_types | length }} debt source{{ 's' if _debt_types | length != 1 else '' }} will be created in Sources.
-          Loan amounts are $0 until you enter Uses and hit Compute.
-          You can edit any source in the Sources module at any time.
+        <div style="background:var(--accent-faint);border:1px solid var(--accent);border-radius:8px;padding:12px 14px;font-size:12px;margin-top:16px">
+          <strong>What happens next:</strong> {{ _debt_types | length }} debt source{{ 's' if _debt_types | length != 1 else '' }} will be created in Sources, along with closing-cost Use line stubs for each loan (pre-loaded at $0, computed on Compute).
+          You can edit any line in the S&amp;U table at any time — user values override the auto-computed defaults.
         </div>
 
       </div>
