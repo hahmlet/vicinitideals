@@ -663,7 +663,8 @@ async def _auto_size_debt_modules(
     )
 
     # System-managed balance-only labels — excluded from total_uses (handled in sizing directly)
-    _BALANCE_ONLY_LABELS = {"Operating Reserve", "Construction Interest Reserve"}
+    # Lease-Up Reserve is also excluded: it's derived from P after solving, not an input to it.
+    _BALANCE_ONLY_LABELS = {"Operating Reserve", "Construction Interest Reserve", "Lease-Up Reserve"}
 
     # Sum all non-exit use_lines as total project cost proxy
     total_uses = ZERO
@@ -734,6 +735,11 @@ async def _auto_size_debt_modules(
             # Exclude the bridge from the gap-fill loop so only perm sizes to TPC.
             auto_modules = [m for m in auto_modules if m is not _constr_mod]
 
+    # Lease-Up Reserve = perm debt service during lease-up minus 50% NOI ramp income.
+    # Computed inside the loop when the gap-fill DS path is active; written as a use
+    # line after the loop so S&U always balances.
+    _lease_up_carry: Decimal = ZERO
+
     for module in auto_modules:
         src = dict(module.source or {})
         carry = module.carry or {}
@@ -797,6 +803,11 @@ async def _auto_size_debt_modules(
             ds_divisor = divisor - pmt_factor * Decimal(reserve_months + lease_up_months)
             if ds_divisor > ZERO:
                 principal = _q(effective_uses / ds_divisor)
+                # Capture lease-up carry = net debt service shortfall during lease-up.
+                # This becomes a Use line so Sources = Uses after compute.
+                if lease_up_months > 0:
+                    _lu = _q(principal * pmt_factor * Decimal(lease_up_months) - lease_up_income_offset)
+                    _lease_up_carry = _lu if _lu > ZERO else ZERO
                 ds_check = _q(principal * pmt_factor)
                 if ds_check < opex_monthly_pre:
                     # OpEx is actually larger — fall back to opex-based reserve
@@ -967,6 +978,31 @@ async def _auto_size_debt_modules(
         )
         session.add(new_ul)
         use_lines.append(new_ul)
+
+    # Update or create Lease-Up Reserve use line (balance-only: perm DS shortfall during lease-up)
+    lu_reserve_found = False
+    for ul in use_lines:
+        if getattr(ul, "label", "") == "Lease-Up Reserve":
+            if _lease_up_carry > ZERO:
+                ul.amount = _lease_up_carry
+                ul.notes = f"Auto-computed: perm debt service during {lease_up_months}-month lease-up net of 50% NOI ramp"
+                session.add(ul)
+            else:
+                await session.delete(ul)
+                use_lines.remove(ul)
+            lu_reserve_found = True
+            break
+    if not lu_reserve_found and project_id and _lease_up_carry > ZERO:
+        new_lu = UseLine(
+            project_id=project_id,
+            label="Lease-Up Reserve",
+            phase="operation_lease_up",
+            amount=_lease_up_carry,
+            timing_type="first_day",
+            notes=f"Auto-computed: perm debt service during {lease_up_months}-month lease-up net of 50% NOI ramp",
+        )
+        session.add(new_lu)
+        use_lines.append(new_lu)
 
     await session.flush()
 
