@@ -51,6 +51,10 @@ _UI_PATH_PREFIXES = (
     "/logout",
     "/register",
     "/profile",
+    "/forgot-password",
+    "/reset-password",
+    "/verify-email",
+    "/resend-verification",
 )
 
 # Paths that don't require an authenticated session (public)
