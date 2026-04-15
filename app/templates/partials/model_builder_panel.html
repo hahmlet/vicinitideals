@@ -238,7 +238,7 @@
                        background:linear-gradient(to right,transparent,rgba(255,255,255,.75));
                        pointer-events:none"></span>
           {% endif %}
-          {% if row.width_pct > 8 %}<span style="padding-left:6px;font-size:10px">{{ row.label }}</span>{% endif %}
+          {% if row.width_pct > 8 %}{{ row.label }}{% endif %}
         </div>
       </div>
     </div>
