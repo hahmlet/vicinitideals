@@ -461,12 +461,15 @@ async def forgot_password_post(
             return RedirectResponse(url="/forgot-password?sent=1", status_code=303)
 
     # ── Actual lookup + send ─────────────────────────────────────────────
+    # Note: we log misses at WARNING level (not INFO) so they surface in
+    # default container log output without needing a logging config change.
+    # Successful sends are intentionally NOT logged — success is the
+    # boring common case and clutters the log.
     if email:
         user = (
             await session.execute(select(User).where(User.email == email))
         ).scalar_one_or_none()
         if user is not None and user.hashed_password and user.is_active:
-            logger.info("forgot_password: sending reset email ip=%s email=%s", ip, email)
             reset_token = make_password_reset_token(user.id, user.hashed_password)
             reset_url = f"{settings.app_base_url}/reset-password?token={reset_token}"
             try:
@@ -486,9 +489,9 @@ async def forgot_password_post(
                 else "no_password_set" if not user.hashed_password
                 else "account_disabled"
             )
-            logger.info("forgot_password miss ip=%s email=%s reason=%s", ip, email, reason)
+            logger.warning("forgot_password miss ip=%s email=%s reason=%s", ip, email, reason)
     else:
-        logger.info("forgot_password: empty email submitted ip=%s", ip)
+        logger.warning("forgot_password: empty email submitted ip=%s", ip)
 
     # Always show the same confirmation regardless of whether the email existed
     return RedirectResponse(url="/forgot-password?sent=1", status_code=303)
