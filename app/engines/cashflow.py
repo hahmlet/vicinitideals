@@ -669,7 +669,9 @@ async def _auto_size_debt_modules(
     _BALANCE_ONLY_LABELS = {
         "Operating Reserve",
         "Capitalized Construction Interest",
-        "Construction Interest Reserve",   # legacy label — aliased for backward compat
+        "Construction Interest Reserve",          # legacy label — aliased for backward compat
+        "Capitalized Pre-Development Interest",   # Phase B: per-bridge IO use lines
+        "Capitalized Acquisition Interest",       # Phase B: per-bridge IO use lines
         "Lease-Up Reserve",
     }
 
@@ -722,25 +724,111 @@ async def _auto_size_debt_modules(
         if "stabilized" in active:
             opex_monthly_pre += _q(_to_decimal(line.annual_amount) / Decimal("12"))
 
-    # For Construction + Permanent (Separate), the construction loan is a bridge that
-    # gets taken out by the permanent loan.  Only the perm leg should gap-fill total
-    # uses; the construction loan principal mirrors the perm amount.  If we let both
-    # independently gap-fill, Sources = 2×Uses, driving equity deeply negative.
-    debt_structure = getattr(inputs, "debt_structure", None) or "perm_only"
+    # Phase B: new multi-debt path when debt_types is explicitly set on inputs.
+    # Bridge loans (pre_development_loan, acquisition_loan, construction_loan, bridge)
+    # are sized to their phase costs and marked is_bridge=True so they're excluded from
+    # the Sources display total.  Permanent debt still gap-fills to TPC.
+    # Legacy 3-path is preserved when debt_types is None (backward compat).
     _bridge_module: object = None
-    if debt_structure == "construction_and_perm":
-        _perm_mod = next(
-            (m for m in auto_modules if str(getattr(m, "funder_type", "")) == "permanent_debt"),
-            None,
-        )
-        _constr_mod = next(
-            (m for m in auto_modules if str(getattr(m, "funder_type", "")) == "construction_loan"),
-            None,
-        )
-        if _perm_mod and _constr_mod:
-            _bridge_module = _constr_mod
-            # Exclude the bridge from the gap-fill loop so only perm sizes to TPC.
-            auto_modules = [m for m in auto_modules if m is not _constr_mod]
+    _perm_mod: object = None
+    _bridge_io: dict = {}   # {funder_type: capitalized_io_amount} for new-path use lines
+
+    debt_types_list: list = getattr(inputs, "debt_types", None) or []
+
+    if debt_types_list:
+        # ── New multi-debt path ─────────────────────────────────────────────
+        _BRIDGE_FUNDER_TYPES = {"pre_development_loan", "acquisition_loan", "construction_loan", "bridge"}
+        _PRE_DEV_USE_PHASES  = {"pre_construction"}
+        _ACQ_USE_PHASES      = {"acquisition", "other"}
+        _CONSTR_USE_PHASES   = {"construction", "renovation", "conversion"}
+
+        def _phase_cost_sum(phase_set: set) -> Decimal:
+            return sum(
+                (_to_decimal(ul.amount)
+                 for ul in use_lines
+                 if str(getattr(ul.phase, "value", ul.phase) or "") in phase_set
+                 and getattr(ul, "label", "") not in _BALANCE_ONLY_LABELS),
+                ZERO,
+            )
+
+        pre_dev_costs  = _phase_cost_sum(_PRE_DEV_USE_PHASES)
+        acq_costs      = _phase_cost_sum(_ACQ_USE_PHASES)
+        constr_costs   = _phase_cost_sum(_CONSTR_USE_PHASES)
+
+        _pre_dev_months = sum(p.months for p in phases if p.period_type == PeriodType.pre_construction)
+        _acq_months     = sum(p.months for p in phases if p.period_type == PeriodType.acquisition)
+
+        for _m in list(auto_modules):
+            _ft = str(getattr(_m, "funder_type", "") or "")
+            if _ft not in _BRIDGE_FUNDER_TYPES:
+                continue
+            _src    = dict(_m.source or {})
+            _carry  = _m.carry or {}
+            _rate   = _src.get("interest_rate_pct") or _carry.get("io_rate_pct")
+            _cc     = _get_phase_carry(_carry, "construction")
+            _cr     = (_cc or {}).get("io_rate_pct") if _cc else None
+            if not _cr:
+                _cr = _rate
+
+            if _ft == "pre_development_loan":
+                _r = Decimal(str(_rate or 0))
+                _io_f = (_r / HUNDRED / Decimal("12") * Decimal(_pre_dev_months)) if (_r > ZERO and _pre_dev_months > 0) else ZERO
+                _div = ONE - _io_f
+                _principal = _q(pre_dev_costs / _div) if (_div > ZERO and pre_dev_costs > ZERO) else pre_dev_costs
+                if _principal > ZERO and _r > ZERO and _pre_dev_months > 0:
+                    _bridge_io["pre_development_loan"] = _q(_principal * _r / HUNDRED / Decimal("12") * Decimal(_pre_dev_months))
+
+            elif _ft == "acquisition_loan":
+                _dt_terms = (inputs.debt_terms or {}).get("acquisition_loan", {})
+                _ltv = Decimal(str(_dt_terms.get("ltv_pct") or _src.get("ltv_pct") or 70))
+                _principal = _q(acq_costs * _ltv / HUNDRED)
+                _r = Decimal(str(_rate or 0))
+                if _principal > ZERO and _r > ZERO and _acq_months > 0:
+                    _bridge_io["acquisition_loan"] = _q(_principal * _r / HUNDRED / Decimal("12") * Decimal(_acq_months))
+
+            elif _ft == "construction_loan":
+                _r = Decimal(str(_cr or 0))
+                _io_f = (_r / HUNDRED / Decimal("12") * Decimal(constr_months_total)) if (_r > ZERO and constr_months_total > 0) else ZERO
+                _div = ONE - _io_f
+                _principal = _q(constr_costs / _div) if (_div > ZERO and constr_costs > ZERO) else constr_costs
+                if _principal > ZERO and _r > ZERO and constr_months_total > 0:
+                    _bridge_io["construction_loan"] = _q(_principal * _r / HUNDRED / Decimal("12") * Decimal(constr_months_total))
+
+            elif _ft == "bridge":
+                _existing_amt = _src.get("amount")
+                _principal = Decimal(str(_existing_amt)) if _existing_amt else ZERO
+            else:
+                continue
+
+            if _principal < ZERO:
+                _principal = ZERO
+            _src["amount"] = str(_q(_principal))
+            _src["is_bridge"] = True
+            await session.execute(
+                sa_update(CapitalModule).where(CapitalModule.id == _m.id).values(source=_src)
+            )
+            _m.source = _src
+            auto_modules = [x for x in auto_modules if x is not _m]  # remove from gap-fill loop
+
+    else:
+        # ── Legacy 3-path: construction_and_perm bridge detection ───────────
+        # For Construction + Permanent (Separate), the construction loan is a bridge
+        # that gets taken out by the permanent loan.  Only the perm leg should
+        # gap-fill total uses; the construction loan principal mirrors the perm amount.
+        debt_structure = getattr(inputs, "debt_structure", None) or "perm_only"
+        if debt_structure == "construction_and_perm":
+            _perm_mod = next(
+                (m for m in auto_modules if str(getattr(m, "funder_type", "")) == "permanent_debt"),
+                None,
+            )
+            _constr_mod = next(
+                (m for m in auto_modules if str(getattr(m, "funder_type", "")) == "construction_loan"),
+                None,
+            )
+            if _perm_mod and _constr_mod:
+                _bridge_module = _constr_mod
+                # Exclude the bridge from the gap-fill loop so only perm sizes to TPC.
+                auto_modules = [m for m in auto_modules if m is not _constr_mod]
 
     # Lease-Up Reserve = perm debt service during lease-up minus ~1/3 stabilized NOI (phantom CF avg).
     # Computed inside the loop when the gap-fill DS path is active; written as a use
@@ -769,8 +857,10 @@ async def _auto_size_debt_modules(
         # IO factor: fraction of principal consumed by construction IO over all constr phases
         # Solved algebraically: P = base / (1 - constr_io_factor) so that
         # cash at ops start = P - base = reserve (net of construction IO charges)
+        # In new multi-debt deals the construction loan handles its own IO, so perm's
+        # constr_io_factor is forced to zero to avoid double-counting.
         constr_io_factor = ZERO
-        if constr_rate_pct and constr_months_total > 0:
+        if not debt_types_list and constr_rate_pct and constr_months_total > 0:
             constr_io_factor = (
                 Decimal(str(constr_rate_pct)) / HUNDRED / Decimal("12")
                 * Decimal(str(constr_months_total))
@@ -942,10 +1032,14 @@ async def _auto_size_debt_modules(
         else max(opex_monthly, ds_monthly) * Decimal(reserve_months)
     )
 
-    # Compute actual construction IO across all auto-sized modules
-    # = sum(principal × constr_rate/12 × constr_months) — already embedded in principal sizing
+    # Compute actual construction IO across auto-sized modules.
+    # New multi-debt path: construction loan IO is in _bridge_io["construction_loan"];
+    # perm does not pay IO during construction, so auto_modules loop would produce ZERO.
+    # Legacy path: iterate auto_modules (may include a phased perm with constr IO carry).
     total_constr_io = ZERO
-    if constr_months_total > 0:
+    if debt_types_list:
+        total_constr_io = _bridge_io.get("construction_loan", ZERO)
+    elif constr_months_total > 0:
         for m in auto_modules:
             src3 = m.source or {}
             carry3 = m.carry or {}
@@ -1045,6 +1139,34 @@ async def _auto_size_debt_modules(
         )
         session.add(new_lu)
         use_lines.append(new_lu)
+
+    # Phase B: write Capitalized Pre-Development Interest and Capitalized Acquisition Interest
+    # use lines for new multi-debt deals (construction_loan IO uses the existing CI block above).
+    if debt_types_list and project_id:
+        for _bft, _blabel in [
+            ("pre_development_loan", "Capitalized Pre-Development Interest"),
+            ("acquisition_loan",     "Capitalized Acquisition Interest"),
+        ]:
+            _bio_amt = _bridge_io.get(_bft, ZERO)
+            _existing_bio = next((ul for ul in use_lines if getattr(ul, "label", "") == _blabel), None)
+            if _existing_bio:
+                if _bio_amt > ZERO:
+                    _existing_bio.amount = _bio_amt
+                    session.add(_existing_bio)
+                else:
+                    await session.delete(_existing_bio)
+                    use_lines.remove(_existing_bio)
+            elif _bio_amt > ZERO:
+                _new_io_ul = UseLine(
+                    project_id=project_id,
+                    label=_blabel,
+                    phase="construction",
+                    amount=_bio_amt,
+                    timing_type="first_day",
+                    notes=f"Auto-computed: IO on {_bft} during active phase.",
+                )
+                session.add(_new_io_ul)
+                use_lines.append(_new_io_ul)
 
     await session.flush()
 
@@ -1335,7 +1457,13 @@ def _compute_period(
     # UseLine outflows: first_day fires at month_index==0; spread fires every month.
     # Balance-only lines (Operating Reserve, Capitalized Construction Interest) are excluded —
     # their costs are already captured via cash balance residual and debt_service respectively.
-    _BALANCE_ONLY = {"Operating Reserve", "Capitalized Construction Interest", "Construction Interest Reserve"}
+    _BALANCE_ONLY = {
+        "Operating Reserve",
+        "Capitalized Construction Interest",
+        "Construction Interest Reserve",
+        "Capitalized Pre-Development Interest",
+        "Capitalized Acquisition Interest",
+    }
     if use_lines:
         for ul in use_lines:
             if getattr(ul, "label", "") in _BALANCE_ONLY:
