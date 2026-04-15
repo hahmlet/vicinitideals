@@ -1,6 +1,6 @@
 # re-modeling — Appsmith UI Plan
 
-**Platform:** Appsmith (deals.ketch.media)  
+**Platform:** Appsmith (viciniti.deals)  
 **Auth model:** No auth. User selected on splash screen, stored in `localStorage`, sent as `X-User-ID` header on all API calls.  
 **Navigation:** Appsmith sidebar or top nav. Pages are distinct Appsmith pages. Sub-navigation within a page uses tabs or drawer panels.
 
@@ -185,7 +185,7 @@ These features exist in the API but don't have a natural home as a standalone Ap
 ## Navigation Structure (Summary)
 
 ```
-deals.ketch.media
+viciniti.deals
 ├── [0] Splash / User Select        ← entry point, no sidebar
 ├── [1] Projects Dashboard          ← home after login
 ├── [2] Project Detail              ← tabs: Overview / Parcels / Deal Models / Permit

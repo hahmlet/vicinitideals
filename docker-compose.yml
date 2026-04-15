@@ -5,7 +5,7 @@ services:
       target: api
     container_name: vicinitideals-api
     # Port 8001 → container 8000. Port 8000 is occupied by Apprise on this host.
-    # NGINX on LXC 109 proxies deals.ketch.media → 192.168.1.28:8001
+    # NGINX on LXC 109 proxies viciniti.deals → 192.168.1.28:8001
     ports:
       - "8001:8000"
     env_file: .env

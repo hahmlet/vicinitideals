@@ -161,7 +161,7 @@ Remove these from re-modeling files when copying:
 ## Quick Context
 
 - **Product**: Self-hosted real estate deal modeling platform (FastAPI + HTMX + Celery)
-- **Live domain**: `deals.ketch.media` (NGINX on LXC 109 proxies to VM 114 port 8001)
+- **Live domain**: `viciniti.deals` (NGINX on LXC 109 proxies to VM 114 port 8001)
 - **Deploy**: `git push origin main` → VM 114 `/root/deploy-vicinitideals.sh` auto-runs
 - **Docs**: See `docs/` for full project documentation
 - **Infrastructure docs**: `../personalproxmox/documentation/MCP/` for Proxmox/networking
@@ -284,7 +284,7 @@ The full two-tier CI spec is in Part 2, Phase 2 of this document. Implement the 
 ### Verification checklist (post-migration)
 
 - [ ] `curl -s http://192.168.1.28:8001/health` → `{"code": "ok", ...}`
-- [ ] `deals.ketch.media` loads in browser, data intact
+- [ ] `viciniti.deals` loads in browser, data intact
 - [ ] `docker compose ps` (in vicinitideals) → all 6 services healthy
 - [ ] `pytest tests/ -q` passes in the new repo
 - [ ] Push a commit → vicinitideals CI triggers and passes

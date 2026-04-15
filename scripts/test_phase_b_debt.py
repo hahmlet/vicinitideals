@@ -11,7 +11,7 @@ Test cases:
   3. Pre-Development Loan + Construction-to-Perm
 
 Usage:
-    python scripts/test_phase_b_debt.py [--base-url https://deals.ketch.media] [--auth auth.json]
+    python scripts/test_phase_b_debt.py [--base-url https://viciniti.deals] [--auth auth.json]
 """
 from __future__ import annotations
 
@@ -37,7 +37,7 @@ def _post_form(client: httpx.Client, url: str, data: dict | list) -> httpx.Respo
     return client.post(url, content=body, headers=_FORM_HEADERS)
 
 COOKIE_NAME = "vd_session"
-BASE_URL = "https://deals.ketch.media"
+BASE_URL = "https://viciniti.deals"
 AUTH_STATE = "tests/e2e/.auth/state.json"
 
 
@@ -450,7 +450,7 @@ def run_tests(base_url: str, session_cookie: str) -> None:
             all_pass = False
 
         print(f"\n{status}  {r['name']}")
-        print(f"       model: https://deals.ketch.media/models/{r['model_id']}/builder?module=sources_uses")
+        print(f"       model: https://viciniti.deals/models/{r['model_id']}/builder?module=sources_uses")
         print(f"       debt:  {', '.join(r['debt_types'])}")
         print(f"       mode:  {r['sizing_mode']}")
         print(f"       TPC:   ${r['tpc']:>12,}")

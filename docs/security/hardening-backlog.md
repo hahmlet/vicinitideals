@@ -114,7 +114,7 @@ These reduce exposure, but they do not fully close the gaps below.
    - Runtime secrets are sourced from a non-git, rotation-friendly mechanism.
    - Secret scanning is automated.
 
-### `P1-1` Version and verify the `deals.ketch.media` NGINX/TLS posture
+### `P1-1` Version and verify the `viciniti.deals` NGINX/TLS posture
 
 **Confirmed issue**
 - Infra docs show a solid baseline (`Let's Encrypt`, Force SSL, proxy header forwarding), but the re-modeling app does not yet have a repo-local hardening checklist tied to its public hostname.
@@ -122,13 +122,13 @@ These reduce exposure, but they do not fully close the gaps below.
 
 **Mitigation plan**
 1. **Immediate containment**
-   - Verify `Force SSL`, certificate renewal, websocket support, and upstream-only exposure for `deals.ketch.media`.
+   - Verify `Force SSL`, certificate renewal, websocket support, and upstream-only exposure for `viciniti.deals`.
    - Confirm NPM admin access is restricted (VPN/Tailscale/IP allow-list) and not broadly public.
 2. **Near-term hardening**
    - Add an app-specific TLS verification checklist covering: `TLS 1.2+ / 1.3`, `HSTS`, secure ciphers, redirect behavior, certificate expiry monitoring, and header hardening.
    - Record the expected NPM proxy-host configuration in versioned docs so future drift is detectable.
 3. **Definition of done**
-   - `deals.ketch.media` has a documented, repeatable security verification checklist and monitoring path.
+   - `viciniti.deals` has a documented, repeatable security verification checklist and monitoring path.
 
 ### `P1-3` Harden Celery-triggering endpoints against abuse
 
@@ -167,7 +167,7 @@ These reduce exposure, but they do not fully close the gaps below.
 
 1. **Eliminate shared-auth impersonation risk** (`P0-1`)
 2. **Fail closed on placeholder secrets and document rotation** (`P0-2`)
-3. **Verify and record NGINX/TLS posture for `deals.ketch.media`** (`P1-1`)
+3. **Verify and record NGINX/TLS posture for `viciniti.deals`** (`P1-1`)
 5. **Constrain and rate-limit Celery-trigger endpoints** (`P1-3`)
 6. Address credential redaction and audit logging follow-ons (`P2`)
 
@@ -177,7 +177,7 @@ These reduce exposure, but they do not fully close the gaps below.
 
 These items were **not** fully verifiable from the repo alone and should be confirmed during implementation:
 
-- Does `deals.ketch.media` already enforce `HSTS` and the desired TLS policy?
+- Does `viciniti.deals` already enforce `HSTS` and the desired TLS policy?
 - Are VM-side `.env` files permissioned and rotated according to an operational checklist?
 - Are background task trigger endpoints protected from repeated high-volume invocation at the proxy layer?
 

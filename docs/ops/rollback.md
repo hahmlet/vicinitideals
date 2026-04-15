@@ -205,7 +205,7 @@ docker exec re-modeling-postgres pg_isready -U re_modeling -d re_modeling
 
 Also verify externally:
 
-- `deals.ketch.media` loads in browser
+- `viciniti.deals` loads in browser
 - Existing deal data is intact
 - No new migration errors appear in the API logs
 
@@ -216,7 +216,7 @@ Also verify externally:
 A rollback is complete only when all of the following are true:
 
 - containers are stable for at least 10–15 minutes,
-- `deals.ketch.media` is accessible and functional,
+- `viciniti.deals` is accessible and functional,
 - the Postgres health check is passing,
 - the team has recorded the rollback SHA, restored backup timestamps, and the reason for rollback.
 

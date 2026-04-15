@@ -5,7 +5,7 @@
 ## Quick Context
 
 - **Product**: Self-hosted real estate deal modeling platform (FastAPI + HTMX + Celery)
-- **Live domain**: `deals.ketch.media` (NGINX on LXC 109 proxies to VM 114 port 8001)
+- **Live domain**: `viciniti.deals` (NGINX on LXC 109 proxies to VM 114 port 8001)
 - **Deploy**: `git push origin main` → VM 114 `/root/deploy-vicinitideals.sh` auto-runs
 - **Docs**: See `docs/` for full project documentation
 - **Infrastructure docs**: `../personalproxmox/documentation/MCP/` for Proxmox/networking

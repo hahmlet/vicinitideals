@@ -134,7 +134,7 @@ git push origin main
         git pull → docker build → alembic upgrade head → docker-compose up -d → health check
 ```
 
-Domain: `deals.ketch.media` (proxied by LXC 109 NGINX)
+Domain: `viciniti.deals` (proxied by LXC 109 NGINX)
 
 Docker services defined in `docker-compose.yml`:
 - `re-modeling-api` (FastAPI, port 8001)
