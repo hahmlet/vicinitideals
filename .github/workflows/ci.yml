@@ -103,6 +103,24 @@ jobs:
       - name: Start required services
         run: docker compose up -d --build postgres redis api
 
+      - name: Wait for API health
+        run: |
+          for i in 1 2 3 4 5 6 7 8 9 10 11 12; do
+            if curl -sf http://localhost:8001/health > /dev/null; then
+              echo "API healthy after ${i} attempt(s)"
+              break
+            fi
+            sleep 5
+          done
+          curl -sf http://localhost:8001/health || (echo "API never became healthy"; docker compose logs --tail=100 api; exit 1)
+
+      - name: Seed E2E test user
+        run: |
+          docker compose exec -T api python -m app.scripts.seed_e2e_user
+        env:
+          E2E_EMAIL: ${{ secrets.E2E_EMAIL || 'e2e@ketch.media' }}
+          E2E_PASSWORD: ${{ secrets.E2E_PASSWORD || 'e2e-test-password-2026' }}
+
       - name: Staging promotion gates
         run: uv run python -m app.scripts.check_promotion_gates --environment staging
 
@@ -116,6 +134,21 @@ jobs:
         run: uv run pytest tests/e2e/ -q -m e2e
         env:
           E2E_BASE_URL: http://localhost:8001
+
+      - name: Phase B debt regression (engine math + Sources=Uses + DSCR-capped parity)
+        run: |
+          # Pass a non-existent auth path so the script uses --email/--password
+          # against the freshly seeded CI user (the committed auth-state.json is
+          # bound to production and won't validate against the CI session store).
+          uv run python scripts/test_phase_b_debt.py \
+            --base-url http://localhost:8001 \
+            --auth /tmp/phase-b-ci-no-auth.json \
+            --email "${E2E_EMAIL}" \
+            --password "${E2E_PASSWORD}"
+        env:
+          E2E_BASE_URL: http://localhost:8001
+          E2E_EMAIL: ${{ secrets.E2E_EMAIL || 'e2e@ketch.media' }}
+          E2E_PASSWORD: ${{ secrets.E2E_PASSWORD || 'e2e-test-password-2026' }}
 
       - name: Trivy image scan
         uses: aquasecurity/trivy-action@master
