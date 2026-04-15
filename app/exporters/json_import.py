@@ -34,7 +34,7 @@ DEAL_JSON_SCHEMA: dict[str, Any] = {
     "type": "object",
     "required": ["schema_version", "project", "deal_model"],
     "properties": {
-        "schema_version": {"type": "string", "const": EXPORT_SCHEMA_VERSION},
+        "schema_version": {"type": "string", "enum": [EXPORT_SCHEMA_VERSION, "deal-json-v1"]},
         "export_type": {"type": "string", "default": "deal"},
         "project": {
             "type": "object",
@@ -195,9 +195,20 @@ def validate_deal_import_payload(payload: Mapping[str, Any]) -> DealImportValida
     warnings: list[str] = []
     schema_version = payload.get("schema_version") if isinstance(payload, Mapping) else None
 
-    if schema_version != EXPORT_SCHEMA_VERSION:
+    # Accept both the current version and the previous v1 for backward
+    # compatibility.  v1 exports predate Phase B and simply lack the newer
+    # fields — Pydantic will treat them as None / default when parsing.
+    _SUPPORTED_VERSIONS = {EXPORT_SCHEMA_VERSION, "deal-json-v1"}
+    if schema_version not in _SUPPORTED_VERSIONS:
         errors.append(
-            f"Unsupported schema_version '{schema_version}'. Expected '{EXPORT_SCHEMA_VERSION}'."
+            f"Unsupported schema_version '{schema_version}'. "
+            f"Expected one of: {sorted(_SUPPORTED_VERSIONS)}."
+        )
+    elif schema_version == "deal-json-v1":
+        warnings.append(
+            "Importing a pre-Phase-B (v1) export. Phase B fields "
+            "(debt_types, debt_terms, debt_sizing_mode, etc.) will be "
+            "absent; re-run the deal setup wizard to populate them."
         )
 
     try:

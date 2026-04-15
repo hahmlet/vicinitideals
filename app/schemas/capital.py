@@ -43,20 +43,84 @@ class CapitalDraw(BaseModel):
 # ---------------------------------------------------------------------------
 
 class CapitalSourceSchema(BaseModel):
+    """Source (principal) config for a CapitalModule.
+
+    ``extra="allow"`` preserves engine-written keys that aren't declared
+    here: ``auto_size``, ``is_bridge``, ``construction_retirement``,
+    ``ltv_pct``, ``sizing_approach``, ``fixed_amount``, etc.  These live
+    in the JSONB column and must survive a JSON export/import round-trip.
+    """
+
+    model_config = ConfigDict(extra="allow")
+
     amount: Decimal | None = None
     pct_of_total_cost: float | None = None
     interest_rate_pct: float | None = None
     funding_date_trigger: str = ""
     draws: list[CapitalDraw] = []
     notes: str = ""
+    # ── Phase B (multi-debt path) fields ─────────────────────────────────
+    auto_size: bool | None = None
+    is_bridge: bool | None = None
+    construction_retirement: str | None = None
+    ltv_pct: float | None = None
+    sizing_approach: str | None = None
+    fixed_amount: float | None = None
 
 
 class CapitalCarrySchema(BaseModel):
-    carry_type: Literal["io_only", "interest_reserve", "capitalized_interest", "accruing", "pi", "none"]
+    """Carry config for a CapitalModule.
+
+    Supports two shapes:
+
+    1. **Flat** (single carry across all phases):
+       ``{"carry_type": "interest_reserve", "io_rate_pct": 6.5, ...}``
+
+    2. **Phased** (different carry per life-cycle phase, e.g. io_then_pi):
+       ``{"phases": [
+            {"name": "construction", "carry_type": "interest_reserve", "io_rate_pct": 6},
+            {"name": "operation",    "carry_type": "pi", "amort_term_years": 30, "io_rate_pct": 5},
+          ]}``
+
+    Both `carry_type` and `phases` are optional at the top level so either
+    shape validates cleanly.  ``extra="allow"`` preserves any future
+    engine-specific keys (draw_schedule, interest_accrual_method, etc.)
+    on round-trip through the JSON exporter so deals survive Phase 1 /
+    Phase 2 feature additions without schema churn.
+    """
+
+    model_config = ConfigDict(extra="allow")
+
+    carry_type: Literal[
+        "io_only",
+        "interest_reserve",
+        "capitalized_interest",
+        "accruing",
+        "pi",
+        "none",
+    ] | None = None
     io_period_months: int | None = None
     io_to_pi_trigger: str | None = None
     payment_frequency: Literal["monthly", "quarterly", "annual", "at_exit"] = "monthly"
     capitalized: bool = False
+
+    # ── Phase 1 (carry type rewrite) ─────────────────────────────────────
+    # Annual interest rate for io_only / interest_reserve / capitalized_interest
+    # / pi construction phases.  The engine reads this from both the flat and
+    # phased shapes.  Prior to this field being declared on the schema,
+    # Pydantic silently dropped it on serialization and Phase 1 exports lost
+    # rate data.
+    io_rate_pct: float | None = None
+
+    # Amortization term in years for pi carry types.  Also used by the
+    # operation phase of io_then_pi.
+    amort_term_years: int | None = None
+
+    # Phased carry (io_then_pi etc.).  Each phase is a dict with at least
+    # {name, carry_type} plus optional {io_rate_pct, amort_term_years, ...}.
+    # Kept as list[dict] rather than a strict sub-model so we don't silently
+    # drop keys the engine adds in future rewrites.
+    phases: list[dict] | None = None
 
 
 class CapitalExitSchema(BaseModel):

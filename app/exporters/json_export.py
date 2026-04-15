@@ -26,7 +26,16 @@ from app.schemas.deal import (
     OperationalOutputsRead,
 )
 
-EXPORT_SCHEMA_VERSION = "deal-json-v1"
+# v2 (April 2026): Phase B fields added to OperationalInputsBase
+# (debt_types, debt_terms, debt_milestone_config, debt_sizing_mode,
+# dscr_minimum, operation_reserve_months, construction_floor_pct,
+# noi_stabilized_input, noi_escalation_rate_pct, deal_setup_complete,
+# debt_structure). ScenarioBase gained income_mode. CapitalCarrySchema
+# and CapitalSourceSchema became permissive (extra="allow") and gained
+# the Phase 1 fields (io_rate_pct, amort_term_years, phases, auto_size,
+# is_bridge, etc.) so carry and source JSONB columns round-trip without
+# silently dropping keys.
+EXPORT_SCHEMA_VERSION = "deal-json-v2"
 
 
 def _json_scalar(value: Any) -> Any:

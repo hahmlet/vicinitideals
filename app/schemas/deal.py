@@ -83,6 +83,11 @@ class ScenarioBase(BaseModel):
     version: int = 1
     is_active: bool = True
     project_type: ProjectType
+    # Income mode selector: "revenue_opex" (income streams + expense lines,
+    # default) or "noi" (user enters stabilized NOI directly via
+    # OperationalInputs.noi_stabilized_input).  Added to JSON export in
+    # deal-json-v2 so Phase B NOI-mode deals round-trip correctly.
+    income_mode: str = "revenue_opex"
 
 
 class ScenarioCreate(ScenarioBase):
@@ -178,6 +183,42 @@ class OperationalInputsBase(BaseModel):
     selling_costs_pct: Decimal = Decimal("0")
 
     milestone_dates: dict[str, str] | None = None
+
+    # ── Deal Setup Wizard + Phase B multi-debt ──────────────────────────
+    # Written by the wizard before any module work begins.  All of these
+    # fields were missing from the JSON export prior to April 2026, which
+    # meant Phase B deals could not round-trip through the exporter.
+    deal_setup_complete: bool = False
+
+    # Legacy single-select: "perm_only" | "construction_to_perm" | "construction_and_perm".
+    # Superseded by debt_types for new deals but kept for pre-migration deals.
+    debt_structure: str | None = None
+
+    # Ordered list of funder_type strings, e.g.
+    # ["pre_development_loan", "construction_loan", "permanent_debt"]
+    debt_types: list[str] | None = None
+
+    # Per-debt milestone assignments and retirement chain.
+    # {funder_type: {"active_from": str, "active_to": str, "retired_by": str | null}}
+    debt_milestone_config: dict[str, dict] | None = None
+
+    # "gap_fill" | "dscr_capped"
+    debt_sizing_mode: str | None = None
+    dscr_minimum: Decimal = Decimal("1.15")
+
+    # % of TPC to maintain as minimum balance during construction (construction debt only)
+    construction_floor_pct: Decimal | None = None
+
+    # Months of projected debt service to maintain at stabilization start
+    operation_reserve_months: int = 6
+
+    # Per-debt terms for auto-created CapitalModule(s).
+    # {funder_type: {rate_pct, amort_years, loan_type, sizing_approach, ltv_pct, ...}}
+    debt_terms: dict[str, dict] | None = None
+
+    # ── NOI mode inputs (used when Scenario.income_mode == 'noi') ───────
+    noi_stabilized_input: Decimal | None = None
+    noi_escalation_rate_pct: Decimal = Decimal("3")
 
 
 class OperationalInputsCreate(OperationalInputsBase):
