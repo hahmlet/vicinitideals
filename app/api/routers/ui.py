@@ -5640,6 +5640,10 @@ async def deal_setup_wizard_complete(
     for cm in existing_auto:
         await session.delete(cm)
 
+    # Closing-cost pre-load data collected during Phase B module creation.
+    # Populated in the loop below; used after both branches to write $0 Use line stubs.
+    _cc_preload_modules: list[dict] = []
+
     if debt_types:
         # ── New multi-debt path ───────────────────────────────────────────────
         # Build one CapitalModule per selected debt type using debt_milestone_config
@@ -5732,9 +5736,10 @@ async def deal_setup_wizard_complete(
             else:
                 exit_terms_dict = {"exit_type": "full_payoff", "trigger": "end of hold period"}
 
+            _cm_label_for_cc = f"{_LABEL.get(ft_str, ft_str)} (auto)"
             session.add(CapitalModule(
                 scenario_id=model_id,
-                label=f"{_LABEL.get(ft_str, ft_str)} (auto)",
+                label=_cm_label_for_cc,
                 funder_type=ft,
                 stack_position=pos,
                 source={"auto_size": True, "interest_rate_pct": rate},
@@ -5743,6 +5748,12 @@ async def deal_setup_wizard_complete(
                 active_phase_start=active_from,
                 active_phase_end=active_to,
             ))
+            # Track for closing-cost pre-loading below
+            _cc_preload_modules.append({
+                "funder_type": ft_str,
+                "label": _cm_label_for_cc,
+                "active_phase_start": active_from,
+            })
 
     else:
         # ── Legacy 3-path (backward compat for pre-migration deals) ──────────
@@ -5840,6 +5851,50 @@ async def deal_setup_wizard_complete(
             timing_type="first_day",
             notes="Sized at compute time: max(OpEx, Debt Service) × reserve months",
         ))
+
+    # ── Pre-load $0 closing cost Use line stubs for Phase B modules ──────────
+    # Cost names match _DEFAULT_LOAN_COSTS in cashflow.py (keep in sync).
+    # amount=0 → engine computes at run time; amount>0 → user override, engine skips.
+    # Users see and edit these in the S&U table before running Compute.
+    _CC_PRELOAD_COSTS: dict[str, list[str]] = {
+        "construction_loan":    ["Origination Fee", "Lender Legal", "Title / Survey", "Environmental Phase I"],
+        "permanent_debt":       ["Origination Fee", "Lender Legal", "Appraisal", "Title"],
+        "pre_development_loan": ["Origination Fee", "Lender Legal"],
+        "acquisition_loan":     ["Origination Fee", "Lender Legal", "Title / Survey"],
+        "bridge":               ["Origination Fee", "Lender Legal"],
+        "bond":                 ["Bond Issuance Fee", "Bond Counsel Legal"],
+    }
+    _APS_TO_PHASE: dict[str, str] = {
+        "acquisition": "acquisition", "pre_construction": "pre_construction",
+        "construction": "construction", "lease_up": "operation",
+        "stabilized": "operation", "exit": "exit",
+    }
+    for _cc_mod in _cc_preload_modules:
+        _cc_ft_str = _cc_mod["funder_type"]
+        # Map construction_to_perm → bond for cost lookup
+        _cc_ft_key = "bond" if _cc_ft_str == "construction_to_perm" else _cc_ft_str
+        _cost_names = _CC_PRELOAD_COSTS.get(_cc_ft_key)
+        if not _cost_names:
+            continue
+        _cc_lbl  = _cc_mod["label"]
+        _cc_phase = _APS_TO_PHASE.get(_cc_mod["active_phase_start"] or "", "pre_construction")
+        for _cost_name in _cost_names:
+            _full_cc_lbl = f"{_cc_lbl} — {_cost_name}"
+            _existing_cc = (await session.execute(
+                select(UseLine).where(
+                    UseLine.project_id == default_project.id,
+                    UseLine.label == _full_cc_lbl,
+                )
+            )).scalar_one_or_none()
+            if _existing_cc is None:
+                session.add(UseLine(
+                    project_id=default_project.id,
+                    label=_full_cc_lbl,
+                    phase=_cc_phase,
+                    amount=Decimal("0"),
+                    timing_type="first_day",
+                    notes="Auto-computed — edit to override",
+                ))
 
     # ── UnitMix: seed from linked building(s) if none exist ─────────────────
     existing_unit_mix = list((await session.execute(
