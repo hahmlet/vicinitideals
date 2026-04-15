@@ -4147,15 +4147,16 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
         total_timeline_days = sum(m.duration_days for m in milestones)
 
     # ── Capital module source bars for Sources & Uses Gantt ─────────────────
-    # Each source bar starts at its active_phase_start milestone and extends to
-    # the right edge of the Gantt with a fade-out (perpetuity convention).
+    # Each source bar spans active_phase_start → active_phase_end. If no end
+    # phase is set the bar extends to the right edge with a fade-out (perpetuity
+    # convention for equity / permanent debt). Zero-amount modules are hidden.
     _CM_PHASE_TO_MS_KEY = {
-        "acquisition": "close",
-        "pre_construction": "pre_development",
-        "construction": "construction",
-        "lease_up": "operation_lease_up",
-        "stabilized": "operation_stabilized",
-        "exit": "divestment",
+        "acquisition":      "close",
+        "pre_construction": "close",        # construction loans close at same time as acquisition
+        "construction":     "construction",
+        "lease_up":         "operation_lease_up",
+        "stabilized":       "operation_stabilized",
+        "exit":             "divestment",
     }
     _cm_gantt_rows: list[dict] = []
     _bgd_cm = _builder_gantt_from_milestones(default_project, milestones)
@@ -4171,6 +4172,10 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
             if m.computed_start(ms_map)
         }
         for _cm in capital_modules:
+            # Skip zero-amount sources (e.g. equity gap-filled to $0)
+            _src_amount = float((_cm.source or {}).get("amount") or 0)
+            if _src_amount <= 0:
+                continue
             if not _cm.active_phase_start or not _epoch_cm:
                 continue
             _ms_key = _CM_PHASE_TO_MS_KEY.get(_cm.active_phase_start)
@@ -4181,14 +4186,25 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
                 continue
             _from_day = (_from_date - _epoch_cm).days
             _left = max(0.0, round(100.0 * (_from_day - _g_min_cm) / _span_cm, 2))
+            # Right edge: use active_phase_end if set, else fade to right (perpetuity)
+            _to_ms_key = _CM_PHASE_TO_MS_KEY.get(_cm.active_phase_end) if _cm.active_phase_end else None
+            _to_date = _ms_start_map.get(_to_ms_key) if _to_ms_key else None
+            if _to_date:
+                _to_day = (_to_date - _epoch_cm).days
+                _right = min(100.0, round(100.0 * (_to_day - _g_min_cm) / _span_cm, 2))
+                _width = max(_right - _left, 1.5)
+                _fade = False
+            else:
+                _width = max(100.0 - _left, 1.5)
+                _fade = True
             _ft = str(_cm.funder_type).replace("FunderType.", "")
             _cm_gantt_rows.append({
                 "label": _cm.label or _ft,
                 "source_type": "equity" if "equity" in _ft.lower() else "debt",
                 "funder_type": _ft,
                 "left_pct": _left,
-                "width_pct": max(100.0 - _left, 1.5),
-                "fade_right": True,
+                "width_pct": _width,
+                "fade_right": _fade,
             })
 
     return {
