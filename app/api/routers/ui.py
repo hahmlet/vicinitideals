@@ -983,7 +983,7 @@ async def _proxyon_residential_snapshot(timeout_seconds: float = 8.0) -> dict[st
 
 @router.get("/", response_class=HTMLResponse)
 async def root() -> RedirectResponse:
-    return RedirectResponse(url="/splash")
+    return RedirectResponse(url="/deals")
 
 
 @router.get("/splash", response_class=HTMLResponse)
