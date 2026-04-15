@@ -5519,20 +5519,63 @@ async def deal_setup_wizard_step(
         if income_mode == "noi":
             await _prefill_noi_from_listing(model, default_project, inputs, session)
     elif step == 2:
-        inputs.debt_structure = form.get("debt_structure") or inputs.debt_structure
+        # Debt type checkboxes → debt_types list
+        _valid_types = {
+            "pre_development_loan", "acquisition_loan", "construction_loan",
+            "bridge", "permanent_debt", "construction_to_perm",
+        }
+        selected = [t for t in form.getlist("debt_types") if t in _valid_types]
+        if selected:
+            inputs.debt_types = selected
     elif step == 3:
-        dt = dict(inputs.debt_terms or {})
-        for key in ("construction_rate_pct", "perm_rate_pct", "perm_amort_years"):
-            val = form.get(key)
-            if val:
-                dt[key] = float(val)
-        inputs.debt_terms = dt
+        # Per-debt milestone & retirement config
+        dmc: dict = {}
+        for ft in (inputs.debt_types or []):
+            active_from = form.get(f"{ft}_active_from") or ""
+            active_to   = form.get(f"{ft}_active_to")   or ""
+            retired_by  = form.get(f"{ft}_retired_by")  or ""
+            if active_from or active_to or retired_by:
+                dmc[ft] = {
+                    "active_from": active_from,
+                    "active_to":   active_to,
+                    "retired_by":  retired_by,
+                }
+        if dmc:
+            inputs.debt_milestone_config = dmc
     elif step == 4:
+        # Per-debt terms: loan type, rate, amort years
+        dt_terms = dict(inputs.debt_terms or {})
+        for ft in (inputs.debt_types or []):
+            loan_type   = form.get(f"{ft}_loan_type")
+            rate_pct    = form.get(f"{ft}_rate_pct")
+            amort_years = form.get(f"{ft}_amort_years")
+            if loan_type or rate_pct:
+                entry = dict(dt_terms.get(ft, {}))
+                if loan_type:   entry["loan_type"]   = loan_type
+                if rate_pct:    entry["rate_pct"]    = float(rate_pct)
+                if amort_years: entry["amort_years"] = int(amort_years)
+                dt_terms[ft] = entry
+        inputs.debt_terms = dt_terms
+    elif step == 5:
+        # Per-debt sizing approach; perm gap-fill / dscr-capped mode
+        dt_terms = dict(inputs.debt_terms or {})
+        for ft in (inputs.debt_types or []):
+            sizing_approach = form.get(f"{ft}_sizing_approach")
+            ltv_pct         = form.get(f"{ft}_ltv_pct")
+            fixed_amount    = form.get(f"{ft}_fixed_amount")
+            if sizing_approach or ltv_pct or fixed_amount:
+                entry = dict(dt_terms.get(ft, {}))
+                if sizing_approach: entry["sizing_approach"] = sizing_approach
+                if ltv_pct:         entry["ltv_pct"]        = float(ltv_pct)
+                if fixed_amount:    entry["fixed_amount"]   = float(fixed_amount)
+                dt_terms[ft] = entry
+        inputs.debt_terms = dt_terms
         inputs.debt_sizing_mode = form.get("debt_sizing_mode") or inputs.debt_sizing_mode
         dscr_val = form.get("dscr_minimum")
         if dscr_val:
             inputs.dscr_minimum = Decimal(dscr_val)
-    elif step == 5:
+    elif step == 6:
+        # Reserves & Floors (renumbered from old step 5)
         cf_pct = form.get("construction_floor_pct")
         if cf_pct:
             inputs.construction_floor_pct = Decimal(cf_pct)
@@ -5578,8 +5621,8 @@ async def deal_setup_wizard_complete(
         return HTMLResponse("No inputs", status_code=400)
 
     dt = inputs.debt_terms or {}
+    debt_types = inputs.debt_types  # None for pre-migration deals
     debt_structure = inputs.debt_structure or "perm_only"
-    has_construction = debt_structure in ("construction_to_perm", "construction_and_perm")
 
     # Remove any existing auto-created debt modules (clean re-run)
     existing_auto = list((await session.execute(
@@ -5591,76 +5634,170 @@ async def deal_setup_wizard_complete(
     for cm in existing_auto:
         await session.delete(cm)
 
-    # Build CapitalModule(s) based on structure
-    if debt_structure == "construction_to_perm":
-        # One bond: phased carry (IO during construction, P&I during operation)
-        construction_rate = dt.get("construction_rate_pct") or dt.get("perm_rate_pct") or 4.5
-        perm_rate = dt.get("perm_rate_pct") or construction_rate
-        amort_years = int(dt.get("perm_amort_years") or 30)
-        cm = CapitalModule(
-            scenario_id=model_id,
-            label="Bond / Construction-to-Perm (auto)",
-            funder_type=FunderType.bond,
-            stack_position=1,
-            source={"auto_size": True, "interest_rate_pct": perm_rate},
-            carry={
-                "phases": [
-                    {"name": "construction", "carry_type": "io_only", "io_rate_pct": construction_rate},
-                    {"name": "operation", "carry_type": "pi", "amort_term_years": amort_years, "io_rate_pct": perm_rate},
-                ]
-            },
-            exit_terms={"exit_type": "full_payoff", "trigger": "end of hold period"},
-            active_phase_start="pre_construction",
-            active_phase_end="stabilized",
-        )
-        session.add(cm)
+    if debt_types:
+        # ── New multi-debt path ───────────────────────────────────────────────
+        # Build one CapitalModule per selected debt type using debt_milestone_config
+        # and debt_terms (per-debt dicts).  Falls back to sensible defaults if the
+        # wizard steps were skipped (e.g. re-running on a backfilled deal).
+        dmc = inputs.debt_milestone_config or {}
 
-    elif debt_structure == "construction_and_perm":
-        construction_rate = dt.get("construction_rate_pct") or 6.0
-        perm_rate = dt.get("perm_rate_pct") or 5.0
-        amort_years = int(dt.get("perm_amort_years") or 30)
-        # Construction loan
-        cm_constr = CapitalModule(
-            scenario_id=model_id,
-            label="Construction Loan (auto)",
-            funder_type=FunderType.construction_loan,
-            stack_position=1,
-            source={"auto_size": True, "interest_rate_pct": construction_rate},
-            carry={"carry_type": "io_only", "io_rate_pct": construction_rate},
-            exit_terms={"exit_type": "full_payoff", "trigger": "permanent_financing_close"},
-            active_phase_start="pre_construction",
-            active_phase_end="lease_up",
-        )
-        # Permanent loan
-        cm_perm = CapitalModule(
-            scenario_id=model_id,
-            label="Permanent Debt (auto)",
-            funder_type=FunderType.permanent_debt,
-            stack_position=2,
-            source={"auto_size": True, "interest_rate_pct": perm_rate},
-            carry={"carry_type": "pi", "amort_term_years": amort_years, "io_rate_pct": perm_rate},
-            exit_terms={"exit_type": "full_payoff", "trigger": "end of hold period"},
-            active_phase_start="lease_up",
-            active_phase_end="stabilized",
-        )
-        session.add(cm_constr)
-        session.add(cm_perm)
+        _FT_MAP: dict[str, FunderType] = {
+            "pre_development_loan": FunderType.pre_development_loan,
+            "acquisition_loan":     FunderType.acquisition_loan,
+            "construction_loan":    FunderType.construction_loan,
+            "bridge":               FunderType.bridge,
+            "permanent_debt":       FunderType.permanent_debt,
+            "construction_to_perm": FunderType.bond,
+        }
+        _LABEL: dict[str, str] = {
+            "pre_development_loan": "Pre-Development Loan",
+            "acquisition_loan":     "Acquisition Loan",
+            "construction_loan":    "Construction Loan",
+            "bridge":               "Bridge Loan",
+            "permanent_debt":       "Permanent Debt",
+            "construction_to_perm": "Construction-to-Perm",
+        }
+        _DEFAULT_RATE: dict[str, float] = {
+            "pre_development_loan": 7.0,
+            "acquisition_loan":     6.5,
+            "construction_loan":    6.0,
+            "bridge":               7.5,
+            "permanent_debt":       5.0,
+            "construction_to_perm": 5.0,
+        }
+        _DEFAULT_LOAN_TYPE: dict[str, str] = {
+            "pre_development_loan": "io_only",
+            "acquisition_loan":     "io_only",
+            "construction_loan":    "io_only",
+            "bridge":               "io_only",
+            "permanent_debt":       "pi",
+            "construction_to_perm": "io_then_pi",
+        }
+        _DEFAULT_FROM: dict[str, str] = {
+            "pre_development_loan": "pre_construction",
+            "acquisition_loan":     "acquisition",
+            "construction_loan":    "acquisition",
+            "bridge":               "lease_up",
+            "permanent_debt":       "lease_up",
+            "construction_to_perm": "acquisition",
+        }
+        _DEFAULT_TO: dict[str, str] = {
+            "pre_development_loan": "acquisition",
+            "acquisition_loan":     "construction",
+            "construction_loan":    "lease_up",
+            "bridge":               "stabilized",
+            "permanent_debt":       "stabilized",
+            "construction_to_perm": "stabilized",
+        }
 
-    else:  # perm_only
-        perm_rate = dt.get("perm_rate_pct") or 5.0
-        amort_years = int(dt.get("perm_amort_years") or 30)
-        cm = CapitalModule(
-            scenario_id=model_id,
-            label="Permanent Debt (auto)",
-            funder_type=FunderType.permanent_debt,
-            stack_position=1,
-            source={"auto_size": True, "interest_rate_pct": perm_rate},
-            carry={"carry_type": "pi", "amort_term_years": amort_years, "io_rate_pct": perm_rate},
-            exit_terms={"exit_type": "full_payoff", "trigger": "end of hold period"},
-            active_phase_start="acquisition",
-            active_phase_end="stabilized",
-        )
-        session.add(cm)
+        for pos, ft_str in enumerate(debt_types, start=1):
+            ft = _FT_MAP.get(ft_str)
+            if ft is None:
+                continue
+            cfg   = dmc.get(ft_str, {})
+            terms = dt.get(ft_str, {})
+
+            rate        = float(terms.get("rate_pct") or _DEFAULT_RATE.get(ft_str, 6.0))
+            loan_type   = terms.get("loan_type") or _DEFAULT_LOAN_TYPE.get(ft_str, "io_only")
+            amort_years = int(terms.get("amort_years") or 30)
+            active_from = cfg.get("active_from") or _DEFAULT_FROM.get(ft_str, "acquisition")
+            active_to   = cfg.get("active_to")   or _DEFAULT_TO.get(ft_str, "stabilized")
+            retired_by  = cfg.get("retired_by")  or ""
+
+            if loan_type == "io_only":
+                carry: dict = {"carry_type": "io_only", "io_rate_pct": rate}
+            elif loan_type == "pi":
+                carry = {"carry_type": "pi", "amort_term_years": amort_years, "io_rate_pct": rate}
+            else:  # io_then_pi
+                carry = {
+                    "phases": [
+                        {"name": "construction", "carry_type": "io_only", "io_rate_pct": rate},
+                        {"name": "operation", "carry_type": "pi", "amort_term_years": amort_years, "io_rate_pct": rate},
+                    ]
+                }
+
+            if retired_by and retired_by not in ("perpetuity", ""):
+                exit_trigger = _LABEL.get(retired_by, retired_by.replace("_", " "))
+                exit_terms_dict: dict = {"exit_type": "full_payoff", "trigger": exit_trigger}
+            else:
+                exit_terms_dict = {"exit_type": "full_payoff", "trigger": "end of hold period"}
+
+            session.add(CapitalModule(
+                scenario_id=model_id,
+                label=f"{_LABEL.get(ft_str, ft_str)} (auto)",
+                funder_type=ft,
+                stack_position=pos,
+                source={"auto_size": True, "interest_rate_pct": rate},
+                carry=carry,
+                exit_terms=exit_terms_dict,
+                active_phase_start=active_from,
+                active_phase_end=active_to,
+            ))
+
+    else:
+        # ── Legacy 3-path (backward compat for pre-migration deals) ──────────
+        if debt_structure == "construction_to_perm":
+            construction_rate = dt.get("construction_rate_pct") or dt.get("perm_rate_pct") or 4.5
+            perm_rate = dt.get("perm_rate_pct") or construction_rate
+            amort_years = int(dt.get("perm_amort_years") or 30)
+            session.add(CapitalModule(
+                scenario_id=model_id,
+                label="Bond / Construction-to-Perm (auto)",
+                funder_type=FunderType.bond,
+                stack_position=1,
+                source={"auto_size": True, "interest_rate_pct": perm_rate},
+                carry={
+                    "phases": [
+                        {"name": "construction", "carry_type": "io_only", "io_rate_pct": construction_rate},
+                        {"name": "operation", "carry_type": "pi", "amort_term_years": amort_years, "io_rate_pct": perm_rate},
+                    ]
+                },
+                exit_terms={"exit_type": "full_payoff", "trigger": "end of hold period"},
+                active_phase_start="pre_construction",
+                active_phase_end="stabilized",
+            ))
+
+        elif debt_structure == "construction_and_perm":
+            construction_rate = dt.get("construction_rate_pct") or 6.0
+            perm_rate = dt.get("perm_rate_pct") or 5.0
+            amort_years = int(dt.get("perm_amort_years") or 30)
+            session.add(CapitalModule(
+                scenario_id=model_id,
+                label="Construction Loan (auto)",
+                funder_type=FunderType.construction_loan,
+                stack_position=1,
+                source={"auto_size": True, "interest_rate_pct": construction_rate},
+                carry={"carry_type": "io_only", "io_rate_pct": construction_rate},
+                exit_terms={"exit_type": "full_payoff", "trigger": "permanent_financing_close"},
+                active_phase_start="pre_construction",
+                active_phase_end="lease_up",
+            ))
+            session.add(CapitalModule(
+                scenario_id=model_id,
+                label="Permanent Debt (auto)",
+                funder_type=FunderType.permanent_debt,
+                stack_position=2,
+                source={"auto_size": True, "interest_rate_pct": perm_rate},
+                carry={"carry_type": "pi", "amort_term_years": amort_years, "io_rate_pct": perm_rate},
+                exit_terms={"exit_type": "full_payoff", "trigger": "end of hold period"},
+                active_phase_start="lease_up",
+                active_phase_end="stabilized",
+            ))
+
+        else:  # perm_only
+            perm_rate = dt.get("perm_rate_pct") or 5.0
+            amort_years = int(dt.get("perm_amort_years") or 30)
+            session.add(CapitalModule(
+                scenario_id=model_id,
+                label="Permanent Debt (auto)",
+                funder_type=FunderType.permanent_debt,
+                stack_position=1,
+                source={"auto_size": True, "interest_rate_pct": perm_rate},
+                carry={"carry_type": "pi", "amort_term_years": amort_years, "io_rate_pct": perm_rate},
+                exit_terms={"exit_type": "full_payoff", "trigger": "end of hold period"},
+                active_phase_start="acquisition",
+                active_phase_end="stabilized",
+            ))
 
     inputs.deal_setup_complete = True
     session.add(inputs)
