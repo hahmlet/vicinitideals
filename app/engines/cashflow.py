@@ -843,6 +843,8 @@ async def _auto_size_debt_modules(
     # For construction_and_perm: mirror perm amount to the bridge construction loan.
     # The bridge is marked is_bridge=True so the Sources & Uses display excludes it
     # from the debt total (avoiding double-counting vs the perm leg).
+    # Also store construction_retirement on the perm source so the UI can break down
+    # how perm proceeds are allocated (retirement vs net new debt).
     if _bridge_module is not None and _perm_mod is not None:
         perm_src = dict(_perm_mod.source or {})
         perm_amount = perm_src.get("amount", "0")
@@ -855,6 +857,14 @@ async def _auto_size_debt_modules(
             .values(source=bridge_src)
         )
         _bridge_module.source = bridge_src
+        # Tag perm module with the retirement amount so UI renders the split breakdown.
+        perm_src["construction_retirement"] = perm_amount
+        await session.execute(
+            sa_update(CapitalModule)
+            .where(CapitalModule.id == _perm_mod.id)
+            .values(source=perm_src)
+        )
+        _perm_mod.source = perm_src
 
     # Compute actual reserve (max of OpEx vs actual debt service, × reserve months)
     # opex_monthly_pre already computed above; re-use it here.
