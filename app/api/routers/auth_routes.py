@@ -120,6 +120,7 @@ async def login_post(
 # POST /logout
 # ---------------------------------------------------------------------------
 
+@router.get("/logout")
 @router.post("/logout")
 async def logout() -> RedirectResponse:
     resp = RedirectResponse(url="/login", status_code=303)
