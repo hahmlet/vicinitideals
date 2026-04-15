@@ -1773,7 +1773,9 @@ async def create_deal(
         except ValueError:
             pass
 
+    _opportunity_is_new = False
     if opportunity is None:
+        _opportunity_is_new = True
         opportunity = Opportunity(
             org_id=org_id,
             name=name,
@@ -1849,7 +1851,7 @@ async def create_deal(
     # Price: first scraped listing's asking_price if available, else 0 (user fills in later).
     # Label: "{opportunity name} - Acquisition"
     acq_price = 0
-    if opportunity.scraped_listings:
+    if not _opportunity_is_new and opportunity.scraped_listings:
         sl = opportunity.scraped_listings[0]
         if sl.asking_price is not None:
             acq_price = sl.asking_price
