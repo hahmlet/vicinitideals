@@ -996,17 +996,20 @@ async def _auto_size_debt_modules(
         session.add(new_op)
         use_lines.append(new_op)
 
-    # Update or create Capitalized Construction Interest use line (balance-only: not a cash outflow)
-    # Also matches legacy label "Construction Interest Reserve" and renames it on first write.
-    constr_reserve_found = False
-    for ul in use_lines:
-        if getattr(ul, "label", "") in ("Capitalized Construction Interest", "Construction Interest Reserve"):
-            ul.label = "Capitalized Construction Interest"
-            ul.amount = total_constr_io
-            session.add(ul)
-            constr_reserve_found = True
-            break
-    if not constr_reserve_found and project_id and total_constr_io > ZERO:
+    # Update or create Capitalized Construction Interest use line (balance-only: not a cash outflow).
+    # Collect ALL rows matching either the current or the legacy label, then keep exactly one.
+    _CI_LABELS = {"Capitalized Construction Interest", "Construction Interest Reserve"}
+    _ci_rows = [ul for ul in use_lines if getattr(ul, "label", "") in _CI_LABELS]
+    if _ci_rows:
+        # Keep the first, delete every duplicate
+        _ci_keep = _ci_rows[0]
+        _ci_keep.label = "Capitalized Construction Interest"
+        _ci_keep.amount = total_constr_io
+        session.add(_ci_keep)
+        for _ci_dup in _ci_rows[1:]:
+            await session.delete(_ci_dup)
+            use_lines.remove(_ci_dup)
+    elif project_id and total_constr_io > ZERO:
         new_ul = UseLine(
             project_id=project_id,
             label="Capitalized Construction Interest",
@@ -1017,13 +1020,6 @@ async def _auto_size_debt_modules(
         )
         session.add(new_ul)
         use_lines.append(new_ul)
-
-    # Delete any orphaned legacy "Construction Interest Reserve" lines that survived a rename
-    # (can appear if the line was created before the label was changed and not yet migrated)
-    for ul in list(use_lines):
-        if getattr(ul, "label", "") == "Construction Interest Reserve":
-            await session.delete(ul)
-            use_lines.remove(ul)
 
     # Update or create Lease-Up Reserve use line (balance-only: perm DS shortfall during lease-up)
     lu_reserve_found = False
