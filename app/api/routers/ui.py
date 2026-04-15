@@ -815,6 +815,9 @@ def _base_ctx(user: User | None, dedup_count: int, active_nav: str, address_issu
         "user_name": user.name if user else "Guest",
         "user_initials": initials,
         "user_color": (user.display_color if user else None) or "#2563EB",
+        # Soft email-verification gate: templates show a banner when False.
+        # None / missing is treated as verified to avoid false positives.
+        "user_email_verified": bool(getattr(user, "email_verified", True)) if user else True,
         "active_nav": active_nav,
         "dedup_count": dedup_count,
         "address_issues_count": address_issues_count,

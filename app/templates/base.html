@@ -45,6 +45,24 @@
 </head>
 <body>
 
+{% if user_email_verified is defined and user_email_verified == false %}
+<div id="email-verify-banner" style="
+    position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+    background: #fef3c7; border-bottom: 1px solid #fbbf24;
+    color: #78350f; padding: 10px 16px; font-size: 13px;
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <span><strong>Please verify your email.</strong> We sent a link to your inbox — check spam too.</span>
+  <form method="post" action="/resend-verification" style="display:inline">
+    <button type="submit" style="
+        background: #fbbf24; color: #78350f; border: none;
+        padding: 4px 12px; border-radius: 6px; font-size: 12px;
+        font-weight: 600; cursor: pointer;">Resend link</button>
+  </form>
+</div>
+<style>body { padding-top: 40px; }</style>
+{% endif %}
+
 <aside class="sidebar">
   <div class="sidebar-logo"><div class="brand">Viciniti <span>Deals</span></div></div>
 

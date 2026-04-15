@@ -33,6 +33,21 @@ class Settings(BaseSettings):
     secret_key: str = "changeme-generate-with-openssl-rand-hex-32"
 
     # -------------------------------------------------------------------------
+    # Transactional email (Resend — https://resend.com)
+    # -------------------------------------------------------------------------
+    # Leave resend_api_key empty to disable email sending entirely
+    # (register/reset still work but no email goes out — useful for local dev).
+    resend_api_key: str = ""
+    email_from: str = "auth@viciniti.deals"
+    email_from_name: str = "Viciniti Deals"
+    # Base URL used when building links inside email bodies (verify / reset).
+    # Must match the public-facing domain (viciniti.deals in prod, localhost in dev).
+    app_base_url: str = "https://viciniti.deals"
+    # Token lifetimes
+    email_verify_token_max_age_seconds: int = 60 * 60 * 24  # 24 hours
+    password_reset_token_max_age_seconds: int = 60 * 30      # 30 minutes
+
+    # -------------------------------------------------------------------------
     # Error monitoring (BugSink — Sentry-SDK compatible)
     # -------------------------------------------------------------------------
     sentry_dsn: str | None = None

@@ -60,6 +60,9 @@ _AUTH_EXEMPT_PATHS = (
     "/login",
     "/logout",
     "/register",
+    "/forgot-password",
+    "/reset-password",
+    "/verify-email",
     "/api/",
 )
 

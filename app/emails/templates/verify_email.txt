@@ -1,0 +1,17 @@
+Verify your Viciniti Deals email
+================================
+
+Hi {{ name }},
+
+Thanks for signing up. Click the link below to confirm your email address
+and finish setting up your account:
+
+{{ verify_url }}
+
+This link expires in 24 hours.
+
+If you didn't create a Viciniti Deals account, you can safely ignore this
+email — someone may have entered your address by mistake.
+
+—
+Sent from {{ app_base_url }}
