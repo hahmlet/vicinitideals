@@ -5610,9 +5610,9 @@ async def deal_setup_wizard_complete(
             stack_position=1,
             source={"auto_size": True, "interest_rate_pct": construction_rate},
             carry={"carry_type": "io_only", "io_rate_pct": construction_rate},
-            exit_terms={"exit_type": "full_payoff", "trigger": "permanent financing close"},
+            exit_terms={"exit_type": "full_payoff", "trigger": "permanent_financing_close"},
             active_phase_start="pre_construction",
-            active_phase_end="construction",
+            active_phase_end="lease_up",
         )
         # Permanent loan
         cm_perm = CapitalModule(

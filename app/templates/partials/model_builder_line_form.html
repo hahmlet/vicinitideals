@@ -513,6 +513,7 @@ function ulTimingChanged(val) {
 {%- set _NO_EXIT_TYPES = ['permanent_debt'] -%}
 
 {%- macro exit_fields(et_val, trig_val) %}
+{%- set _trig_norm = trig_val | replace(' ','_') | lower -%}
 <div class="form-row">
   <div class="form-field">
     <label class="form-label">Exit Type</label>
@@ -525,8 +526,8 @@ function ulTimingChanged(val) {
   <div class="form-field">
     <label class="form-label">Exit Trigger</label>
     <select class="form-select" name="exit_trigger">
-      {% for trig in ['sale','refinance','construction_completion','stabilization','maturity','partner_buyout','call_option'] %}
-      <option value="{{ trig }}" {% if trig_val == trig %}selected{% endif %}>{{ trig | replace('_',' ') | title }}</option>
+      {% for trig in ['sale','refinance','construction_completion','permanent_financing_close','stabilization','maturity','partner_buyout','call_option'] %}
+      <option value="{{ trig }}" {% if _trig_norm == trig %}selected{% endif %}>{{ trig | replace('_',' ') | title }}</option>
       {% endfor %}
     </select>
   </div>
@@ -670,9 +671,10 @@ function ulTimingChanged(val) {
 {%- set _show_exit = _ft not in _SIMPLE_TYPES and not _is_perm_debt -%}
 {%- set _show_carry = _ft not in _NO_CARRY_TYPES -%}
 {%- set c_phases = existing.carry.phases if (existing.carry and existing.carry.get('phases')) else [] -%}
+{%- set _flat_carry = existing.carry if (existing.carry and not existing.carry.get('phases')) else {} -%}
 {%- set c_pre_ops = (c_phases | selectattr('name','equalto','pre_operations') | list | first)
                  or (c_phases | selectattr('name','equalto','construction')    | list | first)
-                 or {} -%}
+                 or _flat_carry -%}
 {%- set c_ops = (c_phases | selectattr('name','equalto','operation') | list | first) if c_phases else {} -%}
 
 <form hx-put="/ui/forms/{{ model.id }}/capital-modules/{{ existing.id }}"
