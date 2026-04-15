@@ -9,6 +9,7 @@ from __future__ import annotations
 import uuid
 from pathlib import Path
 
+import logging
 from datetime import UTC, datetime
 
 from fastapi import APIRouter, Cookie, Query, Request
@@ -26,6 +27,7 @@ from app.api.auth import (
     verify_password,
 )
 from app.api.deps import DBSession
+from app.api.rate_limit import check_rate_limit
 from app.config import settings
 from app.emails import (
     load_email_verification_token,
@@ -36,6 +38,8 @@ from app.emails import (
     send_verification_email,
 )
 from app.models.org import Organization, User
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(include_in_schema=False)
 
@@ -389,21 +393,80 @@ async def forgot_password_get(
 # POST /forgot-password
 # ---------------------------------------------------------------------------
 
+def _client_ip(request: Request) -> str:
+    """Best-effort client IP, trusting X-Forwarded-For from the NGINX proxy."""
+    xff = request.headers.get("x-forwarded-for")
+    if xff:
+        return xff.split(",", 1)[0].strip()
+    if request.client:
+        return request.client.host
+    return "unknown"
+
+
+# Rate limit policy: 5 requests per IP per 15 min + 3 per email per hour.
+# Both checks must pass; the tighter per-email window protects individual
+# mailboxes from being spammed, and the per-IP window protects the sender
+# reputation / Resend bill from a single attacker.
+_RL_IP_MAX = 5
+_RL_IP_WINDOW = 15 * 60       # 15 min
+_RL_EMAIL_MAX = 3
+_RL_EMAIL_WINDOW = 60 * 60    # 1 hour
+
+
 @router.post("/forgot-password", response_class=HTMLResponse)
 async def forgot_password_post(
     request: Request,
     session: DBSession,
 ) -> Response:
-    """Always returns the "we sent a link if the account exists" message —
-    does not reveal whether an email is registered (prevents enumeration)."""
+    """Send a password reset link.
+
+    Always returns the same "we sent a link if the account exists" message
+    regardless of whether the email matched a real account, to prevent
+    enumeration attacks.  Misses are logged server-side at INFO level so
+    the admin can see them in the container logs.
+
+    Rate-limited per IP (5/15min) and per email (3/hour).  On limit
+    exceeded the user gets the same confirmation — the attacker cannot
+    distinguish "rate limited" from "email exists".
+    """
     form = await request.form()
     email = str(form.get("email", "")).strip().lower()
+    ip = _client_ip(request)
 
+    # ── Rate limit: per-IP window ────────────────────────────────────────
+    ip_allowed = await check_rate_limit(
+        key=f"forgot_pw:ip:{ip}",
+        max_count=_RL_IP_MAX,
+        window_seconds=_RL_IP_WINDOW,
+    )
+    if not ip_allowed:
+        logger.warning(
+            "forgot_password rate-limited ip=%s email=%s (per-IP bucket exceeded)",
+            ip, email or "(empty)"
+        )
+        return RedirectResponse(url="/forgot-password?sent=1", status_code=303)
+
+    # ── Rate limit: per-email window (only if email non-empty) ───────────
+    if email:
+        email_allowed = await check_rate_limit(
+            key=f"forgot_pw:email:{email}",
+            max_count=_RL_EMAIL_MAX,
+            window_seconds=_RL_EMAIL_WINDOW,
+        )
+        if not email_allowed:
+            logger.warning(
+                "forgot_password rate-limited ip=%s email=%s (per-email bucket exceeded)",
+                ip, email
+            )
+            return RedirectResponse(url="/forgot-password?sent=1", status_code=303)
+
+    # ── Actual lookup + send ─────────────────────────────────────────────
     if email:
         user = (
             await session.execute(select(User).where(User.email == email))
         ).scalar_one_or_none()
         if user is not None and user.hashed_password and user.is_active:
+            logger.info("forgot_password: sending reset email ip=%s email=%s", ip, email)
             reset_token = make_password_reset_token(user.id, user.hashed_password)
             reset_url = f"{settings.app_base_url}/reset-password?token={reset_token}"
             try:
@@ -414,6 +477,18 @@ async def forgot_password_post(
                 )
             except Exception:  # pragma: no cover — logged in sender
                 pass
+        else:
+            # Server-side miss logging — user sees the same confirmation
+            # regardless, but we as admins can see failed attempts in the
+            # container logs for debugging (e.g. typos, unknown accounts).
+            reason = (
+                "user_not_found" if user is None
+                else "no_password_set" if not user.hashed_password
+                else "account_disabled"
+            )
+            logger.info("forgot_password miss ip=%s email=%s reason=%s", ip, email, reason)
+    else:
+        logger.info("forgot_password: empty email submitted ip=%s", ip)
 
     # Always show the same confirmation regardless of whether the email existed
     return RedirectResponse(url="/forgot-password?sent=1", status_code=303)
