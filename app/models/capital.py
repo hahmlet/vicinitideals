@@ -12,13 +12,15 @@ from app.models.base import Base
 
 
 class FunderType(str, enum.Enum):
-    permanent_debt = "permanent_debt"    # amortizing long-term loan, no exit trigger
+    permanent_debt = "permanent_debt"           # amortizing long-term loan, no exit trigger
     senior_debt = "senior_debt"
     mezzanine_debt = "mezzanine_debt"
-    bridge = "bridge"
+    bridge = "bridge"                           # catch-all short-term bridge loan
     construction_loan = "construction_loan"
+    pre_development_loan = "pre_development_loan"  # pre-closing costs (entitlements, design, due diligence)
+    acquisition_loan = "acquisition_loan"       # funds acquisition phase costs at LTV%
     soft_loan = "soft_loan"
-    bond = "bond"
+    bond = "bond"                               # construction-to-perm converting loan
     preferred_equity = "preferred_equity"
     common_equity = "common_equity"
     owner_loan = "owner_loan"

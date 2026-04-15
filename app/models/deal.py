@@ -304,8 +304,15 @@ class OperationalInputs(Base):
     # ── Deal Setup Wizard ────────────────────────────────────────────────────
     # Set by the deal setup wizard before any module work begins.
     deal_setup_complete: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
-    # "perm_only" | "construction_to_perm" | "construction_and_perm"
+    # Legacy single-select: "perm_only" | "construction_to_perm" | "construction_and_perm"
+    # Superseded by debt_types for new deals; kept for backward compat.
     debt_structure: Mapped[str | None] = mapped_column(String(40), nullable=True)
+    # Multi-debt selection: list of funder_type strings in stack order.
+    # e.g. ["pre_development_loan", "acquisition_loan", "construction_loan", "permanent_debt"]
+    debt_types: Mapped[list | None] = mapped_column(JSON, nullable=True)
+    # Per-debt milestone assignments and retirement chain.
+    # {funder_type: {"active_from": str, "active_to": str, "retired_by": str|null}}
+    debt_milestone_config: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     # "gap_fill" | "dscr_capped"
     debt_sizing_mode: Mapped[str | None] = mapped_column(String(20), nullable=True)
     dscr_minimum: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=Decimal("1.15"))
@@ -313,8 +320,9 @@ class OperationalInputs(Base):
     construction_floor_pct: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
     # months of projected debt service to maintain at stabilization start
     operation_reserve_months: Mapped[int] = mapped_column(Integer, nullable=False, default=6)
-    # debt terms for auto-created CapitalModule(s)
-    # {"perm_rate_pct": 4.5, "perm_amort_years": 30, "construction_rate_pct": 4.5}
+    # Per-debt terms for auto-created CapitalModule(s).
+    # New structure: {funder_type: {rate_pct, amort_years, loan_type, sizing_approach, ltv_pct}}
+    # Legacy flat keys (perm_rate_pct, perm_amort_years, construction_rate_pct) still read for old deals.
     debt_terms: Mapped[dict | None] = mapped_column(JSON, nullable=True)
 
     # ── NOI mode inputs (only used when DealModel.income_mode == 'noi') ──────
