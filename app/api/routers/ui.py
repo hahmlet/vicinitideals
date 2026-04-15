@@ -5357,8 +5357,18 @@ async def timeline_wizard_submit(
             continue
         mt = MilestoneType(mt_str)
         is_anchor = mt == anchor_mt
-        # Auto-cap stabilized at 30 years when no divestment
-        if mt == MilestoneType.operation_stabilized and not has_divestment:
+        # Per-milestone duration override: clients (tests / power-user wizards)
+        # can supply ``duration_<type>=<days>`` form fields to set durations
+        # upfront instead of having to create-then-edit each milestone.  Any
+        # field not supplied falls through to the legacy default below.
+        override_raw = form.get(f"duration_{mt_str}")
+        if override_raw is not None and str(override_raw).strip() != "":
+            try:
+                dur = max(0, int(override_raw))
+            except (ValueError, TypeError):
+                dur = 0
+        elif mt == MilestoneType.operation_stabilized and not has_divestment:
+            # Auto-cap stabilized at 30 years when no divestment
             dur = _STABILIZED_AUTO_DAYS
         else:
             dur = anchor_duration if is_anchor else 0
