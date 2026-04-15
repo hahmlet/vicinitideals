@@ -5865,9 +5865,12 @@ async def deal_setup_wizard_complete(
         "bond":                 ["Bond Issuance Fee", "Bond Counsel Legal"],
     }
     _APS_TO_PHASE: dict[str, str] = {
-        "acquisition": "acquisition", "pre_construction": "pre_construction",
-        "construction": "construction", "lease_up": "operation",
-        "stabilized": "operation", "exit": "exit",
+        "acquisition": "acquisition",      "close": "acquisition",
+        "pre_construction": "pre_construction",
+        "construction": "construction",
+        "lease_up": "operation",           "operation_lease_up": "operation",
+        "stabilized": "operation",         "operation_stabilized": "operation",
+        "exit": "exit",                    "divestment": "exit",
     }
     for _cc_mod in _cc_preload_modules:
         _cc_ft_str = _cc_mod["funder_type"]

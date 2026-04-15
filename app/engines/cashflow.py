@@ -610,14 +610,20 @@ _DEFAULT_LOAN_COSTS: dict[str, list[dict]] = {
 }
 
 # Maps CapitalModule.active_phase_start → UseLinePhase string for closing cost Use lines.
-# "lease_up" and "stabilized" both map to "operation" (closest UseLinePhase value).
+# Covers both short-form values ("lease_up") and milestone-key variants ("operation_lease_up")
+# that the wizard stores verbatim from form data.  Unmapped values fall back to
+# "pre_construction" (construction loan close is the most common default).
 _APS_TO_USE_PHASE: dict[str, str] = {
-    "acquisition":      "acquisition",
-    "pre_construction": "pre_construction",
-    "construction":     "construction",
-    "lease_up":         "operation",
-    "stabilized":       "operation",
-    "exit":             "exit",
+    "acquisition":          "acquisition",
+    "close":                "acquisition",      # milestone key for "loan closes at acq"
+    "pre_construction":     "pre_construction",
+    "construction":         "construction",
+    "lease_up":             "operation",
+    "operation_lease_up":   "operation",        # milestone key variant
+    "stabilized":           "operation",
+    "operation_stabilized": "operation",        # milestone key variant
+    "exit":                 "exit",
+    "divestment":           "exit",             # milestone key variant
 }
 
 
