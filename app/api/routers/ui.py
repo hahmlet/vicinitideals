@@ -7212,6 +7212,7 @@ async def _load_draw_schedule_ctx(
             ds = DrawSource(
                 id=_uuid_mod.uuid4(),
                 scenario_id=model_id,
+                capital_module_id=cm.id,
                 sort_order=i + 1,
                 label=cm.label,
                 source_type=source_type,
