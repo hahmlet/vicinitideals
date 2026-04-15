@@ -598,9 +598,11 @@ function ulTimingChanged(val) {
   <div class="form-field">
     <label class="form-label">Carry Type</label>
     <select class="form-select" name="construction_carry_type" onchange="(function(s){var c=document.getElementById('constr-perm-fields');if(c)c.style.display=s.value==='converts_to_permanent'?'':'none';})(this)">
-      {% for ct in ['none','io_only','pi','capitalized_interest','accruing','converts_to_permanent'] %}
+      {% for ct in ['none','interest_reserve','io_only','capitalized_interest','pi','converts_to_permanent'] %}
       <option value="{{ ct }}" {% if pre_ops.get('carry_type','none') == ct %}selected{% endif %}>
-        {%- if ct == 'io_only' %}I&O Only
+        {%- if ct == 'interest_reserve' %}Interest Reserve
+        {%- elif ct == 'io_only' %}I&O Payment
+        {%- elif ct == 'capitalized_interest' %}Capitalized Interest
         {%- elif ct == 'pi' %}P&I
         {%- elif ct == 'converts_to_permanent' %}Construction-to-Perm Conversion
         {%- else %}{{ ct | replace('_',' ') | title }}{% endif %}</option>
@@ -645,9 +647,13 @@ function ulTimingChanged(val) {
   <div class="form-field">
     <label class="form-label">Carry Type</label>
     <select class="form-select" name="operation_carry_type">
-      {% for ct in ['none','io_only','pi','capitalized_interest','accruing'] %}
+      {% for ct in ['none','interest_reserve','io_only','capitalized_interest','pi'] %}
       <option value="{{ ct }}" {% if _ops_default == ct %}selected{% endif %}>
-        {%- if ct == 'io_only' %}I&O Only{%- elif ct == 'pi' %}P&I{%- else %}{{ ct | replace('_',' ') | title }}{%- endif %}</option>
+        {%- if ct == 'interest_reserve' %}Interest Reserve
+        {%- elif ct == 'io_only' %}I&O Payment
+        {%- elif ct == 'capitalized_interest' %}Capitalized Interest
+        {%- elif ct == 'pi' %}P&I
+        {%- else %}{{ ct | replace('_',' ') | title }}{%- endif %}</option>
       {% endfor %}
     </select>
   </div>

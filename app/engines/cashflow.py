@@ -563,14 +563,21 @@ _DEBT_FUNDER_TYPES = {
 
 
 def _carry_type_for_phase(carry: dict, is_construction: bool) -> str:
-    """Extract carry_type from either flat {carry_type:...} or phased {phases:[...]} format."""
+    """Extract carry_type from either flat {carry_type:...} or phased {phases:[...]} format.
+
+    Normalises "accruing" → "capitalized_interest" in the cashflow engine only.
+    The waterfall engine keeps accruing distinct (side-pocket vs principal accrual).
+    """
+    def _norm(ct: str) -> str:
+        return "capitalized_interest" if ct == "accruing" else ct
+
     if "phases" in carry:
         target = "construction" if is_construction else "operation"
         for p in carry["phases"]:
             if p.get("name") == target:
-                return p.get("carry_type", "none")
+                return _norm(p.get("carry_type", "none"))
         return "none"
-    return carry.get("carry_type", "none")
+    return _norm(carry.get("carry_type", "none"))
 
 
 def _get_phase_carry(carry: dict, phase_name: str) -> dict | None:
@@ -668,10 +675,15 @@ async def _auto_size_debt_modules(
     # Keep it here so pre-rename DB rows don't get counted in the gap-fill total.
     _BALANCE_ONLY_LABELS = {
         "Operating Reserve",
+        # CI labels (100% factor — balance grows, use line is the accrued amount)
         "Capitalized Construction Interest",
         "Construction Interest Reserve",          # legacy label — aliased for backward compat
-        "Capitalized Pre-Development Interest",   # Phase B: per-bridge IO use lines
-        "Capitalized Acquisition Interest",       # Phase B: per-bridge IO use lines
+        "Capitalized Pre-Development Interest",
+        "Capitalized Acquisition Interest",
+        # IR labels (avg-draw factor — pre-funded pool, use line is the reserve bucket)
+        "Interest Reserve",                       # construction IR
+        "Pre-Development Interest Reserve",       # pre-dev IR
+        "Acquisition Interest Reserve",           # acquisition IR
         "Lease-Up Reserve",
     }
 
@@ -731,7 +743,8 @@ async def _auto_size_debt_modules(
     # Legacy 3-path is preserved when debt_types is None (backward compat).
     _bridge_module: object = None
     _perm_mod: object = None
-    _bridge_io: dict = {}   # {funder_type: capitalized_io_amount} for new-path use lines
+    _bridge_io: dict = {}            # {funder_type: interest_amount} for new-path use lines
+    _bridge_io_carry_type: dict = {} # {funder_type: "interest_reserve"|"capitalized_interest"}
 
     debt_types_list: list = getattr(inputs, "debt_types", None) or []
 
@@ -772,27 +785,57 @@ async def _auto_size_debt_modules(
 
             if _ft == "pre_development_loan":
                 _r = Decimal(str(_rate or 0))
-                _io_f = (_r / HUNDRED / Decimal("12") * Decimal(_pre_dev_months)) if (_r > ZERO and _pre_dev_months > 0) else ZERO
+                _pre_ct = _carry_type_for_phase(_carry, is_construction=True)
+                if _pre_ct == "interest_reserve":
+                    # Exact avg-draw factor: rate/12 × (N+1)/2
+                    _io_f = (_r / HUNDRED / Decimal("12") * (Decimal(_pre_dev_months + 1) / Decimal("2"))
+                             ) if (_r > ZERO and _pre_dev_months > 0) else ZERO
+                elif _pre_ct == "capitalized_interest":
+                    _io_f = (_r / HUNDRED / Decimal("12") * Decimal(_pre_dev_months)
+                             ) if (_r > ZERO and _pre_dev_months > 0) else ZERO
+                else:  # io_only (True IO) — periodic payments, no reserve funded
+                    _io_f = ZERO
                 _div = ONE - _io_f
                 _principal = _q(pre_dev_costs / _div) if (_div > ZERO and pre_dev_costs > ZERO) else pre_dev_costs
-                if _principal > ZERO and _r > ZERO and _pre_dev_months > 0:
-                    _bridge_io["pre_development_loan"] = _q(_principal * _r / HUNDRED / Decimal("12") * Decimal(_pre_dev_months))
+                if _principal > ZERO and _r > ZERO and _pre_dev_months > 0 and _io_f > ZERO:
+                    _bridge_io["pre_development_loan"] = _q(_principal - pre_dev_costs)
+                    _bridge_io_carry_type["pre_development_loan"] = _pre_ct
 
             elif _ft == "acquisition_loan":
                 _dt_terms = (inputs.debt_terms or {}).get("acquisition_loan", {})
                 _ltv = Decimal(str(_dt_terms.get("ltv_pct") or _src.get("ltv_pct") or 70))
                 _principal = _q(acq_costs * _ltv / HUNDRED)
                 _r = Decimal(str(_rate or 0))
+                _acq_ct = _carry_type_for_phase(_carry, is_construction=True)
                 if _principal > ZERO and _r > ZERO and _acq_months > 0:
-                    _bridge_io["acquisition_loan"] = _q(_principal * _r / HUNDRED / Decimal("12") * Decimal(_acq_months))
+                    if _acq_ct == "interest_reserve":
+                        _acq_interest = _q(_principal * _r / HUNDRED / Decimal("12") * (Decimal(_acq_months + 1) / Decimal("2")))
+                    elif _acq_ct == "capitalized_interest":
+                        _acq_interest = _q(_principal * _r / HUNDRED / Decimal("12") * Decimal(_acq_months))
+                    else:  # io_only — no reserve
+                        _acq_interest = ZERO
+                    if _acq_interest > ZERO:
+                        _bridge_io["acquisition_loan"] = _acq_interest
+                        _bridge_io_carry_type["acquisition_loan"] = _acq_ct
 
             elif _ft == "construction_loan":
                 _r = Decimal(str(_cr or 0))
-                _io_f = (_r / HUNDRED / Decimal("12") * Decimal(constr_months_total)) if (_r > ZERO and constr_months_total > 0) else ZERO
+                _cl_ct = _carry_type_for_phase(_carry, is_construction=True)
+                if _cl_ct == "interest_reserve":
+                    # Exact avg-draw factor: rate/12 × (N+1)/2
+                    _io_f = (_r / HUNDRED / Decimal("12") * (Decimal(constr_months_total + 1) / Decimal("2"))
+                             ) if (_r > ZERO and constr_months_total > 0) else ZERO
+                elif _cl_ct == "capitalized_interest":
+                    # 100% factor — full balance accrues from day one
+                    _io_f = (_r / HUNDRED / Decimal("12") * Decimal(constr_months_total)
+                             ) if (_r > ZERO and constr_months_total > 0) else ZERO
+                else:  # io_only (True IO) — periodic cash payments, no reserve funded
+                    _io_f = ZERO
                 _div = ONE - _io_f
                 _principal = _q(constr_costs / _div) if (_div > ZERO and constr_costs > ZERO) else constr_costs
-                if _principal > ZERO and _r > ZERO and constr_months_total > 0:
-                    _bridge_io["construction_loan"] = _q(_principal * _r / HUNDRED / Decimal("12") * Decimal(constr_months_total))
+                if _principal > ZERO and _r > ZERO and constr_months_total > 0 and _io_f > ZERO:
+                    _bridge_io["construction_loan"] = _q(_principal - constr_costs)
+                    _bridge_io_carry_type["construction_loan"] = _cl_ct
 
             elif _ft == "bridge":
                 _existing_amt = _src.get("amount")
@@ -830,11 +873,14 @@ async def _auto_size_debt_modules(
                 # Exclude the bridge from the gap-fill loop so only perm sizes to TPC.
                 auto_modules = [m for m in auto_modules if m is not _constr_mod]
 
-    # When bridge loans carry their own IO (new multi-debt path), the gap-fill module
-    # (e.g. permanent debt) must pay off those bridge loans at retirement, including
-    # accrued IO.  Add captured bridge IO to total_uses so perm sizes to cover it.
-    # This is safe: bridge IO amounts are already finalized above before the gap-fill loop.
-    if debt_types_list and _bridge_io:
+    # When bridge loans carry their own IR/CI (new multi-debt path), the gap-fill module
+    # (e.g. permanent debt) must cover those interest costs in the permanent capital stack.
+    # Both interest_reserve and capitalized_interest add to total_uses:
+    #   - interest_reserve: IR pool was a real funded cost; perm replaces the full loan commitment
+    #   - capitalized_interest: balance grew; perm must retire the grown balance
+    # True IO (io_only) is NOT captured in _bridge_io — periodic payments appear in DS only.
+    # Guard: only adjust when there is a downstream gap-fill module to absorb it.
+    if debt_types_list and _bridge_io and auto_modules:
         for _bio_ft, _bio_amt in _bridge_io.items():
             if _bio_amt > ZERO:
                 total_uses += _bio_amt
@@ -1027,7 +1073,9 @@ async def _auto_size_debt_modules(
             op_carry2 = _get_phase_carry(carry2, "operation")
             ct2 = _carry_type_for_phase(carry2, is_construction=False)
             rate2 = src2.get("interest_rate_pct")
-            if ct2 == "io_only":
+            if ct2 in ("interest_reserve", "capitalized_interest"):
+                pass  # no periodic DS; reserve sized on zero DS for this module
+            elif ct2 == "io_only":
                 phase_rate2 = (op_carry2 or {}).get("io_rate_pct") if op_carry2 else None
                 ds_monthly += _monthly_io(p2, phase_rate2 or rate2)
             elif ct2 == "pi":
@@ -1099,15 +1147,31 @@ async def _auto_size_debt_modules(
         session.add(new_op)
         use_lines.append(new_op)
 
-    # Update or create Capitalized Construction Interest use line (balance-only: not a cash outflow).
-    # Collect ALL rows matching either the current or the legacy label, then keep exactly one.
-    _CI_LABELS = {"Capitalized Construction Interest", "Construction Interest Reserve"}
-    _ci_rows = [ul for ul in use_lines if getattr(ul, "label", "") in _CI_LABELS]
+    # Update or create construction interest use line (balance-only: not a cash outflow).
+    # Label depends on carry type: IR → "Interest Reserve", CI → "Capitalized Construction Interest".
+    # Collect ALL rows matching any known construction interest label, keep exactly one.
+    _CONSTR_INT_LABELS = {
+        "Capitalized Construction Interest",
+        "Construction Interest Reserve",   # legacy
+        "Interest Reserve",                # IR carry type
+    }
+    _constr_int_ct = _bridge_io_carry_type.get("construction_loan", "capitalized_interest")
+    _constr_int_label = (
+        "Interest Reserve"
+        if _constr_int_ct == "interest_reserve"
+        else "Capitalized Construction Interest"
+    )
+    _constr_int_notes = (
+        "Auto-computed: interest reserve pre-funded from construction loan proceeds."
+        if _constr_int_ct == "interest_reserve"
+        else "Auto-computed: IO capitalized into construction loan principal."
+    )
+    _ci_rows = [ul for ul in use_lines if getattr(ul, "label", "") in _CONSTR_INT_LABELS]
     if _ci_rows:
-        # Keep the first, delete every duplicate
         _ci_keep = _ci_rows[0]
-        _ci_keep.label = "Capitalized Construction Interest"
+        _ci_keep.label = _constr_int_label
         _ci_keep.amount = total_constr_io
+        _ci_keep.notes = _constr_int_notes
         session.add(_ci_keep)
         for _ci_dup in _ci_rows[1:]:
             await session.delete(_ci_dup)
@@ -1115,11 +1179,11 @@ async def _auto_size_debt_modules(
     elif project_id and total_constr_io > ZERO:
         new_ul = UseLine(
             project_id=project_id,
-            label="Capitalized Construction Interest",
+            label=_constr_int_label,
             phase="construction",
             amount=total_constr_io,
             timing_type="first_day",
-            notes="Auto-computed: IO on debt principal during construction phases.",
+            notes=_constr_int_notes,
         )
         session.add(new_ul)
         use_lines.append(new_ul)
@@ -1149,18 +1213,46 @@ async def _auto_size_debt_modules(
         session.add(new_lu)
         use_lines.append(new_lu)
 
-    # Phase B: write Capitalized Pre-Development Interest and Capitalized Acquisition Interest
-    # use lines for new multi-debt deals (construction_loan IO uses the existing CI block above).
+    # Phase B: write interest use lines for pre_development_loan and acquisition_loan.
+    # Label is carry-type-aware: IR → "…Interest Reserve", CI → "Capitalized … Interest".
+    # construction_loan interest uses the existing block above.
     if debt_types_list and project_id:
-        for _bft, _blabel in [
-            ("pre_development_loan", "Capitalized Pre-Development Interest"),
-            ("acquisition_loan",     "Capitalized Acquisition Interest"),
-        ]:
+        _BRIDGE_INT_LABEL_MAP = {
+            # (funder_type, carry_type) → label
+            ("pre_development_loan", "interest_reserve"):      "Pre-Development Interest Reserve",
+            ("pre_development_loan", "capitalized_interest"):  "Capitalized Pre-Development Interest",
+            ("acquisition_loan",     "interest_reserve"):      "Acquisition Interest Reserve",
+            ("acquisition_loan",     "capitalized_interest"):  "Capitalized Acquisition Interest",
+        }
+        _BRIDGE_ALL_LABELS = {
+            "Pre-Development Interest Reserve",
+            "Capitalized Pre-Development Interest",
+            "Acquisition Interest Reserve",
+            "Capitalized Acquisition Interest",
+        }
+        for _bft in ("pre_development_loan", "acquisition_loan"):
             _bio_amt = _bridge_io.get(_bft, ZERO)
-            _existing_bio = next((ul for ul in use_lines if getattr(ul, "label", "") == _blabel), None)
+            _bft_ct  = _bridge_io_carry_type.get(_bft, "capitalized_interest")
+            _blabel  = _BRIDGE_INT_LABEL_MAP.get((_bft, _bft_ct),
+                           f"Capitalized {_bft.replace('_', ' ').title()} Interest")
+            _bnotes  = (
+                f"Auto-computed: interest reserve pre-funded from {_bft.replace('_', ' ')} proceeds."
+                if _bft_ct == "interest_reserve"
+                else f"Auto-computed: IO capitalized into {_bft.replace('_', ' ')} principal."
+            )
+            # Find any existing row with any known label for this loan type
+            _bft_prefix = "Pre-Development" if "pre_dev" in _bft else "Acquisition"
+            _existing_bio = next(
+                (ul for ul in use_lines
+                 if getattr(ul, "label", "") in _BRIDGE_ALL_LABELS
+                 and _bft_prefix in getattr(ul, "label", "")),
+                None,
+            )
             if _existing_bio:
                 if _bio_amt > ZERO:
+                    _existing_bio.label  = _blabel
                     _existing_bio.amount = _bio_amt
+                    _existing_bio.notes  = _bnotes
                     session.add(_existing_bio)
                 else:
                     await session.delete(_existing_bio)
@@ -1172,7 +1264,7 @@ async def _auto_size_debt_modules(
                     phase="construction",
                     amount=_bio_amt,
                     timing_type="first_day",
-                    notes=f"Auto-computed: IO on {_bft} during active phase.",
+                    notes=_bnotes,
                 )
                 session.add(_new_io_ul)
                 use_lines.append(_new_io_ul)
@@ -1208,8 +1300,6 @@ def _sum_debt_service(modules: list, is_construction: bool) -> Decimal:
             continue
         carry = m.carry or {}
         ct = _carry_type_for_phase(carry, is_construction)
-        if ct not in ("io_only", "pi"):
-            continue
         source = m.source or {}
         amount = source.get("amount")
         if not amount:
@@ -1217,13 +1307,14 @@ def _sum_debt_service(modules: list, is_construction: bool) -> Decimal:
         principal = Decimal(str(amount))
         # Rate may be in source["interest_rate_pct"] or flat carry["io_rate_pct"]
         rate_pct = source.get("interest_rate_pct") or carry.get("io_rate_pct")
-        if ct == "io_only":
-            # Use phase-specific IO rate if available
+        if ct in ("interest_reserve", "capitalized_interest"):
+            continue  # no periodic DS — IR pre-funded; CI accrues to balance
+        elif ct == "io_only":
+            # True IO — periodic cash payments, balance stays flat
             carry_phase = _get_phase_carry(carry, "construction" if is_construction else "operation")
             phase_rate = carry_phase.get("io_rate_pct") if carry_phase else None
             total += _monthly_io(principal, phase_rate or rate_pct)
         elif ct == "pi":
-            # amort_term_years may be in the carry phase (phased carry) or source (flat carry)
             carry_phase = _get_phase_carry(carry, "operation")
             amort_years = int(
                 (carry_phase or {}).get("amort_term_years")
@@ -1232,6 +1323,7 @@ def _sum_debt_service(modules: list, is_construction: bool) -> Decimal:
             )
             phase_rate = (carry_phase or {}).get("io_rate_pct") if carry_phase else None
             total += _monthly_pmt(principal, phase_rate or rate_pct, amort_years)
+        # ct == "none" → zero contribution (falls through)
     return total
 
 
@@ -1468,10 +1560,16 @@ def _compute_period(
     # their costs are already captured via cash balance residual and debt_service respectively.
     _BALANCE_ONLY = {
         "Operating Reserve",
+        # CI labels — no per-period cash outflow (accrues to balance or reserve pays it)
         "Capitalized Construction Interest",
         "Construction Interest Reserve",
         "Capitalized Pre-Development Interest",
         "Capitalized Acquisition Interest",
+        # IR labels — pre-funded pool; no per-period cash outflow from project
+        "Interest Reserve",
+        "Pre-Development Interest Reserve",
+        "Acquisition Interest Reserve",
+        "Lease-Up Reserve",
     }
     if use_lines:
         for ul in use_lines:

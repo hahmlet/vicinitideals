@@ -330,7 +330,7 @@ _FUNDER_TYPE_CHOICES = (
     "soft_loan, bond, preferred_equity, common_equity, owner_loan, "
     "owner_investment, grant, tax_credit"
 )
-_CARRY_CHOICES = "io_only, pi, capitalized_interest, accruing, none"
+_CARRY_CHOICES = "interest_reserve, io_only, capitalized_interest, pi, accruing, none"
 
 def _build_sources(ws: Worksheet, capital_modules: list[CapitalModule]) -> None:
     _editable_header_row(ws, _SOURCES_COLS)

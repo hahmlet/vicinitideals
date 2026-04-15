@@ -515,10 +515,10 @@
         'construction_to_perm': 5.0,
     } -%}
     {%- set _dt_default_types = {
-        'pre_development_loan': 'io_only',
-        'acquisition_loan':     'io_only',
-        'construction_loan':    'io_only',
-        'bridge':               'io_only',
+        'pre_development_loan': 'interest_reserve',
+        'acquisition_loan':     'interest_reserve',
+        'construction_loan':    'interest_reserve',
+        'bridge':               'interest_reserve',
         'permanent_debt':       'pi',
         'construction_to_perm': 'io_then_pi',
     } -%}
@@ -541,9 +541,11 @@
           <div class="field-group" style="max-width:120px">
             <label>Loan Type</label>
             <select name="{{ dt }}_loan_type">
-              <option value="io_only"    {% if _ltype == 'io_only'    %}selected{% endif %}>IO Only</option>
-              <option value="pi"         {% if _ltype == 'pi'         %}selected{% endif %}>P&amp;I</option>
-              <option value="io_then_pi" {% if _ltype == 'io_then_pi' %}selected{% endif %}>IO then P&amp;I</option>
+              <option value="interest_reserve"    {% if _ltype == 'interest_reserve'    %}selected{% endif %}>Interest Reserve</option>
+              <option value="io_only"             {% if _ltype == 'io_only'             %}selected{% endif %}>I&amp;O Payment</option>
+              <option value="capitalized_interest"{% if _ltype == 'capitalized_interest'%}selected{% endif %}>Capitalized Interest</option>
+              <option value="pi"                  {% if _ltype == 'pi'                  %}selected{% endif %}>P&amp;I</option>
+              <option value="io_then_pi"          {% if _ltype == 'io_then_pi'          %}selected{% endif %}>IO then P&amp;I</option>
             </select>
           </div>
           <div class="field-group" style="max-width:120px">
@@ -797,7 +799,9 @@
           <tr>
             <td>Rate / type</td>
             <td>{{ _dt_cfg.get('rate_pct', '—') }}%
-              — {% if _dt_cfg.get('loan_type') == 'io_only' %}IO Only
+              — {% if _dt_cfg.get('loan_type') == 'interest_reserve' %}Interest Reserve
+                 {% elif _dt_cfg.get('loan_type') == 'io_only' %}I&amp;O Payment
+                 {% elif _dt_cfg.get('loan_type') == 'capitalized_interest' %}Capitalized Interest
                  {% elif _dt_cfg.get('loan_type') == 'pi' %}P&amp;I {{ _dt_cfg.get('amort_years', 30) }}yr
                  {% elif _dt_cfg.get('loan_type') == 'io_then_pi' %}IO then P&amp;I {{ _dt_cfg.get('amort_years', 30) }}yr
                  {% else %}—{% endif %}

@@ -3981,21 +3981,25 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
     def _annual_carry_amt(source: dict, carry_type: str) -> float:
         amount = source.get("amount")
         rate_pct = source.get("interest_rate_pct")
-        if not amount or carry_type not in ("io_only", "pi"):
+        if not amount or not rate_pct:
             return 0.0
         principal = float(amount)
-        if not rate_pct:
-            return 0.0
         rate = float(rate_pct)
-        if carry_type == "io_only":
+        if carry_type in ("io_only", "interest_reserve"):
+            # True IO or pre-funded IR: annual interest cost = principal × rate
+            # (IR: reserve pays it; io_only: borrower pays it — same carrying display)
             return principal * rate / 100.0
-        # P&I amortization
-        r = rate / 100.0 / 12.0
-        n = int(source.get("amort_term_years") or 30) * 12
-        if r == 0:
-            return principal / (n / 12)
-        factor = (1 + r) ** n
-        return (principal * r * factor / (factor - 1)) * 12
+        elif carry_type == "capitalized_interest":
+            # No periodic cash outflow — interest accrues to balance, paid at payoff
+            return 0.0
+        elif carry_type == "pi":
+            r = rate / 100.0 / 12.0
+            n = int(source.get("amort_term_years") or 30) * 12
+            if r == 0:
+                return principal / (n / 12)
+            factor = (1 + r) ** n
+            return (principal * r * factor / (factor - 1)) * 12
+        return 0.0
 
     carrying_detail: dict[str, dict[str, float]] = {}
     for _cm in capital_modules:
@@ -5706,14 +5710,18 @@ async def deal_setup_wizard_complete(
             active_to   = cfg.get("active_to")   or _DEFAULT_TO.get(ft_str, "stabilized")
             retired_by  = cfg.get("retired_by")  or ""
 
-            if loan_type == "io_only":
-                carry: dict = {"carry_type": "io_only", "io_rate_pct": rate}
+            if loan_type == "interest_reserve":
+                carry: dict = {"carry_type": "interest_reserve", "io_rate_pct": rate}
+            elif loan_type == "capitalized_interest":
+                carry = {"carry_type": "capitalized_interest", "io_rate_pct": rate}
+            elif loan_type == "io_only":
+                carry = {"carry_type": "io_only", "io_rate_pct": rate}
             elif loan_type == "pi":
                 carry = {"carry_type": "pi", "amort_term_years": amort_years, "io_rate_pct": rate}
             else:  # io_then_pi
                 carry = {
                     "phases": [
-                        {"name": "construction", "carry_type": "io_only", "io_rate_pct": rate},
+                        {"name": "construction", "carry_type": "interest_reserve", "io_rate_pct": rate},
                         {"name": "operation", "carry_type": "pi", "amort_term_years": amort_years, "io_rate_pct": rate},
                     ]
                 }

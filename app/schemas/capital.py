@@ -52,7 +52,7 @@ class CapitalSourceSchema(BaseModel):
 
 
 class CapitalCarrySchema(BaseModel):
-    carry_type: Literal["io_only", "pi", "capitalized_interest", "accruing", "none"]
+    carry_type: Literal["io_only", "interest_reserve", "capitalized_interest", "accruing", "pi", "none"]
     io_period_months: int | None = None
     io_to_pi_trigger: str | None = None
     payment_frequency: Literal["monthly", "quarterly", "annual", "at_exit"] = "monthly"
