@@ -40,7 +40,11 @@ def create_e2e_scenario(
     deal_type: str = "acquisition_minor_reno",
 ) -> str:
     """Create a new deal via the UI and return the model_id UUID string."""
-    page.goto("/deals/new")
+    try:
+        page.goto("/deals/new", wait_until="domcontentloaded")
+    except Exception:
+        page.wait_for_timeout(1000)
+        page.goto("/deals/new", wait_until="domcontentloaded")
     page.wait_for_selector('[name=name]', timeout=10_000)
 
     page.fill('[name=name]', deal_name)
@@ -112,7 +116,13 @@ def submit_timeline_wizard(
     page.click("#wizard-next")
     page.wait_for_timeout(500)
 
-    # Step 3 — select milestone checkboxes (some are pre-checked as defaults)
+    # Step 3 — select milestone checkboxes
+    # First uncheck ALL non-disabled defaults, then check only the requested ones.
+    # The anchor checkbox is disabled and must stay checked.
+    all_cbs = page.locator('#timeline-wizard input[name="milestone_types"]').all()
+    for cb in all_cbs:
+        if cb.is_checked() and not cb.is_disabled():
+            cb.uncheck()
     for mt in milestone_types:
         cb = page.locator(f'#timeline-wizard input[name="milestone_types"][value="{mt}"]')
         if cb.count() > 0 and not cb.is_checked():

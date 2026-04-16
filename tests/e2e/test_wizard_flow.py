@@ -118,7 +118,8 @@ def test_wizard_step3_dropdowns_not_clipped(_seed_page, base_url):
     page.click('#deal-setup-wizard button:has-text("Next")')
     wait_for_htmx(page)
 
-    # Step 3 should have select dropdowns
+    # Step 3 should have select dropdowns — wait for them to render
+    page.wait_for_selector('[name="construction_loan_active_to"]', timeout=8000)
     active_to = page.locator('[name="construction_loan_active_to"]')
     assert active_to.count() > 0
 

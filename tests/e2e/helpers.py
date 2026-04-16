@@ -131,11 +131,17 @@ def read_cashflow_table(page: Page) -> list[dict]:
             .filter(r => r.querySelectorAll('td').length >= 11)
             .map(r => {
                 const cells = r.querySelectorAll('td');
+                // cells[10] = Capital Bal. (construction phases)
+                // cells[11] = Cash Bal. (operational phases)
+                // Use whichever has a value
+                const capBal = cells[10] ? cells[10].innerText.trim() : '';
+                const cashBal = cells.length > 11 && cells[11] ? cells[11].innerText.trim() : '';
+                const balance = cashBal && cashBal !== '—' ? cashBal : capBal;
                 return {
                     period:          cells[0].innerText.trim(),
                     phase:           cells[1].innerText.trim(),
                     net_cf:          cells[9].innerText.trim(),
-                    capital_balance: cells[10].innerText.trim()
+                    capital_balance: balance
                 };
             });
     }""")
