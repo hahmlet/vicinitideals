@@ -13,9 +13,11 @@ from sqlalchemy import func, or_, select, text
 
 from app.api.deps import DBSession
 from app.api.routers.ui import (
+    _apply_jurisdiction_filter,
     _base_ctx,
     _get_address_issues_count,
     _get_dedup_count,
+    _get_jurisdictions,
     _get_user,
     templates,
 )
@@ -238,7 +240,7 @@ async def listings_map_page(request: Request, session: DBSession) -> HTMLRespons
     dedup_count = await _get_dedup_count(session)
     address_issues_count = await _get_address_issues_count(session)
 
-    # Distinct property types and sources for filter dropdowns
+    # Distinct property types, sources, and jurisdictions for filter dropdowns
     property_types = [
         row[0] for row in (await session.execute(
             select(ScrapedListing.property_type)
@@ -255,6 +257,7 @@ async def listings_map_page(request: Request, session: DBSession) -> HTMLRespons
             .order_by(ScrapedListing.source)
         )).all()
     ]
+    jurisdictions = await _get_jurisdictions(session)
 
     return templates.TemplateResponse(
         request,
@@ -262,6 +265,7 @@ async def listings_map_page(request: Request, session: DBSession) -> HTMLRespons
         {
             "property_types": property_types,
             "sources": sources,
+            "jurisdictions": jurisdictions,
             **_base_ctx(user, dedup_count, "listings", address_issues_count),
         },
     )
@@ -276,6 +280,7 @@ async def listings_map_geojson(
     min_units: str = Query(default=""),
     max_units: str = Query(default=""),
     priority_bucket: str = Query(default=""),
+    jurisdiction: list[str] = Query(default=[]),
 ) -> JSONResponse:
     """Return GeoJSON FeatureCollection of listings with coordinates.
 
@@ -299,6 +304,8 @@ async def listings_map_geojson(
             ScrapedListing.priority_bucket,
             ScrapedListing.gba_sqft,
             ScrapedListing.price_per_unit,
+            ScrapedListing.city,
+            ScrapedListing.county,
         )
         .where(
             ScrapedListing.lat.isnot(None),
@@ -336,6 +343,8 @@ async def listings_map_geojson(
             pass
     if priority_bucket:
         stmt = stmt.where(ScrapedListing.priority_bucket == priority_bucket)
+    if jurisdiction:
+        stmt = _apply_jurisdiction_filter(stmt, jurisdiction)
 
     rows = (await session.execute(stmt)).mappings().all()
 

@@ -159,7 +159,23 @@
       </select>
     </div>
 
+    <div>
+      <span class="m-label">Jurisdiction</span>
+      <div id="jur-list" style="max-height:180px;overflow-y:auto;background:#2d3748;border-radius:5px;padding:6px 8px">
+        <label style="display:flex;align-items:center;gap:6px;font-size:11px;color:#e2e8f0;cursor:pointer;font-weight:600;margin-bottom:4px">
+          <input type="checkbox" id="jur-select-all" checked style="accent-color:#60a5fa"> Select All
+        </label>
+        <div style="border-top:1px solid #4a5568;margin:4px 0"></div>
+        {% for j in jurisdictions %}
+        <label style="display:flex;align-items:center;gap:6px;font-size:11px;color:#cbd5e1;cursor:pointer;padding:1px 0">
+          <input type="checkbox" class="jur-cb" value="{{ j.value }}" checked style="accent-color:#60a5fa"> {{ j.label }}
+        </label>
+        {% endfor %}
+      </div>
+    </div>
+
     <button id="apply-btn">Apply Filters</button>
+    <button id="export-csv-btn" style="background:#374151;color:#e2e8f0;border:1px solid #4a5568;border-radius:5px;padding:8px;font-size:12px;cursor:pointer">Export CSV</button>
 
     <div style="font-size:10px;color:#4b5563;line-height:1.5;border-top:1px solid #2d3748;padding-top:8px">
       Land-only listings are excluded.<br>
@@ -254,10 +270,7 @@ function popupHTML(p) {
 // ---------------------------------------------------------------------------
 let _allFeatures = [];
 
-async function loadListings() {
-  const overlay = document.getElementById('loading-overlay');
-  overlay.style.display = 'flex';
-
+function getFilterParams() {
   const params = new URLSearchParams();
   const q = document.getElementById('filter-q').value.trim();
   const source = document.getElementById('filter-source').value;
@@ -272,6 +285,22 @@ async function loadListings() {
   if (minU) params.set('min_units', minU);
   if (maxU) params.set('max_units', maxU);
   if (bucket) params.set('priority_bucket', bucket);
+
+  // Jurisdiction checkboxes
+  const allCbs = document.querySelectorAll('.jur-cb');
+  const checkedCbs = document.querySelectorAll('.jur-cb:checked');
+  // Only send jurisdiction params if not all are checked (all checked = no filter)
+  if (checkedCbs.length < allCbs.length) {
+    checkedCbs.forEach(cb => params.append('jurisdiction', cb.value));
+  }
+  return params;
+}
+
+async function loadListings() {
+  const overlay = document.getElementById('loading-overlay');
+  overlay.style.display = 'flex';
+
+  const params = getFilterParams();
 
   let geojson;
   try {
@@ -351,6 +380,35 @@ document.getElementById('filter-q').addEventListener('keydown', e => {
     if (val) document.getElementById(elId).value = val;
   }
 })();
+
+// ---------------------------------------------------------------------------
+// Jurisdiction select-all
+// ---------------------------------------------------------------------------
+(function() {
+  const selectAll = document.getElementById('jur-select-all');
+  const cbs = document.querySelectorAll('.jur-cb');
+  if (!selectAll || !cbs.length) return;
+
+  selectAll.addEventListener('change', () => {
+    cbs.forEach(cb => { cb.checked = selectAll.checked; });
+  });
+
+  cbs.forEach(cb => {
+    cb.addEventListener('change', () => {
+      const allChecked = Array.from(cbs).every(c => c.checked);
+      const noneChecked = Array.from(cbs).every(c => !c.checked);
+      selectAll.checked = allChecked;
+      selectAll.indeterminate = !allChecked && !noneChecked;
+    });
+  });
+})();
+
+// ---------------------------------------------------------------------------
+// Export CSV
+// ---------------------------------------------------------------------------
+document.getElementById('export-csv-btn').addEventListener('click', () => {
+  window.location.href = '/ui/listings/export.csv?' + getFilterParams().toString();
+});
 
 // ---------------------------------------------------------------------------
 // Boot

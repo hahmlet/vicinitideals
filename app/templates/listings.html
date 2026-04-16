@@ -9,6 +9,20 @@ details.archive-section > summary { cursor: pointer; list-style: none; display: 
 details.archive-section > summary::-webkit-details-marker { display: none; }
 details.archive-section > summary .chevron { font-size: 10px; color: var(--text-muted); transition: transform .15s; }
 details.archive-section[open] > summary .chevron { transform: rotate(90deg); }
+
+/* Jurisdiction dropdown */
+.jur-dropdown { position: relative; display: inline-block; }
+.jur-btn { cursor: pointer; }
+.jur-panel {
+  display: none; position: absolute; top: calc(100% + 4px); left: 0; z-index: 600;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: 0 4px 16px rgba(0,0,0,.25); padding: 8px 0; min-width: 240px; max-height: 320px; overflow-y: auto;
+}
+.jur-panel.open { display: block; }
+.jur-panel label { display: flex; align-items: center; gap: 6px; padding: 4px 12px; font-size: 12px; cursor: pointer; white-space: nowrap; }
+.jur-panel label:hover { background: var(--hover, rgba(255,255,255,.05)); }
+.jur-panel .jur-divider { border-top: 1px solid var(--border); margin: 4px 0; }
+.jur-panel .jur-all { font-weight: 600; }
 </style>
 {% endblock %}
 
@@ -88,6 +102,22 @@ details.archive-section[open] > summary .chevron { transform: rotate(90deg); }
         <option value="ineligible" {% if priority_bucket == 'ineligible' %}selected{% endif %}>Ineligible</option>
         <option value="unclassified" {% if priority_bucket == 'unclassified' %}selected{% endif %}>Unclassified</option>
       </select>
+
+      {# ── Jurisdiction checkbox dropdown ── #}
+      <div class="jur-dropdown" id="jur-dropdown">
+        <button type="button" class="filter-select jur-btn" id="jur-toggle" style="min-width:130px;text-align:left">
+          Jurisdiction ▾
+        </button>
+        <div class="jur-panel" id="jur-panel">
+          <label class="jur-all"><input type="checkbox" id="jur-select-all" checked> Select All</label>
+          <div class="jur-divider"></div>
+          {% for j in jurisdictions %}
+          <label><input type="checkbox" name="jurisdiction" value="{{ j.value }}" class="jur-cb" checked> {{ j.label }}</label>
+          {% endfor %}
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-secondary btn-sm" id="export-csv-btn" style="white-space:nowrap">Export CSV</button>
     </div>
   </form>
 
@@ -542,6 +572,71 @@ function openJson(event, id, title, sub) {
         setTimeout(function() { popup.style.display = 'none'; }, 4000);
       }
     });
+  });
+})();
+
+// ── Jurisdiction dropdown ──
+(function() {
+  var toggle = document.getElementById('jur-toggle');
+  var panel = document.getElementById('jur-panel');
+  var selectAll = document.getElementById('jur-select-all');
+  if (!toggle || !panel || !selectAll) return;
+
+  toggle.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    panel.classList.toggle('open');
+  });
+
+  // Close on outside click
+  document.addEventListener('click', function(e) {
+    if (!panel.contains(e.target) && e.target !== toggle) {
+      panel.classList.remove('open');
+    }
+  });
+
+  var cbs = panel.querySelectorAll('.jur-cb');
+
+  selectAll.addEventListener('change', function() {
+    var checked = selectAll.checked;
+    cbs.forEach(function(cb) { cb.checked = checked; });
+    // Trigger HTMX filter update
+    htmx.trigger(document.getElementById('listing-filters'), 'change');
+  });
+
+  cbs.forEach(function(cb) {
+    cb.addEventListener('change', function() {
+      var allChecked = Array.from(cbs).every(function(c) { return c.checked; });
+      var noneChecked = Array.from(cbs).every(function(c) { return !c.checked; });
+      selectAll.checked = allChecked;
+      selectAll.indeterminate = !allChecked && !noneChecked;
+      htmx.trigger(document.getElementById('listing-filters'), 'change');
+    });
+  });
+
+  // Update button label
+  function updateLabel() {
+    var checked = Array.from(cbs).filter(function(c) { return c.checked; }).length;
+    if (checked === cbs.length || checked === 0) {
+      toggle.textContent = 'Jurisdiction \u25BE';
+    } else {
+      toggle.textContent = checked + '/' + cbs.length + ' selected \u25BE';
+    }
+  }
+  selectAll.addEventListener('change', updateLabel);
+  cbs.forEach(function(cb) { cb.addEventListener('change', updateLabel); });
+})();
+
+// ── Export CSV ──
+(function() {
+  var btn = document.getElementById('export-csv-btn');
+  if (!btn) return;
+  btn.addEventListener('click', function() {
+    var form = document.getElementById('listing-filters');
+    if (!form) return;
+    var params = new URLSearchParams(new FormData(form));
+    for (var pair of [...params.entries()]) { if (!pair[1]) params.delete(pair[0]); }
+    window.location.href = '/ui/listings/export.csv?' + params.toString();
   });
 })();
 

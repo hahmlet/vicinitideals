@@ -2952,6 +2952,7 @@ def _listings_base_stmt(
     min_units: str = "",
     max_units: str = "",
     priority_bucket: str = "",
+    cities: list[str] | None = None,
 ):
     stmt = (
         select(ScrapedListing)
@@ -2986,7 +2987,90 @@ def _listings_base_stmt(
             pass
     if priority_bucket:
         stmt = stmt.where(ScrapedListing.priority_bucket == priority_bucket)
+    if cities is not None:
+        stmt = _apply_jurisdiction_filter(stmt, cities)
     return stmt
+
+
+def _apply_jurisdiction_filter(stmt, jurisdictions: list[str]):
+    """Apply jurisdiction filter — cities and 'uninc:county' entries.
+
+    Normal entries match ScrapedListing.city (case-insensitive).
+    Entries prefixed with 'uninc:' match county where city IS NULL.
+    """
+    city_names = []
+    uninc_counties = []
+    for j in jurisdictions:
+        if j.startswith("uninc:"):
+            uninc_counties.append(j[6:])
+        else:
+            city_names.append(j)
+
+    clauses = []
+    if city_names:
+        clauses.append(func.lower(ScrapedListing.city).in_([c.lower() for c in city_names]))
+    for county in uninc_counties:
+        clauses.append(
+            (ScrapedListing.city.is_(None)) & (func.lower(ScrapedListing.county).like(f"{county.lower()}%"))
+        )
+    if clauses:
+        stmt = stmt.where(or_(*clauses))
+    else:
+        # All deselected — show nothing
+        stmt = stmt.where(ScrapedListing.id.is_(None))
+    return stmt
+
+
+async def _get_jurisdictions(session) -> list[dict]:
+    """Return sorted list of {value, label, type} for jurisdiction filter.
+
+    Cities come from distinct ScrapedListing.city.
+    Unincorporated entries come from counties that have listings with NULL city.
+    """
+    # Distinct cities
+    city_rows = (await session.execute(
+        select(ScrapedListing.city, func.count())
+        .where(ScrapedListing.city.isnot(None))
+        .group_by(ScrapedListing.city)
+        .order_by(ScrapedListing.city)
+    )).all()
+
+    # Normalize city names (dedup case variants like KLAMATH FALLS vs Klamath Falls)
+    seen_cities: dict[str, tuple[str, int]] = {}
+    for city, cnt in city_rows:
+        key = city.strip().lower()
+        if key in seen_cities:
+            # Keep the title-cased version, sum counts
+            existing_label, existing_cnt = seen_cities[key]
+            seen_cities[key] = (existing_label if existing_label[0].isupper() else city.strip(), existing_cnt + cnt)
+        else:
+            seen_cities[key] = (city.strip(), cnt)
+
+    jurisdictions = [
+        {"value": label, "label": f"{label} ({cnt})", "type": "city"}
+        for _key, (label, cnt) in sorted(seen_cities.items())
+    ]
+
+    # Unincorporated counties (listings with city IS NULL)
+    uninc_rows = (await session.execute(
+        select(ScrapedListing.county, func.count())
+        .where(ScrapedListing.city.is_(None), ScrapedListing.county.isnot(None))
+        .group_by(ScrapedListing.county)
+    )).all()
+    if uninc_rows:
+        # Normalize county name: strip " County", title-case
+        seen_counties: dict[str, int] = {}
+        for county, cnt in uninc_rows:
+            norm = county.strip().title().replace(" County", "")
+            seen_counties[norm] = seen_counties.get(norm, 0) + cnt
+        for county_name, cnt in sorted(seen_counties.items()):
+            jurisdictions.append({
+                "value": f"uninc:{county_name}",
+                "label": f"{county_name} Unincorporated ({cnt})",
+                "type": "unincorporated",
+            })
+
+    return jurisdictions
 
 
 def _split_listings(all_listings: list) -> tuple[list, list, list]:
@@ -3012,11 +3096,13 @@ async def listings_page(
     min_units: str = Query(default=""),
     max_units: str = Query(default=""),
     priority_bucket: str = Query(default=""),
+    jurisdiction: list[str] = Query(default=[]),
 ) -> HTMLResponse:
     user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
+    cities = jurisdiction if jurisdiction else None  # empty = no filter (show all)
     all_listings = list((await session.execute(
-        _listings_base_stmt(q, source, "", property_type, min_units, max_units, priority_bucket)
+        _listings_base_stmt(q, source, "", property_type, min_units, max_units, priority_bucket, cities=cities)
     )).scalars())
     new_listings, promoted, archived = _split_listings(all_listings)
     total = int((await session.execute(select(func.count()).select_from(ScrapedListing))).scalar_one())
@@ -3035,6 +3121,7 @@ async def listings_page(
     realie_call_limit = realie_usage.call_limit if realie_usage else 25
     realie_locked = realie_usage.is_locked if realie_usage else False
 
+    jurisdictions = await _get_jurisdictions(session)
     return templates.TemplateResponse(request, "listings.html", {
         "new_listings": new_listings,
         "promoted_listings": promoted,
@@ -3044,6 +3131,8 @@ async def listings_page(
         "property_type": property_type, "min_units": min_units, "max_units": max_units,
         "priority_bucket": priority_bucket,
         "property_types": property_types,
+        "jurisdictions": jurisdictions,
+        "selected_jurisdictions": jurisdiction,
         "realie_calls_used": realie_calls_used,
         "realie_call_limit": realie_call_limit,
         "realie_locked": realie_locked,
@@ -3060,9 +3149,11 @@ async def listings_rows(
     min_units: str = Query(default=""),
     max_units: str = Query(default=""),
     priority_bucket: str = Query(default=""),
+    jurisdiction: list[str] = Query(default=[]),
 ) -> HTMLResponse:
+    cities = jurisdiction if jurisdiction else None
     all_listings = list((await session.execute(
-        _listings_base_stmt(q, source, "", property_type, min_units, max_units, priority_bucket)
+        _listings_base_stmt(q, source, "", property_type, min_units, max_units, priority_bucket, cities=cities)
     )).scalars())
     new_listings, promoted, archived = _split_listings(all_listings)
     return templates.TemplateResponse(request, "partials/listings_rows.html", {
@@ -3071,6 +3162,42 @@ async def listings_rows(
         "archived_listings": archived,
         "oob": True,
     })
+
+
+@router.get("/ui/listings/export.csv")
+async def listings_export_csv(
+    session: DBSession,
+    q: str = Query(default=""),
+    source: str = Query(default=""),
+    property_type: str = Query(default=""),
+    min_units: str = Query(default=""),
+    max_units: str = Query(default=""),
+    priority_bucket: str = Query(default=""),
+    jurisdiction: list[str] = Query(default=[]),
+) -> StreamingResponse:
+    """Export filtered listings as CSV (address, units, asking price, city, county, property type)."""
+    cities = jurisdiction if jurisdiction else None
+    all_listings = list((await session.execute(
+        _listings_base_stmt(q, source, "", property_type, min_units, max_units, priority_bucket, cities=cities)
+    )).scalars())
+
+    import csv as _csv
+
+    buf = io.StringIO()
+    writer = _csv.writer(buf)
+    writer.writerow(["Address", "City", "County", "Units", "Asking Price", "Property Type", "Cap Rate", "Year Built", "Source"])
+    for l in all_listings:
+        addr = l.address_normalized or l.address_raw or "Undisclosed"
+        price = float(l.asking_price) if l.asking_price else ""
+        cap = f"{float(l.cap_rate):.2f}%" if l.cap_rate else ""
+        writer.writerow([addr, l.city or "", l.county or "", l.units or "", price, l.property_type or "", cap, l.year_built or "", l.source or ""])
+
+    buf.seek(0)
+    return StreamingResponse(
+        iter([buf.getvalue()]),
+        media_type="text/csv",
+        headers={"Content-Disposition": "attachment; filename=listings_export.csv"},
+    )
 
 
 @router.get("/ui/listings/promoted/rows", response_class=HTMLResponse)
