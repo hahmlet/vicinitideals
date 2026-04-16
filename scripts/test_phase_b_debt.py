@@ -365,9 +365,9 @@ TEST_CASES = [
     {
         "name":       "Phase B Test 2 — Construction + Perm (12mo, True IO)",
         "deal_type":  "acquisition_major_reno",
-        "milestones": ["close", "pre_construction", "construction", "operation_stabilized", "divestment"],
+        "milestones": ["close", "pre_development", "construction", "operation_stabilized", "divestment"],
         "phase_durations": {
-            "pre_construction":     90,    # 3 months entitlement
+            "pre_development":      90,    # 3 months entitlement (pre_development milestone → pre_construction phase)
             "construction":         365,   # 12 months construction
             "operation_stabilized": 1095,  # 3 years stabilized hold
         },
@@ -383,16 +383,16 @@ TEST_CASES = [
         "use_lines": [
             {"label": "Purchase Price",    "milestone_key": "close",          "amount": "800000",  "timing_type": "first_day"},
             {"label": "Hard Construction", "milestone_key": "construction",   "amount": "600000",  "timing_type": "first_day"},
-            {"label": "Soft Costs",        "milestone_key": "pre_construction","amount": "80000",   "timing_type": "first_day"},
+            {"label": "Soft Costs",        "milestone_key": "pre_development","amount": "80000",   "timing_type": "first_day"},
             {"label": "Closing Costs",     "milestone_key": "close",          "amount": "16000",   "timing_type": "first_day"},
         ],
     },
     {
         "name":       "Phase B Test 3 — Pre-Dev + Construction-to-Perm (18mo, io_then_pi)",
         "deal_type":  "new_construction",
-        "milestones": ["close", "pre_construction", "construction", "operation_lease_up", "operation_stabilized", "divestment"],
+        "milestones": ["close", "pre_development", "construction", "operation_lease_up", "operation_stabilized", "divestment"],
         "phase_durations": {
-            "pre_construction":     180,   # 6 months entitlement
+            "pre_development":      180,   # 6 months entitlement
             "construction":         540,   # 18 months new construction
             "operation_lease_up":   270,   # 9 months lease-up (exercises 1/3 phantom income)
             "operation_stabilized": 1825,  # 5 years stabilized hold
@@ -408,7 +408,7 @@ TEST_CASES = [
         },
         "use_lines": [
             {"label": "Land",                "milestone_key": "close",          "amount": "500000",  "timing_type": "first_day"},
-            {"label": "Pre-Dev Costs",       "milestone_key": "pre_construction","amount": "75000",   "timing_type": "first_day"},
+            {"label": "Pre-Dev Costs",       "milestone_key": "pre_development","amount": "75000",   "timing_type": "first_day"},
             {"label": "Hard Construction",   "milestone_key": "construction",   "amount": "1200000", "timing_type": "first_day"},
             {"label": "Soft Costs",          "milestone_key": "construction",   "amount": "120000",  "timing_type": "first_day"},
         ],
@@ -477,9 +477,9 @@ TEST_CASES = [
         # IR amount = P − $600k ≈ $23,646
         "name":       "Phase B Test 6 — Construction+Perm (Interest Reserve, 12mo)",
         "deal_type":  "acquisition_major_reno",
-        "milestones": ["close", "pre_construction", "construction", "operation_stabilized", "divestment"],
+        "milestones": ["close", "pre_development", "construction", "operation_stabilized", "divestment"],
         "phase_durations": {
-            "pre_construction":     60,
+            "pre_development":      60,
             "construction":         365,   # 12 months
             "operation_stabilized": 1095,
         },
@@ -516,9 +516,9 @@ TEST_CASES = [
         # CI uses the full-balance factor while IR uses (N+1)/(2N) ≈ 54%.
         "name":       "Phase B Test 7 — Construction+Perm (Capitalized Interest, 12mo)",
         "deal_type":  "acquisition_major_reno",
-        "milestones": ["close", "pre_construction", "construction", "operation_stabilized", "divestment"],
+        "milestones": ["close", "pre_development", "construction", "operation_stabilized", "divestment"],
         "phase_durations": {
-            "pre_construction":     60,
+            "pre_development":      60,
             "construction":         365,
             "operation_stabilized": 1095,
         },

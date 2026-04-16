@@ -5349,18 +5349,32 @@ async def timeline_wizard_submit(
     await session.flush()
 
     has_divestment = "divestment" in selected_types
-
-    # Create anchor milestone with date; all others with no date (to be configured in builder)
     valid_types = {mt.value for mt in MilestoneType}
+
+    # Filter + de-dupe while preserving submitted order (the canonical CRE
+    # timeline order the user picked in the UI).  Unknown types are skipped.
+    ordered_types: list[str] = []
+    seen: set[str] = set()
     for mt_str in selected_types:
-        if mt_str not in valid_types:
-            continue
+        if mt_str in valid_types and mt_str not in seen:
+            ordered_types.append(mt_str)
+            seen.add(mt_str)
+
+    # Two-pass creation so we can build a trigger chain.
+    # Pass 1: instantiate every milestone with its duration + target_date
+    # on the anchor.  Pass 2: assign trigger_milestone_id so each non-anchor
+    # milestone starts at the end of the previous one in submitted order.
+    # Without the trigger chain, computed_start() returns None for non-
+    # anchor milestones, _milestone_dates_from_orm skips them, and the
+    # cashflow engine falls back to the legacy OperationalInputs scalar
+    # fields (which are NULL on wizard-created deals) → every phase
+    # defaults to 1 month and the carry-type math collapses.
+    created: list[Milestone] = []
+    for seq, mt_str in enumerate(ordered_types):
         mt = MilestoneType(mt_str)
         is_anchor = mt == anchor_mt
-        # Per-milestone duration override: clients (tests / power-user wizards)
-        # can supply ``duration_<type>=<days>`` form fields to set durations
-        # upfront instead of having to create-then-edit each milestone.  Any
-        # field not supplied falls through to the legacy default below.
+
+        # Per-milestone duration override via ``duration_{type}=N`` form field.
         override_raw = form.get(f"duration_{mt_str}")
         if override_raw is not None and str(override_raw).strip() != "":
             try:
@@ -5372,13 +5386,32 @@ async def timeline_wizard_submit(
             dur = _STABILIZED_AUTO_DAYS
         else:
             dur = anchor_duration if is_anchor else 0
-        session.add(Milestone(
+
+        row = Milestone(
             project_id=project_id,
             milestone_type=mt,
             target_date=anchor_date if is_anchor else None,
             duration_days=dur,
-            sequence_order=0,
-        ))
+            sequence_order=seq,
+        )
+        session.add(row)
+        created.append(row)
+
+    # Flush so every Milestone gets a primary key before we wire trigger refs.
+    await session.flush()
+
+    # Pass 2: build the trigger chain in submitted order.  Each non-anchor
+    # milestone triggers off the previous one with offset=0 so its start date
+    # equals the prior milestone's end date (prev.start + prev.duration_days).
+    prev: Milestone | None = None
+    for row in created:
+        if row.milestone_type == anchor_mt:
+            prev = row
+            continue
+        if prev is not None:
+            row.trigger_milestone_id = prev.id
+            row.trigger_offset_days = 0
+        prev = row
 
     await session.commit()
     return RedirectResponse(url=f"/models/{proj.scenario_id}/builder?project={project_id}&module=timeline", status_code=303)
