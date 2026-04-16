@@ -216,6 +216,9 @@ class OperationalInputsBase(BaseModel):
     # {funder_type: {rate_pct, amort_years, loan_type, sizing_approach, ltv_pct, ...}}
     debt_terms: dict[str, dict] | None = None
 
+    # Asset management fee as % of (NOI - debt service), deducted pre-waterfall
+    asset_mgmt_fee_pct: Decimal | None = None
+
     # ── NOI mode inputs (used when Scenario.income_mode == 'noi') ───────
     noi_stabilized_input: Decimal | None = None
     noi_escalation_rate_pct: Decimal = Decimal("3")
@@ -268,6 +271,9 @@ class IncomeStreamBase(BaseModel):
     amount_per_unit_monthly: Decimal | None = None
     amount_fixed_monthly: Decimal | None = None
     stabilized_occupancy_pct: Decimal = Decimal("95")
+    bad_debt_pct: Decimal = Decimal("0")
+    concessions_pct: Decimal = Decimal("0")
+    renovation_absorption_rate: Decimal | None = None
     escalation_rate_pct_annual: Decimal = Decimal("0")
     active_in_phases: list[str] = []
     notes: str | None = None

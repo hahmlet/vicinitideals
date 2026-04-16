@@ -313,7 +313,7 @@ class OperationalInputs(Base):
     # Per-debt milestone assignments and retirement chain.
     # {funder_type: {"active_from": str, "active_to": str, "retired_by": str|null}}
     debt_milestone_config: Mapped[dict | None] = mapped_column(JSON, nullable=True)
-    # "gap_fill" | "dscr_capped"
+    # "gap_fill" | "dscr_capped" | "dual_constraint"
     debt_sizing_mode: Mapped[str | None] = mapped_column(String(20), nullable=True)
     dscr_minimum: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=Decimal("1.15"))
     # % of TPC to maintain as minimum balance during construction (only when construction debt)
@@ -324,6 +324,9 @@ class OperationalInputs(Base):
     # New structure: {funder_type: {rate_pct, amort_years, loan_type, sizing_approach, ltv_pct}}
     # Legacy flat keys (perm_rate_pct, perm_amort_years, construction_rate_pct) still read for old deals.
     debt_terms: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+
+    # Asset management fee as % of (NOI - debt service), deducted pre-waterfall
+    asset_mgmt_fee_pct: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
 
     # ── NOI mode inputs (only used when DealModel.income_mode == 'noi') ──────
     # Annual stabilized NOI entered/pre-filled from listing; NULL = not yet set
@@ -384,6 +387,11 @@ class IncomeStream(Base):
     amount_per_unit_monthly: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
     amount_fixed_monthly: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
     stabilized_occupancy_pct: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=95)
+    bad_debt_pct: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=0)
+    concessions_pct: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=0)
+    # Fraction of renovation premium absorbed per month during construction+lease-up
+    # (0 = full premium from day one; 1.0 = linear ramp over reno+lease-up timeline)
+    renovation_absorption_rate: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
     escalation_rate_pct_annual: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=0)
     active_in_phases: Mapped[list[str]] = mapped_column(
         ARRAY(String).with_variant(JSON(), "sqlite"),

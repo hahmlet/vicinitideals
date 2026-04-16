@@ -66,6 +66,10 @@ class CapitalSourceSchema(BaseModel):
     ltv_pct: float | None = None
     sizing_approach: str | None = None
     fixed_amount: float | None = None
+    # Refi: cap rate override for property valuation at refi (defaults to going-in cap)
+    refi_cap_rate_pct: float | None = None
+    # Prepay penalty as % of outstanding balloon balance at payoff
+    prepay_penalty_pct: float | None = None
 
 
 class CapitalCarrySchema(BaseModel):

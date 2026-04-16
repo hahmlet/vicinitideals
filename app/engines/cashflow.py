@@ -145,6 +145,62 @@ async def compute_cash_flows(
         if amt:
             total_sources += Decimal(str(amt))
 
+    # ── Refi net proceeds computation ────────────────────────────────────────
+    # When a perm module takes out a bridge (construction_retirement tagged),
+    # compute net refi proceeds: perm_amount − bridge_balloon − prepay − financing_costs.
+    # Positive surplus = cash to equity; negative = equity call needed.
+    # Injected as a capital event line item at the first period of the perm's active phase.
+    _refi_event: dict[str, Any] | None = None
+    for cm in capital_modules:
+        src = cm.source or {}
+        if not src.get("construction_retirement"):
+            continue
+        perm_amount = _to_decimal(src.get("amount"))
+        retirement_amount = _to_decimal(src.get("construction_retirement"))
+        # Find the bridge module to compute balloon balance
+        bridge = next(
+            (m for m in capital_modules if (m.source or {}).get("is_bridge")),
+            None,
+        )
+        bridge_balloon = retirement_amount  # default: full payoff
+        prepay_penalty = ZERO
+        if bridge is not None:
+            b_src = bridge.source or {}
+            b_carry = bridge.carry or {}
+            b_rate = b_src.get("interest_rate_pct") or b_carry.get("io_rate_pct")
+            b_amort = int(b_src.get("amort_term_years") or 30)
+            # Count months the bridge was active (pre-op phases)
+            b_months = sum(
+                p.months for p in phases
+                if p.period_type in _CONSTRUCTION_PERIOD_TYPES
+            )
+            b_io_months = int((b_carry.get("io_period_months") or 0))
+            bridge_balloon = _balloon_balance(
+                retirement_amount, b_rate, b_amort, b_months, io_months=b_io_months,
+            )
+            # Prepay penalty on bridge
+            ppct = _to_decimal(b_src.get("prepay_penalty_pct"))
+            if ppct > ZERO:
+                prepay_penalty = _q(bridge_balloon * ppct / HUNDRED)
+        # Financing costs for the perm loan (flat from closing cost data)
+        perm_financing_costs = ZERO
+        perm_ft = str(getattr(cm, "funder_type", "") or "").replace("FunderType.", "")
+        for cc in _DEFAULT_LOAN_COSTS.get(perm_ft, []):
+            if "pct_of_principal" in cc:
+                perm_financing_costs += _q(perm_amount * Decimal(str(cc["pct_of_principal"])) / HUNDRED)
+            else:
+                perm_financing_costs += Decimal(str(cc["flat"]))
+        net_refi = _q(perm_amount - bridge_balloon - prepay_penalty - perm_financing_costs)
+        _refi_event = {
+            "perm_amount": perm_amount,
+            "bridge_balloon": bridge_balloon,
+            "prepay_penalty": prepay_penalty,
+            "financing_costs": perm_financing_costs,
+            "net_proceeds": net_refi,
+            "perm_active_phase_start": str(getattr(cm, "active_phase_start", "") or ""),
+        }
+        break  # only one perm takeout per deal
+
     await _purge_existing_outputs(session, deal_uuid)
     cash_flow_rows: list[CashFlow] = []
     line_item_rows: list[CashFlowLineItem] = []
@@ -155,6 +211,7 @@ async def compute_cash_flows(
     stabilized_noi_monthly: Decimal | None = None
     period = 0
     _operating_reserve_seeded = False
+    _refi_injected = False
 
     # Resolve operating reserve amount once — used to reset capital balance at
     # start of first operational phase so the invariant holds:
@@ -184,6 +241,100 @@ async def compute_cash_flows(
 
             if phase.period_type == PeriodType.stabilized and stabilized_noi_monthly is None:
                 stabilized_noi_monthly = period_result["noi"]
+
+            # ── Inject refi net proceeds at the first month of perm's active phase ─
+            if _refi_event and not _refi_injected and month_index == 0:
+                _refi_phase_key = _refi_event["perm_active_phase_start"]
+                if phase.period_type.value == _refi_phase_key or (
+                    _refi_phase_key in ("operation_stabilized", "stabilized")
+                    and phase.period_type == PeriodType.stabilized
+                ) or (
+                    _refi_phase_key in ("operation_lease_up", "lease_up")
+                    and phase.period_type == PeriodType.lease_up
+                ):
+                    _net = _refi_event["net_proceeds"]
+                    _refi_items = [
+                        _expense_line_item(
+                            deal_uuid, period,
+                            LineItemCategory.capital_event,
+                            "Refi — Bridge Payoff",
+                            _refi_event["bridge_balloon"],
+                            {"phase": phase.period_type.value, "direction": "outflow",
+                             "detail": "balloon_balance"},
+                        ),
+                    ]
+                    if _refi_event["prepay_penalty"] > ZERO:
+                        _refi_items.append(_expense_line_item(
+                            deal_uuid, period,
+                            LineItemCategory.capital_event,
+                            "Refi — Prepay Penalty",
+                            _refi_event["prepay_penalty"],
+                            {"phase": phase.period_type.value, "direction": "outflow"},
+                        ))
+                    if _refi_event["financing_costs"] > ZERO:
+                        _refi_items.append(_expense_line_item(
+                            deal_uuid, period,
+                            LineItemCategory.capital_event,
+                            "Refi — Financing Costs",
+                            _refi_event["financing_costs"],
+                            {"phase": phase.period_type.value, "direction": "outflow"},
+                        ))
+                    if _net > ZERO:
+                        _refi_items.append(_expense_line_item(
+                            deal_uuid, period,
+                            LineItemCategory.capital_event,
+                            "Refi — Net Proceeds to Equity",
+                            _net,
+                            {"phase": phase.period_type.value, "direction": "inflow",
+                             "detail": "net_refi_proceeds"},
+                        ))
+                    elif _net < ZERO:
+                        _refi_items.append(_expense_line_item(
+                            deal_uuid, period,
+                            LineItemCategory.capital_event,
+                            "Refi — Equity Call (Shortfall)",
+                            abs(_net),
+                            {"phase": phase.period_type.value, "direction": "outflow",
+                             "detail": "refi_shortfall"},
+                        ))
+                    period_result["line_items"].extend(_refi_items)
+                    # Adjust net cash flow for the refi event
+                    period_result["net_cash_flow"] = _q(
+                        period_result["net_cash_flow"] + _net
+                    )
+                    _refi_injected = True
+
+            # ── Inject prepay penalties at exit ───────────��────────────────
+            if phase.period_type == PeriodType.exit and month_index == 0:
+                for _pp_cm in capital_modules:
+                    _pp_src = _pp_cm.source or {}
+                    _pp_pct = _to_decimal(_pp_src.get("prepay_penalty_pct"))
+                    if _pp_pct <= ZERO or _pp_src.get("is_bridge"):
+                        continue
+                    _pp_amt = _to_decimal(_pp_src.get("amount"))
+                    if _pp_amt <= ZERO:
+                        continue
+                    _pp_carry = _pp_cm.carry or {}
+                    _pp_rate = _pp_src.get("interest_rate_pct") or _pp_carry.get("io_rate_pct")
+                    _pp_amort = int(_pp_src.get("amort_term_years") or 30)
+                    _pp_io = int((_pp_carry.get("io_period_months") or 0))
+                    # months active = total hold period
+                    _pp_months = sum(p.months for p in phases if p.period_type != PeriodType.exit)
+                    _pp_bal = _balloon_balance(_pp_amt, _pp_rate, _pp_amort, _pp_months, io_months=_pp_io)
+                    _pp_cost = _q(_pp_bal * _pp_pct / HUNDRED)
+                    if _pp_cost > ZERO:
+                        period_result["line_items"].append(_expense_line_item(
+                            deal_uuid, period,
+                            LineItemCategory.capital_event,
+                            f"Prepay Penalty — {getattr(_pp_cm, 'label', 'Debt')}",
+                            _pp_cost,
+                            {"phase": "exit", "direction": "outflow",
+                             "prepay_penalty_pct": float(_pp_pct),
+                             "balloon_balance": float(_pp_bal)},
+                        ))
+                        period_result["net_cash_flow"] = _q(
+                            period_result["net_cash_flow"] - _pp_cost
+                        )
 
             # Cumulative cash balance:
             #   Pre-stabilized (construction, lease-up) + exit: accumulate NCF fully.
@@ -681,7 +832,9 @@ def _estimate_stabilized_noi_monthly(
             continue
         base = _stream_base_amount(stream)
         occupancy = _percent(stream.stabilized_occupancy_pct, default=Decimal("95"))
-        gross_revenue += _q(base * occupancy)
+        bad_debt_pct = _percent(getattr(stream, "bad_debt_pct", None))
+        concessions_pct = _percent(getattr(stream, "concessions_pct", None))
+        gross_revenue += _q(base * occupancy * (ONE - bad_debt_pct - concessions_pct))
 
     operating_expenses = ZERO
     for line in expense_lines:
@@ -1233,6 +1386,51 @@ async def _auto_size_debt_modules(
             module.source = src  # keep in-memory view consistent
             continue
 
+        if debt_sizing_mode == "dual_constraint":
+            # ── MIN(LTV, DSCR) dual-constraint sizing ─────────────────────
+            # Industry-standard: lender computes both LTV-based and DSCR-based
+            # maximums and funds the smaller.  Property value for LTV uses the
+            # engine's projected stabilized NOI / going-in cap rate (or an
+            # optional refi_cap_rate_pct override on the source).
+            #
+            #   P_ltv  = (NOI_annual / cap_rate) × LTV%
+            #   P_dscr = PV(rate/12, amort_months, -NOI_annual / 12 / DSCR_min)
+            #   P      = MIN(P_ltv, P_dscr, P_gapfill)
+            #
+            # P_gapfill (already computed above) acts as a third ceiling: no
+            # point funding more than the project actually needs.
+            p_gapfill = principal  # from gap-fill solve above
+            ltv = _percent(Decimal(str(src.get("ltv_pct") or 65)))
+            cap_for_ltv = _percent(
+                Decimal(str(src.get("refi_cap_rate_pct") or inputs.exit_cap_rate_pct or 0))
+            )
+            p_ltv = Decimal("999999999999")
+            if noi_annual > ZERO and cap_for_ltv > ZERO and ltv > ZERO:
+                property_value = _q(noi_annual / cap_for_ltv)
+                p_ltv = _q(property_value * ltv)
+
+            p_dscr = Decimal("999999999999")
+            if rate_pct and noi_annual > ZERO and dscr_min > ZERO:
+                target_monthly_ds = _q(noi_annual / dscr_min / Decimal("12"))
+                p_dscr = _pv_from_pmt(target_monthly_ds, rate_pct, amort_years)
+
+            principal = min(p_gapfill, p_ltv, p_dscr)
+            if principal < ZERO:
+                principal = ZERO
+            # Tag which constraint bound for transparency
+            if principal == p_ltv:
+                src["binding_constraint"] = "ltv"
+            elif principal == p_dscr:
+                src["binding_constraint"] = "dscr"
+            else:
+                src["binding_constraint"] = "gap_fill"
+            src["amount"] = str(_q(principal))
+            await session.execute(
+                sa_update(CapitalModule).where(CapitalModule.id == module.id).values(source=src)
+            )
+            module.source = src
+            continue
+
         # gap_fill — principal already computed by _solve_principal_with_reserve above
         if principal < ZERO:
             principal = ZERO
@@ -1542,6 +1740,44 @@ def _monthly_io(principal: Decimal, rate_pct: float | None) -> Decimal:
     return _q(principal * Decimal(str(rate_pct)) / HUNDRED / Decimal("12"))
 
 
+def _balloon_balance(
+    principal: Decimal,
+    rate_pct: float | None,
+    amort_years: int,
+    months_elapsed: int,
+    io_months: int = 0,
+) -> Decimal:
+    """Remaining loan balance after *months_elapsed* of payments.
+
+    Handles IO-then-amortizing: the first *io_months* are interest-only
+    (balance stays at principal), then amortization begins.  Uses the
+    standard FV-of-annuity formula:
+
+        balance = principal × (1+r)^n_amort − pmt × [(1+r)^n_amort − 1] / r
+
+    where n_amort = months_elapsed − io_months (clamped ≥ 0).
+    Returns the original principal if no rate or no amortization.
+    """
+    if principal <= ZERO:
+        return ZERO
+    if not rate_pct or amort_years <= 0:
+        return principal  # no amortization → full balance outstanding
+    monthly_rate = Decimal(str(rate_pct)) / HUNDRED / Decimal("12")
+    if monthly_rate == ZERO:
+        # Zero-rate amortization: straight-line paydown
+        total_months = amort_years * 12
+        amort_months_paid = max(0, months_elapsed - io_months)
+        remaining = principal - _q(principal * Decimal(amort_months_paid) / Decimal(total_months))
+        return _q(max(remaining, ZERO))
+    n_amort = max(0, months_elapsed - io_months)
+    if n_amort == 0:
+        return principal  # still in IO period
+    pmt = _monthly_pmt(principal, rate_pct, amort_years)
+    factor = (ONE + monthly_rate) ** n_amort
+    balance = _q(principal * factor - pmt * (factor - ONE) / monthly_rate)
+    return _q(max(balance, ZERO))
+
+
 def _sum_debt_service(modules: list, is_construction: bool) -> Decimal:
     """Compute total monthly debt service for construction or operation phase."""
     total = ZERO
@@ -1648,14 +1884,41 @@ def _compute_period(
             active = _is_stream_active(stream, phase.period_type)
             if active:
                 escalated_amount = _q(base_amount * escalation_factor)
+                # Renovation absorption: ramp renovation premium from 0→100%
+                # over the combined renovation + lease-up timeline.
+                _reno_abs = _to_decimal(getattr(stream, "renovation_absorption_rate", None))
+                if _reno_abs > ZERO and phase.period_type in {
+                    PeriodType.minor_renovation, PeriodType.major_renovation,
+                    PeriodType.construction, PeriodType.conversion,
+                    PeriodType.lease_up,
+                }:
+                    _reno_months = int(inputs.renovation_months or inputs.construction_months or 0)
+                    _lu_months = int(inputs.lease_up_months or 0)
+                    _total_abs = _reno_months + _lu_months
+                    if _total_abs > 0:
+                        # period is 0-indexed global month; compute months into reno+leaseup
+                        # by using month_index within this phase + offset from prior reno phases
+                        _abs_frac = _q(Decimal(min(period + 1, _total_abs)) / Decimal(_total_abs))
+                        _abs_frac = _clamp(_abs_frac, ZERO, ONE)
+                        escalated_amount = _q(escalated_amount * _abs_frac)
                 occupancy_pct = _stream_occupancy_pct(stream, phase, month_index, inputs)
-                net_income = _q(escalated_amount * occupancy_pct)
-                vacancy = _q(escalated_amount - net_income)
+                after_vacancy = _q(escalated_amount * occupancy_pct)
+                vacancy = _q(escalated_amount - after_vacancy)
+                # Bad debt and concessions: separate % deductions from GPR
+                bad_debt_pct = _percent(getattr(stream, "bad_debt_pct", None))
+                concessions_pct = _percent(getattr(stream, "concessions_pct", None))
+                bad_debt = _q(escalated_amount * bad_debt_pct)
+                concessions = _q(escalated_amount * concessions_pct)
+                net_income = _q(after_vacancy - bad_debt - concessions)
             else:
                 escalated_amount = ZERO
                 occupancy_pct = ZERO
                 net_income = ZERO
                 vacancy = ZERO
+                bad_debt = ZERO
+                concessions = ZERO
+                bad_debt_pct = ZERO
+                concessions_pct = ZERO
 
             gross_revenue += escalated_amount
             vacancy_loss += vacancy
@@ -1677,6 +1940,10 @@ def _compute_period(
                             "occupancy_pct": occupancy_pct * HUNDRED,
                             "escalation_factor": escalation_factor,
                             "vacancy_loss": vacancy,
+                            "bad_debt": bad_debt,
+                            "concessions": concessions,
+                            "bad_debt_pct": bad_debt_pct * HUNDRED,
+                            "concessions_pct": concessions_pct * HUNDRED,
                         }
                     ),
                     net_amount=net_income,
@@ -2081,6 +2348,8 @@ def _phase_capital_events(
                 ),
             ]
         )
+        # Note: prepay penalties at exit are injected in the main compute_cash_flows
+        # loop which has access to capital modules — not here.
 
     return items
 

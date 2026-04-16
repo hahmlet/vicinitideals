@@ -398,6 +398,65 @@ Some deals use a different sizing mode: size the loan to the **minimum DSCR** re
 
 This shows the user a **real funding gap** in the S&U table (Uses > Sources) rather than silently levering up past what the lender would actually fund.
 
+### 2.8 Dual-constraint mode (MIN of LTV, DSCR, gap-fill)
+
+Industry-standard loan sizing: the lender computes both LTV-based and DSCR-based maximums and funds the smaller. Selected via `debt_sizing_mode = "dual_constraint"`.
+
+**Logic:**
+1. Compute the gap-fill principal `P_gap` using §2.4 (with closing-cost divisor fold-in).
+2. Compute LTV-based principal:
+   > `property_value = NOI_annual / cap_rate`
+   > `P_ltv = property_value × LTV%`
+
+   The cap rate defaults to the going-in cap (`exit_cap_rate_pct`) but can be overridden via `source.refi_cap_rate_pct` on the CapitalModule.
+3. Compute DSCR-based principal:
+   > `DS_target = NOI_annual / DSCR_min / 12`
+   > `P_dscr = DS_target × PV_annuity_factor`
+4. Final principal: `P = MIN(P_gap, P_ltv, P_dscr)`
+5. The `binding_constraint` is tagged on the source (`"ltv"`, `"dscr"`, or `"gap_fill"`) for UI transparency.
+
+**Why three-way MIN?** `P_gap` acts as a ceiling: no point funding more than the project actually needs. `P_ltv` and `P_dscr` are lender constraints. The binding one determines what the lender will actually write.
+
+### 2.9 Balloon balance tracking
+
+Remaining loan balance at any point in time, handling IO-then-amortizing transitions:
+
+```
+if months_elapsed <= io_months:
+    balance = principal                         # still in IO period
+else:
+    n_amort = months_elapsed − io_months
+    factor = (1 + r)^n_amort
+    balance = principal × factor − pmt × (factor − 1) / r
+```
+
+Where `pmt = _monthly_pmt(principal, rate, amort_years)` and `r = rate / 12`.
+
+Used by: refi proceeds calculation (§2.10), prepay penalty at exit (§6.4).
+
+### 2.10 Cash-out refinance (bridge → perm takeout)
+
+When a perm loan has `construction_retirement` set on its source (indicating it takes out a bridge), the engine computes net refi proceeds at the first period of the perm's `active_phase_start`:
+
+```
+net_refi = perm_amount
+         − bridge_balloon_balance
+         − prepay_penalty
+         − perm_financing_costs
+```
+
+**Components:**
+- `bridge_balloon_balance`: computed via §2.9 at the takeover month
+- `prepay_penalty`: `bridge_balloon × source.prepay_penalty_pct` (see §6.4)
+- `perm_financing_costs`: sum of `_DEFAULT_LOAN_COSTS` for the perm funder type
+
+**Cash flow injection:**
+- Positive `net_refi` → "Refi — Net Proceeds to Equity" (inflow)
+- Negative `net_refi` → "Refi — Equity Call (Shortfall)" (outflow)
+- Bridge payoff, prepay penalty, and financing costs are each separate line items
+
+**Perm sizing at stabilized NOI.** The perm's `dual_constraint` or `dscr_capped` sizing uses the engine's projected stabilized NOI (from income streams with escalation), not the going-in NOI. The cap rate for LTV defaults to the going-in cap but can be overridden via `source.refi_cap_rate_pct`. This is self-consistent: the only "invented" number is the deal's own NOI projection, which flows from the same income/expense assumptions used for every other metric.
+
 ---
 
 ## 3. Reserves
@@ -463,6 +522,9 @@ class IncomeStream:
     amount_per_unit_monthly: Decimal | None
     amount_fixed_monthly: Decimal | None
     stabilized_occupancy_pct: Decimal      # default 95
+    bad_debt_pct: Decimal                  # default 0 — % of GPR lost to bad debt
+    concessions_pct: Decimal               # default 0 — % of GPR lost to concessions
+    renovation_absorption_rate: Decimal | None  # if set, ramps premium 0→100% over reno+lease-up
     escalation_rate_pct_annual: Decimal    # default 0
     active_in_phases: list[str]            # e.g. ["lease_up", "stabilized"]
 ```
@@ -478,11 +540,23 @@ else:
 **Per-period computation:**
 ```
 escalated = base × (1 + escalation_rate)^(period/12)
-net_income = escalated × occupancy_pct_this_phase
-vacancy = escalated − net_income
+
+# Renovation absorption: if renovation_absorption_rate is set, ramp
+# the premium linearly from 0→100% over reno + lease-up months
+if renovation_absorption_rate > 0 and phase is reno/construction/lease-up:
+    absorption = min(period + 1, reno_months + leaseup_months) / (reno_months + leaseup_months)
+    escalated = escalated × absorption
+
+after_vacancy = escalated × occupancy_pct_this_phase
+vacancy = escalated − after_vacancy
+bad_debt = escalated × bad_debt_pct
+concessions = escalated × concessions_pct
+net_income = after_vacancy − bad_debt − concessions
 ```
 
 Summed across all active streams → gross_revenue, vacancy_loss, EGI.
+
+**Bad debt and concessions** are separate percentage deductions from GPR, distinct from vacancy. Default to 0% (backward-compatible). These match the industry-standard CRE pro forma structure where vacancy, bad debt, and concessions are separate line items between GPR and EGI.
 
 **Why `(1 + rate)^(period/12)`?** This is continuous annual escalation — `rate = 3%` compounds monthly at `(1.03)^(1/12) − 1 ≈ 0.247%`. At month 24 (two years in), the factor is `1.03^2 = 1.0609` exactly.
 
@@ -506,7 +580,24 @@ Where `initial_occ` defaults to 50% and `stabilized_occ` defaults to 95% (config
 
 **Renovation phase:** `stabilized_occ × (1 − income_reduction_pct_during_reno)` — user-specified income hit during renovations.
 
-### 4.5 NOI-mode direct input
+### 4.5 Renovation absorption rate (value-add premium phase-in)
+
+When `renovation_absorption_rate` is set on an income stream, the stream's escalated amount is scaled by an absorption fraction that ramps linearly from 0 to 1 over the combined renovation + lease-up timeline:
+
+```
+total_abs_months = renovation_months + lease_up_months
+absorption_frac = min(current_period + 1, total_abs_months) / total_abs_months
+escalated_amount = escalated_amount × absorption_frac
+```
+
+**Why this matters for value-add deals.** In a 200-unit renovation where you're adding a $200/mo premium, not all units come online at once. Without absorption, the pro forma shows full premium from day one — overstating Year 1-2 revenue, which directly affects:
+- Leveraged IRR (very sensitive to early-period cash flows)
+- DSCR during the ramp period (could show false covenant breach)
+- Draw schedule sizing (lower early cash flow = more reserves needed)
+
+**When to use.** Set `renovation_absorption_rate = 1.0` on premium-driven income streams for value-add deals. Leave it `NULL` (default) for acquisition deals where income is already stabilized.
+
+### 4.6 NOI-mode direct input
 
 ```python
 _noi_annual = _to_decimal(inputs.noi_stabilized_input)
@@ -636,9 +727,34 @@ for each period:
 
 **Why not carry forward post-stabilization NCF?** Because positive post-stabilized NCF goes out to investors through the waterfall. If we also added it to the cash balance, we'd be double-counting.
 
+### 6.4 Prepay penalty at exit
+
+At exit (sale), any debt module with `source.prepay_penalty_pct > 0` incurs a prepay penalty computed on the remaining balloon balance:
+
+```
+balloon = _balloon_balance(principal, rate, amort_years, total_hold_months, io_months)
+prepay_cost = balloon × prepay_penalty_pct / 100
+```
+
+This is injected as a capital event line item ("Prepay Penalty — {label}") in the exit period, reducing net cash flow. Bridge modules (`is_bridge = True`) are excluded — their prepay is handled at refi (§2.10).
+
+### 6.5 Refi capital events
+
+When a bridge→perm takeout is detected (§2.10), the following line items are injected at the first month of the perm's active phase:
+
+| Line Item | Direction | Amount |
+|---|---|---|
+| Refi — Bridge Payoff | outflow | bridge balloon balance |
+| Refi — Prepay Penalty | outflow | bridge balloon × prepay_pct (if > 0) |
+| Refi — Financing Costs | outflow | perm closing costs |
+| Refi — Net Proceeds to Equity | inflow | surplus (if positive) |
+| Refi — Equity Call (Shortfall) | outflow | deficit (if negative) |
+
 ---
 
 ## 7. Waterfall & Profit Metrics
+
+**Waterfall style: American.** Distributions are computed period-by-period (cash distributed as earned, not held until exit). This is the industry standard for US multifamily syndications and JV structures.
 
 ### 7.1 Module stack and tiers
 
@@ -651,7 +767,19 @@ for each period:
 - `irr_hurdle_pct`: hurdle rate (for `irr_hurdle_split`)
 - `capital_module_id`: optional link to a specific module
 
-### 7.2 Capital calls (pre-distribution)
+### 7.2 Asset management fee (pre-distribution deduction)
+
+When `OperationalInputs.asset_mgmt_fee_pct` is set (> 0), the AM fee is deducted from positive net cash flow **before** it enters the waterfall tier distribution:
+
+```
+if available_cash > 0 and am_fee_pct > 0:
+    am_fee = available_cash × am_fee_pct / 100
+    available_cash = available_cash − am_fee
+```
+
+**Why pre-distribution?** The AM fee compensates the asset manager (typically the GP/sponsor's management entity) for ongoing oversight. It's an operational cost of the partnership, not a profit split. Deducting it before the waterfall ensures it's senior to all investor distributions — consistent with how AM fees work in real fund structures.
+
+### 7.3 Capital calls (pre-distribution)
 
 When `net_cash_flow < 0` in any period, the waterfall allocates capital calls in stack-position order:
 
@@ -805,6 +933,12 @@ The spread between the two is the "leverage amplification" — positive if lever
 | `stabilized_occupancy_pct` | `95` (default) | IncomeStream | Ending point of lease-up ramp |
 | `expense_growth_rate_pct_annual` | `3` (default) | OperationalInputs | Annual OpEx escalation |
 | `noi_escalation_rate_pct` | `3` (default) | OperationalInputs | NOI-mode escalation |
+| `bad_debt_pct` | `0` (default) | IncomeStream | % of GPR lost to bad debt |
+| `concessions_pct` | `0` (default) | IncomeStream | % of GPR lost to concessions |
+| `renovation_absorption_rate` | `NULL` (default) | IncomeStream | Ramp fraction for reno premium phase-in |
+| `prepay_penalty_pct` | `NULL` (default) | CapitalSourceSchema (JSONB) | % of balloon balance at payoff |
+| `refi_cap_rate_pct` | `NULL` (default) | CapitalSourceSchema (JSONB) | Cap rate override for refi LTV sizing |
+| `asset_mgmt_fee_pct` | `NULL` (default) | OperationalInputs | AM fee deducted pre-waterfall |
 
 ---
 
@@ -830,6 +964,16 @@ The spread between the two is the "leverage amplification" — positive if lever
 
 10. **Always-recompute vs user-override sentinels**. Operating Reserve, Capitalized Interest, Lease-Up Reserve are always recomputed from current debt (pure derivation). Closing costs respect `amount > 0` as a user override (allows real deal terms to override market defaults). This split matches how users actually think about these numbers.
 
+11. **MIN(LTV, DSCR, gap-fill) three-way constraint** (not just MIN(LTV, DSCR)). Gap-fill acts as a ceiling: there's no point borrowing more than the project needs, even if the lender would fund it. This prevents deals from showing negative equity (sources > uses) when LTV/DSCR constraints are loose.
+
+12. **Refi cap rate defaults to going-in cap, not exit cap**. Conservative: assumes no cap rate compression from value-add. The projected NOI at stabilization already reflects vacancy, bad debt, concessions, and lease-up — so the cap rate applied to it is purely about market pricing of the income stream, not operational risk discounting. Override via `refi_cap_rate_pct` for scenarios modeling cap compression.
+
+13. **Bad debt and concessions as separate named fields** (not bundled into vacancy). The math is equivalent (all are % deductions from GPR), but separating them matches the standard CRE pro forma format and enables HelloData/CoStar data feeds that provide these as distinct fields.
+
+14. **American-style waterfall only** (no European toggle). American (period-by-period distribution) is the standard for US multifamily syndications. European (return-all-capital-plus-pref-before-any-promote) can be modeled by arranging `return_of_equity` and `pref_return` tiers in the correct priority order — no separate engine path needed.
+
+15. **Renovation absorption as a per-stream attribute** (not a global deal setting). Different income streams may have different absorption profiles — e.g., residential rent premiums phase in with unit turns, but parking income may stabilize immediately. Per-stream gives the user control without global assumptions.
+
 ---
 
 ## 10. Sources (market data for closing cost defaults)
@@ -846,7 +990,7 @@ The spread between the two is the "leverage amplification" — positive if lever
 
 ---
 
-*Document current as of April 2026. When changing any formula, update the corresponding section and reference the commit hash.*
+*Document current as of April 16, 2026. Last major update: HelloData model parity (§2.8–2.10, §4.5, §6.4–6.5, §7.2 AM fee, constants table). When changing any formula, update the corresponding section and reference the commit hash.*
 
 ---
 

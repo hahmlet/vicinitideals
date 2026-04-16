@@ -81,6 +81,11 @@ async def compute_waterfall(
 ) -> dict[str, Any]:
     """Compute and persist capital stack waterfall results for a deal.
 
+    **American-style waterfall** — preferred return and promote distributions
+    are computed on a period-by-period basis (cash is distributed as earned,
+    not held until exit).  This is the industry standard for US multifamily
+    syndications and JV structures.
+
     Requirements satisfied by this Stage 1B engine:
     - loads previously computed `CashFlow` rows from Stage 1A
     - deserializes `CapitalModule.source` / `.carry` / `.exit_terms`
@@ -88,6 +93,7 @@ async def compute_waterfall(
     - distributes positive periods across ordered `WaterfallTier` rows
     - persists one `WaterfallResult` per period × tier × capital module target
     - returns LP / GP IRR plus equity multiple and year-1 cash-on-cash
+    - deducts asset management fee (% of distributable CF) pre-distribution
 
     Auto-fallback: if no equity CapitalModule exists, a synthetic common_equity
     module is created representing the org as 100% owner ($0 cash-in, residual
@@ -131,6 +137,14 @@ async def compute_waterfall(
 
     total_project_cost = _resolve_total_project_cost(deal_model.operational_outputs, cash_flows)
     module_states = _build_module_states(capital_modules, total_project_cost)
+
+    # Resolve asset management fee % from OperationalInputs (pre-waterfall deduction)
+    _am_fee_pct = ZERO
+    for _proj in (deal_model.projects or []):
+        _oi = getattr(_proj, "operational_inputs", None)
+        if _oi is not None:
+            _am_fee_pct = _to_decimal(getattr(_oi, "asset_mgmt_fee_pct", None))
+            break
     state_by_id = {state.module.id: state for state in module_states}
     equity_states = [state for state in module_states if _is_equity_module(state.module)]
     gp_proxy_state = _resolve_gp_proxy_state(module_states, equity_states)
@@ -157,6 +171,10 @@ async def compute_waterfall(
             available_cash = ZERO
         else:
             available_cash = net_cash
+            # Deduct asset management fee before waterfall distribution
+            if _am_fee_pct > ZERO and available_cash > ZERO:
+                _am_fee = _q(available_cash * _am_fee_pct / HUNDRED)
+                available_cash = _q(available_cash - _am_fee)
 
         _accrue_current_period_obligations(cash_flow.period, phase_name, module_states)
 
@@ -636,6 +654,7 @@ async def _load_deal_context(session: AsyncSession, deal_model_id: UUID) -> Scen
             selectinload(Scenario.waterfall_tiers),
             selectinload(Scenario.cash_flows),
             selectinload(Scenario.operational_outputs),
+            selectinload(Scenario.projects).selectinload(Project.operational_inputs),
         )
         .where(Scenario.id == deal_model_id)
     )
