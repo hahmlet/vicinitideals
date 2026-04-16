@@ -230,6 +230,13 @@ async def _seed_parcels_from_rlis() -> dict[str, int]:
 
                 geometry = feature.get("geometry")
 
+                # Extract first vertex as centroid proxy for spatial queries
+                _lat, _lng = None, None
+                if geometry and geometry.get("type") == "Polygon":
+                    coords = geometry.get("coordinates", [[]])[0]
+                    if coords:
+                        _lng, _lat = coords[0][0], coords[0][1]
+
                 stub = {
                     "id": uuid4(),
                     "apn": apn,
@@ -240,6 +247,8 @@ async def _seed_parcels_from_rlis() -> dict[str, int]:
                     "jurisdiction": _str(props.get("JURIS_CITY", "")).lower() or None,
                     "postal_city": _title(props.get("SITECITY")),
                     "zip_code": _str(props.get("SITEZIP")),
+                    "latitude": _lat,
+                    "longitude": _lng,
                     "geometry": geometry,
                     # Assessed values
                     "assessed_value_land": _numeric(props.get("LANDVAL")),
@@ -287,6 +296,8 @@ async def _bulk_upsert_rlis(session: Any, stubs: list[dict[str, Any]]) -> int:
     """Upsert RLIS stubs — on conflict update assessor + geometry fields, preserve owner/zoning."""
     update_cols = {
         "apn_normalized": pg_insert(Parcel).excluded.apn_normalized,
+        "latitude": pg_insert(Parcel).excluded.latitude,
+        "longitude": pg_insert(Parcel).excluded.longitude,
         "address_raw": pg_insert(Parcel).excluded.address_raw,
         "address_normalized": pg_insert(Parcel).excluded.address_normalized,
         "county": pg_insert(Parcel).excluded.county,
