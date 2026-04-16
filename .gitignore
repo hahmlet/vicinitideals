@@ -30,3 +30,4 @@ tmp/
 
 # Brainstorming session files (visual companion)
 .superpowers/
+.playwright-cli/
