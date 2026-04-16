@@ -17,6 +17,9 @@ details.archive-section[open] > summary .chevron { transform: rotate(90deg); }
   <div style="font-size:15px;font-weight:700">Listings</div>
   <div class="topbar-actions" style="position:relative;display:flex;gap:8px;align-items:center">
 
+    {# ── Map view button ── #}
+    <a id="map-btn" class="btn btn-secondary" href="/tools/listings/map" style="text-decoration:none">Map View</a>
+
     {# ── Realie enrichment button ── #}
     <span id="realie-btn-wrap" style="display:inline-block;position:relative">
       <button id="realie-btn" class="btn btn-secondary"
@@ -539,6 +542,22 @@ function openJson(event, id, title, sub) {
         setTimeout(function() { popup.style.display = 'none'; }, 4000);
       }
     });
+  });
+})();
+
+// ── Map button: forward current filter state as query params ──
+(function() {
+  var mapBtn = document.getElementById('map-btn');
+  if (!mapBtn) return;
+  mapBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    var form = document.getElementById('listing-filters');
+    if (!form) { window.location.href = '/tools/listings/map'; return; }
+    var params = new URLSearchParams(new FormData(form));
+    // Remove empty params
+    for (var [k, v] of [...params.entries()]) { if (!v) params.delete(k); }
+    var qs = params.toString();
+    window.location.href = '/tools/listings/map' + (qs ? '?' + qs : '');
   });
 })();
 

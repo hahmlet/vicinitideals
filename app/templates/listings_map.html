@@ -1,0 +1,360 @@
+{% extends "base.html" %}
+
+{% block title %}Listings Map — Viciniti Deals{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"/>
+<style>
+  .main { display: flex; flex-direction: column; padding: 0; overflow: hidden; }
+
+  #map-wrap { display: flex; flex: 1; min-height: 0; }
+
+  /* ── Sidebar ── */
+  #map-sidebar {
+    width: 280px; flex-shrink: 0;
+    background: #1a1d23; color: #e2e8f0;
+    display: flex; flex-direction: column;
+    padding: 14px; gap: 12px; overflow-y: auto;
+    border-right: 1px solid #2d3748;
+  }
+  #map-sidebar h2 { font-size: 13px; font-weight: 700; color: #fff; letter-spacing: .02em; margin: 0; }
+
+  .m-label { font-size: 11px; color: #94a3b8; margin-bottom: 3px; display: block; }
+
+  .m-select, .m-input {
+    width: 100%; background: #2d3748; border: 1px solid #4a5568;
+    color: #e2e8f0; border-radius: 5px; padding: 7px 9px;
+    font-size: 12px;
+  }
+  .m-select { appearance: none; }
+  .m-select:focus, .m-input:focus { outline: none; border-color: #60a5fa; }
+
+  .m-row { display: flex; gap: 8px; }
+  .m-row > div { flex: 1; }
+
+  .m-stat-row { display: flex; gap: 6px; }
+  .m-stat {
+    flex: 1; background: #2d3748; border-radius: 5px;
+    padding: 7px 8px; text-align: center;
+  }
+  .m-stat .num { font-size: 18px; font-weight: 700; color: #fff; }
+  .m-stat .lbl { font-size: 10px; color: #94a3b8; text-transform: uppercase; letter-spacing: .04em; }
+
+  #apply-btn {
+    background: #2563eb; color: #fff; border: none; border-radius: 5px;
+    padding: 10px; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: background .15s;
+  }
+  #apply-btn:hover { background: #1d4ed8; }
+
+  #back-link {
+    font-size: 11px; color: #60a5fa; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  #back-link:hover { text-decoration: underline; }
+
+  #lmap { flex: 1; position: relative; }
+
+  /* Marker cluster overrides for dark theme */
+  .marker-cluster-small { background-color: rgba(59, 130, 246, .5); }
+  .marker-cluster-small div { background-color: rgba(59, 130, 246, .8); color: #fff; }
+  .marker-cluster-medium { background-color: rgba(245, 158, 11, .5); }
+  .marker-cluster-medium div { background-color: rgba(245, 158, 11, .8); color: #fff; }
+  .marker-cluster-large { background-color: rgba(239, 68, 68, .5); }
+  .marker-cluster-large div { background-color: rgba(239, 68, 68, .8); color: #fff; }
+
+  /* Popup styling */
+  .listing-popup { font-size: 12px; line-height: 1.5; min-width: 200px; }
+  .listing-popup .popup-addr { font-weight: 700; font-size: 13px; margin-bottom: 4px; }
+  .listing-popup .popup-row { display: flex; justify-content: space-between; gap: 12px; }
+  .listing-popup .popup-label { color: #64748b; }
+  .listing-popup .popup-val { font-weight: 600; }
+  .listing-popup .popup-link { display: inline-block; margin-top: 6px; color: #2563eb; font-size: 11px; cursor: pointer; }
+
+  /* Priority bucket dot colors */
+  .bucket-dot {
+    display: inline-block; width: 8px; height: 8px;
+    border-radius: 50%; margin-right: 4px; vertical-align: middle;
+  }
+  .bucket-prime { background: #22c55e; }
+  .bucket-target { background: #3b82f6; }
+  .bucket-contextual { background: #a855f7; }
+  .bucket-out_of_market { background: #f59e0b; }
+  .bucket-ineligible { background: #ef4444; }
+  .bucket-unclassified { background: #6b7280; }
+
+  #loading-overlay {
+    position: absolute; inset: 0; z-index: 500;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(15,20,30,.5); pointer-events: none;
+  }
+  #loading-overlay span {
+    background: #1a1d23; border: 1px solid #4a5568; border-radius: 8px;
+    padding: 14px 24px; font-size: 13px; color: #94a3b8;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="map-wrap">
+  <div id="map-sidebar">
+    <a id="back-link" href="/listings">&larr; Back to Listings</a>
+    <h2>Listings Map</h2>
+
+    <div class="m-stat-row">
+      <div class="m-stat"><div class="num" id="stat-visible">-</div><div class="lbl">Visible</div></div>
+      <div class="m-stat"><div class="num" id="stat-total">-</div><div class="lbl">Total</div></div>
+    </div>
+
+    <div>
+      <span class="m-label">Search</span>
+      <input class="m-input" type="search" id="filter-q" placeholder="Address...">
+    </div>
+
+    <div>
+      <span class="m-label">Source</span>
+      <select class="m-select" id="filter-source">
+        <option value="">All Sources</option>
+        {% for s in sources %}
+        <option value="{{ s }}">{{ s | title }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div>
+      <span class="m-label">Property Type</span>
+      <select class="m-select" id="filter-property-type">
+        <option value="">All Types</option>
+        {% for pt in property_types %}
+        {% if pt and 'land' not in pt.lower() %}
+        <option value="{{ pt }}">{{ pt }}</option>
+        {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="m-row">
+      <div>
+        <span class="m-label">Min Units</span>
+        <input class="m-input" type="number" id="filter-min-units" min="0" placeholder="0">
+      </div>
+      <div>
+        <span class="m-label">Max Units</span>
+        <input class="m-input" type="number" id="filter-max-units" min="0" placeholder="Any">
+      </div>
+    </div>
+
+    <div>
+      <span class="m-label">Priority Bucket</span>
+      <select class="m-select" id="filter-bucket">
+        <option value="">All Buckets</option>
+        <option value="prime">Prime</option>
+        <option value="target">Target</option>
+        <option value="contextual">Contextual</option>
+        <option value="out_of_market">Out of Market</option>
+        <option value="ineligible">Ineligible</option>
+        <option value="unclassified">Unclassified</option>
+      </select>
+    </div>
+
+    <button id="apply-btn">Apply Filters</button>
+
+    <div style="font-size:10px;color:#4b5563;line-height:1.5;border-top:1px solid #2d3748;padding-top:8px">
+      Land-only listings are excluded.<br>
+      Click a marker for details.<br>
+      Clusters expand on click/zoom.
+    </div>
+  </div>
+
+  <div id="lmap">
+    <div id="loading-overlay"><span>Loading listings...</span></div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<script>
+// ---------------------------------------------------------------------------
+// Map init — Portland metro default
+// ---------------------------------------------------------------------------
+const map = L.map('lmap', { zoomControl: true }).setView([45.48, -122.52], 11);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap contributors', maxZoom: 19,
+}).addTo(map);
+
+const clusterGroup = L.markerClusterGroup({
+  maxClusterRadius: 50,
+  spiderfyOnMaxZoom: true,
+  showCoverageOnHover: false,
+  chunkedLoading: true,
+});
+map.addLayer(clusterGroup);
+
+// ---------------------------------------------------------------------------
+// Bucket colors for circle markers
+// ---------------------------------------------------------------------------
+const BUCKET_COLORS = {
+  prime: '#22c55e',
+  target: '#3b82f6',
+  contextual: '#a855f7',
+  out_of_market: '#f59e0b',
+  ineligible: '#ef4444',
+  unclassified: '#6b7280',
+};
+
+function markerColor(bucket) {
+  return BUCKET_COLORS[bucket] || '#3b82f6';
+}
+
+// ---------------------------------------------------------------------------
+// Currency / number formatting
+// ---------------------------------------------------------------------------
+function fmtCurrency(n) {
+  if (n == null) return '-';
+  if (n >= 1e6) return '$' + (n / 1e6).toFixed(1) + 'M';
+  if (n >= 1e3) return '$' + (n / 1e3).toFixed(0) + 'K';
+  return '$' + n.toLocaleString();
+}
+
+function fmtPct(n) {
+  if (n == null) return '-';
+  return n.toFixed(2) + '%';
+}
+
+function fmtNum(n) {
+  if (n == null) return '-';
+  return n.toLocaleString();
+}
+
+// ---------------------------------------------------------------------------
+// Popup content
+// ---------------------------------------------------------------------------
+function popupHTML(p) {
+  const bucket = p.priority_bucket || 'unclassified';
+  const bucketLabel = bucket.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  return `<div class="listing-popup">
+    <div class="popup-addr">${p.address}</div>
+    <div class="popup-row"><span class="popup-label">Type</span><span class="popup-val">${p.property_type || '-'}</span></div>
+    <div class="popup-row"><span class="popup-label">Price</span><span class="popup-val">${fmtCurrency(p.asking_price)}</span></div>
+    <div class="popup-row"><span class="popup-label">Units</span><span class="popup-val">${fmtNum(p.units)}</span></div>
+    <div class="popup-row"><span class="popup-label">$/Unit</span><span class="popup-val">${fmtCurrency(p.price_per_unit)}</span></div>
+    <div class="popup-row"><span class="popup-label">Cap Rate</span><span class="popup-val">${fmtPct(p.cap_rate)}</span></div>
+    <div class="popup-row"><span class="popup-label">Year Built</span><span class="popup-val">${p.year_built || '-'}</span></div>
+    <div class="popup-row"><span class="popup-label">SqFt</span><span class="popup-val">${fmtNum(p.building_sqft)}</span></div>
+    <div class="popup-row"><span class="popup-label">Bucket</span><span class="popup-val"><span class="bucket-dot bucket-${bucket}"></span>${bucketLabel}</span></div>
+    <div class="popup-row"><span class="popup-label">Source</span><span class="popup-val">${(p.source || '').replace(/^\w/, c => c.toUpperCase())}</span></div>
+    <a class="popup-link" href="/listings?open=${p.id}">Open in Listings &rarr;</a>
+  </div>`;
+}
+
+// ---------------------------------------------------------------------------
+// Data loading
+// ---------------------------------------------------------------------------
+let _allFeatures = [];
+
+async function loadListings() {
+  const overlay = document.getElementById('loading-overlay');
+  overlay.style.display = 'flex';
+
+  const params = new URLSearchParams();
+  const q = document.getElementById('filter-q').value.trim();
+  const source = document.getElementById('filter-source').value;
+  const pt = document.getElementById('filter-property-type').value;
+  const minU = document.getElementById('filter-min-units').value;
+  const maxU = document.getElementById('filter-max-units').value;
+  const bucket = document.getElementById('filter-bucket').value;
+
+  if (q) params.set('q', q);
+  if (source) params.set('source', source);
+  if (pt) params.set('property_type', pt);
+  if (minU) params.set('min_units', minU);
+  if (maxU) params.set('max_units', maxU);
+  if (bucket) params.set('priority_bucket', bucket);
+
+  let geojson;
+  try {
+    const resp = await fetch('/tools/listings/map.geojson?' + params.toString());
+    geojson = await resp.json();
+  } catch (e) {
+    overlay.querySelector('span').textContent = 'Error loading listings';
+    return;
+  }
+
+  _allFeatures = geojson.features;
+  renderMarkers(_allFeatures);
+
+  document.getElementById('stat-visible').textContent = _allFeatures.length;
+  document.getElementById('stat-total').textContent = geojson.total;
+
+  overlay.style.display = 'none';
+
+  // Fit bounds if we have features
+  if (_allFeatures.length > 0) {
+    const lats = _allFeatures.map(f => f.geometry.coordinates[1]);
+    const lngs = _allFeatures.map(f => f.geometry.coordinates[0]);
+    const bounds = L.latLngBounds(
+      [Math.min(...lats), Math.min(...lngs)],
+      [Math.max(...lats), Math.max(...lngs)]
+    );
+    map.fitBounds(bounds, { padding: [40, 40], maxZoom: 15 });
+  }
+}
+
+function renderMarkers(features) {
+  clusterGroup.clearLayers();
+  const markers = [];
+  for (const f of features) {
+    const [lng, lat] = f.geometry.coordinates;
+    const p = f.properties;
+    const color = markerColor(p.priority_bucket);
+    const marker = L.circleMarker([lat, lng], {
+      radius: 7,
+      fillColor: color,
+      color: '#fff',
+      weight: 1.5,
+      fillOpacity: 0.85,
+    });
+    marker.bindPopup(popupHTML(p), { maxWidth: 280 });
+    marker.bindTooltip(p.address, { direction: 'top', offset: [0, -8] });
+    markers.push(marker);
+  }
+  clusterGroup.addLayers(markers);
+}
+
+// ---------------------------------------------------------------------------
+// Filter controls
+// ---------------------------------------------------------------------------
+document.getElementById('apply-btn').addEventListener('click', loadListings);
+
+// Also apply on Enter in search box
+document.getElementById('filter-q').addEventListener('keydown', e => {
+  if (e.key === 'Enter') { e.preventDefault(); loadListings(); }
+});
+
+// ---------------------------------------------------------------------------
+// Restore filters from URL params (allows linking from listings page)
+// ---------------------------------------------------------------------------
+(function restoreFilters() {
+  const params = new URLSearchParams(window.location.search);
+  const map = {
+    'q': 'filter-q',
+    'source': 'filter-source',
+    'property_type': 'filter-property-type',
+    'min_units': 'filter-min-units',
+    'max_units': 'filter-max-units',
+    'priority_bucket': 'filter-bucket',
+  };
+  for (const [param, elId] of Object.entries(map)) {
+    const val = params.get(param);
+    if (val) document.getElementById(elId).value = val;
+  }
+})();
+
+// ---------------------------------------------------------------------------
+// Boot
+// ---------------------------------------------------------------------------
+loadListings();
+</script>
+{% endblock %}

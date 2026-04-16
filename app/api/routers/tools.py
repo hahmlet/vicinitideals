@@ -1,4 +1,4 @@
-"""Internal tools routes — Zone Painter and future tooling."""
+"""Internal tools routes — Zone Painter, Listings Map, and future tooling."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ from typing import Any
 from fastapi import APIRouter, HTTPException, Query, Request
 from fastapi.responses import HTMLResponse, JSONResponse
 from pydantic import BaseModel
-from sqlalchemy import text
+from sqlalchemy import func, or_, select, text
 
 from app.api.deps import DBSession
 from app.api.routers.ui import (
@@ -19,6 +19,7 @@ from app.api.routers.ui import (
     _get_user,
     templates,
 )
+from app.models.scraped_listing import ScrapedListing
 
 router = APIRouter(tags=["tools"])
 
@@ -222,3 +223,149 @@ async def painter_stats(
     )
     r = row.mappings().one()
     return {"total": r["total"], "painted": r["painted"], "field": field}
+
+
+# ---------------------------------------------------------------------------
+# Listings Map — full-page GIS view of all scraped listings
+# ---------------------------------------------------------------------------
+
+MAX_MAP_LISTINGS = 5000  # safety cap
+
+
+@router.get("/tools/listings/map", response_class=HTMLResponse)
+async def listings_map_page(request: Request, session: DBSession) -> HTMLResponse:
+    user = await _get_user(session, request)
+    dedup_count = await _get_dedup_count(session)
+    address_issues_count = await _get_address_issues_count(session)
+
+    # Distinct property types and sources for filter dropdowns
+    property_types = [
+        row[0] for row in (await session.execute(
+            select(ScrapedListing.property_type)
+            .distinct()
+            .where(ScrapedListing.property_type.isnot(None))
+            .order_by(ScrapedListing.property_type)
+        )).all()
+    ]
+    sources = [
+        row[0] for row in (await session.execute(
+            select(ScrapedListing.source)
+            .distinct()
+            .where(ScrapedListing.source.isnot(None))
+            .order_by(ScrapedListing.source)
+        )).all()
+    ]
+
+    return templates.TemplateResponse(
+        request,
+        "listings_map.html",
+        {
+            "property_types": property_types,
+            "sources": sources,
+            **_base_ctx(user, dedup_count, "listings", address_issues_count),
+        },
+    )
+
+
+@router.get("/tools/listings/map.geojson")
+async def listings_map_geojson(
+    session: DBSession,
+    q: str = Query(default=""),
+    source: str = Query(default=""),
+    property_type: str = Query(default=""),
+    min_units: str = Query(default=""),
+    max_units: str = Query(default=""),
+    priority_bucket: str = Query(default=""),
+) -> JSONResponse:
+    """Return GeoJSON FeatureCollection of listings with coordinates.
+
+    Excludes land-only listings (property_type containing 'land').
+    Only returns listings that have lat/lng populated.
+    """
+    stmt = (
+        select(
+            ScrapedListing.id,
+            ScrapedListing.lat,
+            ScrapedListing.lng,
+            ScrapedListing.address_normalized,
+            ScrapedListing.address_raw,
+            ScrapedListing.property_type,
+            ScrapedListing.asking_price,
+            ScrapedListing.units,
+            ScrapedListing.cap_rate,
+            ScrapedListing.year_built,
+            ScrapedListing.source,
+            ScrapedListing.status,
+            ScrapedListing.priority_bucket,
+            ScrapedListing.gba_sqft,
+            ScrapedListing.price_per_unit,
+        )
+        .where(
+            ScrapedListing.lat.isnot(None),
+            ScrapedListing.lng.isnot(None),
+            or_(
+                ScrapedListing.property_type.is_(None),
+                ~ScrapedListing.property_type.ilike("%land%"),
+            ),
+        )
+        .order_by(ScrapedListing.last_seen_at.desc())
+        .limit(MAX_MAP_LISTINGS)
+    )
+
+    # Apply filters
+    if q:
+        stmt = stmt.where(or_(
+            ScrapedListing.address_normalized.ilike(f"%{q}%"),
+            ScrapedListing.address_raw.ilike(f"%{q}%"),
+        ))
+    if source:
+        stmt = stmt.where(ScrapedListing.source == source)
+    if property_type:
+        stmt = stmt.where(ScrapedListing.property_type == property_type)
+    if min_units:
+        try:
+            n = int(min_units)
+            if n > 0:
+                stmt = stmt.where(ScrapedListing.units >= n)
+        except ValueError:
+            pass
+    if max_units:
+        try:
+            stmt = stmt.where(ScrapedListing.units <= int(max_units))
+        except ValueError:
+            pass
+    if priority_bucket:
+        stmt = stmt.where(ScrapedListing.priority_bucket == priority_bucket)
+
+    rows = (await session.execute(stmt)).mappings().all()
+
+    features = []
+    for r in rows:
+        lat = float(r["lat"])
+        lng = float(r["lng"])
+        address = r["address_normalized"] or r["address_raw"] or "Undisclosed"
+        features.append({
+            "type": "Feature",
+            "geometry": {"type": "Point", "coordinates": [lng, lat]},
+            "properties": {
+                "id": str(r["id"]),
+                "address": address,
+                "property_type": r["property_type"],
+                "asking_price": float(r["asking_price"]) if r["asking_price"] else None,
+                "units": r["units"],
+                "cap_rate": float(r["cap_rate"]) if r["cap_rate"] else None,
+                "year_built": r["year_built"],
+                "source": r["source"],
+                "status": r["status"],
+                "priority_bucket": r["priority_bucket"],
+                "building_sqft": float(r["gba_sqft"]) if r["gba_sqft"] else None,
+                "price_per_unit": float(r["price_per_unit"]) if r["price_per_unit"] else None,
+            },
+        })
+
+    return JSONResponse({
+        "type": "FeatureCollection",
+        "features": features,
+        "total": len(features),
+        "truncated": len(features) == MAX_MAP_LISTINGS,
+    })
