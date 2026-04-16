@@ -183,12 +183,14 @@ def submit_timeline_wizard(
 # ---------------------------------------------------------------------------
 
 def _wizard_click_next_or_review(page: Page) -> None:
-    """Click the wizard footer's primary button — handles both Next and Review."""
-    # The footer always has exactly one primary button (Next→ or Review→)
+    """Click the wizard footer's primary button and wait for the next step to render."""
     btn = page.locator('#deal-setup-wizard .wizard-footer button.btn-primary')
     if btn.count() > 0:
         btn.click()
     wait_for_htmx(page)
+    # Wait for the HTMX-swapped content to actually render
+    page.wait_for_selector('#deal-setup-wizard .wizard-body', timeout=8000)
+    page.wait_for_timeout(300)
 
 
 def run_deal_setup_wizard(
@@ -208,16 +210,20 @@ def run_deal_setup_wizard(
     if debt_types is None:
         debt_types = ["permanent_debt"]
 
-    # Navigate to Deal Setup
-    page.goto(f"/models/{model_id}/builder?module=deal_setup")
-    page.wait_for_selector("#deal-setup-wizard", timeout=10_000)
+    # Navigate to Deal Setup (wizard replaces normal layout — no #module-panel-content)
+    try:
+        page.goto(f"/models/{model_id}/builder?module=deal_setup", wait_until="domcontentloaded")
+    except Exception:
+        page.wait_for_timeout(1000)
+        page.goto(f"/models/{model_id}/builder?module=deal_setup", wait_until="domcontentloaded")
+    page.wait_for_selector("#deal-setup-wizard", timeout=15_000)
     wait_for_htmx(page)
 
     # Step 1 — Income mode
-    # Click the radio card for the desired income mode
+    # Wait for the radio button to be present before clicking
+    page.wait_for_selector(f'#deal-setup-wizard input[value="{income_mode}"]', timeout=5000)
     page.click(f'#deal-setup-wizard input[value="{income_mode}"]')
-    page.click('#deal-setup-wizard button:has-text("Next")')
-    wait_for_htmx(page)
+    _wizard_click_next_or_review(page)
 
     # Step 2 — Debt types
     page.wait_for_selector('#debt-type-grid', timeout=5000)
@@ -225,8 +231,7 @@ def run_deal_setup_wizard(
         cb = page.locator(f'#debt-type-grid input[value="{dt}"]')
         if cb.count() > 0 and not cb.is_checked():
             cb.check()
-    page.click('#deal-setup-wizard button:has-text("Next")')
-    wait_for_htmx(page)
+    _wizard_click_next_or_review(page)
 
     # Step 3 — Milestone config (Active From / Active To / Retired By)
     # Map engine-style phase names to the wizard's select option values
@@ -247,11 +252,13 @@ def run_deal_setup_wizard(
                 val = cfg["retired_by"]
                 if val:
                     page.select_option(f'[name="{dt}_retired_by"]', val)
-    page.click('#deal-setup-wizard button:has-text("Next")')
-    wait_for_htmx(page)
+    _wizard_click_next_or_review(page)
 
     # Step 4 — Debt terms (rate, carry type, amort)
     if debt_terms:
+        # Wait for the first debt type's rate input to confirm step 4 rendered
+        first_dt = next(iter(debt_terms))
+        page.wait_for_selector(f'[name="{first_dt}_rate_pct"]', timeout=8000)
         for dt, terms in debt_terms.items():
             if "rate_pct" in terms:
                 rate_input = page.locator(f'[name="{dt}_rate_pct"]')
@@ -265,8 +272,7 @@ def run_deal_setup_wizard(
                 amort_input = page.locator(f'[name="{dt}_amort_years"]')
                 if amort_input.count() > 0:
                     amort_input.fill(str(terms["amort_years"]))
-    page.click('#deal-setup-wizard button:has-text("Next")')
-    wait_for_htmx(page)
+    _wizard_click_next_or_review(page)
 
     # Remaining steps — fill fields if visible, then advance.
     # The wizard may have 5-7 steps depending on debt configuration.
@@ -291,19 +297,21 @@ def run_deal_setup_wizard(
 
         # Check for Finish Setup (step 7 review page)
         finish_btn = page.locator('#deal-setup-wizard .wizard-footer button:has-text("Finish Setup")')
-        if finish_btn.count() > 0:
+        if finish_btn.count() > 0 and finish_btn.is_visible():
+            finish_btn.click()
+            # HX-Redirect fires — wait for URL to change away from deal_setup
             try:
-                finish_btn.click()
+                page.wait_for_url("**/builder?module=sources_uses**", timeout=15_000)
             except Exception:
-                pass
-            break
+                try:
+                    page.wait_for_url("**/builder?module=noi**", timeout=5000)
+                except Exception:
+                    pass
+            wait_for_htmx(page)
+            return
 
         # Advance to next step
         _wizard_click_next_or_review(page)
-
-    # Wizard completes with HX-Redirect to the builder
-    page.wait_for_url(f"**/models/{model_id}/builder**", timeout=15_000)
-    wait_for_htmx(page)
 
 
 # ---------------------------------------------------------------------------

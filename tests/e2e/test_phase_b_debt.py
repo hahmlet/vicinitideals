@@ -178,8 +178,8 @@ TEST_CASES = [
             ("Hard Construction", "1200000", "construction"),
             ("Soft Costs", "120000", "construction"),
         ],
-        "xfail_gap": True,
-        "xfail_reason": "Wizard UI doesn't expose C2P debt terms (carry_type/rate) — carry_type is null after wizard, causing incomplete gap-fill",
+        "expect_gap": True,
+        "expect_sources_le_uses": True,
     },
     {
         "id": "dscr_nonbinding",
