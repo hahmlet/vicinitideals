@@ -18,6 +18,16 @@ from playwright.sync_api import Page
 
 from tests.e2e.helpers import wait_for_htmx
 
+COOKIE_NAME = "vd_session"
+
+
+def _get_session_cookie(page: Page) -> str:
+    """Extract session cookie from the Playwright page context."""
+    for c in page.context.cookies():
+        if c["name"] == COOKIE_NAME:
+            return c["value"]
+    raise ValueError("No session cookie in page context")
+
 
 # ---------------------------------------------------------------------------
 # Deal creation
@@ -30,12 +40,8 @@ def create_e2e_scenario(
     deal_type: str = "acquisition_minor_reno",
 ) -> str:
     """Create a new deal via the UI and return the model_id UUID string."""
-    page.goto("/deals")
-    page.wait_for_load_state("domcontentloaded")
-
-    # Click the "New Deal" button (opens form/modal)
-    page.click("text=New Deal")
-    page.wait_for_selector('[name=name]', timeout=5000)
+    page.goto("/deals/new")
+    page.wait_for_selector('[name=name]', timeout=10_000)
 
     page.fill('[name=name]', deal_name)
     page.select_option('[name=deal_type]', deal_type)
@@ -72,49 +78,80 @@ def submit_timeline_wizard(
     milestone_types: list[str] | None = None,
     phase_durations: dict[str, int] | None = None,
 ) -> None:
-    """Navigate through the timeline wizard and approve the timeline."""
+    """Navigate through the timeline wizard and approve the timeline.
+
+    The timeline wizard is a client-side JS stepper (not HTMX):
+      Step 1: Select anchor milestone (radio)
+      Step 2: Set anchor date + duration
+      Step 3: Select all phases (checkboxes)
+      → Submit hidden form → redirect → approve
+    """
     if milestone_types is None:
         milestone_types = ["close", "construction", "operation_stabilized", "divestment"]
 
-    # Navigate to timeline module
+    # Navigate to timeline module — wizard overlay auto-shows for new deals
     page.goto(f"/models/{model_id}/builder?module=timeline")
-    page.wait_for_selector("#module-panel-content", timeout=10_000)
-    wait_for_htmx(page)
+    page.wait_for_selector("#timeline-wizard", timeout=10_000)
 
-    # Open the timeline wizard
-    page.click("text=Create Timeline")
-    page.wait_for_selector("#timeline-wizard", timeout=5000)
+    # Step 1 — select anchor milestone (radio card)
+    anchor_radio = page.locator(f'#timeline-wizard input[name="_anchor_ui"][value="{anchor_type}"]')
+    if anchor_radio.count() > 0:
+        # Click the parent label to trigger the JS selectAnchor()
+        anchor_radio.locator("..").click()
+    page.wait_for_timeout(300)
 
-    # Step 1 — select milestones
-    for mt in milestone_types:
-        cb = page.locator(f'#timeline-wizard input[value="{mt}"]')
-        if cb.count() > 0 and not cb.is_checked():
-            cb.check()
-
-    # Click Next to go to step 2
-    page.click('#timeline-wizard button:has-text("Next")')
+    # Click "Continue →" to advance to step 2
+    page.click("#wizard-next")
     page.wait_for_timeout(500)
 
     # Step 2 — set anchor date and duration
-    anchor_date_input = page.locator('#timeline-wizard [name=anchor_date]')
-    if anchor_date_input.count() > 0:
-        anchor_date_input.fill(anchor_date)
+    page.fill("#wizard-anchor-date", anchor_date)
+    page.fill("#wizard-anchor-duration", anchor_duration_days)
 
-    anchor_dur_input = page.locator('#timeline-wizard [name=anchor_duration_days]')
-    if anchor_dur_input.count() > 0:
-        anchor_dur_input.fill(anchor_duration_days)
+    # Click "Continue →" to advance to step 3
+    page.click("#wizard-next")
+    page.wait_for_timeout(500)
 
-    # Set per-milestone durations if provided
-    if phase_durations:
-        for mt_str, days in phase_durations.items():
-            dur_input = page.locator(f'#timeline-wizard [name="duration_{mt_str}"]')
-            if dur_input.count() > 0:
-                dur_input.fill(str(days))
+    # Step 3 — select milestone checkboxes (some are pre-checked as defaults)
+    for mt in milestone_types:
+        cb = page.locator(f'#timeline-wizard input[name="milestone_types"][value="{mt}"]')
+        if cb.count() > 0 and not cb.is_checked():
+            cb.check()
 
-    # Submit the wizard
-    page.click('#timeline-wizard button:has-text("Save")')
-    page.wait_for_url(f"**/models/{model_id}/builder**", timeout=10_000)
+    # Click "Set Up Timeline →" to submit
+    page.click("#wizard-next")
+    page.wait_for_url(f"**/models/{model_id}/builder**", timeout=15_000)
     wait_for_htmx(page)
+
+    # Now inject phase durations via the form if provided.
+    # The JS wizard doesn't expose duration fields — we POST them directly
+    # to the timeline-wizard endpoint (this is supplementary data, not a UI flow).
+    if phase_durations:
+        from urllib.parse import urlencode
+        cookie = _get_session_cookie(page)
+        from urllib.parse import urlparse
+        parsed = urlparse(page.url)
+        base_url = f"{parsed.scheme}://{parsed.netloc}"
+        import httpx
+        data: list[tuple[str, str]] = [
+            ("anchor_type", anchor_type),
+            ("anchor_date", anchor_date),
+            ("anchor_duration_days", anchor_duration_days),
+        ] + [("milestone_types", mt) for mt in milestone_types]
+        for mt_str, days in phase_durations.items():
+            data.append((f"duration_{mt_str}", str(int(days))))
+        with httpx.Client(base_url=base_url, cookies={COOKIE_NAME: cookie},
+                          follow_redirects=False) as client:
+            resp = client.post(
+                f"/ui/projects/{project_id}/timeline-wizard",
+                content=urlencode(data).encode("utf-8"),
+                headers={"Content-Type": "application/x-www-form-urlencoded"},
+            )
+            assert resp.status_code in (200, 303), f"Timeline resubmit: {resp.status_code}"
+        # Reload the page to pick up the new durations
+        page.goto(f"/models/{model_id}/builder?module=timeline")
+        page.wait_for_selector("#module-panel-content", timeout=10_000)
+        wait_for_htmx(page)
 
     # Approve the timeline
     page.goto(f"/models/{model_id}/builder?module=timeline")
@@ -122,10 +159,13 @@ def submit_timeline_wizard(
     wait_for_htmx(page)
 
     approve_btn = page.locator('button:has-text("Approve Timeline")')
-    if approve_btn.count() > 0 and approve_btn.is_enabled():
-        approve_btn.click()
-        page.wait_for_url(f"**/models/{model_id}/builder**", timeout=10_000)
-        wait_for_htmx(page)
+    if approve_btn.count() > 0:
+        # Wait until enabled (milestones need valid positions + durations)
+        page.wait_for_timeout(500)
+        if approve_btn.is_enabled():
+            approve_btn.click()
+            page.wait_for_url(f"**/models/{model_id}/builder**", timeout=10_000)
+            wait_for_htmx(page)
 
 
 # ---------------------------------------------------------------------------
@@ -170,14 +210,24 @@ def run_deal_setup_wizard(
     wait_for_htmx(page)
 
     # Step 3 — Milestone config (Active From / Active To / Retired By)
+    # Map engine-style phase names to the wizard's select option values
+    _PHASE_VALUE_MAP = {
+        "operation_lease_up": "lease_up",
+        "operation_stabilized": "stabilized",
+        "divestment": "exit",
+    }
     if milestone_config:
         for dt, cfg in milestone_config.items():
             if "active_from" in cfg:
-                page.select_option(f'[name="{dt}_active_from"]', cfg["active_from"])
+                val = _PHASE_VALUE_MAP.get(cfg["active_from"], cfg["active_from"])
+                page.select_option(f'[name="{dt}_active_from"]', val)
             if "active_to" in cfg:
-                page.select_option(f'[name="{dt}_active_to"]', cfg["active_to"])
+                val = _PHASE_VALUE_MAP.get(cfg["active_to"], cfg["active_to"])
+                page.select_option(f'[name="{dt}_active_to"]', val)
             if "retired_by" in cfg:
-                page.select_option(f'[name="{dt}_retired_by"]', cfg["retired_by"])
+                val = cfg["retired_by"]
+                if val:
+                    page.select_option(f'[name="{dt}_retired_by"]', val)
     page.click('#deal-setup-wizard button:has-text("Next")')
     wait_for_htmx(page)
 
@@ -231,31 +281,60 @@ def run_deal_setup_wizard(
 # Line item creation via drawer forms
 # ---------------------------------------------------------------------------
 
-def _open_add_drawer_and_fill(
+def _open_overlay_and_fill(
     page: Page,
     button_text: str,
+    overlay_selector: str,
     fields: dict[str, str],
     select_fields: dict[str, str] | None = None,
 ) -> None:
-    """Click an add button, fill the drawer form, and submit."""
+    """Click an add button, fill the overlay/drawer form, and submit."""
     page.click(f'button:has-text("{button_text}")')
-    page.wait_for_selector('.drawer', timeout=5000)
-    page.wait_for_timeout(300)  # animation
+    page.wait_for_selector(f'{overlay_selector} [type="submit"]', timeout=8000)
+    page.wait_for_timeout(500)  # HTMX form load + animation
 
     for name, value in fields.items():
-        inp = page.locator(f'.drawer [name="{name}"]')
+        inp = page.locator(f'{overlay_selector} [name="{name}"]')
         if inp.count() > 0:
-            inp.fill(value)
+            # Use force for fields that may be in a scrollable area
+            inp.fill(value, force=True)
 
     if select_fields:
         for name, value in select_fields.items():
-            sel = page.locator(f'.drawer [name="{name}"]')
-            if sel.count() > 0:
-                sel.select_option(value)
+            sel = page.locator(f'{overlay_selector} [name="{name}"]')
+            if sel.count() == 0:
+                continue
+            tag = sel.first.evaluate("el => el.tagName.toLowerCase()")
+            if tag == "select":
+                sel.first.select_option(value, force=True)
+            elif tag == "input":
+                input_type = sel.first.get_attribute("type") or ""
+                if input_type == "checkbox":
+                    # Check the specific value checkbox
+                    cb = page.locator(f'{overlay_selector} input[name="{name}"][value="{value}"]')
+                    if cb.count() > 0 and not cb.is_checked():
+                        cb.check(force=True)
+                elif input_type == "radio":
+                    rb = page.locator(f'{overlay_selector} input[name="{name}"][value="{value}"]')
+                    if rb.count() > 0:
+                        rb.check(force=True)
+                else:
+                    sel.first.fill(value, force=True)
 
-    page.click('.drawer button[type="submit"]')
+    page.click(f'{overlay_selector} button[type="submit"]')
     wait_for_htmx(page)
     page.wait_for_timeout(500)
+
+
+def _safe_goto(page: Page, url: str, timeout: int = 30_000) -> None:
+    """Navigate with retry on ERR_ABORTED (common after HTMX redirects)."""
+    try:
+        page.goto(url, wait_until="domcontentloaded", timeout=timeout)
+    except Exception:
+        page.wait_for_timeout(2000)
+        page.goto(url, wait_until="domcontentloaded", timeout=timeout)
+    page.wait_for_selector("#module-panel-content", timeout=timeout)
+    wait_for_htmx(page)
 
 
 def add_use_line(
@@ -266,17 +345,31 @@ def add_use_line(
     milestone_key: str = "close",
     timing_type: str = "first_day",
 ) -> None:
-    """Add a use line via the S&U module drawer."""
-    page.goto(f"/models/{model_id}/builder?module=sources_uses")
-    page.wait_for_selector("#module-panel-content", timeout=10_000)
-    wait_for_htmx(page)
+    """Add a use line via the uses wizard overlay (2-step JS wizard)."""
+    _safe_goto(page, f"/models/{model_id}/builder?module=sources_uses")
 
-    _open_add_drawer_and_fill(
-        page,
-        button_text="+ Use",
-        fields={"label": label, "amount": amount},
-        select_fields={"milestone_key": milestone_key, "timing_type": timing_type},
-    )
+    # Click "+ Use" button to open the uses wizard overlay
+    page.click('button:has-text("+ Use")')
+    page.wait_for_selector('#uses-wizard-overlay #uw-next', timeout=8000)
+    page.wait_for_timeout(500)
+
+    # Step 1: Name & Amount
+    page.fill('#uses-wizard-overlay [name="label"]', label)
+    page.fill('#uses-wizard-overlay [name="amount"]', amount)
+    page.click('#uw-next')  # Continue →
+    page.wait_for_timeout(300)
+
+    # Step 2: Timing & Milestones
+    ms_sel = page.locator('#uses-wizard-overlay [name="milestone_key"]')
+    if ms_sel.count() > 0:
+        ms_sel.select_option(milestone_key)
+    # timing_type is radio buttons, not a select
+    timing_radio = page.locator(f'#uses-wizard-overlay input[name="timing_type"][value="{timing_type}"]')
+    if timing_radio.count() > 0:
+        timing_radio.check()
+    page.click('#uw-next')  # Add Use (submits form)
+    wait_for_htmx(page)
+    page.wait_for_timeout(500)
 
 
 def add_income_stream(
@@ -290,13 +383,12 @@ def add_income_stream(
     escalation_pct: str = "3",
 ) -> None:
     """Add an income stream via the Revenue module drawer."""
-    page.goto(f"/models/{model_id}/builder?module=revenue")
-    page.wait_for_selector("#module-panel-content", timeout=10_000)
-    wait_for_htmx(page)
+    _safe_goto(page, f"/models/{model_id}/builder?module=revenue")
 
-    _open_add_drawer_and_fill(
+    _open_overlay_and_fill(
         page,
-        button_text="+ Income",
+        button_text="+ Add Stream",
+        overlay_selector="#line-item-drawer",
         fields={
             "label": label,
             "unit_count": unit_count,
@@ -319,13 +411,12 @@ def add_expense_line(
     escalation_pct: str = "3",
 ) -> None:
     """Add an expense line via the OpEx module drawer."""
-    page.goto(f"/models/{model_id}/builder?module=opex")
-    page.wait_for_selector("#module-panel-content", timeout=10_000)
-    wait_for_htmx(page)
+    _safe_goto(page, f"/models/{model_id}/builder?module=opex")
 
-    _open_add_drawer_and_fill(
+    _open_overlay_and_fill(
         page,
-        button_text="+ Expense",
+        button_text="+ Add Line",
+        overlay_selector="#line-item-drawer",
         fields={
             "label": label,
             "per_value": annual_amount,
@@ -342,9 +433,7 @@ def click_compute(page: Page, model_id: str) -> None:
     """Click the Compute button and wait for the result badge."""
     # Ensure we're on the builder page
     if f"/models/{model_id}/builder" not in page.url:
-        page.goto(f"/models/{model_id}/builder?module=sources_uses")
-        page.wait_for_selector("#module-panel-content", timeout=10_000)
-        wait_for_htmx(page)
+        _safe_goto(page, f"/models/{model_id}/builder?module=sources_uses")
 
     page.click('button:has-text("Compute")')
     # Wait for either success or failure badge

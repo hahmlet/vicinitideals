@@ -27,7 +27,7 @@ from decimal import Decimal
 import httpx
 import pytest
 
-from tests.e2e.helpers import parse_currency, read_footer_total, read_sources_total, wait_for_htmx
+from tests.e2e.helpers import wait_for_htmx
 from tests.e2e.seed import (
     add_expense_line,
     add_income_stream,
@@ -359,12 +359,15 @@ def test_phase_b_debt(tc: dict, _seed_page, base_url: str) -> None:
     click_compute(page, model_id)
 
     # ── Read S&U totals from the UI ──────────────────────────────────────
-    page.goto(f"/models/{model_id}/builder?module=sources_uses")
-    page.wait_for_selector("#module-panel-content", timeout=15_000)
-    wait_for_htmx(page)
+    from tests.e2e.seed import _safe_goto
+    _safe_goto(page, f"/models/{model_id}/builder?module=sources_uses")
 
-    uses_total = read_footer_total(page) or 0
-    sources_total = read_sources_total(page) or 0
+    # The combined S&U panel has two .line-table-footer blocks:
+    # first one = Uses total, second one = Sources total
+    footer_amounts = page.locator('.line-table-footer .line-total-amount').all()
+    from tests.e2e.helpers import parse_currency
+    uses_total = parse_currency(footer_amounts[0].inner_text()) if len(footer_amounts) > 0 else 0
+    sources_total = parse_currency(footer_amounts[1].inner_text()) if len(footer_amounts) > 1 else 0
     gap = sources_total - uses_total
 
     # ── Assert Sources ≈ Uses ────────────────────────────────────────────
