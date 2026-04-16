@@ -87,3 +87,16 @@ def logged_in_page(browser: "Browser", _auth_state_path: str) -> Generator["Page
     page = ctx.new_page()
     yield page
     ctx.close()
+
+
+# ---------------------------------------------------------------------------
+# Session-scoped seed page — used by fixtures that create test data
+# ---------------------------------------------------------------------------
+
+@pytest.fixture(scope="session")
+def _seed_page(browser: "Browser", _auth_state_path: str) -> Generator["Page", None, None]:
+    """A session-scoped page for seeding test data via Playwright interactions."""
+    ctx = browser.new_context(base_url=BASE_URL, storage_state=_auth_state_path)
+    page = ctx.new_page()
+    yield page
+    ctx.close()

@@ -22,9 +22,9 @@ pytestmark = pytest.mark.e2e
 # ---------------------------------------------------------------------------
 
 @pytest.fixture(scope="session")
-def model_id(base_url: str, _auth_state_path: str) -> str:
+def model_id(_seed_page) -> str:
     """Create one deal/scenario for all model-builder tests in this session."""
-    return create_e2e_scenario(base_url, _auth_state_path, deal_name="E2E Model Builder Test")
+    return create_e2e_scenario(_seed_page, deal_name="E2E Model Builder Test")
 
 
 # ---------------------------------------------------------------------------

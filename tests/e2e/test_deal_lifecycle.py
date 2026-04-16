@@ -41,11 +41,10 @@ pytestmark = pytest.mark.e2e
 # ---------------------------------------------------------------------------
 
 @pytest.fixture(scope="session")
-def lifecycle_deal(base_url: str, _auth_state_path: str) -> tuple[str, str]:
+def lifecycle_deal(_seed_page, base_url: str) -> tuple[str, str]:
     """Create one fully-seeded deal for all lifecycle tests. Returns (model_id, project_id)."""
     return create_seeded_deal(
-        base_url,
-        _auth_state_path,
+        _seed_page,
         deal_name="E2E Lifecycle — Variant A",
         deal_type="acquisition_minor_reno",
     )
