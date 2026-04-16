@@ -135,20 +135,8 @@ jobs:
         env:
           E2E_BASE_URL: http://localhost:8001
 
-      - name: Phase B debt regression (engine math + Sources=Uses + DSCR-capped parity)
-        run: |
-          # Pass a non-existent auth path so the script uses --email/--password
-          # against the freshly seeded CI user (the committed auth-state.json is
-          # bound to production and won't validate against the CI session store).
-          uv run python scripts/test_phase_b_debt.py \
-            --base-url http://localhost:8001 \
-            --auth /tmp/phase-b-ci-no-auth.json \
-            --email "${E2E_EMAIL}" \
-            --password "${E2E_PASSWORD}"
-        env:
-          E2E_BASE_URL: http://localhost:8001
-          E2E_EMAIL: ${{ secrets.E2E_EMAIL || 'e2e@ketch.media' }}
-          E2E_PASSWORD: ${{ secrets.E2E_PASSWORD || 'e2e-test-password-2026' }}
+      # Phase B debt regression is now in tests/e2e/test_phase_b_debt.py
+      # and runs as part of the E2E tests step above (pytest -m e2e).
 
       - name: Trivy image scan
         uses: aquasecurity/trivy-action@master
