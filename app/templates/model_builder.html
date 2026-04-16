@@ -488,7 +488,7 @@ function handleComputeResult(evt) {
       target: '#balance-bar-container', swap: 'innerHTML'
     });
     // Refresh the current panel — use htmx.ajax directly (no dependency on refreshPanel being defined)
-    var _m = new URLSearchParams(window.location.search).get('module') || 'owners_profit';
+    var _m = new URLSearchParams(window.location.search).get('module') || 'sources_uses';
     htmx.ajax('GET', '/ui/panel/{{ model.id }}?module=' + encodeURIComponent(_m), {
       target: '#module-panel-content', swap: 'innerHTML'
     });

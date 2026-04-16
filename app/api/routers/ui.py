@@ -448,6 +448,11 @@ _GANTT_DISPLAY_CAPS: dict[str, int] = {
 }
 
 
+_GANTT_DISPLAY_MINS: dict[str, int] = {
+    "divestment": 30,   # single-day event needs visual presence on multi-year Gantt
+}
+
+
 def _apply_display_positions(bars: list[dict]) -> None:
     """Add display_start_day / display_duration_days, capping long hold phases.
 
@@ -456,8 +461,12 @@ def _apply_display_positions(bars: list[dict]) -> None:
     Sets is_truncated=True when the bar is shorter than its real duration.
     """
     for bar in bars:
-        cap = _GANTT_DISPLAY_CAPS.get(bar.get("phase_key", ""), bar["duration_days"])
+        phase = bar.get("phase_key", "")
+        cap = _GANTT_DISPLAY_CAPS.get(phase, bar["duration_days"])
         display_dur = min(bar["duration_days"], cap)
+        min_dur = _GANTT_DISPLAY_MINS.get(phase)
+        if min_dur and display_dur < min_dur:
+            display_dur = min_dur
         bar["display_duration_days"] = display_dur
         bar["display_start_day"] = bar["start_day"]
         bar["is_truncated"] = display_dur < bar["duration_days"]
@@ -4160,12 +4169,15 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
     # phase is set the bar extends to the right edge with a fade-out (perpetuity
     # convention for equity / permanent debt). Zero-amount modules are hidden.
     _CM_PHASE_TO_MS_KEY = {
-        "acquisition":      "close",
-        "pre_construction": "close",        # construction loans close at same time as acquisition
-        "construction":     "construction",
-        "lease_up":         "operation_lease_up",
-        "stabilized":       "operation_stabilized",
-        "exit":             "divestment",
+        "acquisition":          "close",
+        "pre_construction":     "close",        # construction loans close at same time as acquisition
+        "construction":         "construction",
+        "lease_up":             "operation_lease_up",
+        "operation_lease_up":   "operation_lease_up",
+        "stabilized":           "operation_stabilized",
+        "operation_stabilized": "operation_stabilized",
+        "exit":                 "divestment",
+        "divestment":           "divestment",
     }
     _cm_gantt_rows: list[dict] = []
     _bgd_cm = _builder_gantt_from_milestones(default_project, milestones)
@@ -4181,10 +4193,7 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
             if m.computed_start(ms_map)
         }
         for _cm in capital_modules:
-            # Skip zero-amount sources (e.g. equity gap-filled to $0)
             _src_amount = float((_cm.source or {}).get("amount") or 0)
-            if _src_amount <= 0:
-                continue
             if not _cm.active_phase_start or not _epoch_cm:
                 continue
             _ms_key = _CM_PHASE_TO_MS_KEY.get(_cm.active_phase_start)
@@ -4215,6 +4224,7 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
                 "left_pct": _left,
                 "width_pct": _width,
                 "fade_right": _fade,
+                "unsized": _src_amount <= 0,
             })
 
     return {
@@ -4420,11 +4430,15 @@ async def handle_form_create_or_update(
         if amort := _fi(form.get("amort_term_years"), None):
             source_d["amort_term_years"] = amort
         constr_carry_type = form.get("construction_carry_type", "none")
+        # Carry rate: use source rate so the engine finds it in both places
+        _carry_rate = _fd(form.get("source_interest_rate"))
         constr_phase: dict = {
             "name": "construction",
             "carry_type": constr_carry_type,
             "payment_frequency": form.get("construction_payment_frequency", "monthly"),
         }
+        if _carry_rate is not None:
+            constr_phase["io_rate_pct"] = float(_carry_rate)
         if constr_carry_type == "converts_to_permanent":
             if perm_rate := _fd(form.get("perm_rate_pct")):
                 constr_phase["perm_rate_pct"] = float(perm_rate)
@@ -4432,15 +4446,15 @@ async def handle_form_create_or_update(
                 constr_phase["perm_term_years"] = perm_term
             if perm_trig := form.get("perm_conversion_trigger"):
                 constr_phase["perm_conversion_trigger"] = perm_trig
+        _op_phase: dict = {
+            "name": "operation",
+            "carry_type": form.get("operation_carry_type", "none"),
+            "payment_frequency": form.get("operation_payment_frequency", "monthly"),
+        }
+        if _carry_rate is not None:
+            _op_phase["io_rate_pct"] = float(_carry_rate)
         carry_d = {
-            "phases": [
-                constr_phase,
-                {
-                    "name": "operation",
-                    "carry_type": form.get("operation_carry_type", "none"),
-                    "payment_frequency": form.get("operation_payment_frequency", "monthly"),
-                },
-            ]
+            "phases": [constr_phase, _op_phase],
         }
         exit_d = {
             "exit_type": form.get("exit_type", "full_payoff"),
@@ -5384,6 +5398,9 @@ async def timeline_wizard_submit(
         elif mt == MilestoneType.operation_stabilized and not has_divestment:
             # Auto-cap stabilized at 30 years when no divestment
             dur = _STABILIZED_AUTO_DAYS
+        elif mt == MilestoneType.divestment:
+            # Divestment is a single-day event (sale closing date)
+            dur = 1
         else:
             dur = anchor_duration if is_anchor else 0
 
@@ -6148,7 +6165,7 @@ async def deal_setup_wizard_complete(
     await session.commit()
 
     # Redirect to builder — NOI mode lands on the NOI module first, else Uses
-    _first_module = "noi" if model.income_mode == "noi" else "uses"
+    _first_module = "noi" if model.income_mode == "noi" else "sources_uses"
     from starlette.responses import Response as StarletteResponse
     response = StarletteResponse(status_code=204)
     response.headers["HX-Redirect"] = f"/models/{model_id}/builder?module={_first_module}"
@@ -6235,7 +6252,7 @@ async def model_builder(
         # Redirect so the URL reflects where the user actually lands
         return RedirectResponse(url=f"/models/{model_id}/builder?module=deal_setup", status_code=302)
     else:
-        active_module = module or ("uses" if _deal_setup_complete else "deal_setup")
+        active_module = module or ("sources_uses" if _deal_setup_complete else "deal_setup")
 
     # Cash flow periods — only loaded when the cashflow module is active
     cash_flow_rows: list = []

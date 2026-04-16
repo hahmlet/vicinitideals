@@ -43,7 +43,7 @@ DEFAULT_DURATIONS: dict[str, dict[str, int]] = {
         "close": 45,
         "construction": 90,
         "operation_stabilized": 1825,  # 5 years
-        "divestment": 30,
+        "divestment": 1,  # single-day event — sale closing date
     },
     "acquisition_major_reno": {
         "offer_made": 14,
@@ -53,7 +53,7 @@ DEFAULT_DURATIONS: dict[str, dict[str, int]] = {
         "construction": 180,
         "operation_lease_up": 120,
         "operation_stabilized": 1825,
-        "divestment": 30,
+        "divestment": 1,  # single-day event — sale closing date
     },
     "acquisition_conversion": {
         "offer_made": 14,
@@ -63,7 +63,7 @@ DEFAULT_DURATIONS: dict[str, dict[str, int]] = {
         "construction": 180,
         "operation_lease_up": 120,
         "operation_stabilized": 1825,
-        "divestment": 30,
+        "divestment": 1,  # single-day event — sale closing date
     },
     "new_construction": {
         "offer_made": 14,
@@ -73,7 +73,7 @@ DEFAULT_DURATIONS: dict[str, dict[str, int]] = {
         "construction": 365,
         "operation_lease_up": 120,
         "operation_stabilized": 1825,
-        "divestment": 30,
+        "divestment": 1,  # single-day event — sale closing date
     },
 }
 

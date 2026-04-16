@@ -231,8 +231,8 @@
       <div class="g2-label" title="{{ row.label }}">{{ row.label }}</div>
       <div class="g2-track">
         <div class="g2-bar g2-bar-{{ row.source_type }}"
-             style="left:{{ row.left_pct }}%;width:{{ row.width_pct }}%;overflow:hidden"
-             title="{{ row.label }}">
+             style="left:{{ row.left_pct }}%;width:{{ row.width_pct }}%;overflow:hidden{% if row.unsized %};opacity:.35;border:2px dashed currentColor;background:repeating-linear-gradient(45deg,transparent,transparent 3px,rgba(255,255,255,.3) 3px,rgba(255,255,255,.3) 6px){% endif %}"
+             title="{{ row.label }}{% if row.unsized %} (not yet sized — run Compute){% endif %}"
           {% if row.fade_right %}
           <span style="position:absolute;right:0;top:0;bottom:0;width:36px;
                        background:linear-gradient(to right,transparent,rgba(255,255,255,.75));
@@ -1049,6 +1049,7 @@
     </div>
     <div style="font-size:11px;color:var(--text-muted);margin-top:2px">
       {% if open_ended %}∞
+      {% elif summary.duration_days and summary.duration_days <= 1 %}Event
       {% elif summary.duration_days %}{{ (summary.duration_days / 30.4) | round(0) | int }} mo
       {% else %}—{% endif %}
     </div>

@@ -197,6 +197,12 @@
   <div style="text-align:center;margin-bottom:24px">
     <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted)">Deal Setup</div>
     <div style="font-size:22px;font-weight:700;margin-top:4px">{{ model.name }}</div>
+    {% if deal_setup_complete %}
+    <a href="/models/{{ model.id }}/builder?module=sources_uses"
+       style="display:inline-block;margin-top:10px;font-size:13px;color:var(--text-muted);text-decoration:none">
+      ← Back to Model
+    </a>
+    {% endif %}
   </div>
 
   <div class="wizard-card">
@@ -451,7 +457,13 @@
           </ul>
         </div>
         {% endif %}
-        <table style="width:100%;border-collapse:collapse;font-size:13px">
+        <table style="width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed">
+          <colgroup>
+            <col style="width:18%">
+            <col style="width:24%">
+            <col style="width:28%">
+            <col style="width:30%">
+          </colgroup>
           <thead>
             <tr style="border-bottom:2px solid var(--border)">
               <th style="text-align:left;padding:6px 8px;color:var(--text-muted);font-weight:600">Debt</th>
@@ -727,31 +739,39 @@
       <input type="hidden" name="step" value="6">
       <div class="wizard-body">
 
+        <div style="display:grid;grid-template-columns:{% if _has_constr %}1fr 1fr{% else %}1fr{% endif %};gap:24px;align-items:start">
+
         {% if _has_constr %}
-        <div class="section-label">Construction Floor</div>
-        <div class="field-row" style="align-items:flex-start">
-          <div class="field-group" style="max-width:180px">
-            <label>Floor (% of Total Project Cost)</label>
-            <input type="number" name="construction_floor_pct" step="0.5" min="0" max="25"
-                   value="{{ _cf_pct }}" placeholder="5.0">
-            <div class="field-hint">Minimum cash balance during construction. Covers IO timing gaps and cost overrun buffer. Typical: 5–10%.</div>
+        <div>
+          <div class="section-label">Construction Floor</div>
+          <div class="field-row" style="align-items:flex-start">
+            <div class="field-group" style="max-width:180px">
+              <label>Floor (% of Total Project Cost)</label>
+              <input type="number" name="construction_floor_pct" step="0.5" min="0" max="25"
+                     value="{{ _cf_pct }}" placeholder="5.0">
+              <div class="field-hint">Minimum cash balance during construction. Covers IO timing gaps and cost overrun buffer. Typical: 5–10%.</div>
+            </div>
           </div>
         </div>
         {% endif %}
 
-        <div class="section-label">Operating Reserve</div>
-        <div class="field-row" style="align-items:flex-start">
-          <div class="field-group" style="max-width:180px">
-            <label>Reserve (months)</label>
-            <input type="number" name="operation_reserve_months" step="1" min="0" max="24"
-                   value="{{ _or_mo }}" placeholder="6">
-            {% if model.income_mode == 'noi' %}
-            <div class="field-hint">Sized as N months of debt service (NOI mode). Lender-required. Typical: 6–12 months.</div>
-            {% else %}
-            <div class="field-hint">Sized as the greater of N months of OpEx or N months of debt service. Lender-required. Typical: 6–12 months.</div>
-            {% endif %}
+        <div>
+          <div class="section-label">Operating Reserve</div>
+          <div class="field-row" style="align-items:flex-start">
+            <div class="field-group" style="max-width:180px">
+              <label>Reserve (months)</label>
+              <input type="number" name="operation_reserve_months" step="1" min="0" max="24"
+                     value="{{ _or_mo }}" placeholder="6">
+              {% if model.income_mode == 'noi' %}
+              <div class="field-hint">Sized as N months of debt service (NOI mode). Lender-required. Typical: 6–12 months.</div>
+              {% else %}
+              <div class="field-hint">Sized as the greater of N months of OpEx or N months of debt service. Lender-required. Typical: 6–12 months.</div>
+              {% endif %}
+            </div>
           </div>
         </div>
+
+        </div>{# /grid #}
 
       </div>
       <div class="wizard-footer">

@@ -550,7 +550,7 @@ async def compute_model_cashflows(model_id: UUID, request: Request, session: DBS
 
     try:
         result = await compute_cash_flows(deal_model_id=model_id, session=session)
-    except ValueError as exc:
+    except (ValueError, KeyError, TypeError, ZeroDivisionError) as exc:
         log_observation(
             logger,
             "underwriting_compute_failed",
