@@ -721,7 +721,61 @@ async def _auto_size_debt_modules(
     dscr_min = _to_decimal(inputs.dscr_minimum or PLACEHOLDER_DSCR)
     reserve_months = int(inputs.operation_reserve_months or 6)
 
-    # Count months in construction-type phases so we can budget construction IO
+    # ── Per-loan active-window phase months ─────────────────────────────────
+    # Each loan's IR/CI interest accrues only during the phases within its
+    # [active_phase_start, active_phase_end) window — not every construction-
+    # type phase in the deal.  This rank mapping converts active_phase_start /
+    # active_phase_end strings into ordinal ranks so we can window-filter the
+    # phase list per loan.
+    #
+    # Rank semantics: a loan with [start_rank, end_rank) includes all phases
+    # whose rank is >= start_rank AND < end_rank.  End-exclusive because the
+    # loan is taken out at the START of the end phase (e.g. active_to="lease_up"
+    # means the perm takes over at lease_up start; the construction loan is not
+    # active during lease_up itself).
+    _PERIOD_TYPE_RANK: dict[PeriodType, int] = {
+        PeriodType.acquisition:       0,
+        PeriodType.hold:              1,
+        PeriodType.pre_construction:  2,
+        PeriodType.minor_renovation:  3,
+        PeriodType.major_renovation:  3,
+        PeriodType.construction:      3,
+        PeriodType.conversion:        3,
+        PeriodType.lease_up:          4,
+        PeriodType.stabilized:        5,
+        PeriodType.exit:              6,
+    }
+    _APS_TO_RANK: dict[str, int] = {
+        "acquisition": 0, "close": 0,
+        "pre_construction": 2,
+        "construction": 3,
+        "lease_up": 4, "operation_lease_up": 4,
+        "stabilized": 5, "operation_stabilized": 5,
+        "exit": 6, "divestment": 6,
+    }
+
+    def _loan_pre_op_months(module: object) -> int:
+        """Compute the number of pre-op months within this loan's active window.
+
+        Only counts construction-type phases (acquisition, hold, pre_construction,
+        construction, renovation, conversion) that fall within the module's
+        [active_phase_start, active_phase_end) rank window.  This replaces the
+        global ``constr_months_total`` so each loan uses its own N for the
+        IR/CI carry formula.
+        """
+        start = str(getattr(module, "active_phase_start", "") or "")
+        end   = str(getattr(module, "active_phase_end", "") or "")
+        start_rank = _APS_TO_RANK.get(start, 0)
+        # End-exclusive: if no end, include everything up to exit
+        end_rank   = _APS_TO_RANK.get(end, 99)
+        return sum(
+            p.months for p in phases
+            if p.period_type in _CONSTRUCTION_PERIOD_TYPES
+            and start_rank <= _PERIOD_TYPE_RANK.get(p.period_type, 99) < end_rank
+        )
+
+    # Legacy global sum — kept for the legacy path (non-Phase-B deals) where
+    # there's a single construction+perm pair and no per-loan active windows.
     constr_months_total = sum(
         p.months for p in phases if p.period_type in _CONSTRUCTION_PERIOD_TYPES
     )
@@ -866,18 +920,18 @@ async def _auto_size_debt_modules(
             if _ft == "pre_development_loan":
                 _r = Decimal(str(_rate or 0))
                 _pre_ct = _carry_type_for_phase(_carry, is_construction=True)
+                _n = _loan_pre_op_months(_m)
                 if _pre_ct == "interest_reserve":
-                    # Exact avg-draw factor: rate/12 × (N+1)/2
-                    _io_f = (_r / HUNDRED / Decimal("12") * (Decimal(_pre_dev_months + 1) / Decimal("2"))
-                             ) if (_r > ZERO and _pre_dev_months > 0) else ZERO
+                    _io_f = (_r / HUNDRED / Decimal("12") * (Decimal(_n + 1) / Decimal("2"))
+                             ) if (_r > ZERO and _n > 0) else ZERO
                 elif _pre_ct == "capitalized_interest":
-                    _io_f = (_r / HUNDRED / Decimal("12") * Decimal(_pre_dev_months)
-                             ) if (_r > ZERO and _pre_dev_months > 0) else ZERO
-                else:  # io_only (True IO) — periodic payments, no reserve funded
+                    _io_f = (_r / HUNDRED / Decimal("12") * Decimal(_n)
+                             ) if (_r > ZERO and _n > 0) else ZERO
+                else:
                     _io_f = ZERO
                 _div = ONE - _io_f
                 _principal = _q(pre_dev_costs / _div) if (_div > ZERO and pre_dev_costs > ZERO) else pre_dev_costs
-                if _principal > ZERO and _r > ZERO and _pre_dev_months > 0 and _io_f > ZERO:
+                if _principal > ZERO and _r > ZERO and _n > 0 and _io_f > ZERO:
                     _bridge_io["pre_development_loan"] = _q(_principal - pre_dev_costs)
                     _bridge_io_carry_type["pre_development_loan"] = _pre_ct
 
@@ -887,12 +941,13 @@ async def _auto_size_debt_modules(
                 _principal = _q(acq_costs * _ltv / HUNDRED)
                 _r = Decimal(str(_rate or 0))
                 _acq_ct = _carry_type_for_phase(_carry, is_construction=True)
-                if _principal > ZERO and _r > ZERO and _acq_months > 0:
+                _n = _loan_pre_op_months(_m)
+                if _principal > ZERO and _r > ZERO and _n > 0:
                     if _acq_ct == "interest_reserve":
-                        _acq_interest = _q(_principal * _r / HUNDRED / Decimal("12") * (Decimal(_acq_months + 1) / Decimal("2")))
+                        _acq_interest = _q(_principal * _r / HUNDRED / Decimal("12") * (Decimal(_n + 1) / Decimal("2")))
                     elif _acq_ct == "capitalized_interest":
-                        _acq_interest = _q(_principal * _r / HUNDRED / Decimal("12") * Decimal(_acq_months))
-                    else:  # io_only — no reserve
+                        _acq_interest = _q(_principal * _r / HUNDRED / Decimal("12") * Decimal(_n))
+                    else:
                         _acq_interest = ZERO
                     if _acq_interest > ZERO:
                         _bridge_io["acquisition_loan"] = _acq_interest
@@ -901,19 +956,18 @@ async def _auto_size_debt_modules(
             elif _ft == "construction_loan":
                 _r = Decimal(str(_cr or 0))
                 _cl_ct = _carry_type_for_phase(_carry, is_construction=True)
+                _n = _loan_pre_op_months(_m)
                 if _cl_ct == "interest_reserve":
-                    # Exact avg-draw factor: rate/12 × (N+1)/2
-                    _io_f = (_r / HUNDRED / Decimal("12") * (Decimal(constr_months_total + 1) / Decimal("2"))
-                             ) if (_r > ZERO and constr_months_total > 0) else ZERO
+                    _io_f = (_r / HUNDRED / Decimal("12") * (Decimal(_n + 1) / Decimal("2"))
+                             ) if (_r > ZERO and _n > 0) else ZERO
                 elif _cl_ct == "capitalized_interest":
-                    # 100% factor — full balance accrues from day one
-                    _io_f = (_r / HUNDRED / Decimal("12") * Decimal(constr_months_total)
-                             ) if (_r > ZERO and constr_months_total > 0) else ZERO
-                else:  # io_only (True IO) — periodic cash payments, no reserve funded
+                    _io_f = (_r / HUNDRED / Decimal("12") * Decimal(_n)
+                             ) if (_r > ZERO and _n > 0) else ZERO
+                else:
                     _io_f = ZERO
                 _div = ONE - _io_f
                 _principal = _q(constr_costs / _div) if (_div > ZERO and constr_costs > ZERO) else constr_costs
-                if _principal > ZERO and _r > ZERO and constr_months_total > 0 and _io_f > ZERO:
+                if _principal > ZERO and _r > ZERO and _n > 0 and _io_f > ZERO:
                     _bridge_io["construction_loan"] = _q(_principal - constr_costs)
                     _bridge_io_carry_type["construction_loan"] = _cl_ct
 
