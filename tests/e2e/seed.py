@@ -182,6 +182,15 @@ def submit_timeline_wizard(
 # Deal setup wizard (steps 1–7)
 # ---------------------------------------------------------------------------
 
+def _wizard_click_next_or_review(page: Page) -> None:
+    """Click the wizard footer's primary button — handles both Next and Review."""
+    # The footer always has exactly one primary button (Next→ or Review→)
+    btn = page.locator('#deal-setup-wizard .wizard-footer button.btn-primary')
+    if btn.count() > 0:
+        btn.click()
+    wait_for_htmx(page)
+
+
 def run_deal_setup_wizard(
     page: Page,
     model_id: str,
@@ -259,31 +268,41 @@ def run_deal_setup_wizard(
     page.click('#deal-setup-wizard button:has-text("Next")')
     wait_for_htmx(page)
 
-    # Step 5 — Debt sizing mode
-    if debt_sizing_mode == "dscr_capped":
-        page.click('text=DSCR-Capped')
-        dscr_input = page.locator('[name="dscr_minimum"]')
-        if dscr_input.count() > 0:
-            dscr_input.fill(dscr_minimum)
-    # else gap_fill is the default selection
-    page.click('#deal-setup-wizard button:has-text("Next")')
-    wait_for_htmx(page)
+    # Remaining steps — fill fields if visible, then advance.
+    # The wizard may have 5-7 steps depending on debt configuration.
+    # Loop through remaining steps filling any recognized fields.
+    for _attempt in range(6):
+        # Fill any recognized fields on the current step
+        if debt_sizing_mode == "dscr_capped":
+            dscr_toggle = page.locator('.toggle-opt:has-text("DSCR-Capped")')
+            if dscr_toggle.count() > 0 and dscr_toggle.first.is_visible():
+                dscr_toggle.first.click()
+                dscr_input = page.locator('[name="dscr_minimum"]')
+                if dscr_input.count() > 0:
+                    dscr_input.fill(dscr_minimum)
 
-    # Step 6 — Reserves & Floors
-    floor_input = page.locator('[name="construction_floor_pct"]')
-    if floor_input.count() > 0:
-        floor_input.fill(construction_floor_pct)
-    reserve_input = page.locator('[name="operation_reserve_months"]')
-    if reserve_input.count() > 0:
-        reserve_input.fill(operation_reserve_months)
-    page.click('#deal-setup-wizard button:has-text("Review")')
-    wait_for_htmx(page)
+        floor_input = page.locator('[name="construction_floor_pct"]')
+        if floor_input.count() > 0 and floor_input.is_visible():
+            floor_input.fill(construction_floor_pct)
 
-    # Step 7 — Review → Finish Setup
-    page.wait_for_selector('button:has-text("Finish Setup")', timeout=5000)
-    page.click('button:has-text("Finish Setup")')
+        reserve_input = page.locator('[name="operation_reserve_months"]')
+        if reserve_input.count() > 0 and reserve_input.is_visible():
+            reserve_input.fill(operation_reserve_months)
+
+        # Check for Finish Setup (step 7 review page)
+        finish_btn = page.locator('#deal-setup-wizard .wizard-footer button:has-text("Finish Setup")')
+        if finish_btn.count() > 0:
+            try:
+                finish_btn.click()
+            except Exception:
+                pass
+            break
+
+        # Advance to next step
+        _wizard_click_next_or_review(page)
+
     # Wizard completes with HX-Redirect to the builder
-    page.wait_for_url(f"**/models/{model_id}/builder**", timeout=10_000)
+    page.wait_for_url(f"**/models/{model_id}/builder**", timeout=15_000)
     wait_for_htmx(page)
 
 
