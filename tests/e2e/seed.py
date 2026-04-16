@@ -123,35 +123,35 @@ def submit_timeline_wizard(
     page.wait_for_url(f"**/models/{model_id}/builder**", timeout=15_000)
     wait_for_htmx(page)
 
-    # Now inject phase durations via the form if provided.
-    # The JS wizard doesn't expose duration fields — we POST them directly
-    # to the timeline-wizard endpoint (this is supplementary data, not a UI flow).
+    # Set per-milestone durations by clicking each milestone row and editing
     if phase_durations:
-        from urllib.parse import urlencode
-        cookie = _get_session_cookie(page)
-        from urllib.parse import urlparse
-        parsed = urlparse(page.url)
-        base_url = f"{parsed.scheme}://{parsed.netloc}"
-        import httpx
-        data: list[tuple[str, str]] = [
-            ("anchor_type", anchor_type),
-            ("anchor_date", anchor_date),
-            ("anchor_duration_days", anchor_duration_days),
-        ] + [("milestone_types", mt) for mt in milestone_types]
-        for mt_str, days in phase_durations.items():
-            data.append((f"duration_{mt_str}", str(int(days))))
-        with httpx.Client(base_url=base_url, cookies={COOKIE_NAME: cookie},
-                          follow_redirects=False) as client:
-            resp = client.post(
-                f"/ui/projects/{project_id}/timeline-wizard",
-                content=urlencode(data).encode("utf-8"),
-                headers={"Content-Type": "application/x-www-form-urlencoded"},
-            )
-            assert resp.status_code in (200, 303), f"Timeline resubmit: {resp.status_code}"
-        # Reload the page to pick up the new durations
+        # Phase type labels shown in the milestone table
+        _PHASE_TYPE_LABELS = {
+            "close": "Close",
+            "pre_development": "Pre Development",
+            "construction": "Construction",
+            "operation_lease_up": "Operation Lease Up",
+            "operation_stabilized": "Operation Stabilized",
+            "divestment": "Divestment",
+            "offer_made": "Offer Made",
+            "under_contract": "Under Contract",
+        }
         page.goto(f"/models/{model_id}/builder?module=timeline")
-        page.wait_for_selector("#module-panel-content", timeout=10_000)
+        page.wait_for_selector("#module-panel-content", timeout=15_000)
         wait_for_htmx(page)
+
+        for mt_str, days in phase_durations.items():
+            label = _PHASE_TYPE_LABELS.get(mt_str, mt_str.replace("_", " ").title())
+            # Click the milestone row to open edit drawer
+            row = page.locator(f'#module-panel-content tr:has(td:has-text("{label}"))')
+            if row.count() > 0:
+                row.first.click()
+                page.wait_for_selector('#line-item-drawer [name="duration_days"]', timeout=8000)
+                page.wait_for_timeout(300)
+                page.fill('#line-item-drawer [name="duration_days"]', str(days))
+                page.click('#line-item-drawer button[type="submit"]')
+                wait_for_htmx(page)
+                page.wait_for_timeout(500)
 
     # Approve the timeline
     page.goto(f"/models/{model_id}/builder?module=timeline")

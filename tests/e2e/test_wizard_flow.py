@@ -23,12 +23,13 @@ from tests.e2e.seed import (
 pytestmark = pytest.mark.e2e
 
 
-@pytest.fixture(scope="module")
-def wizard_deal(_seed_page) -> tuple[str, str]:
-    """Create a deal and approve its timeline, ready for wizard testing."""
-    model_id = create_e2e_scenario(_seed_page, deal_name="E2E Wizard Flow Test")
-    project_id = _extract_project_id(_seed_page)
-    submit_timeline_wizard(_seed_page, model_id, project_id)
+def _fresh_wizard_deal(page) -> tuple[str, str]:
+    """Create a fresh deal with approved timeline — each test gets a clean wizard state."""
+    import uuid
+    suffix = uuid.uuid4().hex[:6]
+    model_id = create_e2e_scenario(page, deal_name=f"E2E Wizard {suffix}")
+    project_id = _extract_project_id(page)
+    submit_timeline_wizard(page, model_id, project_id)
     return model_id, project_id
 
 
@@ -36,9 +37,9 @@ def wizard_deal(_seed_page) -> tuple[str, str]:
 # Step 1 — Income mode
 # ---------------------------------------------------------------------------
 
-def test_wizard_step1_income_mode(logged_in_page, base_url, wizard_deal):
-    model_id, _ = wizard_deal
-    page = logged_in_page
+def test_wizard_step1_income_mode(_seed_page, base_url):
+    model_id, _ = _fresh_wizard_deal(_seed_page)
+    page = _seed_page
     page.goto(f"{base_url}/models/{model_id}/builder?module=deal_setup")
     page.wait_for_selector("#deal-setup-wizard", timeout=10_000)
     wait_for_htmx(page)
@@ -65,9 +66,9 @@ def test_wizard_step1_income_mode(logged_in_page, base_url, wizard_deal):
 # Step 2 — Debt types
 # ---------------------------------------------------------------------------
 
-def test_wizard_step2_debt_types(logged_in_page, base_url, wizard_deal):
-    model_id, _ = wizard_deal
-    page = logged_in_page
+def test_wizard_step2_debt_types(_seed_page, base_url):
+    model_id, _ = _fresh_wizard_deal(_seed_page)
+    page = _seed_page
     page.goto(f"{base_url}/models/{model_id}/builder?module=deal_setup")
     page.wait_for_selector("#deal-setup-wizard", timeout=10_000)
     wait_for_htmx(page)
@@ -99,10 +100,10 @@ def test_wizard_step2_debt_types(logged_in_page, base_url, wizard_deal):
 # Step 3 — Dropdowns fit their content
 # ---------------------------------------------------------------------------
 
-def test_wizard_step3_dropdowns_not_clipped(logged_in_page, base_url, wizard_deal):
+def test_wizard_step3_dropdowns_not_clipped(_seed_page, base_url):
     """Verify Active To dropdown can display long options like 'Certificate of Occupancy'."""
-    model_id, _ = wizard_deal
-    page = logged_in_page
+    model_id, _ = _fresh_wizard_deal(_seed_page)
+    page = _seed_page
     page.goto(f"{base_url}/models/{model_id}/builder?module=deal_setup")
     page.wait_for_selector("#deal-setup-wizard", timeout=10_000)
     wait_for_htmx(page)
@@ -132,10 +133,10 @@ def test_wizard_step3_dropdowns_not_clipped(logged_in_page, base_url, wizard_dea
 # Step 6 — Reserves side by side
 # ---------------------------------------------------------------------------
 
-def test_wizard_step6_reserves_layout(logged_in_page, base_url, wizard_deal):
+def test_wizard_step6_reserves_layout(_seed_page, base_url):
     """Verify Construction Floor and Operating Reserve render side by side."""
-    model_id, _ = wizard_deal
-    page = logged_in_page
+    model_id, _ = _fresh_wizard_deal(_seed_page)
+    page = _seed_page
     page.goto(f"{base_url}/models/{model_id}/builder?module=deal_setup")
     page.wait_for_selector("#deal-setup-wizard", timeout=10_000)
     wait_for_htmx(page)
@@ -172,10 +173,10 @@ def test_wizard_step6_reserves_layout(logged_in_page, base_url, wizard_deal):
 # Step 7 — Finish Setup button exists and works
 # ---------------------------------------------------------------------------
 
-def test_wizard_step7_finish_button_visible(logged_in_page, base_url, wizard_deal):
+def test_wizard_step7_finish_button_visible(_seed_page, base_url):
     """The Finish Setup button must be visible and clickable on step 7."""
-    model_id, _ = wizard_deal
-    page = logged_in_page
+    model_id, _ = _fresh_wizard_deal(_seed_page)
+    page = _seed_page
     page.goto(f"{base_url}/models/{model_id}/builder?module=deal_setup")
     page.wait_for_selector("#deal-setup-wizard", timeout=10_000)
     wait_for_htmx(page)
@@ -212,10 +213,10 @@ def test_wizard_step7_finish_button_visible(logged_in_page, base_url, wizard_dea
 # Wizard re-entry — Back to Model link when setup is already complete
 # ---------------------------------------------------------------------------
 
-def test_wizard_back_to_model_link(logged_in_page, base_url, wizard_deal):
+def test_wizard_back_to_model_link(_seed_page, base_url):
     """After completing setup, re-entering the wizard should show a Back to Model link."""
-    model_id, _ = wizard_deal
-    page = logged_in_page
+    model_id, _ = _fresh_wizard_deal(_seed_page)
+    page = _seed_page
 
     # First complete the wizard (via the previous test's deal or a fresh one)
     # Navigate to deal_setup after it's already been completed
