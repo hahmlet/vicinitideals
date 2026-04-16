@@ -134,23 +134,26 @@ For `N = 12`, that is `rate/12 × 6.5 = 0.5417 × rate`. Compared to the naive 5
 
 **The full-balance factor for Capitalized Interest.** Capitalized interest (PIK) accrues on the full commitment from day one — there is no "average draw", because the lender imputes full balance. The factor is `rate/12 × N`.
 
-**Code (cashflow.py, construction loan branch around line 821):**
+**Code (cashflow.py, construction loan branch around line 958):**
 ```python
 elif _ft == "construction_loan":
     _r = Decimal(str(_cr or 0))
     _cl_ct = _carry_type_for_phase(_carry, is_construction=True)
+    _n = _loan_pre_op_months(_m)   # per-loan active-window months (see §2.8)
     if _cl_ct == "interest_reserve":
         _io_f = (_r / HUNDRED / Decimal("12")
-                 * (Decimal(constr_months_total + 1) / Decimal("2"))
-                 ) if (_r > ZERO and constr_months_total > 0) else ZERO
+                 * (Decimal(_n + 1) / Decimal("2"))
+                 ) if (_r > ZERO and _n > 0) else ZERO
     elif _cl_ct == "capitalized_interest":
-        _io_f = (_r / HUNDRED / Decimal("12") * Decimal(constr_months_total)
-                 ) if (_r > ZERO and constr_months_total > 0) else ZERO
+        _io_f = (_r / HUNDRED / Decimal("12") * Decimal(_n)
+                 ) if (_r > ZERO and _n > 0) else ZERO
     else:  # io_only
         _io_f = ZERO
     _div = ONE - _io_f
     _principal = _q(constr_costs / _div) if (_div > ZERO and constr_costs > ZERO) else constr_costs
 ```
+
+> **April 2026 change:** `constr_months_total` was replaced by `_loan_pre_op_months(_m)` which computes month count within each loan's `[active_phase_start, active_phase_end)` window. See §2.8 for details.
 
 **Derivation of the principal solve.** We want the principal `P` to cover both base costs and interest:
 > `P = base_costs + interest_consumed = base_costs + P × f_io`
@@ -204,7 +207,7 @@ Writing each term as a fraction of `P`:
 > `P·(1 − f_c − f_m·(L + R)) = TPC − fixed − I_lu·L`
 > `P = (TPC − fixed − I_lu·L) / (1 − f_c − f_m·(L + R))`
 
-#### Code (cashflow.py, line ~1049)
+#### Code (cashflow.py, gap-fill solve in `_auto_size_debt_modules`)
 ```python
 divisor = ONE - constr_io_factor
 _m_cc = _cc_data.get(id(module))
@@ -844,3 +847,133 @@ The spread between the two is the "leverage amplification" — positive if lever
 ---
 
 *Document current as of April 2026. When changing any formula, update the corresponding section and reference the commit hash.*
+
+---
+
+## Appendix A: Per-Loan Active-Window Months (April 2026)
+
+### A.1 Why per-loan windowing replaced `constr_months_total`
+
+Prior to April 2026, every bridge loan used the same global `constr_months_total` — the sum of all construction-type phase months. This was wrong for multi-debt deals where loans have different active periods. A pre-development loan active from close to construction should only count pre-construction months, not the full construction duration.
+
+### A.2 Phase rank system
+
+Each phase has a numeric rank. A loan's active window is `[start_rank, end_rank)` — half-open, end-exclusive.
+
+```python
+_PERIOD_TYPE_RANK = {
+    PeriodType.acquisition:      0,
+    PeriodType.hold:             1,
+    PeriodType.pre_construction: 2,
+    PeriodType.construction:     3,  # also minor_renovation, major_renovation, conversion
+    PeriodType.lease_up:         4,
+    PeriodType.stabilized:       5,
+    PeriodType.exit:             6,
+}
+
+_APS_TO_RANK = {
+    "acquisition": 0, "close": 0,
+    "pre_construction": 2,
+    "construction": 3,
+    "lease_up": 4, "operation_lease_up": 4,
+    "stabilized": 5, "operation_stabilized": 5,
+    "exit": 6, "divestment": 6,
+}
+```
+
+### A.3 `_loan_pre_op_months(module)` function
+
+```python
+def _loan_pre_op_months(module) -> int:
+    start_rank = _APS_TO_RANK.get(module.active_phase_start, 0)
+    end_rank   = _APS_TO_RANK.get(module.active_phase_end, 99)
+    return sum(
+        p.months for p in phases
+        if p.period_type in _CONSTRUCTION_PERIOD_TYPES
+        and start_rank <= _PERIOD_TYPE_RANK.get(p.period_type, 99) < end_rank
+    )
+```
+
+**End-exclusive semantics.** `active_phase_end = "operation_stabilized"` (rank 5) means the loan is active for all phases with rank < 5. The loan is NOT active during stabilized itself — it is taken out at the START of stabilized. This matches CRE convention: a construction loan is retired when the project stabilizes.
+
+**Example.** A construction loan with `active_phase_start = "pre_construction"` (rank 2) and `active_phase_end = "lease_up"` (rank 4):
+- Counts pre_construction (rank 2) + construction (rank 3) = both included
+- Does NOT count lease_up (rank 4) — end-exclusive
+- If pre_construction = 3 months, construction = 12 months → N = 15
+
+### A.4 Impact on carry formulas
+
+All three bridge loan branches (pre-dev, acquisition, construction) call `_n = _loan_pre_op_months(_m)` instead of the global `constr_months_total`. The carry formulas themselves are unchanged — only the input `N` is now per-loan.
+
+---
+
+## Appendix B: Milestone Trigger Chains (April 2026)
+
+### B.1 How phase durations reach the engine
+
+The cashflow engine derives phase months from milestone dates. Milestones form a **trigger chain**: each non-anchor milestone has a `trigger_milestone_id` pointing to the previous milestone, with `trigger_offset_days = 0`. The chain is:
+
+```
+close (anchor, fixed date) → pre_development → construction → lease_up → stabilized → divestment
+```
+
+`computed_start(milestone_map)` walks the chain: `start = trigger_milestone.computed_start() + trigger_milestone.duration_days + offset_days`.
+
+### B.2 Fallback behavior
+
+If a milestone has no `trigger_milestone_id`, `computed_start()` returns `None`. The engine then falls back to `OperationalInputs.*_months` scalars. If those are also NULL (common for wizard-created deals), the phase defaults to 1 month.
+
+This fallback produces degenerate carry math — e.g., a 12-month construction project computing with N=1. Deals created before the trigger-chain fix (commit `5d5caf4`) may need a backfill script.
+
+### B.3 Timeline wizard two-pass creation
+
+The timeline wizard creates milestones in two passes:
+1. **Pass 1:** Create all milestones with durations + target_date on the anchor
+2. **Pass 2:** Wire `trigger_milestone_id` so `computed_start()` resolves for every non-anchor milestone
+
+Without Pass 2, the engine can't derive phase durations from milestones.
+
+### B.4 Divestment as a single-day event
+
+Divestment has `duration_days = 1` across all deal types. It represents the sale closing date — a point-in-time event, not a phase with duration. The cashflow engine uses `PhaseSpec(PeriodType.exit, 1)` for the exit phase regardless of the milestone's actual duration.
+
+On the Gantt, divestment gets a minimum display width of 30 days for visual presence (`_GANTT_DISPLAY_MINS`).
+
+---
+
+## Appendix C: Multi-Phase Carry Configuration (April 2026)
+
+### C.1 Phased carry format
+
+A single loan can have different carry types in different phases. The `carry` JSONB column stores this as:
+
+```json
+{
+  "phases": [
+    {"name": "construction", "carry_type": "interest_reserve", "io_rate_pct": 7.0},
+    {"name": "operation",    "carry_type": "pi",               "io_rate_pct": 6.5, "amort_term_years": 30}
+  ]
+}
+```
+
+The engine's `_carry_type_for_phase(carry, is_construction)` extracts the carry type for the relevant phase. The `_get_phase_carry(carry, phase_name)` function returns the full phase dict for rate lookup.
+
+### C.2 Rate lookup precedence
+
+For any carry calculation, the rate is resolved as:
+1. `source["interest_rate_pct"]` (from the capital module's source config)
+2. `carry_phase["io_rate_pct"]` (from the phase-specific carry dict)
+3. `carry["io_rate_pct"]` (from the flat carry format, legacy)
+
+### C.3 Common patterns
+
+| Pattern | Construction carry | Operations carry | Example |
+|---|---|---|---|
+| True IO → P&I | `io_only` | `pi` | Typical construction + perm |
+| Interest Reserve → P&I | `interest_reserve` | `pi` | Construction with reserve |
+| Capitalized Interest → P&I | `capitalized_interest` | `pi` | PIK during construction |
+| IO then PI (C2P) | `io_only` | `pi` | Construction-to-perm bond |
+
+### C.4 `"accruing"` alias
+
+The carry type `"accruing"` is normalized to `"capitalized_interest"` by `_carry_type_for_phase()` in the cashflow engine only. The waterfall engine keeps `"accruing"` distinct for side-pocket vs principal accrual treatment. User-facing UI shows "Capitalized Interest (PIK)".
