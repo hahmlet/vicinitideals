@@ -31,6 +31,7 @@ class Parcel(Base):
         UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
     )
     apn: Mapped[str] = mapped_column(String(100), unique=True, nullable=False)
+    apn_normalized: Mapped[str | None] = mapped_column(String(100), nullable=True, index=True)
     address_normalized: Mapped[str | None] = mapped_column(Text, nullable=True)
     address_raw: Mapped[str | None] = mapped_column(Text, nullable=True)
     state_id: Mapped[str | None] = mapped_column(String(100), nullable=True)

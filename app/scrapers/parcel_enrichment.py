@@ -21,6 +21,7 @@ from typing import Any
 from sqlalchemy import select
 
 from app.models.parcel import Parcel
+from app.reconciliation.matcher import normalize_apn
 from app.schemas.parcel import (
     ClackamasParcelResult,
     OregonCityParcelResult,
@@ -297,6 +298,7 @@ async def _upsert_parcel(session: Any, parcel_data: dict[str, Any]) -> Parcel:
         if value is not None:  # don't overwrite existing data with None from partial scrapers
             setattr(parcel, field, value)
 
+    parcel.apn_normalized = normalize_apn(parcel.apn)
     parcel.scraped_at = datetime.now(UTC)
 
     # Recompute priority bucket whenever parcel data changes

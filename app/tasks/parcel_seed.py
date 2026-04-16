@@ -31,6 +31,7 @@ from sqlalchemy.dialects.postgresql import insert as pg_insert
 
 from app.db import AsyncSessionLocal
 from app.models.parcel import Parcel
+from app.reconciliation.matcher import normalize_apn
 from app.tasks.celery_app import celery_app
 from app.utils.priority import PriorityBucket, classify
 
@@ -232,6 +233,7 @@ async def _seed_parcels_from_rlis() -> dict[str, int]:
                 stub = {
                     "id": uuid4(),
                     "apn": apn,
+                    "apn_normalized": normalize_apn(apn),
                     "address_raw": _str(props.get("SITEADDR")),
                     "address_normalized": _str(props.get("SITEADDR")),
                     "county": county,
@@ -284,6 +286,7 @@ async def _seed_parcels_from_rlis() -> dict[str, int]:
 async def _bulk_upsert_rlis(session: Any, stubs: list[dict[str, Any]]) -> int:
     """Upsert RLIS stubs — on conflict update assessor + geometry fields, preserve owner/zoning."""
     update_cols = {
+        "apn_normalized": pg_insert(Parcel).excluded.apn_normalized,
         "address_raw": pg_insert(Parcel).excluded.address_raw,
         "address_normalized": pg_insert(Parcel).excluded.address_normalized,
         "county": pg_insert(Parcel).excluded.county,
@@ -350,6 +353,7 @@ async def _seed_parcels() -> dict[str, int]:
                 stub = {
                     "id": uuid4(),
                     "apn": apn,
+                    "apn_normalized": normalize_apn(apn),
                     "address_normalized": _str(props.get("ADDRESS_FULL")),
                     "address_raw": _str(props.get("ADDRESS_FULL")),
                     "county": _county_name(props.get("County")),

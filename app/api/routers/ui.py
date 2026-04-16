@@ -2995,9 +2995,12 @@ def _listings_base_stmt(
 def _apply_jurisdiction_filter(stmt, jurisdictions: list[str]):
     """Apply jurisdiction filter — cities and 'uninc:county' entries.
 
-    Normal entries match ScrapedListing.city (case-insensitive).
-    Entries prefixed with 'uninc:' match county where city IS NULL.
+    Uses COALESCE(jurisdiction, city) so that parcel-reconciled listings
+    filter by the authoritative GIS jurisdiction, while unreconciled
+    listings fall back to the broker-provided city.
     """
+    effective_jurisdiction = func.coalesce(ScrapedListing.jurisdiction, ScrapedListing.city)
+
     city_names = []
     uninc_counties = []
     for j in jurisdictions:
@@ -3008,10 +3011,10 @@ def _apply_jurisdiction_filter(stmt, jurisdictions: list[str]):
 
     clauses = []
     if city_names:
-        clauses.append(func.lower(ScrapedListing.city).in_([c.lower() for c in city_names]))
+        clauses.append(func.lower(effective_jurisdiction).in_([c.lower() for c in city_names]))
     for county in uninc_counties:
         clauses.append(
-            (ScrapedListing.city.is_(None)) & (func.lower(ScrapedListing.county).like(f"{county.lower()}%"))
+            (effective_jurisdiction.is_(None)) & (func.lower(ScrapedListing.county).like(f"{county.lower()}%"))
         )
     if clauses:
         stmt = stmt.where(or_(*clauses))
@@ -3024,23 +3027,25 @@ def _apply_jurisdiction_filter(stmt, jurisdictions: list[str]):
 async def _get_jurisdictions(session) -> list[dict]:
     """Return sorted list of {value, label, type} for jurisdiction filter.
 
-    Cities come from distinct ScrapedListing.city.
-    Unincorporated entries come from counties that have listings with NULL city.
+    Uses COALESCE(jurisdiction, city) so parcel-reconciled listings show the
+    authoritative GIS jurisdiction while unreconciled listings fall back to
+    the broker-provided city.
     """
-    # Distinct cities
+    effective_jurisdiction = func.coalesce(ScrapedListing.jurisdiction, ScrapedListing.city)
+
+    # Distinct effective jurisdictions
     city_rows = (await session.execute(
-        select(ScrapedListing.city, func.count())
-        .where(ScrapedListing.city.isnot(None))
-        .group_by(ScrapedListing.city)
-        .order_by(ScrapedListing.city)
+        select(effective_jurisdiction.label("ej"), func.count())
+        .where(effective_jurisdiction.isnot(None))
+        .group_by(effective_jurisdiction)
+        .order_by(effective_jurisdiction)
     )).all()
 
-    # Normalize city names (dedup case variants like KLAMATH FALLS vs Klamath Falls)
+    # Normalize names (dedup case variants like KLAMATH FALLS vs Klamath Falls)
     seen_cities: dict[str, tuple[str, int]] = {}
     for city, cnt in city_rows:
         key = city.strip().lower()
         if key in seen_cities:
-            # Keep the title-cased version, sum counts
             existing_label, existing_cnt = seen_cities[key]
             seen_cities[key] = (existing_label if existing_label[0].isupper() else city.strip(), existing_cnt + cnt)
         else:
@@ -3051,14 +3056,13 @@ async def _get_jurisdictions(session) -> list[dict]:
         for _key, (label, cnt) in sorted(seen_cities.items())
     ]
 
-    # Unincorporated counties (listings with city IS NULL)
+    # Unincorporated counties (listings with no jurisdiction AND no city)
     uninc_rows = (await session.execute(
         select(ScrapedListing.county, func.count())
-        .where(ScrapedListing.city.is_(None), ScrapedListing.county.isnot(None))
+        .where(effective_jurisdiction.is_(None), ScrapedListing.county.isnot(None))
         .group_by(ScrapedListing.county)
     )).all()
     if uninc_rows:
-        # Normalize county name: strip " County", title-case
         seen_counties: dict[str, int] = {}
         for county, cnt in uninc_rows:
             norm = county.strip().title().replace(" County", "")
@@ -6404,6 +6408,27 @@ async def model_builder(
         if _mp_listing and _mp_listing.apn and _re.search(r"[,;]", _mp_listing.apn):
             multi_parcel_apns = [a.strip() for a in _re.split(r"[,;]", _mp_listing.apn) if a.strip()]
 
+    # Lot-size mismatch detection — flag from parcel reconciliation
+    lot_size_mismatch_info: dict | None = None
+    if opportunity:
+        _lsm_listing = (await session.execute(
+            select(ScrapedListing)
+            .where(
+                ScrapedListing.linked_project_id == opportunity.id,
+                ScrapedListing.lot_size_mismatch.is_(True),
+            )
+            .limit(1)
+        )).scalar_one_or_none()
+        if _lsm_listing and _lsm_listing.parcel:
+            _p = _lsm_listing.parcel
+            _parcel_lot = float(_p.lot_sqft) if _p.lot_sqft else (float(_p.gis_acres) * 43560 if _p.gis_acres else None)
+            _listing_lot = float(_lsm_listing.lot_sqft) if _lsm_listing.lot_sqft else None
+            if _parcel_lot and _listing_lot:
+                lot_size_mismatch_info = {
+                    "listing_sqft": f"{_listing_lot:,.0f}",
+                    "parcel_sqft": f"{_parcel_lot:,.0f}",
+                }
+
     # Active project object (for Clone From drawer label)
     active_project = next((p for p in deal_projects if p.id == active_project_id), None)
 
@@ -6437,6 +6462,7 @@ async def model_builder(
         "new_deal": new == "1",
         "cash_flow_rows": cash_flow_rows,
         "multi_parcel_apns": multi_parcel_apns,
+        "lot_size_mismatch": lot_size_mismatch_info,
         "step": wizard_step,
         "missing_building_data": missing_building_data,
         **data,

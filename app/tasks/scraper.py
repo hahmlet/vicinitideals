@@ -352,29 +352,24 @@ async def _auto_link_parcels(
     session: Any,
     new_listing_ids: list[tuple[Any, str | None, str | None, str | None, str | None, str | None, str | None]],
 ) -> None:
-    """For each newly-inserted listing, find or create+enrich its Parcel, set parcel_id, and classify."""
+    """For each newly-inserted listing, match to a Parcel via three-tier cascade, classify, and reconcile."""
     from datetime import UTC, datetime as _dt
-    from app.models.parcel import Parcel
-    from app.scrapers.parcel_enrichment import enrich_parcel
+    from app.reconciliation.matcher import (
+        apply_reconciliation,
+        reconcile_listing_to_parcel,
+    )
     from app.utils.priority import classify as _classify
 
     for listing_id, apn, address, county, city, zoning, property_type in new_listing_ids:
         try:
-            parcel: Parcel | None = None
+            listing = await session.get(ScrapedListing, listing_id)
+            if listing is None:
+                continue
 
-            # Fast path: existing parcel by APN
-            if apn:
-                parcel = (
-                    await session.execute(select(Parcel).where(Parcel.apn == apn))
-                ).scalar_one_or_none()
+            parcel, strategy, confidence = await reconcile_listing_to_parcel(session, listing)
 
-            if parcel is None:
-                # Enrich from GIS (creates or updates Parcel row, classifier runs inside _upsert_parcel)
-                parcel = await enrich_parcel(session, address=address, apn=apn)
-
-            update_vals: dict[str, Any] = {}
             if parcel is not None:
-                update_vals["parcel_id"] = parcel.id
+                await apply_reconciliation(session, listing, parcel, strategy, confidence)
 
             # Classify the listing from whatever data we have (listing fields may differ from parcel)
             # Prefer parcel fields if available, fall back to listing fields
@@ -386,15 +381,8 @@ async def _auto_link_parcels(
                 current_use=(parcel.current_use if parcel else None),
                 property_type=property_type,
             )
-            update_vals["priority_bucket"] = bucket.value
-            update_vals["priority_bucket_at"] = _dt.now(UTC)
-
-            if update_vals:
-                await session.execute(
-                    ScrapedListing.__table__.update()
-                    .where(ScrapedListing.__table__.c.id == listing_id)
-                    .values(**update_vals)
-                )
+            listing.priority_bucket = bucket.value
+            listing.priority_bucket_at = _dt.now(UTC)
         except Exception as exc:  # noqa: BLE001
             logger.warning("Parcel auto-link failed for listing %s: %s", listing_id, exc)
 
@@ -742,6 +730,19 @@ async def _scrape_listings(
                     )
                 ).scalars()
             )
+
+            # Auto-link unlinked listings to parcels (mirrors Crexi path)
+            unlinked = [
+                (
+                    sl.id, sl.apn, sl.address_normalized or sl.address_raw,
+                    sl.county, sl.city, sl.zoning, sl.property_type,
+                )
+                for sl in persisted_listings
+                if sl.parcel_id is None
+            ]
+            if unlinked:
+                await _auto_link_parcels(session, unlinked)
+                await session.flush()
 
             await _flag_saved_search_matches(persisted_listings, session=session)
             # Auto-promote disabled — manual promotion only via UI

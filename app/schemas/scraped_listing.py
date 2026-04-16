@@ -140,4 +140,10 @@ class ScrapedListingRead(ScrapedListingBase):
     matches_saved_criteria: bool = False
     canonical_id: uuid.UUID | None = None
 
+    # Parcel reconciliation
+    jurisdiction: str | None = None
+    match_strategy: str | None = None
+    match_confidence: float | None = None
+    lot_size_mismatch: bool | None = None
+
     model_config = {"from_attributes": True}

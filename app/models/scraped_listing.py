@@ -175,6 +175,12 @@ class ScrapedListing(Base):
     priority_bucket: Mapped[str | None] = mapped_column(String(30), nullable=True, index=True)
     priority_bucket_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
+    # Parcel reconciliation — populated when parcel_id is linked
+    jurisdiction: Mapped[str | None] = mapped_column(String(120), nullable=True, index=True)
+    match_strategy: Mapped[str | None] = mapped_column(String(30), nullable=True)
+    match_confidence: Mapped[object | None] = mapped_column(Numeric(4, 3), nullable=True)
+    lot_size_mismatch: Mapped[bool | None] = mapped_column(nullable=True, default=False)
+
     # Realie.ai enrichment
     realie_skip: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     realie_enriched_at: Mapped[datetime | None] = mapped_column(
