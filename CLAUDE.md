@@ -44,15 +44,19 @@ FastAPI 0.110+ (Python 3.12+) · SQLAlchemy 2.0 async + asyncpg · Alembic · Ce
 
 ## Deploy Workflow
 
-```bash
-git push origin main
-# VM 114 runs /root/deploy-vicinitideals.sh:
-# git pull → docker compose build → alembic upgrade head → docker compose up -d → health check
-```
+**IMPORTANT: A task is NOT complete until it is deployed to production.** Agents manage 100% of deploys. Unless explicitly told otherwise, always deploy after committing and pushing changes — do not ask for permission. "It's done" means it's live on `viciniti.deals`, not just committed locally.
 
-**Via Proxmox MCP** (preferred):
-```
-mcp__proxmox-mcp__ssh_exec container_id=114 command="bash /root/deploy-vicinitideals.sh"
+**Deploy steps** (all three are required):
+1. `git push origin main`
+2. `mcp__proxmox-mcp__ssh_exec container_id=114 command="bash /root/deploy-vicinitideals.sh"`
+3. Verify smoke checks pass in the deploy output
+
+The deploy script runs: `git pull → docker compose build → alembic upgrade head → docker compose up -d → health check`
+
+**Manual fallback** (if MCP is unavailable):
+```bash
+# SSH to VM 114 directly
+ssh root@192.168.1.28 "bash /root/deploy-vicinitideals.sh"
 ```
 
 ---
@@ -221,3 +225,4 @@ uv run python scripts/test_phase_b_debt.py --base-url https://viciniti.deals --a
 2. **X-Forwarded-For shows `192.168.1.1`**: UniFi SNAT on port forwards. Rate limiter buckets on proxy IP (global). Per-email limit still works. Accepted as-is.
 3. **Organization management**: no org creation UI or invite flow yet. First registered user auto-creates "Default Organization".
 4. **`docs/FINANCIAL_MODEL.md`** needs update for per-loan `_loan_pre_op_months`, trigger-chain requirements, and `_PERIOD_TYPE_RANK` windowing logic.
+5. **Listing jurisdiction data is inaccurate**: scraped `city` values come from listing sources (Crexi/LoopNet) and often use the metro name instead of the actual jurisdiction (e.g. Gresham listings tagged "Portland"). Fix: add a `jurisdiction` column to `scraped_listings`, backfill via nearest-parcel lookup using lat/lng against the 446K parcels with known jurisdictions, and update the scraper pipeline to assign jurisdiction on ingest.
