@@ -626,3 +626,104 @@ def test_unit_mix_create_and_delete_round_trip(
     if card_meta.count() > 0:
         meta_text = card_meta.first.text_content() or ""
         assert "40" in meta_text, f"Card should show 40 units total, got: {meta_text}"
+
+
+# ---------------------------------------------------------------------------
+# 11. Apply UnitMix to Revenue — auto-generates IncomeStream rows
+# ---------------------------------------------------------------------------
+
+def test_apply_unit_mix_to_revenue_creates_income_stream(
+    _seed_page, base_url: str
+) -> None:
+    """Clicking 'Apply to Revenue' on the Property panel should create an
+    IncomeStream row with the right label and strategy mapping."""
+    import uuid
+    page = _seed_page
+    suffix = uuid.uuid4().hex[:6]
+    model_id = create_e2e_scenario(page, deal_name=f"E2E Apply2Rev {suffix}")
+    project_id = _extract_project_id(page)
+    submit_timeline_wizard(
+        page, model_id, project_id,
+        milestone_types=["close", "construction", "operation_stabilized", "divestment"],
+    )
+
+    # Add a UnitMix row via the form POST endpoint (simulate user create)
+    # This is faster than opening the drawer for a pure backend integration test.
+    page.request.post(
+        f"{base_url}/ui/forms/{model_id}/unit-mix",
+        form={
+            "label": "2BR/2BA",
+            "unit_count": "60",
+            "avg_sqft": "900",
+            "in_place_rent_per_unit": "1400",
+            "market_rent_per_unit": "1700",
+            "unit_strategy": "ltl_catchup",
+        },
+    )
+
+    # Navigate to Property panel and confirm "Apply to Revenue" button appears
+    page.goto(f"{base_url}/models/{model_id}/builder?module=property")
+    page.wait_for_selector("#module-panel-content", timeout=15_000)
+    wait_for_htmx(page)
+
+    apply_btn = page.locator('button:has-text("Apply to Revenue")')
+    assert apply_btn.count() >= 1, "Apply to Revenue button should be visible"
+
+    # Dismiss the HTMX confirm dialog and click apply
+    page.on("dialog", lambda d: d.accept())
+    apply_btn.first.click()
+    wait_for_htmx(page)
+    page.wait_for_timeout(800)
+
+    # Navigate to Revenue panel — stream should now exist
+    page.goto(f"{base_url}/models/{model_id}/builder?module=revenue")
+    page.wait_for_selector("#module-panel-content", timeout=15_000)
+    wait_for_htmx(page)
+
+    content = page.content()
+    # LTL Catchup strategy → label is "{unit} Rent", amount = in_place ($1400)
+    assert "2BR/2BA Rent" in content, "Generated IncomeStream should have expected label"
+
+
+# ---------------------------------------------------------------------------
+# 12. Sensitivity Analysis — tab, controls, and grid rendering
+# ---------------------------------------------------------------------------
+
+def test_sensitivity_module_card_visible(
+    logged_in_page, base_url: str, feature_model_id: str
+) -> None:
+    """Sensitivity card should appear in the nav stack below Cash Flow."""
+    page = logged_in_page
+    page.goto(f"{base_url}/models/{feature_model_id}/builder")
+    page.wait_for_selector(".module-stack", timeout=15_000)
+
+    card = page.locator('.module-card:has(.module-label:has-text("Sensitivity"))')
+    assert card.count() == 1, "Sensitivity card should be in the nav"
+
+    card.first.click()
+    page.wait_for_url("**module=sensitivity**", timeout=10_000)
+    page.wait_for_selector("#module-panel-content", timeout=10_000)
+    assert page.locator('.module-panel-title:has-text("Sensitivity Analysis")').count() == 1
+
+
+def test_sensitivity_form_has_axis_metric_selectors(
+    logged_in_page, base_url: str, feature_model_id: str
+) -> None:
+    """The Sensitivity panel should expose metric + axis_x + axis_y selects
+    and a 'Run Sensitivity' button."""
+    page = logged_in_page
+    page.goto(f"{base_url}/models/{feature_model_id}/builder?module=sensitivity")
+    page.wait_for_selector("#module-panel-content", timeout=15_000)
+    wait_for_htmx(page)
+
+    assert page.locator('select[name="metric"]').count() == 1
+    assert page.locator('select[name="axis_x"]').count() == 1
+    assert page.locator('select[name="axis_y"]').count() == 1
+    assert page.locator('button#sensitivity-run-btn').count() == 1
+
+    # Metric options include Levered IRR as default
+    metric = page.locator('select[name="metric"]')
+    opts = [o.get_attribute("value") for o in metric.locator("option").all()]
+    assert "project_irr_levered" in opts
+    assert "debt_yield_pct" in opts
+    assert "dscr" in opts
