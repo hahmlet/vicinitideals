@@ -703,6 +703,13 @@
             <div class="toggle-opt-title">DSCR-Capped</div>
             <div class="toggle-opt-desc">Debt sized to meet Minimum DSCR. May result in a Sources gap.</div>
           </label>
+          <label class="toggle-opt {% if _dsm == 'dual_constraint' %}selected{% endif %}"
+                 id="opt-dual-constraint" onclick="selectToggle('debt_sizing_mode','dual_constraint')">
+            <input type="radio" name="debt_sizing_mode" value="dual_constraint"
+                   {% if _dsm == 'dual_constraint' %}checked{% endif %}>
+            <div class="toggle-opt-title">Dual Constraint</div>
+            <div class="toggle-opt-desc">MIN of LTV, DSCR, and gap-fill. Industry standard — lender funds the smaller.</div>
+          </label>
         </div>
         <div class="field-row" style="align-items:flex-end;margin-top:8px">
           <div class="field-group" style="max-width:160px">

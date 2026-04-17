@@ -284,6 +284,10 @@ class OperationalInputs(Base):
     # Lease-up
     lease_up_months: Mapped[int | None] = mapped_column(Integer, nullable=True)
     initial_occupancy_pct: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
+    # "linear" (default) or "s_curve" — controls occupancy ramp shape during lease-up
+    lease_up_curve: Mapped[str | None] = mapped_column(String(20), nullable=True)
+    # S-curve steepness: 1 = flat/linear, 10 = steep S-curve (default 5)
+    lease_up_curve_steepness: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
 
     # Stabilized operations (deprecated OpEx scalars: use OperatingExpenseLine rows instead)
     opex_per_unit_annual: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=0)
@@ -392,7 +396,15 @@ class IncomeStream(Base):
     # Fraction of renovation premium absorbed per month during construction+lease-up
     # (0 = full premium from day one; 1.0 = linear ramp over reno+lease-up timeline)
     renovation_absorption_rate: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
+    # Discrete capture schedule: JSON list of {year: int, capture_pct: float}
+    # e.g. [{"year": 1, "capture_pct": 0}, {"year": 2, "capture_pct": 50}, {"year": 3, "capture_pct": 100}]
+    # If set, overrides renovation_absorption_rate with discrete steps (PropRise-style)
+    renovation_capture_schedule: Mapped[list | None] = mapped_column(JSON, nullable=True)
     escalation_rate_pct_annual: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=0)
+    # LTL catchup: target rent to ramp toward (market_rent from UnitMix)
+    # When set, escalation is accelerated up to ltl_catchup_cap until target is reached,
+    # then reverts to escalation_rate_pct_annual.
+    catchup_target_rent: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
     active_in_phases: Mapped[list[str]] = mapped_column(
         ARRAY(String).with_variant(JSON(), "sqlite"),
         nullable=False,
@@ -428,6 +440,13 @@ class UnitMix(Base):
     unit_count: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
     avg_sqft: Mapped[object | None] = mapped_column(Numeric(18, 2), nullable=True)
     avg_monthly_rent: Mapped[object | None] = mapped_column(Numeric(18, 2), nullable=True)
+    # Loss-to-lease: market rent vs in-place rent spread
+    market_rent_per_unit: Mapped[object | None] = mapped_column(Numeric(18, 2), nullable=True)
+    in_place_rent_per_unit: Mapped[object | None] = mapped_column(Numeric(18, 2), nullable=True)
+    # Unit strategy: "base_escalation" | "ltl_catchup" | "value_add_renovation"
+    unit_strategy: Mapped[str | None] = mapped_column(String(40), nullable=True)
+    # Post-renovation rent (only for value_add_renovation strategy)
+    post_reno_rent_per_unit: Mapped[object | None] = mapped_column(Numeric(18, 2), nullable=True)
     notes: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     project: Mapped["Project"] = relationship(  # type: ignore[name-defined]

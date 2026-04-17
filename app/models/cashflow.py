@@ -107,6 +107,9 @@ class OperationalOutputs(Base):
     dscr: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
     project_irr_levered: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
     project_irr_unlevered: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
+    debt_yield_pct: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
+    # 5x5 sensitivity matrix: {param_x, param_y, values: [[...]]}
+    sensitivity_matrix: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     computed_at: Mapped[datetime | None] = mapped_column(
         DateTime(timezone=True), nullable=True
     )

@@ -311,6 +311,22 @@ function ulTimingChanged(val) {
     </div>
   </div>
 
+  {# ── Loss adjustments (defaults to 0 — show current values or 0) ── #}
+  <div class="form-row">
+    <div class="form-field">
+      <label class="form-label">Bad Debt (%)</label>
+      <input class="form-input" type="number" name="bad_debt_pct" step="0.1" min="0" max="100"
+             value="{{ existing.bad_debt_pct | round(1) if existing and existing.bad_debt_pct else 0 }}" placeholder="0">
+      <div class="form-hint">% of GPR lost to uncollectable rent</div>
+    </div>
+    <div class="form-field">
+      <label class="form-label">Concessions (%)</label>
+      <input class="form-input" type="number" name="concessions_pct" step="0.1" min="0" max="100"
+             value="{{ existing.concessions_pct | round(1) if existing and existing.concessions_pct else 0 }}" placeholder="0">
+      <div class="form-hint">% of GPR lost to move-in specials, free rent</div>
+    </div>
+  </div>
+
   <div class="form-row">
     <div class="form-field">
       <label class="form-label">Escalation (%/yr)</label>
@@ -512,7 +528,7 @@ function ulTimingChanged(val) {
 {%- set _NO_CARRY_TYPES = ['grant','tax_credit','owner_investment'] -%}
 {%- set _NO_EXIT_TYPES = ['permanent_debt'] -%}
 
-{%- macro exit_fields(et_val, trig_val) %}
+{%- macro exit_fields(et_val, trig_val, prepay_val) %}
 {%- set _trig_norm = trig_val | replace(' ','_') | lower -%}
 <div class="form-row">
   <div class="form-field">
@@ -530,6 +546,14 @@ function ulTimingChanged(val) {
       <option value="{{ trig }}" {% if _trig_norm == trig %}selected{% endif %}>{{ trig | replace('_',' ') | title }}</option>
       {% endfor %}
     </select>
+  </div>
+</div>
+<div class="form-row">
+  <div class="form-field" style="max-width:200px">
+    <label class="form-label">Prepay Penalty (%)</label>
+    <input class="form-input" type="number" name="prepay_penalty_pct" step="0.1" min="0" max="100"
+           value="{{ prepay_val or '' }}" placeholder="0">
+    <div class="form-hint">% of outstanding balance at payoff</div>
   </div>
 </div>
 {%- endmacro %}
@@ -741,7 +765,8 @@ function ulTimingChanged(val) {
     <div class="form-section-title">Exit</div>
     {{ exit_fields(
         existing.exit_terms.get('exit_type','') if existing.exit_terms else '',
-        existing.exit_terms.get('trigger','')   if existing.exit_terms else ''
+        existing.exit_terms.get('trigger','')   if existing.exit_terms else '',
+        existing.source.get('prepay_penalty_pct','') if existing.source else ''
     ) }}
   </div>
   <div class="form-section {% if not _show_carry %}border-none{% endif %}">
@@ -894,7 +919,7 @@ function ulTimingChanged(val) {
 
   {# ── Step 2: Exit ── #}
   <div id="sw-step-2" style="display:none">
-    {{ exit_fields('full_payoff', 'sale') }}
+    {{ exit_fields('full_payoff', 'sale', '') }}
   </div>
 
   {# ── Step 3: Interest / Loan Terms (stack position auto-assigned) ── #}

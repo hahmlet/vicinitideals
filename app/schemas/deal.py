@@ -168,6 +168,8 @@ class OperationalInputsBase(BaseModel):
 
     lease_up_months: int | None = None
     initial_occupancy_pct: Decimal | None = None
+    lease_up_curve: str | None = None  # "linear" (default) or "s_curve"
+    lease_up_curve_steepness: Decimal | None = None  # S-curve steepness (1=flat, 10=steep, default 5)
 
     # Deprecated OpEx scalars — use OperatingExpenseLine rows
     opex_per_unit_annual: Decimal = Decimal("0")
@@ -274,7 +276,11 @@ class IncomeStreamBase(BaseModel):
     bad_debt_pct: Decimal = Decimal("0")
     concessions_pct: Decimal = Decimal("0")
     renovation_absorption_rate: Decimal | None = None
+    # Discrete capture schedule: [{year: 1, capture_pct: 0}, {year: 2, capture_pct: 50}, ...]
+    renovation_capture_schedule: list[dict] | None = None
     escalation_rate_pct_annual: Decimal = Decimal("0")
+    # LTL catchup: target rent to ramp toward (capped at LTL_CATCHUP_CAP_PCT/yr)
+    catchup_target_rent: Decimal | None = None
     active_in_phases: list[str] = []
     notes: str | None = None
 
@@ -461,6 +467,29 @@ class UseLineRead(UseLineBase):
 
 
 # ---------------------------------------------------------------------------
+# UnitMix
+# ---------------------------------------------------------------------------
+
+class UnitMixBase(BaseModel):
+    label: str
+    unit_count: int = 1
+    avg_sqft: Decimal | None = None
+    avg_monthly_rent: Decimal | None = None
+    market_rent_per_unit: Decimal | None = None
+    in_place_rent_per_unit: Decimal | None = None
+    unit_strategy: str | None = None  # "base_escalation" | "ltl_catchup" | "value_add_renovation"
+    post_reno_rent_per_unit: Decimal | None = None
+    notes: str | None = None
+
+
+class UnitMixRead(UnitMixBase):
+    id: uuid.UUID
+    project_id: uuid.UUID
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+# ---------------------------------------------------------------------------
 # OperationalOutputs
 # ---------------------------------------------------------------------------
 
@@ -471,8 +500,10 @@ class OperationalOutputsBase(BaseModel):
     noi_stabilized: Decimal | None = None
     cap_rate_on_cost_pct: Decimal | None = None
     dscr: Decimal | None = None
+    debt_yield_pct: Decimal | None = None
     project_irr_levered: Decimal | None = None
     project_irr_unlevered: Decimal | None = None
+    sensitivity_matrix: dict | None = None
     computed_at: datetime | None = None
 
 

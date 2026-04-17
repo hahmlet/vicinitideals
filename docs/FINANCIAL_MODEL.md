@@ -572,7 +572,18 @@ Where `initial_occ` defaults to 50% and `stabilized_occ` defaults to 95% (config
 
 **Why 50% initial?** This is the `OperationalInputs.initial_occupancy_pct` field. In new construction it might be 0%; in acquisition-with-repositioning it might be 60% (existing tenants retained). The default of 50% is a reasonable lease-up scenario that users will commonly overwrite.
 
-**Why linear, not S-curve?** An S-curve (slow-fast-slow) would be more realistic for brand-new lease-up, but it introduces a second parameter (curve steepness) that users don't know how to set. Linear is transparent and produces conservative results in the middle months.
+**S-curve option.** When `OperationalInputs.lease_up_curve = "s_curve"`, the ramp uses a logistic function instead of linear:
+
+```
+t_norm = month_index / (months - 1)           # 0.0 → 1.0
+raw = 1 / (1 + e^(-k × (t_norm - 0.5)))       # logistic sigmoid
+normalized = (raw - sigmoid(-k/2)) / (sigmoid(k/2) - sigmoid(-k/2))
+occupancy = initial_occ + (stabilized_occ - initial_occ) × normalized
+```
+
+Where `k` = `lease_up_curve_steepness` (default 5; range 1=flat to 10=steep). At k=5 this produces the classic slow-start → rapid-middle → slow-finish absorption pattern observed in real lease-ups. The normalization ensures occ(0) = initial and occ(N) = stabilized exactly.
+
+**When to use S-curve.** Large new-construction or major-reno projects where absorption follows a marketing-driven pattern. Keep linear (default) for smaller value-add deals where units turn one at a time.
 
 ### 4.4 Occupancy in hold / renovation phases
 
@@ -596,6 +607,55 @@ escalated_amount = escalated_amount × absorption_frac
 - Draw schedule sizing (lower early cash flow = more reserves needed)
 
 **When to use.** Set `renovation_absorption_rate = 1.0` on premium-driven income streams for value-add deals. Leave it `NULL` (default) for acquisition deals where income is already stabilized.
+
+**Discrete capture schedule (engine only — not exposed in UI).** The engine supports `renovation_capture_schedule` as a JSON array of `{year, capture_pct}` entries for PropRise-style discrete steps. However, the UI exposes only the continuous ramp (`renovation_absorption_rate`). The discrete schedule is available for API/import use but is not a primary modeling path. Continuous ramp is simpler to configure and produces smoother cash flows.
+
+### 4.7 LTL Catchup Escalation
+
+When an income stream has `catchup_target_rent` set, the engine applies accelerated escalation capped at `LTL_CATCHUP_CAP_PCT` (hardcoded 10%) per year until the target is reached, then reverts to normal `escalation_rate_pct_annual`.
+
+**Formula (per year):**
+```
+if current_rent < catchup_target_rent:
+    increase = min(target - current, current × 0.10)
+    current = current + increase
+else:
+    current = current × (1 + normal_escalation_rate)
+```
+
+**Example** ($1,200 in-place → $1,500 market, 10% cap, 3% normal):
+```
+Year 0: $1,200 (in-place)
+Year 1: $1,200 + min($300, $120) = $1,320  (10% cap binds)
+Year 2: $1,320 + min($180, $132) = $1,452  (10% cap binds)
+Year 3: $1,452 + min($48, $145)  = $1,500  (gap closed, full amount < cap)
+Year 4: $1,500 × 1.03            = $1,545  (normal escalation resumes)
+```
+
+**Partial-year interpolation.** Within a year, the catchup increase is pro-rated by month: `increase × (month_in_year / 12)`. This preserves monthly granularity.
+
+**Why 10% cap?** A 10% annual rent increase is at the upper end of what the Portland multifamily market can absorb without mass turnover. Higher increases (15-20%) are theoretically possible but cause vacancy spikes that offset the revenue gain. The cap is a global constant (`LTL_CATCHUP_CAP_PCT`) — not user-configurable — to enforce realistic modeling.
+
+**Relationship to renovation absorption.** LTL catchup and renovation absorption are independent and apply to different unit pools:
+- **LTL catchup** applies to units NOT being renovated — closing the gap between in-place and market rent through lease renewals
+- **Renovation absorption** applies to units being renovated — phasing in the post-renovation premium as units are turned
+
+For units in the value-add pool, renovation supersedes LTL: the unit goes directly from `in_place_rent` to `post_reno_rent`. The LTL gap ($300 in the example) is captured implicitly because `post_reno_rent` ($1,800) already exceeds `market_rent` ($1,500).
+
+### 4.8 Unit Strategy Assignment (UnitMix)
+
+Each unit type in `UnitMix` can be assigned one of three strategies via `unit_strategy`:
+
+| Strategy | Field | Rent Trajectory |
+|---|---|---|
+| `base_escalation` | No special fields | `in_place` → normal annual escalation |
+| `ltl_catchup` | `market_rent_per_unit` | `in_place` → accelerated to `market_rent` → normal |
+| `value_add_renovation` | `post_reno_rent_per_unit` | `in_place` → renovation → `post_reno_rent` → normal |
+
+When "Apply to Model" is invoked from the UnitMix editor (future UI), the system auto-generates appropriate IncomeStream rows:
+- `ltl_catchup` units → stream with `catchup_target_rent = market_rent_per_unit`
+- `value_add_renovation` units → stream with `renovation_absorption_rate = 1.0`, base = `post_reno_rent_per_unit`
+- `base_escalation` units → stream with standard escalation only
 
 ### 4.6 NOI-mode direct input
 
@@ -895,6 +955,26 @@ cash_on_cash_year_1_pct = (year_one_distributions / total_contributed) × 100
 
 **Why "periods 0–11" and not "the year after stabilization"?** By convention, "year 1" means the first 12 months from deal close. If the deal is still in construction during year 1, cash-on-cash will be 0% or negative. That is the correct, honest number — the user should interpret it in context.
 
+#### Debt Yield
+
+```
+debt_yield_pct = (NOI_stabilized / total_outstanding_debt_balance) × 100
+```
+
+Where `total_outstanding_debt_balance` sums all non-bridge debt module amounts (bridge modules with `is_bridge = True` are excluded to avoid double-counting with the perm that takes them out).
+
+**Why lenders care.** Debt yield is a coverage metric independent of interest rate and amortization. A 10% debt yield means NOI covers 10% of the loan balance annually — the lender can recover their principal in ~10 years of NOI alone. Most institutional lenders require 8-10% minimum.
+
+#### Loss-to-Lease
+
+Tracked on `UnitMix` rows via `market_rent_per_unit` and `in_place_rent_per_unit`:
+
+```
+loss_to_lease_pct = (market_rent - in_place_rent) / market_rent × 100
+```
+
+A positive LTL indicates below-market rents — the primary value-add opportunity in multifamily acquisitions. Three of five benchmark CRE models (A.CRE Acquisition, PropRise, A Simple Model) track LTL as a first-class metric. Exported in the JSON payload via `unit_mix` and available for investor-facing reports.
+
 ### 7.5 Debt service in the waterfall (true DS, not placeholder)
 
 The cashflow engine produces an estimate of debt service using simple IO/P&I formulas. The waterfall engine then **recomputes** levered cash flows using the actual distributions from `debt_service` tiers in the waterfall:
@@ -939,6 +1019,17 @@ The spread between the two is the "leverage amplification" — positive if lever
 | `prepay_penalty_pct` | `NULL` (default) | CapitalSourceSchema (JSONB) | % of balloon balance at payoff |
 | `refi_cap_rate_pct` | `NULL` (default) | CapitalSourceSchema (JSONB) | Cap rate override for refi LTV sizing |
 | `asset_mgmt_fee_pct` | `NULL` (default) | OperationalInputs | AM fee deducted pre-waterfall |
+| `debt_yield_pct` | computed | OperationalOutputs | NOI / total debt balance × 100 |
+| `sensitivity_matrix` | computed (JSON) | OperationalOutputs | 5×5 grid storage for investor export |
+| `lease_up_curve` | `NULL` → "linear" | OperationalInputs | "linear" or "s_curve" ramp shape |
+| `lease_up_curve_steepness` | `NULL` → 5 | OperationalInputs | S-curve steepness (1=flat, 10=steep) |
+| `market_rent_per_unit` | `NULL` | UnitMix | Market rent for loss-to-lease calculation |
+| `in_place_rent_per_unit` | `NULL` | UnitMix | Current lease rent for LTL |
+| `renovation_capture_schedule` | `NULL` | IncomeStream | Discrete year-by-year capture rates (JSON, engine only) |
+| `catchup_target_rent` | `NULL` | IncomeStream | Market rent target for LTL catchup escalation |
+| `LTL_CATCHUP_CAP_PCT` | `10` | cashflow.py constant | Max annual rent increase % during LTL catchup |
+| `unit_strategy` | `NULL` | UnitMix | "base_escalation", "ltl_catchup", or "value_add_renovation" |
+| `post_reno_rent_per_unit` | `NULL` | UnitMix | Monthly rent after renovation (value-add strategy) |
 
 ---
 
@@ -973,6 +1064,14 @@ The spread between the two is the "leverage amplification" — positive if lever
 14. **American-style waterfall only** (no European toggle). American (period-by-period distribution) is the standard for US multifamily syndications. European (return-all-capital-plus-pref-before-any-promote) can be modeled by arranging `return_of_equity` and `pref_return` tiers in the correct priority order — no separate engine path needed.
 
 15. **Renovation absorption as a per-stream attribute** (not a global deal setting). Different income streams may have different absorption profiles — e.g., residential rent premiums phase in with unit turns, but parking income may stabilize immediately. Per-stream gives the user control without global assumptions.
+
+16. **S-curve lease-up as opt-in** (linear default). Linear is transparent, conservative, and produces verifiable results. S-curve is more realistic for large projects but adds a steepness parameter that most users won't calibrate. Default to the simpler model; power users can switch via `lease_up_curve = "s_curve"`. Modeled after Adventures in CRE Development Model which offers a similar toggle.
+
+17. **Debt yield as a standard output metric** alongside DSCR. Three of five benchmark models expose debt yield. Lenders increasingly use it as a rate-independent coverage measure. Computed as `NOI / total_debt_balance` — no new inputs required, just a new output.
+
+18. **Loss-to-lease on UnitMix** (not IncomeStream). LTL is a property characteristic (market vs. in-place rent), not an income stream attribute. It lives on UnitMix because that's where unit-level rent data belongs. The value-add thesis is literally "buy at in-place, renovate to market."
+
+19. **Discrete capture schedule as alternative to continuous ramp**. PropRise uses 0%/50%/100% year-by-year steps. This is simpler to explain to investors than a continuous fraction. Both options available per-stream: `renovation_capture_schedule` (discrete) overrides `renovation_absorption_rate` (continuous) when set.
 
 ---
 

@@ -915,6 +915,11 @@
         <div class="stat-value">{{ '%.2f×' | format(outputs.dscr | float) if outputs.dscr else '—' }}</div>
       </div>
       <div class="stat-card" style="cursor:help"
+           title="Debt Yield = Stabilized NOI ÷ Total Outstanding Debt Balance × 100.&#10;&#10;A rate-independent coverage metric. Most institutional lenders require 8–10% minimum.&#10;Unlike DSCR, debt yield does not depend on interest rate or amortization period.">
+        <div class="stat-label">Debt Yield</div>
+        <div class="stat-value">{{ '%.1f%%' | format(outputs.debt_yield_pct | float) if outputs.debt_yield_pct else '—' }}</div>
+      </div>
+      <div class="stat-card" style="cursor:help"
            title="Internal Rate of Return on levered equity cash flows.&#10;&#10;Computed over {{ outputs.total_timeline_months }} months using pyxirr on monthly net cash flows after debt service.{{ '&#10;Hold period: ' + ('%.1f' | format(_hold_yrs)) + ' years' if _hold_yrs else '' }}{{ '&#10;Exit cap rate: ' + ('%.1f%%' | format(_exit_cap)) if _exit_cap else '' }}&#10;&#10;Negative IRR indicates exit proceeds do not recover invested capital — check exit cap rate and hold period in Divestment.">
         <div class="stat-label">Project IRR (Levered)</div>
         <div class="stat-value">{{ '%.1f%%' | format(outputs.project_irr_levered | float) if outputs.project_irr_levered else '—' }}</div>

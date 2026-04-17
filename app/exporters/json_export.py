@@ -21,6 +21,7 @@ from app.schemas.deal import (
     CashFlowRead,
     DealModelRead,
     IncomeStreamRead,
+    UnitMixRead,
     OperatingExpenseLineRead,
     OperationalInputsRead,
     OperationalOutputsRead,
@@ -117,6 +118,7 @@ async def export_deal_model_json(session: AsyncSession, model_id: UUID) -> dict[
                 selectinload(Project.operational_inputs),
                 selectinload(Project.income_streams),
                 selectinload(Project.expense_lines),
+                selectinload(Project.unit_mix),
             ),
             selectinload(DealModel.operational_outputs),
             selectinload(DealModel.cash_flows),
@@ -160,6 +162,10 @@ async def export_deal_model_json(session: AsyncSession, model_id: UUID) -> dict[
         OperatingExpenseLineRead.model_validate(line).model_dump(mode="json")
         for line in sorted(default_project.expense_lines if default_project else [], key=lambda item: (item.label or "", str(item.id)))
     ]
+    unit_mix = [
+        UnitMixRead.model_validate(u).model_dump(mode="json")
+        for u in sorted(default_project.unit_mix if default_project else [], key=lambda item: (item.label or "", str(item.id)))
+    ]
     cash_flows = [
         CashFlowRead.model_validate(cash_flow).model_dump(mode="json")
         for cash_flow in sorted(model.cash_flows, key=lambda item: item.period)
@@ -183,6 +189,7 @@ async def export_deal_model_json(session: AsyncSession, model_id: UUID) -> dict[
             "operational_inputs": operational_inputs,
             "income_streams": income_streams,
             "expense_lines": expense_lines,
+            "unit_mix": unit_mix,
             "capital_stack": capital_modules,
             "waterfall_tiers": waterfall_tiers,
         }
@@ -204,6 +211,7 @@ async def export_deal_model_json(session: AsyncSession, model_id: UUID) -> dict[
         "operational_outputs": outputs,
         "income_streams": income_streams,
         "expense_lines": expense_lines,
+        "unit_mix": unit_mix,
         "capital_modules": capital_modules,
         "waterfall_tiers": waterfall_tiers,
         "waterfall_results": waterfall_results,

@@ -34,6 +34,8 @@ ZERO = Decimal("0")
 ONE = Decimal("1")
 HUNDRED = Decimal("100")
 PLACEHOLDER_DSCR = Decimal("1.250000")
+# Max annual rent increase for LTL catchup — prevents unrealistic 20%+ jumps
+LTL_CATCHUP_CAP_PCT = Decimal("10")
 
 
 @dataclass(frozen=True)
@@ -400,6 +402,24 @@ async def compute_cash_flows(
         else ZERO
     )
 
+    # Debt Yield = Stabilized NOI / Total Outstanding Debt Balance
+    total_debt_balance = ZERO
+    for cm in capital_modules:
+        ft = str(cm.funder_type).replace("FunderType.", "")
+        if ft not in _DEBT_FUNDER_TYPES:
+            continue
+        src = cm.source or {}
+        if src.get("is_bridge"):
+            continue  # bridge is taken out by perm — don't double-count
+        amt = src.get("amount")
+        if amt:
+            total_debt_balance += Decimal(str(amt))
+    debt_yield_pct = (
+        _q((noi_stabilized / total_debt_balance) * HUNDRED)
+        if total_debt_balance > ZERO
+        else ZERO
+    )
+
     project_irr_unlevered = _compute_xirr(net_cash_flow_series)
     project_irr_levered = project_irr_unlevered
 
@@ -411,6 +431,7 @@ async def compute_cash_flows(
         noi_stabilized=noi_stabilized,
         cap_rate_on_cost_pct=cap_rate_on_cost_pct,
         dscr=dscr,
+        debt_yield_pct=debt_yield_pct,
         project_irr_levered=project_irr_levered,
         project_irr_unlevered=project_irr_unlevered,
         computed_at=datetime.now(timezone.utc),
@@ -428,6 +449,7 @@ async def compute_cash_flows(
         "project_irr_unlevered": project_irr_unlevered,
         "project_irr_levered": project_irr_levered,
         "dscr": dscr,
+        "debt_yield_pct": debt_yield_pct,
     }
 
     session.add_all(cash_flow_rows)
@@ -1883,11 +1905,56 @@ def _compute_period(
 
             active = _is_stream_active(stream, phase.period_type)
             if active:
-                escalated_amount = _q(base_amount * escalation_factor)
-                # Renovation absorption: ramp renovation premium from 0→100%
-                # over the combined renovation + lease-up timeline.
+                # LTL catchup: accelerated escalation up to cap, then normal
+                _catchup_target = _to_decimal(getattr(stream, "catchup_target_rent", None))
+                if _catchup_target > ZERO and base_amount > ZERO:
+                    # Simulate year-by-year catchup from base to target
+                    _cap = LTL_CATCHUP_CAP_PCT / HUNDRED
+                    _normal_rate = _percent(stream.escalation_rate_pct_annual)
+                    _current = base_amount
+                    _years = period // 12
+                    _month_in_year = period % 12
+                    for _yr in range(_years):
+                        if _current < _catchup_target:
+                            _increase = min(
+                                _catchup_target - _current,
+                                _current * _cap,
+                            )
+                            _current = _q(_current + _increase)
+                        else:
+                            _current = _q(_current * (ONE + _normal_rate))
+                    # Partial year: interpolate
+                    if _month_in_year > 0:
+                        if _current < _catchup_target:
+                            _yr_increase = min(
+                                _catchup_target - _current,
+                                _current * _cap,
+                            )
+                            _current = _q(_current + _yr_increase * Decimal(_month_in_year) / Decimal("12"))
+                        else:
+                            _current = _q(_current * (ONE + _normal_rate) ** (Decimal(_month_in_year) / Decimal("12")))
+                    escalated_amount = _current
+                else:
+                    escalated_amount = _q(base_amount * escalation_factor)
+                # Renovation absorption: two modes
+                # 1. Discrete capture schedule (PropRise-style): [{year: 1, capture_pct: 0}, ...]
+                # 2. Continuous linear ramp: renovation_absorption_rate scales 0→100%
+                _capture_sched = getattr(stream, "renovation_capture_schedule", None)
                 _reno_abs = _to_decimal(getattr(stream, "renovation_absorption_rate", None))
-                if _reno_abs > ZERO and phase.period_type in {
+                if _capture_sched and phase.period_type in {
+                    PeriodType.minor_renovation, PeriodType.major_renovation,
+                    PeriodType.construction, PeriodType.conversion,
+                    PeriodType.lease_up, PeriodType.stabilized,
+                }:
+                    # Discrete: look up capture_pct for the current year (1-indexed)
+                    _current_year = (period // 12) + 1
+                    _cap_pct = Decimal("100")  # default to full capture
+                    for entry in _capture_sched:
+                        if int(entry.get("year", 0)) == _current_year:
+                            _cap_pct = Decimal(str(entry.get("capture_pct", 100)))
+                            break
+                    escalated_amount = _q(escalated_amount * _cap_pct / HUNDRED)
+                elif _reno_abs > ZERO and phase.period_type in {
                     PeriodType.minor_renovation, PeriodType.major_renovation,
                     PeriodType.construction, PeriodType.conversion,
                     PeriodType.lease_up,
@@ -1896,8 +1963,6 @@ def _compute_period(
                     _lu_months = int(inputs.lease_up_months or 0)
                     _total_abs = _reno_months + _lu_months
                     if _total_abs > 0:
-                        # period is 0-indexed global month; compute months into reno+leaseup
-                        # by using month_index within this phase + offset from prior reno phases
                         _abs_frac = _q(Decimal(min(period + 1, _total_abs)) / Decimal(_total_abs))
                         _abs_frac = _clamp(_abs_frac, ZERO, ONE)
                         escalated_amount = _q(escalated_amount * _abs_frac)
@@ -2401,6 +2466,23 @@ def _stream_occupancy_pct(
         initial_occupancy = _percent(inputs.initial_occupancy_pct, default=Decimal("50"))
         if phase.months <= 1:
             return stabilized_occupancy
+        curve = str(getattr(inputs, "lease_up_curve", None) or "linear")
+        if curve == "s_curve":
+            # Logistic S-curve: slow start → fast middle → slow finish
+            # occ(t) = initial + (stab - initial) × sigmoid(k × (t/N - 0.5))
+            # where sigmoid(x) = 1 / (1 + e^(-x)), normalized so sigmoid(0)=0, sigmoid(N)=1
+            import math
+            k = float(getattr(inputs, "lease_up_curve_steepness", None) or 5)
+            t_norm = float(month_index) / float(phase.months - 1)  # 0.0 → 1.0
+            # Shift so midpoint is at 0.5, scale by steepness
+            raw = 1.0 / (1.0 + math.exp(-k * (t_norm - 0.5)))
+            # Normalize: map sigmoid(k*-0.5)..sigmoid(k*0.5) → 0..1
+            low = 1.0 / (1.0 + math.exp(-k * (-0.5)))
+            high = 1.0 / (1.0 + math.exp(-k * 0.5))
+            normalized = (raw - low) / (high - low) if high > low else t_norm
+            occ = initial_occupancy + (stabilized_occupancy - initial_occupancy) * Decimal(str(normalized))
+            return _q(_clamp(occ, ZERO, stabilized_occupancy))
+        # Default: linear ramp
         step = (stabilized_occupancy - initial_occupancy) / Decimal(phase.months - 1)
         return _q(_clamp(initial_occupancy + (step * Decimal(month_index)), ZERO, stabilized_occupancy))
 
