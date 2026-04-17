@@ -9,6 +9,16 @@
     <div class="module-panel-desc">Unit mix, market rents, and unit-level strategy. This is the source of truth for revenue — edits here flow through to the pro forma.</div>
   </div>
   <div class="module-panel-actions">
+    {% if unit_mix_rows %}
+    <button class="btn btn-sm btn-secondary"
+            hx-post="/ui/models/{{ model.id }}/unit-mix/apply-to-revenue"
+            hx-confirm="Generate revenue streams from these {{ unit_mix_rows | length }} unit type{{ 's' if (unit_mix_rows | length) != 1 else '' }}? Any existing streams with matching labels will be replaced."
+            hx-target="#module-panel-content"
+            hx-swap="innerHTML"
+            title="Auto-generate IncomeStream rows from unit mix strategies">
+      ⟲ Apply to Revenue
+    </button>
+    {% endif %}
     <button class="btn btn-sm btn-primary" onclick="openAddLine('unit_mix')">+ Add Unit Type</button>
   </div>
 </div>
@@ -1422,6 +1432,128 @@
 
 {# Draw Schedule — loaded via dedicated route, included inline #}
 {% include 'partials/draw_schedule_panel.html' %}
+
+{% elif active_module == 'sensitivity' %}
+
+{# ── Sensitivity Analysis — 5x5 what-if grid ── #}
+{% set _sm = (outputs.sensitivity_matrix if outputs and outputs.sensitivity_matrix else None) %}
+<div class="module-panel-header">
+  <div>
+    <div class="module-panel-title">Sensitivity Analysis</div>
+    <div class="module-panel-desc">
+      Vary two inputs in a 5×5 grid around the base case. Results are read-only and do not feed back into the model.
+    </div>
+  </div>
+</div>
+<div class="module-panel-body">
+  <form hx-post="/ui/models/{{ model.id }}/sensitivity/run"
+        hx-target="#module-panel-content"
+        hx-swap="innerHTML"
+        hx-indicator="#sensitivity-spinner"
+        style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;margin-bottom:20px">
+    <div class="form-field" style="max-width:220px">
+      <label class="form-label">Metric</label>
+      <select class="form-select" name="metric">
+        <option value="project_irr_levered" {% if _sm and _sm.metric and _sm.metric.field == 'project_irr_levered' %}selected{% endif %}>Levered IRR (%)</option>
+        <option value="project_irr_unlevered" {% if _sm and _sm.metric and _sm.metric.field == 'project_irr_unlevered' %}selected{% endif %}>Unlevered IRR (%)</option>
+        <option value="dscr" {% if _sm and _sm.metric and _sm.metric.field == 'dscr' %}selected{% endif %}>DSCR</option>
+        <option value="noi_stabilized" {% if _sm and _sm.metric and _sm.metric.field == 'noi_stabilized' %}selected{% endif %}>Stabilized NOI ($)</option>
+        <option value="cap_rate_on_cost_pct" {% if _sm and _sm.metric and _sm.metric.field == 'cap_rate_on_cost_pct' %}selected{% endif %}>Cap Rate on Cost (%)</option>
+        <option value="debt_yield_pct" {% if _sm and _sm.metric and _sm.metric.field == 'debt_yield_pct' %}selected{% endif %}>Debt Yield (%)</option>
+      </select>
+    </div>
+    <div class="form-field" style="max-width:220px">
+      <label class="form-label">Row Axis (Y)</label>
+      <select class="form-select" name="axis_y">
+        <option value="exit_cap_rate_pct" {% if _sm and _sm.axis_y and _sm.axis_y.field == 'exit_cap_rate_pct' %}selected{% endif %}>Exit Cap Rate (%)</option>
+        <option value="expense_growth_rate_pct_annual" {% if _sm and _sm.axis_y and _sm.axis_y.field == 'expense_growth_rate_pct_annual' %}selected{% endif %}>Expense Growth (%)</option>
+        <option value="hold_period_years" {% if _sm and _sm.axis_y and _sm.axis_y.field == 'hold_period_years' %}selected{% endif %}>Hold Period (yrs)</option>
+        <option value="noi_escalation_rate_pct" {% if _sm and _sm.axis_y and _sm.axis_y.field == 'noi_escalation_rate_pct' %}selected{% endif %}>NOI / Rent Growth (%)</option>
+      </select>
+    </div>
+    <div class="form-field" style="max-width:220px">
+      <label class="form-label">Column Axis (X)</label>
+      <select class="form-select" name="axis_x">
+        <option value="noi_escalation_rate_pct" {% if not _sm or (_sm.axis_x and _sm.axis_x.field == 'noi_escalation_rate_pct') %}selected{% endif %}>NOI / Rent Growth (%)</option>
+        <option value="exit_cap_rate_pct" {% if _sm and _sm.axis_x and _sm.axis_x.field == 'exit_cap_rate_pct' %}selected{% endif %}>Exit Cap Rate (%)</option>
+        <option value="expense_growth_rate_pct_annual" {% if _sm and _sm.axis_x and _sm.axis_x.field == 'expense_growth_rate_pct_annual' %}selected{% endif %}>Expense Growth (%)</option>
+        <option value="hold_period_years" {% if _sm and _sm.axis_x and _sm.axis_x.field == 'hold_period_years' %}selected{% endif %}>Hold Period (yrs)</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary" id="sensitivity-run-btn">
+      ▶ Run Sensitivity
+      <span id="sensitivity-spinner" class="htmx-indicator" style="margin-left:6px">…</span>
+    </button>
+  </form>
+
+  {% if _sm and _sm.values %}
+  {%- set _fmt_cell = {'pct': 1, 'multiple': 2, 'currency': 0, 'int': 0}.get(_sm.metric.format, 2) -%}
+  <div style="overflow-x:auto">
+    <table class="line-table" style="width:auto;min-width:560px">
+      <thead>
+        <tr>
+          <th style="text-align:right;padding-right:16px;color:var(--text-muted);font-size:11px">
+            {{ _sm.axis_y.label }}<br>↓&nbsp;&nbsp;{{ _sm.axis_x.label }}&nbsp;→
+          </th>
+          {% for xv in _sm.axis_x['values'] %}
+          <th class="col-right" style="min-width:80px">
+            {% if _sm.axis_x.format == 'pct' %}{{ '%.2f%%' | format(xv) }}
+            {% elif _sm.axis_x.format == 'int' %}{{ xv | int }}
+            {% elif _sm.axis_x.format == 'currency' %}${{ '{:,.0f}'.format(xv) }}
+            {% else %}{{ xv }}{% endif %}
+            {% if loop.index0 == _sm.base_x_index %}<div style="font-size:10px;color:var(--accent)">base</div>{% endif %}
+          </th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for yi in range(_sm.values | length) %}
+        {%- set yv = _sm.axis_y['values'][yi] -%}
+        <tr>
+          <td style="text-align:right;padding-right:16px;font-weight:600">
+            {% if _sm.axis_y.format == 'pct' %}{{ '%.2f%%' | format(yv) }}
+            {% elif _sm.axis_y.format == 'int' %}{{ yv | int }}
+            {% elif _sm.axis_y.format == 'currency' %}${{ '{:,.0f}'.format(yv) }}
+            {% else %}{{ yv }}{% endif %}
+            {% if yi == _sm.base_y_index %}<span style="font-size:10px;color:var(--accent);margin-left:4px">base</span>{% endif %}
+          </td>
+          {% for xi in range(_sm.values[yi] | length) %}
+          {%- set cell = _sm.values[yi][xi] -%}
+          {%- set base_cell = _sm.values[_sm.base_y_index][_sm.base_x_index] if _sm.values and _sm.base_y_index < (_sm.values | length) and _sm.base_x_index < (_sm.values[_sm.base_y_index] | length) else None -%}
+          {%- set is_base = (yi == _sm.base_y_index and xi == _sm.base_x_index) -%}
+          {%- set _bg = 'transparent' -%}
+          {%- if cell is not none and base_cell is not none and not is_base -%}
+            {%- if cell > base_cell -%}{%- set _bg = '#dcfce7' -%}
+            {%- elif cell < base_cell -%}{%- set _bg = '#fee2e2' -%}
+            {%- endif -%}
+          {%- endif -%}
+          {%- if is_base -%}{%- set _bg = '#fef3c7' -%}{%- endif -%}
+          <td class="col-right" style="background:{{ _bg }};font-variant-numeric:tabular-nums;{% if is_base %}font-weight:700{% endif %}">
+            {% if cell is none %}—
+            {% elif _sm.metric.format == 'pct' %}{{ '%.1f%%' | format(cell) }}
+            {% elif _sm.metric.format == 'multiple' %}{{ '%.2fx' | format(cell) }}
+            {% elif _sm.metric.format == 'currency' %}${{ '{:,.0f}'.format(cell) }}
+            {% else %}{{ '%.*f' | format(_fmt_cell, cell) }}{% endif %}
+          </td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div style="margin-top:12px;font-size:12px;color:var(--text-muted)">
+    Measuring: <strong>{{ _sm.metric.label }}</strong>.
+    Yellow cell = base case. Green = better than base, red = worse.
+    Re-run to update after changing deal inputs.
+  </div>
+  {% else %}
+  <div class="module-empty">
+    <div class="module-empty-icon">🎯</div>
+    <div class="module-empty-title">No sensitivity analysis run yet</div>
+    <div class="module-empty-desc">Pick a target metric and two axes, then click Run Sensitivity. The grid will show how the metric changes as the two inputs vary ±2 steps around the base case.</div>
+  </div>
+  {% endif %}
+</div>
 
 {% else %}
 

@@ -4828,6 +4828,177 @@ async def handle_form_delete(
     return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
 
 
+@router.post("/ui/models/{model_id}/unit-mix/apply-to-revenue", response_class=HTMLResponse)
+async def apply_unit_mix_to_revenue(
+    request: Request,
+    model_id: UUID,
+    session: DBSession,
+) -> HTMLResponse:
+    """Auto-generate IncomeStream rows from each UnitMix row's strategy.
+
+    Strategy mapping:
+      - base_escalation:       stream at in_place rent, normal escalation
+      - ltl_catchup:           stream at in_place rent, catchup_target_rent = market
+      - value_add_renovation:  stream at post_reno rent, renovation_absorption_rate = 1.0
+
+    Existing streams labeled "{unit_label} Rent" are deleted and replaced —
+    this is deterministic: run the same UnitMix config, get the same streams.
+    One-off streams (e.g. "Parking", "Laundry") with non-matching labels
+    are preserved.
+    """
+    model = await session.get(DealModel, model_id)
+    if model is None:
+        return HTMLResponse("<p class='text-muted'>Model not found.</p>", status_code=404)
+
+    default_project = (await session.execute(
+        select(Project).where(Project.scenario_id == model_id).order_by(Project.created_at.asc()).limit(1)
+    )).scalar_one_or_none()
+    if default_project is None:
+        return HTMLResponse("<p class='text-muted'>No project.</p>", status_code=400)
+
+    unit_mix_rows = list((await session.execute(
+        select(UnitMix).where(UnitMix.project_id == default_project.id).order_by(UnitMix.label)
+    )).scalars())
+    if not unit_mix_rows:
+        panel_data = await _load_builder_data(session, model_id)
+        ctx = {"model": model, "active_module": "property", **panel_data}
+        return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
+
+    # Collect labels we'll generate so we can purge stale auto-generated streams
+    to_generate: list[dict] = []
+    for u in unit_mix_rows:
+        strategy = (u.unit_strategy or "base_escalation")
+        label = f"{u.label} Rent"
+        count = int(u.unit_count or 0)
+        if count <= 0:
+            continue
+
+        ip_rent = _to_decimal_or_none(u.in_place_rent_per_unit)
+        mkt_rent = _to_decimal_or_none(u.market_rent_per_unit)
+        post_reno = _to_decimal_or_none(u.post_reno_rent_per_unit)
+
+        if strategy == "value_add_renovation":
+            # Post-reno rent is the target; fall back to market if unset
+            base_rent = post_reno or mkt_rent or ip_rent
+            stream = dict(
+                label=f"{u.label} Rent (Renovated)",
+                stream_type=IncomeStreamType.residential_rent,
+                unit_count=count,
+                amount_per_unit_monthly=base_rent,
+                stabilized_occupancy_pct=Decimal("95"),
+                escalation_rate_pct_annual=Decimal("3"),
+                renovation_absorption_rate=Decimal("1"),
+                active_in_phases=["lease_up", "stabilized"],
+            )
+        elif strategy == "ltl_catchup":
+            stream = dict(
+                label=label,
+                stream_type=IncomeStreamType.residential_rent,
+                unit_count=count,
+                amount_per_unit_monthly=(ip_rent or mkt_rent or Decimal("0")),
+                stabilized_occupancy_pct=Decimal("95"),
+                catchup_target_rent=mkt_rent,
+                escalation_rate_pct_annual=Decimal("3"),
+                active_in_phases=["lease_up", "stabilized"],
+            )
+        else:  # base_escalation
+            stream = dict(
+                label=label,
+                stream_type=IncomeStreamType.residential_rent,
+                unit_count=count,
+                amount_per_unit_monthly=(ip_rent or mkt_rent or Decimal("0")),
+                stabilized_occupancy_pct=Decimal("95"),
+                escalation_rate_pct_annual=Decimal("3"),
+                active_in_phases=["lease_up", "stabilized"],
+            )
+        to_generate.append(stream)
+
+    # Delete existing auto-generated streams (matching labels) to keep this idempotent
+    generated_labels = {s["label"] for s in to_generate}
+    if generated_labels:
+        existing_to_delete = list((await session.execute(
+            select(IncomeStream).where(
+                IncomeStream.project_id == default_project.id,
+                IncomeStream.label.in_(generated_labels),
+            )
+        )).scalars())
+        for row in existing_to_delete:
+            await session.delete(row)
+        await session.flush()
+
+    # Create fresh streams
+    for data in to_generate:
+        session.add(IncomeStream(project_id=default_project.id, **data))
+    await session.flush()
+
+    # Return the refreshed Property panel so the user stays oriented
+    panel_data = await _load_builder_data(session, model_id)
+    ctx = {"model": model, "active_module": "property", **panel_data}
+    return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
+
+
+def _to_decimal_or_none(v) -> Decimal | None:
+    """Coerce a numeric value to Decimal, or None if zero/missing."""
+    if v is None:
+        return None
+    try:
+        d = Decimal(str(v))
+        return d if d != 0 else None
+    except Exception:
+        return None
+
+
+@router.post("/ui/models/{model_id}/sensitivity/run", response_class=HTMLResponse)
+async def run_sensitivity_analysis(
+    request: Request,
+    model_id: UUID,
+    session: DBSession,
+) -> HTMLResponse:
+    """Run a 5x5 sensitivity compute and persist the result as JSON on
+    OperationalOutputs.sensitivity_matrix. Returns the refreshed Sensitivity
+    panel so the user sees results inline."""
+    from app.engines.sensitivity_matrix import compute_sensitivity_matrix
+
+    model = await session.get(DealModel, model_id)
+    if model is None:
+        return HTMLResponse("<p class='text-muted'>Model not found.</p>", status_code=404)
+
+    form = await request.form()
+    axis_x = form.get("axis_x") or "noi_escalation_rate_pct"
+    axis_y = form.get("axis_y") or "exit_cap_rate_pct"
+    metric = form.get("metric") or "project_irr_levered"
+
+    try:
+        matrix = await compute_sensitivity_matrix(
+            deal_model_id=model_id,
+            session=session,
+            axis_x=axis_x,
+            axis_y=axis_y,
+            metric=metric,
+        )
+    except ValueError as e:
+        # Bad axis/metric combo — surface the error in the panel
+        panel_data = await _load_builder_data(session, model_id)
+        ctx = {"model": model, "active_module": "sensitivity", **panel_data,
+               "sensitivity_error": str(e)}
+        return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
+
+    # Persist on OperationalOutputs.sensitivity_matrix (JSON column).
+    # compute_sensitivity_matrix runs a final compute_cash_flows so a fresh
+    # OperationalOutputs row now exists.
+    outputs = (await session.execute(
+        select(OperationalOutputs).where(OperationalOutputs.scenario_id == model_id)
+    )).scalar_one_or_none()
+    if outputs is not None:
+        outputs.sensitivity_matrix = matrix
+        session.add(outputs)
+        await session.flush()
+
+    panel_data = await _load_builder_data(session, model_id)
+    ctx = {"model": model, "active_module": "sensitivity", **panel_data}
+    return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
+
+
 async def _get_missing_building_data(
     project: Project,
     session: AsyncSession,

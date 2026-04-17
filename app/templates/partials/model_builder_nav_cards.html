@@ -121,4 +121,20 @@
     {% endif %}
   </div>
 </a>
+
+<a href="{{ nav_base_path }}?module=sensitivity"
+   class="module-card {% if active_module == 'sensitivity' %}active{% endif %}">
+  <div class="module-icon" style="background:#fef3c7;font-size:14px">🎯</div>
+  <div class="module-info">
+    <div class="module-label">Sensitivity</div>
+    <div class="module-meta">What-if grid: vary 2 inputs, read the metric</div>
+  </div>
+  <div class="module-total">
+    {% if outputs and outputs.sensitivity_matrix %}
+    <span class="badge badge-green" style="font-size:10px">Ran</span>
+    {% else %}
+    <span style="font-size:10px;color:var(--text-muted)">Not run</span>
+    {% endif %}
+  </div>
+</a>
 </div>
