@@ -219,6 +219,23 @@ uv run python scripts/test_phase_b_debt.py --base-url https://viciniti.deals --a
 
 ---
 
+## Market Coverage Policy
+
+**Portland city proper is NOT a target acquisition market.** The team does not buy deals in the Portland jurisdiction.
+
+Portland listings are retained in the database for two purposes:
+1. **Market comp data** — Portland has the densest financial data and is essential for KNN comp recommendations, especially in jurisdictions where local comp coverage is sparse
+2. **Testing and development** — feature work, bug repros, and UI testing where realistic data variety is needed
+
+**Do not spend money on Portland data**:
+- No HelloData enrichment calls for Portland properties
+- No paid API calls of any kind for Portland addresses
+- No prioritization of Portland listings for manual data entry
+
+**Target acquisition jurisdictions** are Multnomah and Clackamas county cities *other than Portland* — Gresham, Fairview, Wood Village, Troutdale, Happy Valley, Milwaukie, Oregon City, Gladstone, Lake Oswego, West Linn, Tualatin, Wilsonville, and unincorporated areas. These should get spending priority for any paid data enrichment.
+
+---
+
 ## Known Issues / Open Items
 
 1. **Backfill trigger chains**: deals created before commit `5d5caf4` have milestones with `trigger_milestone_id=None`, causing degenerate 1-month durations. A one-shot backfill script is needed.
