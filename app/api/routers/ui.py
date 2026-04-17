@@ -6223,16 +6223,18 @@ async def deal_setup_wizard_complete(
         _subj_year = _bldg.year_built
         _subj_sqft = float(_bldg.building_sqft) if _bldg.building_sqft else None
         _subj_sqft_per_unit = _subj_sqft / _subj_units if _subj_sqft and _subj_units > 0 else None
-        # Get jurisdiction from linked listing's reconciled parcel data
+        # Get jurisdiction + listing ID from linked listing's reconciled parcel data
         _subj_juris = None
+        _exclude_listing_id = None
         if default_project.opportunity_id:
             _listing_for_juris = (await session.execute(
-                select(ScrapedListing.jurisdiction, ScrapedListing.city)
+                select(ScrapedListing.id, ScrapedListing.jurisdiction, ScrapedListing.city)
                 .where(ScrapedListing.linked_project_id == default_project.opportunity_id)
                 .limit(1)
             )).first()
             if _listing_for_juris:
-                _subj_juris = _listing_for_juris[0] or _listing_for_juris[1]
+                _exclude_listing_id = str(_listing_for_juris[0])
+                _subj_juris = _listing_for_juris[1] or _listing_for_juris[2]
         if _subj_units > 0 and _subj_year:
             try:
                 _market_rec = await get_market_recommendation(
@@ -6243,6 +6245,7 @@ async def deal_setup_wizard_complete(
                         sqft_per_unit=_subj_sqft_per_unit,
                         jurisdiction=_subj_juris,
                     ),
+                    exclude_listing_id=_exclude_listing_id,
                 )
                 if _market_rec and not _market_rec.low_confidence:
                     _market_rent_monthly = Decimal(str(round(_market_rec.noi_per_unit / 12, 2)))

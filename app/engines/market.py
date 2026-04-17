@@ -76,7 +76,7 @@ class CompResult:
 
 @dataclass
 class MarketRecommendation:
-    """Weighted-average market metrics from KNN query."""
+    """Weighted-median market metrics from KNN query (outlier-robust)."""
 
     noi_per_unit: float
     price_per_unit: float
@@ -85,10 +85,14 @@ class MarketRecommendation:
     noi_per_sqft: float | None
     price_per_sqft: float | None
 
-    comp_count: int
-    avg_distance: float
-    avg_similarity: float
-    low_confidence: bool
+    # Weighted-mean variants (for reference / comparison)
+    noi_per_unit_mean: float | None = None
+    price_per_unit_mean: float | None = None
+
+    comp_count: int = 0
+    avg_distance: float = 0.0
+    avg_similarity: float = 0.0
+    low_confidence: bool = False
     comps: list[CompResult] = field(default_factory=list)
 
 
@@ -257,15 +261,32 @@ async def get_market_recommendation(
     for c in top_k:
         c.weight = c.similarity / total_sim if total_sim > 0 else 1.0 / len(top_k)
 
-    # Weighted averages
-    noi_per_unit = sum(c.weight * c.noi_per_unit for c in top_k)
-    price_per_unit = sum(c.weight * c.price_per_unit for c in top_k)
+    # ── Blending: weighted median (primary) + weighted mean (reference) ──
 
-    # Optional metrics (weighted avg of comps that have them)
-    cap_rates = [(c.weight, c.cap_rate) for c in top_k if c.cap_rate is not None]
-    occupancies = [(c.weight, c.occupancy_pct) for c in top_k if c.occupancy_pct is not None]
-    noi_sqft = [(c.weight, c.noi_per_sqft) for c in top_k if c.noi_per_sqft is not None]
-    price_sqft = [(c.weight, c.price_per_sqft) for c in top_k if c.price_per_sqft is not None]
+    def _weighted_median(pairs: list[tuple[float, float]]) -> float | None:
+        """Compute weighted median: sort by value, walk cumulative weight to 50%.
+
+        Robust to outliers — a single extreme comp cannot move the median
+        regardless of its similarity weight.
+        """
+        if not pairs:
+            return None
+        w_total = sum(w for w, _ in pairs)
+        if w_total == 0:
+            return None
+        sorted_pairs = sorted(pairs, key=lambda p: p[1])
+        cumulative = 0.0
+        half = w_total / 2.0
+        for i, (w, v) in enumerate(sorted_pairs):
+            cumulative += w
+            if cumulative >= half:
+                # Interpolate with previous if we jumped past the midpoint
+                if i > 0 and cumulative - w < half:
+                    prev_v = sorted_pairs[i - 1][1]
+                    frac = (half - (cumulative - w)) / w
+                    return prev_v + frac * (v - prev_v)
+                return v
+        return sorted_pairs[-1][1]  # fallback: last value
 
     def _weighted_avg(pairs: list[tuple[float, float]]) -> float | None:
         if not pairs:
@@ -275,16 +296,31 @@ async def get_market_recommendation(
             return None
         return sum(w * v for w, v in pairs) / w_total
 
+    # Core metrics — all comps have these
+    noi_pairs = [(c.weight, c.noi_per_unit) for c in top_k]
+    price_pairs = [(c.weight, c.price_per_unit) for c in top_k]
+
+    noi_per_unit = _weighted_median(noi_pairs)
+    price_per_unit = _weighted_median(price_pairs)
+
+    # Optional metrics (only comps that have them)
+    cap_pairs = [(c.weight, c.cap_rate) for c in top_k if c.cap_rate is not None]
+    occ_pairs = [(c.weight, c.occupancy_pct) for c in top_k if c.occupancy_pct is not None]
+    noi_sqft_pairs = [(c.weight, c.noi_per_sqft) for c in top_k if c.noi_per_sqft is not None]
+    price_sqft_pairs = [(c.weight, c.price_per_sqft) for c in top_k if c.price_per_sqft is not None]
+
     avg_dist = sum(c.distance for c in top_k) / len(top_k)
     avg_sim = sum(c.similarity for c in top_k) / len(top_k)
 
     return MarketRecommendation(
         noi_per_unit=round(noi_per_unit, 2),
         price_per_unit=round(price_per_unit, 2),
-        cap_rate=round(_weighted_avg(cap_rates), 4) if _weighted_avg(cap_rates) is not None else None,
-        occupancy_pct=round(_weighted_avg(occupancies), 4) if _weighted_avg(occupancies) is not None else None,
-        noi_per_sqft=round(_weighted_avg(noi_sqft), 2) if _weighted_avg(noi_sqft) is not None else None,
-        price_per_sqft=round(_weighted_avg(price_sqft), 2) if _weighted_avg(price_sqft) is not None else None,
+        cap_rate=round(v, 4) if (v := _weighted_median(cap_pairs)) is not None else None,
+        occupancy_pct=round(v, 4) if (v := _weighted_median(occ_pairs)) is not None else None,
+        noi_per_sqft=round(v, 2) if (v := _weighted_median(noi_sqft_pairs)) is not None else None,
+        price_per_sqft=round(v, 2) if (v := _weighted_median(price_sqft_pairs)) is not None else None,
+        noi_per_unit_mean=round(v, 2) if (v := _weighted_avg(noi_pairs)) is not None else None,
+        price_per_unit_mean=round(v, 2) if (v := _weighted_avg(price_pairs)) is not None else None,
         comp_count=len(top_k),
         avg_distance=round(avg_dist, 4),
         avg_similarity=round(avg_sim, 4),
