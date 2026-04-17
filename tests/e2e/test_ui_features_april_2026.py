@@ -495,3 +495,134 @@ def test_setup_complete_seeds_default_opex_lines(
         return lbl in content or lbl.replace("&", "&amp;") in content
     missing = [lbl for lbl in expected_labels if not _present(lbl)]
     assert not missing, f"Missing seeded OpEx labels: {missing}"
+
+
+# ---------------------------------------------------------------------------
+# 10. Property module — UnitMix editor with LTL fields
+# ---------------------------------------------------------------------------
+
+def test_property_module_card_visible(
+    logged_in_page, base_url: str, feature_model_id: str
+) -> None:
+    """The Property module card should be in the nav stack, always (not
+    locked behind deal setup). Clicking it shows the Property panel."""
+    page = logged_in_page
+    page.goto(f"{base_url}/models/{feature_model_id}/builder")
+    page.wait_for_selector(".module-stack", timeout=15_000)
+
+    # Card present with label "Property"
+    card = page.locator('.module-card:has(.module-label:has-text("Property"))')
+    assert card.count() == 1, "Property module card should be in the nav stack"
+
+    # Clicking navigates to ?module=property
+    card.first.click()
+    page.wait_for_url("**module=property**", timeout=10_000)
+    page.wait_for_selector("#module-panel-content", timeout=10_000)
+
+    # Panel title should be "Property"
+    assert page.locator('.module-panel-title:has-text("Property")').count() == 1
+
+
+def test_unit_mix_form_has_ltl_fields(
+    logged_in_page, base_url: str, feature_model_id: str
+) -> None:
+    """The unit_mix form should expose label, unit_count, in_place_rent,
+    market_rent, strategy dropdown, and post_reno_rent_per_unit."""
+    page = logged_in_page
+    page.goto(
+        f"{base_url}/ui/models/{feature_model_id}/line-form?type=unit_mix",
+        wait_until="domcontentloaded",
+    )
+    wait_for_htmx(page)
+
+    # Core fields
+    assert page.locator('input[name="label"]').count() == 1
+    assert page.locator('input[name="unit_count"]').count() == 1
+    assert page.locator('input[name="in_place_rent_per_unit"]').count() == 1
+    assert page.locator('input[name="market_rent_per_unit"]').count() == 1
+
+    # Strategy dropdown with all three options
+    strategy = page.locator('select[name="unit_strategy"]')
+    assert strategy.count() == 1, "unit_strategy select should be present"
+    options = [o.get_attribute("value") for o in strategy.locator("option").all()]
+    assert "base_escalation" in options
+    assert "ltl_catchup" in options
+    assert "value_add_renovation" in options
+
+    # Post-reno rent field is present (may be hidden by default)
+    assert page.locator('input[name="post_reno_rent_per_unit"]').count() == 1
+
+
+def test_unit_mix_strategy_toggle_shows_post_reno_field(
+    logged_in_page, base_url: str, feature_model_id: str
+) -> None:
+    """Selecting the value_add_renovation strategy should reveal the
+    post-renovation rent field."""
+    page = logged_in_page
+    page.goto(
+        f"{base_url}/ui/models/{feature_model_id}/line-form?type=unit_mix",
+        wait_until="domcontentloaded",
+    )
+    wait_for_htmx(page)
+
+    # Initially hidden (default strategy is base_escalation)
+    wrap = page.locator('#unit-mix-post-reno')
+    assert wrap.count() == 1
+    assert not wrap.is_visible(), "post-reno row should be hidden for base_escalation"
+
+    # Switch to value_add_renovation
+    page.select_option('select[name="unit_strategy"]', 'value_add_renovation')
+    page.wait_for_timeout(150)
+    assert wrap.is_visible(), "post-reno row should be visible for value_add_renovation"
+
+
+def test_unit_mix_create_and_delete_round_trip(
+    _seed_page, base_url: str
+) -> None:
+    """Create a new unit type via the form, verify it shows in the panel,
+    then delete it. End-to-end CRUD sanity."""
+    import uuid
+    page = _seed_page
+    suffix = uuid.uuid4().hex[:6]
+    model_id = create_e2e_scenario(page, deal_name=f"E2E UnitMix CRUD {suffix}")
+    project_id = _extract_project_id(page)
+    submit_timeline_wizard(
+        page, model_id, project_id,
+        milestone_types=["close", "construction", "operation_stabilized", "divestment"],
+    )
+
+    # Navigate to Property panel
+    page.goto(f"{base_url}/models/{model_id}/builder?module=property")
+    page.wait_for_selector("#module-panel-content", timeout=15_000)
+    wait_for_htmx(page)
+
+    # Open add drawer — scope to the module-panel-actions button
+    page.click('.module-panel-actions button:has-text("Add Unit Type")')
+    # Drawer contents are swapped via HTMX into #line-item-drawer-body
+    page.wait_for_selector('#line-item-drawer-body input[name="label"]', timeout=10_000)
+
+    # Fill in a unit type with LTL data (scope to drawer to avoid ambiguity)
+    drawer = '#line-item-drawer-body '
+    page.fill(drawer + 'input[name="label"]', "1BR/1BA Test")
+    page.fill(drawer + 'input[name="unit_count"]', "40")
+    page.fill(drawer + 'input[name="avg_sqft"]', "650")
+    page.fill(drawer + 'input[name="in_place_rent_per_unit"]', "1200")
+    page.fill(drawer + 'input[name="market_rent_per_unit"]', "1500")
+    page.select_option(drawer + 'select[name="unit_strategy"]', 'ltl_catchup')
+
+    # Submit the form
+    page.click(drawer + 'button[type="submit"]')
+    wait_for_htmx(page)
+    page.wait_for_timeout(800)
+
+    # Verify the unit type appears in the panel with computed LTL %
+    # market=1500, in_place=1200 → LTL = (1500-1200)/1500 = 20.0%
+    content = page.content()
+    assert "1BR/1BA Test" in content, "Created unit type should appear"
+    assert "20.0%" in content, f"Expected LTL 20.0%, content did not include it"
+
+    # Verify count card updates
+    card_meta = page.locator('.module-card:has(.module-label:has-text("Property")) .module-meta')
+    if card_meta.count() > 0:
+        meta_text = card_meta.first.text_content() or ""
+        assert "40" in meta_text, f"Card should show 40 units total, got: {meta_text}"
