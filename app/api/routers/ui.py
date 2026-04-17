@@ -3958,6 +3958,7 @@ _ITEM_TYPE_TO_MODULE: dict[str, str] = {
     "capital-modules": "sources_uses",
     "waterfall-tiers": "owners_profit",
     "milestones": "timeline",
+    "unit-mix": "property",
 }
 
 
@@ -4049,6 +4050,7 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
     use_lines: list = []
     income_streams: list = []
     expense_lines: list = []
+    unit_mix_rows: list = []
 
     if project_id is not None:
         inputs = (await session.execute(
@@ -4065,6 +4067,10 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
 
         expense_lines = list((await session.execute(
             select(OperatingExpenseLine).where(OperatingExpenseLine.project_id == project_id).order_by(OperatingExpenseLine.label)
+        )).scalars())
+
+        unit_mix_rows = list((await session.execute(
+            select(UnitMix).where(UnitMix.project_id == project_id).order_by(UnitMix.label)
         )).scalars())
 
     outputs = (await session.execute(
@@ -4364,6 +4370,7 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
         "use_lines": use_lines,
         "income_streams": income_streams,
         "expense_lines": expense_lines,
+        "unit_mix_rows": unit_mix_rows,
         "capital_modules": capital_modules,
         "waterfall_tiers": waterfall_tiers,
         "milestones": milestones,
@@ -4378,6 +4385,8 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
         "use_line_count": len(use_lines),
         "income_stream_count": len(income_streams),
         "expense_line_count": len(expense_lines),
+        "unit_mix_count": len(unit_mix_rows),
+        "total_units": sum((u.unit_count or 0) for u in unit_mix_rows),
         "capital_module_count": len(capital_modules),
         "waterfall_tier_count": len(waterfall_tiers),
         "capital_total": capital_total,
@@ -4752,6 +4761,26 @@ async def handle_form_create_or_update(
                 **data,
             ))
 
+    elif item_type == "unit-mix":
+        data = {
+            "label": form.get("label", "").strip() or "Units",
+            "unit_count": _fi(form.get("unit_count"), 1) or 1,
+            "avg_sqft": _fd(form.get("avg_sqft")),
+            "avg_monthly_rent": _fd(form.get("avg_monthly_rent")),
+            "market_rent_per_unit": _fd(form.get("market_rent_per_unit")),
+            "in_place_rent_per_unit": _fd(form.get("in_place_rent_per_unit")),
+            "unit_strategy": form.get("unit_strategy") or None,
+            "post_reno_rent_per_unit": _fd(form.get("post_reno_rent_per_unit")),
+            "notes": form.get("notes") or None,
+        }
+        if item_id:
+            row = await session.get(UnitMix, UUID(item_id))
+            if row:
+                for k, v in data.items():
+                    setattr(row, k, v)
+        elif project_id:
+            session.add(UnitMix(project_id=project_id, **data))
+
     await session.flush()
     panel_data = await _load_builder_data(session, model_id)
     ctx = {"model": model, "active_module": module, **panel_data}
@@ -4787,6 +4816,8 @@ async def handle_form_delete(
         row = await session.get(WaterfallTier, uid)
     elif item_type == "milestones":
         row = await session.get(Milestone, uid)
+    elif item_type == "unit-mix":
+        row = await session.get(UnitMix, uid)
 
     if row is not None:
         await session.delete(row)
@@ -6652,6 +6683,7 @@ async def model_module_nav(
             "deferred_uses", "deferred_total", "profit_total",
             "divestment_total", "phase_summaries", "outputs",
             "income_mode", "noi_annual",
+            "unit_mix_count", "total_units",
         )},
     }
     return templates.TemplateResponse(request, "partials/model_builder_nav_cards.html", ctx)
@@ -6891,6 +6923,8 @@ async def model_builder_line_form(
                 existing = await session.get(WaterfallTier, eid)
             elif type in ("milestones", "timeline"):
                 existing = await session.get(Milestone, eid)
+            elif type == "unit_mix":
+                existing = await session.get(UnitMix, eid)
         except ValueError:
             pass
 

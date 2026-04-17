@@ -6,6 +6,17 @@
 
 {% set setup_locked = locked or not deal_setup_complete %}
 
+{# Property module — always editable (source data feeds all downstream modules) #}
+<a href="{{ nav_base_path }}?module=property"
+   class="module-card {% if active_module == 'property' %}active{% endif %}">
+  <div class="module-icon module-icon-sources">🏢</div>
+  <div class="module-info">
+    <div class="module-label">Property</div>
+    <div class="module-meta">{{ unit_mix_count or 0 }} unit type{{ 's' if (unit_mix_count or 0) != 1 else '' }} · {{ total_units or 0 }} unit{{ 's' if (total_units or 0) != 1 else '' }}</div>
+  </div>
+  <div class="module-total">{% if total_units %}{{ total_units }}{% else %}—{% endif %}</div>
+</a>
+
 <a href="{{ nav_base_path }}?module=sources_uses"
    class="module-card {% if active_module in ('sources_uses','uses','sources') %}active{% endif %} {% if setup_locked %}locked{% endif %}">
   <div class="module-icon module-icon-sources">💰</div>

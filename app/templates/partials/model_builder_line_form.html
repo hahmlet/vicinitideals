@@ -539,6 +539,102 @@ function ulTimingChanged(val) {
   <button type="button" class="btn btn-secondary" onclick="closeDrawer('line-item-drawer')">Done</button>
 </div>
 
+{% elif form_type == 'unit_mix' %}
+{# ── UnitMix form — define a unit type with rents and strategy ── #}
+<form {% if existing %}hx-put="/ui/forms/{{ model.id }}/unit-mix/{{ existing.id }}"{% else %}hx-post="/ui/forms/{{ model.id }}/unit-mix"{% endif %}
+      hx-target="#module-panel-content"
+      hx-swap="innerHTML"
+      hx-on::after-request="if(event.detail.successful) closeDrawer('line-item-drawer')">
+
+  <div class="form-row">
+    <div class="form-field">
+      <label class="form-label">Label</label>
+      <input class="form-input" type="text" name="label" required
+             value="{{ existing.label if existing else '' }}" placeholder="e.g. 1BR/1BA, 2BR/2BA, Studio">
+    </div>
+    <div class="form-field">
+      <label class="form-label">Unit Count</label>
+      <input class="form-input" type="number" name="unit_count" min="1" required
+             value="{{ existing.unit_count if existing else 1 }}" placeholder="80">
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-field">
+      <label class="form-label">Avg SF</label>
+      <input class="form-input" type="number" name="avg_sqft" step="1" min="0"
+             value="{{ existing.avg_sqft | round(0) | int if existing and existing.avg_sqft else '' }}" placeholder="650">
+    </div>
+    <div class="form-field">
+      <label class="form-label">Avg Monthly Rent (legacy)</label>
+      <input class="form-input" type="number" name="avg_monthly_rent" step="1" min="0"
+             value="{{ existing.avg_monthly_rent | round(0) | int if existing and existing.avg_monthly_rent else '' }}" placeholder="optional">
+      <div class="form-hint">Legacy field — prefer In-Place Rent below.</div>
+    </div>
+  </div>
+
+  {# ── Loss-to-Lease tracking ── #}
+  <div class="form-section-title" style="margin-top:18px">Rents (Loss-to-Lease)</div>
+  <div class="form-row">
+    <div class="form-field">
+      <label class="form-label">In-Place Rent ($/unit/mo)</label>
+      <input class="form-input" type="number" name="in_place_rent_per_unit" step="1" min="0"
+             value="{{ existing.in_place_rent_per_unit | round(0) | int if existing and existing.in_place_rent_per_unit else '' }}" placeholder="1200">
+      <div class="form-hint">What current tenants actually pay today.</div>
+    </div>
+    <div class="form-field">
+      <label class="form-label">Market Rent ($/unit/mo)</label>
+      <input class="form-input" type="number" name="market_rent_per_unit" step="1" min="0"
+             value="{{ existing.market_rent_per_unit | round(0) | int if existing and existing.market_rent_per_unit else '' }}" placeholder="1500">
+      <div class="form-hint">What the unit could rent for today without renovation.</div>
+    </div>
+  </div>
+
+  {# ── Unit strategy ── #}
+  <div class="form-section-title" style="margin-top:18px">Strategy</div>
+  {%- set _strat = existing.unit_strategy if existing and existing.unit_strategy else 'base_escalation' -%}
+  <div class="form-row">
+    <div class="form-field">
+      <label class="form-label">Strategy for this unit type</label>
+      <select class="form-select" name="unit_strategy"
+              onchange="document.getElementById('unit-mix-post-reno').style.display = this.value === 'value_add_renovation' ? '' : 'none'">
+        <option value="base_escalation" {% if _strat == 'base_escalation' %}selected{% endif %}>Base Escalation — no special treatment</option>
+        <option value="ltl_catchup" {% if _strat == 'ltl_catchup' %}selected{% endif %}>LTL Catchup — ramp rent to market (capped 10%/yr)</option>
+        <option value="value_add_renovation" {% if _strat == 'value_add_renovation' %}selected{% endif %}>Value-Add Renovation — renovate + re-lease at premium</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-row" id="unit-mix-post-reno"
+       style="{% if _strat != 'value_add_renovation' %}display:none{% endif %}">
+    <div class="form-field">
+      <label class="form-label">Post-Renovation Rent ($/unit/mo)</label>
+      <input class="form-input" type="number" name="post_reno_rent_per_unit" step="1" min="0"
+             value="{{ existing.post_reno_rent_per_unit | round(0) | int if existing and existing.post_reno_rent_per_unit else '' }}" placeholder="1800">
+      <div class="form-hint">Rent after renovation — typically 15–30% above market.</div>
+    </div>
+  </div>
+
+  <div class="form-field" style="margin-top:14px">
+    <label class="form-label">Notes (optional)</label>
+    <input class="form-input" type="text" name="notes"
+           value="{{ existing.notes if existing else '' }}">
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">{% if existing %}Save Changes{% else %}Add Unit Type{% endif %}</button>
+    <button type="button" class="btn btn-secondary" onclick="closeDrawer('line-item-drawer')">Cancel</button>
+    {% if existing %}
+    <button type="button" class="btn btn-danger" style="margin-left:auto"
+            hx-delete="/ui/forms/{{ model.id }}/unit-mix/{{ existing.id }}"
+            hx-confirm="Delete '{{ existing.label }}'?"
+            hx-target="#module-panel-content"
+            hx-swap="innerHTML"
+            hx-on::after-request="if(event.detail.successful) closeDrawer('line-item-drawer')">Delete</button>
+    {% endif %}
+  </div>
+</form>
+
 {% elif form_type in ('sources', 'capital_modules') %}
 {# ── Capital Source form ── #}
 

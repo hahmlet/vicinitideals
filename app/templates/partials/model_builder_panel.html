@@ -1,7 +1,82 @@
 {# Active module content panel — included by model_builder.html and swapped via HTMX #}
 {# All mutations post to /api/... JSON endpoints; on success, refreshPanel() fetches this partial #}
 
-{% if active_module == 'sources_uses' %}
+{% if active_module == 'property' %}
+
+<div class="module-panel-header">
+  <div>
+    <div class="module-panel-title">Property</div>
+    <div class="module-panel-desc">Unit mix, market rents, and unit-level strategy. This is the source of truth for revenue — edits here flow through to the pro forma.</div>
+  </div>
+  <div class="module-panel-actions">
+    <button class="btn btn-sm btn-primary" onclick="openAddLine('unit_mix')">+ Add Unit Type</button>
+  </div>
+</div>
+<div class="module-panel-body">
+  {% if unit_mix_rows %}
+  <table class="line-table">
+    <thead>
+      <tr>
+        <th>Unit Type</th>
+        <th class="col-right">Count</th>
+        <th class="col-right">Avg SF</th>
+        <th class="col-right">In-Place Rent</th>
+        <th class="col-right">Market Rent</th>
+        <th class="col-right">Post-Reno</th>
+        <th>Strategy</th>
+        <th class="col-right" title="Loss-to-Lease = (market − in-place) / market">LTL %</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for u in unit_mix_rows %}
+      {%- set _ip = (u.in_place_rent_per_unit | float) if u.in_place_rent_per_unit else 0 -%}
+      {%- set _mkt = (u.market_rent_per_unit | float) if u.market_rent_per_unit else 0 -%}
+      {%- set _ltl_pct = ((_mkt - _ip) / _mkt * 100) if (_mkt > 0 and _ip > 0) else 0 -%}
+      {%- set _strat = u.unit_strategy or 'base_escalation' -%}
+      {%- set _strat_labels = {
+          'base_escalation': 'Base Escalation',
+          'ltl_catchup': 'LTL Catchup',
+          'value_add_renovation': 'Value-Add',
+      } -%}
+      <tr onclick="openEditLine('unit_mix', '{{ u.id }}', '{{ model.id }}')">
+        <td style="font-weight:500">{{ u.label }}</td>
+        <td class="col-right">{{ u.unit_count }}</td>
+        <td class="col-right">{{ u.avg_sqft | round(0) | int if u.avg_sqft else '—' }}</td>
+        <td class="col-right">{{ _ip | currency if _ip else '—' }}</td>
+        <td class="col-right">{{ _mkt | currency if _mkt else '—' }}</td>
+        <td class="col-right">{{ u.post_reno_rent_per_unit | currency if u.post_reno_rent_per_unit else '—' }}</td>
+        <td><span class="text-small text-muted">{{ _strat_labels.get(_strat, _strat | replace('_', ' ') | title) }}</span></td>
+        <td class="col-right" style="color:{% if _ltl_pct > 0 %}var(--success, #16a34a){% else %}var(--text-muted){% endif %}">
+          {% if _ltl_pct > 0 %}{{ '%.1f%%' | format(_ltl_pct) }}{% else %}—{% endif %}
+        </td>
+        <td style="width:32px;text-align:right">
+          <button class="btn btn-sm btn-ghost"
+                  hx-delete="/ui/forms/{{ model.id }}/unit-mix/{{ u.id }}"
+                  hx-confirm="Delete '{{ u.label }}'?"
+                  hx-target="#module-panel-content"
+                  hx-swap="innerHTML"
+                  onclick="event.stopPropagation()">✕</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="line-table-footer">
+    <span class="line-total-label">Total Units</span>
+    <span class="line-total-amount">{{ total_units or 0 }}</span>
+  </div>
+  {% else %}
+  <div class="module-empty">
+    <div class="module-empty-icon">🏢</div>
+    <div class="module-empty-title">No unit mix yet</div>
+    <div class="module-empty-desc">Define the unit types for this property. Enter in-place (current) and market rents to track loss-to-lease. Assign a strategy per unit type: Base Escalation, LTL Catchup, or Value-Add Renovation.</div>
+    <button class="btn btn-primary" style="margin-top:16px" onclick="openAddLine('unit_mix')">+ Add First Unit Type</button>
+  </div>
+  {% endif %}
+</div>
+
+{% elif active_module == 'sources_uses' %}
 
 {# ── Sort helper (Sources & Uses panel) ── #}
 <script>
@@ -1403,6 +1478,7 @@ function openAddLine(type) {
     'uses': 'Add Use Line', 'revenue': 'Add Revenue Stream',
     'opex': 'Add Expense Line', 'opex_templates': 'OpEx Templates',
     'waterfall': 'Add Waterfall Tier',
+    'unit_mix': 'Add Unit Type',
   };
   document.getElementById('line-item-drawer-title').textContent = titles[type] || 'Add Line';
   htmx.ajax('GET', '/ui/models/{{ model.id }}/line-form?type=' + type, {
@@ -1421,6 +1497,7 @@ var _editTitles = {
   'capital_modules': 'Edit Source', 'use_lines': 'Edit Use Line',
   'income_streams': 'Edit Revenue Stream', 'expense_lines': 'Edit Expense Line',
   'waterfall_tiers': 'Edit Waterfall Tier', 'milestones': 'Edit Milestone',
+  'unit_mix': 'Edit Unit Type',
 };
 function openEditLine(table, id, modelId) {
   document.getElementById('line-item-drawer-title').textContent = _editTitles[table] || 'Edit Line';
