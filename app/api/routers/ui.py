@@ -4506,6 +4506,8 @@ async def handle_form_create_or_update(
             "amount_per_unit_monthly": _per_unit_val,
             "amount_fixed_monthly": _fixed_val,
             "stabilized_occupancy_pct": _fd(form.get("stabilized_occupancy_pct")) or Decimal("95"),
+            "bad_debt_pct": _fd(form.get("bad_debt_pct")) or Decimal("0"),
+            "concessions_pct": _fd(form.get("concessions_pct")) or Decimal("0"),
             "escalation_rate_pct_annual": _fd(form.get("escalation_rate_pct_annual")) or Decimal("0"),
             "active_in_phases": form.getlist("active_in_phases") or _fp(form.get("active_in_phases"), ["stabilized"]),
             "notes": form.get("notes") or None,
@@ -4560,6 +4562,8 @@ async def handle_form_create_or_update(
             source_d["compounding_period"] = cp
         if amort := _fi(form.get("amort_term_years"), None):
             source_d["amort_term_years"] = amort
+        if ppct := _fd(form.get("prepay_penalty_pct")):
+            source_d["prepay_penalty_pct"] = float(ppct)
         constr_carry_type = form.get("construction_carry_type", "none")
         # Carry rate: use source rate so the engine finds it in both places
         _carry_rate = _fd(form.get("source_interest_rate"))
@@ -6207,6 +6211,52 @@ async def deal_setup_wizard_complete(
             ))
             existing_unit_mix = []  # will be flushed; reload below via refresh
 
+    # ── Market recommendation: KNN query for revenue/expense prefill ────────
+    from app.engines.market import SubjectProperty, get_market_recommendation
+
+    _market_rec = None
+    _market_rent_monthly = Decimal("0")
+    _market_occupancy = Decimal("95")
+    if assigned_buildings:
+        _bldg = assigned_buildings[0]
+        _subj_units = building_unit_count or int(_bldg.unit_count or 0)
+        _subj_year = _bldg.year_built
+        _subj_sqft = float(_bldg.building_sqft) if _bldg.building_sqft else None
+        _subj_sqft_per_unit = _subj_sqft / _subj_units if _subj_sqft and _subj_units > 0 else None
+        # Get jurisdiction from linked listing's reconciled parcel data
+        _subj_juris = None
+        if default_project.opportunity_id:
+            _listing_for_juris = (await session.execute(
+                select(ScrapedListing.jurisdiction, ScrapedListing.city)
+                .where(ScrapedListing.linked_project_id == default_project.opportunity_id)
+                .limit(1)
+            )).first()
+            if _listing_for_juris:
+                _subj_juris = _listing_for_juris[0] or _listing_for_juris[1]
+        if _subj_units > 0 and _subj_year:
+            try:
+                _market_rec = await get_market_recommendation(
+                    session,
+                    SubjectProperty(
+                        units=_subj_units,
+                        year_built=_subj_year,
+                        sqft_per_unit=_subj_sqft_per_unit,
+                        jurisdiction=_subj_juris,
+                    ),
+                )
+                if _market_rec and not _market_rec.low_confidence:
+                    _market_rent_monthly = Decimal(str(round(_market_rec.noi_per_unit / 12, 2)))
+                    if _market_rec.occupancy_pct is not None:
+                        _market_occupancy = Decimal(str(round(_market_rec.occupancy_pct * 100, 1)))
+            except Exception:
+                pass  # market recommendation failed; fall back to defaults
+
+    # If NOI mode and no NOI prefilled from listing, use market recommendation
+    if model.income_mode == "noi" and inputs.noi_stabilized_input is None and _market_rec and not _market_rec.low_confidence:
+        _market_noi = Decimal(str(round(_market_rec.noi_per_unit * building_unit_count, 2)))
+        inputs.noi_stabilized_input = _market_noi
+        session.add(inputs)
+
     # ── Revenue: seed one IncomeStream per UnitMix row ──────────────────────
     # Skip entirely in NOI mode — Revenue module is not used
     # Only seed if no income streams exist yet
@@ -6228,8 +6278,8 @@ async def deal_setup_wizard_complete(
                 stream_type=IncomeStreamType.residential_rent,
                 label=row.label,
                 unit_count=row.unit_count,
-                amount_per_unit_monthly=row.avg_monthly_rent or Decimal("0"),
-                stabilized_occupancy_pct=Decimal("95"),
+                amount_per_unit_monthly=row.avg_monthly_rent or _market_rent_monthly,
+                stabilized_occupancy_pct=_market_occupancy,
                 escalation_rate_pct_annual=Decimal("3"),
                 active_in_phases=["lease_up", "stabilized"],
             ))
