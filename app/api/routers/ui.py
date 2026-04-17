@@ -4508,6 +4508,8 @@ async def handle_form_create_or_update(
             "stabilized_occupancy_pct": _fd(form.get("stabilized_occupancy_pct")) or Decimal("95"),
             "bad_debt_pct": _fd(form.get("bad_debt_pct")) or Decimal("0"),
             "concessions_pct": _fd(form.get("concessions_pct")) or Decimal("0"),
+            "catchup_target_rent": _fd(form.get("catchup_target_rent")),
+            "renovation_absorption_rate": _fd(form.get("renovation_absorption_rate")),
             "escalation_rate_pct_annual": _fd(form.get("escalation_rate_pct_annual")) or Decimal("0"),
             "active_in_phases": form.getlist("active_in_phases") or _fp(form.get("active_in_phases"), ["stabilized"]),
             "notes": form.get("notes") or None,
@@ -5844,6 +5846,13 @@ async def deal_setup_wizard_step(
         or_months = form.get("operation_reserve_months")
         if or_months:
             inputs.operation_reserve_months = int(or_months)
+        # Lease-up occupancy curve (linear vs s_curve + steepness)
+        lu_curve = form.get("lease_up_curve")
+        if lu_curve in ("linear", "s_curve"):
+            inputs.lease_up_curve = lu_curve
+        lu_steep = _fd(form.get("lease_up_curve_steepness"))
+        if lu_steep is not None:
+            inputs.lease_up_curve_steepness = lu_steep
 
     # If validation failed, don't persist and re-render the same step with errors
     if wizard_errors:
@@ -6098,6 +6107,37 @@ async def deal_setup_wizard_complete(
         elif debt_types == ["permanent_debt"]:
             inputs.debt_structure = "perm_only"
         # Other combinations (pre_development, acquisition, bridge) left as-is until Phase B
+
+    # Seed default OpEx line items if none exist — consensus from CRE model
+    # cross-analysis (HelloData, A.CRE, PropRise). User fills in amounts later.
+    existing_opex = list((await session.execute(
+        select(OperatingExpenseLine).where(
+            OperatingExpenseLine.project_id == default_project.id,
+        )
+    )).scalars())
+    if not existing_opex:
+        _DEFAULT_OPEX_LINES = [
+            "Real Estate Taxes",
+            "Property Insurance",
+            "Utilities",
+            "Repairs & Maintenance",
+            "Management Fee",
+            "Payroll & On-Site Staff",
+            "Marketing & Leasing",
+            "General & Administrative",
+            "Turnover / Make-Ready",
+            "CapEx Reserve",
+        ]
+        for _label in _DEFAULT_OPEX_LINES:
+            session.add(OperatingExpenseLine(
+                project_id=default_project.id,
+                label=_label,
+                annual_amount=Decimal("0"),
+                per_type="flat",
+                escalation_rate_pct_annual=Decimal("3"),
+                active_in_phases=["stabilized"],
+                notes="Seeded default — set amount to customize or delete if not applicable.",
+            ))
 
     inputs.deal_setup_complete = True
     session.add(inputs)

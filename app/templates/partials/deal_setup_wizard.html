@@ -773,6 +773,8 @@
     </div>
     {% set _cf_pct = inputs.construction_floor_pct | float if inputs and inputs.construction_floor_pct else 5.0 %}
     {% set _or_mo  = inputs.operation_reserve_months | int if inputs and inputs.operation_reserve_months else 6 %}
+    {% set _lu_curve = inputs.lease_up_curve if inputs and inputs.lease_up_curve else 'linear' %}
+    {% set _lu_steep = inputs.lease_up_curve_steepness | float if inputs and inputs.lease_up_curve_steepness else 5.0 %}
     <form hx-post="/ui/models/{{ model.id }}/setup/step"
           hx-target="#deal-setup-wizard"
           hx-swap="outerHTML">
@@ -812,6 +814,31 @@
         </div>
 
         </div>{# /grid #}
+
+        {# ── Lease-Up Occupancy Curve ─────────────────────────────────── #}
+        <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border)">
+          <div class="section-label">Lease-Up Occupancy Curve</div>
+          <div class="field-hint" style="margin-bottom:10px">
+            How occupancy ramps from initial to stabilized during lease-up. Linear is conservative; S-curve models realistic marketing-driven absorption (slow start, rapid middle, slow finish).
+          </div>
+          <div class="field-row" style="align-items:flex-start;gap:24px">
+            <div class="field-group" style="max-width:220px">
+              <label>Curve Shape</label>
+              <select name="lease_up_curve" id="lease-up-curve-select"
+                      onchange="document.getElementById('lu-steepness-wrap').style.display=this.value==='s_curve'?'':'none'">
+                <option value="linear" {% if _lu_curve != 's_curve' %}selected{% endif %}>Linear (default)</option>
+                <option value="s_curve" {% if _lu_curve == 's_curve' %}selected{% endif %}>S-Curve</option>
+              </select>
+            </div>
+            <div class="field-group" id="lu-steepness-wrap"
+                 style="max-width:200px;{% if _lu_curve != 's_curve' %}display:none{% endif %}">
+              <label>S-Curve Steepness</label>
+              <input type="number" name="lease_up_curve_steepness" step="0.5" min="1" max="10"
+                     value="{{ _lu_steep }}" placeholder="5">
+              <div class="field-hint">1 = nearly flat/linear · 10 = very steep. Typical: 5.</div>
+            </div>
+          </div>
+        </div>
 
       </div>
       <div class="wizard-footer">

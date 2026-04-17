@@ -349,6 +349,37 @@ function ulTimingChanged(val) {
     </div>
   </div>
 
+  {# ── Advanced: Value-Add Modeling ───────────────────────────────────────
+     Collapsed by default. Only relevant for deals modeling LTL catchup or
+     renovation premium phase-in. Expanding doesn't require any input. #}
+  {%- set _has_advanced = existing and (
+      (existing.catchup_target_rent and existing.catchup_target_rent != 0)
+      or (existing.renovation_absorption_rate and existing.renovation_absorption_rate != 0)
+  ) -%}
+  <details style="margin-top:14px;border-top:1px solid var(--border);padding-top:12px" {% if _has_advanced %}open{% endif %}>
+    <summary style="cursor:pointer;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--text-muted);user-select:none">
+      Advanced — Value-Add Modeling
+    </summary>
+    <div style="margin-top:12px">
+      <div class="form-row">
+        <div class="form-field">
+          <label class="form-label">Catchup Target Rent ($/mo)</label>
+          <input class="form-input" type="number" name="catchup_target_rent" step="1" min="0"
+                 value="{{ existing.catchup_target_rent | round(0) | int if existing and existing.catchup_target_rent else '' }}"
+                 placeholder="blank = no catchup">
+          <div class="form-hint">Market rent to ramp toward (capped at 10%/yr). Leave blank for standard escalation.</div>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Renovation Absorption Rate</label>
+          <input class="form-input" type="number" name="renovation_absorption_rate" step="0.1" min="0" max="1"
+                 value="{{ existing.renovation_absorption_rate | round(2) if existing and existing.renovation_absorption_rate else '' }}"
+                 placeholder="0.0 – 1.0">
+          <div class="form-hint">1.0 = linear ramp over reno + lease-up. Blank = no phase-in (full income from day one).</div>
+        </div>
+      </div>
+    </div>
+  </details>
+
   <div class="form-field">
     <label class="form-label">Notes (optional)</label>
     <input class="form-input" type="text" name="notes"
