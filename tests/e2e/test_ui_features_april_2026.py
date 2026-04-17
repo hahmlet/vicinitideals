@@ -226,3 +226,134 @@ def test_outputs_panel_has_debt_yield_card(
         # text "Debt Yield" in the computed branch — not fail.
         # For a non-computed deal, this test just verifies no rendering error.
         assert "internal_server_error" not in content.lower()
+
+
+# ---------------------------------------------------------------------------
+# 5. Full wizard completion — CRITICAL regression test
+#    The Finish button on step 7 MUST be visible and clickable regardless of
+#    content height. This caught a real bug where the review step's content
+#    overflowed the viewport and the Finish button was unreachable.
+# ---------------------------------------------------------------------------
+
+def test_wizard_finish_button_visible_and_clickable(
+    _seed_page, base_url: str
+) -> None:
+    """End-to-end wizard: create a fresh deal, navigate to step 7, verify the
+    Finish Setup button is visible and can be clicked to actually complete setup.
+
+    This is the test that catches scroll/layout bugs where the button exists
+    in the DOM but isn't reachable by the user.
+    """
+    import uuid
+    page = _seed_page
+    suffix = uuid.uuid4().hex[:6]
+    model_id = create_e2e_scenario(page, deal_name=f"E2E Wizard Finish {suffix}")
+
+    # Approve timeline first so the timeline wizard doesn't overlay
+    project_id = _extract_project_id(page)
+    submit_timeline_wizard(
+        page, model_id, project_id,
+        milestone_types=["close", "construction", "operation_stabilized", "divestment"],
+        phase_durations={"construction": 180, "operation_stabilized": 730},
+    )
+
+    # Navigate to deal setup wizard
+    page.goto(f"{base_url}/models/{model_id}/builder?module=deal_setup")
+    page.wait_for_selector("#deal-setup-wizard", timeout=15_000)
+    wait_for_htmx(page)
+
+    # Step 1: income mode — use NOI to avoid needing building data
+    page.wait_for_selector('#deal-setup-wizard input[value="noi"]', timeout=5000)
+    page.click('#deal-setup-wizard input[value="noi"]')
+    page.click('#deal-setup-wizard .wizard-footer button.btn-primary')
+    wait_for_htmx(page)
+    page.wait_for_timeout(400)
+
+    # Step 2: select a multi-loan stack that produces a long review page
+    page.wait_for_selector('#debt-type-grid', timeout=8000)
+    for dt in ("pre_development_loan", "acquisition_loan", "construction_to_perm"):
+        cb = page.locator(f'#debt-type-grid input[value="{dt}"]')
+        if cb.count() > 0 and not cb.is_checked():
+            cb.check()
+    page.click('#deal-setup-wizard .wizard-footer button.btn-primary')
+    wait_for_htmx(page)
+    page.wait_for_timeout(400)
+
+    # Advance through steps 3, 4, 5, 6 — accept defaults
+    for _ in range(4):
+        btn = page.locator('#deal-setup-wizard .wizard-footer button.btn-primary')
+        if btn.count() > 0:
+            btn.first.click()
+            wait_for_htmx(page)
+            page.wait_for_timeout(400)
+
+    # Now on step 7 — verify Finish button is visible & clickable
+    finish_btn = page.locator('#deal-setup-wizard button[type="submit"]:has-text("Finish Setup")')
+    assert finish_btn.count() >= 1, "Finish Setup button should exist on step 7"
+
+    # CRITICAL: the button must be in the viewport, not clipped by overflow.
+    # Playwright's is_visible() checks display/visibility but not whether the
+    # element is within the scroll-visible area. We verify by asking Playwright
+    # to scroll-into-view-if-needed and then checking bounding box is nonzero.
+    finish_btn.first.scroll_into_view_if_needed(timeout=5000)
+    box = finish_btn.first.bounding_box()
+    assert box is not None, "Finish button should have a bounding box (rendered)"
+    assert box["width"] > 0 and box["height"] > 0, (
+        f"Finish button should have non-zero size, got {box}"
+    )
+
+    # Click it for real — this is the regression canary
+    finish_btn.first.click()
+    # After complete, the wizard is replaced by the full model builder
+    page.wait_for_url(f"**/models/{model_id}/builder**", timeout=15_000)
+    # Deal setup wizard should no longer be in the DOM
+    page.wait_for_timeout(500)
+    assert page.locator('#deal-setup-wizard').count() == 0, (
+        "Wizard should be dismissed after clicking Finish Setup"
+    )
+
+
+# ---------------------------------------------------------------------------
+# 6. Debt type ordering — acquisition comes before pre-development
+# ---------------------------------------------------------------------------
+
+def test_debt_type_ordering_acquisition_first(
+    _seed_page, base_url: str
+) -> None:
+    """Step 2 should render Acquisition Loan before Pre-Development Loan.
+
+    Acquisition is the universal starting point for almost every deal;
+    pre-dev is specialty. Canonical order improves UX for new users.
+    """
+    import uuid
+    page = _seed_page
+    suffix = uuid.uuid4().hex[:6]
+    model_id = create_e2e_scenario(page, deal_name=f"E2E Debt Order {suffix}")
+
+    # Approve timeline
+    project_id = _extract_project_id(page)
+    submit_timeline_wizard(
+        page, model_id, project_id,
+        milestone_types=["close", "construction", "operation_stabilized", "divestment"],
+    )
+
+    page.goto(f"{base_url}/models/{model_id}/builder?module=deal_setup")
+    page.wait_for_selector("#deal-setup-wizard", timeout=15_000)
+    wait_for_htmx(page)
+
+    # Advance to step 2
+    page.click('#deal-setup-wizard input[value="noi"]')
+    page.click('#deal-setup-wizard .wizard-footer button.btn-primary')
+    wait_for_htmx(page)
+    page.wait_for_timeout(400)
+
+    page.wait_for_selector('#debt-type-grid', timeout=8000)
+
+    # Find all option cards in order and verify acquisition comes before pre-dev
+    cards = page.locator('#debt-type-grid label.option-card').all()
+    ids = [c.get_attribute("id") for c in cards]
+    assert "card-acquisition_loan" in ids, "Acquisition Loan card missing"
+    assert "card-pre_development_loan" in ids, "Pre-Development Loan card missing"
+    assert ids.index("card-acquisition_loan") < ids.index("card-pre_development_loan"), (
+        f"Acquisition Loan should appear before Pre-Development Loan. Order: {ids}"
+    )

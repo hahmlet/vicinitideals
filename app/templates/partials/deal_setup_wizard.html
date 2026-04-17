@@ -20,6 +20,18 @@
   max-width: 640px;
   box-shadow: 0 2px 12px rgba(0,0,0,.06);
   overflow: hidden;
+  /* Sticky footer pattern: card fills viewport height, internal body scrolls,
+     footer stays visible. Prevents the Finish button from being clipped on
+     long review steps. */
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 80px);
+}
+.wizard-card > form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
 }
 .wizard-progress {
   display: flex;
@@ -76,6 +88,9 @@
 }
 .wizard-body {
   padding: 20px 28px 8px;
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
 }
 .wizard-footer {
   padding: 16px 28px 24px;
@@ -83,7 +98,9 @@
   align-items: center;
   justify-content: space-between;
   border-top: 1px solid var(--border);
-  margin-top: 16px;
+  margin-top: 0;
+  flex-shrink: 0;
+  background: var(--surface);
 }
 /* Option cards for debt structure */
 .option-grid {
@@ -184,7 +201,23 @@
 
 {% set _step = (step | default(1)) | int %}
 {# debt_types: new multi-select list; fall back to legacy debt_structure for old deals #}
-{% set _debt_types = (inputs.debt_types or []) if inputs else [] %}
+{% set _debt_types_raw = (inputs.debt_types or []) if inputs else [] %}
+{# Canonical order for display: most-common-first, then by lifecycle role.
+   Selection happens in any order but we display consistently everywhere. #}
+{% set _DEBT_ORDER = ['acquisition_loan', 'pre_development_loan', 'bridge',
+                      'construction_loan', 'construction_to_perm', 'permanent_debt'] %}
+{% set _debt_types = [] %}
+{%- for _canonical in _DEBT_ORDER -%}
+  {%- if _canonical in _debt_types_raw -%}
+    {%- set _ = _debt_types.append(_canonical) -%}
+  {%- endif -%}
+{%- endfor -%}
+{# Append any debt types not in the canonical list (defensive for future additions) #}
+{%- for _dt in _debt_types_raw -%}
+  {%- if _dt not in _debt_types -%}
+    {%- set _ = _debt_types.append(_dt) -%}
+  {%- endif -%}
+{%- endfor -%}
 {% set _ds = inputs.debt_structure if (inputs and inputs.debt_structure) else '' %}
 {# _has_constr: true if any construction-phase debt is selected #}
 {% set _has_constr = ('construction_loan' in _debt_types) or ('construction_to_perm' in _debt_types)
@@ -323,16 +356,6 @@
       <div class="wizard-body">
         <div class="option-grid" id="debt-type-grid">
 
-          <label class="option-card {% if 'pre_development_loan' in _debt_types %}selected{% endif %}" id="card-pre_development_loan">
-            <input type="checkbox" name="debt_types" value="pre_development_loan"
-                   {% if 'pre_development_loan' in _debt_types %}checked{% endif %}
-                   onchange="onDebtTypeChange()">
-            <div>
-              <div class="option-card-title">Pre-Development Loan</div>
-              <div class="option-card-desc">Short-term financing for entitlements, design, and due diligence before closing. Retired at Close.</div>
-            </div>
-          </label>
-
           <label class="option-card {% if 'acquisition_loan' in _debt_types %}selected{% endif %}" id="card-acquisition_loan">
             <input type="checkbox" name="debt_types" value="acquisition_loan"
                    {% if 'acquisition_loan' in _debt_types %}checked{% endif %}
@@ -343,13 +366,13 @@
             </div>
           </label>
 
-          <label class="option-card {% if 'construction_loan' in _debt_types %}selected{% endif %}" id="card-construction_loan">
-            <input type="checkbox" name="debt_types" value="construction_loan"
-                   {% if 'construction_loan' in _debt_types %}checked{% endif %}
+          <label class="option-card {% if 'pre_development_loan' in _debt_types %}selected{% endif %}" id="card-pre_development_loan">
+            <input type="checkbox" name="debt_types" value="pre_development_loan"
+                   {% if 'pre_development_loan' in _debt_types %}checked{% endif %}
                    onchange="onDebtTypeChange()">
             <div>
-              <div class="option-card-title">Construction Loan</div>
-              <div class="option-card-desc">IO-only financing during the build phase. Taken out by permanent debt at Certificate of Occupancy.</div>
+              <div class="option-card-title">Pre-Development Loan</div>
+              <div class="option-card-desc">Short-term financing for entitlements, design, and due diligence before closing. Retired at Close.</div>
             </div>
           </label>
 
@@ -363,13 +386,13 @@
             </div>
           </label>
 
-          <label class="option-card {% if 'permanent_debt' in _debt_types %}selected{% endif %}" id="card-permanent_debt">
-            <input type="checkbox" name="debt_types" value="permanent_debt"
-                   {% if 'permanent_debt' in _debt_types %}checked{% endif %}
+          <label class="option-card {% if 'construction_loan' in _debt_types %}selected{% endif %}" id="card-construction_loan">
+            <input type="checkbox" name="debt_types" value="construction_loan"
+                   {% if 'construction_loan' in _debt_types %}checked{% endif %}
                    onchange="onDebtTypeChange()">
             <div>
-              <div class="option-card-title">Permanent Debt</div>
-              <div class="option-card-desc">Long-term amortizing loan. Gap-fills to Total Project Cost. Extends in perpetuity through the hold period.</div>
+              <div class="option-card-title">Construction Loan</div>
+              <div class="option-card-desc">IO-only financing during the build phase. Taken out by permanent debt at Certificate of Occupancy.</div>
             </div>
           </label>
 
@@ -380,6 +403,16 @@
             <div>
               <div class="option-card-title">Construction-to-Perm</div>
               <div class="option-card-desc">One loan (e.g. a municipal bond) funds construction and converts to permanent debt at CO. Cannot be combined with separate Construction + Permanent.</div>
+            </div>
+          </label>
+
+          <label class="option-card {% if 'permanent_debt' in _debt_types %}selected{% endif %}" id="card-permanent_debt">
+            <input type="checkbox" name="debt_types" value="permanent_debt"
+                   {% if 'permanent_debt' in _debt_types %}checked{% endif %}
+                   onchange="onDebtTypeChange()">
+            <div>
+              <div class="option-card-title">Permanent Debt</div>
+              <div class="option-card-desc">Long-term amortizing loan. Gap-fills to Total Project Cost. Extends in perpetuity through the hold period.</div>
             </div>
           </label>
 
