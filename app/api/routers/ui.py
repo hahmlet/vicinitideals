@@ -6215,7 +6215,6 @@ async def deal_setup_wizard_complete(
     from app.engines.market import SubjectProperty, get_market_recommendation
 
     _market_rec = None
-    _market_rent_monthly = Decimal("0")
     _market_occupancy = Decimal("95")
     if assigned_buildings:
         _bldg = assigned_buildings[0]
@@ -6248,7 +6247,6 @@ async def deal_setup_wizard_complete(
                     exclude_listing_id=_exclude_listing_id,
                 )
                 if _market_rec and not _market_rec.low_confidence:
-                    _market_rent_monthly = Decimal(str(round(_market_rec.noi_per_unit / 12, 2)))
                     if _market_rec.occupancy_pct is not None:
                         _market_occupancy = Decimal(str(round(_market_rec.occupancy_pct * 100, 1)))
             except Exception:
@@ -6281,7 +6279,7 @@ async def deal_setup_wizard_complete(
                 stream_type=IncomeStreamType.residential_rent,
                 label=row.label,
                 unit_count=row.unit_count,
-                amount_per_unit_monthly=row.avg_monthly_rent or _market_rent_monthly,
+                amount_per_unit_monthly=row.avg_monthly_rent or Decimal("0"),
                 stabilized_occupancy_pct=_market_occupancy,
                 escalation_rate_pct_annual=Decimal("3"),
                 active_in_phases=["lease_up", "stabilized"],
