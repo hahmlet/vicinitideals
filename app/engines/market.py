@@ -71,6 +71,7 @@ class CompResult:
     price_per_sqft: float | None
     distance: float
     similarity: float
+    noi_source: str = "broker"  # "broker" | "hellodata"
     weight: float = 0.0  # set after normalization
 
 
@@ -146,21 +147,38 @@ def _compute_distance(subject: SubjectProperty, comp: SubjectProperty) -> float:
 
 
 def _comp_eligibility_filter():
-    """SQLAlchemy WHERE clause for eligible comps."""
+    """SQLAlchemy WHERE clause for eligible comps.
+
+    A listing is eligible if it has structural data (units, year, price) AND
+    at least one valid NOI source — either broker-reported (noi) or
+    HelloData-synthesized (hellodata_noi_per_unit).
+    """
+    from sqlalchemy import and_, or_
     return (
         ScrapedListing.priority_bucket != "out_of_market",
         ScrapedListing.units.isnot(None),
         ScrapedListing.units > 0,
         ScrapedListing.asking_price.isnot(None),
-        ScrapedListing.noi.isnot(None),
-        ScrapedListing.noi > 0,
         ScrapedListing.year_built.isnot(None),
         ScrapedListing.year_built < 2100,
+        or_(
+            and_(ScrapedListing.noi.isnot(None), ScrapedListing.noi > 0),
+            and_(
+                ScrapedListing.hellodata_noi_per_unit.isnot(None),
+                ScrapedListing.hellodata_noi_per_unit > 0,
+            ),
+        ),
     )
 
 
 async def _load_comp_pool(session: AsyncSession) -> list[dict[str, Any]]:
-    """Load all eligible comps from the database."""
+    """Load all eligible comps from the database.
+
+    For each comp, we resolve NOI and occupancy from HelloData-synthesized
+    values first (authoritative market data), falling back to broker-reported
+    values.  This gives HelloData-enriched listings a more accurate
+    contribution to the KNN pool.
+    """
     stmt = (
         select(
             ScrapedListing.id,
@@ -175,6 +193,12 @@ async def _load_comp_pool(session: AsyncSession) -> list[dict[str, Any]]:
             ScrapedListing.occupancy_pct,
             ScrapedListing.jurisdiction,
             ScrapedListing.city,
+            # HelloData-synthesized metrics (preferred when present)
+            ScrapedListing.hellodata_noi_per_unit,
+            ScrapedListing.hellodata_opex_per_unit,
+            ScrapedListing.hellodata_egi_per_unit,
+            ScrapedListing.hellodata_market_rent_per_unit,
+            ScrapedListing.hellodata_occupancy_pct,
         )
         .where(*_comp_eligibility_filter())
     )
@@ -229,7 +253,33 @@ async def get_market_recommendation(
             continue
 
         price = float(row["asking_price"])
-        noi = float(row["noi"])
+
+        # Resolve NOI — prefer broker-reported (pertains to this exact property),
+        # fall back to HelloData-synthesized per-unit value if broker NOI missing.
+        broker_noi = row.get("noi")
+        hd_noi_per_unit = row.get("hellodata_noi_per_unit")
+        if broker_noi is not None and broker_noi > 0:
+            noi = float(broker_noi)
+            noi_per_unit = noi / units
+            noi_per_sqft = noi / sqft if sqft and sqft > 0 else None
+            noi_source = "broker"
+        elif hd_noi_per_unit is not None and hd_noi_per_unit > 0:
+            noi_per_unit = float(hd_noi_per_unit)
+            noi = noi_per_unit * units  # synthesize total for per-sqft calc
+            noi_per_sqft = noi / sqft if sqft and sqft > 0 else None
+            noi_source = "hellodata"
+        else:
+            continue  # shouldn't happen given eligibility filter, but be safe
+
+        # Resolve occupancy — same preference order.
+        broker_occ = row.get("occupancy_pct")
+        hd_occ = row.get("hellodata_occupancy_pct")
+        if broker_occ is not None:
+            occupancy_pct = float(broker_occ)
+        elif hd_occ is not None:
+            occupancy_pct = float(hd_occ)
+        else:
+            occupancy_pct = None
 
         scored.append(CompResult(
             listing_id=listing_id,
@@ -238,14 +288,15 @@ async def get_market_recommendation(
             year_built=year_built,
             sqft_per_unit=sqft_per_unit,
             jurisdiction=jurisdiction,
-            noi_per_unit=noi / units,
+            noi_per_unit=noi_per_unit,
             price_per_unit=price / units,
             cap_rate=float(row["cap_rate"]) if row["cap_rate"] else None,
-            occupancy_pct=float(row["occupancy_pct"]) if row["occupancy_pct"] else None,
-            noi_per_sqft=noi / sqft if sqft and sqft > 0 else None,
+            occupancy_pct=occupancy_pct,
+            noi_per_sqft=noi_per_sqft,
             price_per_sqft=price / sqft if sqft and sqft > 0 else None,
             distance=dist,
             similarity=1.0 / (1.0 + dist),
+            noi_source=noi_source,
         ))
 
     if not scored:

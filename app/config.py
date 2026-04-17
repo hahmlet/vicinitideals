@@ -100,6 +100,18 @@ class Settings(BaseSettings):
     realie_api_key: str = ""
 
     # -------------------------------------------------------------------------
+    # HelloData.ai market data enrichment (https://hellodata.ai)
+    # Pay-per-call: ~$0.50/endpoint. Budget enforced in HelloDataEnricher.
+    # hellodata_cost_per_call_cents is configurable in cents (default 50 = $0.50).
+    # hellodata_monthly_budget_cents is the dollar cap per calendar month.
+    # NOTE: Portland listings are excluded — see CLAUDE.md Market Coverage Policy.
+    # -------------------------------------------------------------------------
+    hellodata_api_key: str = ""
+    hellodata_base_url: str = "https://api.hellodata.ai"
+    hellodata_cost_per_call_cents: int = 50
+    hellodata_monthly_budget_cents: int = 10000  # $100/mo default ceiling
+
+    # -------------------------------------------------------------------------
     # Alembic / migrations
     # -------------------------------------------------------------------------
     # Sync DSN used only by Alembic CLI (asyncpg cannot be used synchronously)

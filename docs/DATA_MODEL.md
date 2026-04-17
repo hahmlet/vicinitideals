@@ -50,6 +50,7 @@ Parcel  ←──(parcel_id FK)── ScrapedListing ──(linked_project_id FK
 | **Crexi** | `app/scrapers/crexi.py` | Address, lat/lng, property type, units, asking price, cap rate, NOI, zoning, APN, occupancy, description, broker contacts | Celery beat (scraping queue) |
 | **LoopNet** | `app/tasks/scraper.py` via Scrapling LXC 134 | Same field set as Crexi (normalized to common schema) | Celery beat (scraping queue) |
 | **Realie.ai** | `app/scrapers/realie.py` | Full property data (80+ fields), stored as `realie_raw_json` | 25 calls/month budget, enriches listings post-ingest |
+| **HelloData.ai** | `app/scrapers/hellodata.py` | Unit-level market rents, ML-predicted OpEx/NOI, comparables, occupancy | Pay-per-call (~$0.50/endpoint); monthly cost budget; Portland excluded per policy |
 
 ### 2.2 Parcel Seeding Sources (GIS Ground Truth)
 

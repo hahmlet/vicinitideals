@@ -197,17 +197,51 @@ When HelloData data is ingested:
 
 ## 6. Future Enhancements
 
-### 6.1 HelloData Integration
+### 6.1 HelloData Integration — SHIPPED (2026-04-17)
 
-Quarterly data dump from HelloData API adds ~50 properties with:
-- Unit-level rent by bedroom type (studio, 1BR, 2BR, etc.)
-- ML-predicted expense line items with confidence ranges
-- Occupancy history and trends
+The HelloData.ai enrichment harness is live (`app/scrapers/hellodata.py`).
+Calls four endpoints per property (~$1.50/listing at default rates):
 
-This data would enable:
-- Per-unit-type rent recommendations (not just blended NOI/unit)
-- Individual OpEx line item prefill (property tax, insurance, etc.)
-- Confidence ranges on recommendations
+| Endpoint | Purpose | Stored On ScrapedListing |
+|---|---|---|
+| `/property/search` | Resolve HelloData property ID | `hellodata_property_id`, `hellodata_raw_search` |
+| `/property/market_rents` | Unit-level rent predictions | `hellodata_raw_rents`, synthesized `hellodata_market_rent_per_unit/sqft` |
+| `/property/expense_benchmarks` | ML-predicted OpEx + NOI | `hellodata_raw_expenses`, synthesized `hellodata_egi_per_unit`, `hellodata_noi_per_unit`, `hellodata_opex_per_unit`, `hellodata_occupancy_pct` |
+| `/property/comparables` | Optional: nearby comps | `hellodata_raw_comparables` |
+
+**Budget enforcement** (`HelloDataUsage` table):
+- Monthly cost cap in cents (default $100/month)
+- Per-call cost configurable in `settings.hellodata_cost_per_call_cents` (default 50)
+- Hard lock once monthly budget is reached
+- Per-run `--max-dollars` cap via CLI
+
+**Portland exclusion** (safety):
+- `_is_portland()` checks `jurisdiction` (reconciled) then `city` (broker) against
+  `PORTLAND_JURISDICTION_VALUES`.  Portland listings are never paid for,
+  enforcing the CLAUDE.md Market Coverage Policy.
+
+**Comp pool integration**:
+- Eligibility filter now accepts listings with EITHER broker NOI OR
+  `hellodata_noi_per_unit > 0`.
+- `CompResult.noi_source` records `"broker"` vs `"hellodata"` for audit.
+- Broker-reported NOI wins when present (pertains to the exact property);
+  HelloData synthesized values fill the gap for listings without broker financials.
+- Same preference order applies to occupancy.
+
+**CLI**: `docker exec vicinitideals-api python -m app.scripts.enrich_hellodata`
+
+### 6.2 Future Enhancements
+
+- **Per-unit-type rent recommendations** — HelloData returns rent per floorplan
+  (studio, 1BR, 2BR).  Current synthesis averages these; a future enhancement
+  could break out UnitMix-level recommendations when the deal's UnitMix has
+  multiple rows.
+- **Confidence ranges** — HelloData returns 20th/80th percentile bounds for
+  expense distributions.  These could surface as "market range" alongside
+  the single recommendation.
+- **Expense line-item decomposition** — HelloData provides individual line
+  items (property tax, insurance, utilities, etc.) that could prefill the
+  19-line OpEx template instead of just the aggregate NOI.
 
 ### 6.2 Enhancement UI
 

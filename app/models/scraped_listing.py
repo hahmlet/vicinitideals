@@ -193,6 +193,26 @@ class ScrapedListing(Base):
         JSON, nullable=True  # complete Realie property response (all 80+ fields)
     )
 
+    # HelloData.ai enrichment — raw responses + synthesized comp fields
+    hellodata_skip: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    hellodata_enriched_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
+    hellodata_property_id: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    hellodata_raw_search: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+    hellodata_raw_rents: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+    hellodata_raw_expenses: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+    hellodata_raw_comparables: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+
+    # Synthesized per-unit / per-sqft metrics extracted from raw responses —
+    # these feed the KNN comp pool alongside listing-native financials.
+    hellodata_market_rent_per_unit: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
+    hellodata_market_rent_per_sqft: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
+    hellodata_egi_per_unit: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
+    hellodata_noi_per_unit: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
+    hellodata_opex_per_unit: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
+    hellodata_occupancy_pct: Mapped[object | None] = mapped_column(Numeric(5, 4), nullable=True)
+
     # Compatibility aliases used by the current API/tests.
     listing_url = synonym("source_url")
     address = synonym("street")
