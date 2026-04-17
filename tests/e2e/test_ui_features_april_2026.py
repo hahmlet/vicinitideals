@@ -357,3 +357,141 @@ def test_debt_type_ordering_acquisition_first(
     assert ids.index("card-acquisition_loan") < ids.index("card-pre_development_loan"), (
         f"Acquisition Loan should appear before Pre-Development Loan. Order: {ids}"
     )
+
+
+# ---------------------------------------------------------------------------
+# 7. Income stream form — advanced value-add fields (collapsible)
+# ---------------------------------------------------------------------------
+
+def test_income_stream_form_has_advanced_value_add_section(
+    logged_in_page, base_url: str, feature_model_id: str
+) -> None:
+    """The income stream form should expose catchup_target_rent and
+    renovation_absorption_rate inside an 'Advanced — Value-Add Modeling'
+    <details> section."""
+    page = logged_in_page
+    page.goto(
+        f"{base_url}/ui/models/{feature_model_id}/line-form?type=income_streams",
+        wait_until="domcontentloaded",
+    )
+    wait_for_htmx(page)
+
+    # The <details> block should be present with the exact summary text
+    summary = page.locator('summary:has-text("Advanced")')
+    assert summary.count() >= 1, "Advanced Value-Add Modeling summary should exist"
+
+    # Both new inputs should be in the DOM (inside the collapsed <details>)
+    catchup = page.locator('input[name="catchup_target_rent"]')
+    assert catchup.count() == 1, "catchup_target_rent input should be present"
+
+    reno_abs = page.locator('input[name="renovation_absorption_rate"]')
+    assert reno_abs.count() == 1, "renovation_absorption_rate input should be present"
+
+    # Default placeholders indicate they're optional (blank by default)
+    assert "blank" in (catchup.get_attribute("placeholder") or "").lower()
+
+
+# ---------------------------------------------------------------------------
+# 8. Wizard step 6 — S-curve lease-up toggle
+# ---------------------------------------------------------------------------
+
+def test_wizard_step6_has_lease_up_curve_controls(
+    _seed_page, base_url: str
+) -> None:
+    """Step 6 (Reserves & Floors) should expose the lease-up curve toggle
+    and the steepness input when S-Curve is selected."""
+    import uuid
+    page = _seed_page
+    suffix = uuid.uuid4().hex[:6]
+    model_id = create_e2e_scenario(page, deal_name=f"E2E LeaseUp {suffix}")
+    project_id = _extract_project_id(page)
+    submit_timeline_wizard(
+        page, model_id, project_id,
+        milestone_types=["close", "construction", "operation_stabilized", "divestment"],
+    )
+
+    page.goto(f"{base_url}/models/{model_id}/builder?module=deal_setup")
+    page.wait_for_selector("#deal-setup-wizard", timeout=15_000)
+    wait_for_htmx(page)
+
+    # Advance through 5 steps to reach step 6
+    page.click('#deal-setup-wizard input[value="noi"]')
+    page.click('#deal-setup-wizard .wizard-footer button.btn-primary')
+    wait_for_htmx(page); page.wait_for_timeout(400)
+
+    page.wait_for_selector('#debt-type-grid', timeout=8000)
+    cb = page.locator('#debt-type-grid input[value="permanent_debt"]')
+    if cb.count() > 0 and not cb.is_checked():
+        cb.check()
+    page.click('#deal-setup-wizard .wizard-footer button.btn-primary')
+    wait_for_htmx(page); page.wait_for_timeout(400)
+
+    for _ in range(3):  # steps 3, 4, 5 → advance to 6
+        page.click('#deal-setup-wizard .wizard-footer button.btn-primary')
+        wait_for_htmx(page); page.wait_for_timeout(400)
+
+    # Step 6: lease-up curve dropdown present
+    curve_select = page.locator('select[name="lease_up_curve"]')
+    assert curve_select.count() == 1, "lease_up_curve select should be on step 6"
+
+    # Steepness input exists in DOM (may be hidden when linear is selected)
+    steep_input = page.locator('input[name="lease_up_curve_steepness"]')
+    assert steep_input.count() == 1, "lease_up_curve_steepness input should be present"
+
+    # When we switch to s_curve, steepness wrapper should become visible
+    curve_select.select_option("s_curve")
+    page.wait_for_timeout(200)
+    wrap = page.locator('#lu-steepness-wrap')
+    assert wrap.is_visible(), "Steepness wrapper should become visible when S-Curve selected"
+
+
+# ---------------------------------------------------------------------------
+# 9. Setup complete seeds default OpEx line items
+# ---------------------------------------------------------------------------
+
+def test_setup_complete_seeds_default_opex_lines(
+    _seed_page, base_url: str
+) -> None:
+    """Finishing the deal setup wizard should auto-seed 10 default OpEx
+    line items matching the consensus from CRE model cross-analysis."""
+    import uuid
+    page = _seed_page
+    suffix = uuid.uuid4().hex[:6]
+    model_id = create_e2e_scenario(page, deal_name=f"E2E OpEx Seed {suffix}")
+    project_id = _extract_project_id(page)
+    submit_timeline_wizard(
+        page, model_id, project_id,
+        milestone_types=["close", "construction", "operation_stabilized", "divestment"],
+    )
+
+    # Run the full wizard end-to-end via the seed helper
+    from tests.e2e.seed import run_deal_setup_wizard
+    run_deal_setup_wizard(
+        page, model_id,
+        income_mode="noi",
+        debt_types=["permanent_debt"],
+    )
+
+    # Navigate to the OpEx module and verify seeded lines
+    page.goto(f"{base_url}/models/{model_id}/builder?module=opex")
+    page.wait_for_selector("#module-panel-content", timeout=15_000)
+    wait_for_htmx(page)
+
+    expected_labels = [
+        "Real Estate Taxes",
+        "Property Insurance",
+        "Utilities",
+        "Repairs & Maintenance",
+        "Management Fee",
+        "Payroll & On-Site Staff",
+        "Marketing & Leasing",
+        "General & Administrative",
+        "Turnover / Make-Ready",
+        "CapEx Reserve",
+    ]
+    content = page.content()
+    # & in labels gets rendered as &amp; in HTML — check for either form
+    def _present(lbl: str) -> bool:
+        return lbl in content or lbl.replace("&", "&amp;") in content
+    missing = [lbl for lbl in expected_labels if not _present(lbl)]
+    assert not missing, f"Missing seeded OpEx labels: {missing}"
