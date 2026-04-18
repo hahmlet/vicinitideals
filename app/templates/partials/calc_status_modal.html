@@ -1,0 +1,94 @@
+{# Calculation Status modal body — returned by /ui/models/{id}/calc-status/modal.
+   Renders 3 factors (Sources=Uses, DSCR, LTV) each with status indicator,
+   short label, and explanatory detail.
+
+   Required context:
+     - status: dict with keys: overall, failing_count, sources_uses, dscr, ltv
+     - model_id: str
+#}
+
+<div class="calc-status-modal-header">
+  <div>
+    <div class="calc-status-modal-title">Calculation Status</div>
+    <div class="calc-status-modal-sub">
+      {% if status.overall == 'ok' %}
+      All three checks pass. The model is internally consistent.
+      {% else %}
+      {{ status.failing_count }} factor{{ 's' if status.failing_count != 1 else '' }} need{{ '' if status.failing_count != 1 else 's' }} attention.
+      {% endif %}
+    </div>
+  </div>
+  <button type="button" class="calc-status-modal-close"
+          onclick="document.getElementById('calc-status-modal').style.display='none'">✕</button>
+</div>
+
+<div class="calc-status-modal-body">
+
+  {% for key, title, factor in [
+       ('sources_uses', 'Sources = Uses', status.sources_uses),
+       ('dscr', 'DSCR (Debt Service Coverage)', status.dscr),
+       ('ltv', 'LTV (Loan-to-Value)', status.ltv),
+  ] %}
+  {%- set icon = {'ok': '✓', 'warn': '⚠', 'fail': '✕', 'na': '○'}.get(factor.status, '○') -%}
+  <div class="calc-status-row calc-status-{{ factor.status }}">
+    <div class="calc-status-row-icon">{{ icon }}</div>
+    <div class="calc-status-row-content">
+      <div class="calc-status-row-title">{{ title }}</div>
+      <div class="calc-status-row-label">{{ factor.label }}</div>
+      <div class="calc-status-row-detail">{{ factor.detail }}</div>
+
+      {# Factor-specific meta display #}
+      {% if key == 'sources_uses' and factor.meta.get('capital_total') %}
+      <div class="calc-status-row-meta">
+        <div><span>Sources</span><span class="text-mono">${{ '{:,.0f}'.format(factor.meta.capital_total) }}</span></div>
+        <div><span>Uses</span><span class="text-mono">${{ '{:,.0f}'.format(factor.meta.uses_total) }}</span></div>
+        <div style="font-weight:700;border-top:1px solid var(--border);padding-top:4px;margin-top:4px">
+          <span>Difference</span>
+          <span class="text-mono"
+                style="color:{% if factor.status == 'ok' %}var(--success,#16a34a){% elif factor.status == 'fail' %}var(--danger,#dc2626){% else %}var(--warning,#ca8a04){% endif %}">
+            {% if factor.meta.gap >= 0 %}+{% endif %}${{ '{:,.0f}'.format(factor.meta.gap) }}
+          </span>
+        </div>
+      </div>
+      {% elif key == 'dscr' and factor.meta.get('dscr') is not none and factor.meta.get('dscr_min') is not none %}
+      <div class="calc-status-row-meta">
+        <div><span>Current DSCR</span><span class="text-mono">{{ '%.2f' | format(factor.meta.dscr) }}×</span></div>
+        <div><span>Minimum required</span><span class="text-mono">{{ '%.2f' | format(factor.meta.dscr_min) }}×</span></div>
+        {% if factor.meta.get('headroom') is not none %}
+        <div style="font-weight:700;border-top:1px solid var(--border);padding-top:4px;margin-top:4px">
+          <span>Headroom</span>
+          <span class="text-mono" style="color:var(--success,#16a34a)">+{{ '%.2f' | format(factor.meta.headroom) }}×</span>
+        </div>
+        {% elif factor.meta.get('shortfall') is not none %}
+        <div style="font-weight:700;border-top:1px solid var(--border);padding-top:4px;margin-top:4px">
+          <span>Shortfall</span>
+          <span class="text-mono" style="color:var(--danger,#dc2626)">−{{ '%.2f' | format(factor.meta.shortfall) }}×</span>
+        </div>
+        {% endif %}
+      </div>
+      {% elif key == 'ltv' and factor.meta.get('binding_modules') %}
+      <div class="calc-status-row-meta">
+        {% for bm in factor.meta.binding_modules %}
+        <div>
+          <span>{{ bm.label }}</span>
+          <span class="text-mono">
+            {% if bm.ltv_pct %}{{ bm.ltv_pct }}% LTV{% endif %}
+            {% if bm.amount %} · ${{ '{:,.0f}'.format(bm.amount) }}{% endif %}
+          </span>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+
+</div>
+
+<div class="calc-status-modal-footer">
+  <div class="calc-status-modal-hint">
+    This is read-only diagnostic. Close and edit Sources, Uses, or deal inputs to resolve issues.
+  </div>
+  <button type="button" class="btn btn-primary"
+          onclick="document.getElementById('calc-status-modal').style.display='none'">Close</button>
+</div>

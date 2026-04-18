@@ -6803,30 +6803,223 @@ async def builder_panel(
     return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
 
 
+def _compute_calc_status(data: dict) -> dict:
+    """Produce the 3-factor calculation status: Sources=Uses, DSCR, LTV.
+
+    Each factor returns a dict with:
+      status: "ok" | "warn" | "fail" | "na"
+      label: short human summary
+      detail: longer explanation for the modal
+      meta: structured data (numbers) for display
+
+    Overall status rolls up to "ok" (green) only if ALL factors are ok/na.
+    """
+    capital_total = float(data.get("capital_total") or 0.0)
+    uses_total = float(data.get("uses_total") or 0.0)
+    outputs = data.get("outputs")
+    inputs = data.get("inputs")
+    capital_modules = data.get("capital_modules") or []
+
+    # ── Factor 1: Sources vs Uses ──
+    gap = capital_total - uses_total
+    if not capital_total and not uses_total:
+        su_status = {
+            "status": "na",
+            "label": "No sources/uses yet",
+            "detail": "Add Sources and Uses to see balance check.",
+            "meta": {"capital_total": 0, "uses_total": 0, "gap": 0},
+        }
+    elif abs(gap) < 1.0:
+        su_status = {
+            "status": "ok",
+            "label": "Sources = Uses",
+            "detail": f"Balanced at {_fmt_currency(uses_total)}.",
+            "meta": {"capital_total": capital_total, "uses_total": uses_total, "gap": 0},
+        }
+    elif gap > 0:
+        su_status = {
+            "status": "warn",
+            "label": f"Surplus {_fmt_currency(gap)}",
+            "detail": f"Sources ({_fmt_currency(capital_total)}) exceed Uses ({_fmt_currency(uses_total)}) by {_fmt_currency(gap)}. The extra capital isn't needed — consider reducing a debt amount or equity.",
+            "meta": {"capital_total": capital_total, "uses_total": uses_total, "gap": gap},
+        }
+    else:
+        su_status = {
+            "status": "fail",
+            "label": f"Gap {_fmt_currency(-gap)}",
+            "detail": f"Uses ({_fmt_currency(uses_total)}) exceed Sources ({_fmt_currency(capital_total)}) by {_fmt_currency(-gap)}. Either increase debt sizing (raise LTV or DSCR), reduce Uses, or add equity.",
+            "meta": {"capital_total": capital_total, "uses_total": uses_total, "gap": gap},
+        }
+
+    # ── Factor 2: DSCR ──
+    dscr_val = None
+    dscr_min = None
+    if outputs is not None and getattr(outputs, "dscr", None):
+        try:
+            dscr_val = float(outputs.dscr)
+        except (TypeError, ValueError):
+            dscr_val = None
+    if inputs is not None and getattr(inputs, "dscr_minimum", None):
+        try:
+            dscr_min = float(inputs.dscr_minimum)
+        except (TypeError, ValueError):
+            dscr_min = None
+
+    if dscr_val is None or dscr_min is None:
+        dscr_status = {
+            "status": "na",
+            "label": "DSCR not computed",
+            "detail": "Run Compute to calculate DSCR. Requires debt modules and an operational NOI.",
+            "meta": {"dscr": None, "dscr_min": dscr_min},
+        }
+    elif dscr_val >= dscr_min:
+        headroom = dscr_val - dscr_min
+        dscr_status = {
+            "status": "ok",
+            "label": f"DSCR {dscr_val:.2f}× (min {dscr_min:.2f}×)",
+            "detail": f"DSCR is {headroom:.2f}× above the minimum. The deal comfortably covers its debt service.",
+            "meta": {"dscr": dscr_val, "dscr_min": dscr_min, "headroom": headroom},
+        }
+    else:
+        shortfall = dscr_min - dscr_val
+        dscr_status = {
+            "status": "fail",
+            "label": f"DSCR {dscr_val:.2f}× < min {dscr_min:.2f}×",
+            "detail": f"DSCR is {shortfall:.2f}× below the minimum. The deal isn't producing enough NOI to cover debt service at lender requirements. Reduce debt, increase NOI, or lower the DSCR minimum if your lender allows.",
+            "meta": {"dscr": dscr_val, "dscr_min": dscr_min, "shortfall": shortfall},
+        }
+
+    # ── Factor 3: LTV (binding constraint diagnostic) ──
+    # For each auto-sized debt module, check if LTV is the binding constraint
+    # (only tagged for dual_constraint sizing mode).
+    ltv_binding_modules: list[dict] = []
+    any_has_ltv = False
+    for m in capital_modules:
+        src = m.source or {}
+        if src.get("is_bridge"):
+            continue
+        binding = src.get("binding_constraint")
+        ltv_pct = src.get("ltv_pct")
+        if ltv_pct:
+            any_has_ltv = True
+        if binding == "ltv":
+            ltv_binding_modules.append({
+                "label": m.label,
+                "ltv_pct": float(ltv_pct) if ltv_pct else None,
+                "amount": float(src.get("amount") or 0),
+            })
+
+    if not any_has_ltv:
+        ltv_status = {
+            "status": "na",
+            "label": "LTV not set",
+            "detail": "No debt module has an LTV constraint. LTV sizing is only active under Dual-Constraint mode.",
+            "meta": {"binding_modules": []},
+        }
+    elif ltv_binding_modules and gap < -1.0:
+        # LTV is binding AND we have a gap — LTV is limiting us
+        first = ltv_binding_modules[0]
+        pct = first.get("ltv_pct")
+        ltv_status = {
+            "status": "fail",
+            "label": f"{first['label']} limited by LTV ({pct}%)" if pct else f"{first['label']} limited by LTV",
+            "detail": f"The sizing of {first['label']} is bound by LTV at {pct}% — not DSCR, not gap-fill. If DSCR has headroom, raising the LTV would close some of the Sources gap.",
+            "meta": {"binding_modules": ltv_binding_modules},
+        }
+    elif ltv_binding_modules:
+        # LTV is binding but no gap — fine
+        first = ltv_binding_modules[0]
+        pct = first.get("ltv_pct")
+        ltv_status = {
+            "status": "ok",
+            "label": f"LTV binding at {pct}%" if pct else "LTV binding",
+            "detail": f"{first['label']} is sized at the LTV constraint. Since Sources = Uses, this is fine — the LTV happened to match what the deal needed.",
+            "meta": {"binding_modules": ltv_binding_modules},
+        }
+    else:
+        ltv_status = {
+            "status": "ok",
+            "label": "LTV slack",
+            "detail": "LTV is not the binding constraint for any debt module — DSCR or gap-fill is sizing your debt instead.",
+            "meta": {"binding_modules": []},
+        }
+
+    # ── Overall rollup ──
+    factors = [su_status, dscr_status, ltv_status]
+    failing_count = sum(1 for f in factors if f["status"] in ("fail", "warn"))
+    if failing_count == 0:
+        overall = "ok"
+    else:
+        overall = "warn"
+
+    return {
+        "overall": overall,
+        "failing_count": failing_count,
+        "sources_uses": su_status,
+        "dscr": dscr_status,
+        "ltv": ltv_status,
+    }
+
+
+@router.get("/ui/models/{model_id}/calc-status", response_class=HTMLResponse)
+async def model_calc_status_pill(
+    request: Request,
+    model_id: UUID,
+    session: DBSession,
+) -> HTMLResponse:
+    """Returns the center-top calculation status pill HTML.
+
+    Green pill = all factors clear. Yellow pill = N factors failing.
+    Click opens the Calculation Status modal via HTMX.
+    """
+    data = await _load_builder_data(session, model_id)
+    timeline_approved = data.get("timeline_approved", False)
+    if not timeline_approved:
+        return HTMLResponse("")
+    status = _compute_calc_status(data)
+    if status["overall"] == "ok":
+        label = "✓ Calculation Valid"
+        cls = "ok"
+    else:
+        n = status["failing_count"]
+        label = f"⚠ {n} issue{'s' if n != 1 else ''}"
+        cls = "warn"
+    return HTMLResponse(
+        f'<button type="button" class="calc-status-pill {cls}" '
+        f'hx-get="/ui/models/{model_id}/calc-status/modal" '
+        f'hx-target="#calc-status-modal-body" '
+        f'hx-swap="innerHTML" '
+        f'onclick="document.getElementById(\'calc-status-modal\').style.display=\'flex\'">'
+        f'{label}</button>'
+    )
+
+
+@router.get("/ui/models/{model_id}/calc-status/modal", response_class=HTMLResponse)
+async def model_calc_status_modal(
+    request: Request,
+    model_id: UUID,
+    session: DBSession,
+) -> HTMLResponse:
+    """Returns the modal body HTML with the 3-factor diagnostic."""
+    data = await _load_builder_data(session, model_id)
+    status = _compute_calc_status(data)
+    return templates.TemplateResponse(
+        request,
+        "partials/calc_status_modal.html",
+        {"status": status, "model_id": str(model_id)},
+    )
+
+
 @router.get("/ui/models/{model_id}/balance-bar", response_class=HTMLResponse)
 async def model_balance_bar(
     request: Request,
     model_id: UUID,
     session: DBSession,
 ) -> HTMLResponse:
-    """Returns just the balance bar HTML for the sidebar — refreshed independently after mutations."""
-    data = await _load_builder_data(session, model_id)
-    capital_total = data.get("capital_total") or 0.0
-    uses_total = data.get("uses_total") or 0.0
-    timeline_approved = data.get("timeline_approved", False)
-    bal = float(capital_total) - float(uses_total)
-    if not timeline_approved or (not capital_total and not uses_total):
-        return HTMLResponse("")
-    if abs(bal) < 1.0:
-        cls = "balanced"
-        text = "✓ Sources = Uses"
-    elif bal > 0:
-        cls = "unbalanced"
-        text = f"↑ Surplus {_fmt_currency(bal)}"
-    else:
-        cls = "deficit"
-        text = f"⚠ Gap {_fmt_currency(-bal)}"
-    return HTMLResponse(f'<div class="balance-bar {cls}">{text}</div>')
+    """DEPRECATED — kept for back-compat. Redirects to calc-status pill.
+    Sidebar balance bar replaced by center-top status pill.
+    """
+    return await model_calc_status_pill(request, model_id, session)
 
 
 @router.get("/ui/models/{model_id}/module-nav")

@@ -112,19 +112,164 @@
   white-space: nowrap;
 }
 
-/* balance indicator */
-.balance-bar {
-  margin: 0 16px 8px;
-  padding: 8px 10px;
-  border-radius: 6px;
-  font-size: 12px;
-  display: flex;
+/* ── Calculation Status pill (center-top of builder topbar) ── */
+.calc-status-pill {
+  display: inline-flex;
   align-items: center;
   gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform .08s ease, box-shadow .08s ease;
+  white-space: nowrap;
 }
-.balance-bar.balanced   { background: #d1fae5; color: #065f46; }
-.balance-bar.unbalanced { background: #fef3c7; color: #92400e; }
-.balance-bar.deficit    { background: #fee2e2; color: #991b1b; }
+.calc-status-pill:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+}
+.calc-status-pill.ok {
+  background: #dcfce7;
+  color: #065f46;
+  border-color: #86efac;
+}
+.calc-status-pill.warn {
+  background: #fef3c7;
+  color: #92400e;
+  border-color: #fcd34d;
+}
+
+/* ── Calculation Status modal ── */
+.calc-status-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,.45);
+  z-index: 9000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.calc-status-modal-card {
+  background: var(--surface, #fff);
+  border-radius: 12px;
+  box-shadow: 0 12px 48px rgba(0,0,0,.25);
+  width: 100%;
+  max-width: 560px;
+  max-height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.calc-status-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 20px 24px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.calc-status-modal-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+.calc-status-modal-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.calc-status-modal-close {
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+}
+.calc-status-modal-close:hover { color: var(--text); }
+.calc-status-modal-body {
+  padding: 16px 24px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+.calc-status-modal-footer {
+  padding: 12px 24px 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.calc-status-modal-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  flex: 1;
+}
+
+.calc-status-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+.calc-status-row:last-child { border-bottom: none; }
+.calc-status-row-icon {
+  font-size: 18px;
+  font-weight: 700;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.calc-status-ok .calc-status-row-icon   { background: #dcfce7; color: #16a34a; }
+.calc-status-warn .calc-status-row-icon { background: #fef3c7; color: #ca8a04; }
+.calc-status-fail .calc-status-row-icon { background: #fee2e2; color: #dc2626; }
+.calc-status-na .calc-status-row-icon   { background: #f3f4f6; color: #6b7280; }
+
+.calc-status-row-content { flex: 1; min-width: 0; }
+.calc-status-row-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+.calc-status-row-label {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.calc-status-ok .calc-status-row-label   { color: #16a34a; }
+.calc-status-warn .calc-status-row-label { color: #ca8a04; }
+.calc-status-fail .calc-status-row-label { color: #dc2626; }
+.calc-status-row-detail {
+  font-size: 13px;
+  color: var(--text-secondary, var(--text-muted));
+  line-height: 1.5;
+}
+.calc-status-row-meta {
+  margin-top: 10px;
+  font-size: 12px;
+  background: var(--bg-muted, #f9fafb);
+  border-radius: 6px;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.calc-status-row-meta > div {
+  display: flex;
+  justify-content: space-between;
+}
+.calc-status-row-meta span:first-child { color: var(--text-muted); }
 
 /* ── Active module panel (right) ── */
 .module-panel {
@@ -442,7 +587,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="builder-topbar">
+<div class="builder-topbar" style="position:relative">
   <div class="builder-breadcrumb">
     {% if parent_deal_id %}
     <a href="/deals/{{ parent_deal_id }}" style="font-size:12px;color:var(--text-muted);font-weight:400">← Deal</a>
@@ -450,6 +595,15 @@
     {% endif %}
     <span>{{ project.name if project else model.name }}</span>
   </div>
+
+  {# Center-top Calculation Status pill — clickable to open diagnostic modal.
+     Loaded via HTMX so it refreshes independently after compute or mutations. #}
+  <div id="calc-status-pill-container"
+       style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:1"
+       hx-get="/ui/models/{{ model.id }}/calc-status"
+       hx-trigger="load"
+       hx-swap="innerHTML"></div>
+
   <div class="builder-topbar-right">
     <span class="badge {{ 'badge-green' if model.is_active else 'badge-gray' }}">
       {{ 'Active' if model.is_active else 'Inactive' }}
@@ -484,8 +638,8 @@ function handleComputeResult(evt) {
       el.innerHTML = '<span class="badge badge-green" style="font-size:11px">✓ Computed</span>';
     }
     // Refresh balance bar directly — auto-sized debt amounts change after compute
-    htmx.ajax('GET', '/ui/models/{{ model.id }}/balance-bar', {
-      target: '#balance-bar-container', swap: 'innerHTML'
+    htmx.ajax('GET', '/ui/models/{{ model.id }}/calc-status', {
+      target: '#calc-status-pill-container', swap: 'innerHTML'
     });
     // Refresh the current panel — use htmx.ajax directly (no dependency on refreshPanel being defined)
     var _m = new URLSearchParams(window.location.search).get('module') || 'sources_uses';
@@ -623,19 +777,8 @@ function handleComputeResult(evt) {
     {# ── Model modules — locked until timeline approved AND deal setup complete ── #}
     {% set locked = not timeline_approved or not deal_setup_complete %}
 
-    {% set uses_total = (use_lines | sum(attribute='amount') | float) %}
-    {% set bal = (capital_total | float if capital_total else 0.0) - uses_total %}
-
-    {% set bal_cents = (bal * 100) | round | int %}
-    <div id="balance-bar-container">
-    {% if timeline_approved and (uses_total > 0 or capital_total) %}
-    <div class="balance-bar {% if bal_cents == 0 %}balanced{% elif bal_cents > 0 %}unbalanced{% else %}deficit{% endif %}">
-      {% if bal_cents == 0 %}✓ Sources = Uses
-      {% elif bal_cents > 0 %}↑ Surplus {{ bal | currency }}
-      {% else %}⚠ Gap {{ (bal * -1) | currency }}{% endif %}
-    </div>
-    {% endif %}
-    </div>
+    {# Sidebar balance-bar removed — replaced by center-top Calculation Status
+       pill in the builder topbar. See /ui/models/{id}/calc-status. #}
 
     <div id="module-nav-cards">
     {% set nav_base_path = request.url.path %}
@@ -807,9 +950,17 @@ function saveModelName(el) {
 }
 </script>
 
+<!-- Calculation Status modal (shown when user clicks the topbar status pill) -->
+<div id="calc-status-modal" class="calc-status-modal"
+     onclick="if(event.target===this){this.style.display='none';}">
+  <div class="calc-status-modal-card" id="calc-status-modal-body">
+    <div class="text-muted text-small" style="padding:24px;text-align:center">Loading status…</div>
+  </div>
+</div>
+
 <!-- Line item add/edit drawer -->
 <div class="drawer-overlay" id="line-item-drawer"
-    
+
      style="display:none">
   <div class="drawer">
     <div class="drawer-header">
@@ -1366,8 +1517,8 @@ document.body.addEventListener('htmx:afterSwap', function(evt) {
   if (!tgt) return;
   if (tgt.id === 'module-panel-content') {
     // Refresh balance bar and module nav totals
-    htmx.ajax('GET', '/ui/models/{{ model.id }}/balance-bar', {
-      target: '#balance-bar-container', swap: 'innerHTML'
+    htmx.ajax('GET', '/ui/models/{{ model.id }}/calc-status', {
+      target: '#calc-status-pill-container', swap: 'innerHTML'
     });
     var m = new URLSearchParams(window.location.search).get('module') || '';
     htmx.ajax('GET', '/ui/models/{{ model.id }}/module-nav?module=' + encodeURIComponent(m), {
@@ -1430,9 +1581,9 @@ function _initSourcesDrag() {
         panel.innerHTML = html;
         htmx.process(panel);
         _initSourcesDrag();
-        // refresh balance bar
-        htmx.ajax('GET', '/ui/models/{{ model.id }}/balance-bar', {
-          target: '#balance-bar-container', swap: 'innerHTML'
+        // refresh calc status pill
+        htmx.ajax('GET', '/ui/models/{{ model.id }}/calc-status', {
+          target: '#calc-status-pill-container', swap: 'innerHTML'
         });
       });
   });
