@@ -7003,13 +7003,8 @@ def _compute_calc_status(data: dict) -> dict:
 
 
 @router.get("/ui/models/{model_id}/calc-status", response_class=HTMLResponse)
-def _render_calc_status_pill_html(status: dict, model_id: UUID, *, oob: bool = False) -> str:
-    """Render the calc-status pill button HTML from a computed status dict.
-
-    When oob=True the outer container is emitted with hx-swap-oob so the
-    response can refresh the topbar pill out-of-band (e.g. from the modal
-    endpoint), keeping pill and modal in lockstep.
-    """
+def _render_calc_status_pill_html(status: dict, model_id: UUID) -> str:
+    """Render the calc-status pill button HTML from a computed status dict."""
     if status["overall"] == "ok":
         label = "✓ Calculation Valid"
         cls = "ok"
@@ -7042,7 +7037,7 @@ def _render_calc_status_pill_html(status: dict, model_id: UUID, *, oob: bool = F
         else:
             label = f"⚠ {n} issue{'s' if n != 1 else ''}"
         cls = "warn"
-    button = (
+    return (
         f'<button type="button" class="calc-status-pill {cls}" '
         f'hx-get="/ui/models/{model_id}/calc-status/modal" '
         f'hx-target="#calc-status-modal-body" '
@@ -7050,12 +7045,6 @@ def _render_calc_status_pill_html(status: dict, model_id: UUID, *, oob: bool = F
         f'onclick="document.getElementById(\'calc-status-modal\').style.display=\'flex\'">'
         f'{label}</button>'
     )
-    if oob:
-        return (
-            f'<div id="calc-status-pill-container" hx-swap-oob="innerHTML:#calc-status-pill-container">'
-            f'{button}</div>'
-        )
-    return button
 
 
 async def model_calc_status_pill(
@@ -7081,18 +7070,17 @@ async def model_calc_status_modal(
 ) -> HTMLResponse:
     """Returns the modal body HTML with the 3-factor diagnostic.
 
-    Also emits an out-of-band refresh of the topbar pill so that opening the
-    modal guarantees the pill reflects the same computed status the modal is
-    showing. (Fixes drift cases where a prior panel swap left the pill stale.)
+    Emits an HX-Trigger response header so the topbar pill re-fetches its
+    state whenever the modal opens — keeps pill and modal in lockstep.
     """
     data = await _load_builder_data(session, model_id)
     status = _compute_calc_status(data)
-    pill_oob = _render_calc_status_pill_html(status, model_id, oob=True)
     response = templates.TemplateResponse(
         request,
         "partials/calc_status_modal.html",
-        {"status": status, "model_id": str(model_id), "pill_oob_html": pill_oob},
+        {"status": status, "model_id": str(model_id)},
     )
+    response.headers["HX-Trigger"] = "calcStatusChanged"
     return response
 
 
