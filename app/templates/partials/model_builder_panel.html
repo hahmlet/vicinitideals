@@ -1484,7 +1484,7 @@
     </button>
   </form>
 
-  {% if _sm and _sm.values %}
+  {% if _sm and _sm['values'] %}
   {%- set _fmt_cell = {'pct': 1, 'multiple': 2, 'currency': 0, 'int': 0}.get(_sm.metric.format, 2) -%}
   <div style="overflow-x:auto">
     <table class="line-table" style="width:auto;min-width:560px">
@@ -1505,7 +1505,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for yi in range(_sm.values | length) %}
+        {% for yi in range(_sm['values'] | length) %}
         {%- set yv = _sm.axis_y['values'][yi] -%}
         <tr>
           <td style="text-align:right;padding-right:16px;font-weight:600">
@@ -1515,9 +1515,9 @@
             {% else %}{{ yv }}{% endif %}
             {% if yi == _sm.base_y_index %}<span style="font-size:10px;color:var(--accent);margin-left:4px">base</span>{% endif %}
           </td>
-          {% for xi in range(_sm.values[yi] | length) %}
-          {%- set cell = _sm.values[yi][xi] -%}
-          {%- set base_cell = _sm.values[_sm.base_y_index][_sm.base_x_index] if _sm.values and _sm.base_y_index < (_sm.values | length) and _sm.base_x_index < (_sm.values[_sm.base_y_index] | length) else None -%}
+          {% for xi in range(_sm['values'][yi] | length) %}
+          {%- set cell = _sm['values'][yi][xi] -%}
+          {%- set base_cell = _sm['values'][_sm.base_y_index][_sm.base_x_index] if _sm['values'] and _sm.base_y_index < (_sm['values'] | length) and _sm.base_x_index < (_sm['values'][_sm.base_y_index] | length) else None -%}
           {%- set is_base = (yi == _sm.base_y_index and xi == _sm.base_x_index) -%}
           {%- set _bg = 'transparent' -%}
           {%- if cell is not none and base_cell is not none and not is_base -%}
