@@ -4630,9 +4630,30 @@ async def handle_form_create_or_update(
         carry_d = {
             "phases": [constr_phase, _op_phase],
         }
+        # Exit Vehicle: "maturity" | "sale" | "<module_uuid>" (retiring source).
+        # Validate: must be one of the literals OR a UUID of another module on
+        # the same scenario. Fall back to "maturity" if invalid.
+        _vehicle_raw = (form.get("exit_vehicle") or "").strip()
+        _vehicle_value = "maturity"
+        if _vehicle_raw in {"maturity", "sale"}:
+            _vehicle_value = _vehicle_raw
+        elif _vehicle_raw:
+            try:
+                _vehicle_uuid = UUID(_vehicle_raw)
+                # Ensure it refers to another capital module on this scenario
+                _sibling = (await session.execute(
+                    select(CapitalModule.id).where(
+                        CapitalModule.scenario_id == model_id,
+                        CapitalModule.id == _vehicle_uuid,
+                    )
+                )).scalar_one_or_none()
+                if _sibling is not None and (not item_id or str(_sibling) != item_id):
+                    _vehicle_value = str(_sibling)
+            except (ValueError, AttributeError):
+                pass
         exit_d = {
             "exit_type": form.get("exit_type", "full_payoff"),
-            "trigger": form.get("exit_trigger", ""),
+            "vehicle": _vehicle_value,
         }
         explicit_pos = _fi(form.get("stack_position"), None)
         if not item_id and (not explicit_pos or explicit_pos == 0):
@@ -7579,6 +7600,74 @@ async def model_builder_line_form(
                 ).limit(1)
                 draw_source_window = (await session.execute(_ds_q)).scalar_one_or_none()
 
+    # Exit Vehicle dropdown options (capital modules only). Dynamic from the
+    # current module's active_phase_end + siblings' active windows.
+    exit_vehicle_options: list[dict] = []
+    if type in ("capital_modules", "sources"):
+        from app.engines.cashflow import (
+            _APS_TO_RANK as _EXIT_APS_RANK,
+            _resolve_vehicle as _exit_resolve,
+        )
+
+        siblings = list((await session.execute(
+            select(CapitalModule).where(CapitalModule.scenario_id == model_id)
+        )).scalars())
+        others = [m for m in siblings if not existing or m.id != existing.id]
+        # Build a "candidate" module stand-in for the resolve call — for new
+        # modules we have no saved active_phase_end yet; default to "perpetuity"
+        # (→ Maturity as the only option) to match the form's initial blank
+        # state.  For existing modules we use their actual saved values.
+        if existing is not None:
+            candidate = existing
+        else:
+            class _Stub:  # minimal shim
+                id = None
+                active_phase_start = "acquisition"
+                active_phase_end = ""
+                exit_terms: dict = {}
+            candidate = _Stub()
+
+        _vehicle_now, _retirer_now = _exit_resolve(candidate, [candidate] + others)
+        saved_val = ""
+        if existing is not None and isinstance(existing.exit_terms, dict):
+            saved_val = (existing.exit_terms.get("vehicle") or "").strip()
+
+        # Compute eligible source retirers via same rank logic used by engine
+        e_rank = _EXIT_APS_RANK.get(
+            str(getattr(candidate, "active_phase_end", "") or ""), 99
+        )
+
+        def _rank(m: object, side: str) -> int:
+            raw = str(getattr(m, f"active_phase_{side}", "") or "")
+            if side == "end":
+                return _EXIT_APS_RANK.get(raw, 99)
+            return _EXIT_APS_RANK.get(raw, 0)
+
+        eligible_sources = [
+            m for m in others
+            if _rank(m, "start") <= e_rank < _rank(m, "end")
+        ] if e_rank < 99 else []
+
+        def _opt(value: str, label: str) -> dict:
+            # If saved vehicle is present, honour it; else default to what
+            # _resolve_vehicle picked.
+            if saved_val:
+                selected = (value == saved_val)
+            elif _vehicle_now == "source" and _retirer_now is not None:
+                selected = (value == str(getattr(_retirer_now, "id", "")))
+            else:
+                selected = (value == _vehicle_now)
+            return {"value": value, "label": label, "selected": selected}
+
+        exit_vehicle_options.append(_opt("maturity", "Maturity"))
+        if e_rank >= 6:
+            exit_vehicle_options.append(_opt("sale", "Sale (divestment)"))
+        for m in sorted(
+            eligible_sources,
+            key=lambda r: (int(getattr(r, "stack_position", 0) or 0), str(r.label or "")),
+        ):
+            exit_vehicle_options.append(_opt(str(m.id), m.label or "(unlabeled)"))
+
     return templates.TemplateResponse(request, "partials/model_builder_line_form.html", {
         "model": model,
         "form_type": type,
@@ -7593,6 +7682,7 @@ async def model_builder_line_form(
         "valid_use_phases": valid_use_phases,
         "milestones_dated_ds": milestones_dated_ds,
         "draw_source_window": draw_source_window,
+        "exit_vehicle_options": exit_vehicle_options,
     })
 
 

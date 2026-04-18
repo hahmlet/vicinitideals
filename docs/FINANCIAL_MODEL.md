@@ -436,7 +436,23 @@ Used by: refi proceeds calculation (§2.10), prepay penalty at exit (§6.4).
 
 ### 2.10 Cash-out refinance (bridge → perm takeout)
 
-When a perm loan has `construction_retirement` set on its source (indicating it takes out a bridge), the engine computes net refi proceeds at the first period of the perm's `active_phase_start`:
+**Exit Vehicle pairing.** Each Capital Module's `exit_terms.vehicle` declares how its balance is resolved:
+
+| Vehicle value | Meaning | Refi event? |
+|---|---|---|
+| `"maturity"` | Balloon paid at amort term end | No |
+| `"sale"` | Balloon paid from divestment proceeds | No (handled in exit period) |
+| `<module_uuid>` | Another Capital Module absorbs the balance at the handoff point | **Yes** — §2.10 math below |
+
+The engine computes pairings in a generic pre-pass. For every module `B`, `_resolve_vehicle(B, all_modules)` (in [app/engines/cashflow.py](app/engines/cashflow.py)) reads `B.exit_terms.vehicle` and returns the literal or the retiring module. Falls back to a default when `vehicle` is unset or stale:
+
+1. Among eligible retirers (modules whose active window `[start_rank, end_rank)` covers `B.end_rank`), prefer those where `R.start_rank == B.end_rank` (enter exactly at handoff). Tie-break by lowest `stack_position`, then alphabetical label.
+2. Else if `B.end_rank >= 6` (exit/divestment): `"sale"`.
+3. Else: `"maturity"`.
+
+For each `(B, R)` pair the engine tags `B.source.is_bridge = True`, removes `B` from the gap-fill pool (so only the retirer sizes to TPC), and writes `R.source.construction_retirement = B.amount`. This generalises the legacy `debt_structure == "construction_and_perm"` specialisation — that path now flows through the generic detector and produces identical results.
+
+**Refi cash flow.** When a perm loan has `construction_retirement` set on its source, the engine computes net refi proceeds at the first period of the perm's `active_phase_start`:
 
 ```
 net_refi = perm_amount

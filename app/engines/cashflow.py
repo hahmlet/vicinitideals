@@ -744,6 +744,96 @@ _CONSTRUCTION_PERIOD_TYPES = {
     PeriodType.conversion,
 }
 
+# Active-phase rank map used for Exit Vehicle detection (§2.10) and per-loan
+# carry windowing.  A loan with active window [start_rank, end_rank) is active
+# for phases whose rank falls in that half-open interval.
+_APS_TO_RANK: dict[str, int] = {
+    "acquisition": 0, "close": 0,
+    "pre_construction": 2,
+    "construction": 3,
+    "lease_up": 4, "operation_lease_up": 4,
+    "stabilized": 5, "operation_stabilized": 5,
+    "exit": 6, "divestment": 6,
+}
+
+
+def _module_rank(module: object, side: str) -> int:
+    """Rank of a module's active_phase_{start|end}.
+
+    `start` missing → 0 (acquisition). `end` missing / "perpetuity" → 99.
+    """
+    raw = str(getattr(module, f"active_phase_{side}", "") or "")
+    if side == "end":
+        return _APS_TO_RANK.get(raw, 99)
+    return _APS_TO_RANK.get(raw, 0)
+
+
+def _eligible_retirers(module: object, all_modules: list) -> list:
+    """Return modules whose active window covers `module`'s end point.
+
+    A retirer R qualifies when:
+      - R is not the same module
+      - R.start_rank <= module.end_rank  (already active at the handoff)
+      - R.end_rank   >  module.end_rank  (still active after module ends)
+    """
+    e_rank = _module_rank(module, "end")
+    if e_rank >= 99:
+        return []  # perpetuity — nothing to retire
+    out: list = []
+    for r in all_modules:
+        if r is module:
+            continue
+        if _module_rank(r, "start") <= e_rank < _module_rank(r, "end"):
+            out.append(r)
+    return out
+
+
+def _resolve_vehicle(module: object, all_modules: list) -> tuple[str, object | None]:
+    """Resolve the Exit Vehicle for `module`.
+
+    Reads `exit_terms.vehicle`. Returns:
+      ("maturity", None) — balloon at amort end, no refi event
+      ("sale",     None) — balloon at divestment, no refi event
+      ("source",   R)    — retirer R absorbs the balance (§2.10 refi)
+
+    Falls back to default-selection when vehicle is unset or points to a
+    module that no longer qualifies.  Default selection:
+      1. If ≥1 eligible source exists: prefer those with start_rank == end_rank
+         (enter exactly at handoff); tie-break by lowest stack_position, then
+         alphabetical label.
+      2. Else if end_rank >= 6 (exit/divestment): "sale".
+      3. Else: "maturity".
+    """
+    exit_terms = getattr(module, "exit_terms", None) or {}
+    saved = (exit_terms.get("vehicle") or "").strip() if isinstance(exit_terms, dict) else ""
+    eligible = _eligible_retirers(module, all_modules)
+
+    if saved == "maturity":
+        return ("maturity", None)
+    if saved == "sale":
+        return ("sale", None)
+    if saved and saved not in {"maturity", "sale"}:
+        for r in eligible:
+            if str(getattr(r, "id", "")) == saved:
+                return ("source", r)
+        # Stored vehicle no longer valid → fall through to default.
+
+    if eligible:
+        e_rank = _module_rank(module, "end")
+        exact = [r for r in eligible if _module_rank(r, "start") == e_rank]
+        pool = exact or eligible
+
+        def _sort_key(r: object) -> tuple:
+            return (
+                int(getattr(r, "stack_position", 0) or 0),
+                str(getattr(r, "label", "") or ""),
+            )
+
+        return ("source", sorted(pool, key=_sort_key)[0])
+    if _module_rank(module, "end") >= 6:
+        return ("sale", None)
+    return ("maturity", None)
+
 # Maps UseLinePhase string values to the PeriodType(s) where the outflow fires.
 # "construction" covers all building-work phases so it fires regardless of project type
 # (acquisition_minor_reno uses minor_renovation; acquisition_major_reno uses major_renovation;
@@ -950,15 +1040,6 @@ async def _auto_size_debt_modules(
         PeriodType.stabilized:        5,
         PeriodType.exit:              6,
     }
-    _APS_TO_RANK: dict[str, int] = {
-        "acquisition": 0, "close": 0,
-        "pre_construction": 2,
-        "construction": 3,
-        "lease_up": 4, "operation_lease_up": 4,
-        "stabilized": 5, "operation_stabilized": 5,
-        "exit": 6, "divestment": 6,
-    }
-
     def _loan_pre_op_months(module: object) -> int:
         """Compute the number of pre-op months within this loan's active window.
 
@@ -1065,8 +1146,10 @@ async def _auto_size_debt_modules(
     # are sized to their phase costs and marked is_bridge=True so they're excluded from
     # the Sources display total.  Permanent debt still gap-fills to TPC.
     # Legacy 3-path is preserved when debt_types is None (backward compat).
-    _bridge_module: object = None
-    _perm_mod: object = None
+    # Pairs of (retired_module, retiring_module) resolved via exit_terms.vehicle.
+    # Populated by the generic pairing pass below; consumed by the refi
+    # writeback at the end of this sizing block.
+    _retirement_pairs: list[tuple[object, object]] = []
     _bridge_io: dict = {}            # {funder_type: interest_amount} for new-path use lines
     _bridge_io_carry_type: dict = {} # {funder_type: "interest_reserve"|"capitalized_interest"}
     _cc_data:  dict = {}             # {id(module): {"flat": Decimal, "pct": Decimal, "module": m}}
@@ -1192,25 +1275,35 @@ async def _auto_size_debt_modules(
             _m.source = _src
             auto_modules = [x for x in auto_modules if x is not _m]  # remove from gap-fill loop
 
-    else:
-        # ── Legacy 3-path: construction_and_perm bridge detection ───────────
-        # For Construction + Permanent (Separate), the construction loan is a bridge
-        # that gets taken out by the permanent loan.  Only the perm leg should
-        # gap-fill total uses; the construction loan principal mirrors the perm amount.
-        debt_structure = getattr(inputs, "debt_structure", None) or "perm_only"
-        if debt_structure == "construction_and_perm":
-            _perm_mod = next(
-                (m for m in auto_modules if str(getattr(m, "funder_type", "")) == "permanent_debt"),
-                None,
-            )
-            _constr_mod = next(
-                (m for m in auto_modules if str(getattr(m, "funder_type", "")) == "construction_loan"),
-                None,
-            )
-            if _perm_mod and _constr_mod:
-                _bridge_module = _constr_mod
-                # Exclude the bridge from the gap-fill loop so only perm sizes to TPC.
-                auto_modules = [m for m in auto_modules if m is not _constr_mod]
+    # ── Generic Exit Vehicle pairing (supersedes legacy construction_and_perm) ─
+    # For every capital module, resolve its Exit Vehicle via _resolve_vehicle
+    # (reads exit_terms.vehicle with default-selection fallback).  When the
+    # vehicle is another source, record the (retired, retirer) pair so:
+    #   - the retired module is excluded from the gap-fill pool
+    #   - the retirer's source gets construction_retirement = retired balloon
+    # This generalises the old `debt_structure == "construction_and_perm"`
+    # specialisation to any debt-with-finite-Active-To configuration.
+    for _candidate in list(capital_modules):
+        # Only full_payoff loans route through the auto-pair logic. Equity
+        # modules (profit_share, equity_conversion) and grants (forgiven)
+        # shouldn't be retired by another source even when overlap exists.
+        _cand_exit = _candidate.exit_terms or {}
+        _cand_exit_type = str(_cand_exit.get("exit_type") or "full_payoff")
+        if _cand_exit_type != "full_payoff":
+            continue
+        _vehicle, _retirer = _resolve_vehicle(_candidate, capital_modules)
+        if _vehicle != "source" or _retirer is None:
+            continue
+        # Already handled by the multi-debt path above (is_bridge already set)?
+        _c_src = _candidate.source or {}
+        if _c_src.get("is_bridge"):
+            # Still record the pair so the writeback can tag the retirer,
+            # but don't try to re-exclude from auto_modules (already done).
+            _retirement_pairs.append((_candidate, _retirer))
+            continue
+        _retirement_pairs.append((_candidate, _retirer))
+        # Remove retired from gap-fill pool so only the retirer sizes to TPC.
+        auto_modules = [m for m in auto_modules if m is not _candidate]
 
     # When bridge loans carry their own IR/CI (new multi-debt path), the gap-fill module
     # (e.g. permanent debt) must cover those interest costs in the permanent capital stack.
@@ -1496,31 +1589,36 @@ async def _auto_size_debt_modules(
         )
         module.source = src  # keep in-memory view consistent
 
-    # For construction_and_perm: mirror perm amount to the bridge construction loan.
-    # The bridge is marked is_bridge=True so the Sources & Uses display excludes it
-    # from the debt total (avoiding double-counting vs the perm leg).
-    # Also store construction_retirement on the perm source so the UI can break down
-    # how perm proceeds are allocated (retirement vs net new debt).
-    if _bridge_module is not None and _perm_mod is not None:
-        perm_src = dict(_perm_mod.source or {})
-        perm_amount = perm_src.get("amount", "0")
-        bridge_src = dict(_bridge_module.source or {})
-        bridge_src["amount"] = perm_amount
-        bridge_src["is_bridge"] = True
+    # Generic Exit Vehicle writeback: for every (retired, retirer) pair, tag
+    # the retired loan is_bridge and write construction_retirement onto the
+    # retirer so the §2.10 refi-event emission picks it up.
+    #
+    # In the legacy construction_and_perm flow the bridge's amount was mirrored
+    # to the perm's amount (since conceptually they were one loan). Here the
+    # bridge has been sized independently (via LTV * acq_costs etc.), so we
+    # preserve its own amount — the retirer's gap-fill sizing already targets
+    # TPC so it has enough to retire the bridge at handoff.
+    for _retired, _retirer in _retirement_pairs:
+        retirer_src = dict(_retirer.source or {})
+        retired_src = dict(_retired.source or {})
+        retired_amount = retired_src.get("amount", "0")
+
+        if not retired_src.get("is_bridge"):
+            retired_src["is_bridge"] = True
+            await session.execute(
+                sa_update(CapitalModule)
+                .where(CapitalModule.id == _retired.id)
+                .values(source=retired_src)
+            )
+            _retired.source = retired_src
+
+        retirer_src["construction_retirement"] = retired_amount
         await session.execute(
             sa_update(CapitalModule)
-            .where(CapitalModule.id == _bridge_module.id)
-            .values(source=bridge_src)
+            .where(CapitalModule.id == _retirer.id)
+            .values(source=retirer_src)
         )
-        _bridge_module.source = bridge_src
-        # Tag perm module with the retirement amount so UI renders the split breakdown.
-        perm_src["construction_retirement"] = perm_amount
-        await session.execute(
-            sa_update(CapitalModule)
-            .where(CapitalModule.id == _perm_mod.id)
-            .values(source=perm_src)
-        )
-        _perm_mod.source = perm_src
+        _retirer.source = retirer_src
 
     # Compute actual reserve (max of OpEx vs actual debt service, × reserve months)
     # opex_monthly_pre already computed above; re-use it here.

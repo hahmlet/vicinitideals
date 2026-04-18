@@ -681,12 +681,16 @@ function ulTimingChanged(val) {
     </select>
   </div>
   <div class="form-field">
-    <label class="form-label">Exit Trigger</label>
-    <select class="form-select" name="exit_trigger">
-      {% for trig in ['sale','refinance','construction_completion','permanent_financing_close','stabilization','maturity','partner_buyout','call_option'] %}
-      <option value="{{ trig }}" {% if _trig_norm == trig %}selected{% endif %}>{{ trig | replace('_',' ') | title }}</option>
+    <label class="form-label">Exit Vehicle</label>
+    <select class="form-select" name="exit_vehicle">
+      {% for opt in exit_vehicle_options %}
+      <option value="{{ opt.value }}" {% if opt.selected %}selected{% endif %}>{{ opt.label }}</option>
       {% endfor %}
     </select>
+    <div class="form-hint">
+      Options update based on Active To. Sources whose active window covers this
+      loan's end point are available as takeout targets.
+    </div>
   </div>
 </div>
 <div class="form-row">
@@ -891,7 +895,7 @@ function ulTimingChanged(val) {
   {% if _is_perm_debt %}
   {# Permanent debt: amortization term + interest rate, no exit trigger #}
   <input type="hidden" name="exit_type" value="full_payoff">
-  <input type="hidden" name="exit_trigger" value="maturity">
+  <input type="hidden" name="exit_vehicle" value="maturity">
   <div class="form-section">
     <div class="form-section-title">Loan Terms</div>
     {{ permanent_debt_fields(
@@ -920,7 +924,7 @@ function ulTimingChanged(val) {
   </div>
   {% else %}
   <input type="hidden" name="exit_type" value="forgiven">
-  <input type="hidden" name="exit_trigger" value="">
+  <input type="hidden" name="exit_vehicle" value="maturity">
   <input type="hidden" name="source_interest_rate" value="">
   <input type="hidden" name="compounding_period" value="simple">
   {% endif %}
