@@ -70,6 +70,7 @@ METRIC_SPECS: dict[str, dict[str, Any]] = {
     "project_irr_unlevered": {"label": "Unlevered IRR (%)",    "format": "pct"},
     "dscr":                  {"label": "DSCR",                 "format": "multiple"},
     "noi_stabilized":        {"label": "Stabilized NOI ($)",   "format": "currency"},
+    "noi_exit_year":         {"label": "Exit Year NOI ($)",    "format": "currency"},
     "cap_rate_on_cost_pct":  {"label": "Cap Rate on Cost (%)", "format": "pct"},
     "debt_yield_pct":        {"label": "Debt Yield (%)",       "format": "pct"},
 }

@@ -403,6 +403,20 @@ async def compute_cash_flows(
         stabilized_noi_monthly = _to_decimal(cash_flow_rows[-1].noi)
     noi_stabilized = _q((stabilized_noi_monthly or ZERO) * Decimal("12"))
 
+    # Exit Year NOI = trailing-12-month NOI from the final operational periods.
+    # This is distinct from Stabilized NOI (year-1 of stabilization) and does
+    # respond to rent-growth + hold-period sensitivity axes.
+    _op_rows = [
+        r for r in cash_flow_rows
+        if r.period_type in (PeriodType.lease_up, PeriodType.stabilized)
+    ]
+    if len(_op_rows) >= 12:
+        noi_exit_year = _q(sum((_to_decimal(r.noi) for r in _op_rows[-12:]), ZERO))
+    elif _op_rows:
+        noi_exit_year = _q(_to_decimal(_op_rows[-1].noi) * Decimal("12"))
+    else:
+        noi_exit_year = noi_stabilized
+
     cap_rate_on_cost_pct = (
         _q((noi_stabilized / total_project_cost) * HUNDRED)
         if total_project_cost > ZERO
@@ -460,6 +474,7 @@ async def compute_cash_flows(
         "equity_required": _q(equity_required),
         "total_timeline_months": total_timeline_months,
         "noi_stabilized": noi_stabilized,
+        "noi_exit_year": noi_exit_year,
         "cap_rate_on_cost_pct": cap_rate_on_cost_pct,
         "project_irr_unlevered": project_irr_unlevered,
         "project_irr_levered": project_irr_levered,
