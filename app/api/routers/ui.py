@@ -261,8 +261,8 @@ _STATUS_DISPLAY: dict[str, tuple[str, str]] = {
 }
 
 _TYPE_DISPLAY: dict[str, str] = {
-    "acquisition_minor_reno": "Minor Renovation",
-    "acquisition_major_reno": "Major Renovation",
+    "acquisition_minor_reno": "Acquisition",
+    "acquisition_major_reno": "Value-Add",
     "acquisition_conversion": "Conversion",
     "new_construction": "New Construction",
 }
@@ -2321,9 +2321,9 @@ async def opportunity_wizard_step(
     dedup_count = await _get_dedup_count(session)
 
     _deal_type_labels = {
-        "acquisition_minor_reno": "Acquisition — Minor Renovation",
-        "acquisition_major_reno": "Acquisition — Major Renovation",
-        "acquisition_conversion": "Acquisition — Conversion",
+        "acquisition_minor_reno": "Acquisition",
+        "acquisition_major_reno": "Value-Add",
+        "acquisition_conversion": "Conversion",
         "new_construction": "New Construction",
     }
 
@@ -4433,8 +4433,8 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
         ).keys()),
         "wizard_deal_type": default_project.deal_type if default_project else "",
         "wizard_deal_type_label": {
-            "acquisition_minor_reno": "Minor Renovation",
-            "acquisition_major_reno": "Major Renovation",
+            "acquisition_minor_reno": "Acquisition",
+            "acquisition_major_reno": "Value-Add",
             "acquisition_conversion": "Conversion",
             "new_construction": "New Construction",
         }.get(default_project.deal_type if default_project else "", "Project"),
@@ -7435,7 +7435,6 @@ async def model_builder_line_form(
     _USE_PHASES_BY_TYPE: dict[str, list[tuple[str, str]]] = {
         "acquisition_minor_reno": [
             ("acquisition", "Acquisition"),
-            ("construction", "Renovation"),
             ("operation", "Operations"),
             ("exit", "Exit / Sale"),
             ("other", "Other"),

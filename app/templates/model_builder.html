@@ -841,9 +841,9 @@ function handleComputeResult(evt) {
           <label class="field-label">Deal Type</label>
           <select class="filter-select" style="width:100%;margin-top:4px" name="deal_type">
             {% set _pt = model.project_type.value if model.project_type is not string else model.project_type %}
-            <option value="acquisition_minor_reno" {% if _pt == 'acquisition_minor_reno' %}selected{% endif %}>Acquisition — Minor Renovation</option>
-            <option value="acquisition_major_reno" {% if _pt == 'acquisition_major_reno' %}selected{% endif %}>Acquisition — Major Renovation</option>
-            <option value="acquisition_conversion" {% if _pt == 'acquisition_conversion' %}selected{% endif %}>Acquisition — Conversion</option>
+            <option value="acquisition_minor_reno" {% if _pt == 'acquisition_minor_reno' %}selected{% endif %}>Acquisition</option>
+            <option value="acquisition_major_reno" {% if _pt == 'acquisition_major_reno' %}selected{% endif %}>Value-Add</option>
+            <option value="acquisition_conversion" {% if _pt == 'acquisition_conversion' %}selected{% endif %}>Conversion</option>
             <option value="new_construction" {% if _pt == 'new_construction' %}selected{% endif %}>New Construction</option>
           </select>
         </div>
@@ -887,6 +887,7 @@ function handleComputeResult(evt) {
           <select class="filter-select" style="width:100%;margin-top:4px" name="debt_sizing_mode">
             <option value="gap_fill" {% if (inputs.debt_sizing_mode or 'gap_fill') == 'gap_fill' %}selected{% endif %}>Gap-fill (Uses − Equity)</option>
             <option value="dscr_capped" {% if inputs.debt_sizing_mode == 'dscr_capped' %}selected{% endif %}>DSCR-capped (max debt from NOI)</option>
+            <option value="dual_constraint" {% if inputs.debt_sizing_mode == 'dual_constraint' %}selected{% endif %}>Dual Constraint (MIN of LTV, DSCR, gap-fill)</option>
           </select>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
@@ -1116,8 +1117,8 @@ function saveModelName(el) {
         <div>
           <label class="field-label">Project Type</label>
           <select class="filter-select" style="width:100%;margin-top:4px" name="deal_type">
-            <option value="acquisition_minor_reno" {% if model.project_type | string | replace('ProjectType.','') == 'acquisition_minor_reno' %}selected{% endif %}>Minor Renovation</option>
-            <option value="acquisition_major_reno" {% if model.project_type | string | replace('ProjectType.','') == 'acquisition_major_reno' %}selected{% endif %}>Major Renovation</option>
+            <option value="acquisition_minor_reno" {% if model.project_type | string | replace('ProjectType.','') == 'acquisition_minor_reno' %}selected{% endif %}>Acquisition</option>
+            <option value="acquisition_major_reno" {% if model.project_type | string | replace('ProjectType.','') == 'acquisition_major_reno' %}selected{% endif %}>Value-Add</option>
             <option value="acquisition_conversion" {% if model.project_type | string | replace('ProjectType.','') == 'acquisition_conversion' %}selected{% endif %}>Conversion</option>
             <option value="new_construction" {% if model.project_type | string | replace('ProjectType.','') == 'new_construction' %}selected{% endif %}>New Construction</option>
           </select>

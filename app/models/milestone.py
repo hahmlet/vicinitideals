@@ -38,10 +38,14 @@ class MilestoneType(str, enum.Enum):
 # Used when a new Project is created to pre-populate the milestone list.
 DEFAULT_DURATIONS: dict[str, dict[str, int]] = {
     "acquisition_minor_reno": {
+        # Renamed to "Acquisition" in the UI — this is a pure hold/stabilize
+        # strategy, no renovation phase needed. Construction milestone removed
+        # per user feedback: "Minor Renovation was really deferred maintenance,
+        # better modeled as accelerated escalation on existing rent than as a
+        # construction phase."
         "offer_made": 14,
         "under_contract": 30,
         "close": 45,
-        "construction": 90,
         "operation_stabilized": 1825,  # 5 years
         "divestment": 1,  # single-day event — sale closing date
     },
