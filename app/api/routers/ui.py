@@ -6952,10 +6952,22 @@ def _compute_calc_status(data: dict) -> dict:
     }
 
     if actual_ltv_pct is None:
+        # Diagnose exactly which input is missing so the user knows what to fix.
+        _missing: list[str] = []
+        if noi_dec <= 0:
+            _missing.append("stabilized NOI (run Compute)")
+        if exit_cap <= 0:
+            _missing.append("exit cap rate (set in Settings or the Divestment module)")
+        if total_non_bridge_debt <= 0:
+            _missing.append("non-bridge debt (add a permanent loan source)")
+        if _missing:
+            _detail = "Missing: " + "; ".join(_missing) + "."
+        else:
+            _detail = "Derived property value came out to zero — check inputs."
         ltv_status = {
             "status": "na",
             "label": "LTV not computable",
-            "detail": "Needs both stabilized NOI and an exit cap rate to derive property value. Run Compute and set exit cap rate.",
+            "detail": _detail,
             "meta": ltv_meta,
         }
     elif not is_dual_constraint:
