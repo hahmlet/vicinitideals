@@ -262,12 +262,22 @@ async def compute_cash_flows(
             # ── Inject refi net proceeds at the first month of perm's active phase ─
             if _refi_event and not _refi_injected and month_index == 0:
                 _refi_phase_key = _refi_event["perm_active_phase_start"]
+                # "construction" as an active-phase key matches any of the
+                # construction-type period types (real construction, renovation,
+                # or conversion) — which one fires depends on the deal type.
+                _construction_periods = {
+                    PeriodType.construction, PeriodType.minor_renovation,
+                    PeriodType.major_renovation, PeriodType.conversion,
+                }
                 if phase.period_type.value == _refi_phase_key or (
                     _refi_phase_key in ("operation_stabilized", "stabilized")
                     and phase.period_type == PeriodType.stabilized
                 ) or (
                     _refi_phase_key in ("operation_lease_up", "lease_up")
                     and phase.period_type == PeriodType.lease_up
+                ) or (
+                    _refi_phase_key == "construction"
+                    and phase.period_type in _construction_periods
                 ):
                     _net = _refi_event["net_proceeds"]
                     _refi_items = [
