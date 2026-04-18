@@ -6983,8 +6983,18 @@ def _compute_calc_status(data: dict) -> dict:
         pct = first.get("ltv_pct")
         ltv_status = {
             "status": "fail",
-            "label": f"LTV {pct}% — binding with gap" if pct else f"LTV binding with gap",
-            "detail": f"The sizing of {first['label']} is capped at LTV {pct}% — not DSCR, not gap-fill. Raising LTV would close part of the Sources gap.",
+            "label": f"LTV {pct}% — binding with gap" if pct else "LTV binding with gap",
+            "detail": (
+                f"{first['label']} is sized at its LTV cap "
+                f"({pct}% of $NOI/exit_cap property value)"
+                if pct else
+                f"{first['label']} is sized at its LTV cap"
+            ) + (
+                ". DSCR may have headroom, but dual-constraint sizing uses "
+                "MIN(LTV, DSCR, gap-fill) — the lowest cap wins. To close "
+                "the Sources gap, raise the LTV on this source (or switch "
+                "to a different sizing mode)."
+            ),
             "meta": ltv_meta,
         }
     elif ltv_binding_modules:

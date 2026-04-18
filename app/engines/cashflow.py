@@ -1452,7 +1452,11 @@ async def _auto_size_debt_modules(
             # P_gapfill (already computed above) acts as a third ceiling: no
             # point funding more than the project actually needs.
             p_gapfill = principal  # from gap-fill solve above
-            ltv = _percent(Decimal(str(src.get("ltv_pct") or 65)))
+            ltv_pct_used = Decimal(str(src.get("ltv_pct") or 65))
+            ltv = _percent(ltv_pct_used)
+            # Persist the effective LTV% so the Calculation Status modal and
+            # downstream UI can report which cap was actually applied.
+            src["ltv_pct"] = float(ltv_pct_used)
             cap_for_ltv = _percent(
                 Decimal(str(src.get("refi_cap_rate_pct") or inputs.exit_cap_rate_pct or 0))
             )
