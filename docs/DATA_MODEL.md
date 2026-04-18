@@ -1,10 +1,18 @@
 # Data Model Reference
 
 This document describes the entity model, data sources, reconciliation
-logic, and field-level authority for the Vicinity Deals platform.  It is
-the data-layer counterpart of `FINANCIAL_MODEL.md`.
+logic, and field-level authority for the **market-data ingest layer** of
+Vicinity Deals — parcels, listings, buildings, and the scrapers / APIs
+that populate them. It is the data-layer counterpart of `FINANCIAL_MODEL.md`.
 
-**Last updated**: 2026-04-16
+**Scope note**: Deal-side entities (Scenario, Project, OperationalInputs,
+IncomeStream, UnitMix, CapitalModule, etc.) are documented in
+`FINANCIAL_MODEL.md` alongside the math that consumes them. Recent
+UnitMix schema changes (beds/baths fields, `avg_monthly_rent` removal,
+`unit_strategy`, `in_place_rent_per_unit`, `market_rent_per_unit`,
+`post_reno_rent_per_unit`) are in FINANCIAL_MODEL.md §4.8.
+
+**Last updated**: 2026-04-18
 
 ---
 

@@ -646,26 +646,82 @@ For units in the value-add pool, renovation supersedes LTL: the unit goes direct
 
 Each unit type in `UnitMix` can be assigned one of three strategies via `unit_strategy`:
 
-| Strategy | Field | Rent Trajectory |
+| Strategy | Driving Fields | Rent Trajectory |
 |---|---|---|
-| `base_escalation` | No special fields | `in_place` → normal annual escalation |
-| `ltl_catchup` | `market_rent_per_unit` | `in_place` → accelerated to `market_rent` → normal |
-| `value_add_renovation` | `post_reno_rent_per_unit` | `in_place` → renovation → `post_reno_rent` → normal |
+| `base_escalation` | `in_place_rent_per_unit` | `in_place` → normal annual escalation |
+| `ltl_catchup` | `in_place_rent_per_unit`, `market_rent_per_unit` | `in_place` → accelerated (cap 10%/yr) to `market_rent` → normal |
+| `value_add_renovation` | `post_reno_rent_per_unit`, `renovation_absorption_rate` | `in_place` → renovation → `post_reno_rent` → normal |
 
-When "Apply to Model" is invoked from the UnitMix editor (future UI), the system auto-generates appropriate IncomeStream rows:
-- `ltl_catchup` units → stream with `catchup_target_rent = market_rent_per_unit`
-- `value_add_renovation` units → stream with `renovation_absorption_rate = 1.0`, base = `post_reno_rent_per_unit`
-- `base_escalation` units → stream with standard escalation only
+**UnitMix schema fields (April 18 2026):**
+
+| Field | Type | Notes |
+|---|---|---|
+| `label` | str | Display label (e.g., "1BR/1BA") |
+| `unit_count` | int | Number of units of this type |
+| `avg_sqft` | Numeric(18,2) | Average square footage |
+| `beds` | Numeric(4,1) | Bedrooms: 0, 1, 2, 3, 4, 5+ (5 represents "5 or more") |
+| `baths` | Numeric(4,1) | Baths in 0.5 increments: 0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5+ |
+| `in_place_rent_per_unit` | Numeric(18,2) | Current tenant rent (loss-to-lease anchor) |
+| `market_rent_per_unit` | Numeric(18,2) | Market rent (LTL target + property value basis) |
+| `post_reno_rent_per_unit` | Numeric(18,2) | Post-renovation rent (value-add strategy only) |
+| `unit_strategy` | str | `base_escalation` / `ltl_catchup` / `value_add_renovation` |
+
+**Removed April 18 2026**: `avg_monthly_rent` (legacy). It duplicated `in_place_rent_per_unit` semantically and created ambiguity. Migration 0046 drops the column. Bed/bath were added as numeric variables so comp-data ingestion (HelloData, etc.) can populate them directly.
+
+**Apply to Revenue** (endpoint: `POST /ui/models/{id}/unit-mix/apply-to-revenue`) auto-generates IncomeStream rows per unit type:
+- `ltl_catchup` units → stream with `catchup_target_rent = market_rent_per_unit`, base = `in_place_rent_per_unit`
+- `value_add_renovation` units → stream labeled `"{unit} Rent (Renovated)"` with `renovation_absorption_rate = 1.0`, base = `post_reno_rent_per_unit or market_rent_per_unit or in_place_rent_per_unit`
+- `base_escalation` units → stream with standard escalation only, base = `in_place_rent_per_unit or market_rent_per_unit`
+
+Idempotent — re-running replaces matching-labeled streams, preserves one-off streams (parking, laundry, etc.). Only available in `revenue_opex` mode; hidden in `noi` mode.
 
 ### 4.6 NOI-mode direct input
 
 ```python
 _noi_annual = _to_decimal(inputs.noi_stabilized_input)
-_esc_factor = _growth_factor(inputs.noi_escalation_rate_pct or Decimal("3"), period)
+_esc_period = max(0, period - first_stab_period)  # anchored at first stabilized month
+_esc_factor = _growth_factor(inputs.noi_escalation_rate_pct or Decimal("3"), _esc_period)
 _noi_monthly = _q(_noi_annual / Decimal("12") * _esc_factor)
 ```
 
 Applied month-by-month in stabilized/lease-up/exit phases. Construction phases see `_noi_monthly = 0`.
+
+**Escalation anchor (important — April 18 2026).** Escalation is anchored at `first_stab_period` (the month index of the first stabilized period), **not** at deal month 0. Semantics: the user-entered `noi_stabilized_input` is the NOI at **year 1 of stabilization**, the underwriting convention. Previously the engine applied escalation from deal month 0, so a 22-month construction/lease-up timeline lifted the displayed first-stabilized-month NOI above the raw input by `(1+rate)^(22/12)`. This caused DSCR in `dscr_capped` / `dual_constraint` sizing to drift above the minimum (e.g. 1.1557 instead of 1.15) because sizing used the raw input but display used the escalated value.
+
+With the anchor fix:
+- First stabilized month: `esc_period = 0` → `esc_factor = 1.0` → NOI = raw input
+- Year 2 of stabilization: `esc_period = 12` → `esc_factor = (1+rate)^1`
+- Lease-up months (if any, period < first_stab_period): clamped to 0 via `max(0, ...)` → factor = 1.0 (simplification — lease-up NOI isn't modeled separately in NOI mode)
+
+The `first_stab_period` is computed once in the main compute loop from the phase plan and passed into `_compute_period`.
+
+### 4.7 Fix-point iteration for DSCR convergence
+
+When `debt_sizing_mode` is `dscr_capped` or `dual_constraint`, the **first** sizing pass within a compute can only use an **estimated** stabilized NOI (from `_estimate_stabilized_noi_monthly`) or a `prev_noi_stabilized` from a prior compute. The estimator misses escalation carry-in and capex reserve deductions; `prev_noi_stabilized` is stale if inputs changed. Either way, the NOI used for sizing may differ from the NOI the compute ultimately produces, causing DSCR to drift above the target minimum.
+
+The `POST /api/models/{id}/compute` endpoint wraps `compute_cash_flows` in a fix-point loop:
+
+```python
+MAX_ITERATIONS = 5
+DSCR_CONVERGENCE_TOLERANCE = Decimal("0.005")
+for _iter in range(MAX_ITERATIONS):
+    result = await compute_cash_flows(...)
+    if sizing_mode not in {"dscr_capped", "dual_constraint"}:
+        break
+    cur_dscr = result.get("dscr")
+    if prev_dscr is not None and abs(cur_dscr - prev_dscr) < TOLERANCE:
+        break
+    prev_dscr = cur_dscr
+```
+
+Each iteration reads the **previous** `OperationalOutputs.noi_stabilized` (via the code at line 116 of `cashflow.py`) and passes it to `_auto_size_debt_modules` as `prev_noi_stabilized`. Iteration N+1 sizes using iteration N's actual computed NOI, so by iteration 2–3 the sized debt service matches the final NOI and DSCR converges.
+
+- **Convergence tolerance**: 0.005× (half a basis point of DSCR).
+- **Iteration cap**: 5. If math doesn't converge (shouldn't happen — NOI is debt-independent so convergence is in 2 passes), the 5th iteration's result is returned as-is.
+- **Performance**: typical deals run in 2 iterations (~600ms–1s total). Cap of 5 bounds worst case at ~3s.
+- **Observability**: `result["sizing_iterations"]` surfaces the count used (exposed to logs and the frontend).
+
+Note: `gap_fill` mode doesn't iterate — only sizes once.
 
 ---
 
@@ -998,6 +1054,47 @@ for cash_flow in cash_flows:
 
 The spread between the two is the "leverage amplification" — positive if leverage is accretive, negative if the deal is over-levered.
 
+### 7.7 Calculation Status diagnostic (3-factor model)
+
+The Calculation Status pill in the builder topbar surfaces the health of the model via three factors. Any factor in `warn` or `fail` state marks the overall as `warn` (yellow); all `ok`/`na` = `ok` (green).
+
+**Factor 1: Sources = Uses**
+```
+gap = capital_total − uses_total
+```
+- `|gap| < $1` → `ok` "Sources = Uses"
+- `gap > 0` → `warn` "Surplus $X" (extra capital not needed)
+- `gap < 0` → `fail` "Gap $X" (Uses exceed Sources)
+
+**Factor 2: DSCR**
+```
+dscr = noi_stabilized / (operation_debt_monthly × 12)
+```
+- `dscr ≥ dscr_minimum` → `ok` with headroom amount
+- `dscr < dscr_minimum` → `fail` with shortfall amount
+
+**Factor 3: LTV**
+```
+property_value = noi_stabilized / (exit_cap_rate_pct / 100)
+actual_ltv_pct = total_non_bridge_debt / property_value × 100
+```
+- Computed regardless of sizing mode (always shown as informational)
+- When `debt_sizing_mode == "dual_constraint"`: green/red status based on binding constraint (red if LTV binds AND gap exists)
+- When any other sizing mode: grey `na` status with the computed LTV %
+
+**Pill label (center-top of builder):**
+- All `ok`: "✓ Calculation Valid"
+- Single failing factor: specific label (e.g., "⚠ -$478,284 Sources Gap", "⚠ 1.14× DSCR — Too Low", "⚠ 72.3% LTV — Too High")
+- Multiple failures: "⚠ N issues"
+
+Click opens a modal with per-factor details, current/target values, and actionable explanation text.
+
+**Endpoints:**
+- `GET /ui/models/{id}/calc-status` — pill HTML
+- `GET /ui/models/{id}/calc-status/modal` — modal body HTML
+
+The pill replaces the legacy sidebar "Sources = Uses" banner (removed April 18 2026).
+
 ---
 
 ## 8. Key constants and defaults (quick reference)
@@ -1030,6 +1127,11 @@ The spread between the two is the "leverage amplification" — positive if lever
 | `LTL_CATCHUP_CAP_PCT` | `10` | cashflow.py constant | Max annual rent increase % during LTL catchup |
 | `unit_strategy` | `NULL` | UnitMix | "base_escalation", "ltl_catchup", or "value_add_renovation" |
 | `post_reno_rent_per_unit` | `NULL` | UnitMix | Monthly rent after renovation (value-add strategy) |
+| `beds` | `NULL` | UnitMix | Bedrooms (0–5+, whole numbers) |
+| `baths` | `NULL` | UnitMix | Baths (0–3.5+, 0.5 increments) |
+| `MAX_ITERATIONS` | `5` | models.py compute endpoint | Fix-point iteration cap for DSCR convergence |
+| `DSCR_CONVERGENCE_TOLERANCE` | `0.005` | models.py compute endpoint | DSCR stability threshold between iterations (half a bp) |
+| `first_stab_period` | computed | compute_cash_flows loop | Month index of first stabilized phase; anchor for NOI-mode escalation |
 
 ---
 
@@ -1073,6 +1175,21 @@ The spread between the two is the "leverage amplification" — positive if lever
 
 19. **Discrete capture schedule as alternative to continuous ramp**. PropRise uses 0%/50%/100% year-by-year steps. This is simpler to explain to investors than a continuous fraction. Both options available per-stream: `renovation_capture_schedule` (discrete) overrides `renovation_absorption_rate` (continuous) when set.
 
+20. **NOI-mode escalation anchored at first stabilized month** (April 18 2026). The user-entered `noi_stabilized_input` means "NOI at year 1 of stabilization" (underwriting convention), not "NOI at deal close". Previously escalation ran from deal month 0, causing DSCR drift in `dscr_capped` / `dual_constraint` sizing. Anchor fix: `esc_period = max(0, period − first_stab_period)`. First stabilized month = raw input (no escalation applied yet).
+
+21. **Fix-point iteration for sizing convergence** (April 18 2026). DSCR-bound sizing requires knowing the "true" NOI, but the first compute pass can only use an estimate. Each subsequent call reads the previous OperationalOutputs.noi_stabilized, so re-running converges in 2 passes. The `/compute` endpoint loops up to 5x with a 0.005× DSCR tolerance. `gap_fill` mode breaks after one pass.
+
+22. **Deal type labels renamed for business clarity** (April 18 2026). Display labels updated throughout the UI:
+    - `acquisition_minor_reno` → "Acquisition" (was "Minor Renovation"). Construction milestone removed from the default preset — this strategy is pure hold/stabilize with LTL catchup or base escalation on unrenovated units.
+    - `acquisition_major_reno` → "Value-Add" (was "Major Renovation"). Used for unit renovations with measurable rent uplift.
+    - `acquisition_conversion` → "Conversion" (was "Acquisition — Conversion"). Change-of-use projects.
+    - `new_construction` unchanged.
+    Enum values kept for DB compatibility; only display strings changed.
+
+23. **Calculation Status pill over sidebar balance bar** (April 18 2026). A center-top pill replaces the legacy sidebar "Sources = Uses" banner. Surfaces three factors (S=U gap, DSCR vs. minimum, LTV vs. binding constraint) with per-factor details in a modal. Single-issue label shows the specific value ("⚠ -$478,284 Sources Gap" rather than "⚠ 1 issue") for immediate diagnostic context.
+
+24. **Legacy `avg_monthly_rent` removed; beds/baths added** (April 18 2026). `avg_monthly_rent` duplicated `in_place_rent_per_unit` semantically. Beds (0–5+, whole numbers) and baths (0–3.5+, 0.5 increments) are now first-class numeric variables so comp-data ingestion can populate them directly. Migration 0046 drops the legacy column.
+
 ---
 
 ## 10. Sources (market data for closing cost defaults)
@@ -1089,7 +1206,7 @@ The spread between the two is the "leverage amplification" — positive if lever
 
 ---
 
-*Document current as of April 16, 2026. Last major update: HelloData model parity (§2.8–2.10, §4.5, §6.4–6.5, §7.2 AM fee, constants table). When changing any formula, update the corresponding section and reference the commit hash.*
+*Document current as of April 18, 2026. Recent updates: NOI escalation anchor + fix-point iteration (§4.6–4.7), Calculation Status diagnostic (§7.7), UnitMix bed/bath + strategy (§4.8), deal type rename, constants table. Prior: HelloData model parity (§2.8–2.10, §4.5, §6.4–6.5, §7.2 AM fee). When changing any formula, update the corresponding section and reference the commit hash.*
 
 ---
 
