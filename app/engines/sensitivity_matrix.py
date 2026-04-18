@@ -23,7 +23,8 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.engines.cashflow import compute_cash_flows
-from app.models.deal import OperationalInputs, Project
+from app.models.deal import OperationalInputs
+from app.models.project import Project
 
 # ---------------------------------------------------------------------------
 # Axis + metric registry

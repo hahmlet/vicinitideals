@@ -189,7 +189,9 @@ def _export_project(project: Project) -> dict[str, Any]:
         "timeline_approved": project.timeline_approved,
         "operational_inputs": _export_operational_inputs(oi) if oi else None,
         "unit_mix": [
-            _dump(u, ["label", "unit_count", "avg_sqft", "avg_monthly_rent", "notes"])
+            _dump(u, ["label", "unit_count", "avg_sqft", "beds", "baths",
+                      "market_rent_per_unit", "in_place_rent_per_unit",
+                      "unit_strategy", "post_reno_rent_per_unit", "notes"])
             for u in sorted(project.unit_mix, key=lambda u: u.label)
         ],
         "use_lines": [

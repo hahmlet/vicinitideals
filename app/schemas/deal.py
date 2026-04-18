@@ -474,7 +474,8 @@ class UnitMixBase(BaseModel):
     label: str
     unit_count: int = 1
     avg_sqft: Decimal | None = None
-    avg_monthly_rent: Decimal | None = None
+    beds: Decimal | None = None  # 0, 1, 2, 3, 4, 5+ (stored as numeric)
+    baths: Decimal | None = None  # 0.5 increments: 0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5+
     market_rent_per_unit: Decimal | None = None
     in_place_rent_per_unit: Decimal | None = None
     unit_strategy: str | None = None  # "base_escalation" | "ltl_catchup" | "value_add_renovation"

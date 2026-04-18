@@ -4766,7 +4766,8 @@ async def handle_form_create_or_update(
             "label": form.get("label", "").strip() or "Units",
             "unit_count": _fi(form.get("unit_count"), 1) or 1,
             "avg_sqft": _fd(form.get("avg_sqft")),
-            "avg_monthly_rent": _fd(form.get("avg_monthly_rent")),
+            "beds": _fd(form.get("beds")),
+            "baths": _fd(form.get("baths")),
             "market_rent_per_unit": _fd(form.get("market_rent_per_unit")),
             "in_place_rent_per_unit": _fd(form.get("in_place_rent_per_unit")),
             "unit_strategy": form.get("unit_strategy") or None,
@@ -6448,7 +6449,6 @@ async def deal_setup_wizard_complete(
                 project_id=default_project.id,
                 label="All Units",
                 unit_count=building_unit_count,
-                avg_monthly_rent=None,
                 notes="Seeded from building — break into unit types as needed",
             ))
             existing_unit_mix = []  # will be flushed; reload below via refresh
@@ -6521,7 +6521,7 @@ async def deal_setup_wizard_complete(
                 stream_type=IncomeStreamType.residential_rent,
                 label=row.label,
                 unit_count=row.unit_count,
-                amount_per_unit_monthly=row.avg_monthly_rent or Decimal("0"),
+                amount_per_unit_monthly=(row.in_place_rent_per_unit or row.market_rent_per_unit or Decimal("0")),
                 stabilized_occupancy_pct=_market_occupancy,
                 escalation_rate_pct_annual=Decimal("3"),
                 active_in_phases=["lease_up", "stabilized"],
@@ -6889,9 +6889,37 @@ def _compute_calc_status(data: dict) -> dict:
             "meta": {"dscr": dscr_val, "dscr_min": dscr_min, "shortfall": shortfall},
         }
 
-    # ── Factor 3: LTV (binding constraint diagnostic) ──
-    # For each auto-sized debt module, check if LTV is the binding constraint
-    # (only tagged for dual_constraint sizing mode).
+    # ── Factor 3: LTV ──
+    # Compute actual LTV = total non-bridge debt / property value (NOI / exit cap).
+    # Always shown to the user as informational. Green/red treatment ONLY when
+    # sizing mode is dual_constraint (because otherwise LTV isn't a constraint
+    # the engine actively targets — it's just a derived number).
+    sizing_mode = (getattr(inputs, "debt_sizing_mode", None) or "") if inputs else ""
+    is_dual_constraint = (sizing_mode == "dual_constraint")
+
+    # Actual LTV calculation
+    _DEC_ZERO = Decimal("0")
+    total_non_bridge_debt = _DEC_ZERO
+    for m in capital_modules:
+        src = m.source or {}
+        if src.get("is_bridge"):
+            continue
+        ft = str(getattr(m, "funder_type", "")).replace("FunderType.", "")
+        if ft in {"permanent_debt", "senior_debt", "mezzanine_debt", "construction_loan",
+                  "acquisition_loan", "pre_development_loan", "bond", "bridge", "soft_loan"}:
+            amt = src.get("amount")
+            if amt:
+                try:
+                    total_non_bridge_debt += Decimal(str(amt))
+                except Exception:
+                    pass
+
+    noi_dec = Decimal(str(outputs.noi_stabilized)) if (outputs and getattr(outputs, "noi_stabilized", None)) else _DEC_ZERO
+    exit_cap = Decimal(str(inputs.exit_cap_rate_pct)) if (inputs and getattr(inputs, "exit_cap_rate_pct", None)) else _DEC_ZERO
+    property_value = (noi_dec / (exit_cap / Decimal("100"))) if (noi_dec > 0 and exit_cap > 0) else _DEC_ZERO
+    actual_ltv_pct = float(total_non_bridge_debt / property_value * Decimal("100")) if property_value > 0 and total_non_bridge_debt > 0 else None
+
+    # Collect per-module binding info (for dual_constraint diagnostics)
     ltv_binding_modules: list[dict] = []
     any_has_ltv = False
     for m in capital_modules:
@@ -6899,49 +6927,62 @@ def _compute_calc_status(data: dict) -> dict:
         if src.get("is_bridge"):
             continue
         binding = src.get("binding_constraint")
-        ltv_pct = src.get("ltv_pct")
-        if ltv_pct:
+        ltv_pct_cfg = src.get("ltv_pct")
+        if ltv_pct_cfg:
             any_has_ltv = True
         if binding == "ltv":
             ltv_binding_modules.append({
                 "label": m.label,
-                "ltv_pct": float(ltv_pct) if ltv_pct else None,
+                "ltv_pct": float(ltv_pct_cfg) if ltv_pct_cfg else None,
                 "amount": float(src.get("amount") or 0),
             })
 
-    if not any_has_ltv:
+    ltv_meta = {
+        "actual_ltv_pct": actual_ltv_pct,
+        "total_debt": float(total_non_bridge_debt) if total_non_bridge_debt else 0,
+        "property_value": float(property_value) if property_value else 0,
+        "binding_modules": ltv_binding_modules,
+    }
+
+    if actual_ltv_pct is None:
         ltv_status = {
             "status": "na",
-            "label": "LTV not set",
-            "detail": "No debt module has an LTV constraint. LTV sizing is only active under Dual-Constraint mode.",
-            "meta": {"binding_modules": []},
+            "label": "LTV not computable",
+            "detail": "Needs both stabilized NOI and an exit cap rate to derive property value. Run Compute and set exit cap rate.",
+            "meta": ltv_meta,
+        }
+    elif not is_dual_constraint:
+        # Informational only — grey pill, no pass/fail
+        ltv_status = {
+            "status": "na",
+            "label": f"LTV {actual_ltv_pct:.1f}%",
+            "detail": f"Debt ${float(total_non_bridge_debt):,.0f} / property value ${float(property_value):,.0f} = {actual_ltv_pct:.1f}%. Sizing mode is '{sizing_mode or 'gap_fill'}', so LTV is a derived outcome — not an active constraint. Switch to Dual-Constraint in Deal Setup to size debt by MIN(LTV, DSCR, gap-fill).",
+            "meta": ltv_meta,
         }
     elif ltv_binding_modules and gap < -1.0:
-        # LTV is binding AND we have a gap — LTV is limiting us
         first = ltv_binding_modules[0]
         pct = first.get("ltv_pct")
         ltv_status = {
             "status": "fail",
-            "label": f"{first['label']} limited by LTV ({pct}%)" if pct else f"{first['label']} limited by LTV",
-            "detail": f"The sizing of {first['label']} is bound by LTV at {pct}% — not DSCR, not gap-fill. If DSCR has headroom, raising the LTV would close some of the Sources gap.",
-            "meta": {"binding_modules": ltv_binding_modules},
+            "label": f"LTV {pct}% — binding with gap" if pct else f"LTV binding with gap",
+            "detail": f"The sizing of {first['label']} is capped at LTV {pct}% — not DSCR, not gap-fill. Raising LTV would close part of the Sources gap.",
+            "meta": ltv_meta,
         }
     elif ltv_binding_modules:
-        # LTV is binding but no gap — fine
         first = ltv_binding_modules[0]
         pct = first.get("ltv_pct")
         ltv_status = {
             "status": "ok",
-            "label": f"LTV binding at {pct}%" if pct else "LTV binding",
-            "detail": f"{first['label']} is sized at the LTV constraint. Since Sources = Uses, this is fine — the LTV happened to match what the deal needed.",
-            "meta": {"binding_modules": ltv_binding_modules},
+            "label": f"LTV {actual_ltv_pct:.1f}% (cap {pct}%)" if pct else f"LTV {actual_ltv_pct:.1f}%",
+            "detail": f"{first['label']} is sized exactly at the LTV cap. Sources = Uses, so this is fine.",
+            "meta": ltv_meta,
         }
     else:
         ltv_status = {
             "status": "ok",
-            "label": "LTV slack",
-            "detail": "LTV is not the binding constraint for any debt module — DSCR or gap-fill is sizing your debt instead.",
-            "meta": {"binding_modules": []},
+            "label": f"LTV {actual_ltv_pct:.1f}% (slack)",
+            "detail": "LTV is not the binding constraint — DSCR or gap-fill is sizing your debt. Plenty of LTV headroom.",
+            "meta": ltv_meta,
         }
 
     # ── Overall rollup ──
@@ -6978,8 +7019,34 @@ async def model_calc_status_pill(
         label = "✓ Calculation Valid"
         cls = "ok"
     else:
+        # Build specific labels per failing factor
         n = status["failing_count"]
-        label = f"⚠ {n} issue{'s' if n != 1 else ''}"
+        _specific: list[str] = []
+        su = status.get("sources_uses", {})
+        if su.get("status") in ("fail", "warn"):
+            _gap = (su.get("meta") or {}).get("gap") or 0
+            if _gap < 0:
+                _specific.append(f"-${abs(float(_gap)):,.0f} Sources Gap")
+            elif _gap > 0:
+                _specific.append(f"+${float(_gap):,.0f} Sources Surplus")
+        _dscr_f = status.get("dscr", {})
+        if _dscr_f.get("status") in ("fail", "warn"):
+            _dscr_val = (_dscr_f.get("meta") or {}).get("dscr")
+            if _dscr_val is not None:
+                _specific.append(f"{float(_dscr_val):.2f}× DSCR — Too Low")
+            else:
+                _specific.append("DSCR — Issue")
+        _ltv_f = status.get("ltv", {})
+        if _ltv_f.get("status") in ("fail", "warn"):
+            _actual = (_ltv_f.get("meta") or {}).get("actual_ltv_pct")
+            if _actual is not None:
+                _specific.append(f"{float(_actual):.1f}% LTV — Too High")
+            else:
+                _specific.append("LTV — Too High")
+        if n == 1 and _specific:
+            label = f"⚠ {_specific[0]}"
+        else:
+            label = f"⚠ {n} issue{'s' if n != 1 else ''}"
         cls = "warn"
     return HTMLResponse(
         f'<button type="button" class="calc-status-pill {cls}" '
@@ -7210,10 +7277,12 @@ async def save_noi_inputs(
         return HTMLResponse("No inputs", status_code=400)
 
     form = await request.form()
-    noi_raw = form.get("noi_stabilized_input", "")
+    noi_raw = str(form.get("noi_stabilized_input", "")).strip()
     esc_raw = form.get("noi_escalation_rate_pct", "3")
+    # Strip any display formatting ($ and commas) before parsing.
+    noi_clean = noi_raw.replace("$", "").replace(",", "").strip()
     try:
-        inputs.noi_stabilized_input = Decimal(str(noi_raw)) if noi_raw else None
+        inputs.noi_stabilized_input = Decimal(noi_clean) if noi_clean else None
     except Exception:
         inputs.noi_stabilized_input = None
     try:

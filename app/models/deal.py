@@ -439,7 +439,10 @@ class UnitMix(Base):
     label: Mapped[str] = mapped_column(String(255), nullable=False)
     unit_count: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
     avg_sqft: Mapped[object | None] = mapped_column(Numeric(18, 2), nullable=True)
-    avg_monthly_rent: Mapped[object | None] = mapped_column(Numeric(18, 2), nullable=True)
+    # Bed/bath as numeric fields — come from comp data or user input. 0–4+ beds,
+    # 0–3+ baths in 0.5 increments. Label is derived from these for display.
+    beds: Mapped[object | None] = mapped_column(Numeric(4, 1), nullable=True)
+    baths: Mapped[object | None] = mapped_column(Numeric(4, 1), nullable=True)
     # Loss-to-lease: market rent vs in-place rent spread
     market_rent_per_unit: Mapped[object | None] = mapped_column(Numeric(18, 2), nullable=True)
     in_place_rent_per_unit: Mapped[object | None] = mapped_column(Numeric(18, 2), nullable=True)

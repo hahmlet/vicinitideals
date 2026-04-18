@@ -566,10 +566,24 @@ function ulTimingChanged(val) {
              value="{{ existing.avg_sqft | round(0) | int if existing and existing.avg_sqft else '' }}" placeholder="650">
     </div>
     <div class="form-field">
-      <label class="form-label">Avg Monthly Rent (legacy)</label>
-      <input class="form-input" type="number" name="avg_monthly_rent" step="1" min="0"
-             value="{{ existing.avg_monthly_rent | round(0) | int if existing and existing.avg_monthly_rent else '' }}" placeholder="optional">
-      <div class="form-hint">Legacy field — prefer In-Place Rent below.</div>
+      <label class="form-label">Beds</label>
+      {%- set _beds_val = (existing.beds | float) if existing and existing.beds is not none else '' -%}
+      <select class="form-select" name="beds">
+        <option value="" {% if _beds_val == '' %}selected{% endif %}>—</option>
+        {% for _b in [0, 1, 2, 3, 4, 5] %}
+        <option value="{{ _b }}" {% if _beds_val != '' and _beds_val == _b %}selected{% endif %}>{{ _b }}{% if _b == 5 %}+{% endif %}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-field">
+      <label class="form-label">Baths</label>
+      {%- set _baths_val = (existing.baths | float) if existing and existing.baths is not none else '' -%}
+      <select class="form-select" name="baths">
+        <option value="" {% if _baths_val == '' %}selected{% endif %}>—</option>
+        {% for _b in [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5] %}
+        <option value="{{ _b }}" {% if _baths_val != '' and _baths_val == _b %}selected{% endif %}>{{ _b }}{% if _b == 3.5 %}+{% endif %}</option>
+        {% endfor %}
+      </select>
     </div>
   </div>
 
