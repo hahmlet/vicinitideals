@@ -7,7 +7,7 @@ import io
 import json
 import time
 import uuid as _uuid_mod
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 from zoneinfo import ZoneInfo
 from decimal import Decimal
 from pathlib import Path
@@ -4304,17 +4304,27 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
     # ── Capital module source bars for Sources & Uses Gantt ─────────────────
     # Each source bar spans active_phase_start → active_phase_end. If no end
     # phase is set the bar extends to the right edge with a fade-out (perpetuity
-    # convention for equity / permanent debt). Zero-amount modules are hidden.
-    _CM_PHASE_TO_MS_KEY = {
-        "acquisition":          "close",
-        "pre_construction":     "close",        # construction loans close at same time as acquisition
-        "construction":         "construction",
-        "lease_up":             "operation_lease_up",
-        "operation_lease_up":   "operation_lease_up",
-        "stabilized":           "operation_stabilized",
-        "operation_stabilized": "operation_stabilized",
-        "exit":                 "divestment",
-        "divestment":           "divestment",
+    # convention for equity / permanent debt). Zero-amount modules are hidden
+    # unless explicitly auto-sized (placeholder dashed bar).
+    #
+    # Phase → (milestone_key, side) mapping:
+    # - side="end": the phase begins when that milestone *completes* (e.g.
+    #   "acquisition" phase starts when the Close milestone ends — money
+    #   changes hands at the end of the closing process).
+    # - side="start": the phase begins when that milestone *starts* (e.g.
+    #   "construction" phase starts at Construction milestone start).
+    _CM_PHASE_TO_MS = {
+        "acquisition":          ("close", "end"),
+        "pre_development":      ("close", "end"),
+        "pre_construction":     ("close", "end"),
+        "construction":         ("construction", "start"),
+        "lease_up":             ("operation_lease_up", "start"),
+        "operation_lease_up":   ("operation_lease_up", "start"),
+        "stabilized":           ("operation_stabilized", "start"),
+        "operation_stabilized": ("operation_stabilized", "start"),
+        "exit":                 ("divestment", "start"),
+        "divestment":           ("divestment", "start"),
+        "perpetuity":           (None, None),  # never ends on timeline
     }
     _cm_gantt_rows: list[dict] = []
     _bgd_cm = _builder_gantt_from_milestones(default_project, milestones)
@@ -4323,27 +4333,45 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
         _g_min_cm = _bgd_cm.get("g_min", 0)
         _g_max_cm = _bgd_cm.get("g_max", 1)
         _span_cm = max(_g_max_cm - _g_min_cm, 1)
-        # milestone type key → computed start date
         _ms_start_map: dict = {
             str(m.milestone_type).replace("MilestoneType.", ""): m.computed_start(ms_map)
             for m in milestones
             if m.computed_start(ms_map)
         }
+        _ms_end_map: dict = {
+            str(m.milestone_type).replace("MilestoneType.", ""): m.computed_end(ms_map)
+            for m in milestones
+            if m.computed_end(ms_map)
+        }
+
+        def _phase_to_date(phase: str | None) -> date | None:
+            if not phase:
+                return None
+            entry = _CM_PHASE_TO_MS.get(phase)
+            if not entry:
+                return None
+            ms_key, side = entry
+            if not ms_key:
+                return None
+            return (_ms_end_map if side == "end" else _ms_start_map).get(ms_key)
+
         for _cm in capital_modules:
-            _src_amount = float((_cm.source or {}).get("amount") or 0)
+            _src = _cm.source or {}
+            _src_amount = float(_src.get("amount") or 0)
+            _auto_size = bool(_src.get("auto_size"))
+            # Hide $0 sources that aren't marked for auto-sizing (zero means
+            # the user hasn't committed this source, so it shouldn't take up
+            # a Gantt row).
+            if _src_amount <= 0 and not _auto_size:
+                continue
             if not _cm.active_phase_start or not _epoch_cm:
                 continue
-            _ms_key = _CM_PHASE_TO_MS_KEY.get(_cm.active_phase_start)
-            if not _ms_key:
-                continue
-            _from_date = _ms_start_map.get(_ms_key)
+            _from_date = _phase_to_date(_cm.active_phase_start)
             if not _from_date:
                 continue
             _from_day = (_from_date - _epoch_cm).days
             _left = max(0.0, round(100.0 * (_from_day - _g_min_cm) / _span_cm, 2))
-            # Right edge: use active_phase_end if set, else fade to right (perpetuity)
-            _to_ms_key = _CM_PHASE_TO_MS_KEY.get(_cm.active_phase_end) if _cm.active_phase_end else None
-            _to_date = _ms_start_map.get(_to_ms_key) if _to_ms_key else None
+            _to_date = _phase_to_date(_cm.active_phase_end) if _cm.active_phase_end else None
             if _to_date:
                 _to_day = (_to_date - _epoch_cm).days
                 _right = min(100.0, round(100.0 * (_to_day - _g_min_cm) / _span_cm, 2))
