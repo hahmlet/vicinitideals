@@ -224,6 +224,20 @@ async def compute_cash_flows(
         ZERO,
     )
 
+    # Compute the period index of the first stabilized month.  NOI-mode
+    # escalation anchors here so "Stabilized NOI" input means "NOI at year 1
+    # of stabilization" (the underwriting convention) — not "NOI at deal
+    # close".  Without this anchor, escalation from deal month 0 lifts the
+    # display NOI above the sizing NOI, preventing DSCR convergence to the
+    # minimum in dscr_capped / dual_constraint modes.
+    _first_stab_period = 0
+    _accum = 0
+    for _p in phases:
+        if _p.period_type == PeriodType.stabilized:
+            _first_stab_period = _accum
+            break
+        _accum += _p.months
+
     for phase in phases:
         for month_index in range(phase.months):
             period_result = _compute_period(
@@ -239,6 +253,7 @@ async def compute_cash_flows(
                 construction_debt_monthly=construction_debt_monthly,
                 operation_debt_monthly=operation_debt_monthly,
                 income_mode=income_mode,
+                first_stab_period=_first_stab_period,
             )
 
             if phase.period_type == PeriodType.stabilized and stabilized_noi_monthly is None:
@@ -1850,6 +1865,7 @@ def _compute_period(
     construction_debt_monthly: Decimal = ZERO,
     operation_debt_monthly: Decimal = ZERO,
     income_mode: str = "revenue_opex",
+    first_stab_period: int = 0,
 ) -> dict[str, Any]:
     gross_revenue = ZERO
     vacancy_loss = ZERO
@@ -1868,11 +1884,21 @@ def _compute_period(
     _is_operational_phase = phase.period_type in {PeriodType.lease_up, PeriodType.stabilized}
 
     if income_mode == "noi" and _is_operational_phase:
-        # NOI mode: skip stream/expense loops. Compute monthly NOI from the stabilized input
-        # with compound annual escalation: noi_monthly = (noi_annual/12) × (1+rate)^(period/12)
+        # NOI mode: the `noi_stabilized_input` is "NOI at first stabilized
+        # month" (the underwriting convention). Escalation anchors at
+        # first_stab_period so:
+        #   - First stab month (period == first_stab_period): esc_factor = 1.0
+        #   - Year 2 of stab (period = first_stab + 12): esc_factor = (1+r)
+        #   - Lease-up phase: escalation is clamped at 1.0 so it doesn't
+        #     exceed the stabilized value (simplification — lease-up NOI
+        #     isn't modeled separately in NOI mode)
+        # This prevents DSCR drift in dscr_capped / dual_constraint sizing
+        # because the NOI used for sizing (raw input) == NOI shown at first
+        # stabilized month.
         _noi_annual = _to_decimal(inputs.noi_stabilized_input) if inputs.noi_stabilized_input else ZERO
         _esc_rate = _to_decimal(inputs.noi_escalation_rate_pct) if inputs.noi_escalation_rate_pct else Decimal("3")
-        _esc_factor = _growth_factor(_esc_rate, period)
+        _esc_period = max(0, period - first_stab_period)
+        _esc_factor = _growth_factor(_esc_rate, _esc_period)
         _noi_monthly = _q(_noi_annual / Decimal("12") * _esc_factor)
         gross_revenue = _noi_monthly
         vacancy_loss = ZERO
