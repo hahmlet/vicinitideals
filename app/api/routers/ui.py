@@ -6973,9 +6973,6 @@ async def model_calc_status_pill(
     Click opens the Calculation Status modal via HTMX.
     """
     data = await _load_builder_data(session, model_id)
-    timeline_approved = data.get("timeline_approved", False)
-    if not timeline_approved:
-        return HTMLResponse("")
     status = _compute_calc_status(data)
     if status["overall"] == "ok":
         label = "✓ Calculation Valid"
