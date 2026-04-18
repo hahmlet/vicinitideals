@@ -727,3 +727,63 @@ def test_sensitivity_form_has_axis_metric_selectors(
     assert "project_irr_levered" in opts
     assert "debt_yield_pct" in opts
     assert "dscr" in opts
+
+
+# ---------------------------------------------------------------------------
+# 13. Calculation Status pill + modal
+# ---------------------------------------------------------------------------
+
+def test_calc_status_pill_endpoint_returns_html(
+    logged_in_page, base_url: str, feature_model_id: str
+) -> None:
+    """The /calc-status endpoint should return a button with class
+    'calc-status-pill' and either 'ok' or 'warn' state."""
+    page = logged_in_page
+    page.goto(
+        f"{base_url}/ui/models/{feature_model_id}/calc-status",
+        wait_until="domcontentloaded",
+    )
+    content = page.content()
+    # Must be a pill (either ok or warn state)
+    assert 'calc-status-pill' in content, "calc-status endpoint should return a pill"
+    assert ('class="calc-status-pill ok"' in content
+            or 'class="calc-status-pill warn"' in content), \
+        "pill must have either ok or warn class"
+
+
+def test_calc_status_modal_shows_three_factors(
+    logged_in_page, base_url: str, feature_model_id: str
+) -> None:
+    """The modal endpoint should render 3 factor rows: S=U, DSCR, LTV."""
+    page = logged_in_page
+    page.goto(
+        f"{base_url}/ui/models/{feature_model_id}/calc-status/modal",
+        wait_until="domcontentloaded",
+    )
+    wait_for_htmx(page)
+
+    # Must contain all three factor titles
+    content = page.content()
+    assert "Sources = Uses" in content, "modal should show Sources = Uses factor"
+    assert "DSCR" in content, "modal should show DSCR factor"
+    assert "LTV" in content, "modal should show LTV factor"
+
+    # Must render 3 status rows
+    rows = page.locator('.calc-status-row')
+    assert rows.count() == 3, f"Expected 3 calc-status rows, got {rows.count()}"
+
+
+def test_calc_status_pill_visible_in_topbar(
+    logged_in_page, base_url: str, feature_model_id: str
+) -> None:
+    """After loading the builder page, the pill should appear in the
+    center-top pill container."""
+    page = logged_in_page
+    page.goto(f"{base_url}/models/{feature_model_id}/builder")
+    page.wait_for_selector(".builder-topbar", timeout=15_000)
+    # HTMX auto-loads the pill on page load
+    page.wait_for_selector('#calc-status-pill-container .calc-status-pill', timeout=10_000)
+
+    pill = page.locator('#calc-status-pill-container .calc-status-pill')
+    assert pill.count() == 1, "Exactly one pill should be in the container"
+    assert pill.first.is_visible()
