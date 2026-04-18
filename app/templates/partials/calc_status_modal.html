@@ -7,6 +7,11 @@
      - model_id: str
 #}
 
+{# OOB refresh of the topbar pill so opening the modal always resyncs the pill
+   with the modal's computed status (guards against stale pill after partial
+   swaps that don't trigger the module-panel afterSwap listener). #}
+{{ pill_oob_html | safe }}
+
 <div class="calc-status-modal-header">
   <div>
     <div class="calc-status-modal-title">Calculation Status</div>

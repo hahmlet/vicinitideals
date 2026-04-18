@@ -7003,23 +7003,17 @@ def _compute_calc_status(data: dict) -> dict:
 
 
 @router.get("/ui/models/{model_id}/calc-status", response_class=HTMLResponse)
-async def model_calc_status_pill(
-    request: Request,
-    model_id: UUID,
-    session: DBSession,
-) -> HTMLResponse:
-    """Returns the center-top calculation status pill HTML.
+def _render_calc_status_pill_html(status: dict, model_id: UUID, *, oob: bool = False) -> str:
+    """Render the calc-status pill button HTML from a computed status dict.
 
-    Green pill = all factors clear. Yellow pill = N factors failing.
-    Click opens the Calculation Status modal via HTMX.
+    When oob=True the outer container is emitted with hx-swap-oob so the
+    response can refresh the topbar pill out-of-band (e.g. from the modal
+    endpoint), keeping pill and modal in lockstep.
     """
-    data = await _load_builder_data(session, model_id)
-    status = _compute_calc_status(data)
     if status["overall"] == "ok":
         label = "✓ Calculation Valid"
         cls = "ok"
     else:
-        # Build specific labels per failing factor
         n = status["failing_count"]
         _specific: list[str] = []
         su = status.get("sources_uses", {})
@@ -7048,7 +7042,7 @@ async def model_calc_status_pill(
         else:
             label = f"⚠ {n} issue{'s' if n != 1 else ''}"
         cls = "warn"
-    return HTMLResponse(
+    button = (
         f'<button type="button" class="calc-status-pill {cls}" '
         f'hx-get="/ui/models/{model_id}/calc-status/modal" '
         f'hx-target="#calc-status-modal-body" '
@@ -7056,6 +7050,27 @@ async def model_calc_status_pill(
         f'onclick="document.getElementById(\'calc-status-modal\').style.display=\'flex\'">'
         f'{label}</button>'
     )
+    if oob:
+        return (
+            f'<div id="calc-status-pill-container" hx-swap-oob="innerHTML:#calc-status-pill-container">'
+            f'{button}</div>'
+        )
+    return button
+
+
+async def model_calc_status_pill(
+    request: Request,
+    model_id: UUID,
+    session: DBSession,
+) -> HTMLResponse:
+    """Returns the center-top calculation status pill HTML.
+
+    Green pill = all factors clear. Yellow pill = N factors failing.
+    Click opens the Calculation Status modal via HTMX.
+    """
+    data = await _load_builder_data(session, model_id)
+    status = _compute_calc_status(data)
+    return HTMLResponse(_render_calc_status_pill_html(status, model_id))
 
 
 @router.get("/ui/models/{model_id}/calc-status/modal", response_class=HTMLResponse)
@@ -7064,14 +7079,21 @@ async def model_calc_status_modal(
     model_id: UUID,
     session: DBSession,
 ) -> HTMLResponse:
-    """Returns the modal body HTML with the 3-factor diagnostic."""
+    """Returns the modal body HTML with the 3-factor diagnostic.
+
+    Also emits an out-of-band refresh of the topbar pill so that opening the
+    modal guarantees the pill reflects the same computed status the modal is
+    showing. (Fixes drift cases where a prior panel swap left the pill stale.)
+    """
     data = await _load_builder_data(session, model_id)
     status = _compute_calc_status(data)
-    return templates.TemplateResponse(
+    pill_oob = _render_calc_status_pill_html(status, model_id, oob=True)
+    response = templates.TemplateResponse(
         request,
         "partials/calc_status_modal.html",
-        {"status": status, "model_id": str(model_id)},
+        {"status": status, "model_id": str(model_id), "pill_oob_html": pill_oob},
     )
+    return response
 
 
 @router.get("/ui/models/{model_id}/balance-bar", response_class=HTMLResponse)

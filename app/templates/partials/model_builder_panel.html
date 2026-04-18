@@ -1577,8 +1577,8 @@ function refreshPanel(module) {
     target: '#module-panel-content',
     swap: 'innerHTML'
   });
-  htmx.ajax('GET', '/ui/models/{{ model.id }}/balance-bar', {
-    target: '#balance-bar-container',
+  htmx.ajax('GET', '/ui/models/{{ model.id }}/calc-status', {
+    target: '#calc-status-pill-container',
     swap: 'innerHTML'
   });
 }
