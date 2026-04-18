@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+from decimal import Decimal
 from typing import Any
 from uuid import UUID
 
@@ -548,8 +549,47 @@ async def compute_model_cashflows(model_id: UUID, request: Request, session: DBS
     except Exception:
         pass  # Don't block compute if draw schedule can't run (missing milestones etc.)
 
+    # ── Fix-point iteration for sizing convergence ──────────────────────────
+    # When debt_sizing_mode is 'dscr_capped' or 'dual_constraint', the first
+    # sizing pass uses an estimated stabilized NOI. The final computed NOI may
+    # differ slightly (escalation carry-in, capex reserve, lease-up scaling),
+    # causing the displayed DSCR to drift above the minimum by 0.01–0.05×.
+    # Each subsequent call to compute_cash_flows reads the previous
+    # OperationalOutputs.noi_stabilized and uses it for sizing — so simply
+    # re-running the compute converges DSCR to the exact minimum.
+    #
+    # We cap at 5 iterations to prevent infinite loops if any math goes
+    # unstable. Practically, convergence happens in 2 passes for any
+    # well-formed deal.
+    MAX_ITERATIONS = 5
+    DSCR_CONVERGENCE_TOLERANCE = Decimal("0.005")  # 0.005× = half a basis point
+    _sizing_mode = (
+        (existing_inputs.debt_sizing_mode if existing_inputs else None)
+        if default_project else None
+    )
+    _iterative_modes = {"dscr_capped", "dual_constraint"}
+    _should_iterate = _sizing_mode in _iterative_modes
+
+    result: dict[str, Any] | None = None
+    prev_dscr: Decimal | None = None
+    iterations_used = 0
     try:
-        result = await compute_cash_flows(deal_model_id=model_id, session=session)
+        for _iter in range(MAX_ITERATIONS):
+            result = await compute_cash_flows(deal_model_id=model_id, session=session)
+            iterations_used = _iter + 1
+            if not _should_iterate:
+                break
+            _cur_dscr = result.get("dscr") if isinstance(result, dict) else None
+            if _cur_dscr is None:
+                break
+            try:
+                _cur_dscr_dec = Decimal(str(_cur_dscr))
+            except Exception:
+                break
+            # Converged when the DSCR stabilizes between iterations
+            if prev_dscr is not None and abs(_cur_dscr_dec - prev_dscr) < DSCR_CONVERGENCE_TOLERANCE:
+                break
+            prev_dscr = _cur_dscr_dec
     except (ValueError, KeyError, TypeError, ZeroDivisionError) as exc:
         log_observation(
             logger,
@@ -562,6 +602,9 @@ async def compute_model_cashflows(model_id: UUID, request: Request, session: DBS
             error=str(exc),
         )
         raise HTTPException(status_code=400, detail=str(exc)) from exc
+    # Surface the iteration count for observability
+    if isinstance(result, dict):
+        result["sizing_iterations"] = iterations_used
 
     # Automatically chain waterfall compute after cashflow so that:
     # - owner distributions flow out of the cash balance each period

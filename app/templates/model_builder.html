@@ -112,6 +112,25 @@
   white-space: nowrap;
 }
 
+/* ── Compute button spinning wheel (shown via hx-indicator) ── */
+.compute-spinner-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.compute-spinner-wheel {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(0,0,0,.12);
+  border-top-color: var(--accent, #2563eb);
+  border-radius: 50%;
+  animation: compute-spin 0.7s linear infinite;
+}
+@keyframes compute-spin {
+  to { transform: rotate(360deg); }
+}
+
 /* ── Calculation Status pill (center-top of builder topbar) ── */
 .calc-status-pill {
   display: inline-flex;
@@ -619,7 +638,10 @@
        hx-on::after-request="handleComputeResult(event)">
       ▶ Compute
     </button>
-    <span id="compute-spinner" class="htmx-indicator text-small text-muted">Computing…</span>
+    <span id="compute-spinner" class="htmx-indicator compute-spinner-inline">
+      <span class="compute-spinner-wheel" aria-hidden="true"></span>
+      <span class="text-small text-muted">Computing…</span>
+    </span>
     <span id="compute-result"></span>
 <script>
 function handleComputeResult(evt) {
