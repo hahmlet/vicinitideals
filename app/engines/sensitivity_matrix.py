@@ -43,7 +43,7 @@ AXIS_SPECS: dict[str, dict[str, Any]] = {
         "label": "Expense Growth (%)",
         "field": "expense_growth_rate_pct_annual",
         "format": "pct",
-        "default_step": Decimal("0.5"),
+        "default_step": Decimal("0.25"),
         "min": Decimal("0"),
         "max": Decimal("10"),
     },
@@ -59,7 +59,7 @@ AXIS_SPECS: dict[str, dict[str, Any]] = {
         "label": "NOI / Rent Growth (%)",
         "field": "noi_escalation_rate_pct",
         "format": "pct",
-        "default_step": Decimal("0.5"),
+        "default_step": Decimal("0.25"),
         "min": Decimal("0"),
         "max": Decimal("10"),
     },
@@ -79,13 +79,30 @@ GRID_SIZE = 5
 
 
 def _generate_axis_values(base: Decimal, spec: dict[str, Any]) -> list[Decimal]:
-    """5 values centered on `base`, spaced by `default_step`, clamped to bounds."""
+    """5 distinct values spaced by `default_step`, sliding off-center if the
+    centered window would cross `min` or `max`.
+
+    Plain clamping produces duplicates when the base sits at (or near) a
+    boundary — e.g. base=0, step=0.5 gave [0, 0, 0, 0.5, 1]. Here we slide
+    the whole window so all 5 cells stay inside [min, max] and distinct.
+    """
     step = spec["default_step"]
     lo = spec["min"]
     hi = spec["max"]
-    half = (GRID_SIZE - 1) // 2
-    values = [base + (Decimal(i - half) * step) for i in range(GRID_SIZE)]
-    return [max(lo, min(hi, v)) for v in values]
+    half = Decimal((GRID_SIZE - 1) // 2)
+    span = Decimal(GRID_SIZE - 1) * step
+
+    start = base - half * step
+    if start < lo:
+        start = lo
+    end = start + span
+    if end > hi:
+        end = hi
+        start = max(lo, end - span)
+        if end - start < span:
+            # Range too tight for the configured step: spread evenly.
+            step = (end - start) / Decimal(GRID_SIZE - 1) if end > start else Decimal("0")
+    return [start + Decimal(i) * step for i in range(GRID_SIZE)]
 
 
 async def compute_sensitivity_matrix(
