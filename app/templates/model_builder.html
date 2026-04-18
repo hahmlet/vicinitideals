@@ -620,8 +620,15 @@
   <div id="calc-status-pill-container"
        style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:1"
        hx-get="/ui/models/{{ model.id }}/calc-status"
-       hx-trigger="load, calcStatusChanged from:body"
+       hx-trigger="load"
        hx-swap="innerHTML"></div>
+  <script>
+    document.body.addEventListener('calcStatusChanged', function() {
+      htmx.ajax('GET', '/ui/models/{{ model.id }}/calc-status', {
+        target: '#calc-status-pill-container', swap: 'innerHTML'
+      });
+    });
+  </script>
 
   <div class="builder-topbar-right">
     <span class="badge {{ 'badge-green' if model.is_active else 'badge-gray' }}">
