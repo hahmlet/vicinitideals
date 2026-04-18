@@ -514,7 +514,7 @@ async def get_operational_outputs(
 
 
 @router.post("/models/{model_id}/compute")
-async def compute_model_cashflows(model_id: UUID, request: Request, session: DBSession) -> dict[str, Any]:
+async def compute_model_cashflows(model_id: UUID, request: Request, session: DBSession) -> Any:
     await _get_deal_or_404(session, model_id)
 
     # Auto-create OperationalInputs if missing (pre-existing deals may not have one)
@@ -646,7 +646,15 @@ async def compute_model_cashflows(model_id: UUID, request: Request, session: DBS
         duration_ms=duration_ms,
         user_id=user_id,
     )
-    return response
+    # HX-Trigger makes the topbar Calculation Status pill refresh on the
+    # client — more reliable than relying on the hx-on::after-request JS
+    # handler, which can silently no-op on edge cases.
+    import json as _json
+    from fastapi.responses import JSONResponse
+    return JSONResponse(
+        content=_json.loads(_json.dumps(response, default=str)),
+        headers={"HX-Trigger": "calcStatusChanged"},
+    )
 
 
 @router.get("/models/{model_id}/cashflow", response_model=list[CashFlowRead])
