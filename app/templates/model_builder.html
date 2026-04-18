@@ -618,10 +618,7 @@
   {# Center-top Calculation Status pill — clickable to open diagnostic modal.
      Loaded via HTMX so it refreshes independently after compute or mutations. #}
   <div id="calc-status-pill-container"
-       style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:1"
-       hx-get="/ui/models/{{ model.id }}/calc-status"
-       hx-trigger="load"
-       hx-swap="innerHTML"></div>
+       style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:1">{{ calc_status_pill_html | safe }}</div>
   <script>
     document.body.addEventListener('calcStatusChanged', function() {
       htmx.ajax('GET', '/ui/models/{{ model.id }}/calc-status', {

@@ -6742,6 +6742,12 @@ async def model_builder(
             if _sched:
                 draw_schedule_data["schedule"] = _sched
 
+    # Pre-render the calc-status pill so it's visible on initial page load
+    # without depending on an HTMX hx-trigger="load" round-trip (which was
+    # silently failing for some states, leaving the topbar empty).
+    _calc_status = _compute_calc_status(data)
+    calc_status_pill_html = _render_calc_status_pill_html(_calc_status, model_id)
+
     ctx = {
         "model": model,
         "project": opportunity,  # template uses `project.name` for the topbar breadcrumb
@@ -6758,6 +6764,7 @@ async def model_builder(
         "lot_size_mismatch": lot_size_mismatch_info,
         "step": wizard_step,
         "missing_building_data": missing_building_data,
+        "calc_status_pill_html": calc_status_pill_html,
         **data,
         **draw_schedule_data,
         **_base_ctx(user, dedup_count, "deals", address_issues_count),
