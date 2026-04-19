@@ -823,10 +823,18 @@ def _resolve_vehicle(module: object, all_modules: list) -> tuple[str, object | N
     if saved == "sale":
         return ("sale", None)
     if saved and saved not in {"maturity", "sale"}:
-        for r in eligible:
+        # Honour the user's explicit pick regardless of overlap — timing
+        # semantics around "end" vs "start" make strict overlap checks too
+        # brittle (new loan often starts the day the old one closes, which
+        # may read as adjacent-not-overlapping depending on rank mapping).
+        # Engine trusts the user; compute math handles the handoff via
+        # construction_retirement regardless of exact date alignment.
+        for r in all_modules:
+            if r is module:
+                continue
             if str(getattr(r, "id", "")) == saved:
                 return ("source", r)
-        # Stored vehicle no longer valid → fall through to default.
+        # Stored vehicle points at a deleted/missing module → fall through.
 
     if eligible:
         e_rank = _module_rank(module, "end")

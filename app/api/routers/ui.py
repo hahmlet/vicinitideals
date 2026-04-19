@@ -7673,17 +7673,11 @@ async def model_builder_line_form(
                 return _EXIT_APS_RANK.get(raw, 99)
             return _EXIT_APS_RANK.get(raw, 0)
 
-        # If the candidate has no active_phase_end set (e_rank == 99), fall
-        # back to listing all other modules — the user can't narrow by
-        # overlap when there's no end point yet. Engine re-validates at
-        # compute time and falls back to maturity if no actual overlap.
-        if is_new or e_rank >= 99:
-            eligible_sources = list(others)
-        else:
-            eligible_sources = [
-                m for m in others
-                if _rank(m, "start") <= e_rank < _rank(m, "end")
-            ]
+        # List all other sources as candidates. Overlap is too brittle a
+        # filter — adjacent-vs-overlapping distinctions flip on rank
+        # mapping (a new loan often starts the day the old closes). The
+        # engine honours the user's explicit pick at compute time.
+        eligible_sources = list(others)
 
         def _opt(value: str, label: str) -> dict:
             # If saved vehicle is present, honour it; else default to what

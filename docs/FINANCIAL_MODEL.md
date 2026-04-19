@@ -444,7 +444,11 @@ Used by: refi proceeds calculation (§2.10), prepay penalty at exit (§6.4).
 | `"sale"` | Balloon paid from divestment proceeds | No (handled in exit period) |
 | `<module_uuid>` | Another Capital Module absorbs the balance at the handoff point | **Yes** — §2.10 math below |
 
-The engine computes pairings in a generic pre-pass. For every module `B`, `_resolve_vehicle(B, all_modules)` (in [app/engines/cashflow.py](app/engines/cashflow.py)) reads `B.exit_terms.vehicle` and returns the literal or the retiring module. Falls back to a default when `vehicle` is unset or stale:
+The engine computes pairings in a generic pre-pass. For every module `B`, `_resolve_vehicle(B, all_modules)` (in [app/engines/cashflow.py](app/engines/cashflow.py)) reads `B.exit_terms.vehicle` and returns the literal or the retiring module.
+
+**Explicit user picks are honoured regardless of overlap.** If `B.exit_terms.vehicle` is set to another module's UUID and that module exists, the engine uses it — even when the retirer's active window doesn't literally overlap `B.end_rank`. Adjacent-vs-overlapping distinctions are brittle (a new loan often closes the same day the old one matures), so the engine trusts the user's pick and lets the §2.10 refi math handle the handoff.
+
+Default selection (when `vehicle` is unset or points at a missing module):
 
 1. Among eligible retirers (modules whose active window `[start_rank, end_rank)` covers `B.end_rank`), prefer those where `R.start_rank == B.end_rank` (enter exactly at handoff). Tie-break by lowest `stack_position`, then alphabetical label.
 2. Else if `B.end_rank >= 6` (exit/divestment): `"sale"`.
