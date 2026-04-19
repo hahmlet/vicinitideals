@@ -7641,7 +7641,13 @@ async def model_builder_line_form(
         # modules we have no saved active_phase_end yet; default to "perpetuity"
         # (→ Maturity as the only option) to match the form's initial blank
         # state.  For existing modules we use their actual saved values.
-        if existing is not None:
+        # New-source wizards haven't picked active_phase_end yet — so
+        # eligible-by-rank gives zero results. Fall back to "all other
+        # modules" so the user can pre-select a takeout target. The engine
+        # re-validates at compute time and falls back to maturity if the
+        # eventual active_phase_end doesn't actually overlap.
+        is_new = existing is None
+        if not is_new:
             candidate = existing
         else:
             class _Stub:  # minimal shim
@@ -7667,10 +7673,16 @@ async def model_builder_line_form(
                 return _EXIT_APS_RANK.get(raw, 99)
             return _EXIT_APS_RANK.get(raw, 0)
 
-        eligible_sources = [
-            m for m in others
-            if _rank(m, "start") <= e_rank < _rank(m, "end")
-        ] if e_rank < 99 else []
+        if is_new:
+            # No Active To yet — let the user pick from any other source.
+            eligible_sources = list(others)
+        elif e_rank < 99:
+            eligible_sources = [
+                m for m in others
+                if _rank(m, "start") <= e_rank < _rank(m, "end")
+            ]
+        else:
+            eligible_sources = []
 
         def _opt(value: str, label: str) -> dict:
             # If saved vehicle is present, honour it; else default to what

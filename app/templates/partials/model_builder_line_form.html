@@ -656,13 +656,15 @@ function ulTimingChanged(val) {
 {%- set _FT_LABELS = {
   'permanent_debt':'Permanent Debt','senior_debt':'Senior Debt','mezzanine_debt':'Mezzanine Debt',
   'bridge':'Bridge Loan','construction_loan':'Construction Loan',
+  'acquisition_loan':'Acquisition Loan','pre_development_loan':'Pre-Development Loan',
   'soft_loan':'Soft Loan','bond':'Bond',
   'preferred_equity':'Preferred Equity','common_equity':'Common Equity',
   'owner_loan':'Owner Loan','owner_investment':'Owner Investment',
   'grant':'Grant','tax_credit':'Tax Credit','other':'Other',
 } -%}
 {# permanent_debt: amortizing long-term loan — no exit trigger, exits at end of amortization #}
-{%- set _ALL_TYPES = ['permanent_debt','senior_debt','mezzanine_debt','bridge','construction_loan','soft_loan','bond',
+{%- set _ALL_TYPES = ['permanent_debt','senior_debt','mezzanine_debt','bridge','construction_loan',
+                      'acquisition_loan','pre_development_loan','soft_loan','bond',
                       'preferred_equity','common_equity','owner_loan','owner_investment',
                       'grant','tax_credit'] -%}
 {%- set _SIMPLE_TYPES = ['grant','tax_credit'] -%}
