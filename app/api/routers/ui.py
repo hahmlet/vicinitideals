@@ -6993,11 +6993,35 @@ def _compute_calc_status(data: dict) -> dict:
                 "amount": float(src.get("amount") or 0),
             })
 
+    # Headline LTV cap for the "max debt at X% LTV" display. Prefer the LTV
+    # setting on the first non-bridge debt module with ltv_pct; fall back to
+    # the engine's 65% default when dual_constraint is on; else None.
+    _headline_ltv_pct: float | None = None
+    for m in capital_modules:
+        src = m.source or {}
+        if src.get("is_bridge"):
+            continue
+        _cfg = src.get("ltv_pct")
+        if _cfg:
+            try:
+                _headline_ltv_pct = float(_cfg)
+                break
+            except (TypeError, ValueError):
+                pass
+    if _headline_ltv_pct is None and is_dual_constraint:
+        _headline_ltv_pct = 65.0
+
+    max_debt_at_ltv: float | None = None
+    if _headline_ltv_pct and property_value > 0:
+        max_debt_at_ltv = float(property_value * Decimal(str(_headline_ltv_pct)) / Decimal("100"))
+
     ltv_meta = {
         "actual_ltv_pct": actual_ltv_pct,
         "total_debt": float(total_non_bridge_debt) if total_non_bridge_debt else 0,
         "property_value": float(property_value) if property_value else 0,
         "binding_modules": ltv_binding_modules,
+        "headline_ltv_pct": _headline_ltv_pct,
+        "max_debt_at_ltv": max_debt_at_ltv,
     }
 
     if actual_ltv_pct is None:

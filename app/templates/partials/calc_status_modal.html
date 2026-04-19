@@ -66,7 +66,22 @@
         </div>
         {% endif %}
       </div>
-      {% elif key == 'ltv' and factor.meta.get('binding_modules') %}
+      {% elif key == 'ltv' %}
+      {% if factor.meta.get('property_value') or factor.meta.get('max_debt_at_ltv') %}
+      <div class="calc-status-row-meta">
+        {% if factor.meta.get('property_value') %}
+        <div><span>Property value (NOI ÷ exit cap)</span><span class="text-mono">${{ '{:,.0f}'.format(factor.meta.property_value) }}</span></div>
+        {% endif %}
+        {% if factor.meta.get('max_debt_at_ltv') and factor.meta.get('headline_ltv_pct') %}
+        <div><span>Max debt @ {{ '%.0f' | format(factor.meta.headline_ltv_pct) }}% LTV</span>
+             <span class="text-mono">${{ '{:,.0f}'.format(factor.meta.max_debt_at_ltv) }}</span></div>
+        {% endif %}
+        {% if factor.meta.get('total_debt') %}
+        <div><span>Current non-bridge debt</span><span class="text-mono">${{ '{:,.0f}'.format(factor.meta.total_debt) }}</span></div>
+        {% endif %}
+      </div>
+      {% endif %}
+      {% if factor.meta.get('binding_modules') %}
       <div class="calc-status-row-meta">
         {% for bm in factor.meta.binding_modules %}
         <div>
@@ -78,6 +93,7 @@
         </div>
         {% endfor %}
       </div>
+      {% endif %}
       {% endif %}
     </div>
   </div>
