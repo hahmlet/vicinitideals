@@ -225,22 +225,21 @@
         </td>
       </tr>
       {% if _retirement %}
-      {# Find modules retired by this one (exit_terms.vehicle == this module's id). #}
+      {# Find modules retired by this one (exit_terms.vehicle == this module's id).
+         Jinja scoping: use a namespace so accumulator writes survive the loop. #}
       {%- set _retired_by_me = [] -%}
       {%- for _rb in capital_modules -%}
         {%- if _rb.exit_terms and _rb.exit_terms.get('vehicle') == (m.id | string) -%}
           {{- _retired_by_me.append(_rb) or '' -}}
         {%- endif -%}
       {%- endfor -%}
-      {%- set _retired_sum = 0 -%}
+      {%- set _rns = namespace(sum=0) -%}
       {%- for _rb in _retired_by_me -%}
         {%- if _rb.source and _rb.source.get('amount') -%}
-          {%- set _retired_sum = _retired_sum + (_rb.source.amount | float) -%}
+          {%- set _rns.sum = _rns.sum + (_rb.source.amount | float) -%}
         {%- endif -%}
       {%- endfor -%}
-      {%- if not _retired_by_me -%}
-        {%- set _retired_sum = _retirement -%}
-      {%- endif -%}
+      {%- set _retired_sum = _rns.sum if _retired_by_me else _retirement -%}
       {%- set _net_new = _src_amt - _retired_sum -%}
       {% for _rb in _retired_by_me %}
       <tr style="background:var(--surface-2,#f8f9fa)">
