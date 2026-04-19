@@ -1630,6 +1630,18 @@ async def _auto_size_debt_modules(
         )
         _retirer.source = retirer_src
 
+        # Persist the resolved vehicle on the retired module's exit_terms so
+        # the UI can look up "retires <label>" without re-running the resolver.
+        retired_exit = dict(_retired.exit_terms or {})
+        if retired_exit.get("vehicle") != str(_retirer.id):
+            retired_exit["vehicle"] = str(_retirer.id)
+            await session.execute(
+                sa_update(CapitalModule)
+                .where(CapitalModule.id == _retired.id)
+                .values(exit_terms=retired_exit)
+            )
+            _retired.exit_terms = retired_exit
+
     # Compute actual reserve (max of OpEx vs actual debt service, × reserve months)
     # opex_monthly_pre already computed above; re-use it here.
     opex_monthly = opex_monthly_pre

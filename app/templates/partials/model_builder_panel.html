@@ -225,19 +225,50 @@
         </td>
       </tr>
       {% if _retirement %}
-      {%- set _net_new = _src_amt - _retirement -%}
+      {# Find modules retired by this one (exit_terms.vehicle == this module's id). #}
+      {%- set _retired_by_me = [] -%}
+      {%- for _rb in capital_modules -%}
+        {%- if _rb.exit_terms and _rb.exit_terms.get('vehicle') == (m.id | string) -%}
+          {{- _retired_by_me.append(_rb) or '' -}}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- set _retired_sum = 0 -%}
+      {%- for _rb in _retired_by_me -%}
+        {%- if _rb.source and _rb.source.get('amount') -%}
+          {%- set _retired_sum = _retired_sum + (_rb.source.amount | float) -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if not _retired_by_me -%}
+        {%- set _retired_sum = _retirement -%}
+      {%- endif -%}
+      {%- set _net_new = _src_amt - _retired_sum -%}
+      {% for _rb in _retired_by_me %}
       <tr style="background:var(--surface-2,#f8f9fa)">
         <td></td>
-        <td style="padding-left:20px;color:var(--text-muted);font-size:11px">↳ Retires Construction Loan</td>
+        <td style="padding-left:20px;color:var(--text-muted);font-size:11px">↳ Retires {{ _rb.label }}</td>
+        <td></td>
+        <td class="col-right text-mono" style="color:var(--text-muted);font-size:11px">{{ (_rb.source.amount | float) | currency }}</td>
+        <td></td>
+      </tr>
+      {% endfor %}
+      {% if not _retired_by_me %}
+      <tr style="background:var(--surface-2,#f8f9fa)">
+        <td></td>
+        <td style="padding-left:20px;color:var(--text-muted);font-size:11px">↳ Retires bridge loan</td>
         <td></td>
         <td class="col-right text-mono" style="color:var(--text-muted);font-size:11px">{{ _retirement | currency }}</td>
         <td></td>
       </tr>
+      {% endif %}
       <tr style="background:var(--surface-2,#f8f9fa)">
         <td></td>
-        <td style="padding-left:20px;color:var(--text-muted);font-size:11px">↳ Net New Proceeds</td>
+        <td style="padding-left:20px;{% if _net_new < 0 %}color:var(--danger,#dc2626);font-weight:600{% else %}color:var(--text-muted){% endif %};font-size:11px">
+          {% if _net_new < 0 %}↳ Refi Shortfall (equity call){% else %}↳ Net New Proceeds{% endif %}
+        </td>
         <td></td>
-        <td class="col-right text-mono" style="color:var(--text-muted);font-size:11px">{{ _net_new | currency }}</td>
+        <td class="col-right text-mono" style="{% if _net_new < 0 %}color:var(--danger,#dc2626);font-weight:600{% else %}color:var(--text-muted){% endif %};font-size:11px">
+          {% if _net_new < 0 %}{{ (-_net_new) | currency }}{% else %}{{ _net_new | currency }}{% endif %}
+        </td>
         <td></td>
       </tr>
       {% endif %}
