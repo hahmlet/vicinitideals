@@ -7673,16 +7673,17 @@ async def model_builder_line_form(
                 return _EXIT_APS_RANK.get(raw, 99)
             return _EXIT_APS_RANK.get(raw, 0)
 
-        if is_new:
-            # No Active To yet — let the user pick from any other source.
+        # If the candidate has no active_phase_end set (e_rank == 99), fall
+        # back to listing all other modules — the user can't narrow by
+        # overlap when there's no end point yet. Engine re-validates at
+        # compute time and falls back to maturity if no actual overlap.
+        if is_new or e_rank >= 99:
             eligible_sources = list(others)
-        elif e_rank < 99:
+        else:
             eligible_sources = [
                 m for m in others
                 if _rank(m, "start") <= e_rank < _rank(m, "end")
             ]
-        else:
-            eligible_sources = []
 
         def _opt(value: str, label: str) -> dict:
             # If saved vehicle is present, honour it; else default to what

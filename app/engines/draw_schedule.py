@@ -318,7 +318,15 @@ class DrawScheduleCalculator:
         start_date = _month_start(from_milestone.date + timedelta(days=source.active_from_offset_days))
         end_date = _month_start(to_milestone.date + timedelta(days=source.active_to_offset_days))
         freq = source.draw_every_n_months
-        monthly_rate = source.annual_interest_rate / Decimal("12")
+        # Historical data is stored inconsistently — some rows as a fraction
+        # (0.065 = 6.5%), some as a percentage (5.0 = 5%).  Normalise by
+        # treating any value >= 1 as a percentage and dividing by 100.  Without
+        # this guard, a 12% stored-as-12 rate with monthly freq produces
+        # monthly_rate*n >= 1 → denominator falls back to 0.0001 and the
+        # self-referential draw formula overflows NUMERIC(18,6).
+        _rate_raw = Decimal(str(source.annual_interest_rate or 0))
+        _rate_frac = (_rate_raw / Decimal("100")) if _rate_raw >= Decimal("1") else _rate_raw
+        monthly_rate = _rate_frac / Decimal("12")
 
         # Generate draw dates at the specified frequency (normalized to 1st of month)
         draw_dates: list[datetime] = []
