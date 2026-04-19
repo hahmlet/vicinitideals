@@ -242,11 +242,14 @@
       {%- set _retired_sum = _rns.sum if _retired_by_me else _retirement -%}
       {%- set _net_new = _src_amt - _retired_sum -%}
       {% for _rb in _retired_by_me %}
+      {%- set _rb_amt = (_rb.source.amount | float) if (_rb.source and _rb.source.get('amount')) else 0 -%}
       <tr style="background:var(--surface-2,#f8f9fa)">
         <td></td>
         <td style="padding-left:20px;color:var(--text-muted);font-size:11px">↳ Retires {{ _rb.label }}</td>
         <td></td>
-        <td class="col-right text-mono" style="color:var(--text-muted);font-size:11px">{{ (_rb.source.amount | float) | currency }}</td>
+        <td class="col-right text-mono" style="color:var(--text-muted);font-size:11px">
+          {% if _rb_amt %}{{ _rb_amt | currency }}{% else %}<span style="color:var(--text-muted);font-size:11px">Compute →</span>{% endif %}
+        </td>
         <td></td>
       </tr>
       {% endfor %}
