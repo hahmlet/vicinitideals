@@ -1642,6 +1642,34 @@ async def _auto_size_debt_modules(
             )
             _retired.exit_terms = retired_exit
 
+    # Cleanup: strip stale construction_retirement / is_bridge from modules
+    # that are no longer part of any pair this run (e.g. the user deleted a
+    # bridge that was previously retired by this perm).
+    _retirers_now = {id(r) for _, r in _retirement_pairs}
+    _retireds_now = {id(b) for b, _ in _retirement_pairs}
+    for _cm in capital_modules:
+        src = dict(_cm.source or {})
+        changed = False
+        if id(_cm) not in _retirers_now and src.get("construction_retirement"):
+            src.pop("construction_retirement", None)
+            changed = True
+        if id(_cm) not in _retireds_now and src.get("is_bridge"):
+            # Only auto-clear is_bridge when the funder_type is NOT a
+            # bridge type — bridge-funder-type modules were sized as
+            # bridges via _BRIDGE_FUNDER_TYPES and should stay flagged.
+            _ft = str(getattr(_cm, "funder_type", "") or "").replace("FunderType.", "")
+            if _ft not in {"pre_development_loan", "acquisition_loan",
+                           "construction_loan", "bridge"}:
+                src.pop("is_bridge", None)
+                changed = True
+        if changed:
+            await session.execute(
+                sa_update(CapitalModule)
+                .where(CapitalModule.id == _cm.id)
+                .values(source=src)
+            )
+            _cm.source = src
+
     # Compute actual reserve (max of OpEx vs actual debt service, × reserve months)
     # opex_monthly_pre already computed above; re-use it here.
     opex_monthly = opex_monthly_pre
