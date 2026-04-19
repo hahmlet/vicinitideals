@@ -785,15 +785,19 @@ def _eligible_retirers(module: object, all_modules: list) -> list:
       - R is not the same module
       - R.start_rank <= module.end_rank  (already active at the handoff)
       - R.end_rank   >  module.end_rank  (still active after module ends)
+
+    Module end-rank is derived via `_resolve_active_end_rank` (Exit Vehicle
+    supersedes the deprecated `active_phase_end` field).
     """
-    e_rank = _module_rank(module, "end")
+    e_rank = _resolve_active_end_rank(module, all_modules)
     if e_rank >= 99:
         return []  # perpetuity — nothing to retire
     out: list = []
     for r in all_modules:
         if r is module:
             continue
-        if _module_rank(r, "start") <= e_rank < _module_rank(r, "end"):
+        r_end = _resolve_active_end_rank(r, all_modules)
+        if _module_rank(r, "start") <= e_rank < r_end:
             out.append(r)
     return out
 
@@ -837,7 +841,7 @@ def _resolve_vehicle(module: object, all_modules: list) -> tuple[str, object | N
         # Stored vehicle points at a deleted/missing module → fall through.
 
     if eligible:
-        e_rank = _module_rank(module, "end")
+        e_rank = _resolve_active_end_rank(module, all_modules)
         exact = [r for r in eligible if _module_rank(r, "start") == e_rank]
         pool = exact or eligible
 
@@ -848,9 +852,52 @@ def _resolve_vehicle(module: object, all_modules: list) -> tuple[str, object | N
             )
 
         return ("source", sorted(pool, key=_sort_key)[0])
-    if _module_rank(module, "end") >= 6:
+    if _resolve_active_end_rank(module, all_modules) >= 6:
         return ("sale", None)
     return ("maturity", None)
+
+
+def _resolve_active_end_rank(module: object, all_modules: list) -> int:
+    """Derive a module's active-end rank from its Exit Vehicle.
+
+    Supersedes reading ``active_phase_end`` directly — the user-editable field
+    is deprecated (duplicates the Exit Vehicle intent).  Rules:
+
+      * non-exit-vehicle funder types (equity, grants, etc.) → 99 (perpetuity;
+        waterfall handles at exit)
+      * ``exit_terms.vehicle == "maturity"`` / unset → 99 (balloon uses amort)
+      * ``exit_terms.vehicle == "sale"`` → 6 (exit/divestment rank)
+      * ``exit_terms.vehicle == <uuid>`` → retirer's start_rank (handoff point)
+
+    Falls back to the legacy ``active_phase_end`` if vehicle is unset AND a
+    legacy value is stored — this keeps old rows working until the DB cleanup.
+    """
+    ft = str(getattr(module, "funder_type", "") or "").replace("FunderType.", "")
+    if ft not in _EXIT_VEHICLE_APPLIES:
+        return 99
+
+    exit_terms = getattr(module, "exit_terms", None) or {}
+    saved = (exit_terms.get("vehicle") or "").strip() if isinstance(exit_terms, dict) else ""
+
+    if saved == "sale":
+        return 6
+    if saved == "maturity":
+        return 99
+    if saved:
+        # UUID of a retirer — look it up and use its start rank.
+        for r in all_modules:
+            if r is module:
+                continue
+            if str(getattr(r, "id", "")) == saved:
+                return _module_rank(r, "start")
+        # Dangling reference — fall through to legacy / default.
+
+    # Legacy fallback: honour stored active_phase_end if present.
+    legacy = str(getattr(module, "active_phase_end", "") or "")
+    if legacy:
+        return _APS_TO_RANK.get(legacy, 99)
+    return 99
+
 
 # Maps UseLinePhase string values to the PeriodType(s) where the outflow fires.
 # "construction" covers all building-work phases so it fires regardless of project type
@@ -870,6 +917,17 @@ _USE_LINE_PHASE_MAP: dict[str, set[PeriodType]] = {
 _DEBT_FUNDER_TYPES = {
     "senior_debt", "mezzanine_debt", "bridge", "soft_loan",
     "construction_loan", "bond", "permanent_debt",
+    "acquisition_loan", "pre_development_loan", "owner_loan",
+}
+
+# Funder types for which Exit Vehicle applies — every funding line that has
+# a real "ending" (matures, is refinanced, or is paid off at sale).  All
+# other funder types (equity, grants, tax credits, owner_investment) are
+# perpetuity-like from the engine's POV — single-draw, no vehicle UI.
+_EXIT_VEHICLE_APPLIES = {
+    "permanent_debt", "senior_debt", "mezzanine_debt", "bridge",
+    "construction_loan", "acquisition_loan", "pre_development_loan",
+    "soft_loan", "bond", "owner_loan",
 }
 
 # ── Loan closing cost defaults ────────────────────────────────────────────────
@@ -1063,15 +1121,14 @@ async def _auto_size_debt_modules(
 
         Only counts construction-type phases (acquisition, hold, pre_construction,
         construction, renovation, conversion) that fall within the module's
-        [active_phase_start, active_phase_end) rank window.  This replaces the
-        global ``constr_months_total`` so each loan uses its own N for the
+        [active_phase_start, _resolve_active_end_rank) rank window.  This replaces
+        the global ``constr_months_total`` so each loan uses its own N for the
         IR/CI carry formula.
         """
         start = str(getattr(module, "active_phase_start", "") or "")
-        end   = str(getattr(module, "active_phase_end", "") or "")
         start_rank = _APS_TO_RANK.get(start, 0)
-        # End-exclusive: if no end, include everything up to exit
-        end_rank   = _APS_TO_RANK.get(end, 99)
+        # End-exclusive: derived from Exit Vehicle (supersedes active_phase_end).
+        end_rank   = _resolve_active_end_rank(module, capital_modules)
         return sum(
             p.months for p in phases
             if p.period_type in _CONSTRUCTION_PERIOD_TYPES

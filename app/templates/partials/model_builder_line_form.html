@@ -669,7 +669,10 @@ function ulTimingChanged(val) {
                       'grant','tax_credit'] -%}
 {%- set _SIMPLE_TYPES = ['grant','tax_credit'] -%}
 {%- set _NO_CARRY_TYPES = ['grant','tax_credit','owner_investment'] -%}
-{%- set _NO_EXIT_TYPES = ['permanent_debt'] -%}
+{# Exit Vehicle applies to all debt types (owner_loan now treated as debt). #}
+{%- set _EXIT_VEHICLE_TYPES = ['permanent_debt','senior_debt','mezzanine_debt','bridge',
+                                'construction_loan','acquisition_loan','pre_development_loan',
+                                'soft_loan','bond','owner_loan'] -%}
 
 {%- macro exit_fields(et_val, trig_val, prepay_val) %}
 {%- set _trig_norm = trig_val | replace(' ','_') | lower -%}
@@ -690,8 +693,9 @@ function ulTimingChanged(val) {
       {% endfor %}
     </select>
     <div class="form-hint">
-      Options update based on Active To. Sources whose active window covers this
-      loan's end point are available as takeout targets.
+      Maturity = balloon at amortization end. Sale = payoff at divestment.
+      Any sibling source may be picked as a takeout — the engine routes the
+      payoff at compute time.
     </div>
   </div>
 </div>
@@ -844,8 +848,10 @@ function ulTimingChanged(val) {
    EDIT MODE — locked type, all relevant fields visible
    ════════════════════════════════════════════════════════════════════════════ #}
 {%- set _ft = existing.funder_type | string | replace('FunderType.','') -%}
-{%- set _is_perm_debt = _ft in _NO_EXIT_TYPES -%}
-{%- set _show_exit = _ft not in _SIMPLE_TYPES and not _is_perm_debt -%}
+{%- set _is_perm_debt = (_ft == 'permanent_debt') -%}
+{# Exit Vehicle is shown for every debt instrument including permanent_debt.
+   The dropdown defaults to Maturity for perm; Sale is always a valid alt. #}
+{%- set _show_exit = _ft in _EXIT_VEHICLE_TYPES -%}
 {%- set _show_carry = _ft not in _NO_CARRY_TYPES -%}
 {%- set c_phases = existing.carry.phases if (existing.carry and existing.carry.get('phases')) else [] -%}
 {%- set _flat_carry = existing.carry if (existing.carry and not existing.carry.get('phases')) else {} -%}
@@ -895,9 +901,16 @@ function ulTimingChanged(val) {
   </div>
 
   {% if _is_perm_debt %}
-  {# Permanent debt: amortization term + interest rate, no exit trigger #}
-  <input type="hidden" name="exit_type" value="full_payoff">
-  <input type="hidden" name="exit_vehicle" value="maturity">
+  {# Permanent debt: amortization term + interest rate.  Exit Vehicle is
+     shown so the user can override Maturity → Sale if needed. #}
+  <div class="form-section">
+    <div class="form-section-title">Exit</div>
+    {{ exit_fields(
+        existing.exit_terms.get('exit_type','full_payoff') if existing.exit_terms else 'full_payoff',
+        existing.exit_terms.get('trigger','')   if existing.exit_terms else '',
+        existing.source.get('prepay_penalty_pct','') if existing.source else ''
+    ) }}
+  </div>
   <div class="form-section">
     <div class="form-section-title">Loan Terms</div>
     {{ permanent_debt_fields(
@@ -980,23 +993,10 @@ function ulTimingChanged(val) {
                placeholder="0">
       </div>
     </div>
-    <div class="form-row">
-      <div class="form-field">
-        <label class="form-label">Active To</label>
-        <select class="form-select" name="ds_active_to_milestone">
-          {% for ms in milestones_dated_ds %}
-          <option value="{{ ms.key }}" {% if draw_source_window and ms.key == draw_source_window.active_to_milestone %}selected{% endif %}>
-            {{ ms.label }}{% if ms.key == 'maturity' %} →{% endif %}
-          </option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="form-field" style="max-width:100px">
-        <label class="form-label">+ Days</label>
-        <input class="form-input" type="number" name="ds_active_to_offset_days" step="1" min="0"
-               value="{{ draw_source_window.active_to_offset_days if draw_source_window else 0 }}"
-               placeholder="0">
-      </div>
+    {# "Active To" removed — repayment milestone is derived from Exit Vehicle
+       server-side.  POST handler ignores any user-supplied value. #}
+    <div class="form-hint" style="font-size:11px;color:var(--text-muted);margin-top:4px">
+      Repayment date is derived from the Exit Vehicle above.
     </div>
   </div>
   {% endif %}
@@ -1054,14 +1054,8 @@ function ulTimingChanged(val) {
     <div class="form-hint" style="margin-top:4px;font-size:12px;color:var(--text-muted)">
       Source amount is auto-calculated from Uses + carrying costs when you Compute.
     </div>
-    {# Permanent debt: amortization term only — interest rate is in step 3 #}
-    <div id="sw-perm-fields" style="display:none">
-      <div class="form-field" style="margin-top:12px">
-        <label class="form-label">Amortization Term (years)</label>
-        <input class="form-input" type="number" name="amort_term_years" step="1" min="1" placeholder="30">
-      </div>
-      <div class="form-hint" style="margin-top:4px">Permanent debt exits at end of amortization — no exit trigger needed.</div>
-    </div>
+    {# Permanent debt: amortization term is captured in step 3; Exit Vehicle
+       in step 2 (defaults to Maturity, user may override to Sale). #}
   </div>
 
   {# ── Step 2: Exit ── #}
@@ -1134,28 +1128,16 @@ function ulTimingChanged(val) {
         <input class="form-input" type="number" name="ds_active_from_offset_days" step="1" min="0" value="0" placeholder="0">
       </div>
     </div>
-    <div class="form-row">
-      <div class="form-field">
-        <label class="form-label">Active To</label>
-        <select class="form-select" name="ds_active_to_milestone">
-          {% for ms in milestones_dated_ds %}
-          <option value="{{ ms.key }}" {% if ms.key == 'maturity' %}selected{% endif %}>
-            {{ ms.label }}{% if ms.key == 'maturity' %} →{% endif %}
-          </option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="form-field" style="max-width:100px">
-        <label class="form-label">+ Days</label>
-        <input class="form-input" type="number" name="ds_active_to_offset_days" step="1" min="0" value="0" placeholder="0">
-      </div>
+    {# "Active To" removed — repayment milestone is derived from Exit Vehicle
+       server-side.  POST handler ignores any user-supplied value. #}
+    <div class="form-hint" style="font-size:11px;color:var(--text-muted);margin-top:4px">
+      Repayment date is derived from the Exit Vehicle.
     </div>
     {% else %}
     <div class="form-hint" style="color:var(--warning,#d97706)">
       Add milestones to the Timeline first to configure the draw window.
     </div>
     <input type="hidden" name="ds_active_from_milestone" value="construction">
-    <input type="hidden" name="ds_active_to_milestone" value="maturity">
     {% endif %}
   </div>
 
@@ -1173,6 +1155,14 @@ function ulTimingChanged(val) {
   var _SIMPLE    = ['grant','tax_credit'];
   var _NO_CARRY  = ['grant','tax_credit','owner_investment'];
   var _PERM_DEBT = ['permanent_debt'];
+  // Exit Vehicle applies to every debt instrument (owner_loan now included).
+  // All other funder types (equity, grants, tax credits, owner_investment)
+  // skip the Exit step — they have no repayment concept.
+  var _EXIT_VEHICLE_APPLIES = [
+    'permanent_debt','senior_debt','mezzanine_debt','bridge',
+    'construction_loan','acquisition_loan','pre_development_loan',
+    'soft_loan','bond','owner_loan'
+  ];
   var _TITLES = {
     1: ['Funding Details',    'Name and type'],
     2: ['Exit Terms',         'How does this source exit the deal?'],
@@ -1185,10 +1175,13 @@ function ulTimingChanged(val) {
   var _type = document.getElementById('sw-type').value;
 
   function _stepsFor(t) {
-    if (_SIMPLE.indexOf(t) >= 0)    return [1, 5];           // grant/tax_credit: name + draw
-    if (_PERM_DEBT.indexOf(t) >= 0) return [1, 3, 4, 5];    // permanent_debt: loan terms + carry + draw
-    if (_NO_CARRY.indexOf(t) >= 0)  return [1, 2, 3, 5];    // owner_investment: exit + interest, no carry
-    return [1, 2, 3, 4, 5];
+    var hasExit = _EXIT_VEHICLE_APPLIES.indexOf(t) >= 0;
+    if (_SIMPLE.indexOf(t) >= 0)    return [1, 5];             // grant/tax_credit: name + draw
+    if (_PERM_DEBT.indexOf(t) >= 0) return [1, 2, 3, 4, 5];    // permanent_debt: exit (maturity|sale) + loan terms + carry + draw
+    if (_NO_CARRY.indexOf(t) >= 0) {
+      return hasExit ? [1, 2, 3, 5] : [1, 3, 5];               // owner_investment skips exit; others incl. it
+    }
+    return hasExit ? [1, 2, 3, 4, 5] : [1, 3, 4, 5];
   }
 
   function _updateStep3ForType(t) {
@@ -1251,8 +1244,6 @@ function ulTimingChanged(val) {
 
   window.swTypeChanged = function(val) {
     _type = val;
-    var permFields = document.getElementById('sw-perm-fields');
-    if (permFields) permFields.style.display = (val === 'permanent_debt') ? '' : 'none';
     _updateStep3ForType(val);
     _show(1);
   };

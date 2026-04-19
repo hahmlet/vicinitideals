@@ -12,7 +12,16 @@ UnitMix schema changes (beds/baths fields, `avg_monthly_rent` removal,
 `unit_strategy`, `in_place_rent_per_unit`, `market_rent_per_unit`,
 `post_reno_rent_per_unit`) are in FINANCIAL_MODEL.md §4.8.
 
-**Last updated**: 2026-04-18
+**Deprecated deal fields (2026-04-19):**
+- `capital_modules.active_phase_end` — derived at compute time from
+  `exit_terms.vehicle` via `_resolve_active_end_rank`.  The DB column is
+  retained as a rollback-safety/write-through during the transition;
+  drop in a follow-up Alembic migration.
+- `draw_sources.active_to_milestone` — derived from the linked capital
+  module's Exit Vehicle on save.  Engine ignores the user-supplied value.
+  Same rollback posture as above.
+
+**Last updated**: 2026-04-19
 
 ---
 

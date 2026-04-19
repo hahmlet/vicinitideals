@@ -4633,28 +4633,70 @@ async def handle_form_create_or_update(
         # Exit Vehicle: "maturity" | "sale" | "<module_uuid>" (retiring source).
         # Validate: must be one of the literals OR a UUID of another module on
         # the same scenario. Fall back to "maturity" if invalid.
-        _vehicle_raw = (form.get("exit_vehicle") or "").strip()
-        _vehicle_value = "maturity"
-        if _vehicle_raw in {"maturity", "sale"}:
-            _vehicle_value = _vehicle_raw
-        elif _vehicle_raw:
-            try:
-                _vehicle_uuid = UUID(_vehicle_raw)
-                # Ensure it refers to another capital module on this scenario
-                _sibling = (await session.execute(
-                    select(CapitalModule.id).where(
-                        CapitalModule.scenario_id == model_id,
-                        CapitalModule.id == _vehicle_uuid,
-                    )
-                )).scalar_one_or_none()
-                if _sibling is not None and (not item_id or str(_sibling) != item_id):
-                    _vehicle_value = str(_sibling)
-            except (ValueError, AttributeError):
-                pass
+        #
+        # Non-exit-vehicle funder types (equity, grants, etc.) are forced to
+        # "maturity" as a no-op sentinel — their UI hides Exit Vehicle entirely.
+        _funder_type = form.get("funder_type", "senior_debt")
+        _EXIT_VEHICLE_APPLIES_UI = {
+            "permanent_debt", "senior_debt", "mezzanine_debt", "bridge",
+            "construction_loan", "acquisition_loan", "pre_development_loan",
+            "soft_loan", "bond", "owner_loan",
+        }
+        if _funder_type not in _EXIT_VEHICLE_APPLIES_UI:
+            _vehicle_value = "maturity"
+        else:
+            _vehicle_raw = (form.get("exit_vehicle") or "").strip()
+            _vehicle_value = "maturity"
+            if _vehicle_raw in {"maturity", "sale"}:
+                _vehicle_value = _vehicle_raw
+            elif _vehicle_raw:
+                try:
+                    _vehicle_uuid = UUID(_vehicle_raw)
+                    _sibling = (await session.execute(
+                        select(CapitalModule.id).where(
+                            CapitalModule.scenario_id == model_id,
+                            CapitalModule.id == _vehicle_uuid,
+                        )
+                    )).scalar_one_or_none()
+                    if _sibling is not None and (not item_id or str(_sibling) != item_id):
+                        _vehicle_value = str(_sibling)
+                except (ValueError, AttributeError):
+                    pass
         exit_d = {
             "exit_type": form.get("exit_type", "full_payoff"),
             "vehicle": _vehicle_value,
         }
+
+        # Derive `active_phase_end` + `active_to_milestone` from the vehicle.
+        # `active_phase_end` is deprecated as a user input but still written
+        # server-side from the vehicle so legacy read-paths (Gantt, reports)
+        # keep working without a DB migration.
+        _APS_TO_MS = {
+            "acquisition": "close", "close": "close",
+            "pre_construction": "pre_development",
+            "construction": "construction",
+            "lease_up": "operation_lease_up", "operation_lease_up": "operation_lease_up",
+            "stabilized": "operation_stabilized", "operation_stabilized": "operation_stabilized",
+            "exit": "divestment", "divestment": "divestment",
+        }
+        _retirer_aps: str | None = None
+        if _vehicle_value not in {"maturity", "sale"} and _vehicle_value:
+            try:
+                _retirer = await session.get(CapitalModule, UUID(_vehicle_value))
+                if _retirer is not None:
+                    _retirer_aps = _retirer.active_phase_start
+            except (ValueError, AttributeError):
+                _retirer_aps = None
+        if _vehicle_value == "sale":
+            _derived_end_phase = "exit"
+            _derived_to_ms = "divestment"
+        elif _retirer_aps:
+            _derived_end_phase = _retirer_aps
+            _derived_to_ms = _APS_TO_MS.get(_retirer_aps, _retirer_aps)
+        else:
+            # "maturity" or unresolved → perpetuity sentinel; Gantt shows through exit.
+            _derived_end_phase = "exit"
+            _derived_to_ms = "divestment"
         explicit_pos = _fi(form.get("stack_position"), None)
         if not item_id and (not explicit_pos or explicit_pos == 0):
             # Auto-assign: place at end of current stack
@@ -4679,15 +4721,17 @@ async def handle_form_create_or_update(
             final_pos = (max_pos_result.scalar_one_or_none() or 0) + 1
         data = {
             "label": form.get("label", ""),
-            "funder_type": form.get("funder_type", "senior_debt"),
+            "funder_type": _funder_type,
             "stack_position": final_pos,
             "source": source_d,
             "carry": carry_d,
             "exit_terms": exit_d,
+            "active_phase_end": _derived_end_phase,
         }
-        # Draw schedule fields from form
+        # Draw schedule fields from form.  `ds_active_to_milestone` is ignored —
+        # the repayment milestone is derived from Exit Vehicle (above).
         _ds_from_ms = form.get("ds_active_from_milestone") or ""
-        _ds_to_ms = form.get("ds_active_to_milestone") or ""
+        _ds_to_ms = _derived_to_ms
         _ds_from_offset = _fi(form.get("ds_active_from_offset_days"), 0) or 0
         _ds_to_offset = _fi(form.get("ds_active_to_offset_days"), 0) or 0
         _ds_frequency = _fi(form.get("ds_draw_every_n_months"), 1) or 1
@@ -4724,11 +4768,9 @@ async def handle_form_create_or_update(
             _cm_id = _uuid_mod.uuid4()
             cm = CapitalModule(id=_cm_id, scenario_id=model_id, **data)
             session.add(cm)
-            # Auto-create linked DrawSource
-            _src_type = "equity" if data["funder_type"] in (
-                "common_equity", "preferred_equity", "owner_investment",
-                "grant", "tax_credit",
-            ) else "debt"
+            # Auto-create linked DrawSource.  Non-exit-vehicle funder types
+            # map to source_type="equity" (single lump-sum draw in the engine).
+            _src_type = "debt" if data["funder_type"] in _EXIT_VEHICLE_APPLIES_UI else "equity"
             # Determine sort order for new DrawSource
             _max_sort = (await session.execute(
                 select(func.max(DrawSource.sort_order)).where(DrawSource.scenario_id == model_id)
@@ -7627,6 +7669,13 @@ async def model_builder_line_form(
     # Exit Vehicle dropdown options (capital modules only). Dynamic from the
     # current module's active_phase_end + siblings' active windows.
     exit_vehicle_options: list[dict] = []
+    show_exit_vehicle = False
+    show_active_window = False
+    _EXIT_VEHICLE_APPLIES_UI = {
+        "permanent_debt", "senior_debt", "mezzanine_debt", "bridge",
+        "construction_loan", "acquisition_loan", "pre_development_loan",
+        "soft_loan", "bond", "owner_loan",
+    }
     if type in ("capital_modules", "sources"):
         from app.engines.cashflow import (
             _APS_TO_RANK as _EXIT_APS_RANK,
@@ -7691,13 +7740,25 @@ async def model_builder_line_form(
             return {"value": value, "label": label, "selected": selected}
 
         exit_vehicle_options.append(_opt("maturity", "Maturity"))
-        if e_rank >= 6:
-            exit_vehicle_options.append(_opt("sale", "Sale (divestment)"))
+        # Sale is always a valid exit for any debt instrument — the asset can
+        # be sold at any point, retiring outstanding balances.
+        exit_vehicle_options.append(_opt("sale", "Sale (divestment)"))
         for m in sorted(
             eligible_sources,
             key=lambda r: (int(getattr(r, "stack_position", 0) or 0), str(r.label or "")),
         ):
             exit_vehicle_options.append(_opt(str(m.id), m.label or "(unlabeled)"))
+
+        # Gate Exit Vehicle + draw cadence UI on funder type.  Non-exit-vehicle
+        # funder types (equity, grants, tax credits, owner_investment) don't
+        # have a repayment concept — their form hides both.
+        _existing_ft = ""
+        if existing is not None and getattr(existing, "funder_type", None) is not None:
+            _existing_ft = str(existing.funder_type).replace("FunderType.", "")
+        # New modules default to senior_debt (see line form template default).
+        _effective_ft = _existing_ft or "senior_debt"
+        show_exit_vehicle = _effective_ft in _EXIT_VEHICLE_APPLIES_UI
+        show_active_window = show_exit_vehicle
 
     return templates.TemplateResponse(request, "partials/model_builder_line_form.html", {
         "model": model,
@@ -7714,6 +7775,9 @@ async def model_builder_line_form(
         "milestones_dated_ds": milestones_dated_ds,
         "draw_source_window": draw_source_window,
         "exit_vehicle_options": exit_vehicle_options,
+        "show_exit_vehicle": show_exit_vehicle,
+        "show_active_window": show_active_window,
+        "exit_vehicle_applies": sorted(_EXIT_VEHICLE_APPLIES_UI),
     })
 
 
@@ -8314,6 +8378,9 @@ async def _run_draw_schedule(
             active_from_offset_days=getattr(ds, "active_from_offset_days", 0) or 0,
             active_to_offset_days=getattr(ds, "active_to_offset_days", 0) or 0,
             total_commitment=None,  # auto-size always
+            # Non-exit-vehicle sources fund as a single lump-sum draw; the
+            # engine ignores the active_to milestone for these.
+            single_draw=(ds.source_type != "debt"),
         ))
     engine_sources.sort(key=lambda s: _ms_date_idx.get(s.active_from_milestone, _dt_cls.max))
 
@@ -8448,6 +8515,7 @@ async def _load_draw_schedule_ctx(
         _debt_types = {
             "senior_debt", "mezzanine_debt", "bridge", "construction_loan",
             "soft_loan", "bond", "permanent_debt",
+            "acquisition_loan", "pre_development_loan", "owner_loan",
         }
 
         for i, cm in enumerate(capital_modules):

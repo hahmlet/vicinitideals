@@ -436,15 +436,23 @@ Used by: refi proceeds calculation (§2.10), prepay penalty at exit (§6.4).
 
 ### 2.10 Cash-out refinance (bridge → perm takeout)
 
-**Exit Vehicle pairing.** Each Capital Module's `exit_terms.vehicle` declares how its balance is resolved:
+**Exit Vehicle is the only input that defines when a loan ends.**
 
-| Vehicle value | Meaning | Refi event? |
-|---|---|---|
-| `"maturity"` | Balloon paid at amort term end | No |
-| `"sale"` | Balloon paid from divestment proceeds | No (handled in exit period) |
-| `<module_uuid>` | Another Capital Module absorbs the balance at the handoff point | **Yes** — §2.10 math below |
+Each Capital Module's `exit_terms.vehicle` declares how its balance is resolved.  The previously user-editable `active_phase_end` field is deprecated — the engine derives the active-end rank from the vehicle at compute time via `_resolve_active_end_rank(module, all_modules)` (in [app/engines/cashflow.py](app/engines/cashflow.py)), with a matching helper `_resolve_waterfall_end_index` in [app/engines/waterfall.py](app/engines/waterfall.py).  The DB column still exists (transition-period rollback safety) but the POST handler writes a derived value on save.
 
-The engine computes pairings in a generic pre-pass. For every module `B`, `_resolve_vehicle(B, all_modules)` (in [app/engines/cashflow.py](app/engines/cashflow.py)) reads `B.exit_terms.vehicle` and returns the literal or the retiring module.
+| Vehicle value | Meaning | Refi event? | Derived end-rank |
+|---|---|---|---|
+| `"maturity"` | Balloon paid at amort term end | No | 99 (perpetuity through exit) |
+| `"sale"` | Balloon paid from divestment proceeds | No (handled in exit period) | 6 (exit / divestment) |
+| `<module_uuid>` | Another Capital Module absorbs the balance at the handoff point | **Yes** — §2.10 math below | Retirer's `active_phase_start` rank |
+
+**Funder-type classification.** Exit Vehicle applies only to funder types that have a real ending (loans with maturity/refi/sale semantics):
+
+`_EXIT_VEHICLE_APPLIES` = `{permanent_debt, senior_debt, mezzanine_debt, bridge, construction_loan, acquisition_loan, pre_development_loan, soft_loan, bond, owner_loan}`.
+
+All other funder types (preferred_equity, common_equity, owner_investment, grant, tax_credit, other) are perpetuity-like — the waterfall distributes them at exit, and the draw schedule funds them as a single lump-sum draw at their `active_from` milestone.  `owner_loan` is promoted to full debt treatment (accrues interest, gets a debt-service line, uses Exit Vehicle).  The UI hides Exit Vehicle + draw cadence for non-exit-vehicle types.
+
+The engine computes pairings in a generic pre-pass. For every module `B`, `_resolve_vehicle(B, all_modules)` reads `B.exit_terms.vehicle` and returns the literal or the retiring module.
 
 **Explicit user picks are honoured regardless of overlap.** If `B.exit_terms.vehicle` is set to another module's UUID and that module exists, the engine uses it — even when the retirer's active window doesn't literally overlap `B.end_rank`. Adjacent-vs-overlapping distinctions are brittle (a new loan often closes the same day the old one matures), so the engine trusts the user's pick and lets the §2.10 refi math handle the handoff.
 

@@ -53,6 +53,25 @@ DEBT_FUNDER_TYPES = {
     FunderType.soft_loan.value,
     FunderType.construction_loan.value,
     FunderType.bond.value,
+    FunderType.permanent_debt.value,
+    FunderType.acquisition_loan.value,
+    FunderType.pre_development_loan.value,
+    FunderType.owner_loan.value,
+}
+
+# Funder types for which Exit Vehicle applies (every loan with a real
+# ending).  Mirrors `_EXIT_VEHICLE_APPLIES` in cashflow.py — keep in sync.
+EXIT_VEHICLE_APPLIES = {
+    FunderType.permanent_debt.value,
+    FunderType.senior_debt.value,
+    FunderType.mezzanine_debt.value,
+    FunderType.bridge.value,
+    FunderType.construction_loan.value,
+    FunderType.acquisition_loan.value,
+    FunderType.pre_development_loan.value,
+    FunderType.soft_loan.value,
+    FunderType.bond.value,
+    FunderType.owner_loan.value,
 }
 EQUITY_FUNDER_TYPES = {
     FunderType.preferred_equity.value,
@@ -1047,13 +1066,78 @@ def _resolve_gp_proxy_state(
     return sorted(all_states, key=lambda state: state.module.stack_position)[-1]
 
 
-def _module_active_for_phase(module: CapitalModule, phase_name: str) -> bool:
+def _module_active_for_phase(
+    module: CapitalModule,
+    phase_name: str,
+    all_modules: list[CapitalModule] | None = None,
+) -> bool:
+    """True when `module` is active for `phase_name`.
+
+    Start is `active_phase_start` (unchanged).  End is derived from the module's
+    Exit Vehicle via `_resolve_waterfall_end_index` — `active_phase_end` is
+    deprecated and ignored.  `all_modules` is required for UUID-vehicle lookups;
+    if omitted we fall back to the legacy `active_phase_end` read.
+    """
     start = module.active_phase_start
-    end = module.active_phase_end
     current_index = PHASE_ORDER.get(phase_name, 0)
     start_index = PHASE_ORDER.get(start, 0) if start else 0
-    end_index = PHASE_ORDER.get(end, max(PHASE_ORDER.values())) if end else max(PHASE_ORDER.values())
+    end_index = _resolve_waterfall_end_index(module, all_modules or [])
     return start_index <= current_index <= end_index
+
+
+# Rank mapping used by `_resolve_waterfall_end_index` — mirrors
+# `_APS_TO_RANK` in cashflow.py but keyed by PHASE_ORDER values so waterfall
+# stays self-contained.  See `_resolve_active_end_rank` there for the spec.
+_WATERFALL_PHASE_RANK = {
+    "acquisition":          PHASE_ORDER[PeriodType.acquisition.value],
+    "close":                PHASE_ORDER[PeriodType.acquisition.value],
+    "pre_construction":     PHASE_ORDER[PeriodType.pre_construction.value],
+    "construction":         PHASE_ORDER[PeriodType.construction.value],
+    "lease_up":             PHASE_ORDER[PeriodType.lease_up.value],
+    "operation_lease_up":   PHASE_ORDER[PeriodType.lease_up.value],
+    "stabilized":           PHASE_ORDER[PeriodType.stabilized.value],
+    "operation_stabilized": PHASE_ORDER[PeriodType.stabilized.value],
+    "exit":                 PHASE_ORDER[PeriodType.exit.value],
+    "divestment":           PHASE_ORDER[PeriodType.exit.value],
+}
+
+
+def _resolve_waterfall_end_index(
+    module: CapitalModule,
+    all_modules: list[CapitalModule],
+) -> int:
+    """Derive waterfall end-phase index from Exit Vehicle.
+
+    Mirrors `cashflow._resolve_active_end_rank` but returns indices in
+    `PHASE_ORDER` units so it can be compared against the current phase
+    directly.  Non-exit-vehicle funder types (equity, grants, etc.) return the
+    max index (active through exit).
+    """
+    ft = _enum_value(module.funder_type) if module.funder_type is not None else ""
+    max_index = max(PHASE_ORDER.values())
+    if ft not in EXIT_VEHICLE_APPLIES:
+        return max_index
+
+    exit_terms = module.exit_terms or {}
+    saved = (exit_terms.get("vehicle") or "").strip() if isinstance(exit_terms, dict) else ""
+
+    if saved == "sale":
+        return PHASE_ORDER[PeriodType.exit.value]
+    if saved == "maturity":
+        return max_index
+    if saved:
+        for r in all_modules:
+            if r is module:
+                continue
+            if str(getattr(r, "id", "")) == saved:
+                r_start = r.active_phase_start
+                return _WATERFALL_PHASE_RANK.get(r_start, PHASE_ORDER.get(r_start, max_index)) if r_start else max_index
+
+    # Legacy fallback: stored `active_phase_end` (deprecated).
+    end = module.active_phase_end
+    if end:
+        return _WATERFALL_PHASE_RANK.get(end, PHASE_ORDER.get(end, max_index))
+    return max_index
 
 
 def _annual_rate_decimal(source: CapitalSourceSchema) -> Decimal:

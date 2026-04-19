@@ -74,6 +74,11 @@ class SourceDef:
     active_from_offset_days: int = 0    # offset from milestone date (e.g. +30)
     active_to_offset_days: int = 0      # offset from milestone date
     total_commitment: Decimal | None = None  # None = auto-sized
+    # Non-exit-vehicle sources (grants, equity, tax credits, owner_investment)
+    # fund as a single lump-sum draw at `active_from` and have no repayment
+    # cadence.  When True, the engine emits exactly one DrawEvent regardless
+    # of the milestone window.
+    single_draw: bool = False
 
 
 @dataclass
@@ -316,7 +321,12 @@ class DrawScheduleCalculator:
             return [], prior_outstanding
 
         start_date = _month_start(from_milestone.date + timedelta(days=source.active_from_offset_days))
-        end_date = _month_start(to_milestone.date + timedelta(days=source.active_to_offset_days))
+        if source.single_draw:
+            # Non-exit-vehicle sources (grants, equity, etc.) fund a single
+            # lump-sum draw at activation and have no end / repayment cadence.
+            end_date = start_date
+        else:
+            end_date = _month_start(to_milestone.date + timedelta(days=source.active_to_offset_days))
         freq = source.draw_every_n_months
         # Historical data is stored inconsistently — some rows as a fraction
         # (0.065 = 6.5%), some as a percentage (5.0 = 5%).  Normalise by
