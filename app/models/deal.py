@@ -468,6 +468,15 @@ class UseLine(Base):
     project_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), ForeignKey("projects.id"), nullable=False
     )
+    # Engine-injected reserve use-lines (Interest Reserve, Capitalized
+    # Interest, Acq Interest, Lease-Up Reserve) tag the originating
+    # CapitalModule so the Underwriting rollup can sum reserves per source.
+    # NULL for user-entered uses. Added in migration 0048.
+    source_capital_module_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("capital_modules.id", ondelete="SET NULL"),
+        nullable=True,
+    )
     label: Mapped[str] = mapped_column(String(255), nullable=False)
     phase: Mapped[UseLinePhase] = mapped_column(String(60), nullable=False)
     milestone_key: Mapped[str | None] = mapped_column(String(60), nullable=True)

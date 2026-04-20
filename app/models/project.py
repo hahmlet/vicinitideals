@@ -11,7 +11,7 @@ import enum
 import uuid
 from datetime import datetime
 
-from sqlalchemy import Boolean, DateTime, ForeignKey, String, Text, func
+from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, String, Text, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -210,6 +210,22 @@ class Project(Base):
         cascade="all, delete-orphan",
         order_by="ProjectParcelAssignment.sort_order",
     )
+    # Per-project capital source terms (junction rows from migration 0048).
+    # A Source shared across N projects has N rows, one per project.
+    capital_module_terms: Mapped[list["CapitalModuleProject"]] = relationship(  # type: ignore[name-defined]
+        "CapitalModuleProject",
+        back_populates="project",
+        cascade="all, delete-orphan",
+    )
+    # Cross-project timeline anchor (at most one per project). Presence means
+    # this project's start resolves relative to another project's milestone.
+    anchor: Mapped["ProjectAnchor | None"] = relationship(
+        "ProjectAnchor",
+        back_populates="project",
+        foreign_keys="ProjectAnchor.project_id",
+        cascade="all, delete-orphan",
+        uselist=False,
+    )
 
 
 class ProjectBuildingAssignment(Base):
@@ -279,4 +295,69 @@ class PermitStub(Base):
     )
 
 
+class ProjectAnchor(Base):
+    """Cross-project timeline coupling.
+
+    Presence of a row means the owning Project's first-milestone date resolves
+    relative to ``anchor_project``'s anchor milestone (usually the milestone
+    referenced by ``anchor_milestone_id``) plus ``offset_months`` and
+    ``offset_days``. Absence means the project uses its own ``start_date``.
+
+    Cycle check (P1 → P2 → P1) is enforced at write time by the router, not
+    here. Added in migration 0048.
+    """
+
+    __tablename__ = "project_anchors"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    project_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("projects.id", ondelete="CASCADE"),
+        nullable=False,
+        unique=True,
+    )
+    anchor_project_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("projects.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    anchor_milestone_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("milestones.id", ondelete="SET NULL"),
+        nullable=True,
+    )
+    offset_months: Mapped[int] = mapped_column(
+        Integer, nullable=False, default=0, server_default="0"
+    )
+    offset_days: Mapped[int] = mapped_column(
+        Integer, nullable=False, default=0, server_default="0"
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        onupdate=func.now(),
+        nullable=False,
+    )
+
+    project: Mapped["Project"] = relationship(
+        "Project",
+        back_populates="anchor",
+        foreign_keys=[project_id],
+    )
+    anchor_project: Mapped["Project"] = relationship(
+        "Project",
+        foreign_keys=[anchor_project_id],
+    )
+    anchor_milestone: Mapped["Milestone | None"] = relationship(  # type: ignore[name-defined]
+        "Milestone",
+        foreign_keys=[anchor_milestone_id],
+    )
+
+
+from app.models.capital import CapitalModuleProject  # noqa: E402,F401
 from app.models.scraped_listing import ScrapedListing  # noqa: E402,F401

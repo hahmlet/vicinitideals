@@ -4,7 +4,17 @@ import enum
 import uuid
 from datetime import datetime
 
-from sqlalchemy import JSON, DateTime, ForeignKey, Integer, Numeric, String, func
+from sqlalchemy import (
+    JSON,
+    Boolean,
+    DateTime,
+    ForeignKey,
+    Integer,
+    Numeric,
+    String,
+    UniqueConstraint,
+    func,
+)
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -74,6 +84,16 @@ class CapitalModule(Base):
     draw_source: Mapped["DrawSource | None"] = relationship(
         "DrawSource", back_populates="capital_module", uselist=False
     )
+    # Per-project terms (amount / window / auto_size). One row = project-scoped
+    # funding; multiple rows = shared Source across projects (junction, added
+    # in migration 0048). Presence is authoritative going forward; active_phase_*
+    # and source['amount'] on this table remain as legacy/display values during
+    # the Phase 1 backfill window.
+    project_terms: Mapped[list["CapitalModuleProject"]] = relationship(
+        "CapitalModuleProject",
+        back_populates="capital_module",
+        cascade="all, delete-orphan",
+    )
 
 
 class WaterfallTier(Base):
@@ -84,6 +104,12 @@ class WaterfallTier(Base):
     )
     scenario_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), ForeignKey("scenarios.id"), nullable=False
+    )
+    # Waterfall is per-project going forward; nullable during Phase 1 backfill.
+    project_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("projects.id", ondelete="CASCADE"),
+        nullable=True,
     )
     capital_module_id: Mapped[uuid.UUID | None] = mapped_column(
         UUID(as_uuid=True), ForeignKey("capital_modules.id"), nullable=True
@@ -119,6 +145,11 @@ class WaterfallResult(Base):
     )
     scenario_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), ForeignKey("scenarios.id"), nullable=False
+    )
+    project_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("projects.id", ondelete="CASCADE"),
+        nullable=True,
     )
     period: Mapped[int] = mapped_column(Integer, nullable=False)
     tier_id: Mapped[uuid.UUID] = mapped_column(
@@ -159,6 +190,11 @@ class DrawSource(Base):
     scenario_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), ForeignKey("scenarios.id", ondelete="CASCADE"), nullable=False
     )
+    project_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("projects.id", ondelete="CASCADE"),
+        nullable=True,
+    )
     sort_order: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     label: Mapped[str] = mapped_column(String(255), nullable=False)
     # "equity" or "debt"
@@ -188,4 +224,68 @@ class DrawSource(Base):
     )
     capital_module: Mapped["CapitalModule | None"] = relationship(
         "CapitalModule", back_populates="draw_source"
+    )
+
+
+class CapitalModuleProject(Base):
+    """Per-project terms for a CapitalModule.
+
+    One row = one project funded by the module. Multiple rows on the same
+    module = a Source shared across projects (each carries its own amount,
+    active window, and sizing flag).
+
+    Added in migration 0048. Phase 1 backfill creates a single row per
+    existing module pointing at the scenario's default project.
+    """
+
+    __tablename__ = "capital_module_projects"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    capital_module_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("capital_modules.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    project_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("projects.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    amount: Mapped[object] = mapped_column(
+        Numeric(18, 6), nullable=False, default=0, server_default="0"
+    )
+    active_from: Mapped[str | None] = mapped_column(String(60), nullable=True)
+    active_to: Mapped[str | None] = mapped_column(String(60), nullable=True)
+    active_from_offset_days: Mapped[int] = mapped_column(
+        Integer, nullable=False, default=0, server_default="0"
+    )
+    active_to_offset_days: Mapped[int] = mapped_column(
+        Integer, nullable=False, default=0, server_default="0"
+    )
+    auto_size: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=False, server_default="false"
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        onupdate=func.now(),
+        nullable=False,
+    )
+
+    __table_args__ = (
+        UniqueConstraint(
+            "capital_module_id", "project_id", name="uq_capital_module_project"
+        ),
+    )
+
+    capital_module: Mapped["CapitalModule"] = relationship(
+        "CapitalModule", back_populates="project_terms"
+    )
+    project: Mapped["Project"] = relationship(  # type: ignore[name-defined]
+        "Project", back_populates="capital_module_terms"
     )
