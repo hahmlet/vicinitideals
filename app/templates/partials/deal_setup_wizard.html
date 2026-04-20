@@ -455,21 +455,17 @@
         'permanent_debt':       'lease_up',
         'construction_to_perm': 'acquisition',
     } -%}
-    {%- set _dt_to_defaults = {
-        'pre_development_loan': 'acquisition',
-        'acquisition_loan':     'construction',
-        'construction_loan':    'lease_up',
-        'bridge':               'stabilized',
-        'permanent_debt':       'perpetuity',
-        'construction_to_perm': 'perpetuity',
-    } -%}
-    {%- set _dt_retired_defaults = {
-        'pre_development_loan': 'acquisition_loan',
-        'acquisition_loan':     'construction_loan',
-        'construction_loan':    'permanent_debt',
-        'bridge':               'permanent_debt',
-        'permanent_debt':       'perpetuity',
-        'construction_to_perm': 'perpetuity',
+    {# Exit Vehicle defaults — first picked debt in the preference chain wins,
+       else fall back to "maturity" (or "sale" for debt that typically balloons
+       at divestment).  Resolved in Jinja below so the dropdown pre-selects
+       the right option. #}
+    {%- set _vehicle_pref_chain = {
+        'pre_development_loan': ['acquisition_loan','construction_loan','construction_to_perm','bridge','maturity'],
+        'acquisition_loan':     ['construction_loan','construction_to_perm','permanent_debt','bridge','maturity'],
+        'construction_loan':    ['permanent_debt','construction_to_perm','sale','maturity'],
+        'bridge':               ['permanent_debt','sale','maturity'],
+        'permanent_debt':       ['maturity'],
+        'construction_to_perm': ['sale','maturity'],
     } -%}
     <div class="wizard-header">
       <div class="wizard-title">Milestones &amp; Retirement</div>
@@ -492,25 +488,41 @@
         {% endif %}
         <table style="width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed">
           <colgroup>
-            <col style="width:18%">
-            <col style="width:24%">
-            <col style="width:28%">
             <col style="width:30%">
+            <col style="width:30%">
+            <col style="width:40%">
           </colgroup>
           <thead>
             <tr style="border-bottom:2px solid var(--border)">
               <th style="text-align:left;padding:6px 8px;color:var(--text-muted);font-weight:600">Debt</th>
               <th style="text-align:left;padding:6px 8px;color:var(--text-muted);font-weight:600">Active From</th>
-              <th style="text-align:left;padding:6px 8px;color:var(--text-muted);font-weight:600">Active To</th>
-              <th style="text-align:left;padding:6px 8px;color:var(--text-muted);font-weight:600">Retired By</th>
+              <th style="text-align:left;padding:6px 8px;color:var(--text-muted);font-weight:600">Exit Vehicle</th>
             </tr>
           </thead>
           <tbody>
           {% for dt in _debt_types %}
           {%- set _cfg = _dmc.get(dt, {}) -%}
           {%- set _from_val = _cfg.get('active_from') or _dt_from_defaults.get(dt, 'acquisition') -%}
-          {%- set _to_val   = _cfg.get('active_to')   or _dt_to_defaults.get(dt, 'perpetuity') -%}
-          {%- set _ret_val  = _cfg.get('retired_by')  or _dt_retired_defaults.get(dt, 'perpetuity') -%}
+          {# Resolve default Exit Vehicle: walk the preference chain, pick the
+             first debt-type that the user actually selected in step 2; else
+             use the trailing sentinel (usually 'maturity' or 'sale'). #}
+          {%- set _chain = _vehicle_pref_chain.get(dt, ['maturity']) -%}
+          {%- set _default_vehicle = namespace(value='maturity') -%}
+          {%- for cand in _chain -%}
+            {%- if cand in ['maturity','sale'] and _default_vehicle.value == 'maturity' and not (_chain[0] in _debt_types) -%}
+              {%- set _default_vehicle.value = cand -%}
+              {%- break -%}
+            {%- elif cand in _debt_types and cand != dt -%}
+              {%- set _default_vehicle.value = cand -%}
+              {%- break -%}
+            {%- elif cand in ['maturity','sale'] -%}
+              {%- set _default_vehicle.value = cand -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- set _vehicle_val = _cfg.get('exit_vehicle') or _cfg.get('retired_by') or _default_vehicle.value -%}
+          {# Legacy migration: 'perpetuity' from the old schema → 'maturity'. #}
+          {%- if _vehicle_val == 'perpetuity' -%}{%- set _vehicle_val = 'maturity' -%}{%- endif -%}
           <tr style="border-bottom:1px solid var(--border)">
             <td style="padding:8px;font-weight:600">{{ _dt_labels.get(dt, dt) }}</td>
             <td style="padding:8px">
@@ -521,27 +533,23 @@
               </select>
             </td>
             <td style="padding:8px">
-              <select name="{{ dt }}_active_to" style="width:100%;font-size:12px">
-                {% for val, lbl in _phase_opts %}
-                <option value="{{ val }}" {% if _to_val == val %}selected{% endif %}>{{ lbl }}</option>
-                {% endfor %}
-                <option value="perpetuity" {% if _to_val == 'perpetuity' %}selected{% endif %}>Not retired (perpetuity)</option>
-              </select>
-            </td>
-            <td style="padding:8px">
-              <select name="{{ dt }}_retired_by" style="width:100%;font-size:12px">
+              <select name="{{ dt }}_exit_vehicle" style="width:100%;font-size:12px">
+                <option value="maturity" {% if _vehicle_val == 'maturity' %}selected{% endif %}>Maturity (balloon at amort end)</option>
+                <option value="sale" {% if _vehicle_val == 'sale' %}selected{% endif %}>Sale (paid off at divestment)</option>
                 {% for other_dt in _debt_types %}
                   {% if other_dt != dt %}
-                  <option value="{{ other_dt }}" {% if _ret_val == other_dt %}selected{% endif %}>{{ _dt_labels.get(other_dt, other_dt) }}</option>
+                  <option value="{{ other_dt }}" {% if _vehicle_val == other_dt %}selected{% endif %}>Refi by {{ _dt_labels.get(other_dt, other_dt) }}</option>
                   {% endif %}
                 {% endfor %}
-                <option value="perpetuity" {% if _ret_val == 'perpetuity' %}selected{% endif %}>Not retired (perpetuity)</option>
               </select>
             </td>
           </tr>
           {% endfor %}
           </tbody>
         </table>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:10px;line-height:1.5">
+          "Active To" is derived from Exit Vehicle &mdash; a loan ends only when it matures, is refinanced, or is paid off at sale.
+        </div>
       </div>
       <div class="wizard-footer">
         <button type="button" class="btn btn-secondary"
@@ -601,6 +609,13 @@
         {%- set _rate   = _dt_cfg.get('rate_pct')    or _dt_default_rates.get(dt, 5.0) -%}
         {%- set _ltype  = _dt_cfg.get('loan_type')   or _dt_default_types.get(dt, 'pi') -%}
         {%- set _amort  = _dt_cfg.get('amort_years') or 30 -%}
+        {%- set _mcfg = _dmc.get(dt, {}) -%}
+        {%- set _vehicle = _mcfg.get('exit_vehicle') or _mcfg.get('retired_by') or 'maturity' -%}
+        {%- if _vehicle == 'perpetuity' -%}{%- set _vehicle = 'maturity' -%}{%- endif -%}
+        {# Amortization only applies when the loan runs to maturity.  If it's
+           retired by sale or a takeout source, the balloon exits before the
+           amort schedule completes, so the period is irrelevant. #}
+        {%- set _show_amort = _vehicle == 'maturity' -%}
         <div class="section-label">{{ _dt_labels.get(dt, dt) }}</div>
         <div class="field-row">
           <div class="field-group" style="max-width:120px">
@@ -619,12 +634,14 @@
                    value="{{ _rate }}" placeholder="5.0">
             <div class="field-hint">% per annum</div>
           </div>
+          {% if _show_amort %}
           <div class="field-group" style="max-width:120px">
             <label>Amortization</label>
             <input type="number" name="{{ dt }}_amort_years" step="1" min="1" max="40"
                    value="{{ _amort }}" placeholder="30">
             <div class="field-hint">Years (P&amp;I period)</div>
           </div>
+          {% endif %}
         </div>
         {% endfor %}
       </div>

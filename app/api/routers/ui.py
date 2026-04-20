@@ -4313,18 +4313,32 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
     #   changes hands at the end of the closing process).
     # - side="start": the phase begins when that milestone *starts* (e.g.
     #   "construction" phase starts at Construction milestone start).
-    _CM_PHASE_TO_MS = {
-        "acquisition":          ("close", "end"),
-        "pre_development":      ("close", "end"),
-        "pre_construction":     ("close", "end"),
-        "construction":         ("construction", "start"),
-        "lease_up":             ("operation_lease_up", "start"),
-        "operation_lease_up":   ("operation_lease_up", "start"),
-        "stabilized":           ("operation_stabilized", "start"),
-        "operation_stabilized": ("operation_stabilized", "start"),
-        "exit":                 ("divestment", "start"),
-        "divestment":           ("divestment", "start"),
-        "perpetuity":           (None, None),  # never ends on timeline
+    # Phase → ordered list of candidate (milestone_key, side) tuples.  The
+    # first candidate whose milestone is actually on this deal's timeline is
+    # used.  This lets a single phase like "construction" resolve against
+    # whichever work-phase milestone the project uses: `construction` for new
+    # construction, `minor_renovation` / `major_renovation` for acq-reno
+    # deals, `conversion` for conversions, etc.
+    _CM_PHASE_TO_MS: dict[str, list[tuple[str, str]]] = {
+        "acquisition":          [("close", "end")],
+        "pre_development":      [("close", "end")],
+        "pre_construction":     [("close", "end"), ("pre_development", "start")],
+        "construction":         [
+            ("construction", "start"),
+            ("minor_renovation", "start"),
+            ("major_renovation", "start"),
+            ("renovation", "start"),
+            ("conversion", "start"),
+        ],
+        "lease_up":             [("operation_lease_up", "start")],
+        "operation_lease_up":   [("operation_lease_up", "start")],
+        "stabilized":           [("operation_stabilized", "start")],
+        "operation_stabilized": [("operation_stabilized", "start")],
+        "exit":                 [("divestment", "start"), ("operation_stabilized", "end")],
+        "divestment":           [("divestment", "start"), ("operation_stabilized", "end")],
+        # Legacy value written by the pre-cleanup wizard — treat as "runs
+        # through divestment" so the bar renders to the far right.
+        "perpetuity":           [("divestment", "start"), ("operation_stabilized", "end")],
     }
     _cm_gantt_rows: list[dict] = []
     _bgd_cm = _builder_gantt_from_milestones(default_project, milestones)
@@ -4347,13 +4361,40 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
         def _phase_to_date(phase: str | None) -> date | None:
             if not phase:
                 return None
-            entry = _CM_PHASE_TO_MS.get(phase)
-            if not entry:
+            candidates = _CM_PHASE_TO_MS.get(phase)
+            if not candidates:
                 return None
-            ms_key, side = entry
-            if not ms_key:
-                return None
-            return (_ms_end_map if side == "end" else _ms_start_map).get(ms_key)
+            for ms_key, side in candidates:
+                source_map = _ms_end_map if side == "end" else _ms_start_map
+                found = source_map.get(ms_key)
+                if found:
+                    return found
+            return None
+
+        # Derive end-phase string from Exit Vehicle when possible — matches
+        # the engine's `_resolve_active_end_rank` logic.  Falls back to the
+        # legacy `active_phase_end` field when vehicle is unset.
+        from app.engines.cashflow import _EXIT_VEHICLE_APPLIES as _EVA_SET
+        def _gantt_end_phase(_cm: object) -> str | None:
+            ft = str(getattr(_cm, "funder_type", "") or "").replace("FunderType.", "")
+            if ft not in _EVA_SET:
+                # Non-exit-vehicle: runs through the end of the hold (display-wise)
+                return "divestment"
+            et = getattr(_cm, "exit_terms", None) or {}
+            saved = (et.get("vehicle") or "").strip() if isinstance(et, dict) else ""
+            if saved == "sale":
+                return "divestment"
+            if saved == "maturity":
+                return "divestment"  # display convention: through end of deal
+            if saved:
+                for r in capital_modules:
+                    if r is _cm:
+                        continue
+                    if str(getattr(r, "id", "")) == saved:
+                        return str(r.active_phase_start or "")
+            # Legacy fallback.
+            legacy = str(getattr(_cm, "active_phase_end", "") or "")
+            return legacy or None
 
         for _cm in capital_modules:
             _src = _cm.source or {}
@@ -4368,10 +4409,15 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
                 continue
             _from_date = _phase_to_date(_cm.active_phase_start)
             if not _from_date:
-                continue
+                # Hard fallback so unresolved start doesn't hide the row:
+                # use the earliest dated milestone on the timeline.
+                _from_date = min(_ms_start_map.values()) if _ms_start_map else None
+                if not _from_date:
+                    continue
             _from_day = (_from_date - _epoch_cm).days
             _left = max(0.0, round(100.0 * (_from_day - _g_min_cm) / _span_cm, 2))
-            _to_date = _phase_to_date(_cm.active_phase_end) if _cm.active_phase_end else None
+            _end_phase = _gantt_end_phase(_cm)
+            _to_date = _phase_to_date(_end_phase) if _end_phase else None
             if _to_date:
                 _to_day = (_to_date - _epoch_cm).days
                 _right = min(100.0, round(100.0 * (_to_day - _g_min_cm) / _span_cm, 2))
@@ -6032,33 +6078,36 @@ async def deal_setup_wizard_step(
         if selected:
             inputs.debt_types = selected
     elif step == 3:
-        # Per-debt milestone & retirement config
-        # Validate phase sequencing: active_from must precede active_to.
-        # "perpetuity" and "" are treated as "open-ended" and always valid.
-        _PHASE_ORDER = {
-            "pre_construction": 0, "close": 1, "acquisition": 1,
-            "construction": 2, "lease_up": 3, "operation_lease_up": 3,
-            "stabilized": 4, "operation_stabilized": 4, "exit": 5, "divestment": 5,
-        }
+        # Per-debt milestone & Exit Vehicle config.  The old "Active To"
+        # column is gone — end of loan is derived from Exit Vehicle in the
+        # finalize step (and in the engine at compute time).
+        _valid_debt_types = set(inputs.debt_types or [])
         dmc: dict = {}
-        for ft in (inputs.debt_types or []):
-            active_from = form.get(f"{ft}_active_from") or ""
-            active_to   = form.get(f"{ft}_active_to")   or ""
-            retired_by  = form.get(f"{ft}_retired_by")  or ""
-            if active_from and active_to and active_to not in ("perpetuity", ""):
-                _from_rank = _PHASE_ORDER.get(active_from)
-                _to_rank   = _PHASE_ORDER.get(active_to)
-                if _from_rank is not None and _to_rank is not None and _from_rank > _to_rank:
-                    wizard_errors[ft] = (
-                        f"Active period is backwards: '{active_from}' comes after '{active_to}'. "
-                        f"Set active_to to a later phase, or use 'perpetuity' if the loan never retires."
-                    )
-                    continue
-            if active_from or active_to or retired_by:
+        for ft in _valid_debt_types:
+            active_from  = form.get(f"{ft}_active_from") or ""
+            # New field name; accept the old "retired_by" for form re-submits
+            # that round-tripped through the old POST shape.
+            exit_vehicle = (
+                form.get(f"{ft}_exit_vehicle")
+                or form.get(f"{ft}_retired_by")
+                or ""
+            )
+            # Normalise: legacy 'perpetuity' → 'maturity'.
+            if exit_vehicle == "perpetuity":
+                exit_vehicle = "maturity"
+            # Validate vehicle: must be 'maturity' | 'sale' | another picked debt.
+            if exit_vehicle and exit_vehicle not in {"maturity", "sale"} and exit_vehicle not in _valid_debt_types:
+                wizard_errors[ft] = (
+                    f"Exit Vehicle {exit_vehicle!r} is not one of the selected debt types."
+                )
+                continue
+            if exit_vehicle == ft:
+                wizard_errors[ft] = "A loan cannot retire itself. Pick a different Exit Vehicle."
+                continue
+            if active_from or exit_vehicle:
                 dmc[ft] = {
-                    "active_from": active_from,
-                    "active_to":   active_to,
-                    "retired_by":  retired_by,
+                    "active_from":  active_from,
+                    "exit_vehicle": exit_vehicle or "maturity",
                 }
         if wizard_errors:
             # Re-render step 3 with errors; do not advance
@@ -6261,28 +6310,90 @@ async def deal_setup_wizard_complete(
             "permanent_debt":       "lease_up",
             "construction_to_perm": "acquisition",
         }
-        _DEFAULT_TO: dict[str, str] = {
-            "pre_development_loan": "acquisition",
-            "acquisition_loan":     "construction",
-            "construction_loan":    "lease_up",
-            "bridge":               "stabilized",
-            "permanent_debt":       "stabilized",
-            "construction_to_perm": "stabilized",
+        # Exit Vehicle default per debt type — first available retirer in the
+        # preference chain wins, else fall back to the trailing sentinel.
+        # Mirrors the Jinja `_vehicle_pref_chain` in deal_setup_wizard.html
+        # (§3 Milestones & Retirement).
+        _VEHICLE_PREF_CHAIN: dict[str, list[str]] = {
+            "pre_development_loan": ["acquisition_loan","construction_loan","construction_to_perm","bridge","maturity"],
+            "acquisition_loan":     ["construction_loan","construction_to_perm","permanent_debt","bridge","maturity"],
+            "construction_loan":    ["permanent_debt","construction_to_perm","sale","maturity"],
+            "bridge":               ["permanent_debt","sale","maturity"],
+            "permanent_debt":       ["maturity"],
+            "construction_to_perm": ["sale","maturity"],
         }
 
+        def _default_vehicle(ft_str: str, picked: set[str]) -> str:
+            for cand in _VEHICLE_PREF_CHAIN.get(ft_str, ["maturity"]):
+                if cand in {"maturity", "sale"}:
+                    return cand
+                if cand in picked and cand != ft_str:
+                    return cand
+            return "maturity"
+
+        # Phase-rank lookup used to derive active_phase_end from the resolved
+        # vehicle.  Mirrors cashflow._APS_TO_RANK; duplicated here to avoid a
+        # circular import between the router and the engine.
+        _APS_TO_PHASE: dict[int, str] = {
+            0: "acquisition", 2: "pre_construction", 3: "construction",
+            4: "lease_up", 5: "stabilized", 6: "exit",
+        }
+        _PHASE_TO_RANK: dict[str, int] = {
+            "acquisition": 0, "close": 0,
+            "pre_construction": 2,
+            "construction": 3,
+            "lease_up": 4, "operation_lease_up": 4,
+            "stabilized": 5, "operation_stabilized": 5,
+            "exit": 6, "divestment": 6,
+        }
+
+        # ── Pass 1: pre-generate UUIDs so Exit Vehicle can reference siblings
+        # by id.  Collect per-debt config so Pass 2 can resolve vehicle and
+        # derive active_phase_end without rescanning the form.
+        _picked = {ft_str for ft_str in debt_types if _FT_MAP.get(ft_str) is not None}
+        _module_plan: list[dict] = []
+        _uuid_by_debt_type: dict[str, "_uuid_mod.UUID"] = {}
         for pos, ft_str in enumerate(debt_types, start=1):
             ft = _FT_MAP.get(ft_str)
             if ft is None:
                 continue
             cfg   = dmc.get(ft_str, {})
             terms = dt.get(ft_str, {})
-
             rate        = float(terms.get("rate_pct") or _DEFAULT_RATE.get(ft_str, 6.0))
             loan_type   = terms.get("loan_type") or _DEFAULT_LOAN_TYPE.get(ft_str, "io_only")
             amort_years = int(terms.get("amort_years") or 30)
             active_from = cfg.get("active_from") or _DEFAULT_FROM.get(ft_str, "acquisition")
-            active_to   = cfg.get("active_to")   or _DEFAULT_TO.get(ft_str, "stabilized")
-            retired_by  = cfg.get("retired_by")  or ""
+
+            # Resolve Exit Vehicle — legacy 'retired_by' + 'active_to' are
+            # honoured as fallbacks so in-flight wizard re-submits still work
+            # while old rows propagate through the finalize path.
+            vehicle_raw = (cfg.get("exit_vehicle") or cfg.get("retired_by") or "").strip()
+            if vehicle_raw == "perpetuity" or not vehicle_raw:
+                vehicle_raw = _default_vehicle(ft_str, _picked)
+            _module_plan.append({
+                "pos": pos,
+                "ft_str": ft_str,
+                "ft": ft,
+                "rate": rate,
+                "loan_type": loan_type,
+                "amort_years": amort_years,
+                "active_from": active_from,
+                "vehicle_raw": vehicle_raw,
+            })
+            _uuid_by_debt_type[ft_str] = _uuid_mod.uuid4()
+
+        # ── Pass 2: create CapitalModule rows with fully-resolved exit_terms
+        # and derived active_phase_end.
+        for plan in _module_plan:
+            ft_str      = plan["ft_str"]
+            ft          = plan["ft"]
+            rate        = plan["rate"]
+            loan_type   = plan["loan_type"]
+            amort_years = plan["amort_years"]
+            active_from = plan["active_from"]
+            vehicle_raw = plan["vehicle_raw"]
+            pos         = plan["pos"]
+            cm_id       = _uuid_by_debt_type[ft_str]
 
             if loan_type == "interest_reserve":
                 carry: dict = {"carry_type": "interest_reserve", "io_rate_pct": rate}
@@ -6300,14 +6411,35 @@ async def deal_setup_wizard_complete(
                     ]
                 }
 
-            if retired_by and retired_by not in ("perpetuity", ""):
-                exit_trigger = _LABEL.get(retired_by, retired_by.replace("_", " "))
-                exit_terms_dict: dict = {"exit_type": "full_payoff", "trigger": exit_trigger}
+            # Resolve vehicle to the persisted form:
+            #   "maturity" / "sale" → literal
+            #   <picked debt-type>   → retirer module's UUID
+            if vehicle_raw in {"maturity", "sale"}:
+                vehicle_value = vehicle_raw
+                derived_end = "exit" if vehicle_raw == "sale" else "exit"  # maturity = perpetuity, through exit
+                exit_trigger = "end of hold period" if vehicle_raw == "maturity" else "Sale"
+            elif vehicle_raw in _uuid_by_debt_type:
+                retirer_uuid = _uuid_by_debt_type[vehicle_raw]
+                vehicle_value = str(retirer_uuid)
+                # Derived end = retirer's active_from (handoff point)
+                retirer_plan = next(p for p in _module_plan if p["ft_str"] == vehicle_raw)
+                derived_end = retirer_plan["active_from"]
+                exit_trigger = _LABEL.get(vehicle_raw, vehicle_raw.replace("_", " "))
             else:
-                exit_terms_dict = {"exit_type": "full_payoff", "trigger": "end of hold period"}
+                # Shouldn't happen after validation, but stay defensive.
+                vehicle_value = "maturity"
+                derived_end = "exit"
+                exit_trigger = "end of hold period"
+
+            exit_terms_dict: dict = {
+                "exit_type": "full_payoff",
+                "trigger":   exit_trigger,
+                "vehicle":   vehicle_value,
+            }
 
             _cm_label_for_cc = f"{_LABEL.get(ft_str, ft_str)} (auto)"
             session.add(CapitalModule(
+                id=cm_id,
                 scenario_id=model_id,
                 label=_cm_label_for_cc,
                 funder_type=ft,
@@ -6316,9 +6448,8 @@ async def deal_setup_wizard_complete(
                 carry=carry,
                 exit_terms=exit_terms_dict,
                 active_phase_start=active_from,
-                active_phase_end=active_to,
+                active_phase_end=derived_end,
             ))
-            # Track for closing-cost pre-loading below
             _cc_preload_modules.append({
                 "funder_type": ft_str,
                 "label": _cm_label_for_cc,
