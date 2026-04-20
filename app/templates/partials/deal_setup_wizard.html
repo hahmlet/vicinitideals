@@ -676,43 +676,48 @@
       <input type="hidden" name="step" value="5">
       <div class="wizard-body">
 
+        {#- Per-loan LTV/LTC defaults and basis labels.  The engine applies
+            the resulting cap against the basis at compute time. -#}
+        {%- set _ltv_defaults = {
+            'pre_development_loan': 100,
+            'acquisition_loan':     70,
+            'construction_loan':    75,
+            'bridge':               65,
+            'permanent_debt':       65,
+            'construction_to_perm': 65,
+        } -%}
+        {%- set _ltv_basis = {
+            'pre_development_loan': ('LTC', '% of Pre-Development Costs'),
+            'acquisition_loan':     ('LTV', '% of Acquisition Price'),
+            'construction_loan':    ('LTC', '% of Total Construction Cost'),
+            'bridge':               ('LTV', '% of Acquisition Price'),
+            'permanent_debt':       ('LTV', '% of Stabilized Value'),
+            'construction_to_perm': ('LTV', '% of Stabilized Value'),
+        } -%}
         <table style="width:100%;border-collapse:collapse;font-size:13px;margin-bottom:16px">
           <thead>
             <tr style="border-bottom:2px solid var(--border)">
               <th style="text-align:left;padding:6px 8px;color:var(--text-muted);font-weight:600">Debt</th>
-              <th style="text-align:left;padding:6px 8px;color:var(--text-muted);font-weight:600">Sizing Approach</th>
-              <th style="text-align:left;padding:6px 8px;color:var(--text-muted);font-weight:600">Parameter</th>
+              <th style="text-align:left;padding:6px 8px;color:var(--text-muted);font-weight:600">Basis</th>
+              <th style="text-align:left;padding:6px 8px;color:var(--text-muted);font-weight:600">Cap</th>
             </tr>
           </thead>
           <tbody>
           {% for dt in _debt_types %}
           {%- set _dt_cfg = _dterms.get(dt, {}) -%}
+          {%- set _ltv  = _dt_cfg.get('ltv_pct') or _ltv_defaults.get(dt, 65) -%}
+          {%- set _lbl, _hint = _ltv_basis.get(dt, ('LTV', '% of Value')) -%}
           <tr style="border-bottom:1px solid var(--border)">
             <td style="padding:8px;font-weight:600">{{ _dt_labels.get(dt, dt) }}</td>
-            {% if dt == 'pre_development_loan' %}
-            <td style="padding:8px;color:var(--text-muted)">Auto — sum of Pre-Development phase costs</td>
-            <td style="padding:8px">—</td>
-            {% elif dt == 'acquisition_loan' %}
-            {%- set _ltv = _dt_cfg.get('ltv_pct') or 70 -%}
-            <td style="padding:8px">LTV on acquisition phase costs</td>
-            <td style="padding:8px">
-              <div style="display:flex;align-items:center;gap:4px">
-                <input type="number" name="{{ dt }}_ltv_pct" step="1" min="0" max="100"
-                       value="{{ _ltv }}" style="width:64px;font-size:12px" placeholder="70">
-                <span style="font-size:12px;color:var(--text-muted)">% LTV</span>
-              </div>
-            </td>
-            {% elif dt == 'construction_loan' %}
-            <td style="padding:8px;color:var(--text-muted)">Auto — gap-fill to construction phase costs</td>
-            <td style="padding:8px">—</td>
-            {% elif dt == 'bridge' %}
+            {% if dt == 'bridge' %}
+            {#- Bridge keeps its fixed-vs-LTV toggle — the fixed amount path
+                short-circuits sizing entirely. -#}
             {%- set _bridge_approach = _dt_cfg.get('sizing_approach') or 'fixed' -%}
             {%- set _bridge_amt = _dt_cfg.get('fixed_amount') or '' -%}
-            {%- set _bridge_ltv = _dt_cfg.get('ltv_pct') or 65 -%}
             <td style="padding:8px">
               <select name="{{ dt }}_sizing_approach" style="font-size:12px" onchange="toggleBridgeSizing(this)">
                 <option value="fixed" {% if _bridge_approach == 'fixed' %}selected{% endif %}>Fixed Amount</option>
-                <option value="ltv"   {% if _bridge_approach == 'ltv'   %}selected{% endif %}>LTV %</option>
+                <option value="ltv"   {% if _bridge_approach == 'ltv'   %}selected{% endif %}>{{ _lbl }} — {{ _hint }}</option>
               </select>
             </td>
             <td style="padding:8px">
@@ -723,14 +728,20 @@
               <div id="bridge-ltv" {% if _bridge_approach != 'ltv' %}style="display:none"{% endif %}>
                 <div style="display:flex;align-items:center;gap:4px">
                   <input type="number" name="{{ dt }}_ltv_pct" step="1" min="0" max="100"
-                         value="{{ _bridge_ltv }}" style="width:64px;font-size:12px" placeholder="65">
-                  <span style="font-size:12px;color:var(--text-muted)">% LTV</span>
+                         value="{{ _ltv }}" style="width:64px;font-size:12px" placeholder="65">
+                  <span style="font-size:12px;color:var(--text-muted)">%</span>
                 </div>
               </div>
             </td>
-            {% elif dt in ('permanent_debt', 'construction_to_perm') %}
-            <td style="padding:8px;color:var(--text-muted)">Auto — gap-fill to Total Project Cost</td>
-            <td style="padding:8px">—</td>
+            {% else %}
+            <td style="padding:8px;color:var(--text-muted)">{{ _lbl }} — {{ _hint }}</td>
+            <td style="padding:8px">
+              <div style="display:flex;align-items:center;gap:4px">
+                <input type="number" name="{{ dt }}_ltv_pct" step="1" min="0" max="100"
+                       value="{{ _ltv }}" style="width:64px;font-size:12px" placeholder="{{ _ltv_defaults.get(dt, 65) }}">
+                <span style="font-size:12px;color:var(--text-muted)">%</span>
+              </div>
+            </td>
             {% endif %}
           </tr>
           {% endfor %}

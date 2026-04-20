@@ -291,7 +291,7 @@ class OperationalInputs(Base):
 
     # Stabilized operations (deprecated OpEx scalars: use OperatingExpenseLine rows instead)
     opex_per_unit_annual: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=0)
-    expense_growth_rate_pct_annual: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=0)
+    expense_growth_rate_pct_annual: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=3, server_default="3")
     mgmt_fee_pct: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=0)
     property_tax_annual: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=0)
     insurance_annual: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=0)
@@ -299,7 +299,7 @@ class OperationalInputs(Base):
 
     # Exit (deprecated scalar: use UseLine with phase=exit instead)
     hold_period_years: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=5)
-    exit_cap_rate_pct: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=0)
+    exit_cap_rate_pct: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=5, server_default="5")
     selling_costs_pct: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=0)
 
     # Milestone tracking

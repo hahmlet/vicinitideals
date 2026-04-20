@@ -1281,6 +1281,9 @@ async def _auto_size_debt_modules(
                 _cr = _rate
 
             if _ft == "pre_development_loan":
+                _pdl_terms = (inputs.debt_terms or {}).get("pre_development_loan", {})
+                _ltc = Decimal(str(_src.get("ltv_pct") or _pdl_terms.get("ltv_pct") or 100))
+                _funded = _q(pre_dev_costs * _ltc / HUNDRED)
                 _r = Decimal(str(_rate or 0))
                 _pre_ct = _carry_type_for_phase(_carry, is_construction=True)
                 _n = _loan_pre_op_months(_m)
@@ -1293,14 +1296,14 @@ async def _auto_size_debt_modules(
                 else:
                     _io_f = ZERO
                 _div = ONE - _io_f
-                _principal = _q(pre_dev_costs / _div) if (_div > ZERO and pre_dev_costs > ZERO) else pre_dev_costs
+                _principal = _q(_funded / _div) if (_div > ZERO and _funded > ZERO) else _funded
                 if _principal > ZERO and _r > ZERO and _n > 0 and _io_f > ZERO:
-                    _bridge_io["pre_development_loan"] = _q(_principal - pre_dev_costs)
+                    _bridge_io["pre_development_loan"] = _q(_principal - _funded)
                     _bridge_io_carry_type["pre_development_loan"] = _pre_ct
 
             elif _ft == "acquisition_loan":
                 _dt_terms = (inputs.debt_terms or {}).get("acquisition_loan", {})
-                _ltv = Decimal(str(_dt_terms.get("ltv_pct") or _src.get("ltv_pct") or 70))
+                _ltv = Decimal(str(_src.get("ltv_pct") or _dt_terms.get("ltv_pct") or 70))
                 _principal = _q(acq_costs * _ltv / HUNDRED)
                 _r = Decimal(str(_rate or 0))
                 _acq_ct = _carry_type_for_phase(_carry, is_construction=True)
@@ -1317,6 +1320,9 @@ async def _auto_size_debt_modules(
                         _bridge_io_carry_type["acquisition_loan"] = _acq_ct
 
             elif _ft == "construction_loan":
+                _cl_terms = (inputs.debt_terms or {}).get("construction_loan", {})
+                _ltc = Decimal(str(_src.get("ltv_pct") or _cl_terms.get("ltv_pct") or 75))
+                _funded = _q(constr_costs * _ltc / HUNDRED)
                 _r = Decimal(str(_cr or 0))
                 _cl_ct = _carry_type_for_phase(_carry, is_construction=True)
                 _n = _loan_pre_op_months(_m)
@@ -1329,9 +1335,9 @@ async def _auto_size_debt_modules(
                 else:
                     _io_f = ZERO
                 _div = ONE - _io_f
-                _principal = _q(constr_costs / _div) if (_div > ZERO and constr_costs > ZERO) else constr_costs
+                _principal = _q(_funded / _div) if (_div > ZERO and _funded > ZERO) else _funded
                 if _principal > ZERO and _r > ZERO and _n > 0 and _io_f > ZERO:
-                    _bridge_io["construction_loan"] = _q(_principal - constr_costs)
+                    _bridge_io["construction_loan"] = _q(_principal - _funded)
                     _bridge_io_carry_type["construction_loan"] = _cl_ct
 
             elif _ft == "bridge":
@@ -1597,6 +1603,18 @@ async def _auto_size_debt_modules(
                     # is on DS(P), not on P·(1−perm_pct).  Any closing cost
                     # shortfall surfaces as a real Sources gap downstream.
 
+            _ltv_raw = src.get("ltv_pct")
+            if _ltv_raw is not None:
+                _ltv = _percent(Decimal(str(_ltv_raw)))
+                _cap_rate = _percent(
+                    Decimal(str(src.get("refi_cap_rate_pct") or inputs.exit_cap_rate_pct or 0))
+                )
+                if noi_annual > ZERO and _cap_rate > ZERO and _ltv > ZERO:
+                    _p_ltv = _q((noi_annual / _cap_rate) * _ltv)
+                    if principal > _p_ltv:
+                        principal = _p_ltv
+                        src["binding_constraint"] = "ltv"
+
             if principal < ZERO:
                 principal = ZERO
             src["amount"] = str(_q(principal))
@@ -1655,7 +1673,19 @@ async def _auto_size_debt_modules(
             module.source = src
             continue
 
-        # gap_fill — principal already computed by _solve_principal_with_reserve above
+        # gap_fill — principal already computed by _solve_principal_with_reserve above.
+        # Apply LTV cap against stabilized value if source.ltv_pct is set.
+        _ltv_raw = src.get("ltv_pct")
+        if _ltv_raw is not None:
+            _ltv = _percent(Decimal(str(_ltv_raw)))
+            _cap_rate = _percent(
+                Decimal(str(src.get("refi_cap_rate_pct") or inputs.exit_cap_rate_pct or 0))
+            )
+            if noi_annual > ZERO and _cap_rate > ZERO and _ltv > ZERO:
+                _p_ltv = _q((noi_annual / _cap_rate) * _ltv)
+                if principal > _p_ltv:
+                    principal = _p_ltv
+                    src["binding_constraint"] = "ltv"
         if principal < ZERO:
             principal = ZERO
         src["amount"] = str(_q(principal))

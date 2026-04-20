@@ -4660,6 +4660,8 @@ async def handle_form_create_or_update(
             source_d["amort_term_years"] = amort
         if ppct := _fd(form.get("prepay_penalty_pct")):
             source_d["prepay_penalty_pct"] = float(ppct)
+        if ltv := _fd(form.get("ltv_pct")):
+            source_d["ltv_pct"] = float(ltv)
         constr_carry_type = form.get("construction_carry_type", "none")
         # Carry rate: use source rate so the engine finds it in both places
         _carry_rate = _fd(form.get("source_interest_rate"))
@@ -5845,6 +5847,15 @@ async def timeline_wizard_submit(
         anchor_duration = 0
 
     _STABILIZED_AUTO_DAYS = 10950  # 30 years — applied when no divestment milestone
+    # Hardcoded default durations for acquisition-phase milestones when the
+    # user hasn't supplied an override.  Trigger chain (Pass 2 below) wires
+    # these in submitted order, so "Close Starts After Under Contract" etc.
+    # falls out automatically whenever the predecessor is present.
+    _ACQUISITION_DEFAULT_DAYS: dict[str, int] = {
+        "offer_made":     7,
+        "under_contract": 30,
+        "close":          30,
+    }
 
     # Clear existing milestones for this project
     await session.execute(sa_delete(Milestone).where(Milestone.project_id == project_id))
@@ -5889,8 +5900,12 @@ async def timeline_wizard_submit(
         elif mt == MilestoneType.divestment:
             # Divestment is a single-day event (sale closing date)
             dur = 1
+        elif is_anchor:
+            dur = anchor_duration
+        elif mt_str in _ACQUISITION_DEFAULT_DAYS:
+            dur = _ACQUISITION_DEFAULT_DAYS[mt_str]
         else:
-            dur = anchor_duration if is_anchor else 0
+            dur = 0
 
         row = Milestone(
             project_id=project_id,
@@ -6373,6 +6388,7 @@ async def deal_setup_wizard_complete(
             rate        = float(terms.get("rate_pct") or _DEFAULT_RATE.get(ft_str, 6.0))
             loan_type   = terms.get("loan_type") or _DEFAULT_LOAN_TYPE.get(ft_str, "io_only")
             amort_years = int(terms.get("amort_years") or 30)
+            ltv_pct     = float(terms.get("ltv_pct")) if terms.get("ltv_pct") is not None else None
             active_from = cfg.get("active_from") or _DEFAULT_FROM.get(ft_str, "acquisition")
 
             # Resolve Exit Vehicle — legacy 'retired_by' + 'active_to' are
@@ -6449,13 +6465,16 @@ async def deal_setup_wizard_complete(
             }
 
             _cm_label_for_cc = f"{_LABEL.get(ft_str, ft_str)} (auto)"
+            _source_dict: dict = {"auto_size": True, "interest_rate_pct": rate}
+            if ltv_pct is not None:
+                _source_dict["ltv_pct"] = ltv_pct
             session.add(CapitalModule(
                 id=cm_id,
                 scenario_id=model_id,
                 label=_cm_label_for_cc,
                 funder_type=ft,
                 stack_position=pos,
-                source={"auto_size": True, "interest_rate_pct": rate},
+                source=_source_dict,
                 carry=carry,
                 exit_terms=exit_terms_dict,
                 active_phase_start=active_from,

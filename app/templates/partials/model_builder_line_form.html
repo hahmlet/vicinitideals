@@ -711,7 +711,9 @@ function ulTimingChanged(val) {
 
 {%- macro permanent_debt_fields(term_val, rate_val, cp_val, stack_val) %}
 <div class="form-row" style="margin-bottom:12px">
-  <div class="form-field">
+  {# Amortization is only meaningful when the loan runs to maturity.  The
+     edit-form JS below hides this field when Exit Vehicle != 'maturity'. #}
+  <div class="form-field" id="drawer-amort-field">
     <label class="form-label">Amortization Term (years)</label>
     <input class="form-input" type="number" name="amort_term_years" step="1" min="1"
            value="{{ term_val }}" placeholder="30">
@@ -900,6 +902,38 @@ function ulTimingChanged(val) {
     {% endif %}
   </div>
 
+  {% if _show_exit %}
+  {#- LTV/LTC cap per loan — engine applies against the per-loan basis at
+      compute time.  Leave blank to disable the cap for this source. -#}
+  {%- set _ltv_defaults = {
+      'pre_development_loan': 100, 'acquisition_loan': 70, 'construction_loan': 75,
+      'bridge': 65, 'permanent_debt': 65, 'senior_debt': 65, 'mezzanine_debt': 80,
+      'soft_loan': 100, 'bond': 65, 'owner_loan': 100,
+  } -%}
+  {%- set _ltv_basis = {
+      'pre_development_loan': ('LTC', '% of Pre-Development Costs'),
+      'acquisition_loan':     ('LTV', '% of Acquisition Price'),
+      'construction_loan':    ('LTC', '% of Total Construction Cost'),
+      'bridge':               ('LTV', '% of Acquisition Price'),
+      'permanent_debt':       ('LTV', '% of Stabilized Value'),
+      'senior_debt':          ('LTV', '% of Stabilized Value'),
+      'mezzanine_debt':       ('LTV', '% of Stabilized Value'),
+      'bond':                 ('LTV', '% of Stabilized Value'),
+      'soft_loan':             ('LTC', '% of Costs'),
+      'owner_loan':            ('LTC', '% of Costs'),
+  } -%}
+  {%- set _ltv_val = (existing.source.get('ltv_pct') if existing.source else None) -%}
+  {%- set _ltv_dflt = _ltv_defaults.get(_ft, 65) -%}
+  {%- set _lbl, _hint = _ltv_basis.get(_ft, ('LTV', '% of Value')) -%}
+  <div class="form-row" style="margin-bottom:16px">
+    <div class="form-field" style="max-width:220px">
+      <label class="form-label">{{ _lbl }} (%) <span style="font-weight:400;font-size:11px;color:var(--text-muted)">{{ _hint }}</span></label>
+      <input class="form-input" type="number" name="ltv_pct" step="0.5" min="0" max="100"
+             value="{{ _ltv_val if _ltv_val is not none else '' }}" placeholder="{{ _ltv_dflt }}">
+    </div>
+  </div>
+  {% endif %}
+
   {% if _is_perm_debt %}
   {# Permanent debt: amortization term + interest rate.  Exit Vehicle is
      shown so the user can override Maturity → Sale if needed. #}
@@ -920,6 +954,18 @@ function ulTimingChanged(val) {
         existing.stack_position if existing.stack_position else 1
     ) }}
   </div>
+  <script>
+  (function() {
+    var exitSel  = document.querySelector('#line-item-drawer select[name="exit_vehicle"]');
+    var amortFld = document.getElementById('drawer-amort-field');
+    if (!exitSel || !amortFld) return;
+    function sync() {
+      amortFld.style.display = exitSel.value === 'maturity' ? '' : 'none';
+    }
+    exitSel.addEventListener('change', sync);
+    sync();
+  })();
+  </script>
   {% elif _show_exit %}
   <div class="form-section">
     <div class="form-section-title">Exit</div>
@@ -1066,6 +1112,14 @@ function ulTimingChanged(val) {
   {# ── Step 3: Interest / Loan Terms (stack position auto-assigned) ── #}
   <div id="sw-step-3" style="display:none">
     <input type="hidden" name="stack_position" value="">
+    {# LTV/LTC cap — label + placeholder updated by swTypeChanged() below. #}
+    <div class="form-row" id="sw-ltv-row" style="margin-bottom:12px">
+      <div class="form-field" style="max-width:260px">
+        <label class="form-label" id="sw-ltv-label">LTV (%) <span style="font-weight:400;font-size:11px;color:var(--text-muted)" id="sw-ltv-hint">% of Value</span></label>
+        <input class="form-input" type="number" name="ltv_pct" id="sw-ltv-input"
+               step="0.5" min="0" max="100" value="" placeholder="65">
+      </div>
+    </div>
     {# Amortization term — shown only for permanent_debt #}
     <div class="form-row" id="sw-amort-row" style="display:none;margin-bottom:12px">
       <div class="form-field">
@@ -1184,9 +1238,55 @@ function ulTimingChanged(val) {
     return hasExit ? [1, 2, 3, 4, 5] : [1, 3, 4, 5];
   }
 
+  // Per-type LTV/LTC basis + default — keep in sync with the wizard step 5
+  // and drawer edit-form defaults.
+  var _LTV_DEFAULTS = {
+    pre_development_loan: 100, acquisition_loan: 70, construction_loan: 75,
+    bridge: 65, permanent_debt: 65, senior_debt: 65, mezzanine_debt: 80,
+    soft_loan: 100, bond: 65, owner_loan: 100,
+  };
+  var _LTV_BASIS = {
+    pre_development_loan: ['LTC', '% of Pre-Development Costs'],
+    acquisition_loan:     ['LTV', '% of Acquisition Price'],
+    construction_loan:    ['LTC', '% of Total Construction Cost'],
+    bridge:               ['LTV', '% of Acquisition Price'],
+    permanent_debt:       ['LTV', '% of Stabilized Value'],
+    senior_debt:          ['LTV', '% of Stabilized Value'],
+    mezzanine_debt:       ['LTV', '% of Stabilized Value'],
+    bond:                 ['LTV', '% of Stabilized Value'],
+    soft_loan:            ['LTC', '% of Costs'],
+    owner_loan:           ['LTC', '% of Costs'],
+  };
+
   function _updateStep3ForType(t) {
     var amortRow = document.getElementById('sw-amort-row');
-    if (amortRow) amortRow.style.display = (_PERM_DEBT.indexOf(t) >= 0) ? '' : 'none';
+    if (amortRow) {
+      // Amortization only makes sense for permanent_debt running to maturity.
+      // Any other exit vehicle (sale or takeout source) balloons early.
+      if (_PERM_DEBT.indexOf(t) < 0) {
+        amortRow.style.display = 'none';
+      } else {
+        var exitSel = document.querySelector('#sw-step-2 select[name="exit_vehicle"]');
+        var isMaturity = !exitSel || exitSel.value === 'maturity';
+        amortRow.style.display = isMaturity ? '' : 'none';
+      }
+    }
+    // LTV/LTC — shown only for debt types.  Update label + placeholder.
+    var ltvRow   = document.getElementById('sw-ltv-row');
+    var ltvLbl   = document.getElementById('sw-ltv-label');
+    var ltvHint  = document.getElementById('sw-ltv-hint');
+    var ltvInput = document.getElementById('sw-ltv-input');
+    if (ltvRow && ltvLbl && ltvHint && ltvInput) {
+      var isDebt = _EXIT_VEHICLE_APPLIES.indexOf(t) >= 0;
+      ltvRow.style.display = isDebt ? '' : 'none';
+      if (isDebt) {
+        var basis = _LTV_BASIS[t] || ['LTV', '% of Value'];
+        var dflt  = _LTV_DEFAULTS[t] || 65;
+        ltvLbl.firstChild.nodeValue = basis[0] + ' (%) ';
+        ltvHint.textContent = basis[1];
+        ltvInput.placeholder = String(dflt);
+      }
+    }
   }
 
   function _show(step) {
@@ -1267,6 +1367,8 @@ function ulTimingChanged(val) {
   };
 
   document.getElementById('sw-label').addEventListener('input', function() { _swError(null); });
+  var _swExit = document.querySelector('#sw-step-2 select[name="exit_vehicle"]');
+  if (_swExit) _swExit.addEventListener('change', function() { _updateStep3ForType(_type); });
   _updateStep3ForType(_type);
   _show(1);
 })();
