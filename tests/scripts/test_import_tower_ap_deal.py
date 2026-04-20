@@ -40,7 +40,7 @@ async def test_import_tower_ap_deal_creates_two_projects_and_one_portfolio(
         "projects": [
             {
                 "project": {"name": "Tower", "status": "active", "project_category": "historical", "source": "manual"},
-                "deal_model": {"name": "Tower", "project_type": "acquisition_minor_reno"},
+                "deal_model": {"name": "Tower", "project_type": "acquisition"},
                 "operational_inputs": {
                     "purchase_price": 1000000,
                     "closing_costs_pct": 2.0,
@@ -99,7 +99,7 @@ async def test_import_tower_ap_deal_creates_two_projects_and_one_portfolio(
             },
             {
                 "project": {"name": "A&P", "status": "active", "project_category": "historical", "source": "manual"},
-                "deal_model": {"name": "A&P", "project_type": "acquisition_conversion"},
+                "deal_model": {"name": "A&P", "project_type": "conversion"},
                 "operational_inputs": {
                     "purchase_price": 900000,
                     "closing_costs_pct": 1.5,

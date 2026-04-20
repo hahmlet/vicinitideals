@@ -1,6 +1,6 @@
 """Deal lifecycle E2E tests — structural math verification for Variant A.
 
-Variant A: acquisition_minor_reno, positive cash flow, gap_fill debt sizing, with exit.
+Variant A: acquisition, positive cash flow, gap_fill debt sizing, with exit.
 
 Seeded deal:
   - Uses:    Purchase Price $800k + Renovation $50k + Closing Costs $15k = $865k
@@ -46,7 +46,7 @@ def lifecycle_deal(_seed_page, base_url: str) -> tuple[str, str]:
     return create_seeded_deal(
         _seed_page,
         deal_name="E2E Lifecycle — Variant A",
-        deal_type="acquisition_minor_reno",
+        deal_type="acquisition",
     )
 
 

@@ -121,7 +121,7 @@ TEST_CASES = [
     {
         "id": "perm_only_6mo",
         "name": "Phase B Test 1 — Perm Only (6mo reno)",
-        "deal_type": "acquisition_minor_reno",
+        "deal_type": "acquisition",
         "milestones": ["close", "construction", "operation_stabilized", "divestment"],
         "phase_durations": {"construction": 180, "operation_stabilized": 730},
         "debt_types": ["permanent_debt"],
@@ -138,7 +138,7 @@ TEST_CASES = [
     {
         "id": "constr_perm_io_12mo",
         "name": "Phase B Test 2 — Construction + Perm (12mo, True IO)",
-        "deal_type": "acquisition_major_reno",
+        "deal_type": "value_add",
         "milestones": ["close", "pre_development", "construction", "operation_stabilized", "divestment"],
         "phase_durations": {"pre_development": 90, "construction": 365, "operation_stabilized": 1095},
         "debt_types": ["construction_loan", "permanent_debt"],
@@ -184,7 +184,7 @@ TEST_CASES = [
     {
         "id": "dscr_nonbinding",
         "name": "Phase B Test 4 — DSCR-Capped Non-Binding (low cap)",
-        "deal_type": "acquisition_minor_reno",
+        "deal_type": "acquisition",
         "milestones": ["close", "construction", "operation_stabilized", "divestment"],
         "phase_durations": {"construction": 180, "operation_stabilized": 730},
         "debt_types": ["permanent_debt"],
@@ -205,7 +205,7 @@ TEST_CASES = [
     {
         "id": "dscr_binding",
         "name": "Phase B Test 5 — DSCR-Capped Binding (high cap)",
-        "deal_type": "acquisition_minor_reno",
+        "deal_type": "acquisition",
         "milestones": ["close", "construction", "operation_stabilized", "divestment"],
         "phase_durations": {"construction": 180, "operation_stabilized": 730},
         "debt_types": ["permanent_debt"],
@@ -226,7 +226,7 @@ TEST_CASES = [
     {
         "id": "ir_12mo",
         "name": "Phase B Test 6 — Interest Reserve (12mo)",
-        "deal_type": "acquisition_major_reno",
+        "deal_type": "value_add",
         "milestones": ["close", "pre_development", "construction", "operation_stabilized", "divestment"],
         "phase_durations": {"pre_development": 60, "construction": 365, "operation_stabilized": 1095},
         "debt_types": ["construction_loan", "permanent_debt"],
@@ -255,7 +255,7 @@ TEST_CASES = [
     {
         "id": "ci_12mo",
         "name": "Phase B Test 7 — Capitalized Interest (12mo)",
-        "deal_type": "acquisition_major_reno",
+        "deal_type": "value_add",
         "milestones": ["close", "pre_development", "construction", "operation_stabilized", "divestment"],
         "phase_durations": {"pre_development": 60, "construction": 365, "operation_stabilized": 1095},
         "debt_types": ["construction_loan", "permanent_debt"],
@@ -284,7 +284,7 @@ TEST_CASES = [
     {
         "id": "ir_3mo_short",
         "name": "Phase B Test 8 — Short Construction (3mo, IR)",
-        "deal_type": "acquisition_minor_reno",
+        "deal_type": "acquisition",
         "milestones": ["close", "construction", "operation_stabilized", "divestment"],
         "phase_durations": {"construction": 90, "operation_stabilized": 730},
         "debt_types": ["construction_loan", "permanent_debt"],

@@ -71,7 +71,7 @@ ROUND_TRIP_CASES: list[tuple[type, dict]] = [
             "name": "Contract Model",
             "version": 1,
             "is_active": True,
-            "project_type": "acquisition_minor_reno",
+            "project_type": "acquisition",
         },
     ),
     (
@@ -83,7 +83,7 @@ ROUND_TRIP_CASES: list[tuple[type, dict]] = [
             "name": "Contract Model",
             "version": 1,
             "is_active": True,
-            "project_type": "acquisition_minor_reno",
+            "project_type": "acquisition",
             "created_at": NOW,
         },
     ),

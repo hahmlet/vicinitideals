@@ -25,7 +25,7 @@
     "name": "Tower",
     "version": 1,
     "is_active": true,
-    "project_type": "acquisition_minor_reno",
+    "project_type": "acquisition",
     "id": "cc9e52f9-f2b2-4ce8-a129-082faf49f1b2",
     "project_id": "4050fda3-f43f-4aaf-b09b-7d74ffa521fc",
     "created_by_user_id": "29ccd6e6-020a-42c9-9dcd-6978499c8d2b",

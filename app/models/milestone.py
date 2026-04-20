@@ -37,7 +37,7 @@ class MilestoneType(str, enum.Enum):
 # Default durations (days) per milestone type and deal type
 # Used when a new Project is created to pre-populate the milestone list.
 DEFAULT_DURATIONS: dict[str, dict[str, int]] = {
-    "acquisition_minor_reno": {
+    "acquisition": {
         # Renamed to "Acquisition" in the UI — this is a pure hold/stabilize
         # strategy, no renovation phase needed. Construction milestone removed
         # per user feedback: "Minor Renovation was really deferred maintenance,
@@ -49,7 +49,7 @@ DEFAULT_DURATIONS: dict[str, dict[str, int]] = {
         "operation_stabilized": 1825,  # 5 years
         "divestment": 1,  # single-day event — sale closing date
     },
-    "acquisition_major_reno": {
+    "value_add": {
         "offer_made": 14,
         "under_contract": 30,
         "close": 45,
@@ -59,7 +59,7 @@ DEFAULT_DURATIONS: dict[str, dict[str, int]] = {
         "operation_stabilized": 1825,
         "divestment": 1,  # single-day event — sale closing date
     },
-    "acquisition_conversion": {
+    "conversion": {
         "offer_made": 14,
         "under_contract": 30,
         "close": 45,

@@ -25,7 +25,7 @@
     "name": "A&P",
     "version": 1,
     "is_active": true,
-    "project_type": "acquisition_conversion",
+    "project_type": "conversion",
     "id": "09fbd93d-8d40-4ed5-a772-716f7214aaf5",
     "project_id": "e2610fd8-3186-449f-a321-19d6413fbdbd",
     "created_by_user_id": "29ccd6e6-020a-42c9-9dcd-6978499c8d2b",

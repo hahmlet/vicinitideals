@@ -50,8 +50,8 @@ An accurate model that is hard to use is a good problem to have. A pretty app th
 ### 8. Project Type Language
 **Problem**: "Minor Renovation" actually means "Deferred Maintenance" (not adding value, just catching up to market). "Major Renovation" means "Value-Add." These labels mislead users.
 **Solution**: Rename project types to match business intent:
-- `acquisition_minor_reno` → `acquisition_deferred_maintenance` or `acquisition_ltl_catchup`
-- `acquisition_major_reno` → `acquisition_value_add`
+- `acquisition` → `acquisition_deferred_maintenance` or `acquisition_ltl_catchup`
+- `value_add` → `acquisition_value_add`
 - Keep internal enum values for backward compat, change display labels.
 
 ---

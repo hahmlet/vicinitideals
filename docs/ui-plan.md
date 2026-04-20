@@ -47,7 +47,7 @@ Tabs:
 
 **The core underwriting form.** Where all assumptions are entered and edited.
 
-- Header: model name, version, project type selector (acquisition_minor_reno / acquisition_major_reno / acquisition_conversion / new_construction), is_active toggle
+- Header: model name, version, project type selector (acquisition / value_add / conversion / new_construction), is_active toggle
 - **Section: Acquisition** — purchase price, closing costs %
 - **Section: Project-specific inputs** — dynamically shown based on project_type:
   - Renovation cost, months (minor/major reno)

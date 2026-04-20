@@ -261,9 +261,9 @@ _STATUS_DISPLAY: dict[str, tuple[str, str]] = {
 }
 
 _TYPE_DISPLAY: dict[str, str] = {
-    "acquisition_minor_reno": "Acquisition",
-    "acquisition_major_reno": "Value-Add",
-    "acquisition_conversion": "Conversion",
+    "acquisition": "Acquisition",
+    "value_add": "Value-Add",
+    "conversion": "Conversion",
     "new_construction": "New Construction",
 }
 
@@ -1741,7 +1741,7 @@ async def create_deal(
     creating a new one (used when coming from the opportunity detail page)."""
     form = await request.form()
     name = str(form.get("name", "")).strip()
-    deal_type_raw = str(form.get("deal_type", "acquisition_minor_reno")).strip()
+    deal_type_raw = str(form.get("deal_type", "acquisition")).strip()
     org_id_raw = str(form.get("org_id", "")).strip()
     opp_id_raw = str(form.get("opportunity_id", "")).strip()
 
@@ -1769,7 +1769,7 @@ async def create_deal(
     try:
         deal_type = ProjectType(deal_type_raw)
     except ValueError:
-        deal_type = ProjectType.acquisition_minor_reno
+        deal_type = ProjectType.acquisition
 
     # If an existing opportunity ID was passed (from opp detail page), link to it instead.
     opportunity: Opportunity | None = None
@@ -2049,7 +2049,7 @@ async def create_model_for_deal(
     form = await request.form()
     opp_id_raw = str(form.get("opportunity_id", "")).strip()
     name = str(form.get("name", "Base Case")).strip()
-    deal_type_raw = str(form.get("deal_type", "acquisition_minor_reno")).strip()
+    deal_type_raw = str(form.get("deal_type", "acquisition")).strip()
 
     try:
         opp_id = UUID(opp_id_raw)
@@ -2064,7 +2064,7 @@ async def create_model_for_deal(
     try:
         deal_type = ProjectType(deal_type_raw)
     except ValueError:
-        deal_type = ProjectType.acquisition_minor_reno
+        deal_type = ProjectType.acquisition
 
     # Find or create a top-level Deal for this Opportunity
     existing_top_deal = (await session.execute(
@@ -2321,16 +2321,16 @@ async def opportunity_wizard_step(
     dedup_count = await _get_dedup_count(session)
 
     _deal_type_labels = {
-        "acquisition_minor_reno": "Acquisition",
-        "acquisition_major_reno": "Value-Add",
-        "acquisition_conversion": "Conversion",
+        "acquisition": "Acquisition",
+        "value_add": "Value-Add",
+        "conversion": "Conversion",
         "new_construction": "New Construction",
     }
 
     if step == 1:
         # Create or update Opportunity
         name = str(form.get("name", "")).strip()
-        deal_type = str(form.get("deal_type", "acquisition_major_reno"))
+        deal_type = str(form.get("deal_type", "value_add"))
         opp_status = str(form.get("status", "hypothetical"))
         source = str(form.get("source", "manual"))
         asking_price_raw = str(form.get("asking_price", "") or "").replace(",", "").strip()
@@ -2466,7 +2466,7 @@ async def opportunity_wizard_step(
 
         await session.commit()
 
-        deal_type = str(form.get("deal_type", "acquisition_major_reno"))
+        deal_type = str(form.get("deal_type", "value_add"))
         asking_price_raw = str(form.get("asking_price", "") or "")
         opp_notes = str(form.get("notes", "") or "")
 
@@ -3634,11 +3634,11 @@ async def create_deal_from_listing(
         return HTMLResponse("<p class='text-muted'>Listing not found.</p>", status_code=404)
 
     form = await request.form()
-    deal_type_raw = str(form.get("deal_type", "acquisition_major_reno")).strip()
+    deal_type_raw = str(form.get("deal_type", "value_add")).strip()
     try:
         deal_type = ProjectType(deal_type_raw)
     except ValueError:
-        deal_type = ProjectType.acquisition_major_reno
+        deal_type = ProjectType.value_add
 
     user = await _get_user(session, request)
     from app.models.org import Organization
@@ -4518,9 +4518,9 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
         ).keys()),
         "wizard_deal_type": default_project.deal_type if default_project else "",
         "wizard_deal_type_label": {
-            "acquisition_minor_reno": "Acquisition",
-            "acquisition_major_reno": "Value-Add",
-            "acquisition_conversion": "Conversion",
+            "acquisition": "Acquisition",
+            "value_add": "Value-Add",
+            "conversion": "Conversion",
             "new_construction": "New Construction",
         }.get(default_project.deal_type if default_project else "", "Project"),
         "income_mode": (_scenario.income_mode if _scenario else "revenue_opex") or "revenue_opex",
@@ -5399,7 +5399,7 @@ async def create_deal_project(
         try:
             pt = ProjectType(str(deal.project_type))
         except ValueError:
-            pt = ProjectType.acquisition_minor_reno
+            pt = ProjectType.acquisition
 
     # Find opportunity via existing projects for this scenario
     _existing_proj = (await session.execute(
@@ -5511,7 +5511,7 @@ async def split_multiparcel_projects(
     try:
         pt = ProjectType(existing_proj.deal_type)
     except ValueError:
-        pt = ProjectType.acquisition_minor_reno
+        pt = ProjectType.acquisition
 
     # Rename existing project to include first APN and seed its assignments
     existing_proj.name = f"Project 1 — {apns[0]}"
@@ -7729,13 +7729,13 @@ async def model_builder_line_form(
     # Phase options scoped to this deal type — prevents assigning costs to phases that don't exist
     _project_type_str = str(getattr(model, "project_type", "") or "").replace("ProjectType.", "")
     _USE_PHASES_BY_TYPE: dict[str, list[tuple[str, str]]] = {
-        "acquisition_minor_reno": [
+        "acquisition": [
             ("acquisition", "Acquisition"),
             ("operation", "Operations"),
             ("exit", "Exit / Sale"),
             ("other", "Other"),
         ],
-        "acquisition_major_reno": [
+        "value_add": [
             ("acquisition", "Acquisition"),
             ("pre_construction", "Pre-Development"),
             ("construction", "Construction / Renovation"),
@@ -7743,7 +7743,7 @@ async def model_builder_line_form(
             ("exit", "Exit / Sale"),
             ("other", "Other"),
         ],
-        "acquisition_conversion": [
+        "conversion": [
             ("acquisition", "Acquisition"),
             ("conversion", "Conversion"),
             ("operation", "Operations"),

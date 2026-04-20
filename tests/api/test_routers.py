@@ -164,7 +164,7 @@ async def _seed_model_for_run_tests(
         deal_id=top_deal.id,
         created_by_user_id=user.id,
         name="Workflow Run Deal",
-        project_type=ProjectType.acquisition_minor_reno,
+        project_type=ProjectType.acquisition,
         is_active=True,
     )
     session.add(model)
@@ -175,7 +175,7 @@ async def _seed_model_for_run_tests(
         scenario_id=model.id,
         opportunity_id=opportunity.id,
         name="Default Project",
-        deal_type=ProjectType.acquisition_minor_reno,
+        deal_type=ProjectType.acquisition,
     )
     session.add(dev_project)
     await session.flush()
@@ -389,7 +389,7 @@ async def test_get_project_summary_returns_active_model_rollup(
             deal_id=top_deal.id,
             created_by_user_id=user.id,
             name="Summary Base Case",
-            project_type=ProjectType.acquisition_minor_reno,
+            project_type=ProjectType.acquisition,
             is_active=True,
         )
         session.add(model)
@@ -399,7 +399,7 @@ async def test_get_project_summary_returns_active_model_rollup(
             scenario_id=model.id,
             opportunity_id=opportunity.id,
             name="Default Project",
-            deal_type=ProjectType.acquisition_minor_reno,
+            deal_type=ProjectType.acquisition,
         )
         session.add(dev_project)
         await session.flush()
@@ -541,7 +541,7 @@ async def test_get_model_runs_returns_cashflow_manifest_after_compute(
     assert manifests[0].run_id
     assert manifests[0].inputs_json == {
         "model_id": str(model_id),
-        "project_type": "acquisition_minor_reno",
+        "project_type": "acquisition",
         "hold_period_years": "3.000000",
         "unit_count": 8,
         "income_stream_count": 1,
@@ -1202,7 +1202,7 @@ async def test_compute_portfolio_gantt_and_summary_include_project_rollups(
             deal_id=top_deal_b.id,
             created_by_user_id=user.id,
             name="Division Base Case",
-            project_type=ProjectType.acquisition_major_reno,
+            project_type=ProjectType.value_add,
             is_active=True,
         )
         session.add_all([model_a, model_b])
@@ -1218,7 +1218,7 @@ async def test_compute_portfolio_gantt_and_summary_include_project_rollups(
             scenario_id=model_b.id,
             opportunity_id=project_b.id,
             name="Default Project",
-            deal_type=ProjectType.acquisition_major_reno,
+            deal_type=ProjectType.value_add,
         )
         session.add_all([dev_project_a, dev_project_b])
         await session.flush()
@@ -1384,7 +1384,7 @@ async def test_post_and_get_model_expense_lines_round_trip(
             deal_id=top_deal.id,
             created_by_user_id=user.id,
             name="Expense Line Deal",
-            project_type=ProjectType.acquisition_minor_reno,
+            project_type=ProjectType.acquisition,
         )
         session.add(model)
         await session.flush()
@@ -1393,7 +1393,7 @@ async def test_post_and_get_model_expense_lines_round_trip(
             scenario_id=model.id,
             opportunity_id=opportunity.id,
             name="Default Project",
-            deal_type=ProjectType.acquisition_minor_reno,
+            deal_type=ProjectType.acquisition,
         )
         session.add(dev_project)
         await session.commit()
@@ -1450,7 +1450,7 @@ async def test_update_and_delete_model_income_stream_and_expense_line(
             deal_id=top_deal.id,
             created_by_user_id=user.id,
             name="Editable Assumptions Deal",
-            project_type=ProjectType.acquisition_minor_reno,
+            project_type=ProjectType.acquisition,
         )
         session.add(model)
         await session.flush()
@@ -1459,7 +1459,7 @@ async def test_update_and_delete_model_income_stream_and_expense_line(
             scenario_id=model.id,
             opportunity_id=opportunity.id,
             name="Default Project",
-            deal_type=ProjectType.acquisition_minor_reno,
+            deal_type=ProjectType.acquisition,
         )
         session.add(dev_project)
         await session.commit()
@@ -2199,7 +2199,7 @@ async def test_get_model_json_export_returns_portable_payload(
             deal_id=top_deal.id,
             created_by_user_id=user.id,
             name="JSON Export Deal",
-            project_type=ProjectType.acquisition_minor_reno,
+            project_type=ProjectType.acquisition,
         )
         session.add(model)
         await session.flush()
@@ -2208,7 +2208,7 @@ async def test_get_model_json_export_returns_portable_payload(
             scenario_id=model.id,
             opportunity_id=opportunity.id,
             name="Default Project",
-            deal_type=ProjectType.acquisition_minor_reno,
+            deal_type=ProjectType.acquisition,
         )
         session.add(dev_project)
         await session.flush()
@@ -2307,7 +2307,7 @@ async def test_post_model_import_validate_reports_schema_issues(
         "/api/models/import/validate",
         json={
             "schema_version": "legacy-v0",
-            "deal_model": {"name": "Legacy Payload", "project_type": "acquisition_minor_reno"},
+            "deal_model": {"name": "Legacy Payload", "project_type": "acquisition"},
         },
         headers=auth_headers,
     )
@@ -2338,7 +2338,7 @@ async def test_post_project_model_import_creates_nested_records(
         "schema_version": "deal-json-v1",
         "deal_model": {
             "name": "Imported Deal",
-            "project_type": "acquisition_minor_reno",
+            "project_type": "acquisition",
             "version": 2,
             "is_active": True,
         },
@@ -2451,7 +2451,7 @@ async def test_post_deals_import_creates_project_from_payload_and_links_existing
         },
         "deal_model": {
             "name": "Imported Agent Deal",
-            "project_type": "acquisition_minor_reno",
+            "project_type": "acquisition",
             "version": 1,
             "is_active": True,
             "operational_inputs": {
@@ -2558,7 +2558,7 @@ async def test_exported_model_json_round_trips_through_validation_and_import(
             deal_id=top_deal.id,
             created_by_user_id=user.id,
             name="Round Trip Deal",
-            project_type=ProjectType.acquisition_minor_reno,
+            project_type=ProjectType.acquisition,
             is_active=True,
         )
         session.add(model)
@@ -2568,7 +2568,7 @@ async def test_exported_model_json_round_trips_through_validation_and_import(
             scenario_id=model.id,
             opportunity_id=source_project.id,
             name="Default Project",
-            deal_type=ProjectType.acquisition_minor_reno,
+            deal_type=ProjectType.acquisition,
         )
         session.add(dev_project)
         await session.flush()
@@ -2671,7 +2671,7 @@ async def test_get_model_excel_export_returns_multisheet_workbook(
             deal_id=top_deal.id,
             created_by_user_id=user.id,
             name="Tower Test Deal",
-            project_type=ProjectType.acquisition_minor_reno,
+            project_type=ProjectType.acquisition,
         )
         session.add(model)
         await session.flush()
@@ -2680,7 +2680,7 @@ async def test_get_model_excel_export_returns_multisheet_workbook(
             scenario_id=model.id,
             opportunity_id=opportunity.id,
             name="Default Project",
-            deal_type=ProjectType.acquisition_minor_reno,
+            deal_type=ProjectType.acquisition,
         )
         session.add(dev_project)
         await session.flush()
@@ -2828,7 +2828,7 @@ async def test_get_waterfall_report_returns_investor_timelines_and_summary(
             deal_id=top_deal.id,
             created_by_user_id=user.id,
             name="Investor Distribution Deal",
-            project_type=ProjectType.acquisition_minor_reno,
+            project_type=ProjectType.acquisition,
         )
         session.add(model)
         await session.flush()
@@ -2837,7 +2837,7 @@ async def test_get_waterfall_report_returns_investor_timelines_and_summary(
             scenario_id=model.id,
             opportunity_id=opportunity.id,
             name="Default Project",
-            deal_type=ProjectType.acquisition_minor_reno,
+            deal_type=ProjectType.acquisition,
         )
         session.add(dev_project)
         await session.flush()

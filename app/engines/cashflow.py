@@ -581,22 +581,22 @@ def _build_phase_plan(
     phases: list[PhaseSpec] = [PhaseSpec(PeriodType.acquisition, 1)]
 
     if project_type in {
-        "acquisition_major_reno",
-        "acquisition_conversion",
+        "value_add",
+        "conversion",
         "new_construction",
     } and bool(inputs.hold_phase_enabled):
         hold_months = _positive_int(inputs.hold_months, fallback=0)
         if hold_months > 0:
             phases.append(PhaseSpec(PeriodType.hold, hold_months))
 
-    if project_type == "acquisition_minor_reno":
+    if project_type == "acquisition":
         phases.append(
             PhaseSpec(
                 PeriodType.minor_renovation,
                 _positive_int(inputs.renovation_months, fallback=1),
             )
         )
-    elif project_type == "acquisition_major_reno":
+    elif project_type == "value_add":
         # Optional pre-construction phase when user added a Pre Development milestone
         if has_pre_development_milestone or _positive_int(inputs.entitlement_months, fallback=0) > 0:
             phases.append(PhaseSpec(
@@ -609,7 +609,7 @@ def _build_phase_plan(
                 _positive_int(inputs.renovation_months, fallback=1),
             )
         )
-    elif project_type == "acquisition_conversion":
+    elif project_type == "conversion":
         phases.append(
             PhaseSpec(
                 PeriodType.pre_construction,
@@ -901,7 +901,7 @@ def _resolve_active_end_rank(module: object, all_modules: list) -> int:
 
 # Maps UseLinePhase string values to the PeriodType(s) where the outflow fires.
 # "construction" covers all building-work phases so it fires regardless of project type
-# (acquisition_minor_reno uses minor_renovation; acquisition_major_reno uses major_renovation;
+# (acquisition uses minor_renovation; value_add uses major_renovation;
 #  new_construction uses construction). "pre_construction" falls back to acquisition.
 _USE_LINE_PHASE_MAP: dict[str, set[PeriodType]] = {
     "acquisition":     {PeriodType.acquisition},

@@ -66,9 +66,9 @@ tr:hover .archive-btn { opacity: 1; }
       </select>
       <select class="filter-select" name="type">
         <option value="" {% if not deal_type %}selected{% endif %}>All Types</option>
-        <option value="acquisition_minor_reno" {% if deal_type == 'acquisition_minor_reno' %}selected{% endif %}>Acquisition</option>
-        <option value="acquisition_major_reno" {% if deal_type == 'acquisition_major_reno' %}selected{% endif %}>Value-Add</option>
-        <option value="acquisition_conversion" {% if deal_type == 'acquisition_conversion' %}selected{% endif %}>Conversion</option>
+        <option value="acquisition" {% if deal_type == 'acquisition' %}selected{% endif %}>Acquisition</option>
+        <option value="value_add" {% if deal_type == 'value_add' %}selected{% endif %}>Value-Add</option>
+        <option value="conversion" {% if deal_type == 'conversion' %}selected{% endif %}>Conversion</option>
         <option value="new_construction" {% if deal_type == 'new_construction' %}selected{% endif %}>New Construction</option>
       </select>
       <select class="filter-select" name="model">

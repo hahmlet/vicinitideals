@@ -848,9 +848,9 @@ function handleComputeResult(evt) {
           <label class="field-label">Deal Type</label>
           <select class="filter-select" style="width:100%;margin-top:4px" name="deal_type">
             {% set _pt = model.project_type.value if model.project_type is not string else model.project_type %}
-            <option value="acquisition_minor_reno" {% if _pt == 'acquisition_minor_reno' %}selected{% endif %}>Acquisition</option>
-            <option value="acquisition_major_reno" {% if _pt == 'acquisition_major_reno' %}selected{% endif %}>Value-Add</option>
-            <option value="acquisition_conversion" {% if _pt == 'acquisition_conversion' %}selected{% endif %}>Conversion</option>
+            <option value="acquisition" {% if _pt == 'acquisition' %}selected{% endif %}>Acquisition</option>
+            <option value="value_add" {% if _pt == 'value_add' %}selected{% endif %}>Value-Add</option>
+            <option value="conversion" {% if _pt == 'conversion' %}selected{% endif %}>Conversion</option>
             <option value="new_construction" {% if _pt == 'new_construction' %}selected{% endif %}>New Construction</option>
           </select>
         </div>
@@ -1124,9 +1124,9 @@ function saveModelName(el) {
         <div>
           <label class="field-label">Project Type</label>
           <select class="filter-select" style="width:100%;margin-top:4px" name="deal_type">
-            <option value="acquisition_minor_reno" {% if model.project_type | string | replace('ProjectType.','') == 'acquisition_minor_reno' %}selected{% endif %}>Acquisition</option>
-            <option value="acquisition_major_reno" {% if model.project_type | string | replace('ProjectType.','') == 'acquisition_major_reno' %}selected{% endif %}>Value-Add</option>
-            <option value="acquisition_conversion" {% if model.project_type | string | replace('ProjectType.','') == 'acquisition_conversion' %}selected{% endif %}>Conversion</option>
+            <option value="acquisition" {% if model.project_type | string | replace('ProjectType.','') == 'acquisition' %}selected{% endif %}>Acquisition</option>
+            <option value="value_add" {% if model.project_type | string | replace('ProjectType.','') == 'value_add' %}selected{% endif %}>Value-Add</option>
+            <option value="conversion" {% if model.project_type | string | replace('ProjectType.','') == 'conversion' %}selected{% endif %}>Conversion</option>
             <option value="new_construction" {% if model.project_type | string | replace('ProjectType.','') == 'new_construction' %}selected{% endif %}>New Construction</option>
           </select>
           <div style="font-size:12px;color:var(--text-muted);margin-top:6px">You'll set up this project's timeline after creating it.</div>
@@ -1272,9 +1272,9 @@ function submitCloneFrom(e) {
             <select class="filter-select" id="wizard-deal-type"
                     style="width:100%;font-size:14px;padding:9px 12px">
               {% set _wdt = wizard_deal_type | string | replace('ProjectType.','') %}
-              <option value="acquisition_minor_reno" {% if _wdt == 'acquisition_minor_reno' %}selected{% endif %}>Acquisition — Minor Renovation</option>
-              <option value="acquisition_major_reno" {% if _wdt == 'acquisition_major_reno' %}selected{% endif %}>Acquisition — Major Renovation</option>
-              <option value="acquisition_conversion" {% if _wdt == 'acquisition_conversion' %}selected{% endif %}>Acquisition — Conversion</option>
+              <option value="acquisition" {% if _wdt == 'acquisition' %}selected{% endif %}>Acquisition — Minor Renovation</option>
+              <option value="value_add" {% if _wdt == 'value_add' %}selected{% endif %}>Acquisition — Major Renovation</option>
+              <option value="conversion" {% if _wdt == 'conversion' %}selected{% endif %}>Acquisition — Conversion</option>
               <option value="new_construction" {% if _wdt == 'new_construction' %}selected{% endif %}>New Construction</option>
             </select>
           </div>
@@ -1331,7 +1331,7 @@ function submitCloneFrom(e) {
           {% for value, label, phase in _all_phases if value in group_values %}
           {% set is_default = value in wizard_default_types
                               or value == 'under_contract'
-                              or (value == 'pre_development' and wizard_deal_type in ('acquisition_major_reno','acquisition_conversion','new_construction')) %}
+                              or (value == 'pre_development' and wizard_deal_type in ('value_add','conversion','new_construction')) %}
           <div class="ms-check-item" id="mscheck-{{ value }}">
             <input type="checkbox" id="wms-{{ value }}" name="milestone_types" value="{{ value }}"
                    {% if is_default %}checked{% endif %}>
@@ -1425,9 +1425,9 @@ function selectAnchor(val, el) {
 
 function updateWizardDealType(dealType) {
   var phasesForType = {
-    'acquisition_minor_reno': ['offer_made','under_contract','close','operation_stabilized'],
-    'acquisition_major_reno': ['offer_made','under_contract','close','pre_development','construction','operation_stabilized'],
-    'acquisition_conversion': ['offer_made','under_contract','close','pre_development','operation_stabilized'],
+    'acquisition': ['offer_made','under_contract','close','operation_stabilized'],
+    'value_add': ['offer_made','under_contract','close','pre_development','construction','operation_stabilized'],
+    'conversion': ['offer_made','under_contract','close','pre_development','operation_stabilized'],
     'new_construction':       ['offer_made','under_contract','close','pre_development','construction','operation_stabilized'],
   };
   var defaults = phasesForType[dealType] || [];

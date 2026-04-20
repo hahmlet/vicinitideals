@@ -1208,9 +1208,9 @@ The pill replaces the legacy sidebar "Sources = Uses" banner (removed April 18 2
 21. **Fix-point iteration for sizing convergence** (April 18 2026). DSCR-bound sizing requires knowing the "true" NOI, but the first compute pass can only use an estimate. Each subsequent call reads the previous OperationalOutputs.noi_stabilized, so re-running converges in 2 passes. The `/compute` endpoint loops up to 5x with a 0.005× DSCR tolerance. `gap_fill` mode breaks after one pass.
 
 22. **Deal type labels renamed for business clarity** (April 18 2026). Display labels updated throughout the UI:
-    - `acquisition_minor_reno` → "Acquisition" (was "Minor Renovation"). Construction milestone removed from the default preset — this strategy is pure hold/stabilize with LTL catchup or base escalation on unrenovated units.
-    - `acquisition_major_reno` → "Value-Add" (was "Major Renovation"). Used for unit renovations with measurable rent uplift.
-    - `acquisition_conversion` → "Conversion" (was "Acquisition — Conversion"). Change-of-use projects.
+    - `acquisition` → "Acquisition" (was "Minor Renovation"). Construction milestone removed from the default preset — this strategy is pure hold/stabilize with LTL catchup or base escalation on unrenovated units.
+    - `value_add` → "Value-Add" (was "Major Renovation"). Used for unit renovations with measurable rent uplift.
+    - `conversion` → "Conversion" (was "Acquisition — Conversion"). Change-of-use projects.
     - `new_construction` unchanged.
     Enum values kept for DB compatibility; only display strings changed.
 

@@ -839,7 +839,7 @@ def test_model_settings_propagate_to_outputs(_seed_page, base_url: str) -> None:
         f"{base_url}/ui/models/{model_id}/settings",
         form={
             "name": f"E2E Settings {suffix}",
-            "deal_type": "acquisition_minor_reno",
+            "deal_type": "acquisition",
             "expense_growth_rate_pct_annual": "3.0",
             "exit_cap_rate_pct": "7.0",   # was 5.5 default → change to 7.0
             "hold_period_years": "10",     # was 5 → change to 10

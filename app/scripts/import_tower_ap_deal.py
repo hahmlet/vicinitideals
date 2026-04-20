@@ -1064,15 +1064,15 @@ def _infer_project_type(entry: dict[str, Any]) -> ProjectType:
         raw_inputs = {}
 
     if raw_inputs.get("conversion_cost_per_unit") is not None or raw_inputs.get("unit_count_after_conversion") is not None:
-        return ProjectType.acquisition_conversion
+        return ProjectType.conversion
     if raw_inputs.get("hard_cost_per_unit") is not None and raw_inputs.get("construction_months") is not None:
         return ProjectType.new_construction
     if raw_inputs.get("renovation_cost_total") is not None:
         renovation_months = _to_decimal(raw_inputs.get("renovation_months"), Decimal("0")) or Decimal("0")
         if renovation_months >= Decimal("6"):
-            return ProjectType.acquisition_major_reno
-        return ProjectType.acquisition_minor_reno
-    return ProjectType.acquisition_minor_reno
+            return ProjectType.value_add
+        return ProjectType.acquisition
+    return ProjectType.acquisition
 
 
 def _normalize_phase_list(value: Any) -> list[str]:

@@ -288,7 +288,7 @@ async def seed_deal(session, *, opportunity=None, **overrides) -> Deal:
     defaults = dict(
         opportunity_id=opportunity.id,
         name="Base Case",
-        project_type="acquisition_major_reno",
+        project_type="value_add",
         version=1,
         is_active=True,
     )

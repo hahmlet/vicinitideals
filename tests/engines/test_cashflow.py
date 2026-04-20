@@ -133,7 +133,7 @@ def test_build_phase_plan_major_reno_sequence() -> None:
         selling_costs_pct=Decimal("2.500000"),
     )
 
-    phases = _build_phase_plan("acquisition_major_reno", inputs)
+    phases = _build_phase_plan("value_add", inputs)
 
     assert [phase.period_type for phase in phases] == [
         PeriodType.acquisition,
@@ -209,7 +209,7 @@ def test_build_phase_plan_falls_back_when_some_milestones_are_missing() -> None:
         },
     )
 
-    phases = _build_phase_plan("acquisition_major_reno", inputs)
+    phases = _build_phase_plan("value_add", inputs)
 
     assert [phase.period_type for phase in phases] == [
         PeriodType.acquisition,
@@ -313,7 +313,7 @@ async def _seed_cashflow_deal(session: AsyncSession) -> UUID:
         name="Base Case",
         version=1,
         is_active=True,
-        project_type=ProjectType.acquisition_major_reno,
+        project_type=ProjectType.value_add,
     )
     session.add_all([org, user, opportunity, top_deal, deal])
     await session.flush()
@@ -324,7 +324,7 @@ async def _seed_cashflow_deal(session: AsyncSession) -> UUID:
         scenario_id=deal.id,
         opportunity_id=opportunity.id,
         name="12-unit Major Reno",
-        deal_type=ProjectType.acquisition_major_reno.value,
+        deal_type=ProjectType.value_add.value,
     )
     session.add(project)
     await session.flush()

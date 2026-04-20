@@ -59,7 +59,7 @@ Content-Type: application/json
   "name": "Base Case",
   "version": 1,
   "is_active": true,
-  "project_type": "acquisition_minor_reno"
+  "project_type": "acquisition"
 }
 ```
 
@@ -73,7 +73,7 @@ Content-Type: application/json
   "name": "Base Case",
   "version": 1,
   "is_active": true,
-  "project_type": "acquisition_minor_reno",
+  "project_type": "acquisition",
   "created_at": "2026-04-03T12:00:00Z"
 }
 ```

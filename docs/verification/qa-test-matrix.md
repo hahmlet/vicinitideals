@@ -57,8 +57,8 @@ It intentionally excludes parcel lookup and scraper ingestion except where those
 
 | Project type | Fixture / source | Cash-flow coverage | Waterfall coverage | Investor/report coverage | Special edge guarded |
 | --- | --- | --- | --- | --- | --- |
-| `acquisition_minor_reno` | `tests/fixtures/tower_acquisition.json` | ✅ | ✅ | ✅ | 48-month parity window, minor-reno phase, 22 itemized expense lines |
-| `acquisition_conversion` | `tests/fixtures/ap_conversion.json` | ✅ | ✅ | ✅ | hold + pre-construction + conversion path, 48-month parity window |
+| `acquisition` | `tests/fixtures/tower_acquisition.json` | ✅ | ✅ | ✅ | 48-month parity window, minor-reno phase, 22 itemized expense lines |
+| `conversion` | `tests/fixtures/ap_conversion.json` | ✅ | ✅ | ✅ | hold + pre-construction + conversion path, 48-month parity window |
 | `new_construction` | `tests/fixtures/synthetic_new_construction.json` | ✅ | ✅ | ✅ | milestone-driven schedule, lease-up ramp, synthetic negative-levered-IRR control case |
 
 **Parity note:** the Tower and A&P fixtures are the current Excel-style parity baselines. The synthetic new-construction fixture is a deterministic control benchmark rather than a workbook parity source.

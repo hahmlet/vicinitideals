@@ -437,7 +437,7 @@ async def _seed_base_deal(session: AsyncSession) -> DealModel:
         name="Base Case",
         version=1,
         is_active=True,
-        project_type=ProjectType.acquisition_major_reno,
+        project_type=ProjectType.value_add,
     )
     session.add_all([org, user, opportunity, top_deal, deal])
     await session.flush()

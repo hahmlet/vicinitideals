@@ -101,7 +101,7 @@ class ScenarioCreate(ScenarioBase):
             "name": "Base Case",
             "version": 1,
             "is_active": True,
-            "project_type": "acquisition_minor_reno",
+            "project_type": "acquisition",
         }
     )
 
@@ -120,7 +120,7 @@ class ScenarioRead(ScenarioBase):
             "name": "Base Case",
             "version": 1,
             "is_active": True,
-            "project_type": "acquisition_minor_reno",
+            "project_type": "acquisition",
             "created_at": _EXAMPLE_CREATED_AT,
         },
         from_attributes=True,

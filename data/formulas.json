@@ -15,7 +15,7 @@
       },
       "deal_model": {
         "name": "Tower",
-        "project_type": "acquisition_minor_reno"
+        "project_type": "acquisition"
       },
       "operational_inputs": {
         "purchase_price": 4100000,
@@ -196,7 +196,7 @@
       },
       "deal_model": {
         "name": "A&P",
-        "project_type": "acquisition_conversion"
+        "project_type": "conversion"
       },
       "operational_inputs": {
         "purchase_price": 5500000,

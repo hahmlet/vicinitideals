@@ -34,9 +34,9 @@ from app.models.base import Base
 
 class ProjectType(str, enum.Enum):
     """Scenario type — determines the default milestone sequence and CapEx template."""
-    acquisition_minor_reno = "acquisition_minor_reno"
-    acquisition_major_reno = "acquisition_major_reno"
-    acquisition_conversion = "acquisition_conversion"
+    acquisition = "acquisition"
+    value_add = "value_add"
+    conversion = "conversion"
     new_construction = "new_construction"
 
 

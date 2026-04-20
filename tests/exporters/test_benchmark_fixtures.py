@@ -132,7 +132,7 @@ async def test_export_deal_model_json_includes_itemized_expense_lines(
             created_by_user_id=user.id,
             name="Benchmark Export Deal",
             version=3,
-            project_type=ProjectType.acquisition_minor_reno,
+            project_type=ProjectType.acquisition,
             is_active=True,
         )
         session.add(model)
@@ -143,7 +143,7 @@ async def test_export_deal_model_json_includes_itemized_expense_lines(
             scenario_id=model.id,
             opportunity_id=opportunity.id,
             name="Default Project",
-            deal_type=ProjectType.acquisition_minor_reno.value,
+            deal_type=ProjectType.acquisition.value,
         )
         session.add(dev_project)
         await session.flush()

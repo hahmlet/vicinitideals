@@ -152,9 +152,9 @@
             <label>Deal Type <span style="color:var(--error)">*</span></label>
             <select name="deal_type">
               {% set _dt = deal_type or '' %}
-              <option value="acquisition_minor_reno" {% if _dt == 'acquisition_minor_reno' %}selected{% endif %}>Acquisition — Minor Renovation</option>
-              <option value="acquisition_major_reno" {% if _dt == 'acquisition_major_reno' %}selected{% endif %}>Acquisition — Major Renovation</option>
-              <option value="acquisition_conversion" {% if _dt == 'acquisition_conversion' %}selected{% endif %}>Acquisition — Conversion</option>
+              <option value="acquisition" {% if _dt == 'acquisition' %}selected{% endif %}>Acquisition — Minor Renovation</option>
+              <option value="value_add" {% if _dt == 'value_add' %}selected{% endif %}>Acquisition — Major Renovation</option>
+              <option value="conversion" {% if _dt == 'conversion' %}selected{% endif %}>Acquisition — Conversion</option>
               <option value="new_construction"       {% if _dt == 'new_construction' %}selected{% endif %}>New Construction</option>
             </select>
           </div>

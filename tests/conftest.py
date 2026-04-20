@@ -204,7 +204,7 @@ async def seed_deal_model(
     user: User,
     *,
     name: str = "Base Case",
-    project_type: ProjectType = ProjectType.acquisition_major_reno,
+    project_type: ProjectType = ProjectType.value_add,
 ) -> DealModel:
     """Create a top-level Deal + DealOpportunity + DealModel linked to an Opportunity.
 

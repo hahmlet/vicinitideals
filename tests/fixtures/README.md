@@ -4,8 +4,8 @@ Canonical `REAL-42` benchmark exports used for deterministic regression coverage
 
 | Fixture | Project type | Purpose |
 | --- | --- | --- |
-| `tower_acquisition.json` | `acquisition_minor_reno` | Tower acquisition / minor-reno benchmark |
-| `ap_conversion.json` | `acquisition_conversion` | A&P acquisition / conversion benchmark |
+| `tower_acquisition.json` | `acquisition` | Tower acquisition / minor-reno benchmark |
+| `ap_conversion.json` | `conversion` | A&P acquisition / conversion benchmark |
 | `synthetic_new_construction.json` | `new_construction` | Synthetic edge-case benchmark for milestone-driven new construction |
 
 Each file is a portable `deal-json-v1` export snapshot plus:

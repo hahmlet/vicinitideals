@@ -37,7 +37,7 @@ def create_e2e_scenario(
     page: Page,
     *,
     deal_name: str = "E2E Test Deal",
-    deal_type: str = "acquisition_minor_reno",
+    deal_type: str = "acquisition",
 ) -> str:
     """Create a new deal via the UI and return the model_id UUID string."""
     try:
@@ -486,7 +486,7 @@ def create_seeded_deal(
     page: Page,
     *,
     deal_name: str = "E2E Lifecycle Test Deal",
-    deal_type: str = "acquisition_minor_reno",
+    deal_type: str = "acquisition",
 ) -> tuple[str, str]:
     """Create a fully seeded deal via browser interactions.
 

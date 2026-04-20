@@ -112,7 +112,7 @@ async def test_deal_supports_multiple_scenarios(session):
                 name=name,
                 version=1,
                 is_active=True,
-                project_type=ProjectType.acquisition_minor_reno,
+                project_type=ProjectType.acquisition,
             )
         )
     await session.flush()
