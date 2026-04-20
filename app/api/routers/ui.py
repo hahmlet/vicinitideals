@@ -4319,20 +4319,35 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
     # whichever work-phase milestone the project uses: `construction` for new
     # construction, `minor_renovation` / `major_renovation` for acq-reno
     # deals, `conversion` for conversions, etc.
+    # Each candidate list walks from the ideal match to progressively looser
+    # fallbacks, so a bar still resolves when the exact milestone isn't on
+    # this deal's timeline.  Example: an acq-minor-reno deal may have no
+    # `construction` or `minor_renovation` milestone — "construction" phase
+    # then falls back to `close.end` (construction starts right after close).
     _CM_PHASE_TO_MS: dict[str, list[tuple[str, str]]] = {
-        "acquisition":          [("close", "end")],
-        "pre_development":      [("close", "end")],
-        "pre_construction":     [("close", "end"), ("pre_development", "start")],
+        "acquisition":          [("close", "end"), ("under_contract", "end"), ("offer_made", "end")],
+        "pre_development":      [("pre_development", "start"), ("close", "end")],
+        "pre_construction":     [("pre_development", "start"), ("close", "end")],
         "construction":         [
             ("construction", "start"),
             ("minor_renovation", "start"),
             ("major_renovation", "start"),
             ("renovation", "start"),
             ("conversion", "start"),
+            ("close", "end"),  # fallback: construction begins right after close
         ],
-        "lease_up":             [("operation_lease_up", "start")],
+        "lease_up":             [
+            ("operation_lease_up", "start"),
+            ("construction", "end"),
+            ("minor_renovation", "end"),
+            ("major_renovation", "end"),
+            ("close", "end"),
+        ],
         "operation_lease_up":   [("operation_lease_up", "start")],
-        "stabilized":           [("operation_stabilized", "start")],
+        "stabilized":           [
+            ("operation_stabilized", "start"),
+            ("operation_lease_up", "end"),
+        ],
         "operation_stabilized": [("operation_stabilized", "start")],
         "exit":                 [("divestment", "start"), ("operation_stabilized", "end")],
         "divestment":           [("divestment", "start"), ("operation_stabilized", "end")],
@@ -4409,11 +4424,7 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
                 continue
             _from_date = _phase_to_date(_cm.active_phase_start)
             if not _from_date:
-                # Hard fallback so unresolved start doesn't hide the row:
-                # use the earliest dated milestone on the timeline.
-                _from_date = min(_ms_start_map.values()) if _ms_start_map else None
-                if not _from_date:
-                    continue
+                continue
             _from_day = (_from_date - _epoch_cm).days
             _left = max(0.0, round(100.0 * (_from_day - _g_min_cm) / _span_cm, 2))
             _end_phase = _gantt_end_phase(_cm)
