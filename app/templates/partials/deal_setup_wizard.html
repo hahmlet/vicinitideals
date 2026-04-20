@@ -505,22 +505,23 @@
           {%- set _from_val = _cfg.get('active_from') or _dt_from_defaults.get(dt, 'acquisition') -%}
           {# Resolve default Exit Vehicle: walk the preference chain, pick the
              first debt-type that the user actually selected in step 2; else
-             use the trailing sentinel (usually 'maturity' or 'sale'). #}
+             use the trailing sentinel (usually 'maturity' or 'sale').
+             Jinja doesn't support {% break %} without an extension, so we
+             use a `found` flag on a namespace to short-circuit. #}
           {%- set _chain = _vehicle_pref_chain.get(dt, ['maturity']) -%}
-          {%- set _default_vehicle = namespace(value='maturity') -%}
+          {%- set _dv = namespace(value='maturity', found=false) -%}
           {%- for cand in _chain -%}
-            {%- if cand in ['maturity','sale'] and _default_vehicle.value == 'maturity' and not (_chain[0] in _debt_types) -%}
-              {%- set _default_vehicle.value = cand -%}
-              {%- break -%}
-            {%- elif cand in _debt_types and cand != dt -%}
-              {%- set _default_vehicle.value = cand -%}
-              {%- break -%}
-            {%- elif cand in ['maturity','sale'] -%}
-              {%- set _default_vehicle.value = cand -%}
-              {%- break -%}
+            {%- if not _dv.found -%}
+              {%- if cand in _debt_types and cand != dt -%}
+                {%- set _dv.value = cand -%}
+                {%- set _dv.found = true -%}
+              {%- elif cand in ['maturity','sale'] -%}
+                {%- set _dv.value = cand -%}
+                {%- set _dv.found = true -%}
+              {%- endif -%}
             {%- endif -%}
           {%- endfor -%}
-          {%- set _vehicle_val = _cfg.get('exit_vehicle') or _cfg.get('retired_by') or _default_vehicle.value -%}
+          {%- set _vehicle_val = _cfg.get('exit_vehicle') or _cfg.get('retired_by') or _dv.value -%}
           {# Legacy migration: 'perpetuity' from the old schema → 'maturity'. #}
           {%- if _vehicle_val == 'perpetuity' -%}{%- set _vehicle_val = 'maturity' -%}{%- endif -%}
           <tr style="border-bottom:1px solid var(--border)">
