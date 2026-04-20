@@ -105,7 +105,12 @@ def test_wizard_step2_debt_types(_seed_page, base_url):
 # ---------------------------------------------------------------------------
 
 def test_wizard_step3_dropdowns_not_clipped(_seed_page, base_url):
-    """Verify Active To dropdown can display long options like 'Certificate of Occupancy'."""
+    """Verify Exit Vehicle dropdown renders with long options like 'Refi by Construction-to-Perm'.
+
+    The old three-column layout (Active From / Active To / Retired By) was
+    collapsed to two columns (Active From / Exit Vehicle) in the April 2026
+    cleanup.  "Active To" is now derived server-side from Exit Vehicle.
+    """
     model_id, _ = _fresh_wizard_deal(_seed_page)
     page = _seed_page
     page.goto(f"{base_url}/models/{model_id}/builder?module=deal_setup")
@@ -122,16 +127,25 @@ def test_wizard_step3_dropdowns_not_clipped(_seed_page, base_url):
     page.click('#deal-setup-wizard button:has-text("Next")')
     wait_for_htmx(page)
 
-    # Step 3 should have select dropdowns — wait for them to render
-    page.wait_for_selector('[name="construction_loan_active_to"]', timeout=8000)
-    active_to = page.locator('[name="construction_loan_active_to"]')
-    assert active_to.count() > 0
+    # Step 3 should have Exit Vehicle dropdowns — one per picked debt
+    page.wait_for_selector('[name="construction_loan_exit_vehicle"]', timeout=8000)
+    cl_vehicle = page.locator('[name="construction_loan_exit_vehicle"]')
+    pd_vehicle = page.locator('[name="permanent_debt_exit_vehicle"]')
+    assert cl_vehicle.count() > 0, "construction_loan Exit Vehicle dropdown missing"
+    assert pd_vehicle.count() > 0, "permanent_debt Exit Vehicle dropdown missing"
 
-    # The table should use fixed layout (our fix)
+    # The table should use fixed layout (prevents dropdown clipping)
     table = page.locator('#deal-setup-wizard table')
     assert table.count() > 0
     table_style = table.get_attribute("style") or ""
     assert "table-layout" in table_style
+
+    # Construction loan's default vehicle should be permanent_debt (first picked
+    # retirer in the preference chain).
+    cl_value = cl_vehicle.input_value()
+    assert cl_value == "permanent_debt", (
+        f"construction_loan Exit Vehicle default should be 'permanent_debt', got {cl_value!r}"
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -162,14 +176,24 @@ def test_wizard_step6_reserves_layout(_seed_page, base_url):
     page.click('#deal-setup-wizard button:has-text("Next")')
     wait_for_htmx(page)
 
-    # Step 6 — both reserve inputs should be visible
+    # Walk forward until we land on the Reserves step (the wizard step count
+    # can shift as the setup flow evolves).  Bail out once floor_input is in
+    # the DOM, or after a reasonable upper bound.
     floor_input = page.locator('[name="construction_floor_pct"]')
+    for _ in range(4):
+        if floor_input.count() > 0:
+            break
+        next_btn = page.locator('#deal-setup-wizard button:has-text("Next")')
+        if next_btn.count() == 0 or not next_btn.is_visible():
+            break
+        next_btn.click()
+        wait_for_htmx(page)
     reserve_input = page.locator('[name="operation_reserve_months"]')
-    assert floor_input.is_visible()
-    assert reserve_input.is_visible()
+    title = page.locator('#deal-setup-wizard .wizard-title').first.inner_text()
+    assert floor_input.is_visible(), f"Reserves step never rendered; last title={title!r}"
+    assert reserve_input.is_visible(), f"Reserves step missing reserve_months; last title={title!r}"
 
     # Both should be in the same grid row (our fix makes them side by side)
-    # Verify by checking the grid container style
     grid = page.locator('#deal-setup-wizard .wizard-body > div[style*="grid"]')
     assert grid.count() > 0
 

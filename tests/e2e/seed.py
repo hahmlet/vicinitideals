@@ -233,8 +233,12 @@ def run_deal_setup_wizard(
             cb.check()
     _wizard_click_next_or_review(page)
 
-    # Step 3 — Milestone config (Active From / Active To / Retired By)
-    # Map engine-style phase names to the wizard's select option values
+    # Step 3 — Milestone config (Active From / Exit Vehicle).
+    # "Active To" was removed (derived from Exit Vehicle server-side).
+    # "Retired By" was renamed to "Exit Vehicle" and now accepts:
+    #   "maturity" | "sale" | <sibling_debt_type_key>
+    # Legacy callers that pass `active_to` or `retired_by` still resolve:
+    # active_to is ignored; retired_by="perpetuity" → exit_vehicle="maturity".
     _PHASE_VALUE_MAP = {
         "operation_lease_up": "lease_up",
         "operation_stabilized": "stabilized",
@@ -245,13 +249,12 @@ def run_deal_setup_wizard(
             if "active_from" in cfg:
                 val = _PHASE_VALUE_MAP.get(cfg["active_from"], cfg["active_from"])
                 page.select_option(f'[name="{dt}_active_from"]', val)
-            if "active_to" in cfg:
-                val = _PHASE_VALUE_MAP.get(cfg["active_to"], cfg["active_to"])
-                page.select_option(f'[name="{dt}_active_to"]', val)
-            if "retired_by" in cfg:
-                val = cfg["retired_by"]
-                if val:
-                    page.select_option(f'[name="{dt}_retired_by"]', val)
+            # Prefer the new field; fall back to legacy key for old callers.
+            vehicle = cfg.get("exit_vehicle") or cfg.get("retired_by")
+            if vehicle:
+                if vehicle == "perpetuity":
+                    vehicle = "maturity"
+                page.select_option(f'[name="{dt}_exit_vehicle"]', vehicle)
     _wizard_click_next_or_review(page)
 
     # Step 4 — Debt terms (rate, carry type, amort)
