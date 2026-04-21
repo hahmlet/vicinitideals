@@ -4,7 +4,7 @@ import enum
 import uuid
 from datetime import datetime
 
-from sqlalchemy import JSON, DateTime, ForeignKey, Integer, Numeric, String
+from sqlalchemy import JSON, DateTime, ForeignKey, Integer, Numeric, String, UniqueConstraint
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -109,13 +109,12 @@ class OperationalOutputs(Base):
     scenario_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True),
         ForeignKey("scenarios.id"),
-        unique=True,
         nullable=False,
     )
-    # Per-project output routing (added in migration 0050). Still nullable
-    # because the unique-on-scenario_id constraint above enforces one row per
-    # scenario today; Phase 2b will swap that for (scenario_id, project_id)
-    # unique so per-project output rows can coexist.
+    # Per-project output routing (added in migration 0050). Phase 2b
+    # (migration 0051) swapped UNIQUE(scenario_id) for
+    # UNIQUE(scenario_id, project_id) — see __table_args__ below — so a
+    # scenario may now have N rows, one per project.
     project_id: Mapped[uuid.UUID | None] = mapped_column(
         UUID(as_uuid=True),
         ForeignKey("projects.id", ondelete="CASCADE"),
@@ -134,6 +133,12 @@ class OperationalOutputs(Base):
     sensitivity_matrix: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     computed_at: Mapped[datetime | None] = mapped_column(
         DateTime(timezone=True), nullable=True
+    )
+
+    __table_args__ = (
+        UniqueConstraint(
+            "scenario_id", "project_id", name="uq_operational_outputs_scenario_project"
+        ),
     )
 
     # Relationships

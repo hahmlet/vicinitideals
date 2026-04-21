@@ -79,10 +79,9 @@ async def compute_cash_flows(
     if not projects:
         raise ValueError(f"Deal {deal_uuid} has no Project")
 
-    # Purge once before the per-project loop; _compute_project_cashflow below
-    # writes fresh rows for each project.
-    await _purge_existing_outputs(session, deal_uuid)
-
+    # Per-project purge happens INSIDE _compute_project_cashflow, right after
+    # prev_outputs is captured for DSCR convergence, so each iteration sees its
+    # own prior NOI and wipes only its own rows (not a sibling's).
     last_summary: dict[str, Any] = {}
     for project in projects:
         last_summary = await _compute_project_cashflow(
@@ -151,13 +150,26 @@ async def _compute_project_cashflow(
     )
 
     # Look up previously computed NOI so auto-sizing uses the accurate value.
-    # The estimate from _estimate_stabilized_noi_monthly misses escalation carry-in
-    # and capex reserve, causing the DSCR cap to fire at the wrong level.
-    # We fetch this BEFORE _purge_existing_outputs so the row still exists.
+    # The estimate from _estimate_stabilized_noi_monthly misses escalation
+    # carry-in and capex reserve, causing the DSCR cap to fire at the wrong
+    # level. Scope by project_id now that a scenario can carry N output rows
+    # (one per project) — each project's DSCR convergence reads only its own
+    # prior NOI.
+    #
+    # Note: the outer compute_cash_flows wrapper purges ALL scenario outputs
+    # once before the per-project loop, so within a single compute invocation
+    # prev_outputs is None on every iteration. The prev row only survives
+    # across separate compute calls, which is when convergence matters.
     prev_outputs = (await session.execute(
-        select(OperationalOutputs).where(OperationalOutputs.scenario_id == deal_uuid)
+        select(OperationalOutputs).where(
+            OperationalOutputs.scenario_id == deal_uuid,
+            OperationalOutputs.project_id == project.id,
+        )
     )).scalar_one_or_none()
     prev_noi_stabilized = _to_decimal(prev_outputs.noi_stabilized) if prev_outputs else None
+
+    # Now safe to wipe this project's prior rows — prev_outputs is captured.
+    await _purge_project_outputs(session, deal_uuid, project.id)
 
     income_mode: str = (deal_model.income_mode or "revenue_opex")
 
@@ -588,6 +600,12 @@ async def _load_deal_model(session: AsyncSession, deal_model_id: UUID) -> Scenar
 
 
 async def _purge_existing_outputs(session: AsyncSession, deal_model_id: UUID) -> None:
+    """Scenario-wide purge — deletes every output row for the scenario.
+
+    Kept for anything that still wants to wipe the whole scenario at once;
+    the per-project engine path now prefers :func:`_purge_project_outputs`
+    so an iteration doesn't wipe its siblings' results mid-loop.
+    """
     await session.execute(
         delete(CashFlowLineItem).where(CashFlowLineItem.scenario_id == deal_model_id)
     )
@@ -595,6 +613,24 @@ async def _purge_existing_outputs(session: AsyncSession, deal_model_id: UUID) ->
     await session.execute(
         delete(OperationalOutputs).where(OperationalOutputs.scenario_id == deal_model_id)
     )
+
+
+async def _purge_project_outputs(
+    session: AsyncSession, deal_model_id: UUID, project_id: UUID
+) -> None:
+    """Purge a single project's output rows from the scenario.
+
+    Also deletes legacy rows on this scenario where ``project_id IS NULL``
+    — these exist only if migration 0050's backfill was skipped (never the
+    case in practice, but the guard keeps the engine resilient).
+    """
+    for model in (CashFlowLineItem, CashFlow, OperationalOutputs):
+        await session.execute(
+            delete(model).where(
+                model.scenario_id == deal_model_id,
+                (model.project_id == project_id) | (model.project_id.is_(None)),
+            )
+        )
 
 
 _MILESTONE_TYPE_TO_PHASE_KEY: dict[str, str] = {
