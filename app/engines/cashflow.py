@@ -17,7 +17,7 @@ from app.models.cashflow import (
     OperationalOutputs,
     PeriodType,
 )
-from app.models.capital import CapitalModule
+from app.models.capital import CapitalModule, CapitalModuleProject
 from app.models.deal import IncomeStream, OperatingExpenseLine, OperationalInputs, Scenario, UseLine
 from app.models.milestone import Milestone, MilestoneType
 from app.models.project import Project
@@ -118,9 +118,9 @@ async def _compute_project_cashflow(
     expense_lines = sorted(project.expense_lines, key=lambda line: line.label.lower())
     use_lines = list(project.use_lines)
 
-    capital_modules = list((await session.execute(
-        select(CapitalModule).where(CapitalModule.scenario_id == deal_uuid)
-    )).scalars())
+    capital_modules = await _per_project_capital_modules(
+        session, deal_uuid, project.id
+    )
 
     # Build milestone_dates from ORM Milestone records, overlaying any stored in inputs
     orm_milestones = list((await session.execute(
@@ -597,6 +597,46 @@ async def _load_deal_model(session: AsyncSession, deal_model_id: UUID) -> Scenar
         .where(Scenario.id == deal_model_id)
     )
     return result.scalar_one_or_none()
+
+
+async def _per_project_capital_modules(
+    session: AsyncSession,
+    scenario_id: UUID,
+    project_id: UUID,
+) -> list[CapitalModule]:
+    """Load CapitalModules scoped to a single Project via the junction table.
+
+    Only modules with a ``capital_module_projects`` row for ``project_id``
+    are returned. For single-project scenarios (every production deal today)
+    the backfill from migration 0048 created one junction row per module
+    pointing at the default project — so this query returns the same module
+    list as the old scenario-wide ``WHERE scenario_id=X`` lookup. Math is
+    byte-identical.
+
+    For multi-project scenarios, each project sees only the sources attached
+    to it. A shared Source (junction rows for both P1 and P2) will appear
+    in both projects' module lists — each iteration gets its own ORM
+    instances because SQLAlchemy's identity map is session-scoped.
+
+    Per-project ``amount`` / ``active_from`` / ``auto_size`` overlays from
+    the junction are NOT applied here yet; migration 0048's backfill makes
+    them identical to the CapitalModule's legacy fields for single-project.
+    Phase 2c1 (deferred) will overlay them once the UI can write divergent
+    per-project values.
+    """
+    result = await session.execute(
+        select(CapitalModule)
+        .join(
+            CapitalModuleProject,
+            CapitalModuleProject.capital_module_id == CapitalModule.id,
+        )
+        .where(
+            CapitalModule.scenario_id == scenario_id,
+            CapitalModuleProject.project_id == project_id,
+        )
+        .order_by(CapitalModule.stack_position)
+    )
+    return list(result.scalars())
 
 
 async def _purge_existing_outputs(session: AsyncSession, deal_model_id: UUID) -> None:
