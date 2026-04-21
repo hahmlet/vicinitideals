@@ -1,0 +1,7026 @@
+{
+  "capital_modules": [
+    {
+      "active_phase_end": "exit",
+      "active_phase_start": "lease_up",
+      "funder_type": "permanent_debt",
+      "id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "label": "Permanent Debt (auto)",
+      "source_amount": 0.0,
+      "source_auto_size": true,
+      "stack_position": 1
+    },
+    {
+      "active_phase_end": "exit",
+      "active_phase_start": "acquisition",
+      "funder_type": "common_equity",
+      "id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "label": "Owner Equity",
+      "source_amount": "0",
+      "source_auto_size": null,
+      "stack_position": 2
+    }
+  ],
+  "cash_flow_line_items": [
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "CapEx Reserve",
+      "period": 0
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 0
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "General & Administrative",
+      "period": 0
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "Management Fee",
+      "period": 0
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "Marketing & Leasing",
+      "period": 0
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "Payroll & On-Site Staff",
+      "period": 0
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "Property Insurance",
+      "period": 0
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "Real Estate Taxes",
+      "period": 0
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "Repairs & Maintenance",
+      "period": 0
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "Turnover / Make-Ready",
+      "period": 0
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "Utilities",
+      "period": 0
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "CapEx Reserve",
+      "period": 1
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 1
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "General & Administrative",
+      "period": 1
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "Management Fee",
+      "period": 1
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "Marketing & Leasing",
+      "period": 1
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "Payroll & On-Site Staff",
+      "period": 1
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "Property Insurance",
+      "period": 1
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "Real Estate Taxes",
+      "period": 1
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "Repairs & Maintenance",
+      "period": 1
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "Turnover / Make-Ready",
+      "period": 1
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "Utilities",
+      "period": 1
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 2
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 2
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 2
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 3
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 3
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 3
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 4
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 4
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 4
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 5
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 5
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 5
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 6
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 6
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 6
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 7
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 7
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 7
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 8
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 8
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 8
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 9
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 9
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 9
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 10
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 10
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 10
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 11
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 11
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 11
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 12
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 12
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 12
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 13
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 13
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 13
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 14
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 14
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 14
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 15
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 15
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 15
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 16
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 16
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 16
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 17
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 17
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 17
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 18
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 18
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 18
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 19
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 19
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 19
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 20
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 20
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 20
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 21
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 21
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 21
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 22
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 22
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 22
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 23
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 23
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 23
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 24
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 24
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 24
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 25
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 25
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 25
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 26
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 26
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 26
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 27
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 27
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 27
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 28
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 28
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 28
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 29
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 29
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 29
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 30
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 30
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 30
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 31
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 31
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 31
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 32
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 32
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 32
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 33
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 33
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 33
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 34
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 34
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 34
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 35
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 35
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 35
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 36
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 36
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 36
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 37
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 37
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 37
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 38
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 38
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 38
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 39
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 39
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 39
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 40
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 40
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 40
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 41
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 41
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 41
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 42
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 42
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 42
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 43
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 43
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 43
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 44
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 44
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 44
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 45
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 45
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 45
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 46
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 46
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 46
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 47
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 47
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 47
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 48
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 48
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 48
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 49
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 49
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 49
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 50
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 50
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 50
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 51
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 51
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 51
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 52
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 52
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 52
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 53
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 53
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 53
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 54
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 54
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 54
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 55
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 55
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 55
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 56
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 56
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 56
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 57
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 57
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 57
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 58
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 58
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 58
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 59
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 59
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 59
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 60
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 60
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 60
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 61
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 61
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 61
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 62
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 62
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 62
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 63
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 63
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 63
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 64
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 64
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 64
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 65
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 65
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 65
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 66
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 66
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 66
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 67
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 67
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 67
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 68
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 68
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 68
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 69
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 69
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 69
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 70
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 70
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 70
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 71
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 71
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 71
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 72
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 72
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 72
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 73
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 73
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 73
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 74
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 74
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 74
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 75
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 75
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 75
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 76
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 76
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 76
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 77
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 77
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 77
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 78
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 78
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 78
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 79
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 79
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 79
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 80
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 80
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 80
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 81
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 81
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 81
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 82
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 82
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 82
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 83
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 83
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 83
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 84
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 84
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 84
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 85
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 85
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 85
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 86
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 86
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 86
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 87
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 87
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 87
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 88
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 88
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 88
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 89
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 89
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 89
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 90
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 90
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 90
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 91
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 91
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 91
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 92
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 92
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 92
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 93
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 93
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 93
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 94
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 94
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 94
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 95
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 95
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 95
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 96
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 96
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 96
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 97
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 97
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 97
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 98
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 98
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 98
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 99
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 99
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 99
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 100
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 100
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 100
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 101
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 101
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 101
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 102
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 102
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 102
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 103
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 103
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 103
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 104
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 104
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 104
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 105
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 105
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 105
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 106
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 106
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 106
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 107
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 107
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 107
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 108
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 108
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 108
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 109
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 109
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 109
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 110
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 110
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 110
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 111
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 111
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 111
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 112
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 112
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 112
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 113
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 113
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 113
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 114
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 114
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 114
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 115
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 115
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 115
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 116
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 116
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 116
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 117
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 117
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 117
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 118
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 118
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 118
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 119
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 119
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 119
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 120
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 120
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 120
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 121
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 121
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "income",
+      "income_stream_id": null,
+      "label": "NOI (Stabilized)",
+      "period": 121
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capex_reserve",
+      "income_stream_id": null,
+      "label": "Capex Reserve",
+      "period": 122
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "CapEx Reserve",
+      "period": 122
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "debt_service",
+      "income_stream_id": null,
+      "label": "Debt Service (Stage 1A placeholder)",
+      "period": 122
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "General & Administrative",
+      "period": 122
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "Management Fee",
+      "period": 122
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "Marketing & Leasing",
+      "period": 122
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "Payroll & On-Site Staff",
+      "period": 122
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "Property Insurance",
+      "period": 122
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "Real Estate Taxes",
+      "period": 122
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "Repairs & Maintenance",
+      "period": 122
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capital_event",
+      "income_stream_id": null,
+      "label": "Sale Proceeds",
+      "period": 122
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "capital_event",
+      "income_stream_id": null,
+      "label": "Selling Costs",
+      "period": 122
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "Turnover / Make-Ready",
+      "period": 122
+    },
+    {
+      "amount": null,
+      "capital_module_id": null,
+      "category": "expense",
+      "income_stream_id": null,
+      "label": "Utilities",
+      "period": 122
+    }
+  ],
+  "cash_flows": [
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "0.000000",
+      "noi": "0.000000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 0,
+      "period_date": null,
+      "period_type": "acquisition",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "0.000000",
+      "noi": "0.000000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 1,
+      "period_date": null,
+      "period_type": "minor_renovation",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "41666.666667",
+      "noi": "41666.666667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 2,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "41769.416667",
+      "noi": "41769.416667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 3,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "41872.458333",
+      "noi": "41872.458333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 4,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "41975.708333",
+      "noi": "41975.708333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 5,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "42079.250000",
+      "noi": "42079.250000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 6,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "42183.000000",
+      "noi": "42183.000000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 7,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "42287.041667",
+      "noi": "42287.041667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 8,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "42391.333333",
+      "noi": "42391.333333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 9,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "42495.875000",
+      "noi": "42495.875000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 10,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "42600.708333",
+      "noi": "42600.708333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 11,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "42705.750000",
+      "noi": "42705.750000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 12,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "42811.083333",
+      "noi": "42811.083333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 13,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "42916.666667",
+      "noi": "42916.666667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 14,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "43022.500000",
+      "noi": "43022.500000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 15,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "43128.625000",
+      "noi": "43128.625000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 16,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "43235.000000",
+      "noi": "43235.000000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 17,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "43341.625000",
+      "noi": "43341.625000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 18,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "43448.500000",
+      "noi": "43448.500000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 19,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "43555.666667",
+      "noi": "43555.666667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 20,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "43663.083333",
+      "noi": "43663.083333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 21,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "43770.750000",
+      "noi": "43770.750000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 22,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "43878.708333",
+      "noi": "43878.708333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 23,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "43986.916667",
+      "noi": "43986.916667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 24,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "44095.416667",
+      "noi": "44095.416667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 25,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "44204.166667",
+      "noi": "44204.166667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 26,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "44313.166667",
+      "noi": "44313.166667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 27,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "44422.458333",
+      "noi": "44422.458333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 28,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "44532.041667",
+      "noi": "44532.041667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 29,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "44641.875000",
+      "noi": "44641.875000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 30,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "44751.958333",
+      "noi": "44751.958333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 31,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "44862.333333",
+      "noi": "44862.333333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 32,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "44972.958333",
+      "noi": "44972.958333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 33,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "45083.875000",
+      "noi": "45083.875000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 34,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "45195.083333",
+      "noi": "45195.083333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 35,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "45306.541667",
+      "noi": "45306.541667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 36,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "45418.291667",
+      "noi": "45418.291667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 37,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "45530.291667",
+      "noi": "45530.291667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 38,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "45642.583333",
+      "noi": "45642.583333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 39,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "45755.166667",
+      "noi": "45755.166667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 40,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "45868.000000",
+      "noi": "45868.000000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 41,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "45981.125000",
+      "noi": "45981.125000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 42,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "46094.500000",
+      "noi": "46094.500000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 43,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "46208.208333",
+      "noi": "46208.208333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 44,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "46322.166667",
+      "noi": "46322.166667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 45,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "46436.416667",
+      "noi": "46436.416667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 46,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "46550.916667",
+      "noi": "46550.916667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 47,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "46665.750000",
+      "noi": "46665.750000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 48,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "46780.833333",
+      "noi": "46780.833333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 49,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "46896.208333",
+      "noi": "46896.208333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 50,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "47011.875000",
+      "noi": "47011.875000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 51,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "47127.791667",
+      "noi": "47127.791667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 52,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "47244.041667",
+      "noi": "47244.041667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 53,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "47360.541667",
+      "noi": "47360.541667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 54,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "47477.333333",
+      "noi": "47477.333333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 55,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "47594.458333",
+      "noi": "47594.458333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 56,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "47711.833333",
+      "noi": "47711.833333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 57,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "47829.500000",
+      "noi": "47829.500000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 58,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "47947.458333",
+      "noi": "47947.458333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 59,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "48065.708333",
+      "noi": "48065.708333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 60,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "48184.250000",
+      "noi": "48184.250000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 61,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "48303.083333",
+      "noi": "48303.083333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 62,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "48422.208333",
+      "noi": "48422.208333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 63,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "48541.625000",
+      "noi": "48541.625000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 64,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "48661.333333",
+      "noi": "48661.333333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 65,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "48781.375000",
+      "noi": "48781.375000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 66,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "48901.666667",
+      "noi": "48901.666667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 67,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "49022.291667",
+      "noi": "49022.291667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 68,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "49143.166667",
+      "noi": "49143.166667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 69,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "49264.375000",
+      "noi": "49264.375000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 70,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "49385.875000",
+      "noi": "49385.875000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 71,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "49507.666667",
+      "noi": "49507.666667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 72,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "49629.791667",
+      "noi": "49629.791667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 73,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "49752.166667",
+      "noi": "49752.166667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 74,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "49874.875000",
+      "noi": "49874.875000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 75,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "49997.875000",
+      "noi": "49997.875000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 76,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "50121.208333",
+      "noi": "50121.208333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 77,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "50244.791667",
+      "noi": "50244.791667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 78,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "50368.708333",
+      "noi": "50368.708333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 79,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "50492.958333",
+      "noi": "50492.958333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 80,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "50617.458333",
+      "noi": "50617.458333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 81,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "50742.333333",
+      "noi": "50742.333333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 82,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "50867.458333",
+      "noi": "50867.458333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 83,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "50992.916667",
+      "noi": "50992.916667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 84,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "51118.666667",
+      "noi": "51118.666667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 85,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "51244.750000",
+      "noi": "51244.750000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 86,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "51371.125000",
+      "noi": "51371.125000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 87,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "51497.833333",
+      "noi": "51497.833333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 88,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "51624.833333",
+      "noi": "51624.833333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 89,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "51752.166667",
+      "noi": "51752.166667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 90,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "51879.791667",
+      "noi": "51879.791667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 91,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "52007.750000",
+      "noi": "52007.750000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 92,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "52136.000000",
+      "noi": "52136.000000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 93,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "52264.583333",
+      "noi": "52264.583333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 94,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "52393.500000",
+      "noi": "52393.500000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 95,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "52522.708333",
+      "noi": "52522.708333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 96,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "52652.250000",
+      "noi": "52652.250000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 97,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "52782.083333",
+      "noi": "52782.083333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 98,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "52912.250000",
+      "noi": "52912.250000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 99,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "53042.750000",
+      "noi": "53042.750000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 100,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "53173.583333",
+      "noi": "53173.583333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 101,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "53304.708333",
+      "noi": "53304.708333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 102,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "53436.166667",
+      "noi": "53436.166667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 103,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "53567.958333",
+      "noi": "53567.958333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 104,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "53700.083333",
+      "noi": "53700.083333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 105,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "53832.500000",
+      "noi": "53832.500000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 106,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "53965.291667",
+      "noi": "53965.291667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 107,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "54098.375000",
+      "noi": "54098.375000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 108,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "54231.791667",
+      "noi": "54231.791667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 109,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "54365.541667",
+      "noi": "54365.541667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 110,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "54499.625000",
+      "noi": "54499.625000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 111,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "54634.041667",
+      "noi": "54634.041667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 112,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "54768.791667",
+      "noi": "54768.791667",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 113,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "54903.875000",
+      "noi": "54903.875000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 114,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "55039.250000",
+      "noi": "55039.250000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 115,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "55175.000000",
+      "noi": "55175.000000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 116,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "55311.083333",
+      "noi": "55311.083333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 117,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "55447.500000",
+      "noi": "55447.500000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 118,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "55584.250000",
+      "noi": "55584.250000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 119,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "55721.333333",
+      "noi": "55721.333333",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 120,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "55858.750000",
+      "noi": "55858.750000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 121,
+      "period_date": null,
+      "period_type": "stabilized",
+      "revenue": null
+    },
+    {
+      "capex": null,
+      "cash_balance": null,
+      "debt_service": "0.000000",
+      "net_cash_flow": "7142857.142914",
+      "noi": "0.000000",
+      "opex": null,
+      "outstanding_debt_balance": null,
+      "period": 122,
+      "period_date": null,
+      "period_type": "exit",
+      "revenue": null
+    }
+  ],
+  "operational_outputs": {
+    "cash_on_cash_pct": null,
+    "dscr": "0.000000",
+    "equity_required": "0.000000",
+    "ltv": null,
+    "moic": null,
+    "noi_stabilized": "500000.000004",
+    "project_irr_levered": "0.000000",
+    "project_irr_unlevered": "0.000000",
+    "stabilized_period_start": null,
+    "total_project_cost": "0.000000",
+    "total_timeline_months": 123,
+    "yield_on_cost_pct": null
+  },
+  "scenario_id": "5d1642c6-276f-4640-9694-dd85259dfcf9",
+  "waterfall_results": [
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 0,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 0,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 1,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 1,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 2,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "41666.666667",
+      "cumulative_distributed": "41666.666667",
+      "party_irr_pct": null,
+      "period": 2,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 3,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "41769.416667",
+      "cumulative_distributed": "83436.083334",
+      "party_irr_pct": null,
+      "period": 3,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 4,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "41872.458333",
+      "cumulative_distributed": "125308.541667",
+      "party_irr_pct": null,
+      "period": 4,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 5,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "41975.708333",
+      "cumulative_distributed": "167284.250000",
+      "party_irr_pct": null,
+      "period": 5,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 6,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "42079.250000",
+      "cumulative_distributed": "209363.500000",
+      "party_irr_pct": null,
+      "period": 6,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 7,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "42183.000000",
+      "cumulative_distributed": "251546.500000",
+      "party_irr_pct": null,
+      "period": 7,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 8,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "42287.041667",
+      "cumulative_distributed": "293833.541667",
+      "party_irr_pct": null,
+      "period": 8,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 9,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "42391.333333",
+      "cumulative_distributed": "336224.875000",
+      "party_irr_pct": null,
+      "period": 9,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 10,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "42495.875000",
+      "cumulative_distributed": "378720.750000",
+      "party_irr_pct": null,
+      "period": 10,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 11,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "42600.708333",
+      "cumulative_distributed": "421321.458333",
+      "party_irr_pct": null,
+      "period": 11,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 12,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "42705.750000",
+      "cumulative_distributed": "464027.208333",
+      "party_irr_pct": null,
+      "period": 12,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 13,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "42811.083333",
+      "cumulative_distributed": "506838.291666",
+      "party_irr_pct": null,
+      "period": 13,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 14,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "42916.666667",
+      "cumulative_distributed": "549754.958333",
+      "party_irr_pct": null,
+      "period": 14,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 15,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "43022.500000",
+      "cumulative_distributed": "592777.458333",
+      "party_irr_pct": null,
+      "period": 15,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 16,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "43128.625000",
+      "cumulative_distributed": "635906.083333",
+      "party_irr_pct": null,
+      "period": 16,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 17,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "43235.000000",
+      "cumulative_distributed": "679141.083333",
+      "party_irr_pct": null,
+      "period": 17,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 18,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "43341.625000",
+      "cumulative_distributed": "722482.708333",
+      "party_irr_pct": null,
+      "period": 18,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 19,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "43448.500000",
+      "cumulative_distributed": "765931.208333",
+      "party_irr_pct": null,
+      "period": 19,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 20,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "43555.666667",
+      "cumulative_distributed": "809486.875000",
+      "party_irr_pct": null,
+      "period": 20,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 21,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "43663.083333",
+      "cumulative_distributed": "853149.958333",
+      "party_irr_pct": null,
+      "period": 21,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 22,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "43770.750000",
+      "cumulative_distributed": "896920.708333",
+      "party_irr_pct": null,
+      "period": 22,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 23,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "43878.708333",
+      "cumulative_distributed": "940799.416666",
+      "party_irr_pct": null,
+      "period": 23,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 24,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "43986.916667",
+      "cumulative_distributed": "984786.333333",
+      "party_irr_pct": null,
+      "period": 24,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 25,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "44095.416667",
+      "cumulative_distributed": "1028881.750000",
+      "party_irr_pct": null,
+      "period": 25,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 26,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "44204.166667",
+      "cumulative_distributed": "1073085.916667",
+      "party_irr_pct": null,
+      "period": 26,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 27,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "44313.166667",
+      "cumulative_distributed": "1117399.083334",
+      "party_irr_pct": null,
+      "period": 27,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 28,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "44422.458333",
+      "cumulative_distributed": "1161821.541667",
+      "party_irr_pct": null,
+      "period": 28,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 29,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "44532.041667",
+      "cumulative_distributed": "1206353.583334",
+      "party_irr_pct": null,
+      "period": 29,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 30,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "44641.875000",
+      "cumulative_distributed": "1250995.458334",
+      "party_irr_pct": null,
+      "period": 30,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 31,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "44751.958333",
+      "cumulative_distributed": "1295747.416667",
+      "party_irr_pct": null,
+      "period": 31,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 32,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "44862.333333",
+      "cumulative_distributed": "1340609.750000",
+      "party_irr_pct": null,
+      "period": 32,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 33,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "44972.958333",
+      "cumulative_distributed": "1385582.708333",
+      "party_irr_pct": null,
+      "period": 33,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 34,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "45083.875000",
+      "cumulative_distributed": "1430666.583333",
+      "party_irr_pct": null,
+      "period": 34,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 35,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "45195.083333",
+      "cumulative_distributed": "1475861.666666",
+      "party_irr_pct": null,
+      "period": 35,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 36,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "45306.541667",
+      "cumulative_distributed": "1521168.208333",
+      "party_irr_pct": null,
+      "period": 36,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 37,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "45418.291667",
+      "cumulative_distributed": "1566586.500000",
+      "party_irr_pct": null,
+      "period": 37,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 38,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "45530.291667",
+      "cumulative_distributed": "1612116.791667",
+      "party_irr_pct": null,
+      "period": 38,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 39,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "45642.583333",
+      "cumulative_distributed": "1657759.375000",
+      "party_irr_pct": null,
+      "period": 39,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 40,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "45755.166667",
+      "cumulative_distributed": "1703514.541667",
+      "party_irr_pct": null,
+      "period": 40,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 41,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "45868.000000",
+      "cumulative_distributed": "1749382.541667",
+      "party_irr_pct": null,
+      "period": 41,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 42,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "45981.125000",
+      "cumulative_distributed": "1795363.666667",
+      "party_irr_pct": null,
+      "period": 42,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 43,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "46094.500000",
+      "cumulative_distributed": "1841458.166667",
+      "party_irr_pct": null,
+      "period": 43,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 44,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "46208.208333",
+      "cumulative_distributed": "1887666.375000",
+      "party_irr_pct": null,
+      "period": 44,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 45,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "46322.166667",
+      "cumulative_distributed": "1933988.541667",
+      "party_irr_pct": null,
+      "period": 45,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 46,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "46436.416667",
+      "cumulative_distributed": "1980424.958334",
+      "party_irr_pct": null,
+      "period": 46,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 47,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "46550.916667",
+      "cumulative_distributed": "2026975.875001",
+      "party_irr_pct": null,
+      "period": 47,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 48,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "46665.750000",
+      "cumulative_distributed": "2073641.625001",
+      "party_irr_pct": null,
+      "period": 48,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 49,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "46780.833333",
+      "cumulative_distributed": "2120422.458334",
+      "party_irr_pct": null,
+      "period": 49,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 50,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "46896.208333",
+      "cumulative_distributed": "2167318.666667",
+      "party_irr_pct": null,
+      "period": 50,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 51,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "47011.875000",
+      "cumulative_distributed": "2214330.541667",
+      "party_irr_pct": null,
+      "period": 51,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 52,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "47127.791667",
+      "cumulative_distributed": "2261458.333334",
+      "party_irr_pct": null,
+      "period": 52,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 53,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "47244.041667",
+      "cumulative_distributed": "2308702.375001",
+      "party_irr_pct": null,
+      "period": 53,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 54,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "47360.541667",
+      "cumulative_distributed": "2356062.916668",
+      "party_irr_pct": null,
+      "period": 54,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 55,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "47477.333333",
+      "cumulative_distributed": "2403540.250001",
+      "party_irr_pct": null,
+      "period": 55,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 56,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "47594.458333",
+      "cumulative_distributed": "2451134.708334",
+      "party_irr_pct": null,
+      "period": 56,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 57,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "47711.833333",
+      "cumulative_distributed": "2498846.541667",
+      "party_irr_pct": null,
+      "period": 57,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 58,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "47829.500000",
+      "cumulative_distributed": "2546676.041667",
+      "party_irr_pct": null,
+      "period": 58,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 59,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "47947.458333",
+      "cumulative_distributed": "2594623.500000",
+      "party_irr_pct": null,
+      "period": 59,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 60,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "48065.708333",
+      "cumulative_distributed": "2642689.208333",
+      "party_irr_pct": null,
+      "period": 60,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 61,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "48184.250000",
+      "cumulative_distributed": "2690873.458333",
+      "party_irr_pct": null,
+      "period": 61,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 62,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "48303.083333",
+      "cumulative_distributed": "2739176.541666",
+      "party_irr_pct": null,
+      "period": 62,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 63,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "48422.208333",
+      "cumulative_distributed": "2787598.749999",
+      "party_irr_pct": null,
+      "period": 63,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 64,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "48541.625000",
+      "cumulative_distributed": "2836140.374999",
+      "party_irr_pct": null,
+      "period": 64,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 65,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "48661.333333",
+      "cumulative_distributed": "2884801.708332",
+      "party_irr_pct": null,
+      "period": 65,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 66,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "48781.375000",
+      "cumulative_distributed": "2933583.083332",
+      "party_irr_pct": null,
+      "period": 66,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 67,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "48901.666667",
+      "cumulative_distributed": "2982484.749999",
+      "party_irr_pct": null,
+      "period": 67,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 68,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "49022.291667",
+      "cumulative_distributed": "3031507.041666",
+      "party_irr_pct": null,
+      "period": 68,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 69,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "49143.166667",
+      "cumulative_distributed": "3080650.208333",
+      "party_irr_pct": null,
+      "period": 69,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 70,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "49264.375000",
+      "cumulative_distributed": "3129914.583333",
+      "party_irr_pct": null,
+      "period": 70,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 71,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "49385.875000",
+      "cumulative_distributed": "3179300.458333",
+      "party_irr_pct": null,
+      "period": 71,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 72,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "49507.666667",
+      "cumulative_distributed": "3228808.125000",
+      "party_irr_pct": null,
+      "period": 72,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 73,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "49629.791667",
+      "cumulative_distributed": "3278437.916667",
+      "party_irr_pct": null,
+      "period": 73,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 74,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "49752.166667",
+      "cumulative_distributed": "3328190.083334",
+      "party_irr_pct": null,
+      "period": 74,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 75,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "49874.875000",
+      "cumulative_distributed": "3378064.958334",
+      "party_irr_pct": null,
+      "period": 75,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 76,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "49997.875000",
+      "cumulative_distributed": "3428062.833334",
+      "party_irr_pct": null,
+      "period": 76,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 77,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "50121.208333",
+      "cumulative_distributed": "3478184.041667",
+      "party_irr_pct": null,
+      "period": 77,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 78,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "50244.791667",
+      "cumulative_distributed": "3528428.833334",
+      "party_irr_pct": null,
+      "period": 78,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 79,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "50368.708333",
+      "cumulative_distributed": "3578797.541667",
+      "party_irr_pct": null,
+      "period": 79,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 80,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "50492.958333",
+      "cumulative_distributed": "3629290.500000",
+      "party_irr_pct": null,
+      "period": 80,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 81,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "50617.458333",
+      "cumulative_distributed": "3679907.958333",
+      "party_irr_pct": null,
+      "period": 81,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 82,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "50742.333333",
+      "cumulative_distributed": "3730650.291666",
+      "party_irr_pct": null,
+      "period": 82,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 83,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "50867.458333",
+      "cumulative_distributed": "3781517.749999",
+      "party_irr_pct": null,
+      "period": 83,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 84,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "50992.916667",
+      "cumulative_distributed": "3832510.666666",
+      "party_irr_pct": null,
+      "period": 84,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 85,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "51118.666667",
+      "cumulative_distributed": "3883629.333333",
+      "party_irr_pct": null,
+      "period": 85,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 86,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "51244.750000",
+      "cumulative_distributed": "3934874.083333",
+      "party_irr_pct": null,
+      "period": 86,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 87,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "51371.125000",
+      "cumulative_distributed": "3986245.208333",
+      "party_irr_pct": null,
+      "period": 87,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 88,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "51497.833333",
+      "cumulative_distributed": "4037743.041666",
+      "party_irr_pct": null,
+      "period": 88,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 89,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "51624.833333",
+      "cumulative_distributed": "4089367.874999",
+      "party_irr_pct": null,
+      "period": 89,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 90,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "51752.166667",
+      "cumulative_distributed": "4141120.041666",
+      "party_irr_pct": null,
+      "period": 90,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 91,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "51879.791667",
+      "cumulative_distributed": "4192999.833333",
+      "party_irr_pct": null,
+      "period": 91,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 92,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "52007.750000",
+      "cumulative_distributed": "4245007.583333",
+      "party_irr_pct": null,
+      "period": 92,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 93,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "52136.000000",
+      "cumulative_distributed": "4297143.583333",
+      "party_irr_pct": null,
+      "period": 93,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 94,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "52264.583333",
+      "cumulative_distributed": "4349408.166666",
+      "party_irr_pct": null,
+      "period": 94,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 95,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "52393.500000",
+      "cumulative_distributed": "4401801.666666",
+      "party_irr_pct": null,
+      "period": 95,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 96,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "52522.708333",
+      "cumulative_distributed": "4454324.374999",
+      "party_irr_pct": null,
+      "period": 96,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 97,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "52652.250000",
+      "cumulative_distributed": "4506976.624999",
+      "party_irr_pct": null,
+      "period": 97,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 98,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "52782.083333",
+      "cumulative_distributed": "4559758.708332",
+      "party_irr_pct": null,
+      "period": 98,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 99,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "52912.250000",
+      "cumulative_distributed": "4612670.958332",
+      "party_irr_pct": null,
+      "period": 99,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 100,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "53042.750000",
+      "cumulative_distributed": "4665713.708332",
+      "party_irr_pct": null,
+      "period": 100,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 101,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "53173.583333",
+      "cumulative_distributed": "4718887.291665",
+      "party_irr_pct": null,
+      "period": 101,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 102,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "53304.708333",
+      "cumulative_distributed": "4772191.999998",
+      "party_irr_pct": null,
+      "period": 102,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 103,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "53436.166667",
+      "cumulative_distributed": "4825628.166665",
+      "party_irr_pct": null,
+      "period": 103,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 104,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "53567.958333",
+      "cumulative_distributed": "4879196.124998",
+      "party_irr_pct": null,
+      "period": 104,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 105,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "53700.083333",
+      "cumulative_distributed": "4932896.208331",
+      "party_irr_pct": null,
+      "period": 105,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 106,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "53832.500000",
+      "cumulative_distributed": "4986728.708331",
+      "party_irr_pct": null,
+      "period": 106,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 107,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "53965.291667",
+      "cumulative_distributed": "5040693.999998",
+      "party_irr_pct": null,
+      "period": 107,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 108,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "54098.375000",
+      "cumulative_distributed": "5094792.374998",
+      "party_irr_pct": null,
+      "period": 108,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 109,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "54231.791667",
+      "cumulative_distributed": "5149024.166665",
+      "party_irr_pct": null,
+      "period": 109,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 110,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "54365.541667",
+      "cumulative_distributed": "5203389.708332",
+      "party_irr_pct": null,
+      "period": 110,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 111,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "54499.625000",
+      "cumulative_distributed": "5257889.333332",
+      "party_irr_pct": null,
+      "period": 111,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 112,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "54634.041667",
+      "cumulative_distributed": "5312523.374999",
+      "party_irr_pct": null,
+      "period": 112,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 113,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "54768.791667",
+      "cumulative_distributed": "5367292.166666",
+      "party_irr_pct": null,
+      "period": 113,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 114,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "54903.875000",
+      "cumulative_distributed": "5422196.041666",
+      "party_irr_pct": null,
+      "period": 114,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 115,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "55039.250000",
+      "cumulative_distributed": "5477235.291666",
+      "party_irr_pct": null,
+      "period": 115,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 116,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "55175.000000",
+      "cumulative_distributed": "5532410.291666",
+      "party_irr_pct": null,
+      "period": 116,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 117,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "55311.083333",
+      "cumulative_distributed": "5587721.374999",
+      "party_irr_pct": null,
+      "period": 117,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 118,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "55447.500000",
+      "cumulative_distributed": "5643168.874999",
+      "party_irr_pct": null,
+      "period": 118,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 119,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "55584.250000",
+      "cumulative_distributed": "5698753.124999",
+      "party_irr_pct": null,
+      "period": 119,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 120,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "55721.333333",
+      "cumulative_distributed": "5754474.458332",
+      "party_irr_pct": null,
+      "period": 120,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 121,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "55858.750000",
+      "cumulative_distributed": "5810333.208332",
+      "party_irr_pct": null,
+      "period": 121,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    },
+    {
+      "capital_module_id": "248936a0-c1cb-4f84-a0d0-65dc31eb91d8",
+      "cash_distributed": "0.000000",
+      "cumulative_distributed": "0.000000",
+      "party_irr_pct": null,
+      "period": 122,
+      "tier_id": "c36e1060-6be6-428d-9f9c-a6a2cc25c98d",
+      "tier_priority": 1
+    },
+    {
+      "capital_module_id": "1d57805d-ae48-44a9-ab29-966415bf0d8c",
+      "cash_distributed": "7142857.142914",
+      "cumulative_distributed": "12953190.351246",
+      "party_irr_pct": null,
+      "period": 122,
+      "tier_id": "4349e950-a100-4ae3-a92c-d40a0c3129a3",
+      "tier_priority": 2
+    }
+  ]
+}
