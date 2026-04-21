@@ -47,31 +47,72 @@ class PhaseSpec:
 async def compute_cash_flows(
     deal_model_id: UUID | str, session: AsyncSession
 ) -> dict[str, Any]:
-    """Compute and persist operational cash flows for a deal model.
+    """Compute and persist operational cash flows for every Project in a Scenario.
 
-    The function is idempotent for a given `deal_model_id`: it deletes prior
-    generated `CashFlow`, `CashFlowLineItem`, and `OperationalOutputs` rows,
-    then re-computes the full monthly operating lifecycle using `Decimal`
-    arithmetic and placeholder leverage metrics for Stage 1A.
+    Phase 2 refactor: loads the Scenario once, purges prior output rows once,
+    then iterates ``sorted(scenario.projects, key=created_at)`` and delegates
+    each project to ``_compute_project_cashflow``. For single-project scenarios
+    (every production deal today) the loop runs exactly once and output is
+    byte-identical to the pre-refactor engine.
+
+    The function is idempotent for a given ``deal_model_id``: it deletes prior
+    ``CashFlow`` / ``CashFlowLineItem`` / ``OperationalOutputs`` rows before
+    re-running.
+
+    Returns the last project's summary dict for backward-compat with single-
+    project callers. The Underwriting rollup (``app/engines/underwriting.py``)
+    aggregates across projects directly from the persisted per-project rows.
     """
 
     deal_uuid = UUID(str(deal_model_id))
     # Expire all cached ORM objects so _load_deal_model always reads fresh data.
-    # The compute endpoint pre-loads Project in the same session; without expire_all()
-    # the selectinload in _load_deal_model returns the cached collection and misses
-    # any use_lines / expense_lines written earlier in the same request cycle.
+    # The compute endpoint pre-loads Project in the same session; without
+    # expire_all() the selectinload in _load_deal_model returns the cached
+    # collection and misses any use_lines / expense_lines written earlier in
+    # the same request cycle.
     session.expire_all()
     deal_model = await _load_deal_model(session, deal_uuid)
     if deal_model is None:
         raise ValueError(f"Deal {deal_uuid} was not found")
 
-    project = next(
-        (p for p in sorted(deal_model.projects, key=lambda p: p.created_at)), None
-    )
-    if project is None:
+    projects = sorted(deal_model.projects, key=lambda p: p.created_at)
+    if not projects:
         raise ValueError(f"Deal {deal_uuid} has no Project")
+
+    # Purge once before the per-project loop; _compute_project_cashflow below
+    # writes fresh rows for each project.
+    await _purge_existing_outputs(session, deal_uuid)
+
+    last_summary: dict[str, Any] = {}
+    for project in projects:
+        last_summary = await _compute_project_cashflow(
+            deal_model=deal_model,
+            deal_uuid=deal_uuid,
+            project=project,
+            session=session,
+        )
+    return last_summary
+
+
+async def _compute_project_cashflow(
+    *,
+    deal_model: Scenario,
+    deal_uuid: UUID,
+    project: Project,
+    session: AsyncSession,
+) -> dict[str, Any]:
+    """Compute and persist cash flows for a single Project within a Scenario.
+
+    Writes fresh ``CashFlow`` / ``CashFlowLineItem`` / ``OperationalOutputs``
+    rows scoped to ``project.id``. Caller (``compute_cash_flows``) is
+    responsible for purging prior scenario-wide output rows once, before the
+    per-project loop.
+    """
+
     if project.operational_inputs is None:
-        raise ValueError(f"Deal {deal_uuid} is missing OperationalInputs")
+        raise ValueError(
+            f"Project {project.id} (scenario {deal_uuid}) is missing OperationalInputs"
+        )
 
     inputs = project.operational_inputs
     streams = sorted(project.income_streams, key=lambda stream: stream.label.lower())
@@ -203,7 +244,8 @@ async def compute_cash_flows(
         }
         break  # only one perm takeout per deal
 
-    await _purge_existing_outputs(session, deal_uuid)
+    # Output purge happens once at the outer compute_cash_flows wrapper
+    # before the per-project loop — not per-project here.
     cash_flow_rows: list[CashFlow] = []
     line_item_rows: list[CashFlowLineItem] = []
     net_cash_flow_series: list[Decimal] = []
