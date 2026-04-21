@@ -177,6 +177,10 @@ async def rollup_sources(
                 "total_principal": total,
                 "covered_project_ids": covered,
                 "covered_project_count": len(covered),
+                # True = multi-project / shared-Source. UI uses this to
+                # render the "covers: P1, P2" chip and the drill-down that
+                # shows per-project carry/IR contribution.
+                "is_shared": len(covered) > 1,
                 "interest_rate_pct": src.get("interest_rate_pct"),
                 "amort_term_years": src.get("amort_term_years"),
                 "carry_type": carry.get("carry_type"),

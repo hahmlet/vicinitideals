@@ -83,7 +83,31 @@ Deal ──┬── Scenario (= "Variant")          ← DB table: scenarios; OR
 
 **Multi-project rule (post-0048).** A Scenario may have N Projects. Each Source is identified once on the Scenario (its `CapitalModule` row) and attached to 1+ Projects via `CapitalModuleProject` junction rows. One junction row = project-scoped Source. Multiple junction rows on the same module = shared Source. Each project owns its own UseLines, IncomeStreams, OpEx, OperationalInputs, Milestones, WaterfallTiers, DrawSources.
 
-**Engine coupling (still single-project as of 0048).** The cashflow engine still treats `scenario.projects[0]` as the default project and produces single-project output. Phase 2 will loop per project and add an Underwriting rollup layer. The 0048 junction/anchor schema is forward-compat machinery; it does not change any deal's math until Phase 2.
+**Shared-Source semantics (per Phase 2 product decision, 2026-04-21).** A Source shared across N Projects is *one contract identity* (one lender, one rate, one carry_type, one exit vehicle) with *per-project sizing*. Each project independently sizes its share against its own uses / DSCR / LTV — no cross-project constraint pooling. The junction row for `(module, project)` holds that project's amount / active window / auto_size flag. Total principal on the loan = Σ per-project junction amounts. Underwriting-layer combined DSCR / LTV across a shared Source are **informational notifications only**, not sizing constraints. UX intent: drag a Source chip onto a second Project to add a junction row; that project gets its own amount.
+
+**Engine coupling (Phase 2, merged 2026-04-21).** The cashflow engine (`app/engines/cashflow.py`) loops per project:
+
+1. `compute_cash_flows(scenario_id)` loads the scenario, resolves compute order via `anchor_resolver.ordered_projects` (topological if any `project_anchors` exist; else sorted by `created_at`).
+2. For each project, `_compute_project_cashflow` captures `prev_outputs` for DSCR convergence, purges that project's prior rows only (`_purge_project_outputs`), loads capital modules via the junction (`_per_project_capital_modules`), and writes fresh `CashFlow` / `CashFlowLineItem` / `OperationalOutputs` rows scoped to `project_id`.
+3. Engine-injected reserves (bridge IO carry, closing costs) carry `source_capital_module_id` pointing at the originating `CapitalModule` (Phase 2e).
+4. `app/engines/underwriting_rollup.py` aggregates per-project rows into a scenario-level view (`rollup_cashflow`, `rollup_draws`, `rollup_sources`, `rollup_waterfall`, `rollup_irr`, `rollup_summary`) — pure aggregation, no new math.
+
+For single-project scenarios (every production deal today) the loop runs once, identical math, byte-identical output (validated against `tests/phase2_baseline/` snapshots on 5 prod scenarios).
+
+**Still deferred (documented, code-visible, no UI yet):**
+
+| Item | Trigger | Notes |
+|---|---|---|
+| **2c1 junction overlay** | UI coverage editor writes per-project amounts that diverge from `module.source.amount` | `_per_project_capital_modules` currently returns the unmodified module; overlaying `junction.amount` requires routing auto-sizing to read/write the junction directly (deeper refactor) |
+| **2d1 anchor-driven date resolution** | Phase-B-follows-Phase-A UI request | `project_anchors` table + `anchor_resolver` exist; order is respected, but milestone-date-offset math is not yet computed |
+| **2e1 reserve attribution for aggregates** | Per-Source reserve rollup display wants Operating Reserve + Lease-Up Reserve tagged | These aggregate across multiple modules; attribution needs a split or representative-module decision |
+| **2f joint draw cadence** | First actual shared lender pool (>1 junction rows on one module) | At month-level engine resolution, joint vs independent produce identical numbers; meaningful only under day-level modeling. Independent path is correct-but-conservative until then. |
+
+Read-side helpers already in `app/engines/cashflow.py`:
+
+- `is_shared_source(session, capital_module_id) -> bool`
+- `junction_amount_for(session, capital_module_id, project_id) -> Decimal | None`
+- Rollup row includes `is_shared: bool` and `covered_project_ids: list[str]` for UI consumption.
 
 ### Relationship Cardinalities
 

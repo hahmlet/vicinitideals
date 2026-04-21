@@ -131,7 +131,24 @@ An accurate model that is hard to use is a good problem to have. A pretty app th
 
 ---
 
-## Multi-Project Underwriting — Schema exists, UI does not (as of 0049)
+## Multi-Project Underwriting — Engine ready, UI not (as of 0051)
+
+*Engine / schema status as of 2026-04-21.* Phase 1 (migration 0048) and Phase 2 (migrations 0050 / 0051 + engine refactor) landed and verified byte-identical on prod. The cashflow engine now loops per project, writes per-project output rows, and exposes a scenario-level rollup via `app/engines/underwriting_rollup.py`. What's missing is the UI that lets a user see / edit / compute multi-project deals.
+
+### Deferred engine work (documented invisible capabilities)
+
+These have schema and partial code in place but no UI to exercise. Each line below names a *trigger* — the UI capability that has to land before the matching engine work is worth finishing.
+
+| # | Engine item | Needed when the UI… |
+|---|---|---|
+| A | **Junction overlay (2c1)** — route auto-sizing to read/write `capital_module_projects.amount` instead of `CapitalModule.source.amount`. Read-side helpers (`is_shared_source`, `junction_amount_for`) exist; overlay needs a deeper refactor of `_auto_size_debt_modules` because its writeback path targets the module's source dict. | …lets the user set divergent per-project amounts on a shared Source via the coverage modal. |
+| B | **Anchor-driven dates (2d1)** — walk `project_anchors` chain, compute per-project start-date offsets, seed milestone-date overrides into each project. `anchor_resolver.ordered_projects` detects cycles and orders compute; date math is not yet computed. | …offers a "Project B starts 6 months after Project A's close" UX. Current product direction is *not needed* — each project has its own start date via the wizard, and the Deal / Underwriting start = min(project starts). |
+| C | **Reserve attribution for aggregates (2e1)** — Operating Reserve and Lease-Up Reserve are engine-aggregated across multiple modules; tagging them with a single `source_capital_module_id` requires a split or representative-module decision. Bridge IO and closing-cost reserves are already tagged (Phase 2e). | …shows per-Source reserve totals in the Underwriting Source Package panel. |
+| D | **Joint draw cadence (2f)** — emit one DrawSource row per shared Source, per-project balance-share attribution, per-project carry on draw date. At month-level resolution (current engine) this produces identical numbers to independent per-project — meaningful only once the engine has day-level modeling. Deferred indefinitely. | …a real shared-lender deal is configured AND day-level timing becomes a product requirement. |
+
+### UI work — top of Phase 3
+
+### 21. Underwriting rollup tab
 
 Migration `0048_multi_project_underwriting` landed the data foundation for one Scenario carrying N Projects with shared-Source capital packages and cross-project timelines. The engine and UI still operate in single-project mode. These items are the UI work that needs to land before users can exercise the new schema. See `docs/Underwriting Plan.md` (data-model plan) and `~/.claude/plans/start-planning-out-the-synthetic-squirrel.md` (approved UI plan) for the full design.
 
@@ -178,6 +195,7 @@ Migration `0048_multi_project_underwriting` landed the data foundation for one S
 
 ## Recently fixed
 
+- **[2026-04-21, 0051]** Phase 2 engine refactor shipped: cashflow engine now loops per project, writes per-project output rows, exposes scenario-level rollup via `app/engines/underwriting_rollup.py`. Byte-identical verified against 5 prod baseline scenarios (`tests/phase2_baseline/*.json`). Migrations 0050 / 0051 added `project_id` to output tables and swapped UNIQUE constraint on operational_outputs.
 - **[2026-04-20, 0049]** Sidebar module-card hrefs now preserve `?project=<id>` so navigating between modules no longer silently bounces the user back to the default Project. Previously users on Project 2 who clicked "Timeline" in the sidebar lost their project context because the href used `{{ request.url.path }}?module=xxx` without the project param.
 - **[2026-04-20, 0049]** Stale `ProjectType` enum values (`acquisition_minor_reno` etc.) from the 2026-04-19 rename are now backfilled. Compute no longer crashes with `ValueError: Unsupported project_type` on pre-rename deals.
 

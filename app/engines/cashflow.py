@@ -6,7 +6,7 @@ from decimal import Decimal, ROUND_HALF_UP
 from typing import Any
 from uuid import UUID
 
-from sqlalchemy import delete, select, update as sa_update
+from sqlalchemy import delete, func, select, update as sa_update
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import attributes as sa_attributes, selectinload
 
@@ -618,16 +618,24 @@ async def _per_project_capital_modules(
     list as the old scenario-wide ``WHERE scenario_id=X`` lookup. Math is
     byte-identical.
 
-    For multi-project scenarios, each project sees only the sources attached
-    to it. A shared Source (junction rows for both P1 and P2) will appear
-    in both projects' module lists — each iteration gets its own ORM
-    instances because SQLAlchemy's identity map is session-scoped.
+    For multi-project scenarios, each project sees only the Sources attached
+    to it. A **shared Source** (junction rows for both P1 and P2) appears
+    in both projects' module lists — SQLAlchemy's session-scoped identity
+    map hands each iteration its own ORM instance reference.
 
-    Per-project ``amount`` / ``active_from`` / ``auto_size`` overlays from
-    the junction are NOT applied here yet; migration 0048's backfill makes
-    them identical to the CapitalModule's legacy fields for single-project.
-    Phase 2c1 (deferred) will overlay them once the UI can write divergent
-    per-project values.
+    **Per-project amount overlay from junction is NOT applied yet.** The
+    engine's auto-sizing writes ``module.source["amount"]`` via bulk SQL
+    UPDATE and then ``session.refresh(module, ["source"])``, which reloads
+    the DB state. Overlaying ``module.source["amount"]`` here gets wiped
+    by that refresh before auto-sizing can use it. Proper junction-driven
+    sizing requires routing auto-sizing to read/write ``junction.amount``
+    directly — a deeper refactor tracked as Phase 2c1, triggered when the
+    UI can actually write divergent per-project amounts. Until then,
+    ``junction.amount == module.source.amount`` by Phase 1 backfill, so the
+    single scenario-wide value is correct for every live deal.
+
+    See ``is_shared_source`` and ``junction_amount_for`` for helpers that
+    read the junction directly.
     """
     result = await session.execute(
         select(CapitalModule)
@@ -642,6 +650,84 @@ async def _per_project_capital_modules(
         .order_by(CapitalModule.stack_position)
     )
     return list(result.scalars())
+
+
+async def is_shared_source(
+    session: AsyncSession, capital_module_id: UUID
+) -> bool:
+    """Return True if the CapitalModule is attached to >1 Project via junction.
+
+    Used by the Underwriting rollup to branch on shared-Source display and
+    by future Phase 2f joint-draw logic. For every production deal today
+    (1:1 backfill), always returns False.
+    """
+    count = (
+        await session.execute(
+            select(func.count())
+            .select_from(CapitalModuleProject)
+            .where(CapitalModuleProject.capital_module_id == capital_module_id)
+        )
+    ).scalar_one()
+    return int(count) > 1
+
+
+async def junction_amount_for(
+    session: AsyncSession,
+    capital_module_id: UUID,
+    project_id: UUID,
+) -> Decimal | None:
+    """Return the per-project amount from the junction row, or None if the
+    module isn't attached to that project. Decimal, not float, because this
+    feeds financial math.
+    """
+    row = (
+        await session.execute(
+            select(CapitalModuleProject.amount).where(
+                CapitalModuleProject.capital_module_id == capital_module_id,
+                CapitalModuleProject.project_id == project_id,
+            )
+        )
+    ).scalar_one_or_none()
+    return Decimal(str(row)) if row is not None else None
+
+
+async def is_shared_source(
+    session: AsyncSession, capital_module_id: UUID
+) -> bool:
+    """Return True if the CapitalModule is attached to >1 Project via junction.
+
+    Used by the Underwriting rollup to branch on shared-Source display and
+    by future Phase 2f joint-draw logic. For every production deal today
+    (1:1 backfill), always returns False.
+    """
+    count = (
+        await session.execute(
+            select(func.count())
+            .select_from(CapitalModuleProject)
+            .where(CapitalModuleProject.capital_module_id == capital_module_id)
+        )
+    ).scalar_one()
+    return int(count) > 1
+
+
+async def junction_amount_for(
+    session: AsyncSession,
+    capital_module_id: UUID,
+    project_id: UUID,
+) -> Decimal | None:
+    """Return the per-project amount from the junction row, or None if the
+    module isn't attached to that project. Decimal, not float, because this
+    feeds financial math.
+    """
+    row = (
+        await session.execute(
+            select(CapitalModuleProject.amount).where(
+                CapitalModuleProject.capital_module_id == capital_module_id,
+                CapitalModuleProject.project_id == project_id,
+            )
+        )
+    ).scalar_one_or_none()
+    return Decimal(str(row)) if row is not None else None
 
 
 async def _purge_existing_outputs(session: AsyncSession, deal_model_id: UUID) -> None:

@@ -22,11 +22,27 @@
 - `EGI` = Effective Gross Income (gross revenue − vacancy loss)
 - `DSCR` = NOI / DS
 
-### Multi-project data model (0048) — math unchanged for now
+### Multi-project engine (Phase 2, merged 2026-04-21) — math unchanged per project
 
-As of migration `0048_multi_project_underwriting`, the schema supports one Scenario carrying N Projects via a `capital_module_projects` junction (per-project Source terms) and a `project_anchors` table (cross-project timeline coupling). **None of the math in this document has changed.** The cashflow engine still resolves `scenario.projects[0]` as the default project and runs single-project; existing deals produce byte-identical output post-0048.
+Migrations `0048` (junction + anchors), `0050` (`project_id` on cashflow output tables), and `0051` (UNIQUE swap) let one Scenario compute N Projects' cashflows independently. The engine loops per project; each project reads its own UseLines, IncomeStreams, OpEx, OperationalInputs, Milestones, and a junction-filtered view of CapitalModules. Output rows (CashFlow, CashFlowLineItem, OperationalOutputs) carry `project_id`. The `app/engines/underwriting_rollup.py` module aggregates across projects for Scenario-level display.
 
-Phase 2 will introduce the per-project engine loop, the `underwriting.py` rollup module, and Phase-2 shared-Source joint resolution (when a Source funds 2+ projects, the draw schedule stays single-cadence but balance-share is attributed pro-rata to each project). See `docs/Underwriting Plan.md` for the planned math changes.
+**None of the formulas in this document changed.** Every per-project computation runs the same math as pre-Phase-2: same TPC, same auto-sizing, same carry types, same DSCR convergence, same XIRR, same waterfall. Validated byte-identical against 5 baseline prod scenarios (`tests/phase2_baseline/*.json`).
+
+### Shared Sources — independent sizing, grouped display
+
+A **shared Source** is one `CapitalModule` (one contract identity — one lender, one rate, one carry_type, one exit vehicle) attached to multiple Projects via `capital_module_projects` junction rows. Product decision (2026-04-21): each project sizes its own share against its own numbers. No cross-project constraint pooling.
+
+- **Per-project sizing**: Project A's share of Source-1 is sized on A's DSCR / LTV / gap-fill against A's uses. Project B's share is sized on B's. Total principal on the loan = Σ per-project principals.
+- **Per-project carry / IR / CI**: each project's `Interest Reserve` / `Capitalized Construction Interest` / `Acquisition Interest` UseLine is sized on that project's own uses × carry factor, where the carry factor's `N` comes from the module's active window (which in turn is bounded by the exit vehicle). Since a shared Source has one exit vehicle, `N` is the same across covering projects.
+- **Draw cadence**: at the engine's month-level resolution, joint cadence (one requisition on the 1st) and independent cadence (each project draws on its own schedule) produce identical numbers, because the cadence factor `(N+1)/2` (interest_reserve) or `N` (capitalized_interest) is calendar-month-integer-based. Day-level divergence (Project A draws on day 1, Project B draws on day 15 and pays 2 extra weeks of carry) is not representable at month resolution. Phase 2f joint-cadence code is deferred until day-level modeling lands.
+- **Underwriting-level DSCR / LTV on a shared Source**: informational notification only. No feedback into sizing.
+- **Rollup display**: `rollup_sources` returns one row per CapitalModule with `total_principal = Σ junction.amount`, `covered_project_ids`, and `is_shared: bool`. The UI draws a "covers: P1, P2" chip on shared rows.
+
+### Cross-project compute order
+
+`app/engines/anchor_resolver.py` orders projects via Kahn topological sort over `project_anchors` rows (anchored project runs after its parent). Cycles raise `AnchorCycleError`. Zero-anchor scenarios fall through to `sorted(created_at)` — byte-identical to pre-Phase-2 ordering. Anchor-driven milestone-date resolution (walking the chain + applying offsets) is deferred (2d1); presently the Deal / Underwriting start date = `min(project.start_date)` set per project in the wizard.
+
+---
 
 ---
 
