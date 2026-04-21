@@ -10,19 +10,6 @@ details.archive-section > summary::-webkit-details-marker { display: none; }
 details.archive-section > summary .chevron { font-size: 10px; color: var(--text-muted); transition: transform .15s; }
 details.archive-section[open] > summary .chevron { transform: rotate(90deg); }
 
-/* Jurisdiction dropdown */
-.jur-dropdown { position: relative; display: inline-block; }
-.jur-btn { cursor: pointer; }
-.jur-panel {
-  display: none; position: absolute; top: calc(100% + 4px); left: 0; z-index: 600;
-  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-  box-shadow: 0 4px 16px rgba(0,0,0,.25); padding: 8px 0; min-width: 240px; max-height: 320px; overflow-y: auto;
-}
-.jur-panel.open { display: block; }
-.jur-panel label { display: flex; align-items: center; gap: 6px; padding: 4px 12px; font-size: 12px; cursor: pointer; white-space: nowrap; }
-.jur-panel label:hover { background: var(--hover, rgba(255,255,255,.05)); }
-.jur-panel .jur-divider { border-top: 1px solid var(--border); margin: 4px 0; }
-.jur-panel .jur-all { font-weight: 600; }
 </style>
 {% endblock %}
 
@@ -80,39 +67,53 @@ details.archive-section[open] > summary .chevron { transform: rotate(90deg); }
         <span class="search-icon">🔍</span>
         <input class="search-input" type="search" name="q" value="{{ q }}" placeholder="Search by address…">
       </div>
-      <select class="filter-select" name="source">
-        <option value="" {% if not source %}selected{% endif %}>All Sources</option>
-        <option value="crexi" {% if source == 'crexi' %}selected{% endif %}>Crexi</option>
-        <option value="loopnet" {% if source == 'loopnet' %}selected{% endif %}>LoopNet</option>
-      </select>
-      <select class="filter-select" name="property_type">
-        <option value="" {% if not property_type %}selected{% endif %}>All Types</option>
-        {% for pt in property_types %}
-        <option value="{{ pt }}" {% if property_type == pt %}selected{% endif %}>{{ pt }}</option>
-        {% endfor %}
-      </select>
+      {% set _sources = source if source is iterable and source is not string else ([source] if source else []) %}
+      <div class="ms-dropdown" data-ms-label="Sources">
+        <button type="button" class="filter-select ms-btn" style="min-width:120px;text-align:left">Sources ▾</button>
+        <div class="ms-panel">
+          <label class="ms-all"><input type="checkbox" class="ms-select-all" checked> Select All</label>
+          <div class="ms-divider"></div>
+          {% for val, lbl in [('crexi','Crexi'), ('loopnet','LoopNet')] %}
+          <label><input type="checkbox" name="source" value="{{ val }}" class="ms-cb" {% if not _sources or val in _sources %}checked{% endif %}> {{ lbl }}</label>
+          {% endfor %}
+        </div>
+      </div>
+
+      {% set _ptypes = property_type if property_type is iterable and property_type is not string else ([property_type] if property_type else []) %}
+      <div class="ms-dropdown" data-ms-label="Types">
+        <button type="button" class="filter-select ms-btn" style="min-width:120px;text-align:left">Types ▾</button>
+        <div class="ms-panel">
+          <label class="ms-all"><input type="checkbox" class="ms-select-all" checked> Select All</label>
+          <div class="ms-divider"></div>
+          {% for pt in property_types %}
+          <label><input type="checkbox" name="property_type" value="{{ pt }}" class="ms-cb" {% if not _ptypes or pt in _ptypes %}checked{% endif %}> {{ pt }}</label>
+          {% endfor %}
+        </div>
+      </div>
+
       <input class="filter-input" type="number" name="min_units" value="{{ min_units }}" placeholder="Min units" min="0" style="width:90px">
       <input class="filter-input" type="number" name="max_units" value="{{ max_units }}" placeholder="Max units" min="0" style="width:90px">
-      <select class="filter-select" name="priority_bucket">
-        <option value="" {% if not priority_bucket %}selected{% endif %}>All Buckets</option>
-        <option value="prime" {% if priority_bucket == 'prime' %}selected{% endif %}>Prime</option>
-        <option value="target" {% if priority_bucket == 'target' %}selected{% endif %}>Target</option>
-        <option value="contextual" {% if priority_bucket == 'contextual' %}selected{% endif %}>Contextual</option>
-        <option value="out_of_market" {% if priority_bucket == 'out_of_market' %}selected{% endif %}>Out of Market</option>
-        <option value="ineligible" {% if priority_bucket == 'ineligible' %}selected{% endif %}>Ineligible</option>
-        <option value="unclassified" {% if priority_bucket == 'unclassified' %}selected{% endif %}>Unclassified</option>
-      </select>
 
-      {# ── Jurisdiction checkbox dropdown ── #}
-      <div class="jur-dropdown" id="jur-dropdown">
-        <button type="button" class="filter-select jur-btn" id="jur-toggle" style="min-width:130px;text-align:left">
-          Jurisdiction ▾
-        </button>
-        <div class="jur-panel" id="jur-panel">
-          <label class="jur-all"><input type="checkbox" id="jur-select-all" checked> Select All</label>
-          <div class="jur-divider"></div>
+      {% set _buckets = priority_bucket if priority_bucket is iterable and priority_bucket is not string else ([priority_bucket] if priority_bucket else []) %}
+      <div class="ms-dropdown" data-ms-label="Buckets">
+        <button type="button" class="filter-select ms-btn" style="min-width:120px;text-align:left">Buckets ▾</button>
+        <div class="ms-panel">
+          <label class="ms-all"><input type="checkbox" class="ms-select-all" checked> Select All</label>
+          <div class="ms-divider"></div>
+          {% for val, lbl in [('prime','Prime'), ('target','Target'), ('contextual','Contextual'), ('out_of_market','Out of Market'), ('ineligible','Ineligible'), ('unclassified','Unclassified')] %}
+          <label><input type="checkbox" name="priority_bucket" value="{{ val }}" class="ms-cb" {% if not _buckets or val in _buckets %}checked{% endif %}> {{ lbl }}</label>
+          {% endfor %}
+        </div>
+      </div>
+
+      {% set _jurs = selected_jurisdictions or [] %}
+      <div class="ms-dropdown" data-ms-label="Jurisdiction">
+        <button type="button" class="filter-select ms-btn" style="min-width:130px;text-align:left">Jurisdiction ▾</button>
+        <div class="ms-panel" style="min-width:240px">
+          <label class="ms-all"><input type="checkbox" class="ms-select-all" checked> Select All</label>
+          <div class="ms-divider"></div>
           {% for j in jurisdictions %}
-          <label><input type="checkbox" name="jurisdiction" value="{{ j.value }}" class="jur-cb" checked> {{ j.label }}</label>
+          <label><input type="checkbox" name="jurisdiction" value="{{ j.value }}" class="ms-cb" {% if not _jurs or j.value in _jurs %}checked{% endif %}> {{ j.label }}</label>
           {% endfor %}
         </div>
       </div>
@@ -577,6 +578,8 @@ function openJson(event, id, title, sub) {
 
 // ── Jurisdiction dropdown ──
 (function() {
+  // Legacy jurisdiction dropdown JS — no-ops now that .ms-* markup replaces jur-* IDs.
+  // Kept until we confirm no other callers; safe because document.getElementById returns null.
   var toggle = document.getElementById('jur-toggle');
   var panel = document.getElementById('jur-panel');
   var selectAll = document.getElementById('jur-select-all');

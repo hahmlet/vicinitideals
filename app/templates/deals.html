@@ -57,25 +57,36 @@ tr:hover .archive-btn { opacity: 1; }
         <span class="search-icon">🔍</span>
         <input class="search-input" type="search" name="q" value="{{ q }}" placeholder="Search deals, addresses…">
       </div>
-      <select class="filter-select" name="status">
-        <option value="" {% if not status %}selected{% endif %}>All Active Statuses</option>
-        <option value="evaluation" {% if status == 'evaluation' %}selected{% endif %}>Evaluation</option>
-        <option value="execution" {% if status == 'execution' %}selected{% endif %}>Execution</option>
-        <option value="under_contract" {% if status == 'under_contract' %}selected{% endif %}>Under Contract</option>
-        <option value="closed" {% if status == 'closed' %}selected{% endif %}>Closed</option>
-      </select>
-      <select class="filter-select" name="type">
-        <option value="" {% if not deal_type %}selected{% endif %}>All Types</option>
-        <option value="acquisition" {% if deal_type == 'acquisition' %}selected{% endif %}>Acquisition</option>
-        <option value="value_add" {% if deal_type == 'value_add' %}selected{% endif %}>Value-Add</option>
-        <option value="conversion" {% if deal_type == 'conversion' %}selected{% endif %}>Conversion</option>
-        <option value="new_construction" {% if deal_type == 'new_construction' %}selected{% endif %}>New Construction</option>
-      </select>
-      <select class="filter-select" name="model">
-        <option value="" {% if not model_filter %}selected{% endif %}>Any Model</option>
-        <option value="has" {% if model_filter == 'has' %}selected{% endif %}>Has Primary Model</option>
-        <option value="none" {% if model_filter == 'none' %}selected{% endif %}>No Model</option>
-      </select>
+      <div class="ms-dropdown" data-ms-label="Status">
+        <button type="button" class="filter-select ms-btn" style="min-width:130px;text-align:left">Status ▾</button>
+        <div class="ms-panel">
+          <label class="ms-all"><input type="checkbox" class="ms-select-all" checked> Select All</label>
+          <div class="ms-divider"></div>
+          {% for val, lbl in [('evaluation','Evaluation'), ('execution','Execution'), ('under_contract','Under Contract'), ('closed','Closed')] %}
+          <label><input type="checkbox" name="status" value="{{ val }}" class="ms-cb" {% if not status or val in status %}checked{% endif %}> {{ lbl }}</label>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="ms-dropdown" data-ms-label="Type">
+        <button type="button" class="filter-select ms-btn" style="min-width:120px;text-align:left">Type ▾</button>
+        <div class="ms-panel">
+          <label class="ms-all"><input type="checkbox" class="ms-select-all" checked> Select All</label>
+          <div class="ms-divider"></div>
+          {% for val, lbl in [('acquisition','Acquisition'), ('value_add','Value-Add'), ('conversion','Conversion'), ('new_construction','New Construction')] %}
+          <label><input type="checkbox" name="type" value="{{ val }}" class="ms-cb" {% if not deal_type or val in deal_type %}checked{% endif %}> {{ lbl }}</label>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="ms-dropdown" data-ms-label="Model">
+        <button type="button" class="filter-select ms-btn" style="min-width:120px;text-align:left">Model ▾</button>
+        <div class="ms-panel">
+          <label class="ms-all"><input type="checkbox" class="ms-select-all" checked> Select All</label>
+          <div class="ms-divider"></div>
+          {% for val, lbl in [('has','Has Primary Model'), ('none','No Model')] %}
+          <label><input type="checkbox" name="model" value="{{ val }}" class="ms-cb" {% if not model_filter or val in model_filter %}checked{% endif %}> {{ lbl }}</label>
+          {% endfor %}
+        </div>
+      </div>
       <label class="archived-toggle">
         <input type="checkbox" name="include_archived" value="1" {% if include_archived %}checked{% endif %}>
         Include Archived

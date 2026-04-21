@@ -18,20 +18,27 @@
              name="q" value="{{ q }}">
     </div>
 
-    <select class="filter-select" name="jurisdiction"
-            onchange="document.querySelectorAll('#zoning-options input[type=checkbox]').forEach(cb => cb.checked = false)">
-      <option value="">All Jurisdictions</option>
-      {% for j in jurisdictions %}
-      <option value="{{ j }}"{% if j == jurisdiction %} selected{% endif %}>{{ j | title }}</option>
-      {% endfor %}
-    </select>
+    <div class="ms-dropdown" data-ms-label="Jurisdictions">
+      <button type="button" class="filter-select ms-btn" style="min-width:150px;text-align:left">Jurisdictions ▾</button>
+      <div class="ms-panel" style="min-width:220px">
+        <label class="ms-all"><input type="checkbox" class="ms-select-all" checked> Select All</label>
+        <div class="ms-divider"></div>
+        {% for j in jurisdictions %}
+        <label><input type="checkbox" name="jurisdiction" value="{{ j }}" class="ms-cb" {% if not jurisdiction or j in jurisdiction %}checked{% endif %}> {{ j | title }}</label>
+        {% endfor %}
+      </div>
+    </div>
 
-    <select class="filter-select" name="use_group">
-      <option value="">All Use Types</option>
-      {% for val, label in use_group_options %}
-      <option value="{{ val }}"{% if val == use_group %} selected{% endif %}>{{ label }}</option>
-      {% endfor %}
-    </select>
+    <div class="ms-dropdown" data-ms-label="Use Types">
+      <button type="button" class="filter-select ms-btn" style="min-width:130px;text-align:left">Use Types ▾</button>
+      <div class="ms-panel">
+        <label class="ms-all"><input type="checkbox" class="ms-select-all" checked> Select All</label>
+        <div class="ms-divider"></div>
+        {% for val, label in use_group_options %}
+        <label><input type="checkbox" name="use_group" value="{{ val }}" class="ms-cb" {% if not use_group or val in use_group %}checked{% endif %}> {{ label }}</label>
+        {% endfor %}
+      </div>
+    </div>
 
     <div id="zoning-options" style="display:flex;flex-wrap:wrap;gap:3px;align-items:center;max-width:420px;max-height:72px;overflow-y:auto">
       {% for z in zoning_codes %}

@@ -4,8 +4,23 @@ from __future__ import annotations
 
 import asyncio
 import logging
+from datetime import UTC, datetime
 from typing import Any, Literal, cast
 from uuid import uuid4
+
+
+def _iso_utc(value: datetime | None) -> str | None:
+    """Serialize a datetime as a UTC ISO-8601 string the browser can parse unambiguously.
+
+    DateTime(timezone=True) columns normally return tz-aware values, but legacy
+    rows or naive defaults can leak through; assume UTC in that case rather than
+    emitting a bare timestamp that the browser interprets as local time.
+    """
+    if value is None:
+        return None
+    if value.tzinfo is None:
+        value = value.replace(tzinfo=UTC)
+    return value.astimezone(UTC).isoformat()
 
 from fastapi import APIRouter, Request
 from pydantic import BaseModel, Field
@@ -118,8 +133,8 @@ async def latest_ingest_job(session: DBSession) -> dict[str, Any]:
         "records_new": job.records_new,
         "records_duplicate": job.records_duplicate_exact,
         "source_total": job.source_total,
-        "started_at": job.started_at.isoformat() if job.started_at else None,
-        "completed_at": job.completed_at.isoformat() if job.completed_at else None,
+        "started_at": _iso_utc(job.started_at),
+        "completed_at": _iso_utc(job.completed_at),
     }
 
 

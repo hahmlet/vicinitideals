@@ -33,18 +33,28 @@ tr:hover .archive-btn { opacity: 1; }
         <span class="search-icon">🔍</span>
         <input class="search-input" type="search" name="q" value="{{ q or '' }}" placeholder="Search name, address…">
       </div>
-      <select class="filter-select" name="status">
-        <option value="">All Statuses</option>
-        <option value="hypothetical" {% if status == 'hypothetical' %}selected{% endif %}>Hypothetical</option>
-        <option value="active"       {% if status == 'active'       %}selected{% endif %}>Active</option>
-        <option value="archived"     {% if status == 'archived'     %}selected{% endif %}>Archived</option>
-      </select>
-      <select class="filter-select" name="source">
-        <option value="">All Sources</option>
-        <option value="manual"  {% if source == 'manual'  %}selected{% endif %}>Manual</option>
-        <option value="loopnet" {% if source == 'loopnet' %}selected{% endif %}>LoopNet</option>
-        <option value="crexi"   {% if source == 'crexi'   %}selected{% endif %}>Crexi</option>
-      </select>
+      {# status default: handler hides archived when nothing is checked #}
+      <div class="ms-dropdown" data-ms-label="Status">
+        <button type="button" class="filter-select ms-btn" style="min-width:120px;text-align:left">Status ▾</button>
+        <div class="ms-panel">
+          <label class="ms-all"><input type="checkbox" class="ms-select-all"> Select All</label>
+          <div class="ms-divider"></div>
+          {% for val, lbl in [('hypothetical','Hypothetical'), ('active','Active'), ('archived','Archived')] %}
+          <label><input type="checkbox" name="status" value="{{ val }}" class="ms-cb" {% if val in status %}checked{% endif %}> {{ lbl }}</label>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="ms-dropdown" data-ms-label="Sources">
+        <button type="button" class="filter-select ms-btn" style="min-width:120px;text-align:left">Sources ▾</button>
+        <div class="ms-panel">
+          <label class="ms-all"><input type="checkbox" class="ms-select-all" checked> Select All</label>
+          <div class="ms-divider"></div>
+          {% for val, lbl in [('manual','Manual'), ('loopnet','LoopNet'), ('crexi','Crexi')] %}
+          <label><input type="checkbox" name="source" value="{{ val }}" class="ms-cb" {% if not source or val in source %}checked{% endif %}> {{ lbl }}</label>
+          {% endfor %}
+        </div>
+      </div>
     </div>
   </form>
 

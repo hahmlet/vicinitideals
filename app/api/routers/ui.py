@@ -366,9 +366,9 @@ _VALID_STATUS_FILTERS = {"evaluation", "execution", "under_contract", "closed"}
 
 async def _load_deals(
     session: DBSession,
-    status_filter: str = "",
-    type_filter: str = "",
-    model_filter: str = "",
+    status_filter=None,
+    type_filter=None,
+    model_filter=None,
     q: str = "",
     include_archived: bool = False,
 ) -> list[Deal]:
@@ -397,22 +397,28 @@ async def _load_deals(
     result = await session.execute(stmt)
     deals = list(result.scalars().unique())
 
-    if status_filter:
-        if status_filter in _STATUS_DB_MAP:
-            target_status = _STATUS_DB_MAP[status_filter]
-            deals = [d for d in deals if _first_opportunity(d) and _first_opportunity(d).status == target_status]
-        elif status_filter in _VALID_STATUS_FILTERS:
+    statuses = _as_list(status_filter)
+    if statuses:
+        known = [s for s in statuses if s in _STATUS_DB_MAP]
+        targets = {_STATUS_DB_MAP[s] for s in known}
+        if targets:
+            deals = [d for d in deals if _first_opportunity(d) and _first_opportunity(d).status in targets]
+        else:
             deals = []
 
-    if model_filter == "has":
+    model_filters = _as_list(model_filter)
+    has_primary = "has" in model_filters
+    no_primary = "none" in model_filters
+    if has_primary and not no_primary:
         deals = [d for d in deals if _primary_scenario(d) is not None]
-    elif model_filter == "none":
+    elif no_primary and not has_primary:
         deals = [d for d in deals if _primary_scenario(d) is None]
 
-    if type_filter:
+    types = _as_list(type_filter)
+    if types:
         deals = [
             d for d in deals
-            if _primary_scenario(d) and str(getattr(_primary_scenario(d).project_type, "value", _primary_scenario(d).project_type)) == type_filter
+            if _primary_scenario(d) and str(getattr(_primary_scenario(d).project_type, "value", _primary_scenario(d).project_type)) in types
         ]
 
     return deals
@@ -1639,9 +1645,9 @@ async def deals_page(
     session: DBSession,
     vd_user_id: str | None = Cookie(default=None),
     q: str = Query(default=""),
-    status: str = Query(default=""),
-    type: str = Query(default=""),
-    model: str = Query(default=""),
+    status: list[str] = Query(default=[]),
+    type: list[str] = Query(default=[]),
+    model: list[str] = Query(default=[]),
     include_archived: str = Query(default=""),
 ) -> HTMLResponse:
     user = await _get_user(session, request)
@@ -1700,9 +1706,9 @@ async def deals_rows(
     request: Request,
     session: DBSession,
     q: str = Query(default=""),
-    status: str = Query(default=""),
-    type: str = Query(default=""),
-    model: str = Query(default=""),
+    status: list[str] = Query(default=[]),
+    type: list[str] = Query(default=[]),
+    model: list[str] = Query(default=[]),
     include_archived: str = Query(default=""),
 ) -> HTMLResponse:
     archived = include_archived == "1"
@@ -2207,8 +2213,8 @@ async def opportunities_page(
     session: DBSession,
     vd_user_id: str | None = Cookie(default=None),
     q: str = Query(default=""),
-    status: str = Query(default=""),
-    source: str = Query(default=""),
+    status: list[str] = Query(default=[]),
+    source: list[str] = Query(default=[]),
 ) -> HTMLResponse:
     user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
@@ -2225,8 +2231,8 @@ async def opportunities_rows(
     request: Request,
     session: DBSession,
     q: str = Query(default=""),
-    status: str = Query(default=""),
-    source: str = Query(default=""),
+    status: list[str] = Query(default=[]),
+    source: list[str] = Query(default=[]),
 ) -> HTMLResponse:
     opps = await _query_opportunities(session, q=q, status=status, source=source)
     return templates.TemplateResponse(request, "partials/opportunities_rows.html", {
@@ -2237,8 +2243,8 @@ async def opportunities_rows(
 async def _query_opportunities(
     session: AsyncSession,
     q: str = "",
-    status: str = "",
-    source: str = "",
+    status=None,
+    source=None,
 ) -> list:
     from sqlalchemy.orm import selectinload as _sl
     stmt = (
@@ -2249,12 +2255,14 @@ async def _query_opportunities(
         )
         .order_by(Opportunity.created_at.desc())
     )
-    if status:
-        stmt = stmt.where(Opportunity.status == status)
+    statuses = _as_list(status)
+    if statuses:
+        stmt = stmt.where(Opportunity.status.in_(statuses))
     else:
         stmt = stmt.where(Opportunity.status != OpportunityStatus.archived)
-    if source:
-        stmt = stmt.where(Opportunity.source == source)
+    sources = _as_list(source)
+    if sources:
+        stmt = stmt.where(Opportunity.source.in_(sources))
     opps = list((await session.execute(stmt)).scalars().unique())
     if q:
         q_lower = q.lower()
@@ -2732,8 +2740,8 @@ _STATE_CLASS_GROUPS: dict[str, tuple[str, list[str]]] = {
 
 
 def _parcel_base_stmt(
-    q: str, zoning: list[str], jurisdiction: str,
-    use_group: str, min_acres: str, max_acres: str,
+    q: str, zoning: list[str], jurisdiction,
+    use_group, min_acres: str, max_acres: str,
     min_year: str, max_year: str,
 ):
     stmt = select(Parcel).order_by(Parcel.apn)
@@ -2741,10 +2749,14 @@ def _parcel_base_stmt(
         stmt = stmt.where(or_(Parcel.apn.ilike(f"%{q}%"), Parcel.address_normalized.ilike(f"%{q}%")))
     if zoning:
         stmt = stmt.where(Parcel.zoning_code.in_(zoning))
-    if jurisdiction:
-        stmt = stmt.where(Parcel.jurisdiction == jurisdiction)
-    if use_group and use_group in _STATE_CLASS_GROUPS:
-        codes = _STATE_CLASS_GROUPS[use_group][1]
+    jurs = _as_list(jurisdiction)
+    if jurs:
+        stmt = stmt.where(Parcel.jurisdiction.in_(jurs))
+    use_groups = [g for g in _as_list(use_group) if g in _STATE_CLASS_GROUPS]
+    if use_groups:
+        codes: list[str] = []
+        for g in use_groups:
+            codes.extend(_STATE_CLASS_GROUPS[g][1])
         stmt = stmt.where(Parcel.state_class.in_(codes))
     if min_acres:
         try:
@@ -2770,13 +2782,15 @@ def _parcel_base_stmt(
 
 
 def _parcel_filter_ctx(
-    q: str, zoning: list[str], jurisdiction: str,
-    use_group: str, min_acres: str, max_acres: str,
+    q: str, zoning: list[str], jurisdiction,
+    use_group, min_acres: str, max_acres: str,
     min_year: str, max_year: str,
 ) -> dict:
     return {
-        "q": q, "zoning": zoning, "jurisdiction": jurisdiction,
-        "use_group": use_group, "min_acres": min_acres, "max_acres": max_acres,
+        "q": q, "zoning": zoning,
+        "jurisdiction": _as_list(jurisdiction),
+        "use_group": _as_list(use_group),
+        "min_acres": min_acres, "max_acres": max_acres,
         "min_year": min_year, "max_year": max_year,
         "use_group_options": [(k, v[0]) for k, v in _STATE_CLASS_GROUPS.items()],
     }
@@ -2788,8 +2802,8 @@ async def parcels_page(
     vd_user_id: str | None = Cookie(default=None),
     q: str = Query(default=""),
     zoning: list[str] = Query(default=[]),
-    jurisdiction: str = Query(default=""),
-    use_group: str = Query(default=""),
+    jurisdiction: list[str] = Query(default=[]),
+    use_group: list[str] = Query(default=[]),
     min_acres: str = Query(default=""),
     max_acres: str = Query(default=""),
     min_year: str = Query(default=""),
@@ -2808,7 +2822,9 @@ async def parcels_page(
     parcels_list = list((await session.execute(base.offset(offset).limit(_PARCEL_PAGE_SIZE))).scalars())
     zoning_codes_stmt = select(Parcel.zoning_code).where(Parcel.zoning_code.isnot(None)).distinct().order_by(Parcel.zoning_code)
     if jurisdiction:
-        zoning_codes_stmt = zoning_codes_stmt.where(func.lower(Parcel.jurisdiction) == jurisdiction.lower())
+        zoning_codes_stmt = zoning_codes_stmt.where(
+            func.lower(Parcel.jurisdiction).in_([j.lower() for j in jurisdiction])
+        )
     zoning_codes_result, jurisdictions_result = await asyncio.gather(
         session.execute(zoning_codes_stmt),
         session.execute(select(Parcel.jurisdiction).where(Parcel.jurisdiction.isnot(None)).distinct().order_by(Parcel.jurisdiction)),
@@ -2834,8 +2850,8 @@ async def parcels_rows(
     request: Request, session: DBSession,
     q: str = Query(default=""),
     zoning: list[str] = Query(default=[]),
-    jurisdiction: str = Query(default=""),
-    use_group: str = Query(default=""),
+    jurisdiction: list[str] = Query(default=[]),
+    use_group: list[str] = Query(default=[]),
     min_acres: str = Query(default=""),
     max_acres: str = Query(default=""),
     min_year: str = Query(default=""),
@@ -2944,14 +2960,26 @@ def _build_listing_row(listing: ScrapedListing) -> dict:
     }
 
 
+def _as_list(v) -> list[str]:
+    """Normalize a filter value to a list of non-empty strings.
+
+    Accepts either a single string (legacy single-select) or a list (multi-select).
+    """
+    if v is None:
+        return []
+    if isinstance(v, str):
+        return [v] if v else []
+    return [s for s in v if s]
+
+
 def _listings_base_stmt(
     q: str,
-    source: str,
+    source,
     is_new: str,
-    property_type: str = "",
+    property_type=None,
     min_units: str = "",
     max_units: str = "",
-    priority_bucket: str = "",
+    priority_bucket=None,
     cities: list[str] | None = None,
 ):
     stmt = (
@@ -2967,12 +2995,14 @@ def _listings_base_stmt(
             ScrapedListing.address_normalized.ilike(f"%{q}%"),
             ScrapedListing.address_raw.ilike(f"%{q}%"),
         ))
-    if source:
-        stmt = stmt.where(ScrapedListing.source == source)
+    sources = _as_list(source)
+    if sources:
+        stmt = stmt.where(ScrapedListing.source.in_(sources))
     if is_new == "1":
         stmt = stmt.where(ScrapedListing.is_new.is_(True))
-    if property_type:
-        stmt = stmt.where(ScrapedListing.property_type == property_type)
+    ptypes = _as_list(property_type)
+    if ptypes:
+        stmt = stmt.where(ScrapedListing.property_type.in_(ptypes))
     if min_units:
         try:
             n = int(min_units)
@@ -2985,8 +3015,9 @@ def _listings_base_stmt(
             stmt = stmt.where(ScrapedListing.units <= int(max_units))
         except ValueError:
             pass
-    if priority_bucket:
-        stmt = stmt.where(ScrapedListing.priority_bucket == priority_bucket)
+    buckets = _as_list(priority_bucket)
+    if buckets:
+        stmt = stmt.where(ScrapedListing.priority_bucket.in_(buckets))
     if cities is not None:
         stmt = _apply_jurisdiction_filter(stmt, cities)
     return stmt
@@ -3095,11 +3126,11 @@ async def listings_page(
     request: Request, session: DBSession,
     vd_user_id: str | None = Cookie(default=None),
     q: str = Query(default=""),
-    source: str = Query(default=""),
-    property_type: str = Query(default=""),
+    source: list[str] = Query(default=[]),
+    property_type: list[str] = Query(default=[]),
     min_units: str = Query(default=""),
     max_units: str = Query(default=""),
-    priority_bucket: str = Query(default=""),
+    priority_bucket: list[str] = Query(default=[]),
     jurisdiction: list[str] = Query(default=[]),
 ) -> HTMLResponse:
     user = await _get_user(session, request)
@@ -3148,11 +3179,11 @@ async def listings_page(
 async def listings_rows(
     request: Request, session: DBSession,
     q: str = Query(default=""),
-    source: str = Query(default=""),
-    property_type: str = Query(default=""),
+    source: list[str] = Query(default=[]),
+    property_type: list[str] = Query(default=[]),
     min_units: str = Query(default=""),
     max_units: str = Query(default=""),
-    priority_bucket: str = Query(default=""),
+    priority_bucket: list[str] = Query(default=[]),
     jurisdiction: list[str] = Query(default=[]),
 ) -> HTMLResponse:
     cities = jurisdiction if jurisdiction else None
@@ -3172,11 +3203,11 @@ async def listings_rows(
 async def listings_export_csv(
     session: DBSession,
     q: str = Query(default=""),
-    source: str = Query(default=""),
-    property_type: str = Query(default=""),
+    source: list[str] = Query(default=[]),
+    property_type: list[str] = Query(default=[]),
     min_units: str = Query(default=""),
     max_units: str = Query(default=""),
-    priority_bucket: str = Query(default=""),
+    priority_bucket: list[str] = Query(default=[]),
     jurisdiction: list[str] = Query(default=[]),
 ) -> StreamingResponse:
     """Export filtered listings as CSV (address, units, asking price, city, county, property type)."""

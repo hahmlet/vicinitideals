@@ -40,6 +40,20 @@
   transition: background .12s;
 }
 .settings-popup-item:hover { background: var(--bg); }
+
+/* Shared multi-select checkbox dropdown (filter bars on Listings/Parcels/Opportunities/Deals) */
+.ms-dropdown { position: relative; display: inline-block; }
+.ms-btn { cursor: pointer; }
+.ms-panel {
+  display: none; position: absolute; top: calc(100% + 4px); left: 0; z-index: 600;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: 0 4px 16px rgba(0,0,0,.25); padding: 8px 0; min-width: 200px; max-height: 320px; overflow-y: auto;
+}
+.ms-panel.open { display: block; }
+.ms-panel label { display: flex; align-items: center; gap: 6px; padding: 4px 12px; font-size: 12px; cursor: pointer; white-space: nowrap; }
+.ms-panel label:hover { background: var(--hover, rgba(255,255,255,.05)); }
+.ms-panel .ms-divider { border-top: 1px solid var(--border); margin: 4px 0; }
+.ms-panel .ms-all { font-weight: 600; }
 </style>
 {% block head %}{% endblock %}
 </head>
@@ -648,6 +662,72 @@ document.addEventListener('click', function(e) {
       if (modal && modal.style.display !== 'none') closeParcelMap();
     }
   });
+})();
+</script>
+
+<script>
+// Generic multi-select checkbox dropdown initializer.
+// Markup:
+//   <div class="ms-dropdown" data-ms-label="Sources">
+//     <button type="button" class="filter-select ms-btn">Sources ▾</button>
+//     <div class="ms-panel">
+//       <label class="ms-all"><input type="checkbox" class="ms-select-all" checked> Select All</label>
+//       <div class="ms-divider"></div>
+//       <label><input type="checkbox" name="source" value="crexi" class="ms-cb" checked> Crexi</label>
+//     </div>
+//   </div>
+(function() {
+  function init(root) {
+    (root || document).querySelectorAll('.ms-dropdown').forEach(function(dd) {
+      if (dd.dataset.msInit === '1') return;
+      dd.dataset.msInit = '1';
+      var btn = dd.querySelector('.ms-btn');
+      var panel = dd.querySelector('.ms-panel');
+      var selectAll = dd.querySelector('.ms-select-all');
+      var cbs = dd.querySelectorAll('.ms-cb');
+      if (!btn || !panel || cbs.length === 0) return;
+      var label = dd.dataset.msLabel || btn.textContent.replace(/\s*▾\s*$/, '').trim();
+      var form = dd.closest('form');
+
+      btn.addEventListener('click', function(e) {
+        e.preventDefault(); e.stopPropagation();
+        document.querySelectorAll('.ms-panel.open').forEach(function(p) { if (p !== panel) p.classList.remove('open'); });
+        panel.classList.toggle('open');
+      });
+      document.addEventListener('click', function(e) {
+        if (!panel.contains(e.target) && e.target !== btn) panel.classList.remove('open');
+      });
+
+      function fireChange() {
+        if (form && window.htmx) htmx.trigger(form, 'change');
+      }
+      function updateLabel() {
+        var checked = Array.from(cbs).filter(function(c) { return c.checked; }).length;
+        btn.textContent = (checked === cbs.length || checked === 0)
+          ? label + ' ▾'
+          : checked + '/' + cbs.length + ' selected ▾';
+        if (selectAll) {
+          selectAll.checked = checked === cbs.length;
+          selectAll.indeterminate = checked > 0 && checked < cbs.length;
+        }
+      }
+      if (selectAll) {
+        selectAll.addEventListener('change', function() {
+          cbs.forEach(function(cb) { cb.checked = selectAll.checked; });
+          updateLabel(); fireChange();
+        });
+      }
+      cbs.forEach(function(cb) {
+        cb.addEventListener('change', function() { updateLabel(); fireChange(); });
+      });
+      updateLabel();
+    });
+  }
+  document.addEventListener('DOMContentLoaded', function() { init(document); });
+  if (document.body) {
+    init(document.body);
+    document.body.addEventListener('htmx:afterSwap', function(e) { init(e.target); });
+  }
 })();
 </script>
 </body>
