@@ -75,7 +75,12 @@ async def compute_cash_flows(
     if deal_model is None:
         raise ValueError(f"Deal {deal_uuid} was not found")
 
-    projects = sorted(deal_model.projects, key=lambda p: p.created_at)
+    # Anchor-topological compute order: anchored projects run after the
+    # project they reference. With zero ProjectAnchor rows (current prod)
+    # this returns the same order as sorted-by-created_at. Cycles raise
+    # AnchorCycleError.
+    from app.engines.anchor_resolver import ordered_projects as _ordered_projects
+    projects = await _ordered_projects(deal_model, session)
     if not projects:
         raise ValueError(f"Deal {deal_uuid} has no Project")
 
