@@ -65,18 +65,18 @@ async def compute_cash_flows(
     if deal_model is None:
         raise ValueError(f"Deal {deal_uuid} was not found")
 
-    default_project = next(
+    project = next(
         (p for p in sorted(deal_model.projects, key=lambda p: p.created_at)), None
     )
-    if default_project is None:
+    if project is None:
         raise ValueError(f"Deal {deal_uuid} has no Project")
-    if default_project.operational_inputs is None:
+    if project.operational_inputs is None:
         raise ValueError(f"Deal {deal_uuid} is missing OperationalInputs")
 
-    inputs = default_project.operational_inputs
-    streams = sorted(default_project.income_streams, key=lambda stream: stream.label.lower())
-    expense_lines = sorted(default_project.expense_lines, key=lambda line: line.label.lower())
-    use_lines = list(default_project.use_lines)
+    inputs = project.operational_inputs
+    streams = sorted(project.income_streams, key=lambda stream: stream.label.lower())
+    expense_lines = sorted(project.expense_lines, key=lambda line: line.label.lower())
+    use_lines = list(project.use_lines)
 
     capital_modules = list((await session.execute(
         select(CapitalModule).where(CapitalModule.scenario_id == deal_uuid)
@@ -84,7 +84,7 @@ async def compute_cash_flows(
 
     # Build milestone_dates from ORM Milestone records, overlaying any stored in inputs
     orm_milestones = list((await session.execute(
-        select(Milestone).where(Milestone.project_id == default_project.id)
+        select(Milestone).where(Milestone.project_id == project.id)
     )).scalars())
     milestone_map = {m.id: m for m in orm_milestones}
     milestone_dates = _milestone_dates_from_orm(orm_milestones, milestone_map)
@@ -242,7 +242,7 @@ async def compute_cash_flows(
         for month_index in range(phase.months):
             period_result = _compute_period(
                 deal_model_id=deal_uuid,
-                project_id=default_project.id,
+                project_id=project.id,
                 period=period,
                 phase=phase,
                 month_index=month_index,
@@ -386,7 +386,7 @@ async def compute_cash_flows(
             cash_flow_rows.append(
                 CashFlow(
                     scenario_id=deal_uuid,
-                    project_id=default_project.id,
+                    project_id=project.id,
                     period=period,
                     period_type=phase.period_type,
                     gross_revenue=_q(period_result["gross_revenue"]),
@@ -466,7 +466,7 @@ async def compute_cash_flows(
 
     outputs = OperationalOutputs(
         scenario_id=deal_uuid,
-        project_id=default_project.id,
+        project_id=project.id,
         total_project_cost=_q(total_project_cost),
         equity_required=_q(equity_required),
         total_timeline_months=total_timeline_months,
@@ -501,7 +501,7 @@ async def compute_cash_flows(
     # per-project filter without threading the id through every call site.
     for _li in line_item_rows:
         if _li.project_id is None:
-            _li.project_id = default_project.id
+            _li.project_id = project.id
 
     session.add_all(cash_flow_rows)
     session.add_all(line_item_rows)
