@@ -22,6 +22,12 @@
 - `EGI` = Effective Gross Income (gross revenue − vacancy loss)
 - `DSCR` = NOI / DS
 
+### Multi-project data model (0048) — math unchanged for now
+
+As of migration `0048_multi_project_underwriting`, the schema supports one Scenario carrying N Projects via a `capital_module_projects` junction (per-project Source terms) and a `project_anchors` table (cross-project timeline coupling). **None of the math in this document has changed.** The cashflow engine still resolves `scenario.projects[0]` as the default project and runs single-project; existing deals produce byte-identical output post-0048.
+
+Phase 2 will introduce the per-project engine loop, the `underwriting.py` rollup module, and Phase-2 shared-Source joint resolution (when a Source funds 2+ projects, the draw schedule stays single-cadence but balance-share is attributed pro-rata to each project). See `docs/Underwriting Plan.md` for the planned math changes.
+
 ---
 
 ## 1. Uses / Total Project Cost (TPC)

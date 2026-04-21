@@ -48,6 +48,43 @@ Parcel  ←──(parcel_id FK)── ScrapedListing ──(linked_project_id FK
 | **IngestJob** | `ingest_jobs` | Telemetry record for a scrape run | `id` (UUID) |
 | **DedupCandidate** | `dedup_candidates` | Potential duplicate listing pair pending review | `id` (UUID) |
 
+### 1.1 Deal / Scenario / Project hierarchy (financial side)
+
+The listing/parcel half of the schema above feeds into the financial half below. The canonical entities:
+
+```
+Deal ──┬── Scenario (= "Variant")          ← DB table: scenarios; ORM class: DealModel
+       │       │
+       │       ├── Project ─────────────── UseLine, IncomeStream, OperatingExpenseLine,
+       │       │        │                  OperationalInputs, UnitMix, Milestone
+       │       │        ├── ProjectAnchor  ← cross-project timeline coupling (0..1)
+       │       │        └── CapitalModuleProject ← per-project terms (junction)
+       │       │
+       │       ├── CapitalModule ───────── per-source identity (scenario-scoped)
+       │       │        ├── WaterfallTier       ← per-project (nullable project_id)
+       │       │        ├── WaterfallResult     ← per-project (nullable project_id)
+       │       │        └── DrawSource          ← per-project (nullable project_id)
+       │       │
+       │       └── CashFlow, CashFlowLineItem, OperationalOutputs (scenario-level outputs)
+```
+
+| Entity | Table | Scope | Notes |
+|---|---|---|---|
+| **Deal** | `deals` | top-level investment thesis | ORM: `Deal` |
+| **Scenario / Variant** | `scenarios` | one financial plan per Deal; carries N Projects | ORM: `DealModel` (legacy name) |
+| **Project** | `projects` | individual development effort; own timeline/uses/sources | `scenario_id` FK |
+| **CapitalModule** | `capital_modules` | a Source (lender + rate + carry type + exit terms) | scenario-scoped |
+| **CapitalModuleProject** | `capital_module_projects` | **junction (added 0048)**: per-project amount, active window, `auto_size` | `(capital_module_id, project_id)` unique |
+| **ProjectAnchor** | `project_anchors` | **new (0048)**: anchors one Project's start to another Project's milestone + offset | 0..1 per project |
+| **WaterfallTier** | `waterfall_tiers` | per-project (0048); joined at Underwriting-rollup layer | `project_id` nullable during 0048 backfill window |
+| **WaterfallResult** | `waterfall_results` | per-project | same |
+| **DrawSource** | `draw_sources` | per-project | same |
+| **UseLine** | `use_lines` | project-scoped | new `source_capital_module_id` (0048) attributes engine-injected reserves to their originating Source |
+
+**Multi-project rule (post-0048).** A Scenario may have N Projects. Each Source is identified once on the Scenario (its `CapitalModule` row) and attached to 1+ Projects via `CapitalModuleProject` junction rows. One junction row = project-scoped Source. Multiple junction rows on the same module = shared Source. Each project owns its own UseLines, IncomeStreams, OpEx, OperationalInputs, Milestones, WaterfallTiers, DrawSources.
+
+**Engine coupling (still single-project as of 0048).** The cashflow engine still treats `scenario.projects[0]` as the default project and produces single-project output. Phase 2 will loop per project and add an Underwriting rollup layer. The 0048 junction/anchor schema is forward-compat machinery; it does not change any deal's math until Phase 2.
+
 ### Relationship Cardinalities
 
 - Many ScrapedListings → one Parcel (many listings may reference the same property)

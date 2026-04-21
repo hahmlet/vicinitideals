@@ -131,4 +131,56 @@ An accurate model that is hard to use is a good problem to have. A pretty app th
 
 ---
 
+## Multi-Project Underwriting — Schema exists, UI does not (as of 0049)
+
+Migration `0048_multi_project_underwriting` landed the data foundation for one Scenario carrying N Projects with shared-Source capital packages and cross-project timelines. The engine and UI still operate in single-project mode. These items are the UI work that needs to land before users can exercise the new schema. See `docs/Underwriting Plan.md` (data-model plan) and `~/.claude/plans/start-planning-out-the-synthetic-squirrel.md` (approved UI plan) for the full design.
+
+### 21. Underwriting rollup tab
+**Status**: schema in, no UI.
+**Problem**: a Scenario with N Projects has no combined view — no joined timeline, no combined cashflow, no deduped Source package, no combined IRR, no joined waterfall table. The Model Builder shows one Project at a time.
+**Solution**: new `[Underwriting] [Project 1] [Project 2] …` tab row under the Variant tabs. Underwriting tab renders `underwriting_pill`, `underwriting_source_package`, `underwriting_timeline`, `underwriting_cashflow`, `underwriting_waterfall`, `underwriting_kpi_strip` partials. Short-circuits to per-project output when there's only one Project.
+
+### 22. Source ↔ Project coverage (junction editor)
+**Status**: `capital_module_projects` table populated (1:1 backfill), no UI.
+**Problem**: a CapitalModule today shows a single scenario-level amount / active window. Shared Sources need per-project amounts, windows, and `auto_size` flags.
+**Solution**: "Coverage" button on each Source row opens a modal with per-project rows (include toggle, amount, active_from/to, auto_size). POSTs to `/ui/models/{id}/sources/{source_id}/coverage`.
+
+### 23. Project anchors (relational timelines)
+**Status**: `project_anchors` table exists, zero rows, no UI.
+**Problem**: can't express "Project 2 starts 6 months after Project 1's acquisition close." Users wanting coupled timelines have no way to declare the link.
+**Solution**: anchors panel under the Underwriting timeline. Inline PATCH to `/ui/models/{id}/anchors/{project_id}`. Server-side DFS cycle check rejects P1→P2→P1.
+
+### 24. Per-project status pills + Underwriting pill
+**Status**: today's pill is scenario-level monolithic HTML at `_render_calc_status_pill_html`.
+**Problem**: with N Projects, DSCR/LTV/Sources=Uses must be checked per project, plus lender-level combined rules (combined DSCR, combined LTV) at the Underwriting level.
+**Solution**: promote pill HTML into a parameterized partial (`partials/calc_status_pill.html`). Split `_compute_calc_status` into `_compute_project_status(data, project_id)` + `_compute_underwriting_status(data)`. Render one pill per tab chip.
+
+### 25. Staleness dots (explicit recompute signal)
+**Status**: no output freshness tracking today; pill silently displays last-computed numbers.
+**Problem**: shared Sources couple projects — editing Project 1 invalidates Project 2's carry math. Users have no way to see that an output is stale.
+**Solution**: `computed_at` on outputs, `updated_at` on inputs. Amber dot on tab chips when `max(input.updated_at) > min(output.computed_at)`. Calculate button on Underwriting tab runs the full pipeline.
+
+### 26. Reserve → Source attribution in Uses panel
+**Status**: `use_lines.source_capital_module_id` column exists, nullable, unpopulated.
+**Problem**: engine-injected reserves (IR / CI / Acq Interest / Lease-Up Reserve) only show `(auto)` today with no hint which Source they originated from.
+**Solution**: engine sets `source_capital_module_id` on reserve writes (Phase 2). UI Uses panel shows a `from: {source.label}` chip next to `(auto)`.
+
+### 27. Per-project waterfall + joined display
+**Status**: `waterfall_tiers.project_id` backfilled, but tier editor still scenario-scoped.
+**Problem**: waterfall UI assumes one set of tiers per Scenario.
+**Solution**: tier editor scoped to active Project; Underwriting tab shows joined table with a `Project` column.
+
+### 28. Variant copy allow-list update
+**Status**: `create_deal_copy` at `ui.py:5295` copies Projects + UseLines + Sources + Tiers but doesn't yet copy junction rows or anchors.
+**Solution**: extend allow-list to include `CapitalModuleProject` and `ProjectAnchor`. Post-copy, land on Underwriting tab with all projects' staleness dots lit.
+
+---
+
+## Recently fixed
+
+- **[2026-04-20, 0049]** Sidebar module-card hrefs now preserve `?project=<id>` so navigating between modules no longer silently bounces the user back to the default Project. Previously users on Project 2 who clicked "Timeline" in the sidebar lost their project context because the href used `{{ request.url.path }}?module=xxx` without the project param.
+- **[2026-04-20, 0049]** Stale `ProjectType` enum values (`acquisition_minor_reno` etc.) from the 2026-04-19 rename are now backfilled. Compute no longer crashes with `ValueError: Unsupported project_type` on pre-rename deals.
+
+---
+
 *This document is a living tracker. Add items as they're identified. Remove items when resolved. Don't wait for the UI refactor to fix critical usability blockers.*
