@@ -41,6 +41,14 @@ class CashFlow(Base):
     scenario_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), ForeignKey("scenarios.id"), nullable=False
     )
+    # Per-project output routing (added in migration 0050). Nullable during
+    # the backfill window; the engine populates it on every new row so the
+    # Underwriting rollup can sum per-project CF rows.
+    project_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("projects.id", ondelete="CASCADE"),
+        nullable=True,
+    )
     period: Mapped[int] = mapped_column(Integer, nullable=False)
     period_type: Mapped[PeriodType] = mapped_column(String(60), nullable=False)
     gross_revenue: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=0)
@@ -67,6 +75,11 @@ class CashFlowLineItem(Base):
     )
     scenario_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), ForeignKey("scenarios.id"), nullable=False
+    )
+    project_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("projects.id", ondelete="CASCADE"),
+        nullable=True,
     )
     period: Mapped[int] = mapped_column(Integer, nullable=False)
     income_stream_id: Mapped[uuid.UUID | None] = mapped_column(
@@ -98,6 +111,15 @@ class OperationalOutputs(Base):
         ForeignKey("scenarios.id"),
         unique=True,
         nullable=False,
+    )
+    # Per-project output routing (added in migration 0050). Still nullable
+    # because the unique-on-scenario_id constraint above enforces one row per
+    # scenario today; Phase 2b will swap that for (scenario_id, project_id)
+    # unique so per-project output rows can coexist.
+    project_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("projects.id", ondelete="CASCADE"),
+        nullable=True,
     )
     total_project_cost: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
     equity_required: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)

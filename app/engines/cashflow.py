@@ -242,6 +242,7 @@ async def compute_cash_flows(
         for month_index in range(phase.months):
             period_result = _compute_period(
                 deal_model_id=deal_uuid,
+                project_id=default_project.id,
                 period=period,
                 phase=phase,
                 month_index=month_index,
@@ -385,6 +386,7 @@ async def compute_cash_flows(
             cash_flow_rows.append(
                 CashFlow(
                     scenario_id=deal_uuid,
+                    project_id=default_project.id,
                     period=period,
                     period_type=phase.period_type,
                     gross_revenue=_q(period_result["gross_revenue"]),
@@ -464,6 +466,7 @@ async def compute_cash_flows(
 
     outputs = OperationalOutputs(
         scenario_id=deal_uuid,
+        project_id=default_project.id,
         total_project_cost=_q(total_project_cost),
         equity_required=_q(equity_required),
         total_timeline_months=total_timeline_months,
@@ -491,6 +494,14 @@ async def compute_cash_flows(
         "dscr": dscr,
         "debt_yield_pct": debt_yield_pct,
     }
+
+    # Tag every line-item with its owning project before persist. The
+    # CashFlowLineItem / _expense_line_item constructors inside _compute_period
+    # default project_id=None; this sweep gives the Underwriting rollup a
+    # per-project filter without threading the id through every call site.
+    for _li in line_item_rows:
+        if _li.project_id is None:
+            _li.project_id = default_project.id
 
     session.add_all(cash_flow_rows)
     session.add_all(line_item_rows)
@@ -2128,6 +2139,7 @@ def _compute_period(
     operation_debt_monthly: Decimal = ZERO,
     income_mode: str = "revenue_opex",
     first_stab_period: int = 0,
+    project_id: UUID | None = None,
 ) -> dict[str, Any]:
     gross_revenue = ZERO
     vacancy_loss = ZERO
@@ -2863,9 +2875,12 @@ def _expense_line_item(
     label: str,
     amount: Decimal,
     adjustments: dict[str, Any],
+    *,
+    project_id: UUID | None = None,
 ) -> CashFlowLineItem:
     return CashFlowLineItem(
         scenario_id=deal_model_id,
+        project_id=project_id,
         period=period,
         income_stream_id=None,
         category=category,
