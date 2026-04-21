@@ -7,7 +7,10 @@
 {% set setup_locked = locked or not deal_setup_complete %}
 
 {# Property module — always editable (source data feeds all downstream modules) #}
-<a href="{{ nav_base_path }}?module=property"
+{# Defensive: when this partial is served standalone via /ui/models/{id}/module-nav,
+   _proj_qs may not be set by the parent template. Recompute from default_project_id. #}
+{% set _proj_qs = _proj_qs if _proj_qs is defined else (('&project=' ~ default_project_id) if default_project_id is defined and default_project_id else '') %}
+<a href="{{ nav_base_path }}?module=property{{ _proj_qs }}"
    class="module-card {% if active_module == 'property' %}active{% endif %}">
   <div class="module-icon module-icon-sources">🏢</div>
   <div class="module-info">
@@ -17,7 +20,7 @@
   <div class="module-total">{% if total_units %}{{ total_units }}{% else %}—{% endif %}</div>
 </a>
 
-<a href="{{ nav_base_path }}?module=sources_uses"
+<a href="{{ nav_base_path }}?module=sources_uses{{ _proj_qs }}"
    class="module-card {% if active_module in ('sources_uses','uses','sources') %}active{% endif %} {% if setup_locked %}locked{% endif %}">
   <div class="module-icon module-icon-sources">💰</div>
   <div class="module-info">
@@ -28,7 +31,7 @@
 </a>
 
 {% if income_mode == 'noi' %}
-<a href="{{ nav_base_path }}?module=noi"
+<a href="{{ nav_base_path }}?module=noi{{ _proj_qs }}"
    class="module-card {% if active_module == 'noi' %}active{% endif %} {% if setup_locked %}locked{% endif %}">
   <div class="module-icon module-icon-revenue">📊</div>
   <div class="module-info">
@@ -38,7 +41,7 @@
   <div class="module-total">{{ noi_annual | currency if noi_annual else '—' }}/yr</div>
 </a>
 {% else %}
-<a href="{{ nav_base_path }}?module=revenue"
+<a href="{{ nav_base_path }}?module=revenue{{ _proj_qs }}"
    class="module-card {% if active_module == 'revenue' %}active{% endif %} {% if setup_locked %}locked{% endif %}">
   <div class="module-icon module-icon-revenue">📈</div>
   <div class="module-info">
@@ -48,7 +51,7 @@
   <div class="module-total">{{ revenue_annual | currency if revenue_annual else '—' }}/yr</div>
 </a>
 
-<a href="{{ nav_base_path }}?module=opex"
+<a href="{{ nav_base_path }}?module=opex{{ _proj_qs }}"
    class="module-card {% if active_module == 'opex' %}active{% endif %} {% if setup_locked %}locked{% endif %}">
   <div class="module-icon module-icon-opex">📋</div>
   <div class="module-info">
@@ -59,7 +62,7 @@
 </a>
 {% endif %}
 
-<a href="{{ nav_base_path }}?module=carrying"
+<a href="{{ nav_base_path }}?module=carrying{{ _proj_qs }}"
    class="module-card {% if active_module == 'carrying' %}active{% endif %} {% if setup_locked %}locked{% endif %}">
   <div class="module-icon module-icon-carrying">🏦</div>
   <div class="module-info">
@@ -69,7 +72,7 @@
   <div class="module-total">{{ carrying_annual | currency if carrying_annual else '—' }}/yr</div>
 </a>
 
-<a href="{{ nav_base_path }}?module=owners_profit"
+<a href="{{ nav_base_path }}?module=owners_profit{{ _proj_qs }}"
    class="module-card {% if active_module == 'owners_profit' %}active{% endif %} {% if setup_locked %}locked{% endif %}">
   <div class="module-icon module-icon-owners">🏆</div>
   <div class="module-info">
@@ -83,7 +86,7 @@
 </a>
 
 {% if phase_summaries.has_divestment %}
-<a href="{{ nav_base_path }}?module=divestment"
+<a href="{{ nav_base_path }}?module=divestment{{ _proj_qs }}"
    class="module-card {% if active_module == 'divestment' %}active{% endif %} {% if setup_locked %}locked{% endif %}">
   <div class="module-icon module-icon-div-uses">🏷</div>
   <div class="module-info">
@@ -93,7 +96,7 @@
   <div class="module-total">{{ divestment_total | currency if divestment_total else '—' }}</div>
 </a>
 
-<a href="{{ nav_base_path }}?module=divestment_waterfall"
+<a href="{{ nav_base_path }}?module=divestment_waterfall{{ _proj_qs }}"
    class="module-card {% if active_module == 'divestment_waterfall' %}active{% endif %} {% if setup_locked %}locked{% endif %}">
   <div class="module-icon module-icon-owners" style="background:#fce7f3">🔀</div>
   <div class="module-info">
@@ -106,7 +109,7 @@
 
 <!-- Cash Flow output — always available after compute -->
 <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border)">
-<a href="{{ nav_base_path }}?module=cashflow"
+<a href="{{ nav_base_path }}?module=cashflow{{ _proj_qs }}"
    class="module-card {% if active_module in ('cashflow','draw_schedule') %}active{% endif %}">
   <div class="module-icon" style="background:#f0fdf4;font-size:14px">📈</div>
   <div class="module-info">
@@ -122,7 +125,7 @@
   </div>
 </a>
 
-<a href="{{ nav_base_path }}?module=sensitivity"
+<a href="{{ nav_base_path }}?module=sensitivity{{ _proj_qs }}"
    class="module-card {% if active_module == 'sensitivity' %}active{% endif %}">
   <div class="module-icon" style="background:#fef3c7;font-size:14px">🎯</div>
   <div class="module-info">

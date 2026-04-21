@@ -757,12 +757,15 @@ function handleComputeResult(evt) {
 </div>
 
 {% else %}
+{# Preserve ?project=<id> on every sidebar module link so navigating between
+   modules doesn't silently bounce the user back to the default project. #}
+{% set _proj_qs = ('&project=' ~ default_project_id) if default_project_id else '' %}
 <div class="builder-layout">
   <!-- Left: module stack -->
   <div class="module-stack">
 
     {# ── Timeline — always first, gates everything else ── #}
-    <a href="{{ request.url.path }}?module=timeline"
+    <a href="{{ request.url.path }}?module=timeline{{ _proj_qs }}"
        class="module-card {% if active_module == 'timeline' %}active{% endif %}">
       <div class="module-icon module-icon-timeline">📅</div>
       <div class="module-info">
@@ -782,7 +785,7 @@ function handleComputeResult(evt) {
 
     {# ── Deal Setup — shown after timeline approval, gates modules ── #}
     {% if timeline_approved %}
-    <a href="{{ request.url.path }}?module=deal_setup"
+    <a href="{{ request.url.path }}?module=deal_setup{{ _proj_qs }}"
        class="module-card {% if active_module == 'deal_setup' %}active{% endif %}">
       <div class="module-icon" style="background:#fef3c7;font-size:14px">⚙</div>
       <div class="module-info">
