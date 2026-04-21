@@ -1361,6 +1361,7 @@ async def _auto_size_debt_modules(
     _retirement_pairs: list[tuple[object, object]] = []
     _bridge_io: dict = {}            # {funder_type: interest_amount} for new-path use lines
     _bridge_io_carry_type: dict = {} # {funder_type: "interest_reserve"|"capitalized_interest"}
+    _bridge_io_module: dict = {}     # {funder_type: capital_module.id} for reserve → source attribution
     _cc_data:  dict = {}             # {id(module): {"flat": Decimal, "pct": Decimal, "module": m}}
 
     debt_types_list: list = getattr(inputs, "debt_types", None) or []
@@ -1434,6 +1435,7 @@ async def _auto_size_debt_modules(
                 if _principal > ZERO and _r > ZERO and _n > 0 and _io_f > ZERO:
                     _bridge_io["pre_development_loan"] = _q(_principal - _funded)
                     _bridge_io_carry_type["pre_development_loan"] = _pre_ct
+                    _bridge_io_module["pre_development_loan"] = _m.id
 
             elif _ft == "acquisition_loan":
                 _dt_terms = (inputs.debt_terms or {}).get("acquisition_loan", {})
@@ -1452,6 +1454,7 @@ async def _auto_size_debt_modules(
                     if _acq_interest > ZERO:
                         _bridge_io["acquisition_loan"] = _acq_interest
                         _bridge_io_carry_type["acquisition_loan"] = _acq_ct
+                        _bridge_io_module["acquisition_loan"] = _m.id
 
             elif _ft == "construction_loan":
                 _cl_terms = (inputs.debt_terms or {}).get("construction_loan", {})
@@ -1473,6 +1476,7 @@ async def _auto_size_debt_modules(
                 if _principal > ZERO and _r > ZERO and _n > 0 and _io_f > ZERO:
                     _bridge_io["construction_loan"] = _q(_principal - _funded)
                     _bridge_io_carry_type["construction_loan"] = _cl_ct
+                    _bridge_io_module["construction_loan"] = _m.id
 
             elif _ft == "bridge":
                 _existing_amt = _src.get("amount")
@@ -2093,6 +2097,7 @@ async def _auto_size_debt_modules(
                     _existing_bio.label  = _blabel
                     _existing_bio.amount = _bio_amt
                     _existing_bio.notes  = _bnotes
+                    _existing_bio.source_capital_module_id = _bridge_io_module.get(_bft)
                     session.add(_existing_bio)
                 else:
                     await session.delete(_existing_bio)
@@ -2100,6 +2105,7 @@ async def _auto_size_debt_modules(
             elif _bio_amt > ZERO:
                 _new_io_ul = UseLine(
                     project_id=project_id,
+                    source_capital_module_id=_bridge_io_module.get(_bft),
                     label=_blabel,
                     phase="construction",
                     amount=_bio_amt,
@@ -2138,10 +2144,12 @@ async def _auto_size_debt_modules(
                 if _cc_exist:
                     _cc_exist.amount = _cc_amt
                     _cc_exist.phase  = _ccm_phase
+                    _cc_exist.source_capital_module_id = getattr(_ccm_ref, "id", None)
                     session.add(_cc_exist)
                 elif _cc_amt > ZERO:
                     _new_cc_ul = UseLine(
                         project_id=project_id,
+                        source_capital_module_id=getattr(_ccm_ref, "id", None),
                         label=_cc_full_lbl,
                         phase=_ccm_phase,
                         amount=_cc_amt,
