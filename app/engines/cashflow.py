@@ -98,7 +98,9 @@ async def compute_cash_flows(
     # prev_outputs is captured for DSCR convergence, so each iteration sees its
     # own prior NOI and wipes only its own rows (not a sibling's).
     last_summary: dict[str, Any] = {}
+    _diag(f"compute_cash_flows: {len(projects)} projects")
     for project in projects:
+        _diag(f"  -> project {project.id} ({project.name})")
         last_summary = await _compute_project_cashflow(
             deal_model=deal_model,
             deal_uuid=deal_uuid,
@@ -1314,11 +1316,15 @@ async def _auto_size_debt_modules(
     PLUS the operating reserve, PLUS construction IO — solved algebraically so
     the cash balance at operations start equals the full reserve target.
     """
+    _diag(f"=== _auto_size_debt_modules CALLED n_cap_mod={len(capital_modules)} n_ul={len(use_lines)}")
+    for _dbg_cm in capital_modules:
+        _diag(f"  [pre-filter] cm={_dbg_cm.id} ft={getattr(_dbg_cm,'funder_type',None)} source={_dbg_cm.source}")
     auto_modules = [m for m in capital_modules if (m.source or {}).get("auto_size")]
     if not auto_modules:
+        _diag("EARLY RETURN: no auto_modules")
         return
 
-    _diag(f"=== _auto_size_debt_modules ENTER n_cap_mod={len(capital_modules)} n_auto={len(auto_modules)} n_ul={len(use_lines)}")
+    _diag(f"=== _auto_size_debt_modules CONTINUE n_auto={len(auto_modules)}")
     for _dm in capital_modules:
         _diag(f"  [in] cm={_dm.id} ft={getattr(_dm,'funder_type',None)} auto_size={(_dm.source or {}).get('auto_size')} amt_src={(_dm.source or {}).get('amount')}")
     for _dul in use_lines:
