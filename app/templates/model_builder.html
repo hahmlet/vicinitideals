@@ -670,8 +670,17 @@ function handleComputeResult(evt) {
     htmx.ajax('GET', '/ui/models/{{ model.id }}/calc-status', {
       target: '#calc-status-pill-container', swap: 'innerHTML'
     });
-    // Refresh the current panel — use htmx.ajax directly (no dependency on refreshPanel being defined)
-    var _m = new URLSearchParams(window.location.search).get('module') || 'sources_uses';
+    // Phase 3a: if the user is on the Underwriting tab, the page doesn't
+    // contain a #module-panel-content target — the rollup panels are
+    // inlined. Full-reload is the simplest way to refresh the rollup
+    // numbers AND clear the stale dots on every tab chip.
+    const _params = new URLSearchParams(window.location.search);
+    if (_params.get('view') === 'underwriting') {
+      window.location.reload();
+      return;
+    }
+    // Per-project view: swap the current module panel.
+    var _m = _params.get('module') || 'sources_uses';
     htmx.ajax('GET', '/ui/panel/{{ model.id }}?module=' + encodeURIComponent(_m), {
       target: '#module-panel-content', swap: 'innerHTML'
     });
