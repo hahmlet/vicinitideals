@@ -14,7 +14,7 @@ _DIAG_ENABLED = os.environ.get("VD_DIAG_AUTOSIZE") == "1"
 
 def _diag(msg: str) -> None:
     if _DIAG_ENABLED:
-        _DIAG.warning(msg)
+        print(f"[VD_DIAG] {msg}", flush=True)
 
 from sqlalchemy import delete, func, select, update as sa_update
 from sqlalchemy.ext.asyncio import AsyncSession
