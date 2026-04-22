@@ -2472,6 +2472,12 @@ async def opportunity_wizard_step(
             )
             session.add(ob)
 
+        # Propagate the updated building list to any existing Projects on this
+        # opportunity so their ProjectBuildingAssignment rows stay in sync.
+        # Without this, the deal-detail "missing building" warning keeps firing
+        # even after the user adds a building here.
+        await _sync_opportunity_buildings_to_projects(opp, buildings_saved, session)
+
         await session.commit()
 
         deal_type = str(form.get("deal_type", "value_add"))
@@ -5397,6 +5403,40 @@ async def _get_missing_building_data(
     return missing
 
 
+async def _sync_opportunity_buildings_to_projects(
+    opportunity: Opportunity,
+    buildings: list[Building],
+    session: AsyncSession,
+) -> None:
+    """Rewrite ProjectBuildingAssignment rows for every Project on this opportunity.
+
+    Called after editing an opportunity's buildings (opportunity_wizard step 2)
+    so that Projects already created for this opportunity pick up the change.
+    Without this, the deal-detail 'missing building' warning keeps firing
+    because that check reads ProjectBuildingAssignment, not OpportunityBuilding.
+    """
+    projects = list((await session.execute(
+        select(Project).where(Project.opportunity_id == opportunity.id)
+    )).scalars())
+    if not projects:
+        return
+    for proj in projects:
+        existing = list((await session.execute(
+            select(ProjectBuildingAssignment).where(
+                ProjectBuildingAssignment.project_id == proj.id
+            )
+        )).scalars())
+        for row in existing:
+            await session.delete(row)
+    await session.flush()
+    for proj in projects:
+        for i, b in enumerate(buildings):
+            session.add(ProjectBuildingAssignment(
+                project_id=proj.id, building_id=b.id, sort_order=i
+            ))
+    await session.flush()
+
+
 async def _auto_assign_opportunity_to_project(
     opportunity: Opportunity,
     project: Project,
@@ -5635,6 +5675,11 @@ async def create_deal_project(
     )
     session.add(new_proj)
     await session.flush()
+
+    if _opp_id is not None:
+        opp = await session.get(Opportunity, _opp_id)
+        if opp is not None:
+            await _auto_assign_opportunity_to_project(opp, new_proj, session)
 
     for milestone in _seed_milestones(new_proj, pt):
         session.add(milestone)
