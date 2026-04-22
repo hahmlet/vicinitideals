@@ -258,9 +258,16 @@ async def compute_waterfall(
     equity_required = _q(
         _negative_total(lp_cashflows) + _negative_total(gp_cashflows)
     )
+    # Scope to default project (oldest by created_at). Phase 2b made
+    # OperationalOutputs per-project; pre-multi-project behavior is preserved
+    # by writing equity_required to the default project's row.
     outputs_row = (
         await session.execute(
-            select(OperationalOutputs).where(OperationalOutputs.scenario_id == deal_uuid)
+            select(OperationalOutputs)
+            .join(Project, Project.id == OperationalOutputs.project_id)
+            .where(OperationalOutputs.scenario_id == deal_uuid)
+            .order_by(Project.created_at.asc())
+            .limit(1)
         )
     ).scalar_one_or_none()
     if outputs_row is not None and equity_required > ZERO:
@@ -547,13 +554,30 @@ async def _apply_levered_metrics(
             debt_service_by_period.get(period, ZERO) + _to_decimal(cash_distributed)
         )
 
+    # Default-project scope: the waterfall engine's IRR write targets the
+    # scenario's default project's output row. Multi-project waterfall IRR
+    # is deferred (Phase 2f+).
     outputs = (
         await session.execute(
-            select(OperationalOutputs).where(OperationalOutputs.scenario_id == deal_model_id)
+            select(OperationalOutputs)
+            .join(Project, Project.id == OperationalOutputs.project_id)
+            .where(OperationalOutputs.scenario_id == deal_model_id)
+            .order_by(Project.created_at.asc())
+            .limit(1)
         )
     ).scalar_one_or_none()
     if outputs is None:
-        outputs = OperationalOutputs(scenario_id=deal_model_id)
+        _default_pid = (
+            await session.execute(
+                select(Project.id)
+                .where(Project.scenario_id == deal_model_id)
+                .order_by(Project.created_at.asc())
+                .limit(1)
+            )
+        ).scalar_one_or_none()
+        outputs = OperationalOutputs(
+            scenario_id=deal_model_id, project_id=_default_pid
+        )
         session.add(outputs)
 
     unlevered_cashflows = {

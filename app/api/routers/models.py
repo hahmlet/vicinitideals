@@ -507,8 +507,15 @@ async def get_operational_outputs(
     session: DBSession,
 ) -> OperationalOutputs | None:
     await _get_deal_or_404(session, model_id)
+    # Scenario may now carry N operational_outputs rows (one per project)
+    # after migration 0051. Return the default (oldest) project's row so
+    # legacy single-row callers see the expected shape.
     result = await session.execute(
-        select(OperationalOutputs).where(OperationalOutputs.scenario_id == model_id)
+        select(OperationalOutputs)
+        .join(Project, Project.id == OperationalOutputs.project_id)
+        .where(OperationalOutputs.scenario_id == model_id)
+        .order_by(Project.created_at.asc())
+        .limit(1)
     )
     return result.scalar_one_or_none()
 

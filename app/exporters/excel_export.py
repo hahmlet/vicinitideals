@@ -162,8 +162,14 @@ async def _load_all(session: AsyncSession, model_id: UUID):
         select(CashFlow).where(CashFlow.scenario_id == model_id).order_by(CashFlow.period)
     )).scalars())
 
+    # Default (oldest) project's outputs — Excel export remains single-project
+    # in Phase 3a. Phase 3d/e will add per-project sheets.
     outputs = (await session.execute(
-        select(OperationalOutputs).where(OperationalOutputs.scenario_id == model_id)
+        select(OperationalOutputs)
+        .join(Project, Project.id == OperationalOutputs.project_id)
+        .where(OperationalOutputs.scenario_id == model_id)
+        .order_by(Project.created_at.asc())
+        .limit(1)
     )).scalar_one_or_none()
 
     milestones = list((await session.execute(

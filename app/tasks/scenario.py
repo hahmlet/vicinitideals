@@ -444,8 +444,13 @@ async def _load_operational_outputs(
     session: AsyncSession,
     deal_model_id: UUID,
 ) -> OperationalOutputs | None:
+    # Default (oldest) project's row — Phase 2b made this per-project.
     result = await session.execute(
-        select(OperationalOutputs).where(OperationalOutputs.scenario_id == deal_model_id)
+        select(OperationalOutputs)
+        .join(Project, Project.id == OperationalOutputs.project_id)
+        .where(OperationalOutputs.scenario_id == deal_model_id)
+        .order_by(Project.created_at.asc())
+        .limit(1)
     )
     return result.scalar_one_or_none()
 

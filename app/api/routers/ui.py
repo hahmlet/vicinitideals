@@ -4274,9 +4274,16 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
             select(UnitMix).where(UnitMix.project_id == project_id).order_by(UnitMix.label)
         )).scalars())
 
-    outputs = (await session.execute(
-        select(OperationalOutputs).where(OperationalOutputs.scenario_id == model_id)
-    )).scalar_one_or_none()
+    # Scope outputs to the active project. Phase 2b's migration 0051
+    # swapped UNIQUE(scenario_id) for UNIQUE(scenario_id, project_id), so
+    # a scenario may now carry N rows (one per project). scalar_one_or_none
+    # without project_id raised MultipleResultsFound on multi-project deals.
+    _outputs_q = select(OperationalOutputs).where(
+        OperationalOutputs.scenario_id == model_id
+    )
+    if project_id is not None:
+        _outputs_q = _outputs_q.where(OperationalOutputs.project_id == project_id)
+    outputs = (await session.execute(_outputs_q.limit(1))).scalar_one_or_none()
 
     # Carrying annual = avg monthly debt service in stabilized/operations phase × 12.
     # None = never computed; 0.0 = computed but no debt service.
@@ -5341,9 +5348,15 @@ async def run_sensitivity_analysis(
 
     # Persist on OperationalOutputs.sensitivity_matrix (JSON column).
     # compute_sensitivity_matrix runs a final compute_cash_flows so a fresh
-    # OperationalOutputs row now exists.
+    # OperationalOutputs row now exists. Scope to default project because
+    # sensitivity_matrix is a scenario-wide artifact today (Phase 3d/e will
+    # revisit per-project sensitivity).
     outputs = (await session.execute(
-        select(OperationalOutputs).where(OperationalOutputs.scenario_id == model_id)
+        select(OperationalOutputs)
+        .where(OperationalOutputs.scenario_id == model_id)
+        .join(Project, Project.id == OperationalOutputs.project_id)
+        .order_by(Project.created_at.asc())
+        .limit(1)
     )).scalar_one_or_none()
     if outputs is not None:
         outputs.sensitivity_matrix = matrix
