@@ -4104,6 +4104,124 @@ def _builder_gantt_from_milestones(project: "Project | None", milestones: list) 
     }
 
 
+async def _staleness_map(session: AsyncSession, scenario_id: UUID) -> dict:
+    """Compute per-project + scenario-level staleness for tab chips.
+
+    A project is stale iff any of its inputs (project-scoped or scenario-
+    scoped) was updated after its ``OperationalOutputs.computed_at``. A
+    never-computed project is stale by definition.
+
+    Scenario-level input updates (edits to CapitalModule, WaterfallTier,
+    CapitalModuleProject, ProjectAnchor) mark EVERY project on the scenario
+    stale, since those tables are shared.
+
+    Returns::
+
+        {
+            "per_project": {project_id: bool, ...},
+            "underwriting": bool,   # True iff any project is stale
+        }
+
+    Migration 0052 added ``updated_at`` to the input tables; for fresh
+    installs the initial value is server-default ``now()``, so existing
+    deals won't light up as stale until a real edit happens.
+    """
+    from app.models.capital import CapitalModuleProject as _CMP
+    from app.models.deal import (
+        IncomeStream as _IS,
+        OperatingExpenseLine as _OEL,
+        OperationalInputs as _OI,
+        UnitMix as _UM,
+        UseLine as _UL,
+    )
+    from app.models.project import ProjectAnchor as _PA
+
+    # ── Scenario-scoped max(updated_at) — applies to every project on this scenario.
+    async def _scalar_max(stmt):
+        return (await session.execute(stmt)).scalar_one_or_none()
+
+    scenario_maxes = [
+        await _scalar_max(
+            select(func.max(CapitalModule.updated_at)).where(
+                CapitalModule.scenario_id == scenario_id
+            )
+        ),
+        await _scalar_max(
+            select(func.max(WaterfallTier.updated_at)).where(
+                WaterfallTier.scenario_id == scenario_id
+            )
+        ),
+        await _scalar_max(
+            select(func.max(_CMP.updated_at))
+            .join(CapitalModule, CapitalModule.id == _CMP.capital_module_id)
+            .where(CapitalModule.scenario_id == scenario_id)
+        ),
+        await _scalar_max(
+            select(func.max(_PA.updated_at))
+            .join(Project, Project.id == _PA.project_id)
+            .where(Project.scenario_id == scenario_id)
+        ),
+    ]
+    scenario_max = max((t for t in scenario_maxes if t is not None), default=None)
+
+    # Per-project max(updated_at) across project-scoped input tables.
+    project_ids = [
+        row[0]
+        for row in (
+            await session.execute(
+                select(Project.id).where(Project.scenario_id == scenario_id)
+            )
+        )
+    ]
+
+    per_project: dict = {}
+    for pid in project_ids:
+        proj_maxes = [
+            await _scalar_max(
+                select(func.max(_UL.updated_at)).where(_UL.project_id == pid)
+            ),
+            await _scalar_max(
+                select(func.max(_IS.updated_at)).where(_IS.project_id == pid)
+            ),
+            await _scalar_max(
+                select(func.max(_OEL.updated_at)).where(_OEL.project_id == pid)
+            ),
+            await _scalar_max(
+                select(func.max(_OI.updated_at)).where(_OI.project_id == pid)
+            ),
+            await _scalar_max(
+                select(func.max(_UM.updated_at)).where(_UM.project_id == pid)
+            ),
+            await _scalar_max(
+                select(func.max(Milestone.updated_at)).where(Milestone.project_id == pid)
+            ),
+        ]
+        proj_max = max((t for t in proj_maxes if t is not None), default=None)
+
+        computed_at = (
+            await session.execute(
+                select(OperationalOutputs.computed_at).where(
+                    OperationalOutputs.scenario_id == scenario_id,
+                    OperationalOutputs.project_id == pid,
+                )
+            )
+        ).scalar_one_or_none()
+
+        if computed_at is None:
+            per_project[pid] = True
+            continue
+
+        max_input = max(
+            (t for t in (proj_max, scenario_max) if t is not None), default=None
+        )
+        per_project[pid] = bool(max_input is not None and max_input > computed_at)
+
+    return {
+        "per_project": per_project,
+        "underwriting": any(per_project.values()) if per_project else False,
+    }
+
+
 async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: UUID | None = None) -> dict:
     """Load all line-item data for the model builder page/panel.
 
@@ -4578,6 +4696,10 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
         "timeline_approved": timeline_approved,
         "deal_setup_complete": bool(getattr(inputs, "deal_setup_complete", False)) if inputs else False,
         "default_project_id": project_id,
+        # Staleness map for top tab chips (Phase 3a): each project + the
+        # Underwriting rollup get a dot when inputs have moved past the
+        # last compute. Computed once per _load_builder_data call.
+        "staleness": await _staleness_map(session, model_id),
         # Approval gate: every milestone needs a position AND a non-zero duration
         "timeline_approvable": len(milestones) > 0 and all(
             (m.target_date or m.trigger_milestone_id) and (m.duration_days or 0) > 0

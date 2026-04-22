@@ -339,6 +339,12 @@ class OperationalInputs(Base):
     noi_escalation_rate_pct: Mapped[object] = mapped_column(
         Numeric(18, 6), nullable=False, default=Decimal("3")
     )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        onupdate=func.now(),
+        nullable=False,
+    )
 
     # Relationships
     project: Mapped["Project"] = relationship(  # type: ignore[name-defined]
@@ -370,6 +376,12 @@ class OperatingExpenseLine(Base):
         default=list,
     )
     notes: Mapped[str | None] = mapped_column(Text, nullable=True)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        onupdate=func.now(),
+        nullable=False,
+    )
 
     project: Mapped["Project"] = relationship(  # type: ignore[name-defined]
         "Project", back_populates="expense_lines"
@@ -411,6 +423,12 @@ class IncomeStream(Base):
         default=list,
     )
     notes: Mapped[str | None] = mapped_column(Text, nullable=True)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        onupdate=func.now(),
+        nullable=False,
+    )
 
     project: Mapped["Project"] = relationship(  # type: ignore[name-defined]
         "Project", back_populates="income_streams"
@@ -451,6 +469,12 @@ class UnitMix(Base):
     # Post-renovation rent (only for value_add_renovation strategy)
     post_reno_rent_per_unit: Mapped[object | None] = mapped_column(Numeric(18, 2), nullable=True)
     notes: Mapped[str | None] = mapped_column(Text, nullable=True)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        onupdate=func.now(),
+        nullable=False,
+    )
 
     project: Mapped["Project"] = relationship(  # type: ignore[name-defined]
         "Project", back_populates="unit_mix"
@@ -485,6 +509,12 @@ class UseLine(Base):
     timing_type: Mapped[str] = mapped_column(String(20), nullable=False, default="first_day")
     is_deferred: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     notes: Mapped[str | None] = mapped_column(Text, nullable=True)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        onupdate=func.now(),
+        nullable=False,
+    )
 
     project: Mapped["Project"] = relationship(  # type: ignore[name-defined]
         "Project", back_populates="use_lines"

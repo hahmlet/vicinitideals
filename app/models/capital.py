@@ -70,6 +70,12 @@ class CapitalModule(Base):
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        onupdate=func.now(),
+        nullable=False,
+    )
 
     # Relationships
     scenario: Mapped["Scenario"] = relationship(  # type: ignore[name-defined]
@@ -124,6 +130,12 @@ class WaterfallTier(Base):
     max_pct_of_distributable: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
     # DDF-specific: optional accrual rate on unpaid balance
     interest_rate_pct: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        onupdate=func.now(),
+        nullable=False,
+    )
 
     # Relationships
     scenario: Mapped["Scenario"] = relationship(  # type: ignore[name-defined]

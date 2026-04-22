@@ -125,6 +125,12 @@ class Milestone(Base):
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        onupdate=func.now(),
+        nullable=False,
+    )
 
     def computed_start(self, milestone_map: "dict[uuid.UUID, Milestone] | None" = None) -> "date | None":
         """Resolve start date, following trigger chain. milestone_map avoids repeated DB hits."""
