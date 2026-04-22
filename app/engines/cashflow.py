@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import logging
 import os
 from dataclasses import dataclass
 from datetime import date, datetime, timezone
@@ -8,11 +7,14 @@ from decimal import Decimal, ROUND_HALF_UP
 from typing import Any
 from uuid import UUID
 
-_DIAG = logging.getLogger("vd.diag.autosize")
 _DIAG_ENABLED = os.environ.get("VD_DIAG_AUTOSIZE") == "1"
 
 
 def _diag(msg: str) -> None:
+    """Diagnostic trace for auto-sizing — gated on VD_DIAG_AUTOSIZE=1 env var.
+
+    Off by default; enable temporarily via env to debug sizing issues.
+    """
     if _DIAG_ENABLED:
         print(f"[VD_DIAG] {msg}", flush=True)
 
@@ -98,9 +100,7 @@ async def compute_cash_flows(
     # prev_outputs is captured for DSCR convergence, so each iteration sees its
     # own prior NOI and wipes only its own rows (not a sibling's).
     last_summary: dict[str, Any] = {}
-    _diag(f"compute_cash_flows: {len(projects)} projects")
     for project in projects:
-        _diag(f"  -> project {project.id} ({project.name})")
         last_summary = await _compute_project_cashflow(
             deal_model=deal_model,
             deal_uuid=deal_uuid,
@@ -661,7 +661,47 @@ async def _per_project_capital_modules(
         )
         .order_by(CapitalModule.stack_position)
     )
-    return list(result.scalars())
+    modules = list(result.scalars())
+    if modules:
+        return modules
+
+    # Self-heal: modules created after migration 0048 (deal creation path,
+    # setup-complete handler, etc.) don't all insert junction rows. If this
+    # scenario has modules but no junction rows pointing at this project,
+    # and the scenario has exactly one project, auto-create the junction
+    # (matching what the 0048 backfill would have produced) and return the
+    # now-attached modules. No-op for genuinely multi-project scenarios
+    # where divergent attachment is intentional.
+    all_modules = list((await session.execute(
+        select(CapitalModule)
+        .where(CapitalModule.scenario_id == scenario_id)
+        .order_by(CapitalModule.stack_position)
+    )).scalars())
+    if not all_modules:
+        return []
+    n_projects = int((await session.execute(
+        select(func.count()).select_from(Project).where(Project.scenario_id == scenario_id)
+    )).scalar_one())
+    if n_projects != 1:
+        return modules  # empty — don't guess attachment in multi-project scenarios
+    already_attached = set((await session.execute(
+        select(CapitalModuleProject.capital_module_id)
+        .where(CapitalModuleProject.project_id == project_id)
+    )).scalars())
+    for cm in all_modules:
+        if cm.id in already_attached:
+            continue
+        session.add(CapitalModuleProject(
+            capital_module_id=cm.id,
+            project_id=project_id,
+            amount=Decimal(str((cm.source or {}).get("amount") or 0)),
+            active_from=cm.active_phase_start,
+            active_to=cm.active_phase_end,
+            auto_size=bool((cm.source or {}).get("auto_size")),
+        ))
+    await session.flush()
+    _diag(f"self-healed junction: scenario={scenario_id} project={project_id} attached={len(all_modules)}")
+    return all_modules
 
 
 async def is_shared_source(
