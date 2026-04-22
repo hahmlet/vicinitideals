@@ -7542,7 +7542,6 @@ def _compute_calc_status(data: dict) -> dict:
     }
 
 
-@router.get("/ui/models/{model_id}/calc-status", response_class=HTMLResponse)
 def _render_calc_status_pill_html(status: dict, model_id: UUID) -> str:
     """Render the calc-status pill button HTML from a computed status dict."""
     if status["overall"] == "ok":
@@ -7587,6 +7586,7 @@ def _render_calc_status_pill_html(status: dict, model_id: UUID) -> str:
     )
 
 
+@router.get("/ui/models/{model_id}/calc-status", response_class=HTMLResponse)
 async def model_calc_status_pill(
     request: Request,
     model_id: UUID,
