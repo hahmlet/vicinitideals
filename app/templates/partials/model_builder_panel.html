@@ -1294,10 +1294,27 @@
 
 {% elif active_module == 'cashflow' %}
 
+{% set _income_mode = (model.income_mode if model is defined and model else 'revenue_opex') %}
 <div class="module-panel-header">
   <div>
-    <div class="module-panel-title">Cash Flow</div>
-    <div class="module-panel-desc">Monthly operating cash flow across all phases.</div>
+    <div class="module-panel-title">
+      Cash Flow
+      {% if _income_mode == 'noi' %}
+      <span style="display:inline-block;margin-left:8px;padding:2px 8px;font-size:11px;
+                   background:#ede9fe;color:#5b21b6;border-radius:10px;
+                   font-weight:600;vertical-align:middle"
+            title="This project is underwritten at the NOI level — Revenue and OpEx rows are not broken out.">
+        Mode: NOI
+      </span>
+      {% endif %}
+    </div>
+    <div class="module-panel-desc">
+      {% if _income_mode == 'noi' %}
+      Monthly NOI + debt service across all phases. Revenue / OpEx are reported as $0 because this project is underwritten at the NOI level.
+      {% else %}
+      Monthly operating cash flow across all phases.
+      {% endif %}
+    </div>
   </div>
   <div class="module-panel-actions">
     <button class="btn btn-sm btn-primary"

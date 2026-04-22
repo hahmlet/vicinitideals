@@ -110,17 +110,24 @@
     </table>
   </div>
 
-  {# ── Combined Cashflow (summed across projects) ─────────────────────── #}
+  {# ── Combined Cashflow (summed across projects) ──────────────────────
+       Mode-agnostic rollup: only NOI / Debt Service / Net CF are always
+       summable across projects. Revenue / EGI / OpEx don't sum meaningfully
+       when some projects are NOI-mode (their OpEx is $0 by construction
+       and their EGI === NOI) and others are Rev/OpEx mode. For per-project
+       Revenue/OpEx detail, switch to a Project tab's Cashflow module. #}
   <div class="uw-section">
     <div class="uw-section-title">Combined Cashflow</div>
+    <div class="uw-cf-note text-muted">
+      NOI-focused rollup. For Revenue / OpEx detail, open the Cashflow
+      module on the owning Project's tab.
+    </div>
     <div class="uw-table-scroll">
       <table class="uw-table uw-cf-table">
         <thead>
           <tr>
             <th class="num">Period</th>
             <th>Phase</th>
-            <th class="num">EGI</th>
-            <th class="num">OpEx</th>
             <th class="num">NOI</th>
             <th class="num">Debt Service</th>
             <th class="num">Net CF</th>
@@ -131,14 +138,12 @@
           <tr>
             <td class="num">{{ row.period }}</td>
             <td>{{ (row.period_type if row.period_type else '—').replace('_', ' ').title() }}</td>
-            <td class="num">${{ '{:,.0f}'.format(row.effective_gross_income | float) }}</td>
-            <td class="num">${{ '{:,.0f}'.format(row.operating_expenses | float) }}</td>
             <td class="num">${{ '{:,.0f}'.format(row.noi | float) }}</td>
             <td class="num">${{ '{:,.0f}'.format(row.debt_service | float) }}</td>
             <td class="num">${{ '{:,.0f}'.format(row.net_cash_flow | float) }}</td>
           </tr>
           {% else %}
-          <tr><td colspan="7" class="text-muted" style="text-align:center;padding:20px">No cashflow rows. Compute a Project first.</td></tr>
+          <tr><td colspan="5" class="text-muted" style="text-align:center;padding:20px">No cashflow rows. Compute a Project first.</td></tr>
           {% endfor %}
         </tbody>
       </table>
@@ -274,5 +279,9 @@
 .uw-table-scroll .uw-table {
   border: none;
   border-radius: 0;
+}
+.uw-cf-note {
+  font-size: 12px;
+  margin-bottom: 8px;
 }
 </style>

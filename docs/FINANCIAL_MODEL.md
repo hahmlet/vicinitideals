@@ -38,6 +38,26 @@ A **shared Source** is one `CapitalModule` (one contract identity — one lender
 - **Underwriting-level DSCR / LTV on a shared Source**: informational notification only. No feedback into sizing.
 - **Rollup display**: `rollup_sources` returns one row per CapitalModule with `total_principal = Σ junction.amount`, `covered_project_ids`, and `is_shared: bool`. The UI draws a "covers: P1, P2" chip on shared rows.
 
+### Underwriting rollup CF display — NOI-focused (Phase 3a)
+
+The Underwriting tab's Combined Cashflow table shows only **NOI / Debt Service / Net CF** — no Revenue, EGI, or OpEx columns. Reason: only these three fields sum meaningfully when projects are in different income modes.
+
+| Field | NOI-mode contribution | Rev/OpEx-mode contribution | Summable across modes? |
+|---|---|---|---|
+| NOI | stabilized NOI input | revenue − opex | ✅ always |
+| Debt Service | ✅ | ✅ | ✅ always |
+| Net CF | ✅ | ✅ | ✅ always |
+| Revenue / EGI | == NOI (by construction) | revenue − vacancy | ⚠️ inflates combined total for mixed |
+| OpEx | $0 (no breakout) | actual opex | ⚠️ under-reports combined total for mixed |
+
+Today `income_mode` is a scenario-level setting (one value per Scenario, applied to every Project). The "mixed mode across projects" case is not yet possible in prod — but the NOI-focused rollup is the right design regardless, because:
+
+- All-NOI scenarios: showing Revenue/OpEx $0 alongside NOI is just noise.
+- All-Rev/OpEx scenarios: the detail is still available per-project on the Cashflow module panel; the Underwriting tab is a lender-summary view, not a line-level projection.
+- Mixed scenarios (future, when `income_mode` might become per-project): NOI / DS / Net CF are the only columns that stay honest.
+
+The per-project Cashflow module panel shows a purple "Mode: NOI" chip in its header when that scenario is in NOI mode, so operators looking for missing Revenue/OpEx rows see the reason immediately.
+
 ### Cross-project compute order
 
 `app/engines/anchor_resolver.py` orders projects via Kahn topological sort over `project_anchors` rows (anchored project runs after its parent). Cycles raise `AnchorCycleError`. Zero-anchor scenarios fall through to `sorted(created_at)` — byte-identical to pre-Phase-2 ordering. Anchor-driven milestone-date resolution (walking the chain + applying offsets) is deferred (2d1); presently the Deal / Underwriting start date = `min(project.start_date)` set per project in the wizard.
