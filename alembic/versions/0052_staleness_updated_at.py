@@ -69,9 +69,29 @@ def upgrade() -> None:
                 nullable=False,
             ),
         )
-    # Postgres fills via server_default on existing rows automatically when
-    # the column is added with NOT NULL + server_default. No explicit
-    # backfill needed. (SQLite in tests rebuilds the table via create_all.)
+    # Backfill: legacy rows got `now()` via server_default when the column
+    # was added — that's *after* any prior OperationalOutputs.computed_at,
+    # so every existing deal would light up as stale immediately. Pin
+    # updated_at to each row's created_at so legacy deals look fresh until
+    # the user actually edits something. Only runs for tables that carry a
+    # created_at column (6 of 8); the two that don't — waterfall_tiers,
+    # operational_inputs — are rarely-touched anyway and any false-positive
+    # stale state clears on the next compute.
+    bind = op.get_bind()
+    if bind.dialect.name == "postgresql":
+        for tbl in _TABLES:
+            existing = bind.execute(
+                sa.text(
+                    "SELECT column_name FROM information_schema.columns "
+                    "WHERE table_name = :t AND column_name = 'created_at'"
+                ),
+                {"t": tbl},
+            ).fetchone()
+            if existing:
+                op.execute(
+                    f"UPDATE {tbl} SET updated_at = created_at "
+                    "WHERE updated_at > created_at"
+                )
 
 
 def downgrade() -> None:
