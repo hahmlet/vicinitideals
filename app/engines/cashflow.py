@@ -1,10 +1,20 @@
 from __future__ import annotations
 
+import logging
+import os
 from dataclasses import dataclass
 from datetime import date, datetime, timezone
 from decimal import Decimal, ROUND_HALF_UP
 from typing import Any
 from uuid import UUID
+
+_DIAG = logging.getLogger("vd.diag.autosize")
+_DIAG_ENABLED = os.environ.get("VD_DIAG_AUTOSIZE") == "1"
+
+
+def _diag(msg: str) -> None:
+    if _DIAG_ENABLED:
+        _DIAG.warning(msg)
 
 from sqlalchemy import delete, func, select, update as sa_update
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -1308,6 +1318,12 @@ async def _auto_size_debt_modules(
     if not auto_modules:
         return
 
+    _diag(f"=== _auto_size_debt_modules ENTER n_cap_mod={len(capital_modules)} n_auto={len(auto_modules)} n_ul={len(use_lines)}")
+    for _dm in capital_modules:
+        _diag(f"  [in] cm={_dm.id} ft={getattr(_dm,'funder_type',None)} auto_size={(_dm.source or {}).get('auto_size')} amt_src={(_dm.source or {}).get('amount')}")
+    for _dul in use_lines:
+        _diag(f"  [in] ul label={getattr(_dul,'label','')!r} phase={getattr(_dul,'phase',None)} amt={getattr(_dul,'amount',None)} pid={getattr(_dul,'project_id',None)}")
+
     debt_sizing_mode = inputs.debt_sizing_mode or "gap_fill"
     dscr_min = _to_decimal(inputs.dscr_minimum or PLACEHOLDER_DSCR)
     reserve_months = int(inputs.operation_reserve_months or 6)
@@ -1451,6 +1467,7 @@ async def _auto_size_debt_modules(
     _cc_data:  dict = {}             # {id(module): {"flat": Decimal, "pct": Decimal, "module": m}}
 
     debt_types_list: list = getattr(inputs, "debt_types", None) or []
+    _diag(f"debt_types_list={debt_types_list} debt_sizing_mode={debt_sizing_mode}")
 
     if debt_types_list:
         # ── New multi-debt path ─────────────────────────────────────────────
@@ -1574,6 +1591,7 @@ async def _auto_size_debt_modules(
                 _principal = ZERO
             _src["amount"] = str(_q(_principal))
             _src["is_bridge"] = True
+            _diag(f"bridge sized cm={_m.id} ft={_ft} -> amount={_src['amount']}")
             await session.execute(
                 sa_update(CapitalModule).where(CapitalModule.id == _m.id).values(source=_src)
             )
@@ -1632,9 +1650,11 @@ async def _auto_size_debt_modules(
     # User overrides are already in total_uses from the initial sum; we must not add them
     # again, and must not recompute them.
     _cc_data: dict = {}   # id(module) → {"flat": Decimal, "pct": Decimal, "module": m}
+    _diag(f"CC-INIT entering block debt_types_list={bool(debt_types_list)} auto_modules={[m.id for m in auto_modules]}")
     if debt_types_list and auto_modules:
         for _ccm in capital_modules:
             _ccm_ft = str(getattr(_ccm, "funder_type", "") or "").replace("FunderType.", "")
+            _diag(f"  CC scan cm={_ccm.id} ft={_ccm_ft!r} in_defaults={_ccm_ft in _DEFAULT_LOAN_COSTS} auto_size={(_ccm.source or {}).get('auto_size')}")
             if _ccm_ft not in _DEFAULT_LOAN_COSTS or not (_ccm.source or {}).get("auto_size"):
                 continue
             _ccm_lbl = getattr(_ccm, "label", "") or _ccm_ft.replace("_", " ").title()
@@ -2045,6 +2065,10 @@ async def _auto_size_debt_modules(
 
     # Get project_id from the first use_line (all belong to the same project)
     project_id = getattr(use_lines[0], "project_id", None) if use_lines else None
+    _diag(f"WRITE-BACK project_id={project_id} _cc_data_n={len(_cc_data)} cc_module_ids={[_cc_data[k]['module'].id for k in _cc_data]}")
+    for _dk, _dv in _cc_data.items():
+        _dm2 = _dv['module']
+        _diag(f"  cc module id={_dm2.id} ft={getattr(_dm2,'funder_type',None)} source.amount={(_dm2.source or {}).get('amount')} flat={_dv['flat']} pct={_dv['pct']}")
 
     # Update or create Operating Reserve use line
     if income_mode == "noi":
@@ -2205,6 +2229,7 @@ async def _auto_size_debt_modules(
     # All auto-sized modules now have final principals.  Write one Use line per
     # default closing cost, using amount==0 as the "compute" sentinel.
     # amount > 0 → user override → skip (already in DB, already correct in total_uses).
+    _diag(f"CC-WRITEBACK guard: _cc_data={bool(_cc_data)} project_id={project_id} -> enter={bool(_cc_data and project_id)}")
     if _cc_data and project_id:
         for _cc_obj in _cc_data.values():
             _ccm_ref  = _cc_obj["module"]
@@ -2226,6 +2251,7 @@ async def _auto_size_debt_modules(
                     _cc_amt = _q(_ccm_p * Decimal(str(_cc["pct_of_principal"])) / HUNDRED)
                 else:
                     _cc_amt = Decimal(str(_cc["flat"]))
+                _diag(f"  CC write label={_cc_full_lbl!r} _ccm_p={_ccm_p} cc_def={_cc} -> amt={_cc_amt} exist_id={getattr(_cc_exist,'id',None) if _cc_exist else None}")
 
                 if _cc_exist:
                     _cc_exist.amount = _cc_amt
