@@ -698,13 +698,21 @@ function handleComputeResult(evt) {
   <button type="button" class="deal-tab deal-tab-add" onclick="openDrawer('create-variant-drawer')">+ New Variant</button>
 </div>
 
-{# ── Row 2: Projects in active deal ── #}
+{# ── Row 2: Underwriting tab + Projects in active deal ── #}
+{% set _s = staleness if staleness is defined else {'per_project': {}, 'underwriting': False} %}
+{% set _active_view = active_view if active_view is defined else 'project' %}
 <div style="display:flex;align-items:stretch;overflow:hidden">
   <div class="deal-tabs-row deal-tabs-row-projects" style="flex:1;min-width:0">
+    {# Underwriting — scenario rollup, always the leftmost chip #}
+    <a href="/models/{{ model.id }}/builder?view=underwriting"
+       class="deal-tab {% if _active_view == 'underwriting' %}active{% endif %}"
+       style="font-weight:600">
+      Underwriting{% if _s.underwriting %}<span style="color:#f59e0b;font-size:10px;margin-left:6px" title="Some projects have edits since last compute">●</span>{% endif %}
+    </a>
     {% for p in deal_projects %}
     <a href="/models/{{ model.id }}/builder?project={{ p.id }}"
-       class="deal-tab {% if p.id | string == active_project_id %}active{% endif %}">
-      {{ p.name }}
+       class="deal-tab {% if _active_view == 'project' and p.id | string == active_project_id %}active{% endif %}">
+      {{ p.name }}{% if _s.per_project.get(p.id) %}<span style="color:#f59e0b;font-size:10px;margin-left:6px" title="{{ p.name }} has edits since last compute">●</span>{% endif %}
     </a>
     {% endfor %}
     {% if deal_projects | length < 5 %}
@@ -760,6 +768,11 @@ function handleComputeResult(evt) {
 {# Preserve ?project=<id> on every sidebar module link so navigating between
    modules doesn't silently bounce the user back to the default project. #}
 {% set _proj_qs = ('&project=' ~ default_project_id) if default_project_id else '' %}
+
+{% if (active_view if active_view is defined else 'project') == 'underwriting' %}
+  {# Phase 3a: Underwriting read-only rollup view — no sidebar, no per-project module editor #}
+  {% include 'partials/underwriting/view.html' %}
+{% else %}
 <div class="builder-layout">
   <!-- Left: module stack -->
   <div class="module-stack">
@@ -825,6 +838,7 @@ function handleComputeResult(evt) {
     </div>
   </div>
 </div>
+{% endif %}{# end underwriting vs builder-layout #}
 {% endif %}{# end deal_setup vs builder-layout #}
 
 <!-- Model settings drawer -->

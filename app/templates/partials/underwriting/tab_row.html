@@ -1,0 +1,89 @@
+{# Phase 3a: top tab row — [Underwriting] [Project 1] [Project 2] … [+ Add Project] #}
+{# Context: model, deal_projects, active_project_id, active_view, staleness, active_module #}
+{% set _s = staleness if staleness is defined else {'per_project': {}, 'underwriting': False} %}
+<div class="uw-tab-row" role="tablist" aria-label="Scenario view">
+  {# Underwriting tab — always first #}
+  <a href="/models/{{ model.id }}/builder?view=underwriting"
+     class="uw-tab {% if active_view == 'underwriting' %}active{% endif %}"
+     role="tab"
+     aria-selected="{{ 'true' if active_view == 'underwriting' else 'false' }}">
+    <span class="uw-tab-label">Underwriting</span>
+    {% if _s.underwriting %}<span class="uw-stale-dot" title="Some projects have edits since last compute">●</span>{% endif %}
+  </a>
+
+  {# Per-project tabs in created_at order #}
+  {% for p in deal_projects %}
+  <a href="/models/{{ model.id }}/builder?project={{ p.id }}{% if active_module %}&amp;module={{ active_module }}{% endif %}"
+     class="uw-tab {% if active_view == 'project' and active_project_id == p.id|string %}active{% endif %}"
+     role="tab"
+     aria-selected="{{ 'true' if active_view == 'project' and active_project_id == p.id|string else 'false' }}">
+    <span class="uw-tab-label">{{ p.name }}</span>
+    {% if _s.per_project.get(p.id) %}<span class="uw-stale-dot" title="{{ p.name }} has edits since last compute">●</span>{% endif %}
+  </a>
+  {% endfor %}
+
+  {# + Add Project (reuses existing drawer trigger) #}
+  <button type="button" class="uw-tab-add" onclick="document.getElementById('add-project-drawer')?.showModal()">+ Add Project</button>
+</div>
+
+<style>
+.uw-tab-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  border-bottom: 1px solid var(--border);
+  padding: 0 16px;
+  background: #fafafa;
+}
+.uw-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px 9px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-decoration: none;
+  margin-bottom: -1px;
+  cursor: pointer;
+  position: relative;
+}
+.uw-tab:hover {
+  color: var(--text);
+  background: #fff;
+}
+.uw-tab.active {
+  background: #fff;
+  border-color: var(--border);
+  border-bottom-color: #fff;
+  color: var(--text);
+  font-weight: 600;
+}
+.uw-stale-dot {
+  color: #f59e0b;  /* amber */
+  font-size: 10px;
+  line-height: 1;
+  margin-top: -1px;
+}
+.uw-tab-add {
+  background: transparent;
+  border: 1px dashed var(--border);
+  color: var(--text-muted);
+  padding: 7px 12px;
+  margin-left: 6px;
+  margin-bottom: 0;
+  font-size: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.uw-tab-add:hover {
+  color: var(--text);
+  background: #fff;
+  border-style: solid;
+}
+</style>

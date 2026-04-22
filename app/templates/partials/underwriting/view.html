@@ -1,0 +1,278 @@
+{# Phase 3a: read-only Underwriting view — rollup panels across all projects #}
+{# Context: model, underwriting_rollup, deal_projects #}
+
+{% set _r = underwriting_rollup if underwriting_rollup else {} %}
+{% set _summary = _r.get('summary', {}) %}
+{% set _totals = _summary.get('totals', {}) %}
+{% set _per_project = _summary.get('per_project', []) %}
+
+<div class="uw-view">
+
+  {# ── KPI strip ──────────────────────────────────────────────────────── #}
+  <div class="uw-kpi-strip">
+    <div class="uw-kpi">
+      <div class="uw-kpi-label">Projects</div>
+      <div class="uw-kpi-value">{{ deal_projects | length }}</div>
+    </div>
+    <div class="uw-kpi">
+      <div class="uw-kpi-label">Total Project Cost</div>
+      <div class="uw-kpi-value">${{ '{:,.0f}'.format(_totals.get('total_project_cost', 0) | float) }}</div>
+    </div>
+    <div class="uw-kpi">
+      <div class="uw-kpi-label">Equity Required</div>
+      <div class="uw-kpi-value">${{ '{:,.0f}'.format(_totals.get('equity_required', 0) | float) }}</div>
+    </div>
+    <div class="uw-kpi">
+      <div class="uw-kpi-label">Combined Levered IRR</div>
+      <div class="uw-kpi-value">{{ '{:.2f}%'.format(_totals.get('combined_irr_pct', 0) | float) }}</div>
+    </div>
+  </div>
+
+  {# ── Per-project summary (one row per Project) ──────────────────────── #}
+  <div class="uw-section">
+    <div class="uw-section-title">Per-Project Summary</div>
+    <table class="uw-table">
+      <thead>
+        <tr>
+          <th>Project</th>
+          <th class="num">TPC</th>
+          <th class="num">Equity</th>
+          <th class="num">Stabilized NOI</th>
+          <th class="num">DSCR</th>
+          <th class="num">Levered IRR</th>
+          <th class="num">Months</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for pp in _per_project %}
+        {% set pproj = (deal_projects | selectattr('id', 'equalto', pp.project_id) | list | first) if pp.project_id else None %}
+        <tr>
+          <td>
+            {% if pproj %}
+              <a href="/models/{{ model.id }}/builder?project={{ pproj.id }}">{{ pproj.name }}</a>
+            {% else %}
+              <span class="text-muted">—</span>
+            {% endif %}
+          </td>
+          <td class="num">${{ '{:,.0f}'.format(pp.total_project_cost | float) if pp.total_project_cost else '—' }}</td>
+          <td class="num">${{ '{:,.0f}'.format(pp.equity_required | float) if pp.equity_required else '—' }}</td>
+          <td class="num">${{ '{:,.0f}'.format(pp.noi_stabilized | float) if pp.noi_stabilized else '—' }}</td>
+          <td class="num">{{ '{:.2f}x'.format(pp.dscr | float) if pp.dscr else '—' }}</td>
+          <td class="num">{{ '{:.2f}%'.format(pp.project_irr_levered | float) if pp.project_irr_levered else '—' }}</td>
+          <td class="num">{{ pp.total_timeline_months or '—' }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="7" class="text-muted" style="text-align:center;padding:20px">No per-project outputs yet. Click Compute on any Project tab.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {# ── Source Package (shared deduped) ────────────────────────────────── #}
+  <div class="uw-section">
+    <div class="uw-section-title">Source Package</div>
+    <table class="uw-table">
+      <thead>
+        <tr>
+          <th>Source</th>
+          <th>Type</th>
+          <th>Covers</th>
+          <th class="num">Total Principal</th>
+          <th class="num">Rate %</th>
+          <th>Carry</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in _r.get('sources', []) %}
+        <tr>
+          <td>{{ s.label }}</td>
+          <td>{{ s.funder_type.replace('_', ' ').title() }}</td>
+          <td>
+            {% set _covered = [] %}
+            {% for cid in s.covered_project_ids %}
+              {% set _cp = (deal_projects | selectattr('id', 'equalto', cid|trim) | list | first) %}
+              {% if not _cp %}
+                {# UUID equality — templates get a string, ids are UUID #}
+                {% set _cp = (deal_projects | selectattr('id', 'equalto', cid) | list | first) %}
+              {% endif %}
+              {% if _cp %}<span class="uw-chip">{{ _cp.name }}</span>{% else %}<span class="uw-chip">?</span>{% endif %}
+            {% endfor %}
+            {% if s.is_shared %}<span class="uw-badge-shared">shared</span>{% endif %}
+          </td>
+          <td class="num">${{ '{:,.0f}'.format(s.total_principal | float) }}</td>
+          <td class="num">{{ '{:.2f}'.format(s.interest_rate_pct | float) if s.interest_rate_pct else '—' }}</td>
+          <td>{{ (s.carry_type or '—').replace('_', ' ') }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6" class="text-muted" style="text-align:center;padding:20px">No Sources configured.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {# ── Combined Cashflow (summed across projects) ─────────────────────── #}
+  <div class="uw-section">
+    <div class="uw-section-title">Combined Cashflow</div>
+    <div class="uw-table-scroll">
+      <table class="uw-table uw-cf-table">
+        <thead>
+          <tr>
+            <th class="num">Period</th>
+            <th>Phase</th>
+            <th class="num">EGI</th>
+            <th class="num">OpEx</th>
+            <th class="num">NOI</th>
+            <th class="num">Debt Service</th>
+            <th class="num">Net CF</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in _r.get('cashflow', []) %}
+          <tr>
+            <td class="num">{{ row.period }}</td>
+            <td>{{ (row.period_type if row.period_type else '—').replace('_', ' ').title() }}</td>
+            <td class="num">${{ '{:,.0f}'.format(row.effective_gross_income | float) }}</td>
+            <td class="num">${{ '{:,.0f}'.format(row.operating_expenses | float) }}</td>
+            <td class="num">${{ '{:,.0f}'.format(row.noi | float) }}</td>
+            <td class="num">${{ '{:,.0f}'.format(row.debt_service | float) }}</td>
+            <td class="num">${{ '{:,.0f}'.format(row.net_cash_flow | float) }}</td>
+          </tr>
+          {% else %}
+          <tr><td colspan="7" class="text-muted" style="text-align:center;padding:20px">No cashflow rows. Compute a Project first.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  {# ── Joined Waterfall ───────────────────────────────────────────────── #}
+  <div class="uw-section">
+    <div class="uw-section-title">Waterfall Distribution (joined)</div>
+    <div class="uw-table-scroll">
+      <table class="uw-table">
+        <thead>
+          <tr>
+            <th>Project</th>
+            <th class="num">Period</th>
+            <th class="num">Tier</th>
+            <th>Type</th>
+            <th class="num">Cash Distributed</th>
+            <th class="num">Cumulative</th>
+            <th class="num">Party IRR %</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for w in _r.get('waterfall', []) %}
+          {% set wproj = (deal_projects | selectattr('id', 'equalto', w.project_id) | list | first) if w.project_id else None %}
+          <tr>
+            <td>{% if wproj %}{{ wproj.name }}{% else %}—{% endif %}</td>
+            <td class="num">{{ w.period }}</td>
+            <td class="num">{{ w.tier_priority if w.tier_priority is not none else '—' }}</td>
+            <td>{{ (w.tier_type or '—').replace('_', ' ').title() }}</td>
+            <td class="num">${{ '{:,.0f}'.format(w.cash_distributed | float) if w.cash_distributed else '$0' }}</td>
+            <td class="num">${{ '{:,.0f}'.format(w.cumulative_distributed | float) if w.cumulative_distributed else '$0' }}</td>
+            <td class="num">{{ '{:.2f}%'.format(w.party_irr_pct | float) if w.party_irr_pct else '—' }}</td>
+          </tr>
+          {% else %}
+          <tr><td colspan="7" class="text-muted" style="text-align:center;padding:20px">No waterfall distributions computed yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<style>
+.uw-view {
+  padding: 20px;
+}
+.uw-kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.uw-kpi {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+.uw-kpi-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+.uw-kpi-value {
+  font-size: 22px;
+  font-weight: 700;
+  margin-top: 4px;
+  color: var(--text);
+}
+.uw-section {
+  margin-bottom: 28px;
+}
+.uw-section-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+.uw-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  font-size: 13px;
+}
+.uw-table thead th {
+  background: #f9fafb;
+  padding: 8px 12px;
+  text-align: left;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+}
+.uw-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #f1f5f9;
+}
+.uw-table tbody tr:last-child td { border-bottom: none; }
+.uw-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+.uw-table th.num { text-align: right; }
+.uw-chip {
+  display: inline-block;
+  padding: 2px 8px;
+  margin-right: 4px;
+  font-size: 11px;
+  background: #eff6ff;
+  color: #1e40af;
+  border-radius: 10px;
+}
+.uw-badge-shared {
+  display: inline-block;
+  padding: 2px 6px;
+  margin-left: 4px;
+  font-size: 10px;
+  background: #fef3c7;
+  color: #92400e;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.uw-table-scroll {
+  max-height: 480px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+.uw-table-scroll .uw-table {
+  border: none;
+  border-radius: 0;
+}
+</style>
