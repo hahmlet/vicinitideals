@@ -20,11 +20,11 @@
 
     <div class="ms-dropdown" data-ms-label="Jurisdictions">
       <button type="button" class="filter-select ms-btn" style="min-width:150px;text-align:left">Jurisdictions ▾</button>
-      <div class="ms-panel" style="min-width:220px">
+      <div class="ms-panel" style="min-width:240px">
         <label class="ms-all"><input type="checkbox" class="ms-select-all" checked> Select All</label>
         <div class="ms-divider"></div>
         {% for j in jurisdictions %}
-        <label><input type="checkbox" name="jurisdiction" value="{{ j }}" class="ms-cb" {% if not jurisdiction or j in jurisdiction %}checked{% endif %}> {{ j | title }}</label>
+        <label><input type="checkbox" name="jurisdiction" value="{{ j.value }}" class="ms-cb" {% if not jurisdiction or j.value in jurisdiction %}checked{% endif %}> {{ j.label }}</label>
         {% endfor %}
       </div>
     </div>

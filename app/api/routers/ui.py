@@ -19,7 +19,7 @@ import httpx
 from fastapi import APIRouter, Cookie, Form, HTTPException, Query, Request
 from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse, RedirectResponse, StreamingResponse
 from fastapi.templating import Jinja2Templates
-from sqlalchemy import func, or_, select
+from sqlalchemy import and_, func, literal, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
@@ -2739,6 +2739,63 @@ _STATE_CLASS_GROUPS: dict[str, tuple[str, list[str]]] = {
 }
 
 
+def _parcel_jurisdiction_clause(jurisdictions: list[str]):
+    """Build a SQL clause matching Parcel.jurisdiction, with county-scoped unincorporated.
+
+    City values match ``jurisdiction`` directly. The special ``uninc:<County>`` prefix
+    matches ``jurisdiction='unincorporated' AND county=<County>``, so the filter can
+    distinguish unincorporated Multnomah from unincorporated Clackamas.
+    """
+    cities: list[str] = []
+    uninc_counties: list[str] = []
+    for j in jurisdictions:
+        if j.startswith("uninc:"):
+            uninc_counties.append(j[6:])
+        else:
+            cities.append(j)
+    clauses = []
+    if cities:
+        clauses.append(Parcel.jurisdiction.in_(cities))
+    if uninc_counties:
+        clauses.append(
+            and_(Parcel.jurisdiction == "unincorporated", Parcel.county.in_(uninc_counties))
+        )
+    if not clauses:
+        return literal(False)
+    return or_(*clauses) if len(clauses) > 1 else clauses[0]
+
+
+async def _get_parcel_jurisdictions(session) -> list[dict]:
+    """Return sorted {value, label} entries for the parcels jurisdiction filter.
+
+    Splits the literal ``unincorporated`` jurisdiction into per-county rows
+    (``uninc:Clackamas``, ``uninc:Multnomah``) so the UI can filter each
+    unincorporated area separately.
+    """
+    rows = (await session.execute(
+        select(Parcel.jurisdiction, Parcel.county, func.count())
+        .where(Parcel.jurisdiction.isnot(None))
+        .group_by(Parcel.jurisdiction, Parcel.county)
+    )).all()
+
+    city_totals: dict[str, int] = {}
+    uninc_totals: dict[str, int] = {}
+    for jurisdiction_name, county, cnt in rows:
+        if jurisdiction_name == "unincorporated":
+            key = (county or "Unknown").strip()
+            uninc_totals[key] = uninc_totals.get(key, 0) + cnt
+        else:
+            city_totals[jurisdiction_name] = city_totals.get(jurisdiction_name, 0) + cnt
+
+    out: list[dict] = [
+        {"value": name, "label": f"{name.title()} ({cnt})"}
+        for name, cnt in sorted(city_totals.items())
+    ]
+    for county, cnt in sorted(uninc_totals.items()):
+        out.append({"value": f"uninc:{county}", "label": f"Unin. {county} ({cnt})"})
+    return out
+
+
 def _parcel_base_stmt(
     q: str, zoning: list[str], jurisdiction,
     use_group, min_acres: str, max_acres: str,
@@ -2751,7 +2808,7 @@ def _parcel_base_stmt(
         stmt = stmt.where(Parcel.zoning_code.in_(zoning))
     jurs = _as_list(jurisdiction)
     if jurs:
-        stmt = stmt.where(Parcel.jurisdiction.in_(jurs))
+        stmt = stmt.where(_parcel_jurisdiction_clause(jurs))
     use_groups = [g for g in _as_list(use_group) if g in _STATE_CLASS_GROUPS]
     if use_groups:
         codes: list[str] = []
@@ -2822,15 +2879,10 @@ async def parcels_page(
     parcels_list = list((await session.execute(base.offset(offset).limit(_PARCEL_PAGE_SIZE))).scalars())
     zoning_codes_stmt = select(Parcel.zoning_code).where(Parcel.zoning_code.isnot(None)).distinct().order_by(Parcel.zoning_code)
     if jurisdiction:
-        zoning_codes_stmt = zoning_codes_stmt.where(
-            func.lower(Parcel.jurisdiction).in_([j.lower() for j in jurisdiction])
-        )
-    zoning_codes_result, jurisdictions_result = await asyncio.gather(
-        session.execute(zoning_codes_stmt),
-        session.execute(select(Parcel.jurisdiction).where(Parcel.jurisdiction.isnot(None)).distinct().order_by(Parcel.jurisdiction)),
-    )
+        zoning_codes_stmt = zoning_codes_stmt.where(_parcel_jurisdiction_clause(jurisdiction))
+    zoning_codes_result = (await session.execute(zoning_codes_stmt)).all()
     zoning_codes = [r[0] for r in zoning_codes_result]
-    jurisdictions = [r[0] for r in jurisdictions_result]
+    jurisdictions = await _get_parcel_jurisdictions(session)
     parcels_data = [_build_parcel_row(p) for p in parcels_list]
     return templates.TemplateResponse(request, "parcels.html", {
         "parcels": parcels_data,
@@ -6887,6 +6939,7 @@ async def model_builder(
     vd_user_id: str | None = Cookie(default=None),
     module: str = Query(default=""),
     project: str = Query(default=""),  # optional Project.id to view a specific project
+    view: str = Query(default=""),  # "underwriting" for the scenario-level rollup; default = per-project
     new: str = Query(default=""),  # set to "1" when redirected from new deal creation
 ) -> HTMLResponse:
     model = await session.get(DealModel, model_id)
@@ -6923,7 +6976,34 @@ async def model_builder(
     if active_project_id is None and deal_projects:
         active_project_id = deal_projects[0].id
 
+    # Phase 3a: ``view=underwriting`` routes to the scenario-level rollup.
+    # active_project_id stays populated (for tab-chip rendering); the
+    # template branches on active_view to show rollup panels instead of
+    # the per-project sidebar / module editor.
+    active_view = "underwriting" if view == "underwriting" else "project"
+
     data = await _load_builder_data(session, model_id, project_id=active_project_id)
+
+    # Load rollup data only when the Underwriting tab is active — cheap DB
+    # aggregations; safe to run scenario-wide.
+    underwriting_rollup_data: dict = {}
+    if active_view == "underwriting":
+        from app.engines.underwriting_rollup import (
+            rollup_cashflow,
+            rollup_draws,
+            rollup_irr,
+            rollup_sources,
+            rollup_summary,
+            rollup_waterfall,
+        )
+        underwriting_rollup_data = {
+            "cashflow": await rollup_cashflow(model_id, session),
+            "sources": await rollup_sources(model_id, session),
+            "waterfall": await rollup_waterfall(model_id, session),
+            "draws": await rollup_draws(model_id, session),
+            "combined_irr_pct": await rollup_irr(model_id, session),
+            "summary": await rollup_summary(model_id, session),
+        }
 
     # Sibling scenarios for the variant tab row: other Scenarios sharing the same Opportunity (via Projects)
     deal_variants: list = []
@@ -7039,6 +7119,8 @@ async def model_builder(
         "deal_projects": deal_projects,
         "active_project_id": str(active_project_id) if active_project_id else None,
         "active_project": active_project,
+        "active_view": active_view,
+        "underwriting_rollup": underwriting_rollup_data,
         "active_module": active_module,
         "deal_setup_complete": _deal_setup_complete,
         "new_deal": new == "1",
