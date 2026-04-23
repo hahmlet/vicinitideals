@@ -5731,6 +5731,11 @@ async def create_deal_copy(
     if selected_project_ids:
         source_projects = [p for p in source_projects if str(p.id) in selected_project_ids]
 
+    # Track src_project_id → new_project_id so we can remap per-project FKs
+    # (CapitalModuleProject junction, ProjectAnchor, waterfall_tiers) onto
+    # the new projects below.
+    project_id_map: dict = {}
+
     for src_proj in source_projects:
         new_proj = Project(
             scenario_id=new_deal.id,
@@ -5741,28 +5746,118 @@ async def create_deal_copy(
         )
         session.add(new_proj)
         await session.flush()
+        project_id_map[src_proj.id] = new_proj.id
 
         await _copy_project_data(src_proj, new_proj, session)
 
-    # Copy Scenario-level Capital modules
-    for cm in (await session.execute(
-        select(CapitalModule).where(CapitalModule.scenario_id == deal_id)
-    )).scalars():
-        session.add(CapitalModule(
+    # Copy Scenario-level Capital modules + rebuild their project junction rows.
+    from app.models.capital import CapitalModuleProject as _CMP
+    from app.models.project import ProjectAnchor as _PA
+
+    src_modules = list(
+        (
+            await session.execute(
+                select(CapitalModule).where(
+                    CapitalModule.scenario_id == deal_id
+                )
+            )
+        ).scalars()
+    )
+    # Map old module_id → new module instance so we can attach junction rows
+    # pointing at the copied Source.
+    module_id_map: dict = {}
+    for cm in src_modules:
+        new_cm = CapitalModule(
             scenario_id=new_deal.id,
-            label=cm.label, funder_type=cm.funder_type,
+            label=cm.label,
+            funder_type=cm.funder_type,
             stack_position=cm.stack_position,
-            source=cm.source, carry=cm.carry, exit_terms=cm.exit_terms,
+            source=cm.source,
+            carry=cm.carry,
+            exit_terms=cm.exit_terms,
             active_phase_start=cm.active_phase_start,
             active_phase_end=cm.active_phase_end,
-        ))
+        )
+        session.add(new_cm)
+        await session.flush()
+        module_id_map[cm.id] = new_cm.id
 
-    # Copy Scenario-level Waterfall tiers
+    # Phase 3e: copy capital_module_projects junction rows. Without this the
+    # copied Sources on the new Scenario are orphaned (no project links), and
+    # the per-project loader in cashflow.py returns an empty list → the
+    # engine silently skips sizing on every module.
+    src_junctions = list(
+        (
+            await session.execute(
+                select(_CMP).where(
+                    _CMP.capital_module_id.in_(list(module_id_map.keys()))
+                )
+            )
+        ).scalars()
+    )
+    for j in src_junctions:
+        new_pid = project_id_map.get(j.project_id)
+        if new_pid is None:
+            continue  # project was excluded from copy; skip its junction
+        new_mid = module_id_map.get(j.capital_module_id)
+        if new_mid is None:
+            continue
+        session.add(
+            _CMP(
+                capital_module_id=new_mid,
+                project_id=new_pid,
+                amount=j.amount,
+                active_from=j.active_from,
+                active_to=j.active_to,
+                active_from_offset_days=j.active_from_offset_days,
+                active_to_offset_days=j.active_to_offset_days,
+                auto_size=j.auto_size,
+            )
+        )
+
+    # Copy ProjectAnchor rows — dormant in prod today (no rows exist), but
+    # defensive for the future when cross-project timeline coupling lands.
+    src_anchors = list(
+        (
+            await session.execute(
+                select(_PA).where(
+                    _PA.project_id.in_(list(project_id_map.keys()))
+                )
+            )
+        ).scalars()
+    )
+    for a in src_anchors:
+        new_anchor_pid = project_id_map.get(a.project_id)
+        new_parent_pid = project_id_map.get(a.anchor_project_id)
+        if new_anchor_pid is None or new_parent_pid is None:
+            continue  # drop dangling anchors when parent project wasn't copied
+        session.add(
+            _PA(
+                project_id=new_anchor_pid,
+                anchor_project_id=new_parent_pid,
+                anchor_milestone_id=None,  # milestone-id remap would need cross-walk; skip for v1
+                offset_months=a.offset_months,
+                offset_days=a.offset_days,
+            )
+        )
+
+    # Copy Scenario-level Waterfall tiers (project_id remapped to new projects)
     for t in (await session.execute(
         select(WaterfallTier).where(WaterfallTier.scenario_id == deal_id)
     )).scalars():
+        remapped_pid = project_id_map.get(t.project_id) if t.project_id else None
+        # If the tier's capital_module_id points at an old module, remap to
+        # the new one via module_id_map. Tiers with capital_module_id=None
+        # (e.g. a sponsor-level promote tier) are copied as-is.
+        remapped_mid = (
+            module_id_map.get(t.capital_module_id)
+            if t.capital_module_id
+            else None
+        )
         session.add(WaterfallTier(
             scenario_id=new_deal.id,
+            project_id=remapped_pid,
+            capital_module_id=remapped_mid,
             priority=t.priority, tier_type=t.tier_type,
             irr_hurdle_pct=t.irr_hurdle_pct,
             lp_split_pct=t.lp_split_pct, gp_split_pct=t.gp_split_pct,
@@ -5772,7 +5867,13 @@ async def create_deal_copy(
         ))
 
     await session.commit()
-    return RedirectResponse(url=f"/models/{new_deal.id}/builder", status_code=303)
+    # Phase 3e: land on the Underwriting tab of the new variant so the user
+    # sees the rolled-up view (with every project's staleness dot lit) and
+    # knows to click Compute before any per-project edits.
+    return RedirectResponse(
+        url=f"/models/{new_deal.id}/builder?view=underwriting",
+        status_code=303,
+    )
 
 
 @router.post("/ui/deals/{deal_id}/new-project", response_class=HTMLResponse)
