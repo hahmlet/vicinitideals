@@ -21,6 +21,7 @@ order the engine used before Phase 2, so math is byte-identical.
 
 from __future__ import annotations
 
+from typing import Any
 from uuid import UUID
 
 from sqlalchemy import select
@@ -99,6 +100,143 @@ async def ordered_projects(
             f"Unresolvable ProjectAnchor graph on scenario {scenario.id}"
         )
     return ordered
+
+
+async def resolve_project_start_dates(
+    scenario: Scenario, session: AsyncSession
+) -> dict[UUID, Any]:
+    """Phase 2d1: compute each Project's effective start date by walking the
+    anchor chain and applying per-edge offsets.
+
+    Semantics for a single anchor edge ``(child ← parent, anchor_milestone, +offset)``:
+
+        child.start = parent.anchor_milestone.end_date
+                    + offset_months
+                    + offset_days
+
+    Projects without an anchor row fall through to the root milestone's
+    ``target_date`` for their own milestone chain (legacy behavior). The
+    anchor_milestone lookup walks the parent's ORM milestone chain to get
+    the end date using the usual ``computed_end()`` resolver.
+
+    Returns::
+
+        {project_id: date | None}
+
+    The caller (``compute_cash_flows``) passes this map into the per-project
+    engine invocation so anchored projects can override their own root
+    milestone date. If ``anchor_milestone_id`` is missing / NULL (anchor
+    row exists but no specific milestone picked), the function falls back
+    to the parent project's earliest milestone's target_date. Errors in
+    chain traversal return None for that project, letting the engine use
+    its own defaults.
+
+    For zero-anchor scenarios (every prod deal today) returns an empty
+    dict — short-circuit fast path.
+    """
+    from datetime import date as _date, timedelta
+
+    from app.models.milestone import Milestone as _Milestone
+
+    projects = sorted(list(scenario.projects), key=lambda p: p.created_at)
+    if not projects:
+        return {}
+
+    project_ids = [p.id for p in projects]
+    anchors = list(
+        (
+            await session.execute(
+                select(ProjectAnchor).where(ProjectAnchor.project_id.in_(project_ids))
+            )
+        ).scalars()
+    )
+    if not anchors:
+        return {}
+
+    anchor_by_child: dict[UUID, ProjectAnchor] = {a.project_id: a for a in anchors}
+
+    # Load every milestone for every project on the scenario in one query so
+    # chain-walking (child's anchor_milestone → parent's milestone with
+    # ``computed_end()``) doesn't incur a per-lookup round-trip.
+    all_milestones = list(
+        (
+            await session.execute(
+                select(_Milestone).where(_Milestone.project_id.in_(project_ids))
+            )
+        ).scalars()
+    )
+    ms_by_id: dict[UUID, _Milestone] = {m.id: m for m in all_milestones}
+    ms_by_project: dict[UUID, list[_Milestone]] = {}
+    for m in all_milestones:
+        ms_by_project.setdefault(m.project_id, []).append(m)
+
+    # Topo order — anchored projects run AFTER their parent so the parent's
+    # resolved date is available when the child resolves.
+    ordered = await ordered_projects(scenario, session)
+    resolved: dict[UUID, Any] = {}
+
+    def _add_offset(d: _date, months: int, days: int) -> _date:
+        # Month arithmetic: add N months naively by bumping the month index
+        # (and rolling into years), then clamp the day to the target month's
+        # last day so e.g. Jan 31 + 1 month = Feb 28/29.
+        y = d.year
+        m = d.month + int(months or 0)
+        while m > 12:
+            y += 1
+            m -= 12
+        while m < 1:
+            y -= 1
+            m += 12
+        # Clamp day
+        import calendar
+        last_day = calendar.monthrange(y, m)[1]
+        day = min(d.day, last_day)
+        base = _date(y, m, day)
+        return base + timedelta(days=int(days or 0))
+
+    for project in ordered:
+        anchor = anchor_by_child.get(project.id)
+        if anchor is None:
+            continue  # uses project's own root milestone target_date
+
+        parent_id = anchor.anchor_project_id
+        # The specific milestone on the parent to pivot off. If not set,
+        # fall back to the parent's earliest milestone (by sequence_order).
+        pivot: _Milestone | None = None
+        if anchor.anchor_milestone_id:
+            pivot = ms_by_id.get(anchor.anchor_milestone_id)
+        if pivot is None:
+            parent_ms = sorted(
+                ms_by_project.get(parent_id, []),
+                key=lambda m: (m.sequence_order or 0, m.created_at),
+            )
+            pivot = parent_ms[0] if parent_ms else None
+        if pivot is None:
+            continue  # parent has no milestones — can't resolve; leave unset
+
+        # If the pivot milestone belongs to the parent, resolve its
+        # end-date via the trigger-chain walker. The pivot's own project
+        # may have been date-overridden by this function already — but the
+        # ORM-level ``computed_end()`` reads ``target_date`` directly, which
+        # we do NOT mutate on the in-memory ORM object. Instead we pass a
+        # temporary milestone_map that reflects the resolved root-date
+        # override for parent projects visited earlier in the topo walk.
+        #
+        # For v1 keep it simple: use the pivot's ORM computed_end() as-is.
+        # Propagated shifts through a chain of 3+ projects require pivot
+        # milestones at each intermediate node and will work as long as the
+        # intermediate project's root date has been updated in the DB
+        # (which the caller does via the milestone_dates override).
+        parent_ms_map = {m.id: m for m in ms_by_project.get(parent_id, [])}
+        end = pivot.computed_end(milestone_map=parent_ms_map)
+        if end is None:
+            continue
+
+        resolved[project.id] = _add_offset(
+            end, int(anchor.offset_months or 0), int(anchor.offset_days or 0)
+        )
+
+    return resolved
 
 
 def _check_no_cycles(parent_of: dict[UUID, UUID], project_ids: list[UUID]) -> None:

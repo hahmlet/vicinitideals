@@ -1,0 +1,106 @@
+{# Timeline Anchors (Phase 2d1).
+   Context: model, deal_projects, underwriting_rollup.anchors.
+   Renders one form per Project; parent + milestone dropdowns share a single
+   <optgroup>-organized <select> keyed by milestone id — the server derives
+   anchor_project_id from the picked milestone's project_id. #}
+{% set _anchors = (underwriting_rollup.anchors or {}) if underwriting_rollup is defined else {} %}
+{% set _by_project = _anchors.get('by_project', {}) %}
+{% set _ms_by_project = _anchors.get('milestones_by_project', {}) %}
+
+<div class="uw-section">
+  <div class="uw-section-title">Timeline Anchors</div>
+  <div class="uw-anchors-hint">
+    Anchor a Project's start date to another Project's milestone. When the parent shifts, this Project shifts with it.
+    Cycles are rejected at write time.
+  </div>
+  <table class="uw-table uw-anchors-tbl">
+    <thead>
+      <tr>
+        <th>Project</th>
+        <th>Anchored to (milestone on parent)</th>
+        <th class="num">Offset (months)</th>
+        <th class="num">Offset (days)</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in deal_projects %}
+      {% set _a = _by_project.get(p.id) %}
+      <tr>
+        <td><strong>{{ p.name }}</strong></td>
+        <td>
+          <form method="post"
+                hx-post="/ui/models/{{ model.id }}/anchors"
+                hx-swap="none"
+                style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+            <input type="hidden" name="project_id" value="{{ p.id }}">
+            <select name="anchor_milestone_id" required style="min-width:260px">
+              <option value="">(none — use this project's own start)</option>
+              {% for parent in deal_projects %}
+                {% if parent.id != p.id %}
+                  {% set _parent_ms = _ms_by_project.get(parent.id, []) %}
+                  {% if _parent_ms %}
+                  <optgroup label="{{ parent.name }}">
+                    {% for m in _parent_ms %}
+                    {% set _ms_label = m.label or (m.milestone_type | string).replace('MilestoneType.','') | replace('_',' ') | title %}
+                    <option value="{{ m.id }}"
+                            {% if _a and _a.anchor_milestone_id == m.id %}selected{% endif %}>
+                      {{ _ms_label }}
+                    </option>
+                    {% endfor %}
+                  </optgroup>
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+            </select>
+            <input type="number" name="offset_months" value="{{ _a.offset_months if _a else 0 }}"
+                   style="width:72px;text-align:right" min="-60" max="120">
+            <input type="number" name="offset_days" value="{{ _a.offset_days if _a else 0 }}"
+                   style="width:72px;text-align:right" min="-365" max="365">
+            <button type="submit" class="uw-anchor-btn">Save</button>
+          </form>
+        </td>
+        <td class="num">{{ _a.offset_months if _a else '—' }}</td>
+        <td class="num">{{ _a.offset_days if _a else '—' }}</td>
+        <td class="num">
+          {% if _a %}
+          <button type="button" class="uw-anchor-btn uw-anchor-del"
+                  hx-delete="/ui/models/{{ model.id }}/anchors/{{ p.id }}"
+                  hx-confirm="Remove anchor for {{ p.name }}?">
+            Remove
+          </button>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<style>
+.uw-anchors-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+.uw-anchors-tbl input[type="number"],
+.uw-anchors-tbl select {
+  padding: 4px 6px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 12px;
+}
+.uw-anchor-btn {
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  background: #fff;
+  color: #1e40af;
+  border: 1px solid #93c5fd;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.uw-anchor-btn:hover { background: #eff6ff; }
+.uw-anchor-del { color: #b91c1c; border-color: #fecaca; }
+.uw-anchor-del:hover { background: #fef2f2; }
+</style>

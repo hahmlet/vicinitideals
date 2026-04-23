@@ -7428,6 +7428,37 @@ async def model_builder(
             "combined_irr_pct": await rollup_irr(model_id, session),
             "summary": await rollup_summary(model_id, session),
         }
+        # Phase 2d1: Timeline Anchors panel data.
+        # Load current ProjectAnchor rows + every project's milestones so the
+        # form can render a per-parent <optgroup> milestone dropdown.
+        from app.models.milestone import Milestone as _MS
+        from app.models.project import ProjectAnchor as _PA
+        _anchors = list(
+            (
+                await session.execute(
+                    select(_PA)
+                    .join(Project, Project.id == _PA.project_id)
+                    .where(Project.scenario_id == model_id)
+                )
+            ).scalars()
+        )
+        _ms_rows = list(
+            (
+                await session.execute(
+                    select(_MS)
+                    .join(Project, Project.id == _MS.project_id)
+                    .where(Project.scenario_id == model_id)
+                    .order_by(_MS.sequence_order.asc())
+                )
+            ).scalars()
+        )
+        _ms_by_project: dict = {}
+        for _m in _ms_rows:
+            _ms_by_project.setdefault(_m.project_id, []).append(_m)
+        underwriting_rollup_data["anchors"] = {
+            "by_project": {a.project_id: a for a in _anchors},
+            "milestones_by_project": _ms_by_project,
+        }
 
     # Sibling scenarios for the variant tab row: other Scenarios sharing the same Opportunity (via Projects)
     deal_variants: list = []
@@ -7597,6 +7628,146 @@ async def builder_panel(
                 ctx["schedule"] = _sched
 
     return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Phase 2d1: Timeline Anchors — upsert / remove ProjectAnchor rows.
+# ─────────────────────────────────────────────────────────────────────────────
+
+
+@router.post(
+    "/ui/models/{model_id}/anchors", response_class=HTMLResponse
+)
+async def upsert_project_anchor(
+    request: Request,
+    model_id: UUID,
+    session: DBSession,
+) -> HTMLResponse:
+    """Upsert a ProjectAnchor row from the Timeline Anchors form.
+
+    Form fields:
+      project_id          — the anchored (child) project
+      anchor_milestone_id — the pivot milestone on the parent project
+      offset_months       — int
+      offset_days         — int
+
+    ``anchor_project_id`` is derived server-side from the picked milestone's
+    ``project_id`` so the UI only needs one milestone dropdown. Returns
+    HX-Redirect to the Underwriting tab so pill, staleness dots, and
+    timeline re-render.
+    """
+    from app.models.milestone import Milestone as _MS
+    from app.models.project import ProjectAnchor as _PA
+    from app.engines.anchor_resolver import AnchorCycleError, _check_no_cycles
+    form = await request.form()
+    try:
+        child_id = UUID(str(form.get("project_id", "")))
+        ms_id = UUID(str(form.get("anchor_milestone_id", "")))
+    except (ValueError, TypeError):
+        return HTMLResponse(
+            "<p class='text-muted'>Invalid project_id or anchor_milestone_id.</p>",
+            status_code=400,
+        )
+    offset_months = int(form.get("offset_months") or 0)
+    offset_days = int(form.get("offset_days") or 0)
+
+    # Resolve parent project from the picked milestone.
+    pivot = await session.get(_MS, ms_id)
+    if pivot is None:
+        return HTMLResponse(
+            "<p class='text-muted'>Anchor milestone not found.</p>", status_code=404
+        )
+    parent_id = pivot.project_id
+    if parent_id == child_id:
+        return HTMLResponse(
+            "<p class='text-muted'>A project cannot anchor to its own milestone.</p>",
+            status_code=400,
+        )
+
+    # Gather every project on the scenario for the cycle check. Include the
+    # proposed edge ``child ← parent`` plus all existing anchor edges.
+    project_ids = [
+        row[0]
+        for row in (
+            await session.execute(
+                select(Project.id).where(Project.scenario_id == model_id)
+            )
+        )
+    ]
+    if child_id not in project_ids or parent_id not in project_ids:
+        return HTMLResponse(
+            "<p class='text-muted'>Projects must belong to this scenario.</p>",
+            status_code=400,
+        )
+    existing_anchors = list(
+        (
+            await session.execute(
+                select(_PA).where(_PA.project_id.in_(project_ids))
+            )
+        ).scalars()
+    )
+    parent_of: dict = {a.project_id: a.anchor_project_id for a in existing_anchors}
+    parent_of[child_id] = parent_id  # proposed edge
+    try:
+        _check_no_cycles(parent_of, project_ids)
+    except AnchorCycleError as exc:
+        return HTMLResponse(
+            f"<p class='text-muted'>Cycle rejected: {exc}</p>", status_code=400
+        )
+
+    existing = (
+        await session.execute(
+            select(_PA).where(_PA.project_id == child_id)
+        )
+    ).scalar_one_or_none()
+    if existing is not None:
+        existing.anchor_project_id = parent_id
+        existing.anchor_milestone_id = ms_id
+        existing.offset_months = offset_months
+        existing.offset_days = offset_days
+        session.add(existing)
+    else:
+        session.add(
+            _PA(
+                project_id=child_id,
+                anchor_project_id=parent_id,
+                anchor_milestone_id=ms_id,
+                offset_months=offset_months,
+                offset_days=offset_days,
+            )
+        )
+    await session.commit()
+
+    response = HTMLResponse("")
+    response.headers["HX-Redirect"] = (
+        f"/models/{model_id}/builder?view=underwriting"
+    )
+    return response
+
+
+@router.delete(
+    "/ui/models/{model_id}/anchors/{project_id}", response_class=HTMLResponse
+)
+async def delete_project_anchor(
+    model_id: UUID,
+    project_id: UUID,
+    session: DBSession,
+) -> HTMLResponse:
+    """Remove a ProjectAnchor row — project reverts to its own start date."""
+    from app.models.project import ProjectAnchor as _PA
+    existing = (
+        await session.execute(
+            select(_PA).where(_PA.project_id == project_id)
+        )
+    ).scalar_one_or_none()
+    if existing is not None:
+        await session.delete(existing)
+        await session.commit()
+    response = HTMLResponse("")
+    response.headers["HX-Redirect"] = (
+        f"/models/{model_id}/builder?view=underwriting"
+    )
+    return response
 
 
 # ─────────────────────────────────────────────────────────────────────────────

@@ -91,10 +91,17 @@ async def compute_cash_flows(
     # project they reference. With zero ProjectAnchor rows (current prod)
     # this returns the same order as sorted-by-created_at. Cycles raise
     # AnchorCycleError.
-    from app.engines.anchor_resolver import ordered_projects as _ordered_projects
+    from app.engines.anchor_resolver import (
+        ordered_projects as _ordered_projects,
+        resolve_project_start_dates as _resolve_start_dates,
+    )
     projects = await _ordered_projects(deal_model, session)
     if not projects:
         raise ValueError(f"Deal {deal_uuid} has no Project")
+
+    # Phase 2d1: resolve per-project start-date overrides from the
+    # ProjectAnchor chain. Empty dict for zero-anchor scenarios.
+    start_overrides = await _resolve_start_dates(deal_model, session)
 
     # Per-project purge happens INSIDE _compute_project_cashflow, right after
     # prev_outputs is captured for DSCR convergence, so each iteration sees its
@@ -106,6 +113,7 @@ async def compute_cash_flows(
             deal_uuid=deal_uuid,
             project=project,
             session=session,
+            project_start_override=start_overrides.get(project.id),
         )
     return last_summary
 
@@ -116,6 +124,7 @@ async def _compute_project_cashflow(
     deal_uuid: UUID,
     project: Project,
     session: AsyncSession,
+    project_start_override: Any = None,
 ) -> dict[str, Any]:
     """Compute and persist cash flows for a single Project within a Scenario.
 
@@ -148,6 +157,32 @@ async def _compute_project_cashflow(
     # Stored inputs.milestone_dates overrides ORM-derived dates (manual overrides)
     if isinstance(inputs.milestone_dates, dict):
         milestone_dates.update(inputs.milestone_dates)
+    # Phase 2d1: apply anchor-resolved start date if the scenario has one
+    # for this project. Shift every phase-key date by (override - earliest
+    # current date) so the internal chain timing is preserved but the whole
+    # project starts at the resolved date. No-op when override is None.
+    if project_start_override is not None and milestone_dates:
+        from datetime import date as _date_cls
+        def _parse(v):
+            if isinstance(v, _date_cls):
+                return v
+            if isinstance(v, str):
+                try:
+                    return _date_cls.fromisoformat(v)
+                except ValueError:
+                    return None
+            return None
+        parsed: dict[str, _date_cls] = {}
+        for k, v in milestone_dates.items():
+            d = _parse(v)
+            if d is not None:
+                parsed[k] = d
+        if parsed:
+            earliest = min(parsed.values())
+            delta = project_start_override - earliest
+            if delta.days != 0:
+                for k, d in parsed.items():
+                    milestone_dates[k] = (d + delta).isoformat()
     has_lease_up_milestone = any(
         str(m.milestone_type) in ("operation_lease_up", MilestoneType.operation_lease_up)
         for m in orm_milestones
