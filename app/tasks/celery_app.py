@@ -18,6 +18,7 @@ celery_app = Celery(
         "app.tasks.scraper",
         "app.tasks.scenario",
         "app.tasks.parcel_seed",
+        "app.tasks.loopnet_ingest",
     ],
 )
 
@@ -31,6 +32,7 @@ celery_app.conf.update(
     task_routes={
         "app.tasks.scraper.*": {"queue": "scraping"},
         "app.tasks.scenario.*": {"queue": "analysis"},
+        "app.tasks.loopnet_ingest.*": {"queue": "scraping"},
     },
     beat_schedule={
         "scrape-crexi-daily": {
@@ -41,6 +43,22 @@ celery_app.conf.update(
         "enrich-prime-target-parcels": {
             "task": "app.tasks.parcel_seed.enrich_prime_target_parcels",
             "schedule": crontab(minute="*/2"),
+        },
+        # LoopNet: weekly discovery Monday 07:00 UTC (offset from Crexi daily 06:00)
+        "loopnet-weekly-sweep": {
+            "task": "app.tasks.loopnet_ingest.loopnet_weekly_sweep",
+            "schedule": crontab(day_of_week=1, hour=7, minute=0),
+        },
+        # LoopNet: flag-gated experiment daily refresh. Task self-skips when
+        # LOOPNET_EXPERIMENT_ENABLED is false or today > LOOPNET_EXPERIMENT_END_DATE.
+        "loopnet-experiment-daily": {
+            "task": "app.tasks.loopnet_ingest.loopnet_experiment_daily_refresh",
+            "schedule": crontab(hour=3, minute=0),
+        },
+        # LoopNet: monthly refresh on 1st at 04:00 UTC. Skips while experiment is active.
+        "loopnet-monthly-refresh": {
+            "task": "app.tasks.loopnet_ingest.loopnet_monthly_refresh",
+            "schedule": crontab(day_of_month=1, hour=4, minute=0),
         },
     },
     timezone="UTC",

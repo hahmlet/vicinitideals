@@ -181,6 +181,14 @@ class ScrapedListing(Base):
     match_confidence: Mapped[object | None] = mapped_column(Numeric(4, 3), nullable=True)
     lot_size_mismatch: Mapped[bool | None] = mapped_column(nullable=True, default=False)
 
+    # LoopNet polygon classification — list of polygon names from
+    # app/data/market_polygons.json whose shape contains this listing's lat/lng.
+    # Populated at ingest; empty list = outside all active polygons.
+    polygon_tags: Mapped[list[str] | None] = mapped_column(
+        ARRAY(String).with_variant(JSON(), "sqlite"),
+        nullable=True,
+    )
+
     # Realie.ai enrichment
     realie_skip: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     realie_enriched_at: Mapped[datetime | None] = mapped_column(

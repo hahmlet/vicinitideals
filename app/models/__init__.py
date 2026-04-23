@@ -81,6 +81,11 @@ from app.models.milestone import Milestone  # noqa: F401
 # 13. Realie usage tracking (no FK deps)
 from app.models.realie_usage import RealieUsage  # noqa: F401
 
+# 14. LoopNet scraper support: API call tracking, snapshot history, conflict log
+from app.models.api_call_log import ApiCallLog  # noqa: F401
+from app.models.field_conflict_log import FieldConflictAction, FieldConflictLog  # noqa: F401
+from app.models.listing_snapshot import ListingSnapshot  # noqa: F401
+
 __all__ = [
     "Base",
     # Org
@@ -137,4 +142,9 @@ __all__ = [
     "SavedSearchCriteria",
     # Realie usage
     "RealieUsage",
+    # LoopNet scraper support
+    "ApiCallLog",
+    "ListingSnapshot",
+    "FieldConflictLog",
+    "FieldConflictAction",
 ]

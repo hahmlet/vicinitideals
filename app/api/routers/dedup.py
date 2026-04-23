@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from datetime import UTC, datetime
+from typing import Any
 from uuid import UUID
 
 from fastapi import APIRouter, HTTPException
@@ -12,6 +13,7 @@ from app.api.deps import CurrentUserId, DBSession
 from app.models.ingestion import DedupCandidate, DedupStatus, RecordType
 from app.models.project import ScrapedListing
 from app.schemas.ingestion import DedupCandidateRead
+from app.scrapers.merge_enhancement import apply_enhancement, diff_fields
 
 router = APIRouter(tags=["dedup"])
 
@@ -31,6 +33,34 @@ async def list_pending_dedup_candidates(session: DBSession) -> list[DedupCandida
     return list(result.scalars())
 
 
+@router.get("/dedup/{candidate_id}/preview")
+async def preview_dedup_candidate(
+    candidate_id: UUID,
+    session: DBSession,
+) -> dict[str, Any]:
+    """Return field-level fills and conflicts without mutating anything.
+
+    Shape: {"fills": [...], "conflicts": [...]} — each entry is
+    {"field_name", "canonical_value", "loser_value"}. Useful for the dedup UI
+    to show what will change before the user confirms the merge.
+    """
+    candidate = await session.get(DedupCandidate, candidate_id)
+    if candidate is None:
+        raise HTTPException(status_code=404, detail="Dedup candidate not found")
+    if not (
+        _is_listing_record(candidate.record_a_type)
+        and _is_listing_record(candidate.record_b_type)
+    ):
+        return {"fills": [], "conflicts": []}
+
+    canonical = await session.get(ScrapedListing, candidate.record_a_id)
+    loser = await session.get(ScrapedListing, candidate.record_b_id)
+    if canonical is None or loser is None:
+        raise HTTPException(status_code=404, detail="Underlying listing(s) not found")
+
+    return diff_fields(canonical, loser)
+
+
 @router.patch("/dedup/{candidate_id}/merge", response_model=DedupCandidateRead)
 async def merge_dedup_candidate(
     candidate_id: UUID,
@@ -46,9 +76,18 @@ async def merge_dedup_candidate(
     candidate.resolved_at = datetime.now(UTC)
 
     if _is_listing_record(candidate.record_a_type) and _is_listing_record(candidate.record_b_type):
+        canonical = await session.get(ScrapedListing, candidate.record_a_id)
         record_b = await session.get(ScrapedListing, candidate.record_b_id)
-        if record_b is not None:
-            record_b.canonical_id = candidate.record_a_id
+        if canonical is not None and record_b is not None:
+            log_rows = apply_enhancement(
+                canonical,
+                record_b,
+                merge_candidate_id=candidate.id,
+                resolved_by_user_id=current_user_id,
+            )
+            for row in log_rows:
+                session.add(row)
+            record_b.canonical_id = canonical.id
             record_b.is_new = False
 
     await session.flush()

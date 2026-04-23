@@ -112,6 +112,35 @@ class Settings(BaseSettings):
     hellodata_monthly_budget_cents: int = 10000  # $100/mo default ceiling
 
     # -------------------------------------------------------------------------
+    # LoopNet RapidAPI (https://rapidapi.com/asyncsolutions-asyncsolutions-default/api/loopnet-api)
+    # Free tier: 100 calls/month. Second tier: 5,000 calls/month.
+    # Budget is enforced in app/scrapers/loopnet.py BudgetGuard against api_call_log.
+    # -------------------------------------------------------------------------
+    rapidapi_key: str = ""
+    loopnet_rapidapi_host: str = "loopnet-api.p.rapidapi.com"
+    loopnet_polygon_path: str = "app/data/market_polygons.json"
+    loopnet_monthly_budget: int = 100
+    # Safety margin held in reserve except on the final day of the month.
+    loopnet_budget_safety_margin: int = 5
+    # Seed experiment: when enabled, the daily refresh task snapshots every
+    # captured LoopNet listing to listing_snapshots to empirically characterize
+    # update frequency. Self-disables after loopnet_experiment_end_date.
+    loopnet_experiment_enabled: bool = False
+    loopnet_experiment_end_date: str | None = None  # ISO YYYY-MM-DD
+
+    # Categories that trigger ExtendedDetails fetch in TARGET polygons.
+    # Comma-separated. Categories are derived by classify_categories() and
+    # include: multifamily, land, mixed_use, retail, office, industrial, flex, other.
+    # Comp-only polygons always restrict ED to multifamily regardless of this.
+    loopnet_target_ed_categories: str = "multifamily,land,mixed_use"
+
+    # When True, the weekly sweep uses bulkDetails (batches of 20) to pre-classify
+    # listings by listingType + subtype BEFORE calling SaleDetails. Cuts API-call
+    # volume ~55-60% for high-volume sweeps by skipping SD on listings that
+    # obviously don't match our categories.
+    loopnet_use_bulk_triage: bool = True
+
+    # -------------------------------------------------------------------------
     # Alembic / migrations
     # -------------------------------------------------------------------------
     # Sync DSN used only by Alembic CLI (asyncpg cannot be used synchronously)
