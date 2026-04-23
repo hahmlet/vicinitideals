@@ -709,19 +709,38 @@ function handleComputeResult(evt) {
 
 {# ── Row 2: Underwriting tab + Projects in active deal ── #}
 {% set _s = staleness if staleness is defined else {'per_project': {}, 'underwriting': False} %}
+{% set _sc = scenario_statuses if scenario_statuses is defined else {'per_project': {}, 'underwriting': {'overall': 'na', 'failing_count': 0}} %}
 {% set _active_view = active_view if active_view is defined else 'project' %}
+{# Status dot palette: green=ok, amber=warn, red=fail, grey=na/empty #}
+{% set _status_color = {'ok': '#10b981', 'warn': '#f59e0b', 'fail': '#ef4444', 'na': '#d1d5db'} %}
+{% set _status_tip = {
+  'ok': 'All checks passing',
+  'warn': 'Warnings — Sources/Uses surplus, LTV high, etc.',
+  'fail': 'Failing — DSCR below minimum or Sources<Uses',
+  'na': 'Not yet computed'
+} %}
 <div style="display:flex;align-items:stretch;overflow:hidden">
   <div class="deal-tabs-row deal-tabs-row-projects" style="flex:1;min-width:0">
     {# Underwriting — scenario rollup, always the leftmost chip #}
+    {% set _uw_overall = _sc.underwriting.overall %}
     <a href="/models/{{ model.id }}/builder?view=underwriting"
        class="deal-tab {% if _active_view == 'underwriting' %}active{% endif %}"
        style="font-weight:600">
-      Underwriting{% if _s.underwriting %}<span style="color:#f59e0b;font-size:10px;margin-left:6px" title="Some projects have edits since last compute">●</span>{% endif %}
+      <span aria-hidden="true"
+            title="Underwriting: {{ _status_tip.get(_uw_overall, _uw_overall) }}"
+            style="display:inline-block;width:8px;height:8px;border-radius:50%;
+                   background:{{ _status_color.get(_uw_overall, '#d1d5db') }};
+                   margin-right:6px;vertical-align:middle"></span>Underwriting{% if _s.underwriting %}<span style="color:#f59e0b;font-size:10px;margin-left:6px" title="Some projects have edits since last compute">●</span>{% endif %}
     </a>
     {% for p in deal_projects %}
+    {% set _pp_status = _sc.per_project.get(p.id, {}).get('overall', 'na') %}
     <a href="/models/{{ model.id }}/builder?project={{ p.id }}"
        class="deal-tab {% if _active_view == 'project' and p.id | string == active_project_id %}active{% endif %}">
-      {{ p.name }}{% if _s.per_project.get(p.id) %}<span style="color:#f59e0b;font-size:10px;margin-left:6px" title="{{ p.name }} has edits since last compute">●</span>{% endif %}
+      <span aria-hidden="true"
+            title="{{ p.name }}: {{ _status_tip.get(_pp_status, _pp_status) }}"
+            style="display:inline-block;width:8px;height:8px;border-radius:50%;
+                   background:{{ _status_color.get(_pp_status, '#d1d5db') }};
+                   margin-right:6px;vertical-align:middle"></span>{{ p.name }}{% if _s.per_project.get(p.id) %}<span style="color:#f59e0b;font-size:10px;margin-left:6px" title="{{ p.name }} has edits since last compute">●</span>{% endif %}
     </a>
     {% endfor %}
     {% if deal_projects | length < 5 %}

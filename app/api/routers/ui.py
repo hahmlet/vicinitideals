@@ -4110,6 +4110,145 @@ def _builder_gantt_from_milestones(project: "Project | None", milestones: list) 
     }
 
 
+async def _per_project_capital_modules_ui(
+    session: AsyncSession, scenario_id: UUID, project_id: UUID
+) -> list:
+    """UI-side equivalent of the engine's ``_per_project_capital_modules``
+    — loads CapitalModule rows attached to this project via the junction.
+    Duplicated here to avoid cross-package import between UI and engine.
+    """
+    from app.models.capital import CapitalModuleProject
+    result = await session.execute(
+        select(CapitalModule)
+        .join(
+            CapitalModuleProject,
+            CapitalModuleProject.capital_module_id == CapitalModule.id,
+        )
+        .where(
+            CapitalModule.scenario_id == scenario_id,
+            CapitalModuleProject.project_id == project_id,
+        )
+        .order_by(CapitalModule.stack_position)
+    )
+    return list(result.scalars())
+
+
+async def _lightweight_project_status_data(
+    session: AsyncSession, scenario_id: UUID, project_id: UUID
+) -> dict:
+    """Minimal per-project data for ``_compute_calc_status``.
+
+    Cheaper than re-running the full ``_load_builder_data`` per project.
+    Fetches only the five keys ``_compute_calc_status`` reads: outputs,
+    inputs, capital_modules, capital_total, uses_total.
+    """
+    outputs = (
+        await session.execute(
+            select(OperationalOutputs).where(
+                OperationalOutputs.scenario_id == scenario_id,
+                OperationalOutputs.project_id == project_id,
+            )
+        )
+    ).scalar_one_or_none()
+    inputs = (
+        await session.execute(
+            select(OperationalInputs).where(
+                OperationalInputs.project_id == project_id
+            )
+        )
+    ).scalar_one_or_none()
+    capital_modules = await _per_project_capital_modules_ui(
+        session, scenario_id, project_id
+    )
+    capital_total = 0.0
+    for cm in capital_modules:
+        src = cm.source or {}
+        amt = src.get("amount")
+        if amt is None:
+            continue
+        try:
+            capital_total += float(amt)
+        except (TypeError, ValueError):
+            continue
+    use_lines = list(
+        (
+            await session.execute(
+                select(UseLine).where(UseLine.project_id == project_id)
+            )
+        ).scalars()
+    )
+    uses_total = 0.0
+    for ul in use_lines:
+        if ul.is_deferred:
+            continue
+        if ul.amount is None:
+            continue
+        try:
+            uses_total += float(ul.amount)
+        except (TypeError, ValueError):
+            continue
+    return {
+        "outputs": outputs,
+        "inputs": inputs,
+        "capital_modules": capital_modules,
+        "capital_total": capital_total,
+        "uses_total": uses_total,
+    }
+
+
+# Severity ranking for rolling worst-status up from per-project to Underwriting.
+_STATUS_RANK = {"ok": 0, "na": 0, "warn": 1, "fail": 2}
+
+
+async def _compute_scenario_statuses(
+    session: AsyncSession, scenario_id: UUID
+) -> dict:
+    """Per-project status dicts + Underwriting aggregate for tab-chip pills.
+
+    Each per-project status matches the shape ``_compute_calc_status``
+    returns (sources_uses / dscr / ltv + overall + failing_count). The
+    Underwriting aggregate picks the worst severity across projects and
+    sums their failing counts. No cross-project soft rules yet — combined
+    DSCR / LTV portfolio checks are informational-only per the Phase 2f
+    product decision; a future Phase 3b1 can add dedicated Underwriting-
+    only rule rows if needed.
+    """
+    project_ids = [
+        row[0]
+        for row in (
+            await session.execute(
+                select(Project.id)
+                .where(Project.scenario_id == scenario_id)
+                .order_by(Project.created_at.asc())
+            )
+        )
+    ]
+
+    per_project: dict = {}
+    worst_overall = "ok"
+    worst_project_id = None
+    total_failing = 0
+    for pid in project_ids:
+        data = await _lightweight_project_status_data(session, scenario_id, pid)
+        status = _compute_calc_status(data)
+        per_project[pid] = status
+        total_failing += int(status.get("failing_count", 0) or 0)
+        if _STATUS_RANK.get(status["overall"], 0) > _STATUS_RANK.get(
+            worst_overall, 0
+        ):
+            worst_overall = status["overall"]
+            worst_project_id = pid
+
+    return {
+        "per_project": per_project,
+        "underwriting": {
+            "overall": worst_overall,
+            "failing_count": total_failing,
+            "worst_project_id": worst_project_id,
+        },
+    }
+
+
 async def _staleness_map(session: AsyncSession, scenario_id: UUID) -> dict:
     """Compute per-project + scenario-level staleness for tab chips.
 
@@ -4713,6 +4852,10 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
         # Underwriting rollup get a dot when inputs have moved past the
         # last compute. Computed once per _load_builder_data call.
         "staleness": await _staleness_map(session, model_id),
+        # Phase 3b: per-project calc-status + Underwriting aggregate for the
+        # tab-chip pills. Each status dict follows the _compute_calc_status
+        # shape; the Underwriting entry is the worst severity across projects.
+        "scenario_statuses": await _compute_scenario_statuses(session, model_id),
         # Approval gate: every milestone needs a position AND a non-zero duration
         "timeline_approvable": len(milestones) > 0 and all(
             (m.target_date or m.trigger_milestone_id) and (m.duration_days or 0) > 0
