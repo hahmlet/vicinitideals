@@ -10,14 +10,20 @@ from __future__ import annotations
 
 import asyncio
 import uuid
+from contextlib import asynccontextmanager
 from datetime import UTC, date, datetime
 from typing import Any
 
 from celery.utils.log import get_task_logger
 from sqlalchemy import select
+from sqlalchemy.ext.asyncio import (
+    AsyncSession,
+    async_sessionmaker,
+    create_async_engine,
+)
+from sqlalchemy.pool import NullPool
 
 from app.config import settings
-from app.db import AsyncSessionLocal
 from app.models.api_call_log import ApiCallLog  # noqa: F401 — ensure registered
 from app.models.ingestion import IngestJob
 from app.models.listing_snapshot import ListingSnapshot
@@ -52,6 +58,35 @@ from app.tasks.scraper import upsert_scraped_listings
 logger = get_task_logger(__name__)
 
 
+@asynccontextmanager
+async def _task_session() -> "asyncio.AsyncContextManager[AsyncSession]":
+    """Yield an AsyncSession backed by a task-local engine with NullPool.
+
+    Celery workers fork a subprocess per task, and `asyncio.run()` creates a
+    fresh event loop each invocation. The module-level `AsyncSessionLocal`
+    engine caches connections bound to the first loop that used it, which
+    causes `got Future attached to a different loop` errors on subsequent
+    task runs in the same worker process. NullPool sidesteps this by opening
+    a fresh connection per session and closing it on exit.
+    """
+    engine = create_async_engine(
+        settings.database_url,
+        echo=False,
+        poolclass=NullPool,
+    )
+    factory = async_sessionmaker(
+        bind=engine,
+        class_=AsyncSession,
+        expire_on_commit=False,
+        autoflush=False,
+    )
+    try:
+        async with factory() as session:
+            yield session
+    finally:
+        await engine.dispose()
+
+
 # ---------------------------------------------------------------------------
 # Task: weekly sweep — discover + classify + ingest new listings
 # ---------------------------------------------------------------------------
@@ -75,7 +110,7 @@ async def _loopnet_weekly_sweep() -> dict[str, Any]:
     per_polygon: dict[str, dict[str, int]] = {}
     errors: list[str] = []
 
-    async with AsyncSessionLocal() as session:
+    async with _task_session() as session:
         ingest_job = IngestJob(source="loopnet", triggered_by="beat", status="running")
         session.add(ingest_job)
         await session.flush()
@@ -249,7 +284,7 @@ async def _loopnet_experiment_daily_refresh() -> dict[str, Any]:
     ext_snapshots = 0
     errors: list[str] = []
 
-    async with AsyncSessionLocal() as session:
+    async with _task_session() as session:
         stmt = select(ScrapedListing).where(ScrapedListing.source == "loopnet")
         result = await session.execute(stmt)
         listings: list[ScrapedListing] = list(result.scalars())
@@ -371,7 +406,7 @@ async def _loopnet_seed_lease_comps() -> dict[str, Any]:
     per_polygon: dict[str, dict[str, int]] = {}
     errors: list[str] = []
 
-    async with AsyncSessionLocal() as session:
+    async with _task_session() as session:
         ingest_job = IngestJob(
             source="loopnet_lease", triggered_by="manual", status="running"
         )
@@ -503,7 +538,7 @@ async def _loopnet_monthly_refresh() -> dict[str, Any]:
     refreshed = 0
     errors: list[str] = []
 
-    async with AsyncSessionLocal() as session:
+    async with _task_session() as session:
         stmt = (
             select(ScrapedListing)
             .where(ScrapedListing.source == "loopnet")
