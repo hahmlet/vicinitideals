@@ -62,7 +62,19 @@ The per-project Cashflow module panel shows a purple "Mode: NOI" chip in its hea
 
 ### Cross-project compute order
 
-`app/engines/anchor_resolver.py` orders projects via Kahn topological sort over `project_anchors` rows (anchored project runs after its parent). Cycles raise `AnchorCycleError`. Zero-anchor scenarios fall through to `sorted(created_at)` — byte-identical to pre-Phase-2 ordering. Anchor-driven milestone-date resolution (walking the chain + applying offsets) is deferred (2d1); presently the Deal / Underwriting start date = `min(project.start_date)` set per project in the wizard.
+`app/engines/anchor_resolver.py` orders projects via Kahn topological sort over `project_anchors` rows (anchored project runs after its parent). Cycles raise `AnchorCycleError`. Zero-anchor scenarios fall through to `sorted(created_at)` — byte-identical to pre-Phase-2 ordering.
+
+### Anchor-driven date resolution (Phase 2d1, 2026-04-23)
+
+`resolve_project_start_dates(scenario, session) -> dict[project_id, date]` walks the anchor chain in topological order. For each anchored project:
+
+1. Look up the pivot: `anchor_milestone_id` on the parent project (or the parent's earliest milestone by `sequence_order` if `anchor_milestone_id` is null).
+2. Compute pivot's end date via the standard `Milestone.computed_end()` resolver.
+3. `child.start = pivot.end + offset_months + offset_days`. Month arithmetic clamps to the target month's last day (so Jan 31 + 1 mo = Feb 28/29) before adding `offset_days`.
+
+`compute_cash_flows` calls the resolver before the per-project loop and passes each project's resolved date as `project_start_override` into `_compute_project_cashflow`. The inner function computes `delta = override − min(milestone_dates.values())` and shifts every phase-key date by `delta` — internal phase chain timing is preserved; only the whole project slides. For zero-anchor scenarios the resolver returns `{}`, no override is applied, and math is byte-identical to the pre-2d1 engine.
+
+Cycle detection runs both at read time (`ordered_projects` Kahn pass) and at write time (POST `/ui/models/{id}/anchors`) before the row is committed, so a user can never create a P1→P2→P1 loop.
 
 ---
 
