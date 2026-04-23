@@ -10,8 +10,8 @@ Four changes, all additive:
                                     name(s) that contain its lat/lng; drives target vs
                                     comp-only filtering
 
-Revision ID: 0048
-Revises: 0047
+Revision ID: 0053
+Revises: 0052
 Create Date: 2026-04-23
 """
 
@@ -19,8 +19,8 @@ import sqlalchemy as sa
 from alembic import op
 from sqlalchemy.dialects import postgresql
 
-revision = "0048"
-down_revision = "0047"
+revision = "0053"
+down_revision = "0052"
 branch_labels = None
 depends_on = None
 
