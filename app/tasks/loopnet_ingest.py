@@ -64,39 +64,53 @@ async def _upsert_loopnet_listing(
 ) -> bool:
     """Direct ON CONFLICT upsert for a LoopNet/loopnet_lease listing.
 
+    Uses insert_factory(ScrapedListing) passing the mapped class, which
+    translates our ORM attribute names (source_url, gba_sqft, cap_rate, etc.)
+    to their actual DB column names (listing_url, building_sqft,
+    asking_cap_rate_pct). The ON CONFLICT set_ dict is built from the actual
+    column objects so stmt.excluded can reference them correctly.
+
     Bypasses app/tasks/scraper.py upsert_scraped_listings() because that helper
     re-parses raw_json via Crexi-shaped extractors and would overwrite our
-    carefully-mapped Decimal values. Returns True if the row was newly inserted.
+    carefully-mapped Decimal values.
     """
     from sqlalchemy.dialects.postgresql import insert as pg_insert
     from sqlalchemy.dialects.sqlite import insert as sqlite_insert
 
     from app.models.project import ScrapedListing
 
-    # Required fields; default to non-null sentinels where needed
     values = {**values}
     values.setdefault("ingest_job_id", ingest_job_id)
     values["id"] = values.get("id") or uuid.uuid4()
-    # first_seen_at only set on insert (ON CONFLICT keeps the existing value)
+    # first_seen_at only set on insert (ON CONFLICT keeps existing value)
     values.setdefault("first_seen_at", datetime.now(UTC))
     values["last_seen_at"] = datetime.now(UTC)
 
     dialect = session.bind.dialect.name if session.bind is not None else "postgresql"
-    insert_fn = pg_insert if dialect == "postgresql" else sqlite_insert
+    insert_factory = pg_insert if dialect == "postgresql" else sqlite_insert
 
-    stmt = insert_fn(ScrapedListing.__table__).values(**values)
-    # On conflict, update everything EXCEPT identity and first_seen_at
-    update_cols = {
-        k: stmt.excluded[k]
-        for k in values
-        if k not in ("id", "source", "source_id", "first_seen_at", "ingest_job_id")
-    }
+    stmt = insert_factory(ScrapedListing).values(**values)
+
+    # Build set_ dict using actual DB column objects (not ORM attribute names).
+    # Skip identity + insert-only columns.
+    table = ScrapedListing.__table__
+    skip_on_update: set[str] = {"id", "source", "source_id", "seen_at", "ingest_job_id"}
+    update_cols = {}
+    for col in table.columns:
+        if col.name in skip_on_update:
+            continue
+        if col.name == "scraped_at":
+            # refresh last-seen stamp on every upsert
+            update_cols[col.name] = datetime.now(UTC)
+            continue
+        update_cols[col.name] = stmt.excluded[col.name]
+
     stmt = stmt.on_conflict_do_update(
         index_elements=["source", "source_id"],
         set_=update_cols,
     )
     await session.execute(stmt)
-    return True  # rough; distinguishing insert vs update via RETURNING adds complexity
+    return True
 
 
 @asynccontextmanager
