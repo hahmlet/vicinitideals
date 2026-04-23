@@ -146,6 +146,16 @@ These have schema and partial code in place but no UI to exercise. Each line bel
 | C | **Reserve attribution for aggregates (2e1)** — Operating Reserve and Lease-Up Reserve are engine-aggregated across multiple modules; tagging them with a single `source_capital_module_id` requires a split or representative-module decision. Bridge IO and closing-cost reserves are already tagged (Phase 2e). | …shows per-Source reserve totals in the Underwriting Source Package panel. |
 | D | **Joint draw cadence (2f)** — emit one DrawSource row per shared Source, per-project balance-share attribution, per-project carry on draw date. At month-level resolution (current engine) this produces identical numbers to independent per-project — meaningful only once the engine has day-level modeling. Deferred indefinitely. | …a real shared-lender deal is configured AND day-level timing becomes a product requirement. |
 
+### Phase 3 shipped (2026-04-22)
+
+Phases 3a–3e are live on main:
+
+- **3a** — Underwriting tab (read-only rollup: KPI strip, per-project summary, Source Package with covers chips, combined cashflow, joined waterfall). Top tab row with `[Underwriting] [Project…] [+ Add Project]`. Amber staleness dot on any chip with edits since last compute. Compute-on-Underwriting full-page-reloads to refresh the rollup.
+- **3b** — Per-project status dot on every tab chip (green = ok / amber = warn / red = fail / grey = not-yet-computed). Underwriting chip's dot is the worst severity across projects. `_compute_scenario_statuses` fans out over projects using a lightweight per-project status data loader.
+- **3c** — Source Coverage modal. Each Source row on the Underwriting Source Package has a "Coverage" button → modal with shared-identity display up top + per-project table (include checkbox, amount, active_from, active_to, auto_size). Submit writes `capital_module_projects` junction rows (upsert / delete) then HX-Redirects to Underwriting. Orphan guard keeps at least one junction row per module.
+- **3d** — "from: {source.label}" chip on engine-injected reserve UseLines in the Uses panel, reading the `source_capital_module_id` set by Phase 2e tagging (bridge IO, closing costs). Omitted for user-entered UseLines and for aggregated reserves (Operating / Lease-Up Reserve — still tracked for Phase 2e1).
+- **3e** — Variant copy (`create_deal_copy`) now carries `capital_module_projects` junction rows + `project_anchors` rows with project/module id remapping, so duplicated Scenarios render correctly on the Underwriting tab instead of showing zero-source projects. Redirect target changed to `?view=underwriting` so the user lands on the rolled-up view.
+
 ### UI work — top of Phase 3
 
 ### 21. Underwriting rollup tab
@@ -195,6 +205,10 @@ Migration `0048_multi_project_underwriting` landed the data foundation for one S
 
 ## Recently fixed
 
+- **[2026-04-22, phase-3b]** Per-project status dots on every tab chip (green = ok, amber = warn, red = fail, grey = not computed). Underwriting chip aggregates worst severity across projects.
+- **[2026-04-22, phase-3c]** Source Coverage modal — click "Coverage" on a Source row in the Underwriting Source Package to attach / detach projects and set per-project amount / active window / auto_size. Writes `capital_module_projects` junction rows.
+- **[2026-04-22, phase-3d]** "from: {Source.label}" chip on engine-injected reserve UseLines (bridge IO, closing costs). Makes it obvious which loan generated each auto reserve.
+- **[2026-04-22, phase-3e]** Variant copy now includes `capital_module_projects` junction + `project_anchors` rows with project/module id remapping. Duplicated Scenarios land on the Underwriting tab. Waterfall tiers' `project_id` now remaps correctly.
 - **[2026-04-22, phase-3a]** Underwriting Combined Cashflow is NOI-focused (removed Revenue / EGI / OpEx columns that summed incorrectly across projects in mixed income modes). Per-project Cashflow module panel now shows a "Mode: NOI" chip in its header when the scenario is in NOI mode, so the `$0` Revenue / OpEx rows have an inline explanation.
 - **[2026-04-22, phase-3a]** Compute button stays on the Underwriting tab after running (full page reload re-renders the rollup + clears staleness). Previously dropped the user into per-project Sources & Uses because the HTMX swap target didn't exist on the Underwriting layout.
 - **[2026-04-22, phase-3a]** 500 on `/models/{id}/builder` for multi-project deals — `OperationalOutputs.scalar_one_or_none()` raised `MultipleResultsFound` after migration 0051 made the row per-project. Seven reader sites scoped to the default (oldest) project; the builder route scopes to the active project via `?project=`.
