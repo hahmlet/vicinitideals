@@ -51,11 +51,52 @@ from app.scrapers.loopnet import (
     should_fetch_sale_details_after_bulk,
     should_ingest_lease_after_bulk,
 )
-from app.schemas.scraped_listing import ScrapedListingCreate
 from app.tasks.celery_app import celery_app
-from app.tasks.scraper import upsert_scraped_listings
 
 logger = get_task_logger(__name__)
+
+
+async def _upsert_loopnet_listing(
+    values: dict[str, Any],
+    *,
+    session: AsyncSession,
+    ingest_job_id: uuid.UUID,
+) -> bool:
+    """Direct ON CONFLICT upsert for a LoopNet/loopnet_lease listing.
+
+    Bypasses app/tasks/scraper.py upsert_scraped_listings() because that helper
+    re-parses raw_json via Crexi-shaped extractors and would overwrite our
+    carefully-mapped Decimal values. Returns True if the row was newly inserted.
+    """
+    from sqlalchemy.dialects.postgresql import insert as pg_insert
+    from sqlalchemy.dialects.sqlite import insert as sqlite_insert
+
+    from app.models.project import ScrapedListing
+
+    # Required fields; default to non-null sentinels where needed
+    values = {**values}
+    values.setdefault("ingest_job_id", ingest_job_id)
+    values["id"] = values.get("id") or uuid.uuid4()
+    # first_seen_at only set on insert (ON CONFLICT keeps the existing value)
+    values.setdefault("first_seen_at", datetime.now(UTC))
+    values["last_seen_at"] = datetime.now(UTC)
+
+    dialect = session.bind.dialect.name if session.bind is not None else "postgresql"
+    insert_fn = pg_insert if dialect == "postgresql" else sqlite_insert
+
+    stmt = insert_fn(ScrapedListing.__table__).values(**values)
+    # On conflict, update everything EXCEPT identity and first_seen_at
+    update_cols = {
+        k: stmt.excluded[k]
+        for k in values
+        if k not in ("id", "source", "source_id", "first_seen_at", "ingest_job_id")
+    }
+    stmt = stmt.on_conflict_do_update(
+        index_elements=["source", "source_id"],
+        set_=update_cols,
+    )
+    await session.execute(stmt)
+    return True  # rough; distinguishing insert vs update via RETURNING adds complexity
 
 
 @asynccontextmanager
@@ -206,17 +247,23 @@ async def _loopnet_weekly_sweep() -> dict[str, Any]:
                         sale, ext, listing_id=lid, lat=lat, lng=lng
                     )
                     mapped["polygon_tags"] = polygon_names
-                    create = ScrapedListingCreate.model_validate(mapped)
-                    await upsert_scraped_listings(
-                        [create],
-                        broker_id_map={},
-                        session=session,
-                        ingest_job_id=ingest_job_id,
-                    )
-                    total_new += 1
-                    for pname in polygon_names:
-                        if pname in per_polygon:
-                            per_polygon[pname]["new"] += 1
+                    try:
+                        await _upsert_loopnet_listing(
+                            mapped, session=session, ingest_job_id=ingest_job_id,
+                        )
+                        # Commit per-listing so budget log + upsert survive
+                        # even if a later listing crashes or hits budget.
+                        await session.commit()
+                        total_new += 1
+                        for pname in polygon_names:
+                            if pname in per_polygon:
+                                per_polygon[pname]["new"] += 1
+                    except Exception as exc:  # noqa: BLE001
+                        logger.exception("loopnet upsert failed for %s", lid)
+                        errors.append(f"upsert {lid}: {exc}")
+                        await session.rollback()
+                        # rollback discards pending api_call_log from this listing too
+                        # but budget already charged at RapidAPI — track in errors
 
             job = await session.get(IngestJob, ingest_job_id)
             if job is not None:
@@ -487,14 +534,16 @@ async def _loopnet_seed_lease_comps() -> dict[str, Any]:
                         lease, listing_id=lid, lat=lat, lng=lng
                     )
                     mapped["polygon_tags"] = [p["name"] for p in containing_polygons]
-                    create = ScrapedListingCreate.model_validate(mapped)
-                    await upsert_scraped_listings(
-                        [create],
-                        broker_id_map={},
-                        session=session,
-                        ingest_job_id=ingest_job_id,
-                    )
-                    total_new += 1
+                    try:
+                        await _upsert_loopnet_listing(
+                            mapped, session=session, ingest_job_id=ingest_job_id,
+                        )
+                        await session.commit()
+                        total_new += 1
+                    except Exception as exc:  # noqa: BLE001
+                        logger.exception("loopnet_lease upsert failed for %s", lid)
+                        errors.append(f"upsert {lid}: {exc}")
+                        await session.rollback()
                     for p in containing_polygons:
                         if p["name"] in per_polygon:
                             per_polygon[p["name"]]["new"] += 1
