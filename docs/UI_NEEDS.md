@@ -141,9 +141,9 @@ These have schema and partial code in place but no UI to exercise. Each line bel
 
 | # | Engine item | Needed when the UI… |
 |---|---|---|
-| A | **Junction overlay (2c1)** — route auto-sizing to read/write `capital_module_projects.amount` instead of `CapitalModule.source.amount`. Read-side helpers (`is_shared_source`, `junction_amount_for`) exist; overlay needs a deeper refactor of `_auto_size_debt_modules` because its writeback path targets the module's source dict. | …lets the user set divergent per-project amounts on a shared Source via the coverage modal. |
+| ~~A~~ | ~~Junction overlay (2c1)~~ — **✅ shipped 2026-04-22**: `_per_project_capital_modules` overlays `junction.amount` onto `module.source["amount"]` at load; `_sync_junction_amounts_after_compute` writes the auto-sized amount back to the per-project junction. Coverage-modal divergent amounts now take effect. Byte-identical on 5 baseline single-project scenarios. | |
 | B | **Anchor-driven dates (2d1)** — walk `project_anchors` chain, compute per-project start-date offsets, seed milestone-date overrides into each project. `anchor_resolver.ordered_projects` detects cycles and orders compute; date math is not yet computed. | …offers a "Project B starts 6 months after Project A's close" UX. Current product direction is *not needed* — each project has its own start date via the wizard, and the Deal / Underwriting start = min(project starts). |
-| C | **Reserve attribution for aggregates (2e1)** — Operating Reserve and Lease-Up Reserve are engine-aggregated across multiple modules; tagging them with a single `source_capital_module_id` requires a split or representative-module decision. Bridge IO and closing-cost reserves are already tagged (Phase 2e). | …shows per-Source reserve totals in the Underwriting Source Package panel. |
+| ~~C~~ | ~~Reserve attribution for aggregates (2e1)~~ — **✅ shipped 2026-04-22**: Operating Reserve and Lease-Up Reserve tagged with the "primary perm" module (`_reserve_source_module`, captured inside the DS-based solve loop); Construction Interest Reserve / Capitalized Construction Interest tagged with `_bridge_io_module['construction_loan']`. | |
 | D | **Joint draw cadence (2f)** — emit one DrawSource row per shared Source, per-project balance-share attribution, per-project carry on draw date. At month-level resolution (current engine) this produces identical numbers to independent per-project — meaningful only once the engine has day-level modeling. Deferred indefinitely. | …a real shared-lender deal is configured AND day-level timing becomes a product requirement. |
 
 ### Phase 3 shipped (2026-04-22)
@@ -205,6 +205,8 @@ Migration `0048_multi_project_underwriting` landed the data foundation for one S
 
 ## Recently fixed
 
+- **[2026-04-22, phase-2c1]** Engine reads `capital_module_projects.amount` per-project (overlay at module load) and writes the auto-sized amount back to the junction row after compute. Coverage-modal divergent amounts now actually affect sizing. Byte-identical on 5 baseline single-project scenarios via `scripts/phase2_verify_byte_identical.py`.
+- **[2026-04-22, phase-2e1]** Operating Reserve + Lease-Up Reserve + Construction Interest Reserve / Capitalized Construction Interest UseLines now carry `source_capital_module_id`. Operating + Lease-Up point at the "primary perm" (module whose DS drove the closed-form reserve solve); Construction IO points at the construction loan module.
 - **[2026-04-22, phase-3b]** Per-project status dots on every tab chip (green = ok, amber = warn, red = fail, grey = not computed). Underwriting chip aggregates worst severity across projects.
 - **[2026-04-22, phase-3c]** Source Coverage modal — click "Coverage" on a Source row in the Underwriting Source Package to attach / detach projects and set per-project amount / active window / auto_size. Writes `capital_module_projects` junction rows.
 - **[2026-04-22, phase-3d]** "from: {Source.label}" chip on engine-injected reserve UseLines (bridge IO, closing costs). Makes it obvious which loan generated each auto reserve.
