@@ -1736,6 +1736,10 @@ async def _auto_size_debt_modules(
     # Computed inside the loop when the gap-fill DS path is active; written as a use
     # line after the loop so S&U always balances.
     _lease_up_carry: Decimal = ZERO
+    # Phase 2e1: track which module's DS drove the reserve computation so the
+    # resulting Lease-Up Reserve + Operating Reserve UseLines can carry a
+    # source_capital_module_id back to that module (the "primary perm").
+    _reserve_source_module: CapitalModule | None = None
 
     for module in auto_modules:
         src = dict(module.source or {})
@@ -1844,6 +1848,13 @@ async def _auto_size_debt_modules(
                 if lease_up_months > 0:
                     _lu = _q(principal * pmt_factor * Decimal(lease_up_months) - lease_up_income_offset)
                     _lease_up_carry = _lu if _lu > ZERO else ZERO
+                    if _lu > ZERO:
+                        _reserve_source_module = module
+                # If no lease-up carry was captured, still tag the reserve
+                # source to the first auto-sized perm-like module so the
+                # Operating Reserve has a Source attribution.
+                if _reserve_source_module is None:
+                    _reserve_source_module = module
                 ds_check = _q(principal * pmt_factor)
                 if ds_check < opex_monthly_pre:
                     # OpEx is actually larger — fall back to opex-based reserve
@@ -2128,16 +2139,19 @@ async def _auto_size_debt_modules(
         f"${_reserve_amount_basis:,.0f}/mo × {reserve_months} months"
     )
     op_reserve_found = False
+    _op_reserve_source_id = _reserve_source_module.id if _reserve_source_module else None
     for ul in use_lines:
         if getattr(ul, "label", "") == "Operating Reserve":
             ul.amount = actual_reserve
             ul.notes = _reserve_notes
+            ul.source_capital_module_id = _op_reserve_source_id
             session.add(ul)
             op_reserve_found = True
             break
     if not op_reserve_found and project_id and actual_reserve > ZERO:
         new_op = UseLine(
             project_id=project_id,
+            source_capital_module_id=_op_reserve_source_id,
             label="Operating Reserve",
             phase="operation",
             amount=actual_reserve,
@@ -2166,12 +2180,17 @@ async def _auto_size_debt_modules(
         if _constr_int_ct == "interest_reserve"
         else "Auto-computed: IO capitalized into construction loan principal."
     )
+    # Phase 2e1: tag the Construction IO reserve with the construction loan
+    # module id (already tracked by _bridge_io_module from Phase 2e's bridge
+    # sizing pass).
+    _ci_source_id = _bridge_io_module.get("construction_loan")
     _ci_rows = [ul for ul in use_lines if getattr(ul, "label", "") in _CONSTR_INT_LABELS]
     if _ci_rows:
         _ci_keep = _ci_rows[0]
         _ci_keep.label = _constr_int_label
         _ci_keep.amount = total_constr_io
         _ci_keep.notes = _constr_int_notes
+        _ci_keep.source_capital_module_id = _ci_source_id
         session.add(_ci_keep)
         for _ci_dup in _ci_rows[1:]:
             await session.delete(_ci_dup)
@@ -2179,6 +2198,7 @@ async def _auto_size_debt_modules(
     elif project_id and total_constr_io > ZERO:
         new_ul = UseLine(
             project_id=project_id,
+            source_capital_module_id=_ci_source_id,
             label=_constr_int_label,
             phase="construction",
             amount=total_constr_io,
@@ -2189,12 +2209,15 @@ async def _auto_size_debt_modules(
         use_lines.append(new_ul)
 
     # Update or create Lease-Up Reserve use line (balance-only: perm DS shortfall during lease-up)
+    # Source attribution: the module whose DS drove _lease_up_carry above.
+    _lu_source_id = _reserve_source_module.id if _reserve_source_module else None
     lu_reserve_found = False
     for ul in use_lines:
         if getattr(ul, "label", "") == "Lease-Up Reserve":
             if _lease_up_carry > ZERO:
                 ul.amount = _lease_up_carry
                 ul.notes = f"Auto-computed: perm debt service during {lease_up_months}-month lease-up net of ~1/3 stabilized NOI (phantom CF avg, 60/40 split, opex 50→100%)"
+                ul.source_capital_module_id = _lu_source_id
                 session.add(ul)
             else:
                 await session.delete(ul)
@@ -2204,6 +2227,7 @@ async def _auto_size_debt_modules(
     if not lu_reserve_found and project_id and _lease_up_carry > ZERO:
         new_lu = UseLine(
             project_id=project_id,
+            source_capital_module_id=_lu_source_id,
             label="Lease-Up Reserve",
             phase="operation_lease_up",
             amount=_lease_up_carry,
