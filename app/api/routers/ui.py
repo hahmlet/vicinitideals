@@ -7498,6 +7498,189 @@ async def builder_panel(
     return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# Phase 3c: Source coverage modal — edit which Projects a CapitalModule is
+# attached to (capital_module_projects junction rows).
+# ─────────────────────────────────────────────────────────────────────────────
+
+
+@router.get(
+    "/ui/models/{model_id}/sources/{source_id}/coverage",
+    response_class=HTMLResponse,
+)
+async def source_coverage_modal(
+    request: Request,
+    model_id: UUID,
+    source_id: UUID,
+    session: DBSession,
+) -> HTMLResponse:
+    """Render the Source Coverage modal.
+
+    Lists every Project on the Scenario with an Included checkbox + per-
+    project amount / active_from / active_to / auto_size fields. Existing
+    ``capital_module_projects`` rows pre-fill their projects' inputs; not-
+    yet-attached projects render with empty values + include-checkbox off.
+    """
+    from app.models.capital import CapitalModuleProject
+    module = await session.get(CapitalModule, source_id)
+    if module is None or module.scenario_id != model_id:
+        return HTMLResponse(
+            "<p class='text-muted'>Source not found.</p>", status_code=404
+        )
+    projects = list(
+        (
+            await session.execute(
+                select(Project)
+                .where(Project.scenario_id == model_id)
+                .order_by(Project.created_at.asc())
+            )
+        ).scalars()
+    )
+    junction_rows = list(
+        (
+            await session.execute(
+                select(CapitalModuleProject).where(
+                    CapitalModuleProject.capital_module_id == source_id
+                )
+            )
+        ).scalars()
+    )
+    by_project = {j.project_id: j for j in junction_rows}
+    rows = []
+    for p in projects:
+        j = by_project.get(p.id)
+        rows.append(
+            {
+                "project": p,
+                "included": j is not None,
+                "amount": j.amount if j else (module.source or {}).get("amount"),
+                "active_from": j.active_from
+                if j
+                else module.active_phase_start,
+                "active_to": j.active_to if j else module.active_phase_end,
+                "auto_size": j.auto_size if j else False,
+            }
+        )
+    return templates.TemplateResponse(
+        request,
+        "partials/underwriting/coverage_modal.html",
+        {
+            "model_id": str(model_id),
+            "module": module,
+            "rows": rows,
+        },
+    )
+
+
+@router.post(
+    "/ui/models/{model_id}/sources/{source_id}/coverage",
+    response_class=HTMLResponse,
+)
+async def source_coverage_write(
+    request: Request,
+    model_id: UUID,
+    source_id: UUID,
+    session: DBSession,
+) -> HTMLResponse:
+    """Write junction changes submitted by the coverage modal.
+
+    Form fields per project (keyed by project_id):
+
+        included[<pid>]         — "1" to attach (checkbox); absent = detach
+        amount[<pid>]           — Decimal-ish string
+        active_from[<pid>]      — milestone key
+        active_to[<pid>]        — milestone key
+        auto_size[<pid>]        — "1" / absent
+
+    Invariant: a CapitalModule must retain at least one junction row. If the
+    submitted form would leave zero, the last row stays untouched with a
+    soft warning (TODO: surface warning to user — for now the handler
+    silently keeps the row).
+    """
+    from app.models.capital import CapitalModuleProject
+    module = await session.get(CapitalModule, source_id)
+    if module is None or module.scenario_id != model_id:
+        return HTMLResponse(
+            "<p class='text-muted'>Source not found.</p>", status_code=404
+        )
+    form = await request.form()
+
+    projects = list(
+        (
+            await session.execute(
+                select(Project)
+                .where(Project.scenario_id == model_id)
+                .order_by(Project.created_at.asc())
+            )
+        ).scalars()
+    )
+    junction_rows = list(
+        (
+            await session.execute(
+                select(CapitalModuleProject).where(
+                    CapitalModuleProject.capital_module_id == source_id
+                )
+            )
+        ).scalars()
+    )
+    by_project = {j.project_id: j for j in junction_rows}
+
+    included_after: list[UUID] = []
+    for p in projects:
+        key = str(p.id)
+        included = form.get(f"included[{key}]") == "1"
+        if not included:
+            continue
+        included_after.append(p.id)
+
+    # Orphan guard — never leave a module with zero junction rows. If the
+    # submission would, keep the first existing row.
+    if not included_after and junction_rows:
+        fallback = junction_rows[0]
+        included_after = [fallback.project_id]
+
+    for p in projects:
+        key = str(p.id)
+        included = p.id in included_after
+        amt_raw = (form.get(f"amount[{key}]") or "").strip()
+        af = (form.get(f"active_from[{key}]") or "").strip() or None
+        at = (form.get(f"active_to[{key}]") or "").strip() or None
+        auto = form.get(f"auto_size[{key}]") == "1"
+        amt = _fd(amt_raw)
+        existing = by_project.get(p.id)
+        if included:
+            if existing is not None:
+                if amt is not None:
+                    existing.amount = amt
+                existing.active_from = af
+                existing.active_to = at
+                existing.auto_size = auto
+                session.add(existing)
+            else:
+                session.add(
+                    CapitalModuleProject(
+                        capital_module_id=source_id,
+                        project_id=p.id,
+                        amount=amt if amt is not None else Decimal("0"),
+                        active_from=af,
+                        active_to=at,
+                        auto_size=auto,
+                    )
+                )
+        elif existing is not None:
+            await session.delete(existing)
+
+    await session.commit()
+    # Signal the client to reload the Underwriting page so every panel
+    # (pill, staleness dots, source package, rollup CF) picks up the junction
+    # change. HX-Redirect is the cleanest way from an HTMX form submission.
+    response = HTMLResponse("")
+    response.headers["HX-Redirect"] = (
+        f"/models/{model_id}/builder?view=underwriting"
+    )
+    return response
+
+
 def _compute_calc_status(data: dict) -> dict:
     """Produce the 3-factor calculation status: Sources=Uses, DSCR, LTV.
 

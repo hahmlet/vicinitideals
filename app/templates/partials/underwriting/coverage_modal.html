@@ -1,0 +1,139 @@
+{# Coverage modal body — opened by clicking a Source's Coverage link on the
+   Underwriting Source Package. Lets the user attach / detach Projects to
+   this CapitalModule and set per-project amount / active window / auto_size.
+
+   Context:
+     - model_id: str
+     - module: CapitalModule ORM row (shared-identity fields: label, funder_type,
+       carry rate, etc. read from module.source / module.carry)
+     - rows: list of dicts per Project on the scenario:
+         { project, included, amount, active_from, active_to, auto_size }
+#}
+{% set src = module.source or {} %}
+{% set carry = module.carry or {} %}
+<div class="uw-cov-modal">
+  <div class="uw-cov-shared">
+    <div class="uw-cov-section-title">Source identity (shared across projects)</div>
+    <table class="uw-cov-shared-tbl">
+      <tr>
+        <td><strong>Label</strong></td>
+        <td>{{ module.label }}</td>
+        <td><strong>Funder type</strong></td>
+        <td>{{ (module.funder_type | string).replace('FunderType.', '').replace('_', ' ').title() }}</td>
+      </tr>
+      <tr>
+        <td><strong>Rate</strong></td>
+        <td>{{ '{:.2f}%'.format(src.interest_rate_pct | float) if src.interest_rate_pct else '—' }}</td>
+        <td><strong>Amort (yrs)</strong></td>
+        <td>{{ src.amort_term_years or '—' }}</td>
+      </tr>
+      <tr>
+        <td><strong>Stack position</strong></td>
+        <td>{{ module.stack_position }}</td>
+        <td><strong>Carry type</strong></td>
+        <td>{{ (carry.carry_type or '—').replace('_', ' ') }}</td>
+      </tr>
+    </table>
+    <div class="uw-cov-hint">
+      These fields are properties of the loan contract itself — edit them on the
+      per-project Sources panel.
+    </div>
+  </div>
+
+  <form method="post"
+        hx-post="/ui/models/{{ model_id }}/sources/{{ module.id }}/coverage"
+        hx-swap="none"
+        class="uw-cov-form">
+    <div class="uw-cov-section-title">Per-project coverage</div>
+    <table class="uw-cov-tbl">
+      <thead>
+        <tr>
+          <th>Project</th>
+          <th style="text-align:center">Included</th>
+          <th class="num">Amount</th>
+          <th>Active from</th>
+          <th>Active to</th>
+          <th style="text-align:center">Auto-size</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in rows %}
+        {% set pkey = r.project.id | string %}
+        <tr>
+          <td>{{ r.project.name }}</td>
+          <td style="text-align:center">
+            <input type="checkbox" name="included[{{ pkey }}]" value="1"
+                   {% if r.included %}checked{% endif %}>
+          </td>
+          <td class="num">
+            <input type="number" step="0.01" min="0"
+                   name="amount[{{ pkey }}]"
+                   value="{{ r.amount if r.amount is not none else '' }}"
+                   style="width:130px;text-align:right">
+          </td>
+          <td>
+            <select name="active_from[{{ pkey }}]" style="width:140px">
+              <option value="" {% if not r.active_from %}selected{% endif %}>(scenario default)</option>
+              {% for k in ['acquisition','pre_construction','construction','lease_up','stabilized','exit'] %}
+              <option value="{{ k }}" {% if r.active_from == k %}selected{% endif %}>{{ k | replace('_',' ') | title }}</option>
+              {% endfor %}
+            </select>
+          </td>
+          <td>
+            <select name="active_to[{{ pkey }}]" style="width:140px">
+              <option value="" {% if not r.active_to %}selected{% endif %}>(scenario default)</option>
+              {% for k in ['acquisition','pre_construction','construction','lease_up','stabilized','exit'] %}
+              <option value="{{ k }}" {% if r.active_to == k %}selected{% endif %}>{{ k | replace('_',' ') | title }}</option>
+              {% endfor %}
+            </select>
+          </td>
+          <td style="text-align:center">
+            <input type="checkbox" name="auto_size[{{ pkey }}]" value="1"
+                   {% if r.auto_size %}checked{% endif %}>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="uw-cov-hint">
+      A Source with one checked project is project-scoped; two or more is
+      shared. Each project sizes its own share independently — amounts don't
+      have to agree across projects.
+    </div>
+    <div class="uw-cov-actions">
+      <button type="button" class="btn btn-secondary"
+              onclick="document.getElementById('uw-cov-backdrop')?.remove()">Cancel</button>
+      <button type="submit" class="btn btn-primary">Save coverage</button>
+    </div>
+  </form>
+</div>
+
+<style>
+.uw-cov-modal { padding: 4px; }
+.uw-cov-section-title {
+  font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--text-muted); margin: 0 0 8px;
+}
+.uw-cov-shared {
+  background: #f9fafb; border: 1px solid var(--border);
+  border-radius: 6px; padding: 12px 14px; margin-bottom: 14px;
+}
+.uw-cov-shared-tbl { width: 100%; font-size: 13px; }
+.uw-cov-shared-tbl td { padding: 4px 8px; vertical-align: top; }
+.uw-cov-tbl { width: 100%; font-size: 13px; border-collapse: collapse; }
+.uw-cov-tbl thead th {
+  padding: 6px 8px; text-align: left; font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--text-muted); border-bottom: 1px solid var(--border);
+}
+.uw-cov-tbl tbody td { padding: 8px; border-bottom: 1px solid #f1f5f9; }
+.uw-cov-tbl tbody tr:last-child td { border-bottom: none; }
+.uw-cov-tbl td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.uw-cov-hint {
+  font-size: 11px; color: var(--text-muted); margin-top: 8px;
+}
+.uw-cov-actions {
+  margin-top: 14px; display: flex; gap: 8px; justify-content: flex-end;
+}
+</style>

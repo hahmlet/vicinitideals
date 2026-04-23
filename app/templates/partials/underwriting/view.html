@@ -80,6 +80,7 @@
           <th class="num">Total Principal</th>
           <th class="num">Rate %</th>
           <th>Carry</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -88,11 +89,9 @@
           <td>{{ s.label }}</td>
           <td>{{ s.funder_type.replace('_', ' ').title() }}</td>
           <td>
-            {% set _covered = [] %}
             {% for cid in s.covered_project_ids %}
               {% set _cp = (deal_projects | selectattr('id', 'equalto', cid|trim) | list | first) %}
               {% if not _cp %}
-                {# UUID equality — templates get a string, ids are UUID #}
                 {% set _cp = (deal_projects | selectattr('id', 'equalto', cid) | list | first) %}
               {% endif %}
               {% if _cp %}<span class="uw-chip">{{ _cp.name }}</span>{% else %}<span class="uw-chip">?</span>{% endif %}
@@ -102,9 +101,18 @@
           <td class="num">${{ '{:,.0f}'.format(s.total_principal | float) }}</td>
           <td class="num">{{ '{:.2f}'.format(s.interest_rate_pct | float) if s.interest_rate_pct else '—' }}</td>
           <td>{{ (s.carry_type or '—').replace('_', ' ') }}</td>
+          <td class="num">
+            <button type="button" class="uw-cov-btn"
+                    hx-get="/ui/models/{{ model.id }}/sources/{{ s.id }}/coverage"
+                    hx-target="#uw-cov-body"
+                    hx-swap="innerHTML"
+                    onclick="document.getElementById('uw-cov-backdrop').style.display='flex'">
+              Coverage
+            </button>
+          </td>
         </tr>
         {% else %}
-        <tr><td colspan="6" class="text-muted" style="text-align:center;padding:20px">No Sources configured.</td></tr>
+        <tr><td colspan="7" class="text-muted" style="text-align:center;padding:20px">No Sources configured.</td></tr>
         {% endfor %}
       </tbody>
     </table>
@@ -284,4 +292,48 @@
   font-size: 12px;
   margin-bottom: 8px;
 }
+.uw-cov-btn {
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  background: #fff;
+  color: #1e40af;
+  border: 1px solid #93c5fd;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.uw-cov-btn:hover {
+  background: #eff6ff;
+  border-color: #3b82f6;
+}
+#uw-cov-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.4);
+  z-index: 1000;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 60px;
+}
+#uw-cov-backdrop .uw-cov-panel {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px 24px;
+  width: 760px;
+  max-width: 92vw;
+  max-height: 84vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.25);
+}
 </style>
+
+{# Coverage modal backdrop — body filled by HTMX swap into #uw-cov-body. #}
+<div id="uw-cov-backdrop"
+     onclick="if(event.target===this)this.style.display='none'">
+  <div class="uw-cov-panel" onclick="event.stopPropagation()">
+    <div id="uw-cov-body">
+      <p class="text-muted">Loading coverage…</p>
+    </div>
+  </div>
+</div>
