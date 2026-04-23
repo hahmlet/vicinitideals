@@ -204,6 +204,15 @@ async def _compute_project_cashflow(
     for cm in capital_modules:
         await session.refresh(cm, attribute_names=["source"])
 
+    # Phase 2c1: sync the auto-sized amount back onto the per-project junction
+    # row so the Coverage modal reflects the current computed amount and so
+    # subsequent per-project compute iterations on a shared Source read an
+    # up-to-date junction. No-op for single-project scenarios where
+    # junction.amount == source.amount pre- and post-compute.
+    await _sync_junction_amounts_after_compute(
+        session, deal_uuid, project.id, capital_modules
+    )
+
     construction_debt_monthly = _sum_debt_service(capital_modules, is_construction=True)
     operation_debt_monthly = _sum_debt_service(capital_modules, is_construction=False)
 
@@ -616,6 +625,77 @@ async def _load_deal_model(session: AsyncSession, deal_model_id: UUID) -> Scenar
     return result.scalar_one_or_none()
 
 
+def _apply_junction_overlay_inplace(
+    session: AsyncSession,
+    module: CapitalModule,
+    junction: CapitalModuleProject,
+) -> None:
+    """Phase 2c1: overlay junction.amount + junction.auto_size onto module.source.
+
+    Called from ``_per_project_capital_modules`` at load time. Only writes
+    when the values actually differ — single-project scenarios where
+    junction.amount matches source.amount become no-ops. The write is
+    an in-place mutation of ``module.source`` (a JSON dict) which
+    SQLAlchemy tracks as dirty and flushes on the next session.flush().
+    """
+    junction_amount = junction.amount
+    if junction_amount is None:
+        return
+    current_src = dict(module.source or {})
+    try:
+        j_amount_dec = Decimal(str(junction_amount))
+    except Exception:
+        return
+    current_amount = current_src.get("amount")
+    try:
+        c_amount_dec = (
+            Decimal(str(current_amount)) if current_amount is not None else None
+        )
+    except Exception:
+        c_amount_dec = None
+    current_auto = bool(current_src.get("auto_size"))
+    j_auto = bool(junction.auto_size)
+    if c_amount_dec == j_amount_dec and current_auto == j_auto:
+        return  # no-op — junction matches source already
+    new_src = dict(current_src)
+    new_src["amount"] = float(j_amount_dec) if j_amount_dec else 0.0
+    new_src["auto_size"] = j_auto
+    module.source = new_src  # SQLAlchemy sees this as a change; flush writes it
+
+
+async def _sync_junction_amounts_after_compute(
+    session: AsyncSession,
+    scenario_id: UUID,
+    project_id: UUID,
+    modules: list[CapitalModule],
+) -> None:
+    """Phase 2c1: write post-auto-size amounts back to the junction.
+
+    After ``_auto_size_debt_modules`` finishes, ``module.source["amount"]``
+    holds the final sized principal for the active project. Mirror that
+    onto the project's junction row so the Coverage modal shows the
+    computed amount next time the user opens it, and so subsequent
+    per-project compute iterations on the same scenario read a junction
+    that agrees with the latest engine output.
+    """
+    for module in modules:
+        src_amount = (module.source or {}).get("amount")
+        if src_amount is None:
+            continue
+        try:
+            amt = Decimal(str(src_amount))
+        except Exception:
+            continue
+        await session.execute(
+            sa_update(CapitalModuleProject)
+            .where(
+                CapitalModuleProject.capital_module_id == module.id,
+                CapitalModuleProject.project_id == project_id,
+            )
+            .values(amount=amt)
+        )
+
+
 async def _per_project_capital_modules(
     session: AsyncSession,
     scenario_id: UUID,
@@ -635,34 +715,46 @@ async def _per_project_capital_modules(
     in both projects' module lists — SQLAlchemy's session-scoped identity
     map hands each iteration its own ORM instance reference.
 
-    **Per-project amount overlay from junction is NOT applied yet.** The
-    engine's auto-sizing writes ``module.source["amount"]`` via bulk SQL
-    UPDATE and then ``session.refresh(module, ["source"])``, which reloads
-    the DB state. Overlaying ``module.source["amount"]`` here gets wiped
-    by that refresh before auto-sizing can use it. Proper junction-driven
-    sizing requires routing auto-sizing to read/write ``junction.amount``
-    directly — a deeper refactor tracked as Phase 2c1, triggered when the
-    UI can actually write divergent per-project amounts. Until then,
-    ``junction.amount == module.source.amount`` by Phase 1 backfill, so the
-    single scenario-wide value is correct for every live deal.
+    **Per-project amount overlay (Phase 2c1, 2026-04-22):** when the junction
+    row carries a non-null ``amount``, overlay it onto ``module.source["amount"]``
+    and ``module.source["auto_size"]`` in memory. This makes divergent per-
+    project amounts set via the Coverage modal actually take effect in the
+    engine. The overlay is persisted via a direct SQL UPDATE before the
+    engine runs so downstream ``session.refresh(cm, ["source"])`` calls
+    reload the overlaid value rather than wiping it. Post-compute, the
+    auto-sized amount is synced back to the junction by
+    ``_sync_junction_amounts_after_compute`` so the Coverage modal shows
+    the correct amount on the next render.
+
+    Single-project scenarios: junction.amount == module.source.amount from
+    Phase 1 backfill, so the overlay is a no-op and math is byte-identical.
 
     See ``is_shared_source`` and ``junction_amount_for`` for helpers that
     read the junction directly.
     """
-    result = await session.execute(
-        select(CapitalModule)
-        .join(
-            CapitalModuleProject,
-            CapitalModuleProject.capital_module_id == CapitalModule.id,
+    rows = (
+        await session.execute(
+            select(CapitalModule, CapitalModuleProject)
+            .join(
+                CapitalModuleProject,
+                CapitalModuleProject.capital_module_id == CapitalModule.id,
+            )
+            .where(
+                CapitalModule.scenario_id == scenario_id,
+                CapitalModuleProject.project_id == project_id,
+            )
+            .order_by(CapitalModule.stack_position)
         )
-        .where(
-            CapitalModule.scenario_id == scenario_id,
-            CapitalModuleProject.project_id == project_id,
-        )
-        .order_by(CapitalModule.stack_position)
-    )
-    modules = list(result.scalars())
+    ).all()
+    modules: list[CapitalModule] = []
+    for module, junction in rows:
+        _apply_junction_overlay_inplace(session, module, junction)
+        modules.append(module)
     if modules:
+        # Persist the overlays as a single batched operation so later
+        # session.refresh(cm, ["source"]) calls re-read the overlaid amount
+        # from the DB rather than wiping it.
+        await session.flush()
         return modules
 
     # Self-heal: modules created after migration 0048 (deal creation path,
