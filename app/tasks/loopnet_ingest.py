@@ -189,6 +189,10 @@ async def _loopnet_weekly_sweep() -> dict[str, Any]:
                         else:
                             unified[lid] = (row, [polygon])
 
+                # Commit api_call_log entries from all bbox searches before
+                # moving on — protects these from rollback if bulk/SD fails.
+                await session.commit()
+
                 existing = await _existing_loopnet_ids(session, list(unified.keys()))
                 candidate_ids = [lid for lid in unified if lid not in existing]
 
@@ -205,6 +209,9 @@ async def _loopnet_weekly_sweep() -> dict[str, Any]:
                         lid = str(brow.get("listingId") or "")
                         if lid:
                             bulk_cats[lid] = classify_from_bulk(brow)
+
+                # Commit bulk-triage api_call_log entries too
+                await session.commit()
 
                 for lid in candidate_ids:
                     row, containing_polygons = unified[lid]

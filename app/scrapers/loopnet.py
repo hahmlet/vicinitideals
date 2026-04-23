@@ -242,17 +242,39 @@ class BudgetGuard:
 
         endpoint_name = path.rsplit("/", 1)[-1]
         status_code: int | None = None
+        # Retry-on-429: RapidAPI rate limit enforcement is stricter than
+        # documented; retry with exponential backoff before surfacing the error.
+        max_429_retries = 4
+        backoff = 2.0
         async with self._call_lock:
-            # Enforce the 1-req/sec provider rate limit by sleeping off the
-            # remainder of the window since the previous dispatched call.
             if self._last_call_monotonic is not None:
                 elapsed = time.monotonic() - self._last_call_monotonic
                 wait = self.min_call_interval - elapsed
                 if wait > 0:
                     await asyncio.sleep(wait)
             try:
-                response = await self._client.post(path, json=payload)
-                status_code = response.status_code
+                response: httpx.Response | None = None
+                for attempt in range(max_429_retries + 1):
+                    response = await self._client.post(path, json=payload)
+                    status_code = response.status_code
+                    if status_code != 429:
+                        break
+                    # Retry-After header if present, else exponential backoff
+                    retry_after = response.headers.get("retry-after")
+                    if retry_after:
+                        try:
+                            wait_s = float(retry_after)
+                        except ValueError:
+                            wait_s = backoff * (2 ** attempt)
+                    else:
+                        wait_s = backoff * (2 ** attempt)
+                    if attempt < max_429_retries:
+                        logger.warning(
+                            "loopnet 429 on %s; backing off %.1fs (attempt %s/%s)",
+                            endpoint_name, wait_s, attempt + 1, max_429_retries,
+                        )
+                        await asyncio.sleep(wait_s)
+                assert response is not None
                 response.raise_for_status()
                 return response.json()
             finally:
