@@ -123,6 +123,8 @@ _proxyon_status_cache: dict[str, Any] = {
     "expected_days_left": None,
     "account_balance_usd": None,
     "active_subscription_id": None,
+    "datacenter_count_live": None,   # active proxies from /datacenter/list
+    "datacenter_by_country": None,   # dict {"us": 5, ...} from live list
     "checked_at": None,
 }
 
@@ -952,6 +954,8 @@ async def _proxyon_residential_snapshot(timeout_seconds: float = 8.0) -> dict[st
                     "expected_days_left": None,
                     "account_balance_usd": None,
                     "active_subscription_id": None,
+                    "datacenter_count_live": None,
+                    "datacenter_by_country": None,
                     "checked_at": None,
                 }
             )
@@ -961,6 +965,8 @@ async def _proxyon_residential_snapshot(timeout_seconds: float = 8.0) -> dict[st
         data_left_gb: float | None = None
         expected_days_left: float | None = None
         active_sub_id: int | None = None
+        dc_count_live: int | None = None
+        dc_by_country: dict[str, int] | None = None
         connected = False
         status_label = "API Key Invalid"
         timeout = httpx.Timeout(timeout_seconds)
@@ -1058,6 +1064,36 @@ async def _proxyon_residential_snapshot(timeout_seconds: float = 8.0) -> dict[st
                         )
                     else:
                         status_label = "Configured (No Subscription)"
+
+                    # Datacenter proxies — live count from /datacenter/list.
+                    # Env-var PROXYON_DATACENTER_PROXIES is a comma-separated
+                    # list of pre-wired connection strings the scraper uses at
+                    # runtime; the live list is the authoritative inventory.
+                    try:
+                        dc = await client.get(
+                            "https://api.proxyon.io/v1/datacenter/list", headers=hdrs,
+                        )
+                        dc.raise_for_status()
+                        dc_body = dc.json()
+                        if dc_body.get("success"):
+                            dc_result = dc_body.get("result") or {}
+                            if isinstance(dc_result, dict):
+                                proxies = dc_result.get("proxies") or dc_result.get("list") or []
+                            elif isinstance(dc_result, list):
+                                proxies = dc_result
+                            else:
+                                proxies = []
+                            active = [p for p in proxies
+                                      if isinstance(p, dict)
+                                      and (p.get("status") or "").lower() == "active"]
+                            dc_count_live = len(active)
+                            by_country: dict[str, int] = {}
+                            for p in active:
+                                cc = (p.get("country") or "??").lower()
+                                by_country[cc] = by_country.get(cc, 0) + 1
+                            dc_by_country = by_country or None
+                    except Exception:
+                        pass
         except Exception:
             connected = False
             status_label = "API Error"
@@ -1073,6 +1109,8 @@ async def _proxyon_residential_snapshot(timeout_seconds: float = 8.0) -> dict[st
                 "expected_days_left": expected_days_left,
                 "account_balance_usd": account_balance_usd,
                 "active_subscription_id": active_sub_id,
+                "datacenter_count_live": dc_count_live,
+                "datacenter_by_country": dc_by_country,
                 "checked_at": checked_at,
             }
         )
@@ -1129,7 +1167,7 @@ async def settings_scraping_services(
     residential_username = (settings.proxyon_residential_username or "").strip()
     residential_password = (settings.proxyon_residential_password or "").strip()
     residential_env_creds = bool(residential_username and residential_password)
-    datacenter_count = len([p for p in (settings.proxyon_datacenter_proxies or "").split(",") if p.strip()])
+    datacenter_env_count = len([p for p in (settings.proxyon_datacenter_proxies or "").split(",") if p.strip()])
     proxyon_snapshot = await _proxyon_residential_snapshot()
 
     # Authoritative status = live API state. Residential creds are provisioned
@@ -1141,6 +1179,14 @@ async def settings_scraping_services(
     residential_balance = proxyon_snapshot.get("account_balance_usd")
     residential_sub_id = proxyon_snapshot.get("active_subscription_id")
     residential_days_left = proxyon_snapshot.get("expected_days_left")
+    datacenter_count_live = proxyon_snapshot.get("datacenter_count_live")
+    datacenter_by_country = proxyon_snapshot.get("datacenter_by_country") or {}
+    # Prefer live count from API; fall back to env-var count if API unavailable
+    datacenter_count = (
+        datacenter_count_live
+        if datacenter_count_live is not None
+        else datacenter_env_count
+    )
     # A residential subscription exists (live signal from API, not env-var peek)
     residential_configured = bool(residential_sub_id) or residential_env_creds
     _checked_at = proxyon_snapshot.get("checked_at")
@@ -1208,6 +1254,9 @@ async def settings_scraping_services(
             "services": services,
             "residential_status": residential_status,
             "datacenter_count": datacenter_count,
+            "datacenter_count_live": datacenter_count_live,
+            "datacenter_env_count": datacenter_env_count,
+            "datacenter_by_country": datacenter_by_country,
             "residential_gb_remaining": residential_gb_remaining,
             "residential_balance": residential_balance,
             "residential_sub_id": residential_sub_id,

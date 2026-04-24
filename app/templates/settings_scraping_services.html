@@ -34,6 +34,16 @@
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px">
       <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em">Datacenter Pool</div>
       <div style="font-size:18px;font-weight:700;color:var(--text);margin-top:4px">{{ datacenter_count }} proxy{{ "ies" if datacenter_count != 1 else "" }}</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:2px">
+        {% if datacenter_by_country %}
+          {% for cc, n in datacenter_by_country.items() %}{{ n }} {{ cc|upper }}{% if not loop.last %} · {% endif %}{% endfor %}
+          {% if datacenter_env_count and datacenter_env_count != datacenter_count_live %} · {{ datacenter_env_count }} wired in .env{% endif %}
+        {% elif datacenter_count_live is none %}
+          PROXYON_API_KEY required for live count · {{ datacenter_env_count }} wired in .env
+        {% else %}
+          No active proxies
+        {% endif %}
+      </div>
     </div>
   </div>
 
