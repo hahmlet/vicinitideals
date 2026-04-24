@@ -1051,15 +1051,49 @@ async def settings_scraping_services(
     _checked_at = proxyon_snapshot.get("checked_at")
     residential_last_checked = _fmt_ts(_checked_at) if _checked_at else "API key not configured"
 
+    loopnet_lease_job = (await session.execute(
+        select(IngestJob)
+        .where(IngestJob.source == "loopnet_lease")
+        .order_by(IngestJob.started_at.desc())
+        .limit(1)
+    )).scalar_one_or_none()
+
+    rapidapi_configured = bool((settings.rapidapi_key or "").strip())
+    loopnet_status = (
+        "Not Configured" if not rapidapi_configured
+        else _freshness_status(
+            loopnet_job.started_at if loopnet_job else None,
+            stale_after_hours=180,  # weekly cadence + 12h grace
+        )
+    )
+    loopnet_lease_status: str
+    if not rapidapi_configured:
+        loopnet_lease_status = "Not Configured"
+    elif loopnet_lease_job is None:
+        loopnet_lease_status = "Never Run"
+    elif loopnet_lease_job.status == "completed":
+        loopnet_lease_status = "Completed"
+    else:
+        loopnet_lease_status = (loopnet_lease_job.status or "").title() or "Unknown"
+
     services = [
         {
             "name": "LoopNet Ingest",
-            "description": "Scheduled LoopNet scrape jobs that ingest and deduplicate listing inventory.",
-            "status": "Disabled",
-            "schedule": "Disabled",
-            "proxy": "Disabled",
+            "description": "Weekly LoopNet scrape of sale listings via RapidAPI, with bulk-triage and polygon-tiered categorization (MF + Land + Mixed-Use in target tier, MF-only in comp tier).",
+            "status": loopnet_status,
+            "schedule": "Weekly Monday at 07:00 UTC via Celery beat",
+            "proxy": "Direct (RapidAPI, configured)" if rapidapi_configured else "Direct (RapidAPI, not configured)",
             "last_run": _fmt_ts(loopnet_job.started_at if loopnet_job else None),
-            "last_result": "disabled",
+            "last_result": loopnet_job.status if loopnet_job else "never",
+        },
+        {
+            "name": "LoopNet Lease Seed",
+            "description": "Manual one-off: scrape MF + mixed-use lease listings for income-side comp library.",
+            "status": loopnet_lease_status,
+            "schedule": "Manual (on-demand)",
+            "proxy": "Direct (RapidAPI, configured)" if rapidapi_configured else "Direct (RapidAPI, not configured)",
+            "last_run": _fmt_ts(loopnet_lease_job.started_at if loopnet_lease_job else None),
+            "last_result": loopnet_lease_job.status if loopnet_lease_job else "never",
         },
         {
             "name": "Crexi Ingest",

@@ -47,12 +47,10 @@
           <td style="padding:10px 12px;border-bottom:1px solid var(--border-faint);font-weight:600">{{ svc.name }}</td>
           <td style="padding:10px 12px;border-bottom:1px solid var(--border-faint);color:var(--text-secondary)">{{ svc.description }}</td>
           <td style="padding:10px 12px;border-bottom:1px solid var(--border-faint)">
-            {% if svc.status == "Healthy" %}
+            {% if svc.status == "Healthy" or svc.status == "Completed" %}
               <span class="badge" style="background:var(--success-light);color:var(--success);border:1px solid #bbf7d0">{{ svc.status }}</span>
-            {% elif svc.status == "Stale" %}
+            {% elif svc.status == "Stale" or svc.status == "Not Configured" %}
               <span class="badge" style="background:var(--warning-light);color:var(--warning);border:1px solid #fcd34d">{{ svc.status }}</span>
-            {% elif svc.status == "Disabled" %}
-              <span class="badge" style="background:var(--surface-alt);color:var(--text-muted);border:1px solid var(--border)">{{ svc.status }}</span>
             {% else %}
               <span class="badge" style="background:var(--surface-alt);color:var(--text-muted);border:1px solid var(--border)">{{ svc.status }}</span>
             {% endif %}
