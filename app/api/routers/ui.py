@@ -6652,8 +6652,8 @@ async def approve_timeline(
     proj.timeline_approved = not unapprove
     await session.commit()
     if unapprove:
-        return RedirectResponse(url=f"/models/{proj.scenario_id}/builder?module=timeline", status_code=303)
-    return RedirectResponse(url=f"/models/{proj.scenario_id}/builder?module=sources", status_code=303)
+        return RedirectResponse(url=f"/models/{proj.scenario_id}/builder?project={project_id}&module=timeline", status_code=303)
+    return RedirectResponse(url=f"/models/{proj.scenario_id}/builder?project={project_id}&module=sources", status_code=303)
 
 
 @router.get("/ui/models/{model_id}/setup", response_class=HTMLResponse)
@@ -7293,6 +7293,26 @@ async def deal_setup_wizard_complete(
     inputs.deal_setup_complete = True
     session.add(inputs)
 
+    # Deal Setup is scenario-level (income mode, debt stack). Propagate
+    # the completion flag to every other Project's OperationalInputs so
+    # their tabs don't keep gating users back to the wizard. Create rows
+    # for projects that lack OperationalInputs (e.g. freshly added
+    # Projects 2+ that haven't hit the wizard individually).
+    other_projects = list((await session.execute(
+        select(Project).where(
+            Project.scenario_id == model_id,
+            Project.id != default_project.id,
+        )
+    )).scalars())
+    for other_proj in other_projects:
+        other_inputs = (await session.execute(
+            select(OperationalInputs).where(OperationalInputs.project_id == other_proj.id)
+        )).scalar_one_or_none()
+        if other_inputs is None:
+            other_inputs = OperationalInputs(project_id=other_proj.id)
+            session.add(other_inputs)
+        other_inputs.deal_setup_complete = True
+
     # Create $0 Operating Reserve placeholder in Uses (populated at compute time)
     existing_reserve = (await session.execute(
         select(UseLine).where(
@@ -7536,11 +7556,21 @@ async def deal_setup_wizard_complete(
 
     await session.commit()
 
-    # Redirect to builder — NOI mode lands on the NOI module first, else Uses
+    # Redirect to builder — NOI mode lands on the NOI module first, else Uses.
+    # Preserve the active Project from HX-Current-URL so multi-project deals
+    # don't snap the user back to Project 1 after finishing Deal Setup.
     _first_module = "noi" if model.income_mode == "noi" else "sources_uses"
+    _active_proj_q = ""
+    _hx_url = request.headers.get("HX-Current-URL", "")
+    if _hx_url:
+        from urllib.parse import urlparse, parse_qs
+        _qs = parse_qs(urlparse(_hx_url).query)
+        _p = _qs.get("project", [""])[0]
+        if _p:
+            _active_proj_q = f"&project={_p}"
     from starlette.responses import Response as StarletteResponse
     response = StarletteResponse(status_code=204)
-    response.headers["HX-Redirect"] = f"/models/{model_id}/builder?module={_first_module}"
+    response.headers["HX-Redirect"] = f"/models/{model_id}/builder?module={_first_module}{_active_proj_q}"
     return response
 
 
@@ -7680,8 +7710,10 @@ async def model_builder(
     if not _timeline_approved:
         active_module = module or "timeline"
     elif not _deal_setup_complete and module not in ("timeline", "deal_setup", ""):
-        # Redirect so the URL reflects where the user actually lands
-        return RedirectResponse(url=f"/models/{model_id}/builder?module=deal_setup", status_code=302)
+        # Redirect so the URL reflects where the user actually lands. Preserve
+        # the active project so multi-project deals don't snap back to P1.
+        _proj_q = f"&project={active_project_id}" if active_project_id else ""
+        return RedirectResponse(url=f"/models/{model_id}/builder?module=deal_setup{_proj_q}", status_code=302)
     else:
         active_module = module or ("sources_uses" if _deal_setup_complete else "deal_setup")
 
