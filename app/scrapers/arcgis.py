@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+from collections.abc import AsyncIterator
 from dataclasses import dataclass, field
 from decimal import Decimal, InvalidOperation
 from typing import Any, Literal
@@ -400,4 +401,54 @@ def _to_string(value: Any) -> str | None:
     return text or None
 
 
-__all__ = ["ArcGISLookupError", "lookup_gresham_candidates", "lookup_gresham_parcels"]
+async def iter_all_gresham_taxlots(
+    *,
+    page_size: int = 1000,
+    timeout_seconds: float | None = None,
+) -> AsyncIterator[dict[str, Any]]:
+    """Yield every Gresham taxlot feature as a ready-to-upsert parcel dict.
+
+    Paginates the legacy Taxlots endpoint via resultOffset/resultRecordCount
+    ordered by OBJECTID for stability. Each yielded dict matches the shape
+    produced by `_feature_to_parcel` (i.e. Parcel column names) so callers can
+    hand it straight to `_upsert_parcel`.
+    """
+    timeout = httpx.Timeout(timeout_seconds or max(settings.gresham_arcgis_timeout_seconds, 60.0))
+
+    offset = 0
+    async with httpx.AsyncClient(timeout=timeout, proxy=gis_proxy()) as client:
+        while True:
+            response = await client.get(
+                LEGACY_TAXLOTS_URL,
+                params={
+                    "where": "1=1",
+                    "outFields": LEGACY_OUT_FIELDS,
+                    "returnGeometry": "true",
+                    "outSR": 4326,
+                    "orderByFields": "OBJECTID",
+                    "resultOffset": offset,
+                    "resultRecordCount": page_size,
+                    "f": "pjson",
+                },
+            )
+            response.raise_for_status()
+            payload = response.json()
+            _raise_if_arcgis_error(payload)
+            features = [f for f in payload.get("features", []) if isinstance(f, dict)]
+            if not features:
+                return
+            for feature in features:
+                yield _feature_to_parcel(feature)
+            if len(features) < page_size or not payload.get("exceededTransferLimit", False):
+                # Last page: either short page or the server indicates no overflow.
+                if len(features) < page_size:
+                    return
+            offset += len(features)
+
+
+__all__ = [
+    "ArcGISLookupError",
+    "iter_all_gresham_taxlots",
+    "lookup_gresham_candidates",
+    "lookup_gresham_parcels",
+]
