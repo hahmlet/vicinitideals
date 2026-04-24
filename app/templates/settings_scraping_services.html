@@ -22,7 +22,9 @@
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px">
       <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em">Data Remaining</div>
       <div style="font-size:18px;font-weight:700;color:var(--text);margin-top:4px">{{ residential_gb_remaining or "Unavailable" }}</div>
-      <div style="font-size:11px;color:var(--text-muted);margin-top:2px">{{ residential_last_checked }}</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:2px">
+        {% if residential_days_left is not none %}~{{ "%.1f"|format(residential_days_left) }} days at current rate · {{ residential_last_checked }}{% else %}{{ residential_last_checked }}{% endif %}
+      </div>
     </div>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px">
       <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em">Account Balance</div>

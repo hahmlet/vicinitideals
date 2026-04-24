@@ -120,6 +120,7 @@ _proxyon_status_cache: dict[str, Any] = {
     "status_label": "Not Configured",
     "connected": False,
     "remaining_gb": None,
+    "expected_days_left": None,
     "account_balance_usd": None,
     "active_subscription_id": None,
     "checked_at": None,
@@ -948,6 +949,7 @@ async def _proxyon_residential_snapshot(timeout_seconds: float = 8.0) -> dict[st
                     "status_label": "Not Configured",
                     "connected": False,
                     "remaining_gb": None,
+                    "expected_days_left": None,
                     "account_balance_usd": None,
                     "active_subscription_id": None,
                     "checked_at": None,
@@ -957,6 +959,7 @@ async def _proxyon_residential_snapshot(timeout_seconds: float = 8.0) -> dict[st
 
         account_balance_usd: str | None = None
         data_left_gb: float | None = None
+        expected_days_left: float | None = None
         active_sub_id: int | None = None
         connected = False
         status_label = "API Key Invalid"
@@ -992,42 +995,69 @@ async def _proxyon_residential_snapshot(timeout_seconds: float = 8.0) -> dict[st
                     # "are credentials provisioned" signal. Creds come from the
                     # API (user+password returned per subscription), so API-key
                     # presence + an active subscription means we're configured.
+                    # Note: /list does NOT return dataLeft; we fetch it via
+                    # /residential/{id}/info for the active subscription.
                     subs = await client.get(
                         "https://api.proxyon.io/v1/residential/list", headers=hdrs,
                     )
                     subs.raise_for_status()
                     subs_body = subs.json()
+                    sub_list: list = []
                     if subs_body.get("success"):
-                        sub_list = subs_body.get("result") or []
-                        # ProxyOn sometimes wraps the list under a nested key
-                        if isinstance(sub_list, dict):
-                            sub_list = (sub_list.get("subscriptions")
-                                        or sub_list.get("list")
+                        result = subs_body.get("result") or {}
+                        if isinstance(result, list):
+                            sub_list = result
+                        elif isinstance(result, dict):
+                            sub_list = (result.get("subscriptions")
+                                        or result.get("list")
                                         or [])
-                        if isinstance(sub_list, list) and sub_list:
-                            # Prefer a sub with dataLeft > 0; fallback to first
-                            active = next(
-                                (s for s in sub_list
-                                 if isinstance(s, dict)
-                                 and (s.get("dataLeft") or 0) > 0),
-                                sub_list[0] if isinstance(sub_list[0], dict) else None,
-                            )
-                            if isinstance(active, dict):
-                                active_sub_id = active.get("id")
-                                _left = active.get("dataLeft")
-                                if _left is not None:
-                                    try:
-                                        data_left_gb = float(_left)
-                                    except (TypeError, ValueError):
-                                        data_left_gb = None
-                            status_label = (
-                                "Active" if data_left_gb and data_left_gb > 0
-                                else "Configured (No Data Left)"
-                            )
-                        else:
-                            status_label = "Configured (No Subscription)"
+
+                    if sub_list:
+                        # Pick the main sub if tagged, else first entry
+                        active = next(
+                            (s for s in sub_list
+                             if isinstance(s, dict) and s.get("isMain")),
+                            sub_list[0] if isinstance(sub_list[0], dict) else None,
+                        )
+                        if isinstance(active, dict):
+                            active_sub_id = active.get("id")
+
+                        # Second API call: /info endpoint has the usage data
+                        if active_sub_id is not None:
+                            try:
+                                info = await client.get(
+                                    f"https://api.proxyon.io/v1/residential/{active_sub_id}/info",
+                                    headers=hdrs,
+                                )
+                                info.raise_for_status()
+                                info_body = info.json()
+                                if info_body.get("success"):
+                                    info_result = info_body.get("result") or {}
+                                    # ProxyOn returns dataLeft in megabytes
+                                    # (confirmed against live account with
+                                    # expectedDaysLeft cross-check). Convert to GB.
+                                    _left_mb = info_result.get("dataLeft")
+                                    if _left_mb is not None:
+                                        try:
+                                            data_left_gb = float(_left_mb) / 1024.0
+                                        except (TypeError, ValueError):
+                                            data_left_gb = None
+                                    _days = info_result.get("expectedDaysLeft")
+                                    if _days is not None:
+                                        try:
+                                            expected_days_left = float(_days)
+                                        except (TypeError, ValueError):
+                                            expected_days_left = None
+                            except Exception:
+                                pass
+
+                        status_label = (
+                            "Active" if data_left_gb and data_left_gb > 0
+                            else "Configured (No Data Left)" if data_left_gb == 0
+                            else "Configured"  # has sub, data unknown (info call failed)
+                        )
                     else:
-                        status_label = "Configured (Unknown)"
+                        status_label = "Configured (No Subscription)"
         except Exception:
             connected = False
             status_label = "API Error"
@@ -1040,6 +1070,7 @@ async def _proxyon_residential_snapshot(timeout_seconds: float = 8.0) -> dict[st
                 "remaining_gb": (
                     f"{data_left_gb:.2f} GB" if data_left_gb is not None else None
                 ),
+                "expected_days_left": expected_days_left,
                 "account_balance_usd": account_balance_usd,
                 "active_subscription_id": active_sub_id,
                 "checked_at": checked_at,
@@ -1109,6 +1140,7 @@ async def settings_scraping_services(
     residential_gb_remaining = proxyon_snapshot.get("remaining_gb")
     residential_balance = proxyon_snapshot.get("account_balance_usd")
     residential_sub_id = proxyon_snapshot.get("active_subscription_id")
+    residential_days_left = proxyon_snapshot.get("expected_days_left")
     # A residential subscription exists (live signal from API, not env-var peek)
     residential_configured = bool(residential_sub_id) or residential_env_creds
     _checked_at = proxyon_snapshot.get("checked_at")
@@ -1179,6 +1211,7 @@ async def settings_scraping_services(
             "residential_gb_remaining": residential_gb_remaining,
             "residential_balance": residential_balance,
             "residential_sub_id": residential_sub_id,
+            "residential_days_left": residential_days_left,
             "residential_last_checked": residential_last_checked,
             **_base_ctx(user, dedup_count, "", address_issues_count),
         },
