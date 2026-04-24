@@ -74,7 +74,7 @@ async def convert_listing_to_project(
     try:
         project_source = ProjectSource(str(listing.source))
     except ValueError:
-        project_source = ProjectSource.user_generated
+        project_source = ProjectSource.manual
 
     opportunity = Opportunity(
         org_id=org_id,

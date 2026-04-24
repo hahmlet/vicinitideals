@@ -181,10 +181,10 @@
             <label>Source</label>
             <select name="source">
               {% set _src = opp.source if opp else 'manual' %}
-              <option value="manual"       {% if _src == 'manual' %}selected{% endif %}>Manual</option>
+              {# user_generated collapsed into manual — see 2026-04-24 cleanup #}
+              <option value="manual"       {% if _src in ('manual', 'user_generated') %}selected{% endif %}>Manual</option>
               <option value="loopnet"      {% if _src == 'loopnet' %}selected{% endif %}>LoopNet</option>
               <option value="crexi"        {% if _src == 'crexi' %}selected{% endif %}>Crexi</option>
-              <option value="user_generated" {% if _src == 'user_generated' %}selected{% endif %}>User Generated</option>
             </select>
           </div>
         </div>
