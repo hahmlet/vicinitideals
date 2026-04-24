@@ -95,10 +95,11 @@ async def _lookup_gresham_live_parcels(
         async with httpx.AsyncClient(timeout=timeout, proxy=gis_proxy()) as client:
             features: list[dict[str, Any]] = []
             if apn_value:
-                # RNO in Gresham stores APNs with a space but no dash (e.g. "1S3E10AD 05800"),
-                # while we may receive "1S3E10AD -05800" or "1S3E10AD-05800" from scraped
-                # sources. Enumerate the common formatting variants client-side so the
-                # lookup matches regardless of dash/space punctuation in our stored APN.
+                # Gresham stores our canonical "APN" as STATEID (e.g. "1S3E10AD 05800"),
+                # NOT RNO (RNO is the R-prefixed tax-account number like "R993105510").
+                # Our DB may hold the APN in several formats — "1S3E10AD  -05800",
+                # "1S3E10AD-05800", or the bare compact form — so match against a set
+                # of the common variants.
                 variants = {
                     apn_value,
                     apn_compact,
@@ -112,7 +113,7 @@ async def _lookup_gresham_live_parcels(
                 variant_list = ", ".join(f"'{_escape_sql(v)}'" for v in variants if v)
                 features = await _query_legacy_taxlots(
                     client,
-                    f"UPPER(RNO) IN ({variant_list})",
+                    f"UPPER(STATEID) IN ({variant_list})",
                 )
             elif address_value:
                 features = await _query_legacy_taxlots(
@@ -325,9 +326,14 @@ def _feature_to_parcel(feature: dict[str, Any]) -> dict[str, Any]:
         piece for piece in [owner_street, owner_city, owner_state, owner_zip] if piece
     ) or None
 
+    # Gresham's canonical parcel identifier is STATEID (state map-township-range,
+    # e.g. "1S3E10AD 05800"), not RNO (the R-prefixed tax-account number). Keep the
+    # Parcel.apn aligned to STATEID so we match existing rows seeded from RLIS.
+    stateid = _to_string(attributes.get("STATEID"))
+    rno = _to_string(attributes.get("RNO"))
     return {
-        "apn": str(attributes.get("RNO") or "").strip().upper(),
-        "state_id": _to_string(attributes.get("STATEID")),
+        "apn": (stateid or rno or "").strip().upper(),
+        "state_id": stateid,
         "address_normalized": address,
         "address_raw": address,
         "owner_name": owner_name,
