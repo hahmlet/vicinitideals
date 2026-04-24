@@ -33,6 +33,7 @@ from app.models.org import User
 from app.models.capital import CapitalModule, DrawSource, WaterfallTier
 from app.models.cashflow import OperationalOutputs
 from app.models.parcel import Parcel, ProjectParcel, ProjectParcelRelationship
+from app.reconciliation.matcher import normalize_apn
 from app.models.portfolio import Portfolio, PortfolioProject
 from app.models.milestone import DEFAULT_DURATIONS, Milestone, MilestoneType, MilestoneType as MT
 from app.models.project import Opportunity, OpportunitySource, OpportunityStatus, Project, ProjectBuildingAssignment, ProjectParcelAssignment, ProjectStatus
@@ -2990,7 +2991,14 @@ def _parcel_base_stmt(
 ):
     stmt = select(Parcel).order_by(Parcel.apn)
     if q:
-        stmt = stmt.where(or_(Parcel.apn.ilike(f"%{q}%"), Parcel.address_normalized.ilike(f"%{q}%")))
+        # Also match apn_normalized with the punctuation-stripped query so searches
+        # like "1S3E10AD -05800" / "1S3E10AD 05800" / "1S3E10AD05800" all resolve
+        # to the same parcel regardless of how the stored APN is formatted.
+        q_compact = normalize_apn(q)
+        clauses = [Parcel.apn.ilike(f"%{q}%"), Parcel.address_normalized.ilike(f"%{q}%")]
+        if q_compact:
+            clauses.append(Parcel.apn_normalized.ilike(f"%{q_compact}%"))
+        stmt = stmt.where(or_(*clauses))
     if zoning:
         stmt = stmt.where(Parcel.zoning_code.in_(zoning))
     jurs = _as_list(jurisdiction)

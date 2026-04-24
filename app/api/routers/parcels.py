@@ -12,6 +12,7 @@ from sqlalchemy import or_, select
 
 from app.api.deps import DBSession
 from app.models.parcel import Parcel
+from app.reconciliation.matcher import normalize_apn
 from app.schemas.parcel import (
     ClackamasLookupRequest,
     ClackamasParcelResult,
@@ -50,7 +51,16 @@ def _build_parcel_stmt(
             )
         )
     if apn:
-        stmt = stmt.where(Parcel.apn.ilike(f"%{apn.strip()}%"))
+        # Match both the raw APN (preserves punctuation/whitespace for partial
+        # state-format searches like "1S3E10AD") AND the normalized form, so a
+        # query with dashes/spaces like "1S3E10AD -05800" still finds the row
+        # even when the stored canonical APN uses a different punctuation style.
+        apn_query = apn.strip()
+        apn_compact = normalize_apn(apn_query)
+        clauses = [Parcel.apn.ilike(f"%{apn_query}%")]
+        if apn_compact:
+            clauses.append(Parcel.apn_normalized.ilike(f"%{apn_compact}%"))
+        stmt = stmt.where(or_(*clauses))
     if zoning:
         pattern = f"%{zoning.strip()}%"
         stmt = stmt.where(
