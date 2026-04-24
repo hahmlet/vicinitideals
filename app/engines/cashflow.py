@@ -106,6 +106,14 @@ async def compute_cash_flows(
     # Per-project purge happens INSIDE _compute_project_cashflow, right after
     # prev_outputs is captured for DSCR convergence, so each iteration sees its
     # own prior NOI and wipes only its own rows (not a sibling's).
+    # Skip projects with no OperationalInputs (e.g. orphan rows created when
+    # a user clicks "Add Building" but the wizard doesn't seed inputs on the
+    # new project). Without this guard the whole compute aborts and outputs
+    # never write for the valid sibling project.
+    projects = [p for p in projects if p.operational_inputs is not None]
+    if not projects:
+        raise ValueError(f"Deal {deal_uuid} has no Project with OperationalInputs")
+
     last_summary: dict[str, Any] = {}
     for project in projects:
         last_summary = await _compute_project_cashflow(
