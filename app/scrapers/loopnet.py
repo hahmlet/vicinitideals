@@ -39,6 +39,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.config import settings
 from app.models.api_call_log import ApiCallLog
+from app.scrapers.apn_utils import normalize_apn
 
 # LoopNet RapidAPI rate limit: 1 request per second (provider-enforced).
 # BudgetGuard sleeps to maintain this spacing between calls on the same guard.
@@ -897,6 +898,8 @@ def map_to_scraped_listing(
         # e.g. "R113312, R113343, R113344". Truncate at 100 chars to fit
         # scraped_listings.apn VARCHAR(100). Full list is preserved in raw_json.
         "apn": _truncate(sale_summary.get("apn"), 100),
+        # Normalized APN tokens for cross-source dedup matching
+        "apn_normalized": normalize_apn(sale_summary.get("apn")),
         "occupancy_pct": _parse_decimal(pf.get("occupancyPercentage") or pf.get("percentLeased")),
         "tenancy": pf.get("tenancy") or sale_summary.get("tenancy"),
         "cap_rate": _parse_decimal(pf.get("capRate") or sale_summary.get("capRate")),

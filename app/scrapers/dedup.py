@@ -12,6 +12,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_object_session
 
 from app.models.ingestion import DedupCandidate, DedupStatus, RecordType
 from app.models.project import ScrapedListing
+from app.scrapers.apn_utils import normalize_apn
 
 _ADDRESS_STOP_WORDS = {
     # Directional prefixes/suffixes
@@ -63,15 +64,42 @@ def _to_decimal(value: Any) -> Decimal | None:
         return None
 
 
-def _extract_parcel_id(listing: ScrapedListing) -> str | None:
+def _extract_parcel_tokens(listing: ScrapedListing) -> set[str]:
+    """Return set of normalized APN tokens for cross-source matching.
+
+    Preference order:
+      1. scraped_listings.apn_normalized (populated at ingest — fast, indexed)
+      2. scraped_listings.apn (derive on the fly; newer column vs legacy raw_json)
+      3. raw_json keys (parcel_id / parcel_number / parcel / apn / parcel_numbers)
+         — legacy Crexi shape, kept for backward compat on pre-0054 rows
+
+    Any single source format is normalized via apn_utils.normalize_apn so that
+    "R0313810", "R313810", "r-313-810" all collapse to the same token.
+    """
+    # 1. Persisted normalized tokens (post-migration-0054 rows)
+    if listing.apn_normalized:
+        return set(listing.apn_normalized)
+
+    # 2. Normalize from the apn column
+    if listing.apn:
+        tokens = normalize_apn(listing.apn)
+        if tokens:
+            return set(tokens)
+
+    # 3. Fall back to raw_json (legacy Crexi payloads)
     raw_json = listing.raw_json or {}
     for key in ("parcel_id", "parcel_number", "parcel", "apn", "parcel_numbers"):
         value = raw_json.get(key)
         if isinstance(value, list) and value:
-            value = value[0]
-        if value not in (None, ""):
-            return str(value).strip().upper()
-    return None
+            combined = ",".join(str(v) for v in value if v not in (None, ""))
+            tokens = normalize_apn(combined)
+        elif value not in (None, ""):
+            tokens = normalize_apn(str(value))
+        else:
+            continue
+        if tokens:
+            return set(tokens)
+    return set()
 
 
 def _score_pair(a: ScrapedListing, b: ScrapedListing) -> tuple[float, dict[str, Any]]:
@@ -110,9 +138,9 @@ def _score_pair(a: ScrapedListing, b: ScrapedListing) -> tuple[float, dict[str, 
         signals["unit_count_match"] = True
         score += 0.15
 
-    parcel_a = _extract_parcel_id(a)
-    parcel_b = _extract_parcel_id(b)
-    if parcel_a and parcel_b and parcel_a == parcel_b:
+    parcel_a = _extract_parcel_tokens(a)
+    parcel_b = _extract_parcel_tokens(b)
+    if parcel_a and parcel_b and (parcel_a & parcel_b):
         signals["parcel_id_match"] = True
         score += 1.0
 

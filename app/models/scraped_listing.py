@@ -83,6 +83,13 @@ class ScrapedListing(Base):
     class_: Mapped[str | None] = mapped_column(String(20), nullable=True)
     zoning: Mapped[str | None] = mapped_column(Text, nullable=True)
     apn: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    # Cross-source normalized APN tokens — uppercased, punctuation stripped,
+    # multi-parcel strings split. Populated at ingest via apn_utils.normalize_apn.
+    # Used by dedup.py scorer for robust APN matching across source formats.
+    apn_normalized: Mapped[list[str] | None] = mapped_column(
+        ARRAY(String).with_variant(JSON(), "sqlite"),
+        nullable=True,
+    )
     occupancy_pct: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
     occupancy_date: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     tenancy: Mapped[str | None] = mapped_column(String(50), nullable=True)

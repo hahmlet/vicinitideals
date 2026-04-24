@@ -32,6 +32,7 @@ from app.observability import (
     log_observation,
     utc_now,
 )
+from app.scrapers.apn_utils import normalize_apn
 from app.scrapers.crexi import CrxiScraper
 from app.scrapers.dedup import deduplicate_batch
 from app.scrapers.realie import detect_address_issue
@@ -887,6 +888,7 @@ def _build_upsert_statement(
                 table.c.class_: values["class_"],
                 table.c.zoning: values["zoning"],
                 table.c.apn: values["apn"],
+                table.c.apn_normalized: values.get("apn_normalized"),
                 table.c.occupancy_pct: values["occupancy_pct"],
                 table.c.occupancy_date: values["occupancy_date"],
                 table.c.tenancy: values["tenancy"],
@@ -1311,6 +1313,7 @@ def _build_listing_values(
         "class_": _summary_value(summary, "Class"),
         "zoning": _summary_value(summary, "PermittedZoning", "Zoning"),
         "apn": _summary_value(summary, "Apn", "APN"),
+        "apn_normalized": normalize_apn(_summary_value(summary, "Apn", "APN")),
         "occupancy_pct": _to_fractional_decimal(_summary_value(summary, "Occupancy")),
         "occupancy_date": _to_datetime(_summary_value(summary, "OccupancyDate")),
         "tenancy": _summary_value(summary, "Tenancy"),
