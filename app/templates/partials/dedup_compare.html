@@ -49,13 +49,23 @@
     <div class="cmp-hdr" style="color:var(--text-muted)">Field</div>
     <div class="cmp-hdr">
       <div class="cmp-hdr-src">
+        {% if url_a %}
+        <a href="{{ url_a }}" target="_blank" rel="noopener noreferrer"
+           class="cmp-src-badge" style="text-decoration:none" title="Open listing on {{ src_a }}">{{ src_a }} ↗</a>
+        {% else %}
         <span class="cmp-src-badge">{{ src_a }}</span>
+        {% endif %}
         <span class="cmp-src-addr">{{ addr_a }}</span>
       </div>
     </div>
     <div class="cmp-hdr">
       <div class="cmp-hdr-src">
+        {% if url_b %}
+        <a href="{{ url_b }}" target="_blank" rel="noopener noreferrer"
+           class="cmp-src-badge" style="background:var(--text-muted);text-decoration:none" title="Open listing on {{ src_b }}">{{ src_b }} ↗</a>
+        {% else %}
         <span class="cmp-src-badge" style="background:var(--text-muted)">{{ src_b }}</span>
+        {% endif %}
         <span class="cmp-src-addr">{{ addr_b }}</span>
       </div>
     </div>

@@ -9378,6 +9378,8 @@ async def dedup_compare(
     src_b = (record_b.source.title() if record_b else b_type.title())
     addr_a = (record_a.address_raw or record_a.full_address or "—") if record_a else "—"
     addr_b = (record_b.address_raw or record_b.full_address or "—") if record_b else "—"
+    url_a = getattr(record_a, "source_url", None) if record_a else None
+    url_b = getattr(record_b, "source_url", None) if record_b else None
 
     return templates.TemplateResponse(request, "partials/dedup_compare.html", {
         "request": request,
@@ -9386,6 +9388,8 @@ async def dedup_compare(
         "src_b": src_b,
         "addr_a": addr_a,
         "addr_b": addr_b,
+        "url_a": url_a,
+        "url_b": url_b,
         "conflicts": compare["conflicts"],
         "matches": compare["matches"],
     })
