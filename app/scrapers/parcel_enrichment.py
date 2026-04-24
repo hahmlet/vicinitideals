@@ -92,7 +92,15 @@ async def _enrich_gresham(*, address: str | None, apn: str | None) -> dict[str, 
     results = await lookup_gresham_parcels(apn=apn, address=address)
     if not results:
         return None
-    # lookup_gresham_parcels returns a list of GreshamLookupResult
+    # The live (non-batch) path returns ready-to-upsert parcel dicts already keyed
+    # to the Parcel column names (apn, lot_sqft, zoning_code, …). Pick the first
+    # match and fill in Gresham-specific routing metadata.
+    first = results[0]
+    if isinstance(first, dict):
+        first.setdefault("county", "Multnomah")
+        first.setdefault("jurisdiction", "gresham")
+        return first
+    # Fallback: batch path hands back GreshamLookupResult objects.
     for result in results:
         parcels = getattr(result, "parcels", [])
         if parcels:
@@ -286,15 +294,33 @@ async def _upsert_parcel(session: Any, parcel_data: dict[str, Any]) -> Parcel:
     """Insert or update a Parcel row by APN, then re-classify priority bucket."""
     from app.utils.priority import classify
 
+    incoming_apn = parcel_data["apn"]
     parcel = (
-        await session.execute(select(Parcel).where(Parcel.apn == parcel_data["apn"]))
+        await session.execute(select(Parcel).where(Parcel.apn == incoming_apn))
     ).scalar_one_or_none()
 
     if parcel is None:
-        parcel = Parcel(apn=parcel_data["apn"])
+        # APN formatting can vary by source (e.g. "1S3E10AD -05800" vs "1S3E10AD 05800").
+        # Fall back to the stripped/normalized form so a refresh updates the existing row
+        # rather than inserting a duplicate.
+        normalized = normalize_apn(incoming_apn)
+        if normalized:
+            parcel = (
+                await session.execute(
+                    select(Parcel).where(Parcel.apn_normalized == normalized)
+                )
+            ).scalar_one_or_none()
+
+    if parcel is None:
+        parcel = Parcel(apn=incoming_apn)
         session.add(parcel)
 
     for field, value in parcel_data.items():
+        if field == "apn":
+            # Preserve the existing canonical APN so we don't churn IDs on refresh.
+            if not getattr(parcel, "apn", None):
+                parcel.apn = value
+            continue
         if value is not None:  # don't overwrite existing data with None from partial scrapers
             setattr(parcel, field, value)
 

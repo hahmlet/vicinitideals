@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 from decimal import Decimal, InvalidOperation
 from typing import Any, Literal
@@ -82,6 +83,7 @@ async def _lookup_gresham_live_parcels(
 ) -> list[dict[str, Any]]:
     """Fetch parcel details from the confirmed Gresham Taxlots endpoint."""
     apn_value = (apn or "").strip().upper()
+    apn_compact = re.sub(r"[^A-Z0-9]", "", apn_value)
     address_value = " ".join((address or "").split()).upper()
     if not apn_value and not address_value:
         return []
@@ -92,9 +94,24 @@ async def _lookup_gresham_live_parcels(
         async with httpx.AsyncClient(timeout=timeout, proxy=gis_proxy()) as client:
             features: list[dict[str, Any]] = []
             if apn_value:
+                # RNO in Gresham stores APNs with a space but no dash (e.g. "1S3E10AD 05800"),
+                # while we may receive "1S3E10AD -05800" or "1S3E10AD-05800" from scraped
+                # sources. Enumerate the common formatting variants client-side so the
+                # lookup matches regardless of dash/space punctuation in our stored APN.
+                variants = {
+                    apn_value,
+                    apn_compact,
+                    apn_compact.replace(" ", ""),
+                }
+                if len(apn_compact) > 8 and apn_compact[:8].isalnum():
+                    # Reconstruct "1S3E10AD 05800" and "1S3E10AD-05800" from the compact form.
+                    head, tail = apn_compact[:8], apn_compact[8:]
+                    variants.add(f"{head} {tail}")
+                    variants.add(f"{head}-{tail}")
+                variant_list = ", ".join(f"'{_escape_sql(v)}'" for v in variants if v)
                 features = await _query_legacy_taxlots(
                     client,
-                    f"UPPER(RNO) = '{_escape_sql(apn_value)}'",
+                    f"UPPER(RNO) IN ({variant_list})",
                 )
             elif address_value:
                 features = await _query_legacy_taxlots(
