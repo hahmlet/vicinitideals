@@ -191,6 +191,10 @@ async def _compute_project_cashflow(
         str(m.milestone_type) in ("pre_development", MilestoneType.pre_development)
         for m in orm_milestones
     )
+    has_construction_milestone = any(
+        str(m.milestone_type) in ("construction", MilestoneType.construction)
+        for m in orm_milestones
+    )
 
     # Build phase plan first so auto-sizing knows construction duration for IO budgeting
     phases = _build_phase_plan(
@@ -199,6 +203,7 @@ async def _compute_project_cashflow(
         milestone_dates=milestone_dates,
         has_lease_up_milestone=has_lease_up_milestone,
         has_pre_development_milestone=has_pre_development_milestone,
+        has_construction_milestone=has_construction_milestone,
     )
 
     # Look up previously computed NOI so auto-sizing uses the accurate value.
@@ -976,6 +981,7 @@ def _build_phase_plan(
     milestone_dates: dict[str, Any] | None = None,
     has_lease_up_milestone: bool = False,
     has_pre_development_milestone: bool = False,
+    has_construction_milestone: bool = False,
 ) -> list[PhaseSpec]:
     phases: list[PhaseSpec] = [PhaseSpec(PeriodType.acquisition, 1)]
 
@@ -989,12 +995,14 @@ def _build_phase_plan(
             phases.append(PhaseSpec(PeriodType.hold, hold_months))
 
     if project_type == "acquisition":
-        phases.append(
-            PhaseSpec(
-                PeriodType.minor_renovation,
-                _positive_int(inputs.renovation_months, fallback=1),
+        # Post migration 0049 "acquisition" is a pure hold/stabilize strategy,
+        # no renovation by default. Opt in by adding a construction milestone
+        # or setting renovation_months > 0 — matches the lease_up pattern below.
+        reno_months = _positive_int(inputs.renovation_months, fallback=0)
+        if has_construction_milestone or reno_months > 0:
+            phases.append(
+                PhaseSpec(PeriodType.minor_renovation, max(reno_months, 1))
             )
-        )
     elif project_type == "value_add":
         # Optional pre-construction phase when user added a Pre Development milestone
         if has_pre_development_milestone or _positive_int(inputs.entitlement_months, fallback=0) > 0:
