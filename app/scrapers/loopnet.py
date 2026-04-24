@@ -757,6 +757,16 @@ def _parse_year_pair(raw: Any) -> tuple[int | None, int | None]:
 _ACRES_TO_SQFT = Decimal("43560")
 
 
+def _truncate(value: Any, maxlen: int) -> str | None:
+    """Truncate a string to maxlen; return None for None/empty."""
+    if value is None:
+        return None
+    s = str(value).strip()
+    if not s:
+        return None
+    return s[:maxlen]
+
+
 def _parse_lot_size(raw: Any) -> Decimal | None:
     """'0.12 AC' / '2.17 AC' → Decimal sqft. '5,000 SF' → Decimal sqft. None otherwise."""
     if raw is None:
@@ -883,7 +893,10 @@ def map_to_scraped_listing(
         "parking_spaces": _parse_int(pf.get("parking") or sale_summary.get("parkingSpaceCount")),
         "class_": pf.get("buildingClass") or sale_summary.get("buildingClass"),
         "zoning": pf.get("zoning") or sale_summary.get("zoningDescription"),
-        "apn": sale_summary.get("apn"),
+        # LoopNet returns comma-separated APN lists for multi-parcel deals,
+        # e.g. "R113312, R113343, R113344". Truncate at 100 chars to fit
+        # scraped_listings.apn VARCHAR(100). Full list is preserved in raw_json.
+        "apn": _truncate(sale_summary.get("apn"), 100),
         "occupancy_pct": _parse_decimal(pf.get("occupancyPercentage") or pf.get("percentLeased")),
         "tenancy": pf.get("tenancy") or sale_summary.get("tenancy"),
         "cap_rate": _parse_decimal(pf.get("capRate") or sale_summary.get("capRate")),
