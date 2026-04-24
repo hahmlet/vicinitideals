@@ -120,6 +120,8 @@ _proxyon_status_cache: dict[str, Any] = {
     "status_label": "Not Configured",
     "connected": False,
     "remaining_gb": None,
+    "account_balance_usd": None,
+    "active_subscription_id": None,
     "checked_at": None,
 }
 
@@ -946,13 +948,18 @@ async def _proxyon_residential_snapshot(timeout_seconds: float = 8.0) -> dict[st
                     "status_label": "Not Configured",
                     "connected": False,
                     "remaining_gb": None,
+                    "account_balance_usd": None,
+                    "active_subscription_id": None,
                     "checked_at": None,
                 }
             )
             return dict(_proxyon_status_cache)
 
-        account_balance: str | None = None
+        account_balance_usd: str | None = None
+        data_left_gb: float | None = None
+        active_sub_id: int | None = None
         connected = False
+        status_label = "API Key Invalid"
         timeout = httpx.Timeout(timeout_seconds)
         try:
             async with httpx.AsyncClient(timeout=timeout, follow_redirects=True, trust_env=False) as client:
@@ -963,31 +970,78 @@ async def _proxyon_residential_snapshot(timeout_seconds: float = 8.0) -> dict[st
                 )
                 auth.raise_for_status()
                 auth_body = auth.json()
+                token: str | None = None
                 if auth_body.get("success"):
-                    result = auth_body.get("result") or {}
-                    token = result.get("token") or result.get("sessionToken")
-                    if token:
-                        acct = await client.get(
-                            "https://api.proxyon.io/v1/account/info",
-                            headers={"X-Session-Token": token, "Accept": "application/json"},
-                        )
-                        acct.raise_for_status()
-                        acct_body = acct.json()
-                        if acct_body.get("success"):
-                            connected = True
-                            acct_result = acct_body.get("result") or {}
-                            balance = acct_result.get("balance")
-                            if balance is not None:
-                                account_balance = f"${float(balance):,.2f}"
+                    token = ((auth_body.get("result") or {}).get("token")
+                             or (auth_body.get("result") or {}).get("sessionToken"))
+                if token:
+                    hdrs = {"X-Session-Token": token, "Accept": "application/json"}
+                    # Account balance (USD) — same endpoint as before
+                    acct = await client.get(
+                        "https://api.proxyon.io/v1/account/info", headers=hdrs,
+                    )
+                    acct.raise_for_status()
+                    acct_body = acct.json()
+                    if acct_body.get("success"):
+                        connected = True
+                        balance = (acct_body.get("result") or {}).get("balance")
+                        if balance is not None:
+                            account_balance_usd = f"${float(balance):,.2f}"
+
+                    # Residential subscription list — this is the authoritative
+                    # "are credentials provisioned" signal. Creds come from the
+                    # API (user+password returned per subscription), so API-key
+                    # presence + an active subscription means we're configured.
+                    subs = await client.get(
+                        "https://api.proxyon.io/v1/residential/list", headers=hdrs,
+                    )
+                    subs.raise_for_status()
+                    subs_body = subs.json()
+                    if subs_body.get("success"):
+                        sub_list = subs_body.get("result") or []
+                        # ProxyOn sometimes wraps the list under a nested key
+                        if isinstance(sub_list, dict):
+                            sub_list = (sub_list.get("subscriptions")
+                                        or sub_list.get("list")
+                                        or [])
+                        if isinstance(sub_list, list) and sub_list:
+                            # Prefer a sub with dataLeft > 0; fallback to first
+                            active = next(
+                                (s for s in sub_list
+                                 if isinstance(s, dict)
+                                 and (s.get("dataLeft") or 0) > 0),
+                                sub_list[0] if isinstance(sub_list[0], dict) else None,
+                            )
+                            if isinstance(active, dict):
+                                active_sub_id = active.get("id")
+                                _left = active.get("dataLeft")
+                                if _left is not None:
+                                    try:
+                                        data_left_gb = float(_left)
+                                    except (TypeError, ValueError):
+                                        data_left_gb = None
+                            status_label = (
+                                "Active" if data_left_gb and data_left_gb > 0
+                                else "Configured (No Data Left)"
+                            )
+                        else:
+                            status_label = "Configured (No Subscription)"
+                    else:
+                        status_label = "Configured (Unknown)"
         except Exception:
             connected = False
+            status_label = "API Error"
 
         _proxyon_status_cache.update(
             {
                 "fetched_monotonic": now_monotonic,
-                "status_label": "Active (Connected)" if connected else "Configured (Disconnected)",
+                "status_label": status_label,
                 "connected": connected,
-                "remaining_gb": account_balance,
+                "remaining_gb": (
+                    f"{data_left_gb:.2f} GB" if data_left_gb is not None else None
+                ),
+                "account_balance_usd": account_balance_usd,
+                "active_subscription_id": active_sub_id,
                 "checked_at": checked_at,
             }
         )
@@ -1043,11 +1097,20 @@ async def settings_scraping_services(
 
     residential_username = (settings.proxyon_residential_username or "").strip()
     residential_password = (settings.proxyon_residential_password or "").strip()
-    residential_configured = bool(residential_username and residential_password)
+    residential_env_creds = bool(residential_username and residential_password)
     datacenter_count = len([p for p in (settings.proxyon_datacenter_proxies or "").split(",") if p.strip()])
     proxyon_snapshot = await _proxyon_residential_snapshot()
-    residential_status = "Configured" if residential_configured else "Not Configured"
+
+    # Authoritative status = live API state. Residential creds are provisioned
+    # via the ProxyOn API (GET /residential/list returns user+password per
+    # subscription), so API-key presence + an active subscription means we
+    # have usable credentials regardless of what's in the env vars.
+    residential_status = proxyon_snapshot.get("status_label") or "Not Configured"
     residential_gb_remaining = proxyon_snapshot.get("remaining_gb")
+    residential_balance = proxyon_snapshot.get("account_balance_usd")
+    residential_sub_id = proxyon_snapshot.get("active_subscription_id")
+    # A residential subscription exists (live signal from API, not env-var peek)
+    residential_configured = bool(residential_sub_id) or residential_env_creds
     _checked_at = proxyon_snapshot.get("checked_at")
     residential_last_checked = _fmt_ts(_checked_at) if _checked_at else "API key not configured"
 
@@ -1114,6 +1177,8 @@ async def settings_scraping_services(
             "residential_status": residential_status,
             "datacenter_count": datacenter_count,
             "residential_gb_remaining": residential_gb_remaining,
+            "residential_balance": residential_balance,
+            "residential_sub_id": residential_sub_id,
             "residential_last_checked": residential_last_checked,
             **_base_ctx(user, dedup_count, "", address_issues_count),
         },

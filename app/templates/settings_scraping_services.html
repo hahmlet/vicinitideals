@@ -15,12 +15,19 @@
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px">
       <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em">Residential Proxy</div>
       <div style="font-size:18px;font-weight:700;color:var(--text);margin-top:4px">{{ residential_status }}</div>
-      <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Set PROXYON_RESIDENTIAL_USERNAME + PASSWORD in .env</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:2px">
+        {% if residential_sub_id %}Subscription #{{ residential_sub_id }} via ProxyOn API{% else %}Set PROXYON_API_KEY in .env (creds auto-fetched per subscription){% endif %}
+      </div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px">
+      <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em">Data Remaining</div>
+      <div style="font-size:18px;font-weight:700;color:var(--text);margin-top:4px">{{ residential_gb_remaining or "Unavailable" }}</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:2px">{{ residential_last_checked }}</div>
     </div>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px">
       <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em">Account Balance</div>
-      <div style="font-size:18px;font-weight:700;color:var(--text);margin-top:4px">{{ residential_gb_remaining or "Unavailable" }}</div>
-      <div style="font-size:11px;color:var(--text-muted);margin-top:2px">{{ residential_last_checked }}</div>
+      <div style="font-size:18px;font-weight:700;color:var(--text);margin-top:4px">{{ residential_balance or "Unavailable" }}</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:2px">USD balance on ProxyOn account</div>
     </div>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px">
       <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em">Datacenter Pool</div>
@@ -47,10 +54,12 @@
           <td style="padding:10px 12px;border-bottom:1px solid var(--border-faint);font-weight:600">{{ svc.name }}</td>
           <td style="padding:10px 12px;border-bottom:1px solid var(--border-faint);color:var(--text-secondary)">{{ svc.description }}</td>
           <td style="padding:10px 12px;border-bottom:1px solid var(--border-faint)">
-            {% if svc.status == "Healthy" or svc.status == "Completed" %}
+            {% if svc.status == "Healthy" or svc.status == "Completed" or svc.status == "Active" %}
               <span class="badge" style="background:var(--success-light);color:var(--success);border:1px solid #bbf7d0">{{ svc.status }}</span>
-            {% elif svc.status == "Stale" or svc.status == "Not Configured" %}
+            {% elif svc.status == "Stale" or svc.status == "Not Configured" or "No Data Left" in svc.status or "No Subscription" in svc.status %}
               <span class="badge" style="background:var(--warning-light);color:var(--warning);border:1px solid #fcd34d">{{ svc.status }}</span>
+            {% elif "Invalid" in svc.status or "Error" in svc.status %}
+              <span class="badge" style="background:#fee2e2;color:#991b1b;border:1px solid #fca5a5">{{ svc.status }}</span>
             {% else %}
               <span class="badge" style="background:var(--surface-alt);color:var(--text-muted);border:1px solid var(--border)">{{ svc.status }}</span>
             {% endif %}
