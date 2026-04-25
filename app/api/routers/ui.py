@@ -8674,6 +8674,9 @@ async def model_module_nav(
             "divestment_total", "phase_summaries", "outputs",
             "income_mode", "noi_annual",
             "unit_mix_count", "total_units",
+            # Keep active project on every nav link — without this, _proj_qs
+            # falls back to empty and OpEx/Sources/etc. links drop the project.
+            "default_project_id",
         )},
     }
     return templates.TemplateResponse(request, "partials/model_builder_nav_cards.html", ctx)
