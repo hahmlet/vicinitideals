@@ -347,10 +347,51 @@ function renderMarkers(features) {
     });
     marker.bindPopup(popupHTML(p), { maxWidth: 280 });
     marker.bindTooltip(p.address, { direction: 'top', offset: [0, -8] });
+    marker.on('click', function() { _showParcelOverlay(p.id); });
     markers.push(marker);
   }
   clusterGroup.addLayers(markers);
 }
+
+// ---------------------------------------------------------------------------
+// Parcel polygon overlay — drawn when a listing pin is clicked. Fetches the
+// associated parcel(s) via /ui/map/context (which now resolves listing →
+// parcel via APN, apn_normalized tokens, linked project, or address match)
+// and renders the geometry. Cleared on next pin click or popup close.
+// ---------------------------------------------------------------------------
+let _parcelOverlay = null;
+
+function _clearParcelOverlay() {
+  if (_parcelOverlay) {
+    _parcelOverlay.remove();
+    _parcelOverlay = null;
+  }
+}
+
+async function _showParcelOverlay(listingId) {
+  _clearParcelOverlay();
+  if (!listingId) return;
+  try {
+    const r = await fetch('/ui/map/context?listing_id=' + listingId);
+    const data = await r.json();
+    const parcels = (data.parcels || []).filter(p => p.geojson);
+    if (!parcels.length) return;
+    const fc = {
+      type: 'FeatureCollection',
+      features: parcels.map(p => ({ type: 'Feature', geometry: p.geojson })),
+    };
+    _parcelOverlay = L.geoJSON(fc, {
+      style: { color: '#f97316', weight: 2.5, fillColor: '#fed7aa', fillOpacity: 0.45 },
+    }).addTo(map);
+  } catch (_) { /* silent — popup still works */ }
+}
+
+// Drop the highlight when the popup closes (any popup, anywhere).
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof map !== 'undefined' && map && map.on) {
+    map.on('popupclose', _clearParcelOverlay);
+  }
+});
 
 // ---------------------------------------------------------------------------
 // Filter controls

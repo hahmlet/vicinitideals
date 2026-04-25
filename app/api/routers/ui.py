@@ -3711,6 +3711,18 @@ async def map_context(
                     .options(selectinload(ProjectParcel.parcel))
                 )).scalars().all()
                 parcels = [pp.parcel for pp in pps if pp.parcel]
+            if not parcels:
+                # Address-match fallback. APN coding differs across sources,
+                # but many listings share an exact address with a parcel row.
+                addr = (listing.address_normalized or "").strip()
+                if addr:
+                    hits = list((await session.execute(
+                        select(Parcel).where(
+                            func.lower(Parcel.address_normalized) == addr.lower()
+                        )
+                    )).scalars())
+                    if hits:
+                        parcels = hits
             # Fallback: listing lat/lng only — handled below via centroid
 
     elif opportunity_id:
