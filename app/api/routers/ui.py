@@ -8606,13 +8606,33 @@ def _compute_calc_status(data: dict) -> dict:
             "meta": ltv_meta,
         }
     elif not is_dual_constraint:
-        # Informational only — grey pill, no pass/fail
-        ltv_status = {
-            "status": "na",
-            "label": f"LTV {actual_ltv_pct:.1f}%",
-            "detail": f"Debt ${float(total_non_bridge_debt):,.0f} / property value ${float(property_value):,.0f} = {actual_ltv_pct:.1f}%. Sizing mode is '{sizing_mode or 'gap_fill'}', so LTV is a derived outcome — not an active constraint. Switch to Dual-Constraint in Deal Setup to size debt by MIN(LTV, DSCR, gap-fill).",
-            "meta": ltv_meta,
-        }
+        # gap_fill / dscr_capped: LTV is a derived outcome, not an active
+        # constraint. Treat it as healthy (ok) when it lands inside the
+        # configured LTV cap, warn when it exceeds the cap. Detail still
+        # notes the user can switch to Dual-Constraint to make it actively bind.
+        _cap = _headline_ltv_pct
+        _within_cap = (_cap is None) or (actual_ltv_pct <= float(_cap) + 0.05)
+        _detail = (
+            f"Debt ${float(total_non_bridge_debt):,.0f} / property value "
+            f"${float(property_value):,.0f} = {actual_ltv_pct:.1f}%. Sizing "
+            f"mode is '{sizing_mode or 'gap_fill'}', so LTV is a derived "
+            f"outcome — not an active constraint. Switch to Dual-Constraint "
+            f"in Deal Setup to size debt by MIN(LTV, DSCR, gap-fill)."
+        )
+        if _within_cap:
+            ltv_status = {
+                "status": "ok",
+                "label": f"LTV {actual_ltv_pct:.1f}%",
+                "detail": _detail,
+                "meta": ltv_meta,
+            }
+        else:
+            ltv_status = {
+                "status": "warn",
+                "label": f"LTV {actual_ltv_pct:.1f}% — exceeds {_cap}% cap",
+                "detail": _detail,
+                "meta": ltv_meta,
+            }
     elif ltv_binding_modules and gap < -1.0:
         first = ltv_binding_modules[0]
         pct = first.get("ltv_pct")
