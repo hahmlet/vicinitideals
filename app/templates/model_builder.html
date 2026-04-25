@@ -688,8 +688,13 @@ function handleComputeResult(evt) {
       return;
     }
     // Per-project view: swap the current module panel.
+    // Preserve the ?project= param so a compute on Project N re-renders Project N's
+    // panel, not the default (oldest) project's.
     var _m = _params.get('module') || 'sources_uses';
-    htmx.ajax('GET', '/ui/panel/{{ model.id }}?module=' + encodeURIComponent(_m), {
+    var _panelUrl = '/ui/panel/{{ model.id }}?module=' + encodeURIComponent(_m);
+    var _pid = _params.get('project');
+    if (_pid) _panelUrl += '&project=' + encodeURIComponent(_pid);
+    htmx.ajax('GET', _panelUrl, {
       target: '#module-panel-content', swap: 'innerHTML'
     });
     // Fade the badge out after 5s
