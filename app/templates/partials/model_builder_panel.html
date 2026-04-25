@@ -203,7 +203,17 @@
     </thead>
     <tbody id="sources-tbody">
       {% for m in capital_modules | sort(attribute='stack_position') %}
-      {%- set _src_amt = (m.source.amount | float) if (m.source and m.source.get('amount')) else 0 -%}
+      {# Per-project junction amount wins when present (multi-project tab view);
+         falls back to scenario-level source.amount when junction map is empty
+         (e.g. underwriting rollup or legacy single-project scenario). #}
+      {%- set _junction_amt = (capital_junction_amts or {}).get(m.id | string) -%}
+      {%- if _junction_amt is not none -%}
+        {%- set _src_amt = _junction_amt | float -%}
+      {%- elif m.source and m.source.get('amount') -%}
+        {%- set _src_amt = m.source.amount | float -%}
+      {%- else -%}
+        {%- set _src_amt = 0 -%}
+      {%- endif -%}
       {%- set _retirement = (m.source.construction_retirement | float) if (m.source and m.source.get('construction_retirement')) else 0 -%}
       <tr draggable="true" data-module-id="{{ m.id }}"
           data-label="{{ m.label | lower }}" data-ftype="{{ (m.funder_type or '') | lower }}" data-amt="{{ _src_amt }}"
@@ -281,7 +291,11 @@
     <span class="line-total-label">Total Sources</span>
     <span class="line-total-amount">
       {% set ns = namespace(total=0) %}
-      {% for m in capital_modules %}{% if m.source and m.source.get('amount') and not m.source.get('is_bridge') %}{% set ns.total = ns.total + (m.source.amount | float) %}{% endif %}{% endfor %}
+      {% for m in capital_modules %}
+        {%- set _jam = (capital_junction_amts or {}).get(m.id | string) -%}
+        {%- set _mamt = _jam if _jam is not none else (m.source.amount if (m.source and m.source.get('amount')) else 0) -%}
+        {% if _mamt and not (m.source and m.source.get('is_bridge')) %}{% set ns.total = ns.total + (_mamt | float) %}{% endif %}
+      {% endfor %}
       {% if ns.total %}{{ ns.total | currency }}
       {% else %}<span style="color:var(--text-muted);font-size:11px">Compute →</span>{% endif %}
     </span>
@@ -618,6 +632,9 @@
     </thead>
     <tbody id="sources-drag-tbody">
       {% for m in capital_modules | sort(attribute='stack_position') %}
+      {# Same per-project junction override as the Sources table above. #}
+      {%- set _j_amt = (capital_junction_amts or {}).get(m.id | string) -%}
+      {%- set _disp_amt = _j_amt if _j_amt is not none else (m.source.amount if (m.source and m.source.get('amount')) else None) -%}
       <tr draggable="true" data-module-id="{{ m.id }}"
           onclick="openEditLine('capital_modules', '{{ m.id }}', '{{ model.id }}')">
         <td style="cursor:grab;color:var(--text-muted);font-size:16px;padding-right:4px;user-select:none"
@@ -626,7 +643,7 @@
         <td style="font-weight:500">{{ m.label }}</td>
         <td><span class="text-small text-muted">{{ m.funder_type | replace('_', ' ') | title }}</span></td>
         <td class="col-right">
-          {% if m.source and m.source.get('amount') %}{{ m.source.amount | currency }}
+          {% if _disp_amt is not none and _disp_amt %}{{ _disp_amt | currency }}
           {% elif m.source and m.source.get('pct_of_total_cost') %}{{ m.source.pct_of_total_cost }}% of costs
           {% else %}—{% endif %}
         </td>
@@ -1092,12 +1109,14 @@
     </thead>
     <tbody>
       {% for m in capital_modules | sort(attribute='stack_position') %}
+      {%- set _j_amt_dw = (capital_junction_amts or {}).get(m.id | string) -%}
+      {%- set _dw_amt = _j_amt_dw if _j_amt_dw is not none else (m.source.amount if (m.source and m.source.get('amount')) else None) -%}
       <tr style="cursor:pointer" onclick="openEditLine('capital_modules', '{{ m.id }}', '{{ model.id }}')">
         <td class="text-muted text-small">{{ m.stack_position or '?' }}</td>
         <td style="font-weight:500">{{ m.label }}</td>
         <td class="text-small text-muted">{{ m.funder_type | replace('_',' ') | title }}</td>
         <td class="col-right">
-          {% if m.source and m.source.get('amount') %}{{ m.source.amount | currency }}
+          {% if _dw_amt is not none and _dw_amt %}{{ _dw_amt | currency }}
           {% elif m.source and m.source.get('pct_of_total_cost') %}{{ m.source.pct_of_total_cost }}% of costs
           {% else %}—{% endif %}
         </td>

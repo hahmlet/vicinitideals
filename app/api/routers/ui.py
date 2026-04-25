@@ -4211,13 +4211,20 @@ def _income_annual(streams: list) -> float | None:
     return total if total else None
 
 
-def _capital_total(modules: list) -> float | None:
+def _capital_total(modules: list, junction_amts: dict[str, float] | None = None) -> float | None:
+    """Sum module principals. If junction_amts is provided (project-scoped
+    view), use the per-project junction amount instead of scenario-level
+    source.amount so multi-project Sources totals reflect this project's
+    share only."""
     total = 0.0
     for m in modules:
         if m.source and isinstance(m.source, dict):
             if m.source.get("is_bridge"):
                 continue
-            amt = m.source.get("amount")
+            if junction_amts is not None:
+                amt = junction_amts.get(str(m.id), 0.0)
+            else:
+                amt = m.source.get("amount")
             if amt:
                 total += float(amt)
     return total if total else None
@@ -4808,7 +4815,22 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
     deferred_total = sum(float(u.amount or 0) for u in deferred_uses)
     revenue_annual = _income_annual(income_streams)
     opex_annual = _sum_annual(expense_lines, "annual_amount")
-    capital_total = _capital_total(capital_modules)
+    # Multi-project Sources totals use per-project junction amounts so the
+    # panel total doesn't show the scenario-wide (last-sized) principal.
+    _cap_junction_amts: dict[str, float] = {}
+    if project_id is not None:
+        from app.models.capital import CapitalModuleProject as _CMP_sum
+        _cap_junction_amts = {
+            str(mid): float(amt or 0)
+            for mid, amt in (await session.execute(
+                select(_CMP_sum.capital_module_id, _CMP_sum.amount).where(
+                    _CMP_sum.project_id == project_id
+                )
+            )).all()
+        }
+    capital_total = _capital_total(
+        capital_modules, junction_amts=_cap_junction_amts if project_id is not None else None
+    )
     uses_total_val = sum(float(u.amount or 0) for u in use_lines)
 
     # Equity ownership — computed from equity-type capital modules
@@ -5048,6 +5070,10 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
         "expense_lines": expense_lines,
         "unit_mix_rows": unit_mix_rows,
         "capital_modules": capital_modules,
+        # Per-project junction-scoped principal by module id (str). Template
+        # uses this in the Sources table so Project N's tab shows Project N's
+        # share, not the scenario-wide last-sized amount.
+        "capital_junction_amts": _cap_junction_amts,
         "waterfall_tiers": waterfall_tiers,
         "milestones": milestones,
         "milestone_rows": [
