@@ -7887,14 +7887,18 @@ async def model_builder(
     else:
         active_module = module or ("sources_uses" if _deal_setup_complete else "deal_setup")
 
-    # Cash flow periods — only loaded when the cashflow module is active
+    # Cash flow periods — only loaded when the cashflow module is active.
+    # Multi-project: filter by active project_id so the per-project tab
+    # doesn't interleave both projects' rows (which previously showed
+    # Project 2's $5M acquisition on Project 1's cashflow page).
     cash_flow_rows: list = []
     if active_module == "cashflow":
         from app.models.cashflow import CashFlow
+        _cf_q = select(CashFlow).where(CashFlow.scenario_id == model_id)
+        if active_project_id is not None:
+            _cf_q = _cf_q.where(CashFlow.project_id == active_project_id)
         cash_flow_rows = list((await session.execute(
-            select(CashFlow)
-            .where(CashFlow.scenario_id == model_id)
-            .order_by(CashFlow.period)
+            _cf_q.order_by(CashFlow.period)
         )).scalars())
 
     # Multi-parcel detection — show banner if listing has multiple APNs and user hasn't dismissed
@@ -8017,12 +8021,14 @@ async def builder_panel(
     data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
     ctx: dict = {"model": model, "active_module": module, **data}
 
-    # Cash flow periods — only loaded when the cashflow module is active
+    # Cash flow periods — only loaded when the cashflow module is active.
+    # Filter by active project so per-project tab doesn't interleave rows.
     if module == "cashflow":
+        _cf_q2 = select(CashFlow).where(CashFlow.scenario_id == model_id)
+        if _active_proj_id is not None:
+            _cf_q2 = _cf_q2.where(CashFlow.project_id == _active_proj_id)
         cf_rows = list((await session.execute(
-            select(CashFlow)
-            .where(CashFlow.scenario_id == model_id)
-            .order_by(CashFlow.period)
+            _cf_q2.order_by(CashFlow.period)
         )).scalars())
         ctx["cash_flow_rows"] = cf_rows
 
