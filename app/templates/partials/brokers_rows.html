@@ -1,8 +1,9 @@
 {% import "_macros.html" as ui %}
 {% for b in brokers %}
-{# tojson renders proper JSON strings — handles apostrophes (e.g. firm names
-   like "Kohler Meyers O'Halloran") and any other JS-breaking characters. #}
-<tr onclick="openBroker({{ b.id|tojson }}, {{ b.full_name|tojson }}, {{ (b.brokerage_name or '')|tojson }})">
+{# tojson renders proper JSON-quoted strings (double-quoted, with apostrophes
+   escaped as '). Wrap the onclick attribute in single quotes so the
+   inner double quotes don't terminate the attribute. #}
+<tr onclick='openBroker({{ b.id|tojson }}, {{ b.full_name|tojson }}, {{ (b.brokerage_name or "")|tojson }})'>
   <td>
     <div style="font-weight:600">{{ b.full_name }}</div>
   </td>
