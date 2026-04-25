@@ -6123,6 +6123,35 @@ async def create_deal_project(
     )
 
 
+@router.post("/ui/projects/{project_id}/rename", response_class=HTMLResponse)
+async def rename_project(
+    request: Request,
+    project_id: UUID,
+    session: DBSession,
+) -> HTMLResponse:
+    """Rename a Project. Returns the rendered breadcrumb span for HTMX swap."""
+    project = await session.get(Project, project_id)
+    if project is None:
+        return HTMLResponse("<span>Project not found</span>", status_code=404)
+
+    form = await request.form()
+    new_name = str(form.get("name", "")).strip()
+    if not new_name:
+        new_name = project.name  # ignore empty submits, keep existing
+    project.name = new_name[:255]
+    await session.commit()
+
+    safe = (
+        new_name.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
+    )
+    return HTMLResponse(
+        f'<span id="builder-project-name" '
+        f'onclick="_startProjectRename(event)" '
+        f'style="cursor:pointer" '
+        f'title="Click to rename">{safe}</span>'
+    )
+
+
 @router.post("/ui/deals/{deal_id}/project/{project_id}/clone-from", response_class=HTMLResponse)
 async def clone_project_from(
     deal_id: UUID,

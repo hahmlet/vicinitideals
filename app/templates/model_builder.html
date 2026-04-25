@@ -615,7 +615,57 @@
     <a href="/deals/{{ parent_deal_id }}" style="font-size:12px;color:var(--text-muted);font-weight:400">← Deal</a>
     <span style="color:var(--text-muted);margin:0 6px;font-weight:400">/</span>
     {% endif %}
+    {% if active_project_id %}
+    <span id="builder-project-name"
+          onclick="_startProjectRename(event)"
+          style="cursor:pointer"
+          title="Click to rename">{{ project.name if project else model.name }}</span>
+    <script>
+    function _startProjectRename(ev) {
+      var span = ev.currentTarget;
+      var current = span.textContent.trim();
+      var input = document.createElement('input');
+      input.type = 'text';
+      input.value = current;
+      input.maxLength = 255;
+      input.style.cssText = 'font: inherit; color: inherit; background: var(--surface,#0f172a);' +
+        'border: 1px solid var(--accent); border-radius: 4px; padding: 2px 6px;';
+      input.size = Math.max(current.length, 12);
+      var commit = function(save) {
+        if (input._done) return; input._done = true;
+        if (save) {
+          var fd = new FormData();
+          fd.append('name', input.value);
+          fetch('/ui/projects/{{ active_project_id }}/rename', { method: 'POST', body: fd })
+            .then(function(r) { return r.text(); })
+            .then(function(html) {
+              var wrap = document.createElement('div');
+              wrap.innerHTML = html.trim();
+              input.parentNode.replaceChild(wrap.firstChild, input);
+            });
+        } else {
+          var span2 = document.createElement('span');
+          span2.id = 'builder-project-name';
+          span2.style.cursor = 'pointer';
+          span2.title = 'Click to rename';
+          span2.textContent = current;
+          span2.addEventListener('click', _startProjectRename);
+          input.parentNode.replaceChild(span2, input);
+        }
+      };
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') { e.preventDefault(); commit(true); }
+        else if (e.key === 'Escape') { e.preventDefault(); commit(false); }
+      });
+      input.addEventListener('blur', function() { commit(true); });
+      span.parentNode.replaceChild(input, span);
+      input.focus();
+      input.select();
+    }
+    </script>
+    {% else %}
     <span>{{ project.name if project else model.name }}</span>
+    {% endif %}
   </div>
 
   {# Center-top Calculation Status pill — clickable to open diagnostic modal.
