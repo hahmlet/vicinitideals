@@ -25,6 +25,7 @@ from sqlalchemy.pool import NullPool
 
 from app.config import settings
 from app.models.api_call_log import ApiCallLog  # noqa: F401 — ensure registered
+from app.models.broker import Broker
 from app.models.ingestion import IngestJob
 from app.models.listing_snapshot import ListingSnapshot
 from app.models.project import ScrapedListing
@@ -157,7 +158,12 @@ def loopnet_weekly_sweep(self) -> dict[str, Any]:
     return asyncio.run(_loopnet_weekly_sweep())
 
 
-async def _loopnet_weekly_sweep() -> dict[str, Any]:
+async def _loopnet_weekly_sweep() -> dict[str, Any]:  # noqa: PLR0915
+    # Track every Broker row touched during this run so we can auto-trigger
+    # Oregon eLicense enrichment on any that have a license # OR (first +
+    # last) name and haven't been enriched yet. Same pattern as the Crexi
+    # ingest in app/tasks/scraper.py.
+    batch_broker_ids: set[uuid.UUID] = set()
     """Sweep every active polygon; tag new listings; fetch ED per polygon-tier policy."""
     polygons = load_polygons()
     target_ed_categories = parse_target_ed_categories(
@@ -291,6 +297,8 @@ async def _loopnet_weekly_sweep() -> dict[str, Any]:
                                 f"broker {b.get('loopnet_broker_id')}: {exc}"
                             )
                             continue
+                        if bid is not None:
+                            batch_broker_ids.add(bid)
                         if i == 0 and bid is not None:
                             primary_broker_id = bid
                     if primary_broker_id is not None:
@@ -321,6 +329,38 @@ async def _loopnet_weekly_sweep() -> dict[str, Any]:
                 job.status = "completed" if not errors else "partial"
                 job.completed_at = datetime.now(UTC)
             await session.commit()
+
+            # Auto-trigger Oregon eLicense enrichment for any broker in this
+            # batch that has either a license_number OR a first+last name and
+            # has never been enriched. Mirrors the Crexi auto-trigger in
+            # app/tasks/scraper.py.
+            if batch_broker_ids:
+                from sqlalchemy import and_, or_  # noqa: PLC0415
+
+                unenriched = (
+                    await session.execute(
+                        select(Broker.id).where(
+                            Broker.id.in_(list(batch_broker_ids)),
+                            or_(
+                                Broker.license_number.isnot(None),
+                                and_(
+                                    Broker.first_name.isnot(None),
+                                    Broker.last_name.isnot(None),
+                                ),
+                            ),
+                            Broker.oregon_last_pulled_at.is_(None),
+                        )
+                    )
+                ).scalars().all()
+                if unenriched:
+                    from app.tasks.oregon_elicense import enrich_broker_oregon  # noqa: PLC0415
+
+                    for bid_oregon in unenriched:
+                        enrich_broker_oregon.delay(str(bid_oregon))
+                    logger.info(
+                        "Queued Oregon enrichment for %d LoopNet brokers from this batch",
+                        len(unenriched),
+                    )
         except Exception:
             await session.rollback()
             raise
