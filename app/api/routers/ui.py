@@ -7461,13 +7461,30 @@ async def deal_setup_wizard_complete(
     debt_types = inputs.debt_types  # None for pre-migration deals
     debt_structure = inputs.debt_structure or "perm_only"
 
-    # Remove any existing auto-created debt modules (clean re-run)
+    # Remove any existing auto-created debt modules (clean re-run).
+    # Cascade dependent rows manually first — WaterfallResult and
+    # WaterfallTier both reference capital_module_id with NOT NULL +
+    # default-NO-ACTION FKs, so SQLAlchemy's default "set FK to NULL on
+    # parent delete" behavior throws a NotNullViolation. Delete the
+    # dependents explicitly to keep the wizard re-runnable on scenarios
+    # that have been computed before.
+    from sqlalchemy import delete as _sa_delete
+    from app.models.capital import WaterfallResult as _WR
     existing_auto = list((await session.execute(
         select(CapitalModule).where(
             CapitalModule.scenario_id == model_id,
             CapitalModule.label.like("%(auto)%"),
         )
     )).scalars())
+    if existing_auto:
+        _auto_ids = [cm.id for cm in existing_auto]
+        await session.execute(
+            _sa_delete(_WR).where(_WR.capital_module_id.in_(_auto_ids))
+        )
+        await session.execute(
+            _sa_delete(WaterfallTier).where(WaterfallTier.capital_module_id.in_(_auto_ids))
+        )
+        await session.flush()
     for cm in existing_auto:
         await session.delete(cm)
 
