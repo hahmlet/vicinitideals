@@ -7382,28 +7382,29 @@ async def deal_setup_wizard_complete(
         select(UnitMix).where(UnitMix.project_id == default_project.id)
     )).scalars())
 
+    # Initialize building_unit_count and assigned_buildings unconditionally
+    # so the market-recommendation block below works on wizard re-runs (when
+    # UnitMix already exists and the seed branch is skipped).
+    building_unit_count: int = int(inputs.unit_count_new or 0)
+    assigned_buildings = (await session.execute(
+        select(Building)
+        .join(ProjectBuildingAssignment, ProjectBuildingAssignment.building_id == Building.id)
+        .where(ProjectBuildingAssignment.project_id == default_project.id)
+        .order_by(ProjectBuildingAssignment.sort_order)
+    )).scalars().all()
+    if not assigned_buildings and default_project.opportunity_id:
+        first_ob = (await session.execute(
+            select(OpportunityBuilding)
+            .where(OpportunityBuilding.opportunity_id == default_project.opportunity_id)
+            .order_by(OpportunityBuilding.sort_order)
+            .limit(1)
+        )).scalar_one_or_none()
+        if first_ob:
+            bldg = await session.get(Building, first_ob.building_id)
+            if bldg:
+                assigned_buildings = [bldg]
+
     if not existing_unit_mix:
-        # Prefer assigned buildings' total unit_count; fall back to inputs.unit_count_new
-        building_unit_count: int = int(inputs.unit_count_new or 0)
-        # Read from per-project building assignments (new model); fall back to opportunity-level
-        assigned_buildings = (await session.execute(
-            select(Building)
-            .join(ProjectBuildingAssignment, ProjectBuildingAssignment.building_id == Building.id)
-            .where(ProjectBuildingAssignment.project_id == default_project.id)
-            .order_by(ProjectBuildingAssignment.sort_order)
-        )).scalars().all()
-        if not assigned_buildings and default_project.opportunity_id:
-            # Legacy fallback: no project-level assignments yet (pre-migration projects)
-            first_ob = (await session.execute(
-                select(OpportunityBuilding)
-                .where(OpportunityBuilding.opportunity_id == default_project.opportunity_id)
-                .order_by(OpportunityBuilding.sort_order)
-                .limit(1)
-            )).scalar_one_or_none()
-            if first_ob:
-                bldg = await session.get(Building, first_ob.building_id)
-                if bldg:
-                    assigned_buildings = [bldg]
         total_units = sum(b.unit_count or 0 for b in assigned_buildings)
         if total_units:
             building_unit_count = total_units
