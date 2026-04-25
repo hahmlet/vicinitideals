@@ -51,6 +51,10 @@ from app.scrapers.loopnet import (
     should_fetch_sale_details_after_bulk,
     should_ingest_lease_after_bulk,
 )
+from app.scrapers.loopnet_broker import (
+    extract_brokers_from_sale_details,
+    upsert_broker_from_loopnet,
+)
 from app.tasks.celery_app import celery_app
 
 logger = get_task_logger(__name__)
@@ -268,6 +272,30 @@ async def _loopnet_weekly_sweep() -> dict[str, Any]:
                         sale, ext, listing_id=lid, lat=lat, lng=lng
                     )
                     mapped["polygon_tags"] = polygon_names
+
+                    # Upsert brokers (free — uses inline SD.broker[*] data,
+                    # no API calls). First broker becomes the listing's
+                    # primary broker_id; remaining brokers get rows linked
+                    # to other listings of theirs but not this one.
+                    brokers = extract_brokers_from_sale_details(sale)
+                    primary_broker_id = None
+                    for i, b in enumerate(brokers):
+                        try:
+                            bid = await upsert_broker_from_loopnet(session, b)
+                        except Exception as exc:  # noqa: BLE001
+                            logger.exception(
+                                "broker upsert failed for slug=%s on listing %s",
+                                b.get("loopnet_broker_id"), lid,
+                            )
+                            errors.append(
+                                f"broker {b.get('loopnet_broker_id')}: {exc}"
+                            )
+                            continue
+                        if i == 0 and bid is not None:
+                            primary_broker_id = bid
+                    if primary_broker_id is not None:
+                        mapped["broker_id"] = primary_broker_id
+
                     try:
                         await _upsert_loopnet_listing(
                             mapped, session=session, ingest_job_id=ingest_job_id,

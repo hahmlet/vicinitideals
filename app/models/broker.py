@@ -54,6 +54,10 @@ class Broker(Base):
     )
     crexi_broker_id: Mapped[int | None] = mapped_column(Integer, unique=True, nullable=True)
     crexi_global_id: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    # LoopNet broker slug (alphanumeric, e.g. "mzwstflb"). Parsed from the
+    # broker profile URL inside SD.broker[*].url. Used as the unique cross-
+    # source identifier for /loopnet/broker/extendedDetails lookups.
+    loopnet_broker_id: Mapped[str | None] = mapped_column(String(40), nullable=True)
     first_name: Mapped[str | None] = mapped_column(String(120), nullable=True)
     last_name: Mapped[str | None] = mapped_column(String(120), nullable=True)
     thumbnail_url: Mapped[str | None] = mapped_column(Text, nullable=True)
