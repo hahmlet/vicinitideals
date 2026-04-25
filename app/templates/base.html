@@ -730,5 +730,65 @@ document.addEventListener('click', function(e) {
   }
 })();
 </script>
+
+<script>
+// Shared filter persistence + Clear button.
+//
+// Any form tagged `data-filter-form="<key>"` has its current state mirrored
+// to localStorage on every change. When the page loads with a bare URL (no
+// query string) we restore by navigating to the saved query — so listings,
+// parcels, opportunities, and deals each remember their last filter set
+// across navigation.
+//
+// Buttons tagged `data-filter-clear` wipe both URL and storage.
+(function() {
+  function _scopeKey(form) { return 'vd_filters_' + form.dataset.filterForm; }
+
+  function _serializeForm(form) {
+    var fd = new URLSearchParams(new FormData(form));
+    var out = [];
+    fd.forEach(function(v, k) { if (v !== '') out.push([k, v]); });
+    var qs = new URLSearchParams();
+    out.forEach(function(p) { qs.append(p[0], p[1]); });
+    return qs.toString();
+  }
+
+  function _saveCurrent(form) {
+    try {
+      localStorage.setItem(_scopeKey(form), _serializeForm(form));
+    } catch (_) { /* private mode: ignore */ }
+  }
+
+  function _restoreIfBare(form) {
+    if (window.location.search && window.location.search !== '?') return;
+    var saved;
+    try { saved = localStorage.getItem(_scopeKey(form)); } catch (_) { return; }
+    if (!saved) return;
+    window.location.search = '?' + saved;
+  }
+
+  function _clear(form) {
+    try { localStorage.removeItem(_scopeKey(form)); } catch (_) {}
+    window.location.href = window.location.pathname;
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var form = document.querySelector('form[data-filter-form]');
+    if (form) {
+      _restoreIfBare(form);
+      var save = function() { _saveCurrent(form); };
+      form.addEventListener('change', save);
+      form.addEventListener('input', save);
+    }
+    document.querySelectorAll('[data-filter-clear]').forEach(function(btn) {
+      btn.addEventListener('click', function(ev) {
+        ev.preventDefault();
+        var f = document.querySelector('form[data-filter-form]');
+        if (f) _clear(f);
+      });
+    });
+  });
+})();
+</script>
 </body>
 </html>

@@ -24,6 +24,7 @@ tr:hover .archive-btn { opacity: 1; }
 
   <!-- Toolbar -->
   <form id="opp-filters"
+        data-filter-form="opportunities"
         hx-get="/ui/opportunities/rows"
         hx-trigger="change, input delay:300ms from:[type=search]"
         hx-target="#opps-tbody"
@@ -55,6 +56,7 @@ tr:hover .archive-btn { opacity: 1; }
           {% endfor %}
         </div>
       </div>
+      <button type="button" class="btn btn-secondary btn-sm" data-filter-clear style="white-space:nowrap" title="Clear filters and reset">✕ Clear</button>
     </div>
   </form>
 

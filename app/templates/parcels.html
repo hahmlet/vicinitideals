@@ -9,6 +9,7 @@
 <div class="content">
   {# ── Filter bar ────────────────────────────────────────────────────────── #}
   <form class="toolbar" style="flex-wrap:wrap;gap:8px" id="parcel-filters"
+        data-filter-form="parcels"
         hx-get="/parcels" hx-target="#parcels-tbody" hx-select="#parcels-tbody"
         hx-swap="outerHTML" hx-push-url="true" hx-select-oob="#zoning-options:outerHTML"
         hx-trigger="change, input delay:400ms from:[name=q]">
@@ -68,9 +69,7 @@
              value="{{ max_year }}" style="width:64px">
     </div>
 
-    {% if q or zoning or jurisdiction or use_group or min_acres or max_acres or min_year or max_year %}
-    <a href="/parcels" class="btn btn-secondary btn-sm" style="align-self:center">✕ Clear</a>
-    {% endif %}
+    <button type="button" class="btn btn-secondary btn-sm" data-filter-clear style="align-self:center" title="Clear filters and reset">✕ Clear</button>
 
     <input type="hidden" name="offset" value="0">
   </form>

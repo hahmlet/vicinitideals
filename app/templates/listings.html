@@ -57,6 +57,7 @@ details.archive-section[open] > summary .chevron { transform: rotate(90deg); }
 
   {# ── Shared filter bar (applies to New table) ── #}
   <form id="listing-filters"
+        data-filter-form="listings"
         hx-get="/ui/listings/rows"
         hx-trigger="change, input delay:300ms from:[type=search]"
         hx-target="#new-listings-tbody"
@@ -118,6 +119,7 @@ details.archive-section[open] > summary .chevron { transform: rotate(90deg); }
         </div>
       </div>
 
+      <button type="button" class="btn btn-secondary btn-sm" data-filter-clear style="white-space:nowrap" title="Clear filters and reset">✕ Clear</button>
       <button type="button" class="btn btn-secondary btn-sm" id="export-csv-btn" style="white-space:nowrap">Export CSV</button>
     </div>
   </form>

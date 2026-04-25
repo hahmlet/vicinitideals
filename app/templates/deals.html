@@ -48,6 +48,7 @@ tr:hover .archive-btn { opacity: 1; }
 
   <!-- Toolbar with HTMX live filtering -->
   <form id="deal-filters"
+        data-filter-form="deals"
         hx-get="/ui/deals/rows"
         hx-trigger="change, input delay:300ms from:[type=search]"
         hx-target="#deals-tbody"
@@ -91,6 +92,7 @@ tr:hover .archive-btn { opacity: 1; }
         <input type="checkbox" name="include_archived" value="1" {% if include_archived %}checked{% endif %}>
         Include Archived
       </label>
+      <button type="button" class="btn btn-secondary btn-sm" data-filter-clear style="white-space:nowrap" title="Clear filters and reset">✕ Clear</button>
     </div>
   </form>
 
