@@ -506,6 +506,20 @@ def _build_listing(detail_payload: dict[str, Any], broker_payloads: list[dict[st
 # false positives on words like "OREGON".
 _LICENSE_PREFIX_RE = _re.compile(r"^([A-Z]{2})[\s#\-_:.]*(\d.*)$")
 
+# A handful of brokers have the full state name spelled out, e.g.
+# ``"Oregon 200602153"``. Map back to the 2-letter code.
+_FULLSTATE_RE = _re.compile(
+    r"^(Oregon|Washington|California|Idaho|Nevada|Utah|Arizona|Montana)\s+(\d.*)$",
+    _re.IGNORECASE,
+)
+_FULLSTATE_TO_CODE = {
+    "oregon": "OR", "washington": "WA", "california": "CA",
+    "idaho": "ID", "nevada": "NV", "utah": "UT",
+    "arizona": "AZ", "montana": "MT",
+}
+
+_DIGIT_RE = _re.compile(r"\d")
+
 
 def _extract_crexi_license(payload: dict[str, Any]) -> tuple[str | None, str | None]:
     """Pick the best (license_number, license_state) tuple from a Crexi broker.
@@ -540,26 +554,48 @@ def _extract_crexi_license(payload: dict[str, Any]) -> tuple[str | None, str | N
     if chosen is not None:
         num = _string_or_none(chosen.get("number")) or ""
         state = (chosen.get("licenseStateCode") or "").strip().upper() or None
-        m = _LICENSE_PREFIX_RE.match(num)
-        if m:
-            prefix_state = m.group(1)
-            cleaned = m.group(2).strip()
-            if not state:
-                # licenseStateCode was missing — derive it from the prefix
-                state = prefix_state
-            if prefix_state == state:
-                num = cleaned
-        return (num.strip() or None), state
+        num, state = _strip_state_prefix(num, state)
+        # Reject "license numbers" that contain no digits (e.g. ``"OR"``
+        # alone) — Crexi sometimes records the state with no actual number,
+        # which is useless and shouldn't masquerade as a real license.
+        if num and not _DIGIT_RE.search(num):
+            num = None
+        return num, state
 
     licenses = payload.get("licenses") or []
     if isinstance(licenses, list) and licenses:
         first = str(licenses[0] or "").strip()
-        m = _LICENSE_PREFIX_RE.match(first)
-        if m:
-            return m.group(2).strip() or None, m.group(1)
-        return first or None, None
+        num, state = _strip_state_prefix(first, None)
+        if num and not _DIGIT_RE.search(num):
+            num = None
+        return num, state
 
     return None, None
+
+
+def _strip_state_prefix(
+    raw: str, existing_state: str | None
+) -> tuple[str | None, str | None]:
+    """Strip a US state prefix (2-letter or full name) from a license string."""
+    if not raw:
+        return None, existing_state
+    m = _LICENSE_PREFIX_RE.match(raw)
+    if m:
+        prefix_state = m.group(1)
+        cleaned = m.group(2).strip()
+        state = existing_state or prefix_state
+        if prefix_state == state:
+            return cleaned or None, state
+        return raw.strip() or None, state
+    m = _FULLSTATE_RE.match(raw)
+    if m:
+        full = m.group(1).lower()
+        prefix_state = _FULLSTATE_TO_CODE.get(full)
+        cleaned = m.group(2).strip()
+        state = existing_state or prefix_state
+        if prefix_state and prefix_state == state:
+            return cleaned or None, state
+    return raw.strip() or None, existing_state
 
 
 def _build_broker(broker_payload: dict[str, Any]) -> BrokerCreate | None:
