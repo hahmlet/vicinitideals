@@ -7765,12 +7765,24 @@ async def model_builder(
     active_project = next((p for p in deal_projects if p.id == active_project_id), None)
 
     # When deal_setup is the active module, resolve wizard step and missing building data
-    # so the included partials/deal_setup_wizard.html has everything it needs
+    # so the included partials/deal_setup_wizard.html has everything it needs.
+    # Deal Setup is a scenario-level wizard (income mode, debt stack), so the
+    # template always reads the default project's OperationalInputs — not the
+    # active project's. Otherwise Project 2's tab would render the wizard with
+    # inputs=None and Step 7 (Review) crashes on `inputs.debt_sizing_mode`.
     wizard_step: int = 1
     missing_building_data: list = []
-    if active_module == "deal_setup" and active_project:
-        missing_building_data = await _get_missing_building_data(active_project, session)
-        wizard_step = 0 if missing_building_data else 1
+    deal_setup_inputs = data.get("inputs")
+    if active_module == "deal_setup":
+        _default_proj = (await session.execute(
+            select(Project).where(Project.scenario_id == model_id).order_by(Project.created_at.asc()).limit(1)
+        )).scalar_one_or_none()
+        if _default_proj is not None:
+            deal_setup_inputs = (await session.execute(
+                select(OperationalInputs).where(OperationalInputs.project_id == _default_proj.id)
+            )).scalar_one_or_none()
+            missing_building_data = await _get_missing_building_data(_default_proj, session)
+            wizard_step = 0 if missing_building_data else 1
 
     # Draw schedule data — loaded for draw_schedule and cashflow modules
     draw_schedule_data: dict = {}
@@ -7807,6 +7819,10 @@ async def model_builder(
         "missing_building_data": missing_building_data,
         "calc_status_pill_html": calc_status_pill_html,
         **data,
+        # Override inputs when the wizard is active so it always reads the
+        # default project's OperationalInputs (Deal Setup is scenario-level).
+        # Spread AFTER `**data` so this wins.
+        **({"inputs": deal_setup_inputs} if active_module == "deal_setup" else {}),
         **draw_schedule_data,
         **_base_ctx(user, dedup_count, "deals", address_issues_count),
     }
