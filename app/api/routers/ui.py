@@ -4556,6 +4556,34 @@ async def _staleness_map(session: AsyncSession, scenario_id: UUID) -> dict:
     }
 
 
+async def _active_project_from_request(
+    request: Request, session: AsyncSession, model_id: UUID,
+) -> UUID | None:
+    """Extract the active project_id from HX-Current-URL's `?project=` query param.
+
+    Multi-project deals: form submits don't carry the active project, so the
+    route must look at the user's current URL (sent by HTMX in the
+    HX-Current-URL header) to know which Project tab is active. Returns None
+    if the header is missing, the param is invalid, or the project doesn't
+    belong to this scenario.
+    """
+    _hx_url = request.headers.get("HX-Current-URL", "")
+    if not _hx_url:
+        return None
+    from urllib.parse import urlparse, parse_qs
+    _qs_proj = parse_qs(urlparse(_hx_url).query).get("project", [""])[0]
+    if not _qs_proj:
+        return None
+    try:
+        _candidate = UUID(_qs_proj)
+    except ValueError:
+        return None
+    _candidate_proj = await session.get(Project, _candidate)
+    if _candidate_proj and _candidate_proj.scenario_id == model_id:
+        return _candidate_proj.id
+    return None
+
+
 async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: UUID | None = None) -> dict:
     """Load all line-item data for the model builder page/panel.
 
@@ -5092,11 +5120,15 @@ async def handle_form_create_or_update(
     if model is None:
         return HTMLResponse("<p class='text-muted'>Model not found.</p>", status_code=404)
 
-    # Resolve default Project for line items that belong to Project level
+    # Resolve active Project for line items that belong to Project level.
+    # Multi-project deals: prefer the project from the form's active URL
+    # (HX-Current-URL header carries it), fall back to the oldest project.
     default_project = (await session.execute(
         select(Project).where(Project.scenario_id == model_id).order_by(Project.created_at.asc()).limit(1)
     )).scalar_one_or_none()
-    project_id = default_project.id if default_project else None
+    project_id = await _active_project_from_request(request, session, model_id)
+    if project_id is None:
+        project_id = default_project.id if default_project else None
 
     form = await request.form()
     module = _ITEM_TYPE_TO_MODULE.get(item_type, "uses")
@@ -5483,7 +5515,7 @@ async def handle_form_create_or_update(
             session.add(UnitMix(project_id=project_id, **data))
 
     await session.flush()
-    panel_data = await _load_builder_data(session, model_id)
+    panel_data = await _load_builder_data(session, model_id, project_id=project_id)
     ctx = {"model": model, "active_module": module, **panel_data}
     return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
 
@@ -5524,7 +5556,8 @@ async def handle_form_delete(
         await session.delete(row)
         await session.flush()
 
-    panel_data = await _load_builder_data(session, model_id)
+    _active_proj_id = await _active_project_from_request(request, session, model_id)
+    panel_data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
     ctx = {"model": model, "active_module": module, **panel_data}
     return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
 
@@ -5551,17 +5584,23 @@ async def apply_unit_mix_to_revenue(
     if model is None:
         return HTMLResponse("<p class='text-muted'>Model not found.</p>", status_code=404)
 
-    default_project = (await session.execute(
-        select(Project).where(Project.scenario_id == model_id).order_by(Project.created_at.asc()).limit(1)
-    )).scalar_one_or_none()
-    if default_project is None:
-        return HTMLResponse("<p class='text-muted'>No project.</p>", status_code=400)
+    # Resolve active project from HX-Current-URL (multi-project tabs) and
+    # fall back to the default project. All inserts and the panel re-render
+    # must use this project_id, not default_project.
+    active_proj_id = await _active_project_from_request(request, session, model_id)
+    if active_proj_id is None:
+        default_project = (await session.execute(
+            select(Project).where(Project.scenario_id == model_id).order_by(Project.created_at.asc()).limit(1)
+        )).scalar_one_or_none()
+        if default_project is None:
+            return HTMLResponse("<p class='text-muted'>No project.</p>", status_code=400)
+        active_proj_id = default_project.id
 
     unit_mix_rows = list((await session.execute(
-        select(UnitMix).where(UnitMix.project_id == default_project.id).order_by(UnitMix.label)
+        select(UnitMix).where(UnitMix.project_id == active_proj_id).order_by(UnitMix.label)
     )).scalars())
     if not unit_mix_rows:
-        panel_data = await _load_builder_data(session, model_id)
+        panel_data = await _load_builder_data(session, model_id, project_id=active_proj_id)
         ctx = {"model": model, "active_module": "property", **panel_data}
         return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
 
@@ -5619,7 +5658,7 @@ async def apply_unit_mix_to_revenue(
     if generated_labels:
         existing_to_delete = list((await session.execute(
             select(IncomeStream).where(
-                IncomeStream.project_id == default_project.id,
+                IncomeStream.project_id == active_proj_id,
                 IncomeStream.label.in_(generated_labels),
             )
         )).scalars())
@@ -5629,11 +5668,11 @@ async def apply_unit_mix_to_revenue(
 
     # Create fresh streams
     for data in to_generate:
-        session.add(IncomeStream(project_id=default_project.id, **data))
+        session.add(IncomeStream(project_id=active_proj_id, **data))
     await session.flush()
 
     # Return the refreshed Property panel so the user stays oriented
-    panel_data = await _load_builder_data(session, model_id)
+    panel_data = await _load_builder_data(session, model_id, project_id=active_proj_id)
     ctx = {"model": model, "active_module": "property", **panel_data}
     return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
 
@@ -6328,7 +6367,8 @@ async def save_stack_order(
         if val := _fi(form.get(key), None):
             m.stack_position = val
     await session.flush()
-    ctx = await _load_builder_data(session, model_id)
+    _active_proj_id = await _active_project_from_request(request, session, model_id)
+    ctx = await _load_builder_data(session, model_id, project_id=_active_proj_id)
     ctx["request"] = request
     ctx["active_module"] = "sources"
     return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
@@ -6351,7 +6391,8 @@ async def reorder_capital_modules(
         except (ValueError, Exception):
             pass
     await session.flush()
-    ctx = await _load_builder_data(session, model_id)
+    _active_proj_id = await _active_project_from_request(request, session, model_id)
+    ctx = await _load_builder_data(session, model_id, project_id=_active_proj_id)
     ctx["request"] = request
     ctx["active_module"] = "sources"
     model = await session.get(DealModel, model_id)
@@ -7916,7 +7957,8 @@ async def builder_panel(
     if model is None:
         return HTMLResponse("<p class='text-muted'>Model not found.</p>", status_code=404)
 
-    data = await _load_builder_data(session, model_id)
+    _active_proj_id = await _active_project_from_request(request, session, model_id)
+    data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
     ctx: dict = {"model": model, "active_module": module, **data}
 
     # Cash flow periods — only loaded when the cashflow module is active
@@ -8563,7 +8605,8 @@ async def model_calc_status_pill(
     Green pill = all factors clear. Yellow pill = N factors failing.
     Click opens the Calculation Status modal via HTMX.
     """
-    data = await _load_builder_data(session, model_id)
+    _active_proj_id = await _active_project_from_request(request, session, model_id)
+    data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
     status = _compute_calc_status(data)
     return HTMLResponse(_render_calc_status_pill_html(status, model_id))
 
@@ -8579,7 +8622,8 @@ async def model_calc_status_modal(
     Emits an HX-Trigger response header so the topbar pill re-fetches its
     state whenever the modal opens — keeps pill and modal in lockstep.
     """
-    data = await _load_builder_data(session, model_id)
+    _active_proj_id = await _active_project_from_request(request, session, model_id)
+    data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
     status = _compute_calc_status(data)
     response = templates.TemplateResponse(
         request,
@@ -8610,7 +8654,8 @@ async def model_module_nav(
     module: str = "",
 ) -> _TemplateResponse:
     """Returns the module nav cards partial for sidebar live-refresh after mutations."""
-    data = await _load_builder_data(session, model_id)
+    _active_proj_id = await _active_project_from_request(request, session, model_id)
+    data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
     ctx: dict[str, Any] = {
         "request": request,
         "active_module": module,
