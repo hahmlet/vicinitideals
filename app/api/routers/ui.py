@@ -7415,6 +7415,14 @@ async def deal_setup_wizard_complete(
             other_inputs = OperationalInputs(project_id=other_proj.id)
             session.add(other_inputs)
         other_inputs.deal_setup_complete = True
+        # Propagate scenario-level debt config so the engine's closing-cost
+        # auto-sizing runs for every project. Without these, the per-project
+        # compute skips the CC write-back block (it checks debt_types_list)
+        # and leaves Appraisal / Origination / Legal / Title at $0.
+        other_inputs.debt_types = inputs.debt_types
+        other_inputs.debt_structure = inputs.debt_structure
+        other_inputs.debt_terms = inputs.debt_terms
+        other_inputs.debt_milestone_config = inputs.debt_milestone_config
 
     # Create $0 Operating Reserve placeholder in Uses for every project
     # (populated at compute time). Multi-project deals each need their own.
