@@ -1,4 +1,5 @@
 {# Single archived listing row #}
+{% import "_macros.html" as ui %}
 <tr id="listing-row-{{ l.id }}"
     onclick="openListing('{{ l.id }}', '{{ l.address | replace("'", "\\'") }}', '{{ l.source_label }}')">
   <td>
@@ -27,7 +28,7 @@
   <td class="col-right text-muted">{{ l.lot_sqft | number_fmt if l.lot_sqft else "—" }}</td>
   <td class="text-small text-muted">{{ l.property_type or "—" }}</td>
   <td class="text-small text-muted">{{ l.broker_name or "—" }}</td>
-  <td class="text-small text-muted">{{ l.brokerage_name or "—" }}</td>
+  <td class="text-small text-muted">{{ ui.firm_name(l.brokerage_name, l.brokerage_status) }}</td>
   <td>
     <div style="display:flex;gap:4px;align-items:center" onclick="event.stopPropagation()">
       <button class="btn btn-ghost btn-sm"

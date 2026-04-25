@@ -1,3 +1,4 @@
+{% import "_macros.html" as ui %}
 <!-- Sale status badge (colored) + source chip -->
 <div style="display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap">
   {% if b.sale_status == "Active" %}
@@ -45,7 +46,7 @@
 <div class="field-row">
   <div class="field-key">Company</div>
   <div class="field-value">
-    <a href="/brokers?q={{ b.brokerage_name | urlencode }}" style="color:var(--accent)">{{ b.brokerage_name }}</a>
+    {{ ui.firm_name(b.brokerage_name, b.brokerage_status, b.brokerage_name) }}
   </div>
 </div>
 {% endif %}

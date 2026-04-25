@@ -10,6 +10,7 @@ from typing import Any
 
 from app.schemas.broker import BrokerCreate
 from app.schemas.scraped_listing import ScrapedListingCreate
+from app.services.broker_normalize import normalize_name
 
 try:  # pragma: no cover - exercised in environments with curl-cffi installed.
     from curl_cffi.requests import AsyncSession  # type: ignore[import-not-found]
@@ -500,20 +501,38 @@ def _build_listing(detail_payload: dict[str, Any], broker_payloads: list[dict[st
 def _build_broker(broker_payload: dict[str, Any]) -> BrokerCreate | None:
     broker_id = _to_int(broker_payload.get("id"))
     global_id = _string_or_none(broker_payload.get("globalId"))
-    first_name = _string_or_none(broker_payload.get("firstName"))
-    last_name = _string_or_none(broker_payload.get("lastName"))
+    first_name = normalize_name(_string_or_none(broker_payload.get("firstName")))
+    last_name = normalize_name(_string_or_none(broker_payload.get("lastName")))
     if broker_id is None and global_id is None and first_name is None and last_name is None:
         return None
+
+    # License fields aren't in Crexi's bulk search response but are present on
+    # the per-asset /brokers endpoint when the broker has a publicly listed
+    # license. Field-name shape is undocumented; try the common variants.
+    license_number = _string_or_none(
+        broker_payload.get("licenseNumber")
+        or broker_payload.get("license")
+        or broker_payload.get("agentLicenseNumber")
+    )
+    license_state = _string_or_none(
+        broker_payload.get("licenseState")
+        or broker_payload.get("licenseStateAlpha2")
+        or broker_payload.get("licenseStateCode")
+    )
 
     return BrokerCreate(
         crexi_broker_id=broker_id,
         crexi_global_id=global_id,
         first_name=first_name,
         last_name=last_name,
-        brokerage_name=_string_or_none((broker_payload.get("brokerage") or {}).get("name")),
+        brokerage_name=normalize_name(
+            _string_or_none((broker_payload.get("brokerage") or {}).get("name"))
+        ),
         thumbnail_url=_string_or_none(broker_payload.get("thumbnailUrl")),
         is_platinum=bool(broker_payload.get("isPlatinum", False)),
         number_of_assets=_to_int(broker_payload.get("numberOfAssets")),
+        license_number=license_number,
+        license_state=license_state,
     )
 
 

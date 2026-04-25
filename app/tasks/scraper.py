@@ -12,13 +12,14 @@ from typing import Any
 import httpx
 import usaddress
 from celery.utils.log import get_task_logger
-from sqlalchemy import case, func, literal_column, select
+from sqlalchemy import case, func, literal_column, select, update
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 from sqlalchemy.dialects.sqlite import insert as sqlite_insert
 
 from app.config import settings
 from app.db import AsyncSessionLocal
 from app.models.broker import Broker, Brokerage
+from app.services.broker_normalize import normalize_name
 from app.models.ingestion import DedupStatus, IngestJob, SavedSearchCriteria
 from app.models.org import Organization
 from app.models.project import Opportunity, OpportunityStatus, OpportunitySource, ScrapedListing
@@ -242,20 +243,44 @@ async def upsert_brokers(
         if crexi_broker_id is None:
             continue
 
-        brokerage_name = str(payload.pop("brokerage_name", "")).strip() or None
+        # Normalize the brokerage name (smart-case ALL-CAPS, trim, collapse spaces)
+        # before lookup so source variations like "SMIRE", "Smire", and " smire "
+        # all resolve to the same canonical form.
+        brokerage_name = normalize_name(payload.pop("brokerage_name", None))
         if brokerage_name:
-            brokerage_stmt = (
-                insert_factory(Brokerage)
-                .values(name=brokerage_name, crexi_name=brokerage_name)
-                .on_conflict_do_update(
-                    index_elements=[Brokerage.name],
-                    set_={
-                        Brokerage.crexi_name: brokerage_name,
-                    },
+            # Case-insensitive match against existing rows so we don't create
+            # a second row for "Smire" when "SMIRE" already exists. Existing
+            # duplicates in the DB are tolerated (manual cleanup later); we
+            # just never create new ones.
+            existing_brokerage_id = (
+                await session.execute(
+                    select(Brokerage.id).where(
+                        func.lower(Brokerage.name) == brokerage_name.lower()
+                    )
                 )
-                .returning(Brokerage.id)
-            )
-            payload["brokerage_id"] = (await session.execute(brokerage_stmt)).scalar_one()
+            ).scalar_one_or_none()
+            if existing_brokerage_id is not None:
+                # Refresh crexi_name (source-side spelling) for audit; leave
+                # the canonical `name` alone.
+                await session.execute(
+                    update(Brokerage)
+                    .where(Brokerage.id == existing_brokerage_id)
+                    .values(crexi_name=brokerage_name)
+                )
+                payload["brokerage_id"] = existing_brokerage_id
+            else:
+                brokerage_stmt = (
+                    insert_factory(Brokerage)
+                    .values(name=brokerage_name, crexi_name=brokerage_name)
+                    .on_conflict_do_update(
+                        index_elements=[Brokerage.name],
+                        set_={
+                            Brokerage.crexi_name: brokerage_name,
+                        },
+                    )
+                    .returning(Brokerage.id)
+                )
+                payload["brokerage_id"] = (await session.execute(brokerage_stmt)).scalar_one()
 
         stmt = (
             insert_factory(Broker)
@@ -272,8 +297,19 @@ async def upsert_brokers(
                     Broker.brokerage_id: payload.get("brokerage_id"),
                     Broker.email: payload.get("email"),
                     Broker.phone: payload.get("phone"),
-                    Broker.license_number: payload.get("license_number"),
-                    Broker.license_state: payload.get("license_state"),
+                    # When license_number_locked is True the user has manually
+                    # aligned this broker's license to the Oregon database;
+                    # never let a listing-source scrape overwrite it. When
+                    # unlocked, only update if the scrape produced a value
+                    # (don't blow away a previously-captured license with NULL).
+                    Broker.license_number: case(
+                        (Broker.license_number_locked.is_(True), Broker.license_number),
+                        else_=func.coalesce(payload.get("license_number"), Broker.license_number),
+                    ),
+                    Broker.license_state: case(
+                        (Broker.license_number_locked.is_(True), Broker.license_state),
+                        else_=func.coalesce(payload.get("license_state"), Broker.license_state),
+                    ),
                 },
             )
             .returning(Broker.id, Broker.crexi_broker_id)
@@ -283,6 +319,32 @@ async def upsert_brokers(
             broker_id_map[int(row.crexi_broker_id)] = row.id
 
     await session.flush()
+
+    # Auto-trigger Oregon enrichment for any broker in this batch that has a
+    # license_number but has never been enriched. Listing scrapers may not
+    # always supply license_number (Crexi's bulk API doesn't), in which case
+    # this query returns nothing and the monthly sweep picks them up later.
+    if broker_id_map:
+        unenriched = (
+            await session.execute(
+                select(Broker.id).where(
+                    Broker.id.in_(list(broker_id_map.values())),
+                    Broker.license_number.isnot(None),
+                    Broker.oregon_last_pulled_at.is_(None),
+                )
+            )
+        ).scalars().all()
+        if unenriched:
+            # Local import keeps Celery off scraper.py's eager import path.
+            from app.tasks.oregon_elicense import enrich_broker_oregon  # noqa: PLC0415
+
+            for bid in unenriched:
+                enrich_broker_oregon.delay(str(bid))
+            logger.info(
+                "Queued Oregon enrichment for %d newly-licensed brokers from this batch",
+                len(unenriched),
+            )
+
     return broker_id_map
 
 

@@ -176,6 +176,43 @@ async def run_crexi_scraper(
     }
 
 
+@router.post("/scraper/oregon-elicense/run")
+async def run_oregon_elicense_sweep(
+    http_request: Request,
+    max_brokers: int | None = None,
+) -> dict[str, str]:
+    """Manually trigger the Oregon eLicense enrichment sweep.
+
+    The sweep finds brokers whose Oregon record is stale (>30d old) or never
+    pulled and queues an `enrich_broker_oregon` task per broker. The same
+    sweep also runs automatically on a monthly Celery beat schedule.
+    """
+    from app.tasks.oregon_elicense import oregon_elicense_sweep  # noqa: PLC0415
+
+    triggered_by = "ui"
+    trace_id = new_trace_id(getattr(http_request.state, "trace_id", None))
+    queued_at = utc_now()
+    kwargs: dict[str, Any] = {}
+    if max_brokers is not None:
+        kwargs["max_brokers"] = max_brokers
+    result = oregon_elicense_sweep.delay(**kwargs)
+    log_observation(
+        logger,
+        "ingest_job_queued",
+        trace_id=trace_id,
+        triggered_by=triggered_by,
+        source="oregon_elicense",
+        task_id=result.id,
+    )
+    return {
+        "status": "queued",
+        "task_id": result.id,
+        "source": "oregon_elicense",
+        "trace_id": trace_id,
+        "queued_at": format_timestamp(queued_at),
+    }
+
+
 # ---------------------------------------------------------------------------
 # Realie.ai enrichment
 # ---------------------------------------------------------------------------

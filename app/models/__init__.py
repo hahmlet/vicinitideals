@@ -21,7 +21,7 @@ from app.models.parcel import (  # noqa: F401
 )
 
 # 4. Listing identity / promotion models
-from app.models.broker import Broker, Brokerage  # noqa: F401
+from app.models.broker import Broker, BrokerDisciplinaryAction, Brokerage  # noqa: F401
 from app.models.property import Building, Property  # noqa: F401
 from app.models.scraped_listing import ScrapedListing  # noqa: F401
 
@@ -105,6 +105,7 @@ __all__ = [
     # Brokers / building promotion
     "Brokerage",
     "Broker",
+    "BrokerDisciplinaryAction",
     "Building",
     "Property",          # backward-compat alias for Building
     # Deal (top-level entity) + Scenario (financial plan)

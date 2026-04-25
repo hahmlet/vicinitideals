@@ -194,7 +194,8 @@ document.addEventListener('pointerdown', function(e) {
   _drawerPdTarget = e.target;
 });
 document.addEventListener('click', function(e) {
-  if (e.target.classList.contains('drawer-overlay')) {
+  if (e.target.classList.contains('drawer-overlay') ||
+      e.target.classList.contains('modal-center-overlay')) {
     if (_drawerPdTarget !== e.target) return;
     closeDrawer(e.target.id);
   }

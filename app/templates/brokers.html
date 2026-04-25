@@ -54,17 +54,17 @@
   </div>
 </div>
 
-<!-- Broker detail drawer -->
-<div class="drawer-overlay" id="broker-drawer" style="display:none">
-  <div class="drawer">
-    <div class="drawer-header">
+<!-- Broker info modal (centered overlay; see .modal-center- styles in app.css) -->
+<div class="modal-center-overlay" id="broker-modal" style="display:none">
+  <div class="modal-center-card">
+    <div class="modal-center-header">
       <div>
-        <div class="drawer-title" id="broker-drawer-title">Broker</div>
-        <div class="text-small text-muted" id="broker-drawer-sub"></div>
+        <div class="modal-center-title" id="broker-modal-title">Broker</div>
+        <div class="modal-center-sub" id="broker-modal-sub"></div>
       </div>
-      <span class="drawer-close" onclick="closeDrawer('broker-drawer')">×</span>
+      <span class="modal-center-close" onclick="closeDrawer('broker-modal')">×</span>
     </div>
-    <div class="drawer-body" id="broker-drawer-body">
+    <div class="modal-center-body" id="broker-modal-body">
       <div class="text-muted text-small">Loading…</div>
     </div>
   </div>
@@ -72,10 +72,10 @@
 
 <script>
 function openBroker(id, name, company) {
-  document.getElementById('broker-drawer-title').textContent = name;
-  document.getElementById('broker-drawer-sub').textContent = company || '';
-  htmx.ajax('GET', '/ui/brokers/' + id + '/detail', {target: '#broker-drawer-body', swap: 'innerHTML'});
-  openDrawer('broker-drawer');
+  document.getElementById('broker-modal-title').textContent = name;
+  document.getElementById('broker-modal-sub').textContent = company || '';
+  htmx.ajax('GET', '/ui/brokers/' + id + '/detail', {target: '#broker-modal-body', swap: 'innerHTML'});
+  openDrawer('broker-modal');
 }
 </script>
 {% endblock %}

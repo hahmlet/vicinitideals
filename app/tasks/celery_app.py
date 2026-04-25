@@ -19,6 +19,7 @@ celery_app = Celery(
         "app.tasks.scenario",
         "app.tasks.parcel_seed",
         "app.tasks.loopnet_ingest",
+        "app.tasks.oregon_elicense",
     ],
 )
 
@@ -33,6 +34,7 @@ celery_app.conf.update(
         "app.tasks.scraper.*": {"queue": "scraping"},
         "app.tasks.scenario.*": {"queue": "analysis"},
         "app.tasks.loopnet_ingest.*": {"queue": "scraping"},
+        "app.tasks.oregon_elicense.*": {"queue": "scraping"},
     },
     beat_schedule={
         "scrape-crexi-daily": {
@@ -59,6 +61,12 @@ celery_app.conf.update(
         "loopnet-monthly-refresh": {
             "task": "app.tasks.loopnet_ingest.loopnet_monthly_refresh",
             "schedule": crontab(day_of_month=1, hour=4, minute=0),
+        },
+        # Oregon eLicense: monthly enrichment sweep on 2nd at 05:00 UTC.
+        # Re-enriches brokers whose license data is >30d old or never pulled.
+        "oregon-elicense-monthly-sweep": {
+            "task": "app.tasks.oregon_elicense.oregon_elicense_sweep",
+            "schedule": crontab(day_of_month=2, hour=5, minute=0),
         },
     },
     timezone="UTC",

@@ -1,3 +1,4 @@
+{% import "_macros.html" as ui %}
 {% for b in buildings %}
 <tr onclick="openBuilding('{{ b.id }}', '{{ b.name }}', '{{ b.address }}')">
   <td>
@@ -31,7 +32,7 @@
   <td class="col-right {% if b.cap_rate %}text-mono{% else %}text-muted{% endif %}">{{ b.cap_rate | pct if b.cap_rate else "—" }}</td>
   <td class="text-small">{{ b.property_type or "—" }}</td>
   <td class="text-small">{{ b.broker_name or "—" }}</td>
-  <td class="text-small">{{ b.brokerage_name or "—" }}</td>
+  <td class="text-small">{{ ui.firm_name(b.brokerage_name, b.brokerage_status) }}</td>
   <td class="text-small text-muted">{{ b.first_seen_at or "—" }}</td>
   <td class="text-small text-muted">{{ b.last_seen_at or "—" }}</td>
 </tr>

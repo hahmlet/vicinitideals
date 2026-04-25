@@ -1246,6 +1246,18 @@ async def settings_scraping_services(
             "last_run": _fmt_ts(crexi_job.started_at if crexi_job else None),
             "last_result": crexi_job.status if crexi_job else "never",
         },
+        {
+            "name": "Oregon eLicense",
+            "description": "Monthly enrichment of broker license records (license type, status, personal address, affiliated firm, disciplinary actions) from the Oregon Real Estate Agency public lookup.",
+            "status": "Pending Implementation",
+            "schedule": "Monthly on the 2nd at 05:00 UTC via Celery beat",
+            "proxy": "Residential (ProxyOn)" if residential_configured else "Residential (ProxyOn, not configured)",
+            "last_run": "—",
+            "last_result": "—",
+            "action_url": "/scraper/oregon-elicense/run",
+            "action_label": "Trigger Sweep",
+            "action_method": "post",
+        },
     ]
 
     return templates.TemplateResponse(
@@ -4183,10 +4195,12 @@ async def create_deal_from_listing(
 # ---------------------------------------------------------------------------
 
 def _build_broker_row(broker: Broker, listing_count: int) -> dict:
+    bg = broker.brokerage
     return {
         "id": str(broker.id),
         "full_name": f"{broker.first_name or ''} {broker.last_name or ''}".strip() or "Unknown",
-        "brokerage_name": broker.brokerage.name if broker.brokerage else None,
+        "brokerage_name": bg.name if bg else None,
+        "brokerage_status": (bg.firm_scrape_status if bg else None) or "unknown",
         "email": broker.email,
         "phone": broker.phone,
         "license_number": broker.license_number,
@@ -4197,8 +4211,62 @@ def _build_broker_row(broker: Broker, listing_count: int) -> dict:
     }
 
 
+def _join_address(*parts: str | None) -> str | None:
+    """Join non-empty address parts with separators suitable for inline display."""
+    cleaned = [str(p).strip() for p in parts if p]
+    if not cleaned:
+        return None
+    # street, street2, city, state, zip → "street, street2, city, state zip"
+    if len(cleaned) >= 4:
+        head = ", ".join(cleaned[:-2])
+        tail = " ".join(cleaned[-2:])
+        return f"{head}, {tail}"
+    return ", ".join(cleaned)
+
+
 def _build_broker_detail(broker: Broker, listings: list[ScrapedListing]) -> dict:
     row = _build_broker_row(broker, len(listings))
+    bg = broker.brokerage
+    row.update(
+        {
+            "license_number_locked": bool(broker.license_number_locked),
+            "license_personal_address": _join_address(
+                broker.license_personal_street,
+                broker.license_personal_street2,
+                broker.license_personal_city,
+                broker.license_personal_state,
+                broker.license_personal_zip,
+            ),
+            "license_type": broker.license_type,
+            "license_status": broker.license_status or "unknown",
+            "oregon_last_pulled_at": broker.oregon_last_pulled_at.isoformat()
+            if broker.oregon_last_pulled_at else None,
+            "oregon_lookup_status": broker.oregon_lookup_status,
+            "oregon_failure_count": int(broker.oregon_failure_count or 0),
+            "oregon_detail_url": broker.oregon_detail_url,
+            "brokerage_id": str(bg.id) if bg else None,
+            "firm_scrape_status": (bg.firm_scrape_status if bg else None) or "unknown",
+            "firm_scrape_domain": bg.firm_scrape_domain if bg else None,
+            "oregon_company_name": bg.oregon_company_name if bg else None,
+            "oregon_company_address": _join_address(
+                bg.oregon_company_street,
+                bg.oregon_company_street2,
+                bg.oregon_company_city,
+                bg.oregon_company_state,
+                bg.oregon_company_zip,
+            ) if bg else None,
+            "disciplinary_actions": [
+                {
+                    "case_number": d.case_number,
+                    "order_signed_date": d.order_signed_date.isoformat()
+                    if d.order_signed_date else None,
+                    "resolution": d.resolution,
+                    "found_issues": d.found_issues,
+                }
+                for d in (broker.disciplinary_actions or [])
+            ],
+        }
+    )
     row["listings"] = [
         {
             "address": l.address_normalized or l.address_raw or "Unknown",
@@ -4289,10 +4357,76 @@ async def brokers_rows(
 async def broker_detail(request: Request, broker_id: UUID, session: DBSession) -> HTMLResponse:
     broker = await session.get(
         Broker, broker_id,
-        options=[selectinload(Broker.brokerage), selectinload(Broker.scraped_listings)]
+        options=[
+            selectinload(Broker.brokerage),
+            selectinload(Broker.scraped_listings),
+            selectinload(Broker.disciplinary_actions),
+        ],
     )
     if broker is None:
         return HTMLResponse("<p class='text-muted'>Not found.</p>")
+    b = _build_broker_detail(broker, broker.scraped_listings)
+    return templates.TemplateResponse(request, "partials/broker_detail.html", {"b": b})
+
+
+@router.post("/ui/brokers/{broker_id}/license", response_class=HTMLResponse)
+async def broker_license_update(
+    request: Request,
+    broker_id: UUID,
+    session: DBSession,
+    license_number: str = Form(default=""),
+    license_state: str = Form(default=""),
+) -> HTMLResponse:
+    """Manually set a broker's license number. Sets license_number_locked=True
+    so listing scrapers won't overwrite it. The user does this specifically to
+    align the license with the Oregon database; subsequent Oregon enrichment
+    runs against this value."""
+    broker = await session.get(
+        Broker, broker_id,
+        options=[
+            selectinload(Broker.brokerage),
+            selectinload(Broker.scraped_listings),
+            selectinload(Broker.disciplinary_actions),
+        ],
+    )
+    if broker is None:
+        return HTMLResponse("<p class='text-muted'>Not found.</p>")
+    cleaned_number = (license_number or "").strip() or None
+    cleaned_state = (license_state or "").strip().upper() or None
+    broker.license_number = cleaned_number
+    broker.license_state = cleaned_state
+    broker.license_number_locked = cleaned_number is not None
+    await session.commit()
+    await session.refresh(broker)
+    b = _build_broker_detail(broker, broker.scraped_listings)
+    return templates.TemplateResponse(request, "partials/broker_detail.html", {"b": b})
+
+
+@router.post("/ui/brokers/{broker_id}/oregon-update", response_class=HTMLResponse)
+async def broker_oregon_update(
+    request: Request, broker_id: UUID, session: DBSession,
+) -> HTMLResponse:
+    """Queue a one-shot Oregon eLicense enrichment for a single broker. Does
+    not affect license_number_locked — manual lock and Oregon enrichment are
+    independent (lock blocks listing-source scrapers, not Oregon)."""
+    broker = await session.get(
+        Broker, broker_id,
+        options=[
+            selectinload(Broker.brokerage),
+            selectinload(Broker.scraped_listings),
+            selectinload(Broker.disciplinary_actions),
+        ],
+    )
+    if broker is None:
+        return HTMLResponse("<p class='text-muted'>Not found.</p>")
+    broker.oregon_lookup_status = "pending"
+    await session.commit()
+    # Local import keeps Celery out of the router import path in unit tests
+    # that don't load celery_app.
+    from app.tasks.oregon_elicense import enrich_broker_oregon  # noqa: PLC0415
+
+    enrich_broker_oregon.delay(str(broker_id))
+    await session.refresh(broker)
     b = _build_broker_detail(broker, broker.scraped_listings)
     return templates.TemplateResponse(request, "partials/broker_detail.html", {"b": b})
 

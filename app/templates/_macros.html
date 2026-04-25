@@ -1,0 +1,42 @@
+{# Shared Jinja macros. Import in any template with:
+     {% import "_macros.html" as ui %}
+   then call e.g. {{ ui.firm_name(name, status, query) }}.
+#}
+
+{# Render a brokerage / firm name with the appropriate color treatment.
+
+   The color is driven by Brokerage.firm_scrape_status:
+     - 'supported'   → green (we have a contact-info adapter for this firm)
+     - 'unsupported' → red (we've checked, nothing scrapable)
+     - 'unknown'     → grey (never assessed; default)
+
+   The class also overrides default link blue so the firm color travels with
+   the name everywhere it's rendered (broker modal, broker list, listing
+   rows, building detail, etc.).
+
+   Args:
+     name:    str | None — the firm display name. None/empty renders as "—".
+     status:  str — one of 'supported' / 'unsupported' / 'unknown'. Defaults
+              to 'unknown' for templates that don't have access to brokerage
+              status data yet (e.g. listing-row dict builders that haven't
+              been threaded with status).
+     query:   str | None — optional /brokers?company=… search value. When
+              provided, the name is rendered as a link to the broker list
+              filtered by this company. When None, renders as a span.
+#}
+{% macro firm_name(name, status="unknown", query=None) -%}
+  {%- if not name -%}
+    <span class="text-muted">—</span>
+  {%- else -%}
+    {%- set s = (status or "unknown") | replace("_", "-") -%}
+    {%- set tooltip =
+        "Firm contact-info scraper available — auto-enrichment runs on new brokers." if status == "supported"
+        else ("No scraper for this firm (contact info not publicly listed)." if status == "unsupported"
+        else "No scraper assessed for this firm yet.") -%}
+    {%- if query -%}
+      <a href="/brokers?company={{ query | urlencode }}" class="firm-name is-{{ s }}" title="{{ tooltip }}" onclick="event.stopPropagation()">{{ name }}</a>
+    {%- else -%}
+      <span class="firm-name is-{{ s }}" title="{{ tooltip }}">{{ name }}</span>
+    {%- endif -%}
+  {%- endif -%}
+{%- endmacro %}

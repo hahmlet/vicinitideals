@@ -1,32 +1,157 @@
-{% if b.number_of_assets %}
-<div style="margin-bottom:16px">
-  <span class="badge badge-blue">{{ b.number_of_assets }} assets</span>
+{# Broker detail card — rendered inside the centered modal on /brokers.
+   Context: `b` is the dict produced by _build_broker_detail() in ui.py.
+   Mutations (license edit, Oregon trigger) HTMX-swap the whole partial. #}
+{% import "_macros.html" as ui %}
+{% set status = b.license_status or "unknown" %}
+
+{# ── Identity row ── #}
+<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:16px">
+  <div>
+    <div style="font-size:18px;font-weight:600">{{ b.full_name }}</div>
+    <div style="margin-top:2px">
+      {{ ui.firm_name(b.brokerage_name, b.firm_scrape_status, b.brokerage_name) }}
+    </div>
+  </div>
+  <div style="display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end">
+    {% if b.is_platinum %}<span class="badge badge-blue">Platinum</span>{% endif %}
+    {% if b.number_of_assets %}<span class="badge badge-blue">{{ b.number_of_assets }} assets</span>{% endif %}
+  </div>
+</div>
+
+{# ── Contact ── #}
+<div class="section-title mb-12">Contact</div>
+<div class="field-row">
+  <div class="field-key">Email</div>
+  <div class="field-value">
+    {% if b.email %}<a href="mailto:{{ b.email }}" style="color:var(--accent)">{{ b.email }}</a>{% else %}—{% endif %}
+  </div>
+</div>
+<div class="field-row">
+  <div class="field-key">Phone</div>
+  <div class="field-value">
+    {% if b.phone %}<a href="tel:{{ b.phone }}" style="color:var(--accent)">{{ b.phone }}</a>{% else %}—{% endif %}
+  </div>
+</div>
+
+{# ── License + Oregon enrichment ── #}
+<div class="divider"></div>
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+  <div class="section-title" style="margin:0">License</div>
+  <span class="status-pill is-{{ status | replace('_','-') }}">{{ status | replace('_',' ') }}</span>
+</div>
+
+<form hx-post="/ui/brokers/{{ b.id }}/license"
+      hx-target="#broker-modal-body"
+      hx-swap="innerHTML"
+      style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+  <input type="text"
+         name="license_number"
+         value="{{ b.license_number or '' }}"
+         placeholder="License #"
+         class="filter-input"
+         style="flex:1;font-family:ui-monospace,monospace;{% if status == 'not_found' %}color:var(--danger);font-weight:600;{% endif %}">
+  <input type="text"
+         name="license_state"
+         value="{{ b.license_state or 'OR' }}"
+         maxlength="4"
+         class="filter-input"
+         style="width:64px;text-transform:uppercase">
+  <button type="submit" class="btn btn-secondary btn-sm">
+    {% if b.license_number_locked %}🔒 Update Lock{% else %}Save & Lock{% endif %}
+  </button>
+</form>
+<div class="text-small text-muted" style="margin-bottom:12px">
+  {% if b.license_number_locked %}
+    Locked — listing scrapers won't overwrite. Oregon enrichment still runs against this number.
+  {% else %}
+    Unlocked — listing scrapers may update if they pick up a new value.
+  {% endif %}
+</div>
+
+{% if b.license_type %}
+<div class="field-row">
+  <div class="field-key">License Type</div>
+  <div class="field-value">{{ b.license_type }}</div>
+</div>
+{% endif %}
+{% if b.license_personal_address %}
+<div class="field-row">
+  <div class="field-key">Personal Address</div>
+  <div class="field-value">{{ b.license_personal_address }}</div>
 </div>
 {% endif %}
 
-<div class="section-title mb-12">Contact</div>
-<div class="field-row">
-  <div class="field-key">Full Name</div>
-  <div class="field-value">
-    <a href="/brokers?q={{ b.full_name | urlencode }}" style="color:var(--accent)">{{ b.full_name }}</a>
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:8px;flex-wrap:wrap">
+  <div class="text-small text-muted">
+    {% if b.oregon_last_pulled_at %}
+      Last Oregon pull: {{ b.oregon_last_pulled_at[:16] | replace('T',' ') }}
+    {% elif b.oregon_lookup_status == 'pending' %}
+      Oregon enrichment queued…
+    {% else %}
+      Never enriched from Oregon
+    {% endif %}
+    {% if b.oregon_failure_count and b.oregon_failure_count > 0 %}
+      · <span class="text-license-bad">{{ b.oregon_failure_count }} recent failure{{ 's' if b.oregon_failure_count != 1 else '' }}</span>
+    {% endif %}
+  </div>
+  <div style="display:flex;gap:6px">
+    {% if b.oregon_detail_url %}
+      <a href="{{ b.oregon_detail_url }}" target="_blank" rel="noopener"
+         class="btn btn-secondary btn-sm">View on Oregon ↗</a>
+    {% endif %}
+    <button hx-post="/ui/brokers/{{ b.id }}/oregon-update"
+            hx-target="#broker-modal-body"
+            hx-swap="innerHTML"
+            {% if not b.license_number %}disabled title="Set a license number first"{% endif %}
+            class="btn btn-secondary btn-sm">↻ Update from Oregon</button>
   </div>
 </div>
+
+{# ── Affiliated firm (Oregon record) ── #}
+{% if b.oregon_company_name or b.oregon_company_address %}
+<div class="divider"></div>
+<div class="section-title mb-12">Affiliated Firm (Oregon record)</div>
+{% if b.oregon_company_name %}
 <div class="field-row">
   <div class="field-key">Company</div>
-  <div class="field-value">
-    {% if b.brokerage_name %}
-    <a href="/brokers?q={{ b.brokerage_name | urlencode }}" style="color:var(--accent)">{{ b.brokerage_name }}</a>
-    {% else %}—{% endif %}
-  </div>
+  <div class="field-value">{{ b.oregon_company_name }}</div>
 </div>
-<div class="field-row"><div class="field-key">Email</div><div class="field-value">
-  {% if b.email %}<a href="mailto:{{ b.email }}" style="color:var(--accent)">{{ b.email }}</a>{% else %}—{% endif %}
-</div></div>
-<div class="field-row"><div class="field-key">Phone</div><div class="field-value">{{ b.phone or "—" }}</div></div>
-<div class="field-row"><div class="field-key">License</div><div class="field-value">
-  {% if b.license_number %}{{ b.license_number }}{% if b.license_state %} · {{ b.license_state }}{% endif %}{% else %}—{% endif %}
-</div></div>
+{% endif %}
+{% if b.oregon_company_address %}
+<div class="field-row">
+  <div class="field-key">Address</div>
+  <div class="field-value">{{ b.oregon_company_address }}</div>
+</div>
+{% endif %}
+{% endif %}
 
+{# ── Disciplinary actions ── #}
+{% if b.disciplinary_actions %}
+<div class="divider"></div>
+<div class="section-title mb-12">Disciplinary Actions ({{ b.disciplinary_actions | length }})</div>
+<table class="disciplinary-table">
+  <thead>
+    <tr>
+      <th>Case #</th>
+      <th>Order Signed</th>
+      <th>Resolution</th>
+      <th>Found Issues</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for d in b.disciplinary_actions %}
+    <tr>
+      <td style="font-family:ui-monospace,monospace">{{ d.case_number or '—' }}</td>
+      <td>{{ d.order_signed_date or '—' }}</td>
+      <td>{{ d.resolution or '—' }}</td>
+      <td>{{ d.found_issues or '—' }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{# ── Listings ── #}
 {% if b.listings %}
 <div class="divider"></div>
 <div class="section-title mb-12">Listings ({{ b.listings | length }})</div>
@@ -39,6 +164,3 @@
 </div>
 {% endfor %}
 {% endif %}
-
-<div class="divider"></div>
-<button class="btn btn-secondary" style="width:100%">✏ Edit Contact</button>
