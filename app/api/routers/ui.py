@@ -3667,13 +3667,38 @@ async def map_context(
         listing = await session.get(ScrapedListing, listing_id)
         if listing:
             context_label = listing.address_normalized or listing.address_raw or str(listing_id)
+            # Resolve parcels for the listing. Try in order:
+            #   1) exact apn match
+            #   2) any apn_normalized token match (handles cross-source format
+            #      drift like "1N1E03BD-09700" vs "1N1E03BD09700")
+            #   3) reconciled parcel via ProjectParcel (when promoted to opp)
+            apn_candidates: list[str] = []
             if listing.apn:
-                apn = listing.apn.split(",")[0].split(";")[0].strip().upper()
-                result = (await session.execute(
-                    select(Parcel).where(Parcel.apn == apn)
-                )).scalar_one_or_none()
-                if result:
-                    parcels = [result]
+                apn_candidates.extend(
+                    p.strip().upper() for p in listing.apn.replace(";", ",").split(",")
+                    if p.strip()
+                )
+            if apn_candidates:
+                hits = list((await session.execute(
+                    select(Parcel).where(Parcel.apn.in_(apn_candidates))
+                )).scalars())
+                if hits:
+                    parcels = hits
+            if not parcels and listing.apn_normalized:
+                tokens = [t for t in (listing.apn_normalized or []) if t]
+                if tokens:
+                    hits = list((await session.execute(
+                        select(Parcel).where(Parcel.apn_normalized.in_(tokens))
+                    )).scalars())
+                    if hits:
+                        parcels = hits
+            if not parcels and listing.linked_project_id:
+                pps = (await session.execute(
+                    select(ProjectParcel)
+                    .where(ProjectParcel.project_id == listing.linked_project_id)
+                    .options(selectinload(ProjectParcel.parcel))
+                )).scalars().all()
+                parcels = [pp.parcel for pp in pps if pp.parcel]
             # Fallback: listing lat/lng only — handled below via centroid
 
     elif opportunity_id:
