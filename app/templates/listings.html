@@ -120,6 +120,10 @@ details.archive-section[open] > summary .chevron { transform: rotate(90deg); }
       </div>
 
       <button type="button" class="btn btn-secondary btn-sm" data-filter-clear style="white-space:nowrap" title="Clear filters and reset">✕ Clear</button>
+      <button type="button" class="btn btn-secondary btn-sm" id="saved-filter-save-btn" style="white-space:nowrap;display:none" title="Save current filters as a named view">★ Save filter</button>
+      <span id="saved-filter-dropdown" style="display:none">
+        <select id="saved-filter-select" class="filter-select" style="min-width:140px"></select>
+      </span>
       <button type="button" class="btn btn-secondary btn-sm" id="export-csv-btn" style="white-space:nowrap">Export CSV</button>
     </div>
   </form>

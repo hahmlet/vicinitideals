@@ -790,5 +790,133 @@ document.addEventListener('click', function(e) {
   });
 })();
 </script>
+
+<script>
+// Saved Filters: per-user, per-page named filter snapshots.
+//
+// A "saved filter" is just a URL query string (sans `q`) attached to a
+// name. Recall navigates to /<page>?<query_string>, so the URL itself is
+// shareable. The Save control only appears once any filter is set; the
+// dropdown only appears when the user has at least one saved filter.
+(function() {
+  function _form() { return document.querySelector('form[data-filter-form]'); }
+  function _page() { var f = _form(); return f && f.dataset.filterForm; }
+
+  // Build the filter-only query string from the current form, dropping `q`
+  // (search box) and empty values. This is what Save persists and what
+  // anchors look for when deciding "is anything filtered?".
+  function _filterQuery() {
+    var f = _form();
+    if (!f) return '';
+    var fd = new URLSearchParams(new FormData(f));
+    var qs = new URLSearchParams();
+    fd.forEach(function(v, k) {
+      if (k === 'q') return;
+      if (v === '' || v === undefined || v === null) return;
+      qs.append(k, v);
+    });
+    return qs.toString();
+  }
+
+  function _hasFilter() { return _filterQuery().length > 0; }
+
+  var _saved = [];
+  var _savedFetched = false;
+
+  function _renderControls() {
+    var saveBtn = document.getElementById('saved-filter-save-btn');
+    var dropdown = document.getElementById('saved-filter-dropdown');
+    var pageHasFilter = _hasFilter();
+    if (saveBtn) saveBtn.style.display = pageHasFilter ? 'inline-flex' : 'none';
+    if (dropdown) {
+      dropdown.style.display = (_saved.length >= 1) ? 'inline-block' : 'none';
+      var sel = document.getElementById('saved-filter-select');
+      if (sel) {
+        var current = sel.value;
+        sel.innerHTML = '<option value="">Saved filters…</option>' +
+          _saved.map(function(s) {
+            return '<option value="' + s.url.replace(/"/g, '&quot;') + '" data-id="' + s.id + '">' +
+              s.name.replace(/</g, '&lt;') + '</option>';
+          }).join('') +
+          (_saved.length ? '<option value="__manage__">— Manage…</option>' : '');
+        if (current) sel.value = current;
+      }
+    }
+  }
+
+  async function _fetchSaved() {
+    var page = _page();
+    if (!page) return;
+    try {
+      var r = await fetch('/api/saved-filters?page=' + encodeURIComponent(page),
+        { credentials: 'same-origin' });
+      var data = await r.json();
+      _saved = (data && data.items) || [];
+    } catch (_) { _saved = []; }
+    _savedFetched = true;
+    _renderControls();
+  }
+
+  async function _saveDialog() {
+    var page = _page();
+    if (!page) return;
+    var name = window.prompt('Save current filter as:');
+    if (!name) return;
+    name = name.trim();
+    if (!name) return;
+    var fd = new FormData();
+    fd.append('page', page);
+    fd.append('name', name);
+    fd.append('query_string', _filterQuery());
+    var r = await fetch('/api/saved-filters', {
+      method: 'POST', body: fd, credentials: 'same-origin',
+    });
+    if (!r.ok) {
+      alert('Could not save filter.');
+      return;
+    }
+    await _fetchSaved();
+  }
+
+  async function _manageDialog() {
+    if (!_saved.length) return;
+    var lines = _saved.map(function(s, i) {
+      return (i + 1) + ') ' + s.name;
+    }).join('\n');
+    var pick = window.prompt(
+      'Saved filters:\n' + lines + '\n\nEnter the number to delete (blank to cancel):'
+    );
+    if (!pick) return;
+    var idx = parseInt(pick, 10) - 1;
+    if (isNaN(idx) || idx < 0 || idx >= _saved.length) return;
+    var target = _saved[idx];
+    if (!window.confirm('Delete saved filter "' + target.name + '"?')) return;
+    var r = await fetch('/api/saved-filters/' + target.id, {
+      method: 'DELETE', credentials: 'same-origin',
+    });
+    if (!r.ok) { alert('Could not delete.'); return; }
+    await _fetchSaved();
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (!_form()) return;
+    _fetchSaved();
+    var f = _form();
+    f.addEventListener('change', _renderControls);
+    f.addEventListener('input', _renderControls);
+    var saveBtn = document.getElementById('saved-filter-save-btn');
+    if (saveBtn) saveBtn.addEventListener('click', function(e) {
+      e.preventDefault(); _saveDialog();
+    });
+    var sel = document.getElementById('saved-filter-select');
+    if (sel) sel.addEventListener('change', function() {
+      var v = sel.value;
+      if (!v) return;
+      if (v === '__manage__') { sel.value = ''; _manageDialog(); return; }
+      window.location.href = v;
+    });
+  });
+})();
+</script>
 </body>
 </html>

@@ -10593,3 +10593,115 @@ async def update_draw_source_window(
     ctx["request"] = request
     ctx["active_module"] = "draw_schedule"
     return templates.TemplateResponse(request, "partials/draw_schedule_panel.html", ctx)
+
+
+# ── Saved Filters ────────────────────────────────────────────────────────────
+# Per-user, per-page named filter snapshots used by the Listings/Parcels/
+# Opportunities/Deals filter bars. Stored as the URL query string the page
+# already speaks, so loading a saved filter == redirect to /<page>?<query>
+# and the URL itself is shareable.
+
+_SAVED_FILTER_PAGES = {"listings", "parcels", "opportunities", "deals"}
+
+
+def _saved_filter_landing(page: str) -> str:
+    """Map a filter-form page key back to the URL the saved filter loads against."""
+    return {
+        "listings": "/listings",
+        "parcels": "/parcels",
+        "opportunities": "/opportunities",
+        "deals": "/deals",
+    }.get(page, "/")
+
+
+@router.get("/api/saved-filters")
+async def list_saved_filters(
+    request: Request,
+    session: DBSession,
+    page: str = Query(...),
+) -> dict:
+    """List the current user's saved filters for one page."""
+    from app.models.saved_filter import SavedFilter
+    user = await _get_user(session, request)
+    if user is None or page not in _SAVED_FILTER_PAGES:
+        return {"items": []}
+    rows = list((await session.execute(
+        select(SavedFilter)
+        .where(SavedFilter.user_id == user.id, SavedFilter.page == page)
+        .order_by(SavedFilter.name)
+    )).scalars())
+    base = _saved_filter_landing(page)
+    return {
+        "items": [
+            {
+                "id": str(r.id),
+                "name": r.name,
+                "url": f"{base}?{r.query_string}" if r.query_string else base,
+                "query_string": r.query_string,
+            }
+            for r in rows
+        ]
+    }
+
+
+@router.post("/api/saved-filters")
+async def create_saved_filter(
+    request: Request,
+    session: DBSession,
+) -> dict:
+    """Create or rename-overwrite a saved filter for the current user."""
+    from app.models.saved_filter import SavedFilter
+    user = await _get_user(session, request)
+    if user is None:
+        return JSONResponse({"detail": "Not authenticated"}, status_code=401)
+    form = await request.form()
+    page = str(form.get("page", "")).strip()
+    name = str(form.get("name", "")).strip()[:120]
+    query_string = str(form.get("query_string", "")).strip()
+    if page not in _SAVED_FILTER_PAGES or not name:
+        return JSONResponse({"detail": "Missing page or name"}, status_code=400)
+
+    existing = (await session.execute(
+        select(SavedFilter).where(
+            SavedFilter.user_id == user.id,
+            SavedFilter.page == page,
+            SavedFilter.name == name,
+        )
+    )).scalar_one_or_none()
+    if existing:
+        existing.query_string = query_string
+        existing.updated_at = datetime.now(UTC)
+        row = existing
+    else:
+        row = SavedFilter(
+            user_id=user.id,
+            page=page,
+            name=name,
+            query_string=query_string,
+        )
+        session.add(row)
+    await session.commit()
+    base = _saved_filter_landing(page)
+    return {
+        "id": str(row.id),
+        "name": row.name,
+        "url": f"{base}?{row.query_string}" if row.query_string else base,
+    }
+
+
+@router.delete("/api/saved-filters/{filter_id}")
+async def delete_saved_filter(
+    request: Request,
+    filter_id: UUID,
+    session: DBSession,
+) -> dict:
+    from app.models.saved_filter import SavedFilter
+    user = await _get_user(session, request)
+    if user is None:
+        return JSONResponse({"detail": "Not authenticated"}, status_code=401)
+    row = await session.get(SavedFilter, filter_id)
+    if row is None or row.user_id != user.id:
+        return JSONResponse({"detail": "Not found"}, status_code=404)
+    await session.delete(row)
+    await session.commit()
+    return {"ok": True}
