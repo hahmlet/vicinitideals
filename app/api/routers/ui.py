@@ -6948,7 +6948,7 @@ async def deal_setup_wizard_complete(
     session: DBSession,
 ) -> Response:
     """Finalize setup: mark complete and auto-create the primary debt CapitalModule(s)."""
-    from app.models.capital import CapitalModule, FunderType
+    from app.models.capital import CapitalModule, CapitalModuleProject, FunderType
 
     model = await session.get(DealModel, model_id)
     if model is None:
@@ -7259,29 +7259,40 @@ async def deal_setup_wizard_complete(
             inputs.debt_structure = "perm_only"
         # Other combinations (pre_development, acquisition, bridge) left as-is until Phase B
 
-    # Seed default OpEx line items if none exist — consensus from CRE model
-    # cross-analysis (HelloData, A.CRE, PropRise). User fills in amounts later.
-    existing_opex = list((await session.execute(
-        select(OperatingExpenseLine).where(
-            OperatingExpenseLine.project_id == default_project.id,
-        )
+    # All projects in the scenario — used below to seed Uses, Reserves,
+    # OpEx, and CapitalModuleProject junction rows on every project so
+    # multi-project deals don't leave Project 2+ empty after Deal Setup.
+    all_scenario_projects = list((await session.execute(
+        select(Project).where(Project.scenario_id == model_id).order_by(Project.created_at.asc())
     )).scalars())
-    if not existing_opex:
-        _DEFAULT_OPEX_LINES = [
-            "Real Estate Taxes",
-            "Property Insurance",
-            "Utilities",
-            "Repairs & Maintenance",
-            "Management Fee",
-            "Payroll & On-Site Staff",
-            "Marketing & Leasing",
-            "General & Administrative",
-            "Turnover / Make-Ready",
-            "CapEx Reserve",
-        ]
+
+    # Seed default OpEx line items per project if none exist — consensus
+    # from CRE model cross-analysis (HelloData, A.CRE, PropRise). User
+    # fills in amounts later. Each project gets its own copy because
+    # OpEx rows are project-scoped.
+    _DEFAULT_OPEX_LINES = [
+        "Real Estate Taxes",
+        "Property Insurance",
+        "Utilities",
+        "Repairs & Maintenance",
+        "Management Fee",
+        "Payroll & On-Site Staff",
+        "Marketing & Leasing",
+        "General & Administrative",
+        "Turnover / Make-Ready",
+        "CapEx Reserve",
+    ]
+    for _proj in all_scenario_projects:
+        _existing_opex = list((await session.execute(
+            select(OperatingExpenseLine).where(
+                OperatingExpenseLine.project_id == _proj.id,
+            )
+        )).scalars())
+        if _existing_opex:
+            continue
         for _label in _DEFAULT_OPEX_LINES:
             session.add(OperatingExpenseLine(
-                project_id=default_project.id,
+                project_id=_proj.id,
                 label=_label,
                 annual_amount=Decimal("0"),
                 per_type="flat",
@@ -7313,22 +7324,53 @@ async def deal_setup_wizard_complete(
             session.add(other_inputs)
         other_inputs.deal_setup_complete = True
 
-    # Create $0 Operating Reserve placeholder in Uses (populated at compute time)
-    existing_reserve = (await session.execute(
-        select(UseLine).where(
-            UseLine.project_id == default_project.id,
-            UseLine.label == "Operating Reserve",
+    # Create $0 Operating Reserve placeholder in Uses for every project
+    # (populated at compute time). Multi-project deals each need their own.
+    for _proj in all_scenario_projects:
+        _existing_reserve = (await session.execute(
+            select(UseLine).where(
+                UseLine.project_id == _proj.id,
+                UseLine.label == "Operating Reserve",
+            )
+        )).scalar_one_or_none()
+        if _existing_reserve is None:
+            session.add(UseLine(
+                project_id=_proj.id,
+                label="Operating Reserve",
+                phase="operation",
+                amount=Decimal("0"),
+                timing_type="first_day",
+                notes="Sized at compute time: max(OpEx, Debt Service) × reserve months",
+            ))
+
+    # Auto-attach every newly-created CapitalModule to every project via
+    # CapitalModuleProject junction. Without this, multi-project scenarios
+    # have modules with no coverage — the engine refuses to self-heal junctions
+    # when n_projects != 1, so Project 2 would be uncovered. Users can later
+    # narrow coverage via the Coverage modal.
+    _auto_modules = list((await session.execute(
+        select(CapitalModule).where(
+            CapitalModule.scenario_id == model_id,
+            CapitalModule.label.like("%(auto)%"),
         )
-    )).scalar_one_or_none()
-    if existing_reserve is None:
-        session.add(UseLine(
-            project_id=default_project.id,
-            label="Operating Reserve",
-            phase="operation",
-            amount=Decimal("0"),
-            timing_type="first_day",
-            notes="Sized at compute time: max(OpEx, Debt Service) × reserve months",
-        ))
+    )).scalars())
+    for _mod in _auto_modules:
+        for _proj in all_scenario_projects:
+            _existing_j = (await session.execute(
+                select(CapitalModuleProject).where(
+                    CapitalModuleProject.capital_module_id == _mod.id,
+                    CapitalModuleProject.project_id == _proj.id,
+                )
+            )).scalar_one_or_none()
+            if _existing_j is None:
+                session.add(CapitalModuleProject(
+                    capital_module_id=_mod.id,
+                    project_id=_proj.id,
+                    amount=Decimal(str((_mod.source or {}).get("amount") or 0)),
+                    active_from=_mod.active_phase_start,
+                    active_to=_mod.active_phase_end,
+                    auto_size=bool((_mod.source or {}).get("auto_size")),
+                ))
 
     # ── Pre-load $0 closing cost Use line stubs for Phase B modules ──────────
     # Cost names match _DEFAULT_LOAN_COSTS in cashflow.py (keep in sync).
@@ -7359,23 +7401,24 @@ async def deal_setup_wizard_complete(
             continue
         _cc_lbl  = _cc_mod["label"]
         _cc_phase = _APS_TO_PHASE.get(_cc_mod["active_phase_start"] or "", "pre_construction")
-        for _cost_name in _cost_names:
-            _full_cc_lbl = f"{_cc_lbl} — {_cost_name}"
-            _existing_cc = (await session.execute(
-                select(UseLine).where(
-                    UseLine.project_id == default_project.id,
-                    UseLine.label == _full_cc_lbl,
-                )
-            )).scalar_one_or_none()
-            if _existing_cc is None:
-                session.add(UseLine(
-                    project_id=default_project.id,
-                    label=_full_cc_lbl,
-                    phase=_cc_phase,
-                    amount=Decimal("0"),
-                    timing_type="first_day",
-                    notes="Auto-computed — edit to override",
-                ))
+        for _proj in all_scenario_projects:
+            for _cost_name in _cost_names:
+                _full_cc_lbl = f"{_cc_lbl} — {_cost_name}"
+                _existing_cc = (await session.execute(
+                    select(UseLine).where(
+                        UseLine.project_id == _proj.id,
+                        UseLine.label == _full_cc_lbl,
+                    )
+                )).scalar_one_or_none()
+                if _existing_cc is None:
+                    session.add(UseLine(
+                        project_id=_proj.id,
+                        label=_full_cc_lbl,
+                        phase=_cc_phase,
+                        amount=Decimal("0"),
+                        timing_type="first_day",
+                        notes="Auto-computed — edit to override",
+                    ))
 
     # ── UnitMix: seed from linked building(s) if none exist ─────────────────
     existing_unit_mix = list((await session.execute(
