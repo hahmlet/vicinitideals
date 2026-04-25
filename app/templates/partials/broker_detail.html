@@ -12,10 +12,6 @@
       {{ ui.firm_name(b.brokerage_name, b.firm_scrape_status, b.brokerage_name) }}
     </div>
   </div>
-  <div style="display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end">
-    {% if b.is_platinum %}<span class="badge badge-blue">Platinum</span>{% endif %}
-    {% if b.number_of_assets %}<span class="badge badge-blue">{{ b.number_of_assets }} assets</span>{% endif %}
-  </div>
 </div>
 
 {# ── Contact ── #}
