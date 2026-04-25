@@ -44,6 +44,10 @@ api = [
 worker = [
     "celery[redis]>=5.3",
     "flower>=2.0",
+    # Browser automation for ASP.NET WebForms scrapers (Oregon eLicense and
+    # future per-firm contact-info adapters). Plain httpx can't trigger the
+    # CurrentFilter/UpdatePanel JS that Cavu-based ASP.NET sites require.
+    "playwright>=1.44",
     "curl-cffi>=0.7",
     "sqlalchemy[asyncio]>=2.0",
     "asyncpg>=0.29",

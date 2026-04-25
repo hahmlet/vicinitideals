@@ -2,22 +2,26 @@
 
 Source: https://orea.elicense.micropact.com/Lookup/LicenseLookup.aspx
 
-The site is ASP.NET WebForms with __VIEWSTATE postback. Flow:
+The site is ASP.NET WebForms wrapped in Cavu's ``CurrentFilter`` /
+``LicenseLookup`` JavaScript layer. Submitting the form fires a
+``ClickSearchLicenses(0)`` JS function that builds an EVENTARGUMENT filter
+description and triggers an UpdatePanel postback — none of which runs from a
+plain httpx POST (we tried; the panel comes back empty). So we drive a real
+headless Chromium via Playwright:
 
-  1. ``GET`` the lookup form → extract ``__VIEWSTATE`` + ``__VIEWSTATEGENERATOR``
-  2. ``POST`` the same URL with the license number, viewstate, and the submit
-     button name → response page contains the ``gvSearchResults`` table with
-     the matching license row (or no row if not found).
-  3. The Detail link in that row carries a credential ID inside an inline
-     ``DisplayLicenceDetail('80861;103024;0;Name;6679775;0')`` JS call;
-     extract that string verbatim.
-  4. ``GET /Lookup/licensedetail.aspx?id={cred_id}`` → detail page with four
-     fixed-id tables: ``Grid0`` (name+address), ``Grid1`` (license info),
-     ``Grid2`` (affiliated firm), ``Grid3`` (disciplinary actions).
+  1. ``goto`` the lookup form
+  2. Fill the License Number field, click Submit, wait for the results panel
+     to populate (or stay empty if not found)
+  3. Scrape the rendered HTML and extract the credential ID from the Detail
+     link's ``DisplayLicenceDetail('…')`` call
+  4. ``goto`` ``/Lookup/licensedetail.aspx?id={cred_id}`` directly — this is
+     a plain page render, no JS dance — and parse the four fixed-id tables:
+     ``Grid0`` (name+address), ``Grid1`` (license info), ``Grid2``
+     (affiliated firm), ``Grid3`` (disciplinary actions).
 
-We use httpx (already a dep) plus stdlib regex / ``html.unescape`` for
-parsing — the page structure is rigid (fixed IDs, fixed column order) so the
-parser stays small and we avoid pulling in BeautifulSoup/lxml.
+We use Playwright (in worker extras) for the form submit and stdlib regex /
+``html.unescape`` for parsing the resulting markup — page structure is rigid
+(fixed IDs, fixed column order) so the parser stays small.
 """
 
 from __future__ import annotations
@@ -27,8 +31,7 @@ import logging
 import re
 import urllib.parse
 from dataclasses import dataclass, field
-
-import httpx
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -39,7 +42,6 @@ _USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
     "(KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
 )
-_DEFAULT_TIMEOUT = httpx.Timeout(30.0, connect=10.0)
 
 
 # ---------------------------------------------------------------------------
@@ -187,122 +189,118 @@ def _extract_detail_id(result_html: str) -> str | None:
 # ---------------------------------------------------------------------------
 
 
+_LICENSE_INPUT_SELECTOR = "#ctl00_MainContentPlaceHolder_ucLicenseLookup_ctl03_tbCredentialNumber_Credential"
+_SUBMIT_BUTTON_SELECTOR = "#ctl00_MainContentPlaceHolder_ucLicenseLookup_btnLookup"
+_RESULTS_PANEL_SELECTOR = "#ctl00_MainContentPlaceHolder_ucLicenseLookup_UpdtPanelGridLookup"
+_RESULTS_TABLE_SELECTOR = "#ctl00_MainContentPlaceHolder_ucLicenseLookup_gvSearchResults"
+
+
 async def lookup_broker(
     license_number: str,
     *,
     proxy: str | None = "auto",
-    timeout: httpx.Timeout | None = None,
+    timeout_ms: int = 30_000,
 ) -> OregonBrokerRecord | None:
-    """Look up a single Oregon broker by license number.
+    """Look up a single Oregon broker by license number via Playwright.
 
     Returns ``None`` when the license is not found in the Oregon database.
-    Raises ``httpx.HTTPError`` / ``RuntimeError`` for transport, proxy, or
-    parse failures.
+    Raises ``RuntimeError`` for transport / parse failures.
     """
     if not license_number or not license_number.strip():
         return None
 
+    # Local import keeps Playwright off the import path of API workers and
+    # tests that don't need it.
+    from playwright.async_api import async_playwright  # noqa: PLC0415
+
     proxy_url = _build_proxy_url() if proxy == "auto" else proxy
-    headers = {
-        "User-Agent": _USER_AGENT,
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.9",
-    }
+    launch_kwargs: dict[str, Any] = {"headless": True}
+    if proxy_url:
+        launch_kwargs["proxy"] = {"server": proxy_url}
 
-    async with httpx.AsyncClient(
-        headers=headers,
-        proxy=proxy_url,
-        timeout=timeout or _DEFAULT_TIMEOUT,
-        follow_redirects=True,
-    ) as client:
-        # 1. GET form to grab __VIEWSTATE + cookies
-        r1 = await client.get(LOOKUP_URL)
-        r1.raise_for_status()
-        viewstate = _extract_hidden(r1.text, "__VIEWSTATE")
-        viewstate_gen = _extract_hidden(r1.text, "__VIEWSTATEGENERATOR") or "44A23853"
-        if not viewstate:
-            raise RuntimeError("Oregon eLicense: __VIEWSTATE not found on form page")
+    async with async_playwright() as pw:
+        browser = await pw.chromium.launch(**launch_kwargs)
+        try:
+            context = await browser.new_context(user_agent=_USER_AGENT)
+            page = await context.new_page()
+            page.set_default_timeout(timeout_ms)
 
-        # 2. POST the form (full-page postback path; no async UpdatePanel)
-        post_data = {
-            "__EVENTTARGET": "",
-            "__EVENTARGUMENT": "",
-            "__VIEWSTATE": viewstate,
-            "__VIEWSTATEGENERATOR": viewstate_gen,
-            "__VIEWSTATEENCRYPTED": "",
-            "ctl00$MainContentPlaceHolder$ucLicenseLookup$ctl03$tbCredentialNumber_Credential": license_number.strip(),
-            "ctl00$MainContentPlaceHolder$ucLicenseLookup$ctl03$tbDBA_Contact": "",
-            "ctl00$MainContentPlaceHolder$ucLicenseLookup$ctl03$tbFirstName_Contact": "",
-            "ctl00$MainContentPlaceHolder$ucLicenseLookup$ctl03$tbLastName_Contact": "",
-            "ctl00$MainContentPlaceHolder$ucLicenseLookup$ctl03$tbAddress2_ContactAddress": "",
-            "ctl00$MainContentPlaceHolder$ucLicenseLookup$ctl03$tbCity_ContactAddress": "",
-            "ctl00$MainContentPlaceHolder$ucLicenseLookup$ctl03$ddStates": "",
-            "ctl00$MainContentPlaceHolder$ucLicenseLookup$ctl03$tbZipCode_ContactAddress": "",
-            "ctl00$MainContentPlaceHolder$ucLicenseLookup$ctl03$ddCounty": "",
-            "ctl00$MainContentPlaceHolder$ucLicenseLookup$ctl03$lbMultipleCredentialTypePrefix": "",
-            "ctl00$MainContentPlaceHolder$ucLicenseLookup$btnLookup": "Submit",
-        }
-        post_headers = {
-            "Content-Type": "application/x-www-form-urlencoded",
-            "Referer": LOOKUP_URL,
-            "Origin": "https://orea.elicense.micropact.com",
-        }
-        r2 = await client.post(LOOKUP_URL, data=post_data, headers=post_headers)
-        r2.raise_for_status()
+            # 1. Load form
+            await page.goto(LOOKUP_URL, wait_until="networkidle")
 
-        detail_id = _extract_detail_id(r2.text)
-        if not detail_id:
-            return None  # license not found
+            # 2. Fill + submit. Use blur so any onchange validators run.
+            await page.fill(_LICENSE_INPUT_SELECTOR, license_number.strip())
+            await page.click(_SUBMIT_BUTTON_SELECTOR)
 
-        # 3. GET detail page
-        detail_url = f"{DETAIL_URL}?id={urllib.parse.quote(detail_id, safe='')}"
-        r3 = await client.get(detail_url, headers={"Referer": LOOKUP_URL})
-        r3.raise_for_status()
-        detail_html = r3.text
+            # 3. Wait for either the results table to render or the panel to
+            #    settle empty (no-results path). The UpdatePanel rerender is
+            #    near-instant once the AJAX completes; networkidle is a
+            #    reliable signal that ClickSearchLicenses' XHR has finished.
+            try:
+                await page.wait_for_load_state("networkidle", timeout=timeout_ms)
+            except Exception:
+                pass  # fall through; we'll still inspect the DOM
 
-        # 4. Parse 4 grids
-        grid0 = _parse_grid(detail_html, "Grid0")  # Name | Alt Name | Address
-        grid1 = _parse_grid(detail_html, "Grid1")  # License | Type | Expiration | Status | Docs
-        grid2 = _parse_grid(detail_html, "Grid2")  # Firm Name | Firm Address | License | Type | Status | Affiliation Date
-        grid3 = _parse_grid(detail_html, "Grid3")  # Case # | Order Signed | Resolution | Found Issues | Docs
+            # Give the panel rerender a beat to attach to the DOM.
+            await page.wait_for_timeout(500)
 
-        name = grid0[0][0] if grid0 and len(grid0[0]) > 0 else None
-        personal_address = _parse_address(
-            grid0[0][2] if grid0 and len(grid0[0]) > 2 else None
-        )
+            results_html = await page.content()
+            detail_id = _extract_detail_id(results_html)
+            if not detail_id:
+                return None  # not found
 
-        license_type = grid1[0][1] if grid1 and len(grid1[0]) > 1 else None
-        expiration = grid1[0][2] if grid1 and len(grid1[0]) > 2 else None
-        status = grid1[0][3] if grid1 and len(grid1[0]) > 3 else None
+            # 4. Detail page is a plain render; no JS dance needed. Navigate
+            #    through the same browser context so cookies/session carry.
+            detail_url = f"{DETAIL_URL}?id={urllib.parse.quote(detail_id, safe='')}"
+            await page.goto(detail_url, wait_until="domcontentloaded")
+            detail_html = await page.content()
 
-        firm_name = grid2[0][0] if grid2 and len(grid2[0]) > 0 else None
-        firm_address = _parse_address(
-            grid2[0][1] if grid2 and len(grid2[0]) > 1 else None
-        )
+        finally:
+            await browser.close()
 
-        actions: list[OregonDisciplinaryAction] = []
-        for row in grid3:
-            actions.append(
-                OregonDisciplinaryAction(
-                    case_number=row[0] if len(row) > 0 else None,
-                    order_signed_date=row[1] if len(row) > 1 else None,
-                    resolution=row[2] if len(row) > 2 else None,
-                    found_issues=row[3] if len(row) > 3 else None,
-                )
+    # 5. Parse 4 grids
+    grid0 = _parse_grid(detail_html, "Grid0")  # Name | Alt Name | Address
+    grid1 = _parse_grid(detail_html, "Grid1")  # License | Type | Expiration | Status | Docs
+    grid2 = _parse_grid(detail_html, "Grid2")  # Firm Name | Firm Address | License | Type | Status | Affiliation Date
+    grid3 = _parse_grid(detail_html, "Grid3")  # Case # | Order Signed | Resolution | Found Issues | Docs
+
+    name = grid0[0][0] if grid0 and len(grid0[0]) > 0 else None
+    personal_address = _parse_address(
+        grid0[0][2] if grid0 and len(grid0[0]) > 2 else None
+    )
+
+    license_type = grid1[0][1] if grid1 and len(grid1[0]) > 1 else None
+    expiration = grid1[0][2] if grid1 and len(grid1[0]) > 2 else None
+    status = grid1[0][3] if grid1 and len(grid1[0]) > 3 else None
+
+    firm_name = grid2[0][0] if grid2 and len(grid2[0]) > 0 else None
+    firm_address = _parse_address(
+        grid2[0][1] if grid2 and len(grid2[0]) > 1 else None
+    )
+
+    actions: list[OregonDisciplinaryAction] = []
+    for row in grid3:
+        actions.append(
+            OregonDisciplinaryAction(
+                case_number=row[0] if len(row) > 0 else None,
+                order_signed_date=row[1] if len(row) > 1 else None,
+                resolution=row[2] if len(row) > 2 else None,
+                found_issues=row[3] if len(row) > 3 else None,
             )
-
-        return OregonBrokerRecord(
-            license_number=license_number.strip(),
-            name=name,
-            license_type=license_type,
-            status=status,
-            expiration_date=expiration,
-            personal_address=personal_address,
-            affiliated_firm_name=firm_name,
-            affiliated_firm_address=firm_address,
-            disciplinary_actions=actions,
-            detail_url=detail_url,
         )
+
+    return OregonBrokerRecord(
+        license_number=license_number.strip(),
+        name=name,
+        license_type=license_type,
+        status=status,
+        expiration_date=expiration,
+        personal_address=personal_address,
+        affiliated_firm_name=firm_name,
+        affiliated_firm_address=firm_address,
+        disciplinary_actions=actions,
+        detail_url=detail_url,
+    )
 
 
 __all__ = [

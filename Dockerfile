@@ -38,8 +38,15 @@ CMD ["uvicorn", "app.api.main:app", "--host", "0.0.0.0", "--port", "8000"]
 # -------------------------------------------------------------------------
 FROM base AS worker
 
-# Install worker extras on top of base
+# Install worker extras on top of base (includes Playwright for ASP.NET
+# WebForms scrapers like Oregon eLicense)
 RUN uv pip install --system -e ".[worker]"
+
+# Install Chromium + OS deps for Playwright. Adds ~250MB to the image but is
+# required for any scraper that needs JS execution (Oregon eLicense uses a
+# CurrentFilter/UpdatePanel pattern that won't run server-side off a plain
+# form POST). install-deps uses apt-get under the hood.
+RUN playwright install-deps chromium && playwright install chromium
 
 # Default CMD is overridden per-service in docker-compose.yml
 CMD ["celery", "-A", "app.tasks.celery_app", "worker"]
