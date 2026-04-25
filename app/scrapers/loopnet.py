@@ -827,14 +827,17 @@ def map_to_scraped_listing(
     sale_summary = ext.get("saleSummary") or {}
 
     year_built, year_renovated = _parse_year_pair(pf.get("yearBuiltRenovated"))
-    # ExtendedDetails exposes a numeric yearBuilt on saleSummary — fall back to it
-    # when SaleDetails' combined string field was absent (observed empirically
-    # on ~60% of live samples).
-    if year_built is None and sale_summary.get("yearBuilt") is not None:
-        try:
-            year_built = int(sale_summary["yearBuilt"])
-        except (TypeError, ValueError):
-            year_built = None
+    # Two more fallbacks for year_built:
+    #   pf.yearBuilt          — 49% of listings, often where yearBuiltRenovated is missing
+    #   ss.yearBuilt          — ExtendedDetails-side numeric form
+    for source in (pf.get("yearBuilt"), sale_summary.get("yearBuilt")):
+        if year_built is not None:
+            break
+        if source is not None:
+            try:
+                year_built = int(source)
+            except (TypeError, ValueError):
+                pass
     if year_renovated is None and sale_summary.get("yearRenovated") is not None:
         try:
             year_renovated = int(sale_summary["yearRenovated"])
@@ -853,6 +856,11 @@ def map_to_scraped_listing(
         sub_type_list = [str(s) for s in sale_summary["propertySubtypes"] if s]
     else:
         sub_type_list = None
+    # Append apartmentStyle (Mid-Rise / Garden / Low-Rise / High-Rise) to
+    # sub_type so MF comp filtering can use it without a dedicated column.
+    apt_style = pf.get("apartmentStyle") or sale_summary.get("apartmentStyle")
+    if apt_style:
+        sub_type_list = (sub_type_list or []) + [str(apt_style)]
 
     listing_url = (
         f"https://www.loopnet.com/Listing/{listing_id}/"
@@ -883,12 +891,25 @@ def map_to_scraped_listing(
         "sub_type": sub_type_list,
         "investment_type": pf.get("saleType"),
         "asking_price": _parse_decimal(pf.get("price")),
-        "price_per_sqft": _parse_decimal(pf.get("pricePer")),
+        # Top-level pricePerSquareFoot is populated more often than pf.pricePer
+        # for some property types — chain both as fallback.
+        "price_per_sqft": _parse_decimal(
+            pf.get("pricePer")
+            or sale_details.get("pricePerSquareFoot")
+            or sale_summary.get("pricePerSquareFoot")
+        ),
         # Multifamily listings carry pricePerUnit; commercial uses pricePer (above)
         "price_per_unit": _parse_decimal(pf.get("pricePerUnit")),
-        "gba_sqft": _parse_decimal(pf.get("buildingSize") or sale_summary.get("buildingSize")),
+        "gba_sqft": _parse_decimal(
+            pf.get("buildingSize")
+            or pf.get("totalBuildingSize")  # portfolio listings
+            or sale_summary.get("buildingSize")
+        ),
         "lot_sqft": _parse_lot_size(
-            pf.get("landArea") or sale_summary.get("lotSize")
+            pf.get("landArea")
+            or pf.get("lotSize")           # 52% of listings
+            or pf.get("totalLotSize")      # portfolio variant
+            or sale_summary.get("lotSize")
         ),
         "year_built": year_built,
         "year_renovated": year_renovated,
@@ -912,17 +933,30 @@ def map_to_scraped_listing(
         # Normalized APN tokens for cross-source dedup matching
         "apn_normalized": normalize_apn(sale_summary.get("apn")),
         # MF uses averageOccupancy; commercial uses occupancyPercentage / percentLeased
+        # Top-level avgOccupancy populates ~28% of listings as a separate fallback.
         "occupancy_pct": _parse_decimal(
             pf.get("averageOccupancy")
             or pf.get("occupancyPercentage")
             or pf.get("percentLeased")
+            or sale_details.get("avgOccupancy")
+            or sale_summary.get("avgOccupancy")
+            or sale_summary.get("percentLeased")
         ),
         "tenancy": pf.get("tenancy") or sale_summary.get("tenancy"),
         "cap_rate": _parse_decimal(pf.get("capRate") or sale_summary.get("capRate")),
         "noi": _parse_decimal(pf.get("nOI") or sale_summary.get("yearOneNOI")),
-        "is_in_opportunity_zone": bool(sale_summary.get("opportunityZone"))
-        if sale_summary.get("opportunityZone") is not None
-        else None,
+        "is_in_opportunity_zone": (
+            bool(pf.get("opportunityZone"))
+            if pf.get("opportunityZone") is not None
+            else (bool(sale_summary.get("opportunityZone"))
+                  if sale_summary.get("opportunityZone") is not None
+                  else None)
+        ),
+        "sale_condition": (
+            pf.get("saleCondition")
+            or pf.get("saleConditions")
+            or sale_summary.get("saleConditions")
+        ),
 
         # Listing metadata
         "listing_name": sale_details.get("title") or pf.get("title"),

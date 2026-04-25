@@ -32,7 +32,16 @@ from app.scrapers.loopnet import map_to_scraped_listing  # noqa: E402
 async def main() -> int:
     updated = 0
     examined = 0
-    fields_filled = {"units": 0, "stories": 0, "occupancy_pct": 0, "price_per_unit": 0}
+    # Fields we may newly populate via re-mapping. (sub_type re-derived from
+    # apartmentStyle so it can shift even when other fields don't.)
+    BACKFILL_FIELDS = (
+        "units", "stories", "occupancy_pct", "price_per_unit",
+        "lot_sqft", "year_built", "year_renovated",
+        "is_in_opportunity_zone", "sale_condition",
+        "price_per_sqft", "gba_sqft",
+        "sub_type",
+    )
+    fields_filled = dict.fromkeys(BACKFILL_FIELDS, 0)
 
     async with AsyncSessionLocal() as session:
         result = await session.execute(
@@ -56,7 +65,7 @@ async def main() -> int:
             )
 
             changed = False
-            for col in ("units", "stories", "occupancy_pct", "price_per_unit"):
+            for col in BACKFILL_FIELDS:
                 old = getattr(listing, col)
                 new = mapped.get(col)
                 if new is not None and old != new:
