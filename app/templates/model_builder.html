@@ -743,7 +743,12 @@ function handleComputeResult(evt) {
     {% for p in deal_projects %}
     {% set _pp_status = _sc.per_project.get(p.id, {}).get('overall', 'na') %}
     {% set _is_active = (_active_view == 'project' and p.id | string == active_project_id) %}
-    <a href="/models/{{ model.id }}/builder?project={{ p.id }}"
+    {# Preserve current module so switching projects keeps the user on the
+       same panel (Sources, OpEx, etc.) instead of snapping to Sources & Uses.
+       Skip deal_setup / timeline — gating wizards that the destination
+       project may not need. #}
+    {% set _carry_module = active_module if (_active_view == 'project' and active_module and active_module not in ('deal_setup','timeline')) else '' %}
+    <a href="/models/{{ model.id }}/builder?project={{ p.id }}{% if _carry_module %}&module={{ _carry_module }}{% endif %}"
        class="deal-tab {% if _is_active %}active{% endif %}">
       <span aria-hidden="true"
             title="{{ p.name }}: {{ _status_tip.get(_pp_status, _pp_status) }}"
