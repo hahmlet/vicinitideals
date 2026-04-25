@@ -8116,10 +8116,12 @@ async def deal_setup_wizard_complete(
 
     await session.commit()
 
-    # Redirect to builder — NOI mode lands on the NOI module first, else Uses.
+    # Redirect to builder — NOI mode lands on the NOI module first, else
+    # Property (the natural starting point for filling in unit mix /
+    # building data before moving on to S&U).
     # Preserve the active Project from HX-Current-URL so multi-project deals
     # don't snap the user back to Project 1 after finishing Deal Setup.
-    _first_module = "noi" if model.income_mode == "noi" else "sources_uses"
+    _first_module = "noi" if model.income_mode == "noi" else "property"
     _active_proj_q = ""
     _hx_url = request.headers.get("HX-Current-URL", "")
     if _hx_url:
@@ -8378,6 +8380,10 @@ async def model_builder(
     wizard_step: int = 1
     missing_building_data: list = []
     deal_setup_inputs = data.get("inputs")
+    # Map debt_type → list of project names sharing the existing auto module
+    # (excluding the currently-active project). Step 7 of the wizard renders
+    # a "shared with X" chip when this list is non-empty.
+    wizard_share_info: dict[str, list[str]] = {}
     if active_module == "deal_setup":
         _default_proj = (await session.execute(
             select(Project).where(Project.scenario_id == model_id).order_by(Project.created_at.asc()).limit(1)
@@ -8388,6 +8394,27 @@ async def model_builder(
             )).scalar_one_or_none()
             missing_building_data = await _get_missing_building_data(_default_proj, session)
             wizard_step = 0 if missing_building_data else 1
+            # Find existing auto modules + their junction-shared projects so
+            # the Step 7 review can flag "shared with {project}" entries.
+            from app.models.capital import CapitalModuleProject as _CMP_ws
+            _auto_mods = list((await session.execute(
+                select(CapitalModule).where(
+                    CapitalModule.scenario_id == model_id,
+                    CapitalModule.label.like("%(auto)%"),
+                )
+            )).scalars())
+            _proj_name_by_id = {p.id: p.name for p in deal_projects}
+            for _mod in _auto_mods:
+                _junctions = list((await session.execute(
+                    select(_CMP_ws.project_id).where(_CMP_ws.capital_module_id == _mod.id)
+                )).scalars())
+                _other_names = [
+                    _proj_name_by_id[pid] for pid in _junctions
+                    if pid != active_project_id and pid in _proj_name_by_id
+                ]
+                if _other_names:
+                    _ft_str = str(_mod.funder_type).replace("FunderType.", "")
+                    wizard_share_info[_ft_str] = _other_names
 
     # Draw schedule data — loaded for draw_schedule and cashflow modules
     draw_schedule_data: dict = {}
@@ -8424,6 +8451,7 @@ async def model_builder(
         "multi_parcel_apns": multi_parcel_apns,
         "lot_size_mismatch": lot_size_mismatch_info,
         "step": wizard_step,
+        "wizard_share_info": wizard_share_info,
         "missing_building_data": missing_building_data,
         "calc_status_pill_html": calc_status_pill_html,
         **data,

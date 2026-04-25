@@ -938,12 +938,20 @@
         {%- set _dt_cfg = _dterms.get(dt, {}) -%}
         {%- set _lt = _dt_cfg.get('loan_type') -%}
         {%- set _amort = _dt_cfg.get('amort_years', 30) -%}
-        <div class="section-label" style="margin-top:12px">{{ _dt_labels.get(dt, dt) }}</div>
+        {% set _share = (wizard_share_info or {}).get(dt) %}
+        <div class="section-label" style="margin-top:12px;display:flex;align-items:center;gap:8px">
+          <span>{{ _dt_labels.get(dt, dt) }}</span>
+          {% if _share %}
+          <span style="font-size:11px;font-weight:600;text-transform:none;letter-spacing:0;background:#fef3c7;color:#92400e;border:1px solid #fbbf24;border-radius:10px;padding:2px 8px">
+            shared with {{ _share | join(', ') }}
+          </span>
+          {% endif %}
+        </div>
         <table class="review-table">
           <tr>
             <td>Active period</td>
             <td>{{ _phase_labels.get(_cfg.get('active_from',''), _cfg.get('active_from','—')) }}
-              → {{ _phase_labels.get(_cfg.get('active_to',''), _cfg.get('active_to','—')) }}</td>
+              → {% set _ato = _cfg.get('active_to','') %}{% if _ato in ('', 'perpetuity', 'maturity') %}Matur.{% else %}{{ _phase_labels.get(_ato, _ato) }}{% endif %}</td>
           </tr>
           <tr>
             <td>Retired by</td>
@@ -987,6 +995,9 @@
             <td>
               {% if _dsm == 'gap_fill' %}
                 Gap-Fill (perm sizes to cover remaining TPC)
+              {% elif _dsm == 'dual_constraint' %}
+                Dual-Constraint — DSCR ≥ {{ inputs.dscr_minimum | float }}× AND LTV ≤ {{ inputs.ltv_maximum_pct | float if inputs.ltv_maximum_pct else 75 }}%
+                <div class="field-hint">Perm sizes to the smaller of the gap-fill, DSCR cap, and LTV cap. Whichever binds first becomes the limit; a Sources gap will appear if the cap is below TPC.</div>
               {% else %}
                 DSCR-Capped at {{ inputs.dscr_minimum | float }}×
                 <div class="field-hint">If the gap-fill principal produces DSCR &lt; {{ inputs.dscr_minimum | float }}×, perm will be capped and a Sources gap will appear.</div>
@@ -996,7 +1007,7 @@
           {% if _has_constr %}
           <tr><td>Construction floor</td><td>{{ inputs.construction_floor_pct | float }}% of TPC</td></tr>
           {% endif %}
-          <tr><td>Operating reserve</td><td>{{ inputs.operation_reserve_months }} months of max(OpEx, DS)</td></tr>
+          <tr><td>Operating reserve</td><td>{{ inputs.operation_reserve_months }} months of max(OpEx OR Debt Serv.)</td></tr>
         </table>
 
         <div style="background:var(--accent-faint);border:1px solid var(--accent);border-radius:8px;padding:12px 14px;font-size:12px;margin-top:16px">
