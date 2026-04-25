@@ -884,13 +884,24 @@ def map_to_scraped_listing(
         "investment_type": pf.get("saleType"),
         "asking_price": _parse_decimal(pf.get("price")),
         "price_per_sqft": _parse_decimal(pf.get("pricePer")),
+        # Multifamily listings carry pricePerUnit; commercial uses pricePer (above)
+        "price_per_unit": _parse_decimal(pf.get("pricePerUnit")),
         "gba_sqft": _parse_decimal(pf.get("buildingSize") or sale_summary.get("buildingSize")),
         "lot_sqft": _parse_lot_size(
             pf.get("landArea") or sale_summary.get("lotSize")
         ),
         "year_built": year_built,
         "year_renovated": year_renovated,
-        "stories": _parse_int(pf.get("buildingHeight") or sale_summary.get("numberOfStories")),
+        # MF uses noStories / noUnits; commercial uses buildingHeight + (no unit count)
+        "stories": _parse_int(
+            pf.get("noStories")
+            or pf.get("buildingHeight")
+            or sale_summary.get("numberOfStories")
+        ),
+        "units": _parse_int(
+            pf.get("noUnits")
+            or sale_summary.get("numberOfUnits")
+        ),
         "parking_spaces": _parse_int(pf.get("parking") or sale_summary.get("parkingSpaceCount")),
         "class_": pf.get("buildingClass") or sale_summary.get("buildingClass"),
         "zoning": pf.get("zoning") or sale_summary.get("zoningDescription"),
@@ -900,7 +911,12 @@ def map_to_scraped_listing(
         "apn": _truncate(sale_summary.get("apn"), 100),
         # Normalized APN tokens for cross-source dedup matching
         "apn_normalized": normalize_apn(sale_summary.get("apn")),
-        "occupancy_pct": _parse_decimal(pf.get("occupancyPercentage") or pf.get("percentLeased")),
+        # MF uses averageOccupancy; commercial uses occupancyPercentage / percentLeased
+        "occupancy_pct": _parse_decimal(
+            pf.get("averageOccupancy")
+            or pf.get("occupancyPercentage")
+            or pf.get("percentLeased")
+        ),
         "tenancy": pf.get("tenancy") or sale_summary.get("tenancy"),
         "cap_rate": _parse_decimal(pf.get("capRate") or sale_summary.get("capRate")),
         "noi": _parse_decimal(pf.get("nOI") or sale_summary.get("yearOneNOI")),
