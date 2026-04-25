@@ -498,6 +498,56 @@ def _build_listing(detail_payload: dict[str, Any], broker_payloads: list[dict[st
     )
 
 
+_LICENSE_PREFIX_RE = _re.compile(r"^([A-Z]{2})\s+(.+)$")
+
+
+def _extract_crexi_license(payload: dict[str, Any]) -> tuple[str | None, str | None]:
+    """Pick the best (license_number, license_state) tuple from a Crexi broker.
+
+    Crexi returns license data in two shapes on the ``/assets/{id}/brokers``
+    endpoint:
+      - ``licenseDetails``: list of records with ``number`` (e.g. ``"OR 880100065"``),
+        ``licenseStateCode``, and brokerage details
+      - ``licenses``: simpler list of strings in the same prefixed format
+
+    We prefer Oregon entries (licenseStateCode == 'OR') because Oregon is our
+    target acquisition market; otherwise the first available license is used.
+    The leading state prefix is stripped from the number when present.
+    """
+    details = payload.get("licenseDetails") or []
+    chosen: dict[str, Any] | None = None
+    if isinstance(details, list) and details:
+        for d in details:
+            if not isinstance(d, dict):
+                continue
+            code = (d.get("licenseStateCode") or "").strip().upper()
+            if code == "OR":
+                chosen = d
+                break
+        if chosen is None:
+            for d in details:
+                if isinstance(d, dict):
+                    chosen = d
+                    break
+    if chosen is not None:
+        num = _string_or_none(chosen.get("number")) or ""
+        state = (chosen.get("licenseStateCode") or "").strip().upper() or None
+        m = _LICENSE_PREFIX_RE.match(num)
+        if m and state and m.group(1) == state:
+            num = m.group(2).strip()
+        return (num.strip() or None), state
+
+    licenses = payload.get("licenses") or []
+    if isinstance(licenses, list) and licenses:
+        first = str(licenses[0] or "").strip()
+        m = _LICENSE_PREFIX_RE.match(first)
+        if m:
+            return m.group(2).strip() or None, m.group(1)
+        return first or None, None
+
+    return None, None
+
+
 def _build_broker(broker_payload: dict[str, Any]) -> BrokerCreate | None:
     broker_id = _to_int(broker_payload.get("id"))
     global_id = _string_or_none(broker_payload.get("globalId"))
@@ -506,19 +556,12 @@ def _build_broker(broker_payload: dict[str, Any]) -> BrokerCreate | None:
     if broker_id is None and global_id is None and first_name is None and last_name is None:
         return None
 
-    # License fields aren't in Crexi's bulk search response but are present on
-    # the per-asset /brokers endpoint when the broker has a publicly listed
-    # license. Field-name shape is undocumented; try the common variants.
-    license_number = _string_or_none(
-        broker_payload.get("licenseNumber")
-        or broker_payload.get("license")
-        or broker_payload.get("agentLicenseNumber")
-    )
-    license_state = _string_or_none(
-        broker_payload.get("licenseState")
-        or broker_payload.get("licenseStateAlpha2")
-        or broker_payload.get("licenseStateCode")
-    )
+    # Crexi stores license data on the per-asset /brokers endpoint in two
+    # places. Prefer the structured ``licenseDetails`` entries (which carry
+    # the cleanest state code) and fall back to the top-level ``licenses``
+    # string array. Both formats prefix the number with the state code (e.g.
+    # ``"OR 880100065"``), so we strip that.
+    license_number, license_state = _extract_crexi_license(broker_payload)
 
     return BrokerCreate(
         crexi_broker_id=broker_id,
