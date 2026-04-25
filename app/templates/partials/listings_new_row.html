@@ -13,6 +13,7 @@
     </div>
     <div class="text-small text-muted" style="margin-top:2px">{{ l.source_label }}</div>
   </td>
+  <td data-col="jurisdiction" class="text-small">{{ l.jurisdiction_label or "—" }}</td>
   <td class="col-right text-mono">{{ l.asking_price | currency if l.asking_price else "—" }}</td>
   <td class="col-right">{{ l.units or "—" }}</td>
   <td class="col-right {% if l.cap_rate %}text-mono{% else %}text-muted{% endif %}">{{ l.cap_rate | pct if l.cap_rate else "—" }}</td>

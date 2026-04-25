@@ -3157,9 +3157,26 @@ def _build_listing_row(listing: ScrapedListing) -> dict:
     prop = getattr(listing, "_property", None)
     broker = listing.broker
     brokerage = broker.brokerage if broker else None
+
+    # Jurisdiction display: prefer parcel-reconciled jurisdiction over city,
+    # collapse the literal "unincorporated" / county-name-as-jurisdiction
+    # cases into a friendly bucket label.
+    _ej = (listing.jurisdiction or listing.city or "").strip()
+    _county = (listing.county or "").strip()
+    _bucket = _classify_listing_uninc_bucket(_ej.lower(), _county.lower())
+    if _bucket == "uninc:Clackamas":
+        jurisdiction_label = "Unin. Clackamas"
+    elif _bucket == "uninc:Multnomah":
+        jurisdiction_label = "Unin. Multnomah"
+    elif _bucket == "uninc:other":
+        jurisdiction_label = "Unincorporated"
+    else:
+        jurisdiction_label = _ej.title() if _ej else None
+
     return {
         "id": str(listing.id),
         "address": listing.address_normalized or listing.address_raw or "Undisclosed",
+        "jurisdiction_label": jurisdiction_label,
         "is_new": listing.is_new,
         "source": listing.source,
         "source_label": listing.source.title(),
@@ -3270,88 +3287,164 @@ def _listings_base_stmt(
     return stmt
 
 
+_LISTING_UNINC_TOKENS = {"uninc:Clackamas", "uninc:Multnomah", "uninc:other"}
+
+
+def _classify_listing_uninc_bucket(ej_norm: str | None, county_norm: str | None) -> str | None:
+    """Classify a listing into uninc:Clackamas / uninc:Multnomah / uninc:other or None.
+
+    ej_norm: lowercased COALESCE(jurisdiction, city) string
+    county_norm: lowercased county string
+
+    Returns the bucket token, or None if the listing isn't unincorporated.
+    """
+    ej = (ej_norm or "").strip()
+    cty = (county_norm or "").strip()
+    is_unincorp_label = ej.startswith("unincorp")
+    is_county_as_jur = ej in {"clackamas", "clackamas county", "multnomah", "multnomah county"}
+
+    if not (is_unincorp_label or is_county_as_jur):
+        return None
+
+    # Pick a county hint from either ej or county.
+    hints = " ".join([ej, cty])
+    if "clackamas" in hints:
+        return "uninc:Clackamas"
+    if "multnomah" in hints:
+        return "uninc:Multnomah"
+    return "uninc:other"
+
+
 def _apply_jurisdiction_filter(stmt, jurisdictions: list[str]):
-    """Apply jurisdiction filter — cities and 'uninc:county' entries.
+    """Apply jurisdiction filter — cities and 'uninc:<bucket>' entries.
 
     Uses COALESCE(jurisdiction, city) so that parcel-reconciled listings
     filter by the authoritative GIS jurisdiction, while unreconciled
     listings fall back to the broker-provided city.
+
+    Three unincorporated buckets are recognized:
+      uninc:Clackamas, uninc:Multnomah — explicit unincorporated label or
+        the county name standing in as the jurisdiction, with the county
+        column matching.
+      uninc:other — every other unincorporated row (other counties or
+        rows with no county info).
     """
     effective_jurisdiction = func.coalesce(ScrapedListing.jurisdiction, ScrapedListing.city)
+    ej_lower = func.lower(effective_jurisdiction)
+    county_lower = func.lower(ScrapedListing.county)
+
+    def _county_match(county: str):
+        return county_lower.like(f"{county}%")
+
+    def _is_uninc_label():
+        return ej_lower.like("unincorp%")
+
+    def _is_county_as_jur(county: str):
+        return ej_lower.in_([county, f"{county} county"])
+
+    def _is_clackamas_bucket():
+        return or_(
+            _is_county_as_jur("clackamas"),
+            _is_uninc_label() & _county_match("clackamas"),
+        )
+
+    def _is_multnomah_bucket():
+        return or_(
+            _is_county_as_jur("multnomah"),
+            _is_uninc_label() & _county_match("multnomah"),
+        )
+
+    def _is_other_uninc_bucket():
+        return or_(
+            _is_uninc_label() & ~(_county_match("clackamas") | _county_match("multnomah") | county_lower.is_(None)),
+            _is_uninc_label() & county_lower.is_(None),
+        )
 
     city_names = []
-    uninc_counties = []
+    selected_uninc: set[str] = set()
     for j in jurisdictions:
-        if j.startswith("uninc:"):
-            uninc_counties.append(j[6:])
+        if j in _LISTING_UNINC_TOKENS:
+            selected_uninc.add(j)
+        elif j.startswith("uninc:"):
+            # Legacy uninc:<other-county> tokens — bucket as 'other'.
+            selected_uninc.add("uninc:other")
         else:
             city_names.append(j)
 
     clauses = []
     if city_names:
-        clauses.append(func.lower(effective_jurisdiction).in_([c.lower() for c in city_names]))
-    for county in uninc_counties:
-        clauses.append(
-            (effective_jurisdiction.is_(None)) & (func.lower(ScrapedListing.county).like(f"{county.lower()}%"))
-        )
+        clauses.append(ej_lower.in_([c.lower() for c in city_names]))
+    if "uninc:Clackamas" in selected_uninc:
+        clauses.append(_is_clackamas_bucket())
+    if "uninc:Multnomah" in selected_uninc:
+        clauses.append(_is_multnomah_bucket())
+    if "uninc:other" in selected_uninc:
+        clauses.append(_is_other_uninc_bucket())
     if clauses:
         stmt = stmt.where(or_(*clauses))
     else:
-        # All deselected — show nothing
         stmt = stmt.where(ScrapedListing.id.is_(None))
     return stmt
 
 
 async def _get_jurisdictions(session) -> list[dict]:
-    """Return sorted list of {value, label, type} for jurisdiction filter.
+    """Return sorted list of {value, label, type} for the listings jurisdiction filter.
 
-    Uses COALESCE(jurisdiction, city) so parcel-reconciled listings show the
-    authoritative GIS jurisdiction while unreconciled listings fall back to
-    the broker-provided city.
+    Cities are emitted as discrete rows. Anything that classifies as
+    unincorporated (literal "unincorporated" jurisdiction, or a county name
+    standing in as the jurisdiction, or a row with no jurisdiction but a
+    county hint) is rolled up into one of three buckets:
+
+      uninc:Clackamas, uninc:Multnomah, uninc:other
+
+    so the user picks "Unin. Clackamas" without seeing a confusing raw
+    "Clackamas" entry alongside actual cities.
     """
     effective_jurisdiction = func.coalesce(ScrapedListing.jurisdiction, ScrapedListing.city)
 
-    # Distinct effective jurisdictions
-    city_rows = (await session.execute(
-        select(effective_jurisdiction.label("ej"), func.count())
-        .where(effective_jurisdiction.isnot(None))
-        .group_by(effective_jurisdiction)
-        .order_by(effective_jurisdiction)
+    rows = (await session.execute(
+        select(effective_jurisdiction.label("ej"), ScrapedListing.county, func.count())
+        .group_by(effective_jurisdiction, ScrapedListing.county)
     )).all()
 
-    # Normalize names (dedup case variants like KLAMATH FALLS vs Klamath Falls)
     seen_cities: dict[str, tuple[str, int]] = {}
-    for city, cnt in city_rows:
-        key = city.strip().lower()
+    uninc_totals: dict[str, int] = {"uninc:Clackamas": 0, "uninc:Multnomah": 0, "uninc:other": 0}
+
+    for ej, county, cnt in rows:
+        ej_norm = (ej or "").strip().lower()
+        county_norm = (county or "").strip().lower()
+        bucket = _classify_listing_uninc_bucket(ej_norm, county_norm)
+        if bucket is not None:
+            uninc_totals[bucket] += cnt
+            continue
+        if not ej:
+            # No jurisdiction *or* city, and not classifiable as unincorp →
+            # quietly bucket as 'other' so the row isn't lost.
+            uninc_totals["uninc:other"] += cnt
+            continue
+        # Treat as a city. Dedup case variants (KLAMATH FALLS vs Klamath Falls).
+        key = ej_norm
         if key in seen_cities:
             existing_label, existing_cnt = seen_cities[key]
-            seen_cities[key] = (existing_label if existing_label[0].isupper() else city.strip(), existing_cnt + cnt)
+            seen_cities[key] = (existing_label if existing_label[0].isupper() else ej.strip(), existing_cnt + cnt)
         else:
-            seen_cities[key] = (city.strip(), cnt)
+            seen_cities[key] = (ej.strip(), cnt)
 
-    jurisdictions = [
+    jurisdictions: list[dict] = [
         {"value": label, "label": f"{label} ({cnt})", "type": "city"}
         for _key, (label, cnt) in sorted(seen_cities.items())
     ]
-
-    # Unincorporated counties (listings with no jurisdiction AND no city)
-    uninc_rows = (await session.execute(
-        select(ScrapedListing.county, func.count())
-        .where(effective_jurisdiction.is_(None), ScrapedListing.county.isnot(None))
-        .group_by(ScrapedListing.county)
-    )).all()
-    if uninc_rows:
-        seen_counties: dict[str, int] = {}
-        for county, cnt in uninc_rows:
-            norm = county.strip().title().replace(" County", "")
-            seen_counties[norm] = seen_counties.get(norm, 0) + cnt
-        for county_name, cnt in sorted(seen_counties.items()):
+    for bucket_label, bucket_value in [
+        ("Unin. Clackamas", "uninc:Clackamas"),
+        ("Unin. Multnomah", "uninc:Multnomah"),
+        ("Unincorporated (other)", "uninc:other"),
+    ]:
+        if uninc_totals[bucket_value] > 0:
             jurisdictions.append({
-                "value": f"uninc:{county_name}",
-                "label": f"{county_name} Unincorporated ({cnt})",
+                "value": bucket_value,
+                "label": f"{bucket_label} ({uninc_totals[bucket_value]})",
                 "type": "unincorporated",
             })
-
     return jurisdictions
 
 

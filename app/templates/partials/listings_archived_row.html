@@ -5,6 +5,7 @@
     <div style="font-weight:600;color:var(--text-muted)">{{ l.address }}</div>
     <div class="text-small text-muted" style="margin-top:2px">{{ l.source_label }}</div>
   </td>
+  <td data-col="jurisdiction" class="text-small text-muted">{{ l.jurisdiction_label or "—" }}</td>
   <td class="col-right text-mono" style="color:var(--text-muted)">{{ l.asking_price | currency if l.asking_price else "—" }}</td>
   <td class="col-right text-muted">{{ l.units or "—" }}</td>
   <td class="col-right text-muted">{{ l.cap_rate | pct if l.cap_rate else "—" }}</td>
