@@ -6204,6 +6204,40 @@ async def create_deal_project(
         session.add(milestone)
     await session.flush()
 
+    # Optional Timeline Anchor — set when the user picks a parent milestone
+    # in the Add Project drawer. anchor_project_id is derived from the
+    # milestone's project_id so the form only needs one dropdown.
+    _anchor_ms_raw = str(form.get("anchor_milestone_id", "")).strip()
+    if _anchor_ms_raw:
+        from app.models.milestone import Milestone as _AnchorMS
+        from app.models.project import ProjectAnchor as _PA_create
+        try:
+            _anchor_ms_id = UUID(_anchor_ms_raw)
+        except ValueError:
+            _anchor_ms_id = None
+        if _anchor_ms_id is not None:
+            _pivot = await session.get(_AnchorMS, _anchor_ms_id)
+            if _pivot is not None and _pivot.project_id != new_proj.id:
+                # Confirm parent project belongs to this scenario
+                _parent_proj = await session.get(Project, _pivot.project_id)
+                if _parent_proj and _parent_proj.scenario_id == deal_id:
+                    try:
+                        _off_m = int(form.get("offset_months") or 0)
+                    except (TypeError, ValueError):
+                        _off_m = 0
+                    try:
+                        _off_d = int(form.get("offset_days") or 0)
+                    except (TypeError, ValueError):
+                        _off_d = 0
+                    session.add(_PA_create(
+                        project_id=new_proj.id,
+                        anchor_project_id=_parent_proj.id,
+                        anchor_milestone_id=_anchor_ms_id,
+                        offset_months=_off_m,
+                        offset_days=_off_d,
+                    ))
+                    await session.flush()
+
     return RedirectResponse(
         url=f"/models/{deal_id}/builder?project={new_proj.id}", status_code=303
     )
@@ -7938,6 +7972,25 @@ async def model_builder(
     # Active project object (for Clone From drawer label)
     active_project = next((p for p in deal_projects if p.id == active_project_id), None)
 
+    # Milestones for every project on the scenario — feeds the Add Project
+    # drawer's "Anchor Start Date To" optgroup dropdown so the user can wire
+    # the new project to a parent milestone at creation time.
+    anchor_milestones_by_project: dict = {}
+    if deal_projects:
+        from app.models.milestone import Milestone as _MS_anchor
+        _anchor_ms_rows = list(
+            (
+                await session.execute(
+                    select(_MS_anchor)
+                    .join(Project, Project.id == _MS_anchor.project_id)
+                    .where(Project.scenario_id == model_id)
+                    .order_by(_MS_anchor.sequence_order.asc())
+                )
+            ).scalars()
+        )
+        for _ms in _anchor_ms_rows:
+            anchor_milestones_by_project.setdefault(_ms.project_id, []).append(_ms)
+
     # When deal_setup is the active module, resolve wizard step and missing building data
     # so the included partials/deal_setup_wizard.html has everything it needs.
     # Deal Setup is a scenario-level wizard (income mode, debt stack), so the
@@ -7979,6 +8032,7 @@ async def model_builder(
         "parent_deal_id": str(parent_deal_id) if parent_deal_id else None,
         "deal_variants": deal_variants,
         "deal_projects": deal_projects,
+        "anchor_milestones_by_project": anchor_milestones_by_project,
         "active_project_id": str(active_project_id) if active_project_id else None,
         "active_project": active_project,
         "active_view": active_view,

@@ -45,7 +45,16 @@
       </thead>
       <tbody>
         {% for pp in _per_project %}
-        {% set pproj = (deal_projects | selectattr('id', 'equalto', pp.project_id) | list | first) if pp.project_id else None %}
+        {# pp.project_id is a string (rollup serializes it); cast project ids to
+           strings on the haystack side and compare via namespace because Jinja
+           loop-scoped variables don't escape the inner loop. #}
+        {% set _pns = namespace(found=None) %}
+        {% for _candidate in deal_projects %}
+          {% if (_candidate.id | string) == (pp.project_id | string) %}
+            {% set _pns.found = _candidate %}
+          {% endif %}
+        {% endfor %}
+        {% set pproj = _pns.found %}
         <tr>
           <td>
             {% if pproj %}
@@ -68,8 +77,9 @@
     </table>
   </div>
 
-  {# ── Timeline Anchors (Phase 2d1) ────────────────────────────────────── #}
-  {% include 'partials/underwriting/anchors_panel.html' %}
+  {# Timeline Anchors moved to the Add Project drawer — set when creating
+     each project after the first. To change later, remove the project
+     and re-add it (Phase 4 will add an inline edit modal). #}
 
   {# ── Source Package (shared deduped) ────────────────────────────────── #}
   <div class="uw-section">
