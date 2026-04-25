@@ -7865,6 +7865,14 @@ async def deal_setup_wizard_complete(
     # user runs Add Project (drawer), the share-or-clone checkboxes decide
     # whether each Source is shared (junction extended) or cloned (new module
     # owned solely by the new project). Default is per-project, not shared.
+    #
+    # Explicit flush before the SELECT — autoflush has historically dropped
+    # the just-added rows in this handler (likely an interaction with the
+    # earlier cascade-delete batch in this same transaction). Without the
+    # flush, the SELECT comes back empty and no junctions get attached, so
+    # subsequent computes return empty module lists for default_project and
+    # the deal silently has no debt coverage.
+    await session.flush()
     _auto_modules = list((await session.execute(
         select(CapitalModule).where(
             CapitalModule.scenario_id == model_id,

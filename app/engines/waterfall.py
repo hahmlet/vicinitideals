@@ -356,6 +356,24 @@ async def _ensure_equity_and_tiers(
         )
         session.add(synthetic_equity)
         await session.flush()
+        # Attach the synthetic equity to every project on the scenario so
+        # multi-project deals don't end up with an orphan equity module
+        # (no junction → invisible to per-project compute → engine never
+        # writes back, equity never sized, Sources gap shows up).
+        from app.models.capital import CapitalModuleProject as _CMP_eq
+        _scn_projects = list((await session.execute(
+            select(Project).where(Project.scenario_id == deal_uuid)
+        )).scalars())
+        for _ep in _scn_projects:
+            session.add(_CMP_eq(
+                capital_module_id=synthetic_equity.id,
+                project_id=_ep.id,
+                amount=Decimal("0"),
+                active_from="acquisition",
+                active_to="exit",
+                auto_size=False,
+            ))
+        await session.flush()
         capital_modules.append(synthetic_equity)
         equity_modules = [synthetic_equity]
 
