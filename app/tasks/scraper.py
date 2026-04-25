@@ -320,16 +320,24 @@ async def upsert_brokers(
 
     await session.flush()
 
-    # Auto-trigger Oregon enrichment for any broker in this batch that has a
-    # license_number but has never been enriched. Listing scrapers may not
-    # always supply license_number (Crexi's bulk API doesn't), in which case
-    # this query returns nothing and the monthly sweep picks them up later.
+    # Auto-trigger Oregon enrichment for any broker in this batch that has
+    # either a license_number OR a first+last name and has never been
+    # enriched. The task itself picks the right lookup path (license-based
+    # first, name-based fallback for unique matches only).
     if broker_id_map:
+        from sqlalchemy import and_, or_  # noqa: PLC0415
+
         unenriched = (
             await session.execute(
                 select(Broker.id).where(
                     Broker.id.in_(list(broker_id_map.values())),
-                    Broker.license_number.isnot(None),
+                    or_(
+                        Broker.license_number.isnot(None),
+                        and_(
+                            Broker.first_name.isnot(None),
+                            Broker.last_name.isnot(None),
+                        ),
+                    ),
                     Broker.oregon_last_pulled_at.is_(None),
                 )
             )

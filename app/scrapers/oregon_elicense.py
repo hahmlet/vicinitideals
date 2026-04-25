@@ -190,9 +190,121 @@ def _extract_detail_id(result_html: str) -> str | None:
 
 
 _LICENSE_INPUT_SELECTOR = "#ctl00_MainContentPlaceHolder_ucLicenseLookup_ctl03_tbCredentialNumber_Credential"
+_FIRST_NAME_SELECTOR = "#ctl00_MainContentPlaceHolder_ucLicenseLookup_ctl03_tbFirstName_Contact"
+_LAST_NAME_SELECTOR = "#ctl00_MainContentPlaceHolder_ucLicenseLookup_ctl03_tbLastName_Contact"
 _SUBMIT_BUTTON_SELECTOR = "#ctl00_MainContentPlaceHolder_ucLicenseLookup_btnLookup"
 _RESULTS_PANEL_SELECTOR = "#ctl00_MainContentPlaceHolder_ucLicenseLookup_UpdtPanelGridLookup"
 _RESULTS_TABLE_SELECTOR = "#ctl00_MainContentPlaceHolder_ucLicenseLookup_gvSearchResults"
+
+
+def _count_result_rows(html: str) -> int:
+    """Count ``CavuGridRow`` rows inside the lookup results table."""
+    table_m = re.search(
+        r'<table[^>]*\bid="ctl00_MainContentPlaceHolder_ucLicenseLookup_gvSearchResults"[^>]*>'
+        r"(.*?)</table>",
+        html,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    if not table_m:
+        return 0
+    return len(re.findall(r'<tr[^>]*\bclass="[^"]*\bCavuGridRow\b', table_m.group(1)))
+
+
+async def _record_from_detail_html(detail_html: str, detail_url: str) -> "OregonBrokerRecord":
+    """Parse the four detail-page grids into an OregonBrokerRecord."""
+    grid0 = _parse_grid(detail_html, "Grid0")
+    grid1 = _parse_grid(detail_html, "Grid1")
+    grid2 = _parse_grid(detail_html, "Grid2")
+    grid3 = _parse_grid(detail_html, "Grid3")
+
+    license_number = grid1[0][0] if grid1 and len(grid1[0]) > 0 else ""
+    name = grid0[0][0] if grid0 and len(grid0[0]) > 0 else None
+    personal_address = _parse_address(
+        grid0[0][2] if grid0 and len(grid0[0]) > 2 else None
+    )
+    license_type = grid1[0][1] if grid1 and len(grid1[0]) > 1 else None
+    expiration = grid1[0][2] if grid1 and len(grid1[0]) > 2 else None
+    status = grid1[0][3] if grid1 and len(grid1[0]) > 3 else None
+    firm_name = grid2[0][0] if grid2 and len(grid2[0]) > 0 else None
+    firm_address = _parse_address(
+        grid2[0][1] if grid2 and len(grid2[0]) > 1 else None
+    )
+    actions: list[OregonDisciplinaryAction] = []
+    for row in grid3:
+        actions.append(
+            OregonDisciplinaryAction(
+                case_number=row[0] if len(row) > 0 else None,
+                order_signed_date=row[1] if len(row) > 1 else None,
+                resolution=row[2] if len(row) > 2 else None,
+                found_issues=row[3] if len(row) > 3 else None,
+            )
+        )
+
+    return OregonBrokerRecord(
+        license_number=license_number,
+        name=name,
+        license_type=license_type,
+        status=status,
+        expiration_date=expiration,
+        personal_address=personal_address,
+        affiliated_firm_name=firm_name,
+        affiliated_firm_address=firm_address,
+        disciplinary_actions=actions,
+        detail_url=detail_url,
+    )
+
+
+async def _open_browser_and_search(
+    fill_form: "Callable[[Page], Awaitable[None]]",
+    *,
+    proxy: str | None = "auto",
+    timeout_ms: int = 30_000,
+) -> tuple[str, "Browser"] | None:
+    """Internal helper — opens a browser, runs the fill_form callback, clicks
+    Submit, and returns (results_html, browser_handle). Caller is responsible
+    for closing the browser via the handle once done with the detail page.
+
+    Returns None if the page never rendered (transport failure).
+    """
+    from playwright.async_api import async_playwright  # noqa: PLC0415
+
+    proxy_url = _build_proxy_url() if proxy == "auto" else proxy
+    launch_kwargs: dict[str, Any] = {"headless": True}
+    if proxy_url:
+        launch_kwargs["proxy"] = {"server": proxy_url}
+
+    pw = await async_playwright().start()
+    browser = await pw.chromium.launch(**launch_kwargs)
+    context = await browser.new_context(user_agent=_USER_AGENT)
+    page = await context.new_page()
+    page.set_default_timeout(timeout_ms)
+    try:
+        await page.goto(LOOKUP_URL, wait_until="networkidle")
+        await fill_form(page)
+        await page.click(_SUBMIT_BUTTON_SELECTOR)
+        try:
+            await page.wait_for_load_state("networkidle", timeout=timeout_ms)
+        except Exception:
+            pass
+        await page.wait_for_timeout(500)
+        results_html = await page.content()
+    except Exception:
+        await browser.close()
+        await pw.stop()
+        raise
+
+    return results_html, browser, page, pw  # type: ignore[return-value]
+
+
+async def _fetch_detail(
+    browser_state: tuple[str, Any, Any, Any],
+    detail_id: str,
+) -> str:
+    """Navigate the existing browser to the detail page and return its HTML."""
+    _, _browser, page, _pw = browser_state
+    detail_url = f"{DETAIL_URL}?id={urllib.parse.quote(detail_id, safe='')}"
+    await page.goto(detail_url, wait_until="domcontentloaded")
+    return await page.content()
 
 
 async def lookup_broker(
@@ -209,98 +321,74 @@ async def lookup_broker(
     if not license_number or not license_number.strip():
         return None
 
-    # Local import keeps Playwright off the import path of API workers and
-    # tests that don't need it.
-    from playwright.async_api import async_playwright  # noqa: PLC0415
+    async def _fill(page: Any) -> None:
+        await page.fill(_LICENSE_INPUT_SELECTOR, license_number.strip())
 
-    proxy_url = _build_proxy_url() if proxy == "auto" else proxy
-    launch_kwargs: dict[str, Any] = {"headless": True}
-    if proxy_url:
-        launch_kwargs["proxy"] = {"server": proxy_url}
+    state = await _open_browser_and_search(_fill, proxy=proxy, timeout_ms=timeout_ms)
+    if state is None:
+        return None
+    results_html, browser, _page, pw = state
+    try:
+        detail_id = _extract_detail_id(results_html)
+        if not detail_id:
+            return None
+        detail_html = await _fetch_detail(state, detail_id)
+        detail_url = f"{DETAIL_URL}?id={urllib.parse.quote(detail_id, safe='')}"
+        return await _record_from_detail_html(detail_html, detail_url)
+    finally:
+        await browser.close()
+        await pw.stop()
 
-    async with async_playwright() as pw:
-        browser = await pw.chromium.launch(**launch_kwargs)
-        try:
-            context = await browser.new_context(user_agent=_USER_AGENT)
-            page = await context.new_page()
-            page.set_default_timeout(timeout_ms)
 
-            # 1. Load form
-            await page.goto(LOOKUP_URL, wait_until="networkidle")
+async def lookup_broker_by_name(
+    first_name: str,
+    last_name: str,
+    *,
+    proxy: str | None = "auto",
+    timeout_ms: int = 30_000,
+) -> tuple[OregonBrokerRecord | None, str]:
+    """Look up an Oregon broker by first + last name (fallback for brokers
+    we have no license number for).
 
-            # 2. Fill + submit. Use blur so any onchange validators run.
-            await page.fill(_LICENSE_INPUT_SELECTOR, license_number.strip())
-            await page.click(_SUBMIT_BUTTON_SELECTOR)
+    Returns ``(record, status)`` where status is one of:
 
-            # 3. Wait for either the results table to render or the panel to
-            #    settle empty (no-results path). The UpdatePanel rerender is
-            #    near-instant once the AJAX completes; networkidle is a
-            #    reliable signal that ClickSearchLicenses' XHR has finished.
-            try:
-                await page.wait_for_load_state("networkidle", timeout=timeout_ms)
-            except Exception:
-                pass  # fall through; we'll still inspect the DOM
+      - ``'found'`` — exactly one match in Oregon's DB; ``record`` is populated
+      - ``'not_found'`` — no matches
+      - ``'ambiguous'`` — two or more matches; we don't guess and leave the
+        broker untouched
 
-            # Give the panel rerender a beat to attach to the DOM.
-            await page.wait_for_timeout(500)
+    Both names are required — single-name searches against Oregon's DB are
+    too noisy to safely auto-pick a result.
+    """
+    first = (first_name or "").strip()
+    last = (last_name or "").strip()
+    if not first or not last:
+        return None, "not_found"
 
-            results_html = await page.content()
-            detail_id = _extract_detail_id(results_html)
-            if not detail_id:
-                return None  # not found
+    async def _fill(page: Any) -> None:
+        await page.fill(_FIRST_NAME_SELECTOR, first)
+        await page.fill(_LAST_NAME_SELECTOR, last)
 
-            # 4. Detail page is a plain render; no JS dance needed. Navigate
-            #    through the same browser context so cookies/session carry.
-            detail_url = f"{DETAIL_URL}?id={urllib.parse.quote(detail_id, safe='')}"
-            await page.goto(detail_url, wait_until="domcontentloaded")
-            detail_html = await page.content()
-
-        finally:
-            await browser.close()
-
-    # 5. Parse 4 grids
-    grid0 = _parse_grid(detail_html, "Grid0")  # Name | Alt Name | Address
-    grid1 = _parse_grid(detail_html, "Grid1")  # License | Type | Expiration | Status | Docs
-    grid2 = _parse_grid(detail_html, "Grid2")  # Firm Name | Firm Address | License | Type | Status | Affiliation Date
-    grid3 = _parse_grid(detail_html, "Grid3")  # Case # | Order Signed | Resolution | Found Issues | Docs
-
-    name = grid0[0][0] if grid0 and len(grid0[0]) > 0 else None
-    personal_address = _parse_address(
-        grid0[0][2] if grid0 and len(grid0[0]) > 2 else None
-    )
-
-    license_type = grid1[0][1] if grid1 and len(grid1[0]) > 1 else None
-    expiration = grid1[0][2] if grid1 and len(grid1[0]) > 2 else None
-    status = grid1[0][3] if grid1 and len(grid1[0]) > 3 else None
-
-    firm_name = grid2[0][0] if grid2 and len(grid2[0]) > 0 else None
-    firm_address = _parse_address(
-        grid2[0][1] if grid2 and len(grid2[0]) > 1 else None
-    )
-
-    actions: list[OregonDisciplinaryAction] = []
-    for row in grid3:
-        actions.append(
-            OregonDisciplinaryAction(
-                case_number=row[0] if len(row) > 0 else None,
-                order_signed_date=row[1] if len(row) > 1 else None,
-                resolution=row[2] if len(row) > 2 else None,
-                found_issues=row[3] if len(row) > 3 else None,
-            )
-        )
-
-    return OregonBrokerRecord(
-        license_number=license_number.strip(),
-        name=name,
-        license_type=license_type,
-        status=status,
-        expiration_date=expiration,
-        personal_address=personal_address,
-        affiliated_firm_name=firm_name,
-        affiliated_firm_address=firm_address,
-        disciplinary_actions=actions,
-        detail_url=detail_url,
-    )
+    state = await _open_browser_and_search(_fill, proxy=proxy, timeout_ms=timeout_ms)
+    if state is None:
+        return None, "not_found"
+    results_html, browser, _page, pw = state
+    try:
+        row_count = _count_result_rows(results_html)
+        if row_count == 0:
+            return None, "not_found"
+        if row_count > 1:
+            return None, "ambiguous"
+        detail_id = _extract_detail_id(results_html)
+        if not detail_id:
+            return None, "not_found"
+        detail_html = await _fetch_detail(state, detail_id)
+        detail_url = f"{DETAIL_URL}?id={urllib.parse.quote(detail_id, safe='')}"
+        record = await _record_from_detail_html(detail_html, detail_url)
+        return record, "found"
+    finally:
+        await browser.close()
+        await pw.stop()
 
 
 __all__ = [
@@ -308,4 +396,5 @@ __all__ = [
     "OregonBrokerRecord",
     "OregonDisciplinaryAction",
     "lookup_broker",
+    "lookup_broker_by_name",
 ]

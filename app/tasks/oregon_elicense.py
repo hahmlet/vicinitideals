@@ -25,7 +25,7 @@ import logging
 from datetime import datetime, timedelta, timezone
 from typing import Any
 
-from sqlalchemy import or_, select
+from sqlalchemy import and_, or_, select
 from sqlalchemy.orm import selectinload
 
 from app.db import AsyncSessionLocal, engine
@@ -70,7 +70,10 @@ async def _enrich_broker_oregon(broker_id: str) -> dict[str, Any]:
 
 async def _enrich_broker_oregon_inner(broker_id: str) -> dict[str, Any]:
     # Local import keeps the scraper out of Celery's import path until needed.
-    from app.scrapers.oregon_elicense import lookup_broker  # noqa: PLC0415
+    from app.scrapers.oregon_elicense import (  # noqa: PLC0415
+        lookup_broker,
+        lookup_broker_by_name,
+    )
 
     async with AsyncSessionLocal() as session:
         broker = await session.get(
@@ -83,18 +86,46 @@ async def _enrich_broker_oregon_inner(broker_id: str) -> dict[str, Any]:
         )
         if broker is None:
             return {"status": "missing", "broker_id": broker_id}
-        if not broker.license_number:
-            broker.oregon_lookup_status = "not_found"
-            await session.commit()
-            return {"status": "skipped", "broker_id": broker_id, "reason": "no_license"}
 
+        # Two enrichment paths:
+        #   1. Broker has a license_number → look up by number (primary)
+        #   2. Broker has no license but does have first+last name → try
+        #      name-based lookup; only accept a result if it's unambiguous
+        #      (Oregon returns exactly 1 match). Multiple matches are flagged
+        #      ``ambiguous`` and left untouched.
         try:
-            record = await lookup_broker(broker.license_number)
+            if broker.license_number:
+                record = await lookup_broker(broker.license_number)
+            elif broker.first_name and broker.last_name:
+                record, name_status = await lookup_broker_by_name(
+                    broker.first_name, broker.last_name
+                )
+                if name_status == "ambiguous":
+                    broker.oregon_lookup_status = "ambiguous"
+                    broker.oregon_last_pulled_at = datetime.now(timezone.utc)
+                    broker.oregon_failure_count = 0
+                    await session.commit()
+                    return {"status": "ambiguous", "broker_id": broker_id}
+                # If name lookup found a unique match, persist the discovered
+                # license_number so future enrichments use the (faster, more
+                # reliable) license-based path.
+                if record is not None and record.license_number:
+                    broker.license_number = record.license_number
+            else:
+                broker.oregon_lookup_status = "not_found"
+                await session.commit()
+                return {
+                    "status": "skipped",
+                    "broker_id": broker_id,
+                    "reason": "no_license_or_name",
+                }
         except Exception as exc:
             logger.warning(
-                "Oregon eLicense lookup failed for broker %s (license=%s): %s",
+                "Oregon eLicense lookup failed for broker %s (license=%s, name=%s %s): %s",
                 broker.id,
                 broker.license_number,
+                broker.first_name,
+                broker.last_name,
                 exc,
             )
             broker.oregon_lookup_status = "failed"
@@ -190,10 +221,19 @@ async def _oregon_elicense_sweep_inner(max_brokers: int | None) -> dict[str, Any
     cutoff = datetime.now(timezone.utc) - timedelta(days=_STALE_AFTER_DAYS)
     queued = 0
     async with AsyncSessionLocal() as session:
+        # Eligible brokers: have either a license_number OR (first_name AND
+        # last_name), and are stale or never enriched. The task itself picks
+        # the right lookup path (license preferred, name as fallback).
         stmt = (
             select(Broker.id)
             .where(
-                Broker.license_number.isnot(None),
+                or_(
+                    Broker.license_number.isnot(None),
+                    and_(
+                        Broker.first_name.isnot(None),
+                        Broker.last_name.isnot(None),
+                    ),
+                ),
                 or_(
                     Broker.oregon_last_pulled_at.is_(None),
                     Broker.oregon_last_pulled_at < cutoff,
