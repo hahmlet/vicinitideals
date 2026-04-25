@@ -616,53 +616,11 @@
     <span style="color:var(--text-muted);margin:0 6px;font-weight:400">/</span>
     {% endif %}
     {% if active_project_id %}
-    <span id="builder-project-name"
+    <span class="proj-tab-name"
+          data-project-id="{{ active_project_id }}"
           onclick="_startProjectRename(event)"
           style="cursor:pointer"
           title="Click to rename">{{ project.name if project else model.name }}</span>
-    <script>
-    function _startProjectRename(ev) {
-      var span = ev.currentTarget;
-      var current = span.textContent.trim();
-      var input = document.createElement('input');
-      input.type = 'text';
-      input.value = current;
-      input.maxLength = 255;
-      input.style.cssText = 'font: inherit; color: inherit; background: var(--surface,#0f172a);' +
-        'border: 1px solid var(--accent); border-radius: 4px; padding: 2px 6px;';
-      input.size = Math.max(current.length, 12);
-      var commit = function(save) {
-        if (input._done) return; input._done = true;
-        if (save) {
-          var fd = new FormData();
-          fd.append('name', input.value);
-          fetch('/ui/projects/{{ active_project_id }}/rename', { method: 'POST', body: fd })
-            .then(function(r) { return r.text(); })
-            .then(function(html) {
-              var wrap = document.createElement('div');
-              wrap.innerHTML = html.trim();
-              input.parentNode.replaceChild(wrap.firstChild, input);
-            });
-        } else {
-          var span2 = document.createElement('span');
-          span2.id = 'builder-project-name';
-          span2.style.cursor = 'pointer';
-          span2.title = 'Click to rename';
-          span2.textContent = current;
-          span2.addEventListener('click', _startProjectRename);
-          input.parentNode.replaceChild(span2, input);
-        }
-      };
-      input.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') { e.preventDefault(); commit(true); }
-        else if (e.key === 'Escape') { e.preventDefault(); commit(false); }
-      });
-      input.addEventListener('blur', function() { commit(true); });
-      span.parentNode.replaceChild(input, span);
-      input.focus();
-      input.select();
-    }
-    </script>
     {% else %}
     <span>{{ project.name if project else model.name }}</span>
     {% endif %}
@@ -784,13 +742,17 @@ function handleComputeResult(evt) {
     </a>
     {% for p in deal_projects %}
     {% set _pp_status = _sc.per_project.get(p.id, {}).get('overall', 'na') %}
+    {% set _is_active = (_active_view == 'project' and p.id | string == active_project_id) %}
     <a href="/models/{{ model.id }}/builder?project={{ p.id }}"
-       class="deal-tab {% if _active_view == 'project' and p.id | string == active_project_id %}active{% endif %}">
+       class="deal-tab {% if _is_active %}active{% endif %}">
       <span aria-hidden="true"
             title="{{ p.name }}: {{ _status_tip.get(_pp_status, _pp_status) }}"
             style="display:inline-block;width:8px;height:8px;border-radius:50%;
                    background:{{ _status_color.get(_pp_status, '#d1d5db') }};
-                   margin-right:6px;vertical-align:middle"></span>{{ p.name }}{% if _s.per_project.get(p.id) %}<span style="color:#f59e0b;font-size:10px;margin-left:6px" title="{{ p.name }} has edits since last compute">●</span>{% endif %}
+                   margin-right:6px;vertical-align:middle"></span>{% if _is_active %}<span class="proj-tab-name"
+            data-project-id="{{ p.id }}"
+            onclick="event.preventDefault(); event.stopPropagation(); _startProjectRename(event)"
+            title="Click to rename">{{ p.name }}</span>{% else %}{{ p.name }}{% endif %}{% if _s.per_project.get(p.id) %}<span style="color:#f59e0b;font-size:10px;margin-left:6px" title="{{ p.name }} has edits since last compute">●</span>{% endif %}
     </a>
     {% endfor %}
     {% if deal_projects | length < 5 %}
@@ -1799,6 +1761,64 @@ document.addEventListener('mousedown', function(e) {
     active.blur();
   }
 }, true);
+</script>
+
+<script>
+// Inline rename for project name (breadcrumb + active tab).
+// Click .proj-tab-name → swap to input. Enter/blur → save. Escape → cancel.
+function _startProjectRename(ev) {
+  ev = ev || window.event;
+  if (ev && ev.preventDefault) { ev.preventDefault(); ev.stopPropagation(); }
+  var span = ev.currentTarget;
+  if (!span || span.tagName !== 'SPAN') return;
+  var projectId = span.getAttribute('data-project-id');
+  if (!projectId) return;
+  var current = span.textContent.trim();
+  var input = document.createElement('input');
+  input.type = 'text';
+  input.value = current;
+  input.maxLength = 255;
+  input.style.cssText = 'font: inherit; color: inherit; background: var(--surface,#0f172a);' +
+    'border: 1px solid var(--accent); border-radius: 4px; padding: 2px 6px;';
+  input.size = Math.max(current.length, 12);
+  var done = false;
+  var commit = function(save) {
+    if (done) return; done = true;
+    if (save && input.value.trim() && input.value.trim() !== current) {
+      var fd = new FormData();
+      fd.append('name', input.value);
+      fetch('/ui/projects/' + projectId + '/rename', { method: 'POST', body: fd })
+        .then(function(r) { return r.text(); })
+        .then(function(html) {
+          var wrap = document.createElement('div');
+          wrap.innerHTML = html.trim();
+          var fresh = wrap.firstChild;
+          if (input.parentNode && fresh) input.parentNode.replaceChild(fresh, input);
+          // Refresh tab labels in nav so the renamed name appears everywhere.
+          // Cheap path: reload after a short delay if name actually changed.
+          setTimeout(function() { location.reload(); }, 100);
+        });
+    } else {
+      var span2 = document.createElement('span');
+      span2.className = 'proj-tab-name';
+      span2.setAttribute('data-project-id', projectId);
+      span2.style.cursor = 'pointer';
+      span2.title = 'Click to rename';
+      span2.textContent = current;
+      span2.addEventListener('click', _startProjectRename);
+      if (input.parentNode) input.parentNode.replaceChild(span2, input);
+    }
+  };
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') { e.preventDefault(); commit(true); }
+    else if (e.key === 'Escape') { e.preventDefault(); commit(false); }
+  });
+  input.addEventListener('blur', function() { commit(true); });
+  input.addEventListener('click', function(e) { e.stopPropagation(); });
+  span.parentNode.replaceChild(input, span);
+  input.focus();
+  input.select();
+}
 </script>
 
 {% endblock %}

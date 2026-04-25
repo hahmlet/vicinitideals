@@ -6184,8 +6184,9 @@ async def rename_project(
         new_name.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
     )
     return HTMLResponse(
-        f'<span id="builder-project-name" '
-        f'onclick="_startProjectRename(event)" '
+        f'<span class="proj-tab-name" '
+        f'data-project-id="{project_id}" '
+        f'onclick="event.preventDefault(); event.stopPropagation(); _startProjectRename(event)" '
         f'style="cursor:pointer" '
         f'title="Click to rename">{safe}</span>'
     )
