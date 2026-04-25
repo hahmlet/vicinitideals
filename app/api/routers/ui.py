@@ -6568,6 +6568,16 @@ async def create_deal_project(
                     ))
                     await session.flush()
 
+    # HTMX-driven submit (drawer form uses hx-post) — return HX-Redirect so
+    # the browser does a full navigation to the new project. Plain
+    # RedirectResponse retained as fallback for direct (non-HTMX) calls.
+    if request.headers.get("HX-Request") == "true":
+        from starlette.responses import Response as _StarletteResp
+        _resp = _StarletteResp(status_code=204)
+        _resp.headers["HX-Redirect"] = (
+            f"/models/{deal_id}/builder?project={new_proj.id}"
+        )
+        return _resp
     return RedirectResponse(
         url=f"/models/{deal_id}/builder?project={new_proj.id}", status_code=303
     )
@@ -8301,6 +8311,28 @@ async def model_builder(
     # Active project object (for Clone From drawer label)
     active_project = next((p for p in deal_projects if p.id == active_project_id), None)
 
+    # Resolved anchor start date for the active project. When the project is
+    # anchored to another project's milestone, the timeline wizard's Start
+    # Date input is replaced by a read-only display of this computed date.
+    active_project_anchor_date = None
+    active_project_anchor_parent = None
+    if active_project_id is not None:
+        from app.models.project import ProjectAnchor as _PA_active
+        _active_anchor = (await session.execute(
+            select(_PA_active).where(_PA_active.project_id == active_project_id)
+        )).scalar_one_or_none()
+        if _active_anchor is not None:
+            from app.engines.anchor_resolver import resolve_project_start_dates
+            from app.models.deal import Scenario as _Scn
+            _scn = await session.get(_Scn, model_id)
+            await session.refresh(_scn, ["projects"])
+            _resolved = await resolve_project_start_dates(_scn, session)
+            active_project_anchor_date = _resolved.get(active_project_id)
+            active_project_anchor_parent = next(
+                (p for p in deal_projects if p.id == _active_anchor.anchor_project_id),
+                None,
+            )
+
     # Milestones for every project on the scenario — feeds the Add Project
     # drawer's "Anchor Start Date To" optgroup dropdown so the user can wire
     # the new project to a parent milestone at creation time.
@@ -8364,6 +8396,8 @@ async def model_builder(
         "anchor_milestones_by_project": anchor_milestones_by_project,
         "active_project_id": str(active_project_id) if active_project_id else None,
         "active_project": active_project,
+        "active_project_anchor_date": active_project_anchor_date,
+        "active_project_anchor_parent": active_project_anchor_parent,
         "active_view": active_view,
         "underwriting_rollup": underwriting_rollup_data,
         "active_module": active_module,
