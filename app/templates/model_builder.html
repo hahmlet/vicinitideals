@@ -419,11 +419,11 @@
   flex-shrink: 0;
   background: var(--surface);
   overflow-x: auto;
-  /* Pin tab rows so users can navigate back from underwriting / long views. */
-  position: sticky;
-  z-index: 5;
 }
-.deal-tabs-row-variants { top: 0; }
+/* Pin only the variant row directly; the project row is wrapped in a sticky
+   flex container (see model_builder.html) so its Clone-From sibling stays
+   aligned. Double-sticky inside a sticky parent collapses children's height. */
+.deal-tabs-row-variants { position: sticky; top: 0; z-index: 6; }
 .deal-tab {
   display: flex;
   align-items: center;
@@ -736,8 +736,8 @@ function handleComputeResult(evt) {
   'fail': 'Failing — DSCR below minimum or Sources<Uses',
   'na': 'Not yet computed'
 } %}
-<div style="display:flex;align-items:stretch;overflow:hidden;position:sticky;top:40px;z-index:5;background:var(--surface)">
-  <div class="deal-tabs-row deal-tabs-row-projects" style="flex:1;min-width:0;position:relative;top:auto">
+<div style="display:flex;align-items:stretch;position:sticky;top:40px;z-index:5;background:var(--surface);border-bottom:1px solid var(--border)">
+  <div class="deal-tabs-row deal-tabs-row-projects" style="flex:1;min-width:0;border-bottom:none">
     {# Underwriting — scenario rollup, always the leftmost chip #}
     {% set _uw_overall = _sc.underwriting.overall %}
     <a href="/models/{{ model.id }}/builder?view=underwriting"
