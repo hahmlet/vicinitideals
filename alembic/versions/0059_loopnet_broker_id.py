@@ -11,16 +11,16 @@ the /loopnet/broker/extendedDetails endpoint accepts. Persisting it lets us:
   - Avoid re-fetching broker bio/specialties on every listing pull
   - Cross-reference with future LoopNet broker-search/list endpoints
 
-Revision ID: 0056
-Revises: 0055
+Revision ID: 0059
+Revises: 0058
 Create Date: 2026-04-25
 """
 
 import sqlalchemy as sa
 from alembic import op
 
-revision = "0056"
-down_revision = "0055"
+revision = "0059"
+down_revision = "0058"
 branch_labels = None
 depends_on = None
 
