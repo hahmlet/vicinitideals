@@ -5879,17 +5879,18 @@ async def apply_unit_mix_to_revenue(
     model_id: UUID,
     session: DBSession,
 ) -> HTMLResponse:
-    """Auto-generate IncomeStream rows from each UnitMix row's strategy.
+    """Add IncomeStream rows for UnitMix rows that don't already have one.
+    **Additive only** — never deletes or overwrites existing streams.
 
-    Strategy mapping:
-      - base_escalation:       stream at in_place rent, normal escalation
-      - ltl_catchup:           stream at in_place rent, catchup_target_rent = market
-      - value_add_renovation:  stream at post_reno rent, renovation_absorption_rate = 1.0
+    Strategy → generated label mapping:
+      - base_escalation:       "{unit_label} Rent"
+      - ltl_catchup:           "{unit_label} Rent"
+      - value_add_renovation:  "{unit_label} Rent (Renovated)"
 
-    Existing streams labeled "{unit_label} Rent" are deleted and replaced —
-    this is deterministic: run the same UnitMix config, get the same streams.
-    One-off streams (e.g. "Parking", "Laundry") with non-matching labels
-    are preserved.
+    If a stream already exists at the generated label this handler skips
+    it (preserving rent / occupancy / escalation edits). Stub streams like
+    "All Units" stay put — the user deletes them manually once the
+    per-unit-type streams look right.
     """
     model = await session.get(DealModel, model_id)
     if model is None:
@@ -5915,7 +5916,8 @@ async def apply_unit_mix_to_revenue(
         ctx = {"model": model, "active_module": "property", **panel_data}
         return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
 
-    # Collect labels we'll generate so we can purge stale auto-generated streams
+    # Build the candidate stream list from each UnitMix row's strategy.
+    # Additive sync filters this list against existing labels below.
     to_generate: list[dict] = []
     for u in unit_mix_rows:
         strategy = (u.unit_strategy or "base_escalation")
@@ -5964,27 +5966,28 @@ async def apply_unit_mix_to_revenue(
             )
         to_generate.append(stream)
 
-    # Delete existing auto-generated streams (matching labels) to keep this idempotent
+    # Additive-only: skip any generated label whose stream already exists.
+    # Preserves manual rent / occupancy / escalation edits the user made.
     generated_labels = {s["label"] for s in to_generate}
+    existing_labels: set[str] = set()
     if generated_labels:
-        existing_to_delete = list((await session.execute(
-            select(IncomeStream).where(
+        existing_labels = set((await session.execute(
+            select(IncomeStream.label).where(
                 IncomeStream.project_id == active_proj_id,
                 IncomeStream.label.in_(generated_labels),
             )
         )).scalars())
-        for row in existing_to_delete:
-            await session.delete(row)
-        await session.flush()
 
-    # Create fresh streams
     for data in to_generate:
+        if data["label"] in existing_labels:
+            continue
         session.add(IncomeStream(project_id=active_proj_id, **data))
     await session.flush()
 
-    # Return the refreshed Property panel so the user stays oriented
+    # Return the refreshed Revenue panel — the sync banner triggers from
+    # there, so stay oriented on Revenue rather than bouncing to Property.
     panel_data = await _load_builder_data(session, model_id, project_id=active_proj_id)
-    ctx = {"model": model, "active_module": "property", **panel_data}
+    ctx = {"model": model, "active_module": "revenue", **panel_data}
     return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
 
 

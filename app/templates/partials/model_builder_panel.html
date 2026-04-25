@@ -491,6 +491,33 @@
     <button class="btn btn-sm btn-primary" onclick="openAddLine('revenue')">+ Add Stream</button>
   </div>
 </div>
+{# ── Sync banner: shows when Property unit types exist that don't have a
+     matching Revenue stream yet. Sync is additive-only — never deletes
+     streams. Stub streams like "All Units" stay until user removes them. #}
+{%- set _stream_labels = (income_streams | map(attribute='label') | list) -%}
+{%- set _missing = [] -%}
+{%- for u in unit_mix_rows -%}
+  {%- set _strategy = u.unit_strategy or 'base_escalation' -%}
+  {%- set _expect = (u.label ~ ' Rent (Renovated)') if _strategy == 'value_add_renovation' else (u.label ~ ' Rent') -%}
+  {%- if _expect not in _stream_labels and (u.unit_count or 0) > 0 -%}
+    {{- _missing.append(u.label) or '' -}}
+  {%- endif -%}
+{%- endfor -%}
+{% if _missing %}
+<div style="margin:0 0 16px;padding:10px 14px;background:#fef3c7;border:1px solid #f59e0b;border-radius:6px;display:flex;align-items:center;gap:12px;font-size:13px;color:#92400e">
+  <span style="flex:1">
+    <strong>{{ _missing | length }} unit type{{ 's' if _missing|length != 1 else '' }}</strong> from Property
+    {% if _missing | length <= 4 %}({{ _missing | join(', ') }}){% endif %}
+    don't have matching Revenue streams yet.
+  </span>
+  <button class="btn btn-sm btn-primary"
+          hx-post="/ui/models/{{ model.id }}/unit-mix/apply-to-revenue"
+          hx-target="#module-panel-content"
+          hx-swap="innerHTML">
+    Sync with Property
+  </button>
+</div>
+{% endif %}
 <div class="module-panel-body">
   {% if income_streams %}
   <table class="line-table">
