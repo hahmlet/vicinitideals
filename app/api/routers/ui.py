@@ -6204,6 +6204,69 @@ async def create_deal_project(
         session.add(milestone)
     await session.flush()
 
+    # ── Source share / clone decisions ────────────────────────────────────
+    # Default: each project gets its OWN copy of every existing CapitalModule
+    # (cloned with its own junction). User opts in to sharing a Source by
+    # checking the box in the drawer — checked Sources add the new project
+    # to the existing module's junction (one principal underwriting both).
+    from app.models.capital import CapitalModule as _CM_create, CapitalModuleProject as _CMP_create
+    _shared_ids: set[str] = {
+        s.strip() for s in form.getlist("share_source_ids") if s and s.strip()
+    }
+    _existing_modules = list((await session.execute(
+        select(_CM_create).where(_CM_create.scenario_id == deal_id)
+    )).scalars())
+    _max_pos = max((m.stack_position or 0) for m in _existing_modules) if _existing_modules else 0
+    for _m in _existing_modules:
+        if str(_m.id) in _shared_ids:
+            # Share: add new project to existing junction (idempotent).
+            _existing_j = (await session.execute(
+                select(_CMP_create).where(
+                    _CMP_create.capital_module_id == _m.id,
+                    _CMP_create.project_id == new_proj.id,
+                )
+            )).scalar_one_or_none()
+            if _existing_j is None:
+                session.add(_CMP_create(
+                    capital_module_id=_m.id,
+                    project_id=new_proj.id,
+                    amount=Decimal("0"),
+                    active_from=_m.active_phase_start,
+                    active_to=_m.active_phase_end,
+                    auto_size=bool((_m.source or {}).get("auto_size")),
+                ))
+        else:
+            # Clone: new CapitalModule + junction tied to new project only.
+            # Reset auto-sized principal so the engine sizes for the new
+            # project's own Uses; user-set amounts are preserved as a
+            # starting point the user can edit afterwards.
+            _src_copy = dict(_m.source or {})
+            if _src_copy.get("auto_size"):
+                _src_copy["amount"] = 0
+            _max_pos += 1
+            _new_mod = _CM_create(
+                scenario_id=deal_id,
+                label=_m.label,
+                funder_type=_m.funder_type,
+                stack_position=_max_pos,
+                source=_src_copy,
+                carry=dict(_m.carry or {}),
+                exit_terms=dict(_m.exit_terms or {}),
+                active_phase_start=_m.active_phase_start,
+                active_phase_end=_m.active_phase_end,
+            )
+            session.add(_new_mod)
+            await session.flush()
+            session.add(_CMP_create(
+                capital_module_id=_new_mod.id,
+                project_id=new_proj.id,
+                amount=Decimal("0"),
+                active_from=_new_mod.active_phase_start,
+                active_to=_new_mod.active_phase_end,
+                auto_size=bool((_new_mod.source or {}).get("auto_size")),
+            ))
+    await session.flush()
+
     # Optional Timeline Anchor — set when the user picks a parent milestone
     # in the Add Project drawer. anchor_project_id is derived from the
     # milestone's project_id so the form only needs one dropdown.
@@ -7503,11 +7566,11 @@ async def deal_setup_wizard_complete(
                 notes="Sized at compute time: max(OpEx, Debt Service) × reserve months",
             ))
 
-    # Auto-attach every newly-created CapitalModule to every project via
-    # CapitalModuleProject junction. Without this, multi-project scenarios
-    # have modules with no coverage — the engine refuses to self-heal junctions
-    # when n_projects != 1, so Project 2 would be uncovered. Users can later
-    # narrow coverage via the Coverage modal.
+    # Attach every newly-created CapitalModule to the DEFAULT project only.
+    # Other projects start without coverage on these auto modules; when the
+    # user runs Add Project (drawer), the share-or-clone checkboxes decide
+    # whether each Source is shared (junction extended) or cloned (new module
+    # owned solely by the new project). Default is per-project, not shared.
     _auto_modules = list((await session.execute(
         select(CapitalModule).where(
             CapitalModule.scenario_id == model_id,
@@ -7515,22 +7578,21 @@ async def deal_setup_wizard_complete(
         )
     )).scalars())
     for _mod in _auto_modules:
-        for _proj in all_scenario_projects:
-            _existing_j = (await session.execute(
-                select(CapitalModuleProject).where(
-                    CapitalModuleProject.capital_module_id == _mod.id,
-                    CapitalModuleProject.project_id == _proj.id,
-                )
-            )).scalar_one_or_none()
-            if _existing_j is None:
-                session.add(CapitalModuleProject(
-                    capital_module_id=_mod.id,
-                    project_id=_proj.id,
-                    amount=Decimal(str((_mod.source or {}).get("amount") or 0)),
-                    active_from=_mod.active_phase_start,
-                    active_to=_mod.active_phase_end,
-                    auto_size=bool((_mod.source or {}).get("auto_size")),
-                ))
+        _existing_j = (await session.execute(
+            select(CapitalModuleProject).where(
+                CapitalModuleProject.capital_module_id == _mod.id,
+                CapitalModuleProject.project_id == default_project.id,
+            )
+        )).scalar_one_or_none()
+        if _existing_j is None:
+            session.add(CapitalModuleProject(
+                capital_module_id=_mod.id,
+                project_id=default_project.id,
+                amount=Decimal(str((_mod.source or {}).get("amount") or 0)),
+                active_from=_mod.active_phase_start,
+                active_to=_mod.active_phase_end,
+                auto_size=bool((_mod.source or {}).get("auto_size")),
+            ))
 
     # ── Pre-load $0 closing cost Use line stubs for Phase B modules ──────────
     # Cost names match _DEFAULT_LOAN_COSTS in cashflow.py (keep in sync).

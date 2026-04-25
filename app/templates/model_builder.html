@@ -1235,6 +1235,28 @@ function saveModelName(el) {
           </div>
         </div>
         {% endif %}
+        {# ── Source Sharing — default is per-project (each box unchecked clones
+             the source for the new project). Check a box to share that source
+             across both projects (single principal in the junction). ── #}
+        {% if (deal_projects | length) >= 1 and capital_modules %}
+        <div style="border-top:1px solid var(--border);padding-top:14px;margin-top:4px">
+          <label class="field-label">Share Sources From Existing Projects</label>
+          <div style="font-size:12px;color:var(--text-muted);margin:4px 0 8px">
+            Check to share the existing Source with this new project (one principal underwriting both). Unchecked Sources are cloned — the new project gets its own copy you can size separately.
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;max-height:180px;overflow-y:auto;border:1px solid var(--border);border-radius:6px;padding:10px">
+            {% for m in capital_modules | sort(attribute='stack_position') %}
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer">
+              <input type="checkbox" name="share_source_ids" value="{{ m.id }}">
+              <span>
+                {{ m.label }}
+                <span class="text-muted" style="font-size:11px">— {{ m.funder_type | replace('_',' ') | title if m.funder_type else 'Source' }}</span>
+              </span>
+            </label>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
         <div style="display:flex;gap:8px;margin-top:6px">
           <button type="submit" class="btn btn-primary">Create Project →</button>
           <button type="button" class="btn btn-secondary" onclick="closeDrawer('add-project-drawer')">Cancel</button>
