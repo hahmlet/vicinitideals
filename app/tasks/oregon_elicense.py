@@ -28,7 +28,7 @@ from typing import Any
 from sqlalchemy import or_, select
 from sqlalchemy.orm import selectinload
 
-from app.db import AsyncSessionLocal
+from app.db import AsyncSessionLocal, engine
 from app.models.broker import Broker, BrokerDisciplinaryAction
 from app.tasks.celery_app import celery_app
 
@@ -57,6 +57,18 @@ def enrich_broker_oregon(self, broker_id: str) -> dict[str, Any]:
 
 
 async def _enrich_broker_oregon(broker_id: str) -> dict[str, Any]:
+    try:
+        return await _enrich_broker_oregon_inner(broker_id)
+    finally:
+        # Dispose pooled DB connections while the event loop is still alive.
+        # asyncio.run() will close the loop on return, and any pooled connection
+        # left behind tries to clean itself up against the closed loop, which
+        # fails with "Event loop is closed". Forcing dispose here keeps every
+        # task self-contained.
+        await engine.dispose()
+
+
+async def _enrich_broker_oregon_inner(broker_id: str) -> dict[str, Any]:
     # Local import keeps the scraper out of Celery's import path until needed.
     from app.scrapers.oregon_elicense import lookup_broker  # noqa: PLC0415
 
@@ -168,6 +180,13 @@ def oregon_elicense_sweep(self, max_brokers: int | None = None) -> dict[str, Any
 
 
 async def _oregon_elicense_sweep(max_brokers: int | None) -> dict[str, Any]:
+    try:
+        return await _oregon_elicense_sweep_inner(max_brokers)
+    finally:
+        await engine.dispose()
+
+
+async def _oregon_elicense_sweep_inner(max_brokers: int | None) -> dict[str, Any]:
     cutoff = datetime.now(timezone.utc) - timedelta(days=_STALE_AFTER_DAYS)
     queued = 0
     async with AsyncSessionLocal() as session:
