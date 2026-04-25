@@ -25,11 +25,12 @@ import logging
 from datetime import datetime, timedelta, timezone
 from typing import Any
 
-from sqlalchemy import and_, or_, select
+from sqlalchemy import and_, func, or_, select
 from sqlalchemy.orm import selectinload
 
 from app.db import AsyncSessionLocal, engine
-from app.models.broker import Broker, BrokerDisciplinaryAction
+from app.models.broker import Broker, BrokerDisciplinaryAction, Brokerage
+from app.services.broker_normalize import normalize_name
 from app.tasks.celery_app import celery_app
 
 logger = logging.getLogger(__name__)
@@ -158,17 +159,42 @@ async def _enrich_broker_oregon_inner(broker_id: str) -> dict[str, Any]:
         broker.oregon_lookup_status = "success"
         broker.oregon_failure_count = 0
 
-        # Affiliated firm enrichment — only if the broker has a brokerage row
-        # already. We don't auto-create brokerages from Oregon data; that
-        # would risk creating unjoined orphans.
-        if broker.brokerage and record.affiliated_firm_name:
+        # Affiliated firm enrichment. Two paths:
+        #   - Broker already has a brokerage row → just update oregon_company_*
+        #     fields (don't touch the canonical .name; that's Crexi-sourced).
+        #   - Broker has no brokerage but Oregon found one → look up an
+        #     existing brokerage by case-insensitive name match, or create a
+        #     new one. This handles brokers that came in from Crexi without
+        #     firm info but whose Oregon record exposes their firm.
+        if record.affiliated_firm_name:
+            firm_name_normalized = (
+                normalize_name(record.affiliated_firm_name)
+                or record.affiliated_firm_name.strip()
+            )
             bg = broker.brokerage
-            bg.oregon_company_name = record.affiliated_firm_name
-            if record.affiliated_firm_address:
-                bg.oregon_company_street = record.affiliated_firm_address.street
-                bg.oregon_company_city = record.affiliated_firm_address.city
-                bg.oregon_company_state = record.affiliated_firm_address.state
-                bg.oregon_company_zip = record.affiliated_firm_address.zip
+            if bg is None and firm_name_normalized:
+                existing_id = (
+                    await session.execute(
+                        select(Brokerage.id).where(
+                            func.lower(Brokerage.name) == firm_name_normalized.lower()
+                        )
+                    )
+                ).scalar_one_or_none()
+                if existing_id is not None:
+                    bg = await session.get(Brokerage, existing_id)
+                else:
+                    bg = Brokerage(name=firm_name_normalized)
+                    session.add(bg)
+                    await session.flush()  # populate bg.id before we link
+                broker.brokerage_id = bg.id
+                broker.brokerage = bg
+            if bg is not None:
+                bg.oregon_company_name = record.affiliated_firm_name
+                if record.affiliated_firm_address:
+                    bg.oregon_company_street = record.affiliated_firm_address.street
+                    bg.oregon_company_city = record.affiliated_firm_address.city
+                    bg.oregon_company_state = record.affiliated_firm_address.state
+                    bg.oregon_company_zip = record.affiliated_firm_address.zip
 
         # Replace disciplinary actions for this broker. Cheap and correct
         # given low volume per broker.
