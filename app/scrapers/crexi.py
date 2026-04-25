@@ -498,7 +498,13 @@ def _build_listing(detail_payload: dict[str, Any], broker_payloads: list[dict[st
     )
 
 
-_LICENSE_PREFIX_RE = _re.compile(r"^([A-Z]{2})\s+(.+)$")
+# Match license strings prefixed by a US state code, with optional separator
+# characters (whitespace, '#', '-', '_', ':', '.') between the prefix and the
+# license number. Crexi's stored format varies: ``"OR 880100065"``,
+# ``"OR# 201236666"``, ``"OR201209982"``, even ``"OR-1234"`` are all in the
+# wild. The number portion must start with a digit, which guards against
+# false positives on words like "OREGON".
+_LICENSE_PREFIX_RE = _re.compile(r"^([A-Z]{2})[\s#\-_:.]*(\d.*)$")
 
 
 def _extract_crexi_license(payload: dict[str, Any]) -> tuple[str | None, str | None]:
@@ -512,7 +518,9 @@ def _extract_crexi_license(payload: dict[str, Any]) -> tuple[str | None, str | N
 
     We prefer Oregon entries (licenseStateCode == 'OR') because Oregon is our
     target acquisition market; otherwise the first available license is used.
-    The leading state prefix is stripped from the number when present.
+    The leading state prefix is stripped from the number when present, and
+    the state column is filled in from the prefix when ``licenseStateCode``
+    is null in the payload.
     """
     details = payload.get("licenseDetails") or []
     chosen: dict[str, Any] | None = None
@@ -533,8 +541,14 @@ def _extract_crexi_license(payload: dict[str, Any]) -> tuple[str | None, str | N
         num = _string_or_none(chosen.get("number")) or ""
         state = (chosen.get("licenseStateCode") or "").strip().upper() or None
         m = _LICENSE_PREFIX_RE.match(num)
-        if m and state and m.group(1) == state:
-            num = m.group(2).strip()
+        if m:
+            prefix_state = m.group(1)
+            cleaned = m.group(2).strip()
+            if not state:
+                # licenseStateCode was missing — derive it from the prefix
+                state = prefix_state
+            if prefix_state == state:
+                num = cleaned
         return (num.strip() or None), state
 
     licenses = payload.get("licenses") or []
