@@ -958,6 +958,39 @@ def map_to_scraped_listing(
             or sale_summary.get("saleConditions")
         ),
 
+        # ---- Migration 0055 audit columns ----
+        # Tier 1: typed first-class fields
+        "apartment_style": pf.get("apartmentStyle") or sale_summary.get("apartmentStyle"),
+        "construction_status": (
+            sale_summary.get("constructionStatus")
+            or pf.get("constructionStatus")
+        ),
+        "parking_ratio": (
+            pf.get("parkingRatio")
+            or sale_summary.get("parkingRatio")
+            or sale_details.get("parkingRatio")
+        ),
+        "building_far": _parse_decimal(
+            pf.get("buildingFAR") or sale_summary.get("buildingFAR")
+        ),
+        "gross_rent_multiplier": _parse_decimal(
+            pf.get("grossRentMultiplier")
+            or sale_summary.get("grossRentMultiplier")
+        ),
+        "on_ground_lease": (
+            bool(sale_summary.get("propertyOnGroundLease"))
+            if sale_summary.get("propertyOnGroundLease") is not None
+            else None
+        ),
+
+        # Tier 3: display/context surfaces (lifted from raw_json)
+        "highlights": (
+            [str(h) for h in sale_details.get("highlights") or [] if h]
+            or None
+        ),
+        "attachments": sale_details.get("attachments") or None,
+        "nearby_transportation": (extended_details or {}).get("transportation") or None,
+
         # Listing metadata
         "listing_name": sale_details.get("title") or pf.get("title"),
         "description": sale_details.get("description") or sale_details.get("summary"),

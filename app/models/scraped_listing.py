@@ -196,6 +196,22 @@ class ScrapedListing(Base):
         nullable=True,
     )
 
+    # LoopNet audit-discovered fields (migration 0055)
+    apartment_style: Mapped[str | None] = mapped_column(String(40), nullable=True)
+    construction_status: Mapped[str | None] = mapped_column(String(40), nullable=True)
+    parking_ratio: Mapped[str | None] = mapped_column(String(60), nullable=True)
+    building_far: Mapped[object | None] = mapped_column(Numeric(8, 4), nullable=True)
+    gross_rent_multiplier: Mapped[object | None] = mapped_column(Numeric(8, 4), nullable=True)
+    on_ground_lease: Mapped[bool | None] = mapped_column(Boolean, nullable=True)
+    highlights: Mapped[list[str] | None] = mapped_column(
+        ARRAY(Text).with_variant(JSON(), "sqlite"),
+        nullable=True,
+    )
+    attachments: Mapped[list[dict] | None] = mapped_column(JSON, nullable=True)
+    nearby_transportation: Mapped[list[dict] | None] = mapped_column(
+        JSON, nullable=True,
+    )
+
     # Realie.ai enrichment
     realie_skip: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     realie_enriched_at: Mapped[datetime | None] = mapped_column(

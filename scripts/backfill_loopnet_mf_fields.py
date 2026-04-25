@@ -35,11 +35,15 @@ async def main() -> int:
     # Fields we may newly populate via re-mapping. (sub_type re-derived from
     # apartmentStyle so it can shift even when other fields don't.)
     BACKFILL_FIELDS = (
+        # Initial round
         "units", "stories", "occupancy_pct", "price_per_unit",
         "lot_sqft", "year_built", "year_renovated",
         "is_in_opportunity_zone", "sale_condition",
-        "price_per_sqft", "gba_sqft",
-        "sub_type",
+        "price_per_sqft", "gba_sqft", "sub_type",
+        # Migration 0055 columns
+        "apartment_style", "construction_status", "parking_ratio",
+        "building_far", "gross_rent_multiplier", "on_ground_lease",
+        "highlights", "attachments", "nearby_transportation",
     )
     fields_filled = dict.fromkeys(BACKFILL_FIELDS, 0)
 
