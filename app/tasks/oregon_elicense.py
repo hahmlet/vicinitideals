@@ -198,8 +198,15 @@ async def _enrich_broker_oregon_inner(broker_id: str) -> dict[str, Any]:
 
         # Replace disciplinary actions for this broker. Cheap and correct
         # given low volume per broker.
+        #
+        # The flush() between delete and insert is load-bearing: the
+        # ``uq_broker_disciplinary_actions_broker_case`` unique constraint
+        # would otherwise blow up when the existing case row and a freshly
+        # re-pulled record for the same case live in the same flush, and
+        # SQLAlchemy emits the INSERT before the DELETE has hit the DB.
         for existing in list(broker.disciplinary_actions):
             await session.delete(existing)
+        await session.flush()
         for action in record.disciplinary_actions:
             order_date = None
             if action.order_signed_date:
