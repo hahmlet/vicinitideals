@@ -646,7 +646,7 @@
     <span class="badge {{ 'badge-green' if model.is_active else 'badge-gray' }}">
       {{ 'Active' if model.is_active else 'Inactive' }}
     </span>
-    <a class="btn btn-sm btn-secondary" href="/ui/models/{{ model.id }}/export.xlsx" download title="Download Excel workbook (round-trip capable)">↓ Excel</a>
+    <a class="btn btn-sm btn-secondary" href="/ui/models/{{ model.id }}/investor-export.xlsx" download title="Download LP-facing investor Excel workbook">↓ Investor Export</a>
     <button type="button" class="btn btn-sm btn-secondary" title="View parcels on map"
             onclick="openParcelMap('project','{{ active_project_id }}','{{ model.name | replace("'","\\'") | safe }}')">🗺</button>
     <button class="btn btn-sm btn-secondary" onclick="openDrawer('model-settings-drawer')">⚙ Settings</button>
