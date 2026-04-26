@@ -1,0 +1,4800 @@
+{
+  "capital_modules": [],
+  "cash_flow_line_items": [
+    {
+      "adjustments": {
+        "closing_costs_pct": "2.000000",
+        "direction": "outflow",
+        "phase": "acquisition"
+      },
+      "base_amount": "36000.000000",
+      "category": "capital_event",
+      "label": "Closing Costs",
+      "net_amount": "36000.000000",
+      "period": 0,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "direction": "outflow",
+        "phase": "acquisition"
+      },
+      "base_amount": "1800000.000000",
+      "category": "capital_event",
+      "label": "Purchase Price",
+      "net_amount": "1800000.000000",
+      "period": 0,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "acquisition",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 0,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "acquisition"
+      },
+      "base_amount": "600.000000",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "600.000000",
+      "period": 0,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "acquisition"
+      },
+      "base_amount": "1500.000000",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1500.000000",
+      "period": 0,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": false,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.000000",
+        "occupancy_pct": "0.000000",
+        "phase": "acquisition",
+        "units": 12,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "0.000000",
+      "period": 0,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": false,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.000000",
+        "occupancy_pct": "0.000000",
+        "phase": "acquisition",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "0.000000",
+      "period": 0,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "hold",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 1,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "hold"
+      },
+      "base_amount": "601.479600",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "601.479600",
+      "period": 1,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "hold"
+      },
+      "base_amount": "619.019276",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "619.019276",
+      "period": 1,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "hold",
+        "units": "12.000000"
+      },
+      "base_amount": "4811.836800",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "4811.836800",
+      "period": 1,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "hold"
+      },
+      "base_amount": "1503.699000",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1503.699000",
+      "period": 1,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.002466",
+        "occupancy_pct": "87.400000",
+        "phase": "hold",
+        "units": 12,
+        "vacancy_loss": "2197.806458"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "15245.101942",
+      "period": 1,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.001652",
+        "occupancy_pct": "92.000000",
+        "phase": "hold",
+        "units": 0,
+        "vacancy_loss": "20.033040"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "230.379960",
+      "period": 1,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "hold",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 2,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "hold"
+      },
+      "base_amount": "602.963400",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "602.963400",
+      "period": 2,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "hold"
+      },
+      "base_amount": "620.538829",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "620.538829",
+      "period": 2,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "hold",
+        "units": "12.000000"
+      },
+      "base_amount": "4823.707200",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "4823.707200",
+      "period": 2,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "hold"
+      },
+      "base_amount": "1507.408500",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1507.408500",
+      "period": 2,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.004939",
+        "occupancy_pct": "87.400000",
+        "phase": "hold",
+        "units": 12,
+        "vacancy_loss": "2203.228264"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "15282.710336",
+      "period": 2,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.003306",
+        "occupancy_pct": "92.000000",
+        "phase": "hold",
+        "units": 0,
+        "vacancy_loss": "20.066120"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "230.760380",
+      "period": 2,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "direction": "outflow",
+        "phase": "major_renovation"
+      },
+      "base_amount": "60000.000000",
+      "category": "capital_event",
+      "label": "Renovation Cost",
+      "net_amount": "60000.000000",
+      "period": 3,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "major_renovation",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 3,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "major_renovation"
+      },
+      "base_amount": "604.450200",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "604.450200",
+      "period": 3,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "major_renovation"
+      },
+      "base_amount": "432.967678",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "432.967678",
+      "period": 3,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "major_renovation",
+        "units": "12.000000"
+      },
+      "base_amount": "4835.601600",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "4835.601600",
+      "period": 3,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "major_renovation"
+      },
+      "base_amount": "1511.125500",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1511.125500",
+      "period": 3,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.007417",
+        "occupancy_pct": "61.750000",
+        "phase": "major_renovation",
+        "units": 12,
+        "vacancy_loss": "6704.863843"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "10824.191957",
+      "period": 3,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": false,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.004963",
+        "occupancy_pct": "0.000000",
+        "phase": "major_renovation",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "0.000000",
+      "period": 3,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "direction": "outflow",
+        "phase": "major_renovation"
+      },
+      "base_amount": "60000.000000",
+      "category": "capital_event",
+      "label": "Renovation Cost",
+      "net_amount": "60000.000000",
+      "period": 4,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "major_renovation",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 4,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "major_renovation"
+      },
+      "base_amount": "605.941200",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "605.941200",
+      "period": 4,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "major_renovation"
+      },
+      "base_amount": "434.035682",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "434.035682",
+      "period": 4,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "major_renovation",
+        "units": "12.000000"
+      },
+      "base_amount": "4847.529600",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "4847.529600",
+      "period": 4,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "major_renovation"
+      },
+      "base_amount": "1514.853000",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1514.853000",
+      "period": 4,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.009902",
+        "occupancy_pct": "61.750000",
+        "phase": "major_renovation",
+        "units": 12,
+        "vacancy_loss": "6721.402761"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "10850.892039",
+      "period": 4,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": false,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.006623",
+        "occupancy_pct": "0.000000",
+        "phase": "major_renovation",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "0.000000",
+      "period": 4,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "direction": "outflow",
+        "phase": "major_renovation"
+      },
+      "base_amount": "60000.000000",
+      "category": "capital_event",
+      "label": "Renovation Cost",
+      "net_amount": "60000.000000",
+      "period": 5,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "major_renovation",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 5,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "major_renovation"
+      },
+      "base_amount": "607.435200",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "607.435200",
+      "period": 5,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "major_renovation"
+      },
+      "base_amount": "435.105834",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "435.105834",
+      "period": 5,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "major_renovation",
+        "units": "12.000000"
+      },
+      "base_amount": "4859.481600",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "4859.481600",
+      "period": 5,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "major_renovation"
+      },
+      "base_amount": "1518.588000",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1518.588000",
+      "period": 5,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.012392",
+        "occupancy_pct": "61.750000",
+        "phase": "major_renovation",
+        "units": 12,
+        "vacancy_loss": "6737.974956"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "10877.645844",
+      "period": 5,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": false,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.008285",
+        "occupancy_pct": "0.000000",
+        "phase": "major_renovation",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "0.000000",
+      "period": 5,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "direction": "outflow",
+        "phase": "major_renovation"
+      },
+      "base_amount": "60000.000000",
+      "category": "capital_event",
+      "label": "Renovation Cost",
+      "net_amount": "60000.000000",
+      "period": 6,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "major_renovation",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 6,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "major_renovation"
+      },
+      "base_amount": "608.933400",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "608.933400",
+      "period": 6,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "major_renovation"
+      },
+      "base_amount": "436.178994",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "436.178994",
+      "period": 6,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "major_renovation",
+        "units": "12.000000"
+      },
+      "base_amount": "4871.467200",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "4871.467200",
+      "period": 6,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "major_renovation"
+      },
+      "base_amount": "1522.333500",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1522.333500",
+      "period": 6,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.014889",
+        "occupancy_pct": "61.750000",
+        "phase": "major_renovation",
+        "units": 12,
+        "vacancy_loss": "6754.593739"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "10904.474861",
+      "period": 6,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": false,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.009950",
+        "occupancy_pct": "0.000000",
+        "phase": "major_renovation",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "0.000000",
+      "period": 6,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "direction": "outflow",
+        "phase": "major_renovation"
+      },
+      "base_amount": "60000.000000",
+      "category": "capital_event",
+      "label": "Renovation Cost",
+      "net_amount": "60000.000000",
+      "period": 7,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "major_renovation",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 7,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "major_renovation"
+      },
+      "base_amount": "610.435200",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "610.435200",
+      "period": 7,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "major_renovation"
+      },
+      "base_amount": "437.254734",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "437.254734",
+      "period": 7,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "major_renovation",
+        "units": "12.000000"
+      },
+      "base_amount": "4883.481600",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "4883.481600",
+      "period": 7,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "major_renovation"
+      },
+      "base_amount": "1526.088000",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1526.088000",
+      "period": 7,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.017392",
+        "occupancy_pct": "61.750000",
+        "phase": "major_renovation",
+        "units": 12,
+        "vacancy_loss": "6771.252456"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "10931.368344",
+      "period": 7,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": false,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.011619",
+        "occupancy_pct": "0.000000",
+        "phase": "major_renovation",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "0.000000",
+      "period": 7,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "direction": "outflow",
+        "phase": "major_renovation"
+      },
+      "base_amount": "60000.000000",
+      "category": "capital_event",
+      "label": "Renovation Cost",
+      "net_amount": "60000.000000",
+      "period": 8,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "major_renovation",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 8,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "major_renovation"
+      },
+      "base_amount": "611.940600",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "611.940600",
+      "period": 8,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "major_renovation"
+      },
+      "base_amount": "438.333052",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "438.333052",
+      "period": 8,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "major_renovation",
+        "units": "12.000000"
+      },
+      "base_amount": "4895.524800",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "4895.524800",
+      "period": 8,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "major_renovation"
+      },
+      "base_amount": "1529.851500",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1529.851500",
+      "period": 8,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.019901",
+        "occupancy_pct": "61.750000",
+        "phase": "major_renovation",
+        "units": 12,
+        "vacancy_loss": "6787.951105"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "10958.326295",
+      "period": 8,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": false,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.013289",
+        "occupancy_pct": "0.000000",
+        "phase": "major_renovation",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "0.000000",
+      "period": 8,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "lease_up",
+        "units": "12.000000"
+      },
+      "base_amount": "306.725100",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "306.725100",
+      "period": 9,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "lease_up",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 9,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "lease_up"
+      },
+      "base_amount": "613.450200",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "613.450200",
+      "period": 9,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "lease_up"
+      },
+      "base_amount": "396.963524",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "396.963524",
+      "period": 9,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "lease_up",
+        "units": "12.000000"
+      },
+      "base_amount": "4907.601600",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "4907.601600",
+      "period": 9,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "lease_up"
+      },
+      "base_amount": "1533.625500",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1533.625500",
+      "period": 9,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.022417",
+        "occupancy_pct": "55.000000",
+        "phase": "lease_up",
+        "units": 12,
+        "vacancy_loss": "8005.525110"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "9784.530690",
+      "period": 9,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.014963",
+        "occupancy_pct": "55.000000",
+        "phase": "lease_up",
+        "units": 0,
+        "vacancy_loss": "114.183337"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "139.557413",
+      "period": 9,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "lease_up",
+        "units": "12.000000"
+      },
+      "base_amount": "307.481400",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "307.481400",
+      "period": 10,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "lease_up",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 10,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "lease_up"
+      },
+      "base_amount": "614.962800",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "614.962800",
+      "period": 10,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "lease_up"
+      },
+      "base_amount": "494.576748",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "494.576748",
+      "period": 10,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "lease_up",
+        "units": "12.000000"
+      },
+      "base_amount": "4919.702400",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "4919.702400",
+      "period": 10,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "lease_up"
+      },
+      "base_amount": "1537.407000",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1537.407000",
+      "period": 10,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.024938",
+        "occupancy_pct": "68.333300",
+        "phase": "lease_up",
+        "units": 12,
+        "vacancy_loss": "5647.414325"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "12186.506875",
+      "period": 10,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.016639",
+        "occupancy_pct": "70.000000",
+        "phase": "lease_up",
+        "units": 0,
+        "vacancy_loss": "76.247925"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "177.911825",
+      "period": 10,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "lease_up",
+        "units": "12.000000"
+      },
+      "base_amount": "308.239800",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "308.239800",
+      "period": 11,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "lease_up",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 11,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "lease_up"
+      },
+      "base_amount": "616.479600",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "616.479600",
+      "period": 11,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "lease_up"
+      },
+      "base_amount": "592.667616",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "592.667616",
+      "period": 11,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "lease_up",
+        "units": "12.000000"
+      },
+      "base_amount": "4931.836800",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "4931.836800",
+      "period": 11,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "lease_up"
+      },
+      "base_amount": "1541.199000",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1541.199000",
+      "period": 11,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.027466",
+        "occupancy_pct": "81.666700",
+        "phase": "lease_up",
+        "units": 12,
+        "vacancy_loss": "3277.610581"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "14600.297819",
+      "period": 11,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.018318",
+        "occupancy_pct": "85.000000",
+        "phase": "lease_up",
+        "units": 0,
+        "vacancy_loss": "38.186925"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "216.392575",
+      "period": 11,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "lease_up",
+        "units": "12.000000"
+      },
+      "base_amount": "309.000000",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "309.000000",
+      "period": 12,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "lease_up",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 12,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "lease_up"
+      },
+      "base_amount": "618.000000",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "618.000000",
+      "period": 12,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "lease_up"
+      },
+      "base_amount": "691.236000",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "691.236000",
+      "period": 12,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "lease_up",
+        "units": "12.000000"
+      },
+      "base_amount": "4944.000000",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "4944.000000",
+      "period": 12,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "lease_up"
+      },
+      "base_amount": "1545.000000",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1545.000000",
+      "period": 12,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.030000",
+        "occupancy_pct": "95.000000",
+        "phase": "lease_up",
+        "units": 12,
+        "vacancy_loss": "896.100000"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "17025.900000",
+      "period": 12,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.020000",
+        "occupancy_pct": "100.000000",
+        "phase": "lease_up",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "255.000000",
+      "period": 12,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "309.762000",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "309.762000",
+      "period": 13,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 13,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "619.524000",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "619.524000",
+      "period": 13,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "692.932298",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "692.932298",
+      "period": 13,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "4956.192000",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "4956.192000",
+      "period": 13,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "1548.810000",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1548.810000",
+      "period": 13,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.032540",
+        "occupancy_pct": "95.000000",
+        "phase": "stabilized",
+        "units": 12,
+        "vacancy_loss": "898.309800"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "17067.886200",
+      "period": 13,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.021685",
+        "occupancy_pct": "100.000000",
+        "phase": "stabilized",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "255.421250",
+      "period": 13,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "310.526100",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "310.526100",
+      "period": 14,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 14,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "621.052200",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "621.052200",
+      "period": 14,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "694.633244",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "694.633244",
+      "period": 14,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "4968.417600",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "4968.417600",
+      "period": 14,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "1552.630500",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1552.630500",
+      "period": 14,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.035087",
+        "occupancy_pct": "95.000000",
+        "phase": "stabilized",
+        "units": 12,
+        "vacancy_loss": "900.525690"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "17109.988110",
+      "period": 14,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.023372",
+        "occupancy_pct": "100.000000",
+        "phase": "stabilized",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "255.843000",
+      "period": 14,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "311.292000",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "311.292000",
+      "period": 15,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 15,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "622.584000",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "622.584000",
+      "period": 15,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "696.338188",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "696.338188",
+      "period": 15,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "4980.672000",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "4980.672000",
+      "period": 15,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "1556.460000",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1556.460000",
+      "period": 15,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.037640",
+        "occupancy_pct": "95.000000",
+        "phase": "stabilized",
+        "units": 12,
+        "vacancy_loss": "902.746800"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "17152.189200",
+      "period": 15,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.025062",
+        "occupancy_pct": "100.000000",
+        "phase": "stabilized",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "256.265500",
+      "period": 15,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "312.059700",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "312.059700",
+      "period": 16,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 16,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "624.119400",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "624.119400",
+      "period": 16,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "698.047129",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "698.047129",
+      "period": 16,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "4992.955200",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "4992.955200",
+      "period": 16,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "1560.298500",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1560.298500",
+      "period": 16,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.040199",
+        "occupancy_pct": "95.000000",
+        "phase": "stabilized",
+        "units": 12,
+        "vacancy_loss": "904.973130"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "17194.489470",
+      "period": 16,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.026755",
+        "occupancy_pct": "100.000000",
+        "phase": "stabilized",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "256.688750",
+      "period": 16,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "312.829200",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "312.829200",
+      "period": 17,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 17,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "625.658400",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "625.658400",
+      "period": 17,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "699.760067",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "699.760067",
+      "period": 17,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "5005.267200",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "5005.267200",
+      "period": 17,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "1564.146000",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1564.146000",
+      "period": 17,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.042764",
+        "occupancy_pct": "95.000000",
+        "phase": "stabilized",
+        "units": 12,
+        "vacancy_loss": "907.204680"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "17236.888920",
+      "period": 17,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.028451",
+        "occupancy_pct": "100.000000",
+        "phase": "stabilized",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "257.112750",
+      "period": 17,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "313.600800",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "313.600800",
+      "period": 18,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 18,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "627.201600",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "627.201600",
+      "period": 18,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "701.477663",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "701.477663",
+      "period": 18,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "5017.612800",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "5017.612800",
+      "period": 18,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "1568.004000",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1568.004000",
+      "period": 18,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.045336",
+        "occupancy_pct": "95.000000",
+        "phase": "stabilized",
+        "units": 12,
+        "vacancy_loss": "909.442320"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "17279.404080",
+      "period": 18,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.030150",
+        "occupancy_pct": "100.000000",
+        "phase": "stabilized",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "257.537500",
+      "period": 18,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "314.374200",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "314.374200",
+      "period": 19,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 19,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "628.748400",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "628.748400",
+      "period": 19,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "703.199247",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "703.199247",
+      "period": 19,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "5029.987200",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "5029.987200",
+      "period": 19,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "1571.871000",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1571.871000",
+      "period": 19,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.047914",
+        "occupancy_pct": "95.000000",
+        "phase": "stabilized",
+        "units": 12,
+        "vacancy_loss": "911.685180"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "17322.018420",
+      "period": 19,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.031851",
+        "occupancy_pct": "100.000000",
+        "phase": "stabilized",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "257.962750",
+      "period": 19,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "315.149400",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "315.149400",
+      "period": 20,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 20,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "630.298800",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "630.298800",
+      "period": 20,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "704.924828",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "704.924828",
+      "period": 20,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "5042.390400",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "5042.390400",
+      "period": 20,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "1575.747000",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1575.747000",
+      "period": 20,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.050498",
+        "occupancy_pct": "95.000000",
+        "phase": "stabilized",
+        "units": 12,
+        "vacancy_loss": "913.933260"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "17364.731940",
+      "period": 20,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.033555",
+        "occupancy_pct": "100.000000",
+        "phase": "stabilized",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "258.388750",
+      "period": 20,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "315.926700",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "315.926700",
+      "period": 21,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 21,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "631.853400",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "631.853400",
+      "period": 21,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "706.655067",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "706.655067",
+      "period": 21,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "5054.827200",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "5054.827200",
+      "period": 21,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "1579.633500",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1579.633500",
+      "period": 21,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.053089",
+        "occupancy_pct": "95.000000",
+        "phase": "stabilized",
+        "units": 12,
+        "vacancy_loss": "916.187430"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "17407.561170",
+      "period": 21,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.035262",
+        "occupancy_pct": "100.000000",
+        "phase": "stabilized",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "258.815500",
+      "period": 21,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "316.705800",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "316.705800",
+      "period": 22,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 22,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "633.411600",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "633.411600",
+      "period": 22,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "708.389303",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "708.389303",
+      "period": 22,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "5067.292800",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "5067.292800",
+      "period": 22,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "1583.529000",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1583.529000",
+      "period": 22,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.055686",
+        "occupancy_pct": "95.000000",
+        "phase": "stabilized",
+        "units": 12,
+        "vacancy_loss": "918.446820"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "17450.489580",
+      "period": 22,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.036972",
+        "occupancy_pct": "100.000000",
+        "phase": "stabilized",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "259.243000",
+      "period": 22,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "317.487000",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "317.487000",
+      "period": 23,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 23,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "634.974000",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "634.974000",
+      "period": 23,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "710.128198",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "710.128198",
+      "period": 23,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "5079.792000",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "5079.792000",
+      "period": 23,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "1587.435000",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1587.435000",
+      "period": 23,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.058290",
+        "occupancy_pct": "95.000000",
+        "phase": "stabilized",
+        "units": 12,
+        "vacancy_loss": "920.712300"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "17493.533700",
+      "period": 23,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.038685",
+        "occupancy_pct": "100.000000",
+        "phase": "stabilized",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "259.671250",
+      "period": 23,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "318.270000",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "318.270000",
+      "period": 24,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 24,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "636.540000",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "636.540000",
+      "period": 24,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "711.871080",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "711.871080",
+      "period": 24,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "5092.320000",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "5092.320000",
+      "period": 24,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "1591.350000",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1591.350000",
+      "period": 24,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.060900",
+        "occupancy_pct": "95.000000",
+        "phase": "stabilized",
+        "units": 12,
+        "vacancy_loss": "922.983000"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "17536.677000",
+      "period": 24,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.040400",
+        "occupancy_pct": "100.000000",
+        "phase": "stabilized",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "260.100000",
+      "period": 24,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "319.054800",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "319.054800",
+      "period": 25,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 25,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "638.109600",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "638.109600",
+      "period": 25,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "713.617959",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "713.617959",
+      "period": 25,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "5104.876800",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "5104.876800",
+      "period": 25,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "1595.274000",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1595.274000",
+      "period": 25,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.063516",
+        "occupancy_pct": "95.000000",
+        "phase": "stabilized",
+        "units": 12,
+        "vacancy_loss": "925.258920"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "17579.919480",
+      "period": 25,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.042118",
+        "occupancy_pct": "100.000000",
+        "phase": "stabilized",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "260.529500",
+      "period": 25,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "319.841700",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "319.841700",
+      "period": 26,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 26,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "639.683400",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "639.683400",
+      "period": 26,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "715.369497",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "715.369497",
+      "period": 26,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "5117.467200",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "5117.467200",
+      "period": 26,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "1599.208500",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1599.208500",
+      "period": 26,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.066139",
+        "occupancy_pct": "95.000000",
+        "phase": "stabilized",
+        "units": 12,
+        "vacancy_loss": "927.540930"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "17623.277670",
+      "period": 26,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.043839",
+        "occupancy_pct": "100.000000",
+        "phase": "stabilized",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "260.959750",
+      "period": 26,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "320.630700",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "320.630700",
+      "period": 27,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 27,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "641.261400",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "641.261400",
+      "period": 27,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "717.125693",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "717.125693",
+      "period": 27,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "5130.091200",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "5130.091200",
+      "period": 27,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "1603.153500",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1603.153500",
+      "period": 27,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.068769",
+        "occupancy_pct": "95.000000",
+        "phase": "stabilized",
+        "units": 12,
+        "vacancy_loss": "929.829030"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "17666.751570",
+      "period": 27,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.045563",
+        "occupancy_pct": "100.000000",
+        "phase": "stabilized",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "261.390750",
+      "period": 27,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "321.421500",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "321.421500",
+      "period": 28,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 28,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "642.843000",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "642.843000",
+      "period": 28,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "718.885886",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "718.885886",
+      "period": 28,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "5142.744000",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "5142.744000",
+      "period": 28,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "1607.107500",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1607.107500",
+      "period": 28,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.071405",
+        "occupancy_pct": "95.000000",
+        "phase": "stabilized",
+        "units": 12,
+        "vacancy_loss": "932.122350"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "17710.324650",
+      "period": 28,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.047290",
+        "occupancy_pct": "100.000000",
+        "phase": "stabilized",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "261.822500",
+      "period": 28,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "322.214100",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "322.214100",
+      "period": 29,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 29,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "644.428200",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "644.428200",
+      "period": 29,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "720.650076",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "720.650076",
+      "period": 29,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "5155.425600",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "5155.425600",
+      "period": 29,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "1611.070500",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1611.070500",
+      "period": 29,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.074047",
+        "occupancy_pct": "95.000000",
+        "phase": "stabilized",
+        "units": 12,
+        "vacancy_loss": "934.420890"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "17753.996910",
+      "period": 29,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.049020",
+        "occupancy_pct": "100.000000",
+        "phase": "stabilized",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "262.255000",
+      "period": 29,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "323.008800",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "323.008800",
+      "period": 30,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 30,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "646.017600",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "646.017600",
+      "period": 30,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "722.418915",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "722.418915",
+      "period": 30,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "5168.140800",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "5168.140800",
+      "period": 30,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "1615.044000",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1615.044000",
+      "period": 30,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.076696",
+        "occupancy_pct": "95.000000",
+        "phase": "stabilized",
+        "units": 12,
+        "vacancy_loss": "936.725520"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "17797.784880",
+      "period": 30,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.050752",
+        "occupancy_pct": "100.000000",
+        "phase": "stabilized",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "262.688000",
+      "period": 30,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "323.805300",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "323.805300",
+      "period": 31,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 31,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "647.610600",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "647.610600",
+      "period": 31,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "724.191761",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "724.191761",
+      "period": 31,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "5180.884800",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "5180.884800",
+      "period": 31,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "1619.026500",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1619.026500",
+      "period": 31,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.079351",
+        "occupancy_pct": "95.000000",
+        "phase": "stabilized",
+        "units": 12,
+        "vacancy_loss": "939.035370"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "17841.672030",
+      "period": 31,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.052488",
+        "occupancy_pct": "100.000000",
+        "phase": "stabilized",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "263.122000",
+      "period": 31,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "324.603900",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "324.603900",
+      "period": 32,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 32,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "649.207800",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "649.207800",
+      "period": 32,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "725.969256",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "725.969256",
+      "period": 32,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "5193.662400",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "5193.662400",
+      "period": 32,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "1623.019500",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1623.019500",
+      "period": 32,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.082013",
+        "occupancy_pct": "95.000000",
+        "phase": "stabilized",
+        "units": 12,
+        "vacancy_loss": "941.351310"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "17885.674890",
+      "period": 32,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.054226",
+        "occupancy_pct": "100.000000",
+        "phase": "stabilized",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "263.556500",
+      "period": 32,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "325.404600",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "325.404600",
+      "period": 33,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 33,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "650.809200",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "650.809200",
+      "period": 33,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "727.751408",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "727.751408",
+      "period": 33,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "5206.473600",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "5206.473600",
+      "period": 33,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "1627.023000",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1627.023000",
+      "period": 33,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.084682",
+        "occupancy_pct": "95.000000",
+        "phase": "stabilized",
+        "units": 12,
+        "vacancy_loss": "943.673340"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "17929.793460",
+      "period": 33,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.055967",
+        "occupancy_pct": "100.000000",
+        "phase": "stabilized",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "263.991750",
+      "period": 33,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "326.207100",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "326.207100",
+      "period": 34,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 34,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "652.414200",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "652.414200",
+      "period": 34,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "729.537558",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "729.537558",
+      "period": 34,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "5219.313600",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "5219.313600",
+      "period": 34,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "1631.035500",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1631.035500",
+      "period": 34,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.087357",
+        "occupancy_pct": "95.000000",
+        "phase": "stabilized",
+        "units": 12,
+        "vacancy_loss": "946.000590"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "17974.011210",
+      "period": 34,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.057711",
+        "occupancy_pct": "100.000000",
+        "phase": "stabilized",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "264.427750",
+      "period": 34,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "327.011700",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "327.011700",
+      "period": 35,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 35,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "654.023400",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "654.023400",
+      "period": 35,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "731.328367",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "731.328367",
+      "period": 35,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "5232.187200",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "5232.187200",
+      "period": 35,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "1635.058500",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1635.058500",
+      "period": 35,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.090039",
+        "occupancy_pct": "95.000000",
+        "phase": "stabilized",
+        "units": 12,
+        "vacancy_loss": "948.333930"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "18018.344670",
+      "period": 35,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.059458",
+        "occupancy_pct": "100.000000",
+        "phase": "stabilized",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "264.864500",
+      "period": 35,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "327.818100",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "327.818100",
+      "period": 36,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 36,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "655.636200",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "655.636200",
+      "period": 36,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "733.123172",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "733.123172",
+      "period": 36,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "stabilized",
+        "units": "12.000000"
+      },
+      "base_amount": "5245.089600",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "5245.089600",
+      "period": 36,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "stabilized"
+      },
+      "base_amount": "1639.090500",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1639.090500",
+      "period": 36,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.092727",
+        "occupancy_pct": "95.000000",
+        "phase": "stabilized",
+        "units": 12,
+        "vacancy_loss": "950.672490"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "18062.777310",
+      "period": 36,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.061208",
+        "occupancy_pct": "100.000000",
+        "phase": "stabilized",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "265.302000",
+      "period": 36,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "exit",
+        "units": "12.000000"
+      },
+      "base_amount": "328.626600",
+      "category": "capex_reserve",
+      "label": "Capex Reserve",
+      "net_amount": "328.626600",
+      "period": 37,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "direction": "inflow",
+        "phase": "exit"
+      },
+      "base_amount": "1919183.405635",
+      "category": "capital_event",
+      "label": "Sale Proceeds",
+      "net_amount": "1919183.405635",
+      "period": 37,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "direction": "outflow",
+        "phase": "exit",
+        "selling_costs_pct": "2.500000"
+      },
+      "base_amount": "47979.585141",
+      "category": "capital_event",
+      "label": "Selling Costs",
+      "net_amount": "47979.585141",
+      "period": 37,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "exit",
+        "placeholder": true
+      },
+      "base_amount": "0.000000",
+      "category": "debt_service",
+      "label": "Debt Service (Stage 1A placeholder)",
+      "net_amount": "0.000000",
+      "period": 37,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "7200.000000",
+        "phase": "exit"
+      },
+      "base_amount": "657.253200",
+      "category": "expense",
+      "label": "Insurance",
+      "net_amount": "657.253200",
+      "period": 37,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "mgmt_fee_pct": "4.000000",
+        "phase": "exit"
+      },
+      "base_amount": "734.922636",
+      "category": "expense",
+      "label": "Management Fee",
+      "net_amount": "734.922636",
+      "period": 37,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "phase": "exit",
+        "units": "12.000000"
+      },
+      "base_amount": "5258.025600",
+      "category": "expense",
+      "label": "Operating Expenses",
+      "net_amount": "5258.025600",
+      "period": 37,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "annual_amount": "18000.000000",
+        "phase": "exit"
+      },
+      "base_amount": "1643.133000",
+      "category": "expense",
+      "label": "Property Tax",
+      "net_amount": "1643.133000",
+      "period": 37,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.095422",
+        "occupancy_pct": "95.000000",
+        "phase": "exit",
+        "units": 12,
+        "vacancy_loss": "953.017140"
+      },
+      "base_amount": "17400.000000",
+      "category": "income",
+      "label": "12 Residential Units",
+      "net_amount": "18107.325660",
+      "period": 37,
+      "project_idx": 0
+    },
+    {
+      "adjustments": {
+        "active": true,
+        "bad_debt": "0.000000",
+        "bad_debt_pct": "0.000000",
+        "concessions": "0.000000",
+        "concessions_pct": "0.000000",
+        "escalation_factor": "1.062961",
+        "occupancy_pct": "100.000000",
+        "phase": "exit",
+        "units": 0,
+        "vacancy_loss": "0.000000"
+      },
+      "base_amount": "250.000000",
+      "category": "income",
+      "label": "Laundry",
+      "net_amount": "265.740250",
+      "period": 37,
+      "project_idx": 0
+    }
+  ],
+  "cash_flows": [
+    {
+      "capex_reserve": "0.000000",
+      "cumulative_cash_flow": "-1838100.000000",
+      "debt_service": "0.000000",
+      "effective_gross_income": "0.000000",
+      "gross_revenue": "0.000000",
+      "net_cash_flow": "-1838100.000000",
+      "noi": "-2100.000000",
+      "operating_expenses": "2100.000000",
+      "period": 0,
+      "period_type": "acquisition",
+      "project_idx": 0,
+      "vacancy_loss": "0.000000"
+    },
+    {
+      "capex_reserve": "0.000000",
+      "cumulative_cash_flow": "-1830160.552774",
+      "debt_service": "0.000000",
+      "effective_gross_income": "15475.481902",
+      "gross_revenue": "17693.321400",
+      "net_cash_flow": "7939.447226",
+      "noi": "7939.447226",
+      "operating_expenses": "7536.034676",
+      "period": 1,
+      "period_type": "hold",
+      "project_idx": 0,
+      "vacancy_loss": "2217.839498"
+    },
+    {
+      "capex_reserve": "0.000000",
+      "cumulative_cash_flow": "-1822201.699987",
+      "debt_service": "0.000000",
+      "effective_gross_income": "15513.470716",
+      "gross_revenue": "17736.765100",
+      "net_cash_flow": "7958.852787",
+      "noi": "7958.852787",
+      "operating_expenses": "7554.617929",
+      "period": 2,
+      "period_type": "hold",
+      "project_idx": 0,
+      "vacancy_loss": "2223.294384"
+    },
+    {
+      "capex_reserve": "0.000000",
+      "cumulative_cash_flow": "-1878761.653008",
+      "debt_service": "0.000000",
+      "effective_gross_income": "10824.191957",
+      "gross_revenue": "17529.055800",
+      "net_cash_flow": "-56559.953021",
+      "noi": "3440.046979",
+      "operating_expenses": "7384.144978",
+      "period": 3,
+      "period_type": "major_renovation",
+      "project_idx": 0,
+      "vacancy_loss": "6704.863843"
+    },
+    {
+      "capex_reserve": "0.000000",
+      "cumulative_cash_flow": "-1935313.120451",
+      "debt_service": "0.000000",
+      "effective_gross_income": "10850.892039",
+      "gross_revenue": "17572.294800",
+      "net_cash_flow": "-56551.467443",
+      "noi": "3448.532557",
+      "operating_expenses": "7402.359482",
+      "period": 4,
+      "period_type": "major_renovation",
+      "project_idx": 0,
+      "vacancy_loss": "6721.402761"
+    },
+    {
+      "capex_reserve": "0.000000",
+      "cumulative_cash_flow": "-1991856.085241",
+      "debt_service": "0.000000",
+      "effective_gross_income": "10877.645844",
+      "gross_revenue": "17615.620800",
+      "net_cash_flow": "-56542.964790",
+      "noi": "3457.035210",
+      "operating_expenses": "7420.610634",
+      "period": 5,
+      "period_type": "major_renovation",
+      "project_idx": 0,
+      "vacancy_loss": "6737.974956"
+    },
+    {
+      "capex_reserve": "0.000000",
+      "cumulative_cash_flow": "-2048390.523474",
+      "debt_service": "0.000000",
+      "effective_gross_income": "10904.474861",
+      "gross_revenue": "17659.068600",
+      "net_cash_flow": "-56534.438233",
+      "noi": "3465.561767",
+      "operating_expenses": "7438.913094",
+      "period": 6,
+      "period_type": "major_renovation",
+      "project_idx": 0,
+      "vacancy_loss": "6754.593739"
+    },
+    {
+      "capex_reserve": "0.000000",
+      "cumulative_cash_flow": "-2104916.414664",
+      "debt_service": "0.000000",
+      "effective_gross_income": "10931.368344",
+      "gross_revenue": "17702.620800",
+      "net_cash_flow": "-56525.891190",
+      "noi": "3474.108810",
+      "operating_expenses": "7457.259534",
+      "period": 7,
+      "period_type": "major_renovation",
+      "project_idx": 0,
+      "vacancy_loss": "6771.252456"
+    },
+    {
+      "capex_reserve": "0.000000",
+      "cumulative_cash_flow": "-2161433.738321",
+      "debt_service": "0.000000",
+      "effective_gross_income": "10958.326295",
+      "gross_revenue": "17746.277400",
+      "net_cash_flow": "-56517.323657",
+      "noi": "3482.676343",
+      "operating_expenses": "7475.649952",
+      "period": 8,
+      "period_type": "major_renovation",
+      "project_idx": 0,
+      "vacancy_loss": "6787.951105"
+    },
+    {
+      "capex_reserve": "306.725100",
+      "cumulative_cash_flow": "-2159268.016142",
+      "debt_service": "0.000000",
+      "effective_gross_income": "9924.088103",
+      "gross_revenue": "18043.796550",
+      "net_cash_flow": "2165.722179",
+      "noi": "2165.722179",
+      "operating_expenses": "7451.640824",
+      "period": 9,
+      "period_type": "lease_up",
+      "project_idx": 0,
+      "vacancy_loss": "8119.708447"
+    },
+    {
+      "capex_reserve": "307.481400",
+      "cumulative_cash_flow": "-2154777.727790",
+      "debt_service": "0.000000",
+      "effective_gross_income": "12364.418700",
+      "gross_revenue": "18088.080950",
+      "net_cash_flow": "4490.288352",
+      "noi": "4490.288352",
+      "operating_expenses": "7566.648948",
+      "period": 10,
+      "period_type": "lease_up",
+      "project_idx": 0,
+      "vacancy_loss": "5723.662250"
+    },
+    {
+      "capex_reserve": "308.239800",
+      "cumulative_cash_flow": "-2147951.460212",
+      "debt_service": "0.000000",
+      "effective_gross_income": "14816.690394",
+      "gross_revenue": "18132.487900",
+      "net_cash_flow": "6826.267578",
+      "noi": "6826.267578",
+      "operating_expenses": "7682.183016",
+      "period": 11,
+      "period_type": "lease_up",
+      "project_idx": 0,
+      "vacancy_loss": "3315.797506"
+    },
+    {
+      "capex_reserve": "309.000000",
+      "cumulative_cash_flow": "-2138777.796212",
+      "debt_service": "0.000000",
+      "effective_gross_income": "17280.900000",
+      "gross_revenue": "18177.000000",
+      "net_cash_flow": "9173.664000",
+      "noi": "9173.664000",
+      "operating_expenses": "7798.236000",
+      "period": 12,
+      "period_type": "lease_up",
+      "project_idx": 0,
+      "vacancy_loss": "896.100000"
+    },
+    {
+      "capex_reserve": "309.762000",
+      "cumulative_cash_flow": "0.000000",
+      "debt_service": "0.000000",
+      "effective_gross_income": "17323.307450",
+      "gross_revenue": "18221.617250",
+      "net_cash_flow": "9196.087152",
+      "noi": "9196.087152",
+      "operating_expenses": "7817.458298",
+      "period": 13,
+      "period_type": "stabilized",
+      "project_idx": 0,
+      "vacancy_loss": "898.309800"
+    },
+    {
+      "capex_reserve": "310.526100",
+      "cumulative_cash_flow": "0.000000",
+      "debt_service": "0.000000",
+      "effective_gross_income": "17365.831110",
+      "gross_revenue": "18266.356800",
+      "net_cash_flow": "9218.571466",
+      "noi": "9218.571466",
+      "operating_expenses": "7836.733544",
+      "period": 14,
+      "period_type": "stabilized",
+      "project_idx": 0,
+      "vacancy_loss": "900.525690"
+    },
+    {
+      "capex_reserve": "311.292000",
+      "cumulative_cash_flow": "0.000000",
+      "debt_service": "0.000000",
+      "effective_gross_income": "17408.454700",
+      "gross_revenue": "18311.201500",
+      "net_cash_flow": "9241.108512",
+      "noi": "9241.108512",
+      "operating_expenses": "7856.054188",
+      "period": 15,
+      "period_type": "stabilized",
+      "project_idx": 0,
+      "vacancy_loss": "902.746800"
+    },
+    {
+      "capex_reserve": "312.059700",
+      "cumulative_cash_flow": "0.000000",
+      "debt_service": "0.000000",
+      "effective_gross_income": "17451.178220",
+      "gross_revenue": "18356.151350",
+      "net_cash_flow": "9263.698291",
+      "noi": "9263.698291",
+      "operating_expenses": "7875.420229",
+      "period": 16,
+      "period_type": "stabilized",
+      "project_idx": 0,
+      "vacancy_loss": "904.973130"
+    },
+    {
+      "capex_reserve": "312.829200",
+      "cumulative_cash_flow": "0.000000",
+      "debt_service": "0.000000",
+      "effective_gross_income": "17494.001670",
+      "gross_revenue": "18401.206350",
+      "net_cash_flow": "9286.340803",
+      "noi": "9286.340803",
+      "operating_expenses": "7894.831667",
+      "period": 17,
+      "period_type": "stabilized",
+      "project_idx": 0,
+      "vacancy_loss": "907.204680"
+    },
+    {
+      "capex_reserve": "313.600800",
+      "cumulative_cash_flow": "0.000000",
+      "debt_service": "0.000000",
+      "effective_gross_income": "17536.941580",
+      "gross_revenue": "18446.383900",
+      "net_cash_flow": "9309.044717",
+      "noi": "9309.044717",
+      "operating_expenses": "7914.296063",
+      "period": 18,
+      "period_type": "stabilized",
+      "project_idx": 0,
+      "vacancy_loss": "909.442320"
+    },
+    {
+      "capex_reserve": "314.374200",
+      "cumulative_cash_flow": "0.000000",
+      "debt_service": "0.000000",
+      "effective_gross_income": "17579.981170",
+      "gross_revenue": "18491.666350",
+      "net_cash_flow": "9331.801123",
+      "noi": "9331.801123",
+      "operating_expenses": "7933.805847",
+      "period": 19,
+      "period_type": "stabilized",
+      "project_idx": 0,
+      "vacancy_loss": "911.685180"
+    },
+    {
+      "capex_reserve": "315.149400",
+      "cumulative_cash_flow": "0.000000",
+      "debt_service": "0.000000",
+      "effective_gross_income": "17623.120690",
+      "gross_revenue": "18537.053950",
+      "net_cash_flow": "9354.610262",
+      "noi": "9354.610262",
+      "operating_expenses": "7953.361028",
+      "period": 20,
+      "period_type": "stabilized",
+      "project_idx": 0,
+      "vacancy_loss": "913.933260"
+    },
+    {
+      "capex_reserve": "315.926700",
+      "cumulative_cash_flow": "0.000000",
+      "debt_service": "0.000000",
+      "effective_gross_income": "17666.376670",
+      "gross_revenue": "18582.564100",
+      "net_cash_flow": "9377.480803",
+      "noi": "9377.480803",
+      "operating_expenses": "7972.969167",
+      "period": 21,
+      "period_type": "stabilized",
+      "project_idx": 0,
+      "vacancy_loss": "916.187430"
+    },
+    {
+      "capex_reserve": "316.705800",
+      "cumulative_cash_flow": "0.000000",
+      "debt_service": "0.000000",
+      "effective_gross_income": "17709.732580",
+      "gross_revenue": "18628.179400",
+      "net_cash_flow": "9400.404077",
+      "noi": "9400.404077",
+      "operating_expenses": "7992.622703",
+      "period": 22,
+      "period_type": "stabilized",
+      "project_idx": 0,
+      "vacancy_loss": "918.446820"
+    },
+    {
+      "capex_reserve": "317.487000",
+      "cumulative_cash_flow": "0.000000",
+      "debt_service": "0.000000",
+      "effective_gross_income": "17753.204950",
+      "gross_revenue": "18673.917250",
+      "net_cash_flow": "9423.388752",
+      "noi": "9423.388752",
+      "operating_expenses": "8012.329198",
+      "period": 23,
+      "period_type": "stabilized",
+      "project_idx": 0,
+      "vacancy_loss": "920.712300"
+    },
+    {
+      "capex_reserve": "318.270000",
+      "cumulative_cash_flow": "0.000000",
+      "debt_service": "0.000000",
+      "effective_gross_income": "17796.777000",
+      "gross_revenue": "18719.760000",
+      "net_cash_flow": "9446.425920",
+      "noi": "9446.425920",
+      "operating_expenses": "8032.081080",
+      "period": 24,
+      "period_type": "stabilized",
+      "project_idx": 0,
+      "vacancy_loss": "922.983000"
+    },
+    {
+      "capex_reserve": "319.054800",
+      "cumulative_cash_flow": "0.000000",
+      "debt_service": "0.000000",
+      "effective_gross_income": "17840.448980",
+      "gross_revenue": "18765.707900",
+      "net_cash_flow": "9469.515821",
+      "noi": "9469.515821",
+      "operating_expenses": "8051.878359",
+      "period": 25,
+      "period_type": "stabilized",
+      "project_idx": 0,
+      "vacancy_loss": "925.258920"
+    },
+    {
+      "capex_reserve": "319.841700",
+      "cumulative_cash_flow": "0.000000",
+      "debt_service": "0.000000",
+      "effective_gross_income": "17884.237420",
+      "gross_revenue": "18811.778350",
+      "net_cash_flow": "9492.667123",
+      "noi": "9492.667123",
+      "operating_expenses": "8071.728597",
+      "period": 26,
+      "period_type": "stabilized",
+      "project_idx": 0,
+      "vacancy_loss": "927.540930"
+    },
+    {
+      "capex_reserve": "320.630700",
+      "cumulative_cash_flow": "0.000000",
+      "debt_service": "0.000000",
+      "effective_gross_income": "17928.142320",
+      "gross_revenue": "18857.971350",
+      "net_cash_flow": "9515.879827",
+      "noi": "9515.879827",
+      "operating_expenses": "8091.631793",
+      "period": 27,
+      "period_type": "stabilized",
+      "project_idx": 0,
+      "vacancy_loss": "929.829030"
+    },
+    {
+      "capex_reserve": "321.421500",
+      "cumulative_cash_flow": "0.000000",
+      "debt_service": "0.000000",
+      "effective_gross_income": "17972.147150",
+      "gross_revenue": "18904.269500",
+      "net_cash_flow": "9539.145264",
+      "noi": "9539.145264",
+      "operating_expenses": "8111.580386",
+      "period": 28,
+      "period_type": "stabilized",
+      "project_idx": 0,
+      "vacancy_loss": "932.122350"
+    },
+    {
+      "capex_reserve": "322.214100",
+      "cumulative_cash_flow": "0.000000",
+      "debt_service": "0.000000",
+      "effective_gross_income": "18016.251910",
+      "gross_revenue": "18950.672800",
+      "net_cash_flow": "9562.463434",
+      "noi": "9562.463434",
+      "operating_expenses": "8131.574376",
+      "period": 29,
+      "period_type": "stabilized",
+      "project_idx": 0,
+      "vacancy_loss": "934.420890"
+    },
+    {
+      "capex_reserve": "323.008800",
+      "cumulative_cash_flow": "0.000000",
+      "debt_service": "0.000000",
+      "effective_gross_income": "18060.472880",
+      "gross_revenue": "18997.198400",
+      "net_cash_flow": "9585.842765",
+      "noi": "9585.842765",
+      "operating_expenses": "8151.621315",
+      "period": 30,
+      "period_type": "stabilized",
+      "project_idx": 0,
+      "vacancy_loss": "936.725520"
+    },
+    {
+      "capex_reserve": "323.805300",
+      "cumulative_cash_flow": "0.000000",
+      "debt_service": "0.000000",
+      "effective_gross_income": "18104.794030",
+      "gross_revenue": "19043.829400",
+      "net_cash_flow": "9609.275069",
+      "noi": "9609.275069",
+      "operating_expenses": "8171.713661",
+      "period": 31,
+      "period_type": "stabilized",
+      "project_idx": 0,
+      "vacancy_loss": "939.035370"
+    },
+    {
+      "capex_reserve": "324.603900",
+      "cumulative_cash_flow": "0.000000",
+      "debt_service": "0.000000",
+      "effective_gross_income": "18149.231390",
+      "gross_revenue": "19090.582700",
+      "net_cash_flow": "9632.768534",
+      "noi": "9632.768534",
+      "operating_expenses": "8191.858956",
+      "period": 32,
+      "period_type": "stabilized",
+      "project_idx": 0,
+      "vacancy_loss": "941.351310"
+    },
+    {
+      "capex_reserve": "325.404600",
+      "cumulative_cash_flow": "0.000000",
+      "debt_service": "0.000000",
+      "effective_gross_income": "18193.785210",
+      "gross_revenue": "19137.458550",
+      "net_cash_flow": "9656.323402",
+      "noi": "9656.323402",
+      "operating_expenses": "8212.057208",
+      "period": 33,
+      "period_type": "stabilized",
+      "project_idx": 0,
+      "vacancy_loss": "943.673340"
+    },
+    {
+      "capex_reserve": "326.207100",
+      "cumulative_cash_flow": "0.000000",
+      "debt_service": "0.000000",
+      "effective_gross_income": "18238.438960",
+      "gross_revenue": "19184.439550",
+      "net_cash_flow": "9679.931002",
+      "noi": "9679.931002",
+      "operating_expenses": "8232.300858",
+      "period": 34,
+      "period_type": "stabilized",
+      "project_idx": 0,
+      "vacancy_loss": "946.000590"
+    },
+    {
+      "capex_reserve": "327.011700",
+      "cumulative_cash_flow": "0.000000",
+      "debt_service": "0.000000",
+      "effective_gross_income": "18283.209170",
+      "gross_revenue": "19231.543100",
+      "net_cash_flow": "9703.600003",
+      "noi": "9703.600003",
+      "operating_expenses": "8252.597467",
+      "period": 35,
+      "period_type": "stabilized",
+      "project_idx": 0,
+      "vacancy_loss": "948.333930"
+    },
+    {
+      "capex_reserve": "327.818100",
+      "cumulative_cash_flow": "0.000000",
+      "debt_service": "0.000000",
+      "effective_gross_income": "18328.079310",
+      "gross_revenue": "19278.751800",
+      "net_cash_flow": "9727.321738",
+      "noi": "9727.321738",
+      "operating_expenses": "8272.939472",
+      "period": 36,
+      "period_type": "stabilized",
+      "project_idx": 0,
+      "vacancy_loss": "950.672490"
+    },
+    {
+      "capex_reserve": "328.626600",
+      "cumulative_cash_flow": "0.000000",
+      "debt_service": "0.000000",
+      "effective_gross_income": "18373.065910",
+      "gross_revenue": "19326.083050",
+      "net_cash_flow": "1880954.925368",
+      "noi": "9751.104874",
+      "operating_expenses": "8293.334436",
+      "period": 37,
+      "period_type": "exit",
+      "project_idx": 0,
+      "vacancy_loss": "953.017140"
+    }
+  ],
+  "operational_outputs": [
+    {
+      "cap_rate_on_cost_pct": "4.917738",
+      "computed_at": "<computed>",
+      "debt_yield_pct": "0.000000",
+      "dscr": "0.000000",
+      "equity_required": "0.000000",
+      "noi_stabilized": "110353.045824",
+      "project_idx": 0,
+      "project_irr_levered": "-0.496417",
+      "project_irr_unlevered": "-0.496417",
+      "total_project_cost": "2243979.585141",
+      "total_timeline_months": 38
+    }
+  ]
+}
