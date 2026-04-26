@@ -122,6 +122,17 @@ async def export_investor_workbook(
     assumptions = wb.create_sheet("Assumptions")
     _build_assumptions(assumptions, registry, ctx)
 
+    # Per-project sheets sit between Assumptions and Glossary (plan §2 final
+    # order). Sheet names are `P{n} {Name}` truncated to Excel's 31-char
+    # ceiling — see _project_sheet_name. The Underwriting Summary's per-
+    # project mini-table already emits =HYPERLINK() targets pointing at
+    # these names, so they resolve once these sheets exist.
+    projects: list[Project] = ctx["projects"]
+    for idx, project in enumerate(projects, start=1):
+        sheet_name = _project_sheet_name(idx, project.name)
+        ws_proj = wb.create_sheet(sheet_name)
+        _build_project_sheet(ws_proj, registry, ctx, idx, project)
+
     glossary = wb.create_sheet("Glossary & Methodology")
     _build_glossary(glossary, registry, ctx)
 
@@ -895,6 +906,300 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
     ); cur_row += 1
 
     freeze_top(ws, row=3)
+    print_landscape(ws)
+
+
+# ── Per-project sheets (commit 3) ─────────────────────────────────────────────
+
+
+def _build_project_sheet(
+    ws,
+    registry: CellRegistry,
+    ctx: dict,
+    project_idx: int,
+    project: Project,
+) -> None:
+    """One sheet per project: header → Pro Forma → Cash Flow → S&U.
+
+    Named ranges use the ``p{n}_`` prefix from plan §4 — outputs only.
+    Per-project *inputs* live on the Assumptions sheet (Block B) and use
+    the same prefix; outputs are distinct names so the registry doesn't
+    collide. Layout matches the underwriting rollup sheets so an LP can
+    open a project sheet and read it the same way as the scenario summary.
+    """
+    inputs_by_project: dict[UUID, OperationalInputs] = ctx["operational_inputs"]
+    use_lines_by_project: dict[UUID, list[UseLine]] = ctx["use_lines"]
+    cash_flows_by_project: dict[UUID, list[CashFlow]] = ctx["cash_flows"]
+    cash_flow_items_by_project: dict[UUID, list[CashFlowLineItem]] = ctx["cash_flow_items"]
+    outputs_by_project: dict[UUID, "OperationalOutputs"] = ctx["outputs"]
+    capital_modules: list[CapitalModule] = ctx["capital_modules"]
+    junctions: list[CapitalModuleProject] = ctx["junctions"]
+
+    inputs = inputs_by_project.get(project.id)
+    use_lines = use_lines_by_project.get(project.id, [])
+    cash_flows = cash_flows_by_project.get(project.id, [])
+    line_items = cash_flow_items_by_project.get(project.id, [])
+    outputs = outputs_by_project.get(project.id)
+
+    annual = _aggregate_annual(cash_flows)
+    annual_items = _annual_line_items(line_items)
+    capital_events_by_year = _capital_events_by_year(annual_items)
+    max_year = min(max(annual) if annual else 0, 10)
+    year_cols = list(range(0, max(max_year, 1) + 1))
+
+    set_widths(ws, [30, *([14] * len(year_cols))])
+
+    # ── Project header ─────────────────────────────────────────────────────
+    ws.cell(
+        row=1, column=1,
+        value=f"P{project_idx} — {project.name or 'Project'}",
+    ).font = FONT_TITLE
+    ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=len(year_cols) + 1)
+    ws.row_dimensions[1].height = 24
+
+    # Top-of-sheet hyperlinks back to the rollup + glossary
+    ws.cell(
+        row=2, column=1,
+        value='=HYPERLINK("#\'Underwriting Summary\'!A1", "← Underwriting Summary")',
+    ).font = FONT_SUBTITLE
+    ws.cell(
+        row=2, column=2,
+        value='=HYPERLINK("#\'Glossary & Methodology\'!A1", "Glossary →")',
+    ).font = FONT_SUBTITLE
+
+    section_label(ws, 4, "Project KPIs", span_cols=2)
+    cur = 5
+    kv_row(
+        ws, cur, "Project Type",
+        getattr(project, "deal_type", "") or "",
+        name=f"p{project_idx}_uw_project_type", registry=registry,
+    ); cur += 1
+    kv_row(
+        ws, cur, "Total Project Cost",
+        _safe_decimal(outputs, "total_project_cost"),
+        name=f"p{project_idx}_total_project_cost", registry=registry,
+        fmt=ACCOUNTING, hero=True,
+    ); cur += 1
+    kv_row(
+        ws, cur, "Equity Required",
+        _safe_decimal(outputs, "equity_required"),
+        name=f"p{project_idx}_equity_required", registry=registry,
+        fmt=ACCOUNTING, hero=True,
+    ); cur += 1
+    kv_row(
+        ws, cur, "Stabilized NOI",
+        _safe_decimal(outputs, "noi_stabilized"),
+        name=f"p{project_idx}_noi_stabilized", registry=registry,
+        fmt=ACCOUNTING, hero=True,
+    ); cur += 1
+    kv_row(
+        ws, cur, "DSCR",
+        _safe_decimal(outputs, "dscr"),
+        name=f"p{project_idx}_dscr", registry=registry,
+        fmt="0.000", hero=True,
+    ); cur += 1
+    kv_row(
+        ws, cur, "Cap Rate on Cost",
+        _pct_value(outputs, "cap_rate_on_cost_pct"),
+        name=f"p{project_idx}_cap_rate", registry=registry,
+        fmt=PCT, hero=True,
+    ); cur += 1
+    kv_row(
+        ws, cur, "Debt Yield",
+        _pct_value(outputs, "debt_yield_pct"),
+        name=f"p{project_idx}_debt_yield", registry=registry,
+        fmt=PCT, hero=True,
+    ); cur += 1
+    kv_row(
+        ws, cur, "Levered IRR",
+        _pct_value(outputs, "project_irr_levered"),
+        name=f"p{project_idx}_levered_irr", registry=registry,
+        fmt=PCT, hero=True,
+    ); cur += 1
+    kv_row(
+        ws, cur, "Unlevered IRR",
+        _pct_value(outputs, "project_irr_unlevered"),
+        name=f"p{project_idx}_unlevered_irr", registry=registry,
+        fmt=PCT, hero=True,
+    ); cur += 1
+    kv_row(
+        ws, cur, "Total Timeline (months)",
+        _safe_decimal(outputs, "total_timeline_months"),
+        name=f"p{project_idx}_timeline_months", registry=registry,
+        fmt=INT_COMMA,
+    ); cur += 1
+
+    # ── Project Pro Forma ──────────────────────────────────────────────────
+    pf_row = cur + 2
+    section_label(
+        ws, pf_row, "Project Pro Forma — Annual",
+        span_cols=len(year_cols) + 1,
+    )
+    header_row(ws, pf_row + 1, ["Line Item", *[f"Y{y}" for y in year_cols]])
+    pf_data = pf_row + 2
+    pf_rows: list[tuple[str, str, str | None]] = [
+        ("Gross Revenue", "gross_revenue", f"r_p{project_idx}_gross_revenue"),
+        ("Vacancy Loss", "vacancy_loss", None),
+        ("EGI", "effective_gross_income", f"r_p{project_idx}_egi"),
+        ("Operating Expenses", "operating_expenses", f"r_p{project_idx}_opex"),
+        ("CapEx Reserve", "capex_reserve", None),
+        ("NOI", "noi", f"r_p{project_idx}_noi"),
+    ]
+    for label, field, range_name in pf_rows:
+        ws.cell(row=pf_data, column=1, value=label).font = FONT_LABEL
+        for col_offset, year in enumerate(year_cols):
+            value = annual.get(year, {}).get(field, Decimal(0))
+            cell = ws.cell(row=pf_data, column=2 + col_offset, value=_to_excel_number(value))
+            cell.number_format = ACCOUNTING
+            cell.font = FONT_VALUE
+            cell.alignment = ALIGN_RIGHT
+        if range_name and year_cols:
+            registry.register_range(
+                range_name, ws.title, pf_data, pf_data,
+                col=2, end_col=1 + len(year_cols),
+            )
+        pf_data += 1
+
+    # ── Project Cash Flow ──────────────────────────────────────────────────
+    cf_row = pf_data + 1
+    section_label(
+        ws, cf_row, "Project Cash Flow — Annual",
+        span_cols=len(year_cols) + 1,
+    )
+    header_row(ws, cf_row + 1, ["Line Item", *[f"Y{y}" for y in year_cols]])
+    cf_data = cf_row + 2
+
+    noi_series = {y: annual.get(y, {}).get("noi", Decimal(0)) for y in year_cols}
+    debt_series = {y: annual.get(y, {}).get("debt_service", Decimal(0)) for y in year_cols}
+    ncf_series = {y: annual.get(y, {}).get("net_cash_flow", Decimal(0)) for y in year_cols}
+
+    def write_proj_series(label: str, source: dict[int, Decimal], range_name: str | None,
+                          fmt: str = ACCOUNTING) -> None:
+        nonlocal cf_data
+        ws.cell(row=cf_data, column=1, value=label).font = FONT_LABEL
+        for col_offset, year in enumerate(year_cols):
+            value = source.get(year, Decimal(0))
+            cell = ws.cell(row=cf_data, column=2 + col_offset, value=_to_excel_number(value))
+            cell.number_format = fmt
+            cell.font = FONT_VALUE
+            cell.alignment = ALIGN_RIGHT
+        if range_name and year_cols:
+            registry.register_range(
+                range_name, ws.title, cf_data, cf_data,
+                col=2, end_col=1 + len(year_cols),
+            )
+        cf_data += 1
+
+    write_proj_series("NOI", noi_series, f"r_p{project_idx}_cf_noi")
+    write_proj_series(
+        "Capital Events", capital_events_by_year, f"r_p{project_idx}_cf_capital_events"
+    )
+    write_proj_series("Debt Service", debt_series, f"r_p{project_idx}_cf_debt_service")
+    write_proj_series("Levered Cash Flow", ncf_series, f"r_p{project_idx}_cf_levered")
+
+    unlevered_series = {
+        y: noi_series.get(y, Decimal(0)) + capital_events_by_year.get(y, Decimal(0))
+        for y in year_cols
+    }
+    write_proj_series(
+        "Unlevered Cash Flow", unlevered_series, f"r_p{project_idx}_cf_unlevered"
+    )
+
+    cumulative: dict[int, Decimal] = {}
+    running = Decimal(0)
+    for y in year_cols:
+        running += ncf_series.get(y, Decimal(0)) + capital_events_by_year.get(y, Decimal(0))
+        cumulative[y] = running
+    write_proj_series("Cumulative Cash Flow", cumulative, f"r_p{project_idx}_cf_cumulative")
+
+    # ── Project S&U ────────────────────────────────────────────────────────
+    su_row = cf_data + 1
+    section_label(ws, su_row, "Project Sources & Uses", span_cols=4)
+    header_row(ws, su_row + 1, ["Side", "Label", "Amount", "Notes"])
+    su_data = su_row + 2
+
+    uses_total = Decimal(0)
+    by_phase: dict[str, Decimal] = {}
+    for ul in use_lines:
+        phase = str(getattr(ul.phase, "value", ul.phase) or "")
+        if phase == "exit":
+            continue
+        amt = _coerce_decimal(ul.amount or 0)
+        by_phase[phase] = by_phase.get(phase, Decimal(0)) + amt
+        uses_total += amt
+    for phase, amount in sorted(by_phase.items()):
+        ws.cell(row=su_data, column=1, value="Use").font = FONT_VALUE
+        ws.cell(row=su_data, column=2, value=phase.replace("_", " ").title()).font = FONT_VALUE
+        ws.cell(row=su_data, column=3, value=_to_excel_number(amount)).number_format = ACCOUNTING
+        su_data += 1
+    ws.cell(row=su_data, column=1, value="Use").font = FONT_LABEL
+    ws.cell(row=su_data, column=2, value="Total Uses").font = FONT_LABEL
+    registry.write(
+        ws, su_data, 3, uses_total,
+        name=f"p{project_idx}_uw_total_uses", fmt=ACCOUNTING,
+        font=FONT_LABEL, align=ALIGN_RIGHT,
+    )
+    su_data += 2
+
+    # Sources for THIS project — junction-scoped (each capital module's
+    # share for this project, not the scenario-wide commitment).
+    junction_for_project: dict[UUID, Decimal] = {}
+    for j in junctions:
+        if j.project_id != project.id:
+            continue
+        junction_for_project[j.capital_module_id] = junction_for_project.get(
+            j.capital_module_id, Decimal(0)
+        ) + _coerce_decimal(j.amount or 0)
+
+    sources_total = Decimal(0)
+    for module in capital_modules:
+        if module.id not in junction_for_project:
+            continue
+        amount = junction_for_project[module.id]
+        ws.cell(row=su_data, column=1, value="Source").font = FONT_VALUE
+        ws.cell(
+            row=su_data, column=2,
+            value=module.label or _funder_type_label(module),
+        ).font = FONT_VALUE
+        ws.cell(row=su_data, column=3, value=_to_excel_number(amount)).number_format = ACCOUNTING
+        ws.cell(
+            row=su_data, column=4,
+            value=_funder_type_label(module),
+        ).font = FONT_HINT
+        sources_total += amount
+        su_data += 1
+
+    if not junction_for_project:
+        ws.cell(
+            row=su_data, column=1,
+            value="(no capital module attached to this project)",
+        ).font = FONT_HINT
+        su_data += 1
+
+    ws.cell(row=su_data, column=1, value="Source").font = FONT_LABEL
+    ws.cell(row=su_data, column=2, value="Total Sources").font = FONT_LABEL
+    registry.write(
+        ws, su_data, 3, sources_total,
+        name=f"p{project_idx}_uw_total_sources", fmt=ACCOUNTING,
+        font=FONT_LABEL, align=ALIGN_RIGHT,
+    )
+    su_data += 1
+
+    gap = uses_total - sources_total
+    ws.cell(row=su_data, column=1, value="Δ").font = FONT_LABEL
+    ws.cell(row=su_data, column=2, value="Gap (Uses − Sources)").font = FONT_LABEL
+    registry.write(
+        ws, su_data, 3, gap,
+        name=f"p{project_idx}_uw_gap", fmt=ACCOUNTING,
+        font=FONT_LABEL, align=ALIGN_RIGHT,
+    )
+
+    # Suppress the inputs param when truthy via a no-op reference — keeps
+    # the function signature stable for future per-project pulls without
+    # ruff flagging the unused local.
+    _ = inputs
+
+    freeze_top(ws, row=4)
     print_landscape(ws)
 
 

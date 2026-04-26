@@ -32,15 +32,23 @@ from tests.conftest import (
 )
 
 
-COMMIT_2_SHEET_ORDER = (
-    "Cover",
-    "Underwriting Summary",
-    "Underwriting Pro Forma",
-    "Underwriting Cash Flow",
-    "Investor Returns",
-    "Assumptions",
-    "Glossary & Methodology",
-)
+def _commit_3_sheet_order(num_projects: int) -> tuple[str, ...]:
+    """Sheet roster after commit 3: per-project sheets sit between
+    Assumptions and Glossary. Project sheet names are ``P{n} {Name}``.
+    """
+    base_pre = (
+        "Cover",
+        "Underwriting Summary",
+        "Underwriting Pro Forma",
+        "Underwriting Cash Flow",
+        "Investor Returns",
+        "Assumptions",
+    )
+    return base_pre + tuple(
+        # Match the seeder's "Main Project" name; tests with custom names
+        # build the expected roster themselves.
+        f"P{i + 1} Main Project" for i in range(num_projects)
+    ) + ("Glossary & Methodology",)
 
 # Named-range prefixes the validator recognises. Anything else is treated as a
 # free-form name (debug / one-off) and is allowed but doesn't get
@@ -59,11 +67,82 @@ async def _seed_minimal_scenario(session: AsyncSession):
 
 
 async def test_workbook_has_expected_sheets(session: AsyncSession):
-    """Sheets render in the commit-2 order with no orphan/extra sheets."""
+    """Single-project scenario: roster has exactly one P1 sheet inserted."""
     scenario = await _seed_minimal_scenario(session)
     blob = await export_investor_workbook(scenario.id, session)
     wb = load_workbook(BytesIO(blob), data_only=False)
-    assert tuple(wb.sheetnames) == COMMIT_2_SHEET_ORDER
+    assert tuple(wb.sheetnames) == _commit_3_sheet_order(num_projects=1)
+
+
+async def test_per_project_sheet_per_project(session: AsyncSession):
+    """Multi-project scenario: one P{n} sheet per project, in created_at order."""
+    scenario = await _seed_minimal_scenario(session)
+    # Seed two extra projects on the same scenario so we have N=3 total.
+    from decimal import Decimal as _D
+    from uuid import uuid4
+
+    from app.models.deal import OperationalInputs as _OI
+    from app.models.project import Project as _Project
+
+    for label in ("Liberty", "East 25"):
+        proj = _Project(
+            id=uuid4(),
+            scenario_id=scenario.id,
+            opportunity_id=None,
+            name=label,
+            deal_type="acquisition",
+        )
+        session.add(proj)
+        await session.flush()
+        session.add(
+            _OI(
+                id=uuid4(), project_id=proj.id,
+                unit_count_new=4, hold_period_years=5,
+                exit_cap_rate_pct=_D("5.5"),
+            )
+        )
+        await session.flush()
+
+    blob = await export_investor_workbook(scenario.id, session)
+    wb = load_workbook(BytesIO(blob), data_only=False)
+    sheets = tuple(wb.sheetnames)
+
+    project_sheets = [s for s in sheets if s.startswith("P") and " " in s]
+    assert len(project_sheets) == 3
+    assert project_sheets[0].startswith("P1 ")
+    assert project_sheets[1] == "P2 Liberty"
+    assert project_sheets[2] == "P3 East 25"
+
+
+async def test_long_project_name_truncated_to_27_chars(session: AsyncSession):
+    """Per plan §2: P{n} prefix (4 chars) + ≤27 chars of name = 31 cap."""
+    scenario = await _seed_minimal_scenario(session)
+    from uuid import uuid4
+
+    from app.models.project import Project as _Project
+
+    long_name = "Northwest Freeway Industrial Park Phase II Buildings A through G"
+    long_proj = _Project(
+        id=uuid4(),
+        scenario_id=scenario.id,
+        opportunity_id=None,
+        name=long_name,
+        deal_type="acquisition",
+    )
+    session.add(long_proj)
+    await session.flush()
+
+    blob = await export_investor_workbook(scenario.id, session)
+    wb = load_workbook(BytesIO(blob), data_only=False)
+    p2_sheets = [s for s in wb.sheetnames if s.startswith("P2 ")]
+    assert len(p2_sheets) == 1
+    sheet_name = p2_sheets[0]
+    # 31-char Excel ceiling
+    assert len(sheet_name) <= 31, sheet_name
+    # Prefix is exactly "P2 " (3 chars), then up to 27 of the name
+    assert sheet_name.startswith("P2 ")
+    truncated_name_part = sheet_name[3:]
+    assert truncated_name_part == long_name[: PROJECT_SHEET_NAME_BUDGET].rstrip()
 
 
 async def test_named_ranges_resolve_to_existing_cells(session: AsyncSession):
