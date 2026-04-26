@@ -353,14 +353,191 @@ async def seed_value_add_with_perm_debt_io(session: AsyncSession) -> UUID:
     return scenario.id
 
 
+async def seed_new_construction_with_ci_and_retirement(session: AsyncSession) -> UUID:
+    """A new-construction deal with capitalized-interest construction loan
+    retired by permanent debt at lease-up start.
+
+    Stack:
+      - Construction Loan (auto), 6.5% rate, capitalized_interest carry,
+        active acquisition→lease_up, vehicle=<perm debt UUID>
+      - Permanent Debt (auto), 6.0% rate, IO carry, 65% LTV, 30yr amort,
+        active lease_up→exit, vehicle="sale"
+      - Owner Equity, gap-fill, perpetuity
+
+    Uses:
+      - Land (1.5M) — acquisition
+      - Hard Costs (3.2M) — construction
+      - Soft Costs (640k) — pre_construction
+
+    Exercises:
+      - Capitalized-interest carry math (full-balance N formula)
+      - Retirement chain (construction loan → permanent debt at lease_up)
+      - construction_retirement field population in source JSONB
+      - Multiple auto-sized modules in a single deal
+      - Gap-fill principal solve with closing-cost divisor fold-in
+    """
+    org = Organization(id=uuid4(), name="Snapshot Org NC", slug=f"snap-nc-{uuid4().hex[:8]}")
+    user = User(id=uuid4(), org_id=org.id, name="Snapshot User", display_color="#3366FF")
+    opportunity = Opportunity(
+        id=uuid4(),
+        org_id=org.id,
+        name="2200 NE Burnside, ground-up 24-unit",
+        status=OpportunityStatus.active,
+        project_category=OpportunityCategory.proposed,
+        source=OpportunitySource.manual,
+        created_by_user_id=user.id,
+    )
+    top_deal = Deal(
+        id=uuid4(),
+        org_id=org.id,
+        name="Snapshot — New Construction (CI Carry + Retirement)",
+        created_by_user_id=user.id,
+    )
+    scenario = DealModel(
+        id=uuid4(),
+        deal_id=top_deal.id,
+        created_by_user_id=user.id,
+        name="Snapshot — New Construction (CI Carry + Retirement)",
+        version=1,
+        is_active=True,
+        project_type=ProjectType.new_construction,
+    )
+    session.add_all([org, user, opportunity, top_deal, scenario])
+    await session.flush()
+    session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id))
+
+    project = Project(
+        id=uuid4(),
+        scenario_id=scenario.id,
+        opportunity_id=opportunity.id,
+        name="Burnside 24",
+        deal_type=ProjectType.new_construction.value,
+    )
+    session.add(project)
+    await session.flush()
+
+    # Pre-allocate UUIDs so we can wire the retirement chain in exit_terms.
+    construction_loan_id = uuid4()
+    perm_debt_id = uuid4()
+
+    session.add_all(
+        [
+            OperationalInputs(
+                project_id=project.id,
+                unit_count_new=24,
+                purchase_price=Decimal("1500000"),
+                closing_costs_pct=Decimal("2.000000"),
+                hold_phase_enabled=False,
+                entitlement_months=4,
+                construction_months=14,
+                lease_up_months=6,
+                initial_occupancy_pct=Decimal("0.000000"),
+                opex_per_unit_annual=Decimal("4200.000000"),
+                expense_growth_rate_pct_annual=Decimal("3.000000"),
+                mgmt_fee_pct=Decimal("4.000000"),
+                property_tax_annual=Decimal("36000.000000"),
+                insurance_annual=Decimal("14400.000000"),
+                capex_reserve_per_unit_annual=Decimal("300.000000"),
+                hold_period_years=Decimal("3.000000"),
+                exit_cap_rate_pct=Decimal("5.500000"),
+                selling_costs_pct=Decimal("2.500000"),
+                dscr_minimum=Decimal("1.150000"),
+                debt_types=["construction_loan", "permanent_debt"],
+                debt_sizing_mode="gap_fill",
+            ),
+            IncomeStream(
+                project_id=project.id,
+                stream_type="residential_rent",
+                label="24 Residential Units",
+                unit_count=24,
+                amount_per_unit_monthly=Decimal("2100.000000"),
+                stabilized_occupancy_pct=Decimal("95.000000"),
+                escalation_rate_pct_annual=Decimal("3.000000"),
+                active_in_phases=["lease_up", "stabilized", "exit"],
+            ),
+            UseLine(
+                project_id=project.id,
+                label="Land",
+                phase=UseLinePhase.acquisition,
+                amount=Decimal("1500000.000000"),
+                timing_type="first_day",
+            ),
+            UseLine(
+                project_id=project.id,
+                label="Soft Costs",
+                phase=UseLinePhase.pre_construction,
+                amount=Decimal("640000.000000"),
+                timing_type="first_day",
+            ),
+            UseLine(
+                project_id=project.id,
+                label="Hard Costs",
+                phase=UseLinePhase.construction,
+                amount=Decimal("3200000.000000"),
+                timing_type="first_day",
+            ),
+            CapitalModule(
+                id=construction_loan_id,
+                scenario_id=scenario.id,
+                label="Construction Loan (auto)",
+                funder_type=FunderType.construction_loan,
+                stack_position=1,
+                source={
+                    "auto_size": True,
+                    "interest_rate_pct": 6.5,
+                    "ltv_pct": 70.0,
+                },
+                carry={"carry_type": "capitalized_interest", "payment_frequency": "at_exit"},
+                # Retired by the permanent debt module at lease_up start.
+                exit_terms={"vehicle": str(perm_debt_id), "exit_type": "refi", "trigger": "stabilization"},
+                active_phase_start="acquisition",
+                active_phase_end="lease_up",
+            ),
+            CapitalModule(
+                id=perm_debt_id,
+                scenario_id=scenario.id,
+                label="Permanent Debt (auto)",
+                funder_type=FunderType.permanent_debt,
+                stack_position=2,
+                source={
+                    "auto_size": True,
+                    "interest_rate_pct": 6.0,
+                    "ltv_pct": 65.0,
+                    "amort_term_years": 30,
+                    "refi_cap_rate_pct": 5.50,
+                },
+                carry={"carry_type": "io_only", "payment_frequency": "monthly"},
+                exit_terms={"vehicle": "sale", "exit_type": "full_payoff", "trigger": "sale"},
+                active_phase_start="lease_up",
+                active_phase_end="exit",
+            ),
+            CapitalModule(
+                scenario_id=scenario.id,
+                label="Owner Equity",
+                funder_type=FunderType.common_equity,
+                stack_position=3,
+                source={"amount": 0},
+                carry={"carry_type": "none", "payment_frequency": "at_exit"},
+                exit_terms={"exit_type": "profit_share", "trigger": "sale", "profit_share_pct": 100},
+                active_phase_start="acquisition",
+                active_phase_end="exit",
+            ),
+        ]
+    )
+    await session.flush()
+    return scenario.id
+
+
 # Add scenarios here as PR1/PR2 progress. Each entry:
 #   (snapshot_name, seed_function)
-# The seed function must return the scenario UUID. UUIDs are auto-generated;
-# the snapshot serializer strips them and uses stable ordinals (project_idx,
-# period, label) so output is byte-reproducible across runs.
+# The seed function must return the scenario UUID. UUIDs are auto-generated
+# (except where retirement chains require pre-allocation); the snapshot
+# serializer strips raw UUIDs and uses stable ordinals (project_idx, period,
+# label) so output is byte-reproducible across runs.
 SCENARIOS: list[tuple[str, Callable[[AsyncSession], Awaitable[UUID]]]] = [
     ("minimal_value_add", seed_minimal_value_add),
     ("value_add_with_perm_debt_io", seed_value_add_with_perm_debt_io),
+    ("new_construction_with_ci_and_retirement", seed_new_construction_with_ci_and_retirement),
 ]
 
 
