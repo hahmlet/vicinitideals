@@ -18,7 +18,7 @@ import pytest
 from openpyxl import load_workbook
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.exporters._doc_validator import parse_doc
+from app.exporters._doc_validator import name_lookup, parse_doc, slugs_for_name
 from app.exporters.investor_export import (
     MAX_PROJECTS_PER_SCENARIO,
     PROJECT_SHEET_NAME_BUDGET,
@@ -54,6 +54,72 @@ def _commit_3_sheet_order(num_projects: int) -> tuple[str, ...]:
 # free-form name (debug / one-off) and is allowed but doesn't get
 # bidirectional-validated against the doc glossary.
 _NAMED_RANGE_RE = re.compile(r"^(s|p\d+|r)_")
+
+# Cells that are intentionally not "metrics" in the FINANCIAL_MODEL.md sense.
+# Each falls into one of:
+#   - Cover/scenario meta: sponsor, deal name, dates — context for the LP
+#   - Assumption inputs: hold years, growth rates, occupancy starting point —
+#     drive metrics rather than being them
+#   - Aggregate/derived view of a metric (combined/worst across projects) —
+#     not its own doc header but a slice of an existing metric
+#   - Capital stack rows: per-module principal/rate (line items not metrics)
+#   - Waterfall tier sums: per-tier-type aggregates (not metrics in the doc
+#     sense, the metrics are LP/GP IRR/EM/etc. computed from these)
+#   - S&U panel totals: scoped variants of "Total Uses" / "Total Sources" /
+#     "Sources Gap" — these are doc-tagged metrics already, but the workbook
+#     emits per-scope variants (s_su_*, p<n>_uw_*) that don't match the
+#     bare doc name. These could be aliased; for now they're allow-listed.
+_NON_METRIC_NAMES = frozenset({
+    # Cover sheet meta
+    "s_sponsor_name", "s_deal_name", "s_scenario_name", "s_snapshot_date",
+    "s_project_count", "s_income_mode", "s_is_active", "s_calc_status_text",
+    # Assumptions Block A — meta + inputs
+    "s_assumptions_scenario_name", "s_assumptions_income_mode",
+    "s_assumptions_project_type",
+    "s_hold_years", "s_opex_growth_rate", "s_initial_occupancy",
+    "s_operating_reserve_months",
+    # Per-project meta (header cells)
+    "s_returns_combined_irr",  # alias for s_combined_irr
+})
+
+# Workbook ranges with these prefixes are not validated. Each prefix corresponds
+# to a structural section (capital stack rows, waterfall tier sums, assumption
+# inputs, S&U totals) where the per-instance name doesn't map 1:1 to a doc
+# metric — the doc-level metric is what's tagged.
+_NON_METRIC_PREFIXES = (
+    "s_module_",       # capital stack rows (per-module principal/rate)
+    "s_waterfall_",    # waterfall tier sums (per-tier-type cash distributed)
+    "s_assumptions_",  # assumption inputs
+    "s_su_",           # scenario S&U panel totals (alias of Total Uses/Sources/Gap)
+)
+
+
+def _is_non_metric(name: str) -> bool:
+    """True for named ranges that are intentionally not metric outputs.
+
+    Per-project Block-B inputs (``p<n>_acquisition_price``, ``p<n>_unit_count_*``,
+    ``p<n>_avg_*_rent``, etc.) and per-project sheet meta (``p<n>_uw_*``) follow
+    structural patterns rather than living in the explicit allow-list.
+    """
+    if name in _NON_METRIC_NAMES:
+        return True
+    if any(name.startswith(p) for p in _NON_METRIC_PREFIXES):
+        return True
+    # Per-project assumption inputs — match by suffix on the p<n>_ prefix.
+    per_project_input_suffixes = {
+        "project_name", "project_type",
+        "acquisition_price", "unit_count_existing", "unit_count_new",
+        "avg_in_place_rent", "avg_market_rent",
+        "stabilized_occupancy", "going_in_cap_rate", "exit_cap_rate",
+        "construction_months", "lease_up_months", "hold_years",
+    }
+    m = re.match(r"^p\d+_(.+)$", name)
+    if m and m.group(1) in per_project_input_suffixes:
+        return True
+    # Per-project sheet meta + S&U totals (scoped variants of doc metrics).
+    if m and m.group(1).startswith("uw_"):
+        return True
+    return False
 
 
 async def _seed_minimal_scenario(session: AsyncSession):
@@ -200,37 +266,100 @@ async def test_glossary_sheet_has_investor_metrics(session: AsyncSession):
     assert not missing, f"investor-tagged metrics missing from Glossary sheet: {sorted(missing)}"
 
 
-@pytest.mark.xfail(strict=False, reason="soft gate — bidirectional validator tightens after commit 3 lands per-project sheets")
-async def test_every_named_range_traces_to_doc_entry(session: AsyncSession):
-    """Bidirectional validator (forward direction) per plan §3.8 + §7.
+# Aggregate-variant patterns: workbook names that compose a base metric with
+# a scope qualifier (combined / worst / lp / gp / scenario-level snapshot).
+# Each pattern maps to the canonical doc-entry name it traces to.
+_NAMED_RANGE_ALIASES: tuple[tuple[re.Pattern[str], str], ...] = (
+    # Aggregate views (combined / worst across projects)
+    (re.compile(r"^s_combined_irr$"), "LP IRR"),
+    (re.compile(r"^s_returns_combined_irr$"), "LP IRR"),
+    (re.compile(r"^s_combined_noi$"), "Stabilized NOI"),
+    (re.compile(r"^s_worst_dscr$"), "DSCR"),
+    (re.compile(r"^s_hold_months$"), "Hold Period"),
+    # LP/GP-scoped variants of "Equity Multiple"
+    (re.compile(r"^s_(lp|gp)_equity_multiple$"), "Equity Multiple"),
+    # Asset Mgmt Fee — input on Assumptions, also a metric on Investor Returns
+    (re.compile(r"^s_asset_mgmt_fee$"), "Asset Management Fee"),
+    # Per-project sheet alias: workbook calls it timeline_months, doc Hold Period
+    (re.compile(r"^p\d+_timeline_months$"), "Hold Period"),
+    # Per-project levered/unlevered IRR — match by suffix
+    (re.compile(r"^p\d+_levered_irr$"), "Levered IRR"),
+    (re.compile(r"^p\d+_unlevered_irr$"), "Unlevered IRR"),
+    # Per-project NOI variant (workbook reorders "noi_stabilized" vs
+    # doc "Stabilized NOI"; sorted-tokens slug catches it, but be explicit)
+    (re.compile(r"^p\d+_noi_stabilized$"), "Stabilized NOI"),
+    # Net Cash Flow == Levered Cash Flow in our cashflow engine — the engine
+    # writes both labels to different columns but they're computed identically
+    # (NOI − DS + capital flows). Doc tag is "Levered Cash Flow".
+    (re.compile(r"^r_(p\d+_)?(uw_)?(cf_)?net_cash_flow$"), "Levered Cash Flow"),
+    # GP promote total — workbook adds a "_dollars" suffix; doc is "GP Promote"
+    (re.compile(r"^s_gp_promote_dollars$"), "GP Promote"),
+)
 
-    For every named range matching ``^(s|p\\d+|r)_`` in the workbook, look
-    up the implied metric in FINANCIAL_MODEL.md and assert it is tagged
-    ``investor``. Marked xfail-soft during rollout: many ``s_*`` names refer
-    to scenario meta (sponsor, scenario name, snapshot date) that aren't
-    "metrics" in the FINANCIAL_MODEL.md sense — the strict mapping lands
-    when commit 3 wires per-project metrics.
+
+def _candidate_slugs(workbook_name: str) -> set[str]:
+    """Generate every candidate slug a workbook named range could match against.
+
+    Strips: ``s_`` / ``p<n>_`` / ``r_`` outer prefix, then any nested ``p<n>_``
+    (for ``r_p<n>_*`` ranges), then ``uw_`` / ``cf_`` section markers
+    (Underwriting / CashFlow sheet tags). Adds " cash flow" expansion when
+    the range was tagged ``_cf_`` so e.g. ``r_p1_cf_levered`` matches doc
+    "Levered Cash Flow".
+    """
+    bare = re.sub(r"^(s|p\d+|r)_", "", workbook_name)
+    bare = re.sub(r"^p\d+_", "", bare)
+    has_cf_marker = "_cf_" in workbook_name
+    bare = re.sub(r"^(uw_|cf_)+", "", bare)
+    bare = re.sub(r"_(uw|cf)_", "_", bare)
+    text = bare.replace("_", " ")
+    aliases = slugs_for_name(text)
+    if has_cf_marker:
+        aliases.update(slugs_for_name(text + " cash flow"))
+    # Apply explicit aggregate-variant aliases on top of the parsed slugs.
+    for pattern, canonical in _NAMED_RANGE_ALIASES:
+        if pattern.match(workbook_name):
+            aliases.update(slugs_for_name(canonical))
+    return aliases
+
+
+async def test_every_named_range_traces_to_doc_entry(session: AsyncSession):
+    """Bidirectional validator (workbook → doc direction) per plan §3.8 + §7.
+
+    For every named range matching ``^(s|p\\d+|r)_`` in the workbook that
+    purports to be a metric, assert it traces to a tagged doc entry in
+    ``investor`` ∪ ``lender`` ∪ ``app`` (any user-facing audience). Cells
+    that are intentionally not metrics — scenario meta, assumption inputs,
+    capital-stack line items, waterfall tier sums — are excluded via
+    ``_is_non_metric``.
+
+    This is a **strict** gate: any new named range that doesn't trace
+    must either (a) get a doc entry added in FINANCIAL_MODEL.md, (b) be
+    added to ``_NON_METRIC_NAMES`` / ``_NON_METRIC_PREFIXES`` /
+    ``per_project_input_suffixes`` with a one-line rationale, or (c) get
+    an explicit alias added to ``_NAMED_RANGE_ALIASES``.
     """
     scenario = await _seed_minimal_scenario(session)
     blob = await export_investor_workbook(scenario.id, session)
     wb = load_workbook(BytesIO(blob), data_only=False)
 
-    investor_doc_names = {
-        _slug(m.name) for m in parse_doc().for_audience("investor")
-    }
+    lookup = name_lookup()  # default audiences = investor ∪ lender ∪ app
 
     orphans: list[str] = []
     for name in wb.defined_names:
         if not _NAMED_RANGE_RE.match(name):
             continue
-        bare = re.sub(r"^(s|p\d+|r)_", "", name)
-        if _slug(bare) not in investor_doc_names:
-            orphans.append(name)
+        if _is_non_metric(name):
+            continue
+        if any(slug in lookup for slug in _candidate_slugs(name)):
+            continue
+        orphans.append(name)
 
-    if orphans:
-        pytest.fail(
-            "named ranges with no investor-tagged doc entry:\n  " + "\n  ".join(sorted(orphans))
-        )
+    assert not orphans, (
+        "named ranges with no doc entry — either tag the metric in "
+        "FINANCIAL_MODEL.md, list in _NON_METRIC_NAMES/_PREFIXES, or "
+        "add to _NAMED_RANGE_ALIASES:\n  "
+        + "\n  ".join(sorted(orphans))
+    )
 
 
 async def test_uw_summary_kpis_match_engine_outputs(session: AsyncSession):

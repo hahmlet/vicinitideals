@@ -151,6 +151,66 @@ def metrics_for(audience: str, report: ParseReport | None = None) -> list[Metric
     return rpt.for_audience(audience)
 
 
+_PARENTHETICAL_RE = re.compile(r"\s*\(([^)]+)\)\s*")
+_NON_ALNUM_RE = re.compile(r"[^a-z0-9]+")
+
+
+def _slug(text: str) -> str:
+    return _NON_ALNUM_RE.sub("_", text.lower()).strip("_")
+
+
+def slugs_for_name(name: str) -> set[str]:
+    """Return every alias slug a workbook named-range fragment may match.
+
+    Doc titles often carry a parenthetical acronym ("Total Project Cost (TPC)",
+    "DSCR (Debt Service Coverage Ratio)"). Workbook named ranges drop the
+    acronym (``s_total_project_cost``, ``p1_dscr``). Word order may also
+    differ ("Stabilized NOI" in doc vs ``noi_stabilized`` on the workbook).
+    This helper generates every legitimate variant so the bidirectional
+    validator can check membership without re-implementing the munging logic.
+
+    Aliases produced for "Total Project Cost (TPC)":
+      - ``total_project_cost_tpc``       — full, parens included
+      - ``total_project_cost``           — parens stripped
+      - ``tpc``                          — parens contents only
+      - sorted-tokens variants of each   — handles word reorder
+    """
+    full = _slug(name)
+    aliases: set[str] = {full}
+    bare_text = _PARENTHETICAL_RE.sub(" ", name).strip()
+    if bare_text:
+        bare_slug = _slug(bare_text)
+        aliases.add(bare_slug)
+        aliases.add("_".join(sorted(bare_slug.split("_"))))
+    paren = _PARENTHETICAL_RE.search(name)
+    if paren is not None:
+        aliases.add(_slug(paren.group(1)))
+    aliases.add("_".join(sorted(full.split("_"))))
+    aliases.discard("")
+    return aliases
+
+
+def name_lookup(
+    audiences: list[str] | None = None,
+    report: ParseReport | None = None,
+) -> dict[str, MetricEntry]:
+    """Build a slug → MetricEntry index across the requested audiences.
+
+    Default pool is the user-facing set (``investor``, ``lender``, ``app``).
+    ``internal``-only metrics are engine plumbing and never surface in
+    workbooks, so they're excluded by default.
+    """
+    rpt = report if report is not None else parse_doc()
+    pool = set(audiences) if audiences else {"investor", "lender", "app"}
+    out: dict[str, MetricEntry] = {}
+    for metric in rpt.metrics:
+        if not metric.audiences & pool:
+            continue
+        for slug in slugs_for_name(metric.name):
+            out.setdefault(slug, metric)
+    return out
+
+
 def main(argv: list[str]) -> int:
     path = Path(argv[1]) if len(argv) > 1 else DOC_PATH
     report = parse_doc(path)

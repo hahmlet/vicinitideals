@@ -1050,6 +1050,29 @@ else:
 
 The default when creating a new expense line is `scale_with_lease_up = False` (conservative: costs show at full during lease-up). Users opt in to lease-up scaling.
 
+### Operating Expenses (OpEx) [investor, lender, app]
+
+**Definition.** Recurring operating costs of the property — taxes, insurance,
+property management, utilities, repairs, payroll. Sits between EGI and NOI on
+the P&L.
+
+**Calculation.**
+```
+opex_period = property_tax + insurance + opex_per_unit
+            + Σ itemized_OperatingExpenseLine.amount
+            + management_fee + carrying_cost
+```
+
+**Engine source.** `CashFlow.operating_expenses` (per project, per month).
+Itemized rows live in `OperatingExpenseLine` and are summed in the engine's
+per-period loop.
+
+**Notes / edge cases.** OpEx differs from CapEx Reserve: OpEx hits the P&L
+NOI line (DSCR uses NOI ÷ DS), CapEx is a below-NOI cash deduction (cash-on-
+cash includes CapEx, DSCR doesn't). OpEx scales with occupancy when
+`scale_with_lease_up = True`, with a configurable floor (`lease_up_floor_pct`)
+for partially-fixed costs.
+
 ### CapEx Reserve [investor, lender, app]
 
 ```python
@@ -1275,6 +1298,92 @@ if available_cash > 0 and am_fee_pct > 0:
 **Notes / edge cases.** Pre-distribution placement makes the AM fee senior to
 all investor distributions, consistent with how AM fees work in real fund
 structures.
+
+### Debt Service [investor, lender, app]
+
+**Definition.** Annual cash payment to all debt modules — interest plus
+amortization (or interest only during construction / pre-stabilization).
+
+**Calculation.**
+```
+debt_service_annual = Σ debt_service_monthly_per_loan × 12
+```
+
+**Engine source.** `CashFlow.debt_service` (per project, per month). The
+investor export aggregates to annual buckets for the Cash Flow sheet
+(`r_uw_cf_debt_service`, `r_p<n>_cf_debt_service`).
+
+**Notes / edge cases.** Construction-phase debt service uses the loan's
+construction carry rate; operations-phase uses P&I or interest-only per
+the carry config. Bridge → perm refi events show up as separate
+**Capital Events** lines, not in Debt Service.
+
+### Capital Events [investor, app]
+
+**Definition.** Per-period capital cash flows that aren't operating: the
+acquisition outflow at close, exit proceeds at sale, refi takeout
+proceeds, prepay penalties, and equity calls / refi shortfalls.
+
+**Calculation.**
+```
+capital_events_period = Σ CashFlowLineItem.net_amount
+                          where label.startswith("Acquisition" | "Sale" |
+                                                 "Refi —" | "Prepay" | "Exit")
+```
+
+**Engine source.** `CashFlowLineItem` rows tagged with the category
+prefixes above; the investor export separates them from operating flows
+on the Cash Flow sheet so the LP sees one-time events distinctly.
+
+**Notes / edge cases.** Y0 typically holds the acquisition outflow; the
+exit-year period holds sale proceeds net of selling costs. Multi-project
+deals can have acquisition outflows in different periods (anchor-driven
+date resolution).
+
+### Cumulative Cash Flow [investor, app]
+
+**Definition.** Running total of operating + capital cash flows from
+period 0 through the current period — the LP's "what's the project
+worth in cumulative dollars to me right now?" view.
+
+**Calculation.**
+```
+cumulative[t] = cumulative[t-1] + levered_cf[t] + capital_events[t]
+cumulative[0] = levered_cf[0] + capital_events[0]
+```
+
+**Engine source.** Computed inline by the investor export from the
+per-project `CashFlow.net_cash_flow` series + `CashFlowLineItem` capital
+events. `CashFlow.cumulative_cash_flow` carries the engine's own running
+total but resets at first stabilized month per the cash-balance seeding
+invariant (§6.3), so the export computes a separate non-resetting
+cumulative for the investor view.
+
+**Notes / edge cases.** The engine's `cumulative_cash_flow` is a *cash
+balance* (with reserves seeded) used for solvency tracking; the export's
+**Cumulative Cash Flow** is a *return-tracking* sum used for IRR/EM
+intuition. Both are valid views on the same data.
+
+### GP Promote [investor, app]
+
+**Definition.** Total GP profit-share dollars from the catch-up and
+residual waterfall tiers — the GP's compensation for outperformance
+above the LP's preferred return / hurdle.
+
+**Calculation.**
+```
+gp_promote_dollars = Σ WaterfallResult.cash_distributed
+                       where tier.tier_type in ("catch_up", "residual")
+```
+
+**Engine source.** `WaterfallResult` rows tagged with `catch_up` or
+`residual` tier types via `WaterfallTier.tier_type`.
+
+**Notes / edge cases.** Pure catch-up dollars (the GP catching up to
+its target share *after* the LP's pref) and pure residual promote (the
+GP's share of the upside above the final hurdle) both count as "promote"
+from the LP's perspective — the LP cares about total fees out, not their
+tier-by-tier breakdown.
 
 ### Hold Period [investor, lender, app]
 
