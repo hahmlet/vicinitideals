@@ -4620,8 +4620,27 @@ async def _lightweight_project_status_data(
     capital_modules = await _per_project_capital_modules_ui(
         session, scenario_id, project_id
     )
+    # capital_total must use this project's junction-scoped amount, not the
+    # module's source.amount (which holds the scenario-wide last-sized value
+    # for shared modules — e.g. P2's $4.3M would show on P1's pill,
+    # producing a phantom $1.45M Sources/Uses surplus on P1).
+    from app.models.capital import CapitalModuleProject as _CMP_lite
+    _junction_by_module = {
+        str(mid): float(amt or 0)
+        for mid, amt in (
+            await session.execute(
+                select(_CMP_lite.capital_module_id, _CMP_lite.amount).where(
+                    _CMP_lite.project_id == project_id
+                )
+            )
+        ).all()
+    }
     capital_total = 0.0
     for cm in capital_modules:
+        _jam = _junction_by_module.get(str(cm.id))
+        if _jam is not None:
+            capital_total += _jam
+            continue
         src = cm.source or {}
         amt = src.get("amount")
         if amt is None:
