@@ -13,6 +13,7 @@ from sqlalchemy import select
 
 from app.api.deps import CurrentUserId, DBSession
 from app.engines.cashflow import compute_cash_flows
+from app.schemas.gap_adjustment_names import is_reserved_label as _is_reserved_label
 from app.engines.waterfall import compute_waterfall
 from app.exporters import (
     DealImportResult,
@@ -330,6 +331,27 @@ async def create_income_stream(
 
 
 @router.put("/models/{model_id}/income-streams/{stream_id}", response_model=IncomeStreamRead)
+def _assert_not_phantom_row(label: str | None, row_kind: str) -> None:
+    """Reject mutations to Gap Adjustment phantom rows via the public API.
+
+    The slider feature owns these rows (identified by reserved label) and
+    manages their lifecycle through the dedicated /sliders endpoint. Direct
+    edits or deletions through the public CRUD endpoints would break the
+    slider's contract that "row exists ↔ slider is non-zero."
+
+    To remove an adjustment, drag the slider back to zero.
+    """
+    if _is_reserved_label(label):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=(
+                f"{row_kind} {label!r} is a Gap Adjustment phantom row owned "
+                "by the slider feature; edit or remove it via the slider, "
+                "not the line-item endpoints"
+            ),
+        )
+
+
 @router.patch("/models/{model_id}/income-streams/{stream_id}", response_model=IncomeStreamRead)
 async def update_income_stream(
     model_id: UUID,
@@ -338,6 +360,7 @@ async def update_income_stream(
     session: DBSession,
 ) -> IncomeStream:
     stream = await _get_income_stream_or_404(session, model_id, stream_id)
+    _assert_not_phantom_row(stream.label, "IncomeStream")
 
     for field, value in payload.model_dump(exclude_unset=True).items():
         setattr(stream, field, value)
@@ -354,6 +377,7 @@ async def delete_income_stream(
     session: DBSession,
 ) -> Response:
     stream = await _get_income_stream_or_404(session, model_id, stream_id)
+    _assert_not_phantom_row(stream.label, "IncomeStream")
 
     line_items = await session.execute(
         select(CashFlowLineItem).where(CashFlowLineItem.income_stream_id == stream_id)
@@ -410,6 +434,7 @@ async def update_expense_line(
     session: DBSession,
 ) -> OperatingExpenseLine:
     expense_line = await _get_expense_line_or_404(session, model_id, expense_line_id)
+    _assert_not_phantom_row(expense_line.label, "OperatingExpenseLine")
 
     for field, value in payload.model_dump(exclude_unset=True).items():
         setattr(expense_line, field, value)
@@ -429,6 +454,7 @@ async def delete_expense_line(
     session: DBSession,
 ) -> Response:
     expense_line = await _get_expense_line_or_404(session, model_id, expense_line_id)
+    _assert_not_phantom_row(expense_line.label, "OperatingExpenseLine")
     await session.delete(expense_line)
     await session.flush()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
@@ -478,6 +504,7 @@ async def update_use_line(
     session: DBSession,
 ) -> UseLine:
     use_line = await _get_use_line_or_404(session, model_id, use_line_id)
+    _assert_not_phantom_row(use_line.label, "UseLine")
     for field, value in payload.model_dump(exclude_unset=True).items():
         setattr(use_line, field, value)
     await session.flush()
@@ -492,6 +519,7 @@ async def delete_use_line(
     session: DBSession,
 ) -> Response:
     use_line = await _get_use_line_or_404(session, model_id, use_line_id)
+    _assert_not_phantom_row(use_line.label, "UseLine")
     await session.delete(use_line)
     await session.flush()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
