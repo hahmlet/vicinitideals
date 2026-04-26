@@ -22,6 +22,34 @@
 - `EGI` = Effective Gross Income (gross revenue − vacancy loss)
 - `DSCR` = NOI / DS
 
+**Tagged metric headers — audience tagging convention.** Headers throughout this
+doc follow one of two shapes:
+
+1. **Tagged metric header.** A `##` or `###` header that ends with a bracketed
+   audience list, e.g. `### DSCR [investor, lender, app]`. These are
+   machine-parsed by [`app/exporters/_doc_validator.py`](../app/exporters/_doc_validator.py)
+   and drive the **Glossary** sheet of the investor Excel export — so any
+   metric tagged `investor` automatically surfaces in the workbook the LP
+   receives. Body convention: `**Definition.**`, `**Calculation.**` (often a
+   code block), `**Engine source.**`, `**Notes / edge cases.**` paragraphs.
+2. **Untagged structural header.** A `##` or `###` header without brackets
+   (most of the existing section/sub-section headers in this doc, e.g.
+   `## 2. Sources / Debt Sizing`). These describe processes or methodology
+   and are **not** treated as metrics. The validator skips them.
+
+**Audience tags** (one or more, comma-separated):
+
+- `investor` — appears in the LP-facing Investor Excel export
+- `lender` — lender-facing metric (DSCR, LTV, debt yield, balloon, prepay)
+- `app` — surfaces in the web UI (status pills, tooltips, KPI cards, modals)
+- `internal` — engine implementation detail; never user-facing
+
+Most metrics will be `[investor, lender, app]` (the LP package + the lender
+package + the app UI all want it). LP-only metrics drop `lender` (e.g. promote,
+catchup); lender-only metrics drop `investor` (e.g. debt yield, balloon).
+Process headers (auto-sizing internals, fix-point iteration, refi math)
+deliberately carry no tag.
+
 ### Multi-project engine (Phase 2, merged 2026-04-21) — math unchanged per project
 
 Migrations `0048` (junction + anchors), `0050` (`project_id` on cashflow output tables), and `0051` (UNIQUE swap) let one Scenario compute N Projects' cashflows independently. The engine loops per project; each project reads its own UseLines, IncomeStreams, OpEx, OperationalInputs, Milestones, and a junction-filtered view of CapitalModules. Output rows (CashFlow, CashFlowLineItem, OperationalOutputs) carry `project_id`. The `app/engines/underwriting_rollup.py` module aggregates across projects for Scenario-level display.
@@ -85,6 +113,91 @@ Cycle detection runs both at read time (`ordered_projects` Kahn pass) and at wri
 ---
 
 ## 1. Uses / Total Project Cost (TPC)
+
+### Total Project Cost (TPC) [investor, lender, app]
+
+**Definition.** Sum of every capital outflow required to acquire, build, lease
+up, and stabilize a project — every Use line that is not exit-phase and not
+a balance-only label.
+
+**Calculation.**
+```
+TPC = Σ UseLine.amount
+        where ul.phase != "exit"
+          and ul.label not in _BALANCE_ONLY_LABELS
+```
+
+**Engine source.** `compute_cash_flows` (`app/engines/cashflow.py`) computes
+TPC during the per-project loop and writes it to
+`OperationalOutputs.total_project_cost`. The underwriting rollup
+(`app/engines/underwriting_rollup.py`) sums it across projects for scenario
+display.
+
+**Notes / edge cases.** TPC excludes Operating Reserve, Lease-Up Reserve, and
+capitalized-interest stubs because those are derived from the principal we
+are sizing — including them would double-count loan-funded items as costs the
+loan needs to cover. See **Total Uses** for the all-inclusive sum used on the
+visible S&U panel and the equity stack. See §1.1 below for the full prose
+treatment.
+
+### Total Uses [investor, lender, app]
+
+**Definition.** Sum of every non-exit Use line including reserves and
+capitalized-interest stubs. The number that matches the line items the user
+sees on the Sources & Uses panel.
+
+**Calculation.**
+```
+total_uses = Σ UseLine.amount where ul.phase != "exit"
+```
+
+**Engine source.** `compute_cash_flows` (`app/engines/cashflow.py`) computes
+this and the rollup exposes it as `rollup_summary["total_uses"]`. The
+Underwriting KPI strip displays it as the headline "Total Uses" tile (with
+TPC as a sub-label).
+
+**Notes / edge cases.** Total Uses ≥ TPC. The delta is the sum of balance-only
+labels (Operating Reserve, Lease-Up Reserve, capitalized-interest reserves).
+The equity stack ultimately has to fund those out of pocket, which is why
+`equity_required` and Sources Gap both key off Total Uses, not TPC.
+
+### Equity Required [investor, app]
+
+**Definition.** Per-project target equity check at close — what the equity
+stack has to bring after debt is sized. Writes to
+`OperationalOutputs.equity_required`.
+
+**Calculation.**
+```
+equity_required = max(0, total_uses_per_project − Σ debt_module_principal_via_junction)
+```
+
+**Engine source.** `compute_cash_flows` writes per-project values via the
+junction-overlay path. The waterfall engine's in-place rewrite of
+`equity_required` is **skipped for multi-project scenarios** so the per-project
+numbers stay honest. See §1.0 for the full reconciliation.
+
+**Notes / edge cases.** Does *not* subtract committed equity in the Owner
+Equity / Preferred Equity modules — that role belongs to **Sources Gap**.
+Equity Required is the *raise target*; Sources Gap is the *remaining shortfall*.
+
+### Sources Gap [investor, app]
+
+**Definition.** Scenario-wide remaining funding shortfall after both debt
+sizing and the user's committed equity entries. Shrinks toward zero as the
+user fills in equity modules.
+
+**Calculation.**
+```
+sources_gap = Σ total_uses_across_projects
+            − Σ junction_scoped_sources (debt + committed equity)
+```
+
+**Engine source.** Computed by the Underwriting KPI strip
+(`app/templates/partials/underwriting/view.html`) from rollup totals.
+
+**Notes / edge cases.** When committed equity = 0, Sources Gap == Σ Equity
+Required. The two diverge once the user starts entering equity commitments.
 
 ### 1.0 Two Uses totals — TPC vs. Total Uses
 
@@ -568,7 +681,7 @@ net_refi = perm_amount
 
 ## 3. Reserves
 
-### 3.1 Operating Reserve
+### Operating Reserve [investor, lender, app]
 
 **Formula.**
 ```
@@ -594,7 +707,7 @@ if _is_stabilized and not _operating_reserve_seeded:
 
 **Plain English.** "Size the loan so that after all construction costs, lease-up carry, and IO payments, the project has exactly `reserve_months × max(OpEx, DS)` left in the bank at first stabilized month."
 
-### 3.2 Lease-Up Reserve
+### Lease-Up Reserve [investor, lender, app]
 
 **Formula.**
 ```
@@ -611,6 +724,76 @@ This is the **net debt-service shortfall** during lease-up that the permanent lo
 ---
 
 ## 4. Revenue / NOI
+
+### Gross Revenue [investor, lender, app]
+
+**Definition.** Sum of escalated stream amounts before vacancy, bad debt, and
+concessions. Also called Gross Potential Rent (GPR) when all streams are rent.
+
+**Calculation.**
+```
+gross_revenue = Σ escalated_stream_amount  (per period, summed across active streams)
+```
+
+**Engine source.** `_compute_period` in `app/engines/cashflow.py`.
+
+**Notes / edge cases.** Only meaningful in `revenue_opex` mode. In `noi` mode,
+the engine reports gross revenue equal to NOI by construction.
+
+### EGI (Effective Gross Income) [investor, lender, app]
+
+**Definition.** Gross revenue minus vacancy loss, bad debt, and concessions —
+the income actually expected to be collected before operating expenses.
+
+**Calculation.**
+```
+EGI = gross_revenue − vacancy_loss − bad_debt − concessions
+```
+
+**Engine source.** `_compute_period` in `app/engines/cashflow.py`.
+
+**Notes / edge cases.** Bad debt and concessions are separate percentage
+deductions from GPR (default 0%). They match the standard CRE pro forma
+format and enable HelloData/CoStar feeds that supply them as distinct fields.
+
+### NOI (Net Operating Income) [investor, lender, app]
+
+**Definition.** EGI minus operating expenses minus CapEx reserve. The
+income-statement bottom line above the debt-service deduction.
+
+**Calculation.**
+```
+NOI = EGI − OpEx − CapEx_Reserve
+```
+
+In `noi` mode the user enters NOI directly and the engine applies an annual
+escalation factor anchored at the first stabilized month (see §4.6).
+
+**Engine source.** `_compute_period` writes monthly NOI into `CashFlow.noi`;
+`OperationalOutputs.noi_stabilized` materializes the stabilized annual value.
+
+**Notes / edge cases.** CapEx Reserve sits below NOI because it is a cash
+deduction, not an accounting expense. The distinction matters: DSCR uses NOI
+(excluding CapEx) while cash-on-cash uses distributable cash (including
+CapEx). See §5.3.
+
+### Stabilized NOI [investor, lender, app]
+
+**Definition.** The first year's annualized NOI once lease-up has completed
+and occupancy reaches `stabilized_occupancy_pct`.
+
+**Calculation.**
+```
+stabilized_noi = NOI_monthly_at_first_stabilized_month × 12
+```
+
+**Engine source.** `OperationalOutputs.noi_stabilized` (per project), summed
+across projects by `rollup_summary` for scenario-wide display.
+
+**Notes / edge cases.** This is the NOI used by `dscr_capped` and
+`dual_constraint` debt sizing modes. Drift between stabilized NOI used for
+sizing and stabilized NOI computed in the cash flow loop is the reason the
+`/compute` endpoint runs a fix-point iteration (§4.7).
 
 ### 4.1 Two income modes
 
@@ -867,7 +1050,7 @@ else:
 
 The default when creating a new expense line is `scale_with_lease_up = False` (conservative: costs show at full during lease-up). Users opt in to lease-up scaling.
 
-### 5.3 CapEx Reserve
+### CapEx Reserve [investor, lender, app]
 
 ```python
 capex_reserve = (
@@ -979,6 +1162,138 @@ When a bridge→perm takeout is detected (§2.10), the following line items are 
 
 **Waterfall style: American.** Distributions are computed period-by-period (cash distributed as earned, not held until exit). This is the industry standard for US multifamily syndications and JV structures.
 
+### Cap Rate (Going-In) [investor, lender, app]
+
+**Definition.** Year-1 NOI divided by total project cost — the
+return-on-cost rate the lender and LP both check against market caps.
+
+**Calculation.**
+```
+going_in_cap_rate = NOI_year_1 / TPC
+```
+
+**Engine source.** Computed for display by `rollup_summary`; `OperationalInputs`
+carries `going_in_cap_rate_pct` as an analyst input on direct-NOI deals.
+
+**Notes / edge cases.** Year-1 NOI may be negative or low if the project is
+still in lease-up during the first 12 months. Stabilized cap (year-1 of
+stabilization NOI ÷ TPC) is the more comparable number for value-add deals.
+
+### Exit Cap Rate [investor, lender, app]
+
+**Definition.** The cap rate applied to stabilized NOI at exit to derive the
+sale value of the asset.
+
+**Calculation.**
+```
+exit_value = NOI_at_exit / exit_cap_rate
+```
+
+**Engine source.** `OperationalInputs.exit_cap_rate_pct`, used by the
+exit-period capital event to compute sale proceeds and by LTV-based debt
+sizing to compute property value.
+
+**Notes / edge cases.** Default LTV property value uses the *going-in* cap; refi
+LTV uses `source.refi_cap_rate_pct` when set, otherwise falls back to the
+exit cap. Conservative convention: assume no cap-rate compression unless the
+analyst explicitly models it.
+
+### DSCR (Debt Service Coverage Ratio) [investor, lender, app]
+
+**Definition.** Stabilized annual NOI divided by stabilized annual debt
+service — the lender's primary coverage metric.
+
+**Calculation.**
+```
+DSCR = NOI_stabilized_annual / (operation_debt_monthly × 12)
+```
+
+**Engine source.** `OperationalOutputs.dscr` (per project, written by the
+cashflow engine using the junction-overlaid principal). The waterfall's
+`_apply_levered_metrics` recomputes DSCR for the default project only;
+non-default projects retain the cashflow-engine value.
+
+**Notes / edge cases.** Lenders typically require ≥ 1.20–1.25. DSCR is per
+loan, so multi-debt scenarios surface a worst-case across modules.
+`PLACEHOLDER_DSCR = 1.25` is the engine fallback when `dscr_minimum` is unset.
+
+### LTV (Loan-to-Value) [investor, lender, app]
+
+**Definition.** Total non-bridge debt divided by stabilized property value.
+Bridge modules are excluded to avoid double-counting with the perm that takes
+them out.
+
+**Calculation.**
+```
+property_value = NOI_stabilized / exit_cap_rate
+LTV = total_non_bridge_debt / property_value
+```
+
+**Engine source.** Computed at status-pill render time (`ui.py`
+`_compute_calc_status`); not stored as a single column on
+`OperationalOutputs`.
+
+**Notes / edge cases.** Per-funder-type LTV caps live on
+`debt_terms.{funder_type}.ltv_pct`, NOT on a top-level `OperationalInputs`
+column. Default LTV when absent is funder-type-specific (typically 70% for
+acquisition, 75% for perm). In `dual_constraint` sizing, LTV is one of three
+binding constraints (LTV / DSCR / gap-fill).
+
+### Debt Yield [lender, app]
+
+**Definition.** Stabilized NOI divided by total non-bridge debt balance — a
+coverage metric independent of interest rate and amortization.
+
+**Calculation.**
+```
+debt_yield_pct = (NOI_stabilized / total_outstanding_debt_balance) × 100
+```
+
+**Engine source.** `OperationalOutputs.debt_yield_pct` (computed alongside
+DSCR in the cashflow engine).
+
+**Notes / edge cases.** Lenders increasingly use this as the primary coverage
+gate. A 10% debt yield means NOI covers 10% of the loan balance annually;
+most institutional lenders require 8–10% minimum.
+
+### Asset Management Fee [investor, app]
+
+**Definition.** A fee deducted from positive net cash flow before it enters
+the waterfall tier distribution. Compensates the asset manager for ongoing
+oversight.
+
+**Calculation.**
+```
+if available_cash > 0 and am_fee_pct > 0:
+    am_fee = available_cash × am_fee_pct / 100
+    available_cash = available_cash − am_fee
+```
+
+**Engine source.** `OperationalInputs.asset_mgmt_fee_pct` is the input;
+`compute_waterfall` (`app/engines/waterfall.py`) applies the deduction.
+
+**Notes / edge cases.** Pre-distribution placement makes the AM fee senior to
+all investor distributions, consistent with how AM fees work in real fund
+structures.
+
+### Hold Period [investor, lender, app]
+
+**Definition.** Number of months from acquisition close to exit/divestment.
+Drives the cash flow horizon, the levered IRR base, and the year axes on the
+investor export.
+
+**Calculation.**
+```
+hold_months = sum(phase.months for phase in phases if phase.period_type != exit)
+```
+
+**Engine source.** Derived from the project's milestone trigger chain (or
+fallback `OperationalInputs.*_months` scalars). Surfaces as
+`rollup_summary["hold_months"]`.
+
+**Notes / edge cases.** In multi-project deals, the scenario hold period is
+the longest project's hold (so all projects' cash flows are captured).
+
 ### 7.1 Module stack and tiers
 
 **Capital modules** (`CapitalModule`) define the stack: debt and equity lines with a `stack_position` (0 = senior, higher = junior) and a `funder_type` (`permanent_debt`, `construction_loan`, `common_equity`, etc.).
@@ -1071,7 +1386,39 @@ Whatever remains after all earlier tiers — split by tier ratios. This is "the 
 
 ### 7.4 Profit metrics
 
-#### LP IRR, GP IRR (via XIRR)
+### LP IRR [investor, app]
+
+**Definition.** Internal rate of return on the LP cash flow stream, computed
+via XIRR over actual period dates.
+
+**Calculation.** Solve for `r` such that `Σ CF_LP_i / (1 + r)^((t_i − t_0) / 365) = 0`,
+where each `CF_LP_i` is the LP's net of contributions and distributions in
+period i and `t_i` is the date of that period.
+
+**Engine source.** `_compute_xirr_fraction` in `app/engines/waterfall.py`,
+materialized to `OperationalOutputs.lp_irr` (or scenario-aggregated via
+`rollup_irr`).
+
+**Notes / edge cases.** XIRR (not IRR) because periods are monthly but
+distributions can land on any period. The base year used for the
+period→date conversion is `2020` (`DEFAULT_IRR_BASE_YEAR` — only the date
+*differences* matter to the solver).
+
+### GP IRR [investor, app]
+
+**Definition.** IRR on the GP cash flow stream — same mechanic as LP IRR, GP
+side.
+
+**Calculation.** XIRR over GP capital calls and distributions (including
+promote tier proceeds).
+
+**Engine source.** `_compute_xirr_fraction` in `app/engines/waterfall.py`,
+materialized to `OperationalOutputs.gp_irr`.
+
+**Notes / edge cases.** GP IRR usually exceeds LP IRR thanks to the promote;
+the spread quantifies the deal's promote economics.
+
+#### Period→date mapping
 
 ```python
 def _compute_xirr_fraction(period_cashflows: dict[int, Decimal]) -> Decimal | None:
@@ -1096,7 +1443,7 @@ Where `CF_i` are individual cash flows (negative = contribution, positive = dist
 
 **Why 2020 as base year?** It's arbitrary — XIRR only cares about the date differences between flows, not their absolute values. 2020 is a round number inside the pyxirr-supported range.
 
-#### Equity Multiple (MOIC)
+### Equity Multiple (MOIC) [investor, app]
 
 ```python
 equity_multiple = (total_LP_positive + total_GP_positive) / (total_LP_contributed + total_GP_contributed)
@@ -1106,7 +1453,7 @@ equity_multiple = (total_LP_positive + total_GP_positive) / (total_LP_contribute
 
 **Why combined LP + GP?** This is the **project-level** equity multiple. Separate LP and GP multiples are also computed but are not the headline metric.
 
-#### Cash-on-Cash Year 1
+### Cash-on-Cash Year 1 [investor, app]
 
 ```python
 year_one_distributions = Σ positive cash flows (LP + GP) in periods 0–11
@@ -1118,17 +1465,14 @@ cash_on_cash_year_1_pct = (year_one_distributions / total_contributed) × 100
 
 **Why "periods 0–11" and not "the year after stabilization"?** By convention, "year 1" means the first 12 months from deal close. If the deal is still in construction during year 1, cash-on-cash will be 0% or negative. That is the correct, honest number — the user should interpret it in context.
 
-#### Debt Yield
+#### Debt yield (already tagged above)
 
-```
-debt_yield_pct = (NOI_stabilized / total_outstanding_debt_balance) × 100
-```
+The debt-yield definition lives in the §7 prelude as a tagged metric header
+(`Debt Yield [lender, app]`). Repeating context here for the in-flow read:
+debt yield equals stabilized NOI divided by total non-bridge debt balance.
+See the tagged entry above for the full definition.
 
-Where `total_outstanding_debt_balance` sums all non-bridge debt module amounts (bridge modules with `is_bridge = True` are excluded to avoid double-counting with the perm that takes them out).
-
-**Why lenders care.** Debt yield is a coverage metric independent of interest rate and amortization. A 10% debt yield means NOI covers 10% of the loan balance annually — the lender can recover their principal in ~10 years of NOI alone. Most institutional lenders require 8-10% minimum.
-
-#### Loss-to-Lease
+### Loss-to-Lease [investor, app]
 
 Tracked on `UnitMix` rows via `market_rent_per_unit` and `in_place_rent_per_unit`:
 
@@ -1160,6 +1504,80 @@ for cash_flow in cash_flows:
 - **Levered project IRR**: `XIRR(equity contributions, post-DS distributions, post-payoff residual)` — returns to the equity stack. Measures the deal's return after leverage.
 
 The spread between the two is the "leverage amplification" — positive if leverage is accretive, negative if the deal is over-levered.
+
+### Unlevered IRR [investor, app]
+
+**Definition.** XIRR of TPC outflows, NOI inflows, and exit proceeds — the
+return as if the deal were 100% equity. Measures asset quality independent
+of capital structure.
+
+**Calculation.**
+```
+unlevered_irr = XIRR(
+  outflows = TPC capital deployments,
+  inflows  = monthly NOI + exit proceeds (net of selling costs)
+)
+```
+
+**Engine source.** `OperationalOutputs.unlevered_irr` (computed by the
+cashflow engine per project, aggregated by `rollup_irr`).
+
+**Notes / edge cases.** Unlevered IRR is the standard apples-to-apples metric
+for comparing assets across different capital stacks.
+
+### Levered IRR [investor, app]
+
+**Definition.** XIRR of equity contributions and post-debt-service distributions
+through exit — the return realized by the equity stack after leverage.
+
+**Calculation.**
+```
+levered_irr = XIRR(
+  outflows = equity capital calls,
+  inflows  = post-DS distributions + post-payoff residual at exit
+)
+```
+
+**Engine source.** `OperationalOutputs.levered_irr` (waterfall engine writes
+the authoritative value via `_apply_levered_metrics`).
+
+**Notes / edge cases.** Levered IRR > unlevered IRR when leverage is
+accretive; reversed when the deal is over-levered. The spread is what the
+investor is paying the GP to engineer.
+
+### Levered Cash Flow [investor, app]
+
+**Definition.** Net cash flow to the equity stack each period after debt
+service.
+
+**Calculation.**
+```
+levered_cf_period = NOI − debt_service − capital_outflows + capital_inflows
+```
+
+**Engine source.** `CashFlow.net_cash_flow` (per project; rollup sums across
+projects for scenario-wide display).
+
+**Notes / edge cases.** Negative levered CF triggers capital calls in the
+waterfall. Cumulative levered CF resets to the operating reserve at first
+stabilized month — see §6.3.
+
+### Unlevered Cash Flow [investor, app]
+
+**Definition.** Net cash flow assuming no debt — operating cash flow plus
+capital events, minus capital outflows.
+
+**Calculation.**
+```
+unlevered_cf_period = NOI − capital_outflows + capital_inflows
+```
+
+**Engine source.** Computed inline by the investor export sheet builder from
+`CashFlow.noi`, `CashFlowLineItem` capital events.
+
+**Notes / edge cases.** Subtracting debt service from unlevered CF gives
+levered CF — the two columns appear side-by-side on the investor cash flow
+sheet so the LP can see the leverage spread per period.
 
 ### 7.7 Calculation Status diagnostic (3-factor model)
 

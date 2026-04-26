@@ -1,5 +1,14 @@
 """Excel workbook export for deal models — designed for round-trip re-import.
 
+.. deprecated::
+   This round-trip exporter is **deprecated** as of 2026-04-25 in favour of
+   the LP-facing investor export being built per
+   ``docs/feature-plans/investor-excel-export-v2.md``. Tests stay green and
+   the module stays importable as a safety net during rollout, but no new
+   features, sheets, or columns should land here. The module + its route +
+   its tests are scheduled for deletion once the investor export is feature-
+   complete and the UI button has been swapped (see plan §10).
+
 Sheet layout:
   Summary      — computed outputs, read-only (protected)
   Cash Flow    — monthly period table, read-only (protected)
