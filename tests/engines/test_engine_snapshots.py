@@ -528,25 +528,26 @@ async def seed_new_construction_with_ci_and_retirement(session: AsyncSession) ->
     return scenario.id
 
 
-async def _seed_multi_project_value_add_FLAKY_DO_NOT_USE(session: AsyncSession) -> UUID:
+async def seed_multi_project_value_add(session: AsyncSession) -> UUID:
     """A multi-project deal with 2 value-add reno projects under one scenario.
 
-    DROPPED FROM HARNESS — flaky output. Diff investigation showed project_idx=1's
-    line items intermittently missing from the persisted CashFlowLineItem table
-    (3/10 runs miss them entirely). Likely cause: per-project purge in
-    _compute_project_cashflow interacting with ORM session state across the
-    multi-project iteration loop, possibly because both projects insert in the
-    same flush and prev_outputs read race-conditions with subsequent writes.
-
-    Setting distinct created_at timestamps on the two projects did NOT fix it
-    (output remained 3/5 flaky), suggesting the issue is in compute order or
-    session caching, not project sort. This is a pre-existing engine
-    nondeterminism worth investigating separately before adding multi-project
-    coverage to the harness.
-
     Mirrors the shape of session S246's multi-project deal (1203 E Powell +
-    East 25). Function kept here for future re-enablement once the engine
-    flakiness is resolved.
+    East 25). Each project has its own OperationalInputs and IncomeStream.
+    No debt — focus is exercising the multi-project loop in compute_cash_flows.
+
+    Exercises:
+      - compute_cash_flows iterating sorted(scenario.projects, key=created_at)
+      - _compute_project_cashflow called per project
+      - Per-project OperationalOutputs writeback (UNIQUE(scenario_id, project_id))
+      - Per-project equity_required calculation
+      - Per-project CashFlow / CashFlowLineItem writeback
+
+    History: this scenario was initially flaky (3/10 runs would diff). The
+    diagnostic at tests/engines/diag_multi_project_flakiness.py showed engine
+    writes are deterministic (Powell=244 line items, East 25=265, every
+    single run). The bug was in the snapshot serializer's ``ORDER BY
+    project_id`` — UUIDs are auto-generated and sort differently across runs.
+    Fixed by sorting in Python by the stable project_idx ordinal instead.
     """
     org = Organization(id=uuid4(), name="Snapshot Org MP", slug=f"snap-mp-{uuid4().hex[:8]}")
     user = User(id=uuid4(), org_id=org.id, name="Snapshot User", display_color="#3366FF")
@@ -697,11 +698,7 @@ SCENARIOS: list[tuple[str, Callable[[AsyncSession], Awaitable[UUID]]]] = [
     ("minimal_value_add", seed_minimal_value_add),
     ("value_add_with_perm_debt_io", seed_value_add_with_perm_debt_io),
     ("new_construction_with_ci_and_retirement", seed_new_construction_with_ci_and_retirement),
-    # NOTE: multi_project_value_add removed — flaky engine output
-    # (see _seed_multi_project_value_add_FLAKY_DO_NOT_USE for the seed and
-    # investigation notes). Multi-project coverage lives in the prod
-    # baselines (tests/phase2_baseline/) until the engine nondeterminism
-    # is investigated.
+    ("multi_project_value_add", seed_multi_project_value_add),
 ]
 
 

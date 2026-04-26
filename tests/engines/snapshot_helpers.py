@@ -126,12 +126,14 @@ async def serialize_engine_state(
     def _pidx(pid: UUID | None) -> int | None:
         return project_idx.get(pid) if pid else None
 
+    # Query each model unsorted — DB-side ORDER BY project_id (a UUID) is
+    # nondeterministic across runs because UUIDs are auto-generated. We sort
+    # by the stable project_idx ordinal in Python after the project map is
+    # built, so output is byte-reproducible.
     cash_flows = (
         (
             await session.execute(
-                select(CashFlow)
-                .where(CashFlow.scenario_id == scenario_id)
-                .order_by(CashFlow.project_id, CashFlow.period)
+                select(CashFlow).where(CashFlow.scenario_id == scenario_id)
             )
         )
         .scalars()
@@ -140,13 +142,8 @@ async def serialize_engine_state(
     cash_flow_line_items = (
         (
             await session.execute(
-                select(CashFlowLineItem)
-                .where(CashFlowLineItem.scenario_id == scenario_id)
-                .order_by(
-                    CashFlowLineItem.project_id,
-                    CashFlowLineItem.period,
-                    CashFlowLineItem.category,
-                    CashFlowLineItem.label,
+                select(CashFlowLineItem).where(
+                    CashFlowLineItem.scenario_id == scenario_id
                 )
             )
         )
@@ -156,13 +153,31 @@ async def serialize_engine_state(
     operational_outputs = (
         (
             await session.execute(
-                select(OperationalOutputs)
-                .where(OperationalOutputs.scenario_id == scenario_id)
-                .order_by(OperationalOutputs.project_id)
+                select(OperationalOutputs).where(
+                    OperationalOutputs.scenario_id == scenario_id
+                )
             )
         )
         .scalars()
         .all()
+    )
+
+    cash_flows = sorted(
+        cash_flows,
+        key=lambda cf: (_pidx(cf.project_id) if cf.project_id else -1, cf.period),
+    )
+    cash_flow_line_items = sorted(
+        cash_flow_line_items,
+        key=lambda li: (
+            _pidx(li.project_id) if li.project_id else -1,
+            li.period,
+            getattr(li.category, "value", str(li.category)),
+            li.label or "",
+        ),
+    )
+    operational_outputs = sorted(
+        operational_outputs,
+        key=lambda o: _pidx(o.project_id) if o.project_id else -1,
     )
     capital_modules = (
         (
