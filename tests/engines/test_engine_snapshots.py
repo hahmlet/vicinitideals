@@ -528,6 +528,165 @@ async def seed_new_construction_with_ci_and_retirement(session: AsyncSession) ->
     return scenario.id
 
 
+async def _seed_multi_project_value_add_FLAKY_DO_NOT_USE(session: AsyncSession) -> UUID:
+    """A multi-project deal with 2 value-add reno projects under one scenario.
+
+    DROPPED FROM HARNESS — flaky output. Diff investigation showed project_idx=1's
+    line items intermittently missing from the persisted CashFlowLineItem table
+    (3/10 runs miss them entirely). Likely cause: per-project purge in
+    _compute_project_cashflow interacting with ORM session state across the
+    multi-project iteration loop, possibly because both projects insert in the
+    same flush and prev_outputs read race-conditions with subsequent writes.
+
+    Setting distinct created_at timestamps on the two projects did NOT fix it
+    (output remained 3/5 flaky), suggesting the issue is in compute order or
+    session caching, not project sort. This is a pre-existing engine
+    nondeterminism worth investigating separately before adding multi-project
+    coverage to the harness.
+
+    Mirrors the shape of session S246's multi-project deal (1203 E Powell +
+    East 25). Function kept here for future re-enablement once the engine
+    flakiness is resolved.
+    """
+    org = Organization(id=uuid4(), name="Snapshot Org MP", slug=f"snap-mp-{uuid4().hex[:8]}")
+    user = User(id=uuid4(), org_id=org.id, name="Snapshot User", display_color="#3366FF")
+    opportunity = Opportunity(
+        id=uuid4(),
+        org_id=org.id,
+        name="Multi-Project: 1203 E Powell + East 25 (synthetic)",
+        status=OpportunityStatus.active,
+        project_category=OpportunityCategory.proposed,
+        source=OpportunitySource.manual,
+        created_by_user_id=user.id,
+    )
+    top_deal = Deal(
+        id=uuid4(),
+        org_id=org.id,
+        name="Snapshot — Multi-Project Value-Add",
+        created_by_user_id=user.id,
+    )
+    scenario = DealModel(
+        id=uuid4(),
+        deal_id=top_deal.id,
+        created_by_user_id=user.id,
+        name="Snapshot — Multi-Project Value-Add",
+        version=1,
+        is_active=True,
+        project_type=ProjectType.value_add,
+    )
+    session.add_all([org, user, opportunity, top_deal, scenario])
+    await session.flush()
+    session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id))
+
+    # Two projects under one scenario. Engine sorts by created_at only, so
+    # we set explicit distinct timestamps to make the compute order
+    # deterministic (otherwise both get func.now() and tie-breaking is
+    # implementation-defined).
+    from datetime import datetime, timezone
+    t0 = datetime(2026, 1, 1, 9, 0, 0, tzinfo=timezone.utc)
+    t1 = datetime(2026, 1, 1, 9, 0, 1, tzinfo=timezone.utc)
+    project_powell = Project(
+        id=uuid4(),
+        scenario_id=scenario.id,
+        opportunity_id=opportunity.id,
+        name="1203 E Powell",
+        deal_type=ProjectType.value_add.value,
+        created_at=t0,
+    )
+    project_east25 = Project(
+        id=uuid4(),
+        scenario_id=scenario.id,
+        opportunity_id=opportunity.id,
+        name="East 25",
+        deal_type=ProjectType.value_add.value,
+        created_at=t1,
+    )
+    session.add_all([project_powell, project_east25])
+    await session.flush()
+
+    # Project 1: 1203 E Powell — 8-unit small value-add
+    session.add_all(
+        [
+            OperationalInputs(
+                project_id=project_powell.id,
+                unit_count_existing=8,
+                unit_count_new=8,
+                purchase_price=Decimal("1200000"),
+                closing_costs_pct=Decimal("2.000000"),
+                hold_phase_enabled=True,
+                hold_months=2,
+                hold_vacancy_rate_pct=Decimal("8.000000"),
+                renovation_cost_total=Decimal("240000"),
+                renovation_months=4,
+                lease_up_months=3,
+                initial_occupancy_pct=Decimal("60.000000"),
+                opex_per_unit_annual=Decimal("4500.000000"),
+                expense_growth_rate_pct_annual=Decimal("3.000000"),
+                mgmt_fee_pct=Decimal("4.000000"),
+                property_tax_annual=Decimal("12000.000000"),
+                insurance_annual=Decimal("4800.000000"),
+                capex_reserve_per_unit_annual=Decimal("300.000000"),
+                hold_period_years=Decimal("2.000000"),
+                exit_cap_rate_pct=Decimal("5.750000"),
+                selling_costs_pct=Decimal("2.500000"),
+                income_reduction_pct_during_reno=Decimal("35.000000"),
+            ),
+            IncomeStream(
+                project_id=project_powell.id,
+                stream_type="residential_rent",
+                label="Powell — 8 Residential Units",
+                unit_count=8,
+                amount_per_unit_monthly=Decimal("1500.000000"),
+                stabilized_occupancy_pct=Decimal("95.000000"),
+                escalation_rate_pct_annual=Decimal("3.000000"),
+                active_in_phases=["hold", "major_renovation", "lease_up", "stabilized", "exit"],
+            ),
+        ]
+    )
+
+    # Project 2: East 25 — 12-unit larger value-add
+    session.add_all(
+        [
+            OperationalInputs(
+                project_id=project_east25.id,
+                unit_count_existing=12,
+                unit_count_new=12,
+                purchase_price=Decimal("1800000"),
+                closing_costs_pct=Decimal("2.000000"),
+                hold_phase_enabled=True,
+                hold_months=2,
+                hold_vacancy_rate_pct=Decimal("8.000000"),
+                renovation_cost_total=Decimal("360000"),
+                renovation_months=6,
+                lease_up_months=4,
+                initial_occupancy_pct=Decimal("55.000000"),
+                opex_per_unit_annual=Decimal("4800.000000"),
+                expense_growth_rate_pct_annual=Decimal("3.000000"),
+                mgmt_fee_pct=Decimal("4.000000"),
+                property_tax_annual=Decimal("18000.000000"),
+                insurance_annual=Decimal("7200.000000"),
+                capex_reserve_per_unit_annual=Decimal("300.000000"),
+                hold_period_years=Decimal("2.000000"),
+                exit_cap_rate_pct=Decimal("5.750000"),
+                selling_costs_pct=Decimal("2.500000"),
+                income_reduction_pct_during_reno=Decimal("35.000000"),
+            ),
+            IncomeStream(
+                project_id=project_east25.id,
+                stream_type="residential_rent",
+                label="East 25 — 12 Residential Units",
+                unit_count=12,
+                amount_per_unit_monthly=Decimal("1450.000000"),
+                stabilized_occupancy_pct=Decimal("95.000000"),
+                escalation_rate_pct_annual=Decimal("3.000000"),
+                active_in_phases=["hold", "major_renovation", "lease_up", "stabilized", "exit"],
+            ),
+        ]
+    )
+    await session.flush()
+    return scenario.id
+
+
 # Add scenarios here as PR1/PR2 progress. Each entry:
 #   (snapshot_name, seed_function)
 # The seed function must return the scenario UUID. UUIDs are auto-generated
@@ -538,6 +697,11 @@ SCENARIOS: list[tuple[str, Callable[[AsyncSession], Awaitable[UUID]]]] = [
     ("minimal_value_add", seed_minimal_value_add),
     ("value_add_with_perm_debt_io", seed_value_add_with_perm_debt_io),
     ("new_construction_with_ci_and_retirement", seed_new_construction_with_ci_and_retirement),
+    # NOTE: multi_project_value_add removed — flaky engine output
+    # (see _seed_multi_project_value_add_FLAKY_DO_NOT_USE for the seed and
+    # investigation notes). Multi-project coverage lives in the prod
+    # baselines (tests/phase2_baseline/) until the engine nondeterminism
+    # is investigated.
 ]
 
 
