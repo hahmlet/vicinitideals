@@ -533,13 +533,20 @@ async def _compute_project_cashflow(
             period += 1
 
     total_project_cost = _calculate_total_project_cost(line_item_rows)
-    # equity_required = the funding gap this project needs equity to fill =
-    # max(0, TPC - sum of this project's debt module principals via junction
-    # overlay). Single-project deals: the waterfall engine subsequently
-    # overwrites this with actual LP+GP capital calls (richer signal). Multi-
-    # project deals: the waterfall's scenario-wide sum gets dumped onto the
-    # default project only, producing nonsense, so the waterfall now skips
-    # the overwrite for multi-project — these per-project values stand.
+    # equity_required = the funding gap this project's equity must fill =
+    # max(0, Σ UseLine.amount (excluding exit phase) − Σ debt module
+    # principal via junction overlay). Uses Σ Uses, NOT TPC: the S&U panel
+    # the user sees includes Operating Reserve, Lease-Up Reserve, and
+    # capitalized-interest stub lines that are excluded from TPC for
+    # auto-sizing purposes but are real cash-out items the equity stack
+    # has to cover. Mirroring the panel's visible total keeps Equity
+    # Required ↔ Sources Gap reconcilable from a single mental model.
+    #
+    # Single-project deals: the waterfall engine subsequently overwrites
+    # equity_required with the richer LP+GP capital-call sum. Multi-
+    # project deals: the waterfall's scenario-wide sum gets dumped onto
+    # the default project only — nonsense — so the waterfall skips the
+    # overwrite for multi-project and these per-project values stand.
     _project_debt_principal = ZERO
     for _cm_eq in capital_modules:
         _ft_eq = str(_cm_eq.funder_type).replace("FunderType.", "")
@@ -554,9 +561,18 @@ async def _compute_project_cashflow(
                 _project_debt_principal += Decimal(str(_amt_eq))
             except Exception:
                 pass
+    _project_total_uses = ZERO
+    for _ul_eq in use_lines:
+        _ph = str(getattr(_ul_eq.phase, "value", _ul_eq.phase) or "")
+        if _ph == "exit":
+            continue
+        try:
+            _project_total_uses += Decimal(str(_ul_eq.amount or 0))
+        except Exception:
+            pass
     equity_required = (
-        total_project_cost - _project_debt_principal
-        if total_project_cost > _project_debt_principal
+        _project_total_uses - _project_debt_principal
+        if _project_total_uses > _project_debt_principal
         else ZERO
     )
     total_timeline_months = len(cash_flow_rows)

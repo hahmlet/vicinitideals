@@ -320,11 +320,36 @@ async def rollup_summary(
     total_eq = sum(
         (Decimal(str(o.equity_required or 0)) for o in outputs), _ZERO
     )
+    # Total Uses across all projects, excluding exit-phase lines. Includes
+    # Operating Reserve, Lease-Up Reserve, capitalized-interest stubs —
+    # everything the user sees in their per-project S&U panel — so the
+    # Sources Gap KPI on Underwriting reconciles cleanly with the per-
+    # project gap math (Σ Uses − debt − committed equity).
+    from app.models.deal import UseLine, Project
+    _uses_rows = list(
+        (
+            await session.execute(
+                select(UseLine.amount, UseLine.phase)
+                .join(Project, Project.id == UseLine.project_id)
+                .where(Project.scenario_id == scenario_id)
+            )
+        ).all()
+    )
+    total_uses = _ZERO
+    for _amt, _ph in _uses_rows:
+        _ph_val = str(getattr(_ph, "value", _ph) or "")
+        if _ph_val == "exit":
+            continue
+        try:
+            total_uses += Decimal(str(_amt or 0))
+        except Exception:
+            pass
     combined_irr = await rollup_irr(scenario_id, session)
     return {
         "per_project": per_project,
         "totals": {
             "total_project_cost": total_tpc,
+            "total_uses": total_uses,
             "equity_required": total_eq,
             "combined_irr_pct": combined_irr,
         },

@@ -19,11 +19,14 @@
     {%- endif -%}
   {%- endif -%}
 {% endfor %}
-{# Sources/Uses gap from the rollup_sources + rollup_summary data: total
-   uses per project come from OperationalOutputs.total_project_cost; total
-   sources for the scenario = sum of CapitalModule junction-scoped principals
-   already aggregated by rollup_sources as `total_principal`. #}
-{% set _uw_total_uses = _totals.get('total_project_cost', 0) | float %}
+{# Sources/Uses gap reconciles directly with the per-project S&U panel:
+   total Uses includes Operating Reserve + capitalized-interest stubs +
+   every visible UseLine (excluding exit phase) summed across projects;
+   total Sources = Σ junction-scoped principal across CapitalModules
+   (debt + committed equity). They coincide when no equity is yet
+   committed; Sources Gap shrinks toward zero as equity is entered. #}
+{% set _uw_total_uses = _totals.get('total_uses', _totals.get('total_project_cost', 0)) | float %}
+{% set _uw_total_tpc = _totals.get('total_project_cost', 0) | float %}
 {% set _ns_src = namespace(total=0.0) %}
 {% for _src in _r.get('sources', []) %}
   {% set _ns_src.total = _ns_src.total + (_src.total_principal | float if _src.total_principal else 0.0) %}
@@ -39,8 +42,9 @@
       <div class="uw-kpi-value">{{ deal_projects | length }}</div>
     </div>
     <div class="uw-kpi">
-      <div class="uw-kpi-label">Total Project Cost</div>
-      <div class="uw-kpi-value">${{ '{:,.0f}'.format(_uw_total_uses) }}</div>
+      <div class="uw-kpi-label">Total Uses</div>
+      <div class="uw-kpi-value" title="Σ UseLines across projects (excluding exit phase). Includes acquisition, construction, closing costs, Operating Reserve, and capitalized-interest stubs — matches the visible S&U panel.">${{ '{:,.0f}'.format(_uw_total_uses) }}</div>
+      <div style="font-size:10px;color:var(--text-muted);margin-top:2px">TPC: ${{ '{:,.0f}'.format(_uw_total_tpc) }}</div>
     </div>
     <div class="uw-kpi">
       <div class="uw-kpi-label">Equity Required</div>

@@ -86,6 +86,23 @@ Cycle detection runs both at read time (`ordered_projects` Kahn pass) and at wri
 
 ## 1. Uses / Total Project Cost (TPC)
 
+### 1.0 Two Uses totals — TPC vs. Total Uses
+
+The engine carries two distinct "uses" totals because they answer different questions.
+
+| Number | What it sums | Used for | Excludes |
+|---|---|---|---|
+| **TPC** (`total_project_cost`) | UseLines that aren't exit-phase **and** aren't `_BALANCE_ONLY_LABELS` | Auto-sizing math, cap rate on cost, debt yield | Operating Reserve, Lease-Up Reserve, Capitalized Construction Interest, Interest Reserve labels |
+| **Total Uses** | UseLines that aren't exit-phase | Sources/Uses panel display, **`equity_required`**, Sources Gap | exit-phase only |
+
+The reserves and capitalized-interest stubs are excluded from TPC so the gap-fill solve doesn't double-count loan-funded items as costs the loan needs to cover. They are *included* in Total Uses because the user expects the panel total to match the visible line items, and the equity stack ultimately has to fund Operating Reserve / Lease-Up Reserve out of pocket.
+
+**`equity_required` (per-project, written by `compute_cash_flows`)** = `max(0, Total Uses − Σ debt module principal via junction)`. This is the *target equity check* for the project: what the equity stack has to bring at close after debt is sized. It does not subtract committed equity in the Owner Equity / Preferred Equity modules — that's the role of **Sources Gap**.
+
+**`Sources Gap` (Underwriting KPI strip)** = `Σ Total Uses across projects − Σ junction-scoped Sources (debt + committed equity)`. This shrinks toward zero as the user enters equity commitments into the Owner Equity modules. When committed equity = 0, Sources Gap == Σ Equity Required.
+
+The two numbers reconcile when no equity is yet committed; they diverge once the user starts filling in the equity stack. Equity Required is the *raise target*; Sources Gap is the *remaining shortfall*.
+
 ### 1.1 What TPC is
 
 TPC is the sum of every capital outflow required to acquire, build, lease up, and stabilize the project. It is **not** the sum of "hard costs" in the CRE sense — it includes every cost line except sale proceeds and derived/balance-only entries.
