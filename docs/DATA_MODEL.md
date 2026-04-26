@@ -83,6 +83,24 @@ Deal ──┬── Scenario (= "Variant")          ← DB table: scenarios; OR
 
 **Multi-project rule (post-0048).** A Scenario may have N Projects. Each Source is identified once on the Scenario (its `CapitalModule` row) and attached to 1+ Projects via `CapitalModuleProject` junction rows. One junction row = project-scoped Source. Multiple junction rows on the same module = shared Source. Each project owns its own UseLines, IncomeStreams, OpEx, OperationalInputs, Milestones, WaterfallTiers, DrawSources.
 
+**Scenario-level fields on `OperationalInputs` (per-project storage, scenario-wide semantics).** A handful of `OperationalInputs` columns are stored on every Project's row but are conceptually *one decision per Scenario*. The Deal Setup wizard and the Add Project drawer propagate these from the default project's row to every other project's row at write time. Direct edits to a non-default project's row will be overwritten on the next wizard run / drawer add.
+
+| Column | What | Propagated by |
+|---|---|---|
+| `debt_types` | Selected debt stack (e.g. `["permanent_debt"]`) | Wizard Finish + Add Project drawer |
+| `debt_structure` | Derived stack pattern (`perm_only`, `construction_and_perm`, `construction_to_perm`) | same |
+| `debt_terms` | Per-funder-type rate / amort / `ltv_pct` / loan_type JSON | same |
+| `debt_milestone_config` | Per-funder-type active_from / active_to / retired_by | same |
+| `debt_sizing_mode` | `gap_fill` \| `dscr_capped` \| `dual_constraint` | same |
+| `dscr_minimum` | DSCR floor for the cap modes (default 1.15) | same |
+| `construction_floor_pct` | % of TPC held during construction | same |
+| `operation_reserve_months` | Reserve months at stabilization (default 6) | same |
+| `deal_setup_complete` | Wizard gate flag | same |
+
+**LTV** is *not* a top-level `OperationalInputs` column — it lives on `debt_terms.{funder_type}.ltv_pct` (e.g. `debt_terms.permanent_debt.ltv_pct = 75`). Any code reading `inputs.ltv_maximum_pct` is a bug; that column does not exist.
+
+Per-project fields on `OperationalInputs` (genuinely per-project, never propagated): `unit_count_new`, `noi_stabilized_input`, `noi_escalation_rate_pct`, `asset_mgmt_fee_pct`, and the lease-up / construction / operation duration scalars used as fallbacks when milestones lack trigger chains.
+
 **Shared-Source semantics (per Phase 2 product decision, 2026-04-21).** A Source shared across N Projects is *one contract identity* (one lender, one rate, one carry_type, one exit vehicle) with *per-project sizing*. Each project independently sizes its share against its own uses / DSCR / LTV — no cross-project constraint pooling. The junction row for `(module, project)` holds that project's amount / active window / auto_size flag. Total principal on the loan = Σ per-project junction amounts. Underwriting-layer combined DSCR / LTV across a shared Source are **informational notifications only**, not sizing constraints. UX intent: drag a Source chip onto a second Project to add a junction row; that project gets its own amount.
 
 **Engine coupling (Phase 2, merged 2026-04-21).** The cashflow engine (`app/engines/cashflow.py`) loops per project:

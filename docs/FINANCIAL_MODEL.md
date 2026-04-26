@@ -40,6 +40,10 @@ A **shared Source** is one `CapitalModule` (one contract identity — one lender
 - **Underwriting-level DSCR / LTV on a shared Source**: informational notification only. No feedback into sizing.
 - **Rollup display**: `rollup_sources` returns one row per CapitalModule with `total_principal = Σ junction.amount`, `covered_project_ids`, and `is_shared: bool`. The UI draws a "covers: P1, P2" chip on shared rows.
 
+**Per-project DSCR and IRR are computed from each project's own cashflow rows.** The cashflow engine writes per-project `OperationalOutputs.dscr` (NOI ÷ annual DS using junction-overlaid principal) and per-project unlevered IRR during its per-project loop. The waterfall engine's `_apply_levered_metrics` recomputes DSCR + levered IRR for the **default project only** (`outputs.project_id = oldest project`); for non-default projects the cashflow engine's values are authoritative. Multi-project deals additionally **skip the waterfall's in-place rewrite of `cash_flow.debt_service` / `net_cash_flow` / `cumulative_cash_flow`**: `WaterfallResult` rows don't carry `project_id`, so `debt_service_by_period[N]` is a scenario-wide aggregate (e.g. P1's $15.3K + P2's $27.9K = $43.2K) — pushing that onto every project's row would silently corrupt per-project DS that the cashflow engine sized via the junction overlay. Single-project deals retain the rewrite (it caps actual DS at NCF when DSCR < 1, keeping `cumulative_cash_flow` honest). The detection is `len({row.project_id for row in cash_flows if row.project_id is not None}) > 1`.
+
+**Synthetic Owner Equity is per-project.** `_ensure_equity_and_tiers` walks every project on the scenario, joins through `capital_module_projects` to find which projects already have an equity module attached, and creates a synthetic `Owner Equity` (common_equity, $0, residual interest) for each project that lacks one — with a junction row tying the synthetic to that specific project. The default for new equity is per-project, not shared; users opt into sharing via the Add Project drawer's share-source checkbox. Single-project scenarios are unchanged: if the lone project has no equity, one is created and attached.
+
 ### Underwriting rollup CF display — NOI-focused (Phase 3a)
 
 The Underwriting tab's Combined Cashflow table shows only **NOI / Debt Service / Net CF** — no Revenue, EGI, or OpEx columns. Reason: only these three fields sum meaningfully when projects are in different income modes.
@@ -457,6 +461,8 @@ This shows the user a **real funding gap** in the S&U table (Uses > Sources) rat
 ### 2.8 Dual-constraint mode (MIN of LTV, DSCR, gap-fill)
 
 Industry-standard loan sizing: the lender computes both LTV-based and DSCR-based maximums and funds the smaller. Selected via `debt_sizing_mode = "dual_constraint"`.
+
+**Where each input lives.** `debt_sizing_mode` and `dscr_minimum` live on `OperationalInputs`. **LTV** lives on the per-funder-type `debt_terms.{funder_type}.ltv_pct` JSON sub-object — *not* on a top-level `OperationalInputs` column. There is no `ltv_maximum_pct` column; any code that reads such a name has a bug. Examples: `debt_terms.permanent_debt.ltv_pct = 75` or `debt_terms.acquisition_loan.ltv_pct = 70`. Default LTV when the field is absent is funder-type-specific (typically 70% for acquisition, 75% for perm).
 
 **Logic:**
 1. Compute the gap-fill principal `P_gap` using §2.4 (with closing-cost divisor fold-in).
