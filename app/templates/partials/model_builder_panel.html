@@ -153,7 +153,10 @@
     <tbody id="uses-tbody">
       {% for line in use_lines %}
       {%- set _ms_key = line.milestone_key or (line.phase | string).replace('UseLinePhase.','') -%}
+      {%- set _is_gap_adj = (line.label == 'Gap Adjustment — Purchase Price') -%}
+      {%- set _gap_active = _is_gap_adj and line.amount and (line.amount | float) != 0 -%}
       <tr data-label="{{ line.label | lower }}" data-ms="{{ _ms_key }}" data-amt="{{ line.amount or 0 }}"
+          {% if _gap_active %}style="background:#fef3c7"{% elif _is_gap_adj %}style="background:#f3f4f6"{% endif %}
           onclick="openEditLine('use_lines', '{{ line.id }}', '{{ model.id }}')">
         <td style="font-weight:500">{{ line.label }}{% if line.label in ('Operating Reserve', 'Acquisition Interest Reserve', 'Pre-Development Interest Reserve', 'Interest Reserve', 'Capitalized Construction Interest', 'Capitalized Pre-Development Interest', 'Capitalized Acquisition Interest', 'Lease-Up Reserve') and '(auto)' not in line.label %} <span class="text-small text-muted">(auto)</span>{% endif %}{# Phase 3d: show which Source this engine-injected reserve came from (set by Phase 2e tagging on bridge IO + closing costs) #}{% if line.source_capital_module_id %}{% set _src = (capital_modules | selectattr('id', 'equalto', line.source_capital_module_id) | list | first) %}{% if _src %} <span title="Engine-injected from the {{ _src.label }} Source" style="display:inline-block;font-size:10px;margin-left:4px;padding:1px 7px;background:#eff6ff;color:#1e40af;border-radius:10px;font-weight:500">from: {{ _src.label }}</span>{% endif %}{% endif %}</td>
         <td><span class="text-small text-muted" style="font-size:11px">
