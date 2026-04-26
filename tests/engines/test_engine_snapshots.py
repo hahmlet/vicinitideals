@@ -198,17 +198,16 @@ async def seed_value_add_with_perm_debt_io(session: AsyncSession) -> UUID:
       - Closing Costs (36k = 2%) — acquisition phase
       - Renovation (360k) — renovation phase
 
-    KNOWN LIMITATION: with the current seed, ``_auto_size_debt_modules`` fires
-    but the perm debt module is filtered out of the gap-fill pool (likely a
-    retirement-chain or bridge-classification issue around cashflow.py:1820-
-    1860). The snapshot still pins down engine behavior on this exact input —
-    any change to that filter logic will be detected. To debug seed config:
+    Auto-sizer coverage: this scenario does fire ``_auto_size_debt_modules``
+    end-to-end. The perm debt's ``exit_terms.vehicle="sale"`` is required —
+    without it, ``_resolve_vehicle``'s default-selection picks Owner Equity
+    (covers same window) as the retirer, which filters perm debt out of the
+    gap-fill pool. Real prod scenarios always set vehicle explicitly.
+
+    To trace auto-sizer decisions while debugging seed configurations:
 
         VD_DIAG_AUTOSIZE=1 uv run pytest tests/engines/test_engine_snapshots.py \\
             -k perm_debt_io -q -s 2>&1 | grep VD_DIAG
-
-    Real auto-sizer behavior is covered by the prod baselines in
-    tests/phase2_baseline/ via scripts/phase2_verify_byte_identical.py.
     """
     org = Organization(id=uuid4(), name="Snapshot Org Debt", slug=f"snap-debt-{uuid4().hex[:8]}")
     user = User(id=uuid4(), org_id=org.id, name="Snapshot User", display_color="#3366FF")
@@ -329,7 +328,11 @@ async def seed_value_add_with_perm_debt_io(session: AsyncSession) -> UUID:
                     "refi_cap_rate_pct": 5.75,
                 },
                 carry={"carry_type": "io_only", "payment_frequency": "monthly"},
-                exit_terms={"exit_type": "full_payoff", "trigger": "sale"},
+                # vehicle="sale" — paid off at divestment, not retired by another
+                # module. Without this, _resolve_vehicle's default-selection logic
+                # picks Owner Equity (covers same window) as the retirer, which
+                # filters perm debt out of auto_modules in _auto_size_debt_modules.
+                exit_terms={"vehicle": "sale", "exit_type": "full_payoff", "trigger": "sale"},
                 active_phase_start="acquisition",
                 active_phase_end="exit",
             ),
