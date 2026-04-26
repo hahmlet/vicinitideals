@@ -558,13 +558,15 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         name="s_equity_required", registry=registry,
         fmt=ACCOUNTING, hero=True,
     ); row += 1
-    # Worst-case DSCR across projects: DSCR is per-loan, so the LP cares
-    # about the weakest covenant in the stack, not an average.
-    worst_dscr = _worst_dscr(per_project)
+    # Combined DSCR = Σ NOI / Σ DS across projects. Per LP feedback the
+    # right number for a Primary-KPI block is a singular combined coverage
+    # figure, not the weakest project's DSCR. Engine doesn't store DS as
+    # a per-project scalar, so derive it from per-project (NOI ÷ DSCR).
+    combined_dscr = _combined_dscr(per_project)
     kv_row(
-        ws, row, "Stabilized DSCR (worst project)",
-        worst_dscr,
-        name="s_worst_dscr", registry=registry,
+        ws, row, "Stabilized DSCR (combined)",
+        combined_dscr,
+        name="s_combined_dscr", registry=registry,
         fmt="0.000", hero=True,
     ); row += 1
     kv_row(
@@ -579,11 +581,17 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         name="s_combined_irr", registry=registry,
         fmt=PCT, hero=True,
     ); row += 1
+    # Hold = max of milestone chain (engine writes total_timeline_months as
+    # the count of generated cashflow rows = sum of phase durations from
+    # acquisition close through divestment, or stabilized when no divestment
+    # exists). This is the actual modeled horizon, distinct from the
+    # OperationalInputs.hold_period_years input on the Assumptions sheet
+    # (which represents the user's intent for *stabilized* hold only).
     longest_hold = _longest_hold_months(per_project)
     kv_row(
-        ws, row, "Hold Period (months)",
+        ws, row, "Total Modeled Duration (months)",
         longest_hold,
-        name="s_hold_months", registry=registry,
+        name="s_modeled_duration_months", registry=registry,
         fmt=INT_COMMA, hero=True,
     ); row += 1
 
@@ -1428,13 +1436,39 @@ def _capital_events_by_year(
 
 
 def _worst_dscr(per_project: list[dict]) -> Decimal | None:
-    """Lowest non-null DSCR across projects (covenant binds at the weakest one)."""
+    """Lowest non-null DSCR across projects (covenant binds at the weakest one).
+
+    Retained for callers that want the per-loan worst-case view; the
+    Underwriting Summary now leads with the combined DSCR instead (see
+    ``_combined_dscr``) per LP feedback.
+    """
     candidates = [
         _coerce_decimal(p.get("dscr"))
         for p in per_project
         if p.get("dscr") is not None
     ]
     return min(candidates) if candidates else None
+
+
+def _combined_dscr(per_project: list[dict]) -> Decimal | None:
+    """Combined DSCR = Σ NOI_stabilized / Σ Debt Service across projects.
+
+    The engine doesn't materialize a per-project ``debt_service`` scalar;
+    we reverse-derive ``ds_per_project = noi_stabilized / dscr`` and sum
+    both sides to get a coverage figure that's a singular ratio rather
+    than a worst-case across loans. Returns None when nothing has a
+    non-zero DSCR (compute hasn't run, or no debt is sized).
+    """
+    total_noi = Decimal(0)
+    total_ds = Decimal(0)
+    for p in per_project:
+        noi = _coerce_decimal(p.get("noi_stabilized") or 0)
+        dscr = _coerce_decimal(p.get("dscr") or 0)
+        if dscr <= 0 or noi <= 0:
+            continue
+        total_noi += noi
+        total_ds += noi / dscr
+    return (total_noi / total_ds) if total_ds > 0 else None
 
 
 def _sum_per_project_field(per_project: list[dict], field: str) -> Decimal:

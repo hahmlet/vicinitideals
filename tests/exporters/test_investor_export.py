@@ -275,7 +275,9 @@ _NAMED_RANGE_ALIASES: tuple[tuple[re.Pattern[str], str], ...] = (
     (re.compile(r"^s_returns_combined_irr$"), "LP IRR"),
     (re.compile(r"^s_combined_noi$"), "Stabilized NOI"),
     (re.compile(r"^s_worst_dscr$"), "DSCR"),
+    (re.compile(r"^s_combined_dscr$"), "DSCR"),
     (re.compile(r"^s_hold_months$"), "Hold Period"),
+    (re.compile(r"^s_modeled_duration_months$"), "Hold Period"),
     # LP/GP-scoped variants of "Equity Multiple"
     (re.compile(r"^s_(lp|gp)_equity_multiple$"), "Equity Multiple"),
     # Asset Mgmt Fee — input on Assumptions, also a metric on Investor Returns
