@@ -1415,7 +1415,13 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
            name="s_assumptions_scenario_name", registry=registry); row += 1
     kv_row(ws, row, "Income Mode", scenario.income_mode,
            name="s_assumptions_income_mode", registry=registry); row += 1
-    kv_row(ws, row, "Project Type (default)", scenario.project_type.value,
+    # `project_type` is typed Mapped[ProjectType] but stored as String(60)
+    # — SQLAlchemy doesn't auto-coerce on read, so it comes back as a bare
+    # string in production. Use the same safe pattern as _funder_type_label.
+    project_type_label = getattr(
+        scenario.project_type, "value", scenario.project_type
+    ) or ""
+    kv_row(ws, row, "Project Type (default)", str(project_type_label),
            name="s_assumptions_project_type", registry=registry); row += 1
     kv_row(
         ws, row, "Hold Period (years)",

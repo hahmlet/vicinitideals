@@ -389,6 +389,29 @@ async def test_uw_summary_kpis_match_engine_outputs(session: AsyncSession):
         )
 
 
+async def test_export_handles_string_stored_enum_columns(session: AsyncSession):
+    """Regression: production reads ``Scenario.project_type`` as a bare string,
+    not the ``ProjectType`` enum instance.
+
+    The Mapped column is typed ``Mapped[ProjectType]`` but the underlying
+    column is plain ``String(60)`` — no enum adapter. SQLAlchemy stores
+    the enum's ``.value`` on write but doesn't coerce back to the enum on
+    read. The in-memory test fixture's session keeps the original Python
+    enum reference, so prior tests didn't catch ``scenario.project_type.value``
+    crashing with AttributeError in production. This test forces the
+    string-stored case by reassigning the attribute to a plain string
+    before invoking the export.
+    """
+    scenario = await _seed_minimal_scenario(session)
+    scenario.project_type = "acquisition"  # simulate post-roundtrip read
+    await session.flush()
+
+    blob = await export_investor_workbook(scenario.id, session)
+    assert blob, "expected workbook bytes — exporter must tolerate string-stored enums"
+    wb = load_workbook(BytesIO(blob), data_only=False)
+    assert "Assumptions" in wb.sheetnames
+
+
 async def test_filename_slugged(session: AsyncSession):
     scenario = await _seed_minimal_scenario(session)
     from app.models.deal import Deal
