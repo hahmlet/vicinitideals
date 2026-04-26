@@ -6471,6 +6471,39 @@ async def create_deal_project(
         session.add(milestone)
     await session.flush()
 
+    # ── Seed OperationalInputs with scenario-level sizing config ──────────
+    # If the deal already has Deal Setup completed, the default project's
+    # OperationalInputs holds the scenario-level debt + sizing config the
+    # user filled in. Copy those onto the new project's inputs so the
+    # engine respects the same DSCR cap, sizing mode, reserve months, etc.
+    # Without this the new project silently falls back to gap-fill, leaving
+    # debt over-leveraged and the Sources/Uses panel showing zero gap when
+    # there should be one.
+    _default_inputs = (await session.execute(
+        select(OperationalInputs)
+        .join(Project, Project.id == OperationalInputs.project_id)
+        .where(
+            Project.scenario_id == deal_id,
+            Project.id != new_proj.id,
+        )
+        .order_by(Project.created_at.asc())
+        .limit(1)
+    )).scalar_one_or_none()
+    if _default_inputs is not None:
+        session.add(OperationalInputs(
+            project_id=new_proj.id,
+            debt_types=_default_inputs.debt_types,
+            debt_structure=_default_inputs.debt_structure,
+            debt_terms=_default_inputs.debt_terms,
+            debt_milestone_config=_default_inputs.debt_milestone_config,
+            debt_sizing_mode=_default_inputs.debt_sizing_mode,
+            dscr_minimum=_default_inputs.dscr_minimum,
+            construction_floor_pct=_default_inputs.construction_floor_pct,
+            operation_reserve_months=_default_inputs.operation_reserve_months,
+            deal_setup_complete=_default_inputs.deal_setup_complete,
+        ))
+        await session.flush()
+
     # ── Source share / clone decisions ────────────────────────────────────
     # Default: each project gets its OWN copy of every existing CapitalModule
     # (cloned with its own junction). User opts in to sharing a Source by
@@ -7840,6 +7873,13 @@ async def deal_setup_wizard_complete(
         other_inputs.debt_structure = inputs.debt_structure
         other_inputs.debt_terms = inputs.debt_terms
         other_inputs.debt_milestone_config = inputs.debt_milestone_config
+        # Sizing-policy fields are scenario-level too. Without them every
+        # non-default project silently falls back to gap-fill on compute,
+        # so DSCR caps don't bind and debt over-leverages without a gap.
+        other_inputs.debt_sizing_mode = inputs.debt_sizing_mode
+        other_inputs.dscr_minimum = inputs.dscr_minimum
+        other_inputs.construction_floor_pct = inputs.construction_floor_pct
+        other_inputs.operation_reserve_months = inputs.operation_reserve_months
 
     # Create $0 Operating Reserve placeholder in Uses for every project
     # (populated at compute time). Multi-project deals each need their own.

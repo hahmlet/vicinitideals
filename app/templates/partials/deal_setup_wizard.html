@@ -996,8 +996,10 @@
               {% if _dsm == 'gap_fill' %}
                 Gap-Fill (perm sizes to cover remaining TPC)
               {% elif _dsm == 'dual_constraint' %}
-                Dual-Constraint — DSCR ≥ {{ inputs.dscr_minimum | float }}× AND LTV ≤ {{ inputs.ltv_maximum_pct | float if inputs.ltv_maximum_pct else 75 }}%
-                <div class="field-hint">Perm sizes to the smaller of the gap-fill, DSCR cap, and LTV cap. Whichever binds first becomes the limit; a Sources gap will appear if the cap is below TPC.</div>
+                {%- set _perm_terms = (inputs.debt_terms or {}).get('permanent_debt', {}) -%}
+                {%- set _ltv = _perm_terms.get('ltv_pct') -%}
+                Dual-Constraint — DSCR ≥ {{ inputs.dscr_minimum | float }}×{% if _ltv %} AND LTV ≤ {{ _ltv | float }}%{% endif %}
+                <div class="field-hint">Perm sizes to the smaller of the gap-fill{% if _ltv %}, DSCR cap, and LTV cap{% else %} and DSCR cap{% endif %}. Whichever binds first becomes the limit; a Sources gap will appear if the cap is below TPC.</div>
               {% else %}
                 DSCR-Capped at {{ inputs.dscr_minimum | float }}×
                 <div class="field-hint">If the gap-fill principal produces DSCR &lt; {{ inputs.dscr_minimum | float }}×, perm will be capped and a Sources gap will appear.</div>
