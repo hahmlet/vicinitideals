@@ -732,31 +732,71 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
             )
         cur_row += 1
 
-    # OpEx-by-category breakout (driven by line items rather than aggregate)
+    # Revenue + OpEx breakouts: separate tables driven by line items.
+    # Category-aware aggregation — Revenue from `income` line items
+    # (per-stream labels, Option C: same label across projects = one row),
+    # OpEx from `expense` line items (per-category labels). Capital events
+    # show on the Underwriting Cash Flow sheet, not here.
+    by_category = _aggregate_scenario_line_items_by_category(cash_flow_items)
+
     cur_row += 1
-    section_label(
-        ws, cur_row, "OpEx Breakout (by category)", span_cols=len(year_cols) + 1
+    cur_row = _write_breakout_table(
+        ws, registry, cur_row,
+        title="Revenue Breakout (by stream)",
+        rows=by_category.get("income", {}),
+        year_cols=year_cols,
+        empty_hint="(no revenue line items recorded — run Compute to populate)",
     )
+
     cur_row += 1
-    annual_items = _aggregate_scenario_line_items(cash_flow_items)
-    opex_labels = sorted(_collect_opex_labels(annual_items))
-    if not opex_labels:
-        ws.cell(
-            row=cur_row, column=1,
-            value="(no OpEx line items recorded — run Compute to populate)",
-        ).font = FONT_HINT
-    for label in opex_labels:
-        ws.cell(row=cur_row, column=1, value=label).font = FONT_VALUE
-        for col_offset, year in enumerate(year_cols):
-            value = annual_items.get(year, {}).get(label, Decimal(0))
-            cell = ws.cell(row=cur_row, column=2 + col_offset, value=_to_excel_number(value))
-            cell.number_format = ACCOUNTING
-            cell.font = FONT_VALUE
-            cell.alignment = ALIGN_RIGHT
-        cur_row += 1
+    cur_row = _write_breakout_table(
+        ws, registry, cur_row,
+        title="OpEx Breakout (by category)",
+        rows=by_category.get("expense", {}),
+        year_cols=year_cols,
+        empty_hint="(no OpEx line items recorded — run Compute to populate)",
+    )
 
     freeze_top(ws, row=3)
     print_landscape(ws)
+
+
+def _write_breakout_table(
+    ws,
+    registry: CellRegistry,
+    start_row: int,
+    *,
+    title: str,
+    rows: dict[int, dict[str, Decimal]],
+    year_cols: list[int],
+    empty_hint: str,
+) -> int:
+    """Render one labelled annual-buckets table and return the row after it.
+
+    Shared by the Pro Forma sheet's Revenue and OpEx sections so they
+    stay visually identical. ``rows`` shape mirrors the per-category
+    output from ``_aggregate_scenario_line_items_by_category``: a
+    ``{year: {label: amount}}`` dict for the chosen category.
+    """
+    section_label(ws, start_row, title, span_cols=len(year_cols) + 1)
+    cur = start_row + 1
+
+    labels = sorted({label for year_data in rows.values() for label in year_data})
+    if not labels:
+        ws.cell(row=cur, column=1, value=empty_hint).font = FONT_HINT
+        return cur + 1
+
+    for label in labels:
+        ws.cell(row=cur, column=1, value=label).font = FONT_VALUE
+        for col_offset, year in enumerate(year_cols):
+            value = rows.get(year, {}).get(label, Decimal(0))
+            cell = ws.cell(row=cur, column=2 + col_offset, value=_to_excel_number(value))
+            cell.number_format = ACCOUNTING
+            cell.font = FONT_VALUE
+            cell.alignment = ALIGN_RIGHT
+        cur += 1
+    _ = registry  # accepted for future per-row named ranges; not used today
+    return cur
 
 
 # ── Underwriting Cash Flow sheet ──────────────────────────────────────────────
@@ -1223,32 +1263,54 @@ def _aggregate_scenario_line_items(
     return combined
 
 
-def _collect_opex_labels(annual_items: dict[int, dict[str, Decimal]]) -> set[str]:
-    """OpEx line-item labels — distinct from capital events.
+def _aggregate_scenario_line_items_by_category(
+    items_by_project: dict[UUID, list[CashFlowLineItem]],
+) -> dict[str, dict[int, dict[str, Decimal]]]:
+    """Returns ``{category: {year: {label: amount}}}``.
 
-    Heuristic: non-OpEx items either start with "Refi —" / "Acquisition" /
-    "Sale" / "Prepay", or are negative across all years. Anything else that
-    appears as a recurring outflow is treated as an OpEx category.
+    Aggregates across projects per LP feedback Option C: same exact label
+    across projects → one combined row, no project-name suffixing. Labels
+    are stripped of leading/trailing whitespace defensively so e.g.
+    ``"CapEx Reserve"`` and ``"CapEx Reserve "`` collapse into one row.
+
+    Categories follow ``LineItemCategory``: ``income`` / ``expense`` /
+    ``debt_service`` / ``capex_reserve`` / ``capital_event``. The Pro Forma
+    splits this into separate Revenue (income) and OpEx (expense) tables;
+    capital events are summed for the Cash Flow sheet's "Capital Events"
+    row.
     """
-    capital_prefixes = ("Refi —", "Acquisition", "Sale", "Prepay", "Exit")
-    labels: set[str] = set()
-    for by_label in annual_items.values():
-        for label in by_label:
-            if not any(label.startswith(p) for p in capital_prefixes):
-                labels.add(label)
-    return labels
+    out: dict[str, dict[int, dict[str, Decimal]]] = {}
+    for items in items_by_project.values():
+        for li in items:
+            year = _period_to_year(li.period)
+            category = str(getattr(li.category, "value", li.category) or "")
+            label = (li.label or "").strip()
+            cat_dict = out.setdefault(category, {})
+            year_dict = cat_dict.setdefault(year, {})
+            year_dict[label] = year_dict.get(label, Decimal(0)) + _coerce_decimal(
+                li.net_amount or 0
+            )
+    return out
+
+
+_CAPITAL_EVENT_PREFIXES = ("Refi —", "Acquisition", "Sale", "Prepay", "Exit", "Purchase Price", "Closing Costs")
 
 
 def _capital_events_by_year(
     annual_items: dict[int, dict[str, Decimal]],
 ) -> dict[int, Decimal]:
-    """Sum capital-event line items per year (acquisition outflows, exit proceeds)."""
-    capital_prefixes = ("Refi —", "Acquisition", "Sale", "Prepay", "Exit")
+    """Sum capital-event line items per year (acquisition outflows, exit proceeds).
+
+    Used by the per-project sheets which still consume the legacy
+    ``annual_items`` shape. The category-aware path
+    (``_aggregate_scenario_line_items_by_category``) is preferred for new
+    code — filter by ``"capital_event"`` category there.
+    """
     out: dict[int, Decimal] = {}
     for year, by_label in annual_items.items():
         total = Decimal(0)
         for label, amount in by_label.items():
-            if any(label.startswith(p) for p in capital_prefixes):
+            if any(label.startswith(p) for p in _CAPITAL_EVENT_PREFIXES):
                 total += amount
         out[year] = total
     return out
