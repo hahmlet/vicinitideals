@@ -875,71 +875,170 @@ def _build_uw_cashflow(ws, registry: CellRegistry, ctx: dict) -> None:
 # ── Investor Returns sheet ────────────────────────────────────────────────────
 
 
+# Funder-type classification — drives which columns are meaningful per row.
+# Debt sources care about cost-of-capital (rate, amort, balloon, debt service);
+# equity sources care about returns (IRR, EM, distributions); grants/credits
+# are contributed-only.
+_DEBT_FUNDER_TYPES: frozenset[str] = frozenset({
+    "permanent_debt", "senior_debt", "mezzanine_debt", "bridge",
+    "construction_loan", "pre_development_loan", "acquisition_loan",
+    "soft_loan", "bond", "owner_loan",
+})
+_EQUITY_FUNDER_TYPES: frozenset[str] = frozenset({
+    "preferred_equity", "common_equity", "owner_investment",
+})
+
+
+def _funder_class(funder_type) -> str:
+    """Return one of `Debt` / `Equity` / `Grant` / `Other` for display."""
+    raw = (str(getattr(funder_type, "value", funder_type)) or "").lower()
+    if raw in _DEBT_FUNDER_TYPES:
+        return "Debt"
+    if raw in _EQUITY_FUNDER_TYPES:
+        return "Equity"
+    if raw in ("grant", "tax_credit"):
+        return "Grant"
+    return "Other"
+
+
 def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
-    """Waterfall by tier + LP/GP IRR + EM + CoC + promote summary."""
+    """Source Returns — per-CapitalModule view of contractual returns.
+
+    Replaces the prior "Investor Returns" sheet (LP/GP IRR + EM aggregates)
+    which assumed equity tiers were seeded. The new sheet meets the LP
+    where the deal actually is: a list of every Source on the stack with
+    its return semantics conditional on funder type.
+
+      Debt rows: rate, term, total debt service paid through hold, balloon
+        balance at exit. Cost-of-capital view.
+      Equity rows: pref rate, contributed amount, cumulative distributions,
+        IRR (from waterfall ``party_irr_pct``), EM (= dist / contrib).
+      Grant / tax-credit rows: contributed amount only — no return
+        semantics on the export. The LP sees them as part of the stack.
+
+    Aggregate rollup (combined IRR, GP promote $) stays at the bottom for
+    deals that have a populated waterfall.
+    """
     rollup: list[dict] = ctx.get("rollup_waterfall") or []
     summary = ctx.get("rollup_summary") or {}
     totals = summary.get("totals") or {}
+    capital_modules: list[CapitalModule] = ctx["capital_modules"]
+    junctions: list[CapitalModuleProject] = ctx["junctions"]
 
-    set_widths(ws, [30, 22, 22, 22])
+    set_widths(ws, [28, 18, 12, 16, 12, 18, 18, 14])
 
-    section_label(ws, 1, "Waterfall — Aggregate Distributions by Tier", span_cols=4)
-    header_row(ws, 2, ["Tier Type", "Cash Distributed", "# Modules", "Notes"])
+    section_label(ws, 1, "Source Returns — Per Capital Module", span_cols=8)
+    header_row(
+        ws, 2,
+        ["Module", "Funder Type", "Class", "Principal", "Rate",
+         "Total DS / Distributions", "Return ($)", "Return (%)"],
+    )
 
-    by_tier = _waterfall_by_tier(rollup)
+    # Junction-aggregated principals (one debt module shared across N projects
+    # has its principal split across N junction rows; the "module principal"
+    # is the sum).
+    junction_principal: dict[UUID, Decimal] = {}
+    for j in junctions:
+        junction_principal[j.capital_module_id] = junction_principal.get(
+            j.capital_module_id, Decimal(0)
+        ) + _coerce_decimal(j.amount or 0)
+
+    # Pre-aggregate waterfall results per module (cumulative distributions +
+    # latest period's party_irr_pct). One pass through the rollup.
+    module_distributions: dict[str, Decimal] = {}
+    module_irr: dict[str, Decimal] = {}
+    module_latest_period: dict[str, int] = {}
+    for row in rollup:
+        mid = row.get("capital_module_id")
+        if not mid:
+            continue
+        cum = _coerce_decimal(row.get("cumulative_distributed") or 0)
+        if cum > module_distributions.get(mid, Decimal(0)):
+            module_distributions[mid] = cum
+        period = row.get("period") or 0
+        if period >= module_latest_period.get(mid, -1):
+            module_latest_period[mid] = period
+            irr = row.get("party_irr_pct")
+            if irr is not None:
+                module_irr[mid] = _coerce_pct(irr)
+
     cur_row = 3
-    for tier_type in sorted(by_tier):
-        bucket = by_tier[tier_type]
-        ws.cell(row=cur_row, column=1, value=tier_type.replace("_", " ").title()).font = FONT_LABEL
-        registry.write(
-            ws, cur_row, 2, bucket.get("cash_total", Decimal(0)),
-            name=f"s_waterfall_{tier_type}_cash",
-            fmt=ACCOUNTING, font=FONT_VALUE, align=ALIGN_RIGHT,
-        )
-        ws.cell(row=cur_row, column=3, value=int(bucket.get("module_count", 0))).number_format = INT_COMMA
-        cur_row += 1
-
-    if not by_tier:
+    if not capital_modules:
         ws.cell(
             row=cur_row, column=1,
-            value="(no waterfall results — run Compute to populate)",
+            value="(no capital modules — add Sources on the Capital Stack module to populate)",
         ).font = FONT_HINT
         cur_row += 1
 
-    # ── Headline returns ───────────────────────────────────────────────────
+    for m_idx, module in enumerate(capital_modules, start=1):
+        source = module.source or {}
+        carry = module.carry or {}
+        principal = junction_principal.get(module.id) or _coerce_decimal(
+            source.get("amount") or 0
+        )
+        rate_raw = source.get("interest_rate_pct") or carry.get("io_rate_pct") or 0
+        rate = _coerce_pct(rate_raw)
+        funder_class = _funder_class(module.funder_type)
+
+        ws.cell(row=cur_row, column=1, value=module.label or _funder_type_label(module)).font = FONT_VALUE
+        ws.cell(row=cur_row, column=2, value=_funder_type_label(module)).font = FONT_VALUE
+        ws.cell(row=cur_row, column=3, value=funder_class).font = FONT_VALUE
+        registry.write(
+            ws, cur_row, 4, principal,
+            name=f"s_module_{m_idx}_principal_returns", fmt=ACCOUNTING,
+            font=FONT_VALUE, align=ALIGN_RIGHT,
+        )
+        registry.write(
+            ws, cur_row, 5, rate,
+            name=f"s_module_{m_idx}_rate_returns", fmt=PCT,
+            font=FONT_VALUE, align=ALIGN_RIGHT,
+        )
+
+        total_ds_or_dist = module_distributions.get(str(module.id), Decimal(0))
+        # For debt: total_ds_or_dist is the lifetime principal+interest paid;
+        # for equity: it's the cumulative distributions to the equity holder.
+        registry.write(
+            ws, cur_row, 6, total_ds_or_dist,
+            name=f"s_module_{m_idx}_distributions", fmt=ACCOUNTING,
+            font=FONT_VALUE, align=ALIGN_RIGHT,
+        )
+
+        # Return $ and Return %: meaningful per funder class.
+        if funder_class == "Debt":
+            return_dollars = total_ds_or_dist - principal  # interest paid over life
+            return_pct = rate  # cost of capital
+        elif funder_class == "Equity":
+            return_dollars = total_ds_or_dist - principal
+            return_pct = module_irr.get(str(module.id), Decimal(0))
+        else:
+            # Grant / tax_credit / other — no return semantics
+            return_dollars = Decimal(0)
+            return_pct = Decimal(0)
+
+        registry.write(
+            ws, cur_row, 7, return_dollars,
+            name=f"s_module_{m_idx}_return_dollars", fmt=ACCOUNTING,
+            font=FONT_VALUE, align=ALIGN_RIGHT,
+        )
+        registry.write(
+            ws, cur_row, 8, return_pct,
+            name=f"s_module_{m_idx}_return_pct", fmt=PCT,
+            font=FONT_VALUE, align=ALIGN_RIGHT,
+        )
+        cur_row += 1
+
+    # ── Aggregate rollup (only meaningful when a waterfall is populated) ──
     cur_row += 1
-    section_label(ws, cur_row, "Headline Returns", span_cols=2)
+    section_label(ws, cur_row, "Scenario-Level Aggregates", span_cols=2)
     cur_row += 1
 
-    # Compute LP / GP IRR from per-tier party_irr_pct rows. Use the latest
-    # period's value per (tier_type, capital_module_id) — the party IRR is
-    # reported as the cumulative figure as of each period; the last period
-    # is the project IRR through exit.
-    lp_irr, gp_irr = _lp_gp_irr_from_rollup(rollup, ctx["capital_modules"])
-    lp_em, gp_em = _equity_multiples_from_rollup(rollup, ctx["capital_modules"])
-
-    kv_row(
-        ws, cur_row, "LP IRR (project)", lp_irr,
-        name="s_lp_irr", registry=registry, fmt=PCT,
-    ); cur_row += 1
-    kv_row(
-        ws, cur_row, "GP IRR (project)", gp_irr,
-        name="s_gp_irr", registry=registry, fmt=PCT,
-    ); cur_row += 1
     kv_row(
         ws, cur_row, "Combined Levered IRR (scenario)",
         _coerce_pct(totals.get("combined_irr_pct") or 0),
         name="s_returns_combined_irr", registry=registry, fmt=PCT,
     ); cur_row += 1
-    kv_row(
-        ws, cur_row, "LP Equity Multiple", lp_em,
-        name="s_lp_equity_multiple", registry=registry, fmt="0.00\\x",
-    ); cur_row += 1
-    kv_row(
-        ws, cur_row, "GP Equity Multiple", gp_em,
-        name="s_gp_equity_multiple", registry=registry, fmt="0.00\\x",
-    ); cur_row += 1
 
+    by_tier = _waterfall_by_tier(rollup)
     promote_total = by_tier.get("residual", {}).get("cash_total", Decimal(0)) + by_tier.get(
         "catch_up", {}
     ).get("cash_total", Decimal(0))
@@ -948,6 +1047,18 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
         promote_total,
         name="s_gp_promote_dollars", registry=registry, fmt=ACCOUNTING,
     ); cur_row += 1
+
+    if not rollup:
+        cur_row += 1
+        ws.cell(
+            row=cur_row, column=1,
+            value=(
+                "(no waterfall distributions yet — Source Returns above show "
+                "principal + cost-of-capital semantics; add equity tiers + "
+                "compute to populate IRR / promote.)"
+            ),
+        ).font = FONT_HINT
+        ws.merge_cells(start_row=cur_row, start_column=1, end_row=cur_row, end_column=8)
 
     freeze_top(ws, row=3)
     print_landscape(ws)
