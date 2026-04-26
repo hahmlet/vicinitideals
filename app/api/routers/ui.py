@@ -9209,6 +9209,37 @@ def _render_calc_status_pill_html(status: dict, model_id: UUID) -> str:
     )
 
 
+def _is_underwriting_view_request(request: Request) -> bool:
+    """True when the user is currently on the Underwriting (rollup) view.
+
+    HTMX sends HX-Current-URL on every refresh; the pill + modal routes
+    use it to decide whether to render scenario-aggregate state (when the
+    parent page is on ?view=underwriting) or per-project state.
+    """
+    _hx_url = request.headers.get("HX-Current-URL", "")
+    if not _hx_url:
+        return False
+    from urllib.parse import urlparse, parse_qs
+    return parse_qs(urlparse(_hx_url).query).get("view", [""])[0] == "underwriting"
+
+
+async def _aggregate_status_for_underwriting(
+    session: AsyncSession, model_id: UUID
+) -> dict:
+    """Build a calc_status-shaped dict from _compute_scenario_statuses so
+    the pill on Underwriting reflects the worst-project severity instead
+    of mirroring the default project's pill."""
+    _scen_st = await _compute_scenario_statuses(session, model_id)
+    _uw_st = (_scen_st.get("underwriting") or {})
+    return {
+        "overall": _uw_st.get("overall", "na"),
+        "failing_count": int(_uw_st.get("failing_count") or 0),
+        "sources_uses": {"status": "na", "label": "See per-project chips", "detail": "", "meta": {}},
+        "dscr": {"status": "na", "label": "See per-project chips", "detail": "", "meta": {}},
+        "ltv": {"status": "na", "label": "See per-project chips", "detail": "", "meta": {}},
+    }
+
+
 @router.get("/ui/models/{model_id}/calc-status", response_class=HTMLResponse)
 async def model_calc_status_pill(
     request: Request,
@@ -9217,12 +9248,17 @@ async def model_calc_status_pill(
 ) -> HTMLResponse:
     """Returns the center-top calculation status pill HTML.
 
-    Green pill = all factors clear. Yellow pill = N factors failing.
-    Click opens the Calculation Status modal via HTMX.
+    On the per-project view: 3-factor (Sources=Uses, DSCR, LTV) for the
+    active project. On the Underwriting view: scenario aggregate via
+    _compute_scenario_statuses so the pill stays consistent with the tab
+    chips and doesn't snap to Project 1's pill after modal interactions.
     """
-    _active_proj_id = await _active_project_from_request(request, session, model_id)
-    data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
-    status = _compute_calc_status(data)
+    if _is_underwriting_view_request(request):
+        status = await _aggregate_status_for_underwriting(session, model_id)
+    else:
+        _active_proj_id = await _active_project_from_request(request, session, model_id)
+        data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
+        status = _compute_calc_status(data)
     return HTMLResponse(_render_calc_status_pill_html(status, model_id))
 
 
@@ -9236,10 +9272,16 @@ async def model_calc_status_modal(
 
     Emits an HX-Trigger response header so the topbar pill re-fetches its
     state whenever the modal opens — keeps pill and modal in lockstep.
+    On Underwriting view the modal shows the aggregate (no specific
+    factor drill-downs); per-project drilldowns are reachable via the
+    project tab chips.
     """
-    _active_proj_id = await _active_project_from_request(request, session, model_id)
-    data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
-    status = _compute_calc_status(data)
+    if _is_underwriting_view_request(request):
+        status = await _aggregate_status_for_underwriting(session, model_id)
+    else:
+        _active_proj_id = await _active_project_from_request(request, session, model_id)
+        data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
+        status = _compute_calc_status(data)
     response = templates.TemplateResponse(
         request,
         "partials/calc_status_modal.html",
