@@ -72,9 +72,9 @@ _NAMED_RANGE_RE = re.compile(r"^(s|p\d+|r)_")
 _NON_METRIC_NAMES = frozenset({
     # Cover sheet meta
     "s_sponsor_name", "s_deal_name", "s_scenario_name", "s_snapshot_date",
-    "s_project_count", "s_income_mode", "s_is_active", "s_calc_status_text",
+    "s_project_count", "s_noi_basis",
     # Assumptions Block A — meta + inputs
-    "s_assumptions_scenario_name", "s_assumptions_income_mode",
+    "s_assumptions_scenario_name", "s_assumptions_noi_basis",
     "s_assumptions_project_type",
     "s_hold_years", "s_opex_growth_rate", "s_initial_occupancy",
     "s_operating_reserve_months",

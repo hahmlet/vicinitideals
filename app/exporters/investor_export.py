@@ -332,6 +332,42 @@ async def _load_all(session: AsyncSession, scenario_id: UUID) -> dict | None:
 # ── Sheet builders ────────────────────────────────────────────────────────────
 
 
+_NOI_BASIS_LABELS: dict[str, str] = {
+    "revenue_opex": "Revenue/OpEx",
+    "noi": "Simplified NOI",
+}
+
+# Repo URL for in-workbook hyperlinks back to the FINANCIAL_MODEL.md headings.
+# If the repo moves, update here. Anchor format follows GitHub's markdown
+# heading convention (see _github_anchor_for).
+_FINANCIAL_MODEL_URL = (
+    "https://github.com/hahmlet/vicinitideals/blob/main/docs/FINANCIAL_MODEL.md"
+)
+
+
+def _github_anchor_for(metric) -> str:
+    """Derive GitHub's auto-generated anchor for a tagged metric heading.
+
+    GitHub renders ``### Total Project Cost (TPC) [investor, lender, app]``
+    with the anchor ``#total-project-cost-tpc-investor-lender-app``: lowercase,
+    drop everything that isn't alphanumeric / space / hyphen / underscore,
+    replace runs of whitespace with single hyphens.
+    """
+    audiences = sorted(metric.audiences)
+    heading = f"{metric.name} [{', '.join(audiences)}]"
+    cleaned = re.sub(r"[^a-z0-9\s_-]", "", heading.lower())
+    return re.sub(r"\s+", "-", cleaned).strip("-")
+
+
+def _noi_basis_label(income_mode: str | None) -> str:
+    """Translate the engine's `income_mode` enum to the LP-facing NOI Basis label.
+
+    Engine stores `revenue_opex` (default) or `noi`; the LP cares about the
+    semantic distinction between full P&L roll-up vs. direct-NOI input.
+    """
+    return _NOI_BASIS_LABELS.get(str(income_mode or "").lower(), str(income_mode or "—"))
+
+
 def _build_cover(ws, registry: CellRegistry, ctx: dict) -> None:
     """Cover sheet: deal/scenario title, sponsor, project list."""
     set_widths(ws, [28, 60])
@@ -339,73 +375,41 @@ def _build_cover(ws, registry: CellRegistry, ctx: dict) -> None:
     deal: Deal | None = ctx["deal"]
     org: Organization | None = ctx["org"]
     projects: list[Project] = ctx["projects"]
-    snapshot_at: datetime = ctx["snapshot_at"]
 
-    # Title block
+    # Title block (no merged subtitle row — removed per LP feedback,
+    # Snapshot Date carries the timestamp in the metadata block below)
     ws.cell(row=1, column=1, value=f"{(deal.name if deal else '—')} — {scenario.name}")
     ws.cell(row=1, column=1).font = FONT_TITLE
     ws.cell(row=1, column=1).alignment = ALIGN_LEFT
     ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=2)
     ws.row_dimensions[1].height = 28
 
-    ws.cell(
-        row=2, column=1,
-        value=f"Snapshot as of {snapshot_at.strftime('%Y-%m-%d %H:%M')} PT",
-    )
-    ws.cell(row=2, column=1).font = FONT_SUBTITLE
-    ws.merge_cells(start_row=2, start_column=1, end_row=2, end_column=2)
-
-    # Metadata block
-    section_label(ws, 4, "Deal", span_cols=2)
-    kv_row(ws, 5, "Sponsor / Organization", org.name if org else "—",
+    # Metadata block — `Scenario Active` row removed (LP doesn't need scenario-
+    # active state; that's an internal toggle).
+    section_label(ws, 3, "Deal", span_cols=2)
+    kv_row(ws, 4, "Sponsor / Organization", org.name if org else "—",
            name="s_sponsor_name", registry=registry)
-    kv_row(ws, 6, "Deal Name", deal.name if deal else "—",
+    kv_row(ws, 5, "Deal Name", deal.name if deal else "—",
            name="s_deal_name", registry=registry)
-    kv_row(ws, 7, "Scenario Name", scenario.name,
+    kv_row(ws, 6, "Scenario Name", scenario.name,
            name="s_scenario_name", registry=registry)
-    kv_row(ws, 8, "Snapshot Date", snapshot_at.date().isoformat(),
+    snapshot_at: datetime = ctx["snapshot_at"]
+    kv_row(ws, 7, "Snapshot Date", snapshot_at.date().isoformat(),
            name="s_snapshot_date", registry=registry)
-    kv_row(ws, 9, "Project Count", len(projects),
+    kv_row(ws, 8, "Project Count", len(projects),
            name="s_project_count", registry=registry, fmt=INT_COMMA)
-    kv_row(ws, 10, "Income Mode", scenario.income_mode,
-           name="s_income_mode", registry=registry)
-    kv_row(ws, 11, "Scenario Active", "Yes" if scenario.is_active else "No",
-           name="s_is_active", registry=registry)
+    kv_row(ws, 9, "NOI Basis", _noi_basis_label(scenario.income_mode),
+           name="s_noi_basis", registry=registry)
 
-    # Project list — bullets, one per row
-    section_label(ws, 13, "Projects", span_cols=2)
+    # Project list — one row per project, labelled `Project N`
+    # (LP-friendlier than the engine's `P1` ordinal shorthand).
+    section_label(ws, 11, "Projects", span_cols=2)
     for idx, proj in enumerate(projects, start=1):
-        row = 13 + idx
-        ws.cell(row=row, column=1, value=f"  •  P{idx}").font = FONT_LABEL
+        row = 11 + idx
+        ws.cell(row=row, column=1, value=f"Project {idx}").font = FONT_LABEL
         ws.cell(row=row, column=2, value=proj.name or f"Project {idx}").font = FONT_VALUE
 
-    # Status block — Calc Status placeholder; real wiring lands in commit 2
-    # alongside the Underwriting Summary rollup which already loads the
-    # status-pill data path.
-    status_row = 13 + max(len(projects), 1) + 2
-    section_label(ws, status_row, "Status", span_cols=2)
-    kv_row(
-        ws,
-        status_row + 1,
-        "Calculation Status",
-        "(populated by Underwriting Summary in next build phase)",
-        name="s_calc_status_text",
-        registry=registry,
-    )
-
-    # Footer hint
-    foot_row = status_row + 3
-    ws.cell(
-        row=foot_row,
-        column=1,
-        value=(
-            "Investor-Ready Excel Export — read-only by convention. "
-            "All values hard-coded in this phase; see Glossary for source-of-truth references."
-        ),
-    ).font = FONT_HINT
-    ws.merge_cells(start_row=foot_row, start_column=1, end_row=foot_row, end_column=2)
-
-    freeze_top(ws, row=4)
+    freeze_top(ws, row=3)
     print_landscape(ws)
 
 
@@ -533,8 +537,8 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
     junctions: list[CapitalModuleProject] = ctx["junctions"]
     use_lines_by_project: dict[UUID, list[UseLine]] = ctx["use_lines"]
 
-    # ── Hero KPI block ─────────────────────────────────────────────────────
-    section_label(ws, 1, "Hero KPIs", span_cols=2)
+    # ── Primary KPI block ──────────────────────────────────────────────────
+    section_label(ws, 1, "Primary KPIs", span_cols=2)
     row = 2
     kv_row(
         ws, row, "Total Project Cost",
@@ -1413,8 +1417,8 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
     row = 2
     kv_row(ws, row, "Scenario Name", scenario.name,
            name="s_assumptions_scenario_name", registry=registry); row += 1
-    kv_row(ws, row, "Income Mode", scenario.income_mode,
-           name="s_assumptions_income_mode", registry=registry); row += 1
+    kv_row(ws, row, "NOI Basis", _noi_basis_label(scenario.income_mode),
+           name="s_assumptions_noi_basis", registry=registry); row += 1
     # `project_type` is typed Mapped[ProjectType] but stored as String(60)
     # — SQLAlchemy doesn't auto-coerce on read, so it comes back as a bare
     # string in production. Use the same safe pattern as _funder_type_label.
@@ -1574,10 +1578,18 @@ def _build_glossary(ws, registry: CellRegistry, ctx: dict) -> None:
         ws.cell(row=r, column=3).alignment = ALIGN_WRAP
         ws.cell(row=r, column=3).border = THIN_BORDER
 
+        # GitHub-anchored hyperlink → opens the doc heading in a browser.
+        # Friendly label first, URL behind the click — most LPs won't have
+        # local repo access but anyone with a web browser can follow it.
+        anchor = _github_anchor_for(metric)
+        link_url = f"{_FINANCIAL_MODEL_URL}#{anchor}"
+        link_label = f"FINANCIAL_MODEL.md § {metric.name}"
+        # Escape any double quotes in the label to keep the formula valid.
+        safe_label = link_label.replace('"', '""')
         ws.cell(
             row=r,
             column=4,
-            value=f"FINANCIAL_MODEL.md (line {metric.line})",
+            value=f'=HYPERLINK("{link_url}","{safe_label}")',
         ).font = FONT_VALUE
         ws.cell(row=r, column=4).alignment = ALIGN_LEFT
         ws.cell(row=r, column=4).border = THIN_BORDER
