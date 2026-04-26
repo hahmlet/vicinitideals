@@ -7647,6 +7647,20 @@ async def deal_setup_wizard_complete(
             amort_years = int(terms.get("amort_years") or 30)
             ltv_pct     = float(terms.get("ltv_pct")) if terms.get("ltv_pct") is not None else None
             active_from = cfg.get("active_from") or _DEFAULT_FROM.get(ft_str, "acquisition")
+            # Stabilized-acquisition deals: the perm loan IS the acquisition
+            # financing — no construction/lease-up to refinance out of. Default
+            # active_from = "acquisition" so closing costs flow at close instead
+            # of dumping into month 1 of stabilized (where they'd otherwise
+            # show as a phantom -$25K NCF spike). Value-add / new-construction
+            # keep the standard "lease_up" default — perm refinances out the
+            # construction loan at stabilization, costs hit then.
+            _scn_proj_type = str(getattr(model, "project_type", "") or "").replace("ProjectType.", "")
+            if (
+                ft_str == "permanent_debt"
+                and _scn_proj_type == "acquisition"
+                and not cfg.get("active_from")
+            ):
+                active_from = "acquisition"
 
             # Resolve Exit Vehicle — legacy 'retired_by' + 'active_to' are
             # honoured as fallbacks so in-flight wizard re-submits still work
