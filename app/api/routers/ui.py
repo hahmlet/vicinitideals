@@ -8971,8 +8971,13 @@ def _compute_calc_status(data: dict) -> dict:
     sizing_mode = (getattr(inputs, "debt_sizing_mode", None) or "") if inputs else ""
     is_dual_constraint = (sizing_mode == "dual_constraint")
 
-    # Actual LTV calculation
+    # Actual LTV calculation. Multi-project: prefer the per-project junction
+    # amount over the scenario-level source.amount. source.amount holds the
+    # last-sized value (P2 in last-write-wins), so on P1's tab the LTV would
+    # otherwise compute against P2's much larger principal — easily pushing
+    # the displayed LTV above 100% for the smaller project.
     _DEC_ZERO = Decimal("0")
+    _junction_amts = data.get("capital_junction_amts") or {}
     total_non_bridge_debt = _DEC_ZERO
     for m in capital_modules:
         src = m.source or {}
@@ -8981,7 +8986,8 @@ def _compute_calc_status(data: dict) -> dict:
         ft = str(getattr(m, "funder_type", "")).replace("FunderType.", "")
         if ft in {"permanent_debt", "senior_debt", "mezzanine_debt", "construction_loan",
                   "acquisition_loan", "pre_development_loan", "bond", "bridge", "soft_loan"}:
-            amt = src.get("amount")
+            _jam = _junction_amts.get(str(m.id))
+            amt = _jam if _jam is not None else src.get("amount")
             if amt:
                 try:
                     total_non_bridge_debt += Decimal(str(amt))
