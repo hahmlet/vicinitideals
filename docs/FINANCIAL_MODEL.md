@@ -1862,3 +1862,138 @@ For any carry calculation, the rate is resolved as:
 ### C.4 `"accruing"` alias
 
 The carry type `"accruing"` is normalized to `"capitalized_interest"` by `_carry_type_for_phase()` in the cashflow engine only. The waterfall engine keeps `"accruing"` distinct for side-pocket vs principal accrual treatment. User-facing UI shows "Capitalized Interest (PIK)".
+
+---
+
+## Appendix D: Gap Adjustment Sliders + Compile/Evaluate Split (April 2026)
+
+### D.1 Motivation
+
+When the auto-sizer hits the DSCR floor (default 1.15) or the user's LTV cap, a Sources/Uses gap appears that the engine cannot close on its own. The user has to pick where to give: lower Purchase Price, raise Revenue assumptions, or cut OpEx — each choice has different real-world feasibility, so the model can't decide for them. The Gap Adjustment slider feature gives the user three knobs:
+
+- **Revenue (/mo)** — adds a fixed monthly amount to gross revenue
+- **OpEx (/yr)** — adds an annual amount (negative = imagined reduction) to operating expenses
+- **Purchase Price** — adds an amount (negative = imagined reduction) to total Uses
+
+Each slider materializes a **phantom line item** in the corresponding table (`IncomeStream`, `OperatingExpenseLine`, `UseLine`). The phantom row persists in the database, so the user's "what reach was needed to make this pencil" survives across sessions and tells the deal's story. Drag a slider to zero and the row stays at zero (gray, un-highlighted) — the lineage is preserved. Click "Reset all" and all three rows go to zero in one action.
+
+### D.2 Reserved labels (single source of truth)
+
+The three phantom rows are identified by exact-match labels, defined in `app/schemas/gap_adjustment_names.py`:
+
+```python
+REVENUE_ADJUSTMENT_LABEL          = "Gap Adjustment — Revenue"
+OPEX_ADJUSTMENT_LABEL             = "Gap Adjustment — OpEx"
+PURCHASE_PRICE_ADJUSTMENT_LABEL   = "Gap Adjustment — Purchase Price"
+```
+
+`is_reserved_label(label)` returns True for an exact match; comparison is case- and whitespace-sensitive. The constants are imported wherever name protection is enforced (Pydantic schemas, router handlers, the slider endpoint, the pill renderer, the panel template).
+
+### D.3 Name protection (perimeter)
+
+The slider feature is the only legitimate creator/mutator of phantom rows. Two enforcement layers:
+
+- **Pydantic validators** (`app/schemas/deal.py`): `IncomeStreamCreate`/`Update`, `OperatingExpenseLineCreate`/`Update`, and `UseLineCreate`/`Update` all run `_validate_label_not_reserved` on the `label` field. Any user attempt to create a new row with a reserved label or rename an existing row to a reserved label fails with a `ValidationError`. Read schemas are unaffected — they have to deserialize phantom rows from the DB.
+
+- **Router guards** (`app/api/routers/models.py`): the PATCH and DELETE handlers for `/income-streams/{id}`, `/expense-lines/{id}`, and `/use-lines/{id}` all call `_assert_not_phantom_row(label, kind)` before mutating. If the target row's label is reserved, the handler returns HTTP 403 with a message pointing the user at the slider drawer.
+
+To remove an adjustment, the user drags the slider back to zero. Direct `DELETE` of phantom rows is intentionally blocked.
+
+### D.4 Slider endpoint
+
+`POST /api/models/{model_id}/sliders` (defined in `app/api/routers/models.py`):
+
+```jsonc
+// Request
+{
+  "revenue_delta_monthly": "1000",   // optional; null = leave revenue phantom alone
+  "opex_delta_annual":     "-12000", // optional; negative supported
+  "pp_delta":              "-50000"  // optional; negative supported
+}
+
+// Response (SliderResponse)
+{
+  "revenue_delta_monthly": "1000",
+  "opex_delta_annual":     "-12000",
+  "pp_delta":              "-50000",
+  "has_any_adjustment":    true,         // drives pill yellow override
+  "dscr":                  "1.235",      // post-compute
+  "total_project_cost":    "1850000",
+  "equity_required":       "0"
+}
+```
+
+For each non-null delta, the endpoint upserts the corresponding phantom row to that absolute amount on the deal's default project. Omitted fields leave the row untouched. After the upserts, `compute_cash_flows` runs synchronously and the response carries the post-compute metrics.
+
+The endpoint bypasses the schema validators (it writes via ORM directly) — that's the intended contract: the slider is the only path that legitimately produces reserved-label rows.
+
+### D.5 How phantom amounts flow into the engine
+
+Phantom rows are **structurally identical** to user-created rows of the same type. The cashflow engine doesn't special-case them:
+
+- A `Gap Adjustment — Revenue` row is an `IncomeStream` with `amount_fixed_monthly` set. Its amount flows into `_calculate_noi_period` (cashflow.py:1470 area) and adds to monthly gross revenue across the operating phases listed in `active_in_phases` (default: lease_up, stabilized, exit).
+
+- A `Gap Adjustment — OpEx` row is an `OperatingExpenseLine` with `annual_amount` set, possibly negative. The engine sums it directly: `operating_expenses += annual / 12` (cashflow.py:1476). A negative annual amount reduces total OpEx, which is the "imagine OpEx were $X lower" semantic.
+
+- A `Gap Adjustment — Purchase Price` row is a `UseLine` with `amount` set, possibly negative, in the acquisition phase. The auto-sizer sums all use_lines in `_auto_size_debt_modules` (cashflow.py:1603): `total_uses += _to_decimal(ul.amount)`. A negative amount subtracts from total Uses, lowering the principal solve and reducing the Sources/Uses gap.
+
+No ORM CHECK constraints, no Pydantic `ge=0`, no UI input minimums prevent negatives — the engine has supported negative line items all along.
+
+### D.6 Pill yellow override
+
+The calc-status pill (top of the model builder page) normally renders green ("✓ Calculation Valid") when Sources=Uses, DSCR≥floor, and LTV≤cap. When *any* phantom row has a nonzero amount, that green state is overridden to yellow ("⚠ Balanced w/ adjustments"):
+
+```python
+# app/api/routers/ui.py — _render_calc_status_pill_html
+if status["overall"] == "ok" and has_any_adjustment:
+    label = "⚠ Balanced w/ adjustments"
+    cls = "warn"
+elif status["overall"] == "ok":
+    label = "✓ Calculation Valid"
+    cls = "ok"
+else:
+    # real failure — keep existing warn label
+    ...
+```
+
+Real failures (gap nonzero, DSCR below floor, LTV above cap) keep their existing warn label even when phantoms are nonzero — `has_any_adjustment` doesn't downgrade real failures, only converts the otherwise-green case.
+
+The flag is computed by `_has_any_gap_adjustment(session, project_id)`, which queries the three phantom rows and returns True iff at least one has a nonzero amount.
+
+### D.7 Compile / Evaluate engine split (foundation, partial)
+
+The slider drawer's "drag, see DSCR move" UX wants snappy response per slider release. The current implementation runs the full `compute_cash_flows` engine on each POST — fine for now (200ms–2s perceived latency over a debounced release), but the architectural goal is to split the engine into two phases so future slider drag can be sub-100ms server-side:
+
+- **`compile(scenario) → CompiledScenario`**: builds all structure that doesn't depend on slider inputs (timing, schedules, trigger chains, rates, terms, escalation factors, lease-up curves). Runs once per scenario.
+- **`evaluate(compiled, dR, dE, dP) → EvaluationResult`**: takes the compiled structure plus three scalar deltas (revenue monthly, opex annual, PP). Returns sized loan, total uses/sources, DSCR/LTV, gap, per-period arrays. Cheap (~1ms) and pure.
+
+The full save/export path is `evaluate(compile(scenario), 0, 0, 0)` — same code path as the slider, just with zero deltas. **No parallel implementation** — preventing two-engine drift was the explicit reason for choosing this approach over a separate fast estimator.
+
+**Status as of this writing (April 2026):**
+- ✅ Phase-plan layer extracted to `app/engines/cashflow_compile.py` (PR1 slice 1): `PhaseSpec`, `_build_phase_plan`, `_milestone_dates_from_orm`, helpers
+- ✅ Per-loan windowing + Exit Vehicle pairing extracted (PR1 slice 2): `_APS_TO_RANK`, `_PERIOD_TYPE_RANK`, `_module_rank`, `_eligible_retirers`, `_resolve_vehicle`, `_resolve_active_end_rank`, `_loan_pre_op_months`
+- ✅ Per-period structural helpers extracted (PR1 slice 3): `_is_stream_active`, `_is_expense_line_active`, `_stream_occupancy_pct`, `_operating_unit_count`, `_phase_is_operational`, `_growth_factor`, `_manifest_unit_count`
+- ⏳ Auto-sizer arithmetic + DB writeback split (PR2): the 1,000+ line `_auto_size_debt_modules` still mixes principal-solve math with ORM mutation. Closed-form `evaluate()` and pure `persist_evaluation()` are deferred until the debounced full-engine UX proves too slow in practice.
+
+### D.8 Snapshot harness as safety net
+
+The compile/evaluate refactor is risky — cashflow.py drives every financial number on the platform. Byte-identical output across the refactor is enforced by the snapshot harness at `tests/engines/test_engine_snapshots.py`:
+
+- Four scenarios cover the major engine paths: minimal NOI, single-project + auto-sized perm debt + IO carry, new-construction with capitalized-interest carry + retirement chain, multi-project rollup
+- Each scenario seeds via in-memory SQLite, runs `compute_cash_flows`, serializes the full persisted state (CashFlow, CashFlowLineItem, OperationalOutputs, post-auto-size CapitalModule.source.amount) to canonical JSON
+- Output is compared byte-for-byte against checked-in snapshots; `SNAPSHOT_UPDATE=1 pytest ...` regenerates when engine output is intentionally changed
+- Snapshot serializer sorts in Python by stable project_idx ordinal (not the auto-generated UUID) so output is reproducible across runs — a UUID-ordering bug initially made multi-project output 30% flaky
+
+Production-data verification continues to live alongside in `scripts/phase2_verify_byte_identical.py` + the five baselines under `tests/phase2_baseline/`.
+
+### D.9 Worked example (multi-project gap scenario)
+
+A two-project deal has a Sources/Uses gap on Project 1 because NOI doesn't support more debt at 1.15 DSCR. The user opens the slider drawer and:
+
+1. Drags Purchase Price down $30k → phantom UseLine with `amount = -30000` materializes on Project 1, total Uses drops by ~$30k. The pill is now yellow ("⚠ Balanced w/ adjustments").
+2. Notices the DSCR didn't move (PP doesn't affect NOI; the DSCR-cap loan size is unchanged). Drags Revenue +$500/mo → phantom IncomeStream materializes, NOI rises, sized loan rises to keep DSCR=1.15, the gap closes by another ~$60k.
+3. Drags OpEx -$5k/yr → phantom OperatingExpenseLine with `annual_amount = -5000`, NOI rises further, sized loan rises again, gap closes.
+
+The final state: three phantom rows persisted, pill yellow with "Balanced w/ adjustments", Sources = Uses, DSCR = 1.150, equity_required = 0. The model "pencils" but only via fictional inputs the user knows have to be operationalized (find the $500/mo from somewhere; find the $5k/yr opex savings; negotiate the $30k off PP).
+
+When the user later finds real budget for any of those, they edit the underlying real lines (not the phantoms) and drag the corresponding slider back to zero. The pill goes green only when all three sliders are zero.
