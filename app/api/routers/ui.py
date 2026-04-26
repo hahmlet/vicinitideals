@@ -27,7 +27,7 @@ import app as _pkg
 from app.api.deps import DBSession
 from app.config import settings
 from app.models.broker import Broker, Brokerage
-from app.models.deal import Deal, DealModel, DealOpportunity, DealStatus, IncomeStream, IncomeStreamType, OperatingExpenseLine, OperationalInputs, ProjectType, UnitMix, UseLine, UseLinePhase
+from app.models.deal import STANDARD_OPEX_CATEGORIES, Deal, DealModel, DealOpportunity, DealStatus, IncomeStream, IncomeStreamType, OperatingExpenseLine, OperationalInputs, ProjectType, UnitMix, UseLine, UseLinePhase
 from app.models.ingestion import DedupCandidate, DedupStatus, IngestJob, RecordType, SavedSearchCriteria
 from app.models.org import User
 from app.models.capital import CapitalModule, DrawSource, WaterfallTier
@@ -9926,6 +9926,7 @@ async def model_builder_line_form(
         "show_exit_vehicle": show_exit_vehicle,
         "show_active_window": show_active_window,
         "exit_vehicle_applies": sorted(_EXIT_VEHICLE_APPLIES_UI),
+        "opex_categories": STANDARD_OPEX_CATEGORIES,
     })
 
 

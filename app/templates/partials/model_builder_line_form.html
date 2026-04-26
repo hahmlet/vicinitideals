@@ -408,11 +408,28 @@ function ulTimingChanged(val) {
       hx-on::after-request="if(event.detail.successful) closeDrawer('line-item-drawer')"
       style="padding-bottom:8px">
 
+  {# Standard OpEx categories — controlled vocabulary (see app/models/deal.py
+     STANDARD_OPEX_CATEGORIES). Free-text legacy labels are preserved by
+     emitting them as a "(legacy)" option so editing an existing line
+     doesn't lose data; "Other" is the catch-all for anything that doesn't
+     fit. The investor export's Pro Forma OpEx Breakout groups by exact
+     label, so picking from the canonical list keeps the breakout clean. #}
+  {%- set _opex_label_existing = existing.label if existing else '' -%}
+  {%- set _opex_label_in_canonical = _opex_label_existing in (opex_categories or ()) -%}
   <div class="form-field">
-    <label class="form-label">Label</label>
-    <input class="form-input" type="text" name="label" required
-           value="{{ existing.label if existing else '' }}"
-           placeholder="e.g. Property Tax, Insurance, Property Management">
+    <label class="form-label">Category</label>
+    <select class="form-select" name="label" required>
+      {% if not _opex_label_existing %}
+      <option value="" disabled selected>— Select a category —</option>
+      {% endif %}
+      {% for cat in opex_categories or [] %}
+      <option value="{{ cat }}" {% if _opex_label_existing == cat %}selected{% endif %}>{{ cat }}</option>
+      {% endfor %}
+      {% if _opex_label_existing and not _opex_label_in_canonical %}
+      <option value="{{ _opex_label_existing }}" selected>{{ _opex_label_existing }} (legacy)</option>
+      {% endif %}
+    </select>
+    <div class="form-hint">Pick the closest standard category. Use "Other" for anything that doesn't fit — keeps the investor export's OpEx breakout clean.</div>
   </div>
 
   {%- set _opex_per_val = existing.per_value if existing and existing.per_value else (existing.annual_amount if existing and existing.annual_amount else '') -%}

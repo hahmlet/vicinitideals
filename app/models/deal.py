@@ -352,6 +352,36 @@ class OperationalInputs(Base):
     )
 
 
+# Standard OpEx categories — controlled vocabulary surfaced in the
+# OpEx-line entry UI as a dropdown. Free-text labels are still accepted at
+# the DB layer (no constraint), but the UI nudges new entries toward this
+# canonical set so the investor export can group by exact label without
+# being defeated by typos like "Garbage" vs "Grabage". "Other" is the
+# catch-all — anything that doesn't fit the standard list lumps in here.
+# Order is the dropdown render order; alphabetical-ish within usage groups.
+STANDARD_OPEX_CATEGORIES: tuple[str, ...] = (
+    "Real Estate Taxes",
+    "Insurance",
+    "Property Management",
+    "Utilities — Water/Sewer",
+    "Utilities — Electric",
+    "Utilities — Gas",
+    "Utilities — Trash",
+    "Repairs & Maintenance",
+    "Marketing & Leasing",
+    "Administrative",
+    "Payroll",
+    "Landscaping & Snow Removal",
+    "Pest Control",
+    "Cleaning & Janitorial",
+    "Security",
+    "Resident Services",
+    "Compliance & Legal",
+    "Bank/Software Fees",
+    "Other",
+)
+
+
 class OperatingExpenseLine(Base):
     __tablename__ = "operating_expense_lines"
 
