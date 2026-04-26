@@ -52,7 +52,17 @@ from app.exporters._workbook_helpers import (
     section_label,
     set_widths,
 )
-from app.models.capital import CapitalModule, CapitalModuleProject
+from app.engines.underwriting_rollup import (
+    rollup_summary,
+    rollup_waterfall,
+)
+from app.models.capital import (
+    CapitalModule,
+    CapitalModuleProject,
+    WaterfallResult,
+    WaterfallTier,
+)
+from app.models.cashflow import CashFlow, CashFlowLineItem, OperationalOutputs
 from app.models.deal import (
     Deal,
     DealModel,
@@ -90,11 +100,24 @@ async def export_investor_workbook(
     wb = Workbook()
     registry = CellRegistry()
 
-    # Commit 1 sheet roster. Commits 2/3 will insert UW + per-project sheets
-    # between Cover and Assumptions to reach the §2 final order.
+    # Commit 2 sheet roster (matches plan §2 final order minus per-project
+    # sheets, which land in commit 3). Per-project sheets are inserted
+    # between Assumptions and Glossary as they're built.
     cover = wb.active
     cover.title = "Cover"
     _build_cover(cover, registry, ctx)
+
+    uw_summary = wb.create_sheet("Underwriting Summary")
+    _build_uw_summary(uw_summary, registry, ctx)
+
+    uw_proforma = wb.create_sheet("Underwriting Pro Forma")
+    _build_uw_proforma(uw_proforma, registry, ctx)
+
+    uw_cashflow = wb.create_sheet("Underwriting Cash Flow")
+    _build_uw_cashflow(uw_cashflow, registry, ctx)
+
+    investor_returns = wb.create_sheet("Investor Returns")
+    _build_investor_returns(investor_returns, registry, ctx)
 
     assumptions = wb.create_sheet("Assumptions")
     _build_assumptions(assumptions, registry, ctx)
@@ -210,6 +233,70 @@ async def _load_all(session: AsyncSession, scenario_id: UUID) -> dict | None:
             ).scalars()
         )
 
+    # ── Cashflow / waterfall / rollup data (commit 2) ──────────────────────
+    # Per-project cashflow + line items so the UW Pro Forma / Cash Flow
+    # sheets can aggregate to annual buckets and the Investor Returns sheet
+    # can read waterfall tier distributions.
+    cash_flows_by_project: dict[UUID, list[CashFlow]] = {pid: [] for pid in project_ids}
+    cash_flow_items_by_project: dict[UUID, list[CashFlowLineItem]] = {
+        pid: [] for pid in project_ids
+    }
+    outputs_by_project: dict[UUID, OperationalOutputs] = {}
+    if project_ids:
+        for cf in (
+            await session.execute(
+                select(CashFlow)
+                .where(CashFlow.scenario_id == scenario_id)
+                .order_by(CashFlow.project_id, CashFlow.period)
+            )
+        ).scalars():
+            if cf.project_id is not None:
+                cash_flows_by_project.setdefault(cf.project_id, []).append(cf)
+        for li in (
+            await session.execute(
+                select(CashFlowLineItem)
+                .where(CashFlowLineItem.scenario_id == scenario_id)
+                .order_by(CashFlowLineItem.project_id, CashFlowLineItem.period)
+            )
+        ).scalars():
+            if li.project_id is not None:
+                cash_flow_items_by_project.setdefault(li.project_id, []).append(li)
+        for o in (
+            await session.execute(
+                select(OperationalOutputs).where(
+                    OperationalOutputs.scenario_id == scenario_id
+                )
+            )
+        ).scalars():
+            if o.project_id is not None:
+                outputs_by_project[o.project_id] = o
+
+    waterfall_tiers = list(
+        (
+            await session.execute(
+                select(WaterfallTier)
+                .where(WaterfallTier.scenario_id == scenario_id)
+                .order_by(WaterfallTier.priority)
+            )
+        ).scalars()
+    )
+    waterfall_results = list(
+        (
+            await session.execute(
+                select(WaterfallResult)
+                .where(WaterfallResult.scenario_id == scenario_id)
+                .order_by(WaterfallResult.period)
+            )
+        ).scalars()
+    )
+
+    # Rollup helpers do their own DB roundtrips — call once and stash so
+    # every sheet builder reads the same snapshot. ``rollup_summary``
+    # returns ``{"per_project": [...], "totals": {...}}``;
+    # ``rollup_waterfall`` returns the joined tier table.
+    summary = await rollup_summary(scenario_id, session)
+    waterfall_rollup = await rollup_waterfall(scenario_id, session)
+
     return {
         "scenario": scenario,
         "deal": deal,
@@ -220,6 +307,13 @@ async def _load_all(session: AsyncSession, scenario_id: UUID) -> dict | None:
         "unit_mix": unit_mix_by_project,
         "capital_modules": capital_modules,
         "junctions": junctions,
+        "cash_flows": cash_flows_by_project,
+        "cash_flow_items": cash_flow_items_by_project,
+        "outputs": outputs_by_project,
+        "waterfall_tiers": waterfall_tiers,
+        "waterfall_results": waterfall_results,
+        "rollup_summary": summary,
+        "rollup_waterfall": waterfall_rollup,
         "snapshot_at": datetime.now(),
     }
 
@@ -302,6 +396,687 @@ def _build_cover(ws, registry: CellRegistry, ctx: dict) -> None:
 
     freeze_top(ws, row=4)
     print_landscape(ws)
+
+
+# ── Aggregation helpers (commit 2) ────────────────────────────────────────────
+
+
+def _period_to_year(period: int) -> int:
+    """Year-bucket convention from plan §5.3.
+
+    Period 0 = acquisition close → Y0. Periods 1-12 = Y1, etc. Y0 carries
+    capital events (acquisition outflows, partial-year operations) that
+    aren't visible if rolled into Y1.
+    """
+    if period == 0:
+        return 0
+    return (period - 1) // 12 + 1
+
+
+def _max_year(rows: list[CashFlow]) -> int:
+    if not rows:
+        return 0
+    return max(_period_to_year(cf.period) for cf in rows)
+
+
+def _aggregate_annual(monthly: list[CashFlow]) -> dict[int, dict[str, Decimal]]:
+    """Aggregate per-period CashFlow rows into annual buckets.
+
+    Returns ``{year: {field: Decimal}}`` for the standard cashflow fields.
+    Skipping ``cumulative_cash_flow`` because it's a balance series, not
+    additive — the consumers compute their own running totals.
+    """
+    fields = (
+        "gross_revenue",
+        "vacancy_loss",
+        "effective_gross_income",
+        "operating_expenses",
+        "capex_reserve",
+        "noi",
+        "debt_service",
+        "net_cash_flow",
+    )
+    out: dict[int, dict[str, Decimal]] = {}
+    for cf in monthly:
+        year = _period_to_year(cf.period)
+        bucket = out.setdefault(year, {f: Decimal(0) for f in fields})
+        for field in fields:
+            bucket[field] += _coerce_decimal(getattr(cf, field, 0) or 0)
+    return out
+
+
+def _annual_line_items(
+    items: list[CashFlowLineItem],
+) -> dict[int, dict[str, Decimal]]:
+    """Aggregate CashFlowLineItem rows by (year, label) for the Pro Forma sheet.
+
+    OpEx categories like "Real Estate Taxes" / "Insurance" / "Property Mgmt"
+    show up here as separate rows. Capital events (acquisition outflows,
+    sale proceeds) likewise — the cash-flow sheet picks those out by
+    label prefix.
+    """
+    out: dict[int, dict[str, Decimal]] = {}
+    for li in items:
+        year = _period_to_year(li.period)
+        bucket = out.setdefault(year, {})
+        bucket[li.label] = bucket.get(li.label, Decimal(0)) + _coerce_decimal(
+            li.net_amount or 0
+        )
+    return out
+
+
+def _waterfall_by_tier(
+    rollup: list[dict],
+) -> dict[str, dict[str, Decimal]]:
+    """Aggregate the waterfall rollup into ``{tier_type: totals}``.
+
+    Each tier-type bucket carries ``cash_total`` and ``module_count`` (unique
+    Capital Modules that received distributions through this tier).
+    """
+    out: dict[str, dict[str, Decimal]] = {}
+    seen_modules: dict[str, set[str]] = {}
+    for row in rollup:
+        tier = row.get("tier_type") or "unknown"
+        bucket = out.setdefault(tier, {"cash_total": Decimal(0)})
+        bucket["cash_total"] += _coerce_decimal(row.get("cash_distributed") or 0)
+        module_id = row.get("capital_module_id")
+        if module_id:
+            seen_modules.setdefault(tier, set()).add(module_id)
+    for tier, modules in seen_modules.items():
+        out[tier]["module_count"] = Decimal(len(modules))
+    return out
+
+
+def _aggregate_scenario_annual(
+    cash_flows_by_project: dict[UUID, list[CashFlow]],
+) -> dict[int, dict[str, Decimal]]:
+    """Sum all projects' annual cashflow buckets into scenario totals."""
+    combined: dict[int, dict[str, Decimal]] = {}
+    for cf_list in cash_flows_by_project.values():
+        per_year = _aggregate_annual(cf_list)
+        for year, fields in per_year.items():
+            bucket = combined.setdefault(year, {})
+            for field, value in fields.items():
+                bucket[field] = bucket.get(field, Decimal(0)) + value
+    return combined
+
+
+# ── Underwriting Summary sheet ────────────────────────────────────────────────
+
+
+def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
+    """Underwriting Summary: hero KPIs + scenario S&U + per-project mini-table.
+
+    KPI sources reference ``rollup_summary`` totals + ``rollup_irr``. The
+    per-project mini-table uses ``=HYPERLINK("#'P1 Liberty'!A1", ...)``
+    Excel syntax to navigate to per-project sheets — those sheets land in
+    commit 3, so the hyperlink is already present and resolves once those
+    sheets exist.
+    """
+    set_widths(ws, [32, 24, 18, 14, 14, 14, 14])
+    summary = ctx.get("rollup_summary") or {}
+    totals = summary.get("totals") or {}
+    per_project = summary.get("per_project") or []
+    projects: list[Project] = ctx["projects"]
+    capital_modules: list[CapitalModule] = ctx["capital_modules"]
+    junctions: list[CapitalModuleProject] = ctx["junctions"]
+    use_lines_by_project: dict[UUID, list[UseLine]] = ctx["use_lines"]
+
+    # ── Hero KPI block ─────────────────────────────────────────────────────
+    section_label(ws, 1, "Hero KPIs", span_cols=2)
+    row = 2
+    kv_row(
+        ws, row, "Total Project Cost",
+        _coerce_decimal(totals.get("total_project_cost") or 0),
+        name="s_total_project_cost", registry=registry,
+        fmt=ACCOUNTING, hero=True,
+    ); row += 1
+    kv_row(
+        ws, row, "Total Uses",
+        _coerce_decimal(totals.get("total_uses") or 0),
+        name="s_total_uses", registry=registry,
+        fmt=ACCOUNTING, hero=True,
+    ); row += 1
+    kv_row(
+        ws, row, "Equity Required",
+        _coerce_decimal(totals.get("equity_required") or 0),
+        name="s_equity_required", registry=registry,
+        fmt=ACCOUNTING, hero=True,
+    ); row += 1
+    # Worst-case DSCR across projects: DSCR is per-loan, so the LP cares
+    # about the weakest covenant in the stack, not an average.
+    worst_dscr = _worst_dscr(per_project)
+    kv_row(
+        ws, row, "Stabilized DSCR (worst project)",
+        worst_dscr,
+        name="s_worst_dscr", registry=registry,
+        fmt="0.000", hero=True,
+    ); row += 1
+    kv_row(
+        ws, row, "Combined Stabilized NOI",
+        _sum_per_project_field(per_project, "noi_stabilized"),
+        name="s_combined_noi", registry=registry,
+        fmt=ACCOUNTING, hero=True,
+    ); row += 1
+    kv_row(
+        ws, row, "Combined Levered IRR",
+        _coerce_pct(totals.get("combined_irr_pct") or 0),
+        name="s_combined_irr", registry=registry,
+        fmt=PCT, hero=True,
+    ); row += 1
+    longest_hold = _longest_hold_months(per_project)
+    kv_row(
+        ws, row, "Hold Period (months)",
+        longest_hold,
+        name="s_hold_months", registry=registry,
+        fmt=INT_COMMA, hero=True,
+    ); row += 1
+
+    # ── Scenario Sources & Uses ────────────────────────────────────────────
+    su_row = row + 2
+    section_label(ws, su_row, "Scenario Sources & Uses", span_cols=4)
+    header_row(ws, su_row + 1, ["Side", "Label", "Amount", "Notes"])
+    line = su_row + 2
+
+    # Uses — sum across projects, by phase
+    uses_by_phase: dict[str, Decimal] = {}
+    for pid, uls in use_lines_by_project.items():
+        for ul in uls:
+            phase = str(getattr(ul.phase, "value", ul.phase) or "")
+            if phase == "exit":
+                continue
+            uses_by_phase[phase] = uses_by_phase.get(phase, Decimal(0)) + _coerce_decimal(
+                ul.amount or 0
+            )
+    for phase, amount in sorted(uses_by_phase.items()):
+        ws.cell(row=line, column=1, value="Use").font = FONT_VALUE
+        ws.cell(row=line, column=2, value=phase.replace("_", " ").title()).font = FONT_VALUE
+        ws.cell(row=line, column=3, value=_to_excel_number(amount)).number_format = ACCOUNTING
+        ws.cell(row=line, column=4, value="(summed across projects)").font = FONT_HINT
+        line += 1
+    uses_total = sum(uses_by_phase.values(), Decimal(0))
+    ws.cell(row=line, column=1, value="Use").font = FONT_LABEL
+    ws.cell(row=line, column=2, value="Total Uses (excl. exit)").font = FONT_LABEL
+    registry.write(
+        ws, line, 3, uses_total,
+        name="s_su_uses_total", fmt=ACCOUNTING, font=FONT_LABEL, align=ALIGN_RIGHT,
+    )
+    line += 2
+
+    # Sources — capital modules, deduplicated for shared modules via junctions
+    junction_amount: dict[UUID, Decimal] = {}
+    for j in junctions:
+        junction_amount[j.capital_module_id] = junction_amount.get(
+            j.capital_module_id, Decimal(0)
+        ) + _coerce_decimal(j.amount or 0)
+    sources_total = Decimal(0)
+    for module in capital_modules:
+        amount = junction_amount.get(module.id) or _coerce_decimal(
+            (module.source or {}).get("amount") or 0
+        )
+        ws.cell(row=line, column=1, value="Source").font = FONT_VALUE
+        ws.cell(row=line, column=2, value=module.label or _funder_type_label(module)).font = FONT_VALUE
+        ws.cell(row=line, column=3, value=_to_excel_number(amount)).number_format = ACCOUNTING
+        ws.cell(row=line, column=4, value=_funder_type_label(module)).font = FONT_HINT
+        sources_total += amount
+        line += 1
+    ws.cell(row=line, column=1, value="Source").font = FONT_LABEL
+    ws.cell(row=line, column=2, value="Total Sources").font = FONT_LABEL
+    registry.write(
+        ws, line, 3, sources_total,
+        name="s_su_sources_total", fmt=ACCOUNTING, font=FONT_LABEL, align=ALIGN_RIGHT,
+    )
+    line += 1
+
+    gap = uses_total - sources_total
+    ws.cell(row=line, column=1, value="Δ").font = FONT_LABEL
+    ws.cell(row=line, column=2, value="Sources Gap (Uses − Sources)").font = FONT_LABEL
+    registry.write(
+        ws, line, 3, gap,
+        name="s_sources_gap", fmt=ACCOUNTING, font=FONT_LABEL, align=ALIGN_RIGHT,
+    )
+    line += 2
+
+    # ── Per-project mini-summary ───────────────────────────────────────────
+    pp_row = line + 1
+    section_label(ws, pp_row, "Per-Project Mini-Summary", span_cols=7)
+    header_row(
+        ws, pp_row + 1,
+        ["Project", "TPC", "Equity Req'd", "Stab NOI", "DSCR", "Levered IRR", "Sheet"],
+    )
+    pp_data = pp_row + 2
+    for idx, project in enumerate(projects, start=1):
+        proj_id = str(project.id)
+        record = next(
+            (p for p in per_project if str(p.get("project_id") or "") == proj_id),
+            {},
+        )
+        ws.cell(row=pp_data, column=1, value=project.name or f"Project {idx}").font = FONT_VALUE
+        ws.cell(row=pp_data, column=2, value=_to_excel_number(record.get("total_project_cost"))).number_format = ACCOUNTING
+        ws.cell(row=pp_data, column=3, value=_to_excel_number(record.get("equity_required"))).number_format = ACCOUNTING
+        ws.cell(row=pp_data, column=4, value=_to_excel_number(record.get("noi_stabilized"))).number_format = ACCOUNTING
+        ws.cell(row=pp_data, column=5, value=_to_excel_number(record.get("dscr"))).number_format = "0.000"
+        levered = record.get("project_irr_levered")
+        ws.cell(row=pp_data, column=6, value=_to_excel_number(_coerce_pct(levered) if levered is not None else None)).number_format = PCT
+        # Sheet hyperlink — resolves once commit 3's per-project sheets land.
+        sheet_label = _project_sheet_name(idx, project.name)
+        ws.cell(
+            row=pp_data, column=7,
+            value=f'=HYPERLINK("#\'{sheet_label}\'!A1", "→ open")',
+        ).font = FONT_VALUE
+        pp_data += 1
+
+    freeze_top(ws, row=2)
+    print_landscape(ws)
+
+
+# ── Underwriting Pro Forma sheet ──────────────────────────────────────────────
+
+
+def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
+    """Annual P&L summed across projects: Y0 → Y10 (or longest hold)."""
+    cash_flows: dict[UUID, list[CashFlow]] = ctx["cash_flows"]
+    cash_flow_items: dict[UUID, list[CashFlowLineItem]] = ctx["cash_flow_items"]
+
+    annual = _aggregate_scenario_annual(cash_flows)
+    max_year = min(max(annual) if annual else 0, 10)
+    year_cols = list(range(0, max(max_year, 1) + 1))
+
+    set_widths(ws, [30, *([14] * (len(year_cols) + 1))])
+
+    section_label(ws, 1, "Pro Forma — Annual P&L (combined across projects)", span_cols=len(year_cols) + 1)
+    header_row(ws, 2, ["Line Item", *[f"Y{y}" for y in year_cols]])
+
+    rows: list[tuple[str, str, str | None]] = [
+        ("Gross Revenue", "gross_revenue", "r_uw_gross_revenue"),
+        ("Vacancy Loss", "vacancy_loss", None),
+        ("Effective Gross Income", "effective_gross_income", "r_uw_egi"),
+        ("Operating Expenses", "operating_expenses", "r_uw_opex"),
+        ("CapEx Reserve", "capex_reserve", None),
+        ("NOI", "noi", "r_uw_noi"),
+        ("Debt Service", "debt_service", "r_uw_debt_service"),
+        ("Net Cash Flow", "net_cash_flow", "r_uw_net_cash_flow"),
+    ]
+    cur_row = 3
+    for label, field, range_name in rows:
+        ws.cell(row=cur_row, column=1, value=label).font = FONT_LABEL
+        for col_offset, year in enumerate(year_cols):
+            value = annual.get(year, {}).get(field, Decimal(0))
+            cell = ws.cell(row=cur_row, column=2 + col_offset, value=_to_excel_number(value))
+            cell.number_format = ACCOUNTING
+            cell.font = FONT_VALUE
+            cell.alignment = ALIGN_RIGHT
+        if range_name and year_cols:
+            registry.register_range(
+                range_name,
+                ws.title,
+                cur_row,
+                cur_row,
+                col=2,
+                end_col=1 + len(year_cols),
+            )
+        cur_row += 1
+
+    # OpEx-by-category breakout (driven by line items rather than aggregate)
+    cur_row += 1
+    section_label(
+        ws, cur_row, "OpEx Breakout (by category)", span_cols=len(year_cols) + 1
+    )
+    cur_row += 1
+    annual_items = _aggregate_scenario_line_items(cash_flow_items)
+    opex_labels = sorted(_collect_opex_labels(annual_items))
+    if not opex_labels:
+        ws.cell(
+            row=cur_row, column=1,
+            value="(no OpEx line items recorded — run Compute to populate)",
+        ).font = FONT_HINT
+    for label in opex_labels:
+        ws.cell(row=cur_row, column=1, value=label).font = FONT_VALUE
+        for col_offset, year in enumerate(year_cols):
+            value = annual_items.get(year, {}).get(label, Decimal(0))
+            cell = ws.cell(row=cur_row, column=2 + col_offset, value=_to_excel_number(value))
+            cell.number_format = ACCOUNTING
+            cell.font = FONT_VALUE
+            cell.alignment = ALIGN_RIGHT
+        cur_row += 1
+
+    freeze_top(ws, row=3)
+    print_landscape(ws)
+
+
+# ── Underwriting Cash Flow sheet ──────────────────────────────────────────────
+
+
+def _build_uw_cashflow(ws, registry: CellRegistry, ctx: dict) -> None:
+    """Annual cash flow: NOI / Capital Events / Levered / Unlevered / DS / DSCR / Cum LCF."""
+    cash_flows: dict[UUID, list[CashFlow]] = ctx["cash_flows"]
+    cash_flow_items: dict[UUID, list[CashFlowLineItem]] = ctx["cash_flow_items"]
+
+    annual = _aggregate_scenario_annual(cash_flows)
+    annual_items = _aggregate_scenario_line_items(cash_flow_items)
+    capital_events_by_year = _capital_events_by_year(annual_items)
+    max_year = min(max(annual) if annual else 0, 10)
+    year_cols = list(range(0, max(max_year, 1) + 1))
+
+    set_widths(ws, [30, *([14] * len(year_cols))])
+    section_label(
+        ws, 1, "Cash Flow — Annual (scenario-wide)", span_cols=len(year_cols) + 1
+    )
+    header_row(ws, 2, ["Line Item", *[f"Y{y}" for y in year_cols]])
+
+    cur_row = 3
+
+    def write_series(label: str, source: dict[int, Decimal], range_name: str | None,
+                     fmt: str = ACCOUNTING) -> None:
+        nonlocal cur_row
+        ws.cell(row=cur_row, column=1, value=label).font = FONT_LABEL
+        for col_offset, year in enumerate(year_cols):
+            value = source.get(year, Decimal(0))
+            cell = ws.cell(row=cur_row, column=2 + col_offset, value=_to_excel_number(value))
+            cell.number_format = fmt
+            cell.font = FONT_VALUE
+            cell.alignment = ALIGN_RIGHT
+        if range_name and year_cols:
+            registry.register_range(
+                range_name, ws.title, cur_row, cur_row, col=2,
+                end_col=1 + len(year_cols),
+            )
+        cur_row += 1
+
+    noi_series = {y: annual.get(y, {}).get("noi", Decimal(0)) for y in year_cols}
+    debt_series = {y: annual.get(y, {}).get("debt_service", Decimal(0)) for y in year_cols}
+    ncf_series = {y: annual.get(y, {}).get("net_cash_flow", Decimal(0)) for y in year_cols}
+
+    write_series("NOI", noi_series, "r_uw_cf_noi")
+    write_series("Capital Events (acq + exit)", capital_events_by_year, "r_uw_cf_capital_events")
+    write_series("Debt Service", debt_series, "r_uw_cf_debt_service")
+    write_series("Levered Cash Flow", ncf_series, "r_uw_cf_levered")
+
+    unlevered_series = {
+        y: noi_series.get(y, Decimal(0)) + capital_events_by_year.get(y, Decimal(0))
+        for y in year_cols
+    }
+    write_series("Unlevered Cash Flow", unlevered_series, "r_uw_cf_unlevered")
+
+    dscr_series = {}
+    for y in year_cols:
+        ds = debt_series.get(y, Decimal(0))
+        dscr_series[y] = (
+            (noi_series.get(y, Decimal(0)) / ds) if ds and ds != 0 else Decimal(0)
+        )
+    write_series("DSCR (annual)", dscr_series, "r_uw_cf_dscr", fmt="0.000")
+
+    cumulative: dict[int, Decimal] = {}
+    running = Decimal(0)
+    for y in year_cols:
+        running += ncf_series.get(y, Decimal(0)) + capital_events_by_year.get(y, Decimal(0))
+        cumulative[y] = running
+    write_series("Cumulative Cash Flow", cumulative, "r_uw_cf_cumulative")
+
+    freeze_top(ws, row=3)
+    print_landscape(ws)
+
+
+# ── Investor Returns sheet ────────────────────────────────────────────────────
+
+
+def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
+    """Waterfall by tier + LP/GP IRR + EM + CoC + promote summary."""
+    rollup: list[dict] = ctx.get("rollup_waterfall") or []
+    summary = ctx.get("rollup_summary") or {}
+    totals = summary.get("totals") or {}
+
+    set_widths(ws, [30, 22, 22, 22])
+
+    section_label(ws, 1, "Waterfall — Aggregate Distributions by Tier", span_cols=4)
+    header_row(ws, 2, ["Tier Type", "Cash Distributed", "# Modules", "Notes"])
+
+    by_tier = _waterfall_by_tier(rollup)
+    cur_row = 3
+    for tier_type in sorted(by_tier):
+        bucket = by_tier[tier_type]
+        ws.cell(row=cur_row, column=1, value=tier_type.replace("_", " ").title()).font = FONT_LABEL
+        registry.write(
+            ws, cur_row, 2, bucket.get("cash_total", Decimal(0)),
+            name=f"s_waterfall_{tier_type}_cash",
+            fmt=ACCOUNTING, font=FONT_VALUE, align=ALIGN_RIGHT,
+        )
+        ws.cell(row=cur_row, column=3, value=int(bucket.get("module_count", 0))).number_format = INT_COMMA
+        cur_row += 1
+
+    if not by_tier:
+        ws.cell(
+            row=cur_row, column=1,
+            value="(no waterfall results — run Compute to populate)",
+        ).font = FONT_HINT
+        cur_row += 1
+
+    # ── Headline returns ───────────────────────────────────────────────────
+    cur_row += 1
+    section_label(ws, cur_row, "Headline Returns", span_cols=2)
+    cur_row += 1
+
+    # Compute LP / GP IRR from per-tier party_irr_pct rows. Use the latest
+    # period's value per (tier_type, capital_module_id) — the party IRR is
+    # reported as the cumulative figure as of each period; the last period
+    # is the project IRR through exit.
+    lp_irr, gp_irr = _lp_gp_irr_from_rollup(rollup, ctx["capital_modules"])
+    lp_em, gp_em = _equity_multiples_from_rollup(rollup, ctx["capital_modules"])
+
+    kv_row(
+        ws, cur_row, "LP IRR (project)", lp_irr,
+        name="s_lp_irr", registry=registry, fmt=PCT,
+    ); cur_row += 1
+    kv_row(
+        ws, cur_row, "GP IRR (project)", gp_irr,
+        name="s_gp_irr", registry=registry, fmt=PCT,
+    ); cur_row += 1
+    kv_row(
+        ws, cur_row, "Combined Levered IRR (scenario)",
+        _coerce_pct(totals.get("combined_irr_pct") or 0),
+        name="s_returns_combined_irr", registry=registry, fmt=PCT,
+    ); cur_row += 1
+    kv_row(
+        ws, cur_row, "LP Equity Multiple", lp_em,
+        name="s_lp_equity_multiple", registry=registry, fmt="0.00\\x",
+    ); cur_row += 1
+    kv_row(
+        ws, cur_row, "GP Equity Multiple", gp_em,
+        name="s_gp_equity_multiple", registry=registry, fmt="0.00\\x",
+    ); cur_row += 1
+
+    promote_total = by_tier.get("residual", {}).get("cash_total", Decimal(0)) + by_tier.get(
+        "catch_up", {}
+    ).get("cash_total", Decimal(0))
+    kv_row(
+        ws, cur_row, "GP Promote $ (catch-up + residual)",
+        promote_total,
+        name="s_gp_promote_dollars", registry=registry, fmt=ACCOUNTING,
+    ); cur_row += 1
+
+    freeze_top(ws, row=3)
+    print_landscape(ws)
+
+
+# ── Sheet-builder support helpers (commit 2) ──────────────────────────────────
+
+
+def _aggregate_scenario_line_items(
+    items_by_project: dict[UUID, list[CashFlowLineItem]],
+) -> dict[int, dict[str, Decimal]]:
+    combined: dict[int, dict[str, Decimal]] = {}
+    for items in items_by_project.values():
+        per_year = _annual_line_items(items)
+        for year, by_label in per_year.items():
+            bucket = combined.setdefault(year, {})
+            for label, amount in by_label.items():
+                bucket[label] = bucket.get(label, Decimal(0)) + amount
+    return combined
+
+
+def _collect_opex_labels(annual_items: dict[int, dict[str, Decimal]]) -> set[str]:
+    """OpEx line-item labels — distinct from capital events.
+
+    Heuristic: non-OpEx items either start with "Refi —" / "Acquisition" /
+    "Sale" / "Prepay", or are negative across all years. Anything else that
+    appears as a recurring outflow is treated as an OpEx category.
+    """
+    capital_prefixes = ("Refi —", "Acquisition", "Sale", "Prepay", "Exit")
+    labels: set[str] = set()
+    for by_label in annual_items.values():
+        for label in by_label:
+            if not any(label.startswith(p) for p in capital_prefixes):
+                labels.add(label)
+    return labels
+
+
+def _capital_events_by_year(
+    annual_items: dict[int, dict[str, Decimal]],
+) -> dict[int, Decimal]:
+    """Sum capital-event line items per year (acquisition outflows, exit proceeds)."""
+    capital_prefixes = ("Refi —", "Acquisition", "Sale", "Prepay", "Exit")
+    out: dict[int, Decimal] = {}
+    for year, by_label in annual_items.items():
+        total = Decimal(0)
+        for label, amount in by_label.items():
+            if any(label.startswith(p) for p in capital_prefixes):
+                total += amount
+        out[year] = total
+    return out
+
+
+def _worst_dscr(per_project: list[dict]) -> Decimal | None:
+    """Lowest non-null DSCR across projects (covenant binds at the weakest one)."""
+    candidates = [
+        _coerce_decimal(p.get("dscr"))
+        for p in per_project
+        if p.get("dscr") is not None
+    ]
+    return min(candidates) if candidates else None
+
+
+def _sum_per_project_field(per_project: list[dict], field: str) -> Decimal:
+    return sum(
+        (_coerce_decimal(p.get(field) or 0) for p in per_project),
+        Decimal(0),
+    )
+
+
+def _longest_hold_months(per_project: list[dict]) -> int | None:
+    candidates = [
+        int(p.get("total_timeline_months") or 0)
+        for p in per_project
+        if p.get("total_timeline_months")
+    ]
+    return max(candidates) if candidates else None
+
+
+def _project_sheet_name(idx: int, project_name: str | None) -> str:
+    """Build the per-project sheet name (commit 3 will create these sheets).
+
+    Format ``P{n} {Name}`` truncated to Excel's 31-char ceiling. The exact
+    rule comes from plan §2: prefix is `P` + 1- or 2-digit ordinal + space
+    (4 chars max), then up to ``PROJECT_SHEET_NAME_BUDGET`` chars of name.
+    """
+    name = (project_name or "").strip()
+    truncated = name[:PROJECT_SHEET_NAME_BUDGET].rstrip()
+    return f"P{idx} {truncated}".rstrip()
+
+
+def _is_lp_funder(funder_type) -> bool:
+    label = (str(getattr(funder_type, "value", funder_type)) or "").lower()
+    return "common_equity" in label or "preferred" in label or "lp" in label
+
+
+def _is_gp_funder(funder_type) -> bool:
+    label = (str(getattr(funder_type, "value", funder_type)) or "").lower()
+    return "owner_equity" in label or label == "gp" or "developer" in label
+
+
+def _lp_gp_irr_from_rollup(
+    rollup: list[dict], capital_modules: list[CapitalModule]
+) -> tuple[Decimal | None, Decimal | None]:
+    """Pull LP and GP IRR percentages from the latest waterfall row per module.
+
+    Returns (LP IRR fraction, GP IRR fraction) — None when no eligible rows.
+    """
+    by_module: dict[str, dict] = {}
+    for row in rollup:
+        mid = row.get("capital_module_id")
+        if not mid:
+            continue
+        prior = by_module.get(mid)
+        if prior is None or (row.get("period") or 0) > (prior.get("period") or 0):
+            by_module[mid] = row
+    module_index = {str(m.id): m for m in capital_modules}
+
+    lp_vals: list[Decimal] = []
+    gp_vals: list[Decimal] = []
+    for mid, row in by_module.items():
+        module = module_index.get(mid)
+        if module is None or row.get("party_irr_pct") is None:
+            continue
+        irr_fraction = _coerce_pct(row.get("party_irr_pct"))
+        if _is_lp_funder(module.funder_type):
+            lp_vals.append(irr_fraction)
+        elif _is_gp_funder(module.funder_type):
+            gp_vals.append(irr_fraction)
+
+    lp_irr = sum(lp_vals, Decimal(0)) / Decimal(len(lp_vals)) if lp_vals else None
+    gp_irr = sum(gp_vals, Decimal(0)) / Decimal(len(gp_vals)) if gp_vals else None
+    return lp_irr, gp_irr
+
+
+def _equity_multiples_from_rollup(
+    rollup: list[dict], capital_modules: list[CapitalModule]
+) -> tuple[Decimal | None, Decimal | None]:
+    """Compute LP / GP equity multiples from cumulative distributed totals.
+
+    EM = total distributions ÷ total contributions. We don't have direct
+    contribution data here, so use ``cumulative_distributed`` as the
+    numerator and the module's source amount as the denominator (the
+    committed amount is the contribution proxy for equity modules).
+    """
+    by_module: dict[str, Decimal] = {}
+    for row in rollup:
+        mid = row.get("capital_module_id")
+        if not mid:
+            continue
+        cum = _coerce_decimal(row.get("cumulative_distributed") or 0)
+        prev = by_module.get(mid)
+        if prev is None or cum > prev:
+            by_module[mid] = cum
+
+    lp_dist = lp_contrib = Decimal(0)
+    gp_dist = gp_contrib = Decimal(0)
+    for module in capital_modules:
+        commitment = _coerce_decimal((module.source or {}).get("amount") or 0)
+        cum = by_module.get(str(module.id), Decimal(0))
+        if _is_lp_funder(module.funder_type):
+            lp_dist += cum
+            lp_contrib += commitment
+        elif _is_gp_funder(module.funder_type):
+            gp_dist += cum
+            gp_contrib += commitment
+
+    lp_em = (lp_dist / lp_contrib) if lp_contrib > 0 else None
+    gp_em = (gp_dist / gp_contrib) if gp_contrib > 0 else None
+    return lp_em, gp_em
+
+
+def _to_excel_number(value):
+    """Coerce a Decimal/None to a plain float-or-blank for openpyxl cells.
+
+    Returns "" for None so empty cells render blank, not as the literal
+    string "None". Mirrors ``_workbook_helpers.to_excel_value`` but is
+    inlined here for the hot per-cell path.
+    """
+    if value is None:
+        return ""
+    if isinstance(value, Decimal):
+        f = float(value)
+        return int(f) if f == int(f) else round(f, 6)
+    return value
 
 
 def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:

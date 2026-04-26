@@ -1,16 +1,17 @@
-"""Smoke tests for the LP investor Excel export.
+"""Smoke + parity tests for the LP investor Excel export.
 
-Commit-1 scope: Cover, Assumptions, Glossary. Commits 2/3 will extend the
-sheet roster (Underwriting Summary/Pro Forma/Cash Flow/Investor Returns,
-then per-project sheets) and these tests will grow to assert the new
-sheet names + named-range coverage.
+Sheet roster grows commit-by-commit: commit 1 added Cover/Assumptions/
+Glossary; commit 2 inserts the four Underwriting rollup sheets in the
+§2 final order; commit 3 will splice per-project sheets between
+Assumptions and Glossary. Tests assert exact roster + grow with the build.
 
-Tests intentionally use the in-memory async SQLite + ``seed_deal_model_with_financials``
-fixture from ``tests/conftest.py`` for speed; the exporter's data loader
-is exercised end-to-end with real ORM rows.
+Tests use the in-memory async SQLite + ``seed_deal_model_with_financials``
+fixture from ``tests/conftest.py``; the exporter's data loader is exercised
+end-to-end with real ORM rows.
 """
 from __future__ import annotations
 
+import re
 from io import BytesIO
 
 import pytest
@@ -31,7 +32,20 @@ from tests.conftest import (
 )
 
 
-COMMIT_1_SHEET_ORDER = ("Cover", "Assumptions", "Glossary & Methodology")
+COMMIT_2_SHEET_ORDER = (
+    "Cover",
+    "Underwriting Summary",
+    "Underwriting Pro Forma",
+    "Underwriting Cash Flow",
+    "Investor Returns",
+    "Assumptions",
+    "Glossary & Methodology",
+)
+
+# Named-range prefixes the validator recognises. Anything else is treated as a
+# free-form name (debug / one-off) and is allowed but doesn't get
+# bidirectional-validated against the doc glossary.
+_NAMED_RANGE_RE = re.compile(r"^(s|p\d+|r)_")
 
 
 async def _seed_minimal_scenario(session: AsyncSession):
@@ -45,11 +59,11 @@ async def _seed_minimal_scenario(session: AsyncSession):
 
 
 async def test_workbook_has_expected_sheets(session: AsyncSession):
-    """Sheets render in the commit-1 order with no orphan/extra sheets."""
+    """Sheets render in the commit-2 order with no orphan/extra sheets."""
     scenario = await _seed_minimal_scenario(session)
     blob = await export_investor_workbook(scenario.id, session)
     wb = load_workbook(BytesIO(blob), data_only=False)
-    assert tuple(wb.sheetnames) == COMMIT_1_SHEET_ORDER
+    assert tuple(wb.sheetnames) == COMMIT_2_SHEET_ORDER
 
 
 async def test_named_ranges_resolve_to_existing_cells(session: AsyncSession):
@@ -107,6 +121,66 @@ async def test_glossary_sheet_has_investor_metrics(session: AsyncSession):
     assert not missing, f"investor-tagged metrics missing from Glossary sheet: {sorted(missing)}"
 
 
+@pytest.mark.xfail(strict=False, reason="soft gate — bidirectional validator tightens after commit 3 lands per-project sheets")
+async def test_every_named_range_traces_to_doc_entry(session: AsyncSession):
+    """Bidirectional validator (forward direction) per plan §3.8 + §7.
+
+    For every named range matching ``^(s|p\\d+|r)_`` in the workbook, look
+    up the implied metric in FINANCIAL_MODEL.md and assert it is tagged
+    ``investor``. Marked xfail-soft during rollout: many ``s_*`` names refer
+    to scenario meta (sponsor, scenario name, snapshot date) that aren't
+    "metrics" in the FINANCIAL_MODEL.md sense — the strict mapping lands
+    when commit 3 wires per-project metrics.
+    """
+    scenario = await _seed_minimal_scenario(session)
+    blob = await export_investor_workbook(scenario.id, session)
+    wb = load_workbook(BytesIO(blob), data_only=False)
+
+    investor_doc_names = {
+        _slug(m.name) for m in parse_doc().for_audience("investor")
+    }
+
+    orphans: list[str] = []
+    for name in wb.defined_names:
+        if not _NAMED_RANGE_RE.match(name):
+            continue
+        bare = re.sub(r"^(s|p\d+|r)_", "", name)
+        if _slug(bare) not in investor_doc_names:
+            orphans.append(name)
+
+    if orphans:
+        pytest.fail(
+            "named ranges with no investor-tagged doc entry:\n  " + "\n  ".join(sorted(orphans))
+        )
+
+
+async def test_uw_summary_kpis_match_engine_outputs(session: AsyncSession):
+    """Parity test: hero KPIs on the Underwriting Summary sheet match the
+    rollup engine's outputs to within rounding tolerance.
+    """
+    from app.engines.underwriting_rollup import rollup_summary
+
+    scenario = await _seed_minimal_scenario(session)
+    expected = await rollup_summary(scenario.id, session)
+    expected_totals = expected["totals"]
+
+    blob = await export_investor_workbook(scenario.id, session)
+    wb = load_workbook(BytesIO(blob), data_only=False)
+    uw = wb["Underwriting Summary"]
+
+    for key, name in (
+        ("total_project_cost", "s_total_project_cost"),
+        ("total_uses", "s_total_uses"),
+        ("equity_required", "s_equity_required"),
+    ):
+        cell_value = _resolve_named_cell(wb, uw.title, name)
+        engine_value = float(expected_totals.get(key) or 0)
+        assert cell_value is not None, f"named range {name} not found"
+        assert abs(float(cell_value or 0) - engine_value) < 0.01, (
+            f"{name}: cell={cell_value} vs engine={engine_value}"
+        )
+
+
 async def test_filename_slugged(session: AsyncSession):
     scenario = await _seed_minimal_scenario(session)
     from app.models.deal import Deal
@@ -124,7 +198,27 @@ def test_max_project_constants_are_consistent():
     assert len("P99 ") + PROJECT_SHEET_NAME_BUDGET == 31  # 2-digit ordinals fit too
 
 
-# Silence the "imported but unused" warning when pytest collects this file —
-# pytest itself doesn't auto-mark every async def as a test, but our pyproject
-# uses asyncio_mode=auto so the coroutine signature is enough.
-_ = pytest  # noqa: F401
+# ── Helpers ───────────────────────────────────────────────────────────────────
+
+
+def _slug(text: str) -> str:
+    """Lowercase + alphanum-only slug for matching named-range fragments to
+    metric titles like 'Total Project Cost (TPC)'."""
+    return re.sub(r"[^a-z0-9]+", "_", text.lower()).strip("_")
+
+
+def _resolve_named_cell(wb, sheet_title: str, name: str):
+    """Read the value at the cell registered under ``name`` on ``sheet_title``."""
+    if name not in wb.defined_names:
+        return None
+    defined = wb.defined_names[name]
+    for resolved_sheet, ref in defined.destinations:
+        if resolved_sheet != sheet_title:
+            continue
+        sheet = wb[resolved_sheet]
+        ref_clean = ref.replace("$", "")
+        return sheet[ref_clean].value
+    return None
+
+
+_ = pytest  # silence "imported but unused" — pytest's asyncio_mode=auto handles invocation
