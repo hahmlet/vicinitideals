@@ -310,6 +310,173 @@
 
 </div>{# /grid #}
 
+{# ── Gap Adjustment drawer — three sliders that materialize phantom line items ── #}
+{% set _REV_LBL = 'Gap Adjustment — Revenue' %}
+{% set _OPEX_LBL = 'Gap Adjustment — OpEx' %}
+{% set _PP_LBL = 'Gap Adjustment — Purchase Price' %}
+{% set _rev_phantom = (income_streams | selectattr('label', 'equalto', _REV_LBL) | list | first) if income_streams else none %}
+{% set _opex_phantom = (expense_lines | selectattr('label', 'equalto', _OPEX_LBL) | list | first) if expense_lines else none %}
+{% set _pp_phantom = (use_lines | selectattr('label', 'equalto', _PP_LBL) | list | first) if use_lines else none %}
+{% set _rev_amt = (_rev_phantom.amount_fixed_monthly | float) if (_rev_phantom and _rev_phantom.amount_fixed_monthly is not none) else 0 %}
+{% set _opex_amt = (_opex_phantom.annual_amount | float) if (_opex_phantom and _opex_phantom.annual_amount is not none) else 0 %}
+{% set _pp_amt = (_pp_phantom.amount | float) if (_pp_phantom and _pp_phantom.amount is not none) else 0 %}
+
+{# Baselines — used to compute % display. Filter out the phantom rows so the
+   slider's $ delta isn't expressed as a percentage of itself. #}
+{% set ns_rev = namespace(total=0) %}
+{% if income_streams %}
+  {% for s in income_streams if s.label != _REV_LBL %}
+    {% if s.amount_fixed_monthly %}{% set ns_rev.total = ns_rev.total + (s.amount_fixed_monthly | float) %}{% endif %}
+    {% if s.amount_per_unit_monthly and s.unit_count %}
+      {% set ns_rev.total = ns_rev.total + ((s.amount_per_unit_monthly | float) * (s.unit_count | int)) %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+{% set ns_op = namespace(total=0) %}
+{% if expense_lines %}
+  {% for e in expense_lines if e.label != _OPEX_LBL %}
+    {% if e.annual_amount %}{% set ns_op.total = ns_op.total + (e.annual_amount | float) %}{% endif %}
+  {% endfor %}
+{% endif %}
+{% set _baseline_rev_monthly = ns_rev.total %}
+{% set _baseline_opex_annual = ns_op.total %}
+{% set _baseline_pp = (inputs.purchase_price | float) if (inputs and inputs.purchase_price) else 0 %}
+
+{# Ranges: simple ±20% of baseline (or ±$10k floor for tiny baselines).
+   "Auto-bounded to current gap" is a nicer UX but needs the gap dollar
+   value passed in — leaving that as a follow-up. #}
+{% set _rev_range = ((_baseline_rev_monthly * 0.2) | round(0, 'common')) if _baseline_rev_monthly else 10000 %}
+{% set _opex_range = ((_baseline_opex_annual * 0.2) | round(0, 'common')) if _baseline_opex_annual else 50000 %}
+{% set _pp_range = ((_baseline_pp * 0.2) | round(0, 'common')) if _baseline_pp else 100000 %}
+
+<div id="gap-adj-drawer" style="margin-top:24px;padding:16px;border:1px solid var(--border,#e5e7eb);border-radius:8px;background:var(--surface-2,#f9fafb)">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted)">Gap Adjustment</div>
+    <button type="button"
+            onclick="resetGapSliders('{{ model.id }}')"
+            style="font-size:11px;padding:2px 10px;background:transparent;border:1px solid var(--border,#e5e7eb);border-radius:4px;color:var(--text-muted);cursor:pointer">
+      Reset all
+    </button>
+  </div>
+  <p style="font-size:11px;color:var(--text-muted);margin:0 0 16px">
+    Drag to make the model balance. Each slider materializes a phantom line item;
+    the calc-status pill stays yellow while any adjustment is non-zero — drag back
+    to zero to make the model "real" again.
+  </p>
+
+  {# ── Revenue slider ── #}
+  <div style="display:grid;grid-template-columns:130px 1fr 180px;gap:12px;align-items:center;margin-bottom:10px">
+    <label for="gap-slider-rev" style="font-size:12px;font-weight:500">Revenue (/mo)</label>
+    <input type="range"
+           id="gap-slider-rev"
+           min="-{{ _rev_range }}" max="{{ _rev_range }}" step="100"
+           value="{{ _rev_amt | int }}"
+           oninput="onGapSlide('rev', this.value, {{ _baseline_rev_monthly }})"
+           onchange="postGapSliders('{{ model.id }}')"
+           style="width:100%">
+    <div id="gap-slider-rev-display" style="font-size:12px;color:var(--text-muted);text-align:right;font-variant-numeric:tabular-nums"></div>
+  </div>
+
+  {# ── OpEx slider ── #}
+  <div style="display:grid;grid-template-columns:130px 1fr 180px;gap:12px;align-items:center;margin-bottom:10px">
+    <label for="gap-slider-opex" style="font-size:12px;font-weight:500">OpEx (/yr)</label>
+    <input type="range"
+           id="gap-slider-opex"
+           min="-{{ _opex_range }}" max="{{ _opex_range }}" step="500"
+           value="{{ _opex_amt | int }}"
+           oninput="onGapSlide('opex', this.value, {{ _baseline_opex_annual }})"
+           onchange="postGapSliders('{{ model.id }}')"
+           style="width:100%">
+    <div id="gap-slider-opex-display" style="font-size:12px;color:var(--text-muted);text-align:right;font-variant-numeric:tabular-nums"></div>
+  </div>
+
+  {# ── Purchase Price slider ── #}
+  <div style="display:grid;grid-template-columns:130px 1fr 180px;gap:12px;align-items:center">
+    <label for="gap-slider-pp" style="font-size:12px;font-weight:500">Purchase Price</label>
+    <input type="range"
+           id="gap-slider-pp"
+           min="-{{ _pp_range }}" max="{{ _pp_range }}" step="1000"
+           value="{{ _pp_amt | int }}"
+           oninput="onGapSlide('pp', this.value, {{ _baseline_pp }})"
+           onchange="postGapSliders('{{ model.id }}')"
+           style="width:100%">
+    <div id="gap-slider-pp-display" style="font-size:12px;color:var(--text-muted);text-align:right;font-variant-numeric:tabular-nums"></div>
+  </div>
+</div>
+
+<script>
+(function() {
+  function fmtUSD(n) {
+    var sign = n < 0 ? '-' : (n > 0 ? '+' : '');
+    return sign + '$' + Math.abs(n).toLocaleString('en-US', {maximumFractionDigits: 0});
+  }
+  function fmtPct(delta, baseline) {
+    if (!baseline) return '';
+    var p = (delta / baseline) * 100;
+    var sign = p < 0 ? '' : '+';
+    return ' (' + sign + p.toFixed(1) + '%)';
+  }
+  // Live $ + % display update on slider drag — runs on every oninput tick.
+  window.onGapSlide = function(kind, value, baseline) {
+    var el = document.getElementById('gap-slider-' + kind + '-display');
+    if (!el) return;
+    var delta = parseFloat(value);
+    el.textContent = fmtUSD(delta) + fmtPct(delta, baseline);
+  };
+  // Initialize displays from current slider values on partial load.
+  ['rev', 'opex', 'pp'].forEach(function(kind) {
+    var slider = document.getElementById('gap-slider-' + kind);
+    if (!slider) return;
+    var baselineMap = {
+      rev: {{ _baseline_rev_monthly }},
+      opex: {{ _baseline_opex_annual }},
+      pp: {{ _baseline_pp }}
+    };
+    window.onGapSlide(kind, slider.value, baselineMap[kind]);
+  });
+
+  // POST current slider state to /sliders, then refresh the panel + pill.
+  // Triggered on `change` (slider release) — drag latency comes from
+  // network + compute_cash_flows, no client-side debounce needed.
+  window.postGapSliders = function(modelId) {
+    var rev = document.getElementById('gap-slider-rev');
+    var opex = document.getElementById('gap-slider-opex');
+    var pp = document.getElementById('gap-slider-pp');
+    var body = {
+      revenue_delta_monthly: rev ? rev.value : '0',
+      opex_delta_annual: opex ? opex.value : '0',
+      pp_delta: pp ? pp.value : '0'
+    };
+    fetch('/api/models/' + modelId + '/sliders', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(body)
+    }).then(function(r) {
+      if (!r.ok) { console.error('gap sliders POST failed:', r.status); return; }
+      // Re-render the panel (includes phantom row state) and the pill.
+      if (typeof refreshPanel === 'function') refreshPanel('sources_uses');
+    });
+  };
+
+  // Reset all three to zero, persist, refresh.
+  window.resetGapSliders = function(modelId) {
+    ['rev', 'opex', 'pp'].forEach(function(kind) {
+      var s = document.getElementById('gap-slider-' + kind);
+      if (s) {
+        s.value = 0;
+        var baselineMap = {
+          rev: {{ _baseline_rev_monthly }},
+          opex: {{ _baseline_opex_annual }},
+          pp: {{ _baseline_pp }}
+        };
+        window.onGapSlide(kind, 0, baselineMap[kind]);
+      }
+    });
+    window.postGapSliders(modelId);
+  };
+})();
+</script>
+
 {# ── Gantt (timeline phases) — only shown once timeline is approved ── #}
 {% if builder_gantt_data and timeline_approved %}
 <div style="margin-top:20px">
