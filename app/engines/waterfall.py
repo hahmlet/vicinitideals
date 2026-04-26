@@ -339,9 +339,31 @@ async def _ensure_equity_and_tiers(
     equity_modules = [m for m in capital_modules if _is_equity_module(m)]
     debt_modules = [m for m in capital_modules if _is_debt_module(m)]
 
-    # Auto-create equity module if none exists
+    # Auto-create equity per project: every project on the scenario should
+    # have at least one equity module attached via the junction. Multi-
+    # project deals routinely end up with one project covered (e.g. P2 has
+    # its own clone) while another (P1) is orphaned because the original
+    # equity module's junction was never wired up. Walk the projects, check
+    # junction coverage, and create a per-project synthetic only where
+    # needed. Single-project scenarios behave identically to before.
+    from app.models.capital import CapitalModuleProject as _CMP_eq
+    _scn_projects = list((await session.execute(
+        select(Project).where(Project.scenario_id == deal_uuid)
+    )).scalars())
+    _equity_ids = [m.id for m in equity_modules]
+    _projects_with_equity: set = set()
+    if _equity_ids and _scn_projects:
+        _projects_with_equity = set((await session.execute(
+            select(_CMP_eq.project_id).where(
+                _CMP_eq.capital_module_id.in_(_equity_ids),
+            )
+        )).scalars())
+    _projects_missing_equity = [
+        p for p in _scn_projects if p.id not in _projects_with_equity
+    ]
+
     synthetic_equity: CapitalModule | None = None
-    if not equity_modules:
+    if _projects_missing_equity:
         max_position = max((m.stack_position for m in capital_modules), default=0)
         synthetic_equity = CapitalModule(
             scenario_id=deal_uuid,
@@ -356,15 +378,10 @@ async def _ensure_equity_and_tiers(
         )
         session.add(synthetic_equity)
         await session.flush()
-        # Attach the synthetic equity to every project on the scenario so
-        # multi-project deals don't end up with an orphan equity module
-        # (no junction → invisible to per-project compute → engine never
-        # writes back, equity never sized, Sources gap shows up).
-        from app.models.capital import CapitalModuleProject as _CMP_eq
-        _scn_projects = list((await session.execute(
-            select(Project).where(Project.scenario_id == deal_uuid)
-        )).scalars())
-        for _ep in _scn_projects:
+        # Attach to every project that lacked equity coverage. The per-project
+        # default keeps each project's equity siloed; users opt into sharing
+        # via the Add Project drawer's share-source checkbox.
+        for _ep in _projects_missing_equity:
             session.add(_CMP_eq(
                 capital_module_id=synthetic_equity.id,
                 project_id=_ep.id,
@@ -375,7 +392,7 @@ async def _ensure_equity_and_tiers(
             ))
         await session.flush()
         capital_modules.append(synthetic_equity)
-        equity_modules = [synthetic_equity]
+        equity_modules.append(synthetic_equity)
 
     # Auto-create tiers if none exist
     if not deal_model.waterfall_tiers:
