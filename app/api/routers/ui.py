@@ -8476,7 +8476,24 @@ async def model_builder(
     # Pre-render the calc-status pill so it's visible on initial page load
     # without depending on an HTMX hx-trigger="load" round-trip (which was
     # silently failing for some states, leaving the topbar empty).
-    _calc_status = _compute_calc_status(data)
+    # On the Underwriting view, the pill should reflect the scenario's
+    # worst-status aggregate (so it doesn't just mirror Project 1's pill);
+    # on per-project tabs, it remains the active project's status.
+    if active_view == "underwriting":
+        _scen_st = data.get("scenario_statuses") or {}
+        _uw_st = (_scen_st.get("underwriting") or {})
+        _calc_status = {
+            "overall": _uw_st.get("overall", "na"),
+            "failing_count": int(_uw_st.get("failing_count") or 0),
+            # The detail modal uses sources_uses/dscr/ltv keys; for the
+            # Underwriting pill we rely on the per-project chips for drilldown
+            # and just surface the aggregate severity here.
+            "sources_uses": {"status": "na", "label": "See per-project chips", "detail": "", "meta": {}},
+            "dscr": {"status": "na", "label": "See per-project chips", "detail": "", "meta": {}},
+            "ltv": {"status": "na", "label": "See per-project chips", "detail": "", "meta": {}},
+        }
+    else:
+        _calc_status = _compute_calc_status(data)
     calc_status_pill_html = _render_calc_status_pill_html(_calc_status, model_id)
 
     ctx = {

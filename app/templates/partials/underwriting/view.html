@@ -6,6 +6,30 @@
 {% set _totals = _summary.get('totals', {}) %}
 {% set _per_project = _summary.get('per_project', []) %}
 
+{# ── Aggregate Sources/Uses gap + worst DSCR across projects ───────────
+   Underwriting tab KPI strip needs scenario-wide visibility of the gap
+   and the binding-DSCR. Computed inline from rollup data + per-project
+   capital_total/uses_total which the cashflow engine writes per project. #}
+{% set _ns_uw = namespace(total_uses=0.0, total_sources=0.0, worst_dscr=None) %}
+{% for _pp in _per_project %}
+  {%- set _pp_dscr = _pp.dscr | float if _pp.dscr else None -%}
+  {%- if _pp_dscr is not none -%}
+    {%- if _ns_uw.worst_dscr is none or _pp_dscr < _ns_uw.worst_dscr -%}
+      {%- set _ns_uw.worst_dscr = _pp_dscr -%}
+    {%- endif -%}
+  {%- endif -%}
+{% endfor %}
+{# Sources/Uses gap from the rollup_sources + rollup_summary data: total
+   uses per project come from OperationalOutputs.total_project_cost; total
+   sources for the scenario = sum of CapitalModule junction-scoped principals
+   already aggregated by rollup_sources as `total_principal`. #}
+{% set _uw_total_uses = _totals.get('total_project_cost', 0) | float %}
+{% set _ns_src = namespace(total=0.0) %}
+{% for _src in _r.get('sources', []) %}
+  {% set _ns_src.total = _ns_src.total + (_src.total_principal | float if _src.total_principal else 0.0) %}
+{% endfor %}
+{% set _uw_sources_gap = _uw_total_uses - _ns_src.total %}
+
 <div class="uw-view">
 
   {# ── KPI strip ──────────────────────────────────────────────────────── #}
@@ -16,11 +40,31 @@
     </div>
     <div class="uw-kpi">
       <div class="uw-kpi-label">Total Project Cost</div>
-      <div class="uw-kpi-value">${{ '{:,.0f}'.format(_totals.get('total_project_cost', 0) | float) }}</div>
+      <div class="uw-kpi-value">${{ '{:,.0f}'.format(_uw_total_uses) }}</div>
     </div>
     <div class="uw-kpi">
       <div class="uw-kpi-label">Equity Required</div>
       <div class="uw-kpi-value">${{ '{:,.0f}'.format(_totals.get('equity_required', 0) | float) }}</div>
+    </div>
+    <div class="uw-kpi">
+      <div class="uw-kpi-label">Sources Gap</div>
+      <div class="uw-kpi-value" style="color:{% if _uw_sources_gap > 1 %}#dc2626{% elif _uw_sources_gap < -1 %}#d97706{% else %}#16a34a{% endif %}">
+        {%- if _uw_sources_gap > 1 -%}
+          ${{ '{:,.0f}'.format(_uw_sources_gap) }}
+        {%- elif _uw_sources_gap < -1 -%}
+          (${{ '{:,.0f}'.format(-_uw_sources_gap) }})
+        {%- else -%}
+          $0
+        {%- endif -%}
+      </div>
+      <div style="font-size:10px;color:var(--text-muted);margin-top:2px">Σ Uses − Σ Sources</div>
+    </div>
+    <div class="uw-kpi">
+      <div class="uw-kpi-label">Worst DSCR</div>
+      <div class="uw-kpi-value" style="color:{% if _ns_uw.worst_dscr is not none and _ns_uw.worst_dscr < 1.15 %}#dc2626{% else %}#16a34a{% endif %}">
+        {{ '{:.2f}×'.format(_ns_uw.worst_dscr) if _ns_uw.worst_dscr is not none else '—' }}
+      </div>
+      <div style="font-size:10px;color:var(--text-muted);margin-top:2px">min across projects</div>
     </div>
     <div class="uw-kpi">
       <div class="uw-kpi-label">Combined Levered IRR</div>
@@ -103,11 +147,13 @@
           <td>{{ s.funder_type.replace('_', ' ').title() }}</td>
           <td>
             {% for cid in s.covered_project_ids %}
-              {% set _cp = (deal_projects | selectattr('id', 'equalto', cid|trim) | list | first) %}
-              {% if not _cp %}
-                {% set _cp = (deal_projects | selectattr('id', 'equalto', cid) | list | first) %}
-              {% endif %}
-              {% if _cp %}<span class="uw-chip">{{ _cp.name }}</span>{% else %}<span class="uw-chip">?</span>{% endif %}
+              {# rollup serializes project_id as str; deal_projects[i].id is UUID.
+                 selectattr equalto silently fails — use namespace + string compare. #}
+              {% set _cns = namespace(found=None) %}
+              {% for _cand in deal_projects %}
+                {% if (_cand.id | string) == (cid | string) %}{% set _cns.found = _cand %}{% endif %}
+              {% endfor %}
+              {% if _cns.found %}<span class="uw-chip">{{ _cns.found.name }}</span>{% else %}<span class="uw-chip">?</span>{% endif %}
             {% endfor %}
             {% if s.is_shared %}<span class="uw-badge-shared">shared</span>{% endif %}
           </td>
@@ -214,7 +260,7 @@
 }
 .uw-kpi-strip {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 12px;
   margin-bottom: 24px;
 }

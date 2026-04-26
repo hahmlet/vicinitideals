@@ -254,25 +254,41 @@ async def compute_waterfall(
     await session.flush()
 
     # Write equity_required to OperationalOutputs: sum of all equity contributions
-    # (negative LP+GP cash flows = cash in from equity investors)
-    equity_required = _q(
-        _negative_total(lp_cashflows) + _negative_total(gp_cashflows)
+    # (negative LP+GP cash flows = cash in from equity investors).
+    #
+    # Multi-project skip: lp_cashflows / gp_cashflows aggregate every
+    # project's negative-NCF capital call across the scenario, then the sum
+    # gets dumped onto the default project's outputs row only — producing
+    # values like $7.7M of equity for a $2.7M project. The cashflow engine
+    # already wrote per-project equity_required = max(0, TPC - junction debt),
+    # which is the right per-project number. For multi-project we leave it
+    # alone; for single-project we keep the richer waterfall-derived value.
+    from sqlalchemy import func as _sa_func
+    _scn_project_count = int(
+        (
+            await session.execute(
+                select(_sa_func.count())
+                .select_from(Project)
+                .where(Project.scenario_id == deal_uuid)
+            )
+        ).scalar_one()
     )
-    # Scope to default project (oldest by created_at). Phase 2b made
-    # OperationalOutputs per-project; pre-multi-project behavior is preserved
-    # by writing equity_required to the default project's row.
-    outputs_row = (
-        await session.execute(
-            select(OperationalOutputs)
-            .join(Project, Project.id == OperationalOutputs.project_id)
-            .where(OperationalOutputs.scenario_id == deal_uuid)
-            .order_by(Project.created_at.asc())
-            .limit(1)
+    if _scn_project_count <= 1:
+        equity_required = _q(
+            _negative_total(lp_cashflows) + _negative_total(gp_cashflows)
         )
-    ).scalar_one_or_none()
-    if outputs_row is not None and equity_required > ZERO:
-        outputs_row.equity_required = equity_required
-        await session.flush()
+        outputs_row = (
+            await session.execute(
+                select(OperationalOutputs)
+                .join(Project, Project.id == OperationalOutputs.project_id)
+                .where(OperationalOutputs.scenario_id == deal_uuid)
+                .order_by(Project.created_at.asc())
+                .limit(1)
+            )
+        ).scalar_one_or_none()
+        if outputs_row is not None and equity_required > ZERO:
+            outputs_row.equity_required = equity_required
+            await session.flush()
 
     levered_metrics = await _apply_levered_metrics(deal_uuid, session)
     distribution_report = _build_investor_distribution_report(

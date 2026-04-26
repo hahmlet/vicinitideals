@@ -533,10 +533,32 @@ async def _compute_project_cashflow(
             period += 1
 
     total_project_cost = _calculate_total_project_cost(line_item_rows)
-    # equity_required is set to 0 here; the waterfall engine overwrites it with
-    # the actual sum of equity cash contributions after running its capital-call
-    # allocation. Using peak-negative-NCF here conflates debt + equity.
-    equity_required = ZERO
+    # equity_required = the funding gap this project needs equity to fill =
+    # max(0, TPC - sum of this project's debt module principals via junction
+    # overlay). Single-project deals: the waterfall engine subsequently
+    # overwrites this with actual LP+GP capital calls (richer signal). Multi-
+    # project deals: the waterfall's scenario-wide sum gets dumped onto the
+    # default project only, producing nonsense, so the waterfall now skips
+    # the overwrite for multi-project — these per-project values stand.
+    _project_debt_principal = ZERO
+    for _cm_eq in capital_modules:
+        _ft_eq = str(_cm_eq.funder_type).replace("FunderType.", "")
+        if _ft_eq not in _DEBT_FUNDER_TYPES:
+            continue
+        _src_eq = _cm_eq.source or {}
+        if _src_eq.get("is_bridge"):
+            continue
+        _amt_eq = _src_eq.get("amount")
+        if _amt_eq:
+            try:
+                _project_debt_principal += Decimal(str(_amt_eq))
+            except Exception:
+                pass
+    equity_required = (
+        total_project_cost - _project_debt_principal
+        if total_project_cost > _project_debt_principal
+        else ZERO
+    )
     total_timeline_months = len(cash_flow_rows)
 
     if stabilized_noi_monthly is None and cash_flow_rows:

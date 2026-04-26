@@ -773,7 +773,10 @@ function handleComputeResult(evt) {
     <button type="button" class="deal-tab deal-tab-add" onclick="openDrawer('add-project-drawer')">+ Add Project</button>
     {% endif %}
   </div>
-  {% if deal_projects | length >= 2 %}
+  {# Clone From is a per-project mutation (replaces the active project's
+     financial data with another project's). It only makes sense when a
+     project tab is active — hide on the Underwriting (rollup) view. #}
+  {% if deal_projects | length >= 2 and (active_view if active_view is defined else 'project') == 'project' %}
   <button type="button" class="deal-tab deal-tab-add" style="flex-shrink:0;border-left:1px solid var(--border)"
           onclick="openDrawer('clone-project-drawer')">⎘ Clone From</button>
   {% endif %}
