@@ -9278,15 +9278,38 @@ async def model_calc_status_modal(
     """
     if _is_underwriting_view_request(request):
         status = await _aggregate_status_for_underwriting(session, model_id)
+        # Underwriting modal shows per-project breakdown, not the 3-factor
+        # diagnostic. Load full scenario_statuses + project list for the
+        # template's severity-sorted card list.
+        _scen_st_full = await _compute_scenario_statuses(session, model_id)
+        _deal_projects = list(
+            (
+                await session.execute(
+                    select(Project)
+                    .where(Project.scenario_id == model_id)
+                    .order_by(Project.created_at.asc())
+                )
+            ).scalars()
+        )
+        response = templates.TemplateResponse(
+            request,
+            "partials/calc_status_modal_underwriting.html",
+            {
+                "status": status,
+                "model_id": str(model_id),
+                "scenario_statuses": _scen_st_full,
+                "deal_projects": _deal_projects,
+            },
+        )
     else:
         _active_proj_id = await _active_project_from_request(request, session, model_id)
         data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
         status = _compute_calc_status(data)
-    response = templates.TemplateResponse(
-        request,
-        "partials/calc_status_modal.html",
-        {"status": status, "model_id": str(model_id)},
-    )
+        response = templates.TemplateResponse(
+            request,
+            "partials/calc_status_modal.html",
+            {"status": status, "model_id": str(model_id)},
+        )
     response.headers["HX-Trigger"] = "calcStatusChanged"
     return response
 

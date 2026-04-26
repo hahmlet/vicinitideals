@@ -1,0 +1,114 @@
+{# Underwriting calc-status modal body. Returned by
+   /ui/models/{id}/calc-status/modal when HX-Current-URL has
+   ?view=underwriting. Shows a per-project breakdown sorted by
+   severity (fail → warn → ok), with passing projects collapsed
+   to a single summary line.
+
+   Required context:
+     - status: aggregate dict (overall, failing_count) used in the header
+     - model_id: str
+     - scenario_statuses: full output of _compute_scenario_statuses
+       — { per_project: {project_id: <calc_status_dict>}, underwriting: ... }
+     - deal_projects: list of Project ORM rows (need .id, .name)
+#}
+
+{%- set _per = scenario_statuses.per_project if scenario_statuses else {} -%}
+{%- set _proj_by_id = {} -%}
+{%- for _p in deal_projects -%}
+  {{- _proj_by_id.update({_p.id: _p}) or '' -}}
+{%- endfor -%}
+
+{# Build sortable list: (severity_rank, project) tuples #}
+{%- set _SEV_RANK = {'fail': 0, 'warn': 1, 'ok': 2, 'na': 3} -%}
+{%- set _ranked = namespace(items=[]) -%}
+{%- for _pid, _st in _per.items() -%}
+  {%- set _proj = _proj_by_id.get(_pid) -%}
+  {%- if _proj -%}
+    {{- _ranked.items.append((_SEV_RANK.get(_st.overall, 4), _proj.id, _proj.name, _st)) or '' -}}
+  {%- endif -%}
+{%- endfor -%}
+{%- set _ranked_sorted = _ranked.items | sort -%}
+
+{%- set _passing = [] -%}
+{%- set _issues = [] -%}
+{%- for _r in _ranked_sorted -%}
+  {%- if _r[3].overall == 'ok' or _r[3].overall == 'na' -%}
+    {{- _passing.append(_r) or '' -}}
+  {%- else -%}
+    {{- _issues.append(_r) or '' -}}
+  {%- endif -%}
+{%- endfor -%}
+
+<div class="calc-status-modal-header">
+  <div>
+    <div class="calc-status-modal-title">Underwriting Status</div>
+    <div class="calc-status-modal-sub">
+      {% if status.overall == 'ok' %}
+        All {{ deal_projects | length }} project{{ 's' if deal_projects|length != 1 else '' }} passing.
+      {% else %}
+        {{ _issues | length }} project{{ 's' if _issues|length != 1 else '' }} need{{ '' if _issues|length != 1 else 's' }} attention
+        ({{ status.failing_count }} factor{{ 's' if status.failing_count != 1 else '' }} flagged).
+      {% endif %}
+    </div>
+  </div>
+  <button type="button" class="calc-status-modal-close"
+          onclick="document.getElementById('calc-status-modal').style.display='none'">✕</button>
+</div>
+
+<div class="calc-status-modal-body" style="max-height:70vh;overflow-y:auto">
+
+  {% if _passing %}
+  <div style="margin-bottom:14px;padding:10px 12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;font-size:13px">
+    <strong style="color:#166534">{{ _passing | length }} of {{ deal_projects | length }} passing —</strong>
+    {% for _r in _passing %}
+      <span class="calc-status-pass-chip">{{ _r[2] }}</span>{% if not loop.last %} {% endif %}
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% for _rank, _pid, _pname, _pst in _issues %}
+  {%- set _icon = {'ok': '✓', 'warn': '⚠', 'fail': '✕', 'na': '○'}.get(_pst.overall, '○') -%}
+  <div class="calc-status-row calc-status-{{ _pst.overall }}" style="margin-bottom:12px">
+    <div class="calc-status-row-icon">{{ _icon }}</div>
+    <div class="calc-status-row-content">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+        <div class="calc-status-row-title">{{ _pname }}</div>
+        <a href="/models/{{ model_id }}/builder?project={{ _pid }}"
+           style="font-size:11px;color:var(--accent);text-decoration:none;font-weight:500">→ Open Project</a>
+      </div>
+      <ul style="margin:6px 0 0;padding-left:18px;font-size:12px;line-height:1.6">
+        {%- for _factor_key in ['sources_uses', 'dscr', 'ltv'] -%}
+          {%- set _fa = _pst.get(_factor_key) -%}
+          {%- if _fa and _fa.status in ('warn', 'fail') -%}
+            <li>
+              <strong>{{ {'sources_uses': 'Sources / Uses', 'dscr': 'DSCR', 'ltv': 'LTV'}[_factor_key] }}:</strong>
+              {{ _fa.label }}
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+  </div>
+  {% endfor %}
+
+  {% if not _issues and not _passing %}
+  <div style="text-align:center;padding:30px;color:var(--text-muted)">
+    No projects yet. Add a project to begin.
+  </div>
+  {% endif %}
+
+</div>
+
+<style>
+.calc-status-pass-chip {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  background: #fff;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+  border-radius: 10px;
+  padding: 1px 8px;
+  margin-right: 4px;
+}
+</style>
