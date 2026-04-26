@@ -695,7 +695,21 @@ async def _apply_levered_metrics(
         if stabilized_noi_annual is not None:
             outputs.noi_stabilized = stabilized_noi_annual
 
-    computed_dscr = _compute_dscr(cash_flows, outputs)
+    # DSCR scoped to default project only. Multi-project scenarios have
+    # one cashflow row per (project, period); sweeping all of them through
+    # _compute_dscr conflates P1's debt service with P2's and yields a
+    # nonsense aggregate that doesn't match either project's actual DSCR.
+    # The per-project cashflow engine has already written outputs.dscr for
+    # every project; we recompute here only for the default project to keep
+    # the median-based formula authoritative when the waterfall reshapes
+    # debt_service away from straight P&I.
+    _default_project_cashflows = [
+        row for row in cash_flows
+        if outputs.project_id is not None and row.project_id == outputs.project_id
+    ]
+    computed_dscr = _compute_dscr(
+        _default_project_cashflows or cash_flows, outputs
+    )
     if computed_dscr is not None:
         outputs.dscr = computed_dscr
     elif outputs.dscr is None:
