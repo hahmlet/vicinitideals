@@ -325,7 +325,8 @@ async def rollup_summary(
     # everything the user sees in their per-project S&U panel — so the
     # Sources Gap KPI on Underwriting reconciles cleanly with the per-
     # project gap math (Σ Uses − debt − committed equity).
-    from app.models.deal import UseLine, Project
+    from app.models.deal import UseLine
+    from app.models.project import Project
     _uses_rows = list(
         (
             await session.execute(
