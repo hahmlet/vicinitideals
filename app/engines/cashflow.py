@@ -35,18 +35,28 @@ from app.models.milestone import Milestone, MilestoneType
 from app.models.project import Project
 from app.models.manifest import WorkflowRunManifest
 
-# Phase-plan layer extracted to cashflow_compile.py (PR1 of compile/evaluate
-# split). Imports below are re-exported for backward compat — existing
-# callers (tests, etc.) keep importing from app.engines.cashflow.
+# Phase-plan layer + per-loan windowing extracted to cashflow_compile.py
+# (PR1 slices 1 & 2 of compile/evaluate split). Imports below are re-exported
+# for backward compat — existing callers (tests, app/api/routers/ui.py:5288
+# importing _EXIT_VEHICLE_APPLIES, etc.) keep importing from app.engines.cashflow.
 from app.engines.cashflow_compile import (
     PhaseSpec,
+    _APS_TO_RANK,
+    _CONSTRUCTION_PERIOD_TYPES,
+    _EXIT_VEHICLE_APPLIES,
     _MILESTONE_TYPE_TO_PHASE_KEY,
+    _PERIOD_TYPE_RANK,
     _apply_milestone_phase_overrides,
     _build_phase_plan,
     _calendar_month_count,
     _coerce_milestone_date,
+    _eligible_retirers,
+    _loan_pre_op_months,
     _milestone_dates_from_orm,
+    _module_rank,
     _phase_milestone_key,
+    _resolve_active_end_rank,
+    _resolve_vehicle,
 )
 
 try:
@@ -1011,155 +1021,15 @@ async def _purge_project_outputs(
 # (re-imported at top of this file).
 
 
-_CONSTRUCTION_PERIOD_TYPES = {
-    PeriodType.acquisition, PeriodType.hold, PeriodType.pre_construction,
-    PeriodType.construction, PeriodType.minor_renovation, PeriodType.major_renovation,
-    PeriodType.conversion,
-}
-
-# Active-phase rank map used for Exit Vehicle detection (§2.10) and per-loan
-# carry windowing.  A loan with active window [start_rank, end_rank) is active
-# for phases whose rank falls in that half-open interval.
-_APS_TO_RANK: dict[str, int] = {
-    "acquisition": 0, "close": 0,
-    "pre_construction": 2,
-    "construction": 3,
-    "lease_up": 4, "operation_lease_up": 4,
-    "stabilized": 5, "operation_stabilized": 5,
-    "exit": 6, "divestment": 6,
-}
+# NOTE: _CONSTRUCTION_PERIOD_TYPES + _APS_TO_RANK extracted to cashflow_compile.py
+# (re-imported at top of this file).
 
 
-def _module_rank(module: object, side: str) -> int:
-    """Rank of a module's active_phase_{start|end}.
-
-    `start` missing → 0 (acquisition). `end` missing / "perpetuity" → 99.
-    """
-    raw = str(getattr(module, f"active_phase_{side}", "") or "")
-    if side == "end":
-        return _APS_TO_RANK.get(raw, 99)
-    return _APS_TO_RANK.get(raw, 0)
+# NOTE: _module_rank, _eligible_retirers, _resolve_vehicle,
+# _resolve_active_end_rank extracted to cashflow_compile.py.
 
 
-def _eligible_retirers(module: object, all_modules: list) -> list:
-    """Return modules whose active window covers `module`'s end point.
-
-    A retirer R qualifies when:
-      - R is not the same module
-      - R.start_rank <= module.end_rank  (already active at the handoff)
-      - R.end_rank   >  module.end_rank  (still active after module ends)
-
-    Module end-rank is derived via `_resolve_active_end_rank` (Exit Vehicle
-    supersedes the deprecated `active_phase_end` field).
-    """
-    e_rank = _resolve_active_end_rank(module, all_modules)
-    if e_rank >= 99:
-        return []  # perpetuity — nothing to retire
-    out: list = []
-    for r in all_modules:
-        if r is module:
-            continue
-        r_end = _resolve_active_end_rank(r, all_modules)
-        if _module_rank(r, "start") <= e_rank < r_end:
-            out.append(r)
-    return out
-
-
-def _resolve_vehicle(module: object, all_modules: list) -> tuple[str, object | None]:
-    """Resolve the Exit Vehicle for `module`.
-
-    Reads `exit_terms.vehicle`. Returns:
-      ("maturity", None) — balloon at amort end, no refi event
-      ("sale",     None) — balloon at divestment, no refi event
-      ("source",   R)    — retirer R absorbs the balance (§2.10 refi)
-
-    Falls back to default-selection when vehicle is unset or points to a
-    module that no longer qualifies.  Default selection:
-      1. If ≥1 eligible source exists: prefer those with start_rank == end_rank
-         (enter exactly at handoff); tie-break by lowest stack_position, then
-         alphabetical label.
-      2. Else if end_rank >= 6 (exit/divestment): "sale".
-      3. Else: "maturity".
-    """
-    exit_terms = getattr(module, "exit_terms", None) or {}
-    saved = (exit_terms.get("vehicle") or "").strip() if isinstance(exit_terms, dict) else ""
-    eligible = _eligible_retirers(module, all_modules)
-
-    if saved == "maturity":
-        return ("maturity", None)
-    if saved == "sale":
-        return ("sale", None)
-    if saved and saved not in {"maturity", "sale"}:
-        # Honour the user's explicit pick regardless of overlap — timing
-        # semantics around "end" vs "start" make strict overlap checks too
-        # brittle (new loan often starts the day the old one closes, which
-        # may read as adjacent-not-overlapping depending on rank mapping).
-        # Engine trusts the user; compute math handles the handoff via
-        # construction_retirement regardless of exact date alignment.
-        for r in all_modules:
-            if r is module:
-                continue
-            if str(getattr(r, "id", "")) == saved:
-                return ("source", r)
-        # Stored vehicle points at a deleted/missing module → fall through.
-
-    if eligible:
-        e_rank = _resolve_active_end_rank(module, all_modules)
-        exact = [r for r in eligible if _module_rank(r, "start") == e_rank]
-        pool = exact or eligible
-
-        def _sort_key(r: object) -> tuple:
-            return (
-                int(getattr(r, "stack_position", 0) or 0),
-                str(getattr(r, "label", "") or ""),
-            )
-
-        return ("source", sorted(pool, key=_sort_key)[0])
-    if _resolve_active_end_rank(module, all_modules) >= 6:
-        return ("sale", None)
-    return ("maturity", None)
-
-
-def _resolve_active_end_rank(module: object, all_modules: list) -> int:
-    """Derive a module's active-end rank from its Exit Vehicle.
-
-    Supersedes reading ``active_phase_end`` directly — the user-editable field
-    is deprecated (duplicates the Exit Vehicle intent).  Rules:
-
-      * non-exit-vehicle funder types (equity, grants, etc.) → 99 (perpetuity;
-        waterfall handles at exit)
-      * ``exit_terms.vehicle == "maturity"`` / unset → 99 (balloon uses amort)
-      * ``exit_terms.vehicle == "sale"`` → 6 (exit/divestment rank)
-      * ``exit_terms.vehicle == <uuid>`` → retirer's start_rank (handoff point)
-
-    Falls back to the legacy ``active_phase_end`` if vehicle is unset AND a
-    legacy value is stored — this keeps old rows working until the DB cleanup.
-    """
-    ft = str(getattr(module, "funder_type", "") or "").replace("FunderType.", "")
-    if ft not in _EXIT_VEHICLE_APPLIES:
-        return 99
-
-    exit_terms = getattr(module, "exit_terms", None) or {}
-    saved = (exit_terms.get("vehicle") or "").strip() if isinstance(exit_terms, dict) else ""
-
-    if saved == "sale":
-        return 6
-    if saved == "maturity":
-        return 99
-    if saved:
-        # UUID of a retirer — look it up and use its start rank.
-        for r in all_modules:
-            if r is module:
-                continue
-            if str(getattr(r, "id", "")) == saved:
-                return _module_rank(r, "start")
-        # Dangling reference — fall through to legacy / default.
-
-    # Legacy fallback: honour stored active_phase_end if present.
-    legacy = str(getattr(module, "active_phase_end", "") or "")
-    if legacy:
-        return _APS_TO_RANK.get(legacy, 99)
-    return 99
+# (_resolve_vehicle and _resolve_active_end_rank extracted to cashflow_compile.py)
 
 
 # Maps UseLinePhase string values to the PeriodType(s) where the outflow fires.
@@ -1187,11 +1057,7 @@ _DEBT_FUNDER_TYPES = {
 # a real "ending" (matures, is refinanced, or is paid off at sale).  All
 # other funder types (equity, grants, tax credits, owner_investment) are
 # perpetuity-like from the engine's POV — single-draw, no vehicle UI.
-_EXIT_VEHICLE_APPLIES = {
-    "permanent_debt", "senior_debt", "mezzanine_debt", "bridge",
-    "construction_loan", "acquisition_loan", "pre_development_loan",
-    "soft_loan", "bond", "owner_loan",
-}
+# NOTE: _EXIT_VEHICLE_APPLIES extracted to cashflow_compile.py.
 
 # ── Loan closing cost defaults ────────────────────────────────────────────────
 # Market-backed defaults (commloan.com, financelobby.com, aegisenvironmentalinc.com,
@@ -1377,36 +1243,7 @@ async def _auto_size_debt_modules(
     # loan is taken out at the START of the end phase (e.g. active_to="lease_up"
     # means the perm takes over at lease_up start; the construction loan is not
     # active during lease_up itself).
-    _PERIOD_TYPE_RANK: dict[PeriodType, int] = {
-        PeriodType.acquisition:       0,
-        PeriodType.hold:              1,
-        PeriodType.pre_construction:  2,
-        PeriodType.minor_renovation:  3,
-        PeriodType.major_renovation:  3,
-        PeriodType.construction:      3,
-        PeriodType.conversion:        3,
-        PeriodType.lease_up:          4,
-        PeriodType.stabilized:        5,
-        PeriodType.exit:              6,
-    }
-    def _loan_pre_op_months(module: object) -> int:
-        """Compute the number of pre-op months within this loan's active window.
-
-        Only counts construction-type phases (acquisition, hold, pre_construction,
-        construction, renovation, conversion) that fall within the module's
-        [active_phase_start, _resolve_active_end_rank) rank window.  This replaces
-        the global ``constr_months_total`` so each loan uses its own N for the
-        IR/CI carry formula.
-        """
-        start = str(getattr(module, "active_phase_start", "") or "")
-        start_rank = _APS_TO_RANK.get(start, 0)
-        # End-exclusive: derived from Exit Vehicle (supersedes active_phase_end).
-        end_rank   = _resolve_active_end_rank(module, capital_modules)
-        return sum(
-            p.months for p in phases
-            if p.period_type in _CONSTRUCTION_PERIOD_TYPES
-            and start_rank <= _PERIOD_TYPE_RANK.get(p.period_type, 99) < end_rank
-        )
+    # _PERIOD_TYPE_RANK and _loan_pre_op_months extracted to cashflow_compile.py.
 
     # Legacy global sum — kept for the legacy path (non-Phase-B deals) where
     # there's a single construction+perm pair and no per-loan active windows.
@@ -1561,7 +1398,7 @@ async def _auto_size_debt_modules(
                 _funded = _q(pre_dev_costs * _ltc / HUNDRED)
                 _r = Decimal(str(_rate or 0))
                 _pre_ct = _carry_type_for_phase(_carry, is_construction=True)
-                _n = _loan_pre_op_months(_m)
+                _n = _loan_pre_op_months(_m, capital_modules, phases)
                 if _pre_ct == "interest_reserve":
                     _io_f = (_r / HUNDRED / Decimal("12") * (Decimal(_n + 1) / Decimal("2"))
                              ) if (_r > ZERO and _n > 0) else ZERO
@@ -1583,7 +1420,7 @@ async def _auto_size_debt_modules(
                 _principal = _q(acq_costs * _ltv / HUNDRED)
                 _r = Decimal(str(_rate or 0))
                 _acq_ct = _carry_type_for_phase(_carry, is_construction=True)
-                _n = _loan_pre_op_months(_m)
+                _n = _loan_pre_op_months(_m, capital_modules, phases)
                 if _principal > ZERO and _r > ZERO and _n > 0:
                     if _acq_ct == "interest_reserve":
                         _acq_interest = _q(_principal * _r / HUNDRED / Decimal("12") * (Decimal(_n + 1) / Decimal("2")))
@@ -1602,7 +1439,7 @@ async def _auto_size_debt_modules(
                 _funded = _q(constr_costs * _ltc / HUNDRED)
                 _r = Decimal(str(_cr or 0))
                 _cl_ct = _carry_type_for_phase(_carry, is_construction=True)
-                _n = _loan_pre_op_months(_m)
+                _n = _loan_pre_op_months(_m, capital_modules, phases)
                 if _cl_ct == "interest_reserve":
                     _io_f = (_r / HUNDRED / Decimal("12") * (Decimal(_n + 1) / Decimal("2"))
                              ) if (_r > ZERO and _n > 0) else ZERO
