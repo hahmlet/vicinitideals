@@ -615,8 +615,15 @@ async def _apply_levered_metrics(
         )
         session.add(outputs)
 
+    # unlevered_cashflows keyed by period — scope to default project so
+    # multi-project rows with the same period don't collide on dict insert
+    # (last-write-wins for shared period numbers between projects).
+    _default_pid_for_unlevered = outputs.project_id
     unlevered_cashflows = {
-        cash_flow.period: _to_decimal(cash_flow.net_cash_flow) for cash_flow in cash_flows
+        cash_flow.period: _to_decimal(cash_flow.net_cash_flow)
+        for cash_flow in cash_flows
+        if _default_pid_for_unlevered is None
+        or cash_flow.project_id == _default_pid_for_unlevered
     }
     if outputs.project_irr_unlevered is None:
         outputs.project_irr_unlevered = _compute_xirr_pct(unlevered_cashflows) or ZERO
@@ -653,41 +660,68 @@ async def _apply_levered_metrics(
     _operating_reserve_seeded = False
     _stabilized_value = PeriodType.stabilized.value
 
+    # Multi-project scope: WaterfallResult rows don't carry project_id today,
+    # so debt_service_by_period[N] is the scenario-wide aggregate of DS for
+    # period N (e.g. P1's $15.3K + P2's $27.9K = $43.2K). Applying that onto
+    # any single project's row corrupts that project's per-project DS that
+    # the cashflow engine wrote correctly via junction-overlaid sizing.
+    #
+    # The rewrite below only makes sense in single-project deals — there
+    # waterfall_ds equals prior_debt_service in healthy cases, and may drop
+    # below it when DSCR < 1 (waterfall caps actual cash distributed). For
+    # multi-project deals we skip the in-place rewrite entirely; the
+    # cashflow engine's per-project DS / NCF / cumulative are authoritative.
+    # We still build levered_cashflows from the default project's rows so
+    # IRR can be (re-)computed below.
+    _default_pid = outputs.project_id
+    _default_cashflows = [
+        row for row in cash_flows
+        if _default_pid is None or row.project_id == _default_pid
+    ]
+    _is_multi_project = (
+        len({row.project_id for row in cash_flows if row.project_id is not None}) > 1
+    )
+
     running_cumulative = total_sources
     levered_cashflows: dict[int, Decimal] = {}
-    for cash_flow in cash_flows:
-        prior_debt_service = _to_decimal(cash_flow.debt_service)
-        non_operating_adjustments = _q(
-            _to_decimal(cash_flow.net_cash_flow) - _to_decimal(cash_flow.noi) + prior_debt_service
-        )
-        waterfall_ds = _q(debt_service_by_period.get(cash_flow.period, ZERO))
-        # When the waterfall has no debt-service distribution for this period
-        # (e.g. DSCR < 1, deal can't cover its own debt service from NOI),
-        # preserve the cashflow-engine obligation so carrying costs are visible.
-        debt_service = waterfall_ds if waterfall_ds > ZERO else prior_debt_service
+    if _is_multi_project:
+        # Skip in-place rewrite. Trust cashflow engine's per-project rows.
+        for cash_flow in _default_cashflows:
+            levered_cashflows[cash_flow.period] = _to_decimal(cash_flow.net_cash_flow)
+    else:
+        for cash_flow in _default_cashflows:
+            prior_debt_service = _to_decimal(cash_flow.debt_service)
+            non_operating_adjustments = _q(
+                _to_decimal(cash_flow.net_cash_flow) - _to_decimal(cash_flow.noi) + prior_debt_service
+            )
+            waterfall_ds = _q(debt_service_by_period.get(cash_flow.period, ZERO))
+            # When the waterfall has no debt-service distribution for this period
+            # (e.g. DSCR < 1, deal can't cover its own debt service from NOI),
+            # preserve the cashflow-engine obligation so carrying costs are visible.
+            debt_service = waterfall_ds if waterfall_ds > ZERO else prior_debt_service
 
-        cash_flow.debt_service = debt_service
-        cash_flow.net_cash_flow = _q(
-            _to_decimal(cash_flow.noi) - debt_service + non_operating_adjustments
-        )
-        _ncf = _to_decimal(cash_flow.net_cash_flow)
-        _is_stabilized = _enum_value(cash_flow.period_type) == _stabilized_value
-        if _is_stabilized and not _operating_reserve_seeded:
-            running_cumulative = _op_reserve_amount
-            _operating_reserve_seeded = True
-        elif _operating_reserve_seeded:
-            if _ncf < ZERO:
+            cash_flow.debt_service = debt_service
+            cash_flow.net_cash_flow = _q(
+                _to_decimal(cash_flow.noi) - debt_service + non_operating_adjustments
+            )
+            _ncf = _to_decimal(cash_flow.net_cash_flow)
+            _is_stabilized = _enum_value(cash_flow.period_type) == _stabilized_value
+            if _is_stabilized and not _operating_reserve_seeded:
+                running_cumulative = _op_reserve_amount
+                _operating_reserve_seeded = True
+            elif _operating_reserve_seeded:
+                if _ncf < ZERO:
+                    running_cumulative = _q(running_cumulative + _ncf)
+            else:
                 running_cumulative = _q(running_cumulative + _ncf)
-        else:
-            running_cumulative = _q(running_cumulative + _ncf)
-        cash_flow.cumulative_cash_flow = running_cumulative
-        levered_cashflows[cash_flow.period] = _ncf
+            cash_flow.cumulative_cash_flow = running_cumulative
+            levered_cashflows[cash_flow.period] = _ncf
 
     if outputs.noi_stabilized is None:
         stabilized_noi_annual = _annualized_median(
             [
                 _to_decimal(row.noi)
-                for row in cash_flows
+                for row in _default_cashflows
                 if _enum_value(row.period_type) == PeriodType.stabilized.value
                 and _to_decimal(row.noi) > ZERO
             ]
@@ -695,21 +729,7 @@ async def _apply_levered_metrics(
         if stabilized_noi_annual is not None:
             outputs.noi_stabilized = stabilized_noi_annual
 
-    # DSCR scoped to default project only. Multi-project scenarios have
-    # one cashflow row per (project, period); sweeping all of them through
-    # _compute_dscr conflates P1's debt service with P2's and yields a
-    # nonsense aggregate that doesn't match either project's actual DSCR.
-    # The per-project cashflow engine has already written outputs.dscr for
-    # every project; we recompute here only for the default project to keep
-    # the median-based formula authoritative when the waterfall reshapes
-    # debt_service away from straight P&I.
-    _default_project_cashflows = [
-        row for row in cash_flows
-        if outputs.project_id is not None and row.project_id == outputs.project_id
-    ]
-    computed_dscr = _compute_dscr(
-        _default_project_cashflows or cash_flows, outputs
-    )
+    computed_dscr = _compute_dscr(_default_cashflows, outputs)
     if computed_dscr is not None:
         outputs.dscr = computed_dscr
     elif outputs.dscr is None:
