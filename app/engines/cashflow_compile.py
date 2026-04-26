@@ -31,11 +31,13 @@ from decimal import Decimal, ROUND_HALF_UP
 from typing import Any
 
 from app.models.cashflow import PeriodType
-from app.models.deal import OperationalInputs
+from app.models.deal import IncomeStream, OperatingExpenseLine, OperationalInputs
 from app.models.milestone import Milestone
 
 ZERO = Decimal("0")
 ONE = Decimal("1")
+HUNDRED = Decimal("100")
+MONEY_PLACES = Decimal("0.000001")
 
 _MILESTONE_TYPE_TO_PHASE_KEY: dict[str, str] = {
     "construction": "construction_start",
@@ -445,6 +447,125 @@ def _resolve_vehicle(module: object, all_modules: list) -> tuple[str, object | N
     if _resolve_active_end_rank(module, all_modules) >= 6:
         return ("sale", None)
     return ("maturity", None)
+
+
+def _q(value: Any) -> Decimal:
+    return _to_decimal(value).quantize(MONEY_PLACES, rounding=ROUND_HALF_UP)
+
+
+def _percent(value: Any, default: Decimal = ZERO) -> Decimal:
+    return _q(_to_decimal(value, default) / HUNDRED)
+
+
+def _clamp(value: Decimal, lower: Decimal, upper: Decimal) -> Decimal:
+    return max(lower, min(upper, value))
+
+
+# ─── Stream / phase / period structural helpers (PR1 slice 3) ───────────────
+# Pure functions of (stream | expense_line | inputs, period_type, phase) that
+# never see dollar inputs. The slider's evaluate phase will call these as the
+# basis for per-period factor pre-computation.
+
+
+def _is_stream_active(stream: IncomeStream, period_type: PeriodType) -> bool:
+    active_in_phases = {str(phase) for phase in (stream.active_in_phases or [])}
+    phase_name = period_type.value
+    if phase_name in active_in_phases:
+        return True
+    return phase_name == PeriodType.exit.value and PeriodType.stabilized.value in active_in_phases
+
+
+def _is_expense_line_active(expense_line: OperatingExpenseLine, period_type: PeriodType) -> bool:
+    active_in_phases = {str(phase) for phase in (expense_line.active_in_phases or [])}
+    phase_name = period_type.value
+    if phase_name in active_in_phases:
+        return True
+    return phase_name == PeriodType.exit.value and PeriodType.stabilized.value in active_in_phases
+
+
+def _stream_occupancy_pct(
+    stream: IncomeStream,
+    phase: PhaseSpec,
+    month_index: int,
+    inputs: OperationalInputs,
+) -> Decimal:
+    stabilized_occupancy = _percent(stream.stabilized_occupancy_pct, default=Decimal("95"))
+
+    if phase.period_type == PeriodType.hold:
+        return _q(stabilized_occupancy * (ONE - _percent(inputs.hold_vacancy_rate_pct)))
+
+    if phase.period_type in {
+        PeriodType.minor_renovation,
+        PeriodType.major_renovation,
+        PeriodType.conversion,
+    }:
+        return _q(stabilized_occupancy * (ONE - _percent(inputs.income_reduction_pct_during_reno)))
+
+    if phase.period_type == PeriodType.lease_up:
+        initial_occupancy = _percent(inputs.initial_occupancy_pct, default=Decimal("50"))
+        if phase.months <= 1:
+            return stabilized_occupancy
+        curve = str(getattr(inputs, "lease_up_curve", None) or "linear")
+        if curve == "s_curve":
+            # Logistic S-curve: slow start → fast middle → slow finish
+            # occ(t) = initial + (stab - initial) × sigmoid(k × (t/N - 0.5))
+            # where sigmoid(x) = 1 / (1 + e^(-x)), normalized so sigmoid(0)=0, sigmoid(N)=1
+            import math
+            k = float(getattr(inputs, "lease_up_curve_steepness", None) or 5)
+            t_norm = float(month_index) / float(phase.months - 1)  # 0.0 → 1.0
+            # Shift so midpoint is at 0.5, scale by steepness
+            raw = 1.0 / (1.0 + math.exp(-k * (t_norm - 0.5)))
+            # Normalize: map sigmoid(k*-0.5)..sigmoid(k*0.5) → 0..1
+            low = 1.0 / (1.0 + math.exp(-k * (-0.5)))
+            high = 1.0 / (1.0 + math.exp(-k * 0.5))
+            normalized = (raw - low) / (high - low) if high > low else t_norm
+            occ = initial_occupancy + (stabilized_occupancy - initial_occupancy) * Decimal(str(normalized))
+            return _q(_clamp(occ, ZERO, stabilized_occupancy))
+        # Default: linear ramp
+        step = (stabilized_occupancy - initial_occupancy) / Decimal(phase.months - 1)
+        return _q(_clamp(initial_occupancy + (step * Decimal(month_index)), ZERO, stabilized_occupancy))
+
+    if phase.period_type in {PeriodType.stabilized, PeriodType.exit}:
+        return stabilized_occupancy
+
+    return ZERO
+
+
+def _operating_unit_count(inputs: OperationalInputs, period_type: PeriodType) -> Decimal:
+    if period_type in {PeriodType.hold, PeriodType.minor_renovation, PeriodType.major_renovation}:
+        return _to_decimal(inputs.unit_count_existing or inputs.unit_count_new)
+    if period_type == PeriodType.conversion:
+        return _to_decimal(inputs.unit_count_after_conversion or inputs.unit_count_new)
+    if period_type in {PeriodType.lease_up, PeriodType.stabilized, PeriodType.exit}:
+        return _to_decimal(inputs.unit_count_after_conversion or inputs.unit_count_new)
+    return ZERO
+
+
+def _phase_is_operational(period_type: PeriodType) -> bool:
+    return period_type in {
+        PeriodType.hold,
+        PeriodType.minor_renovation,
+        PeriodType.major_renovation,
+        PeriodType.conversion,
+        PeriodType.lease_up,
+        PeriodType.stabilized,
+        PeriodType.exit,
+    }
+
+
+def _growth_factor(rate_pct_annual: Any, period: int) -> Decimal:
+    rate = _percent(rate_pct_annual)
+    if rate <= ZERO or period <= 0:
+        return ONE
+    return _q((ONE + rate) ** (Decimal(period) / Decimal("12")))
+
+
+def _manifest_unit_count(inputs: OperationalInputs) -> int:
+    return int(
+        _to_decimal(
+            inputs.unit_count_after_conversion or inputs.unit_count_existing or inputs.unit_count_new or 0
+        )
+    )
 
 
 def _loan_pre_op_months(module: object, capital_modules: list, phases: list) -> int:
