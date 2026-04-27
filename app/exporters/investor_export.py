@@ -768,7 +768,7 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         )
         ws.cell(
             row=cur, column=3,
-            value=f"= Σ Stab NOI / {exit_cap_pct_raw}% Exit Cap",
+            value=f"Σ Stab NOI ÷ {exit_cap_pct_raw}% Exit Cap",
         ).font = FONT_HINT
     else:
         ws.cell(row=cur, column=2, value=_DASH).font = FONT_VALUE
@@ -782,7 +782,7 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
             name="s_modeled_exit_value", fmt=ACCOUNTING,
             font=FONT_VALUE, align=ALIGN_RIGHT,
         )
-        ws.cell(row=cur, column=3, value="= Σ engine-written Sale events").font = FONT_HINT
+        ws.cell(row=cur, column=3, value="Σ engine-written Sale events").font = FONT_HINT
     else:
         ws.cell(row=cur, column=2, value=_DASH).font = FONT_VALUE
         ws.cell(row=cur, column=3, value="(no exit event in cash flows)").font = FONT_HINT

@@ -422,6 +422,45 @@ async def test_export_handles_string_stored_enum_columns(session: AsyncSession):
     assert "Assumptions" in wb.sheetnames
 
 
+async def test_no_accidental_formula_strings(session: AsyncSession):
+    """Regression: any string-typed cell value that starts with ``=`` is
+    interpreted by Excel as a formula. If the string isn't valid formula
+    syntax, Excel strips it on open with a "Removed Records: Formula"
+    warning — silently destroying the cell content. We hit this once with
+    Phase F4's hint cells (``"= Σ Stab NOI / 5.5% Exit Cap"``) which Excel
+    tried to parse as a formula and failed.
+
+    This test scans every populated cell across every sheet, asserts that
+    any value starting with ``=`` is one of the export's known formula
+    types (currently only ``HYPERLINK(...)``). Anything else is a bug.
+    """
+    scenario = await _seed_minimal_scenario(session)
+    blob = await export_investor_workbook(scenario.id, session)
+    wb = load_workbook(BytesIO(blob), data_only=False)
+
+    bad_cells: list[str] = []
+    for sheet_name in wb.sheetnames:
+        ws = wb[sheet_name]
+        for row in ws.iter_rows():
+            for cell in row:
+                v = cell.value
+                if not isinstance(v, str) or not v.startswith("="):
+                    continue
+                # Allowed: real HYPERLINK formulas the export generates
+                # for in-workbook navigation + GitHub anchor links on the
+                # Glossary sheet.
+                if v.startswith("=HYPERLINK("):
+                    continue
+                bad_cells.append(f"{sheet_name}!{cell.coordinate}: {v!r}")
+
+    assert not bad_cells, (
+        "Cells whose string value starts with '=' but isn't a recognised "
+        "formula — Excel will strip these on open with a Removed Records "
+        "warning. Either drop the leading '=' or wrap as a real formula:\n  "
+        + "\n  ".join(bad_cells)
+    )
+
+
 async def test_filename_slugged(session: AsyncSession):
     scenario = await _seed_minimal_scenario(session)
     from app.models.deal import Deal
