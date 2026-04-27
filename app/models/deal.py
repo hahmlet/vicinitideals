@@ -352,6 +352,56 @@ class OperationalInputs(Base):
     )
 
 
+# Synonym map for legacy free-text OpEx labels → canonical categories.
+# Used by the investor export to fold pre-vocabulary entries into the
+# STANDARD_OPEX_CATEGORIES set. Two sources feed this map:
+#   1. Engine-emitted hardcoded labels — `app/engines/cashflow.py` writes
+#      "Property Tax", "Insurance", "Operating Expenses", "Management Fee",
+#      "Carrying Cost" from legacy OperationalInputs scalar fields. These
+#      need to project onto the canonical vocabulary so the export's OpEx
+#      breakout doesn't show "Property Tax" $0 next to a user-entered
+#      "Real Estate Taxes" with the actual value.
+#   2. Common user variants observed in legacy seed data (`Subject Model`,
+#      etc.) — typos and spelling variants from before the dropdown landed.
+# The map is intentionally small; new typos go through Phase B2's dropdown
+# enforcement.
+OPEX_SYNONYMS: dict[str, str] = {
+    # Engine-emitted labels
+    "Property Tax": "Real Estate Taxes",
+    "Operating Expenses": "Other",
+    "Management Fee": "Property Management",
+    "Carrying Cost": "Other",
+    # Common user variants
+    "Property Insurance": "Insurance",
+    "Office / Admin": "Administrative",
+    "Office/Admin": "Administrative",
+    "Payroll & On-Site Staff": "Payroll",
+    "On-Site Staff": "Payroll",
+    "Garbage / Refuse": "Utilities — Trash",
+    "Garbage / Trash": "Utilities — Trash",
+    "Garbage": "Utilities — Trash",
+    "Trash": "Utilities — Trash",
+    "Refuse": "Utilities — Trash",
+    "Grabage": "Utilities — Trash",  # known typo in seed data
+    "Water / Sewer": "Utilities — Water/Sewer",
+    "Water/Sewer": "Utilities — Water/Sewer",
+    "Sewer": "Utilities — Water/Sewer",
+    "Electric": "Utilities — Electric",
+    "Electricity": "Utilities — Electric",
+    "Gas": "Utilities — Gas",
+    "Natural Gas": "Utilities — Gas",
+}
+
+
+def normalize_opex_label(label: str | None) -> str:
+    """Map a free-text OpEx label to a canonical STANDARD_OPEX_CATEGORIES
+    entry, falling back to the trimmed label itself if no synonym match.
+    Whitespace is stripped on input — the export already does this for
+    label-key dedup, this is the second guard."""
+    cleaned = (label or "").strip()
+    return OPEX_SYNONYMS.get(cleaned, cleaned)
+
+
 # Standard OpEx categories — controlled vocabulary surfaced in the
 # OpEx-line entry UI as a dropdown. Free-text labels are still accepted at
 # the DB layer (no constraint), but the UI nudges new entries toward this

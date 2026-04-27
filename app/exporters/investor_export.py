@@ -69,6 +69,7 @@ from app.models.deal import (
     OperationalInputs,
     UnitMix,
     UseLine,
+    normalize_opex_label,
 )
 from app.models.org import Organization
 from app.models.project import Project
@@ -789,7 +790,17 @@ def _write_breakout_table(
     section_label(ws, start_row, title, span_cols=len(year_cols) + 1)
     cur = start_row + 1
 
-    labels = sorted({label for year_data in rows.values() for label in year_data})
+    # Drop labels whose total across all year columns is exactly $0 — clean
+    # presentation. Legacy free-text OpEx data has placeholder rows from
+    # before the dropdown enforcement landed; surfacing them as $0 lines
+    # mixed with real values makes the LP read the table as duplicated /
+    # half-finished. A row is kept if it has any non-zero year.
+    labels = sorted({
+        label
+        for year_data in rows.values()
+        for label in year_data
+        if any(rows.get(y, {}).get(label, Decimal(0)) != 0 for y in year_cols)
+    })
     if not labels:
         ws.cell(row=cur, column=1, value=empty_hint).font = FONT_HINT
         return cur + 1
@@ -909,53 +920,89 @@ def _funder_class(funder_type) -> str:
     return "Other"
 
 
+_DASH = "—"  # rendered when a column is not meaningful for a row's funder class
+
+
+def _write_optional(ws, row, col, value, registry: CellRegistry, *, name: str, fmt: str) -> None:
+    """Write a numeric value at (row, col) if non-None, else write the
+    em-dash ``"—"`` literal. Either way the named range is registered so
+    workbook structure stays stable for downstream formulas; the cell value
+    is the dash string when data is missing instead of a misleading $0."""
+    if value is None:
+        cell = ws.cell(row=row, column=col, value=_DASH)
+        cell.font = FONT_VALUE
+        cell.alignment = ALIGN_RIGHT
+        registry.register(name, ws.title, row, col)
+    else:
+        registry.write(
+            ws, row, col, value,
+            name=name, fmt=fmt,
+            font=FONT_VALUE, align=ALIGN_RIGHT,
+        )
+
+
 def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
-    """Source Returns — per-CapitalModule view of contractual returns.
+    """Source Returns — per-CapitalModule view with per-class column semantics.
 
-    Replaces the prior "Investor Returns" sheet (LP/GP IRR + EM aggregates)
-    which assumed equity tiers were seeded. The new sheet meets the LP
-    where the deal actually is: a list of every Source on the stack with
-    its return semantics conditional on funder type.
+    Layout: ``Module | Funder Type | Class | Principal | Rate | Total DS |
+    Distributions | Return $ | Return %``.
 
-      Debt rows: rate, term, total debt service paid through hold, balloon
-        balance at exit. Cost-of-capital view.
-      Equity rows: pref rate, contributed amount, cumulative distributions,
-        IRR (from waterfall ``party_irr_pct``), EM (= dist / contrib).
-      Grant / tax-credit rows: contributed amount only — no return
-        semantics on the export. The LP sees them as part of the stack.
+    Per-class fill: only the columns meaningful to a row's funder class
+    carry numeric values; the rest render the em-dash ``"—"`` so the LP
+    can tell at a glance that "$0" never means "missing data".
 
-    Aggregate rollup (combined IRR, GP promote $) stays at the bottom for
-    deals that have a populated waterfall.
+      Debt rows: Rate = ``source.interest_rate_pct``; Total DS = sum of
+        ``WaterfallResult.cash_distributed`` for ``debt_service``-tier rows
+        on this module (or "—" when no waterfall is computed); Distributions
+        = "—" (debt doesn't receive distributions); Return $ = Total DS −
+        Principal (= lifetime interest paid, or "—" when no DS data);
+        Return % = Rate (cost of capital).
+      Equity rows: Rate = pref rate from carry config (or "—"); Total DS =
+        "—"; Distributions = ``cumulative_distributed`` from waterfall;
+        Return $ = Distributions − Principal; Return % = ``party_irr_pct``
+        from the latest waterfall period for this module.
+      Grant / tax-credit / other: Principal only — every other column "—".
+
+    Duplicate-label disambiguation: when two modules share the exact same
+    label (the engine creates one ``Owner Equity`` per project, so a
+    2-project deal renders two visually-identical rows), the displayed
+    label is rewritten to ``"<label> (<project_name>)"`` looked up via
+    the ``junctions`` table. Keeps the LP from reading two rows as one
+    duplicated row.
     """
     rollup: list[dict] = ctx.get("rollup_waterfall") or []
     summary = ctx.get("rollup_summary") or {}
     totals = summary.get("totals") or {}
     capital_modules: list[CapitalModule] = ctx["capital_modules"]
     junctions: list[CapitalModuleProject] = ctx["junctions"]
+    projects_by_id: dict[UUID, Project] = {p.id: p for p in ctx["projects"]}
 
-    set_widths(ws, [28, 18, 12, 16, 12, 18, 18, 14])
+    set_widths(ws, [30, 18, 10, 16, 10, 16, 16, 16, 12])
 
-    section_label(ws, 1, "Source Returns — Per Capital Module", span_cols=8)
+    section_label(ws, 1, "Source Returns — Per Capital Module", span_cols=9)
     header_row(
         ws, 2,
         ["Module", "Funder Type", "Class", "Principal", "Rate",
-         "Total DS / Distributions", "Return ($)", "Return (%)"],
+         "Total DS", "Distributions", "Return ($)", "Return (%)"],
     )
 
-    # Junction-aggregated principals (one debt module shared across N projects
-    # has its principal split across N junction rows; the "module principal"
-    # is the sum).
+    # Junction-aggregated principals (one shared debt module covering N
+    # projects has its principal split across N junction rows; the
+    # module-level principal is their sum).
     junction_principal: dict[UUID, Decimal] = {}
+    junction_projects: dict[UUID, list[UUID]] = {}
     for j in junctions:
         junction_principal[j.capital_module_id] = junction_principal.get(
             j.capital_module_id, Decimal(0)
         ) + _coerce_decimal(j.amount or 0)
+        junction_projects.setdefault(j.capital_module_id, []).append(j.project_id)
 
-    # Pre-aggregate waterfall results per module (cumulative distributions +
-    # latest period's party_irr_pct). One pass through the rollup.
+    # Pre-aggregate waterfall: per-module cumulative distributions, latest
+    # party IRR, and per-module debt-service totals (debt_service tier rows).
     module_distributions: dict[str, Decimal] = {}
     module_irr: dict[str, Decimal] = {}
     module_latest_period: dict[str, int] = {}
+    module_debt_service_total: dict[str, Decimal] = {}
     for row in rollup:
         mid = row.get("capital_module_id")
         if not mid:
@@ -969,6 +1016,29 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
             irr = row.get("party_irr_pct")
             if irr is not None:
                 module_irr[mid] = _coerce_pct(irr)
+        if (row.get("tier_type") or "") == "debt_service":
+            module_debt_service_total[mid] = (
+                module_debt_service_total.get(mid, Decimal(0))
+                + _coerce_decimal(row.get("cash_distributed") or 0)
+            )
+
+    # Pre-walk module labels to disambiguate duplicates by project context.
+    label_counts: dict[str, int] = {}
+    for module in capital_modules:
+        raw = module.label or _funder_type_label(module)
+        label_counts[raw] = label_counts.get(raw, 0) + 1
+
+    def _display_label(module: CapitalModule) -> str:
+        raw = module.label or _funder_type_label(module)
+        if label_counts.get(raw, 0) <= 1:
+            return raw
+        # Disambiguate via the first project in the module's junction rows.
+        proj_ids = junction_projects.get(module.id) or []
+        if proj_ids:
+            proj = projects_by_id.get(proj_ids[0])
+            if proj and proj.name:
+                return f"{raw} ({proj.name})"
+        return raw
 
     cur_row = 3
     if not capital_modules:
@@ -981,57 +1051,64 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
     for m_idx, module in enumerate(capital_modules, start=1):
         source = module.source or {}
         carry = module.carry or {}
-        principal = junction_principal.get(module.id) or _coerce_decimal(
-            source.get("amount") or 0
-        )
+        mid_str = str(module.id)
+        principal = junction_principal.get(module.id)
+        if principal is None:
+            principal = _coerce_decimal(source.get("amount") or 0)
         rate_raw = source.get("interest_rate_pct") or carry.get("io_rate_pct") or 0
-        rate = _coerce_pct(rate_raw)
+        rate = _coerce_pct(rate_raw) if rate_raw else None
         funder_class = _funder_class(module.funder_type)
 
-        ws.cell(row=cur_row, column=1, value=module.label or _funder_type_label(module)).font = FONT_VALUE
+        # Per-class column fill — write em-dash strings where a column doesn't
+        # apply, so missing data never reads as "$0" or "0%".
+        if funder_class == "Debt":
+            total_ds = module_debt_service_total.get(mid_str)
+            distributions = None  # debt has no distributions
+            if total_ds is not None and total_ds > 0:
+                return_dollars = total_ds - principal
+            else:
+                return_dollars = None  # no DS data ⇒ blank, not -principal
+            return_pct = rate
+        elif funder_class == "Equity":
+            total_ds = None
+            distributions = module_distributions.get(mid_str)
+            return_dollars = (distributions - principal) if distributions is not None else None
+            return_pct = module_irr.get(mid_str)
+        else:
+            # Grant / tax_credit / other — only Principal is meaningful
+            total_ds = None
+            distributions = None
+            return_dollars = None
+            return_pct = None
+
+        ws.cell(row=cur_row, column=1, value=_display_label(module)).font = FONT_VALUE
         ws.cell(row=cur_row, column=2, value=_funder_type_label(module)).font = FONT_VALUE
         ws.cell(row=cur_row, column=3, value=funder_class).font = FONT_VALUE
+
         registry.write(
             ws, cur_row, 4, principal,
             name=f"s_module_{m_idx}_principal_returns", fmt=ACCOUNTING,
             font=FONT_VALUE, align=ALIGN_RIGHT,
         )
-        registry.write(
-            ws, cur_row, 5, rate,
+        _write_optional(
+            ws, cur_row, 5, rate, registry,
             name=f"s_module_{m_idx}_rate_returns", fmt=PCT,
-            font=FONT_VALUE, align=ALIGN_RIGHT,
         )
-
-        total_ds_or_dist = module_distributions.get(str(module.id), Decimal(0))
-        # For debt: total_ds_or_dist is the lifetime principal+interest paid;
-        # for equity: it's the cumulative distributions to the equity holder.
-        registry.write(
-            ws, cur_row, 6, total_ds_or_dist,
+        _write_optional(
+            ws, cur_row, 6, total_ds, registry,
+            name=f"s_module_{m_idx}_total_ds", fmt=ACCOUNTING,
+        )
+        _write_optional(
+            ws, cur_row, 7, distributions, registry,
             name=f"s_module_{m_idx}_distributions", fmt=ACCOUNTING,
-            font=FONT_VALUE, align=ALIGN_RIGHT,
         )
-
-        # Return $ and Return %: meaningful per funder class.
-        if funder_class == "Debt":
-            return_dollars = total_ds_or_dist - principal  # interest paid over life
-            return_pct = rate  # cost of capital
-        elif funder_class == "Equity":
-            return_dollars = total_ds_or_dist - principal
-            return_pct = module_irr.get(str(module.id), Decimal(0))
-        else:
-            # Grant / tax_credit / other — no return semantics
-            return_dollars = Decimal(0)
-            return_pct = Decimal(0)
-
-        registry.write(
-            ws, cur_row, 7, return_dollars,
+        _write_optional(
+            ws, cur_row, 8, return_dollars, registry,
             name=f"s_module_{m_idx}_return_dollars", fmt=ACCOUNTING,
-            font=FONT_VALUE, align=ALIGN_RIGHT,
         )
-        registry.write(
-            ws, cur_row, 8, return_pct,
+        _write_optional(
+            ws, cur_row, 9, return_pct, registry,
             name=f"s_module_{m_idx}_return_pct", fmt=PCT,
-            font=FONT_VALUE, align=ALIGN_RIGHT,
         )
         cur_row += 1
 
@@ -1404,6 +1481,13 @@ def _aggregate_scenario_line_items_by_category(
             year = _period_to_year(li.period)
             category = str(getattr(li.category, "value", li.category) or "")
             label = (li.label or "").strip()
+            # Expense labels get folded onto the canonical OpEx vocabulary
+            # so legacy free-text duplicates ("Water / Sewer" vs "Water/Sewer",
+            # "Property Tax" vs "Real Estate Taxes") collapse into one row.
+            # Income labels stay as-is — Phase B1 Option C dedup already
+            # handles cross-project name collisions for revenue streams.
+            if category == "expense":
+                label = normalize_opex_label(label)
             cat_dict = out.setdefault(category, {})
             year_dict = cat_dict.setdefault(year, {})
             year_dict[label] = year_dict.get(label, Decimal(0)) + _coerce_decimal(
@@ -1845,6 +1929,24 @@ def _per_project_metric_specs() -> list[tuple[str, str, str | None, str]]:
 
 
 def _per_project_value(
+    key: str,
+    project: Project,
+    inputs: OperationalInputs | None,
+    use_lines: list[UseLine],
+    unit_mix: list[UnitMix],
+):
+    raw = _per_project_value_raw(key, project, inputs, use_lines, unit_mix)
+    # The DB stores percentages as whole numbers ("5.5" for 5.5%). The Block B
+    # cell uses Excel's PCT format which expects fractions ("0.055"). Without
+    # this divide-by-100 the per-project Exit Cap Rate column displays "5"
+    # which Excel renders as "500.00%" — silently wrong. Block A's kv_row uses
+    # _pct_value for this same conversion; this is the per-project equivalent.
+    if isinstance(raw, Decimal) and key.endswith("_pct"):
+        return raw / Decimal(100)
+    return raw
+
+
+def _per_project_value_raw(
     key: str,
     project: Project,
     inputs: OperationalInputs | None,
