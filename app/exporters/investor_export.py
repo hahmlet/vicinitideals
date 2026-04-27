@@ -533,6 +533,7 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
     summary = ctx.get("rollup_summary") or {}
     totals = summary.get("totals") or {}
     per_project = summary.get("per_project") or []
+    rollup_waterfall: list[dict] = ctx.get("rollup_waterfall") or []
     projects: list[Project] = ctx["projects"]
     capital_modules: list[CapitalModule] = ctx["capital_modules"]
     junctions: list[CapitalModuleProject] = ctx["junctions"]
@@ -594,6 +595,37 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         longest_hold,
         name="s_modeled_duration_months", registry=registry,
         fmt=INT_COMMA, hero=True,
+    ); row += 1
+    # Combined Unlevered IRR — computed from per-project unlevered CF series
+    # summed by period (NCF + DS = NOI − capital_outflows + capital_inflows),
+    # then XIRR. Sibling to Combined Levered IRR for the standard
+    # leverage-amplification read.
+    unlevered_irr = _combined_unlevered_irr(ctx["cash_flows"])
+    kv_row(
+        ws, row, "Combined Unlevered IRR",
+        unlevered_irr,
+        name="s_combined_unlevered_irr", registry=registry,
+        fmt=PCT, hero=True,
+    ); row += 1
+    # Equity Multiple (combined LP+GP) — total equity-module distributions
+    # divided by total equity commitments. Returns None ("—") when the
+    # waterfall hasn't run or there's no equity stack seeded.
+    equity_multiple = _combined_em(rollup_waterfall, capital_modules)
+    kv_row(
+        ws, row, "Combined Equity Multiple",
+        equity_multiple,
+        name="s_combined_equity_multiple", registry=registry,
+        fmt="0.00\\x", hero=True,
+    ); row += 1
+    # Cash-on-Cash Year 1 — sum of equity distributions in periods 1-12
+    # divided by total equity commitments. The standard first-year-yield
+    # metric LPs ask about ahead of a deal close.
+    coc_y1 = _coc_year_one(rollup_waterfall, capital_modules)
+    kv_row(
+        ws, row, "Cash-on-Cash (Year 1)",
+        coc_y1,
+        name="s_coc_year_one", registry=registry,
+        fmt=PCT, hero=True,
     ); row += 1
 
     # ── Scenario Sources & Uses ────────────────────────────────────────────
@@ -690,6 +722,87 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         ).font = FONT_VALUE
         pp_data += 1
 
+    # ── Valuation Reconciliation ───────────────────────────────────────────
+    # Two ways to value the asset at exit. Should land within a few percent
+    # of each other if the deal's exit cap rate matches the implied DCF
+    # discounting; a wide delta is a yellow flag for either the cap-rate
+    # input or the underlying CF projection.
+    val_row = pp_data + 1
+    section_label(ws, val_row, "Valuation Reconciliation", span_cols=3)
+    header_row(ws, val_row + 1, ["Method", "Value", "Notes"])
+
+    # Direct Cap: Stabilized NOI ÷ Exit Cap Rate. Pulls Exit Cap from the
+    # default project's OperationalInputs (scenario-level field today).
+    default_inputs = (
+        ctx["operational_inputs"].get(projects[0].id) if projects else None
+    )
+    exit_cap_pct_raw = (
+        _coerce_decimal(getattr(default_inputs, "exit_cap_rate_pct", 0) or 0)
+    )
+    combined_noi = _sum_per_project_field(per_project, "noi_stabilized")
+    direct_cap_value = (
+        (combined_noi * Decimal(100) / exit_cap_pct_raw) if exit_cap_pct_raw > 0 else None
+    )
+
+    # DCF / Modeled Exit: sum of "Sale" line items in the exit period(s).
+    # When the engine writes a synthesized exit event (always — see
+    # _compute_capital_events_for_phase), this captures it. If no sale
+    # event was generated the row shows "—".
+    cash_flow_items: dict[UUID, list[CashFlowLineItem]] = ctx["cash_flow_items"]
+    modeled_exit_value = Decimal(0)
+    has_sale_event = False
+    for items in cash_flow_items.values():
+        for li in items:
+            label = (li.label or "").strip()
+            if label.startswith("Sale") or label.startswith("Exit"):
+                modeled_exit_value += _coerce_decimal(li.net_amount or 0)
+                has_sale_event = True
+
+    cur = val_row + 2
+    ws.cell(row=cur, column=1, value="Direct Cap (NOI ÷ Exit Cap)").font = FONT_LABEL
+    if direct_cap_value is not None:
+        registry.write(
+            ws, cur, 2, direct_cap_value,
+            name="s_direct_cap_value", fmt=ACCOUNTING,
+            font=FONT_VALUE, align=ALIGN_RIGHT,
+        )
+        ws.cell(
+            row=cur, column=3,
+            value=f"= Σ Stab NOI / {exit_cap_pct_raw}% Exit Cap",
+        ).font = FONT_HINT
+    else:
+        ws.cell(row=cur, column=2, value=_DASH).font = FONT_VALUE
+        ws.cell(row=cur, column=3, value="(no Exit Cap configured)").font = FONT_HINT
+    cur += 1
+
+    ws.cell(row=cur, column=1, value="Modeled Exit (DCF / engine sale)").font = FONT_LABEL
+    if has_sale_event:
+        registry.write(
+            ws, cur, 2, modeled_exit_value,
+            name="s_modeled_exit_value", fmt=ACCOUNTING,
+            font=FONT_VALUE, align=ALIGN_RIGHT,
+        )
+        ws.cell(row=cur, column=3, value="= Σ engine-written Sale events").font = FONT_HINT
+    else:
+        ws.cell(row=cur, column=2, value=_DASH).font = FONT_VALUE
+        ws.cell(row=cur, column=3, value="(no exit event in cash flows)").font = FONT_HINT
+    cur += 1
+
+    if direct_cap_value is not None and has_sale_event:
+        delta = modeled_exit_value - direct_cap_value
+        ws.cell(row=cur, column=1, value="Δ (Modeled − Direct Cap)").font = FONT_LABEL
+        registry.write(
+            ws, cur, 2, delta,
+            name="s_valuation_delta", fmt=ACCOUNTING,
+            font=FONT_VALUE, align=ALIGN_RIGHT,
+        )
+        delta_pct = (delta / direct_cap_value) if direct_cap_value > 0 else None
+        if delta_pct is not None:
+            ws.cell(
+                row=cur, column=3,
+                value=f"{(delta_pct * 100):.1f}% of Direct Cap",
+            ).font = FONT_HINT
+
     freeze_top(ws, row=2)
     print_landscape(ws)
 
@@ -740,6 +853,29 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
                 end_col=1 + len(year_cols),
             )
         cur_row += 1
+
+    # OER (Operating Expense Ratio) = OpEx / EGI per year. Standard CRE
+    # operating-efficiency metric — typical multifamily targets 35-45%; a
+    # number above 50% is a yellow flag for the LP. Rendered as a derived
+    # ratio row immediately below CapEx Reserve, before the NOI line.
+    ws.cell(row=cur_row, column=1, value="OER (OpEx ÷ EGI)").font = FONT_LABEL
+    for col_offset, year in enumerate(year_cols):
+        opex = annual.get(year, {}).get("operating_expenses", Decimal(0))
+        egi = annual.get(year, {}).get("effective_gross_income", Decimal(0))
+        oer = (opex / egi) if egi > 0 else None
+        cell = ws.cell(
+            row=cur_row, column=2 + col_offset,
+            value=_to_excel_number(oer) if oer is not None else _DASH,
+        )
+        cell.number_format = PCT
+        cell.font = FONT_VALUE
+        cell.alignment = ALIGN_RIGHT
+    if year_cols:
+        registry.register_range(
+            "r_uw_oer", ws.title, cur_row, cur_row,
+            col=2, end_col=1 + len(year_cols),
+        )
+    cur_row += 1
 
     # Revenue + OpEx breakouts: separate tables driven by line items.
     # Category-aware aggregation — Revenue from `income` line items
@@ -1553,6 +1689,103 @@ def _combined_dscr(per_project: list[dict]) -> Decimal | None:
         total_noi += noi
         total_ds += noi / dscr
     return (total_noi / total_ds) if total_ds > 0 else None
+
+
+def _combined_unlevered_irr(
+    cash_flows_by_project: dict[UUID, list[CashFlow]],
+) -> Decimal | None:
+    """Combined unlevered IRR — XIRR over per-period unlevered CF totals.
+
+    Sums each project's unlevered cash flow (NCF + DS) per period, then
+    runs the engine's pyxirr helper. Mirrors the rollup engine's path
+    for the levered version (``rollup_irr``) but reverses out debt
+    service so the result represents the asset-level return.
+    Returns None on the typical no-pyxirr / no-sign-change cases.
+    """
+    from app.engines.cashflow import _compute_xirr  # late import — keep this module's imports lean
+
+    period_totals: dict[int, Decimal] = {}
+    for cf_list in cash_flows_by_project.values():
+        for cf in cf_list:
+            ncf = _coerce_decimal(cf.net_cash_flow or 0)
+            ds = _coerce_decimal(cf.debt_service or 0)
+            unlevered = ncf + ds
+            period_totals[cf.period] = period_totals.get(cf.period, Decimal(0)) + unlevered
+    if not period_totals:
+        return None
+    series = [period_totals[p] for p in sorted(period_totals)]
+    pct_whole = _compute_xirr(series)
+    if pct_whole == 0:
+        return None
+    # _compute_xirr returns percent as whole number (e.g. 12.34 = 12.34%);
+    # PCT format wants a fraction.
+    return pct_whole / Decimal(100)
+
+
+def _combined_em(
+    rollup_waterfall: list[dict],
+    capital_modules: list[CapitalModule],
+) -> Decimal | None:
+    """Combined Equity Multiple = Σ equity distributions ÷ Σ equity contributions.
+
+    Walks the waterfall rollup for cumulative_distributed per equity
+    module, sums those, divides by the sum of equity-module commitments
+    (``source.amount``). Returns None when there's no equity stack OR no
+    waterfall data — better than reading a misleading 0 in the LP's eye.
+    """
+    by_module: dict[str, Decimal] = {}
+    for row in rollup_waterfall:
+        mid = row.get("capital_module_id")
+        if not mid:
+            continue
+        cum = _coerce_decimal(row.get("cumulative_distributed") or 0)
+        if cum > by_module.get(mid, Decimal(0)):
+            by_module[mid] = cum
+
+    total_dist = Decimal(0)
+    total_contrib = Decimal(0)
+    for module in capital_modules:
+        if _funder_class(module.funder_type) != "Equity":
+            continue
+        commitment = _coerce_decimal((module.source or {}).get("amount") or 0)
+        if commitment <= 0:
+            continue
+        total_contrib += commitment
+        total_dist += by_module.get(str(module.id), Decimal(0))
+    return (total_dist / total_contrib) if total_contrib > 0 else None
+
+
+def _coc_year_one(
+    rollup_waterfall: list[dict],
+    capital_modules: list[CapitalModule],
+) -> Decimal | None:
+    """Cash-on-Cash Year 1 = Σ equity distributions in periods 1-12 ÷ contributions.
+
+    Per CRE convention "year 1" = first 12 months from deal close. If the
+    deal is still mid-construction during year 1, this comes out 0 or
+    negative — that's the honest number; the LP reads it in context.
+    Returns None when there's no equity stack with non-zero commitments.
+    """
+    y1_per_module: dict[str, Decimal] = {}
+    for row in rollup_waterfall:
+        mid = row.get("capital_module_id")
+        period = row.get("period") or 0
+        if not mid or period < 1 or period > 12:
+            continue
+        amount = _coerce_decimal(row.get("cash_distributed") or 0)
+        y1_per_module[mid] = y1_per_module.get(mid, Decimal(0)) + amount
+
+    total_y1_dist = Decimal(0)
+    total_contrib = Decimal(0)
+    for module in capital_modules:
+        if _funder_class(module.funder_type) != "Equity":
+            continue
+        commitment = _coerce_decimal((module.source or {}).get("amount") or 0)
+        if commitment <= 0:
+            continue
+        total_contrib += commitment
+        total_y1_dist += y1_per_module.get(str(module.id), Decimal(0))
+    return (total_y1_dist / total_contrib) if total_contrib > 0 else None
 
 
 def _sum_per_project_field(per_project: list[dict], field: str) -> Decimal:

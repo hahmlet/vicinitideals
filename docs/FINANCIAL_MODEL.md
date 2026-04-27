@@ -1050,6 +1050,63 @@ else:
 
 The default when creating a new expense line is `scale_with_lease_up = False` (conservative: costs show at full during lease-up). Users opt in to lease-up scaling.
 
+### OER (Operating Expense Ratio) [investor, lender, app]
+
+**Definition.** Operating expenses divided by effective gross income —
+the standard CRE operating-efficiency metric. Lower is better.
+
+**Calculation.**
+```
+OER_period = operating_expenses_period / effective_gross_income_period
+```
+
+**Engine source.** Computed inline by the investor export from
+`CashFlow.operating_expenses` and `CashFlow.effective_gross_income`
+per annual bucket. Not stored as a single column on `OperationalOutputs`.
+
+**Notes / edge cases.** Multifamily benchmarks: 35-45% is typical, 50%+ is
+a yellow flag for the LP / lender. Returns "—" in the export when EGI = 0
+(pre-stabilization periods).
+
+### Direct Cap Value [investor, app]
+
+**Definition.** Property value implied by capping stabilized NOI at the
+exit cap rate — the textbook valuation reconciliation against a DCF.
+
+**Calculation.**
+```
+direct_cap_value = NOI_stabilized_combined / exit_cap_rate
+```
+
+**Engine source.** Computed inline by the investor export's Underwriting
+Summary "Valuation Reconciliation" section from
+`OperationalOutputs.noi_stabilized` (summed across projects) and
+`OperationalInputs.exit_cap_rate_pct`.
+
+**Notes / edge cases.** Should land within a few percent of the Modeled
+Exit Value (engine-written sale events at the exit period). A wide delta
+flags either the Exit Cap input or the underlying CF projection.
+
+### Modeled Exit Value [investor, app]
+
+**Definition.** Sum of `Sale` / `Exit`-prefixed `CashFlowLineItem` rows
+in the exit period(s) — the engine's DCF-derived sale proceeds.
+
+**Calculation.**
+```
+modeled_exit_value = Σ CashFlowLineItem.net_amount
+                       where label.startswith("Sale" | "Exit")
+```
+
+**Engine source.** Synthesized in `_compute_capital_events_for_phase`
+when `period_type == PeriodType.exit`; the export aggregates them across
+projects.
+
+**Notes / edge cases.** Compared against Direct Cap Value in the
+Valuation Reconciliation section. Both numbers should converge if the
+exit cap matches the implied DCF discounting; divergence is intentional
+when the analyst has set `refi_cap_rate_pct` separately.
+
 ### Operating Expenses (OpEx) [investor, lender, app]
 
 **Definition.** Recurring operating costs of the property — taxes, insurance,

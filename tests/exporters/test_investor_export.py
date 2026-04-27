@@ -278,6 +278,14 @@ _NAMED_RANGE_ALIASES: tuple[tuple[re.Pattern[str], str], ...] = (
     (re.compile(r"^s_combined_dscr$"), "DSCR"),
     (re.compile(r"^s_hold_months$"), "Hold Period"),
     (re.compile(r"^s_modeled_duration_months$"), "Hold Period"),
+    # Phase F additions — combined / scenario-level variants of base metrics
+    (re.compile(r"^s_combined_unlevered_irr$"), "Unlevered IRR"),
+    (re.compile(r"^s_combined_equity_multiple$"), "Equity Multiple"),
+    (re.compile(r"^s_coc_year_one$"), "Cash-on-Cash Year 1"),
+    # Valuation-delta is a derived display row (Modeled − Direct Cap), not its
+    # own metric in the doc; trace it to the Direct Cap Value entry it nets
+    # against rather than adding a "Δ" header.
+    (re.compile(r"^s_valuation_delta$"), "Direct Cap Value"),
     # LP/GP-scoped variants of "Equity Multiple"
     (re.compile(r"^s_(lp|gp)_equity_multiple$"), "Equity Multiple"),
     # Asset Mgmt Fee — input on Assumptions, also a metric on Investor Returns
