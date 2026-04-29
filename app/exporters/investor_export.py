@@ -1685,8 +1685,130 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
         ).font = FONT_HINT
         ws.merge_cells(start_row=cur_row, start_column=1, end_row=cur_row, end_column=8)
 
+    # ── Waterfall Structure ───────────────────────────────────────────────
+    # Pref → Catch-up → Promote tier breakdown. Always renders the full
+    # canonical structure even when no tiers are configured — shows the
+    # LP what the deal *would* look like with a real waterfall and makes
+    # an undefined waterfall obviously absent rather than silently empty.
+    cur_row = _build_waterfall_structure(
+        ws, registry, cur_row + 2, ctx,
+    )
+
     freeze_top(ws, row=3)
     print_landscape(ws)
+
+
+# Canonical investor-waterfall tier order. When the Scenario has no
+# WaterfallTier rows configured, the structure block renders these as $0
+# placeholders so the LP sees the policy structure the deal *should* have.
+_CANONICAL_WATERFALL_TIERS: tuple[tuple[str, str], ...] = (
+    ("debt_service", "Debt Service"),
+    ("return_of_equity", "Return of Equity"),
+    ("pref_return", "Pref Return (LP preferred)"),
+    ("catch_up", "GP Catch-Up"),
+    ("irr_hurdle_split", "IRR-Hurdle Split"),
+    ("deferred_developer_fee", "Deferred Developer Fee"),
+    ("residual", "Residual / Promote"),
+)
+
+
+def _build_waterfall_structure(
+    ws, registry: CellRegistry, start_row: int, ctx: dict,
+) -> int:
+    """Render the Waterfall Structure block.
+
+    Two display modes:
+
+      Configured: Scenario has ``WaterfallTier`` rows. Renders one row per
+      tier in priority order with tier_type, IRR hurdle (if applicable),
+      LP / GP split %, and Total Distributed (cumulative
+      ``WaterfallResult.cash_distributed`` for the tier).
+
+      Unconfigured: Scenario has zero tiers. Renders the canonical
+      structure (Pref → Catch-Up → Promote etc.) with "—" / 0 placeholders
+      so the LP sees the policy structure the deal *should* have. A hint
+      cell calls out the placeholder state explicitly.
+
+    Returns the next-free row.
+    """
+    waterfall_tiers: list[WaterfallTier] = ctx.get("waterfall_tiers") or []
+    rollup: list[dict] = ctx.get("rollup_waterfall") or []
+
+    section_label(ws, start_row, "Waterfall Structure", span_cols=6)
+    header_row(
+        ws, start_row + 1,
+        ["Priority", "Tier Type", "IRR Hurdle", "LP Split", "GP Split", "Total Distributed"],
+    )
+
+    # Pre-aggregate distributions per tier_id from the rollup.
+    dist_by_tier_id: dict[str, Decimal] = {}
+    for row in rollup:
+        tier_id = row.get("tier_id") or ""
+        amount = _coerce_decimal(row.get("cash_distributed") or 0)
+        dist_by_tier_id[tier_id] = dist_by_tier_id.get(tier_id, Decimal(0)) + amount
+
+    cur = start_row + 2
+
+    if waterfall_tiers:
+        ordered = sorted(
+            waterfall_tiers,
+            key=lambda t: (int(t.priority or 999), str(t.tier_type)),
+        )
+        for tier_idx, tier in enumerate(ordered, start=1):
+            tier_type_str = str(getattr(tier.tier_type, "value", tier.tier_type) or "")
+            display_label = tier_type_str.replace("_", " ").title()
+            ws.cell(row=cur, column=1, value=int(tier.priority or 0)).font = FONT_VALUE
+            ws.cell(row=cur, column=2, value=display_label).font = FONT_LABEL
+            hurdle = _coerce_decimal(tier.irr_hurdle_pct or 0)
+            if tier_type_str == "irr_hurdle_split" and hurdle > 0:
+                cell = ws.cell(row=cur, column=3, value=_to_excel_number(hurdle / Decimal(100)))
+                cell.number_format = PCT
+            else:
+                ws.cell(row=cur, column=3, value=_DASH).font = FONT_VALUE
+            cell_lp = ws.cell(
+                row=cur, column=4,
+                value=_to_excel_number(_coerce_decimal(tier.lp_split_pct or 0) / Decimal(100)),
+            )
+            cell_lp.number_format = PCT
+            cell_gp = ws.cell(
+                row=cur, column=5,
+                value=_to_excel_number(_coerce_decimal(tier.gp_split_pct or 0) / Decimal(100)),
+            )
+            cell_gp.number_format = PCT
+            distributed = dist_by_tier_id.get(str(tier.id), Decimal(0))
+            registry.write(
+                ws, cur, 6, distributed,
+                name=f"s_waterfall_tier_{tier_idx}_distributed", fmt=ACCOUNTING,
+                font=FONT_VALUE, align=ALIGN_RIGHT,
+            )
+            cur += 1
+    else:
+        # Unconfigured — render canonical structure with $0 placeholders.
+        for tier_idx, (_tier_type, label) in enumerate(_CANONICAL_WATERFALL_TIERS, start=1):
+            ws.cell(row=cur, column=1, value=tier_idx).font = FONT_VALUE
+            ws.cell(row=cur, column=2, value=label).font = FONT_LABEL
+            ws.cell(row=cur, column=3, value=_DASH).font = FONT_VALUE
+            ws.cell(row=cur, column=4, value=_DASH).font = FONT_VALUE
+            ws.cell(row=cur, column=5, value=_DASH).font = FONT_VALUE
+            registry.write(
+                ws, cur, 6, Decimal(0),
+                name=f"s_waterfall_tier_{tier_idx}_distributed", fmt=ACCOUNTING,
+                font=FONT_VALUE, align=ALIGN_RIGHT,
+            )
+            cur += 1
+        cur += 1
+        ws.cell(
+            row=cur, column=1,
+            value=(
+                "(placeholder structure — no WaterfallTier rows configured. "
+                "Configure pref / catch-up / promote tiers on the Capital Stack module "
+                "to replace the placeholders with real splits and distributions.)"
+            ),
+        ).font = FONT_HINT
+        ws.merge_cells(start_row=cur, start_column=1, end_row=cur, end_column=8)
+        cur += 1
+
+    return cur
 
 
 # ── Per-project sheets (commit 3) ─────────────────────────────────────────────
