@@ -2523,6 +2523,30 @@ async def _query_opportunities(
 
 # ── Opportunity creation wizard ────────────────────────────────────────────────
 
+def _safe_uuid_str(raw: str) -> str:
+    """Return raw if it parses as a UUID, else empty string."""
+    if not raw:
+        return ""
+    try:
+        UUID(raw)
+        return raw
+    except ValueError:
+        return ""
+
+
+def _safe_return_path(raw: str) -> str:
+    """Only allow same-origin paths starting with `/` and free of CRLF / scheme.
+
+    Caller-provided redirect target — we filter to prevent open-redirect to an
+    attacker-controlled URL.
+    """
+    if not raw or not raw.startswith("/") or raw.startswith("//"):
+        return ""
+    if any(ch in raw for ch in ("\r", "\n")):
+        return ""
+    return raw
+
+
 @router.get("/ui/opportunities/wizard", response_class=HTMLResponse)
 async def opportunity_wizard_get(
     request: Request,
@@ -2530,6 +2554,8 @@ async def opportunity_wizard_get(
     vd_user_id: str | None = Cookie(default=None),
     step: int = Query(default=1),
     opp_id: str = Query(default=""),
+    link_to_deal: str = Query(default=""),
+    return_to: str = Query(default=""),
 ) -> HTMLResponse:
     user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
@@ -2554,6 +2580,12 @@ async def opportunity_wizard_get(
         "deal_type": request.query_params.get("deal_type", ""),
         "opp_asking_price": "", "opp_notes": "",
         "deal_type_label": "",
+        # Carry-through for the "create-from-deal" flow: when the wizard is
+        # opened from the Add-Project drawer's empty state, both params are
+        # set, threaded through every step's form, and consumed by /complete
+        # to link the new opp to the deal and bounce back to the builder.
+        "link_to_deal": _safe_uuid_str(link_to_deal),
+        "return_to": _safe_return_path(return_to),
         **_base_ctx(user, dedup_count, "opportunities"),
     }
     return templates.TemplateResponse(request, "opportunity_wizard.html", ctx)
@@ -2570,6 +2602,10 @@ async def opportunity_wizard_step(
     opp_id_str = str(form.get("opp_id", "") or "")
     user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
+
+    # Carry-through params from the create-from-deal flow.
+    _link_to_deal = _safe_uuid_str(str(form.get("link_to_deal", "") or ""))
+    _return_to = _safe_return_path(str(form.get("return_to", "") or ""))
 
     _deal_type_labels = {
         "acquisition": "Acquisition",
@@ -2634,6 +2670,8 @@ async def opportunity_wizard_step(
             "opp_asking_price": asking_price_raw,
             "opp_notes": notes,
             "deal_type_label": _deal_type_labels.get(deal_type, deal_type),
+            "link_to_deal": _link_to_deal,
+            "return_to": _return_to,
             **_base_ctx(user, dedup_count, "opportunities"),
         })
 
@@ -2734,6 +2772,8 @@ async def opportunity_wizard_step(
             "opp_asking_price": asking_price_raw,
             "opp_notes": opp_notes,
             "deal_type_label": _deal_type_labels.get(deal_type, deal_type),
+            "link_to_deal": _link_to_deal,
+            "return_to": _return_to,
             **_base_ctx(user, dedup_count, "opportunities"),
         })
 
@@ -2745,12 +2785,45 @@ async def opportunity_wizard_complete(
     request: Request,
     session: DBSession,
 ) -> Response:
-    """Finalize opportunity creation — redirect to opportunity detail."""
+    """Finalize opportunity creation — link to a Deal if requested, then redirect.
+
+    When ``link_to_deal`` is set (from the Add-Project drawer's empty-state
+    flow), idempotently insert the DealOpportunity junction row so the new
+    opp shows up in the drawer's eligible-opportunities dropdown on return.
+    ``return_to`` controls the post-finalize landing URL — same-origin paths
+    only; falls back to the opportunity detail page.
+    """
     form = await request.form()
     opp_id_str = str(form.get("opp_id", "") or "")
     if not opp_id_str:
         return HTMLResponse("Missing opp_id", status_code=400)
-    return RedirectResponse(url=f"/opportunities/{opp_id_str}", status_code=303)
+
+    link_to_deal = _safe_uuid_str(str(form.get("link_to_deal", "") or ""))
+    return_to = _safe_return_path(str(form.get("return_to", "") or ""))
+
+    if link_to_deal:
+        try:
+            opp_uuid = UUID(opp_id_str)
+            deal_uuid = UUID(link_to_deal)
+        except ValueError:
+            opp_uuid = None
+            deal_uuid = None
+        if opp_uuid is not None and deal_uuid is not None:
+            existing = (await session.execute(
+                select(DealOpportunity).where(
+                    DealOpportunity.deal_id == deal_uuid,
+                    DealOpportunity.opportunity_id == opp_uuid,
+                ).limit(1)
+            )).scalar_one_or_none()
+            if existing is None:
+                session.add(DealOpportunity(
+                    deal_id=deal_uuid,
+                    opportunity_id=opp_uuid,
+                ))
+                await session.commit()
+
+    target = return_to or f"/opportunities/{opp_id_str}"
+    return RedirectResponse(url=target, status_code=303)
 
 
 @router.get("/opportunities/{opp_id}", response_class=HTMLResponse)

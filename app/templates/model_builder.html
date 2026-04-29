@@ -1191,11 +1191,15 @@ function saveModelName(el) {
       <div style="padding:12px;border-radius:6px;background:#fef3c7;border:1px solid #f59e0b;color:#78350f;font-size:13px">
         <strong>No eligible opportunities.</strong>
         Every project must be tied to an Opportunity (so its acquisition cost
-        seeds correctly). Link a new opportunity to this deal first, then
-        return here to add it as a project.
+        seeds correctly). Create a new opportunity here — it will auto-link
+        to this deal and you'll land back on this builder, ready to add it
+        as a project.
         {% if parent_deal_id %}
-        <div style="margin-top:8px">
-          <a href="/deals/{{ parent_deal_id }}" class="btn btn-secondary btn-sm">Open Deal →</a>
+        {% set _return_to = '/models/' ~ model.id ~ '/builder' ~ ('?project=' ~ active_project_id if active_project_id else '') %}
+        <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+          <a href="/ui/opportunities/wizard?step=1&link_to_deal={{ parent_deal_id }}&return_to={{ _return_to | urlencode }}"
+             class="btn btn-primary btn-sm">+ Create Opportunity →</a>
+          <a href="/deals/{{ parent_deal_id }}" class="btn btn-secondary btn-sm">Open Deal</a>
         </div>
         {% endif %}
       </div>
