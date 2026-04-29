@@ -39,6 +39,13 @@ BRAND: dict[str, str] = {
     "ink": "1B1B1B",
     "paper": "FFFFFF",
     "rule": "D0D4DA",
+    # Input/output color convention — industry standard from
+    # `docs/Best Practice Synthesis/03_modeling_conventions.md` / `07_ux_*.md`:
+    # blue = user-editable input, black = calc, green = cross-sheet link.
+    # Picked these specific shades to be legible in print + e-ink readers
+    # without crossing over into the gold accent.
+    "input_blue": "0B5394",
+    "link_green": "1E7E34",
 }
 
 FONT_TITLE = Font(name="Calibri", size=18, bold=True, color=BRAND["navy"])
@@ -49,6 +56,12 @@ FONT_LABEL = Font(name="Calibri", size=10, bold=True, color=BRAND["ink"])
 FONT_VALUE = Font(name="Calibri", size=10, color=BRAND["ink"])
 FONT_HERO_VALUE = Font(name="Calibri", size=12, bold=True, color=BRAND["gold"])
 FONT_HINT = Font(name="Calibri", size=9, italic=True, color=BRAND["mist"])
+# Input cell — blue. Surfaces on every Assumption row so the LP can tell at
+# a glance which numbers are user inputs vs derived calculations.
+FONT_INPUT = Font(name="Calibri", size=10, color=BRAND["input_blue"])
+# Cross-sheet link — green. Used for HYPERLINK formulas (Glossary refs,
+# Per-Project Mini-Summary navigation, per-project sheet back/forward links).
+FONT_LINK = Font(name="Calibri", size=10, color=BRAND["link_green"], underline="single")
 
 FILL_SECTION = PatternFill("solid", fgColor=BRAND["navy"])
 FILL_HEADER = PatternFill("solid", fgColor=BRAND["slate"])
@@ -243,10 +256,27 @@ def kv_row(
     registry: CellRegistry | None = None,
     fmt: str | None = None,
     hero: bool = False,
+    style: str = "calc",
 ) -> None:
-    """Two-column key/value row at (row, 1) and (row, 2)."""
+    """Two-column key/value row at (row, 1) and (row, 2).
+
+    ``style`` selects the value-cell font per the input/output color
+    convention from ``docs/Best Practice Synthesis/03_modeling_conventions.md``:
+    ``"calc"`` = black (default; derived values), ``"input"`` = blue
+    (user-editable assumptions), ``"link"`` = green (cross-sheet links;
+    typically paired with a ``=HYPERLINK(...)`` value). ``hero=True``
+    overrides ``style`` for the gold-accent KPI rows on Underwriting
+    Summary's Primary KPIs block, since those are visually-loaded and
+    don't need additional color signaling.
+    """
     ws.cell(row=row, column=1, value=key).font = FONT_LABEL
     ws.cell(row=row, column=1).alignment = ALIGN_LEFT
+    value_font = (
+        FONT_HERO_VALUE if hero
+        else FONT_INPUT if style == "input"
+        else FONT_LINK if style == "link"
+        else FONT_VALUE
+    )
     if registry is not None:
         registry.write(
             ws,
@@ -255,13 +285,13 @@ def kv_row(
             value,
             name=name,
             fmt=fmt,
-            font=FONT_HERO_VALUE if hero else FONT_VALUE,
+            font=value_font,
             fill=FILL_HERO if hero else None,
             align=ALIGN_RIGHT,
         )
     else:
         cell = ws.cell(row=row, column=2, value=to_excel_value(value))
-        cell.font = FONT_HERO_VALUE if hero else FONT_VALUE
+        cell.font = value_font
         cell.alignment = ALIGN_RIGHT
         if fmt:
             cell.number_format = fmt

@@ -39,7 +39,9 @@ from app.exporters._workbook_helpers import (
     FILL_HERO,
     FONT_HERO_VALUE,
     FONT_HINT,
+    FONT_INPUT,
     FONT_LABEL,
+    FONT_LINK,
     FONT_SUBTITLE,
     FONT_TITLE,
     FONT_VALUE,
@@ -416,6 +418,27 @@ def _build_cover(ws, registry: CellRegistry, ctx: dict) -> None:
         ws.cell(row=row, column=1, value=f"Project {idx}").font = FONT_LABEL
         ws.cell(row=row, column=2, value=proj.name or f"Project {idx}").font = FONT_VALUE
 
+    # Color legend — explains the input/output color convention applied
+    # throughout the workbook so the LP doesn't have to guess. Sized small
+    # (FONT_HINT) so it doesn't compete with the deal data above.
+    legend_row = 11 + max(len(projects), 1) + 2
+    section_label(ws, legend_row, "Color Legend", span_cols=2)
+    ws.cell(row=legend_row + 1, column=1, value="Black text").font = FONT_VALUE
+    ws.cell(
+        row=legend_row + 1, column=2,
+        value="Calculated value (derived from inputs).",
+    ).font = FONT_HINT
+    ws.cell(row=legend_row + 2, column=1, value="Blue text").font = FONT_INPUT
+    ws.cell(
+        row=legend_row + 2, column=2,
+        value="User input (assumption that drives the model).",
+    ).font = FONT_HINT
+    ws.cell(row=legend_row + 3, column=1, value="Green underlined text").font = FONT_LINK
+    ws.cell(
+        row=legend_row + 3, column=2,
+        value="Cross-sheet link or external reference (click to follow).",
+    ).font = FONT_HINT
+
     freeze_top(ws, row=3)
     print_landscape(ws)
 
@@ -727,7 +750,7 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         ws.cell(
             row=pp_data, column=7,
             value=f'=HYPERLINK("#\'{sheet_label}\'!A1", "→ open")',
-        ).font = FONT_VALUE
+        ).font = FONT_LINK
         pp_data += 1
 
     # ── Property Valuation ─────────────────────────────────────────────────
@@ -1661,15 +1684,16 @@ def _build_project_sheet(
     ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=len(year_cols) + 1)
     ws.row_dimensions[1].height = 24
 
-    # Top-of-sheet hyperlinks back to the rollup + glossary
+    # Top-of-sheet hyperlinks back to the rollup + glossary — green per
+    # the cross-sheet-link convention (Phase H3).
     ws.cell(
         row=2, column=1,
         value='=HYPERLINK("#\'Underwriting Summary\'!A1", "← Underwriting Summary")',
-    ).font = FONT_SUBTITLE
+    ).font = FONT_LINK
     ws.cell(
         row=2, column=2,
         value='=HYPERLINK("#\'Glossary & Methodology\'!A1", "Glossary →")',
-    ).font = FONT_SUBTITLE
+    ).font = FONT_LINK
 
     section_label(ws, 4, "Project KPIs", span_cols=2)
     cur = 5
@@ -2547,6 +2571,8 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
 
     section_label(ws, 1, "A. Scenario-Level Assumptions", span_cols=2)
     row = 2
+    # Scenario / NOI Basis / Project Type rows are meta — derived from the
+    # Scenario record, not "inputs" the LP would tweak. Keep black/calc.
     kv_row(ws, row, "Scenario Name", scenario.name,
            name="s_assumptions_scenario_name", registry=registry); row += 1
     kv_row(ws, row, "NOI Basis", _noi_basis_label(scenario.income_mode),
@@ -2559,35 +2585,38 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
     ) or ""
     kv_row(ws, row, "Project Type (default)", str(project_type_label),
            name="s_assumptions_project_type", registry=registry); row += 1
+    # The remaining Block A rows are user-editable inputs — render in blue
+    # per the input/output color convention so the LP can tell at a glance
+    # which numbers drive the model vs which are derived.
     kv_row(
         ws, row, "Hold Period (years)",
         _safe_decimal(default_inputs, "hold_period_years"),
-        name="s_hold_years", registry=registry, fmt=INT_COMMA,
+        name="s_hold_years", registry=registry, fmt=INT_COMMA, style="input",
     ); row += 1
     kv_row(
         ws, row, "Exit Cap Rate",
         _pct_value(default_inputs, "exit_cap_rate_pct"),
-        name="s_exit_cap_rate", registry=registry, fmt=PCT,
+        name="s_exit_cap_rate", registry=registry, fmt=PCT, style="input",
     ); row += 1
     kv_row(
         ws, row, "OpEx Growth Rate (annual)",
         _pct_value(default_inputs, "expense_growth_rate_pct_annual"),
-        name="s_opex_growth_rate", registry=registry, fmt=PCT,
+        name="s_opex_growth_rate", registry=registry, fmt=PCT, style="input",
     ); row += 1
     kv_row(
         ws, row, "Operating Reserve (months)",
         _safe_decimal(default_inputs, "operation_reserve_months"),
-        name="s_operating_reserve_months", registry=registry, fmt=INT_COMMA,
+        name="s_operating_reserve_months", registry=registry, fmt=INT_COMMA, style="input",
     ); row += 1
     kv_row(
         ws, row, "Initial Occupancy",
         _pct_value(default_inputs, "initial_occupancy_pct"),
-        name="s_initial_occupancy", registry=registry, fmt=PCT,
+        name="s_initial_occupancy", registry=registry, fmt=PCT, style="input",
     ); row += 1
     kv_row(
         ws, row, "Asset Mgmt Fee",
         _pct_value(default_inputs, "asset_mgmt_fee_pct"),
-        name="s_asset_mgmt_fee", registry=registry, fmt=PCT,
+        name="s_asset_mgmt_fee", registry=registry, fmt=PCT, style="input",
     ); row += 1
 
     # ── Block B: Per-project ───────────────────────────────────────────────
@@ -2603,6 +2632,11 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
         r = block_b_row + 2 + offset
         ws.cell(row=r, column=1, value=label).font = FONT_LABEL
         ws.cell(row=r, column=1).alignment = ALIGN_LEFT
+        # Numeric metric rows are user inputs (acquisition_price, unit
+        # counts, occupancy %, cap rates, hold years, etc.) — render in
+        # blue per the input/output color convention. Meta rows where
+        # ``fmt`` is None (project_name, project_type) stay black.
+        cell_font = FONT_INPUT if fmt is not None else FONT_VALUE
         for proj_idx, project in enumerate(projects, start=1):
             value = _per_project_value(
                 key,
@@ -2618,7 +2652,7 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
                 value,
                 name=f"p{proj_idx}_{prefix}",
                 fmt=fmt,
-                font=FONT_VALUE,
+                font=cell_font,
                 align=ALIGN_RIGHT,
             )
     next_row = block_b_row + 2 + len(metrics)
@@ -2649,15 +2683,16 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
 
         ws.cell(row=r, column=1, value=module.label or "—").font = FONT_VALUE
         ws.cell(row=r, column=2, value=_funder_type_label(module)).font = FONT_VALUE
+        # Capital-stack principal and rate are user-editable inputs — blue.
         registry.write(
             ws, r, 3, _coerce_decimal(principal),
             name=f"s_module_{m_idx}_principal", fmt=ACCOUNTING,
-            font=FONT_VALUE, align=ALIGN_RIGHT,
+            font=FONT_INPUT, align=ALIGN_RIGHT,
         )
         registry.write(
             ws, r, 4, _coerce_pct(rate),
             name=f"s_module_{m_idx}_rate", fmt=PCT,
-            font=FONT_VALUE, align=ALIGN_RIGHT,
+            font=FONT_INPUT, align=ALIGN_RIGHT,
         )
         ws.cell(row=r, column=5, value="Yes" if auto_size else "No").font = FONT_VALUE
         ws.cell(
@@ -2722,7 +2757,7 @@ def _build_glossary(ws, registry: CellRegistry, ctx: dict) -> None:
             row=r,
             column=4,
             value=f'=HYPERLINK("{link_url}","{safe_label}")',
-        ).font = FONT_VALUE
+        ).font = FONT_LINK
         ws.cell(row=r, column=4).alignment = ALIGN_LEFT
         ws.cell(row=r, column=4).border = THIN_BORDER
 
