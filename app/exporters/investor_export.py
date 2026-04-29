@@ -854,8 +854,229 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         ws.cell(row=cur, column=2, value=_DASH).font = FONT_VALUE
         registry.register("s_cap_spread", ws.title, cur, 2)
 
+    # ── Per-Year Returns Matrix ────────────────────────────────────────────
+    # BIW pattern (Building_I_Want v5): a year-by-year grid of the metrics
+    # an LP uses to size up a deal at a glance. Each "year N" column is the
+    # metric AS OF year N, computed two ways:
+    #   - Cash-based metrics (NOI, OpEx, OER, Levered/Unlevered CF):
+    #     just that year's value.
+    #   - Cumulative / IRR metrics (Cumulative CF, Lev/Unlev IRR-if-exit):
+    #     computed over the cash-flow window from period 0 through end of
+    #     year N, with a simulated exit in the last period equal to
+    #     year-N NOI ÷ exit cap rate.
+    # The IRR-if-exit columns are particularly useful — they show "if you
+    # bailed at Y3, your IRR would be X%" so the LP can see when the deal
+    # crosses its hurdle.
+    matrix_row = cur + 2
+    cur = _build_per_year_returns_matrix(
+        ws, registry, matrix_row, ctx, per_project=per_project, totals=totals,
+    )
+
     freeze_top(ws, row=2)
     print_landscape(ws)
+
+
+def _build_per_year_returns_matrix(
+    ws,
+    registry: CellRegistry,
+    start_row: int,
+    ctx: dict,
+    *,
+    per_project: list[dict],
+    totals: dict,
+) -> int:
+    """Render the BIW-style per-year matrix and return the next-free row.
+
+    Columns are Y1, Y2, … up to the hold horizon (capped at 10 for a
+    Underwriting-Summary skim view; the full series is on the Cash Flow
+    sheet). Rows split into two visual groups: per-year cash metrics
+    (NOI / OER / Levered / Unlevered) and cumulative-through-this-year
+    metrics (Cumulative CF, IRR-if-exit-at-Y_N).
+    """
+    cash_flows: dict[UUID, list[CashFlow]] = ctx["cash_flows"]
+    cash_flow_items: dict[UUID, list[CashFlowLineItem]] = ctx["cash_flow_items"]
+    operational_inputs: dict[UUID, OperationalInputs] = ctx["operational_inputs"]
+    projects: list[Project] = ctx["projects"]
+
+    annual = _aggregate_scenario_annual(cash_flows)
+    if not annual:
+        ws.cell(
+            row=start_row, column=1,
+            value="(no compute output — Per-Year Returns Matrix populates after Compute)",
+        ).font = FONT_HINT
+        return start_row + 1
+
+    max_year_modeled = max(annual)
+    # Skip Y0 (acquisition stub) — investor-friendly read starts at Y1.
+    year_cols = [y for y in range(1, max_year_modeled + 1) if y <= 10]
+    if not year_cols:
+        return start_row
+
+    combined_tpc = _coerce_decimal(totals.get("total_project_cost") or 0)
+    default_inputs = operational_inputs.get(projects[0].id) if projects else None
+    exit_cap_pct = _coerce_decimal(
+        getattr(default_inputs, "exit_cap_rate_pct", 0) or 0
+    )
+
+    # Period-totals cache for IRR computations (sum across projects per period).
+    period_ncf: dict[int, Decimal] = {}
+    period_ds: dict[int, Decimal] = {}
+    period_noi: dict[int, Decimal] = {}
+    for cf_list in cash_flows.values():
+        for cf in cf_list:
+            p = cf.period
+            period_ncf[p] = period_ncf.get(p, Decimal(0)) + _coerce_decimal(cf.net_cash_flow or 0)
+            period_ds[p] = period_ds.get(p, Decimal(0)) + _coerce_decimal(cf.debt_service or 0)
+            period_noi[p] = period_noi.get(p, Decimal(0)) + _coerce_decimal(cf.noi or 0)
+    # Equity calls (capital_outflow) by period — needed for Cash-on-Cash
+    # denominators. Sum signed capital events per project across periods.
+    period_signed_events = _signed_capital_events_by_year(cash_flow_items)
+
+    set_widths(ws, [30, *([14] * len(year_cols))])
+    section_label(
+        ws, start_row, "Per-Year Returns Matrix (BIW-style)",
+        span_cols=len(year_cols) + 1,
+    )
+    header_row(ws, start_row + 1, ["Metric", *[f"Y{y}" for y in year_cols]])
+
+    cur = start_row + 2
+
+    def write_row(label: str, values: dict[int, Decimal | None], range_name: str | None,
+                  fmt: str = ACCOUNTING) -> None:
+        nonlocal cur
+        ws.cell(row=cur, column=1, value=label).font = FONT_LABEL
+        for col_offset, year in enumerate(year_cols):
+            value = values.get(year)
+            cell = ws.cell(
+                row=cur, column=2 + col_offset,
+                value=_to_excel_number(value) if value is not None else _DASH,
+            )
+            if value is not None:
+                cell.number_format = fmt
+            cell.font = FONT_VALUE
+            cell.alignment = ALIGN_RIGHT
+        if range_name and year_cols:
+            registry.register_range(
+                range_name, ws.title, cur, cur, col=2,
+                end_col=1 + len(year_cols),
+            )
+        cur += 1
+
+    # Row 1: NOI per year
+    noi_per_year = {y: annual.get(y, {}).get("noi", Decimal(0)) for y in year_cols}
+    write_row("NOI", noi_per_year, "r_uw_matrix_noi")
+
+    # Row 2: Cap on Cost = NOI[Y] / TPC per year
+    cap_on_cost = {
+        y: (noi_per_year[y] / combined_tpc) if combined_tpc > 0 else None
+        for y in year_cols
+    }
+    write_row("Cap on Cost (NOI ÷ TPC)", cap_on_cost, "r_uw_matrix_cap_on_cost", fmt=PCT)
+
+    # Row 3: OER per year
+    oer_per_year = {}
+    for y in year_cols:
+        opex = annual.get(y, {}).get("operating_expenses", Decimal(0))
+        egi = annual.get(y, {}).get("effective_gross_income", Decimal(0))
+        oer_per_year[y] = (opex / egi) if egi > 0 else None
+    write_row("OER (OpEx ÷ EGI)", oer_per_year, "r_uw_matrix_oer", fmt=PCT)
+
+    # Row 4: Levered Cash Flow per year
+    levered_per_year = {y: annual.get(y, {}).get("net_cash_flow", Decimal(0)) for y in year_cols}
+    write_row("Levered Cash Flow", levered_per_year, "r_uw_matrix_levered_cf")
+
+    # Row 5: Unlevered CF per year (= NCF + DS)
+    unlevered_per_year = {
+        y: annual.get(y, {}).get("net_cash_flow", Decimal(0))
+           + annual.get(y, {}).get("debt_service", Decimal(0))
+        for y in year_cols
+    }
+    write_row("Unlevered Cash Flow", unlevered_per_year, "r_uw_matrix_unlevered_cf")
+
+    # Row 6: Cumulative Levered CF through year N
+    cumulative_levered = {}
+    running = Decimal(0)
+    for y in year_cols:
+        running += levered_per_year.get(y, Decimal(0))
+        cumulative_levered[y] = running
+    write_row("Cumulative Levered CF", cumulative_levered, "r_uw_matrix_cumulative_levered")
+
+    # Row 7: Levered IRR-if-exit-at-Y_N
+    # Build once per year: NCF[0..N*12] with the last period augmented by
+    # (NOI[Y_N] * 12 / exit_cap) — a simulated sale at year-N's stabilized
+    # cap value. Engine NCF already nets the actual debt payoff at exit
+    # (when project actually exits at Y_N), but for years before exit we
+    # have to simulate.
+    levered_irr_per_year = _per_year_irr_series(
+        period_ncf, period_noi, year_cols, exit_cap_pct,
+    )
+    write_row("Levered IRR (if exit at Y)", levered_irr_per_year, "r_uw_matrix_levered_irr", fmt=PCT)
+
+    # Row 8: Unlevered IRR-if-exit-at-Y_N — same but using NCF + DS
+    period_unlev = {p: period_ncf.get(p, Decimal(0)) + period_ds.get(p, Decimal(0))
+                    for p in period_ncf}
+    unlevered_irr_per_year = _per_year_irr_series(
+        period_unlev, period_noi, year_cols, exit_cap_pct,
+    )
+    write_row("Unlevered IRR (if exit at Y)", unlevered_irr_per_year, "r_uw_matrix_unlevered_irr", fmt=PCT)
+
+    # Suppress an unused-local lint flag while keeping the variable
+    # documented for future Cash-on-Cash extensions.
+    _ = period_signed_events
+
+    return cur + 1
+
+
+def _per_year_irr_series(
+    period_cf: dict[int, Decimal],
+    period_noi: dict[int, Decimal],
+    year_cols: list[int],
+    exit_cap_pct: Decimal,
+) -> dict[int, Decimal | None]:
+    """Compute IRR-if-exit-at-Y_N for each year in ``year_cols``.
+
+    For each year N, take the period cash flow series from period 0
+    through period N×12, replace the last period's value with
+    ``cf + simulated_exit`` where ``simulated_exit = NOI(Y_N) ÷ exit_cap``.
+    Returns the IRR as a fraction (PCT-format ready), or None when the
+    series has no sign change / no exit cap configured / pyxirr unavailable.
+    """
+    from app.engines.cashflow import _compute_xirr  # late import — keep module imports lean
+
+    out: dict[int, Decimal | None] = {}
+    if exit_cap_pct <= 0:
+        return {y: None for y in year_cols}
+
+    for year_n in year_cols:
+        max_period = year_n * 12
+        # Year-N annualized NOI: sum of monthly NOI in months (year_n*12 - 11)..year_n*12
+        ytd_noi_annual = sum(
+            (period_noi.get(p, Decimal(0)) for p in range(max_period - 11, max_period + 1)),
+            Decimal(0),
+        )
+        if ytd_noi_annual <= 0:
+            out[year_n] = None
+            continue
+        simulated_exit = ytd_noi_annual * Decimal(100) / exit_cap_pct
+
+        # Build clipped + augmented series
+        series: list[Decimal] = []
+        for p in sorted(period_cf):
+            if p > max_period:
+                break
+            value = period_cf[p]
+            if p == max_period:
+                value = value + simulated_exit
+            series.append(value)
+        if not series:
+            out[year_n] = None
+            continue
+        pct_whole = _compute_xirr(series)
+        if pct_whole == 0:
+            out[year_n] = None
+        else:
+            out[year_n] = pct_whole / Decimal(100)
+    return out
 
 
 # ── Underwriting Pro Forma sheet ──────────────────────────────────────────────

@@ -311,16 +311,19 @@ def _candidate_slugs(workbook_name: str) -> set[str]:
     """Generate every candidate slug a workbook named range could match against.
 
     Strips: ``s_`` / ``p<n>_`` / ``r_`` outer prefix, then any nested ``p<n>_``
-    (for ``r_p<n>_*`` ranges), then ``uw_`` / ``cf_`` section markers
-    (Underwriting / CashFlow sheet tags). Adds " cash flow" expansion when
-    the range was tagged ``_cf_`` so e.g. ``r_p1_cf_levered`` matches doc
-    "Levered Cash Flow".
+    (for ``r_p<n>_*`` ranges), then ``uw_`` / ``cf_`` / ``matrix_`` section
+    markers (Underwriting / CashFlow sheet / Per-Year Matrix view tags).
+    Adds " cash flow" expansion when the range was tagged ``_cf_`` so e.g.
+    ``r_p1_cf_levered`` matches doc "Levered Cash Flow".
     """
     bare = re.sub(r"^(s|p\d+|r)_", "", workbook_name)
     bare = re.sub(r"^p\d+_", "", bare)
     has_cf_marker = "_cf_" in workbook_name
-    bare = re.sub(r"^(uw_|cf_)+", "", bare)
-    bare = re.sub(r"_(uw|cf)_", "_", bare)
+    # ``matrix_`` is the per-year-matrix scope marker. Each matrix row is a
+    # year-by-year view of an existing tagged metric (NOI, OER, IRR, etc.);
+    # stripping the marker lets the row's name slug match the base metric.
+    bare = re.sub(r"^(uw_|cf_|matrix_)+", "", bare)
+    bare = re.sub(r"_(uw|cf|matrix)_", "_", bare)
     text = bare.replace("_", " ")
     aliases = slugs_for_name(text)
     if has_cf_marker:
