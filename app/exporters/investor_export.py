@@ -421,10 +421,52 @@ def _build_cover(ws, registry: CellRegistry, ctx: dict) -> None:
         ws.cell(row=row, column=1, value=f"Project {idx}").font = FONT_LABEL
         ws.cell(row=row, column=2, value=proj.name or f"Project {idx}").font = FONT_VALUE
 
+    # Sources-Gap banner — fires when the deal is materially undersized
+    # (Uses exceed Sources by > $1, mirroring the Calculation Status pill
+    # threshold in the app UI). Surfaces on Cover so the LP doesn't have
+    # to drill into Underwriting Summary to discover the deal isn't
+    # fully funded. Threshold of $1 — anything smaller is rounding noise.
+    uses_total, sources_total, gap = _compute_sources_gap(ctx)
+    next_row_after_projects = 11 + max(len(projects), 1) + 2
+    if gap > Decimal(1):
+        section_label(
+            ws, next_row_after_projects, "⚠ Sources Gap", span_cols=2,
+        )
+        ws.cell(
+            row=next_row_after_projects + 1, column=1,
+            value="Deal is undersized",
+        ).font = FONT_LABEL
+        cell = ws.cell(
+            row=next_row_after_projects + 1, column=2,
+            value=_to_excel_number(gap),
+        )
+        cell.number_format = ACCOUNTING
+        cell.font = FONT_VALUE
+        cell.alignment = ALIGN_RIGHT
+        registry.register("s_cover_sources_gap", ws.title, next_row_after_projects + 1, 2)
+        gap_pct = (gap / uses_total * Decimal(100)) if uses_total > 0 else None
+        hint = (
+            f"Σ Uses {_format_currency_short(uses_total)} exceeds "
+            f"Σ Sources {_format_currency_short(sources_total)}"
+        )
+        if gap_pct is not None:
+            hint += f" by {gap_pct:.1f}% of Total Uses"
+        ws.cell(
+            row=next_row_after_projects + 2, column=1,
+            value=hint,
+        ).font = FONT_HINT
+        ws.merge_cells(
+            start_row=next_row_after_projects + 2, start_column=1,
+            end_row=next_row_after_projects + 2, end_column=2,
+        )
+        legend_offset = 4  # banner consumes 3 rows + 1 spacer
+    else:
+        legend_offset = 0
+
     # Color legend — explains the input/output color convention applied
     # throughout the workbook so the LP doesn't have to guess. Sized small
     # (FONT_HINT) so it doesn't compete with the deal data above.
-    legend_row = 11 + max(len(projects), 1) + 2
+    legend_row = next_row_after_projects + legend_offset
     section_label(ws, legend_row, "Color Legend", span_cols=2)
     ws.cell(row=legend_row + 1, column=1, value="Black text").font = FONT_VALUE
     ws.cell(
@@ -2084,6 +2126,58 @@ def _worst_dscr(per_project: list[dict]) -> Decimal | None:
         if p.get("dscr") is not None
     ]
     return min(candidates) if candidates else None
+
+
+def _format_currency_short(amount: Decimal | None) -> str:
+    """Render a Decimal dollar amount as a compact human-readable string
+    for use in hint text — ``$7.85M``, ``$869K``, ``$1.2K``, ``$0``."""
+    if amount is None:
+        return "$0"
+    abs_amount = abs(amount)
+    sign = "-" if amount < 0 else ""
+    if abs_amount >= 1_000_000:
+        return f"{sign}${abs_amount / Decimal('1000000'):.2f}M"
+    if abs_amount >= 1_000:
+        return f"{sign}${abs_amount / Decimal('1000'):.0f}K"
+    return f"{sign}${abs_amount:.0f}"
+
+
+def _compute_sources_gap(ctx: dict) -> tuple[Decimal, Decimal, Decimal]:
+    """Compute scenario-wide ``(uses_total, sources_total, gap)``.
+
+    ``gap = uses_total − sources_total``: positive means deal is undersized
+    (Uses exceed funded Sources), negative means surplus.
+
+    Mirrors the Underwriting Summary's S&U math so the Cover banner reads
+    the same number the LP sees on the rollup. Pure aggregation — no DB
+    roundtrip; reads ``use_lines`` (per project) + ``junctions``
+    (junction-aggregated source principals) from ctx.
+    """
+    use_lines_by_project: dict[UUID, list[UseLine]] = ctx["use_lines"]
+    junctions: list[CapitalModuleProject] = ctx["junctions"]
+    capital_modules: list[CapitalModule] = ctx["capital_modules"]
+
+    uses_total = Decimal(0)
+    for uls in use_lines_by_project.values():
+        for ul in uls:
+            phase = str(getattr(ul.phase, "value", ul.phase) or "")
+            if phase == "exit":
+                continue
+            uses_total += _coerce_decimal(ul.amount or 0)
+
+    junction_amount: dict[UUID, Decimal] = {}
+    for j in junctions:
+        junction_amount[j.capital_module_id] = junction_amount.get(
+            j.capital_module_id, Decimal(0)
+        ) + _coerce_decimal(j.amount or 0)
+    sources_total = Decimal(0)
+    for module in capital_modules:
+        amount = junction_amount.get(module.id) or _coerce_decimal(
+            (module.source or {}).get("amount") or 0
+        )
+        sources_total += amount
+
+    return uses_total, sources_total, uses_total - sources_total
 
 
 def _combined_dscr(per_project: list[dict]) -> Decimal | None:

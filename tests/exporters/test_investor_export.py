@@ -293,6 +293,9 @@ _NAMED_RANGE_ALIASES: tuple[tuple[re.Pattern[str], str], ...] = (
     # own metric in the doc; trace it to the Direct Cap Value entry it nets
     # against rather than adding a "Δ" header.
     (re.compile(r"^s_valuation_delta$"), "Direct Cap Value"),
+    # Cover Sources-Gap banner (Phase I3) — same value as the Underwriting
+    # Summary's s_sources_gap, just surfaced on Cover when non-zero.
+    (re.compile(r"^s_cover_sources_gap$"), "Sources Gap"),
     # LP/GP-scoped variants of "Equity Multiple"
     (re.compile(r"^s_(lp|gp)_equity_multiple$"), "Equity Multiple"),
     # Asset Mgmt Fee — input on Assumptions, also a metric on Investor Returns
