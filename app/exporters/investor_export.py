@@ -123,6 +123,9 @@ async def export_investor_workbook(
     investor_returns = wb.create_sheet("Investor Returns")
     _build_investor_returns(investor_returns, registry, ctx)
 
+    debt_schedule = wb.create_sheet("Debt Schedule")
+    _build_debt_schedule(debt_schedule, registry, ctx)
+
     assumptions = wb.create_sheet("Assumptions")
     _build_assumptions(assumptions, registry, ctx)
 
@@ -2287,6 +2290,234 @@ def _to_excel_number(value):
         f = float(value)
         return int(f) if f == int(f) else round(f, 6)
     return value
+
+
+# ── Debt Schedule sheet (Phase H2) ────────────────────────────────────────────
+
+
+def _build_debt_schedule(ws, registry: CellRegistry, ctx: dict) -> None:
+    """Debt Schedule — per-module loan terms + perm-loan amortization table.
+
+    Two sections:
+
+      Loan Summary: one row per debt-class CapitalModule with the contractual
+      terms an LP / lender reads at first scan — principal (junction-aggregated),
+      rate, term in months (loan's active window), amort years, IO months,
+      carry type, annual P&I payment, balloon balance at term end.
+
+      Perm Loan Amortization: year-by-year balance / payment / interest /
+      principal table for the *largest* permanent-debt module on the stack
+      (or the largest senior-debt module if no permanent debt is present).
+      One row per year of the amort term, capped at 30 years for readability.
+
+    Bridge / construction / pre-dev loans don't get amort tables — they're
+    typically interest-only and short-term, so the summary table is enough.
+    """
+    capital_modules: list[CapitalModule] = ctx["capital_modules"]
+    junctions: list[CapitalModuleProject] = ctx["junctions"]
+
+    set_widths(ws, [28, 16, 14, 10, 10, 10, 12, 18, 14, 14])
+
+    section_label(ws, 1, "Loan Summary — Per Capital Module", span_cols=10)
+    header_row(
+        ws, 2,
+        ["Module", "Funder Type", "Principal", "Rate", "Term (mo)",
+         "Amort (yrs)", "IO Months", "Carry Type", "Annual P&I", "Balloon"],
+    )
+
+    # Junction-aggregated principal per module (mirrors the Investor Returns
+    # path — one shared debt module covering N projects has its principal
+    # split across N junctions; the loan's headline principal is the sum).
+    junction_principal: dict[UUID, Decimal] = {}
+    for j in junctions:
+        junction_principal[j.capital_module_id] = junction_principal.get(
+            j.capital_module_id, Decimal(0)
+        ) + _coerce_decimal(j.amount or 0)
+
+    debt_modules = [m for m in capital_modules if _funder_class(m.funder_type) == "Debt"]
+
+    cur_row = 3
+    if not debt_modules:
+        ws.cell(
+            row=cur_row, column=1,
+            value="(no debt modules — Loan Summary populates when debt is added to the Capital Stack)",
+        ).font = FONT_HINT
+        cur_row += 1
+
+    perm_candidate: tuple[CapitalModule, Decimal] | None = None  # (module, principal)
+    for m_idx, module in enumerate(debt_modules, start=1):
+        source = module.source or {}
+        carry = module.carry or {}
+        principal = junction_principal.get(module.id) or _coerce_decimal(
+            source.get("amount") or 0
+        )
+        rate_raw = source.get("interest_rate_pct") or carry.get("io_rate_pct") or 0
+        rate = _coerce_pct(rate_raw) if rate_raw else None
+        amort_years = source.get("amort_term_years") or 30
+        io_months = source.get("io_months") or 0
+        carry_type = _resolve_carry_type(carry)
+        term_months = _loan_active_term_months(module, ctx)
+
+        # Annual P&I — only meaningful for amortizing carry types
+        annual_pi: Decimal | None = None
+        if carry_type == "pi" and rate_raw:
+            from app.engines.cashflow import _monthly_pmt
+            monthly = _monthly_pmt(principal, float(rate_raw), int(amort_years))
+            annual_pi = monthly * Decimal(12)
+
+        # Balloon balance at end of term
+        balloon: Decimal | None = None
+        if rate_raw and term_months and term_months > 0:
+            from app.engines.cashflow import _balloon_balance
+            balloon = _balloon_balance(
+                principal, float(rate_raw), int(amort_years),
+                int(term_months), io_months=int(io_months),
+            )
+
+        ws.cell(row=cur_row, column=1, value=module.label or _funder_type_label(module)).font = FONT_VALUE
+        ws.cell(row=cur_row, column=2, value=_funder_type_label(module)).font = FONT_VALUE
+        registry.write(
+            ws, cur_row, 3, principal,
+            name=f"s_loan_{m_idx}_principal", fmt=ACCOUNTING,
+            font=FONT_VALUE, align=ALIGN_RIGHT,
+        )
+        _write_optional(ws, cur_row, 4, rate, registry,
+                        name=f"s_loan_{m_idx}_rate", fmt=PCT)
+        ws.cell(
+            row=cur_row, column=5,
+            value=int(term_months) if term_months else _DASH,
+        ).font = FONT_VALUE
+        ws.cell(row=cur_row, column=6, value=int(amort_years)).font = FONT_VALUE
+        ws.cell(row=cur_row, column=7, value=int(io_months)).font = FONT_VALUE
+        ws.cell(
+            row=cur_row, column=8,
+            value=carry_type.replace("_", " ").title() if carry_type else _DASH,
+        ).font = FONT_VALUE
+        _write_optional(
+            ws, cur_row, 9, annual_pi, registry,
+            name=f"s_loan_{m_idx}_annual_pi", fmt=ACCOUNTING,
+        )
+        _write_optional(
+            ws, cur_row, 10, balloon, registry,
+            name=f"s_loan_{m_idx}_balloon", fmt=ACCOUNTING,
+        )
+
+        # Track largest permanent-debt module for the amort table below.
+        ft = (str(getattr(module.funder_type, "value", module.funder_type)) or "").lower()
+        if ft == "permanent_debt" and (perm_candidate is None or principal > perm_candidate[1]):
+            perm_candidate = (module, principal)
+        elif ft == "senior_debt" and perm_candidate is None:
+            # Senior debt as a fallback when no permanent_debt exists
+            perm_candidate = (module, principal)
+        cur_row += 1
+
+    # ── Perm Loan Amortization Table ──────────────────────────────────────
+    if perm_candidate is None:
+        return
+
+    perm_module, perm_principal = perm_candidate
+    perm_source = perm_module.source or {}
+    perm_rate_raw = perm_source.get("interest_rate_pct") or 0
+    perm_amort_yrs = int(perm_source.get("amort_term_years") or 30)
+    perm_io_months = int(perm_source.get("io_months") or 0)
+
+    if not perm_rate_raw:
+        return
+
+    cur_row += 2
+    section_label(
+        ws, cur_row,
+        f"Amortization — {perm_module.label or _funder_type_label(perm_module)}",
+        span_cols=6,
+    )
+    cur_row += 1
+    header_row(
+        ws, cur_row,
+        ["Year", "Beginning Balance", "Annual Payment", "Interest", "Principal", "Ending Balance"],
+    )
+    cur_row += 1
+
+    # Cap at 30 years for readability — the LP doesn't need a 40-year amort
+    # table on a Phase 1 deal review.
+    display_years = min(perm_amort_yrs, 30)
+
+    from app.engines.cashflow import _balloon_balance, _monthly_pmt
+    monthly_pi = _monthly_pmt(perm_principal, float(perm_rate_raw), perm_amort_yrs)
+    annual_pi_amount = monthly_pi * Decimal(12)
+    monthly_rate = _coerce_decimal(perm_rate_raw) / Decimal(100) / Decimal(12)
+
+    for year in range(1, display_years + 1):
+        # Balance at start of year = balance at end of previous year
+        beg_balance = _balloon_balance(
+            perm_principal, float(perm_rate_raw), perm_amort_yrs,
+            (year - 1) * 12, io_months=perm_io_months,
+        )
+        end_balance = _balloon_balance(
+            perm_principal, float(perm_rate_raw), perm_amort_yrs,
+            year * 12, io_months=perm_io_months,
+        )
+        # Interest in year = average balance × rate × 12 (close enough for
+        # display purposes; the engine itself uses period-by-period exact
+        # accrual for the cashflow output)
+        interest_paid = (beg_balance + end_balance) / Decimal(2) * monthly_rate * Decimal(12)
+        # During IO period, full payment is interest, no principal reduction
+        if year * 12 <= perm_io_months:
+            year_payment = interest_paid
+            principal_paid = Decimal(0)
+        else:
+            year_payment = annual_pi_amount
+            principal_paid = year_payment - interest_paid
+
+        ws.cell(row=cur_row, column=1, value=year).font = FONT_VALUE
+        for col, value in enumerate(
+            (beg_balance, year_payment, interest_paid, principal_paid, end_balance),
+            start=2,
+        ):
+            cell = ws.cell(row=cur_row, column=col, value=_to_excel_number(value))
+            cell.number_format = ACCOUNTING
+            cell.font = FONT_VALUE
+            cell.alignment = ALIGN_RIGHT
+        cur_row += 1
+
+    freeze_top(ws, row=3)
+    print_landscape(ws)
+
+
+def _resolve_carry_type(carry: dict) -> str:
+    """Best-effort carry-type read from the carry JSON. Mirrors what the
+    cashflow engine does (`_carry_type_for_phase`) but simpler — just pulls
+    the operations-phase carry if present, else top-level carry_type, else
+    "io_only" as a default."""
+    if not carry:
+        return "io_only"
+    phases = carry.get("phases") or []
+    for phase in phases:
+        if phase.get("name") == "operation":
+            return phase.get("carry_type") or "io_only"
+    return carry.get("carry_type") or (phases[0].get("carry_type") if phases else "io_only")
+
+
+def _loan_active_term_months(module: CapitalModule, ctx: dict) -> int | None:
+    """Approximate term-in-months for a loan based on its active phase
+    window. Returns the count of months from active_phase_start through
+    the scenario's modeled horizon — close enough for a Loan Summary
+    table; the engine has more precise per-loan windowing
+    (`_loan_pre_op_months`) but it's not exposed in ctx today.
+    """
+    # Fall back to the scenario's longest project's total_timeline_months
+    # since loans typically extend to exit. Bridge loans get retired earlier
+    # (their ``exit_terms.vehicle`` points at the perm) but the terminal
+    # value table here is illustrative.
+    rollup_summary = ctx.get("rollup_summary") or {}
+    per_project = rollup_summary.get("per_project") or []
+    timeline_candidates = [
+        int(p.get("total_timeline_months") or 0)
+        for p in per_project
+        if p.get("total_timeline_months")
+    ]
+    if not timeline_candidates:
+        return None
+    return max(timeline_candidates)
 
 
 def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:

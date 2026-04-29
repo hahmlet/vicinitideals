@@ -33,8 +33,13 @@ from tests.conftest import (
 
 
 def _commit_3_sheet_order(num_projects: int) -> tuple[str, ...]:
-    """Sheet roster after commit 3: per-project sheets sit between
-    Assumptions and Glossary. Project sheet names are ``P{n} {Name}``.
+    """Sheet roster after commit 3 + Phase H2 Debt Schedule insertion.
+
+    Order: Cover → UW Summary → UW Pro Forma → UW Cash Flow →
+    Investor Returns → Debt Schedule → Assumptions → P{n} per-project
+    sheets → Glossary. The Debt Schedule sits next to Investor Returns
+    since both are capital-stack views; both are upstream of the
+    Assumptions inputs that drive them.
     """
     base_pre = (
         "Cover",
@@ -42,6 +47,7 @@ def _commit_3_sheet_order(num_projects: int) -> tuple[str, ...]:
         "Underwriting Pro Forma",
         "Underwriting Cash Flow",
         "Investor Returns",
+        "Debt Schedule",
         "Assumptions",
     )
     return base_pre + tuple(
@@ -91,6 +97,7 @@ _NON_METRIC_PREFIXES = (
     "s_waterfall_",    # waterfall tier sums (per-tier-type cash distributed)
     "s_assumptions_",  # assumption inputs
     "s_su_",           # scenario S&U panel totals (alias of Total Uses/Sources/Gap)
+    "s_loan_",         # Debt Schedule per-loan rows (rate/term/amort/balloon)
 )
 
 
