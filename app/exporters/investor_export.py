@@ -395,20 +395,23 @@ def _build_cover(ws, registry: CellRegistry, ctx: dict) -> None:
 
     # Metadata block — `Scenario Active` row removed (LP doesn't need scenario-
     # active state; that's an internal toggle).
+    # User-set values render blue per the input/output color convention
+    # (Sponsor name, Deal name, Scenario name, NOI Basis selection).
+    # Derived values (Snapshot Date = now(), Project Count = len()) stay black.
     section_label(ws, 3, "Deal", span_cols=2)
     kv_row(ws, 4, "Sponsor / Organization", org.name if org else "—",
-           name="s_sponsor_name", registry=registry)
+           name="s_sponsor_name", registry=registry, style="input")
     kv_row(ws, 5, "Deal Name", deal.name if deal else "—",
-           name="s_deal_name", registry=registry)
+           name="s_deal_name", registry=registry, style="input")
     kv_row(ws, 6, "Scenario Name", scenario.name,
-           name="s_scenario_name", registry=registry)
+           name="s_scenario_name", registry=registry, style="input")
     snapshot_at: datetime = ctx["snapshot_at"]
     kv_row(ws, 7, "Snapshot Date", snapshot_at.date().isoformat(),
            name="s_snapshot_date", registry=registry)
     kv_row(ws, 8, "Project Count", len(projects),
            name="s_project_count", registry=registry, fmt=INT_COMMA)
     kv_row(ws, 9, "NOI Basis", _noi_basis_label(scenario.income_mode),
-           name="s_noi_basis", registry=registry)
+           name="s_noi_basis", registry=registry, style="input")
 
     # Project list — one row per project, labelled `Project N`
     # (LP-friendlier than the engine's `P1` ordinal shorthand).
