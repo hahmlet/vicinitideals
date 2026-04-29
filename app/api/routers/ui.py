@@ -9,7 +9,7 @@ import time
 import uuid as _uuid_mod
 from datetime import UTC, date, datetime
 from zoneinfo import ZoneInfo
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Any
 from urllib.parse import quote_plus
@@ -1819,17 +1819,29 @@ async def deals_new_page(
     user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
     ctx = _base_ctx(user, dedup_count, "deals")
-    # Pre-populate name and pass opp_id so the form can link to an existing opportunity.
+    # Pre-populate name and pass opp_id so the form can link to an existing
+    # opportunity. Also pre-load the opportunity's first listing asking_price
+    # so the Acquisition Cost field can pre-fill — ensures the seeded
+    # UseLine always lands with a non-zero amount.
     opp_name = ""
+    opp_asking_price: float | None = None
     if opp_id:
         try:
-            _opp = await session.get(Opportunity, UUID(opp_id))
+            _opp = await session.get(
+                Opportunity, UUID(opp_id),
+                options=[selectinload(Opportunity.scraped_listings)],
+            )
             if _opp:
                 opp_name = _opp.name
+                for _sl in (_opp.scraped_listings or []):
+                    if _sl.asking_price is not None and _sl.asking_price > 0:
+                        opp_asking_price = float(_sl.asking_price)
+                        break
         except ValueError:
             opp_id = ""
     ctx["opp_id"] = opp_id
     ctx["opp_name"] = opp_name
+    ctx["opp_asking_price"] = opp_asking_price
     return templates.TemplateResponse(request, "deals_new.html", ctx)
 
 
@@ -1944,9 +1956,25 @@ async def create_deal(
     deal_type_raw = str(form.get("deal_type", "acquisition")).strip()
     org_id_raw = str(form.get("org_id", "")).strip()
     opp_id_raw = str(form.get("opportunity_id", "")).strip()
+    acq_cost_raw = str(form.get("acquisition_cost", "")).strip()
 
     if not name:
         return HTMLResponse("<p class='text-muted'>Deal name is required.</p>", status_code=400)
+
+    # Required: acquisition_cost > 0. Same invariant as the Add-Project flow —
+    # the seeded UseLine must have a real value or downstream debt sizing
+    # silently produces gaps that can't be reconciled by a later edit.
+    try:
+        acq_cost = Decimal(acq_cost_raw) if acq_cost_raw else Decimal("0")
+    except (InvalidOperation, ValueError):
+        return HTMLResponse(
+            "<p class='text-muted'>Invalid acquisition cost.</p>", status_code=400,
+        )
+    if acq_cost <= 0:
+        return HTMLResponse(
+            "<p class='text-muted'>Acquisition cost must be greater than zero.</p>",
+            status_code=400,
+        )
 
     user = await _get_user(session, request)
 
@@ -2059,20 +2087,15 @@ async def create_deal(
     for milestone in _seed_milestones(dev_project, deal_type):
         session.add(milestone)
 
-    # Auto-seed the Acquisition use line from the linked opportunity.
-    # Price: first scraped listing's asking_price if available, else 0 (user fills in later).
-    # Label: "{opportunity name} - Acquisition"
-    acq_price = 0
-    if not _opportunity_is_new and opportunity.scraped_listings:
-        sl = opportunity.scraped_listings[0]
-        if sl.asking_price is not None:
-            acq_price = sl.asking_price
+    # Seed the Acquisition UseLine with the user-confirmed cost. Pre-fill
+    # in the form pulls from the linked listing's asking_price; user can
+    # override with their underwriting price before submit.
     session.add(UseLine(
         project_id=dev_project.id,
         label=f"{opportunity.name} - Acquisition",
         phase=UseLinePhase.acquisition,
         milestone_key="close",
-        amount=acq_price,
+        amount=acq_cost,
         timing_type="first_day",
     ))
 
@@ -2250,6 +2273,7 @@ async def create_model_for_deal(
     opp_id_raw = str(form.get("opportunity_id", "")).strip()
     name = str(form.get("name", "Base Case")).strip()
     deal_type_raw = str(form.get("deal_type", "acquisition")).strip()
+    acq_cost_raw = str(form.get("acquisition_cost", "")).strip()
 
     try:
         opp_id = UUID(opp_id_raw)
@@ -2259,6 +2283,20 @@ async def create_model_for_deal(
     opportunity = await session.get(Opportunity, opp_id)
     if opportunity is None:
         return HTMLResponse("<p class='text-muted'>Opportunity not found.</p>", status_code=404)
+
+    # Required: acquisition_cost > 0. Seeded UseLine ensures the new
+    # scenario has populated Uses on day one — same invariant as project 1.
+    try:
+        acq_cost = Decimal(acq_cost_raw) if acq_cost_raw else Decimal("0")
+    except (InvalidOperation, ValueError):
+        return HTMLResponse(
+            "<p class='text-muted'>Invalid acquisition cost.</p>", status_code=400,
+        )
+    if acq_cost <= 0:
+        return HTMLResponse(
+            "<p class='text-muted'>Acquisition cost must be greater than zero.</p>",
+            status_code=400,
+        )
 
     user = await _get_user(session, request)
     try:
@@ -2311,6 +2349,17 @@ async def create_model_for_deal(
 
     for milestone in _seed_milestones(dev_project, deal_type):
         session.add(milestone)
+
+    # Seed the Acquisition UseLine with the user-confirmed cost.
+    session.add(UseLine(
+        project_id=dev_project.id,
+        label=f"{opportunity.name} - Acquisition",
+        phase=UseLinePhase.acquisition,
+        milestone_key="close",
+        amount=acq_cost,
+        timing_type="first_day",
+    ))
+
     await session.commit()
 
     return RedirectResponse(url=f"/models/{scenario.id}/builder", status_code=303)
@@ -4053,6 +4102,17 @@ async def create_deal_from_listing(
     if listing is None:
         return HTMLResponse("<p class='text-muted'>Listing not found.</p>", status_code=404)
 
+    # Enforce: listing must have a non-zero asking price before we'll seed a
+    # deal off it. Without this we end up with a $0 Acquisition UseLine and
+    # the same recompute-gap bug we're fixing in the multi-project flow.
+    if not listing.asking_price or float(listing.asking_price) <= 0:
+        return HTMLResponse(
+            "<p class='text-muted'>This listing has no asking price. "
+            "Set a price on the listing first, or create the deal manually "
+            "from <a href='/deals/new'>Deals → New</a>.</p>",
+            status_code=400,
+        )
+
     form = await request.form()
     deal_type_raw = str(form.get("deal_type", "value_add")).strip()
     try:
@@ -4186,16 +4246,17 @@ async def create_deal_from_listing(
     for milestone in _seed_milestones(dev_project, deal_type):
         session.add(milestone)
 
-    # Seed Acquisition use line from listing asking price
-    if listing.asking_price:
-        session.add(UseLine(
-            project_id=dev_project.id,
-            label="Acquisition",
-            phase=UseLinePhase.acquisition,
-            amount=float(listing.asking_price),
-            timing_type="first_day",
-            is_deferred=False,
-        ))
+    # Seed Acquisition use line from listing asking price (validated > 0
+    # at the top of this handler).
+    session.add(UseLine(
+        project_id=dev_project.id,
+        label=f"{opportunity.name} - Acquisition",
+        phase=UseLinePhase.acquisition,
+        milestone_key="close",
+        amount=Decimal(str(listing.asking_price)),
+        timing_type="first_day",
+        is_deferred=False,
+    ))
 
     await session.commit()
 
@@ -6466,11 +6527,66 @@ async def create_deal_project(
         except ValueError:
             pt = ProjectType.acquisition
 
-    # Find opportunity via existing projects for this scenario
-    _existing_proj = (await session.execute(
-        select(Project).where(Project.scenario_id == deal_id).limit(1)
+    # Required: opportunity_id. Tying every project to an opportunity is the
+    # invariant that lets us seed a non-zero Acquisition UseLine — without it
+    # the model has $0 of Uses and downstream debt sizing produces gaps that
+    # can't be reconciled by a later edit.
+    _opp_id_raw = str(form.get("opportunity_id", "")).strip()
+    if not _opp_id_raw:
+        return HTMLResponse(
+            "<p class='text-muted'>Pick an opportunity to convert into this project.</p>",
+            status_code=400,
+        )
+    try:
+        _opp_id = UUID(_opp_id_raw)
+    except ValueError:
+        return HTMLResponse(
+            "<p class='text-muted'>Invalid opportunity id.</p>", status_code=400,
+        )
+
+    opp = await session.get(
+        Opportunity, _opp_id,
+        options=[selectinload(Opportunity.scraped_listings)],
+    )
+    if opp is None:
+        return HTMLResponse(
+            "<p class='text-muted'>Opportunity not found.</p>", status_code=404,
+        )
+
+    # Validate the opportunity is linked to this Deal (not any deal). The
+    # Add-Project drawer's dropdown is already filtered to deal-linked opps,
+    # so this is a defence-in-depth check.
+    _deal_link = (await session.execute(
+        select(DealOpportunity)
+        .where(
+            DealOpportunity.deal_id == deal.deal_id,
+            DealOpportunity.opportunity_id == _opp_id,
+        )
+        .limit(1)
     )).scalar_one_or_none()
-    _opp_id = _existing_proj.opportunity_id if _existing_proj else None
+    if _deal_link is None:
+        return HTMLResponse(
+            "<p class='text-muted'>That opportunity isn't linked to this deal.</p>",
+            status_code=400,
+        )
+
+    # Required: acquisition_cost > 0. Pre-filled from the opportunity's
+    # listing price client-side, but always editable so the user can
+    # override with their underwriting price. Without this we end up with
+    # a $0 Acquisition UseLine and the same recompute-gap bug that motivated
+    # this whole flow.
+    _acq_raw = str(form.get("acquisition_cost", "")).strip()
+    try:
+        _acq_amount = Decimal(_acq_raw) if _acq_raw else Decimal("0")
+    except (InvalidOperation, ValueError):
+        return HTMLResponse(
+            "<p class='text-muted'>Invalid acquisition cost.</p>", status_code=400,
+        )
+    if _acq_amount <= 0:
+        return HTMLResponse(
+            "<p class='text-muted'>Acquisition cost must be greater than zero.</p>",
+            status_code=400,
+        )
 
     new_proj = Project(
         scenario_id=deal_id,
@@ -6481,14 +6597,23 @@ async def create_deal_project(
     session.add(new_proj)
     await session.flush()
 
-    if _opp_id is not None:
-        opp = await session.get(Opportunity, _opp_id)
-        if opp is not None:
-            await _auto_assign_opportunity_to_project(opp, new_proj, session)
+    await _auto_assign_opportunity_to_project(opp, new_proj, session)
 
     for milestone in _seed_milestones(new_proj, pt):
         session.add(milestone)
     await session.flush()
+
+    # Seed the Acquisition UseLine using the user-confirmed cost. Mirrors the
+    # pattern used at deal creation (project 1) so multi-project deals are
+    # symmetric — every project lands with a populated Acquisition row.
+    session.add(UseLine(
+        project_id=new_proj.id,
+        label=f"{opp.name} - Acquisition",
+        phase=UseLinePhase.acquisition,
+        milestone_key="close",
+        amount=_acq_amount,
+        timing_type="first_day",
+    ))
 
     # ── Seed OperationalInputs with scenario-level sizing config ──────────
     # If the deal already has Deal Setup completed, the default project's
@@ -8452,6 +8577,34 @@ async def model_builder(
         for _ms in _anchor_ms_rows:
             anchor_milestones_by_project.setdefault(_ms.project_id, []).append(_ms)
 
+    # Add-Project drawer: opportunities linked to this deal that aren't yet
+    # bound to a project on this scenario. Each carries the first listing's
+    # asking_price so the drawer can pre-fill Acquisition Cost. Enforcing an
+    # opportunity selection is what guarantees every project gets a non-zero
+    # Acquisition UseLine seeded — same invariant as project 1.
+    add_project_opportunities: list[dict] = []
+    if parent_deal_id is not None:
+        _bound_opp_ids = {p.opportunity_id for p in deal_projects if p.opportunity_id}
+        _deal_opps_rows = list((await session.execute(
+            select(Opportunity)
+            .join(DealOpportunity, DealOpportunity.opportunity_id == Opportunity.id)
+            .where(DealOpportunity.deal_id == parent_deal_id)
+            .options(selectinload(Opportunity.scraped_listings))
+        )).scalars().unique())
+        for _opp in _deal_opps_rows:
+            if _opp.id in _bound_opp_ids:
+                continue
+            _price = None
+            for _sl in (_opp.scraped_listings or []):
+                if _sl.asking_price is not None and _sl.asking_price > 0:
+                    _price = float(_sl.asking_price)
+                    break
+            add_project_opportunities.append({
+                "id": str(_opp.id),
+                "name": _opp.name,
+                "asking_price": _price,
+            })
+
     # When deal_setup is the active module, resolve wizard step and missing building data
     # so the included partials/deal_setup_wizard.html has everything it needs.
     # Deal Setup is a scenario-level wizard (income mode, debt stack), so the
@@ -8536,6 +8689,7 @@ async def model_builder(
         "deal_variants": deal_variants,
         "deal_projects": deal_projects,
         "anchor_milestones_by_project": anchor_milestones_by_project,
+        "add_project_opportunities": add_project_opportunities,
         "active_project_id": str(active_project_id) if active_project_id else None,
         "active_project": active_project,
         "active_project_anchor_date": active_project_anchor_date,

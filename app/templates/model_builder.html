@@ -1187,15 +1187,57 @@ function saveModelName(el) {
       <span class="drawer-close" onclick="closeDrawer('add-project-drawer')">×</span>
     </div>
     <div class="drawer-body">
+      {% if not add_project_opportunities %}
+      <div style="padding:12px;border-radius:6px;background:#fef3c7;border:1px solid #f59e0b;color:#78350f;font-size:13px">
+        <strong>No eligible opportunities.</strong>
+        Every project must be tied to an Opportunity (so its acquisition cost
+        seeds correctly). Link a new opportunity to this deal first, then
+        return here to add it as a project.
+        {% if parent_deal_id %}
+        <div style="margin-top:8px">
+          <a href="/deals/{{ parent_deal_id }}" class="btn btn-secondary btn-sm">Open Deal →</a>
+        </div>
+        {% endif %}
+      </div>
+      {% else %}
       <form hx-post="/ui/deals/{{ model.id }}/new-project"
             hx-swap="none"
-            style="display:flex;flex-direction:column;gap:14px">
+            style="display:flex;flex-direction:column;gap:14px"
+            onsubmit="return _addProjValidate(this)">
+        <div>
+          <label class="field-label">Convert Opportunity → Project</label>
+          <select class="filter-select" style="width:100%;margin-top:4px"
+                  name="opportunity_id" id="add-proj-opp" required
+                  onchange="_addProjOnOppChange(this)">
+            <option value="">— select an opportunity —</option>
+            {% for opp in add_project_opportunities %}
+            <option value="{{ opp.id }}"
+                    data-name="{{ opp.name }}"
+                    data-price="{{ opp.asking_price if opp.asking_price is not none else '' }}">
+              {{ opp.name }}{% if opp.asking_price %} — ${{ '{:,.0f}'.format(opp.asking_price) }}{% endif %}
+            </option>
+            {% endfor %}
+          </select>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:6px">
+            Only opportunities already linked to this deal that aren't yet a project on this scenario.
+          </div>
+        </div>
         <div>
           <label class="field-label">Project Name</label>
           <input class="filter-input" style="width:100%;margin-top:4px"
-                 type="text" name="name" required
+                 type="text" name="name" id="add-proj-name" required
                  value="Project {{ (deal_projects | length) + 1 }}"
                  placeholder="e.g. Tower, Building A">
+        </div>
+        <div>
+          <label class="field-label">Acquisition Cost</label>
+          <input class="filter-input" style="width:100%;margin-top:4px"
+                 type="number" name="acquisition_cost" id="add-proj-acq"
+                 required min="1" step="any"
+                 placeholder="e.g. 4500000">
+          <div style="font-size:12px;color:var(--text-muted);margin-top:6px">
+            Pre-fills from the opportunity's listing price; edit if your underwriting price differs.
+          </div>
         </div>
         <div>
           <label class="field-label">Project Type</label>
@@ -1267,6 +1309,32 @@ function saveModelName(el) {
           <button type="button" class="btn btn-secondary" onclick="closeDrawer('add-project-drawer')">Cancel</button>
         </div>
       </form>
+      <script>
+        // Pre-fill name + acquisition cost from the selected opportunity.
+        function _addProjOnOppChange(sel) {
+          const opt = sel.options[sel.selectedIndex];
+          if (!opt || !opt.value) return;
+          const nameField = document.getElementById('add-proj-name');
+          const priceField = document.getElementById('add-proj-acq');
+          if (nameField && opt.dataset.name) nameField.value = opt.dataset.name;
+          if (priceField && opt.dataset.price) priceField.value = opt.dataset.price;
+        }
+        function _addProjValidate(form) {
+          const opp = form.querySelector('[name=opportunity_id]');
+          const acq = form.querySelector('[name=acquisition_cost]');
+          if (!opp || !opp.value) {
+            alert('Pick an opportunity to convert into this project.');
+            return false;
+          }
+          const v = parseFloat(acq && acq.value);
+          if (!(v > 0)) {
+            alert('Acquisition cost must be greater than zero.');
+            return false;
+          }
+          return true;
+        }
+      </script>
+      {% endif %}
     </div>
   </div>
 </div>

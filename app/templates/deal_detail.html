@@ -543,6 +543,14 @@
       <span class="drawer-close" onclick="closeDrawer('new-model-drawer')">×</span>
     </div>
     <div class="drawer-body">
+      {% set _opp_price = namespace(value=none) %}
+      {% if opp and opp.scraped_listings %}
+        {% for _sl in opp.scraped_listings %}
+          {% if _opp_price.value is none and _sl.asking_price and _sl.asking_price > 0 %}
+            {% set _opp_price.value = _sl.asking_price %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
       <form method="post" action="/ui/deals/create-model" style="display:flex;flex-direction:column;gap:14px">
         <input type="hidden" name="opportunity_id" value="{{ opp_id }}">
         <div>
@@ -558,6 +566,17 @@
             <option value="conversion">Acquisition — Conversion</option>
             <option value="new_construction">New Construction</option>
           </select>
+        </div>
+        <div>
+          <label class="field-label">Acquisition Cost</label>
+          <input class="filter-input" style="width:100%;margin-top:4px"
+                 type="number" name="acquisition_cost" required min="1" step="any"
+                 value="{{ _opp_price.value if _opp_price.value else '' }}"
+                 placeholder="e.g. 4500000">
+          <div style="font-size:12px;color:var(--text-muted);margin-top:4px">
+            {% if _opp_price.value %}Pre-filled from the linked listing — edit if your underwriting price differs.
+            {% else %}Required so the seeded Acquisition use line lands with a real value.{% endif %}
+          </div>
         </div>
         <div style="display:flex;gap:8px;margin-top:6px">
           <button type="submit" class="btn btn-primary">Create Model →</button>
