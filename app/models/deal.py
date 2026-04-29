@@ -402,6 +402,19 @@ def normalize_opex_label(label: str | None) -> str:
     return OPEX_SYNONYMS.get(cleaned, cleaned)
 
 
+# Universal multifamily OpEx categories — present on every CRE pro forma
+# regardless of the deal's specifics. The investor export's OpEx breakout
+# always renders these rows, even when the engine has $0 for them, so a
+# missing data point is *visible* to the LP. A CRE professional reading a
+# pro forma without a Property Tax line treats it as broken; explicitly
+# showing $0 prompts the right "is this configured?" question.
+ALWAYS_SHOWN_OPEX_CATEGORIES: tuple[str, ...] = (
+    "Real Estate Taxes",
+    "Insurance",
+    "Property Management",
+)
+
+
 # Standard OpEx categories — controlled vocabulary surfaced in the
 # OpEx-line entry UI as a dropdown. Free-text labels are still accepted at
 # the DB layer (no constraint), but the UI nudges new entries toward this

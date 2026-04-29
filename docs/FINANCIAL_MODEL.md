@@ -1068,6 +1068,63 @@ per annual bucket. Not stored as a single column on `OperationalOutputs`.
 a yellow flag for the LP / lender. Returns "—" in the export when EGI = 0
 (pre-stabilization periods).
 
+### Yield on Cost [investor, lender, app]
+
+**Definition.** Stabilized NOI divided by Total Project Cost — the asset's
+unlevered earnings rate against what it cost to acquire/build. Headline
+"is this deal reasonable on its own?" check.
+
+**Calculation.**
+```
+yield_on_cost = NOI_stabilized / TPC
+```
+
+**Engine source.** Computed inline by the investor export's Underwriting
+Summary "Property Valuation" section from `OperationalOutputs.noi_stabilized`
+(summed across projects) and `OperationalOutputs.total_project_cost`.
+
+**Notes / edge cases.** Equivalent to "going-in cap rate on cost." Compare
+against the going-in market cap rate (`OperationalInputs.going_in_cap_rate_pct`)
+to read the deal's yield premium / discount — see Cap Spread.
+
+### Going-In Cap Value [investor, app]
+
+**Definition.** Property value implied by capping stabilized NOI at the
+going-in (acquisition) cap rate — the analyst's market valuation snapshot
+at deal close.
+
+**Calculation.**
+```
+going_in_cap_value = NOI_stabilized_combined / going_in_cap_rate
+```
+
+**Engine source.** Computed inline by the investor export's Property
+Valuation section from `OperationalOutputs.noi_stabilized` and
+`OperationalInputs.going_in_cap_rate_pct`.
+
+**Notes / edge cases.** Differs from Direct Cap Value (Exit Cap basis)
+only when the analyst sets going-in and exit cap rates differently, e.g.
+modeling cap-rate decompression on exit. Common conservative pattern:
+exit cap > going-in cap by 25-50 bps.
+
+### Cap Spread [investor, lender, app]
+
+**Definition.** Yield on Cost minus Going-In Cap rate — the deal's yield
+premium (or discount) relative to the market cap input.
+
+**Calculation.**
+```
+cap_spread = yield_on_cost − going_in_cap_rate
+```
+
+**Engine source.** Computed inline by the investor export's Property
+Valuation section.
+
+**Notes / edge cases.** Positive spread → buying below-market cap (yield
+premium); negative → above-market acquisition price relative to NOI. A
+spread of 100-200 bps is typical for value-add multifamily; below 50 bps
+the deal needs cap compression or NOI growth to clear hurdle returns.
+
 ### Direct Cap Value [investor, app]
 
 **Definition.** Property value implied by capping stabilized NOI at the

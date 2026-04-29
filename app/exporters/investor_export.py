@@ -36,6 +36,8 @@ from app.exporters._workbook_helpers import (
     ALIGN_WRAP,
     BRAND,
     DATE_FMT,
+    FILL_HERO,
+    FONT_HERO_VALUE,
     FONT_HINT,
     FONT_LABEL,
     FONT_SUBTITLE,
@@ -64,6 +66,7 @@ from app.models.capital import (
 )
 from app.models.cashflow import CashFlow, CashFlowLineItem, OperationalOutputs
 from app.models.deal import (
+    ALWAYS_SHOWN_OPEX_CATEGORIES,
     Deal,
     DealModel,
     OperationalInputs,
@@ -608,10 +611,11 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         fmt=PCT, hero=True,
     ); row += 1
     # Equity Multiple (combined LP+GP) — total equity-module distributions
-    # divided by total equity commitments. Returns None ("—") when the
-    # waterfall hasn't run or there's no equity stack seeded.
+    # divided by total equity commitments. _kv_row_optional emits the em-
+    # dash literal when there's no equity stack to compute against, so the
+    # cell never reads as a misleading blank (V2-C fix).
     equity_multiple = _combined_em(rollup_waterfall, capital_modules)
-    kv_row(
+    _kv_row_optional(
         ws, row, "Combined Equity Multiple",
         equity_multiple,
         name="s_combined_equity_multiple", registry=registry,
@@ -619,9 +623,10 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
     ); row += 1
     # Cash-on-Cash Year 1 — sum of equity distributions in periods 1-12
     # divided by total equity commitments. The standard first-year-yield
-    # metric LPs ask about ahead of a deal close.
+    # metric LPs ask about ahead of a deal close. Same em-dash semantics
+    # as Equity Multiple when the denominator is zero.
     coc_y1 = _coc_year_one(rollup_waterfall, capital_modules)
-    kv_row(
+    _kv_row_optional(
         ws, row, "Cash-on-Cash (Year 1)",
         coc_y1,
         name="s_coc_year_one", registry=registry,
@@ -722,86 +727,132 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         ).font = FONT_VALUE
         pp_data += 1
 
-    # ── Valuation Reconciliation ───────────────────────────────────────────
-    # Two ways to value the asset at exit. Should land within a few percent
-    # of each other if the deal's exit cap rate matches the implied DCF
-    # discounting; a wide delta is a yellow flag for either the cap-rate
-    # input or the underlying CF projection.
+    # ── Property Valuation ─────────────────────────────────────────────────
+    # The previous "Valuation Reconciliation" block compared two methods
+    # that the engine computes identically (sale_proceeds = stab_NOI /
+    # exit_cap; Direct Cap is also stab_NOI / exit_cap), so Δ was always
+    # $0 — tautological per V2-D in the Subject Model Review.
+    #
+    # The reframed block presents three distinct valuations the LP can
+    # actually act on:
+    #   - Yield on Cost = NOI / TPC: the asset's unlevered earnings rate
+    #     against what it cost to build/buy. The headline "is this deal
+    #     reasonable on its own?" check.
+    #   - Going-In Cap Value = NOI / Going-In Cap: the market valuation
+    #     at acquisition based on the analyst's going-in cap input.
+    #   - Exit Cap Value = NOI / Exit Cap: the market valuation at exit.
+    #     Differs from going-in only when the analyst has set the two
+    #     caps differently (cap-rate compression / decompression).
+    # Cap Spread (Yield on Cost − Going-In Cap) shows the yield premium
+    # — positive means buying below market cap, negative means above.
     val_row = pp_data + 1
-    section_label(ws, val_row, "Valuation Reconciliation", span_cols=3)
+    section_label(ws, val_row, "Property Valuation", span_cols=3)
     header_row(ws, val_row + 1, ["Method", "Value", "Notes"])
 
-    # Direct Cap: Stabilized NOI ÷ Exit Cap Rate. Pulls Exit Cap from the
-    # default project's OperationalInputs (scenario-level field today).
     default_inputs = (
         ctx["operational_inputs"].get(projects[0].id) if projects else None
     )
-    exit_cap_pct_raw = (
-        _coerce_decimal(getattr(default_inputs, "exit_cap_rate_pct", 0) or 0)
+    exit_cap_pct_raw = _coerce_decimal(
+        getattr(default_inputs, "exit_cap_rate_pct", 0) or 0
+    )
+    going_in_cap_pct_raw = _coerce_decimal(
+        getattr(default_inputs, "going_in_cap_rate_pct", 0) or 0
     )
     combined_noi = _sum_per_project_field(per_project, "noi_stabilized")
-    direct_cap_value = (
-        (combined_noi * Decimal(100) / exit_cap_pct_raw) if exit_cap_pct_raw > 0 else None
+    combined_tpc = _coerce_decimal(totals.get("total_project_cost") or 0)
+
+    yield_on_cost = (combined_noi / combined_tpc) if combined_tpc > 0 else None
+    going_in_value = (
+        (combined_noi * Decimal(100) / going_in_cap_pct_raw)
+        if going_in_cap_pct_raw > 0 else None
+    )
+    exit_value = (
+        (combined_noi * Decimal(100) / exit_cap_pct_raw)
+        if exit_cap_pct_raw > 0 else None
     )
 
-    # DCF / Modeled Exit: sum of "Sale" line items in the exit period(s).
-    # When the engine writes a synthesized exit event (always — see
-    # _compute_capital_events_for_phase), this captures it. If no sale
-    # event was generated the row shows "—".
-    cash_flow_items: dict[UUID, list[CashFlowLineItem]] = ctx["cash_flow_items"]
-    modeled_exit_value = Decimal(0)
-    has_sale_event = False
-    for items in cash_flow_items.values():
-        for li in items:
-            label = (li.label or "").strip()
-            if label.startswith("Sale") or label.startswith("Exit"):
-                modeled_exit_value += _coerce_decimal(li.net_amount or 0)
-                has_sale_event = True
-
     cur = val_row + 2
-    ws.cell(row=cur, column=1, value="Direct Cap (NOI ÷ Exit Cap)").font = FONT_LABEL
-    if direct_cap_value is not None:
+
+    # Row 1: Yield on Cost
+    ws.cell(row=cur, column=1, value="Yield on Cost (NOI ÷ TPC)").font = FONT_LABEL
+    if yield_on_cost is not None:
         registry.write(
-            ws, cur, 2, direct_cap_value,
+            ws, cur, 2, yield_on_cost,
+            name="s_yield_on_cost", fmt=PCT,
+            font=FONT_VALUE, align=ALIGN_RIGHT,
+        )
+        ws.cell(
+            row=cur, column=3,
+            value="Unlevered earnings rate vs cost basis",
+        ).font = FONT_HINT
+    else:
+        ws.cell(row=cur, column=2, value=_DASH).font = FONT_VALUE
+        registry.register("s_yield_on_cost", ws.title, cur, 2)
+    cur += 1
+
+    # Row 2: Going-In Cap Value
+    ws.cell(
+        row=cur, column=1, value="Going-In Cap Value (NOI ÷ Going-In Cap)"
+    ).font = FONT_LABEL
+    if going_in_value is not None:
+        registry.write(
+            ws, cur, 2, going_in_value,
+            name="s_going_in_cap_value", fmt=ACCOUNTING,
+            font=FONT_VALUE, align=ALIGN_RIGHT,
+        )
+        ws.cell(
+            row=cur, column=3,
+            value=f"Market value at acquisition ({going_in_cap_pct_raw}% cap)",
+        ).font = FONT_HINT
+    else:
+        ws.cell(row=cur, column=2, value=_DASH).font = FONT_VALUE
+        ws.cell(
+            row=cur, column=3,
+            value="(no Going-In Cap configured)",
+        ).font = FONT_HINT
+        registry.register("s_going_in_cap_value", ws.title, cur, 2)
+    cur += 1
+
+    # Row 3: Exit Cap Value (= Direct Cap, kept name for back-compat)
+    ws.cell(
+        row=cur, column=1, value="Exit Cap Value (NOI ÷ Exit Cap)"
+    ).font = FONT_LABEL
+    if exit_value is not None:
+        registry.write(
+            ws, cur, 2, exit_value,
             name="s_direct_cap_value", fmt=ACCOUNTING,
             font=FONT_VALUE, align=ALIGN_RIGHT,
         )
         ws.cell(
             row=cur, column=3,
-            value=f"Σ Stab NOI ÷ {exit_cap_pct_raw}% Exit Cap",
+            value=f"Market value at exit ({exit_cap_pct_raw}% cap)",
         ).font = FONT_HINT
     else:
         ws.cell(row=cur, column=2, value=_DASH).font = FONT_VALUE
-        ws.cell(row=cur, column=3, value="(no Exit Cap configured)").font = FONT_HINT
+        ws.cell(
+            row=cur, column=3, value="(no Exit Cap configured)",
+        ).font = FONT_HINT
+        registry.register("s_direct_cap_value", ws.title, cur, 2)
     cur += 1
 
-    ws.cell(row=cur, column=1, value="Modeled Exit (DCF / engine sale)").font = FONT_LABEL
-    if has_sale_event:
+    # Row 4: Cap Spread (Yield on Cost − Going-In Cap)
+    ws.cell(row=cur, column=1, value="Cap Spread (Yield − Going-In Cap)").font = FONT_LABEL
+    if yield_on_cost is not None and going_in_cap_pct_raw > 0:
+        cap_spread = yield_on_cost - (going_in_cap_pct_raw / Decimal(100))
         registry.write(
-            ws, cur, 2, modeled_exit_value,
-            name="s_modeled_exit_value", fmt=ACCOUNTING,
+            ws, cur, 2, cap_spread,
+            name="s_cap_spread", fmt=PCT,
             font=FONT_VALUE, align=ALIGN_RIGHT,
         )
-        ws.cell(row=cur, column=3, value="Σ engine-written Sale events").font = FONT_HINT
+        # Positive spread = yield premium (buying below market cap);
+        # negative = above-market acquisition price relative to NOI.
+        ws.cell(
+            row=cur, column=3,
+            value=("Yield premium" if cap_spread > 0 else "Yield discount"),
+        ).font = FONT_HINT
     else:
         ws.cell(row=cur, column=2, value=_DASH).font = FONT_VALUE
-        ws.cell(row=cur, column=3, value="(no exit event in cash flows)").font = FONT_HINT
-    cur += 1
-
-    if direct_cap_value is not None and has_sale_event:
-        delta = modeled_exit_value - direct_cap_value
-        ws.cell(row=cur, column=1, value="Δ (Modeled − Direct Cap)").font = FONT_LABEL
-        registry.write(
-            ws, cur, 2, delta,
-            name="s_valuation_delta", fmt=ACCOUNTING,
-            font=FONT_VALUE, align=ALIGN_RIGHT,
-        )
-        delta_pct = (delta / direct_cap_value) if direct_cap_value > 0 else None
-        if delta_pct is not None:
-            ws.cell(
-                row=cur, column=3,
-                value=f"{(delta_pct * 100):.1f}% of Direct Cap",
-            ).font = FONT_HINT
+        registry.register("s_cap_spread", ws.title, cur, 2)
 
     freeze_top(ws, row=2)
     print_landscape(ws)
@@ -900,6 +951,7 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
         rows=by_category.get("expense", {}),
         year_cols=year_cols,
         empty_hint="(no OpEx line items recorded — run Compute to populate)",
+        always_show=ALWAYS_SHOWN_OPEX_CATEGORIES,
     )
 
     freeze_top(ws, row=3)
@@ -915,6 +967,7 @@ def _write_breakout_table(
     rows: dict[int, dict[str, Decimal]],
     year_cols: list[int],
     empty_hint: str,
+    always_show: tuple[str, ...] = (),
 ) -> int:
     """Render one labelled annual-buckets table and return the row after it.
 
@@ -922,21 +975,29 @@ def _write_breakout_table(
     stay visually identical. ``rows`` shape mirrors the per-category
     output from ``_aggregate_scenario_line_items_by_category``: a
     ``{year: {label: amount}}`` dict for the chosen category.
+
+    ``always_show`` is a tuple of canonical labels that must appear even
+    when their year totals are zero. Used by the OpEx breakout to surface
+    universal multifamily categories (Real Estate Taxes, Insurance,
+    Property Management) so a missing line is *visible* — a CRE LP
+    immediately notices a $0 Property Tax row and asks; an *absent*
+    Property Tax row is silent and dangerous.
     """
     section_label(ws, start_row, title, span_cols=len(year_cols) + 1)
     cur = start_row + 1
 
-    # Drop labels whose total across all year columns is exactly $0 — clean
-    # presentation. Legacy free-text OpEx data has placeholder rows from
-    # before the dropdown enforcement landed; surfacing them as $0 lines
-    # mixed with real values makes the LP read the table as duplicated /
-    # half-finished. A row is kept if it has any non-zero year.
+    # Keep a label if (a) it's in the always-show list, OR (b) any of its
+    # years has a non-zero amount. Drops typo placeholder rows ("$0 across
+    # the board, non-canonical name") while keeping universal-vocabulary
+    # rows visible even when missing data.
+    always_set = set(always_show)
     labels = sorted({
         label
         for year_data in rows.values()
         for label in year_data
-        if any(rows.get(y, {}).get(label, Decimal(0)) != 0 for y in year_cols)
-    })
+        if label in always_set
+        or any(rows.get(y, {}).get(label, Decimal(0)) != 0 for y in year_cols)
+    } | always_set)
     if not labels:
         ws.cell(row=cur, column=1, value=empty_hint).font = FONT_HINT
         return cur + 1
@@ -963,8 +1024,10 @@ def _build_uw_cashflow(ws, registry: CellRegistry, ctx: dict) -> None:
     cash_flow_items: dict[UUID, list[CashFlowLineItem]] = ctx["cash_flow_items"]
 
     annual = _aggregate_scenario_annual(cash_flows)
-    annual_items = _aggregate_scenario_line_items(cash_flow_items)
-    capital_events_by_year = _capital_events_by_year(annual_items)
+    # Signed capital events — outflows negative, inflows positive — so the
+    # row reads correctly for an investor (Y0 acquisition shows -$X, exit
+    # shows +$Y). See _signed_capital_events_by_year docstring.
+    capital_events_by_year = _signed_capital_events_by_year(cash_flow_items)
     max_year = min(max(annual) if annual else 0, 10)
     year_cols = list(range(0, max(max_year, 1) + 1))
 
@@ -1002,8 +1065,11 @@ def _build_uw_cashflow(ws, registry: CellRegistry, ctx: dict) -> None:
     write_series("Debt Service", debt_series, "r_uw_cf_debt_service")
     write_series("Levered Cash Flow", ncf_series, "r_uw_cf_levered")
 
+    # Unlevered = engine's NCF + DS (= NOI + capital events, signed).
+    # Sourcing from NCF + DS instead of (NOI + signed_cap_events) keeps the
+    # row consistent with _combined_unlevered_irr which uses the same path.
     unlevered_series = {
-        y: noi_series.get(y, Decimal(0)) + capital_events_by_year.get(y, Decimal(0))
+        y: ncf_series.get(y, Decimal(0)) + debt_series.get(y, Decimal(0))
         for y in year_cols
     }
     write_series("Unlevered Cash Flow", unlevered_series, "r_uw_cf_unlevered")
@@ -1016,10 +1082,15 @@ def _build_uw_cashflow(ws, registry: CellRegistry, ctx: dict) -> None:
         )
     write_series("DSCR (annual)", dscr_series, "r_uw_cf_dscr", fmt="0.000")
 
+    # Cumulative = running sum of Levered CF (engine's NCF). Capital events
+    # are already inside NCF via the engine's invariant, so adding them
+    # separately would double-count. This makes the row read as
+    # "cumulative cash to equity through period N" without needing the
+    # capital_events_by_year addition that was here before.
     cumulative: dict[int, Decimal] = {}
     running = Decimal(0)
     for y in year_cols:
-        running += ncf_series.get(y, Decimal(0)) + capital_events_by_year.get(y, Decimal(0))
+        running += ncf_series.get(y, Decimal(0))
         cumulative[y] = running
     write_series("Cumulative Cash Flow", cumulative, "r_uw_cf_cumulative")
 
@@ -1057,6 +1128,38 @@ def _funder_class(funder_type) -> str:
 
 
 _DASH = "—"  # rendered when a column is not meaningful for a row's funder class
+
+
+def _kv_row_optional(
+    ws,
+    row: int,
+    key: str,
+    value,
+    *,
+    name: str,
+    registry: CellRegistry,
+    fmt: str,
+    hero: bool = False,
+) -> None:
+    """kv_row variant that writes em-dash for None values without applying
+    the numeric format. Mirrors ``_write_optional`` but lays out as a
+    label/value pair (column 1 = key, column 2 = value) instead of a
+    bare cell. Used on Underwriting Summary KPIs where the metric is
+    meaningful only when its denominator is non-zero (Equity Multiple,
+    Cash-on-Cash Year 1, etc.) — emitting "—" instead of leaving the
+    cell blank tells the LP "no equity stack to compute against",
+    matching the per-class column semantics on Source Returns."""
+    if value is None:
+        ws.cell(row=row, column=1, value=key).font = FONT_LABEL
+        ws.cell(row=row, column=1).alignment = ALIGN_LEFT
+        cell = ws.cell(row=row, column=2, value=_DASH)
+        cell.font = FONT_HERO_VALUE if hero else FONT_VALUE
+        if hero:
+            cell.fill = FILL_HERO
+        cell.alignment = ALIGN_RIGHT
+        registry.register(name, ws.title, row, 2)
+    else:
+        kv_row(ws, row, key, value, name=name, registry=registry, fmt=fmt, hero=hero)
 
 
 def _write_optional(ws, row, col, value, registry: CellRegistry, *, name: str, fmt: str) -> None:
@@ -1318,8 +1421,9 @@ def _build_project_sheet(
     outputs = outputs_by_project.get(project.id)
 
     annual = _aggregate_annual(cash_flows)
-    annual_items = _annual_line_items(line_items)
-    capital_events_by_year = _capital_events_by_year(annual_items)
+    # Signed per-project capital events — outflows negative, inflows
+    # positive — see V2-B fix in _signed_capital_events_by_year_for_project.
+    capital_events_by_year = _signed_capital_events_by_year_for_project(line_items)
     max_year = min(max(annual) if annual else 0, 10)
     year_cols = list(range(0, max(max_year, 1) + 1))
 
@@ -1473,8 +1577,11 @@ def _build_project_sheet(
     write_proj_series("Debt Service", debt_series, f"r_p{project_idx}_cf_debt_service")
     write_proj_series("Levered Cash Flow", ncf_series, f"r_p{project_idx}_cf_levered")
 
+    # V2-B: Unlevered = engine NCF + DS (matches IRR helper path).
+    # Cumulative = running sum of NCF (capital events already inside NCF
+    # via engine invariant; adding them separately would double-count).
     unlevered_series = {
-        y: noi_series.get(y, Decimal(0)) + capital_events_by_year.get(y, Decimal(0))
+        y: ncf_series.get(y, Decimal(0)) + debt_series.get(y, Decimal(0))
         for y in year_cols
     }
     write_proj_series(
@@ -1484,7 +1591,7 @@ def _build_project_sheet(
     cumulative: dict[int, Decimal] = {}
     running = Decimal(0)
     for y in year_cols:
-        running += ncf_series.get(y, Decimal(0)) + capital_events_by_year.get(y, Decimal(0))
+        running += ncf_series.get(y, Decimal(0))
         cumulative[y] = running
     write_proj_series("Cumulative Cash Flow", cumulative, f"r_p{project_idx}_cf_cumulative")
 
@@ -1638,12 +1745,15 @@ _CAPITAL_EVENT_PREFIXES = ("Refi —", "Acquisition", "Sale", "Prepay", "Exit", 
 def _capital_events_by_year(
     annual_items: dict[int, dict[str, Decimal]],
 ) -> dict[int, Decimal]:
-    """Sum capital-event line items per year (acquisition outflows, exit proceeds).
+    """Legacy unsigned capital-event sum. Deprecated — use
+    ``_signed_capital_events_by_year`` for sheet display.
 
-    Used by the per-project sheets which still consume the legacy
-    ``annual_items`` shape. The category-aware path
-    (``_aggregate_scenario_line_items_by_category``) is preferred for new
-    code — filter by ``"capital_event"`` category there.
+    The engine writes line-item ``net_amount`` as a positive number with
+    the sign convention encoded in ``adjustments['direction']``. This
+    helper sums the bare amounts and so produces a positive value for
+    Y0 acquisition costs — wrong sign for an investor read where outflows
+    must be negative. Retained only because some legacy callers still
+    consume this shape; new callers should use the signed variant.
     """
     out: dict[int, Decimal] = {}
     for year, by_label in annual_items.items():
@@ -1652,6 +1762,52 @@ def _capital_events_by_year(
             if any(label.startswith(p) for p in _CAPITAL_EVENT_PREFIXES):
                 total += amount
         out[year] = total
+    return out
+
+
+def _signed_capital_events_by_year_for_project(
+    items: list[CashFlowLineItem],
+) -> dict[int, Decimal]:
+    """Per-project signed capital events, respecting direction metadata.
+
+    The engine writes ``CashFlowLineItem.adjustments['direction']`` with
+    ``"outflow"`` or ``"inflow"``; ``net_amount`` is always a positive
+    magnitude. This helper applies the sign so outflows render negative
+    and inflows render positive in the export — matching the engine's
+    own ``net_cash_flow`` invariant
+    (``NCF = NOI - DS - capital_outflow + capital_inflow``).
+
+    Without this fix, the Cash Flow sheet's Y0 Capital Events row showed
+    ``+$5M`` for a $5M acquisition outflow, and the derived Unlevered CF
+    row inherited the wrong sign — see Subject Model Review V2-B for the
+    full diagnosis.
+    """
+    out: dict[int, Decimal] = {}
+    for li in items:
+        label = (li.label or "").strip()
+        if not any(label.startswith(p) for p in _CAPITAL_EVENT_PREFIXES):
+            continue
+        amount = _coerce_decimal(li.net_amount or 0)
+        adjustments = li.adjustments or {}
+        if adjustments.get("direction") == "outflow":
+            amount = -amount
+        year = _period_to_year(li.period)
+        out[year] = out.get(year, Decimal(0)) + amount
+    return out
+
+
+def _signed_capital_events_by_year(
+    items_by_project: dict[UUID, list[CashFlowLineItem]],
+) -> dict[int, Decimal]:
+    """Scenario-wide signed capital events: sum the per-project signed
+    series. Outflows negative, inflows positive — see
+    ``_signed_capital_events_by_year_for_project`` for the per-project
+    rationale."""
+    out: dict[int, Decimal] = {}
+    for items in items_by_project.values():
+        per_project = _signed_capital_events_by_year_for_project(items)
+        for year, amount in per_project.items():
+            out[year] = out.get(year, Decimal(0)) + amount
     return out
 
 
