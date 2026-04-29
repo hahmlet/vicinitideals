@@ -441,6 +441,15 @@ def _build_cover(ws, registry: CellRegistry, ctx: dict) -> None:
         row=legend_row + 3, column=2,
         value="Cross-sheet link or external reference (click to follow).",
     ).font = FONT_HINT
+    # Fourth row covers the gold-bold KPI styling on Underwriting Summary's
+    # Primary KPIs block. Adding the row to the legend (rather than dropping
+    # the gold treatment) keeps the headline emphasis on Total Project Cost,
+    # IRR, EM, etc. while giving the LP an explanation for the color.
+    ws.cell(row=legend_row + 4, column=1, value="Gold bold").font = FONT_HERO_VALUE
+    ws.cell(
+        row=legend_row + 4, column=2,
+        value="Headline KPI on Underwriting Summary (TPC, IRR, NOI, etc.).",
+    ).font = FONT_HINT
 
     freeze_top(ws, row=3)
     print_landscape(ws)
