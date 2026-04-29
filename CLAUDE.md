@@ -2,10 +2,10 @@
 
 ## Product Overview
 
-Self-hosted real estate financial modeling and deal intelligence platform for a Portland-area investment team. Two core functions:
+Self-hosted real estate financial modeling + deal intelligence platform for Portland-area investment team. Two core functions:
 
-1. **Parcel intelligence** — continuously scrapes commercial listings (Crexi, LoopNet, REALie) and county GIS (Portland Maps, Clackamas, Oregon City, Gresham ArcGIS) to maintain a living parcel inventory across Multnomah + Clackamas County, OR.
-2. **Deal underwriting** — full financial model builder: Uses, Sources, debt carry (4 carry types), operating cash flow, equity waterfall, draw schedule, sensitivity analysis, with Excel export.
+1. **Parcel intelligence** — scrapes commercial listings (Crexi, LoopNet, REALie) + county GIS (Portland Maps, Clackamas, Oregon City, Gresham ArcGIS). Maintains living parcel inventory across Multnomah + Clackamas County, OR.
+2. **Deal underwriting** — full financial model builder: Uses, Sources, debt carry (4 types), operating cash flow, equity waterfall, draw schedule, sensitivity analysis, Excel export.
 
 **Live URL**: `https://viciniti.deals`
 **Domain**: Cloudflare DNS, Let's Encrypt wildcard cert on NGINX Proxy Manager (LXC 109)
@@ -44,20 +44,68 @@ FastAPI 0.110+ (Python 3.12+) · SQLAlchemy 2.0 async + asyncpg · Alembic · Ce
 
 ## Deploy Workflow
 
-**IMPORTANT: A task is NOT complete until it is deployed to production.** Agents manage 100% of deploys. Unless explicitly told otherwise, always deploy after committing and pushing changes — do not ask for permission. "It's done" means it's live on `viciniti.deals`, not just committed locally.
+**IMPORTANT: Task NOT complete until deployed to production.** Agents manage 100% of deploys. Unless told otherwise, always deploy after commit+push — no permission needed. "Done" means live on `viciniti.deals`, not committed locally.
 
-**Deploy steps** (all three are required):
+**Deploy steps** (all three required):
 1. `git push origin main`
 2. `mcp__proxmox-mcp__ssh_exec container_id=114 command="bash /root/deploy-vicinitideals.sh"`
-3. Verify smoke checks pass in the deploy output
+3. Verify smoke checks pass in deploy output
 
-The deploy script runs: `git pull → docker compose build → alembic upgrade head → docker compose up -d → health check`
+Deploy script runs: `git pull → docker compose build → alembic upgrade head → docker compose up -d → health check`
 
-**Manual fallback** (if MCP is unavailable):
+**Manual fallback** (if MCP unavailable):
 ```bash
 # SSH to VM 114 directly
 ssh root@192.168.1.28 "bash /root/deploy-vicinitideals.sh"
 ```
+
+---
+
+## Working in This Repo
+
+### Branch & worktree convention
+
+Primary checkout (`c:\Users\Steph\Repos\vicinitideals`) stays on `main`. Branched work lives in worktrees at `c:\Users\Steph\Repos\vicinitideals-worktrees\<slug>\` so parallel agent sessions don't collide on shared working-tree state.
+
+**When to use worktree:**
+- **Bug fixes, small tweaks, doc edits, config changes** → work on `main` in primary checkout. No worktree.
+- **New features, refactors, risky changes** → **confirm with user first** before creating worktree. Don't start branched work in primary checkout.
+
+**Per-worktree setup** (from primary):
+```bash
+git worktree add ../vicinitideals-worktrees/<slug> -b feature/<slug> main
+cp .env ../vicinitideals-worktrees/<slug>/.env
+( cd ../vicinitideals-worktrees/<slug> && uv sync )
+```
+
+`.gitignore` excludes `.env`, `.venv/`, `.claude/` — each worktree gets own. Shared `.git` object DB makes worktrees cheap.
+
+**Granularity:** one branch = one shippable slice = one worktree. If worktree scope grows beyond one mergeable change, split into multiple branches/worktrees. Merge each slice when independently deployable; gate user-visible behavior with feature flags rather than delaying merges.
+
+**Cleanup** — remove finished worktree: `git worktree remove <path> && git branch -d <branch>`. Find stale worktrees (run from primary, safe weekly):
+```bash
+git worktree list --porcelain | grep '^worktree' | awk '{print $2}' | while read wt; do
+  branch=$(git -C "$wt" branch --show-current)
+  if [ -n "$branch" ] && [ "$branch" != "main" ] && git merge-base --is-ancestor "$branch" main 2>/dev/null; then
+    echo "stale (merged): $wt on $branch"
+  fi
+done
+```
+
+### End-of-session checklist
+
+When user indicates session ending, run through before closing:
+
+1. **Undone items** — list anything discussed but not finished, plus follow-ups identified (open questions, deferred fixes, things user said "later").
+2. **Completed work summary** — commits (branch + SHA), pushes, deploys, decisions not captured in commit messages.
+3. **Worktree trim** — if session branch merged into main and won't be touched again, run `git worktree remove` + `git branch -d`. If work in progress, leave. If unsure, ask.
+4. **Schema doc updates** — if session changed engine behavior, data model, or architecture, update relevant docs:
+   - [docs/FINANCIAL_MODEL.md](docs/FINANCIAL_MODEL.md) — financial engine math (cashflow, draw schedule, waterfall, underwriting metrics, carry types, auto-sizing)
+   - [docs/DATA_MODEL.md](docs/DATA_MODEL.md) — ORM schema (deal, scenario, capital, milestone, project, parcel)
+   - [docs/MARKET_MODEL.md](docs/MARKET_MODEL.md) — market/comp model
+   - [docs/PROJECT_OVERVIEW.md](docs/PROJECT_OVERVIEW.md) — overall architecture
+
+   Don't write doc updates every commit — only when behavior, schema, or invariants changed.
 
 ---
 
@@ -117,18 +165,18 @@ docs/
 ### Financial Engine (cashflow.py)
 
 - **4 carry types**: `io_only` (True IO), `interest_reserve` (avg-draw `(N+1)/2`), `capitalized_interest` (PIK, full-balance `N`), `pi` (amortizing)
-- **Per-loan active windows**: each loan's pre-op months come from `_loan_pre_op_months(module)`, NOT a global `constr_months_total`
+- **Per-loan active windows**: each loan's pre-op months from `_loan_pre_op_months(module)`, NOT global `constr_months_total`
 - **`_PERIOD_TYPE_RANK` + `_APS_TO_RANK`**: maps `active_phase_start` to phase ordering for windowed month counting
 - **Auto-sizing**: `_auto_size_debt_modules()` with one-pass algebraic divisor fold-in for closing costs (Sources = Uses invariant)
-- **DSCR-capped mode**: when DSCR cap binds, a gap is expected and real
+- **DSCR-capped mode**: when DSCR cap binds, gap expected and real
 - **Default loan closing costs**: `_DEFAULT_LOAN_COSTS` table per `funder_type`
 - Uses `Decimal` arithmetic throughout (`MONEY_PLACES = Decimal("0.000001")`)
 
 ### Milestone Timeline
 
 - Milestones use **trigger chains** (`trigger_milestone_id`) — `computed_start()` resolves dates via chain-walk
-- The timeline wizard does **two-pass creation**: Pass 1 creates milestones with durations, Pass 2 wires trigger IDs
-- Without trigger chains, the engine falls back to `OperationalInputs.*_months` scalars (NULL → 1mo fallback) — this was a production bug fixed in commit `5d5caf4`
+- Timeline wizard does **two-pass creation**: Pass 1 creates milestones with durations, Pass 2 wires trigger IDs
+- Without trigger chains, engine falls back to `OperationalInputs.*_months` scalars (NULL → 1mo fallback) — production bug fixed in commit `5d5caf4`
 
 ### Entity Hierarchy
 
@@ -138,11 +186,11 @@ Scenario → UseLines, CapitalModules, IncomeStreams, ExpenseLines, DrawSources,
 Parcel → ScrapedListings (many listings per parcel)
 ```
 
-The old `Deal` ORM class is now `Scenario`. `DealModel = Scenario` alias exists for backward compat.
+Old `Deal` ORM class now `Scenario`. `DealModel = Scenario` alias exists for backward compat.
 
 ### Capital Stack
 
-`CapitalModule` stores structured data in JSONB columns: `source` (CapitalSourceSchema), `carry` (CapitalCarrySchema), `exit_terms`. `extra="allow"` on schemas preserves engine-written keys not declared in the schema.
+`CapitalModule` stores structured data in JSONB columns: `source` (CapitalSourceSchema), `carry` (CapitalCarrySchema), `exit_terms`. `extra="allow"` on schemas preserves engine-written keys not declared in schema.
 
 ---
 
@@ -163,7 +211,7 @@ uv run ruff check app/ tests/                              # Lint
 ```
 
 ### Phase B Debt Regression (scripts/test_phase_b_debt.py)
-8 tests covering Sources=Uses parity, DSCR-capped gaps, and carry-type formula round-trips. Runs against a live instance:
+8 tests covering Sources=Uses parity, DSCR-capped gaps, carry-type formula round-trips. Runs against live instance:
 ```bash
 uv run python scripts/test_phase_b_debt.py --base-url https://viciniti.deals --auth tests/e2e/auth-state.json
 ```
@@ -172,7 +220,7 @@ uv run python scripts/test_phase_b_debt.py --base-url https://viciniti.deals --a
 - **Scope detection**: skips heavy gates for docs/templates-only changes
 - **Light gate**: Ruff lint + unit tests (every push/PR)
 - **Full gate**: integration tests + E2E (Playwright) + Phase B regression + Trivy image scan + Semgrep SAST
-- CI seeds an E2E user via `app/scripts/seed_e2e_user.py`
+- CI seeds E2E user via `app/scripts/seed_e2e_user.py`
 
 ---
 
@@ -194,7 +242,7 @@ uv run python scripts/test_phase_b_debt.py --base-url https://viciniti.deals --a
 - **Pydantic v2** for schemas and settings
 - **Ruff** for linting (`uv run ruff check app/ tests/`)
 - **uv** as package manager (not pip)
-- **HTMX** for UI interactivity — server renders HTML partials, no client-side JS framework
+- **HTMX** for UI — server renders HTML partials, no client-side JS framework
 - Module docstrings describe purpose and entity relationships
 - Enums are `str, enum.Enum` subclasses for JSON serialization
 
@@ -203,7 +251,7 @@ uv run python scripts/test_phase_b_debt.py --base-url https://viciniti.deals --a
 ## Database Safety
 
 - PostgreSQL data lives in Docker named volume `re-modeling-postgres-data`
-- **NEVER run `docker compose down -v`** — this deletes the volume and all data
+- **NEVER run `docker compose down -v`** — deletes volume and all data
 - DB name and user remain `re_modeling` (intentional legacy name — renaming requires dump/restore)
 - Alembic migrations run automatically during deploy (`alembic upgrade head`)
 
@@ -221,25 +269,47 @@ uv run python scripts/test_phase_b_debt.py --base-url https://viciniti.deals --a
 
 ## Market Coverage Policy
 
-**Portland city proper is NOT a target acquisition market.** The team does not buy deals in the Portland jurisdiction.
+**Portland city proper NOT target acquisition market.** Team does not buy deals in Portland jurisdiction.
 
-Portland listings are retained in the database for two purposes:
-1. **Market comp data** — Portland has the densest financial data and is essential for KNN comp recommendations, especially in jurisdictions where local comp coverage is sparse
-2. **Testing and development** — feature work, bug repros, and UI testing where realistic data variety is needed
+Portland listings retained for two purposes:
+1. **Market comp data** — Portland has densest financial data, essential for KNN comp recommendations in jurisdictions where local comp coverage sparse
+2. **Testing and development** — feature work, bug repros, UI testing where realistic data variety needed
 
 **Do not spend money on Portland data**:
 - No HelloData enrichment calls for Portland properties
-- No paid API calls of any kind for Portland addresses
+- No paid API calls for Portland addresses
 - No prioritization of Portland listings for manual data entry
 
-**Target acquisition jurisdictions** are Multnomah and Clackamas county cities *other than Portland* — Gresham, Fairview, Wood Village, Troutdale, Happy Valley, Milwaukie, Oregon City, Gladstone, Lake Oswego, West Linn, Tualatin, Wilsonville, and unincorporated areas. These should get spending priority for any paid data enrichment.
+**Target acquisition jurisdictions**: Multnomah + Clackamas county cities *other than Portland* — Gresham, Fairview, Wood Village, Troutdale, Happy Valley, Milwaukie, Oregon City, Gladstone, Lake Oswego, West Linn, Tualatin, Wilsonville, unincorporated areas. These get spending priority for paid data enrichment.
 
 ---
 
 ## Known Issues / Open Items
 
-1. **Backfill trigger chains**: deals created before commit `5d5caf4` have milestones with `trigger_milestone_id=None`, causing degenerate 1-month durations. A one-shot backfill script is needed.
+1. **Backfill trigger chains**: deals created before commit `5d5caf4` have milestones with `trigger_milestone_id=None`, causing degenerate 1-month durations. One-shot backfill script needed.
 2. **X-Forwarded-For shows `192.168.1.1`**: UniFi SNAT on port forwards. Rate limiter buckets on proxy IP (global). Per-email limit still works. Accepted as-is.
 3. **Organization management**: no org creation UI or invite flow yet. First registered user auto-creates "Default Organization".
-4. **`docs/FINANCIAL_MODEL.md`** needs update for per-loan `_loan_pre_op_months`, trigger-chain requirements, and `_PERIOD_TYPE_RANK` windowing logic.
-5. **Listing jurisdiction data is inaccurate**: scraped `city` values come from listing sources (Crexi/LoopNet) and often use the metro name instead of the actual jurisdiction (e.g. Gresham listings tagged "Portland"). Fix: add a `jurisdiction` column to `scraped_listings`, backfill via nearest-parcel lookup using lat/lng against the 446K parcels with known jurisdictions, and update the scraper pipeline to assign jurisdiction on ingest.
+4. **`docs/FINANCIAL_MODEL.md`** needs update for per-loan `_loan_pre_op_months`, trigger-chain requirements, `_PERIOD_TYPE_RANK` windowing logic.
+5. **Listing jurisdiction data inaccurate**: scraped `city` values from listing sources (Crexi/LoopNet) often use metro name instead of actual jurisdiction (e.g. Gresham listings tagged "Portland"). Fix: add `jurisdiction` column to `scraped_listings`, backfill via nearest-parcel lookup using lat/lng against 446K parcels with known jurisdictions, update scraper pipeline to assign jurisdiction on ingest.
+
+---
+
+## Subagent Routing
+
+Spawn subagents (Agent tool) for bulk mechanical work, scoped research, or parallel investigations. Don't spawn when parent needs reasoning for judgment call, when synthesis requires holding multiple threads in one head, or when spawn overhead dominates work.
+
+**Pack strategic why, not just task.** Tell subagent what parent trying to decide, not only what to fetch. Subagent that knows "choosing between new column vs reusing existing field" can flag third option or surface that question wrong. Subagent told only "search for column X" cannot.
+
+**Verify load-bearing claims, especially absences.** "No existing helper for this" = extraordinary claim — when parent plan depends on it, ask subagent to confirm against actual files (grep + read), not vibes. Surface results ≠ underlying reality.
+
+**Pick cheapest agent that can do subtask well:**
+- `Explore` (Sonnet): scoped code/file search, grep-and-summarize, file inventories. Default for research.
+- `general-purpose`: open-ended cross-codebase questions, web research, multi-step lookups.
+- `Plan`: design implementation approach for non-trivial change.
+- `claude-code-guide`: questions about Claude Code tool itself.
+
+If subagent realizes task needs more reasoning than its tier provides, return to parent rather than burning tokens.
+
+**Avoid sprawl.** Batch related work into one subagent prompt rather than fanning out. Each spawn costs context-loading overhead.
+
+Parent owns final synthesis. User instructions override these rules.
