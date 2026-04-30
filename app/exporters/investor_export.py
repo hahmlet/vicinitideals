@@ -783,7 +783,7 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
     section_label(ws, pp_row, "Per-Project Mini-Summary", span_cols=7)
     header_row(
         ws, pp_row + 1,
-        ["Project", "TPC", "Equity Req'd", "Stab NOI", "DSCR", "Levered IRR", "Sheet"],
+        ["Project", "TPC", "Equity Req'd", "Stabilized NOI", "DSCR", "Levered IRR", "Sheet"],
     )
     pp_data = pp_row + 2
     for idx, project in enumerate(projects, start=1):
