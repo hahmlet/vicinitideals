@@ -339,9 +339,19 @@ def _open_overlay_and_fill(
 
     for name, value in fields.items():
         inp = page.locator(f'{overlay_selector} [name="{name}"]')
-        if inp.count() > 0:
-            # Use force for fields that may be in a scrollable area
-            inp.fill(value, force=True)
+        if inp.count() == 0:
+            continue
+        # Detect tag — some "label" fields are now <select> dropdowns of preset
+        # categories (e.g. expense-line label) rather than free text inputs.
+        tag = inp.first.evaluate("el => el.tagName.toLowerCase()")
+        if tag == "select":
+            try:
+                inp.first.select_option(value, force=True)
+            except Exception:
+                # Value not in preset options — fall through to label-based match.
+                inp.first.select_option(label=value, force=True)
+        else:
+            inp.first.fill(value, force=True)
 
     if select_fields:
         for name, value in select_fields.items():
@@ -527,9 +537,11 @@ def create_seeded_deal(
     add_income_stream(page, model_id)
 
     # Expenses
+    # Labels must match STANDARD_OPEX_CATEGORIES exactly (the form's
+    # "Category" select is now a strict dropdown, not free text).
     add_expense_line(page, model_id, "Property Management", "14400")
     add_expense_line(page, model_id, "Insurance", "6000")
-    add_expense_line(page, model_id, "Property Tax", "9600", escalation_pct="2")
+    add_expense_line(page, model_id, "Real Estate Taxes", "9600", escalation_pct="2")
 
     # Compute
     click_compute(page, model_id)
