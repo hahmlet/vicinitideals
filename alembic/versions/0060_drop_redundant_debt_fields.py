@@ -30,40 +30,51 @@ def upgrade() -> None:
     conn = op.get_bind()
 
     # ── Step 1+2: backfill perm-debt modules ────────────────────────────────
-    # For every CapitalModule with funder_type = 'permanent_debt', merge
-    # hold_term_years and dscr_min into source JSONB. amort_term_years can
-    # live in carry (phased) OR source; check carry first.
+    # source/carry columns are JSON (not JSONB) on legacy prod schemas, so
+    # cast both sides to jsonb for the merge then back to json on assignment.
+    # amort_term_years can live in carry (phased) OR source; check carry first.
     conn.execute(sa.text("""
         UPDATE capital_modules cm
-        SET source = COALESCE(source, '{}'::jsonb) || jsonb_build_object(
-            'hold_term_years',
-            COALESCE(
-                (cm.carry->>'amort_term_years')::int,
-                (cm.source->>'amort_term_years')::int,
-                5
-            ),
-            'dscr_min',
-            COALESCE(
-                (
-                    SELECT (oi.dscr_minimum)::float
-                    FROM operational_inputs oi
-                    JOIN projects p ON p.id = oi.project_id
-                    WHERE p.scenario_id = cm.scenario_id
-                      AND oi.dscr_minimum IS NOT NULL
-                    ORDER BY p.created_at ASC
-                    LIMIT 1
+        SET source = (
+            COALESCE(cm.source::jsonb, '{}'::jsonb)
+            || jsonb_build_object(
+                'hold_term_years',
+                COALESCE(
+                    (cm.carry::jsonb->>'amort_term_years')::int,
+                    (cm.source::jsonb->>'amort_term_years')::int,
+                    5
                 ),
-                1.20
+                'dscr_min',
+                COALESCE(
+                    (
+                        SELECT (oi.dscr_minimum)::float
+                        FROM operational_inputs oi
+                        JOIN projects p ON p.id = oi.project_id
+                        WHERE p.scenario_id = cm.scenario_id
+                          AND oi.dscr_minimum IS NOT NULL
+                        ORDER BY p.created_at ASC
+                        LIMIT 1
+                    ),
+                    1.20
+                )
             )
-        )
+        )::json
         WHERE cm.funder_type = 'permanent_debt'
     """))
 
-    # ── Step 3: drop columns ────────────────────────────────────────────────
-    op.drop_column("operational_inputs", "hold_period_years")
-    op.drop_column("operational_inputs", "perm_rate_pct")
-    op.drop_column("operational_inputs", "perm_amort_years")
-    op.drop_column("operational_inputs", "dscr_minimum")
+    # ── Step 3: drop columns (tolerate columns that never existed on this DB)
+    conn.execute(sa.text(
+        "ALTER TABLE operational_inputs DROP COLUMN IF EXISTS hold_period_years"
+    ))
+    conn.execute(sa.text(
+        "ALTER TABLE operational_inputs DROP COLUMN IF EXISTS perm_rate_pct"
+    ))
+    conn.execute(sa.text(
+        "ALTER TABLE operational_inputs DROP COLUMN IF EXISTS perm_amort_years"
+    ))
+    conn.execute(sa.text(
+        "ALTER TABLE operational_inputs DROP COLUMN IF EXISTS dscr_minimum"
+    ))
 
 
 def downgrade() -> None:
