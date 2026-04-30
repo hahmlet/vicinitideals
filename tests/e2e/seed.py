@@ -49,6 +49,10 @@ def create_e2e_scenario(
 
     page.fill('[name=name]', deal_name)
     page.select_option('[name=deal_type]', deal_type)
+    # Acquisition Cost is required by the form (server enforces > 0).
+    acq_input = page.locator('[name="acquisition_cost"]')
+    if acq_input.count() > 0:
+        acq_input.fill("1000000")
     page.click('[type=submit]')
 
     # Redirects to /models/{model_id}/builder
