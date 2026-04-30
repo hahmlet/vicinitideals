@@ -21,7 +21,7 @@ import uuid
 from dataclasses import dataclass, field
 from typing import Any
 
-from sqlalchemy import func, select, update
+from sqlalchemy import delete, func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.broker import Broker, BrokerDisciplinaryAction
@@ -168,7 +168,13 @@ async def _merge_group(
         )
         report.disciplinary_actions_reassigned += len(result.fetchall())
 
-        await session.delete(loser)
+        # Raw DELETE — avoid `await session.delete(loser)` which triggers a
+        # cascade load of relationships (scraped_listings, disciplinary_actions)
+        # in async context and raises MissingGreenlet. We've already moved
+        # those rows via UPDATE so no orphans will remain.
+        await session.execute(
+            delete(Broker).where(Broker.id == loser.id)
+        )
         report.brokers_deleted += 1
 
 
