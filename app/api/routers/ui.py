@@ -5853,6 +5853,31 @@ async def handle_form_create_or_update(
                 data["source"] = source_d
                 for k, v in data.items():
                     setattr(row, k, v)
+                # Mirror perm-debt hold_term_years / dscr_min to wizard staging
+                # so re-opening Deal Setup wizard shows the latest value.
+                if data["funder_type"] == "permanent_debt" and (
+                    "hold_term_years" in source_d or "dscr_min" in source_d
+                ):
+                    _default_proj = (await session.execute(
+                        select(Project).where(Project.scenario_id == model_id)
+                        .order_by(Project.created_at.asc()).limit(1)
+                    )).scalar_one_or_none()
+                    if _default_proj is not None:
+                        _oi = (await session.execute(
+                            select(OperationalInputs).where(
+                                OperationalInputs.project_id == _default_proj.id
+                            )
+                        )).scalar_one_or_none()
+                        if _oi is not None:
+                            _dt = dict(_oi.debt_terms or {})
+                            _pd_entry = dict(_dt.get("permanent_debt", {}))
+                            if "hold_term_years" in source_d:
+                                _pd_entry["hold_term_years"] = source_d["hold_term_years"]
+                            if "dscr_min" in source_d:
+                                _pd_entry["dscr_min"] = source_d["dscr_min"]
+                            _dt["permanent_debt"] = _pd_entry
+                            _oi.debt_terms = _dt
+                            session.add(_oi)
             # Update matching DrawSource (active window, offsets, frequency)
             _ds_id_raw = str(form.get("ds_id") or "").strip()
             if _ds_id_raw:
@@ -7164,6 +7189,14 @@ async def save_model_settings(
                     _src["hold_term_years"] = hold_int
                     _cm.source = _src
                     session.add(_cm)
+                # Mirror to wizard staging (inputs.debt_terms) so re-opening
+                # the Deal Setup wizard reflects the latest value instead of
+                # the stale staging dict from initial setup.
+                _dt = dict(inputs.debt_terms or {})
+                _pd_entry = dict(_dt.get("permanent_debt", {}))
+                _pd_entry["hold_term_years"] = hold_int
+                _dt["permanent_debt"] = _pd_entry
+                inputs.debt_terms = _dt
             except (ValueError, TypeError):
                 pass
 
@@ -7186,6 +7219,12 @@ async def save_model_settings(
                     _src["dscr_min"] = _dscr_val
                     _cm.source = _src
                     session.add(_cm)
+                # Mirror to wizard staging.
+                _dt = dict(inputs.debt_terms or {})
+                _pd_entry = dict(_dt.get("permanent_debt", {}))
+                _pd_entry["dscr_min"] = _dscr_val
+                _dt["permanent_debt"] = _pd_entry
+                inputs.debt_terms = _dt
             except (ValueError, TypeError):
                 pass
         if operation_reserve_months:
@@ -7428,6 +7467,29 @@ async def deal_setup_wizard_get(
     # If step not explicitly requested, start at step 0 (if missing data) else step 1
     if step == -1:
         step = 0 if missing_building_data else 1
+
+    # Sync wizard staging (inputs.debt_terms) from live CapitalModule.source so
+    # re-opening the wizard reflects edits made via Settings drawer or Edit
+    # Source drawer between setups. Read-only mirror — engine still uses
+    # CapitalModule.source as source of truth.
+    if inputs is not None:
+        _perm = (await session.execute(
+            select(CapitalModule).where(
+                CapitalModule.scenario_id == model_id,
+                CapitalModule.funder_type == "permanent_debt",
+            ).limit(1)
+        )).scalar_one_or_none()
+        if _perm is not None and isinstance(_perm.source, dict):
+            _dt = dict(inputs.debt_terms or {})
+            _pd_entry = dict(_dt.get("permanent_debt", {}))
+            if "hold_term_years" in _perm.source:
+                _pd_entry["hold_term_years"] = _perm.source["hold_term_years"]
+            if "dscr_min" in _perm.source:
+                _pd_entry["dscr_min"] = _perm.source["dscr_min"]
+            _dt["permanent_debt"] = _pd_entry
+            inputs.debt_terms = _dt
+            session.add(inputs)
+            await session.flush()
 
     return templates.TemplateResponse(request, "partials/deal_setup_wizard.html", {
         "request": request, "model": model, "inputs": inputs, "step": step,
