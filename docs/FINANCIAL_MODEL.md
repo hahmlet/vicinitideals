@@ -361,7 +361,7 @@ This is self-consistent: the interest amount `P − base_costs = P × f_io / (1 
 #### Acquisition loan
 **Formula.** `P_acq = acq_costs × LTV / 100`
 
-**Plain English.** Size to a loan-to-value percent of acquisition-phase costs. Default LTV = 70% unless overridden in `debt_terms.acquisition_loan.ltv_pct`.
+**Plain English.** Size to a loan-to-value percent of acquisition-phase costs. Default LTV = 70% unless overridden via `CapitalModule.source.ltv_pct` on the acquisition-loan module.
 
 **Why LTV and not gap-fill?** Acquisition loans are sized on the appraised value of what is being acquired, not on the residual capital stack. LTV is the standard industry input.
 
@@ -580,7 +580,7 @@ Some deals use a different sizing mode: size the loan to the **minimum DSCR** re
 **Logic:**
 1. Compute the gap-fill principal `P_gap` using §2.4.
 2. Compute the resulting DSCR at stabilization: `DSCR_gap = NOI / (P_gap × pmt_factor × 12)`.
-3. If `DSCR_gap ≥ dscr_minimum`: use `P_gap` (the lender's minimum doesn't bind).
+3. If `DSCR_gap ≥ module.source.dscr_min` (fallback `1.25`): use `P_gap` (the lender's minimum doesn't bind).
 4. Otherwise: cap the principal so DSCR exactly equals the minimum:
    > `DS_target = NOI / DSCR_min / 12`
    > `P_capped = DS_target × PV_annuity_factor`
@@ -592,7 +592,7 @@ This shows the user a **real funding gap** in the S&U table (Uses > Sources) rat
 
 Industry-standard loan sizing: the lender computes both LTV-based and DSCR-based maximums and funds the smaller. Selected via `debt_sizing_mode = "dual_constraint"`.
 
-**Where each input lives.** `debt_sizing_mode` and `dscr_minimum` live on `OperationalInputs`. **LTV** lives on the per-funder-type `debt_terms.{funder_type}.ltv_pct` JSON sub-object — *not* on a top-level `OperationalInputs` column. There is no `ltv_maximum_pct` column; any code that reads such a name has a bug. Examples: `debt_terms.permanent_debt.ltv_pct = 75` or `debt_terms.acquisition_loan.ltv_pct = 70`. Default LTV when the field is absent is funder-type-specific (typically 70% for acquisition, 75% for perm).
+**Where each input lives (post 2026-04-29 refactor, alembic 0060).** `debt_sizing_mode` lives on `OperationalInputs` (deal-level). **DSCR floor** is per-loan: `CapitalModule.source.dscr_min` for permanent-debt modules. Engine reads inside the per-module sizing loop; falls back to `PLACEHOLDER_DSCR = 1.25` if unset. **LTV** is also per-loan: `CapitalModule.source.ltv_pct`. There is no `OperationalInputs.dscr_minimum` and no `inputs.ltv_maximum_pct` column — any code reading those names is a bug or pre-refactor stale. The wizard's `inputs.debt_terms.{funder_type}.{ltv_pct,dscr_min,hold_term_years,rate_pct,amort_years}` JSON is **wizard staging only**; engine reads `CapitalModule.source` directly. Default LTV when absent is funder-type-specific (typically 70% for acquisition, 75% for perm).
 
 **Logic:**
 1. Compute the gap-fill principal `P_gap` using §2.4 (with closing-cost divisor fold-in).
@@ -1352,7 +1352,7 @@ non-default projects retain the cashflow-engine value.
 
 **Notes / edge cases.** Lenders typically require ≥ 1.20–1.25. DSCR is per
 loan, so multi-debt scenarios surface a worst-case across modules.
-`PLACEHOLDER_DSCR = 1.25` is the engine fallback when `dscr_minimum` is unset.
+`PLACEHOLDER_DSCR = 1.25` is the engine fallback when `CapitalModule.source.dscr_min` is unset on the perm-debt module being sized.
 
 ### LTV (Loan-to-Value) [investor, lender, app]
 
@@ -1370,11 +1370,13 @@ LTV = total_non_bridge_debt / property_value
 `_compute_calc_status`); not stored as a single column on
 `OperationalOutputs`.
 
-**Notes / edge cases.** Per-funder-type LTV caps live on
-`debt_terms.{funder_type}.ltv_pct`, NOT on a top-level `OperationalInputs`
-column. Default LTV when absent is funder-type-specific (typically 70% for
-acquisition, 75% for perm). In `dual_constraint` sizing, LTV is one of three
-binding constraints (LTV / DSCR / gap-fill).
+**Notes / edge cases.** Per-loan LTV caps live on
+`CapitalModule.source.ltv_pct`, NOT on a top-level `OperationalInputs`
+column. (Wizard staging mirror at `inputs.debt_terms.{funder_type}.ltv_pct`
+exists for re-edit population only.) Default LTV when absent is funder-
+type-specific (typically 70% for acquisition, 75% for perm). In
+`dual_constraint` sizing, LTV is one of three binding constraints (LTV /
+DSCR / gap-fill).
 
 ### Debt Yield [lender, app]
 
@@ -1510,12 +1512,32 @@ investor export.
 hold_months = sum(phase.months for phase in phases if phase.period_type != exit)
 ```
 
-**Engine source.** Derived from the project's milestone trigger chain (or
-fallback `OperationalInputs.*_months` scalars). Surfaces as
-`rollup_summary["hold_months"]`.
+**Engine source (refactor 2026-04-29).** Stabilized phase length comes from
+`_resolve_horizon_months(capital_modules, orm_milestones)` in
+`app/engines/cashflow.py`, then `_apply_milestone_phase_overrides` resizes
+in calendar months when both `stabilized_start` and `exit_date` resolve
+from the milestone trigger chain.
+
+Resolver order:
+
+1. Exit (`divestment`) milestone with resolvable date → override path resizes
+   stabilized to `_calendar_month_count(stabilized_start, exit_date)`.
+2. Else permanent-debt modules present → `MAX(perm_debt.source.hold_term_years) × 12`.
+3. Else `operation_stabilized` milestone present → `duration_days // 30`.
+4. Else fallback `60` months.
+
+The deprecated `OperationalInputs.hold_period_years` column was dropped in
+alembic 0060. Per-perm-debt `CapitalModule.source.hold_term_years` is the
+single source of truth for loan-side hold; the divestment milestone date
+overrides it for deal-side horizon when set.
 
 **Notes / edge cases.** In multi-project deals, the scenario hold period is
 the longest project's hold (so all projects' cash flows are captured).
+Multi-perm-debt deals with mismatched `hold_term_years` take MAX for
+horizon; per-loan early balloon at `min(hold_term × 12, horizon)` for
+shorter loans is a future enhancement (currently each loan amortizes
+through the full horizon unless its `exit_terms.vehicle` points at a
+specific takeout source).
 
 ### 7.1 Module stack and tiers
 
@@ -1818,8 +1840,8 @@ gap = capital_total − uses_total
 ```
 dscr = noi_stabilized / (operation_debt_monthly × 12)
 ```
-- `dscr ≥ dscr_minimum` → `ok` with headroom amount
-- `dscr < dscr_minimum` → `fail` with shortfall amount
+- `dscr ≥ source.dscr_min` (first perm-debt module; fallback `1.20`) → `ok` with headroom amount
+- `dscr < source.dscr_min` → `fail` with shortfall amount
 
 **Factor 3: LTV**
 ```
@@ -1851,7 +1873,7 @@ The pill replaces the legacy sidebar "Sources = Uses" banner (removed April 18 2
 |---|---|---|---|
 | `MONEY_PLACES` | `Decimal("0.000001")` | cashflow.py | 6-decimal rounding for all cash math |
 | `DEFAULT_IRR_BASE_YEAR` | `2020` | waterfall.py | Period → date conversion origin for XIRR |
-| `PLACEHOLDER_DSCR` | `Decimal("1.25")` | cashflow.py | Fallback if `dscr_minimum` not set |
+| `PLACEHOLDER_DSCR` | `Decimal("1.25")` | cashflow.py | Fallback if `CapitalModule.source.dscr_min` not set on perm-debt module |
 | `_LEASE_UP_INCOME_FACTOR` | `1/3` | cashflow.py | Phantom CF avg income during lease-up |
 | `operation_reserve_months` | `6` (default) | OperationalInputs | Reserve horizon for gap-fill sizing |
 | `initial_occupancy_pct` | `50` (default) | OperationalInputs | Starting point of lease-up ramp |
