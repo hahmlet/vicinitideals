@@ -969,8 +969,23 @@ function ulTimingChanged(val) {
   </div>
   <div class="form-section">
     <div class="form-section-title">Loan Terms</div>
+    {# Amort lives canonically on carry (flat) or carry.phases[*] (phased).
+       Source fallback exists for legacy modules. Walk both shapes so the
+       Edit Source drawer pre-fills correctly regardless of where the engine
+       last persisted the value. #}
+    {%- set _carry = existing.carry if existing else None -%}
+    {%- set _flat_amort = (_carry.get('amort_term_years') if _carry else None) -%}
+    {%- set _phased_amort = namespace(value=none) -%}
+    {%- if _carry and _carry.get('phases') -%}
+      {%- for _ph in _carry.get('phases', []) -%}
+        {%- if _ph.get('name') == 'operation' and _ph.get('amort_term_years') and _phased_amort.value is none -%}
+          {%- set _phased_amort.value = _ph.get('amort_term_years') -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+    {%- set _amort_val = (_flat_amort or _phased_amort.value or (existing.source.get('amort_term_years') if existing.source else None) or '') -%}
     {{ permanent_debt_fields(
-        existing.source.amort_term_years if existing.source and existing.source.get('amort_term_years') else '',
+        _amort_val,
         existing.source.interest_rate_pct if existing.source and existing.source.get('interest_rate_pct') else '',
         existing.source.compounding_period if existing.source and existing.source.get('compounding_period') else 'monthly',
         existing.stack_position if existing.stack_position else 1,

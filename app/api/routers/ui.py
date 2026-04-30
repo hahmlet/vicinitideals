@@ -5734,6 +5734,12 @@ async def handle_form_create_or_update(
         }
         if _carry_rate is not None:
             _op_phase["io_rate_pct"] = float(_carry_rate)
+        # Mirror amort_term_years onto the operation phase so the engine's
+        # phased-carry reader (`_get_phase_carry(carry, "operation")`) finds
+        # it without falling back to source.amort_term_years (the legacy
+        # flat-shape location).
+        if amort:
+            _op_phase["amort_term_years"] = amort
         carry_d = {
             "phases": [constr_phase, _op_phase],
         }
