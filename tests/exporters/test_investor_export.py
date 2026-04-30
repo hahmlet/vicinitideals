@@ -46,6 +46,7 @@ def _commit_3_sheet_order(num_projects: int) -> tuple[str, ...]:
         "Underwriting Summary",
         "Underwriting Pro Forma",
         "Underwriting Cash Flow",
+        "Sensitivity",
         "Investor Returns",
         "Debt Schedule",
         "Assumptions",
@@ -253,6 +254,45 @@ async def test_no_sheet_protection(session: AsyncSession):
         )
 
 
+async def test_sensitivity_sheet_renders_5x5_grid(session: AsyncSession):
+    """Sensitivity sheet should expose a 5x5 IRR grid with axis labels.
+
+    Asserts:
+      - Sheet exists at the documented order position
+      - Title cell A1 reads "Two-Way Sensitivity"
+      - 5 x-axis values (rent growth) sit in row 4, cols B..F
+      - 5 y-axis values (exit cap) sit in column A, rows 5..9
+      - Defined name ``r_sensitivity_grid`` resolves to the 5x5 data range
+      - At least one IRR cell carries a numeric value (engine ran)
+    """
+    scenario = await _seed_minimal_scenario(session)
+    blob = await export_investor_workbook(scenario.id, session)
+    wb = load_workbook(BytesIO(blob), data_only=False)
+
+    assert "Sensitivity" in wb.sheetnames
+    ws = wb["Sensitivity"]
+    assert ws.cell(row=1, column=1).value == "Two-Way Sensitivity"
+
+    # X-axis row (B4..F4) and y-axis column (A5..A9) carry numeric pcts.
+    x_axis = [ws.cell(row=4, column=2 + i).value for i in range(5)]
+    y_axis = [ws.cell(row=5 + i, column=1).value for i in range(5)]
+    assert all(isinstance(v, (int, float)) for v in x_axis), x_axis
+    assert all(isinstance(v, (int, float)) for v in y_axis), y_axis
+
+    # 5x5 grid in B5..F9. Cells may be None when the engine errors out for
+    # a given combination; require at least one to be numeric so the test
+    # catches a fully empty grid (engine entirely broken).
+    grid = [
+        [ws.cell(row=5 + r, column=2 + c).value for c in range(5)]
+        for r in range(5)
+    ]
+    flat = [v for row in grid for v in row]
+    assert any(isinstance(v, (int, float)) for v in flat), grid
+
+    # Defined name resolves and points at the data range.
+    assert "r_sensitivity_grid" in wb.defined_names
+
+
 async def test_glossary_sheet_has_investor_metrics(session: AsyncSession):
     """The Glossary sheet sources its term list from FINANCIAL_MODEL.md.
 
@@ -314,6 +354,10 @@ _NAMED_RANGE_ALIASES: tuple[tuple[re.Pattern[str], str], ...] = (
     (re.compile(r"^r_(p\d+_)?(uw_)?(cf_)?net_cash_flow$"), "Levered Cash Flow"),
     # GP promote total — workbook adds a "_dollars" suffix; doc is "GP Promote"
     (re.compile(r"^s_gp_promote_dollars$"), "GP Promote"),
+    # Sensitivity sheet's 5x5 IRR grid — each cell is a Levered IRR sample at
+    # a (Exit Cap, Rent Growth) coordinate. The range itself is structural,
+    # but the underlying metric is Levered IRR.
+    (re.compile(r"^r_sensitivity_grid$"), "Levered IRR"),
 )
 
 

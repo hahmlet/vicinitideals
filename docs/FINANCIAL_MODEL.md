@@ -2107,3 +2107,49 @@ For any carry calculation, the rate is resolved as:
 ### C.4 `"accruing"` alias
 
 The carry type `"accruing"` is normalized to `"capitalized_interest"` by `_carry_type_for_phase()` in the cashflow engine only. The waterfall engine keeps `"accruing"` distinct for side-pocket vs principal accrual treatment. User-facing UI shows "Capitalized Interest (PIK)".
+
+---
+
+## Appendix D: Two-Way Sensitivity (April 2026)
+
+### D.1 What it is
+
+A 5x5 grid of Combined Levered IRR computed by re-running the full cashflow engine across the cartesian product of two assumption axes. The default pair is **Exit Cap Rate** (rows) × **NOI / Rent Growth** (columns) — the two highest-conviction-loss variables for stabilized multifamily underwriting per the LP/IC sensitivity convention.
+
+The grid is rendered as the **Sensitivity** sheet of the investor Excel export (between Underwriting Cash Flow and Investor Returns) and is also surfaced in the in-app Sensitivity tab via `compute_sensitivity_matrix()`.
+
+### D.2 Engine — `compute_sensitivity_matrix`
+
+Located at `app/engines/sensitivity_matrix.py`. Two modes:
+
+- **`mode="first"`** (default, back-compat): mutates only the first project's `OperationalInputs`. Cell value is read from the last project's per-project summary returned by `compute_cash_flows`. Suitable for single-project scenarios and the existing UI Sensitivity tab.
+- **`mode="combined"`**: mutates **every** project's `OperationalInputs` in lockstep. For `metric="project_irr_levered"` the cell value is the deal-level Combined Levered IRR computed via `rollup_irr` over the summed monthly NCF series across all projects. Required for multi-project deals where the per-project IRR doesn't reflect the LP-facing return.
+
+Steps per axis are configurable via `step_overrides: dict[str, Decimal]`. The investor export uses:
+- `noi_escalation_rate_pct` step = `1.0` (window ±200bps around base)
+- `exit_cap_rate_pct` step = `0.5` (window ±100bps around base)
+
+### D.3 Grid layout in the investor export
+
+| Row | Content |
+|---|---|
+| 1 | Title: "Two-Way Sensitivity" |
+| 2 | Subtitle: `<axis_y_label> × <axis_x_label> → <metric_label> (combined deal-level)` |
+| 4 | Corner label (A4) + x-axis values (B4:F4) |
+| 5–9 | y-axis values (A5:A9) + 5x5 IRR grid (B5:F9) |
+| 11 | Base-case readout (axis values + base IRR) |
+| 13+ | Notes |
+
+The base-case cell uses the brand fog fill + hero-value font. The data range carries a red→yellow→green 3-color conditional-formatting scale (red = lowest IRR, green = highest). Failed cells (engine errors, infeasible debt sizing) appear blank rather than zero so they don't skew the gradient.
+
+### D.4 Defined name
+
+The 5x5 data range registers the workbook-scoped name `r_sensitivity_grid`. External tooling can `INDIRECT()` against it; the bidirectional doc validator aliases this name to the existing **Levered IRR** doc entry (the underlying metric for every cell).
+
+### D.5 Performance
+
+Each cell is one full `compute_cash_flows` cycle. 25 cells × ~0.2s = ~5s added to export latency. Acceptable for a synchronous LP-facing artifact; not used for Monte Carlo (10K+ runs would need Celery offload).
+
+### D.6 Mutation safety
+
+The engine mutates `OperationalInputs` in place during the run, then restores per-project base values from a snapshot taken before iteration begins. A final `compute_cash_flows` call re-persists the base-case `CashFlow`/`OperationalOutputs` rows so downstream rollup queries see consistent numbers. The mutation window is the duration of the export request; concurrent reads during this ~5s window may see transient values.
