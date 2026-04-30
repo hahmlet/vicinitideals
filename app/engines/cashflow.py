@@ -212,6 +212,8 @@ async def _compute_project_cashflow(
         has_lease_up_milestone=has_lease_up_milestone,
         has_pre_development_milestone=has_pre_development_milestone,
         has_construction_milestone=has_construction_milestone,
+        capital_modules=capital_modules,
+        orm_milestones=orm_milestones,
     )
 
     # Look up previously computed NOI so auto-sizing uses the accurate value.
@@ -682,7 +684,6 @@ async def _compute_project_cashflow(
                 {
                     "model_id": str(deal_uuid),
                     "project_type": _project_type_name(deal_model.project_type),
-                    "hold_period_years": inputs.hold_period_years,
                     "unit_count": _manifest_unit_count(inputs),
                     "income_stream_count": len(streams),
                 }
@@ -1021,6 +1022,52 @@ def _milestone_dates_from_orm(
     return result
 
 
+def _resolve_horizon_months(
+    capital_modules: list | None,
+    orm_milestones: list[Milestone] | None,
+) -> tuple[int, str]:
+    """Resolve modeled horizon (stabilized phase length, in months).
+
+    Order:
+      1. Exit (divestment) milestone with resolvable date → handled downstream
+         by ``_apply_milestone_phase_overrides``. This helper still returns a
+         sensible base in case the override path can't fire (e.g., broken
+         trigger chain).
+      2. Permanent debt present → MAX(perm_debt.source.hold_term_years) × 12.
+      3. ``operation_stabilized`` milestone ``duration_days`` → months
+         (``duration_days // 30``, min 1).
+      4. Final fallback → 60 months.
+
+    Returns ``(months, source_label)`` for diagnostics.
+    """
+    max_hold_years = 0
+    for cm in capital_modules or []:
+        ft = str(getattr(cm, "funder_type", "") or "").replace("FunderType.", "")
+        if ft != "permanent_debt":
+            continue
+        src = getattr(cm, "source", None) or {}
+        hold = src.get("hold_term_years") if isinstance(src, dict) else None
+        try:
+            hy = int(hold) if hold is not None else 0
+        except (TypeError, ValueError):
+            hy = 0
+        if hy > max_hold_years:
+            max_hold_years = hy
+
+    if max_hold_years > 0:
+        return (max_hold_years * 12, "perm_debt_hold_term")
+
+    for m in orm_milestones or []:
+        mtype = str(m.milestone_type).replace("MilestoneType.", "")
+        if mtype == "operation_stabilized":
+            d = int(getattr(m, "duration_days", 0) or 0)
+            if d > 0:
+                return (max(1, d // 30), "operation_stabilized_milestone")
+            break
+
+    return (60, "fallback_default_60mo")
+
+
 def _build_phase_plan(
     project_type: str,
     inputs: OperationalInputs,
@@ -1028,6 +1075,8 @@ def _build_phase_plan(
     has_lease_up_milestone: bool = False,
     has_pre_development_milestone: bool = False,
     has_construction_milestone: bool = False,
+    capital_modules: list | None = None,
+    orm_milestones: list[Milestone] | None = None,
 ) -> list[PhaseSpec]:
     phases: list[PhaseSpec] = [PhaseSpec(PeriodType.acquisition, 1)]
 
@@ -1099,9 +1148,8 @@ def _build_phase_plan(
     if has_lease_up_milestone or lease_up_months > 0:
         phases.append(PhaseSpec(PeriodType.lease_up, max(lease_up_months, 1)))
 
-    stabilized_months = _positive_int(
-        (_to_decimal(inputs.hold_period_years, ONE) * Decimal("12")),
-        fallback=12,
+    stabilized_months, _horizon_src = _resolve_horizon_months(
+        capital_modules, orm_milestones
     )
     phases.append(PhaseSpec(PeriodType.stabilized, stabilized_months))
     phases.append(PhaseSpec(PeriodType.exit, 1))
@@ -1552,7 +1600,6 @@ async def _auto_size_debt_modules(
         _diag(f"  [in] ul label={getattr(_dul,'label','')!r} phase={getattr(_dul,'phase',None)} amt={getattr(_dul,'amount',None)} pid={getattr(_dul,'project_id',None)}")
 
     debt_sizing_mode = inputs.debt_sizing_mode or "gap_fill"
-    dscr_min = _to_decimal(inputs.dscr_minimum or PLACEHOLDER_DSCR)
     reserve_months = int(inputs.operation_reserve_months or 6)
 
     # ── Per-loan active-window phase months ─────────────────────────────────
@@ -1746,8 +1793,7 @@ async def _auto_size_debt_modules(
                 _cr = _rate
 
             if _ft == "pre_development_loan":
-                _pdl_terms = (inputs.debt_terms or {}).get("pre_development_loan", {})
-                _ltc = Decimal(str(_src.get("ltv_pct") or _pdl_terms.get("ltv_pct") or 100))
+                _ltc = Decimal(str(_src.get("ltv_pct") or 100))
                 _funded = _q(pre_dev_costs * _ltc / HUNDRED)
                 _r = Decimal(str(_rate or 0))
                 _pre_ct = _carry_type_for_phase(_carry, is_construction=True)
@@ -1768,8 +1814,7 @@ async def _auto_size_debt_modules(
                     _bridge_io_module["pre_development_loan"] = _m.id
 
             elif _ft == "acquisition_loan":
-                _dt_terms = (inputs.debt_terms or {}).get("acquisition_loan", {})
-                _ltv = Decimal(str(_src.get("ltv_pct") or _dt_terms.get("ltv_pct") or 70))
+                _ltv = Decimal(str(_src.get("ltv_pct") or 70))
                 _principal = _q(acq_costs * _ltv / HUNDRED)
                 _r = Decimal(str(_rate or 0))
                 _acq_ct = _carry_type_for_phase(_carry, is_construction=True)
@@ -1787,8 +1832,7 @@ async def _auto_size_debt_modules(
                         _bridge_io_module["acquisition_loan"] = _m.id
 
             elif _ft == "construction_loan":
-                _cl_terms = (inputs.debt_terms or {}).get("construction_loan", {})
-                _ltc = Decimal(str(_src.get("ltv_pct") or _cl_terms.get("ltv_pct") or 75))
+                _ltc = Decimal(str(_src.get("ltv_pct") or 75))
                 _funded = _q(constr_costs * _ltc / HUNDRED)
                 _r = Decimal(str(_cr or 0))
                 _cl_ct = _carry_type_for_phase(_carry, is_construction=True)
@@ -1927,6 +1971,9 @@ async def _auto_size_debt_modules(
         carry = module.carry or {}
         # Rate may be in source["interest_rate_pct"] or flat carry["io_rate_pct"]
         rate_pct = src.get("interest_rate_pct") or carry.get("io_rate_pct")
+        # Per-loan DSCR floor: read from source.dscr_min (perm-debt only),
+        # fallback to PLACEHOLDER_DSCR (1.25).
+        dscr_min = _to_decimal(src.get("dscr_min") or PLACEHOLDER_DSCR)
 
         # Get amort_term_years from carry (phased) or source
         op_carry = _get_phase_carry(carry, "operation")

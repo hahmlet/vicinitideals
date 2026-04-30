@@ -179,7 +179,6 @@ class OperationalInputsBase(BaseModel):
     insurance_annual: Decimal = Decimal("0")
     capex_reserve_per_unit_annual: Decimal = Decimal("0")
 
-    hold_period_years: Decimal = Decimal("5")
     exit_cap_rate_pct: Decimal = Decimal("0")
     # Deprecated exit scalar — use UseLine with phase=exit
     selling_costs_pct: Decimal = Decimal("0")
@@ -206,7 +205,6 @@ class OperationalInputsBase(BaseModel):
 
     # "gap_fill" | "dscr_capped"
     debt_sizing_mode: str | None = None
-    dscr_minimum: Decimal = Decimal("1.15")
 
     # % of TPC to maintain as minimum balance during construction (construction debt only)
     construction_floor_pct: Decimal | None = None
@@ -236,7 +234,6 @@ class OperationalInputsCreate(OperationalInputsBase):
             "renovation_months": 4,
             "lease_up_months": 3,
             "expense_growth_rate_pct_annual": "3.0",
-            "hold_period_years": "5",
             "exit_cap_rate_pct": "5.5",
             "milestone_dates": {
                 "construction_start": "2026-01-15",
@@ -255,7 +252,6 @@ class OperationalInputsRead(OperationalInputsBase):
             "id": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
             "project_id": _EXAMPLE_PROJECT_ID,
             "unit_count_existing": 12,
-            "hold_period_years": "5",
             "exit_cap_rate_pct": "5.5",
         },
         from_attributes=True,

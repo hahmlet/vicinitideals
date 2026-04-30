@@ -12,7 +12,7 @@ from datetime import date, datetime
 from decimal import Decimal
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 _EXAMPLE_MODEL_ID = "44444444-4444-4444-4444-444444444444"
 _EXAMPLE_CAPITAL_MODULE_ID = "99999999-9999-9999-9999-999999999999"
@@ -70,6 +70,14 @@ class CapitalSourceSchema(BaseModel):
     refi_cap_rate_pct: float | None = None
     # Prepay penalty as % of outstanding balloon balance at payoff
     prepay_penalty_pct: float | None = None
+    # Modeled hold period in years for the loan. Required when the parent
+    # CapitalModule has funder_type == "permanent_debt" — the cashflow
+    # engine reads this as the loan's balloon point and the deal-level
+    # horizon resolver takes MAX across all perm-debt modules.
+    hold_term_years: int | None = None
+    # Minimum DSCR floor for sizing. Used by the DSCR-capped auto-sizer when
+    # this module is the perm loan being sized. Falls back to 1.20 if unset.
+    dscr_min: float | None = None
 
 
 class CapitalCarrySchema(BaseModel):
@@ -151,6 +159,17 @@ class CapitalModuleBase(BaseModel):
     exit_terms: CapitalExitSchema | None = None
     active_phase_start: str | None = None
     active_phase_end: str | None = None
+
+    @model_validator(mode="after")
+    def _require_perm_debt_hold_term(self) -> "CapitalModuleBase":
+        ft = (self.funder_type or "").replace("FunderType.", "")
+        if ft == "permanent_debt":
+            hold = self.source.hold_term_years if self.source is not None else None
+            if hold is None or hold <= 0:
+                raise ValueError(
+                    "permanent_debt CapitalModule requires source.hold_term_years > 0"
+                )
+        return self
 
 
 class CapitalModuleCreate(CapitalModuleBase):

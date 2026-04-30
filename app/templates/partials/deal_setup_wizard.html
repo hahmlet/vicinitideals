@@ -610,6 +610,7 @@
         {%- set _rate   = _dt_cfg.get('rate_pct')    or _dt_default_rates.get(dt, 5.0) -%}
         {%- set _ltype  = _dt_cfg.get('loan_type')   or _dt_default_types.get(dt, 'pi') -%}
         {%- set _amort  = _dt_cfg.get('amort_years') or 30 -%}
+        {%- set _hold_term = _dt_cfg.get('hold_term_years') or 10 -%}
         {%- set _mcfg = _dmc.get(dt, {}) -%}
         {%- set _vehicle = _mcfg.get('exit_vehicle') or _mcfg.get('retired_by') or 'maturity' -%}
         {%- if _vehicle == 'perpetuity' -%}{%- set _vehicle = 'maturity' -%}{%- endif -%}
@@ -643,6 +644,14 @@
             <div class="field-hint">Years (P&amp;I period)</div>
           </div>
           {% endif %}
+          {% if dt == 'permanent_debt' %}
+          <div class="field-group" style="max-width:120px">
+            <label>Hold Term</label>
+            <input type="number" name="{{ dt }}_hold_term_years" step="1" min="1" max="40"
+                   value="{{ _hold_term }}" placeholder="10" required>
+            <div class="field-hint">Years (balloon point)</div>
+          </div>
+          {% endif %}
         </div>
         {% endfor %}
       </div>
@@ -665,7 +674,7 @@
         'construction_to_perm': 'Construction-to-Perm',
     } -%}
     {% set _dsm = inputs.debt_sizing_mode or 'gap_fill' %}
-    {% set _dscr_min = inputs.dscr_minimum | float if inputs and inputs.dscr_minimum else 1.15 %}
+    {% set _dscr_min = (_dterms.get('permanent_debt', {}).get('dscr_min') | float) if _dterms.get('permanent_debt', {}).get('dscr_min') else 1.20 %}
     <div class="wizard-header">
       <div class="wizard-title">Debt Sizing</div>
       <div class="wizard-subtitle">How will each loan be sized when you hit Compute?</div>
@@ -993,16 +1002,17 @@
           <tr>
             <td>Perm sizing mode</td>
             <td>
+              {%- set _perm_terms = _dterms.get('permanent_debt', {}) -%}
+              {%- set _ltv = _perm_terms.get('ltv_pct') -%}
+              {%- set _dscr_min = _perm_terms.get('dscr_min') or 1.20 -%}
               {% if _dsm == 'gap_fill' %}
                 Gap-Fill (perm sizes to cover remaining TPC)
               {% elif _dsm == 'dual_constraint' %}
-                {%- set _perm_terms = (inputs.debt_terms or {}).get('permanent_debt', {}) -%}
-                {%- set _ltv = _perm_terms.get('ltv_pct') -%}
-                Dual-Constraint — DSCR ≥ {{ inputs.dscr_minimum | float }}×{% if _ltv %} AND LTV ≤ {{ _ltv | float }}%{% endif %}
+                Dual-Constraint — DSCR ≥ {{ _dscr_min | float }}×{% if _ltv %} AND LTV ≤ {{ _ltv | float }}%{% endif %}
                 <div class="field-hint">Perm sizes to the smaller of the gap-fill{% if _ltv %}, DSCR cap, and LTV cap{% else %} and DSCR cap{% endif %}. Whichever binds first becomes the limit; a Sources gap will appear if the cap is below TPC.</div>
               {% else %}
-                DSCR-Capped at {{ inputs.dscr_minimum | float }}×
-                <div class="field-hint">If the gap-fill principal produces DSCR &lt; {{ inputs.dscr_minimum | float }}×, perm will be capped and a Sources gap will appear.</div>
+                DSCR-Capped at {{ _dscr_min | float }}×
+                <div class="field-hint">If the gap-fill principal produces DSCR &lt; {{ _dscr_min | float }}×, perm will be capped and a Sources gap will appear.</div>
               {% endif %}
             </td>
           </tr>

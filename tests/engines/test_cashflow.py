@@ -26,7 +26,37 @@ from app.models.project import (
     Project,
 )
 
-from app.engines.cashflow import PhaseSpec, _build_phase_plan, _compute_period, compute_cash_flows
+from app.engines.cashflow import (
+    PhaseSpec,
+    _build_phase_plan,
+    _compute_period,
+    _resolve_horizon_months,
+    compute_cash_flows,
+)
+
+
+# ---------------------------------------------------------------------------
+# Lightweight stand-ins for capital modules / milestones — avoid SQLAlchemy
+# round-trips for pure resolver unit tests.
+# ---------------------------------------------------------------------------
+
+class _FakeModule:
+    def __init__(self, funder_type: str, hold_term_years: int | None = None,
+                 amort_term_years: int | None = None) -> None:
+        self.funder_type = funder_type
+        src: dict[str, object] = {}
+        if hold_term_years is not None:
+            src["hold_term_years"] = hold_term_years
+        if amort_term_years is not None:
+            src["amort_term_years"] = amort_term_years
+        self.source = src
+        self.carry = {}
+
+
+class _FakeMilestone:
+    def __init__(self, milestone_type: str, duration_days: int = 0) -> None:
+        self.milestone_type = milestone_type
+        self.duration_days = duration_days
 
 
 # ---------------------------------------------------------------------------
@@ -122,7 +152,6 @@ def test_build_phase_plan_major_reno_sequence() -> None:
         hold_months=2,
         renovation_months=6,
         lease_up_months=4,
-        hold_period_years=Decimal("2.000000"),
         opex_per_unit_annual=Decimal("4800.000000"),
         expense_growth_rate_pct_annual=Decimal("3.000000"),
         mgmt_fee_pct=Decimal("4.000000"),
@@ -133,7 +162,11 @@ def test_build_phase_plan_major_reno_sequence() -> None:
         selling_costs_pct=Decimal("2.500000"),
     )
 
-    phases = _build_phase_plan("value_add", inputs)
+    phases = _build_phase_plan(
+        "value_add",
+        inputs,
+        capital_modules=[_FakeModule("permanent_debt", hold_term_years=2)],
+    )
 
     assert [phase.period_type for phase in phases] == [
         PeriodType.acquisition,
@@ -154,7 +187,6 @@ def test_build_phase_plan_uses_milestone_dates_for_new_construction() -> None:
         entitlement_months=9,
         construction_months=18,
         lease_up_months=5,
-        hold_period_years=Decimal("7.000000"),
         opex_per_unit_annual=Decimal("4800.000000"),
         expense_growth_rate_pct_annual=Decimal("3.000000"),
         mgmt_fee_pct=Decimal("4.000000"),
@@ -194,7 +226,6 @@ def test_build_phase_plan_falls_back_when_some_milestones_are_missing() -> None:
         hold_months=2,
         renovation_months=6,
         lease_up_months=4,
-        hold_period_years=Decimal("5.000000"),
         opex_per_unit_annual=Decimal("4800.000000"),
         expense_growth_rate_pct_annual=Decimal("3.000000"),
         mgmt_fee_pct=Decimal("4.000000"),
@@ -222,6 +253,93 @@ def test_build_phase_plan_falls_back_when_some_milestones_are_missing() -> None:
     assert [phase.months for phase in phases] == [1, 2, 6, 4, 8, 1]
 
 
+# ---------------------------------------------------------------------------
+# Horizon resolver tests — replace deal-level hold_period_years with per-loan
+# hold_term_years + operation_stabilized milestone fallback.
+# ---------------------------------------------------------------------------
+
+@pytest.mark.unit
+def test_resolve_horizon_single_perm_loan() -> None:
+    months, src = _resolve_horizon_months(
+        capital_modules=[_FakeModule("permanent_debt", hold_term_years=25)],
+        orm_milestones=None,
+    )
+    assert months == 300
+    assert src == "perm_debt_hold_term"
+
+
+@pytest.mark.unit
+def test_resolve_horizon_multi_perm_takes_max() -> None:
+    months, src = _resolve_horizon_months(
+        capital_modules=[
+            _FakeModule("permanent_debt", hold_term_years=10),
+            _FakeModule("permanent_debt", hold_term_years=25),
+        ],
+        orm_milestones=None,
+    )
+    assert months == 300
+    assert src == "perm_debt_hold_term"
+
+
+@pytest.mark.unit
+def test_resolve_horizon_all_cash_uses_stabilized_milestone() -> None:
+    months, src = _resolve_horizon_months(
+        capital_modules=[],
+        orm_milestones=[
+            _FakeMilestone("operation_stabilized", duration_days=72 * 30),
+        ],
+    )
+    assert months == 72
+    assert src == "operation_stabilized_milestone"
+
+
+@pytest.mark.unit
+def test_resolve_horizon_no_perm_no_stabilized_milestone_falls_back() -> None:
+    months, src = _resolve_horizon_months(
+        capital_modules=[_FakeModule("equity")],
+        orm_milestones=None,
+    )
+    assert months == 60
+    assert src == "fallback_default_60mo"
+
+
+@pytest.mark.unit
+def test_resolve_horizon_construction_loan_alone_falls_back() -> None:
+    """Construction loans don't carry hold_term_years (perm-debt scope only)."""
+    months, src = _resolve_horizon_months(
+        capital_modules=[_FakeModule("construction_loan")],
+        orm_milestones=[
+            _FakeMilestone("operation_stabilized", duration_days=120 * 30),
+        ],
+    )
+    assert months == 120
+    assert src == "operation_stabilized_milestone"
+
+
+@pytest.mark.unit
+def test_build_phase_plan_horizon_from_perm_debt_when_no_milestone_dates() -> None:
+    """Horizon resolver feeds stabilized phase length when no exit milestone."""
+    inputs = OperationalInputs(
+        project_id=uuid4(),
+        unit_count_new=10,
+        opex_per_unit_annual=Decimal("4800.000000"),
+        expense_growth_rate_pct_annual=Decimal("3.000000"),
+        mgmt_fee_pct=Decimal("4.000000"),
+        property_tax_annual=Decimal("18000.000000"),
+        insurance_annual=Decimal("7200.000000"),
+        capex_reserve_per_unit_annual=Decimal("300.000000"),
+        exit_cap_rate_pct=Decimal("5.750000"),
+        selling_costs_pct=Decimal("2.500000"),
+    )
+    phases = _build_phase_plan(
+        "acquisition",
+        inputs,
+        capital_modules=[_FakeModule("permanent_debt", hold_term_years=10)],
+    )
+    stabilized = next(p for p in phases if p.period_type == PeriodType.stabilized)
+    assert stabilized.months == 120  # 10y × 12mo
+
+
 @pytest.mark.unit
 def test_compute_period_includes_itemized_operating_expense_lines() -> None:
     project_id = uuid4()
@@ -236,7 +354,6 @@ def test_compute_period_includes_itemized_operating_expense_lines() -> None:
         property_tax_annual=Decimal("0.000000"),
         insurance_annual=Decimal("0.000000"),
         capex_reserve_per_unit_annual=Decimal("0.000000"),
-        hold_period_years=Decimal("1.000000"),
         exit_cap_rate_pct=Decimal("5.000000"),
         selling_costs_pct=Decimal("2.000000"),
     )
@@ -348,7 +465,6 @@ async def _seed_cashflow_deal(session: AsyncSession) -> UUID:
         property_tax_annual=Decimal("18000.000000"),
         insurance_annual=Decimal("7200.000000"),
         capex_reserve_per_unit_annual=Decimal("300.000000"),
-        hold_period_years=Decimal("2.000000"),
         exit_cap_rate_pct=Decimal("5.750000"),
         selling_costs_pct=Decimal("2.500000"),
         income_reduction_pct_during_reno=Decimal("35.000000"),

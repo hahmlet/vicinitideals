@@ -726,7 +726,7 @@ function ulTimingChanged(val) {
 </div>
 {%- endmacro %}
 
-{%- macro permanent_debt_fields(term_val, rate_val, cp_val, stack_val) %}
+{%- macro permanent_debt_fields(term_val, rate_val, cp_val, stack_val, hold_val='') %}
 <div class="form-row" style="margin-bottom:12px">
   {# Amortization is only meaningful when the loan runs to maturity.  The
      edit-form JS below hides this field when Exit Vehicle != 'maturity'. #}
@@ -734,6 +734,11 @@ function ulTimingChanged(val) {
     <label class="form-label">Amortization Term (years)</label>
     <input class="form-input" type="number" name="amort_term_years" step="1" min="1"
            value="{{ term_val }}" placeholder="30">
+  </div>
+  <div class="form-field">
+    <label class="form-label">Hold Term (years) <span style="font-weight:400;font-size:11px;color:var(--text-muted)">balloon point</span></label>
+    <input class="form-input" type="number" name="hold_term_years" step="1" min="1"
+           value="{{ hold_val }}" placeholder="10" required>
   </div>
   <div class="form-field">
     <label class="form-label">Interest Rate (%)</label>
@@ -968,7 +973,8 @@ function ulTimingChanged(val) {
         existing.source.amort_term_years if existing.source and existing.source.get('amort_term_years') else '',
         existing.source.interest_rate_pct if existing.source and existing.source.get('interest_rate_pct') else '',
         existing.source.compounding_period if existing.source and existing.source.get('compounding_period') else 'monthly',
-        existing.stack_position if existing.stack_position else 1
+        existing.stack_position if existing.stack_position else 1,
+        existing.source.hold_term_years if existing.source and existing.source.get('hold_term_years') else ''
     ) }}
   </div>
   <script>
@@ -1137,12 +1143,17 @@ function ulTimingChanged(val) {
                step="0.5" min="0" max="100" value="" placeholder="65">
       </div>
     </div>
-    {# Amortization term — shown only for permanent_debt #}
+    {# Amortization term + Hold term — shown only for permanent_debt #}
     <div class="form-row" id="sw-amort-row" style="display:none;margin-bottom:12px">
       <div class="form-field">
         <label class="form-label">Amortization Term (years)</label>
         <input class="form-input" type="number" name="amort_term_years" step="1" min="1"
                value="" placeholder="30">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Hold Term (years) <span style="font-weight:400;font-size:11px;color:var(--text-muted)">balloon point</span></label>
+        <input class="form-input" type="number" name="hold_term_years" step="1" min="1"
+               value="" placeholder="10">
       </div>
       <div class="form-field">
         <label class="form-label">Stack Position <span style="font-weight:400;font-size:10px;color:var(--text-muted)">1=most senior</span></label>
