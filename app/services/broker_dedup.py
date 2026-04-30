@@ -72,12 +72,29 @@ class MergeReport:
     skipped_groups: list[dict[str, Any]] = field(default_factory=list)
 
 
-def _pick_winner(brokers: list[Broker]) -> Broker:
-    """Score by listings → oregon → crexi_broker_id presence → oldest."""
+def _pick_winner(
+    brokers: list[Broker],
+    listing_counts: dict[uuid.UUID, int] | None = None,
+) -> Broker:
+    """Score by listings → oregon → crexi_broker_id presence → oldest.
+
+    `listing_counts` is an optional pre-computed `{broker_id: count}` map.
+    When omitted, falls back to the ORM relationship (synchronous contexts only).
+    """
+    counts = listing_counts or {}
+
+    def _listing_count(b: Broker) -> int:
+        if b.id in counts:
+            return counts[b.id]
+        try:
+            return len(b.scraped_listings or [])
+        except Exception:  # noqa: BLE001
+            return 0
+
     return max(
         brokers,
         key=lambda b: (
-            len(b.scraped_listings) if b.scraped_listings is not None else 0,
+            _listing_count(b),
             1 if b.oregon_lookup_status == "success" else 0,
             1 if b.crexi_broker_id is not None else 0,
             1 if b.license_number_locked else 0,
@@ -113,12 +130,15 @@ def _copy_missing_fields(winner: Broker, loser: Broker) -> None:
 
 
 async def _merge_group(
-    session: AsyncSession, brokers: list[Broker], report: MergeReport,
+    session: AsyncSession,
+    brokers: list[Broker],
+    report: MergeReport,
+    listing_counts: dict[uuid.UUID, int] | None = None,
 ) -> None:
     """Merge a group of duplicate Broker rows into one winner."""
     if len(brokers) < 2:
         return
-    winner = _pick_winner(brokers)
+    winner = _pick_winner(brokers, listing_counts=listing_counts)
     losers = [b for b in brokers if b.id != winner.id]
 
     for loser in losers:
@@ -173,12 +193,14 @@ async def merge_duplicate_brokers(session: AsyncSession) -> MergeReport:
                 Broker.license_state == lic_state,
             )
         )).scalars())
-        # Eagerly load listings count for winner-picking
+        # Pre-compute listing counts per broker (avoids triggering the ORM
+        # lazy-loaded scraped_listings relationship in async context).
+        listing_counts: dict[uuid.UUID, int] = {}
         for b in rows:
             count_q = select(func.count(ScrapedListing.id)).where(
                 ScrapedListing.broker_id == b.id
             )
-            b.scraped_listings = [None] * int(
+            listing_counts[b.id] = int(
                 (await session.execute(count_q)).scalar_one()
             )
 
@@ -199,7 +221,7 @@ async def merge_duplicate_brokers(session: AsyncSession) -> MergeReport:
             })
             continue
 
-        await _merge_group(session, rows, report)
+        await _merge_group(session, rows, report, listing_counts=listing_counts)
         report.license_groups_merged += 1
 
     # Phase 2: name-only dedup (no license, exact name match)
@@ -233,7 +255,7 @@ async def merge_duplicate_brokers(session: AsyncSession) -> MergeReport:
             b.scraped_listings = [None] * int(
                 (await session.execute(count_q)).scalar_one()
             )
-        await _merge_group(session, rows, report)
+        await _merge_group(session, rows, report, listing_counts=listing_counts)
         report.name_groups_merged += 1
 
     await session.flush()
