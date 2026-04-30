@@ -449,6 +449,15 @@
 <div class="module-panel-body">
   {% set _noi_val = inputs.noi_stabilized_input | float if inputs and inputs.noi_stabilized_input else '' %}
   {% set _esc_val = inputs.noi_escalation_rate_pct | float if inputs and inputs.noi_escalation_rate_pct else 3.0 %}
+  {% if inputs and inputs.noi_auto_seeded %}
+  <div style="margin-bottom:14px;padding:10px 12px;border-radius:6px;background:#fef3c7;border:1px solid #f59e0b;color:#78350f;font-size:13px;line-height:1.4">
+    <strong>NOI auto-filled from comps.</strong>
+    This deal had no listing NOI on file, so we seeded
+    {% if _noi_val %}<strong>${{ '{:,.0f}'.format(_noi_val) }}</strong>{% endif %}
+    from the KNN comp engine (per-unit NOI × unit count). Confirm or override
+    the value below — submit to clear this banner.
+  </div>
+  {% endif %}
   <form hx-post="/ui/models/{{ model.id }}/noi-inputs"
         hx-target="this"
         hx-swap="outerHTML"

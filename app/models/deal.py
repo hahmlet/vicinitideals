@@ -24,6 +24,7 @@ from sqlalchemy import (
     String,
     Text,
     UniqueConstraint,
+    false,
     func,
 )
 from sqlalchemy.dialects.postgresql import ARRAY, UUID
@@ -332,6 +333,13 @@ class OperationalInputs(Base):
     # ── NOI mode inputs (only used when DealModel.income_mode == 'noi') ──────
     # Annual stabilized NOI entered/pre-filled from listing; NULL = not yet set
     noi_stabilized_input: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
+    # True when noi_stabilized_input was silently seeded by the KNN comp engine
+    # at builder load (income_mode="noi", no listing NOI). Cleared when the
+    # user submits the NOI form. Drives the "auto-filled — confirm or override"
+    # banner so the value isn't accepted blindly.
+    noi_auto_seeded: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=False, server_default=false()
+    )
     # Annual escalation rate applied month-by-month to the NOI input
     noi_escalation_rate_pct: Mapped[object] = mapped_column(
         Numeric(18, 6), nullable=False, default=Decimal("3")

@@ -7533,6 +7533,7 @@ async def _prefill_noi_from_listing(
     noi_value = listing.proforma_noi if listing.proforma_noi is not None else listing.noi
     if noi_value is not None:
         inputs.noi_stabilized_input = noi_value
+        inputs.noi_auto_seeded = True
         session.add(inputs)
 
 
@@ -8405,10 +8406,13 @@ async def deal_setup_wizard_complete(
             except Exception:
                 pass  # market recommendation failed; fall back to defaults
 
-    # If NOI mode and no NOI prefilled from listing, use market recommendation
+    # If NOI mode and no NOI prefilled from listing, use market recommendation.
+    # Mark as auto-seeded so the builder can show a confirm-or-override banner
+    # — a silent KNN-based number shouldn't be accepted as the user's input.
     if model.income_mode == "noi" and inputs.noi_stabilized_input is None and _market_rec and not _market_rec.low_confidence:
         _market_noi = Decimal(str(round(_market_rec.noi_per_unit * building_unit_count, 2)))
         inputs.noi_stabilized_input = _market_noi
+        inputs.noi_auto_seeded = True
         session.add(inputs)
 
     # ── Revenue: seed one IncomeStream per UnitMix row ──────────────────────
@@ -9930,6 +9934,9 @@ async def save_noi_inputs(
         inputs.noi_escalation_rate_pct = Decimal(str(esc_raw)) if esc_raw else Decimal("3")
     except Exception:
         inputs.noi_escalation_rate_pct = Decimal("3")
+    # User explicitly submitted — clear the auto-seeded flag whether they
+    # accepted the suggested value or overrode it. Banner disappears.
+    inputs.noi_auto_seeded = False
     session.add(inputs)
     await session.commit()
     await session.refresh(inputs)
