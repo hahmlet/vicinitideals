@@ -68,6 +68,13 @@ celery_app.conf.update(
             "task": "app.tasks.oregon_elicense.oregon_elicense_sweep",
             "schedule": crontab(day_of_month=2, hour=5, minute=0),
         },
+        # Broker dedup: daily 06:00 UTC. Runs after enrichment windows so
+        # license-based grouping has fresh Oregon legal-name data.
+        # Idempotent — no-op when no dupes present.
+        "broker-dedup-daily": {
+            "task": "app.tasks.oregon_elicense.broker_dedup_sweep",
+            "schedule": crontab(hour=6, minute=0),
+        },
     },
     timezone="UTC",
     enable_utc=True,

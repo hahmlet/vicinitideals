@@ -285,4 +285,44 @@ async def _oregon_elicense_sweep_inner(max_brokers: int | None) -> dict[str, Any
     return {"status": "queued", "queued": queued}
 
 
-__all__ = ["enrich_broker_oregon", "oregon_elicense_sweep"]
+@celery_app.task(
+    name="app.tasks.oregon_elicense.broker_dedup_sweep",
+    bind=True,
+    max_retries=2,
+)
+def broker_dedup_sweep(self) -> dict[str, Any]:  # type: ignore[override]
+    """Cross-source Broker dedup. Idempotent. Runs after Oregon enrichment so
+    license-based grouping has the freshest legal-name data."""
+    del self
+    return asyncio.run(_broker_dedup_sweep())
+
+
+async def _broker_dedup_sweep() -> dict[str, Any]:
+    from app.services.broker_dedup import merge_duplicate_brokers
+    try:
+        async with AsyncSessionLocal() as session:
+            report = await merge_duplicate_brokers(session)
+            await session.commit()
+        logger.info(
+            "broker dedup sweep: license_merged=%d name_merged=%d "
+            "listings_reassigned=%d brokers_deleted=%d skipped_name=%d",
+            report.license_groups_merged,
+            report.name_groups_merged,
+            report.listings_reassigned,
+            report.brokers_deleted,
+            report.license_groups_skipped_name_mismatch,
+        )
+        return {
+            "license_groups": report.license_groups,
+            "license_groups_merged": report.license_groups_merged,
+            "name_groups_merged": report.name_groups_merged,
+            "listings_reassigned": report.listings_reassigned,
+            "brokers_deleted": report.brokers_deleted,
+            "skipped_name_mismatch": report.license_groups_skipped_name_mismatch,
+            "skipped_groups": report.skipped_groups,
+        }
+    finally:
+        await engine.dispose()
+
+
+__all__ = ["enrich_broker_oregon", "oregon_elicense_sweep", "broker_dedup_sweep"]
