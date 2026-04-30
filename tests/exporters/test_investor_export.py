@@ -170,7 +170,7 @@ async def test_per_project_sheet_per_project(session: AsyncSession):
         session.add(
             _OI(
                 id=uuid4(), project_id=proj.id,
-                unit_count_new=4, hold_period_years=5,
+                unit_count_new=4,
                 exit_cap_rate_pct=_D("5.5"),
             )
         )

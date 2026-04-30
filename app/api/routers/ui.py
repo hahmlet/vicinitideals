@@ -5704,6 +5704,8 @@ async def handle_form_create_or_update(
             source_d["compounding_period"] = cp
         if amort := _fi(form.get("amort_term_years"), None):
             source_d["amort_term_years"] = amort
+        if hold_term := _fi(form.get("hold_term_years"), None):
+            source_d["hold_term_years"] = hold_term
         if ppct := _fd(form.get("prepay_penalty_pct")):
             source_d["prepay_penalty_pct"] = float(ppct)
         if ltv := _fd(form.get("ltv_pct")):
@@ -6711,10 +6713,8 @@ async def create_deal_project(
             project_id=new_proj.id,
             debt_types=_default_inputs.debt_types,
             debt_structure=_default_inputs.debt_structure,
-            debt_terms=_default_inputs.debt_terms,
             debt_milestone_config=_default_inputs.debt_milestone_config,
             debt_sizing_mode=_default_inputs.debt_sizing_mode,
-            dscr_minimum=_default_inputs.dscr_minimum,
             construction_floor_pct=_default_inputs.construction_floor_pct,
             operation_reserve_months=_default_inputs.operation_reserve_months,
             deal_setup_complete=_default_inputs.deal_setup_complete,
@@ -7140,8 +7140,8 @@ async def save_model_settings(
         if hold_period is not None:
             try:
                 hold_years = float(hold_period)
-                inputs.hold_period_years = hold_years
-                # Sync operation_stabilized milestone duration to match hold period
+                # Hold period now sourced from operation_stabilized milestone
+                # duration AND per-perm-debt CapitalModule.source.hold_term_years.
                 from app.models.milestone import Milestone as _Milestone
                 stabilized_ms = (await session.execute(
                     select(_Milestone).where(
@@ -7151,6 +7151,19 @@ async def save_model_settings(
                 )).scalar_one_or_none()
                 if stabilized_ms is not None:
                     stabilized_ms.duration_days = round(hold_years * 365)
+                # Mirror to all perm-debt modules so engine resolver picks it up.
+                hold_int = max(1, int(round(hold_years)))
+                _perm_mods = list((await session.execute(
+                    select(CapitalModule).where(CapitalModule.scenario_id == model_id)
+                )).scalars())
+                for _cm in _perm_mods:
+                    _ft = str(_cm.funder_type).replace("FunderType.", "")
+                    if _ft != "permanent_debt":
+                        continue
+                    _src = dict(_cm.source or {})
+                    _src["hold_term_years"] = hold_int
+                    _cm.source = _src
+                    session.add(_cm)
             except (ValueError, TypeError):
                 pass
 
@@ -7160,39 +7173,32 @@ async def save_model_settings(
             inputs.debt_sizing_mode = debt_sizing_mode
         if dscr_minimum:
             try:
-                inputs.dscr_minimum = Decimal(dscr_minimum)
-            except Exception:
+                _dscr_val = float(dscr_minimum)
+                # Per-perm-debt dscr_min replaces deal-level dscr_minimum.
+                _dscr_mods = list((await session.execute(
+                    select(CapitalModule).where(CapitalModule.scenario_id == model_id)
+                )).scalars())
+                for _cm in _dscr_mods:
+                    _ft = str(_cm.funder_type).replace("FunderType.", "")
+                    if _ft != "permanent_debt":
+                        continue
+                    _src = dict(_cm.source or {})
+                    _src["dscr_min"] = _dscr_val
+                    _cm.source = _src
+                    session.add(_cm)
+            except (ValueError, TypeError):
                 pass
         if operation_reserve_months:
             try:
                 inputs.operation_reserve_months = int(operation_reserve_months)
             except Exception:
                 pass
-        # Update debt_terms dict if rates/amort changed
-        if perm_rate_pct or construction_rate_pct or perm_amort_years:
-            dt = dict(inputs.debt_terms or {})
-            if perm_rate_pct:
-                try:
-                    dt["perm_rate_pct"] = float(perm_rate_pct)
-                except Exception:
-                    pass
-            if construction_rate_pct:
-                try:
-                    dt["construction_rate_pct"] = float(construction_rate_pct)
-                except Exception:
-                    pass
-            if perm_amort_years:
-                try:
-                    dt["perm_amort_years"] = int(perm_amort_years)
-                except Exception:
-                    pass
-            inputs.debt_terms = dt
-        # Sync auto-sized CapitalModules to match updated debt terms
+        # Sync auto-sized CapitalModules with rate / amort form fields
+        # (deal-level OperationalInputs.debt_terms is no longer authoritative).
         if any([perm_rate_pct, construction_rate_pct, perm_amort_years, debt_structure]):
             auto_mods = list((await session.execute(
                 select(CapitalModule).where(CapitalModule.scenario_id == model_id)
             )).scalars())
-            dt = inputs.debt_terms or {}
             for cm in auto_mods:
                 src = cm.source or {}
                 if not src.get("auto_size"):
@@ -7591,6 +7597,7 @@ async def deal_setup_wizard_step(
             loan_type   = form.get(f"{ft}_loan_type")
             rate_raw    = form.get(f"{ft}_rate_pct")
             amort_raw   = form.get(f"{ft}_amort_years")
+            hold_raw    = form.get(f"{ft}_hold_term_years")
             entry = dict(dt_terms.get(ft, {}))
 
             if loan_type:
@@ -7623,6 +7630,17 @@ async def deal_setup_wizard_step(
                     continue
                 entry["amort_years"] = amort_val
 
+            if hold_raw:
+                try:
+                    hold_val = int(hold_raw)
+                except (TypeError, ValueError):
+                    wizard_errors[ft] = f"Hold term must be a whole number of years (got {hold_raw!r})"
+                    continue
+                if hold_val < 1 or hold_val > 40:
+                    wizard_errors[ft] = f"Hold term {hold_val} years is outside 1–40 years."
+                    continue
+                entry["hold_term_years"] = hold_val
+
             if entry:
                 dt_terms[ft] = entry
         if not wizard_errors:
@@ -7640,11 +7658,16 @@ async def deal_setup_wizard_step(
                 if ltv_pct:         entry["ltv_pct"]        = float(ltv_pct)
                 if fixed_amount:    entry["fixed_amount"]   = float(fixed_amount)
                 dt_terms[ft] = entry
-        inputs.debt_terms = dt_terms
         inputs.debt_sizing_mode = form.get("debt_sizing_mode") or inputs.debt_sizing_mode
         dscr_val = form.get("dscr_minimum")
         if dscr_val:
-            inputs.dscr_minimum = Decimal(dscr_val)
+            try:
+                _perm = dict(dt_terms.get("permanent_debt", {}))
+                _perm["dscr_min"] = float(dscr_val)
+                dt_terms["permanent_debt"] = _perm
+            except (TypeError, ValueError):
+                pass
+        inputs.debt_terms = dt_terms
     elif step == 6:
         # Reserves & Floors (renumbered from old step 5)
         cf_pct = form.get("construction_floor_pct")
@@ -7937,6 +7960,21 @@ async def deal_setup_wizard_complete(
             _source_dict: dict = {"auto_size": True, "interest_rate_pct": rate}
             if ltv_pct is not None:
                 _source_dict["ltv_pct"] = ltv_pct
+            # Perm-debt requires hold_term_years (validator-enforced) and
+            # optionally dscr_min. Read from wizard staging (debt_terms[ft]),
+            # default hold_term_years to amort_years if user didn't pick one.
+            if ft_str == "permanent_debt":
+                _terms_for_pd = dt.get(ft_str, {}) if isinstance(dt, dict) else {}
+                _hold_raw = _terms_for_pd.get("hold_term_years") if isinstance(_terms_for_pd, dict) else None
+                _source_dict["hold_term_years"] = (
+                    int(_hold_raw) if _hold_raw else amort_years
+                )
+                _dscr_raw = _terms_for_pd.get("dscr_min") if isinstance(_terms_for_pd, dict) else None
+                if _dscr_raw is not None:
+                    try:
+                        _source_dict["dscr_min"] = float(_dscr_raw)
+                    except (TypeError, ValueError):
+                        pass
             session.add(CapitalModule(
                 id=cm_id,
                 scenario_id=model_id,
@@ -8102,13 +8140,11 @@ async def deal_setup_wizard_complete(
         # and leaves Appraisal / Origination / Legal / Title at $0.
         other_inputs.debt_types = inputs.debt_types
         other_inputs.debt_structure = inputs.debt_structure
-        other_inputs.debt_terms = inputs.debt_terms
         other_inputs.debt_milestone_config = inputs.debt_milestone_config
         # Sizing-policy fields are scenario-level too. Without them every
         # non-default project silently falls back to gap-fill on compute,
         # so DSCR caps don't bind and debt over-leverages without a gap.
         other_inputs.debt_sizing_mode = inputs.debt_sizing_mode
-        other_inputs.dscr_minimum = inputs.dscr_minimum
         other_inputs.construction_floor_pct = inputs.construction_floor_pct
         other_inputs.operation_reserve_months = inputs.operation_reserve_months
 
@@ -9210,11 +9246,19 @@ def _compute_calc_status(data: dict) -> dict:
             dscr_val = float(outputs.dscr)
         except (TypeError, ValueError):
             dscr_val = None
-    if inputs is not None and getattr(inputs, "dscr_minimum", None):
+    # DSCR floor: read from the first perm-debt CapitalModule's source.dscr_min;
+    # falls back to 1.20 if perm debt exists but value is unset.
+    for _cm in capital_modules:
+        _ft = str(getattr(_cm, "funder_type", "") or "").replace("FunderType.", "")
+        if _ft != "permanent_debt":
+            continue
+        _src = getattr(_cm, "source", None) or {}
         try:
-            dscr_min = float(inputs.dscr_minimum)
+            _v = _src.get("dscr_min") if isinstance(_src, dict) else None
+            dscr_min = float(_v) if _v is not None else 1.20
         except (TypeError, ValueError):
-            dscr_min = None
+            dscr_min = 1.20
+        break
 
     if dscr_val is None or dscr_min is None:
         dscr_status = {

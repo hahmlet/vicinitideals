@@ -47,14 +47,6 @@ AXIS_SPECS: dict[str, dict[str, Any]] = {
         "min": Decimal("0"),
         "max": Decimal("10"),
     },
-    "hold_period_years": {
-        "label": "Hold Period (yrs)",
-        "field": "hold_period_years",
-        "format": "int",
-        "default_step": Decimal("1"),
-        "min": Decimal("3"),
-        "max": Decimal("15"),
-    },
     "noi_escalation_rate_pct": {
         "label": "NOI / Rent Growth (%)",
         "field": "noi_escalation_rate_pct",

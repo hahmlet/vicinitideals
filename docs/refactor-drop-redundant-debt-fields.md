@@ -33,12 +33,12 @@ Per-loan amort runs independently. Loan balloons at `min(hold_term × 12, horizo
 
 **`OperationalInputs`:**
 - `hold_period_years`
-- `hold_phase_enabled`
-- `hold_months`
 - `perm_rate_pct`
 - `perm_amort_years`
 - `debt_terms` (JSON)
 - `dscr_minimum`
+
+`hold_phase_enabled` + `hold_months` retained — they control insertion of a separate "hold" phase between acquisition and renovation (value-add operate-then-renovate pattern), unrelated to perm-debt hold period despite name similarity. No UI surface today; API/JSON-import only. Out of perm-debt-only scope.
 
 **Model Settings UI panel:** Hold Period, Perm Rate, Amort, DSCR Minimum (header was already pre-fill placeholder, not authoritative).
 

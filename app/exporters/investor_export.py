@@ -2816,11 +2816,28 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
     # The remaining Block A rows are user-editable inputs — render in blue
     # per the input/output color convention so the LP can tell at a glance
     # which numbers drive the model vs which are derived.
-    kv_row(
-        ws, row, "Hold Period (years)",
-        _safe_decimal(default_inputs, "hold_period_years"),
-        name="s_hold_years", registry=registry, fmt=INT_COMMA, style="input",
-    ); row += 1
+    # Hold Period removed — now per-perm-debt CapitalModule.source.hold_term_years.
+    # Show the MAX across perm-debt modules as scenario-level summary.
+    _perm_holds: list[int] = []
+    for _cm in capital_modules:
+        _ft = str(getattr(_cm, "funder_type", "") or "").replace("FunderType.", "")
+        if _ft != "permanent_debt":
+            continue
+        _src = getattr(_cm, "source", None) or {}
+        _h = _src.get("hold_term_years") if isinstance(_src, dict) else None
+        try:
+            _hi = int(_h) if _h is not None else 0
+        except (TypeError, ValueError):
+            _hi = 0
+        if _hi > 0:
+            _perm_holds.append(_hi)
+    _perm_hold_display = max(_perm_holds) if _perm_holds else None
+    if _perm_hold_display is not None:
+        kv_row(
+            ws, row, "Hold Term (years, MAX of perm debt)",
+            Decimal(str(_perm_hold_display)),
+            name="s_hold_years", registry=registry, fmt=INT_COMMA, style="input",
+        ); row += 1
     kv_row(
         ws, row, "Exit Cap Rate",
         _pct_value(default_inputs, "exit_cap_rate_pct"),
@@ -3028,7 +3045,6 @@ def _per_project_metric_specs() -> list[tuple[str, str, str | None, str]]:
         ("Exit Cap Rate", "exit_cap_rate_pct", PCT, "exit_cap_rate"),
         ("Construction Months", "construction_months", INT_COMMA, "construction_months"),
         ("Lease-Up Months", "lease_up_months", INT_COMMA, "lease_up_months"),
-        ("Hold Period (years)", "hold_period_years", INT_COMMA, "hold_years"),
     ]
 
 

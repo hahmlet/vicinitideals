@@ -261,7 +261,6 @@ async def seed_deal_model_with_financials(
         id=uuid.uuid4(),
         project_id=project.id,
         unit_count_new=8,
-        hold_period_years=5,
         exit_cap_rate_pct=Decimal("5.5"),
         expense_growth_rate_pct_annual=Decimal("3.0"),
         opex_per_unit_annual=Decimal("3600"),

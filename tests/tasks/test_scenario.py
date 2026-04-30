@@ -152,7 +152,6 @@ async def test_run_scenario_writes_one_result_per_step(
     assert snapshot["unit_count_new"] == 12
     assert snapshot["purchase_price"] == "1250000.000000"
     assert snapshot["exit_cap_rate_pct"] == "5.500000"
-    assert snapshot["hold_period_years"] == "5.000000"
     captured_at = snapshot.get("captured_at")
     assert isinstance(captured_at, str)
     assert datetime.fromisoformat(captured_at)
@@ -350,7 +349,6 @@ async def _seed_scenario(test_session_factory, variable: str = "operational.exit
             exit_cap_rate_pct=Decimal("5.500000"),
             lease_up_months=6,
             expense_growth_rate_pct_annual=Decimal("3.000000"),
-            hold_period_years=Decimal("5.000000"),
             hard_cost_per_unit=Decimal("180000.000000"),
             opex_per_unit_annual=Decimal("4800.000000"),
             mgmt_fee_pct=Decimal("4.000000"),

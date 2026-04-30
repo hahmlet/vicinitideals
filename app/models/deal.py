@@ -298,7 +298,6 @@ class OperationalInputs(Base):
     capex_reserve_per_unit_annual: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=0)
 
     # Exit (deprecated scalar: use UseLine with phase=exit instead)
-    hold_period_years: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=5)
     exit_cap_rate_pct: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=5, server_default="5")
     selling_costs_pct: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=0)
 
@@ -319,14 +318,12 @@ class OperationalInputs(Base):
     debt_milestone_config: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     # "gap_fill" | "dscr_capped" | "dual_constraint"
     debt_sizing_mode: Mapped[str | None] = mapped_column(String(20), nullable=True)
-    dscr_minimum: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=Decimal("1.15"))
     # % of TPC to maintain as minimum balance during construction (only when construction debt)
     construction_floor_pct: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
     # months of projected debt service to maintain at stabilization start
     operation_reserve_months: Mapped[int] = mapped_column(Integer, nullable=False, default=6)
-    # Per-debt terms for auto-created CapitalModule(s).
-    # New structure: {funder_type: {rate_pct, amort_years, loan_type, sizing_approach, ltv_pct}}
-    # Legacy flat keys (perm_rate_pct, perm_amort_years, construction_rate_pct) still read for old deals.
+    # Per-debt terms — used as wizard staging (engine reads CapitalModule directly).
+    # Shape: {funder_type: {rate_pct, amort_years, loan_type, hold_term_years, dscr_min, ltv_pct, ...}}
     debt_terms: Mapped[dict | None] = mapped_column(JSON, nullable=True)
 
     # Asset management fee as % of (NOI - debt service), deducted pre-waterfall

@@ -1093,7 +1093,6 @@ def _find_alias_value(raw_inputs: dict[str, Any], field_name: str) -> Any:
         "property_tax_annual": ["property_taxes_annual"],
         "insurance_annual": ["insurance_cost_annual"],
         "capex_reserve_per_unit_annual": ["capex_reserve_annual_per_unit"],
-        "hold_period_years": ["hold_years"],
         "exit_cap_rate_pct": ["exit_cap_pct"],
         "selling_costs_pct": ["sale_cost_pct"],
     }

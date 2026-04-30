@@ -156,7 +156,6 @@ async def test_export_deal_model_json_includes_itemized_expense_lines(
                 opex_per_unit_annual=Decimal("3600"),
                 property_tax_annual=Decimal("7200"),
                 insurance_annual=Decimal("2400"),
-                hold_period_years=Decimal("5"),
                 exit_cap_rate_pct=Decimal("5.5"),
                 selling_costs_pct=Decimal("2.5"),
             )
