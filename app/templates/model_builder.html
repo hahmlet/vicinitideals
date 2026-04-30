@@ -968,6 +968,21 @@ function handleComputeResult(evt) {
           <input class="filter-input" type="number" step="1" style="width:100%;margin-top:4px"
                  name="operation_reserve_months" value="{{ inputs.operation_reserve_months or 6 }}" placeholder="6">
         </div>
+        {# DSCR Minimum — read current value from any perm-debt module's
+           source.dscr_min (refactor 2026-04-29). Edit here writes back to
+           all perm-debt modules + wizard staging via the form save handler. #}
+        {%- set _perm_dscr = namespace(value=none) -%}
+        {%- for _cm in (capital_modules or []) -%}
+          {%- set _ft = (_cm.funder_type | string | replace('FunderType.','')) -%}
+          {%- if _ft == 'permanent_debt' and _cm.source and _cm.source.get('dscr_min') is not none and _perm_dscr.value is none -%}
+            {%- set _perm_dscr.value = _cm.source.get('dscr_min') -%}
+          {%- endif -%}
+        {%- endfor -%}
+        <div>
+          <label class="field-label">DSCR Minimum (Permanent Debt)</label>
+          <input class="filter-input" type="number" step="0.01" min="1.0" max="3.0" style="width:100%;margin-top:4px"
+                 name="dscr_minimum" value="{{ '%.2f' | format(_perm_dscr.value | float) if _perm_dscr.value is not none else '1.20' }}" placeholder="1.20">
+        </div>
         {% if inputs.debt_structure in ('construction_to_perm', 'construction_and_perm') %}
         <div>
           <label class="field-label">Constr. Rate (%)</label>
@@ -976,7 +991,7 @@ function handleComputeResult(evt) {
         </div>
         {% endif %}
         <div class="form-hint" style="font-size:11px;color:var(--text-muted);margin-top:4px">
-          Hold term, perm rate, amort, and DSCR minimum live on each Source — edit individual debt modules in the Capital Stack panel.
+          Hold term, perm rate, and amort live on each Source — edit individual debt modules in the Capital Stack panel.
         </div>
         {% endif %}
         <div style="display:flex;gap:8px;margin-top:4px">
