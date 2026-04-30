@@ -123,25 +123,6 @@ async def export_investor_workbook(
     uw_cashflow = wb.create_sheet("Underwriting Cash Flow")
     _build_uw_cashflow(uw_cashflow, registry, ctx)
 
-    # Two-way sensitivity matrix — computed live so the grid always reflects
-    # the current scenario state. Mutates+restores OperationalInputs across
-    # all projects (combined mode) inside the engine; the restore step puts
-    # the base case back before this function returns.
-    sensitivity = await compute_sensitivity_matrix(
-        deal_model_id=deal_model_id,
-        session=session,
-        axis_x="noi_escalation_rate_pct",
-        axis_y="exit_cap_rate_pct",
-        metric="project_irr_levered",
-        mode="combined",
-        step_overrides={
-            "noi_escalation_rate_pct": Decimal("1.0"),
-            "exit_cap_rate_pct": Decimal("0.5"),
-        },
-    )
-    sensitivity_sheet = wb.create_sheet("Sensitivity")
-    _build_sensitivity(sensitivity_sheet, registry, ctx, sensitivity)
-
     investor_returns = wb.create_sheet("Investor Returns")
     _build_investor_returns(investor_returns, registry, ctx)
 
@@ -164,6 +145,33 @@ async def export_investor_workbook(
 
     glossary = wb.create_sheet("Glossary & Methodology")
     _build_glossary(glossary, registry, ctx)
+
+    # Two-way sensitivity matrix — built LAST because the engine calls
+    # session.expire_all() inside each compute_cash_flows cycle, which
+    # invalidates ORM rows held by ``ctx`` (waterfall tiers, capital
+    # modules, etc.). Building all ORM-reading sheets before the matrix
+    # avoids MissingGreenlet errors from sync attribute access on expired
+    # rows. After the sheet is built we splice it into position 4 (between
+    # Underwriting Cash Flow and Investor Returns) via ``wb._sheets`` so
+    # the on-disk tab order matches plan §2.
+    sensitivity = await compute_sensitivity_matrix(
+        deal_model_id=deal_model_id,
+        session=session,
+        axis_x="noi_escalation_rate_pct",
+        axis_y="exit_cap_rate_pct",
+        metric="project_irr_levered",
+        mode="combined",
+        step_overrides={
+            "noi_escalation_rate_pct": Decimal("1.0"),
+            "exit_cap_rate_pct": Decimal("0.5"),
+        },
+    )
+    sensitivity_sheet = wb.create_sheet("Sensitivity")
+    _build_sensitivity(sensitivity_sheet, registry, ctx, sensitivity)
+    # Splice from end → position 4 (after Cover, UW Summary, Pro Forma,
+    # Cash Flow). openpyxl's wb._sheets is a plain list of Worksheet refs.
+    wb._sheets.remove(sensitivity_sheet)
+    wb._sheets.insert(4, sensitivity_sheet)
 
     registry.emit(wb)
 
