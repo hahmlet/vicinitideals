@@ -371,7 +371,7 @@
 {% set _opex_raw = (_baseline_opex_annual * 0.25) if _baseline_opex_annual else 50000 %}
 {% set _opex_raw = _opex_raw if _opex_raw > (_gap_abs / 6) else (_gap_abs / 6) %}
 {% set _pp_raw = (_baseline_pp * 0.25) if _baseline_pp else 100000 %}
-{% set _pp_raw = _pp_raw if _pp_raw > (_gap_abs * 2) else (_gap_abs * 2) %}
+{% set _pp_raw = _pp_raw if _pp_raw > (_gap_abs * 1.25) else (_gap_abs * 1.25) %}
 {% set _rev_range = (((_rev_raw / _rev_step) | round(0, 'ceil')) | int) * _rev_step %}
 {% set _opex_range = (((_opex_raw / _opex_step) | round(0, 'ceil')) | int) * _opex_step %}
 {% set _pp_range = (((_pp_raw / _pp_step) | round(0, 'ceil')) | int) * _pp_step %}
@@ -491,6 +491,9 @@
       opex_delta_annual: opex ? opex.value : '0',
       pp_delta: pp ? pp.value : '0'
     };
+    // Multi-project: phantom rows must land on the project the user is
+    // viewing, not the scenario's default (first) project.
+    {% if active_project_id %}body.project_id = '{{ active_project_id }}';{% endif %}
     fetch('/api/models/' + modelId + '/sliders', {
       method: 'POST',
       credentials: 'include',  // session cookie must travel for auth

@@ -13,6 +13,7 @@ slider; pass ``None`` (omit) to leave it alone.
 
 from __future__ import annotations
 
+import uuid
 from decimal import Decimal
 
 from pydantic import BaseModel, ConfigDict
@@ -34,6 +35,10 @@ class SliderRequest(BaseModel):
     revenue_delta_monthly: Decimal | None = None
     opex_delta_annual: Decimal | None = None
     pp_delta: Decimal | None = None
+    # Multi-project deals: phantom rows must land on the project the user is
+    # currently viewing. Omit (default) → endpoint uses the scenario's
+    # default (first) project — the single-project case.
+    project_id: uuid.UUID | None = None
 
     model_config = ConfigDict(
         json_schema_extra={
@@ -41,6 +46,7 @@ class SliderRequest(BaseModel):
                 "revenue_delta_monthly": "1000",
                 "opex_delta_annual": "-12000",
                 "pp_delta": "-50000",
+                "project_id": "44444444-4444-4444-4444-444444444444",
             }
         }
     )

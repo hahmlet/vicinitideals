@@ -8919,7 +8919,12 @@ async def builder_panel(
 
     _active_proj_id = await _active_project_from_request(request, session, model_id)
     data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
-    ctx: dict = {"model": model, "active_module": module, **data}
+    ctx: dict = {
+        "model": model,
+        "active_module": module,
+        "active_project_id": str(_active_proj_id) if _active_proj_id else None,
+        **data,
+    }
 
     # Cash flow periods — only loaded when the cashflow module is active.
     # Filter by active project so per-project tab doesn't interleave rows.

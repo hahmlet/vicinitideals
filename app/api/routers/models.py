@@ -900,7 +900,20 @@ async def update_gap_adjustment_sliders(
     to avoid hammering this endpoint mid-drag.
     """
     await _get_deal_or_404(session, model_id)
-    project = await _get_default_project_for_deal(session, model_id)
+    # Multi-project: caller supplies project_id (UI passes active project's id).
+    # Single-project / unspecified: fall back to the scenario's default (first)
+    # project. Validates that the project belongs to this scenario to prevent
+    # cross-scenario phantom row leakage.
+    if payload.project_id is not None:
+        proj = await session.get(Project, payload.project_id)
+        if proj is None or proj.scenario_id != model_id:
+            raise HTTPException(
+                status_code=404,
+                detail="Project not found on this scenario",
+            )
+        project = proj
+    else:
+        project = await _get_default_project_for_deal(session, model_id)
 
     if payload.revenue_delta_monthly is not None:
         await _upsert_revenue_phantom(session, project.id, payload.revenue_delta_monthly)
