@@ -324,6 +324,15 @@
 {% set _opex_amt = (_opex_phantom.annual_amount | float) if (_opex_phantom and _opex_phantom.annual_amount is not none) else 0 %}
 {% set _pp_amt = (_pp_phantom.amount | float) if (_pp_phantom and _pp_phantom.amount is not none) else 0 %}
 
+{# Sources/Uses gap drives drawer visibility + PP slider range. uses_total
+   and capital_total come from _load_builder_data; gap = uses - sources
+   (positive = need to close gap by increasing sources or reducing uses). #}
+{% set _gap = ((uses_total | float) - (capital_total | float)) if (uses_total is not none and capital_total is not none) else 0 %}
+{% set _has_phantom = (_rev_amt != 0) or (_opex_amt != 0) or (_pp_amt != 0) %}
+{% set _show_drawer = (_gap != 0) or _has_phantom %}
+
+{% if _show_drawer %}
+
 {# Baselines — used to compute % display. Filter out the phantom rows so the
    slider's $ delta isn't expressed as a percentage of itself. #}
 {% set ns_rev = namespace(total=0) %}
@@ -345,12 +354,27 @@
 {% set _baseline_opex_annual = ns_op.total %}
 {% set _baseline_pp = (inputs.purchase_price | float) if (inputs and inputs.purchase_price) else 0 %}
 
-{# Ranges: simple ±20% of baseline (or ±$10k floor for tiny baselines).
-   "Auto-bounded to current gap" is a nicer UX but needs the gap dollar
-   value passed in — leaving that as a follow-up. #}
-{% set _rev_range = ((_baseline_rev_monthly * 0.2) | round(0, 'common')) if _baseline_rev_monthly else 10000 %}
-{% set _opex_range = ((_baseline_opex_annual * 0.2) | round(0, 'common')) if _baseline_opex_annual else 50000 %}
-{% set _pp_range = ((_baseline_pp * 0.2) | round(0, 'common')) if _baseline_pp else 100000 %}
+{# Ranges aligned to step grid (every multiple of step). Min/max are integer
+   multiples of step so 0 sits on a grid point and value=0 is exactly
+   reachable — fixes the "drag-to-zero, browser snaps to nearest step,
+   server saves snapped value, reload renders mismatch" loop.
+
+   Range scales to gap so a single slider can close it: PP gets 2× cushion,
+   Revenue covers 60mo of gap, OpEx covers 6mo. Falls back to 25% of baseline
+   when gap is small relative to baseline. #}
+{% set _gap_abs = (_gap if _gap >= 0 else -_gap) %}
+{% set _rev_step = 100 %}
+{% set _opex_step = 500 %}
+{% set _pp_step = 1000 %}
+{% set _rev_raw = (_baseline_rev_monthly * 0.25) if _baseline_rev_monthly else 10000 %}
+{% set _rev_raw = _rev_raw if _rev_raw > (_gap_abs / 60) else (_gap_abs / 60) %}
+{% set _opex_raw = (_baseline_opex_annual * 0.25) if _baseline_opex_annual else 50000 %}
+{% set _opex_raw = _opex_raw if _opex_raw > (_gap_abs / 6) else (_gap_abs / 6) %}
+{% set _pp_raw = (_baseline_pp * 0.25) if _baseline_pp else 100000 %}
+{% set _pp_raw = _pp_raw if _pp_raw > (_gap_abs * 2) else (_gap_abs * 2) %}
+{% set _rev_range = (((_rev_raw / _rev_step) | round(0, 'ceil')) | int) * _rev_step %}
+{% set _opex_range = (((_opex_raw / _opex_step) | round(0, 'ceil')) | int) * _opex_step %}
+{% set _pp_range = (((_pp_raw / _pp_step) | round(0, 'ceil')) | int) * _pp_step %}
 
 <div id="gap-adj-drawer" style="margin-top:24px;padding:16px;border:1px solid var(--border,#e5e7eb);border-radius:8px;background:var(--surface-2,#f9fafb)">
   <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
@@ -362,50 +386,67 @@
     </button>
   </div>
   <p style="font-size:11px;color:var(--text-muted);margin:0 0 16px">
-    Drag to make the model balance. Each slider materializes a phantom line item;
-    the calc-status pill stays yellow while any adjustment is non-zero — drag back
-    to zero to make the model "real" again.
+    Sources/Uses gap: <strong>{{ _gap | abs | currency }}</strong>{% if _gap > 0 %} (Uses exceed Sources){% elif _gap < 0 %} (Sources exceed Uses){% endif %}.
+    Drag each slider to imagine a fix; pill stays yellow while any adjustment is non-zero.
   </p>
 
-  {# ── Revenue slider ── #}
-  <div style="display:grid;grid-template-columns:130px 1fr 180px;gap:12px;align-items:center;margin-bottom:10px">
-    <label for="gap-slider-rev" style="font-size:12px;font-weight:500">Revenue (/mo)</label>
-    <input type="range"
-           id="gap-slider-rev"
-           min="-{{ _rev_range }}" max="{{ _rev_range }}" step="100"
-           value="{{ _rev_amt | int }}"
-           oninput="onGapSlide('rev', this.value, {{ _baseline_rev_monthly }})"
-           onchange="postGapSliders('{{ model.id }}')"
-           style="width:100%">
-    <div id="gap-slider-rev-display" style="font-size:12px;color:var(--text-muted);text-align:right;font-variant-numeric:tabular-nums"></div>
-  </div>
+  <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px">
 
-  {# ── OpEx slider ── #}
-  <div style="display:grid;grid-template-columns:130px 1fr 180px;gap:12px;align-items:center;margin-bottom:10px">
-    <label for="gap-slider-opex" style="font-size:12px;font-weight:500">OpEx (/yr)</label>
-    <input type="range"
-           id="gap-slider-opex"
-           min="-{{ _opex_range }}" max="{{ _opex_range }}" step="500"
-           value="{{ _opex_amt | int }}"
-           oninput="onGapSlide('opex', this.value, {{ _baseline_opex_annual }})"
-           onchange="postGapSliders('{{ model.id }}')"
-           style="width:100%">
-    <div id="gap-slider-opex-display" style="font-size:12px;color:var(--text-muted);text-align:right;font-variant-numeric:tabular-nums"></div>
-  </div>
+    {# ── Revenue column ── #}
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <label for="gap-slider-rev" style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em">Revenue (/mo)</label>
+      <div id="gap-slider-rev-display" style="font-size:18px;font-weight:600;color:var(--text-primary);font-variant-numeric:tabular-nums">+$0</div>
+      <input type="range"
+             id="gap-slider-rev"
+             min="-{{ _rev_range }}" max="{{ _rev_range }}" step="{{ _rev_step }}"
+             value="{{ _rev_amt | int }}"
+             oninput="onGapSlide('rev', this.value, {{ _baseline_rev_monthly }})"
+             onchange="postGapSliders('{{ model.id }}')"
+             style="width:100%">
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-muted)">
+        <span>-{{ _rev_range | int | currency }}</span>
+        <span>+{{ _rev_range | int | currency }}</span>
+      </div>
+    </div>
 
-  {# ── Purchase Price slider ── #}
-  <div style="display:grid;grid-template-columns:130px 1fr 180px;gap:12px;align-items:center">
-    <label for="gap-slider-pp" style="font-size:12px;font-weight:500">Purchase Price</label>
-    <input type="range"
-           id="gap-slider-pp"
-           min="-{{ _pp_range }}" max="{{ _pp_range }}" step="1000"
-           value="{{ _pp_amt | int }}"
-           oninput="onGapSlide('pp', this.value, {{ _baseline_pp }})"
-           onchange="postGapSliders('{{ model.id }}')"
-           style="width:100%">
-    <div id="gap-slider-pp-display" style="font-size:12px;color:var(--text-muted);text-align:right;font-variant-numeric:tabular-nums"></div>
+    {# ── OpEx column ── #}
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <label for="gap-slider-opex" style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em">OpEx (/yr)</label>
+      <div id="gap-slider-opex-display" style="font-size:18px;font-weight:600;color:var(--text-primary);font-variant-numeric:tabular-nums">+$0</div>
+      <input type="range"
+             id="gap-slider-opex"
+             min="-{{ _opex_range }}" max="{{ _opex_range }}" step="{{ _opex_step }}"
+             value="{{ _opex_amt | int }}"
+             oninput="onGapSlide('opex', this.value, {{ _baseline_opex_annual }})"
+             onchange="postGapSliders('{{ model.id }}')"
+             style="width:100%">
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-muted)">
+        <span>-{{ _opex_range | int | currency }}</span>
+        <span>+{{ _opex_range | int | currency }}</span>
+      </div>
+    </div>
+
+    {# ── Purchase Price column ── #}
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <label for="gap-slider-pp" style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em">Purchase Price</label>
+      <div id="gap-slider-pp-display" style="font-size:18px;font-weight:600;color:var(--text-primary);font-variant-numeric:tabular-nums">+$0</div>
+      <input type="range"
+             id="gap-slider-pp"
+             min="-{{ _pp_range }}" max="{{ _pp_range }}" step="{{ _pp_step }}"
+             value="{{ _pp_amt | int }}"
+             oninput="onGapSlide('pp', this.value, {{ _baseline_pp }})"
+             onchange="postGapSliders('{{ model.id }}')"
+             style="width:100%">
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-muted)">
+        <span>-{{ _pp_range | int | currency }}</span>
+        <span>+{{ _pp_range | int | currency }}</span>
+      </div>
+    </div>
+
   </div>
 </div>
+
+{% endif %}{# /_show_drawer #}
 
 <script>
 (function() {
@@ -452,12 +493,22 @@
     };
     fetch('/api/models/' + modelId + '/sliders', {
       method: 'POST',
+      credentials: 'include',  // session cookie must travel for auth
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(body)
     }).then(function(r) {
-      if (!r.ok) { console.error('gap sliders POST failed:', r.status); return; }
-      // Re-render the panel (includes phantom row state) and the pill.
+      if (!r.ok) {
+        // Surface failure so the user sees why the slider "snapped back"
+        // (otherwise refreshPanel re-renders with the un-changed phantom = 0).
+        return r.text().then(function(t) {
+          console.error('gap sliders POST failed:', r.status, t);
+          alert('Slider update failed (' + r.status + '). Check console.');
+        });
+      }
       if (typeof refreshPanel === 'function') refreshPanel('sources_uses');
+    }).catch(function(err) {
+      console.error('gap sliders POST network error:', err);
+      alert('Slider update network error. Check console.');
     });
   };
 
