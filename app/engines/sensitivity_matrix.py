@@ -26,7 +26,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.engines.cashflow import compute_cash_flows
-from app.engines.underwriting_rollup import rollup_irr
+from app.engines.underwriting_rollup import rollup_em, rollup_irr
 from app.models.deal import OperationalInputs
 from app.models.project import Project
 
@@ -64,6 +64,7 @@ AXIS_SPECS: dict[str, dict[str, Any]] = {
 METRIC_SPECS: dict[str, dict[str, Any]] = {
     "project_irr_levered":   {"label": "Levered IRR (%)",      "format": "pct"},
     "project_irr_unlevered": {"label": "Unlevered IRR (%)",    "format": "pct"},
+    "equity_multiple":       {"label": "Equity Multiple (×)",  "format": "multiple"},
     "dscr":                  {"label": "DSCR",                 "format": "multiple"},
     "noi_stabilized":        {"label": "Stabilized NOI ($)",   "format": "currency"},
     "noi_exit_year":         {"label": "Exit Year NOI ($)",    "format": "currency"},
@@ -110,12 +111,16 @@ async def compute_sensitivity_matrix(
     axis_x: str = "noi_escalation_rate_pct",
     axis_y: str = "exit_cap_rate_pct",
     metric: str = "project_irr_levered",
+    secondary_metric: str | None = None,
     mode: Literal["first", "combined"] = "first",
     step_overrides: dict[str, Decimal] | None = None,
 ) -> dict[str, Any]:
     """Run 25 compute_cash_flows cycles; return a matrix dict.
 
     Args:
+      secondary_metric: optional second metric captured in the same 25 runs
+        at no extra compute cost. Result appears as ``"values_secondary"``
+        and ``"metric_secondary"`` in the returned dict.
       mode:
         - "first" (default): mutate only the first project's
           OperationalInputs and read metric from the last summary.
@@ -134,6 +139,9 @@ async def compute_sensitivity_matrix(
         "mode": "first" | "combined",
         "base_x_index": int, "base_y_index": int,
         "values": [[5 floats-or-None] × 5 rows],  # values[y][x]
+        # only present when secondary_metric is set:
+        "metric_secondary": {"field", "label", "format"},
+        "values_secondary": [[5 floats-or-None] × 5 rows],
     }
     """
     if axis_x not in AXIS_SPECS:
@@ -144,6 +152,8 @@ async def compute_sensitivity_matrix(
         raise ValueError("axis_x and axis_y must differ")
     if metric not in METRIC_SPECS:
         raise ValueError(f"Unknown metric: {metric}")
+    if secondary_metric is not None and secondary_metric not in METRIC_SPECS:
+        raise ValueError(f"Unknown secondary_metric: {secondary_metric}")
     if mode not in ("first", "combined"):
         raise ValueError(f"Unknown mode: {mode}")
 
@@ -206,6 +216,19 @@ async def compute_sensitivity_matrix(
     ]
 
     grid: list[list[float | None]] = [[None] * GRID_SIZE for _ in range(GRID_SIZE)]
+    grid2: list[list[float | None]] | None = (
+        [[None] * GRID_SIZE for _ in range(GRID_SIZE)] if secondary_metric else None
+    )
+
+    async def _extract_metric(m: str, summary: dict[str, Any]) -> float | None:
+        if mode == "combined" and m == "project_irr_levered":
+            v = await rollup_irr(deal_uuid, session)
+            return float(v) if v is not None else None
+        if mode == "combined" and m == "equity_multiple":
+            v = await rollup_em(deal_uuid, session)
+            return float(v) if v is not None else None
+        metric_val = summary.get(m)
+        return float(metric_val) if metric_val is not None else None
 
     for yi, yv in enumerate(y_values):
         for row in inputs_rows:
@@ -219,14 +242,13 @@ async def compute_sensitivity_matrix(
                 summary = await compute_cash_flows(
                     deal_model_id=deal_uuid, session=session
                 )
-                if mode == "combined" and metric == "project_irr_levered":
-                    irr_decimal = await rollup_irr(deal_uuid, session)
-                    grid[yi][xi] = float(irr_decimal) if irr_decimal is not None else None
-                else:
-                    metric_val = summary.get(metric)
-                    grid[yi][xi] = float(metric_val) if metric_val is not None else None
+                grid[yi][xi] = await _extract_metric(metric, summary)
+                if grid2 is not None and secondary_metric:
+                    grid2[yi][xi] = await _extract_metric(secondary_metric, summary)
             except Exception:  # noqa: BLE001
                 grid[yi][xi] = None
+                if grid2 is not None:
+                    grid2[yi][xi] = None
 
     # Restore base values per-project and refresh persisted rows
     for row, bx, by in base_snapshot:
@@ -239,7 +261,7 @@ async def compute_sensitivity_matrix(
     except Exception:  # noqa: BLE001
         pass  # Base case may have been invalid to begin with
 
-    return {
+    result: dict[str, Any] = {
         "axis_x": {
             "field": axis_x,
             "label": spec_x["label"],
@@ -262,3 +284,11 @@ async def compute_sensitivity_matrix(
         "base_y_index": base_y_idx,
         "values": grid,
     }
+    if secondary_metric and grid2 is not None:
+        result["metric_secondary"] = {
+            "field": secondary_metric,
+            "label": METRIC_SPECS[secondary_metric]["label"],
+            "format": METRIC_SPECS[secondary_metric]["format"],
+        }
+        result["values_secondary"] = grid2
+    return result

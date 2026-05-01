@@ -167,6 +167,7 @@ async def export_investor_workbook(
         axis_x="noi_escalation_rate_pct",
         axis_y="exit_cap_rate_pct",
         metric="project_irr_levered",
+        secondary_metric="equity_multiple",
         mode="combined",
         step_overrides={
             "noi_escalation_rate_pct": Decimal("1.0"),
@@ -1437,41 +1438,44 @@ def _build_uw_cashflow(ws, registry: CellRegistry, ctx: dict) -> None:
 # ── Sensitivity sheet ─────────────────────────────────────────────────────────
 
 
-def _build_sensitivity(
-    ws, registry: CellRegistry, ctx: dict, matrix: dict
-) -> None:
-    """Two-way sensitivity grid: Exit Cap × Rent Growth → Combined Levered IRR.
+def _render_sensitivity_grid(
+    ws,
+    registry: CellRegistry,
+    matrix: dict,
+    grid_values: list[list[float | None]],
+    metric_spec: dict,
+    start_row: int,
+    range_name: str | None = None,
+) -> int:
+    """Render one 5×5 sensitivity grid starting at ``start_row``.
 
-    Layout:
-      Row 1: title
-      Row 2: subtitle (axes + metric + mode)
-      Row 4: corner label + x-axis (rent growth) values across columns
-      Rows 5–9: y-axis (exit cap) value in column A, IRR cells in B–F
-      Row 11: base-case readout
-      Rows 13+: notes
-    Base-case cell gets the hero fill + bold font; remaining cells use a
-    red→yellow→green 3-color scale via conditional formatting.
+    Returns the row number immediately after the last note line so the
+    caller can stack a second grid below with appropriate spacing.
+
+    Rows emitted (relative to start_row):
+      +0: subtitle (axes → metric)
+      +2: corner label + x-axis header
+      +3 … +7: y-axis labels + data cells  (GRID_SIZE rows)
+      +9: base-case readout
+      +11 … +14: notes bullet points
     """
     from openpyxl.formatting.rule import ColorScaleRule
     from openpyxl.styles import PatternFill
     from openpyxl.utils import get_column_letter
 
-    set_widths(ws, [18, 14, 14, 14, 14, 14, 30])
-
-    # Title + subtitle
-    ws.cell(row=1, column=1, value="Two-Way Sensitivity").font = FONT_TITLE
-    metric_label = matrix["metric"]["label"]
     axis_x_label = matrix["axis_x"]["label"]
     axis_y_label = matrix["axis_y"]["label"]
+    metric_label = metric_spec["label"]
+    metric_fmt   = metric_spec.get("format", "pct")
     mode_label = "combined deal-level" if matrix.get("mode") == "combined" else "first-project"
+
+    subtitle_row = start_row
     ws.cell(
-        row=2, column=1,
+        row=subtitle_row, column=1,
         value=f"{axis_y_label} × {axis_x_label} → {metric_label} ({mode_label})",
     ).font = FONT_SUBTITLE
 
-    grid_top = 4
-    # Corner label spans the y-axis title using arrows so the layout reads
-    # without a separate row of axis names.
+    grid_top = start_row + 2
     corner = ws.cell(
         row=grid_top, column=1,
         value=f"{axis_y_label} ↓ / {axis_x_label} →",
@@ -1479,26 +1483,26 @@ def _build_sensitivity(
     corner.font = FONT_LABEL
     corner.alignment = ALIGN_WRAP
 
-    # X-axis header row (rent growth values across B4:F4)
     x_values = matrix["axis_x"]["values"]
+    y_values = matrix["axis_y"]["values"]
+    base_x_idx = matrix.get("base_x_index")
+    base_y_idx = matrix.get("base_y_index")
+    base_fill = PatternFill("solid", fgColor=BRAND["fog"])
+
     for xi, xv in enumerate(x_values):
         cell = ws.cell(row=grid_top, column=2 + xi, value=float(xv))
         cell.number_format = "0.00\"%\""
         cell.font = FONT_LABEL
         cell.alignment = ALIGN_RIGHT
 
-    # Y-axis column + IRR grid
-    y_values = matrix["axis_y"]["values"]
-    grid_values = matrix["values"]
-    base_x_idx = matrix.get("base_x_index")
-    base_y_idx = matrix.get("base_y_index")
-
-    base_fill = PatternFill("solid", fgColor=BRAND["fog"])
-
     grid_first_data_col = 2
-    grid_last_data_col = 1 + len(x_values)
+    grid_last_data_col  = 1 + len(x_values)
     grid_first_data_row = grid_top + 1
-    grid_last_data_row = grid_top + len(y_values)
+    grid_last_data_row  = grid_top + len(y_values)
+
+    is_pct      = metric_fmt == "pct"
+    is_multiple = metric_fmt == "multiple"
+    num_fmt     = PCT if is_pct else ('0.00"×"' if is_multiple else ACCOUNTING)
 
     for yi, yv in enumerate(y_values):
         row = grid_first_data_row + yi
@@ -1509,72 +1513,126 @@ def _build_sensitivity(
 
         for xi in range(len(x_values)):
             col = grid_first_data_col + xi
-            v = grid_values[yi][xi] if yi < len(grid_values) and xi < len(grid_values[yi]) else None
-            cell = ws.cell(row=row, column=col, value=float(v) / 100.0 if v is not None else None)
-            cell.number_format = PCT
+            v = (
+                grid_values[yi][xi]
+                if yi < len(grid_values) and xi < len(grid_values[yi])
+                else None
+            )
+            # IRR/pct values stored as percent-magnitude (e.g. 12.5 = 12.5%);
+            # divide by 100 so Excel % format renders correctly.
+            # Multiple values (EM) are already ratios (e.g. 1.85).
+            display_v = (float(v) / 100.0 if is_pct else float(v)) if v is not None else None
+            cell = ws.cell(row=row, column=col, value=display_v)
+            cell.number_format = num_fmt
             cell.alignment = ALIGN_RIGHT
-            if base_x_idx is not None and base_y_idx is not None and yi == base_y_idx and xi == base_x_idx:
+            if (
+                base_x_idx is not None
+                and base_y_idx is not None
+                and yi == base_y_idx
+                and xi == base_x_idx
+            ):
                 cell.fill = base_fill
                 cell.font = FONT_HERO_VALUE
             else:
                 cell.font = FONT_VALUE
 
-    # Register the grid as a defined range so external tooling can pull it.
-    registry.register_range(
-        "r_sensitivity_grid",
-        ws.title,
-        grid_first_data_row,
-        grid_last_data_row,
-        grid_first_data_col,
-        end_col=grid_last_data_col,
-    )
+    if range_name:
+        registry.register_range(
+            range_name,
+            ws.title,
+            grid_first_data_row,
+            grid_last_data_row,
+            grid_first_data_col,
+            end_col=grid_last_data_col,
+        )
 
-    # Color scale on the IRR data range only — header cells excluded so the
-    # axis labels don't drive the gradient extremes.
     first_col_letter = get_column_letter(grid_first_data_col)
-    last_col_letter = get_column_letter(grid_last_data_col)
-    grid_ref = f"{first_col_letter}{grid_first_data_row}:{last_col_letter}{grid_last_data_row}"
-    scale = ColorScaleRule(
-        start_type="min", start_color="F8696B",      # red
-        mid_type="percentile", mid_value=50, mid_color="FFEB84",  # yellow
-        end_type="max", end_color="63BE7B",          # green
+    last_col_letter  = get_column_letter(grid_last_data_col)
+    grid_ref = (
+        f"{first_col_letter}{grid_first_data_row}"
+        f":{last_col_letter}{grid_last_data_row}"
     )
-    ws.conditional_formatting.add(grid_ref, scale)
+    ws.conditional_formatting.add(
+        grid_ref,
+        ColorScaleRule(
+            start_type="min",        start_color="F8696B",
+            mid_type="percentile",   mid_value=50, mid_color="FFEB84",
+            end_type="max",          end_color="63BE7B",
+        ),
+    )
 
-    # Base-case readout
     readout_row = grid_last_data_row + 2
     if base_x_idx is not None and base_y_idx is not None:
         base_x_val = x_values[base_x_idx]
         base_y_val = y_values[base_y_idx]
-        base_irr = grid_values[base_y_idx][base_x_idx] if grid_values else None
-        irr_text = f"{base_irr:.2f}%" if base_irr is not None else "—"
+        base_v = grid_values[base_y_idx][base_x_idx] if grid_values else None
+        if base_v is not None:
+            v_text = (
+                f"{base_v:.2f}%" if is_pct
+                else f"{base_v:.2f}×" if is_multiple
+                else f"${base_v:,.0f}"
+            )
+        else:
+            v_text = "—"
         ws.cell(
             row=readout_row, column=1,
             value=(
                 f"Base case: {axis_y_label} = {base_y_val:.2f}%, "
-                f"{axis_x_label} = {base_x_val:.2f}%  →  {metric_label} = {irr_text}"
+                f"{axis_x_label} = {base_x_val:.2f}%  →  {metric_label} = {v_text}"
             ),
         ).font = FONT_LABEL
 
-    # Notes
     notes_row = readout_row + 2
     ws.cell(row=notes_row, column=1, value="Notes").font = FONT_LABEL
     notes = [
         "Each cell re-runs the full cashflow engine with the column/row "
         "values substituted into every project's OperationalInputs.",
-        "Levered IRR is the deal-level rollup over summed monthly NCF "
-        "(matches Underwriting Summary's Combined Levered IRR).",
-        "Color scale: red = lowest IRR, green = highest IRR. Base case "
-        "cell is highlighted with the brand fog fill.",
-        "Failed cells (engine errors, e.g. infeasible debt sizing) appear "
-        "blank rather than zero so they don't skew the gradient.",
+        f"{metric_label} is the deal-level rollup over summed monthly NCF.",
+        "Color scale: red = lowest, green = highest. Base case cell "
+        "highlighted with brand fog fill.",
+        "Blank cells indicate engine errors (e.g. infeasible debt sizing).",
     ]
     for offset, text in enumerate(notes):
         cell = ws.cell(row=notes_row + 1 + offset, column=1, value=f"• {text}")
         cell.font = FONT_HINT
         cell.alignment = ALIGN_WRAP
 
-    freeze_top(ws, row=grid_top + 1)
+    return notes_row + 1 + len(notes)
+
+
+def _build_sensitivity(
+    ws, registry: CellRegistry, ctx: dict, matrix: dict
+) -> None:
+    """Two-way sensitivity sheet: stacked grids for each metric in ``matrix``.
+
+    Grid 1 (primary metric, default Levered IRR): rows 1–~16.
+    Grid 2 (secondary metric, default Equity Multiple): rows ~19–~35.
+    Each grid: subtitle → axes header → 5×5 data → base-case readout → notes.
+    """
+    from openpyxl.utils import get_column_letter  # noqa: F401 — used by helper
+
+    set_widths(ws, [18, 14, 14, 14, 14, 14, 30])
+
+    ws.cell(row=1, column=1, value="Two-Way Sensitivity").font = FONT_TITLE
+
+    next_row = _render_sensitivity_grid(
+        ws, registry, matrix,
+        grid_values=matrix["values"],
+        metric_spec=matrix["metric"],
+        start_row=2,
+        range_name="r_sensitivity_grid",
+    )
+
+    if matrix.get("values_secondary") and matrix.get("metric_secondary"):
+        _render_sensitivity_grid(
+            ws, registry, matrix,
+            grid_values=matrix["values_secondary"],
+            metric_spec=matrix["metric_secondary"],
+            start_row=next_row + 2,
+            range_name="r_sensitivity_grid_em",
+        )
+
+    freeze_top(ws, row=5)  # freeze through x-axis header of first grid (row 4)
     print_landscape(ws)
 
 

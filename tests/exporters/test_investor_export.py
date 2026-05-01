@@ -354,6 +354,7 @@ _NAMED_RANGE_ALIASES: tuple[tuple[re.Pattern[str], str], ...] = (
     # a (Exit Cap, Rent Growth) coordinate. The range itself is structural,
     # but the underlying metric is Levered IRR.
     (re.compile(r"^r_sensitivity_grid$"), "Levered IRR"),
+    (re.compile(r"^r_sensitivity_grid_em$"), "Equity Multiple"),
 )
 
 

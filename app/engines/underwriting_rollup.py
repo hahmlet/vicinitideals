@@ -271,6 +271,27 @@ async def rollup_irr(scenario_id: UUID, session: AsyncSession) -> Decimal:
     return _engine_xirr(series)
 
 
+async def rollup_em(scenario_id: UUID, session: AsyncSession) -> Decimal:
+    """Combined equity multiple on the summed NCF series across all projects.
+
+    EM = total equity returned / total equity invested.
+    Uses the same NCF series as rollup_irr — positive periods are equity
+    distributions, negative periods are equity calls.
+    Returns Decimal ratio (e.g. ``Decimal('1.85')`` = 1.85×). Zero if no
+    equity was invested.
+    """
+    result = await session.execute(
+        select(CashFlow.period, func.sum(CashFlow.net_cash_flow))
+        .where(CashFlow.scenario_id == scenario_id)
+        .group_by(CashFlow.period)
+        .order_by(CashFlow.period)
+    )
+    series: list[Decimal] = [Decimal(str(row[1] or 0)) for row in result]
+    total_in = sum((abs(v) for v in series if v < _ZERO), _ZERO)
+    total_out = sum((v for v in series if v > _ZERO), _ZERO)
+    return (total_out / total_in).quantize(Decimal("0.000001")) if total_in > _ZERO else _ZERO
+
+
 async def rollup_summary(
     scenario_id: UUID, session: AsyncSession
 ) -> dict[str, Any]:
