@@ -44,6 +44,21 @@ def test_slider_drawer_renders_and_persists_phantom_rows(
         page, deal_name="E2E Slider Test", deal_type="acquisition",
     )
 
+    # 1a. Wizard auto-sizes debt → typically no gap → drawer hides. POST a
+    # non-zero phantom first via API so the drawer renders on page load.
+    cookie_pre = _session_cookie(page)
+    with httpx.Client(
+        base_url=base_url,
+        headers={"X-API-Key": api_key, "Content-Type": "application/json"},
+        cookies={"vd_session": cookie_pre} if cookie_pre else {},
+        timeout=30,
+    ) as c:
+        r0 = c.post(
+            f"/api/models/{model_id}/sliders",
+            json={"revenue_delta_monthly": "100"},
+        )
+        assert r0.status_code == 200, r0.text
+
     # 2. Navigate to model_builder, sources_uses module
     page.goto(f"{base_url}/models/{model_id}/builder?module=sources_uses")
     page.wait_for_selector("#gap-adj-drawer", timeout=10_000)
