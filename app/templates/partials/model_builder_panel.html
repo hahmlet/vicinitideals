@@ -165,11 +165,19 @@
         </span></td>
         <td class="col-right text-mono">{{ line.amount | currency }}</td>
         <td style="width:28px;text-align:right">
+          {% if _is_gap_adj %}
+          {# Phantom Gap Adjustment row — ✕ zeroes the slider rather than
+             hard-deleting (router guard would 403 a direct DELETE; the
+             slider is the only legitimate mutator). Refresh panel after. #}
+          <button class="btn btn-sm btn-ghost" title="Reset Purchase Price adjustment to 0"
+                  onclick="event.stopPropagation(); window.zeroGapAdjRow && window.zeroGapAdjRow('{{ model.id }}', 'pp', {% if active_project_id %}'{{ active_project_id }}'{% else %}null{% endif %})">✕</button>
+          {% else %}
           <button class="btn btn-sm btn-ghost"
                   hx-delete="/api/models/{{ model.id }}/use-lines/{{ line.id }}"
                   hx-confirm="Delete '{{ line.label }}'?"
                   hx-on::after-request="if(event.detail.successful) refreshPanel('sources_uses')"
                   onclick="event.stopPropagation()">✕</button>
+          {% endif %}
         </td>
       </tr>
       {% endfor %}
@@ -331,10 +339,10 @@
 {% set _has_phantom = (_rev_amt != 0) or (_opex_amt != 0) or (_pp_amt != 0) %}
 {% set _show_drawer = (_gap != 0) or _has_phantom %}
 
-{% if _show_drawer %}
-
-{# Baselines — used to compute % display. Filter out the phantom rows so the
-   slider's $ delta isn't expressed as a percentage of itself. #}
+{# Baselines computed unconditionally so the JS block (which renders
+   regardless of _show_drawer for zeroGapAdjRow availability) never sees
+   undefined Jinja vars. Filter out phantom rows so slider's $ delta
+   isn't expressed as a percentage of itself. #}
 {% set ns_rev = namespace(total=0) %}
 {% if income_streams %}
   {% for s in income_streams if s.label != _REV_LBL %}
@@ -353,6 +361,8 @@
 {% set _baseline_rev_monthly = ns_rev.total %}
 {% set _baseline_opex_annual = ns_op.total %}
 {% set _baseline_pp = (inputs.purchase_price | float) if (inputs and inputs.purchase_price) else 0 %}
+
+{% if _show_drawer %}
 
 {# Ranges aligned to step grid (every multiple of step). Min/max are integer
    multiples of step so 0 sits on a grid point and value=0 is exactly
@@ -512,6 +522,32 @@
     }).catch(function(err) {
       console.error('gap sliders POST network error:', err);
       alert('Slider update network error. Check console.');
+    });
+  };
+
+  // Zero a single phantom row from the use-line ✕ button (router guard
+   // blocks direct DELETE; slider is the only legitimate path to remove).
+  window.zeroGapAdjRow = function(modelId, kind, projectId) {
+    var body = {};
+    if (kind === 'pp') body.pp_delta = '0';
+    else if (kind === 'rev') body.revenue_delta_monthly = '0';
+    else if (kind === 'opex') body.opex_delta_annual = '0';
+    if (projectId) body.project_id = projectId;
+    fetch('/api/models/' + modelId + '/sliders', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(body)
+    }).then(function(r) {
+      if (!r.ok) {
+        return r.text().then(function(t) {
+          console.error('zeroGapAdjRow failed:', r.status, t);
+          alert('Reset failed (' + r.status + '). Check console.');
+        });
+      }
+      if (typeof refreshPanel === 'function') refreshPanel('sources_uses');
+    }).catch(function(err) {
+      console.error('zeroGapAdjRow network error:', err);
     });
   };
 

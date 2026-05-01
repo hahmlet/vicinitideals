@@ -9551,6 +9551,60 @@ def _compute_calc_status(data: dict) -> dict:
     }
 
 
+async def _get_gap_adjustment_amounts(
+    session: AsyncSession, project_id: UUID
+) -> dict[str, float]:
+    """Return current Gap Adjustment phantom amounts as a dict.
+
+    Keys: ``revenue_monthly`` (IncomeStream.amount_fixed_monthly),
+    ``opex_annual`` (OperatingExpenseLine.annual_amount),
+    ``pp`` (UseLine.amount).  Missing rows resolve to 0.0. Used by the
+    calc-status modal to drive per-section yellow override + adjustment
+    notes (Sources=Uses ← PP; DSCR/LTV ← Revenue + OpEx).
+    """
+    from app.schemas.gap_adjustment_names import (
+        OPEX_ADJUSTMENT_LABEL,
+        PURCHASE_PRICE_ADJUSTMENT_LABEL,
+        REVENUE_ADJUSTMENT_LABEL,
+    )
+
+    out = {"revenue_monthly": 0.0, "opex_annual": 0.0, "pp": 0.0}
+    rev = (await session.execute(
+        select(IncomeStream).where(
+            IncomeStream.project_id == project_id,
+            IncomeStream.label == REVENUE_ADJUSTMENT_LABEL,
+        )
+    )).scalar_one_or_none()
+    if rev and rev.amount_fixed_monthly is not None:
+        try:
+            out["revenue_monthly"] = float(rev.amount_fixed_monthly)
+        except (TypeError, ValueError):
+            pass
+    opex = (await session.execute(
+        select(OperatingExpenseLine).where(
+            OperatingExpenseLine.project_id == project_id,
+            OperatingExpenseLine.label == OPEX_ADJUSTMENT_LABEL,
+        )
+    )).scalar_one_or_none()
+    if opex and opex.annual_amount is not None:
+        try:
+            out["opex_annual"] = float(opex.annual_amount)
+        except (TypeError, ValueError):
+            pass
+    pp = (await session.execute(
+        select(UseLine).where(
+            UseLine.project_id == project_id,
+            UseLine.label == PURCHASE_PRICE_ADJUSTMENT_LABEL,
+        )
+    )).scalar_one_or_none()
+    if pp and pp.amount is not None:
+        try:
+            out["pp"] = float(pp.amount)
+        except (TypeError, ValueError):
+            pass
+    return out
+
+
 async def _has_any_gap_adjustment(session: AsyncSession, project_id: UUID) -> bool:
     """True iff at least one Gap Adjustment phantom row has a nonzero amount.
 
@@ -9752,10 +9806,19 @@ async def model_calc_status_modal(
         _active_proj_id = await _active_project_from_request(request, session, model_id)
         data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
         status = _compute_calc_status(data)
+        gap_adjustments = (
+            await _get_gap_adjustment_amounts(session, _active_proj_id)
+            if _active_proj_id is not None
+            else {"revenue_monthly": 0.0, "opex_annual": 0.0, "pp": 0.0}
+        )
         response = templates.TemplateResponse(
             request,
             "partials/calc_status_modal.html",
-            {"status": status, "model_id": str(model_id)},
+            {
+                "status": status,
+                "model_id": str(model_id),
+                "gap_adjustments": gap_adjustments,
+            },
         )
     response.headers["HX-Trigger"] = "calcStatusChanged"
     return response
