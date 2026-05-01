@@ -7,7 +7,25 @@ from datetime import datetime
 from decimal import Decimal
 from typing import Any
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, field_validator
+
+from app.schemas.gap_adjustment_names import is_reserved_label
+
+
+def _validate_label_not_reserved(v: str | None) -> str | None:
+    """Reject Gap Adjustment reserved labels on user-facing Create/Update.
+
+    The slider feature owns these labels — the API blocks human attempts to
+    create new lines with them or to rename other lines into them. Phantom
+    rows themselves are managed via the dedicated /sliders endpoint, which
+    bypasses these schemas.
+    """
+    if v is not None and is_reserved_label(v):
+        raise ValueError(
+            f"label {v!r} is reserved for the Gap Adjustment slider feature; "
+            "phantom rows are managed by the slider, pick a different label"
+        )
+    return v
 
 from app.models.cashflow import LineItemCategory, PeriodType
 
@@ -284,6 +302,8 @@ class IncomeStreamBase(BaseModel):
 class IncomeStreamCreate(IncomeStreamBase):
     project_id: uuid.UUID
 
+    _validate_label = field_validator("label")(_validate_label_not_reserved)
+
     model_config = _example_config(
         {
             "project_id": _EXAMPLE_PROJECT_ID,
@@ -308,6 +328,8 @@ class IncomeStreamUpdate(BaseModel):
     escalation_rate_pct_annual: Decimal | None = None
     active_in_phases: list[str] | None = None
     notes: str | None = None
+
+    _validate_label = field_validator("label")(_validate_label_not_reserved)
 
     model_config = _example_config(
         {
@@ -358,6 +380,8 @@ class OperatingExpenseLineBase(BaseModel):
 class OperatingExpenseLineCreate(OperatingExpenseLineBase):
     project_id: uuid.UUID
 
+    _validate_label = field_validator("label")(_validate_label_not_reserved)
+
     model_config = _example_config(
         {
             "project_id": _EXAMPLE_PROJECT_ID,
@@ -379,6 +403,8 @@ class OperatingExpenseLineUpdate(BaseModel):
     escalation_rate_pct_annual: Decimal | None = None
     active_in_phases: list[str] | None = None
     notes: str | None = None
+
+    _validate_label = field_validator("label")(_validate_label_not_reserved)
 
     model_config = _example_config(
         {
@@ -423,6 +449,8 @@ class UseLineBase(BaseModel):
 
 
 class UseLineCreate(UseLineBase):
+    _validate_label = field_validator("label")(_validate_label_not_reserved)
+
     model_config = _example_config(
         {
             "label": "Land Acquisition",
@@ -441,6 +469,8 @@ class UseLineUpdate(BaseModel):
     timing_type: str | None = None
     is_deferred: bool | None = None
     notes: str | None = None
+
+    _validate_label = field_validator("label")(_validate_label_not_reserved)
 
     model_config = _example_config({"amount": "1350000", "notes": "Revised after appraisal"})
 

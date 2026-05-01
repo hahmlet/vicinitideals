@@ -5,13 +5,28 @@
    Required context:
      - status: dict with keys: overall, failing_count, sources_uses, dscr, ltv
      - model_id: str
+     - gap_adjustments (optional): dict with revenue_monthly, opex_annual, pp.
+       When present and non-zero, per-section status is overridden to "warn"
+       (yellow) for the sections those phantoms contributed to:
+         * pp       → Sources=Uses
+         * revenue  → DSCR + LTV (NOI driver)
+         * opex     → DSCR + LTV (NOI driver)
 #}
+{%- set _ga = gap_adjustments or {'revenue_monthly': 0, 'opex_annual': 0, 'pp': 0} -%}
+{%- set _ga_pp = (_ga.pp | float) -%}
+{%- set _ga_rev = (_ga.revenue_monthly | float) -%}
+{%- set _ga_opex = (_ga.opex_annual | float) -%}
+{%- set _has_pp_adj = _ga_pp != 0 -%}
+{%- set _has_noi_adj = (_ga_rev != 0) or (_ga_opex != 0) -%}
+{%- set _has_any_adj = _has_pp_adj or _has_noi_adj -%}
 
 <div class="calc-status-modal-header">
   <div>
     <div class="calc-status-modal-title">Calculation Status</div>
     <div class="calc-status-modal-sub">
-      {% if status.overall == 'ok' %}
+      {% if status.overall == 'ok' and _has_any_adj %}
+      All three checks pass — but only with Gap Adjustments. Sections marked yellow rely on hypothetical line items.
+      {% elif status.overall == 'ok' %}
       All three checks pass. The model is internally consistent.
       {% else %}
       {{ status.failing_count }} factor{{ 's' if status.failing_count != 1 else '' }} need{{ '' if status.failing_count != 1 else 's' }} attention.
@@ -29,13 +44,40 @@
        ('dscr', 'DSCR (Debt Service Coverage)', status.dscr),
        ('ltv', 'LTV (Loan-to-Value)', status.ltv),
   ] %}
-  {%- set icon = {'ok': '✓', 'warn': '⚠', 'fail': '✕', 'na': '○'}.get(factor.status, '○') -%}
-  <div class="calc-status-row calc-status-{{ factor.status }}">
+  {# Per-section adjustment override: yellow when relevant phantom is non-zero
+     AND underlying status is "ok" (real failures keep their fail/warn status). #}
+  {%- set _section_adj =
+      _has_pp_adj if key == 'sources_uses'
+      else (_has_noi_adj if key in ('dscr', 'ltv') else False) -%}
+  {%- set _eff_status = 'warn' if (factor.status == 'ok' and _section_adj) else factor.status -%}
+  {%- set icon = {'ok': '✓', 'warn': '⚠', 'fail': '✕', 'na': '○'}.get(_eff_status, '○') -%}
+  <div class="calc-status-row calc-status-{{ _eff_status }}">
     <div class="calc-status-row-icon">{{ icon }}</div>
     <div class="calc-status-row-content">
       <div class="calc-status-row-title">{{ title }}</div>
       <div class="calc-status-row-label">{{ factor.label }}</div>
       <div class="calc-status-row-detail">{{ factor.detail }}</div>
+
+      {# Adjustment note — surfaces which phantom rows contributed to this
+         section landing where it did. Yellow background ties to the
+         _eff_status override above. #}
+      {% if _section_adj %}
+      <div style="margin-top:8px;padding:6px 10px;background:#fef3c7;border-left:3px solid #ca8a04;border-radius:3px;font-size:12px;color:var(--text-primary)">
+        <div style="font-weight:600;margin-bottom:2px">⚠ With Gap Adjustments</div>
+        {% if key == 'sources_uses' and _has_pp_adj %}
+        <div>Purchase Price hypothetical: <span class="text-mono">{% if _ga_pp >= 0 %}+{% endif %}${{ '{:,.0f}'.format(_ga_pp) }}</span></div>
+        {% endif %}
+        {% if key in ('dscr', 'ltv') %}
+          {% if _ga_rev != 0 %}
+          <div>Revenue hypothetical: <span class="text-mono">{% if _ga_rev >= 0 %}+{% endif %}${{ '{:,.0f}'.format(_ga_rev) }}/mo</span></div>
+          {% endif %}
+          {% if _ga_opex != 0 %}
+          <div>OpEx hypothetical: <span class="text-mono">{% if _ga_opex >= 0 %}+{% endif %}${{ '{:,.0f}'.format(_ga_opex) }}/yr</span></div>
+          {% endif %}
+        {% endif %}
+        <div style="font-size:11px;color:var(--text-muted);margin-top:3px">Drag back to zero in Sources &amp; Uses to make this section "real" again.</div>
+      </div>
+      {% endif %}
 
       {# Factor-specific meta display #}
       {% if key == 'sources_uses' and factor.meta.get('capital_total') %}

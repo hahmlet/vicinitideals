@@ -8861,7 +8861,12 @@ async def model_builder(
         }
     else:
         _calc_status = _compute_calc_status(data)
-    calc_status_pill_html = _render_calc_status_pill_html(_calc_status, model_id)
+    _has_adj = False
+    if active_view != "underwriting" and active_project_id is not None:
+        _has_adj = await _has_any_gap_adjustment(session, active_project_id)
+    calc_status_pill_html = _render_calc_status_pill_html(
+        _calc_status, model_id, has_any_adjustment=_has_adj
+    )
 
     ctx = {
         "model": model,
@@ -8914,7 +8919,12 @@ async def builder_panel(
 
     _active_proj_id = await _active_project_from_request(request, session, model_id)
     data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
-    ctx: dict = {"model": model, "active_module": module, **data}
+    ctx: dict = {
+        "model": model,
+        "active_module": module,
+        "active_project_id": str(_active_proj_id) if _active_proj_id else None,
+        **data,
+    }
 
     # Cash flow periods — only loaded when the cashflow module is active.
     # Filter by active project so per-project tab doesn't interleave rows.
@@ -9541,9 +9551,119 @@ def _compute_calc_status(data: dict) -> dict:
     }
 
 
-def _render_calc_status_pill_html(status: dict, model_id: UUID) -> str:
-    """Render the calc-status pill button HTML from a computed status dict."""
-    if status["overall"] == "ok":
+async def _get_gap_adjustment_amounts(
+    session: AsyncSession, project_id: UUID
+) -> dict[str, float]:
+    """Return current Gap Adjustment phantom amounts as a dict.
+
+    Keys: ``revenue_monthly`` (IncomeStream.amount_fixed_monthly),
+    ``opex_annual`` (OperatingExpenseLine.annual_amount),
+    ``pp`` (UseLine.amount).  Missing rows resolve to 0.0. Used by the
+    calc-status modal to drive per-section yellow override + adjustment
+    notes (Sources=Uses ← PP; DSCR/LTV ← Revenue + OpEx).
+    """
+    from app.schemas.gap_adjustment_names import (
+        OPEX_ADJUSTMENT_LABEL,
+        PURCHASE_PRICE_ADJUSTMENT_LABEL,
+        REVENUE_ADJUSTMENT_LABEL,
+    )
+
+    out = {"revenue_monthly": 0.0, "opex_annual": 0.0, "pp": 0.0}
+    rev = (await session.execute(
+        select(IncomeStream).where(
+            IncomeStream.project_id == project_id,
+            IncomeStream.label == REVENUE_ADJUSTMENT_LABEL,
+        )
+    )).scalar_one_or_none()
+    if rev and rev.amount_fixed_monthly is not None:
+        try:
+            out["revenue_monthly"] = float(rev.amount_fixed_monthly)
+        except (TypeError, ValueError):
+            pass
+    opex = (await session.execute(
+        select(OperatingExpenseLine).where(
+            OperatingExpenseLine.project_id == project_id,
+            OperatingExpenseLine.label == OPEX_ADJUSTMENT_LABEL,
+        )
+    )).scalar_one_or_none()
+    if opex and opex.annual_amount is not None:
+        try:
+            out["opex_annual"] = float(opex.annual_amount)
+        except (TypeError, ValueError):
+            pass
+    pp = (await session.execute(
+        select(UseLine).where(
+            UseLine.project_id == project_id,
+            UseLine.label == PURCHASE_PRICE_ADJUSTMENT_LABEL,
+        )
+    )).scalar_one_or_none()
+    if pp and pp.amount is not None:
+        try:
+            out["pp"] = float(pp.amount)
+        except (TypeError, ValueError):
+            pass
+    return out
+
+
+async def _has_any_gap_adjustment(session: AsyncSession, project_id: UUID) -> bool:
+    """True iff at least one Gap Adjustment phantom row has a nonzero amount.
+
+    Gap Adjustment phantom rows materialize the slider deltas; the
+    calc-status pill stays yellow as long as any of them are non-zero,
+    even if Sources=Uses / DSCR / LTV all individually pass — the user
+    needs visible feedback that the model balances "with adjustments"
+    rather than "for real."
+    """
+    from app.schemas.gap_adjustment_names import (
+        OPEX_ADJUSTMENT_LABEL,
+        PURCHASE_PRICE_ADJUSTMENT_LABEL,
+        REVENUE_ADJUSTMENT_LABEL,
+    )
+
+    rev = (await session.execute(
+        select(IncomeStream).where(
+            IncomeStream.project_id == project_id,
+            IncomeStream.label == REVENUE_ADJUSTMENT_LABEL,
+        )
+    )).scalar_one_or_none()
+    if rev and rev.amount_fixed_monthly and float(rev.amount_fixed_monthly) != 0:
+        return True
+    opex = (await session.execute(
+        select(OperatingExpenseLine).where(
+            OperatingExpenseLine.project_id == project_id,
+            OperatingExpenseLine.label == OPEX_ADJUSTMENT_LABEL,
+        )
+    )).scalar_one_or_none()
+    if opex and opex.annual_amount and float(opex.annual_amount) != 0:
+        return True
+    pp = (await session.execute(
+        select(UseLine).where(
+            UseLine.project_id == project_id,
+            UseLine.label == PURCHASE_PRICE_ADJUSTMENT_LABEL,
+        )
+    )).scalar_one_or_none()
+    if pp and pp.amount and float(pp.amount) != 0:
+        return True
+    return False
+
+
+def _render_calc_status_pill_html(
+    status: dict,
+    model_id: UUID,
+    has_any_adjustment: bool = False,
+) -> str:
+    """Render the calc-status pill button HTML from a computed status dict.
+
+    ``has_any_adjustment`` overrides "ok" → "warn" (yellow) so a model
+    that pencils only via Gap Adjustment phantom rows is visibly distinct
+    from a model that pencils unaided. Real failures still surface as
+    "warn" with their existing label — the override only applies to the
+    otherwise-green case.
+    """
+    if status["overall"] == "ok" and has_any_adjustment:
+        label = "⚠ Balanced w/ adjustments"
+        cls = "warn"
+    elif status["overall"] == "ok":
         label = "✓ Calculation Valid"
         cls = "ok"
     else:
@@ -9629,13 +9749,18 @@ async def model_calc_status_pill(
     _compute_scenario_statuses so the pill stays consistent with the tab
     chips and doesn't snap to Project 1's pill after modal interactions.
     """
+    has_adj = False
     if _is_underwriting_view_request(request):
         status = await _aggregate_status_for_underwriting(session, model_id)
     else:
         _active_proj_id = await _active_project_from_request(request, session, model_id)
         data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
         status = _compute_calc_status(data)
-    return HTMLResponse(_render_calc_status_pill_html(status, model_id))
+        if _active_proj_id is not None:
+            has_adj = await _has_any_gap_adjustment(session, _active_proj_id)
+    return HTMLResponse(
+        _render_calc_status_pill_html(status, model_id, has_any_adjustment=has_adj)
+    )
 
 
 @router.get("/ui/models/{model_id}/calc-status/modal", response_class=HTMLResponse)
@@ -9681,10 +9806,19 @@ async def model_calc_status_modal(
         _active_proj_id = await _active_project_from_request(request, session, model_id)
         data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
         status = _compute_calc_status(data)
+        gap_adjustments = (
+            await _get_gap_adjustment_amounts(session, _active_proj_id)
+            if _active_proj_id is not None
+            else {"revenue_monthly": 0.0, "opex_annual": 0.0, "pp": 0.0}
+        )
         response = templates.TemplateResponse(
             request,
             "partials/calc_status_modal.html",
-            {"status": status, "model_id": str(model_id)},
+            {
+                "status": status,
+                "model_id": str(model_id),
+                "gap_adjustments": gap_adjustments,
+            },
         )
     response.headers["HX-Trigger"] = "calcStatusChanged"
     return response

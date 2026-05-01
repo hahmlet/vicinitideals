@@ -13,6 +13,13 @@ from sqlalchemy import select
 
 from app.api.deps import CurrentUserId, DBSession
 from app.engines.cashflow import compute_cash_flows
+from app.schemas.gap_adjustment import SliderRequest, SliderResponse
+from app.schemas.gap_adjustment_names import (
+    OPEX_ADJUSTMENT_LABEL,
+    PURCHASE_PRICE_ADJUSTMENT_LABEL,
+    REVENUE_ADJUSTMENT_LABEL,
+    is_reserved_label as _is_reserved_label,
+)
 from app.engines.waterfall import compute_waterfall
 from app.exporters import (
     DealImportResult,
@@ -330,6 +337,27 @@ async def create_income_stream(
 
 
 @router.put("/models/{model_id}/income-streams/{stream_id}", response_model=IncomeStreamRead)
+def _assert_not_phantom_row(label: str | None, row_kind: str) -> None:
+    """Reject mutations to Gap Adjustment phantom rows via the public API.
+
+    The slider feature owns these rows (identified by reserved label) and
+    manages their lifecycle through the dedicated /sliders endpoint. Direct
+    edits or deletions through the public CRUD endpoints would break the
+    slider's contract that "row exists ↔ slider is non-zero."
+
+    To remove an adjustment, drag the slider back to zero.
+    """
+    if _is_reserved_label(label):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=(
+                f"{row_kind} {label!r} is a Gap Adjustment phantom row owned "
+                "by the slider feature; edit or remove it via the slider, "
+                "not the line-item endpoints"
+            ),
+        )
+
+
 @router.patch("/models/{model_id}/income-streams/{stream_id}", response_model=IncomeStreamRead)
 async def update_income_stream(
     model_id: UUID,
@@ -338,6 +366,7 @@ async def update_income_stream(
     session: DBSession,
 ) -> IncomeStream:
     stream = await _get_income_stream_or_404(session, model_id, stream_id)
+    _assert_not_phantom_row(stream.label, "IncomeStream")
 
     for field, value in payload.model_dump(exclude_unset=True).items():
         setattr(stream, field, value)
@@ -354,6 +383,7 @@ async def delete_income_stream(
     session: DBSession,
 ) -> Response:
     stream = await _get_income_stream_or_404(session, model_id, stream_id)
+    _assert_not_phantom_row(stream.label, "IncomeStream")
 
     line_items = await session.execute(
         select(CashFlowLineItem).where(CashFlowLineItem.income_stream_id == stream_id)
@@ -410,6 +440,7 @@ async def update_expense_line(
     session: DBSession,
 ) -> OperatingExpenseLine:
     expense_line = await _get_expense_line_or_404(session, model_id, expense_line_id)
+    _assert_not_phantom_row(expense_line.label, "OperatingExpenseLine")
 
     for field, value in payload.model_dump(exclude_unset=True).items():
         setattr(expense_line, field, value)
@@ -429,6 +460,7 @@ async def delete_expense_line(
     session: DBSession,
 ) -> Response:
     expense_line = await _get_expense_line_or_404(session, model_id, expense_line_id)
+    _assert_not_phantom_row(expense_line.label, "OperatingExpenseLine")
     await session.delete(expense_line)
     await session.flush()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
@@ -478,6 +510,7 @@ async def update_use_line(
     session: DBSession,
 ) -> UseLine:
     use_line = await _get_use_line_or_404(session, model_id, use_line_id)
+    _assert_not_phantom_row(use_line.label, "UseLine")
     for field, value in payload.model_dump(exclude_unset=True).items():
         setattr(use_line, field, value)
     await session.flush()
@@ -492,6 +525,7 @@ async def delete_use_line(
     session: DBSession,
 ) -> Response:
     use_line = await _get_use_line_or_404(session, model_id, use_line_id)
+    _assert_not_phantom_row(use_line.label, "UseLine")
     await session.delete(use_line)
     await session.flush()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
@@ -759,4 +793,182 @@ async def export_model_xlsx(model_id: UUID, session: DBSession) -> Response:
         content=workbook_bytes,
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         headers={"Content-Disposition": f'attachment; filename="{filename}"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Gap Adjustment slider endpoint
+# ---------------------------------------------------------------------------
+
+
+async def _upsert_revenue_phantom(
+    session: DBSession,
+    project_id: UUID,
+    monthly_amount: Decimal,
+) -> IncomeStream:
+    existing = (await session.execute(
+        select(IncomeStream).where(
+            IncomeStream.project_id == project_id,
+            IncomeStream.label == REVENUE_ADJUSTMENT_LABEL,
+        )
+    )).scalar_one_or_none()
+    if existing is not None:
+        existing.amount_fixed_monthly = monthly_amount
+        return existing
+    row = IncomeStream(
+        project_id=project_id,
+        stream_type="other",
+        label=REVENUE_ADJUSTMENT_LABEL,
+        amount_fixed_monthly=monthly_amount,
+        # Active in operating phases only — adjustment to stabilized NOI.
+        active_in_phases=["lease_up", "stabilized", "exit"],
+    )
+    session.add(row)
+    return row
+
+
+async def _upsert_opex_phantom(
+    session: DBSession,
+    project_id: UUID,
+    annual_amount: Decimal,
+) -> OperatingExpenseLine:
+    existing = (await session.execute(
+        select(OperatingExpenseLine).where(
+            OperatingExpenseLine.project_id == project_id,
+            OperatingExpenseLine.label == OPEX_ADJUSTMENT_LABEL,
+        )
+    )).scalar_one_or_none()
+    if existing is not None:
+        existing.annual_amount = annual_amount
+        return existing
+    row = OperatingExpenseLine(
+        project_id=project_id,
+        label=OPEX_ADJUSTMENT_LABEL,
+        annual_amount=annual_amount,
+        active_in_phases=["lease_up", "stabilized", "exit"],
+    )
+    session.add(row)
+    return row
+
+
+async def _upsert_pp_phantom(
+    session: DBSession,
+    project_id: UUID,
+    amount: Decimal,
+) -> UseLine:
+    existing = (await session.execute(
+        select(UseLine).where(
+            UseLine.project_id == project_id,
+            UseLine.label == PURCHASE_PRICE_ADJUSTMENT_LABEL,
+        )
+    )).scalar_one_or_none()
+    if existing is not None:
+        existing.amount = amount
+        return existing
+    # UseLinePhase enum is imported via app.models.deal but referenced as
+    # the string value to match how the existing line items are seeded
+    # (see test_engine_snapshots.py). Negative amounts are explicitly
+    # supported by the engine — the auto-sizer subtracts them from
+    # total_uses in cashflow.py:1603.
+    from app.models.deal import UseLinePhase
+    row = UseLine(
+        project_id=project_id,
+        label=PURCHASE_PRICE_ADJUSTMENT_LABEL,
+        phase=UseLinePhase.acquisition,
+        amount=amount,
+        timing_type="first_day",
+    )
+    session.add(row)
+    return row
+
+
+@router.post("/models/{model_id}/sliders", response_model=SliderResponse)
+async def update_gap_adjustment_sliders(
+    model_id: UUID,
+    payload: SliderRequest,
+    session: DBSession,
+) -> SliderResponse:
+    """Apply Gap Adjustment slider deltas and recompute.
+
+    Each non-None field upserts the corresponding phantom row to that
+    absolute amount. ``None`` leaves the row untouched. ``0`` sets it to
+    zero (the row stays in place — drag-to-zero doesn't delete; the user
+    keeps the adjustment lineage so they can drag it again later).
+
+    Runs ``compute_cash_flows`` synchronously after upserting and returns
+    the post-compute metrics. The UI should debounce slider drag events
+    to avoid hammering this endpoint mid-drag.
+    """
+    await _get_deal_or_404(session, model_id)
+    # Multi-project: caller supplies project_id (UI passes active project's id).
+    # Single-project / unspecified: fall back to the scenario's default (first)
+    # project. Validates that the project belongs to this scenario to prevent
+    # cross-scenario phantom row leakage.
+    if payload.project_id is not None:
+        proj = await session.get(Project, payload.project_id)
+        if proj is None or proj.scenario_id != model_id:
+            raise HTTPException(
+                status_code=404,
+                detail="Project not found on this scenario",
+            )
+        project = proj
+    else:
+        project = await _get_default_project_for_deal(session, model_id)
+
+    if payload.revenue_delta_monthly is not None:
+        await _upsert_revenue_phantom(session, project.id, payload.revenue_delta_monthly)
+    if payload.opex_delta_annual is not None:
+        await _upsert_opex_phantom(session, project.id, payload.opex_delta_annual)
+    if payload.pp_delta is not None:
+        await _upsert_pp_phantom(session, project.id, payload.pp_delta)
+
+    await session.flush()
+    await compute_cash_flows(deal_model_id=model_id, session=session)
+    await session.commit()
+
+    # Read back the post-compute metrics + the resolved deltas for echo.
+    outputs = (await session.execute(
+        select(OperationalOutputs).where(
+            OperationalOutputs.scenario_id == model_id,
+            OperationalOutputs.project_id == project.id,
+        )
+    )).scalar_one_or_none()
+
+    revenue = (await session.execute(
+        select(IncomeStream).where(
+            IncomeStream.project_id == project.id,
+            IncomeStream.label == REVENUE_ADJUSTMENT_LABEL,
+        )
+    )).scalar_one_or_none()
+    opex = (await session.execute(
+        select(OperatingExpenseLine).where(
+            OperatingExpenseLine.project_id == project.id,
+            OperatingExpenseLine.label == OPEX_ADJUSTMENT_LABEL,
+        )
+    )).scalar_one_or_none()
+    pp = (await session.execute(
+        select(UseLine).where(
+            UseLine.project_id == project.id,
+            UseLine.label == PURCHASE_PRICE_ADJUSTMENT_LABEL,
+        )
+    )).scalar_one_or_none()
+
+    rev_amt = Decimal(str(revenue.amount_fixed_monthly)) if revenue and revenue.amount_fixed_monthly is not None else Decimal("0")
+    opex_amt = Decimal(str(opex.annual_amount)) if opex and opex.annual_amount is not None else Decimal("0")
+    pp_amt = Decimal(str(pp.amount)) if pp and pp.amount is not None else Decimal("0")
+
+    return SliderResponse(
+        revenue_delta_monthly=rev_amt,
+        opex_delta_annual=opex_amt,
+        pp_delta=pp_amt,
+        has_any_adjustment=any(v != 0 for v in (rev_amt, opex_amt, pp_amt)),
+        dscr=Decimal(str(outputs.dscr)) if outputs and outputs.dscr is not None else None,
+        total_project_cost=(
+            Decimal(str(outputs.total_project_cost))
+            if outputs and outputs.total_project_cost is not None else None
+        ),
+        equity_required=(
+            Decimal(str(outputs.equity_required))
+            if outputs and outputs.equity_required is not None else None
+        ),
     )
