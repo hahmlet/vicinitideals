@@ -313,3 +313,20 @@ If subagent realizes task needs more reasoning than its tier provides, return to
 **Avoid sprawl.** Batch related work into one subagent prompt rather than fanning out. Each spawn costs context-loading overhead.
 
 Parent owns final synthesis. User instructions override these rules.
+
+---
+
+## Code Search Routing
+
+**Prefer code-review-graph MCP over Grep/Glob for codebase exploration.** The graph (2,500+ nodes, 31k edges, Tree-sitter AST) gives precise, token-efficient answers. Grep/Glob scan raw text and return noisy matches from large files.
+
+| Task | Prefer |
+|---|---|
+| Find where a function is defined or called | `mcp__code-review-graph__query_graph_tool` |
+| Find files affected by a change | `mcp__code-review-graph__get_impact_radius_tool` |
+| Semantic search ("where is DSCR calculated?") | `mcp__code-review-graph__semantic_search_nodes_tool` |
+| Trace call paths / dependencies | `mcp__code-review-graph__traverse_graph_tool` |
+| Understand what a file imports / exports | `mcp__code-review-graph__get_minimal_context_tool` |
+| Find large or complex functions | `mcp__code-review-graph__find_large_functions_tool` |
+
+Use Grep/Glob only when: searching template/HTML files (not parsed by Tree-sitter), doing exact string matches in non-Python files, or when the graph returns no results. Always try graph first.
