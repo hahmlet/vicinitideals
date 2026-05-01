@@ -25,7 +25,7 @@ from uuid import UUID
 from celery.utils.log import get_task_logger
 from sqlalchemy import select
 
-from app.db import AsyncSessionLocal
+from app.db import AsyncSessionLocal, engine as _db_engine
 from app.emails.sender import send_export_ready_email
 from app.exporters.investor_export import (
     export_investor_workbook,
@@ -46,14 +46,39 @@ RESEND_EXPORT_TASK = "app.tasks.export.resend_investor_export"
 def run_investor_export(self, job_id: str) -> str:
     """Build the workbook, persist bytes, send the email."""
     del self
-    return asyncio.run(_run_investor_export_async(job_id))
+    return asyncio.run(_with_fresh_loop(_run_investor_export_async, job_id))
 
 
 @celery_app.task(bind=True, name=RESEND_EXPORT_TASK)
 def resend_investor_export(self, job_id: str) -> str:
     """Resend a previously-built export from the cached ``xlsx_bytes``."""
     del self
-    return asyncio.run(_resend_investor_export_async(job_id))
+    return asyncio.run(_with_fresh_loop(_resend_investor_export_async, job_id))
+
+
+async def _with_fresh_loop(fn, *args):
+    """Wrap a task body so the shared async engine is disposed at start AND
+    end, keeping its connection pool aligned with the current event loop.
+
+    Celery's prefork worker reuses a process across many tasks. Each task
+    invokes ``asyncio.run()`` which creates a NEW loop, but the module-
+    level ``app.db.engine`` retains pooled connections whose transport
+    futures belong to the previous task's (now-closed) loop. Without
+    disposing, the next ``checkout`` triggers ``pool_pre_ping`` against a
+    stale future and crashes with::
+
+        RuntimeError: Task ... got Future ... attached to a different loop
+
+    Disposing at start guarantees this task starts with an empty pool;
+    disposing at end keeps the next task safe even if it forgets the
+    guard. See ``app/tasks/oregon_elicense.py`` for the same pattern in
+    its scraper tasks.
+    """
+    try:
+        await _db_engine.dispose()
+        return await fn(*args)
+    finally:
+        await _db_engine.dispose()
 
 
 async def _run_investor_export_async(job_id: str) -> str:

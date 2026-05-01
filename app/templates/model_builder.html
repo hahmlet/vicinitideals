@@ -883,7 +883,18 @@ function _finishExport(modelId, finalStatus, errorMessage) {
 
 function _pollExportStatus(modelId, jobId) {
   if (_exportPollers[modelId]) clearInterval(_exportPollers[modelId]);
+  // Cap total poll duration — far longer than any legitimate export,
+  // but bounded so a stuck/queued job (e.g. Celery worker crash or
+  // dead-letter) doesn't poll the api forever and pin the browser's
+  // main thread across every open tab.
+  const startedAt = Date.now();
+  const MAX_POLL_MS = 5 * 60 * 1000;
   _exportPollers[modelId] = setInterval(async () => {
+    if (Date.now() - startedAt > MAX_POLL_MS) {
+      _finishExport(modelId, 'failed',
+        'Export timed out after 5 minutes. Check your email or retry.');
+      return;
+    }
     try {
       const r = await fetch('/ui/exports/' + jobId + '/status');
       if (!r.ok) {
