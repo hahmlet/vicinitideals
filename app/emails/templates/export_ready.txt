@@ -1,0 +1,10 @@
+Hi {{ name }},
+
+The LP-facing Excel workbook for {{ deal_name }}{% if scenario_name %} · {{ scenario_name }}{% endif %} is attached.
+
+File: {{ filename }}
+
+You can open the workbook directly, copy values into your own model, or forward this email to a colleague. The Sensitivity tab reflects your latest underwriting assumptions.
+
+— Viciniti Deals
+{{ app_base_url }}

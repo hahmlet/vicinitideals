@@ -146,13 +146,39 @@ async def export_investor_workbook(
     glossary = wb.create_sheet("Glossary & Methodology")
     _build_glossary(glossary, registry, ctx)
 
-    # NOTE: Two-way sensitivity sheet temporarily disabled — the live
-    # 25-iteration compute_cash_flows loop blew past the NGINX 60s timeout
-    # on production multi-project deals and the api container OOM-restarted
-    # mid-export. Engine + sheet builder remain wired up; re-enable once
-    # the matrix is computed off the request path (Celery task writing to
-    # OperationalOutputs.sensitivity_matrix, exporter reads cached value).
-    # See: app/engines/sensitivity_matrix.py + _build_sensitivity below.
+    # Two-way sensitivity sheet is built LAST because the engine calls
+    # session.expire_all() inside each compute_cash_flows cycle, which
+    # invalidates ORM rows held by ``ctx`` (waterfall tiers, capital
+    # modules, etc.). Building all ORM-reading sheets before the matrix
+    # avoids MissingGreenlet errors from sync attribute access on expired
+    # rows. After the sheet is built we splice it into position 4 (between
+    # Underwriting Cash Flow and Investor Returns) via ``wb._sheets`` so
+    # the on-disk tab order matches plan §2.
+    #
+    # Originally disabled on the synchronous request path because the
+    # 25-cycle compute exceeded NGINX's 60s proxy timeout. The async
+    # export path (Celery worker, no proxy) lifts that constraint, so the
+    # sheet is unconditionally rendered here. Sync callers of this
+    # builder (the legacy GET endpoint) inherit the live build too — they
+    # may time out, in which case the user retries via the async button.
+    sensitivity = await compute_sensitivity_matrix(
+        deal_model_id=deal_model_id,
+        session=session,
+        axis_x="noi_escalation_rate_pct",
+        axis_y="exit_cap_rate_pct",
+        metric="project_irr_levered",
+        mode="combined",
+        step_overrides={
+            "noi_escalation_rate_pct": Decimal("1.0"),
+            "exit_cap_rate_pct": Decimal("0.5"),
+        },
+    )
+    sensitivity_sheet = wb.create_sheet("Sensitivity")
+    _build_sensitivity(sensitivity_sheet, registry, ctx, sensitivity)
+    # Splice from end → position 4 (after Cover, UW Summary, Pro Forma,
+    # Cash Flow). openpyxl's wb._sheets is a plain list of Worksheet refs.
+    wb._sheets.remove(sensitivity_sheet)
+    wb._sheets.insert(4, sensitivity_sheet)
 
     registry.emit(wb)
 

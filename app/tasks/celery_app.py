@@ -20,6 +20,7 @@ celery_app = Celery(
         "app.tasks.parcel_seed",
         "app.tasks.loopnet_ingest",
         "app.tasks.oregon_elicense",
+        "app.tasks.export",
     ],
 )
 
@@ -35,6 +36,7 @@ celery_app.conf.update(
         "app.tasks.scenario.*": {"queue": "analysis"},
         "app.tasks.loopnet_ingest.*": {"queue": "scraping"},
         "app.tasks.oregon_elicense.*": {"queue": "scraping"},
+        "app.tasks.export.*": {"queue": "analysis"},
     },
     beat_schedule={
         "scrape-crexi-daily": {

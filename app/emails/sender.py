@@ -136,3 +136,47 @@ async def send_password_reset_email(
     }
     result = await _post(payload)
     return result is not None
+
+
+async def send_export_ready_email(
+    *,
+    to: str,
+    name: str,
+    deal_name: str,
+    scenario_name: str | None,
+    filename: str,
+    xlsx_bytes: bytes,
+) -> bool:
+    """Send the rendered investor Excel workbook as an email attachment.
+
+    Resend supports attachments via the ``attachments`` payload field —
+    each entry is ``{"filename": str, "content": <base64 str>}``. The
+    .xlsx content type is inferred from the filename extension on
+    Resend's side. Returns True when the API accepts the message.
+    """
+    import base64
+
+    if not to:
+        return False
+    ctx = {
+        "name": name or "there",
+        "deal_name": deal_name or "your deal",
+        "scenario_name": scenario_name or "",
+        "filename": filename,
+        "app_base_url": settings.app_base_url,
+    }
+    payload = {
+        "from": _from_field(),
+        "to": [to],
+        "subject": f"Investor export ready — {deal_name or 'deal'}",
+        "html": _render("export_ready.html", **ctx),
+        "text": _render("export_ready.txt", **ctx),
+        "attachments": [
+            {
+                "filename": filename,
+                "content": base64.b64encode(xlsx_bytes).decode("ascii"),
+            }
+        ],
+    }
+    result = await _post(payload)
+    return result is not None

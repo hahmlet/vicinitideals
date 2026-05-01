@@ -46,6 +46,7 @@ def _commit_3_sheet_order(num_projects: int) -> tuple[str, ...]:
         "Underwriting Summary",
         "Underwriting Pro Forma",
         "Underwriting Cash Flow",
+        "Sensitivity",
         "Investor Returns",
         "Debt Schedule",
         "Assumptions",
@@ -253,10 +254,39 @@ async def test_no_sheet_protection(session: AsyncSession):
         )
 
 
-# NOTE: Sensitivity sheet shape test removed alongside the temporary disable
-# of the live-compute Sensitivity tab in export_investor_workbook (request
-# path was timing out on multi-project deals). Re-add once the matrix is
-# pre-computed off-request and the exporter reads from a cached field.
+async def test_sensitivity_sheet_renders_5x5_grid(session: AsyncSession):
+    """Sensitivity sheet should expose a 5x5 IRR grid with axis labels.
+
+    Sheet is rendered live during export via compute_sensitivity_matrix
+    (Celery worker path; sync request-path callers may time out on
+    NGINX). Asserts:
+      - Sheet exists at the documented order position
+      - Title cell A1 reads "Two-Way Sensitivity"
+      - 5 x-axis values (rent growth) sit in row 4, cols B..F
+      - 5 y-axis values (exit cap) sit in column A, rows 5..9
+      - Defined name ``r_sensitivity_grid`` resolves to the 5x5 data range
+      - At least one IRR cell carries a numeric value (engine ran)
+    """
+    scenario = await _seed_minimal_scenario(session)
+    blob = await export_investor_workbook(scenario.id, session)
+    wb = load_workbook(BytesIO(blob), data_only=False)
+
+    assert "Sensitivity" in wb.sheetnames
+    ws = wb["Sensitivity"]
+    assert ws.cell(row=1, column=1).value == "Two-Way Sensitivity"
+
+    x_axis = [ws.cell(row=4, column=2 + i).value for i in range(5)]
+    y_axis = [ws.cell(row=5 + i, column=1).value for i in range(5)]
+    assert all(isinstance(v, (int, float)) for v in x_axis), x_axis
+    assert all(isinstance(v, (int, float)) for v in y_axis), y_axis
+
+    grid = [
+        [ws.cell(row=5 + r, column=2 + c).value for c in range(5)]
+        for r in range(5)
+    ]
+    flat = [v for row in grid for v in row]
+    assert any(isinstance(v, (int, float)) for v in flat), grid
+    assert "r_sensitivity_grid" in wb.defined_names
 
 
 async def test_glossary_sheet_has_investor_metrics(session: AsyncSession):

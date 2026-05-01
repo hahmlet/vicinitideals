@@ -9781,6 +9781,195 @@ async def download_investor_export(
     )
 
 
+# ── Async investor export ────────────────────────────────────────────────────
+#
+# The synchronous endpoint above blows past the NGINX 60s proxy timeout once
+# the live Sensitivity matrix lands (25 cashflow cycles per export). The async
+# path below kicks a Celery task that builds the workbook off the request
+# path and emails the .xlsx as an attachment when finished. Job state
+# (``queued → calculating → sending → sent`` or ``failed``) is persisted on
+# ``ExportJob`` rows so the UI can poll for hover-modal updates and the user
+# can resend a cached build when the scenario hasn't been recomputed since
+# the last successful export.
+
+
+@router.get("/ui/models/{model_id}/investor-export/preflight")
+async def preflight_investor_export(
+    model_id: UUID,
+    session: DBSession,
+    request: Request,
+) -> JSONResponse:
+    """Cheap idempotent check: is a cached resend eligible for this scenario?
+
+    Returns ``{"resend_eligible": bool, "resend_job_id": <uuid|null>}``.
+    UI uses this to decide whether to prompt the user with a "Resend last
+    export?" modal before enqueueing a fresh build.
+
+    Eligibility = last ``sent`` job's ``created_at`` > every
+    ``OperationalOutputs.computed_at`` for this scenario AND that job
+    still has ``xlsx_bytes`` cached.
+    """
+    from app.models.cashflow import OperationalOutputs
+    from app.models.export_job import ExportJob, ExportJobStatus
+
+    user = await _get_user(session, request)
+    if user is None:
+        return JSONResponse({"error": "not authenticated"}, status_code=401)
+    scenario = await session.get(DealModel, model_id)
+    if scenario is None:
+        return JSONResponse({"error": "scenario not found"}, status_code=404)
+
+    latest_outputs_computed_at = (
+        await session.execute(
+            select(func.max(OperationalOutputs.computed_at))
+            .where(OperationalOutputs.scenario_id == model_id)
+        )
+    ).scalar_one_or_none()
+
+    last_sent_job = (
+        await session.execute(
+            select(ExportJob)
+            .where(ExportJob.scenario_id == model_id)
+            .where(ExportJob.status == ExportJobStatus.sent)
+            .where(ExportJob.xlsx_bytes.isnot(None))
+            .order_by(ExportJob.created_at.desc())
+            .limit(1)
+        )
+    ).scalar_one_or_none()
+
+    resend_eligible = bool(
+        last_sent_job is not None
+        and (
+            latest_outputs_computed_at is None
+            or last_sent_job.created_at > latest_outputs_computed_at
+        )
+    )
+    return JSONResponse(
+        {
+            "resend_eligible": resend_eligible,
+            "resend_job_id": (
+                str(last_sent_job.id) if (resend_eligible and last_sent_job) else None
+            ),
+        }
+    )
+
+
+@router.post("/ui/models/{model_id}/investor-export/async")
+async def start_investor_export_async(
+    model_id: UUID,
+    session: DBSession,
+    request: Request,
+) -> JSONResponse:
+    """Enqueue a fresh-build investor-export job and return its id.
+
+    Caller (UI) is expected to have hit ``/preflight`` first to decide
+    whether to prompt for "Resend last export?" — this endpoint always
+    builds fresh.
+    """
+    from app.models.export_job import ExportJob, ExportJobStatus
+    from app.tasks.export import RUN_EXPORT_TASK
+    from app.tasks.celery_app import celery_app as _celery
+
+    user = await _get_user(session, request)
+    if user is None:
+        return JSONResponse({"error": "not authenticated"}, status_code=401)
+    scenario = await session.get(DealModel, model_id)
+    if scenario is None:
+        return JSONResponse({"error": "scenario not found"}, status_code=404)
+
+    job = ExportJob(
+        scenario_id=model_id,
+        user_id=user.id,
+        recipient_email=user.email or "",
+        status=ExportJobStatus.queued,
+    )
+    session.add(job)
+    await session.commit()
+    await session.refresh(job)
+
+    _celery.send_task(RUN_EXPORT_TASK, args=[str(job.id)])
+
+    return JSONResponse(
+        {
+            "job_id": str(job.id),
+            "status": job.status.value,
+        }
+    )
+
+
+@router.get("/ui/exports/{job_id}/status")
+async def get_export_job_status(
+    job_id: UUID,
+    session: DBSession,
+    request: Request,
+) -> JSONResponse:
+    """Return current status of an export job for poll/hover-modal use."""
+    from app.models.export_job import ExportJob
+
+    user = await _get_user(session, request)
+    if user is None:
+        return JSONResponse({"error": "not authenticated"}, status_code=401)
+    job = await session.get(ExportJob, job_id)
+    if job is None or job.user_id != user.id:
+        return JSONResponse({"error": "job not found"}, status_code=404)
+
+    return JSONResponse(
+        {
+            "job_id": str(job.id),
+            "status": job.status.value,
+            "error_message": job.error_message,
+            "created_at": job.created_at.isoformat() if job.created_at else None,
+            "completed_at": job.completed_at.isoformat() if job.completed_at else None,
+        }
+    )
+
+
+@router.post("/ui/exports/{job_id}/resend")
+async def resend_investor_export_endpoint(
+    job_id: UUID,
+    session: DBSession,
+    request: Request,
+) -> JSONResponse:
+    """Re-send a previously-completed export from cached xlsx_bytes.
+
+    Spawns a fresh ``ExportJob`` row pointing at the same scenario; the
+    resend task copies bytes from the source job before sending so the
+    "last sent" lookup keeps walking forward in time.
+    """
+    from app.models.export_job import ExportJob, ExportJobStatus
+    from app.tasks.export import RESEND_EXPORT_TASK
+    from app.tasks.celery_app import celery_app as _celery
+
+    user = await _get_user(session, request)
+    if user is None:
+        return JSONResponse({"error": "not authenticated"}, status_code=401)
+    src = await session.get(ExportJob, job_id)
+    if src is None or src.user_id != user.id:
+        return JSONResponse({"error": "job not found"}, status_code=404)
+    if not src.xlsx_bytes:
+        return JSONResponse({"error": "no cached export bytes"}, status_code=409)
+
+    new_job = ExportJob(
+        scenario_id=src.scenario_id,
+        user_id=user.id,
+        recipient_email=user.email or src.recipient_email,
+        status=ExportJobStatus.queued,
+        xlsx_bytes=src.xlsx_bytes,
+        filename=src.filename,
+    )
+    session.add(new_job)
+    await session.commit()
+    await session.refresh(new_job)
+
+    _celery.send_task(RESEND_EXPORT_TASK, args=[str(new_job.id)])
+    return JSONResponse(
+        {
+            "job_id": str(new_job.id),
+            "status": new_job.status.value,
+        }
+    )
+
+
 @router.get("/ui/models/{model_id}/import-template.xlsx")
 async def download_import_template(model_id: UUID) -> StreamingResponse:
     """Download a pre-formatted Excel template for bulk import of Uses and OpEx line items."""
