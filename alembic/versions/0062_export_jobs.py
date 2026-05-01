@@ -30,11 +30,25 @@ export_job_status = sa.Enum(
     "sent",
     "failed",
     name="export_job_status",
+    create_type=False,
 )
 
 
 def upgrade() -> None:
-    export_job_status.create(op.get_bind(), checkfirst=True)
+    # Idempotent enum creation — a previous half-applied attempt may have
+    # left the type behind. Raw DO-block makes re-running this migration
+    # safe; the column-level Enum reference uses ``create_type=False`` so
+    # ``op.create_table`` does not re-attempt creation either.
+    op.execute(
+        """
+        DO $$
+        BEGIN
+            IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'export_job_status') THEN
+                CREATE TYPE export_job_status AS ENUM ('queued', 'calculating', 'sending', 'sent', 'failed');
+            END IF;
+        END$$;
+        """
+    )
 
     op.create_table(
         "export_jobs",
