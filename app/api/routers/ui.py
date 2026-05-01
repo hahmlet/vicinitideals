@@ -8862,10 +8862,8 @@ async def model_builder(
     else:
         _calc_status = _compute_calc_status(data)
     _has_adj = False
-    if active_view != "underwriting":
-        _proj_for_pill = data.get("active_project") or data.get("project")
-        if _proj_for_pill is not None:
-            _has_adj = await _has_any_gap_adjustment(session, _proj_for_pill.id)
+    if active_view != "underwriting" and active_project_id is not None:
+        _has_adj = await _has_any_gap_adjustment(session, active_project_id)
     calc_status_pill_html = _render_calc_status_pill_html(
         _calc_status, model_id, has_any_adjustment=_has_adj
     )
