@@ -1649,11 +1649,15 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
         on this module (or "—" when no waterfall is computed); Distributions
         = "—" (debt doesn't receive distributions); Return $ = Total DS −
         Principal (= lifetime interest paid, or "—" when no DS data);
-        Return % = Rate (cost of capital).
+        Return % = "—" (cost of capital is the Rate column; restating it
+        here as a Return mislabels rate as realized yield).
       Equity rows: Rate = pref rate from carry config (or "—"); Total DS =
         "—"; Distributions = ``cumulative_distributed`` from waterfall;
-        Return $ = Distributions − Principal; Return % = ``party_irr_pct``
-        from the latest waterfall period for this module.
+        Return $ = Distributions − Principal; Return % = the linked
+        project's ``project_irr_levered`` (weighted by junction amount when
+        the module spans multiple projects). The waterfall's
+        ``party_irr_pct`` is the scenario-wide LP/GP IRR — same value on
+        every equity module — so it doesn't differentiate per-module.
       Grant / tax-credit / other: Principal only — every other column "—".
 
     Duplicate-label disambiguation: when two modules share the exact same
@@ -1669,6 +1673,7 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
     capital_modules: list[CapitalModule] = ctx["capital_modules"]
     junctions: list[CapitalModuleProject] = ctx["junctions"]
     projects_by_id: dict[UUID, Project] = {p.id: p for p in ctx["projects"]}
+    outputs_by_project: dict[UUID, OperationalOutputs] = ctx.get("outputs") or {}
 
     set_widths(ws, [30, 18, 10, 16, 10, 16, 16, 16, 12])
 
@@ -1684,11 +1689,45 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
     # module-level principal is their sum).
     junction_principal: dict[UUID, Decimal] = {}
     junction_projects: dict[UUID, list[UUID]] = {}
+    junction_amount_by_project: dict[UUID, dict[UUID, Decimal]] = {}
     for j in junctions:
         junction_principal[j.capital_module_id] = junction_principal.get(
             j.capital_module_id, Decimal(0)
         ) + _coerce_decimal(j.amount or 0)
         junction_projects.setdefault(j.capital_module_id, []).append(j.project_id)
+        junction_amount_by_project.setdefault(j.capital_module_id, {})[j.project_id] = (
+            junction_amount_by_project.get(j.capital_module_id, {}).get(j.project_id, Decimal(0))
+            + _coerce_decimal(j.amount or 0)
+        )
+
+    def _module_per_project_irr(module_id: UUID) -> Decimal | None:
+        """Per-module Levered IRR = principal-weighted average of the linked
+        projects' ``project_irr_levered``. Returns None when none of the
+        linked projects have a computed IRR.
+        """
+        amounts = junction_amount_by_project.get(module_id) or {}
+        if not amounts:
+            return None
+        total_amt = sum(amounts.values(), Decimal(0))
+        if total_amt <= 0:
+            return None
+        weighted = Decimal(0)
+        seen = False
+        for pid, amt in amounts.items():
+            o = outputs_by_project.get(pid)
+            if o is None:
+                continue
+            irr_raw = getattr(o, "project_irr_levered", None)
+            if irr_raw is None:
+                continue
+            seen = True
+            weighted += _coerce_decimal(irr_raw) * amt
+        if not seen:
+            return None
+        # project_irr_levered is stored as percent (e.g. 5.34 = 5.34%); the
+        # _write_optional call below uses _coerce_pct via PCT format which
+        # expects a fraction. Divide by 100 to convert.
+        return (weighted / total_amt) / Decimal(100)
 
     # Pre-aggregate waterfall: per-module cumulative distributions, latest
     # party IRR, and per-module debt-service totals (debt_service tier rows).
@@ -1761,12 +1800,19 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
                 return_dollars = total_ds - principal
             else:
                 return_dollars = None  # no DS data ⇒ blank, not -principal
-            return_pct = rate
+            # Cost of capital lives in the Rate column. Restating it as a
+            # Return mislabels rate-as-realized-yield, so leave Return % blank
+            # for debt rows.
+            return_pct = None
         elif funder_class == "Equity":
             total_ds = None
             distributions = module_distributions.get(mid_str)
             return_dollars = (distributions - principal) if distributions is not None else None
-            return_pct = module_irr.get(mid_str)
+            # Per-module IRR from the linked project(s) — not the waterfall's
+            # scenario-wide LP/GP IRR (which is the same value on every
+            # equity row and reads as a per-module differentiator when it
+            # isn't).
+            return_pct = _module_per_project_irr(module.id)
         else:
             # Grant / tax_credit / other — only Principal is meaningful
             total_ds = None
@@ -1817,11 +1863,21 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
     ); cur_row += 1
 
     by_tier = _waterfall_by_tier(rollup)
-    promote_total = by_tier.get("residual", {}).get("cash_total", Decimal(0)) + by_tier.get(
-        "catch_up", {}
-    ).get("cash_total", Decimal(0))
+    pref_total = by_tier.get("pref_return", {}).get("cash_total", Decimal(0))
+    catch_up_total = by_tier.get("catch_up", {}).get("cash_total", Decimal(0))
+    residual_total = by_tier.get("residual", {}).get("cash_total", Decimal(0))
+    promote_total = residual_total + catch_up_total
+    # "GP Promote" assumes a promote-above-pref structure. With no pref tier
+    # paid, residual is straight pro-rata distribution to equity, not promote.
+    # Rename so the LP doesn't read residual cash as carried interest.
+    has_pref_tier = pref_total > 0
+    promote_label = (
+        "GP Promote $ (catch-up + residual)"
+        if has_pref_tier
+        else "Residual Distributions to GP (no pref tier)"
+    )
     kv_row(
-        ws, cur_row, "GP Promote $ (catch-up + residual)",
+        ws, cur_row, promote_label,
         promote_total,
         name="s_gp_promote_dollars", registry=registry, fmt=ACCOUNTING,
     ); cur_row += 1
