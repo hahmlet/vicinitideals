@@ -23,7 +23,7 @@ branch_labels = None
 depends_on = None
 
 
-export_job_status = sa.Enum(
+export_job_status = postgresql.ENUM(
     "queued",
     "calculating",
     "sending",
@@ -35,19 +35,16 @@ export_job_status = sa.Enum(
 
 
 def upgrade() -> None:
-    # Idempotent enum creation — a previous half-applied attempt may have
-    # left the type behind. Raw DO-block makes re-running this migration
-    # safe; the column-level Enum reference uses ``create_type=False`` so
-    # ``op.create_table`` does not re-attempt creation either.
+    # Idempotent — a half-applied previous attempt may have left the
+    # enum type and/or the table in place. Drop the table first (it
+    # depends on the type), then the type, then recreate cleanly. The
+    # column-level Enum reference uses ``create_type=False`` so
+    # ``op.create_table`` does not re-emit its own CREATE TYPE.
+    op.execute("DROP TABLE IF EXISTS export_jobs CASCADE")
+    op.execute("DROP TYPE IF EXISTS export_job_status")
     op.execute(
-        """
-        DO $$
-        BEGIN
-            IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'export_job_status') THEN
-                CREATE TYPE export_job_status AS ENUM ('queued', 'calculating', 'sending', 'sent', 'failed');
-            END IF;
-        END$$;
-        """
+        "CREATE TYPE export_job_status AS ENUM "
+        "('queued', 'calculating', 'sending', 'sent', 'failed')"
     )
 
     op.create_table(
