@@ -421,7 +421,6 @@ def _build_setup(
         ("deal_type",               _to_v(getattr(project, "deal_type", None)) if project else ""),
         ("unit_count_new",          _to_v(getattr(inputs, "unit_count_new", None)) if inputs else ""),
         ("unit_count_existing",     _to_v(getattr(inputs, "unit_count_existing", None)) if inputs else ""),
-        ("hold_period_years",       _to_v(getattr(inputs, "hold_period_years", None)) if inputs else ""),
         ("exit_cap_rate_pct",       _to_v(getattr(inputs, "exit_cap_rate_pct", None)) if inputs else ""),
         ("selling_costs_pct",       _to_v(getattr(inputs, "selling_costs_pct", None)) if inputs else ""),
         ("lease_up_months",         _to_v(getattr(inputs, "lease_up_months", None)) if inputs else ""),
@@ -430,7 +429,6 @@ def _build_setup(
         # Deal setup wizard
         ("debt_structure",          _to_v(getattr(inputs, "debt_structure", None)) if inputs else ""),
         ("debt_sizing_mode",        _to_v(getattr(inputs, "debt_sizing_mode", None)) if inputs else ""),
-        ("dscr_minimum",            _to_v(getattr(inputs, "dscr_minimum", None)) if inputs else ""),
         ("construction_floor_pct",  _to_v(getattr(inputs, "construction_floor_pct", None)) if inputs else ""),
         ("operation_reserve_months",_to_v(getattr(inputs, "operation_reserve_months", None)) if inputs else ""),
         ("",                        ""),

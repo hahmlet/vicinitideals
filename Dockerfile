@@ -24,6 +24,12 @@ COPY tests/ tests/
 # Copy deploy/ops scripts
 COPY scripts/ scripts/
 
+# Copy the financial-model doc — source of truth for the investor export's
+# Glossary sheet (parsed at request time by app/exporters/_doc_validator.py).
+# Without this, GET /ui/models/{id}/investor-export.xlsx 500s with
+# FileNotFoundError on /app/docs/FINANCIAL_MODEL.md.
+COPY docs/FINANCIAL_MODEL.md docs/FINANCIAL_MODEL.md
+
 # -------------------------------------------------------------------------
 # API stage
 # -------------------------------------------------------------------------

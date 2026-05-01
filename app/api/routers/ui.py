@@ -9,7 +9,7 @@ import time
 import uuid as _uuid_mod
 from datetime import UTC, date, datetime
 from zoneinfo import ZoneInfo
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Any
 from urllib.parse import quote_plus
@@ -27,7 +27,7 @@ import app as _pkg
 from app.api.deps import DBSession
 from app.config import settings
 from app.models.broker import Broker, Brokerage
-from app.models.deal import Deal, DealModel, DealOpportunity, DealStatus, IncomeStream, IncomeStreamType, OperatingExpenseLine, OperationalInputs, ProjectType, UnitMix, UseLine, UseLinePhase
+from app.models.deal import STANDARD_OPEX_CATEGORIES, Deal, DealModel, DealOpportunity, DealStatus, IncomeStream, IncomeStreamType, OperatingExpenseLine, OperationalInputs, ProjectType, UnitMix, UseLine, UseLinePhase
 from app.models.ingestion import DedupCandidate, DedupStatus, IngestJob, RecordType, SavedSearchCriteria
 from app.models.org import User
 from app.models.capital import CapitalModule, DrawSource, WaterfallTier
@@ -1819,17 +1819,29 @@ async def deals_new_page(
     user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
     ctx = _base_ctx(user, dedup_count, "deals")
-    # Pre-populate name and pass opp_id so the form can link to an existing opportunity.
+    # Pre-populate name and pass opp_id so the form can link to an existing
+    # opportunity. Also pre-load the opportunity's first listing asking_price
+    # so the Acquisition Cost field can pre-fill — ensures the seeded
+    # UseLine always lands with a non-zero amount.
     opp_name = ""
+    opp_asking_price: float | None = None
     if opp_id:
         try:
-            _opp = await session.get(Opportunity, UUID(opp_id))
+            _opp = await session.get(
+                Opportunity, UUID(opp_id),
+                options=[selectinload(Opportunity.scraped_listings)],
+            )
             if _opp:
                 opp_name = _opp.name
+                for _sl in (_opp.scraped_listings or []):
+                    if _sl.asking_price is not None and _sl.asking_price > 0:
+                        opp_asking_price = float(_sl.asking_price)
+                        break
         except ValueError:
             opp_id = ""
     ctx["opp_id"] = opp_id
     ctx["opp_name"] = opp_name
+    ctx["opp_asking_price"] = opp_asking_price
     return templates.TemplateResponse(request, "deals_new.html", ctx)
 
 
@@ -1944,9 +1956,25 @@ async def create_deal(
     deal_type_raw = str(form.get("deal_type", "acquisition")).strip()
     org_id_raw = str(form.get("org_id", "")).strip()
     opp_id_raw = str(form.get("opportunity_id", "")).strip()
+    acq_cost_raw = str(form.get("acquisition_cost", "")).strip()
 
     if not name:
         return HTMLResponse("<p class='text-muted'>Deal name is required.</p>", status_code=400)
+
+    # Required: acquisition_cost > 0. Same invariant as the Add-Project flow —
+    # the seeded UseLine must have a real value or downstream debt sizing
+    # silently produces gaps that can't be reconciled by a later edit.
+    try:
+        acq_cost = Decimal(acq_cost_raw) if acq_cost_raw else Decimal("0")
+    except (InvalidOperation, ValueError):
+        return HTMLResponse(
+            "<p class='text-muted'>Invalid acquisition cost.</p>", status_code=400,
+        )
+    if acq_cost <= 0:
+        return HTMLResponse(
+            "<p class='text-muted'>Acquisition cost must be greater than zero.</p>",
+            status_code=400,
+        )
 
     user = await _get_user(session, request)
 
@@ -2059,20 +2087,15 @@ async def create_deal(
     for milestone in _seed_milestones(dev_project, deal_type):
         session.add(milestone)
 
-    # Auto-seed the Acquisition use line from the linked opportunity.
-    # Price: first scraped listing's asking_price if available, else 0 (user fills in later).
-    # Label: "{opportunity name} - Acquisition"
-    acq_price = 0
-    if not _opportunity_is_new and opportunity.scraped_listings:
-        sl = opportunity.scraped_listings[0]
-        if sl.asking_price is not None:
-            acq_price = sl.asking_price
+    # Seed the Acquisition UseLine with the user-confirmed cost. Pre-fill
+    # in the form pulls from the linked listing's asking_price; user can
+    # override with their underwriting price before submit.
     session.add(UseLine(
         project_id=dev_project.id,
         label=f"{opportunity.name} - Acquisition",
         phase=UseLinePhase.acquisition,
         milestone_key="close",
-        amount=acq_price,
+        amount=acq_cost,
         timing_type="first_day",
     ))
 
@@ -2250,6 +2273,7 @@ async def create_model_for_deal(
     opp_id_raw = str(form.get("opportunity_id", "")).strip()
     name = str(form.get("name", "Base Case")).strip()
     deal_type_raw = str(form.get("deal_type", "acquisition")).strip()
+    acq_cost_raw = str(form.get("acquisition_cost", "")).strip()
 
     try:
         opp_id = UUID(opp_id_raw)
@@ -2259,6 +2283,20 @@ async def create_model_for_deal(
     opportunity = await session.get(Opportunity, opp_id)
     if opportunity is None:
         return HTMLResponse("<p class='text-muted'>Opportunity not found.</p>", status_code=404)
+
+    # Required: acquisition_cost > 0. Seeded UseLine ensures the new
+    # scenario has populated Uses on day one — same invariant as project 1.
+    try:
+        acq_cost = Decimal(acq_cost_raw) if acq_cost_raw else Decimal("0")
+    except (InvalidOperation, ValueError):
+        return HTMLResponse(
+            "<p class='text-muted'>Invalid acquisition cost.</p>", status_code=400,
+        )
+    if acq_cost <= 0:
+        return HTMLResponse(
+            "<p class='text-muted'>Acquisition cost must be greater than zero.</p>",
+            status_code=400,
+        )
 
     user = await _get_user(session, request)
     try:
@@ -2311,6 +2349,17 @@ async def create_model_for_deal(
 
     for milestone in _seed_milestones(dev_project, deal_type):
         session.add(milestone)
+
+    # Seed the Acquisition UseLine with the user-confirmed cost.
+    session.add(UseLine(
+        project_id=dev_project.id,
+        label=f"{opportunity.name} - Acquisition",
+        phase=UseLinePhase.acquisition,
+        milestone_key="close",
+        amount=acq_cost,
+        timing_type="first_day",
+    ))
+
     await session.commit()
 
     return RedirectResponse(url=f"/models/{scenario.id}/builder", status_code=303)
@@ -2474,6 +2523,30 @@ async def _query_opportunities(
 
 # ── Opportunity creation wizard ────────────────────────────────────────────────
 
+def _safe_uuid_str(raw: str) -> str:
+    """Return raw if it parses as a UUID, else empty string."""
+    if not raw:
+        return ""
+    try:
+        UUID(raw)
+        return raw
+    except ValueError:
+        return ""
+
+
+def _safe_return_path(raw: str) -> str:
+    """Only allow same-origin paths starting with `/` and free of CRLF / scheme.
+
+    Caller-provided redirect target — we filter to prevent open-redirect to an
+    attacker-controlled URL.
+    """
+    if not raw or not raw.startswith("/") or raw.startswith("//"):
+        return ""
+    if any(ch in raw for ch in ("\r", "\n")):
+        return ""
+    return raw
+
+
 @router.get("/ui/opportunities/wizard", response_class=HTMLResponse)
 async def opportunity_wizard_get(
     request: Request,
@@ -2481,6 +2554,8 @@ async def opportunity_wizard_get(
     vd_user_id: str | None = Cookie(default=None),
     step: int = Query(default=1),
     opp_id: str = Query(default=""),
+    link_to_deal: str = Query(default=""),
+    return_to: str = Query(default=""),
 ) -> HTMLResponse:
     user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
@@ -2505,6 +2580,12 @@ async def opportunity_wizard_get(
         "deal_type": request.query_params.get("deal_type", ""),
         "opp_asking_price": "", "opp_notes": "",
         "deal_type_label": "",
+        # Carry-through for the "create-from-deal" flow: when the wizard is
+        # opened from the Add-Project drawer's empty state, both params are
+        # set, threaded through every step's form, and consumed by /complete
+        # to link the new opp to the deal and bounce back to the builder.
+        "link_to_deal": _safe_uuid_str(link_to_deal),
+        "return_to": _safe_return_path(return_to),
         **_base_ctx(user, dedup_count, "opportunities"),
     }
     return templates.TemplateResponse(request, "opportunity_wizard.html", ctx)
@@ -2521,6 +2602,10 @@ async def opportunity_wizard_step(
     opp_id_str = str(form.get("opp_id", "") or "")
     user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
+
+    # Carry-through params from the create-from-deal flow.
+    _link_to_deal = _safe_uuid_str(str(form.get("link_to_deal", "") or ""))
+    _return_to = _safe_return_path(str(form.get("return_to", "") or ""))
 
     _deal_type_labels = {
         "acquisition": "Acquisition",
@@ -2585,6 +2670,8 @@ async def opportunity_wizard_step(
             "opp_asking_price": asking_price_raw,
             "opp_notes": notes,
             "deal_type_label": _deal_type_labels.get(deal_type, deal_type),
+            "link_to_deal": _link_to_deal,
+            "return_to": _return_to,
             **_base_ctx(user, dedup_count, "opportunities"),
         })
 
@@ -2685,6 +2772,8 @@ async def opportunity_wizard_step(
             "opp_asking_price": asking_price_raw,
             "opp_notes": opp_notes,
             "deal_type_label": _deal_type_labels.get(deal_type, deal_type),
+            "link_to_deal": _link_to_deal,
+            "return_to": _return_to,
             **_base_ctx(user, dedup_count, "opportunities"),
         })
 
@@ -2696,12 +2785,45 @@ async def opportunity_wizard_complete(
     request: Request,
     session: DBSession,
 ) -> Response:
-    """Finalize opportunity creation — redirect to opportunity detail."""
+    """Finalize opportunity creation — link to a Deal if requested, then redirect.
+
+    When ``link_to_deal`` is set (from the Add-Project drawer's empty-state
+    flow), idempotently insert the DealOpportunity junction row so the new
+    opp shows up in the drawer's eligible-opportunities dropdown on return.
+    ``return_to`` controls the post-finalize landing URL — same-origin paths
+    only; falls back to the opportunity detail page.
+    """
     form = await request.form()
     opp_id_str = str(form.get("opp_id", "") or "")
     if not opp_id_str:
         return HTMLResponse("Missing opp_id", status_code=400)
-    return RedirectResponse(url=f"/opportunities/{opp_id_str}", status_code=303)
+
+    link_to_deal = _safe_uuid_str(str(form.get("link_to_deal", "") or ""))
+    return_to = _safe_return_path(str(form.get("return_to", "") or ""))
+
+    if link_to_deal:
+        try:
+            opp_uuid = UUID(opp_id_str)
+            deal_uuid = UUID(link_to_deal)
+        except ValueError:
+            opp_uuid = None
+            deal_uuid = None
+        if opp_uuid is not None and deal_uuid is not None:
+            existing = (await session.execute(
+                select(DealOpportunity).where(
+                    DealOpportunity.deal_id == deal_uuid,
+                    DealOpportunity.opportunity_id == opp_uuid,
+                ).limit(1)
+            )).scalar_one_or_none()
+            if existing is None:
+                session.add(DealOpportunity(
+                    deal_id=deal_uuid,
+                    opportunity_id=opp_uuid,
+                ))
+                await session.commit()
+
+    target = return_to or f"/opportunities/{opp_id_str}"
+    return RedirectResponse(url=target, status_code=303)
 
 
 @router.get("/opportunities/{opp_id}", response_class=HTMLResponse)
@@ -4053,6 +4175,17 @@ async def create_deal_from_listing(
     if listing is None:
         return HTMLResponse("<p class='text-muted'>Listing not found.</p>", status_code=404)
 
+    # Enforce: listing must have a non-zero asking price before we'll seed a
+    # deal off it. Without this we end up with a $0 Acquisition UseLine and
+    # the same recompute-gap bug we're fixing in the multi-project flow.
+    if not listing.asking_price or float(listing.asking_price) <= 0:
+        return HTMLResponse(
+            "<p class='text-muted'>This listing has no asking price. "
+            "Set a price on the listing first, or create the deal manually "
+            "from <a href='/deals/new'>Deals → New</a>.</p>",
+            status_code=400,
+        )
+
     form = await request.form()
     deal_type_raw = str(form.get("deal_type", "value_add")).strip()
     try:
@@ -4186,16 +4319,17 @@ async def create_deal_from_listing(
     for milestone in _seed_milestones(dev_project, deal_type):
         session.add(milestone)
 
-    # Seed Acquisition use line from listing asking price
-    if listing.asking_price:
-        session.add(UseLine(
-            project_id=dev_project.id,
-            label="Acquisition",
-            phase=UseLinePhase.acquisition,
-            amount=float(listing.asking_price),
-            timing_type="first_day",
-            is_deferred=False,
-        ))
+    # Seed Acquisition use line from listing asking price (validated > 0
+    # at the top of this handler).
+    session.add(UseLine(
+        project_id=dev_project.id,
+        label=f"{opportunity.name} - Acquisition",
+        phase=UseLinePhase.acquisition,
+        milestone_key="close",
+        amount=Decimal(str(listing.asking_price)),
+        timing_type="first_day",
+        is_deferred=False,
+    ))
 
     await session.commit()
 
@@ -5570,6 +5704,8 @@ async def handle_form_create_or_update(
             source_d["compounding_period"] = cp
         if amort := _fi(form.get("amort_term_years"), None):
             source_d["amort_term_years"] = amort
+        if hold_term := _fi(form.get("hold_term_years"), None):
+            source_d["hold_term_years"] = hold_term
         if ppct := _fd(form.get("prepay_penalty_pct")):
             source_d["prepay_penalty_pct"] = float(ppct)
         if ltv := _fd(form.get("ltv_pct")):
@@ -5598,6 +5734,12 @@ async def handle_form_create_or_update(
         }
         if _carry_rate is not None:
             _op_phase["io_rate_pct"] = float(_carry_rate)
+        # Mirror amort_term_years onto the operation phase so the engine's
+        # phased-carry reader (`_get_phase_carry(carry, "operation")`) finds
+        # it without falling back to source.amort_term_years (the legacy
+        # flat-shape location).
+        if amort:
+            _op_phase["amort_term_years"] = amort
         carry_d = {
             "phases": [constr_phase, _op_phase],
         }
@@ -5717,6 +5859,31 @@ async def handle_form_create_or_update(
                 data["source"] = source_d
                 for k, v in data.items():
                     setattr(row, k, v)
+                # Mirror perm-debt hold_term_years / dscr_min to wizard staging
+                # so re-opening Deal Setup wizard shows the latest value.
+                if data["funder_type"] == "permanent_debt" and (
+                    "hold_term_years" in source_d or "dscr_min" in source_d
+                ):
+                    _default_proj = (await session.execute(
+                        select(Project).where(Project.scenario_id == model_id)
+                        .order_by(Project.created_at.asc()).limit(1)
+                    )).scalar_one_or_none()
+                    if _default_proj is not None:
+                        _oi = (await session.execute(
+                            select(OperationalInputs).where(
+                                OperationalInputs.project_id == _default_proj.id
+                            )
+                        )).scalar_one_or_none()
+                        if _oi is not None:
+                            _dt = dict(_oi.debt_terms or {})
+                            _pd_entry = dict(_dt.get("permanent_debt", {}))
+                            if "hold_term_years" in source_d:
+                                _pd_entry["hold_term_years"] = source_d["hold_term_years"]
+                            if "dscr_min" in source_d:
+                                _pd_entry["dscr_min"] = source_d["dscr_min"]
+                            _dt["permanent_debt"] = _pd_entry
+                            _oi.debt_terms = _dt
+                            session.add(_oi)
             # Update matching DrawSource (active window, offsets, frequency)
             _ds_id_raw = str(form.get("ds_id") or "").strip()
             if _ds_id_raw:
@@ -6466,11 +6633,66 @@ async def create_deal_project(
         except ValueError:
             pt = ProjectType.acquisition
 
-    # Find opportunity via existing projects for this scenario
-    _existing_proj = (await session.execute(
-        select(Project).where(Project.scenario_id == deal_id).limit(1)
+    # Required: opportunity_id. Tying every project to an opportunity is the
+    # invariant that lets us seed a non-zero Acquisition UseLine — without it
+    # the model has $0 of Uses and downstream debt sizing produces gaps that
+    # can't be reconciled by a later edit.
+    _opp_id_raw = str(form.get("opportunity_id", "")).strip()
+    if not _opp_id_raw:
+        return HTMLResponse(
+            "<p class='text-muted'>Pick an opportunity to convert into this project.</p>",
+            status_code=400,
+        )
+    try:
+        _opp_id = UUID(_opp_id_raw)
+    except ValueError:
+        return HTMLResponse(
+            "<p class='text-muted'>Invalid opportunity id.</p>", status_code=400,
+        )
+
+    opp = await session.get(
+        Opportunity, _opp_id,
+        options=[selectinload(Opportunity.scraped_listings)],
+    )
+    if opp is None:
+        return HTMLResponse(
+            "<p class='text-muted'>Opportunity not found.</p>", status_code=404,
+        )
+
+    # Validate the opportunity is linked to this Deal (not any deal). The
+    # Add-Project drawer's dropdown is already filtered to deal-linked opps,
+    # so this is a defence-in-depth check.
+    _deal_link = (await session.execute(
+        select(DealOpportunity)
+        .where(
+            DealOpportunity.deal_id == deal.deal_id,
+            DealOpportunity.opportunity_id == _opp_id,
+        )
+        .limit(1)
     )).scalar_one_or_none()
-    _opp_id = _existing_proj.opportunity_id if _existing_proj else None
+    if _deal_link is None:
+        return HTMLResponse(
+            "<p class='text-muted'>That opportunity isn't linked to this deal.</p>",
+            status_code=400,
+        )
+
+    # Required: acquisition_cost > 0. Pre-filled from the opportunity's
+    # listing price client-side, but always editable so the user can
+    # override with their underwriting price. Without this we end up with
+    # a $0 Acquisition UseLine and the same recompute-gap bug that motivated
+    # this whole flow.
+    _acq_raw = str(form.get("acquisition_cost", "")).strip()
+    try:
+        _acq_amount = Decimal(_acq_raw) if _acq_raw else Decimal("0")
+    except (InvalidOperation, ValueError):
+        return HTMLResponse(
+            "<p class='text-muted'>Invalid acquisition cost.</p>", status_code=400,
+        )
+    if _acq_amount <= 0:
+        return HTMLResponse(
+            "<p class='text-muted'>Acquisition cost must be greater than zero.</p>",
+            status_code=400,
+        )
 
     new_proj = Project(
         scenario_id=deal_id,
@@ -6481,14 +6703,23 @@ async def create_deal_project(
     session.add(new_proj)
     await session.flush()
 
-    if _opp_id is not None:
-        opp = await session.get(Opportunity, _opp_id)
-        if opp is not None:
-            await _auto_assign_opportunity_to_project(opp, new_proj, session)
+    await _auto_assign_opportunity_to_project(opp, new_proj, session)
 
     for milestone in _seed_milestones(new_proj, pt):
         session.add(milestone)
     await session.flush()
+
+    # Seed the Acquisition UseLine using the user-confirmed cost. Mirrors the
+    # pattern used at deal creation (project 1) so multi-project deals are
+    # symmetric — every project lands with a populated Acquisition row.
+    session.add(UseLine(
+        project_id=new_proj.id,
+        label=f"{opp.name} - Acquisition",
+        phase=UseLinePhase.acquisition,
+        milestone_key="close",
+        amount=_acq_amount,
+        timing_type="first_day",
+    ))
 
     # ── Seed OperationalInputs with scenario-level sizing config ──────────
     # If the deal already has Deal Setup completed, the default project's
@@ -6513,10 +6744,8 @@ async def create_deal_project(
             project_id=new_proj.id,
             debt_types=_default_inputs.debt_types,
             debt_structure=_default_inputs.debt_structure,
-            debt_terms=_default_inputs.debt_terms,
             debt_milestone_config=_default_inputs.debt_milestone_config,
             debt_sizing_mode=_default_inputs.debt_sizing_mode,
-            dscr_minimum=_default_inputs.dscr_minimum,
             construction_floor_pct=_default_inputs.construction_floor_pct,
             operation_reserve_months=_default_inputs.operation_reserve_months,
             deal_setup_complete=_default_inputs.deal_setup_complete,
@@ -6942,8 +7171,8 @@ async def save_model_settings(
         if hold_period is not None:
             try:
                 hold_years = float(hold_period)
-                inputs.hold_period_years = hold_years
-                # Sync operation_stabilized milestone duration to match hold period
+                # Hold period now sourced from operation_stabilized milestone
+                # duration AND per-perm-debt CapitalModule.source.hold_term_years.
                 from app.models.milestone import Milestone as _Milestone
                 stabilized_ms = (await session.execute(
                     select(_Milestone).where(
@@ -6953,6 +7182,27 @@ async def save_model_settings(
                 )).scalar_one_or_none()
                 if stabilized_ms is not None:
                     stabilized_ms.duration_days = round(hold_years * 365)
+                # Mirror to all perm-debt modules so engine resolver picks it up.
+                hold_int = max(1, int(round(hold_years)))
+                _perm_mods = list((await session.execute(
+                    select(CapitalModule).where(CapitalModule.scenario_id == model_id)
+                )).scalars())
+                for _cm in _perm_mods:
+                    _ft = str(_cm.funder_type).replace("FunderType.", "")
+                    if _ft != "permanent_debt":
+                        continue
+                    _src = dict(_cm.source or {})
+                    _src["hold_term_years"] = hold_int
+                    _cm.source = _src
+                    session.add(_cm)
+                # Mirror to wizard staging (inputs.debt_terms) so re-opening
+                # the Deal Setup wizard reflects the latest value instead of
+                # the stale staging dict from initial setup.
+                _dt = dict(inputs.debt_terms or {})
+                _pd_entry = dict(_dt.get("permanent_debt", {}))
+                _pd_entry["hold_term_years"] = hold_int
+                _dt["permanent_debt"] = _pd_entry
+                inputs.debt_terms = _dt
             except (ValueError, TypeError):
                 pass
 
@@ -6962,39 +7212,38 @@ async def save_model_settings(
             inputs.debt_sizing_mode = debt_sizing_mode
         if dscr_minimum:
             try:
-                inputs.dscr_minimum = Decimal(dscr_minimum)
-            except Exception:
+                _dscr_val = float(dscr_minimum)
+                # Per-perm-debt dscr_min replaces deal-level dscr_minimum.
+                _dscr_mods = list((await session.execute(
+                    select(CapitalModule).where(CapitalModule.scenario_id == model_id)
+                )).scalars())
+                for _cm in _dscr_mods:
+                    _ft = str(_cm.funder_type).replace("FunderType.", "")
+                    if _ft != "permanent_debt":
+                        continue
+                    _src = dict(_cm.source or {})
+                    _src["dscr_min"] = _dscr_val
+                    _cm.source = _src
+                    session.add(_cm)
+                # Mirror to wizard staging.
+                _dt = dict(inputs.debt_terms or {})
+                _pd_entry = dict(_dt.get("permanent_debt", {}))
+                _pd_entry["dscr_min"] = _dscr_val
+                _dt["permanent_debt"] = _pd_entry
+                inputs.debt_terms = _dt
+            except (ValueError, TypeError):
                 pass
         if operation_reserve_months:
             try:
                 inputs.operation_reserve_months = int(operation_reserve_months)
             except Exception:
                 pass
-        # Update debt_terms dict if rates/amort changed
-        if perm_rate_pct or construction_rate_pct or perm_amort_years:
-            dt = dict(inputs.debt_terms or {})
-            if perm_rate_pct:
-                try:
-                    dt["perm_rate_pct"] = float(perm_rate_pct)
-                except Exception:
-                    pass
-            if construction_rate_pct:
-                try:
-                    dt["construction_rate_pct"] = float(construction_rate_pct)
-                except Exception:
-                    pass
-            if perm_amort_years:
-                try:
-                    dt["perm_amort_years"] = int(perm_amort_years)
-                except Exception:
-                    pass
-            inputs.debt_terms = dt
-        # Sync auto-sized CapitalModules to match updated debt terms
+        # Sync auto-sized CapitalModules with rate / amort form fields
+        # (deal-level OperationalInputs.debt_terms is no longer authoritative).
         if any([perm_rate_pct, construction_rate_pct, perm_amort_years, debt_structure]):
             auto_mods = list((await session.execute(
                 select(CapitalModule).where(CapitalModule.scenario_id == model_id)
             )).scalars())
-            dt = inputs.debt_terms or {}
             for cm in auto_mods:
                 src = cm.source or {}
                 if not src.get("auto_size"):
@@ -7225,6 +7474,29 @@ async def deal_setup_wizard_get(
     if step == -1:
         step = 0 if missing_building_data else 1
 
+    # Sync wizard staging (inputs.debt_terms) from live CapitalModule.source so
+    # re-opening the wizard reflects edits made via Settings drawer or Edit
+    # Source drawer between setups. Read-only mirror — engine still uses
+    # CapitalModule.source as source of truth.
+    if inputs is not None:
+        _perm = (await session.execute(
+            select(CapitalModule).where(
+                CapitalModule.scenario_id == model_id,
+                CapitalModule.funder_type == "permanent_debt",
+            ).limit(1)
+        )).scalar_one_or_none()
+        if _perm is not None and isinstance(_perm.source, dict):
+            _dt = dict(inputs.debt_terms or {})
+            _pd_entry = dict(_dt.get("permanent_debt", {}))
+            if "hold_term_years" in _perm.source:
+                _pd_entry["hold_term_years"] = _perm.source["hold_term_years"]
+            if "dscr_min" in _perm.source:
+                _pd_entry["dscr_min"] = _perm.source["dscr_min"]
+            _dt["permanent_debt"] = _pd_entry
+            inputs.debt_terms = _dt
+            session.add(inputs)
+            await session.flush()
+
     return templates.TemplateResponse(request, "partials/deal_setup_wizard.html", {
         "request": request, "model": model, "inputs": inputs, "step": step,
         "missing_building_data": missing_building_data,
@@ -7261,6 +7533,7 @@ async def _prefill_noi_from_listing(
     noi_value = listing.proforma_noi if listing.proforma_noi is not None else listing.noi
     if noi_value is not None:
         inputs.noi_stabilized_input = noi_value
+        inputs.noi_auto_seeded = True
         session.add(inputs)
 
 
@@ -7393,6 +7666,7 @@ async def deal_setup_wizard_step(
             loan_type   = form.get(f"{ft}_loan_type")
             rate_raw    = form.get(f"{ft}_rate_pct")
             amort_raw   = form.get(f"{ft}_amort_years")
+            hold_raw    = form.get(f"{ft}_hold_term_years")
             entry = dict(dt_terms.get(ft, {}))
 
             if loan_type:
@@ -7425,6 +7699,17 @@ async def deal_setup_wizard_step(
                     continue
                 entry["amort_years"] = amort_val
 
+            if hold_raw:
+                try:
+                    hold_val = int(hold_raw)
+                except (TypeError, ValueError):
+                    wizard_errors[ft] = f"Hold term must be a whole number of years (got {hold_raw!r})"
+                    continue
+                if hold_val < 1 or hold_val > 40:
+                    wizard_errors[ft] = f"Hold term {hold_val} years is outside 1–40 years."
+                    continue
+                entry["hold_term_years"] = hold_val
+
             if entry:
                 dt_terms[ft] = entry
         if not wizard_errors:
@@ -7442,11 +7727,16 @@ async def deal_setup_wizard_step(
                 if ltv_pct:         entry["ltv_pct"]        = float(ltv_pct)
                 if fixed_amount:    entry["fixed_amount"]   = float(fixed_amount)
                 dt_terms[ft] = entry
-        inputs.debt_terms = dt_terms
         inputs.debt_sizing_mode = form.get("debt_sizing_mode") or inputs.debt_sizing_mode
         dscr_val = form.get("dscr_minimum")
         if dscr_val:
-            inputs.dscr_minimum = Decimal(dscr_val)
+            try:
+                _perm = dict(dt_terms.get("permanent_debt", {}))
+                _perm["dscr_min"] = float(dscr_val)
+                dt_terms["permanent_debt"] = _perm
+            except (TypeError, ValueError):
+                pass
+        inputs.debt_terms = dt_terms
     elif step == 6:
         # Reserves & Floors (renumbered from old step 5)
         cf_pct = form.get("construction_floor_pct")
@@ -7739,6 +8029,21 @@ async def deal_setup_wizard_complete(
             _source_dict: dict = {"auto_size": True, "interest_rate_pct": rate}
             if ltv_pct is not None:
                 _source_dict["ltv_pct"] = ltv_pct
+            # Perm-debt requires hold_term_years (validator-enforced) and
+            # optionally dscr_min. Read from wizard staging (debt_terms[ft]),
+            # default hold_term_years to amort_years if user didn't pick one.
+            if ft_str == "permanent_debt":
+                _terms_for_pd = dt.get(ft_str, {}) if isinstance(dt, dict) else {}
+                _hold_raw = _terms_for_pd.get("hold_term_years") if isinstance(_terms_for_pd, dict) else None
+                _source_dict["hold_term_years"] = (
+                    int(_hold_raw) if _hold_raw else amort_years
+                )
+                _dscr_raw = _terms_for_pd.get("dscr_min") if isinstance(_terms_for_pd, dict) else None
+                if _dscr_raw is not None:
+                    try:
+                        _source_dict["dscr_min"] = float(_dscr_raw)
+                    except (TypeError, ValueError):
+                        pass
             session.add(CapitalModule(
                 id=cm_id,
                 scenario_id=model_id,
@@ -7904,13 +8209,11 @@ async def deal_setup_wizard_complete(
         # and leaves Appraisal / Origination / Legal / Title at $0.
         other_inputs.debt_types = inputs.debt_types
         other_inputs.debt_structure = inputs.debt_structure
-        other_inputs.debt_terms = inputs.debt_terms
         other_inputs.debt_milestone_config = inputs.debt_milestone_config
         # Sizing-policy fields are scenario-level too. Without them every
         # non-default project silently falls back to gap-fill on compute,
         # so DSCR caps don't bind and debt over-leverages without a gap.
         other_inputs.debt_sizing_mode = inputs.debt_sizing_mode
-        other_inputs.dscr_minimum = inputs.dscr_minimum
         other_inputs.construction_floor_pct = inputs.construction_floor_pct
         other_inputs.operation_reserve_months = inputs.operation_reserve_months
 
@@ -8103,10 +8406,13 @@ async def deal_setup_wizard_complete(
             except Exception:
                 pass  # market recommendation failed; fall back to defaults
 
-    # If NOI mode and no NOI prefilled from listing, use market recommendation
+    # If NOI mode and no NOI prefilled from listing, use market recommendation.
+    # Mark as auto-seeded so the builder can show a confirm-or-override banner
+    # — a silent KNN-based number shouldn't be accepted as the user's input.
     if model.income_mode == "noi" and inputs.noi_stabilized_input is None and _market_rec and not _market_rec.low_confidence:
         _market_noi = Decimal(str(round(_market_rec.noi_per_unit * building_unit_count, 2)))
         inputs.noi_stabilized_input = _market_noi
+        inputs.noi_auto_seeded = True
         session.add(inputs)
 
     # ── Revenue: seed one IncomeStream per UnitMix row ──────────────────────
@@ -8452,6 +8758,34 @@ async def model_builder(
         for _ms in _anchor_ms_rows:
             anchor_milestones_by_project.setdefault(_ms.project_id, []).append(_ms)
 
+    # Add-Project drawer: opportunities linked to this deal that aren't yet
+    # bound to a project on this scenario. Each carries the first listing's
+    # asking_price so the drawer can pre-fill Acquisition Cost. Enforcing an
+    # opportunity selection is what guarantees every project gets a non-zero
+    # Acquisition UseLine seeded — same invariant as project 1.
+    add_project_opportunities: list[dict] = []
+    if parent_deal_id is not None:
+        _bound_opp_ids = {p.opportunity_id for p in deal_projects if p.opportunity_id}
+        _deal_opps_rows = list((await session.execute(
+            select(Opportunity)
+            .join(DealOpportunity, DealOpportunity.opportunity_id == Opportunity.id)
+            .where(DealOpportunity.deal_id == parent_deal_id)
+            .options(selectinload(Opportunity.scraped_listings))
+        )).scalars().unique())
+        for _opp in _deal_opps_rows:
+            if _opp.id in _bound_opp_ids:
+                continue
+            _price = None
+            for _sl in (_opp.scraped_listings or []):
+                if _sl.asking_price is not None and _sl.asking_price > 0:
+                    _price = float(_sl.asking_price)
+                    break
+            add_project_opportunities.append({
+                "id": str(_opp.id),
+                "name": _opp.name,
+                "asking_price": _price,
+            })
+
     # When deal_setup is the active module, resolve wizard step and missing building data
     # so the included partials/deal_setup_wizard.html has everything it needs.
     # Deal Setup is a scenario-level wizard (income mode, debt stack), so the
@@ -8543,6 +8877,7 @@ async def model_builder(
         "deal_variants": deal_variants,
         "deal_projects": deal_projects,
         "anchor_milestones_by_project": anchor_milestones_by_project,
+        "add_project_opportunities": add_project_opportunities,
         "active_project_id": str(active_project_id) if active_project_id else None,
         "active_project": active_project,
         "active_project_anchor_date": active_project_anchor_date,
@@ -8990,11 +9325,19 @@ def _compute_calc_status(data: dict) -> dict:
             dscr_val = float(outputs.dscr)
         except (TypeError, ValueError):
             dscr_val = None
-    if inputs is not None and getattr(inputs, "dscr_minimum", None):
+    # DSCR floor: read from the first perm-debt CapitalModule's source.dscr_min;
+    # falls back to 1.20 if perm debt exists but value is unset.
+    for _cm in capital_modules:
+        _ft = str(getattr(_cm, "funder_type", "") or "").replace("FunderType.", "")
+        if _ft != "permanent_debt":
+            continue
+        _src = getattr(_cm, "source", None) or {}
         try:
-            dscr_min = float(inputs.dscr_minimum)
+            _v = _src.get("dscr_min") if isinstance(_src, dict) else None
+            dscr_min = float(_v) if _v is not None else 1.20
         except (TypeError, ValueError):
-            dscr_min = None
+            dscr_min = 1.20
+        break
 
     if dscr_val is None or dscr_min is None:
         dscr_status = {
@@ -9467,7 +9810,12 @@ async def download_model_export(
     model_id: UUID,
     session: DBSession,
 ) -> StreamingResponse:
-    """Download a round-trip-capable Excel workbook for this deal model."""
+    """Download a round-trip-capable Excel workbook for this deal model.
+
+    Deprecated path; superseded by ``/investor-export.xlsx``. Kept available
+    while the investor export bakes — see plan §10 in
+    ``docs/feature-plans/investor-excel-export-v2.md``.
+    """
     from app.exporters.excel_export import export_deal_model_workbook, make_export_filename
     model = await session.get(DealModel, model_id)
     if model is None:
@@ -9478,6 +9826,215 @@ async def download_model_export(
         iter([workbook_bytes]),
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         headers={"Content-Disposition": f"attachment; filename={filename}"},
+    )
+
+
+@router.get("/ui/models/{model_id}/investor-export.xlsx")
+async def download_investor_export(
+    model_id: UUID,
+    session: DBSession,
+) -> StreamingResponse:
+    """Download the LP-facing investor Excel workbook for this Scenario."""
+    from app.exporters.investor_export import export_investor_workbook, make_investor_filename
+    scenario = await session.get(DealModel, model_id)
+    if scenario is None:
+        return HTMLResponse("Not found", status_code=404)
+    deal = await session.get(Deal, scenario.deal_id) if scenario.deal_id else None
+    workbook_bytes = await export_investor_workbook(model_id, session)
+    filename = make_investor_filename(scenario, deal)
+    return StreamingResponse(
+        iter([workbook_bytes]),
+        media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        headers={"Content-Disposition": f"attachment; filename={filename}"},
+    )
+
+
+# ── Async investor export ────────────────────────────────────────────────────
+#
+# The synchronous endpoint above blows past the NGINX 60s proxy timeout once
+# the live Sensitivity matrix lands (25 cashflow cycles per export). The async
+# path below kicks a Celery task that builds the workbook off the request
+# path and emails the .xlsx as an attachment when finished. Job state
+# (``queued → calculating → sending → sent`` or ``failed``) is persisted on
+# ``ExportJob`` rows so the UI can poll for hover-modal updates and the user
+# can resend a cached build when the scenario hasn't been recomputed since
+# the last successful export.
+
+
+@router.get("/ui/models/{model_id}/investor-export/preflight")
+async def preflight_investor_export(
+    model_id: UUID,
+    session: DBSession,
+    request: Request,
+) -> JSONResponse:
+    """Cheap idempotent check: is a cached resend eligible for this scenario?
+
+    Returns ``{"resend_eligible": bool, "resend_job_id": <uuid|null>}``.
+    UI uses this to decide whether to prompt the user with a "Resend last
+    export?" modal before enqueueing a fresh build.
+
+    Eligibility = last ``sent`` job's ``created_at`` > every
+    ``OperationalOutputs.computed_at`` for this scenario AND that job
+    still has ``xlsx_bytes`` cached.
+    """
+    from app.models.cashflow import OperationalOutputs
+    from app.models.export_job import ExportJob, ExportJobStatus
+
+    user = await _get_user(session, request)
+    if user is None:
+        return JSONResponse({"error": "not authenticated"}, status_code=401)
+    scenario = await session.get(DealModel, model_id)
+    if scenario is None:
+        return JSONResponse({"error": "scenario not found"}, status_code=404)
+
+    latest_outputs_computed_at = (
+        await session.execute(
+            select(func.max(OperationalOutputs.computed_at))
+            .where(OperationalOutputs.scenario_id == model_id)
+        )
+    ).scalar_one_or_none()
+
+    last_sent_job = (
+        await session.execute(
+            select(ExportJob)
+            .where(ExportJob.scenario_id == model_id)
+            .where(ExportJob.status == ExportJobStatus.sent)
+            .where(ExportJob.xlsx_bytes.isnot(None))
+            .order_by(ExportJob.created_at.desc())
+            .limit(1)
+        )
+    ).scalar_one_or_none()
+
+    resend_eligible = bool(
+        last_sent_job is not None
+        and (
+            latest_outputs_computed_at is None
+            or last_sent_job.created_at > latest_outputs_computed_at
+        )
+    )
+    return JSONResponse(
+        {
+            "resend_eligible": resend_eligible,
+            "resend_job_id": (
+                str(last_sent_job.id) if (resend_eligible and last_sent_job) else None
+            ),
+        }
+    )
+
+
+@router.post("/ui/models/{model_id}/investor-export/async")
+async def start_investor_export_async(
+    model_id: UUID,
+    session: DBSession,
+    request: Request,
+) -> JSONResponse:
+    """Enqueue a fresh-build investor-export job and return its id.
+
+    Caller (UI) is expected to have hit ``/preflight`` first to decide
+    whether to prompt for "Resend last export?" — this endpoint always
+    builds fresh.
+    """
+    from app.models.export_job import ExportJob, ExportJobStatus
+    from app.tasks.export import RUN_EXPORT_TASK
+    from app.tasks.celery_app import celery_app as _celery
+
+    user = await _get_user(session, request)
+    if user is None:
+        return JSONResponse({"error": "not authenticated"}, status_code=401)
+    scenario = await session.get(DealModel, model_id)
+    if scenario is None:
+        return JSONResponse({"error": "scenario not found"}, status_code=404)
+
+    job = ExportJob(
+        scenario_id=model_id,
+        user_id=user.id,
+        recipient_email=user.email or "",
+        status=ExportJobStatus.queued,
+    )
+    session.add(job)
+    await session.commit()
+    await session.refresh(job)
+
+    _celery.send_task(RUN_EXPORT_TASK, args=[str(job.id)])
+
+    return JSONResponse(
+        {
+            "job_id": str(job.id),
+            "status": job.status.value,
+        }
+    )
+
+
+@router.get("/ui/exports/{job_id}/status")
+async def get_export_job_status(
+    job_id: UUID,
+    session: DBSession,
+    request: Request,
+) -> JSONResponse:
+    """Return current status of an export job for poll/hover-modal use."""
+    from app.models.export_job import ExportJob
+
+    user = await _get_user(session, request)
+    if user is None:
+        return JSONResponse({"error": "not authenticated"}, status_code=401)
+    job = await session.get(ExportJob, job_id)
+    if job is None or job.user_id != user.id:
+        return JSONResponse({"error": "job not found"}, status_code=404)
+
+    return JSONResponse(
+        {
+            "job_id": str(job.id),
+            "status": job.status.value,
+            "error_message": job.error_message,
+            "created_at": job.created_at.isoformat() if job.created_at else None,
+            "completed_at": job.completed_at.isoformat() if job.completed_at else None,
+        }
+    )
+
+
+@router.post("/ui/exports/{job_id}/resend")
+async def resend_investor_export_endpoint(
+    job_id: UUID,
+    session: DBSession,
+    request: Request,
+) -> JSONResponse:
+    """Re-send a previously-completed export from cached xlsx_bytes.
+
+    Spawns a fresh ``ExportJob`` row pointing at the same scenario; the
+    resend task copies bytes from the source job before sending so the
+    "last sent" lookup keeps walking forward in time.
+    """
+    from app.models.export_job import ExportJob, ExportJobStatus
+    from app.tasks.export import RESEND_EXPORT_TASK
+    from app.tasks.celery_app import celery_app as _celery
+
+    user = await _get_user(session, request)
+    if user is None:
+        return JSONResponse({"error": "not authenticated"}, status_code=401)
+    src = await session.get(ExportJob, job_id)
+    if src is None or src.user_id != user.id:
+        return JSONResponse({"error": "job not found"}, status_code=404)
+    if not src.xlsx_bytes:
+        return JSONResponse({"error": "no cached export bytes"}, status_code=409)
+
+    new_job = ExportJob(
+        scenario_id=src.scenario_id,
+        user_id=user.id,
+        recipient_email=user.email or src.recipient_email,
+        status=ExportJobStatus.queued,
+        xlsx_bytes=src.xlsx_bytes,
+        filename=src.filename,
+    )
+    session.add(new_job)
+    await session.commit()
+    await session.refresh(new_job)
+
+    _celery.send_task(RESEND_EXPORT_TASK, args=[str(new_job.id)])
+    return JSONResponse(
+        {
+            "job_id": str(new_job.id),
+            "status": new_job.status.value,
+        }
     )
 
 
@@ -9634,6 +10191,9 @@ async def save_noi_inputs(
         inputs.noi_escalation_rate_pct = Decimal(str(esc_raw)) if esc_raw else Decimal("3")
     except Exception:
         inputs.noi_escalation_rate_pct = Decimal("3")
+    # User explicitly submitted — clear the auto-seeded flag whether they
+    # accepted the suggested value or overrode it. Banner disappears.
+    inputs.noi_auto_seeded = False
     session.add(inputs)
     await session.commit()
     await session.refresh(inputs)
@@ -9969,6 +10529,7 @@ async def model_builder_line_form(
         "show_exit_vehicle": show_exit_vehicle,
         "show_active_window": show_active_window,
         "exit_vehicle_applies": sorted(_EXIT_VEHICLE_APPLIES_UI),
+        "opex_categories": STANDARD_OPEX_CATEGORIES,
     })
 
 

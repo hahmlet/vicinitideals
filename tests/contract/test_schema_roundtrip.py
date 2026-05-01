@@ -103,7 +103,6 @@ ROUND_TRIP_CASES: list[tuple[type, dict]] = [
             "property_tax_annual": "12000",
             "insurance_annual": "2400",
             "capex_reserve_per_unit_annual": "250",
-            "hold_period_years": "5",
             "exit_cap_rate_pct": "5.5",
             "selling_costs_pct": "2.0",
             "milestone_dates": {
@@ -120,7 +119,6 @@ ROUND_TRIP_CASES: list[tuple[type, dict]] = [
             "unit_count_existing": 12,
             "purchase_price": "1250000",
             "closing_costs_pct": "2.0",
-            "hold_period_years": "5",
             "exit_cap_rate_pct": "5.5",
             "selling_costs_pct": "2.0",
         },

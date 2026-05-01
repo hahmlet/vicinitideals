@@ -619,6 +619,15 @@
 <div class="module-panel-body">
   {% set _noi_val = inputs.noi_stabilized_input | float if inputs and inputs.noi_stabilized_input else '' %}
   {% set _esc_val = inputs.noi_escalation_rate_pct | float if inputs and inputs.noi_escalation_rate_pct else 3.0 %}
+  {% if inputs and inputs.noi_auto_seeded %}
+  <div style="margin-bottom:14px;padding:10px 12px;border-radius:6px;background:#fef3c7;border:1px solid #f59e0b;color:#78350f;font-size:13px;line-height:1.4">
+    <strong>NOI auto-filled from comps.</strong>
+    This deal had no listing NOI on file, so we seeded
+    {% if _noi_val %}<strong>${{ '{:,.0f}'.format(_noi_val) }}</strong>{% endif %}
+    from the KNN comp engine (per-unit NOI × unit count). Confirm or override
+    the value below — submit to clear this banner.
+  </div>
+  {% endif %}
   <form hx-post="/ui/models/{{ model.id }}/noi-inputs"
         hx-target="this"
         hx-swap="outerHTML"
@@ -993,21 +1002,11 @@
   </div>
 </div>
 
-{# Exit Assumptions — exit cap rate, hold period, selling costs #}
+{# Exit Assumptions — exit cap rate, selling costs (hold period now lives on
+   each perm-debt CapitalModule.source.hold_term_years) #}
 <div class="carry-assumptions-block" style="margin-bottom:18px">
   <div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);margin-bottom:10px">Exit Assumptions</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
-    <label class="carry-field-label">
-      <span>Hold Period (yrs)</span>
-      <input class="form-input carry-inline-input" type="number" step="1" min="1"
-             value="{{ inputs.hold_period_years if inputs and inputs.hold_period_years is not none else '' }}"
-             placeholder="e.g. 7"
-             hx-trigger="change"
-             hx-put="/api/models/{{ model.id }}/inputs"
-             hx-vals="js:{hold_period_years: parseFloat(event.target.value) || null}"
-             hx-swap="none"
-             hx-on::after-request="if(event.detail.successful) refreshPanel('divestment')">
-    </label>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
     <label class="carry-field-label">
       <span>Exit Cap Rate (%)</span>
       <input class="form-input carry-inline-input" type="number" step="0.1" min="0"
@@ -1198,7 +1197,6 @@
     {%- set _rev_ann = revenue_annual | float if revenue_annual else none -%}
     {%- set _opex_ann = opex_annual | float if opex_annual else none -%}
     {%- set _carry_ann = carrying_annual | float if carrying_annual else none -%}
-    {%- set _hold_yrs = (inputs.hold_period_years | float) if inputs and inputs.hold_period_years else none -%}
     {%- set _exit_cap = (inputs.exit_cap_rate_pct | float) if inputs and inputs.exit_cap_rate_pct else none -%}
     {%- set _mo1 = stabilized_month1_ncf | float if stabilized_month1_ncf is not none else none -%}
     {%- set _yr1 = stabilized_year1_ncf | float if stabilized_year1_ncf is not none else none -%}
@@ -1250,7 +1248,7 @@
         <div class="stat-value">{{ '%.1f%%' | format(outputs.debt_yield_pct | float) if outputs.debt_yield_pct else '—' }}</div>
       </div>
       <div class="stat-card" style="cursor:help"
-           title="Internal Rate of Return on levered equity cash flows.&#10;&#10;Computed over {{ outputs.total_timeline_months }} months using pyxirr on monthly net cash flows after debt service.{{ '&#10;Hold period: ' + ('%.1f' | format(_hold_yrs)) + ' years' if _hold_yrs else '' }}{{ '&#10;Exit cap rate: ' + ('%.1f%%' | format(_exit_cap)) if _exit_cap else '' }}&#10;&#10;Negative IRR indicates exit proceeds do not recover invested capital — check exit cap rate and hold period in Divestment.">
+           title="Internal Rate of Return on levered equity cash flows.&#10;&#10;Computed over {{ outputs.total_timeline_months }} months using pyxirr on monthly net cash flows after debt service.{{ '&#10;Exit cap rate: ' + ('%.1f%%' | format(_exit_cap)) if _exit_cap else '' }}&#10;&#10;Negative IRR indicates exit proceeds do not recover invested capital — check exit cap rate and hold term in Divestment / Capital Stack.">
         <div class="stat-label">Project IRR (Levered)</div>
         <div class="stat-value">{{ '%.1f%%' | format(outputs.project_irr_levered | float) if outputs.project_irr_levered else '—' }}</div>
       </div>

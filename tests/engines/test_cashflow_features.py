@@ -39,7 +39,6 @@ def _make_inputs(**overrides) -> OperationalInputs:
     defaults = {
         "project_id": uuid4(),
         "unit_count_new": 100,
-        "hold_period_years": Decimal("5"),
         "exit_cap_rate_pct": Decimal("5.5"),
         "selling_costs_pct": Decimal("2.5"),
         "opex_per_unit_annual": Decimal("0"),

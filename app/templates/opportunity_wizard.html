@@ -135,6 +135,8 @@
     <form method="post" action="/ui/opportunities/wizard/step">
       <input type="hidden" name="step" value="1">
       {% if opp_id %}<input type="hidden" name="opp_id" value="{{ opp_id }}">{% endif %}
+      {% if link_to_deal %}<input type="hidden" name="link_to_deal" value="{{ link_to_deal }}">{% endif %}
+      {% if return_to %}<input type="hidden" name="return_to" value="{{ return_to }}">{% endif %}
       <div class="wiz-body">
 
         <div class="field-row">
@@ -213,6 +215,8 @@
     <form method="post" action="/ui/opportunities/wizard/step" id="buildings-form">
       <input type="hidden" name="step" value="2">
       <input type="hidden" name="opp_id" value="{{ opp_id }}">
+      {% if link_to_deal %}<input type="hidden" name="link_to_deal" value="{{ link_to_deal }}">{% endif %}
+      {% if return_to %}<input type="hidden" name="return_to" value="{{ return_to }}">{% endif %}
       <div class="wiz-body">
 
         <div class="building-list" id="building-list">
@@ -239,7 +243,7 @@
       </div>
       <div class="wiz-footer">
         <button type="button" class="btn btn-secondary"
-                onclick="window.location='/ui/opportunities/wizard?opp_id={{ opp_id }}&step=1'">
+                onclick="window.location='/ui/opportunities/wizard?opp_id={{ opp_id }}&step=1{% if link_to_deal %}&link_to_deal={{ link_to_deal }}{% endif %}{% if return_to %}&return_to={{ return_to | urlencode }}{% endif %}'">
           ← Back
         </button>
         <div style="font-size:12px;color:var(--text-muted)">Step 2 of 3</div>
@@ -255,6 +259,8 @@
     </div>
     <form method="post" action="/ui/opportunities/wizard/complete">
       <input type="hidden" name="opp_id" value="{{ opp_id }}">
+      {% if link_to_deal %}<input type="hidden" name="link_to_deal" value="{{ link_to_deal }}">{% endif %}
+      {% if return_to %}<input type="hidden" name="return_to" value="{{ return_to }}">{% endif %}
       <div class="wiz-body">
 
         <div class="section-label">Opportunity</div>
@@ -287,7 +293,7 @@
 
       </div>
       <div class="wiz-footer">
-        <a href="/ui/opportunities/wizard?opp_id={{ opp_id }}&step=2" class="btn btn-secondary">← Back</a>
+        <a href="/ui/opportunities/wizard?opp_id={{ opp_id }}&step=2{% if link_to_deal %}&link_to_deal={{ link_to_deal }}{% endif %}{% if return_to %}&return_to={{ return_to | urlencode }}{% endif %}" class="btn btn-secondary">← Back</a>
         <div style="font-size:12px;color:var(--text-muted)">All set</div>
         <button type="submit" class="btn btn-primary">Create Opportunity →</button>
       </div>

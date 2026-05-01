@@ -20,6 +20,7 @@ celery_app = Celery(
         "app.tasks.parcel_seed",
         "app.tasks.loopnet_ingest",
         "app.tasks.oregon_elicense",
+        "app.tasks.export",
     ],
 )
 
@@ -35,6 +36,7 @@ celery_app.conf.update(
         "app.tasks.scenario.*": {"queue": "analysis"},
         "app.tasks.loopnet_ingest.*": {"queue": "scraping"},
         "app.tasks.oregon_elicense.*": {"queue": "scraping"},
+        "app.tasks.export.*": {"queue": "analysis"},
     },
     beat_schedule={
         "scrape-crexi-daily": {
@@ -67,6 +69,13 @@ celery_app.conf.update(
         "oregon-elicense-monthly-sweep": {
             "task": "app.tasks.oregon_elicense.oregon_elicense_sweep",
             "schedule": crontab(day_of_month=2, hour=5, minute=0),
+        },
+        # Broker dedup: daily 06:00 UTC. Runs after enrichment windows so
+        # license-based grouping has fresh Oregon legal-name data.
+        # Idempotent — no-op when no dupes present.
+        "broker-dedup-daily": {
+            "task": "app.tasks.oregon_elicense.broker_dedup_sweep",
+            "schedule": crontab(hour=6, minute=0),
         },
     },
     timezone="UTC",

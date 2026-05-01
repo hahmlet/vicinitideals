@@ -361,7 +361,7 @@ This is self-consistent: the interest amount `P − base_costs = P × f_io / (1 
 #### Acquisition loan
 **Formula.** `P_acq = acq_costs × LTV / 100`
 
-**Plain English.** Size to a loan-to-value percent of acquisition-phase costs. Default LTV = 70% unless overridden in `debt_terms.acquisition_loan.ltv_pct`.
+**Plain English.** Size to a loan-to-value percent of acquisition-phase costs. Default LTV = 70% unless overridden via `CapitalModule.source.ltv_pct` on the acquisition-loan module.
 
 **Why LTV and not gap-fill?** Acquisition loans are sized on the appraised value of what is being acquired, not on the residual capital stack. LTV is the standard industry input.
 
@@ -580,7 +580,7 @@ Some deals use a different sizing mode: size the loan to the **minimum DSCR** re
 **Logic:**
 1. Compute the gap-fill principal `P_gap` using §2.4.
 2. Compute the resulting DSCR at stabilization: `DSCR_gap = NOI / (P_gap × pmt_factor × 12)`.
-3. If `DSCR_gap ≥ dscr_minimum`: use `P_gap` (the lender's minimum doesn't bind).
+3. If `DSCR_gap ≥ module.source.dscr_min` (fallback `1.25`): use `P_gap` (the lender's minimum doesn't bind).
 4. Otherwise: cap the principal so DSCR exactly equals the minimum:
    > `DS_target = NOI / DSCR_min / 12`
    > `P_capped = DS_target × PV_annuity_factor`
@@ -592,7 +592,7 @@ This shows the user a **real funding gap** in the S&U table (Uses > Sources) rat
 
 Industry-standard loan sizing: the lender computes both LTV-based and DSCR-based maximums and funds the smaller. Selected via `debt_sizing_mode = "dual_constraint"`.
 
-**Where each input lives.** `debt_sizing_mode` and `dscr_minimum` live on `OperationalInputs`. **LTV** lives on the per-funder-type `debt_terms.{funder_type}.ltv_pct` JSON sub-object — *not* on a top-level `OperationalInputs` column. There is no `ltv_maximum_pct` column; any code that reads such a name has a bug. Examples: `debt_terms.permanent_debt.ltv_pct = 75` or `debt_terms.acquisition_loan.ltv_pct = 70`. Default LTV when the field is absent is funder-type-specific (typically 70% for acquisition, 75% for perm).
+**Where each input lives (post 2026-04-29 refactor, alembic 0060).** `debt_sizing_mode` lives on `OperationalInputs` (deal-level). **DSCR floor** is per-loan: `CapitalModule.source.dscr_min` for permanent-debt modules. Engine reads inside the per-module sizing loop; falls back to `PLACEHOLDER_DSCR = 1.25` if unset. **LTV** is also per-loan: `CapitalModule.source.ltv_pct`. There is no `OperationalInputs.dscr_minimum` and no `inputs.ltv_maximum_pct` column — any code reading those names is a bug or pre-refactor stale. The wizard's `inputs.debt_terms.{funder_type}.{ltv_pct,dscr_min,hold_term_years,rate_pct,amort_years}` JSON is **wizard staging only**; engine reads `CapitalModule.source` directly. Default LTV when absent is funder-type-specific (typically 70% for acquisition, 75% for perm).
 
 **Logic:**
 1. Compute the gap-fill principal `P_gap` using §2.4 (with closing-cost divisor fold-in).
@@ -1050,6 +1050,143 @@ else:
 
 The default when creating a new expense line is `scale_with_lease_up = False` (conservative: costs show at full during lease-up). Users opt in to lease-up scaling.
 
+### OER (Operating Expense Ratio) [investor, lender, app]
+
+**Definition.** Operating expenses divided by effective gross income —
+the standard CRE operating-efficiency metric. Lower is better.
+
+**Calculation.**
+```
+OER_period = operating_expenses_period / effective_gross_income_period
+```
+
+**Engine source.** Computed inline by the investor export from
+`CashFlow.operating_expenses` and `CashFlow.effective_gross_income`
+per annual bucket. Not stored as a single column on `OperationalOutputs`.
+
+**Notes / edge cases.** Multifamily benchmarks: 35-45% is typical, 50%+ is
+a yellow flag for the LP / lender. Returns "—" in the export when EGI = 0
+(pre-stabilization periods).
+
+### Yield on Cost [investor, lender, app]
+
+**Definition.** Stabilized NOI divided by Total Project Cost — the asset's
+unlevered earnings rate against what it cost to acquire/build. Headline
+"is this deal reasonable on its own?" check.
+
+**Calculation.**
+```
+yield_on_cost = NOI_stabilized / TPC
+```
+
+**Engine source.** Computed inline by the investor export's Underwriting
+Summary "Property Valuation" section from `OperationalOutputs.noi_stabilized`
+(summed across projects) and `OperationalOutputs.total_project_cost`.
+
+**Notes / edge cases.** Equivalent to "going-in cap rate on cost." Compare
+against the going-in market cap rate (`OperationalInputs.going_in_cap_rate_pct`)
+to read the deal's yield premium / discount — see Cap Spread.
+
+### Going-In Cap Value [investor, app]
+
+**Definition.** Property value implied by capping stabilized NOI at the
+going-in (acquisition) cap rate — the analyst's market valuation snapshot
+at deal close.
+
+**Calculation.**
+```
+going_in_cap_value = NOI_stabilized_combined / going_in_cap_rate
+```
+
+**Engine source.** Computed inline by the investor export's Property
+Valuation section from `OperationalOutputs.noi_stabilized` and
+`OperationalInputs.going_in_cap_rate_pct`.
+
+**Notes / edge cases.** Differs from Direct Cap Value (Exit Cap basis)
+only when the analyst sets going-in and exit cap rates differently, e.g.
+modeling cap-rate decompression on exit. Common conservative pattern:
+exit cap > going-in cap by 25-50 bps.
+
+### Cap Spread [investor, lender, app]
+
+**Definition.** Yield on Cost minus Going-In Cap rate — the deal's yield
+premium (or discount) relative to the market cap input.
+
+**Calculation.**
+```
+cap_spread = yield_on_cost − going_in_cap_rate
+```
+
+**Engine source.** Computed inline by the investor export's Property
+Valuation section.
+
+**Notes / edge cases.** Positive spread → buying below-market cap (yield
+premium); negative → above-market acquisition price relative to NOI. A
+spread of 100-200 bps is typical for value-add multifamily; below 50 bps
+the deal needs cap compression or NOI growth to clear hurdle returns.
+
+### Direct Cap Value [investor, app]
+
+**Definition.** Property value implied by capping stabilized NOI at the
+exit cap rate — the textbook valuation reconciliation against a DCF.
+
+**Calculation.**
+```
+direct_cap_value = NOI_stabilized_combined / exit_cap_rate
+```
+
+**Engine source.** Computed inline by the investor export's Underwriting
+Summary "Valuation Reconciliation" section from
+`OperationalOutputs.noi_stabilized` (summed across projects) and
+`OperationalInputs.exit_cap_rate_pct`.
+
+**Notes / edge cases.** Should land within a few percent of the Modeled
+Exit Value (engine-written sale events at the exit period). A wide delta
+flags either the Exit Cap input or the underlying CF projection.
+
+### Modeled Exit Value [investor, app]
+
+**Definition.** Sum of `Sale` / `Exit`-prefixed `CashFlowLineItem` rows
+in the exit period(s) — the engine's DCF-derived sale proceeds.
+
+**Calculation.**
+```
+modeled_exit_value = Σ CashFlowLineItem.net_amount
+                       where label.startswith("Sale" | "Exit")
+```
+
+**Engine source.** Synthesized in `_compute_capital_events_for_phase`
+when `period_type == PeriodType.exit`; the export aggregates them across
+projects.
+
+**Notes / edge cases.** Compared against Direct Cap Value in the
+Valuation Reconciliation section. Both numbers should converge if the
+exit cap matches the implied DCF discounting; divergence is intentional
+when the analyst has set `refi_cap_rate_pct` separately.
+
+### Operating Expenses (OpEx) [investor, lender, app]
+
+**Definition.** Recurring operating costs of the property — taxes, insurance,
+property management, utilities, repairs, payroll. Sits between EGI and NOI on
+the P&L.
+
+**Calculation.**
+```
+opex_period = property_tax + insurance + opex_per_unit
+            + Σ itemized_OperatingExpenseLine.amount
+            + management_fee + carrying_cost
+```
+
+**Engine source.** `CashFlow.operating_expenses` (per project, per month).
+Itemized rows live in `OperatingExpenseLine` and are summed in the engine's
+per-period loop.
+
+**Notes / edge cases.** OpEx differs from CapEx Reserve: OpEx hits the P&L
+NOI line (DSCR uses NOI ÷ DS), CapEx is a below-NOI cash deduction (cash-on-
+cash includes CapEx, DSCR doesn't). OpEx scales with occupancy when
+`scale_with_lease_up = True`, with a configurable floor (`lease_up_floor_pct`)
+for partially-fixed costs.
+
 ### CapEx Reserve [investor, lender, app]
 
 ```python
@@ -1215,7 +1352,7 @@ non-default projects retain the cashflow-engine value.
 
 **Notes / edge cases.** Lenders typically require ≥ 1.20–1.25. DSCR is per
 loan, so multi-debt scenarios surface a worst-case across modules.
-`PLACEHOLDER_DSCR = 1.25` is the engine fallback when `dscr_minimum` is unset.
+`PLACEHOLDER_DSCR = 1.25` is the engine fallback when `CapitalModule.source.dscr_min` is unset on the perm-debt module being sized.
 
 ### LTV (Loan-to-Value) [investor, lender, app]
 
@@ -1233,11 +1370,13 @@ LTV = total_non_bridge_debt / property_value
 `_compute_calc_status`); not stored as a single column on
 `OperationalOutputs`.
 
-**Notes / edge cases.** Per-funder-type LTV caps live on
-`debt_terms.{funder_type}.ltv_pct`, NOT on a top-level `OperationalInputs`
-column. Default LTV when absent is funder-type-specific (typically 70% for
-acquisition, 75% for perm). In `dual_constraint` sizing, LTV is one of three
-binding constraints (LTV / DSCR / gap-fill).
+**Notes / edge cases.** Per-loan LTV caps live on
+`CapitalModule.source.ltv_pct`, NOT on a top-level `OperationalInputs`
+column. (Wizard staging mirror at `inputs.debt_terms.{funder_type}.ltv_pct`
+exists for re-edit population only.) Default LTV when absent is funder-
+type-specific (typically 70% for acquisition, 75% for perm). In
+`dual_constraint` sizing, LTV is one of three binding constraints (LTV /
+DSCR / gap-fill).
 
 ### Debt Yield [lender, app]
 
@@ -1276,6 +1415,92 @@ if available_cash > 0 and am_fee_pct > 0:
 all investor distributions, consistent with how AM fees work in real fund
 structures.
 
+### Debt Service [investor, lender, app]
+
+**Definition.** Annual cash payment to all debt modules — interest plus
+amortization (or interest only during construction / pre-stabilization).
+
+**Calculation.**
+```
+debt_service_annual = Σ debt_service_monthly_per_loan × 12
+```
+
+**Engine source.** `CashFlow.debt_service` (per project, per month). The
+investor export aggregates to annual buckets for the Cash Flow sheet
+(`r_uw_cf_debt_service`, `r_p<n>_cf_debt_service`).
+
+**Notes / edge cases.** Construction-phase debt service uses the loan's
+construction carry rate; operations-phase uses P&I or interest-only per
+the carry config. Bridge → perm refi events show up as separate
+**Capital Events** lines, not in Debt Service.
+
+### Capital Events [investor, app]
+
+**Definition.** Per-period capital cash flows that aren't operating: the
+acquisition outflow at close, exit proceeds at sale, refi takeout
+proceeds, prepay penalties, and equity calls / refi shortfalls.
+
+**Calculation.**
+```
+capital_events_period = Σ CashFlowLineItem.net_amount
+                          where label.startswith("Acquisition" | "Sale" |
+                                                 "Refi —" | "Prepay" | "Exit")
+```
+
+**Engine source.** `CashFlowLineItem` rows tagged with the category
+prefixes above; the investor export separates them from operating flows
+on the Cash Flow sheet so the LP sees one-time events distinctly.
+
+**Notes / edge cases.** Y0 typically holds the acquisition outflow; the
+exit-year period holds sale proceeds net of selling costs. Multi-project
+deals can have acquisition outflows in different periods (anchor-driven
+date resolution).
+
+### Cumulative Cash Flow [investor, app]
+
+**Definition.** Running total of operating + capital cash flows from
+period 0 through the current period — the LP's "what's the project
+worth in cumulative dollars to me right now?" view.
+
+**Calculation.**
+```
+cumulative[t] = cumulative[t-1] + levered_cf[t] + capital_events[t]
+cumulative[0] = levered_cf[0] + capital_events[0]
+```
+
+**Engine source.** Computed inline by the investor export from the
+per-project `CashFlow.net_cash_flow` series + `CashFlowLineItem` capital
+events. `CashFlow.cumulative_cash_flow` carries the engine's own running
+total but resets at first stabilized month per the cash-balance seeding
+invariant (§6.3), so the export computes a separate non-resetting
+cumulative for the investor view.
+
+**Notes / edge cases.** The engine's `cumulative_cash_flow` is a *cash
+balance* (with reserves seeded) used for solvency tracking; the export's
+**Cumulative Cash Flow** is a *return-tracking* sum used for IRR/EM
+intuition. Both are valid views on the same data.
+
+### GP Promote [investor, app]
+
+**Definition.** Total GP profit-share dollars from the catch-up and
+residual waterfall tiers — the GP's compensation for outperformance
+above the LP's preferred return / hurdle.
+
+**Calculation.**
+```
+gp_promote_dollars = Σ WaterfallResult.cash_distributed
+                       where tier.tier_type in ("catch_up", "residual")
+```
+
+**Engine source.** `WaterfallResult` rows tagged with `catch_up` or
+`residual` tier types via `WaterfallTier.tier_type`.
+
+**Notes / edge cases.** Pure catch-up dollars (the GP catching up to
+its target share *after* the LP's pref) and pure residual promote (the
+GP's share of the upside above the final hurdle) both count as "promote"
+from the LP's perspective — the LP cares about total fees out, not their
+tier-by-tier breakdown.
+
 ### Hold Period [investor, lender, app]
 
 **Definition.** Number of months from acquisition close to exit/divestment.
@@ -1287,12 +1512,32 @@ investor export.
 hold_months = sum(phase.months for phase in phases if phase.period_type != exit)
 ```
 
-**Engine source.** Derived from the project's milestone trigger chain (or
-fallback `OperationalInputs.*_months` scalars). Surfaces as
-`rollup_summary["hold_months"]`.
+**Engine source (refactor 2026-04-29).** Stabilized phase length comes from
+`_resolve_horizon_months(capital_modules, orm_milestones)` in
+`app/engines/cashflow.py`, then `_apply_milestone_phase_overrides` resizes
+in calendar months when both `stabilized_start` and `exit_date` resolve
+from the milestone trigger chain.
+
+Resolver order:
+
+1. Exit (`divestment`) milestone with resolvable date → override path resizes
+   stabilized to `_calendar_month_count(stabilized_start, exit_date)`.
+2. Else permanent-debt modules present → `MAX(perm_debt.source.hold_term_years) × 12`.
+3. Else `operation_stabilized` milestone present → `duration_days // 30`.
+4. Else fallback `60` months.
+
+The deprecated `OperationalInputs.hold_period_years` column was dropped in
+alembic 0060. Per-perm-debt `CapitalModule.source.hold_term_years` is the
+single source of truth for loan-side hold; the divestment milestone date
+overrides it for deal-side horizon when set.
 
 **Notes / edge cases.** In multi-project deals, the scenario hold period is
 the longest project's hold (so all projects' cash flows are captured).
+Multi-perm-debt deals with mismatched `hold_term_years` take MAX for
+horizon; per-loan early balloon at `min(hold_term × 12, horizon)` for
+shorter loans is a future enhancement (currently each loan amortizes
+through the full horizon unless its `exit_terms.vehicle` points at a
+specific takeout source).
 
 ### 7.1 Module stack and tiers
 
@@ -1595,8 +1840,8 @@ gap = capital_total − uses_total
 ```
 dscr = noi_stabilized / (operation_debt_monthly × 12)
 ```
-- `dscr ≥ dscr_minimum` → `ok` with headroom amount
-- `dscr < dscr_minimum` → `fail` with shortfall amount
+- `dscr ≥ source.dscr_min` (first perm-debt module; fallback `1.20`) → `ok` with headroom amount
+- `dscr < source.dscr_min` → `fail` with shortfall amount
 
 **Factor 3: LTV**
 ```
@@ -1628,7 +1873,7 @@ The pill replaces the legacy sidebar "Sources = Uses" banner (removed April 18 2
 |---|---|---|---|
 | `MONEY_PLACES` | `Decimal("0.000001")` | cashflow.py | 6-decimal rounding for all cash math |
 | `DEFAULT_IRR_BASE_YEAR` | `2020` | waterfall.py | Period → date conversion origin for XIRR |
-| `PLACEHOLDER_DSCR` | `Decimal("1.25")` | cashflow.py | Fallback if `dscr_minimum` not set |
+| `PLACEHOLDER_DSCR` | `Decimal("1.25")` | cashflow.py | Fallback if `CapitalModule.source.dscr_min` not set on perm-debt module |
 | `_LEASE_UP_INCOME_FACTOR` | `1/3` | cashflow.py | Phantom CF avg income during lease-up |
 | `operation_reserve_months` | `6` (default) | OperationalInputs | Reserve horizon for gap-fill sizing |
 | `initial_occupancy_pct` | `50` (default) | OperationalInputs | Starting point of lease-up ramp |
@@ -1865,7 +2110,54 @@ The carry type `"accruing"` is normalized to `"capitalized_interest"` by `_carry
 
 ---
 
-## Appendix D: Gap Adjustment Sliders + Compile/Evaluate Split (April 2026)
+## Appendix D: Two-Way Sensitivity (April 2026)
+
+### D.1 What it is
+
+A 5x5 grid of Combined Levered IRR computed by re-running the full cashflow engine across the cartesian product of two assumption axes. The default pair is **Exit Cap Rate** (rows) × **NOI / Rent Growth** (columns) — the two highest-conviction-loss variables for stabilized multifamily underwriting per the LP/IC sensitivity convention.
+
+The grid is rendered as the **Sensitivity** sheet of the investor Excel export (between Underwriting Cash Flow and Investor Returns) and is also surfaced in the in-app Sensitivity tab via `compute_sensitivity_matrix()`.
+
+### D.2 Engine — `compute_sensitivity_matrix`
+
+Located at `app/engines/sensitivity_matrix.py`. Two modes:
+
+- **`mode="first"`** (default, back-compat): mutates only the first project's `OperationalInputs`. Cell value is read from the last project's per-project summary returned by `compute_cash_flows`. Suitable for single-project scenarios and the existing UI Sensitivity tab.
+- **`mode="combined"`**: mutates **every** project's `OperationalInputs` in lockstep. For `metric="project_irr_levered"` the cell value is the deal-level Combined Levered IRR computed via `rollup_irr` over the summed monthly NCF series across all projects. Required for multi-project deals where the per-project IRR doesn't reflect the LP-facing return.
+
+Steps per axis are configurable via `step_overrides: dict[str, Decimal]`. The investor export uses:
+- `noi_escalation_rate_pct` step = `1.0` (window ±200bps around base)
+- `exit_cap_rate_pct` step = `0.5` (window ±100bps around base)
+
+### D.3 Grid layout in the investor export
+
+| Row | Content |
+|---|---|
+| 1 | Title: "Two-Way Sensitivity" |
+| 2 | Subtitle: `<axis_y_label> × <axis_x_label> → <metric_label> (combined deal-level)` |
+| 4 | Corner label (A4) + x-axis values (B4:F4) |
+| 5–9 | y-axis values (A5:A9) + 5x5 IRR grid (B5:F9) |
+| 11 | Base-case readout (axis values + base IRR) |
+| 13+ | Notes |
+
+The base-case cell uses the brand fog fill + hero-value font. The data range carries a red→yellow→green 3-color conditional-formatting scale (red = lowest IRR, green = highest). Failed cells (engine errors, infeasible debt sizing) appear blank rather than zero so they don't skew the gradient.
+
+### D.4 Defined name
+
+The 5x5 data range registers the workbook-scoped name `r_sensitivity_grid`. External tooling can `INDIRECT()` against it; the bidirectional doc validator aliases this name to the existing **Levered IRR** doc entry (the underlying metric for every cell).
+
+### D.5 Performance
+
+Each cell is one full `compute_cash_flows` cycle. 25 cells × ~0.2s = ~5s added to export latency. Acceptable for a synchronous LP-facing artifact; not used for Monte Carlo (10K+ runs would need Celery offload).
+
+### D.6 Mutation safety
+
+The engine mutates `OperationalInputs` in place during the run, then restores per-project base values from a snapshot taken before iteration begins. A final `compute_cash_flows` call re-persists the base-case `CashFlow`/`OperationalOutputs` rows so downstream rollup queries see consistent numbers. The mutation window is the duration of the export request; concurrent reads during this ~5s window may see transient values.
+
+
+---
+
+## Appendix E: Gap Adjustment Sliders + Compile/Evaluate Split (April 2026)
 
 ### D.1 Motivation
 
@@ -1997,3 +2289,6 @@ A two-project deal has a Sources/Uses gap on Project 1 because NOI doesn't suppo
 The final state: three phantom rows persisted, pill yellow with "Balanced w/ adjustments", Sources = Uses, DSCR = 1.150, equity_required = 0. The model "pencils" but only via fictional inputs the user knows have to be operationalized (find the $500/mo from somewhere; find the $5k/yr opex savings; negotiate the $30k off PP).
 
 When the user later finds real budget for any of those, they edit the underlying real lines (not the phantoms) and drag the corresponding slider back to zero. The pill goes green only when all three sliders are zero.
+
+---
+

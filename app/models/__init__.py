@@ -57,6 +57,9 @@ from app.models.cashflow import (  # noqa: F401
 # 8. Workflow manifests (FK → Scenario)
 from app.models.manifest import WorkflowRunManifest  # noqa: F401
 
+# 8b. Async export jobs (FK → Scenario, User)
+from app.models.export_job import ExportJob, ExportJobStatus  # noqa: F401
+
 # 9. Sensitivity analysis (FK → Opportunity, Scenario, User)
 #    Previously named Scenario/ScenarioResult — renamed to free up the table name
 from app.models.scenario import (  # noqa: F401
@@ -127,6 +130,9 @@ __all__ = [
     "CashFlowLineItem",
     "OperationalOutputs",
     "WorkflowRunManifest",
+    # Async export jobs
+    "ExportJob",
+    "ExportJobStatus",
     # Sensitivity analysis (was Scenario/ScenarioResult)
     "Sensitivity",
     "SensitivityResult",

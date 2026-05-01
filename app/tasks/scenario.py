@@ -290,9 +290,6 @@ def _build_model_version_snapshot(scenario: Scenario) -> dict[str, Any]:
         "exit_cap_rate_pct": None
         if inputs is None or inputs.exit_cap_rate_pct is None
         else str(inputs.exit_cap_rate_pct),
-        "hold_period_years": None
-        if inputs is None or inputs.hold_period_years is None
-        else str(inputs.hold_period_years),
         "captured_at": datetime.now(UTC).isoformat(),
     }
 

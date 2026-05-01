@@ -190,7 +190,6 @@ async def _seed_model_for_run_tests(
             lease_up_months=2,
             unit_count_existing=8,
             expense_growth_rate_pct_annual=Decimal("3.0"),
-            hold_period_years=Decimal("3"),
             exit_cap_rate_pct=Decimal("5.5"),
         )
     )
@@ -430,7 +429,6 @@ async def test_get_project_summary_returns_active_model_rollup(
             "renovation_months": 3,
             "lease_up_months": 2,
             "expense_growth_rate_pct_annual": "3.0",
-            "hold_period_years": 5,
             "exit_cap_rate_pct": "5.5",
         },
         headers=auth_headers,
@@ -542,7 +540,6 @@ async def test_get_model_runs_returns_cashflow_manifest_after_compute(
     assert manifests[0].inputs_json == {
         "model_id": str(model_id),
         "project_type": "acquisition",
-        "hold_period_years": "3.000000",
         "unit_count": 8,
         "income_stream_count": 1,
     }
@@ -798,7 +795,6 @@ async def test_get_scenario_status_includes_model_version_snapshot_after_run(
                 exit_cap_rate_pct=Decimal("5.500000"),
                 lease_up_months=6,
                 expense_growth_rate_pct_annual=Decimal("3.000000"),
-                hold_period_years=Decimal("5.000000"),
             )
         )
         await session.commit()
@@ -853,7 +849,6 @@ async def test_get_scenario_status_includes_model_version_snapshot_after_run(
     assert snapshot["project_type"] == ProjectType.new_construction.value
     assert snapshot["unit_count_new"] == 12
     assert snapshot["exit_cap_rate_pct"] == "5.500000"
-    assert snapshot["hold_period_years"] == "5.000000"
     assert isinstance(snapshot["captured_at"], str)
     assert datetime.fromisoformat(snapshot["captured_at"])
     assert status_response.json()["run_count"] == 1
@@ -1010,7 +1005,6 @@ async def test_get_scenario_compare_returns_variance_and_attribution_contract(
                 unit_count_new=12,
                 exit_cap_rate_pct=Decimal("5.500000"),
                 expense_growth_rate_pct_annual=Decimal("3.000000"),
-                hold_period_years=Decimal("5.000000"),
             )
         )
 
@@ -2218,7 +2212,6 @@ async def test_get_model_json_export_returns_portable_payload(
             OperationalInputs(
                 project_id=dev_project.id,
                 unit_count_existing=8,
-                hold_period_years=Decimal("5"),
                 exit_cap_rate_pct=Decimal("5.5"),
             )
         )
@@ -2344,7 +2337,6 @@ async def test_post_project_model_import_creates_nested_records(
         },
         "operational_inputs": {
             "unit_count_existing": 10,
-            "hold_period_years": "5",
             "exit_cap_rate_pct": "5.25",
         },
         "income_streams": [
@@ -2456,7 +2448,6 @@ async def test_post_deals_import_creates_project_from_payload_and_links_existing
             "is_active": True,
             "operational_inputs": {
                 "unit_count_existing": 9,
-                "hold_period_years": "5",
                 "exit_cap_rate_pct": "5.4",
             },
             "income_streams": [
@@ -2577,7 +2568,6 @@ async def test_exported_model_json_round_trips_through_validation_and_import(
             OperationalInputs(
                 project_id=dev_project.id,
                 unit_count_existing=6,
-                hold_period_years=Decimal("5"),
                 exit_cap_rate_pct=Decimal("5.25"),
             )
         )
@@ -2691,7 +2681,6 @@ async def test_get_model_excel_export_returns_multisheet_workbook(
                 unit_count_existing=12,
                 unit_count_new=2,
                 expense_growth_rate_pct_annual=Decimal("3.0"),
-                hold_period_years=Decimal("5"),
                 exit_cap_rate_pct=Decimal("5.25"),
             )
         )

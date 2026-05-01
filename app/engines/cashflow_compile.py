@@ -86,6 +86,56 @@ def _milestone_dates_from_orm(
     return result
 
 
+def _resolve_horizon_months(
+    capital_modules: list | None,
+    orm_milestones: list[Milestone] | None,
+) -> tuple[int, str]:
+    """Resolve modeled horizon (stabilized phase length, in months).
+
+    Order:
+      1. Exit (divestment) milestone with resolvable date → handled downstream
+         by ``_apply_milestone_phase_overrides``. This helper still returns a
+         sensible base in case the override path can't fire (e.g., broken
+         trigger chain).
+      2. Permanent debt present → MAX(perm_debt.source.hold_term_years) × 12.
+      3. ``operation_stabilized`` milestone ``duration_days`` → months
+         (``duration_days // 30``, min 1).
+      4. Final fallback → 60 months.
+
+    Returns ``(months, source_label)`` for diagnostics.
+
+    Replaces the legacy ``inputs.hold_period_years × 12`` expression. Migration
+    0060 dropped ``hold_period_years`` from ``operational_inputs``; perm-debt
+    hold term now lives on ``CapitalModule.source.hold_term_years``.
+    """
+    max_hold_years = 0
+    for cm in capital_modules or []:
+        ft = str(getattr(cm, "funder_type", "") or "").replace("FunderType.", "")
+        if ft != "permanent_debt":
+            continue
+        src = getattr(cm, "source", None) or {}
+        hold = src.get("hold_term_years") if isinstance(src, dict) else None
+        try:
+            hy = int(hold) if hold is not None else 0
+        except (TypeError, ValueError):
+            hy = 0
+        if hy > max_hold_years:
+            max_hold_years = hy
+
+    if max_hold_years > 0:
+        return (max_hold_years * 12, "perm_debt_hold_term")
+
+    for m in orm_milestones or []:
+        mtype = str(m.milestone_type).replace("MilestoneType.", "")
+        if mtype == "operation_stabilized":
+            d = int(getattr(m, "duration_days", 0) or 0)
+            if d > 0:
+                return (max(1, d // 30), "operation_stabilized_milestone")
+            break
+
+    return (60, "fallback_default_60mo")
+
+
 def _build_phase_plan(
     project_type: str,
     inputs: OperationalInputs,
@@ -93,6 +143,8 @@ def _build_phase_plan(
     has_lease_up_milestone: bool = False,
     has_pre_development_milestone: bool = False,
     has_construction_milestone: bool = False,
+    capital_modules: list | None = None,
+    orm_milestones: list[Milestone] | None = None,
 ) -> list[PhaseSpec]:
     phases: list[PhaseSpec] = [PhaseSpec(PeriodType.acquisition, 1)]
 
@@ -164,9 +216,8 @@ def _build_phase_plan(
     if has_lease_up_milestone or lease_up_months > 0:
         phases.append(PhaseSpec(PeriodType.lease_up, max(lease_up_months, 1)))
 
-    stabilized_months = _positive_int(
-        (_to_decimal(inputs.hold_period_years, ONE) * Decimal("12")),
-        fallback=12,
+    stabilized_months, _horizon_src = _resolve_horizon_months(
+        capital_modules, orm_milestones
     )
     phases.append(PhaseSpec(PeriodType.stabilized, stabilized_months))
     phases.append(PhaseSpec(PeriodType.exit, 1))

@@ -63,6 +63,7 @@ from app.engines.cashflow_compile import (
     _phase_is_operational,
     _phase_milestone_key,
     _resolve_active_end_rank,
+    _resolve_horizon_months,
     _resolve_vehicle,
     _stream_occupancy_pct,
 )
@@ -238,6 +239,8 @@ async def _compute_project_cashflow(
         has_lease_up_milestone=has_lease_up_milestone,
         has_pre_development_milestone=has_pre_development_milestone,
         has_construction_milestone=has_construction_milestone,
+        capital_modules=capital_modules,
+        orm_milestones=orm_milestones,
     )
 
     # Look up previously computed NOI so auto-sizing uses the accurate value.
@@ -708,7 +711,6 @@ async def _compute_project_cashflow(
                 {
                     "model_id": str(deal_uuid),
                     "project_type": _project_type_name(deal_model.project_type),
-                    "hold_period_years": inputs.hold_period_years,
                     "unit_count": _manifest_unit_count(inputs),
                     "income_stream_count": len(streams),
                 }
@@ -1029,8 +1031,10 @@ async def _purge_project_outputs(
 # (re-imported at top of this file).
 
 
-# NOTE: _CONSTRUCTION_PERIOD_TYPES + _APS_TO_RANK extracted to cashflow_compile.py
-# (re-imported at top of this file).
+# NOTE: _CONSTRUCTION_PERIOD_TYPES + _APS_TO_RANK + _resolve_horizon_months
+# extracted to cashflow_compile.py (re-imported at top of this file).
+# main's _resolve_horizon_months + signature change to _build_phase_plan
+# (capital_modules, orm_milestones params) ported into cashflow_compile.py.
 
 
 # NOTE: _module_rank, _eligible_retirers, _resolve_vehicle,
@@ -1236,7 +1240,6 @@ async def _auto_size_debt_modules(
         _diag(f"  [in] ul label={getattr(_dul,'label','')!r} phase={getattr(_dul,'phase',None)} amt={getattr(_dul,'amount',None)} pid={getattr(_dul,'project_id',None)}")
 
     debt_sizing_mode = inputs.debt_sizing_mode or "gap_fill"
-    dscr_min = _to_decimal(inputs.dscr_minimum or PLACEHOLDER_DSCR)
     reserve_months = int(inputs.operation_reserve_months or 6)
 
     # ── Per-loan active-window phase months ─────────────────────────────────
@@ -1401,8 +1404,7 @@ async def _auto_size_debt_modules(
                 _cr = _rate
 
             if _ft == "pre_development_loan":
-                _pdl_terms = (inputs.debt_terms or {}).get("pre_development_loan", {})
-                _ltc = Decimal(str(_src.get("ltv_pct") or _pdl_terms.get("ltv_pct") or 100))
+                _ltc = Decimal(str(_src.get("ltv_pct") or 100))
                 _funded = _q(pre_dev_costs * _ltc / HUNDRED)
                 _r = Decimal(str(_rate or 0))
                 _pre_ct = _carry_type_for_phase(_carry, is_construction=True)
@@ -1423,8 +1425,7 @@ async def _auto_size_debt_modules(
                     _bridge_io_module["pre_development_loan"] = _m.id
 
             elif _ft == "acquisition_loan":
-                _dt_terms = (inputs.debt_terms or {}).get("acquisition_loan", {})
-                _ltv = Decimal(str(_src.get("ltv_pct") or _dt_terms.get("ltv_pct") or 70))
+                _ltv = Decimal(str(_src.get("ltv_pct") or 70))
                 _principal = _q(acq_costs * _ltv / HUNDRED)
                 _r = Decimal(str(_rate or 0))
                 _acq_ct = _carry_type_for_phase(_carry, is_construction=True)
@@ -1442,8 +1443,7 @@ async def _auto_size_debt_modules(
                         _bridge_io_module["acquisition_loan"] = _m.id
 
             elif _ft == "construction_loan":
-                _cl_terms = (inputs.debt_terms or {}).get("construction_loan", {})
-                _ltc = Decimal(str(_src.get("ltv_pct") or _cl_terms.get("ltv_pct") or 75))
+                _ltc = Decimal(str(_src.get("ltv_pct") or 75))
                 _funded = _q(constr_costs * _ltc / HUNDRED)
                 _r = Decimal(str(_cr or 0))
                 _cl_ct = _carry_type_for_phase(_carry, is_construction=True)
@@ -1582,6 +1582,9 @@ async def _auto_size_debt_modules(
         carry = module.carry or {}
         # Rate may be in source["interest_rate_pct"] or flat carry["io_rate_pct"]
         rate_pct = src.get("interest_rate_pct") or carry.get("io_rate_pct")
+        # Per-loan DSCR floor: read from source.dscr_min (perm-debt only),
+        # fallback to PLACEHOLDER_DSCR (1.25).
+        dscr_min = _to_decimal(src.get("dscr_min") or PLACEHOLDER_DSCR)
 
         # Get amort_term_years from carry (phased) or source
         op_carry = _get_phase_carry(carry, "operation")

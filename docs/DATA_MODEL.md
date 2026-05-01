@@ -89,15 +89,30 @@ Deal ──┬── Scenario (= "Variant")          ← DB table: scenarios; OR
 |---|---|---|
 | `debt_types` | Selected debt stack (e.g. `["permanent_debt"]`) | Wizard Finish + Add Project drawer |
 | `debt_structure` | Derived stack pattern (`perm_only`, `construction_and_perm`, `construction_to_perm`) | same |
-| `debt_terms` | Per-funder-type rate / amort / `ltv_pct` / loan_type JSON | same |
+| `debt_terms` | **Wizard staging only** — per-funder-type `rate_pct` / `amort_years` / `loan_type` / `ltv_pct` / `hold_term_years` / `dscr_min` JSON. Engine does NOT read this; it reads `CapitalModule.source` directly. Repopulates the wizard form on re-edit. | same |
 | `debt_milestone_config` | Per-funder-type active_from / active_to / retired_by | same |
 | `debt_sizing_mode` | `gap_fill` \| `dscr_capped` \| `dual_constraint` | same |
-| `dscr_minimum` | DSCR floor for the cap modes (default 1.15) | same |
 | `construction_floor_pct` | % of TPC held during construction | same |
 | `operation_reserve_months` | Reserve months at stabilization (default 6) | same |
 | `deal_setup_complete` | Wizard gate flag | same |
 
-**LTV** is *not* a top-level `OperationalInputs` column — it lives on `debt_terms.{funder_type}.ltv_pct` (e.g. `debt_terms.permanent_debt.ltv_pct = 75`). Any code reading `inputs.ltv_maximum_pct` is a bug; that column does not exist.
+**Dropped columns (refactor 2026-04-29, alembic 0060).** Moved to per-perm-debt `CapitalModule.source` JSON:
+
+- `OperationalInputs.hold_period_years` → `CapitalModule.source.hold_term_years` (required when `funder_type == "permanent_debt"`, Pydantic-validated)
+- `OperationalInputs.dscr_minimum` → `CapitalModule.source.dscr_min` (optional; engine fallback `1.20` if unset)
+- `OperationalInputs.perm_rate_pct` → `CapitalModule.source.interest_rate_pct`
+- `OperationalInputs.perm_amort_years` → `CapitalModule.carry.amort_term_years` (or `source.amort_term_years` for flat carry)
+
+Engine resolves deal-level horizon (stabilized phase length) via:
+
+1. Exit/divestment milestone with resolvable date → `_apply_milestone_phase_overrides` sets stabilized length from `stabilized_start → exit_date`.
+2. Else: `MAX(perm_debt.source.hold_term_years) × 12`.
+3. Else: `operation_stabilized` milestone `duration_days // 30`.
+4. Else: `60` (final fallback).
+
+See `app/engines/cashflow.py::_resolve_horizon_months`.
+
+**LTV** is *not* a top-level `OperationalInputs` column — it lives on `CapitalModule.source.ltv_pct`. Engine reads from `source` directly; `debt_terms.{funder_type}.ltv_pct` is wizard-staging mirror only. Any code reading `inputs.ltv_maximum_pct` is a bug; that column does not exist.
 
 Per-project fields on `OperationalInputs` (genuinely per-project, never propagated): `unit_count_new`, `noi_stabilized_input`, `noi_escalation_rate_pct`, `asset_mgmt_fee_pct`, and the lease-up / construction / operation duration scalars used as fallbacks when milestones lack trigger chains.
 

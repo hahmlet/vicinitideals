@@ -24,6 +24,7 @@ from sqlalchemy import (
     String,
     Text,
     UniqueConstraint,
+    false,
     func,
 )
 from sqlalchemy.dialects.postgresql import ARRAY, UUID
@@ -298,7 +299,6 @@ class OperationalInputs(Base):
     capex_reserve_per_unit_annual: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=0)
 
     # Exit (deprecated scalar: use UseLine with phase=exit instead)
-    hold_period_years: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=5)
     exit_cap_rate_pct: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=5, server_default="5")
     selling_costs_pct: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=0)
 
@@ -319,14 +319,12 @@ class OperationalInputs(Base):
     debt_milestone_config: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     # "gap_fill" | "dscr_capped" | "dual_constraint"
     debt_sizing_mode: Mapped[str | None] = mapped_column(String(20), nullable=True)
-    dscr_minimum: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=Decimal("1.15"))
     # % of TPC to maintain as minimum balance during construction (only when construction debt)
     construction_floor_pct: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
     # months of projected debt service to maintain at stabilization start
     operation_reserve_months: Mapped[int] = mapped_column(Integer, nullable=False, default=6)
-    # Per-debt terms for auto-created CapitalModule(s).
-    # New structure: {funder_type: {rate_pct, amort_years, loan_type, sizing_approach, ltv_pct}}
-    # Legacy flat keys (perm_rate_pct, perm_amort_years, construction_rate_pct) still read for old deals.
+    # Per-debt terms — used as wizard staging (engine reads CapitalModule directly).
+    # Shape: {funder_type: {rate_pct, amort_years, loan_type, hold_term_years, dscr_min, ltv_pct, ...}}
     debt_terms: Mapped[dict | None] = mapped_column(JSON, nullable=True)
 
     # Asset management fee as % of (NOI - debt service), deducted pre-waterfall
@@ -335,6 +333,13 @@ class OperationalInputs(Base):
     # ── NOI mode inputs (only used when DealModel.income_mode == 'noi') ──────
     # Annual stabilized NOI entered/pre-filled from listing; NULL = not yet set
     noi_stabilized_input: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
+    # True when noi_stabilized_input was silently seeded by the KNN comp engine
+    # at builder load (income_mode="noi", no listing NOI). Cleared when the
+    # user submits the NOI form. Drives the "auto-filled — confirm or override"
+    # banner so the value isn't accepted blindly.
+    noi_auto_seeded: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=False, server_default=false()
+    )
     # Annual escalation rate applied month-by-month to the NOI input
     noi_escalation_rate_pct: Mapped[object] = mapped_column(
         Numeric(18, 6), nullable=False, default=Decimal("3")
@@ -350,6 +355,99 @@ class OperationalInputs(Base):
     project: Mapped["Project"] = relationship(  # type: ignore[name-defined]
         "Project", back_populates="operational_inputs"
     )
+
+
+# Synonym map for legacy free-text OpEx labels → canonical categories.
+# Used by the investor export to fold pre-vocabulary entries into the
+# STANDARD_OPEX_CATEGORIES set. Two sources feed this map:
+#   1. Engine-emitted hardcoded labels — `app/engines/cashflow.py` writes
+#      "Property Tax", "Insurance", "Operating Expenses", "Management Fee",
+#      "Carrying Cost" from legacy OperationalInputs scalar fields. These
+#      need to project onto the canonical vocabulary so the export's OpEx
+#      breakout doesn't show "Property Tax" $0 next to a user-entered
+#      "Real Estate Taxes" with the actual value.
+#   2. Common user variants observed in legacy seed data (`Subject Model`,
+#      etc.) — typos and spelling variants from before the dropdown landed.
+# The map is intentionally small; new typos go through Phase B2's dropdown
+# enforcement.
+OPEX_SYNONYMS: dict[str, str] = {
+    # Engine-emitted labels
+    "Property Tax": "Real Estate Taxes",
+    "Operating Expenses": "Other",
+    "Management Fee": "Property Management",
+    "Carrying Cost": "Other",
+    # Common user variants
+    "Property Insurance": "Insurance",
+    "Office / Admin": "Administrative",
+    "Office/Admin": "Administrative",
+    "Payroll & On-Site Staff": "Payroll",
+    "On-Site Staff": "Payroll",
+    "Garbage / Refuse": "Utilities — Trash",
+    "Garbage / Trash": "Utilities — Trash",
+    "Garbage": "Utilities — Trash",
+    "Trash": "Utilities — Trash",
+    "Refuse": "Utilities — Trash",
+    "Grabage": "Utilities — Trash",  # known typo in seed data
+    "Water / Sewer": "Utilities — Water/Sewer",
+    "Water/Sewer": "Utilities — Water/Sewer",
+    "Sewer": "Utilities — Water/Sewer",
+    "Electric": "Utilities — Electric",
+    "Electricity": "Utilities — Electric",
+    "Gas": "Utilities — Gas",
+    "Natural Gas": "Utilities — Gas",
+}
+
+
+def normalize_opex_label(label: str | None) -> str:
+    """Map a free-text OpEx label to a canonical STANDARD_OPEX_CATEGORIES
+    entry, falling back to the trimmed label itself if no synonym match.
+    Whitespace is stripped on input — the export already does this for
+    label-key dedup, this is the second guard."""
+    cleaned = (label or "").strip()
+    return OPEX_SYNONYMS.get(cleaned, cleaned)
+
+
+# Universal multifamily OpEx categories — present on every CRE pro forma
+# regardless of the deal's specifics. The investor export's OpEx breakout
+# always renders these rows, even when the engine has $0 for them, so a
+# missing data point is *visible* to the LP. A CRE professional reading a
+# pro forma without a Property Tax line treats it as broken; explicitly
+# showing $0 prompts the right "is this configured?" question.
+ALWAYS_SHOWN_OPEX_CATEGORIES: tuple[str, ...] = (
+    "Real Estate Taxes",
+    "Insurance",
+    "Property Management",
+)
+
+
+# Standard OpEx categories — controlled vocabulary surfaced in the
+# OpEx-line entry UI as a dropdown. Free-text labels are still accepted at
+# the DB layer (no constraint), but the UI nudges new entries toward this
+# canonical set so the investor export can group by exact label without
+# being defeated by typos like "Garbage" vs "Grabage". "Other" is the
+# catch-all — anything that doesn't fit the standard list lumps in here.
+# Order is the dropdown render order; alphabetical-ish within usage groups.
+STANDARD_OPEX_CATEGORIES: tuple[str, ...] = (
+    "Real Estate Taxes",
+    "Insurance",
+    "Property Management",
+    "Utilities — Water/Sewer",
+    "Utilities — Electric",
+    "Utilities — Gas",
+    "Utilities — Trash",
+    "Repairs & Maintenance",
+    "Marketing & Leasing",
+    "Administrative",
+    "Payroll",
+    "Landscaping & Snow Removal",
+    "Pest Control",
+    "Cleaning & Janitorial",
+    "Security",
+    "Resident Services",
+    "Compliance & Legal",
+    "Bank/Software Fees",
+    "Other",
+)
 
 
 class OperatingExpenseLine(Base):

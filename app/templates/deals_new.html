@@ -117,6 +117,17 @@
           </select>
         </div>
 
+        <div class="nd-field">
+          <label>Acquisition Cost</label>
+          <input type="number" name="acquisition_cost" required min="1" step="any"
+                 value="{{ opp_asking_price if opp_asking_price else '' }}"
+                 placeholder="e.g. 4500000">
+          <div style="font-size:12px;color:var(--text-muted);margin-top:4px">
+            {% if opp_asking_price %}Pre-filled from the linked listing — edit if your underwriting price differs.
+            {% else %}Required so the seeded Acquisition use line lands with a real value.{% endif %}
+          </div>
+        </div>
+
       </div>
 
       <div class="new-deal-footer">

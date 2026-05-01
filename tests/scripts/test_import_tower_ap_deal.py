@@ -54,7 +54,6 @@ async def test_import_tower_ap_deal_creates_two_projects_and_one_portfolio(
                     "property_tax_annual": 18000,
                     "insurance_annual": 6000,
                     "capex_reserve_per_unit_annual": 300,
-                    "hold_period_years": 5,
                     "exit_cap_rate_pct": 5.5,
                     "selling_costs_pct": 2.0
                 },
@@ -119,7 +118,6 @@ async def test_import_tower_ap_deal_creates_two_projects_and_one_portfolio(
                     "property_tax_annual": 15000,
                     "insurance_annual": 5200,
                     "capex_reserve_per_unit_annual": 275,
-                    "hold_period_years": 4,
                     "exit_cap_rate_pct": 5.75,
                     "selling_costs_pct": 2.25
                 },
