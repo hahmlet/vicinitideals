@@ -699,3 +699,247 @@ broker-provided city via `COALESCE(jurisdiction, city)` in UI filters.
    seeding parcel data for the target county AND updating
    `METRO_COUNTIES` + `MF_ZONING_CODES` in `app/utils/priority.py` for
    classification to work.
+
+
+---
+
+## 12. Financial Entity Field Reference
+
+Field-level schemas for financial entities not fully covered in Section 1.1. All types are Python/SQLAlchemy: Numeric(18,6) = 6-decimal money/pct; dict = JSONB column.
+
+### 12.1 CapitalModule
+
+Scenario-scoped Source identity (lender, rate, carry type, exit terms). Per-project amounts live on the CapitalModuleProject junction.
+
+| Column | Type | Required | Notes |
+|---|---|---|---|
+| id | UUID | Yes | PK |
+| scenario_id | UUID FK to scenarios | Yes | |
+| label | str (255) | Yes | e.g. "Permanent Debt - Chase" |
+| funder_type | FunderType enum | Yes | See Section 13.1 |
+| stack_position | int | Yes | Display order (0 = top) |
+| source | dict or None | No | JSONB: sizing inputs - see 12.1a |
+| carry | dict or None | No | JSONB: construction carry - see 12.1b |
+| exit_terms | dict or None | No | JSONB: balloon, prepay, refi cap rate |
+| active_phase_start | str (60) or None | No | Deprecated; loan window derived from exit vehicle |
+| active_phase_end | str (60) or None | No | Deprecated; retained in DB, not used by engine |
+| created_at | datetime | Yes | |
+| updated_at | datetime | Yes | |
+
+**12.1a source JSONB keys (perm/senior/bridge debt):**
+
+| Key | Notes |
+|---|---|
+| amount | Principal (explicit) - overrides auto-sizing when set |
+| interest_rate_pct | Annual rate (%) |
+| amort_term_years | Amortization schedule length |
+| hold_term_years | IO or balloon period (required for permanent_debt) |
+| dscr_min | DSCR floor for sizing; engine fallback 1.20 if absent |
+| ltv_pct | LTV cap for sizing; defaults: acq 70%, perm 75% |
+| debt_sizing_mode | gap_fill / dscr_capped / dual_constraint |
+| refi_cap_rate_pct | Cap rate for refi LTV sizing; defaults to going-in cap if absent |
+| loan_type | io_only / interest_reserve / capitalized_interest / pi |
+| closing_costs_pct | Origination/closing fee as % of principal |
+
+**12.1b carry JSONB keys:**
+
+| Key | Notes |
+|---|---|
+| carry_type | io_only / interest_reserve / capitalized_interest / pi |
+| rate_pct | Annual carry rate (may differ from permanent rate) |
+| amort_term_years | Amortization years for pi carry type |
+
+---
+
+### 12.2 WaterfallTier
+
+Defines one distribution tier in the waterfall stack. Tiers are evaluated in priority order each period.
+
+| Column | Type | Required | Notes |
+|---|---|---|---|
+| id | UUID | Yes | PK |
+| scenario_id | UUID FK to scenarios | Yes | |
+| project_id | UUID FK to projects or None | No | Nullable during Phase 1 backfill window |
+| capital_module_id | UUID FK to capital_modules or None | No | Links tier to its funding source |
+| priority | int | Yes | Lower = higher priority |
+| tier_type | WaterfallTierType enum | Yes | See Section 13.2 |
+| irr_hurdle_pct | Numeric or None | No | Required for irr_hurdle_split type |
+| lp_split_pct | Numeric | Yes | LP share (0-100) |
+| gp_split_pct | Numeric | Yes | GP share (0-100) |
+| description | str (500) or None | No | |
+| max_pct_of_distributable | Numeric or None | No | DDF only: max % of period cash for this tier |
+| interest_rate_pct | Numeric or None | No | DDF only: accrual rate on unpaid balance |
+| updated_at | datetime | Yes | |
+
+---
+
+### 12.3 Milestone
+
+Pre-close milestones belong to an Opportunity; post-close milestones belong to a Project. Exactly one of opportunity_id / project_id must be set (DB CHECK constraint).
+
+| Column | Type | Required | Notes |
+|---|---|---|---|
+| id | UUID | Yes | PK |
+| trigger_milestone_id | UUID FK to milestones or None | No | Self-ref. If set: start = trigger.end_date + trigger_offset_days. If NULL: anchor milestone uses target_date. |
+| trigger_offset_days | int | Yes | Days after trigger end date this milestone starts. Default 0. |
+| opportunity_id | UUID FK to opportunities or None | No | Set for pre-close milestones |
+| project_id | UUID FK to projects or None | No | Set for post-close milestones |
+| milestone_type | MilestoneType enum | Yes | See Section 13.3 |
+| duration_days | int | Yes | Phase length in days; 0 = same day as trigger |
+| target_date | date or None | No | Overrides duration-based positioning when set |
+| sequence_order | int | Yes | 1-based ordering within the project milestone sequence |
+| label | str (255) or None | No | Human-readable display override |
+| created_at | datetime | Yes | |
+| updated_at | datetime | Yes | |
+
+**Computed methods (not stored, resolved at runtime):**
+- computed_start(milestone_map) - walks the trigger chain to a calendar date
+- computed_end(milestone_map) - computed_start + duration_days
+- is_anchor property - True when trigger_milestone_id is NULL
+
+**Important:** Deals created before commit 5d5caf4 may have milestones with trigger_milestone_id = NULL even though they were intended as chained. Engine falls back to OperationalInputs.*_months scalars when trigger chain is broken. One-shot backfill script needed (see Section 11 / CLAUDE.md known issues).
+
+---
+
+### 12.4 UnitMix
+
+One row per unit type per project. Optional - present only when unit-type breakdown has been entered.
+
+| Column | Type | Required | Notes |
+|---|---|---|---|
+| id | UUID | Yes | PK |
+| project_id | UUID FK to projects | Yes | ondelete=CASCADE |
+| label | str (255) | Yes | e.g. "1BR/1BA - Renovated" |
+| unit_count | int | Yes | Default 1 |
+| avg_sqft | Numeric(18,2) or None | No | |
+| beds | Numeric(4,1) or None | No | 0-4+ in 0.5 increments |
+| baths | Numeric(4,1) or None | No | 0-3+ in 0.5 increments |
+| market_rent_per_unit | Numeric(18,2) or None | No | |
+| in_place_rent_per_unit | Numeric(18,2) or None | No | Current rent; absent for vacant units |
+| unit_strategy | str or None | No | base_escalation / ltl_catchup / value_add_renovation |
+| post_reno_rent_per_unit | Numeric(18,2) or None | No | value_add_renovation strategy only |
+| notes | str or None | No | |
+| updated_at | datetime | Yes | |
+
+---
+
+### 12.5 DrawSource
+
+One row per source per project. Drives the self-referential draw-schedule engine.
+
+| Column | Type | Required | Notes |
+|---|---|---|---|
+| id | UUID | Yes | PK |
+| scenario_id | UUID FK to scenarios | Yes | ondelete=CASCADE |
+| project_id | UUID FK to projects or None | No | ondelete=CASCADE |
+| sort_order | int | Yes | Display + draw order |
+| label | str (255) | Yes | |
+| source_type | str | Yes | equity or debt |
+| draw_every_n_months | int | Yes | Default 1 |
+| annual_interest_rate | Numeric | Yes | Default 0 |
+| active_from_milestone | str (60) | Yes | Milestone key that activates draws |
+| active_to_milestone | str (60) | Yes | Milestone key that deactivates draws |
+| active_from_offset_days | int | Yes | Days offset from active_from milestone; default 0 |
+| active_to_offset_days | int | Yes | Days offset from active_to milestone; default 0 |
+| total_commitment | Numeric or None | No | None = auto-sized to total drawn |
+| funder_type | str (60) or None | No | Denormalized from CapitalModule for display |
+| capital_module_id | UUID FK to capital_modules or None | No | ondelete=SET NULL |
+| created_at | datetime | Yes | |
+
+---
+
+## 13. Enum Reference
+
+Complete valid values for all enums in the financial data model.
+
+### 13.1 FunderType
+
+| Value | Meaning |
+|---|---|
+| permanent_debt | Amortizing long-term loan, no exit trigger |
+| senior_debt | Senior secured debt (general) |
+| mezzanine_debt | Subordinated to senior debt |
+| bridge | Short-term bridge loan |
+| construction_loan | Funds construction phase |
+| pre_development_loan | Pre-closing costs (entitlements, design, due diligence) |
+| acquisition_loan | Funds acquisition phase at LTV%; sized as P = acq_costs x LTV / 100 |
+| soft_loan | Below-market governmental/nonprofit debt |
+| bond | Construction-to-perm converting loan |
+| preferred_equity | Equity with preferred return ahead of common |
+| common_equity | Common equity (LP/GP splits apply) |
+| owner_loan | Sponsor-provided debt |
+| owner_investment | Sponsor equity contribution |
+| grant | Non-repayable grant funds |
+| tax_credit | Tax credit equity (LIHTC etc.) |
+| other | Retained for backend compatibility |
+
+### 13.2 WaterfallTierType
+
+| Value | Meaning |
+|---|---|
+| debt_service | Debt service payment tier |
+| pref_return | LP preferred return (e.g. 7% on committed equity) |
+| return_of_equity | Return of LP capital contributions |
+| catch_up | GP catch-up after LP pref is met |
+| irr_hurdle_split | Split changes at IRR hurdle (e.g. 60/40 above 12%) |
+| deferred_developer_fee | Unpaid portion of developer fee paid from distributions |
+| residual | Everything remaining after higher-priority tiers exhausted |
+
+### 13.3 MilestoneType
+
+| Value | Phase | Notes |
+|---|---|---|
+| offer_made | Pre-close | Opportunity-level |
+| under_contract | Pre-close | Opportunity-level |
+| close | Pre-close | Last pre-close milestone |
+| pre_development | Post-close | Entitlements, design, permits |
+| construction | Post-close | |
+| operation_lease_up | Post-close | Income ramps toward stabilized occupancy |
+| operation_stabilized | Post-close | Fully leased; hold period |
+| divestment | Post-close | Exit event |
+
+### 13.4 UseLinePhase
+
+| Value | When used |
+|---|---|
+| acquisition | Purchase price, closing costs |
+| pre_construction | Pre-dev costs during entitlement |
+| construction | Hard costs, soft costs, contingency |
+| renovation | Reno costs for value-add |
+| conversion | Change-of-use costs |
+| operation | Reserves funded at stabilization |
+| exit | Selling costs, payoff penalties at disposition |
+| other | Catch-all |
+
+### 13.5 ProjectType / deal_type
+
+Stored on both Scenario.project_type (legacy, backward compat) and Project.deal_type (canonical - engine reads this).
+
+| Value | Strategy |
+|---|---|
+| acquisition | Stabilized acquisition / pure hold |
+| value_add | Acquire + renovate + stabilize |
+| conversion | Change-of-use conversion |
+| new_construction | Ground-up development |
+
+### 13.6 IncomeStreamType
+
+| Value |
+|---|
+| residential_rent |
+| commercial_rent |
+| parking |
+| laundry |
+| utility_water, utility_electric, utility_gas, utility_internet |
+| storage |
+| pet_fee |
+| deposit_forfeit |
+| other |
+
+### 13.7 UnitMix strategy values
+
+| Value | Behavior |
+|---|---|
+| base_escalation | Rent escalates at escalation_rate_pct_annual; no gap chasing |
+| ltl_catchup | Accelerated escalation toward catchup_target_rent; reverts to base rate once target reached |
+| value_add_renovation | Post-renovation rent is post_reno_rent_per_unit; pre-reno is in_place_rent_per_unit |
