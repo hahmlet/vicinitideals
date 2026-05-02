@@ -2841,11 +2841,9 @@ def _phase_capital_events(
     if phase.period_type == PeriodType.exit:
         sale_proceeds = ZERO
         if stabilized_noi_monthly is not None and _percent(inputs.exit_cap_rate_pct) > ZERO:
-            _exit_noi = stabilized_noi_monthly
-            if income_mode == "noi":
-                _esc_rate = _to_decimal(inputs.noi_escalation_rate_pct) if inputs.noi_escalation_rate_pct else Decimal("3")
-                _esc_period = max(0, period - first_stab_period)
-                _exit_noi = _q(stabilized_noi_monthly * _growth_factor(_esc_rate, _esc_period))
+            _esc_rate = _to_decimal(inputs.noi_escalation_rate_pct) if inputs.noi_escalation_rate_pct else Decimal("3")
+            _esc_period = max(0, period - first_stab_period)
+            _exit_noi = _q(stabilized_noi_monthly * _growth_factor(_esc_rate, _esc_period))
             sale_proceeds = _q(
                 (_exit_noi * Decimal("12")) / _percent(inputs.exit_cap_rate_pct)
             )
