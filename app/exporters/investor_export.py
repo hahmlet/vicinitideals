@@ -680,30 +680,37 @@ def _compute_deal_health(ctx: dict) -> dict[str, Any]:
     inputs_by_project: dict = ctx.get("operational_inputs") or {}
     cash_flows_by_project: dict = ctx.get("cash_flows") or {}
 
-    # Pillar 1: Stabilized Occupancy — NOI-weighted avg across projects
+    # Pillar 1: Stabilized Occupancy — NOI-weighted avg across projects.
+    # Use explicit stabilized_occupancy_pct when set; fall back to EGI ÷
+    # gross_revenue from stabilized cashflow rows when the field is blank.
+    _proj_implied_occ: dict[UUID, Decimal] = {}
+    for _pid, _cfs in cash_flows_by_project.items():
+        _gr = Decimal(0)
+        _egi_occ = Decimal(0)
+        for _cf in _cfs:
+            if str(getattr(_cf.period_type, "value", _cf.period_type) or "") == "stabilized":
+                _gr      += _coerce_decimal(_cf.gross_revenue or 0)
+                _egi_occ += _coerce_decimal(_cf.effective_gross_income or 0)
+        if _gr > Decimal(0):
+            _proj_implied_occ[_pid] = _egi_occ / _gr * Decimal(100)
+
+    def _occ_for_project(p: dict) -> Decimal:
+        pid = UUID(p["project_id"]) if p.get("project_id") else None
+        inp = inputs_by_project.get(pid) if pid else None
+        explicit = _coerce_decimal(getattr(inp, "stabilized_occupancy_pct", None) or 0)
+        return explicit if explicit > Decimal(0) else _proj_implied_occ.get(pid, Decimal(0))
+
     total_noi = _sum_per_project_field(per_project, "noi_stabilized")
     combined_occ: Decimal | None
     if total_noi > Decimal(0):
         occ_sum = sum(
-            (
-                _coerce_decimal(p.get("noi_stabilized") or 0)
-                * _coerce_decimal(
-                    getattr(
-                        inputs_by_project.get(UUID(p["project_id"])),
-                        "stabilized_occupancy_pct",
-                        0,
-                    ) or 0
-                )
-            )
+            _coerce_decimal(p.get("noi_stabilized") or 0) * _occ_for_project(p)
             for p in per_project
             if p.get("project_id")
         )
         combined_occ = occ_sum / total_noi
     else:
-        occs = [
-            _coerce_decimal(getattr(inp, "stabilized_occupancy_pct", 0) or 0)
-            for inp in inputs_by_project.values()
-        ]
+        occs = [_occ_for_project(p) for p in per_project if p.get("project_id")]
         combined_occ = sum(occs, Decimal(0)) / len(occs) if occs else None
 
     # Pillars 2 + 4: OER and Post-Debt CF Margin from stabilized CashFlow rows
