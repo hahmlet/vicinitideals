@@ -851,7 +851,7 @@ def _allocate_capital_calls(
         ),
     )
 
-    for state in ordered_states:
+    for idx, state in enumerate(ordered_states):
         if remaining <= ZERO:
             break
         if not _module_active_for_phase(state.module, phase_name):
@@ -859,7 +859,17 @@ def _allocate_capital_calls(
 
         remaining_commitment = _q(max(state.commitment - state.cumulative_contributed, ZERO))
         if remaining_commitment <= ZERO and _is_equity_module(state.module):
-            remaining_commitment = remaining
+            # Pro-rata split across uncapped active equity modules from this position forward.
+            # Without this, the first uncapped module absorbs all remaining, leaving sibling
+            # equity modules with outstanding_principal=0 and zero distributions.
+            uncapped_ahead = [
+                s for s in ordered_states[idx:]
+                if _is_equity_module(s.module)
+                and _module_active_for_phase(s.module, phase_name)
+                and _q(max(s.commitment - s.cumulative_contributed, ZERO)) <= ZERO
+            ]
+            n = Decimal(len(uncapped_ahead)) if uncapped_ahead else Decimal("1")
+            remaining_commitment = _q(remaining / n)
 
         contribution = _q(min(remaining, remaining_commitment))
         if contribution <= ZERO:

@@ -9,8 +9,10 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.pool import StaticPool
 
-from app.engines.waterfall import compute_waterfall
+from app.engines.waterfall import _allocate_capital_calls, compute_waterfall
+from app.engines.waterfall import ModuleState  # noqa: PLC2701
 from app.models.capital import CapitalModule, FunderType, WaterfallResult, WaterfallTier
+from app.schemas.capital import CapitalCarrySchema, CapitalExitSchema, CapitalSourceSchema
 from app.models.cashflow import CashFlow, OperationalOutputs, PeriodType
 from app.models.deal import DealModel, ProjectType
 from app.models.org import Organization, User
@@ -444,3 +446,70 @@ async def _seed_base_deal(session: AsyncSession) -> DealModel:
     session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id))
     await session.flush()
     return deal
+
+
+# ---------------------------------------------------------------------------
+# Unit tests for _allocate_capital_calls (pure function, no DB required)
+# ---------------------------------------------------------------------------
+
+_ZERO = Decimal("0")
+_MONEY_PLACES = Decimal("0.000001")
+
+
+def _make_equity_state(
+    funder_type: FunderType,
+    stack_position: int,
+    commitment: Decimal = _ZERO,
+) -> ModuleState:
+    module = CapitalModule(
+        id=uuid4(),
+        funder_type=funder_type,
+        stack_position=stack_position,
+        label=f"Equity {stack_position}",
+        active_phase_start=None,
+        exit_terms={"exit_type": "full_payoff", "trigger": "sale"},
+    )
+    return ModuleState(
+        module=module,
+        source=CapitalSourceSchema.model_validate({}),
+        carry=CapitalCarrySchema.model_validate({"carry_type": "none"}),
+        exit_terms=CapitalExitSchema.model_validate({"exit_type": "full_payoff", "trigger": "sale"}),
+        commitment=commitment,
+    )
+
+
+@pytest.mark.unit
+def test_single_uncapped_equity_absorbs_full_call() -> None:
+    state = _make_equity_state(FunderType.common_equity, stack_position=1)
+    allocs = _allocate_capital_calls(
+        Decimal("1000000"), "construction", [state]
+    )
+    assert allocs[state.module.id] == Decimal("1000000").quantize(_MONEY_PLACES)
+    assert state.outstanding_principal == Decimal("1000000").quantize(_MONEY_PLACES)
+
+
+@pytest.mark.unit
+def test_two_uncapped_equity_modules_split_pro_rata() -> None:
+    lp = _make_equity_state(FunderType.preferred_equity, stack_position=1)
+    gp = _make_equity_state(FunderType.common_equity, stack_position=2)
+    allocs = _allocate_capital_calls(
+        Decimal("1000000"), "construction", [lp, gp]
+    )
+    half = Decimal("500000").quantize(_MONEY_PLACES)
+    assert allocs[lp.module.id] == half, "LP should get half of uncapped call"
+    assert allocs[gp.module.id] == half, "GP should get half of uncapped call"
+    assert lp.outstanding_principal == half
+    assert gp.outstanding_principal == half
+
+
+@pytest.mark.unit
+def test_capped_lp_fills_first_uncapped_gp_absorbs_residual() -> None:
+    lp = _make_equity_state(
+        FunderType.preferred_equity, stack_position=1, commitment=Decimal("2000000")
+    )
+    gp = _make_equity_state(FunderType.common_equity, stack_position=2)
+    allocs = _allocate_capital_calls(
+        Decimal("2500000"), "construction", [lp, gp]
+    )
+    assert allocs[lp.module.id] == Decimal("2000000").quantize(_MONEY_PLACES)
+    assert allocs[gp.module.id] == Decimal("500000").quantize(_MONEY_PLACES)
