@@ -791,6 +791,11 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         _coerce_pct(_combined_irr_pct - _combined_cap_pct) if _combined_cap_pct is not None else None,
         name="s_irr_spread", registry=registry, fmt=PCT, hero=True,
     ); row += 1
+    _kv_row_optional(
+        ws, row, "Levered IRR Spread (vs RFR)",
+        _coerce_pct(_combined_irr_pct - _rfr),
+        name="s_irr_rfr_spread", registry=registry, fmt=PCT, hero=True,
+    ); row += 1
 
     # ── Scenario Sources & Uses ────────────────────────────────────────────
     su_row = row + 2
