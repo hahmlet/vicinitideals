@@ -51,6 +51,7 @@ from app.exporters._workbook_helpers import (
     FONT_VALUE,
     INT_COMMA,
     PCT,
+    PCT_1,
     THIN_BORDER,
     CellRegistry,
     freeze_top,
@@ -2421,7 +2422,7 @@ def _build_unit_mix_sheet(ws, registry: CellRegistry, ctx: dict) -> None:
     projects: list[Project] = ctx["projects"]
     unit_mix_by_project: dict[UUID, list[UnitMix]] = ctx.get("unit_mix") or {}
 
-    set_widths(ws, [28, 7, 7, 10, 8, 16, 16, 16, 22, 18, 18])
+    set_widths(ws, [28, 7, 7, 10, 8, 16, 16, 16, 10, 22, 18, 18])
     print_landscape(ws)
 
     has_any = any(unit_mix_by_project.get(p.id) for p in projects)
@@ -2439,13 +2440,13 @@ def _build_unit_mix_sheet(ws, registry: CellRegistry, ctx: dict) -> None:
         if not units:
             continue
 
-        section_label(ws, row, project.name or "Project", span_cols=11)
+        section_label(ws, row, project.name or "Project", span_cols=12)
         row += 1
         header_row(
             ws, row,
             ["Unit Type", "Beds", "Baths", "Avg SF", "Count",
-             "In-Place Rent", "Market Rent", "Rent Gap", "Strategy",
-             "Monthly Rev (In-Place)", "Monthly Rev (Market)"],
+             "In-Place Rent", "Market Rent", "Rent Gap ($)", "L-t-L %",
+             "Strategy", "Monthly Rev (In-Place)", "Monthly Rev (Market)"],
         )
         row += 1
 
@@ -2453,13 +2454,22 @@ def _build_unit_mix_sheet(ws, registry: CellRegistry, ctx: dict) -> None:
         proj_mkt_total = Decimal(0)
         proj_units_total = 0
 
+        _STRATEGY_LABELS = {
+            "base_escalation": "Base Escalation",
+            "ltl_catchup": "LTL Catchup",
+            "value_add_renovation": "Value-Add Renovation",
+        }
         for um in sorted(units, key=lambda u: (float(u.beds or 0), float(u.baths or 0))):
             count = um.unit_count or 0
             ip_rent = _coerce_decimal(um.in_place_rent_per_unit) if um.in_place_rent_per_unit else None
             mkt_rent = _coerce_decimal(um.market_rent_per_unit) if um.market_rent_per_unit else None
             sqft = _coerce_decimal(um.avg_sqft) if um.avg_sqft else None
             gap = (mkt_rent - ip_rent) if (mkt_rent is not None and ip_rent is not None) else None
-            strategy = (um.unit_strategy or "").replace("_", " ").title() or "—"
+            ltl_pct = (gap / mkt_rent) if (gap is not None and mkt_rent and mkt_rent > Decimal(0)) else None
+            strategy = _STRATEGY_LABELS.get(
+                um.unit_strategy or "",
+                (um.unit_strategy or "").replace("_", " ").title(),
+            ) or "—"
             ip_rev = (ip_rent * count) if ip_rent and count else None
             mkt_rev = (mkt_rent * count) if mkt_rent and count else None
 
@@ -2477,8 +2487,8 @@ def _build_unit_mix_sheet(ws, registry: CellRegistry, ctx: dict) -> None:
                 (5, count, INT_COMMA),
                 (6, _to_excel_number(ip_rent) if ip_rent else None, ACCOUNTING),
                 (7, _to_excel_number(mkt_rent) if mkt_rent else None, ACCOUNTING),
-                (10, _to_excel_number(ip_rev) if ip_rev else None, ACCOUNTING),
-                (11, _to_excel_number(mkt_rev) if mkt_rev else None, ACCOUNTING),
+                (11, _to_excel_number(ip_rev) if ip_rev else None, ACCOUNTING),
+                (12, _to_excel_number(mkt_rev) if mkt_rev else None, ACCOUNTING),
             ):
                 c = ws.cell(row=row, column=col, value=val)
                 c.font = FONT_VALUE
@@ -2496,15 +2506,25 @@ def _build_unit_mix_sheet(ws, registry: CellRegistry, ctx: dict) -> None:
                 gap_c.number_format = ACCOUNTING
                 gap_c.fill = FILL_RAG_GREEN if gap >= 0 else FILL_RAG_RED
 
-            ws.cell(row=row, column=9, value=strategy).font = FONT_VALUE
-            ws.cell(row=row, column=9).alignment = ALIGN_LEFT
+            ltl_c = ws.cell(
+                row=row, column=9,
+                value=_to_excel_number(ltl_pct) if ltl_pct is not None else _DASH,
+            )
+            ltl_c.font = FONT_VALUE
+            ltl_c.alignment = ALIGN_RIGHT
+            if ltl_pct is not None:
+                ltl_c.number_format = PCT_1
+                ltl_c.fill = FILL_RAG_GREEN if ltl_pct >= 0 else FILL_RAG_RED
+
+            ws.cell(row=row, column=10, value=strategy).font = FONT_VALUE
+            ws.cell(row=row, column=10).alignment = ALIGN_LEFT
             row += 1
 
         ws.cell(row=row, column=1, value=f"Total — {project.name or 'Project'}").font = FONT_LABEL
         for col, val, fmt in (
             (5, proj_units_total, INT_COMMA),
-            (10, _to_excel_number(proj_ip_total) if proj_ip_total else None, ACCOUNTING),
-            (11, _to_excel_number(proj_mkt_total) if proj_mkt_total else None, ACCOUNTING),
+            (11, _to_excel_number(proj_ip_total) if proj_ip_total else None, ACCOUNTING),
+            (12, _to_excel_number(proj_mkt_total) if proj_mkt_total else None, ACCOUNTING),
         ):
             c = ws.cell(row=row, column=col, value=val)
             c.font = FONT_HERO_VALUE
