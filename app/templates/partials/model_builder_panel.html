@@ -360,7 +360,8 @@
 {% endif %}
 {% set _baseline_rev_monthly = ns_rev.total %}
 {% set _baseline_opex_annual = ns_op.total %}
-{% set _baseline_pp = (inputs.purchase_price | float) if (inputs and inputs.purchase_price) else 0 %}
+{% set _acq_ul = (use_lines | selectattr('label', 'equalto', 'Acquisition') | list | first) if use_lines else none %}
+{% set _baseline_pp = (_acq_ul.amount | float) if _acq_ul else ((inputs.purchase_price | float) if (inputs and inputs.purchase_price) else 0) %}
 
 {% if _show_drawer %}
 
@@ -385,6 +386,12 @@
 {% set _rev_range = (((_rev_raw / _rev_step) | round(0, 'ceil')) | int) * _rev_step %}
 {% set _opex_range = (((_opex_raw / _opex_step) | round(0, 'ceil')) | int) * _opex_step %}
 {% set _pp_range = (((_pp_raw / _pp_step) | round(0, 'ceil')) | int) * _pp_step %}
+{# Guarantee range always covers the live stored adjustment — prevents browser
+   clamping when range shrinks after a compute (gap closes → gap_abs → 0). #}
+{% set _pp_amt_abs = (_pp_amt if _pp_amt >= 0 else -_pp_amt) %}
+{% set _pp_range = _pp_range if _pp_range >= _pp_amt_abs else (((_pp_amt_abs / _pp_step) | round(0, 'ceil') | int) * _pp_step) %}
+{# Snap stop: pp value that exactly closes the remaining gap (pp phantom + gap → 0). #}
+{% set _pp_snap_value = ((_pp_amt | int) - (_gap | int)) %}
 
 <div id="gap-adj-drawer" style="margin-top:24px;padding:16px;border:1px solid var(--border,#e5e7eb);border-radius:8px;background:var(--surface-2,#f9fafb)">
   <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
@@ -392,7 +399,7 @@
     <button type="button"
             onclick="resetGapSliders('{{ model.id }}')"
             style="font-size:11px;padding:2px 10px;background:transparent;border:1px solid var(--border,#e5e7eb);border-radius:4px;color:var(--text-muted);cursor:pointer">
-      Reset all
+      Reset and Recalc
     </button>
   </div>
   <p style="font-size:11px;color:var(--text-muted);margin:0 0 16px">
@@ -444,7 +451,7 @@
              id="gap-slider-pp"
              min="-{{ _pp_range }}" max="{{ _pp_range }}" step="{{ _pp_step }}"
              value="{{ _pp_amt | int }}"
-             oninput="onGapSlide('pp', this.value, {{ _baseline_pp }})"
+             oninput="onPpSlide(this.value, {{ _baseline_pp }})"
              onchange="postGapSliders('{{ model.id }}')"
              style="width:100%">
       <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-muted)">
@@ -477,6 +484,25 @@
     var delta = parseFloat(value);
     el.textContent = fmtUSD(delta) + fmtPct(delta, baseline);
   };
+
+  // PP-specific slider handler with gap-close snap stop.
+  // First drag past the snap point stops at it; a second drag passes through.
+  // Snap re-arms each panel render (i.e. after other sliders trigger a refresh).
+  var _ppSnapValue = {{ _pp_snap_value }};
+  var _ppSnapArmed = {{ 'true' if _gap > 0 and _pp_snap_value < (_pp_amt | int) else 'false' }};
+  var _ppPrevValue = {{ _pp_amt | int }};
+  window.onPpSlide = function(rawValue, baseline) {
+    var v = parseFloat(rawValue);
+    var slider = document.getElementById('gap-slider-pp');
+    if (_ppSnapArmed && _ppPrevValue > _ppSnapValue && v <= _ppSnapValue) {
+      slider.value = _ppSnapValue;
+      v = _ppSnapValue;
+      _ppSnapArmed = false;
+    }
+    _ppPrevValue = v;
+    window.onGapSlide('pp', v, baseline);
+  };
+
   // Initialize displays from current slider values on partial load.
   ['rev', 'opex', 'pp'].forEach(function(kind) {
     var slider = document.getElementById('gap-slider-' + kind);

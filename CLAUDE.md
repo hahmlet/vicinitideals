@@ -330,3 +330,5 @@ Parent owns final synthesis. User instructions override these rules.
 | Find large or complex functions | `mcp__code-review-graph__find_large_functions_tool` |
 
 Use Grep/Glob only when: searching template/HTML files (not parsed by Tree-sitter), doing exact string matches in non-Python files, or when the graph returns no results. Always try graph first.
+
+**Skip graph immediately** for UI/template concepts — go straight to Grep on `app/templates/`: drawer, slider, modal, panel, button, checkbox, badge, pill, HTMX attribute (`hx-`, `hx_`), Jinja2 variable/block names. These live in `.html` files the graph does not index.
