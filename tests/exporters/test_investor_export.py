@@ -355,6 +355,8 @@ _NAMED_RANGE_ALIASES: tuple[tuple[re.Pattern[str], str], ...] = (
     # but the underlying metric is Levered IRR.
     (re.compile(r"^r_sensitivity_grid$"), "Levered IRR"),
     (re.compile(r"^r_sensitivity_grid_em$"), "Equity Multiple"),
+    # Investor Returns sheet combined EM aggregate
+    (re.compile(r"^s_returns_combined_em$"), "Equity Multiple"),
 )
 
 

@@ -367,6 +367,7 @@ async def rollup_summary(
         except Exception:
             pass
     combined_irr = await rollup_irr(scenario_id, session)
+    combined_em = await rollup_em(scenario_id, session)
     return {
         "per_project": per_project,
         "totals": {
@@ -374,5 +375,6 @@ async def rollup_summary(
             "total_uses": total_uses,
             "equity_required": total_eq,
             "combined_irr_pct": combined_irr,
+            "combined_em_x": combined_em,
         },
     }

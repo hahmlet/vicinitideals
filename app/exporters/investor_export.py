@@ -1946,6 +1946,13 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
         name="s_returns_combined_irr", registry=registry, fmt=PCT,
     ); cur_row += 1
 
+    em_raw = _coerce_decimal(totals.get("combined_em_x") or 0)
+    kv_row(
+        ws, cur_row, "Combined Equity Multiple (scenario)",
+        em_raw if em_raw > 0 else None,
+        name="s_returns_combined_em", registry=registry, fmt='0.00"×"',
+    ); cur_row += 1
+
     by_tier = _waterfall_by_tier(rollup)
     pref_total = by_tier.get("pref_return", {}).get("cash_total", Decimal(0))
     catch_up_total = by_tier.get("catch_up", {}).get("cash_total", Decimal(0))
