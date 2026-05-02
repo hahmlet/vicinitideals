@@ -131,6 +131,12 @@ async def export_investor_workbook(
     investor_returns = wb.create_sheet("Investor Returns")
     _build_investor_returns(investor_returns, registry, ctx)
 
+    waterfall_ws = wb.create_sheet("Waterfall")
+    _build_waterfall_sheet(waterfall_ws, registry, ctx)
+
+    unit_mix_ws = wb.create_sheet("Unit Mix")
+    _build_unit_mix_sheet(unit_mix_ws, registry, ctx)
+
     debt_schedule = wb.create_sheet("Debt Schedule")
     _build_debt_schedule(debt_schedule, registry, ctx)
 
@@ -2274,15 +2280,6 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
         ).font = FONT_HINT
         ws.merge_cells(start_row=cur_row, start_column=1, end_row=cur_row, end_column=8)
 
-    # ── Waterfall Structure ───────────────────────────────────────────────
-    # Pref → Catch-up → Promote tier breakdown. Always renders the full
-    # canonical structure even when no tiers are configured — shows the
-    # LP what the deal *would* look like with a real waterfall and makes
-    # an undefined waterfall obviously absent rather than silently empty.
-    cur_row = _build_waterfall_structure(
-        ws, registry, cur_row + 2, ctx,
-    )
-
     freeze_top(ws, row=3)
     print_landscape(ws)
 
@@ -2323,10 +2320,11 @@ def _build_waterfall_structure(
     waterfall_tiers: list[WaterfallTier] = ctx.get("waterfall_tiers") or []
     rollup: list[dict] = ctx.get("rollup_waterfall") or []
 
-    section_label(ws, start_row, "Waterfall Structure", span_cols=6)
+    section_label(ws, start_row, "Waterfall Structure", span_cols=8)
     header_row(
         ws, start_row + 1,
-        ["Priority", "Tier Type", "IRR Hurdle", "LP Split", "GP Split", "Total Distributed"],
+        ["Priority", "Tier Type", "IRR Hurdle", "LP Split", "GP Split",
+         "Total Distributed", "LP Amount", "GP Amount"],
     )
 
     # Pre-aggregate distributions per tier_id from the rollup.
@@ -2370,6 +2368,14 @@ def _build_waterfall_structure(
                 name=f"s_waterfall_tier_{tier_idx}_distributed", fmt=ACCOUNTING,
                 font=FONT_VALUE, align=ALIGN_RIGHT,
             )
+            lp_pct_d = _coerce_decimal(tier.lp_split_pct or 0)
+            gp_pct_d = _coerce_decimal(tier.gp_split_pct or 0)
+            lp_amt = distributed * lp_pct_d / Decimal(100)
+            gp_amt = distributed * gp_pct_d / Decimal(100)
+            lp_c = ws.cell(row=cur, column=7, value=_to_excel_number(lp_amt))
+            lp_c.number_format = ACCOUNTING; lp_c.font = FONT_VALUE; lp_c.alignment = ALIGN_RIGHT
+            gp_c = ws.cell(row=cur, column=8, value=_to_excel_number(gp_amt))
+            gp_c.number_format = ACCOUNTING; gp_c.font = FONT_VALUE; gp_c.alignment = ALIGN_RIGHT
             cur += 1
     else:
         # Unconfigured — render canonical structure with $0 placeholders.
@@ -2384,6 +2390,8 @@ def _build_waterfall_structure(
                 name=f"s_waterfall_tier_{tier_idx}_distributed", fmt=ACCOUNTING,
                 font=FONT_VALUE, align=ALIGN_RIGHT,
             )
+            ws.cell(row=cur, column=7, value=_DASH).font = FONT_VALUE
+            ws.cell(row=cur, column=8, value=_DASH).font = FONT_VALUE
             cur += 1
         cur += 1
         ws.cell(
@@ -2398,6 +2406,116 @@ def _build_waterfall_structure(
         cur += 1
 
     return cur
+
+
+def _build_waterfall_sheet(ws, registry: CellRegistry, ctx: dict) -> None:
+    """Dedicated Waterfall sheet — tier structure and LP / GP distributions."""
+    set_widths(ws, [10, 32, 12, 10, 10, 18, 18, 18])
+    print_landscape(ws)
+    _build_waterfall_structure(ws, registry, 1, ctx)
+    freeze_top(ws, row=3)
+
+
+def _build_unit_mix_sheet(ws, registry: CellRegistry, ctx: dict) -> None:
+    """Unit Mix — per-project breakdown of unit types, rents, and gap."""
+    projects: list[Project] = ctx["projects"]
+    unit_mix_by_project: dict[UUID, list[UnitMix]] = ctx.get("unit_mix") or {}
+
+    set_widths(ws, [28, 7, 7, 10, 8, 16, 16, 16, 22, 18, 18])
+    print_landscape(ws)
+
+    has_any = any(unit_mix_by_project.get(p.id) for p in projects)
+    if not has_any:
+        ws.cell(row=1, column=1, value="No unit mix configured.").font = FONT_HINT
+        ws.cell(row=2, column=1, value=(
+            "Add unit types in Project Setup to enable per-type rent and "
+            "loss-to-lease analysis."
+        )).font = FONT_HINT
+        return
+
+    row = 1
+    for project in projects:
+        units = unit_mix_by_project.get(project.id) or []
+        if not units:
+            continue
+
+        section_label(ws, row, project.name or "Project", span_cols=11)
+        row += 1
+        header_row(
+            ws, row,
+            ["Unit Type", "Beds", "Baths", "Avg SF", "Count",
+             "In-Place Rent", "Market Rent", "Rent Gap", "Strategy",
+             "Monthly Rev (In-Place)", "Monthly Rev (Market)"],
+        )
+        row += 1
+
+        proj_ip_total = Decimal(0)
+        proj_mkt_total = Decimal(0)
+        proj_units_total = 0
+
+        for um in sorted(units, key=lambda u: (float(u.beds or 0), float(u.baths or 0))):
+            count = um.unit_count or 0
+            ip_rent = _coerce_decimal(um.in_place_rent_per_unit) if um.in_place_rent_per_unit else None
+            mkt_rent = _coerce_decimal(um.market_rent_per_unit) if um.market_rent_per_unit else None
+            sqft = _coerce_decimal(um.avg_sqft) if um.avg_sqft else None
+            gap = (mkt_rent - ip_rent) if (mkt_rent is not None and ip_rent is not None) else None
+            strategy = (um.unit_strategy or "").replace("_", " ").title() or "—"
+            ip_rev = (ip_rent * count) if ip_rent and count else None
+            mkt_rev = (mkt_rent * count) if mkt_rent and count else None
+
+            proj_ip_total += ip_rev or Decimal(0)
+            proj_mkt_total += mkt_rev or Decimal(0)
+            proj_units_total += count
+
+            ws.cell(row=row, column=1, value=um.label or "—").font = FONT_LABEL
+            ws.cell(row=row, column=1).alignment = ALIGN_LEFT
+
+            for col, val, fmt in (
+                (2, float(um.beds) if um.beds is not None else None, None),
+                (3, float(um.baths) if um.baths is not None else None, None),
+                (4, _to_excel_number(sqft) if sqft else None, INT_COMMA),
+                (5, count, INT_COMMA),
+                (6, _to_excel_number(ip_rent) if ip_rent else None, ACCOUNTING),
+                (7, _to_excel_number(mkt_rent) if mkt_rent else None, ACCOUNTING),
+                (10, _to_excel_number(ip_rev) if ip_rev else None, ACCOUNTING),
+                (11, _to_excel_number(mkt_rev) if mkt_rev else None, ACCOUNTING),
+            ):
+                c = ws.cell(row=row, column=col, value=val)
+                c.font = FONT_VALUE
+                c.alignment = ALIGN_RIGHT
+                if fmt:
+                    c.number_format = fmt
+
+            gap_c = ws.cell(
+                row=row, column=8,
+                value=_to_excel_number(gap) if gap is not None else _DASH,
+            )
+            gap_c.font = FONT_VALUE
+            gap_c.alignment = ALIGN_RIGHT
+            if gap is not None:
+                gap_c.number_format = ACCOUNTING
+                gap_c.fill = FILL_RAG_GREEN if gap >= 0 else FILL_RAG_RED
+
+            ws.cell(row=row, column=9, value=strategy).font = FONT_VALUE
+            ws.cell(row=row, column=9).alignment = ALIGN_LEFT
+            row += 1
+
+        ws.cell(row=row, column=1, value=f"Total — {project.name or 'Project'}").font = FONT_LABEL
+        for col, val, fmt in (
+            (5, proj_units_total, INT_COMMA),
+            (10, _to_excel_number(proj_ip_total) if proj_ip_total else None, ACCOUNTING),
+            (11, _to_excel_number(proj_mkt_total) if proj_mkt_total else None, ACCOUNTING),
+        ):
+            c = ws.cell(row=row, column=col, value=val)
+            c.font = FONT_HERO_VALUE
+            c.fill = FILL_HERO
+            c.alignment = ALIGN_RIGHT
+            if fmt:
+                c.number_format = fmt
+        row += 2
+
+    freeze_top(ws, row=3)
+    _ = registry  # reserved for future per-row named ranges
 
 
 # ── Per-project sheets (commit 3) ─────────────────────────────────────────────
