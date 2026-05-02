@@ -1318,22 +1318,36 @@ stabilization NOI ÷ TPC) is the more comparable number for value-add deals.
 
 ### Exit Cap Rate [investor, lender, app]
 
-**Definition.** The cap rate applied to stabilized NOI at exit to derive the
-sale value of the asset.
+**Definition.** The cap rate applied to exit-year NOI to derive the sale
+value of the asset.
 
 **Calculation.**
 ```
-exit_value = NOI_at_exit / exit_cap_rate
+months_to_exit   = exit_period - first_stabilized_period
+NOI_at_exit      = stabilized_noi_monthly
+                   × (1 + noi_escalation_rate_pct/100) ^ (months_to_exit/12)
+                   × 12
+exit_value       = NOI_at_exit / exit_cap_rate
 ```
 
-**Engine source.** `OperationalInputs.exit_cap_rate_pct`, used by the
-exit-period capital event to compute sale proceeds and by LTV-based debt
-sizing to compute property value.
+`stabilized_noi_monthly` is the NOI at the *first* stabilized period (year-1
+anchor). The engine grows it forward to the exit period using
+`noi_escalation_rate_pct` regardless of income mode (`revenue_opex` or
+`noi`). This means the sensitivity matrix correctly produces distinct IRR
+values across the rent-growth axis — the exit price changes as NOI growth
+changes.
+
+**Engine source.** `OperationalInputs.exit_cap_rate_pct` and
+`OperationalInputs.noi_escalation_rate_pct` (default 3%), used by
+`_phase_capital_events` in `cashflow.py`.
 
 **Notes / edge cases.** Default LTV property value uses the *going-in* cap; refi
 LTV uses `source.refi_cap_rate_pct` when set, otherwise falls back to the
 exit cap. Conservative convention: assume no cap-rate compression unless the
-analyst explicitly models it.
+analyst explicitly models it. The Underwriting Summary "Valuation
+Reconciliation" block uses year-1 `NOI_stabilized` (not the escalated exit
+NOI) — that is intentional; it shows the going-in direct-cap value as a
+cross-check, not the modeled exit price.
 
 ### DSCR (Debt Service Coverage Ratio) [investor, lender, app]
 
