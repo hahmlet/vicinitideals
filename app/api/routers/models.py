@@ -814,12 +814,14 @@ async def _upsert_revenue_phantom(
     )).scalar_one_or_none()
     if existing is not None:
         existing.amount_fixed_monthly = monthly_amount
+        existing.stabilized_occupancy_pct = Decimal("100")
         return existing
     row = IncomeStream(
         project_id=project_id,
         stream_type="other",
         label=REVENUE_ADJUSTMENT_LABEL,
         amount_fixed_monthly=monthly_amount,
+        stabilized_occupancy_pct=Decimal("100"),  # slider value = exact NOI delta
         # Active in operating phases only — adjustment to stabilized NOI.
         active_in_phases=["lease_up", "stabilized", "exit"],
     )
