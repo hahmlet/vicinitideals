@@ -79,6 +79,7 @@ from app.models.deal import (
 )
 from app.models.org import Organization
 from app.models.project import Project
+from app.config import settings as _app_settings
 
 # Hard cap from the plan; enforced upstream so we never need 3-digit ordinals.
 MAX_PROJECTS_PER_SCENARIO = 5
@@ -371,6 +372,11 @@ async def _load_all(session: AsyncSession, scenario_id: UUID) -> dict | None:
         "rollup_summary": summary,
         "rollup_waterfall": waterfall_rollup,
         "snapshot_at": datetime.now(),
+        "risk_free_rate_pct": (
+            Decimal(str(scenario.risk_free_rate_pct))
+            if scenario.risk_free_rate_pct is not None
+            else Decimal(str(_app_settings.default_risk_free_rate_pct))
+        ),
     }
 
 
@@ -750,6 +756,40 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         coc_y1,
         name="s_coc_year_one", registry=registry,
         fmt=PCT, hero=True,
+    ); row += 1
+
+    # ── Spread Stack ──────────────────────────────────────────────────────────
+    # Three rows anchoring risk-adjusted return context:
+    #   RFR → Cap Rate (unlevered going-in premium over T-bill)
+    #   Cap Rate → Levered IRR (execution / leverage premium)
+    row += 1
+    section_label(ws, row, "Spread Stack", span_cols=2)
+    row += 1
+    _rfr = _coerce_decimal(ctx.get("risk_free_rate_pct") or Decimal("4.25"))
+    _tpc = _coerce_decimal(totals.get("total_project_cost") or 0)
+    _noi = _sum_per_project_field(per_project, "noi_stabilized")
+    _combined_cap_pct: Decimal | None = (
+        (_noi / _tpc * Decimal(100)) if _tpc > 0 else None
+    )
+    _combined_irr_pct = _coerce_decimal(totals.get("combined_irr_pct") or 0)
+    kv_row(
+        ws, row, "Risk-Free Rate (10Y Treasury)", _coerce_pct(_rfr),
+        name="s_rfr_pct", registry=registry, fmt=PCT, hero=True,
+    ); row += 1
+    _kv_row_optional(
+        ws, row, "Cap Rate on Cost",
+        _coerce_pct(_combined_cap_pct) if _combined_cap_pct is not None else None,
+        name="s_spread_cap_pct", registry=registry, fmt=PCT, hero=True,
+    ); row += 1
+    _kv_row_optional(
+        ws, row, "Cap Rate Spread (vs RFR)",
+        _coerce_pct(_combined_cap_pct - _rfr) if _combined_cap_pct is not None else None,
+        name="s_cap_rate_spread", registry=registry, fmt=PCT, hero=True,
+    ); row += 1
+    _kv_row_optional(
+        ws, row, "Levered IRR Spread (vs Cap Rate)",
+        _coerce_pct(_combined_irr_pct - _combined_cap_pct) if _combined_cap_pct is not None else None,
+        name="s_irr_spread", registry=registry, fmt=PCT, hero=True,
     ); row += 1
 
     # ── Scenario Sources & Uses ────────────────────────────────────────────

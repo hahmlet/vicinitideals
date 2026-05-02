@@ -141,6 +141,14 @@ class Settings(BaseSettings):
     loopnet_use_bulk_triage: bool = True
 
     # -------------------------------------------------------------------------
+    # Financial model defaults
+    # -------------------------------------------------------------------------
+    # Risk-free rate (10Y Treasury) used in the Spread Stack export KPIs.
+    # Applied when scenario.risk_free_rate_pct is NULL. Override per-deal
+    # in scenario settings when the rate environment shifts significantly.
+    default_risk_free_rate_pct: float = 4.25
+
+    # -------------------------------------------------------------------------
     # Alembic / migrations
     # -------------------------------------------------------------------------
     # Sync DSN used only by Alembic CLI (asyncpg cannot be used synchronously)
