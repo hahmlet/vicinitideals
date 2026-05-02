@@ -923,7 +923,20 @@ async def update_gap_adjustment_sliders(
         await _upsert_pp_phantom(session, project.id, payload.pp_delta)
 
     await session.flush()
-    await compute_cash_flows(deal_model_id=model_id, session=session)
+
+    # Two-pass compute for DSCR-capped deals: a single pass sizes debt from
+    # the previously stored NOI estimate; the second pass re-sizes with the
+    # actual computed NOI, converging DSCR to the minimum. Matches the
+    # fix-point logic in the /compute endpoint so Reset+Recalc doesn't leave
+    # DSCR below the minimum.
+    _inputs = (await session.execute(
+        select(OperationalInputs).where(OperationalInputs.project_id == project.id)
+    )).scalar_one_or_none()
+    _sizing_mode = _inputs.debt_sizing_mode if _inputs else None
+    _passes = 2 if _sizing_mode in {"dscr_capped", "dual_constraint"} else 1
+    for _ in range(_passes):
+        await compute_cash_flows(deal_model_id=model_id, session=session)
+
     await session.commit()
 
     # Read back the post-compute metrics + the resolved deltas for echo.

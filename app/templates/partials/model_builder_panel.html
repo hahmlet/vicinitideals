@@ -1,6 +1,11 @@
 {# Active module content panel — included by model_builder.html and swapped via HTMX #}
 {# All mutations post to /api/... JSON endpoints; on success, refreshPanel() fetches this partial #}
 
+{# Gap-adjustment phantom row labels — defined here so revenue/opex panels can highlight them. #}
+{% set _GAP_REV_LBL = 'Gap Adjustment — Revenue' %}
+{% set _GAP_OPEX_LBL = 'Gap Adjustment — OpEx' %}
+{% set _GAP_PP_LBL = 'Gap Adjustment — Purchase Price' %}
+
 {% if active_module == 'property' %}
 
 <div class="module-panel-header">
@@ -322,9 +327,9 @@
 </div>{# /grid #}
 
 {# ── Gap Adjustment drawer — three sliders that materialize phantom line items ── #}
-{% set _REV_LBL = 'Gap Adjustment — Revenue' %}
-{% set _OPEX_LBL = 'Gap Adjustment — OpEx' %}
-{% set _PP_LBL = 'Gap Adjustment — Purchase Price' %}
+{% set _REV_LBL = _GAP_REV_LBL %}
+{% set _OPEX_LBL = _GAP_OPEX_LBL %}
+{% set _PP_LBL = _GAP_PP_LBL %}
 {% set _rev_phantom = (income_streams | selectattr('label', 'equalto', _REV_LBL) | list | first) if income_streams else none %}
 {% set _opex_phantom = (expense_lines | selectattr('label', 'equalto', _OPEX_LBL) | list | first) if expense_lines else none %}
 {% set _pp_phantom = (use_lines | selectattr('label', 'equalto', _PP_LBL) | list | first) if use_lines else none %}
@@ -842,7 +847,10 @@
       {% for s in income_streams %}
       {% set monthly = (s.unit_count or 1) * (s.amount_per_unit_monthly or s.amount_fixed_monthly or 0) * ((s.stabilized_occupancy_pct or 95) / 100) %}
       {% set annual = monthly * 12 %}
-      <tr onclick="openEditLine('income_streams', '{{ s.id }}', '{{ model.id }}')">
+      {%- set _is_rev_gap = (s.label == _GAP_REV_LBL) -%}
+      {%- set _rev_gap_active = _is_rev_gap and s.amount_fixed_monthly and (s.amount_fixed_monthly | float) != 0 -%}
+      <tr onclick="openEditLine('income_streams', '{{ s.id }}', '{{ model.id }}')"
+          {% if _rev_gap_active %}style="background:#fef3c7"{% elif _is_rev_gap %}style="background:#f3f4f6"{% endif %}>
         <td style="font-weight:500">{{ s.label }}</td>
         <td><span class="text-small text-muted">{{ s.stream_type | replace('_', ' ') | title }}</span></td>
         <td class="col-right">{{ s.unit_count or '—' }}</td>
@@ -900,7 +908,10 @@
     </thead>
     <tbody>
       {% for e in expense_lines %}
-      <tr onclick="openEditLine('expense_lines', '{{ e.id }}', '{{ model.id }}')">
+      {%- set _is_opex_gap = (e.label == _GAP_OPEX_LBL) -%}
+      {%- set _opex_gap_active = _is_opex_gap and e.annual_amount and (e.annual_amount | float) != 0 -%}
+      <tr onclick="openEditLine('expense_lines', '{{ e.id }}', '{{ model.id }}')"
+          {% if _opex_gap_active %}style="background:#fef3c7"{% elif _is_opex_gap %}style="background:#f3f4f6"{% endif %}>
         <td>
           <span style="font-weight:500">{{ e.label }}</span>
           {% if e.notes %}<div class="text-small text-muted" style="margin-top:2px">{{ e.notes }}</div>{% endif %}
