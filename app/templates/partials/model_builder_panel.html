@@ -532,7 +532,7 @@
     var body = {
       revenue_delta_monthly: rev ? rev.value : '0',
       opex_delta_annual: opex ? opex.value : '0',
-      pp_delta: pp ? pp.value : '0'
+      pp_delta: _ppSnapStuck ? String(_ppSnapValue) : (pp ? pp.value : '0')
     };
     // Multi-project: phantom rows must land on the project the user is
     // viewing, not the scenario's default (first) project.
@@ -551,6 +551,8 @@
           alert('Slider update failed (' + r.status + '). Check console.');
         });
       }
+      _ppSnapStuck = false;
+      document.body.dispatchEvent(new CustomEvent('calcStatusChanged'));
       if (typeof refreshPanel === 'function') refreshPanel('sources_uses');
     }).catch(function(err) {
       console.error('gap sliders POST network error:', err);
@@ -578,6 +580,7 @@
           alert('Reset failed (' + r.status + '). Check console.');
         });
       }
+      document.body.dispatchEvent(new CustomEvent('calcStatusChanged'));
       if (typeof refreshPanel === 'function') refreshPanel('sources_uses');
     }).catch(function(err) {
       console.error('zeroGapAdjRow network error:', err);
