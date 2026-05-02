@@ -66,6 +66,9 @@ FONT_LINK = Font(name="Calibri", size=10, color=BRAND["link_green"], underline="
 FILL_SECTION = PatternFill("solid", fgColor=BRAND["navy"])
 FILL_HEADER = PatternFill("solid", fgColor=BRAND["slate"])
 FILL_HERO = PatternFill("solid", fgColor=BRAND["fog"])
+FILL_RAG_GREEN  = PatternFill("solid", fgColor="C8E6C9")
+FILL_RAG_YELLOW = PatternFill("solid", fgColor="FFF9C4")
+FILL_RAG_RED    = PatternFill("solid", fgColor="FFCDD2")
 
 ALIGN_LEFT = Alignment(horizontal="left", vertical="center")
 ALIGN_RIGHT = Alignment(horizontal="right", vertical="center")

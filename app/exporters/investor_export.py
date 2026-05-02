@@ -22,6 +22,7 @@ import re
 from datetime import datetime
 from decimal import Decimal
 from io import BytesIO
+from typing import Any
 from uuid import UUID
 
 from openpyxl import Workbook
@@ -37,6 +38,9 @@ from app.exporters._workbook_helpers import (
     BRAND,
     DATE_FMT,
     FILL_HERO,
+    FILL_RAG_GREEN,
+    FILL_RAG_RED,
+    FILL_RAG_YELLOW,
     FONT_HERO_VALUE,
     FONT_HINT,
     FONT_INPUT,
@@ -642,6 +646,222 @@ def _aggregate_scenario_annual(
     return combined
 
 
+# ── Deal Health helpers ───────────────────────────────────────────────────────
+
+_RAG_FILLS = {
+    "green":  FILL_RAG_GREEN,
+    "yellow": FILL_RAG_YELLOW,
+    "red":    FILL_RAG_RED,
+}
+_RAG_SYMBOL = {"green": "✓", "yellow": "!", "red": "✗"}
+
+
+def _occ_rag(v: float) -> str:
+    return "green" if v >= 93 else "yellow" if v >= 88 else "red"
+
+
+def _oer_rag(v: float) -> str:
+    return "green" if v <= 45 else "yellow" if v <= 55 else "red"
+
+
+def _dscr_rag(v: float) -> str:
+    return "green" if v >= 1.25 else "yellow" if v >= 1.15 else "red"
+
+
+def _margin_rag(v: float) -> str:
+    return "green" if v >= 10 else "yellow" if v >= 5 else "red"
+
+
+def _compute_deal_health(ctx: dict) -> dict[str, Any]:
+    """Compute 4-pillar health signals and archetype + IRR band classification."""
+    scenario = ctx["scenario"]
+    per_project: list[dict] = (ctx.get("rollup_summary") or {}).get("per_project") or []
+    totals: dict = (ctx.get("rollup_summary") or {}).get("totals") or {}
+    inputs_by_project: dict = ctx.get("operational_inputs") or {}
+    cash_flows_by_project: dict = ctx.get("cash_flows") or {}
+
+    # Pillar 1: Stabilized Occupancy — NOI-weighted avg across projects
+    total_noi = _sum_per_project_field(per_project, "noi_stabilized")
+    combined_occ: Decimal | None
+    if total_noi > Decimal(0):
+        occ_sum = sum(
+            (
+                _coerce_decimal(p.get("noi_stabilized") or 0)
+                * _coerce_decimal(
+                    getattr(
+                        inputs_by_project.get(UUID(p["project_id"])),
+                        "stabilized_occupancy_pct",
+                        0,
+                    ) or 0
+                )
+            )
+            for p in per_project
+            if p.get("project_id")
+        )
+        combined_occ = occ_sum / total_noi
+    else:
+        occs = [
+            _coerce_decimal(getattr(inp, "stabilized_occupancy_pct", 0) or 0)
+            for inp in inputs_by_project.values()
+        ]
+        combined_occ = sum(occs, Decimal(0)) / len(occs) if occs else None
+
+    # Pillars 2 + 4: OER and Post-Debt CF Margin from stabilized CashFlow rows
+    total_opex = Decimal(0)
+    total_egi = Decimal(0)
+    total_ncf = Decimal(0)
+    for cfs in cash_flows_by_project.values():
+        for cf in cfs:
+            if str(getattr(cf.period_type, "value", cf.period_type) or "") == "stabilized":
+                total_opex += _coerce_decimal(cf.operating_expenses or 0)
+                total_egi  += _coerce_decimal(cf.effective_gross_income or 0)
+                total_ncf  += _coerce_decimal(cf.net_cash_flow or 0)
+    combined_oer: Decimal | None = (
+        (total_opex / total_egi * Decimal(100)) if total_egi > Decimal(0) else None
+    )
+    ncf_margin: Decimal | None = (
+        (total_ncf / total_egi * Decimal(100)) if total_egi > Decimal(0) else None
+    )
+
+    # Pillar 3: DSCR
+    dscr = _combined_dscr(per_project)
+
+    # Archetype: deal_type primary; occupancy + OER split acquisition into Core / Core-Plus
+    deal_type = str(getattr(scenario.project_type, "value", scenario.project_type) or "")
+    occ_f = float(combined_occ) if combined_occ is not None else 0.0
+    oer_f = float(combined_oer) if combined_oer is not None else 50.0
+
+    if deal_type in ("conversion", "new_construction"):
+        archetype, irr_lo, irr_hi = "Opportunistic", 15.0, None
+    elif deal_type == "value_add":
+        archetype, irr_lo, irr_hi = "Value-Add", 11.0, 15.0
+    elif deal_type == "acquisition":
+        if occ_f >= 92.0 and oer_f <= 42.0:
+            archetype, irr_lo, irr_hi = "Core", 6.0, 8.0
+        else:
+            archetype, irr_lo, irr_hi = "Core-Plus", 8.0, 11.0
+    else:
+        archetype, irr_lo, irr_hi = "Value-Add", 11.0, 15.0
+
+    combined_irr = float(_coerce_decimal(totals.get("combined_irr_pct") or 0))
+    irr_flag = combined_irr < irr_lo or (irr_hi is not None and combined_irr > irr_hi)
+
+    return {
+        "occupancy_pct": combined_occ,
+        "oer_pct": combined_oer,
+        "dscr": dscr,
+        "ncf_margin_pct": ncf_margin,
+        "archetype": archetype,
+        "irr_lo": irr_lo,
+        "irr_hi": irr_hi,
+        "irr_flag": irr_flag,
+        "combined_irr_pct": Decimal(str(combined_irr)),
+    }
+
+
+def _write_deal_health_section(
+    ws, row: int, registry: CellRegistry, health: dict[str, Any]
+) -> int:
+    """Write Deal Health block starting at `row`. Returns first row after block."""
+    section_label(ws, row, "Deal Health", span_cols=4)
+    row += 1
+
+    def _pillar(
+        label: str,
+        value: Any,
+        fmt: str,
+        rag: str | None,
+        note: str,
+        name: str,
+    ) -> None:
+        nonlocal row
+        ws.cell(row=row, column=1, value=label).font = FONT_LABEL
+        ws.cell(row=row, column=1).alignment = ALIGN_LEFT
+        if value is None:
+            ws.cell(row=row, column=2, value="—").font = FONT_VALUE
+        else:
+            cv = ws.cell(row=row, column=2)
+            cv.value = _to_excel_number(value)
+            cv.number_format = fmt
+            cv.font = FONT_VALUE
+            cv.alignment = ALIGN_RIGHT
+        if rag is not None:
+            cs = ws.cell(row=row, column=3, value=_RAG_SYMBOL[rag])
+            cs.fill = _RAG_FILLS[rag]
+            cs.font = FONT_VALUE
+            cs.alignment = ALIGN_RIGHT
+        ws.cell(row=row, column=4, value=note).font = FONT_HINT
+        registry.register(name, ws.title, row, 2)
+        row += 1
+
+    occ = health["occupancy_pct"]
+    _pillar(
+        "Stabilized Occupancy",
+        _coerce_pct(occ) if occ is not None else None,
+        PCT,
+        _occ_rag(float(occ)) if occ is not None else None,
+        "≥ 93% green · 88–93% yellow · <88% red",
+        "dh_occupancy",
+    )
+    oer = health["oer_pct"]
+    _pillar(
+        "Operating Expense Ratio",
+        _coerce_pct(oer) if oer is not None else None,
+        PCT,
+        _oer_rag(float(oer)) if oer is not None else None,
+        "≤ 45% green · 45–55% yellow · >55% red",
+        "dh_oer",
+    )
+    dscr_v = _coerce_decimal(health["dscr"]) if health["dscr"] is not None else None
+    _pillar(
+        "DSCR",
+        float(dscr_v) if dscr_v is not None else None,
+        "0.00",
+        _dscr_rag(float(dscr_v)) if dscr_v is not None else None,
+        "≥ 1.25× green · 1.15–1.25× yellow · <1.15× red",
+        "dh_dscr",
+    )
+    margin = health["ncf_margin_pct"]
+    _pillar(
+        "Post-Debt CF Margin (NCF / EGI)",
+        _coerce_pct(margin) if margin is not None else None,
+        PCT,
+        _margin_rag(float(margin)) if margin is not None else None,
+        "≥ 10% green · 5–10% yellow · <5% red",
+        "dh_ncf_margin",
+    )
+
+    row += 1  # blank separator before archetype row
+
+    arch = health["archetype"]
+    irr_lo = health["irr_lo"]
+    irr_hi = health["irr_hi"]
+    irr_pct = float(health["combined_irr_pct"])
+    irr_flag = health["irr_flag"]
+    band_str = f"{irr_lo:.0f}–{irr_hi:.0f}%" if irr_hi is not None else f"≥{irr_lo:.0f}%"
+    irr_note = (
+        f"⚠ IRR {irr_pct:.1f}% outside {arch} band ({band_str})"
+        if irr_flag
+        else f"✓ IRR {irr_pct:.1f}% within {arch} band ({band_str})"
+    )
+    irr_rag = "red" if irr_flag else "green"
+
+    ws.cell(row=row, column=1, value="Archetype").font = FONT_LABEL
+    ws.cell(row=row, column=1).alignment = ALIGN_LEFT
+    av = ws.cell(row=row, column=2, value=arch)
+    av.font = FONT_VALUE
+    av.alignment = ALIGN_LEFT
+    cs = ws.cell(row=row, column=3, value=_RAG_SYMBOL[irr_rag])
+    cs.fill = _RAG_FILLS[irr_rag]
+    cs.font = FONT_VALUE
+    cs.alignment = ALIGN_RIGHT
+    ws.cell(row=row, column=4, value=irr_note).font = FONT_HINT
+    registry.register("dh_archetype", ws.title, row, 2)
+    row += 1
+
+    return row + 1  # trailing blank row after block
+
+
 # ── Underwriting Summary sheet ────────────────────────────────────────────────
 
 
@@ -664,9 +884,13 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
     junctions: list[CapitalModuleProject] = ctx["junctions"]
     use_lines_by_project: dict[UUID, list[UseLine]] = ctx["use_lines"]
 
+    # ── Deal Health block (top of sheet — first thing LP sees) ───────────────
+    health = _compute_deal_health(ctx)
+    row = _write_deal_health_section(ws, 1, registry, health)
+
     # ── Primary KPI block ──────────────────────────────────────────────────
-    section_label(ws, 1, "Primary KPIs", span_cols=2)
-    row = 2
+    section_label(ws, row, "Primary KPIs", span_cols=2)
+    row += 1
     kv_row(
         ws, row, "Total Project Cost",
         _coerce_decimal(totals.get("total_project_cost") or 0),
