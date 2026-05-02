@@ -7117,6 +7117,7 @@ async def save_model_settings(
     deal_type_raw = str(form.get("deal_type", "")).strip()
     expense_growth = form.get("expense_growth_rate_pct_annual")
     exit_cap = form.get("exit_cap_rate_pct")
+    risk_free_rate = form.get("risk_free_rate_pct")
     hold_period = form.get("hold_period_years")
     debt_structure = str(form.get("debt_structure") or "").strip() or None
     debt_sizing_mode = str(form.get("debt_sizing_mode") or "").strip() or None
@@ -7136,6 +7137,11 @@ async def save_model_settings(
         try:
             deal.project_type = ProjectType(deal_type_raw)
         except ValueError:
+            pass
+    if risk_free_rate is not None:
+        try:
+            deal.risk_free_rate_pct = float(risk_free_rate)
+        except (ValueError, TypeError):
             pass
 
     await session.flush()
