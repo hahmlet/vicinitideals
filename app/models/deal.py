@@ -222,6 +222,11 @@ class Scenario(Base):
     min_reserve_construction: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
     min_reserve_operational: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
 
+    # Market rate context — risk-free rate at time of underwriting (10Y Treasury).
+    # Scenario-level: same value across all projects and all Base/Down/Up scenarios.
+    # NULL → falls back to settings.default_risk_free_rate_pct (4.25%).
+    risk_free_rate_pct: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
+
 
 # Backward-compat alias — old code importing DealModel still works
 DealModel = Scenario
