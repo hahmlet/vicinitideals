@@ -1004,6 +1004,8 @@ for _iter in range(MAX_ITERATIONS):
     prev_dscr = cur_dscr
 ```
 
+The iteration loop lives in the **compute endpoint** (`app/api/routers/models.py`), not inside `cashflow.py`. The cashflow engine runs a single pass — it accepts inputs and returns results. The endpoint calls `compute_cash_flows()` up to 5 times, each time feeding the prior pass's `OperationalOutputs.noi_stabilized` into the next pass's auto-sizer. This is why the constants `MAX_ITERATIONS` and `DSCR_CONVERGENCE_TOLERANCE` belong to the endpoint, not the engine.
+
 Each iteration reads the **previous** `OperationalOutputs.noi_stabilized` (via the code at line 116 of `cashflow.py`) and passes it to `_auto_size_debt_modules` as `prev_noi_stabilized`. Iteration N+1 sizes using iteration N's actual computed NOI, so by iteration 2–3 the sized debt service matches the final NOI and DSCR converges.
 
 - **Convergence tolerance**: 0.005× (half a basis point of DSCR).
@@ -1380,9 +1382,7 @@ property_value = NOI_stabilized / exit_cap_rate
 LTV = total_non_bridge_debt / property_value
 ```
 
-**Engine source.** Computed at status-pill render time (`ui.py`
-`_compute_calc_status`); not stored as a single column on
-`OperationalOutputs`.
+**Engine source.** LTV appears in two places: (1) inside the `dual_constraint` sizing loop in `cashflow.py` — the engine computes `P_ltv = (NOI / cap_rate) × LTV%` during auto-sizing and uses it as a principal ceiling; (2) at status-pill render time in `ui.py` (`_compute_calc_status`) for the informational display above the model builder. The metric value shown to the user is the render-time computation; the sizing-loop value is an intermediate that affects the resulting principal but is not stored as a separate output column.
 
 **Notes / edge cases.** Per-loan LTV caps live on
 `CapitalModule.source.ltv_pct`, NOT on a top-level `OperationalInputs`
