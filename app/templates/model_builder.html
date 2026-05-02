@@ -695,6 +695,17 @@
         target: '#calc-status-pill-container', swap: 'innerHTML'
       });
     });
+    // Fired by gap-adjustment slider POSTs — refreshes Sources & Uses panel
+    // from the parent-page context (same path as the Compute button) so HTMX
+    // correctly resolves the #module-panel-content target and project param.
+    document.body.addEventListener('gapAdjChanged', function() {
+      var _params = new URLSearchParams(window.location.search);
+      var _m = _params.get('module') || 'sources_uses';
+      var _panelUrl = '/ui/panel/{{ model.id }}?module=' + encodeURIComponent(_m);
+      var _pid = _params.get('project');
+      if (_pid) _panelUrl += '&project=' + encodeURIComponent(_pid);
+      htmx.ajax('GET', _panelUrl, { target: '#module-panel-content', swap: 'innerHTML' });
+    });
   </script>
 
   <div class="builder-topbar-right">

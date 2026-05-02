@@ -553,7 +553,7 @@
       }
       _ppSnapStuck = false;
       document.body.dispatchEvent(new CustomEvent('calcStatusChanged'));
-      if (typeof refreshPanel === 'function') refreshPanel('sources_uses');
+      document.body.dispatchEvent(new CustomEvent('gapAdjChanged'));
     }).catch(function(err) {
       console.error('gap sliders POST network error:', err);
       alert('Slider update network error. Check console.');
@@ -581,7 +581,7 @@
         });
       }
       document.body.dispatchEvent(new CustomEvent('calcStatusChanged'));
-      if (typeof refreshPanel === 'function') refreshPanel('sources_uses');
+      document.body.dispatchEvent(new CustomEvent('gapAdjChanged'));
     }).catch(function(err) {
       console.error('zeroGapAdjRow network error:', err);
     });
