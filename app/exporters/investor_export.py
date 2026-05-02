@@ -731,6 +731,9 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
     # dash literal when there's no equity stack to compute against, so the
     # cell never reads as a misleading blank (V2-C fix).
     equity_multiple = _combined_em(rollup_waterfall, capital_modules)
+    if equity_multiple is None:
+        _raw_em = _coerce_decimal(totals.get("combined_em_x") or 0)
+        equity_multiple = _raw_em if _raw_em > 0 else None
     _kv_row_optional(
         ws, row, "Combined Equity Multiple",
         equity_multiple,
@@ -1758,6 +1761,7 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
     junctions: list[CapitalModuleProject] = ctx["junctions"]
     projects_by_id: dict[UUID, Project] = {p.id: p for p in ctx["projects"]}
     outputs_by_project: dict[UUID, OperationalOutputs] = ctx.get("outputs") or {}
+    cash_flows_by_project: dict = ctx.get("cash_flows") or {}
 
     set_widths(ws, [30, 18, 10, 16, 10, 16, 16, 16, 12])
 
@@ -1879,6 +1883,15 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
         # apply, so missing data never reads as "$0" or "0%".
         if funder_class == "Debt":
             total_ds = module_debt_service_total.get(mid_str)
+            if not total_ds:
+                # Waterfall can't see DS (NCF is already net-of-DS), so sum
+                # CashFlow.debt_service directly from covered projects.
+                covered_pids = junction_projects.get(module.id, [])
+                cf_ds = sum(
+                    sum(_coerce_decimal(cf.debt_service or 0) for cf in cash_flows_by_project.get(pid, []))
+                    for pid in covered_pids
+                )
+                total_ds = cf_ds if cf_ds > 0 else None
             distributions = None  # debt has no distributions
             if total_ds is not None and total_ds > 0:
                 return_dollars = total_ds - principal
@@ -3212,16 +3225,22 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
     )
 
     junction_count_by_module: dict[UUID, int] = {}
+    junction_principal_by_module: dict[UUID, Decimal] = {}
     for j in junctions:
         junction_count_by_module[j.capital_module_id] = (
             junction_count_by_module.get(j.capital_module_id, 0) + 1
+        )
+        junction_principal_by_module[j.capital_module_id] = (
+            junction_principal_by_module.get(j.capital_module_id, Decimal(0))
+            + _coerce_decimal(j.amount or 0)
         )
 
     for m_idx, module in enumerate(capital_modules, start=1):
         r = block_c_row + 1 + m_idx
         source = module.source or {}
         carry = module.carry or {}
-        principal = source.get("amount") or 0
+        _junc_p = junction_principal_by_module.get(module.id)
+        principal = _junc_p if _junc_p is not None else _coerce_decimal(source.get("amount") or 0)
         rate = source.get("interest_rate_pct") or carry.get("io_rate_pct") or 0
         auto_size = bool(source.get("auto_size"))
         is_shared = junction_count_by_module.get(module.id, 0) > 1

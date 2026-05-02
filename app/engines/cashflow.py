@@ -2581,6 +2581,8 @@ def _compute_period(
         period=period,
         stabilized_noi_monthly=stabilized_noi_monthly,
         has_use_lines=bool(use_lines),
+        income_mode=income_mode,
+        first_stab_period=first_stab_period,
     )
     for item in capital_events:
         line_items.append(item)
@@ -2718,6 +2720,8 @@ def _phase_capital_events(
     period: int,
     stabilized_noi_monthly: Decimal | None,
     has_use_lines: bool = False,
+    income_mode: str = "revenue_opex",
+    first_stab_period: int = 0,
 ) -> list[CashFlowLineItem]:
     """Generate capital event line items for a phase.
 
@@ -2837,8 +2841,13 @@ def _phase_capital_events(
     if phase.period_type == PeriodType.exit:
         sale_proceeds = ZERO
         if stabilized_noi_monthly is not None and _percent(inputs.exit_cap_rate_pct) > ZERO:
+            _exit_noi = stabilized_noi_monthly
+            if income_mode == "noi":
+                _esc_rate = _to_decimal(inputs.noi_escalation_rate_pct) if inputs.noi_escalation_rate_pct else Decimal("3")
+                _esc_period = max(0, period - first_stab_period)
+                _exit_noi = _q(stabilized_noi_monthly * _growth_factor(_esc_rate, _esc_period))
             sale_proceeds = _q(
-                (stabilized_noi_monthly * Decimal("12")) / _percent(inputs.exit_cap_rate_pct)
+                (_exit_noi * Decimal("12")) / _percent(inputs.exit_cap_rate_pct)
             )
         selling_costs = _q(sale_proceeds * _percent(inputs.selling_costs_pct))
         items.extend(
