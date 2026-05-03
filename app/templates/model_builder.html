@@ -1239,13 +1239,15 @@ async function startInvestorExport(modelId) {
                  placeholder="4.25">
           <div class="form-hint" style="font-size:11px;color:var(--text-muted);margin-top:4px">Used in Spread Stack on investor export. Defaults to 4.25% if blank.</div>
         </div>
+        {%- set _mb_dr_defaults = {'acquisition': 8.0, 'value_add': 10.0, 'conversion': 10.0, 'new_construction': 12.0} -%}
+        {%- set _mb_dr_default = _mb_dr_defaults.get(_pt | string, 8.0) -%}
         <div>
           <label class="field-label">Discount Rate / Hurdle (%)</label>
           <input class="filter-input" type="number" step="0.25" min="0" max="50"
                  style="width:100%;margin-top:4px" name="discount_rate_pct"
                  value="{{ model.discount_rate_pct | round(2) if model.discount_rate_pct else '' }}"
-                 placeholder="8.00">
-          <div class="form-hint" style="font-size:11px;color:var(--text-muted);margin-top:4px">Required return for DCF NPV and Weighted Equity Multiple. Defaults to 8.0% if blank.</div>
+                 placeholder="{{ _mb_dr_default }}">
+          <div class="form-hint" style="font-size:11px;color:var(--text-muted);margin-top:4px">Required return for DCF NPV and Weighted Equity Multiple. Defaults to {{ _mb_dr_default }}% for this deal type if blank.</div>
         </div>
         {% if inputs and inputs.deal_setup_complete %}
         <div class="divider"></div>

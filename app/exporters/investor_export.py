@@ -393,7 +393,10 @@ async def _load_all(session: AsyncSession, scenario_id: UUID) -> dict | None:
         "discount_rate_pct": (
             Decimal(str(scenario.discount_rate_pct))
             if scenario.discount_rate_pct is not None
-            else Decimal("8.0")
+            else _DISCOUNT_RATE_DEFAULTS.get(
+                str(getattr(scenario, "project_type", "") or "").replace("ProjectType.", "").lower(),
+                Decimal("8.0"),
+            )
         ),
     }
 
@@ -753,6 +756,18 @@ _RAG_FILLS = {
     "red":    FILL_RAG_RED,
 }
 _RAG_SYMBOL = {"green": "✓", "yellow": "!", "red": "✗"}
+
+
+# Default discount rate (hurdle) by deal type.  Aligns with archetype IRR
+# bands from CRE best-practice corpus: acquisition = LP pref threshold (8%),
+# value-add / conversion = mid-range IRR target (10%), ground-up = development
+# spread minimum (12%).  NULL scenario.discount_rate_pct falls back here.
+_DISCOUNT_RATE_DEFAULTS: dict[str, Decimal] = {
+    "acquisition":      Decimal("8.0"),
+    "value_add":        Decimal("10.0"),
+    "conversion":       Decimal("10.0"),
+    "new_construction": Decimal("12.0"),
+}
 
 
 # Default RAG thresholds by deal type.  Yellow band = green − 5pp (pct metrics)
