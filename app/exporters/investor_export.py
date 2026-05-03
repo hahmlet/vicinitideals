@@ -113,11 +113,13 @@ async def export_investor_workbook(
     wb = Workbook()
     registry = CellRegistry()
 
-    # Commit 2 sheet roster (matches plan §2 final order minus per-project
-    # sheets, which land in commit 3). Per-project sheets are inserted
-    # between Assumptions and Glossary as they're built.
-    cover = wb.active
-    cover.title = "Cover"
+    # Version tab is first — professional CRE convention: reviewers check
+    # model version and timestamp before reading any numbers.
+    version_tab = wb.active
+    version_tab.title = "Version"
+    _build_version_tab(version_tab, ctx)
+
+    cover = wb.create_sheet("Cover")
     _build_cover(cover, registry, ctx)
 
     uw_summary = wb.create_sheet("Underwriting Summary")
@@ -388,6 +390,11 @@ async def _load_all(session: AsyncSession, scenario_id: UUID) -> dict | None:
             if scenario.risk_free_rate_pct is not None
             else Decimal(str(_app_settings.default_risk_free_rate_pct))
         ),
+        "discount_rate_pct": (
+            Decimal(str(scenario.discount_rate_pct))
+            if scenario.discount_rate_pct is not None
+            else Decimal("8.0")
+        ),
     }
 
 
@@ -428,6 +435,91 @@ def _noi_basis_label(income_mode: str | None) -> str:
     semantic distinction between full P&L roll-up vs. direct-NOI input.
     """
     return _NOI_BASIS_LABELS.get(str(income_mode or "").lower(), str(income_mode or "—"))
+
+
+def _build_version_tab(ws, ctx: dict) -> None:
+    """Version/Audit tab — workbook metadata for reviewer audit trail.
+
+    Placed first in the workbook per CRE best-practice convention: professional
+    models lead with a version tab so any reviewer can immediately identify
+    the model version, export timestamp, and change history.
+    """
+    set_widths(ws, [22, 42, 60])
+    scenario = ctx["scenario"]
+    ws.cell(row=1, column=1, value="Viciniti Investor Export").font = FONT_TITLE
+    ws.cell(row=2, column=1, value="Version & Audit Trail").font = FONT_SUBTITLE
+    row = 4
+    snap = ctx.get("snapshot_at") or datetime.now()
+    fields = [
+        ("Export Generated", snap.strftime("%Y-%m-%d %H:%M UTC")),
+        ("Export Version", "2.0"),
+        ("Scenario Name", scenario.name or "—"),
+        ("Scenario ID", str(scenario.id)),
+        ("Deal Type", str(getattr(scenario, "project_type", "") or "—").replace("_", " ").title()),
+    ]
+    for label, value in fields:
+        ws.cell(row=row, column=1, value=label).font = FONT_LABEL
+        ws.cell(row=row, column=2, value=value).font = FONT_VALUE
+        row += 1
+    row += 1
+    ws.cell(row=row, column=1, value="Change Log").font = FONT_LABEL
+    row += 1
+    ws.cell(row=row, column=1, value="Version").font = FONT_HINT
+    ws.cell(row=row, column=2, value="Date").font = FONT_HINT
+    ws.cell(row=row, column=3, value="Notes").font = FONT_HINT
+    row += 1
+    changelog = [
+        ("2.0", "2026-05-03", "Added Weighted EM, DCF NPV (configurable hurdle rate), Day Count per loan"),
+        ("1.0", "2025-01-01", "Initial release: Cover, UW Summary, Pro Forma, Cash Flow, Returns, Waterfall, Debt Schedule, Sensitivity"),
+    ]
+    for ver, date_str, notes in changelog:
+        ws.cell(row=row, column=1, value=ver).font = FONT_VALUE
+        ws.cell(row=row, column=2, value=date_str).font = FONT_VALUE
+        ws.cell(row=row, column=3, value=notes).font = FONT_VALUE
+        row += 1
+
+
+def _npv_levered(
+    cash_flows: dict,
+    equity_required: Decimal,
+    discount_rate_pct: Decimal,
+) -> Decimal | None:
+    """NPV of levered equity CFs discounted at investor's required rate.
+
+    Sums monthly net_cash_flow (after debt service) across all projects,
+    discounts each period at annual rate r = discount_rate_pct/100,
+    then subtracts initial equity outlay. Returns None when equity or
+    discount rate is zero (no meaningful result).
+    """
+    if discount_rate_pct <= 0 or equity_required <= 0:
+        return None
+    r = discount_rate_pct / Decimal(100)
+    pv_cfs = Decimal(0)
+    for cfl in cash_flows.values():
+        for cf in cfl:
+            t = cf.period
+            ncf = _coerce_decimal(cf.net_cash_flow or 0)
+            if ncf == 0:
+                continue
+            pv_cfs += ncf / (1 + r) ** (Decimal(t) / Decimal(12))
+    return pv_cfs - equity_required
+
+
+def _weighted_em_calc(
+    cash_flows: dict,
+    equity_required: Decimal,
+    discount_rate_pct: Decimal,
+) -> Decimal | None:
+    """Weighted Equity Multiple = (equity + NPV) / equity.
+
+    Adjusts raw EM for TVM using the investor's hurdle rate. A 2.0× WEM
+    means PV of distributions equals 2× equity invested — a better quality
+    signal than raw EM when comparing deals with different hold periods.
+    """
+    npv = _npv_levered(cash_flows, equity_required, discount_rate_pct)
+    if npv is None:
+        return None
+    return (equity_required + npv) / equity_required
 
 
 def _build_cover(ws, registry: CellRegistry, ctx: dict) -> None:
@@ -1013,6 +1105,19 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         name="s_combined_equity_multiple", registry=registry,
         fmt="0.00\\x", hero=True,
     ); row += 1
+    # Weighted Equity Multiple — raw EM adjusted for TVM at the investor's
+    # hurdle rate.  Two deals with identical raw EM but different hold
+    # periods have different WEM; the one returning capital sooner scores
+    # higher.  Source: corpus 67, A.CRE best-practice convention.
+    _disc_rate = _coerce_decimal(ctx.get("discount_rate_pct") or Decimal("8.0"))
+    _equity_req = _coerce_decimal(totals.get("equity_required") or 0)
+    w_em = _weighted_em_calc(ctx["cash_flows"], _equity_req, _disc_rate)
+    _kv_row_optional(
+        ws, row, f"Weighted Equity Multiple ({_disc_rate:.2f}% hurdle)",
+        w_em,
+        name="s_weighted_equity_multiple", registry=registry,
+        fmt="0.00\\x", hero=True,
+    ); row += 1
     # Cash-on-Cash Year 1 — sum of equity distributions in periods 1-12
     # divided by total equity commitments. The standard first-year-yield
     # metric LPs ask about ahead of a deal close. Same em-dash semantics
@@ -1300,6 +1405,37 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
     else:
         ws.cell(row=cur, column=2, value=_DASH).font = FONT_VALUE
         registry.register("s_cap_spread", ws.title, cur, 2)
+    cur += 1
+
+    # Row 5: DCF NPV — PV of levered cash flows less equity invested.
+    # Reconciles against Direct Cap: NPV > 0 means the asset generates
+    # returns above the hurdle; NPV < 0 means it doesn't clear the bar
+    # at the stated price.  Pairs with Weighted EM above.
+    _disc_rate_pct = _coerce_decimal(ctx.get("discount_rate_pct") or Decimal("8.0"))
+    _equity_req_val = _coerce_decimal(totals.get("equity_required") or 0)
+    npv_lev = _npv_levered(ctx["cash_flows"], _equity_req_val, _disc_rate_pct)
+    ws.cell(
+        row=cur, column=1,
+        value=f"DCF NPV ({_disc_rate_pct:.2f}% hurdle)",
+    ).font = FONT_LABEL
+    if npv_lev is not None:
+        registry.write(
+            ws, cur, 2, npv_lev,
+            name="s_dcf_npv", fmt=ACCOUNTING,
+            font=FONT_VALUE, align=ALIGN_RIGHT,
+        )
+        ws.cell(
+            row=cur, column=3,
+            value=("Value created above hurdle" if npv_lev > 0 else "Return below hurdle"),
+        ).font = FONT_HINT
+    else:
+        ws.cell(row=cur, column=2, value=_DASH).font = FONT_VALUE
+        ws.cell(
+            row=cur, column=3,
+            value="(set equity + Discount Rate in Deal Settings)",
+        ).font = FONT_HINT
+        registry.register("s_dcf_npv", ws.title, cur, 2)
+    cur += 1
 
     # ── Per-Year Returns Matrix ────────────────────────────────────────────
     # BIW pattern (Building_I_Want v5): a year-by-year grid of the metrics
@@ -3340,13 +3476,13 @@ def _build_debt_schedule(ws, registry: CellRegistry, ctx: dict) -> None:
     capital_modules: list[CapitalModule] = ctx["capital_modules"]
     junctions: list[CapitalModuleProject] = ctx["junctions"]
 
-    set_widths(ws, [28, 16, 14, 10, 10, 10, 12, 18, 14, 14])
+    set_widths(ws, [28, 16, 14, 10, 10, 10, 12, 18, 13, 14, 14])
 
-    section_label(ws, 1, "Loan Summary — Per Capital Module", span_cols=10)
+    section_label(ws, 1, "Loan Summary — Per Capital Module", span_cols=11)
     header_row(
         ws, 2,
         ["Module", "Funder Type", "Principal", "Rate", "Term (mo)",
-         "Amort (yrs)", "IO Months", "Carry Type", "Annual P&I", "Balloon"],
+         "Amort (yrs)", "IO Months", "Carry Type", "Day Count", "Annual P&I", "Balloon"],
     )
 
     # Junction-aggregated principal per module (mirrors the Investor Returns
@@ -3398,6 +3534,11 @@ def _build_debt_schedule(ws, registry: CellRegistry, ctx: dict) -> None:
                 int(term_months), io_months=int(io_months),
             )
 
+        # Day-count convention — read from carry schema, default 30/360.
+        # Labels match lender term-sheet wording per CRE best practice.
+        _DC_LABELS = {"30_360": "30/360", "actual_365": "Actual/365", "actual_360": "Actual/360"}
+        day_count_label = _DC_LABELS.get(carry.get("day_count") or "30_360", "30/360")
+
         ws.cell(row=cur_row, column=1, value=module.label or _funder_type_label(module)).font = FONT_VALUE
         ws.cell(row=cur_row, column=2, value=_funder_type_label(module)).font = FONT_VALUE
         registry.write(
@@ -3417,12 +3558,13 @@ def _build_debt_schedule(ws, registry: CellRegistry, ctx: dict) -> None:
             row=cur_row, column=8,
             value=carry_type.replace("_", " ").title() if carry_type else _DASH,
         ).font = FONT_VALUE
+        ws.cell(row=cur_row, column=9, value=day_count_label).font = FONT_VALUE
         _write_optional(
-            ws, cur_row, 9, annual_pi, registry,
+            ws, cur_row, 10, annual_pi, registry,
             name=f"s_loan_{m_idx}_annual_pi", fmt=ACCOUNTING,
         )
         _write_optional(
-            ws, cur_row, 10, balloon, registry,
+            ws, cur_row, 11, balloon, registry,
             name=f"s_loan_{m_idx}_balloon", fmt=ACCOUNTING,
         )
 

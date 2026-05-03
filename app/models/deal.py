@@ -227,6 +227,10 @@ class Scenario(Base):
     # NULL → falls back to settings.default_risk_free_rate_pct (4.25%).
     risk_free_rate_pct: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
 
+    # Investor's required rate of return / hurdle rate — used by the investor
+    # export for DCF NPV and Weighted Equity Multiple.  NULL → defaults to 8.0%.
+    discount_rate_pct: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
+
     # Deal Health RAG thresholds — per-scenario overrides for the investor export.
     # Keys: occ_green, oer_green, dscr_green, margin_green (all floats).
     # NULL → exporter falls back to HEALTH_THRESHOLD_DEFAULTS keyed by deal_type.

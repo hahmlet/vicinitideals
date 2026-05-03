@@ -128,6 +128,13 @@ class CapitalCarrySchema(BaseModel):
     # operation phase of io_then_pi.
     amort_term_years: int | None = None
 
+    # Interest day-count convention — matches the lender's loan documents.
+    # "30_360": 30 days/month, 360-day year (most common).
+    # "actual_365": actual days, 365-day year.
+    # "actual_360": actual days, 360-day year (highest effective rate).
+    # NULL treated as "30_360" by the engine and exporter.
+    day_count: Literal["30_360", "actual_365", "actual_360"] | None = None
+
     # Phased carry (io_then_pi etc.).  Each phase is a dict with at least
     # {name, carry_type} plus optional {io_rate_pct, amort_term_years, ...}.
     # Kept as list[dict] rather than a strict sub-model so we don't silently
