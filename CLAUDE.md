@@ -335,4 +335,4 @@ Use Grep/Glob only when: searching template/HTML files (not parsed by Tree-sitte
 
 **Skip graph immediately** for UI/template concepts — go straight to Grep on `app/templates/`: drawer, slider, modal, panel, button, checkbox, badge, pill, HTMX attribute (`hx-`, `hx_`), Jinja2 variable/block names. These live in `.html` files the graph does not index.
 
-**Skip `smart_outline` for `.txt` and docs files** — Tree-sitter has no grammar for plain text. Use `Read` directly on anything in `docs/`.
+**Skip `smart_outline` for `.txt`, `.html`, and docs files** — claude-mem's Tree-sitter parser has no grammar for plain text or HTML. Use `Read` directly on anything in `docs/` or `app/templates/`. Use code-review-graph MCP for template searches instead.
