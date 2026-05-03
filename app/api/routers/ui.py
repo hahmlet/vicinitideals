@@ -11863,7 +11863,12 @@ async def history_drawer(
     if user is None:
         return HTMLResponse('<p style="color:var(--text-muted)">Not authenticated</p>', status_code=401)
 
-    model = await _get_deal_or_404(session, model_id)
+    model = await session.get(DealModel, model_id, options=[selectinload(DealModel.deal)])
+    if model is None:
+        return HTMLResponse('<p style="color:var(--text-muted)">Model not found</p>', status_code=404)
+    if model.deal is None or model.deal.org_id != user.org_id:
+        return HTMLResponse('<p style="color:var(--text-muted)">Forbidden</p>', status_code=403)
+
     snaps = await list_snapshots(session, model_id)
 
     # Build diff summaries between consecutive snapshots for rendering
@@ -11893,6 +11898,12 @@ async def revert_snapshot(
     if user is None:
         return HTMLResponse('<p style="color:var(--color-error)">Not authenticated</p>', status_code=401)
 
+    model = await session.get(DealModel, model_id, options=[selectinload(DealModel.deal)])
+    if model is None:
+        return HTMLResponse('<p style="color:var(--color-error)">Model not found</p>', status_code=404)
+    if model.deal is None or model.deal.org_id != user.org_id:
+        return HTMLResponse('<p style="color:var(--color-error)">Forbidden</p>', status_code=403)
+
     try:
         await revert_to_snapshot(session, model_id, snapshot_id)
         await session.commit()
@@ -11903,8 +11914,7 @@ async def revert_snapshot(
         )
 
     return HTMLResponse(
-        '<div class="alert alert-success" role="alert" '
-        'hx-trigger="load delay:0ms" hx-get="" hx-target="body">'
+        '<div class="alert alert-success" role="alert">'
         'Reverted. Click <strong>Calculate</strong> to recompute.</div>',
         headers={"HX-Trigger": "snapshotReverted"},
     )
@@ -11921,6 +11931,12 @@ async def export_history_json_endpoint(
     user = await _get_user(session, request)
     if user is None:
         return JSONResponse({"error": "not authenticated"}, status_code=401)
+
+    model = await session.get(DealModel, model_id, options=[selectinload(DealModel.deal)])
+    if model is None:
+        return JSONResponse({"error": "model not found"}, status_code=404)
+    if model.deal is None or model.deal.org_id != user.org_id:
+        return JSONResponse({"error": "forbidden"}, status_code=403)
 
     try:
         payload = await export_history_json(session, model_id)

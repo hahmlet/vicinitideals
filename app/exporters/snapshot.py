@@ -24,8 +24,9 @@ export_history_json(session, scenario_id)
 
 from __future__ import annotations
 
+import logging
 import uuid
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 from decimal import Decimal
 from typing import Any
 from uuid import UUID
@@ -47,6 +48,7 @@ from app.models.deal import (
     UnitMix,
     UseLine,
 )
+from app.models.milestone import Milestone
 from app.models.project import Project
 from app.schemas.capital import CapitalModuleBase, WaterfallTierBase
 from app.schemas.deal import (
@@ -58,6 +60,8 @@ from app.schemas.deal import (
 )
 
 # ── Helpers ──────────────────────────────────────────────────────────────────
+
+logger = logging.getLogger(__name__)
 
 _OUTPUT_KEYS = (
     "dscr",
@@ -90,6 +94,74 @@ def _clean(obj: Any) -> Any:
     return _coerce(obj)
 
 
+def _parse_iso_date(value: Any) -> date | None:
+    if value is None:
+        return None
+    if isinstance(value, date):
+        return value
+    if isinstance(value, str):
+        try:
+            return date.fromisoformat(value)
+        except ValueError:
+            return None
+    return None
+
+
+def _row_to_payload(row: Any, *, exclude: set[str]) -> dict[str, Any]:
+    """Serialize an ORM row to a JSON-safe dict using its table columns."""
+    return {
+        col.name: _coerce(getattr(row, col.name))
+        for col in row.__table__.columns
+        if col.name not in exclude
+    }
+
+
+def _serialize_project_snapshot(project: Project) -> dict[str, Any]:
+    use_lines = [
+        _row_to_payload(row, exclude={"id", "project_id", "updated_at"})
+        for row in sorted(project.use_lines, key=lambda item: (item.label or "", str(item.id)))
+    ]
+    income_streams = [
+        _row_to_payload(row, exclude={"id", "project_id", "updated_at"})
+        for row in sorted(project.income_streams, key=lambda item: (item.label or "", str(item.id)))
+    ]
+    expense_lines = [
+        _row_to_payload(row, exclude={"id", "project_id", "updated_at"})
+        for row in sorted(project.expense_lines, key=lambda item: (item.label or "", str(item.id)))
+    ]
+    unit_mix = [
+        _row_to_payload(row, exclude={"id", "project_id", "updated_at"})
+        for row in sorted(project.unit_mix, key=lambda item: (item.label or "", str(item.id)))
+    ]
+    milestones = [
+        {
+            "id": str(ms.id),
+            "milestone_type": _coerce(ms.milestone_type),
+            "duration_days": ms.duration_days,
+            "target_date": ms.target_date.isoformat() if ms.target_date else None,
+            "sequence_order": ms.sequence_order,
+            "label": ms.label,
+            "trigger_milestone_id": str(ms.trigger_milestone_id) if ms.trigger_milestone_id else None,
+            "trigger_offset_days": ms.trigger_offset_days,
+        }
+        for ms in sorted(project.milestones, key=lambda item: (item.sequence_order, str(item.id)))
+    ]
+
+    return {
+        "project_id": str(project.id),
+        "operational_inputs": (
+            _row_to_payload(project.operational_inputs, exclude={"id", "project_id", "updated_at"})
+            if project.operational_inputs is not None
+            else None
+        ),
+        "use_lines": use_lines,
+        "income_streams": income_streams,
+        "expense_lines": expense_lines,
+        "unit_mix": unit_mix,
+        "milestones": milestones,
+    }
+
+
 # ── Core serialisation ────────────────────────────────────────────────────────
 
 async def _serialize_inputs(session: AsyncSession, scenario_id: UUID) -> dict[str, Any]:
@@ -107,30 +179,76 @@ async def _serialize_inputs(session: AsyncSession, scenario_id: UUID) -> dict[st
         "project",
         "deal_model",
         "operational_inputs",
+        "use_lines",
         "income_streams",
         "expense_lines",
         "unit_mix",
+        "milestones",
+        "projects",
         "capital_modules",
         "waterfall_tiers",
     }
-    return {k: v for k, v in full.items() if k in input_keys}
+
+    # Capture every project's mutable inputs so multi-project reverts are exact.
+    projects = list(
+        (
+            await session.execute(
+                select(Project)
+                .where(Project.scenario_id == scenario_id)
+                .options(
+                    selectinload(Project.operational_inputs),
+                    selectinload(Project.use_lines),
+                    selectinload(Project.income_streams),
+                    selectinload(Project.expense_lines),
+                    selectinload(Project.unit_mix),
+                    selectinload(Project.milestones),
+                )
+                .order_by(Project.created_at.asc())
+            )
+        ).scalars()
+    )
+    project_payloads = [_serialize_project_snapshot(project) for project in projects]
+
+    result = {k: v for k, v in full.items() if k in input_keys}
+    if project_payloads:
+        default_payload = project_payloads[0]
+        result["projects"] = project_payloads
+        result["operational_inputs"] = default_payload.get("operational_inputs")
+        result["use_lines"] = default_payload.get("use_lines")
+        result["income_streams"] = default_payload.get("income_streams")
+        result["expense_lines"] = default_payload.get("expense_lines")
+        result["unit_mix"] = default_payload.get("unit_mix")
+        result["milestones"] = default_payload.get("milestones")
+
+    return result
 
 
 async def _serialize_outputs(session: AsyncSession, scenario_id: UUID) -> dict[str, Any]:
     """Read key output metrics for the snapshot's outputs_json."""
-    row = (await session.execute(
+    rows = list((await session.execute(
         select(OperationalOutputs)
         .where(OperationalOutputs.scenario_id == scenario_id)
         .order_by(OperationalOutputs.project_id.nulls_first())
-        .limit(1)
-    )).scalar_one_or_none()
+    )).scalars())
 
     result: dict[str, Any] = {}
-    if row is None:
+    if not rows:
         return result
+
+    by_project: dict[str, Any] = {}
+    for row in rows:
+        metrics: dict[str, Any] = {
+            key: (_coerce(getattr(row, key, None)) if getattr(row, key, None) is not None else None)
+            for key in _OUTPUT_KEYS
+        }
+        metrics["project_id"] = str(row.project_id) if row.project_id is not None else None
+        by_project[metrics["project_id"] or "__scenario__"] = metrics
+
+    # Preserve existing top-level metrics for current UI consumers.
+    primary = by_project.get("__scenario__") or next(iter(by_project.values()))
     for key in _OUTPUT_KEYS:
-        val = getattr(row, key, None)
-        result[key] = _coerce(val) if val is not None else None
+        result[key] = primary.get(key)
+    result["by_project"] = by_project
     return result
 
 
@@ -188,8 +306,14 @@ async def list_snapshots(
 def _entity_map(rows: list[dict]) -> dict[str, dict]:
     """Index a list of entity dicts by (label, id) for diffing."""
     out: dict[str, dict] = {}
-    for row in rows:
-        key = str(row.get("label") or row.get("id") or "")
+    for idx, row in enumerate(rows):
+        row_id = row.get("id")
+        if row_id not in (None, ""):
+            key = f"id:{row_id}"
+        elif row.get("label") not in (None, ""):
+            key = f"label:{row.get('label')}|idx:{idx}"
+        else:
+            key = f"row:{idx}"
         out[key] = row
     return out
 
@@ -274,12 +398,45 @@ def diff_snapshots(
         ("amount_monthly", "amount_annual", "pct_of_egr"),
     ))
 
+    # UseLine diff
+    input_changes.extend(_entity_list_diff(
+        b_in.get("use_lines") or [],
+        a_in.get("use_lines") or [],
+        "UseLine",
+        ("phase", "amount", "timing_type", "is_deferred"),
+    ))
+
+    # UnitMix diff
+    input_changes.extend(_entity_list_diff(
+        b_in.get("unit_mix") or [],
+        a_in.get("unit_mix") or [],
+        "UnitMix",
+        (
+            "unit_count",
+            "avg_sqft",
+            "beds",
+            "baths",
+            "market_rent_per_unit",
+            "in_place_rent_per_unit",
+            "unit_strategy",
+            "post_reno_rent_per_unit",
+        ),
+    ))
+
     # CapitalModule diff
     input_changes.extend(_entity_list_diff(
         b_in.get("capital_modules") or [],
         a_in.get("capital_modules") or [],
         "CapitalModule",
-        ("funder_type", "stack_position", "auto_size"),
+        (
+            "funder_type",
+            "stack_position",
+            "source",
+            "carry",
+            "exit_terms",
+            "active_phase_start",
+            "active_phase_end",
+        ),
     ))
 
     # WaterfallTier diff
@@ -299,6 +456,12 @@ def diff_snapshots(
         av = a_out.get(key)
         if bv != av:
             output_changes[key] = {"before": bv, "after": av}
+
+    if (b_out.get("by_project") or {}) != (a_out.get("by_project") or {}):
+        output_changes["by_project"] = {
+            "before": b_out.get("by_project") or {},
+            "after": a_out.get("by_project") or {},
+        }
 
     return {
         "version_before": snap_before.version,
@@ -330,32 +493,64 @@ async def revert_to_snapshot(
 
     inputs = snap.inputs_json or {}
 
-    # Locate the default project for this scenario
-    default_project = (await session.execute(
-        select(Project)
-        .where(Project.scenario_id == scenario_id)
-        .order_by(Project.created_at.asc())
-        .limit(1)
-    )).scalar_one_or_none()
-    if default_project is None:
+    projects = list(
+        (
+            await session.execute(
+                select(Project)
+                .where(Project.scenario_id == scenario_id)
+                .order_by(Project.created_at.asc())
+            )
+        ).scalars()
+    )
+    if not projects:
         raise ValueError(f"No Project found for scenario {scenario_id}")
 
-    project_id = default_project.id
+    project_ids = [project.id for project in projects]
+    project_ids_str = {str(project.id): project.id for project in projects}
+    project_payloads = inputs.get("projects") or []
+    payload_by_project = {
+        str(payload.get("project_id")): payload
+        for payload in project_payloads
+        if payload.get("project_id") is not None
+    }
+
+    # Backward compatibility for snapshots captured before multi-project payloads.
+    if not payload_by_project and projects:
+        payload_by_project[str(projects[0].id)] = {
+            "operational_inputs": inputs.get("operational_inputs"),
+            "use_lines": inputs.get("use_lines") or [],
+            "income_streams": inputs.get("income_streams") or [],
+            "expense_lines": inputs.get("expense_lines") or [],
+            "unit_mix": inputs.get("unit_mix") or [],
+            "milestones": inputs.get("milestones") or [],
+        }
+
+    target_project_ids = [
+        project_ids_str[pid]
+        for pid in payload_by_project
+        if pid in project_ids_str
+    ]
+    if not target_project_ids:
+        target_project_ids = [projects[0].id]
 
     # ── Delete mutable input rows ────────────────────────────────────────────
     # UseLines (engine-injected reserve lines will be recreated on next Compute)
-    await session.execute(delete(UseLine).where(UseLine.project_id == project_id))
+    await session.execute(delete(UseLine).where(UseLine.project_id.in_(target_project_ids)))
     # IncomeStreams
-    await session.execute(delete(IncomeStream).where(IncomeStream.project_id == project_id))
+    await session.execute(delete(IncomeStream).where(IncomeStream.project_id.in_(target_project_ids)))
     # ExpenseLines
     await session.execute(delete(OperatingExpenseLine).where(
-        OperatingExpenseLine.project_id == project_id
+        OperatingExpenseLine.project_id.in_(target_project_ids)
     ))
     # UnitMix
-    await session.execute(delete(UnitMix).where(UnitMix.project_id == project_id))
+    await session.execute(delete(UnitMix).where(UnitMix.project_id.in_(target_project_ids)))
     # OperationalInputs (scalar row)
     await session.execute(delete(OperationalInputs).where(
-        OperationalInputs.project_id == project_id
+        OperationalInputs.project_id.in_(target_project_ids)
+    ))
+    # Milestones (timeline rows)
+    await session.execute(delete(Milestone).where(
+        Milestone.project_id.in_(target_project_ids)
     ))
     # Capital
     await session.execute(delete(WaterfallTier).where(
@@ -374,30 +569,77 @@ async def revert_to_snapshot(
     await session.flush()
 
     # ── Re-insert from snapshot ──────────────────────────────────────────────
-    oi_data = inputs.get("operational_inputs")
-    if oi_data:
-        try:
-            parsed_oi = OperationalInputsBase.model_validate(oi_data)
-            session.add(OperationalInputs(
-                project_id=project_id,
-                **parsed_oi.model_dump(exclude_unset=True),
-            ))
-        except Exception:
-            pass  # Don't block revert if schema evolved
+    for project in projects:
+        payload = payload_by_project.get(str(project.id))
+        if payload is None:
+            continue
 
-    for stream_data in inputs.get("income_streams") or []:
-        try:
-            parsed = IncomeStreamBase.model_validate(stream_data)
-            session.add(IncomeStream(project_id=project_id, **parsed.model_dump(exclude_unset=True)))
-        except Exception:
-            pass
+        oi_data = payload.get("operational_inputs")
+        if oi_data:
+            try:
+                parsed_oi = OperationalInputsBase.model_validate(oi_data)
+                session.add(OperationalInputs(
+                    project_id=project.id,
+                    **parsed_oi.model_dump(exclude_unset=True),
+                ))
+            except Exception:
+                logger.warning("snapshot revert: skipped OperationalInputs restore", exc_info=True)
 
-    for exp_data in inputs.get("expense_lines") or []:
-        try:
-            parsed = OperatingExpenseLineBase.model_validate(exp_data)
-            session.add(OperatingExpenseLine(project_id=project_id, **parsed.model_dump(exclude_unset=True)))
-        except Exception:
-            pass
+        for use_data in payload.get("use_lines") or []:
+            try:
+                parsed = UseLineBase.model_validate(use_data)
+                session.add(UseLine(project_id=project.id, **parsed.model_dump(exclude_unset=True)))
+            except Exception:
+                logger.warning("snapshot revert: skipped UseLine restore", exc_info=True)
+
+        for stream_data in payload.get("income_streams") or []:
+            try:
+                parsed = IncomeStreamBase.model_validate(stream_data)
+                session.add(IncomeStream(project_id=project.id, **parsed.model_dump(exclude_unset=True)))
+            except Exception:
+                logger.warning("snapshot revert: skipped IncomeStream restore", exc_info=True)
+
+        for exp_data in payload.get("expense_lines") or []:
+            try:
+                parsed = OperatingExpenseLineBase.model_validate(exp_data)
+                session.add(OperatingExpenseLine(project_id=project.id, **parsed.model_dump(exclude_unset=True)))
+            except Exception:
+                logger.warning("snapshot revert: skipped OperatingExpenseLine restore", exc_info=True)
+
+        for mix_data in payload.get("unit_mix") or []:
+            try:
+                parsed = UnitMixBase.model_validate(mix_data)
+                session.add(UnitMix(project_id=project.id, **parsed.model_dump(exclude_unset=True)))
+            except Exception:
+                logger.warning("snapshot revert: skipped UnitMix restore", exc_info=True)
+
+        milestone_rows: list[tuple[dict[str, Any], Milestone]] = []
+        old_to_new_milestone_ids: dict[str, UUID] = {}
+        for ms_data in payload.get("milestones") or []:
+            try:
+                new_ms = Milestone(
+                    project_id=project.id,
+                    milestone_type=str(ms_data.get("milestone_type") or ""),
+                    duration_days=int(ms_data.get("duration_days") or 0),
+                    target_date=_parse_iso_date(ms_data.get("target_date")),
+                    sequence_order=int(ms_data.get("sequence_order") or 1),
+                    label=ms_data.get("label"),
+                    trigger_offset_days=int(ms_data.get("trigger_offset_days") or 0),
+                    trigger_milestone_id=None,
+                )
+                session.add(new_ms)
+                await session.flush()
+                old_id = ms_data.get("id")
+                if old_id:
+                    old_to_new_milestone_ids[str(old_id)] = new_ms.id
+                milestone_rows.append((ms_data, new_ms))
+            except Exception:
+                logger.warning("snapshot revert: skipped Milestone restore", exc_info=True)
+
+        for ms_data, new_ms in milestone_rows:
+            old_trigger_id = ms_data.get("trigger_milestone_id")
+            if old_trigger_id and str(old_trigger_id) in old_to_new_milestone_ids:
+                new_ms.trigger_milestone_id = old_to_new_milestone_ids[str(old_trigger_id)]
 
     cap_id_map: dict[str, UUID] = {}
     for mod_data in inputs.get("capital_modules") or []:
@@ -411,7 +653,7 @@ async def revert_to_snapshot(
             if old_id:
                 cap_id_map[str(old_id)] = new_mod.id
         except Exception:
-            pass
+            logger.warning("snapshot revert: skipped CapitalModule restore", exc_info=True)
 
     for tier_data in inputs.get("waterfall_tiers") or []:
         try:
@@ -422,7 +664,7 @@ async def revert_to_snapshot(
                 payload["capital_module_id"] = cap_id_map[str(old_cap_id)]
             session.add(WaterfallTier(scenario_id=scenario_id, **payload))
         except Exception:
-            pass
+            logger.warning("snapshot revert: skipped WaterfallTier restore", exc_info=True)
 
     await session.flush()
 

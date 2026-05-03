@@ -694,7 +694,11 @@ async def compute_model_cashflows(model_id: UUID, request: Request, session: DBS
         snap = await capture_snapshot(session, model_id, triggered_by="compute")
         response["snapshot_version"] = snap.version
     except Exception:
-        pass  # Never block the compute response on snapshot failure
+        logger.warning(
+            "snapshot capture failed",
+            extra={"deal_model_id": str(model_id), "trace_id": trace_id},
+            exc_info=True,
+        )  # Never block the compute response on snapshot failure
 
     # HX-Trigger makes the topbar Calculation Status pill refresh on the
     # client — more reliable than relying on the hx-on::after-request JS

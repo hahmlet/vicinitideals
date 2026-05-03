@@ -27,7 +27,7 @@ from sqlalchemy import (
     false,
     func,
 )
-from sqlalchemy.dialects.postgresql import ARRAY, UUID
+from sqlalchemy.dialects.postgresql import ARRAY, JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.models.base import Base
@@ -278,8 +278,14 @@ class ScenarioSnapshot(Base):
         String(20), nullable=False, default="compute"
     )
     label: Mapped[str | None] = mapped_column(Text, nullable=True)
-    inputs_json: Mapped[dict] = mapped_column(JSON, nullable=False)
-    outputs_json: Mapped[dict] = mapped_column(JSON, nullable=False)
+    inputs_json: Mapped[dict] = mapped_column(
+        JSON().with_variant(JSONB, "postgresql"),
+        nullable=False,
+    )
+    outputs_json: Mapped[dict] = mapped_column(
+        JSON().with_variant(JSONB, "postgresql"),
+        nullable=False,
+    )
 
     # Relationship back to the owning Scenario
     scenario: Mapped["Scenario"] = relationship(
