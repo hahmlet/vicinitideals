@@ -33,13 +33,12 @@ from tests.conftest import (
 
 
 def _commit_3_sheet_order(num_projects: int) -> tuple[str, ...]:
-    """Sheet roster after commit 3 + Phase H2 Debt Schedule insertion.
+    """Sheet roster after commit 3 + Phase H2 Debt Schedule + Waterfall + Unit Mix.
 
     Order: Cover → UW Summary → UW Pro Forma → UW Cash Flow →
-    Investor Returns → Debt Schedule → Assumptions → P{n} per-project
-    sheets → Glossary. The Debt Schedule sits next to Investor Returns
-    since both are capital-stack views; both are upstream of the
-    Assumptions inputs that drive them.
+    Sensitivity → Investor Returns → Waterfall → Unit Mix →
+    Debt Schedule → Assumptions → P{n} per-project sheets → Glossary.
+    Waterfall and Unit Mix were added in commits cbd2828/be7b361.
     """
     base_pre = (
         "Cover",
@@ -48,6 +47,8 @@ def _commit_3_sheet_order(num_projects: int) -> tuple[str, ...]:
         "Underwriting Cash Flow",
         "Sensitivity",
         "Investor Returns",
+        "Waterfall",
+        "Unit Mix",
         "Debt Schedule",
         "Assumptions",
     )
@@ -357,6 +358,18 @@ _NAMED_RANGE_ALIASES: tuple[tuple[re.Pattern[str], str], ...] = (
     (re.compile(r"^r_sensitivity_grid_em$"), "Equity Multiple"),
     # Investor Returns sheet combined EM aggregate
     (re.compile(r"^s_returns_combined_em$"), "Equity Multiple"),
+    # Spread Stack (added Phase Spread Stack / d6d812c + 42cb8d4)
+    # s_rfr_pct is the Risk-Free Rate input; named differently from the
+    # doc entry so an explicit alias is required.
+    (re.compile(r"^s_rfr_pct$"), "Risk-Free Rate"),
+    # Cap Rate on Cost = NOI / TPC × 100 — same metric as "Yield on Cost"
+    # in the doc; the Spread Stack labels it differently for context.
+    (re.compile(r"^s_spread_cap_pct$"), "Yield on Cost"),
+    # Spread rows — derived from existing tagged metrics. Each traces to
+    # the base metric it computes a differential against.
+    (re.compile(r"^s_cap_rate_spread$"), "Cap Rate Spread"),
+    (re.compile(r"^s_irr_spread$"), "Levered IRR Spread"),
+    (re.compile(r"^s_irr_rfr_spread$"), "Levered IRR Spread"),
 )
 
 

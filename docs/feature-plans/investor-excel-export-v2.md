@@ -515,6 +515,8 @@ Touchpoints (all in `app/exporters/investor_export.py` unless noted):
 
 6. **Tests.** Update `tests/conftest.py` `seed_deal_model_with_financials()` to populate the new fields. Update fixture-driven test expectations in `tests/exporters/test_investor_export.py`. The bidirectional doc/export validator tests (§7) catch any missed touchpoints automatically.
 
+7. **Unit Mix sheet — `_build_unit_mix_sheet`.** The Unit Mix sheet (added post-plan in commits cbd2828/be7b361) iterates `unit_mix_by_project: dict[UUID, list[UnitMix]]` loaded from the standalone `unit_mix` ORM table — the same data source as touchpoint #1. After the refactor, update the sheet builder to read `project.unit_mix` JSONB directly via the same `UnitMixItem` Pydantic model. The sheet's column layout (beds, baths, sqft, count, in-place rent, market rent, rent gap) and named ranges are unchanged; only the data source switches. This touchpoint is bundled with #1 — both change together in `_load_all`.
+
 This commit is the export's only direct dependency on the schema refactor;
 all other commits are refactor-blind and stable.
 

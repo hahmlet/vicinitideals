@@ -1127,6 +1127,65 @@ premium); negative → above-market acquisition price relative to NOI. A
 spread of 100-200 bps is typical for value-add multifamily; below 50 bps
 the deal needs cap compression or NOI growth to clear hurdle returns.
 
+### Risk-Free Rate [investor, app]
+
+**Definition.** The annualised risk-free benchmark rate (typically the
+10-year US Treasury yield) at the time of underwriting. Used as the
+denominator benchmark in the Spread Stack KPIs on the Underwriting
+Summary sheet.
+
+**Engine source.** `Scenario.risk_free_rate_pct` (nullable; falls back to
+`settings.default_risk_free_rate_pct` = 4.25% when NULL). Set in the
+Model Settings drawer.
+
+**Notes / edge cases.** Scenario-level input, not a computed output. A
+stale rate can make spreads misleading — update this when underwriting a
+new deal if the rate environment has shifted materially.
+
+### Cap Rate Spread [investor, app]
+
+**Definition.** Going-in cap rate on cost minus the risk-free rate — the
+unlevered risk premium the property earns over a T-bill.
+
+**Calculation.**
+```
+cap_rate_spread = yield_on_cost − risk_free_rate
+```
+
+**Engine source.** Computed inline by the investor export Spread Stack
+section from `s_spread_cap_pct` (Yield on Cost) and `s_rfr_pct`
+(Risk-Free Rate).
+
+**Notes / edge cases.** A cap rate spread of 150–250 bps over the 10Y
+Treasury is typical for stabilised multifamily. Below 100 bps the deal's
+unlevered return offers little cushion vs. a risk-free alternative.
+
+### Levered IRR Spread [investor, app]
+
+**Definition.** Levered IRR minus a benchmark rate — quantifies the
+return premium engineering (leverage + execution) delivers over a passive
+benchmark. Two variants appear in the Spread Stack:
+
+- **vs Cap Rate** (`s_irr_spread`): how much leverage adds to the
+  unlevered going-in cap.
+- **vs RFR** (`s_irr_rfr_spread`): total levered return premium over the
+  risk-free rate.
+
+**Calculation.**
+```
+irr_spread_vs_cap   = levered_irr − yield_on_cost
+irr_spread_vs_rfr   = levered_irr − risk_free_rate
+```
+
+**Engine source.** Computed inline by the investor export Spread Stack
+from `OperationalOutputs.levered_irr` (via `rollup_summary`) and the cap
+/ RFR inputs.
+
+**Notes / edge cases.** Negative IRR vs Cap spread means leverage is
+dilutive — the deal would return more unlevered. A positive spread of
+200–400 bps over cap rate is a reasonable leverage hurdle for
+value-add multifamily.
+
 ### Direct Cap Value [investor, app]
 
 **Definition.** Property value implied by capping stabilized NOI at the
