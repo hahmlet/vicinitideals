@@ -11848,3 +11848,88 @@ async def delete_saved_filter(
     await session.delete(row)
     await session.commit()
     return {"ok": True}
+
+
+# ── Deal change-log (history drawer) ─────────────────────────────────────────
+
+@router.get("/ui/models/{model_id}/history", response_class=HTMLResponse)
+async def history_drawer(
+    model_id: UUID, request: Request, session: DBSession
+) -> HTMLResponse:
+    """Render the history drawer partial (list of compute snapshots)."""
+    from app.exporters.snapshot import diff_snapshots, list_snapshots
+
+    user = await _get_user(session, request)
+    if user is None:
+        return HTMLResponse('<p style="color:var(--text-muted)">Not authenticated</p>', status_code=401)
+
+    model = await _get_deal_or_404(session, model_id)
+    snaps = await list_snapshots(session, model_id)
+
+    # Build diff summaries between consecutive snapshots for rendering
+    entries = []
+    for i, snap in enumerate(snaps):
+        diff = diff_snapshots(snaps[i - 1], snap) if i > 0 else None
+        entries.append({"snap": snap, "diff": diff})
+
+    tpl = request.app.state.templates
+    return tpl.TemplateResponse(
+        "partials/history_drawer.html",
+        {"request": request, "model": model, "entries": entries, "model_id": model_id},
+    )
+
+
+@router.post("/ui/models/{model_id}/history/{snapshot_id}/revert", response_class=HTMLResponse)
+async def revert_snapshot(
+    model_id: UUID,
+    snapshot_id: UUID,
+    request: Request,
+    session: DBSession,
+) -> HTMLResponse:
+    """Revert scenario inputs to a prior snapshot state and return a status banner."""
+    from app.exporters.snapshot import revert_to_snapshot
+
+    user = await _get_user(session, request)
+    if user is None:
+        return HTMLResponse('<p style="color:var(--color-error)">Not authenticated</p>', status_code=401)
+
+    try:
+        await revert_to_snapshot(session, model_id, snapshot_id)
+        await session.commit()
+    except ValueError as exc:
+        return HTMLResponse(
+            f'<div class="alert alert-error" role="alert">{exc}</div>',
+            status_code=404,
+        )
+
+    return HTMLResponse(
+        '<div class="alert alert-success" role="alert" '
+        'hx-trigger="load delay:0ms" hx-get="" hx-target="body">'
+        'Reverted. Click <strong>Calculate</strong> to recompute.</div>',
+        headers={"HX-Trigger": "snapshotReverted"},
+    )
+
+
+@router.get("/ui/models/{model_id}/history/export.json")
+async def export_history_json_endpoint(
+    model_id: UUID, request: Request, session: DBSession
+) -> JSONResponse:
+    """Return the full change-log as a structured JSON (AI-readable)."""
+    from app.exporters.snapshot import export_history_json
+    import json as _json
+
+    user = await _get_user(session, request)
+    if user is None:
+        return JSONResponse({"error": "not authenticated"}, status_code=401)
+
+    try:
+        payload = await export_history_json(session, model_id)
+    except ValueError as exc:
+        return JSONResponse({"error": str(exc)}, status_code=404)
+
+    return JSONResponse(
+        content=_json.loads(_json.dumps(payload, default=str)),
+        headers={
+            "Content-Disposition": f'attachment; filename="history-{model_id}.json"',
+        },
+    )

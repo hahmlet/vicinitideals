@@ -1,0 +1,192 @@
+{# History drawer — list of compute snapshots with diffs and revert actions #}
+{# Context: model, entries (list of {snap, diff}), model_id #}
+
+<style>
+.hist-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px 12px; border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; background: var(--surface, #fff); z-index: 10;
+}
+.hist-title { font-size: 15px; font-weight: 700; color: var(--text); }
+.hist-export-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600; color: var(--accent, #2563eb);
+  text-decoration: none; padding: 4px 10px; border: 1px solid var(--accent, #2563eb);
+  border-radius: 5px; cursor: pointer; background: transparent;
+}
+.hist-export-btn:hover { background: var(--accent-light, #eff6ff); }
+.hist-empty {
+  padding: 40px 20px; text-align: center;
+  color: var(--text-muted); font-size: 13px;
+}
+.hist-list { list-style: none; margin: 0; padding: 0; }
+.hist-entry {
+  border-bottom: 1px solid var(--border-faint, #f0f0f0);
+  padding: 14px 20px;
+}
+.hist-entry:last-child { border-bottom: none; }
+.hist-entry-header {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+}
+.hist-version-badge {
+  display: inline-flex; align-items: center; padding: 2px 8px;
+  background: var(--accent-light, #eff6ff); color: var(--accent, #2563eb);
+  border-radius: 10px; font-size: 11px; font-weight: 700; white-space: nowrap;
+}
+.hist-meta { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.hist-metrics {
+  display: flex; flex-wrap: wrap; gap: 10px 20px; margin-top: 8px;
+}
+.hist-metric { font-size: 12px; color: var(--text-secondary); }
+.hist-metric strong { font-weight: 700; color: var(--text); }
+.hist-diff-toggle {
+  font-size: 11px; color: var(--accent, #2563eb); cursor: pointer;
+  background: none; border: none; padding: 4px 0; text-decoration: underline;
+  text-align: left;
+}
+.hist-diff-panel {
+  display: none; margin-top: 10px; background: var(--surface-2, #f9fafb);
+  border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px;
+  font-size: 12px;
+}
+.hist-diff-panel.open { display: block; }
+.hist-diff-section-title {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .04em; color: var(--text-muted); margin-bottom: 6px;
+}
+.hist-change-row { display: flex; gap: 8px; align-items: baseline; padding: 2px 0; }
+.hist-change-entity {
+  font-weight: 600; color: var(--text-secondary); min-width: 110px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.hist-change-field { color: var(--text-muted); }
+.hist-change-val { font-family: monospace; }
+.hist-change-before { color: var(--color-error, #dc2626); }
+.hist-change-after  { color: var(--success, #16a34a); }
+.hist-change-arrow  { color: var(--text-muted); }
+.hist-change-added   { color: var(--success, #16a34a); font-style: italic; }
+.hist-change-removed { color: var(--color-error, #dc2626); font-style: italic; text-decoration: line-through; }
+.hist-revert-btn {
+  margin-top: 10px; font-size: 12px; font-weight: 600;
+  padding: 4px 12px; border-radius: 5px;
+  background: var(--surface, #fff); border: 1px solid var(--border);
+  color: var(--text-secondary); cursor: pointer;
+}
+.hist-revert-btn:hover { border-color: var(--accent, #2563eb); color: var(--accent, #2563eb); }
+.hist-baseline-note {
+  font-size: 11px; color: var(--text-muted); font-style: italic; margin-top: 8px;
+}
+</style>
+
+<div class="hist-header">
+  <div class="hist-title">Compute History</div>
+  <a class="hist-export-btn"
+     href="/ui/models/{{ model_id }}/history/export.json"
+     download="history-{{ model_id }}.json">
+    ↓ Export Log
+  </a>
+</div>
+
+{% if not entries %}
+<div class="hist-empty">
+  No compute runs recorded yet.<br>
+  Click <strong>Calculate</strong> to start the audit trail.
+</div>
+{% else %}
+<ul class="hist-list">
+{% for entry in entries %}
+{% set snap = entry.snap %}
+{% set diff = entry.diff %}
+{% set out  = snap.outputs_json or {} %}
+
+<li class="hist-entry" id="hist-entry-{{ snap.id }}">
+  <div class="hist-entry-header">
+    <div>
+      <span class="hist-version-badge">v{{ snap.version }}</span>
+      <div class="hist-meta">
+        {{ snap.created_at.strftime('%b %d, %Y %H:%M UTC') if snap.created_at else '—' }}
+        {% if snap.label %} · <em>{{ snap.label }}</em>{% endif %}
+      </div>
+    </div>
+    {% if not loop.first %}
+    <button
+      class="hist-revert-btn"
+      hx-post="/ui/models/{{ model_id }}/history/{{ snap.id }}/revert"
+      hx-confirm="Revert to v{{ snap.version }}? Current inputs will be overwritten. You can re-run Calculate to see the restored numbers."
+      hx-target="#hist-entry-{{ snap.id }}"
+      hx-swap="innerHTML">
+      ↩ Revert to v{{ snap.version }}
+    </button>
+    {% endif %}
+  </div>
+
+  {# Key output metrics row #}
+  <div class="hist-metrics">
+    {% if out.get('dscr') is not none %}
+    <div class="hist-metric">DSCR <strong>{{ "%.2f"|format(out.dscr | float) }}×</strong></div>
+    {% endif %}
+    {% if out.get('project_irr_levered') is not none %}
+    <div class="hist-metric">IRR <strong>{{ "%.1f"|format(out.project_irr_levered | float * 100) }}%</strong></div>
+    {% endif %}
+    {% if out.get('noi_stabilized') is not none %}
+    <div class="hist-metric">NOI <strong>${{ "{:,.0f}".format(out.noi_stabilized | float) }}</strong></div>
+    {% endif %}
+    {% if out.get('equity_required') is not none %}
+    <div class="hist-metric">Equity <strong>${{ "{:,.0f}".format(out.equity_required | float) }}</strong></div>
+    {% endif %}
+    {% if out.get('total_project_cost') is not none %}
+    <div class="hist-metric">TPC <strong>${{ "{:,.0f}".format(out.total_project_cost | float) }}</strong></div>
+    {% endif %}
+  </div>
+
+  {% if loop.first %}
+  <div class="hist-baseline-note">Baseline — first compute run recorded.</div>
+  {% elif diff %}
+  {% set input_changes = diff.input_changes or [] %}
+  {% set output_changes = diff.output_changes or {} %}
+  {% if input_changes or output_changes %}
+  <button class="hist-diff-toggle"
+          onclick="this.nextElementSibling.classList.toggle('open'); this.textContent = this.nextElementSibling.classList.contains('open') ? '▲ Hide changes' : '▼ Show changes'">
+    ▼ Show changes ({{ input_changes | length }} input{% if input_changes | length != 1 %}s{% endif %}{% if output_changes %}, {{ output_changes | length }} metric{% if output_changes | length != 1 %}s{% endif %}{% endif %} changed)
+  </button>
+  <div class="hist-diff-panel">
+    {% if input_changes %}
+    <div class="hist-diff-section-title">Input Changes</div>
+    {% for chg in input_changes %}
+    <div class="hist-change-row">
+      <span class="hist-change-entity" title="{{ chg.entity }}">{{ chg.entity }}</span>
+      <span class="hist-change-field">{{ chg.label }}</span>
+      {% if chg.get('change') == 'added' %}
+      <span class="hist-change-added hist-change-val">+ added</span>
+      {% elif chg.get('change') == 'removed' %}
+      <span class="hist-change-removed hist-change-val">removed</span>
+      {% else %}
+      <span class="hist-change-field">{{ chg.field }}</span>
+      <span class="hist-change-before hist-change-val">{{ chg.before }}</span>
+      <span class="hist-change-arrow">→</span>
+      <span class="hist-change-after hist-change-val">{{ chg.after }}</span>
+      {% endif %}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if output_changes %}
+    <div class="hist-diff-section-title" style="margin-top:10px">Metric Changes</div>
+    {% for key, chg in output_changes.items() %}
+    <div class="hist-change-row">
+      <span class="hist-change-entity">{{ key }}</span>
+      <span class="hist-change-before hist-change-val">{{ chg.before }}</span>
+      <span class="hist-change-arrow">→</span>
+      <span class="hist-change-after hist-change-val">{{ chg.after }}</span>
+    </div>
+    {% endfor %}
+    {% endif %}
+  </div>
+  {% else %}
+  <div class="hist-meta" style="margin-top:6px">No tracked inputs changed.</div>
+  {% endif %}
+  {% endif %}
+</li>
+{% endfor %}
+</ul>
+{% endif %}
