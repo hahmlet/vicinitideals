@@ -22,10 +22,18 @@ depends_on = None
 
 
 def upgrade() -> None:
-    op.add_column(
-        "scenarios",
-        sa.Column("health_thresholds", sa.JSON(), nullable=True),
-    )
+    conn = op.get_bind()
+    exists = conn.execute(
+        sa.text(
+            "SELECT 1 FROM information_schema.columns "
+            "WHERE table_name='scenarios' AND column_name='health_thresholds'"
+        )
+    ).scalar()
+    if not exists:
+        op.add_column(
+            "scenarios",
+            sa.Column("health_thresholds", sa.JSON(), nullable=True),
+        )
 
 
 def downgrade() -> None:
