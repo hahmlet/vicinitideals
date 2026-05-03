@@ -331,7 +331,9 @@ Parent owns final synthesis. User instructions override these rules.
 | Understand what a file imports / exports | `mcp__code-review-graph__get_minimal_context_tool` |
 | Find large or complex functions | `mcp__code-review-graph__find_large_functions_tool` |
 
-Use Grep/Glob only when: searching template/HTML files (not parsed by Tree-sitter), doing exact string matches in non-Python files, or when the graph returns no results. Always try graph first.
+Use Grep/Glob only when: searching template/HTML files (not parsed by Tree-sitter), doing exact string matches in non-Python files, searching for external library usage patterns (`requests.get`, `urllib`, `open()`— external packages not in graph), or when graph returns no results. Always try graph first.
+
+For route/function discovery in a known file, use `query_graph_tool` (lists all functions as nodes) — faster and cheaper than regex grep.
 
 **Skip graph immediately** for UI/template concepts — go straight to Grep on `app/templates/`: drawer, slider, modal, panel, button, checkbox, badge, pill, HTMX attribute (`hx-`, `hx_`), Jinja2 variable/block names. These live in `.html` files the graph does not index.
 
