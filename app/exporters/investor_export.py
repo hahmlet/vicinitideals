@@ -483,33 +483,56 @@ def _build_version_tab(ws, ctx: dict) -> None:
 
 
 def _npv_levered(
-    cash_flows: dict,
+    rollup_waterfall: list[dict],
+    capital_modules: list,
     equity_required: Decimal,
     discount_rate_pct: Decimal,
 ) -> Decimal | None:
-    """NPV of levered equity CFs discounted at investor's required rate.
+    """NPV of levered equity CF series discounted at investor's hurdle rate.
 
-    Sums monthly net_cash_flow (after debt service) across all projects,
-    discounts each period at annual rate r = discount_rate_pct/100,
-    then subtracts initial equity outlay. Returns None when equity or
-    discount rate is zero (no meaningful result).
+    Uses per-period waterfall cash_distributed as the equity CF series —
+    this correctly captures operating distributions AND the large terminal
+    exit payout that net_cash_flow (NOI−DS) omits.  Initial equity outlay
+    is equity_required (the funded gap between Uses and Sources).
+
+    Returns None when no distributable equity CFs found or denominator zero.
     """
     if discount_rate_pct <= 0 or equity_required <= 0:
         return None
     r = discount_rate_pct / Decimal(100)
-    pv_cfs = Decimal(0)
-    for cfl in cash_flows.values():
-        for cf in cfl:
-            t = cf.period
-            ncf = _coerce_decimal(cf.net_cash_flow or 0)
-            if ncf == 0:
-                continue
-            pv_cfs += ncf / (1 + r) ** (Decimal(t) / Decimal(12))
-    return pv_cfs - equity_required
+
+    # Identify equity capital module IDs so we skip debt tiers.
+    # If none have Equity class (auto-funded deals), fall through to sum all tiers.
+    equity_ids = {
+        str(m.id) for m in capital_modules
+        if _funder_class(m.funder_type) == "Equity"
+    }
+
+    per_period: dict[int, Decimal] = {}
+    for row in rollup_waterfall:
+        mid = row.get("capital_module_id")
+        if equity_ids and mid not in equity_ids:
+            continue
+        t = row.get("period") or 0
+        if t <= 0:
+            continue
+        dist = _coerce_decimal(row.get("cash_distributed") or 0)
+        if dist:
+            per_period[t] = per_period.get(t, Decimal(0)) + dist
+
+    if not per_period:
+        return None
+
+    pv_dist = sum(
+        v / (1 + r) ** (Decimal(t) / Decimal(12))
+        for t, v in per_period.items()
+    )
+    return pv_dist - equity_required
 
 
 def _weighted_em_calc(
-    cash_flows: dict,
+    rollup_waterfall: list[dict],
+    capital_modules: list,
     equity_required: Decimal,
     discount_rate_pct: Decimal,
 ) -> Decimal | None:
@@ -519,7 +542,7 @@ def _weighted_em_calc(
     means PV of distributions equals 2× equity invested — a better quality
     signal than raw EM when comparing deals with different hold periods.
     """
-    npv = _npv_levered(cash_flows, equity_required, discount_rate_pct)
+    npv = _npv_levered(rollup_waterfall, capital_modules, equity_required, discount_rate_pct)
     if npv is None:
         return None
     return (equity_required + npv) / equity_required
@@ -1126,7 +1149,7 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
     # higher.  Source: corpus 67, A.CRE best-practice convention.
     _disc_rate = _coerce_decimal(ctx.get("discount_rate_pct") or Decimal("8.0"))
     _equity_req = _coerce_decimal(totals.get("equity_required") or 0)
-    w_em = _weighted_em_calc(ctx["cash_flows"], _equity_req, _disc_rate)
+    w_em = _weighted_em_calc(rollup_waterfall, capital_modules, _equity_req, _disc_rate)
     _kv_row_optional(
         ws, row, f"Weighted Equity Multiple ({_disc_rate:.2f}% hurdle)",
         w_em,
@@ -1138,6 +1161,17 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
     # metric LPs ask about ahead of a deal close. Same em-dash semantics
     # as Equity Multiple when the denominator is zero.
     coc_y1 = _coc_year_one(rollup_waterfall, capital_modules)
+    if coc_y1 is None and _equity_req > 0:
+        # Auto-funded deals have $0 equity module commitments so _coc_year_one
+        # returns None (denominator = 0). Fall back: use scenario equity_required
+        # as the denominator, sum Y1 cash_distributed across all waterfall tiers.
+        _y1_dists = sum(
+            _coerce_decimal(row.get("cash_distributed") or 0)
+            for row in rollup_waterfall
+            if 1 <= (row.get("period") or 0) <= 12
+        )
+        if _y1_dists > 0:
+            coc_y1 = _y1_dists / _equity_req
     _kv_row_optional(
         ws, row, "Cash-on-Cash (Year 1)",
         coc_y1,
@@ -1428,7 +1462,7 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
     # at the stated price.  Pairs with Weighted EM above.
     _disc_rate_pct = _coerce_decimal(ctx.get("discount_rate_pct") or Decimal("8.0"))
     _equity_req_val = _coerce_decimal(totals.get("equity_required") or 0)
-    npv_lev = _npv_levered(ctx["cash_flows"], _equity_req_val, _disc_rate_pct)
+    npv_lev = _npv_levered(rollup_waterfall, capital_modules, _equity_req_val, _disc_rate_pct)
     ws.cell(
         row=cur, column=1,
         value=f"DCF NPV ({_disc_rate_pct:.2f}% hurdle)",
