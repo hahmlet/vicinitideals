@@ -1092,7 +1092,7 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         fmt="0.000", hero=True,
     ); row += 1
     kv_row(
-        ws, row, "Combined Stabilized NOI",
+        ws, row, "Combined Stabilized NOI (DSCR basis)",
         _sum_per_project_field(per_project, "noi_stabilized"),
         name="s_combined_noi", registry=registry,
         fmt=ACCOUNTING, hero=True,
@@ -2527,6 +2527,29 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
         name="s_gp_promote_dollars", registry=registry, fmt=ACCOUNTING,
     ); cur_row += 1
 
+    # When all equity modules have $0 committed principal but the scenario has
+    # a nonzero equity_required, return multiples (EM, WEM, CoC) are computed
+    # against the implied-gap equity figure and will appear inflated. Warn so
+    # the LP understands the basis before interpreting headline multiples.
+    _equity_req_check = _coerce_decimal(totals.get("equity_required") or 0)
+    _committed_equity = sum(
+        junction_principal.get(m.id) or _coerce_decimal((m.source or {}).get("amount") or 0)
+        for m in capital_modules
+        if _funder_class(m.funder_type) == "Equity"
+    )
+    if _equity_req_check > Decimal(1) and _committed_equity <= Decimal(1):
+        cur_row += 1
+        note = ws.cell(
+            row=cur_row, column=1,
+            value=(
+                f"⚠ Return multiples (EM, Weighted EM, CoC) are computed against the implied equity "
+                f"basis of {_format_currency_short(_equity_req_check)}, not a formally committed equity "
+                f"module. Assign equity to a capital module to lock in the contribution basis."
+            ),
+        )
+        note.font = FONT_HINT
+        ws.merge_cells(start_row=cur_row, start_column=1, end_row=cur_row, end_column=8)
+
     if not rollup:
         cur_row += 1
         ws.cell(
@@ -3066,6 +3089,15 @@ def _build_project_sheet(
             row=su_data, column=1,
             value="(no capital module attached to this project)",
         ).font = FONT_HINT
+        su_data += 1
+
+    _proj_implied = uses_total - sources_total
+    if _proj_implied > Decimal(1):
+        ws.cell(row=su_data, column=1, value="Source").font = FONT_VALUE
+        ws.cell(row=su_data, column=2, value="Owner Equity (implied gap)").font = FONT_VALUE
+        ws.cell(row=su_data, column=3, value=_to_excel_number(_proj_implied)).number_format = ACCOUNTING
+        ws.cell(row=su_data, column=4, value="Auto-funded equity — residual after debt").font = FONT_HINT
+        sources_total += _proj_implied
         su_data += 1
 
     ws.cell(row=su_data, column=1, value="Source").font = FONT_LABEL
