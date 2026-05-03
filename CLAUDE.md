@@ -314,6 +314,8 @@ If subagent realizes task needs more reasoning than its tier provides, return to
 
 Parent owns final synthesis. User instructions override these rules.
 
+**If a Read is intercepted by the memory hook** ("File unchanged since last read"), this is not an error — it means the file content is already in context from an earlier read. Use that prior result instead of retrying.
+
 ---
 
 ## Code Search Routing
