@@ -1044,7 +1044,7 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         name="s_rfr_pct", registry=registry, fmt=PCT, hero=True,
     ); row += 1
     _kv_row_optional(
-        ws, row, "Cap Rate on Cost",
+        ws, row, "Cap Rate on Cost (stabilized Y1 NOI ÷ TPC)",
         _coerce_pct(_combined_cap_pct) if _combined_cap_pct is not None else None,
         name="s_spread_cap_pct", registry=registry, fmt=PCT, hero=True,
     ); row += 1
@@ -1192,13 +1192,29 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
     combined_noi = _sum_per_project_field(per_project, "noi_stabilized")
     combined_tpc = _coerce_decimal(totals.get("total_project_cost") or 0)
 
+    # Exit-year NOI: sum monthly NOI for the last 12 months of the modeled hold
+    # (capped at Y10), matching the _per_year_irr_series convention.
+    # Yield-on-cost and Going-In Cap Value intentionally keep stabilized (Y1) NOI.
+    _cf_map: dict = ctx["cash_flows"]
+    _pnoi: dict[int, Decimal] = {}
+    for _cfl in _cf_map.values():
+        for _cf in _cfl:
+            _pnoi[_cf.period] = _pnoi.get(_cf.period, Decimal(0)) + _coerce_decimal(_cf.noi or 0)
+    _ann = _aggregate_scenario_annual(_cf_map)
+    _exit_yr = min(max(_ann) if _ann else 10, 10)
+    _exit_noi = sum(
+        (_pnoi.get(p, Decimal(0)) for p in range(_exit_yr * 12 - 11, _exit_yr * 12 + 1)),
+        Decimal(0),
+    )
+    exit_year_noi = _exit_noi if _exit_noi > 0 else combined_noi
+
     yield_on_cost = (combined_noi / combined_tpc) if combined_tpc > 0 else None
     going_in_value = (
         (combined_noi * Decimal(100) / going_in_cap_pct_raw)
         if going_in_cap_pct_raw > 0 else None
     )
     exit_value = (
-        (combined_noi * Decimal(100) / exit_cap_pct_raw)
+        (exit_year_noi * Decimal(100) / exit_cap_pct_raw)
         if exit_cap_pct_raw > 0 else None
     )
 
@@ -1256,7 +1272,7 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         )
         ws.cell(
             row=cur, column=3,
-            value=f"Market value at exit ({exit_cap_pct_raw}% cap)",
+            value=f"Market value at exit ({exit_cap_pct_raw}% cap, Y{_exit_yr} NOI)",
         ).font = FONT_HINT
     else:
         ws.cell(row=cur, column=2, value=_DASH).font = FONT_VALUE
