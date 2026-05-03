@@ -1225,11 +1225,28 @@ async function startInvestorExport(modelId) {
                  placeholder="3.0">
         </div>
         <div>
+          <label class="field-label">Going-In Cap Rate (%)</label>
+          <input class="filter-input" type="number" step="0.1" style="width:100%;margin-top:4px"
+                 name="going_in_cap_rate_pct"
+                 value="{{ inputs.going_in_cap_rate_pct | round(1) if inputs and inputs.going_in_cap_rate_pct else '' }}"
+                 placeholder="5.0">
+          <div class="form-hint" style="font-size:11px;color:var(--text-muted);margin-top:4px">Market cap rate at acquisition. Used to compute Going-In Market Value on investor export.</div>
+        </div>
+        <div>
           <label class="field-label">Exit Cap Rate (%)</label>
           <input class="filter-input" type="number" step="0.1" style="width:100%;margin-top:4px"
                  name="exit_cap_rate_pct"
                  value="{{ inputs.exit_cap_rate_pct | round(1) if inputs and inputs.exit_cap_rate_pct else '' }}"
                  placeholder="5.5">
+        </div>
+        <div>
+          <label class="field-label">CapEx Reserve ($/unit/yr)</label>
+          <input class="filter-input" type="number" step="50" min="0"
+                 style="width:100%;margin-top:4px"
+                 name="capex_reserve_per_unit_annual"
+                 value="{{ inputs.capex_reserve_per_unit_annual | int if inputs and inputs.capex_reserve_per_unit_annual else '' }}"
+                 placeholder="250">
+          <div class="form-hint" style="font-size:11px;color:var(--text-muted);margin-top:4px">Annual capital reserve per unit, deducted from NOI (below OpEx). Defaults to $0 if blank.</div>
         </div>
         <div>
           <label class="field-label">Risk-Free Rate / 10Y Treasury (%)</label>

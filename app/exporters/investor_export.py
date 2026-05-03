@@ -1266,6 +1266,19 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         ws.cell(row=line, column=4, value=_funder_type_label(module)).font = FONT_HINT
         sources_total += amount
         line += 1
+
+    # Auto-funded equity (implied gap): equity modules sized as Uses − explicit Sources.
+    # Show the implied contribution as a funded source line so Total Sources = Total Uses
+    # and lenders don't flag a gap that is intentionally covered by sponsor equity.
+    _implied_equity = uses_total - sources_total
+    if _implied_equity > Decimal(1):
+        ws.cell(row=line, column=1, value="Source").font = FONT_VALUE
+        ws.cell(row=line, column=2, value="Owner Equity (implied gap)").font = FONT_VALUE
+        ws.cell(row=line, column=3, value=_to_excel_number(_implied_equity)).number_format = ACCOUNTING
+        ws.cell(row=line, column=4, value="Auto-funded equity — residual after debt").font = FONT_HINT
+        sources_total += _implied_equity
+        line += 1
+
     ws.cell(row=line, column=1, value="Source").font = FONT_LABEL
     ws.cell(row=line, column=2, value="Total Sources").font = FONT_LABEL
     registry.write(
@@ -1915,6 +1928,23 @@ def _build_uw_cashflow(ws, registry: CellRegistry, ctx: dict) -> None:
 
     write_series("NOI", noi_series, "r_uw_cf_noi")
     write_series("Capital Events (acq + exit)", capital_events_by_year, "r_uw_cf_capital_events")
+
+    # Debt proceeds drawn at acquisition close (Y0) — show as explicit inflow so
+    # the LP can see: Acquisition Cost − Debt Proceeds = Net Equity Deployed.
+    _junc_dp: dict = {}
+    for _j in ctx.get("junctions", []):
+        _junc_dp[_j.capital_module_id] = _junc_dp.get(
+            _j.capital_module_id, Decimal(0)
+        ) + _coerce_decimal(_j.amount or 0)
+    _debt_y0 = Decimal(0)
+    for _m in ctx.get("capital_modules", []):
+        if _funder_class(_m.funder_type) == "Debt":
+            _debt_y0 += _junc_dp.get(_m.id) or _coerce_decimal(
+                (_m.source or {}).get("amount") or 0
+            )
+    if _debt_y0 > Decimal(1):
+        write_series("Debt Proceeds (Y0 draws)", {0: _debt_y0}, "r_uw_cf_debt_proceeds")
+
     write_series("Debt Service", debt_series, "r_uw_cf_debt_service")
     write_series("Levered Cash Flow", ncf_series, "r_uw_cf_levered")
 
@@ -3679,6 +3709,12 @@ def _build_debt_schedule(ws, registry: CellRegistry, ctx: dict) -> None:
         if year * 12 <= perm_io_months:
             year_payment = interest_paid
             principal_paid = Decimal(0)
+        elif year == display_years and display_years >= perm_amort_yrs:
+            # Final row: sweep remaining balance to exactly $0 so the table is
+            # internally consistent (Beg − Principal = End = $0).
+            end_balance = Decimal(0)
+            principal_paid = beg_balance
+            year_payment = interest_paid + principal_paid
         else:
             year_payment = annual_pi_amount
             principal_paid = year_payment - interest_paid

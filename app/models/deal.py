@@ -311,6 +311,7 @@ class OperationalInputs(Base):
     property_tax_annual: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=0)
     insurance_annual: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=0)
     capex_reserve_per_unit_annual: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=0)
+    going_in_cap_rate_pct: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
 
     # Exit (deprecated scalar: use UseLine with phase=exit instead)
     exit_cap_rate_pct: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=5, server_default="5")

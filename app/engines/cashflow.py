@@ -2234,6 +2234,8 @@ def _balloon_balance(
     n_amort = max(0, months_elapsed - io_months)
     if n_amort == 0:
         return principal  # still in IO period
+    if n_amort >= amort_years * 12:
+        return ZERO  # fully amortized — sweep residual to exact $0
     pmt = _monthly_pmt(principal, rate_pct, amort_years)
     factor = (ONE + monthly_rate) ** n_amort
     balance = _q(principal * factor - pmt * (factor - ONE) / monthly_rate)

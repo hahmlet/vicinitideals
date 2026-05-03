@@ -7117,6 +7117,8 @@ async def save_model_settings(
     deal_type_raw = str(form.get("deal_type", "")).strip()
     expense_growth = form.get("expense_growth_rate_pct_annual")
     exit_cap = form.get("exit_cap_rate_pct")
+    going_in_cap = form.get("going_in_cap_rate_pct")
+    capex_reserve = form.get("capex_reserve_per_unit_annual")
     risk_free_rate = form.get("risk_free_rate_pct")
     discount_rate = form.get("discount_rate_pct")
     hold_period = form.get("hold_period_years")
@@ -7178,6 +7180,16 @@ async def save_model_settings(
         if exit_cap is not None:
             try:
                 inputs.exit_cap_rate_pct = float(exit_cap)
+            except (ValueError, TypeError):
+                pass
+        if going_in_cap is not None:
+            try:
+                inputs.going_in_cap_rate_pct = float(going_in_cap)
+            except (ValueError, TypeError):
+                pass
+        if capex_reserve is not None:
+            try:
+                inputs.capex_reserve_per_unit_annual = float(capex_reserve)
             except (ValueError, TypeError):
                 pass
         if hold_period is not None:
