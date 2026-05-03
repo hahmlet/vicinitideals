@@ -36,6 +36,7 @@ from app.models.deal import (  # noqa: F401
     OperatingExpenseLine,
     OperationalInputs,
     Scenario,        # financial plan (was DealModel / the old deals table)
+    ScenarioSnapshot,
     UseLine,
 )
 

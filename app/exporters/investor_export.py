@@ -456,6 +456,7 @@ def _build_version_tab(ws, ctx: dict) -> None:
     fields = [
         ("Export Generated", snap.strftime("%Y-%m-%d %H:%M UTC")),
         ("Export Version", "2.0"),
+        ("Compute Version", f"v{scenario.version}" if getattr(scenario, 'version', None) is not None else "—"),
         ("Scenario Name", scenario.name or "—"),
         ("Scenario ID", str(scenario.id)),
         ("Deal Type", str(getattr(scenario, "project_type", "") or "—").replace("_", " ").title()),
