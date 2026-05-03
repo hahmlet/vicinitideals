@@ -601,11 +601,11 @@ def _build_cover(ws, registry: CellRegistry, ctx: dict) -> None:
     next_row_after_projects = 11 + max(len(projects), 1) + 2
     if gap > Decimal(1):
         section_label(
-            ws, next_row_after_projects, "⚠ Sources Gap", span_cols=2,
+            ws, next_row_after_projects, "⚠ Equity Gap", span_cols=2,
         )
         ws.cell(
             row=next_row_after_projects + 1, column=1,
-            value="Deal is undersized",
+            value="Owner equity not formally committed",
         ).font = FONT_LABEL
         cell = ws.cell(
             row=next_row_after_projects + 1, column=2,
@@ -617,11 +617,9 @@ def _build_cover(ws, registry: CellRegistry, ctx: dict) -> None:
         registry.register("s_cover_sources_gap", ws.title, next_row_after_projects + 1, 2)
         gap_pct = (gap / uses_total * Decimal(100)) if uses_total > 0 else None
         hint = (
-            f"Σ Uses {_format_currency_short(uses_total)} exceeds "
-            f"Σ Sources {_format_currency_short(sources_total)}"
+            f"{_format_currency_short(gap)} of owner equity implied but not assigned to a module"
+            f" — recorded as implied gap on Underwriting Summary Sources & Uses"
         )
-        if gap_pct is not None:
-            hint += f" by {gap_pct:.1f}% of Total Uses"
         ws.cell(
             row=next_row_after_projects + 2, column=1,
             value=hint,
@@ -3170,7 +3168,7 @@ def _capital_events_by_year(
     for year, by_label in annual_items.items():
         total = Decimal(0)
         for label, amount in by_label.items():
-            if any(label.startswith(p) for p in _CAPITAL_EVENT_PREFIXES):
+            if any(p in label for p in _CAPITAL_EVENT_PREFIXES):
                 total += amount
         out[year] = total
     return out
@@ -3196,7 +3194,7 @@ def _signed_capital_events_by_year_for_project(
     out: dict[int, Decimal] = {}
     for li in items:
         label = (li.label or "").strip()
-        if not any(label.startswith(p) for p in _CAPITAL_EVENT_PREFIXES):
+        if not any(p in label for p in _CAPITAL_EVENT_PREFIXES):
             continue
         amount = _coerce_decimal(li.net_amount or 0)
         adjustments = li.adjustments or {}
