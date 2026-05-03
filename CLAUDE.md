@@ -332,3 +332,5 @@ Parent owns final synthesis. User instructions override these rules.
 Use Grep/Glob only when: searching template/HTML files (not parsed by Tree-sitter), doing exact string matches in non-Python files, or when the graph returns no results. Always try graph first.
 
 **Skip graph immediately** for UI/template concepts — go straight to Grep on `app/templates/`: drawer, slider, modal, panel, button, checkbox, badge, pill, HTMX attribute (`hx-`, `hx_`), Jinja2 variable/block names. These live in `.html` files the graph does not index.
+
+**Skip `smart_outline` for `.txt` and docs files** — Tree-sitter has no grammar for plain text. Use `Read` directly on anything in `docs/`.
