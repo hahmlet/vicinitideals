@@ -227,6 +227,11 @@ class Scenario(Base):
     # NULL → falls back to settings.default_risk_free_rate_pct (4.25%).
     risk_free_rate_pct: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
 
+    # Deal Health RAG thresholds — per-scenario overrides for the investor export.
+    # Keys: occ_green, oer_green, dscr_green, margin_green (all floats).
+    # NULL → exporter falls back to HEALTH_THRESHOLD_DEFAULTS keyed by deal_type.
+    health_thresholds: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+
 
 # Backward-compat alias — old code importing DealModel still works
 DealModel = Scenario

@@ -7278,6 +7278,17 @@ async def save_model_settings(
                 cm.carry = carry
                 session.add(cm)
 
+    _ht: dict[str, float] = {}
+    for _key in ("ht_occ_green", "ht_oer_green", "ht_dscr_green", "ht_margin_green"):
+        _raw = form.get(_key)
+        if _raw is not None:
+            try:
+                _ht[_key.removeprefix("ht_")] = float(_raw)
+            except (ValueError, TypeError):
+                pass
+    if _ht:
+        deal.health_thresholds = {**(deal.health_thresholds or {}), **_ht}
+
     await session.commit()
 
     return RedirectResponse(url=f"/models/{model_id}/builder", status_code=303)
@@ -7805,6 +7816,7 @@ async def deal_setup_wizard_complete(
     if inputs is None:
         return HTMLResponse("No inputs", status_code=400)
 
+    form = await request.form()
     dt = inputs.debt_terms or {}
     debt_types = inputs.debt_types  # None for pre-migration deals
     debt_structure = inputs.debt_structure or "perm_only"
@@ -8506,6 +8518,21 @@ async def deal_setup_wizard_complete(
             escalation_rate_pct_annual=Decimal("3"),
             active_in_phases=phases,
         ))
+
+    # Save Deal Health thresholds from wizard step 7 form.
+    _ht: dict[str, float] = {}
+    for _key, _default in (
+        ("ht_occ_green", None), ("ht_oer_green", None),
+        ("ht_dscr_green", None), ("ht_margin_green", None),
+    ):
+        _raw = form.get(_key)
+        if _raw is not None:
+            try:
+                _ht[_key.removeprefix("ht_")] = float(_raw)
+            except (ValueError, TypeError):
+                pass
+    if _ht:
+        model.health_thresholds = {**(model.health_thresholds or {}), **_ht}
 
     await session.commit()
 

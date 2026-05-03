@@ -1289,6 +1289,46 @@ async function startInvestorExport(modelId) {
           Hold term, perm rate, and amort live on each Source — edit individual debt modules in the Capital Stack panel.
         </div>
         {% endif %}
+        <div class="divider"></div>
+        <div style="font-size:12px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">Deal Health Benchmarks</div>
+        <div class="form-hint" style="font-size:11px;color:var(--text-muted);margin-bottom:8px">
+          Controls red / yellow / green flags on the investor export Deal Health section.
+        </div>
+        {%- set _mb_dt = (model.project_type.value if model.project_type is not string else model.project_type) | string -%}
+        {%- set _mb_dh_defaults = {
+          'acquisition':      {'occ': 93, 'oer': 45, 'dscr': '1.25', 'margin': 10},
+          'value_add':        {'occ': 90, 'oer': 50, 'dscr': '1.20', 'margin': 8},
+          'conversion':       {'occ': 90, 'oer': 50, 'dscr': '1.20', 'margin': 8},
+          'new_construction': {'occ': 88, 'oer': 50, 'dscr': '1.20', 'margin': 8},
+        } -%}
+        {%- set _mb_dh = _mb_dh_defaults.get(_mb_dt, _mb_dh_defaults['acquisition']) -%}
+        {%- set _mb_ht = model.health_thresholds or {} -%}
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div>
+            <label class="field-label">Occupancy green floor (%)</label>
+            <input class="filter-input" type="number" step="0.5" min="50" max="100"
+                   style="width:100%;margin-top:4px" name="ht_occ_green"
+                   value="{{ _mb_ht.get('occ_green', _mb_dh.occ) }}">
+          </div>
+          <div>
+            <label class="field-label">OER green ceiling (%)</label>
+            <input class="filter-input" type="number" step="0.5" min="10" max="100"
+                   style="width:100%;margin-top:4px" name="ht_oer_green"
+                   value="{{ _mb_ht.get('oer_green', _mb_dh.oer) }}">
+          </div>
+          <div>
+            <label class="field-label">DSCR green floor (×)</label>
+            <input class="filter-input" type="number" step="0.01" min="1.0" max="3.0"
+                   style="width:100%;margin-top:4px" name="ht_dscr_green"
+                   value="{{ _mb_ht.get('dscr_green', _mb_dh.dscr) }}">
+          </div>
+          <div>
+            <label class="field-label">NCF Margin green floor (%)</label>
+            <input class="filter-input" type="number" step="0.5" min="0" max="100"
+                   style="width:100%;margin-top:4px" name="ht_margin_green"
+                   value="{{ _mb_ht.get('margin_green', _mb_dh.margin) }}">
+          </div>
+        </div>
         <div style="display:flex;gap:8px;margin-top:4px">
           <button type="submit" class="btn btn-primary">Save Settings</button>
           <button type="button" class="btn btn-secondary" onclick="closeDrawer('model-settings-drawer')">Cancel</button>

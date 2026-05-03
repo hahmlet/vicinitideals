@@ -663,25 +663,47 @@ _RAG_FILLS = {
 _RAG_SYMBOL = {"green": "✓", "yellow": "!", "red": "✗"}
 
 
-def _occ_rag(v: float) -> str:
-    return "green" if v >= 93 else "yellow" if v >= 88 else "red"
+# Default RAG thresholds by deal type.  Yellow band = green − 5pp (pct metrics)
+# or green − 0.10× (DSCR).  Red = below yellow.
+HEALTH_THRESHOLD_DEFAULTS: dict[str, dict[str, float]] = {
+    "acquisition":      {"occ_green": 93.0, "oer_green": 45.0, "dscr_green": 1.25, "margin_green": 10.0},
+    "value_add":        {"occ_green": 90.0, "oer_green": 50.0, "dscr_green": 1.20, "margin_green":  8.0},
+    "conversion":       {"occ_green": 90.0, "oer_green": 50.0, "dscr_green": 1.20, "margin_green":  8.0},
+    "new_construction": {"occ_green": 88.0, "oer_green": 50.0, "dscr_green": 1.20, "margin_green":  8.0},
+}
+_HEALTH_THRESHOLD_FALLBACK = HEALTH_THRESHOLD_DEFAULTS["acquisition"]
 
 
-def _oer_rag(v: float) -> str:
-    return "green" if v <= 45 else "yellow" if v <= 55 else "red"
+def _resolve_thresholds(scenario: Any) -> dict[str, float]:
+    """Return effective RAG thresholds: scenario override or deal-type default."""
+    stored: dict | None = getattr(scenario, "health_thresholds", None)
+    deal_type = str(getattr(scenario.project_type, "value", scenario.project_type) or "")
+    defaults = HEALTH_THRESHOLD_DEFAULTS.get(deal_type, _HEALTH_THRESHOLD_FALLBACK)
+    if not stored:
+        return defaults
+    return {**defaults, **{k: float(v) for k, v in stored.items() if v is not None}}
 
 
-def _dscr_rag(v: float) -> str:
-    return "green" if v >= 1.25 else "yellow" if v >= 1.15 else "red"
+def _occ_rag(v: float, green: float = 93.0) -> str:
+    return "green" if v >= green else "yellow" if v >= green - 5.0 else "red"
 
 
-def _margin_rag(v: float) -> str:
-    return "green" if v >= 10 else "yellow" if v >= 5 else "red"
+def _oer_rag(v: float, green: float = 45.0) -> str:
+    return "green" if v <= green else "yellow" if v <= green + 10.0 else "red"
+
+
+def _dscr_rag(v: float, green: float = 1.25) -> str:
+    return "green" if v >= green else "yellow" if v >= green - 0.10 else "red"
+
+
+def _margin_rag(v: float, green: float = 10.0) -> str:
+    return "green" if v >= green else "yellow" if v >= green - 5.0 else "red"
 
 
 def _compute_deal_health(ctx: dict) -> dict[str, Any]:
     """Compute 4-pillar health signals and archetype + IRR band classification."""
     scenario = ctx["scenario"]
+    thresholds = _resolve_thresholds(scenario)
     per_project: list[dict] = (ctx.get("rollup_summary") or {}).get("per_project") or []
     totals: dict = (ctx.get("rollup_summary") or {}).get("totals") or {}
     inputs_by_project: dict = ctx.get("operational_inputs") or {}
@@ -770,6 +792,7 @@ def _compute_deal_health(ctx: dict) -> dict[str, Any]:
         "irr_hi": irr_hi,
         "irr_flag": irr_flag,
         "combined_irr_pct": Decimal(str(combined_irr)),
+        "thresholds": thresholds,
     }
 
 
@@ -808,13 +831,19 @@ def _write_deal_health_section(
         registry.register(name, ws.title, row, 2)
         row += 1
 
+    thr = health.get("thresholds") or _HEALTH_THRESHOLD_FALLBACK
+    occ_g    = thr["occ_green"]
+    oer_g    = thr["oer_green"]
+    dscr_g   = thr["dscr_green"]
+    margin_g = thr["margin_green"]
+
     occ = health["occupancy_pct"]
     _pillar(
         "Stabilized Occupancy",
         _coerce_pct(occ) if occ is not None else None,
         PCT,
-        _occ_rag(float(occ)) if occ is not None else None,
-        "≥ 93% green · 88–93% yellow · <88% red",
+        _occ_rag(float(occ), occ_g) if occ is not None else None,
+        f"≥ {occ_g:.0f}% green · {occ_g - 5:.0f}–{occ_g:.0f}% yellow · <{occ_g - 5:.0f}% red",
         "dh_occupancy",
     )
     oer = health["oer_pct"]
@@ -822,8 +851,8 @@ def _write_deal_health_section(
         "Operating Expense Ratio",
         _coerce_pct(oer) if oer is not None else None,
         PCT,
-        _oer_rag(float(oer)) if oer is not None else None,
-        "≤ 45% green · 45–55% yellow · >55% red",
+        _oer_rag(float(oer), oer_g) if oer is not None else None,
+        f"≤ {oer_g:.0f}% green · {oer_g:.0f}–{oer_g + 10:.0f}% yellow · >{oer_g + 10:.0f}% red",
         "dh_oer",
     )
     dscr_v = _coerce_decimal(health["dscr"]) if health["dscr"] is not None else None
@@ -831,8 +860,8 @@ def _write_deal_health_section(
         "DSCR",
         float(dscr_v) if dscr_v is not None else None,
         "0.00",
-        _dscr_rag(float(dscr_v)) if dscr_v is not None else None,
-        "≥ 1.25× green · 1.15–1.25× yellow · <1.15× red",
+        _dscr_rag(float(dscr_v), dscr_g) if dscr_v is not None else None,
+        f"≥ {dscr_g:.2f}× green · {dscr_g - 0.10:.2f}–{dscr_g:.2f}× yellow · <{dscr_g - 0.10:.2f}× red",
         "dh_dscr",
     )
     margin = health["ncf_margin_pct"]
@@ -840,8 +869,8 @@ def _write_deal_health_section(
         "Post-Debt CF Margin (NCF / EGI)",
         _coerce_pct(margin) if margin is not None else None,
         PCT,
-        _margin_rag(float(margin)) if margin is not None else None,
-        "≥ 10% green · 5–10% yellow · <5% red",
+        _margin_rag(float(margin), margin_g) if margin is not None else None,
+        f"≥ {margin_g:.0f}% green · {margin_g - 5:.0f}–{margin_g:.0f}% yellow · <{margin_g - 5:.0f}% red",
         "dh_ncf_margin",
     )
 

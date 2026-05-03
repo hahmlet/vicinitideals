@@ -1027,6 +1027,53 @@
           You can edit any line in the S&amp;U table at any time — user values override the auto-computed defaults.
         </div>
 
+        {# Deal Health Benchmarks — pre-fill from deal-type defaults, editable #}
+        {%- set _wiz_dt = (model.project_type.value if model.project_type is not string else model.project_type) | string -%}
+        {%- set _dh_defaults = {
+          'acquisition':      {'occ': 93, 'oer': 45, 'dscr': '1.25', 'margin': 10},
+          'value_add':        {'occ': 90, 'oer': 50, 'dscr': '1.20', 'margin': 8},
+          'conversion':       {'occ': 90, 'oer': 50, 'dscr': '1.20', 'margin': 8},
+          'new_construction': {'occ': 88, 'oer': 50, 'dscr': '1.20', 'margin': 8},
+        } -%}
+        {%- set _dh = _dh_defaults.get(_wiz_dt, _dh_defaults['acquisition']) -%}
+        {%- set _stored = model.health_thresholds or {} -%}
+        <div class="section-label" style="margin-top:20px">Deal Health Benchmarks</div>
+        <div class="field-hint" style="margin-bottom:10px">
+          These thresholds control the red / yellow / green flags on the Deal Health section of your investor export.
+          Pre-filled based on your deal type — adjust if your lender or target uses different standards.
+          You can also change them later via ⚙ Settings on the model builder.
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div>
+            <label class="field-label">Occupancy — green floor (%)</label>
+            <input class="filter-input" type="number" step="0.5" min="50" max="100"
+                   style="width:100%;margin-top:4px" name="ht_occ_green"
+                   value="{{ _stored.get('occ_green', _dh.occ) }}">
+            <div class="field-hint">Yellow = floor − 5pp. Red = below yellow.</div>
+          </div>
+          <div>
+            <label class="field-label">OER — green ceiling (%)</label>
+            <input class="filter-input" type="number" step="0.5" min="10" max="100"
+                   style="width:100%;margin-top:4px" name="ht_oer_green"
+                   value="{{ _stored.get('oer_green', _dh.oer) }}">
+            <div class="field-hint">Yellow = ceiling + 10pp. Red = above yellow.</div>
+          </div>
+          <div>
+            <label class="field-label">DSCR — green floor (×)</label>
+            <input class="filter-input" type="number" step="0.01" min="1.0" max="3.0"
+                   style="width:100%;margin-top:4px" name="ht_dscr_green"
+                   value="{{ _stored.get('dscr_green', _dh.dscr) }}">
+            <div class="field-hint">Yellow = floor − 0.10×. Red = below yellow.</div>
+          </div>
+          <div>
+            <label class="field-label">NCF Margin — green floor (%)</label>
+            <input class="filter-input" type="number" step="0.5" min="0" max="100"
+                   style="width:100%;margin-top:4px" name="ht_margin_green"
+                   value="{{ _stored.get('margin_green', _dh.margin) }}">
+            <div class="field-hint">Yellow = floor − 5pp. Red = below yellow.</div>
+          </div>
+        </div>
+
       </div>
       <div class="wizard-footer">
         <button type="button" class="btn btn-secondary"
