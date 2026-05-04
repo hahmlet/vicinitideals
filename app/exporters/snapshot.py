@@ -709,7 +709,7 @@ async def revert_to_snapshot(
     for mod_data in inputs.get("capital_modules") or []:
         try:
             old_id = mod_data.get("id")
-            payload = CapitalModuleBase.model_validate(mod_data).model_dump(exclude_unset=True)
+            payload = CapitalModuleBase.model_validate(mod_data).model_dump(mode="json", exclude_unset=True)
             payload.pop("id", None)
             new_mod = CapitalModule(scenario_id=scenario_id, **payload)
             session.add(new_mod)
@@ -722,7 +722,7 @@ async def revert_to_snapshot(
     for ds_data in inputs.get("draw_sources") or []:
         try:
             old_cap_id = ds_data.get("capital_module_id")
-            payload = DrawSourceBase.model_validate(ds_data).model_dump(exclude_unset=True)
+            payload = DrawSourceBase.model_validate(ds_data).model_dump(mode="json", exclude_unset=True)
             if old_cap_id and str(old_cap_id) in cap_id_map:
                 payload["capital_module_id"] = cap_id_map[str(old_cap_id)]
             session.add(DrawSource(scenario_id=scenario_id, **payload))
@@ -732,7 +732,7 @@ async def revert_to_snapshot(
     for tier_data in inputs.get("waterfall_tiers") or []:
         try:
             old_cap_id = tier_data.get("capital_module_id")
-            payload = WaterfallTierBase.model_validate(tier_data).model_dump(exclude_unset=True)
+            payload = WaterfallTierBase.model_validate(tier_data).model_dump(mode="json", exclude_unset=True)
             payload.pop("id", None)
             if old_cap_id and str(old_cap_id) in cap_id_map:
                 payload["capital_module_id"] = cap_id_map[str(old_cap_id)]
