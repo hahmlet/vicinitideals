@@ -24,6 +24,7 @@ export_history_json(session, scenario_id)
 
 from __future__ import annotations
 
+import json
 import logging
 import uuid
 from datetime import UTC, date, datetime
@@ -36,7 +37,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from app.exporters.json_export import export_deal_model_json
-from app.models.capital import CapitalModule, DrawSource, WaterfallResult, WaterfallTier
+from app.models.capital import CapitalModule, CapitalModuleProject, DrawSource, WaterfallResult, WaterfallTier
 from app.models.cashflow import CashFlowLineItem, OperationalOutputs
 from app.models.deal import (
     DealModel,
@@ -107,6 +108,21 @@ def _parse_iso_date(value: Any) -> date | None:
         except ValueError:
             return None
     return None
+
+
+def _json_safe(obj: Any) -> Any:
+    """Convert a Pydantic model_dump() result to JSON-safe types.
+
+    model_dump(mode='json') serializes Decimal as str, which breaks the
+    cashflow engine when those strings are stored in JSONB columns.  This
+    helper round-trips through json.dumps (using float for Decimal) so the
+    returned dict contains only Python native JSON types (float, not str).
+    """
+    def _default(o: Any) -> Any:
+        if isinstance(o, Decimal):
+            return float(o)
+        raise TypeError(f"Object of type {type(o)} is not JSON serializable")
+    return json.loads(json.dumps(obj, default=_default))
 
 
 def _row_to_payload(row: Any, *, exclude: set[str]) -> dict[str, Any]:
@@ -229,6 +245,28 @@ async def _serialize_inputs(session: AsyncSession, scenario_id: UUID) -> dict[st
         )
         for row in draw_sources
     ]
+
+    # Capture capital_module_projects junction entries so revert can restore them.
+    _cm_ids_for_junc = [
+        uuid.UUID(m["id"]) for m in (result.get("capital_modules") or []) if m.get("id")
+    ]
+    if _cm_ids_for_junc:
+        _junc_rows = list(
+            (
+                await session.execute(
+                    select(CapitalModuleProject).where(
+                        CapitalModuleProject.capital_module_id.in_(_cm_ids_for_junc)
+                    )
+                )
+            ).scalars()
+        )
+        result["capital_module_projects"] = [
+            _row_to_payload(row, exclude={"id", "created_at", "updated_at"})
+            for row in _junc_rows
+        ]
+    else:
+        result["capital_module_projects"] = []
+
     if project_payloads:
         default_payload = project_payloads[0]
         result["projects"] = project_payloads
@@ -706,23 +744,30 @@ async def revert_to_snapshot(
                 new_ms.trigger_milestone_id = old_to_new_milestone_ids[str(old_trigger_id)]
 
     cap_id_map: dict[str, UUID] = {}
+    cap_source_amounts: dict[str, float] = {}  # new_cap_id_str → source amount for fallback junctions
     for mod_data in inputs.get("capital_modules") or []:
         try:
             old_id = mod_data.get("id")
-            payload = CapitalModuleBase.model_validate(mod_data).model_dump(mode="json", exclude_unset=True)
+            _amt_raw = (mod_data.get("source") or {}).get("amount")
+            try:
+                _src_amt = float(_amt_raw) if _amt_raw is not None else 0.0
+            except (TypeError, ValueError):
+                _src_amt = 0.0
+            payload = _json_safe(CapitalModuleBase.model_validate(mod_data).model_dump(exclude_unset=True))
             payload.pop("id", None)
             new_mod = CapitalModule(scenario_id=scenario_id, **payload)
             session.add(new_mod)
             await session.flush()
             if old_id:
                 cap_id_map[str(old_id)] = new_mod.id
+                cap_source_amounts[str(new_mod.id)] = _src_amt
         except Exception:
             logger.warning("snapshot revert: skipped CapitalModule restore", exc_info=True)
 
     for ds_data in inputs.get("draw_sources") or []:
         try:
             old_cap_id = ds_data.get("capital_module_id")
-            payload = DrawSourceBase.model_validate(ds_data).model_dump(mode="json", exclude_unset=True)
+            payload = _json_safe(DrawSourceBase.model_validate(ds_data).model_dump(exclude_unset=True))
             if old_cap_id and str(old_cap_id) in cap_id_map:
                 payload["capital_module_id"] = cap_id_map[str(old_cap_id)]
             session.add(DrawSource(scenario_id=scenario_id, **payload))
@@ -732,13 +777,54 @@ async def revert_to_snapshot(
     for tier_data in inputs.get("waterfall_tiers") or []:
         try:
             old_cap_id = tier_data.get("capital_module_id")
-            payload = WaterfallTierBase.model_validate(tier_data).model_dump(mode="json", exclude_unset=True)
+            payload = _json_safe(WaterfallTierBase.model_validate(tier_data).model_dump(exclude_unset=True))
             payload.pop("id", None)
             if old_cap_id and str(old_cap_id) in cap_id_map:
                 payload["capital_module_id"] = cap_id_map[str(old_cap_id)]
             session.add(WaterfallTier(scenario_id=scenario_id, **payload))
         except Exception:
             logger.warning("snapshot revert: skipped WaterfallTier restore", exc_info=True)
+
+    # ── Restore capital_module_projects junction entries ─────────────────────
+    junc_data_list = inputs.get("capital_module_projects")
+    if junc_data_list:
+        for junc_data in junc_data_list:
+            try:
+                old_cap_id_s = str(junc_data.get("capital_module_id") or "")
+                old_proj_id_s = str(junc_data.get("project_id") or "")
+                if old_cap_id_s not in cap_id_map:
+                    continue
+                if old_proj_id_s not in project_ids_str:
+                    continue
+                session.add(CapitalModuleProject(
+                    capital_module_id=cap_id_map[old_cap_id_s],
+                    project_id=project_ids_str[old_proj_id_s],
+                    amount=junc_data.get("amount") or 0,
+                    active_from=junc_data.get("active_from"),
+                    active_to=junc_data.get("active_to"),
+                    active_from_offset_days=int(junc_data.get("active_from_offset_days") or 0),
+                    active_to_offset_days=int(junc_data.get("active_to_offset_days") or 0),
+                    auto_size=bool(junc_data.get("auto_size") or False),
+                ))
+            except Exception:
+                logger.warning("snapshot revert: skipped CapitalModuleProject restore", exc_info=True)
+    elif cap_id_map:
+        # Fallback for old snapshots that predate junction capture: assign each
+        # capital module to all projects using its source amount.
+        for new_cap_uuid in cap_id_map.values():
+            amt = cap_source_amounts.get(str(new_cap_uuid), 0.0)
+            for proj_id in project_ids:
+                try:
+                    session.add(CapitalModuleProject(
+                        capital_module_id=new_cap_uuid,
+                        project_id=proj_id,
+                        amount=amt,
+                        active_from_offset_days=0,
+                        active_to_offset_days=0,
+                        auto_size=False,
+                    ))
+                except Exception:
+                    logger.warning("snapshot revert: skipped fallback CapitalModuleProject", exc_info=True)
 
     await session.flush()
 
