@@ -632,7 +632,6 @@ async def compute_model_cashflows(model_id: UUID, request: Request, session: DBS
                 break
             prev_dscr = _cur_dscr_dec
     except (ValueError, KeyError, TypeError, ZeroDivisionError) as exc:
-        logger.exception("compute_cash_flows raised %s: %s", type(exc).__name__, exc, exc_info=exc)
         log_observation(
             logger,
             "underwriting_compute_failed",
