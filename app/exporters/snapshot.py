@@ -36,8 +36,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from app.exporters.json_export import export_deal_model_json
-from app.models.capital import CapitalModule, DrawSource, WaterfallTier
-from app.models.cashflow import OperationalOutputs
+from app.models.capital import CapitalModule, DrawSource, WaterfallResult, WaterfallTier
+from app.models.cashflow import CashFlowLineItem, OperationalOutputs
 from app.models.deal import (
     DealModel,
     IncomeStream,
@@ -593,6 +593,8 @@ async def revert_to_snapshot(
         target_project_ids = [projects[0].id]
 
     # ── Delete mutable input rows ────────────────────────────────────────────
+    # CashFlowLineItems reference IncomeStreams — delete first
+    await session.execute(delete(CashFlowLineItem).where(CashFlowLineItem.scenario_id == scenario_id))
     # UseLines (engine-injected reserve lines will be recreated on next Compute)
     await session.execute(delete(UseLine).where(UseLine.project_id.in_(target_project_ids)))
     # IncomeStreams
@@ -611,7 +613,10 @@ async def revert_to_snapshot(
     await session.execute(delete(Milestone).where(
         Milestone.project_id.in_(target_project_ids)
     ))
-    # Capital
+    # Capital — WaterfallResults reference WaterfallTiers and CapitalModules, delete first
+    await session.execute(delete(WaterfallResult).where(
+        WaterfallResult.scenario_id == scenario_id
+    ))
     await session.execute(delete(WaterfallTier).where(
         WaterfallTier.scenario_id == scenario_id
     ))
