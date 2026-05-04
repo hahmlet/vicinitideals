@@ -809,19 +809,20 @@ async def revert_to_snapshot(
             except Exception:
                 logger.warning("snapshot revert: skipped CapitalModuleProject restore", exc_info=True)
     elif cap_id_map:
-        # Fallback for old snapshots that predate junction capture: assign each
-        # capital module to all projects using its source amount.
+        # Fallback for old snapshots that predate junction capture. Use amount=0
+        # and auto_size=True so the engine re-sizes correctly on next Compute.
+        # source["amount"] in old snapshots reflects one project's last-computed
+        # value — distributing it across all projects produces incorrect gaps.
         for new_cap_uuid in cap_id_map.values():
-            amt = cap_source_amounts.get(str(new_cap_uuid), 0.0)
             for proj_id in project_ids:
                 try:
                     session.add(CapitalModuleProject(
                         capital_module_id=new_cap_uuid,
                         project_id=proj_id,
-                        amount=amt,
+                        amount=0,
                         active_from_offset_days=0,
                         active_to_offset_days=0,
-                        auto_size=False,
+                        auto_size=True,
                     ))
                 except Exception:
                     logger.warning("snapshot revert: skipped fallback CapitalModuleProject", exc_info=True)
