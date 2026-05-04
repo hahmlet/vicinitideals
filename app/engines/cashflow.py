@@ -1146,7 +1146,7 @@ def _carry_type_for_phase(carry: dict, is_construction: bool) -> str:
     def _norm(ct: str) -> str:
         return "capitalized_interest" if ct == "accruing" else ct
 
-    if "phases" in carry:
+    if carry.get("phases"):
         target = "construction" if is_construction else "operation"
         for p in carry["phases"]:
             if p.get("name") == target:
@@ -1157,7 +1157,7 @@ def _carry_type_for_phase(carry: dict, is_construction: bool) -> str:
 
 def _get_phase_carry(carry: dict, phase_name: str) -> dict | None:
     """Return the carry config dict for a named phase, or None if not phased / not found."""
-    if "phases" not in carry:
+    if not carry.get("phases"):
         return None
     for p in carry["phases"]:
         if p.get("name") == phase_name:
