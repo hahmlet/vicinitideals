@@ -11877,8 +11877,8 @@ async def history_drawer(
         diff = diff_snapshots(snaps[i - 1], snap) if i > 0 else None
         entries.append({"snap": snap, "diff": diff})
 
-    tpl = request.app.state.templates
-    return tpl.TemplateResponse(
+    return templates.TemplateResponse(
+        request,
         "partials/history_drawer.html",
         {"request": request, "model": model, "entries": entries, "model_id": model_id},
     )
