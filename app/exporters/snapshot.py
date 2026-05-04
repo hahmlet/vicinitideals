@@ -347,6 +347,30 @@ def _scalar_diff(before: dict, after: dict, keys: tuple[str, ...]) -> list[dict]
     return changes
 
 
+def _scalar_diff_all(before: dict, after: dict) -> list[dict]:
+    """Compare every field present in either dict (no fixed key list)."""
+    all_keys = set(before.keys()) | set(after.keys())
+    changes = []
+    for k in sorted(all_keys):
+        bv = before.get(k)
+        av = after.get(k)
+        if bv != av:
+            changes.append({"field": k, "before": bv, "after": av})
+    return changes
+
+
+# Display multiplier applied before rounding-based suppression.
+# project_irr_levered is stored as 0.14 (= 14%); displayed ×100 as 14.00%.
+_OUTPUT_DISPLAY_MULTIPLIER: dict[str, float] = {
+    "dscr": 1.0,
+    "project_irr_levered": 100.0,
+    "noi_stabilized": 1.0,
+    "equity_required": 1.0,
+    "total_project_cost": 1.0,
+    "cap_rate_on_cost_pct": 1.0,
+}
+
+
 def _entity_list_diff(
     before_rows: list[dict],
     after_rows: list[dict],
@@ -392,12 +416,7 @@ def diff_snapshots(
     # OperationalInputs scalar diff
     b_oi = b_in.get("operational_inputs") or {}
     a_oi = a_in.get("operational_inputs") or {}
-    oi_fields = (
-        "unit_count_existing", "unit_count_new", "building_sqft", "lot_sqft",
-        "purchase_price", "constr_months_total", "lease_up_months",
-        "debt_sizing_mode", "dscr_minimum", "noi_stabilized_input",
-    )
-    for fc in _scalar_diff(b_oi, a_oi, oi_fields):
+    for fc in _scalar_diff_all(b_oi, a_oi):
         input_changes.append({"entity": "OperationalInputs", **fc})
 
     # IncomeStream diff
@@ -466,7 +485,20 @@ def diff_snapshots(
         ("hurdle_rate_pct", "gp_split_pct", "priority"),
     ))
 
-    # Output diff
+    # DrawSource diff
+    input_changes.extend(_entity_list_diff(
+        b_in.get("draw_sources") or [],
+        a_in.get("draw_sources") or [],
+        "DrawSource",
+        (
+            "label", "source_type", "sort_order", "draw_every_n_months",
+            "annual_interest_rate", "active_from_milestone", "active_to_milestone",
+            "active_from_offset_days", "active_to_offset_days",
+            "total_commitment", "funder_type",
+        ),
+    ))
+
+    # Output diff — only _OUTPUT_KEYS; by_project is too noisy for the UI.
     b_out = snap_before.outputs_json or {}
     a_out = snap_after.outputs_json or {}
     output_changes: dict[str, Any] = {}
@@ -476,17 +508,25 @@ def diff_snapshots(
         if bv != av:
             output_changes[key] = {"before": bv, "after": av}
 
-    if (b_out.get("by_project") or {}) != (a_out.get("by_project") or {}):
-        output_changes["by_project"] = {
-            "before": b_out.get("by_project") or {},
-            "after": a_out.get("by_project") or {},
-        }
+    # Suppress changes that are invisible at 2-decimal display precision.
+    visible: dict[str, Any] = {}
+    for key, chg in output_changes.items():
+        bv, av = chg.get("before"), chg.get("after")
+        if bv is None or av is None:
+            visible[key] = chg
+            continue
+        try:
+            mult = _OUTPUT_DISPLAY_MULTIPLIER.get(key, 1.0)
+            if round(float(bv) * mult, 2) != round(float(av) * mult, 2):
+                visible[key] = chg
+        except (TypeError, ValueError):
+            visible[key] = chg
 
     return {
         "version_before": snap_before.version,
         "version_after": snap_after.version,
         "input_changes": input_changes,
-        "output_changes": output_changes,
+        "output_changes": visible,
     }
 
 
