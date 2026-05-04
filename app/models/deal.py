@@ -27,7 +27,7 @@ from sqlalchemy import (
     false,
     func,
 )
-from sqlalchemy.dialects.postgresql import ARRAY, UUID
+from sqlalchemy.dialects.postgresql import ARRAY, JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.models.base import Base
@@ -218,6 +218,10 @@ class Scenario(Base):
         "DrawSource", back_populates="scenario", cascade="all, delete-orphan",
         order_by="DrawSource.sort_order",
     )
+    snapshots: Mapped[list["ScenarioSnapshot"]] = relationship(
+        "ScenarioSnapshot", back_populates="scenario", passive_deletes=True,
+        order_by="ScenarioSnapshot.version",
+    )
     # Reserve floors for draw schedule validation
     min_reserve_construction: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
     min_reserve_operational: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
@@ -239,6 +243,54 @@ class Scenario(Base):
 
 # Backward-compat alias — old code importing DealModel still works
 DealModel = Scenario
+
+
+# ---------------------------------------------------------------------------
+# ScenarioSnapshot — audit snapshot captured on every Compute run
+# ---------------------------------------------------------------------------
+
+class ScenarioSnapshot(Base):
+    """Immutable snapshot of scenario inputs + output metrics captured on each Compute run.
+
+    inputs_json  — full serialized input state (~20–30 KB compact JSON).
+    outputs_json — key metric dict: dscr, irr, tpc, noi, equity_required, cap_rate.
+    version      — mirrors Scenario.version at the moment this snapshot was created.
+    triggered_by — 'compute' (automatic) or 'manual' (reserved for future use).
+    label        — optional user-facing checkpoint name (reserved for future use).
+    """
+
+    __tablename__ = "scenario_snapshots"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    scenario_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("scenarios.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+    version: Mapped[int] = mapped_column(Integer, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+    triggered_by: Mapped[str] = mapped_column(
+        String(20), nullable=False, default="compute"
+    )
+    label: Mapped[str | None] = mapped_column(Text, nullable=True)
+    inputs_json: Mapped[dict] = mapped_column(
+        JSON().with_variant(JSONB, "postgresql"),
+        nullable=False,
+    )
+    outputs_json: Mapped[dict] = mapped_column(
+        JSON().with_variant(JSONB, "postgresql"),
+        nullable=False,
+    )
+
+    # Relationship back to the owning Scenario
+    scenario: Mapped["Scenario"] = relationship(
+        "Scenario", back_populates="snapshots"
+    )
 
 
 # ---------------------------------------------------------------------------
