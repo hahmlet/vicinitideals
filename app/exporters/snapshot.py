@@ -744,15 +744,11 @@ async def revert_to_snapshot(
                 new_ms.trigger_milestone_id = old_to_new_milestone_ids[str(old_trigger_id)]
 
     cap_id_map: dict[str, UUID] = {}
-    cap_source_amounts: dict[str, float] = {}  # new_cap_id_str → source amount for fallback junctions
+    cap_auto_size: dict[str, bool] = {}  # new_cap_id_str → source.auto_size for fallback junctions
     for mod_data in inputs.get("capital_modules") or []:
         try:
             old_id = mod_data.get("id")
-            _amt_raw = (mod_data.get("source") or {}).get("amount")
-            try:
-                _src_amt = float(_amt_raw) if _amt_raw is not None else 0.0
-            except (TypeError, ValueError):
-                _src_amt = 0.0
+            _src_auto = bool((mod_data.get("source") or {}).get("auto_size"))
             payload = _json_safe(CapitalModuleBase.model_validate(mod_data).model_dump(exclude_unset=True))
             payload.pop("id", None)
             new_mod = CapitalModule(scenario_id=scenario_id, **payload)
@@ -760,7 +756,7 @@ async def revert_to_snapshot(
             await session.flush()
             if old_id:
                 cap_id_map[str(old_id)] = new_mod.id
-                cap_source_amounts[str(new_mod.id)] = _src_amt
+                cap_auto_size[str(new_mod.id)] = _src_auto
         except Exception:
             logger.warning("snapshot revert: skipped CapitalModule restore", exc_info=True)
 
@@ -809,11 +805,14 @@ async def revert_to_snapshot(
             except Exception:
                 logger.warning("snapshot revert: skipped CapitalModuleProject restore", exc_info=True)
     elif cap_id_map:
-        # Fallback for old snapshots that predate junction capture. Use amount=0
-        # and auto_size=True so the engine re-sizes correctly on next Compute.
-        # source["amount"] in old snapshots reflects one project's last-computed
-        # value — distributing it across all projects produces incorrect gaps.
+        # Fallback for old snapshots that predate junction capture.
+        # amount=0 always (old source["amount"] is a single-project compute
+        # artifact — wrong to broadcast to all projects).
+        # auto_size mirrors the module's own source flag: debt stays True so
+        # the engine auto-sizes per project; equity (auto_size=null/False)
+        # stays False so the engine doesn't attempt to size equity as debt.
         for new_cap_uuid in cap_id_map.values():
+            a_size = cap_auto_size.get(str(new_cap_uuid), False)
             for proj_id in project_ids:
                 try:
                     session.add(CapitalModuleProject(
@@ -822,7 +821,7 @@ async def revert_to_snapshot(
                         amount=0,
                         active_from_offset_days=0,
                         active_to_offset_days=0,
-                        auto_size=True,
+                        auto_size=a_size,
                     ))
                 except Exception:
                     logger.warning("snapshot revert: skipped fallback CapitalModuleProject", exc_info=True)
