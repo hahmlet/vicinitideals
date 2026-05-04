@@ -5173,7 +5173,7 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
         if project_id is not None:
             # Override amount with this project's junction share
             _src["amount"] = _junction_amts.get(_mid, 0.0)
-        if "phases" in _carry:
+        if _carry.get("phases"):
             carrying_detail[_mid] = {
                 p.get("name", ""): _annual_carry_amt(_src, p.get("carry_type", "none"))
                 for p in _carry["phases"]
