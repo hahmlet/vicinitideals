@@ -11913,10 +11913,8 @@ async def revert_snapshot(
             status_code=404,
         )
 
-    return HTMLResponse(
-        '',
-        headers={"HX-Refresh": "true"},
-    )
+    from starlette.responses import RedirectResponse
+    return RedirectResponse(url=f"/models/{model_id}/builder", status_code=303)
 
 
 @router.get("/ui/models/{model_id}/history/export.json")
