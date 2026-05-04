@@ -50,7 +50,7 @@ from app.models.deal import (
 )
 from app.models.milestone import Milestone
 from app.models.project import Project
-from app.schemas.capital import CapitalModuleBase, WaterfallTierBase
+from app.schemas.capital import CapitalModuleBase, DrawSourceBase, WaterfallTierBase
 from app.schemas.deal import (
     IncomeStreamBase,
     OperatingExpenseLineBase,
@@ -82,6 +82,8 @@ def _coerce(value: Any) -> Any:
     if hasattr(value, "value"):  # enum
         return value.value
     if isinstance(value, datetime):
+        return value.isoformat()
+    if isinstance(value, date):
         return value.isoformat()
     return value
 
@@ -185,6 +187,7 @@ async def _serialize_inputs(session: AsyncSession, scenario_id: UUID) -> dict[st
         "unit_mix",
         "milestones",
         "projects",
+        "draw_sources",
         "capital_modules",
         "waterfall_tiers",
     }
@@ -210,6 +213,22 @@ async def _serialize_inputs(session: AsyncSession, scenario_id: UUID) -> dict[st
     project_payloads = [_serialize_project_snapshot(project) for project in projects]
 
     result = {k: v for k, v in full.items() if k in input_keys}
+    draw_sources = list(
+        (
+            await session.execute(
+                select(DrawSource)
+                .where(DrawSource.scenario_id == scenario_id)
+                .order_by(DrawSource.sort_order.asc(), DrawSource.created_at.asc())
+            )
+        ).scalars()
+    )
+    result["draw_sources"] = [
+        _row_to_payload(
+            row,
+            exclude={"id", "scenario_id", "created_at"},
+        )
+        for row in draw_sources
+    ]
     if project_payloads:
         default_payload = project_payloads[0]
         result["projects"] = project_payloads
@@ -654,6 +673,16 @@ async def revert_to_snapshot(
                 cap_id_map[str(old_id)] = new_mod.id
         except Exception:
             logger.warning("snapshot revert: skipped CapitalModule restore", exc_info=True)
+
+    for ds_data in inputs.get("draw_sources") or []:
+        try:
+            old_cap_id = ds_data.get("capital_module_id")
+            payload = DrawSourceBase.model_validate(ds_data).model_dump(exclude_unset=True)
+            if old_cap_id and str(old_cap_id) in cap_id_map:
+                payload["capital_module_id"] = cap_id_map[str(old_cap_id)]
+            session.add(DrawSource(scenario_id=scenario_id, **payload))
+        except Exception:
+            logger.warning("snapshot revert: skipped DrawSource restore", exc_info=True)
 
     for tier_data in inputs.get("waterfall_tiers") or []:
         try:

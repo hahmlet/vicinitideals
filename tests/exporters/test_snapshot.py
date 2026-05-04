@@ -14,12 +14,14 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.exporters.snapshot import (
+    _clean,
     capture_snapshot,
     diff_snapshots,
     export_history_json,
     list_snapshots,
     revert_to_snapshot,
 )
+from app.models.capital import DrawSource
 from app.models.cashflow import OperationalOutputs
 from app.models.deal import ScenarioSnapshot
 from app.models.deal import UnitMix, UseLine, UseLinePhase
@@ -326,6 +328,65 @@ async def test_revert_to_snapshot_restores_use_unitmix_and_milestones(session: A
     assert any(row.label == "1BR" for row in restored_mix)
     assert len(restored_ms) == 2
     assert restored_ms[1].trigger_milestone_id == restored_ms[0].id
+
+
+@pytest.mark.asyncio
+async def test_revert_to_snapshot_restores_draw_sources(session: AsyncSession):
+    """Revert restores persisted draw source configuration, including milestone windows."""
+    org, user = await seed_org(session)
+    opp = await seed_opportunity(session, org, user)
+    scenario, *_ = await seed_deal_model_with_financials(session, opp, user)
+
+    project = (
+        await session.execute(
+            select(Project).where(Project.scenario_id == scenario.id).order_by(Project.created_at.asc()).limit(1)
+        )
+    ).scalar_one()
+
+    draw_source = DrawSource(
+        scenario_id=scenario.id,
+        project_id=project.id,
+        sort_order=1,
+        label="Senior Debt Draws",
+        source_type="debt",
+        draw_every_n_months=2,
+        annual_interest_rate=0.065,
+        active_from_milestone="close",
+        active_to_milestone="operation_stabilized",
+        total_commitment=1500000,
+        funder_type="senior_debt",
+    )
+    session.add(draw_source)
+    await session.flush()
+
+    snap = await capture_snapshot(session, scenario.id)
+
+    await session.delete(draw_source)
+    await session.flush()
+
+    await revert_to_snapshot(session, scenario.id, snap.id)
+    await session.commit()
+
+    restored_sources = list(
+        (
+            await session.execute(
+                select(DrawSource)
+                .where(DrawSource.scenario_id == scenario.id)
+                .order_by(DrawSource.sort_order.asc())
+            )
+        ).scalars()
+    )
+
+    assert len(restored_sources) == 1
+    assert restored_sources[0].label == "Senior Debt Draws"
+    assert restored_sources[0].active_from_milestone == "close"
+    assert restored_sources[0].active_to_milestone == "operation_stabilized"
+
+
+def test_clean_serializes_bare_date_objects():
+    """_clean should make date-only values JSON-safe, not just datetimes."""
+    payload = {"target_date": date(2026, 5, 3)}
+    assert _clean(payload) == {"target_date": "2026-05-03"}
 
 
 @pytest.mark.asyncio
