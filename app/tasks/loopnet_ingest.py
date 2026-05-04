@@ -682,7 +682,7 @@ async def _loopnet_monthly_refresh() -> dict[str, Any]:
             .where(ScrapedListing.source == "loopnet")
             # Prioritize listings attached to an active opportunity first
             .order_by(
-                ScrapedListing.linked_project_id.is_(None),
+                ScrapedListing.org_id.isnot(None).desc(),  # promoted listings first
                 ScrapedListing.last_seen_at.asc(),
             )
         )

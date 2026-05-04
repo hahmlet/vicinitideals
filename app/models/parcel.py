@@ -1,4 +1,8 @@
-"""Parcel, ProjectParcel, ParcelTransformation models."""
+"""Parcel and ParcelTransformation models.
+
+ProjectParcel (project_parcels) was a junction table linking the old Opportunity
+to parcels. Dropped in migration 0067 — projects now get a direct parcel_id FK.
+"""
 
 import enum
 import uuid
@@ -15,6 +19,19 @@ class ProjectParcelRelationship(str, enum.Enum):
     unchanged = "unchanged"
     merged_in = "merged_in"
     split_from = "split_from"
+
+
+class ProjectParcel:
+    """Non-ORM stub. project_parcels table dropped in migration 0067.
+    Kept for import compatibility — cannot be used in select() or session.add()."""
+
+    project_id: "uuid.UUID"
+    parcel_id: "uuid.UUID"
+    relationship_type: "ProjectParcelRelationship"
+    notes: "str | None"
+
+    def __init__(self, **_: object) -> None:
+        pass
 
 
 class ParcelTransformationType(str, enum.Enum):
@@ -59,15 +76,9 @@ class Parcel(Base):
     last_updated: Mapped[datetime | None] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=True
     )
-
-    # Location routing (populated from Oregon Address Points / county scrapers)
     county: Mapped[str | None] = mapped_column(String(120), nullable=True, index=True)
     jurisdiction: Mapped[str | None] = mapped_column(String(120), nullable=True, index=True)
-
-    # Priority classification
     priority_bucket: Mapped[str | None] = mapped_column(String(30), nullable=True, index=True)
-
-    # Oregon Address Points fields (populated at seed time, quarterly refresh)
     latitude: Mapped[object | None] = mapped_column(Numeric(10, 7), nullable=True)
     longitude: Mapped[object | None] = mapped_column(Numeric(10, 7), nullable=True)
     postal_city: Mapped[str | None] = mapped_column(String(120), nullable=True, index=True)
@@ -92,63 +103,17 @@ class Parcel(Base):
     discrepancy_agency_id: Mapped[str | None] = mapped_column(String(200), nullable=True)
     esn: Mapped[str | None] = mapped_column(String(50), nullable=True)
     msag_community: Mapped[str | None] = mapped_column(String(120), nullable=True)
-
-    # Metro RLIS taxlot fields (populated from tax_lots_metro_rlis cache)
     sale_price: Mapped[int | None] = mapped_column(Integer, nullable=True)
-    sale_date: Mapped[str | None] = mapped_column(String(6), nullable=True)  # YYYYMM
+    sale_date: Mapped[str | None] = mapped_column(String(6), nullable=True)
     state_class: Mapped[str | None] = mapped_column(String(10), nullable=True, index=True)
     ortaxlot: Mapped[str | None] = mapped_column(String(50), nullable=True, index=True)
     primary_account_num: Mapped[str | None] = mapped_column(String(20), nullable=True)
     alt_account_num: Mapped[str | None] = mapped_column(String(20), nullable=True)
     rlis_land_use: Mapped[str | None] = mapped_column(String(10), nullable=True)
     rlis_taxcode: Mapped[str | None] = mapped_column(String(20), nullable=True)
-
-    # For jurisdictions with no queryable GIS zoning layer — links to an authoritative PDF
-    # zoning map. Populated at seed time when jurisdiction is in ZONING_PDF_JURISDICTIONS
-    # and zoning_code is null. See tools/gis_cache/oregon_statewide_sources.py.
     zoning_lookup_url: Mapped[str | None] = mapped_column(String(500), nullable=True)
-
-    # Enterprise zone name (e.g. "Columbia Cascade Enterprise Zone").
-    # Populated by spatial join against enterprise_zones_or cache at seed time.
-    # NULL = not in any enterprise zone.
     enterprise_zone_name: Mapped[str | None] = mapped_column(String(120), nullable=True, index=True)
-
-    # Cultural sensitivity designation — manually painted via zone painter.
-    # NULL = not designated. Value = designation label (e.g. "Cultural Sensitivity Lands").
     cultural_sensitivity: Mapped[str | None] = mapped_column(String(120), nullable=True)
-
-    # Relationships
-    project_parcels: Mapped[list["ProjectParcel"]] = relationship(
-        "ProjectParcel", back_populates="parcel"
-    )
-
-
-class ProjectParcel(Base):
-    __tablename__ = "project_parcels"
-
-    project_id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True),
-        ForeignKey("opportunities.id"),
-        primary_key=True,
-    )
-    parcel_id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True),
-        ForeignKey("parcels.id"),
-        primary_key=True,
-    )
-    relationship_type: Mapped[ProjectParcelRelationship] = mapped_column(
-        "relationship",
-        String(50),
-        nullable=False,
-        default=ProjectParcelRelationship.unchanged,
-    )
-    notes: Mapped[str | None] = mapped_column(Text, nullable=True)
-
-    # Relationships
-    parcel: Mapped["Parcel"] = relationship("Parcel", back_populates="project_parcels")
-    opportunity: Mapped["Opportunity"] = relationship(  # type: ignore[name-defined]
-        "Opportunity", back_populates="project_parcels"
-    )
 
 
 class ParcelTransformation(Base):
@@ -164,18 +129,15 @@ class ParcelTransformation(Base):
         String(50), nullable=False
     )
     input_apns: Mapped[list[str]] = mapped_column(
-        ARRAY(String).with_variant(JSON(), "sqlite"),
-        nullable=False,
+        ARRAY(String).with_variant(JSON(), "sqlite"), nullable=False,
     )
     output_apns: Mapped[list[str] | None] = mapped_column(
-        ARRAY(String).with_variant(JSON(), "sqlite"),
-        nullable=True,
+        ARRAY(String).with_variant(JSON(), "sqlite"), nullable=True,
     )
     effective_lot_sqft: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
     notes: Mapped[str | None] = mapped_column(Text, nullable=True)
     effective_date: Mapped[object | None] = mapped_column(Date, nullable=True)
 
-    # Relationships
     opportunity: Mapped["Opportunity"] = relationship(  # type: ignore[name-defined]
         "Opportunity", back_populates="parcel_transformations"
     )

@@ -14,7 +14,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from app.models.deal import DealModel
-from app.models.parcel import ProjectParcel
 from app.models.project import Opportunity, Project, ProjectCategory, ProjectSource, ProjectStatus
 from app.schemas.capital import CapitalModuleRead, WaterfallResultRead, WaterfallTierRead
 from app.schemas.deal import (
@@ -79,7 +78,7 @@ def _split_reso_address(address: str | None) -> tuple[str | None, str | None, st
 def _build_project_payload(project: Opportunity | None) -> dict[str, Any]:
     parcel = None
     if project is not None:
-        parcel = next((link.parcel for link in project.project_parcels if link.parcel is not None), None)
+        parcel = project.parcel
 
     address = None if parcel is None else (parcel.address_normalized or parcel.address_raw)
     city, state, postal = _split_reso_address(address)
@@ -118,7 +117,7 @@ async def export_deal_model_json(session: AsyncSession, model_id: UUID) -> dict[
                 selectinload(Project.operational_inputs),
                 selectinload(Project.income_streams),
                 selectinload(Project.expense_lines),
-                selectinload(Project.unit_mix),
+                selectinload(Project.opportunity).selectinload(Opportunity.parcel),
             ),
             selectinload(DealModel.operational_outputs),
             selectinload(DealModel.cash_flows),
@@ -140,9 +139,7 @@ async def export_deal_model_json(session: AsyncSession, model_id: UUID) -> dict[
     if opportunity_id:
         opp_result = await session.execute(
             select(Opportunity)
-            .options(
-                selectinload(Opportunity.project_parcels).selectinload(ProjectParcel.parcel)
-            )
+            .options(selectinload(Opportunity.parcel))
             .where(Opportunity.id == opportunity_id)
         )
         opportunity = opp_result.scalar_one_or_none()
@@ -164,7 +161,7 @@ async def export_deal_model_json(session: AsyncSession, model_id: UUID) -> dict[
     ]
     unit_mix = [
         UnitMixRead.model_validate(u).model_dump(mode="json")
-        for u in sorted(default_project.unit_mix if default_project else [], key=lambda item: (item.label or "", str(item.id)))
+        for u in sorted(default_project.unit_mix if default_project else [], key=lambda item: (item.get("label") or "", item.get("id") or ""))
     ]
     cash_flows = [
         CashFlowRead.model_validate(cash_flow).model_dump(mode="json")

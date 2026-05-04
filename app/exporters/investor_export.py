@@ -78,10 +78,21 @@ from app.models.deal import (
     Deal,
     DealModel,
     OperationalInputs,
-    UnitMix,
     UseLine,
     normalize_opex_label,
 )
+
+
+class _UMProxy:
+    """Attribute-compatible proxy for unit_mix JSONB dicts.
+
+    Replaces the old UnitMix ORM rows; unknown attributes return None.
+    """
+    def __init__(self, d: dict) -> None:
+        self.__dict__.update(d)
+
+    def __getattr__(self, k: str):
+        return None
 from app.models.org import Organization
 from app.models.project import Project
 from app.config import settings as _app_settings
@@ -252,7 +263,10 @@ async def _load_all(session: AsyncSession, scenario_id: UUID) -> dict | None:
 
     inputs_by_project: dict[UUID, OperationalInputs] = {}
     use_lines_by_project: dict[UUID, list[UseLine]] = {pid: [] for pid in project_ids}
-    unit_mix_by_project: dict[UUID, list[UnitMix]] = {pid: [] for pid in project_ids}
+    # unit_mix is JSONB on Project; wrap dicts in _UMProxy for attribute-compatible access
+    unit_mix_by_project: dict[UUID, list] = {
+        p.id: [_UMProxy(r) for r in (p.unit_mix or [])] for p in projects
+    }
 
     if project_ids:
         for inp in (
@@ -271,14 +285,6 @@ async def _load_all(session: AsyncSession, scenario_id: UUID) -> dict | None:
             )
         ).scalars():
             use_lines_by_project.setdefault(ul.project_id, []).append(ul)
-        for um in (
-            await session.execute(
-                select(UnitMix)
-                .where(UnitMix.project_id.in_(project_ids))
-                .order_by(UnitMix.label)
-            )
-        ).scalars():
-            unit_mix_by_project.setdefault(um.project_id, []).append(um)
 
     capital_modules = list(
         (
@@ -2680,7 +2686,7 @@ def _build_waterfall_sheet(ws, registry: CellRegistry, ctx: dict) -> None:
 def _build_unit_mix_sheet(ws, registry: CellRegistry, ctx: dict) -> None:
     """Unit Mix — per-project breakdown of unit types, rents, and gap."""
     projects: list[Project] = ctx["projects"]
-    unit_mix_by_project: dict[UUID, list[UnitMix]] = ctx.get("unit_mix") or {}
+    unit_mix_by_project: dict[UUID, list] = ctx.get("unit_mix") or {}
 
     set_widths(ws, [28, 7, 7, 10, 8, 16, 16, 16, 10, 22, 18, 18])
     print_landscape(ws)
@@ -3777,7 +3783,7 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
     projects: list[Project] = ctx["projects"]
     inputs_by_project: dict[UUID, OperationalInputs] = ctx["operational_inputs"]
     use_lines_by_project: dict[UUID, list[UseLine]] = ctx["use_lines"]
-    unit_mix_by_project: dict[UUID, list[UnitMix]] = ctx["unit_mix"]
+    unit_mix_by_project: dict[UUID, list] = ctx["unit_mix"]
     capital_modules: list[CapitalModule] = ctx["capital_modules"]
     junctions: list[CapitalModuleProject] = ctx["junctions"]
 
@@ -4058,7 +4064,7 @@ def _per_project_value(
     project: Project,
     inputs: OperationalInputs | None,
     use_lines: list[UseLine],
-    unit_mix: list[UnitMix],
+    unit_mix: list,
 ):
     raw = _per_project_value_raw(key, project, inputs, use_lines, unit_mix)
     # The DB stores percentages as whole numbers ("5.5" for 5.5%). The Block B
@@ -4076,7 +4082,7 @@ def _per_project_value_raw(
     project: Project,
     inputs: OperationalInputs | None,
     use_lines: list[UseLine],
-    unit_mix: list[UnitMix],
+    unit_mix: list,
 ):
     if key == "project_name":
         return project.name or ""
@@ -4100,7 +4106,7 @@ def _per_project_value_raw(
     return _safe_decimal(inputs, key)
 
 
-def _weighted_avg_rent(unit_mix: list[UnitMix], field: str) -> Decimal | None:
+def _weighted_avg_rent(unit_mix: list, field: str) -> Decimal | None:
     total_units = 0
     weighted = Decimal(0)
     for um in unit_mix:

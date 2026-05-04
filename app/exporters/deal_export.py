@@ -31,7 +31,6 @@ Export shape:
                     "projects": [
                         {
                             "name": "...",
-                            "deal_type": "...",
                             "operational_inputs": {...},
                             "unit_mix": [...],
                             "use_lines": [...],
@@ -71,17 +70,15 @@ from app.models.capital import CapitalModule, WaterfallTier
 from app.models.deal import (
     Deal,
     DealModel,
-    DealOpportunity,
     DealStatus,
     IncomeStream,
     OperatingExpenseLine,
     OperationalInputs,
-    UnitMix,
     UseLine,
 )
-from app.models.parcel import Parcel, ProjectParcel, ProjectParcelRelationship
-from app.models.project import Opportunity, Project
-from app.models.scraped_listing import ScrapedListing
+from app.models.opportunity import Opportunity
+from app.models.parcel import Parcel
+from app.models.project import Project
 
 DEAL_EXPORT_VERSION = "deal-v1"
 
@@ -156,16 +153,16 @@ def _dump(obj: Any, fields: list[str]) -> dict[str, Any]:
 # Export
 # ---------------------------------------------------------------------------
 
-def _export_listing(listing: ScrapedListing) -> dict[str, Any]:
+def _export_listing(listing: Opportunity) -> dict[str, Any]:
     d = _dump(listing, _LISTING_FIELDS)
-    # Normalise synonym aliases to canonical names
     d["source_url"] = _v(listing.source_url)
     d["units"] = listing.units
     d["cap_rate"] = _v(listing.cap_rate)
     d["gba_sqft"] = _v(listing.gba_sqft)
     if listing.broker:
         d["broker"] = {
-            "name": listing.broker.name,
+            "name": getattr(listing.broker, "name", None)
+                    or f"{getattr(listing.broker, 'first_name', '')} {getattr(listing.broker, 'last_name', '')}".strip(),
             "email": getattr(listing.broker, "email", None),
             "phone": getattr(listing.broker, "phone", None),
         }
@@ -185,14 +182,11 @@ def _export_project(project: Project) -> dict[str, Any]:
     oi = project.operational_inputs
     return {
         "name": project.name,
-        "deal_type": project.deal_type,
         "timeline_approved": project.timeline_approved,
         "operational_inputs": _export_operational_inputs(oi) if oi else None,
         "unit_mix": [
-            _dump(u, ["label", "unit_count", "avg_sqft", "beds", "baths",
-                      "market_rent_per_unit", "in_place_rent_per_unit",
-                      "unit_strategy", "post_reno_rent_per_unit", "notes"])
-            for u in sorted(project.unit_mix, key=lambda u: u.label)
+            {k: _v(v) for k, v in row.items()}
+            for row in sorted(project.unit_mix or [], key=lambda r: r.get("label") or "")
         ],
         "use_lines": [
             _dump(u, ["label", "phase", "amount", "timing_type", "is_deferred", "notes"])
@@ -261,22 +255,17 @@ def _export_scenario(scenario: DealModel) -> dict[str, Any]:
 
 
 def _export_opportunity(opp: Opportunity) -> dict[str, Any]:
-    parcels = [
-        {
-            "apn": pp.parcel.apn,
-            "address": pp.parcel.address_normalized or pp.parcel.address_raw,
-        }
-        for pp in opp.project_parcels
-        if pp.parcel is not None
-    ]
-    listings = [_export_listing(l) for l in opp.scraped_listings]
+    parcel_entry = (
+        {"apn": opp.parcel.apn, "address": opp.parcel.address_normalized or opp.parcel.address_raw}
+        if opp.parcel is not None else None
+    )
     return {
-        "name": opp.name,
-        "status": _v(opp.status),
+        "name": opp.name or opp.display_name,
+        "status": _v(opp.opp_status),
         "source": _v(opp.source),
-        "created_at": _v(opp.created_at),
-        "parcels": parcels,
-        "listings": listings,
+        "created_at": _v(opp.last_seen_at),
+        "parcels": [parcel_entry] if parcel_entry else [],
+        "listings": [_export_listing(opp)],  # opportunity IS the listing
     }
 
 
@@ -285,14 +274,13 @@ async def export_deal_json(session: AsyncSession, deal_id: UUID) -> dict[str, An
     result = await session.execute(
         select(Deal)
         .options(
-            selectinload(Deal.deal_opportunities).selectinload(DealOpportunity.opportunity).options(
-                selectinload(Opportunity.project_parcels).selectinload(ProjectParcel.parcel),
-                selectinload(Opportunity.scraped_listings).selectinload(ScrapedListing.broker),
-            ),
             selectinload(Deal.scenarios).options(
                 selectinload(DealModel.projects).options(
+                    selectinload(Project.opportunity).options(
+                        selectinload(Opportunity.parcel),
+                        selectinload(Opportunity.broker),
+                    ),
                     selectinload(Project.operational_inputs),
-                    selectinload(Project.unit_mix),
                     selectinload(Project.use_lines),
                     selectinload(Project.expense_lines),
                     selectinload(Project.income_streams),
@@ -307,6 +295,15 @@ async def export_deal_json(session: AsyncSession, deal_id: UUID) -> dict[str, An
     if deal is None:
         raise ValueError(f"Deal {deal_id} not found")
 
+    # Collect unique opportunities across all scenario projects
+    seen_opp_ids: set[UUID] = set()
+    opportunities: list[Opportunity] = []
+    for scenario in deal.scenarios:
+        for project in scenario.projects:
+            if project.opportunity and project.opportunity.id not in seen_opp_ids:
+                seen_opp_ids.add(project.opportunity.id)
+                opportunities.append(project.opportunity)
+
     return {
         "export_version": DEAL_EXPORT_VERSION,
         "exported_at": datetime.now(UTC).isoformat(),
@@ -314,11 +311,7 @@ async def export_deal_json(session: AsyncSession, deal_id: UUID) -> dict[str, An
             "name": deal.name,
             "status": _v(deal.status),
             "created_at": _v(deal.created_at),
-            "opportunities": [
-                _export_opportunity(do.opportunity)
-                for do in deal.deal_opportunities
-                if do.opportunity is not None
-            ],
+            "opportunities": [_export_opportunity(opp) for opp in opportunities],
             "scenarios": [
                 _export_scenario(s)
                 for s in sorted(deal.scenarios, key=lambda s: s.created_at)
@@ -354,23 +347,23 @@ async def import_deal_json(
     session.add(deal)
     await session.flush()
 
-    # Opportunities
+    # Opportunities — listing IS the opportunity; apply listing fields directly
     opp_map: dict[int, Opportunity] = {}
     for idx, opp_data in enumerate(deal_data.get("opportunities") or []):
+        first_listing = next(iter(opp_data.get("listings") or []), {})
         opp = Opportunity(
             org_id=org_id,
-            name=opp_data["name"],
-            status=opp_data.get("status", "hypothetical"),
-            source=opp_data.get("source"),
+            name=opp_data.get("name") or first_listing.get("listing_name") or "",
+            opp_status=opp_data.get("status", "hypothetical"),
+            source=first_listing.get("source") or "manual",
+            source_url=first_listing.get("source_url") or "",
             created_by_user_id=created_by_user_id,
         )
         session.add(opp)
         await session.flush()
         opp_map[idx] = opp
 
-        session.add(DealOpportunity(deal_id=deal.id, opportunity_id=opp.id))
-
-        # Parcels — look up by APN, create stub if not found
+        # Parcel — look up by APN; only one parcel per opportunity now
         for p_data in opp_data.get("parcels") or []:
             apn = (p_data.get("apn") or "").strip()
             if not apn:
@@ -382,31 +375,8 @@ async def import_deal_json(
                 parcel = Parcel(apn=apn, address_normalized=p_data.get("address"))
                 session.add(parcel)
                 await session.flush()
-            session.add(
-                ProjectParcel(
-                    project_id=opp.id,
-                    parcel_id=parcel.id,
-                    relationship_type=ProjectParcelRelationship.unchanged,
-                )
-            )
-
-        # Listings — create stubs with deal-relevant fields; source_url is the canonical ref
-        for l_data in opp_data.get("listings") or []:
-            source_url = l_data.get("source_url") or ""
-            source = l_data.get("source") or "manual"
-            if not source_url:
-                continue
-            listing = ScrapedListing(
-                source=source,
-                source_url=source_url,
-                linked_project_id=opp.id,
-                **{
-                    k: l_data.get(k)
-                    for k in _LISTING_FIELDS
-                    if k not in ("source", "source_url") and l_data.get(k) is not None
-                },
-            )
-            session.add(listing)
+            opp.parcel_id = parcel.id
+            break  # single parcel FK per opportunity
 
         await session.flush()
 
@@ -459,13 +429,19 @@ async def import_deal_json(
                 capital_module_id=cap_id_map.get(cap_ref) if cap_ref else None,
             ))
 
-        # Projects (dev efforts)
-        for p_data in s_data.get("projects") or []:
+        # Projects — link first project to first opportunity when available
+        first_opp = opp_map.get(0)
+        for p_idx, p_data in enumerate(s_data.get("projects") or []):
+            unit_mix_rows = [
+                {k: v for k, v in u_data.items() if v is not None}
+                for u_data in p_data.get("unit_mix") or []
+            ]
             project = Project(
                 scenario_id=scenario.id,
+                opportunity_id=first_opp.id if first_opp and p_idx == 0 else None,
                 name=p_data.get("name", "Default Project"),
-                deal_type=p_data["deal_type"],
                 timeline_approved=p_data.get("timeline_approved", False),
+                unit_mix=unit_mix_rows or None,
             )
             session.add(project)
             await session.flush()
@@ -475,11 +451,6 @@ async def import_deal_json(
                 session.add(OperationalInputs(project_id=project.id, **{
                     k: v for k, v in oi_data.items()
                     if hasattr(OperationalInputs, k) and v is not None
-                }))
-
-            for u_data in p_data.get("unit_mix") or []:
-                session.add(UnitMix(project_id=project.id, **{
-                    k: v for k, v in u_data.items() if v is not None
                 }))
 
             for u_data in p_data.get("use_lines") or []:

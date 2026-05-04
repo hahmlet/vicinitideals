@@ -114,38 +114,16 @@ class Deal(Base):
     created_by: Mapped["User | None"] = relationship(  # type: ignore[name-defined]
         "User", foreign_keys=[created_by_user_id]
     )
-    deal_opportunities: Mapped[list["DealOpportunity"]] = relationship(
-        "DealOpportunity", back_populates="deal", cascade="all, delete-orphan"
-    )
     scenarios: Mapped[list["Scenario"]] = relationship(
         "Scenario", back_populates="deal", cascade="all, delete-orphan"
     )
 
 
-class DealOpportunity(Base):
-    """Many-to-many join: a Deal can draw from multiple Opportunities."""
-
-    __tablename__ = "deal_opportunities"
-    __table_args__ = (
-        UniqueConstraint("deal_id", "opportunity_id", name="uq_deal_opportunity"),
-    )
-
-    deal_id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True),
-        ForeignKey("deals.id", ondelete="CASCADE"),
-        primary_key=True,
-    )
-    opportunity_id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True),
-        ForeignKey("opportunities.id", ondelete="CASCADE"),
-        primary_key=True,
-    )
-
-    # Relationships
-    deal: Mapped["Deal"] = relationship("Deal", back_populates="deal_opportunities")
-    opportunity: Mapped["Opportunity"] = relationship(  # type: ignore[name-defined]
-        "Opportunity", back_populates="deal_opportunities"
-    )
+# DealOpportunity (deal_opportunities) removed in migration 0067.
+# Stub retained for any lingering runtime references — raises AttributeError on use.
+class DealOpportunity:  # type: ignore[no-redef]
+    """Removed. Deal→Scenario→Project→Opportunity is now the lineage path."""
+    __tablename__ = "deal_opportunities"  # kept so imports don't error at module load
 
 
 # ---------------------------------------------------------------------------
@@ -551,47 +529,11 @@ class IncomeStream(Base):
     )
 
 
-class UnitMix(Base):
-    """Unit type breakdown for a Project (deal-local copy — not linked back to Building).
-
-    Populated from the Building's unit count at Deal Setup and freely editable
-    within the deal context.  Used to seed IncomeStream rows and to provide a
-    per-unit denominator for $/unit expense lines.
-    """
-
+# UnitMix ORM table removed in migration 0067 — unit_mix is now JSONB on Project.
+# Stub retained for any lingering runtime import references.
+class UnitMix:  # type: ignore[no-redef]
+    """Removed. unit_mix is now a JSONB column on Project."""
     __tablename__ = "unit_mix"
-
-    id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
-    )
-    project_id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("projects.id", ondelete="CASCADE"), nullable=False
-    )
-    label: Mapped[str] = mapped_column(String(255), nullable=False)
-    unit_count: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
-    avg_sqft: Mapped[object | None] = mapped_column(Numeric(18, 2), nullable=True)
-    # Bed/bath as numeric fields — come from comp data or user input. 0–4+ beds,
-    # 0–3+ baths in 0.5 increments. Label is derived from these for display.
-    beds: Mapped[object | None] = mapped_column(Numeric(4, 1), nullable=True)
-    baths: Mapped[object | None] = mapped_column(Numeric(4, 1), nullable=True)
-    # Loss-to-lease: market rent vs in-place rent spread
-    market_rent_per_unit: Mapped[object | None] = mapped_column(Numeric(18, 2), nullable=True)
-    in_place_rent_per_unit: Mapped[object | None] = mapped_column(Numeric(18, 2), nullable=True)
-    # Unit strategy: "base_escalation" | "ltl_catchup" | "value_add_renovation"
-    unit_strategy: Mapped[str | None] = mapped_column(String(40), nullable=True)
-    # Post-renovation rent (only for value_add_renovation strategy)
-    post_reno_rent_per_unit: Mapped[object | None] = mapped_column(Numeric(18, 2), nullable=True)
-    notes: Mapped[str | None] = mapped_column(Text, nullable=True)
-    updated_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True),
-        server_default=func.now(),
-        onupdate=func.now(),
-        nullable=False,
-    )
-
-    project: Mapped["Project"] = relationship(  # type: ignore[name-defined]
-        "Project", back_populates="unit_mix"
-    )
 
 
 class UseLine(Base):

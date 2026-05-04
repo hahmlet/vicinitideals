@@ -32,17 +32,32 @@ from app.models.ingestion import DedupCandidate, DedupStatus, IngestJob, RecordT
 from app.models.org import User
 from app.models.capital import CapitalModule, DrawSource, WaterfallTier
 from app.models.cashflow import OperationalOutputs
-from app.models.parcel import Parcel, ProjectParcel, ProjectParcelRelationship
+from app.models.parcel import Parcel
 from app.reconciliation.matcher import normalize_apn
 from app.models.portfolio import Portfolio, PortfolioProject
 from app.models.milestone import DEFAULT_DURATIONS, Milestone, MilestoneType, MilestoneType as MT
-from app.models.project import Opportunity, OpportunitySource, OpportunityStatus, Project, ProjectBuildingAssignment, ProjectParcelAssignment, ProjectStatus
-from app.models.property import Building, BuildingStatus, OpportunityBuilding, Property
+from app.models.opportunity import Opportunity, OpportunitySource, OpportunityStatus
+from app.models.project import Project, ProjectStatus
 from app.models.scraped_listing import ScrapedListing
 from app.models.realie_usage import RealieUsage
 from app.scrapers.realie import _current_month
 
 router = APIRouter(include_in_schema=False)
+
+
+class _UMRow:
+    """Attribute-compatible proxy for unit_mix JSONB dicts.
+
+    Wraps a dict so code that was written against the old UnitMix ORM rows
+    (using `.label`, `.unit_count`, etc.) continues to work without change.
+    Unknown attributes return None, matching the old ORM nullable behaviour.
+    """
+    def __init__(self, d: dict) -> None:
+        self.__dict__.update(d)
+
+    def __getattr__(self, k: str):
+        return None
+
 
 # ---------------------------------------------------------------------------
 # Template setup
@@ -289,9 +304,11 @@ def _primary_scenario(deal: Deal) -> DealModel | None:
 
 
 def _first_opportunity(deal: Deal) -> Opportunity | None:
-    """Return the first Opportunity linked to a Deal."""
-    if deal.deal_opportunities:
-        return deal.deal_opportunities[0].opportunity
+    """Return the first Opportunity linked to a Deal via Scenario→Project→Opportunity."""
+    for scenario in (deal.scenarios or []):
+        for proj in (scenario.projects or []):
+            if proj.opportunity is not None:
+                return proj.opportunity
     return None
 
 
@@ -299,40 +316,23 @@ def _deal_address(deal: Deal) -> str | None:
     opp = _first_opportunity(deal)
     if opp is None:
         return None
-    for pp in opp.project_parcels:
-        if pp.parcel and pp.parcel.address_normalized:
-            return pp.parcel.address_normalized
-    return None
+    return opp.address_normalized or opp.address_raw
 
 
 def _deal_building_description(deal: Deal) -> str | None:
-    """Build a short building description from parcel or scraped listing data."""
+    """Build a short building description from Opportunity physical attributes."""
     opp = _first_opportunity(deal)
     if opp is None:
         return None
-    # Try parcels first
-    for pp in opp.project_parcels:
-        parcel = pp.parcel
-        if parcel is None:
-            continue
-        parts: list[str] = []
-        if parcel.unit_count:
-            parts.append(f"{parcel.unit_count} units")
-        if parcel.building_sqft:
-            sqft = int(float(parcel.building_sqft))
-            parts.append(f"{sqft:,} sqft")
-        if parts:
-            return " · ".join(parts)
-    # Fall back to scraped listings
-    for listing in opp.scraped_listings:
-        parts = []
-        if listing.unit_count:
-            parts.append(f"{listing.unit_count} units")
-        if listing.gba_sqft:
-            sqft = int(float(listing.gba_sqft))
-            parts.append(f"{sqft:,} sqft")
-        if parts:
-            return " · ".join(parts)
+    parts: list[str] = []
+    unit_count = opp.units if opp.units is not None else None
+    if unit_count:
+        parts.append(f"{unit_count} units")
+    sqft = opp.gba_sqft if opp.gba_sqft is not None else None
+    if sqft:
+        parts.append(f"{int(float(sqft)):,} sqft")
+    if parts:
+        return " · ".join(parts)
     return None
 
 
@@ -382,14 +382,10 @@ async def _load_deals(
     stmt = (
         select(Deal)
         .options(
+            selectinload(Deal.scenarios)
+                .selectinload(DealModel.projects)
+                .selectinload(Project.opportunity),
             selectinload(Deal.scenarios).selectinload(DealModel.operational_outputs),
-            selectinload(Deal.deal_opportunities)
-                .selectinload(DealOpportunity.opportunity)
-                .selectinload(Opportunity.project_parcels)
-                .selectinload(ProjectParcel.parcel),
-            selectinload(Deal.deal_opportunities)
-                .selectinload(DealOpportunity.opportunity)
-                .selectinload(Opportunity.scraped_listings),
         )
         .order_by(Deal.created_at.desc())
     )
@@ -1827,16 +1823,11 @@ async def deals_new_page(
     opp_asking_price: float | None = None
     if opp_id:
         try:
-            _opp = await session.get(
-                Opportunity, UUID(opp_id),
-                options=[selectinload(Opportunity.scraped_listings)],
-            )
+            _opp = await session.get(Opportunity, UUID(opp_id))
             if _opp:
                 opp_name = _opp.name
-                for _sl in (_opp.scraped_listings or []):
-                    if _sl.asking_price is not None and _sl.asking_price > 0:
-                        opp_asking_price = float(_sl.asking_price)
-                        break
+                if _opp.asking_price is not None and _opp.asking_price > 0:
+                    opp_asking_price = float(_opp.asking_price)
         except ValueError:
             opp_id = ""
     ctx["opp_id"] = opp_id
@@ -2003,13 +1994,7 @@ async def create_deal(
     opportunity: Opportunity | None = None
     if opp_id_raw:
         try:
-            opportunity = await session.get(
-                Opportunity, UUID(opp_id_raw),
-                options=[
-                    selectinload(Opportunity.opportunity_buildings),
-                    selectinload(Opportunity.scraped_listings),
-                ],
-            )
+            opportunity = await session.get(Opportunity, UUID(opp_id_raw))
         except ValueError:
             pass
 
@@ -2019,40 +2004,31 @@ async def create_deal(
         opportunity = Opportunity(
             org_id=org_id,
             name=name,
-            status=OpportunityStatus.active,
+            opp_status=OpportunityStatus.active.value,
+            source="manual",
+            source_id=_uuid_mod.uuid4().hex,
+            source_url="",
             created_by_user_id=user.id if user else None,
         )
         session.add(opportunity)
         await session.flush()
     else:
-        # Ensure ProjectParcel exists for any parcel linked via scraped listing.
-        for _sl in opportunity.scraped_listings:
-            _parcel_id = _sl.parcel_id
-            if _parcel_id is None and (_sl.apn or _sl.address_normalized):
-                try:
-                    from app.scrapers.parcel_enrichment import enrich_parcel as _enrich
-                    _p = await _enrich(session, address=_sl.address_normalized or _sl.address_raw, apn=_sl.apn)
-                    if _p is not None:
-                        _parcel_id = _p.id
-                        _sl.parcel_id = _parcel_id
-                except Exception:
-                    pass
-            if _parcel_id is not None:
-                _existing = (await session.execute(
-                    select(ProjectParcel).where(
-                        ProjectParcel.project_id == opportunity.id,
-                        ProjectParcel.parcel_id == _parcel_id,
-                    )
-                )).scalar_one_or_none()
-                if _existing is None:
-                    session.add(ProjectParcel(
-                        project_id=opportunity.id,
-                        parcel_id=_parcel_id,
-                        relationship_type=ProjectParcelRelationship.unchanged,
-                    ))
+        # Ensure parcel is linked on the Opportunity itself
+        if opportunity.parcel_id is None and (opportunity.apn or opportunity.address_normalized):
+            try:
+                from app.scrapers.parcel_enrichment import enrich_parcel as _enrich
+                _p = await _enrich(
+                    session,
+                    address=opportunity.address_normalized or opportunity.address_raw,
+                    apn=opportunity.apn,
+                )
+                if _p is not None:
+                    opportunity.parcel_id = _p.id
+            except Exception:
+                pass
         await session.flush()
 
-    # New architecture: top-level Deal → DealOpportunity link → Scenario (financial plan)
+    # Deal → Scenario (financial plan) → Project → Opportunity
     top_deal = Deal(
         org_id=org_id,
         name=name,
@@ -2060,8 +2036,6 @@ async def create_deal(
     )
     session.add(top_deal)
     await session.flush()
-
-    session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id))
 
     scenario = DealModel(
         deal_id=top_deal.id,
@@ -2078,7 +2052,6 @@ async def create_deal(
         scenario_id=scenario.id,
         opportunity_id=opportunity.id,
         name="Default Project",
-        deal_type=deal_type,
     )
     session.add(dev_project)
     await session.flush()
@@ -2123,13 +2096,7 @@ async def deal_detail(
         options=[
             selectinload(Deal.scenarios).selectinload(DealModel.operational_outputs),
             selectinload(Deal.scenarios).selectinload(DealModel.projects).selectinload(Project.milestones),
-            selectinload(Deal.deal_opportunities)
-                .selectinload(DealOpportunity.opportunity)
-                .selectinload(Opportunity.project_parcels)
-                .selectinload(ProjectParcel.parcel),
-            selectinload(Deal.deal_opportunities)
-                .selectinload(DealOpportunity.opportunity)
-                .selectinload(Opportunity.scraped_listings),
+            selectinload(Deal.scenarios).selectinload(DealModel.projects).selectinload(Project.opportunity),
         ],
     )
     if deal is None:
@@ -2137,29 +2104,14 @@ async def deal_detail(
 
     opportunity = _first_opportunity(deal)
 
-    # Collect all buildings linked via opportunity's scraped_listings
-    building_ids = []
-    if opportunity:
-        building_ids = [l.property_id for l in opportunity.scraped_listings if l.property_id]
-    buildings = []
-    if building_ids:
-        bldg_stmt = (
-            select(Building)
-            .options(
-                selectinload(Building.scraped_listing)
-                    .selectinload(ScrapedListing.broker)
-                    .selectinload(Broker.brokerage),
-                selectinload(Building.parcel),
-            )
-            .where(Building.id.in_(building_ids))
-        )
-        bldg_result = await session.execute(bldg_stmt)
-        buildings = [_build_building_row(b) for b in bldg_result.scalars()]
+    buildings = []  # Building entity removed — physical attrs now on Opportunity
 
-    # Parcels linked to the primary opportunity
+    # Parcel linked directly to the Opportunity
     parcels = []
-    if opportunity:
-        parcels = [_build_parcel_row(pp.parcel) for pp in opportunity.project_parcels if pp.parcel]
+    if opportunity and opportunity.parcel_id:
+        parcel = await session.get(Parcel, opportunity.parcel_id)
+        if parcel:
+            parcels = [_build_parcel_row(parcel)]
 
     # Financial models (Scenarios) for this Deal
     models = []
@@ -2243,7 +2195,7 @@ async def update_deal(
         Deal,
         deal_id,
         options=[
-            selectinload(Deal.deal_opportunities).selectinload(DealOpportunity.opportunity),
+            selectinload(Deal.scenarios).selectinload(Scenario.projects).selectinload(Project.opportunity),
         ],
     )
     if deal is None:
@@ -2255,7 +2207,7 @@ async def update_deal(
     opp = _first_opportunity(deal)
     if opp is not None:
         try:
-            opp.status = OpportunityStatus(status_raw)
+            opp.opp_status = status_raw
         except ValueError:
             pass
     await session.commit()
@@ -2304,23 +2256,23 @@ async def create_model_for_deal(
     except ValueError:
         deal_type = ProjectType.acquisition
 
-    # Find or create a top-level Deal for this Opportunity
+    # Find or create a top-level Deal for this Opportunity (via Scenario→Project path)
     existing_top_deal = (await session.execute(
         select(Deal)
-        .join(DealOpportunity, DealOpportunity.deal_id == Deal.id)
-        .where(DealOpportunity.opportunity_id == opp_id)
+        .join(Scenario, Scenario.deal_id == Deal.id)
+        .join(Project, Project.scenario_id == Scenario.id)
+        .where(Project.opportunity_id == opp_id)
         .limit(1)
     )).scalar_one_or_none()
 
     if existing_top_deal is None:
         existing_top_deal = Deal(
-            org_id=opportunity.org_id,
+            org_id=opportunity.org_id or (user.org_id if user else None),
             name=name or "Base Case",
             created_by_user_id=user.id if user else None,
         )
         session.add(existing_top_deal)
         await session.flush()
-        session.add(DealOpportunity(deal_id=existing_top_deal.id, opportunity_id=opp_id))
 
     # Count existing scenarios for version numbering
     existing_version = int((await session.execute(
@@ -2342,7 +2294,6 @@ async def create_model_for_deal(
         scenario_id=scenario.id,
         opportunity_id=opp_id,
         name="Default Project",
-        deal_type=deal_type,
     )
     session.add(dev_project)
     await session.flush()
@@ -2384,34 +2335,18 @@ async def link_parcel_to_deal(
             status_code=303,
         )
 
-    # Get the primary opportunity — parcels are linked to Opportunity, not Deal
+    # Get the primary opportunity and set parcel_id directly
     deal = await session.get(
         Deal, deal_id,
-        options=[selectinload(Deal.deal_opportunities).selectinload(DealOpportunity.opportunity)],
+        options=[
+            selectinload(Deal.scenarios).selectinload(Scenario.projects).selectinload(Project.opportunity),
+        ],
     )
     opp = _first_opportunity(deal) if deal else None
     if opp is None:
         return RedirectResponse(url=f"/deals/{deal_id}?tab=parcels&error=no_opportunity", status_code=303)
 
-    try:
-        rel = ProjectParcelRelationship(rel_raw)
-    except ValueError:
-        rel = ProjectParcelRelationship.unchanged
-
-    # Upsert: skip if already linked
-    existing = await session.execute(
-        select(ProjectParcel).where(
-            ProjectParcel.project_id == opp.id,
-            ProjectParcel.parcel_id == parcel.id,
-        )
-    )
-    if existing.scalar_one_or_none() is None:
-        pp = ProjectParcel(
-            project_id=opp.id,
-            parcel_id=parcel.id,
-            relationship_type=rel,
-        )
-        session.add(pp)
+    opp.parcel_id = parcel.id
     await session.commit()
 
     return RedirectResponse(url=f"/deals/{deal_id}?tab=parcels", status_code=303)
@@ -2421,31 +2356,9 @@ async def link_parcel_to_deal(
 # Buildings
 # ---------------------------------------------------------------------------
 
-def _build_building_row(prop: Building) -> dict:
-    listing = prop.scraped_listing
-    parcel = prop.parcel
-    return {
-        "id": str(prop.id),
-        "name": prop.name,
-        "address": listing.address_normalized if listing else (parcel.address_normalized if parcel else ""),
-        "full_address": listing.address_normalized if listing else (parcel.address_normalized if parcel else ""),
-        "sale_status": listing.status if listing else None,
-        "source": listing.source if listing else None,
-        "source_url": listing.source_url if listing else None,
-        "unit_count": listing.units if listing else (parcel.unit_count if parcel else None),
-        "building_sqft": float(listing.gba_sqft) if listing and listing.gba_sqft else (float(parcel.building_sqft) if parcel and parcel.building_sqft else None),
-        "year_built": listing.year_built if listing else (parcel.year_built if parcel else None),
-        "property_type": listing.property_type if listing else None,
-        "asking_price": float(listing.asking_price) if listing and listing.asking_price else None,
-        "cap_rate": float(listing.cap_rate) if listing and listing.cap_rate else None,
-        "first_seen_at": listing.first_seen_at.strftime("%b %-d, %Y") if listing and listing.first_seen_at else None,
-        "last_seen_at": listing.last_seen_at.strftime("%b %-d, %Y") if listing and listing.last_seen_at else None,
-        "broker_name": f"{listing.broker.first_name} {listing.broker.last_name}".strip() if listing and listing.broker else None,
-        "brokerage_name": listing.broker.brokerage.name if listing and listing.broker and listing.broker.brokerage else None,
-        "broker_phone": listing.broker.phone if listing and listing.broker else None,
-        "project_id": None,
-        "project_name": None,
-    }
+def _build_building_row(prop: object) -> dict:
+    """Stub — Building entity removed. Physical attrs now on Opportunity."""
+    return {}
 
 
 # ── Opportunities ─────────────────────────────────────────────────────────────
@@ -2489,13 +2402,8 @@ async def _query_opportunities(
     status=None,
     source=None,
 ) -> list:
-    from sqlalchemy.orm import selectinload as _sl
     stmt = (
         select(Opportunity)
-        .options(
-            _sl(Opportunity.opportunity_buildings).selectinload(OpportunityBuilding.building),
-            _sl(Opportunity.deal_opportunities),
-        )
         .order_by(Opportunity.created_at.desc())
     )
     statuses = _as_list(status)
@@ -2512,11 +2420,7 @@ async def _query_opportunities(
         opps = [
             o for o in opps
             if q_lower in (o.name or "").lower()
-            or any(
-                q_lower in (ob.building.address_line1 or "").lower()
-                or q_lower in (ob.building.city or "").lower()
-                for ob in o.opportunity_buildings
-            )
+            or q_lower in (o.address_normalized or "").lower()
         ]
     return opps
 
@@ -2560,18 +2464,10 @@ async def opportunity_wizard_get(
     user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
     opp = None
-    buildings: list[Building] = []
+    buildings: list = []  # Building entity removed
     if opp_id:
         try:
             opp = await session.get(Opportunity, UUID(opp_id))
-            if opp:
-                obs = list((await session.execute(
-                    select(OpportunityBuilding)
-                    .options(__import__('sqlalchemy.orm', fromlist=['selectinload']).selectinload(OpportunityBuilding.building))
-                    .where(OpportunityBuilding.opportunity_id == UUID(opp_id))
-                    .order_by(OpportunityBuilding.sort_order)
-                )).scalars())
-                buildings = [ob.building for ob in obs]
         except (ValueError, Exception):
             pass
     ctx = {
@@ -2654,18 +2550,9 @@ async def opportunity_wizard_step(
         await session.refresh(opp)
         opp_id_str = str(opp.id)
 
-        # Load buildings for step 2
-        obs = list((await session.execute(
-            select(OpportunityBuilding)
-            .options(__import__('sqlalchemy.orm', fromlist=['selectinload']).selectinload(OpportunityBuilding.building))
-            .where(OpportunityBuilding.opportunity_id == opp.id)
-            .order_by(OpportunityBuilding.sort_order)
-        )).scalars())
-        buildings = [ob.building for ob in obs]
-
         return templates.TemplateResponse(request, "opportunity_wizard.html", {
             "request": request, "step": 2, "opp": opp,
-            "opp_id": opp_id_str, "buildings": buildings,
+            "opp_id": opp_id_str, "buildings": [],  # Building entity removed
             "deal_type": deal_type,
             "opp_asking_price": asking_price_raw,
             "opp_notes": notes,
@@ -2676,88 +2563,35 @@ async def opportunity_wizard_step(
         })
 
     elif step == 2:
-        # Save buildings
+        # Save physical attributes directly on the Opportunity (Building entity removed).
         opp = await session.get(Opportunity, UUID(opp_id_str)) if opp_id_str else None
         if opp is None:
             return HTMLResponse("Opportunity not found", status_code=400)
 
-        # Parse building index list
-        idxs_raw = form.getlist("building_idx[]")
-        # Remove existing OpportunityBuilding rows for clean re-save
-        existing_obs = list((await session.execute(
-            select(OpportunityBuilding).where(OpportunityBuilding.opportunity_id == opp.id)
-        )).scalars())
-        for ob in existing_obs:
-            await session.delete(ob)
-        await session.flush()
+        def _int(v: str) -> int | None:
+            try: return int(v) if v else None
+            except ValueError: return None
+        def _dec(v: str):
+            try: return Decimal(v.replace(",", "")) if v else None
+            except Exception: return None
 
-        buildings_saved: list[Building] = []
-        for sort_i, idx in enumerate(idxs_raw):
-            building_id_str = str(form.get(f"building_id_{idx}", "") or "").strip()
-            address = str(form.get(f"b_address_{idx}", "") or "").strip()
-            city = str(form.get(f"b_city_{idx}", "") or "").strip()
-            state = str(form.get(f"b_state_{idx}", "") or "").strip()
-            zip_code = str(form.get(f"b_zip_{idx}", "") or "").strip()
+        # Read first building row's data as the canonical physical attrs for this opportunity
+        address = str(form.get("b_address_0", "") or "").strip()
+        units = _int(str(form.get("b_units_0", "") or ""))
+        sqft = _dec(str(form.get("b_sqft_0", "") or ""))
+        year = _int(str(form.get("b_year_0", "") or ""))
+        prop_type = str(form.get("b_type_0", "") or "").strip() or None
 
-            def _int(v: str) -> int | None:
-                try: return int(v) if v else None
-                except ValueError: return None
-            def _dec(v: str):
-                try: return Decimal(v.replace(",", "")) if v else None
-                except Exception: return None
-
-            units = _int(str(form.get(f"b_units_{idx}", "") or ""))
-            sqft = _dec(str(form.get(f"b_sqft_{idx}", "") or ""))
-            year = _int(str(form.get(f"b_year_{idx}", "") or ""))
-            prop_type = str(form.get(f"b_type_{idx}", "") or "").strip() or None
-            cur_use = str(form.get(f"b_use_{idx}", "") or "").strip() or None
-            notes = str(form.get(f"b_notes_{idx}", "") or "").strip() or None
-
-            if not address and not units:
-                continue  # skip blank rows
-
-            # Create or update building
-            b: Building | None = None
-            if building_id_str:
-                try:
-                    b = await session.get(Building, UUID(building_id_str))
-                except ValueError:
-                    b = None
-
-            if b is None:
-                b = Building(
-                    name=address or f"Building {sort_i + 1}",
-                    created_by_user_id=user.id if user else None,
-                )
-                session.add(b)
-
-            b.address_line1 = address or b.address_line1
-            b.city = city or b.city
-            b.state = state or b.state
-            b.zip_code = zip_code or b.zip_code
-            b.unit_count = units if units is not None else b.unit_count
-            b.building_sqft = sqft if sqft is not None else b.building_sqft
-            b.year_built = year if year is not None else b.year_built
-            b.property_type = prop_type or b.property_type
-            b.current_use = cur_use or b.current_use
-            b.notes = notes or b.notes
-            b.name = address or b.name
-
-            await session.flush()
-            buildings_saved.append(b)
-
-            ob = OpportunityBuilding(
-                opportunity_id=opp.id,
-                building_id=b.id,
-                sort_order=sort_i,
-            )
-            session.add(ob)
-
-        # Propagate the updated building list to any existing Projects on this
-        # opportunity so their ProjectBuildingAssignment rows stay in sync.
-        # Without this, the deal-detail "missing building" warning keeps firing
-        # even after the user adds a building here.
-        await _sync_opportunity_buildings_to_projects(opp, buildings_saved, session)
+        if address and not opp.street:
+            opp.street = address
+        if units is not None:
+            opp.units = units
+        if sqft is not None:
+            opp.gba_sqft = sqft
+        if year is not None:
+            opp.year_built = year
+        if prop_type:
+            opp.property_type = prop_type
 
         await session.commit()
 
@@ -2767,7 +2601,7 @@ async def opportunity_wizard_step(
 
         return templates.TemplateResponse(request, "opportunity_wizard.html", {
             "request": request, "step": 3, "opp": opp,
-            "opp_id": opp_id_str, "buildings": buildings_saved,
+            "opp_id": opp_id_str, "buildings": [],
             "deal_type": deal_type,
             "opp_asking_price": asking_price_raw,
             "opp_notes": opp_notes,
@@ -2785,43 +2619,19 @@ async def opportunity_wizard_complete(
     request: Request,
     session: DBSession,
 ) -> Response:
-    """Finalize opportunity creation — link to a Deal if requested, then redirect.
+    """Finalize opportunity creation — redirect to deal or opportunity detail.
 
-    When ``link_to_deal`` is set (from the Add-Project drawer's empty-state
-    flow), idempotently insert the DealOpportunity junction row so the new
-    opp shows up in the drawer's eligible-opportunities dropdown on return.
-    ``return_to`` controls the post-finalize landing URL — same-origin paths
-    only; falls back to the opportunity detail page.
+    ``link_to_deal`` is no longer used to create a junction row (DealOpportunity
+    was dropped in migration 0067). The opportunity is already linked via
+    Scenario→Project→Opportunity. ``return_to`` controls the post-finalize
+    landing URL — same-origin paths only; falls back to the opportunity detail.
     """
     form = await request.form()
     opp_id_str = str(form.get("opp_id", "") or "")
     if not opp_id_str:
         return HTMLResponse("Missing opp_id", status_code=400)
 
-    link_to_deal = _safe_uuid_str(str(form.get("link_to_deal", "") or ""))
     return_to = _safe_return_path(str(form.get("return_to", "") or ""))
-
-    if link_to_deal:
-        try:
-            opp_uuid = UUID(opp_id_str)
-            deal_uuid = UUID(link_to_deal)
-        except ValueError:
-            opp_uuid = None
-            deal_uuid = None
-        if opp_uuid is not None and deal_uuid is not None:
-            existing = (await session.execute(
-                select(DealOpportunity).where(
-                    DealOpportunity.deal_id == deal_uuid,
-                    DealOpportunity.opportunity_id == opp_uuid,
-                ).limit(1)
-            )).scalar_one_or_none()
-            if existing is None:
-                session.add(DealOpportunity(
-                    deal_id=deal_uuid,
-                    opportunity_id=opp_uuid,
-                ))
-                await session.commit()
-
     target = return_to or f"/opportunities/{opp_id_str}"
     return RedirectResponse(url=target, status_code=303)
 
@@ -2834,29 +2644,20 @@ async def opportunity_detail(
     vd_user_id: str | None = Cookie(default=None),
 ) -> HTMLResponse:
     """Opportunity detail page — shows buildings inline."""
-    from sqlalchemy.orm import selectinload as _sl
     user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
-    from app.models.parcel import Parcel as _Parcel
     opp = (await session.execute(
         select(Opportunity)
-        .options(
-            _sl(Opportunity.opportunity_buildings).selectinload(OpportunityBuilding.building),
-            _sl(Opportunity.deal_opportunities).selectinload(DealOpportunity.deal),
-            _sl(Opportunity.scraped_listings),
-            _sl(Opportunity.project_parcels).selectinload(ProjectParcel.parcel),
-        )
         .where(Opportunity.id == opp_id)
     )).scalar_one_or_none()
     if opp is None:
         return HTMLResponse("Not found", status_code=404)
-    buildings = [ob.building for ob in opp.opportunity_buildings if ob.building]
-    # Parcels with no associated Building record — prompt user to add one
-    building_parcel_ids = {b.parcel_id for b in buildings if b.parcel_id}
-    bare_parcels = [
-        pp.parcel for pp in opp.project_parcels
-        if pp.parcel and pp.parcel.id not in building_parcel_ids
-    ]
+    buildings = []  # Building entity removed
+    bare_parcels = []
+    if opp.parcel_id:
+        parcel = await session.get(Parcel, opp.parcel_id)
+        if parcel:
+            bare_parcels = [parcel]
     return templates.TemplateResponse(request, "opportunity_detail.html", {
         "request": request, "opp": opp,
         "buildings": buildings,
@@ -2884,10 +2685,10 @@ async def dissolve_opportunity(
     opp_id: UUID,
     session: DBSession,
 ) -> RedirectResponse:
-    """Dissolve a listing-sourced opportunity: delete the Opportunity row (and its
-    DealOpportunity join rows via CASCADE). The underlying Listing/Building/Parcel
-    records are left completely untouched."""
-    from sqlalchemy import delete as sa_delete, update as sa_update
+    """Dissolve an opportunity row. The Opportunity IS the listing (scraped_listings
+    was renamed to opportunities in migration 0067) — deleting it removes all trace.
+    Parcel records are left completely untouched."""
+    from sqlalchemy import delete as sa_delete
     from app.models.parcel import ParcelTransformation
     from app.models.portfolio import GanttEntry
     from app.models.org import ProjectVisibility
@@ -2897,15 +2698,7 @@ async def dissolve_opportunity(
     if opp is None:
         return RedirectResponse("/opportunities", status_code=303)
 
-    # Clear FKs that lack ondelete rules before deleting the Opportunity row.
-    # ScrapedListing.linked_project_id is nullable — set to NULL to preserve the listing.
-    await session.execute(
-        sa_update(ScrapedListing)
-        .where(ScrapedListing.linked_project_id == opp_id)
-        .values(linked_project_id=None)
-    )
-    # Join/child tables whose FKs reference opportunities.id with no ondelete — delete rows.
-    await session.execute(sa_delete(ProjectParcel).where(ProjectParcel.project_id == opp_id))
+    # Join/child tables whose FKs reference opportunities.id — delete rows first.
     await session.execute(sa_delete(PortfolioProject).where(PortfolioProject.project_id == opp_id))
     await session.execute(sa_delete(GanttEntry).where(GanttEntry.project_id == opp_id))
     await session.execute(sa_delete(ParcelTransformation).where(ParcelTransformation.project_id == opp_id))
@@ -2925,29 +2718,10 @@ async def buildings_page(
     q: str = Query(default=""),
     source: str = Query(default=""),
 ) -> HTMLResponse:
+    """Building inventory page — removed. Physical attributes now live on Opportunity."""
     user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
-    stmt = (
-        select(Building)
-        .options(
-            selectinload(Building.scraped_listing).selectinload(ScrapedListing.broker).selectinload(Broker.brokerage),
-            selectinload(Building.parcel),
-        )
-        .order_by(Building.name)
-    )
-    if q:
-        stmt = stmt.join(Building.scraped_listing, isouter=True).where(
-            or_(Building.name.ilike(f"%{q}%"), ScrapedListing.address_normalized.ilike(f"%{q}%"))
-        )
-    if source:
-        stmt = stmt.join(Building.scraped_listing, isouter=True).where(ScrapedListing.source == source)
-    props = list((await session.execute(stmt)).scalars().unique())
-    total = int((await session.execute(select(func.count()).select_from(Building))).scalar_one())
-    buildings = [_build_building_row(p) for p in props]
-    return templates.TemplateResponse(request, "buildings.html", {
-        "buildings": buildings, "total_count": total,
-        **_base_ctx(user, dedup_count, "buildings"),
-    })
+    return RedirectResponse("/opportunities", status_code=302)
 
 
 @router.get("/ui/buildings/rows", response_class=HTMLResponse)
@@ -2955,38 +2729,12 @@ async def buildings_rows(
     request: Request, session: DBSession,
     q: str = Query(default=""), source: str = Query(default=""),
 ) -> HTMLResponse:
-    stmt = (
-        select(Building)
-        .options(
-            selectinload(Building.scraped_listing).selectinload(ScrapedListing.broker).selectinload(Broker.brokerage),
-            selectinload(Building.parcel),
-        )
-        .order_by(Building.name)
-    )
-    if q:
-        stmt = stmt.join(Building.scraped_listing, isouter=True).where(
-            or_(Building.name.ilike(f"%{q}%"), ScrapedListing.address_normalized.ilike(f"%{q}%"))
-        )
-    if source:
-        stmt = stmt.join(Building.scraped_listing, isouter=True).where(ScrapedListing.source == source)
-    props = list((await session.execute(stmt)).scalars().unique())
-    buildings = [_build_building_row(p) for p in props]
-    return templates.TemplateResponse(request, "partials/buildings_rows.html", {"buildings": buildings})
+    return HTMLResponse("<p class='text-muted'>Building inventory removed.</p>")
 
 
 @router.get("/ui/buildings/{property_id}/detail", response_class=HTMLResponse)
 async def building_detail(request: Request, property_id: UUID, session: DBSession) -> HTMLResponse:
-    prop = await session.get(
-        Building, property_id,
-        options=[
-            selectinload(Building.scraped_listing).selectinload(ScrapedListing.broker).selectinload(Broker.brokerage),
-            selectinload(Building.parcel),
-        ]
-    )
-    if prop is None:
-        return HTMLResponse("<p class='text-muted'>Not found.</p>")
-    b = _build_building_row(prop)
-    return templates.TemplateResponse(request, "partials/building_detail.html", {"b": b})
+    return HTMLResponse("<p class='text-muted'>Building entity removed.</p>", status_code=410)
 
 
 # ---------------------------------------------------------------------------
@@ -3351,8 +3099,8 @@ def _build_listing_row(listing: ScrapedListing) -> dict:
         "updated_highlight": listing.updated_at_source is not None,
         "raw_json": listing.raw_json,
         "archived": listing.archived,
-        "linked_opportunity_id": str(listing.linked_project_id) if listing.linked_project_id else None,
-        "linked_opportunity_name": getattr(getattr(listing, "linked_opportunity", None), "name", None),
+        "linked_opportunity_id": str(listing.id) if listing.org_id else None,
+        "linked_opportunity_name": listing.name or None,
         "linked_deal_id": None,  # Resolved separately when needed (avoid N+1 on list page)
         "priority_bucket": listing.priority_bucket,
     }
@@ -3583,10 +3331,10 @@ async def _get_jurisdictions(session) -> list[dict]:
 
 
 def _split_listings(all_listings: list) -> tuple[list, list, list]:
-    """Split into (new, promoted, archived) buckets."""
+    """Split into (new, promoted, archived) buckets. Promoted = org_id set."""
     new, promoted, archived = [], [], []
     for l in all_listings:
-        if l.linked_project_id:
+        if l.org_id:
             promoted.append(_build_listing_row(l))
         elif l.archived:
             archived.append(_build_listing_row(l))
@@ -3722,9 +3470,8 @@ async def listings_promoted_rows(
         select(ScrapedListing)
         .options(
             selectinload(ScrapedListing.broker).selectinload(Broker.brokerage),
-            selectinload(ScrapedListing.linked_opportunity),
         )
-        .where(ScrapedListing.linked_project_id.isnot(None))
+        .where(ScrapedListing.org_id.isnot(None))
         .order_by(ScrapedListing.last_seen_at.desc())
     )
     if q_promoted:
@@ -3826,13 +3573,10 @@ async def map_context(
                     )).scalars())
                     if hits:
                         parcels = hits
-            if not parcels and listing.linked_project_id:
-                pps = (await session.execute(
-                    select(ProjectParcel)
-                    .where(ProjectParcel.project_id == listing.linked_project_id)
-                    .options(selectinload(ProjectParcel.parcel))
-                )).scalars().all()
-                parcels = [pp.parcel for pp in pps if pp.parcel]
+            if not parcels and listing.parcel_id:
+                parcel = await session.get(Parcel, listing.parcel_id)
+                if parcel:
+                    parcels = [parcel]
             if not parcels:
                 # Address-match fallback. APN coding differs across sources,
                 # but many listings share an exact address with a parcel row.
@@ -3851,12 +3595,10 @@ async def map_context(
         opp = await session.get(Opportunity, opportunity_id)
         if opp:
             context_label = opp.name or str(opportunity_id)
-        pps = (await session.execute(
-            select(ProjectParcel)
-            .where(ProjectParcel.project_id == opportunity_id)
-            .options(selectinload(ProjectParcel.parcel))
-        )).scalars().all()
-        parcels = [pp.parcel for pp in pps if pp.parcel]
+            if opp.parcel_id:
+                parcel = await session.get(Parcel, opp.parcel_id)
+                if parcel:
+                    parcels = [parcel]
 
     elif project_id:
         proj = await session.get(Project, project_id)
@@ -3866,24 +3608,17 @@ async def map_context(
                 opp = await session.get(Opportunity, proj.opportunity_id)
                 if opp:
                     context_label = f"{opp.name or ''} — {proj.name or ''}".strip(" —")
-        assignments = (await session.execute(
-            select(ProjectParcelAssignment)
-            .where(ProjectParcelAssignment.project_id == project_id)
-        )).scalars().all()
-        if assignments:
-            parcel_id_list = [a.parcel_id for a in assignments]
-            parcels = list((await session.execute(
-                select(Parcel).where(Parcel.id.in_(parcel_id_list))
-            )).scalars())
-        else:
-            # Fallback to opportunity-level parcels
-            if proj and proj.opportunity_id:
-                pps = (await session.execute(
-                    select(ProjectParcel)
-                    .where(ProjectParcel.project_id == proj.opportunity_id)
-                    .options(selectinload(ProjectParcel.parcel))
-                )).scalars().all()
-                parcels = [pp.parcel for pp in pps if pp.parcel]
+            # Parcel via Project.parcel_id or Opportunity.parcel_id
+            if proj.parcel_id:
+                parcel = await session.get(Parcel, proj.parcel_id)
+                if parcel:
+                    parcels = [parcel]
+            elif proj.opportunity_id:
+                opp = opp if proj.opportunity_id == (opp.id if opp else None) else await session.get(Opportunity, proj.opportunity_id)
+                if opp and opp.parcel_id:
+                    parcel = await session.get(Parcel, opp.parcel_id)
+                    if parcel:
+                        parcels = [parcel]
 
     elif parcel_id:
         result = await session.get(Parcel, parcel_id)
@@ -3996,12 +3731,13 @@ async def listing_detail(request: Request, listing_id: UUID, session: DBSession)
     if listing is None:
         return HTMLResponse("<p class='text-muted'>Not found.</p>")
     l = _build_listing_row(listing)
-    # Resolve linked deal if this listing is connected to an opportunity
-    if listing.linked_project_id:
+    # Resolve linked deal — listing IS the opportunity; find deal via Scenario→Project path
+    if listing.org_id:
         deal_row = (await session.execute(
             select(Deal.id)
-            .join(DealOpportunity, DealOpportunity.deal_id == Deal.id)
-            .where(DealOpportunity.opportunity_id == listing.linked_project_id)
+            .join(Scenario, Scenario.deal_id == Deal.id)
+            .join(Project, Project.scenario_id == Scenario.id)
+            .where(Project.opportunity_id == listing.id)
             .limit(1)
         )).scalar_one_or_none()
         if deal_row:
@@ -4015,7 +3751,7 @@ async def promote_listing(
     listing_id: UUID,
     session: DBSession,
 ) -> HTMLResponse:
-    """Manually promote a listing to an Opportunity + Building."""
+    """Manually promote a listing to an Opportunity (set org_id on listing row)."""
     from app.tasks.scraper import _promote_listing as _do_promote, _get_default_org_id  # local import avoids circular
 
     listing = await session.get(
@@ -4025,8 +3761,8 @@ async def promote_listing(
     if listing is None:
         return HTMLResponse("<span class='text-muted text-small'>Not found</span>")
 
-    if listing.linked_project_id:
-        # Already promoted — return the promoted row snippet so the UI can move it
+    if listing.org_id:
+        # Already promoted
         l = _build_listing_row(listing)
         return templates.TemplateResponse(request, "partials/listings_promoted_row.html", {"l": l})
 
@@ -4042,16 +3778,8 @@ async def promote_listing(
     if opp is None:
         return HTMLResponse("<span class='text-muted text-small'>Promotion failed</span>")
 
-    # Reload listing to get fresh linked_opportunity relationship
     await session.refresh(listing)
-    listing_with_opp = await session.get(
-        ScrapedListing, listing_id,
-        options=[
-            selectinload(ScrapedListing.broker).selectinload(Broker.brokerage),
-            selectinload(ScrapedListing.linked_opportunity),
-        ]
-    )
-    l = _build_listing_row(listing_with_opp)
+    l = _build_listing_row(listing)
     return templates.TemplateResponse(request, "partials/listings_promoted_row.html", {"l": l})
 
 
@@ -4067,8 +3795,8 @@ async def promote_listing_redirect(
     if listing is None:
         return RedirectResponse("/listings", status_code=303)
 
-    if listing.linked_project_id:
-        return RedirectResponse(f"/opportunities/{listing.linked_project_id}", status_code=303)
+    if listing.org_id:
+        return RedirectResponse(f"/opportunities/{listing.id}", status_code=303)
 
     org_id = await _get_default_org_id(session)
     opp = await _do_promote(listing, session, promotion_source="manual", ruleset_id=None, org_id=org_id)
@@ -4089,19 +3817,15 @@ async def revert_listing(
     """Revert a promoted listing back to unpromoted: archives the Opportunity and clears the link."""
     listing = await session.get(
         ScrapedListing, listing_id,
-        options=[
-            selectinload(ScrapedListing.broker).selectinload(Broker.brokerage),
-            selectinload(ScrapedListing.linked_opportunity),
-        ]
+        options=[selectinload(ScrapedListing.broker).selectinload(Broker.brokerage)]
     )
     if listing is None:
         return HTMLResponse("<span class='text-muted text-small'>Not found</span>")
 
-    if listing.linked_project_id:
-        opp = await session.get(Opportunity, listing.linked_project_id)
-        if opp is not None:
-            opp.status = OpportunityStatus.archived
-        listing.linked_project_id = None
+    if listing.org_id:
+        # Demote: clear org_id and set opp_status to archived
+        listing.org_id = None
+        listing.opp_status = None
         await session.commit()
 
     # Reload and return as a New row (revert = back to New, not archived)
@@ -4202,88 +3926,34 @@ async def create_deal_from_listing(
 
     deal_name = listing.address_normalized or listing.address_raw or "Unnamed Listing Deal"
 
-    # Re-use existing Opportunity if this listing was already linked
-    if listing.linked_project_id:
-        opportunity = await session.get(Opportunity, listing.linked_project_id)
-    else:
-        opportunity = Opportunity(
-            org_id=org_id,
-            name=deal_name,
-            status=OpportunityStatus.active,
-            created_by_user_id=user.id if user else None,
-        )
-        session.add(opportunity)
-        await session.flush()
-        listing.linked_project_id = opportunity.id
-
-        # Create a Building from listing data and link it to the Opportunity,
-        # same as _promote_listing does when going via the Promote flow.
-        if listing.property_id:
-            _bldg = await session.get(Building, listing.property_id)
-        else:
-            _bldg = None
-        if _bldg is None:
-            _bldg = Building(
-                name=deal_name,
-                address_line1=listing.street,
-                city=listing.city,
-                state=listing.state_code,
-                zip_code=listing.zip_code,
-                unit_count=listing.units,
-                building_sqft=float(listing.gba_sqft) if listing.gba_sqft else None,
-                net_rentable_sqft=float(listing.net_rentable_sqft) if listing.net_rentable_sqft else None,
-                lot_sqft=float(listing.lot_sqft) if listing.lot_sqft else None,
-                year_built=listing.year_built,
-                stories=listing.stories,
-                property_type=listing.property_type,
-                asking_price=float(listing.asking_price) if listing.asking_price else None,
-                asking_cap_rate_pct=float(listing.cap_rate) if listing.cap_rate else None,
-                status=BuildingStatus.existing,
-                scraped_listing_id=listing.id,
-            )
-            session.add(_bldg)
-            await session.flush()
-            listing.property_id = _bldg.id
-        session.add(OpportunityBuilding(
-            opportunity_id=opportunity.id,
-            building_id=_bldg.id,
-            sort_order=0,
-        ))
+    # The listing IS the opportunity — promote it by setting org_id if not already set
+    opportunity = listing
+    if not opportunity.org_id:
+        opportunity.org_id = org_id
+        opportunity.opp_status = OpportunityStatus.active.value
+        if not opportunity.name:
+            opportunity.name = deal_name
+        # Enrich parcel link if missing
+        if opportunity.parcel_id is None and (opportunity.apn or opportunity.address_normalized):
+            try:
+                from app.scrapers.parcel_enrichment import enrich_parcel as _enrich
+                _parcel = await _enrich(session, address=opportunity.address_normalized or opportunity.address_raw, apn=opportunity.apn)
+                if _parcel is not None:
+                    opportunity.parcel_id = _parcel.id
+            except Exception:
+                pass
         await session.flush()
 
-        # Auto-link parcel: enrich if needed, then create ProjectParcel
-        parcel_id = listing.parcel_id
-        if parcel_id is None and (listing.apn or listing.address_normalized):
-            from app.scrapers.parcel_enrichment import enrich_parcel as _enrich
-            _parcel = await _enrich(session, address=listing.address_normalized or listing.address_raw, apn=listing.apn)
-            if _parcel is not None:
-                parcel_id = _parcel.id
-                listing.parcel_id = parcel_id
-        if parcel_id is not None:
-            _existing_pp = (await session.execute(
-                select(ProjectParcel).where(
-                    ProjectParcel.project_id == opportunity.id,
-                    ProjectParcel.parcel_id == parcel_id,
-                )
-            )).scalar_one_or_none()
-            if _existing_pp is None:
-                session.add(ProjectParcel(
-                    project_id=opportunity.id,
-                    parcel_id=parcel_id,
-                    relationship_type=ProjectParcelRelationship.unchanged,
-                ))
-        await session.flush()
-
-    # Check for existing Deal linked to this Opportunity
+    # Check for existing Deal linked to this Opportunity via Scenario→Project
     existing_deal = (await session.execute(
         select(Deal)
-        .join(DealOpportunity, DealOpportunity.deal_id == Deal.id)
-        .where(DealOpportunity.opportunity_id == opportunity.id)
+        .join(Scenario, Scenario.deal_id == Deal.id)
+        .join(Project, Project.scenario_id == Scenario.id)
+        .where(Project.opportunity_id == opportunity.id)
         .limit(1)
     )).scalar_one_or_none()
 
     if existing_deal:
-        # Deal already exists — just redirect to it
         return RedirectResponse(url=f"/deals/{existing_deal.id}", status_code=303)
 
     top_deal = Deal(
@@ -4293,7 +3963,6 @@ async def create_deal_from_listing(
     )
     session.add(top_deal)
     await session.flush()
-    session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id))
 
     scenario = DealModel(
         deal_id=top_deal.id,
@@ -4310,7 +3979,6 @@ async def create_deal_from_listing(
         scenario_id=scenario.id,
         opportunity_id=opportunity.id,
         name="Default Project",
-        deal_type=deal_type,
     )
     session.add(dev_project)
     await session.flush()
@@ -4889,7 +4557,6 @@ async def _staleness_map(session: AsyncSession, scenario_id: UUID) -> dict:
         IncomeStream as _IS,
         OperatingExpenseLine as _OEL,
         OperationalInputs as _OI,
-        UnitMix as _UM,
         UseLine as _UL,
     )
     from app.models.project import ProjectAnchor as _PA
@@ -4947,10 +4614,7 @@ async def _staleness_map(session: AsyncSession, scenario_id: UUID) -> dict:
             await _scalar_max(
                 select(func.max(_OI.updated_at)).where(_OI.project_id == pid)
             ),
-            await _scalar_max(
-                select(func.max(_UM.updated_at)).where(_UM.project_id == pid)
-            ),
-            await _scalar_max(
+                await _scalar_max(
                 select(func.max(Milestone.updated_at)).where(Milestone.project_id == pid)
             ),
         ]
@@ -5056,9 +4720,8 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
             select(OperatingExpenseLine).where(OperatingExpenseLine.project_id == project_id).order_by(OperatingExpenseLine.label)
         )).scalars())
 
-        unit_mix_rows = list((await session.execute(
-            select(UnitMix).where(UnitMix.project_id == project_id).order_by(UnitMix.label)
-        )).scalars())
+        # unit_mix is JSONB on Project; wrap dicts for attribute-compatible access
+        unit_mix_rows = [_UMRow(r) for r in (default_project.unit_mix or [])] if default_project else []
 
     # Scope outputs to the active project. Phase 2b's migration 0051
     # swapped UNIQUE(scenario_id) for UNIQUE(scenario_id, project_id), so
@@ -5556,15 +5219,15 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
         # Wizard: show when unapproved and no milestone has a start date yet
         "wizard_needed": (not timeline_approved) and (not any(m.target_date for m in milestones)),
         "wizard_default_types": list(DEFAULT_DURATIONS.get(
-            default_project.deal_type if default_project else "", {}
+            _scenario.project_type if _scenario else "", {}
         ).keys()),
-        "wizard_deal_type": default_project.deal_type if default_project else "",
+        "wizard_deal_type": _scenario.project_type if _scenario else "",
         "wizard_deal_type_label": {
             "acquisition": "Acquisition",
             "value_add": "Value-Add",
             "conversion": "Conversion",
             "new_construction": "New Construction",
-        }.get(default_project.deal_type if default_project else "", "Project"),
+        }.get(_scenario.project_type if _scenario else "", "Project"),
         "income_mode": (_scenario.income_mode if _scenario else "revenue_opex") or "revenue_opex",
         "noi_annual": float(inputs.noi_stabilized_input) if inputs and inputs.noi_stabilized_input is not None else None,
     }
@@ -5991,6 +5654,7 @@ async def handle_form_create_or_update(
             ))
 
     elif item_type == "unit-mix":
+        from uuid import uuid4 as _uuid4
         data = {
             "label": form.get("label", "").strip() or "Units",
             "unit_count": _fi(form.get("unit_count"), 1) or 1,
@@ -6003,13 +5667,21 @@ async def handle_form_create_or_update(
             "post_reno_rent_per_unit": _fd(form.get("post_reno_rent_per_unit")),
             "notes": form.get("notes") or None,
         }
-        if item_id:
-            row = await session.get(UnitMix, UUID(item_id))
-            if row:
-                for k, v in data.items():
-                    setattr(row, k, v)
-        elif project_id:
-            session.add(UnitMix(project_id=project_id, **data))
+        if project_id:
+            _um_proj = await session.get(Project, project_id)
+            if _um_proj is not None:
+                rows = list(_um_proj.unit_mix or [])
+                if item_id:
+                    _uid_str = str(UUID(item_id))
+                    idx = next((i for i, d in enumerate(rows) if d.get("id") == _uid_str), None)
+                    if idx is not None:
+                        rows[idx] = {**data, "id": _uid_str}
+                    else:
+                        rows.append({**data, "id": _uid_str})
+                else:
+                    rows.append({**data, "id": str(_uuid4())})
+                _um_proj.unit_mix = rows
+                session.add(_um_proj)
 
     await session.flush()
     panel_data = await _load_builder_data(session, model_id, project_id=project_id)
@@ -6047,7 +5719,18 @@ async def handle_form_delete(
     elif item_type == "milestones":
         row = await session.get(Milestone, uid)
     elif item_type == "unit-mix":
-        row = await session.get(UnitMix, uid)
+        # JSONB — find the project and filter out the row by id
+        _del_proj_id = await _active_project_from_request(request, session, model_id)
+        if _del_proj_id:
+            _del_proj = await session.get(Project, _del_proj_id)
+            if _del_proj is not None:
+                _del_proj.unit_mix = [d for d in (_del_proj.unit_mix or []) if d.get("id") != str(uid)]
+                session.add(_del_proj)
+        await session.flush()
+        _active_proj_id2 = await _active_project_from_request(request, session, model_id)
+        panel_data = await _load_builder_data(session, model_id, project_id=_active_proj_id2)
+        ctx = {"model": model, "active_module": module, **panel_data}
+        return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
 
     if row is not None:
         await session.delete(row)
@@ -6094,9 +5777,8 @@ async def apply_unit_mix_to_revenue(
             return HTMLResponse("<p class='text-muted'>No project.</p>", status_code=400)
         active_proj_id = default_project.id
 
-    unit_mix_rows = list((await session.execute(
-        select(UnitMix).where(UnitMix.project_id == active_proj_id).order_by(UnitMix.label)
-    )).scalars())
+    _active_proj = await session.get(Project, active_proj_id)
+    unit_mix_rows = [_UMRow(r) for r in (_active_proj.unit_mix or [])] if _active_proj else []
     if not unit_mix_rows:
         panel_data = await _load_builder_data(session, model_id, project_id=active_proj_id)
         ctx = {"model": model, "active_module": "property", **panel_data}
@@ -6249,63 +5931,34 @@ async def _get_missing_building_data(
     project: Project,
     session: AsyncSession,
 ) -> list[dict]:
-    """Return list of dicts describing buildings assigned to this project that are missing
-    unit_count or building_sqft. Used to gate the deal setup wizard with a data-entry step."""
-    assigned_buildings = (await session.execute(
-        select(Building)
-        .join(ProjectBuildingAssignment, ProjectBuildingAssignment.building_id == Building.id)
-        .where(ProjectBuildingAssignment.project_id == project.id)
-        .order_by(ProjectBuildingAssignment.sort_order)
-    )).scalars().all()
-    missing = []
-    for b in assigned_buildings:
-        fields = []
-        if not b.unit_count:
-            fields.append("unit_count")
-        if not b.building_sqft:
-            fields.append("building_sqft")
-        if fields:
-            missing.append({
-                "id": str(b.id),
-                "label": b.address_line1 or "Building",
-                "fields": fields,
-                "net_rentable_sqft": float(b.net_rentable_sqft) if b.net_rentable_sqft else None,
-            })
-    return missing
+    """Check for missing physical data on the linked Opportunity (Building entity removed)."""
+    if project.opportunity_id is None:
+        return []
+    opp = await session.get(Opportunity, project.opportunity_id)
+    if opp is None:
+        return []
+    fields = []
+    if not opp.units:
+        fields.append("unit_count")
+    if not opp.gba_sqft:
+        fields.append("building_sqft")
+    if not fields:
+        return []
+    return [{
+        "id": str(opp.id),
+        "label": opp.address_normalized or opp.name or "Opportunity",
+        "fields": fields,
+        "net_rentable_sqft": float(opp.net_rentable_sqft) if opp.net_rentable_sqft else None,
+    }]
 
 
 async def _sync_opportunity_buildings_to_projects(
     opportunity: Opportunity,
-    buildings: list[Building],
+    buildings: object,
     session: AsyncSession,
 ) -> None:
-    """Rewrite ProjectBuildingAssignment rows for every Project on this opportunity.
-
-    Called after editing an opportunity's buildings (opportunity_wizard step 2)
-    so that Projects already created for this opportunity pick up the change.
-    Without this, the deal-detail 'missing building' warning keeps firing
-    because that check reads ProjectBuildingAssignment, not OpportunityBuilding.
-    """
-    projects = list((await session.execute(
-        select(Project).where(Project.opportunity_id == opportunity.id)
-    )).scalars())
-    if not projects:
-        return
-    for proj in projects:
-        existing = list((await session.execute(
-            select(ProjectBuildingAssignment).where(
-                ProjectBuildingAssignment.project_id == proj.id
-            )
-        )).scalars())
-        for row in existing:
-            await session.delete(row)
-    await session.flush()
-    for proj in projects:
-        for i, b in enumerate(buildings):
-            session.add(ProjectBuildingAssignment(
-                project_id=proj.id, building_id=b.id, sort_order=i
-            ))
-    await session.flush()
+    """No-op stub — Building entity removed. Physical attrs live on Opportunity."""
+    pass
 
 
 async def _auto_assign_opportunity_to_project(
@@ -6313,30 +5966,9 @@ async def _auto_assign_opportunity_to_project(
     project: Project,
     session: AsyncSession,
 ) -> None:
-    """Seed ProjectBuildingAssignment and ProjectParcelAssignment from an Opportunity's linked data.
-
-    Called whenever a new Project is created so that project-scoped unit counts and parcel data
-    are available immediately. A building/parcel can be assigned to multiple Projects (variants).
-    """
-    # Buildings via OpportunityBuilding join table
-    opp_buildings = (await session.execute(
-        select(OpportunityBuilding)
-        .where(OpportunityBuilding.opportunity_id == opportunity.id)
-        .order_by(OpportunityBuilding.sort_order)
-    )).scalars().all()
-    for i, ob in enumerate(opp_buildings):
-        session.add(ProjectBuildingAssignment(
-            project_id=project.id, building_id=ob.building_id, sort_order=i
-        ))
-
-    # Parcels via existing ProjectParcel (opportunity-level FK = opportunities.id)
-    opp_parcels = (await session.execute(
-        select(ProjectParcel).where(ProjectParcel.project_id == opportunity.id)
-    )).scalars().all()
-    for i, op in enumerate(opp_parcels):
-        session.add(ProjectParcelAssignment(
-            project_id=project.id, parcel_id=op.parcel_id, sort_order=i
-        ))
+    """Set project.parcel_id from opportunity.parcel_id when available."""
+    if project.parcel_id is None and opportunity.parcel_id is not None:
+        project.parcel_id = opportunity.parcel_id
 
 
 async def _copy_project_data(
@@ -6409,6 +6041,11 @@ async def _copy_project_data(
             active_in_phases=e.active_in_phases, notes=e.notes,
         ))
 
+    # Copy unit_mix JSONB
+    if src_proj.unit_mix:
+        dst_proj.unit_mix = list(src_proj.unit_mix)
+        session.add(dst_proj)
+
     # Copy OperationalInputs if any
     src_inputs = (await session.execute(
         select(OperationalInputs).where(OperationalInputs.project_id == src_proj.id)
@@ -6469,7 +6106,6 @@ async def create_deal_copy(
             scenario_id=new_deal.id,
             opportunity_id=src_proj.opportunity_id,
             name=src_proj.name,
-            deal_type=src_proj.deal_type,
             timeline_approved=src_proj.timeline_approved,
         )
         session.add(new_proj)
@@ -6650,30 +6286,10 @@ async def create_deal_project(
             "<p class='text-muted'>Invalid opportunity id.</p>", status_code=400,
         )
 
-    opp = await session.get(
-        Opportunity, _opp_id,
-        options=[selectinload(Opportunity.scraped_listings)],
-    )
+    opp = await session.get(Opportunity, _opp_id)
     if opp is None:
         return HTMLResponse(
             "<p class='text-muted'>Opportunity not found.</p>", status_code=404,
-        )
-
-    # Validate the opportunity is linked to this Deal (not any deal). The
-    # Add-Project drawer's dropdown is already filtered to deal-linked opps,
-    # so this is a defence-in-depth check.
-    _deal_link = (await session.execute(
-        select(DealOpportunity)
-        .where(
-            DealOpportunity.deal_id == deal.deal_id,
-            DealOpportunity.opportunity_id == _opp_id,
-        )
-        .limit(1)
-    )).scalar_one_or_none()
-    if _deal_link is None:
-        return HTMLResponse(
-            "<p class='text-muted'>That opportunity isn't linked to this deal.</p>",
-            status_code=400,
         )
 
     # Required: acquisition_cost > 0. Pre-filled from the opportunity's
@@ -6698,7 +6314,6 @@ async def create_deal_project(
         scenario_id=deal_id,
         opportunity_id=_opp_id,
         name=project_name,
-        deal_type=pt.value,
     )
     session.add(new_proj)
     await session.flush()
@@ -6928,7 +6543,9 @@ async def clone_project_from(
     await session.execute(sa_delete(UseLine).where(UseLine.project_id == project_id))
     await session.execute(sa_delete(IncomeStream).where(IncomeStream.project_id == project_id))
     await session.execute(sa_delete(OperatingExpenseLine).where(OperatingExpenseLine.project_id == project_id))
-    await session.execute(sa_delete(UnitMix).where(UnitMix.project_id == project_id))
+    if target_proj:
+        target_proj.unit_mix = []
+        session.add(target_proj)
     await session.execute(sa_delete(OperationalInputs).where(OperationalInputs.project_id == project_id))
     await session.flush()
 
@@ -6958,39 +6575,26 @@ async def split_multiparcel_projects(
     if existing_proj is None:
         return HTMLResponse("")
 
-    # Find the linked listing's APN via the opportunity's scraped listings
+    # Opportunity IS the listing — APN is directly on the opportunity row
     opp = await session.get(Opportunity, existing_proj.opportunity_id) if existing_proj.opportunity_id else None
     if opp is None:
         return HTMLResponse("")
 
-    listing = (await session.execute(
-        select(ScrapedListing)
-        .where(ScrapedListing.linked_project_id == existing_proj.opportunity_id)
-        .order_by(ScrapedListing.last_seen_at.desc())
-        .limit(1)
-    )).scalar_one_or_none()
-
-    if listing is None or not listing.apn or not _re.search(r"[,;]", listing.apn):
+    if not opp.apn or not _re.search(r"[,;]", opp.apn):
         return HTMLResponse("")
 
-    apns = [a.strip() for a in _re.split(r"[,;]", listing.apn) if a.strip()]
+    apns = [a.strip() for a in _re.split(r"[,;]", opp.apn) if a.strip()]
     if len(apns) < 2:
         return HTMLResponse("")
 
     try:
-        pt = ProjectType(existing_proj.deal_type)
+        pt = ProjectType(scenario.project_type) if scenario and scenario.project_type else ProjectType.acquisition
     except ValueError:
         pt = ProjectType.acquisition
 
-    # Rename existing project to include first APN and seed its assignments
+    # Rename existing project to include first APN and seed its parcel assignment
     existing_proj.name = f"Project 1 — {apns[0]}"
-    # Ensure the first project has building/parcel assignments (may not if created pre-feature)
-    existing_has_assignments = await session.scalar(
-        select(func.count()).select_from(ProjectBuildingAssignment)
-        .where(ProjectBuildingAssignment.project_id == existing_proj.id)
-    ) or 0
-    if existing_has_assignments == 0:
-        await _auto_assign_opportunity_to_project(opp, existing_proj, session)
+    await _auto_assign_opportunity_to_project(opp, existing_proj, session)
 
     # Parcel lookup helper: find parcel by APN for per-project scoping
     async def _parcel_for_apn(apn: str) -> "Parcel | None":
@@ -7009,27 +6613,16 @@ async def split_multiparcel_projects(
             scenario_id=deal_id,
             opportunity_id=existing_proj.opportunity_id,
             name=f"Project {i} — {apn}",
-            deal_type=pt.value,
         )
         session.add(new_proj)
         await session.flush()
-        # Assign all buildings + this project's specific parcel (if found)
         await _auto_assign_opportunity_to_project(opp, new_proj, session)
         parcel = await _parcel_for_apn(apn)
         if parcel:
-            # Ensure we don't double-assign the same parcel (auto-assign adds all opportunity parcels)
-            already = await session.scalar(
-                select(func.count()).select_from(ProjectParcelAssignment)
-                .where(ProjectParcelAssignment.project_id == new_proj.id)
-                .where(ProjectParcelAssignment.parcel_id == parcel.id)
-            ) or 0
-            if already == 0:
-                session.add(ProjectParcelAssignment(project_id=new_proj.id, parcel_id=parcel.id))
+            new_proj.parcel_id = parcel.id
         for milestone in _seed_milestones(new_proj, pt):
             session.add(milestone)
 
-    # Suppress banner
-    opp.multi_parcel_dismissed = True
     await session.flush()
 
     return RedirectResponse(url=f"/models/{deal_id}/builder", status_code=303)
@@ -7041,16 +6634,7 @@ async def dismiss_multiparcel_banner(
     session: DBSession,
 ) -> HTMLResponse:
     """Suppress the multi-parcel banner for this opportunity."""
-    scenario = await session.get(DealModel, deal_id)
-    if scenario is not None:
-        proj = (await session.execute(
-            select(Project).where(Project.scenario_id == deal_id).limit(1)
-        )).scalar_one_or_none()
-        if proj and proj.opportunity_id:
-            opp = await session.get(Opportunity, proj.opportunity_id)
-            if opp:
-                opp.multi_parcel_dismissed = True
-                await session.flush()
+    # multi_parcel_dismissed was on the old Opportunity entity — no longer supported.
     return HTMLResponse("")  # replaces the banner with nothing
 
 
@@ -7159,12 +6743,6 @@ async def save_model_settings(
         select(Project).where(Project.scenario_id == model_id).order_by(Project.created_at.asc()).limit(1)
     )).scalar_one_or_none()
     if default_project:
-        if deal_type_raw:
-            try:
-                default_project.deal_type = deal_type_raw
-            except Exception:
-                pass
-
         inputs = (await session.execute(
             select(OperationalInputs).where(OperationalInputs.project_id == default_project.id)
         )).scalar_one_or_none()
@@ -7341,7 +6919,6 @@ async def timeline_wizard_submit(
             if new_deal_type_raw:
                 try:
                     new_dt = ProjectType(new_deal_type_raw)
-                    proj.deal_type = new_dt
                     scenario.project_type = new_dt
                 except ValueError:
                     pass
@@ -7544,25 +7121,14 @@ async def _prefill_noi_from_listing(
     inputs: "OperationalInputs",
     session: "AsyncSession",
 ) -> None:
-    """If the deal's opportunity has a scraped listing with NOI data, pre-fill
-    OperationalInputs.noi_stabilized_input.  Does nothing if already set or no
-    listing data is found.  Uses proforma_noi first, falls back to noi."""
+    """If the project's linked opportunity has NOI data, pre-fill
+    OperationalInputs.noi_stabilized_input. Does nothing if already set."""
     if inputs.noi_stabilized_input is not None:
         return  # already set — don't overwrite a previous entry
-    # Resolve opportunity via DealOpportunity join
-    opp_row = (await session.execute(
-        select(DealOpportunity)
-        .where(DealOpportunity.deal_id == model.deal_id)
-        .limit(1)
-    )).scalar_one_or_none()
-    if opp_row is None:
+    # Opportunity IS the listing — read NOI directly from Project.opportunity_id
+    if default_project.opportunity_id is None:
         return
-    listing = (await session.execute(
-        select(ScrapedListing)
-        .where(ScrapedListing.linked_project_id == opp_row.opportunity_id)
-        .order_by(ScrapedListing.last_seen_at.desc())
-        .limit(1)
-    )).scalar_one_or_none()
+    listing = await session.get(ScrapedListing, default_project.opportunity_id)
     if listing is None:
         return
     noi_value = listing.proforma_noi if listing.proforma_noi is not None else listing.noi
@@ -7608,24 +7174,22 @@ async def deal_setup_wizard_step(
 
     # Save current step's data
     if step == 0:
-        # Building data step — patch buildings with missing unit_count / building_sqft / net_rentable_sqft
-        for key, val in form.multi_items():
-            # Keys: unit_count_{id} | building_sqft_{id} | net_rentable_sqft_{id}
-            for field in ("unit_count", "building_sqft", "net_rentable_sqft"):
-                if key.startswith(f"{field}_") and val:
-                    bldg_id_str = key[len(f"{field}_"):]
-                    try:
-                        bldg_id = UUID(bldg_id_str)
-                    except ValueError:
-                        continue
-                    bldg = await session.get(Building, bldg_id)
-                    if bldg:
-                        if field == "unit_count":
-                            bldg.unit_count = int(val)
-                        elif field == "building_sqft":
-                            bldg.building_sqft = int(val)
-                        elif field == "net_rentable_sqft":
-                            bldg.net_rentable_sqft = int(val)
+        # Physical data step — patch the linked Opportunity with missing physical attrs
+        if default_project and default_project.opportunity_id:
+            _opp_patch = await session.get(Opportunity, default_project.opportunity_id)
+            if _opp_patch:
+                _uc = form.get("unit_count") or None
+                _sqft = form.get("building_sqft") or None
+                _nrsf = form.get("net_rentable_sqft") or None
+                if _uc:
+                    try: _opp_patch.units = int(_uc)
+                    except ValueError: pass
+                if _sqft:
+                    try: _opp_patch.gba_sqft = int(_sqft)
+                    except ValueError: pass
+                if _nrsf:
+                    try: _opp_patch.net_rentable_sqft = int(_nrsf)
+                    except ValueError: pass
         await session.flush()
         missing_building_data = await _get_missing_building_data(default_project, session)
         return templates.TemplateResponse(request, "partials/deal_setup_wizard.html", {
@@ -8356,74 +7920,44 @@ async def deal_setup_wizard_complete(
                         notes="Auto-computed — edit to override",
                     ))
 
-    # ── UnitMix: seed from linked building(s) if none exist ─────────────────
-    existing_unit_mix = list((await session.execute(
-        select(UnitMix).where(UnitMix.project_id == default_project.id)
-    )).scalars())
+    # ── UnitMix: seed from opportunity if none exist ─────────────────────────
+    # unit_mix is JSONB on Project; shape: [{label, unit_count, beds, baths, sqft, rent_monthly, notes}]
+    existing_unit_mix: list = default_project.unit_mix or []
 
-    # Initialize building_unit_count and assigned_buildings unconditionally
-    # so the market-recommendation block below works on wizard re-runs (when
-    # UnitMix already exists and the seed branch is skipped).
+    # Physical attributes from the linked opportunity
+    _opp_for_units: Opportunity | None = None
+    if default_project.opportunity_id:
+        _opp_for_units = await session.get(Opportunity, default_project.opportunity_id)
+
     building_unit_count: int = int(inputs.unit_count_new or 0)
-    assigned_buildings = (await session.execute(
-        select(Building)
-        .join(ProjectBuildingAssignment, ProjectBuildingAssignment.building_id == Building.id)
-        .where(ProjectBuildingAssignment.project_id == default_project.id)
-        .order_by(ProjectBuildingAssignment.sort_order)
-    )).scalars().all()
-    if not assigned_buildings and default_project.opportunity_id:
-        first_ob = (await session.execute(
-            select(OpportunityBuilding)
-            .where(OpportunityBuilding.opportunity_id == default_project.opportunity_id)
-            .order_by(OpportunityBuilding.sort_order)
-            .limit(1)
-        )).scalar_one_or_none()
-        if first_ob:
-            bldg = await session.get(Building, first_ob.building_id)
-            if bldg:
-                assigned_buildings = [bldg]
+    if _opp_for_units and _opp_for_units.units and not building_unit_count:
+        building_unit_count = int(_opp_for_units.units)
 
-    if not existing_unit_mix:
-        total_units = sum(b.unit_count or 0 for b in assigned_buildings)
-        if total_units:
-            building_unit_count = total_units
-            # Keep OperationalInputs in sync
-            if not inputs.unit_count_new:
-                inputs.unit_count_new = building_unit_count
-                session.add(inputs)
-
-        if building_unit_count:
-            session.add(UnitMix(
-                project_id=default_project.id,
-                label="All Units",
-                unit_count=building_unit_count,
-                notes="Seeded from building — break into unit types as needed",
-            ))
-            existing_unit_mix = []  # will be flushed; reload below via refresh
+    if not existing_unit_mix and building_unit_count:
+        # Keep OperationalInputs in sync
+        if not inputs.unit_count_new:
+            inputs.unit_count_new = building_unit_count
+            session.add(inputs)
+        default_project.unit_mix = [{
+            "label": "All Units",
+            "unit_count": building_unit_count,
+            "notes": "Seeded from opportunity — break into unit types as needed",
+        }]
+        session.add(default_project)
+        existing_unit_mix = default_project.unit_mix
 
     # ── Market recommendation: KNN query for revenue/expense prefill ────────
     from app.engines.market import SubjectProperty, get_market_recommendation
 
     _market_rec = None
     _market_occupancy = Decimal("95")
-    if assigned_buildings:
-        _bldg = assigned_buildings[0]
-        _subj_units = building_unit_count or int(_bldg.unit_count or 0)
-        _subj_year = _bldg.year_built
-        _subj_sqft = float(_bldg.building_sqft) if _bldg.building_sqft else None
+    if _opp_for_units:
+        _subj_units = building_unit_count or int(_opp_for_units.units or 0)
+        _subj_year = _opp_for_units.year_built
+        _subj_sqft = float(_opp_for_units.gba_sqft) if _opp_for_units.gba_sqft else None
         _subj_sqft_per_unit = _subj_sqft / _subj_units if _subj_sqft and _subj_units > 0 else None
-        # Get jurisdiction + listing ID from linked listing's reconciled parcel data
-        _subj_juris = None
-        _exclude_listing_id = None
-        if default_project.opportunity_id:
-            _listing_for_juris = (await session.execute(
-                select(ScrapedListing.id, ScrapedListing.jurisdiction, ScrapedListing.city)
-                .where(ScrapedListing.linked_project_id == default_project.opportunity_id)
-                .limit(1)
-            )).first()
-            if _listing_for_juris:
-                _exclude_listing_id = str(_listing_for_juris[0])
-                _subj_juris = _listing_for_juris[1] or _listing_for_juris[2]
+        _subj_juris = _opp_for_units.jurisdiction or _opp_for_units.city
+        _exclude_listing_id = str(_opp_for_units.id)
         if _subj_units > 0 and _subj_year:
             try:
                 _market_rec = await get_market_recommendation(
@@ -8459,20 +7993,24 @@ async def deal_setup_wizard_complete(
     )).scalar_one_or_none()
 
     if existing_income is None and model.income_mode != "noi":
-        # Flush so UnitMix rows are visible
+        # Reload unit_mix in case it was just seeded above
         await session.flush()
-        unit_mix_rows = list((await session.execute(
-            select(UnitMix).where(UnitMix.project_id == default_project.id)
-        )).scalars())
+        await session.refresh(default_project)
+        unit_mix_rows: list[dict] = default_project.unit_mix or []
 
-        total_units = sum(row.unit_count for row in unit_mix_rows)
+        total_units = sum(int(row.get("unit_count", 0)) for row in unit_mix_rows)
         for row in unit_mix_rows:
+            _uc = int(row.get("unit_count", 0))
+            _rent = Decimal(str(
+                row.get("in_place_rent_per_unit") or row.get("market_rent_per_unit")
+                or row.get("rent_monthly") or 0
+            ))
             session.add(IncomeStream(
                 project_id=default_project.id,
                 stream_type=IncomeStreamType.residential_rent,
-                label=row.label,
-                unit_count=row.unit_count,
-                amount_per_unit_monthly=(row.in_place_rent_per_unit or row.market_rent_per_unit or Decimal("0")),
+                label=row.get("label", "Unit Mix"),
+                unit_count=_uc,
+                amount_per_unit_monthly=_rent,
                 stabilized_occupancy_pct=_market_occupancy,
                 escalation_rate_pct_annual=Decimal("3"),
                 active_in_phases=["lease_up", "stabilized"],
@@ -8692,16 +8230,8 @@ async def model_builder(
     if not deal_variants:
         deal_variants = [model]
 
-    # Resolve Deal.id for the breadcrumb (Opportunity ≠ Deal)
-    parent_deal_id: UUID | None = None
-    if opportunity:
-        _deal_row = (await session.execute(
-            select(Deal.id)
-            .join(DealOpportunity, DealOpportunity.deal_id == Deal.id)
-            .where(DealOpportunity.opportunity_id == opportunity.id)
-            .limit(1)
-        )).scalar_one_or_none()
-        parent_deal_id = _deal_row
+    # Resolve Deal.id for the breadcrumb — model.deal_id IS the parent Deal
+    parent_deal_id: UUID | None = model.deal_id
 
     # Determine active module — deal_setup gates modules after timeline approval
     _inputs = data.get("inputs")
@@ -8731,34 +8261,20 @@ async def model_builder(
             _cf_q.order_by(CashFlow.period)
         )).scalars())
 
-    # Multi-parcel detection — show banner if listing has multiple APNs and user hasn't dismissed
+    # Multi-parcel detection — opportunity IS the listing; APN is on opportunity directly
     import re as _re
     multi_parcel_apns: list[str] = []
-    if opportunity and not opportunity.multi_parcel_dismissed and len(deal_projects) <= 1:
-        _mp_listing = (await session.execute(
-            select(ScrapedListing)
-            .where(ScrapedListing.linked_project_id == opportunity.id)
-            .order_by(ScrapedListing.last_seen_at.desc())
-            .limit(1)
-        )).scalar_one_or_none()
-        if _mp_listing and _mp_listing.apn and _re.search(r"[,;]", _mp_listing.apn):
-            multi_parcel_apns = [a.strip() for a in _re.split(r"[,;]", _mp_listing.apn) if a.strip()]
+    if opportunity and opportunity.apn and len(deal_projects) <= 1:
+        if _re.search(r"[,;]", opportunity.apn):
+            multi_parcel_apns = [a.strip() for a in _re.split(r"[,;]", opportunity.apn) if a.strip()]
 
     # Lot-size mismatch detection — flag from parcel reconciliation
     lot_size_mismatch_info: dict | None = None
-    if opportunity:
-        _lsm_listing = (await session.execute(
-            select(ScrapedListing)
-            .where(
-                ScrapedListing.linked_project_id == opportunity.id,
-                ScrapedListing.lot_size_mismatch.is_(True),
-            )
-            .limit(1)
-        )).scalar_one_or_none()
-        if _lsm_listing and _lsm_listing.parcel:
-            _p = _lsm_listing.parcel
+    if opportunity and opportunity.lot_size_mismatch and opportunity.parcel_id:
+        _p = await session.get(Parcel, opportunity.parcel_id)
+        if _p:
             _parcel_lot = float(_p.lot_sqft) if _p.lot_sqft else (float(_p.gis_acres) * 43560 if _p.gis_acres else None)
-            _listing_lot = float(_lsm_listing.lot_sqft) if _lsm_listing.lot_sqft else None
+            _listing_lot = float(opportunity.lot_sqft) if opportunity.lot_sqft else None
             if _parcel_lot and _listing_lot:
                 lot_size_mismatch_info = {
                     "listing_sqft": f"{_listing_lot:,.0f}",
@@ -8809,32 +8325,25 @@ async def model_builder(
         for _ms in _anchor_ms_rows:
             anchor_milestones_by_project.setdefault(_ms.project_id, []).append(_ms)
 
-    # Add-Project drawer: opportunities linked to this deal that aren't yet
-    # bound to a project on this scenario. Each carries the first listing's
-    # asking_price so the drawer can pre-fill Acquisition Cost. Enforcing an
-    # opportunity selection is what guarantees every project gets a non-zero
-    # Acquisition UseLine seeded — same invariant as project 1.
+    # Add-Project drawer: opportunities used in other scenarios of this deal
+    # but not yet bound to a project on THIS scenario.
     add_project_opportunities: list[dict] = []
-    if parent_deal_id is not None:
+    if model.deal_id is not None:
         _bound_opp_ids = {p.opportunity_id for p in deal_projects if p.opportunity_id}
-        _deal_opps_rows = list((await session.execute(
+        _other_opps_stmt = (
             select(Opportunity)
-            .join(DealOpportunity, DealOpportunity.opportunity_id == Opportunity.id)
-            .where(DealOpportunity.deal_id == parent_deal_id)
-            .options(selectinload(Opportunity.scraped_listings))
-        )).scalars().unique())
+            .join(Project, Project.opportunity_id == Opportunity.id)
+            .join(DealModel, DealModel.id == Project.scenario_id)
+            .where(DealModel.deal_id == model.deal_id)
+        )
+        if _bound_opp_ids:
+            _other_opps_stmt = _other_opps_stmt.where(Opportunity.id.notin_(_bound_opp_ids))
+        _deal_opps_rows = list((await session.execute(_other_opps_stmt)).scalars().unique())
         for _opp in _deal_opps_rows:
-            if _opp.id in _bound_opp_ids:
-                continue
-            _price = None
-            for _sl in (_opp.scraped_listings or []):
-                if _sl.asking_price is not None and _sl.asking_price > 0:
-                    _price = float(_sl.asking_price)
-                    break
             add_project_opportunities.append({
                 "id": str(_opp.id),
-                "name": _opp.name,
-                "asking_price": _price,
+                "name": _opp.name or _opp.address_normalized or "—",
+                "asking_price": float(_opp.asking_price) if _opp.asking_price else None,
             })
 
     # When deal_setup is the active module, resolve wizard step and missing building data
@@ -10376,7 +9885,13 @@ async def model_builder_line_form(
             elif type in ("milestones", "timeline"):
                 existing = await session.get(Milestone, eid)
             elif type == "unit_mix":
-                existing = await session.get(UnitMix, eid)
+                _lf_proj = (await session.execute(
+                    select(Project).where(Project.scenario_id == model_id).order_by(Project.created_at.asc()).limit(1)
+                )).scalar_one_or_none()
+                if _lf_proj:
+                    _um_dict = next((d for d in (_lf_proj.unit_mix or []) if d.get("id") == str(eid)), None)
+                    if _um_dict:
+                        existing = _UMRow(_um_dict)
         except ValueError:
             pass
 
@@ -10798,18 +10313,18 @@ async def portfolio_detail(
             "equity_required": float(out.equity_required) if out and out.equity_required is not None else None,
         })
 
-    # Build Gantt — we need to load Deal + milestones for each pp's scenario
-    # Load all Deals that link to these opportunities via DealOpportunity
+    # Build Gantt — find Deals whose scenarios/projects reference these opportunity IDs
     opp_ids = [pp.project_id for pp in portfolio.portfolio_projects if pp.project_id]
     gantt_rows: list[dict] = []
     if opp_ids:
         deals_stmt = (
             select(Deal)
-            .join(DealOpportunity, DealOpportunity.deal_id == Deal.id)
-            .where(DealOpportunity.opportunity_id.in_(opp_ids))
+            .join(DealModel, DealModel.deal_id == Deal.id)
+            .join(Project, Project.scenario_id == DealModel.id)
+            .where(Project.opportunity_id.in_(opp_ids))
             .options(
                 selectinload(Deal.scenarios).selectinload(DealModel.projects).selectinload(Project.milestones),
-                selectinload(Deal.deal_opportunities).selectinload(DealOpportunity.opportunity),
+                selectinload(Deal.scenarios).selectinload(DealModel.projects).selectinload(Project.opportunity),
             )
             .distinct()
         )
@@ -10868,31 +10383,29 @@ async def portfolio_add_deal(
     deal = await session.get(
         Deal, deal_id,
         options=[
-            selectinload(Deal.scenarios),
-            selectinload(Deal.deal_opportunities),
+            selectinload(Deal.scenarios).selectinload(DealModel.projects),
         ],
     )
     if deal is None:
         return HTMLResponse("<p class='text-muted'>Deal not found.</p>", status_code=404)
 
-    opp_link = deal.deal_opportunities[0] if deal.deal_opportunities else None
-    if opp_link is None:
-        return HTMLResponse("<p class='text-muted'>Deal has no linked opportunity.</p>", status_code=400)
-
     active_scenario = _primary_scenario(deal)
+    _first_proj = active_scenario.projects[0] if active_scenario and active_scenario.projects else None
+    if _first_proj is None or _first_proj.opportunity_id is None:
+        return HTMLResponse("<p class='text-muted'>Deal has no linked opportunity.</p>", status_code=400)
 
     # Upsert — skip if opportunity already in portfolio
     existing = (await session.execute(
         select(PortfolioProject).where(
             PortfolioProject.portfolio_id == portfolio_id,
-            PortfolioProject.project_id == opp_link.opportunity_id,
+            PortfolioProject.project_id == _first_proj.opportunity_id,
         )
     )).scalar_one_or_none()
 
     if existing is None:
         pp = PortfolioProject(
             portfolio_id=portfolio_id,
-            project_id=opp_link.opportunity_id,
+            project_id=_first_proj.opportunity_id,
             scenario_id=active_scenario.id if active_scenario else None,
         )
         session.add(pp)

@@ -10,20 +10,24 @@ from app.models.base import Base  # noqa: F401
 from app.models.org import Organization, ProjectVisibility, User  # noqa: F401
 from app.models.saved_filter import SavedFilter  # noqa: F401
 
-# 2. Opportunities (was Projects — FK → Organization, User)
-from app.models.project import Opportunity, PermitStub, Project  # noqa: F401
+# 2. Opportunities (unified investment target — renamed from ScrapedListing)
+from app.models.opportunity import (  # noqa: F401
+    Opportunity,
+    OpportunityCategory,
+    OpportunitySource,
+    OpportunityStatus,
+)
+from app.models.project import PermitStub, Project  # noqa: F401
 
 # 3. Parcels (FK → Opportunity)
 from app.models.parcel import (  # noqa: F401
     Parcel,
     ParcelTransformation,
-    ProjectParcel,
 )
 
-# 4. Listing identity / promotion models
+# 4. Listing identity / broker models
 from app.models.broker import Broker, BrokerDisciplinaryAction, Brokerage  # noqa: F401
-from app.models.property import Building, Property  # noqa: F401
-from app.models.scraped_listing import ScrapedListing  # noqa: F401
+from app.models.scraped_listing import ScrapedListing  # noqa: F401  (alias for Opportunity)
 
 # 5. Deals (top-level entity, FK → Organization, User)
 #    + Scenarios (financial plan for a Deal, FK → Deal)
@@ -31,11 +35,12 @@ from app.models.scraped_listing import ScrapedListing  # noqa: F401
 from app.models.deal import (  # noqa: F401
     Deal,
     DealModel,       # backward-compat alias for Scenario
-    DealOpportunity,
+    DealOpportunity,  # stub — removed in migration 0067; kept for import compat
     IncomeStream,
     OperatingExpenseLine,
     OperationalInputs,
     Scenario,        # financial plan (was DealModel / the old deals table)
+    UnitMix,         # stub — removed in migration 0067; kept for import compat
     UseLine,
 )
 
@@ -61,7 +66,6 @@ from app.models.manifest import WorkflowRunManifest  # noqa: F401
 from app.models.export_job import ExportJob, ExportJobStatus  # noqa: F401
 
 # 9. Sensitivity analysis (FK → Opportunity, Scenario, User)
-#    Previously named Scenario/ScenarioResult — renamed to free up the table name
 from app.models.scenario import (  # noqa: F401
     ScenarioResult,    # backward-compat alias for SensitivityResult
     Sensitivity,
@@ -72,7 +76,7 @@ from app.models.scenario import (  # noqa: F401
 # 10. Portfolio (FK → Organization, Opportunity, Scenario)
 from app.models.portfolio import GanttEntry, Portfolio, PortfolioProject  # noqa: F401
 
-# 11. Ingestion (FK → User; ScrapedListing already imported above)
+# 11. Ingestion (FK → User; Opportunity already imported above)
 from app.models.ingestion import (  # noqa: F401
     DedupCandidate,
     IngestJob,
@@ -96,29 +100,30 @@ __all__ = [
     "Organization",
     "User",
     "ProjectVisibility",
-    # Opportunity (was Project)
+    # Opportunity (unified investment target)
     "Opportunity",
-    "Project",           # post-acquisition dev effort
+    "OpportunityCategory",
+    "OpportunitySource",
+    "OpportunityStatus",
+    "Project",
     "PermitStub",
-    "ScrapedListing",
+    "ScrapedListing",    # alias for Opportunity
     # Parcel
     "Parcel",
-    "ProjectParcel",
     "ParcelTransformation",
-    # Brokers / building promotion
+    # Brokers
     "Brokerage",
     "Broker",
     "BrokerDisciplinaryAction",
-    "Building",
-    "Property",          # backward-compat alias for Building
     # Deal (top-level entity) + Scenario (financial plan)
     "Deal",
-    "DealOpportunity",
-    "Scenario",          # financial plan (was DealModel)
-    "DealModel",         # backward-compat alias for Scenario
+    "DealOpportunity",   # stub — removed in 0067
+    "Scenario",
+    "DealModel",
     "OperationalInputs",
     "IncomeStream",
     "OperatingExpenseLine",
+    "UnitMix",           # stub — removed in 0067
     "UseLine",
     # Capital
     "CapitalModule",
@@ -133,11 +138,11 @@ __all__ = [
     # Async export jobs
     "ExportJob",
     "ExportJobStatus",
-    # Sensitivity analysis (was Scenario/ScenarioResult)
+    # Sensitivity analysis
     "Sensitivity",
     "SensitivityResult",
     "SensitivityStatus",
-    "ScenarioResult",    # backward-compat alias
+    "ScenarioResult",
     # Portfolio
     "Portfolio",
     "PortfolioProject",

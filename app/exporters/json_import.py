@@ -15,8 +15,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.exporters.json_export import EXPORT_SCHEMA_VERSION
 from app.models.capital import CapitalModule, WaterfallTier
-from app.models.deal import Deal, DealModel, DealOpportunity, IncomeStream, OperatingExpenseLine, OperationalInputs
-from app.models.parcel import Parcel, ProjectParcel, ProjectParcelRelationship
+from app.models.deal import Deal, DealModel, IncomeStream, OperatingExpenseLine, OperationalInputs
+from app.models.parcel import Parcel
 from app.models.project import Opportunity, Project, ProjectCategory, ProjectSource, ProjectStatus
 from app.schemas.capital import CapitalModuleBase, WaterfallTierBase
 from app.schemas.deal import (
@@ -254,10 +254,13 @@ async def import_deal_model_json(
 
     parsed = DealImportPayload.model_validate(payload)
 
-    # Find or create top-level Deal linked to this Opportunity
+    # Find or create top-level Deal linked to this Opportunity (via Project)
     existing_top_deal = (await session.execute(
-        select(Deal).join(DealOpportunity, DealOpportunity.deal_id == Deal.id)
-        .where(DealOpportunity.opportunity_id == project_id).limit(1)
+        select(Deal)
+        .join(DealModel, DealModel.deal_id == Deal.id)
+        .join(Project, Project.scenario_id == DealModel.id)
+        .where(Project.opportunity_id == project_id)
+        .limit(1)
     )).scalar_one_or_none()
     if existing_top_deal is None:
         deal_name = parsed.deal_model.name or "Imported Deal"
@@ -269,8 +272,6 @@ async def import_deal_model_json(
             created_by_user_id=created_by_user_id,
         )
         session.add(existing_top_deal)
-        await session.flush()
-        session.add(DealOpportunity(deal_id=existing_top_deal.id, opportunity_id=project_id))
         await session.flush()
 
     model = DealModel(
@@ -286,7 +287,6 @@ async def import_deal_model_json(
         scenario_id=model.id,
         opportunity_id=project_id,
         name="Default Project",
-        deal_type=str(getattr(model.project_type, "value", model.project_type)),
     )
     session.add(dev_project)
     await session.flush()
@@ -375,9 +375,10 @@ async def import_deal_from_json(
     opportunity = Opportunity(
         org_id=org_id,
         name=project_name,
-        status=project_meta.Status,
-        project_category=project_meta.ProjectCategory,
-        source=project_meta.Source,
+        opp_status=str(project_meta.Status),
+        project_category=str(project_meta.ProjectCategory),
+        source=str(project_meta.Source),
+        source_url="",  # manual entry
         created_by_user_id=created_by_user_id,
     )
     session.add(opportunity)
@@ -405,13 +406,7 @@ async def import_deal_from_json(
             parcel.current_use = project_meta.PropertyType
 
         await session.flush()
-        session.add(
-            ProjectParcel(
-                project_id=opportunity.id,
-                parcel_id=parcel.id,
-                relationship_type=ProjectParcelRelationship.unchanged,
-            )
-        )
+        opportunity.parcel_id = parcel.id
         await session.flush()
 
     model_result = await import_deal_model_json(
