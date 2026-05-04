@@ -143,14 +143,22 @@
       </div>
     </div>
     {% if not loop.last %}
-    <button
-      class="hist-revert-btn"
-      hx-post="/ui/models/{{ model_id }}/history/{{ snap.id }}/revert"
-      hx-confirm="Revert to v{{ snap.version }}? Current inputs will be overwritten. You can re-run Compute to see the restored numbers."
-      hx-target="#hist-entry-{{ snap.id }}"
-      hx-swap="innerHTML">
+    <button type="button" class="hist-revert-btn" id="revert-btn-{{ snap.id }}"
+            onclick="document.getElementById('revert-confirm-{{ snap.id }}').style.display='flex';this.style.display='none'">
       ↩ Revert to v{{ snap.version }}
     </button>
+    <span id="revert-confirm-{{ snap.id }}" style="display:none;align-items:center;gap:8px;margin-top:10px">
+      <span style="font-size:12px;color:var(--text-muted)">Overwrite current inputs with v{{ snap.version }}?</span>
+      <button type="button" class="hist-revert-btn" style="border-color:var(--color-error,#dc2626);color:var(--color-error,#dc2626)"
+              hx-post="/ui/models/{{ model_id }}/history/{{ snap.id }}/revert"
+              hx-swap="none">
+        Confirm
+      </button>
+      <button type="button" class="hist-revert-btn"
+              onclick="this.closest('span').style.display='none';document.getElementById('revert-btn-{{ snap.id }}').style.display=''">
+        Cancel
+      </button>
+    </span>
     {% endif %}
   </div>
 
