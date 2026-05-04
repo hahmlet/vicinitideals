@@ -76,15 +76,49 @@
 .hist-baseline-note {
   font-size: 11px; color: var(--text-muted); font-style: italic; margin-top: 8px;
 }
+.hist-modal-close {
+  border: none; background: transparent; font-size: 20px;
+  color: var(--text-muted); cursor: pointer; padding: 0 4px; line-height: 1;
+  margin-left: 8px;
+}
+.hist-modal-close:hover { color: var(--text); }
+.hist-no-changes {
+  font-size: 12px; color: var(--text-muted); font-style: italic; padding: 2px 0;
+}
 </style>
+
+{# ── Metric formatting macro ───────────────────────────────────────────── #}
+{% macro fmt_metric(key, value) -%}
+  {%- if value is none -%}&mdash;
+  {%- elif key == 'dscr' -%}{{ "%.2f"|format(value | float) }}&times;
+  {%- elif key == 'project_irr_levered' -%}{{ "%.2f"|format(value | float * 100) }}%
+  {%- elif key in ('noi_stabilized', 'equity_required', 'total_project_cost') -%}${{ "{:,.2f}".format(value | float) }}
+  {%- elif key == 'cap_rate_on_cost_pct' -%}{{ "%.2f"|format(value | float) }}%
+  {%- else -%}{{ value | round(4) }}
+  {%- endif -%}
+{%- endmacro %}
+
+{% set _metric_labels = {
+  'dscr': 'DSCR',
+  'project_irr_levered': 'Levered IRR',
+  'noi_stabilized': 'NOI Stabilized',
+  'equity_required': 'Equity Required',
+  'total_project_cost': 'Total Project Cost',
+  'cap_rate_on_cost_pct': 'Cap Rate on Cost',
+} %}
 
 <div class="hist-header">
   <div class="hist-title">Compute History</div>
-  <a class="hist-export-btn"
-     href="/ui/models/{{ model_id }}/history/export.json"
-     download="history-{{ model_id }}.json">
-    ↓ Export Log
-  </a>
+  <div style="display:flex;align-items:center;gap:8px">
+    <a class="hist-export-btn"
+       href="/ui/models/{{ model_id }}/history/export.json"
+       download="history-{{ model_id }}.json">
+      ↓ Export Log
+    </a>
+    <button type="button" class="hist-modal-close"
+            onclick="if(typeof closeHistoryModal==='function')closeHistoryModal()"
+            title="Close">×</button>
+  </div>
 </div>
 
 {% if not entries %}
@@ -108,11 +142,11 @@
         {% if snap.label %} · <em>{{ snap.label }}</em>{% endif %}
       </div>
     </div>
-    {% if not loop.first %}
+    {% if not loop.last %}
     <button
       class="hist-revert-btn"
       hx-post="/ui/models/{{ model_id }}/history/{{ snap.id }}/revert"
-      hx-confirm="Revert to v{{ snap.version }}? Current inputs will be overwritten. You can re-run Calculate to see the restored numbers."
+      hx-confirm="Revert to v{{ snap.version }}? Current inputs will be overwritten. You can re-run Compute to see the restored numbers."
       hx-target="#hist-entry-{{ snap.id }}"
       hx-swap="innerHTML">
       ↩ Revert to v{{ snap.version }}
@@ -144,40 +178,42 @@
   {% elif diff %}
   {% set input_changes = diff.input_changes or [] %}
   {% set output_changes = diff.output_changes or {} %}
-  {% if input_changes or output_changes %}
   <button class="hist-diff-toggle"
           onclick="this.nextElementSibling.classList.toggle('open'); this.textContent = this.nextElementSibling.classList.contains('open') ? '▲ Hide changes' : '▼ Show changes'">
-    ▼ Show changes ({{ input_changes | length }} input{% if input_changes | length != 1 %}s{% endif %}{% if output_changes %}, {{ output_changes | length }} metric{% if output_changes | length != 1 %}s{% endif %}{% endif %} changed)
+    ▼ Show changes{% if input_changes %} ({{ input_changes | length }} input{% if input_changes | length != 1 %}s{% endif %}){% endif %}
   </button>
   <div class="hist-diff-panel">
+    <div class="hist-diff-section-title">What Changed</div>
     {% if input_changes %}
-    <div class="hist-diff-section-title">Input Changes</div>
     {% for chg in input_changes %}
     <div class="hist-change-row">
-      <span class="hist-change-entity" title="{{ chg.entity }}">{{ chg.entity }}</span>
-      <span class="hist-change-field">{{ chg.label }}</span>
+      <span class="hist-change-entity" title="{{ chg.entity }}: {{ chg.label }}">{{ chg.entity }}</span>
       {% if chg.get('change') == 'added' %}
+      <span class="hist-change-field">{{ chg.label }}</span>
       <span class="hist-change-added hist-change-val">+ added</span>
       {% elif chg.get('change') == 'removed' %}
+      <span class="hist-change-field">{{ chg.label }}</span>
       <span class="hist-change-removed hist-change-val">removed</span>
       {% else %}
       <span class="hist-change-field">{{ chg.field }}</span>
-      <span class="hist-change-before hist-change-val">{{ chg.before | string | truncate(60, True) }}</span>
-      <span class="hist-change-arrow">→</span>
-      <span class="hist-change-after hist-change-val">{{ chg.after | string | truncate(60, True) }}</span>
+      <span class="hist-change-before hist-change-val">{{ chg.before | string | truncate(50, True) }}</span>
+      <span class="hist-change-arrow">&rarr;</span>
+      <span class="hist-change-after hist-change-val">{{ chg.after | string | truncate(50, True) }}</span>
       {% endif %}
     </div>
     {% endfor %}
+    {% else %}
+    <div class="hist-no-changes">No tracked input changes detected.</div>
     {% endif %}
 
     {% if output_changes %}
-    <div class="hist-diff-section-title" style="margin-top:10px">Metric Changes</div>
+    <div class="hist-diff-section-title" style="margin-top:10px">Metric Impact</div>
     {% for key, chg in output_changes.items() %}
     <div class="hist-change-row">
-      <span class="hist-change-entity">{{ key }}</span>
-      <span class="hist-change-before hist-change-val">{{ chg.before | string | truncate(60, True) }}</span>
-      <span class="hist-change-arrow">→</span>
-      <span class="hist-change-after hist-change-val">{{ chg.after | string | truncate(60, True) }}</span>
+      <span class="hist-change-entity">{{ _metric_labels.get(key, key) }}</span>
+      <span class="hist-change-before hist-change-val">{{ fmt_metric(key, chg.before) }}</span>
+      <span class="hist-change-arrow">&rarr;</span>
+      <span class="hist-change-after hist-change-val">{{ fmt_metric(key, chg.after) }}</span>
     </div>
     {% endfor %}
     {% endif %}

@@ -712,6 +712,9 @@
     <span class="badge {{ 'badge-green' if model.is_active else 'badge-gray' }}">
       {{ 'Active' if model.is_active else 'Inactive' }}
     </span>
+    <button type="button" class="btn btn-sm btn-secondary"
+            title="Compute history &amp; audit log"
+            onclick="openHistoryModal('{{ model.id }}')">&#9200; History</button>
     {# Async investor export — kicks Celery job, emails .xlsx attachment.
        Button locks while one is in flight per deal. Hover a locked button
        to see a status modal with three-point progress. #}
@@ -1411,9 +1414,43 @@ function saveModelName(el) {
 <div id="calc-status-modal" class="calc-status-modal"
      onclick="if(event.target===this){this.style.display='none';}">
   <div class="calc-status-modal-card" id="calc-status-modal-body">
-    <div class="text-muted text-small" style="padding:24px;text-align:center">Loading status…</div>
+    <div class="text-muted text-small" style="padding:24px;text-align:center">Loading status&hellip;</div>
   </div>
 </div>
+
+<!-- Compute history modal -->
+<div id="history-modal" class="calc-status-modal"
+     onclick="if(event.target===this){closeHistoryModal();}">
+  <div class="calc-status-modal-card" id="history-modal-body"
+       style="max-width:780px;max-height:calc(100vh - 60px);overflow-y:auto">
+    <div class="text-muted text-small" style="padding:24px;text-align:center">Loading history&hellip;</div>
+  </div>
+</div>
+<script>
+function openHistoryModal(modelId) {
+  var modal = document.getElementById('history-modal');
+  modal.style.display = 'flex';
+  htmx.ajax('GET', '/ui/models/' + modelId + '/history', {
+    target: '#history-modal-body', swap: 'innerHTML'
+  });
+}
+function closeHistoryModal() {
+  var modal = document.getElementById('history-modal');
+  if (modal) modal.style.display = 'none';
+  var body = document.getElementById('history-modal-body');
+  if (body) body.innerHTML = '<div class="text-muted text-small" style="padding:24px;text-align:center">Loading history&hellip;</div>';
+}
+document.body.addEventListener('snapshotReverted', function() {
+  closeHistoryModal();
+  window.location.reload();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    var modal = document.getElementById('history-modal');
+    if (modal && modal.style.display !== 'none') closeHistoryModal();
+  }
+});
+</script>
 
 <!-- Line item add/edit drawer -->
 <div class="drawer-overlay" id="line-item-drawer"
