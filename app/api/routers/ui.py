@@ -11914,9 +11914,8 @@ async def revert_snapshot(
         )
 
     return HTMLResponse(
-        '<div class="alert alert-success" role="alert">'
-        'Reverted. Click <strong>Calculate</strong> to recompute.</div>',
-        headers={"HX-Trigger": "snapshotReverted"},
+        '',
+        headers={"HX-Refresh": "true"},
     )
 
 
