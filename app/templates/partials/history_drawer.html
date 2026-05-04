@@ -162,9 +162,9 @@
       <span class="hist-change-removed hist-change-val">removed</span>
       {% else %}
       <span class="hist-change-field">{{ chg.field }}</span>
-      <span class="hist-change-before hist-change-val">{{ chg.before }}</span>
+      <span class="hist-change-before hist-change-val">{{ chg.before | string | truncate(60, True) }}</span>
       <span class="hist-change-arrow">→</span>
-      <span class="hist-change-after hist-change-val">{{ chg.after }}</span>
+      <span class="hist-change-after hist-change-val">{{ chg.after | string | truncate(60, True) }}</span>
       {% endif %}
     </div>
     {% endfor %}
@@ -175,9 +175,9 @@
     {% for key, chg in output_changes.items() %}
     <div class="hist-change-row">
       <span class="hist-change-entity">{{ key }}</span>
-      <span class="hist-change-before hist-change-val">{{ chg.before }}</span>
+      <span class="hist-change-before hist-change-val">{{ chg.before | string | truncate(60, True) }}</span>
       <span class="hist-change-arrow">→</span>
-      <span class="hist-change-after hist-change-val">{{ chg.after }}</span>
+      <span class="hist-change-after hist-change-val">{{ chg.after | string | truncate(60, True) }}</span>
     </div>
     {% endfor %}
     {% endif %}

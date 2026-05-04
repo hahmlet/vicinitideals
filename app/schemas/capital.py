@@ -328,6 +328,26 @@ class WaterfallTierRead(WaterfallTierBase):
 
 
 # ---------------------------------------------------------------------------
+# DrawSource CRUD schemas
+# ---------------------------------------------------------------------------
+
+class DrawSourceBase(BaseModel):
+    project_id: uuid.UUID | None = None
+    sort_order: int = 0
+    label: str
+    source_type: str = "equity"
+    draw_every_n_months: int = 1
+    annual_interest_rate: Decimal = Decimal("0")
+    active_from_milestone: str
+    active_to_milestone: str
+    active_from_offset_days: int = 0
+    active_to_offset_days: int = 0
+    total_commitment: Decimal | None = None
+    funder_type: str | None = None
+    capital_module_id: uuid.UUID | None = None
+
+
+# ---------------------------------------------------------------------------
 # WaterfallResult CRUD schemas
 # ---------------------------------------------------------------------------
 
