@@ -320,17 +320,33 @@ async def capture_snapshot(
 
     Called AFTER the compute engine has written OperationalOutputs so that
     outputs_json captures the freshly computed metrics.
+
+    If inputs are identical to the most recent snapshot, no new snapshot is
+    created and the existing one is returned unchanged (idempotent re-compute).
     """
     scenario = (await session.execute(
         select(Scenario).where(Scenario.id == scenario_id)
     )).scalar_one()
 
-    # Increment the version counter
+    inputs_json = await _serialize_inputs(session, scenario_id)
+    clean_inputs = _clean(inputs_json)
+
+    # Check whether inputs changed since the last snapshot
+    last_snap = (await session.execute(
+        select(ScenarioSnapshot)
+        .where(ScenarioSnapshot.scenario_id == scenario_id)
+        .order_by(ScenarioSnapshot.version.desc())
+        .limit(1)
+    )).scalar_one_or_none()
+
+    if last_snap is not None and last_snap.inputs_json == clean_inputs:
+        return last_snap
+
+    # Inputs changed (or first ever snapshot) — create a new version
     scenario.version = (scenario.version or 0) + 1
     session.add(scenario)
     await session.flush()
 
-    inputs_json = await _serialize_inputs(session, scenario_id)
     outputs_json = await _serialize_outputs(session, scenario_id)
 
     snap = ScenarioSnapshot(
@@ -338,7 +354,7 @@ async def capture_snapshot(
         scenario_id=scenario_id,
         version=scenario.version,
         triggered_by=triggered_by,
-        inputs_json=_clean(inputs_json),
+        inputs_json=clean_inputs,
         outputs_json=_clean(outputs_json),
     )
     session.add(snap)
