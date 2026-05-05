@@ -1993,7 +1993,7 @@ function openAddLine(type) {
     return;
   }
   if (type === 'milestones') {
-    htmx.ajax('GET', '/ui/models/{{ model.id }}/line-form?type=milestones', {
+    htmx.ajax('GET', '/ui/models/{{ model.id }}/line-form?type=milestones&project={{ default_project_id or "" }}', {
       target: '#milestone-wizard-body', swap: 'innerHTML'
     });
     document.getElementById('milestone-wizard-overlay').style.display = 'flex';

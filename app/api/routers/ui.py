@@ -6050,6 +6050,22 @@ async def handle_form_create_or_update(
         except ValueError:
             trigger_id = None
 
+        # Guard: reject a trigger that belongs to a different project.
+        # This prevents the cross-project trigger corruption that caused
+        # milestones on project 2 to point at milestones on project 1.
+        if trigger_id is not None:
+            _trigger_ms = await session.get(Milestone, trigger_id)
+            _ms_project_id: UUID | None = project_id
+            if item_id:
+                try:
+                    _existing_for_check = await session.get(Milestone, UUID(item_id))
+                    if _existing_for_check:
+                        _ms_project_id = _existing_for_check.project_id
+                except (ValueError, AttributeError):
+                    pass
+            if _trigger_ms is None or (_ms_project_id is not None and _trigger_ms.project_id != _ms_project_id):
+                trigger_id = None
+
         data = {
             "duration_days": _fi(form.get("duration_days"), 0),
             "milestone_type": mtype,
@@ -10433,12 +10449,28 @@ async def model_builder_line_form(
     trigger_end_date = None  # ISO string passed to JS for end-date preview
     default_trigger_id: str | None = None
     if type in ("milestones", "timeline"):
-        default_project = (await session.execute(
-            select(Project).where(Project.scenario_id == model_id).order_by(Project.created_at.asc()).limit(1)
-        )).scalar_one_or_none()
-        if default_project:
+        # Determine which project's milestones to load for the trigger dropdown:
+        # 1. If editing an existing milestone, use its own project_id.
+        # 2. If adding, use the ?project= query param passed by the caller.
+        # 3. Fall back to the first (oldest) project only as a last resort.
+        ms_project_id: UUID | None = None
+        if existing is not None and hasattr(existing, "project_id"):
+            ms_project_id = existing.project_id
+        if ms_project_id is None:
+            _proj_param = request.query_params.get("project", "")
+            if _proj_param:
+                try:
+                    ms_project_id = UUID(_proj_param)
+                except ValueError:
+                    pass
+        if ms_project_id is None:
+            _fp = (await session.execute(
+                select(Project).where(Project.scenario_id == model_id).order_by(Project.created_at.asc()).limit(1)
+            )).scalar_one_or_none()
+            ms_project_id = _fp.id if _fp else None
+        if ms_project_id is not None:
             all_ms = list((await session.execute(
-                select(Milestone).where(Milestone.project_id == default_project.id)
+                select(Milestone).where(Milestone.project_id == ms_project_id)
             )).scalars())
             _SPHASE_ORDER = [
                 "offer_made", "under_contract", "close", "pre_development",
