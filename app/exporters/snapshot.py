@@ -409,27 +409,252 @@ _OUTPUT_DISPLAY_MULTIPLIER: dict[str, float] = {
 }
 
 
-def _entity_list_diff(
+# ── Diff label / format maps ──────────────────────────────────────────────────
+# Each entry: (human-readable label, format hint)
+# Format hints: currency | percent | number | text | bool | date
+
+_FUNDER_TYPE_LABELS: dict[str, str] = {
+    "debt": "Debt",
+    "bridge": "Bridge Loan",
+    "permanent_debt": "Permanent Debt",
+    "mezzanine": "Mezzanine",
+    "preferred_equity": "Preferred Equity",
+    "common_equity": "Common Equity",
+    "owner_investment": "Owner Investment",
+    "owner_loan": "Owner Loan",
+    "grant": "Grant",
+    "tax_credit": "Tax Credit",
+    "subordinate_debt": "Subordinate Debt",
+}
+
+_MILESTONE_TYPE_LABELS: dict[str, str] = {
+    "offer_made": "Offer Made",
+    "under_contract": "Under Contract",
+    "close": "Close",
+    "pre_development": "Pre-Development",
+    "construction": "Construction",
+    "operation_lease_up": "Lease-Up",
+    "operation_stabilized": "Stabilized Operations",
+    "divestment": "Divestment",
+}
+
+_SOURCE_FIELDS: dict[str, tuple[str, str]] = {
+    "amount":               ("Principal",           "currency"),
+    "interest_rate_pct":    ("Interest Rate",       "percent"),
+    "pct_of_total_cost":    ("% of Total Cost",     "percent"),
+    "ltv_pct":              ("LTV %",               "percent"),
+    "sizing_approach":      ("Sizing Approach",     "text"),
+    "fixed_amount":         ("Fixed Amount",        "currency"),
+    "hold_term_years":      ("Hold Term (yrs)",     "number"),
+    "dscr_min":             ("Min DSCR",            "number"),
+    "auto_size":            ("Auto-size",           "bool"),
+    "prepay_penalty_pct":   ("Prepay Penalty %",    "percent"),
+    "refi_cap_rate_pct":    ("Refi Cap Rate %",     "percent"),
+    "funding_date_trigger": ("Funding Trigger",     "text"),
+}
+_SOURCE_SKIP: frozenset[str] = frozenset({
+    "draws", "notes", "is_bridge", "construction_retirement", "schema_version",
+})
+
+_CARRY_FIELDS: dict[str, tuple[str, str]] = {
+    "carry_type":        ("Carry Type",        "text"),
+    "io_rate_pct":       ("Interest Rate",     "percent"),
+    "amort_term_years":  ("Amort. Term (yrs)", "number"),
+    "day_count":         ("Day Count",         "text"),
+    "payment_frequency": ("Payment Frequency", "text"),
+}
+_CARRY_SKIP: frozenset[str] = frozenset({
+    "capitalized", "io_period_months", "io_to_pi_trigger", "phases", "schema_version",
+})
+
+_CAP_MODULE_TOP_FIELDS: dict[str, tuple[str, str]] = {
+    "funder_type":        ("Source Type",       "text"),
+    "active_phase_start": ("Active From Phase", "text"),
+    "active_phase_end":   ("Active To Phase",   "text"),
+    "stack_position":     ("Stack Position",    "number"),
+}
+
+_INCOME_STREAM_FIELDS: dict[str, tuple[str, str]] = {
+    "label":                      ("Name",                   "text"),
+    "amount_per_unit_monthly":    ("Rent/Unit/Month",        "currency"),
+    "unit_count":                 ("Units",                  "number"),
+    "occupancy_rate_pct":         ("Occupancy %",            "percent"),
+    "escalation_rate_pct_annual": ("Escalation % (annual)", "percent"),
+    "income_type":                ("Income Type",            "text"),
+}
+
+_EXPENSE_FIELDS: dict[str, tuple[str, str]] = {
+    "label":          ("Name",           "text"),
+    "amount_monthly": ("Monthly Amount", "currency"),
+    "amount_annual":  ("Annual Amount",  "currency"),
+    "pct_of_egr":     ("% of EGR",       "percent"),
+}
+
+_USE_LINE_FIELDS: dict[str, tuple[str, str]] = {
+    "label":       ("Name",    "text"),
+    "phase":       ("Phase",   "text"),
+    "amount":      ("Amount",  "currency"),
+    "timing_type": ("Timing",  "text"),
+    "is_deferred": ("Deferred","bool"),
+}
+
+_MILESTONE_FIELDS: dict[str, tuple[str, str]] = {
+    "duration_days":       ("Duration (days)",       "number"),
+    "target_date":         ("Target Date",           "date"),
+    "trigger_offset_days": ("Trigger Offset (days)", "number"),
+}
+
+_WATERFALL_FIELDS: dict[str, tuple[str, str]] = {
+    "hurdle_rate_pct": ("Hurdle Rate %", "percent"),
+    "gp_split_pct":    ("GP Split %",    "percent"),
+    "priority":        ("Priority",      "number"),
+}
+
+_DRAW_SOURCE_FIELDS: dict[str, tuple[str, str]] = {
+    "label":                 ("Name",                    "text"),
+    "total_commitment":      ("Total Commitment",        "currency"),
+    "annual_interest_rate":  ("Interest Rate",           "percent"),
+    "draw_every_n_months":   ("Draw Frequency (months)", "number"),
+    "source_type":           ("Source Type",             "text"),
+    "funder_type":           ("Funder Type",             "text"),
+    "active_from_milestone": ("Active From",             "text"),
+    "active_to_milestone":   ("Active To",               "text"),
+}
+
+_OPS_INPUTS_FIELDS: dict[str, tuple[str, str]] = {
+    "unit_count_existing":         ("Existing Units",         "number"),
+    "unit_count_new":              ("New Units",              "number"),
+    "unit_count_after_conversion": ("Units After Conversion", "number"),
+    "building_sqft":               ("Building Sq Ft",         "number"),
+    "lot_sqft":                    ("Lot Sq Ft",              "number"),
+    "hold_months":                 ("Hold Months",            "number"),
+    "entitlement_months":          ("Entitlement Months",     "number"),
+    "entitlement_cost":            ("Entitlement Cost",       "currency"),
+    "lease_up_months":             ("Lease-Up Months",        "number"),
+    "initial_occupancy_pct":       ("Initial Occupancy %",    "percent"),
+    "lease_up_curve":              ("Lease-Up Curve",         "text"),
+    "mgmt_fee_pct":                ("Management Fee %",       "percent"),
+    "going_in_cap_rate_pct":       ("Going-In Cap Rate %",    "percent"),
+    "exit_cap_rate_pct":           ("Exit Cap Rate %",        "percent"),
+    "selling_costs_pct":           ("Selling Costs %",        "percent"),
+    "construction_months":         ("Construction Months",    "number"),
+    "renovation_months":           ("Renovation Months",      "number"),
+}
+
+_UNIT_MIX_FIELDS: dict[str, tuple[str, str]] = {
+    "unit_count":              ("Units",               "number"),
+    "avg_sqft":                ("Avg Sq Ft",           "number"),
+    "beds":                    ("Beds",                "number"),
+    "baths":                   ("Baths",               "number"),
+    "market_rent_per_unit":    ("Market Rent/Unit",    "currency"),
+    "in_place_rent_per_unit":  ("In-Place Rent/Unit",  "currency"),
+    "unit_strategy":           ("Unit Strategy",       "text"),
+    "post_reno_rent_per_unit": ("Post-Reno Rent/Unit", "currency"),
+}
+
+
+def _entity_name(row: dict, entity_type: str) -> str:
+    """Return a user-facing name for a data row."""
+    if entity_type == "CapitalModule":
+        user_label = (row.get("label") or "").strip()
+        if user_label:
+            return user_label
+        ft = str(row.get("funder_type") or "").replace("FunderType.", "")
+        return _FUNDER_TYPE_LABELS.get(ft, "Capital Source")
+    if entity_type == "Milestone":
+        raw = str(row.get("milestone_type") or "").replace("MilestoneType.", "")
+        ms_label = _MILESTONE_TYPE_LABELS.get(raw, raw.replace("_", " ").title())
+        custom = (row.get("label") or "").strip()
+        return f"{ms_label}: {custom}" if custom else ms_label
+    return ((row.get("label") or row.get("name") or entity_type) or entity_type).strip()
+
+
+def _numeric_eq(a: Any, b: Any) -> bool:
+    """True if two values are numerically equal within 4 decimal places."""
+    try:
+        return round(float(a), 4) == round(float(b), 4)
+    except (TypeError, ValueError):
+        return False
+
+
+def _blob_diff(
+    before: dict,
+    after: dict,
+    entity_label: str,
+    entity_type: str,
+    field_map: dict[str, tuple[str, str]],
+    skip: frozenset[str] | None = None,
+) -> list[dict]:
+    """Diff two JSONB dicts field-by-field, emitting only user-visible fields."""
+    changes: list[dict] = []
+    all_keys = (set(before.keys()) | set(after.keys())) - (skip or frozenset())
+    for k in sorted(all_keys):
+        if k not in field_map:
+            continue
+        label, fmt = field_map[k]
+        bv = before.get(k)
+        av = after.get(k)
+        if bv == av:
+            continue
+        if fmt in ("currency", "percent", "number") and bv is not None and av is not None:
+            if _numeric_eq(bv, av):
+                continue
+        changes.append({
+            "entity_label": entity_label,
+            "entity_type": entity_type,
+            "field_label": label,
+            "fmt": fmt,
+            "before": bv,
+            "after": av,
+        })
+    return changes
+
+
+def _entity_list_diff_v2(
     before_rows: list[dict],
     after_rows: list[dict],
     entity_type: str,
-    compare_fields: tuple[str, ...],
+    scalar_fields: dict[str, tuple[str, str]],
+    blob_fields: dict[str, tuple[dict[str, tuple[str, str]], frozenset[str]]] | None = None,
 ) -> list[dict]:
+    """Produce human-readable per-field change rows for a list of entities."""
     changes: list[dict] = []
     b_map = _entity_map(before_rows)
     a_map = _entity_map(after_rows)
-
-    all_keys = set(b_map) | set(a_map)
-    for key in sorted(all_keys):
+    for key in sorted(set(b_map) | set(a_map)):
+        b_row = b_map.get(key) or {}
+        a_row = a_map.get(key) or {}
+        entity_label = _entity_name(a_row if a_row else b_row, entity_type)
         if key in b_map and key not in a_map:
-            changes.append({"entity": entity_type, "label": key, "change": "removed"})
-        elif key not in b_map and key in a_map:
-            changes.append({"entity": entity_type, "label": key, "change": "added",
-                            "values": a_map[key]})
-        else:
-            field_changes = _scalar_diff(b_map[key], a_map[key], compare_fields)
-            for fc in field_changes:
-                changes.append({"entity": entity_type, "label": key, **fc})
+            changes.append({"entity_label": entity_label, "entity_type": entity_type, "change": "removed"})
+            continue
+        if key not in b_map and key in a_map:
+            changes.append({"entity_label": entity_label, "entity_type": entity_type, "change": "added"})
+            continue
+        # Scalar top-level fields
+        for field_key, (field_label, fmt) in scalar_fields.items():
+            bv = b_row.get(field_key)
+            av = a_row.get(field_key)
+            if bv == av:
+                continue
+            if fmt in ("currency", "percent", "number") and bv is not None and av is not None:
+                if _numeric_eq(bv, av):
+                    continue
+            changes.append({
+                "entity_label": entity_label,
+                "entity_type": entity_type,
+                "field_label": field_label,
+                "fmt": fmt,
+                "before": bv,
+                "after": av,
+            })
+        # JSONB blob expansions
+        if blob_fields:
+            for blob_key, (sub_map, skip) in blob_fields.items():
+                b_blob = b_row.get(blob_key) or {}
+                a_blob = a_row.get(blob_key) or {}
+                if b_blob != a_blob:
+                    changes.extend(_blob_diff(b_blob, a_blob, entity_label, entity_type, sub_map, skip))
     return changes
 
 
@@ -442,7 +667,7 @@ def diff_snapshots(
         {
             "version_before": int,
             "version_after": int,
-            "input_changes": [...],
+            "input_changes": [...],   # each item has entity_label, field_label, fmt, before, after
             "output_changes": {...}
         }
     """
@@ -451,89 +676,92 @@ def diff_snapshots(
 
     input_changes: list[dict] = []
 
-    # OperationalInputs scalar diff
+    # OperationalInputs — only user-visible fields
     b_oi = b_in.get("operational_inputs") or {}
     a_oi = a_in.get("operational_inputs") or {}
-    for fc in _scalar_diff_all(b_oi, a_oi):
-        input_changes.append({"entity": "OperationalInputs", **fc})
+    for field_key, (field_label, fmt) in _OPS_INPUTS_FIELDS.items():
+        bv = b_oi.get(field_key)
+        av = a_oi.get(field_key)
+        if bv == av:
+            continue
+        if fmt in ("currency", "percent", "number") and bv is not None and av is not None:
+            if _numeric_eq(bv, av):
+                continue
+        input_changes.append({
+            "entity_label": "Operating Inputs",
+            "entity_type": "OperationalInputs",
+            "field_label": field_label,
+            "fmt": fmt,
+            "before": bv,
+            "after": av,
+        })
 
-    # IncomeStream diff
-    input_changes.extend(_entity_list_diff(
+    # IncomeStream
+    input_changes.extend(_entity_list_diff_v2(
         b_in.get("income_streams") or [],
         a_in.get("income_streams") or [],
         "IncomeStream",
-        ("amount_per_unit_monthly", "unit_count", "occupancy_rate_pct",
-         "escalation_rate_pct_annual", "income_type"),
+        _INCOME_STREAM_FIELDS,
     ))
 
-    # ExpenseLine diff
-    input_changes.extend(_entity_list_diff(
+    # ExpenseLine
+    input_changes.extend(_entity_list_diff_v2(
         b_in.get("expense_lines") or [],
         a_in.get("expense_lines") or [],
         "ExpenseLine",
-        ("amount_monthly", "amount_annual", "pct_of_egr"),
+        _EXPENSE_FIELDS,
     ))
 
-    # UseLine diff
-    input_changes.extend(_entity_list_diff(
+    # UseLine
+    input_changes.extend(_entity_list_diff_v2(
         b_in.get("use_lines") or [],
         a_in.get("use_lines") or [],
         "UseLine",
-        ("phase", "amount", "timing_type", "is_deferred"),
+        _USE_LINE_FIELDS,
     ))
 
-    # UnitMix diff
-    input_changes.extend(_entity_list_diff(
+    # UnitMix
+    input_changes.extend(_entity_list_diff_v2(
         b_in.get("unit_mix") or [],
         a_in.get("unit_mix") or [],
         "UnitMix",
-        (
-            "unit_count",
-            "avg_sqft",
-            "beds",
-            "baths",
-            "market_rent_per_unit",
-            "in_place_rent_per_unit",
-            "unit_strategy",
-            "post_reno_rent_per_unit",
-        ),
+        _UNIT_MIX_FIELDS,
     ))
 
-    # CapitalModule diff
-    input_changes.extend(_entity_list_diff(
+    # Milestone
+    input_changes.extend(_entity_list_diff_v2(
+        b_in.get("milestones") or [],
+        a_in.get("milestones") or [],
+        "Milestone",
+        _MILESTONE_FIELDS,
+    ))
+
+    # CapitalModule — expand source and carry blobs into individual fields
+    input_changes.extend(_entity_list_diff_v2(
         b_in.get("capital_modules") or [],
         a_in.get("capital_modules") or [],
         "CapitalModule",
-        (
-            "funder_type",
-            "stack_position",
-            "source",
-            "carry",
-            "exit_terms",
-            "active_phase_start",
-            "active_phase_end",
-        ),
+        _CAP_MODULE_TOP_FIELDS,
+        blob_fields={
+            "source": (_SOURCE_FIELDS, _SOURCE_SKIP),
+            "carry": (_CARRY_FIELDS, _CARRY_SKIP),
+        },
     ))
 
-    # WaterfallTier diff
-    input_changes.extend(_entity_list_diff(
+    # WaterfallTier
+    input_changes.extend(_entity_list_diff_v2(
         b_in.get("waterfall_tiers") or [],
         a_in.get("waterfall_tiers") or [],
         "WaterfallTier",
-        ("hurdle_rate_pct", "gp_split_pct", "priority"),
+        _WATERFALL_FIELDS,
     ))
 
-    # DrawSource diff
-    input_changes.extend(_entity_list_diff(
+    # DrawSource
+    input_changes.extend(_entity_list_diff_v2(
         b_in.get("draw_sources") or [],
         a_in.get("draw_sources") or [],
         "DrawSource",
-        (
-            "label", "source_type", "sort_order", "draw_every_n_months",
-            "annual_interest_rate", "active_from_milestone", "active_to_milestone",
-            "active_from_offset_days", "active_to_offset_days",
-            "total_commitment", "funder_type",
-        ),
+        _DRAW_SOURCE_FIELDS,
     ))
 
     # Output diff — only _OUTPUT_KEYS; by_project is too noisy for the UI.
@@ -546,7 +774,7 @@ def diff_snapshots(
         if bv != av:
             output_changes[key] = {"before": bv, "after": av}
 
-    # Suppress changes that are invisible at 2-decimal display precision.
+    # Suppress rounding noise at 2-decimal display precision.
     visible: dict[str, Any] = {}
     for key, chg in output_changes.items():
         bv, av = chg.get("before"), chg.get("after")

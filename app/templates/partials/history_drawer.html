@@ -87,7 +87,17 @@
 }
 </style>
 
-{# ── Metric formatting macro ───────────────────────────────────────────── #}
+{# ── Value formatting macros ───────────────────────────────────────────── #}
+{% macro fmt_change_val(value, fmt) -%}
+  {%- if value is none -%}&mdash;
+  {%- elif fmt == 'currency' -%}${{ "{:,.0f}".format(value | float) }}
+  {%- elif fmt == 'percent' -%}{{ "%.2f"|format(value | float) }}%
+  {%- elif fmt == 'bool' -%}{{ "Yes" if value else "No" }}
+  {%- elif fmt == 'number' -%}{{ value | int if (value | float) == (value | float | int) else "%.2f"|format(value | float) }}
+  {%- else -%}{{ value | string | truncate(40, True) }}
+  {%- endif -%}
+{%- endmacro %}
+
 {% macro fmt_metric(key, value) -%}
   {%- if value is none -%}&mdash;
   {%- elif key == 'dscr' -%}{{ "%.2f"|format(value | float) }}&times;
@@ -186,25 +196,23 @@
   {% set output_changes = diff.output_changes or {} %}
   <button class="hist-diff-toggle"
           onclick="this.nextElementSibling.classList.toggle('open'); this.textContent = this.nextElementSibling.classList.contains('open') ? '▲ Hide changes' : '▼ Show changes'">
-    ▼ Show changes{% if input_changes %} ({{ input_changes | length }} input{% if input_changes | length != 1 %}s{% endif %}){% endif %}
+    ▼ Show changes{% if input_changes %} ({{ input_changes | length }} change{% if input_changes | length != 1 %}s{% endif %}){% endif %}
   </button>
   <div class="hist-diff-panel">
     <div class="hist-diff-section-title">What Changed</div>
     {% if input_changes %}
     {% for chg in input_changes %}
     <div class="hist-change-row">
-      <span class="hist-change-entity" title="{{ chg.entity }}: {{ chg.label }}">{{ chg.entity }}</span>
+      <span class="hist-change-entity">{{ chg.entity_label }}</span>
       {% if chg.get('change') == 'added' %}
-      <span class="hist-change-field">{{ chg.label }}</span>
       <span class="hist-change-added hist-change-val">+ added</span>
       {% elif chg.get('change') == 'removed' %}
-      <span class="hist-change-field">{{ chg.label }}</span>
       <span class="hist-change-removed hist-change-val">removed</span>
       {% else %}
-      <span class="hist-change-field">{{ chg.field }}</span>
-      <span class="hist-change-before hist-change-val">{{ chg.before | string | truncate(50, True) }}</span>
+      <span class="hist-change-field">{{ chg.field_label }}</span>
+      <span class="hist-change-before hist-change-val">{{ fmt_change_val(chg.before, chg.fmt) }}</span>
       <span class="hist-change-arrow">&rarr;</span>
-      <span class="hist-change-after hist-change-val">{{ chg.after | string | truncate(50, True) }}</span>
+      <span class="hist-change-after hist-change-val">{{ fmt_change_val(chg.after, chg.fmt) }}</span>
       {% endif %}
     </div>
     {% endfor %}
