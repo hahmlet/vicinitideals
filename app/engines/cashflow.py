@@ -1499,6 +1499,11 @@ async def _auto_size_debt_modules(
         _vehicle, _retirer = _resolve_vehicle(_candidate, capital_modules)
         if _vehicle != "source" or _retirer is None:
             continue
+        # Equity modules cannot retire debt — skip spurious pairs where a user
+        # accidentally set exit_terms.vehicle to an equity source.
+        _retirer_ft = str(getattr(_retirer, "funder_type", "") or "").replace("FunderType.", "")
+        if _retirer_ft in {"common_equity", "preferred_equity", "owner_investment", "owner_loan"}:
+            continue
         # Already handled by the multi-debt path above (is_bridge already set)?
         _c_src = _candidate.source or {}
         if _c_src.get("is_bridge"):
