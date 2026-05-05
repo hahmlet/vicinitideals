@@ -426,7 +426,12 @@ async def forgot_password_get(
 # ---------------------------------------------------------------------------
 
 def _client_ip(request: Request) -> str:
-    """Best-effort client IP, trusting X-Forwarded-For from the NGINX proxy."""
+    """Best-effort client IP. Prefers CF-Connecting-IP (set by Cloudflare proxy)
+    over X-Forwarded-For so the rate limiter buckets on the real visitor IP
+    rather than a proxy or SNAT address."""
+    cf_ip = request.headers.get("cf-connecting-ip")
+    if cf_ip:
+        return cf_ip.strip()
     xff = request.headers.get("x-forwarded-for")
     if xff:
         return xff.split(",", 1)[0].strip()
