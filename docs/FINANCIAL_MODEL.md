@@ -68,7 +68,7 @@ A **shared Source** is one `CapitalModule` (one contract identity — one lender
 - **Underwriting-level DSCR / LTV on a shared Source**: informational notification only. No feedback into sizing.
 - **Rollup display**: `rollup_sources` returns one row per CapitalModule with `total_principal = Σ junction.amount`, `covered_project_ids`, and `is_shared: bool`. The UI draws a "covers: P1, P2" chip on shared rows.
 
-**Per-project DSCR and IRR are computed from each project's own cashflow rows.** The cashflow engine writes per-project `OperationalOutputs.dscr` (NOI ÷ annual DS using junction-overlaid principal) and per-project unlevered IRR during its per-project loop. The waterfall engine's `_apply_levered_metrics` recomputes DSCR + levered IRR for the **default project only** (`outputs.project_id = oldest project`); for non-default projects the cashflow engine's values are authoritative. Multi-project deals additionally **skip the waterfall's in-place rewrite of `cash_flow.debt_service` / `net_cash_flow` / `cumulative_cash_flow`**: `WaterfallResult` rows don't carry `project_id`, so `debt_service_by_period[N]` is a scenario-wide aggregate (e.g. P1's $15.3K + P2's $27.9K = $43.2K) — pushing that onto every project's row would silently corrupt per-project DS that the cashflow engine sized via the junction overlay. Single-project deals retain the rewrite (it caps actual DS at NCF when DSCR < 1, keeping `cumulative_cash_flow` honest). The detection is `len({row.project_id for row in cash_flows if row.project_id is not None}) > 1`.
+**Per-project DSCR and IRR are computed from each project's own cashflow rows.** The cashflow engine writes per-project `OperationalOutputs.dscr` (NOI ÷ annual DS using junction-overlaid principal) and per-project unlevered IRR during its per-project loop. The waterfall engine's `_apply_levered_metrics` recomputes DSCR + levered IRR for the **default project only** (`outputs.project_id = oldest project`); for non-default projects the cashflow engine's values are authoritative. **The waterfall engine does not overwrite `cash_flow.debt_service`, `net_cash_flow`, or `cumulative_cash_flow` for any deal** (single- or multi-project). The cashflow engine is the sole writer of those columns. `_apply_levered_metrics` reads `net_cash_flow` to build `levered_cashflows` for XIRR, then recomputes DSCR using the cashflow engine's `debt_service` values. This applies uniformly — `WaterfallResult.cash_distributed` for the `debt_service` tier is a residual NCF allocation (what's left after DS is already deducted), not the PMT obligation.
 
 **Synthetic Owner Equity is per-project.** `_ensure_equity_and_tiers` walks every project on the scenario, joins through `capital_module_projects` to find which projects already have an equity module attached, and creates a synthetic `Owner Equity` (common_equity, $0, residual interest) for each project that lacks one — with a junction row tying the synthetic to that specific project. The default for new equity is per-project, not shared; users opt into sharing via the Add Project drawer's share-source checkbox. Single-project scenarios are unchanged: if the lone project has no equity, one is created and attached.
 
@@ -1420,10 +1420,13 @@ service — the lender's primary coverage metric.
 DSCR = NOI_stabilized_annual / (operation_debt_monthly × 12)
 ```
 
-**Engine source.** `OperationalOutputs.dscr` (per project, written by the
-cashflow engine using the junction-overlaid principal). The waterfall's
-`_apply_levered_metrics` recomputes DSCR for the default project only;
-non-default projects retain the cashflow-engine value.
+**Engine source.** `OperationalOutputs.dscr` (per project). The cashflow
+engine writes the initial value using the junction-overlaid principal.
+`_apply_levered_metrics` in `waterfall.py` recomputes DSCR for the default
+project only, using the cashflow engine's authoritative `debt_service` values
+from `CashFlow` rows — it does not use `WaterfallResult.cash_distributed`
+from the `debt_service` tier. Non-default projects retain the cashflow-engine
+value unchanged.
 
 **Notes / edge cases.** Lenders typically require ≥ 1.20–1.25. DSCR is per
 loan, so multi-debt scenarios surface a worst-case across modules.
@@ -1800,21 +1803,20 @@ loss_to_lease_pct = (market_rent - in_place_rent) / market_rent × 100
 
 A positive LTL indicates below-market rents — the primary value-add opportunity in multifamily acquisitions. Three of five benchmark CRE models (A.CRE Acquisition, PropRise, A Simple Model) track LTL as a first-class metric. Exported in the JSON payload via `unit_mix` and available for investor-facing reports.
 
-### 7.5 Debt service in the waterfall (true DS, not placeholder)
+### 7.5 Debt service in the waterfall — cashflow engine is authoritative
 
-The cashflow engine produces an estimate of debt service using simple IO/P&I formulas. The waterfall engine then **recomputes** levered cash flows using the actual distributions from `debt_service` tiers in the waterfall:
+The cashflow engine computes debt service using closed-form IO/P&I formulas and writes the authoritative `debt_service`, `net_cash_flow`, and `cumulative_cash_flow` columns on every `CashFlow` row. **The waterfall engine does not overwrite these values.**
+
+`_apply_levered_metrics` builds `levered_cashflows` directly from the cashflow engine's `net_cash_flow` for use in levered IRR:
 
 ```python
-debt_service_rows = select(WaterfallResult where tier_type = 'debt_service')
-debt_service_by_period = aggregate by period
-
-for cash_flow in cash_flows:
-    waterfall_ds = debt_service_by_period.get(period, ZERO)
-    debt_service = waterfall_ds if waterfall_ds > ZERO else prior_debt_service
-    cash_flow.net_cash_flow = NOI − debt_service + adjustments
+for cash_flow in _default_cashflows:
+    levered_cashflows[cash_flow.period] = _to_decimal(cash_flow.net_cash_flow)
 ```
 
-**Why this two-step dance?** Because the waterfall can enforce constraints the cashflow engine cannot: DSCR cutoffs, priority-of-payment rules, deferred-interest accruals, actual timing of lender payments. The cashflow engine gives us a closed-form sizing; the waterfall produces the **authoritative** levered cash flows that feed IRR.
+DSCR is then computed from the `_default_cashflows` rows using the cashflow engine's `debt_service` values (via `_compute_dscr`), and written to `OperationalOutputs.dscr`.
+
+**Why not use WaterfallResult.cash_distributed for the debt_service tier?** The waterfall distributes from **post-DS** `net_cash_flow` as `available_cash`. This means the `debt_service` tier receives only the residual equity slice (e.g. NOI $45,352 − DS $36,770 = $8,582/period) — not the PMT obligation. Reading `cash_distributed` from this tier and writing it back to `cash_flow.debt_service` would swap the two values (debt_service ≈ $8,582, net_cash_flow ≈ $36,770), corrupting DSCR for both single- and multi-project deals. The cashflow engine's sized PMT is the correct obligation; the waterfall respects it.
 
 ### 7.6 Levered vs unlevered project IRR
 
@@ -1992,7 +1994,7 @@ The pill replaces the legacy sidebar "Sources = Uses" banner (removed April 18 2
 
 6. **Closing costs excluded from bridge loan sizing via `_cc_labels`**. A construction loan should not cover its own origination fee — the fee lives in `pre_construction`, the same phase that sizes the pre-dev loan. Without the exclusion, pre-dev loan would double-count. Perm gap-fill covers all closing costs.
 
-7. **Waterfall re-derives debt service** from `debt_service` tier allocations rather than reusing the cashflow-engine placeholder. This preserves accrual logic, DSCR cutoffs, and priority-of-payment rules that the cashflow engine cannot enforce alone.
+7. **Cashflow engine is authoritative for `debt_service`, `net_cash_flow`, and `cumulative_cash_flow`.** The waterfall engine does not overwrite these columns. The waterfall distributes from post-DS `net_cash_flow` as `available_cash`, so `WaterfallResult.cash_distributed` for the `debt_service` tier is the residual NCF allocation — not the PMT obligation. Overwriting `cash_flow.debt_service` with this value would swap the two columns and corrupt DSCR. `_apply_levered_metrics` builds `levered_cashflows` from the cashflow engine's `net_cash_flow` and computes DSCR from the cashflow engine's `debt_service` values.
 
 8. **Cumulative cash flow resets to operating reserve at first stabilized month**. This is the invariant the entire gap-fill formula is designed to satisfy. Without it, you couldn't prove that Sources = Uses after the cash flow loop runs. With it, the reserve is guaranteed to exist at stabilization regardless of what happens in lease-up.
 
