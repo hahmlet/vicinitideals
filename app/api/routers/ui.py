@@ -1752,6 +1752,7 @@ async def settings_organization(
         {
             "org": org,
             "org_users": org_users,
+            "user": user,
             **_base_ctx(user, dedup_count, "", address_issues_count),
         },
     )
