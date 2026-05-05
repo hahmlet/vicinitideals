@@ -1889,7 +1889,10 @@ async def deals_new_page(
         try:
             _opp = await session.get(
                 Opportunity, UUID(opp_id),
-                options=[selectinload(Opportunity.scraped_listings)],
+                options=[
+                    selectinload(Opportunity.scraped_listings),
+                    selectinload(Opportunity.opportunity_buildings).selectinload(OpportunityBuilding.building),
+                ],
             )
             if _opp:
                 opp_name = _opp.name
@@ -1897,6 +1900,12 @@ async def deals_new_page(
                     if _sl.asking_price is not None and _sl.asking_price > 0:
                         opp_asking_price = float(_sl.asking_price)
                         break
+                # Fallback: check buildings for manually-created opportunities
+                if opp_asking_price is None:
+                    for _ob in sorted(_opp.opportunity_buildings or [], key=lambda o: o.sort_order):
+                        if _ob.building and _ob.building.asking_price and _ob.building.asking_price > 0:
+                            opp_asking_price = float(_ob.building.asking_price)
+                            break
         except ValueError:
             opp_id = ""
     ctx["opp_id"] = opp_id
@@ -2824,6 +2833,17 @@ async def opportunity_wizard_step(
         deal_type = str(form.get("deal_type", "value_add"))
         asking_price_raw = str(form.get("asking_price", "") or "")
         opp_notes = str(form.get("notes", "") or "")
+
+        # Persist the asking price on the first building so /deals/new can pre-fill
+        # the Acquisition Cost field when creating a deal from this opportunity.
+        if asking_price_raw and buildings_saved:
+            try:
+                _ap = Decimal(asking_price_raw.replace(",", ""))
+                if _ap > 0:
+                    buildings_saved[0].asking_price = _ap
+                    await session.commit()
+            except Exception:
+                pass
 
         return templates.TemplateResponse(request, "opportunity_wizard.html", {
             "request": request, "step": 3, "opp": opp,
