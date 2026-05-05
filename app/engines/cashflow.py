@@ -262,6 +262,15 @@ async def _compute_project_cashflow(
     )).scalar_one_or_none()
     prev_noi_stabilized = _to_decimal(prev_outputs.noi_stabilized) if prev_outputs else None
 
+    # Flush any pending (unflushed) ORM objects from a prior compute pass
+    # before the bulk DELETE runs.  With autoflush=False, session.add_all()
+    # rows from a previous pass remain PENDING and are NOT evicted by
+    # synchronize_session="evaluate" — they would survive the DELETE and be
+    # committed alongside the new pass, producing mixed-pass data in the DB.
+    # Flushing here ensures all prior-pass rows are written then immediately
+    # deleted, so only the current pass commits.
+    await session.flush()
+
     # Now safe to wipe this project's prior rows — prev_outputs is captured.
     await _purge_project_outputs(session, deal_uuid, project.id)
 
