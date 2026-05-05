@@ -1757,6 +1757,29 @@ async def settings_organization(
     )
 
 
+@router.post("/settings/organization", response_class=HTMLResponse)
+async def settings_organization_post(
+    request: Request,
+    session: DBSession,
+    org_name: str = Form(...),
+) -> HTMLResponse:
+    user = await _get_user(session, request)
+    if user is None:
+        return RedirectResponse(url="/login?next=/settings/organization", status_code=303)
+    if not getattr(user, "is_org_admin", False):
+        return HTMLResponse("Access denied", status_code=403)
+
+    org = await session.get(Organization, user.org_id)
+    if org is None:
+        return HTMLResponse("Organization not found", status_code=404)
+
+    org.name = org_name.strip()
+    await session.commit()
+
+    # Redirect back to GET to show updated data
+    return RedirectResponse(url="/settings/organization", status_code=303)
+
+
 @router.post("/ui/admin/rlis-refresh")
 async def admin_rlis_refresh(
     request: Request,

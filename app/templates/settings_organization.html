@@ -18,7 +18,14 @@
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px">
       <div>
         <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">Organization Name</div>
+        {% if user.is_org_admin %}
+        <form method="post" style="display:flex;gap:8px;align-items:center">
+          <input type="text" name="org_name" value="{{ org.name }}" style="flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:15px" required>
+          <button type="submit" class="btn btn-primary" style="padding:6px 12px;font-size:13px">Save</button>
+        </form>
+        {% else %}
         <div style="font-size:15px;font-weight:600;color:var(--text)">{{ org.name }}</div>
+        {% endif %}
       </div>
       <div>
         <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">Slug</div>
