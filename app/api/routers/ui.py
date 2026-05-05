@@ -8262,40 +8262,7 @@ async def deal_setup_wizard_complete(
         select(Project).where(Project.scenario_id == model_id).order_by(Project.created_at.asc())
     )).scalars())
 
-    # Seed default OpEx line items per project if none exist — consensus
-    # from CRE model cross-analysis (HelloData, A.CRE, PropRise). User
-    # fills in amounts later. Each project gets its own copy because
-    # OpEx rows are project-scoped.
-    _DEFAULT_OPEX_LINES = [
-        "Real Estate Taxes",
-        "Property Insurance",
-        "Utilities",
-        "Repairs & Maintenance",
-        "Management Fee",
-        "Payroll & On-Site Staff",
-        "Marketing & Leasing",
-        "General & Administrative",
-        "Turnover / Make-Ready",
-        "CapEx Reserve",
-    ]
-    for _proj in all_scenario_projects:
-        _existing_opex = list((await session.execute(
-            select(OperatingExpenseLine).where(
-                OperatingExpenseLine.project_id == _proj.id,
-            )
-        )).scalars())
-        if _existing_opex:
-            continue
-        for _label in _DEFAULT_OPEX_LINES:
-            session.add(OperatingExpenseLine(
-                project_id=_proj.id,
-                label=_label,
-                annual_amount=Decimal("0"),
-                per_type="flat",
-                escalation_rate_pct_annual=Decimal("3"),
-                active_in_phases=["stabilized"],
-                notes="Seeded default — set amount to customize or delete if not applicable.",
-            ))
+
 
     inputs.deal_setup_complete = True
     session.add(inputs)
@@ -8571,51 +8538,51 @@ async def deal_setup_wizard_complete(
                 notes="$/unit/mo to configure — typically 4.5% annual turnover × avg rent × recovery rate / 12",
             ))
 
-    # ── OpEx: seed 19 standard lines ────────────────────────────────────────
-    # Skip entirely in NOI mode — OpEx module is not used
-    # Skip individual labels that already exist (idempotent re-run)
-    existing_opex_labels = set((await session.execute(
-        select(OperatingExpenseLine.label).where(
-            OperatingExpenseLine.project_id == default_project.id
-        )
-    )).scalars())
-
+    # ── OpEx: seed canonical standard lines for every project ───────────────
+    # Skip individual labels that already exist (idempotent re-run).
+    # Seeded in all income modes — user may switch from NOI to revenue/opex.
     # (label, per_type, scale_with_lease_up, lease_up_floor_pct, active_phases)
     _OPEX_SEEDS = [
-        ("Property Tax",             "flat",     False, None,   ["lease_up", "stabilized"]),
-        ("Insurance",                "flat",     False, None,   ["lease_up", "stabilized"]),
-        ("Property Management",      "per_unit", True,  25.0,   ["lease_up", "stabilized"]),
-        ("On-Site Staff",            "flat",     False, None,   ["lease_up", "stabilized"]),
-        ("Payroll Taxes",            "flat",     False, None,   ["lease_up", "stabilized"]),
-        ("Electric — Common Areas",  "flat",     True,  100.0,  ["lease_up", "stabilized"]),
-        ("Water / Sewer",            "per_unit", True,  50.0,   ["lease_up", "stabilized"]),
-        ("Gas",                      "per_unit", True,  50.0,   ["lease_up", "stabilized"]),
-        ("Internet — Common",        "flat",     False, None,   ["lease_up", "stabilized"]),
-        ("Garbage / Refuse",         "flat",     True,  75.0,   ["lease_up", "stabilized"]),
-        ("Repairs & Maintenance",    "per_unit", True,  25.0,   ["stabilized"]),
-        ("Landscaping",              "flat",     False, None,   ["lease_up", "stabilized"]),
-        ("Replacement Reserve",      "per_unit", False, None,   ["stabilized"]),
-        ("Resident Services",        "flat",     True,  25.0,   ["stabilized"]),
-        ("Legal",                    "flat",     False, None,   ["lease_up", "stabilized"]),
-        ("Accounting",               "flat",     False, None,   ["lease_up", "stabilized"]),
-        ("Office / Admin",           "flat",     False, None,   ["lease_up", "stabilized"]),
-        ("Advertising & Leasing",    "per_unit", True,  100.0,  ["lease_up", "stabilized"]),
-        ("Unit Turnover",            "per_unit", False, None,   ["stabilized"]),
+        ("Real Estate Taxes",          "flat",     False, None,   ["lease_up", "stabilized"]),
+        ("Insurance",                  "flat",     False, None,   ["lease_up", "stabilized"]),
+        ("Property Management",        "per_unit", True,  25.0,   ["lease_up", "stabilized"]),
+        ("Utilities — Water/Sewer",    "per_unit", True,  50.0,   ["lease_up", "stabilized"]),
+        ("Utilities — Electric",       "flat",     True,  100.0,  ["lease_up", "stabilized"]),
+        ("Utilities — Gas",            "per_unit", True,  50.0,   ["lease_up", "stabilized"]),
+        ("Utilities — Trash",          "flat",     True,  75.0,   ["lease_up", "stabilized"]),
+        ("Repairs & Maintenance",      "per_unit", True,  25.0,   ["stabilized"]),
+        ("Marketing & Leasing",        "per_unit", True,  100.0,  ["lease_up", "stabilized"]),
+        ("Administrative",             "flat",     False, None,   ["lease_up", "stabilized"]),
+        ("Payroll",                    "flat",     False, None,   ["lease_up", "stabilized"]),
+        ("Landscaping & Snow Removal", "flat",     False, None,   ["lease_up", "stabilized"]),
+        ("Pest Control",               "flat",     False, None,   ["lease_up", "stabilized"]),
+        ("Cleaning & Janitorial",      "flat",     False, None,   ["lease_up", "stabilized"]),
+        ("Security",                   "flat",     False, None,   ["lease_up", "stabilized"]),
+        ("Resident Services",          "flat",     True,  25.0,   ["stabilized"]),
+        ("Compliance & Legal",         "flat",     False, None,   ["lease_up", "stabilized"]),
+        ("Bank/Software Fees",         "flat",     False, None,   ["lease_up", "stabilized"]),
+        ("Unit Turnover",              "per_unit", False, None,   ["stabilized"]),
     ]
 
-    for label, per_type, scale, floor_pct, phases in _OPEX_SEEDS:
-        if label in existing_opex_labels or model.income_mode == "noi":
-            continue
-        session.add(OperatingExpenseLine(
-            project_id=default_project.id,
-            label=label,
-            annual_amount=Decimal("0"),
-            per_type=per_type,
-            scale_with_lease_up=scale,
-            lease_up_floor_pct=Decimal(str(floor_pct)) if floor_pct is not None else None,
-            escalation_rate_pct_annual=Decimal("3"),
-            active_in_phases=phases,
-        ))
+    for _opex_proj in all_scenario_projects:
+        _existing_opex_labels = set((await session.execute(
+            select(OperatingExpenseLine.label).where(
+                OperatingExpenseLine.project_id == _opex_proj.id
+            )
+        )).scalars())
+        for label, per_type, scale, floor_pct, phases in _OPEX_SEEDS:
+            if label in _existing_opex_labels:
+                continue
+            session.add(OperatingExpenseLine(
+                project_id=_opex_proj.id,
+                label=label,
+                annual_amount=Decimal("0"),
+                per_type=per_type,
+                scale_with_lease_up=scale,
+                lease_up_floor_pct=Decimal(str(floor_pct)) if floor_pct is not None else None,
+                escalation_rate_pct_annual=Decimal("3"),
+                active_in_phases=phases,
+            ))
 
     # Save Deal Health thresholds from wizard step 7 form.
     _ht: dict[str, float] = {}
