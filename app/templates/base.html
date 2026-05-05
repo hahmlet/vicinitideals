@@ -121,15 +121,25 @@
         <a href="/settings/data-sources" class="settings-popup-item">
           <span>🧭</span> Data Sources
         </a>
+        <a href="/settings/organization" class="settings-popup-item">
+          <span>🏢</span> Organization
+        </a>
       </div>
       <button type="button" class="nav-item nav-item-muted settings-btn" onclick="toggleSettingsMenu()" id="settingsBtn">
         <span class="nav-icon">⚙</span> Settings <span id="app-version" style="opacity:.45;font-size:10px"></span>
       </button>
     </div>
     {% else %}
-    <a href="#" class="nav-item nav-item-muted">
-      <span class="nav-icon">⚙</span> Settings <span id="app-version" style="opacity:.45;font-size:10px"></span>
-    </a>
+    <div class="settings-menu-wrap" id="settingsMenuWrap">
+      <div class="settings-popup" id="settingsPopup" style="display:none">
+        <a href="/settings/organization" class="settings-popup-item">
+          <span>🏢</span> Organization
+        </a>
+      </div>
+      <button type="button" class="nav-item nav-item-muted settings-btn" onclick="toggleSettingsMenu()" id="settingsBtn">
+        <span class="nav-icon">⚙</span> Settings <span id="app-version" style="opacity:.45;font-size:10px"></span>
+      </button>
+    </div>
     {% endif %}
     <div class="sidebar-user">
       <div class="user-avatar" style="background:{{ user_color }}">{{ user_initials }}</div>

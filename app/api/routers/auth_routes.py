@@ -149,9 +149,17 @@ async def logout() -> RedirectResponse:
 @router.get("/register", response_class=HTMLResponse)
 async def register_get(
     request: Request,
+    session: DBSession,
     error: str = Query(default=""),
 ) -> HTMLResponse:
-    return templates.TemplateResponse(request, "register.html", {"error": error})
+    orgs = list(
+        (await session.execute(select(Organization).order_by(Organization.name))).scalars()
+    )
+    return templates.TemplateResponse(
+        request,
+        "register.html",
+        {"error": error, "orgs": orgs},
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -168,12 +176,18 @@ async def register_post(
     email = str(form.get("email", "")).strip().lower()
     password = str(form.get("password", ""))
     password_confirm = str(form.get("password_confirm", ""))
+    org_choice = str(form.get("org_choice", "")).strip()  # UUID or "new"
+    org_name_input = str(form.get("org_name", "")).strip()
+
+    orgs = list(
+        (await session.execute(select(Organization).order_by(Organization.name))).scalars()
+    )
 
     def _err(msg: str) -> HTMLResponse:
         return templates.TemplateResponse(
             request,
             "register.html",
-            {"error": msg, "name": name, "email": email},
+            {"error": msg, "name": name, "email": email, "orgs": orgs},
             status_code=400,
         )
 
@@ -186,6 +200,9 @@ async def register_post(
     if len(password) < 8:
         return _err("Password must be at least 8 characters.")
 
+    if not org_choice:
+        return _err("Please select or create an organization.")
+
     # Check email uniqueness
     existing = (
         await session.execute(select(User).where(User.email == email))
@@ -193,18 +210,32 @@ async def register_post(
     if existing is not None:
         return _err("An account with that email already exists.")
 
-    # Resolve org — use first org or create one
-    org = (
-        await session.execute(select(Organization).order_by(Organization.created_at))
-    ).scalars().first()
-    if org is None:
-        org = Organization(
-            id=uuid.uuid4(),
-            name="Default Organization",
-            slug=f"org-{uuid.uuid4().hex[:8]}",
-        )
+    # Resolve or create org
+    is_org_admin = False
+    if org_choice == "new":
+        if not org_name_input:
+            return _err("Organization name is required when creating a new org.")
+        # Auto-generate slug from name (spaces → dashes, lowercase, dedupe if needed)
+        base_slug = "-".join(org_name_input.lower().split())
+        slug = base_slug
+        suffix = 1
+        while (
+            await session.execute(select(Organization).where(Organization.slug == slug))
+        ).scalar_one_or_none() is not None:
+            slug = f"{base_slug}-{suffix}"
+            suffix += 1
+        org = Organization(id=uuid.uuid4(), name=org_name_input, slug=slug)
         session.add(org)
         await session.flush()
+        is_org_admin = True  # Creator of a new org becomes Admin
+    else:
+        try:
+            org_id = uuid.UUID(org_choice)
+        except ValueError:
+            return _err("Invalid organization selection.")
+        org = await session.get(Organization, org_id)
+        if org is None:
+            return _err("Selected organization not found.")
 
     user = User(
         id=uuid.uuid4(),
@@ -213,6 +244,7 @@ async def register_post(
         email=email,
         hashed_password=hash_password(password),
         is_active=True,
+        is_org_admin=is_org_admin,
         email_verified=False,
     )
     session.add(user)

@@ -44,6 +44,7 @@ class UserCreate(UserBase):
 class UserRead(UserBase):
     id: uuid.UUID
     org_id: uuid.UUID
+    is_org_admin: bool = False
     created_at: datetime
 
     model_config = {"from_attributes": True}

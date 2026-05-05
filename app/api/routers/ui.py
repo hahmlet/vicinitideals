@@ -29,7 +29,7 @@ from app.config import settings
 from app.models.broker import Broker, Brokerage
 from app.models.deal import STANDARD_OPEX_CATEGORIES, Deal, DealModel, DealOpportunity, DealStatus, IncomeStream, IncomeStreamType, OperatingExpenseLine, OperationalInputs, ProjectType, UnitMix, UseLine, UseLinePhase
 from app.models.ingestion import DedupCandidate, DedupStatus, IngestJob, RecordType, SavedSearchCriteria
-from app.models.org import User
+from app.models.org import Organization, User
 from app.models.capital import CapitalModule, DrawSource, WaterfallTier
 from app.models.cashflow import OperationalOutputs
 from app.models.parcel import Parcel, ProjectParcel, ProjectParcelRelationship
@@ -839,6 +839,7 @@ def _base_ctx(user: User | None, dedup_count: int, active_nav: str, address_issu
         # Soft email-verification gate: templates show a banner when False.
         # None / missing is treated as verified to avoid false positives.
         "user_email_verified": bool(getattr(user, "email_verified", True)) if user else True,
+        "is_org_admin": bool(getattr(user, "is_org_admin", False)) if user else False,
         "active_nav": active_nav,
         "dedup_count": dedup_count,
         "address_issues_count": address_issues_count,
@@ -1716,6 +1717,41 @@ async def settings_data_sources(
         {
             "groups": groups,
             "heartbeat_ts": heartbeat_ts,
+            **_base_ctx(user, dedup_count, "", address_issues_count),
+        },
+    )
+
+
+# ---------------------------------------------------------------------------
+# GET /settings/organization
+# ---------------------------------------------------------------------------
+
+@router.get("/settings/organization", response_class=HTMLResponse)
+async def settings_organization(
+    request: Request,
+    session: DBSession,
+) -> HTMLResponse:
+    user = await _get_user(session, request)
+    if user is None:
+        return RedirectResponse(url="/login?next=/settings/organization", status_code=303)
+    dedup_count = await _get_dedup_count(session)
+    address_issues_count = await _get_address_issues_count(session)
+
+    org = await session.get(Organization, user.org_id)
+    org_users = list(
+        (
+            await session.execute(
+                select(User).where(User.org_id == user.org_id).order_by(User.created_at)
+            )
+        ).scalars()
+    )
+
+    return templates.TemplateResponse(
+        request,
+        "settings_organization.html",
+        {
+            "org": org,
+            "org_users": org_users,
             **_base_ctx(user, dedup_count, "", address_issues_count),
         },
     )

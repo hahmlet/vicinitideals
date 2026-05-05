@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Organization — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div class="page-header" style="display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid var(--border);background:var(--surface)">
+  <div>
+    <div class="page-title" style="font-size:20px;font-weight:700;color:var(--text)">Organization</div>
+    <div style="font-size:12px;color:var(--text-muted);margin-top:2px">{{ org.name }}</div>
+  </div>
+  <a href="/deals" class="btn btn-secondary">Back to Deals</a>
+</div>
+
+<div style="padding:24px;display:grid;gap:20px;max-width:900px">
+
+  {# ── Org info card ─────────────────────────────────────────────────────── #}
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px">
+    <div style="font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px">Details</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px">
+      <div>
+        <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">Organization Name</div>
+        <div style="font-size:15px;font-weight:600;color:var(--text)">{{ org.name }}</div>
+      </div>
+      <div>
+        <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">Slug</div>
+        <div style="font-size:13px;color:var(--text-muted);font-family:monospace">{{ org.slug }}</div>
+      </div>
+      <div>
+        <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">Created</div>
+        <div style="font-size:13px;color:var(--text-muted)">{{ org.created_at.strftime("%b %d, %Y") }}</div>
+      </div>
+    </div>
+  </div>
+
+  {# ── Members table ──────────────────────────────────────────────────────── #}
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:auto">
+    <div style="padding:16px 16px 0;font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em">Members</div>
+    <table style="width:100%;border-collapse:collapse;font-size:13px;margin-top:8px">
+      <thead>
+        <tr style="background:var(--surface-alt)">
+          <th style="text-align:left;padding:10px 16px;border-bottom:1px solid var(--border)">Name</th>
+          <th style="text-align:left;padding:10px 16px;border-bottom:1px solid var(--border)">Email</th>
+          <th style="text-align:left;padding:10px 16px;border-bottom:1px solid var(--border)">Role</th>
+          <th style="text-align:left;padding:10px 16px;border-bottom:1px solid var(--border)">Joined</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for member in org_users %}
+        <tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:10px 16px">
+            <div style="display:flex;align-items:center;gap:8px">
+              {% set parts = member.name.split() %}
+              {% set initials = (parts[0][0] + parts[-1][0])|upper if parts|length >= 2 else member.name[:2]|upper %}
+              <div style="width:28px;height:28px;border-radius:50%;background:{{ member.display_color or '#2563EB' }};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0">{{ initials }}</div>
+              <span style="font-weight:{% if member.is_org_admin %}600{% else %}400{% endif %}">{{ member.name }}</span>
+              {% if member.id == org_users[0].id and member.is_org_admin %}
+              <span style="font-size:10px;color:var(--text-muted)">(you)</span>
+              {% endif %}
+            </div>
+          </td>
+          <td style="padding:10px 16px;color:var(--text-muted)">{{ member.email or "—" }}</td>
+          <td style="padding:10px 16px">
+            {% if member.is_org_admin %}
+            <span style="font-size:11px;font-weight:600;background:var(--accent-light, #dbeafe);color:var(--accent);border-radius:4px;padding:2px 7px">Admin</span>
+            {% else %}
+            <span style="font-size:11px;color:var(--text-muted)">User</span>
+            {% endif %}
+          </td>
+          <td style="padding:10px 16px;color:var(--text-muted)">{{ member.created_at.strftime("%b %d, %Y") }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {# ── Org-level settings (placeholder) ─────────────────────────────────── #}
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px">
+    <div style="font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Organization Settings</div>
+    <div style="font-size:13px;color:var(--text-muted);font-style:italic">
+      Org-level defaults (e.g. risk-free rate, underwriting assumptions) will appear here.
+    </div>
+  </div>
+
+</div>
+{% endblock %}
