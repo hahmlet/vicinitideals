@@ -1998,6 +1998,7 @@ async def _auto_size_debt_modules(
             ul.amount = actual_reserve
             ul.notes = _reserve_notes
             ul.source_capital_module_id = _op_reserve_source_id
+            ul.cost_category = "soft"
             session.add(ul)
             op_reserve_found = True
             break
@@ -2009,6 +2010,7 @@ async def _auto_size_debt_modules(
             phase="operation",
             amount=actual_reserve,
             timing_type="first_day",
+            cost_category="soft",
             notes=_reserve_notes,
         )
         session.add(new_op)
@@ -2044,6 +2046,7 @@ async def _auto_size_debt_modules(
         _ci_keep.amount = total_constr_io
         _ci_keep.notes = _constr_int_notes
         _ci_keep.source_capital_module_id = _ci_source_id
+        _ci_keep.cost_category = "soft"
         session.add(_ci_keep)
         for _ci_dup in _ci_rows[1:]:
             await session.delete(_ci_dup)
@@ -2056,6 +2059,7 @@ async def _auto_size_debt_modules(
             phase="construction",
             amount=total_constr_io,
             timing_type="first_day",
+            cost_category="soft",
             notes=_constr_int_notes,
         )
         session.add(new_ul)
@@ -2071,6 +2075,7 @@ async def _auto_size_debt_modules(
                 ul.amount = _lease_up_carry
                 ul.notes = f"Auto-computed: perm debt service during {lease_up_months}-month lease-up net of ~1/3 stabilized NOI (phantom CF avg, 60/40 split, opex 50→100%)"
                 ul.source_capital_module_id = _lu_source_id
+                ul.cost_category = "soft"
                 session.add(ul)
             else:
                 await session.delete(ul)
@@ -2085,6 +2090,7 @@ async def _auto_size_debt_modules(
             phase="operation_lease_up",
             amount=_lease_up_carry,
             timing_type="first_day",
+            cost_category="soft",
             notes=f"Auto-computed: perm debt service during {lease_up_months}-month lease-up net of ~1/3 stabilized NOI (phantom CF avg, 60/40 split, opex 50→100%)",
         )
         session.add(new_lu)
@@ -2131,6 +2137,7 @@ async def _auto_size_debt_modules(
                     _existing_bio.amount = _bio_amt
                     _existing_bio.notes  = _bnotes
                     _existing_bio.source_capital_module_id = _bridge_io_module.get(_bft)
+                    _existing_bio.cost_category = "soft"
                     session.add(_existing_bio)
                 else:
                     await session.delete(_existing_bio)
@@ -2143,6 +2150,7 @@ async def _auto_size_debt_modules(
                     phase="construction",
                     amount=_bio_amt,
                     timing_type="first_day",
+                    cost_category="soft",
                     notes=_bnotes,
                 )
                 session.add(_new_io_ul)
@@ -2180,6 +2188,7 @@ async def _auto_size_debt_modules(
                     _cc_exist.amount = _cc_amt
                     _cc_exist.phase  = _ccm_phase
                     _cc_exist.source_capital_module_id = getattr(_ccm_ref, "id", None)
+                    _cc_exist.cost_category = "acquisition" if _ccm_ft == "acquisition_loan" else "soft"
                     session.add(_cc_exist)
                 elif _cc_amt > ZERO:
                     _new_cc_ul = UseLine(
@@ -2189,6 +2198,7 @@ async def _auto_size_debt_modules(
                         phase=_ccm_phase,
                         amount=_cc_amt,
                         timing_type="first_day",
+                        cost_category="acquisition" if _ccm_ft == "acquisition_loan" else "soft",
                         notes="Auto-computed — edit to override",
                     )
                     session.add(_new_cc_ul)

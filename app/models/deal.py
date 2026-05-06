@@ -647,6 +647,64 @@ class UnitMix(Base):
     )
 
 
+USE_COST_CATEGORIES: tuple[str, ...] = ("acquisition", "soft", "hard")
+
+USE_CATEGORY_LABELS: dict[str, str] = {
+    "acquisition": "Acquisition",
+    "soft": "Soft Costs",
+    "hard": "Hard Costs",
+}
+
+USE_CATEGORY_PRESETS: dict[str, tuple[str, ...]] = {
+    "acquisition": (
+        "Purchase Price",
+        "Closing Costs",
+        "Lender Origination Fee",
+        "Appraisal",
+        "Title Insurance",
+        "Environmental Phase I",
+        "Legal Fees",
+        "Survey",
+        "Acquisition Fee",
+        "Purchase Price Adjustments",
+    ),
+    "soft": (
+        "Architect Fees",
+        "Structural Engineering",
+        "MEP Engineering",
+        "Civil Engineering",
+        "Building Permits",
+        "System Development Charges (SDCs)",
+        "Legal Fees",
+        "Owner's Representative",
+        "Builders' Risk Insurance",
+        "Performance Bond",
+        "Loan Commitment Fee",
+        "Pre-Development Costs",
+        "Marketing & Pre-Leasing",
+        "Soft Cost Contingency",
+    ),
+    "hard": (
+        "Demolition",
+        "Hazmat Abatement",
+        "Site Work & Grading",
+        "Foundation & Concrete",
+        "Framing & Structure",
+        "Roofing",
+        "Windows & Exterior Doors",
+        "Mechanical (HVAC)",
+        "Electrical",
+        "Plumbing",
+        "Fire Protection",
+        "Interior Finishes",
+        "Appliances & Fixtures",
+        "Landscaping",
+        "GC Overhead & Profit",
+        "Hard Cost Contingency",
+    ),
+}
+
+
 class UseLine(Base):
     """A one-time capital expenditure or use-of-funds line item (Project-level)."""
 
@@ -674,6 +732,7 @@ class UseLine(Base):
     amount: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=0)
     timing_type: Mapped[str] = mapped_column(String(20), nullable=False, default="first_day")
     is_deferred: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    cost_category: Mapped[str | None] = mapped_column(String(60), nullable=True)
     notes: Mapped[str | None] = mapped_column(Text, nullable=True)
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
