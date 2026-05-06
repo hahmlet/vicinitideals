@@ -36,7 +36,7 @@ def _commit_3_sheet_order(num_projects: int) -> tuple[str, ...]:
     """Sheet roster after commit 3 + Phase H2 Debt Schedule + Waterfall + Unit Mix.
 
     Order: Cover → UW Summary → UW Pro Forma → UW Cash Flow →
-    Sensitivity → Investor Returns → Waterfall → Unit Mix →
+    Sources & Uses → Sensitivity → Investor Returns → Waterfall → Unit Mix →
     Debt Schedule → Assumptions → P{n} per-project sheets → Glossary.
     Waterfall and Unit Mix were added in commits cbd2828/be7b361.
     """
@@ -45,6 +45,7 @@ def _commit_3_sheet_order(num_projects: int) -> tuple[str, ...]:
         "Underwriting Summary",
         "Underwriting Pro Forma",
         "Underwriting Cash Flow",
+        "Sources & Uses",
         "Sensitivity",
         "Investor Returns",
         "Waterfall",
@@ -99,6 +100,7 @@ _NON_METRIC_PREFIXES = (
     "s_waterfall_",    # waterfall tier sums (per-tier-type cash distributed)
     "s_assumptions_",  # assumption inputs
     "s_su_",           # scenario S&U panel totals (alias of Total Uses/Sources/Gap)
+    "s_su2_",          # dedicated Sources & Uses sheet totals (category + grand totals)
     "s_loan_",         # Debt Schedule per-loan rows (rate/term/amort/balloon)
 )
 

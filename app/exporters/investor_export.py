@@ -75,6 +75,8 @@ from app.models.capital import (
 from app.models.cashflow import CashFlow, CashFlowLineItem, OperationalOutputs
 from app.models.deal import (
     ALWAYS_SHOWN_OPEX_CATEGORIES,
+    USE_CATEGORY_LABELS,
+    USE_COST_CATEGORIES,
     Deal,
     DealModel,
     OperationalInputs,
@@ -124,6 +126,7 @@ async def export_investor_workbook(
     # Each set lists which profiles render that sheet.  Adding a new profile
     # only requires updating the relevant set(s) below.
     _HAS_UW        = {"internal", "lp", "lender"}   # UW Summary + Pro Forma + Cash Flow
+    _HAS_SU        = {"internal", "lp", "lender"}   # Sources & Uses dedicated sheet
     _HAS_RETURNS   = {"internal", "lp"}              # Investor Returns + Waterfall
     _HAS_UNIT_MIX  = {"internal", "lp", "lender"}
     _HAS_DEBT      = {"internal", "lender"}          # Debt Schedule
@@ -144,6 +147,10 @@ async def export_investor_workbook(
 
         uw_cashflow = wb.create_sheet("Underwriting Cash Flow")
         _build_uw_cashflow(uw_cashflow, registry, ctx)
+
+    if _profile in _HAS_SU:
+        su_sheet = wb.create_sheet("Sources & Uses")
+        _build_su_sheet(su_sheet, registry, ctx)
 
     if _profile in _HAS_RETURNS:
         investor_returns = wb.create_sheet("Investor Returns")
@@ -214,10 +221,10 @@ async def export_investor_workbook(
         )
         sensitivity_sheet = wb.create_sheet("Sensitivity")
         _build_sensitivity(sensitivity_sheet, registry, ctx, sensitivity)
-        # Splice from end → position 4 (after Cover, UW Summary, Pro Forma,
-        # Cash Flow). openpyxl's wb._sheets is a plain list of Worksheet refs.
+        # Splice from end → position 5 (after Cover, UW Summary, Pro Forma,
+        # Cash Flow, Sources & Uses). openpyxl's wb._sheets is a plain list.
         wb._sheets.remove(sensitivity_sheet)
-        wb._sheets.insert(4, sensitivity_sheet)
+        wb._sheets.insert(5, sensitivity_sheet)
 
     registry.emit(wb)
 
@@ -1226,23 +1233,24 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
     header_row(ws, su_row + 1, ["Side", "Label", "Amount", "Notes"])
     line = su_row + 2
 
-    # Uses — sum across projects, by phase
-    uses_by_phase: dict[str, Decimal] = {}
+    # Uses — sum across projects, by cost category
+    uses_by_cat: dict[str, Decimal] = {}
     for pid, uls in use_lines_by_project.items():
         for ul in uls:
             phase = str(getattr(ul.phase, "value", ul.phase) or "")
             if phase == "exit":
                 continue
-            uses_by_phase[phase] = uses_by_phase.get(phase, Decimal(0)) + _coerce_decimal(
-                ul.amount or 0
-            )
-    for phase, amount in sorted(uses_by_phase.items()):
+            cat = str(ul.cost_category or "soft")
+            uses_by_cat[cat] = uses_by_cat.get(cat, Decimal(0)) + _coerce_decimal(ul.amount or 0)
+    for cat in USE_COST_CATEGORIES:
+        amount = uses_by_cat.get(cat, Decimal(0))
+        cat_label = USE_CATEGORY_LABELS.get(cat, cat.title())
         ws.cell(row=line, column=1, value="Use").font = FONT_VALUE
-        ws.cell(row=line, column=2, value=phase.replace("_", " ").title()).font = FONT_VALUE
+        ws.cell(row=line, column=2, value=cat_label).font = FONT_VALUE
         ws.cell(row=line, column=3, value=_to_excel_number(amount)).number_format = ACCOUNTING
-        ws.cell(row=line, column=4, value="(summed across projects)").font = FONT_HINT
+        ws.cell(row=line, column=4, value="(all projects)").font = FONT_HINT
         line += 1
-    uses_total = sum(uses_by_phase.values(), Decimal(0))
+    uses_total = sum(uses_by_cat.values(), Decimal(0))
     ws.cell(row=line, column=1, value="Use").font = FONT_LABEL
     ws.cell(row=line, column=2, value="Total Uses (excl. exit)").font = FONT_LABEL
     registry.write(
@@ -4034,6 +4042,142 @@ def _glossary_metric_used(name: str, written: set[str]) -> bool:
         if any(token.lower() in w for w in written_lower):
             return True
     return False
+
+
+def _build_su_sheet(
+    ws,
+    registry: CellRegistry,
+    ctx: dict,
+) -> None:
+    """Dedicated Sources & Uses sheet: per-project line detail + category summary + sources."""
+    set_widths(ws, [42, 22])
+
+    use_lines_by_project: dict = ctx.get("use_lines", {})
+    projects: list[Project] = ctx["projects"]
+    capital_modules: list[CapitalModule] = ctx["capital_modules"]
+    junctions: list[CapitalModuleProject] = ctx["junctions"]
+
+    line = 1
+    section_label(ws, line, "Sources & Uses", span_cols=2)
+    line += 2
+
+    # ── Per-project sections ───────────────────────────────────────────────
+    total_by_cat: dict[str, Decimal] = {cat: Decimal(0) for cat in USE_COST_CATEGORIES}
+
+    for idx, project in enumerate(projects, start=1):
+        pid = project.id
+        uls = use_lines_by_project.get(pid, [])
+
+        section_label(ws, line, f"P{idx} — {project.name}", span_cols=2)
+        line += 1
+
+        proj_total = Decimal(0)
+        for cat in USE_COST_CATEGORIES:
+            cat_label = USE_CATEGORY_LABELS.get(cat, cat.title())
+            cat_lines = [
+                ul for ul in uls
+                if str(ul.cost_category or "soft") == cat
+                and str(getattr(ul.phase, "value", ul.phase) or "") != "exit"
+            ]
+            if not cat_lines:
+                continue
+            ws.cell(row=line, column=1, value=cat_label).font = FONT_LABEL
+            line += 1
+
+            cat_total = Decimal(0)
+            for ul in cat_lines:
+                amt = _coerce_decimal(ul.amount or 0)
+                ws.cell(row=line, column=1, value=f"  {ul.label or ''}").font = FONT_VALUE
+                ws.cell(row=line, column=2, value=_to_excel_number(amt)).number_format = ACCOUNTING
+                cat_total += amt
+                line += 1
+
+            ws.cell(row=line, column=1, value=f"  Subtotal {cat_label}").font = FONT_LABEL
+            cell = ws.cell(row=line, column=2, value=_to_excel_number(cat_total))
+            cell.number_format = ACCOUNTING
+            cell.font = FONT_LABEL
+            total_by_cat[cat] += cat_total
+            proj_total += cat_total
+            line += 1
+
+        ws.cell(row=line, column=1, value=f"Total Uses P{idx}").font = FONT_LABEL
+        cell = ws.cell(row=line, column=2, value=_to_excel_number(proj_total))
+        cell.number_format = ACCOUNTING
+        cell.font = FONT_LABEL
+        line += 2
+
+    # ── Category summary (all projects) ───────────────────────────────────
+    section_label(ws, line, "Category Summary (All Projects)", span_cols=2)
+    line += 1
+
+    _su2_names = {
+        "acquisition": "s_su2_acq_total",
+        "soft":        "s_su2_soft_total",
+        "hard":        "s_su2_hard_total",
+    }
+    uses_grand_total = Decimal(0)
+    for cat in USE_COST_CATEGORIES:
+        cat_label = USE_CATEGORY_LABELS.get(cat, cat.title())
+        amount = total_by_cat.get(cat, Decimal(0))
+        ws.cell(row=line, column=1, value=cat_label).font = FONT_VALUE
+        registry.write(
+            ws, line, 2, amount,
+            name=_su2_names[cat], fmt=ACCOUNTING, font=FONT_VALUE, align=ALIGN_RIGHT,
+        )
+        uses_grand_total += amount
+        line += 1
+
+    ws.cell(row=line, column=1, value="Total Uses").font = FONT_LABEL
+    registry.write(
+        ws, line, 2, uses_grand_total,
+        name="s_su2_uses_total", fmt=ACCOUNTING, font=FONT_LABEL, align=ALIGN_RIGHT,
+    )
+    line += 2
+
+    # ── Sources ───────────────────────────────────────────────────────────
+    section_label(ws, line, "Sources", span_cols=2)
+    line += 1
+
+    junction_amount: dict = {}
+    for j in junctions:
+        junction_amount[j.capital_module_id] = junction_amount.get(
+            j.capital_module_id, Decimal(0)
+        ) + _coerce_decimal(j.amount or 0)
+
+    sources_total = Decimal(0)
+    for module in capital_modules:
+        amount = junction_amount.get(module.id) or _coerce_decimal(
+            (module.source or {}).get("amount") or 0
+        )
+        if amount <= Decimal(1) and _funder_class(module.funder_type) == "Equity":
+            continue
+        ws.cell(row=line, column=1, value=module.label or _funder_type_label(module)).font = FONT_VALUE
+        cell = ws.cell(row=line, column=2, value=_to_excel_number(amount))
+        cell.number_format = ACCOUNTING
+        sources_total += amount
+        line += 1
+
+    _implied_equity = uses_grand_total - sources_total
+    if _implied_equity > Decimal(1):
+        ws.cell(row=line, column=1, value="Owner Equity (implied gap)").font = FONT_VALUE
+        cell = ws.cell(row=line, column=2, value=_to_excel_number(_implied_equity))
+        cell.number_format = ACCOUNTING
+        sources_total += _implied_equity
+        line += 1
+
+    ws.cell(row=line, column=1, value="Total Sources").font = FONT_LABEL
+    registry.write(
+        ws, line, 2, sources_total,
+        name="s_su2_sources_total", fmt=ACCOUNTING, font=FONT_LABEL, align=ALIGN_RIGHT,
+    )
+    line += 1
+
+    gap = uses_grand_total - sources_total
+    ws.cell(row=line, column=1, value="Δ Sources Gap (Uses − Sources)").font = FONT_LABEL
+    registry.write(
+        ws, line, 2, gap,
+        name="s_su2_gap", fmt=ACCOUNTING, font=FONT_LABEL, align=ALIGN_RIGHT,
+    )
 
 
 def _build_glossary(
