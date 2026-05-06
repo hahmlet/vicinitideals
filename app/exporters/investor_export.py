@@ -131,12 +131,8 @@ async def export_investor_workbook(
     _HAS_SENS      = {"internal", "lp"}              # Sensitivity (slow; skip for lender/proforma)
     _HAS_PF        = {"proforma"}                    # New formula-driven Pro Forma sheets
 
-    # Version tab is first — professional CRE convention.
-    version_tab = wb.active
-    version_tab.title = "Version"
-    _build_version_tab(version_tab, ctx)
-
-    cover = wb.create_sheet("Cover")
+    cover = wb.active
+    cover.title = "Cover"
     _build_cover(cover, registry, ctx)
 
     if _profile in _HAS_UW:
@@ -481,49 +477,6 @@ def _noi_basis_label(income_mode: str | None) -> str:
     return _NOI_BASIS_LABELS.get(str(income_mode or "").lower(), str(income_mode or "—"))
 
 
-def _build_version_tab(ws, ctx: dict) -> None:
-    """Version/Audit tab — workbook metadata for reviewer audit trail.
-
-    Placed first in the workbook per CRE best-practice convention: professional
-    models lead with a version tab so any reviewer can immediately identify
-    the model version, export timestamp, and change history.
-    """
-    set_widths(ws, [22, 42, 60])
-    scenario = ctx["scenario"]
-    ws.cell(row=1, column=1, value="Viciniti Investor Export").font = FONT_TITLE
-    ws.cell(row=2, column=1, value="Version & Audit Trail").font = FONT_SUBTITLE
-    row = 4
-    snap = ctx.get("snapshot_at") or datetime.now()
-    fields = [
-        ("Export Generated", snap.strftime("%Y-%m-%d %H:%M UTC")),
-        ("Export Version", "2.0"),
-        ("Compute Version", f"v{scenario.version}" if getattr(scenario, 'version', None) is not None else "—"),
-        ("Scenario Name", scenario.name or "—"),
-        ("Scenario ID", str(scenario.id)),
-        ("Deal Type", str(getattr(scenario, "project_type", "") or "—").replace("_", " ").title()),
-    ]
-    for label, value in fields:
-        ws.cell(row=row, column=1, value=label).font = FONT_LABEL
-        ws.cell(row=row, column=2, value=value).font = FONT_VALUE
-        row += 1
-    row += 1
-    ws.cell(row=row, column=1, value="Change Log").font = FONT_LABEL
-    row += 1
-    ws.cell(row=row, column=1, value="Version").font = FONT_HINT
-    ws.cell(row=row, column=2, value="Date").font = FONT_HINT
-    ws.cell(row=row, column=3, value="Notes").font = FONT_HINT
-    row += 1
-    changelog = [
-        ("2.0", "2026-05-03", "Added Weighted EM, DCF NPV (configurable hurdle rate), Day Count per loan"),
-        ("1.0", "2025-01-01", "Initial release: Cover, UW Summary, Pro Forma, Cash Flow, Returns, Waterfall, Debt Schedule, Sensitivity"),
-    ]
-    for ver, date_str, notes in changelog:
-        ws.cell(row=row, column=1, value=ver).font = FONT_VALUE
-        ws.cell(row=row, column=2, value=date_str).font = FONT_VALUE
-        ws.cell(row=row, column=3, value=notes).font = FONT_VALUE
-        row += 1
-
-
 def _npv_levered(
     rollup_waterfall: list[dict],
     capital_modules: list,
@@ -593,118 +546,133 @@ def _weighted_em_calc(
 
 
 def _build_cover(ws, registry: CellRegistry, ctx: dict) -> None:
-    """Cover sheet: deal/scenario title, sponsor, project list."""
+    """Cover sheet: key metrics summary, deal/scenario metadata, project list."""
     set_widths(ws, [28, 60])
     scenario: DealModel = ctx["scenario"]
     deal: Deal | None = ctx["deal"]
     org: Organization | None = ctx["org"]
     projects: list[Project] = ctx["projects"]
+    summary_data = ctx.get("rollup_summary") or {}
+    totals = summary_data.get("totals") or {}
+    per_project = summary_data.get("per_project") or []
 
-    # Title block (no merged subtitle row — removed per LP feedback,
-    # Snapshot Date carries the timestamp in the metadata block below)
-    ws.cell(row=1, column=1, value=f"{(deal.name if deal else '—')} — {scenario.name}")
-    ws.cell(row=1, column=1).font = FONT_TITLE
-    ws.cell(row=1, column=1).alignment = ALIGN_LEFT
-    ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=2)
-    ws.row_dimensions[1].height = 28
+    row = 1
 
-    # Metadata block — `Scenario Active` row removed (LP doesn't need scenario-
-    # active state; that's an internal toggle).
-    # User-set values render blue per the input/output color convention
-    # (Sponsor name, Deal name, Scenario name, NOI Basis selection).
-    # Derived values (Snapshot Date = now(), Project Count = len()) stay black.
-    section_label(ws, 3, "Deal", span_cols=2)
-    kv_row(ws, 4, "Sponsor / Organization", org.name if org else "—",
-           name="s_sponsor_name", registry=registry, style="input")
-    kv_row(ws, 5, "Deal Name", deal.name if deal else "—",
-           name="s_deal_name", registry=registry, style="input")
-    kv_row(ws, 6, "Scenario Name", scenario.name,
-           name="s_scenario_name", registry=registry, style="input")
-    snapshot_at: datetime = ctx["snapshot_at"]
-    kv_row(ws, 7, "Snapshot Date", snapshot_at.date().isoformat(),
-           name="s_snapshot_date", registry=registry)
-    kv_row(ws, 8, "Project Count", len(projects),
-           name="s_project_count", registry=registry, fmt=INT_COMMA)
-    kv_row(ws, 9, "NOI Basis", _noi_basis_label(scenario.income_mode),
-           name="s_noi_basis", registry=registry, style="input")
+    # Title block
+    ws.cell(row=row, column=1, value=f"{(deal.name if deal else '—')} — {scenario.name}")
+    ws.cell(row=row, column=1).font = FONT_TITLE
+    ws.cell(row=row, column=1).alignment = ALIGN_LEFT
+    ws.merge_cells(start_row=row, start_column=1, end_row=row, end_column=2)
+    ws.row_dimensions[row].height = 28
+    row += 2
 
-    # Project list — one row per project, labelled `Project N`
-    # (LP-friendlier than the engine's `P1` ordinal shorthand).
-    section_label(ws, 11, "Projects", span_cols=2)
-    for idx, proj in enumerate(projects, start=1):
-        row = 11 + idx
-        ws.cell(row=row, column=1, value=f"Project {idx}").font = FONT_LABEL
-        ws.cell(row=row, column=2, value=proj.name or f"Project {idx}").font = FONT_VALUE
+    # Key Metrics summary — high-level figures for all export audiences.
+    section_label(ws, row, "Key Metrics", span_cols=2)
+    row += 1
 
-    # Sources-Gap banner — fires when the deal is materially undersized
-    # (Uses exceed Sources by > $1, mirroring the Calculation Status pill
-    # threshold in the app UI). Surfaces on Cover so the LP doesn't have
-    # to drill into Underwriting Summary to discover the deal isn't
-    # fully funded. Threshold of $1 — anything smaller is rounding noise.
     uses_total, sources_total, gap = _compute_sources_gap(ctx)
-    next_row_after_projects = 11 + max(len(projects), 1) + 2
+    combined_noi = _sum_per_project_field(per_project, "noi_stabilized")
+    _tpc = _coerce_decimal(totals.get("total_project_cost") or 0)
+    cap_rate_pct = (_coerce_pct(combined_noi / _tpc * Decimal(100)) if _tpc > 0 else None)
+    combined_dscr = _combined_dscr(per_project)
+    combined_irr = _coerce_pct(totals.get("combined_irr_pct") or 0)
+
+    cash_flow_items: dict = ctx.get("cash_flow_items") or {}
+    carrying_costs = sum(
+        sum(_coerce_decimal(li.net_amount or 0) for li in items if li.label == "Carrying Cost")
+        for items in cash_flow_items.values()
+    )
+
+    kv_row(ws, row, "Stabilized NOI", combined_noi,
+           name="s_cover_noi", registry=registry, fmt=ACCOUNTING)
+    row += 1
+    kv_row(ws, row, "Cap Rate on Cost", cap_rate_pct,
+           name="s_cover_cap_rate", registry=registry, fmt=PCT)
+    row += 1
+    kv_row(ws, row, "DSCR (combined)", combined_dscr,
+           name="s_cover_dscr", registry=registry, fmt="0.000")
+    row += 1
+    kv_row(ws, row, "Levered IRR", combined_irr,
+           name="s_cover_irr", registry=registry, fmt=PCT)
+    row += 1
+    kv_row(ws, row, "Total Uses", uses_total,
+           name="s_cover_uses", registry=registry, fmt=ACCOUNTING)
+    row += 1
+    kv_row(ws, row, "Total Sources", sources_total,
+           name="s_cover_sources", registry=registry, fmt=ACCOUNTING)
+    row += 1
+    if carrying_costs > Decimal(0):
+        kv_row(ws, row, "Carrying Costs", carrying_costs,
+               name="s_cover_carrying_costs", registry=registry, fmt=ACCOUNTING)
+        row += 1
+    row += 1  # spacer
+
+    # Deal metadata block
+    section_label(ws, row, "Deal", span_cols=2)
+    row += 1
+    kv_row(ws, row, "Sponsor / Organization", org.name if org else "—",
+           name="s_sponsor_name", registry=registry, style="input")
+    row += 1
+    kv_row(ws, row, "Deal Name", deal.name if deal else "—",
+           name="s_deal_name", registry=registry, style="input")
+    row += 1
+    kv_row(ws, row, "Scenario Name", scenario.name,
+           name="s_scenario_name", registry=registry, style="input")
+    row += 1
+    snapshot_at: datetime = ctx["snapshot_at"]
+    kv_row(ws, row, "Snapshot Date", snapshot_at.date().isoformat(),
+           name="s_snapshot_date", registry=registry)
+    row += 1
+    kv_row(ws, row, "Project Count", len(projects),
+           name="s_project_count", registry=registry, fmt=INT_COMMA)
+    row += 1
+    kv_row(ws, row, "NOI Basis", _noi_basis_label(scenario.income_mode),
+           name="s_noi_basis", registry=registry, style="input")
+    row += 2
+
+    # Project list — one row per project
+    section_label(ws, row, "Projects", span_cols=2)
+    for idx, proj in enumerate(projects, start=1):
+        ws.cell(row=row + idx, column=1, value=f"Project {idx}").font = FONT_LABEL
+        ws.cell(row=row + idx, column=2, value=proj.name or f"Project {idx}").font = FONT_VALUE
+
+    next_row = row + max(len(projects), 1) + 2
+
+    # Sources-Gap banner — fires when Uses exceed funded Sources by > $1.
     if gap > Decimal(1):
-        section_label(
-            ws, next_row_after_projects, "⚠ Equity Gap", span_cols=2,
-        )
-        ws.cell(
-            row=next_row_after_projects + 1, column=1,
-            value="Owner equity not formally committed",
-        ).font = FONT_LABEL
-        cell = ws.cell(
-            row=next_row_after_projects + 1, column=2,
-            value=_to_excel_number(gap),
-        )
+        section_label(ws, next_row, "⚠ Equity Gap", span_cols=2)
+        ws.cell(row=next_row + 1, column=1,
+                value="Owner equity not formally committed").font = FONT_LABEL
+        cell = ws.cell(row=next_row + 1, column=2, value=_to_excel_number(gap))
         cell.number_format = ACCOUNTING
         cell.font = FONT_VALUE
         cell.alignment = ALIGN_RIGHT
-        registry.register("s_cover_sources_gap", ws.title, next_row_after_projects + 1, 2)
-        gap_pct = (gap / uses_total * Decimal(100)) if uses_total > 0 else None
+        registry.register("s_cover_sources_gap", ws.title, next_row + 1, 2)
         hint = (
             f"{_format_currency_short(gap)} of owner equity implied but not assigned to a module"
             f" — recorded as implied gap on Underwriting Summary Sources & Uses"
         )
-        ws.cell(
-            row=next_row_after_projects + 2, column=1,
-            value=hint,
-        ).font = FONT_HINT
-        ws.merge_cells(
-            start_row=next_row_after_projects + 2, start_column=1,
-            end_row=next_row_after_projects + 2, end_column=2,
-        )
-        legend_offset = 4  # banner consumes 3 rows + 1 spacer
+        ws.cell(row=next_row + 2, column=1, value=hint).font = FONT_HINT
+        ws.merge_cells(start_row=next_row + 2, start_column=1,
+                       end_row=next_row + 2, end_column=2)
+        legend_row = next_row + 4
     else:
-        legend_offset = 0
+        legend_row = next_row
 
-    # Color legend — explains the input/output color convention applied
-    # throughout the workbook so the LP doesn't have to guess. Sized small
-    # (FONT_HINT) so it doesn't compete with the deal data above.
-    legend_row = next_row_after_projects + legend_offset
+    # Color legend
     section_label(ws, legend_row, "Color Legend", span_cols=2)
     ws.cell(row=legend_row + 1, column=1, value="Black text").font = FONT_VALUE
-    ws.cell(
-        row=legend_row + 1, column=2,
-        value="Calculated value (derived from inputs).",
-    ).font = FONT_HINT
+    ws.cell(row=legend_row + 1, column=2,
+            value="Calculated value (derived from inputs).").font = FONT_HINT
     ws.cell(row=legend_row + 2, column=1, value="Blue text").font = FONT_INPUT
-    ws.cell(
-        row=legend_row + 2, column=2,
-        value="User input (assumption that drives the model).",
-    ).font = FONT_HINT
+    ws.cell(row=legend_row + 2, column=2,
+            value="User input (assumption that drives the model).").font = FONT_HINT
     ws.cell(row=legend_row + 3, column=1, value="Green underlined text").font = FONT_LINK
-    ws.cell(
-        row=legend_row + 3, column=2,
-        value="Cross-sheet link or external reference (click to follow).",
-    ).font = FONT_HINT
-    # Fourth row covers the gold-bold KPI styling on Underwriting Summary's
-    # Primary KPIs block. Adding the row to the legend (rather than dropping
-    # the gold treatment) keeps the headline emphasis on Total Project Cost,
-    # IRR, EM, etc. while giving the LP an explanation for the color.
+    ws.cell(row=legend_row + 3, column=2,
+            value="Cross-sheet link or external reference (click to follow).").font = FONT_HINT
     ws.cell(row=legend_row + 4, column=1, value="Gold bold").font = FONT_HERO_VALUE
-    ws.cell(
-        row=legend_row + 4, column=2,
-        value="Headline KPI on Underwriting Summary (TPC, IRR, NOI, etc.).",
-    ).font = FONT_HINT
+    ws.cell(row=legend_row + 4, column=2,
+            value="Headline KPI on Underwriting Summary (TPC, IRR, NOI, etc.).").font = FONT_HINT
 
     freeze_top(ws, row=3)
     print_landscape(ws)

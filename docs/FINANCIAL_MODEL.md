@@ -161,6 +161,18 @@ labels (Operating Reserve, Lease-Up Reserve, capitalized-interest reserves).
 The equity stack ultimately has to fund those out of pocket, which is why
 `equity_required` and Sources Gap both key off Total Uses, not TPC.
 
+### Total Sources [investor, lender, app]
+
+**Definition.** Sum of all funded capital source commitments — debt principal (junction-scoped amounts) plus committed equity. The counter-side of Total Uses in the Sources & Uses panel.
+
+**Calculation.**
+```
+total_sources = Σ CapitalModule junction-scoped amounts (or module.source.amount when no junctions)
+               + implied_equity (Uses − explicit Sources, when > $1)
+```
+
+**Engine source.** `_compute_sources_gap` in `app/exporters/investor_export.py`.
+
 ### Equity Required [investor, app]
 
 **Definition.** Per-project target equity check at close — what the equity
@@ -1773,6 +1785,30 @@ equity_multiple = (total_LP_positive + total_GP_positive) / (total_LP_contribute
 **Plain English.** Total dollars out divided by total dollars in, across LP and GP combined. A value of 2.0× means investors doubled their money.
 
 **Why combined LP + GP?** This is the **project-level** equity multiple. Separate LP and GP multiples are also computed but are not the headline metric.
+
+### Weighted Equity Multiple [investor, app]
+
+**Definition.** Time-value-adjusted equity multiple at the investor's hurdle rate: (equity invested + NPV of distributions) ÷ equity invested. A 2.0× WEM means distributions are worth 2× equity in present-value terms at the hurdle rate.
+
+**Calculation.**
+```
+npv = Σ (cash_distributed_t / (1 + r)^(t/12)) − equity_required   # t in months
+weighted_em = (equity_required + npv) / equity_required
+```
+
+**Engine source.** `_weighted_em_calc` + `_npv_levered` in `app/exporters/investor_export.py`. Suppressed when `equity_required < $1` (all-debt deals).
+
+### DCF NPV [investor, app]
+
+**Definition.** Net Present Value of levered equity cash flows discounted at the investor's hurdle rate, less equity invested. Positive = IRR exceeds hurdle; zero = exactly at hurdle; negative = below hurdle.
+
+**Calculation.**
+```
+pv_distributions = Σ (cash_distributed_t / (1 + r)^(t/12))   # t in months, LP+GP equity tiers only
+dcf_npv = pv_distributions − equity_required
+```
+
+**Engine source.** `_npv_levered` in `app/exporters/investor_export.py`.
 
 ### Cash-on-Cash Year 1 [investor, app]
 

@@ -291,10 +291,16 @@ async def test_sensitivity_sheet_renders_5x5_grid(session: AsyncSession):
 
 
 async def test_glossary_sheet_has_investor_metrics(session: AsyncSession):
-    """The Glossary sheet sources its term list from FINANCIAL_MODEL.md.
+    """Glossary includes all investor metrics whose names appear in the workbook.
 
-    Every metric tagged ``investor`` in the doc should land as a row.
+    The glossary uses post-render filtering — only terms whose name or
+    abbreviation appears in workbook cells are included. This test mirrors
+    that filtering so the expected set matches exactly what the builder
+    would include, avoiding false failures for terms that legitimately
+    don't appear in the minimal-scenario workbook.
     """
+    from app.exporters.investor_export import _glossary_metric_used
+
     scenario = await _seed_minimal_scenario(session)
     blob = await export_investor_workbook(scenario.id, session)
     wb = load_workbook(BytesIO(blob), data_only=False)
@@ -305,7 +311,19 @@ async def test_glossary_sheet_has_investor_metrics(session: AsyncSession):
         if cell.value and isinstance(cell.value, str)
     }
 
-    expected = {m.name for m in parse_doc().for_audience("investor")}
+    non_glossary_strings: set[str] = {
+        cell.value
+        for ws in wb.worksheets
+        if ws.title != "Glossary & Methodology"
+        for row in ws.iter_rows()
+        for cell in row
+        if isinstance(cell.value, str) and cell.value
+    }
+    all_investor = {m.name for m in parse_doc().for_audience("investor")}
+    expected = {
+        name for name in all_investor
+        if _glossary_metric_used(name, non_glossary_strings)
+    }
     missing = expected - glossary_terms
     assert not missing, f"investor-tagged metrics missing from Glossary sheet: {sorted(missing)}"
 
@@ -333,6 +351,17 @@ _NAMED_RANGE_ALIASES: tuple[tuple[re.Pattern[str], str], ...] = (
     # Cover Sources-Gap banner (Phase I3) — same value as the Underwriting
     # Summary's s_sources_gap, just surfaced on Cover when non-zero.
     (re.compile(r"^s_cover_sources_gap$"), "Sources Gap"),
+    # Cover sheet KPI summary — aliases of the same metrics shown elsewhere.
+    (re.compile(r"^s_cover_noi$"), "Stabilized NOI"),
+    (re.compile(r"^s_cover_cap_rate$"), "Cap Rate (Going-In)"),
+    (re.compile(r"^s_cover_dscr$"), "DSCR (Debt Service Coverage Ratio)"),
+    (re.compile(r"^s_cover_irr$"), "Levered IRR"),
+    (re.compile(r"^s_cover_uses$"), "Total Uses"),
+    (re.compile(r"^s_cover_sources$"), "Total Sources"),
+    (re.compile(r"^s_cover_carrying_costs$"), "Carrying Cost"),
+    # Weighted EM and DCF NPV — time-value-adjusted return metrics.
+    (re.compile(r"^s_weighted_equity_multiple$"), "Weighted Equity Multiple"),
+    (re.compile(r"^s_dcf_npv$"), "DCF NPV"),
     # LP/GP-scoped variants of "Equity Multiple"
     (re.compile(r"^s_(lp|gp)_equity_multiple$"), "Equity Multiple"),
     # Asset Mgmt Fee — input on Assumptions, also a metric on Investor Returns
@@ -535,7 +564,7 @@ async def test_filename_slugged(session: AsyncSession):
     from app.models.deal import Deal
 
     deal = await session.get(Deal, scenario.deal_id)
-    name = make_investor_filename(scenario, deal)
+    name = make_investor_filename(scenario, deal, profile="lp")
     assert name.endswith("-investor.xlsx")
     assert " " not in name
 
