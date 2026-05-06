@@ -4317,40 +4317,171 @@ def _coerce_pct(value) -> Decimal:
 
 # ── Pro Forma profile sheet builders ──────────────────────────────────────────
 #
-# These are formula-driven sheets designed for broker/external use — recipients
-# can adjust escalation rates, vacancy, and OpEx inputs and watch NOI update.
-# Full implementation in the Pro Forma feature phase; stubs below ensure the
-# proforma profile renders without error in the meantime.
+# The proforma export profile renders these sheets instead of the full
+# Underwriting Pro Forma / per-project sheets.  Phase 1 = hardcoded computed
+# values (same data as the UW sheets, different layout for broker/external use).
+# Phase 2 = formula-driven input cells so the recipient can adjust escalation
+# rates, vacancy, etc. without going back to the app.
+
+_PF_ROWS: list[tuple[str, str]] = [
+    ("Gross Revenue", "gross_revenue"),
+    ("Vacancy Loss", "vacancy_loss"),
+    ("Effective Gross Income (EGI)", "effective_gross_income"),
+    ("Operating Expenses (OpEx)", "operating_expenses"),
+    ("CapEx Reserve", "capex_reserve"),
+    ("NOI (Net Operating Income)", "noi"),
+    ("Debt Service", "debt_service"),
+    ("Net Cash Flow", "net_cash_flow"),
+]
+
+
+def _write_pf_table(
+    ws,
+    registry: CellRegistry,
+    start_row: int,
+    annual: dict,
+    year_cols: list[int],
+    cash_flow_items_for_scope,  # dict[UUID, list[CashFlowLineItem]]
+) -> int:
+    """Write the standard NOI build table + breakouts; return next free row."""
+    cur_row = start_row
+    for label, field in _PF_ROWS:
+        ws.cell(row=cur_row, column=1, value=label).font = FONT_LABEL
+        for col_offset, year in enumerate(year_cols):
+            value = annual.get(year, {}).get(field, Decimal(0))
+            cell = ws.cell(row=cur_row, column=2 + col_offset, value=_to_excel_number(value))
+            cell.number_format = ACCOUNTING
+            cell.font = FONT_VALUE
+            cell.alignment = ALIGN_RIGHT
+        cur_row += 1
+
+    # OER derived row
+    ws.cell(row=cur_row, column=1, value="OER (OpEx ÷ EGI)").font = FONT_LABEL
+    for col_offset, year in enumerate(year_cols):
+        opex = annual.get(year, {}).get("operating_expenses", Decimal(0))
+        egi = annual.get(year, {}).get("effective_gross_income", Decimal(0))
+        oer = (opex / egi) if egi > 0 else None
+        cell = ws.cell(
+            row=cur_row, column=2 + col_offset,
+            value=_to_excel_number(oer) if oer is not None else _DASH,
+        )
+        cell.number_format = PCT
+        cell.font = FONT_VALUE
+        cell.alignment = ALIGN_RIGHT
+    cur_row += 1
+
+    # Revenue + OpEx breakouts
+    by_category = _aggregate_scenario_line_items_by_category(cash_flow_items_for_scope)
+
+    cur_row += 1
+    cur_row = _write_breakout_table(
+        ws, registry, cur_row,
+        title="Revenue Breakout (by stream)",
+        rows=by_category.get("income", {}),
+        year_cols=year_cols,
+        empty_hint="(no revenue line items — run Compute to populate)",
+    )
+    cur_row += 1
+    cur_row = _write_breakout_table(
+        ws, registry, cur_row,
+        title="OpEx Breakout (by category)",
+        rows=by_category.get("expense", {}),
+        year_cols=year_cols,
+        empty_hint="(no OpEx line items — run Compute to populate)",
+        always_show=ALWAYS_SHOWN_OPEX_CATEGORIES,
+    )
+    return cur_row
 
 
 def _build_proforma_combined(
     ws,
-    registry: "CellRegistry",
+    registry: CellRegistry,
     ctx: dict,
 ) -> None:
-    """Combined pro forma: all projects aggregated into single line items."""
+    """Combined pro forma — all projects aggregated.
+
+    Phase 1: hardcoded computed values matching the Underwriting Pro Forma
+    sheet data.  Phase 2 will add adjustable input cells.
+    """
+    cash_flows: dict[UUID, list[CashFlow]] = ctx["cash_flows"]
+    cash_flow_items: dict[UUID, list[CashFlowLineItem]] = ctx["cash_flow_items"]
+    projects: list[Project] = ctx["projects"]
+
+    annual = _aggregate_scenario_annual(cash_flows)
+    max_year = min(max(annual) if annual else 0, 10)
+    year_cols = list(range(0, max(max_year, 1) + 1))
+
+    set_widths(ws, [32, *([14] * (len(year_cols) + 1))])
+
+    section_label(
+        ws, 1,
+        f"Pro Forma — Combined ({len(projects)} project{'s' if len(projects) != 1 else ''})",
+        span_cols=len(year_cols) + 2,
+    )
+    header_row(ws, 2, ["Line Item", *[f"Y{y}" for y in year_cols]])
+
+    _write_pf_table(ws, registry, 3, annual, year_cols, cash_flow_items)
+
+    freeze_top(ws, row=3)
     print_landscape(ws)
-    ws.column_dimensions["A"].width = 32
-    ws.column_dimensions["B"].width = 18
-    title_cell = ws.cell(row=1, column=1, value="Pro Forma — Combined")
-    title_cell.font = FONT_TITLE
-    ws.cell(row=2, column=1, value="Full formula-driven pro forma coming soon.").font = FONT_HINT
 
 
 def _build_proforma_project_sheet(
     ws,
-    registry: "CellRegistry",
+    registry: CellRegistry,
     ctx: dict,
     idx: int,
-    project,
+    project: Project,
 ) -> None:
-    """Per-project pro forma with adjustable revenue/opex inputs."""
+    """Per-project pro forma.
+
+    Phase 1: hardcoded computed values matching the existing per-project sheet
+    data.  Phase 2 will add adjustable input cells.
+    """
+    cash_flows_by_project: dict[UUID, list[CashFlow]] = ctx["cash_flows"]
+    cash_flow_items_by_project: dict[UUID, list[CashFlowLineItem]] = ctx["cash_flow_items"]
+    outputs_by_project: dict[UUID, "OperationalOutputs"] = ctx["outputs"]
+
+    project_cash_flows = cash_flows_by_project.get(project.id, [])
+    project_items = cash_flow_items_by_project.get(project.id, [])
+    outputs = outputs_by_project.get(project.id)
+
+    annual = _aggregate_annual(project_cash_flows)
+    max_year = min(max(annual) if annual else 0, 10)
+    year_cols = list(range(0, max(max_year, 1) + 1))
+
+    set_widths(ws, [32, *([14] * (len(year_cols) + 1))])
+
+    # Header
+    header_text = f"P{idx} — {project.name or 'Project'}"
+    ws.cell(row=1, column=1, value=header_text).font = FONT_TITLE
+    ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=len(year_cols) + 2)
+    ws.row_dimensions[1].height = 24
+
+    # Key metrics strip
+    cur = 2
+    kpi_pairs: list[tuple[str, object, str]] = [
+        ("Stabilized NOI", _safe_decimal(outputs, "noi_stabilized"), ACCOUNTING),
+        ("DSCR", _safe_decimal(outputs, "dscr"), "0.000"),
+        ("Cap Rate on Cost", _pct_value(outputs, "cap_rate_on_cost_pct"), PCT),
+        ("Levered IRR", _pct_value(outputs, "project_irr_levered"), PCT),
+    ]
+    for label, val, fmt in kpi_pairs:
+        ws.cell(row=cur, column=1, value=label).font = FONT_LABEL
+        cell = ws.cell(row=cur, column=2, value=_to_excel_number(val))
+        cell.number_format = fmt
+        cell.font = FONT_VALUE
+        cur += 1
+
+    cur += 1  # blank separator
+    header_row(ws, cur, ["Line Item", *[f"Y{y}" for y in year_cols]])
+    cur += 1
+
+    # Wrap single project in a dict so _aggregate_scenario_line_items_by_category works.
+    _write_pf_table(ws, registry, cur, annual, year_cols, {project.id: project_items})
+
+    freeze_top(ws, row=cur)
     print_landscape(ws)
-    ws.column_dimensions["A"].width = 32
-    ws.column_dimensions["B"].width = 18
-    title_cell = ws.cell(row=1, column=1, value=f"Pro Forma — {project.name or f'P{idx}'}")
-    title_cell.font = FONT_TITLE
-    ws.cell(row=2, column=1, value="Full formula-driven pro forma coming soon.").font = FONT_HINT
 
 
 # Re-exports for callers that want to inline format strings without importing
