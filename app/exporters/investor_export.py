@@ -546,6 +546,8 @@ def _weighted_em_calc(
     npv = _npv_levered(rollup_waterfall, capital_modules, equity_required, discount_rate_pct)
     if npv is None:
         return None
+    if equity_required < Decimal(1):
+        return None
     return (equity_required + npv) / equity_required
 
 
@@ -1128,12 +1130,14 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         name="s_combined_unlevered_irr", registry=registry,
         fmt=PCT, hero=True,
     ); row += 1
-    # Equity Multiple (combined LP+GP) — total equity-module distributions
-    # divided by total equity commitments. _kv_row_optional emits the em-
-    # dash literal when there's no equity stack to compute against, so the
-    # cell never reads as a misleading blank (V2-C fix).
+    # Equity multiples — EM, WEM, CoC. Require a non-trivial equity basis.
+    # Compute _equity_req first so the EM fallback and CoC fallback can gate
+    # on it: a 100%-debt deal (equity_required < $1) suppresses all three
+    # rather than showing multiples against a near-zero denominator.
+    _disc_rate = _coerce_decimal(ctx.get("discount_rate_pct") or Decimal("8.0"))
+    _equity_req = _coerce_decimal(totals.get("equity_required") or 0)
     equity_multiple = _combined_em(rollup_waterfall, capital_modules)
-    if equity_multiple is None:
+    if equity_multiple is None and _equity_req > Decimal(1):
         _raw_em = _coerce_decimal(totals.get("combined_em_x") or 0)
         equity_multiple = _raw_em if _raw_em > 0 else None
     _kv_row_optional(
@@ -1142,12 +1146,6 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         name="s_combined_equity_multiple", registry=registry,
         fmt="0.00\\x", hero=True,
     ); row += 1
-    # Weighted Equity Multiple — raw EM adjusted for TVM at the investor's
-    # hurdle rate.  Two deals with identical raw EM but different hold
-    # periods have different WEM; the one returning capital sooner scores
-    # higher.  Source: corpus 67, A.CRE best-practice convention.
-    _disc_rate = _coerce_decimal(ctx.get("discount_rate_pct") or Decimal("8.0"))
-    _equity_req = _coerce_decimal(totals.get("equity_required") or 0)
     w_em = _weighted_em_calc(rollup_waterfall, capital_modules, _equity_req, _disc_rate)
     _kv_row_optional(
         ws, row, f"Weighted Equity Multiple ({_disc_rate:.2f}% hurdle)",
@@ -1155,12 +1153,8 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         name="s_weighted_equity_multiple", registry=registry,
         fmt="0.00\\x", hero=True,
     ); row += 1
-    # Cash-on-Cash Year 1 — sum of equity distributions in periods 1-12
-    # divided by total equity commitments. The standard first-year-yield
-    # metric LPs ask about ahead of a deal close. Same em-dash semantics
-    # as Equity Multiple when the denominator is zero.
     coc_y1 = _coc_year_one(rollup_waterfall, capital_modules)
-    if coc_y1 is None and _equity_req > 0:
+    if coc_y1 is None and _equity_req > Decimal(1):
         # Auto-funded deals have $0 equity module commitments so _coc_year_one
         # returns None (denominator = 0). Fall back: use scenario equity_required
         # as the denominator, sum Y1 cash_distributed across all waterfall tiers.
@@ -1259,6 +1253,8 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         amount = junction_amount.get(module.id) or _coerce_decimal(
             (module.source or {}).get("amount") or 0
         )
+        if amount <= Decimal(1) and _funder_class(module.funder_type) == "Equity":
+            continue
         ws.cell(row=line, column=1, value="Source").font = FONT_VALUE
         ws.cell(row=line, column=2, value=module.label or _funder_type_label(module)).font = FONT_VALUE
         ws.cell(row=line, column=3, value=_to_excel_number(amount)).number_format = ACCOUNTING
@@ -1298,9 +1294,10 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
     # ── Per-project mini-summary ───────────────────────────────────────────
     pp_row = line + 1
     section_label(ws, pp_row, "Per-Project Mini-Summary", span_cols=7)
+    _pp_col3_header = "Equity Req'd" if _equity_req > Decimal(1) else "Cap on Cost"
     header_row(
         ws, pp_row + 1,
-        ["Project", "TPC", "Equity Req'd", "Stabilized NOI", "DSCR", "Levered IRR", "Sheet"],
+        ["Project", "TPC", _pp_col3_header, "Stabilized NOI", "DSCR", "Levered IRR", "Sheet"],
     )
     pp_data = pp_row + 2
     for idx, project in enumerate(projects, start=1):
@@ -1311,7 +1308,12 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         )
         ws.cell(row=pp_data, column=1, value=project.name or f"Project {idx}").font = FONT_VALUE
         ws.cell(row=pp_data, column=2, value=_to_excel_number(record.get("total_project_cost"))).number_format = ACCOUNTING
-        ws.cell(row=pp_data, column=3, value=_to_excel_number(record.get("equity_required"))).number_format = ACCOUNTING
+        if _equity_req > Decimal(1):
+            ws.cell(row=pp_data, column=3, value=_to_excel_number(record.get("equity_required"))).number_format = ACCOUNTING
+        else:
+            _pp_noi = _coerce_decimal(record.get("noi_stabilized") or 0)
+            _pp_tpc = _coerce_decimal(record.get("total_project_cost") or 0)
+            ws.cell(row=pp_data, column=3, value=_to_excel_number(_pp_noi / _pp_tpc if _pp_tpc > 0 else None)).number_format = PCT
         ws.cell(row=pp_data, column=4, value=_to_excel_number(record.get("noi_stabilized"))).number_format = ACCOUNTING
         ws.cell(row=pp_data, column=5, value=_to_excel_number(record.get("dscr"))).number_format = "0.000"
         levered = record.get("project_irr_levered")
@@ -2168,7 +2170,14 @@ def _build_sensitivity(
         range_name="r_sensitivity_grid",
     )
 
-    if matrix.get("values_secondary") and matrix.get("metric_secondary"):
+    _summary_s = ctx.get("rollup_summary") or {}
+    _eq_req_s = _coerce_decimal((_summary_s.get("totals") or {}).get("equity_required") or 0)
+    _has_equity_s = _eq_req_s > Decimal(1) or any(
+        _funder_class(m.funder_type) == "Equity"
+        and _coerce_decimal((m.source or {}).get("amount") or 0) > Decimal(1)
+        for m in (ctx.get("capital_modules") or [])
+    )
+    if _has_equity_s and matrix.get("values_secondary") and matrix.get("metric_secondary"):
         _render_sensitivity_grid(
             ws, registry, matrix,
             grid_values=matrix["values_secondary"],
@@ -2420,6 +2429,8 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
         rate_raw = source.get("interest_rate_pct") or carry.get("io_rate_pct") or 0
         rate = _coerce_pct(rate_raw) if rate_raw else None
         funder_class = _funder_class(module.funder_type)
+        if funder_class == "Equity" and principal <= Decimal(1):
+            continue
 
         # Per-class column fill — write em-dash strings where a column doesn't
         # apply, so missing data never reads as "$0" or "0%".
@@ -2492,6 +2503,14 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
 
     # ── Aggregate rollup (only meaningful when a waterfall is populated) ──
     cur_row += 1
+    _equity_req_check = _coerce_decimal(totals.get("equity_required") or 0)
+    _committed_equity = sum(
+        junction_principal.get(m.id) or _coerce_decimal((m.source or {}).get("amount") or 0)
+        for m in capital_modules
+        if _funder_class(m.funder_type) == "Equity"
+    )
+    _has_real_equity = _committed_equity > Decimal(1) or _equity_req_check > Decimal(1)
+
     section_label(ws, cur_row, "Scenario-Level Aggregates", span_cols=2)
     cur_row += 1
 
@@ -2504,7 +2523,7 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
     em_raw = _coerce_decimal(totals.get("combined_em_x") or 0)
     kv_row(
         ws, cur_row, "Combined Equity Multiple (scenario)",
-        em_raw if em_raw > 0 else None,
+        (em_raw if em_raw > 0 else None) if _has_real_equity else None,
         name="s_returns_combined_em", registry=registry, fmt='0.00"×"',
     ); cur_row += 1
 
@@ -2528,16 +2547,6 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
         name="s_gp_promote_dollars", registry=registry, fmt=ACCOUNTING,
     ); cur_row += 1
 
-    # When all equity modules have $0 committed principal but the scenario has
-    # a nonzero equity_required, return multiples (EM, WEM, CoC) are computed
-    # against the implied-gap equity figure and will appear inflated. Warn so
-    # the LP understands the basis before interpreting headline multiples.
-    _equity_req_check = _coerce_decimal(totals.get("equity_required") or 0)
-    _committed_equity = sum(
-        junction_principal.get(m.id) or _coerce_decimal((m.source or {}).get("amount") or 0)
-        for m in capital_modules
-        if _funder_class(m.funder_type) == "Equity"
-    )
     if _equity_req_check > Decimal(1) and _committed_equity <= Decimal(1):
         cur_row += 1
         note = ws.cell(
