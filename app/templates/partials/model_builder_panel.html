@@ -164,8 +164,8 @@
 <div>
   {% for _cat, _cat_label in [("acquisition", "Acquisition"), ("soft", "Soft Costs"), ("hard", "Hard Costs")] %}
   {%- set _cat_lines = use_lines | selectattr("cost_category", "equalto", _cat) | list -%}
-  <details open style="margin-bottom:6px">
-    <summary style="display:flex;align-items:center;justify-content:space-between;padding:4px 0;cursor:pointer;list-style:none;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);user-select:none">
+  <details open style="{% if not loop.first %}border-top:1px solid var(--border,#e5e7eb);margin-top:10px;padding-top:10px;{% endif %}margin-bottom:4px">
+    <summary style="display:flex;align-items:center;justify-content:space-between;padding:4px 6px;cursor:pointer;list-style:none;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);user-select:none;background:var(--surface-2,#f9fafb);border-radius:4px">
       <span>{{ _cat_label }}</span>
       <span style="display:flex;align-items:center;gap:8px">
         <span style="font-weight:400">{{ _cat_lines | sum(attribute='amount') | currency }}</span>
