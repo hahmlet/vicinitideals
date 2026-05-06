@@ -139,65 +139,62 @@
 
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
 
-{# ── Left: Uses ── #}
+{# ── Left: Uses — 3 collapsible category groups ── #}
 <div>
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted)">Uses</div>
-    <button class="btn btn-sm btn-secondary" style="font-size:11px;padding:2px 8px" onclick="openAddLine('uses')">+ Use</button>
-  </div>
-  {% if use_lines %}
-  <table class="line-table" style="font-size:12px">
-    <thead>
-      <tr>
-        <th data-sort-col="label" onclick="suSortTable('uses-tbody','label','str')" style="cursor:pointer;user-select:none">Label<span class="sort-arrow"> ↕</span></th>
-        <th data-sort-col="ms" onclick="suSortTable('uses-tbody','ms','ms')" style="cursor:pointer;user-select:none">Milestone<span class="sort-arrow"> ↕</span></th>
-        <th data-sort-col="amt" class="col-right" onclick="suSortTable('uses-tbody','amt','num')" style="cursor:pointer;user-select:none">Amount<span class="sort-arrow"> ↕</span></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody id="uses-tbody">
-      {% for line in use_lines %}
-      {%- set _ms_key = line.milestone_key or (line.phase | string).replace('UseLinePhase.','') -%}
-      {%- set _is_gap_adj = (line.label == 'Gap Adjustment — Purchase Price') -%}
-      {%- set _gap_active = _is_gap_adj and line.amount and (line.amount | float) != 0 -%}
-      <tr data-label="{{ line.label | lower }}" data-ms="{{ _ms_key }}" data-amt="{{ line.amount or 0 }}"
-          {% if _gap_active %}style="background:#fef3c7"{% elif _is_gap_adj %}style="background:#f3f4f6"{% endif %}
-          onclick="openEditLine('use_lines', '{{ line.id }}', '{{ model.id }}')">
-        <td style="font-weight:500">{{ line.label }}{% if line.label in ('Operating Reserve', 'Acquisition Interest Reserve', 'Pre-Development Interest Reserve', 'Interest Reserve', 'Capitalized Construction Interest', 'Capitalized Pre-Development Interest', 'Capitalized Acquisition Interest', 'Lease-Up Reserve') and '(auto)' not in line.label %} <span class="text-small text-muted">(auto)</span>{% endif %}{# Phase 3d: show which Source this engine-injected reserve came from (set by Phase 2e tagging on bridge IO + closing costs) #}{% if line.source_capital_module_id %}{% set _src = (capital_modules | selectattr('id', 'equalto', line.source_capital_module_id) | list | first) %}{% if _src %} <span title="Engine-injected from the {{ _src.label }} Source" style="display:inline-block;font-size:10px;margin-left:4px;padding:1px 7px;background:#eff6ff;color:#1e40af;border-radius:10px;font-weight:500">from: {{ _src.label }}</span>{% endif %}{% endif %}</td>
-        <td><span class="text-small text-muted" style="font-size:11px">
-          {% if line.milestone_key %}{{ line.milestone_key | replace('_',' ') | title }}{% if line.milestone_key_to %} → {{ line.milestone_key_to | replace('_',' ') | title }}{% endif %}
-          {% else %}{{ (line.phase | string).replace('UseLinePhase.','') | replace('_',' ') | title }}{% endif %}
-        </span></td>
-        <td class="col-right text-mono">{{ line.amount | currency }}</td>
-        <td style="width:28px;text-align:right">
-          {% if _is_gap_adj %}
-          {# Phantom Gap Adjustment row — ✕ zeroes the slider rather than
-             hard-deleting (router guard would 403 a direct DELETE; the
-             slider is the only legitimate mutator). Refresh panel after. #}
-          <button class="btn btn-sm btn-ghost" title="Reset Purchase Price adjustment to 0"
-                  onclick="event.stopPropagation(); window.zeroGapAdjRow && window.zeroGapAdjRow('{{ model.id }}', 'pp', {% if active_project_id %}'{{ active_project_id }}'{% else %}null{% endif %})">✕</button>
-          {% else %}
-          <button class="btn btn-sm btn-ghost"
-                  hx-delete="/api/models/{{ model.id }}/use-lines/{{ line.id }}"
-                  hx-confirm="Delete '{{ line.label }}'?"
-                  hx-on::after-request="if(event.detail.successful) refreshPanel('sources_uses')"
-                  onclick="event.stopPropagation()">✕</button>
-          {% endif %}
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  {% for _cat, _cat_label in [("acquisition", "Acquisition"), ("soft", "Soft Costs"), ("hard", "Hard Costs")] %}
+  {%- set _cat_lines = use_lines | selectattr("cost_category", "equalto", _cat) | list -%}
+  <details open style="margin-bottom:6px">
+    <summary style="display:flex;align-items:center;justify-content:space-between;padding:4px 0;cursor:pointer;list-style:none;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);user-select:none">
+      <span>{{ _cat_label }}</span>
+      <span style="display:flex;align-items:center;gap:8px">
+        <span style="font-weight:400">{{ _cat_lines | sum(attribute='amount') | currency }}</span>
+        <button class="btn btn-sm btn-secondary" style="font-size:11px;padding:2px 8px" onclick="event.preventDefault();openAddLine('uses','{{ _cat }}')">+ Add</button>
+      </span>
+    </summary>
+    {% if _cat_lines %}
+    <table class="line-table" style="font-size:12px;margin-top:2px">
+      <tbody>
+        {% for line in _cat_lines %}
+        {%- set _ms_key = line.milestone_key or (line.phase | string).replace('UseLinePhase.','') -%}
+        {%- set _is_gap_adj = (line.label == 'Gap Adjustment — Purchase Price') -%}
+        {%- set _gap_active = _is_gap_adj and line.amount and (line.amount | float) != 0 -%}
+        {%- set _is_engine = line.source_capital_module_id is not none -%}
+        <tr data-label="{{ line.label | lower }}" data-ms="{{ _ms_key }}" data-amt="{{ line.amount or 0 }}"
+            {% if _is_engine %}style="opacity:.75"{% elif _gap_active %}style="background:#fef3c7"{% elif _is_gap_adj %}style="background:#f3f4f6"{% endif %}
+            onclick="openEditLine('use_lines', '{{ line.id }}', '{{ model.id }}')">
+          <td style="font-weight:500">{{ line.label }}{% if line.label in ('Operating Reserve', 'Acquisition Interest Reserve', 'Pre-Development Interest Reserve', 'Interest Reserve', 'Capitalized Construction Interest', 'Capitalized Pre-Development Interest', 'Capitalized Acquisition Interest', 'Lease-Up Reserve') and '(auto)' not in line.label %} <span class="text-small text-muted">(auto)</span>{% endif %}{# Phase 3d: show which Source this engine-injected reserve came from (set by Phase 2e tagging on bridge IO + closing costs) #}{% if line.source_capital_module_id %}{% set _src = (capital_modules | selectattr('id', 'equalto', line.source_capital_module_id) | list | first) %}{% if _src %} <span title="Engine-injected from the {{ _src.label }} Source" style="display:inline-block;font-size:10px;margin-left:4px;padding:1px 7px;background:#eff6ff;color:#1e40af;border-radius:10px;font-weight:500">from: {{ _src.label }}</span>{% endif %}{% endif %}</td>
+          <td><span class="text-small text-muted" style="font-size:11px">
+            {% if line.milestone_key %}{{ line.milestone_key | replace('_',' ') | title }}{% if line.milestone_key_to %} → {{ line.milestone_key_to | replace('_',' ') | title }}{% endif %}
+            {% else %}{{ (line.phase | string).replace('UseLinePhase.','') | replace('_',' ') | title }}{% endif %}
+          </span></td>
+          <td class="col-right text-mono">{{ line.amount | currency }}</td>
+          <td style="width:28px;text-align:right">
+            {% if not _is_engine %}
+            {% if _is_gap_adj %}
+            {# Phantom Gap Adjustment row — ✕ zeroes the slider rather than
+               hard-deleting (router guard would 403 a direct DELETE). #}
+            <button class="btn btn-sm btn-ghost" title="Reset Purchase Price adjustment to 0"
+                    onclick="event.stopPropagation(); window.zeroGapAdjRow && window.zeroGapAdjRow('{{ model.id }}', 'pp', {% if active_project_id %}'{{ active_project_id }}'{% else %}null{% endif %})">✕</button>
+            {% else %}
+            <button class="btn btn-sm btn-ghost"
+                    hx-delete="/api/models/{{ model.id }}/use-lines/{{ line.id }}"
+                    hx-confirm="Delete '{{ line.label }}'?"
+                    hx-on::after-request="if(event.detail.successful) refreshPanel('sources_uses')"
+                    onclick="event.stopPropagation()">✕</button>
+            {% endif %}
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+  </details>
+  {% endfor %}
   <div class="line-table-footer">
     <span class="line-total-label">Total Uses</span>
     <span class="line-total-amount">{{ use_lines | sum(attribute='amount') | currency }}</span>
   </div>
-  {% else %}
-  <div class="module-empty" style="padding:24px 0">
-    <div class="module-empty-icon">🔨</div>
-    <div class="module-empty-title" style="font-size:13px">No uses yet</div>
-  </div>
-  {% endif %}
 </div>
 
 {# ── Right: Sources ── #}
@@ -1984,7 +1981,7 @@ function refreshPanel(module) {
     swap: 'innerHTML'
   });
 }
-function openAddLine(type) {
+function openAddLine(type, category) {
   if (type === 'sources') {
     htmx.ajax('GET', '/ui/models/{{ model.id }}/line-form?type=sources', {
       target: '#source-wizard-body', swap: 'innerHTML'
@@ -2000,7 +1997,8 @@ function openAddLine(type) {
     return;
   }
   if (type === 'uses') {
-    htmx.ajax('GET', '/ui/models/{{ model.id }}/line-form?type=uses', {
+    var catParam = category ? '&category=' + encodeURIComponent(category) : '';
+    htmx.ajax('GET', '/ui/models/{{ model.id }}/line-form?type=uses' + catParam, {
       target: '#uses-wizard-body', swap: 'innerHTML'
     });
     document.getElementById('uses-wizard-overlay').style.display = 'flex';

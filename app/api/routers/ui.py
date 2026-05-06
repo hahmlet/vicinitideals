@@ -27,7 +27,7 @@ import app as _pkg
 from app.api.deps import DBSession
 from app.config import settings
 from app.models.broker import Broker, Brokerage
-from app.models.deal import STANDARD_OPEX_CATEGORIES, Deal, DealModel, DealOpportunity, DealStatus, IncomeStream, IncomeStreamType, OperatingExpenseLine, OperationalInputs, ProjectType, UnitMix, UseLine, UseLinePhase
+from app.models.deal import STANDARD_OPEX_CATEGORIES, USE_CATEGORY_LABELS, USE_CATEGORY_PRESETS, USE_COST_CATEGORIES, Deal, DealModel, DealOpportunity, DealStatus, IncomeStream, IncomeStreamType, OperatingExpenseLine, OperationalInputs, ProjectType, UnitMix, UseLine, UseLinePhase
 from app.models.ingestion import DedupCandidate, DedupStatus, IngestJob, RecordType, SavedSearchCriteria
 from app.models.org import Organization, User
 from app.models.capital import CapitalModule, DrawSource, WaterfallTier
@@ -5700,6 +5700,7 @@ async def handle_form_create_or_update(
             "amount": _fd(form.get("amount")) or Decimal("0"),
             "timing_type": form.get("timing_type") or "first_day",
             "is_deferred": form.get("is_deferred") == "true",
+            "cost_category": form.get("cost_category") or "soft",
             "notes": form.get("notes") or None,
         }
         if item_id:
@@ -10424,6 +10425,7 @@ async def model_builder_line_form(
     type: str = Query(default="uses"),
     id: str = Query(default=""),
     phase: str = Query(default=""),
+    category: str = Query(default="soft"),
 ) -> HTMLResponse:
     """Serves the add/edit form inside the line-item drawer."""
     model = await session.get(DealModel, model_id)
@@ -10734,6 +10736,10 @@ async def model_builder_line_form(
         "show_active_window": show_active_window,
         "exit_vehicle_applies": sorted(_EXIT_VEHICLE_APPLIES_UI),
         "opex_categories": STANDARD_OPEX_CATEGORIES,
+        "default_category": (existing.cost_category if existing else None) or category,
+        "use_cost_categories": USE_COST_CATEGORIES,
+        "use_category_labels": USE_CATEGORY_LABELS,
+        "use_category_presets": USE_CATEGORY_PRESETS,
     })
 
 

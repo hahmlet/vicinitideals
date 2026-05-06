@@ -87,6 +87,14 @@
     <label class="form-label">Notes (optional)</label>
     <input class="form-input" type="text" name="notes" value="{{ existing.notes or '' }}" placeholder="e.g. Per appraisal estimate">
   </div>
+  <div class="form-field">
+    <label class="form-label">Category</label>
+    <select class="form-select" name="cost_category">
+      {% for _uc in use_cost_categories %}
+      <option value="{{ _uc }}" {% if _uc == default_category %}selected{% endif %}>{{ use_category_labels[_uc] }}</option>
+      {% endfor %}
+    </select>
+  </div>
   <div class="form-actions">
     <button type="submit" class="btn btn-primary">Save Changes</button>
     <button type="button" class="btn btn-secondary" onclick="closeDrawer('line-item-drawer')">Cancel</button>
@@ -120,6 +128,7 @@ function ulTimingChanged(val) {
       hx-target="#module-panel-content" hx-swap="innerHTML"
       hx-on::after-request="if(event.detail.successful) closeUsesWizard()"
       id="uw-form" style="padding-bottom:8px">
+  <input type="hidden" name="cost_category" value="{{ default_category }}">
 
   {# ── Step 1: Name, Amount, Deferred flag ── #}
   <div id="uw-step-1">
