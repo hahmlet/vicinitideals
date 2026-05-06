@@ -98,14 +98,21 @@ PROJECT_SHEET_NAME_BUDGET = 27
 
 
 async def export_investor_workbook(
-    deal_model_id: UUID, session: AsyncSession
+    deal_model_id: UUID,
+    session: AsyncSession,
+    profile: str = "internal",
 ) -> bytes:
     """Build the investor workbook for a Scenario and return the bytes.
 
-    Raises ``ValueError`` if the Scenario doesn't exist. The caller wraps
-    the bytes in a ``StreamingResponse`` with the appropriate
-    Content-Disposition (see ``download_investor_export`` in ui.py).
+    ``profile`` controls which sheets are rendered:
+    - ``"internal"``  — all sheets (full underwriting working model)
+    - ``"lp"``        — LP / investor package (IRR, waterfall, sensitivity)
+    - ``"lender"``    — lender package (DSCR, debt schedule, NOI)
+    - ``"proforma"``  — pro forma only (NOI build, S&U, per-project)
+
+    Raises ``ValueError`` if the Scenario doesn't exist.
     """
+    _profile = profile if profile in {"internal", "lp", "lender", "proforma"} else "internal"
     ctx = await _load_all(session, deal_model_id)
     if ctx is None:
         raise ValueError(f"Scenario {deal_model_id} was not found")
@@ -113,8 +120,18 @@ async def export_investor_workbook(
     wb = Workbook()
     registry = CellRegistry()
 
-    # Version tab is first — professional CRE convention: reviewers check
-    # model version and timestamp before reading any numbers.
+    # ── Profile membership helpers ─────────────────────────────────────────────
+    # Each set lists which profiles render that sheet.  Adding a new profile
+    # only requires updating the relevant set(s) below.
+    _HAS_UW        = {"internal", "lp", "lender"}   # UW Summary + Pro Forma + Cash Flow
+    _HAS_RETURNS   = {"internal", "lp"}              # Investor Returns + Waterfall
+    _HAS_UNIT_MIX  = {"internal", "lp", "lender"}
+    _HAS_DEBT      = {"internal", "lender"}          # Debt Schedule
+    _HAS_ASSUMPT   = {"internal", "lender"}          # Assumptions
+    _HAS_SENS      = {"internal", "lp"}              # Sensitivity (slow; skip for lender/proforma)
+    _HAS_PF        = {"proforma"}                    # New formula-driven Pro Forma sheets
+
+    # Version tab is first — professional CRE convention.
     version_tab = wb.active
     version_tab.title = "Version"
     _build_version_tab(version_tab, ctx)
@@ -122,78 +139,89 @@ async def export_investor_workbook(
     cover = wb.create_sheet("Cover")
     _build_cover(cover, registry, ctx)
 
-    uw_summary = wb.create_sheet("Underwriting Summary")
-    _build_uw_summary(uw_summary, registry, ctx)
+    if _profile in _HAS_UW:
+        uw_summary = wb.create_sheet("Underwriting Summary")
+        _build_uw_summary(uw_summary, registry, ctx)
 
-    uw_proforma = wb.create_sheet("Underwriting Pro Forma")
-    _build_uw_proforma(uw_proforma, registry, ctx)
+        uw_proforma = wb.create_sheet("Underwriting Pro Forma")
+        _build_uw_proforma(uw_proforma, registry, ctx)
 
-    uw_cashflow = wb.create_sheet("Underwriting Cash Flow")
-    _build_uw_cashflow(uw_cashflow, registry, ctx)
+        uw_cashflow = wb.create_sheet("Underwriting Cash Flow")
+        _build_uw_cashflow(uw_cashflow, registry, ctx)
 
-    investor_returns = wb.create_sheet("Investor Returns")
-    _build_investor_returns(investor_returns, registry, ctx)
+    if _profile in _HAS_RETURNS:
+        investor_returns = wb.create_sheet("Investor Returns")
+        _build_investor_returns(investor_returns, registry, ctx)
 
-    waterfall_ws = wb.create_sheet("Waterfall")
-    _build_waterfall_sheet(waterfall_ws, registry, ctx)
+        waterfall_ws = wb.create_sheet("Waterfall")
+        _build_waterfall_sheet(waterfall_ws, registry, ctx)
 
-    unit_mix_ws = wb.create_sheet("Unit Mix")
-    _build_unit_mix_sheet(unit_mix_ws, registry, ctx)
+    if _profile in _HAS_UNIT_MIX:
+        unit_mix_ws = wb.create_sheet("Unit Mix")
+        _build_unit_mix_sheet(unit_mix_ws, registry, ctx)
 
-    debt_schedule = wb.create_sheet("Debt Schedule")
-    _build_debt_schedule(debt_schedule, registry, ctx)
+    if _profile in _HAS_DEBT:
+        debt_schedule = wb.create_sheet("Debt Schedule")
+        _build_debt_schedule(debt_schedule, registry, ctx)
 
-    assumptions = wb.create_sheet("Assumptions")
-    _build_assumptions(assumptions, registry, ctx)
+    if _profile in _HAS_ASSUMPT:
+        assumptions = wb.create_sheet("Assumptions")
+        _build_assumptions(assumptions, registry, ctx)
 
-    # Per-project sheets sit between Assumptions and Glossary (plan §2 final
-    # order). Sheet names are `P{n} {Name}` truncated to Excel's 31-char
-    # ceiling — see _project_sheet_name. The Underwriting Summary's per-
-    # project mini-table already emits =HYPERLINK() targets pointing at
-    # these names, so they resolve once these sheets exist.
+    # Pro Forma profile gets the formula-driven combined + per-project sheets.
+    if _profile in _HAS_PF:
+        pf_combined = wb.create_sheet("Pro Forma")
+        _build_proforma_combined(pf_combined, registry, ctx)
+
+    # Per-project sheets: all profiles. Sheet names `P{n} {Name}` truncated
+    # to Excel's 31-char ceiling. UW Summary hyperlinks resolve once these exist.
     projects: list[Project] = ctx["projects"]
     for idx, project in enumerate(projects, start=1):
-        sheet_name = _project_sheet_name(idx, project.name)
-        ws_proj = wb.create_sheet(sheet_name)
-        _build_project_sheet(ws_proj, registry, ctx, idx, project)
+        if _profile in _HAS_PF:
+            sheet_name = _project_sheet_name(idx, project.name)
+            ws_proj = wb.create_sheet(sheet_name)
+            _build_proforma_project_sheet(ws_proj, registry, ctx, idx, project)
+        else:
+            sheet_name = _project_sheet_name(idx, project.name)
+            ws_proj = wb.create_sheet(sheet_name)
+            _build_project_sheet(ws_proj, registry, ctx, idx, project)
 
+    # Collect every string written to the workbook so far so _build_glossary
+    # can filter to only terms that actually appear in this export.
+    _written_strings: set[str] = {
+        cell.value
+        for sheet in wb.worksheets
+        for row in sheet.iter_rows()
+        for cell in row
+        if isinstance(cell.value, str) and cell.value
+    }
     glossary = wb.create_sheet("Glossary & Methodology")
-    _build_glossary(glossary, registry, ctx)
+    _build_glossary(glossary, registry, ctx, written_strings=_written_strings)
 
-    # Two-way sensitivity sheet is built LAST because the engine calls
-    # session.expire_all() inside each compute_cash_flows cycle, which
-    # invalidates ORM rows held by ``ctx`` (waterfall tiers, capital
-    # modules, etc.). Building all ORM-reading sheets before the matrix
-    # avoids MissingGreenlet errors from sync attribute access on expired
-    # rows. After the sheet is built we splice it into position 4 (between
-    # Underwriting Cash Flow and Investor Returns) via ``wb._sheets`` so
-    # the on-disk tab order matches plan §2.
-    #
-    # Originally disabled on the synchronous request path because the
-    # 25-cycle compute exceeded NGINX's 60s proxy timeout. The async
-    # export path (Celery worker, no proxy) lifts that constraint, so the
-    # sheet is unconditionally rendered here. Sync callers of this
-    # builder (the legacy GET endpoint) inherit the live build too — they
-    # may time out, in which case the user retries via the async button.
-    sensitivity = await compute_sensitivity_matrix(
-        deal_model_id=deal_model_id,
-        session=session,
-        axis_x="noi_escalation_rate_pct",
-        axis_y="exit_cap_rate_pct",
-        metric="project_irr_levered",
-        secondary_metric="equity_multiple",
-        mode="combined",
-        step_overrides={
-            "noi_escalation_rate_pct": Decimal("1.0"),
-            "exit_cap_rate_pct": Decimal("0.5"),
-        },
-    )
-    sensitivity_sheet = wb.create_sheet("Sensitivity")
-    _build_sensitivity(sensitivity_sheet, registry, ctx, sensitivity)
-    # Splice from end → position 4 (after Cover, UW Summary, Pro Forma,
-    # Cash Flow). openpyxl's wb._sheets is a plain list of Worksheet refs.
-    wb._sheets.remove(sensitivity_sheet)
-    wb._sheets.insert(4, sensitivity_sheet)
+    # Sensitivity is built LAST — compute_sensitivity_matrix calls
+    # session.expire_all() each cycle, invalidating ORM rows in ctx.
+    # Splice it into position 4 after building so tab order is correct.
+    # Skip for lender/proforma profiles (not needed, saves ~30s build time).
+    if _profile in _HAS_SENS:
+        sensitivity = await compute_sensitivity_matrix(
+            deal_model_id=deal_model_id,
+            session=session,
+            axis_x="noi_escalation_rate_pct",
+            axis_y="exit_cap_rate_pct",
+            metric="project_irr_levered",
+            secondary_metric="equity_multiple",
+            mode="combined",
+            step_overrides={
+                "noi_escalation_rate_pct": Decimal("1.0"),
+                "exit_cap_rate_pct": Decimal("0.5"),
+            },
+        )
+        sensitivity_sheet = wb.create_sheet("Sensitivity")
+        _build_sensitivity(sensitivity_sheet, registry, ctx, sensitivity)
+        # Splice from end → position 4 (after Cover, UW Summary, Pro Forma,
+        # Cash Flow). openpyxl's wb._sheets is a plain list of Worksheet refs.
+        wb._sheets.remove(sensitivity_sheet)
+        wb._sheets.insert(4, sensitivity_sheet)
 
     registry.emit(wb)
 
@@ -4001,23 +4029,62 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
     print_landscape(ws)
 
 
-def _build_glossary(ws, registry: CellRegistry, ctx: dict) -> None:
+def _glossary_term_tokens(name: str) -> list[str]:
+    """Extract searchable tokens from a metric name.
+
+    Handles two conventions used in FINANCIAL_MODEL.md:
+    - ``ABBREV (Full Name)`` → ["ABBREV", "Full Name", full string]
+    - ``Full Name (ABBREV)`` → ["Full Name", "ABBREV", full string]
+    - ``Plain Name``         → [full string]
+    """
+    tokens = [name]
+    m = re.search(r"\((.+)\)", name)
+    if m:
+        inner = m.group(1).strip()
+        prefix = name[: name.index("(")].strip()
+        tokens.extend([prefix, inner])
+    return tokens
+
+
+def _glossary_metric_used(name: str, written: set[str]) -> bool:
+    """Return True if any token from this metric name appears in written cell strings."""
+    written_lower = {s.lower() for s in written}
+    for token in _glossary_term_tokens(name):
+        if any(token.lower() in w for w in written_lower):
+            return True
+    return False
+
+
+def _build_glossary(
+    ws,
+    registry: CellRegistry,
+    ctx: dict,
+    written_strings: set[str] | None = None,
+) -> None:
     """Glossary & Methodology sheet — driven by FINANCIAL_MODEL.md.
 
+    When ``written_strings`` is provided (set of all string cell values
+    already written to the workbook), filters to metrics whose name or
+    abbreviation appears in the rendered output — so each export profile
+    shows only the terms it actually uses.
+
     Filters parsed metrics down to ``audience='investor'`` per plan §3.8.
-    Lender-only metrics intentionally omitted (they'll surface in a future
-    lender-package extract). The bidirectional doc/export validator
-    (commits 2/3) verifies that every named range in the workbook traces
-    to a row here.
+    The bidirectional doc/export validator verifies every named range
+    in the workbook traces to a row here.
     """
     set_widths(ws, [28, 60, 50, 36])
     section_label(ws, 1, "Glossary & Methodology", span_cols=4)
     header_row(ws, 2, ["Term", "Definition", "Calculation", "Reference"])
 
     report = parse_doc()
-    investor_metrics = sorted(
+    all_investor = sorted(
         report.for_audience("investor"),
         key=lambda m: m.name.lower(),
+    )
+    investor_metrics = (
+        [m for m in all_investor if _glossary_metric_used(m.name, written_strings)]
+        if written_strings
+        else all_investor
     )
 
     for row_offset, metric in enumerate(investor_metrics):
@@ -4246,6 +4313,44 @@ def _coerce_decimal(value) -> Decimal:
 
 def _coerce_pct(value) -> Decimal:
     return _coerce_decimal(value) / Decimal(100)
+
+
+# ── Pro Forma profile sheet builders ──────────────────────────────────────────
+#
+# These are formula-driven sheets designed for broker/external use — recipients
+# can adjust escalation rates, vacancy, and OpEx inputs and watch NOI update.
+# Full implementation in the Pro Forma feature phase; stubs below ensure the
+# proforma profile renders without error in the meantime.
+
+
+def _build_proforma_combined(
+    ws,
+    registry: "CellRegistry",
+    ctx: dict,
+) -> None:
+    """Combined pro forma: all projects aggregated into single line items."""
+    print_landscape(ws)
+    ws.column_dimensions["A"].width = 32
+    ws.column_dimensions["B"].width = 18
+    title_cell = ws.cell(row=1, column=1, value="Pro Forma — Combined")
+    title_cell.font = FONT_TITLE
+    ws.cell(row=2, column=1, value="Full formula-driven pro forma coming soon.").font = FONT_HINT
+
+
+def _build_proforma_project_sheet(
+    ws,
+    registry: "CellRegistry",
+    ctx: dict,
+    idx: int,
+    project,
+) -> None:
+    """Per-project pro forma with adjustable revenue/opex inputs."""
+    print_landscape(ws)
+    ws.column_dimensions["A"].width = 32
+    ws.column_dimensions["B"].width = 18
+    title_cell = ws.cell(row=1, column=1, value=f"Pro Forma — {project.name or f'P{idx}'}")
+    title_cell.font = FONT_TITLE
+    ws.cell(row=2, column=1, value="Full formula-driven pro forma coming soon.").font = FONT_HINT
 
 
 # Re-exports for callers that want to inline format strings without importing

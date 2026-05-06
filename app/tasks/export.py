@@ -97,7 +97,9 @@ async def _run_investor_export_async(job_id: str) -> str:
         await session.commit()
 
         try:
-            xlsx_bytes = await export_investor_workbook(scenario_id, session)
+            xlsx_bytes = await export_investor_workbook(
+                scenario_id, session, profile=job.export_profile or "internal"
+            )
         except Exception as exc:  # noqa: BLE001
             logger.exception("Investor export build failed for scenario %s", scenario_id)
             await _mark_failed(session, job_uuid, f"build error: {exc}")

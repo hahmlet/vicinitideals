@@ -723,9 +723,9 @@
       <button type="button"
               class="btn btn-sm btn-secondary investor-export-btn"
               id="investor-export-btn-{{ model.id }}"
-              title="Email LP-facing investor Excel workbook"
-              onclick="startInvestorExport('{{ model.id }}')">
-        ↓ Investor Export
+              title="Export deal model to Excel"
+              onclick="openExportChooser('{{ model.id }}')">
+        ↓ Export
       </button>
       <div class="investor-export-status hidden"
            id="investor-export-status-{{ model.id }}"
@@ -928,7 +928,48 @@ function _pollExportStatus(modelId, jobId) {
   }, 2000);
 }
 
-async function startInvestorExport(modelId) {
+// ── Export profile chooser ───────────────────────────────────────────────────
+let _exportChooserModelId = null;
+
+function openExportChooser(modelId) {
+  if (_activeExportJobs[modelId]) {
+    _showExportModal(modelId);
+    return;
+  }
+  _exportChooserModelId = modelId;
+  // Reset to default selection.
+  selectExportProfile(modelId, 'internal');
+  document.getElementById('export-chooser-modal').style.display = 'flex';
+}
+
+function closeExportChooser() {
+  document.getElementById('export-chooser-modal').style.display = 'none';
+  _exportChooserModelId = null;
+}
+
+function selectExportProfile(modelId, profile) {
+  const profiles = ['internal', 'lp', 'lender', 'proforma'];
+  profiles.forEach(p => {
+    const card = document.getElementById('export-pcard-' + p + '-' + modelId);
+    const radio = card && card.querySelector('input[type="radio"]');
+    if (card) card.classList.toggle('export-profile-selected', p === profile);
+    if (radio) radio.checked = p === profile;
+  });
+}
+
+function submitExportChooser(modelId) {
+  const profiles = ['internal', 'lp', 'lender', 'proforma'];
+  let selected = 'internal';
+  profiles.forEach(p => {
+    const radio = document.querySelector('input[name="export-profile-' + modelId + '"][value="' + p + '"]');
+    if (radio && radio.checked) selected = p;
+  });
+  closeExportChooser();
+  startInvestorExport(modelId, selected);
+}
+
+async function startInvestorExport(modelId, profile) {
+  profile = profile || 'internal';
   if (_activeExportJobs[modelId]) {
     // Already in flight; just surface the modal.
     _showExportModal(modelId);
@@ -984,7 +1025,12 @@ async function startInvestorExport(modelId) {
     : '/ui/models/' + modelId + '/investor-export/async';
   let job = null;
   try {
-    const r = await fetch(url, { method: 'POST' });
+    const fetchOpts = { method: 'POST' };
+    if (!resendJobId) {
+      fetchOpts.headers = { 'Content-Type': 'application/json' };
+      fetchOpts.body = JSON.stringify({ profile: profile });
+    }
+    const r = await fetch(url, fetchOpts);
     if (!r.ok) {
       const j = await r.json().catch(() => ({}));
       _finishExport(modelId, 'failed', j.error || ('HTTP ' + r.status));
@@ -1468,6 +1514,8 @@ document.addEventListener('keydown', function(e) {
     </div>
   </div>
 </div>
+
+{% include 'partials/export_chooser_modal.html' %}
 
 <!-- Source wizard (center-screen modal) -->
 <div class="wizard-overlay" id="source-wizard-overlay" style="display:none">

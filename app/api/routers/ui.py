@@ -10125,11 +10125,19 @@ async def start_investor_export_async(
     if scenario is None:
         return JSONResponse({"error": "scenario not found"}, status_code=404)
 
+    try:
+        body = await request.json()
+    except Exception:  # noqa: BLE001
+        body = {}
+    _raw_profile = body.get("profile", "internal") if isinstance(body, dict) else "internal"
+    _profile = _raw_profile if _raw_profile in {"internal", "lp", "lender", "proforma"} else "internal"
+
     job = ExportJob(
         scenario_id=model_id,
         user_id=user.id,
         recipient_email=user.email or "",
         status=ExportJobStatus.queued,
+        export_profile=_profile,
     )
     session.add(job)
     await session.commit()
