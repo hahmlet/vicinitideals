@@ -230,13 +230,26 @@ async def export_investor_workbook(
     return buf.getvalue()
 
 
-def make_investor_filename(scenario: DealModel, deal: Deal | None) -> str:
-    """Investor-export filename: ``<deal>-<scenario>-investor.xlsx`` (slugged)."""
+_PROFILE_SUFFIX: dict[str, str] = {
+    "internal": "underwriting",
+    "lp": "investor",
+    "lender": "lender",
+    "proforma": "proforma",
+}
+
+
+def make_investor_filename(
+    scenario: DealModel,
+    deal: Deal | None,
+    profile: str = "internal",
+) -> str:
+    """Export filename: ``<deal>-<scenario>-<profile-suffix>.xlsx`` (slugged)."""
     deal_part = (deal.name if deal else None) or "deal"
     scen_part = scenario.name or "scenario"
     deal_slug = re.sub(r"[^a-z0-9]+", "-", deal_part.lower()).strip("-") or "deal"
     scen_slug = re.sub(r"[^a-z0-9]+", "-", scen_part.lower()).strip("-") or "scenario"
-    return f"{deal_slug}-{scen_slug}-investor.xlsx"
+    suffix = _PROFILE_SUFFIX.get(profile, "export")
+    return f"{deal_slug}-{scen_slug}-{suffix}.xlsx"
 
 
 # ── Data loader ───────────────────────────────────────────────────────────────

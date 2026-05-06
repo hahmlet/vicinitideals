@@ -138,6 +138,20 @@ async def send_password_reset_email(
     return result is not None
 
 
+_EXPORT_PROFILE_LABEL: dict[str, str] = {
+    "internal": "Underwriting Model",
+    "lp": "Investor Package",
+    "lender": "Lender Package",
+    "proforma": "Pro Forma",
+}
+_EXPORT_PROFILE_DESC: dict[str, str] = {
+    "internal": "the full underwriting workbook",
+    "lp": "the LP-facing investor package",
+    "lender": "the lender package",
+    "proforma": "the pro forma",
+}
+
+
 async def send_export_ready_email(
     *,
     to: str,
@@ -146,8 +160,13 @@ async def send_export_ready_email(
     scenario_name: str | None,
     filename: str,
     xlsx_bytes: bytes,
+    profile: str = "internal",
 ) -> bool:
-    """Send the rendered investor Excel workbook as an email attachment.
+    """Send the rendered Excel workbook as an email attachment.
+
+    ``profile`` controls the email subject line and body copy so each
+    export type gets appropriate messaging (LP package vs lender package
+    vs pro forma vs internal underwriting).
 
     Resend supports attachments via the ``attachments`` payload field —
     each entry is ``{"filename": str, "content": <base64 str>}``. The
@@ -158,17 +177,21 @@ async def send_export_ready_email(
 
     if not to:
         return False
+    _label = _EXPORT_PROFILE_LABEL.get(profile, "Export")
+    _desc = _EXPORT_PROFILE_DESC.get(profile, "the export")
     ctx = {
         "name": name or "there",
         "deal_name": deal_name or "your deal",
         "scenario_name": scenario_name or "",
         "filename": filename,
+        "export_label": _label,
+        "export_desc": _desc,
         "app_base_url": settings.app_base_url,
     }
     payload = {
         "from": _from_field(),
         "to": [to],
-        "subject": f"Investor export ready — {deal_name or 'deal'}",
+        "subject": f"{_label} ready — {deal_name or 'deal'}",
         "html": _render("export_ready.html", **ctx),
         "text": _render("export_ready.txt", **ctx),
         "attachments": [
