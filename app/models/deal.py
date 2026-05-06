@@ -411,6 +411,12 @@ class OperationalInputs(Base):
     noi_escalation_rate_pct: Mapped[object] = mapped_column(
         Numeric(18, 6), nullable=False, default=Decimal("3")
     )
+
+    # Affordable housing — enables AMI rent tier columns in the Property module
+    affordable_housing_project: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=False, server_default=false()
+    )
+
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now(),

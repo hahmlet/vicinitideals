@@ -43,6 +43,10 @@
         <th class="col-right">Post-Reno</th>
         <th>Strategy</th>
         <th class="col-right" title="Loss-to-Lease = (market − in-place) / market">LTL %</th>
+        {% if inputs and inputs.affordable_housing_project %}
+        <th class="col-right" title="Lowest AMI tier this rent qualifies at (Portland 2025 PHB limits)">AMI %</th>
+        <th class="col-right" title="Max household income at that AMI tier (standard HUD household size)">Income Limit</th>
+        {% endif %}
         <th></th>
       </tr>
     </thead>
@@ -68,6 +72,23 @@
         <td class="col-right" style="color:{% if _ltl_pct > 0 %}var(--success, #16a34a){% else %}var(--text-muted){% endif %}">
           {% if _ltl_pct > 0 %}{{ '%.1f%%' | format(_ltl_pct) }}{% else %}—{% endif %}
         </td>
+        {% if inputs and inputs.affordable_housing_project %}
+        {%- set _ami = ami_unit_data.get(u.id | string) -%}
+        <td class="col-right">
+          {% if _ami and _ami.ami_pct is not none %}
+            <span style="font-weight:500">{{ _ami.ami_pct }}%</span>
+          {% elif _mkt or _ip %}
+            <span class="text-muted">&gt;120%</span>
+          {% else %}
+            <span class="text-muted">—</span>
+          {% endif %}
+        </td>
+        <td class="col-right">
+          {% if _ami and _ami.income_limit %}
+            {{ _ami.income_limit | currency(decimals=0) }}
+          {% else %}—{% endif %}
+        </td>
+        {% endif %}
         <td style="width:32px;text-align:right">
           <button class="btn btn-sm btn-ghost"
                   hx-delete="/ui/forms/{{ model.id }}/unit-mix/{{ u.id }}"

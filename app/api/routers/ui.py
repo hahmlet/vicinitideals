@@ -5559,6 +5559,27 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
                 "unsized": _src_amount <= 0,
             })
 
+    # AMI rent tier lookup — only computed when affordable_housing_project is enabled.
+    ami_unit_data: dict = {}
+    if inputs and getattr(inputs, "affordable_housing_project", False):
+        from app.data.ami_portland_2025 import get_ami_tier as _get_ami_tier
+        _stream_by_label = {s.label: s for s in income_streams}
+        for _u in unit_mix_rows:
+            _sl = (
+                f"{_u.label} Rent (Renovated)"
+                if getattr(_u, "unit_strategy", None) == "value_add_renovation"
+                else f"{_u.label} Rent"
+            )
+            _s = _stream_by_label.get(_sl)
+            _proposed: float | None = None
+            if _s and _s.amount_per_unit_monthly:
+                _proposed = float(_s.amount_per_unit_monthly)
+            elif _u.market_rent_per_unit:
+                _proposed = float(_u.market_rent_per_unit)
+            if _proposed is not None:
+                _beds = int(_u.beds or 1)
+                ami_unit_data[str(_u.id)] = _get_ami_tier(_beds, _proposed)
+
     return {
         "inputs": inputs,
         "outputs": outputs,
@@ -5647,6 +5668,7 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
         }.get(default_project.deal_type if default_project else "", "Project"),
         "income_mode": (_scenario.income_mode if _scenario else "revenue_opex") or "revenue_opex",
         "noi_annual": float(inputs.noi_stabilized_input) if inputs and inputs.noi_stabilized_input is not None else None,
+        "ami_unit_data": ami_unit_data,
     }
 
 
@@ -7359,6 +7381,7 @@ async def save_model_settings(
                 inputs.operation_reserve_months = int(operation_reserve_months)
             except Exception:
                 pass
+        inputs.affordable_housing_project = (form.get("affordable_housing_project") == "1")
         # Sync auto-sized CapitalModules with rate / amort form fields
         # (deal-level OperationalInputs.debt_terms is no longer authoritative).
         if any([perm_rate_pct, construction_rate_pct, perm_amort_years, debt_structure]):
