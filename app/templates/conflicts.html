@@ -52,7 +52,7 @@
         } %}
         <tr class="conflict-row" id="conflict-{{ opp.id }}-{{ field_key }}">
           <td>
-            <a href="/ui/opportunities/{{ opp.id }}" style="font-weight:600">{{ opp.display_name }}</a>
+            <a href="/opportunities/{{ opp.id }}" style="font-weight:600">{{ opp.display_name }}</a>
             {% if opp.street %}
             <div style="font-size:11px;color:var(--text-muted)">{{ opp.street }}{% if opp.city %}, {{ opp.city }}{% endif %}</div>
             {% endif %}
