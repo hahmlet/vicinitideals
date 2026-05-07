@@ -219,6 +219,10 @@ class Opportunity(Base):
     realie_match_confidence: Mapped[object | None] = mapped_column(Numeric(4, 3), nullable=True)
     realie_raw_json: Mapped[dict | None] = mapped_column(JSON, nullable=True)
 
+    # ── User interaction state ────────────────────────────────────────────
+    is_favorited: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    parcel_conflicts_ack: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+
     # HelloData.ai enrichment
     hellodata_skip: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     hellodata_enriched_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
@@ -317,6 +321,39 @@ class Opportunity(Base):
         return getattr(parcel, "building_sqft", None) if parcel else (
             self.parcel.building_sqft if self.parcel else None
         )
+
+    # ── Display properties (use these in all templates, never raw columns) ─
+    # NULL on Opportunity = defer to Parcel (county-authoritative seed).
+
+    @builtins.property
+    def display_units(self) -> int | None:
+        if self.units is not None:
+            return self.units
+        return self.parcel.unit_count if self.parcel else None
+
+    @builtins.property
+    def display_sqft(self) -> object | None:
+        if self.gba_sqft is not None:
+            return self.gba_sqft
+        return self.parcel.building_sqft if self.parcel else None
+
+    @builtins.property
+    def display_year_built(self) -> int | None:
+        if self.year_built is not None:
+            return self.year_built
+        return self.parcel.year_built if self.parcel else None
+
+    @builtins.property
+    def display_lot_sqft(self) -> object | None:
+        if self.lot_sqft is not None:
+            return self.lot_sqft
+        return self.parcel.lot_sqft if self.parcel else None
+
+    @builtins.property
+    def display_property_type(self) -> str | None:
+        if self.property_type:
+            return self.property_type
+        return self.parcel.rlis_land_use if self.parcel else None
 
     # ── Compatibility synonyms (keep existing code working) ───────────────
     listing_url = synonym("source_url")

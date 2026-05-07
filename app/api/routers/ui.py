@@ -2428,62 +2428,225 @@ async def opportunities_page(
     request: Request,
     session: DBSession,
     vd_user_id: str | None = Cookie(default=None),
-    q: str = Query(default=""),
-    status: list[str] = Query(default=[]),
-    source: list[str] = Query(default=[]),
 ) -> HTMLResponse:
     user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
-    opps = await _query_opportunities(session, q=q, status=status, source=source)
     return templates.TemplateResponse(request, "opportunities.html", {
-        "request": request, "opps": opps,
-        "q": q, "status": status, "source": source,
+        "request": request,
         **_base_ctx(user, dedup_count, "opportunities"),
     })
 
 
-@router.get("/ui/opportunities/rows", response_class=HTMLResponse)
-async def opportunities_rows(
+# ── Opportunities sub-table HTMX endpoints ────────────────────────────────────
+
+def _filter_opps(opps: list, q: str) -> list:
+    if not q:
+        return opps
+    q_lower = q.lower()
+    return [
+        o for o in opps
+        if q_lower in (o.name or "").lower()
+        or q_lower in (o.address_normalized or "").lower()
+        or q_lower in (o.street or "").lower()
+    ]
+
+
+@router.get("/ui/opportunities/rows/deals", response_class=HTMLResponse)
+async def opportunities_rows_deals(
     request: Request,
     session: DBSession,
     q: str = Query(default=""),
-    status: list[str] = Query(default=[]),
-    source: list[str] = Query(default=[]),
+    favorited: int = Query(default=0),
 ) -> HTMLResponse:
-    opps = await _query_opportunities(session, q=q, status=status, source=source)
+    active_oppo_ids = select(Project.opportunity_id).where(
+        Project.opportunity_id.isnot(None)
+    )
+    stmt = (
+        select(Opportunity)
+        .where(Opportunity.id.in_(active_oppo_ids))
+        .order_by(Opportunity.last_seen_at.desc())
+    )
+    if favorited:
+        stmt = stmt.where(Opportunity.is_favorited.is_(True))
+    opps = _filter_opps(
+        list((await session.execute(stmt)).scalars().unique()), q
+    )
     return templates.TemplateResponse(request, "partials/opportunities_rows.html", {
-        "request": request, "opps": opps,
+        "request": request, "opps": opps, "table": "deals",
     })
 
 
-async def _query_opportunities(
-    session: AsyncSession,
-    q: str = "",
-    status=None,
-    source=None,
-) -> list:
+@router.get("/ui/opportunities/rows/offmarket", response_class=HTMLResponse)
+async def opportunities_rows_offmarket(
+    request: Request,
+    session: DBSession,
+    q: str = Query(default=""),
+    favorited: int = Query(default=0),
+) -> HTMLResponse:
+    active_oppo_ids = select(Project.opportunity_id).where(
+        Project.opportunity_id.isnot(None)
+    )
     stmt = (
         select(Opportunity)
-        .where(Opportunity.org_id.isnot(None))
+        .where(
+            Opportunity.promotion_source == "manual",
+            Opportunity.id.notin_(active_oppo_ids),
+            Opportunity.archived.is_(False),
+        )
         .order_by(Opportunity.last_seen_at.desc())
     )
-    statuses = _as_list(status)
-    if statuses:
-        stmt = stmt.where(Opportunity.status.in_(statuses))
-    else:
-        stmt = stmt.where(Opportunity.status != OpportunityStatus.archived)
-    sources = _as_list(source)
-    if sources:
-        stmt = stmt.where(Opportunity.source.in_(sources))
+    if favorited:
+        stmt = stmt.where(Opportunity.is_favorited.is_(True))
+    opps = _filter_opps(
+        list((await session.execute(stmt)).scalars().unique()), q
+    )
+    return templates.TemplateResponse(request, "partials/opportunities_rows.html", {
+        "request": request, "opps": opps, "table": "offmarket",
+    })
+
+
+@router.get("/ui/opportunities/rows/onmarket", response_class=HTMLResponse)
+async def opportunities_rows_onmarket(
+    request: Request,
+    session: DBSession,
+    q: str = Query(default=""),
+    favorited: int = Query(default=0),
+) -> HTMLResponse:
+    active_oppo_ids = select(Project.opportunity_id).where(
+        Project.opportunity_id.isnot(None)
+    )
+    stmt = (
+        select(Opportunity)
+        .where(
+            Opportunity.promotion_source.in_(["loopnet", "crexi", "scraper"]),
+            Opportunity.id.notin_(active_oppo_ids),
+            Opportunity.archived.is_(False),
+        )
+        .order_by(Opportunity.last_seen_at.desc())
+    )
+    if favorited:
+        stmt = stmt.where(Opportunity.is_favorited.is_(True))
+    opps = _filter_opps(
+        list((await session.execute(stmt)).scalars().unique()), q
+    )
+    return templates.TemplateResponse(request, "partials/opportunities_rows.html", {
+        "request": request, "opps": opps, "table": "onmarket",
+    })
+
+
+@router.patch("/ui/opportunities/{opp_id}/favorite", response_class=HTMLResponse)
+async def toggle_opportunity_favorite(
+    request: Request,
+    session: DBSession,
+    opp_id: UUID,
+) -> HTMLResponse:
+    opp = await session.get(Opportunity, opp_id)
+    if opp is None:
+        return HTMLResponse("Not found", status_code=404)
+    opp.is_favorited = not opp.is_favorited
+    await session.commit()
+    await session.refresh(opp)
+    # Return updated star button only
+    starred = "★" if opp.is_favorited else "☆"
+    title = "Unfavorite" if opp.is_favorited else "Favorite"
+    return HTMLResponse(
+        f'<button class="star-btn {"starred" if opp.is_favorited else ""}"'
+        f' hx-patch="/ui/opportunities/{opp_id}/favorite"'
+        f' hx-target="closest .star-cell"'
+        f' hx-swap="innerHTML"'
+        f' title="{title}">{starred}</button>'
+    )
+
+
+# ── Opportunity conflicts page ────────────────────────────────────────────────
+
+@router.get("/ui/opportunities/conflicts", response_class=HTMLResponse)
+async def opportunities_conflicts(
+    request: Request,
+    session: DBSession,
+    vd_user_id: str | None = Cookie(default=None),
+) -> HTMLResponse:
+    """Show field-level conflicts between Opportunity physical attrs and linked Parcel."""
+    user = await _get_user(session, request)
+    dedup_count = await _get_dedup_count(session)
+
+    stmt = (
+        select(Opportunity)
+        .where(
+            Opportunity.parcel_id.isnot(None),
+            Opportunity.archived.is_(False),
+        )
+        .order_by(Opportunity.last_seen_at.desc())
+    )
     opps = list((await session.execute(stmt)).scalars().unique())
-    if q:
-        q_lower = q.lower()
-        opps = [
-            o for o in opps
-            if q_lower in (o.name or "").lower()
-            or q_lower in (o.address_normalized or "").lower()
-        ]
-    return opps
+
+    # Build conflict list: [(opp, field_key, opp_val, parcel_val), ...]
+    _PCT_TOL = 0.05  # 5% tolerance for sqft/lot_sqft
+
+    def _pct_conflict(a, b) -> bool:
+        if a is None or b is None:
+            return False
+        try:
+            fa, fb = float(a), float(b)
+            if fb == 0:
+                return fa != 0
+            return abs(fa - fb) / fb > _PCT_TOL
+        except (TypeError, ValueError):
+            return False
+
+    conflicts = []
+    for opp in opps:
+        p = opp.parcel
+        if p is None:
+            continue
+        ack = opp.parcel_conflicts_ack or {}
+
+        if "units" not in ack and opp.units is not None and p.unit_count is not None and opp.units != p.unit_count:
+            conflicts.append((opp, "units", opp.units, p.unit_count))
+        if "gba_sqft" not in ack and _pct_conflict(opp.gba_sqft, p.building_sqft):
+            conflicts.append((opp, "gba_sqft", opp.gba_sqft, p.building_sqft))
+        if "year_built" not in ack and opp.year_built is not None and p.year_built is not None and opp.year_built != p.year_built:
+            conflicts.append((opp, "year_built", opp.year_built, p.year_built))
+        if "lot_sqft" not in ack and _pct_conflict(opp.lot_sqft, p.lot_sqft):
+            conflicts.append((opp, "lot_sqft", opp.lot_sqft, p.lot_sqft))
+
+    return templates.TemplateResponse(request, "conflicts.html", {
+        "request": request, "conflicts": conflicts,
+        **_base_ctx(user, dedup_count, "opportunities"),
+    })
+
+
+@router.post("/ui/opportunities/{opp_id}/conflicts/resolve", response_class=HTMLResponse)
+async def resolve_opportunity_conflict(
+    request: Request,
+    session: DBSession,
+    opp_id: UUID,
+) -> HTMLResponse:
+    """Resolve a single field conflict: use_listing, use_parcel, or dismiss."""
+    form = await request.form()
+    field = str(form.get("field", ""))
+    action = str(form.get("action", ""))
+
+    opp = await session.get(Opportunity, opp_id)
+    if opp is None or not field:
+        return HTMLResponse("Not found", status_code=404)
+
+    if action == "use_parcel":
+        # NULL out opp field — defers to parcel via display_* property
+        _null_map = {
+            "units": "units", "gba_sqft": "gba_sqft",
+            "year_built": "year_built", "lot_sqft": "lot_sqft",
+        }
+        if field in _null_map:
+            setattr(opp, _null_map[field], None)
+
+    # Both use_listing and dismiss: ack the field to suppress from queue
+    ack = dict(opp.parcel_conflicts_ack or {})
+    ack[field] = action
+    opp.parcel_conflicts_ack = ack
+
+    await session.commit()
+    return HTMLResponse("", status_code=200)
 
 
 # ── Opportunity creation wizard ────────────────────────────────────────────────
@@ -2548,6 +2711,72 @@ async def opportunity_wizard_get(
     return templates.TemplateResponse(request, "opportunity_wizard.html", ctx)
 
 
+@router.get("/ui/opportunities/wizard/search", response_class=HTMLResponse)
+async def opportunity_wizard_search(
+    request: Request,
+    session: DBSession,
+    q: str = Query(default=""),
+    opp_id: str = Query(default=""),
+) -> HTMLResponse:
+    """Step 2 HTMX search — finds a matching scraped Opportunity or Parcel."""
+    if not q or len(q.strip()) < 3:
+        return HTMLResponse("")
+
+    q_lower = q.strip().lower()
+
+    # Priority 1: search scraped Opportunities by address or APN
+    stmt = (
+        select(Opportunity)
+        .where(
+            Opportunity.promotion_source.in_(["loopnet", "crexi", "scraper"]),
+            Opportunity.archived.is_(False),
+        )
+        .order_by(Opportunity.last_seen_at.desc())
+        .limit(200)
+    )
+    candidates = list((await session.execute(stmt)).scalars().unique())
+    matched_opp: Opportunity | None = None
+    for c in candidates:
+        if (
+            q_lower in (c.address_normalized or "").lower()
+            or q_lower in (c.street or "").lower()
+            or q_lower in (c.apn or "").lower()
+        ):
+            matched_opp = c
+            break
+
+    if matched_opp:
+        return templates.TemplateResponse(request, "partials/wizard_match_card.html", {
+            "request": request,
+            "match_type": "listing",
+            "match": matched_opp,
+            "opp_id": opp_id,
+        })
+
+    # Priority 2: fall back to Parcel search
+    parcel_stmt = (
+        select(Parcel)
+        .where(
+            Parcel.address_normalized.ilike(f"%{q.strip()}%")
+        )
+        .limit(1)
+    )
+    matched_parcel = (await session.execute(parcel_stmt)).scalar_one_or_none()
+
+    if matched_parcel:
+        return templates.TemplateResponse(request, "partials/wizard_match_card.html", {
+            "request": request,
+            "match_type": "parcel",
+            "match": matched_parcel,
+            "opp_id": opp_id,
+        })
+
+    return HTMLResponse(
+        '<div style="color:var(--text-muted);font-size:13px;padding:12px 0">'
+        "No match found for that address or APN.</div>"
+    )
+
+
 @router.post("/ui/opportunities/wizard/step", response_class=HTMLResponse)
 async def opportunity_wizard_step(
     request: Request,
@@ -2572,12 +2801,8 @@ async def opportunity_wizard_step(
     }
 
     if step == 1:
-        # Create or update Opportunity
         name = str(form.get("name", "")).strip()
         deal_type = str(form.get("deal_type", "value_add"))
-        opp_status = str(form.get("status", "hypothetical"))
-        source = str(form.get("source", "manual"))
-        asking_price_raw = str(form.get("asking_price", "") or "").replace(",", "").strip()
         notes = str(form.get("notes", "") or "").strip()
 
         if opp_id_str:
@@ -2596,16 +2821,15 @@ async def opportunity_wizard_step(
             opp = Opportunity(
                 org_id=org.id,
                 name=name,
-                status=opp_status,
-                source=source,
-                source_type="manual",
+                notes=notes,
+                source="manual",
+                promotion_source="manual",
                 created_by_user_id=user.id if user else None,
             )
             session.add(opp)
         else:
             opp.name = name
-            opp.status = opp_status
-            opp.source = source
+            opp.notes = notes
 
         await session.commit()
         await session.refresh(opp)
@@ -2613,10 +2837,8 @@ async def opportunity_wizard_step(
 
         return templates.TemplateResponse(request, "opportunity_wizard.html", {
             "request": request, "step": 2, "opp": opp,
-            "opp_id": opp_id_str, "buildings": [],  # Building entity removed
+            "opp_id": opp_id_str,
             "deal_type": deal_type,
-            "opp_asking_price": asking_price_raw,
-            "opp_notes": notes,
             "deal_type_label": _deal_type_labels.get(deal_type, deal_type),
             "link_to_deal": _link_to_deal,
             "return_to": _return_to,
@@ -2624,59 +2846,37 @@ async def opportunity_wizard_step(
         })
 
     elif step == 2:
-        # Save physical attributes directly on the Opportunity (Building entity removed).
+        # Step 2: optional parcel/listing attachment.
+        # Form sends attach_type ('listing'|'parcel'|'') and attach_id (UUID str).
         opp = await session.get(Opportunity, UUID(opp_id_str)) if opp_id_str else None
         if opp is None:
             return HTMLResponse("Opportunity not found", status_code=400)
 
-        def _int(v: str) -> int | None:
-            try: return int(v) if v else None
-            except ValueError: return None
-        def _dec(v: str):
-            try: return Decimal(v.replace(",", "")) if v else None
-            except Exception: return None
+        attach_type = str(form.get("attach_type", "") or "").strip()
+        attach_id_raw = str(form.get("attach_id", "") or "").strip()
 
-        # Read first building row's data as the canonical physical attrs for this opportunity
-        address = str(form.get("b_address_0", "") or "").strip()
-        units = _int(str(form.get("b_units_0", "") or ""))
-        sqft = _dec(str(form.get("b_sqft_0", "") or ""))
-        year = _int(str(form.get("b_year_0", "") or ""))
-        prop_type = str(form.get("b_type_0", "") or "").strip() or None
-
-        if address and not opp.street:
-            opp.street = address
-        if units is not None:
-            opp.units = units
-        if sqft is not None:
-            opp.gba_sqft = sqft
-        if year is not None:
-            opp.year_built = year
-        if prop_type:
-            opp.property_type = prop_type
+        if attach_type == "parcel" and attach_id_raw:
+            try:
+                opp.parcel_id = UUID(attach_id_raw)
+            except ValueError:
+                pass
+        elif attach_type == "listing" and attach_id_raw:
+            # Link via parcel if the matched listing already has one
+            try:
+                linked_opp = await session.get(Opportunity, UUID(attach_id_raw))
+                if linked_opp and linked_opp.parcel_id:
+                    opp.parcel_id = linked_opp.parcel_id
+            except ValueError:
+                pass
+        # "skip" or empty = no attachment; proceed to review
 
         await session.commit()
 
         deal_type = str(form.get("deal_type", "value_add"))
-        asking_price_raw = str(form.get("asking_price", "") or "")
-        opp_notes = str(form.get("notes", "") or "")
-
-        # Persist the asking price on the first building so /deals/new can pre-fill
-        # the Acquisition Cost field when creating a deal from this opportunity.
-        if asking_price_raw and buildings_saved:
-            try:
-                _ap = Decimal(asking_price_raw.replace(",", ""))
-                if _ap > 0:
-                    buildings_saved[0].asking_price = _ap
-                    await session.commit()
-            except Exception:
-                pass
-
         return templates.TemplateResponse(request, "opportunity_wizard.html", {
             "request": request, "step": 3, "opp": opp,
-            "opp_id": opp_id_str, "buildings": [],
+            "opp_id": opp_id_str,
             "deal_type": deal_type,
-            "opp_asking_price": asking_price_raw,
-            "opp_notes": opp_notes,
             "deal_type_label": _deal_type_labels.get(deal_type, deal_type),
             "link_to_deal": _link_to_deal,
             "return_to": _return_to,
@@ -3415,57 +3615,9 @@ def _split_listings(all_listings: list) -> tuple[list, list, list]:
 
 
 @router.get("/listings", response_class=HTMLResponse)
-async def listings_page(
-    request: Request, session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
-    q: str = Query(default=""),
-    source: list[str] = Query(default=[]),
-    property_type: list[str] = Query(default=[]),
-    min_units: str = Query(default=""),
-    max_units: str = Query(default=""),
-    priority_bucket: list[str] = Query(default=[]),
-    jurisdiction: list[str] = Query(default=[]),
-) -> HTMLResponse:
-    user = await _get_user(session, request)
-    dedup_count = await _get_dedup_count(session)
-    cities = jurisdiction if jurisdiction else None  # empty = no filter (show all)
-    all_listings = list((await session.execute(
-        _listings_base_stmt(q, source, "", property_type, min_units, max_units, priority_bucket, cities=cities)
-    )).scalars())
-    new_listings, promoted, archived = _split_listings(all_listings)
-    total = int((await session.execute(select(func.count()).select_from(ScrapedListing))).scalar_one())
-    property_types = [
-        row[0] for row in (await session.execute(
-            select(ScrapedListing.property_type).distinct().where(ScrapedListing.property_type.isnot(None)).order_by(ScrapedListing.property_type)
-        )).all()
-    ]
-    # Realie usage for button state
-    realie_month = _current_month()
-    realie_result = await session.execute(
-        select(RealieUsage).where(RealieUsage.month == realie_month)
-    )
-    realie_usage = realie_result.scalar_one_or_none()
-    realie_calls_used = realie_usage.calls_used if realie_usage else 0
-    realie_call_limit = realie_usage.call_limit if realie_usage else 25
-    realie_locked = realie_usage.is_locked if realie_usage else False
-
-    jurisdictions = await _get_jurisdictions(session)
-    return templates.TemplateResponse(request, "listings.html", {
-        "new_listings": new_listings,
-        "promoted_listings": promoted,
-        "archived_listings": archived,
-        "total_count": total,
-        "q": q, "source": source,
-        "property_type": property_type, "min_units": min_units, "max_units": max_units,
-        "priority_bucket": priority_bucket,
-        "property_types": property_types,
-        "jurisdictions": jurisdictions,
-        "selected_jurisdictions": jurisdiction,
-        "realie_calls_used": realie_calls_used,
-        "realie_call_limit": realie_call_limit,
-        "realie_locked": realie_locked,
-        **_base_ctx(user, dedup_count, "listings"),
-    })
+async def listings_page(request: Request) -> Response:
+    """Listings page merged into Opportunities — redirect permanently."""
+    return RedirectResponse(url="/opportunities", status_code=302)
 
 
 @router.get("/ui/listings/rows", response_class=HTMLResponse)

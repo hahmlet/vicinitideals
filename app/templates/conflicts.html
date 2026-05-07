@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block title %}Property Conflicts — Viciniti Deals{% endblock %}
+
+{% block head %}
+<style>
+.conflict-row td { vertical-align: middle; padding: 10px 12px; }
+.conflict-field { font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .04em; color: var(--text-muted); }
+.val-opp   { color: var(--accent); font-weight: 600; }
+.val-parcel { color: var(--text-muted); }
+.resolve-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="topbar">
+  <a href="/opportunities" class="btn btn-secondary">← Back to Opportunities</a>
+</div>
+
+<div class="content">
+  <div class="card" style="padding:0">
+    <div style="padding:16px 20px;border-bottom:1px solid var(--border)">
+      <div style="font-size:16px;font-weight:700">Property Data Conflicts</div>
+      <div style="font-size:13px;color:var(--text-muted);margin-top:2px">
+        Fields where listing data and county parcel data disagree.
+        Resolve each to suppress from this queue.
+      </div>
+    </div>
+
+    {% if not conflicts %}
+    <div style="text-align:center;padding:48px;color:var(--text-muted)">
+      No unacknowledged conflicts. All clear.
+    </div>
+    {% else %}
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Opportunity</th>
+          <th>Field</th>
+          <th>Listing Value</th>
+          <th>Parcel Value</th>
+          <th>Resolve</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for opp, field_key, opp_val, parcel_val in conflicts %}
+        {% set field_labels = {
+          'units': 'Units',
+          'gba_sqft': 'Bldg Sqft',
+          'year_built': 'Year Built',
+          'lot_sqft': 'Lot Sqft'
+        } %}
+        <tr class="conflict-row" id="conflict-{{ opp.id }}-{{ field_key }}">
+          <td>
+            <a href="/opportunities/{{ opp.id }}" style="font-weight:600">{{ opp.display_name }}</a>
+            {% if opp.street %}
+            <div style="font-size:11px;color:var(--text-muted)">{{ opp.street }}{% if opp.city %}, {{ opp.city }}{% endif %}</div>
+            {% endif %}
+          </td>
+          <td><span class="conflict-field">{{ field_labels.get(field_key, field_key) }}</span></td>
+          <td>
+            <span class="val-opp">
+              {% if opp_val is not none %}
+                {% if field_key in ('gba_sqft', 'lot_sqft') %}{{ "{:,.0f}".format(opp_val | float) }}{% else %}{{ opp_val }}{% endif %}
+              {% else %}—{% endif %}
+            </span>
+          </td>
+          <td>
+            <span class="val-parcel">
+              {% if parcel_val is not none %}
+                {% if field_key in ('gba_sqft', 'lot_sqft') %}{{ "{:,.0f}".format(parcel_val | float) }}{% else %}{{ parcel_val }}{% endif %}
+              {% else %}—{% endif %}
+            </span>
+          </td>
+          <td>
+            <div class="resolve-btns">
+              <button class="btn btn-sm btn-secondary"
+                      hx-post="/ui/opportunities/{{ opp.id }}/conflicts/resolve"
+                      hx-vals='{"field": "{{ field_key }}", "action": "use_listing"}'
+                      hx-target="#conflict-{{ opp.id }}-{{ field_key }}"
+                      hx-swap="outerHTML"
+                      title="Keep listing value, suppress this conflict">
+                Use Listing
+              </button>
+              <button class="btn btn-sm btn-secondary"
+                      hx-post="/ui/opportunities/{{ opp.id }}/conflicts/resolve"
+                      hx-vals='{"field": "{{ field_key }}", "action": "use_parcel"}'
+                      hx-target="#conflict-{{ opp.id }}-{{ field_key }}"
+                      hx-swap="outerHTML"
+                      title="Clear listing value, defer to parcel">
+                Use Parcel
+              </button>
+              <button class="btn btn-sm btn-ghost"
+                      hx-post="/ui/opportunities/{{ opp.id }}/conflicts/resolve"
+                      hx-vals='{"field": "{{ field_key }}", "action": "dismiss"}'
+                      hx-target="#conflict-{{ opp.id }}-{{ field_key }}"
+                      hx-swap="outerHTML"
+                      title="Dismiss without changing data">
+                Dismiss
+              </button>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

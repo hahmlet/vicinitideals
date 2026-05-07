@@ -29,6 +29,8 @@ from app.models.broker import Broker
 from app.models.ingestion import IngestJob
 from app.models.listing_snapshot import ListingSnapshot
 from app.models.scraped_listing import ScrapedListing
+from app.models.opportunity import Opportunity
+from app.services.parcel_matching import link_parcel_if_unlinked
 from app.scrapers.loopnet import (
     BudgetExhausted,
     BudgetGuard,
@@ -308,6 +310,16 @@ async def _loopnet_weekly_sweep() -> dict[str, Any]:  # noqa: PLR0915
                         await _upsert_loopnet_listing(
                             mapped, session=session, ingest_job_id=ingest_job_id,
                         )
+                        # Attempt parcel auto-link before committing.
+                        # Runs only when parcel_id is NULL; idempotent on reruns.
+                        _opp = (await session.execute(
+                            select(Opportunity).where(
+                                Opportunity.source == mapped.get("source"),
+                                Opportunity.source_id == mapped.get("source_id"),
+                            )
+                        )).scalar_one_or_none()
+                        if _opp is not None:
+                            await link_parcel_if_unlinked(session, _opp)
                         # Commit per-listing so budget log + upsert survive
                         # even if a later listing crashes or hits budget.
                         await session.commit()

@@ -420,7 +420,22 @@ review at `/dedup/pending`.
 
 ---
 
-## 6. ScrapedListing Fields
+## 6. Opportunity Fields (formerly ScrapedListing)
+
+> **Note:** `ScrapedListing` is a Python alias — `ScrapedListing = Opportunity`. Both point to the `opportunities` table (renamed from `scraped_listings` in migration 0067). All new code should use `Opportunity`.
+
+### Display-property pattern
+Physical attributes live on both `Opportunity` (broker-reported) and `Parcel` (county-authoritative). Access them only through the model's `display_*` properties — never read raw columns directly in templates or routes:
+
+| Property | ORM column first | Parcel fallback |
+|---|---|---|
+| `display_units` | `opportunity.units` | `parcel.unit_count` |
+| `display_sqft` | `opportunity.gba_sqft` | `parcel.building_sqft` |
+| `display_year_built` | `opportunity.year_built` | `parcel.year_built` |
+| `display_lot_sqft` | `opportunity.lot_sqft` | `parcel.lot_sqft` |
+| `display_property_type` | `opportunity.property_type` | `parcel.rlis_land_use` |
+
+`NULL` on the Opportunity column means "defer to Parcel." Setting a column is a permanent user override.
 
 ### 6.1 All Columns
 
@@ -497,6 +512,16 @@ review at `/dedup/pending`.
 | `last_seen_at` | DateTime | Ingest pipeline | DB: `scraped_at` |
 | `is_new` | Boolean | Ingest pipeline | |
 | `archived` | Boolean | User action | |
+| `is_favorited` | Boolean | User action | Starred by user; default `false`; auto-set `true` for oppos linked to a Deal via Project at migration 0073 |
+| `parcel_conflicts_ack` | JSONB | User action | `{field_key: action}` map — suppresses resolved field conflicts from the conflicts queue |
+
+**Opportunity metadata** (set when manually created or promoted)
+| Column | Type | Source | Notes |
+|---|---|---|---|
+| `name` | String(255) | User | User-facing name override |
+| `promotion_source` | String(20) | Ingest / User | `"manual"` for user-created; `"loopnet"` / `"crexi"` for scraped |
+| `org_id` | UUID FK | System | Set on creation; required for visibility in opportunity pipeline |
+| `notes` | Text | User | Deal context / seller notes |
 
 **Reconciliation** (populated by matcher)
 | Column | Type | Source | Notes |
@@ -510,10 +535,29 @@ review at `/dedup/pending`.
 **Foreign Keys**
 | Column | Target | Notes |
 |---|---|---|
-| `parcel_id` | `parcels.id` | Set by reconciliation matcher |
-| `broker_id` | `brokers.id` | Set during Crexi ingest |
-| `property_id` | `buildings.id` | Set by `_sync_listing_to_building` |
-| `linked_project_id` | `opportunities.id` | Set when user promotes listing to deal |
+| `parcel_id` | `parcels.id` | Set by parcel matching service (`app/services/parcel_matching.py`) or manual wizard attach |
+| `broker_id` | `brokers.id` | Set during Crexi/LoopNet ingest |
+| `org_id` | `organizations.id` | Set on creation |
+| `created_by_user_id` | `users.id` | Set on manual creation |
+
+> **Removed FKs (migration 0072):** `property_id → buildings.id` (building entity dropped), `linked_project_id → opportunities.id` (deal_opportunities junction dropped). Deal linkage now flows through `Project.opportunity_id`.
+
+---
+
+### 6.2 Parcel Matching Service
+
+`app/services/parcel_matching.py` provides auto-linking for new ingest and manual backfill.
+
+**Strategy (priority order):**
+1. **APN exact** — any element of `opp.apn_normalized` (ARRAY) matches `parcel.apn_normalized` (String)
+2. **Lat/lng proximity** — within 30 m of `parcel.latitude / longitude` (SQL bounding box + Python haversine)
+3. **Address text** — street number equals `parcel.street_number` AND normalized street name equals `parcel.street_full_name`
+
+**Key functions:**
+- `find_matching_parcel(session, opp)` → `Parcel | None` — returns best match, no mutation
+- `link_parcel_if_unlinked(session, opp)` → `bool` — idempotent; sets `opp.parcel_id` if unlinked
+
+**Backfill:** `uv run python app/scripts/backfill_parcel_links.py` — processes all `parcel_id IS NULL` in batches of 500.
 
 ---
 
