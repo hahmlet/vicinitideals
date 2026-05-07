@@ -2464,7 +2464,7 @@ async def _query_opportunities(
 ) -> list:
     stmt = (
         select(Opportunity)
-        .order_by(Opportunity.created_at.desc())
+        .order_by(Opportunity.last_seen_at.desc())
     )
     statuses = _as_list(status)
     if statuses:

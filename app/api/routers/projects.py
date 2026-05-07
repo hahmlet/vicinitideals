@@ -204,7 +204,7 @@ async def list_projects(
     org_id: UUID | None = Query(default=None),
     include_hidden: bool = Query(default=False),
 ) -> list[Opportunity]:
-    stmt = select(Opportunity).order_by(Opportunity.created_at.desc())
+    stmt = select(Opportunity).order_by(Opportunity.last_seen_at.desc())
     if org_id is not None:
         stmt = stmt.where(Opportunity.org_id == org_id)
 
