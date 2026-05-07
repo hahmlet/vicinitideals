@@ -823,39 +823,63 @@ async def _get_address_issues_count(session: AsyncSession) -> int:
         return 0
 
 
+_CONFLICT_PCT_TOL = 0.05
+
+
+def _pct_conflict(a, b) -> bool:
+    if a is None or b is None:
+        return False
+    try:
+        fa, fb = float(a), float(b)
+        if fb == 0:
+            return fa != 0
+        return abs(fa - fb) / fb > _CONFLICT_PCT_TOL
+    except (TypeError, ValueError):
+        return False
+
+
+def _parcel_map_url(parcel: "Parcel") -> str:
+    j = (parcel.jurisdiction or "").lower().strip()
+    if j == "portland":
+        return "https://www.portlandmaps.com/"
+    if j == "gresham":
+        return "https://gis.greshamoregon.gov/GreshamMap/"
+    county = (parcel.county or "").lower().strip()
+    if county == "multnomah":
+        return "https://www.portlandmaps.com/"
+    return "https://www.clackamas.us/cmap"
+
+
+def _build_conflicts(opps: list) -> list:
+    """Return list of (opp, field_key, opp_val, parcel_val, map_url) tuples."""
+    conflicts = []
+    for opp in opps:
+        p = opp.parcel
+        if p is None:
+            continue
+        ack = opp.parcel_conflicts_ack or {}
+        url = _parcel_map_url(p)
+        if "units" not in ack and opp.units is not None and p.unit_count is not None and opp.units != p.unit_count:
+            conflicts.append((opp, "units", opp.units, p.unit_count, url))
+        if "gba_sqft" not in ack and _pct_conflict(opp.gba_sqft, p.building_sqft):
+            conflicts.append((opp, "gba_sqft", opp.gba_sqft, p.building_sqft, url))
+        if "year_built" not in ack and opp.year_built is not None and p.year_built is not None and opp.year_built != p.year_built:
+            conflicts.append((opp, "year_built", opp.year_built, p.year_built, url))
+        if "lot_sqft" not in ack and _pct_conflict(opp.lot_sqft, p.lot_sqft):
+            conflicts.append((opp, "lot_sqft", opp.lot_sqft, p.lot_sqft, url))
+    return conflicts
+
+
 async def _get_conflicts_count(session: AsyncSession) -> int:
     """Count Opportunities with at least one unacknowledged parcel field conflict."""
     try:
-        result = await session.execute(
-            select(func.count(Opportunity.id.distinct()))
-            .join(Parcel, Parcel.id == Opportunity.parcel_id)
-            .where(
-                Opportunity.archived.is_(False),
-                or_(
-                    and_(
-                        Opportunity.units.isnot(None),
-                        Parcel.unit_count.isnot(None),
-                        Opportunity.units != Parcel.unit_count,
-                    ),
-                    and_(
-                        Opportunity.gba_sqft.isnot(None),
-                        Parcel.building_sqft.isnot(None),
-                        Opportunity.gba_sqft != Parcel.building_sqft,
-                    ),
-                    and_(
-                        Opportunity.year_built.isnot(None),
-                        Parcel.year_built.isnot(None),
-                        Opportunity.year_built != Parcel.year_built,
-                    ),
-                    and_(
-                        Opportunity.lot_sqft.isnot(None),
-                        Parcel.lot_sqft.isnot(None),
-                        Opportunity.lot_sqft != Parcel.lot_sqft,
-                    ),
-                )
-            )
+        stmt = (
+            select(Opportunity)
+            .options(selectinload(Opportunity.parcel))
+            .where(Opportunity.parcel_id.isnot(None), Opportunity.archived.is_(False))
         )
-        return int(result.scalar_one() or 0)
+        opps = list((await session.execute(stmt)).scalars().unique())
+        return len(set(c[0].id for c in _build_conflicts(opps)))
     except Exception:
         return 0
 
@@ -2628,36 +2652,7 @@ async def opportunities_conflicts(
         .order_by(Opportunity.last_seen_at.desc())
     )
     opps = list((await session.execute(stmt)).scalars().unique())
-
-    # Build conflict list: [(opp, field_key, opp_val, parcel_val), ...]
-    _PCT_TOL = 0.05  # 5% tolerance for sqft/lot_sqft
-
-    def _pct_conflict(a, b) -> bool:
-        if a is None or b is None:
-            return False
-        try:
-            fa, fb = float(a), float(b)
-            if fb == 0:
-                return fa != 0
-            return abs(fa - fb) / fb > _PCT_TOL
-        except (TypeError, ValueError):
-            return False
-
-    conflicts = []
-    for opp in opps:
-        p = opp.parcel
-        if p is None:
-            continue
-        ack = opp.parcel_conflicts_ack or {}
-
-        if "units" not in ack and opp.units is not None and p.unit_count is not None and opp.units != p.unit_count:
-            conflicts.append((opp, "units", opp.units, p.unit_count))
-        if "gba_sqft" not in ack and _pct_conflict(opp.gba_sqft, p.building_sqft):
-            conflicts.append((opp, "gba_sqft", opp.gba_sqft, p.building_sqft))
-        if "year_built" not in ack and opp.year_built is not None and p.year_built is not None and opp.year_built != p.year_built:
-            conflicts.append((opp, "year_built", opp.year_built, p.year_built))
-        if "lot_sqft" not in ack and _pct_conflict(opp.lot_sqft, p.lot_sqft):
-            conflicts.append((opp, "lot_sqft", opp.lot_sqft, p.lot_sqft))
+    conflicts = _build_conflicts(opps)
 
     return templates.TemplateResponse(request, "conflicts.html", {
         "request": request, "conflicts": conflicts,

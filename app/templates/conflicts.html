@@ -43,7 +43,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for opp, field_key, opp_val, parcel_val in conflicts %}
+        {% for opp, field_key, opp_val, parcel_val, map_url in conflicts %}
         {% set field_labels = {
           'units': 'Units',
           'gba_sqft': 'Bldg Sqft',
@@ -52,25 +52,25 @@
         } %}
         <tr class="conflict-row" id="conflict-{{ opp.id }}-{{ field_key }}">
           <td>
-            <a href="/opportunities/{{ opp.id }}" style="font-weight:600">{{ opp.display_name }}</a>
+            <a href="/ui/opportunities/{{ opp.id }}" style="font-weight:600">{{ opp.display_name }}</a>
             {% if opp.street %}
             <div style="font-size:11px;color:var(--text-muted)">{{ opp.street }}{% if opp.city %}, {{ opp.city }}{% endif %}</div>
             {% endif %}
           </td>
           <td><span class="conflict-field">{{ field_labels.get(field_key, field_key) }}</span></td>
           <td>
-            <span class="val-opp">
+            <a href="/ui/opportunities/{{ opp.id }}" class="val-opp" style="text-decoration:none">
               {% if opp_val is not none %}
                 {% if field_key in ('gba_sqft', 'lot_sqft') %}{{ "{:,.0f}".format(opp_val | float) }}{% else %}{{ opp_val }}{% endif %}
               {% else %}—{% endif %}
-            </span>
+            </a>
           </td>
           <td>
-            <span class="val-parcel">
+            <a href="{{ map_url }}" target="_blank" rel="noopener" class="val-parcel" style="text-decoration:none" title="Open in GIS map">
               {% if parcel_val is not none %}
                 {% if field_key in ('gba_sqft', 'lot_sqft') %}{{ "{:,.0f}".format(parcel_val | float) }}{% else %}{{ parcel_val }}{% endif %}
               {% else %}—{% endif %}
-            </span>
+            </a>
           </td>
           <td>
             <div class="resolve-btns">
