@@ -11,7 +11,7 @@ from sqlalchemy import or_, select
 from sqlalchemy.ext.asyncio import AsyncSession, async_object_session
 
 from app.models.ingestion import DedupCandidate, DedupStatus, RecordType
-from app.models.project import ScrapedListing
+from app.models.scraped_listing import ScrapedListing
 from app.scrapers.apn_utils import normalize_apn
 
 _ADDRESS_STOP_WORDS = {

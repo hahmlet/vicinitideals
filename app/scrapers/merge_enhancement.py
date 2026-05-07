@@ -19,7 +19,7 @@ from typing import Any
 from uuid import UUID
 
 from app.models.field_conflict_log import FieldConflictAction, FieldConflictLog
-from app.models.project import ScrapedListing
+from app.models.scraped_listing import ScrapedListing
 
 # Explicit allowlist of fields eligible for cross-source enhancement.
 # Excludes identity, metadata, and enrichment-source-specific columns.

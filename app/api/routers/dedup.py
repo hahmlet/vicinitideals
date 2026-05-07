@@ -11,7 +11,7 @@ from sqlalchemy import select
 
 from app.api.deps import CurrentUserId, DBSession
 from app.models.ingestion import DedupCandidate, DedupStatus, RecordType
-from app.models.project import ScrapedListing
+from app.models.scraped_listing import ScrapedListing
 from app.schemas.ingestion import DedupCandidateRead
 from app.scrapers.merge_enhancement import apply_enhancement, diff_fields
 

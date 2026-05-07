@@ -28,7 +28,7 @@ from app.models.api_call_log import ApiCallLog  # noqa: F401 — ensure register
 from app.models.broker import Broker
 from app.models.ingestion import IngestJob
 from app.models.listing_snapshot import ListingSnapshot
-from app.models.project import ScrapedListing
+from app.models.scraped_listing import ScrapedListing
 from app.scrapers.loopnet import (
     BudgetExhausted,
     BudgetGuard,
@@ -82,7 +82,7 @@ async def _upsert_loopnet_listing(
     from sqlalchemy.dialects.postgresql import insert as pg_insert
     from sqlalchemy.dialects.sqlite import insert as sqlite_insert
 
-    from app.models.project import ScrapedListing
+    from app.models.scraped_listing import ScrapedListing
 
     values = {**values}
     values.setdefault("ingest_job_id", ingest_job_id)
