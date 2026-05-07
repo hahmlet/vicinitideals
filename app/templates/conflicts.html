@@ -59,7 +59,7 @@
           </td>
           <td><span class="conflict-field">{{ field_labels.get(field_key, field_key) }}</span></td>
           <td>
-            <a href="/ui/opportunities/{{ opp.id }}" class="val-opp" style="text-decoration:none">
+            <a href="{{ opp.source_url }}" target="_blank" rel="noopener" class="val-opp" style="text-decoration:none">
               {% if opp_val is not none %}
                 {% if field_key in ('gba_sqft', 'lot_sqft') %}{{ "{:,.0f}".format(opp_val | float) }}{% else %}{{ opp_val }}{% endif %}
               {% else %}—{% endif %}
