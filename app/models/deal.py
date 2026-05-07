@@ -685,6 +685,7 @@ USE_CATEGORY_PRESETS: dict[str, tuple[str, ...]] = {
         "Building Permits",
         "Capitalized Construction Interest",
         "Civil Engineering",
+        "Developer Fee",
         "Lease-Up Reserve",
         "Legal Fees",
         "Lender Legal",
