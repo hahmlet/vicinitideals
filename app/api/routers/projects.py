@@ -21,7 +21,6 @@ from app.models.parcel import (
     Parcel,
     ParcelTransformation,
     ParcelTransformationType,
-    ProjectParcel,
     ProjectParcelRelationship,
 )
 from app.models.project import Opportunity, Project
@@ -308,17 +307,31 @@ async def update_project_visibility(
     return visibility
 
 
-@router.get("/projects/{project_id}/parcels", response_model=list[ProjectParcelRead])
-async def list_project_parcels(project_id: UUID, session: DBSession) -> list[ProjectParcel]:
-    await _get_project_or_404(session, project_id)
+def _build_parcel_link(
+    project_id: UUID,
+    parcel: Parcel,
+    rel_type: ProjectParcelRelationship = ProjectParcelRelationship.unchanged,
+    notes: str | None = None,
+) -> dict[str, Any]:
+    """Build a ProjectParcelRead-compatible dict from the new single-FK model."""
+    return {
+        "project_id": project_id,
+        "parcel_id": parcel.id,
+        "relationship_type": rel_type,
+        "notes": notes,
+        "parcel": parcel,
+    }
 
-    result = await session.execute(
-        select(ProjectParcel)
-        .options(selectinload(ProjectParcel.parcel))
-        .where(ProjectParcel.project_id == project_id)
-        .order_by(ProjectParcel.parcel_id.asc())
-    )
-    return list(result.scalars())
+
+@router.get("/projects/{project_id}/parcels", response_model=list[ProjectParcelRead])
+async def list_project_parcels(project_id: UUID, session: DBSession) -> list[dict]:
+    opp = await _get_project_or_404(session, project_id)
+    if opp.parcel_id is None:
+        return []
+    parcel = await session.get(Parcel, opp.parcel_id)
+    if parcel is None:
+        return []
+    return [_build_parcel_link(project_id, parcel)]
 
 
 @router.post(
@@ -330,37 +343,13 @@ async def attach_parcel_to_project(
     project_id: UUID,
     payload: ProjectParcelAttachRequest,
     session: DBSession,
-) -> ProjectParcel:
-    await _get_project_or_404(session, project_id)
-
+) -> dict:
+    opp = await _get_project_or_404(session, project_id)
     parcel = await _resolve_parcel_for_attachment(session, payload)
-
-    project_parcel = await session.get(
-        ProjectParcel,
-        {"project_id": project_id, "parcel_id": parcel.id},
-    )
-    if project_parcel is None:
-        project_parcel = ProjectParcel(
-            project_id=project_id,
-            parcel_id=parcel.id,
-            relationship_type=payload.relationship_type,
-            notes=payload.notes,
-        )
-        session.add(project_parcel)
-    else:
-        project_parcel.relationship_type = payload.relationship_type
-        project_parcel.notes = payload.notes
-
+    opp.parcel_id = parcel.id
+    session.add(opp)
     await session.flush()
-    result = await session.execute(
-        select(ProjectParcel)
-        .options(selectinload(ProjectParcel.parcel))
-        .where(
-            ProjectParcel.project_id == project_id,
-            ProjectParcel.parcel_id == parcel.id,
-        )
-    )
-    return result.scalar_one()
+    return _build_parcel_link(project_id, parcel, payload.relationship_type, payload.notes)
 
 
 @router.patch("/projects/{project_id}/parcels/{parcel_id}", response_model=ProjectParcelRead)
@@ -369,29 +358,15 @@ async def update_project_parcel(
     parcel_id: UUID,
     payload: ProjectParcelUpdateRequest,
     session: DBSession,
-) -> ProjectParcel:
-    await _get_project_or_404(session, project_id)
-
-    project_parcel = await session.get(
-        ProjectParcel,
-        {"project_id": project_id, "parcel_id": parcel_id},
-    )
-    if project_parcel is None:
+) -> dict:
+    opp = await _get_project_or_404(session, project_id)
+    if opp.parcel_id != parcel_id:
         raise HTTPException(status_code=404, detail="Project parcel link not found")
-
-    for field, value in payload.model_dump(exclude_unset=True).items():
-        setattr(project_parcel, field, value)
-
-    await session.flush()
-    result = await session.execute(
-        select(ProjectParcel)
-        .options(selectinload(ProjectParcel.parcel))
-        .where(
-            ProjectParcel.project_id == project_id,
-            ProjectParcel.parcel_id == parcel_id,
-        )
-    )
-    return result.scalar_one()
+    parcel = await session.get(Parcel, parcel_id)
+    if parcel is None:
+        raise HTTPException(status_code=404, detail="Parcel not found")
+    rel = payload.relationship_type or ProjectParcelRelationship.unchanged
+    return _build_parcel_link(project_id, parcel, rel, payload.notes)
 
 
 @router.delete("/projects/{project_id}/parcels/{parcel_id}", status_code=status.HTTP_204_NO_CONTENT)
@@ -400,16 +375,11 @@ async def delete_project_parcel(
     parcel_id: UUID,
     session: DBSession,
 ) -> Response:
-    await _get_project_or_404(session, project_id)
-
-    project_parcel = await session.get(
-        ProjectParcel,
-        {"project_id": project_id, "parcel_id": parcel_id},
-    )
-    if project_parcel is None:
+    opp = await _get_project_or_404(session, project_id)
+    if opp.parcel_id != parcel_id:
         raise HTTPException(status_code=404, detail="Project parcel link not found")
-
-    await session.delete(project_parcel)
+    opp.parcel_id = None
+    session.add(opp)
     await session.flush()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 

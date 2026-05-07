@@ -154,7 +154,7 @@ async def _purge_deleted_parcels(deleted_tlids: list[str]) -> int:
     if not deleted_tlids:
         return 0
 
-    from app.models.parcel import ProjectParcel
+    from app.models.project import Project as _Project
 
     purged = 0
     # Process in chunks to avoid massive IN clauses
@@ -164,10 +164,12 @@ async def _purge_deleted_parcels(deleted_tlids: list[str]) -> int:
             chunk = deleted_tlids[i: i + chunk_size]
 
             # Find parcels for these APNs that have NO project associations
+            # Project.parcel_id is the new single-FK (replaced junction table)
             subq = (
-                select(ProjectParcel.parcel_id)
-                .join(Parcel, Parcel.id == ProjectParcel.parcel_id)
+                select(_Project.parcel_id)
+                .join(Parcel, Parcel.id == _Project.parcel_id)
                 .where(Parcel.apn.in_(chunk))
+                .where(_Project.parcel_id.isnot(None))
             )
             stmt = (
                 delete(Parcel)

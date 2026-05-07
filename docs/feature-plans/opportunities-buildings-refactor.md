@@ -24,14 +24,11 @@ Untangle the Listing → Opportunity → Project → Deal chain so that:
 
 1. **Listings and Opportunities collapse into one entity.** A "listing" (scraped) and a manually-created opportunity become the same kind of row, distinguished only by `source`. The standalone `Opportunity` ORM model is deleted.
 2. **Every Opportunity has a Parcel** (1:1, required at creation). The 446k-row `parcels` table is the authoritative source of what can be attached.
-3. **Buildings are auto-seeded on the Opportunity** from parcel + listing data (1 building per opportunity, unless raw land). Buildings are severable from listings — a manually-created opportunity gets a building too.
-4. **Project = a snapshot of an Opportunity inside a Deal.** A Project deep-copies the opportunity's buildings, unit mix, and proposed-use fields at creation time. Edits inside a Deal/Project stay there and never write back to the Opportunity.
+3. **Physical attributes (sqft, year_built, stories, unit_count, property_type) live as nullable columns on `opportunities`.** NULL = defer to `parcel.*` (Parcel is the authoritative seed). Non-null = permanent user override; future Parcel/GIS updates for that field are silently ignored. The override pattern: `display_sqft = opportunity.building_sqft ?? parcel.building_sqft`. No separate `Building` entity. No join tables.
+4. **Project = a snapshot of an Opportunity inside a Deal.** A Project deep-copies the opportunity's unit mix, proposed-use, and physical attribute overrides (nullable columns copied as-is) at creation time. Edits inside a Deal/Project stay there and never write back to the Opportunity.
 5. **Deal = N Projects** (1+). Each Project carries its own copy of physical and assumption data so the Deal is a true sandbox for iteration.
 
 The user has confirmed they are willing to **purge all existing Deals, Opportunities, Projects, Scenarios, and downstream rows** to enable a clean cutover. Parcels and ScrapedListings are preserved.
-
-### Future vision (not in scope here, but should not be blocked)
-Buildings as first-class manipulable objects (demolish, renovate, duplicate, split square footage), driven by richer geometry / image-recognition data. The schema we ship should leave room for that without baking it in now.
 
 ---
 
@@ -41,15 +38,13 @@ Class inventory at start of refactor:
 
 | File | Classes |
 |---|---|
-| `app/models/project.py` | `OpportunityStatus`, `OpportunityCategory`, `OpportunitySource`, **`Opportunity`** (49), **`Project`** (141), **`ProjectBuildingAssignment`** (231), **`ProjectParcelAssignment`** (255), `PermitStub`, **`ProjectAnchor`** (298) |
-| `app/models/property.py` | `BuildingStatus`, **`Building`** (26), **`OpportunityBuilding`** (102) |
+| `app/models/project.py` | `OpportunityStatus`, `OpportunityCategory`, `OpportunitySource`, **`Opportunity`** (49), **`Project`** (141), **`ProjectParcelAssignment`** (255), `PermitStub`, **`ProjectAnchor`** (298) |
+| `app/models/property.py` | **DELETED** — `BuildingStatus`, `Building`, `OpportunityBuilding` all removed |
 | `app/models/scraped_listing.py` | **`ScrapedListing`** (27) — has `linked_project_id`, `parcel_id`, `property_id` |
 | `app/models/parcel.py` | `ProjectParcelRelationship`, `ParcelTransformationType`, **`Parcel`** (27), **`ProjectParcel`** (126), `ParcelTransformation` |
 | `app/models/deal.py` | `ProjectType`, **`Deal`** (83), **`DealOpportunity`** (124), **`Scenario`** (154), `OperationalInputs`, `OperatingExpenseLine`, `IncomeStream`, **`UnitMix`** (441), `UseLine` |
 
 Key observations from prior audits (claude-mem obs IDs in parentheses):
-- `Building.scraped_listing_id` is a **unique** FK — one-to-one promotion (777). Severing requires nullable.
-- `OpportunityBuilding` is M2M with `sort_order`/`role` (777). Becomes 1:N after refactor.
 - `ProjectParcel` and `ProjectParcelAssignment` are both junction tables — one is opp↔parcel, the other is project↔parcel; we collapse both to direct FKs.
 - `Project.deal_type` is `String(60)`; `Deal.project_type` is enum-typed (`ProjectType`). Naming chaos; resolve. (1743)
 - `unit_mix` exists on both `Deal/Scenario` and `Project` (1138). Collapse to Project only.
@@ -65,33 +60,25 @@ Key observations from prior audits (claude-mem obs IDs in parentheses):
 
 ```
 Parcel  ◀── (FK, required) ── Opportunity ◀── (FK, lineage only) ── Project ──▶ Deal
-                                  │                                    │
-                                  │  (1:N, owner=opp)                  │  (1:N, owner=project)
-                                  ▼                                    ▼
-                               Building ─── (deep-copy on project create) ──▶ Building
-                                  │                                    │
-                                  └──────── unique-FK to ScrapedListing (nullable) ─── kept on opp-owned only
 ```
+
+Physical attributes (sqft, year_built, stories, unit_count, property_type) live as nullable columns on `Opportunity`. NULL = read from Parcel; non-null = permanent user override.
 
 ### Edit-flow rules (load-bearing)
 
-- **Opportunity edits** (parcel reassignment, unit mix, building add/edit/archive): write directly to opportunity-owned rows. Do NOT propagate to existing Projects.
+- **Opportunity edits** (parcel reassignment, unit mix, physical attribute overrides): write directly to opportunity columns. Do NOT propagate to existing Projects.
 - **Project edits** (anything inside Model Builder / Deal context): write to project-owned rows only. NEVER touch opportunity rows.
-- **New Project creation**: deep-copy from Opportunity → Project (buildings, unit mix, proposed-use, default acquisition price). After creation, Project is independent. The `Project.opportunity_id` FK is preserved for lineage display only.
+- **New Project creation**: deep-copy from Opportunity → Project (unit_mix JSONB, proposed-use default, physical attribute overrides as-is, acquisition_price default from asking_price). After creation, Project is independent. The `Project.opportunity_id` FK is preserved for lineage display only.
 
 ### Cardinalities (final)
 
 | From | To | Cardinality | Notes |
 |---|---|---|---|
 | Opportunity | Parcel | N:1, required | `opportunity.parcel_id NOT NULL` |
-| Opportunity | Building | 1:N | Typically 1; raw-land = 0; user can add more |
 | Opportunity | ScrapedListing | 1:0..1 | Manual opps have no listing; scraped opps have one |
 | Deal | Project | 1:N (≥1) | Replaces the old Deal↔Opportunity M2M |
 | Project | Opportunity | N:1, required | Lineage; never sourced from at runtime |
 | Project | Parcel | N:1, required | Copied from Opportunity at creation |
-| Project | Building | 1:N | Copied from Opportunity at creation |
-| Building | Opportunity | N:1 (nullable) | XOR with `project_id` |
-| Building | Project | N:1 (nullable) | XOR with `opportunity_id` |
 
 ---
 
@@ -103,10 +90,11 @@ Parcel  ◀── (FK, required) ── Opportunity ◀── (FK, lineage only)
 |---|---|
 | `opportunities` (`Opportunity`) | Folded into `scraped_listings` which becomes the unified Opportunity table. |
 | `deal_opportunities` (`DealOpportunity`) | Deal→Project supersedes Deal→Opportunity. |
-| `opportunity_buildings` (`OpportunityBuilding`) | Replaced by direct FK `Building.opportunity_id`. |
+| `buildings` (`Building`) | Dropped entirely. Physical attributes become nullable columns on `opportunities`. |
+| `opportunity_buildings` (`OpportunityBuilding`) | Moot once `buildings` is dropped. |
 | `project_parcels` (`ProjectParcel` in `parcel.py`) | Replaced by direct FK `Project.parcel_id` (and `Opportunity.parcel_id`). |
 | `project_parcel_assignments` (`ProjectParcelAssignment` in `project.py`) | Same; the duplicate junction is removed too. |
-| `project_building_assignments` (`ProjectBuildingAssignment`) | Replaced by direct FK `Building.project_id`. |
+| `project_building_assignments` (`ProjectBuildingAssignment`) | Moot once `buildings` is dropped. |
 
 ### 4.2 Tables renamed / restructured
 
@@ -118,13 +106,9 @@ Parcel  ◀── (FK, required) ── Opportunity ◀── (FK, lineage only)
 - Add `project_type` (enum, copied from old `Project.deal_type` / `Opportunity.project_type` — pick the cleaner of the two; see §4.5).
 - Keep `asking_price`, `asking_cap_rate_pct`, raw_json, scraper metadata as-is.
 - Add `archived_at` and `dismissed_at` if they aren't already present, to replace any old "soft delete" patterns on `Opportunity`.
-
-**`buildings`**:
-- Add `opportunity_id UUID NULL` (FK → `opportunities.id`).
-- Add `project_id UUID NULL` (FK → `projects.id`).
-- Add CHECK constraint: exactly one of `opportunity_id` or `project_id` is non-null.
-- Make `scraped_listing_id` **nullable** (was unique NOT NULL). Keep the unique partial index for the case where it IS set, so we don't double-promote a listing.
-- Remove the FK from `OpportunityBuilding` after that table is dropped.
+- **Physical attribute columns (nullable, Parcel-override):** `unit_count INTEGER NULL`, `building_sqft NUMERIC NULL`, `net_rentable_sqft NUMERIC NULL`, `lot_sqft NUMERIC NULL`, `year_built INTEGER NULL`, `stories INTEGER NULL`, `property_type VARCHAR NULL`, `current_use VARCHAR NULL`. NULL = read from `parcel.*`; non-null = permanent user override.
+- `scraped_listing_id UUID NULL UNIQUE` — moved from the old `buildings` table; links back to the source listing record when promoted from a scrape.
+- `notes TEXT NULL`.
 
 **`projects`**:
 - Add `opportunity_id UUID NOT NULL` FK → `opportunities.id` (lineage, indexed).
@@ -168,10 +152,10 @@ User has approved a **purge-and-cutover** approach. Implementation creates one A
    - `buildings` rows that came from manual flows (preserve scraped-listing-promoted rows; will be re-attached to scraped_listings under the new schema if useful, or also purged — operator choice)
 3. **Schema changes** (DDL):
    - DROP `deal_opportunities`, `opportunity_buildings`, `project_parcel_assignments`, `project_parcels`, `project_building_assignments`
+   - DROP `buildings` table (no longer needed — physical attributes move to `opportunities`).
    - DROP old `opportunities` table (was `Opportunity` model)
    - RENAME `scraped_listings` → `opportunities`. Update all FK references in the same migration.
-   - ALTER `opportunities`: add `parcel_id NOT NULL`, `project_type`, optional fields lifted from old Opportunity model.
-   - ALTER `buildings`: add `opportunity_id`, `project_id`, CHECK constraint, make `scraped_listing_id` nullable.
+   - ALTER `opportunities`: add `parcel_id NOT NULL`, `project_type`, optional fields lifted from old Opportunity model; add physical attribute columns (`unit_count`, `building_sqft`, `net_rentable_sqft`, `lot_sqft`, `year_built`, `stories`, `property_type`, `current_use` — all nullable); add `scraped_listing_id UUID NULL UNIQUE`; add `notes TEXT NULL`.
    - ALTER `projects`: add `opportunity_id`, `parcel_id`, `acquisition_price`, `proposed_use`, drop `multi_parcel_dismissed`, drop `deal_type`.
    - ALTER `scenarios` / `deals`: drop `project_type` / `unit_mix` linkage where applicable.
 4. **Reseed**: re-run scraper backfills if any opportunity-level enrichments need to populate the new `opportunities` table fields. Scraped listings already have parcel_id populated for most rows; rows missing parcel_id should be flagged and excluded from "promote to opportunity" UI until reconciled.
@@ -213,9 +197,9 @@ Implementation requirements:
 
 ### 5.1 Models (`app/models/`)
 
-- **New**: `app/models/opportunity.py` — the new `Opportunity` ORM class (was `ScrapedListing`). Re-export from `app/models/__init__.py`. Keep `ScrapedListing = Opportunity` alias for the duration of the refactor; remove in a follow-up.
+- **New**: `app/models/opportunity.py` — the new `Opportunity` ORM class (was `ScrapedListing`). Add nullable physical attribute columns (`unit_count`, `building_sqft`, `net_rentable_sqft`, `lot_sqft`, `year_built`, `stories`, `property_type`, `current_use`) and `scraped_listing_id`, `notes`. Re-export from `app/models/__init__.py`. Keep `ScrapedListing = Opportunity` alias for the duration of the refactor; remove in a follow-up.
 - **Rewrite**: `app/models/project.py` — drop `Opportunity`, `OpportunityCategory`, `OpportunityStatus`, `ProjectBuildingAssignment`, `ProjectParcelAssignment`. Add `opportunity_id`, `parcel_id`, `acquisition_price`, `proposed_use` to `Project`. Drop `multi_parcel_dismissed`, `deal_type`. `OpportunitySource` enum stays (move to `opportunity.py`).
-- **Rewrite**: `app/models/property.py` — `Building.opportunity_id` and `Building.project_id` columns, CHECK constraint, nullable `scraped_listing_id`. Drop `OpportunityBuilding`.
+- **DELETE**: `app/models/property.py` — entire file removed. `Building`, `BuildingStatus`, `OpportunityBuilding` all gone.
 - **Rewrite**: `app/models/parcel.py` — drop `ProjectParcel` and `ProjectParcelRelationship`. Keep `Parcel` and `ParcelTransformation`.
 - **Rewrite**: `app/models/deal.py` — drop `DealOpportunity`. Drop `UnitMix.deal_id` (or the table itself, depending on whether unit_mix becomes JSONB on Project or stays a separate table keyed by `project_id`). Drop `Deal.project_type`.
 
@@ -258,8 +242,7 @@ Implementation requirements:
 
 ### 5.6 Tasks (`app/tasks/`)
 
-- Scraper tasks (`tasks/scraper.py`): adjust the post-ingest step that today populates `scraped_listings` to also (a) ensure `parcel_id` is set via lat/lng nearest-parcel reconciliation if missing, and (b) auto-seed a Building for non-land listings. The auto-seed lives at the **opportunity layer**, not at deal-creation time.
-- Backfill task (one-shot, after migration): for every existing scraped listing without a building and without raw-land project_type, create a seeded Building.
+- Scraper tasks (`tasks/scraper.py`): adjust the post-ingest step that today populates `scraped_listings` to ensure `parcel_id` is set via lat/lng nearest-parcel reconciliation if missing. No Building auto-seed — physical attributes are copied from parcel columns at scrape time.
 
 ### 5.7 Tests (`tests/`)
 
@@ -283,15 +266,15 @@ Implementation requirements:
 
 ### 6.2 Listing detail / Opportunity detail (`opportunity_detail.html` + `partials/listing_detail.html`)
 
-- Merge into a single "Opportunity Detail" page. Sections: Header (name, source, parcel, project_type), Parcel Summary, Buildings (auto-seeded list, edit inline, add new), Unit Mix (per-building or aggregated — confirm with Steph), Notes, Linked Deals.
+- Merge into a single "Opportunity Detail" page. Sections: Header (name, source, parcel, project_type), Parcel Summary, Physical Attributes (editable fields with inline hints), Unit Mix, Notes, Linked Deals.
+- **Physical attribute fields**: each field shows "(from parcel)" hint when the opportunity column is NULL; "(overridden)" badge when the user has set it. Saving a non-null value permanently locks that field to the user's choice — Parcel updates no longer apply to it.
 - Edit unit mix here = canonical edit (does NOT propagate to existing Projects).
 - "**Create Deal from this Opportunity**" button — primary CTA. Lands user in Model Builder with one Project preloaded.
 - "**Add to existing Deal**" secondary action — picker shows user's recent deals; creates a new Project under the chosen deal.
 
 ### 6.3 Buildings page (`app/templates/buildings.html`)
 
-- Becomes a read-mostly inventory view. Today it's used for manual building creation in the deal flow (per user's complaint); after refactor, building creation happens at Opportunity level only.
-- Keep it for the inventory/audit use case. Add a filter for "buildings without an opportunity" to spot orphans.
+- **DELETE.** No `Building` entity = no inventory page. Remove the route, nav link, and template.
 
 ### 6.4 Opportunity Wizard (`opportunity_wizard.html`)
 
@@ -325,7 +308,8 @@ Implementation requirements:
 | `opportunities.html` | Likely DELETE or merge into listings.html |
 | `partials/listing_detail.html` | Fold into opportunity_detail.html |
 | `partials/listings_*_row.html` (new/promoted/unpromoted/archived) | Update to opportunity-row partials, drop "promote to opportunity" CTA |
-| `partials/buildings_rows.html`, `partials/building_detail.html` | Show owner badge (opp / project), add "edit at source" link |
+| `buildings.html` | **DELETE** — no Building entity |
+| `partials/buildings_rows.html`, `partials/building_detail.html` | **DELETE** — no Building entity |
 | `model_builder.html` | Remove multi-parcel banner, update Add Project drawer |
 | `deal_detail.html` | Update to read from Project lineage, remove DealOpportunity references |
 
@@ -333,8 +317,7 @@ Implementation requirements:
 
 ## 7. Out of Scope / Deferred
 
-- Multi-building per opportunity (user defers; ship 1 building per opportunity, allow add later).
-- Building manipulation operations (demolish/renovate/duplicate). `BuildingStatus` enum stays available; UI for it ships later.
+- **Building as a separate entity — deferred indefinitely.** Physical attributes are nullable columns on `Opportunity` for now. A richer Building entity (demolish/renovate/duplicate, geometry, image-recognition) is not blocked but is not planned.
 - Multi-parcel assemblage at the opportunity level. Future assemblage = "deal with multiple projects, each on its own parcel."
 - Splitting a parcel (`ParcelTransformation` table stays in place but is not exercised by this refactor).
 - Multi-project cashflow compute (Phase 2 of migration 0048).
@@ -346,10 +329,9 @@ Implementation requirements:
 ## 8. Open Questions (decide during implementation)
 
 1. **`ScrapedListing = Opportunity` alias.** Keep for one release cycle, or remove in the same migration? Recommendation: keep, deprecate in the next refactor pass.
-3. **`OpportunityBuilding.role` field.** Today supports `primary`/`adjacent`. With 1:N direct FK, do we need `role` on Building, or is it dropped entirely? Recommendation: drop now; reintroduce only if assemblage UI ships.
-4. **`Property = Building` alias.** Old name still used in some imports per obs 777. Drop now or in follow-up? Recommendation: follow-up.
-5. **What does "raw land" mean for auto-seed gate?** Detection logic options: (a) `project_type == ProjectType.land`, (b) `parcel.building_sqft IS NULL OR == 0`, (c) both. Recommendation: (a) primarily, (b) as a fallback when project_type is missing on scraped rows.
-6. **Manual opportunity numbering.** What's the human-readable name shown by default? Recommendation: `{address} ({apn})` derived from parcel; user can override.
+2. **`Property = Building` alias.** Old name still used in some imports per obs 777. Drop now or in follow-up? Recommendation: drop in this migration (the whole file is deleted; any import of `property.py` is a compile error anyway).
+3. **Confirm physical attribute column list.** Before migration DDL is written, verify the full set: `unit_count`, `building_sqft`, `net_rentable_sqft`, `lot_sqft`, `year_built`, `stories`, `property_type`, `current_use`. Any additions or renames from this list?
+4. **Manual opportunity numbering.** What's the human-readable name shown by default? Recommendation: `{address} ({apn})` derived from parcel; user can override.
 
 ---
 
@@ -369,16 +351,17 @@ A reviewer should be able to verify all of these from the live app and the codeb
 
 1. Listings page is renamed "Opportunities" and supports manual-create with a required parcel pick.
 2. `Opportunity` ORM class no longer exists in `app/models/project.py`. The unified opportunity ORM lives in `app/models/opportunity.py` and is the renamed `ScrapedListing`.
-3. `Building.opportunity_id` and `Building.project_id` are both present, with a CHECK constraint that exactly one is set.
-4. Creating a Deal from an Opportunity deep-copies buildings, unit_mix, and project_type→proposed_use into the new Project. Editing those fields inside the Deal does not modify the Opportunity (verified by a test).
-5. Adding a second Project to an existing Deal works via the Add Project drawer and accepts an Opportunity selection.
-6. The multi-parcel split banner and `Project.multi_parcel_dismissed` column are gone.
-7. `unit_mix` no longer exists at the Deal/Scenario level; only at Project level.
-8. `Deal.project_type` and `Project.deal_type` columns are gone; `Opportunity.project_type` and `Project.proposed_use` replace them.
-9. Migration 0059 runs cleanly on a fresh DB and on a purged production DB.
-10. Phase B debt regression suite (`scripts/test_phase_b_debt.py`) passes against a post-migration deploy.
-11. Live deploy to `viciniti.deals` is successful and the smoke checks in `deploy-vicinitideals.sh` pass.
-12. `docs/DATA_MODEL.md` and `docs/PROJECT_OVERVIEW.md` are updated to match shipped reality. **This is the final acceptance criterion — the refactor is not done until the docs match the schema.** Done in the same PR series, not deferred to a follow-up.
+3. `app/models/property.py` is deleted. No `Building`, `BuildingStatus`, or `OpportunityBuilding` anywhere in the codebase.
+4. Creating a Deal from an Opportunity deep-copies unit_mix, proposed_use default, and physical attribute overrides (nullable columns) into the new Project. Editing those fields inside the Deal does not modify the Opportunity (verified by a test).
+5. Physical attributes on Opportunity fall back to Parcel values when the Opportunity column is NULL; once set, the Opportunity value takes permanent precedence (verified by a test).
+6. Adding a second Project to an existing Deal works via the Add Project drawer and accepts an Opportunity selection.
+7. The multi-parcel split banner and `Project.multi_parcel_dismissed` column are gone.
+8. `unit_mix` no longer exists at the Deal/Scenario level; only at Project level.
+9. `Deal.project_type` and `Project.deal_type` columns are gone; `Opportunity.project_type` and `Project.proposed_use` replace them.
+10. Migration 0059 runs cleanly on a fresh DB and on a purged production DB.
+11. Phase B debt regression suite (`scripts/test_phase_b_debt.py`) passes against a post-migration deploy.
+12. Live deploy to `viciniti.deals` is successful and the smoke checks in `deploy-vicinitideals.sh` pass.
+13. `docs/DATA_MODEL.md` and `docs/PROJECT_OVERVIEW.md` are updated to match shipped reality. **This is the final acceptance criterion — the refactor is not done until the docs match the schema.** Done in the same PR series, not deferred to a follow-up.
 
 ---
 
@@ -390,7 +373,7 @@ A reviewer should be able to verify all of these from the live app and the codeb
 4. **API routers** updated. Integration tests green.
 5. **Engine smoke** — Phase B debt suite green against local seed.
 6. **UI templates** updated. Playwright E2E suite updated.
-7. **Tasks** — scraper post-ingest step updated; backfill task written.
+7. **Tasks** — scraper post-ingest step updated (ensure `parcel_id` populated via lat/lng reconciliation if missing).
 8. **Deploy** to staging DB if available; otherwise straight to production after a manual purge confirmation.
 9. **Update `docs/DATA_MODEL.md` and `docs/PROJECT_OVERVIEW.md`** to match shipped reality. This is a required final step, not a deferrable follow-up. Any drift between the plan in this document and what actually shipped (renamed columns, different enum values, deferred sub-features) must be reflected in the schema docs before the refactor closes out.
 

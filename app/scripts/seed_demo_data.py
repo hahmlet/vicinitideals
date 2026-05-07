@@ -1,4 +1,4 @@
-"""Seed demo data: parcels, brokerages, brokers, scraped listings, properties.
+"""Seed demo data: parcels, brokerages, brokers, scraped listings.
 
 Run inside the api container:
   python -m app.scripts.seed_demo_data
@@ -17,7 +17,6 @@ from app.models.broker import Broker, Brokerage
 from app.models.org import Organization, User
 from app.models.parcel import Parcel
 from app.models.project import Project
-from app.models.property import Property
 from app.models.scraped_listing import ScrapedListing
 
 
@@ -304,39 +303,6 @@ async def seed() -> None:
             await session.flush()
             listings.append(lobj)
             print(f"  created listing {ld['source_id']}")
-
-        # ------------------------------------------------------------------
-        # Properties (Buildings) — link to listing + parcel where available
-        # ------------------------------------------------------------------
-        property_data = [
-            dict(name="N Interstate Ave (Tower)", listing_idx=0, apn="R123400010"),
-            dict(name="619 NE 190th Ave", listing_idx=1, apn="R698400130"),
-            dict(name="2211 NE Broadway", listing_idx=2, apn=None),
-            dict(name="4444 N Williams Ave", listing_idx=3, apn=None),
-            dict(name="4821 SE Powell Blvd", listing_idx=4, apn="R245600044"),
-        ]
-        for pd in property_data:
-            listing = listings[pd["listing_idx"]] if pd["listing_idx"] < len(listings) else None
-            apn = pd.get("apn")
-            parcel = parcels.get(apn) if apn else None
-
-            if listing:
-                existing = (await session.execute(
-                    select(Property).where(Property.scraped_listing_id == listing.id)
-                )).scalars().first()
-                if existing:
-                    print(f"  property '{pd['name']}' already exists, skipping")
-                    continue
-
-            prop = Property(
-                name=pd["name"],
-                scraped_listing_id=listing.id if listing else None,
-                parcel_id=parcel.id if parcel else None,
-                created_by_user_id=user.id if user else None,
-            )
-            session.add(prop)
-            await session.flush()
-            print(f"  created property '{pd['name']}'")
 
         await session.commit()
         print("\nDone.")

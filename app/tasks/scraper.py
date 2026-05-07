@@ -22,8 +22,8 @@ from app.models.broker import Broker, Brokerage
 from app.services.broker_normalize import normalize_name
 from app.models.ingestion import DedupStatus, IngestJob, SavedSearchCriteria
 from app.models.org import Organization
-from app.models.project import Opportunity, OpportunityStatus, OpportunitySource, ScrapedListing
-from app.models.property import Building, BuildingStatus, OpportunityBuilding
+from app.models.opportunity import Opportunity, OpportunityStatus, OpportunitySource
+from app.models.scraped_listing import ScrapedListing
 from app.schemas.broker import BrokerCreate
 from app.schemas.scraped_listing import ScrapedListingCreate
 from app.observability import (
@@ -146,9 +146,6 @@ async def _scrape_crexi(
             await _flag_saved_search_matches(current_listings, session=session)
             # Auto-promote disabled — manual promotion only via UI
             # await _auto_promote_listings(current_listings, session=session)
-            for listing in current_listings:
-                if not listing.is_new:
-                    await _sync_listing_to_building(listing, session)
             current_listing_ids = [listing.id for listing in current_listings if listing.id is not None]
             dedup_rows = await deduplicate_batch(
                 current_listing_ids,
@@ -383,9 +380,7 @@ async def upsert_scraped_listings(
             listing_payload=payload,
         )
         values["broker_id"] = _resolve_listing_broker_id(payload, broker_id_map)
-        values["linked_project_id"] = listing.linked_project_id
         values["parcel_id"] = listing.parcel_id
-        values["property_id"] = listing.property_id
 
         upsert_stmt = _build_upsert_statement(
             dialect_name=dialect_name,
@@ -547,11 +542,14 @@ async def _promote_listing(
     ruleset_id: "uuid.UUID | None" = None,
     org_id: "uuid.UUID | None" = None,
 ) -> Opportunity | None:
-    """Create an Opportunity + Building from a listing and link them together.
+    """Promote a listing to an Opportunity by setting org_id and metadata.
 
-    Returns the new Opportunity, or None if a link already exists.
+    The listing IS the Opportunity (same table). Promotion marks it as belonging
+    to an org so it appears in the deal pipeline.
+
+    Returns the listing (as Opportunity) or None if already promoted.
     """
-    if listing.linked_project_id is not None:
+    if listing.org_id is not None:
         return None  # already promoted
 
     if org_id is None:
@@ -560,118 +558,27 @@ async def _promote_listing(
         logger.warning("Cannot promote listing %s: no organisation found", listing.id)
         return None
 
-    # Determine the source enum value
-    source_str = (listing.source or "").lower()
-    try:
-        opp_source = OpportunitySource(source_str)
-    except ValueError:
-        opp_source = None
-
     address_display = (
         listing.address_normalized or listing.address_raw or listing.listing_name or "Unnamed"
     )
 
-    opp = Opportunity(
-        org_id=org_id,
-        name=address_display,
-        status=OpportunityStatus.hypothetical,
-        source=opp_source,
-        source_type="scraped",
-        promotion_source=promotion_source,
-        promotion_ruleset_id=ruleset_id,
-    )
-    session.add(opp)
-    await session.flush()  # get opp.id
-
-    # Build or reuse a Building for this listing
-    building: Building | None = None
-    if listing.property_id:
-        building = await session.get(Building, listing.property_id)
-
-    if building is None:
-        building = Building(
-            name=address_display,
-            address_line1=listing.street,
-            city=listing.city,
-            state=listing.state_code,
-            zip_code=listing.zip_code,
-            unit_count=listing.units,
-            building_sqft=float(listing.gba_sqft) if listing.gba_sqft else None,
-            net_rentable_sqft=float(listing.net_rentable_sqft) if listing.net_rentable_sqft else None,
-            lot_sqft=float(listing.lot_sqft) if listing.lot_sqft else None,
-            year_built=listing.year_built,
-            stories=listing.stories,
-            property_type=listing.property_type,
-            asking_price=float(listing.asking_price) if listing.asking_price else None,
-            asking_cap_rate_pct=float(listing.cap_rate) if listing.cap_rate else None,
-            status=BuildingStatus.existing,
-            scraped_listing_id=listing.id,
-        )
-        session.add(building)
-        await session.flush()
-        listing.property_id = building.id
-
-    ob = OpportunityBuilding(
-        opportunity_id=opp.id,
-        building_id=building.id,
-        sort_order=0,
-    )
-    session.add(ob)
-
-    listing.linked_project_id = opp.id
+    listing.org_id = org_id
+    listing.opp_status = OpportunityStatus.hypothetical.value
+    listing.promotion_source = promotion_source
+    listing.promotion_ruleset_id = ruleset_id
+    if not listing.name:
+        listing.name = address_display
     await session.flush()
 
     log_observation(
         logger,
         "listing_promoted",
         listing_id=str(listing.id),
-        opportunity_id=str(opp.id),
-        building_id=str(building.id),
+        opportunity_id=str(listing.id),
         promotion_source=promotion_source,
         ruleset_id=str(ruleset_id) if ruleset_id else None,
     )
-    return opp
-
-
-async def _sync_listing_to_building(listing: ScrapedListing, session) -> None:
-    """Propagate updated listing fields to the linked Building (if any).
-
-    Called when a listing is refreshed (not new) and has a linked building.
-    Only overwrites fields that are non-null in the listing — preserves manual
-    edits to fields the listing no longer carries.
-    """
-    if not listing.property_id:
-        return
-    building = await session.get(Building, listing.property_id)
-    if building is None:
-        return
-
-    def _maybe(field, value):
-        if value is not None:
-            setattr(building, field, value)
-
-    addr_line1 = listing.street
-    _maybe("address_line1", addr_line1)
-    _maybe("city", listing.city)
-    _maybe("state", listing.state_code)
-    _maybe("zip_code", listing.zip_code)
-    _maybe("unit_count", listing.units)
-    if listing.gba_sqft is not None:
-        building.building_sqft = float(listing.gba_sqft)
-    if listing.lot_sqft is not None:
-        building.lot_sqft = float(listing.lot_sqft)
-    _maybe("year_built", listing.year_built)
-    _maybe("stories", listing.stories)
-    _maybe("property_type", listing.property_type)
-    if listing.asking_price is not None:
-        building.asking_price = float(listing.asking_price)
-    if listing.cap_rate is not None:
-        building.asking_cap_rate_pct = float(listing.cap_rate)
-    # Update the building name if we have a better address now
-    new_name = listing.address_normalized or listing.address_raw
-    if new_name:
-        building.name = new_name
-    await session.flush()
+    return listing
 
 
 async def _auto_promote_listings(
@@ -688,7 +595,7 @@ async def _auto_promote_listings(
 
     Returns the count of new promotions created.
     """
-    new_listings = [l for l in listings if l.is_new and l.linked_project_id is None]
+    new_listings = [l for l in listings if l.is_new and l.org_id is None]
     if not new_listings:
         return 0
 
@@ -818,9 +725,6 @@ async def _scrape_listings(
             await _flag_saved_search_matches(persisted_listings, session=session)
             # Auto-promote disabled — manual promotion only via UI
             # await _auto_promote_listings(persisted_listings, session=session)
-            for listing in persisted_listings:
-                if not listing.is_new:
-                    await _sync_listing_to_building(listing, session)
             dedup_rows = await deduplicate_batch(
                 persisted_listings,
                 ingest_job_id=ingest_job_id,
@@ -983,8 +887,6 @@ def _build_upsert_statement(
                 table.c.updated_at_source: values["updated_at_source"],
                 table.c.broker_id: values.get("broker_id"),
                 table.c.parcel_id: values.get("parcel_id"),
-                table.c.property_id: values.get("property_id"),
-                table.c.linked_project_id: func.coalesce(table.c.linked_project_id, values.get("linked_project_id")),
                 table.c.matches_saved_criteria: values["matches_saved_criteria"],
                 table.c.scraped_at: func.now(),
                 # is_new is NOT cleared on re-scrape — only user actions (promote/archive) clear it
@@ -1417,8 +1319,6 @@ def _build_listing_values(
         "last_seen_at": func.now(),
         "broker_id": None,
         "parcel_id": None,
-        "property_id": None,
-        "linked_project_id": None,
         "realie_skip": detect_address_issue(
             str(address).strip() if address not in (None, "") else None
         ) is not None,

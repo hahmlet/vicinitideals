@@ -9,15 +9,11 @@ from pydantic import BaseModel
 from sqlalchemy import select
 
 from app.api.deps import CurrentUserId, DBSession
+from app.models.opportunity import Opportunity
 from app.models.org import User
-from app.models.project import (
-    Opportunity,
-    ProjectCategory,
-    ProjectSource,
-    ProjectStatus,
-    ScrapedListing,
-)
 from app.schemas.project import ProjectRead, ScrapedListingRead
+
+ScrapedListing = Opportunity
 
 router = APIRouter(tags=["listings"])
 
@@ -32,12 +28,12 @@ async def list_scraped_listings(
     session: DBSession,
     is_new: bool | None = Query(default=None),
     matches_criteria: bool | None = Query(default=None),
-) -> list[ScrapedListing]:
-    stmt = select(ScrapedListing).order_by(ScrapedListing.scraped_at.desc())
+) -> list[Opportunity]:
+    stmt = select(Opportunity).order_by(Opportunity.last_seen_at.desc())
     if is_new is not None:
-        stmt = stmt.where(ScrapedListing.is_new == is_new)
+        stmt = stmt.where(Opportunity.is_new == is_new)
     if matches_criteria is not None:
-        stmt = stmt.where(ScrapedListing.matches_saved_criteria == matches_criteria)
+        stmt = stmt.where(Opportunity.matches_saved_criteria == matches_criteria)
 
     result = await session.execute(stmt)
     return list(result.scalars())
@@ -54,14 +50,13 @@ async def convert_listing_to_project(
     session: DBSession,
     current_user_id: CurrentUserId,
 ) -> Opportunity:
-    listing = await session.get(ScrapedListing, listing_id)
+    listing = await session.get(Opportunity, listing_id)
     if listing is None:
         raise HTTPException(status_code=404, detail="Listing not found")
 
-    if listing.linked_project_id is not None:
-        existing_project = await session.get(Opportunity, listing.linked_project_id)
-        if existing_project is not None:
-            return existing_project
+    # Listing IS the opportunity — already promoted if org_id is set
+    if listing.org_id is not None:
+        return listing
 
     org_id = payload.org_id
     if org_id is None:
@@ -70,25 +65,13 @@ async def convert_listing_to_project(
             raise HTTPException(status_code=404, detail="User not found")
         org_id = user.org_id
 
-    project_name = payload.name or listing.address_normalized or listing.address_raw or f"{listing.source.title()} listing"
-    try:
-        project_source = ProjectSource(str(listing.source))
-    except ValueError:
-        project_source = ProjectSource.manual
-
-    opportunity = Opportunity(
-        org_id=org_id,
-        name=project_name,
-        status=ProjectStatus.hypothetical,
-        project_category=ProjectCategory.proposed,
-        source=project_source,
-        created_by_user_id=current_user_id,
-    )
-    session.add(opportunity)
-    await session.flush()
-
-    listing.linked_project_id = opportunity.id
+    listing.org_id = org_id
+    listing.name = payload.name or listing.address_normalized or listing.address_raw or f"{listing.source.title()} listing"
+    listing.opp_status = "hypothetical"
+    listing.project_category = "proposed"
+    listing.promotion_source = "manual"
+    listing.created_by_user_id = current_user_id
     listing.is_new = False
     await session.flush()
-    await session.refresh(opportunity)
-    return opportunity
+    await session.refresh(listing)
+    return listing
