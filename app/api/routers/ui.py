@@ -3203,7 +3203,6 @@ def _listings_base_stmt(
         select(ScrapedListing)
         .options(
             selectinload(ScrapedListing.broker).selectinload(Broker.brokerage),
-            selectinload(ScrapedListing.linked_opportunity),
         )
         .order_by(ScrapedListing.last_seen_at.desc())
     )
@@ -3796,7 +3795,6 @@ async def listing_detail(request: Request, listing_id: UUID, session: DBSession)
         ScrapedListing, listing_id,
         options=[
             selectinload(ScrapedListing.broker).selectinload(Broker.brokerage),
-            selectinload(ScrapedListing.linked_opportunity),
         ]
     )
     if listing is None:
