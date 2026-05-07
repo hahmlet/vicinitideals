@@ -10037,6 +10037,7 @@ async def download_model_export(
 async def download_investor_export(
     model_id: UUID,
     session: DBSession,
+    profile: str = Query(default="internal"),
 ) -> StreamingResponse:
     """Download the LP-facing investor Excel workbook for this Scenario."""
     from app.exporters.investor_export import export_investor_workbook, make_investor_filename
@@ -10044,7 +10045,7 @@ async def download_investor_export(
     if scenario is None:
         return HTMLResponse("Not found", status_code=404)
     deal = await session.get(Deal, scenario.deal_id) if scenario.deal_id else None
-    workbook_bytes = await export_investor_workbook(model_id, session)
+    workbook_bytes = await export_investor_workbook(model_id, session, profile=profile)
     filename = make_investor_filename(scenario, deal)
     return StreamingResponse(
         iter([workbook_bytes]),
@@ -10070,6 +10071,7 @@ async def preflight_investor_export(
     model_id: UUID,
     session: DBSession,
     request: Request,
+    profile: str = Query(default="internal"),
 ) -> JSONResponse:
     """Cheap idempotent check: is a cached resend eligible for this scenario?
 
@@ -10104,6 +10106,7 @@ async def preflight_investor_export(
             .where(ExportJob.scenario_id == model_id)
             .where(ExportJob.status == ExportJobStatus.sent)
             .where(ExportJob.xlsx_bytes.isnot(None))
+            .where(ExportJob.export_profile == profile)
             .order_by(ExportJob.created_at.desc())
             .limit(1)
         )

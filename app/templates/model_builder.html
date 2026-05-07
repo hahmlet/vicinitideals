@@ -731,6 +731,7 @@
            id="investor-export-status-{{ model.id }}"
            role="status"
            aria-live="polite">
+        <p style="font-size:11px;color:var(--text-muted);margin:0 0 6px">Includes sensitivity analysis — export will be emailed when ready.</p>
         <ol class="investor-export-steps">
           <li class="step" data-step="calculating">Calculating</li>
           <li class="step" data-step="sending">Sending Email</li>
@@ -987,7 +988,7 @@ async function startInvestorExport(modelId, profile) {
   // Step 1: preflight — does a cached resend exist?
   let pre = null;
   try {
-    const r = await fetch('/ui/models/' + modelId + '/investor-export/preflight');
+    const r = await fetch('/ui/models/' + modelId + '/investor-export/preflight?profile=' + profile);
     if (!r.ok) {
       const j = await r.json().catch(() => ({}));
       _failBtn(j.error || ('HTTP ' + r.status));
@@ -1020,6 +1021,16 @@ async function startInvestorExport(modelId, profile) {
   }
   _attachHoverHandlers(modelId);
 
+  // lender + proforma have no sensitivity — build synchronously in the browser.
+  const _SYNC_PROFILES = new Set(['lender', 'proforma']);
+  if (_SYNC_PROFILES.has(profile) && !resendJobId) {
+    if (btn) { btn.textContent = 'Downloading…'; btn.disabled = true; }
+    window.location.href = '/ui/models/' + modelId + '/investor-export.xlsx?profile=' + profile;
+    setTimeout(() => { if (btn) { btn.disabled = false; btn.textContent = '↓ Investor Export'; } }, 4000);
+    return;
+  }
+
+  // internal + lp include sensitivity analysis (slow) — queued and emailed.
   const url = resendJobId
     ? '/ui/exports/' + resendJobId + '/resend'
     : '/ui/models/' + modelId + '/investor-export/async';

@@ -126,7 +126,7 @@ async def export_investor_workbook(
     # Each set lists which profiles render that sheet.  Adding a new profile
     # only requires updating the relevant set(s) below.
     _HAS_UW        = {"internal", "lp", "lender"}   # UW Summary + Pro Forma + Cash Flow
-    _HAS_SU        = {"internal", "lp", "lender"}   # Sources & Uses dedicated sheet
+    _HAS_SU        = {"internal", "lp", "lender", "proforma"}  # Sources & Uses dedicated sheet
     _HAS_RETURNS   = {"internal", "lp"}              # Investor Returns + Waterfall
     _HAS_UNIT_MIX  = {"internal", "lp", "lender"}
     _HAS_DEBT      = {"internal", "lender"}          # Debt Schedule
