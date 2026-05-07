@@ -7,9 +7,9 @@ the authoritative seed; opportunity columns are permanent override when non-null
 Data purge approved in refactor plan — all deal/scenario/project rows are wiped.
 Parcels and scraped listings (now opportunities) are preserved.
 
-Revision ID: 0067
-Revises: 0066
-Create Date: 2026-05-03
+Revision ID: 0072
+Revises: 0071
+Create Date: 2026-05-06
 """
 
 from __future__ import annotations
@@ -18,8 +18,8 @@ import sqlalchemy as sa
 from alembic import op
 from sqlalchemy import text
 
-revision = "0067"
-down_revision = "0066"
+revision = "0072"
+down_revision = "0071"
 branch_labels = None
 depends_on = None
 
