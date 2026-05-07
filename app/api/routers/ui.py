@@ -823,7 +823,50 @@ async def _get_address_issues_count(session: AsyncSession) -> int:
         return 0
 
 
-def _base_ctx(user: User | None, dedup_count: int, active_nav: str, address_issues_count: int = 0) -> dict:
+async def _get_conflicts_count(session: AsyncSession) -> int:
+    """Count Opportunities with at least one unacknowledged parcel field conflict."""
+    try:
+        result = await session.execute(
+            select(func.count(Opportunity.id.distinct()))
+            .join(Parcel, Parcel.id == Opportunity.parcel_id)
+            .where(
+                Opportunity.archived.is_(False),
+                or_(
+                    and_(
+                        Opportunity.units.isnot(None),
+                        Parcel.unit_count.isnot(None),
+                        Opportunity.units != Parcel.unit_count,
+                    ),
+                    and_(
+                        Opportunity.gba_sqft.isnot(None),
+                        Parcel.building_sqft.isnot(None),
+                        Opportunity.gba_sqft != Parcel.building_sqft,
+                    ),
+                    and_(
+                        Opportunity.year_built.isnot(None),
+                        Parcel.year_built.isnot(None),
+                        Opportunity.year_built != Parcel.year_built,
+                    ),
+                    and_(
+                        Opportunity.lot_sqft.isnot(None),
+                        Parcel.lot_sqft.isnot(None),
+                        Opportunity.lot_sqft != Parcel.lot_sqft,
+                    ),
+                )
+            )
+        )
+        return int(result.scalar_one() or 0)
+    except Exception:
+        return 0
+
+
+def _base_ctx(
+    user: User | None,
+    dedup_count: int,
+    active_nav: str,
+    address_issues_count: int = 0,
+    conflicts_count: int = 0,
+) -> dict:
     initials = "??"
     if user:
         parts = user.name.split()
@@ -839,6 +882,7 @@ def _base_ctx(user: User | None, dedup_count: int, active_nav: str, address_issu
         "active_nav": active_nav,
         "dedup_count": dedup_count,
         "address_issues_count": address_issues_count,
+        "conflicts_count": conflicts_count,
     }
 
 
@@ -2431,9 +2475,10 @@ async def opportunities_page(
 ) -> HTMLResponse:
     user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
+    conflicts_count = await _get_conflicts_count(session)
     return templates.TemplateResponse(request, "opportunities.html", {
         "request": request,
-        **_base_ctx(user, dedup_count, "opportunities"),
+        **_base_ctx(user, dedup_count, "opportunities", conflicts_count=conflicts_count),
     })
 
 
@@ -2572,6 +2617,7 @@ async def opportunities_conflicts(
 
     stmt = (
         select(Opportunity)
+        .options(selectinload(Opportunity.parcel))
         .where(
             Opportunity.parcel_id.isnot(None),
             Opportunity.archived.is_(False),
@@ -2612,7 +2658,7 @@ async def opportunities_conflicts(
 
     return templates.TemplateResponse(request, "conflicts.html", {
         "request": request, "conflicts": conflicts,
-        **_base_ctx(user, dedup_count, "opportunities"),
+        **_base_ctx(user, dedup_count, "conflicts", conflicts_count=len(set(c[0].id for c in conflicts))),
     })
 
 
