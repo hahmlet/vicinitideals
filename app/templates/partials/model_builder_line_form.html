@@ -27,10 +27,10 @@
   <div class="form-field">
     <label class="form-label">Label</label>
     {% if use_category_presets and default_category in use_category_presets %}
-    <select class="form-select" style="margin-bottom:6px" onchange="if(this.value){document.getElementById('edit-ul-label').value=this.value;this.value=''}">
-      <option value="">— Quick pick, or type below —</option>
+    <select class="form-select" style="margin-bottom:6px" onchange="if(this.value){document.getElementById('edit-ul-label').value=this.value}">
+      <option value="">— Custom (type below) —</option>
       {% for _p in use_category_presets[default_category] %}
-      <option value="{{ _p }}">{{ _p }}</option>
+      <option value="{{ _p }}" {% if _p == existing.label %}selected{% endif %}>{{ _p }}</option>
       {% endfor %}
     </select>
     {% endif %}
