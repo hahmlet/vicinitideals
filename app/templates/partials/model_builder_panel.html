@@ -85,7 +85,7 @@
         </td>
         <td class="col-right">
           {% if _ami and _ami.income_limit %}
-            {{ _ami.income_limit | currency(decimals=0) }}
+            {{ _ami.income_limit | currency }}
           {% else %}—{% endif %}
         </td>
         {% endif %}
