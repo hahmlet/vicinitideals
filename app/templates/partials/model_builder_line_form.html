@@ -26,7 +26,15 @@
 
   <div class="form-field">
     <label class="form-label">Label</label>
-    <input class="form-input" type="text" name="label" required value="{{ existing.label }}">
+    {% if use_category_presets and default_category in use_category_presets %}
+    <select class="form-select" style="margin-bottom:6px" onchange="if(this.value){document.getElementById('edit-ul-label').value=this.value;this.value=''}">
+      <option value="">— Quick pick, or type below —</option>
+      {% for _p in use_category_presets[default_category] %}
+      <option value="{{ _p }}">{{ _p }}</option>
+      {% endfor %}
+    </select>
+    {% endif %}
+    <input class="form-input" type="text" name="label" id="edit-ul-label" required value="{{ existing.label }}">
   </div>
   <div class="form-row" style="margin-bottom:8px">
     <div class="form-field">
@@ -134,6 +142,14 @@ function ulTimingChanged(val) {
   <div id="uw-step-1">
     <div class="form-field">
       <label class="form-label">Label</label>
+      {% if use_category_presets and default_category in use_category_presets %}
+      <select class="form-select" style="margin-bottom:6px" onchange="if(this.value){document.getElementById('uw-label').value=this.value;this.value=''}">
+        <option value="">— Quick pick, or type below —</option>
+        {% for _p in use_category_presets[default_category] %}
+        <option value="{{ _p }}">{{ _p }}</option>
+        {% endfor %}
+      </select>
+      {% endif %}
       <input class="form-input" type="text" name="label" id="uw-label" required
              placeholder="e.g. Land Acquisition, Hard Construction Costs">
     </div>
