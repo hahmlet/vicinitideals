@@ -860,6 +860,10 @@ async def _get_conflicts_count(session: AsyncSession) -> int:
         return 0
 
 
+async def _get_counts(session: AsyncSession) -> tuple[int, int]:
+    return await _get_dedup_count(session), await _get_conflicts_count(session)
+
+
 def _base_ctx(
     user: User | None,
     dedup_count: int,
@@ -1190,7 +1194,7 @@ async def settings_scraping_services(
 ) -> HTMLResponse:
     user = await _get_user(session, request)
     _require_settings_owner(user)
-    dedup_count = await _get_dedup_count(session)
+    dedup_count, conflicts_count = await _get_counts(session)
     address_issues_count = await _get_address_issues_count(session)
 
     loopnet_job = (await session.execute(
@@ -1316,7 +1320,7 @@ async def settings_scraping_services(
             "residential_sub_id": residential_sub_id,
             "residential_days_left": residential_days_left,
             "residential_last_checked": residential_last_checked,
-            **_base_ctx(user, dedup_count, "", address_issues_count),
+            **_base_ctx(user, dedup_count, "", address_issues_count, conflicts_count=conflicts_count),
         },
     )
 
@@ -1329,7 +1333,7 @@ async def settings_data_sources(
 ) -> HTMLResponse:
     user = await _get_user(session, request)
     _require_settings_owner(user)
-    dedup_count = await _get_dedup_count(session)
+    dedup_count, conflicts_count = await _get_counts(session)
     address_issues_count = await _get_address_issues_count(session)
 
     parcel_count = int((await session.execute(select(func.count()).select_from(Parcel))).scalar_one())
@@ -1757,7 +1761,7 @@ async def settings_data_sources(
         {
             "groups": groups,
             "heartbeat_ts": heartbeat_ts,
-            **_base_ctx(user, dedup_count, "", address_issues_count),
+            **_base_ctx(user, dedup_count, "", address_issues_count, conflicts_count=conflicts_count),
         },
     )
 
@@ -1774,7 +1778,7 @@ async def settings_organization(
     user = await _get_user(session, request)
     if user is None:
         return RedirectResponse(url="/login?next=/settings/organization", status_code=303)
-    dedup_count = await _get_dedup_count(session)
+    dedup_count, conflicts_count = await _get_counts(session)
     address_issues_count = await _get_address_issues_count(session)
 
     org = await session.get(Organization, user.org_id)
@@ -1793,7 +1797,7 @@ async def settings_organization(
             "org": org,
             "org_users": org_users,
             "user": user,
-            **_base_ctx(user, dedup_count, "", address_issues_count),
+            **_base_ctx(user, dedup_count, "", address_issues_count, conflicts_count=conflicts_count),
         },
     )
 
@@ -1917,8 +1921,8 @@ async def deals_new_page(
 ) -> HTMLResponse:
     """Full-page wizard for creating a new deal (name + type)."""
     user = await _get_user(session, request)
-    dedup_count = await _get_dedup_count(session)
-    ctx = _base_ctx(user, dedup_count, "deals")
+    dedup_count, conflicts_count = await _get_counts(session)
+    ctx = _base_ctx(user, dedup_count, "deals", conflicts_count=conflicts_count)
     # Pre-populate name and pass opp_id so the form can link to an existing
     # opportunity. Also pre-load the opportunity's first listing asking_price
     # so the Acquisition Cost field can pre-fill — ensures the seeded
@@ -1952,7 +1956,7 @@ async def deals_page(
     include_archived: str = Query(default=""),
 ) -> HTMLResponse:
     user = await _get_user(session, request)
-    dedup_count = await _get_dedup_count(session)
+    dedup_count, conflicts_count = await _get_counts(session)
 
     archived = include_archived == "1"
     loaded_deals = await _load_deals(session, status, type, model, q, archived)
@@ -1997,7 +2001,7 @@ async def deals_page(
                 "pipeline_value": pipeline_value,
                 "no_model_count": sum(1 for d in deals if not d["primary_model_name"]),
             },
-            **_base_ctx(user, dedup_count, "deals"),
+            **_base_ctx(user, dedup_count, "deals", conflicts_count=conflicts_count),
         },
     )
 
@@ -2192,7 +2196,7 @@ async def deal_detail(
     error: str = Query(default=""),
 ) -> HTMLResponse:
     user = await _get_user(session, request)
-    dedup_count = await _get_dedup_count(session)
+    dedup_count, conflicts_count = await _get_counts(session)
 
     deal = await session.get(
         Deal,
@@ -2265,7 +2269,7 @@ async def deal_detail(
             "active_tab": tab,
             "primary_model_id": models[0]["id"] if models else None,
             "flash_error": error,
-            **_base_ctx(user, dedup_count, "deals"),
+            **_base_ctx(user, dedup_count, "deals", conflicts_count=conflicts_count),
         },
     )
 
@@ -2474,8 +2478,7 @@ async def opportunities_page(
     vd_user_id: str | None = Cookie(default=None),
 ) -> HTMLResponse:
     user = await _get_user(session, request)
-    dedup_count = await _get_dedup_count(session)
-    conflicts_count = await _get_conflicts_count(session)
+    dedup_count, conflicts_count = await _get_counts(session)
     return templates.TemplateResponse(request, "opportunities.html", {
         "request": request,
         **_base_ctx(user, dedup_count, "opportunities", conflicts_count=conflicts_count),
@@ -2613,7 +2616,7 @@ async def opportunities_conflicts(
 ) -> HTMLResponse:
     """Show field-level conflicts between Opportunity physical attrs and linked Parcel."""
     user = await _get_user(session, request)
-    dedup_count = await _get_dedup_count(session)
+    dedup_count, conflicts_count = await _get_counts(session)
 
     stmt = (
         select(Opportunity)
@@ -2732,7 +2735,7 @@ async def opportunity_wizard_get(
     return_to: str = Query(default=""),
 ) -> HTMLResponse:
     user = await _get_user(session, request)
-    dedup_count = await _get_dedup_count(session)
+    dedup_count, conflicts_count = await _get_counts(session)
     opp = None
     buildings: list = []  # Building entity removed
     if opp_id:
@@ -2752,7 +2755,7 @@ async def opportunity_wizard_get(
         # to link the new opp to the deal and bounce back to the builder.
         "link_to_deal": _safe_uuid_str(link_to_deal),
         "return_to": _safe_return_path(return_to),
-        **_base_ctx(user, dedup_count, "opportunities"),
+        **_base_ctx(user, dedup_count, "opportunities", conflicts_count=conflicts_count),
     }
     return templates.TemplateResponse(request, "opportunity_wizard.html", ctx)
 
@@ -2833,7 +2836,7 @@ async def opportunity_wizard_step(
     step = int(form.get("step", 1))
     opp_id_str = str(form.get("opp_id", "") or "")
     user = await _get_user(session, request)
-    dedup_count = await _get_dedup_count(session)
+    dedup_count, conflicts_count = await _get_counts(session)
 
     # Carry-through params from the create-from-deal flow.
     _link_to_deal = _safe_uuid_str(str(form.get("link_to_deal", "") or ""))
@@ -2888,7 +2891,7 @@ async def opportunity_wizard_step(
             "deal_type_label": _deal_type_labels.get(deal_type, deal_type),
             "link_to_deal": _link_to_deal,
             "return_to": _return_to,
-            **_base_ctx(user, dedup_count, "opportunities"),
+            **_base_ctx(user, dedup_count, "opportunities", conflicts_count=conflicts_count),
         })
 
     elif step == 2:
@@ -2926,7 +2929,7 @@ async def opportunity_wizard_step(
             "deal_type_label": _deal_type_labels.get(deal_type, deal_type),
             "link_to_deal": _link_to_deal,
             "return_to": _return_to,
-            **_base_ctx(user, dedup_count, "opportunities"),
+            **_base_ctx(user, dedup_count, "opportunities", conflicts_count=conflicts_count),
         })
 
     return HTMLResponse("Invalid step", status_code=400)
@@ -2963,7 +2966,7 @@ async def opportunity_detail(
 ) -> HTMLResponse:
     """Opportunity detail page — shows buildings inline."""
     user = await _get_user(session, request)
-    dedup_count = await _get_dedup_count(session)
+    dedup_count, conflicts_count = await _get_counts(session)
     opp = (await session.execute(
         select(Opportunity)
         .where(Opportunity.id == opp_id)
@@ -2980,7 +2983,7 @@ async def opportunity_detail(
         "request": request, "opp": opp,
         "buildings": buildings,
         "bare_parcels": bare_parcels,
-        **_base_ctx(user, dedup_count, "opportunities"),
+        **_base_ctx(user, dedup_count, "opportunities", conflicts_count=conflicts_count),
     })
 
 
@@ -3038,7 +3041,7 @@ async def buildings_page(
 ) -> HTMLResponse:
     """Building inventory page — removed. Physical attributes now live on Opportunity."""
     user = await _get_user(session, request)
-    dedup_count = await _get_dedup_count(session)
+    dedup_count, conflicts_count = await _get_counts(session)
     return RedirectResponse("/opportunities", status_code=302)
 
 
@@ -3263,7 +3266,7 @@ async def parcels_page(
     offset: int = Query(default=0, ge=0),
 ) -> HTMLResponse:
     user = await _get_user(session, request)
-    dedup_count = await _get_dedup_count(session)
+    dedup_count, conflicts_count = await _get_counts(session)
     base = _parcel_base_stmt(q, zoning, jurisdiction, use_group, min_acres, max_acres, min_year, max_year)
     filtered_count, total = await asyncio.gather(
         session.execute(select(func.count()).select_from(base.subquery())),
@@ -3288,7 +3291,7 @@ async def parcels_page(
         "zoning_codes": zoning_codes,
         "jurisdictions": jurisdictions,
         **_parcel_filter_ctx(q, zoning, jurisdiction, use_group, min_acres, max_acres, min_year, max_year),
-        **_base_ctx(user, dedup_count, "parcels"),
+        **_base_ctx(user, dedup_count, "parcels", conflicts_count=conflicts_count),
     })
 
 
@@ -4407,7 +4410,7 @@ async def brokers_page(
     listings_val: str = Query(default=""),
 ) -> HTMLResponse:
     user = await _get_user(session, request)
-    dedup_count = await _get_dedup_count(session)
+    dedup_count, conflicts_count = await _get_counts(session)
     stmt = _broker_stmt(q, company, listings_op, listings_val)
     brokers_list = list((await session.execute(stmt)).scalars().unique())
     brokers_list = _apply_listings_filter(brokers_list, listings_op, listings_val)
@@ -4416,7 +4419,7 @@ async def brokers_page(
     return templates.TemplateResponse(request, "brokers.html", {
         "brokers": brokers_data, "total_count": total,
         "q": q, "company": company, "listings_op": listings_op, "listings_val": listings_val,
-        **_base_ctx(user, dedup_count, "brokers"),
+        **_base_ctx(user, dedup_count, "brokers", conflicts_count=conflicts_count),
     })
 
 
@@ -8412,7 +8415,7 @@ async def model_builder(
         if _first_proj and _first_proj.opportunity_id else None
     )
     user = await _get_user(session, request)
-    dedup_count = await _get_dedup_count(session)
+    dedup_count, conflicts_count = await _get_counts(session)
     address_issues_count = await _get_address_issues_count(session)
 
     # All Projects in this Scenario (tab row)
@@ -8733,7 +8736,7 @@ async def model_builder(
         # Spread AFTER `**data` so this wins.
         **({"inputs": deal_setup_inputs} if active_module == "deal_setup" else {}),
         **draw_schedule_data,
-        **_base_ctx(user, dedup_count, "deals", address_issues_count),
+        **_base_ctx(user, dedup_count, "deals", address_issues_count, conflicts_count=conflicts_count),
     }
     return templates.TemplateResponse(request, "model_builder.html", ctx)
 
@@ -10484,7 +10487,7 @@ async def portfolios_page(
     vd_user_id: str | None = Cookie(default=None),
 ) -> HTMLResponse:
     user = await _get_user(session, request)
-    dedup_count = await _get_dedup_count(session)
+    dedup_count, conflicts_count = await _get_counts(session)
 
     portfolios_result = await session.execute(
         select(Portfolio)
@@ -10522,7 +10525,7 @@ async def portfolios_page(
         request, "portfolios.html",
         {
             "portfolios": portfolio_rows,
-            **_base_ctx(user, dedup_count, "portfolios"),
+            **_base_ctx(user, dedup_count, "portfolios", conflicts_count=conflicts_count),
         },
     )
 
@@ -10590,7 +10593,7 @@ async def portfolio_detail(
     vd_user_id: str | None = Cookie(default=None),
 ) -> HTMLResponse:
     user = await _get_user(session, request)
-    dedup_count = await _get_dedup_count(session)
+    dedup_count, conflicts_count = await _get_counts(session)
 
     portfolio = await session.get(
         Portfolio,
@@ -10667,7 +10670,7 @@ async def portfolio_detail(
                 "total_equity": sum(equity_values) if equity_values else None,
                 "total_noi": sum(noi_values) if noi_values else None,
             },
-            **_base_ctx(user, dedup_count, "portfolios"),
+            **_base_ctx(user, dedup_count, "portfolios", conflicts_count=conflicts_count),
         },
     )
 
@@ -10757,7 +10760,7 @@ async def dedup_page(
     vd_user_id: str | None = Cookie(default=None),
 ) -> HTMLResponse:
     user = await _get_user(session, request)
-    dedup_count = await _get_dedup_count(session)
+    dedup_count, conflicts_count = await _get_counts(session)
     address_issues_count = await _get_address_issues_count(session)
 
     address_issues: list[ScrapedListing] = []
@@ -10798,7 +10801,7 @@ async def dedup_page(
         "tab": tab,
         "candidates": rows,
         "address_issues": address_issues,
-        **_base_ctx(user, dedup_count, "dedup", address_issues_count),
+        **_base_ctx(user, dedup_count, "dedup", address_issues_count, conflicts_count=conflicts_count),
     })
 
 
