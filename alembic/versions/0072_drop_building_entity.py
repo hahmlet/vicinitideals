@@ -27,35 +27,38 @@ depends_on = None
 def upgrade() -> None:
     conn = op.get_bind()
 
-    # ── 1. PURGE deal/project data (reverse FK order) ─────────────────────
-    for tbl in [
-        "cash_flow_line_items",
-        "cash_flows",
-        "operational_outputs",
-        "waterfall_results",
-        "use_lines",
-        "income_streams",
-        "operating_expense_lines",
-        "unit_mix",
-        "draw_sources",
-        "capital_module_projects",
-        "capital_modules",
-        "waterfall_tiers",
-        "project_anchors",
-        "project_building_assignments",
-        "project_parcel_assignments",
-        "milestones",
-        "projects",
-        "operational_inputs",
-        "scenarios",
-        "deal_opportunities",
-        "deals",
-        "opportunity_buildings",
-        "parcel_transformations",
-        "permit_stubs",
-        "workflow_run_manifests",
-    ]:
-        conn.execute(text(f"DELETE FROM {tbl}"))  # noqa: S608
+    # ── 1. PURGE deal/project data ────────────────────────────────────────
+    # TRUNCATE handles FK ordering automatically; CASCADE clears any
+    # referencing tables not listed (scenario_snapshots, sensitivities, etc.)
+    conn.execute(text("""
+        TRUNCATE
+            cash_flow_line_items,
+            cash_flows,
+            operational_outputs,
+            waterfall_results,
+            use_lines,
+            income_streams,
+            operating_expense_lines,
+            unit_mix,
+            draw_sources,
+            capital_module_projects,
+            capital_modules,
+            waterfall_tiers,
+            project_anchors,
+            project_building_assignments,
+            project_parcel_assignments,
+            milestones,
+            projects,
+            operational_inputs,
+            scenarios,
+            deal_opportunities,
+            deals,
+            opportunity_buildings,
+            parcel_transformations,
+            permit_stubs,
+            workflow_run_manifests
+        CASCADE
+    """))
 
     # Null out FK columns in kept tables that reference old opportunities
     conn.execute(text("UPDATE project_visibilities SET opportunity_id = NULL"))
