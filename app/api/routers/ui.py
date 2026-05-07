@@ -2464,6 +2464,7 @@ async def _query_opportunities(
 ) -> list:
     stmt = (
         select(Opportunity)
+        .where(Opportunity.org_id.isnot(None))
         .order_by(Opportunity.last_seen_at.desc())
     )
     statuses = _as_list(status)
