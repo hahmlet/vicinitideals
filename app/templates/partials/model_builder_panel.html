@@ -45,7 +45,6 @@
         <th class="col-right" title="Loss-to-Lease = (market − in-place) / market">LTL %</th>
         {% if inputs and inputs.affordable_housing_project %}
         <th class="col-right" title="Lowest AMI tier this rent qualifies at (Portland 2025 PHB limits)">AMI %</th>
-        <th class="col-right" title="Max household income at that AMI tier (standard HUD household size)">Income Limit</th>
         {% endif %}
         <th></th>
       </tr>
@@ -82,11 +81,6 @@
           {% else %}
             <span class="text-muted">—</span>
           {% endif %}
-        </td>
-        <td class="col-right">
-          {% if _ami and _ami.income_limit %}
-            {{ _ami.income_limit | currency }}
-          {% else %}—{% endif %}
         </td>
         {% endif %}
         <td style="width:32px;text-align:right">

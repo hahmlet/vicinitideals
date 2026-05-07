@@ -10759,7 +10759,7 @@ async def model_builder_line_form(
         "show_active_window": show_active_window,
         "exit_vehicle_applies": sorted(_EXIT_VEHICLE_APPLIES_UI),
         "opex_categories": STANDARD_OPEX_CATEGORIES,
-        "default_category": (existing.cost_category if existing else None) or category,
+        "default_category": (getattr(existing, "cost_category", None) if existing else None) or category,
         "use_cost_categories": USE_COST_CATEGORIES,
         "use_category_labels": USE_CATEGORY_LABELS,
         "use_category_presets": USE_CATEGORY_PRESETS,
