@@ -60,11 +60,12 @@ def upgrade() -> None:
         CASCADE
     """))
 
-    # Null out FK columns in kept tables that reference old opportunities
-    conn.execute(text("UPDATE project_visibilities SET opportunity_id = NULL"))
-    conn.execute(text("UPDATE sensitivities SET opportunity_id = NULL"))
-    conn.execute(text("UPDATE portfolio_projects SET opportunity_id = NULL"))
-    conn.execute(text("UPDATE gantt_entries SET opportunity_id = NULL"))
+    # Delete rows from kept tables that reference old opportunities (all stale;
+    # columns are NOT NULL so SET NULL is not an option)
+    conn.execute(text("DELETE FROM project_visibilities"))
+    conn.execute(text("DELETE FROM sensitivities"))
+    conn.execute(text("DELETE FROM portfolio_projects"))
+    conn.execute(text("DELETE FROM gantt_entries"))
 
     # ── 2. DROP building/junction tables (CASCADE removes FK constraints) ──
     for tbl in [
@@ -122,23 +123,23 @@ def upgrade() -> None:
     """))
     conn.execute(text("""
         ALTER TABLE project_visibilities
-            ADD CONSTRAINT fk_project_visibilities_opportunity_id
-            FOREIGN KEY (opportunity_id) REFERENCES opportunities(id) ON DELETE SET NULL
+            ADD CONSTRAINT fk_project_visibilities_project_id
+            FOREIGN KEY (project_id) REFERENCES opportunities(id) ON DELETE CASCADE
     """))
     conn.execute(text("""
         ALTER TABLE sensitivities
             ADD CONSTRAINT fk_sensitivities_opportunity_id
-            FOREIGN KEY (opportunity_id) REFERENCES opportunities(id) ON DELETE SET NULL
+            FOREIGN KEY (opportunity_id) REFERENCES opportunities(id) ON DELETE CASCADE
     """))
     conn.execute(text("""
         ALTER TABLE portfolio_projects
-            ADD CONSTRAINT fk_portfolio_projects_opportunity_id
-            FOREIGN KEY (opportunity_id) REFERENCES opportunities(id) ON DELETE SET NULL
+            ADD CONSTRAINT fk_portfolio_projects_project_id
+            FOREIGN KEY (project_id) REFERENCES opportunities(id) ON DELETE CASCADE
     """))
     conn.execute(text("""
         ALTER TABLE gantt_entries
-            ADD CONSTRAINT fk_gantt_entries_opportunity_id
-            FOREIGN KEY (opportunity_id) REFERENCES opportunities(id) ON DELETE SET NULL
+            ADD CONSTRAINT fk_gantt_entries_project_id
+            FOREIGN KEY (project_id) REFERENCES opportunities(id) ON DELETE CASCADE
     """))
 
     # ── 8. Modify projects table ──────────────────────────────────────────
