@@ -794,14 +794,13 @@ function buildPolyListItem(p) {
   li.className = 'poly-item';
   li.dataset.id = p.id;
   li.innerHTML = `
-    <div class="poly-item-name">${escHtml(p.name)}</div>
+    <div class="poly-item-name" onclick="zoomToPoly('${p.id}')" style="cursor:pointer" title="Click to zoom">${escHtml(p.name)}</div>
     <div class="poly-item-meta">slug: ${escHtml(p.slug)} &nbsp;·&nbsp; ${p.points.length} pts &nbsp;·&nbsp; ${p.is_active ? '✓ active' : '○ inactive'}</div>
     <div class="poly-item-actions">
-      <button onclick="zoomToPoly('${p.id}')">Zoom</button>
       <button onclick="startVertexEdit('${p.id}')">Edit</button>
       <button onclick="togglePolyActive('${p.id}', ${!p.is_active})">${p.is_active ? 'Deact.' : 'Activate'}</button>
       <button onclick="startEdit('${p.id}')">Redraw</button>
-      <button onclick="deletePoly('${p.id}')" style="color:#f87171">Del</button>
+      <button onclick="deletePoly('${p.id}')" style="color:#f87171">Delete</button>
     </div>`;
   return li;
 }
