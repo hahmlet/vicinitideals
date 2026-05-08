@@ -25,9 +25,9 @@ if TYPE_CHECKING:
     from app.models.opportunity import Opportunity
 
 # Proximity threshold in metres — within this radius a parcel is a geo match.
-_GEO_THRESHOLD_M = 30.0
-# Rough degree bounding box for SQL pre-filter (~0.0005° ≈ 55 m at lat 45°).
-_GEO_BOX_DEG = 0.0005
+_GEO_THRESHOLD_M = 75.0
+# Rough degree bounding box for SQL pre-filter (~0.001° ≈ 110 m at lat 45°).
+_GEO_BOX_DEG = 0.001
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
