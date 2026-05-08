@@ -2573,6 +2573,7 @@ async def opportunities_rows_deals(
     )
     stmt = (
         select(Opportunity)
+        .options(selectinload(Opportunity.parcel))
         .where(Opportunity.id.in_(active_oppo_ids))
         .order_by(Opportunity.last_seen_at.desc())
     )
@@ -2598,6 +2599,7 @@ async def opportunities_rows_offmarket(
     )
     stmt = (
         select(Opportunity)
+        .options(selectinload(Opportunity.parcel))
         .where(
             Opportunity.promotion_source == "manual",
             Opportunity.id.notin_(active_oppo_ids),
@@ -2627,6 +2629,7 @@ async def opportunities_rows_onmarket(
     )
     stmt = (
         select(Opportunity)
+        .options(selectinload(Opportunity.parcel))
         .where(
             Opportunity.promotion_source.in_(["loopnet", "crexi", "scraper"]),
             Opportunity.id.notin_(active_oppo_ids),
