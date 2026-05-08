@@ -40,6 +40,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.config import settings
 from app.models.api_call_log import ApiCallLog
 from app.scrapers.apn_utils import normalize_apn
+from app.scrapers.geo_utils import clip_to_polygons, load_polygons, point_in_polygon, polygon_bbox
 
 # LoopNet RapidAPI rate limit: 1 request per second (provider-enforced).
 # BudgetGuard sleeps to maintain this spacing between calls on the same guard.
@@ -74,57 +75,8 @@ BBOX_PAGE_HINT = 30
 
 
 # ---------------------------------------------------------------------------
-# Polygon loading + point-in-polygon
+# Polygon utilities imported from app.scrapers.geo_utils
 # ---------------------------------------------------------------------------
-
-def load_polygons(path: str | None = None) -> list[dict[str, Any]]:
-    """Read the polygons JSON file. Returns only polygons with is_active=true."""
-    p = Path(path or settings.loopnet_polygon_path)
-    with p.open("r", encoding="utf-8") as f:
-        data = json.load(f)
-    return [poly for poly in data if poly.get("is_active")]
-
-
-def polygon_bbox(points: Sequence[Sequence[float]]) -> tuple[float, float, float, float]:
-    """Return (minLng, minLat, maxLng, maxLat) — LoopNet's boundingBox ordering."""
-    lngs = [p[0] for p in points]
-    lats = [p[1] for p in points]
-    return (min(lngs), min(lats), max(lngs), max(lats))
-
-
-def point_in_polygon(points: Sequence[Sequence[float]], lng: float, lat: float) -> bool:
-    """Ray-casting point-in-polygon test. Points are [lng, lat] pairs.
-
-    The polygon is treated as closed (first/last point equality is fine).
-    """
-    n = len(points)
-    inside = False
-    j = n - 1
-    for i in range(n):
-        xi, yi = points[i][0], points[i][1]
-        xj, yj = points[j][0], points[j][1]
-        if (yi > lat) != (yj > lat):
-            # Add 1e-12 to avoid div-by-zero on horizontal edges.
-            x_intersect = (xj - xi) * (lat - yi) / (yj - yi + 1e-12) + xi
-            if lng < x_intersect:
-                inside = not inside
-        j = i
-    return inside
-
-
-def clip_to_polygon(
-    rows: Iterable[dict[str, Any]],
-    polygon_points: Sequence[Sequence[float]],
-) -> list[dict[str, Any]]:
-    """Filter search-response rows whose coordinations fall inside polygon."""
-    survivors = []
-    for row in rows:
-        coords = row.get("coordinations") or []
-        if not coords:
-            continue
-        if any(point_in_polygon(polygon_points, c[0], c[1]) for c in coords):
-            survivors.append(row)
-    return survivors
 
 
 # ---------------------------------------------------------------------------

@@ -31,6 +31,7 @@ from app.models.listing_snapshot import ListingSnapshot
 from app.models.scraped_listing import ScrapedListing
 from app.models.opportunity import Opportunity
 from app.services.parcel_matching import link_parcel_if_unlinked
+from app.scrapers.geo_utils import clip_to_polygon, load_polygons, polygon_bbox
 from app.scrapers.loopnet import (
     BudgetExhausted,
     BudgetGuard,
@@ -39,17 +40,14 @@ from app.scrapers.loopnet import (
     classify_from_bulk,
     classify_lease_from_bulk,
     classify_multifamily,
-    clip_to_polygon,
     fetch_bulk_details,
     fetch_extended_details,
     fetch_lease_details,
     fetch_sale_details,
     lease_bbox_search,
-    load_polygons,
     map_lease_to_scraped_listing,
     map_to_scraped_listing,
     parse_target_ed_categories,
-    polygon_bbox,
     should_fetch_extended_details,
     should_fetch_sale_details_after_bulk,
     should_ingest_lease_after_bulk,
