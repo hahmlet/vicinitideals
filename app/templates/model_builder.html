@@ -679,9 +679,9 @@
           data-project-id="{{ active_project_id }}"
           onclick="_startProjectRename(event)"
           style="cursor:pointer"
-          title="Click to rename">{{ project.name if project else model.name }}</span>
+          title="Click to rename">{{ (project.name or project.address_normalized) if project else model.name }}</span>
     {% else %}
-    <span>{{ project.name if project else model.name }}</span>
+    <span>{{ (project.name or project.address_normalized) if project else model.name }}</span>
     {% endif %}
   </div>
 
