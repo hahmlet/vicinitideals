@@ -780,10 +780,8 @@ function loadPolyList() {
 function addPolyToMap(p) {
   if (!p.points || p.points.length < 3) return;
   const latlngs = p.points.map(pt => [pt[1], pt[0]]);
-  const color = p.is_active ? '#f97316' : '#4a5568';
   const layer = L.polygon(latlngs, {
-    color, weight: 2, fillColor: color, fillOpacity: 0.12,
-    dashArray: p.is_active ? null : '5,5',
+    color: '#f97316', weight: 2, fillColor: '#f97316', fillOpacity: 0.12,
   }).addTo(map);
   layer.bindTooltip(`<strong>${p.name}</strong><br><small>${p.slug}</small>`, { sticky: true });
   polyLayers[p.id] = layer;
@@ -794,11 +792,10 @@ function buildPolyListItem(p) {
   li.className = 'poly-item';
   li.dataset.id = p.id;
   li.innerHTML = `
-    <div class="poly-item-name" onclick="zoomToPoly('${p.id}')" style="cursor:pointer" title="Click to zoom">${escHtml(p.name)}</div>
+    <div class="poly-item-name" onclick="selectPoly('${p.id}')" style="cursor:pointer" title="Click to zoom">${escHtml(p.name)}</div>
     <div class="poly-item-meta">slug: ${escHtml(p.slug)} &nbsp;·&nbsp; ${p.points.length} pts &nbsp;·&nbsp; ${p.is_active ? '✓ active' : '○ inactive'}</div>
     <div class="poly-item-actions">
       <button onclick="startVertexEdit('${p.id}')">Edit</button>
-      <button onclick="togglePolyActive('${p.id}', ${!p.is_active})">${p.is_active ? 'Deact.' : 'Activate'}</button>
       <button onclick="startEdit('${p.id}')">Redraw</button>
       <button onclick="deletePoly('${p.id}')" style="color:#f87171">Delete</button>
     </div>`;
@@ -812,6 +809,13 @@ function escHtml(s) {
 function zoomToPoly(id) {
   const l = polyLayers[id];
   if (l) map.fitBounds(l.getBounds(), { padding: [30, 30] });
+}
+
+function selectPoly(id) {
+  document.querySelectorAll('.poly-item').forEach(el => el.classList.remove('active-poly'));
+  const item = document.querySelector(`.poly-item[data-id="${id}"]`);
+  if (item) item.classList.add('active-poly');
+  zoomToPoly(id);
 }
 
 async function togglePolyActive(id, newVal) {
