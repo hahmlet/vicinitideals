@@ -1995,7 +1995,7 @@ async def deals_new_page(
         try:
             _opp = await session.get(Opportunity, UUID(opp_id))
             if _opp:
-                opp_name = _opp.name
+                opp_name = _opp.name or ""
                 if _opp.asking_price is not None and _opp.asking_price > 0:
                     opp_asking_price = float(_opp.asking_price)
         except ValueError:
@@ -6319,6 +6319,7 @@ async def _get_missing_building_data(
         "label": opp.address_normalized or opp.name or "Opportunity",
         "fields": fields,
         "net_rentable_sqft": float(opp.net_rentable_sqft) if opp.net_rentable_sqft else None,
+        "source_url": opp.source_url or "",
     }]
 
 

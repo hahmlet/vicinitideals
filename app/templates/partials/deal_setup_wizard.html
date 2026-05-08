@@ -267,7 +267,13 @@
       <div class="wizard-body">
         {% for b in (missing_building_data or []) %}
         <div style="border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:10px">
-          <div style="font-size:13px;font-weight:600;margin-bottom:10px">{{ b.label }}</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <div style="font-size:13px;font-weight:600">{{ b.label }}</div>
+            {% if b.source_url %}
+            <a href="{{ b.source_url }}" target="_blank" rel="noopener"
+               style="font-size:12px;color:var(--accent);text-decoration:none;font-weight:500">View Listing ↗</a>
+            {% endif %}
+          </div>
           <div class="field-row">
             {% if 'unit_count' in b.fields %}
             <div class="field-group">
