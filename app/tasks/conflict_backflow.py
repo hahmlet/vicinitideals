@@ -55,6 +55,16 @@ async def _backflow_all() -> dict[str, Any]:
             try:
                 ack = dict(opp.parcel_conflicts_ack or {})
                 changed = False
+
+                # Correct any prior "use_parcel" acks on year_built — policy is now
+                # always "use_listing".  The opp.year_built may already be NULL from
+                # the old rule; we can't recover the original value, so we just flip
+                # the ack so the record reflects the correct policy.
+                if ack.get("year_built") == "use_parcel":
+                    ack["year_built"] = "use_listing"
+                    changed = True
+                    rule_counts["year_built_policy_fix"] += 1
+
                 for field, (opp_attr, parcel_attr) in _FIELD_MAP.items():
                     if field in ack:
                         continue

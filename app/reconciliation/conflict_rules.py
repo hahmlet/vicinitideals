@@ -36,8 +36,6 @@ _FIELD_MAP: dict[str, tuple[str, str]] = {
 _SQFT_FIELDS = frozenset({"gba_sqft", "lot_sqft"})
 _SMALL_SQFT_THRESHOLD = 2_000.0
 _SQFT_CLOSE_PCT = 0.05   # 5 % — treated as noise; use the larger value
-_YEAR_CLOSE_RANGE = 5    # within 5 years → use newer
-_YEAR_FAR_RANGE = 40     # 40+ years apart → use newer
 
 
 # ---------------------------------------------------------------------------
@@ -85,18 +83,8 @@ def auto_resolve_conflict(
         return "use_listing"
 
     if field == "year_built":
-        try:
-            iv_opp = int(round(fv_opp))
-            iv_par = int(round(fv_par))
-        except (TypeError, ValueError):
-            return None
-        diff = abs(iv_opp - iv_par)
-        # Rule 2 — within 5 years: use newer
-        if diff <= _YEAR_CLOSE_RANGE:
-            return "use_listing" if iv_opp >= iv_par else "use_parcel"
-        # Rule 4 — 40+ years apart: use newer
-        if diff >= _YEAR_FAR_RANGE:
-            return "use_listing" if iv_opp >= iv_par else "use_parcel"
+        # Policy: listing year always wins — assessor data lags renovations / rebuilds
+        return "use_listing"
 
     elif field in _SQFT_FIELDS:
         max_val = max(fv_opp, fv_par)
