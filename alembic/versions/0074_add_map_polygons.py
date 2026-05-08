@@ -65,7 +65,7 @@ def upgrade() -> None:
                 INSERT INTO map_polygons
                     (id, name, slug, is_active, purpose, description, points)
                 VALUES
-                    (:id, :name, :slug, :is_active, :purpose, :description, :points::jsonb)
+                    (:id, :name, :slug, :is_active, :purpose, :description, cast(:points as jsonb))
                 ON CONFLICT (slug) DO NOTHING
                 """
             ),
