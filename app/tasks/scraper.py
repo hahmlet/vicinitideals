@@ -35,6 +35,7 @@ from app.observability import (
 )
 from app.scrapers.apn_utils import normalize_apn
 from app.scrapers.crexi import CrxiScraper
+from app.scrapers.geo_utils import load_all_polygons_from_db
 from app.scrapers.dedup import deduplicate_batch
 from app.scrapers.realie import detect_address_issue
 from app.tasks.celery_app import celery_app
@@ -128,7 +129,8 @@ async def _scrape_crexi(
         )
 
         try:
-            listings, brokers, source_total = await scraper.fetch_all()
+            db_polygons = await load_all_polygons_from_db(session)
+            listings, brokers, source_total = await scraper.fetch_all(polygons=db_polygons)
             broker_id_map = await upsert_brokers(brokers, session)
             upserted, skipped = await upsert_scraped_listings(
                 listings,

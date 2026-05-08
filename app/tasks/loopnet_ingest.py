@@ -31,7 +31,7 @@ from app.models.listing_snapshot import ListingSnapshot
 from app.models.scraped_listing import ScrapedListing
 from app.models.opportunity import Opportunity
 from app.services.parcel_matching import link_parcel_if_unlinked
-from app.scrapers.geo_utils import clip_to_polygon, load_polygons, polygon_bbox
+from app.scrapers.geo_utils import clip_to_polygon, load_all_polygons_from_db, polygon_bbox
 from app.scrapers.loopnet import (
     BudgetExhausted,
     BudgetGuard,
@@ -165,7 +165,6 @@ async def _loopnet_weekly_sweep() -> dict[str, Any]:  # noqa: PLR0915
     # ingest in app/tasks/scraper.py.
     batch_broker_ids: set[uuid.UUID] = set()
     """Sweep every active polygon; tag new listings; fetch ED per polygon-tier policy."""
-    polygons = load_polygons()
     target_ed_categories = parse_target_ed_categories(
         settings.loopnet_target_ed_categories
     )
@@ -176,6 +175,7 @@ async def _loopnet_weekly_sweep() -> dict[str, Any]:  # noqa: PLR0915
     errors: list[str] = []
 
     async with _task_session() as session:
+        polygons = await load_all_polygons_from_db(session)
         ingest_job = IngestJob(source="loopnet", triggered_by="beat", status="running")
         session.add(ingest_job)
         await session.flush()
@@ -200,6 +200,8 @@ async def _loopnet_weekly_sweep() -> dict[str, Any]:  # noqa: PLR0915
                         break
 
                     clipped = clip_to_polygon(rows, points)
+                    if name == "portland":
+                        clipped = [r for r in clipped if str(r.get("listingType") or "").strip() != "LandForSale"]
                     per_polygon[name]["bbox_rows"] = len(rows)
                     per_polygon[name]["clipped"] = len(clipped)
                     logger.info(
@@ -547,12 +549,12 @@ def loopnet_seed_lease_comps(self) -> dict[str, Any]:
 
 
 async def _loopnet_seed_lease_comps() -> dict[str, Any]:
-    polygons = load_polygons()
     total_new = 0
     per_polygon: dict[str, dict[str, int]] = {}
     errors: list[str] = []
 
     async with _task_session() as session:
+        polygons = await load_all_polygons_from_db(session)
         ingest_job = IngestJob(
             source="loopnet_lease", triggered_by="manual", status="running"
         )
@@ -577,6 +579,8 @@ async def _loopnet_seed_lease_comps() -> dict[str, Any]:
                         break
 
                     clipped = clip_to_polygon(rows, points)
+                    if name == "portland":
+                        clipped = [r for r in clipped if str(r.get("listingType") or "").strip() != "LandForSale"]
                     per_polygon[name]["bbox_rows"] = len(rows)
                     per_polygon[name]["clipped"] = len(clipped)
                     for row in clipped:

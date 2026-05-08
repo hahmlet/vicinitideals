@@ -103,7 +103,7 @@ class CrxiScraper:
             self.password = password
         self._access_token: str | None = None  # cached for the session
 
-    async def fetch_all(self) -> tuple[list[ScrapedListingCreate], list[BrokerCreate], int]:
+    async def fetch_all(self, polygons: list[dict] | None = None) -> tuple[list[ScrapedListingCreate], list[BrokerCreate], int]:
         """Return (listings, brokers, source_total) where source_total is Crexi's reported count."""
         listings: list[ScrapedListingCreate] = []
         deduped_brokers: dict[str, BrokerCreate] = {}
@@ -144,7 +144,8 @@ class CrxiScraper:
                     await asyncio.sleep(self.batch_delay_seconds)
 
         # Clip to active polygons — drop anything outside our target market.
-        polygons = load_polygons()
+        if polygons is None:
+            polygons = load_polygons()
         if polygons:
             clipped: list[ScrapedListingCreate] = []
             for listing in listings:
@@ -152,7 +153,16 @@ class CrxiScraper:
                     clipped.append(listing)  # keep if no coordinates to filter on
                     continue
                 lat, lng = float(listing.lat), float(listing.lng)
-                if any(point_in_polygon(p["points"], lng, lat) for p in polygons):
+                is_land = "land" in (listing.property_type or "").lower()
+                kept = False
+                for p in polygons:
+                    if not point_in_polygon(p["points"], lng, lat):
+                        continue
+                    if is_land and p["name"] == "portland":
+                        continue
+                    kept = True
+                    break
+                if kept:
                     clipped.append(listing)
             listings = clipped
 

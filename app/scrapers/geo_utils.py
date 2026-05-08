@@ -99,3 +99,11 @@ async def load_polygons_by_slugs(session: AsyncSession, slugs: list[str]) -> lis
     from app.models.map_polygon import MapPolygon
     rows = (await session.execute(select(MapPolygon).where(MapPolygon.slug.in_(slugs)))).scalars().all()
     return [{"name": r.slug, "is_active": r.is_active, "points": r.points} for r in rows]
+
+
+async def load_all_polygons_from_db(session: AsyncSession) -> list[dict[str, Any]]:
+    """Load ALL polygons from DB — no is_active filter. All stored polygons are listing filters."""
+    from sqlalchemy import select
+    from app.models.map_polygon import MapPolygon
+    rows = (await session.execute(select(MapPolygon))).scalars().all()
+    return [{"name": r.slug, "is_active": r.is_active, "points": r.points} for r in rows]
