@@ -73,6 +73,7 @@ from app.models.capital import (
     WaterfallTier,
 )
 from app.models.cashflow import CashFlow, CashFlowLineItem, OperationalOutputs
+from app.models.milestone import Milestone
 from app.models.deal import (
     ALWAYS_SHOWN_OPEX_CATEGORIES,
     USE_CATEGORY_LABELS,
@@ -417,6 +418,20 @@ async def _load_all(session: AsyncSession, scenario_id: UUID) -> dict | None:
     summary = await rollup_summary(scenario_id, session)
     waterfall_rollup = await rollup_waterfall(scenario_id, session)
 
+    milestones_by_project: dict = {}
+    if project_ids:
+        _all_ms = list(
+            (
+                await session.execute(
+                    select(Milestone)
+                    .where(Milestone.project_id.in_(project_ids))
+                    .order_by(Milestone.sequence_order.asc())
+                )
+            ).scalars()
+        )
+        for _m in _all_ms:
+            milestones_by_project.setdefault(_m.project_id, []).append(_m)
+
     return {
         "scenario": scenario,
         "deal": deal,
@@ -448,6 +463,7 @@ async def _load_all(session: AsyncSession, scenario_id: UUID) -> dict | None:
                 Decimal("8.0"),
             )
         ),
+        "milestones": milestones_by_project,
     }
 
 
@@ -558,9 +574,51 @@ def _weighted_em_calc(
     return (equity_required + npv) / equity_required
 
 
+def _write_cover_timeline(
+    ws,
+    start_row: int,
+    projects: list,
+    milestones_by_project: dict,
+) -> None:
+    """Render a phase-timeline table on the Cover sheet."""
+    if not any(milestones_by_project.get(p.id) for p in projects):
+        return
+
+    section_label(ws, start_row, "Project Timeline", span_cols=5)
+    hdr = start_row + 1
+    for col, txt in enumerate(["Phase", "Start", "End", "Days", "Months"], start=1):
+        ws.cell(row=hdr, column=col, value=txt).font = FONT_LABEL
+
+    row = hdr + 1
+    for idx, project in enumerate(projects, start=1):
+        ms_list = milestones_by_project.get(project.id, [])
+        if not ms_list:
+            continue
+        if len(projects) > 1:
+            ws.cell(row=row, column=1, value=f"P{idx} — {project.name}").font = FONT_LABEL
+            row += 1
+        ms_map = {m.id: m for m in ms_list}
+        for m in ms_list:
+            start_dt = m.computed_start(ms_map)
+            end_dt = m.computed_end(ms_map)
+            days = int(m.duration_days or 0)
+            months = round(days / 30.4, 1) if days else 0.0
+            raw_type = str(getattr(m.milestone_type, "value", m.milestone_type) or "")
+            label = m.label or raw_type.replace("_", " ").title()
+            ws.cell(row=row, column=1, value=label).font = FONT_VALUE
+            ws.cell(row=row, column=2, value=start_dt.isoformat() if start_dt else "—").font = FONT_VALUE
+            ws.cell(row=row, column=3, value=end_dt.isoformat() if end_dt else "—").font = FONT_VALUE
+            ws.cell(row=row, column=4, value=days).font = FONT_VALUE
+            c = ws.cell(row=row, column=5, value=months)
+            c.font = FONT_VALUE
+            c.number_format = "0.0"
+            row += 1
+        row += 1  # blank between projects
+
+
 def _build_cover(ws, registry: CellRegistry, ctx: dict) -> None:
     """Cover sheet: key metrics summary, deal/scenario metadata, project list."""
-    set_widths(ws, [28, 60])
+    set_widths(ws, [30, 16, 14, 10, 12])
     scenario: DealModel = ctx["scenario"]
     deal: Deal | None = ctx["deal"]
     org: Organization | None = ctx["org"]
@@ -686,6 +744,9 @@ def _build_cover(ws, registry: CellRegistry, ctx: dict) -> None:
     ws.cell(row=legend_row + 4, column=1, value="Gold bold").font = FONT_HERO_VALUE
     ws.cell(row=legend_row + 4, column=2,
             value="Headline KPI on Underwriting Summary (TPC, IRR, NOI, etc.).").font = FONT_HINT
+
+    tl_start = legend_row + 6
+    _write_cover_timeline(ws, tl_start, projects, ctx.get("milestones", {}))
 
     freeze_top(ws, row=3)
     print_landscape(ws)
