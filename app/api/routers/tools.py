@@ -105,8 +105,7 @@ def _bbox_clause(bbox: str | None) -> tuple[str, dict]:
 
 @router.get("/tools/zone-painter", response_class=HTMLResponse)
 async def zone_painter_page(request: Request, session: DBSession) -> HTMLResponse:
-    user_id = str(getattr(request.state, "user_id", None) or "")
-    user = await _get_user(session, user_id)
+    user = await _get_user(session, request)
     dedup_count = await _get_dedup_count(session)
     address_issues_count = await _get_address_issues_count(session)
     return templates.TemplateResponse(
