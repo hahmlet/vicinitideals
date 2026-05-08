@@ -4,9 +4,12 @@ from __future__ import annotations
 import json
 from collections.abc import Iterable, Sequence
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from app.config import settings
+
+if TYPE_CHECKING:
+    from sqlalchemy.ext.asyncio import AsyncSession
 
 
 def load_polygons(path: str | None = None) -> list[dict[str, Any]]:
@@ -78,3 +81,21 @@ def clip_to_polygons(
                 survivors.append(row)
                 break
     return survivors
+
+
+async def load_polygon_by_slug(session: AsyncSession, slug: str) -> dict[str, Any] | None:
+    """Load a single polygon from DB by slug. Returns dict with 'points' key, or None."""
+    from sqlalchemy import select
+    from app.models.map_polygon import MapPolygon
+    row = (await session.execute(select(MapPolygon).where(MapPolygon.slug == slug))).scalar_one_or_none()
+    if row is None:
+        return None
+    return {"name": row.slug, "is_active": row.is_active, "points": row.points}
+
+
+async def load_polygons_by_slugs(session: AsyncSession, slugs: list[str]) -> list[dict[str, Any]]:
+    """Load multiple polygons from DB by slug list. Useful for union filtering."""
+    from sqlalchemy import select
+    from app.models.map_polygon import MapPolygon
+    rows = (await session.execute(select(MapPolygon).where(MapPolygon.slug.in_(slugs)))).scalars().all()
+    return [{"name": r.slug, "is_active": r.is_active, "points": r.points} for r in rows]
