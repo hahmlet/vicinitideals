@@ -110,10 +110,14 @@
   .poly-item-meta { font-size: 11px; color: #64748b; margin-top: 2px; }
   .poly-item-actions { display: flex; gap: 6px; margin-top: 6px; }
   .poly-item-actions button { font-size: 11px; padding: 2px 8px; }
-  #draw-panel { display: none; background: #1a2236; border: 1px solid #3b82f6; border-radius: 6px; padding: 10px; }
+  #draw-panel, #import-panel, #edit-panel {
+    display: none; background: #1a2236; border: 1px solid #3b82f6; border-radius: 6px; padding: 10px;
+  }
   #draw-panel .p-label { margin-top: 6px; }
-  #vertex-count { font-size: 12px; color: #94a3b8; margin-bottom: 6px; }
+  #vertex-count, #vtx-count { font-size: 12px; color: #94a3b8; margin-bottom: 6px; }
   .draw-active-hint { font-size: 11px; color: #60a5fa; margin: 4px 0; }
+  .vtx-handle { width: 12px; height: 12px; background: #f97316; border: 2px solid #fff; border-radius: 50%; cursor: grab; margin: -6px 0 0 -6px; }
+  .vtx-handle:active { cursor: grabbing; }
 
   /* Zoom-gate overlay shown when map is too far out */
   #zoom-gate {
@@ -225,11 +229,15 @@
 
     <!-- Polygon editor controls (shown only in Polygon mode) -->
     <div id="polygon-controls">
-      <button id="draw-new-btn" style="width:100%">＋ Draw New Polygon</button>
+      <div style="display:flex;gap:6px">
+        <button id="draw-new-btn" style="flex:1">＋ Draw</button>
+        <button id="import-osm-btn" style="flex:1">↓ Import OSM</button>
+      </div>
 
+      <!-- Draw panel -->
       <div id="draw-panel">
         <div id="vertex-count">0 vertices placed</div>
-        <p class="draw-active-hint">Click the map to add points. Double-click or press Close to finish.</p>
+        <p class="draw-active-hint">Click map to add points. Double-click or Close to finish.</p>
         <span class="p-label">Name</span>
         <input id="poly-name-input" class="p-select" style="width:100%;box-sizing:border-box" placeholder="e.g. Gresham Target Area">
         <span class="p-label" style="margin-top:6px">Slug (for scraper config)</span>
@@ -244,6 +252,32 @@
         <div style="display:flex;gap:6px;margin-top:8px">
           <button id="close-poly-btn" style="flex:1">Close &amp; Save</button>
           <button id="cancel-draw-btn" style="flex:1;background:#374151">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Import from OSM panel -->
+      <div id="import-panel">
+        <span class="p-label">City / Place</span>
+        <input id="import-city-input" class="p-select" style="width:100%;box-sizing:border-box" placeholder="e.g. Gresham, Oregon">
+        <span class="p-label" style="margin-top:6px">Name for polygon</span>
+        <input id="import-name-input" class="p-select" style="width:100%;box-sizing:border-box" placeholder="e.g. Gresham City Limits">
+        <span class="p-label" style="margin-top:6px">Slug</span>
+        <input id="import-slug-input" class="p-select" style="width:100%;box-sizing:border-box" placeholder="e.g. gresham_city_limits">
+        <div id="import-status" style="font-size:11px;color:#94a3b8;margin-top:4px"></div>
+        <div style="display:flex;gap:6px;margin-top:8px">
+          <button id="fetch-osm-btn" style="flex:1">Fetch &amp; Preview</button>
+          <button id="save-import-btn" style="flex:1;display:none">Save</button>
+          <button id="cancel-import-btn" style="flex:1;background:#374151">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Vertex edit panel -->
+      <div id="edit-panel">
+        <div id="vtx-count">0 vertices</div>
+        <p class="draw-active-hint">Drag to move. Double-click vertex to delete it.</p>
+        <div style="display:flex;gap:6px;margin-top:8px">
+          <button id="save-vtx-btn" style="flex:1">Save Changes</button>
+          <button id="cancel-vtx-btn" style="flex:1;background:#374151">Cancel</button>
         </div>
       </div>
 
@@ -751,9 +785,10 @@ function buildPolyListItem(p) {
     <div class="poly-item-meta">slug: ${escHtml(p.slug)} &nbsp;·&nbsp; ${p.points.length} pts &nbsp;·&nbsp; ${p.is_active ? '✓ active' : '○ inactive'}</div>
     <div class="poly-item-actions">
       <button onclick="zoomToPoly('${p.id}')">Zoom</button>
-      <button onclick="togglePolyActive('${p.id}', ${!p.is_active})">${p.is_active ? 'Deactivate' : 'Activate'}</button>
+      <button onclick="startVertexEdit('${p.id}')">Edit</button>
+      <button onclick="togglePolyActive('${p.id}', ${!p.is_active})">${p.is_active ? 'Deact.' : 'Activate'}</button>
       <button onclick="startEdit('${p.id}')">Redraw</button>
-      <button onclick="deletePoly('${p.id}')" style="color:#f87171">Delete</button>
+      <button onclick="deletePoly('${p.id}')" style="color:#f87171">Del</button>
     </div>`;
   return li;
 }
@@ -876,6 +911,201 @@ async function commitDraw() {
 document.getElementById('draw-new-btn').addEventListener('click', startDraw);
 document.getElementById('close-poly-btn').addEventListener('click', commitDraw);
 document.getElementById('cancel-draw-btn').addEventListener('click', cancelDraw);
+
+// ---------------------------------------------------------------------------
+// Import from OSM (Nominatim)
+// ---------------------------------------------------------------------------
+let importPreviewLayer = null;
+let importedPoints = null;
+
+function showImportPanel(show) {
+  document.getElementById('import-panel').style.display = show ? 'block' : 'none';
+  document.getElementById('draw-new-btn').style.display = show ? 'none' : '';
+  document.getElementById('import-osm-btn').style.display = show ? 'none' : '';
+  if (!show) {
+    if (importPreviewLayer) { map.removeLayer(importPreviewLayer); importPreviewLayer = null; }
+    importedPoints = null;
+    document.getElementById('import-status').textContent = '';
+    document.getElementById('save-import-btn').style.display = 'none';
+    document.getElementById('import-city-input').value = '';
+    document.getElementById('import-name-input').value = '';
+    document.getElementById('import-slug-input').value = '';
+    document.getElementById('import-slug-input').removeAttribute('data-user-edited');
+  }
+}
+
+document.getElementById('import-osm-btn').addEventListener('click', () => showImportPanel(true));
+document.getElementById('cancel-import-btn').addEventListener('click', () => showImportPanel(false));
+
+document.getElementById('import-name-input').addEventListener('input', e => {
+  const slugEl = document.getElementById('import-slug-input');
+  if (!slugEl.dataset.userEdited) {
+    slugEl.value = e.target.value.trim().toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'');
+  }
+});
+document.getElementById('import-slug-input').addEventListener('input', e => {
+  e.target.dataset.userEdited = '1';
+});
+
+document.getElementById('fetch-osm-btn').addEventListener('click', async () => {
+  const city = document.getElementById('import-city-input').value.trim();
+  if (!city) { showToast('Enter a city name', true); return; }
+  const status = document.getElementById('import-status');
+  status.textContent = 'Fetching from OpenStreetMap…';
+  document.getElementById('save-import-btn').style.display = 'none';
+  if (importPreviewLayer) { map.removeLayer(importPreviewLayer); importPreviewLayer = null; }
+
+  try {
+    const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(city)}&format=geojson&polygon_geojson=1&limit=3`;
+    const r = await fetch(url, { headers: { 'Accept-Language': 'en' } });
+    const geojson = await r.json();
+    const feature = geojson.features.find(f =>
+      f.geometry && (f.geometry.type === 'Polygon' || f.geometry.type === 'MultiPolygon')
+    );
+    if (!feature) { status.textContent = 'No polygon found for that place.'; return; }
+
+    // Extract outer ring — pick largest ring for MultiPolygon
+    let ring;
+    if (feature.geometry.type === 'Polygon') {
+      ring = feature.geometry.coordinates[0];
+    } else {
+      ring = feature.geometry.coordinates.reduce((best, poly) =>
+        poly[0].length > best.length ? poly[0] : best, []);
+    }
+    importedPoints = ring; // [[lng, lat], ...]
+    const latlngs = ring.map(pt => [pt[1], pt[0]]);
+    importPreviewLayer = L.polygon(latlngs, {
+      color: '#60a5fa', weight: 2, fillColor: '#60a5fa', fillOpacity: 0.1, dashArray: '6,4',
+    }).addTo(map);
+    map.fitBounds(importPreviewLayer.getBounds(), { padding: [30, 30] });
+    status.textContent = `Found: "${feature.properties.display_name}" — ${ring.length} vertices. Edit after saving.`;
+    document.getElementById('save-import-btn').style.display = '';
+    // Auto-fill name from display name if empty
+    const nameEl = document.getElementById('import-name-input');
+    if (!nameEl.value) nameEl.dispatchEvent(Object.assign(new Event('input'), { target: nameEl }));
+  } catch(e) {
+    status.textContent = 'Error fetching from Nominatim.';
+  }
+});
+
+document.getElementById('save-import-btn').addEventListener('click', async () => {
+  const name = document.getElementById('import-name-input').value.trim();
+  const slug = document.getElementById('import-slug-input').value.trim();
+  if (!name || !slug) { showToast('Name and slug required', true); return; }
+  if (!importedPoints || importedPoints.length < 3) { showToast('No polygon to save', true); return; }
+  const r = await fetch('/tools/zone-painter/polygons', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, slug, is_active: true, points: importedPoints }),
+  });
+  if (r.ok) {
+    showImportPanel(false);
+    loadPolyList();
+    showToast(`Imported "${name}" — ${importedPoints.length} vertices. Use Edit to refine.`);
+  } else {
+    const err = await r.json().catch(() => ({}));
+    showToast(err.detail || 'Error saving polygon', true);
+  }
+});
+
+// ---------------------------------------------------------------------------
+// Vertex drag editor
+// ---------------------------------------------------------------------------
+let vtxMarkers  = [];
+let vtxPreview  = null;
+let vtxEditId   = null;
+let vtxPoints   = [];  // [[lat, lng], ...] mutable during edit
+
+const VTX_ICON = L.divIcon({ className: 'vtx-handle', iconSize: [12, 12] });
+
+function startVertexEdit(id) {
+  cancelDraw();
+  showImportPanel(false);
+  cancelVertexEdit();
+
+  const layer = polyLayers[id];
+  if (!layer) return;
+  vtxEditId = id;
+
+  // Get latlngs from existing polygon layer
+  const lls = layer.getLatLngs()[0];
+  vtxPoints = lls.map(ll => [ll.lat, ll.lng]);
+
+  // Hide original layer while editing
+  layer.setStyle({ opacity: 0, fillOpacity: 0 });
+
+  // Live preview polygon
+  vtxPreview = L.polygon([...vtxPoints], {
+    color: '#f97316', weight: 2, fillColor: '#f97316', fillOpacity: 0.12,
+  }).addTo(map);
+
+  _rebuildVtxMarkers();
+
+  document.getElementById('edit-panel').style.display = 'block';
+  document.getElementById('draw-new-btn').style.display = 'none';
+  document.getElementById('import-osm-btn').style.display = 'none';
+  _updateVtxCount();
+}
+
+function _rebuildVtxMarkers() {
+  vtxMarkers.forEach(m => map.removeLayer(m));
+  vtxMarkers = [];
+  vtxPoints.forEach((pt, idx) => {
+    const m = L.marker([pt[0], pt[1]], { icon: VTX_ICON, draggable: true, zIndexOffset: 1000 }).addTo(map);
+    m.on('drag', e => {
+      const { lat, lng } = e.latlng;
+      vtxPoints[idx] = [lat, lng];
+      vtxPreview.setLatLngs([...vtxPoints]);
+    });
+    m.on('dblclick', e => {
+      L.DomEvent.stopPropagation(e);
+      if (vtxPoints.length <= 3) { showToast('Need at least 3 vertices', true); return; }
+      vtxPoints.splice(idx, 1);
+      vtxPreview.setLatLngs([...vtxPoints]);
+      _rebuildVtxMarkers();
+      _updateVtxCount();
+    });
+    vtxMarkers.push(m);
+  });
+}
+
+function _updateVtxCount() {
+  document.getElementById('vtx-count').textContent = `${vtxPoints.length} vertices`;
+}
+
+function cancelVertexEdit() {
+  if (vtxEditId && polyLayers[vtxEditId]) {
+    polyLayers[vtxEditId].setStyle({ opacity: 1, fillOpacity: 0.12, color: '#f97316' });
+  }
+  vtxMarkers.forEach(m => map.removeLayer(m));
+  vtxMarkers = [];
+  if (vtxPreview) { map.removeLayer(vtxPreview); vtxPreview = null; }
+  vtxEditId = null;
+  vtxPoints = [];
+  document.getElementById('edit-panel').style.display = 'none';
+  document.getElementById('draw-new-btn').style.display = '';
+  document.getElementById('import-osm-btn').style.display = '';
+}
+
+document.getElementById('cancel-vtx-btn').addEventListener('click', cancelVertexEdit);
+
+document.getElementById('save-vtx-btn').addEventListener('click', async () => {
+  if (!vtxEditId || vtxPoints.length < 3) return;
+  const pts = vtxPoints.map(([lat, lng]) => [lng, lat]); // → [lng, lat] for DB
+  const r = await fetch(`/tools/zone-painter/polygons/${vtxEditId}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ points: pts }),
+  });
+  if (r.ok) {
+    const id = vtxEditId;
+    cancelVertexEdit();
+    loadPolyList();
+    showToast('Polygon updated');
+  } else {
+    showToast('Error saving', true);
+  }
+});
 
 // Auto-fill slug from name
 document.getElementById('poly-name-input').addEventListener('input', e => {
