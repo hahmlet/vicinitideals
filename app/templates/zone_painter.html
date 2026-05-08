@@ -118,6 +118,7 @@
   .draw-active-hint { font-size: 11px; color: #60a5fa; margin: 4px 0; }
   .vtx-handle { width: 12px; height: 12px; background: #f97316; border: 2px solid #fff; border-radius: 50%; cursor: grab; margin: -6px 0 0 -6px; }
   .vtx-handle:active { cursor: grabbing; }
+  .vtx-handle.vtx-sel { background: #ef4444; border-color: #fca5a5; transform: scale(1.3); }
 
   /* Zoom-gate overlay shown when map is too far out */
   #zoom-gate {
@@ -274,7 +275,8 @@
       <!-- Vertex edit panel -->
       <div id="edit-panel">
         <div id="vtx-count">0 vertices</div>
-        <p class="draw-active-hint">Drag to move. Double-click vertex to delete it.</p>
+        <p class="draw-active-hint">Drag to move · Double-click to delete one · <kbd>Shift</kbd>+drag to box-select → Delete</p>
+        <button id="delete-sel-vtx-btn" style="width:100%;display:none;background:#7f1d1d;color:#fca5a5">Delete selected vertices</button>
         <div style="display:flex;gap:6px;margin-top:8px">
           <button id="save-vtx-btn" style="flex:1">Save Changes</button>
           <button id="cancel-vtx-btn" style="flex:1;background:#374151">Cancel</button>
@@ -714,6 +716,17 @@ map.on('mouseup', e => {
   if (!_boxRect) return;
   const bounds = _boxRect.getBounds();
   map.removeLayer(_boxRect); _boxRect = null;
+
+  // Vertex edit mode: box selects vertices instead of parcels
+  if (vtxEditId) {
+    if (!e.originalEvent.ctrlKey && !e.originalEvent.metaKey) selectedVtxIndices.clear();
+    vtxMarkers.forEach((m, idx) => {
+      if (bounds.contains(m.getLatLng())) selectedVtxIndices.add(idx);
+    });
+    _rebuildVtxMarkers();
+    return;
+  }
+
   if (!e.originalEvent.ctrlKey && !e.originalEvent.metaKey) clearSelection();
   if (!geoLayer) return;
   geoLayer.eachLayer(layer => {
@@ -1015,8 +1028,10 @@ let vtxMarkers  = [];
 let vtxPreview  = null;
 let vtxEditId   = null;
 let vtxPoints   = [];  // [[lat, lng], ...] mutable during edit
+let selectedVtxIndices = new Set();
 
-const VTX_ICON = L.divIcon({ className: 'vtx-handle', iconSize: [12, 12] });
+const VTX_ICON     = L.divIcon({ className: 'vtx-handle',          iconSize: [12, 12] });
+const VTX_ICON_SEL = L.divIcon({ className: 'vtx-handle vtx-sel',  iconSize: [12, 12] });
 
 function startVertexEdit(id) {
   cancelDraw();
@@ -1051,7 +1066,8 @@ function _rebuildVtxMarkers() {
   vtxMarkers.forEach(m => map.removeLayer(m));
   vtxMarkers = [];
   vtxPoints.forEach((pt, idx) => {
-    const m = L.marker([pt[0], pt[1]], { icon: VTX_ICON, draggable: true, zIndexOffset: 1000 }).addTo(map);
+    const icon = selectedVtxIndices.has(idx) ? VTX_ICON_SEL : VTX_ICON;
+    const m = L.marker([pt[0], pt[1]], { icon, draggable: true, zIndexOffset: 1000 }).addTo(map);
     m.on('drag', e => {
       const { lat, lng } = e.latlng;
       vtxPoints[idx] = [lat, lng];
@@ -1061,17 +1077,38 @@ function _rebuildVtxMarkers() {
       L.DomEvent.stopPropagation(e);
       if (vtxPoints.length <= 3) { showToast('Need at least 3 vertices', true); return; }
       vtxPoints.splice(idx, 1);
+      selectedVtxIndices.clear();
       vtxPreview.setLatLngs([...vtxPoints]);
       _rebuildVtxMarkers();
       _updateVtxCount();
     });
     vtxMarkers.push(m);
   });
+  _updateDeleteSelBtn();
 }
 
 function _updateVtxCount() {
   document.getElementById('vtx-count').textContent = `${vtxPoints.length} vertices`;
 }
+
+function _updateDeleteSelBtn() {
+  const btn = document.getElementById('delete-sel-vtx-btn');
+  const n = selectedVtxIndices.size;
+  btn.style.display = n > 0 ? '' : 'none';
+  btn.textContent = `Delete ${n} selected vert${n === 1 ? 'ex' : 'ices'}`;
+}
+
+document.getElementById('delete-sel-vtx-btn').addEventListener('click', () => {
+  if (!selectedVtxIndices.size) return;
+  const remaining = vtxPoints.length - selectedVtxIndices.size;
+  if (remaining < 3) { showToast(`Can't delete — need at least 3 vertices remaining`, true); return; }
+  vtxPoints = vtxPoints.filter((_, i) => !selectedVtxIndices.has(i));
+  selectedVtxIndices.clear();
+  vtxPreview.setLatLngs([...vtxPoints]);
+  _rebuildVtxMarkers();
+  _updateVtxCount();
+  showToast(`Deleted — ${vtxPoints.length} vertices remain`);
+});
 
 function cancelVertexEdit() {
   if (vtxEditId && polyLayers[vtxEditId]) {
@@ -1082,6 +1119,7 @@ function cancelVertexEdit() {
   if (vtxPreview) { map.removeLayer(vtxPreview); vtxPreview = null; }
   vtxEditId = null;
   vtxPoints = [];
+  selectedVtxIndices.clear();
   document.getElementById('edit-panel').style.display = 'none';
   document.getElementById('draw-new-btn').style.display = '';
   document.getElementById('import-osm-btn').style.display = '';
