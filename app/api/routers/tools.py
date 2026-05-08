@@ -21,6 +21,7 @@ from app.api.routers.ui import (
     _get_user,
     templates,
 )
+from app.models.map_polygon import MapPolygon
 from app.models.scraped_listing import ScrapedListing
 
 router = APIRouter(tags=["tools"])
@@ -377,3 +378,97 @@ async def listings_map_geojson(
         "total": len(features),
         "truncated": len(features) == MAX_MAP_LISTINGS,
     })
+
+
+# ---------------------------------------------------------------------------
+# Map Polygons — CRUD for named geographic polygons (used by scrapers)
+# ---------------------------------------------------------------------------
+
+class PolygonCreateRequest(BaseModel):
+    name: str
+    slug: str
+    is_active: bool = True
+    purpose: str | None = None
+    description: str | None = None
+    points: list[list[float]]  # [[lng, lat], ...]
+
+
+class PolygonUpdateRequest(BaseModel):
+    name: str | None = None
+    is_active: bool | None = None
+    purpose: str | None = None
+    description: str | None = None
+    points: list[list[float]] | None = None
+
+
+@router.get("/tools/zone-painter/polygons")
+async def list_polygons(session: DBSession) -> list[dict[str, Any]]:
+    rows = list((await session.execute(select(MapPolygon).order_by(MapPolygon.created_at))).scalars().all())
+    return [_poly_dict(p) for p in rows]
+
+
+@router.post("/tools/zone-painter/polygons", status_code=201)
+async def create_polygon(req: PolygonCreateRequest, session: DBSession) -> dict[str, Any]:
+    slug = req.slug.strip().lower().replace(" ", "_")
+    if not slug:
+        raise HTTPException(status_code=400, detail="slug is required")
+    if len(req.points) < 3:
+        raise HTTPException(status_code=400, detail="Polygon needs at least 3 points")
+    poly = MapPolygon(
+        id=uuid.uuid4(),
+        name=req.name.strip(),
+        slug=slug,
+        is_active=req.is_active,
+        purpose=req.purpose,
+        description=req.description,
+        points=req.points,
+    )
+    session.add(poly)
+    await session.commit()
+    await session.refresh(poly)
+    return _poly_dict(poly)
+
+
+@router.patch("/tools/zone-painter/polygons/{poly_id}")
+async def update_polygon(poly_id: uuid.UUID, req: PolygonUpdateRequest, session: DBSession) -> dict[str, Any]:
+    poly = await session.get(MapPolygon, poly_id)
+    if poly is None:
+        raise HTTPException(status_code=404, detail="Polygon not found")
+    if req.name is not None:
+        poly.name = req.name.strip()
+    if req.is_active is not None:
+        poly.is_active = req.is_active
+    if req.purpose is not None:
+        poly.purpose = req.purpose
+    if req.description is not None:
+        poly.description = req.description
+    if req.points is not None:
+        if len(req.points) < 3:
+            raise HTTPException(status_code=400, detail="Polygon needs at least 3 points")
+        poly.points = req.points
+    await session.commit()
+    await session.refresh(poly)
+    return _poly_dict(poly)
+
+
+@router.delete("/tools/zone-painter/polygons/{poly_id}", status_code=204)
+async def delete_polygon(poly_id: uuid.UUID, session: DBSession) -> None:
+    poly = await session.get(MapPolygon, poly_id)
+    if poly is None:
+        raise HTTPException(status_code=404, detail="Polygon not found")
+    await session.delete(poly)
+    await session.commit()
+
+
+def _poly_dict(p: MapPolygon) -> dict[str, Any]:
+    return {
+        "id": str(p.id),
+        "name": p.name,
+        "slug": p.slug,
+        "is_active": p.is_active,
+        "purpose": p.purpose,
+        "description": p.description,
+        "points": p.points,
+        "created_at": p.created_at.isoformat() if p.created_at else None,
+        "updated_at": p.updated_at.isoformat() if p.updated_at else None,
+    }

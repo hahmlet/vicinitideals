@@ -96,6 +96,25 @@
 
   #pmap { flex: 1; position: relative; }
 
+  /* Polygon mode panel */
+  #polygon-controls { display: none; flex-direction: column; gap: 8px; }
+  #parcel-controls  { display: flex;  flex-direction: column; gap: 8px; }
+  .poly-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .poly-item {
+    background: #1a1d23; border: 1px solid #2d3748; border-radius: 6px;
+    padding: 8px 10px; cursor: pointer; transition: border-color .15s;
+  }
+  .poly-item:hover { border-color: #4a90e2; }
+  .poly-item.active-poly { border-color: #f97316; background: #2d1f10; }
+  .poly-item-name { font-weight: 600; font-size: 13px; color: #e2e8f0; }
+  .poly-item-meta { font-size: 11px; color: #64748b; margin-top: 2px; }
+  .poly-item-actions { display: flex; gap: 6px; margin-top: 6px; }
+  .poly-item-actions button { font-size: 11px; padding: 2px 8px; }
+  #draw-panel { display: none; background: #1a2236; border: 1px solid #3b82f6; border-radius: 6px; padding: 10px; }
+  #draw-panel .p-label { margin-top: 6px; }
+  #vertex-count { font-size: 12px; color: #94a3b8; margin-bottom: 6px; }
+  .draw-active-hint { font-size: 11px; color: #60a5fa; margin: 4px 0; }
+
   /* Zoom-gate overlay shown when map is too far out */
   #zoom-gate {
     position: absolute; inset: 0; z-index: 500;
@@ -122,6 +141,7 @@
         {% for mode in modes %}
         <option value="{{ mode.id }}">{{ mode.label }}</option>
         {% endfor %}
+        <option value="polygon">Polygons</option>
       </select>
     </div>
 
@@ -154,41 +174,72 @@
 
     <div class="p-banner" id="mode-banner"></div>
 
-    <div class="p-stat-row">
-      <div class="p-stat"><div class="num" id="stat-painted">–</div><div class="lbl">Painted</div></div>
-      <div class="p-stat"><div class="num" id="stat-total">–</div><div class="lbl">Total</div></div>
-      <div class="p-stat"><div class="num" id="stat-pct">–</div><div class="lbl">Done</div></div>
+    <!-- Parcel painting controls (hidden in Polygon mode) -->
+    <div id="parcel-controls">
+      <div class="p-stat-row">
+        <div class="p-stat"><div class="num" id="stat-painted">–</div><div class="lbl">Painted</div></div>
+        <div class="p-stat"><div class="num" id="stat-total">–</div><div class="lbl">Total</div></div>
+        <div class="p-stat"><div class="num" id="stat-pct">–</div><div class="lbl">Done</div></div>
+      </div>
+
+      <div id="p-viewport-info"></div>
+
+      <div>
+        <span class="p-label" id="value-label">Zone Code</span>
+        <div id="value-picker"></div>
+      </div>
+
+      <div id="p-badge">No parcels selected</div>
+
+      <button id="paint-btn" disabled>Paint selected parcels</button>
+      <button id="clear-btn">Clear selection</button>
+
+      <div class="p-toggle">
+        <input type="checkbox" id="hide-painted">
+        <label for="hide-painted" style="margin:0">Hide already-painted parcels</label>
+      </div>
+      <div class="p-toggle">
+        <input type="checkbox" id="show-tooltips">
+        <label for="show-tooltips" style="margin:0">Show parcel info on hover</label>
+      </div>
+
+      <div class="p-instructions">
+        Click to select &nbsp;·&nbsp; <kbd>Ctrl</kbd>+click add/remove<br>
+        <kbd>Shift</kbd>+drag to box-select<br>
+        Choose a value → Paint
+        <br><br>
+        <span style="color:#4ade80">■</span> Painted &nbsp;
+        <span style="color:#fb923c">■</span> Selected &nbsp;
+        <span style="color:#93c5fd">■</span> Unset
+      </div>
     </div>
 
-    <div id="p-viewport-info"></div>
+    <!-- Polygon editor controls (shown only in Polygon mode) -->
+    <div id="polygon-controls">
+      <button id="draw-new-btn" style="width:100%">＋ Draw New Polygon</button>
 
-    <div>
-      <span class="p-label" id="value-label">Zone Code</span>
-      <div id="value-picker"></div>
-    </div>
+      <div id="draw-panel">
+        <div id="vertex-count">0 vertices placed</div>
+        <p class="draw-active-hint">Click the map to add points. Double-click or press Close to finish.</p>
+        <span class="p-label">Name</span>
+        <input id="poly-name-input" class="p-select" style="width:100%;box-sizing:border-box" placeholder="e.g. Gresham Target Area">
+        <span class="p-label" style="margin-top:6px">Slug (for scraper config)</span>
+        <input id="poly-slug-input" class="p-select" style="width:100%;box-sizing:border-box" placeholder="e.g. gresham_target">
+        <span class="p-label" style="margin-top:6px">Purpose</span>
+        <select id="poly-purpose-select" class="p-select">
+          <option value="">— optional —</option>
+          <option value="target">target (acquisition scraping)</option>
+          <option value="comp_only">comp_only (comp data only)</option>
+          <option value="exclude">exclude (suppress from results)</option>
+        </select>
+        <div style="display:flex;gap:6px;margin-top:8px">
+          <button id="close-poly-btn" style="flex:1">Close &amp; Save</button>
+          <button id="cancel-draw-btn" style="flex:1;background:#374151">Cancel</button>
+        </div>
+      </div>
 
-    <div id="p-badge">No parcels selected</div>
-
-    <button id="paint-btn" disabled>Paint selected parcels</button>
-    <button id="clear-btn">Clear selection</button>
-
-    <div class="p-toggle">
-      <input type="checkbox" id="hide-painted">
-      <label for="hide-painted" style="margin:0">Hide already-painted parcels</label>
-    </div>
-    <div class="p-toggle">
-      <input type="checkbox" id="show-tooltips">
-      <label for="show-tooltips" style="margin:0">Show parcel info on hover</label>
-    </div>
-
-    <div class="p-instructions">
-      Click to select &nbsp;·&nbsp; <kbd>Ctrl</kbd>+click add/remove<br>
-      <kbd>Shift</kbd>+drag to box-select<br>
-      Choose a value → Paint
-      <br><br>
-      <span style="color:#4ade80">■</span> Painted &nbsp;
-      <span style="color:#fb923c">■</span> Selected &nbsp;
-      <span style="color:#93c5fd">■</span> Unset
+      <span class="p-label">Saved Polygons</span>
+      <ul class="poly-list" id="poly-list"></ul>
     </div>
   </div>
 
@@ -288,6 +339,12 @@ const MODES = {
         <option value="Cultural Sensitivity Lands">Cultural Sensitivity Lands</option>
       </select>`,
   },
+  polygon: {
+    label: 'Polygons',
+    valueLabel: '',
+    banner: 'Draw and manage geographic polygons for scraper filters.',
+    pickerHTML: '',
+  },
 };
 
 // ---------------------------------------------------------------------------
@@ -320,6 +377,7 @@ function styleFor(feature, isSelected) {
 // Zoom gate
 // ---------------------------------------------------------------------------
 function updateZoomGate() {
+  if (activeMode === 'polygon') return;
   const zoom = map.getZoom();
   const gate = document.getElementById('zoom-gate');
   gate.style.display = zoom < MIN_ZOOM ? 'flex' : 'none';
@@ -332,6 +390,7 @@ updateZoomGate();
 // Viewport-based parcel loading
 // ---------------------------------------------------------------------------
 function scheduleLoad() {
+  if (activeMode === 'polygon') return;
   clearTimeout(_loadDebounce);
   _loadDebounce = setTimeout(() => {
     if (map.getZoom() < MIN_ZOOM) return;
@@ -421,9 +480,24 @@ function applyMode(mode, jurisdiction) {
   activeJurisdiction = jurisdiction;
   const def = MODES[mode];
   document.getElementById('mode-banner').textContent = def.banner;
+
+  const isPolyMode = mode === 'polygon';
+  document.getElementById('parcel-controls').style.display  = isPolyMode ? 'none' : 'flex';
+  document.getElementById('polygon-controls').style.display = isPolyMode ? 'flex' : 'none';
+  document.getElementById('jurisdiction-select').closest('div').style.display = isPolyMode ? 'none' : '';
+  document.getElementById('zoom-gate').style.display = 'none';
+
+  if (isPolyMode) {
+    cancelDraw();
+    if (geoLayer) { map.removeLayer(geoLayer); geoLayer = null; }
+    loadPolyList();
+    return;
+  }
+
   document.getElementById('value-label').textContent = def.valueLabel;
   document.getElementById('value-picker').innerHTML = def.pickerHTML;
-  document.getElementById('value-select').addEventListener('change', updateSelectionUI);
+  const vsel = document.getElementById('value-select');
+  if (vsel) vsel.addEventListener('change', updateSelectionUI);
   document.getElementById('hide-painted').checked = false;
   clearSelection();
   refreshStats();
@@ -602,6 +676,190 @@ function showToast(msg, isError = false) {
   t.style.display = 'block';
   setTimeout(() => { t.style.display = 'none'; }, 3000);
 }
+
+// ---------------------------------------------------------------------------
+// Polygon editor
+// ---------------------------------------------------------------------------
+let polyLayers    = {};   // id → L.polygon on map
+let drawVertices  = [];   // [[lat,lng],...] during active draw
+let drawMarkers   = [];   // L.circleMarker per vertex
+let drawPolyline  = null; // L.polyline showing the in-progress shape
+let editingPolyId = null; // id of polygon being edited, or null
+
+function loadPolyList() {
+  fetch('/tools/zone-painter/polygons')
+    .then(r => r.json())
+    .then(polys => {
+      // Clear existing polygon layers
+      Object.values(polyLayers).forEach(l => map.removeLayer(l));
+      polyLayers = {};
+
+      const ul = document.getElementById('poly-list');
+      ul.innerHTML = '';
+      polys.forEach(p => {
+        addPolyToMap(p);
+        ul.appendChild(buildPolyListItem(p));
+      });
+    });
+}
+
+function addPolyToMap(p) {
+  if (!p.points || p.points.length < 3) return;
+  const latlngs = p.points.map(pt => [pt[1], pt[0]]);
+  const color = p.is_active ? '#f97316' : '#4a5568';
+  const layer = L.polygon(latlngs, {
+    color, weight: 2, fillColor: color, fillOpacity: 0.12,
+    dashArray: p.is_active ? null : '5,5',
+  }).addTo(map);
+  layer.bindTooltip(`<strong>${p.name}</strong><br><small>${p.slug}</small>`, { sticky: true });
+  polyLayers[p.id] = layer;
+}
+
+function buildPolyListItem(p) {
+  const li = document.createElement('li');
+  li.className = 'poly-item';
+  li.dataset.id = p.id;
+  li.innerHTML = `
+    <div class="poly-item-name">${escHtml(p.name)}</div>
+    <div class="poly-item-meta">slug: ${escHtml(p.slug)} &nbsp;·&nbsp; ${p.points.length} pts &nbsp;·&nbsp; ${p.is_active ? '✓ active' : '○ inactive'}</div>
+    <div class="poly-item-actions">
+      <button onclick="zoomToPoly('${p.id}')">Zoom</button>
+      <button onclick="togglePolyActive('${p.id}', ${!p.is_active})">${p.is_active ? 'Deactivate' : 'Activate'}</button>
+      <button onclick="startEdit('${p.id}')">Redraw</button>
+      <button onclick="deletePoly('${p.id}')" style="color:#f87171">Delete</button>
+    </div>`;
+  return li;
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function zoomToPoly(id) {
+  const l = polyLayers[id];
+  if (l) map.fitBounds(l.getBounds(), { padding: [30, 30] });
+}
+
+async function togglePolyActive(id, newVal) {
+  const r = await fetch(`/tools/zone-painter/polygons/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ is_active: newVal }),
+  });
+  if (r.ok) { loadPolyList(); showToast(newVal ? 'Polygon activated' : 'Polygon deactivated'); }
+  else showToast('Error updating polygon', true);
+}
+
+async function deletePoly(id) {
+  if (!confirm('Delete this polygon? This cannot be undone.')) return;
+  const r = await fetch(`/tools/zone-painter/polygons/${id}`, { method: 'DELETE' });
+  if (r.ok || r.status === 204) { loadPolyList(); showToast('Polygon deleted'); }
+  else showToast('Error deleting polygon', true);
+}
+
+function startEdit(id) {
+  // Pre-fill form with existing polygon data, enter draw mode
+  editingPolyId = id;
+  const layer = polyLayers[id];
+  const item = document.querySelector(`.poly-item[data-id="${id}"]`);
+  const nameEl = item ? item.querySelector('.poly-item-name') : null;
+  const metaEl = item ? item.querySelector('.poly-item-meta') : null;
+  document.getElementById('poly-name-input').value = nameEl ? nameEl.textContent : '';
+  // Extract slug from meta text
+  const slugMatch = metaEl ? metaEl.textContent.match(/slug:\s*(\S+)/) : null;
+  document.getElementById('poly-slug-input').value = slugMatch ? slugMatch[1] : '';
+  startDraw();
+}
+
+function startDraw() {
+  cancelDraw();
+  document.getElementById('draw-panel').style.display = 'block';
+  document.getElementById('draw-new-btn').style.display = 'none';
+  map.getContainer().style.cursor = 'crosshair';
+  map.on('click', onDrawClick);
+  map.on('dblclick', onDrawDblClick);
+}
+
+function onDrawClick(e) {
+  if (e.originalEvent.detail > 1) return; // ignore dblclick component
+  const { lat, lng } = e.latlng;
+  drawVertices.push([lat, lng]);
+  const m = L.circleMarker([lat, lng], { radius: 5, color: '#f97316', fillColor: '#f97316', fillOpacity: 1 }).addTo(map);
+  drawMarkers.push(m);
+  if (drawPolyline) map.removeLayer(drawPolyline);
+  drawPolyline = L.polyline(drawVertices, { color: '#f97316', weight: 2, dashArray: '6,4' }).addTo(map);
+  document.getElementById('vertex-count').textContent = `${drawVertices.length} vert${drawVertices.length === 1 ? 'ex' : 'ices'} placed`;
+}
+
+function onDrawDblClick(e) {
+  L.DomEvent.stopPropagation(e);
+  if (drawVertices.length >= 3) commitDraw();
+}
+
+function cancelDraw() {
+  map.off('click', onDrawClick);
+  map.off('dblclick', onDrawDblClick);
+  map.getContainer().style.cursor = '';
+  drawMarkers.forEach(m => map.removeLayer(m));
+  drawMarkers = [];
+  drawVertices = [];
+  if (drawPolyline) { map.removeLayer(drawPolyline); drawPolyline = null; }
+  editingPolyId = null;
+  document.getElementById('draw-panel').style.display = 'none';
+  document.getElementById('draw-new-btn').style.display = '';
+  document.getElementById('vertex-count').textContent = '0 vertices placed';
+}
+
+async function commitDraw() {
+  if (drawVertices.length < 3) { showToast('Need at least 3 points', true); return; }
+  const name = document.getElementById('poly-name-input').value.trim();
+  const slug = document.getElementById('poly-slug-input').value.trim().toLowerCase().replace(/\s+/g,'_');
+  if (!name || !slug) { showToast('Name and slug required', true); return; }
+  // Close the polygon (repeat first point)
+  const pts = drawVertices.map(([lat, lng]) => [lng, lat]); // → [lng, lat]
+  const purpose = document.getElementById('poly-purpose-select').value || null;
+
+  let r;
+  if (editingPolyId) {
+    r = await fetch(`/tools/zone-painter/polygons/${editingPolyId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, points: pts, purpose }),
+    });
+  } else {
+    r = await fetch('/tools/zone-painter/polygons', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, slug, is_active: true, purpose, points: pts }),
+    });
+  }
+
+  if (r.ok) {
+    cancelDraw();
+    loadPolyList();
+    showToast(editingPolyId ? 'Polygon updated' : 'Polygon saved');
+    document.getElementById('poly-name-input').value = '';
+    document.getElementById('poly-slug-input').value = '';
+  } else {
+    const err = await r.json().catch(() => ({}));
+    showToast(err.detail || 'Error saving polygon', true);
+  }
+}
+
+document.getElementById('draw-new-btn').addEventListener('click', startDraw);
+document.getElementById('close-poly-btn').addEventListener('click', commitDraw);
+document.getElementById('cancel-draw-btn').addEventListener('click', cancelDraw);
+
+// Auto-fill slug from name
+document.getElementById('poly-name-input').addEventListener('input', e => {
+  const slugEl = document.getElementById('poly-slug-input');
+  if (!slugEl.dataset.userEdited) {
+    slugEl.value = e.target.value.trim().toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'');
+  }
+});
+document.getElementById('poly-slug-input').addEventListener('input', e => {
+  e.target.dataset.userEdited = '1';
+});
 
 // ---------------------------------------------------------------------------
 // Boot — init mode picker then fly to default jurisdiction
