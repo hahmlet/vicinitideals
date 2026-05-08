@@ -34,6 +34,7 @@ from app.models.capital import CapitalModule, DrawSource, WaterfallTier
 from app.models.cashflow import OperationalOutputs
 from app.models.parcel import Parcel
 from app.reconciliation.matcher import normalize_apn
+from app.reconciliation.conflict_rules import _FIELD_MAP, auto_resolve_conflict
 from app.models.portfolio import Portfolio, PortfolioProject
 from app.models.milestone import DEFAULT_DURATIONS, Milestone, MilestoneType, MilestoneType as MT
 from app.models.opportunity import Opportunity, OpportunitySource, OpportunityStatus
@@ -868,6 +869,43 @@ def _build_conflicts(opps: list) -> list:
         if "lot_sqft" not in ack and _pct_conflict(opp.lot_sqft, p.lot_sqft):
             conflicts.append((opp, "lot_sqft", opp.lot_sqft, p.lot_sqft, url))
     return conflicts
+
+
+def _apply_auto_resolutions(opps: list) -> int:
+    """Apply auto-resolution rules to ORM objects in place.
+
+    Checks every conflict field on every linked Opportunity.  When a rule
+    fires the ORM object is mutated (no commit — caller owns the session)
+    and the field is acked so it no longer surfaces in the queue.
+
+    Returns the number of field resolutions applied.
+    """
+    resolved = 0
+    _null_fields = {"units", "gba_sqft", "year_built", "lot_sqft"}
+    for opp in opps:
+        p = opp.parcel
+        if p is None:
+            continue
+        ack = dict(opp.parcel_conflicts_ack or {})
+        changed = False
+        for field, (opp_attr, parcel_attr) in _FIELD_MAP.items():
+            if field in ack:
+                continue
+            opp_val = getattr(opp, opp_attr, None)
+            par_val = getattr(p, parcel_attr, None)
+            if opp_val is None or par_val is None:
+                continue
+            action = auto_resolve_conflict(field, opp_val, par_val)
+            if action is None:
+                continue
+            if action == "use_parcel" and field in _null_fields:
+                setattr(opp, opp_attr, None)
+            ack[field] = action
+            changed = True
+            resolved += 1
+        if changed:
+            opp.parcel_conflicts_ack = ack
+    return resolved
 
 
 async def _get_conflicts_count(session: AsyncSession) -> int:
@@ -2652,12 +2690,36 @@ async def opportunities_conflicts(
         .order_by(Opportunity.last_seen_at.desc())
     )
     opps = list((await session.execute(stmt)).scalars().unique())
+
+    # Auto-resolve any conflicts that match the rules before showing the queue
+    auto_count = _apply_auto_resolutions(opps)
+    if auto_count:
+        await session.commit()
+
     conflicts = _build_conflicts(opps)
 
     return templates.TemplateResponse(request, "conflicts.html", {
         "request": request, "conflicts": conflicts,
         **_base_ctx(user, dedup_count, "conflicts", conflicts_count=len(set(c[0].id for c in conflicts))),
     })
+
+
+@router.post("/ui/opportunities/conflicts/auto-resolve", response_class=HTMLResponse)
+async def trigger_conflict_auto_resolve(
+    request: Request,
+    session: DBSession,
+    vd_user_id: str | None = Cookie(default=None),
+) -> HTMLResponse:
+    """Enqueue a background task to auto-resolve all existing conflicts.
+
+    Returns a small status fragment suitable for HTMX swap.
+    """
+    from app.tasks.conflict_backflow import conflict_backflow_task  # noqa: PLC0415
+    task = conflict_backflow_task.delay()
+    return HTMLResponse(
+        f'<span class="badge badge-gray" title="task id: {task.id}">Auto-resolve queued</span>',
+        status_code=202,
+    )
 
 
 @router.post("/ui/opportunities/{opp_id}/conflicts/resolve", response_class=HTMLResponse)
