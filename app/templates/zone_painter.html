@@ -136,6 +136,15 @@
     <h2>🎨 Zone Painter</h2>
 
     <div>
+      <span class="p-label">Map Style</span>
+      <select id="basemap-select" class="p-select">
+        <option value="dark" selected>Dark Matter (bold boundaries)</option>
+        <option value="positron">Positron (light)</option>
+        <option value="osm">OpenStreetMap</option>
+      </select>
+    </div>
+
+    <div>
       <span class="p-label">Mode</span>
       <select id="mode-select" class="p-select">
         {% for mode in modes %}
@@ -351,9 +360,26 @@ const MODES = {
 // Map
 // ---------------------------------------------------------------------------
 const map = L.map('pmap', { zoomControl: true });
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '© OpenStreetMap contributors', maxZoom: 20,
-}).addTo(map);
+const TILE_LAYERS = {
+  dark: L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    attribution: '© OpenStreetMap contributors © CARTO', maxZoom: 20, subdomains: 'abcd',
+  }),
+  positron: L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '© OpenStreetMap contributors © CARTO', maxZoom: 20, subdomains: 'abcd',
+  }),
+  osm: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors', maxZoom: 20,
+  }),
+};
+let activeBasemap = 'dark';
+TILE_LAYERS.dark.addTo(map);
+
+function setBasemap(key) {
+  if (key === activeBasemap) return;
+  map.removeLayer(TILE_LAYERS[activeBasemap]);
+  TILE_LAYERS[key].addTo(map);
+  activeBasemap = key;
+}
 
 // Default overview: Portland metro
 map.setView([45.48, -122.52], 11);
@@ -519,6 +545,7 @@ function applyJurisdiction(jurisdiction) {
   }
 }
 
+document.getElementById('basemap-select').addEventListener('change', e => setBasemap(e.target.value));
 document.getElementById('mode-select').addEventListener('change', e => {
   applyMode(e.target.value, activeJurisdiction);
 });
