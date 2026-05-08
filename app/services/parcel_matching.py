@@ -105,7 +105,7 @@ async def _match_by_latlng(session: AsyncSession, opp: "Opportunity") -> Parcel 
 
 
 async def _match_by_address(session: AsyncSession, opp: "Opportunity") -> Parcel | None:
-    """Strategy 3: street number + normalized street name match."""
+    """Strategy 3: match against parcel.address_normalized using street number prefix filter."""
     street_num = _opp_street_number(opp)
     if street_num is None:
         return None
@@ -116,10 +116,19 @@ async def _match_by_address(session: AsyncSession, opp: "Opportunity") -> Parcel
     if not opp_street_norm:
         return None
 
-    stmt = select(Parcel).where(Parcel.street_number == street_num)
+    # SQL pre-filter: address_normalized starts with the street number
+    stmt = select(Parcel).where(
+        Parcel.address_normalized.ilike(f"{street_num} %")
+    )
     candidates = list((await session.execute(stmt)).scalars().all())
     for p in candidates:
-        if _normalize_street_name(p.street_full_name) == opp_street_norm:
+        if not p.address_normalized:
+            continue
+        # Parse street name portion from parcel address (skip leading number token)
+        parts = p.address_normalized.split(" ", 1)
+        if len(parts) < 2:
+            continue
+        if _normalize_street_name(parts[1]) == opp_street_norm:
             return p
     return None
 
