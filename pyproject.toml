@@ -19,6 +19,7 @@ dependencies = [
     "pyxirr>=0.10",
     # Address normalization
     "usaddress>=0.5.10",
+    "nicknames>=1.0.1",
 ]
 
 [project.optional-dependencies]

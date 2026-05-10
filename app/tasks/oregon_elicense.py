@@ -73,7 +73,7 @@ async def _enrich_broker_oregon_inner(broker_id: str) -> dict[str, Any]:
     # Local import keeps the scraper out of Celery's import path until needed.
     from app.scrapers.oregon_elicense import (  # noqa: PLC0415
         lookup_broker,
-        lookup_broker_by_name,
+        lookup_broker_by_name_with_fallbacks,
     )
 
     async with AsyncSessionLocal() as session:
@@ -91,14 +91,15 @@ async def _enrich_broker_oregon_inner(broker_id: str) -> dict[str, Any]:
         # Two enrichment paths:
         #   1. Broker has a license_number → look up by number (primary)
         #   2. Broker has no license but does have first+last name → try
-        #      name-based lookup; only accept a result if it's unambiguous
-        #      (Oregon returns exactly 1 match). Multiple matches are flagged
-        #      ``ambiguous`` and left untouched.
+        #      name-based lookup with automatic fallbacks:
+        #        a. Exact first+last search
+        #        b. Nickname expansion (e.g. "Tim" → "Timothy")
+        #        c. Last-name-only search (only succeeds if exactly 1 match)
         try:
             if broker.license_number:
                 record = await lookup_broker(broker.license_number, proxy=None)
             elif broker.first_name and broker.last_name:
-                record, name_status = await lookup_broker_by_name(
+                record, name_status = await lookup_broker_by_name_with_fallbacks(
                     broker.first_name, broker.last_name, proxy=None
                 )
                 if name_status == "ambiguous":

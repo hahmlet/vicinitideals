@@ -400,10 +400,98 @@ async def lookup_broker_by_name(
         await pw.stop()
 
 
+async def lookup_broker_by_last_name(
+    last_name: str,
+    *,
+    proxy: str | None = "auto",
+    timeout_ms: int = 30_000,
+) -> tuple["OregonBrokerRecord | None", str]:
+    """Last-name-only search. Returns ``(record, status)`` where status is
+    ``'found'`` (exactly 1 match), ``'ambiguous'`` (>1), or ``'not_found'``."""
+    last = (last_name or "").strip()
+    if not last:
+        return None, "not_found"
+
+    async def _fill(page: Any) -> None:
+        await page.fill(_LAST_NAME_SELECTOR, last)
+
+    state = await _open_browser_and_search(_fill, proxy=proxy, timeout_ms=timeout_ms)
+    if state is None:
+        return None, "not_found"
+    results_html, browser, _page, pw = state
+    try:
+        row_count = _count_result_rows(results_html)
+        if row_count == 0:
+            return None, "not_found"
+        if row_count > 1:
+            return None, "ambiguous"
+        detail_id = _extract_detail_id(results_html)
+        if not detail_id:
+            return None, "not_found"
+        detail_html = await _fetch_detail(state, detail_id)
+        detail_url = f"{DETAIL_URL}?id={urllib.parse.quote(detail_id, safe='')}"
+        record = await _record_from_detail_html(detail_html, detail_url)
+        return record, "found"
+    finally:
+        await browser.close()
+        await pw.stop()
+
+
+try:
+    from nicknames import NickNamer as _NickNamer
+    _NICK_NAMER: "_NickNamer | None" = _NickNamer()
+except ImportError:
+    _NICK_NAMER = None
+
+
+async def lookup_broker_by_name_with_fallbacks(
+    first_name: str,
+    last_name: str,
+    *,
+    proxy: str | None = "auto",
+    timeout_ms: int = 30_000,
+) -> tuple["OregonBrokerRecord | None", str]:
+    """Name lookup with two automatic fallbacks when the exact search fails:
+
+    1. **Nickname expansion** — if ``first_name`` is a known nickname (e.g.
+       "Tim"), each formal canonical ("Timothy") is tried in turn. Stops on
+       the first ``found`` or ``ambiguous`` result.
+    2. **Last-name only** — if all name variants are ``not_found``, falls
+       back to a last-name-only search. Returns the result only when
+       exactly one broker has that surname in Oregon's DB.
+
+    Returns ``(record, status)`` with the same status vocabulary as
+    ``lookup_broker_by_name``.
+    """
+    # 1. Exact name
+    record, status = await lookup_broker_by_name(
+        first_name, last_name, proxy=proxy, timeout_ms=timeout_ms
+    )
+    if status != "not_found":
+        return record, status
+
+    # 2. Nickname → canonical expansion
+    if _NICK_NAMER is not None:
+        canonicals = _NICK_NAMER.canonicals_of(first_name.lower())
+        for canonical in sorted(canonicals)[:4]:
+            if canonical.lower() == first_name.lower():
+                continue
+            record, status = await lookup_broker_by_name(
+                canonical, last_name, proxy=proxy, timeout_ms=timeout_ms
+            )
+            if status in ("found", "ambiguous"):
+                return record, status
+
+    # 3. Last-name only (only safe when Oregon has exactly one person with surname)
+    return await lookup_broker_by_last_name(last_name, proxy=proxy, timeout_ms=timeout_ms)
+
+
 __all__ = [
     "OregonAddress",
     "OregonBrokerRecord",
     "OregonDisciplinaryAction",
     "lookup_broker",
+    "lookup_broker_by_last_name",
     "lookup_broker_by_name",
+    "lookup_broker_by_name_with_fallbacks",
 ]
