@@ -117,12 +117,7 @@ tr:hover .archive-btn { opacity: 1; }
           <th></th>
         </tr>
       </thead>
-      <tbody id="deals-tbody"
-             hx-get="/ui/opportunities/rows/deals"
-             hx-trigger="load, oppFilterChange"
-             hx-include="#opp-filters"
-             hx-swap="innerHTML">
-      </tbody>
+      <tbody id="deals-tbody"></tbody>
     </table>
   </div>
 </div>
@@ -150,12 +145,7 @@ tr:hover .archive-btn { opacity: 1; }
           <th></th>
         </tr>
       </thead>
-      <tbody id="offmarket-tbody"
-             hx-get="/ui/opportunities/rows/offmarket"
-             hx-trigger="load, oppFilterChange"
-             hx-include="#opp-filters"
-             hx-swap="innerHTML">
-      </tbody>
+      <tbody id="offmarket-tbody"></tbody>
     </table>
   </div>
 </div>
@@ -183,12 +173,7 @@ tr:hover .archive-btn { opacity: 1; }
           <th></th>
         </tr>
       </thead>
-      <tbody id="onmarket-tbody"
-             hx-get="/ui/opportunities/rows/onmarket"
-             hx-trigger="load, oppFilterChange"
-             hx-include="#opp-filters"
-             hx-swap="innerHTML">
-      </tbody>
+      <tbody id="onmarket-tbody"></tbody>
     </table>
   </div>
 </div>
@@ -204,31 +189,41 @@ function toggleSection(name) {
   if (chev) chev.textContent = body.classList.contains('collapsed') ? '▸' : '▾';
 }
 
-// Dispatch oppFilterChange to all tbodies when the global filter form changes
 (function() {
-  var form = document.getElementById('opp-filters');
-  var tbodyIds = ['deals-tbody', 'offmarket-tbody', 'onmarket-tbody'];
-  var timer;
-  function fireAll() {
-    tbodyIds.forEach(function(id) {
-      var el = document.getElementById(id);
-      if (el) htmx.trigger(el, 'oppFilterChange');
+  var tables = [
+    {id: 'deals-tbody',    url: '/ui/opportunities/rows/deals'},
+    {id: 'offmarket-tbody', url: '/ui/opportunities/rows/offmarket'},
+    {id: 'onmarket-tbody',  url: '/ui/opportunities/rows/onmarket'},
+  ];
+
+  function loadAll() {
+    var form = document.getElementById('opp-filters');
+    var params = form ? new URLSearchParams(new FormData(form)).toString() : '';
+    tables.forEach(function(t) {
+      var el = document.getElementById(t.id);
+      if (!el) return;
+      htmx.ajax('GET', t.url + (params ? '?' + params : ''), {target: '#' + t.id, swap: 'innerHTML'});
     });
   }
-  form.addEventListener('input', function() { clearTimeout(timer); timer = setTimeout(fireAll, 400); });
-  form.addEventListener('change', function() { clearTimeout(timer); fireAll(); });
-})();
 
-// Update row counts after each HTMX load
-document.addEventListener('htmx:afterSettle', function(e) {
-  ['deals', 'offmarket', 'onmarket'].forEach(function(name) {
-    var tbody = document.getElementById(name + '-tbody');
-    var countEl = document.getElementById(name + '-count');
-    if (tbody && countEl) {
-      var rows = tbody.querySelectorAll('tr[data-opp-id]');
-      countEl.textContent = rows.length;
-    }
+  function updateCounts() {
+    ['deals', 'offmarket', 'onmarket'].forEach(function(name) {
+      var tbody = document.getElementById(name + '-tbody');
+      var countEl = document.getElementById(name + '-count');
+      if (tbody && countEl) countEl.textContent = tbody.querySelectorAll('tr[data-opp-id]').length;
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', loadAll);
+  document.addEventListener('htmx:afterSettle', updateCounts);
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var form = document.getElementById('opp-filters');
+    if (!form) return;
+    var timer;
+    form.addEventListener('input', function() { clearTimeout(timer); timer = setTimeout(loadAll, 400); });
+    form.addEventListener('change', function() { clearTimeout(timer); loadAll(); });
   });
-});
+})();
 </script>
 {% endblock %}
