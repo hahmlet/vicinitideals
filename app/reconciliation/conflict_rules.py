@@ -87,16 +87,7 @@ def auto_resolve_conflict(
         return "use_listing"
 
     elif field in _SQFT_FIELDS:
-        max_val = max(fv_opp, fv_par)
-
-        # Rule 3 — within 5%: use the larger
-        if max_val > 0 and abs(fv_opp - fv_par) / max_val <= _SQFT_CLOSE_PCT:
-            return "use_listing" if fv_opp >= fv_par else "use_parcel"
-
-        # Rule 5 / 6 — unreliably small sqft: use the other side
-        if fv_opp < _SMALL_SQFT_THRESHOLD and fv_par >= _SMALL_SQFT_THRESHOLD:
-            return "use_parcel"
-        if fv_par < _SMALL_SQFT_THRESHOLD and fv_opp >= _SMALL_SQFT_THRESHOLD:
-            return "use_listing"
+        # Policy: listing sqft always wins
+        return "use_listing"
 
     return None

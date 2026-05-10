@@ -64,6 +64,11 @@ async def _backflow_all() -> dict[str, Any]:
                     ack["year_built"] = "use_listing"
                     changed = True
                     rule_counts["year_built_policy_fix"] += 1
+                for sqft_field in ("lot_sqft", "gba_sqft"):
+                    if ack.get(sqft_field) == "use_parcel":
+                        ack[sqft_field] = "use_listing"
+                        changed = True
+                        rule_counts["sqft_policy_fix"] += 1
 
                 for field, (opp_attr, parcel_attr) in _FIELD_MAP.items():
                     if field in ack:
