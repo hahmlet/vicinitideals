@@ -944,9 +944,9 @@ Year 4: $1,500 × 1.03            = $1,545  (normal escalation resumes)
 
 For units in the value-add pool, renovation supersedes LTL: the unit goes directly from `in_place_rent` to `post_reno_rent`. The LTL gap ($300 in the example) is captured implicitly because `post_reno_rent` ($1,800) already exceeds `market_rent` ($1,500).
 
-### 4.8 Unit Strategy Assignment (UnitMix)
+### 4.8 Unit Strategy Assignment (unit_mix JSONB)
 
-Each unit type in `UnitMix` can be assigned one of three strategies via `unit_strategy`:
+> **Storage (migration 0072):** `unit_mix` is now a JSONB column on `Project` (not a standalone DB table). Each element is a dict with the fields below. Deep-copied from the Opportunity at Project creation. Edit inside a Deal never writes back to the Opportunity.
 
 | Strategy | Driving Fields | Rent Trajectory |
 |---|---|---|

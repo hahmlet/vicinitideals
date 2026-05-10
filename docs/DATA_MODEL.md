@@ -2,7 +2,7 @@
 
 This document describes the entity model, data sources, reconciliation
 logic, and field-level authority for the **market-data ingest layer** of
-Vicinity Deals — parcels, listings, buildings, and the scrapers / APIs
+Vicinity Deals — parcels, opportunities, and the scrapers / APIs
 that populate them. It is the data-layer counterpart of `FINANCIAL_MODEL.md`.
 
 **Scope note**: Deal-side entities (Scenario, Project, OperationalInputs,
@@ -21,32 +21,26 @@ UnitMix schema changes (beds/baths fields, `avg_monthly_rent` removal,
   module's Exit Vehicle on save.  Engine ignores the user-supplied value.
   Same rollback posture as above.
 
-**Last updated**: 2026-04-19
+**Last updated**: 2026-05-09
 
 ---
 
 ## 1. Entity Hierarchy
 
-```
-Parcel  ←──(parcel_id FK)── ScrapedListing ──(linked_project_id FK)──→ Opportunity
-  │                              │                                        │
-  │                        (property_id FK)                         (project_parcels)
-  │                              │                                        │
-  │                           Building                              ProjectParcel
-  │                                                                       │
-  └───────────────────────────────────────────────────────────────── (parcel_id FK)
-```
+The market-data entities link as: Parcel (parcel_id FK, nullable) <- Opportunity (opportunity_id FK) <- Project -> Deal/Scenario
+
+Physical attributes (units, gba_sqft, year_built, lot_sqft, property_type) live as nullable columns on Opportunity. NULL = read from Parcel (county-authoritative seed). Non-null = permanent user override. Access via display_* properties only -- never raw columns.
+
+> **Removed (migration 0072):** Building entity, buildings table, scraped_listings table (renamed to opportunities), deal_opportunities junction, project_parcels junction, opportunity_buildings junction, standalone unit_mix table (JSONB on Project now). ScrapedListing remains as a Python import alias only.
 
 | Entity | Table | Purpose | Key |
 |---|---|---|---|
 | **Parcel** | `parcels` | GIS/assessor ground truth for a physical tax lot | `apn` (unique) |
-| **ScrapedListing** | `scraped_listings` | Market snapshot from a listing source (Crexi, LoopNet) | `(source, source_id)` unique |
-| **Building** | `buildings` | Physical structure linked to a listing or parcel | `id` (UUID) |
-| **Opportunity** | `opportunities` | A deal/project the team is evaluating | `id` (UUID) |
-| **ProjectParcel** | `project_parcels` | Junction linking parcels to opportunities (assemblages) | `(project_id, parcel_id)` |
-| **Broker** | `brokers` | Contact from listing source (Crexi) | `crexi_broker_id` (unique) |
+| **Opportunity** | `opportunities` | Unified investment target (scraped or manually created); was scraped_listings | `(source, source_id)` unique |
+| **Broker** | `brokers` | Contact from listing source (Crexi/LoopNet) | `crexi_broker_id` (unique) |
 | **IngestJob** | `ingest_jobs` | Telemetry record for a scrape run | `id` (UUID) |
 | **DedupCandidate** | `dedup_candidates` | Potential duplicate listing pair pending review | `id` (UUID) |
+| **MapPolygon** | `map_polygons` | Named geographic polygon for listing filtering (zone painter) | `slug` (unique) |
 
 ### 1.1 Deal / Scenario / Project hierarchy (financial side)
 
@@ -56,7 +50,7 @@ The listing/parcel half of the schema above feeds into the financial half below.
 Deal ──┬── Scenario (= "Variant")          ← DB table: scenarios; ORM class: DealModel
        │       │
        │       ├── Project ─────────────── UseLine, IncomeStream, OperatingExpenseLine,
-       │       │        │                  OperationalInputs, UnitMix, Milestone
+       │       │        │                  OperationalInputs, unit_mix (JSONB), Milestone
        │       │        ├── ProjectAnchor  ← cross-project timeline coupling (0..1)
        │       │        └── CapitalModuleProject ← per-project terms (junction)
        │       │
@@ -155,9 +149,9 @@ Read-side helpers already in `app/engines/cashflow.py`:
 
 ### Relationship Cardinalities
 
-- Many ScrapedListings → one Parcel (many listings may reference the same property)
-- One ScrapedListing ↔ one Building (optional one-to-one)
-- One ScrapedListing → one Opportunity (optional, via `linked_project_id`)
+- One Opportunity <-> one Parcel (optional; linked via parcel matching service)
+- One Opportunity <- many Projects (lineage FK; physical data deep-copied at project create)
+- One Parcel <- many Opportunities (same property listed multiple times)
 - Many ProjectParcels ↔ one Parcel (parcel can be in multiple deals)
 - Many ProjectParcels ↔ one Opportunity (deal can include multiple parcels)
 
@@ -194,7 +188,7 @@ These are queried on-demand during listing auto-link or via the drip-enrichment 
 
 ### 2.4 GIS Overlay Layers (Map Display + Screening)
 
-These layers are cached as GeoJSON files and displayed on the zone painter and map views. They do not directly populate Parcel or ScrapedListing columns but are used for spatial screening and visual context.
+These layers are cached as GeoJSON files and displayed on the zone painter and map views. They do not directly populate Parcel or Opportunity columns but are used for spatial screening and visual context.
 
 **Parcel Seeding**
 - Metro RLIS Taxlots — primary seed (~430K parcels)
@@ -237,7 +231,7 @@ See `/settings/data-sources` in the app for the full live inventory with heartbe
 
 ## 3. Field Authority: Who Owns What
 
-When a ScrapedListing is linked to a Parcel, two records describe the
+When an Opportunity is linked to a Parcel, two records describe the
 same property from different perspectives.  This table defines which
 source is authoritative for each field and how conflicts are resolved.
 
@@ -245,7 +239,7 @@ source is authoritative for each field and how conflicts are resolved.
 
 > **Parcel = GIS/assessor ground truth.  Listing = market snapshot.**
 >
-> Denormalize onto ScrapedListing only what is needed in list/filter
+> Denormalize onto Opportunity only what is needed in list/filter
 > queries that run every page load (jurisdiction).  Everything else
 > stays on Parcel and is accessed via the `parcel_id` FK in detail views.
 
@@ -253,18 +247,18 @@ source is authoritative for each field and how conflicts are resolved.
 
 | Field | Authoritative Source | Fallback | Stored On | Notes |
 |---|---|---|---|---|
-| **Jurisdiction** | `Parcel.jurisdiction` (GIS) | `ScrapedListing.city` (broker) | Denormalized → `ScrapedListing.jurisdiction` | UI uses `COALESCE(jurisdiction, city)` for graceful degradation |
-| **Zoning** | `Parcel.zoning_code` (GIS) | `ScrapedListing.zoning` (broker) | Stay on Parcel | Joined via `parcel_id` in detail views |
-| **County** | `Parcel.county` (GIS) | `ScrapedListing.county` (broker) | Stay on Parcel | Listing county is mostly correct at county level |
+| **Jurisdiction** | `Parcel.jurisdiction` (GIS) | `Opportunity.city` (broker) | Denormalized -> `Opportunity.jurisdiction` | UI uses `COALESCE(jurisdiction, city)` for graceful degradation |
+| **Zoning** | `Parcel.zoning_code` (GIS) | `Opportunity.zoning` (broker) | Stay on Parcel | Joined via `parcel_id` in detail views |
+| **County** | `Parcel.county` (GIS) | `Opportunity.county` (broker) | Stay on Parcel | Listing county is mostly correct at county level |
 | **Assessed Value** | `Parcel.total_assessed_value` (assessor) | None | Stay on Parcel | Land + improvements split also available |
-| **Lot Size** | `Parcel.lot_sqft` / `gis_acres` (GIS) | `ScrapedListing.lot_sqft` (broker) | Both keep theirs | Mismatch >20% flags `lot_size_mismatch` (possible assemblage) |
+| **Lot Size** | `Parcel.lot_sqft` / `gis_acres` (GIS) | `Opportunity.lot_sqft` (broker) | Both keep theirs | Mismatch >20% flags `lot_size_mismatch` (possible assemblage) |
 | **Owner** | `Parcel.owner_name` (assessor) | None | Stay on Parcel | Not available from listing sources |
 | **Year Built** | Both sources | N/A | Both keep theirs | Generally agree; parcel is more reliable |
-| **Asking Price** | `ScrapedListing` (broker) | None | Stay on Listing | Only the market knows the ask |
-| **NOI / Cap Rate** | `ScrapedListing` (broker) | None | Stay on Listing | Broker-provided operating metrics |
-| **Property Type** | `ScrapedListing` (broker) | None | Stay on Listing | Market classification (Multifamily, Office, etc.) |
-| **Units** | `ScrapedListing` (broker) | None | Stay on Listing | Broker unit count |
-| **Lat/Lng** | `ScrapedListing.lat/lng` (geocoded by source) | `Parcel.latitude/longitude` (GIS vertex) | Both keep theirs | Listing coordinates used for spatial matching |
+| **Asking Price** | Opportunity (broker) | None | Stay on Opportunity | Only the market knows the ask |
+| **NOI / Cap Rate** | Opportunity (broker) | None | Stay on Opportunity | Broker-provided operating metrics |
+| **Property Type** | Opportunity (broker) | None | Stay on Opportunity | Market classification (Multifamily, Office, etc.) |
+| **Units** | Opportunity (broker) | None | Stay on Opportunity | Broker unit count |
+| **Lat/Lng** | `Opportunity.lat/lng` (geocoded by source) | `Parcel.latitude/longitude` (GIS vertex) | Both keep theirs | Listing coordinates used for spatial matching |
 
 ---
 
@@ -339,14 +333,14 @@ Listings may silently cover multiple parcels (e.g., a 2-acre listing for
 a 1-acre addressed parcel plus an empty acre behind it).  When
 `listing.lot_sqft > parcel.lot_sqft × 1.20`, the `lot_size_mismatch`
 flag is set.  The model builder shows a yellow banner prompting the user
-to add additional parcels via the `ProjectParcel` junction table.
+to add additional parcels via the Opportunity detail page (assemblage workflow).
 
 ### 4.4 Multi-APN Listing Detection
 
 Separate from lot-size mismatch, listings with comma/semicolon-separated
 APNs (e.g., `R123456,R789012`) trigger a multi-parcel banner in the
 model builder.  The user can split into separate projects or keep
-combined.  This is handled by `Opportunity.multi_parcel_dismissed`.
+combined.  This was previously tracked via `Opportunity.multi_parcel_dismissed` (removed in migration 0072).
 
 ### 4.5 Priority Classification
 
@@ -374,11 +368,11 @@ Classification prefers parcel fields (authoritative) over listing fields:
 ```
 CrxiScraper.fetch_all()
   → upsert_brokers()           # Broker + Brokerage tables
-  → upsert_scraped_listings()  # ON CONFLICT (source, source_id) DO UPDATE
+  -> upsert_opportunities()  # ON CONFLICT (source, source_id) DO UPDATE
   → _auto_link_parcels()       # Three-tier matcher + classify + reconcile
   → deduplicate_batch()        # Address/unit/price scoring → DedupCandidate
   → _flag_saved_search_matches()
-  → _sync_listing_to_building()
+  # (building sync removed -- Building entity dropped in migration 0072)
 ```
 
 ### 5.2 LoopNet Path (via Scrapling LXC 134)
@@ -388,7 +382,7 @@ Scrapling HTTP POST → _scrape_listings()
   → upsert listing rows       # ON CONFLICT (source, source_id) DO UPDATE
   → _auto_link_parcels()       # Three-tier matcher (same as Crexi)
   → _flag_saved_search_matches()
-  → _sync_listing_to_building()
+  # (building sync removed -- Building entity dropped in migration 0072)
   → deduplicate_batch()
 ```
 
@@ -420,9 +414,9 @@ review at `/dedup/pending`.
 
 ---
 
-## 6. Opportunity Fields (formerly ScrapedListing)
+## 6. Opportunity Fields
 
-> **Note:** `ScrapedListing` is a Python alias — `ScrapedListing = Opportunity`. Both point to the `opportunities` table (renamed from `scraped_listings` in migration 0067). All new code should use `Opportunity`.
+> **Note:** `ScrapedListing` is a Python import alias for `Opportunity` (`ScrapedListing = Opportunity`). Both reference the `opportunities` table (renamed from `scraped_listings` in migration 0072). All new code should import `Opportunity` from `app.models.opportunity`.
 
 ### Display-property pattern
 Physical attributes live on both `Opportunity` (broker-reported) and `Parcel` (county-authoritative). Access them only through the model's `display_*` properties — never read raw columns directly in templates or routes:
@@ -694,7 +688,7 @@ All parcel table fields plus: postal city, jurisdiction, owner name, owner maili
 
 ### 9.6 API Endpoints
 
-**`GET /listings`** → `ScrapedListingRead` schema (all base fields + reconciliation fields: jurisdiction, match_strategy, match_confidence, lot_size_mismatch).
+**`GET /listings`** -> `OpportunityRead` schema (all base fields + reconciliation fields: jurisdiction, match_strategy, match_confidence, lot_size_mismatch).
 
 **`GET /parcels`** → `ParcelRead` schema (all base fields).
 
