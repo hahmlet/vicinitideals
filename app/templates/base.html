@@ -57,7 +57,7 @@
 </style>
 {% block head %}{% endblock %}
 </head>
-<body {% if user %}hx-headers='{"X-User-ID": "{{ user.id }}"}'{% endif %}>
+<body>
 
 {% if user_email_verified is defined and user_email_verified == false %}
 <div id="email-verify-banner" style="
@@ -942,5 +942,12 @@ document.addEventListener('click', function(e) {
   });
 })();
 </script>
+{% if user %}
+<script>
+  document.body.addEventListener('htmx:configRequest', function(evt) {
+    evt.detail.headers['X-User-ID'] = '{{ user.id }}';
+  });
+</script>
+{% endif %}
 </body>
 </html>
