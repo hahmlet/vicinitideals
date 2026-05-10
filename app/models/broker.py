@@ -104,8 +104,8 @@ class Broker(Base):
         return self.brokerage.name if self.brokerage is not None else None
 
     brokerage: Mapped["Brokerage | None"] = relationship("Brokerage", back_populates="brokers")
-    scraped_listings: Mapped[list["ScrapedListing"]] = relationship(  # type: ignore[name-defined]
-        "ScrapedListing",
+    scraped_listings: Mapped[list["Opportunity"]] = relationship(  # type: ignore[name-defined]
+        "Opportunity",
         back_populates="broker",
     )
     disciplinary_actions: Mapped[list["BrokerDisciplinaryAction"]] = relationship(

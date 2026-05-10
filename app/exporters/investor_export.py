@@ -73,15 +73,29 @@ from app.models.capital import (
     WaterfallTier,
 )
 from app.models.cashflow import CashFlow, CashFlowLineItem, OperationalOutputs
+from app.models.milestone import Milestone
 from app.models.deal import (
     ALWAYS_SHOWN_OPEX_CATEGORIES,
+    USE_CATEGORY_LABELS,
+    USE_COST_CATEGORIES,
     Deal,
     DealModel,
     OperationalInputs,
-    UnitMix,
     UseLine,
     normalize_opex_label,
 )
+
+
+class _UMProxy:
+    """Attribute-compatible proxy for unit_mix JSONB dicts.
+
+    Replaces the old UnitMix ORM rows; unknown attributes return None.
+    """
+    def __init__(self, d: dict) -> None:
+        self.__dict__.update(d)
+
+    def __getattr__(self, k: str):
+        return None
 from app.models.org import Organization
 from app.models.project import Project
 from app.config import settings as _app_settings
@@ -98,14 +112,21 @@ PROJECT_SHEET_NAME_BUDGET = 27
 
 
 async def export_investor_workbook(
-    deal_model_id: UUID, session: AsyncSession
+    deal_model_id: UUID,
+    session: AsyncSession,
+    profile: str = "internal",
 ) -> bytes:
     """Build the investor workbook for a Scenario and return the bytes.
 
-    Raises ``ValueError`` if the Scenario doesn't exist. The caller wraps
-    the bytes in a ``StreamingResponse`` with the appropriate
-    Content-Disposition (see ``download_investor_export`` in ui.py).
+    ``profile`` controls which sheets are rendered:
+    - ``"internal"``  — all sheets (full underwriting working model)
+    - ``"lp"``        — LP / investor package (IRR, waterfall, sensitivity)
+    - ``"lender"``    — lender package (DSCR, debt schedule, NOI)
+    - ``"proforma"``  — pro forma only (NOI build, S&U, per-project)
+
+    Raises ``ValueError`` if the Scenario doesn't exist.
     """
+    _profile = profile if profile in {"internal", "lp", "lender", "proforma"} else "internal"
     ctx = await _load_all(session, deal_model_id)
     if ctx is None:
         raise ValueError(f"Scenario {deal_model_id} was not found")
@@ -113,87 +134,109 @@ async def export_investor_workbook(
     wb = Workbook()
     registry = CellRegistry()
 
-    # Version tab is first — professional CRE convention: reviewers check
-    # model version and timestamp before reading any numbers.
-    version_tab = wb.active
-    version_tab.title = "Version"
-    _build_version_tab(version_tab, ctx)
+    # ── Profile membership helpers ─────────────────────────────────────────────
+    # Each set lists which profiles render that sheet.  Adding a new profile
+    # only requires updating the relevant set(s) below.
+    _HAS_UW        = {"internal", "lp", "lender"}   # UW Summary + Pro Forma + Cash Flow
+    _HAS_SU        = {"internal", "lp", "lender", "proforma"}  # Sources & Uses dedicated sheet
+    _HAS_RETURNS   = {"internal", "lp"}              # Investor Returns + Waterfall
+    _HAS_UNIT_MIX  = {"internal", "lp", "lender"}
+    _HAS_DEBT      = {"internal", "lender"}          # Debt Schedule
+    _HAS_ASSUMPT   = {"internal", "lender"}          # Assumptions
+    _HAS_SENS      = {"internal", "lp"}              # Sensitivity (slow; skip for lender/proforma)
+    _HAS_PF        = {"proforma"}                    # New formula-driven Pro Forma sheets
 
-    cover = wb.create_sheet("Cover")
+    cover = wb.active
+    cover.title = "Cover"
     _build_cover(cover, registry, ctx)
 
-    uw_summary = wb.create_sheet("Underwriting Summary")
-    _build_uw_summary(uw_summary, registry, ctx)
+    if _profile in _HAS_UW:
+        uw_summary = wb.create_sheet("Underwriting Summary")
+        _build_uw_summary(uw_summary, registry, ctx)
 
-    uw_proforma = wb.create_sheet("Underwriting Pro Forma")
-    _build_uw_proforma(uw_proforma, registry, ctx)
+        uw_proforma = wb.create_sheet("Underwriting Pro Forma")
+        _build_uw_proforma(uw_proforma, registry, ctx)
 
-    uw_cashflow = wb.create_sheet("Underwriting Cash Flow")
-    _build_uw_cashflow(uw_cashflow, registry, ctx)
+        uw_cashflow = wb.create_sheet("Underwriting Cash Flow")
+        _build_uw_cashflow(uw_cashflow, registry, ctx)
 
-    investor_returns = wb.create_sheet("Investor Returns")
-    _build_investor_returns(investor_returns, registry, ctx)
+    if _profile in _HAS_SU:
+        su_sheet = wb.create_sheet("Sources & Uses")
+        _build_su_sheet(su_sheet, registry, ctx)
 
-    waterfall_ws = wb.create_sheet("Waterfall")
-    _build_waterfall_sheet(waterfall_ws, registry, ctx)
+    if _profile in _HAS_RETURNS:
+        investor_returns = wb.create_sheet("Investor Returns")
+        _build_investor_returns(investor_returns, registry, ctx)
 
-    unit_mix_ws = wb.create_sheet("Unit Mix")
-    _build_unit_mix_sheet(unit_mix_ws, registry, ctx)
+        waterfall_ws = wb.create_sheet("Waterfall")
+        _build_waterfall_sheet(waterfall_ws, registry, ctx)
 
-    debt_schedule = wb.create_sheet("Debt Schedule")
-    _build_debt_schedule(debt_schedule, registry, ctx)
+    if _profile in _HAS_UNIT_MIX:
+        unit_mix_ws = wb.create_sheet("Unit Mix")
+        _build_unit_mix_sheet(unit_mix_ws, registry, ctx)
 
-    assumptions = wb.create_sheet("Assumptions")
-    _build_assumptions(assumptions, registry, ctx)
+    if _profile in _HAS_DEBT:
+        debt_schedule = wb.create_sheet("Debt Schedule")
+        _build_debt_schedule(debt_schedule, registry, ctx)
 
-    # Per-project sheets sit between Assumptions and Glossary (plan §2 final
-    # order). Sheet names are `P{n} {Name}` truncated to Excel's 31-char
-    # ceiling — see _project_sheet_name. The Underwriting Summary's per-
-    # project mini-table already emits =HYPERLINK() targets pointing at
-    # these names, so they resolve once these sheets exist.
+    if _profile in _HAS_ASSUMPT:
+        assumptions = wb.create_sheet("Assumptions")
+        _build_assumptions(assumptions, registry, ctx)
+
+    # Pro Forma profile gets the formula-driven combined + per-project sheets.
+    if _profile in _HAS_PF:
+        pf_combined = wb.create_sheet("Pro Forma")
+        _build_proforma_combined(pf_combined, registry, ctx)
+
+    # Per-project sheets: all profiles. Sheet names `P{n} {Name}` truncated
+    # to Excel's 31-char ceiling. UW Summary hyperlinks resolve once these exist.
     projects: list[Project] = ctx["projects"]
     for idx, project in enumerate(projects, start=1):
-        sheet_name = _project_sheet_name(idx, project.name)
-        ws_proj = wb.create_sheet(sheet_name)
-        _build_project_sheet(ws_proj, registry, ctx, idx, project)
+        if _profile in _HAS_PF:
+            sheet_name = _project_sheet_name(idx, project.name)
+            ws_proj = wb.create_sheet(sheet_name)
+            _build_proforma_project_sheet(ws_proj, registry, ctx, idx, project)
+        else:
+            sheet_name = _project_sheet_name(idx, project.name)
+            ws_proj = wb.create_sheet(sheet_name)
+            _build_project_sheet(ws_proj, registry, ctx, idx, project)
 
+    # Collect every string written to the workbook so far so _build_glossary
+    # can filter to only terms that actually appear in this export.
+    _written_strings: set[str] = {
+        cell.value
+        for sheet in wb.worksheets
+        for row in sheet.iter_rows()
+        for cell in row
+        if isinstance(cell.value, str) and cell.value
+    }
     glossary = wb.create_sheet("Glossary & Methodology")
-    _build_glossary(glossary, registry, ctx)
+    _build_glossary(glossary, registry, ctx, written_strings=_written_strings)
 
-    # Two-way sensitivity sheet is built LAST because the engine calls
-    # session.expire_all() inside each compute_cash_flows cycle, which
-    # invalidates ORM rows held by ``ctx`` (waterfall tiers, capital
-    # modules, etc.). Building all ORM-reading sheets before the matrix
-    # avoids MissingGreenlet errors from sync attribute access on expired
-    # rows. After the sheet is built we splice it into position 4 (between
-    # Underwriting Cash Flow and Investor Returns) via ``wb._sheets`` so
-    # the on-disk tab order matches plan §2.
-    #
-    # Originally disabled on the synchronous request path because the
-    # 25-cycle compute exceeded NGINX's 60s proxy timeout. The async
-    # export path (Celery worker, no proxy) lifts that constraint, so the
-    # sheet is unconditionally rendered here. Sync callers of this
-    # builder (the legacy GET endpoint) inherit the live build too — they
-    # may time out, in which case the user retries via the async button.
-    sensitivity = await compute_sensitivity_matrix(
-        deal_model_id=deal_model_id,
-        session=session,
-        axis_x="noi_escalation_rate_pct",
-        axis_y="exit_cap_rate_pct",
-        metric="project_irr_levered",
-        secondary_metric="equity_multiple",
-        mode="combined",
-        step_overrides={
-            "noi_escalation_rate_pct": Decimal("1.0"),
-            "exit_cap_rate_pct": Decimal("0.5"),
-        },
-    )
-    sensitivity_sheet = wb.create_sheet("Sensitivity")
-    _build_sensitivity(sensitivity_sheet, registry, ctx, sensitivity)
-    # Splice from end → position 4 (after Cover, UW Summary, Pro Forma,
-    # Cash Flow). openpyxl's wb._sheets is a plain list of Worksheet refs.
-    wb._sheets.remove(sensitivity_sheet)
-    wb._sheets.insert(4, sensitivity_sheet)
+    # Sensitivity is built LAST — compute_sensitivity_matrix calls
+    # session.expire_all() each cycle, invalidating ORM rows in ctx.
+    # Splice it into position 4 after building so tab order is correct.
+    # Skip for lender/proforma profiles (not needed, saves ~30s build time).
+    if _profile in _HAS_SENS:
+        sensitivity = await compute_sensitivity_matrix(
+            deal_model_id=deal_model_id,
+            session=session,
+            axis_x="noi_escalation_rate_pct",
+            axis_y="exit_cap_rate_pct",
+            metric="project_irr_levered",
+            secondary_metric="equity_multiple",
+            mode="combined",
+            step_overrides={
+                "noi_escalation_rate_pct": Decimal("1.0"),
+                "exit_cap_rate_pct": Decimal("0.5"),
+            },
+        )
+        sensitivity_sheet = wb.create_sheet("Sensitivity")
+        _build_sensitivity(sensitivity_sheet, registry, ctx, sensitivity)
+        # Splice from end → position 5 (after Cover, UW Summary, Pro Forma,
+        # Cash Flow, Sources & Uses). openpyxl's wb._sheets is a plain list.
+        wb._sheets.remove(sensitivity_sheet)
+        wb._sheets.insert(5, sensitivity_sheet)
 
     registry.emit(wb)
 
@@ -202,13 +245,26 @@ async def export_investor_workbook(
     return buf.getvalue()
 
 
-def make_investor_filename(scenario: DealModel, deal: Deal | None) -> str:
-    """Investor-export filename: ``<deal>-<scenario>-investor.xlsx`` (slugged)."""
+_PROFILE_SUFFIX: dict[str, str] = {
+    "internal": "underwriting",
+    "lp": "investor",
+    "lender": "lender",
+    "proforma": "proforma",
+}
+
+
+def make_investor_filename(
+    scenario: DealModel,
+    deal: Deal | None,
+    profile: str = "internal",
+) -> str:
+    """Export filename: ``<deal>-<scenario>-<profile-suffix>.xlsx`` (slugged)."""
     deal_part = (deal.name if deal else None) or "deal"
     scen_part = scenario.name or "scenario"
     deal_slug = re.sub(r"[^a-z0-9]+", "-", deal_part.lower()).strip("-") or "deal"
     scen_slug = re.sub(r"[^a-z0-9]+", "-", scen_part.lower()).strip("-") or "scenario"
-    return f"{deal_slug}-{scen_slug}-investor.xlsx"
+    suffix = _PROFILE_SUFFIX.get(profile, "export")
+    return f"{deal_slug}-{scen_slug}-{suffix}.xlsx"
 
 
 # ── Data loader ───────────────────────────────────────────────────────────────
@@ -252,7 +308,10 @@ async def _load_all(session: AsyncSession, scenario_id: UUID) -> dict | None:
 
     inputs_by_project: dict[UUID, OperationalInputs] = {}
     use_lines_by_project: dict[UUID, list[UseLine]] = {pid: [] for pid in project_ids}
-    unit_mix_by_project: dict[UUID, list[UnitMix]] = {pid: [] for pid in project_ids}
+    # unit_mix is JSONB on Project; wrap dicts in _UMProxy for attribute-compatible access
+    unit_mix_by_project: dict[UUID, list] = {
+        p.id: [_UMProxy(r) for r in (p.unit_mix or [])] for p in projects
+    }
 
     if project_ids:
         for inp in (
@@ -271,14 +330,6 @@ async def _load_all(session: AsyncSession, scenario_id: UUID) -> dict | None:
             )
         ).scalars():
             use_lines_by_project.setdefault(ul.project_id, []).append(ul)
-        for um in (
-            await session.execute(
-                select(UnitMix)
-                .where(UnitMix.project_id.in_(project_ids))
-                .order_by(UnitMix.label)
-            )
-        ).scalars():
-            unit_mix_by_project.setdefault(um.project_id, []).append(um)
 
     capital_modules = list(
         (
@@ -367,6 +418,20 @@ async def _load_all(session: AsyncSession, scenario_id: UUID) -> dict | None:
     summary = await rollup_summary(scenario_id, session)
     waterfall_rollup = await rollup_waterfall(scenario_id, session)
 
+    milestones_by_project: dict = {}
+    if project_ids:
+        _all_ms = list(
+            (
+                await session.execute(
+                    select(Milestone)
+                    .where(Milestone.project_id.in_(project_ids))
+                    .order_by(Milestone.sequence_order.asc())
+                )
+            ).scalars()
+        )
+        for _m in _all_ms:
+            milestones_by_project.setdefault(_m.project_id, []).append(_m)
+
     return {
         "scenario": scenario,
         "deal": deal,
@@ -398,6 +463,7 @@ async def _load_all(session: AsyncSession, scenario_id: UUID) -> dict | None:
                 Decimal("8.0"),
             )
         ),
+        "milestones": milestones_by_project,
     }
 
 
@@ -546,122 +612,184 @@ def _weighted_em_calc(
     npv = _npv_levered(rollup_waterfall, capital_modules, equity_required, discount_rate_pct)
     if npv is None:
         return None
+    if equity_required < Decimal(1):
+        return None
     return (equity_required + npv) / equity_required
 
 
+def _write_cover_timeline(
+    ws,
+    start_row: int,
+    projects: list,
+    milestones_by_project: dict,
+) -> None:
+    """Render a phase-timeline table on the Cover sheet."""
+    if not any(milestones_by_project.get(p.id) for p in projects):
+        return
+
+    section_label(ws, start_row, "Project Timeline", span_cols=5)
+    hdr = start_row + 1
+    for col, txt in enumerate(["Phase", "Start", "End", "Days", "Months"], start=1):
+        ws.cell(row=hdr, column=col, value=txt).font = FONT_LABEL
+
+    row = hdr + 1
+    for idx, project in enumerate(projects, start=1):
+        ms_list = milestones_by_project.get(project.id, [])
+        if not ms_list:
+            continue
+        if len(projects) > 1:
+            ws.cell(row=row, column=1, value=f"P{idx} — {project.name}").font = FONT_LABEL
+            row += 1
+        ms_map = {m.id: m for m in ms_list}
+        for m in ms_list:
+            start_dt = m.computed_start(ms_map)
+            end_dt = m.computed_end(ms_map)
+            days = int(m.duration_days or 0)
+            months = round(days / 30.4, 1) if days else 0.0
+            raw_type = str(getattr(m.milestone_type, "value", m.milestone_type) or "")
+            label = m.label or raw_type.replace("_", " ").title()
+            ws.cell(row=row, column=1, value=label).font = FONT_VALUE
+            ws.cell(row=row, column=2, value=start_dt.isoformat() if start_dt else "—").font = FONT_VALUE
+            ws.cell(row=row, column=3, value=end_dt.isoformat() if end_dt else "—").font = FONT_VALUE
+            ws.cell(row=row, column=4, value=days).font = FONT_VALUE
+            c = ws.cell(row=row, column=5, value=months)
+            c.font = FONT_VALUE
+            c.number_format = "0.0"
+            row += 1
+        row += 1  # blank between projects
+
+
 def _build_cover(ws, registry: CellRegistry, ctx: dict) -> None:
-    """Cover sheet: deal/scenario title, sponsor, project list."""
-    set_widths(ws, [28, 60])
+    """Cover sheet: key metrics summary, deal/scenario metadata, project list."""
+    set_widths(ws, [30, 16, 14, 10, 12])
     scenario: DealModel = ctx["scenario"]
     deal: Deal | None = ctx["deal"]
     org: Organization | None = ctx["org"]
     projects: list[Project] = ctx["projects"]
+    summary_data = ctx.get("rollup_summary") or {}
+    totals = summary_data.get("totals") or {}
+    per_project = summary_data.get("per_project") or []
 
-    # Title block (no merged subtitle row — removed per LP feedback,
-    # Snapshot Date carries the timestamp in the metadata block below)
-    ws.cell(row=1, column=1, value=f"{(deal.name if deal else '—')} — {scenario.name}")
-    ws.cell(row=1, column=1).font = FONT_TITLE
-    ws.cell(row=1, column=1).alignment = ALIGN_LEFT
-    ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=2)
-    ws.row_dimensions[1].height = 28
+    row = 1
 
-    # Metadata block — `Scenario Active` row removed (LP doesn't need scenario-
-    # active state; that's an internal toggle).
-    # User-set values render blue per the input/output color convention
-    # (Sponsor name, Deal name, Scenario name, NOI Basis selection).
-    # Derived values (Snapshot Date = now(), Project Count = len()) stay black.
-    section_label(ws, 3, "Deal", span_cols=2)
-    kv_row(ws, 4, "Sponsor / Organization", org.name if org else "—",
-           name="s_sponsor_name", registry=registry, style="input")
-    kv_row(ws, 5, "Deal Name", deal.name if deal else "—",
-           name="s_deal_name", registry=registry, style="input")
-    kv_row(ws, 6, "Scenario Name", scenario.name,
-           name="s_scenario_name", registry=registry, style="input")
-    snapshot_at: datetime = ctx["snapshot_at"]
-    kv_row(ws, 7, "Snapshot Date", snapshot_at.date().isoformat(),
-           name="s_snapshot_date", registry=registry)
-    kv_row(ws, 8, "Project Count", len(projects),
-           name="s_project_count", registry=registry, fmt=INT_COMMA)
-    kv_row(ws, 9, "NOI Basis", _noi_basis_label(scenario.income_mode),
-           name="s_noi_basis", registry=registry, style="input")
+    # Title block
+    ws.cell(row=row, column=1, value=f"{(deal.name if deal else '—')} — {scenario.name}")
+    ws.cell(row=row, column=1).font = FONT_TITLE
+    ws.cell(row=row, column=1).alignment = ALIGN_LEFT
+    ws.merge_cells(start_row=row, start_column=1, end_row=row, end_column=2)
+    ws.row_dimensions[row].height = 28
+    row += 2
 
-    # Project list — one row per project, labelled `Project N`
-    # (LP-friendlier than the engine's `P1` ordinal shorthand).
-    section_label(ws, 11, "Projects", span_cols=2)
-    for idx, proj in enumerate(projects, start=1):
-        row = 11 + idx
-        ws.cell(row=row, column=1, value=f"Project {idx}").font = FONT_LABEL
-        ws.cell(row=row, column=2, value=proj.name or f"Project {idx}").font = FONT_VALUE
+    # Key Metrics summary — high-level figures for all export audiences.
+    section_label(ws, row, "Key Metrics", span_cols=2)
+    row += 1
 
-    # Sources-Gap banner — fires when the deal is materially undersized
-    # (Uses exceed Sources by > $1, mirroring the Calculation Status pill
-    # threshold in the app UI). Surfaces on Cover so the LP doesn't have
-    # to drill into Underwriting Summary to discover the deal isn't
-    # fully funded. Threshold of $1 — anything smaller is rounding noise.
     uses_total, sources_total, gap = _compute_sources_gap(ctx)
-    next_row_after_projects = 11 + max(len(projects), 1) + 2
+    combined_noi = _sum_per_project_field(per_project, "noi_stabilized")
+    _tpc = _coerce_decimal(totals.get("total_project_cost") or 0)
+    cap_rate_pct = (_coerce_pct(combined_noi / _tpc * Decimal(100)) if _tpc > 0 else None)
+    combined_dscr = _combined_dscr(per_project)
+    combined_irr = _coerce_pct(totals.get("combined_irr_pct") or 0)
+
+    cash_flow_items: dict = ctx.get("cash_flow_items") or {}
+    carrying_costs = sum(
+        sum(_coerce_decimal(li.net_amount or 0) for li in items if li.label == "Carrying Cost")
+        for items in cash_flow_items.values()
+    )
+
+    kv_row(ws, row, "Stabilized NOI", combined_noi,
+           name="s_cover_noi", registry=registry, fmt=ACCOUNTING)
+    row += 1
+    kv_row(ws, row, "Cap Rate on Cost", cap_rate_pct,
+           name="s_cover_cap_rate", registry=registry, fmt=PCT)
+    row += 1
+    kv_row(ws, row, "DSCR (combined)", combined_dscr,
+           name="s_cover_dscr", registry=registry, fmt="0.000")
+    row += 1
+    kv_row(ws, row, "Levered IRR", combined_irr,
+           name="s_cover_irr", registry=registry, fmt=PCT)
+    row += 1
+    kv_row(ws, row, "Total Uses", uses_total,
+           name="s_cover_uses", registry=registry, fmt=ACCOUNTING)
+    row += 1
+    kv_row(ws, row, "Total Sources", sources_total,
+           name="s_cover_sources", registry=registry, fmt=ACCOUNTING)
+    row += 1
+    if carrying_costs > Decimal(0):
+        kv_row(ws, row, "Carrying Costs", carrying_costs,
+               name="s_cover_carrying_costs", registry=registry, fmt=ACCOUNTING)
+        row += 1
+    row += 1  # spacer
+
+    # Deal metadata block
+    section_label(ws, row, "Deal", span_cols=2)
+    row += 1
+    kv_row(ws, row, "Sponsor / Organization", org.name if org else "—",
+           name="s_sponsor_name", registry=registry, style="input")
+    row += 1
+    kv_row(ws, row, "Deal Name", deal.name if deal else "—",
+           name="s_deal_name", registry=registry, style="input")
+    row += 1
+    kv_row(ws, row, "Scenario Name", scenario.name,
+           name="s_scenario_name", registry=registry, style="input")
+    row += 1
+    snapshot_at: datetime = ctx["snapshot_at"]
+    kv_row(ws, row, "Snapshot Date", snapshot_at.date().isoformat(),
+           name="s_snapshot_date", registry=registry)
+    row += 1
+    kv_row(ws, row, "Project Count", len(projects),
+           name="s_project_count", registry=registry, fmt=INT_COMMA)
+    row += 1
+    kv_row(ws, row, "NOI Basis", _noi_basis_label(scenario.income_mode),
+           name="s_noi_basis", registry=registry, style="input")
+    row += 2
+
+    # Project list — one row per project
+    section_label(ws, row, "Projects", span_cols=2)
+    for idx, proj in enumerate(projects, start=1):
+        ws.cell(row=row + idx, column=1, value=f"Project {idx}").font = FONT_LABEL
+        ws.cell(row=row + idx, column=2, value=proj.name or f"Project {idx}").font = FONT_VALUE
+
+    next_row = row + max(len(projects), 1) + 2
+
+    # Sources-Gap banner — fires when Uses exceed funded Sources by > $1.
     if gap > Decimal(1):
-        section_label(
-            ws, next_row_after_projects, "⚠ Equity Gap", span_cols=2,
-        )
-        ws.cell(
-            row=next_row_after_projects + 1, column=1,
-            value="Owner equity not formally committed",
-        ).font = FONT_LABEL
-        cell = ws.cell(
-            row=next_row_after_projects + 1, column=2,
-            value=_to_excel_number(gap),
-        )
+        section_label(ws, next_row, "⚠ Equity Gap", span_cols=2)
+        ws.cell(row=next_row + 1, column=1,
+                value="Owner equity not formally committed").font = FONT_LABEL
+        cell = ws.cell(row=next_row + 1, column=2, value=_to_excel_number(gap))
         cell.number_format = ACCOUNTING
         cell.font = FONT_VALUE
         cell.alignment = ALIGN_RIGHT
-        registry.register("s_cover_sources_gap", ws.title, next_row_after_projects + 1, 2)
-        gap_pct = (gap / uses_total * Decimal(100)) if uses_total > 0 else None
+        registry.register("s_cover_sources_gap", ws.title, next_row + 1, 2)
         hint = (
             f"{_format_currency_short(gap)} of owner equity implied but not assigned to a module"
             f" — recorded as implied gap on Underwriting Summary Sources & Uses"
         )
-        ws.cell(
-            row=next_row_after_projects + 2, column=1,
-            value=hint,
-        ).font = FONT_HINT
-        ws.merge_cells(
-            start_row=next_row_after_projects + 2, start_column=1,
-            end_row=next_row_after_projects + 2, end_column=2,
-        )
-        legend_offset = 4  # banner consumes 3 rows + 1 spacer
+        ws.cell(row=next_row + 2, column=1, value=hint).font = FONT_HINT
+        ws.merge_cells(start_row=next_row + 2, start_column=1,
+                       end_row=next_row + 2, end_column=2)
+        legend_row = next_row + 4
     else:
-        legend_offset = 0
+        legend_row = next_row
 
-    # Color legend — explains the input/output color convention applied
-    # throughout the workbook so the LP doesn't have to guess. Sized small
-    # (FONT_HINT) so it doesn't compete with the deal data above.
-    legend_row = next_row_after_projects + legend_offset
+    # Color legend
     section_label(ws, legend_row, "Color Legend", span_cols=2)
     ws.cell(row=legend_row + 1, column=1, value="Black text").font = FONT_VALUE
-    ws.cell(
-        row=legend_row + 1, column=2,
-        value="Calculated value (derived from inputs).",
-    ).font = FONT_HINT
+    ws.cell(row=legend_row + 1, column=2,
+            value="Calculated value (derived from inputs).").font = FONT_HINT
     ws.cell(row=legend_row + 2, column=1, value="Blue text").font = FONT_INPUT
-    ws.cell(
-        row=legend_row + 2, column=2,
-        value="User input (assumption that drives the model).",
-    ).font = FONT_HINT
+    ws.cell(row=legend_row + 2, column=2,
+            value="User input (assumption that drives the model).").font = FONT_HINT
     ws.cell(row=legend_row + 3, column=1, value="Green underlined text").font = FONT_LINK
-    ws.cell(
-        row=legend_row + 3, column=2,
-        value="Cross-sheet link or external reference (click to follow).",
-    ).font = FONT_HINT
-    # Fourth row covers the gold-bold KPI styling on Underwriting Summary's
-    # Primary KPIs block. Adding the row to the legend (rather than dropping
-    # the gold treatment) keeps the headline emphasis on Total Project Cost,
-    # IRR, EM, etc. while giving the LP an explanation for the color.
+    ws.cell(row=legend_row + 3, column=2,
+            value="Cross-sheet link or external reference (click to follow).").font = FONT_HINT
     ws.cell(row=legend_row + 4, column=1, value="Gold bold").font = FONT_HERO_VALUE
-    ws.cell(
-        row=legend_row + 4, column=2,
-        value="Headline KPI on Underwriting Summary (TPC, IRR, NOI, etc.).",
-    ).font = FONT_HINT
+    ws.cell(row=legend_row + 4, column=2,
+            value="Headline KPI on Underwriting Summary (TPC, IRR, NOI, etc.).").font = FONT_HINT
+
+    tl_start = legend_row + 6
+    _write_cover_timeline(ws, tl_start, projects, ctx.get("milestones", {}))
 
     freeze_top(ws, row=3)
     print_landscape(ws)
@@ -1128,12 +1256,14 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         name="s_combined_unlevered_irr", registry=registry,
         fmt=PCT, hero=True,
     ); row += 1
-    # Equity Multiple (combined LP+GP) — total equity-module distributions
-    # divided by total equity commitments. _kv_row_optional emits the em-
-    # dash literal when there's no equity stack to compute against, so the
-    # cell never reads as a misleading blank (V2-C fix).
+    # Equity multiples — EM, WEM, CoC. Require a non-trivial equity basis.
+    # Compute _equity_req first so the EM fallback and CoC fallback can gate
+    # on it: a 100%-debt deal (equity_required < $1) suppresses all three
+    # rather than showing multiples against a near-zero denominator.
+    _disc_rate = _coerce_decimal(ctx.get("discount_rate_pct") or Decimal("8.0"))
+    _equity_req = _coerce_decimal(totals.get("equity_required") or 0)
     equity_multiple = _combined_em(rollup_waterfall, capital_modules)
-    if equity_multiple is None:
+    if equity_multiple is None and _equity_req > Decimal(1):
         _raw_em = _coerce_decimal(totals.get("combined_em_x") or 0)
         equity_multiple = _raw_em if _raw_em > 0 else None
     _kv_row_optional(
@@ -1142,12 +1272,6 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         name="s_combined_equity_multiple", registry=registry,
         fmt="0.00\\x", hero=True,
     ); row += 1
-    # Weighted Equity Multiple — raw EM adjusted for TVM at the investor's
-    # hurdle rate.  Two deals with identical raw EM but different hold
-    # periods have different WEM; the one returning capital sooner scores
-    # higher.  Source: corpus 67, A.CRE best-practice convention.
-    _disc_rate = _coerce_decimal(ctx.get("discount_rate_pct") or Decimal("8.0"))
-    _equity_req = _coerce_decimal(totals.get("equity_required") or 0)
     w_em = _weighted_em_calc(rollup_waterfall, capital_modules, _equity_req, _disc_rate)
     _kv_row_optional(
         ws, row, f"Weighted Equity Multiple ({_disc_rate:.2f}% hurdle)",
@@ -1155,12 +1279,8 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         name="s_weighted_equity_multiple", registry=registry,
         fmt="0.00\\x", hero=True,
     ); row += 1
-    # Cash-on-Cash Year 1 — sum of equity distributions in periods 1-12
-    # divided by total equity commitments. The standard first-year-yield
-    # metric LPs ask about ahead of a deal close. Same em-dash semantics
-    # as Equity Multiple when the denominator is zero.
     coc_y1 = _coc_year_one(rollup_waterfall, capital_modules)
-    if coc_y1 is None and _equity_req > 0:
+    if coc_y1 is None and _equity_req > Decimal(1):
         # Auto-funded deals have $0 equity module commitments so _coc_year_one
         # returns None (denominator = 0). Fall back: use scenario equity_required
         # as the denominator, sum Y1 cash_distributed across all waterfall tiers.
@@ -1223,23 +1343,24 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
     header_row(ws, su_row + 1, ["Side", "Label", "Amount", "Notes"])
     line = su_row + 2
 
-    # Uses — sum across projects, by phase
-    uses_by_phase: dict[str, Decimal] = {}
+    # Uses — sum across projects, by cost category
+    uses_by_cat: dict[str, Decimal] = {}
     for pid, uls in use_lines_by_project.items():
         for ul in uls:
             phase = str(getattr(ul.phase, "value", ul.phase) or "")
             if phase == "exit":
                 continue
-            uses_by_phase[phase] = uses_by_phase.get(phase, Decimal(0)) + _coerce_decimal(
-                ul.amount or 0
-            )
-    for phase, amount in sorted(uses_by_phase.items()):
+            cat = str(ul.cost_category or "soft")
+            uses_by_cat[cat] = uses_by_cat.get(cat, Decimal(0)) + _coerce_decimal(ul.amount or 0)
+    for cat in USE_COST_CATEGORIES:
+        amount = uses_by_cat.get(cat, Decimal(0))
+        cat_label = USE_CATEGORY_LABELS.get(cat, cat.title())
         ws.cell(row=line, column=1, value="Use").font = FONT_VALUE
-        ws.cell(row=line, column=2, value=phase.replace("_", " ").title()).font = FONT_VALUE
+        ws.cell(row=line, column=2, value=cat_label).font = FONT_VALUE
         ws.cell(row=line, column=3, value=_to_excel_number(amount)).number_format = ACCOUNTING
-        ws.cell(row=line, column=4, value="(summed across projects)").font = FONT_HINT
+        ws.cell(row=line, column=4, value="(all projects)").font = FONT_HINT
         line += 1
-    uses_total = sum(uses_by_phase.values(), Decimal(0))
+    uses_total = sum(uses_by_cat.values(), Decimal(0))
     ws.cell(row=line, column=1, value="Use").font = FONT_LABEL
     ws.cell(row=line, column=2, value="Total Uses (excl. exit)").font = FONT_LABEL
     registry.write(
@@ -1259,6 +1380,8 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         amount = junction_amount.get(module.id) or _coerce_decimal(
             (module.source or {}).get("amount") or 0
         )
+        if amount <= Decimal(1) and _funder_class(module.funder_type) == "Equity":
+            continue
         ws.cell(row=line, column=1, value="Source").font = FONT_VALUE
         ws.cell(row=line, column=2, value=module.label or _funder_type_label(module)).font = FONT_VALUE
         ws.cell(row=line, column=3, value=_to_excel_number(amount)).number_format = ACCOUNTING
@@ -1298,9 +1421,10 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
     # ── Per-project mini-summary ───────────────────────────────────────────
     pp_row = line + 1
     section_label(ws, pp_row, "Per-Project Mini-Summary", span_cols=7)
+    _pp_col3_header = "Equity Req'd" if _equity_req > Decimal(1) else "Cap on Cost"
     header_row(
         ws, pp_row + 1,
-        ["Project", "TPC", "Equity Req'd", "Stabilized NOI", "DSCR", "Levered IRR", "Sheet"],
+        ["Project", "TPC", _pp_col3_header, "Stabilized NOI", "DSCR", "Levered IRR", "Sheet"],
     )
     pp_data = pp_row + 2
     for idx, project in enumerate(projects, start=1):
@@ -1311,7 +1435,12 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         )
         ws.cell(row=pp_data, column=1, value=project.name or f"Project {idx}").font = FONT_VALUE
         ws.cell(row=pp_data, column=2, value=_to_excel_number(record.get("total_project_cost"))).number_format = ACCOUNTING
-        ws.cell(row=pp_data, column=3, value=_to_excel_number(record.get("equity_required"))).number_format = ACCOUNTING
+        if _equity_req > Decimal(1):
+            ws.cell(row=pp_data, column=3, value=_to_excel_number(record.get("equity_required"))).number_format = ACCOUNTING
+        else:
+            _pp_noi = _coerce_decimal(record.get("noi_stabilized") or 0)
+            _pp_tpc = _coerce_decimal(record.get("total_project_cost") or 0)
+            ws.cell(row=pp_data, column=3, value=_to_excel_number(_pp_noi / _pp_tpc if _pp_tpc > 0 else None)).number_format = PCT
         ws.cell(row=pp_data, column=4, value=_to_excel_number(record.get("noi_stabilized"))).number_format = ACCOUNTING
         ws.cell(row=pp_data, column=5, value=_to_excel_number(record.get("dscr"))).number_format = "0.000"
         levered = record.get("project_irr_levered")
@@ -2168,7 +2297,14 @@ def _build_sensitivity(
         range_name="r_sensitivity_grid",
     )
 
-    if matrix.get("values_secondary") and matrix.get("metric_secondary"):
+    _summary_s = ctx.get("rollup_summary") or {}
+    _eq_req_s = _coerce_decimal((_summary_s.get("totals") or {}).get("equity_required") or 0)
+    _has_equity_s = _eq_req_s > Decimal(1) or any(
+        _funder_class(m.funder_type) == "Equity"
+        and _coerce_decimal((m.source or {}).get("amount") or 0) > Decimal(1)
+        for m in (ctx.get("capital_modules") or [])
+    )
+    if _has_equity_s and matrix.get("values_secondary") and matrix.get("metric_secondary"):
         _render_sensitivity_grid(
             ws, registry, matrix,
             grid_values=matrix["values_secondary"],
@@ -2420,6 +2556,8 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
         rate_raw = source.get("interest_rate_pct") or carry.get("io_rate_pct") or 0
         rate = _coerce_pct(rate_raw) if rate_raw else None
         funder_class = _funder_class(module.funder_type)
+        if funder_class == "Equity" and principal <= Decimal(1):
+            continue
 
         # Per-class column fill — write em-dash strings where a column doesn't
         # apply, so missing data never reads as "$0" or "0%".
@@ -2492,6 +2630,14 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
 
     # ── Aggregate rollup (only meaningful when a waterfall is populated) ──
     cur_row += 1
+    _equity_req_check = _coerce_decimal(totals.get("equity_required") or 0)
+    _committed_equity = sum(
+        junction_principal.get(m.id) or _coerce_decimal((m.source or {}).get("amount") or 0)
+        for m in capital_modules
+        if _funder_class(m.funder_type) == "Equity"
+    )
+    _has_real_equity = _committed_equity > Decimal(1) or _equity_req_check > Decimal(1)
+
     section_label(ws, cur_row, "Scenario-Level Aggregates", span_cols=2)
     cur_row += 1
 
@@ -2504,7 +2650,7 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
     em_raw = _coerce_decimal(totals.get("combined_em_x") or 0)
     kv_row(
         ws, cur_row, "Combined Equity Multiple (scenario)",
-        em_raw if em_raw > 0 else None,
+        (em_raw if em_raw > 0 else None) if _has_real_equity else None,
         name="s_returns_combined_em", registry=registry, fmt='0.00"×"',
     ); cur_row += 1
 
@@ -2528,16 +2674,6 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
         name="s_gp_promote_dollars", registry=registry, fmt=ACCOUNTING,
     ); cur_row += 1
 
-    # When all equity modules have $0 committed principal but the scenario has
-    # a nonzero equity_required, return multiples (EM, WEM, CoC) are computed
-    # against the implied-gap equity figure and will appear inflated. Warn so
-    # the LP understands the basis before interpreting headline multiples.
-    _equity_req_check = _coerce_decimal(totals.get("equity_required") or 0)
-    _committed_equity = sum(
-        junction_principal.get(m.id) or _coerce_decimal((m.source or {}).get("amount") or 0)
-        for m in capital_modules
-        if _funder_class(m.funder_type) == "Equity"
-    )
     if _equity_req_check > Decimal(1) and _committed_equity <= Decimal(1):
         cur_row += 1
         note = ws.cell(
@@ -2702,7 +2838,7 @@ def _build_waterfall_sheet(ws, registry: CellRegistry, ctx: dict) -> None:
 def _build_unit_mix_sheet(ws, registry: CellRegistry, ctx: dict) -> None:
     """Unit Mix — per-project breakdown of unit types, rents, and gap."""
     projects: list[Project] = ctx["projects"]
-    unit_mix_by_project: dict[UUID, list[UnitMix]] = ctx.get("unit_mix") or {}
+    unit_mix_by_project: dict[UUID, list] = ctx.get("unit_mix") or {}
 
     set_widths(ws, [28, 7, 7, 10, 8, 16, 16, 16, 10, 22, 18, 18])
     print_landscape(ws)
@@ -3808,7 +3944,7 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
     projects: list[Project] = ctx["projects"]
     inputs_by_project: dict[UUID, OperationalInputs] = ctx["operational_inputs"]
     use_lines_by_project: dict[UUID, list[UseLine]] = ctx["use_lines"]
-    unit_mix_by_project: dict[UUID, list[UnitMix]] = ctx["unit_mix"]
+    unit_mix_by_project: dict[UUID, list] = ctx["unit_mix"]
     capital_modules: list[CapitalModule] = ctx["capital_modules"]
     junctions: list[CapitalModuleProject] = ctx["junctions"]
 
@@ -3992,23 +4128,198 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
     print_landscape(ws)
 
 
-def _build_glossary(ws, registry: CellRegistry, ctx: dict) -> None:
+def _glossary_term_tokens(name: str) -> list[str]:
+    """Extract searchable tokens from a metric name.
+
+    Handles two conventions used in FINANCIAL_MODEL.md:
+    - ``ABBREV (Full Name)`` → ["ABBREV", "Full Name", full string]
+    - ``Full Name (ABBREV)`` → ["Full Name", "ABBREV", full string]
+    - ``Plain Name``         → [full string]
+    """
+    tokens = [name]
+    m = re.search(r"\((.+)\)", name)
+    if m:
+        inner = m.group(1).strip()
+        prefix = name[: name.index("(")].strip()
+        tokens.extend([prefix, inner])
+    return tokens
+
+
+def _glossary_metric_used(name: str, written: set[str]) -> bool:
+    """Return True if any token from this metric name appears in written cell strings."""
+    written_lower = {s.lower() for s in written}
+    for token in _glossary_term_tokens(name):
+        if any(token.lower() in w for w in written_lower):
+            return True
+    return False
+
+
+def _build_su_sheet(
+    ws,
+    registry: CellRegistry,
+    ctx: dict,
+) -> None:
+    """Dedicated Sources & Uses sheet: per-project line detail + category summary + sources."""
+    set_widths(ws, [42, 22])
+
+    use_lines_by_project: dict = ctx.get("use_lines", {})
+    projects: list[Project] = ctx["projects"]
+    capital_modules: list[CapitalModule] = ctx["capital_modules"]
+    junctions: list[CapitalModuleProject] = ctx["junctions"]
+
+    line = 1
+    section_label(ws, line, "Sources & Uses", span_cols=2)
+    line += 2
+
+    # ── Per-project sections ───────────────────────────────────────────────
+    total_by_cat: dict[str, Decimal] = {cat: Decimal(0) for cat in USE_COST_CATEGORIES}
+
+    for idx, project in enumerate(projects, start=1):
+        pid = project.id
+        uls = use_lines_by_project.get(pid, [])
+
+        section_label(ws, line, f"P{idx} — {project.name}", span_cols=2)
+        line += 1
+
+        proj_total = Decimal(0)
+        for cat in USE_COST_CATEGORIES:
+            cat_label = USE_CATEGORY_LABELS.get(cat, cat.title())
+            cat_lines = [
+                ul for ul in uls
+                if str(ul.cost_category or "soft") == cat
+                and str(getattr(ul.phase, "value", ul.phase) or "") != "exit"
+            ]
+            if not cat_lines:
+                continue
+            ws.cell(row=line, column=1, value=cat_label).font = FONT_LABEL
+            line += 1
+
+            cat_total = Decimal(0)
+            for ul in cat_lines:
+                amt = _coerce_decimal(ul.amount or 0)
+                ws.cell(row=line, column=1, value=f"  {ul.label or ''}").font = FONT_VALUE
+                ws.cell(row=line, column=2, value=_to_excel_number(amt)).number_format = ACCOUNTING
+                cat_total += amt
+                line += 1
+
+            ws.cell(row=line, column=1, value=f"  Subtotal {cat_label}").font = FONT_LABEL
+            cell = ws.cell(row=line, column=2, value=_to_excel_number(cat_total))
+            cell.number_format = ACCOUNTING
+            cell.font = FONT_LABEL
+            total_by_cat[cat] += cat_total
+            proj_total += cat_total
+            line += 1
+
+        ws.cell(row=line, column=1, value=f"Total Uses P{idx}").font = FONT_LABEL
+        cell = ws.cell(row=line, column=2, value=_to_excel_number(proj_total))
+        cell.number_format = ACCOUNTING
+        cell.font = FONT_LABEL
+        line += 2
+
+    # ── Category summary (all projects) ───────────────────────────────────
+    section_label(ws, line, "Category Summary (All Projects)", span_cols=2)
+    line += 1
+
+    _su2_names = {
+        "acquisition": "s_su2_acq_total",
+        "soft":        "s_su2_soft_total",
+        "hard":        "s_su2_hard_total",
+    }
+    uses_grand_total = Decimal(0)
+    for cat in USE_COST_CATEGORIES:
+        cat_label = USE_CATEGORY_LABELS.get(cat, cat.title())
+        amount = total_by_cat.get(cat, Decimal(0))
+        ws.cell(row=line, column=1, value=cat_label).font = FONT_VALUE
+        registry.write(
+            ws, line, 2, amount,
+            name=_su2_names[cat], fmt=ACCOUNTING, font=FONT_VALUE, align=ALIGN_RIGHT,
+        )
+        uses_grand_total += amount
+        line += 1
+
+    ws.cell(row=line, column=1, value="Total Uses").font = FONT_LABEL
+    registry.write(
+        ws, line, 2, uses_grand_total,
+        name="s_su2_uses_total", fmt=ACCOUNTING, font=FONT_LABEL, align=ALIGN_RIGHT,
+    )
+    line += 2
+
+    # ── Sources ───────────────────────────────────────────────────────────
+    section_label(ws, line, "Sources", span_cols=2)
+    line += 1
+
+    junction_amount: dict = {}
+    for j in junctions:
+        junction_amount[j.capital_module_id] = junction_amount.get(
+            j.capital_module_id, Decimal(0)
+        ) + _coerce_decimal(j.amount or 0)
+
+    sources_total = Decimal(0)
+    for module in capital_modules:
+        amount = junction_amount.get(module.id) or _coerce_decimal(
+            (module.source or {}).get("amount") or 0
+        )
+        if amount <= Decimal(1) and _funder_class(module.funder_type) == "Equity":
+            continue
+        ws.cell(row=line, column=1, value=module.label or _funder_type_label(module)).font = FONT_VALUE
+        cell = ws.cell(row=line, column=2, value=_to_excel_number(amount))
+        cell.number_format = ACCOUNTING
+        sources_total += amount
+        line += 1
+
+    _implied_equity = uses_grand_total - sources_total
+    if _implied_equity > Decimal(1):
+        ws.cell(row=line, column=1, value="Owner Equity (implied gap)").font = FONT_VALUE
+        cell = ws.cell(row=line, column=2, value=_to_excel_number(_implied_equity))
+        cell.number_format = ACCOUNTING
+        sources_total += _implied_equity
+        line += 1
+
+    ws.cell(row=line, column=1, value="Total Sources").font = FONT_LABEL
+    registry.write(
+        ws, line, 2, sources_total,
+        name="s_su2_sources_total", fmt=ACCOUNTING, font=FONT_LABEL, align=ALIGN_RIGHT,
+    )
+    line += 1
+
+    gap = uses_grand_total - sources_total
+    ws.cell(row=line, column=1, value="Δ Sources Gap (Uses − Sources)").font = FONT_LABEL
+    registry.write(
+        ws, line, 2, gap,
+        name="s_su2_gap", fmt=ACCOUNTING, font=FONT_LABEL, align=ALIGN_RIGHT,
+    )
+
+
+def _build_glossary(
+    ws,
+    registry: CellRegistry,
+    ctx: dict,
+    written_strings: set[str] | None = None,
+) -> None:
     """Glossary & Methodology sheet — driven by FINANCIAL_MODEL.md.
 
+    When ``written_strings`` is provided (set of all string cell values
+    already written to the workbook), filters to metrics whose name or
+    abbreviation appears in the rendered output — so each export profile
+    shows only the terms it actually uses.
+
     Filters parsed metrics down to ``audience='investor'`` per plan §3.8.
-    Lender-only metrics intentionally omitted (they'll surface in a future
-    lender-package extract). The bidirectional doc/export validator
-    (commits 2/3) verifies that every named range in the workbook traces
-    to a row here.
+    The bidirectional doc/export validator verifies every named range
+    in the workbook traces to a row here.
     """
     set_widths(ws, [28, 60, 50, 36])
     section_label(ws, 1, "Glossary & Methodology", span_cols=4)
     header_row(ws, 2, ["Term", "Definition", "Calculation", "Reference"])
 
     report = parse_doc()
-    investor_metrics = sorted(
+    all_investor = sorted(
         report.for_audience("investor"),
         key=lambda m: m.name.lower(),
+    )
+    investor_metrics = (
+        [m for m in all_investor if _glossary_metric_used(m.name, written_strings)]
+        if written_strings
+        else all_investor
     )
 
     for row_offset, metric in enumerate(investor_metrics):
@@ -4089,7 +4400,7 @@ def _per_project_value(
     project: Project,
     inputs: OperationalInputs | None,
     use_lines: list[UseLine],
-    unit_mix: list[UnitMix],
+    unit_mix: list,
 ):
     raw = _per_project_value_raw(key, project, inputs, use_lines, unit_mix)
     # The DB stores percentages as whole numbers ("5.5" for 5.5%). The Block B
@@ -4107,7 +4418,7 @@ def _per_project_value_raw(
     project: Project,
     inputs: OperationalInputs | None,
     use_lines: list[UseLine],
-    unit_mix: list[UnitMix],
+    unit_mix: list,
 ):
     if key == "project_name":
         return project.name or ""
@@ -4131,7 +4442,7 @@ def _per_project_value_raw(
     return _safe_decimal(inputs, key)
 
 
-def _weighted_avg_rent(unit_mix: list[UnitMix], field: str) -> Decimal | None:
+def _weighted_avg_rent(unit_mix: list, field: str) -> Decimal | None:
     total_units = 0
     weighted = Decimal(0)
     for um in unit_mix:
@@ -4237,6 +4548,175 @@ def _coerce_decimal(value) -> Decimal:
 
 def _coerce_pct(value) -> Decimal:
     return _coerce_decimal(value) / Decimal(100)
+
+
+# ── Pro Forma profile sheet builders ──────────────────────────────────────────
+#
+# The proforma export profile renders these sheets instead of the full
+# Underwriting Pro Forma / per-project sheets.  Phase 1 = hardcoded computed
+# values (same data as the UW sheets, different layout for broker/external use).
+# Phase 2 = formula-driven input cells so the recipient can adjust escalation
+# rates, vacancy, etc. without going back to the app.
+
+_PF_ROWS: list[tuple[str, str]] = [
+    ("Gross Revenue", "gross_revenue"),
+    ("Vacancy Loss", "vacancy_loss"),
+    ("Effective Gross Income (EGI)", "effective_gross_income"),
+    ("Operating Expenses (OpEx)", "operating_expenses"),
+    ("CapEx Reserve", "capex_reserve"),
+    ("NOI (Net Operating Income)", "noi"),
+    ("Debt Service", "debt_service"),
+    ("Net Cash Flow", "net_cash_flow"),
+]
+
+
+def _write_pf_table(
+    ws,
+    registry: CellRegistry,
+    start_row: int,
+    annual: dict,
+    year_cols: list[int],
+    cash_flow_items_for_scope,  # dict[UUID, list[CashFlowLineItem]]
+) -> int:
+    """Write the standard NOI build table + breakouts; return next free row."""
+    cur_row = start_row
+    for label, field in _PF_ROWS:
+        ws.cell(row=cur_row, column=1, value=label).font = FONT_LABEL
+        for col_offset, year in enumerate(year_cols):
+            value = annual.get(year, {}).get(field, Decimal(0))
+            cell = ws.cell(row=cur_row, column=2 + col_offset, value=_to_excel_number(value))
+            cell.number_format = ACCOUNTING
+            cell.font = FONT_VALUE
+            cell.alignment = ALIGN_RIGHT
+        cur_row += 1
+
+    # OER derived row
+    ws.cell(row=cur_row, column=1, value="OER (OpEx ÷ EGI)").font = FONT_LABEL
+    for col_offset, year in enumerate(year_cols):
+        opex = annual.get(year, {}).get("operating_expenses", Decimal(0))
+        egi = annual.get(year, {}).get("effective_gross_income", Decimal(0))
+        oer = (opex / egi) if egi > 0 else None
+        cell = ws.cell(
+            row=cur_row, column=2 + col_offset,
+            value=_to_excel_number(oer) if oer is not None else _DASH,
+        )
+        cell.number_format = PCT
+        cell.font = FONT_VALUE
+        cell.alignment = ALIGN_RIGHT
+    cur_row += 1
+
+    # Revenue + OpEx breakouts
+    by_category = _aggregate_scenario_line_items_by_category(cash_flow_items_for_scope)
+
+    cur_row += 1
+    cur_row = _write_breakout_table(
+        ws, registry, cur_row,
+        title="Revenue Breakout (by stream)",
+        rows=by_category.get("income", {}),
+        year_cols=year_cols,
+        empty_hint="(no revenue line items — run Compute to populate)",
+    )
+    cur_row += 1
+    cur_row = _write_breakout_table(
+        ws, registry, cur_row,
+        title="OpEx Breakout (by category)",
+        rows=by_category.get("expense", {}),
+        year_cols=year_cols,
+        empty_hint="(no OpEx line items — run Compute to populate)",
+        always_show=ALWAYS_SHOWN_OPEX_CATEGORIES,
+    )
+    return cur_row
+
+
+def _build_proforma_combined(
+    ws,
+    registry: CellRegistry,
+    ctx: dict,
+) -> None:
+    """Combined pro forma — all projects aggregated.
+
+    Phase 1: hardcoded computed values matching the Underwriting Pro Forma
+    sheet data.  Phase 2 will add adjustable input cells.
+    """
+    cash_flows: dict[UUID, list[CashFlow]] = ctx["cash_flows"]
+    cash_flow_items: dict[UUID, list[CashFlowLineItem]] = ctx["cash_flow_items"]
+    projects: list[Project] = ctx["projects"]
+
+    annual = _aggregate_scenario_annual(cash_flows)
+    max_year = min(max(annual) if annual else 0, 10)
+    year_cols = list(range(0, max(max_year, 1) + 1))
+
+    set_widths(ws, [32, *([14] * (len(year_cols) + 1))])
+
+    section_label(
+        ws, 1,
+        f"Pro Forma — Combined ({len(projects)} project{'s' if len(projects) != 1 else ''})",
+        span_cols=len(year_cols) + 2,
+    )
+    header_row(ws, 2, ["Line Item", *[f"Y{y}" for y in year_cols]])
+
+    _write_pf_table(ws, registry, 3, annual, year_cols, cash_flow_items)
+
+    freeze_top(ws, row=3)
+    print_landscape(ws)
+
+
+def _build_proforma_project_sheet(
+    ws,
+    registry: CellRegistry,
+    ctx: dict,
+    idx: int,
+    project: Project,
+) -> None:
+    """Per-project pro forma.
+
+    Phase 1: hardcoded computed values matching the existing per-project sheet
+    data.  Phase 2 will add adjustable input cells.
+    """
+    cash_flows_by_project: dict[UUID, list[CashFlow]] = ctx["cash_flows"]
+    cash_flow_items_by_project: dict[UUID, list[CashFlowLineItem]] = ctx["cash_flow_items"]
+    outputs_by_project: dict[UUID, "OperationalOutputs"] = ctx["outputs"]
+
+    project_cash_flows = cash_flows_by_project.get(project.id, [])
+    project_items = cash_flow_items_by_project.get(project.id, [])
+    outputs = outputs_by_project.get(project.id)
+
+    annual = _aggregate_annual(project_cash_flows)
+    max_year = min(max(annual) if annual else 0, 10)
+    year_cols = list(range(0, max(max_year, 1) + 1))
+
+    set_widths(ws, [32, *([14] * (len(year_cols) + 1))])
+
+    # Header
+    header_text = f"P{idx} — {project.name or 'Project'}"
+    ws.cell(row=1, column=1, value=header_text).font = FONT_TITLE
+    ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=len(year_cols) + 2)
+    ws.row_dimensions[1].height = 24
+
+    # Key metrics strip
+    cur = 2
+    kpi_pairs: list[tuple[str, object, str]] = [
+        ("Stabilized NOI", _safe_decimal(outputs, "noi_stabilized"), ACCOUNTING),
+        ("DSCR", _safe_decimal(outputs, "dscr"), "0.000"),
+        ("Cap Rate on Cost", _pct_value(outputs, "cap_rate_on_cost_pct"), PCT),
+        ("Levered IRR", _pct_value(outputs, "project_irr_levered"), PCT),
+    ]
+    for label, val, fmt in kpi_pairs:
+        ws.cell(row=cur, column=1, value=label).font = FONT_LABEL
+        cell = ws.cell(row=cur, column=2, value=_to_excel_number(val))
+        cell.number_format = fmt
+        cell.font = FONT_VALUE
+        cur += 1
+
+    cur += 1  # blank separator
+    header_row(ws, cur, ["Line Item", *[f"Y{y}" for y in year_cols]])
+    cur += 1
+
+    # Wrap single project in a dict so _aggregate_scenario_line_items_by_category works.
+    _write_pf_table(ws, registry, cur, annual, year_cols, {project.id: project_items})
+
+    freeze_top(ws, row=cur)
+    print_landscape(ws)
 
 
 # Re-exports for callers that want to inline format strings without importing

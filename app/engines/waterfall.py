@@ -698,40 +698,16 @@ async def _apply_levered_metrics(
         len({row.project_id for row in cash_flows if row.project_id is not None}) > 1
     )
 
-    running_cumulative = total_sources
     levered_cashflows: dict[int, Decimal] = {}
-    if _is_multi_project:
-        # Skip in-place rewrite. Trust cashflow engine's per-project rows.
-        for cash_flow in _default_cashflows:
-            levered_cashflows[cash_flow.period] = _to_decimal(cash_flow.net_cash_flow)
-    else:
-        for cash_flow in _default_cashflows:
-            prior_debt_service = _to_decimal(cash_flow.debt_service)
-            non_operating_adjustments = _q(
-                _to_decimal(cash_flow.net_cash_flow) - _to_decimal(cash_flow.noi) + prior_debt_service
-            )
-            waterfall_ds = _q(debt_service_by_period.get(cash_flow.period, ZERO))
-            # When the waterfall has no debt-service distribution for this period
-            # (e.g. DSCR < 1, deal can't cover its own debt service from NOI),
-            # preserve the cashflow-engine obligation so carrying costs are visible.
-            debt_service = waterfall_ds if waterfall_ds > ZERO else prior_debt_service
-
-            cash_flow.debt_service = debt_service
-            cash_flow.net_cash_flow = _q(
-                _to_decimal(cash_flow.noi) - debt_service + non_operating_adjustments
-            )
-            _ncf = _to_decimal(cash_flow.net_cash_flow)
-            _is_stabilized = _enum_value(cash_flow.period_type) == _stabilized_value
-            if _is_stabilized and not _operating_reserve_seeded:
-                running_cumulative = _op_reserve_amount
-                _operating_reserve_seeded = True
-            elif _operating_reserve_seeded:
-                if _ncf < ZERO:
-                    running_cumulative = _q(running_cumulative + _ncf)
-            else:
-                running_cumulative = _q(running_cumulative + _ncf)
-            cash_flow.cumulative_cash_flow = running_cumulative
-            levered_cashflows[cash_flow.period] = _ncf
+    # Trust the cashflow engine's authoritative values for debt_service,
+    # net_cash_flow, and cumulative_cash_flow. The waterfall distributes
+    # from post-DS net_cash_flow as available_cash, so WaterfallResult
+    # cash_distributed for the debt_service tier is a residual NCF
+    # allocation — NOT the PMT obligation. Overwriting debt_service here
+    # corrupts DSCR and the cashflow display for both single- and
+    # multi-project deals.
+    for cash_flow in _default_cashflows:
+        levered_cashflows[cash_flow.period] = _to_decimal(cash_flow.net_cash_flow)
 
     if outputs.noi_stabilized is None:
         stabilized_noi_annual = _annualized_median(

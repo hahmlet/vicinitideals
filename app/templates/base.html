@@ -90,9 +90,7 @@
     <a href="/parcels" class="nav-item {% if active_nav == 'parcels' %}active{% endif %}">
       <span class="nav-icon">📐</span> Parcels
     </a>
-    <a href="/listings" class="nav-item {% if active_nav == 'listings' %}active{% endif %}">
-      <span class="nav-icon">📋</span> Listings
-    </a>
+
     <a href="/brokers" class="nav-item {% if active_nav == 'brokers' %}active{% endif %}">
       <span class="nav-icon">👤</span> Brokers
     </a>
@@ -109,6 +107,12 @@
       <span class="nav-badge nav-badge-alert">{{ cleanup_count if cleanup_count <= 99 else "99+" }}</span>
     </a>
     {% endif %}
+    {% if (conflicts_count or 0) > 0 %}
+    <a href="/ui/opportunities/conflicts" class="nav-item {% if active_nav == 'conflicts' %}active{% endif %}" style="color:var(--warning)">
+      <span class="nav-icon">⚡</span> Property Conflicts
+      <span class="nav-badge nav-badge-alert">{{ conflicts_count if conflicts_count <= 99 else "99+" }}</span>
+    </a>
+    {% endif %}
     {% if user_name == 'Stephen Ketch' %}
     <div class="settings-menu-wrap" id="settingsMenuWrap">
       <div class="settings-popup" id="settingsPopup" style="display:none">
@@ -121,15 +125,25 @@
         <a href="/settings/data-sources" class="settings-popup-item">
           <span>🧭</span> Data Sources
         </a>
+        <a href="/settings/organization" class="settings-popup-item">
+          <span>🏢</span> Organization
+        </a>
       </div>
       <button type="button" class="nav-item nav-item-muted settings-btn" onclick="toggleSettingsMenu()" id="settingsBtn">
         <span class="nav-icon">⚙</span> Settings <span id="app-version" style="opacity:.45;font-size:10px"></span>
       </button>
     </div>
     {% else %}
-    <a href="#" class="nav-item nav-item-muted">
-      <span class="nav-icon">⚙</span> Settings <span id="app-version" style="opacity:.45;font-size:10px"></span>
-    </a>
+    <div class="settings-menu-wrap" id="settingsMenuWrap">
+      <div class="settings-popup" id="settingsPopup" style="display:none">
+        <a href="/settings/organization" class="settings-popup-item">
+          <span>🏢</span> Organization
+        </a>
+      </div>
+      <button type="button" class="nav-item nav-item-muted settings-btn" onclick="toggleSettingsMenu()" id="settingsBtn">
+        <span class="nav-icon">⚙</span> Settings <span id="app-version" style="opacity:.45;font-size:10px"></span>
+      </button>
+    </div>
     {% endif %}
     <div class="sidebar-user">
       <div class="user-avatar" style="background:{{ user_color }}">{{ user_initials }}</div>

@@ -26,7 +26,15 @@
 
   <div class="form-field">
     <label class="form-label">Label</label>
-    <input class="form-input" type="text" name="label" required value="{{ existing.label }}">
+    {% if use_category_presets and default_category in use_category_presets %}
+    <select class="form-select" style="margin-bottom:6px" onchange="if(this.value){document.getElementById('edit-ul-label').value=this.value}">
+      <option value="">— Custom (type below) —</option>
+      {% for _p in use_category_presets[default_category] %}
+      <option value="{{ _p }}" {% if _p == existing.label %}selected{% endif %}>{{ _p }}</option>
+      {% endfor %}
+    </select>
+    {% endif %}
+    <input class="form-input" type="text" name="label" id="edit-ul-label" required value="{{ existing.label }}">
   </div>
   <div class="form-row" style="margin-bottom:8px">
     <div class="form-field">
@@ -87,6 +95,14 @@
     <label class="form-label">Notes (optional)</label>
     <input class="form-input" type="text" name="notes" value="{{ existing.notes or '' }}" placeholder="e.g. Per appraisal estimate">
   </div>
+  <div class="form-field">
+    <label class="form-label">Category</label>
+    <select class="form-select" name="cost_category">
+      {% for _uc in use_cost_categories %}
+      <option value="{{ _uc }}" {% if _uc == default_category %}selected{% endif %}>{{ use_category_labels[_uc] }}</option>
+      {% endfor %}
+    </select>
+  </div>
   <div class="form-actions">
     <button type="submit" class="btn btn-primary">Save Changes</button>
     <button type="button" class="btn btn-secondary" onclick="closeDrawer('line-item-drawer')">Cancel</button>
@@ -120,11 +136,20 @@ function ulTimingChanged(val) {
       hx-target="#module-panel-content" hx-swap="innerHTML"
       hx-on::after-request="if(event.detail.successful) closeUsesWizard()"
       id="uw-form" style="padding-bottom:8px">
+  <input type="hidden" name="cost_category" value="{{ default_category }}">
 
   {# ── Step 1: Name, Amount, Deferred flag ── #}
   <div id="uw-step-1">
     <div class="form-field">
       <label class="form-label">Label</label>
+      {% if use_category_presets and default_category in use_category_presets %}
+      <select class="form-select" style="margin-bottom:6px" onchange="if(this.value){document.getElementById('uw-label').value=this.value;this.value=''}">
+        <option value="">— Quick pick, or type below —</option>
+        {% for _p in use_category_presets[default_category] %}
+        <option value="{{ _p }}">{{ _p }}</option>
+        {% endfor %}
+      </select>
+      {% endif %}
       <input class="form-input" type="text" name="label" id="uw-label" required
              placeholder="e.g. Land Acquisition, Hard Construction Costs">
     </div>

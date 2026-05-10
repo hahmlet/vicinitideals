@@ -320,17 +320,33 @@ async def capture_snapshot(
 
     Called AFTER the compute engine has written OperationalOutputs so that
     outputs_json captures the freshly computed metrics.
+
+    If inputs are identical to the most recent snapshot, no new snapshot is
+    created and the existing one is returned unchanged (idempotent re-compute).
     """
     scenario = (await session.execute(
         select(Scenario).where(Scenario.id == scenario_id)
     )).scalar_one()
 
-    # Increment the version counter
+    inputs_json = await _serialize_inputs(session, scenario_id)
+    clean_inputs = _clean(inputs_json)
+
+    # Check whether inputs changed since the last snapshot
+    last_snap = (await session.execute(
+        select(ScenarioSnapshot)
+        .where(ScenarioSnapshot.scenario_id == scenario_id)
+        .order_by(ScenarioSnapshot.version.desc())
+        .limit(1)
+    )).scalar_one_or_none()
+
+    if last_snap is not None and last_snap.inputs_json == clean_inputs:
+        return last_snap
+
+    # Inputs changed (or first ever snapshot) — create a new version
     scenario.version = (scenario.version or 0) + 1
     session.add(scenario)
     await session.flush()
 
-    inputs_json = await _serialize_inputs(session, scenario_id)
     outputs_json = await _serialize_outputs(session, scenario_id)
 
     snap = ScenarioSnapshot(
@@ -338,7 +354,7 @@ async def capture_snapshot(
         scenario_id=scenario_id,
         version=scenario.version,
         triggered_by=triggered_by,
-        inputs_json=_clean(inputs_json),
+        inputs_json=clean_inputs,
         outputs_json=_clean(outputs_json),
     )
     session.add(snap)
@@ -566,6 +582,11 @@ def _entity_name(row: dict, entity_type: str) -> str:
         ms_label = _MILESTONE_TYPE_LABELS.get(raw, raw.replace("_", " ").title())
         custom = (row.get("label") or "").strip()
         return f"{ms_label}: {custom}" if custom else ms_label
+    if entity_type == "WaterfallTier":
+        priority = row.get("priority")
+        if priority is not None:
+            return f"Waterfall Tier {priority}"
+        return "Waterfall Tier"
     return ((row.get("label") or row.get("name") or entity_type) or entity_type).strip()
 
 
@@ -610,6 +631,40 @@ def _blob_diff(
     return changes
 
 
+def _compare_rows(
+    b_row: dict,
+    a_row: dict,
+    entity_label: str,
+    entity_type: str,
+    scalar_fields: dict[str, tuple[str, str]],
+    blob_fields: dict[str, tuple[dict[str, tuple[str, str]], frozenset[str]]] | None,
+    changes: list[dict],
+) -> None:
+    """Append field-level diffs between two entity rows into changes."""
+    for field_key, (field_label, fmt) in scalar_fields.items():
+        bv = b_row.get(field_key)
+        av = a_row.get(field_key)
+        if bv == av:
+            continue
+        if fmt in ("currency", "percent", "number") and bv is not None and av is not None:
+            if _numeric_eq(bv, av):
+                continue
+        changes.append({
+            "entity_label": entity_label,
+            "entity_type": entity_type,
+            "field_label": field_label,
+            "fmt": fmt,
+            "before": bv,
+            "after": av,
+        })
+    if blob_fields:
+        for blob_key, (sub_map, skip) in blob_fields.items():
+            b_blob = b_row.get(blob_key) or {}
+            a_blob = a_row.get(blob_key) or {}
+            if b_blob != a_blob:
+                changes.extend(_blob_diff(b_blob, a_blob, entity_label, entity_type, sub_map, skip))
+
+
 def _entity_list_diff_v2(
     before_rows: list[dict],
     after_rows: list[dict],
@@ -617,44 +672,53 @@ def _entity_list_diff_v2(
     scalar_fields: dict[str, tuple[str, str]],
     blob_fields: dict[str, tuple[dict[str, tuple[str, str]], frozenset[str]]] | None = None,
 ) -> list[dict]:
-    """Produce human-readable per-field change rows for a list of entities."""
+    """Produce human-readable per-field change rows for a list of entities.
+
+    Two-pass matching:
+    - Pass 1: match by stable ID — handles normal edits.
+    - Pass 2: for rows unmatched after pass 1, group by display name and pair
+      them up.  This suppresses the spurious add+remove noise that appears when
+      rows are deleted and re-created with new UUIDs but the same data (e.g.
+      the timeline wizard or capital stack editor recreates all items at once).
+      Only a genuine net increase/decrease in count for a given name produces an
+      added/removed entry.
+    """
     changes: list[dict] = []
     b_map = _entity_map(before_rows)
     a_map = _entity_map(after_rows)
-    for key in sorted(set(b_map) | set(a_map)):
-        b_row = b_map.get(key) or {}
-        a_row = a_map.get(key) or {}
-        entity_label = _entity_name(a_row if a_row else b_row, entity_type)
-        if key in b_map and key not in a_map:
-            changes.append({"entity_label": entity_label, "entity_type": entity_type, "change": "removed"})
-            continue
-        if key not in b_map and key in a_map:
-            changes.append({"entity_label": entity_label, "entity_type": entity_type, "change": "added"})
-            continue
-        # Scalar top-level fields
-        for field_key, (field_label, fmt) in scalar_fields.items():
-            bv = b_row.get(field_key)
-            av = a_row.get(field_key)
-            if bv == av:
-                continue
-            if fmt in ("currency", "percent", "number") and bv is not None and av is not None:
-                if _numeric_eq(bv, av):
-                    continue
-            changes.append({
-                "entity_label": entity_label,
-                "entity_type": entity_type,
-                "field_label": field_label,
-                "fmt": fmt,
-                "before": bv,
-                "after": av,
-            })
-        # JSONB blob expansions
-        if blob_fields:
-            for blob_key, (sub_map, skip) in blob_fields.items():
-                b_blob = b_row.get(blob_key) or {}
-                a_blob = a_row.get(blob_key) or {}
-                if b_blob != a_blob:
-                    changes.extend(_blob_diff(b_blob, a_blob, entity_label, entity_type, sub_map, skip))
+
+    common_keys = set(b_map) & set(a_map)
+    b_unmatched = {k: v for k, v in b_map.items() if k not in common_keys}
+    a_unmatched = {k: v for k, v in a_map.items() if k not in common_keys}
+
+    # Pass 1: ID-matched pairs
+    for key in sorted(common_keys):
+        label = _entity_name(a_map[key], entity_type)
+        _compare_rows(b_map[key], a_map[key], label, entity_type, scalar_fields, blob_fields, changes)
+
+    # Pass 2: group unmatched by display name
+    b_by_name: dict[str, list[dict]] = {}
+    for row in b_unmatched.values():
+        b_by_name.setdefault(_entity_name(row, entity_type), []).append(row)
+
+    a_by_name: dict[str, list[dict]] = {}
+    for row in a_unmatched.values():
+        a_by_name.setdefault(_entity_name(row, entity_type), []).append(row)
+
+    for name in sorted(set(b_by_name) | set(a_by_name)):
+        b_list = b_by_name.get(name, [])
+        a_list = a_by_name.get(name, [])
+        n_pairs = min(len(b_list), len(a_list))
+        # Paired same-name rows: compare fields (usually no-op for recreated rows)
+        for i in range(n_pairs):
+            _compare_rows(b_list[i], a_list[i], name, entity_type, scalar_fields, blob_fields, changes)
+        # Genuine removals
+        for _ in range(len(b_list) - n_pairs):
+            changes.append({"entity_label": name, "entity_type": entity_type, "change": "removed"})
+        # Genuine additions
+        for row in a_list[n_pairs:]:
+            changes.append({"entity_label": name, "entity_type": entity_type, "change": "added"})
+
     return changes
 
 

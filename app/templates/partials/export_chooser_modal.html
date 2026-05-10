@@ -1,0 +1,67 @@
+{# Export profile chooser modal.
+   Included by model_builder.html.  Requires `model` in template context. #}
+<div class="modal-center-overlay" id="export-chooser-modal" style="display:none"
+     onclick="if(event.target===this)closeExportChooser()">
+  <div class="modal-center-card" style="max-width:560px">
+    <div class="modal-center-header">
+      <div>
+        <div class="modal-center-title">Export Deal Model</div>
+        <div class="modal-center-sub">Choose what to generate and send</div>
+      </div>
+      <span class="modal-center-close" onclick="closeExportChooser()">&#215;</span>
+    </div>
+    <div class="modal-center-body">
+      <div class="export-profile-list" id="export-profile-list-{{ model.id }}">
+
+        <label class="export-profile-card export-profile-selected"
+               id="export-pcard-internal-{{ model.id }}"
+               onclick="selectExportProfile('{{ model.id }}','internal')">
+          <input type="radio" name="export-profile-{{ model.id }}" value="internal" checked>
+          <div>
+            <div class="export-profile-name">Internal Underwriting</div>
+            <div class="export-profile-desc">Full model — all sheets, formula-driven working copy. For team use.</div>
+          </div>
+        </label>
+
+        <label class="export-profile-card"
+               id="export-pcard-lp-{{ model.id }}"
+               onclick="selectExportProfile('{{ model.id }}','lp')">
+          <input type="radio" name="export-profile-{{ model.id }}" value="lp">
+          <div>
+            <div class="export-profile-name">LP / Investor Package</div>
+            <div class="export-profile-desc">IRR, equity multiple, waterfall distributions, sensitivity grid. For equity partners.</div>
+          </div>
+        </label>
+
+        <label class="export-profile-card"
+               id="export-pcard-lender-{{ model.id }}"
+               onclick="selectExportProfile('{{ model.id }}','lender')">
+          <input type="radio" name="export-profile-{{ model.id }}" value="lender">
+          <div>
+            <div class="export-profile-name">Lender Package</div>
+            <div class="export-profile-desc">DSCR, NOI, debt schedule, sources &amp; uses, cash flow. For banks and lenders.</div>
+          </div>
+        </label>
+
+        <label class="export-profile-card"
+               id="export-pcard-proforma-{{ model.id }}"
+               onclick="selectExportProfile('{{ model.id }}','proforma')">
+          <input type="radio" name="export-profile-{{ model.id }}" value="proforma">
+          <div>
+            <div class="export-profile-name">Pro Forma</div>
+            <div class="export-profile-desc">Revenue, OpEx, NOI build, sources &amp; uses. Adjustable inputs for brokers and quick review.</div>
+          </div>
+        </label>
+
+      </div>
+    </div>
+    <div class="modal-center-footer">
+      <button type="button" class="btn btn-secondary btn-sm" onclick="closeExportChooser()">Cancel</button>
+      <button type="button" class="btn btn-primary btn-sm"
+              id="export-chooser-submit-{{ model.id }}"
+              onclick="submitExportChooser('{{ model.id }}')">
+        Generate Export
+      </button>
+    </div>
+  </div>
+</div>

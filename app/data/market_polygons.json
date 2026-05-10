@@ -88,11 +88,11 @@
     "is_active": true,
     "description": "Wide Portland metro comp library polygon. Simple rectangle covering Portland proper, Beaverton, Hillsboro, Tigard, Tualatin, Lake Oswego, West Linn, Wilsonville, Oregon City, Gladstone, Milwaukie, Happy Valley, Gresham, Troutdale, Fairview. Excludes Vancouver WA. ED fetch is MF-only for this tier; tighten with a user-supplied polygon later by editing this file or adding a 3rd polygon.",
     "points": [
-      [-123.10, 45.65],
-      [-122.25, 45.65],
+      [-123.10, 45.60],
+      [-122.25, 45.60],
       [-122.25, 45.22],
       [-123.10, 45.22],
-      [-123.10, 45.65]
+      [-123.10, 45.60]
     ]
   }
 ]

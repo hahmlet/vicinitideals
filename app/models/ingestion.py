@@ -48,8 +48,8 @@ class IngestJob(Base):
     dedup_candidates: Mapped[list["DedupCandidate"]] = relationship(
         "DedupCandidate", back_populates="ingest_job"
     )
-    scraped_listings: Mapped[list["ScrapedListing"]] = relationship(  # type: ignore[name-defined]
-        "ScrapedListing", back_populates="ingest_job"
+    scraped_listings: Mapped[list["Opportunity"]] = relationship(  # type: ignore[name-defined]
+        "Opportunity", back_populates="ingest_job"
     )
 
 

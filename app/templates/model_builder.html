@@ -679,9 +679,9 @@
           data-project-id="{{ active_project_id }}"
           onclick="_startProjectRename(event)"
           style="cursor:pointer"
-          title="Click to rename">{{ project.name if project else model.name }}</span>
+          title="Click to rename">{{ (project.name or project.address_normalized) if project else model.name }}</span>
     {% else %}
-    <span>{{ project.name if project else model.name }}</span>
+    <span>{{ (project.name or project.address_normalized) if project else model.name }}</span>
     {% endif %}
   </div>
 
@@ -723,14 +723,15 @@
       <button type="button"
               class="btn btn-sm btn-secondary investor-export-btn"
               id="investor-export-btn-{{ model.id }}"
-              title="Email LP-facing investor Excel workbook"
-              onclick="startInvestorExport('{{ model.id }}')">
-        ↓ Investor Export
+              title="Export deal model to Excel"
+              onclick="openExportChooser('{{ model.id }}')">
+        ↓ Export
       </button>
       <div class="investor-export-status hidden"
            id="investor-export-status-{{ model.id }}"
            role="status"
            aria-live="polite">
+        <p style="font-size:11px;color:var(--text-muted);margin:0 0 6px">Includes sensitivity analysis — export will be emailed when ready.</p>
         <ol class="investor-export-steps">
           <li class="step" data-step="calculating">Calculating</li>
           <li class="step" data-step="sending">Sending Email</li>
@@ -928,7 +929,48 @@ function _pollExportStatus(modelId, jobId) {
   }, 2000);
 }
 
-async function startInvestorExport(modelId) {
+// ── Export profile chooser ───────────────────────────────────────────────────
+let _exportChooserModelId = null;
+
+function openExportChooser(modelId) {
+  if (_activeExportJobs[modelId]) {
+    _showExportModal(modelId);
+    return;
+  }
+  _exportChooserModelId = modelId;
+  // Reset to default selection.
+  selectExportProfile(modelId, 'internal');
+  document.getElementById('export-chooser-modal').style.display = 'flex';
+}
+
+function closeExportChooser() {
+  document.getElementById('export-chooser-modal').style.display = 'none';
+  _exportChooserModelId = null;
+}
+
+function selectExportProfile(modelId, profile) {
+  const profiles = ['internal', 'lp', 'lender', 'proforma'];
+  profiles.forEach(p => {
+    const card = document.getElementById('export-pcard-' + p + '-' + modelId);
+    const radio = card && card.querySelector('input[type="radio"]');
+    if (card) card.classList.toggle('export-profile-selected', p === profile);
+    if (radio) radio.checked = p === profile;
+  });
+}
+
+function submitExportChooser(modelId) {
+  const profiles = ['internal', 'lp', 'lender', 'proforma'];
+  let selected = 'internal';
+  profiles.forEach(p => {
+    const radio = document.querySelector('input[name="export-profile-' + modelId + '"][value="' + p + '"]');
+    if (radio && radio.checked) selected = p;
+  });
+  closeExportChooser();
+  startInvestorExport(modelId, selected);
+}
+
+async function startInvestorExport(modelId, profile) {
+  profile = profile || 'internal';
   if (_activeExportJobs[modelId]) {
     // Already in flight; just surface the modal.
     _showExportModal(modelId);
@@ -946,7 +988,7 @@ async function startInvestorExport(modelId) {
   // Step 1: preflight — does a cached resend exist?
   let pre = null;
   try {
-    const r = await fetch('/ui/models/' + modelId + '/investor-export/preflight');
+    const r = await fetch('/ui/models/' + modelId + '/investor-export/preflight?profile=' + profile);
     if (!r.ok) {
       const j = await r.json().catch(() => ({}));
       _failBtn(j.error || ('HTTP ' + r.status));
@@ -979,12 +1021,27 @@ async function startInvestorExport(modelId) {
   }
   _attachHoverHandlers(modelId);
 
+  // lender + proforma have no sensitivity — build synchronously in the browser.
+  const _SYNC_PROFILES = new Set(['lender', 'proforma']);
+  if (_SYNC_PROFILES.has(profile) && !resendJobId) {
+    if (btn) { btn.textContent = 'Downloading…'; btn.disabled = true; }
+    window.location.href = '/ui/models/' + modelId + '/investor-export.xlsx?profile=' + profile;
+    setTimeout(() => { if (btn) { btn.disabled = false; btn.textContent = '↓ Investor Export'; } }, 4000);
+    return;
+  }
+
+  // internal + lp include sensitivity analysis (slow) — queued and emailed.
   const url = resendJobId
     ? '/ui/exports/' + resendJobId + '/resend'
     : '/ui/models/' + modelId + '/investor-export/async';
   let job = null;
   try {
-    const r = await fetch(url, { method: 'POST' });
+    const fetchOpts = { method: 'POST' };
+    if (!resendJobId) {
+      fetchOpts.headers = { 'Content-Type': 'application/json' };
+      fetchOpts.body = JSON.stringify({ profile: profile });
+    }
+    const r = await fetch(url, fetchOpts);
     if (!r.ok) {
       const j = await r.json().catch(() => ({}));
       _finishExport(modelId, 'failed', j.error || ('HTTP ' + r.status));
@@ -1011,7 +1068,7 @@ async function startInvestorExport(modelId) {
     {{ d.name }}
   </a>
   {% endfor %}
-  <button type="button" class="deal-tab deal-tab-add" onclick="openDrawer('create-variant-drawer')">+ New Variant</button>
+
 </div>
 
 {# ── Row 2: Underwriting tab + Projects in active deal ── #}
@@ -1359,7 +1416,17 @@ async function startInvestorExport(modelId) {
                    value="{{ _mb_ht.get('margin_green', _mb_dh.margin) }}">
           </div>
         </div>
-        <div style="display:flex;gap:8px;margin-top:4px">
+        <div class="form-group" style="margin-top:16px;padding-top:16px;border-top:1px solid #e5e7eb">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+            <input type="checkbox" name="affordable_housing_project" value="1"
+                   {% if inputs and inputs.affordable_housing_project %}checked{% endif %}>
+            <span style="font-weight:500">Affordable Housing Project</span>
+          </label>
+          <div class="text-small text-muted" style="margin-top:2px;margin-left:22px">
+            Shows AMI rent tier columns in the Property module
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:12px">
           <button type="submit" class="btn btn-primary">Save Settings</button>
           <button type="button" class="btn btn-secondary" onclick="closeDrawer('model-settings-drawer')">Cancel</button>
         </div>
@@ -1468,6 +1535,8 @@ document.addEventListener('keydown', function(e) {
     </div>
   </div>
 </div>
+
+{% include 'partials/export_chooser_modal.html' %}
 
 <!-- Source wizard (center-screen modal) -->
 <div class="wizard-overlay" id="source-wizard-overlay" style="display:none">

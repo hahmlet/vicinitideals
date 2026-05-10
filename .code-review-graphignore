@@ -1,0 +1,9 @@
+# Exclude Claude Code internals — worktrees, caches, plugin files
+.claude/**
+
+# Exclude any worktrees directory if created inside repo root
+worktrees/**
+
+# Redundant safety net for nested venvs (default patterns miss Windows paths)
+**/.venv/**
+**/site-packages/**

@@ -479,15 +479,14 @@ def test_setup_complete_seeds_default_opex_lines(
 
     expected_labels = [
         "Real Estate Taxes",
-        "Property Insurance",
-        "Utilities",
+        "Insurance",
+        "Property Management",
         "Repairs & Maintenance",
-        "Management Fee",
-        "Payroll & On-Site Staff",
         "Marketing & Leasing",
-        "General & Administrative",
-        "Turnover / Make-Ready",
-        "CapEx Reserve",
+        "Administrative",
+        "Payroll",
+        "Resident Services",
+        "Unit Turnover",
     ]
     content = page.content()
     # & in labels gets rendered as &amp; in HTML — check for either form

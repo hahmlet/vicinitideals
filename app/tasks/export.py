@@ -97,7 +97,9 @@ async def _run_investor_export_async(job_id: str) -> str:
         await session.commit()
 
         try:
-            xlsx_bytes = await export_investor_workbook(scenario_id, session)
+            xlsx_bytes = await export_investor_workbook(
+                scenario_id, session, profile=job.export_profile or "internal"
+            )
         except Exception as exc:  # noqa: BLE001
             logger.exception("Investor export build failed for scenario %s", scenario_id)
             await _mark_failed(session, job_uuid, f"build error: {exc}")
@@ -107,7 +109,12 @@ async def _run_investor_export_async(job_id: str) -> str:
         deal = (
             await session.get(Deal, scenario.deal_id) if scenario and scenario.deal_id else None
         )
-        filename = make_investor_filename(scenario, deal) if scenario else "investor-export.xlsx"
+        _profile = job.export_profile or "internal"
+        filename = (
+            make_investor_filename(scenario, deal, profile=_profile)
+            if scenario
+            else "export.xlsx"
+        )
 
         # Persist bytes + flip status to "sending" before email out.
         job.xlsx_bytes = xlsx_bytes
@@ -154,8 +161,9 @@ async def _send_export(session, job_uuid: UUID) -> bool:
             name=(user.name if user else "") or "",
             deal_name=(deal.name if deal else None) or "your deal",
             scenario_name=(scenario.name if scenario else None),
-            filename=job.filename or "investor-export.xlsx",
+            filename=job.filename or "export.xlsx",
             xlsx_bytes=job.xlsx_bytes or b"",
+            profile=job.export_profile or "internal",
         )
     except Exception as exc:  # noqa: BLE001
         logger.exception("Resend send failed for job %s", job_uuid)

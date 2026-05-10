@@ -58,6 +58,11 @@ class User(Base):
         DateTime(timezone=True), nullable=True
     )
     is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    # Org role: True = Admin (full control), False = User (read-only org access).
+    # The first user created in an org is automatically set as Admin.
+    is_org_admin: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=False, server_default="false"
+    )
     # Email verification (soft gate — users can still log in when False,
     # they just see a "Please verify your email" banner on every page)
     email_verified: Mapped[bool] = mapped_column(

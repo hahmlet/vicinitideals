@@ -4,12 +4,39 @@
 {% block head %}
 <style>
 .opp-address { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
-.building-pill {
-  display: inline-block; padding: 1px 7px;
-  border-radius: 10px; background: var(--accent-faint);
-  color: var(--accent); font-size: 11px; font-weight: 600;
-  margin-right: 3px;
+.star-btn {
+  background: none; border: none; cursor: pointer;
+  font-size: 16px; line-height: 1; padding: 0 2px;
+  color: var(--text-muted); transition: color 0.1s;
 }
+.star-btn:hover, .star-btn.starred { color: #f5a623; }
+.star-cell { width: 28px; text-align: center; }
+.section-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 16px; cursor: pointer; user-select: none;
+  border-bottom: 1px solid var(--border);
+}
+.section-header .section-title { font-size: 13px; font-weight: 700; }
+.section-header .section-count {
+  font-size: 11px; color: var(--text-muted);
+  background: var(--surface-alt, #f0f1f3); border-radius: 10px;
+  padding: 1px 8px; margin-left: 8px;
+}
+.section-toggle { font-size: 11px; color: var(--text-muted); }
+.section-filters {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 16px; border-bottom: 1px solid var(--border);
+  background: var(--surface-alt, #f8f9fa);
+}
+.section-filters input[type=search] {
+  flex: 1; max-width: 260px;
+  padding: 5px 10px; border: 1px solid var(--border);
+  border-radius: 5px; font-size: 13px;
+  background: var(--bg); color: var(--text);
+}
+.fav-toggle { display: flex; align-items: center; gap: 5px; font-size: 12px; cursor: pointer; }
+.section-body { overflow: hidden; transition: max-height 0.2s ease; }
+.section-body.collapsed { display: none; }
 .archive-btn { opacity: 0; transition: opacity 0.1s; }
 tr:hover .archive-btn { opacity: 1; }
 </style>
@@ -22,66 +49,177 @@ tr:hover .archive-btn { opacity: 1; }
 
 <div class="content">
 
-  <!-- Toolbar -->
-  <form id="opp-filters"
-        data-filter-form="opportunities"
-        hx-get="/ui/opportunities/rows"
-        hx-trigger="change, input delay:300ms from:[type=search]"
-        hx-target="#opps-tbody"
-        hx-swap="innerHTML">
-    <div class="toolbar">
-      <div class="search-wrap">
-        <span class="search-icon">🔍</span>
-        <input class="search-input" type="search" name="q" value="{{ q or '' }}" placeholder="Search name, address…">
-      </div>
-      {# status default: handler hides archived when nothing is checked #}
-      <div class="ms-dropdown" data-ms-label="Status">
-        <button type="button" class="filter-select ms-btn" style="min-width:120px;text-align:left">Status ▾</button>
-        <div class="ms-panel">
-          <label class="ms-all"><input type="checkbox" class="ms-select-all"> Select All</label>
-          <div class="ms-divider"></div>
-          {% for val, lbl in [('hypothetical','Hypothetical'), ('active','Active'), ('archived','Archived')] %}
-          <label><input type="checkbox" name="status" value="{{ val }}" class="ms-cb" {% if val in status %}checked{% endif %}> {{ lbl }}</label>
-          {% endfor %}
-        </div>
-      </div>
-
-      <div class="ms-dropdown" data-ms-label="Sources">
-        <button type="button" class="filter-select ms-btn" style="min-width:120px;text-align:left">Sources ▾</button>
-        <div class="ms-panel">
-          <label class="ms-all"><input type="checkbox" class="ms-select-all" checked> Select All</label>
-          <div class="ms-divider"></div>
-          {% for val, lbl in [('manual','Manual'), ('loopnet','LoopNet'), ('crexi','Crexi')] %}
-          <label><input type="checkbox" name="source" value="{{ val }}" class="ms-cb" {% if not source or val in source %}checked{% endif %}> {{ lbl }}</label>
-          {% endfor %}
-        </div>
-      </div>
-      <button type="button" class="btn btn-secondary btn-sm" data-filter-clear style="white-space:nowrap" title="Clear filters and reset">✕ Clear</button>
-      <button type="button" class="btn btn-secondary btn-sm" id="saved-filter-save-btn" style="white-space:nowrap;display:none" title="Save current filters as a named view">★ Save filter</button>
-      <span id="saved-filter-dropdown" style="display:none">
-        <select id="saved-filter-select" class="filter-select" style="min-width:140px"></select>
-      </span>
+{# ── Active Deals ──────────────────────────────────────────────────────────── #}
+<div class="card" style="padding:0;margin-bottom:16px">
+  <div class="section-header" onclick="toggleSection('deals')">
+    <span>
+      <span class="section-title">Active Deals</span>
+      <span class="section-count" id="deals-count">—</span>
+    </span>
+    <span class="section-toggle" id="deals-chevron">▾</span>
+  </div>
+  <div id="section-deals" class="section-body">
+    <div class="section-filters">
+      <input type="search" placeholder="Search…"
+             hx-get="/ui/opportunities/rows/deals"
+             hx-trigger="input delay:300ms"
+             hx-target="#deals-tbody"
+             hx-swap="innerHTML"
+             hx-include="[name='deals-fav']"
+             name="q">
+      <label class="fav-toggle">
+        <input type="checkbox" name="deals-fav" value="1"
+               hx-get="/ui/opportunities/rows/deals"
+               hx-trigger="change"
+               hx-target="#deals-tbody"
+               hx-swap="innerHTML"
+               hx-include="[name='q']">
+        ★ Favorited only
+      </label>
     </div>
-  </form>
-
-  <div class="card" style="padding:0">
     <table class="data-table">
       <thead>
         <tr>
-          <th>Opportunity</th>
-          <th>Buildings</th>
-          <th>Status</th>
+          <th class="star-cell">★</th>
+          <th>Name / Address</th>
+          <th>Units</th>
+          <th>Sqft</th>
+          <th>Type</th>
           <th>Source</th>
-          <th>Deals</th>
-          <th>Created</th>
+          <th>Last Seen</th>
           <th></th>
         </tr>
       </thead>
-      <tbody id="opps-tbody">
-        {% include 'partials/opportunities_rows.html' %}
+      <tbody id="deals-tbody"
+             hx-get="/ui/opportunities/rows/deals"
+             hx-trigger="load"
+             hx-swap="innerHTML">
       </tbody>
     </table>
   </div>
-
 </div>
+
+{# ── Off Market ────────────────────────────────────────────────────────────── #}
+<div class="card" style="padding:0;margin-bottom:16px">
+  <div class="section-header" onclick="toggleSection('offmarket')">
+    <span>
+      <span class="section-title">Off Market</span>
+      <span class="section-count" id="offmarket-count">—</span>
+    </span>
+    <span class="section-toggle" id="offmarket-chevron">▾</span>
+  </div>
+  <div id="section-offmarket" class="section-body">
+    <div class="section-filters">
+      <input type="search" placeholder="Search…"
+             hx-get="/ui/opportunities/rows/offmarket"
+             hx-trigger="input delay:300ms"
+             hx-target="#offmarket-tbody"
+             hx-swap="innerHTML"
+             hx-include="[name='offmarket-fav']"
+             name="q">
+      <label class="fav-toggle">
+        <input type="checkbox" name="offmarket-fav" value="1"
+               hx-get="/ui/opportunities/rows/offmarket"
+               hx-trigger="change"
+               hx-target="#offmarket-tbody"
+               hx-swap="innerHTML"
+               hx-include="[name='q']">
+        ★ Favorited only
+      </label>
+    </div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th class="star-cell">★</th>
+          <th>Name / Address</th>
+          <th>Units</th>
+          <th>Sqft</th>
+          <th>Type</th>
+          <th>Source</th>
+          <th>Last Seen</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="offmarket-tbody"
+             hx-get="/ui/opportunities/rows/offmarket"
+             hx-trigger="load"
+             hx-swap="innerHTML">
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{# ── On Market ─────────────────────────────────────────────────────────────── #}
+<div class="card" style="padding:0">
+  <div class="section-header" onclick="toggleSection('onmarket')">
+    <span>
+      <span class="section-title">On Market (Scraped)</span>
+      <span class="section-count" id="onmarket-count">—</span>
+    </span>
+    <span class="section-toggle" id="onmarket-chevron">▾</span>
+  </div>
+  <div id="section-onmarket" class="section-body">
+    <div class="section-filters">
+      <input type="search" placeholder="Search…"
+             hx-get="/ui/opportunities/rows/onmarket"
+             hx-trigger="input delay:300ms"
+             hx-target="#onmarket-tbody"
+             hx-swap="innerHTML"
+             hx-include="[name='onmarket-fav']"
+             name="q">
+      <label class="fav-toggle">
+        <input type="checkbox" name="onmarket-fav" value="1"
+               hx-get="/ui/opportunities/rows/onmarket"
+               hx-trigger="change"
+               hx-target="#onmarket-tbody"
+               hx-swap="innerHTML"
+               hx-include="[name='q']">
+        ★ Favorited only
+      </label>
+    </div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th class="star-cell">★</th>
+          <th>Name / Address</th>
+          <th>Units</th>
+          <th>Sqft</th>
+          <th>Type</th>
+          <th>Source</th>
+          <th>Last Seen</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="onmarket-tbody"
+             hx-get="/ui/opportunities/rows/onmarket"
+             hx-trigger="load"
+             hx-swap="innerHTML">
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</div>{# /.content #}
+
+<script>
+function toggleSection(name) {
+  var body = document.getElementById('section-' + name);
+  var chev = document.getElementById(name + '-chevron');
+  if (!body) return;
+  body.classList.toggle('collapsed');
+  if (chev) chev.textContent = body.classList.contains('collapsed') ? '▸' : '▾';
+}
+
+// Update row counts after each HTMX load
+document.addEventListener('htmx:afterSettle', function(e) {
+  ['deals', 'offmarket', 'onmarket'].forEach(function(name) {
+    var tbody = document.getElementById(name + '-tbody');
+    var countEl = document.getElementById(name + '-count');
+    if (tbody && countEl) {
+      var rows = tbody.querySelectorAll('tr[data-opp-id]');
+      countEl.textContent = rows.length;
+    }
+  });
+});
+</script>
 {% endblock %}

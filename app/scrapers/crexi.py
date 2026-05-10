@@ -10,6 +10,7 @@ from typing import Any
 
 from app.schemas.broker import BrokerCreate
 from app.schemas.scraped_listing import ScrapedListingCreate
+from app.scrapers.geo_utils import load_polygons, point_in_polygon
 from app.services.broker_normalize import normalize_name
 
 try:  # pragma: no cover - exercised in environments with curl-cffi installed.
@@ -23,29 +24,10 @@ except Exception:  # pragma: no cover - lightweight local/test fallback.
             super().__init__(*args, **kwargs)
 
 
-# Oregon cities known to have Crexi multifamily listings.
-# Crexi's unauthenticated API ignores pagination (skip) and caps at 50 results per query.
-# Searching city-by-city keeps each slice under 50, achieving ~77% statewide coverage.
-# Portland city itself still caps at 50/82 — the remaining ~32 require auth.
-# Update this list when new markets appear (run _search diagnostics to find them).
-_OREGON_CITIES: list[str] = [
-    # Portland Metro
-    "Portland", "Gresham", "Beaverton", "Hillsboro", "Lake Oswego", "Tigard",
-    "Tualatin", "Sherwood", "Wilsonville", "Milwaukie", "Oregon City", "West Linn",
-    "Troutdale", "Fairview", "Happy Valley", "McMinnville", "Forest Grove", "Cornelius",
-    # Willamette Valley
-    "Eugene", "Salem", "Corvallis", "Albany", "Springfield", "Woodburn", "Newberg",
-    "Lebanon", "Sweet Home", "Dallas", "Keizer",
-    # Oregon Coast
-    "Astoria", "Tillamook", "Lincoln City", "Newport", "Toledo", "Waldport",
-    "Florence", "North Bend", "Rockaway Beach", "Depoe Bay", "Wheeler",
-    # Southern Oregon
-    "Medford", "Ashland", "Grants Pass", "Klamath Falls", "Central Point",
-    # Eastern / Central Oregon
-    "Bend", "Redmond", "Prineville", "Madras", "The Dalles", "Pendleton", "John Day",
-    # Other
-    "Cottage Grove",
-]
+# Only cities Crexi's API returns meaningful results for in the Portland metro.
+# Probe (2026-05-07): Portland=83, Gresham=3; all other metro cities return 0.
+# All results are polygon-clipped post-fetch via market_polygons.json.
+_OREGON_CITIES: list[str] = ["Portland", "Gresham"]
 
 SEARCH_URL = "https://api.crexi.com/assets/search"
 TOKEN_URL = "https://api.crexi.com/token"
@@ -121,7 +103,7 @@ class CrxiScraper:
             self.password = password
         self._access_token: str | None = None  # cached for the session
 
-    async def fetch_all(self) -> tuple[list[ScrapedListingCreate], list[BrokerCreate], int]:
+    async def fetch_all(self, polygons: list[dict] | None = None) -> tuple[list[ScrapedListingCreate], list[BrokerCreate], int]:
         """Return (listings, brokers, source_total) where source_total is Crexi's reported count."""
         listings: list[ScrapedListingCreate] = []
         deduped_brokers: dict[str, BrokerCreate] = {}
@@ -160,6 +142,29 @@ class CrxiScraper:
 
                 if offset + self.batch_size < len(search_hits):
                     await asyncio.sleep(self.batch_delay_seconds)
+
+        # Clip to active polygons — drop anything outside our target market.
+        if polygons is None:
+            polygons = load_polygons()
+        if polygons:
+            clipped: list[ScrapedListingCreate] = []
+            for listing in listings:
+                if listing.lat is None or listing.lng is None:
+                    clipped.append(listing)  # keep if no coordinates to filter on
+                    continue
+                lat, lng = float(listing.lat), float(listing.lng)
+                is_land = "land" in (listing.property_type or "").lower()
+                kept = False
+                for p in polygons:
+                    if not point_in_polygon(p["points"], lng, lat):
+                        continue
+                    if is_land and p["name"] == "portland":
+                        continue
+                    kept = True
+                    break
+                if kept:
+                    clipped.append(listing)
+            listings = clipped
 
         return listings, list(deduped_brokers.values()), source_total
 

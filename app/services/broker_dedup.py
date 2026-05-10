@@ -25,7 +25,7 @@ from sqlalchemy import delete, func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.broker import Broker, BrokerDisciplinaryAction
-from app.models.project import ScrapedListing
+from app.models.scraped_listing import ScrapedListing
 
 # Suffixes/credentials that get appended to last_name and shouldn't break match
 _NAME_SUFFIX_RE = re.compile(

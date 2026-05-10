@@ -20,10 +20,10 @@
           <tr>
             <td style="padding:0 32px 24px 32px;">
               <h1 style="margin:0 0 12px 0;font-size:22px;font-weight:700;color:#111827;">
-                Your investor export is ready
+                Your {{ export_label }} is ready
               </h1>
               <p style="margin:0 0 16px 0;line-height:1.55;color:#374151;">
-                Hi {{ name }}, the LP-facing Excel workbook for
+                Hi {{ name }}, {{ export_desc }} for
                 <strong>{{ deal_name }}</strong>{% if scenario_name %} ·
                 <strong>{{ scenario_name }}</strong>{% endif %} is attached.
               </p>
@@ -32,9 +32,7 @@
               </p>
               <p style="margin:0 0 8px 0;font-size:13px;color:#6b7280;line-height:1.55;">
                 You can open the workbook directly, copy values into your
-                own model, or forward this email to a colleague. The
-                Sensitivity tab reflects your latest underwriting
-                assumptions.
+                own model, or forward this email to a colleague.
               </p>
               <hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0;">
               <p style="margin:0;font-size:12px;color:#9ca3af;line-height:1.55;">

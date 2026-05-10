@@ -85,6 +85,9 @@ def _payload(code: str, message: str, detail: Any = None) -> dict[str, Any]:
 
 
 def _resolve_client_ip(request: Request) -> str | None:
+    cf_ip = request.headers.get("CF-Connecting-IP")
+    if cf_ip:
+        return cf_ip.strip()
     forwarded_for = request.headers.get("X-Forwarded-For")
     if forwarded_for:
         return forwarded_for.split(",", 1)[0].strip()

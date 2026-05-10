@@ -1,0 +1,34 @@
+{# HTMX partial — wizard step 2 match result card.
+   match_type: 'listing' | 'parcel'
+   match: Opportunity or Parcel instance
+   opp_id: current wizard opportunity id (str)
+#}
+<div class="match-card">
+  {% if match_type == 'listing' %}
+    <div class="match-card-title">{{ match.display_name }}</div>
+    <div class="match-card-meta">
+      Source: {{ match.promotion_source | title if match.promotion_source else match.source | title }}
+      {% if match.display_units %} · {{ match.display_units }} units{% endif %}
+      {% if match.display_sqft %} · {{ "{:,.0f}".format(match.display_sqft | float) }} sqft{% endif %}
+      {% if match.display_year_built %} · Built {{ match.display_year_built }}{% endif %}
+      {% if match.display_property_type %} · {{ match.display_property_type }}{% endif %}
+    </div>
+    <button type="button" class="btn btn-primary btn-sm"
+            onclick="attachMatch('listing', '{{ match.id }}')">
+      ✓ Attach this listing
+    </button>
+  {% elif match_type == 'parcel' %}
+    <div class="match-card-title">{{ match.address_normalized or match.apn }}</div>
+    <div class="match-card-meta">
+      Source: County Parcel ({{ match.county or 'OR' }})
+      {% if match.unit_count %} · {{ match.unit_count }} units{% endif %}
+      {% if match.building_sqft %} · {{ "{:,.0f}".format(match.building_sqft | float) }} sqft{% endif %}
+      {% if match.year_built %} · Built {{ match.year_built }}{% endif %}
+      {% if match.rlis_land_use %} · {{ match.rlis_land_use }}{% endif %}
+    </div>
+    <button type="button" class="btn btn-primary btn-sm"
+            onclick="attachMatch('parcel', '{{ match.id }}')">
+      ✓ Attach this parcel
+    </button>
+  {% endif %}
+</div>
