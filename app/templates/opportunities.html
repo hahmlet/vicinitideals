@@ -24,17 +24,30 @@
 }
 .section-toggle { font-size: 11px; color: var(--text-muted); }
 .section-filters {
-  display: flex; align-items: center; gap: 10px;
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
   padding: 8px 16px; border-bottom: 1px solid var(--border);
   background: var(--surface-alt, #f8f9fa);
 }
 .section-filters input[type=search] {
-  flex: 1; max-width: 260px;
+  flex: 1; min-width: 160px; max-width: 240px;
   padding: 5px 10px; border: 1px solid var(--border);
   border-radius: 5px; font-size: 13px;
   background: var(--bg); color: var(--text);
 }
-.fav-toggle { display: flex; align-items: center; gap: 5px; font-size: 12px; cursor: pointer; }
+.section-filters .filter-select {
+  padding: 5px 8px; border: 1px solid var(--border);
+  border-radius: 5px; font-size: 12px;
+  background: var(--bg); color: var(--text);
+}
+.section-filters .units-range {
+  display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--text-muted);
+}
+.section-filters .units-range input {
+  width: 58px; padding: 5px 6px; border: 1px solid var(--border);
+  border-radius: 5px; font-size: 12px;
+  background: var(--bg); color: var(--text);
+}
+.fav-toggle { display: flex; align-items: center; gap: 5px; font-size: 12px; cursor: pointer; white-space: nowrap; }
 .section-body { overflow: hidden; transition: max-height 0.2s ease; }
 .section-body.collapsed { display: none; }
 .archive-btn { opacity: 0; transition: opacity 0.1s; }
@@ -59,24 +72,31 @@ tr:hover .archive-btn { opacity: 1; }
     <span class="section-toggle" id="deals-chevron">▾</span>
   </div>
   <div id="section-deals" class="section-body">
-    <div class="section-filters">
-      <input type="search" placeholder="Search…"
-             hx-get="/ui/opportunities/rows/deals"
-             hx-trigger="input delay:300ms"
-             hx-target="#deals-tbody"
-             hx-swap="innerHTML"
-             hx-include="[name='deals-fav']"
-             name="q">
-      <label class="fav-toggle">
-        <input type="checkbox" name="deals-fav" value="1"
-               hx-get="/ui/opportunities/rows/deals"
-               hx-trigger="change"
-               hx-target="#deals-tbody"
-               hx-swap="innerHTML"
-               hx-include="[name='q']">
-        ★ Favorited only
-      </label>
-    </div>
+    <form class="section-filters" data-filter-form="opp-deals"
+          hx-get="/ui/opportunities/rows/deals"
+          hx-trigger="input delay:400ms from:input, change from:select, change from:input[type=checkbox]"
+          hx-target="#deals-tbody" hx-swap="innerHTML" hx-include="this">
+      <input type="search" name="q" placeholder="Search…">
+      <select name="jurisdiction" class="filter-select">
+        <option value="">All jurisdictions</option>
+        <option>gresham</option><option>portland</option><option>fairview</option>
+        <option>wood village</option><option>troutdale</option><option>happy valley</option>
+        <option>milwaukie</option><option>oregon city</option><option>gladstone</option>
+        <option>lake oswego</option><option>west linn</option><option>tualatin</option>
+        <option>wilsonville</option>
+      </select>
+      <select name="property_type" class="filter-select">
+        <option value="">All types</option>
+        <option>Multifamily</option><option>Office</option><option>Retail</option>
+        <option>Industrial</option><option>Land</option><option>Mixed Use</option>
+        <option>Hospitality</option><option>Medical</option>
+      </select>
+      <span class="units-range">
+        Units <input type="number" name="min_units" placeholder="min" min="0"> –
+        <input type="number" name="max_units" placeholder="max" min="0">
+      </span>
+      <label class="fav-toggle"><input type="checkbox" name="favorited" value="1"> ★ Fav only</label>
+    </form>
     <table class="data-table">
       <thead>
         <tr>
@@ -109,24 +129,31 @@ tr:hover .archive-btn { opacity: 1; }
     <span class="section-toggle" id="offmarket-chevron">▾</span>
   </div>
   <div id="section-offmarket" class="section-body">
-    <div class="section-filters">
-      <input type="search" placeholder="Search…"
-             hx-get="/ui/opportunities/rows/offmarket"
-             hx-trigger="input delay:300ms"
-             hx-target="#offmarket-tbody"
-             hx-swap="innerHTML"
-             hx-include="[name='offmarket-fav']"
-             name="q">
-      <label class="fav-toggle">
-        <input type="checkbox" name="offmarket-fav" value="1"
-               hx-get="/ui/opportunities/rows/offmarket"
-               hx-trigger="change"
-               hx-target="#offmarket-tbody"
-               hx-swap="innerHTML"
-               hx-include="[name='q']">
-        ★ Favorited only
-      </label>
-    </div>
+    <form class="section-filters" data-filter-form="opp-offmarket"
+          hx-get="/ui/opportunities/rows/offmarket"
+          hx-trigger="input delay:400ms from:input, change from:select, change from:input[type=checkbox]"
+          hx-target="#offmarket-tbody" hx-swap="innerHTML" hx-include="this">
+      <input type="search" name="q" placeholder="Search…">
+      <select name="jurisdiction" class="filter-select">
+        <option value="">All jurisdictions</option>
+        <option>gresham</option><option>portland</option><option>fairview</option>
+        <option>wood village</option><option>troutdale</option><option>happy valley</option>
+        <option>milwaukie</option><option>oregon city</option><option>gladstone</option>
+        <option>lake oswego</option><option>west linn</option><option>tualatin</option>
+        <option>wilsonville</option>
+      </select>
+      <select name="property_type" class="filter-select">
+        <option value="">All types</option>
+        <option>Multifamily</option><option>Office</option><option>Retail</option>
+        <option>Industrial</option><option>Land</option><option>Mixed Use</option>
+        <option>Hospitality</option><option>Medical</option>
+      </select>
+      <span class="units-range">
+        Units <input type="number" name="min_units" placeholder="min" min="0"> –
+        <input type="number" name="max_units" placeholder="max" min="0">
+      </span>
+      <label class="fav-toggle"><input type="checkbox" name="favorited" value="1"> ★ Fav only</label>
+    </form>
     <table class="data-table">
       <thead>
         <tr>
@@ -159,24 +186,31 @@ tr:hover .archive-btn { opacity: 1; }
     <span class="section-toggle" id="onmarket-chevron">▾</span>
   </div>
   <div id="section-onmarket" class="section-body">
-    <div class="section-filters">
-      <input type="search" placeholder="Search…"
-             hx-get="/ui/opportunities/rows/onmarket"
-             hx-trigger="input delay:300ms"
-             hx-target="#onmarket-tbody"
-             hx-swap="innerHTML"
-             hx-include="[name='onmarket-fav']"
-             name="q">
-      <label class="fav-toggle">
-        <input type="checkbox" name="onmarket-fav" value="1"
-               hx-get="/ui/opportunities/rows/onmarket"
-               hx-trigger="change"
-               hx-target="#onmarket-tbody"
-               hx-swap="innerHTML"
-               hx-include="[name='q']">
-        ★ Favorited only
-      </label>
-    </div>
+    <form class="section-filters" data-filter-form="opp-onmarket"
+          hx-get="/ui/opportunities/rows/onmarket"
+          hx-trigger="input delay:400ms from:input, change from:select, change from:input[type=checkbox]"
+          hx-target="#onmarket-tbody" hx-swap="innerHTML" hx-include="this">
+      <input type="search" name="q" placeholder="Search…">
+      <select name="jurisdiction" class="filter-select">
+        <option value="">All jurisdictions</option>
+        <option>gresham</option><option>portland</option><option>fairview</option>
+        <option>wood village</option><option>troutdale</option><option>happy valley</option>
+        <option>milwaukie</option><option>oregon city</option><option>gladstone</option>
+        <option>lake oswego</option><option>west linn</option><option>tualatin</option>
+        <option>wilsonville</option>
+      </select>
+      <select name="property_type" class="filter-select">
+        <option value="">All types</option>
+        <option>Multifamily</option><option>Office</option><option>Retail</option>
+        <option>Industrial</option><option>Land</option><option>Mixed Use</option>
+        <option>Hospitality</option><option>Medical</option>
+      </select>
+      <span class="units-range">
+        Units <input type="number" name="min_units" placeholder="min" min="0"> –
+        <input type="number" name="max_units" placeholder="max" min="0">
+      </span>
+      <label class="fav-toggle"><input type="checkbox" name="favorited" value="1"> ★ Fav only</label>
+    </form>
     <table class="data-table">
       <thead>
         <tr>

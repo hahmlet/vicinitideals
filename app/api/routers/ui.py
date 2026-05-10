@@ -2561,12 +2561,37 @@ def _filter_opps(opps: list, q: str) -> list:
     ]
 
 
+def _apply_opp_filters(
+    stmt: object,
+    favorited: int,
+    jurisdiction: list[str],
+    min_units: int | None,
+    max_units: int | None,
+    property_type: list[str],
+) -> object:
+    if favorited:
+        stmt = stmt.where(Opportunity.is_favorited.is_(True))
+    if jurisdiction:
+        stmt = stmt.where(func.lower(Opportunity.jurisdiction).in_([j.lower() for j in jurisdiction]))
+    if min_units is not None:
+        stmt = stmt.where(Opportunity.units >= min_units)
+    if max_units is not None:
+        stmt = stmt.where(Opportunity.units <= max_units)
+    if property_type:
+        stmt = stmt.where(func.lower(Opportunity.property_type).in_([p.lower() for p in property_type]))
+    return stmt
+
+
 @router.get("/ui/opportunities/rows/deals", response_class=HTMLResponse)
 async def opportunities_rows_deals(
     request: Request,
     session: DBSession,
     q: str = Query(default=""),
     favorited: int = Query(default=0),
+    jurisdiction: list[str] = Query(default=[]),
+    min_units: int | None = Query(default=None),
+    max_units: int | None = Query(default=None),
+    property_type: list[str] = Query(default=[]),
 ) -> HTMLResponse:
     active_oppo_ids = select(Project.opportunity_id).where(
         Project.opportunity_id.isnot(None)
@@ -2577,11 +2602,8 @@ async def opportunities_rows_deals(
         .where(Opportunity.id.in_(active_oppo_ids))
         .order_by(Opportunity.last_seen_at.desc())
     )
-    if favorited:
-        stmt = stmt.where(Opportunity.is_favorited.is_(True))
-    opps = _filter_opps(
-        list((await session.execute(stmt)).scalars().unique()), q
-    )
+    stmt = _apply_opp_filters(stmt, favorited, jurisdiction, min_units, max_units, property_type)
+    opps = _filter_opps(list((await session.execute(stmt)).scalars().unique()), q)
     return templates.TemplateResponse(request, "partials/opportunities_rows.html", {
         "request": request, "opps": opps, "table": "deals",
     })
@@ -2593,6 +2615,10 @@ async def opportunities_rows_offmarket(
     session: DBSession,
     q: str = Query(default=""),
     favorited: int = Query(default=0),
+    jurisdiction: list[str] = Query(default=[]),
+    min_units: int | None = Query(default=None),
+    max_units: int | None = Query(default=None),
+    property_type: list[str] = Query(default=[]),
 ) -> HTMLResponse:
     active_oppo_ids = select(Project.opportunity_id).where(
         Project.opportunity_id.isnot(None)
@@ -2607,11 +2633,8 @@ async def opportunities_rows_offmarket(
         )
         .order_by(Opportunity.last_seen_at.desc())
     )
-    if favorited:
-        stmt = stmt.where(Opportunity.is_favorited.is_(True))
-    opps = _filter_opps(
-        list((await session.execute(stmt)).scalars().unique()), q
-    )
+    stmt = _apply_opp_filters(stmt, favorited, jurisdiction, min_units, max_units, property_type)
+    opps = _filter_opps(list((await session.execute(stmt)).scalars().unique()), q)
     return templates.TemplateResponse(request, "partials/opportunities_rows.html", {
         "request": request, "opps": opps, "table": "offmarket",
     })
@@ -2623,6 +2646,10 @@ async def opportunities_rows_onmarket(
     session: DBSession,
     q: str = Query(default=""),
     favorited: int = Query(default=0),
+    jurisdiction: list[str] = Query(default=[]),
+    min_units: int | None = Query(default=None),
+    max_units: int | None = Query(default=None),
+    property_type: list[str] = Query(default=[]),
 ) -> HTMLResponse:
     active_oppo_ids = select(Project.opportunity_id).where(
         Project.opportunity_id.isnot(None)
@@ -2637,11 +2664,8 @@ async def opportunities_rows_onmarket(
         )
         .order_by(Opportunity.last_seen_at.desc())
     )
-    if favorited:
-        stmt = stmt.where(Opportunity.is_favorited.is_(True))
-    opps = _filter_opps(
-        list((await session.execute(stmt)).scalars().unique()), q
-    )
+    stmt = _apply_opp_filters(stmt, favorited, jurisdiction, min_units, max_units, property_type)
+    opps = _filter_opps(list((await session.execute(stmt)).scalars().unique()), q)
     return templates.TemplateResponse(request, "partials/opportunities_rows.html", {
         "request": request, "opps": opps, "table": "onmarket",
     })
