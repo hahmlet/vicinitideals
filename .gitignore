@@ -33,6 +33,8 @@ tests/e2e/.playwright-cli/
 
 # Scratch / temp files (screenshots, dumps, one-off scripts)
 tmp/
+/docs/models/
+/docs/PitchDecks
 
 # Brainstorming session files (visual companion)
 .superpowers/
