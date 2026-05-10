@@ -1,0 +1,238 @@
+{% extends "base.html" %}
+{% block title %}Underwriting Defaults — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div class="page-header" style="display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid var(--border);background:var(--surface)">
+  <div>
+    <div class="page-title" style="font-size:20px;font-weight:700;color:var(--text)">Underwriting Defaults</div>
+    <div style="font-size:12px;color:var(--text-muted);margin-top:2px">{{ org.name }} · applied to new deals for all users</div>
+  </div>
+  <a href="/settings/organization" class="btn btn-secondary">Back to Org</a>
+</div>
+
+<div style="padding:24px;display:grid;gap:16px;max-width:860px">
+
+  {# ── Group 1: Underwriting Policy (Org-Set) — expanded by default ───────── #}
+  <details open style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+    <summary style="padding:14px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);list-style:none;display:flex;align-items:center;gap:8px">
+      🔒 Underwriting Policy
+      <span style="margin-left:auto;font-size:11px;color:var(--text-muted);font-weight:400">Org-Set · users cannot override in-model</span>
+    </summary>
+    <div style="padding:0 18px 18px;display:grid;gap:12px">
+
+      {# Debt Sizing Method #}
+      <div>
+        <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block">Debt Sizing Method</label>
+        <form hx-put="/api/settings/org/debt_sizing_mode" hx-target="#ss-debt_sizing_mode" hx-swap="innerHTML"
+              style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end">
+          <select class="filter-select" name="value" style="width:100%">
+            <option value="gap_fill" {% if (resolved.get('debt_sizing_mode') or 'gap_fill') == 'gap_fill' %}selected{% endif %}>Gap-fill (Uses − Equity)</option>
+            <option value="dscr_capped" {% if resolved.get('debt_sizing_mode') == 'dscr_capped' %}selected{% endif %}>DSCR-capped (max from NOI)</option>
+            <option value="dual_constraint" {% if resolved.get('debt_sizing_mode') == 'dual_constraint' %}selected{% endif %}>Dual Constraint (MIN of LTV, DSCR, gap-fill)</option>
+          </select>
+          <button type="submit" class="btn btn-primary" style="padding:6px 14px;font-size:13px">Save</button>
+        </form>
+        <div id="ss-debt_sizing_mode" style="font-size:12px;min-height:18px;margin-top:2px"></div>
+      </div>
+
+      {% for fk, label, step, placeholder, hint in [
+        ("operation_reserve_months", "Operating Reserve (months)", "1", "6", "Months of projected debt service held at stabilization start."),
+        ("capex_reserve_per_unit_annual", "CapEx Reserve ($/unit/yr)", "50", "250", "Annual capital reserve per unit, deducted from NOI."),
+        ("risk_free_rate_pct", "Discount Rate / Risk-Free (%)", "0.05", "4.25", "10Y Treasury proxy used in spread stack on investor export."),
+      ] %}
+      <div>
+        <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block">{{ label }}</label>
+        <form hx-put="/api/settings/org/{{ fk }}" hx-target="#ss-{{ fk }}" hx-swap="innerHTML"
+              style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end">
+          <div>
+            <input class="filter-input" type="number" step="{{ step }}" name="value"
+                   value="{{ resolved.get(fk, '') }}" placeholder="{{ placeholder }}" style="width:100%">
+            {% if hint %}<div style="font-size:11px;color:var(--text-muted);margin-top:3px">{{ hint }}</div>{% endif %}
+          </div>
+          <button type="submit" class="btn btn-primary" style="padding:6px 14px;font-size:13px">Save</button>
+        </form>
+        <div id="ss-{{ fk }}" style="font-size:12px;min-height:18px;margin-top:2px"></div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </details>
+
+  {# ── Group 2: Debt & Financing ────────────────────────────────────────── #}
+  <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+    <summary style="padding:14px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);list-style:none">Debt &amp; Financing</summary>
+    <div style="padding:0 18px 18px;display:grid;gap:12px">
+      {% for fk, label, step, placeholder in [
+        ("dscr_min",                     "DSCR Minimum",              "0.01", "1.25"),
+        ("ltv_pct",                      "Max LTV (%)",               "1",    "70"),
+        ("amort_term_years",             "Amortization Term (years)", "1",    "30"),
+        ("loan_closing_origination_pct", "Origination (%)",           "0.1",  "1.0"),
+        ("loan_closing_legal_flat",      "Legal Flat ($)",            "500",  "7500"),
+        ("loan_closing_title_pct",       "Title/Escrow (%)",          "0.05", "0.25"),
+      ] %}
+      <div>
+        <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block">{{ label }}</label>
+        <form hx-put="/api/settings/org/{{ fk }}" hx-target="#ss-{{ fk }}" hx-swap="innerHTML"
+              style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end">
+          <input class="filter-input" type="number" step="{{ step }}" name="value"
+                 value="{{ resolved.get(fk, '') }}" placeholder="{{ placeholder }}" style="width:100%">
+          <button type="submit" class="btn btn-primary" style="padding:6px 14px;font-size:13px">Save</button>
+        </form>
+        <div id="ss-{{ fk }}" style="font-size:12px;min-height:18px;margin-top:2px"></div>
+      </div>
+      {% endfor %}
+    </div>
+  </details>
+
+  {# ── Group 3: Income & Revenue ────────────────────────────────────────── #}
+  <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+    <summary style="padding:14px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);list-style:none">Income &amp; Revenue</summary>
+    <div style="padding:0 18px 18px;display:grid;gap:12px">
+
+      {# Income Mode — select #}
+      <div>
+        <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block">Income Mode</label>
+        <form hx-put="/api/settings/org/income_mode" hx-target="#ss-income_mode" hx-swap="innerHTML"
+              style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end">
+          <select class="filter-select" name="value" style="width:100%">
+            <option value="revenue_opex" {% if (resolved.get('income_mode') or 'revenue_opex') == 'revenue_opex' %}selected{% endif %}>Revenue + OpEx (line-by-line)</option>
+            <option value="noi" {% if resolved.get('income_mode') == 'noi' %}selected{% endif %}>NOI Direct</option>
+          </select>
+          <button type="submit" class="btn btn-primary" style="padding:6px 14px;font-size:13px">Save</button>
+        </form>
+        <div id="ss-income_mode" style="font-size:12px;min-height:18px;margin-top:2px"></div>
+      </div>
+
+      {# Lease-Up Curve — select #}
+      <div>
+        <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block">Lease-Up Curve</label>
+        <form hx-put="/api/settings/org/lease_up_curve" hx-target="#ss-lease_up_curve" hx-swap="innerHTML"
+              style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end">
+          <select class="filter-select" name="value" style="width:100%">
+            <option value="linear" {% if (resolved.get('lease_up_curve') or 'linear') == 'linear' %}selected{% endif %}>Linear</option>
+            <option value="s_curve" {% if resolved.get('lease_up_curve') == 's_curve' %}selected{% endif %}>S-Curve</option>
+          </select>
+          <button type="submit" class="btn btn-primary" style="padding:6px 14px;font-size:13px">Save</button>
+        </form>
+        <div id="ss-lease_up_curve" style="font-size:12px;min-height:18px;margin-top:2px"></div>
+      </div>
+
+      {% for fk, label, step, placeholder in [
+        ("stabilized_occupancy_pct",          "Stabilized Occupancy (%)",  "0.5", "95"),
+        ("escalation_rate_pct_annual_income", "Rent Escalation (%/yr)",    "0.1", "3.0"),
+        ("noi_escalation_rate_pct",           "NOI Escalation (%/yr)",     "0.1", "3.0"),
+        ("bad_debt_pct",                      "Bad Debt (%)",              "0.1", "1.0"),
+      ] %}
+      <div>
+        <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block">{{ label }}</label>
+        <form hx-put="/api/settings/org/{{ fk }}" hx-target="#ss-{{ fk }}" hx-swap="innerHTML"
+              style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end">
+          <input class="filter-input" type="number" step="{{ step }}" name="value"
+                 value="{{ resolved.get(fk, '') }}" placeholder="{{ placeholder }}" style="width:100%">
+          <button type="submit" class="btn btn-primary" style="padding:6px 14px;font-size:13px">Save</button>
+        </form>
+        <div id="ss-{{ fk }}" style="font-size:12px;min-height:18px;margin-top:2px"></div>
+      </div>
+      {% endfor %}
+    </div>
+  </details>
+
+  {# ── Group 4: Operating Expenses ──────────────────────────────────────── #}
+  <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+    <summary style="padding:14px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);list-style:none">Operating Expenses</summary>
+    <div style="padding:0 18px 18px;display:grid;gap:12px">
+      {% for fk, label, step, placeholder in [
+        ("escalation_rate_pct_annual_opex", "Expense Escalation (%/yr)",  "0.1", "3.0"),
+        ("asset_mgmt_fee_pct",              "Asset Mgmt Fee (%)",         "0.1", "0.5"),
+        ("management_fee_pct",              "Property Mgmt Fee (%)",      "0.5", "5.0"),
+        ("lease_up_floor_pct",              "Variable Expense Floor (%)", "1",   "50"),
+      ] %}
+      <div>
+        <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block">{{ label }}</label>
+        <form hx-put="/api/settings/org/{{ fk }}" hx-target="#ss-{{ fk }}" hx-swap="innerHTML"
+              style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end">
+          <input class="filter-input" type="number" step="{{ step }}" name="value"
+                 value="{{ resolved.get(fk, '') }}" placeholder="{{ placeholder }}" style="width:100%">
+          <button type="submit" class="btn btn-primary" style="padding:6px 14px;font-size:13px">Save</button>
+        </form>
+        <div id="ss-{{ fk }}" style="font-size:12px;min-height:18px;margin-top:2px"></div>
+      </div>
+      {% endfor %}
+    </div>
+  </details>
+
+  {# ── Group 5: Construction & Timeline ─────────────────────────────────── #}
+  <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+    <summary style="padding:14px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);list-style:none">Construction &amp; Timeline</summary>
+    <div style="padding:0 18px 18px;display:grid;gap:12px">
+      <div>
+        <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block">Construction Reserve Floor (%)</label>
+        <form hx-put="/api/settings/org/construction_floor_pct" hx-target="#ss-construction_floor_pct" hx-swap="innerHTML"
+              style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end">
+          <input class="filter-input" type="number" step="1" name="value"
+                 value="{{ resolved.get('construction_floor_pct', '') }}" placeholder="40" style="width:100%">
+          <button type="submit" class="btn btn-primary" style="padding:6px 14px;font-size:13px">Save</button>
+        </form>
+        <div id="ss-construction_floor_pct" style="font-size:12px;min-height:18px;margin-top:2px"></div>
+      </div>
+      <div>
+        <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block">Default Use Line Timing</label>
+        <form hx-put="/api/settings/org/use_line_timing" hx-target="#ss-use_line_timing" hx-swap="innerHTML"
+              style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end">
+          <select class="filter-select" name="value" style="width:100%">
+            <option value="first_day" {% if (resolved.get('use_line_timing') or 'first_day') == 'first_day' %}selected{% endif %}>First day of period</option>
+            <option value="spread" {% if resolved.get('use_line_timing') == 'spread' %}selected{% endif %}>Spread evenly</option>
+          </select>
+          <button type="submit" class="btn btn-primary" style="padding:6px 14px;font-size:13px">Save</button>
+        </form>
+        <div id="ss-use_line_timing" style="font-size:12px;min-height:18px;margin-top:2px"></div>
+      </div>
+    </div>
+  </details>
+
+  {# ── Group 6: Exit & Disposition ──────────────────────────────────────── #}
+  <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+    <summary style="padding:14px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);list-style:none">Exit &amp; Disposition</summary>
+    <div style="padding:0 18px 18px;display:grid;gap:12px">
+      <div>
+        <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block">Selling Costs (%)</label>
+        <form hx-put="/api/settings/org/selling_costs_pct" hx-target="#ss-selling_costs_pct" hx-swap="innerHTML"
+              style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end">
+          <div>
+            <input class="filter-input" type="number" step="0.1" name="value"
+                   value="{{ resolved.get('selling_costs_pct', '') }}" placeholder="2.0" style="width:100%">
+            <div style="font-size:11px;color:var(--text-muted);margin-top:3px">Brokerage + closing costs as % of gross sale proceeds.</div>
+          </div>
+          <button type="submit" class="btn btn-primary" style="padding:6px 14px;font-size:13px">Save</button>
+        </form>
+        <div id="ss-selling_costs_pct" style="font-size:12px;min-height:18px;margin-top:2px"></div>
+      </div>
+    </div>
+  </details>
+
+  {# ── Group 7: Waterfall & Equity ──────────────────────────────────────── #}
+  <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+    <summary style="padding:14px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);list-style:none">Waterfall &amp; Equity</summary>
+    <div style="padding:0 18px 18px;display:grid;gap:12px">
+      {% for fk, label, step, placeholder in [
+        ("lp_split_pct",         "LP Split (%)",           "1",   "80"),
+        ("gp_split_pct",         "GP Split (%)",           "1",   "20"),
+        ("irr_hurdle_pct_tier1", "IRR Hurdle Tier 1 (%)", "0.5", "8.0"),
+        ("pref_return_rate_pct", "Preferred Return (%)",  "0.5", "6.0"),
+      ] %}
+      <div>
+        <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block">{{ label }}</label>
+        <form hx-put="/api/settings/org/{{ fk }}" hx-target="#ss-{{ fk }}" hx-swap="innerHTML"
+              style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end">
+          <input class="filter-input" type="number" step="{{ step }}" name="value"
+                 value="{{ resolved.get(fk, '') }}" placeholder="{{ placeholder }}" style="width:100%">
+          <button type="submit" class="btn btn-primary" style="padding:6px 14px;font-size:13px">Save</button>
+        </form>
+        <div id="ss-{{ fk }}" style="font-size:12px;min-height:18px;margin-top:2px"></div>
+      </div>
+      {% endfor %}
+    </div>
+  </details>
+
+</div>
+{% endblock %}

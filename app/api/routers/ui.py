@@ -1861,6 +1861,72 @@ async def settings_organization_post(
     return RedirectResponse(url="/settings/organization", status_code=303)
 
 
+# ---------------------------------------------------------------------------
+# GET /settings/org — org-wide underwriting defaults (admin only)
+# ---------------------------------------------------------------------------
+
+
+@router.get("/settings/org", response_class=HTMLResponse)
+async def settings_org_defaults(
+    request: Request,
+    session: DBSession,
+) -> HTMLResponse:
+    from app.settings.resolver import resolve_all_defaults as _resolve_all
+
+    user = await _get_user(session, request)
+    if user is None:
+        return RedirectResponse(url="/login?next=/settings/org", status_code=303)
+    if not getattr(user, "is_org_admin", False):
+        return HTMLResponse("Access denied", status_code=403)
+
+    dedup_count, conflicts_count = await _get_counts(session)
+    address_issues_count = await _get_address_issues_count(session)
+    org = await session.get(Organization, user.org_id)
+    resolved = await _resolve_all(user.id, user.org_id, session)
+
+    return templates.TemplateResponse(
+        request,
+        "settings_org.html",
+        {
+            "org": org,
+            "user": user,
+            "resolved": resolved,
+            **_base_ctx(user, dedup_count, "", address_issues_count, conflicts_count=conflicts_count),
+        },
+    )
+
+
+# ---------------------------------------------------------------------------
+# GET /settings/preferences — per-user underwriting preferences
+# ---------------------------------------------------------------------------
+
+
+@router.get("/settings/preferences", response_class=HTMLResponse)
+async def settings_user_preferences(
+    request: Request,
+    session: DBSession,
+) -> HTMLResponse:
+    from app.settings.resolver import resolve_all_defaults as _resolve_all
+
+    user = await _get_user(session, request)
+    if user is None:
+        return RedirectResponse(url="/login?next=/settings/preferences", status_code=303)
+
+    dedup_count, conflicts_count = await _get_counts(session)
+    address_issues_count = await _get_address_issues_count(session)
+    resolved = await _resolve_all(user.id, user.org_id, session)
+
+    return templates.TemplateResponse(
+        request,
+        "settings_user.html",
+        {
+            "user": user,
+            "resolved": resolved,
+            **_base_ctx(user, dedup_count, "", address_issues_count, conflicts_count=conflicts_count),
+        },
+    )
+
+
 @router.post("/ui/admin/rlis-refresh")
 async def admin_rlis_refresh(
     request: Request,
@@ -7526,6 +7592,46 @@ async def deal_setup_wizard_step(
         session.add(inputs)
         await session.flush()
 
+        # Pre-populate from org/user defaults on first creation
+        _wizard_user = await _get_user(session, request)
+        if _wizard_user is not None:
+            from decimal import Decimal as _D
+            from app.settings.resolver import resolve_all_defaults as _resolve_all
+            _defs = await _resolve_all(_wizard_user.id, _wizard_user.org_id, session)
+
+            _dsm = _defs.get("debt_sizing_mode")
+            if _dsm:
+                inputs.debt_sizing_mode = _dsm
+
+            _orm = _defs.get("operation_reserve_months")
+            if _orm is not None:
+                try:
+                    inputs.operation_reserve_months = int(_orm)
+                except (ValueError, TypeError):
+                    pass
+
+            _cfp = _defs.get("construction_floor_pct")
+            if _cfp is not None:
+                try:
+                    inputs.construction_floor_pct = _D(_cfp)
+                except Exception:
+                    pass
+
+            _noi = _defs.get("noi_escalation_rate_pct")
+            if _noi is not None:
+                try:
+                    inputs.noi_escalation_rate_pct = _D(_noi)
+                except Exception:
+                    pass
+
+            _luc = _defs.get("lease_up_curve")
+            if _luc:
+                inputs.lease_up_curve = _luc
+
+            _im = _defs.get("income_mode")
+            if _im:
+                inputs.income_mode = _im
+
     # Save current step's data
     if step == 0:
         # Physical data step — patch the linked Opportunity with missing physical attrs
@@ -8779,6 +8885,7 @@ async def model_builder(
         **({"inputs": deal_setup_inputs} if active_module == "deal_setup" else {}),
         **draw_schedule_data,
         **_base_ctx(user, dedup_count, "deals", address_issues_count, conflicts_count=conflicts_count),
+        "org_set_fields": frozenset({"debt_sizing_mode", "operation_reserve_months", "capex_reserve_per_unit_annual", "risk_free_rate_pct"}),
     }
     return templates.TemplateResponse(request, "model_builder.html", ctx)
 
