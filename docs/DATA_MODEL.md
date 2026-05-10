@@ -990,3 +990,99 @@ Complete valid values for all enums in the financial data model.
 | base_escalation | Rent escalates at escalation_rate_pct_annual; no gap chasing |
 | ltl_catchup | Accelerated escalation toward catchup_target_rent; reverts to base rate once target reached |
 | value_add_renovation | Post-renovation rent is post_reno_rent_per_unit; pre-reno is in_place_rent_per_unit |
+
+---
+
+## 14. Deal Change History (scenario_snapshots)
+
+### 14.1 Overview
+
+Every explicit Compute run inserts an immutable `scenario_snapshots` row and increments `Scenario.version`. Snapshots enable:
+- Audit trail of what inputs were active at each compute
+- Diff view (input changes + cascading output metric deltas) between any two consecutive snapshots
+- Full revert to any prior snapshot state (wipes current child rows, re-inserts from snapshot JSON)
+
+Snapshot creation is automatic; no manual save button. `Scenario.version` is the canonical version number that appears in both the history drawer and the Excel investor export Version/Audit tab.
+
+### 14.2 scenario_snapshots table
+
+| Column | Type | Notes |
+|---|---|---|
+| id | UUID PK | |
+| scenario_id | UUID FK → scenarios | CASCADE DELETE |
+| version | int | Mirrors Scenario.version at snapshot time; 1-indexed, monotonically increasing |
+| created_at | timestamptz | Server default NOW() |
+| triggered_by | str(20) | `"compute"` (current); `"manual"` reserved |
+| label | text or null | Reserved for future named checkpoints |
+| inputs_json | JSONB | Full serialized scenario inputs (~20–30 KB). See 14.3 |
+| outputs_json | JSONB | Key metric snapshot. See 14.4 |
+
+### 14.3 inputs_json structure
+
+Produced by `app/exporters/snapshot.serialize_inputs()`. Top-level keys mirror the financial entity types:
+
+```
+{
+  "operational_inputs": { ...scalar fields... },
+  "use_lines": [ {id, category, label, amount, phase, ...}, ... ],
+  "income_streams": [ {id, label, stream_type, amount_per_unit_monthly, ...}, ... ],
+  "expense_lines": [ {id, label, category, amount_annual, ...}, ... ],
+  "capital_modules": [ {id, label, funder_type, source, carry, exit_terms, ...}, ... ],
+  "waterfall_tiers": [ {id, label, tier_type, ...}, ... ],
+  "draw_sources": [ {id, ...}, ... ],
+  "unit_mix": [ {id, unit_type, count, ...}, ... ],
+  "milestones": [ {id, milestone_type, duration_months, ...}, ... ]
+}
+```
+
+Amounts serialized as float (Decimal → float at snapshot time). Schema-version fields stripped on revert to avoid forward-compat issues.
+
+### 14.4 outputs_json structure
+
+Captured from `OperationalOutputs` immediately after compute completes:
+
+```json
+{
+  "dscr": 1.31,
+  "project_irr_levered": 0.158,
+  "noi_stabilized": 163800.0,
+  "equity_required": 487000.0,
+  "total_project_cost": 1840000.0,
+  "cap_rate_on_cost": 0.062
+}
+```
+
+### 14.5 Diff format
+
+`app/exporters/snapshot.build_diff(snap_before, snap_after)` returns:
+
+```json
+{
+  "version_before": 2,
+  "version_after": 3,
+  "input_changes": [
+    {
+      "entity": "IncomeStream",
+      "label": "Gross Revenue (Unit A)",
+      "field": "amount_per_unit_monthly",
+      "before": 1200,
+      "after": 1450
+    }
+  ],
+  "output_changes": {
+    "dscr": { "before": 1.18, "after": 1.31 },
+    "project_irr_levered": { "before": 0.142, "after": 0.158 }
+  }
+}
+```
+
+### 14.6 Revert behavior
+
+Revert (`POST /ui/models/{id}/history/{snapshot_id}/revert`) replaces all current scenario inputs with the snapshot's `inputs_json`:
+1. Delete CashFlowLineItems, WaterfallResults, OperationalOutputs
+2. Delete UseLines, IncomeStreams, ExpenseLines, DrawSources, WaterfallTiers, CapitalModules, UnitMix, Milestones, OperationalInputs
+3. Re-insert all entities from `inputs_json`
+4. Re-insert `capital_module_projects` junction rows (amount + auto_size flag)
+5. Redirect to model builder — user must re-run Compute to regenerate outputs
+
+Partial revert is not supported. `Scenario.version` is not decremented on revert; next Compute will increment to the next sequential version.

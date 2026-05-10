@@ -506,6 +506,49 @@ def _noi_basis_label(income_mode: str | None) -> str:
     return _NOI_BASIS_LABELS.get(str(income_mode or "").lower(), str(income_mode or "—"))
 
 
+def _build_version_tab(ws, ctx: dict) -> None:
+    """Version/Audit tab — workbook metadata for reviewer audit trail.
+
+    Placed first in the workbook per CRE best-practice convention: professional
+    models lead with a version tab so any reviewer can immediately identify
+    the model version, export timestamp, and change history.
+    """
+    set_widths(ws, [22, 42, 60])
+    scenario = ctx["scenario"]
+    ws.cell(row=1, column=1, value="Viciniti Investor Export").font = FONT_TITLE
+    ws.cell(row=2, column=1, value="Version & Audit Trail").font = FONT_SUBTITLE
+    row = 4
+    snap = ctx.get("snapshot_at") or datetime.now()
+    fields = [
+        ("Export Generated", snap.strftime("%Y-%m-%d %H:%M UTC")),
+        ("Export Version", "2.0"),
+        ("Compute Version", f"v{scenario.version}" if getattr(scenario, 'version', None) is not None else "—"),
+        ("Scenario Name", scenario.name or "—"),
+        ("Scenario ID", str(scenario.id)),
+        ("Deal Type", str(getattr(scenario, "project_type", "") or "—").replace("_", " ").title()),
+    ]
+    for label, value in fields:
+        ws.cell(row=row, column=1, value=label).font = FONT_LABEL
+        ws.cell(row=row, column=2, value=value).font = FONT_VALUE
+        row += 1
+    row += 1
+    ws.cell(row=row, column=1, value="Change Log").font = FONT_LABEL
+    row += 1
+    ws.cell(row=row, column=1, value="Version").font = FONT_HINT
+    ws.cell(row=row, column=2, value="Date").font = FONT_HINT
+    ws.cell(row=row, column=3, value="Notes").font = FONT_HINT
+    row += 1
+    changelog = [
+        ("2.0", "2026-05-03", "Added Weighted EM, DCF NPV (configurable hurdle rate), Day Count per loan"),
+        ("1.0", "2025-01-01", "Initial release: Cover, UW Summary, Pro Forma, Cash Flow, Returns, Waterfall, Debt Schedule, Sensitivity"),
+    ]
+    for ver, date_str, notes in changelog:
+        ws.cell(row=row, column=1, value=ver).font = FONT_VALUE
+        ws.cell(row=row, column=2, value=date_str).font = FONT_VALUE
+        ws.cell(row=row, column=3, value=notes).font = FONT_VALUE
+        row += 1
+
+
 def _npv_levered(
     rollup_waterfall: list[dict],
     capital_modules: list,
