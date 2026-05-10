@@ -4526,7 +4526,9 @@ async def broker_license_update(
     await session.commit()
     await session.refresh(broker)
     b = _build_broker_detail(broker, broker.scraped_listings)
-    return templates.TemplateResponse(request, "partials/broker_detail.html", {"b": b})
+    resp = templates.TemplateResponse(request, "partials/broker_detail.html", {"b": b})
+    resp.headers["HX-Trigger"] = "brokerSaved"
+    return resp
 
 
 @router.post("/ui/brokers/{broker_id}/oregon-update", response_class=HTMLResponse)

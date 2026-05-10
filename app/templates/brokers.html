@@ -8,7 +8,7 @@
 <div class="content">
   <form id="broker-filters"
         hx-get="/ui/brokers/rows"
-        hx-trigger="input delay:300ms, change"
+        hx-trigger="input delay:300ms, change, brokerSaved from:body"
         hx-target="#brokers-tbody"
         hx-swap="innerHTML">
     <div class="toolbar">

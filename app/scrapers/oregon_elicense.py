@@ -271,7 +271,14 @@ async def _open_browser_and_search(
     proxy_url = _build_proxy_url() if proxy == "auto" else proxy
     launch_kwargs: dict[str, Any] = {"headless": True}
     if proxy_url:
-        launch_kwargs["proxy"] = {"server": proxy_url}
+        from urllib.parse import urlparse  # noqa: PLC0415
+        _p = urlparse(proxy_url)
+        _proxy_cfg: dict[str, str] = {"server": f"{_p.scheme}://{_p.hostname}:{_p.port}"}
+        if _p.username:
+            _proxy_cfg["username"] = _p.username
+        if _p.password:
+            _proxy_cfg["password"] = _p.password
+        launch_kwargs["proxy"] = _proxy_cfg
 
     pw = await async_playwright().start()
     browser = await pw.chromium.launch(**launch_kwargs)
