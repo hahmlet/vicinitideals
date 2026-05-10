@@ -35,6 +35,11 @@ tests/e2e/.playwright-cli/
 tmp/
 /docs/models/
 /docs/PitchDecks
+/poly_points.txt
+su_*.png
+/scripts/audit_model_v15*
+/scripts/audit_v15*
+/scripts/inspect_models.py
 
 # Brainstorming session files (visual companion)
 .superpowers/
