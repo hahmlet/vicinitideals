@@ -119,7 +119,7 @@ tr:hover .archive-btn { opacity: 1; }
       </thead>
       <tbody id="deals-tbody"
              hx-get="/ui/opportunities/rows/deals"
-             hx-trigger="load, input delay:400ms from:#opp-filters, change from:#opp-filters"
+             hx-trigger="load, oppFilterChange"
              hx-include="#opp-filters"
              hx-swap="innerHTML">
       </tbody>
@@ -152,7 +152,7 @@ tr:hover .archive-btn { opacity: 1; }
       </thead>
       <tbody id="offmarket-tbody"
              hx-get="/ui/opportunities/rows/offmarket"
-             hx-trigger="load, input delay:400ms from:#opp-filters, change from:#opp-filters"
+             hx-trigger="load, oppFilterChange"
              hx-include="#opp-filters"
              hx-swap="innerHTML">
       </tbody>
@@ -185,7 +185,7 @@ tr:hover .archive-btn { opacity: 1; }
       </thead>
       <tbody id="onmarket-tbody"
              hx-get="/ui/opportunities/rows/onmarket"
-             hx-trigger="load, input delay:400ms from:#opp-filters, change from:#opp-filters"
+             hx-trigger="load, oppFilterChange"
              hx-include="#opp-filters"
              hx-swap="innerHTML">
       </tbody>
@@ -203,6 +203,21 @@ function toggleSection(name) {
   body.classList.toggle('collapsed');
   if (chev) chev.textContent = body.classList.contains('collapsed') ? '▸' : '▾';
 }
+
+// Dispatch oppFilterChange to all tbodies when the global filter form changes
+(function() {
+  var form = document.getElementById('opp-filters');
+  var tbodyIds = ['deals-tbody', 'offmarket-tbody', 'onmarket-tbody'];
+  var timer;
+  function fireAll() {
+    tbodyIds.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) htmx.trigger(el, 'oppFilterChange');
+    });
+  }
+  form.addEventListener('input', function() { clearTimeout(timer); timer = setTimeout(fireAll, 400); });
+  form.addEventListener('change', function() { clearTimeout(timer); fireAll(); });
+})();
 
 // Update row counts after each HTMX load
 document.addEventListener('htmx:afterSettle', function(e) {
