@@ -1,4 +1,4 @@
-# Data Model Reference
+﻿# Data Model Reference
 
 This document describes the entity model, data sources, reconciliation
 logic, and field-level authority for the **market-data ingest layer** of
@@ -660,11 +660,17 @@ Physical attributes live on both `Opportunity` (broker-reported) and `Parcel` (c
 
 ## 9. Where Data Appears
 
-### 9.1 Listings Table (`/ui/listings`)
+### 9.1 Opportunities Page (`/ui/opportunities`)
 
-Columns displayed per row: address, source, asking price, units, cap rate, proforma cap rate, NOI, proforma NOI, building sqft, lot sqft, property type, year built, status, broker name, brokerage name, first seen, last updated, priority bucket badge.
+Three collapsible sub-tables, each with its own search input and "★ Favorited" toggle filter:
 
-Filters: text search (address), source, property type, min/max units, priority bucket, jurisdiction (uses `COALESCE(jurisdiction, city)`).
+| Sub-table | Filter | Columns |
+|---|---|---|
+| **Active Deals** | Oppos linked to at least one Project/Scenario chain | ★, Name/Address, Units, Sqft, Type, Source, Last Seen, action |
+| **Off Market** | `promotion_source = "manual"`, not in a Deal | same |
+| **On Market** | `promotion_source IN ("loopnet","crexi","scraper")`, not in a Deal | same |
+
+Physical attribute columns use `display_*` properties (Opportunity column ?? Parcel fallback). Star column toggles `is_favorited` via `PATCH /ui/opportunities/{id}/favorite`.
 
 ### 9.2 Listing Detail Panel
 
@@ -841,25 +847,21 @@ Pre-close milestones belong to an Opportunity; post-close milestones belong to a
 
 ### 12.4 UnitMix
 
-One row per unit type per project. Optional - present only when unit-type breakdown has been entered.
+> **Removed (migration 0072).** The standalone `unit_mix` DB table is dropped. `unit_mix` is now a **JSONB column on `projects`** — a list of unit-type dicts deep-copied from the Opportunity at Project creation. The `UnitMix` ORM class in `deal.py` is a tombstone stub (no `Base`, no table registration). See §13.7 for strategy values and `FINANCIAL_MODEL.md §4.8` for the full field schema and cashflow engine integration.
 
-| Column | Type | Required | Notes |
-|---|---|---|---|
-| id | UUID | Yes | PK |
-| project_id | UUID FK to projects | Yes | ondelete=CASCADE |
-| label | str (255) | Yes | e.g. "1BR/1BA - Renovated" |
-| unit_count | int | Yes | Default 1 |
-| avg_sqft | Numeric(18,2) or None | No | |
-| beds | Numeric(4,1) or None | No | 0-4+ in 0.5 increments |
-| baths | Numeric(4,1) or None | No | 0-3+ in 0.5 increments |
-| market_rent_per_unit | Numeric(18,2) or None | No | |
-| in_place_rent_per_unit | Numeric(18,2) or None | No | Current rent; absent for vacant units |
-| unit_strategy | str or None | No | base_escalation / ltl_catchup / value_add_renovation |
-| post_reno_rent_per_unit | Numeric(18,2) or None | No | value_add_renovation strategy only |
-| notes | str or None | No | |
-| updated_at | datetime | Yes | |
+**JSONB element shape (Project.unit_mix[]):**
 
----
+| Field | Type | Notes |
+|---|---|---|
+| `label` | str | e.g. "1BR/1BA - Renovated" |
+| `unit_count` | int | Number of units of this type |
+| `avg_sqft` | Numeric | Average square footage |
+| `beds` | Numeric(4,1) | 0-4+ in 0.5 increments |
+| `baths` | Numeric(4,1) | 0-3+ in 0.5 increments |
+| `in_place_rent_per_unit` | Numeric | Current tenant rent |
+| `market_rent_per_unit` | Numeric | Market rent (LTL target) |
+| `post_reno_rent_per_unit` | Numeric | value_add_renovation only |
+| `unit_strategy` | str | base_escalation / ltl_catchup / value_add_renovation |
 
 ### 12.5 DrawSource
 
@@ -949,9 +951,18 @@ Complete valid values for all enums in the financial data model.
 | exit | Selling costs, payoff penalties at disposition |
 | other | Catch-all |
 
-### 13.5 ProjectType / deal_type
+### 13.5 ProjectType / ProposedUse
 
-Stored on both Scenario.project_type (legacy, backward compat) and Project.deal_type (canonical - engine reads this).
+> **Removed (migration 0072):** `Project.deal_type` (string) and `Scenario.project_type` (enum) are both dropped.
+
+**Current schema (post-0072):**
+
+| Attribute | Column | Location | Notes |
+|---|---|---|---|
+| What the property *is today* | `project_type` | `Opportunity` | Enum: see values below |
+| What this deal *proposes to do* | `proposed_use` | `Project` | String; values include `hold_existing`, `value_add_renovation`, `redevelop`, `ground_up_new`, `land_bank` |
+
+`ProjectType` enum values (for `opportunity.project_type`):
 
 | Value | Strategy |
 |---|---|
