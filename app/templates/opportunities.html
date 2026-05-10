@@ -198,7 +198,11 @@ function toggleSection(name) {
 
   function loadAll() {
     var form = document.getElementById('opp-filters');
-    var params = form ? new URLSearchParams(new FormData(form)).toString() : '';
+    var qs = new URLSearchParams();
+    if (form) {
+      new FormData(form).forEach(function(v, k) { if (v !== '') qs.append(k, v); });
+    }
+    var params = qs.toString();
     tables.forEach(function(t) {
       var el = document.getElementById(t.id);
       if (!el) return;
