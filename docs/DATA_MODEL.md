@@ -6,11 +6,9 @@ Vicinity Deals — parcels, opportunities, and the scrapers / APIs
 that populate them. It is the data-layer counterpart of `FINANCIAL_MODEL.md`.
 
 **Scope note**: Deal-side entities (Scenario, Project, OperationalInputs,
-IncomeStream, UnitMix, CapitalModule, etc.) are documented in
-`FINANCIAL_MODEL.md` alongside the math that consumes them. Recent
-UnitMix schema changes (beds/baths fields, `avg_monthly_rent` removal,
-`unit_strategy`, `in_place_rent_per_unit`, `market_rent_per_unit`,
-`post_reno_rent_per_unit`) are in FINANCIAL_MODEL.md §4.8.
+IncomeStream, CapitalModule, etc.) are documented in
+`FINANCIAL_MODEL.md` alongside the math that consumes them. `unit_mix` is
+JSONB on `Project` (not a separate table) — field reference in FINANCIAL_MODEL.md §4.8.
 
 **Deprecated deal fields (2026-04-19):**
 - `capital_modules.active_phase_end` — derived at compute time from
