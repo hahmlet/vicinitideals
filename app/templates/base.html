@@ -57,7 +57,7 @@
 </style>
 {% block head %}{% endblock %}
 </head>
-<body>
+<body {% if user %}hx-headers='{"X-User-ID": "{{ user.id }}"}'{% endif %}>
 
 {% if user_email_verified is defined and user_email_verified == false %}
 <div id="email-verify-banner" style="
