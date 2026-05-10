@@ -206,7 +206,13 @@ function toggleSection(name) {
     tables.forEach(function(t) {
       var el = document.getElementById(t.id);
       if (!el) return;
-      htmx.ajax('GET', t.url + (params ? '?' + params : ''), {target: '#' + t.id, swap: 'innerHTML'});
+      fetch(t.url + (params ? '?' + params : ''), {credentials: 'same-origin'})
+        .then(function(r) { return r.text(); })
+        .then(function(html) {
+          el.innerHTML = html;
+          if (window.htmx) htmx.process(el);
+          updateCounts();
+        });
     });
   }
 
