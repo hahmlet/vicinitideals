@@ -942,12 +942,5 @@ document.addEventListener('click', function(e) {
   });
 })();
 </script>
-{% if user %}
-<script>
-  document.body.addEventListener('htmx:configRequest', function(evt) {
-    evt.detail.headers['X-User-ID'] = '{{ user.id }}';
-  });
-</script>
-{% endif %}
 </body>
 </html>

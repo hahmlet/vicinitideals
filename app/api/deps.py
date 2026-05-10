@@ -18,19 +18,27 @@ async def get_db() -> AsyncGenerator[AsyncSession, None]:
         yield session
 
 
-def get_current_user_id(
+async def get_current_user_id(
     request: Request,
     x_user_id: Annotated[str | None, Header(alias="X-User-ID")] = None,
 ) -> UUID:
-    """Return the validated user UUID from request state or the raw header."""
+    """Return user UUID from request state, X-User-ID header, or session cookie."""
     candidate = getattr(request.state, "user_id", None) or x_user_id
-    if not candidate:
-        raise HTTPException(status_code=400, detail="Missing X-User-ID header")
+    if candidate:
+        try:
+            return UUID(str(candidate))
+        except ValueError as exc:  # pragma: no cover
+            raise HTTPException(status_code=400, detail="Invalid X-User-ID header") from exc
 
-    try:
-        return UUID(str(candidate))
-    except ValueError as exc:  # pragma: no cover - middleware blocks invalid values first
-        raise HTTPException(status_code=400, detail="Invalid X-User-ID header") from exc
+    # Browser HTMX requests carry a signed session cookie instead of the header.
+    from app.api.auth import COOKIE_NAME, decode_session_token
+    token = request.cookies.get(COOKIE_NAME)
+    if token:
+        uid = decode_session_token(token)
+        if uid is not None:
+            return uid
+
+    raise HTTPException(status_code=401, detail="Authentication required")
 
 
 DBSession = Annotated[AsyncSession, Depends(get_db)]
