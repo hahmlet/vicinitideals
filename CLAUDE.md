@@ -155,6 +155,7 @@ docs/
   FINANCIAL_MODEL.md   # 846-line math reference
   PROJECT_OVERVIEW.md  # Architecture overview
   testing-strategy.md  # Test architecture
+  Troubleshooting/     # Per-symptom debug guides (start here when something breaks)
   ops/, security/, verification/, wireframes/
 ```
 
@@ -281,6 +282,14 @@ Portland listings retained for two purposes:
 - No prioritization of Portland listings for manual data entry
 
 **Target acquisition jurisdictions**: Multnomah + Clackamas county cities *other than Portland* — Gresham, Fairview, Wood Village, Troutdale, Happy Valley, Milwaukie, Oregon City, Gladstone, Lake Oswego, West Linn, Tualatin, Wilsonville, unincorporated areas. These get spending priority for paid data enrichment.
+
+---
+
+## Troubleshooting
+
+Before diagnosing a UI or infrastructure regression, check `docs/Troubleshooting/` for a matching symptom guide. Current guides:
+
+- [HTMX tables go empty](docs/Troubleshooting/htmx-table-loading.md) — opportunities page tables blank after deploy; covers 4 root causes and a debugging checklist
 
 ---
 
