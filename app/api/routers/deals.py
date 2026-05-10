@@ -35,8 +35,13 @@ async def get_deal_schema() -> dict[str, Any]:
 
 
 @router.get("/deals/{deal_id}/export/json")
-async def export_deal(deal_id: UUID, session: DBSession) -> dict[str, Any]:
+async def export_deal(deal_id: UUID, session: DBSession, current_user_id: CurrentUserId) -> dict[str, Any]:
     """Export a full deal as portable deal-v1 JSON."""
+    from app.models.deal import Deal
+    user = await session.get(User, current_user_id)
+    deal = await session.get(Deal, deal_id)
+    if user is None or deal is None or deal.org_id != user.org_id:
+        raise HTTPException(status_code=404, detail="Deal not found")
     try:
         return await export_deal_json(session=session, deal_id=deal_id)
     except ValueError as exc:

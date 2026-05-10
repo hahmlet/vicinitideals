@@ -17,7 +17,8 @@ from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 
 from app.api.deps import CurrentUserId, DBSession
-from app.models.deal import Scenario as FinancialScenario  # financial plan
+from app.models.deal import Deal, Scenario as FinancialScenario  # financial plan
+from app.models.org import User
 from app.models.project import Opportunity, Project
 from app.models.scenario import (
     Sensitivity,
@@ -162,10 +163,16 @@ async def create_project_scenario(
 async def get_scenario_results(
     scenario_id: UUID,
     session: DBSession,
+    current_user_id: CurrentUserId,
     run_number: int | None = Query(default=None, alias="run", ge=1),
 ) -> list[SensitivityResult]:
     sensitivity = await session.get(Sensitivity, scenario_id)
     if sensitivity is None:
+        raise HTTPException(status_code=404, detail="Scenario not found")
+    user = await session.get(User, current_user_id)
+    fin_scenario = await session.get(FinancialScenario, sensitivity.scenario_id)
+    deal = await session.get(Deal, fin_scenario.deal_id) if fin_scenario else None
+    if user is None or deal is None or deal.org_id != user.org_id:
         raise HTTPException(status_code=404, detail="Scenario not found")
 
     requested_run = run_number or max(int(getattr(sensitivity, "run_count", 1) or 1), 1)

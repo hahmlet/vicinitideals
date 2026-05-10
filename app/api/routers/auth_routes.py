@@ -125,6 +125,7 @@ async def login_post(
         token,
         max_age=SESSION_MAX_AGE,
         httponly=True,
+        secure=True,
         samesite="lax",
     )
     return resp
@@ -269,6 +270,7 @@ async def register_post(
         token,
         max_age=SESSION_MAX_AGE,
         httponly=True,
+        secure=True,
         samesite="lax",
     )
     return resp
@@ -697,6 +699,7 @@ async def reset_password_post(
         session_token,
         max_age=SESSION_MAX_AGE,
         httponly=True,
+        secure=True,
         samesite="lax",
     )
     return resp
