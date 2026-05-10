@@ -273,7 +273,9 @@ async def _open_browser_and_search(
     if proxy_url:
         from urllib.parse import urlparse  # noqa: PLC0415
         _p = urlparse(proxy_url)
-        _proxy_cfg: dict[str, str] = {"server": f"{_p.scheme}://{_p.hostname}:{_p.port}"}
+        # Playwright/Chromium can't handle HTTP proxy 407 challenges with some
+        # auth schemes. SOCKS5 embeds credentials in the handshake, no 407.
+        _proxy_cfg: dict[str, str] = {"server": f"socks5://{_p.hostname}:{_p.port}"}
         if _p.username:
             _proxy_cfg["username"] = _p.username
         if _p.password:
