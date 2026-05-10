@@ -11,6 +11,7 @@ from app.api.routers import (
     portfolios,
     projects,
     scenarios,
+    settings,
     users,
 )
 
@@ -26,6 +27,7 @@ ROUTERS = [
     dedup.router,
     portfolios.router,
     ingest.router,
+    settings.router,
 ]
 
 __all__ = ["ROUTERS"]

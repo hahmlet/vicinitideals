@@ -45,12 +45,12 @@ class FieldConflictLog(Base):
     )
     canonical_listing_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True),
-        ForeignKey("scraped_listings.id", ondelete="CASCADE"),
+        ForeignKey("opportunities.id", ondelete="CASCADE"),
         nullable=False,
     )
     loser_listing_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True),
-        ForeignKey("scraped_listings.id", ondelete="CASCADE"),
+        ForeignKey("opportunities.id", ondelete="CASCADE"),
         nullable=False,
     )
     field_name: Mapped[str] = mapped_column(String(64), nullable=False)

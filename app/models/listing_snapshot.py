@@ -30,7 +30,7 @@ class ListingSnapshot(Base):
     )
     listing_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True),
-        ForeignKey("scraped_listings.id", ondelete="CASCADE"),
+        ForeignKey("opportunities.id", ondelete="CASCADE"),
         nullable=False,
     )
     captured_at: Mapped[datetime] = mapped_column(

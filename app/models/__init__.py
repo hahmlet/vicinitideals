@@ -95,6 +95,7 @@ from app.models.api_call_log import ApiCallLog  # noqa: F401
 from app.models.field_conflict_log import FieldConflictAction, FieldConflictLog  # noqa: F401
 from app.models.listing_snapshot import ListingSnapshot  # noqa: F401
 from app.models.map_polygon import MapPolygon  # noqa: F401
+from app.models.settings import OrgSetting, UserSetting  # noqa: F401
 
 __all__ = [
     "Base",
@@ -162,4 +163,7 @@ __all__ = [
     "ListingSnapshot",
     "FieldConflictLog",
     "FieldConflictAction",
+    # Org & user defaults
+    "OrgSetting",
+    "UserSetting",
 ]
