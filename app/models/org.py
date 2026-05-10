@@ -63,6 +63,10 @@ class User(Base):
     is_org_admin: Mapped[bool] = mapped_column(
         Boolean, nullable=False, default=False, server_default="false"
     )
+    # Site-level admin. Controls access to /settings/* routes and scraping controls.
+    is_admin: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=False, server_default="false"
+    )
     # Email verification (soft gate — users can still log in when False,
     # they just see a "Please verify your email" banner on every page)
     email_verified: Mapped[bool] = mapped_column(

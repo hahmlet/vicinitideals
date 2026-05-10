@@ -16,7 +16,7 @@ from urllib.parse import quote_plus
 from uuid import UUID
 
 import httpx
-from fastapi import APIRouter, Cookie, Form, HTTPException, Query, Request
+from fastapi import APIRouter, Form, HTTPException, Query, Request
 from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse, RedirectResponse, StreamingResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy import and_, func, literal, or_, select
@@ -128,7 +128,6 @@ templates.env.filters["multiple"] = _fmt_multiple
 templates.env.filters["number_fmt"] = _fmt_number
 templates.env.filters["urlencode"] = quote_plus
 
-_SETTINGS_OWNER_NAME = "Stephen Ketch"
 _PACIFIC = ZoneInfo("America/Los_Angeles")
 _PROXYON_STATUS_CACHE_TTL_SECONDS = 3600
 _proxyon_status_lock = asyncio.Lock()
@@ -772,11 +771,7 @@ def _build_portfolio_gantt(portfolio_entries: "list[tuple[str, str, Deal]]") -> 
 
 
 async def _get_user(session: DBSession, request: Request) -> User | None:
-    """Resolve the current user from the session cookie.
-
-    Checks vd_session (new signed cookie) first, falls back to vd_user_id
-    (legacy splash-screen cookie) so existing sessions keep working.
-    """
+    """Resolve the current user from the signed session cookie."""
     from app.api.auth import COOKIE_NAME, decode_session_token
 
     token = request.cookies.get(COOKIE_NAME)
@@ -785,14 +780,6 @@ async def _get_user(session: DBSession, request: Request) -> User | None:
         if uid is not None:
             return await session.get(User, uid)
 
-    # Legacy fallback — vd_user_id cookie set by the splash screen
-    legacy = request.cookies.get("vd_user_id")
-    if legacy:
-        try:
-            uid = UUID(legacy)
-            return await session.get(User, uid)
-        except ValueError:
-            pass
     return None
 
 
@@ -952,13 +939,8 @@ def _base_ctx(
     }
 
 
-def _is_settings_owner(user: User | None) -> bool:
-    return bool(user and user.name.strip().lower() == _SETTINGS_OWNER_NAME.lower())
-
-
 def _require_settings_owner(user: User | None) -> None:
-    if not _is_settings_owner(user):
-        # Hide route existence for all non-owner users.
+    if not (user and user.is_admin):
         raise HTTPException(status_code=404, detail="Not found")
 
 
@@ -1241,18 +1223,11 @@ async def splash(request: Request, session: DBSession) -> HTMLResponse:
     return templates.TemplateResponse(request, "splash.html", {"users": users})
 
 
-@router.post("/splash/select")
-async def select_user(user_id: str = Form(...)) -> RedirectResponse:
-    resp = RedirectResponse(url="/deals", status_code=303)
-    resp.set_cookie("vd_user_id", user_id, max_age=60 * 60 * 24 * 30, httponly=True)
-    return resp
-
 
 @router.get("/settings/scraping-services", response_class=HTMLResponse)
 async def settings_scraping_services(
     request: Request,
     session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
 ) -> HTMLResponse:
     user = await _get_user(session, request)
     _require_settings_owner(user)
@@ -1391,7 +1366,6 @@ async def settings_scraping_services(
 async def settings_data_sources(
     request: Request,
     session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
 ) -> HTMLResponse:
     user = await _get_user(session, request)
     _require_settings_owner(user)
@@ -1891,7 +1865,6 @@ async def settings_organization_post(
 async def admin_rlis_refresh(
     request: Request,
     session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
 ) -> JSONResponse:
     """
     Dispatch rlis_quarterly_refresh_task to the Celery default queue.
@@ -1909,7 +1882,6 @@ async def admin_rlis_refresh(
 async def admin_seed_rlis(
     request: Request,
     session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
 ) -> JSONResponse:
     """Dispatch seed_rlis_task — re-seeds parcels from the cached taxlot GeoJSON."""
     from app.tasks.parcel_seed import seed_rlis_task
@@ -1964,7 +1936,6 @@ async def admin_backfill_listing_buckets(
 async def admin_classify_parcels(
     request: Request,
     session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
 ) -> JSONResponse:
     """Dispatch classify_parcels_task — classifies parcels with data but no bucket."""
     from app.tasks.parcel_seed import classify_parcels_task
@@ -1978,7 +1949,6 @@ async def admin_classify_parcels(
 async def deals_new_page(
     request: Request,
     session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
     opp_id: str = Query(default=""),
 ) -> HTMLResponse:
     """Full-page wizard for creating a new deal (name + type)."""
@@ -2010,7 +1980,6 @@ async def deals_new_page(
 async def deals_page(
     request: Request,
     session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
     q: str = Query(default=""),
     status: list[str] = Query(default=[]),
     type: list[str] = Query(default=[]),
@@ -2106,7 +2075,6 @@ def _seed_milestones(project: Project, deal_type: ProjectType) -> list[Milestone
 async def create_deal(
     request: Request,
     session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
     new: str = Query(default=""),
 ) -> HTMLResponse:
     """Quick-create: Opportunity + Deal + default dev Project. Redirects to model builder.
@@ -2253,7 +2221,6 @@ async def deal_detail(
     request: Request,
     deal_id: UUID,
     session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
     tab: str = Query(default="overview"),
     error: str = Query(default=""),
 ) -> HTMLResponse:
@@ -2269,7 +2236,7 @@ async def deal_detail(
             selectinload(Deal.scenarios).selectinload(DealModel.projects).selectinload(Project.opportunity),
         ],
     )
-    if deal is None:
+    if deal is None or (user is not None and deal.org_id != user.org_id):
         return HTMLResponse("<p class='text-muted'>Deal not found.</p>", status_code=404)
 
     opportunity = _first_opportunity(deal)
@@ -2342,8 +2309,9 @@ async def archive_deal(
     deal_id: UUID,
     session: DBSession,
 ) -> HTMLResponse:
+    user = await _get_user(session, request)
     deal = await session.get(Deal, deal_id)
-    if deal is not None:
+    if deal is not None and (user is None or deal.org_id == user.org_id):
         deal.status = DealStatus.archived
         await session.flush()
     loaded_deals = await _load_deals(session)
@@ -2357,6 +2325,7 @@ async def update_deal(
     deal_id: UUID,
     session: DBSession,
 ) -> HTMLResponse:
+    user = await _get_user(session, request)
     form = await request.form()
     name = str(form.get("name", "")).strip()
     status_raw = str(form.get("status", "hypothetical")).strip()
@@ -2368,7 +2337,7 @@ async def update_deal(
             selectinload(Deal.scenarios).selectinload(Scenario.projects).selectinload(Project.opportunity),
         ],
     )
-    if deal is None:
+    if deal is None or (user is not None and deal.org_id != user.org_id):
         return HTMLResponse("<p class='text-muted'>Not found.</p>", status_code=404)
 
     if name:
@@ -2388,7 +2357,6 @@ async def update_deal(
 async def create_model_for_deal(
     request: Request,
     session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
 ) -> HTMLResponse:
     """Create a new financial model (Deal + Project) for an existing Opportunity."""
     form = await request.form()
@@ -2537,7 +2505,6 @@ def _build_building_row(prop: object) -> dict:
 async def opportunities_page(
     request: Request,
     session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
 ) -> HTMLResponse:
     user = await _get_user(session, request)
     dedup_count, conflicts_count = await _get_counts(session)
@@ -2701,7 +2668,6 @@ async def toggle_opportunity_favorite(
 async def opportunities_conflicts(
     request: Request,
     session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
 ) -> HTMLResponse:
     """Show field-level conflicts between Opportunity physical attrs and linked Parcel."""
     user = await _get_user(session, request)
@@ -2735,7 +2701,6 @@ async def opportunities_conflicts(
 async def trigger_conflict_auto_resolve(
     request: Request,
     session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
 ) -> HTMLResponse:
     """Enqueue a background task to auto-resolve all existing conflicts.
 
@@ -2812,7 +2777,6 @@ def _safe_return_path(raw: str) -> str:
 async def opportunity_wizard_get(
     request: Request,
     session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
     step: int = Query(default=1),
     opp_id: str = Query(default=""),
     link_to_deal: str = Query(default=""),
@@ -2914,7 +2878,6 @@ async def opportunity_wizard_search(
 async def opportunity_wizard_step(
     request: Request,
     session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
 ) -> HTMLResponse:
     form = await request.form()
     step = int(form.get("step", 1))
@@ -3046,7 +3009,6 @@ async def opportunity_detail(
     request: Request,
     opp_id: UUID,
     session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
 ) -> HTMLResponse:
     """Opportunity detail page — shows buildings inline."""
     user = await _get_user(session, request)
@@ -3119,7 +3081,6 @@ async def dissolve_opportunity(
 async def buildings_page(
     request: Request,
     session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
     q: str = Query(default=""),
     source: str = Query(default=""),
 ) -> HTMLResponse:
@@ -3338,7 +3299,6 @@ def _parcel_filter_ctx(
 @router.get("/parcels", response_class=HTMLResponse)
 async def parcels_page(
     request: Request, session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
     q: str = Query(default=""),
     zoning: list[str] = Query(default=[]),
     jurisdiction: list[str] = Query(default=[]),
@@ -4244,7 +4204,6 @@ async def create_deal_from_listing(
     request: Request,
     listing_id: UUID,
     session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
 ) -> HTMLResponse:
     """Create a Deal + Scenario from a ScrapedListing. Redirects to model builder."""
     listing = await session.get(
@@ -4487,7 +4446,6 @@ def _apply_listings_filter(brokers_list: list, listings_op: str, listings_val: s
 @router.get("/brokers", response_class=HTMLResponse)
 async def brokers_page(
     request: Request, session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
     q: str = Query(default=""),
     company: str = Query(default=""),
     listings_op: str = Query(default=""),
@@ -6459,7 +6417,6 @@ async def create_deal_copy(
     request: Request,
     deal_id: UUID,
     session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
 ) -> HTMLResponse:
     """Deep-copy a Scenario into a new Scenario with the same Projects, milestones, and line items."""
     from decimal import Decimal as _Dec
@@ -6640,7 +6597,6 @@ async def create_deal_project(
     request: Request,
     deal_id: UUID,
     session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
 ) -> HTMLResponse:
     """Add a new Project to an existing Scenario (max 5). Redirects to builder with timeline wizard."""
     deal = await session.get(DealModel, deal_id)
@@ -8480,7 +8436,6 @@ async def model_builder(
     request: Request,
     model_id: UUID,
     session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
     module: str = Query(default=""),
     project: str = Query(default=""),  # optional Project.id to view a specific project
     view: str = Query(default=""),  # "underwriting" for the scenario-level rollup; default = per-project
@@ -10569,7 +10524,6 @@ async def model_builder_line_form(
 async def portfolios_page(
     request: Request,
     session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
 ) -> HTMLResponse:
     user = await _get_user(session, request)
     dedup_count, conflicts_count = await _get_counts(session)
@@ -10648,7 +10602,6 @@ async def deals_search(
 async def create_portfolio(
     request: Request,
     session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
 ) -> HTMLResponse:
     form = await request.form()
     name = str(form.get("name", "")).strip()
@@ -10675,7 +10628,6 @@ async def portfolio_detail(
     request: Request,
     portfolio_id: UUID,
     session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
 ) -> HTMLResponse:
     user = await _get_user(session, request)
     dedup_count, conflicts_count = await _get_counts(session)
@@ -10842,7 +10794,6 @@ async def portfolio_remove_deal(
 async def dedup_page(
     request: Request, session: DBSession,
     tab: str = Query(default="pending"),
-    vd_user_id: str | None = Cookie(default=None),
 ) -> HTMLResponse:
     user = await _get_user(session, request)
     dedup_count, conflicts_count = await _get_counts(session)
@@ -10934,7 +10885,6 @@ async def dedup_compare(
 @router.post("/ui/dedup/{candidate_id}/keep-separate", response_class=HTMLResponse)
 async def ui_dedup_keep_separate(
     request: Request, candidate_id: UUID, session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
 ) -> HTMLResponse:
     candidate = await session.get(DedupCandidate, candidate_id)
     if candidate is None:
@@ -10954,7 +10904,6 @@ async def ui_dedup_keep_separate(
 @router.post("/ui/dedup/{candidate_id}/resolve", response_class=HTMLResponse)
 async def ui_dedup_resolve(
     request: Request, candidate_id: UUID, session: DBSession,
-    vd_user_id: str | None = Cookie(default=None),
 ) -> HTMLResponse:
     candidate = await session.get(DedupCandidate, candidate_id)
     if candidate is None:
