@@ -93,8 +93,8 @@ async def _enrich_broker_oregon_inner(broker_id: str) -> dict[str, Any]:
         #   2. Broker has no license but does have first+last name → try
         #      name-based lookup with automatic fallbacks:
         #        a. Exact first+last search
-        #        b. Nickname expansion (e.g. "Tim" → "Timothy")
-        #        c. Last-name-only search (only succeeds if exactly 1 match)
+        #        b. Last-name-only search (only succeeds if exactly 1 match)
+        #        c. Nickname expansion (e.g. "Tim" → "Timothy")
         try:
             if broker.license_number:
                 record = await lookup_broker(broker.license_number, proxy=None)
