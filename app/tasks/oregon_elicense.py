@@ -96,10 +96,10 @@ async def _enrich_broker_oregon_inner(broker_id: str) -> dict[str, Any]:
         #      ``ambiguous`` and left untouched.
         try:
             if broker.license_number:
-                record = await lookup_broker(broker.license_number)
+                record = await lookup_broker(broker.license_number, proxy=None)
             elif broker.first_name and broker.last_name:
                 record, name_status = await lookup_broker_by_name(
-                    broker.first_name, broker.last_name
+                    broker.first_name, broker.last_name, proxy=None
                 )
                 if name_status == "ambiguous":
                     broker.oregon_lookup_status = "ambiguous"
