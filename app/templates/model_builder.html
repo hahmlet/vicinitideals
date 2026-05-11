@@ -2050,6 +2050,8 @@ function submitCloneFrom(e) {
 var _wizardStep = {{ '0' if new_deal else '1' }};
 var _wizardAnchor = 'offer_made';
 var _newDeal = {{ 'true' if new_deal else 'false' }};
+var _wizardDealType = "{{ wizard_deal_type | default('') | string | replace('ProjectType.','') }}";
+var _wTLTemplate = {{ (wizard_timeline_template | default({})) | tojson }};
 var _wizardTitles = {
   0: ['Name your deal',                      'Give this deal a name and choose the project type.'],
   1: ['What phase does your project start?', 'Select the first milestone — this becomes your timeline anchor.'],
@@ -2071,6 +2073,13 @@ function _wShow(step) {
   document.getElementById('wizard-back').style.display = step > firstStep ? '' : 'none';
   document.getElementById('wizard-next').textContent = step === 3 ? 'Set Up Timeline →' : 'Continue →';
   _wizardStep = step;
+  if (step === 2) {
+    var durInput = document.getElementById('wizard-anchor-duration');
+    if (!durInput.value) {
+      var tpl = (_wTLTemplate[_wizardDealType] || {})[_wizardAnchor] || {};
+      if (tpl.duration_days) durInput.value = tpl.duration_days;
+    }
+  }
   _wizardValidate();
 }
 
@@ -2099,6 +2108,7 @@ function selectAnchor(val, el) {
 }
 
 function updateWizardDealType(dealType) {
+  _wizardDealType = dealType;
   var phasesForType = {
     'acquisition': ['offer_made','under_contract','close','operation_stabilized'],
     'value_add': ['offer_made','under_contract','close','pre_development','construction','operation_stabilized'],
