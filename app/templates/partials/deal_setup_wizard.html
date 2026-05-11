@@ -616,7 +616,7 @@
         {%- set _rate   = _dt_cfg.get('rate_pct')    or _dt_default_rates.get(dt, 5.0) -%}
         {%- set _ltype  = _dt_cfg.get('loan_type')   or _dt_default_types.get(dt, 'pi') -%}
         {%- set _amort  = _dt_cfg.get('amort_years') or 30 -%}
-        {%- set _hold_term = _dt_cfg.get('hold_term_years') or 10 -%}
+        {%- set _hold_term = _dt_cfg.get('hold_term_years') if _dt_cfg.get('hold_term_years') is not none else 7 -%}
         {%- set _mcfg = _dmc.get(dt, {}) -%}
         {%- set _vehicle = _mcfg.get('exit_vehicle') or _mcfg.get('retired_by') or 'maturity' -%}
         {%- if _vehicle == 'perpetuity' -%}{%- set _vehicle = 'maturity' -%}{%- endif -%}

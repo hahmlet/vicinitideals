@@ -7526,6 +7526,35 @@ async def approve_timeline(
     return RedirectResponse(url=f"/models/{proj.scenario_id}/builder?project={project_id}&module=sources", status_code=303)
 
 
+async def _seed_wizard_perm_defaults(inputs: "OperationalInputs", session: "DBSession", request: "Request") -> None:
+    """Seed permanent-debt staging from user/org resolved defaults when not already set."""
+    _wiz_user = await _get_user(session, request)
+    if _wiz_user is None:
+        return
+    from app.settings.resolver import resolve_all_defaults as _resolve_all
+    _wiz_defs = await _resolve_all(_wiz_user.id, _wiz_user.org_id, session)
+    _wiz_dt = dict(inputs.debt_terms or {})
+    _wiz_pd = dict(_wiz_dt.get("permanent_debt", {}))
+    _wiz_dirty = False
+    for _def_key, _staging_key in (
+        ("hold_term_years", "hold_term_years"),
+        ("amort_term_years", "amort_years"),
+    ):
+        if _staging_key not in _wiz_pd:
+            _raw = _wiz_defs.get(_def_key)
+            if _raw:
+                try:
+                    _wiz_pd[_staging_key] = int(_raw)
+                    _wiz_dirty = True
+                except (ValueError, TypeError):
+                    pass
+    if _wiz_dirty:
+        _wiz_dt["permanent_debt"] = _wiz_pd
+        inputs.debt_terms = _wiz_dt
+        session.add(inputs)
+        await session.flush()
+
+
 @router.get("/ui/models/{model_id}/setup", response_class=HTMLResponse)
 async def deal_setup_wizard_get(
     request: Request,
@@ -7576,30 +7605,7 @@ async def deal_setup_wizard_get(
 
     # Seed perm-debt staging from user/org resolved defaults when not already set.
     if inputs is not None:
-        _wiz_user = await _get_user(session, request)
-        if _wiz_user is not None:
-            from app.settings.resolver import resolve_all_defaults as _resolve_all
-            _wiz_defs = await _resolve_all(_wiz_user.id, _wiz_user.org_id, session)
-            _wiz_dt = dict(inputs.debt_terms or {})
-            _wiz_pd = dict(_wiz_dt.get("permanent_debt", {}))
-            _wiz_dirty = False
-            for _def_key, _staging_key in (
-                ("hold_term_years", "hold_term_years"),
-                ("amort_term_years", "amort_years"),
-            ):
-                if _staging_key not in _wiz_pd:
-                    _raw = _wiz_defs.get(_def_key)
-                    if _raw:
-                        try:
-                            _wiz_pd[_staging_key] = int(_raw)
-                            _wiz_dirty = True
-                        except (ValueError, TypeError):
-                            pass
-            if _wiz_dirty:
-                _wiz_dt["permanent_debt"] = _wiz_pd
-                inputs.debt_terms = _wiz_dt
-                session.add(inputs)
-                await session.flush()
+        await _seed_wizard_perm_defaults(inputs, session, request)
     return templates.TemplateResponse(request, "partials/deal_setup_wizard.html", {
         "request": request, "model": model, "inputs": inputs, "step": step,
         "missing_building_data": missing_building_data,
@@ -7898,6 +7904,8 @@ async def deal_setup_wizard_step(
     await session.refresh(model)
 
     next_step = step + 1
+    # Seed perm-debt defaults so step 4 shows user/org preference, not template fallback.
+    await _seed_wizard_perm_defaults(inputs, session, request)
     missing_building_data = await _get_missing_building_data(default_project, session)
     return templates.TemplateResponse(request, "partials/deal_setup_wizard.html", {
         "request": request, "model": model, "inputs": inputs, "step": next_step,
