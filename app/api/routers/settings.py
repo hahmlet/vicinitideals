@@ -488,3 +488,255 @@ async def batch_upsert_user_timeline_defaults(
     await session.commit()
     log.info("user_timeline_defaults.upsert user=%s saved=%s", current_user_id, saved)
     return {"ok": True, "saved": saved}
+
+
+# ---------------------------------------------------------------------------
+# Source Vehicles — saved capital source presets
+# ---------------------------------------------------------------------------
+
+from sqlalchemy.exc import IntegrityError as _IntegrityError  # noqa: E402
+
+from app.models.capital import CapitalModule as _CapitalModule  # noqa: E402
+from app.models.source_vehicle import OrgSourceVehicle as _OSV, UserSourceVehicle as _USV  # noqa: E402
+
+
+def _sv_body_to_jsonb(body: dict) -> tuple[dict, dict, dict]:
+    """Convert flat API body to (source_config, carry_config, exit_config) JSONB dicts."""
+    source: dict = {}
+    if body.get("interest_rate_pct") is not None:
+        source["interest_rate_pct"] = float(body["interest_rate_pct"])
+    if body.get("ltv_pct") is not None:
+        source["ltv_pct"] = float(body["ltv_pct"])
+    if body.get("amort_term_years") is not None:
+        source["amort_term_years"] = int(body["amort_term_years"])
+    if body.get("hold_term_years") is not None:
+        source["hold_term_years"] = int(body["hold_term_years"])
+    if body.get("dscr_min") is not None:
+        source["dscr_min"] = float(body["dscr_min"])
+
+    carry: dict = {}
+    constr_ct = body.get("construction_carry_type")
+    oper_ct = body.get("operation_carry_type")
+    if constr_ct or oper_ct:
+        phases = []
+        if constr_ct:
+            phases.append({"name": "construction", "carry_type": constr_ct})
+        if oper_ct:
+            phases.append({"name": "operation", "carry_type": oper_ct})
+        carry["phases"] = phases
+
+    exit_cfg: dict = {}
+    if body.get("exit_type"):
+        exit_cfg["exit_type"] = body["exit_type"]
+
+    return source or None, carry or None, exit_cfg or None
+
+
+@router.get("/source-vehicles")
+async def list_source_vehicles(
+    current_user_id: CurrentUserId,
+    session: DBSession,
+) -> JSONResponse:
+    """Return org + user vehicles for the current user (used by wizard dropdown)."""
+    user = await _get_user_or_401(current_user_id, session)
+    org_vs = (
+        await session.execute(
+            select(_OSV).where(_OSV.org_id == user.org_id).order_by(_OSV.name)
+        )
+    ).scalars().all()
+    user_vs = (
+        await session.execute(
+            select(_USV).where(_USV.user_id == user.id).order_by(_USV.name)
+        )
+    ).scalars().all()
+
+    result = [
+        {
+            "id": str(v.id),
+            "name": v.name,
+            "funder_type": v.funder_type,
+            "owner": "org",
+            "source_config": v.source_config,
+            "carry_config": v.carry_config,
+            "exit_config": v.exit_config,
+        }
+        for v in org_vs
+    ] + [
+        {
+            "id": str(v.id),
+            "name": v.name,
+            "funder_type": v.funder_type,
+            "owner": "user",
+            "source_config": v.source_config,
+            "carry_config": v.carry_config,
+            "exit_config": v.exit_config,
+        }
+        for v in user_vs
+    ]
+    return JSONResponse(result)
+
+
+@router.post("/source-vehicles/org")
+async def create_org_source_vehicle(
+    request: Request,
+    current_user_id: CurrentUserId,
+    session: DBSession,
+) -> JSONResponse:
+    user = await _get_user_or_401(current_user_id, session)
+    _require_org_admin(user)
+    body = await request.json()
+    name = (body.get("name") or "").strip()
+    funder_type = (body.get("funder_type") or "").strip()
+    if not name or not funder_type:
+        raise HTTPException(status_code=400, detail="name and funder_type are required")
+    source_cfg, carry_cfg, exit_cfg = _sv_body_to_jsonb(body)
+    vehicle = _OSV(
+        org_id=user.org_id,
+        name=name,
+        funder_type=funder_type,
+        source_config=source_cfg,
+        carry_config=carry_cfg,
+        exit_config=exit_cfg,
+        created_by=user.id,
+        updated_by=user.id,
+    )
+    session.add(vehicle)
+    try:
+        await session.commit()
+        await session.refresh(vehicle)
+    except _IntegrityError:
+        await session.rollback()
+        raise HTTPException(status_code=409, detail="A vehicle with that name already exists in this org.")
+    return JSONResponse({"id": str(vehicle.id), "name": vehicle.name, "funder_type": vehicle.funder_type})
+
+
+@router.put("/source-vehicles/org/{vehicle_id}")
+async def update_org_source_vehicle(
+    vehicle_id: uuid.UUID,
+    request: Request,
+    current_user_id: CurrentUserId,
+    session: DBSession,
+) -> JSONResponse:
+    user = await _get_user_or_401(current_user_id, session)
+    _require_org_admin(user)
+    vehicle = await session.get(_OSV, vehicle_id)
+    if vehicle is None or vehicle.org_id != user.org_id:
+        raise HTTPException(status_code=404, detail="Vehicle not found")
+    body = await request.json()
+    name = (body.get("name") or "").strip()
+    funder_type = (body.get("funder_type") or "").strip()
+    if not name or not funder_type:
+        raise HTTPException(status_code=400, detail="name and funder_type are required")
+    vehicle.name = name
+    vehicle.funder_type = funder_type
+    vehicle.updated_by = user.id
+    vehicle.source_config, vehicle.carry_config, vehicle.exit_config = _sv_body_to_jsonb(body)
+    try:
+        await session.commit()
+    except _IntegrityError:
+        await session.rollback()
+        raise HTTPException(status_code=409, detail="A vehicle with that name already exists in this org.")
+    return JSONResponse({"ok": True})
+
+
+@router.delete("/source-vehicles/org/{vehicle_id}")
+async def delete_org_source_vehicle(
+    vehicle_id: uuid.UUID,
+    current_user_id: CurrentUserId,
+    session: DBSession,
+) -> JSONResponse:
+    user = await _get_user_or_401(current_user_id, session)
+    _require_org_admin(user)
+    vehicle = await session.get(_OSV, vehicle_id)
+    if vehicle is None or vehicle.org_id != user.org_id:
+        raise HTTPException(status_code=404, detail="Vehicle not found")
+    # Break links on any capital modules that used this vehicle
+    from sqlalchemy import update as _update  # noqa: PLC0415
+    await session.execute(
+        _update(_CapitalModule)
+        .where(_CapitalModule.source_vehicle_id == vehicle_id)
+        .values(source_vehicle_id=None)
+    )
+    await session.delete(vehicle)
+    await session.commit()
+    return JSONResponse({"ok": True})
+
+
+@router.post("/source-vehicles/user")
+async def create_user_source_vehicle(
+    request: Request,
+    current_user_id: CurrentUserId,
+    session: DBSession,
+) -> JSONResponse:
+    user = await _get_user_or_401(current_user_id, session)
+    body = await request.json()
+    name = (body.get("name") or "").strip()
+    funder_type = (body.get("funder_type") or "").strip()
+    if not name or not funder_type:
+        raise HTTPException(status_code=400, detail="name and funder_type are required")
+    source_cfg, carry_cfg, exit_cfg = _sv_body_to_jsonb(body)
+    vehicle = _USV(
+        user_id=user.id,
+        org_id=user.org_id,
+        name=name,
+        funder_type=funder_type,
+        source_config=source_cfg,
+        carry_config=carry_cfg,
+        exit_config=exit_cfg,
+    )
+    session.add(vehicle)
+    try:
+        await session.commit()
+        await session.refresh(vehicle)
+    except _IntegrityError:
+        await session.rollback()
+        raise HTTPException(status_code=409, detail="You already have a vehicle with that name.")
+    return JSONResponse({"id": str(vehicle.id), "name": vehicle.name, "funder_type": vehicle.funder_type})
+
+
+@router.put("/source-vehicles/user/{vehicle_id}")
+async def update_user_source_vehicle(
+    vehicle_id: uuid.UUID,
+    request: Request,
+    current_user_id: CurrentUserId,
+    session: DBSession,
+) -> JSONResponse:
+    user = await _get_user_or_401(current_user_id, session)
+    vehicle = await session.get(_USV, vehicle_id)
+    if vehicle is None or vehicle.user_id != user.id:
+        raise HTTPException(status_code=404, detail="Vehicle not found")
+    body = await request.json()
+    name = (body.get("name") or "").strip()
+    funder_type = (body.get("funder_type") or "").strip()
+    if not name or not funder_type:
+        raise HTTPException(status_code=400, detail="name and funder_type are required")
+    vehicle.name = name
+    vehicle.funder_type = funder_type
+    vehicle.source_config, vehicle.carry_config, vehicle.exit_config = _sv_body_to_jsonb(body)
+    try:
+        await session.commit()
+    except _IntegrityError:
+        await session.rollback()
+        raise HTTPException(status_code=409, detail="You already have a vehicle with that name.")
+    return JSONResponse({"ok": True})
+
+
+@router.delete("/source-vehicles/user/{vehicle_id}")
+async def delete_user_source_vehicle(
+    vehicle_id: uuid.UUID,
+    current_user_id: CurrentUserId,
+    session: DBSession,
+) -> JSONResponse:
+    user = await _get_user_or_401(current_user_id, session)
+    vehicle = await session.get(_USV, vehicle_id)
+    if vehicle is None or vehicle.user_id != user.id:
+        raise HTTPException(status_code=404, detail="Vehicle not found")
+    from sqlalchemy import update as _update  # noqa: PLC0415
+    await session.execute(
+        _update(_CapitalModule)
+        .where(_CapitalModule.source_vehicle_id == vehicle_id)
+        .values(source_vehicle_id=None)
+    )
+    await session.delete(vehicle)
+    await session.commit()
+    return JSONResponse({"ok": True})

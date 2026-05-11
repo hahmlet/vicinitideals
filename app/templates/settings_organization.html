@@ -11,7 +11,10 @@
   <a href="/deals" class="btn btn-secondary">Back to Deals</a>
 </div>
 
-<div style="padding:24px;display:grid;gap:20px;max-width:900px">
+<div style="padding:24px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,380px);gap:28px;align-items:start">
+
+{# ── LEFT COLUMN: existing org settings ── #}
+<div style="display:grid;gap:20px">
 
   {# ── Org info card ─────────────────────────────────────────────────────── #}
   <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px">
@@ -366,7 +369,285 @@
 
   {% endif %}
 
-</div>
+</div>{# /left col #}
+
+{# ── RIGHT COLUMN: Source Vehicles (admin-only) ── #}
+{% if is_org_admin %}
+{% set _ft_labels_org = {
+  'permanent_debt': 'Permanent Debt',
+  'senior_debt': 'Senior Debt',
+  'mezzanine_debt': 'Mezzanine Debt',
+  'bridge': 'Bridge',
+  'construction_loan': 'Construction Loan',
+  'pre_development_loan': 'Pre-Development Loan',
+  'acquisition_loan': 'Acquisition Loan',
+  'soft_loan': 'Soft Loan',
+  'bond': 'Bond',
+  'preferred_equity': 'Preferred Equity',
+  'common_equity': 'Common Equity',
+  'owner_loan': 'Owner Loan',
+  'owner_investment': 'Owner Investment',
+  'grant': 'Grant',
+  'tax_credit': 'Tax Credit',
+  'other': 'Other',
+} %}
+{% set _carry_opts_org = [
+  ('none','None'),('io_only','IO Only'),('interest_reserve','Interest Reserve'),
+  ('capitalized_interest','Capitalized Interest'),('accruing','Accruing'),('pi','PI (Amortizing)'),
+] %}
+{% set _exit_opts_org = [
+  ('full_payoff','Full Payoff'),('tranche_payoff','Tranche Payoff'),
+  ('equity_conversion','Equity Conversion'),('profit_share','Profit Share'),('forgiven','Forgiven'),
+] %}
+<div id="sv-panel-org" style="display:grid;gap:16px">
+  <div>
+    <div style="font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em">Source Vehicles</div>
+    <div style="font-size:12px;color:var(--text-muted);margin-top:3px">Saved capital source presets for the org. Visible to all members as read-only presets. Once applied to a deal, the deal is independent of the preset.</div>
+  </div>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+    <div style="padding:10px 14px;font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--border);background:var(--surface-alt);display:flex;justify-content:space-between;align-items:center">
+      Org Presets
+      <button type="button" onclick="svOrgToggleAdd()" class="btn btn-secondary" style="font-size:11px;padding:4px 10px">+ Add</button>
+    </div>
+
+    {# Add new org vehicle form #}
+    <div id="sv-add-org-form" style="display:none;padding:14px;border-bottom:1px solid var(--border);background:var(--surface-alt)">
+      <div style="display:grid;gap:10px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div>
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Name *</label>
+            <input class="filter-input" type="text" id="sv-add-org-name" placeholder="e.g. City Senior Loan" style="width:100%">
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Type *</label>
+            <select class="filter-select" id="sv-add-org-ft" style="width:100%">
+              {% for ft_val, ft_lbl in _ft_labels_org.items() %}
+              <option value="{{ ft_val }}">{{ ft_lbl }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div>
+          <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Interest Rate (%)</label>
+          <input class="filter-input" id="sv-add-org-rate" type="number" step="0.1" placeholder="e.g. 6.5" style="width:100%">
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div>
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Max LTV (%)</label>
+            <input class="filter-input" id="sv-add-org-ltv" type="number" step="1" placeholder="e.g. 65" style="width:100%">
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">DSCR Min</label>
+            <input class="filter-input" id="sv-add-org-dscr" type="number" step="0.01" placeholder="e.g. 1.25" style="width:100%">
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div>
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Amort (yrs)</label>
+            <input class="filter-input" id="sv-add-org-amort" type="number" step="1" placeholder="e.g. 30" style="width:100%">
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Hold (yrs)</label>
+            <input class="filter-input" id="sv-add-org-hold" type="number" step="1" placeholder="e.g. 10" style="width:100%">
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div>
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Constr. Carry</label>
+            <select class="filter-select" id="sv-add-org-ccarry" style="width:100%">
+              {% for cv, cl in _carry_opts_org %}<option value="{{ cv }}">{{ cl }}</option>{% endfor %}
+            </select>
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Oper. Carry</label>
+            <select class="filter-select" id="sv-add-org-ocarry" style="width:100%">
+              {% for cv, cl in _carry_opts_org %}<option value="{{ cv }}">{{ cl }}</option>{% endfor %}
+            </select>
+          </div>
+        </div>
+        <div>
+          <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Exit Type</label>
+          <select class="filter-select" id="sv-add-org-exit" style="width:100%">
+            {% for ev, el in _exit_opts_org %}<option value="{{ ev }}">{{ el }}</option>{% endfor %}
+          </select>
+        </div>
+        <div id="sv-add-org-err" style="display:none;color:var(--danger,#dc2626);font-size:12px"></div>
+        <div style="display:flex;gap:8px">
+          <button type="button" class="btn btn-primary" style="font-size:12px" onclick="svOrgSaveNew()">Save</button>
+          <button type="button" class="btn btn-secondary" style="font-size:12px" onclick="svOrgToggleAdd()">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    {# Existing org vehicles #}
+    {% if not org_source_vehicles %}
+    <div style="padding:14px;color:var(--text-muted);font-size:12px;text-align:center">No org presets yet.</div>
+    {% endif %}
+    {% for v in org_source_vehicles %}
+    {% set sc = v.source_config or {} %}
+    {% set cc = v.carry_config or {} %}
+    {% set ec = v.exit_config or {} %}
+    {% set phases = cc.get('phases', []) %}
+    {% set c_carry = (phases | selectattr('name','eq','construction') | list | first) or {} %}
+    {% set o_carry = (phases | selectattr('name','eq','operation') | list | first) or {} %}
+    <details style="border-bottom:1px solid var(--border){% if loop.last %};border-bottom:none{% endif %}">
+      <summary style="padding:10px 14px;cursor:pointer;font-size:13px;list-style:none;display:flex;align-items:center;gap:8px">
+        <span style="font-weight:500;color:var(--text);flex:1">{{ v.name }}</span>
+        <span style="font-size:11px;color:var(--text-muted)">{{ _ft_labels_org.get(v.funder_type, v.funder_type) }}</span>
+      </summary>
+      <div style="padding:0 14px 14px;display:grid;gap:8px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div>
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Name *</label>
+            <input class="filter-input sv-org-name" type="text" value="{{ v.name }}" data-vid="{{ v.id }}" style="width:100%">
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Type *</label>
+            <select class="filter-select sv-org-ft" data-vid="{{ v.id }}" style="width:100%">
+              {% for ft_val, ft_lbl in _ft_labels_org.items() %}
+              <option value="{{ ft_val }}" {% if v.funder_type == ft_val %}selected{% endif %}>{{ ft_lbl }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
+          <div>
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Rate (%)</label>
+            <input class="filter-input sv-org-rate" type="number" step="0.1" value="{{ sc.get('interest_rate_pct','') }}" data-vid="{{ v.id }}" style="width:100%">
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">LTV (%)</label>
+            <input class="filter-input sv-org-ltv" type="number" step="1" value="{{ sc.get('ltv_pct','') }}" data-vid="{{ v.id }}" style="width:100%">
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">DSCR Min</label>
+            <input class="filter-input sv-org-dscr" type="number" step="0.01" value="{{ sc.get('dscr_min','') }}" data-vid="{{ v.id }}" style="width:100%">
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+          <div>
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Amort (yrs)</label>
+            <input class="filter-input sv-org-amort" type="number" step="1" value="{{ sc.get('amort_term_years','') }}" data-vid="{{ v.id }}" style="width:100%">
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Hold (yrs)</label>
+            <input class="filter-input sv-org-hold" type="number" step="1" value="{{ sc.get('hold_term_years','') }}" data-vid="{{ v.id }}" style="width:100%">
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+          <div>
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Constr. Carry</label>
+            <select class="filter-select sv-org-ccarry" data-vid="{{ v.id }}" style="width:100%">
+              {% for cv, cl in _carry_opts_org %}<option value="{{ cv }}" {% if c_carry.get('carry_type') == cv %}selected{% endif %}>{{ cl }}</option>{% endfor %}
+            </select>
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Oper. Carry</label>
+            <select class="filter-select sv-org-ocarry" data-vid="{{ v.id }}" style="width:100%">
+              {% for cv, cl in _carry_opts_org %}<option value="{{ cv }}" {% if o_carry.get('carry_type') == cv %}selected{% endif %}>{{ cl }}</option>{% endfor %}
+            </select>
+          </div>
+        </div>
+        <div>
+          <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Exit Type</label>
+          <select class="filter-select sv-org-exit" data-vid="{{ v.id }}" style="width:100%">
+            {% for ev, el in _exit_opts_org %}<option value="{{ ev }}" {% if ec.get('exit_type') == ev %}selected{% endif %}>{{ el }}</option>{% endfor %}
+          </select>
+        </div>
+        <div class="sv-org-err" data-vid="{{ v.id }}" style="display:none;color:var(--danger,#dc2626);font-size:12px"></div>
+        <div style="display:flex;gap:8px">
+          <button type="button" class="btn btn-primary" style="font-size:12px" onclick="svOrgSave('{{ v.id }}')">Save</button>
+          <button type="button" class="btn btn-danger" style="font-size:12px"
+                  onclick="svOrgDelete('{{ v.id }}', '{{ v.name }}')">Delete</button>
+        </div>
+      </div>
+    </details>
+    {% endfor %}
+  </div>
+</div>{# /sv-panel-org #}
+{% else %}
+<div></div>{# placeholder right col for non-admins #}
+{% endif %}
+
+</div>{# /two-col outer grid #}
+
+<script>
+(function() {
+  function svOrgField(selector, vid) {
+    return document.querySelector(selector + '[data-vid="' + vid + '"]');
+  }
+  function svOrgVal(selector, vid) {
+    var el = svOrgField(selector, vid);
+    return el ? el.value.trim() : '';
+  }
+  function svOrgBuildPayload(vid) {
+    return {
+      name: svOrgVal('.sv-org-name', vid),
+      funder_type: svOrgVal('.sv-org-ft', vid),
+      interest_rate_pct: parseFloat(svOrgVal('.sv-org-rate', vid)) || null,
+      ltv_pct: parseFloat(svOrgVal('.sv-org-ltv', vid)) || null,
+      dscr_min: parseFloat(svOrgVal('.sv-org-dscr', vid)) || null,
+      amort_term_years: parseInt(svOrgVal('.sv-org-amort', vid)) || null,
+      hold_term_years: parseInt(svOrgVal('.sv-org-hold', vid)) || null,
+      construction_carry_type: svOrgVal('.sv-org-ccarry', vid) || null,
+      operation_carry_type: svOrgVal('.sv-org-ocarry', vid) || null,
+      exit_type: svOrgVal('.sv-org-exit', vid) || null,
+    };
+  }
+  function svOrgShowErr(errEl, msg) {
+    if (!errEl) return;
+    errEl.textContent = msg;
+    errEl.style.display = msg ? '' : 'none';
+  }
+
+  window.svOrgToggleAdd = function() {
+    var f = document.getElementById('sv-add-org-form');
+    f.style.display = f.style.display === 'none' ? '' : 'none';
+    document.getElementById('sv-add-org-err').style.display = 'none';
+  };
+
+  window.svOrgSaveNew = async function() {
+    var name = document.getElementById('sv-add-org-name').value.trim();
+    var ft = document.getElementById('sv-add-org-ft').value;
+    var errEl = document.getElementById('sv-add-org-err');
+    if (!name) { svOrgShowErr(errEl, 'Name is required.'); return; }
+    var payload = {
+      name: name, funder_type: ft,
+      interest_rate_pct: parseFloat(document.getElementById('sv-add-org-rate').value) || null,
+      ltv_pct: parseFloat(document.getElementById('sv-add-org-ltv').value) || null,
+      dscr_min: parseFloat(document.getElementById('sv-add-org-dscr').value) || null,
+      amort_term_years: parseInt(document.getElementById('sv-add-org-amort').value) || null,
+      hold_term_years: parseInt(document.getElementById('sv-add-org-hold').value) || null,
+      construction_carry_type: document.getElementById('sv-add-org-ccarry').value || null,
+      operation_carry_type: document.getElementById('sv-add-org-ocarry').value || null,
+      exit_type: document.getElementById('sv-add-org-exit').value || null,
+    };
+    var resp = await fetch('/api/settings/source-vehicles/org', {
+      method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload)
+    });
+    if (resp.ok) { location.reload(); }
+    else { var d = await resp.json().catch(function(){return {};}); svOrgShowErr(errEl, d.detail || 'Error saving.'); }
+  };
+
+  window.svOrgSave = async function(vid) {
+    var payload = svOrgBuildPayload(vid);
+    if (!payload.name) { svOrgShowErr(document.querySelector('.sv-org-err[data-vid="'+vid+'"]'), 'Name is required.'); return; }
+    var resp = await fetch('/api/settings/source-vehicles/org/' + vid, {
+      method: 'PUT', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload)
+    });
+    if (resp.ok) { location.reload(); }
+    else { var d = await resp.json().catch(function(){return {};}); svOrgShowErr(document.querySelector('.sv-org-err[data-vid="'+vid+'"]'), d.detail || 'Error saving.'); }
+  };
+
+  window.svOrgDelete = async function(vid, name) {
+    if (!confirm('Delete "' + name + '"? Deals that used this preset keep their data.')) return;
+    var resp = await fetch('/api/settings/source-vehicles/org/' + vid, { method: 'DELETE' });
+    if (resp.ok) { location.reload(); }
+    else { alert('Error deleting vehicle.'); }
+  };
+}());
+</script>
 
 {# ── Floating save pill (underwriting defaults only) ──────────────────── #}
 {% if is_org_admin %}

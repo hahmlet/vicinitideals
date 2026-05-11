@@ -1145,8 +1145,38 @@ function ulTimingChanged(val) {
       hx-on::after-request="if(event.detail.successful) closeSourceWizard()"
       id="sw-form">
 
+  {# Hidden field: records which vehicle pre-filled this form (empty = custom) #}
+  <input type="hidden" name="source_vehicle_id" id="sw-vehicle-id-input" value="">
+
   {# ── Step 1: Name / Type ── #}
   <div id="sw-step-1">
+    {# ── Vehicle preset dropdown (shown only when adding new, not editing) ── #}
+    {% if source_vehicles %}
+    <div class="form-field" style="margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border)">
+      <label class="form-label">Start from a preset <span style="font-weight:400;font-size:11px;color:var(--text-muted)">(optional)</span></label>
+      <select class="form-select" id="sw-vehicle-select" onchange="swApplyVehicle(this.value, '{{ model.id }}')">
+        <option value="">— Custom (blank) —</option>
+        {% if source_vehicles | selectattr('owner', 'equalto', 'org') | list %}
+        <optgroup label="Org Presets">
+          {% for v in source_vehicles if v.owner == 'org' %}
+          <option value="{{ v.id }}">{{ v.name }} — {{ v.funder_type | replace('_',' ') | title }}</option>
+          {% endfor %}
+        </optgroup>
+        {% endif %}
+        {% if source_vehicles | selectattr('owner', 'equalto', 'user') | list %}
+        <optgroup label="My Presets">
+          {% for v in source_vehicles if v.owner == 'user' %}
+          <option value="{{ v.id }}">{{ v.name }} — {{ v.funder_type | replace('_',' ') | title }}</option>
+          {% endfor %}
+        </optgroup>
+        {% endif %}
+      </select>
+      <div id="sw-vehicle-hint" style="display:none;font-size:11px;color:var(--text-muted);margin-top:4px">
+        Pre-filled from preset — edit any field before saving.
+      </div>
+    </div>
+    {% endif %}
+
     <div class="form-field" style="margin-bottom:12px">
       <label class="form-label">Name</label>
       <input class="form-input" type="text" name="label" id="sw-label"
@@ -1439,6 +1469,42 @@ function ulTimingChanged(val) {
   if (_swExit) _swExit.addEventListener('change', function() { _updateStep3ForType(_type); });
   _updateStep3ForType(_type);
   _show(1);
+
+  // ── Source Vehicle prefill ──────────────────────────────────────────
+  window.swApplyVehicle = async function(vehicleId, modelId) {
+    document.getElementById('sw-vehicle-id-input').value = vehicleId || '';
+    var hint = document.getElementById('sw-vehicle-hint');
+    if (!vehicleId) { if (hint) hint.style.display = 'none'; return; }
+    var resp = await fetch('/ui/source-vehicles/' + vehicleId + '/prefill?model_id=' + modelId);
+    if (!resp.ok) return;
+    var d = await resp.json();
+
+    function setVal(name, val) {
+      if (val === null || val === undefined || val === '') return;
+      var el = document.querySelector('#sw-form [name="' + name + '"]');
+      if (el) el.value = val;
+    }
+
+    if (d.funder_type) {
+      var typeEl = document.getElementById('sw-type');
+      if (typeEl) {
+        typeEl.value = d.funder_type;
+        if (window.swTypeChanged) swTypeChanged(d.funder_type);
+      }
+    }
+    setVal('source_interest_rate', d.source_interest_rate);
+    setVal('ltv_pct', d.ltv_pct);
+    setVal('amort_term_years', d.amort_term_years);
+    setVal('hold_term_years', d.hold_term_years);
+    setVal('construction_carry_type', d.construction_carry_type);
+    setVal('operation_carry_type', d.operation_carry_type);
+    if (d.perm_rate_pct) setVal('perm_rate_pct', d.perm_rate_pct);
+    if (d.perm_term_years) setVal('perm_term_years', d.perm_term_years);
+    if (d.perm_conversion_trigger) setVal('perm_conversion_trigger', d.perm_conversion_trigger);
+    if (d.exit_vehicle) setVal('exit_vehicle', d.exit_vehicle);
+
+    if (hint) hint.style.display = '';
+  };
 })();
 </script>
 {%- endif %}

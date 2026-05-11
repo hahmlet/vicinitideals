@@ -1838,6 +1838,13 @@ async def settings_organization(
         for r in _org_rows
     }
 
+    from app.models.source_vehicle import OrgSourceVehicle as _OSV_org
+    org_source_vehicles = (
+        await session.execute(
+            select(_OSV_org).where(_OSV_org.org_id == user.org_id).order_by(_OSV_org.name)
+        )
+    ).scalars().all()
+
     return templates.TemplateResponse(
         request,
         "settings_organization.html",
@@ -1848,6 +1855,7 @@ async def settings_organization(
             "resolved": resolved,
             "org_settings_map": org_settings_map,
             "org_set_fields": _ORG_SET_FIELDS,
+            "org_source_vehicles": org_source_vehicles,
             **_base_ctx(user, dedup_count, "", address_issues_count, conflicts_count=conflicts_count),
         },
     )
@@ -1946,6 +1954,18 @@ async def settings_user_preferences(
         (r.deal_type, r.milestone_type): r.user_overridable for r in _org_dtd_rows2
     }
 
+    from app.models.source_vehicle import OrgSourceVehicle as _OSV_usr, UserSourceVehicle as _USV_usr
+    org_source_vehicles_usr = (
+        await session.execute(
+            select(_OSV_usr).where(_OSV_usr.org_id == user.org_id).order_by(_OSV_usr.name)
+        )
+    ).scalars().all()
+    user_source_vehicles = (
+        await session.execute(
+            select(_USV_usr).where(_USV_usr.user_id == user.id).order_by(_USV_usr.name)
+        )
+    ).scalars().all()
+
     return templates.TemplateResponse(
         request,
         "settings_user.html",
@@ -1958,6 +1978,8 @@ async def settings_user_preferences(
             "timeline_defaults_map": timeline_defaults_map,
             "user_timeline_map": user_timeline_map,
             "timeline_overridable": timeline_overridable,
+            "org_source_vehicles": org_source_vehicles_usr,
+            "user_source_vehicles": user_source_vehicles,
             **_base_ctx(user, dedup_count, "", address_issues_count, conflicts_count=conflicts_count),
         },
     )
@@ -5970,6 +5992,15 @@ async def handle_form_create_or_update(
                 select(func.max(CapitalModule.stack_position)).where(CapitalModule.scenario_id == model_id)
             )
             final_pos = (max_pos_result.scalar_one_or_none() or 0) + 1
+        # Record which vehicle pre-filled this module (nullable; SET NULL on vehicle delete)
+        _sv_id_raw = (form.get("source_vehicle_id") or "").strip()
+        _sv_uuid: UUID | None = None
+        if _sv_id_raw:
+            try:
+                _sv_uuid = UUID(_sv_id_raw)
+            except (ValueError, AttributeError):
+                pass
+
         data = {
             "label": form.get("label", ""),
             "funder_type": _funder_type,
@@ -5978,6 +6009,7 @@ async def handle_form_create_or_update(
             "carry": carry_d,
             "exit_terms": exit_d,
             "active_phase_end": _derived_end_phase,
+            "source_vehicle_id": _sv_uuid,
         }
         # Draw schedule fields from form.  `ds_active_to_milestone` is ignored —
         # the repayment milestone is derived from Exit Vehicle (above).
@@ -10712,6 +10744,26 @@ async def model_builder_line_form(
         show_exit_vehicle = _effective_ft in _EXIT_VEHICLE_APPLIES_UI
         show_active_window = show_exit_vehicle
 
+    # Source vehicle presets for the wizard dropdown (only shown on add, not edit)
+    _sv_list: list[dict] = []
+    if not id:
+        _lf_user = await _get_user(session, request)
+        if _lf_user is not None:
+            from app.models.source_vehicle import OrgSourceVehicle as _OSV_lf, UserSourceVehicle as _USV_lf
+            _org_svs = (await session.execute(
+                select(_OSV_lf).where(_OSV_lf.org_id == _lf_user.org_id).order_by(_OSV_lf.name)
+            )).scalars().all()
+            _usr_svs = (await session.execute(
+                select(_USV_lf).where(_USV_lf.user_id == _lf_user.id).order_by(_USV_lf.name)
+            )).scalars().all()
+            _sv_list = [
+                {"id": str(v.id), "name": v.name, "funder_type": v.funder_type, "owner": "org"}
+                for v in _org_svs
+            ] + [
+                {"id": str(v.id), "name": v.name, "funder_type": v.funder_type, "owner": "user"}
+                for v in _usr_svs
+            ]
+
     return templates.TemplateResponse(request, "partials/model_builder_line_form.html", {
         "model": model,
         "form_type": type,
@@ -10735,6 +10787,76 @@ async def model_builder_line_form(
         "use_cost_categories": USE_COST_CATEGORIES,
         "use_category_labels": USE_CATEGORY_LABELS,
         "use_category_presets": USE_CATEGORY_PRESETS,
+        "source_vehicles": _sv_list,
+    })
+
+
+# ---------------------------------------------------------------------------
+# Source Vehicle prefill endpoint
+# ---------------------------------------------------------------------------
+
+
+@router.get("/source-vehicles/{vehicle_id}/prefill")
+async def source_vehicle_prefill(
+    request: Request,
+    vehicle_id: UUID,
+    session: DBSession,
+) -> JSONResponse:
+    """Return flat form-field values for a source vehicle (used by wizard dropdown JS)."""
+    from app.models.source_vehicle import OrgSourceVehicle as _OSV_pf, UserSourceVehicle as _USV_pf
+
+    user = await _get_user(session, request)
+    if user is None:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+
+    vehicle = None
+    owner = None
+    # Check org vehicles first
+    org_v = (await session.execute(
+        select(_OSV_pf).where(_OSV_pf.id == vehicle_id, _OSV_pf.org_id == user.org_id)
+    )).scalar_one_or_none()
+    if org_v:
+        vehicle = org_v
+        owner = "org"
+    else:
+        user_v = (await session.execute(
+            select(_USV_pf).where(_USV_pf.id == vehicle_id, _USV_pf.user_id == user.id)
+        )).scalar_one_or_none()
+        if user_v:
+            vehicle = user_v
+            owner = "user"
+
+    if vehicle is None:
+        raise HTTPException(status_code=404, detail="Vehicle not found")
+
+    source = vehicle.source_config or {}
+    carry = vehicle.carry_config or {}
+    exit_cfg = vehicle.exit_config or {}
+
+    phases = carry.get("phases", [])
+    constr = next((p for p in phases if p.get("name") == "construction"), {})
+    oper = next((p for p in phases if p.get("name") == "operation"), {})
+
+    exit_vehicle_raw = exit_cfg.get("vehicle") or exit_cfg.get("exit_vehicle")
+    # Only pre-fill exit vehicle if it's a named sentinel (not a stale UUID from another deal)
+    safe_exit_vehicle = exit_vehicle_raw if exit_vehicle_raw in ("maturity", "sale") else None
+
+    return JSONResponse({
+        "vehicle_name": vehicle.name,
+        "owner": owner,
+        "funder_type": vehicle.funder_type,
+        "source_interest_rate": source.get("interest_rate_pct"),
+        "ltv_pct": source.get("ltv_pct"),
+        "amort_term_years": source.get("amort_term_years"),
+        "hold_term_years": source.get("hold_term_years"),
+        "dscr_min": source.get("dscr_min"),
+        "construction_carry_type": constr.get("carry_type"),
+        "operation_carry_type": oper.get("carry_type"),
+        "perm_rate_pct": oper.get("perm_rate_pct"),
+        "perm_term_years": oper.get("perm_term_years"),
+        "perm_conversion_trigger": oper.get("perm_conversion_trigger"),
+        "exit_type": exit_cfg.get("exit_type"),
+        "exit_vehicle": safe_exit_vehicle,
     })
 
 
