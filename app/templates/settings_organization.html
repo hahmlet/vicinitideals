@@ -265,6 +265,105 @@
     </details>
 
   </div>
+
+  {# ── Deal Type Timeline Templates ──────────────────────────────────────── #}
+  <div style="font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-top:8px">Deal Type Timeline Templates</div>
+  <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">Set default milestones, durations, and sequencing for each deal type. Users can optionally override where allowed.</div>
+
+  {% set _deal_type_labels = [
+    ('acquisition',      'Acquisition'),
+    ('value_add',        'Value-Add'),
+    ('conversion',       'Acquisition – Conversion'),
+    ('new_construction', 'New Construction'),
+  ] %}
+  {% set _ms_labels = {
+    'offer_made':            'Offer Made',
+    'under_contract':        'Under Contract',
+    'close':                 'Close',
+    'pre_development':       'Pre-Development',
+    'construction':          'Construction',
+    'operation_lease_up':    'Lease-Up',
+    'operation_stabilized':  'Stabilized Operations',
+    'divestment':            'Divestment / Exit',
+  } %}
+
+  <div id="timeline-defaults" style="display:grid;gap:12px">
+  {% for dt_key, dt_label in _deal_type_labels %}
+  {% set dt_map = timeline_defaults_map.get(dt_key, {}) %}
+  <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+    <summary style="padding:14px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);list-style:none">{{ dt_label }}</summary>
+    <div style="overflow-x:auto">
+    <table style="width:100%;border-collapse:collapse;font-size:12px">
+      <thead>
+        <tr style="background:var(--surface-alt)">
+          <th style="text-align:left;padding:8px 12px;border-bottom:1px solid var(--border);white-space:nowrap">Milestone</th>
+          <th style="text-align:center;padding:8px 12px;border-bottom:1px solid var(--border)">Include</th>
+          <th style="text-align:left;padding:8px 12px;border-bottom:1px solid var(--border)">Duration (days)</th>
+          <th style="text-align:left;padding:8px 12px;border-bottom:1px solid var(--border)">Starts After</th>
+          <th style="text-align:left;padding:8px 12px;border-bottom:1px solid var(--border)">Offset (days)</th>
+          <th style="text-align:left;padding:8px 12px;border-bottom:1px solid var(--border)">Allow Override</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for ms_key, ms_label in _ms_labels.items() %}
+      {% set ms_cfg = dt_map.get(ms_key, {}) %}
+      {% set _org_row = org_timeline_map.get((dt_key, ms_key), {}) %}
+      {% set _included = ms_cfg.get('included', False) %}
+      {% set _duration = ms_cfg.get('duration_days') %}
+      {% set _starts_after = ms_cfg.get('starts_after_type') %}
+      {% set _offset = ms_cfg.get('offset_days', 0) %}
+      {% set _overridable = _org_row.get('user_overridable', True) %}
+      <tr style="border-bottom:1px solid var(--border)"
+          data-tl-dt="{{ dt_key }}" data-tl-ms="{{ ms_key }}">
+        <td style="padding:8px 12px;color:var(--text)">{{ ms_label }}</td>
+        <td style="padding:8px 12px;text-align:center">
+          <input type="checkbox"
+                 class="tl-field tl-included"
+                 data-tl-orig-included="{{ 'true' if _included else 'false' }}"
+                 {% if _included %}checked{% endif %}>
+        </td>
+        <td style="padding:8px 12px">
+          <input type="number" min="1" step="1"
+                 class="filter-input tl-field tl-duration"
+                 placeholder="from system"
+                 data-tl-orig-duration="{{ _duration if _duration is not none else '' }}"
+                 value="{{ _duration if _duration is not none else '' }}"
+                 style="width:90px">
+        </td>
+        <td style="padding:8px 12px">
+          <select class="filter-select tl-field tl-starts-after" style="width:160px"
+                  data-tl-orig-starts-after="{{ _starts_after or '' }}">
+            <option value="">— must set in deal —</option>
+            {% for sa_key, sa_label in _ms_labels.items() if sa_key != ms_key %}
+            <option value="{{ sa_key }}" {% if _starts_after == sa_key %}selected{% endif %}>{{ sa_label }}</option>
+            {% endfor %}
+          </select>
+        </td>
+        <td style="padding:8px 12px">
+          <input type="number" step="1"
+                 class="filter-input tl-field tl-offset"
+                 value="{{ _offset }}"
+                 data-tl-orig-offset="{{ _offset }}"
+                 style="width:70px">
+        </td>
+        <td style="padding:8px 12px">
+          <label style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-muted);cursor:pointer">
+            <input type="checkbox"
+                   class="tl-field tl-overridable"
+                   data-tl-orig-overridable="{{ 'true' if _overridable else 'false' }}"
+                   {% if _overridable %}checked{% endif %}>
+            Allow users
+          </label>
+        </td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  </details>
+  {% endfor %}
+  </div>
+
   {% endif %}
 
 </div>
@@ -282,9 +381,10 @@
   const label = document.getElementById('save-pill-label');
   const dirtyValues = new Map();
   const dirtyPerms  = new Map();
+  var tlDirty = false;
 
   function refreshPill() {
-    pill.style.display = (dirtyValues.size + dirtyPerms.size) > 0 ? 'flex' : 'none';
+    pill.style.display = (dirtyValues.size + dirtyPerms.size > 0 || tlDirty) ? 'flex' : 'none';
   }
 
   // Track value changes on all settings inputs / selects.
@@ -313,54 +413,136 @@
   });
 
   pill.addEventListener('click', async function () {
-    if (dirtyValues.size === 0 && dirtyPerms.size === 0) return;
+    if (dirtyValues.size === 0 && dirtyPerms.size === 0 && !tlDirty) return;
     label.textContent = 'Saving…';
+    var allOk = true;
     try {
-      // For each dirty permission, also include the current displayed value
-      // so the backend can always upsert a complete OrgSetting row.
-      var extraValues = {};
-      dirtyPerms.forEach(function (_, fk) {
-        if (!dirtyValues.has(fk)) {
-          var input = document.querySelector('[data-fk="' + fk + '"]');
-          if (input) extraValues[fk] = input.value;
-        }
-      });
-
-      var payload = {
-        values: Object.assign(Object.fromEntries(dirtyValues), extraValues),
-        permissions: Object.fromEntries(dirtyPerms),
-      };
-
-      var resp = await fetch('/api/settings/org', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-
-      if (resp.ok) {
-        // Update data-orig on value inputs.
-        dirtyValues.forEach(function (v, k) {
-          var el = document.querySelector('[data-fk="' + k + '"]');
-          if (el) el.dataset.orig = v;
+      // ── Underwriting defaults save ──
+      if (dirtyValues.size > 0 || dirtyPerms.size > 0) {
+        var extraValues = {};
+        dirtyPerms.forEach(function (_, fk) {
+          if (!dirtyValues.has(fk)) {
+            var input = document.querySelector('[data-fk="' + fk + '"]');
+            if (input) extraValues[fk] = input.value;
+          }
         });
-        // Update data-perm-orig on permission checkboxes.
-        dirtyPerms.forEach(function (v, k) {
-          var el = document.querySelector('[data-perm-fk="' + k + '"]');
-          if (el) el.dataset.permOrig = v ? 'true' : 'false';
+        var payload = {
+          values: Object.assign(Object.fromEntries(dirtyValues), extraValues),
+          permissions: Object.fromEntries(dirtyPerms),
+        };
+        var resp = await fetch('/api/settings/org', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
         });
-        dirtyValues.clear();
-        dirtyPerms.clear();
+        if (resp.ok) {
+          dirtyValues.forEach(function (v, k) {
+            var el = document.querySelector('[data-fk="' + k + '"]');
+            if (el) el.dataset.orig = v;
+          });
+          dirtyPerms.forEach(function (v, k) {
+            var el = document.querySelector('[data-perm-fk="' + k + '"]');
+            if (el) el.dataset.permOrig = v ? 'true' : 'false';
+          });
+          dirtyValues.clear();
+          dirtyPerms.clear();
+        } else { allOk = false; }
+      }
+
+      // ── Timeline defaults save ──
+      if (tlDirty) {
+        var tlBody = buildTlPayload();
+        var tlResp = await fetch('/api/settings/timeline-defaults/org', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(tlBody),
+        });
+        if (tlResp.ok) {
+          // Reset orig values on all tl-field elements
+          document.querySelectorAll('#timeline-defaults .tl-included').forEach(function(el) {
+            el.dataset.tlOrigIncluded = el.checked ? 'true' : 'false';
+          });
+          document.querySelectorAll('#timeline-defaults .tl-duration').forEach(function(el) {
+            el.dataset.tlOrigDuration = el.value;
+          });
+          document.querySelectorAll('#timeline-defaults .tl-starts-after').forEach(function(el) {
+            el.dataset.tlOrigStartsAfter = el.value;
+          });
+          document.querySelectorAll('#timeline-defaults .tl-offset').forEach(function(el) {
+            el.dataset.tlOrigOffset = el.value;
+          });
+          document.querySelectorAll('#timeline-defaults .tl-overridable').forEach(function(el) {
+            el.dataset.tlOrigOverridable = el.checked ? 'true' : 'false';
+          });
+          tlDirty = false;
+        } else { allOk = false; }
+      }
+
+      if (allOk) {
         pill.style.display = 'none';
         label.textContent = 'Save Changes';
       } else {
         label.textContent = 'Error — try again';
-        setTimeout(function () { label.textContent = 'Save Changes'; }, 3000);
+        setTimeout(function () { label.textContent = 'Save Changes'; refreshPill(); }, 3000);
       }
     } catch (e) {
       label.textContent = 'Error — try again';
       setTimeout(function () { label.textContent = 'Save Changes'; }, 3000);
     }
   });
+
+  // ── Timeline defaults dirty tracking ──
+  function checkTlDirty() {
+    var d = false;
+    document.querySelectorAll('#timeline-defaults .tl-field').forEach(function(el) {
+      if (el.classList.contains('tl-included') && el.checked !== (el.dataset.tlOrigIncluded === 'true')) d = true;
+      if (el.classList.contains('tl-duration') && el.value !== el.dataset.tlOrigDuration) d = true;
+      if (el.classList.contains('tl-starts-after') && el.value !== el.dataset.tlOrigStartsAfter) d = true;
+      if (el.classList.contains('tl-offset') && el.value !== el.dataset.tlOrigOffset) d = true;
+      if (el.classList.contains('tl-overridable') && el.checked !== (el.dataset.tlOrigOverridable === 'true')) d = true;
+    });
+    tlDirty = d;
+    refreshPill();
+  }
+
+  function refreshPill() {
+    pill.style.display = (dirtyValues.size + dirtyPerms.size > 0 || tlDirty) ? 'flex' : 'none';
+  }
+
+  document.querySelectorAll('#timeline-defaults .tl-field').forEach(function(el) {
+    el.addEventListener('change', checkTlDirty);
+    el.addEventListener('input', checkTlDirty);
+  });
+
+  function buildTlPayload() {
+    var body = {};
+    var permissions = {};
+    document.querySelectorAll('#timeline-defaults tr[data-tl-dt]').forEach(function(row) {
+      var dt = row.dataset.tlDt;
+      var ms = row.dataset.tlMs;
+      var includedEl = row.querySelector('.tl-included');
+      var durationEl = row.querySelector('.tl-duration');
+      var startsAfterEl = row.querySelector('.tl-starts-after');
+      var offsetEl = row.querySelector('.tl-offset');
+      var overridableEl = row.querySelector('.tl-overridable');
+
+      if (!body[dt]) body[dt] = {};
+      body[dt][ms] = {
+        included: includedEl ? includedEl.checked : true,
+        duration_days: durationEl && durationEl.value !== '' ? parseInt(durationEl.value) : null,
+        starts_after_type: startsAfterEl && startsAfterEl.value !== '' ? startsAfterEl.value : null,
+        offset_days: offsetEl ? (parseInt(offsetEl.value) || 0) : 0,
+      };
+
+      if (overridableEl) {
+        if (!permissions[dt]) permissions[dt] = {};
+        permissions[dt][ms] = { user_overridable: overridableEl.checked };
+      }
+    });
+    body.permissions = permissions;
+    return body;
+  }
+
 }());
 </script>
 {% endif %}

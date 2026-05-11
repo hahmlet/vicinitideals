@@ -125,3 +125,78 @@ def build_overridable_map(
         key: False if key in ORG_SET_FIELDS else db_map.get(key, True)
         for key in SYSTEM_BASELINE
     }
+
+
+async def resolve_timeline_defaults(
+    user_id: uuid.UUID,
+    org_id: uuid.UUID,
+    session: AsyncSession,
+) -> dict[str, dict[str, dict]]:
+    """Resolve per-deal-type timeline defaults for a user/org context.
+
+    Returns: { deal_type: { milestone_type: { included, duration_days, starts_after_type, offset_days } } }
+    Resolution order: user row → org row → DEFAULT_DURATIONS system baseline.
+    """
+    from app.models.milestone import DEFAULT_DURATIONS, MilestoneType
+    from app.models.settings import OrgDealTypeDefault, UserDealTypeDefault
+
+    _DEAL_TYPES = ["acquisition", "value_add", "conversion", "new_construction"]
+    _MILESTONE_TYPES = [mt.value for mt in MilestoneType]
+
+    org_rows = (
+        await session.execute(
+            select(OrgDealTypeDefault).where(OrgDealTypeDefault.org_id == org_id)
+        )
+    ).scalars().all()
+    user_rows = (
+        await session.execute(
+            select(UserDealTypeDefault).where(UserDealTypeDefault.user_id == user_id)
+        )
+    ).scalars().all()
+
+    org_map: dict[tuple, "OrgDealTypeDefault"] = {
+        (r.deal_type, r.milestone_type): r for r in org_rows
+    }
+    user_map: dict[tuple, "UserDealTypeDefault"] = {
+        (r.deal_type, r.milestone_type): r for r in user_rows
+    }
+
+    result: dict[str, dict[str, dict]] = {}
+    for deal_type in _DEAL_TYPES:
+        result[deal_type] = {}
+        sys_defaults = DEFAULT_DURATIONS.get(deal_type, {})
+
+        for milestone_type in _MILESTONE_TYPES:
+            sys_included = milestone_type in sys_defaults
+            sys_duration = sys_defaults.get(milestone_type)
+
+            org_row = org_map.get((deal_type, milestone_type))
+            user_row = user_map.get((deal_type, milestone_type))
+
+            user_overridable = org_row.user_overridable if org_row is not None else True
+            effective_user = user_row if (user_overridable and user_row is not None) else None
+
+            if effective_user is not None:
+                included = effective_user.included
+                duration_days = int(effective_user.duration_days) if effective_user.duration_days is not None else sys_duration
+                starts_after_type = effective_user.starts_after_type
+                offset_days = int(effective_user.offset_days)
+            elif org_row is not None:
+                included = org_row.included
+                duration_days = int(org_row.duration_days) if org_row.duration_days is not None else sys_duration
+                starts_after_type = org_row.starts_after_type
+                offset_days = int(org_row.offset_days)
+            else:
+                included = sys_included
+                duration_days = sys_duration
+                starts_after_type = None
+                offset_days = 0
+
+            result[deal_type][milestone_type] = {
+                "included": included,
+                "duration_days": duration_days,
+                "starts_after_type": starts_after_type,
+                "offset_days": offset_days,
+            }
+
+    return result

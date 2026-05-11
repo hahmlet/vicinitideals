@@ -193,6 +193,96 @@
     </div>
   </details>
 
+  {# ── Deal Type Timeline Templates ────────────────────────────────── #}
+  {% set _deal_type_labels = [
+    ('acquisition',      'Acquisition'),
+    ('value_add',        'Value-Add'),
+    ('conversion',       'Acquisition – Conversion'),
+    ('new_construction', 'New Construction'),
+  ] %}
+  {% set _ms_labels = {
+    'offer_made':            'Offer Made',
+    'under_contract':        'Under Contract',
+    'close':                 'Close',
+    'pre_development':       'Pre-Development',
+    'construction':          'Construction',
+    'operation_lease_up':    'Lease-Up',
+    'operation_stabilized':  'Stabilized Operations',
+    'divestment':            'Divestment / Exit',
+  } %}
+
+  {% for dt_key, dt_label in _deal_type_labels %}
+  {% set dt_map = timeline_defaults_map.get(dt_key, {}) %}
+  <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+    <summary style="padding:14px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);list-style:none">Timeline: {{ dt_label }}</summary>
+    <div style="overflow-x:auto">
+    <table style="width:100%;border-collapse:collapse;font-size:12px">
+      <thead>
+        <tr style="background:var(--surface-alt)">
+          <th style="text-align:left;padding:8px 12px;border-bottom:1px solid var(--border)">Milestone</th>
+          <th style="text-align:center;padding:8px 12px;border-bottom:1px solid var(--border)">Include</th>
+          <th style="text-align:left;padding:8px 12px;border-bottom:1px solid var(--border)">Duration (days)</th>
+          <th style="text-align:left;padding:8px 12px;border-bottom:1px solid var(--border)">Starts After</th>
+          <th style="text-align:left;padding:8px 12px;border-bottom:1px solid var(--border)">Offset (days)</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for ms_key, ms_label in _ms_labels.items() %}
+      {% set ms_cfg = dt_map.get(ms_key, {}) %}
+      {% set _overridable = timeline_overridable.get((dt_key, ms_key), True) %}
+      {% set _user_row = user_timeline_map.get((dt_key, ms_key), {}) %}
+      {% set _included = _user_row.get('included', ms_cfg.get('included', False)) %}
+      {% set _duration = _user_row.get('duration_days', ms_cfg.get('duration_days')) %}
+      {% set _starts_after = _user_row.get('starts_after_type', ms_cfg.get('starts_after_type')) %}
+      {% set _offset = _user_row.get('offset_days', ms_cfg.get('offset_days', 0)) %}
+      <tr style="border-bottom:1px solid var(--border);{% if not _overridable %}opacity:.65{% endif %}"
+          data-utl-dt="{{ dt_key }}" data-utl-ms="{{ ms_key }}">
+        <td style="padding:8px 12px;color:var(--text)">
+          {{ ms_label }}
+          {% if not _overridable %}<span style="font-size:10px;color:var(--text-muted)"> 🔒</span>{% endif %}
+        </td>
+        <td style="padding:8px 12px;text-align:center">
+          <input type="checkbox"
+                 class="utl-field utl-included"
+                 data-utl-orig-included="{{ 'true' if _included else 'false' }}"
+                 {% if _included %}checked{% endif %}
+                 {% if not _overridable %}disabled{% endif %}>
+        </td>
+        <td style="padding:8px 12px">
+          <input type="number" min="1" step="1"
+                 class="filter-input utl-field utl-duration"
+                 placeholder="from org default"
+                 data-utl-orig-duration="{{ _duration if _duration is not none else '' }}"
+                 value="{{ _duration if _duration is not none else '' }}"
+                 style="width:90px"
+                 {% if not _overridable %}disabled style="opacity:.6;width:90px"{% endif %}>
+        </td>
+        <td style="padding:8px 12px">
+          <select class="filter-select utl-field utl-starts-after" style="width:160px"
+                  data-utl-orig-starts-after="{{ _starts_after or '' }}"
+                  {% if not _overridable %}disabled{% endif %}>
+            <option value="">— must set in deal —</option>
+            {% for sa_key, sa_label in _ms_labels.items() if sa_key != ms_key %}
+            <option value="{{ sa_key }}" {% if _starts_after == sa_key %}selected{% endif %}>{{ sa_label }}</option>
+            {% endfor %}
+          </select>
+        </td>
+        <td style="padding:8px 12px">
+          <input type="number" step="1"
+                 class="filter-input utl-field utl-offset"
+                 value="{{ _offset }}"
+                 data-utl-orig-offset="{{ _offset }}"
+                 style="width:70px"
+                 {% if not _overridable %}disabled{% endif %}>
+        </td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  </details>
+  {% endfor %}
+
 </div>
 
 <div id="save-pill" style="display:none;position:fixed;bottom:28px;left:50%;transform:translateX(-50%);
@@ -205,6 +295,11 @@
   const pill = document.getElementById('save-pill');
   const label = document.getElementById('save-pill-label');
   const dirty = new Map();
+  var tlDirty = false;
+
+  function refreshPill() {
+    pill.style.display = (dirty.size > 0 || tlDirty) ? 'flex' : 'none';
+  }
 
   // Only .settings-field elements are on unlocked fields — disabled inputs lack this class.
   document.querySelectorAll('#user-prefs .settings-field').forEach(function (el) {
@@ -214,30 +309,103 @@
       } else {
         dirty.delete(el.dataset.fk);
       }
-      pill.style.display = dirty.size > 0 ? 'flex' : 'none';
+      refreshPill();
     });
   });
 
-  pill.addEventListener('click', async function () {
-    if (dirty.size === 0) return;
-    label.textContent = 'Saving…';
-    try {
-      const resp = await fetch('/api/settings/user', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(Object.fromEntries(dirty)),
+  // Timeline defaults dirty tracking — skip disabled inputs (locked by org).
+  function checkUtlDirty() {
+    var d = false;
+    document.querySelectorAll('.utl-field:not([disabled])').forEach(function(el) {
+      if (el.classList.contains('utl-included') && el.checked !== (el.dataset.utlOrigIncluded === 'true')) d = true;
+      if (el.classList.contains('utl-duration') && el.value !== el.dataset.utlOrigDuration) d = true;
+      if (el.classList.contains('utl-starts-after') && el.value !== el.dataset.utlOrigStartsAfter) d = true;
+      if (el.classList.contains('utl-offset') && el.value !== el.dataset.utlOrigOffset) d = true;
+    });
+    tlDirty = d;
+    refreshPill();
+  }
+
+  document.querySelectorAll('.utl-field:not([disabled])').forEach(function(el) {
+    el.addEventListener('change', checkUtlDirty);
+    el.addEventListener('input', checkUtlDirty);
+  });
+
+  function buildUtlPayload() {
+    var body = {};
+    document.querySelectorAll('tr[data-utl-dt]').forEach(function(row) {
+      var dt = row.dataset.utlDt;
+      var ms = row.dataset.utlMs;
+      var includedEl = row.querySelector('.utl-included:not([disabled])');
+      var durationEl = row.querySelector('.utl-duration:not([disabled])');
+      var startsAfterEl = row.querySelector('.utl-starts-after:not([disabled])');
+      var offsetEl = row.querySelector('.utl-offset:not([disabled])');
+
+      if (!includedEl && !durationEl && !startsAfterEl && !offsetEl) return; // all locked
+      if (!body[dt]) body[dt] = {};
+      body[dt][ms] = {
+        included: includedEl ? includedEl.checked : undefined,
+        duration_days: durationEl && durationEl.value !== '' ? parseInt(durationEl.value) : null,
+        starts_after_type: startsAfterEl && startsAfterEl.value !== '' ? startsAfterEl.value : null,
+        offset_days: offsetEl ? (parseInt(offsetEl.value) || 0) : 0,
+      };
+      // Remove undefined keys
+      Object.keys(body[dt][ms]).forEach(function(k) {
+        if (body[dt][ms][k] === undefined) delete body[dt][ms][k];
       });
-      if (resp.ok) {
-        dirty.forEach(function (v, k) {
-          const el = document.querySelector('[data-fk="' + k + '"]');
-          if (el) el.dataset.orig = v;
+    });
+    return body;
+  }
+
+  pill.addEventListener('click', async function () {
+    if (dirty.size === 0 && !tlDirty) return;
+    label.textContent = 'Saving…';
+    var allOk = true;
+    try {
+      if (dirty.size > 0) {
+        const resp = await fetch('/api/settings/user', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(Object.fromEntries(dirty)),
         });
-        dirty.clear();
+        if (resp.ok) {
+          dirty.forEach(function (v, k) {
+            const el = document.querySelector('[data-fk="' + k + '"]');
+            if (el) el.dataset.orig = v;
+          });
+          dirty.clear();
+        } else { allOk = false; }
+      }
+
+      if (tlDirty) {
+        var tlResp = await fetch('/api/settings/timeline-defaults/user', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(buildUtlPayload()),
+        });
+        if (tlResp.ok) {
+          document.querySelectorAll('.utl-included:not([disabled])').forEach(function(el) {
+            el.dataset.utlOrigIncluded = el.checked ? 'true' : 'false';
+          });
+          document.querySelectorAll('.utl-duration:not([disabled])').forEach(function(el) {
+            el.dataset.utlOrigDuration = el.value;
+          });
+          document.querySelectorAll('.utl-starts-after:not([disabled])').forEach(function(el) {
+            el.dataset.utlOrigStartsAfter = el.value;
+          });
+          document.querySelectorAll('.utl-offset:not([disabled])').forEach(function(el) {
+            el.dataset.utlOrigOffset = el.value;
+          });
+          tlDirty = false;
+        } else { allOk = false; }
+      }
+
+      if (allOk) {
         pill.style.display = 'none';
         label.textContent = 'Save Changes';
       } else {
         label.textContent = 'Error — try again';
-        setTimeout(function () { label.textContent = 'Save Changes'; }, 3000);
+        setTimeout(function () { label.textContent = 'Save Changes'; refreshPill(); }, 3000);
       }
     } catch (e) {
       label.textContent = 'Error — try again';

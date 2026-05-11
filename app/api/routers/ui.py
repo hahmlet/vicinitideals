@@ -1922,6 +1922,30 @@ async def settings_user_preferences(
     overridable = _build_overridable_map(_org_rows)
     user_values = {r.field_key: r.value for r in _user_rows}
 
+    from app.models.settings import UserDealTypeDefault as _UserDTD
+    from app.settings.resolver import resolve_timeline_defaults as _resolve_tl2
+
+    timeline_defaults_map = await _resolve_tl2(user.id, user.org_id, session)
+    _user_dtd_rows = (
+        await session.execute(select(_UserDTD).where(_UserDTD.user_id == user.id))
+    ).scalars().all()
+    user_timeline_map = {
+        (r.deal_type, r.milestone_type): {
+            "included": r.included,
+            "duration_days": int(r.duration_days) if r.duration_days is not None else None,
+            "starts_after_type": r.starts_after_type,
+            "offset_days": int(r.offset_days),
+        }
+        for r in _user_dtd_rows
+    }
+    from app.models.settings import OrgDealTypeDefault as _OrgDTD2
+    _org_dtd_rows2 = (
+        await session.execute(select(_OrgDTD2).where(_OrgDTD2.org_id == user.org_id))
+    ).scalars().all()
+    timeline_overridable = {
+        (r.deal_type, r.milestone_type): r.user_overridable for r in _org_dtd_rows2
+    }
+
     return templates.TemplateResponse(
         request,
         "settings_user.html",
@@ -1931,6 +1955,9 @@ async def settings_user_preferences(
             "overridable": overridable,
             "user_values": user_values,
             "org_set_fields": _ORG_SET_FIELDS,
+            "timeline_defaults_map": timeline_defaults_map,
+            "user_timeline_map": user_timeline_map,
+            "timeline_overridable": timeline_overridable,
             **_base_ctx(user, dedup_count, "", address_issues_count, conflicts_count=conflicts_count),
         },
     )
@@ -8932,6 +8959,15 @@ async def model_builder(
         _calc_status, model_id, has_any_adjustment=_has_adj
     )
 
+    # Override wizard_default_types from org/user resolved timeline template.
+    if user is not None:
+        from app.settings.resolver import resolve_timeline_defaults as _resolve_tl_bld
+        _tl_template = await _resolve_tl_bld(user.id, user.org_id, session)
+        _bld_deal_type = data.get("wizard_deal_type", "")
+        _tl_for_dt = _tl_template.get(_bld_deal_type, {})
+        data["wizard_default_types"] = [mt for mt, cfg in _tl_for_dt.items() if cfg.get("included")]
+        data["wizard_timeline_template"] = _tl_template
+
     ctx = {
         "model": model,
         "project": opportunity,  # template uses `project.name` for the topbar breadcrumb
@@ -11990,3 +12026,5 @@ async def export_history_json_endpoint(
             "Content-Disposition": f'attachment; filename="history-{model_id}.json"',
         },
     )
+
+

@@ -23,9 +23,9 @@ from sqlalchemy.dialects.postgresql import insert as pg_insert
 
 from app.api.deps import CurrentUserId, DBSession
 from app.models.org import User
-from app.models.settings import OrgSetting, UserSetting
+from app.models.settings import OrgDealTypeDefault, OrgSetting, UserDealTypeDefault, UserSetting
 from app.settings.defaults import ORG_SET_FIELDS, SYSTEM_BASELINE
-from app.settings.resolver import resolve_all_defaults, resolve_default
+from app.settings.resolver import resolve_all_defaults, resolve_default, resolve_timeline_defaults
 
 log = logging.getLogger(__name__)
 
@@ -341,3 +341,150 @@ async def resolve_one(
     user = await _get_user_or_401(current_user_id, session)
     resolved_value = await resolve_default(field_key, current_user_id, user.org_id, session)
     return {"field_key": field_key, "value": resolved_value}
+
+
+# ---------------------------------------------------------------------------
+# Timeline defaults — per-deal-type milestone configuration
+# ---------------------------------------------------------------------------
+
+
+@router.get("/timeline-defaults")
+async def get_timeline_defaults(
+    current_user_id: CurrentUserId,
+    session: DBSession,
+) -> dict[str, Any]:
+    """Resolve full timeline defaults template for current user/org."""
+    user = await _get_user_or_401(current_user_id, session)
+    return await resolve_timeline_defaults(current_user_id, user.org_id, session)
+
+
+@router.put("/timeline-defaults/org", response_class=JSONResponse)
+async def batch_upsert_org_timeline_defaults(
+    request: Request,
+    current_user_id: CurrentUserId,
+    session: DBSession,
+) -> dict[str, Any]:
+    """Batch upsert org timeline defaults.
+
+    Body shape:
+    {
+      "acquisition": {"offer_made": {"included": true, "duration_days": 14, ...}},
+      "permissions": {"acquisition": {"construction": {"user_overridable": false}}}
+    }
+    """
+    user = await _get_user_or_401(current_user_id, session)
+    _require_org_admin(user)
+    raw: dict = await request.json()
+
+    permissions: dict = raw.pop("permissions", {}) or {}
+    saved = 0
+
+    for deal_type, milestones in raw.items():
+        if not isinstance(milestones, dict):
+            continue
+        for milestone_type, cfg in milestones.items():
+            if not isinstance(cfg, dict):
+                continue
+
+            perm_cfg = (permissions.get(deal_type) or {}).get(milestone_type) or {}
+            user_overridable = bool(perm_cfg["user_overridable"]) if "user_overridable" in perm_cfg else None
+
+            insert_kwargs: dict[str, Any] = {
+                "id": uuid.uuid4(),
+                "org_id": user.org_id,
+                "deal_type": str(deal_type),
+                "milestone_type": str(milestone_type),
+                "updated_by": current_user_id,
+            }
+            update_set: dict[str, Any] = {"updated_by": current_user_id}
+
+            for col in ("included", "duration_days", "starts_after_type", "offset_days"):
+                if col in cfg:
+                    insert_kwargs[col] = cfg[col]
+                    update_set[col] = cfg[col]
+            if user_overridable is not None:
+                insert_kwargs["user_overridable"] = user_overridable
+                update_set["user_overridable"] = user_overridable
+
+            stmt = (
+                pg_insert(OrgDealTypeDefault)
+                .values(**insert_kwargs)
+                .on_conflict_do_update(
+                    constraint="uq_org_deal_type_defaults",
+                    set_=update_set,
+                )
+            )
+            await session.execute(stmt)
+            saved += 1
+
+    await session.commit()
+    log.info("org_timeline_defaults.upsert org=%s saved=%s", user.org_id, saved)
+    return {"ok": True, "saved": saved}
+
+
+@router.put("/timeline-defaults/user", response_class=JSONResponse)
+async def batch_upsert_user_timeline_defaults(
+    request: Request,
+    current_user_id: CurrentUserId,
+    session: DBSession,
+) -> dict[str, Any]:
+    """Batch upsert user timeline defaults.
+
+    Body shape: same as org, without 'permissions' key.
+    Rows where org has user_overridable=False are silently skipped.
+    """
+    user = await _get_user_or_401(current_user_id, session)
+    raw: dict = await request.json()
+
+    # Load org overridable flags
+    org_rows = (
+        await session.execute(
+            select(OrgDealTypeDefault).where(OrgDealTypeDefault.org_id == user.org_id)
+        )
+    ).scalars().all()
+    org_lock_map: dict[tuple, bool] = {
+        (r.deal_type, r.milestone_type): r.user_overridable for r in org_rows
+    }
+
+    saved = 0
+    for deal_type, milestones in raw.items():
+        if not isinstance(milestones, dict):
+            continue
+        for milestone_type, cfg in milestones.items():
+            if not isinstance(cfg, dict):
+                continue
+            # Respect org lock
+            if not org_lock_map.get((deal_type, milestone_type), True):
+                continue
+
+            insert_kwargs: dict[str, Any] = {
+                "id": uuid.uuid4(),
+                "user_id": current_user_id,
+                "org_id": user.org_id,
+                "deal_type": str(deal_type),
+                "milestone_type": str(milestone_type),
+            }
+            update_set: dict[str, Any] = {}
+
+            for col in ("included", "duration_days", "starts_after_type", "offset_days"):
+                if col in cfg:
+                    insert_kwargs[col] = cfg[col]
+                    update_set[col] = cfg[col]
+
+            if not update_set:
+                continue
+
+            stmt = (
+                pg_insert(UserDealTypeDefault)
+                .values(**insert_kwargs)
+                .on_conflict_do_update(
+                    constraint="uq_user_deal_type_defaults",
+                    set_=update_set,
+                )
+            )
+            await session.execute(stmt)
+            saved += 1
+
+    await session.commit()
+    log.info("user_timeline_defaults.upsert user=%s saved=%s", current_user_id, saved)
+    return {"ok": True, "saved": saved}
