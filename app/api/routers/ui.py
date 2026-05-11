@@ -2556,8 +2556,17 @@ async def opportunities_page(
 ) -> HTMLResponse:
     user = await _get_user(session, request)
     dedup_count, conflicts_count = await _get_counts(session)
+    jur_rows = await session.execute(
+        select(func.lower(Opportunity.jurisdiction))
+        .where(Opportunity.jurisdiction.isnot(None))
+        .where(Opportunity.jurisdiction != "")
+        .distinct()
+        .order_by(func.lower(Opportunity.jurisdiction))
+    )
+    jurisdictions = [r[0] for r in jur_rows if r[0] and r[0].strip()]
     return templates.TemplateResponse(request, "opportunities.html", {
         "request": request,
+        "jurisdictions": jurisdictions,
         **_base_ctx(user, dedup_count, "opportunities", conflicts_count=conflicts_count),
     })
 

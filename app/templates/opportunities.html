@@ -52,6 +52,25 @@
 .section-body.collapsed { display: none; }
 .archive-btn { opacity: 0; transition: opacity 0.1s; }
 tr:hover .archive-btn { opacity: 1; }
+.filter-dropdown { position: relative; display: inline-block; }
+.filter-dropdown-btn {
+  padding: 5px 8px; border: 1px solid var(--border);
+  border-radius: 5px; font-size: 12px; cursor: pointer;
+  background: var(--bg); color: var(--text); white-space: nowrap;
+}
+.filter-dropdown-panel {
+  position: absolute; top: calc(100% + 4px); left: 0; z-index: 200;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 6px; padding: 6px 4px;
+  min-width: 170px; max-height: 240px; overflow-y: auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,.12);
+}
+.filter-dropdown-panel label {
+  display: flex; align-items: center; gap: 7px;
+  padding: 4px 8px; font-size: 12px; cursor: pointer;
+  white-space: nowrap; text-transform: capitalize; border-radius: 4px;
+}
+.filter-dropdown-panel label:hover { background: var(--surface-alt, #f0f0f0); }
 </style>
 {% endblock %}
 
@@ -73,14 +92,14 @@ tr:hover .archive-btn { opacity: 1; }
 <form id="opp-filters" data-filter-form="opportunities" class="section-filters"
       style="margin-bottom:16px;border-radius:6px;border:1px solid var(--border)">
   <input type="search" name="q" placeholder="Search…">
-  <select name="jurisdiction" class="filter-select">
-    <option value="">All jurisdictions</option>
-    <option>gresham</option><option>portland</option><option>fairview</option>
-    <option>wood village</option><option>troutdale</option><option>happy valley</option>
-    <option>milwaukie</option><option>oregon city</option><option>gladstone</option>
-    <option>lake oswego</option><option>west linn</option><option>tualatin</option>
-    <option>wilsonville</option>
-  </select>
+  <div class="filter-dropdown" id="jurisdiction-dropdown">
+    <button type="button" class="filter-dropdown-btn" id="jurisdiction-btn">All jurisdictions</button>
+    <div class="filter-dropdown-panel" id="jurisdiction-panel" style="display:none">
+      {% for j in jurisdictions %}
+      <label><input type="checkbox" name="jurisdiction" value="{{ j }}"> {{ j | title }}</label>
+      {% endfor %}
+    </div>
+  </div>
   <select name="property_type" class="filter-select">
     <option value="">All types</option>
     <option>Multifamily</option><option>Office</option><option>Retail</option>
@@ -196,13 +215,15 @@ function toggleSection(name) {
     {id: 'onmarket-tbody',  url: '/ui/opportunities/rows/onmarket'},
   ];
 
-  function loadAll() {
+  function getFilterQS() {
     var form = document.getElementById('opp-filters');
     var qs = new URLSearchParams();
-    if (form) {
-      new FormData(form).forEach(function(v, k) { if (v !== '') qs.append(k, v); });
-    }
-    var params = qs.toString();
+    if (form) new FormData(form).forEach(function(v, k) { if (v !== '') qs.append(k, v); });
+    return qs.toString();
+  }
+
+  function loadAll() {
+    var params = getFilterQS();
     tables.forEach(function(t) {
       var el = document.getElementById(t.id);
       if (!el) return;
@@ -224,16 +245,133 @@ function toggleSection(name) {
     });
   }
 
-  document.addEventListener('DOMContentLoaded', loadAll);
-  document.addEventListener('htmx:afterSettle', updateCounts);
+  function updateJurisdictionLabel() {
+    var btn = document.getElementById('jurisdiction-btn');
+    var panel = document.getElementById('jurisdiction-panel');
+    if (!btn || !panel) return;
+    var checked = panel.querySelectorAll('input[type=checkbox]:checked');
+    btn.textContent = checked.length === 0 ? 'All jurisdictions'
+      : checked.length === 1 ? checked[0].value
+      : checked.length + ' jurisdictions';
+  }
+
+  // ── Save filters (localStorage) ────────────────────────────────────
+  var STORAGE_KEY = 'opp_saved_filters';
+
+  function getSavedFilters() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e) { return []; }
+  }
+  function setSavedFilters(arr) { localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); }
+
+  function populateSavedSelect() {
+    var select = document.getElementById('saved-filter-select');
+    var dropdown = document.getElementById('saved-filter-dropdown');
+    if (!select || !dropdown) return;
+    var saved = getSavedFilters();
+    select.innerHTML = '<option value="">— Saved —</option>' +
+      saved.map(function(f) {
+        return '<option value="' + f.name.replace(/"/g, '&quot;') + '">' + f.name + '</option>';
+      }).join('');
+    dropdown.style.display = saved.length ? 'inline-block' : 'none';
+  }
+
+  function applyFilterQS(qs) {
+    var form = document.getElementById('opp-filters');
+    if (!form) return;
+    var params = new URLSearchParams(qs);
+    form.querySelectorAll('input[type=search],input[type=number]').forEach(function(el) { el.value = ''; });
+    form.querySelectorAll('input[type=checkbox]').forEach(function(el) { el.checked = false; });
+    params.forEach(function(v, k) {
+      var el = form.querySelector('[name="' + k + '"]:not([type=checkbox])');
+      if (el) el.value = v;
+    });
+    form.querySelectorAll('input[type=checkbox]').forEach(function(el) {
+      if (params.getAll(el.name).indexOf(el.value) !== -1) el.checked = true;
+    });
+    updateJurisdictionLabel();
+    updateSaveBtn();
+    loadAll();
+  }
+
+  function updateSaveBtn() {
+    var btn = document.getElementById('saved-filter-save-btn');
+    if (btn) btn.style.display = getFilterQS() !== '' ? '' : 'none';
+  }
 
   document.addEventListener('DOMContentLoaded', function() {
     var form = document.getElementById('opp-filters');
     if (!form) return;
+
+    // Jurisdiction dropdown open/close
+    var jBtn = document.getElementById('jurisdiction-btn');
+    var jPanel = document.getElementById('jurisdiction-panel');
+    if (jBtn && jPanel) {
+      jBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        jPanel.style.display = jPanel.style.display === 'none' ? 'block' : 'none';
+      });
+      jPanel.addEventListener('click', function(e) { e.stopPropagation(); });
+      document.addEventListener('click', function() { jPanel.style.display = 'none'; });
+    }
+
+    // Filter changes → reload + update UI
     var timer;
-    form.addEventListener('input', function() { clearTimeout(timer); timer = setTimeout(loadAll, 400); });
-    form.addEventListener('change', function() { clearTimeout(timer); loadAll(); });
+    form.addEventListener('input', function() {
+      clearTimeout(timer);
+      timer = setTimeout(function() { updateJurisdictionLabel(); updateSaveBtn(); loadAll(); }, 400);
+    });
+    form.addEventListener('change', function() {
+      clearTimeout(timer);
+      updateJurisdictionLabel();
+      updateSaveBtn();
+      loadAll();
+    });
+
+    // Clear button
+    var clearBtn = document.querySelector('[data-filter-clear]');
+    if (clearBtn) {
+      clearBtn.addEventListener('click', function() {
+        form.querySelectorAll('input[type=search],input[type=number]').forEach(function(el) { el.value = ''; });
+        form.querySelectorAll('input[type=checkbox]').forEach(function(el) { el.checked = false; });
+        var select = document.getElementById('saved-filter-select');
+        if (select) select.value = '';
+        updateJurisdictionLabel();
+        updateSaveBtn();
+        loadAll();
+      });
+    }
+
+    // Save filter
+    var saveBtn = document.getElementById('saved-filter-save-btn');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', function() {
+        var name = prompt('Save filter as:');
+        if (!name || !name.trim()) return;
+        var saved = getSavedFilters().filter(function(f) { return f.name !== name.trim(); });
+        saved.push({ name: name.trim(), qs: getFilterQS() });
+        setSavedFilters(saved);
+        populateSavedSelect();
+        var select = document.getElementById('saved-filter-select');
+        if (select) select.value = name.trim();
+      });
+    }
+
+    // Load saved filter
+    var filterSelect = document.getElementById('saved-filter-select');
+    if (filterSelect) {
+      filterSelect.addEventListener('change', function() {
+        if (!filterSelect.value) return;
+        var found = getSavedFilters().filter(function(f) { return f.name === filterSelect.value; })[0];
+        if (found) applyFilterQS(found.qs);
+      });
+    }
+
+    populateSavedSelect();
+    updateSaveBtn();
+    loadAll();
   });
+
+  document.addEventListener('htmx:afterSettle', updateCounts);
 })();
 </script>
 {% endblock %}
