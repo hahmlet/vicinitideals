@@ -52,6 +52,13 @@
 .section-body.collapsed { display: none; }
 .archive-btn { opacity: 0; transition: opacity 0.1s; }
 tr:hover .archive-btn { opacity: 1; }
+.source-link-btn {
+  display: inline-block; padding: 2px 7px;
+  border: 1px solid var(--border); border-radius: 4px;
+  font-size: 11px; color: var(--text); text-decoration: none;
+  background: var(--bg); white-space: nowrap;
+}
+.source-link-btn:hover { background: var(--surface-alt, #f0f0f0); border-color: var(--text-muted); }
 .filter-dropdown { position: relative; display: inline-block; }
 .filter-dropdown-btn {
   padding: 5px 8px; border: 1px solid var(--border);

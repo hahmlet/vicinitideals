@@ -26,8 +26,13 @@
     <td style="font-size:12px;color:var(--text-muted)">
       {{ opp.display_property_type or '—' }}
     </td>
-    <td style="font-size:12px;color:var(--text-muted)">
-      {{ opp.promotion_source | title if opp.promotion_source else (opp.source | title if opp.source else 'Manual') }}
+    <td style="font-size:12px;color:var(--text-muted)" onclick="event.stopPropagation()">
+      {% set src_label = opp.promotion_source | title if opp.promotion_source else (opp.source | title if opp.source else 'Manual') %}
+      {% if opp.source_url %}
+      <a href="{{ opp.source_url }}" target="_blank" rel="noopener noreferrer" class="source-link-btn">{{ src_label }} ↗</a>
+      {% else %}
+      {{ src_label }}
+      {% endif %}
     </td>
     <td style="font-size:12px;color:var(--text-muted)">
       {{ opp.last_seen_at.strftime('%b %d, %Y') if opp.last_seen_at else '—' }}
