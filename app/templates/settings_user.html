@@ -11,45 +11,185 @@
   <a href="/deals" class="btn btn-secondary">Back to Deals</a>
 </div>
 
+{# Helper macro: renders one editable or locked field row #}
+{# val = user's own saved value if any, else resolved (org/system) default #}
+{# locked = field is org-set or admin has disabled user override #}
+{% macro user_field_number(fk, label, step, min='', max='', placeholder='', hint='') %}
+  {% set _overridable = overridable.get(fk, True) %}
+  {% set _val = user_values.get(fk) if user_values.get(fk) is not none else resolved.get(fk, '') %}
+  <div>
+    <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block">{{ label }}</label>
+    <div style="display:flex;align-items:center;gap:8px">
+      <input class="filter-input{% if _overridable %} settings-field{% endif %}"
+             type="number" step="{{ step }}"
+             {% if min %}min="{{ min }}"{% endif %}
+             {% if max %}max="{{ max }}"{% endif %}
+             data-fk="{{ fk }}"
+             data-orig="{{ _val }}"
+             value="{{ _val }}"
+             placeholder="{{ placeholder }}"
+             {% if not _overridable %}disabled style="opacity:.6;width:100%"{% else %}style="width:100%"{% endif %}>
+      {% if not _overridable %}
+      <span style="font-size:11px;color:var(--text-muted);white-space:nowrap">🔒 Set by org</span>
+      {% endif %}
+    </div>
+    {% if hint %}<div style="font-size:11px;color:var(--text-muted);margin-top:3px">{{ hint }}</div>{% endif %}
+  </div>
+{% endmacro %}
+
+{% macro user_field_select(fk, label, options) %}
+  {% set _overridable = overridable.get(fk, True) %}
+  {% set _val = user_values.get(fk) if user_values.get(fk) is not none else resolved.get(fk, '') %}
+  <div>
+    <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block">{{ label }}</label>
+    <div style="display:flex;align-items:center;gap:8px">
+      <select class="filter-select{% if _overridable %} settings-field{% endif %}"
+              data-fk="{{ fk }}"
+              data-orig="{{ _val }}"
+              {% if not _overridable %}disabled style="opacity:.6;width:100%"{% else %}style="width:100%"{% endif %}>
+        {% for opt_val, opt_label in options %}
+        <option value="{{ opt_val }}" {% if _val == opt_val %}selected{% endif %}>{{ opt_label }}</option>
+        {% endfor %}
+      </select>
+      {% if not _overridable %}
+      <span style="font-size:11px;color:var(--text-muted);white-space:nowrap">🔒 Set by org</span>
+      {% endif %}
+    </div>
+  </div>
+{% endmacro %}
+
 <div id="user-prefs" style="padding:24px;display:grid;gap:16px;max-width:600px">
 
+  {# ── Underwriting Policy (always locked — org-set) ─────────────────── #}
+  <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+    <summary style="padding:14px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);list-style:none;display:flex;align-items:center;gap:8px">
+      🔒 Underwriting Policy
+      <span style="margin-left:auto;font-size:11px;color:var(--text-muted);font-weight:400">Org-Set — read only</span>
+    </summary>
+    <div style="padding:0 18px 18px;display:grid;gap:12px">
+      {{ user_field_select("debt_sizing_mode", "Debt Sizing Method", [
+        ("gap_fill", "Gap-fill (Uses − Equity)"),
+        ("dscr_capped", "DSCR-capped (max from NOI)"),
+        ("dual_constraint", "Dual Constraint (MIN of LTV, DSCR, gap-fill)"),
+      ]) }}
+      {{ user_field_number("operation_reserve_months", "Operating Reserve (months)", "1", placeholder="6",
+         hint="Months of projected debt service held at stabilization start.") }}
+      {{ user_field_number("capex_reserve_per_unit_annual", "CapEx Reserve ($/unit/yr)", "50", placeholder="250",
+         hint="Annual capital reserve per unit, deducted from NOI.") }}
+      {{ user_field_number("risk_free_rate_pct", "Discount Rate / Risk-Free (%)", "0.05", placeholder="4.25",
+         hint="10Y Treasury proxy used in spread stack on investor export.") }}
+    </div>
+  </details>
+
+  {# ── Debt & Financing ─────────────────────────────────────────────── #}
+  <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+    <summary style="padding:14px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);list-style:none">Debt &amp; Financing</summary>
+    <div style="padding:0 18px 18px;display:grid;gap:12px">
+      {{ user_field_number("dscr_min", "DSCR Minimum", "0.01", placeholder="1.25") }}
+      {{ user_field_number("ltv_pct", "Max LTV (%)", "1", placeholder="70") }}
+      {{ user_field_number("amort_term_years", "Amortization Term (years)", "1", min="1", max="40", placeholder="30") }}
+      {{ user_field_number("loan_closing_origination_pct", "Origination (%)", "0.1", placeholder="1.0") }}
+      {{ user_field_number("loan_closing_legal_flat", "Legal Flat ($)", "500", placeholder="7500") }}
+      {{ user_field_number("loan_closing_title_pct", "Title/Escrow (%)", "0.05", placeholder="0.25") }}
+    </div>
+  </details>
+
+  {# ── Income & Revenue ─────────────────────────────────────────────── #}
+  <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+    <summary style="padding:14px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);list-style:none">Income &amp; Revenue</summary>
+    <div style="padding:0 18px 18px;display:grid;gap:12px">
+      {{ user_field_select("income_mode", "Income Mode", [
+        ("revenue_opex", "Revenue + OpEx (line-by-line)"),
+        ("noi", "NOI Direct"),
+      ]) }}
+      {{ user_field_select("lease_up_curve", "Lease-Up Curve", [
+        ("linear", "Linear"),
+        ("s_curve", "S-Curve"),
+      ]) }}
+      {{ user_field_number("stabilized_occupancy_pct", "Stabilized Occupancy (%)", "0.5", placeholder="95") }}
+      {{ user_field_number("escalation_rate_pct_annual_income", "Rent Escalation (%/yr)", "0.1", placeholder="3.0") }}
+      {{ user_field_number("noi_escalation_rate_pct", "NOI Escalation (%/yr)", "0.1", placeholder="3.0") }}
+      {{ user_field_number("bad_debt_pct", "Bad Debt (%)", "0.1", placeholder="1.0") }}
+    </div>
+  </details>
+
+  {# ── My Preferences (user-only fields) ───────────────────────────── #}
   <details open style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
     <summary style="padding:14px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);list-style:none">
-      My Underwriting Preferences
+      My Preferences
     </summary>
     <div style="padding:0 18px 18px;display:grid;gap:18px">
+      {{ user_field_number("hold_term_years", "Hold / Loan Term (years)", "1", min="1", max="40", placeholder="7",
+         hint="Default hold period for new permanent debt modules.") }}
 
-      <div>
-        <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block">
-          Hold / Loan Term (years)
-        </label>
-        <input class="filter-input settings-field" type="number" step="1" min="1" max="40"
-               data-fk="hold_term_years"
-               data-orig="{{ resolved.get('hold_term_years', '') }}"
-               value="{{ resolved.get('hold_term_years', '') }}"
-               placeholder="7"
-               style="width:100%">
-        <div style="font-size:11px;color:var(--text-muted);margin-top:3px">Default hold period for new permanent debt modules.</div>
-      </div>
-
+      {# S-curve steepness: range slider, custom render #}
+      {% set _overridable_s = overridable.get('lease_up_curve_steepness', True) %}
+      {% set _val_s = user_values.get('lease_up_curve_steepness') if user_values.get('lease_up_curve_steepness') is not none else resolved.get('lease_up_curve_steepness', 5) %}
       <div>
         <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;display:block">
-          S-Curve Steepness — <span id="steepness-display">{{ resolved.get('lease_up_curve_steepness', 5) }}</span>
+          S-Curve Steepness — <span id="steepness-display">{{ _val_s }}</span>
         </label>
-        <input type="range" min="1" max="10" step="1"
-               class="settings-field"
-               data-fk="lease_up_curve_steepness"
-               data-orig="{{ resolved.get('lease_up_curve_steepness', 5) }}"
-               value="{{ resolved.get('lease_up_curve_steepness', 5) }}"
-               id="field-steepness"
-               style="width:100%"
-               oninput="document.getElementById('steepness-display').textContent=this.value">
+        <div style="display:flex;align-items:center;gap:8px">
+          <input type="range" min="1" max="10" step="1"
+                 class="{% if _overridable_s %}settings-field{% endif %}"
+                 data-fk="lease_up_curve_steepness"
+                 data-orig="{{ _val_s }}"
+                 value="{{ _val_s }}"
+                 id="field-steepness"
+                 {% if not _overridable_s %}disabled style="opacity:.6;width:100%"{% else %}style="width:100%"{% endif %}
+                 oninput="document.getElementById('steepness-display').textContent=this.value">
+          {% if not _overridable_s %}
+          <span style="font-size:11px;color:var(--text-muted);white-space:nowrap">🔒 Set by org</span>
+          {% endif %}
+        </div>
         <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);margin-top:2px">
           <span>1 — flat / linear</span><span>10 — steep S-curve</span>
         </div>
         <div style="font-size:11px;color:var(--text-muted);margin-top:4px">Only active when lease-up curve type is S-Curve.</div>
       </div>
+    </div>
+  </details>
 
+  {# ── Operating Expenses ───────────────────────────────────────────── #}
+  <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+    <summary style="padding:14px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);list-style:none">Operating Expenses</summary>
+    <div style="padding:0 18px 18px;display:grid;gap:12px">
+      {{ user_field_number("escalation_rate_pct_annual_opex", "Expense Escalation (%/yr)", "0.1", placeholder="3.0") }}
+      {{ user_field_number("asset_mgmt_fee_pct", "Asset Mgmt Fee (%)", "0.1", placeholder="0.5") }}
+      {{ user_field_number("management_fee_pct", "Property Mgmt Fee (%)", "0.5", placeholder="5.0") }}
+      {{ user_field_number("lease_up_floor_pct", "Variable Expense Floor (%)", "1", placeholder="50") }}
+    </div>
+  </details>
+
+  {# ── Construction & Timeline ──────────────────────────────────────── #}
+  <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+    <summary style="padding:14px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);list-style:none">Construction &amp; Timeline</summary>
+    <div style="padding:0 18px 18px;display:grid;gap:12px">
+      {{ user_field_number("construction_floor_pct", "Construction Reserve Floor (%)", "1", placeholder="40") }}
+      {{ user_field_select("use_line_timing", "Default Use Line Timing", [
+        ("first_day", "First day of period"),
+        ("spread", "Spread evenly"),
+      ]) }}
+    </div>
+  </details>
+
+  {# ── Exit & Disposition ───────────────────────────────────────────── #}
+  <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+    <summary style="padding:14px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);list-style:none">Exit &amp; Disposition</summary>
+    <div style="padding:0 18px 18px;display:grid;gap:12px">
+      {{ user_field_number("selling_costs_pct", "Selling Costs (%)", "0.1", placeholder="2.0",
+         hint="Brokerage + closing costs as % of gross sale proceeds.") }}
+    </div>
+  </details>
+
+  {# ── Waterfall & Equity ───────────────────────────────────────────── #}
+  <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+    <summary style="padding:14px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);list-style:none">Waterfall &amp; Equity</summary>
+    <div style="padding:0 18px 18px;display:grid;gap:12px">
+      {{ user_field_number("lp_split_pct", "LP Split (%)", "1", placeholder="80") }}
+      {{ user_field_number("gp_split_pct", "GP Split (%)", "1", placeholder="20") }}
+      {{ user_field_number("irr_hurdle_pct_tier1", "IRR Hurdle Tier 1 (%)", "0.5", placeholder="8.0") }}
+      {{ user_field_number("pref_return_rate_pct", "Preferred Return (%)", "0.5", placeholder="6.0") }}
     </div>
   </details>
 
@@ -66,6 +206,7 @@
   const label = document.getElementById('save-pill-label');
   const dirty = new Map();
 
+  // Only .settings-field elements are on unlocked fields — disabled inputs lack this class.
   document.querySelectorAll('#user-prefs .settings-field').forEach(function (el) {
     el.addEventListener('change', function () {
       if (el.value !== el.dataset.orig) {

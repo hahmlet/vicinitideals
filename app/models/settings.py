@@ -14,7 +14,7 @@ import uuid
 from datetime import datetime
 from decimal import Decimal
 
-from sqlalchemy import DateTime, ForeignKey, Numeric, Text, UniqueConstraint, func
+from sqlalchemy import Boolean, DateTime, ForeignKey, Numeric, Text, UniqueConstraint, func
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -32,6 +32,10 @@ class OrgSetting(Base):
     field_key: Mapped[str] = mapped_column(Text, nullable=False)
     # Stored as text; callers cast to the appropriate Python type at read time.
     value: Mapped[str] = mapped_column(Text, nullable=False)
+    # When False, UserSetting rows for this field are ignored by the resolver.
+    user_overridable: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=True, server_default="true"
+    )
     # Phase 5 (deferred): "range" | "list" | None
     constraint_type: Mapped[str | None] = mapped_column(Text, nullable=True)
     constraint_min: Mapped[Decimal | None] = mapped_column(Numeric, nullable=True)

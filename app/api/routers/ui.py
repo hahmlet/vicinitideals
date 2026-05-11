@@ -1826,8 +1826,18 @@ async def settings_organization(
         ).scalars()
     )
 
+    from app.models.settings import OrgSetting as _OrgSetting
+    from app.settings.defaults import ORG_SET_FIELDS as _ORG_SET_FIELDS
     from app.settings.resolver import resolve_all_defaults as _resolve_all
+
     resolved = await _resolve_all(user.id, user.org_id, session)
+    _org_rows = (
+        await session.execute(select(_OrgSetting).where(_OrgSetting.org_id == user.org_id))
+    ).scalars().all()
+    org_settings_map = {
+        r.field_key: {"value": r.value, "user_overridable": r.user_overridable}
+        for r in _org_rows
+    }
 
     return templates.TemplateResponse(
         request,
@@ -1837,6 +1847,8 @@ async def settings_organization(
             "org_users": org_users,
             "user": user,
             "resolved": resolved,
+            "org_settings_map": org_settings_map,
+            "org_set_fields": _ORG_SET_FIELDS,
             **_base_ctx(user, dedup_count, "", address_issues_count, conflicts_count=conflicts_count),
         },
     )
@@ -1888,6 +1900,10 @@ async def settings_user_preferences(
     request: Request,
     session: DBSession,
 ) -> HTMLResponse:
+    from app.models.settings import OrgSetting as _OrgSetting
+    from app.models.settings import UserSetting as _UserSetting
+    from app.settings.defaults import ORG_SET_FIELDS as _ORG_SET_FIELDS
+    from app.settings.resolver import build_overridable_map as _build_overridable_map
     from app.settings.resolver import resolve_all_defaults as _resolve_all
 
     user = await _get_user(session, request)
@@ -1898,12 +1914,24 @@ async def settings_user_preferences(
     address_issues_count = await _get_address_issues_count(session)
     resolved = await _resolve_all(user.id, user.org_id, session)
 
+    _org_rows = (
+        await session.execute(select(_OrgSetting).where(_OrgSetting.org_id == user.org_id))
+    ).scalars().all()
+    _user_rows = (
+        await session.execute(select(_UserSetting).where(_UserSetting.user_id == user.id))
+    ).scalars().all()
+    overridable = _build_overridable_map(_org_rows)
+    user_values = {r.field_key: r.value for r in _user_rows}
+
     return templates.TemplateResponse(
         request,
         "settings_user.html",
         {
             "user": user,
             "resolved": resolved,
+            "overridable": overridable,
+            "user_values": user_values,
+            "org_set_fields": _ORG_SET_FIELDS,
             **_base_ctx(user, dedup_count, "", address_issues_count, conflicts_count=conflicts_count),
         },
     )

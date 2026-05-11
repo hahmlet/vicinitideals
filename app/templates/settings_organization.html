@@ -92,6 +92,25 @@
   {% if is_org_admin %}
   <div style="font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-top:8px">Underwriting Defaults</div>
 
+  {# Macro: renders one field row with value input + permission checkbox #}
+  {# locked=True → checkbox disabled, always shows "Org policy" label #}
+  {% macro perm_checkbox(fk, locked=False) %}
+    {% if locked %}
+    <div style="font-size:11px;color:var(--text-muted);margin-top:5px;display:flex;align-items:center;gap:5px">
+      <input type="checkbox" disabled style="cursor:not-allowed;opacity:.4"> 🔒 Org policy — users cannot override
+    </div>
+    {% else %}
+    {% set _overridable = org_settings_map.get(fk, {}).get('user_overridable', True) %}
+    <label style="font-size:11px;color:var(--text-muted);margin-top:5px;display:flex;align-items:center;gap:5px;cursor:pointer">
+      <input type="checkbox" class="perm-field"
+             data-perm-fk="{{ fk }}"
+             data-perm-orig="{{ 'true' if _overridable else 'false' }}"
+             {% if _overridable %}checked{% endif %}>
+      Allow users to override
+    </label>
+    {% endif %}
+  {% endmacro %}
+
   <div id="underwriting-defaults" style="display:grid;gap:16px">
 
     <details open style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
@@ -107,6 +126,7 @@
             <option value="dscr_capped" {% if resolved.get('debt_sizing_mode') == 'dscr_capped' %}selected{% endif %}>DSCR-capped (max from NOI)</option>
             <option value="dual_constraint" {% if resolved.get('debt_sizing_mode') == 'dual_constraint' %}selected{% endif %}>Dual Constraint (MIN of LTV, DSCR, gap-fill)</option>
           </select>
+          {{ perm_checkbox("debt_sizing_mode", locked=True) }}
         </div>
         {% for fk, label, step, placeholder, hint in [
           ("operation_reserve_months", "Operating Reserve (months)", "1", "6", "Months of projected debt service held at stabilization start."),
@@ -117,6 +137,7 @@
           <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block">{{ label }}</label>
           <input class="filter-input settings-field" type="number" step="{{ step }}" data-fk="{{ fk }}" data-orig="{{ resolved.get(fk, '') }}" value="{{ resolved.get(fk, '') }}" placeholder="{{ placeholder }}" style="width:100%">
           {% if hint %}<div style="font-size:11px;color:var(--text-muted);margin-top:3px">{{ hint }}</div>{% endif %}
+          {{ perm_checkbox(fk, locked=True) }}
         </div>
         {% endfor %}
       </div>
@@ -136,6 +157,7 @@
         <div>
           <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block">{{ label }}</label>
           <input class="filter-input settings-field" type="number" step="{{ step }}" data-fk="{{ fk }}" data-orig="{{ resolved.get(fk, '') }}" value="{{ resolved.get(fk, '') }}" placeholder="{{ placeholder }}" style="width:100%">
+          {{ perm_checkbox(fk) }}
         </div>
         {% endfor %}
       </div>
@@ -150,6 +172,7 @@
             <option value="revenue_opex" {% if (resolved.get('income_mode') or 'revenue_opex') == 'revenue_opex' %}selected{% endif %}>Revenue + OpEx (line-by-line)</option>
             <option value="noi" {% if resolved.get('income_mode') == 'noi' %}selected{% endif %}>NOI Direct</option>
           </select>
+          {{ perm_checkbox("income_mode") }}
         </div>
         <div>
           <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block">Lease-Up Curve</label>
@@ -157,6 +180,7 @@
             <option value="linear" {% if (resolved.get('lease_up_curve') or 'linear') == 'linear' %}selected{% endif %}>Linear</option>
             <option value="s_curve" {% if resolved.get('lease_up_curve') == 's_curve' %}selected{% endif %}>S-Curve</option>
           </select>
+          {{ perm_checkbox("lease_up_curve") }}
         </div>
         {% for fk, label, step, placeholder in [
           ("stabilized_occupancy_pct", "Stabilized Occupancy (%)", "0.5", "95"),
@@ -167,6 +191,7 @@
         <div>
           <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block">{{ label }}</label>
           <input class="filter-input settings-field" type="number" step="{{ step }}" data-fk="{{ fk }}" data-orig="{{ resolved.get(fk, '') }}" value="{{ resolved.get(fk, '') }}" placeholder="{{ placeholder }}" style="width:100%">
+          {{ perm_checkbox(fk) }}
         </div>
         {% endfor %}
       </div>
@@ -184,6 +209,7 @@
         <div>
           <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block">{{ label }}</label>
           <input class="filter-input settings-field" type="number" step="{{ step }}" data-fk="{{ fk }}" data-orig="{{ resolved.get(fk, '') }}" value="{{ resolved.get(fk, '') }}" placeholder="{{ placeholder }}" style="width:100%">
+          {{ perm_checkbox(fk) }}
         </div>
         {% endfor %}
       </div>
@@ -195,6 +221,7 @@
         <div>
           <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block">Construction Reserve Floor (%)</label>
           <input class="filter-input settings-field" type="number" step="1" data-fk="construction_floor_pct" data-orig="{{ resolved.get('construction_floor_pct', '') }}" value="{{ resolved.get('construction_floor_pct', '') }}" placeholder="40" style="width:100%">
+          {{ perm_checkbox("construction_floor_pct") }}
         </div>
         <div>
           <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block">Default Use Line Timing</label>
@@ -202,6 +229,7 @@
             <option value="first_day" {% if (resolved.get('use_line_timing') or 'first_day') == 'first_day' %}selected{% endif %}>First day of period</option>
             <option value="spread" {% if resolved.get('use_line_timing') == 'spread' %}selected{% endif %}>Spread evenly</option>
           </select>
+          {{ perm_checkbox("use_line_timing") }}
         </div>
       </div>
     </details>
@@ -213,6 +241,7 @@
           <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block">Selling Costs (%)</label>
           <input class="filter-input settings-field" type="number" step="0.1" data-fk="selling_costs_pct" data-orig="{{ resolved.get('selling_costs_pct', '') }}" value="{{ resolved.get('selling_costs_pct', '') }}" placeholder="2.0" style="width:100%">
           <div style="font-size:11px;color:var(--text-muted);margin-top:3px">Brokerage + closing costs as % of gross sale proceeds.</div>
+          {{ perm_checkbox("selling_costs_pct") }}
         </div>
       </div>
     </details>
@@ -229,6 +258,7 @@
         <div>
           <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block">{{ label }}</label>
           <input class="filter-input settings-field" type="number" step="{{ step }}" data-fk="{{ fk }}" data-orig="{{ resolved.get(fk, '') }}" value="{{ resolved.get(fk, '') }}" placeholder="{{ placeholder }}" style="width:100%">
+          {{ perm_checkbox(fk) }}
         </div>
         {% endfor %}
       </div>
@@ -250,34 +280,76 @@
 (function () {
   const pill = document.getElementById('save-pill');
   const label = document.getElementById('save-pill-label');
-  const dirty = new Map();
+  const dirtyValues = new Map();
+  const dirtyPerms  = new Map();
 
+  function refreshPill() {
+    pill.style.display = (dirtyValues.size + dirtyPerms.size) > 0 ? 'flex' : 'none';
+  }
+
+  // Track value changes on all settings inputs / selects.
   document.querySelectorAll('#underwriting-defaults .settings-field').forEach(function (el) {
     el.addEventListener('change', function () {
       if (el.value !== el.dataset.orig) {
-        dirty.set(el.dataset.fk, el.value);
+        dirtyValues.set(el.dataset.fk, el.value);
       } else {
-        dirty.delete(el.dataset.fk);
+        dirtyValues.delete(el.dataset.fk);
       }
-      pill.style.display = dirty.size > 0 ? 'flex' : 'none';
+      refreshPill();
+    });
+  });
+
+  // Track permission checkbox changes.
+  document.querySelectorAll('#underwriting-defaults .perm-field').forEach(function (el) {
+    el.addEventListener('change', function () {
+      var orig = el.dataset.permOrig === 'true';
+      if (el.checked !== orig) {
+        dirtyPerms.set(el.dataset.permFk, el.checked);
+      } else {
+        dirtyPerms.delete(el.dataset.permFk);
+      }
+      refreshPill();
     });
   });
 
   pill.addEventListener('click', async function () {
-    if (dirty.size === 0) return;
+    if (dirtyValues.size === 0 && dirtyPerms.size === 0) return;
     label.textContent = 'Saving…';
     try {
-      const resp = await fetch('/api/settings/org', {
+      // For each dirty permission, also include the current displayed value
+      // so the backend can always upsert a complete OrgSetting row.
+      var extraValues = {};
+      dirtyPerms.forEach(function (_, fk) {
+        if (!dirtyValues.has(fk)) {
+          var input = document.querySelector('[data-fk="' + fk + '"]');
+          if (input) extraValues[fk] = input.value;
+        }
+      });
+
+      var payload = {
+        values: Object.assign(Object.fromEntries(dirtyValues), extraValues),
+        permissions: Object.fromEntries(dirtyPerms),
+      };
+
+      var resp = await fetch('/api/settings/org', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(Object.fromEntries(dirty)),
+        body: JSON.stringify(payload),
       });
+
       if (resp.ok) {
-        dirty.forEach(function (v, k) {
-          const el = document.querySelector('[data-fk="' + k + '"]');
+        // Update data-orig on value inputs.
+        dirtyValues.forEach(function (v, k) {
+          var el = document.querySelector('[data-fk="' + k + '"]');
           if (el) el.dataset.orig = v;
         });
-        dirty.clear();
+        // Update data-perm-orig on permission checkboxes.
+        dirtyPerms.forEach(function (v, k) {
+          var el = document.querySelector('[data-perm-fk="' + k + '"]');
+          if (el) el.dataset.permOrig = v ? 'true' : 'false';
+        });
+        dirtyValues.clear();
+        dirtyPerms.clear();
         pill.style.display = 'none';
         label.textContent = 'Save Changes';
       } else {
