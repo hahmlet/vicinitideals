@@ -7551,27 +7551,32 @@ async def deal_setup_wizard_get(
             session.add(inputs)
             await session.flush()
 
-    # Seed hold_term_years from user/org resolved defaults when not already staged.
+    # Seed perm-debt staging from user/org resolved defaults when not already set.
     if inputs is not None:
         _wiz_user = await _get_user(session, request)
         if _wiz_user is not None:
             from app.settings.resolver import resolve_all_defaults as _resolve_all
             _wiz_defs = await _resolve_all(_wiz_user.id, _wiz_user.org_id, session)
-            _hty_raw = _wiz_defs.get("hold_term_years")
-            if _hty_raw:
-                try:
-                    _hty_int = int(_hty_raw)
-                    _wiz_dt = dict(inputs.debt_terms or {})
-                    _wiz_pd = dict(_wiz_dt.get("permanent_debt", {}))
-                    if "hold_term_years" not in _wiz_pd:
-                        _wiz_pd["hold_term_years"] = _hty_int
-                        _wiz_dt["permanent_debt"] = _wiz_pd
-                        inputs.debt_terms = _wiz_dt
-                        session.add(inputs)
-                        await session.flush()
-                except (ValueError, TypeError):
-                    pass
-
+            _wiz_dt = dict(inputs.debt_terms or {})
+            _wiz_pd = dict(_wiz_dt.get("permanent_debt", {}))
+            _wiz_dirty = False
+            for _def_key, _staging_key in (
+                ("hold_term_years", "hold_term_years"),
+                ("amort_term_years", "amort_years"),
+            ):
+                if _staging_key not in _wiz_pd:
+                    _raw = _wiz_defs.get(_def_key)
+                    if _raw:
+                        try:
+                            _wiz_pd[_staging_key] = int(_raw)
+                            _wiz_dirty = True
+                        except (ValueError, TypeError):
+                            pass
+            if _wiz_dirty:
+                _wiz_dt["permanent_debt"] = _wiz_pd
+                inputs.debt_terms = _wiz_dt
+                session.add(inputs)
+                await session.flush()
     return templates.TemplateResponse(request, "partials/deal_setup_wizard.html", {
         "request": request, "model": model, "inputs": inputs, "step": step,
         "missing_building_data": missing_building_data,
