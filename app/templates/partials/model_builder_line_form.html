@@ -1502,6 +1502,9 @@ function ulTimingChanged(val) {
     if (d.perm_term_years) setVal('perm_term_years', d.perm_term_years);
     if (d.perm_conversion_trigger) setVal('perm_conversion_trigger', d.perm_conversion_trigger);
     if (d.exit_vehicle) setVal('exit_vehicle', d.exit_vehicle);
+    setVal('ds_draw_every_n_months', d.draw_every_n_months);
+    setVal('ds_active_from_milestone', d.draw_active_from_milestone);
+    setVal('ds_active_from_offset_days', d.draw_active_from_offset_days);
 
     if (hint) hint.style.display = '';
   };

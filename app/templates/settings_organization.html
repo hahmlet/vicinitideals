@@ -498,6 +498,33 @@
             {% for ev, el in _exit_opts_org %}<option value="{{ ev }}">{{ el }}</option>{% endfor %}
           </select>
         </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:6px">
+          <div>
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Draw Freq.</label>
+            <select class="filter-select" id="sv-add-org-draw-freq" style="width:100%">
+              <option value="1">Monthly</option>
+              <option value="2">Bi-Monthly</option>
+              <option value="3">Quarterly</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Active From</label>
+            <select class="filter-select" id="sv-add-org-draw-from" style="width:100%">
+              <option value="">— Phase —</option>
+              <option value="offer_made">Offer Made</option>
+              <option value="under_contract">Under Contract</option>
+              <option value="close">Close</option>
+              <option value="pre_construction">Pre-Construction</option>
+              <option value="construction">Construction</option>
+              <option value="lease_up">Lease-Up</option>
+              <option value="stabilized">Stabilized</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">+ Days</label>
+            <input class="filter-input" id="sv-add-org-draw-days" type="number" step="1" min="0" placeholder="0" style="width:100%">
+          </div>
+        </div>
         <div id="sv-add-org-err" style="display:none;color:var(--danger,#dc2626);font-size:12px"></div>
         <div style="display:flex;gap:8px">
           <button type="button" class="btn btn-primary" style="font-size:12px" onclick="svOrgSaveNew()">Save</button>
@@ -581,6 +608,29 @@
             {% for ev, el in _exit_opts_org %}<option value="{{ ev }}" {% if ec.get('exit_type') == ev %}selected{% endif %}>{{ el }}</option>{% endfor %}
           </select>
         </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:6px">
+          <div>
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Draw Freq.</label>
+            <select class="filter-select sv-org-draw-freq" data-vid="{{ v.id }}" style="width:100%">
+              {% for fv, fl in [(1,'Monthly'),(2,'Bi-Monthly'),(3,'Quarterly')] %}
+              <option value="{{ fv }}" {% if sc.get('draw_every_n_months', 1) == fv %}selected{% endif %}>{{ fl }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Active From</label>
+            <select class="filter-select sv-org-draw-from" data-vid="{{ v.id }}" style="width:100%">
+              {% set _draw_phases = [('','— Phase —'),('offer_made','Offer Made'),('under_contract','Under Contract'),('close','Close'),('pre_construction','Pre-Construction'),('construction','Construction'),('lease_up','Lease-Up'),('stabilized','Stabilized')] %}
+              {% for pv, pl in _draw_phases %}
+              <option value="{{ pv }}" {% if sc.get('draw_active_from_milestone','') == pv %}selected{% endif %}>{{ pl }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">+ Days</label>
+            <input class="filter-input sv-org-draw-days" type="number" step="1" min="0" value="{{ sc.get('draw_active_from_offset_days', 0) }}" data-vid="{{ v.id }}" style="width:100%">
+          </div>
+        </div>
         <div class="sv-org-err" data-vid="{{ v.id }}" style="display:none;color:var(--danger,#dc2626);font-size:12px"></div>
         <div style="display:flex;gap:8px">
           <button type="button" class="btn btn-primary" style="font-size:12px" onclick="svOrgSave('{{ v.id }}')">Save</button>
@@ -620,6 +670,9 @@
       construction_carry_type: svOrgVal('.sv-org-ccarry', vid) || null,
       operation_carry_type: svOrgVal('.sv-org-ocarry', vid) || null,
       exit_type: svOrgVal('.sv-org-exit', vid) || null,
+      draw_every_n_months: parseInt(svOrgVal('.sv-org-draw-freq', vid)) || 1,
+      draw_active_from_milestone: svOrgVal('.sv-org-draw-from', vid) || null,
+      draw_active_from_offset_days: parseInt(svOrgVal('.sv-org-draw-days', vid)) || 0,
     };
   }
   function svOrgShowErr(errEl, msg) {
@@ -649,6 +702,9 @@
       construction_carry_type: document.getElementById('sv-add-org-ccarry').value || null,
       operation_carry_type: document.getElementById('sv-add-org-ocarry').value || null,
       exit_type: document.getElementById('sv-add-org-exit').value || null,
+      draw_every_n_months: parseInt(document.getElementById('sv-add-org-draw-freq').value) || 1,
+      draw_active_from_milestone: document.getElementById('sv-add-org-draw-from').value || null,
+      draw_active_from_offset_days: parseInt(document.getElementById('sv-add-org-draw-days').value) || 0,
     };
     var resp = await fetch('/api/settings/source-vehicles/org', {
       method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload)

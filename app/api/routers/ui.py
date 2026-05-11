@@ -10929,6 +10929,9 @@ async def source_vehicle_prefill(
         "perm_conversion_trigger": oper.get("perm_conversion_trigger"),
         "exit_type": exit_cfg.get("exit_type"),
         "exit_vehicle": safe_exit_vehicle,
+        "draw_every_n_months": source.get("draw_every_n_months"),
+        "draw_active_from_milestone": source.get("draw_active_from_milestone"),
+        "draw_active_from_offset_days": source.get("draw_active_from_offset_days"),
     })
 
 

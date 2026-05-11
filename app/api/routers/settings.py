@@ -513,6 +513,12 @@ def _sv_body_to_jsonb(body: dict) -> tuple[dict, dict, dict]:
         source["hold_term_years"] = int(body["hold_term_years"])
     if body.get("dscr_min") is not None:
         source["dscr_min"] = float(body["dscr_min"])
+    if body.get("draw_every_n_months") is not None:
+        source["draw_every_n_months"] = int(body["draw_every_n_months"])
+    if body.get("draw_active_from_milestone"):
+        source["draw_active_from_milestone"] = body["draw_active_from_milestone"]
+    if body.get("draw_active_from_offset_days") is not None:
+        source["draw_active_from_offset_days"] = int(body["draw_active_from_offset_days"])
 
     carry: dict = {}
     constr_ct = body.get("construction_carry_type")
