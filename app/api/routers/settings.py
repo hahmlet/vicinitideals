@@ -16,8 +16,8 @@ import logging
 import uuid
 from typing import Annotated, Any
 
-from fastapi import APIRouter, Form, HTTPException, status
-from fastapi.responses import HTMLResponse
+from fastapi import APIRouter, Form, HTTPException, Request, status
+from fastapi.responses import HTMLResponse, JSONResponse
 from sqlalchemy import select
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 
@@ -113,6 +113,77 @@ async def upsert_org_setting(
     await session.commit()
     log.info("org_setting.upsert org=%s field=%s", user.org_id, field_key)
     return HTMLResponse(_SAVED_HTML)
+
+
+# ---------------------------------------------------------------------------
+# Org batch upsert — saves multiple fields in one request
+# ---------------------------------------------------------------------------
+
+
+@router.put("/org", response_class=JSONResponse)
+async def batch_upsert_org_settings(
+    request: Request,
+    current_user_id: CurrentUserId,
+    session: DBSession,
+) -> dict[str, Any]:
+    """Batch-upsert org settings from a JSON {field_key: value} body."""
+    user = await _get_user_or_401(current_user_id, session)
+    _require_org_admin(user)
+    body: dict[str, str] = await request.json()
+    for field_key, value in body.items():
+        stmt = (
+            pg_insert(OrgSetting)
+            .values(
+                id=uuid.uuid4(),
+                org_id=user.org_id,
+                field_key=str(field_key),
+                value=str(value),
+                updated_by=current_user_id,
+            )
+            .on_conflict_do_update(
+                constraint="uq_org_settings_org_field",
+                set_={"value": str(value), "updated_by": current_user_id},
+            )
+        )
+        await session.execute(stmt)
+    await session.commit()
+    log.info("org_setting.batch_upsert org=%s fields=%s", user.org_id, list(body.keys()))
+    return {"ok": True, "saved": len(body)}
+
+
+# ---------------------------------------------------------------------------
+# User batch upsert — saves multiple fields in one request
+# ---------------------------------------------------------------------------
+
+
+@router.put("/user", response_class=JSONResponse)
+async def batch_upsert_user_settings(
+    request: Request,
+    current_user_id: CurrentUserId,
+    session: DBSession,
+) -> dict[str, Any]:
+    """Batch-upsert user settings from a JSON {field_key: value} body."""
+    user = await _get_user_or_401(current_user_id, session)
+    body: dict[str, str] = await request.json()
+    for field_key, value in body.items():
+        stmt = (
+            pg_insert(UserSetting)
+            .values(
+                id=uuid.uuid4(),
+                user_id=current_user_id,
+                org_id=user.org_id,
+                field_key=str(field_key),
+                value=str(value),
+            )
+            .on_conflict_do_update(
+                constraint="uq_user_settings_user_field",
+                set_={"value": str(value)},
+            )
+        )
+        await session.execute(stmt)
+    await session.commit()
+    log.info("user_setting.batch_upsert user=%s fields=%s", current_user_id, list(body.keys()))
+    return {"ok": True, "saved": len(body)}
 
 
 # ---------------------------------------------------------------------------

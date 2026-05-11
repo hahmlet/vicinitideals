@@ -11,7 +11,7 @@
   <a href="/deals" class="btn btn-secondary">Back to Deals</a>
 </div>
 
-<div style="padding:24px;display:grid;gap:16px;max-width:600px">
+<div id="user-prefs" style="padding:24px;display:grid;gap:16px;max-width:600px">
 
   <details open style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
     <summary style="padding:14px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);list-style:none">
@@ -19,54 +19,92 @@
     </summary>
     <div style="padding:0 18px 18px;display:grid;gap:18px">
 
-      {# Hold / Loan Term #}
       <div>
         <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block">
           Hold / Loan Term (years)
         </label>
-        <form hx-put="/api/settings/user/hold_term_years"
-              hx-target="#ss-hold_term_years"
-              hx-swap="innerHTML"
-              style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end">
-          <div>
-            <input class="filter-input" type="number" step="1" min="1" max="40"
-                   name="value"
-                   value="{{ resolved.get('hold_term_years', '') }}"
-                   placeholder="7"
-                   style="width:100%">
-            <div style="font-size:11px;color:var(--text-muted);margin-top:3px">Default hold period for new permanent debt modules.</div>
-          </div>
-          <button type="submit" class="btn btn-primary" style="padding:6px 14px;font-size:13px">Save</button>
-        </form>
-        <div id="ss-hold_term_years" style="font-size:12px;min-height:18px;margin-top:2px"></div>
+        <input class="filter-input settings-field" type="number" step="1" min="1" max="40"
+               data-fk="hold_term_years"
+               data-orig="{{ resolved.get('hold_term_years', '') }}"
+               value="{{ resolved.get('hold_term_years', '') }}"
+               placeholder="7"
+               style="width:100%">
+        <div style="font-size:11px;color:var(--text-muted);margin-top:3px">Default hold period for new permanent debt modules.</div>
       </div>
 
-      {# S-Curve Steepness — range slider #}
       <div>
         <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;display:block">
           S-Curve Steepness — <span id="steepness-display">{{ resolved.get('lease_up_curve_steepness', 5) }}</span>
         </label>
-        <form hx-put="/api/settings/user/lease_up_curve_steepness"
-              hx-target="#ss-steepness"
-              hx-swap="innerHTML">
-          <input type="range" min="1" max="10" step="1"
-                 name="value"
-                 id="field-steepness"
-                 value="{{ resolved.get('lease_up_curve_steepness', 5) }}"
-                 style="width:100%"
-                 oninput="document.getElementById('steepness-display').textContent=this.value">
-          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);margin-top:2px">
-            <span>1 — flat / linear</span><span>10 — steep S-curve</span>
-          </div>
-          <div style="font-size:11px;color:var(--text-muted);margin-top:4px">Only active when lease-up curve type is S-Curve.</div>
-          <button type="submit" class="btn btn-primary" style="padding:6px 14px;font-size:13px;margin-top:10px">Save</button>
-        </form>
-        <div id="ss-steepness" style="font-size:12px;min-height:18px;margin-top:4px"></div>
+        <input type="range" min="1" max="10" step="1"
+               class="settings-field"
+               data-fk="lease_up_curve_steepness"
+               data-orig="{{ resolved.get('lease_up_curve_steepness', 5) }}"
+               value="{{ resolved.get('lease_up_curve_steepness', 5) }}"
+               id="field-steepness"
+               style="width:100%"
+               oninput="document.getElementById('steepness-display').textContent=this.value">
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);margin-top:2px">
+          <span>1 — flat / linear</span><span>10 — steep S-curve</span>
+        </div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:4px">Only active when lease-up curve type is S-Curve.</div>
       </div>
 
     </div>
   </details>
 
 </div>
+
+<div id="save-pill" style="display:none;position:fixed;bottom:28px;left:50%;transform:translateX(-50%);
+  background:var(--accent);color:#fff;border-radius:999px;padding:11px 32px;font-size:14px;font-weight:600;
+  cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.28);z-index:500;align-items:center;gap:10px;white-space:nowrap">
+  <span id="save-pill-label">Save Changes</span>
+</div>
+<script>
+(function () {
+  const pill = document.getElementById('save-pill');
+  const label = document.getElementById('save-pill-label');
+  const dirty = new Map();
+
+  document.querySelectorAll('#user-prefs .settings-field').forEach(function (el) {
+    el.addEventListener('change', function () {
+      if (el.value !== el.dataset.orig) {
+        dirty.set(el.dataset.fk, el.value);
+      } else {
+        dirty.delete(el.dataset.fk);
+      }
+      pill.style.display = dirty.size > 0 ? 'flex' : 'none';
+    });
+  });
+
+  pill.addEventListener('click', async function () {
+    if (dirty.size === 0) return;
+    label.textContent = 'Saving…';
+    try {
+      const resp = await fetch('/api/settings/user', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(dirty)),
+      });
+      if (resp.ok) {
+        dirty.forEach(function (v, k) {
+          const el = document.querySelector('[data-fk="' + k + '"]');
+          if (el) el.dataset.orig = v;
+        });
+        dirty.clear();
+        pill.style.display = 'none';
+        label.textContent = 'Save Changes';
+      } else {
+        label.textContent = 'Error — try again';
+        setTimeout(function () { label.textContent = 'Save Changes'; }, 3000);
+      }
+    } catch (e) {
+      label.textContent = 'Error — try again';
+      setTimeout(function () { label.textContent = 'Save Changes'; }, 3000);
+    }
+  });
+}());
+</script>
+
 </div>
 {% endblock %}
