@@ -67,6 +67,10 @@ class CapitalModule(Base):
     exit_terms: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     active_phase_start: Mapped[str | None] = mapped_column(String(60), nullable=True)
     active_phase_end: Mapped[str | None] = mapped_column(String(60), nullable=True)
+    # Nullable FK to whichever source vehicle was used to pre-fill this module.
+    # No DB-level FK constraint (vehicle can be from org or user table).
+    # Set to NULL when the vehicle is deleted; deal data is otherwise unchanged.
+    source_vehicle_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), nullable=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )

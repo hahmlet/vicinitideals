@@ -97,6 +97,9 @@ from app.models.listing_snapshot import ListingSnapshot  # noqa: F401
 from app.models.map_polygon import MapPolygon  # noqa: F401
 from app.models.settings import OrgSetting, UserSetting  # noqa: F401
 
+# 15. Source Vehicles (FK → Organization, User)
+from app.models.source_vehicle import OrgSourceVehicle, UserSourceVehicle  # noqa: F401
+
 __all__ = [
     "Base",
     # Org
@@ -166,4 +169,7 @@ __all__ = [
     # Org & user defaults
     "OrgSetting",
     "UserSetting",
+    # Source vehicles
+    "OrgSourceVehicle",
+    "UserSourceVehicle",
 ]
