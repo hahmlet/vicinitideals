@@ -325,6 +325,8 @@ Parent owns final synthesis. User instructions override these rules.
 
 **If a Read is intercepted by the memory hook** ("File unchanged since last read"), this is not an error — it means the file content is already in context from an earlier read. Use that prior result instead of retrying.
 
+Do NOT attempt offset/limit workarounds to bypass it — the hook fires on file path regardless of parameters. If you are a subagent without the prior read in context, retrieve cached content via `mcp__plugin_claude-mem_mcp-search__get_observations` or use `mcp__code-review-graph__get_minimal_context_tool` for the file instead.
+
 ---
 
 ## Code Search Routing
