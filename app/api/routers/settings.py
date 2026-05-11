@@ -29,7 +29,7 @@ from app.settings.resolver import resolve_all_defaults, resolve_default
 
 log = logging.getLogger(__name__)
 
-router = APIRouter(prefix="/api/settings", tags=["settings"])
+router = APIRouter(prefix="/settings", tags=["settings"])
 
 _SAVED_HTML = '<span style="color:var(--success,green)">Saved ✓</span>'
 
