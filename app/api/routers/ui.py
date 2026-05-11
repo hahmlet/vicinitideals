@@ -3098,25 +3098,20 @@ async def opportunity_detail(
     opp_id: UUID,
     session: DBSession,
 ) -> HTMLResponse:
-    """Opportunity detail page — shows buildings inline."""
     user = await _get_user(session, request)
     dedup_count, conflicts_count = await _get_counts(session)
     opp = (await session.execute(
         select(Opportunity)
         .where(Opportunity.id == opp_id)
+        .options(
+            selectinload(Opportunity.parcel),
+            selectinload(Opportunity.dev_projects),
+        )
     )).scalar_one_or_none()
     if opp is None:
         return HTMLResponse("Not found", status_code=404)
-    buildings = []  # Building entity removed
-    bare_parcels = []
-    if opp.parcel_id:
-        parcel = await session.get(Parcel, opp.parcel_id)
-        if parcel:
-            bare_parcels = [parcel]
     return templates.TemplateResponse(request, "opportunity_detail.html", {
         "request": request, "opp": opp,
-        "buildings": buildings,
-        "bare_parcels": bare_parcels,
         **_base_ctx(user, dedup_count, "opportunities", conflicts_count=conflicts_count),
     })
 

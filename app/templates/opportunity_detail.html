@@ -9,21 +9,21 @@
   gap: 16px;
   margin-top: 16px;
 }
-.building-detail-card {
+.prop-detail-card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 16px 18px;
 }
-.building-detail-card .bdc-title {
+.prop-detail-card .pdc-title {
   font-size: 14px; font-weight: 700; margin: 0 0 4px;
 }
-.building-detail-card .bdc-meta {
+.prop-detail-card .pdc-meta {
   font-size: 12px; color: var(--text-muted); margin-bottom: 12px;
 }
-.bdc-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-.bdc-field-label { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
-.bdc-field-value { font-size: 13px; font-weight: 500; }
+.pdc-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; }
+.pdc-field-label { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.pdc-field-value { font-size: 13px; font-weight: 500; }
 .deal-link-card {
   background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
   padding: 12px 16px; display: flex; align-items: center; justify-content: space-between;
@@ -31,6 +31,13 @@
   margin-bottom: 8px;
 }
 .deal-link-card:hover { background: var(--hover); }
+.source-link-btn {
+  display: inline-block; padding: 2px 7px;
+  border: 1px solid var(--border); border-radius: 4px;
+  font-size: 11px; color: var(--text); text-decoration: none;
+  background: var(--bg); white-space: nowrap;
+}
+.source-link-btn:hover { background: var(--surface-alt, #f0f0f0); border-color: var(--text-muted); }
 </style>
 {% endblock %}
 
@@ -39,22 +46,21 @@
   <div style="display:flex;align-items:center;gap:8px">
     <a href="/opportunities" style="color:var(--text-muted);text-decoration:none;font-size:13px">← Opportunities</a>
     <span style="color:var(--border)">/</span>
-    <span style="font-size:13px">{{ opp.name }}</span>
+    <span style="font-size:13px">{{ opp.display_name }}</span>
   </div>
   <div style="display:flex;gap:8px">
-    <a href="/ui/opportunities/wizard?opp_id={{ opp.id }}&step=2" class="btn btn-secondary">Edit Buildings</a>
-    {% if opp.project_parcels %}
+    {% if opp.parcel_id %}
     <button type="button" class="btn btn-secondary"
-            onclick="openParcelMap('opportunity','{{ opp.id }}','{{ opp.name | replace("'","\\'") | safe }}')">
-      🗺 Parcels
+            onclick="openParcelMap('opportunity','{{ opp.id }}','{{ opp.display_name | replace("'","\\'") | safe }}')">
+      Parcels
     </button>
     {% endif %}
-    {% if opp.source_type == 'scraped' %}
+    {% if opp.promotion_source in ('loopnet', 'crexi', 'scraper') %}
     <form method="post" action="/ui/opportunities/{{ opp.id }}/dissolve" style="margin:0"
-          onsubmit="return confirm('Dissolve this opportunity? The underlying listing and buildings will not be affected.')">
-      <button type="submit" class="btn btn-danger btn-sm">Dissolve</button>
+          onsubmit="return confirm('Remove this listing from your pipeline? The underlying data will not be deleted.')">
+      <button type="submit" class="btn btn-danger btn-sm">Remove</button>
     </form>
-    {% elif opp.status != 'archived' %}
+    {% elif not opp.archived %}
     <form method="post" action="/ui/opportunities/{{ opp.id }}/archive" style="margin:0">
       <button type="submit" class="btn btn-secondary btn-sm">Archive</button>
     </form>
@@ -65,101 +71,130 @@
 
 <div class="content">
 
-  {% if bare_parcels %}
-  <div style="background:#fef3c7;border:1px solid #f59e0b;border-radius:8px;
-              padding:10px 16px;margin-bottom:16px;font-size:13px;color:#92400e">
-    <strong>⚠ Missing building data:</strong>
-    {% for p in bare_parcels %}
-    Parcel {{ p.apn or p.id }}
-    {% if not loop.last %}, {% endif %}
-    {% endfor %}
-    has no building record. Add building details to use this parcel in financial modeling.
-    <a href="/ui/opportunities/wizard?opp_id={{ opp.id }}&step=2"
-       style="color:#92400e;font-weight:600;margin-left:8px">Add Buildings →</a>
-  </div>
-  {% endif %}
-
   <!-- Header -->
   <div class="card" style="margin-bottom:16px">
     <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px">
       <div>
-        <h1 style="font-size:22px;font-weight:700;margin:0 0 4px">{{ opp.name }}</h1>
+        <h1 style="font-size:22px;font-weight:700;margin:0 0 4px">{{ opp.display_name }}</h1>
         <div style="font-size:13px;color:var(--text-muted)">
-          {{ buildings | length }} building{{ 's' if buildings | length != 1 else '' }}
+          {% if opp.display_property_type %}{{ opp.display_property_type }}{% endif %}
+          {% if opp.display_units %} · {{ opp.display_units }} units{% endif %}
           {% if opp.source %} · {{ opp.source | title }}{% endif %}
-          · Created {{ opp.created_at.strftime('%b %d, %Y') if opp.created_at else '—' }}
+          · {{ opp.last_seen_at.strftime('%b %d, %Y') if opp.last_seen_at else 'Unknown date' }}
         </div>
       </div>
-      <span class="badge {% if opp.status == 'active' %}badge-green{% elif opp.status == 'archived' %}badge-gray{% else %}badge-blue{% endif %}">
-        {{ opp.status | title if opp.status else '—' }}
+      <span class="badge {% if opp.archived %}badge-gray{% elif opp.opp_status == 'active' %}badge-green{% else %}badge-blue{% endif %}">
+        {% if opp.archived %}Archived{% elif opp.opp_status %}{{ opp.opp_status | title }}{% else %}Active{% endif %}
       </span>
     </div>
   </div>
 
   <div class="opp-detail-grid">
 
-    <!-- Left: Buildings -->
+    <!-- Left: Property Details -->
     <div>
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:10px">
-        Buildings ({{ buildings | length }})
+        Property Details
       </div>
-
-      {% if buildings %}
-        {% for b in buildings %}
-        <div class="building-detail-card" style="margin-bottom:12px">
-          <div class="bdc-title">{{ b.address_display }}</div>
-          <div class="bdc-meta">
-            {% if b.property_type %}{{ b.property_type }}{% endif %}
-            {% if b.current_use %} · {{ b.current_use }}{% endif %}
+      <div class="prop-detail-card">
+        {% if opp.full_address %}
+        <div class="pdc-title">{{ opp.full_address }}</div>
+        {% elif opp.address_normalized %}
+        <div class="pdc-title">{{ opp.address_normalized }}</div>
+        {% endif %}
+        <div class="pdc-meta">
+          {{ opp.display_property_type or '—' }}
+          {% if opp.jurisdiction %} · {{ opp.jurisdiction | title }}{% endif %}
+          {% if opp.county %} · {{ opp.county | title }} Co.{% endif %}
+        </div>
+        <div class="pdc-fields">
+          <div>
+            <div class="pdc-field-label">Units</div>
+            <div class="pdc-field-value">{{ opp.display_units if opp.display_units is not none else '—' }}</div>
           </div>
-          <div class="bdc-fields">
-            <div>
-              <div class="bdc-field-label">Units</div>
-              <div class="bdc-field-value">{{ b.unit_count or '—' }}</div>
-            </div>
-            <div>
-              <div class="bdc-field-label">Bldg Sqft{% if b.net_rentable_sqft %} (gross){% endif %}</div>
-              <div class="bdc-field-value">{{ "{:,.0f}".format(b.building_sqft | float) if b.building_sqft else '—' }}</div>
-            </div>
-            {% if b.net_rentable_sqft %}
-            <div>
-              <div class="bdc-field-label">Net Rentable</div>
-              <div class="bdc-field-value">{{ "{:,.0f}".format(b.net_rentable_sqft | float) }}</div>
-            </div>
-            {% endif %}
-            <div>
-              <div class="bdc-field-label">Year Built</div>
-              <div class="bdc-field-value">{{ b.year_built or '—' }}</div>
-            </div>
-            <div>
-              <div class="bdc-field-label">Status</div>
-              <div class="bdc-field-value">{{ b.status | title if b.status else '—' }}</div>
-            </div>
+          <div>
+            <div class="pdc-field-label">Bldg Sqft</div>
+            <div class="pdc-field-value">{{ "{:,.0f}".format(opp.display_sqft | float) if opp.display_sqft else '—' }}</div>
           </div>
-          {% if b.notes %}
-          <div style="margin-top:8px;font-size:12px;color:var(--text-muted)">{{ b.notes }}</div>
+          {% if opp.net_rentable_sqft %}
+          <div>
+            <div class="pdc-field-label">Net Rentable</div>
+            <div class="pdc-field-value">{{ "{:,.0f}".format(opp.net_rentable_sqft | float) }}</div>
+          </div>
+          {% endif %}
+          <div>
+            <div class="pdc-field-label">Lot Sqft</div>
+            <div class="pdc-field-value">{{ "{:,.0f}".format(opp.display_lot_sqft | float) if opp.display_lot_sqft else '—' }}</div>
+          </div>
+          <div>
+            <div class="pdc-field-label">Year Built</div>
+            <div class="pdc-field-value">{{ opp.display_year_built or '—' }}</div>
+          </div>
+          {% if opp.zoning %}
+          <div>
+            <div class="pdc-field-label">Zoning</div>
+            <div class="pdc-field-value">{{ opp.zoning }}</div>
+          </div>
+          {% endif %}
+          {% if opp.asking_price %}
+          <div>
+            <div class="pdc-field-label">Asking Price</div>
+            <div class="pdc-field-value">${{ "{:,.0f}".format(opp.asking_price | float) }}</div>
+          </div>
+          {% endif %}
+          {% if opp.cap_rate %}
+          <div>
+            <div class="pdc-field-label">Cap Rate</div>
+            <div class="pdc-field-value">{{ "{:.2f}".format(opp.cap_rate | float) }}%</div>
+          </div>
+          {% endif %}
+          {% if opp.noi %}
+          <div>
+            <div class="pdc-field-label">NOI</div>
+            <div class="pdc-field-value">${{ "{:,.0f}".format(opp.noi | float) }}</div>
+          </div>
+          {% endif %}
+          {% if opp.occupancy_pct %}
+          <div>
+            <div class="pdc-field-label">Occupancy</div>
+            <div class="pdc-field-value">{{ "{:.0f}".format(opp.occupancy_pct | float) }}%</div>
+          </div>
           {% endif %}
         </div>
-        {% endfor %}
-      {% else %}
-        <div class="card" style="text-align:center;padding:24px;color:var(--text-muted)">
-          No buildings defined yet.
-          <a href="/ui/opportunities/wizard?opp_id={{ opp.id }}&step=2">Add buildings →</a>
+        {% if opp.source_url %}
+        <div style="margin-top:14px">
+          <a href="{{ opp.source_url }}" target="_blank" rel="noopener noreferrer" class="source-link-btn">
+            View on {{ opp.source | title if opp.source else 'Source' }} ↗
+          </a>
         </div>
+        {% endif %}
+        {% if opp.notes %}
+        <div style="margin-top:10px;font-size:12px;color:var(--text-muted)">{{ opp.notes }}</div>
+        {% endif %}
+      </div>
+
+      {% if opp.description %}
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin:16px 0 10px">
+        Description
+      </div>
+      <div class="card" style="font-size:13px;color:var(--text-muted);line-height:1.5">
+        {{ opp.description[:800] }}{% if opp.description | length > 800 %}…{% endif %}
+      </div>
       {% endif %}
     </div>
 
-    <!-- Right: Deals + Parcels -->
+    <!-- Right: Deals -->
     <div>
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:10px">
-        Deals ({{ opp.deal_opportunities | length }})
+        Deals ({{ opp.dev_projects | length }})
       </div>
 
-      {% if opp.deal_opportunities %}
-        {% for do in opp.deal_opportunities %}
-        <a class="deal-link-card" href="/deals/{{ do.deal_id }}">
+      {% if opp.dev_projects %}
+        {% for proj in opp.dev_projects %}
+        <a class="deal-link-card" href="/deals/{{ proj.scenario_id }}">
           <div>
-            <div style="font-weight:600;font-size:13px">{{ do.deal.name if do.deal else do.deal_id }}</div>
+            <div style="font-weight:600;font-size:13px">Deal {{ loop.index }}</div>
+            <div style="font-size:11px;color:var(--text-muted)">{{ proj.scenario_id | string | truncate(12, true, '') }}</div>
           </div>
           <span style="font-size:11px;color:var(--text-muted)">→</span>
         </a>
@@ -170,16 +205,18 @@
         </div>
       {% endif %}
 
-      {% if opp.scraped_listings %}
+      {% if opp.parcel %}
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin:20px 0 10px">
-        Source Listings ({{ opp.scraped_listings | length }})
+        Linked Parcel
       </div>
-      {% for listing in opp.scraped_listings %}
-      <a href="/listings?q={{ (listing.address_normalized or listing.address_raw or '') | urlencode }}" class="card" style="display:block;padding:10px 14px;margin-bottom:8px;font-size:12px;text-decoration:none;color:inherit">
-        <div style="font-weight:600">{{ listing.address_normalized or listing.address_raw or 'Unknown' }}</div>
-        <div style="color:var(--text-muted)">{{ listing.source | title if listing.source else '' }} · Scraped {{ listing.scraped_at.strftime('%b %d') if listing.scraped_at else '—' }}</div>
-      </a>
-      {% endfor %}
+      <div class="card" style="padding:12px 14px;font-size:12px">
+        <div style="font-weight:600">{{ opp.parcel.apn or opp.parcel.id }}</div>
+        <div style="color:var(--text-muted);margin-top:4px">
+          {% if opp.parcel.unit_count %}{{ opp.parcel.unit_count }} units · {% endif %}
+          {% if opp.parcel.building_sqft %}{{ "{:,.0f}".format(opp.parcel.building_sqft | float) }} sqft · {% endif %}
+          {{ opp.parcel.rlis_land_use or '—' }}
+        </div>
+      </div>
       {% endif %}
     </div>
 
