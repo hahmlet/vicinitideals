@@ -2116,6 +2116,20 @@ async def deals_new_page(
     ctx["opp_id"] = opp_id
     ctx["opp_name"] = opp_name
     ctx["opp_asking_price"] = opp_asking_price
+    from app.models.source_vehicle import OrgSourceVehicle as _OSVC, UserSourceVehicle as _USVC
+    _org_svs = list((await session.execute(
+        select(_OSVC).where(_OSVC.org_id == user.org_id).order_by(_OSVC.name)
+    )).scalars()) if user else []
+    _user_svs = list((await session.execute(
+        select(_USVC).where(_USVC.user_id == user.id).order_by(_USVC.name)
+    )).scalars()) if user else []
+    ctx["source_vehicles"] = [
+        {"id": str(v.id), "name": v.name, "funder_type": v.funder_type, "owner": "org"}
+        for v in _org_svs
+    ] + [
+        {"id": str(v.id), "name": v.name, "funder_type": v.funder_type, "owner": "user"}
+        for v in _user_svs
+    ]
     return templates.TemplateResponse(request, "deals_new.html", ctx)
 
 
@@ -2229,6 +2243,7 @@ async def create_deal(
     org_id_raw = str(form.get("org_id", "")).strip()
     opp_id_raw = str(form.get("opportunity_id", "")).strip()
     acq_cost_raw = str(form.get("acquisition_cost", "")).strip()
+    sv_id_raw = str(form.get("source_vehicle_id", "")).strip()
 
     if not name:
         return HTMLResponse("<p class='text-muted'>Deal name is required.</p>", status_code=400)
@@ -2326,6 +2341,11 @@ async def create_deal(
         is_active=True,
         created_by_user_id=user.id if user else None,
     )
+    if sv_id_raw:
+        try:
+            scenario.source_vehicle_id = UUID(sv_id_raw)
+        except ValueError:
+            pass
     session.add(scenario)
     await session.flush()
 
@@ -8050,7 +8070,40 @@ async def deal_setup_wizard_complete(
     # Populated in the loop below; used after both branches to write $0 Use line stubs.
     _cc_preload_modules: list[dict] = []
 
-    if debt_types:
+    # If a Source Vehicle was chosen at deal creation, use it for the auto module
+    # instead of the wizard's per-debt-type config.
+    _sv_module_created = False
+    if model.source_vehicle_id is not None:
+        from app.models.source_vehicle import OrgSourceVehicle as _OSV2, UserSourceVehicle as _USV2
+        _sv = (await session.execute(
+            select(_OSV2).where(_OSV2.id == model.source_vehicle_id)
+        )).scalar_one_or_none()
+        if _sv is None:
+            _sv = (await session.execute(
+                select(_USV2).where(_USV2.id == model.source_vehicle_id)
+            )).scalar_one_or_none()
+        if _sv is not None:
+            _sv_module_created = True
+            _sv_label = f"{_sv.name} (auto)"
+            session.add(CapitalModule(
+                scenario_id=model_id,
+                label=_sv_label,
+                funder_type=FunderType(_sv.funder_type),
+                stack_position=1,
+                source=_sv.source_config or {"auto_size": True},
+                carry=_sv.carry_config or {},
+                exit_terms=_sv.exit_config or {"exit_type": "full_payoff", "trigger": "end of hold period"},
+                active_phase_start=_sv.active_phase_start or "acquisition",
+                active_phase_end=_sv.active_phase_end or "stabilized",
+                source_vehicle_id=model.source_vehicle_id,
+            ))
+            _cc_preload_modules.append({
+                "funder_type": _sv.funder_type,
+                "label": _sv_label,
+                "active_phase_start": _sv.active_phase_start or "acquisition",
+            })
+
+    if debt_types and not _sv_module_created:
         # ── New multi-debt path ───────────────────────────────────────────────
         # Build one CapitalModule per selected debt type using debt_milestone_config
         # and debt_terms (per-debt dicts).  Falls back to sensible defaults if the
@@ -8278,7 +8331,7 @@ async def deal_setup_wizard_complete(
                 "active_phase_start": active_from,
             })
 
-    else:
+    elif not _sv_module_created:
         # ── Legacy 3-path (backward compat for pre-migration deals) ──────────
         if debt_structure == "construction_to_perm":
             construction_rate = dt.get("construction_rate_pct") or dt.get("perm_rate_pct") or 4.5

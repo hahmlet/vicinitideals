@@ -117,6 +117,32 @@
           </select>
         </div>
 
+        {% if source_vehicles %}
+        <div class="nd-field">
+          <label>Source Vehicle <span style="font-weight:400;color:var(--text-muted)">(optional)</span></label>
+          <select name="source_vehicle_id">
+            <option value="">Default</option>
+            {% if source_vehicles | selectattr('owner', 'equalto', 'org') | list %}
+            <optgroup label="Org Presets">
+              {% for v in source_vehicles if v.owner == 'org' %}
+              <option value="{{ v.id }}">{{ v.name }}</option>
+              {% endfor %}
+            </optgroup>
+            {% endif %}
+            {% if source_vehicles | selectattr('owner', 'equalto', 'user') | list %}
+            <optgroup label="My Presets">
+              {% for v in source_vehicles if v.owner == 'user' %}
+              <option value="{{ v.id }}">{{ v.name }}</option>
+              {% endfor %}
+            </optgroup>
+            {% endif %}
+          </select>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:4px">
+            Pre-fills the auto-generated debt source with the selected preset's settings.
+          </div>
+        </div>
+        {% endif %}
+
         <div class="nd-field">
           <label>Acquisition Cost</label>
           <input type="number" name="acquisition_cost" required min="1" step="any"

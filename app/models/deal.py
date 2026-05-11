@@ -218,6 +218,10 @@ class Scenario(Base):
     # NULL → exporter falls back to HEALTH_THRESHOLD_DEFAULTS keyed by deal_type.
     health_thresholds: Mapped[dict | None] = mapped_column(JSON, nullable=True)
 
+    # Source Vehicle selected at deal creation — drives auto-generated CapitalModule settings.
+    # No FK: vehicle may live in org_source_vehicles or user_source_vehicles.
+    source_vehicle_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), nullable=True)
+
 
 # Backward-compat alias — old code importing DealModel still works
 DealModel = Scenario
