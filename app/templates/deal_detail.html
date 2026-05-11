@@ -27,31 +27,23 @@
   align-items: center;
   gap: 10px;
 }
-.detail-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
-
-.detail-tabs {
-  display: flex;
-  gap: 0;
-  border-bottom: 1px solid var(--border);
-  background: var(--surface);
-  padding: 0 24px;
-}
-.detail-tab {
-  padding: 10px 16px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-muted);
+.detail-title-editable {
   cursor: pointer;
-  border-bottom: 2px solid transparent;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: color 0.1s;
+  border-radius: 4px;
+  padding: 2px 4px;
+  margin: -2px -4px;
+  transition: background 0.1s;
 }
-.detail-tab:hover { color: var(--text); }
-.detail-tab.active {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
+.detail-title-editable:hover { background: var(--hover, rgba(0,0,0,0.05)); }
+.detail-edit-hint {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-muted);
+  opacity: 0;
+  transition: opacity 0.15s;
 }
+.detail-title-editable:hover .detail-edit-hint { opacity: 1; }
+.detail-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
 
 .detail-body { padding: 24px; }
 
@@ -177,43 +169,15 @@
     <div class="detail-breadcrumb">
       <a href="/deals">Deals</a> / {{ deal_name }}
     </div>
-    <div class="detail-title">
+    <div class="detail-title detail-title-editable" onclick="openDrawer('edit-deal-drawer')" title="Click to edit">
       {{ deal_name }}
       <span class="badge {{ status_badge }}" style="font-size:12px;font-weight:500">{{ status_display }}</span>
+      <span class="detail-edit-hint">✏</span>
     </div>
   </div>
   <div class="detail-actions">
-    {% if primary_model_id %}
-    <a href="/models/{{ primary_model_id }}/builder" class="btn btn-primary">Open Model Builder →</a>
-    {% else %}
-    <button class="btn btn-primary" onclick="openDrawer('new-model-drawer')">+ New Model</button>
-    {% endif %}
-    <button class="btn btn-secondary" onclick="openDrawer('edit-deal-drawer')">✏ Edit</button>
     <a href="/deals/{{ deal_id }}/export/json" download="deal-{{ deal_id }}.json" class="btn btn-secondary">⬇ Export JSON</a>
   </div>
-</div>
-
-<!-- Tab nav -->
-<div class="detail-tabs">
-  <a href="/deals/{{ deal_id }}?tab=overview"
-     class="detail-tab {% if active_tab == 'overview' %}active{% endif %}">Overview</a>
-  <a href="/deals/{{ deal_id }}?tab=models"
-     class="detail-tab {% if active_tab == 'models' %}active{% endif %}">
-    Financial Models
-    {% if models %}<span style="font-size:11px;margin-left:4px;color:var(--text-muted)">({{ models | length }})</span>{% endif %}
-  </a>
-  <a href="/deals/{{ deal_id }}?tab=parcels"
-     class="detail-tab {% if active_tab == 'parcels' %}active{% endif %}">
-    Parcels
-    {% if parcels %}<span style="font-size:11px;margin-left:4px;color:var(--text-muted)">({{ parcels | length }})</span>{% endif %}
-  </a>
-  <a href="/deals/{{ deal_id }}?tab=buildings"
-     class="detail-tab {% if active_tab == 'buildings' %}active{% endif %}">
-    Buildings
-    {% if buildings %}<span style="font-size:11px;margin-left:4px;color:var(--text-muted)">({{ buildings | length }})</span>{% endif %}
-  </a>
-  <a href="/deals/{{ deal_id }}?tab=timeline"
-     class="detail-tab {% if active_tab == 'timeline' %}active{% endif %}">Timeline</a>
 </div>
 
 <div class="detail-body">
@@ -228,195 +192,166 @@
 </div>
 {% endif %}
 
-{# ── Overview Tab ── #}
-{% if active_tab == 'overview' %}
-
-  {% if models %}
-  {# Key metrics from primary (first active) model #}
-  {% set pm = models[0] %}
-  <div class="info-grid" style="margin-bottom:24px">
-    <div class="info-card">
-      <div class="info-card-label">Stabilized NOI</div>
-      <div class="info-card-value">{{ pm.noi | currency }}</div>
-      <div class="info-card-sub">{{ pm.name }}</div>
-    </div>
-    <div class="info-card">
-      <div class="info-card-label">Levered IRR</div>
-      <div class="info-card-value" style="color:var(--success)">{{ pm.irr | pct }}</div>
-      <div class="info-card-sub">primary model</div>
-    </div>
-    <div class="info-card">
-      <div class="info-card-label">Equity Required</div>
-      <div class="info-card-value">{{ pm.equity_required | currency }}</div>
-      <div class="info-card-sub">project equity</div>
-    </div>
-    <div class="info-card">
-      <div class="info-card-label">Deal Type</div>
-      <div class="info-card-value" style="font-size:14px">{{ pm.type_display }}</div>
-      <div class="info-card-sub">{{ models | length }} model{{ 's' if models | length != 1 else '' }}</div>
-    </div>
+{# Key metrics from primary model #}
+{% if models %}
+{% set pm = models[0] %}
+<div class="info-grid" style="margin-bottom:24px">
+  <div class="info-card">
+    <div class="info-card-label">Stabilized NOI</div>
+    <div class="info-card-value">{{ pm.noi | currency }}</div>
+    <div class="info-card-sub">{{ pm.name }}</div>
   </div>
-  {% endif %}
+  <div class="info-card">
+    <div class="info-card-label">Levered IRR</div>
+    <div class="info-card-value" style="color:var(--success)">{{ pm.irr | pct }}</div>
+    <div class="info-card-sub">primary model</div>
+  </div>
+  <div class="info-card">
+    <div class="info-card-label">Equity Required</div>
+    <div class="info-card-value">{{ pm.equity_required | currency }}</div>
+    <div class="info-card-sub">project equity</div>
+  </div>
+  <div class="info-card">
+    <div class="info-card-label">Deal Type</div>
+    <div class="info-card-value" style="font-size:14px">{{ pm.type_display }}</div>
+    <div class="info-card-sub">{{ models | length }} model{{ 's' if models | length != 1 else '' }}</div>
+  </div>
+</div>
+{% endif %}
 
-  <!-- Deal info fields -->
-  <div class="section-title mb-12">Deal Details</div>
-  <div style="max-width:480px">
-    <div class="field-row"><div class="field-key">Name</div><div class="field-value">{{ deal_name }}</div></div>
-    <div class="field-row"><div class="field-key">Status</div>
-      <div class="field-value"><span class="badge {{ status_badge }}">{{ status_display }}</span></div>
+{# Two-column: deal info + parcels (left) | financial models (right) #}
+<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:24px;align-items:start;margin-bottom:32px">
+
+  {# Left: deal details + parcels #}
+  <div>
+    <div class="section-title mb-12">Deal Details</div>
+    <div style="margin-bottom:24px">
+      <div class="field-row">
+        <div class="field-key">Status</div>
+        <div class="field-value"><span class="badge {{ status_badge }}">{{ status_display }}</span></div>
+      </div>
+      {% if opp_name %}
+      <div class="field-row">
+        <div class="field-key">Property</div>
+        {% if opp %}
+        <div class="field-value">
+          <a href="/opportunities/{{ opp.id }}" style="color:var(--text);text-decoration:none;font-weight:500">{{ opp_name }}</a>
+        </div>
+        {% else %}
+        <div class="field-value">{{ opp_name }}</div>
+        {% endif %}
+      </div>
+      {% endif %}
+      {% if opp and opp.source %}
+      <div class="field-row">
+        <div class="field-key">Source</div>
+        <div class="field-value">
+          {% if opp.source_url %}
+          <a href="{{ opp.source_url }}" target="_blank" rel="noopener" class="btn btn-secondary btn-sm" style="font-size:12px">
+            View on {{ opp.source.value | title }} ↗
+          </a>
+          {% else %}
+          {{ opp.source.value | title }}
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
     </div>
-    {% if opp_name %}
-    <div class="field-row"><div class="field-key">Property</div><div class="field-value">{{ opp_name }}</div></div>
-    {% endif %}
-    {% if opp and opp.source %}
-    <div class="field-row"><div class="field-key">Source</div><div class="field-value">{{ opp.source.value | title }}</div></div>
-    {% endif %}
-    <div class="field-row"><div class="field-key">Created</div>
-      <div class="field-value">{{ deal.created_at.strftime('%b %-d, %Y') if deal.created_at else '—' }}</div>
+
+    {# Parcels #}
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <div class="section-title" style="margin:0">Parcels</div>
+      <button class="btn btn-secondary btn-sm" onclick="openDrawer('link-parcel-drawer')">+ Link</button>
     </div>
     {% if parcels %}
-    <div class="field-row"><div class="field-key">Address</div>
-      <div class="field-value">{{ parcels[0].address }}</div>
-    </div>
-    {% endif %}
-  </div>
-
-{# ── Models Tab ── #}
-{% elif active_tab == 'models' %}
-
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-    <div class="section-title" style="margin:0">Financial Models</div>
-    <button class="btn btn-primary btn-sm" onclick="openDrawer('new-model-drawer')">+ New Model</button>
-  </div>
-
-  {% if models %}
-  {% for m in models %}
-  <div class="model-row {% if m.is_active and loop.first %}model-row-active{% endif %}"
-       onclick="window.location='/models/{{ m.id }}/builder'">
-    <div>
-      <div class="model-name">
-        {{ m.name }}
-        {% if m.is_active and loop.first %}<span style="font-size:10px;color:var(--accent);margin-left:6px">● ACTIVE</span>{% endif %}
-      </div>
-      <div class="model-meta">v{{ m.version }} · {{ m.type_display }} · {{ m.project_name }}</div>
-    </div>
-    <div class="model-metrics">
-      {% if m.noi is not none %}
-      <div class="metric-pill">
-        <div class="metric-label">NOI</div>
-        <div class="metric-value">{{ m.noi | currency }}</div>
-      </div>
-      {% endif %}
-      {% if m.irr is not none %}
-      <div class="metric-pill">
-        <div class="metric-label">IRR (L)</div>
-        <div class="metric-value metric-irr">{{ m.irr | pct }}</div>
-      </div>
-      {% endif %}
-      {% if m.equity_required is not none %}
-      <div class="metric-pill">
-        <div class="metric-label">Equity</div>
-        <div class="metric-value">{{ m.equity_required | currency }}</div>
-      </div>
-      {% endif %}
-      <a href="/models/{{ m.id }}/builder" class="btn btn-secondary btn-sm"
-         onclick="event.stopPropagation()">Open →</a>
-    </div>
-  </div>
-  {% endfor %}
-  {% else %}
-  <div class="empty-panel">
-    <div class="empty-panel-icon">📊</div>
-    <div class="empty-panel-title">No financial models yet</div>
-    <div style="font-size:13px;margin-bottom:16px">Create a model to start building your deal analysis.</div>
-    <button class="btn btn-primary" onclick="openDrawer('new-model-drawer')">+ Create First Model</button>
-  </div>
-  {% endif %}
-
-{# ── Parcels Tab ── #}
-{% elif active_tab == 'parcels' %}
-
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-    <div class="section-title" style="margin:0">Linked Parcels</div>
-    <button class="btn btn-secondary btn-sm" onclick="openDrawer('link-parcel-drawer')">+ Link Parcel</button>
-  </div>
-
-  {% if parcels %}
-  {% for p in parcels %}
-  <div class="parcel-card" style="cursor:pointer" onclick="window.location='/parcels?q={{ p.apn | urlencode }}'">
-    <div class="parcel-card-apn">{{ p.apn }}</div>
-    <div class="parcel-card-address">{{ p.address or '—' }}</div>
-    <div style="display:flex;gap:16px;margin-top:8px;flex-wrap:wrap">
-      {% if p.zoning_code %}
-      <div style="font-size:12px"><span class="text-muted">Zoning</span> {{ p.zoning_code }}</div>
-      {% endif %}
-      {% if p.lot_sqft %}
-      <div style="font-size:12px"><span class="text-muted">Lot</span> {{ p.lot_sqft | number_fmt }} sf</div>
-      {% endif %}
-      {% if p.total_assessed_value %}
-      <div style="font-size:12px"><span class="text-muted">Assessed</span> {{ p.total_assessed_value | currency }}</div>
-      {% endif %}
-      {% if p.owner_name %}
-      <div style="font-size:12px"><span class="text-muted">Owner</span> {{ p.owner_name }}</div>
-      {% endif %}
-    </div>
-  </div>
-  {% endfor %}
-  {% else %}
-  <div class="empty-panel">
-    <div class="empty-panel-icon">📐</div>
-    <div class="empty-panel-title">No parcels linked</div>
-    <div style="font-size:13px;margin-bottom:16px">Link a parcel by APN to connect GIS data to this deal.</div>
-    <button class="btn btn-secondary" onclick="openDrawer('link-parcel-drawer')">+ Link Parcel</button>
-  </div>
-  {% endif %}
-
-{# ── Buildings Tab ── #}
-{% elif active_tab == 'buildings' %}
-
-  <div class="section-title mb-12">Linked Buildings</div>
-
-  {% if buildings %}
-  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px">
-    {% for b in buildings %}
-    <div class="parcel-card" style="cursor:pointer" onclick="window.location='/buildings?q={{ b.address | urlencode }}'">
-      <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
-        {% if b.sale_status == 'Active' %}<span class="badge badge-green">● Active</span>
-        {% elif b.sale_status == 'Under Contract' %}<span class="badge badge-yellow">● Under Contract</span>
-        {% elif b.sale_status %}<span class="badge badge-gray">{{ b.sale_status }}</span>
-        {% else %}<span class="badge badge-gray">Off Market</span>{% endif %}
-        {% if b.source %}<span class="badge badge-outline" style="font-size:10px">{{ b.source | title }}</span>{% endif %}
-      </div>
-      <div class="parcel-card-address">{{ b.name }}</div>
-      {% if b.address and b.address != b.name %}
-      <div style="font-size:12px;color:var(--text-muted);margin-top:2px">{{ b.address }}</div>
-      {% endif %}
+    {% for p in parcels %}
+    <div class="parcel-card" style="cursor:pointer" onclick="window.location='/parcels?q={{ p.apn | urlencode }}'">
+      <div class="parcel-card-apn">{{ p.apn }}</div>
+      <div class="parcel-card-address">{{ p.address or '—' }}</div>
       <div style="display:flex;gap:16px;margin-top:8px;flex-wrap:wrap">
-        {% if b.unit_count %}<div style="font-size:12px"><span class="text-muted">Units</span> {{ b.unit_count }}</div>{% endif %}
-        {% if b.building_sqft %}<div style="font-size:12px"><span class="text-muted">SqFt</span> {{ b.building_sqft | number_fmt }}</div>{% endif %}
-        {% if b.year_built %}<div style="font-size:12px"><span class="text-muted">Built</span> {{ b.year_built }}</div>{% endif %}
-        {% if b.asking_price %}<div style="font-size:12px"><span class="text-muted">Ask</span> {{ b.asking_price | currency }}</div>{% endif %}
+        {% if p.zoning_code %}
+        <div style="font-size:12px"><span class="text-muted">Zoning</span> {{ p.zoning_code }}</div>
+        {% endif %}
+        {% if p.lot_sqft %}
+        <div style="font-size:12px"><span class="text-muted">Lot</span> {{ p.lot_sqft | number_fmt }} sf</div>
+        {% endif %}
+        {% if p.total_assessed_value %}
+        <div style="font-size:12px"><span class="text-muted">Assessed</span> {{ p.total_assessed_value | currency }}</div>
+        {% endif %}
+        {% if p.owner_name %}
+        <div style="font-size:12px"><span class="text-muted">Owner</span> {{ p.owner_name }}</div>
+        {% endif %}
       </div>
     </div>
     {% endfor %}
+    {% else %}
+    <div style="font-size:13px;color:var(--text-muted);padding:8px 0">
+      No parcels linked.
+    </div>
+    {% endif %}
   </div>
-  {% else %}
-  <div class="empty-panel">
-    <div class="empty-panel-icon">🏢</div>
-    <div class="empty-panel-title">No buildings linked</div>
-    <div style="font-size:13px">Buildings are linked automatically when a listing is connected to this deal.</div>
+
+  {# Right: financial models #}
+  <div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <div class="section-title" style="margin:0">
+        Financial Models
+        {% if models %}<span style="font-size:11px;margin-left:4px;color:var(--text-muted)">({{ models | length }})</span>{% endif %}
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="openDrawer('new-model-drawer')">+ New Model</button>
+    </div>
+    {% if models %}
+    {% for m in models %}
+    <div class="model-row {% if m.is_active and loop.first %}model-row-active{% endif %}"
+         onclick="window.location='/models/{{ m.id }}/builder'">
+      <div>
+        <div class="model-name">
+          {{ m.name }}
+          {% if m.is_active and loop.first %}<span style="font-size:10px;color:var(--accent);margin-left:6px">● ACTIVE</span>{% endif %}
+        </div>
+        <div class="model-meta">v{{ m.version }} · {{ m.type_display }} · {{ m.project_name }}</div>
+      </div>
+      <div class="model-metrics">
+        {% if m.noi is not none %}
+        <div class="metric-pill">
+          <div class="metric-label">NOI</div>
+          <div class="metric-value">{{ m.noi | currency }}</div>
+        </div>
+        {% endif %}
+        {% if m.irr is not none %}
+        <div class="metric-pill">
+          <div class="metric-label">IRR (L)</div>
+          <div class="metric-value metric-irr">{{ m.irr | pct }}</div>
+        </div>
+        {% endif %}
+        {% if m.equity_required is not none %}
+        <div class="metric-pill">
+          <div class="metric-label">Equity</div>
+          <div class="metric-value">{{ m.equity_required | currency }}</div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="empty-panel">
+      <div class="empty-panel-icon">📊</div>
+      <div class="empty-panel-title">No financial models yet</div>
+      <div style="font-size:13px;margin-bottom:16px">Create a model to start building your deal analysis.</div>
+      <button class="btn btn-primary" onclick="openDrawer('new-model-drawer')">+ Create First Model</button>
+    </div>
+    {% endif %}
   </div>
-  {% endif %}
+</div>
 
-{# ── Timeline / Gantt Tab ── #}
-{% elif active_tab == 'timeline' %}
-
+{# Timeline — full width #}
+<div>
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
     <div>
       <div class="section-title" style="margin:0">Project Timeline</div>
       <div style="font-size:12px;color:var(--text-muted);margin-top:2px">
         Phase schedule for the active scenario
-        {% if gantt_rows and not gantt_rows[0].has_dates %}
+        {% if gantt_data and gantt_data.rows and not gantt_data.has_dates %}
           · <span style="color:var(--warning,#d97706)">No anchor date set — showing relative durations.
             <a href="/models/{{ primary_model_id }}/builder?module=timeline" style="color:inherit;text-decoration:underline">Set dates →</a></span>
         {% endif %}
@@ -494,8 +429,8 @@
     {% endif %}
   </div>
   {% endif %}
+</div>
 
-{% endif %}
 </div>
 
 <!-- Edit Deal drawer -->
