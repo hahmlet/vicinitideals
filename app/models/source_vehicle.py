@@ -34,6 +34,8 @@ class OrgSourceVehicle(Base):
     source_config: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
     carry_config: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
     exit_config: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
+    active_phase_start: Mapped[str | None] = mapped_column(String(60), nullable=True)
+    active_phase_end: Mapped[str | None] = mapped_column(String(60), nullable=True)
     created_by: Mapped[uuid.UUID | None] = mapped_column(
         UUID(as_uuid=True), ForeignKey("users.id"), nullable=True
     )
@@ -65,6 +67,8 @@ class UserSourceVehicle(Base):
     source_config: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
     carry_config: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
     exit_config: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
+    active_phase_start: Mapped[str | None] = mapped_column(String(60), nullable=True)
+    active_phase_end: Mapped[str | None] = mapped_column(String(60), nullable=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
