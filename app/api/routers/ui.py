@@ -1826,6 +1826,9 @@ async def settings_organization(
         ).scalars()
     )
 
+    from app.settings.resolver import resolve_all_defaults as _resolve_all
+    resolved = await _resolve_all(user.id, user.org_id, session)
+
     return templates.TemplateResponse(
         request,
         "settings_organization.html",
@@ -1833,6 +1836,7 @@ async def settings_organization(
             "org": org,
             "org_users": org_users,
             "user": user,
+            "resolved": resolved,
             **_base_ctx(user, dedup_count, "", address_issues_count, conflicts_count=conflicts_count),
         },
     )
@@ -1843,6 +1847,7 @@ async def settings_organization_post(
     request: Request,
     session: DBSession,
     org_name: str = Form(...),
+    org_slug: str = Form(None),
 ) -> HTMLResponse:
     user = await _get_user(session, request)
     if user is None:
@@ -1855,6 +1860,8 @@ async def settings_organization_post(
         return HTMLResponse("Organization not found", status_code=404)
 
     org.name = org_name.strip()
+    if org_slug and org_slug.strip():
+        org.slug = org_slug.strip().lower().replace(" ", "-")
     await session.commit()
 
     # Redirect back to GET to show updated data
@@ -1867,33 +1874,8 @@ async def settings_organization_post(
 
 
 @router.get("/settings/org", response_class=HTMLResponse)
-async def settings_org_defaults(
-    request: Request,
-    session: DBSession,
-) -> HTMLResponse:
-    from app.settings.resolver import resolve_all_defaults as _resolve_all
-
-    user = await _get_user(session, request)
-    if user is None:
-        return RedirectResponse(url="/login?next=/settings/org", status_code=303)
-    if not getattr(user, "is_org_admin", False):
-        return HTMLResponse("Access denied", status_code=403)
-
-    dedup_count, conflicts_count = await _get_counts(session)
-    address_issues_count = await _get_address_issues_count(session)
-    org = await session.get(Organization, user.org_id)
-    resolved = await _resolve_all(user.id, user.org_id, session)
-
-    return templates.TemplateResponse(
-        request,
-        "settings_org.html",
-        {
-            "org": org,
-            "user": user,
-            "resolved": resolved,
-            **_base_ctx(user, dedup_count, "", address_issues_count, conflicts_count=conflicts_count),
-        },
-    )
+async def settings_org_defaults(request: Request) -> HTMLResponse:
+    return RedirectResponse(url="/settings/organization", status_code=301)
 
 
 # ---------------------------------------------------------------------------
