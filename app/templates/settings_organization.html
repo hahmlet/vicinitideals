@@ -11,10 +11,7 @@
   <a href="/deals" class="btn btn-secondary">Back to Deals</a>
 </div>
 
-<div style="padding:24px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,380px);gap:28px;align-items:start">
-
-{# ── LEFT COLUMN: existing org settings ── #}
-<div style="display:grid;gap:20px">
+<div style="padding:24px;display:grid;gap:20px">
 
   {# ── Org info card ─────────────────────────────────────────────────────── #}
   <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px">
@@ -91,6 +88,8 @@
     </table>
   </div>
 
+<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,400px);gap:28px;align-items:start">
+<div>
   {# ── Underwriting defaults (admin only) ───────────────────────────────── #}
   {% if is_org_admin %}
   <div style="font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-top:8px">Underwriting Defaults</div>
@@ -396,9 +395,9 @@
 
   {% endif %}
 
-</div>{# /left col #}
+</div>{# /left #}
 
-{# ── RIGHT COLUMN: Source Vehicles (admin-only) ── #}
+{# ── RIGHT: Source Vehicles ── #}
 {% if is_org_admin %}
 {% set _ft_labels_org = {
   'permanent_debt': 'Permanent Debt',
@@ -597,7 +596,8 @@
 <div></div>{# placeholder right col for non-admins #}
 {% endif %}
 
-</div>{# /two-col outer grid #}
+</div>{# /bottom-row grid #}
+</div>{# /outer #}
 
 <script>
 (function() {
