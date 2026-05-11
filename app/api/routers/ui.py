@@ -2366,8 +2366,9 @@ async def create_deal(
     # override with their underwriting price before submit.
     session.add(UseLine(
         project_id=dev_project.id,
-        label=f"{opportunity.name} - Acquisition",
+        label=f"{opportunity.name or 'Property'} - Acquisition",
         phase=UseLinePhase.acquisition,
+        cost_category="acquisition",
         milestone_key="close",
         amount=acq_cost,
         timing_type="first_day",
@@ -2605,8 +2606,9 @@ async def create_model_for_deal(
     # Seed the Acquisition UseLine with the user-confirmed cost.
     session.add(UseLine(
         project_id=dev_project.id,
-        label=f"{opportunity.name} - Acquisition",
+        label=f"{opportunity.name or 'Property'} - Acquisition",
         phase=UseLinePhase.acquisition,
+        cost_category="acquisition",
         milestone_key="close",
         amount=acq_cost,
         timing_type="first_day",
@@ -4503,8 +4505,9 @@ async def create_deal_from_listing(
     # at the top of this handler).
     session.add(UseLine(
         project_id=dev_project.id,
-        label=f"{opportunity.name} - Acquisition",
+        label=f"{opportunity.name or 'Property'} - Acquisition",
         phase=UseLinePhase.acquisition,
+        cost_category="acquisition",
         milestone_key="close",
         amount=Decimal(str(listing.asking_price)),
         timing_type="first_day",
@@ -6890,8 +6893,9 @@ async def create_deal_project(
     # symmetric — every project lands with a populated Acquisition row.
     session.add(UseLine(
         project_id=new_proj.id,
-        label=f"{opp.name} - Acquisition",
+        label=f"{opp.name or 'Property'} - Acquisition",
         phase=UseLinePhase.acquisition,
+        cost_category="acquisition",
         milestone_key="close",
         amount=_acq_amount,
         timing_type="first_day",

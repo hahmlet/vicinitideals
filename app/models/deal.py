@@ -698,7 +698,7 @@ class UseLine(Base):
     amount: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=0)
     timing_type: Mapped[str] = mapped_column(String(20), nullable=False, default="first_day")
     is_deferred: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
-    cost_category: Mapped[str | None] = mapped_column(String(60), nullable=True)
+    cost_category: Mapped[str | None] = mapped_column(String(60), nullable=True, default="soft")
     notes: Mapped[str | None] = mapped_column(Text, nullable=True)
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
