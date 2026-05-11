@@ -78,50 +78,10 @@
          hint="Annual capital reserve per unit, deducted from NOI.") }}
       {{ user_field_number("risk_free_rate_pct", "Discount Rate / Risk-Free (%)", "0.05", placeholder="4.25",
          hint="10Y Treasury proxy used in spread stack on investor export.") }}
-    </div>
-  </details>
-
-  {# ── Debt & Financing ─────────────────────────────────────────────── #}
-  <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
-    <summary style="padding:14px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);list-style:none">Debt &amp; Financing</summary>
-    <div style="padding:0 18px 18px;display:grid;gap:12px">
-      {{ user_field_number("dscr_min", "DSCR Minimum", "0.01", placeholder="1.25") }}
-      {{ user_field_number("ltv_pct", "Max LTV (%)", "1", placeholder="70") }}
-      {{ user_field_number("amort_term_years", "Amortization Term (years)", "1", min="1", max="40", placeholder="30") }}
-      {{ user_field_number("loan_closing_origination_pct", "Origination (%)", "0.1", placeholder="1.0") }}
-      {{ user_field_number("loan_closing_legal_flat", "Legal Flat ($)", "500", placeholder="7500") }}
-      {{ user_field_number("loan_closing_title_pct", "Title/Escrow (%)", "0.05", placeholder="0.25") }}
-    </div>
-  </details>
-
-  {# ── Income & Revenue ─────────────────────────────────────────────── #}
-  <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
-    <summary style="padding:14px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);list-style:none">Income &amp; Revenue</summary>
-    <div style="padding:0 18px 18px;display:grid;gap:12px">
-      {{ user_field_select("income_mode", "Income Mode", [
-        ("revenue_opex", "Revenue + OpEx (line-by-line)"),
-        ("noi", "NOI Direct"),
-      ]) }}
       {{ user_field_select("lease_up_curve", "Lease-Up Curve", [
         ("linear", "Linear"),
         ("s_curve", "S-Curve"),
       ]) }}
-      {{ user_field_number("stabilized_occupancy_pct", "Stabilized Occupancy (%)", "0.5", placeholder="95") }}
-      {{ user_field_number("escalation_rate_pct_annual_income", "Rent Escalation (%/yr)", "0.1", placeholder="3.0") }}
-      {{ user_field_number("noi_escalation_rate_pct", "NOI Escalation (%/yr)", "0.1", placeholder="3.0") }}
-      {{ user_field_number("bad_debt_pct", "Bad Debt (%)", "0.1", placeholder="1.0") }}
-    </div>
-  </details>
-
-  {# ── My Preferences (user-only fields) ───────────────────────────── #}
-  <details open style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
-    <summary style="padding:14px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);list-style:none">
-      My Preferences
-    </summary>
-    <div style="padding:0 18px 18px;display:grid;gap:18px">
-      {{ user_field_number("hold_term_years", "Hold / Loan Term (years)", "1", min="1", max="40", placeholder="7",
-         hint="Default hold period for new permanent debt modules.") }}
-
       {# S-curve steepness: range slider, custom render #}
       {% set _overridable_s = overridable.get('lease_up_curve_steepness', True) %}
       {% set _val_s = user_values.get('lease_up_curve_steepness') if user_values.get('lease_up_curve_steepness') is not none else resolved.get('lease_up_curve_steepness', 5) %}
@@ -147,6 +107,36 @@
         </div>
         <div style="font-size:11px;color:var(--text-muted);margin-top:4px">Only active when lease-up curve type is S-Curve.</div>
       </div>
+    </div>
+  </details>
+
+  {# ── Debt & Financing ─────────────────────────────────────────────── #}
+  <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+    <summary style="padding:14px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);list-style:none">Debt &amp; Financing</summary>
+    <div style="padding:0 18px 18px;display:grid;gap:12px">
+      {{ user_field_number("dscr_min", "DSCR Minimum", "0.01", placeholder="1.25") }}
+      {{ user_field_number("ltv_pct", "Max LTV (%)", "1", placeholder="70") }}
+      {{ user_field_number("amort_term_years", "Amortization Term (years)", "1", min="1", max="40", placeholder="30") }}
+      {{ user_field_number("hold_term_years", "Hold Term (years)", "1", min="1", max="40", placeholder="7",
+         hint="Default hold period for new permanent debt modules.") }}
+      {{ user_field_number("loan_closing_origination_pct", "Origination (%)", "0.1", placeholder="1.0") }}
+      {{ user_field_number("loan_closing_legal_flat", "Legal Flat ($)", "500", placeholder="7500") }}
+      {{ user_field_number("loan_closing_title_pct", "Title/Escrow (%)", "0.05", placeholder="0.25") }}
+    </div>
+  </details>
+
+  {# ── Income & Revenue ─────────────────────────────────────────────── #}
+  <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+    <summary style="padding:14px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);list-style:none">Income &amp; Revenue</summary>
+    <div style="padding:0 18px 18px;display:grid;gap:12px">
+      {{ user_field_select("income_mode", "Income Mode", [
+        ("revenue_opex", "Revenue + OpEx (line-by-line)"),
+        ("noi", "NOI Direct"),
+      ]) }}
+      {{ user_field_number("stabilized_occupancy_pct", "Stabilized Occupancy (%)", "0.5", placeholder="95") }}
+      {{ user_field_number("escalation_rate_pct_annual_income", "Rent Escalation (%/yr)", "0.1", placeholder="3.0") }}
+      {{ user_field_number("noi_escalation_rate_pct", "NOI Escalation (%/yr)", "0.1", placeholder="3.0") }}
+      {{ user_field_number("bad_debt_pct", "Bad Debt (%)", "0.1", placeholder="1.0") }}
     </div>
   </details>
 
@@ -251,13 +241,20 @@
         <td style="padding:8px 12px">
           <input type="number" min="1" step="1"
                  class="filter-input utl-field utl-duration"
-                 placeholder="from org default"
+                 placeholder="{{ 'hold term' if ms_key == 'operation_stabilized' else 'from org default' }}"
                  data-utl-orig-duration="{{ _duration if _duration is not none else '' }}"
                  value="{{ _duration if _duration is not none else '' }}"
                  style="width:90px"
                  {% if not _overridable %}disabled style="opacity:.6;width:90px"{% endif %}>
+          {% if ms_key == 'operation_stabilized' %}
+          <div style="font-size:10px;color:var(--text-muted);margin-top:2px">Blank = uses hold term</div>
+          {% endif %}
         </td>
         <td style="padding:8px 12px">
+          {% if ms_key == 'offer_made' %}
+          <span style="font-size:12px;color:var(--text-muted)">— first milestone</span>
+          <input type="hidden" class="utl-field utl-starts-after" data-utl-orig-starts-after="" value="">
+          {% else %}
           <select class="filter-select utl-field utl-starts-after" style="width:160px"
                   data-utl-orig-starts-after="{{ _starts_after or '' }}"
                   {% if not _overridable %}disabled{% endif %}>
@@ -266,6 +263,7 @@
             <option value="{{ sa_key }}" {% if _starts_after == sa_key %}selected{% endif %}>{{ sa_label }}</option>
             {% endfor %}
           </select>
+          {% endif %}
         </td>
         <td style="padding:8px 12px">
           <input type="number" step="1"

@@ -116,7 +116,7 @@
     <details open style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
       <summary style="padding:14px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);list-style:none;display:flex;align-items:center;gap:8px">
         🔒 Underwriting Policy
-        <span style="margin-left:auto;font-size:11px;color:var(--text-muted);font-weight:400">Org-Set · users cannot override in-model</span>
+        <span style="margin-left:auto;font-size:11px;color:var(--text-muted);font-weight:400">Policy defaults</span>
       </summary>
       <div style="padding:0 18px 18px;display:grid;gap:12px">
         <div>
@@ -140,6 +140,32 @@
           {{ perm_checkbox(fk, locked=True) }}
         </div>
         {% endfor %}
+        <div>
+          <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block">Lease-Up Curve</label>
+          <select class="filter-select settings-field" data-fk="lease_up_curve" data-orig="{{ resolved.get('lease_up_curve', 'linear') }}" style="width:100%">
+            <option value="linear" {% if (resolved.get('lease_up_curve') or 'linear') == 'linear' %}selected{% endif %}>Linear</option>
+            <option value="s_curve" {% if resolved.get('lease_up_curve') == 's_curve' %}selected{% endif %}>S-Curve</option>
+          </select>
+          {{ perm_checkbox("lease_up_curve") }}
+        </div>
+        {% set _steep_org = resolved.get('lease_up_curve_steepness', '5') %}
+        <div>
+          <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block">
+            S-Curve Steepness — <span id="org-steepness-display">{{ _steep_org }}</span>
+          </label>
+          <input type="range" min="1" max="10" step="1"
+                 class="settings-field"
+                 data-fk="lease_up_curve_steepness"
+                 data-orig="{{ _steep_org }}"
+                 value="{{ _steep_org }}"
+                 style="width:100%"
+                 oninput="document.getElementById('org-steepness-display').textContent=this.value">
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);margin-top:2px">
+            <span>1 — flat / linear</span><span>10 — steep S-curve</span>
+          </div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:4px">Only active when Lease-Up Curve is set to S-Curve.</div>
+          {{ perm_checkbox("lease_up_curve_steepness") }}
+        </div>
       </div>
     </details>
 
@@ -150,6 +176,7 @@
           ("dscr_min", "DSCR Minimum", "0.01", "1.25"),
           ("ltv_pct", "Max LTV (%)", "1", "70"),
           ("amort_term_years", "Amortization Term (years)", "1", "30"),
+          ("hold_term_years", "Hold Term (years)", "1", "7"),
           ("loan_closing_origination_pct", "Origination (%)", "0.1", "1.0"),
           ("loan_closing_legal_flat", "Legal Flat ($)", "500", "7500"),
           ("loan_closing_title_pct", "Title/Escrow (%)", "0.05", "0.25"),
@@ -173,14 +200,6 @@
             <option value="noi" {% if resolved.get('income_mode') == 'noi' %}selected{% endif %}>NOI Direct</option>
           </select>
           {{ perm_checkbox("income_mode") }}
-        </div>
-        <div>
-          <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block">Lease-Up Curve</label>
-          <select class="filter-select settings-field" data-fk="lease_up_curve" data-orig="{{ resolved.get('lease_up_curve', 'linear') }}" style="width:100%">
-            <option value="linear" {% if (resolved.get('lease_up_curve') or 'linear') == 'linear' %}selected{% endif %}>Linear</option>
-            <option value="s_curve" {% if resolved.get('lease_up_curve') == 's_curve' %}selected{% endif %}>S-Curve</option>
-          </select>
-          {{ perm_checkbox("lease_up_curve") }}
         </div>
         {% for fk, label, step, placeholder in [
           ("stabilized_occupancy_pct", "Stabilized Occupancy (%)", "0.5", "95"),
@@ -325,12 +344,19 @@
         <td style="padding:8px 12px">
           <input type="number" min="1" step="1"
                  class="filter-input tl-field tl-duration"
-                 placeholder="from system"
+                 placeholder="{{ 'hold term' if ms_key == 'operation_stabilized' else 'from system' }}"
                  data-tl-orig-duration="{{ _duration if _duration is not none else '' }}"
                  value="{{ _duration if _duration is not none else '' }}"
                  style="width:90px">
+          {% if ms_key == 'operation_stabilized' %}
+          <div style="font-size:10px;color:var(--text-muted);margin-top:2px">Blank = uses hold term</div>
+          {% endif %}
         </td>
         <td style="padding:8px 12px">
+          {% if ms_key == 'offer_made' %}
+          <span style="font-size:12px;color:var(--text-muted)">— first milestone</span>
+          <input type="hidden" class="tl-field tl-starts-after" data-tl-orig-starts-after="" value="">
+          {% else %}
           <select class="filter-select tl-field tl-starts-after" style="width:160px"
                   data-tl-orig-starts-after="{{ _starts_after or '' }}">
             <option value="">— must set in deal —</option>
@@ -338,6 +364,7 @@
             <option value="{{ sa_key }}" {% if _starts_after == sa_key %}selected{% endif %}>{{ sa_label }}</option>
             {% endfor %}
           </select>
+          {% endif %}
         </td>
         <td style="padding:8px 12px">
           <input type="number" step="1"
