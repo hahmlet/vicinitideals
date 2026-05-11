@@ -2410,7 +2410,7 @@ async def update_deal(
         Deal,
         deal_id,
         options=[
-            selectinload(Deal.scenarios).selectinload(Scenario.projects).selectinload(Project.opportunity),
+            selectinload(Deal.scenarios).selectinload(DealModel.projects).selectinload(Project.opportunity),
         ],
     )
     if deal is None or (user is not None and deal.org_id != user.org_id):
@@ -2473,8 +2473,8 @@ async def create_model_for_deal(
     # Find or create a top-level Deal for this Opportunity (via Scenario→Project path)
     existing_top_deal = (await session.execute(
         select(Deal)
-        .join(Scenario, Scenario.deal_id == Deal.id)
-        .join(Project, Project.scenario_id == Scenario.id)
+        .join(DealModel, DealModel.deal_id == Deal.id)
+        .join(Project, Project.scenario_id == DealModel.id)
         .where(Project.opportunity_id == opp_id)
         .limit(1)
     )).scalar_one_or_none()
@@ -2545,7 +2545,7 @@ async def link_parcel_to_deal(
     parcel = parcel_result.scalar_one_or_none()
     if parcel is None:
         return RedirectResponse(
-            url=f"/deals/{deal_id}?tab=parcels&error=parcel_not_found",
+            url=f"/deals/{deal_id}?error=parcel_not_found",
             status_code=303,
         )
 
@@ -2553,17 +2553,17 @@ async def link_parcel_to_deal(
     deal = await session.get(
         Deal, deal_id,
         options=[
-            selectinload(Deal.scenarios).selectinload(Scenario.projects).selectinload(Project.opportunity),
+            selectinload(Deal.scenarios).selectinload(DealModel.projects).selectinload(Project.opportunity),
         ],
     )
     opp = _first_opportunity(deal) if deal else None
     if opp is None:
-        return RedirectResponse(url=f"/deals/{deal_id}?tab=parcels&error=no_opportunity", status_code=303)
+        return RedirectResponse(url=f"/deals/{deal_id}?error=no_opportunity", status_code=303)
 
     opp.parcel_id = parcel.id
     await session.commit()
 
-    return RedirectResponse(url=f"/deals/{deal_id}?tab=parcels", status_code=303)
+    return RedirectResponse(url=f"/deals/{deal_id}", status_code=303)
 
 
 # ---------------------------------------------------------------------------
@@ -4372,8 +4372,8 @@ async def create_deal_from_listing(
     # Check for existing Deal linked to this Opportunity via Scenario→Project
     existing_deal = (await session.execute(
         select(Deal)
-        .join(Scenario, Scenario.deal_id == Deal.id)
-        .join(Project, Project.scenario_id == Scenario.id)
+        .join(DealModel, DealModel.deal_id == Deal.id)
+        .join(Project, Project.scenario_id == DealModel.id)
         .where(Project.opportunity_id == opportunity.id)
         .limit(1)
     )).scalar_one_or_none()

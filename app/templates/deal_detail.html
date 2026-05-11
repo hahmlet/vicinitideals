@@ -91,7 +91,10 @@
   padding: 14px 16px;
   background: var(--surface);
   margin-bottom: 8px;
+  cursor: pointer;
+  transition: border-color 0.1s;
 }
+.parcel-card:hover { border-color: var(--accent); }
 .parcel-card-apn { font-size: 11px; color: var(--text-muted); font-family: var(--font-mono, monospace); }
 .parcel-card-address { font-size: 14px; font-weight: 600; margin: 4px 0; }
 
@@ -169,11 +172,38 @@
     <div class="detail-breadcrumb">
       <a href="/deals">Deals</a> / {{ deal_name }}
     </div>
-    <div class="detail-title detail-title-editable" onclick="openDrawer('edit-deal-drawer')" title="Click to edit">
+
+    <!-- Title: click to inline-edit -->
+    <div id="deal-title-display" class="detail-title detail-title-editable"
+         onclick="startNameEdit()" title="Click to rename">
       {{ deal_name }}
       <span class="badge {{ status_badge }}" style="font-size:12px;font-weight:500">{{ status_display }}</span>
       <span class="detail-edit-hint">✏</span>
     </div>
+    <form id="deal-name-form" action="/ui/deals/{{ deal_id }}/update" method="post"
+          style="display:none;align-items:center;gap:8px">
+      <input type="hidden" name="status" value="{{ status_key }}">
+      <input type="text" id="deal-name-input" name="name" value="{{ deal_name }}"
+             style="font-size:18px;font-weight:700;border:2px solid var(--accent);border-radius:6px;
+                    padding:4px 10px;outline:none;min-width:260px"
+             onkeydown="if(event.key==='Enter'){event.preventDefault();document.getElementById('deal-name-form').submit();}
+                        if(event.key==='Escape'){cancelNameEdit();}">
+      <button type="submit" class="btn btn-primary btn-sm">Save</button>
+      <button type="button" class="btn btn-secondary btn-sm" onclick="cancelNameEdit()">Cancel</button>
+    </form>
+    <script>
+    function startNameEdit() {
+      document.getElementById('deal-title-display').style.display = 'none';
+      var form = document.getElementById('deal-name-form');
+      form.style.display = 'flex';
+      var inp = document.getElementById('deal-name-input');
+      inp.focus(); inp.select();
+    }
+    function cancelNameEdit() {
+      document.getElementById('deal-name-form').style.display = 'none';
+      document.getElementById('deal-title-display').style.display = 'flex';
+    }
+    </script>
   </div>
   <div class="detail-actions">
     <a href="/deals/{{ deal_id }}/export/json" download="deal-{{ deal_id }}.json" class="btn btn-secondary">⬇ Export JSON</a>
@@ -226,10 +256,6 @@
   <div>
     <div class="section-title mb-12">Deal Details</div>
     <div style="margin-bottom:24px">
-      <div class="field-row">
-        <div class="field-key">Status</div>
-        <div class="field-value"><span class="badge {{ status_badge }}">{{ status_display }}</span></div>
-      </div>
       {% if opp_name %}
       <div class="field-row">
         <div class="field-key">Property</div>
@@ -248,10 +274,10 @@
         <div class="field-value">
           {% if opp.source_url %}
           <a href="{{ opp.source_url }}" target="_blank" rel="noopener" class="btn btn-secondary btn-sm" style="font-size:12px">
-            View on {{ opp.source.value | title }} ↗
+            View on {{ opp.source | title }} ↗
           </a>
           {% else %}
-          {{ opp.source.value | title }}
+          {{ opp.source | title }}
           {% endif %}
         </div>
       </div>
@@ -265,7 +291,7 @@
     </div>
     {% if parcels %}
     {% for p in parcels %}
-    <div class="parcel-card" style="cursor:pointer" onclick="window.location='/parcels?q={{ p.apn | urlencode }}'">
+    <div class="parcel-card" onclick="openDrawer('parcel-drawer-{{ loop.index0 }}')">
       <div class="parcel-card-apn">{{ p.apn }}</div>
       <div class="parcel-card-address">{{ p.address or '—' }}</div>
       <div style="display:flex;gap:16px;margin-top:8px;flex-wrap:wrap">
@@ -285,9 +311,7 @@
     </div>
     {% endfor %}
     {% else %}
-    <div style="font-size:13px;color:var(--text-muted);padding:8px 0">
-      No parcels linked.
-    </div>
+    <div style="font-size:13px;color:var(--text-muted);padding:8px 0">No parcels linked.</div>
     {% endif %}
   </div>
 
@@ -346,30 +370,17 @@
 
 {# Timeline — full width #}
 <div>
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-    <div>
-      <div class="section-title" style="margin:0">Project Timeline</div>
-      <div style="font-size:12px;color:var(--text-muted);margin-top:2px">
-        Phase schedule for the active scenario
-        {% if gantt_data and gantt_data.rows and not gantt_data.has_dates %}
-          · <span style="color:var(--warning,#d97706)">No anchor date set — showing relative durations.
-            <a href="/models/{{ primary_model_id }}/builder?module=timeline" style="color:inherit;text-decoration:underline">Set dates →</a></span>
-        {% endif %}
-      </div>
+  <div style="margin-bottom:20px">
+    <div class="section-title" style="margin:0">Project Timeline</div>
+    <div style="font-size:12px;color:var(--text-muted);margin-top:2px">
+      Phase schedule for the active scenario
+      {% if gantt_data and gantt_data.rows and not gantt_data.has_dates %}
+        · <span style="color:var(--warning,#d97706)">No anchor date set — showing relative durations.</span>
+      {% endif %}
     </div>
-    {% if primary_model_id %}
-    <a href="/models/{{ primary_model_id }}/builder?module=timeline" class="btn btn-secondary btn-sm">Edit Timeline →</a>
-    {% endif %}
   </div>
 
   {% if gantt_data %}
-  {% if not gantt_data.has_dates %}
-  <div style="font-size:12px;color:var(--warning,#d97706);margin-bottom:10px">
-    No anchor date set — showing relative durations.
-    {% if primary_model_id %}<a href="/models/{{ primary_model_id }}/builder?module=timeline" style="color:inherit;text-decoration:underline">Set dates →</a>{% endif %}
-  </div>
-  {% endif %}
-
   <div class="g2-wrap">
     <!-- Time axis -->
     <div class="g2-axis">
@@ -433,39 +444,65 @@
 
 </div>
 
-<!-- Edit Deal drawer -->
-<div class="drawer-overlay" id="edit-deal-drawer" style="display:none">
+<!-- Parcel detail drawers -->
+{% for p in parcels %}
+<div class="drawer-overlay" id="parcel-drawer-{{ loop.index0 }}" style="display:none">
   <div class="drawer">
     <div class="drawer-header">
       <div>
-        <div class="drawer-title">Edit Deal</div>
-        <div class="text-small text-muted">Update deal name and status</div>
+        <div class="drawer-title">{{ p.address or p.apn }}</div>
+        <div class="text-small text-muted" style="font-family:var(--font-mono,monospace)">{{ p.apn }}</div>
       </div>
-      <span class="drawer-close" onclick="closeDrawer('edit-deal-drawer')">×</span>
+      <span class="drawer-close" onclick="closeDrawer('parcel-drawer-{{ loop.index0 }}')">×</span>
     </div>
-    <div class="drawer-body">
-      <form method="post" action="/ui/deals/{{ deal_id }}/update" style="display:flex;flex-direction:column;gap:14px">
-        <div>
-          <label class="field-label">Deal Name</label>
-          <input class="filter-input" style="width:100%;margin-top:4px" type="text" name="name"
-                 value="{{ deal_name }}" required>
-        </div>
-        <div>
-          <label class="field-label">Status</label>
-          <select class="filter-select" style="width:100%;margin-top:4px" name="status">
-            <option value="hypothetical" {% if status_key == 'hypothetical' %}selected{% endif %}>Evaluation</option>
-            <option value="active" {% if status_key == 'active' %}selected{% endif %}>Execution</option>
-            <option value="archived" {% if status_key == 'archived' %}selected{% endif %}>Archived</option>
-          </select>
-        </div>
-        <div style="display:flex;gap:8px;margin-top:6px">
-          <button type="submit" class="btn btn-primary">Save Changes</button>
-          <button type="button" class="btn btn-secondary" onclick="closeDrawer('edit-deal-drawer')">Cancel</button>
-        </div>
-      </form>
+    <div class="drawer-body" style="display:flex;flex-direction:column;gap:10px">
+      {% if p.zoning_code %}
+      <div class="field-row"><div class="field-key">Zoning</div>
+        <div class="field-value">{{ p.zoning_code }}{% if p.zoning_description %} — {{ p.zoning_description }}{% endif %}</div>
+      </div>
+      {% endif %}
+      {% if p.lot_sqft %}
+      <div class="field-row"><div class="field-key">Lot</div>
+        <div class="field-value">{{ p.lot_sqft | number_fmt }} sf{% if p.gis_acres %} · {{ "%.2f"|format(p.gis_acres) }} ac{% endif %}</div>
+      </div>
+      {% endif %}
+      {% if p.state_class_label %}
+      <div class="field-row"><div class="field-key">Use Class</div><div class="field-value">{{ p.state_class_label }}</div></div>
+      {% endif %}
+      {% if p.current_use %}
+      <div class="field-row"><div class="field-key">Current Use</div><div class="field-value">{{ p.current_use }}</div></div>
+      {% endif %}
+      {% if p.year_built %}
+      <div class="field-row"><div class="field-key">Year Built</div><div class="field-value">{{ p.year_built }}</div></div>
+      {% endif %}
+      {% if p.total_assessed_value %}
+      <div class="field-row"><div class="field-key">Assessed Value</div><div class="field-value">{{ p.total_assessed_value | currency }}</div></div>
+      {% endif %}
+      {% if p.assessed_value_land %}
+      <div class="field-row"><div class="field-key">Land Value</div><div class="field-value">{{ p.assessed_value_land | currency }}</div></div>
+      {% endif %}
+      {% if p.assessed_value_improvements %}
+      <div class="field-row"><div class="field-key">Improvements</div><div class="field-value">{{ p.assessed_value_improvements | currency }}</div></div>
+      {% endif %}
+      {% if p.owner_name %}
+      <div class="field-row"><div class="field-key">Owner</div><div class="field-value">{{ p.owner_name }}</div></div>
+      {% endif %}
+      {% if p.owner_mailing_address %}
+      <div class="field-row"><div class="field-key">Mailing</div><div class="field-value">{{ p.owner_mailing_address }}</div></div>
+      {% endif %}
+      {% if p.jurisdiction %}
+      <div class="field-row"><div class="field-key">Jurisdiction</div><div class="field-value">{{ p.jurisdiction }}</div></div>
+      {% endif %}
+      {% if p.county %}
+      <div class="field-row"><div class="field-key">County</div><div class="field-value">{{ p.county }}</div></div>
+      {% endif %}
+      <div style="margin-top:8px;padding-top:12px;border-top:1px solid var(--border)">
+        <a href="/parcels?q={{ p.apn | urlencode }}" class="btn btn-secondary btn-sm">View full parcel record →</a>
+      </div>
     </div>
   </div>
 </div>
+{% endfor %}
 
 <!-- New Model drawer -->
 <div class="drawer-overlay" id="new-model-drawer" style="display:none">
