@@ -634,11 +634,10 @@ def _compute_gantt_axis(
     # Month ticks: first of each calendar month within the range
     month_ticks = []
     cur = start_date.replace(day=1)
-    if cur < start_date:
-        cur = (cur.replace(month=cur.month + 1) if cur.month < 12 else _dt.date(cur.year + 1, 1, 1))
+    # Don't skip the starting month — it may start mid-month but we still want the label
     while cur <= end_date:
         lp = _date_pct(cur)
-        if 0 < lp < 100:
+        if 0 <= lp < 100:
             month_ticks.append({"left_pct": lp, "label": cur.strftime("%b").upper(), "is_year_start": cur.month == 1})
         cur = (cur.replace(month=cur.month + 1) if cur.month < 12 else _dt.date(cur.year + 1, 1, 1))
 
