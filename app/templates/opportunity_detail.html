@@ -191,10 +191,9 @@
 
       {% if opp.dev_projects %}
         {% for proj in opp.dev_projects %}
-        <a class="deal-link-card" href="/deals/{{ proj.scenario_id }}">
+        <a class="deal-link-card" href="/deals/{{ proj.scenario.deal_id if proj.scenario else proj.scenario_id }}">
           <div>
-            <div style="font-weight:600;font-size:13px">Deal {{ loop.index }}</div>
-            <div style="font-size:11px;color:var(--text-muted)">{{ proj.scenario_id | string | truncate(12, true, '') }}</div>
+            <div style="font-weight:600;font-size:13px">{{ proj.scenario.name if proj.scenario else 'Deal' }}</div>
           </div>
           <span style="font-size:11px;color:var(--text-muted)">→</span>
         </a>

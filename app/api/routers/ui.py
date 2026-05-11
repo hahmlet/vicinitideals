@@ -3133,7 +3133,7 @@ async def opportunity_detail(
         .where(Opportunity.id == opp_id)
         .options(
             selectinload(Opportunity.parcel),
-            selectinload(Opportunity.dev_projects),
+            selectinload(Opportunity.dev_projects).selectinload(Project.scenario),
         )
     )).scalar_one_or_none()
     if opp is None:
