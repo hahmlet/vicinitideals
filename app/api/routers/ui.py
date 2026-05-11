@@ -1845,6 +1845,23 @@ async def settings_organization(
         )
     ).scalars().all()
 
+    from app.models.settings import OrgDealTypeDefault as _OrgDTD
+    from app.settings.resolver import resolve_timeline_defaults as _resolve_tl_org
+    timeline_defaults_map = await _resolve_tl_org(user.id, user.org_id, session)
+    _org_tl_rows = (
+        await session.execute(select(_OrgDTD).where(_OrgDTD.org_id == user.org_id))
+    ).scalars().all()
+    org_timeline_map = {
+        (r.deal_type, r.milestone_type): {
+            "included": r.included,
+            "duration_days": int(r.duration_days) if r.duration_days is not None else None,
+            "starts_after_type": r.starts_after_type,
+            "offset_days": int(r.offset_days),
+            "user_overridable": r.user_overridable,
+        }
+        for r in _org_tl_rows
+    }
+
     return templates.TemplateResponse(
         request,
         "settings_organization.html",
@@ -1856,6 +1873,8 @@ async def settings_organization(
             "org_settings_map": org_settings_map,
             "org_set_fields": _ORG_SET_FIELDS,
             "org_source_vehicles": org_source_vehicles,
+            "timeline_defaults_map": timeline_defaults_map,
+            "org_timeline_map": org_timeline_map,
             **_base_ctx(user, dedup_count, "", address_issues_count, conflicts_count=conflicts_count),
         },
     )
