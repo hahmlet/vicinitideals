@@ -1,7 +1,7 @@
 """Add user_overridable column to org_settings.
 
-Revision ID: 0050
-Revises: 0049
+Revision ID: 0077
+Revises: 0076
 Create Date: 2026-05-10
 """
 
@@ -10,8 +10,8 @@ from __future__ import annotations
 import sqlalchemy as sa
 from alembic import op
 
-revision = "0050"
-down_revision = "0049"
+revision = "0077"
+down_revision = "0076"
 branch_labels = None
 depends_on = None
 
