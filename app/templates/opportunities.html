@@ -102,8 +102,8 @@ tr:hover .archive-btn { opacity: 1; }
   <div class="filter-dropdown" id="jurisdiction-dropdown">
     <button type="button" class="filter-dropdown-btn" id="jurisdiction-btn">All jurisdictions</button>
     <div class="filter-dropdown-panel" id="jurisdiction-panel" style="display:none">
-      {% for j in jurisdictions %}
-      <label><input type="checkbox" name="jurisdiction" value="{{ j }}"> {{ j | title }}</label>
+      {% for opt in jurisdiction_options %}
+      <label><input type="checkbox" name="jurisdiction" value="{{ opt.value }}"> {{ opt.label }}</label>
       {% endfor %}
     </div>
   </div>

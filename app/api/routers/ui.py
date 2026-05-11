@@ -2557,16 +2557,30 @@ async def opportunities_page(
     user = await _get_user(session, request)
     dedup_count, conflicts_count = await _get_counts(session)
     jur_rows = await session.execute(
-        select(func.lower(Opportunity.jurisdiction))
+        select(func.lower(Opportunity.jurisdiction), func.lower(Opportunity.county))
         .where(Opportunity.jurisdiction.isnot(None))
         .where(Opportunity.jurisdiction != "")
         .distinct()
-        .order_by(func.lower(Opportunity.jurisdiction))
+        .order_by(func.lower(Opportunity.jurisdiction), func.lower(Opportunity.county))
     )
-    jurisdictions = [r[0] for r in jur_rows if r[0] and r[0].strip()]
+    seen_jur: set[str] = set()
+    jurisdiction_options: list[dict[str, str]] = []
+    for jur, county in jur_rows:
+        if not jur or not jur.strip():
+            continue
+        if jur == "unincorporated":
+            county_part = (county or "").strip()
+            value = f"unincorporated_{county_part}" if county_part else "unincorporated"
+            label = f"Unin. {county_part.title()}" if county_part else "Unincorporated"
+        else:
+            value, label = jur, jur.title()
+        if value not in seen_jur:
+            seen_jur.add(value)
+            jurisdiction_options.append({"value": value, "label": label})
+    jurisdiction_options.sort(key=lambda x: x["label"])
     return templates.TemplateResponse(request, "opportunities.html", {
         "request": request,
-        "jurisdictions": jurisdictions,
+        "jurisdiction_options": jurisdiction_options,
         **_base_ctx(user, dedup_count, "opportunities", conflicts_count=conflicts_count),
     })
 
@@ -2596,7 +2610,24 @@ def _apply_opp_filters(
     if favorited:
         stmt = stmt.where(Opportunity.is_favorited.is_(True))
     if jurisdiction:
-        stmt = stmt.where(func.lower(Opportunity.jurisdiction).in_([j.lower() for j in jurisdiction]))
+        plain, compound = [], []
+        for j in jurisdiction:
+            if j.startswith("unincorporated_"):
+                compound.append(j[len("unincorporated_"):])
+            else:
+                plain.append(j.lower())
+        clauses = []
+        if plain:
+            clauses.append(func.lower(Opportunity.jurisdiction).in_(plain))
+        for county_part in compound:
+            clauses.append(
+                and_(
+                    func.lower(Opportunity.jurisdiction) == "unincorporated",
+                    func.lower(Opportunity.county) == county_part,
+                )
+            )
+        if clauses:
+            stmt = stmt.where(or_(*clauses))
     if min_units is not None:
         stmt = stmt.where(Opportunity.units >= min_units)
     if max_units is not None:
