@@ -35,6 +35,7 @@ tests/e2e/.playwright-cli/
 tmp/
 /docs/models/
 /docs/PitchDecks
+/docs/Argus
 /poly_points.txt
 su_*.png
 /scripts/audit_model_v15*
