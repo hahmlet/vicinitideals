@@ -10669,9 +10669,9 @@ async def proforma_confirm(
             try:
                 unit_mix_rows.append({
                     "label": name,
-                    "unit_count": int(count_s or 0),
-                    "sqft": float(sqft_s or 0),
-                    "rent_monthly": float(rent_s or 0),
+                    "unit_count": int((count_s or "0").replace(",", "")),
+                    "sqft": float((sqft_s or "0").replace(",", "")),
+                    "rent_monthly": float((rent_s or "0").replace(",", "")),
                     "beds": None,
                     "baths": None,
                     "notes": None,
@@ -10679,7 +10679,10 @@ async def proforma_confirm(
             except Exception:
                 pass
         if unit_mix_rows:
+            from sqlalchemy.orm.attributes import flag_modified
             project.unit_mix = unit_mix_rows
+            flag_modified(project, "unit_mix")
+            session.add(project)
 
     # ---------- OpEx lines ----------
     # Label field holds the mapped category (investor export groups by label).
@@ -10703,7 +10706,7 @@ async def proforma_confirm(
                 session.add(OperatingExpenseLine(
                     project_id=project_id,
                     label=label,
-                    annual_amount=Decimal(amount_s or "0"),
+                    annual_amount=Decimal((amount_s or "0").replace(",", "")),
                     escalation_rate_pct_annual=Decimal("3"),
                     active_in_phases=["operation_lease_up", "operation_stabilized"],
                     notes=orig_label.strip() if orig_label.strip() != label else None,
