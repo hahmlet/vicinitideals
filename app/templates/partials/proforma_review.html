@@ -198,6 +198,14 @@
           </tr>
           {% endfor %}
           </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="4" style="padding:10px;text-align:right;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);border-top:2px solid var(--border)">Total (selected)</td>
+              <td style="padding:10px;text-align:right;font-size:14px;font-weight:700;color:var(--text);border-top:2px solid var(--border)">
+                <span style="color:var(--text-muted);font-weight:500">$</span><span id="expense-total">0</span>
+              </td>
+            </tr>
+          </tfoot>
         </table>
         {% else %}
         <div style="padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;font-size:13px;color:var(--text-muted)">No expense lines detected in the OpEx sheet.</div>
@@ -227,6 +235,7 @@ function toggleRow(checkbox, rowId) {
   } else {
     row.classList.add('excluded');
   }
+  recalcExpenseTotal();
 }
 
 function toggleAll(masterCheckbox) {
@@ -235,6 +244,23 @@ function toggleAll(masterCheckbox) {
     const rowId = cb.closest('tr').id;
     if (rowId) toggleRow(cb, rowId);
   });
+  recalcExpenseTotal();
+}
+
+function recalcExpenseTotal() {
+  const totalEl = document.getElementById('expense-total');
+  if (!totalEl) return;
+  let total = 0;
+  document.querySelectorAll('input[name="expense_include[]"]').forEach(cb => {
+    if (!cb.checked) return;
+    const row = cb.closest('tr');
+    if (!row) return;
+    const amountInput = row.querySelector('input[name="expense_amount[]"]');
+    if (!amountInput) return;
+    const v = parseInt(amountInput.value.replace(/[^0-9-]/g, ''), 10);
+    if (!isNaN(v)) total += v;
+  });
+  totalEl.textContent = total.toLocaleString('en-US');
 }
 
 // Format amount inputs with commas on load
@@ -244,11 +270,14 @@ document.querySelectorAll('.amount-input').forEach(input => {
   input.addEventListener('blur', function() {
     const v = parseInt(this.value.replace(/[^0-9]/g, ''), 10);
     if (!isNaN(v)) this.value = v.toLocaleString('en-US');
+    recalcExpenseTotal();
   });
   input.addEventListener('focus', function() {
     this.value = this.value.replace(/,/g, '');
   });
 });
+
+recalcExpenseTotal();
 
 // Strip commas before HTMX submits so server receives plain integers
 document.getElementById('proforma-confirm-form').addEventListener('htmx:configRequest', function() {
