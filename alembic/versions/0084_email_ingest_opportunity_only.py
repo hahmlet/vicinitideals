@@ -69,7 +69,7 @@ def upgrade() -> None:
 
     # --- deals: drop columns the old preliminary-deal flow added --------
     op.drop_constraint(
-        "deals_inbound_email_id_fkey", "deals", type_="foreignkey"
+        "fk_deals_inbound_email_id", "deals", type_="foreignkey"
     )
     op.drop_column("deals", "inbound_email_id")
     op.drop_column("deals", "is_preliminary")
@@ -95,7 +95,7 @@ def downgrade() -> None:
         ),
     )
     op.create_foreign_key(
-        "deals_inbound_email_id_fkey",
+        "fk_deals_inbound_email_id",
         "deals",
         "inbound_emails",
         ["inbound_email_id"],
