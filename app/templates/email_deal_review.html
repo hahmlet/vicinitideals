@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+{% block title %}Review Email Deal — Viciniti Deals{% endblock %}
+
+{% block head %}
+<style>
+.review-header { padding: 14px 20px; border-bottom: 1px solid var(--border); background: var(--surface); }
+.review-header-meta { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+.review-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 0; height: calc(100vh - 120px); overflow: hidden; }
+.review-pane { overflow-y: auto; padding: 20px; }
+.review-pane-left { border-right: 1px solid var(--border); }
+.pane-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); margin-bottom: 12px; }
+
+/* Source pane */
+.email-body-text { font-family: monospace; font-size: 12px; line-height: 1.6; white-space: pre-wrap; background: var(--surface-muted); border-radius: 6px; padding: 14px; color: var(--text); max-height: 400px; overflow-y: auto; }
+.attachment-section { margin-top: 16px; }
+.attachment-item { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 6px; font-size: 13px; }
+
+/* Deal preview pane */
+.suggestion-row { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border-light); }
+.suggestion-row:last-child { border-bottom: none; }
+.suggestion-label { font-size: 12px; color: var(--text-muted); width: 140px; flex-shrink: 0; padding-top: 2px; }
+.suggestion-value { flex: 1; font-size: 13px; font-weight: 500; }
+.suggestion-actions { display: flex; gap: 6px; align-items: center; }
+.chip { display: inline-flex; align-items: center; gap: 3px; font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 8px; cursor: pointer; border: 1px solid; white-space: nowrap; transition: all 0.1s; }
+.chip-accept { border-color: var(--success); color: var(--success); background: transparent; }
+.chip-accept:hover, .chip-accept.active { background: var(--success); color: white; }
+.chip-reject { border-color: var(--text-muted); color: var(--text-muted); background: transparent; }
+.chip-reject:hover { border-color: var(--danger); color: var(--danger); }
+.confidence-bar { width: 40px; height: 4px; border-radius: 2px; background: var(--border); overflow: hidden; }
+.confidence-fill { height: 100%; border-radius: 2px; background: var(--accent); }
+.warning-banner { background: #fffbeb; border: 1px solid #f59e0b; border-radius: 6px; padding: 10px 14px; font-size: 13px; color: #92400e; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.deal-section { margin-bottom: 20px; }
+.deal-section-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border-light); }
+.no-suggestions { color: var(--text-muted); font-size: 13px; padding: 12px 0; }
+.status-processing { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #1d4ed8; }
+.action-bar { padding: 14px 20px; border-top: 1px solid var(--border); background: var(--surface); display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="review-header">
+  <div style="font-weight:600;font-size:15px">{{ email.subject or "(no subject)" }}</div>
+  <div class="review-header-meta">
+    From {{ email.sender_email }}
+    {% if email.sender_name %} ({{ email.sender_name }}){% endif %}
+    · {{ email.received_at.strftime("%b %d, %Y %I:%M %p") if email.received_at else "" }}
+    · <span style="font-weight:600;color:
+      {%- if email.status == 'deal_created' %}var(--success)
+      {%- elif email.status == 'processing' %}#1d4ed8
+      {%- elif email.status == 'failed' %}var(--danger)
+      {%- else %}var(--text-muted){% endif -%}
+    ">{{ email.status | replace("_", " ") | title }}</span>
+  </div>
+</div>
+
+<div class="review-layout">
+  <!-- LEFT: Source documents -->
+  <div class="review-pane review-pane-left">
+    <div class="pane-title">Source Documents</div>
+
+    {% if email.body_text %}
+    <div class="deal-section">
+      <div class="deal-section-title">Email Body</div>
+      <div class="email-body-text">{{ email.body_text }}</div>
+    </div>
+    {% endif %}
+
+    {% if email.attachments_meta %}
+    <div class="attachment-section">
+      <div class="deal-section-title">Attachments</div>
+      {% for att in email.attachments_meta %}
+      <div class="attachment-item">
+        <span>📎</span>
+        <span>{{ att.filename or "file" }}</span>
+        <span style="color:var(--text-muted);font-size:11px;margin-left:auto">
+          {{ att.content_type or "" }}
+          {% if att.size_bytes %} · {{ (att.size_bytes / 1024) | round(1) }} KB{% endif %}
+        </span>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if not email.body_text and not email.attachments_meta %}
+    <div class="no-suggestions">Email body not yet available — processing in progress.</div>
+    {% endif %}
+  </div>
+
+  <!-- RIGHT: Deal preview + suggestions -->
+  <div class="review-pane">
+    <div class="pane-title">Deal Preview</div>
+
+    {% if email.status == "processing" %}
+    <div class="status-processing">
+      <span>⚙</span> Extracting deal data — refresh in a few seconds.
+    </div>
+    {% endif %}
+
+    {% if email.status == "failed" and email.error_message %}
+    <div class="warning-banner">⚠ Processing failed: {{ email.error_message }}</div>
+    {% endif %}
+
+    {% set core_fields = ["address", "acquisition_cost", "unit_count", "property_type"] %}
+    {% set has_core = namespace(value=false) %}
+    {% for s in suggestions %}{% if s.field_path in core_fields %}{% set has_core.value = true %}{% endif %}{% endfor %}
+
+    {% set has_income = namespace(value=false) %}
+    {% for s in suggestions %}{% if s.field_path.startswith("income_stream") %}{% set has_income.value = true %}{% endif %}{% endfor %}
+
+    {% set has_expense = namespace(value=false) %}
+    {% for s in suggestions %}{% if s.field_path.startswith("expense_line") %}{% set has_expense.value = true %}{% endif %}{% endfor %}
+
+    <!-- Core deal fields section -->
+    {% if has_core.value %}
+    <div class="deal-section">
+      <div class="deal-section-title">Core Fields</div>
+      {% for s in suggestions %}{% if s.field_path in core_fields %}
+      <div class="suggestion-row" id="suggestion-{{ s.id }}">
+        <div class="suggestion-label">
+          {% if s.field_path == "address" %}Address
+          {% elif s.field_path == "acquisition_cost" %}Asking Price
+          {% elif s.field_path == "unit_count" %}Unit Count
+          {% elif s.field_path == "property_type" %}Property Type
+          {% else %}{{ s.field_path | replace("_", " ") | title }}{% endif %}
+        </div>
+        <div class="suggestion-value">
+          {% if s.field_path == "acquisition_cost" and s.suggested_value %}
+            ${{ "{:,.0f}".format(s.suggested_value | float) }}
+          {% else %}
+            {{ s.suggested_value or "—" }}
+          {% endif %}
+        </div>
+        {% if s.confidence is not none %}
+        <div class="confidence-bar" title="{{ (s.confidence * 100) | int }}% confidence">
+          <div class="confidence-fill" style="width:{{ (s.confidence * 100) | int }}%"></div>
+        </div>
+        {% endif %}
+        <div class="suggestion-actions">
+          <button class="chip chip-accept {% if s.accepted == true %}active{% endif %}"
+                  hx-post="/api/email-suggestions/{{ s.id }}/accept"
+                  hx-target="#suggestion-{{ s.id }}"
+                  hx-swap="outerHTML">✓ Accept</button>
+          <button class="chip chip-reject"
+                  hx-post="/api/email-suggestions/{{ s.id }}/reject"
+                  hx-target="#suggestion-{{ s.id }}"
+                  hx-swap="outerHTML">Skip</button>
+        </div>
+      </div>
+      {% endif %}{% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Income suggestions (from proforma) -->
+    {% if has_income.value %}
+    <div class="deal-section">
+      <div class="deal-section-title">Income (from Pro Forma)</div>
+      {% for s in suggestions %}{% if s.field_path.startswith("income_stream") %}
+      <div class="suggestion-row" id="suggestion-{{ s.id }}">
+        <div class="suggestion-label" style="font-size:12px">{{ s.field_path | replace("income_stream.", "") | replace("_", " ") | title }}</div>
+        <div class="suggestion-value">{{ s.suggested_value or "—" }}</div>
+        <div class="suggestion-actions">
+          <button class="chip chip-accept {% if s.accepted == true %}active{% endif %}"
+                  hx-patch="/api/email-suggestions/{{ s.id }}"
+                  hx-vals='{"accepted": true}'
+                  hx-target="#suggestion-{{ s.id }}"
+                  hx-swap="outerHTML">✓</button>
+          <button class="chip chip-reject"
+                  hx-patch="/api/email-suggestions/{{ s.id }}"
+                  hx-vals='{"accepted": false}'
+                  hx-target="#suggestion-{{ s.id }}"
+                  hx-swap="outerHTML">Skip</button>
+        </div>
+      </div>
+      {% endif %}{% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Expense suggestions (from proforma) -->
+    {% if has_expense.value %}
+    <div class="deal-section">
+      <div class="deal-section-title">Expenses (from Pro Forma)</div>
+      {% for s in suggestions %}{% if s.field_path.startswith("expense_line") %}
+      <div class="suggestion-row" id="suggestion-{{ s.id }}">
+        <div class="suggestion-label" style="font-size:12px">{{ s.field_path | replace("expense_line.", "") | replace("_", " ") | title }}</div>
+        <div class="suggestion-value">{{ s.suggested_value or "—" }}</div>
+        <div class="suggestion-actions">
+          <button class="chip chip-accept {% if s.accepted == true %}active{% endif %}"
+                  hx-patch="/api/email-suggestions/{{ s.id }}"
+                  hx-vals='{"accepted": true}'
+                  hx-target="#suggestion-{{ s.id }}"
+                  hx-swap="outerHTML">✓</button>
+          <button class="chip chip-reject"
+                  hx-patch="/api/email-suggestions/{{ s.id }}"
+                  hx-vals='{"accepted": false}'
+                  hx-target="#suggestion-{{ s.id }}"
+                  hx-swap="outerHTML">Skip</button>
+        </div>
+      </div>
+      {% endif %}{% endfor %}
+    </div>
+    {% endif %}
+
+    {% if not suggestions and email.status not in ["pending", "processing"] %}
+    <div class="no-suggestions">No suggestions extracted from this email.</div>
+    {% endif %}
+
+    {% if deal and deal.is_preliminary %}
+    <div class="warning-banner">
+      ⚠ Acquisition cost required before compute can run.
+      Complete deal setup to enable financial modeling.
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="action-bar">
+  <a href="/ui/email-inbox" class="btn btn-secondary">← Back to Inbox</a>
+  {% if deal and scenario %}
+  <a href="/models/{{ scenario.id }}/setup" class="btn btn-primary">
+    Continue to Deal Setup →
+  </a>
+  {% elif email.status == "deal_created" %}
+  <button class="btn btn-primary" disabled>Deal not ready</button>
+  {% endif %}
+</div>
+{% endblock %}

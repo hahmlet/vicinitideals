@@ -106,6 +106,14 @@ class Deal(Base):
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
+    is_preliminary: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=False, server_default="false"
+    )
+    inbound_email_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("inbound_emails.id", ondelete="SET NULL"),
+        nullable=True,
+    )
 
     # Relationships
     organization: Mapped["Organization"] = relationship(  # type: ignore[name-defined]
@@ -116,6 +124,11 @@ class Deal(Base):
     )
     scenarios: Mapped[list["Scenario"]] = relationship(
         "Scenario", back_populates="deal", cascade="all, delete-orphan"
+    )
+    inbound_email: Mapped["InboundEmail | None"] = relationship(  # type: ignore[name-defined]
+        "InboundEmail",
+        foreign_keys=[inbound_email_id],
+        back_populates="deal",
     )
 
 

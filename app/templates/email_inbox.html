@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Email Inbox — Viciniti Deals{% endblock %}
+
+{% block head %}
+<style>
+.inbox-table { width: 100%; border-collapse: collapse; }
+.inbox-table th { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 600; padding: 8px 12px; border-bottom: 1px solid var(--border); text-align: left; }
+.inbox-table td { padding: 10px 12px; border-bottom: 1px solid var(--border-light); font-size: 13px; vertical-align: middle; }
+.inbox-table tr:last-child td { border-bottom: none; }
+.inbox-table tr:hover td { background: var(--surface-hover); }
+.inbox-row { cursor: pointer; }
+.subject-cell { max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sender-cell { color: var(--text-muted); font-size: 12px; }
+.status-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge-pending { background: var(--surface-muted); color: var(--text-muted); }
+.badge-processing { background: #dbeafe; color: #1d4ed8; }
+.badge-deal_created { background: #dcfce7; color: #15803d; }
+.badge-failed { background: #fee2e2; color: #b91c1c; }
+.badge-spam { background: var(--surface-muted); color: var(--text-muted); }
+.attachment-chip { display: inline-flex; align-items: center; gap: 3px; font-size: 11px; padding: 2px 6px; border-radius: 4px; background: var(--surface-muted); color: var(--text-muted); }
+.empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+.empty-state-icon { font-size: 40px; margin-bottom: 12px; }
+.empty-state-title { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="topbar">
+  <div class="topbar-title">Email Inbox</div>
+</div>
+
+<div class="content">
+  <div class="card">
+    {% if emails %}
+    <table class="inbox-table">
+      <thead>
+        <tr>
+          <th>Subject</th>
+          <th>From</th>
+          <th>Received</th>
+          <th>Attachments</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for email in emails %}
+        <tr class="inbox-row" onclick="window.location='/ui/deals/email/{{ email.id }}/review'">
+          <td class="subject-cell">{{ email.subject or "(no subject)" }}</td>
+          <td class="sender-cell">{{ email.sender_email }}</td>
+          <td style="color:var(--text-muted);font-size:12px;white-space:nowrap">
+            {{ email.received_at.strftime("%b %d, %Y %I:%M %p") if email.received_at else "—" }}
+          </td>
+          <td>
+            {% for att in (email.attachments_meta or []) %}
+            <span class="attachment-chip">📎 {{ att.filename or "file" }}</span>
+            {% endfor %}
+          </td>
+          <td>
+            <span class="status-badge badge-{{ email.status }}">
+              {% if email.status == "pending" %}⏳ Pending
+              {% elif email.status == "processing" %}⚙ Processing
+              {% elif email.status == "deal_created" %}✓ Deal Created
+              {% elif email.status == "failed" %}✗ Failed
+              {% elif email.status == "spam" %}Spam
+              {% else %}{{ email.status }}
+              {% endif %}
+            </span>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+      <div class="empty-state-icon">📬</div>
+      <div class="empty-state-title">No emails yet</div>
+      <div>Emails sent to deals@viciniti.deals will appear here.</div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

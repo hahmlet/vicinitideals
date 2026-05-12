@@ -270,6 +270,10 @@ def create_app() -> FastAPI:
     from app.api.routers.tools import router as tools_router
     app.include_router(tools_router)
 
+    # Email ingest UI router — inbox and review pages, no /api prefix
+    from app.api.routers.email_ingest import ui_router as email_ingest_ui_router
+    app.include_router(email_ingest_ui_router)
+
     # Static files (CSS, etc.) — must be mounted after routes
     if _static_dir.exists():
         app.mount("/static", StaticFiles(directory=str(_static_dir)), name="static")

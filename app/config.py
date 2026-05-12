@@ -150,6 +150,13 @@ class Settings(BaseSettings):
     ollama_model: str = "qwen2.5:7b"
 
     # -------------------------------------------------------------------------
+    # Email ingest webhook
+    # -------------------------------------------------------------------------
+    # Shared secret sent by the Cloudflare Email Worker in X-Email-Ingest-Secret header.
+    # Generate with: openssl rand -hex 32
+    email_ingest_webhook_secret: str = "changeme-generate-with-openssl-rand-hex-32"
+
+    # -------------------------------------------------------------------------
     # Financial model defaults
     # -------------------------------------------------------------------------
     # Risk-free rate (10Y Treasury) used in the Spread Stack export KPIs.

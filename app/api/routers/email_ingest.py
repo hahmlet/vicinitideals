@@ -1,0 +1,226 @@
+"""Email ingest routes: webhook endpoint, inbox list, side-by-side review UI."""
+
+from __future__ import annotations
+
+import uuid
+from pathlib import Path
+from typing import Any
+
+from fastapi import APIRouter, HTTPException, Request, status
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+from sqlalchemy import select
+
+from app.api.deps import DBSession, CurrentUserId
+from app.config import settings
+
+# ---------------------------------------------------------------------------
+# Template setup (same dir as ui.py)
+# ---------------------------------------------------------------------------
+_PACKAGE_DIR = Path(__file__).resolve().parent.parent.parent
+_TEMPLATES_DIR = _PACKAGE_DIR / "templates"
+templates = Jinja2Templates(directory=str(_TEMPLATES_DIR))
+
+# ---------------------------------------------------------------------------
+# Two routers: api_router gets /api prefix via ROUTERS; ui_router has no prefix
+# ---------------------------------------------------------------------------
+router = APIRouter(tags=["email-ingest"], include_in_schema=False)
+ui_router = APIRouter(include_in_schema=False)
+
+
+# ===========================================================================
+# API routes (mounted at /api/...)
+# ===========================================================================
+
+@router.post("/email-ingest", status_code=status.HTTP_200_OK)
+async def receive_inbound_email(
+    request: Request,
+    session: DBSession,
+) -> dict[str, Any]:
+    """Cloudflare Email Worker webhook. Validates shared secret, creates InboundEmail row."""
+    secret = request.headers.get("X-Email-Ingest-Secret", "")
+    if secret != settings.email_ingest_webhook_secret:
+        raise HTTPException(status_code=403, detail="Invalid webhook secret")
+
+    body = await request.json()
+    sender = str(body.get("from", ""))
+    subject = body.get("subject") or None
+    raw_mime = body.get("rawMime") or None
+
+    from app.models.email_ingest import InboundEmail, InboundEmailStatus
+    from app.models.org import Organization
+
+    org_result = await session.execute(select(Organization).limit(1))
+    org = org_result.scalar_one_or_none()
+    if org is None:
+        raise HTTPException(status_code=500, detail="No organization configured")
+
+    email_row = InboundEmail(
+        id=uuid.uuid4(),
+        org_id=org.id,
+        sender_email=sender,
+        subject=subject,
+        raw_mime_b64=raw_mime,
+        status=InboundEmailStatus.pending.value,
+        proforma_task_ids=[],
+        attachments_meta=[],
+    )
+    session.add(email_row)
+    await session.commit()
+    await session.refresh(email_row)
+
+    from app.tasks.email_ingest import process_inbound_email  # noqa: PLC0415
+    process_inbound_email.delay(str(email_row.id))
+
+    return {"status": "accepted", "id": str(email_row.id)}
+
+
+@router.post("/email-suggestions/{suggestion_id}/accept")
+async def accept_suggestion(
+    suggestion_id: uuid.UUID,
+    current_user_id: CurrentUserId,
+    session: DBSession,
+) -> HTMLResponse:
+    """Mark a suggestion as accepted. Returns updated suggestion row HTML."""
+    return await _set_suggestion(suggestion_id, True, current_user_id, session)
+
+
+@router.post("/email-suggestions/{suggestion_id}/reject")
+async def reject_suggestion(
+    suggestion_id: uuid.UUID,
+    current_user_id: CurrentUserId,
+    session: DBSession,
+) -> HTMLResponse:
+    """Mark a suggestion as rejected. Returns updated suggestion row HTML."""
+    return await _set_suggestion(suggestion_id, False, current_user_id, session)
+
+
+async def _set_suggestion(
+    suggestion_id: uuid.UUID,
+    accepted: bool,
+    current_user_id: uuid.UUID,
+    session: Any,
+) -> HTMLResponse:
+    from app.models.deal import Deal
+    from app.models.email_ingest import EmailDealSuggestion
+
+    suggestion = await session.get(EmailDealSuggestion, suggestion_id)
+    if suggestion is None:
+        raise HTTPException(status_code=404, detail="Suggestion not found")
+
+    deal = await session.get(Deal, suggestion.deal_id)
+    if deal is None or deal.org_id != (await _get_user_org(session, current_user_id)):
+        raise HTTPException(status_code=404, detail="Suggestion not found")
+
+    suggestion.accepted = accepted
+    await session.commit()
+
+    accepted_class = "active" if accepted else ""
+    return HTMLResponse(
+        f'<div class="suggestion-row" id="suggestion-{suggestion_id}" '
+        f'style="opacity:{0.6 if not accepted else 1}">'
+        f'<div class="suggestion-label">{suggestion.field_path.replace("_", " ").title()}</div>'
+        f'<div class="suggestion-value">{suggestion.suggested_value or "—"}</div>'
+        f'<div class="suggestion-actions">'
+        f'<span class="chip chip-accept {accepted_class}">{"✓ Accepted" if accepted else "✓ Accept"}</span>'
+        f'</div></div>'
+    )
+
+
+# ===========================================================================
+# UI routes (no /api prefix)
+# ===========================================================================
+
+@ui_router.get("/ui/email-inbox", response_class=HTMLResponse)
+async def email_inbox(
+    request: Request,
+    current_user_id: CurrentUserId,
+    session: DBSession,
+) -> HTMLResponse:
+    """Email inbox — lists all inbound emails for the org."""
+    from app.api.routers.ui import _base_ctx, _get_counts  # noqa: PLC0415
+    from app.models.email_ingest import InboundEmail
+    from app.models.org import User
+
+    user = await session.get(User, current_user_id)
+    if user is None:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+
+    dedup_count, conflicts_count = await _get_counts(session)
+
+    result = await session.execute(
+        select(InboundEmail)
+        .where(InboundEmail.org_id == user.org_id)
+        .order_by(InboundEmail.received_at.desc())
+        .limit(100)
+    )
+    emails = result.scalars().all()
+
+    ctx = _base_ctx(user, dedup_count, "email_inbox", conflicts_count=conflicts_count)
+    ctx.update({"emails": emails})
+
+    return templates.TemplateResponse(request, "email_inbox.html", ctx)
+
+
+@ui_router.get("/ui/deals/email/{inbound_email_id}/review", response_class=HTMLResponse)
+async def email_deal_review(
+    request: Request,
+    inbound_email_id: uuid.UUID,
+    current_user_id: CurrentUserId,
+    session: DBSession,
+) -> HTMLResponse:
+    """Side-by-side review: source email on left, extracted deal fields on right."""
+    from app.api.routers.ui import _base_ctx, _get_counts  # noqa: PLC0415
+    from app.models.deal import Deal
+    from app.models.email_ingest import EmailDealSuggestion, InboundEmail
+    from app.models.org import User
+
+    user = await session.get(User, current_user_id)
+    if user is None:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+
+    email_row = await session.get(InboundEmail, inbound_email_id)
+    if email_row is None or email_row.org_id != user.org_id:
+        raise HTTPException(status_code=404, detail="Email not found")
+
+    dedup_count, conflicts_count = await _get_counts(session)
+
+    suggestions_result = await session.execute(
+        select(EmailDealSuggestion)
+        .where(EmailDealSuggestion.inbound_email_id == inbound_email_id)
+        .order_by(EmailDealSuggestion.field_path)
+    )
+    suggestions = suggestions_result.scalars().all()
+
+    deal = None
+    scenario = None
+    if email_row.deal_id:
+        from sqlalchemy.orm import selectinload  # noqa: PLC0415
+
+        deal = await session.get(
+            Deal,
+            email_row.deal_id,
+            options=[selectinload(Deal.scenarios)],
+        )
+        if deal and deal.scenarios:
+            scenario = deal.scenarios[0]
+
+    ctx = _base_ctx(user, dedup_count, "email_inbox", conflicts_count=conflicts_count)
+    ctx.update({
+        "email": email_row,
+        "deal": deal,
+        "scenario": scenario,
+        "suggestions": suggestions,
+    })
+
+    return templates.TemplateResponse(request, "email_deal_review.html", ctx)
+
+
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
+
+async def _get_user_org(session: Any, user_id: uuid.UUID) -> uuid.UUID | None:
+    from app.models.org import User
+    user = await session.get(User, user_id)
+    return user.org_id if user else None
