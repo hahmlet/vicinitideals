@@ -10,6 +10,19 @@
     <div style="font-size:12px;color:var(--text-muted)">Step 1 — Pro Forma Import — <strong style="color:var(--accent)">Select Sheets</strong></div>
   </div>
 
+  <style>
+    .sheet-option {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px;
+      cursor: pointer; transition: border-color .15s, background .15s;
+    }
+    .sheet-option:hover { border-color: var(--accent); }
+    .sheet-option:has(input:checked) {
+      border-color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 5%, var(--bg));
+    }
+  </style>
+
   <div class="wizard-card">
     <div class="wizard-header">
       <div class="wizard-title">Which sheets?</div>
@@ -29,13 +42,9 @@
           <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em">Revenue / Rent Roll Sheet</label>
           <div style="display:flex;flex-direction:column;gap:6px">
             {% for name in sheet_names %}
-            <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:border-color .15s"
-                   onmouseover="this.style.borderColor='var(--accent)'"
-                   onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='var(--border)'"
-                   id="rev-label-{{ loop.index }}">
+            <label class="sheet-option">
               <input type="radio" name="revenue_sheet" value="{{ name }}"
-                     {% if loop.first %}checked{% endif %}
-                     onchange="highlightSelected('rev',{{ loop.index }},{{ sheet_names|length }})">
+                     {% if loop.first %}checked{% endif %}>
               <div>
                 <div style="font-weight:600;font-size:13px">{{ name }}</div>
                 {% if sheet_columns[name] %}
@@ -52,11 +61,10 @@
           <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em">Operating Expense Sheet</label>
           <div style="display:flex;flex-direction:column;gap:6px">
             {% for name in sheet_names %}
-            <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:border-color .15s"
-                   id="opex-label-{{ loop.index }}">
+            <label class="sheet-option">
               <input type="radio" name="opex_sheet" value="{{ name }}"
                      {% if loop.index == 2 or (sheet_names|length == 1 and loop.first) %}checked{% endif %}
-                     onchange="highlightSelected('opex',{{ loop.index }},{{ sheet_names|length }});showColumnPicker('{{ name }}', {{ sheet_columns[name]|tojson }})">
+                     onchange="showColumnPicker('{{ name }}', {{ sheet_columns[name]|tojson }})">
               <div>
                 <div style="font-weight:600;font-size:13px">{{ name }}</div>
                 {% if sheet_columns[name] %}
@@ -102,16 +110,6 @@
 </div>
 
 <script>
-function highlightSelected(prefix, idx, total) {
-  for (let i = 1; i <= total; i++) {
-    const el = document.getElementById(prefix + '-label-' + i);
-    if (!el) continue;
-    const checked = el.querySelector('input').checked;
-    el.style.borderColor = checked ? 'var(--accent)' : 'var(--border)';
-    el.style.background = checked ? 'color-mix(in srgb,var(--accent) 5%,var(--bg))' : '';
-  }
-}
-
 function showColumnPicker(sheetName, columns) {
   // Identify numeric-looking columns (skip the first — assume it's the label column)
   const numeric = columns.slice(1).filter(c => c && c.trim() !== '');
@@ -131,11 +129,4 @@ function showColumnPicker(sheetName, columns) {
   }
 }
 
-// Init highlight state on load
-document.querySelectorAll('input[name="revenue_sheet"]').forEach((input, i) => {
-  if (input.checked) highlightSelected('rev', i+1, document.querySelectorAll('input[name="revenue_sheet"]').length);
-});
-document.querySelectorAll('input[name="opex_sheet"]').forEach((input, i) => {
-  if (input.checked) highlightSelected('opex', i+1, document.querySelectorAll('input[name="opex_sheet"]').length);
-});
 </script>

@@ -76,6 +76,18 @@
         {# ── REVENUE / UNIT MIX ───────────────────────────────────── #}
         {% if unit_types %}
         <div class="section-label">Revenue — Unit Mix</div>
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:10px;font-size:12px;color:var(--text-muted);flex-wrap:wrap">
+          <span>Imported rents represent:</span>
+          <label style="display:inline-flex;align-items:center;gap:5px;cursor:pointer">
+            <input type="radio" name="rent_type" value="in_place" checked>
+            <span>In-place rent</span>
+          </label>
+          <label style="display:inline-flex;align-items:center;gap:5px;cursor:pointer">
+            <input type="radio" name="rent_type" value="market">
+            <span>Market rent</span>
+          </label>
+          <span style="font-size:11px;opacity:.7">(Set the other later for LTL catchup)</span>
+        </div>
         <table class="review-table">
           <colgroup>
             <col style="width:20px">

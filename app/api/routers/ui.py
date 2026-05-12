@@ -10656,6 +10656,9 @@ async def proforma_confirm(
     sqfts = form.getlist("unit_type_sqft[]")
     rents = form.getlist("unit_type_rent[]")
 
+    rent_type = (form.get("rent_type") or "in_place").strip().lower()
+    rent_field = "market_rent_per_unit" if rent_type == "market" else "in_place_rent_per_unit"
+
     if names:
         proj_result = await session.execute(
             select(Project).where(Project.id == project_id)
@@ -10667,15 +10670,17 @@ async def proforma_confirm(
             if not name:
                 continue
             try:
-                unit_mix_rows.append({
+                row = {
                     "label": name,
                     "unit_count": int((count_s or "0").replace(",", "")),
-                    "sqft": float((sqft_s or "0").replace(",", "")),
-                    "rent_monthly": float((rent_s or "0").replace(",", "")),
+                    "avg_sqft": float((sqft_s or "0").replace(",", "")),
                     "beds": None,
                     "baths": None,
+                    "unit_strategy": "base_escalation",
                     "notes": None,
-                })
+                }
+                row[rent_field] = float((rent_s or "0").replace(",", ""))
+                unit_mix_rows.append(row)
             except Exception:
                 pass
         if unit_mix_rows:
@@ -10691,7 +10696,7 @@ async def proforma_confirm(
                 delete(IncomeStream).where(IncomeStream.project_id == project_id)
             )
             for row in unit_mix_rows:
-                rent = Decimal(str(row.get("rent_monthly") or 0))
+                rent = Decimal(str(row.get(rent_field) or 0))
                 count = int(row.get("unit_count") or 0)
                 if count <= 0:
                     continue
