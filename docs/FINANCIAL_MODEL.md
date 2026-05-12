@@ -1,4 +1,4 @@
-# Vicinitideals Financial Model — Math, Assumptions, and Justification
+﻿# Vicinitideals Financial Model — Math, Assumptions, and Justification
 
 **Purpose.** This document is the source of truth for every formula the cashflow and waterfall engines use. If someone asks "what is this math based on?", the answer lives here. Each section gives:
 
@@ -1072,6 +1072,7 @@ All expense lines carry a `category` label drawn from `STANDARD_OPEX_CATEGORIES`
 |---|---|
 | Real Estate Taxes | Property tax, special assessments |
 | Insurance | Property & liability premiums |
+| Jurisdiction Fees | Municipal levies — Gresham Police/Fire/Parks, city assessments |
 | Property Management | On-site and off-site management fees |
 | Utilities — Water/Sewer | Water, sewer, stormwater |
 | Utilities — Electric | Common-area and unit electric |
@@ -1086,7 +1087,7 @@ All expense lines carry a `category` label drawn from `STANDARD_OPEX_CATEGORIES`
 | Cleaning & Janitorial | Common-area cleaning |
 | Security | Security monitoring, guard service |
 | Resident Services | Tenant events, social services, resident programming |
-| Compliance & Legal | Legal fees, professional fees, licenses |
+| Legal | Legal fees, professional fees, licenses |
 | Source Compliance | Funder monitoring fees — LIFT, OHCS, bond covenant reporting, HUD compliance |
 | Bank/Software Fees | Bank service charges, property management software |
 | Unit Turnover | Turnover cleaning, paint, minor repairs between tenants |

@@ -80,12 +80,20 @@
       </div>
 
       <div class="wizard-footer">
-        <a hx-get="/ui/models/{{ model_id }}/proforma-skip"
-           hx-target="#deal-setup-wizard"
-           hx-swap="outerHTML"
-           style="font-size:12px;color:var(--text-muted);cursor:pointer;text-decoration:none">
-          Skip import →
-        </a>
+        <div style="display:flex;gap:16px;align-items:center">
+          <a hx-get="/ui/models/{{ model_id }}/proforma-restart"
+             hx-target="#deal-setup-wizard"
+             hx-swap="outerHTML"
+             style="font-size:12px;color:var(--text-muted);cursor:pointer;text-decoration:none">
+            ← Change file
+          </a>
+          <a hx-get="/ui/models/{{ model_id }}/proforma-skip"
+             hx-target="#deal-setup-wizard"
+             hx-swap="outerHTML"
+             style="font-size:12px;color:var(--text-muted);cursor:pointer;text-decoration:none">
+            Skip import →
+          </a>
+        </div>
         <button type="submit" class="btn btn-primary">Analyze →</button>
       </div>
     </form>

@@ -999,6 +999,7 @@ Defined in `app/models/deal.py`. The investor export groups `OperatingExpenseLin
 |---|---|
 | Real Estate Taxes | Property tax, special assessments |
 | Insurance | Property & liability premiums |
+| Jurisdiction Fees | Municipal levies — Gresham Police/Fire/Parks, city assessments |
 | Property Management | On-site and off-site management fees |
 | Utilities — Water/Sewer | |
 | Utilities — Electric | |
@@ -1013,7 +1014,7 @@ Defined in `app/models/deal.py`. The investor export groups `OperatingExpenseLin
 | Cleaning & Janitorial | |
 | Security | |
 | Resident Services | Tenant events, social services |
-| Compliance & Legal | Legal fees, licenses, professional fees |
+| Legal | Legal fees, professional fees, licenses |
 | Source Compliance | Funder monitoring — LIFT, OHCS, bond covenant, HUD compliance |
 | Bank/Software Fees | Bank charges, PM software |
 | Unit Turnover | Between-tenant make-ready costs |

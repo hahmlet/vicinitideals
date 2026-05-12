@@ -10508,6 +10508,16 @@ async def proforma_preflight(
     )
 
 
+@router.get("/ui/models/{model_id}/proforma-restart", response_class=HTMLResponse)
+async def proforma_restart(request: Request, model_id: UUID) -> HTMLResponse:
+    """Return the file upload step so the user can upload a different file."""
+    return templates.TemplateResponse(
+        request,
+        "partials/proforma_upload_step.html",
+        {"model_id": model_id},
+    )
+
+
 @router.post("/ui/models/{model_id}/upload-proforma", response_class=HTMLResponse)
 async def upload_proforma(
     request: Request,
