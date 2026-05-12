@@ -105,6 +105,8 @@ _DEBT_KEYWORDS: frozenset[str] = frozenset({
     "total income", "total expenses", "total other", "net income",
     "net operating", "subtotal", "total revenue", "utilities total",
     "total utilities", "total opex",
+    "reserves", "capital reserve", "replacement reserve",
+    "ar writeoff", "bad debt",
 })
 
 _EXCLUDE_ROW_PREFIXES: tuple[str, ...] = (
@@ -124,16 +126,100 @@ def _is_debt_or_total(label: str) -> bool:
     return False
 
 
-def _snap_category(raw: str | None) -> str | None:
-    """Fuzzy-snap a raw LLM category string to the nearest STANDARD_OPEX_CATEGORIES entry.
+# Keyword → canonical category overrides.  Applied before fuzzy match so we
+# catch verbose LLM outputs (e.g. "Maintenance and Repair", "Waste Management",
+# "Advertising and Marketing") that share only one token with the canonical
+# category name and so fall under the fuzzy threshold.  Each keyword is
+# substring-matched against the lowercase raw label; first hit wins.
+_CATEGORY_KEYWORDS: tuple[tuple[str, str], ...] = (
+    ("electric",     "Utilities — Electric"),
+    ("gas",          "Utilities — Gas"),
+    ("water",        "Utilities — Water/Sewer"),
+    ("sewer",        "Utilities — Water/Sewer"),
+    ("trash",        "Utilities — Trash"),
+    ("garbage",      "Utilities — Trash"),
+    ("waste",        "Utilities — Trash"),
+    ("turnover",     "Unit Turnover"),
+    ("make ready",   "Unit Turnover"),
+    ("make-ready",   "Unit Turnover"),
+    ("repair",       "Repairs & Maintenance"),
+    ("maint",        "Repairs & Maintenance"),
+    ("landscap",     "Landscaping & Snow Removal"),
+    ("snow",         "Landscaping & Snow Removal"),
+    ("ground",       "Landscaping & Snow Removal"),
+    ("advertis",     "Marketing & Leasing"),
+    ("market",       "Marketing & Leasing"),
+    ("leasing",      "Marketing & Leasing"),
+    ("payroll",      "Payroll"),
+    ("salary",       "Payroll"),
+    ("wage",         "Payroll"),
+    ("pest",         "Pest Control"),
+    ("insurance",    "Insurance"),
+    ("real estate tax", "Real Estate Taxes"),
+    ("property tax", "Real Estate Taxes"),
+    ("prop mgmt",    "Property Management"),
+    ("property management", "Property Management"),
+    ("professional management", "Property Management"),
+    ("on-site mgmt", "Property Management"),
+    ("off-site mgmt", "Property Management"),
+    ("office",       "Administrative"),
+    ("admin",        "Administrative"),
+    ("phone",        "Bank/Software Fees"),
+    ("internet",     "Bank/Software Fees"),
+    ("software",     "Bank/Software Fees"),
+    ("computer",     "Bank/Software Fees"),
+    ("bank",         "Bank/Software Fees"),
+    ("financing charge", "Bank/Software Fees"),
+    ("tenant event", "Resident Services"),
+    ("resident",     "Resident Services"),
+    ("security",     "Security"),
+    ("fire monitor", "Security"),
+    ("compliance",   "Source Compliance"),
+    ("lift monit",   "Source Compliance"),
+    ("ohcs",         "Source Compliance"),
+    ("hud monit",    "Source Compliance"),
+    ("legal",        "Legal"),
+    ("accounting",   "Legal"),
+    ("audit",        "Legal"),
+    ("cpa",          "Legal"),
+    ("license",      "Legal"),
+    ("professional fee", "Legal"),
+    ("police",       "Jurisdiction Fees"),
+    ("parks levy",   "Jurisdiction Fees"),
+    ("municipal",    "Jurisdiction Fees"),
+    ("jurisdiction", "Jurisdiction Fees"),
+)
 
-    Normalises both sides to lowercase ASCII (strips em-dashes, ampersands, etc.)
-    then picks the best token-overlap match.  Returns None if no candidate
-    scores above the 0.40 threshold (lets truly unmappable rows stay null).
+
+def _snap_category(raw: str | None) -> str | None:
+    """Snap a raw LLM category string to the nearest STANDARD_OPEX_CATEGORIES entry.
+
+    Tries three strategies in order:
+    1. Exact match against the canonical list (already correct, no-op snap).
+    2. Substring keyword override (handles verbose LLM phrasings like
+       "Maintenance and Repair" → Repairs & Maintenance).
+    3. Token-overlap fuzzy match with a 0.30 threshold (last resort).
+
+    Returns None if nothing scores; the caller treats null as "needs human review".
     """
     if raw is None:
         return None
 
+    raw_stripped = raw.strip()
+    if not raw_stripped:
+        return None
+
+    # 1. Exact canonical match
+    if raw_stripped in STANDARD_OPEX_CATEGORIES:
+        return raw_stripped
+
+    # 2. Keyword override (substring on lowercased raw)
+    lower = raw_stripped.lower()
+    for kw, cat in _CATEGORY_KEYWORDS:
+        if kw in lower:
+            return cat
+
+    # 3. Token-overlap fuzzy fallback
     import re
 
     def _norm(s: str) -> set[str]:
@@ -141,7 +227,7 @@ def _snap_category(raw: str | None) -> str | None:
         s = re.sub(r"[^a-z0-9 ]", " ", s)
         return set(s.split())
 
-    raw_tokens = _norm(raw)
+    raw_tokens = _norm(raw_stripped)
     if not raw_tokens:
         return None
 
@@ -157,14 +243,17 @@ def _snap_category(raw: str | None) -> str | None:
             best_score = score
             best_cat = cat
 
-    return best_cat if best_score >= 0.40 else None
+    return best_cat if best_score >= 0.30 else None
 
 
 def _postprocess_expense_lines(lines: list[dict]) -> list[dict]:
     """Apply deterministic rules on top of the LLM output.
 
-    - Snap mapped_category to canonical spelling via fuzzy match
-    - Force is_operating_expense=False for debt/total rows regardless of LLM
+    - Snap the original spreadsheet label first (ground truth from the file);
+      fall back to the LLM's mapped_category only when the label has no
+      recognisable keyword.  This guards against LLM hallucinations like
+      "Landscaping" → "Maintenance and Repair".
+    - Force is_operating_expense=False for debt/total/reserve rows regardless of LLM
     - Round annual_amount to nearest whole dollar
     - Keep all rows (capture is essential even when unmappable)
     """
@@ -173,7 +262,9 @@ def _postprocess_expense_lines(lines: list[dict]) -> list[dict]:
         label = line.get("original_label", "")
         if _is_debt_or_total(label):
             line["is_operating_expense"] = False
-        snapped = _snap_category(line.get("mapped_category"))
+        snapped = _snap_category(label) if label else None
+        if snapped is None:
+            snapped = _snap_category(line.get("mapped_category"))
         line["mapped_category"] = snapped
         try:
             line["annual_amount"] = round(float(line.get("annual_amount", 0)))
@@ -284,6 +375,73 @@ def _markitdown_to_text(content: bytes, filename: str) -> str:
                 pass
 
 
+def build_revenue_prompt(text: str) -> str:
+    """Construct the LLM prompt for revenue / unit-mix extraction.
+
+    Shared with scripts/dry_run_proforma_doc.py so dry runs and the
+    production Celery task stay in sync.
+    """
+    return (
+        "You are a real estate financial analyst. The following is tabular data from a "
+        "spreadsheet's revenue or rent-roll sheet. Group the units into distinct unit types "
+        "(e.g. Studio, 1BR, 2BR, or developer-named types like 'Tower Small'). "
+        "For each type, return the count, average square footage, and average gross monthly rent. "
+        "If the sheet is a unit-by-unit roll (individual unit numbers), group similar-sized units. "
+        "Only return actual residential or commercial units — exclude parking, storage, laundry, "
+        "and ancillary income rows.\n\n"
+        f"SHEET DATA:\n{text}"
+    )
+
+
+def build_opex_prompt(text: str) -> str:
+    """Construct the LLM prompt for OpEx extraction + category mapping.
+
+    Shared with scripts/dry_run_proforma_doc.py.
+    """
+    categories_str = "\n".join(f"- {c}" for c in STANDARD_OPEX_CATEGORIES)
+    return (
+        "You are a real estate financial analyst. The following is tabular data from a "
+        "spreadsheet's operating expense sheet.\n\n"
+        "RULES — follow exactly:\n"
+        "1. Return EVERY labeled expense row in the sheet, even if you cannot map it. "
+        "Do not skip rows or merge rows together.\n"
+        "2. For each row, extract the annual dollar amount. "
+        "If the sheet shows monthly columns, sum them to get the annual total. "
+        "If a TOTAL or annual column is present, use that instead.\n"
+        "3. Map each label to EXACTLY one category from the STANDARD CATEGORIES list below. "
+        "Copy the category name character-for-character including dashes and special characters. "
+        "Set mapped_category=null ONLY if none of the standard categories fit at all.\n"
+        "4. Set is_operating_expense=false for: debt service, mortgage interest, "
+        "depreciation, loan fee amortization, principal payments, income tax — these are NOT OpEx. "
+        "Also exclude subtotal/total rows and income rows.\n"
+        "5. Set confidence 0.85–1.0 for obvious matches, 0.60–0.84 for reasonable guesses, "
+        "below 0.60 when unsure.\n\n"
+        f"STANDARD CATEGORIES (use exact spelling):\n{categories_str}\n\n"
+        "Mapping hints:\n"
+        "- 'LIFT Monitoring', 'OHCS', 'bond compliance', 'HUD monitoring' -> Source Compliance\n"
+        "- 'Prop Mgmt', 'On-Site Mgmt', 'Off-Site Mgmt', 'Professional Management' -> Property Management\n"
+        "- 'RE Taxes', 'Real Estate Tax', 'Property Tax' -> Real Estate Taxes\n"
+        "- 'Gresham Police Fire Parks', 'Municipal assessment', 'Police', 'Fire', 'Parks levy' -> Jurisdiction Fees\n"
+        "- 'Accounting', 'CPA', 'Audit', 'Professional Fees', 'Legal', 'Licenses' -> Legal\n"
+        "- 'Bank', 'NSF', 'Financing charges', 'Computer', 'Software', 'Internet', 'Phone/Internet' -> Bank/Software Fees\n"
+        "- 'Office Supplies', 'Office/Admin', 'Administrative' -> Administrative\n"
+        "- 'Tenant Events', 'Resident Activities' -> Resident Services\n"
+        "- 'Fire Monitoring', 'Security System' -> Security\n"
+        "- 'Garbage', 'Trash', 'Waste' -> Utilities — Trash\n"
+        "- 'Electricity', 'Electric' -> Utilities — Electric\n"
+        "- 'Gas', 'Natural Gas' -> Utilities — Gas\n"
+        "- 'Water', 'Sewer', 'Water/Sewer' -> Utilities — Water/Sewer\n"
+        "- 'Advertising', 'Marketing', 'Promotion' -> Marketing & Leasing\n"
+        "- 'Landscaping', 'Snow Removal', 'Grounds' -> Landscaping & Snow Removal\n"
+        "- 'Maint/Repair', 'Maintenance', 'Repairs' -> Repairs & Maintenance\n"
+        "- 'Payroll', 'Wages', 'Salaries' -> Payroll\n"
+        "- 'Turnover', 'Make-ready', 'Unit Turn' -> Unit Turnover\n"
+        "- 'Reserves', 'Capital Reserves', 'Replacement Reserves' -> set is_operating_expense=false\n"
+        "- 'AR Writeoffs', 'Bad Debt', 'Receivables' -> set is_operating_expense=false\n\n"
+        f"SHEET DATA:\n{text}"
+    )
+
+
 def _llm_client() -> Any:
     """Return an instructor-patched OpenAI client pointed at local Ollama."""
     import instructor  # type: ignore
@@ -360,16 +518,7 @@ def parse_proforma(
 
         if revenue_text:
             try:
-                rev_prompt = (
-                    "You are a real estate financial analyst. The following is tabular data from a "
-                    "spreadsheet's revenue or rent-roll sheet. Group the units into distinct unit types "
-                    "(e.g. Studio, 1BR, 2BR, or developer-named types like 'Tower Small'). "
-                    "For each type, return the count, average square footage, and average gross monthly rent. "
-                    "If the sheet is a unit-by-unit roll (individual unit numbers), group similar-sized units. "
-                    "Only return actual residential or commercial units — exclude parking, storage, laundry, "
-                    "and ancillary income rows.\n\n"
-                    f"SHEET DATA:\n{revenue_text}"
-                )
+                rev_prompt = build_revenue_prompt(revenue_text)
                 parsed_rev: ParsedRevenue = client.chat.completions.create(
                     model=settings.ollama_model,
                     response_model=ParsedRevenue,
@@ -387,40 +536,8 @@ def parse_proforma(
         expense_lines: list[dict] = []
 
         if opex_text:
-            categories_str = "\n".join(f"- {c}" for c in STANDARD_OPEX_CATEGORIES)
             try:
-                opex_prompt = (
-                    "You are a real estate financial analyst. The following is tabular data from a "
-                    "spreadsheet's operating expense sheet.\n\n"
-                    "RULES — follow exactly:\n"
-                    "1. Return EVERY labeled expense row in the sheet, even if you cannot map it. "
-                    "Do not skip rows or merge rows together.\n"
-                    "2. For each row, extract the annual dollar amount. "
-                    "If the sheet shows monthly columns, sum them to get the annual total. "
-                    "If a TOTAL or annual column is present, use that instead.\n"
-                    "3. Map each label to EXACTLY one category from the STANDARD CATEGORIES list below. "
-                    "Copy the category name character-for-character including dashes and special characters. "
-                    "Set mapped_category=null ONLY if none of the standard categories fit at all.\n"
-                    "4. Set is_operating_expense=false for: debt service, mortgage interest, "
-                    "depreciation, loan fee amortization, principal payments, income tax — these are NOT OpEx. "
-                    "Also exclude subtotal/total rows and income rows.\n"
-                    "5. Set confidence 0.85–1.0 for obvious matches, 0.60–0.84 for reasonable guesses, "
-                    "below 0.60 when unsure.\n\n"
-                    f"STANDARD CATEGORIES (use exact spelling):\n{categories_str}\n\n"
-                    "Mapping hints:\n"
-                    "- 'LIFT Monitoring', 'OHCS', 'bond compliance', 'HUD monitoring' -> Source Compliance\n"
-                    "- 'Prop Mgmt', 'On-Site Mgmt', 'Off-Site Mgmt' -> Property Management\n"
-                    "- 'RE Taxes', 'Real Estate Tax', 'Property Tax' -> Real Estate Taxes\n"
-                    "- 'Gresham Police Fire Parks', 'Municipal assessment', 'Police', 'Fire', 'Parks levy' -> Jurisdiction Fees\n"
-                    "- 'Accounting', 'CPA', 'Audit', 'Professional Fees', 'Legal', 'Licenses' -> Legal\n"
-                    "- 'Bank', 'NSF', 'Financing charges', 'Computer', 'Software', 'Internet' -> Bank/Software Fees\n"
-                    "- 'Office Supplies', 'Administrative' -> Administrative\n"
-                    "- 'Tenant Events', 'Resident Activities' -> Resident Services\n"
-                    "- 'Fire Monitoring', 'Security System' -> Security\n"
-                    "- 'Garbage', 'Trash', 'Waste' -> Utilities — Trash\n"
-                    "- 'AR Writeoffs', 'Bad Debt', 'Receivables' -> set is_operating_expense=false\n\n"
-                    f"SHEET DATA:\n{opex_text}"
-                )
+                opex_prompt = build_opex_prompt(opex_text)
                 parsed_exp: ParsedExpenses = client.chat.completions.create(
                     model=settings.ollama_model,
                     response_model=ParsedExpenses,
