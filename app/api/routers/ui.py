@@ -3124,6 +3124,7 @@ async def opportunity_wizard_step(
                 name=name,
                 notes=notes,
                 source="manual",
+                source_url="",
                 promotion_source="manual",
                 created_by_user_id=user.id if user else None,
             )
