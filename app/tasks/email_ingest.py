@@ -89,7 +89,65 @@ def _llm_client() -> Any:
     return instructor.from_openai(raw, mode=instructor.Mode.JSON)
 
 
-def _extract_deal_info(
+_STEP_TIMEOUT_SECONDS = 60.0
+_GPU_CHECK_DELAY_SECONDS = 3.0
+
+
+async def _gpu_inflight_check(log: list[str] | None) -> None:
+    """Sleep briefly, then snapshot Ollama running models to confirm GPU usage.
+
+    Ollama's /api/ps returns each loaded model's ``size`` and ``size_vram``.
+    If ``size_vram == 0`` the model is running on CPU (slow path, common cause
+    of timeouts). If /api/ps returns no models, the call is still queued or
+    something upstream failed.
+    """
+    import traceback
+    from datetime import UTC, datetime
+
+    def _emit(msg: str) -> None:
+        line = f"[{datetime.now(UTC).isoformat()}] {msg}"
+        logger.info(line)
+        if log is not None:
+            log.append(line)
+
+    try:
+        import asyncio as _asyncio
+        await _asyncio.sleep(_GPU_CHECK_DELAY_SECONDS)
+        import httpx
+        async with httpx.AsyncClient(timeout=5.0) as client:
+            resp = await client.get(f"{settings.ollama_base_url.rstrip('/')}/api/ps")
+            if resp.status_code != 200:
+                _emit(f"GPU check: /api/ps returned status {resp.status_code}")
+                return
+            models = (resp.json() or {}).get("models", [])
+            if not models:
+                _emit(
+                    "GPU check: Ollama /api/ps returned no loaded models — "
+                    "call may still be queued or model unload happened"
+                )
+                return
+            for m in models:
+                name = m.get("name") or m.get("model")
+                size = m.get("size") or 0
+                vram = m.get("size_vram") or 0
+                pct_gpu = (vram / size * 100) if size else 0
+                where = "GPU" if vram > 0 else "CPU (NO GPU)"
+                _emit(
+                    f"GPU check: model={name} size={size:,}B vram={vram:,}B "
+                    f"({pct_gpu:.0f}% on GPU) -> running_on={where}"
+                )
+                if vram == 0:
+                    _emit(
+                        "  >> WARNING: model is on CPU, not GPU. Inference will be "
+                        "10-50x slower and likely to exceed the step timeout."
+                    )
+    except Exception as exc:
+        _emit(f"GPU check: failed: {type(exc).__name__}: {exc}")
+        if log is not None:
+            log.append(traceback.format_exc())
+
+
+def _extract_deal_info_sync(
     subject: str | None,
     body: str | None,
     log: list[str] | None = None,
@@ -175,6 +233,55 @@ def _extract_deal_info(
         if log is not None:
             log.append(traceback.format_exc())
         return ExtractedDealInfo()
+
+
+async def _extract_deal_info(
+    subject: str | None,
+    body: str | None,
+    log: list[str] | None = None,
+) -> ExtractedDealInfo:
+    """Async wrapper: run the LLM extraction with a 60s timeout and a parallel GPU check.
+
+    The sync ``_extract_deal_info_sync`` is dispatched to a worker thread so we
+    can enforce the timeout cooperatively. The GPU check runs as a sibling task
+    so it lands in the same debug log regardless of whether the LLM call
+    succeeded, failed, or hung.
+    """
+    import traceback
+    from datetime import UTC, datetime
+
+    def _emit(msg: str) -> None:
+        line = f"[{datetime.now(UTC).isoformat()}] {msg}"
+        logger.info(line)
+        if log is not None:
+            log.append(line)
+
+    gpu_task = asyncio.create_task(_gpu_inflight_check(log))
+    try:
+        result = await asyncio.wait_for(
+            asyncio.to_thread(_extract_deal_info_sync, subject, body, log),
+            timeout=_STEP_TIMEOUT_SECONDS,
+        )
+        return result
+    except asyncio.TimeoutError:
+        _emit(
+            f"FAIL: LLM extraction exceeded {_STEP_TIMEOUT_SECONDS:.0f}s timeout. "
+            "Common causes: model running on CPU (see GPU check above), "
+            "Ollama process unresponsive, or request stuck waiting on model load."
+        )
+        return ExtractedDealInfo()
+    except Exception as exc:
+        _emit(f"FAIL: LLM extraction wrapper error: {type(exc).__name__}: {exc}")
+        if log is not None:
+            log.append(traceback.format_exc())
+        return ExtractedDealInfo()
+    finally:
+        # Make sure the GPU check finished and got its lines into the log
+        try:
+            await asyncio.wait_for(gpu_task, timeout=10.0)
+        except (asyncio.TimeoutError, Exception):
+            if not gpu_task.done():
+                gpu_task.cancel()
 
 
 # ---------------------------------------------------------------------------
@@ -316,8 +423,17 @@ async def _process_async(inbound_email_id: str, resend_email_id: str) -> None:
             debug_log.append(f"inbound_email_id={inbound_email_id}")
             debug_log.append(f"resend_email_id={resend_email_id}")
 
-            # --- Fetch raw MIME from Resend ---
-            raw_mime_b64 = await _fetch_resend_raw_mime(resend_email_id, log=debug_log)
+            # --- Fetch raw MIME from Resend (60s ceiling) ---
+            try:
+                raw_mime_b64 = await asyncio.wait_for(
+                    _fetch_resend_raw_mime(resend_email_id, log=debug_log),
+                    timeout=_STEP_TIMEOUT_SECONDS,
+                )
+            except asyncio.TimeoutError:
+                raw_mime_b64 = None
+                debug_log.append(
+                    f"FAIL: Resend MIME fetch exceeded {_STEP_TIMEOUT_SECONDS:.0f}s timeout"
+                )
             email_row.raw_mime_b64 = raw_mime_b64
 
             # --- Parse MIME ---
@@ -337,8 +453,8 @@ async def _process_async(inbound_email_id: str, resend_email_id: str) -> None:
             email_row.attachments_meta = attachments_meta
             await session.commit()
 
-            # --- LLM extraction ---
-            info = _extract_deal_info(email_row.subject, body_text, log=debug_log)
+            # --- LLM extraction (60s timeout + parallel GPU usage check) ---
+            info = await _extract_deal_info(email_row.subject, body_text, log=debug_log)
 
             # --- Resolve org ---
             from app.models.org import Organization
