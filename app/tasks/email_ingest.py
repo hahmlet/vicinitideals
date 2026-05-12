@@ -119,8 +119,13 @@ async def _gpu_inflight_check(
     try:
         await asyncio.sleep(_GPU_CHECK_DELAY_SECONDS)
         import httpx
+        # ollama_base_url is the OpenAI-compatible endpoint (.../v1); the
+        # /api/ps endpoint lives on the native Ollama root, so strip /v1.
+        base = settings.ollama_base_url.rstrip("/")
+        if base.endswith("/v1"):
+            base = base[:-3]
         async with httpx.AsyncClient(timeout=5.0) as client:
-            resp = await client.get(f"{settings.ollama_base_url.rstrip('/')}/api/ps")
+            resp = await client.get(f"{base}/api/ps")
             if resp.status_code != 200:
                 _emit(f"GPU check: /api/ps returned status {resp.status_code}")
                 return
