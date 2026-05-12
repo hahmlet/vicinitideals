@@ -22,6 +22,10 @@ from app.config import settings
 # Reject webhooks with timestamps more than 5 minutes off (Svix default)
 _WEBHOOK_TOLERANCE_SECONDS = 300
 
+# Debug-log download is gated to a single hardcoded operator email — feature only
+# meaningful for the person triaging AI extraction failures.
+_DEBUG_LOG_ALLOWED_EMAIL = "stephenjketch@gmail.com"
+
 # ---------------------------------------------------------------------------
 # Template setup (same dir as ui.py)
 # ---------------------------------------------------------------------------
@@ -212,7 +216,10 @@ async def email_inbox(
     emails = result.scalars().all()
 
     ctx = _base_ctx(user, dedup_count, "email_inbox", conflicts_count=conflicts_count)
-    ctx.update({"emails": emails})
+    ctx.update({
+        "emails": emails,
+        "can_view_debug_log": (user.email or "").lower() == _DEBUG_LOG_ALLOWED_EMAIL,
+    })
 
     return templates.TemplateResponse(request, "email_inbox.html", ctx)
 
@@ -266,6 +273,7 @@ async def email_deal_review(
         "deal": deal,
         "scenario": scenario,
         "suggestions": suggestions,
+        "can_view_debug_log": (user.email or "").lower() == _DEBUG_LOG_ALLOWED_EMAIL,
     })
 
     return templates.TemplateResponse(request, "email_deal_review.html", ctx)
@@ -279,3 +287,42 @@ async def _get_user_org(session: Any, user_id: uuid.UUID) -> uuid.UUID | None:
     from app.models.org import User
     user = await session.get(User, user_id)
     return user.org_id if user else None
+
+
+@ui_router.get("/ui/email-inbox/{inbound_email_id}/debug-log.txt")
+async def email_debug_log(
+    inbound_email_id: uuid.UUID,
+    current_user_id: CurrentUserId,
+    session: DBSession,
+) -> Any:
+    """Return AI processing debug log as plain text. Hardcoded to a single operator email."""
+    from fastapi.responses import PlainTextResponse  # noqa: PLC0415
+
+    from app.models.email_ingest import InboundEmail
+    from app.models.org import User
+
+    user = await session.get(User, current_user_id)
+    if user is None or (user.email or "").lower() != _DEBUG_LOG_ALLOWED_EMAIL:
+        raise HTTPException(status_code=404, detail="Not found")
+
+    email_row = await session.get(InboundEmail, inbound_email_id)
+    if email_row is None or email_row.org_id != user.org_id:
+        raise HTTPException(status_code=404, detail="Email not found")
+
+    body = email_row.debug_log or "(no debug log captured for this email)"
+    header = (
+        f"# Email ingest debug log\n"
+        f"# inbound_email_id: {email_row.id}\n"
+        f"# received_at: {email_row.received_at}\n"
+        f"# status: {email_row.status}\n"
+        f"# sender: {email_row.sender_email}\n"
+        f"# subject: {email_row.subject}\n"
+        f"# error_message: {email_row.error_message or '(none)'}\n"
+        f"#" + ("-" * 60) + "\n\n"
+    )
+    return PlainTextResponse(
+        header + body,
+        headers={
+            "Content-Disposition": f'attachment; filename="email-{email_row.id}-debug.txt"'
+        },
+    )

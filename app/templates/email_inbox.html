@@ -40,6 +40,7 @@
           <th>Received</th>
           <th>Attachments</th>
           <th>Status</th>
+          {% if can_view_debug_log %}<th>Log</th>{% endif %}
         </tr>
       </thead>
       <tbody>
@@ -66,6 +67,15 @@
               {% endif %}
             </span>
           </td>
+          {% if can_view_debug_log %}
+          <td onclick="event.stopPropagation()">
+            <a href="/ui/email-inbox/{{ email.id }}/debug-log.txt"
+               download
+               style="font-size:11px;color:var(--text-muted);text-decoration:underline">
+              .txt
+            </a>
+          </td>
+          {% endif %}
         </tr>
         {% endfor %}
       </tbody>

@@ -60,6 +60,7 @@ class InboundEmail(Base):
         JSONB, nullable=False, default=list
     )
     error_message: Mapped[str | None] = mapped_column(Text(), nullable=True)
+    debug_log: Mapped[str | None] = mapped_column(Text(), nullable=True)
     attachments_meta: Mapped[list] = mapped_column(
         JSONB, nullable=False, default=list
     )

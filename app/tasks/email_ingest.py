@@ -89,11 +89,44 @@ def _llm_client() -> Any:
     return instructor.from_openai(raw, mode=instructor.Mode.JSON)
 
 
-def _extract_deal_info(subject: str | None, body: str | None) -> ExtractedDealInfo:
-    """Call local Ollama LLM to extract deal fields from email subject+body."""
+def _extract_deal_info(
+    subject: str | None,
+    body: str | None,
+    log: list[str] | None = None,
+) -> ExtractedDealInfo:
+    """Call local Ollama LLM to extract deal fields from email subject+body.
+
+    Appends diagnostic entries to ``log`` (caller-owned list) so failures
+    can be surfaced to the UI as a downloadable .txt file.
+    """
+    import time
+    import traceback
+    from datetime import UTC, datetime
+
+    def _emit(msg: str) -> None:
+        line = f"[{datetime.now(UTC).isoformat()}] {msg}"
+        logger.info(line)
+        if log is not None:
+            log.append(line)
+
     text = f"Subject: {subject or ''}\n\n{(body or '')[:2000]}"
+    _emit("LLM extraction: start")
+    _emit(f"  ollama_base_url={settings.ollama_base_url!r}")
+    _emit(f"  ollama_model={settings.ollama_model!r}")
+    _emit(f"  prompt_chars={len(text)}")
+    _emit(f"  subject={subject!r}")
+
+    t0 = time.monotonic()
     try:
         client = _llm_client()
+        _emit("  client constructed (instructor + OpenAI shim)")
+    except Exception as exc:
+        _emit(f"FAIL: client construction error: {type(exc).__name__}: {exc}")
+        if log is not None:
+            log.append(traceback.format_exc())
+        return ExtractedDealInfo()
+
+    try:
         result = client.chat.completions.create(
             model=settings.ollama_model,
             response_model=ExtractedDealInfo,
@@ -115,9 +148,32 @@ def _extract_deal_info(subject: str | None, body: str | None) -> ExtractedDealIn
             ],
             max_retries=2,
         )
+        elapsed_ms = (time.monotonic() - t0) * 1000
+        _emit(f"OK: LLM extraction succeeded in {elapsed_ms:.0f}ms")
+        _emit(f"  address={result.address!r} (conf={result.address_confidence})")
+        _emit(f"  asking_price={result.asking_price!r} (conf={result.price_confidence})")
+        _emit(f"  unit_count={result.unit_count!r}")
+        _emit(f"  property_type={result.property_type!r}")
+        _emit(f"  broker={result.broker_name!r} <{result.broker_email!r}>")
         return result
     except Exception as exc:
-        logger.warning("LLM extraction failed: %s", exc)
+        elapsed_ms = (time.monotonic() - t0) * 1000
+        cause = type(exc).__name__
+        _emit(f"FAIL: LLM extraction error after {elapsed_ms:.0f}ms: {cause}: {exc}")
+        # Classify common failure modes for the user
+        msg = str(exc).lower()
+        if "connection" in msg or "refused" in msg or "unreachable" in msg:
+            _emit("  >> classification: cannot reach Ollama service")
+        elif "timeout" in msg or "timed out" in msg:
+            _emit("  >> classification: request timed out")
+        elif "model" in msg and ("not found" in msg or "404" in msg):
+            _emit("  >> classification: model not pulled/registered on Ollama")
+        elif "validation" in msg or "parse" in msg:
+            _emit("  >> classification: model returned malformed JSON (instructor parse)")
+        else:
+            _emit("  >> classification: other (see traceback below)")
+        if log is not None:
+            log.append(traceback.format_exc())
         return ExtractedDealInfo()
 
 
@@ -171,12 +227,27 @@ def _parse_mime(raw_mime_b64: str | None) -> tuple[str | None, list[dict]]:
 # Async core
 # ---------------------------------------------------------------------------
 
-async def _fetch_resend_raw_mime(resend_email_id: str) -> str | None:
+async def _fetch_resend_raw_mime(
+    resend_email_id: str,
+    log: list[str] | None = None,
+) -> str | None:
     """Fetch raw MIME from Resend received-email API. Returns base64-encoded bytes or None on failure."""
+    import time
+    import traceback
+    from datetime import UTC, datetime
+
+    def _emit(msg: str) -> None:
+        line = f"[{datetime.now(UTC).isoformat()}] {msg}"
+        logger.info(line)
+        if log is not None:
+            log.append(line)
+
     if not settings.resend_api_key:
-        logger.error("resend_api_key not configured — cannot fetch inbound email")
+        _emit("FAIL: resend_api_key not configured")
         return None
 
+    _emit(f"Resend MIME fetch: start (email_id={resend_email_id})")
+    t0 = time.monotonic()
     try:
         import httpx
         async with httpx.AsyncClient(timeout=30.0) as client:
@@ -184,19 +255,26 @@ async def _fetch_resend_raw_mime(resend_email_id: str) -> str | None:
                 f"https://api.resend.com/emails/receiving/{resend_email_id}",
                 headers={"Authorization": f"Bearer {settings.resend_api_key}"},
             )
+            _emit(f"  metadata GET status={meta_resp.status_code}")
             meta_resp.raise_for_status()
             meta = meta_resp.json()
             raw_obj = meta.get("raw") or {}
             download_url = raw_obj.get("download_url")
             if not download_url:
-                logger.warning("Resend email %s missing raw.download_url", resend_email_id)
+                _emit("FAIL: response missing raw.download_url")
                 return None
 
             raw_resp = await client.get(download_url)
+            _emit(f"  raw MIME GET status={raw_resp.status_code} bytes={len(raw_resp.content)}")
             raw_resp.raise_for_status()
+            elapsed_ms = (time.monotonic() - t0) * 1000
+            _emit(f"OK: raw MIME fetched in {elapsed_ms:.0f}ms")
             return base64.b64encode(raw_resp.content).decode()
     except Exception as exc:
-        logger.warning("Resend raw MIME fetch failed for %s: %s", resend_email_id, exc)
+        elapsed_ms = (time.monotonic() - t0) * 1000
+        _emit(f"FAIL: Resend MIME fetch after {elapsed_ms:.0f}ms: {type(exc).__name__}: {exc}")
+        if log is not None:
+            log.append(traceback.format_exc())
         return None
 
 
@@ -223,6 +301,7 @@ async def _process_async(inbound_email_id: str, resend_email_id: str) -> None:
     from app.models.project import Project
 
     email_uuid = UUID(inbound_email_id)
+    debug_log: list[str] = []
 
     async with AsyncSessionLocal() as session:
         email_row = await session.get(InboundEmail, email_uuid)
@@ -234,12 +313,18 @@ async def _process_async(inbound_email_id: str, resend_email_id: str) -> None:
             email_row.status = InboundEmailStatus.processing.value
             await session.commit()
 
+            debug_log.append(f"inbound_email_id={inbound_email_id}")
+            debug_log.append(f"resend_email_id={resend_email_id}")
+
             # --- Fetch raw MIME from Resend ---
-            raw_mime_b64 = await _fetch_resend_raw_mime(resend_email_id)
+            raw_mime_b64 = await _fetch_resend_raw_mime(resend_email_id, log=debug_log)
             email_row.raw_mime_b64 = raw_mime_b64
 
             # --- Parse MIME ---
             body_text, attachments = _parse_mime(raw_mime_b64)
+            debug_log.append(
+                f"MIME parse: body_chars={len(body_text or '')}, attachments={len(attachments)}"
+            )
             email_row.body_text = body_text
             # Strip raw MIME after parsing (72h retention not needed at task time)
             email_row.raw_mime_b64 = None
@@ -253,7 +338,7 @@ async def _process_async(inbound_email_id: str, resend_email_id: str) -> None:
             await session.commit()
 
             # --- LLM extraction ---
-            info = _extract_deal_info(email_row.subject, body_text)
+            info = _extract_deal_info(email_row.subject, body_text, log=debug_log)
 
             # --- Resolve org ---
             from app.models.org import Organization
@@ -409,16 +494,22 @@ async def _process_async(inbound_email_id: str, resend_email_id: str) -> None:
                 email_row.proforma_task_ids = task_ids
 
             email_row.status = InboundEmailStatus.deal_created.value
+            debug_log.append("OK: pipeline complete, status=deal_created")
+            email_row.debug_log = "\n".join(debug_log)[-50000:]
             await session.commit()
 
             # --- Notification email ---
             await _notify_org(org, email_row, deal, info)
 
         except Exception as exc:
+            import traceback
             logger.exception("process_inbound_email failed for %s", inbound_email_id)
+            debug_log.append(f"FAIL: pipeline exception {type(exc).__name__}: {exc}")
+            debug_log.append(traceback.format_exc())
             try:
                 email_row.status = InboundEmailStatus.failed.value
                 email_row.error_message = str(exc)[:500]
+                email_row.debug_log = "\n".join(debug_log)[-50000:]
                 await session.commit()
             except Exception:
                 pass

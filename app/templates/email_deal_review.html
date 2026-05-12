@@ -50,6 +50,13 @@
       {%- elif email.status == 'failed' %}var(--danger)
       {%- else %}var(--text-muted){% endif -%}
     ">{{ email.status | replace("_", " ") | title }}</span>
+    {% if can_view_debug_log %}
+    · <a href="/ui/email-inbox/{{ email.id }}/debug-log.txt"
+         download
+         style="font-size:12px;color:var(--text-muted);text-decoration:underline">
+        Download AI debug log (.txt)
+      </a>
+    {% endif %}
   </div>
 </div>
 
