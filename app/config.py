@@ -141,6 +141,15 @@ class Settings(BaseSettings):
     loopnet_use_bulk_triage: bool = True
 
     # -------------------------------------------------------------------------
+    # Pro forma import — local LLM via Ollama
+    # -------------------------------------------------------------------------
+    # Base URL for the Ollama API (OpenAI-compatible). Defaults to the ollama
+    # Docker service on VM 114. Override in .env if running Ollama separately.
+    ollama_base_url: str = "http://ollama:11434/v1"
+    # Model used for pro forma parsing. qwen2.5:7b or llama3.1:8b both work.
+    ollama_model: str = "qwen2.5:7b"
+
+    # -------------------------------------------------------------------------
     # Financial model defaults
     # -------------------------------------------------------------------------
     # Risk-free rate (10Y Treasury) used in the Spread Stack export KPIs.

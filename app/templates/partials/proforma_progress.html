@@ -1,0 +1,98 @@
+{# Pro Forma Import — Progress Polling Fragment
+   Shown while Celery task runs. HTMX polls status endpoint every 2s.
+   Context: model_id, task_id, step (int), total (int), message (str), error (str|None)
+#}
+{% set _step = step|default(0) %}
+{% set _total = total|default(3) %}
+{% set _pct = ((_step / _total) * 100)|int if _total else 0 %}
+{% set _error = error|default(None) %}
+
+<div class="wizard-shell" id="deal-setup-wizard"
+     {% if not _error %}
+     hx-get="/ui/models/{{ model_id }}/proforma-status/{{ task_id }}"
+     hx-trigger="every 2s"
+     hx-swap="outerHTML"
+     hx-target="#deal-setup-wizard"
+     {% endif %}>
+
+  <div style="text-align:center;margin-bottom:24px">
+    <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px">Deal Setup</div>
+    <div style="font-size:12px;color:var(--text-muted)">Step 1 — Pro Forma Import — <strong style="color:var(--accent)">Analyzing…</strong></div>
+  </div>
+
+  <div class="wizard-card">
+    <div class="wizard-header">
+      {% if _error %}
+      <div class="wizard-title" style="color:var(--error,#e53e3e)">Import Failed</div>
+      <div class="wizard-subtitle">{{ _error }}</div>
+      {% else %}
+      <div class="wizard-title">Analyzing your file…</div>
+      <div class="wizard-subtitle">Running the local model. This usually takes 15–60 seconds.</div>
+      {% endif %}
+    </div>
+
+    <div class="wizard-body">
+
+      {% if _error %}
+      <div style="padding:16px;background:color-mix(in srgb,#e53e3e 8%,var(--bg));border:1px solid color-mix(in srgb,#e53e3e 30%,transparent);border-radius:8px;font-size:13px;color:var(--text)">
+        {{ _error }}
+      </div>
+      {% else %}
+
+      {# Step indicators #}
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px">
+        {% set steps_info = [
+          (1, "Reading spreadsheet"),
+          (2, "Parsing revenue and unit mix"),
+          (3, "Mapping expense categories"),
+        ] %}
+        {% for s_num, s_label in steps_info %}
+        {% set is_done = _step > s_num %}
+        {% set is_active = _step == s_num %}
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="
+            width:28px;height:28px;border-radius:50%;flex-shrink:0;
+            display:flex;align-items:center;justify-content:center;
+            font-size:11px;font-weight:700;
+            {% if is_done %}background:var(--accent);color:#fff;border:2px solid var(--accent)
+            {% elif is_active %}background:var(--bg);color:var(--accent);border:2px solid var(--accent)
+            {% else %}background:var(--bg);color:var(--text-muted);border:2px solid var(--border){% endif %}
+          ">
+            {% if is_done %}✓{% else %}{{ s_num }}{% endif %}
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:{% if is_active %}600{% else %}400{% endif %};color:{% if is_done %}var(--text-muted){% elif is_active %}var(--text){% else %}var(--text-muted){% endif %}">
+              {{ s_label }}
+            </div>
+            {% if is_active %}
+            <div style="font-size:11px;color:var(--accent);margin-top:2px">{{ message|default('') }}</div>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      {# Progress bar #}
+      <div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden">
+        <div style="height:100%;width:{{ _pct }}%;background:var(--accent);border-radius:2px;transition:width .4s ease"></div>
+      </div>
+      <div style="text-align:right;font-size:11px;color:var(--text-muted);margin-top:4px">{{ _pct }}%</div>
+
+      {% endif %}
+
+    </div>
+
+    <div class="wizard-footer">
+      <a hx-get="/ui/models/{{ model_id }}/proforma-skip"
+         hx-target="#deal-setup-wizard"
+         hx-swap="outerHTML"
+         style="font-size:12px;color:var(--text-muted);cursor:pointer;text-decoration:none">
+        Skip import →
+      </a>
+      {% if _error %}
+      <button onclick="history.back()" class="btn btn-ghost">← Back</button>
+      {% endif %}
+    </div>
+  </div>
+
+</div>
