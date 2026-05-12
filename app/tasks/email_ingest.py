@@ -752,7 +752,24 @@ async def _notify_org(
 # Celery task entry point
 # ---------------------------------------------------------------------------
 
+async def _with_fresh_loop(fn, *args):
+    """Dispose the shared async engine at start and end of each task so its
+    asyncpg connection pool stays aligned with the current asyncio.run() loop.
+
+    See ``app/tasks/export.py`` for the same pattern. Celery's prefork worker
+    reuses processes; without dispose, a second task in the same process
+    crashes with "Future attached to a different loop" because pooled
+    connections hold transport futures bound to the previous (now-closed) loop.
+    """
+    from app.db import engine as _db_engine  # noqa: PLC0415
+    try:
+        await _db_engine.dispose()
+        return await fn(*args)
+    finally:
+        await _db_engine.dispose()
+
+
 @celery_app.task(bind=True, name=PROCESS_EMAIL_TASK)
 def process_inbound_email(self, inbound_email_id: str, resend_email_id: str) -> None:
     """Parse inbound email, extract deal data, create preliminary deal."""
-    asyncio.run(_process_async(inbound_email_id, resend_email_id))
+    asyncio.run(_with_fresh_loop(_process_async, inbound_email_id, resend_email_id))
