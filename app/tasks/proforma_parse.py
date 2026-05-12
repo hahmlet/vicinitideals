@@ -179,34 +179,69 @@ def _postprocess_expense_lines(lines: list[dict]) -> list[dict]:
 
 
 def _sheet_to_text(ws: Any, property_column: str | None = None, max_rows: int = 200) -> str:
-    """Convert an openpyxl worksheet to a plain-text table for the LLM.
+    """Convert an openpyxl worksheet to a markdown table for the LLM.
 
-    If *property_column* is set (e.g. "Ash & Pine"), only the label column
-    and that specific numeric column are included, dropping others.  This
-    keeps the prompt focused when a sheet has multiple property sub-columns.
+    Column filtering strategy (applied in order):
+    1. If *property_column* is set, keep label col + that property's column only.
+    2. If the header row contains a TOTAL/Annual column, keep label col + that
+       column only — strips out monthly columns that bloat the prompt and cause
+       the LLM to drop rows.
+    3. Otherwise keep all columns.
+
+    Output is a GitHub-flavored markdown table so the LLM can parse structure
+    reliably without counting tabs.
     """
-    rows: list[list[str]] = []
-    col_indices: list[int] | None = None
+    import re
 
-    for i, row in enumerate(ws.iter_rows(max_row=min(ws.max_row, max_rows), values_only=True)):
+    _TOTAL_HEADERS = {"total", "annual", "annual total", "ytd", "full year"}
+
+    raw_rows: list[list[str]] = []
+    for row in ws.iter_rows(max_row=min(ws.max_row, max_rows), values_only=True):
         if not any(c is not None for c in row):
             continue
+        raw_rows.append([str(c).strip() if c is not None else "" for c in row])
 
-        cells = [str(c).strip() if c is not None else "" for c in row]
+    if not raw_rows:
+        return ""
 
-        # On the first non-empty row (assumed header), determine column filter
-        if col_indices is None and property_column:
-            col_indices = [0]  # always keep the label column
-            for idx, cell in enumerate(cells):
-                if property_column.lower() in cell.lower():
-                    col_indices.append(idx)
+    header = raw_rows[0]
 
-        if col_indices is not None:
-            cells = [cells[idx] for idx in col_indices if idx < len(cells)]
+    # Determine which columns to keep
+    keep: list[int] = []
+    if property_column:
+        keep = [0] + [
+            idx for idx, h in enumerate(header)
+            if property_column.lower() in h.lower()
+        ]
+    else:
+        total_col = next(
+            (idx for idx, h in enumerate(header)
+             if re.sub(r"[^a-z]", "", h.lower()) in {re.sub(r"[^a-z]", "", t) for t in _TOTAL_HEADERS}),
+            None,
+        )
+        if total_col is not None and total_col != 0:
+            keep = [0, total_col]
 
-        rows.append(cells)
+    def _filter(cells: list[str]) -> list[str]:
+        if keep:
+            return [cells[i] for i in keep if i < len(cells)]
+        return cells
 
-    return "\n".join("\t".join(row) for row in rows)
+    filtered = [_filter(r) for r in raw_rows]
+
+    # Build markdown table
+    col_count = max(len(r) for r in filtered)
+    header_row = filtered[0] + [""] * (col_count - len(filtered[0]))
+    sep = ["---"] * col_count
+    lines = [
+        "| " + " | ".join(header_row) + " |",
+        "| " + " | ".join(sep) + " |",
+    ]
+    for row in filtered[1:]:
+        padded = row + [""] * (col_count - len(row))
+        lines.append("| " + " | ".join(padded) + " |")
+
+    return "\n".join(lines)
 
 
 def _llm_client() -> Any:
