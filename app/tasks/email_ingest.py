@@ -93,13 +93,19 @@ _STEP_TIMEOUT_SECONDS = 60.0
 _GPU_CHECK_DELAY_SECONDS = 3.0
 
 
-async def _gpu_inflight_check(log: list[str] | None) -> None:
+async def _gpu_inflight_check(
+    log: list[str] | None,
+    abort_event: "asyncio.Event | None" = None,
+) -> None:
     """Sleep briefly, then snapshot Ollama running models to confirm GPU usage.
 
     Ollama's /api/ps returns each loaded model's ``size`` and ``size_vram``.
-    If ``size_vram == 0`` the model is running on CPU (slow path, common cause
-    of timeouts). If /api/ps returns no models, the call is still queued or
-    something upstream failed.
+    If a loaded model has ``size_vram == 0`` the model is running on CPU
+    (10-50x slower than GPU). When ``abort_event`` is passed, set it so the
+    caller can fast-fail the LLM call instead of waiting out the full timeout.
+
+    No models loaded at the check time means the model is still loading or
+    queued — not aborted, just noted.
     """
     import traceback
     from datetime import UTC, datetime
@@ -111,8 +117,7 @@ async def _gpu_inflight_check(log: list[str] | None) -> None:
             log.append(line)
 
     try:
-        import asyncio as _asyncio
-        await _asyncio.sleep(_GPU_CHECK_DELAY_SECONDS)
+        await asyncio.sleep(_GPU_CHECK_DELAY_SECONDS)
         import httpx
         async with httpx.AsyncClient(timeout=5.0) as client:
             resp = await client.get(f"{settings.ollama_base_url.rstrip('/')}/api/ps")
@@ -123,9 +128,10 @@ async def _gpu_inflight_check(log: list[str] | None) -> None:
             if not models:
                 _emit(
                     "GPU check: Ollama /api/ps returned no loaded models — "
-                    "call may still be queued or model unload happened"
+                    "call may still be queued or model load in progress"
                 )
                 return
+            cpu_only = True
             for m in models:
                 name = m.get("name") or m.get("model")
                 size = m.get("size") or 0
@@ -136,11 +142,15 @@ async def _gpu_inflight_check(log: list[str] | None) -> None:
                     f"GPU check: model={name} size={size:,}B vram={vram:,}B "
                     f"({pct_gpu:.0f}% on GPU) -> running_on={where}"
                 )
-                if vram == 0:
-                    _emit(
-                        "  >> WARNING: model is on CPU, not GPU. Inference will be "
-                        "10-50x slower and likely to exceed the step timeout."
-                    )
+                if vram > 0:
+                    cpu_only = False
+            if cpu_only and abort_event is not None:
+                _emit(
+                    "  >> ABORT: every loaded model is on CPU. Stopping the LLM "
+                    "call immediately rather than waiting for the 60s timeout. "
+                    "Fix the GPU on the Ollama host and re-trigger the email."
+                )
+                abort_event.set()
     except Exception as exc:
         _emit(f"GPU check: failed: {type(exc).__name__}: {exc}")
         if log is not None:
@@ -256,19 +266,41 @@ async def _extract_deal_info(
         if log is not None:
             log.append(line)
 
-    gpu_task = asyncio.create_task(_gpu_inflight_check(log))
+    abort_event = asyncio.Event()
+    gpu_task = asyncio.create_task(_gpu_inflight_check(log, abort_event=abort_event))
+    llm_task = asyncio.create_task(
+        asyncio.to_thread(_extract_deal_info_sync, subject, body, log)
+    )
+    abort_waiter = asyncio.create_task(abort_event.wait())
+
     try:
-        result = await asyncio.wait_for(
-            asyncio.to_thread(_extract_deal_info_sync, subject, body, log),
+        done, _pending = await asyncio.wait(
+            {llm_task, abort_waiter},
             timeout=_STEP_TIMEOUT_SECONDS,
+            return_when=asyncio.FIRST_COMPLETED,
         )
-        return result
-    except asyncio.TimeoutError:
+
+        if llm_task in done:
+            return llm_task.result()
+
+        if abort_waiter in done:
+            _emit(
+                "ABORTED: GPU check detected CPU-only execution; LLM call "
+                "abandoned. The worker thread will finish in the background "
+                "but its result is discarded."
+            )
+            # Cancel the asyncio handle — the underlying thread keeps running
+            # (Python limitation) but the Celery task returns immediately.
+            llm_task.cancel()
+            return ExtractedDealInfo()
+
+        # Neither completed -> timeout fired
         _emit(
             f"FAIL: LLM extraction exceeded {_STEP_TIMEOUT_SECONDS:.0f}s timeout. "
             "Common causes: model running on CPU (see GPU check above), "
             "Ollama process unresponsive, or request stuck waiting on model load."
         )
+        llm_task.cancel()
         return ExtractedDealInfo()
     except Exception as exc:
         _emit(f"FAIL: LLM extraction wrapper error: {type(exc).__name__}: {exc}")
@@ -276,9 +308,11 @@ async def _extract_deal_info(
             log.append(traceback.format_exc())
         return ExtractedDealInfo()
     finally:
-        # Make sure the GPU check finished and got its lines into the log
+        if not abort_waiter.done():
+            abort_waiter.cancel()
+        # Give the GPU check a moment to flush its lines into the log
         try:
-            await asyncio.wait_for(gpu_task, timeout=10.0)
+            await asyncio.wait_for(gpu_task, timeout=5.0)
         except (asyncio.TimeoutError, Exception):
             if not gpu_task.done():
                 gpu_task.cancel()
