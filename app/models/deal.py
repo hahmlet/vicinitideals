@@ -450,6 +450,8 @@ OPEX_SYNONYMS: dict[str, str] = {
     "Electricity": "Utilities — Electric",
     "Gas": "Utilities — Gas",
     "Natural Gas": "Utilities — Gas",
+    # Renamed categories — backward compat for existing DB rows
+    "Compliance & Legal": "Legal",
 }
 
 
@@ -481,29 +483,30 @@ ALWAYS_SHOWN_OPEX_CATEGORIES: tuple[str, ...] = (
 # canonical set so the investor export can group by exact label without
 # being defeated by typos like "Garbage" vs "Grabage". "Other" is the
 # catch-all — anything that doesn't fit the standard list lumps in here.
-# Order is the dropdown render order; alphabetical-ish within usage groups.
+# Alphabetical. "Other" is the catch-all for anything that doesn't fit.
 STANDARD_OPEX_CATEGORIES: tuple[str, ...] = (
-    "Real Estate Taxes",
+    "Administrative",
+    "Bank/Software Fees",
+    "Cleaning & Janitorial",
     "Insurance",
+    "Jurisdiction Fees",
+    "Landscaping & Snow Removal",
+    "Legal",
+    "Marketing & Leasing",
+    "Other",
+    "Payroll",
+    "Pest Control",
     "Property Management",
-    "Utilities — Water/Sewer",
+    "Real Estate Taxes",
+    "Repairs & Maintenance",
+    "Resident Services",
+    "Security",
+    "Source Compliance",
+    "Unit Turnover",
     "Utilities — Electric",
     "Utilities — Gas",
     "Utilities — Trash",
-    "Repairs & Maintenance",
-    "Marketing & Leasing",
-    "Administrative",
-    "Payroll",
-    "Landscaping & Snow Removal",
-    "Pest Control",
-    "Cleaning & Janitorial",
-    "Security",
-    "Resident Services",
-    "Compliance & Legal",
-    "Source Compliance",
-    "Bank/Software Fees",
-    "Unit Turnover",
-    "Other",
+    "Utilities — Water/Sewer",
 )
 
 

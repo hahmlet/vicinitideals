@@ -8697,7 +8697,8 @@ async def deal_setup_wizard_complete(
         ("Cleaning & Janitorial",      "flat",     False, None,   ["lease_up", "stabilized"]),
         ("Security",                   "flat",     False, None,   ["lease_up", "stabilized"]),
         ("Resident Services",          "flat",     True,  25.0,   ["stabilized"]),
-        ("Compliance & Legal",         "flat",     False, None,   ["lease_up", "stabilized"]),
+        ("Jurisdiction Fees",           "flat",     False, None,   ["lease_up", "stabilized"]),
+        ("Legal",                       "flat",     False, None,   ["lease_up", "stabilized"]),
         ("Bank/Software Fees",         "flat",     False, None,   ["lease_up", "stabilized"]),
         ("Unit Turnover",              "per_unit", False, None,   ["stabilized"]),
     ]

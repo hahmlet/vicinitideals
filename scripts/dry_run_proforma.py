@@ -21,13 +21,13 @@ from pydantic import BaseModel
 
 
 STANDARD_OPEX_CATEGORIES = (
-    "Real Estate Taxes", "Insurance", "Property Management",
-    "Utilities — Water/Sewer", "Utilities — Electric", "Utilities — Gas",
-    "Utilities — Trash", "Repairs & Maintenance", "Marketing & Leasing",
-    "Administrative", "Payroll", "Landscaping & Snow Removal",
-    "Pest Control", "Cleaning & Janitorial", "Security",
-    "Resident Services", "Compliance & Legal", "Source Compliance",
-    "Bank/Software Fees", "Unit Turnover", "Other",
+    "Administrative", "Bank/Software Fees", "Cleaning & Janitorial",
+    "Insurance", "Jurisdiction Fees", "Landscaping & Snow Removal",
+    "Legal", "Marketing & Leasing", "Other", "Payroll", "Pest Control",
+    "Property Management", "Real Estate Taxes", "Repairs & Maintenance",
+    "Resident Services", "Security", "Source Compliance", "Unit Turnover",
+    "Utilities — Electric", "Utilities — Gas", "Utilities — Trash",
+    "Utilities — Water/Sewer",
 )
 
 
@@ -267,8 +267,8 @@ def main() -> None:
         "- 'LIFT Monitoring', 'OHCS', 'bond compliance', 'HUD monitoring' -> Source Compliance\n"
         "- 'Prop Mgmt', 'On-Site Mgmt', 'Off-Site Mgmt' -> Property Management\n"
         "- 'RE Taxes', 'Real Estate Tax', 'Property Tax' -> Real Estate Taxes\n"
-        "- 'Gresham Police Fire Parks', 'Municipal assessment' -> Real Estate Taxes\n"
-        "- 'Accounting', 'CPA', 'Audit', 'Professional Fees', 'Legal', 'Licenses' -> Compliance & Legal\n"
+        "- 'Gresham Police Fire Parks', 'Municipal assessment', 'Police', 'Fire', 'Parks levy' -> Jurisdiction Fees\n"
+        "- 'Accounting', 'CPA', 'Audit', 'Professional Fees', 'Legal', 'Licenses' -> Legal\n"
         "- 'Bank', 'NSF', 'Financing charges', 'Computer', 'Software', 'Internet' -> Bank/Software Fees\n"
         "- 'Office Supplies', 'Administrative' -> Administrative\n"
         "- 'Tenant Events', 'Resident Activities' -> Resident Services\n"
