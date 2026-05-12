@@ -160,15 +160,15 @@ async def _set_suggestion(
     current_user_id: uuid.UUID,
     session: Any,
 ) -> HTMLResponse:
-    from app.models.deal import Deal
-    from app.models.email_ingest import EmailDealSuggestion
+    from app.models.email_ingest import EmailDealSuggestion, InboundEmail
 
     suggestion = await session.get(EmailDealSuggestion, suggestion_id)
     if suggestion is None:
         raise HTTPException(status_code=404, detail="Suggestion not found")
 
-    deal = await session.get(Deal, suggestion.deal_id)
-    if deal is None or deal.org_id != (await _get_user_org(session, current_user_id)):
+    email_row = await session.get(InboundEmail, suggestion.inbound_email_id)
+    user_org = await _get_user_org(session, current_user_id)
+    if email_row is None or email_row.org_id != user_org:
         raise HTTPException(status_code=404, detail="Suggestion not found")
 
     suggestion.accepted = accepted
@@ -233,8 +233,8 @@ async def email_deal_review(
 ) -> HTMLResponse:
     """Side-by-side review: source email on left, extracted deal fields on right."""
     from app.api.routers.ui import _base_ctx, _get_counts  # noqa: PLC0415
-    from app.models.deal import Deal
     from app.models.email_ingest import EmailDealSuggestion, InboundEmail
+    from app.models.opportunity import Opportunity
     from app.models.org import User
 
     user = await session.get(User, current_user_id)
@@ -254,24 +254,14 @@ async def email_deal_review(
     )
     suggestions = suggestions_result.scalars().all()
 
-    deal = None
-    scenario = None
-    if email_row.deal_id:
-        from sqlalchemy.orm import selectinload  # noqa: PLC0415
-
-        deal = await session.get(
-            Deal,
-            email_row.deal_id,
-            options=[selectinload(Deal.scenarios)],
-        )
-        if deal and deal.scenarios:
-            scenario = deal.scenarios[0]
+    opportunity = None
+    if email_row.opportunity_id:
+        opportunity = await session.get(Opportunity, email_row.opportunity_id)
 
     ctx = _base_ctx(user, dedup_count, "email_inbox", conflicts_count=conflicts_count)
     ctx.update({
         "email": email_row,
-        "deal": deal,
-        "scenario": scenario,
+        "opportunity": opportunity,
         "suggestions": suggestions,
         "can_view_debug_log": (user.email or "").lower() == _DEBUG_LOG_ALLOWED_EMAIL,
     })

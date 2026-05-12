@@ -45,7 +45,7 @@
     {% if email.sender_name %} ({{ email.sender_name }}){% endif %}
     · {{ email.received_at.strftime("%b %d, %Y %I:%M %p") if email.received_at else "" }}
     · <span style="font-weight:600;color:
-      {%- if email.status == 'deal_created' %}var(--success)
+      {%- if email.status == 'opportunity_created' %}var(--success)
       {%- elif email.status == 'processing' %}#1d4ed8
       {%- elif email.status == 'failed' %}var(--danger)
       {%- else %}var(--text-muted){% endif -%}
@@ -210,24 +210,17 @@
     {% if not suggestions and email.status not in ["pending", "processing"] %}
     <div class="no-suggestions">No suggestions extracted from this email.</div>
     {% endif %}
-
-    {% if deal and deal.is_preliminary %}
-    <div class="warning-banner">
-      ⚠ Acquisition cost required before compute can run.
-      Complete deal setup to enable financial modeling.
-    </div>
-    {% endif %}
   </div>
 </div>
 
 <div class="action-bar">
   <a href="/ui/email-inbox" class="btn btn-secondary">← Back to Inbox</a>
-  {% if deal and scenario %}
-  <a href="/models/{{ scenario.id }}/builder?new=1" class="btn btn-primary">
+  {% if opportunity %}
+  <a href="/deals/new?opp_id={{ opportunity.id }}" class="btn btn-primary">
     Continue to Deal Setup →
   </a>
-  {% elif email.status == "deal_created" %}
-  <button class="btn btn-primary" disabled>Deal not ready</button>
+  {% elif email.status == "opportunity_created" %}
+  <button class="btn btn-primary" disabled>Opportunity not ready</button>
   {% endif %}
 </div>
 {% endblock %}

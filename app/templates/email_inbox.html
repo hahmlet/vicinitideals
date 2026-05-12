@@ -14,7 +14,7 @@
 .status-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
 .badge-pending { background: var(--surface-muted); color: var(--text-muted); }
 .badge-processing { background: #dbeafe; color: #1d4ed8; }
-.badge-deal_created { background: #dcfce7; color: #15803d; }
+.badge-opportunity_created { background: #dcfce7; color: #15803d; }
 .badge-failed { background: #fee2e2; color: #b91c1c; }
 .badge-spam { background: var(--surface-muted); color: var(--text-muted); }
 .attachment-chip { display: inline-flex; align-items: center; gap: 3px; font-size: 11px; padding: 2px 6px; border-radius: 4px; background: var(--surface-muted); color: var(--text-muted); }
@@ -60,7 +60,7 @@
             <span class="status-badge badge-{{ email.status }}">
               {% if email.status == "pending" %}⏳ Pending
               {% elif email.status == "processing" %}⚙ Processing
-              {% elif email.status == "deal_created" %}✓ Deal Created
+              {% elif email.status == "opportunity_created" %}✓ Opportunity Created
               {% elif email.status == "failed" %}✗ Failed
               {% elif email.status == "spam" %}Spam
               {% else %}{{ email.status }}

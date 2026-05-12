@@ -9,7 +9,7 @@ Flow
 5. Creates Deal + Scenario + Project + OperationalInputs (preliminary=True).
 6. Creates EmailDealSuggestion rows for each extracted field.
 7. Queues parse_proforma for any .xlsx attachments.
-8. Updates status → deal_created (or failed on exception).
+8. Updates status → opportunity_created (or failed on exception).
 9. Sends notification email to org members.
 
 Redis key schema
@@ -426,17 +426,8 @@ async def _fetch_resend_raw_mime(
 
 async def _process_async(inbound_email_id: str, resend_email_id: str) -> None:
     from decimal import Decimal
-    from sqlalchemy import select
 
     from app.db import AsyncSessionLocal
-    from app.models.deal import (
-        Deal,
-        OperationalInputs,
-        ProjectType,
-        Scenario,
-        UseLine,
-        UseLinePhase,
-    )
     from app.models.email_ingest import (
         EmailDealSuggestion,
         InboundEmail,
@@ -444,7 +435,6 @@ async def _process_async(inbound_email_id: str, resend_email_id: str) -> None:
         SuggestionSourceType,
     )
     from app.models.opportunity import Opportunity, OpportunityStatus
-    from app.models.project import Project
 
     email_uuid = UUID(inbound_email_id)
     debug_log: list[str] = []
@@ -501,11 +491,6 @@ async def _process_async(inbound_email_id: str, resend_email_id: str) -> None:
             if org is None:
                 raise ValueError(f"Org {email_row.org_id} not found")
 
-            # --- Determine acquisition cost ---
-            acq_cost = Decimal("1")  # placeholder when unknown
-            if info.asking_price and info.asking_price > 0:
-                acq_cost = Decimal(str(info.asking_price))
-
             # --- Parcel match (best-effort) ---
             parcel_id = None
             if info.address:
@@ -522,82 +507,45 @@ async def _process_async(inbound_email_id: str, resend_email_id: str) -> None:
                 f"{email_row.sender_email}|{email_row.subject}|{email_row.received_at}".encode()
             ).hexdigest()[:32]
 
-            # --- Create Opportunity ---
+            # --- Create Opportunity ----------------------------------------
+            # Email ingest stops at Opportunity. The user finishes deal
+            # creation via /deals/new?opp_id=<id> which builds the
+            # Deal+Scenario+Project from the Opportunity.
+            asking_price_dec = None
+            if info.asking_price and info.asking_price > 0:
+                asking_price_dec = Decimal(str(info.asking_price))
+
+            opp_name = (
+                info.address
+                or (email_row.subject or "Email Deal")[:255]
+            )
+
             opportunity = Opportunity(
                 org_id=email_row.org_id,
-                name=(
-                    info.address
-                    or (email_row.subject or "Email Deal")[:255]
-                ),
+                name=opp_name,
                 opp_status=OpportunityStatus.active.value,
                 source="email",
                 source_id=source_id,
                 source_url="",
                 parcel_id=parcel_id,
+                address_raw=info.address,
+                asking_price=asking_price_dec,
+                units=info.unit_count,
             )
             session.add(opportunity)
             await session.flush()
 
-            # --- Create Deal (preliminary) ---
-            deal = Deal(
-                org_id=email_row.org_id,
-                name=(
-                    info.address
-                    or (email_row.subject or "Email Deal")[:255]
-                ),
-                is_preliminary=True,
-                inbound_email_id=email_row.id,
-            )
-            session.add(deal)
+            email_row.opportunity_id = opportunity.id
             await session.flush()
 
-            # --- Create Scenario ---
-            scenario = Scenario(
-                deal_id=deal.id,
-                name="Base Case",
-                project_type=ProjectType.acquisition,
-                version=1,
-                is_active=True,
-            )
-            session.add(scenario)
-            await session.flush()
-
-            # --- Create Project + OperationalInputs ---
-            project = Project(
-                scenario_id=scenario.id,
-                opportunity_id=opportunity.id,
-                name="Default Project",
-            )
-            session.add(project)
-            await session.flush()
-
-            session.add(OperationalInputs(project_id=project.id))
-
-            # --- Seed acquisition UseLine ---
-            session.add(UseLine(
-                project_id=project.id,
-                label=f"{opportunity.name} - Acquisition",
-                phase=UseLinePhase.acquisition,
-                cost_category="acquisition",
-                milestone_key="close",
-                amount=acq_cost,
-                timing_type="first_day",
-            ))
-
-            await session.flush()
-
-            # --- Update InboundEmail with deal reference ---
-            email_row.deal_id = deal.id
-            await session.flush()
-
-            # --- Create suggestions ---
+            # --- Create suggestions ----------------------------------------
             suggestions: list[EmailDealSuggestion] = []
             src = SuggestionSourceType.llm_extraction.value
 
             if info.address:
                 suggestions.append(EmailDealSuggestion(
                     inbound_email_id=email_row.id,
-                    deal_id=deal.id,
+                    opportunity_id=opportunity.id,
                     field_path="address",
                     suggested_value=info.address,
                     confidence=info.address_confidence,
@@ -606,7 +554,7 @@ async def _process_async(inbound_email_id: str, resend_email_id: str) -> None:
             if info.asking_price:
                 suggestions.append(EmailDealSuggestion(
                     inbound_email_id=email_row.id,
-                    deal_id=deal.id,
+                    opportunity_id=opportunity.id,
                     field_path="acquisition_cost",
                     suggested_value=str(info.asking_price),
                     confidence=info.price_confidence,
@@ -615,7 +563,7 @@ async def _process_async(inbound_email_id: str, resend_email_id: str) -> None:
             if info.unit_count:
                 suggestions.append(EmailDealSuggestion(
                     inbound_email_id=email_row.id,
-                    deal_id=deal.id,
+                    opportunity_id=opportunity.id,
                     field_path="unit_count",
                     suggested_value=str(info.unit_count),
                     confidence=0.8,
@@ -624,7 +572,7 @@ async def _process_async(inbound_email_id: str, resend_email_id: str) -> None:
             if info.property_type:
                 suggestions.append(EmailDealSuggestion(
                     inbound_email_id=email_row.id,
-                    deal_id=deal.id,
+                    opportunity_id=opportunity.id,
                     field_path="property_type",
                     suggested_value=info.property_type,
                     confidence=0.7,
@@ -633,28 +581,19 @@ async def _process_async(inbound_email_id: str, resend_email_id: str) -> None:
             for s in suggestions:
                 session.add(s)
 
-            # --- Queue proforma parse for .xlsx attachments ---
-            task_ids: list[str] = []
-            for att in attachments:
-                filename = att.get("filename", "")
-                if filename.lower().endswith((".xlsx", ".xls")) and att.get("payload_b64"):
-                    try:
-                        task_ids.extend(
-                            await _queue_proforma(att, deal.id, session)
-                        )
-                    except Exception as exc:
-                        logger.warning("Failed to queue proforma for %s: %s", filename, exc)
+            # Note: proforma .xlsx parse is intentionally NOT queued here.
+            # parse_proforma needs a scenario_id (model_id) which doesn't
+            # exist yet. The /deals/new modal that creates the Deal+Scenario
+            # is the right place to kick off proforma parsing — track this
+            # as a follow-up when the modal-side integration lands.
 
-            if task_ids:
-                email_row.proforma_task_ids = task_ids
-
-            email_row.status = InboundEmailStatus.deal_created.value
-            debug_log.append("OK: pipeline complete, status=deal_created")
+            email_row.status = InboundEmailStatus.opportunity_created.value
+            debug_log.append("OK: pipeline complete, status=opportunity_created")
             email_row.debug_log = "\n".join(debug_log)[-50000:]
             await session.commit()
 
             # --- Notification email ---
-            await _notify_org(org, email_row, deal, info)
+            await _notify_org(org, email_row, opportunity, info)
 
         except Exception as exc:
             import traceback
@@ -670,43 +609,13 @@ async def _process_async(inbound_email_id: str, resend_email_id: str) -> None:
                 pass
 
 
-async def _queue_proforma(
-    attachment: dict,
-    deal_id: UUID,
-    session: Any,
-) -> list[str]:
-    """Store xlsx in Redis and queue parse_proforma task. Returns list of task IDs."""
-    import redis  # type: ignore
-    import uuid as _uuid_mod
-
-    from app.tasks.proforma_parse import PARSE_PROFORMA_TASK
-
-    r = redis.from_url(settings.redis_url, decode_responses=False)
-    task_id = _uuid_mod.uuid4().hex
-    payload = base64.b64decode(attachment["payload_b64"])
-    r.set(f"proforma:{task_id}:file", payload, ex=86400)
-
-    # Queue with placeholder sheet names — user selects in review UI
-    celery_app.send_task(
-        PARSE_PROFORMA_TASK,
-        kwargs={
-            "task_id": task_id,
-            "model_id": str(deal_id),
-            "revenue_sheet": "",
-            "opex_sheet": "",
-        },
-        queue="analysis",
-    )
-    return [task_id]
-
-
 async def _notify_org(
     org: Any,
     email_row: Any,
-    deal: Any,
+    opportunity: Any,
     info: "ExtractedDealInfo",
 ) -> None:
-    """Send notification email to org admins when a new preliminary deal is created."""
+    """Send notification email to org admins when an opportunity is created from an inbound email."""
     if not settings.resend_api_key:
         return
 
@@ -728,14 +637,15 @@ async def _notify_org(
         for user in users:
             if not user.email:
                 continue
-            subject = f"New deal from email: {email_row.subject or email_row.sender_email}"
+            subject = f"New opportunity from email: {email_row.subject or email_row.sender_email}"
             body = (
-                f"A new preliminary deal was created from an inbound email.\n\n"
+                f"A new opportunity was created from an inbound email.\n\n"
                 f"From: {email_row.sender_email}\n"
                 f"Subject: {email_row.subject or '(no subject)'}\n"
                 f"Address: {info.address or '(not detected)'}\n"
                 f"Asking Price: {'${:,.0f}'.format(info.asking_price) if info.asking_price else '(not detected)'}\n\n"
-                f"Review at: {settings.app_base_url}/ui/deals/email/{email_row.id}/review"
+                f"Review extracted fields and finish deal creation at:\n"
+                f"{settings.app_base_url}/ui/deals/email/{email_row.id}/review"
             )
             payload = {
                 "from": f"{settings.email_from_name} <{settings.email_from}>",

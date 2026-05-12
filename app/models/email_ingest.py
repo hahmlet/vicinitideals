@@ -16,7 +16,7 @@ from app.models.base import Base
 class InboundEmailStatus(str, enum.Enum):
     pending = "pending"
     processing = "processing"
-    deal_created = "deal_created"
+    opportunity_created = "opportunity_created"
     failed = "failed"
     spam = "spam"
 
@@ -51,9 +51,9 @@ class InboundEmail(Base):
     status: Mapped[str] = mapped_column(
         String(30), nullable=False, default=InboundEmailStatus.pending.value
     )
-    deal_id: Mapped[uuid.UUID | None] = mapped_column(
+    opportunity_id: Mapped[uuid.UUID | None] = mapped_column(
         UUID(as_uuid=True),
-        ForeignKey("deals.id", ondelete="SET NULL"),
+        ForeignKey("opportunities.id", ondelete="SET NULL"),
         nullable=True,
     )
     proforma_task_ids: Mapped[list] = mapped_column(
@@ -69,8 +69,8 @@ class InboundEmail(Base):
     organization: Mapped["Organization"] = relationship(  # type: ignore[name-defined]
         "Organization"
     )
-    deal: Mapped["Deal | None"] = relationship(  # type: ignore[name-defined]
-        "Deal", foreign_keys=[deal_id]
+    opportunity: Mapped["Opportunity | None"] = relationship(  # type: ignore[name-defined]
+        "Opportunity", foreign_keys=[opportunity_id]
     )
     suggestions: Mapped[list["EmailDealSuggestion"]] = relationship(
         "EmailDealSuggestion",
@@ -92,10 +92,10 @@ class EmailDealSuggestion(Base):
         ForeignKey("inbound_emails.id", ondelete="CASCADE"),
         nullable=False,
     )
-    deal_id: Mapped[uuid.UUID] = mapped_column(
+    opportunity_id: Mapped[uuid.UUID | None] = mapped_column(
         UUID(as_uuid=True),
-        ForeignKey("deals.id", ondelete="CASCADE"),
-        nullable=False,
+        ForeignKey("opportunities.id", ondelete="CASCADE"),
+        nullable=True,
     )
     field_path: Mapped[str] = mapped_column(Text(), nullable=False)
     suggested_value: Mapped[str | None] = mapped_column(Text(), nullable=True)
