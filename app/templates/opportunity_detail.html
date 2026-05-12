@@ -55,9 +55,9 @@
       Parcels
     </button>
     {% endif %}
-    {% if opp.promotion_source in ('loopnet', 'crexi', 'scraper') %}
+    {% if opp.promotion_source in ('loopnet', 'crexi', 'scraper', 'email') %}
     <form method="post" action="/ui/opportunities/{{ opp.id }}/dissolve" style="margin:0"
-          onsubmit="return confirm('Remove this listing from your pipeline? The underlying data will not be deleted.')">
+          onsubmit="return confirm('Remove this opportunity from your pipeline? Linked email history will be preserved.')">
       <button type="submit" class="btn btn-danger btn-sm">Remove</button>
     </form>
     {% elif not opp.archived %}

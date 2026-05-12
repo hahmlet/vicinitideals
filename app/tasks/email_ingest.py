@@ -527,6 +527,7 @@ async def _process_async(inbound_email_id: str, resend_email_id: str) -> None:
                 source="email",
                 source_id=source_id,
                 source_url="",
+                promotion_source="email",
                 parcel_id=parcel_id,
                 address_raw=info.address,
                 asking_price=asking_price_dec,
