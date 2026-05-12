@@ -4,6 +4,7 @@ from app.api.routers import (
     capital,
     deals,
     dedup,
+    email_ingest,
     ingest,
     listings,
     models,
@@ -28,6 +29,7 @@ ROUTERS = [
     portfolios.router,
     ingest.router,
     settings.router,
+    email_ingest.router,
 ]
 
 __all__ = ["ROUTERS"]
