@@ -249,6 +249,41 @@ def _sheet_to_text(ws: Any, property_column: str | None = None, max_rows: int = 
     return "\n".join(lines)
 
 
+def _markitdown_to_text(content: bytes, filename: str) -> str:
+    """Convert any MarkitDown-supported file (PDF, DOCX, HTML, PPTX, etc.)
+    to markdown text suitable for the LLM prompts.
+
+    Writes bytes to a temp file because MarkitDown's public API is path-based.
+    Returns empty string on failure so the caller can surface a clean error.
+    """
+    import os
+    import tempfile
+    try:
+        from markitdown import MarkItDown  # type: ignore
+    except ImportError:
+        logger.error("markitdown not installed — cannot parse non-xlsx documents")
+        return ""
+
+    ext = os.path.splitext(filename)[1] or ".bin"
+    tmp_path: str | None = None
+    try:
+        with tempfile.NamedTemporaryFile(suffix=ext, delete=False) as tmp:
+            tmp.write(content)
+            tmp_path = tmp.name
+        md = MarkItDown()
+        result = md.convert(tmp_path)
+        return (getattr(result, "text_content", "") or "").strip()
+    except Exception as exc:
+        logger.warning("MarkitDown conversion failed: %s", exc)
+        return ""
+    finally:
+        if tmp_path and os.path.exists(tmp_path):
+            try:
+                os.remove(tmp_path)
+            except OSError:
+                pass
+
+
 def _llm_client() -> Any:
     """Return an instructor-patched OpenAI client pointed at local Ollama."""
     import instructor  # type: ignore
@@ -270,8 +305,14 @@ def parse_proforma(
     revenue_sheet: str,
     opex_sheet: str,
     property_column: str | None = None,
+    file_kind: str = "xlsx",
 ) -> None:
-    """Parse a pro forma spreadsheet and write structured results to Redis."""
+    """Parse a pro forma file and write structured results to Redis.
+
+    file_kind="xlsx": user has picked specific sheets via the preflight UI.
+    file_kind="doc": PDF / DOCX / HTML / etc. — MarkitDown converts the
+    whole document and the resulting markdown is fed to both LLM passes.
+    """
     r = _redis_client()
     warnings: list[str] = []
 
@@ -279,25 +320,35 @@ def parse_proforma(
         # ------------------------------------------------------------------
         # Step 1 — Read file from Redis
         # ------------------------------------------------------------------
-        _set_progress(r, task_id, 1, 3, "Reading spreadsheet…")
+        _set_progress(r, task_id, 1, 3, "Reading document…")
         file_bytes: bytes | None = r.get(f"proforma:{task_id}:file")
         if not file_bytes:
             _set_error(r, task_id, "Upload expired or not found. Please upload the file again.")
             return
 
-        wb = openpyxl.load_workbook(io.BytesIO(file_bytes), data_only=True)
-
-        if revenue_sheet not in wb.sheetnames:
-            warnings.append(f"Revenue sheet '{revenue_sheet}' not found — skipping revenue parse.")
-            revenue_text = ""
+        if file_kind == "doc":
+            filename_raw = r.get(f"proforma:{task_id}:filename") or b"document"
+            filename = filename_raw.decode() if isinstance(filename_raw, bytes) else str(filename_raw)
+            doc_markdown = _markitdown_to_text(file_bytes, filename)
+            if not doc_markdown:
+                _set_error(r, task_id, "Could not extract text from this file. Try a PDF, DOCX, or XLSX.")
+                return
+            revenue_text = doc_markdown
+            opex_text = doc_markdown
         else:
-            revenue_text = _sheet_to_text(wb[revenue_sheet])
+            wb = openpyxl.load_workbook(io.BytesIO(file_bytes), data_only=True)
 
-        if opex_sheet not in wb.sheetnames:
-            warnings.append(f"OpEx sheet '{opex_sheet}' not found — skipping expense parse.")
-            opex_text = ""
-        else:
-            opex_text = _sheet_to_text(wb[opex_sheet], property_column=property_column)
+            if revenue_sheet not in wb.sheetnames:
+                warnings.append(f"Revenue sheet '{revenue_sheet}' not found — skipping revenue parse.")
+                revenue_text = ""
+            else:
+                revenue_text = _sheet_to_text(wb[revenue_sheet])
+
+            if opex_sheet not in wb.sheetnames:
+                warnings.append(f"OpEx sheet '{opex_sheet}' not found — skipping expense parse.")
+                opex_text = ""
+            else:
+                opex_text = _sheet_to_text(wb[opex_sheet], property_column=property_column)
 
         client = _llm_client()
 

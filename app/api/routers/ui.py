@@ -10461,20 +10461,54 @@ async def proforma_preflight(
     model_id: UUID,
     file: UploadFile = File(...),
 ) -> HTMLResponse:
-    """Receive uploaded file, read sheet names + column headers (no LLM),
-    return the sheet-picker fragment so the user can select revenue/opex sheets
-    and (if detected) a property column before queuing the parse task."""
+    """Receive uploaded file. For .xlsx files, read sheet names + column
+    headers and return the sheet-picker fragment. For PDF/DOCX/HTML/etc.,
+    queue the parse task directly (whole-document mode) and return the
+    progress poller — there are no sheets to pick."""
     import openpyxl
+    import os as _os
 
     content = await file.read()
     if not content:
         return HTMLResponse("<p class='text-red-500'>Empty file uploaded.</p>", status_code=400)
 
+    filename = file.filename or ""
+    ext = _os.path.splitext(filename)[1].lower().lstrip(".")
+    file_kind = "xlsx" if ext in {"xlsx", "xlsm", "xlsb"} else "doc"
+
+    task_id = str(_uuid_mod.uuid4())
+    import redis as _redis  # type: ignore
+    r = _redis.from_url(settings.redis_url, decode_responses=False)
+    r.set(f"proforma:{task_id}:file", content, ex=86_400)
+    r.set(f"proforma:{task_id}:filename", filename, ex=86_400)
+    r.set(f"proforma:{task_id}:kind", file_kind, ex=86_400)
+
+    if file_kind == "doc":
+        # No sheets to pick — queue the task immediately and return the
+        # progress poller. MarkitDown will convert the whole document.
+        from app.tasks.proforma_parse import PARSE_PROFORMA_TASK
+        from app.tasks.celery_app import celery_app as _celery
+        _celery.send_task(
+            PARSE_PROFORMA_TASK,
+            kwargs={
+                "task_id": task_id,
+                "model_id": str(model_id),
+                "revenue_sheet": "",
+                "opex_sheet": "",
+                "property_column": None,
+                "file_kind": "doc",
+            },
+        )
+        return templates.TemplateResponse(
+            request,
+            "partials/proforma_progress.html",
+            {"model_id": model_id, "task_id": task_id},
+        )
+
     try:
         wb = openpyxl.load_workbook(io.BytesIO(content), data_only=True, read_only=True)
         sheet_names = wb.sheetnames
 
-        # For each sheet, peek at the first non-empty row to get column headers
         sheet_columns: dict[str, list[str]] = {}
         for name in sheet_names:
             ws = wb[name]
@@ -10488,12 +10522,6 @@ async def proforma_preflight(
         wb.close()
     except Exception as exc:
         return HTMLResponse(f"<p class='text-red-500'>Could not read file: {exc}</p>", status_code=400)
-
-    # Store bytes in Redis; task will read them when queued
-    task_id = str(_uuid_mod.uuid4())
-    import redis as _redis  # type: ignore
-    r = _redis.from_url(settings.redis_url, decode_responses=False)
-    r.set(f"proforma:{task_id}:file", content, ex=86_400)
 
     return templates.TemplateResponse(
         request,
@@ -10540,6 +10568,7 @@ async def upload_proforma(
             "revenue_sheet": revenue_sheet,
             "opex_sheet": opex_sheet,
             "property_column": property_column or None,
+            "file_kind": "xlsx",
         },
     )
 

@@ -45,12 +45,12 @@
           ondrop="handleDrop(event)">
           <div style="font-size:28px;margin-bottom:8px">📂</div>
           <div style="font-weight:600;margin-bottom:4px">Drop your file here</div>
-          <div style="font-size:12px;color:var(--text-muted);margin-bottom:16px">Excel spreadsheets (.xlsx, .xls) — pro formas, OMs, rent rolls</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-bottom:16px">Excel, PDF, Word, HTML — pro formas, OMs, rent rolls</div>
           <div id="file-name-display" style="font-size:13px;font-weight:600;color:var(--accent);display:none;margin-bottom:12px"></div>
           <button type="button" class="btn btn-ghost" style="font-size:12px" onclick="event.stopPropagation();document.getElementById('proforma-file-input').click()">Browse files</button>
         </div>
 
-        <input type="file" id="proforma-file-input" name="file" accept=".xlsx,.xls"
+        <input type="file" id="proforma-file-input" name="file" accept=".xlsx,.xls,.xlsm,.pdf,.docx,.doc,.html,.htm,.pptx"
                style="display:none" onchange="onFileSelected(this)">
 
         <div id="upload-spinner" style="display:none;text-align:center;padding:12px 0;color:var(--text-muted);font-size:13px">
