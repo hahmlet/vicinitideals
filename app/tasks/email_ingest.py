@@ -171,7 +171,36 @@ def _parse_mime(raw_mime_b64: str | None) -> tuple[str | None, list[dict]]:
 # Async core
 # ---------------------------------------------------------------------------
 
-async def _process_async(inbound_email_id: str) -> None:
+async def _fetch_resend_raw_mime(resend_email_id: str) -> str | None:
+    """Fetch raw MIME from Resend received-email API. Returns base64-encoded bytes or None on failure."""
+    if not settings.resend_api_key:
+        logger.error("resend_api_key not configured — cannot fetch inbound email")
+        return None
+
+    try:
+        import httpx
+        async with httpx.AsyncClient(timeout=30.0) as client:
+            meta_resp = await client.get(
+                f"https://api.resend.com/emails/receiving/{resend_email_id}",
+                headers={"Authorization": f"Bearer {settings.resend_api_key}"},
+            )
+            meta_resp.raise_for_status()
+            meta = meta_resp.json()
+            raw_obj = meta.get("raw") or {}
+            download_url = raw_obj.get("download_url")
+            if not download_url:
+                logger.warning("Resend email %s missing raw.download_url", resend_email_id)
+                return None
+
+            raw_resp = await client.get(download_url)
+            raw_resp.raise_for_status()
+            return base64.b64encode(raw_resp.content).decode()
+    except Exception as exc:
+        logger.warning("Resend raw MIME fetch failed for %s: %s", resend_email_id, exc)
+        return None
+
+
+async def _process_async(inbound_email_id: str, resend_email_id: str) -> None:
     from decimal import Decimal
     from sqlalchemy import select
 
@@ -205,8 +234,12 @@ async def _process_async(inbound_email_id: str) -> None:
             email_row.status = InboundEmailStatus.processing.value
             await session.commit()
 
+            # --- Fetch raw MIME from Resend ---
+            raw_mime_b64 = await _fetch_resend_raw_mime(resend_email_id)
+            email_row.raw_mime_b64 = raw_mime_b64
+
             # --- Parse MIME ---
-            body_text, attachments = _parse_mime(email_row.raw_mime_b64)
+            body_text, attachments = _parse_mime(raw_mime_b64)
             email_row.body_text = body_text
             # Strip raw MIME after parsing (72h retention not needed at task time)
             email_row.raw_mime_b64 = None
@@ -479,6 +512,6 @@ async def _notify_org(
 # ---------------------------------------------------------------------------
 
 @celery_app.task(bind=True, name=PROCESS_EMAIL_TASK)
-def process_inbound_email(self, inbound_email_id: str) -> None:
+def process_inbound_email(self, inbound_email_id: str, resend_email_id: str) -> None:
     """Parse inbound email, extract deal data, create preliminary deal."""
-    asyncio.run(_process_async(inbound_email_id))
+    asyncio.run(_process_async(inbound_email_id, resend_email_id))

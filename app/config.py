@@ -154,7 +154,8 @@ class Settings(BaseSettings):
     # -------------------------------------------------------------------------
     # Shared secret sent by the Cloudflare Email Worker in X-Email-Ingest-Secret header.
     # Generate with: openssl rand -hex 32
-    email_ingest_webhook_secret: str = "changeme-generate-with-openssl-rand-hex-32"
+    # Resend inbound webhook signing secret (from Resend dashboard, Svix format: whsec_...)
+    resend_webhook_secret: str = ""
 
     # -------------------------------------------------------------------------
     # Financial model defaults

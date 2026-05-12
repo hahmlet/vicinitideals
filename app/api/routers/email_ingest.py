@@ -2,6 +2,11 @@
 
 from __future__ import annotations
 
+import base64
+import hashlib
+import hmac
+import json
+import time
 import uuid
 from pathlib import Path
 from typing import Any
@@ -13,6 +18,9 @@ from sqlalchemy import select
 
 from app.api.deps import DBSession, CurrentUserId
 from app.config import settings
+
+# Reject webhooks with timestamps more than 5 minutes off (Svix default)
+_WEBHOOK_TOLERANCE_SECONDS = 300
 
 # ---------------------------------------------------------------------------
 # Template setup (same dir as ui.py)
@@ -37,15 +45,22 @@ async def receive_inbound_email(
     request: Request,
     session: DBSession,
 ) -> dict[str, Any]:
-    """Cloudflare Email Worker webhook. Validates shared secret, creates InboundEmail row."""
-    secret = request.headers.get("X-Email-Ingest-Secret", "")
-    if secret != settings.email_ingest_webhook_secret:
-        raise HTTPException(status_code=403, detail="Invalid webhook secret")
+    """Resend inbound webhook. Verifies Svix signature, stores email metadata, queues Celery task to fetch full content."""
+    raw_body = await request.body()
+    _verify_svix_signature(request, raw_body)
 
-    body = await request.json()
-    sender = str(body.get("from", ""))
-    subject = body.get("subject") or None
-    raw_mime = body.get("rawMime") or None
+    try:
+        payload = json.loads(raw_body)
+    except json.JSONDecodeError as exc:
+        raise HTTPException(status_code=400, detail="Invalid JSON") from exc
+
+    if payload.get("type") != "email.received":
+        return {"status": "ignored", "reason": "event type not email.received"}
+
+    data = payload.get("data") or {}
+    resend_email_id = data.get("email_id")
+    if not resend_email_id:
+        raise HTTPException(status_code=400, detail="Missing email_id")
 
     from app.models.email_ingest import InboundEmail, InboundEmailStatus
     from app.models.org import Organization
@@ -58,21 +73,61 @@ async def receive_inbound_email(
     email_row = InboundEmail(
         id=uuid.uuid4(),
         org_id=org.id,
-        sender_email=sender,
-        subject=subject,
-        raw_mime_b64=raw_mime,
+        sender_email=str(data.get("from") or ""),
+        subject=data.get("subject") or None,
+        raw_mime_b64=None,  # Fetched by Celery task via Resend API
         status=InboundEmailStatus.pending.value,
         proforma_task_ids=[],
-        attachments_meta=[],
+        attachments_meta=data.get("attachments") or [],
     )
     session.add(email_row)
     await session.commit()
     await session.refresh(email_row)
 
     from app.tasks.email_ingest import process_inbound_email  # noqa: PLC0415
-    process_inbound_email.delay(str(email_row.id))
+    process_inbound_email.delay(str(email_row.id), resend_email_id)
 
     return {"status": "accepted", "id": str(email_row.id)}
+
+
+def _verify_svix_signature(request: Request, body: bytes) -> None:
+    """Verify Resend (Svix) webhook signature using HMAC-SHA256.
+
+    Raises 403 if signature invalid, secret unset, or timestamp out of tolerance.
+    """
+    secret = settings.resend_webhook_secret
+    if not secret:
+        raise HTTPException(status_code=403, detail="Webhook secret not configured")
+
+    svix_id = request.headers.get("svix-id", "")
+    svix_timestamp = request.headers.get("svix-timestamp", "")
+    svix_signature = request.headers.get("svix-signature", "")
+    if not (svix_id and svix_timestamp and svix_signature):
+        raise HTTPException(status_code=403, detail="Missing Svix headers")
+
+    try:
+        ts = int(svix_timestamp)
+    except ValueError as exc:
+        raise HTTPException(status_code=403, detail="Invalid timestamp") from exc
+    if abs(time.time() - ts) > _WEBHOOK_TOLERANCE_SECONDS:
+        raise HTTPException(status_code=403, detail="Timestamp out of tolerance")
+
+    # Strip "whsec_" prefix if present, then base64-decode the key
+    secret_key = secret.removeprefix("whsec_")
+    try:
+        key_bytes = base64.b64decode(secret_key)
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail="Malformed webhook secret") from exc
+
+    signed_payload = f"{svix_id}.{svix_timestamp}.".encode() + body
+    expected_sig = base64.b64encode(
+        hmac.new(key_bytes, signed_payload, hashlib.sha256).digest()
+    ).decode()
+
+    # Header format: "v1,sig1 v1,sig2" — any version-prefixed match wins
+    provided_sigs = [s.split(",", 1)[1] for s in svix_signature.split() if "," in s]
+    if not any(hmac.compare_digest(expected_sig, sig) for sig in provided_sigs):
+        raise HTTPException(status_code=403, detail="Invalid signature")
 
 
 @router.post("/email-suggestions/{suggestion_id}/accept")
