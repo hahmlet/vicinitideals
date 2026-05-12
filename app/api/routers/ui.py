@@ -10684,6 +10684,28 @@ async def proforma_confirm(
             flag_modified(project, "unit_mix")
             session.add(project)
 
+            # Seed IncomeStream rows so the Revenue tab is populated.
+            # Overwrite semantics: drop existing streams for this project, then
+            # insert one per unit mix row using rent_monthly as the base.
+            await session.execute(
+                delete(IncomeStream).where(IncomeStream.project_id == project_id)
+            )
+            for row in unit_mix_rows:
+                rent = Decimal(str(row.get("rent_monthly") or 0))
+                count = int(row.get("unit_count") or 0)
+                if count <= 0:
+                    continue
+                session.add(IncomeStream(
+                    project_id=project_id,
+                    label=f"{row['label']} Rent",
+                    stream_type=IncomeStreamType.residential_rent,
+                    unit_count=count,
+                    amount_per_unit_monthly=rent,
+                    stabilized_occupancy_pct=Decimal("95"),
+                    escalation_rate_pct_annual=Decimal("3"),
+                    active_in_phases=["lease_up", "stabilized"],
+                ))
+
     # ---------- OpEx lines ----------
     # Label field holds the mapped category (investor export groups by label).
     # Original source label is preserved in notes.
