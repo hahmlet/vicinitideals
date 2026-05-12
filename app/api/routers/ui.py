@@ -10634,19 +10634,21 @@ async def proforma_confirm(
     from sqlalchemy import delete
 
     form = await request.form()
-    from sqlalchemy import delete
 
-    # Resolve the project linked to this DealModel
-    dm_result = await session.execute(
-        select(DealModel).options(selectinload(DealModel.operational_inputs))
-        .where(DealModel.id == model_id)
-    )
-    deal_model = dm_result.scalar_one_or_none()
+    deal_model = await session.get(DealModel, model_id)
     if not deal_model:
         raise HTTPException(status_code=404, detail="Deal model not found")
 
-    project_id = deal_model.project_id
-    inputs = deal_model.operational_inputs
+    default_project = (await session.execute(
+        select(Project).where(Project.scenario_id == model_id).order_by(Project.created_at).limit(1)
+    )).scalar_one_or_none()
+    if not default_project:
+        raise HTTPException(status_code=400, detail="No project found")
+
+    project_id = default_project.id
+    inputs = (await session.execute(
+        select(OperationalInputs).where(OperationalInputs.project_id == project_id)
+    )).scalar_one_or_none()
 
     # ---------- Revenue / unit mix (JSONB on Project) ----------
     names = form.getlist("unit_type_name[]")
@@ -10731,14 +10733,16 @@ async def proforma_skip(
     session: DBSession,
 ) -> HTMLResponse:
     """Skip pro forma import — advance wizard to Step 2 (debt types)."""
-    result = await session.execute(
-        select(DealModel).options(
-            selectinload(DealModel.operational_inputs)
-        ).where(DealModel.id == model_id)
-    )
-    deal_model = result.scalar_one_or_none()
+    deal_model = await session.get(DealModel, model_id)
     if not deal_model:
         raise HTTPException(status_code=404, detail="Deal model not found")
+
+    skip_project = (await session.execute(
+        select(Project).where(Project.scenario_id == model_id).order_by(Project.created_at).limit(1)
+    )).scalar_one_or_none()
+    skip_inputs = (await session.execute(
+        select(OperationalInputs).where(OperationalInputs.project_id == skip_project.id)
+    )).scalar_one_or_none() if skip_project else None
 
     return templates.TemplateResponse(
         request,
@@ -10746,7 +10750,7 @@ async def proforma_skip(
         {
             "model_id": model_id,
             "step": 2,
-            "inputs": deal_model.operational_inputs,
+            "inputs": skip_inputs,
             "model": deal_model,
         },
     )

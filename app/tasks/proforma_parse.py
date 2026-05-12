@@ -165,6 +165,7 @@ def _postprocess_expense_lines(lines: list[dict]) -> list[dict]:
 
     - Snap mapped_category to canonical spelling via fuzzy match
     - Force is_operating_expense=False for debt/total rows regardless of LLM
+    - Round annual_amount to nearest whole dollar
     - Keep all rows (capture is essential even when unmappable)
     """
     out = []
@@ -174,6 +175,10 @@ def _postprocess_expense_lines(lines: list[dict]) -> list[dict]:
             line["is_operating_expense"] = False
         snapped = _snap_category(line.get("mapped_category"))
         line["mapped_category"] = snapped
+        try:
+            line["annual_amount"] = round(float(line.get("annual_amount", 0)))
+        except (TypeError, ValueError):
+            line["annual_amount"] = 0
         out.append(line)
     return out
 

@@ -15,7 +15,7 @@
 
 <style>
 .conf-dot {
-  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 3px;
+  display: inline-block; width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; vertical-align: middle;
 }
 .conf-high  { background: #38a169; }
 .conf-mid   { background: #d69e2e; }
@@ -114,8 +114,11 @@
                      style="width:80px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
             </td>
             <td style="text-align:right">
-              <input type="number" name="unit_type_rent[]" value="{{ u.avg_monthly_rent|round(0)|int }}" min="0"
-                     style="width:90px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
+              <div style="display:flex;align-items:center;justify-content:flex-end;gap:2px">
+                <span style="font-size:13px;color:var(--text-muted)">$</span>
+                <input type="text" name="unit_type_rent[]" value="{{ u.avg_monthly_rent|round(0)|int }}" class="amount-input"
+                       style="width:80px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
+              </div>
             </td>
           </tr>
           {% endfor %}
@@ -174,8 +177,11 @@
               </select>
             </td>
             <td style="text-align:right">
-              <input type="number" name="expense_amount[]" value="{{ e.annual_amount|round(0)|int }}" min="0" step="1"
-                     style="width:110px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
+              <div style="display:flex;align-items:center;justify-content:flex-end;gap:2px">
+                <span style="font-size:13px;color:var(--text-muted)">$</span>
+                <input type="text" name="expense_amount[]" value="{{ e.annual_amount|round(0)|int }}" class="amount-input"
+                       style="width:100px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
+              </div>
             </td>
           </tr>
           {% endfor %}
@@ -218,4 +224,24 @@ function toggleAll(masterCheckbox) {
     if (rowId) toggleRow(cb, rowId);
   });
 }
+
+// Format amount inputs with commas on load
+document.querySelectorAll('.amount-input').forEach(input => {
+  const raw = parseInt(input.value.replace(/[^0-9]/g, ''), 10);
+  if (!isNaN(raw)) input.value = raw.toLocaleString('en-US');
+  input.addEventListener('blur', function() {
+    const v = parseInt(this.value.replace(/[^0-9]/g, ''), 10);
+    if (!isNaN(v)) this.value = v.toLocaleString('en-US');
+  });
+  input.addEventListener('focus', function() {
+    this.value = this.value.replace(/,/g, '');
+  });
+});
+
+// Strip commas before HTMX submits so server receives plain integers
+document.getElementById('proforma-confirm-form').addEventListener('htmx:configRequest', function() {
+  document.querySelectorAll('.amount-input').forEach(input => {
+    input.value = input.value.replace(/,/g, '');
+  });
+});
 </script>

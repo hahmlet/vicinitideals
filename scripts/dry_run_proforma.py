@@ -117,6 +117,10 @@ def _postprocess_expense_lines(lines: list[dict]) -> list[dict]:
         if _is_debt_or_total(label):
             line["is_operating_expense"] = False
         line["mapped_category"] = _snap_category(line.get("mapped_category"))
+        try:
+            line["annual_amount"] = round(float(line.get("annual_amount", 0)))
+        except (TypeError, ValueError):
+            line["annual_amount"] = 0
         out.append(line)
     return out
 
