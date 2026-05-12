@@ -99,6 +99,85 @@ def _set_done(r: Any, task_id: str) -> None:
     r.set(f"proforma:{task_id}:progress", payload, ex=_REDIS_TTL)
 
 
+_DEBT_KEYWORDS: frozenset[str] = frozenset({
+    "depreciation", "interest", "amortization", "principal",
+    "debt service", "mortgage", "loan fee", "income tax",
+    "total income", "total expenses", "total other", "net income",
+    "net operating", "subtotal", "total revenue", "utilities total",
+    "total utilities", "total opex",
+})
+
+_EXCLUDE_ROW_PREFIXES: tuple[str, ...] = (
+    "total", "subtotal", "net ", "grand total",
+)
+
+
+def _is_debt_or_total(label: str) -> bool:
+    """Return True if the label looks like a below-the-line or subtotal row."""
+    lower = label.lower().strip()
+    for kw in _DEBT_KEYWORDS:
+        if kw in lower:
+            return True
+    for prefix in _EXCLUDE_ROW_PREFIXES:
+        if lower.startswith(prefix):
+            return True
+    return False
+
+
+def _snap_category(raw: str | None) -> str | None:
+    """Fuzzy-snap a raw LLM category string to the nearest STANDARD_OPEX_CATEGORIES entry.
+
+    Normalises both sides to lowercase ASCII (strips em-dashes, ampersands, etc.)
+    then picks the best token-overlap match.  Returns None if no candidate
+    scores above the 0.40 threshold (lets truly unmappable rows stay null).
+    """
+    if raw is None:
+        return None
+
+    import re
+
+    def _norm(s: str) -> set[str]:
+        s = s.lower()
+        s = re.sub(r"[^a-z0-9 ]", " ", s)
+        return set(s.split())
+
+    raw_tokens = _norm(raw)
+    if not raw_tokens:
+        return None
+
+    best_score = 0.0
+    best_cat: str | None = None
+    for cat in STANDARD_OPEX_CATEGORIES:
+        cat_tokens = _norm(cat)
+        if not cat_tokens:
+            continue
+        overlap = len(raw_tokens & cat_tokens)
+        score = overlap / max(len(raw_tokens | cat_tokens), 1)
+        if score > best_score:
+            best_score = score
+            best_cat = cat
+
+    return best_cat if best_score >= 0.40 else None
+
+
+def _postprocess_expense_lines(lines: list[dict]) -> list[dict]:
+    """Apply deterministic rules on top of the LLM output.
+
+    - Snap mapped_category to canonical spelling via fuzzy match
+    - Force is_operating_expense=False for debt/total rows regardless of LLM
+    - Keep all rows (capture is essential even when unmappable)
+    """
+    out = []
+    for line in lines:
+        label = line.get("original_label", "")
+        if _is_debt_or_total(label):
+            line["is_operating_expense"] = False
+        snapped = _snap_category(line.get("mapped_category"))
+        line["mapped_category"] = snapped
+        out.append(line)
+    return out
+
+
 def _sheet_to_text(ws: Any, property_column: str | None = None, max_rows: int = 200) -> str:
     """Convert an openpyxl worksheet to a plain-text table for the LLM.
 
@@ -221,23 +300,34 @@ def parse_proforma(
             try:
                 opex_prompt = (
                     "You are a real estate financial analyst. The following is tabular data from a "
-                    "spreadsheet's operating expense sheet. For each expense line item:\n"
-                    "1. Extract the annual dollar amount. If the sheet shows monthly columns, sum them.\n"
-                    "2. Map the label to exactly one of the STANDARD CATEGORIES below. "
-                    "Use null if you cannot confidently map it.\n"
-                    "3. Set is_operating_expense=false for below-the-line items: debt service, interest, "
-                    "depreciation, loan fee amortization, principal payments — these are NOT OpEx.\n"
-                    "4. Set confidence to 0.0–1.0 based on how certain you are about the mapping.\n\n"
-                    f"STANDARD CATEGORIES:\n{categories_str}\n\n"
+                    "spreadsheet's operating expense sheet.\n\n"
+                    "RULES — follow exactly:\n"
+                    "1. Return EVERY labeled expense row in the sheet, even if you cannot map it. "
+                    "Do not skip rows or merge rows together.\n"
+                    "2. For each row, extract the annual dollar amount. "
+                    "If the sheet shows monthly columns, sum them to get the annual total. "
+                    "If a TOTAL or annual column is present, use that instead.\n"
+                    "3. Map each label to EXACTLY one category from the STANDARD CATEGORIES list below. "
+                    "Copy the category name character-for-character including dashes and special characters. "
+                    "Set mapped_category=null ONLY if none of the standard categories fit at all.\n"
+                    "4. Set is_operating_expense=false for: debt service, mortgage interest, "
+                    "depreciation, loan fee amortization, principal payments, income tax — these are NOT OpEx. "
+                    "Also exclude subtotal/total rows and income rows.\n"
+                    "5. Set confidence 0.85–1.0 for obvious matches, 0.60–0.84 for reasonable guesses, "
+                    "below 0.60 when unsure.\n\n"
+                    f"STANDARD CATEGORIES (use exact spelling):\n{categories_str}\n\n"
                     "Mapping hints:\n"
-                    "- 'LIFT Monitoring', 'OHCS', 'bond compliance', 'HUD monitoring' → Source Compliance\n"
-                    "- 'Prop Mgmt', 'Property Management', 'On-Site', 'Off-Site' → Property Management\n"
-                    "- 'RE Taxes', 'Real Estate Tax', 'Property Tax', 'Prop. Tax' → Real Estate Taxes\n"
-                    "- 'Police and Fire', 'Municipal' → Real Estate Taxes (if annual assessment) or Other\n"
-                    "- 'Accounting', 'CPA', 'Audit', 'Professional Fees', 'Legal' → Compliance & Legal\n"
-                    "- 'Bank', 'NSF', 'Financing charges' → Bank/Software Fees\n"
-                    "- 'AR Writeoffs', 'Bad Debt', 'Receivables' → is_operating_expense=false "
-                    "(non-cash, excluded from underwriting)\n\n"
+                    "- 'LIFT Monitoring', 'OHCS', 'bond compliance', 'HUD monitoring' -> Source Compliance\n"
+                    "- 'Prop Mgmt', 'On-Site Mgmt', 'Off-Site Mgmt' -> Property Management\n"
+                    "- 'RE Taxes', 'Real Estate Tax', 'Property Tax' -> Real Estate Taxes\n"
+                    "- 'Gresham Police Fire Parks', 'Municipal assessment' -> Real Estate Taxes\n"
+                    "- 'Accounting', 'CPA', 'Audit', 'Professional Fees', 'Legal', 'Licenses' -> Compliance & Legal\n"
+                    "- 'Bank', 'NSF', 'Financing charges', 'Computer', 'Software', 'Internet' -> Bank/Software Fees\n"
+                    "- 'Office Supplies', 'Administrative' -> Administrative\n"
+                    "- 'Tenant Events', 'Resident Activities' -> Resident Services\n"
+                    "- 'Fire Monitoring', 'Security System' -> Security\n"
+                    "- 'Garbage', 'Trash', 'Waste' -> Utilities — Trash\n"
+                    "- 'AR Writeoffs', 'Bad Debt', 'Receivables' -> set is_operating_expense=false\n\n"
                     f"SHEET DATA:\n{opex_text}"
                 )
                 parsed_exp: ParsedExpenses = client.chat.completions.create(
@@ -245,7 +335,9 @@ def parse_proforma(
                     response_model=ParsedExpenses,
                     messages=[{"role": "user", "content": opex_prompt}],
                 )
-                expense_lines = [e.model_dump() for e in parsed_exp.expense_lines]
+                expense_lines = _postprocess_expense_lines(
+                    [e.model_dump() for e in parsed_exp.expense_lines]
+                )
             except Exception as exc:
                 logger.warning("OpEx parse failed: %s", exc)
                 warnings.append(f"OpEx parsing failed: {exc}")

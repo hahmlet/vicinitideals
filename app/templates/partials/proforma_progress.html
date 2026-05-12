@@ -25,6 +25,9 @@
       {% if _error %}
       <div class="wizard-title" style="color:var(--error,#e53e3e)">Import Failed</div>
       <div class="wizard-subtitle">{{ _error }}</div>
+      {% elif _step == 0 %}
+      <div class="wizard-title">Waiting for analysis slot…</div>
+      <div class="wizard-subtitle">Another analysis is running. You're queued — this will start automatically.</div>
       {% else %}
       <div class="wizard-title">Analyzing your file…</div>
       <div class="wizard-subtitle">Running the local model. This usually takes 15–60 seconds.</div>
