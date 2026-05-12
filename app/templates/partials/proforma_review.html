@@ -77,6 +77,13 @@
         {% if unit_types %}
         <div class="section-label">Revenue — Unit Mix</div>
         <table class="review-table">
+          <colgroup>
+            <col style="width:20px">
+            <col>
+            <col style="width:80px">
+            <col style="width:90px">
+            <col style="width:110px">
+          </colgroup>
           <thead>
             <tr>
               <th></th>
@@ -122,9 +129,16 @@
         {% if expense_lines %}
         <div class="section-label" style="margin-top:28px">Operating Expenses</div>
         <table class="review-table">
+          <colgroup>
+            <col style="width:36px">
+            <col style="width:20px">
+            <col style="width:28%">
+            <col>
+            <col style="width:120px">
+          </colgroup>
           <thead>
             <tr>
-              <th style="width:32px"><input type="checkbox" id="check-all" onchange="toggleAll(this)" checked title="Select all"></th>
+              <th><input type="checkbox" id="check-all" onchange="toggleAll(this)" checked title="Select all"></th>
               <th></th>
               <th>Source Label</th>
               <th>Standard Category</th>
@@ -146,13 +160,13 @@
                      onchange="toggleRow(this, 'exp-row-{{ loop.index0 }}')">
             </td>
             <td><span class="conf-dot {{ dot_cls }}" title="Confidence: {{ (conf * 100)|int }}%{% if excluded %} (below-the-line, excluded){% endif %}"></span></td>
-            <td>
+            <td style="word-break:break-word;max-width:0">
               <input type="hidden" name="expense_orig_label[]" value="{{ e.original_label }}">
               <span style="font-size:12px;color:var(--text-muted);{% if excluded %}text-decoration:line-through{% endif %}">{{ e.original_label }}</span>
             </td>
             <td>
               <select name="expense_label[]"
-                      style="width:100%;border:1px solid {% if conf < 0.60 and not excluded %}var(--error,#e53e3e){% else %}var(--border){% endif %};border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px">
+                      style="width:100%;min-width:0;border:1px solid {% if conf < 0.60 and not excluded %}var(--error,#e53e3e){% else %}var(--border){% endif %};border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px">
                 <option value="">— Select category —</option>
                 {% for cat in STANDARD_OPEX_CATEGORIES %}
                 <option value="{{ cat }}" {% if e.mapped_category == cat and conf >= 0.60 %}selected{% endif %}>{{ cat }}</option>
