@@ -69,7 +69,7 @@ class InboundEmail(Base):
         "Organization"
     )
     deal: Mapped["Deal | None"] = relationship(  # type: ignore[name-defined]
-        "Deal", foreign_keys=[deal_id], back_populates="inbound_email"
+        "Deal", foreign_keys=[deal_id]
     )
     suggestions: Mapped[list["EmailDealSuggestion"]] = relationship(
         "EmailDealSuggestion",

@@ -128,7 +128,6 @@ class Deal(Base):
     inbound_email: Mapped["InboundEmail | None"] = relationship(  # type: ignore[name-defined]
         "InboundEmail",
         foreign_keys=[inbound_email_id],
-        back_populates="deal",
     )
 
 
