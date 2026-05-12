@@ -223,7 +223,7 @@
 <div class="action-bar">
   <a href="/ui/email-inbox" class="btn btn-secondary">← Back to Inbox</a>
   {% if deal and scenario %}
-  <a href="/ui/models/{{ scenario.id }}/setup" class="btn btn-primary">
+  <a href="/models/{{ scenario.id }}/builder?new=1" class="btn btn-primary">
     Continue to Deal Setup →
   </a>
   {% elif email.status == "deal_created" %}
