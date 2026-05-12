@@ -21,6 +21,7 @@ celery_app = Celery(
         "app.tasks.loopnet_ingest",
         "app.tasks.oregon_elicense",
         "app.tasks.export",
+        "app.tasks.proforma_parse",
     ],
 )
 
@@ -34,6 +35,7 @@ celery_app.conf.update(
     task_routes={
         "app.tasks.scraper.*": {"queue": "scraping"},
         "app.tasks.scenario.*": {"queue": "analysis"},
+        "app.tasks.proforma_parse.*": {"queue": "analysis"},
         "app.tasks.loopnet_ingest.*": {"queue": "scraping"},
         "app.tasks.oregon_elicense.*": {"queue": "scraping"},
         "app.tasks.export.*": {"queue": "analysis"},

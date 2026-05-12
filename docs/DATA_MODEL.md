@@ -991,6 +991,34 @@ Complete valid values for all enums in the financial data model.
 | ltl_catchup | Accelerated escalation toward catchup_target_rent; reverts to base rate once target reached |
 | value_add_renovation | Post-renovation rent is post_reno_rent_per_unit; pre-reno is in_place_rent_per_unit |
 
+### 13.8 STANDARD_OPEX_CATEGORIES
+
+Defined in `app/models/deal.py`. The investor export groups `OperatingExpenseLine` rows by exact category string. The pro forma import parser maps arbitrary source labels to this vocabulary via LLM confidence scoring.
+
+| Category | Notes |
+|---|---|
+| Real Estate Taxes | Property tax, special assessments |
+| Insurance | Property & liability premiums |
+| Property Management | On-site and off-site management fees |
+| Utilities — Water/Sewer | |
+| Utilities — Electric | |
+| Utilities — Gas | |
+| Utilities — Trash | Garbage removal |
+| Repairs & Maintenance | |
+| Marketing & Leasing | Advertising, leasing commissions |
+| Administrative | Office supplies, bank fees |
+| Payroll | Salaries, benefits, payroll taxes |
+| Landscaping & Snow Removal | |
+| Pest Control | |
+| Cleaning & Janitorial | |
+| Security | |
+| Resident Services | Tenant events, social services |
+| Compliance & Legal | Legal fees, licenses, professional fees |
+| Source Compliance | Funder monitoring — LIFT, OHCS, bond covenant, HUD compliance |
+| Bank/Software Fees | Bank charges, PM software |
+| Unit Turnover | Between-tenant make-ready costs |
+| Other | Catch-all |
+
 ---
 
 ## 14. Deal Change History (scenario_snapshots)

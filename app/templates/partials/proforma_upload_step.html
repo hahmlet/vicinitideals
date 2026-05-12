@@ -1,0 +1,106 @@
+{# Pro Forma Import — Step 1.5: File Upload
+   Shown after income_mode=revenue_opex is selected, before debt setup.
+   Context: model_id
+#}
+
+<div class="wizard-shell" id="deal-setup-wizard">
+
+  <div style="text-align:center;margin-bottom:24px">
+    <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px">Deal Setup</div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:6px">
+      <span style="font-size:12px;color:var(--text-muted)">Step 1</span>
+      <span style="width:20px;height:1px;background:var(--border);display:inline-block"></span>
+      <span style="font-size:12px;font-weight:600;color:var(--accent)">Pro Forma Import</span>
+      <span style="width:20px;height:1px;background:var(--border);display:inline-block"></span>
+      <span style="font-size:12px;color:var(--text-muted)">Debt Setup →</span>
+    </div>
+  </div>
+
+  <div class="wizard-card">
+    <div class="wizard-header">
+      <div class="wizard-title">Import Pro Forma</div>
+      <div class="wizard-subtitle">Upload an existing pro forma, OM, or rent roll to auto-populate revenue and expenses. You can review and adjust everything before it's saved.</div>
+    </div>
+
+    <form id="proforma-upload-form"
+          hx-post="/ui/models/{{ model_id }}/proforma-preflight"
+          hx-target="#deal-setup-wizard"
+          hx-swap="outerHTML"
+          hx-encoding="multipart/form-data"
+          hx-indicator="#upload-spinner">
+      <div class="wizard-body">
+
+        <div id="drop-zone" style="
+          border: 2px dashed var(--border);
+          border-radius: 10px;
+          padding: 40px 24px;
+          text-align: center;
+          cursor: pointer;
+          transition: border-color .15s, background .15s;
+          background: var(--bg);
+        "
+          onclick="document.getElementById('proforma-file-input').click()"
+          ondragover="event.preventDefault();this.style.borderColor='var(--accent)';this.style.background='color-mix(in srgb,var(--accent) 6%,transparent)'"
+          ondragleave="this.style.borderColor='var(--border)';this.style.background='var(--bg)'"
+          ondrop="handleDrop(event)">
+          <div style="font-size:28px;margin-bottom:8px">📂</div>
+          <div style="font-weight:600;margin-bottom:4px">Drop your file here</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-bottom:16px">Excel spreadsheets (.xlsx, .xls) — pro formas, OMs, rent rolls</div>
+          <div id="file-name-display" style="font-size:13px;font-weight:600;color:var(--accent);display:none;margin-bottom:12px"></div>
+          <button type="button" class="btn btn-ghost" style="font-size:12px" onclick="event.stopPropagation();document.getElementById('proforma-file-input').click()">Browse files</button>
+        </div>
+
+        <input type="file" id="proforma-file-input" name="file" accept=".xlsx,.xls"
+               style="display:none" onchange="onFileSelected(this)">
+
+        <div id="upload-spinner" style="display:none;text-align:center;padding:12px 0;color:var(--text-muted);font-size:13px">
+          Reading spreadsheet…
+        </div>
+
+        <div style="margin-top:16px;padding:12px 14px;background:color-mix(in srgb,var(--accent) 5%,var(--bg));border-radius:8px;font-size:12px;color:var(--text-muted)">
+          <strong style="color:var(--text)">What gets imported:</strong> Unit types (count, sq ft, avg rent) and operating expense line items. You'll pick which sheets to use and review every match before anything is saved.
+        </div>
+      </div>
+
+      <div class="wizard-footer">
+        <a hx-get="/ui/models/{{ model_id }}/proforma-skip"
+           hx-target="#deal-setup-wizard"
+           hx-swap="outerHTML"
+           style="font-size:12px;color:var(--text-muted);cursor:pointer;text-decoration:none">
+          Skip, I'll add manually →
+        </a>
+        <button type="submit" id="upload-btn" class="btn btn-primary" disabled>
+          Analyze File →
+        </button>
+      </div>
+    </form>
+  </div>
+
+</div>
+
+<script>
+function onFileSelected(input) {
+  const file = input.files[0];
+  if (!file) return;
+  document.getElementById('file-name-display').textContent = file.name;
+  document.getElementById('file-name-display').style.display = 'block';
+  document.getElementById('upload-btn').disabled = false;
+  document.getElementById('drop-zone').style.borderColor = 'var(--accent)';
+}
+
+function handleDrop(event) {
+  event.preventDefault();
+  const zone = document.getElementById('drop-zone');
+  zone.style.borderColor = 'var(--accent)';
+  zone.style.background = 'var(--bg)';
+  const file = event.dataTransfer.files[0];
+  if (!file) return;
+  const input = document.getElementById('proforma-file-input');
+  const dt = new DataTransfer();
+  dt.items.add(file);
+  input.files = dt.files;
+  onFileSelected(input);
+  // Trigger the HTMX form submission automatically after drop
+  document.getElementById('proforma-upload-form').dispatchEvent(new Event('submit', {bubbles: true}));
+}
+</script>

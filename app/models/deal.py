@@ -500,6 +500,7 @@ STANDARD_OPEX_CATEGORIES: tuple[str, ...] = (
     "Security",
     "Resident Services",
     "Compliance & Legal",
+    "Source Compliance",
     "Bank/Software Fees",
     "Unit Turnover",
     "Other",

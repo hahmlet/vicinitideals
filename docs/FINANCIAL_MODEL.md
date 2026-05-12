@@ -1064,6 +1064,36 @@ else:
 
 The default when creating a new expense line is `scale_with_lease_up = False` (conservative: costs show at full during lease-up). Users opt in to lease-up scaling.
 
+### 5.3 Standard OpEx categories
+
+All expense lines carry a `category` label drawn from `STANDARD_OPEX_CATEGORIES` in `app/models/deal.py`. The investor export groups lines by exact category label; the pro forma import parser maps arbitrary source labels to this vocabulary.
+
+| Category | Typical contents |
+|---|---|
+| Real Estate Taxes | Property tax, special assessments |
+| Insurance | Property & liability premiums |
+| Property Management | On-site and off-site management fees |
+| Utilities — Water/Sewer | Water, sewer, stormwater |
+| Utilities — Electric | Common-area and unit electric |
+| Utilities — Gas | Natural gas |
+| Utilities — Trash | Garbage removal, recycling |
+| Repairs & Maintenance | Routine repairs, elevator, general maintenance |
+| Marketing & Leasing | Advertising, leasing commissions |
+| Administrative | Office supplies, postage, printing |
+| Payroll | Salaries, benefits, payroll taxes |
+| Landscaping & Snow Removal | Grounds maintenance, snow removal |
+| Pest Control | Pest and rodent treatment |
+| Cleaning & Janitorial | Common-area cleaning |
+| Security | Security monitoring, guard service |
+| Resident Services | Tenant events, social services, resident programming |
+| Compliance & Legal | Legal fees, professional fees, licenses |
+| Source Compliance | Funder monitoring fees — LIFT, OHCS, bond covenant reporting, HUD compliance |
+| Bank/Software Fees | Bank service charges, property management software |
+| Unit Turnover | Turnover cleaning, paint, minor repairs between tenants |
+| Other | Catch-all for items not fitting above |
+
+`"Other"` is the catch-all. The investor export groups by this exact label; typos create orphan groups. The pro forma import parser targets these labels for its confidence-scored mapping.
+
 ### OER (Operating Expense Ratio) [investor, lender, app]
 
 **Definition.** Operating expenses divided by effective gross income —

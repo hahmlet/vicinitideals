@@ -37,6 +37,7 @@ api = [
     "pyxirr>=0.10",
     "usaddress>=0.5.10",
     "openpyxl>=3.1",
+    "instructor>=1.3",
     "jinja2>=3.1",
     "python-multipart>=0.0.9",
     "bcrypt>=4.0",
@@ -44,6 +45,8 @@ api = [
 ]
 worker = [
     "celery[redis]>=5.3",
+    "instructor>=1.3",
+    "openpyxl>=3.1",
     "flower>=2.0",
     # Browser automation for ASP.NET WebForms scrapers (Oregon eLicense and
     # future per-firm contact-info adapters). Plain httpx can't trigger the

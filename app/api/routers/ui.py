@@ -16,7 +16,7 @@ from urllib.parse import quote_plus
 from uuid import UUID
 
 import httpx
-from fastapi import APIRouter, Form, HTTPException, Query, Request
+from fastapi import APIRouter, File, Form, HTTPException, Query, Request, UploadFile
 from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse, RedirectResponse, StreamingResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy import and_, func, literal, or_, select
@@ -8004,6 +8004,13 @@ async def deal_setup_wizard_step(
     await session.refresh(inputs)
     await session.refresh(model)
 
+    # After step 1 income-mode selection: offer pro forma upload when revenue_opex.
+    # NOI mode skips directly to debt setup (step 2).
+    if step == 1 and (model.income_mode or "revenue_opex") == "revenue_opex":
+        return templates.TemplateResponse(request, "partials/proforma_upload_step.html", {
+            "request": request, "model_id": model_id,
+        })
+
     next_step = step + 1
     # Seed perm-debt defaults so step 4 shows user/org preference, not template fallback.
     await _seed_wizard_perm_defaults(inputs, session, request)
@@ -10440,6 +10447,297 @@ async def download_import_template(model_id: UUID) -> StreamingResponse:
         buf,
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         headers={"Content-Disposition": "attachment; filename=import-template.xlsx"},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Pro forma import — preflight, upload, status, confirm, skip
+# ---------------------------------------------------------------------------
+
+@router.post("/ui/models/{model_id}/proforma-preflight", response_class=HTMLResponse)
+async def proforma_preflight(
+    request: Request,
+    model_id: UUID,
+    file: UploadFile = File(...),
+) -> HTMLResponse:
+    """Receive uploaded file, read sheet names + column headers (no LLM),
+    return the sheet-picker fragment so the user can select revenue/opex sheets
+    and (if detected) a property column before queuing the parse task."""
+    import openpyxl
+
+    content = await file.read()
+    if not content:
+        return HTMLResponse("<p class='text-red-500'>Empty file uploaded.</p>", status_code=400)
+
+    try:
+        wb = openpyxl.load_workbook(io.BytesIO(content), data_only=True, read_only=True)
+        sheet_names = wb.sheetnames
+
+        # For each sheet, peek at the first non-empty row to get column headers
+        sheet_columns: dict[str, list[str]] = {}
+        for name in sheet_names:
+            ws = wb[name]
+            for row in ws.iter_rows(max_row=10, values_only=True):
+                non_empty = [str(c).strip() for c in row if c is not None]
+                if non_empty:
+                    sheet_columns[name] = non_empty
+                    break
+            else:
+                sheet_columns[name] = []
+        wb.close()
+    except Exception as exc:
+        return HTMLResponse(f"<p class='text-red-500'>Could not read file: {exc}</p>", status_code=400)
+
+    # Store bytes in Redis; task will read them when queued
+    task_id = str(_uuid_mod.uuid4())
+    import redis as _redis  # type: ignore
+    r = _redis.from_url(settings.redis_url, decode_responses=False)
+    r.set(f"proforma:{task_id}:file", content, ex=86_400)
+
+    return templates.TemplateResponse(
+        request,
+        "partials/proforma_preflight.html",
+        {
+            "model_id": model_id,
+            "task_id": task_id,
+            "sheet_names": sheet_names,
+            "sheet_columns": sheet_columns,
+            "STANDARD_OPEX_CATEGORIES": STANDARD_OPEX_CATEGORIES,
+        },
+    )
+
+
+@router.post("/ui/models/{model_id}/upload-proforma", response_class=HTMLResponse)
+async def upload_proforma(
+    request: Request,
+    model_id: UUID,
+    task_id: str = Form(...),
+    revenue_sheet: str = Form(...),
+    opex_sheet: str = Form(...),
+    property_column: str = Form(""),
+) -> HTMLResponse:
+    """Queue the Celery parse task with the user-selected sheet/column coordinates,
+    then return the progress-polling fragment."""
+    from app.tasks.proforma_parse import PARSE_PROFORMA_TASK
+    from app.tasks.celery_app import celery_app as _celery
+
+    _celery.send_task(
+        PARSE_PROFORMA_TASK,
+        kwargs={
+            "task_id": task_id,
+            "model_id": str(model_id),
+            "revenue_sheet": revenue_sheet,
+            "opex_sheet": opex_sheet,
+            "property_column": property_column or None,
+        },
+    )
+
+    return templates.TemplateResponse(
+        request,
+        "partials/proforma_progress.html",
+        {"model_id": model_id, "task_id": task_id},
+    )
+
+
+@router.get("/ui/models/{model_id}/proforma-status/{task_id}", response_class=HTMLResponse)
+async def proforma_status(
+    request: Request,
+    model_id: UUID,
+    task_id: str,
+    session: DBSession,
+) -> HTMLResponse:
+    """HTMX poll endpoint. Returns progress fragment while running; switches to
+    the review fragment when the task completes or errors."""
+    import redis as _redis  # type: ignore
+
+    r = _redis.from_url(settings.redis_url, decode_responses=True)
+    raw = r.get(f"proforma:{task_id}:progress")
+
+    if not raw:
+        return templates.TemplateResponse(
+            request,
+            "partials/proforma_progress.html",
+            {"model_id": model_id, "task_id": task_id, "step": 0, "total": 3, "message": "Queued…"},
+        )
+
+    progress = json.loads(raw)
+    status = progress.get("status", "running")
+
+    if status == "error":
+        return templates.TemplateResponse(
+            request,
+            "partials/proforma_progress.html",
+            {
+                "model_id": model_id,
+                "task_id": task_id,
+                "error": progress.get("message", "Unknown error"),
+            },
+        )
+
+    if status != "done":
+        return templates.TemplateResponse(
+            request,
+            "partials/proforma_progress.html",
+            {
+                "model_id": model_id,
+                "task_id": task_id,
+                "step": progress.get("step", 0),
+                "total": progress.get("total", 3),
+                "message": progress.get("message", ""),
+            },
+        )
+
+    # Done — load result and render review UI
+    raw_result = r.get(f"proforma:{task_id}:result")
+    result = json.loads(raw_result) if raw_result else {"unit_types": [], "expense_lines": [], "warnings": []}
+
+    return templates.TemplateResponse(
+        request,
+        "partials/proforma_review.html",
+        {
+            "model_id": model_id,
+            "task_id": task_id,
+            "unit_types": result.get("unit_types", []),
+            "expense_lines": result.get("expense_lines", []),
+            "warnings": result.get("warnings", []),
+            "STANDARD_OPEX_CATEGORIES": STANDARD_OPEX_CATEGORIES,
+        },
+    )
+
+
+@router.post("/ui/models/{model_id}/proforma-confirm", response_class=HTMLResponse)
+async def proforma_confirm(
+    request: Request,
+    model_id: UUID,
+    session: DBSession,
+) -> HTMLResponse:
+    """Commit user-approved revenue and expense lines to the database.
+
+    Accepts multipart form data built by the review template:
+    - ``unit_type_name[]``, ``unit_type_count[]``, ``unit_type_sqft[]``,
+      ``unit_type_rent[]`` — parallel arrays for each confirmed unit type
+    - ``expense_label[]``, ``expense_amount[]``, ``expense_category[]``,
+      ``expense_include[]`` — parallel arrays for each expense line
+      (``expense_include`` contains the indices of rows the user kept checked)
+    """
+    from sqlalchemy import delete
+
+    form = await request.form()
+    from sqlalchemy import delete
+
+    # Resolve the project linked to this DealModel
+    dm_result = await session.execute(
+        select(DealModel).options(selectinload(DealModel.operational_inputs))
+        .where(DealModel.id == model_id)
+    )
+    deal_model = dm_result.scalar_one_or_none()
+    if not deal_model:
+        raise HTTPException(status_code=404, detail="Deal model not found")
+
+    project_id = deal_model.project_id
+    inputs = deal_model.operational_inputs
+
+    # ---------- Revenue / unit mix (JSONB on Project) ----------
+    names = form.getlist("unit_type_name[]")
+    counts = form.getlist("unit_type_count[]")
+    sqfts = form.getlist("unit_type_sqft[]")
+    rents = form.getlist("unit_type_rent[]")
+
+    if names:
+        proj_result = await session.execute(
+            select(Project).where(Project.id == project_id)
+        )
+        project = proj_result.scalar_one()
+        unit_mix_rows = []
+        for name, count_s, sqft_s, rent_s in zip(names, counts, sqfts, rents):
+            name = name.strip()
+            if not name:
+                continue
+            try:
+                unit_mix_rows.append({
+                    "label": name,
+                    "unit_count": int(count_s or 0),
+                    "sqft": float(sqft_s or 0),
+                    "rent_monthly": float(rent_s or 0),
+                    "beds": None,
+                    "baths": None,
+                    "notes": None,
+                })
+            except Exception:
+                pass
+        if unit_mix_rows:
+            project.unit_mix = unit_mix_rows
+
+    # ---------- OpEx lines ----------
+    # Label field holds the mapped category (investor export groups by label).
+    # Original source label is preserved in notes.
+    orig_labels = form.getlist("expense_orig_label[]")
+    labels = form.getlist("expense_label[]")
+    amounts = form.getlist("expense_amount[]")
+    included_indices = {int(i) for i in form.getlist("expense_include[]")}
+
+    if labels:
+        await session.execute(
+            delete(OperatingExpenseLine).where(OperatingExpenseLine.project_id == project_id)
+        )
+        for idx, (orig_label, label, amount_s) in enumerate(zip(orig_labels, labels, amounts)):
+            if idx not in included_indices:
+                continue
+            label = label.strip()
+            if not label:
+                continue
+            try:
+                session.add(OperatingExpenseLine(
+                    project_id=project_id,
+                    label=label,
+                    annual_amount=Decimal(amount_s or "0"),
+                    escalation_rate_pct_annual=Decimal("3"),
+                    active_in_phases=["operation_lease_up", "operation_stabilized"],
+                    notes=orig_label.strip() if orig_label.strip() != label else None,
+                ))
+            except Exception:
+                pass
+
+    await session.commit()
+
+    return templates.TemplateResponse(
+        request,
+        "partials/deal_setup_wizard.html",
+        {
+            "model_id": model_id,
+            "step": 2,
+            "inputs": inputs,
+            "model": deal_model,
+            "flash": "Revenue and expenses imported successfully.",
+        },
+    )
+
+
+@router.get("/ui/models/{model_id}/proforma-skip", response_class=HTMLResponse)
+async def proforma_skip(
+    request: Request,
+    model_id: UUID,
+    session: DBSession,
+) -> HTMLResponse:
+    """Skip pro forma import — advance wizard to Step 2 (debt types)."""
+    result = await session.execute(
+        select(DealModel).options(
+            selectinload(DealModel.operational_inputs)
+        ).where(DealModel.id == model_id)
+    )
+    deal_model = result.scalar_one_or_none()
+    if not deal_model:
+        raise HTTPException(status_code=404, detail="Deal model not found")
+
+    return templates.TemplateResponse(
+        request,
+        "partials/deal_setup_wizard.html",
+        {
+            "model_id": model_id,
+            "step": 2,
+            "inputs": deal_model.operational_inputs,
+            "model": deal_model,
+        },
     )
 
 

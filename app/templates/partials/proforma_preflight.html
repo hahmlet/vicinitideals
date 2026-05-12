@@ -1,0 +1,133 @@
+{# Pro Forma Import — Preflight: Sheet & Column Picker
+   Shown immediately after file upload (no LLM — just openpyxl sheetnames).
+   Context: model_id, task_id, sheet_names (list), sheet_columns (dict name→list[str])
+#}
+
+<div class="wizard-shell" id="deal-setup-wizard">
+
+  <div style="text-align:center;margin-bottom:24px">
+    <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px">Deal Setup</div>
+    <div style="font-size:12px;color:var(--text-muted)">Step 1 — Pro Forma Import — <strong style="color:var(--accent)">Select Sheets</strong></div>
+  </div>
+
+  <div class="wizard-card">
+    <div class="wizard-header">
+      <div class="wizard-title">Which sheets?</div>
+      <div class="wizard-subtitle">Tell us which sheet has revenue/unit data and which has operating expenses. We found {{ sheet_names|length }} sheet{{ 's' if sheet_names|length != 1 else '' }} in your file.</div>
+    </div>
+
+    <form hx-post="/ui/models/{{ model_id }}/upload-proforma"
+          hx-target="#deal-setup-wizard"
+          hx-swap="outerHTML"
+          hx-include="[name='task_id']">
+      <input type="hidden" name="task_id" value="{{ task_id }}">
+
+      <div class="wizard-body" style="display:flex;flex-direction:column;gap:20px">
+
+        {# Revenue sheet picker #}
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em">Revenue / Rent Roll Sheet</label>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            {% for name in sheet_names %}
+            <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:border-color .15s"
+                   onmouseover="this.style.borderColor='var(--accent)'"
+                   onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='var(--border)'"
+                   id="rev-label-{{ loop.index }}">
+              <input type="radio" name="revenue_sheet" value="{{ name }}"
+                     {% if loop.first %}checked{% endif %}
+                     onchange="highlightSelected('rev',{{ loop.index }},{{ sheet_names|length }})">
+              <div>
+                <div style="font-weight:600;font-size:13px">{{ name }}</div>
+                {% if sheet_columns[name] %}
+                <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Columns: {{ sheet_columns[name][:6]|join(', ') }}{% if sheet_columns[name]|length > 6 %} +{{ sheet_columns[name]|length - 6 }} more{% endif %}</div>
+                {% endif %}
+              </div>
+            </label>
+            {% endfor %}
+          </div>
+        </div>
+
+        {# OpEx sheet picker #}
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em">Operating Expense Sheet</label>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            {% for name in sheet_names %}
+            <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:border-color .15s"
+                   id="opex-label-{{ loop.index }}">
+              <input type="radio" name="opex_sheet" value="{{ name }}"
+                     {% if loop.index == 2 or (sheet_names|length == 1 and loop.first) %}checked{% endif %}
+                     onchange="highlightSelected('opex',{{ loop.index }},{{ sheet_names|length }});showColumnPicker('{{ name }}', {{ sheet_columns[name]|tojson }})">
+              <div>
+                <div style="font-weight:600;font-size:13px">{{ name }}</div>
+                {% if sheet_columns[name] %}
+                <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Columns: {{ sheet_columns[name][:6]|join(', ') }}{% if sheet_columns[name]|length > 6 %} +{{ sheet_columns[name]|length - 6 }} more{% endif %}</div>
+                {% endif %}
+              </div>
+            </label>
+            {% endfor %}
+          </div>
+        </div>
+
+        {# Property column picker — shown when multi-column sheet selected #}
+        <div id="property-column-picker" style="display:none">
+          <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em">Which property column?</label>
+          <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">This sheet has multiple numeric columns. Select the one with this deal's expenses.</div>
+          <select name="property_column" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:13px">
+            <option value="">— All / Combined —</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="wizard-footer">
+        <a hx-get="/ui/models/{{ model_id }}/proforma-skip"
+           hx-target="#deal-setup-wizard"
+           hx-swap="outerHTML"
+           style="font-size:12px;color:var(--text-muted);cursor:pointer;text-decoration:none">
+          Skip import →
+        </a>
+        <button type="submit" class="btn btn-primary">Analyze →</button>
+      </div>
+    </form>
+  </div>
+
+</div>
+
+<script>
+function highlightSelected(prefix, idx, total) {
+  for (let i = 1; i <= total; i++) {
+    const el = document.getElementById(prefix + '-label-' + i);
+    if (!el) continue;
+    const checked = el.querySelector('input').checked;
+    el.style.borderColor = checked ? 'var(--accent)' : 'var(--border)';
+    el.style.background = checked ? 'color-mix(in srgb,var(--accent) 5%,var(--bg))' : '';
+  }
+}
+
+function showColumnPicker(sheetName, columns) {
+  // Identify numeric-looking columns (skip the first — assume it's the label column)
+  const numeric = columns.slice(1).filter(c => c && c.trim() !== '');
+  const picker = document.getElementById('property-column-picker');
+  const sel = picker.querySelector('select');
+  sel.innerHTML = '<option value="">— All / Combined —</option>';
+  if (numeric.length > 1) {
+    numeric.forEach(col => {
+      const opt = document.createElement('option');
+      opt.value = col;
+      opt.textContent = col;
+      sel.appendChild(opt);
+    });
+    picker.style.display = 'block';
+  } else {
+    picker.style.display = 'none';
+  }
+}
+
+// Init highlight state on load
+document.querySelectorAll('input[name="revenue_sheet"]').forEach((input, i) => {
+  if (input.checked) highlightSelected('rev', i+1, document.querySelectorAll('input[name="revenue_sheet"]').length);
+});
+document.querySelectorAll('input[name="opex_sheet"]').forEach((input, i) => {
+  if (input.checked) highlightSelected('opex', i+1, document.querySelectorAll('input[name="opex_sheet"]').length);
+});
+</script>

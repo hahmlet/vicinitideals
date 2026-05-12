@@ -1,0 +1,207 @@
+{# Pro Forma Import — Review & Confirm
+   Shown when Celery task completes. User validates matches before commit.
+   Context: model_id, task_id, unit_types (list), expense_lines (list), warnings (list),
+            STANDARD_OPEX_CATEGORIES (tuple)
+
+   unit_types items: {name, count, avg_sqft, avg_monthly_rent, confidence}
+   expense_lines items: {original_label, annual_amount, mapped_category, confidence, is_operating_expense}
+
+   Confidence thresholds:
+     ≥ 0.85 → auto-filled, green dot
+     0.60–0.84 → auto-filled, yellow dot (review recommended)
+     < 0.60 → blank category dropdown, red dot
+     is_operating_expense=false → row checked-off (excluded) by default
+#}
+
+<style>
+.conf-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 3px;
+}
+.conf-high  { background: #38a169; }
+.conf-mid   { background: #d69e2e; }
+.conf-low   { background: #e53e3e; }
+.conf-excl  { background: #a0aec0; }
+.review-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.review-table th {
+  font-size: 11px; font-weight: 600; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: .06em;
+  padding: 6px 10px; border-bottom: 1px solid var(--border); text-align: left;
+}
+.review-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.review-table tr.excluded td { opacity: .45; }
+.review-table tr.excluded td select,
+.review-table tr.excluded td input[type=text],
+.review-table tr.excluded td input[type=number] { pointer-events: none; }
+.section-label {
+  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--text-muted); margin: 20px 0 10px;
+}
+</style>
+
+<div class="wizard-shell" id="deal-setup-wizard">
+
+  <div style="text-align:center;margin-bottom:24px">
+    <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px">Deal Setup</div>
+    <div style="font-size:12px;color:var(--text-muted)">Step 1 — Pro Forma Import — <strong style="color:var(--accent)">Review Results</strong></div>
+  </div>
+
+  <div class="wizard-card" style="max-width:800px">
+    <div class="wizard-header">
+      <div class="wizard-title">Review Imported Data</div>
+      <div class="wizard-subtitle">Check matches before saving. Edit any field inline. Uncheck rows you want to exclude.</div>
+    </div>
+
+    <form id="proforma-confirm-form"
+          hx-post="/ui/models/{{ model_id }}/proforma-confirm"
+          hx-target="#deal-setup-wizard"
+          hx-swap="outerHTML">
+
+      <div class="wizard-body" style="overflow-y:auto;max-height:calc(100vh - 280px)">
+
+        {# Warnings banner #}
+        {% if warnings %}
+        <div style="padding:10px 14px;background:color-mix(in srgb,#d69e2e 10%,var(--bg));border:1px solid color-mix(in srgb,#d69e2e 35%,transparent);border-radius:8px;font-size:12px;margin-bottom:16px">
+          {% for w in warnings %}<div>⚠ {{ w }}</div>{% endfor %}
+        </div>
+        {% endif %}
+
+        {# Confidence legend #}
+        <div style="display:flex;gap:16px;font-size:11px;color:var(--text-muted);margin-bottom:16px;flex-wrap:wrap">
+          <span style="display:flex;align-items:center;gap:5px"><span class="conf-dot conf-high"></span>High confidence (auto-filled)</span>
+          <span style="display:flex;align-items:center;gap:5px"><span class="conf-dot conf-mid"></span>Medium — review recommended</span>
+          <span style="display:flex;align-items:center;gap:5px"><span class="conf-dot conf-low"></span>Low — please select category</span>
+          <span style="display:flex;align-items:center;gap:5px"><span class="conf-dot conf-excl"></span>Excluded (below-the-line)</span>
+        </div>
+
+        {# ── REVENUE / UNIT MIX ───────────────────────────────────── #}
+        {% if unit_types %}
+        <div class="section-label">Revenue — Unit Mix</div>
+        <table class="review-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Unit Type</th>
+              <th style="text-align:right">Count</th>
+              <th style="text-align:right">Avg Sq Ft</th>
+              <th style="text-align:right">Avg Rent/Mo</th>
+            </tr>
+          </thead>
+          <tbody id="unit-mix-tbody">
+          {% for u in unit_types %}
+          {% set conf = u.confidence %}
+          {% if conf >= 0.85 %}{% set dot_cls = 'conf-high' %}
+          {% elif conf >= 0.60 %}{% set dot_cls = 'conf-mid' %}
+          {% else %}{% set dot_cls = 'conf-low' %}{% endif %}
+          <tr>
+            <td><span class="conf-dot {{ dot_cls }}"></span></td>
+            <td>
+              <input type="text" name="unit_type_name[]" value="{{ u.name }}"
+                     style="width:100%;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px">
+            </td>
+            <td style="text-align:right">
+              <input type="number" name="unit_type_count[]" value="{{ u.count }}" min="0"
+                     style="width:70px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
+            </td>
+            <td style="text-align:right">
+              <input type="number" name="unit_type_sqft[]" value="{{ u.avg_sqft|round(0)|int }}" min="0"
+                     style="width:80px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
+            </td>
+            <td style="text-align:right">
+              <input type="number" name="unit_type_rent[]" value="{{ u.avg_monthly_rent|round(0)|int }}" min="0"
+                     style="width:90px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
+            </td>
+          </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+        <div style="padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;font-size:13px;color:var(--text-muted);margin-bottom:8px">No unit types detected in the revenue sheet.</div>
+        {% endif %}
+
+        {# ── OPERATING EXPENSES ───────────────────────────────────── #}
+        {% if expense_lines %}
+        <div class="section-label" style="margin-top:28px">Operating Expenses</div>
+        <table class="review-table">
+          <thead>
+            <tr>
+              <th style="width:32px"><input type="checkbox" id="check-all" onchange="toggleAll(this)" checked title="Select all"></th>
+              <th></th>
+              <th>Source Label</th>
+              <th>Standard Category</th>
+              <th style="text-align:right">Annual Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for e in expense_lines %}
+          {% set conf = e.confidence %}
+          {% set excluded = not e.is_operating_expense %}
+          {% if excluded %}{% set dot_cls = 'conf-excl' %}
+          {% elif conf >= 0.85 %}{% set dot_cls = 'conf-high' %}
+          {% elif conf >= 0.60 %}{% set dot_cls = 'conf-mid' %}
+          {% else %}{% set dot_cls = 'conf-low' %}{% endif %}
+          <tr id="exp-row-{{ loop.index0 }}" class="{% if excluded %}excluded{% endif %}">
+            <td>
+              <input type="checkbox" name="expense_include[]" value="{{ loop.index0 }}"
+                     {% if not excluded %}checked{% endif %}
+                     onchange="toggleRow(this, 'exp-row-{{ loop.index0 }}')">
+            </td>
+            <td><span class="conf-dot {{ dot_cls }}" title="Confidence: {{ (conf * 100)|int }}%{% if excluded %} (below-the-line, excluded){% endif %}"></span></td>
+            <td>
+              <input type="hidden" name="expense_orig_label[]" value="{{ e.original_label }}">
+              <span style="font-size:12px;color:var(--text-muted);{% if excluded %}text-decoration:line-through{% endif %}">{{ e.original_label }}</span>
+            </td>
+            <td>
+              <select name="expense_label[]"
+                      style="width:100%;border:1px solid {% if conf < 0.60 and not excluded %}var(--error,#e53e3e){% else %}var(--border){% endif %};border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px">
+                <option value="">— Select category —</option>
+                {% for cat in STANDARD_OPEX_CATEGORIES %}
+                <option value="{{ cat }}" {% if e.mapped_category == cat and conf >= 0.60 %}selected{% endif %}>{{ cat }}</option>
+                {% endfor %}
+              </select>
+            </td>
+            <td style="text-align:right">
+              <input type="number" name="expense_amount[]" value="{{ e.annual_amount|round(0)|int }}" min="0" step="1"
+                     style="width:110px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
+            </td>
+          </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+        <div style="padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;font-size:13px;color:var(--text-muted)">No expense lines detected in the OpEx sheet.</div>
+        {% endif %}
+
+      </div>
+
+      <div class="wizard-footer" style="justify-content:space-between">
+        <a hx-get="/ui/models/{{ model_id }}/proforma-skip"
+           hx-target="#deal-setup-wizard"
+           hx-swap="outerHTML"
+           style="font-size:12px;color:var(--text-muted);cursor:pointer;text-decoration:none">
+          Skip, discard import →
+        </a>
+        <button type="submit" class="btn btn-primary">Save &amp; Continue →</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+function toggleRow(checkbox, rowId) {
+  const row = document.getElementById(rowId);
+  if (!row) return;
+  if (checkbox.checked) {
+    row.classList.remove('excluded');
+  } else {
+    row.classList.add('excluded');
+  }
+}
+
+function toggleAll(masterCheckbox) {
+  document.querySelectorAll('input[name="expense_include[]"]').forEach(cb => {
+    cb.checked = masterCheckbox.checked;
+    const rowId = cb.closest('tr').id;
+    if (rowId) toggleRow(cb, rowId);
+  });
+}
+</script>
