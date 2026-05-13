@@ -281,6 +281,7 @@ function recalcExpenseTotal() {
 document.querySelectorAll('.amount-input').forEach(input => {
   const raw = parseInt(input.value.replace(/[^0-9]/g, ''), 10);
   if (!isNaN(raw)) input.value = raw.toLocaleString('en-US');
+  input.addEventListener('input', recalcExpenseTotal);
   input.addEventListener('blur', function() {
     const v = parseInt(this.value.replace(/[^0-9]/g, ''), 10);
     if (!isNaN(v)) this.value = v.toLocaleString('en-US');
@@ -382,6 +383,7 @@ function addOpexRow() {
     </td>`;
   tbody.appendChild(tr);
   const amt = tr.querySelector('input[name="expense_amount[]"]');
+  amt.addEventListener('input', recalcExpenseTotal);
   amt.addEventListener('blur', function() {
     const v = parseInt(this.value.replace(/[^0-9]/g, ''), 10);
     if (!isNaN(v)) this.value = v.toLocaleString('en-US');
