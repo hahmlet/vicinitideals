@@ -970,6 +970,14 @@ For units in the value-add pool, renovation supersedes LTL: the unit goes direct
 
 **Removed April 18 2026**: `avg_monthly_rent` (legacy). It duplicated `in_place_rent_per_unit` semantically and created ambiguity. Migration 0046 drops the column. Bed/bath were added as numeric variables so comp-data ingestion (HelloData, etc.) can populate them directly.
 
+**Derived building totals (Excel export inputs, May 12 2026):**
+
+| Total | Source | Notes |
+|---|---|---|
+| Total units | `Σ unit_mix[].unit_count` | Captured per row at pro forma import or in the unit-mix editor |
+| Net rentable sq ft | `Σ (unit_mix[].unit_count × unit_mix[].avg_sqft)` | Computed at read time; no separate column |
+| Gross building sq ft | **stubbed** | No active capture path. Previously collected via the wizard's "Building Data Needed" step (removed 2026-05-12). Re-introduce when a workflow needs it; Excel exports currently leave the cell blank or echo net rentable. |
+
 **Apply to Revenue** (endpoint: `POST /ui/models/{id}/unit-mix/apply-to-revenue`) auto-generates IncomeStream rows per unit type:
 - `ltl_catchup` units → stream with `catchup_target_rent = market_rent_per_unit`, base = `in_place_rent_per_unit`
 - `value_add_renovation` units → stream labeled `"{unit} Rent (Renovated)"` with `renovation_absorption_rate = 1.0`, base = `post_reno_rent_per_unit or market_rent_per_unit or in_place_rent_per_unit`

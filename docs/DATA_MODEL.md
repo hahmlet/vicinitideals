@@ -861,6 +861,14 @@ Pre-close milestones belong to an Opportunity; post-close milestones belong to a
 | `post_reno_rent_per_unit` | Numeric | value_add_renovation only |
 | `unit_strategy` | str | base_escalation / ltl_catchup / value_add_renovation |
 
+**Derived building totals (for Excel export and metrics):**
+
+| Total | Source | Notes |
+|---|---|---|
+| Total units | `Σ unit_mix[].unit_count` | Captured per row at pro forma import or in the unit-mix editor |
+| Net rentable sq ft | `Σ (unit_mix[].unit_count × unit_mix[].avg_sqft)` | Computed at read time; no separate column |
+| Gross building sq ft | **stubbed** | No active capture path. Previously collected via the wizard's "Building Data Needed" step (removed 2026-05-12). Re-introduce when a workflow needs it; Excel exports currently leave the cell blank or echo net rentable. |
+
 ### 12.5 DrawSource
 
 One row per source per project. Drives the self-referential draw-schedule engine.
