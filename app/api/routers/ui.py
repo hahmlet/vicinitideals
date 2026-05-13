@@ -7165,6 +7165,79 @@ async def delete_deal_project(
     return RedirectResponse(url=f"/models/{deal_id}/builder", status_code=303)
 
 
+@router.get("/ui/deals/{deal_id}/add-project/search", response_class=HTMLResponse)
+async def add_project_search(
+    deal_id: UUID,
+    request: Request,
+    session: DBSession,
+    q: str = Query(default=""),
+) -> HTMLResponse:
+    """HTMX search for the Add-Project drawer. Mirrors the wizard step 2
+    parcel/opp search UX: returns one best-match opportunity card.
+
+    Eligibility: any opp the user can see (their org OR scraped/null-org),
+    excluding archived rows. Flags rows already bound to a project on this
+    scenario so the user gets a clear 'already used' message instead of a
+    silent re-add attempt.
+    """
+    if not q or len(q.strip()) < 3:
+        return HTMLResponse("")
+
+    user = await _get_user(session, request)
+    if user is None:
+        return HTMLResponse("")
+
+    q_clean = q.strip()
+    q_lower = q_clean.lower()
+
+    bound_rows = (await session.execute(
+        select(Project.opportunity_id).where(Project.scenario_id == deal_id)
+    )).all()
+    bound_ids = {r[0] for r in bound_rows if r[0] is not None}
+
+    stmt = (
+        select(Opportunity)
+        .where(
+            ((Opportunity.org_id == user.org_id) | (Opportunity.org_id.is_(None))),
+            Opportunity.archived.is_(False),
+            (
+                Opportunity.address_normalized.ilike(f"%{q_clean}%")
+                | Opportunity.street.ilike(f"%{q_clean}%")
+                | Opportunity.name.ilike(f"%{q_clean}%")
+                | Opportunity.listing_name.ilike(f"%{q_clean}%")
+                | Opportunity.apn.ilike(f"%{q_clean}%")
+            ),
+        )
+        .order_by(
+            Opportunity.org_id.desc().nullslast(),
+            Opportunity.last_seen_at.desc().nullslast(),
+        )
+        .limit(25)
+    )
+    candidates = list((await session.execute(stmt)).scalars().unique())
+
+    matched: Opportunity | None = None
+    for c in candidates:
+        haystack = " ".join([
+            (c.address_normalized or ""),
+            (c.street or ""),
+            (c.name or ""),
+            (c.listing_name or ""),
+            (c.apn or ""),
+        ]).lower()
+        if q_lower in haystack:
+            matched = c
+            break
+    if matched is None and candidates:
+        matched = candidates[0]
+
+    return templates.TemplateResponse(request, "partials/add_project_search_match.html", {
+        "request": request,
+        "match": matched,
+        "already_bound": (matched is not None and matched.id in bound_ids),
+    })
+
+
 @router.post("/ui/deals/{deal_id}/split-projects", response_class=HTMLResponse)
 async def split_multiparcel_projects(
     deal_id: UUID,
@@ -8994,26 +9067,8 @@ async def model_builder(
         for _ms in _anchor_ms_rows:
             anchor_milestones_by_project.setdefault(_ms.project_id, []).append(_ms)
 
-    # Add-Project drawer: any opp in the user's org not yet bound to a project
-    # on THIS scenario. Covers cross-scenario reuse AND newly-created standalone
-    # opps from the wizard's `link_to_deal` flow (which doesn't auto-link).
-    add_project_opportunities: list[dict] = []
-    if model.deal_id is not None and user is not None:
-        _bound_opp_ids = {p.opportunity_id for p in deal_projects if p.opportunity_id}
-        _opps_stmt = (
-            select(Opportunity)
-            .where(Opportunity.org_id == user.org_id)
-            .order_by(Opportunity.scraped_at.desc())
-        )
-        if _bound_opp_ids:
-            _opps_stmt = _opps_stmt.where(Opportunity.id.notin_(_bound_opp_ids))
-        _deal_opps_rows = list((await session.execute(_opps_stmt)).scalars().unique())
-        for _opp in _deal_opps_rows:
-            add_project_opportunities.append({
-                "id": str(_opp.id),
-                "name": _opp.name or _opp.address_normalized or "—",
-                "asking_price": float(_opp.asking_price) if _opp.asking_price else None,
-            })
+    # Add-Project drawer is search-driven (see GET /ui/deals/{deal_id}/add-project/search),
+    # so no eager opportunity list is needed here.
 
     # When deal_setup is the active module, resolve wizard step and missing building data
     # so the included partials/deal_setup_wizard.html has everything it needs.
@@ -9111,7 +9166,6 @@ async def model_builder(
         "deal_variants": deal_variants,
         "deal_projects": deal_projects,
         "anchor_milestones_by_project": anchor_milestones_by_project,
-        "add_project_opportunities": add_project_opportunities,
         "active_project_id": str(active_project_id) if active_project_id else None,
         "active_project": active_project,
         "active_project_anchor_date": active_project_anchor_date,

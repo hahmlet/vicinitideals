@@ -1654,43 +1654,26 @@ document.addEventListener('keydown', function(e) {
       <span class="drawer-close" onclick="closeDrawer('add-project-drawer')">×</span>
     </div>
     <div class="drawer-body">
-      {% if not add_project_opportunities %}
-      <div style="padding:12px;border-radius:6px;background:#fef3c7;border:1px solid #f59e0b;color:#78350f;font-size:13px">
-        <strong>No eligible opportunities.</strong>
-        Every project must be tied to an Opportunity (so its acquisition cost
-        seeds correctly). Create a new opportunity here — it will auto-link
-        to this deal and you'll land back on this builder, ready to add it
-        as a project.
-        {% if parent_deal_id %}
-        {% set _return_to = '/models/' ~ model.id ~ '/builder' ~ ('?project=' ~ active_project_id if active_project_id else '') %}
-        <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
-          <a href="/ui/opportunities/wizard?step=1&link_to_deal={{ parent_deal_id }}&return_to={{ _return_to | urlencode }}"
-             class="btn btn-primary btn-sm">+ Create Opportunity →</a>
-          <a href="/deals/{{ parent_deal_id }}" class="btn btn-secondary btn-sm">Open Deal</a>
-        </div>
-        {% endif %}
-      </div>
-      {% else %}
       <form hx-post="/ui/deals/{{ model.id }}/new-project"
             hx-swap="none"
             style="display:flex;flex-direction:column;gap:14px"
             onsubmit="return _addProjValidate(this)">
         <div>
           <label class="field-label">Convert Opportunity → Project</label>
-          <select class="filter-select" style="width:100%;margin-top:4px"
-                  name="opportunity_id" id="add-proj-opp" required
-                  onchange="_addProjOnOppChange(this)">
-            <option value="">— select an opportunity —</option>
-            {% for opp in add_project_opportunities %}
-            <option value="{{ opp.id }}"
-                    data-name="{{ opp.name }}"
-                    data-price="{{ opp.asking_price if opp.asking_price is not none else '' }}">
-              {{ opp.name }}{% if opp.asking_price %} — ${{ '{:,.0f}'.format(opp.asking_price) }}{% endif %}
-            </option>
-            {% endfor %}
-          </select>
+          <input type="hidden" name="opportunity_id" id="add-proj-opp" value="">
+          <input type="search" id="add-proj-opp-search"
+                 placeholder="Address, name, or APN — e.g. 16111 E Burnside"
+                 style="width:100%;margin-top:4px"
+                 class="filter-input"
+                 hx-get="/ui/deals/{{ model.id }}/add-project/search"
+                 hx-trigger="input changed delay:400ms"
+                 hx-target="#add-proj-search-result"
+                 hx-swap="innerHTML"
+                 name="q"
+                 autocomplete="off">
+          <div id="add-proj-search-result" style="min-height:24px;margin-top:8px"></div>
           <div style="font-size:12px;color:var(--text-muted);margin-top:6px">
-            Only opportunities already linked to this deal that aren't yet a project on this scenario.
+            Searches your org's opportunities and the scraped listing pool.
           </div>
         </div>
         <div>
@@ -1781,20 +1764,34 @@ document.addEventListener('keydown', function(e) {
         </div>
       </form>
       <script>
-        // Pre-fill name + acquisition cost from the selected opportunity.
-        function _addProjOnOppChange(sel) {
-          const opt = sel.options[sel.selectedIndex];
-          if (!opt || !opt.value) return;
+        // Triggered from the search-result attach button. Sets the hidden
+        // opportunity_id field and pre-fills name + acquisition cost.
+        function _addProjAttachOpp(btn) {
+          const id = btn.dataset.oppId || '';
+          const name = btn.dataset.oppName || '';
+          const price = btn.dataset.oppPrice || '';
+          const hidden = document.getElementById('add-proj-opp');
+          const search = document.getElementById('add-proj-opp-search');
           const nameField = document.getElementById('add-proj-name');
           const priceField = document.getElementById('add-proj-acq');
-          if (nameField && opt.dataset.name) nameField.value = opt.dataset.name;
-          if (priceField && opt.dataset.price) priceField.value = opt.dataset.price;
+          if (hidden) hidden.value = id;
+          if (search && name) search.value = name;
+          if (nameField && name) nameField.value = name;
+          if (priceField && price) priceField.value = price;
+          // Visual confirmation: replace the card with a chip.
+          const wrap = document.getElementById('add-proj-search-result');
+          if (wrap) {
+            wrap.innerHTML = '<div class="match-card" style="background:#ecfdf5;border-color:#10b981">' +
+              '<div class="match-card-title">✓ ' + (name || 'Selected') + '</div>' +
+              '<div class="match-card-meta">Ready to convert. Search again to pick a different one.</div>' +
+              '</div>';
+          }
         }
         function _addProjValidate(form) {
           const opp = form.querySelector('[name=opportunity_id]');
           const acq = form.querySelector('[name=acquisition_cost]');
           if (!opp || !opp.value) {
-            alert('Pick an opportunity to convert into this project.');
+            alert('Search and pick an opportunity to convert into this project.');
             return false;
           }
           const v = parseFloat(acq && acq.value);
@@ -1805,7 +1802,6 @@ document.addEventListener('keydown', function(e) {
           return true;
         }
       </script>
-      {% endif %}
     </div>
   </div>
 </div>

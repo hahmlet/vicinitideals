@@ -1,0 +1,37 @@
+{# HTMX partial — Add Project drawer search result.
+   match: Opportunity instance or None
+   already_bound: True if the matched opp is already a project on this scenario
+#}
+{% if match is none %}
+  <div style="color:var(--text-muted);font-size:13px;padding:12px 0">
+    No match found for that address, name, or APN.
+  </div>
+{% elif already_bound %}
+  <div class="match-card" style="opacity:.7">
+    <div class="match-card-title">{{ match.name or match.address_normalized or match.street or match.id }}</div>
+    <div class="match-card-meta" style="color:#92400e">
+      Already a project on this scenario.
+    </div>
+  </div>
+{% else %}
+  {% set _label = match.name or match.address_normalized or match.street or '—' %}
+  {% set _price = match.asking_price | float if match.asking_price else 0 %}
+  <div class="match-card">
+    <div class="match-card-title">{{ _label }}</div>
+    <div class="match-card-meta">
+      Source: {{ match.promotion_source | title if match.promotion_source else (match.source | title if match.source else '—') }}
+      {% if _price > 0 %} · ${{ '{:,.0f}'.format(_price) }}{% endif %}
+      {% if match.unit_count %} · {{ match.unit_count }} units{% endif %}
+      {% if match.building_sqft %} · {{ '{:,.0f}'.format(match.building_sqft | float) }} sqft{% endif %}
+      {% if match.year_built %} · Built {{ match.year_built }}{% endif %}
+      {% if match.archived %} · <span style="color:#b91c1c">Archived</span>{% endif %}
+    </div>
+    <button type="button" class="btn btn-primary btn-sm"
+            data-opp-id="{{ match.id }}"
+            data-opp-name="{{ _label }}"
+            data-opp-price="{{ _price if _price > 0 else '' }}"
+            onclick="_addProjAttachOpp(this)">
+      ✓ Use this opportunity
+    </button>
+  </div>
+{% endif %}
