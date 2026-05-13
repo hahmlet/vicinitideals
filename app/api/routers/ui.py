@@ -10686,13 +10686,17 @@ async def proforma_confirm(
     if not deal_model:
         raise HTTPException(status_code=404, detail="Deal model not found")
 
-    default_project = (await session.execute(
-        select(Project).where(Project.scenario_id == model_id).order_by(Project.created_at).limit(1)
-    )).scalar_one_or_none()
-    if not default_project:
-        raise HTTPException(status_code=400, detail="No project found")
+    # Multi-project deals: route import to the project the user is viewing
+    # (from HX-Current-URL ?project=...). Fall back to oldest only if missing.
+    project_id = await _active_project_from_request(request, session, model_id)
+    if project_id is None:
+        default_project = (await session.execute(
+            select(Project).where(Project.scenario_id == model_id).order_by(Project.created_at).limit(1)
+        )).scalar_one_or_none()
+        if not default_project:
+            raise HTTPException(status_code=400, detail="No project found")
+        project_id = default_project.id
 
-    project_id = default_project.id
     inputs = (await session.execute(
         select(OperationalInputs).where(OperationalInputs.project_id == project_id)
     )).scalar_one_or_none()
