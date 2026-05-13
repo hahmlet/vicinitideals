@@ -7160,11 +7160,10 @@ async def delete_deal_project(
             url=f"/models/{deal_id}/builder?project={project_id}", status_code=303
         )
 
-    # Non-CASCADE child tables: delete explicitly. Everything else
-    # (capital_modules, draw_sources, waterfall_tiers, milestones,
-    # cash_flows, cash_flow_line_items, operational_outputs, portfolio
-    # join rows, gantt entries, parcel_transformations, project_visibilities,
-    # permit_stubs) cascades from projects.id ondelete=CASCADE.
+    # Non-CASCADE child tables: delete explicitly. Most other children
+    # (capital_modules, draw_sources, waterfall_tiers, cash_flows,
+    # cash_flow_line_items, operational_outputs) cascade from projects.id
+    # ondelete=CASCADE.
     await session.execute(sa_delete(UseLine).where(UseLine.project_id == project_id))
     await session.execute(sa_delete(IncomeStream).where(IncomeStream.project_id == project_id))
     await session.execute(sa_delete(OperatingExpenseLine).where(OperatingExpenseLine.project_id == project_id))
@@ -7175,6 +7174,16 @@ async def delete_deal_project(
     await session.execute(sa_delete(ParcelTransformation).where(ParcelTransformation.project_id == project_id))
     await session.execute(sa_delete(ProjectVisibility).where(ProjectVisibility.project_id == project_id))
     await session.execute(sa_delete(PermitStub).where(PermitStub.project_id == project_id))
+    # Milestones: must delete via raw SQL BEFORE session.delete(proj) so the
+    # ORM doesn't try to null out project_id on cached milestone rows (which
+    # would violate ck_milestones_single_parent — both parent FKs null).
+    # Trigger-chain refs from sibling projects' milestones are auto-nulled by
+    # the DB (trigger_milestone_id FK is ondelete=SET NULL).
+    await session.execute(sa_delete(Milestone).where(Milestone.project_id == project_id))
+    await session.flush()
+    # Expire any cached state on `proj` so the ORM doesn't replay a stale
+    # milestones collection during the delete cascade.
+    await session.refresh(proj)
 
     await session.delete(proj)
     await session.commit()
