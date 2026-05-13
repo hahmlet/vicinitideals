@@ -2773,7 +2773,10 @@ async def opportunities_rows_deals(
     stmt = (
         select(Opportunity)
         .options(selectinload(Opportunity.parcel))
-        .where(Opportunity.id.in_(active_oppo_ids))
+        .where(
+            Opportunity.id.in_(active_oppo_ids),
+            Opportunity.archived.is_(False),
+        )
         .order_by(Opportunity.last_seen_at.desc())
     )
     stmt = _apply_opp_filters(stmt, favorited, jurisdiction, min_units, max_units, property_type)
