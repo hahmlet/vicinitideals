@@ -7130,6 +7130,58 @@ async def clone_project_from(
     return RedirectResponse(url=f"/models/{deal_id}/builder?project={project_id}", status_code=303)
 
 
+@router.post("/ui/deals/{deal_id}/project/{project_id}/delete")
+async def delete_deal_project(
+    deal_id: UUID,
+    project_id: UUID,
+    session: DBSession,
+) -> RedirectResponse:
+    """Delete a Project and all its child rows from a Scenario.
+
+    `deal_id` here is the Scenario id (URL kept consistent with the rest
+    of the model-builder routes). The deal must keep at least one project,
+    so deletion is rejected when only one remains.
+    """
+    from sqlalchemy import delete as sa_delete
+    from app.models.portfolio import GanttEntry
+    from app.models.parcel import ParcelTransformation
+    from app.models.org import ProjectVisibility
+    from app.models.project import PermitStub
+
+    proj = await session.get(Project, project_id)
+    if proj is None or proj.scenario_id != deal_id:
+        return RedirectResponse(url=f"/models/{deal_id}/builder", status_code=303)
+
+    project_count = int((await session.execute(
+        select(func.count()).select_from(Project).where(Project.scenario_id == deal_id)
+    )).scalar_one())
+    if project_count <= 1:
+        return RedirectResponse(
+            url=f"/models/{deal_id}/builder?project={project_id}", status_code=303
+        )
+
+    # Non-CASCADE child tables: delete explicitly. Everything else
+    # (capital_modules, draw_sources, waterfall_tiers, milestones,
+    # cash_flows, cash_flow_line_items, operational_outputs, portfolio
+    # join rows, gantt entries, parcel_transformations, project_visibilities,
+    # permit_stubs) cascades from projects.id ondelete=CASCADE.
+    await session.execute(sa_delete(UseLine).where(UseLine.project_id == project_id))
+    await session.execute(sa_delete(IncomeStream).where(IncomeStream.project_id == project_id))
+    await session.execute(sa_delete(OperatingExpenseLine).where(OperatingExpenseLine.project_id == project_id))
+    await session.execute(sa_delete(OperationalInputs).where(OperationalInputs.project_id == project_id))
+    # Defensive deletes for tables whose FK isn't ondelete=CASCADE everywhere.
+    await session.execute(sa_delete(PortfolioProject).where(PortfolioProject.project_id == project_id))
+    await session.execute(sa_delete(GanttEntry).where(GanttEntry.project_id == project_id))
+    await session.execute(sa_delete(ParcelTransformation).where(ParcelTransformation.project_id == project_id))
+    await session.execute(sa_delete(ProjectVisibility).where(ProjectVisibility.project_id == project_id))
+    await session.execute(sa_delete(PermitStub).where(PermitStub.project_id == project_id))
+
+    await session.delete(proj)
+    await session.commit()
+
+    return RedirectResponse(url=f"/models/{deal_id}/builder", status_code=303)
+
+
 @router.post("/ui/deals/{deal_id}/split-projects", response_class=HTMLResponse)
 async def split_multiparcel_projects(
     deal_id: UUID,
