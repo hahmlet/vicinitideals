@@ -518,8 +518,25 @@ def _clamp(value: Decimal, lower: Decimal, upper: Decimal) -> Decimal:
 # basis for per-period factor pre-computation.
 
 
+# Milestone-key phase variants (e.g. "operation_lease_up") map to PeriodType
+# values (e.g. "lease_up"). Proforma import and some legacy seeders wrote the
+# milestone-key form; engine reasons in PeriodType. Normalize both forms here.
+_PHASE_ALIAS = {
+    "operation_lease_up": PeriodType.lease_up.value,
+    "operation_stabilized": PeriodType.stabilized.value,
+}
+
+
+def _normalize_active_phases(phases) -> set[str]:
+    out: set[str] = set()
+    for p in (phases or []):
+        s = str(p)
+        out.add(_PHASE_ALIAS.get(s, s))
+    return out
+
+
 def _is_stream_active(stream: IncomeStream, period_type: PeriodType) -> bool:
-    active_in_phases = {str(phase) for phase in (stream.active_in_phases or [])}
+    active_in_phases = _normalize_active_phases(stream.active_in_phases)
     phase_name = period_type.value
     if phase_name in active_in_phases:
         return True
@@ -527,7 +544,7 @@ def _is_stream_active(stream: IncomeStream, period_type: PeriodType) -> bool:
 
 
 def _is_expense_line_active(expense_line: OperatingExpenseLine, period_type: PeriodType) -> bool:
-    active_in_phases = {str(phase) for phase in (expense_line.active_in_phases or [])}
+    active_in_phases = _normalize_active_phases(expense_line.active_in_phases)
     phase_name = period_type.value
     if phase_name in active_in_phases:
         return True

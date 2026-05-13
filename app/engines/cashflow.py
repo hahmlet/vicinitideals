@@ -1343,7 +1343,7 @@ async def _auto_size_debt_modules(
     opex_monthly_pre = ZERO
     for line in expense_lines:
         active = {str(phase) for phase in (line.active_in_phases or [])}
-        if "stabilized" in active:
+        if "stabilized" in active or "operation_stabilized" in active:
             opex_monthly_pre += _q(_to_decimal(line.annual_amount) / Decimal("12"))
 
     # Phase B: new multi-debt path when debt_types is explicitly set on inputs.
