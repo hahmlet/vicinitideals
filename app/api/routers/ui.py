@@ -7501,7 +7501,19 @@ async def save_model_settings(
                 inputs.operation_reserve_months = int(operation_reserve_months)
             except Exception:
                 pass
-        inputs.affordable_housing_project = (form.get("affordable_housing_project") == "1")
+        _ahp_val = (form.get("affordable_housing_project") == "1")
+        inputs.affordable_housing_project = _ahp_val
+        # Scenario-level toggle — propagate to every project's OperationalInputs
+        # so the flag stays consistent regardless of which project tab is
+        # active when the Settings drawer is reopened.
+        _sibling_oi = list((await session.execute(
+            select(OperationalInputs)
+            .join(Project, Project.id == OperationalInputs.project_id)
+            .where(Project.scenario_id == model_id)
+            .where(OperationalInputs.project_id != default_project.id)
+        )).scalars())
+        for _oi in _sibling_oi:
+            _oi.affordable_housing_project = _ahp_val
         # Sync auto-sized CapitalModules with rate / amort form fields
         # (deal-level OperationalInputs.debt_terms is no longer authoritative).
         if any([perm_rate_pct, construction_rate_pct, perm_amort_years, debt_structure]):
