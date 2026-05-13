@@ -3247,11 +3247,12 @@ async def archive_opportunity(
     opp_id: UUID,
     session: DBSession,
 ) -> RedirectResponse:
-    """Archive a manually-created opportunity (sets status=archived, keeps all data)."""
+    """Archive a manually-created opportunity (sets archived=True, keeps all data)."""
     opp = await session.get(Opportunity, opp_id)
     if opp is None:
         return RedirectResponse("/opportunities", status_code=303)
-    opp.status = OpportunityStatus.archived
+    opp.archived = True
+    opp.opp_status = OpportunityStatus.archived.value
     await session.commit()
     return RedirectResponse("/opportunities", status_code=303)
 
@@ -8160,6 +8161,24 @@ async def deal_setup_wizard_complete(
             CapitalModule.label.like("%(auto)%"),
         )
     )).scalars())
+    # Snapshot share state so wizard re-runs don't silently strip junctions
+    # added by Add Project. Map funder_type → set of non-default project IDs
+    # that had a junction on the OLD auto module. After recreation we restore
+    # those junctions on the matching new module so shared auto-debt persists.
+    _prior_auto_shares: dict[str, set[UUID]] = {}
+    if existing_auto:
+        _prior_junctions = list((await session.execute(
+            select(CapitalModuleProject).where(
+                CapitalModuleProject.capital_module_id.in_([cm.id for cm in existing_auto])
+            )
+        )).scalars())
+        _ft_by_mod = {cm.id: str(cm.funder_type).replace("FunderType.", "") for cm in existing_auto}
+        for _j in _prior_junctions:
+            if _j.project_id == default_project.id:
+                continue
+            _ft = _ft_by_mod.get(_j.capital_module_id)
+            if _ft:
+                _prior_auto_shares.setdefault(_ft, set()).add(_j.project_id)
     if existing_auto:
         _auto_ids = [cm.id for cm in existing_auto]
         await session.execute(
@@ -8609,6 +8628,18 @@ async def deal_setup_wizard_complete(
                 capital_module_id=_mod.id,
                 project_id=default_project.id,
                 amount=Decimal(str((_mod.source or {}).get("amount") or 0)),
+                active_from=_mod.active_phase_start,
+                active_to=_mod.active_phase_end,
+                auto_size=bool((_mod.source or {}).get("auto_size")),
+            ))
+        # Restore prior shared-with-other-projects junctions for this funder
+        # type so wizard re-runs preserve coverage added via Add Project.
+        _mod_ft = str(_mod.funder_type).replace("FunderType.", "")
+        for _pid in _prior_auto_shares.get(_mod_ft, set()):
+            session.add(CapitalModuleProject(
+                capital_module_id=_mod.id,
+                project_id=_pid,
+                amount=Decimal("0"),
                 active_from=_mod.active_phase_start,
                 active_to=_mod.active_phase_end,
                 auto_size=bool((_mod.source or {}).get("auto_size")),
@@ -9558,6 +9589,111 @@ async def source_coverage_write(
     response = HTMLResponse("")
     response.headers["HX-Redirect"] = (
         f"/models/{model_id}/builder?view=underwriting"
+    )
+    return response
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Adopt Source — project-perspective recovery path. Surfaces scenario
+# CapitalModules not yet junctioned to a given project, then writes the
+# junction when one is chosen. Recovery for Add Project's share box being
+# missed or wiped by a wizard re-run.
+# ─────────────────────────────────────────────────────────────────────────────
+
+
+@router.get(
+    "/ui/models/{model_id}/projects/{project_id}/adopt-source",
+    response_class=HTMLResponse,
+)
+async def adopt_source_modal(
+    request: Request,
+    model_id: UUID,
+    project_id: UUID,
+    session: DBSession,
+) -> HTMLResponse:
+    """Render the Adopt Source picker for a project."""
+    from app.models.capital import CapitalModuleProject
+    project = await session.get(Project, project_id)
+    if project is None or project.scenario_id != model_id:
+        return HTMLResponse(
+            "<p class='text-muted'>Project not found.</p>", status_code=404
+        )
+    all_modules = list((await session.execute(
+        select(CapitalModule)
+        .where(CapitalModule.scenario_id == model_id)
+        .order_by(CapitalModule.stack_position.asc())
+    )).scalars())
+    attached_ids = set((await session.execute(
+        select(CapitalModuleProject.capital_module_id).where(
+            CapitalModuleProject.project_id == project_id
+        )
+    )).scalars())
+    candidates = [m for m in all_modules if m.id not in attached_ids]
+    return templates.TemplateResponse(
+        request,
+        "partials/adopt_source_modal.html",
+        {
+            "model_id": str(model_id),
+            "project_id": str(project_id),
+            "project_name": project.name,
+            "candidates": candidates,
+        },
+    )
+
+
+@router.post(
+    "/ui/models/{model_id}/projects/{project_id}/adopt-source",
+    response_class=HTMLResponse,
+)
+async def adopt_source_write(
+    request: Request,
+    model_id: UUID,
+    project_id: UUID,
+    session: DBSession,
+) -> HTMLResponse:
+    """Attach the chosen scenario CapitalModule to this project."""
+    from app.models.capital import CapitalModuleProject
+    project = await session.get(Project, project_id)
+    if project is None or project.scenario_id != model_id:
+        return HTMLResponse(
+            "<p class='text-muted'>Project not found.</p>", status_code=404
+        )
+    form = await request.form()
+    src_raw = str(form.get("source_id", "")).strip()
+    if not src_raw:
+        return HTMLResponse(
+            "<p class='text-muted'>Pick a Source.</p>", status_code=400
+        )
+    try:
+        source_id = UUID(src_raw)
+    except ValueError:
+        return HTMLResponse(
+            "<p class='text-muted'>Invalid Source.</p>", status_code=400
+        )
+    module = await session.get(CapitalModule, source_id)
+    if module is None or module.scenario_id != model_id:
+        return HTMLResponse(
+            "<p class='text-muted'>Source not on this Deal.</p>", status_code=404
+        )
+    existing = (await session.execute(
+        select(CapitalModuleProject).where(
+            CapitalModuleProject.capital_module_id == source_id,
+            CapitalModuleProject.project_id == project_id,
+        )
+    )).scalar_one_or_none()
+    if existing is None:
+        session.add(CapitalModuleProject(
+            capital_module_id=source_id,
+            project_id=project_id,
+            amount=Decimal("0"),
+            active_from=module.active_phase_start,
+            active_to=module.active_phase_end,
+            auto_size=bool((module.source or {}).get("auto_size")),
+        ))
+        await session.commit()
+    response = HTMLResponse("")
+    response.headers["HX-Redirect"] = (
+        f"/models/{model_id}/builder?module=sources_uses&project={project_id}"
     )
     return response
 
