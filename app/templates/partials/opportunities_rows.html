@@ -38,12 +38,7 @@
       {{ opp.last_seen_at.strftime('%b %d, %Y') if opp.last_seen_at else '—' }}
     </td>
     <td onclick="event.stopPropagation()">
-      {% if opp.promotion_source in ('loopnet', 'crexi', 'scraper', 'email') %}
-      <button class="btn btn-ghost btn-sm archive-btn"
-              onclick="if(confirm('Remove from pipeline? Linked email/scrape history will be preserved.')) { fetch('/ui/opportunities/{{ opp.id }}/dissolve', {method:'POST'}).then(() => htmx.trigger(document.body,'refreshOpps')); }">
-        Remove
-      </button>
-      {% elif not opp.archived %}
+      {% if not opp.archived %}
       <button class="btn btn-ghost btn-sm archive-btn"
               onclick="fetch('/ui/opportunities/{{ opp.id }}/archive', {method:'POST'}).then(() => htmx.trigger(document.body,'refreshOpps'));">
         Archive

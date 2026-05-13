@@ -3261,35 +3261,6 @@ async def archive_opportunity(
     return RedirectResponse("/opportunities", status_code=303)
 
 
-@router.post("/ui/opportunities/{opp_id}/dissolve")
-async def dissolve_opportunity(
-    opp_id: UUID,
-    session: DBSession,
-) -> RedirectResponse:
-    """Dissolve an opportunity row. The Opportunity IS the listing (scraped_listings
-    was renamed to opportunities in migration 0067) — deleting it removes all trace.
-    Parcel records are left completely untouched."""
-    from sqlalchemy import delete as sa_delete
-    from app.models.parcel import ParcelTransformation
-    from app.models.portfolio import GanttEntry
-    from app.models.org import ProjectVisibility
-    from app.models.project import PermitStub
-
-    opp = await session.get(Opportunity, opp_id)
-    if opp is None:
-        return RedirectResponse("/opportunities", status_code=303)
-
-    # Join/child tables whose FKs reference opportunities.id — delete rows first.
-    await session.execute(sa_delete(PortfolioProject).where(PortfolioProject.project_id == opp_id))
-    await session.execute(sa_delete(GanttEntry).where(GanttEntry.project_id == opp_id))
-    await session.execute(sa_delete(ParcelTransformation).where(ParcelTransformation.project_id == opp_id))
-    await session.execute(sa_delete(ProjectVisibility).where(ProjectVisibility.project_id == opp_id))
-    await session.execute(sa_delete(PermitStub).where(PermitStub.project_id == opp_id))
-
-    await session.delete(opp)
-    await session.commit()
-    return RedirectResponse("/opportunities", status_code=303)
-
 
 @router.get("/buildings", response_class=HTMLResponse)
 async def buildings_page(
