@@ -74,8 +74,10 @@
         </div>
 
         {# ── REVENUE / UNIT MIX ───────────────────────────────────── #}
-        {% if unit_types %}
         <div class="section-label">Revenue — Unit Mix</div>
+        {% if not unit_types %}
+        <div style="padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;font-size:13px;color:var(--text-muted);margin-bottom:8px">No unit types detected in the revenue sheet. Add rows manually below.</div>
+        {% endif %}
         <div style="display:flex;align-items:center;gap:14px;margin-bottom:10px;font-size:12px;color:var(--text-muted);flex-wrap:wrap">
           <span>Imported rents represent:</span>
           <label style="display:inline-flex;align-items:center;gap:5px;cursor:pointer">
@@ -146,14 +148,16 @@
           {% endfor %}
           </tbody>
         </table>
-        {% else %}
-        <div style="padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;font-size:13px;color:var(--text-muted);margin-bottom:8px">No unit types detected in the revenue sheet.</div>
-        {% endif %}
+        <div style="margin-top:8px">
+          <button type="button" class="btn btn-ghost" style="font-size:12px" onclick="addUnitRow()">+ Add unit type</button>
+        </div>
 
         {# ── OPERATING EXPENSES ───────────────────────────────────── #}
-        {% if expense_lines %}
         <div class="section-label" style="margin-top:28px">Operating Expenses</div>
-        <table class="review-table">
+        {% if not expense_lines %}
+        <div style="padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;font-size:13px;color:var(--text-muted);margin-bottom:8px">No expense lines detected. Add rows manually below.</div>
+        {% endif %}
+        <table class="review-table" id="opex-table">
           <colgroup>
             <col style="width:36px">
             <col style="width:20px">
@@ -170,7 +174,7 @@
               <th style="text-align:right">Annual Amount</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="opex-tbody">
           {% for e in expense_lines %}
           {% set conf = e.confidence %}
           {% set excluded = not e.is_operating_expense %}
@@ -217,9 +221,9 @@
             </tr>
           </tfoot>
         </table>
-        {% else %}
-        <div style="padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;font-size:13px;color:var(--text-muted)">No expense lines detected in the OpEx sheet.</div>
-        {% endif %}
+        <div style="margin-top:8px">
+          <button type="button" class="btn btn-ghost" style="font-size:12px" onclick="addOpexRow()">+ Add OpEx line</button>
+        </div>
 
       </div>
 
@@ -307,4 +311,86 @@ function toggleMarketCol() {
   });
 }
 toggleMarketCol();
+
+const OPEX_CATEGORIES = [
+  {% for cat in STANDARD_OPEX_CATEGORIES %}{{ cat | tojson }},{% endfor %}
+];
+
+function addUnitRow() {
+  const tbody = document.getElementById('unit-mix-tbody');
+  if (!tbody) return;
+  const isInPlace = document.querySelector('input[name="rent_type"]:checked').value === 'in_place';
+  const marketStyle = isInPlace ? '' : 'display:none';
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><span class="conf-dot conf-high" title="Manually added"></span></td>
+    <td><input type="text" name="unit_type_name[]" value="" placeholder="e.g. 2BR/1BA"
+               style="width:100%;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px"></td>
+    <td style="text-align:right"><input type="number" name="unit_type_count[]" value="" min="0" placeholder="0"
+               style="width:70px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right"></td>
+    <td style="text-align:right"><input type="number" name="unit_type_sqft[]" value="" min="0" placeholder="0"
+               style="width:80px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right"></td>
+    <td style="text-align:right">
+      <div style="display:flex;align-items:center;justify-content:flex-end;gap:2px">
+        <span style="font-size:13px;color:var(--text-muted)">$</span>
+        <input type="text" name="unit_type_rent[]" value="" class="amount-input" placeholder="0"
+               style="width:80px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
+      </div>
+    </td>
+    <td style="text-align:right" class="market-col" style="${marketStyle}">
+      <div style="display:flex;align-items:center;justify-content:flex-end;gap:2px">
+        <span style="font-size:13px;color:var(--text-muted)">$</span>
+        <input type="text" name="unit_type_market_rent[]" value="" class="amount-input" placeholder="optional"
+               style="width:80px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
+      </div>
+    </td>`;
+  tbody.appendChild(tr);
+  toggleMarketCol();
+  tr.querySelector('input[name="unit_type_name[]"]').focus();
+}
+
+function addOpexRow() {
+  const tbody = document.getElementById('opex-tbody');
+  if (!tbody) return;
+  const idx = tbody.querySelectorAll('tr').length;
+  const rowId = `exp-row-${idx}`;
+  const tr = document.createElement('tr');
+  tr.id = rowId;
+  const opts = ['<option value="">— Select category —</option>']
+    .concat(OPEX_CATEGORIES.map(c => `<option value="${c}">${c}</option>`))
+    .join('');
+  tr.innerHTML = `
+    <td><input type="checkbox" name="expense_include[]" value="${idx}" checked
+               onchange="toggleRow(this, '${rowId}')"></td>
+    <td><span class="conf-dot conf-high" title="Manually added"></span></td>
+    <td style="word-break:break-word;max-width:0">
+      <input type="text" name="expense_orig_label[]" value="" placeholder="Source label (e.g. Phone/Internet)"
+             style="width:100%;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:12px">
+    </td>
+    <td>
+      <select name="expense_label[]"
+              style="width:100%;min-width:0;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px">
+        ${opts}
+      </select>
+    </td>
+    <td style="text-align:right">
+      <div style="display:flex;align-items:center;justify-content:flex-end;gap:2px">
+        <span style="font-size:13px;color:var(--text-muted)">$</span>
+        <input type="text" name="expense_amount[]" value="0" class="amount-input"
+               style="width:100px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
+      </div>
+    </td>`;
+  tbody.appendChild(tr);
+  const amt = tr.querySelector('input[name="expense_amount[]"]');
+  amt.addEventListener('blur', function() {
+    const v = parseInt(this.value.replace(/[^0-9]/g, ''), 10);
+    if (!isNaN(v)) this.value = v.toLocaleString('en-US');
+    recalcExpenseTotal();
+  });
+  amt.addEventListener('focus', function() {
+    this.value = this.value.replace(/,/g, '');
+  });
+  tr.querySelector('input[name="expense_orig_label[]"]').focus();
+  recalcExpenseTotal();
+}
 </script>
