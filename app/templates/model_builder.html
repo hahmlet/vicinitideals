@@ -1126,7 +1126,7 @@ async function startInvestorExport(modelId, profile) {
      zero projects. #}
   {% if deal_projects | length >= 2 and (active_view if active_view is defined else 'project') == 'project' and active_project_id %}
   <form method="post" action="/ui/deals/{{ model.id }}/project/{{ active_project_id }}/delete"
-        style="margin:0;display:inline"
+        style="margin:0;display:contents"
         onsubmit="return confirm('Delete this project and all its data? This cannot be undone.')">
     <button type="submit" class="deal-tab deal-tab-add"
             style="flex-shrink:0;border-left:1px solid var(--border);color:#b91c1c"
