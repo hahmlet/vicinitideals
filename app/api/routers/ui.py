@@ -8219,7 +8219,7 @@ async def deal_setup_wizard_complete(
                 label=_sv_label,
                 funder_type=FunderType(_sv.funder_type),
                 stack_position=1,
-                source=_sv.source_config or {"auto_size": True},
+                source={**(_sv.source_config or {}), "auto_size": True},
                 carry=_sv.carry_config or {},
                 exit_terms=_sv.exit_config or {"exit_type": "full_payoff", "trigger": "end of hold period"},
                 active_phase_start=_sv.active_phase_start or "acquisition",
