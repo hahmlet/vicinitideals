@@ -2711,8 +2711,10 @@ def _filter_opps(opps: list, q: str) -> list:
     return [
         o for o in opps
         if q_lower in (o.name or "").lower()
+        or q_lower in (o.listing_name or "").lower()
         or q_lower in (o.address_normalized or "").lower()
         or q_lower in (o.street or "").lower()
+        or q_lower in (o.apn or "").lower()
     ]
 
 
@@ -3043,6 +3045,8 @@ async def opportunity_wizard_search(
             q_lower in (c.address_normalized or "").lower()
             or q_lower in (c.street or "").lower()
             or q_lower in (c.apn or "").lower()
+            or q_lower in (c.name or "").lower()
+            or q_lower in (c.listing_name or "").lower()
         ):
             matched_opp = c
             break

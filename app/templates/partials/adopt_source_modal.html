@@ -1,0 +1,89 @@
+{# Adopt Source modal — opened from the Sources & Uses panel header on a
+   project. Lists scenario CapitalModules not yet junctioned to this project
+   so the user can attach one ("adopt") after the fact. Recovery path when
+   the share-on-Add-Project step missed a Source.
+
+   Context:
+     - model_id: str
+     - project_id: str
+     - project_name: str
+     - candidates: list of CapitalModule rows (modules NOT already on this project)
+#}
+<div class="adopt-src-modal">
+  <div class="adopt-src-title">Adopt a Source for {{ project_name }}</div>
+  <div class="adopt-src-hint">
+    Pick an existing Source from this Deal to attach to this project. The
+    Source's terms stay shared — only the coverage on this project is added.
+    Sources already attached to this project are not shown.
+  </div>
+
+  {% if not candidates %}
+  <p class="text-muted" style="margin:14px 0">
+    No other Sources on this Deal are available to adopt. Every scenario
+    Source is already attached to {{ project_name }}.
+  </p>
+  <div class="adopt-src-actions">
+    <button type="button" class="btn btn-secondary"
+            onclick="document.getElementById('adopt-src-backdrop')?.remove()">Close</button>
+  </div>
+  {% else %}
+  <form method="post"
+        hx-post="/ui/models/{{ model_id }}/projects/{{ project_id }}/adopt-source"
+        hx-swap="none">
+    <div class="adopt-src-list">
+      {% for m in candidates %}
+      {% set src = m.source or {} %}
+      <label class="adopt-src-row">
+        <input type="radio" name="source_id" value="{{ m.id }}" {% if loop.first %}checked{% endif %}>
+        <div class="adopt-src-row-body">
+          <div class="adopt-src-row-label">{{ m.label }}</div>
+          <div class="adopt-src-row-meta">
+            <span>{{ (m.funder_type | string).replace('FunderType.', '').replace('_', ' ').title() if m.funder_type else 'Source' }}</span>
+            {% if src.interest_rate_pct %}<span>· {{ '{:.2f}%'.format(src.interest_rate_pct | float) }}</span>{% endif %}
+            {% if src.amount %}<span>· {{ src.amount | float | currency }}</span>{% endif %}
+            {% if src.auto_size %}<span>· auto-sized</span>{% endif %}
+          </div>
+        </div>
+      </label>
+      {% endfor %}
+    </div>
+    <div class="adopt-src-actions">
+      <button type="button" class="btn btn-secondary"
+              onclick="document.getElementById('adopt-src-backdrop')?.remove()">Cancel</button>
+      <button type="submit" class="btn btn-primary">Adopt Source →</button>
+    </div>
+  </form>
+  {% endif %}
+</div>
+
+<style>
+.adopt-src-modal { padding: 4px; }
+.adopt-src-title {
+  font-size: 16px; font-weight: 600; margin-bottom: 4px;
+}
+.adopt-src-hint {
+  font-size: 12px; color: var(--text-muted); margin-bottom: 14px;
+}
+.adopt-src-list {
+  display: flex; flex-direction: column; gap: 8px;
+  max-height: 360px; overflow-y: auto;
+  border: 1px solid var(--border); border-radius: 6px; padding: 8px;
+}
+.adopt-src-row {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 12px; border: 1px solid var(--border);
+  border-radius: 6px; cursor: pointer;
+  background: #fff;
+}
+.adopt-src-row:hover { background: #f9fafb; }
+.adopt-src-row input[type=radio] { margin-top: 3px; }
+.adopt-src-row-body { flex: 1; }
+.adopt-src-row-label { font-size: 13px; font-weight: 500; }
+.adopt-src-row-meta {
+  font-size: 11px; color: var(--text-muted);
+  margin-top: 2px; display: flex; gap: 4px; flex-wrap: wrap;
+}
+.adopt-src-actions {
+  margin-top: 14px; display: flex; gap: 8px; justify-content: flex-end;
+}
+</style>
