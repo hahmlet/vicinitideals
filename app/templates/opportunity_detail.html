@@ -191,7 +191,7 @@
 
       {% if opp.dev_projects %}
         {% for proj in opp.dev_projects %}
-        <a class="deal-link-card" href="/deals/{{ proj.scenario.deal_id if proj.scenario else proj.scenario_id }}">
+        <a class="deal-link-card" href="/models/{{ proj.scenario.id if proj.scenario else proj.scenario_id }}/builder?project={{ proj.id }}">
           <div>
             <div style="font-weight:600;font-size:13px">{{ proj.scenario.name if proj.scenario else 'Deal' }}</div>
           </div>
