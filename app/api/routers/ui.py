@@ -6501,32 +6501,6 @@ async def run_sensitivity_analysis(
     return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
 
 
-async def _get_missing_building_data(
-    project: Project,
-    session: AsyncSession,
-) -> list[dict]:
-    """Check for missing physical data on the linked Opportunity (Building entity removed)."""
-    if project.opportunity_id is None:
-        return []
-    opp = await session.get(Opportunity, project.opportunity_id)
-    if opp is None:
-        return []
-    fields = []
-    if not opp.units:
-        fields.append("unit_count")
-    if not opp.gba_sqft:
-        fields.append("building_sqft")
-    if not fields:
-        return []
-    return [{
-        "id": str(opp.id),
-        "label": opp.address_normalized or opp.name or "Opportunity",
-        "fields": fields,
-        "net_rentable_sqft": float(opp.net_rentable_sqft) if opp.net_rentable_sqft else None,
-        "source_url": opp.source_url or "",
-    }]
-
-
 async def _sync_opportunity_buildings_to_projects(
     opportunity: Opportunity,
     buildings: object,
@@ -7753,12 +7727,9 @@ async def deal_setup_wizard_get(
         select(OperationalInputs).where(OperationalInputs.project_id == default_project.id)
     )).scalar_one_or_none() if default_project else None
 
-    # Detect missing building data for step 0
-    missing_building_data = await _get_missing_building_data(default_project, session) if default_project else []
-
-    # If step not explicitly requested, start at step 0 (if missing data) else step 1
+    # If step not explicitly requested, start at step 1.
     if step == -1:
-        step = 0 if missing_building_data else 1
+        step = 1
 
     # Sync wizard staging (inputs.debt_terms) from live CapitalModule.source so
     # re-opening the wizard reflects edits made via Settings drawer or Edit
@@ -7788,7 +7759,6 @@ async def deal_setup_wizard_get(
         await _seed_wizard_perm_defaults(inputs, session, request)
     return templates.TemplateResponse(request, "partials/deal_setup_wizard.html", {
         "request": request, "model": model, "inputs": inputs, "step": step,
-        "missing_building_data": missing_building_data,
     })
 
 
@@ -7890,30 +7860,7 @@ async def deal_setup_wizard_step(
                 inputs.income_mode = _im
 
     # Save current step's data
-    if step == 0:
-        # Physical data step — patch the linked Opportunity with missing physical attrs
-        if default_project and default_project.opportunity_id:
-            _opp_patch = await session.get(Opportunity, default_project.opportunity_id)
-            if _opp_patch:
-                _uc = form.get("unit_count") or None
-                _sqft = form.get("building_sqft") or None
-                _nrsf = form.get("net_rentable_sqft") or None
-                if _uc:
-                    try: _opp_patch.units = int(_uc)
-                    except ValueError: pass
-                if _sqft:
-                    try: _opp_patch.gba_sqft = int(_sqft)
-                    except ValueError: pass
-                if _nrsf:
-                    try: _opp_patch.net_rentable_sqft = int(_nrsf)
-                    except ValueError: pass
-        await session.flush()
-        missing_building_data = await _get_missing_building_data(default_project, session)
-        return templates.TemplateResponse(request, "partials/deal_setup_wizard.html", {
-            "request": request, "model": model, "inputs": inputs, "step": 1,
-            "missing_building_data": missing_building_data,
-        })
-    elif step == 1:
+    if step == 1:
         # Income mode selection (new step 1)
         income_mode = str(form.get("income_mode") or "revenue_opex")
         if income_mode not in ("revenue_opex", "noi"):
@@ -8071,10 +8018,8 @@ async def deal_setup_wizard_step(
 
     # If validation failed, don't persist and re-render the same step with errors
     if wizard_errors:
-        missing_building_data = await _get_missing_building_data(default_project, session)
         return templates.TemplateResponse(request, "partials/deal_setup_wizard.html", {
             "request": request, "model": model, "inputs": inputs, "step": step,
-            "missing_building_data": missing_building_data,
             "wizard_errors": wizard_errors,
         })
 
@@ -8093,10 +8038,8 @@ async def deal_setup_wizard_step(
     next_step = step + 1
     # Seed perm-debt defaults so step 4 shows user/org preference, not template fallback.
     await _seed_wizard_perm_defaults(inputs, session, request)
-    missing_building_data = await _get_missing_building_data(default_project, session)
     return templates.TemplateResponse(request, "partials/deal_setup_wizard.html", {
         "request": request, "model": model, "inputs": inputs, "step": next_step,
-        "missing_building_data": missing_building_data,
     })
 
 
@@ -9079,7 +9022,6 @@ async def model_builder(
     # active project's. Otherwise Project 2's tab would render the wizard with
     # inputs=None and Step 7 (Review) crashes on `inputs.debt_sizing_mode`.
     wizard_step: int = 1
-    missing_building_data: list = []
     deal_setup_inputs = data.get("inputs")
     # Map debt_type → list of project names sharing the existing auto module
     # (excluding the currently-active project). Step 7 of the wizard renders
@@ -9093,8 +9035,7 @@ async def model_builder(
             deal_setup_inputs = (await session.execute(
                 select(OperationalInputs).where(OperationalInputs.project_id == _default_proj.id)
             )).scalar_one_or_none()
-            missing_building_data = await _get_missing_building_data(_default_proj, session)
-            wizard_step = 0 if missing_building_data else 1
+            wizard_step = 1
             # Find existing auto modules + their junction-shared projects so
             # the Step 7 review can flag "shared with {project}" entries.
             from app.models.capital import CapitalModuleProject as _CMP_ws
@@ -9185,7 +9126,6 @@ async def model_builder(
         "lot_size_mismatch": lot_size_mismatch_info,
         "step": wizard_step,
         "wizard_share_info": wizard_share_info,
-        "missing_building_data": missing_building_data,
         "calc_status_pill_html": calc_status_pill_html,
         **data,
         # Override inputs when the wizard is active so it always reads the

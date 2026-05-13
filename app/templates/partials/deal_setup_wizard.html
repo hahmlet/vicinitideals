@@ -254,61 +254,8 @@
     </div>
     {% endif %}
 
-    {# ════════════════════════════════════════════════════════════════ STEP 0 — Missing building data #}
-    {% if _step == 0 %}
-    <div class="wizard-header">
-      <div class="wizard-title">Building Data Needed</div>
-      <div class="wizard-subtitle">Some assigned buildings are missing data required for financial modeling.</div>
-    </div>
-    <form hx-post="/ui/models/{{ model.id }}/setup/step"
-          hx-target="#deal-setup-wizard"
-          hx-swap="outerHTML">
-      <input type="hidden" name="step" value="0">
-      <div class="wizard-body">
-        {% for b in (missing_building_data or []) %}
-        <div style="border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:10px">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-            <div style="font-size:13px;font-weight:600">{{ b.label }}</div>
-            {% if b.source_url %}
-            <a href="{{ b.source_url }}" target="_blank" rel="noopener"
-               style="font-size:12px;color:var(--accent);text-decoration:none;font-weight:500">View Listing ↗</a>
-            {% endif %}
-          </div>
-          <div class="field-row">
-            {% if 'unit_count' in b.fields %}
-            <div class="field-group">
-              <label for="unit_count_{{ b.id }}">Unit Count</label>
-              <input type="number" id="unit_count_{{ b.id }}" name="unit_count_{{ b.id }}"
-                     min="1" step="1" placeholder="e.g. 24">
-              <div class="field-hint">Total rentable units in this building</div>
-            </div>
-            {% endif %}
-            {% if 'building_sqft' in b.fields %}
-            <div class="field-group">
-              <label for="building_sqft_{{ b.id }}">Gross Bldg Sq Ft</label>
-              <input type="number" id="building_sqft_{{ b.id }}" name="building_sqft_{{ b.id }}"
-                     min="1" step="1" placeholder="e.g. 18500">
-              <div class="field-hint">Total gross area including common/mechanical</div>
-            </div>
-            {% endif %}
-            <div class="field-group">
-              <label for="net_rentable_sqft_{{ b.id }}">Net Rentable Sq Ft <span style="font-weight:400;opacity:.6">(optional)</span></label>
-              <input type="number" id="net_rentable_sqft_{{ b.id }}" name="net_rentable_sqft_{{ b.id }}"
-                     min="1" step="1" placeholder="e.g. 16200" value="{{ b.net_rentable_sqft or '' }}">
-              <div class="field-hint">Leasable area — $/rentable sqft metric</div>
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-      <div class="wizard-footer">
-        <span></span>
-        <button type="submit" class="btn btn-primary">Save &amp; Continue →</button>
-      </div>
-    </form>
-
     {# ════════════════════════════════════════════════════════════════ STEP 1 #}
-    {% elif _step == 1 %}
+    {% if _step == 1 %}
     {% set _im = model.income_mode if model.income_mode else 'revenue_opex' %}
     <div class="wizard-header">
       <div class="wizard-title">Income Mode</div>
