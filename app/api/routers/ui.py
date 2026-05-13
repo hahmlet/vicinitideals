@@ -3174,6 +3174,14 @@ async def opportunity_wizard_step(
 
         await session.commit()
 
+        # Re-fetch with parcel eager-loaded so step 3 template can render
+        # opp.parcel.address_normalized without an async lazy load.
+        opp = (await session.execute(
+            select(Opportunity)
+            .where(Opportunity.id == UUID(opp_id_str))
+            .options(selectinload(Opportunity.parcel))
+        )).scalar_one()
+
         deal_type = str(form.get("deal_type", "value_add"))
         return templates.TemplateResponse(request, "opportunity_wizard.html", {
             "request": request, "step": 3, "opp": opp,
@@ -10685,6 +10693,7 @@ async def proforma_confirm(
     counts = form.getlist("unit_type_count[]")
     sqfts = form.getlist("unit_type_sqft[]")
     rents = form.getlist("unit_type_rent[]")
+    market_rents = form.getlist("unit_type_market_rent[]")
 
     rent_type = (form.get("rent_type") or "in_place").strip().lower()
     rent_field = "market_rent_per_unit" if rent_type == "market" else "in_place_rent_per_unit"
@@ -10695,7 +10704,7 @@ async def proforma_confirm(
         )
         project = proj_result.scalar_one()
         unit_mix_rows = []
-        for name, count_s, sqft_s, rent_s in zip(names, counts, sqfts, rents):
+        for idx, (name, count_s, sqft_s, rent_s) in enumerate(zip(names, counts, sqfts, rents)):
             name = name.strip()
             if not name:
                 continue
@@ -10710,6 +10719,17 @@ async def proforma_confirm(
                     "notes": None,
                 }
                 row[rent_field] = float((rent_s or "0").replace(",", ""))
+                # If user supplied a Market Rent alongside in-place, capture it
+                # so LTL catchup can be modeled later without re-entry.
+                if rent_type == "in_place" and idx < len(market_rents):
+                    mkt_s = (market_rents[idx] or "").replace(",", "").strip()
+                    if mkt_s:
+                        try:
+                            mkt_v = float(mkt_s)
+                            if mkt_v > 0:
+                                row["market_rent_per_unit"] = mkt_v
+                        except ValueError:
+                            pass
                 unit_mix_rows.append(row)
             except Exception:
                 pass
