@@ -316,9 +316,17 @@ function ulTimingChanged(val) {
              value="{{ existing.unit_count if existing else '' }}" placeholder="leave blank = 1 unit">
     </div>
     <div class="form-field">
-      <label class="form-label">$/Unit/Month</label>
+      <label class="form-label">Current Rent ($/unit/mo)</label>
       <input class="form-input" type="number" name="amount_per_unit_monthly" step="0.01" min="0"
              value="{{ existing.amount_per_unit_monthly if existing else '' }}" placeholder="0.00">
+      <div class="form-hint">In-place rent the average unit is paying today.</div>
+    </div>
+    <div class="form-field">
+      <label class="form-label">Market Rent ($/unit/mo)</label>
+      <input class="form-input" type="number" name="catchup_target_rent" step="1" min="0"
+             value="{{ existing.catchup_target_rent | round(0) | int if existing and existing.catchup_target_rent else '' }}"
+             placeholder="blank = no catchup">
+      <div class="form-hint">What the unit could rent for today. Triggers LTL catchup (capped 10%/yr) when above Current.</div>
     </div>
   </div>
 
@@ -387,13 +395,6 @@ function ulTimingChanged(val) {
     </summary>
     <div style="margin-top:12px">
       <div class="form-row">
-        <div class="form-field">
-          <label class="form-label">Catchup Target Rent ($/mo)</label>
-          <input class="form-input" type="number" name="catchup_target_rent" step="1" min="0"
-                 value="{{ existing.catchup_target_rent | round(0) | int if existing and existing.catchup_target_rent else '' }}"
-                 placeholder="blank = no catchup">
-          <div class="form-hint">Market rent to ramp toward (capped at 10%/yr). Leave blank for standard escalation.</div>
-        </div>
         <div class="form-field">
           <label class="form-label">Renovation Absorption Rate</label>
           <input class="form-input" type="number" name="renovation_absorption_rate" step="0.1" min="0" max="1"

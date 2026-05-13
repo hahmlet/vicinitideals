@@ -79,22 +79,23 @@
         <div style="display:flex;align-items:center;gap:14px;margin-bottom:10px;font-size:12px;color:var(--text-muted);flex-wrap:wrap">
           <span>Imported rents represent:</span>
           <label style="display:inline-flex;align-items:center;gap:5px;cursor:pointer">
-            <input type="radio" name="rent_type" value="in_place" checked>
-            <span>In-place rent</span>
+            <input type="radio" name="rent_type" value="in_place" checked onchange="toggleMarketCol()">
+            <span>Current rent (in-place)</span>
           </label>
           <label style="display:inline-flex;align-items:center;gap:5px;cursor:pointer">
-            <input type="radio" name="rent_type" value="market">
+            <input type="radio" name="rent_type" value="market" onchange="toggleMarketCol()">
             <span>Market rent</span>
           </label>
-          <span style="font-size:11px;opacity:.7">(Set the other later for LTL catchup)</span>
+          <span style="font-size:11px;opacity:.7">Adding Market here enables LTL catchup later.</span>
         </div>
-        <table class="review-table">
+        <table class="review-table" id="unit-mix-table">
           <colgroup>
             <col style="width:20px">
             <col>
             <col style="width:80px">
             <col style="width:90px">
             <col style="width:110px">
+            <col style="width:110px" class="market-col">
           </colgroup>
           <thead>
             <tr>
@@ -102,7 +103,8 @@
               <th>Unit Type</th>
               <th style="text-align:right">Count</th>
               <th style="text-align:right">Avg Sq Ft</th>
-              <th style="text-align:right">Avg Rent/Mo</th>
+              <th style="text-align:right" id="rent-col-th">Current Rent/Mo</th>
+              <th style="text-align:right" class="market-col">Market Rent/Mo</th>
             </tr>
           </thead>
           <tbody id="unit-mix-tbody">
@@ -129,6 +131,14 @@
               <div style="display:flex;align-items:center;justify-content:flex-end;gap:2px">
                 <span style="font-size:13px;color:var(--text-muted)">$</span>
                 <input type="text" name="unit_type_rent[]" value="{{ u.avg_monthly_rent|round(0)|int }}" class="amount-input"
+                       style="width:80px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
+              </div>
+            </td>
+            <td style="text-align:right" class="market-col">
+              <div style="display:flex;align-items:center;justify-content:flex-end;gap:2px">
+                <span style="font-size:13px;color:var(--text-muted)">$</span>
+                <input type="text" name="unit_type_market_rent[]" value="" class="amount-input"
+                       placeholder="optional"
                        style="width:80px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
               </div>
             </td>
@@ -285,4 +295,16 @@ document.getElementById('proforma-confirm-form').addEventListener('htmx:configRe
     input.value = input.value.replace(/,/g, '');
   });
 });
+
+function toggleMarketCol() {
+  const sel = document.querySelector('input[name="rent_type"]:checked');
+  if (!sel) return;
+  const isInPlace = sel.value === 'in_place';
+  const rentTh = document.getElementById('rent-col-th');
+  if (rentTh) rentTh.textContent = isInPlace ? 'Current Rent/Mo' : 'Market Rent/Mo';
+  document.querySelectorAll('.market-col').forEach(el => {
+    el.style.display = isInPlace ? '' : 'none';
+  });
+}
+toggleMarketCol();
 </script>

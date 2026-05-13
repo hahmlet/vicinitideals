@@ -7646,15 +7646,17 @@ async def _seed_wizard_perm_defaults(inputs: "OperationalInputs", session: "DBSe
     _wiz_dt = dict(inputs.debt_terms or {})
     _wiz_pd = dict(_wiz_dt.get("permanent_debt", {}))
     _wiz_dirty = False
-    for _def_key, _staging_key in (
-        ("hold_term_years", "hold_term_years"),
-        ("amort_term_years", "amort_years"),
+    for _def_key, _staging_key, _cast in (
+        ("hold_term_years", "hold_term_years", int),
+        ("amort_term_years", "amort_years", int),
+        ("ltv_pct", "ltv_pct", float),
+        ("dscr_min", "dscr_min", float),
     ):
         if _staging_key not in _wiz_pd:
             _raw = _wiz_defs.get(_def_key)
             if _raw:
                 try:
-                    _wiz_pd[_staging_key] = int(_raw)
+                    _wiz_pd[_staging_key] = _cast(_raw)
                     _wiz_dirty = True
                 except (ValueError, TypeError):
                     pass
@@ -7663,6 +7665,13 @@ async def _seed_wizard_perm_defaults(inputs: "OperationalInputs", session: "DBSe
         inputs.debt_terms = _wiz_dt
         session.add(inputs)
         await session.flush()
+    # Org-Set debt_sizing_mode reflects org policy when no value yet on inputs.
+    if not inputs.debt_sizing_mode:
+        _dsm_default = _wiz_defs.get("debt_sizing_mode")
+        if _dsm_default:
+            inputs.debt_sizing_mode = _dsm_default
+            session.add(inputs)
+            await session.flush()
 
 
 @router.get("/ui/models/{model_id}/setup", response_class=HTMLResponse)
