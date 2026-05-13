@@ -8990,20 +8990,20 @@ async def model_builder(
         for _ms in _anchor_ms_rows:
             anchor_milestones_by_project.setdefault(_ms.project_id, []).append(_ms)
 
-    # Add-Project drawer: opportunities used in other scenarios of this deal
-    # but not yet bound to a project on THIS scenario.
+    # Add-Project drawer: any opp in the user's org not yet bound to a project
+    # on THIS scenario. Covers cross-scenario reuse AND newly-created standalone
+    # opps from the wizard's `link_to_deal` flow (which doesn't auto-link).
     add_project_opportunities: list[dict] = []
-    if model.deal_id is not None:
+    if model.deal_id is not None and user is not None:
         _bound_opp_ids = {p.opportunity_id for p in deal_projects if p.opportunity_id}
-        _other_opps_stmt = (
+        _opps_stmt = (
             select(Opportunity)
-            .join(Project, Project.opportunity_id == Opportunity.id)
-            .join(DealModel, DealModel.id == Project.scenario_id)
-            .where(DealModel.deal_id == model.deal_id)
+            .where(Opportunity.org_id == user.org_id)
+            .order_by(Opportunity.scraped_at.desc())
         )
         if _bound_opp_ids:
-            _other_opps_stmt = _other_opps_stmt.where(Opportunity.id.notin_(_bound_opp_ids))
-        _deal_opps_rows = list((await session.execute(_other_opps_stmt)).scalars().unique())
+            _opps_stmt = _opps_stmt.where(Opportunity.id.notin_(_bound_opp_ids))
+        _deal_opps_rows = list((await session.execute(_opps_stmt)).scalars().unique())
         for _opp in _deal_opps_rows:
             add_project_opportunities.append({
                 "id": str(_opp.id),
