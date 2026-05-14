@@ -21,7 +21,26 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.models.base import Base
 
 
+class VehicleType(str, enum.Enum):
+    """4-type mechanical classification replacing the 17-value FunderType taxonomy."""
+    equity = "equity"
+    debt = "debt"
+    forgivable_loan = "forgivable_loan"
+    grant = "grant"
+
+
+class EquityRole(str, enum.Enum):
+    """GP vs LP role for equity vehicles. Non-null only when vehicle_type == "equity"."""
+    gp = "gp"
+    lp = "lp"
+
+
 class FunderType(str, enum.Enum):
+    """Legacy 17-value taxonomy. Kept for backward compat with existing engine code and UI.
+
+    New code should use VehicleType + EquityRole on CapitalModule instead.
+    Will be removed after Phase G UI rewrite.
+    """
     permanent_debt = "permanent_debt"           # amortizing long-term loan, no exit trigger
     senior_debt = "senior_debt"
     mezzanine_debt = "mezzanine_debt"
@@ -61,16 +80,22 @@ class CapitalModule(Base):
     )
     label: Mapped[str] = mapped_column(String(255), nullable=False)
     funder_type: Mapped[FunderType] = mapped_column(String(60), nullable=False)
+    # New 4-type classification (Phase A). Populated on new creates; NULL on legacy rows.
+    # Engine classifiers check this first, then fall back to funder_type.
+    vehicle_type: Mapped[str | None] = mapped_column(String(20), nullable=True)   # VehicleType value
+    equity_role: Mapped[str | None] = mapped_column(String(10), nullable=True)    # EquityRole value or NULL
     stack_position: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     source: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     carry: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     exit_terms: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     active_phase_start: Mapped[str | None] = mapped_column(String(60), nullable=True)
     active_phase_end: Mapped[str | None] = mapped_column(String(60), nullable=True)
-    # Nullable FK to whichever source vehicle was used to pre-fill this module.
-    # No DB-level FK constraint (vehicle can be from org or user table).
-    # Set to NULL when the vehicle is deleted; deal data is otherwise unchanged.
-    source_vehicle_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), nullable=True)
+    # FK to unified source_vehicles table (nullable; SET NULL when vehicle deleted).
+    source_vehicle_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("source_vehicles.id", ondelete="SET NULL"),
+        nullable=True,
+    )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )

@@ -587,8 +587,7 @@ async def _compute_project_cashflow(
     # overwrite for multi-project and these per-project values stand.
     _project_debt_principal = ZERO
     for _cm_eq in capital_modules:
-        _ft_eq = str(_cm_eq.funder_type).replace("FunderType.", "")
-        if _ft_eq not in _DEBT_FUNDER_TYPES:
+        if not _is_debt_cm(_cm_eq):
             continue
         _src_eq = _cm_eq.source or {}
         if _src_eq.get("is_bridge"):
@@ -650,8 +649,7 @@ async def _compute_project_cashflow(
     # Debt Yield = Stabilized NOI / Total Outstanding Debt Balance
     total_debt_balance = ZERO
     for cm in capital_modules:
-        ft = str(cm.funder_type).replace("FunderType.", "")
-        if ft not in _DEBT_FUNDER_TYPES:
+        if not _is_debt_cm(cm):
             continue
         src = cm.source or {}
         if src.get("is_bridge"):
@@ -1073,6 +1071,19 @@ _DEBT_FUNDER_TYPES = {
     "construction_loan", "bond", "permanent_debt",
     "acquisition_loan", "pre_development_loan", "owner_loan",
 }
+
+
+def _is_debt_cm(m: object) -> bool:
+    """Return True if the capital module is a debt instrument.
+
+    Checks vehicle_type (4-type schema) first; falls back to funder_type for legacy rows.
+    """
+    vt = str(getattr(m, "vehicle_type", None) or "").replace("VehicleType.", "")
+    if vt == "debt":
+        return True
+    if vt in ("equity", "forgivable_loan", "grant"):
+        return False
+    return str(getattr(m, "funder_type", "") or "").replace("FunderType.", "") in _DEBT_FUNDER_TYPES
 
 # Funder types for which Exit Vehicle applies — every funding line that has
 # a real "ending" (matures, is refinanced, or is paid off at sale).  All
@@ -2270,8 +2281,7 @@ def _sum_debt_service(modules: list, is_construction: bool) -> Decimal:
     """Compute total monthly debt service for construction or operation phase."""
     total = ZERO
     for m in modules:
-        ft = str(m.funder_type).replace("FunderType.", "")
-        if ft not in _DEBT_FUNDER_TYPES:
+        if not _is_debt_cm(m):
             continue
         carry = m.carry or {}
         ct = _carry_type_for_phase(carry, is_construction)

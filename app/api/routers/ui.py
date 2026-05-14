@@ -1838,10 +1838,12 @@ async def settings_organization(
         for r in _org_rows
     }
 
-    from app.models.source_vehicle import OrgSourceVehicle as _OSV_org
+    from app.models.source_vehicle import SourceVehicle as _OSV_org
     org_source_vehicles = (
         await session.execute(
-            select(_OSV_org).where(_OSV_org.org_id == user.org_id).order_by(_OSV_org.name)
+            select(_OSV_org).where(
+                _OSV_org.scope == "org", _OSV_org.owner_id == user.org_id
+            ).order_by(_OSV_org.label)
         )
     ).scalars().all()
 
@@ -1973,15 +1975,19 @@ async def settings_user_preferences(
         (r.deal_type, r.milestone_type): r.user_overridable for r in _org_dtd_rows2
     }
 
-    from app.models.source_vehicle import OrgSourceVehicle as _OSV_usr, UserSourceVehicle as _USV_usr
+    from app.models.source_vehicle import SourceVehicle as _SV_usr
     org_source_vehicles_usr = (
         await session.execute(
-            select(_OSV_usr).where(_OSV_usr.org_id == user.org_id).order_by(_OSV_usr.name)
+            select(_SV_usr).where(
+                _SV_usr.scope == "org", _SV_usr.owner_id == user.org_id
+            ).order_by(_SV_usr.label)
         )
     ).scalars().all()
     user_source_vehicles = (
         await session.execute(
-            select(_USV_usr).where(_USV_usr.user_id == user.id).order_by(_USV_usr.name)
+            select(_SV_usr).where(
+                _SV_usr.scope == "user", _SV_usr.owner_id == user.id
+            ).order_by(_SV_usr.label)
         )
     ).scalars().all()
 
@@ -2116,19 +2122,16 @@ async def deals_new_page(
     ctx["opp_id"] = opp_id
     ctx["opp_name"] = opp_name
     ctx["opp_asking_price"] = opp_asking_price
-    from app.models.source_vehicle import OrgSourceVehicle as _OSVC, UserSourceVehicle as _USVC
-    _org_svs = list((await session.execute(
-        select(_OSVC).where(_OSVC.org_id == user.org_id).order_by(_OSVC.name)
-    )).scalars()) if user else []
-    _user_svs = list((await session.execute(
-        select(_USVC).where(_USVC.user_id == user.id).order_by(_USVC.name)
+    from app.models.source_vehicle import SourceVehicle as _SVC
+    _all_svs = list((await session.execute(
+        select(_SVC).where(
+            ((_SVC.scope == "org") & (_SVC.owner_id == user.org_id)) |
+            ((_SVC.scope == "user") & (_SVC.owner_id == user.id))
+        ).order_by(_SVC.label)
     )).scalars()) if user else []
     ctx["source_vehicles"] = [
-        {"id": str(v.id), "name": v.name, "funder_type": v.funder_type, "owner": "org"}
-        for v in _org_svs
-    ] + [
-        {"id": str(v.id), "name": v.name, "funder_type": v.funder_type, "owner": "user"}
-        for v in _user_svs
+        {"id": str(v.id), "name": v.label, "funder_type": v.vehicle_type, "owner": v.scope}
+        for v in _all_svs
     ]
     return templates.TemplateResponse(request, "deals_new.html", ctx)
 
@@ -8189,21 +8192,29 @@ async def deal_setup_wizard_complete(
     # instead of the wizard's per-debt-type config.
     _sv_module_created = False
     if model.source_vehicle_id is not None:
-        from app.models.source_vehicle import OrgSourceVehicle as _OSV2, UserSourceVehicle as _USV2
+        from app.models.source_vehicle import SourceVehicle as _SV2
         _sv = (await session.execute(
-            select(_OSV2).where(_OSV2.id == model.source_vehicle_id)
+            select(_SV2).where(_SV2.id == model.source_vehicle_id)
         )).scalar_one_or_none()
-        if _sv is None:
-            _sv = (await session.execute(
-                select(_USV2).where(_USV2.id == model.source_vehicle_id)
-            )).scalar_one_or_none()
         if _sv is not None:
             _sv_module_created = True
-            _sv_label = f"{_sv.name} (auto)"
+            _sv_label = f"{_sv.label} (auto)"
+            # Map vehicle_type → legacy funder_type for backward compat with existing engine code.
+            _sv_ft_map = {
+                "debt": "senior_debt", "forgivable_loan": "soft_loan",
+                "grant": "grant", "equity": "common_equity" if _sv.equity_role == "gp" else "preferred_equity",
+            }
+            _sv_ft_str = _sv_ft_map.get(_sv.vehicle_type or "", "other")
+            try:
+                _sv_ft = FunderType(_sv_ft_str)
+            except ValueError:
+                _sv_ft = FunderType.other
             session.add(CapitalModule(
                 scenario_id=model_id,
                 label=_sv_label,
-                funder_type=FunderType(_sv.funder_type),
+                funder_type=_sv_ft,
+                vehicle_type=_sv.vehicle_type,
+                equity_role=_sv.equity_role,
                 stack_position=1,
                 source={**(_sv.source_config or {}), "auto_size": True},
                 carry=_sv.carry_config or {},
@@ -8213,7 +8224,7 @@ async def deal_setup_wizard_complete(
                 source_vehicle_id=model.source_vehicle_id,
             ))
             _cc_preload_modules.append({
-                "funder_type": _sv.funder_type,
+                "funder_type": _sv_ft_str,
                 "label": _sv_label,
                 "active_phase_start": _sv.active_phase_start or "acquisition",
             })
@@ -11412,19 +11423,16 @@ async def model_builder_line_form(
     if not id:
         _lf_user = await _get_user(session, request)
         if _lf_user is not None:
-            from app.models.source_vehicle import OrgSourceVehicle as _OSV_lf, UserSourceVehicle as _USV_lf
-            _org_svs = (await session.execute(
-                select(_OSV_lf).where(_OSV_lf.org_id == _lf_user.org_id).order_by(_OSV_lf.name)
-            )).scalars().all()
-            _usr_svs = (await session.execute(
-                select(_USV_lf).where(_USV_lf.user_id == _lf_user.id).order_by(_USV_lf.name)
+            from app.models.source_vehicle import SourceVehicle as _SV_lf
+            _all_svs_lf = (await session.execute(
+                select(_SV_lf).where(
+                    ((_SV_lf.scope == "org") & (_SV_lf.owner_id == _lf_user.org_id)) |
+                    ((_SV_lf.scope == "user") & (_SV_lf.owner_id == _lf_user.id))
+                ).order_by(_SV_lf.label)
             )).scalars().all()
             _sv_list = [
-                {"id": str(v.id), "name": v.name, "funder_type": v.funder_type, "owner": "org"}
-                for v in _org_svs
-            ] + [
-                {"id": str(v.id), "name": v.name, "funder_type": v.funder_type, "owner": "user"}
-                for v in _usr_svs
+                {"id": str(v.id), "name": v.label, "funder_type": v.vehicle_type, "owner": v.scope}
+                for v in _all_svs_lf
             ]
 
     return templates.TemplateResponse(request, "partials/model_builder_line_form.html", {
@@ -11466,31 +11474,26 @@ async def source_vehicle_prefill(
     session: DBSession,
 ) -> JSONResponse:
     """Return flat form-field values for a source vehicle (used by wizard dropdown JS)."""
-    from app.models.source_vehicle import OrgSourceVehicle as _OSV_pf, UserSourceVehicle as _USV_pf
+    from app.models.source_vehicle import SourceVehicle as _SV_pf
 
     user = await _get_user(session, request)
     if user is None:
         raise HTTPException(status_code=401, detail="Not authenticated")
 
-    vehicle = None
-    owner = None
-    # Check org vehicles first
-    org_v = (await session.execute(
-        select(_OSV_pf).where(_OSV_pf.id == vehicle_id, _OSV_pf.org_id == user.org_id)
+    vehicle = (await session.execute(
+        select(_SV_pf).where(
+            _SV_pf.id == vehicle_id,
+            (
+                ((_SV_pf.scope == "org") & (_SV_pf.owner_id == user.org_id)) |
+                ((_SV_pf.scope == "user") & (_SV_pf.owner_id == user.id))
+            ),
+        )
     )).scalar_one_or_none()
-    if org_v:
-        vehicle = org_v
-        owner = "org"
-    else:
-        user_v = (await session.execute(
-            select(_USV_pf).where(_USV_pf.id == vehicle_id, _USV_pf.user_id == user.id)
-        )).scalar_one_or_none()
-        if user_v:
-            vehicle = user_v
-            owner = "user"
 
     if vehicle is None:
         raise HTTPException(status_code=404, detail="Vehicle not found")
+
+    owner = vehicle.scope
 
     source = vehicle.source_config or {}
     carry = vehicle.carry_config or {}
