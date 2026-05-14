@@ -36,6 +36,8 @@ from app.models.milestone import Milestone, MilestoneType
 from app.models.project import Project
 from app.models.manifest import WorkflowRunManifest
 from app.engines.draw_engine import compute_period_draw_inflow
+from app.engines.interest import period_interest_months
+from app.engines.newton_solve import solve_principal_for_dscr
 
 # Phase-plan + per-loan windowing + per-period structural helpers extracted
 # to cashflow_compile.py (PR1 slices 1, 2, 3 of compile/evaluate split).
@@ -1604,12 +1606,14 @@ async def _auto_size_debt_modules(
                 _r = Decimal(str(_rate or 0))
                 _pre_ct = _carry_type_for_phase(_carry, is_construction=True)
                 _n = _loan_pre_op_months(_m, capital_modules, phases)
-                if _pre_ct == "interest_reserve":
-                    _io_f = (_r / HUNDRED / Decimal("12") * (Decimal(_n + 1) / Decimal("2"))
-                             ) if (_r > ZERO and _n > 0) else ZERO
-                elif _pre_ct == "capitalized_interest":
-                    _io_f = (_r / HUNDRED / Decimal("12") * Decimal(_n)
-                             ) if (_r > ZERO and _n > 0) else ZERO
+                if _pre_ct == "interest_reserve" and _r > ZERO and _n > 0:
+                    # average-draw factor: principal drawn evenly over _n months
+                    _interest_carry = period_interest_months(_funded, _n, _r, draw_schedule="linear")
+                    _io_f = (_interest_carry / _funded) if _funded > ZERO else ZERO
+                elif _pre_ct == "capitalized_interest" and _r > ZERO and _n > 0:
+                    # full-balance factor: lump draw at month 0
+                    _interest_carry = period_interest_months(_funded, _n, _r, draw_schedule="lump")
+                    _io_f = (_interest_carry / _funded) if _funded > ZERO else ZERO
                 else:
                     _io_f = ZERO
                 _div = ONE - _io_f
@@ -1627,9 +1631,9 @@ async def _auto_size_debt_modules(
                 _n = _loan_pre_op_months(_m, capital_modules, phases)
                 if _principal > ZERO and _r > ZERO and _n > 0:
                     if _acq_ct == "interest_reserve":
-                        _acq_interest = _q(_principal * _r / HUNDRED / Decimal("12") * (Decimal(_n + 1) / Decimal("2")))
+                        _acq_interest = period_interest_months(_principal, _n, _r, draw_schedule="linear")
                     elif _acq_ct == "capitalized_interest":
-                        _acq_interest = _q(_principal * _r / HUNDRED / Decimal("12") * Decimal(_n))
+                        _acq_interest = period_interest_months(_principal, _n, _r, draw_schedule="lump")
                     else:
                         _acq_interest = ZERO
                     if _acq_interest > ZERO:
@@ -1643,12 +1647,12 @@ async def _auto_size_debt_modules(
                 _r = Decimal(str(_cr or 0))
                 _cl_ct = _carry_type_for_phase(_carry, is_construction=True)
                 _n = _loan_pre_op_months(_m, capital_modules, phases)
-                if _cl_ct == "interest_reserve":
-                    _io_f = (_r / HUNDRED / Decimal("12") * (Decimal(_n + 1) / Decimal("2"))
-                             ) if (_r > ZERO and _n > 0) else ZERO
-                elif _cl_ct == "capitalized_interest":
-                    _io_f = (_r / HUNDRED / Decimal("12") * Decimal(_n)
-                             ) if (_r > ZERO and _n > 0) else ZERO
+                if _cl_ct == "interest_reserve" and _r > ZERO and _n > 0:
+                    _interest_carry = period_interest_months(_funded, _n, _r, draw_schedule="linear")
+                    _io_f = (_interest_carry / _funded) if _funded > ZERO else ZERO
+                elif _cl_ct == "capitalized_interest" and _r > ZERO and _n > 0:
+                    _interest_carry = period_interest_months(_funded, _n, _r, draw_schedule="lump")
+                    _io_f = (_interest_carry / _funded) if _funded > ZERO else ZERO
                 else:
                     _io_f = ZERO
                 _div = ONE - _io_f
@@ -1937,8 +1941,12 @@ async def _auto_size_debt_modules(
                 )
                 if gf_dscr < dscr_min:
                     # Hard cap binds: compute P at exactly DSCR_min
-                    target_monthly_ds = _q(noi_annual / dscr_min / Decimal("12"))
-                    principal = _pv_from_pmt(target_monthly_ds, rate_pct, amort_years)
+                    principal = solve_principal_for_dscr(
+                        noi_annual=noi_annual,
+                        target_dscr=dscr_min,
+                        rate_pct=Decimal(str(rate_pct)),
+                        amort_years=amort_years,
+                    )
                     # Note: no closing-cost re-inflation here. The lender's cap
                     # is on DS(P), not on P·(1−perm_pct).  Any closing cost
                     # shortfall surfaces as a real Sources gap downstream.
@@ -1993,8 +2001,12 @@ async def _auto_size_debt_modules(
 
             p_dscr = Decimal("999999999999")
             if rate_pct and noi_annual > ZERO and dscr_min > ZERO:
-                target_monthly_ds = _q(noi_annual / dscr_min / Decimal("12"))
-                p_dscr = _pv_from_pmt(target_monthly_ds, rate_pct, amort_years)
+                p_dscr = solve_principal_for_dscr(
+                    noi_annual=noi_annual,
+                    target_dscr=dscr_min,
+                    rate_pct=Decimal(str(rate_pct)),
+                    amort_years=amort_years,
+                )
 
             principal = min(p_gapfill, p_ltv, p_dscr)
             if principal < ZERO:
