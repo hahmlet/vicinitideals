@@ -193,4 +193,51 @@
 </div>
 {% endif %}
 
+{# ── Phase E: Capital Draw Events (populated by cashflow compute) ── #}
+{% if capital_draw_events %}
+<div class="ds-section" style="margin-top:24px;border-top:2px solid var(--border);padding-top:16px">
+  <div class="ds-section-title">Capital Draw Events
+    <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-muted);font-size:11px">
+      — per-period inflows from last cashflow compute
+    </span>
+  </div>
+  {%- set _projects = capital_draw_events | map(attribute='project_name') | unique | list -%}
+  {%- set _multi_project = _projects | length > 1 -%}
+  <div style="overflow-x:auto;max-height:320px">
+  <table class="line-table" style="font-size:12px;white-space:nowrap">
+    <thead style="position:sticky;top:0;background:var(--surface,#fff);z-index:1">
+      <tr>
+        <th style="text-align:left">Period</th>
+        <th style="text-align:left">Phase</th>
+        <th style="text-align:left">Reason</th>
+        {% if _multi_project %}<th style="text-align:left">Project</th>{% endif %}
+        <th class="col-right">Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for ev in capital_draw_events %}
+    {%- if ev.allocation_reason == 'period_funding' -%}{%- set _rc = '#16a34a' -%}
+    {%- elif ev.allocation_reason == 'acquisition' -%}{%- set _rc = '#2563eb' -%}
+    {%- else -%}{%- set _rc = '#d97706' -%}
+    {%- endif -%}
+    <tr>
+      <td class="text-muted" style="font-size:11px">{{ ev.period }}</td>
+      <td style="font-size:11px">{{ ev.period_type | replace('_',' ') | title }}</td>
+      <td><span style="font-size:10px;color:{{ _rc }};font-weight:600">{{ ev.allocation_reason | replace('_',' ') | title }}</span></td>
+      {% if _multi_project %}<td style="font-size:11px;color:var(--text-muted)">{{ ev.project_name }}</td>{% endif %}
+      <td class="col-right text-mono" style="color:var(--success,#16a34a)">{{ ev.amount | currency }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot style="border-top:2px solid var(--border);font-weight:700;background:var(--surface,#fff)">
+      <tr>
+        <td colspan="{{ 4 if _multi_project else 3 }}" style="padding:6px 8px">Total Drawn</td>
+        <td class="col-right">{{ capital_draw_events | sum(attribute='amount') | currency }}</td>
+      </tr>
+    </tfoot>
+  </table>
+  </div>
+</div>
+{% endif %}
+
 </div>{# /module-panel-body #}

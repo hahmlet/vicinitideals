@@ -12563,6 +12563,35 @@ async def _load_draw_schedule_ctx(
     milestone_label_map = {m["key"]: m["label"] for m in milestones_dated}
     milestone_label_map["maturity"] = "Maturity"
 
+    # Phase E draw events — populated by compute_cash_flows(); empty until then.
+    from app.models.capital_draw_event import CapitalDrawEvent as _CDE_ds
+    from app.models.project import Project as _Proj_ds
+    _cde_rows = list((await session.execute(
+        select(_CDE_ds)
+        .where(_CDE_ds.scenario_id == model_id)
+        .order_by(_CDE_ds.period, _CDE_ds.allocation_reason)
+    )).scalars())
+    # Collect project names for multi-project labelling
+    _proj_ids = {str(r.project_id) for r in _cde_rows if r.project_id}
+    _proj_name_map: dict[str, str] = {}
+    if _proj_ids:
+        _projs_ds = list((await session.execute(
+            select(_Proj_ds).where(_Proj_ds.id.in_([_uuid_mod.UUID(p) for p in _proj_ids]))
+        )).scalars())
+        _proj_name_map = {str(p.id): p.name for p in _projs_ds}
+    capital_draw_events = [
+        {
+            "period": r.period,
+            "period_type": r.period_type or "",
+            "allocation_reason": (r.allocation_reason.value if hasattr(r.allocation_reason, "value") else str(r.allocation_reason or "")),
+            "amount": float(r.amount or 0),
+            "project_id": str(r.project_id) if r.project_id else None,
+            "project_name": _proj_name_map.get(str(r.project_id), "—") if r.project_id else "—",
+            "use_line_label": r.use_line_label or "",
+        }
+        for r in _cde_rows
+    ]
+
     return {
         "model": model,
         "draw_sources": draw_sources,
@@ -12574,6 +12603,7 @@ async def _load_draw_schedule_ctx(
         "milestone_keys": milestone_keys,
         "builder_gantt_data": builder_gantt_data_ds,
         "source_gantt_rows": source_gantt_rows,
+        "capital_draw_events": capital_draw_events,
     }
 
 
