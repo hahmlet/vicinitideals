@@ -412,6 +412,13 @@ async def _compute_project_cashflow(
             break
         _accum += _p.months
 
+    # Phase B: pre-compute milestone FK overrides for UseLines that have
+    # active_from_milestone_id set. Built once before the phase loop so
+    # milestone resolution doesn't repeat per-period.
+    _ul_phase_overrides = _build_use_line_phase_overrides(
+        use_lines, milestone_map, phases
+    )
+
     for phase in phases:
         for month_index in range(phase.months):
             period_result = _compute_period(
@@ -429,6 +436,7 @@ async def _compute_project_cashflow(
                 operation_debt_monthly=operation_debt_monthly,
                 income_mode=income_mode,
                 first_stab_period=_first_stab_period,
+                use_line_phase_overrides=_ul_phase_overrides,
             )
 
             if phase.period_type == PeriodType.stabilized and stabilized_noi_monthly is None:
@@ -1117,6 +1125,73 @@ _USE_LINE_PHASE_MAP: dict[str, set[PeriodType]] = {
     "exit":            {PeriodType.exit},
     "other":           {PeriodType.acquisition},
 }
+
+# Phase B: milestone_type → period_types mapping for FK-anchored UseLines.
+# When a UseLine has active_from_milestone_id set, we resolve period_types from
+# the milestone type rather than the legacy phase string.
+_MILESTONE_TYPE_TO_PERIOD_TYPES: dict[str, set[PeriodType]] = {
+    "close":                {PeriodType.acquisition},
+    "under_contract":       {PeriodType.acquisition},
+    "offer_made":           {PeriodType.acquisition},
+    "pre_development":      {PeriodType.pre_construction},
+    "construction":         {PeriodType.construction, PeriodType.major_renovation, PeriodType.minor_renovation, PeriodType.conversion},
+    "operation_lease_up":   {PeriodType.lease_up},
+    "operation_stabilized": {PeriodType.stabilized},
+    "divestment":           {PeriodType.exit},
+}
+
+
+def _period_types_in_range(
+    from_types: set[PeriodType],
+    to_types: set[PeriodType],
+    phases: list,
+) -> set[PeriodType]:
+    """Return all PeriodTypes that appear between from_types and to_types in the phase plan (inclusive)."""
+    result: set[PeriodType] = set()
+    in_range = False
+    for p in phases:
+        if p.period_type in from_types:
+            in_range = True
+        if in_range:
+            result.add(p.period_type)
+            if p.period_type in to_types:
+                break
+    return result or from_types
+
+
+def _build_use_line_phase_overrides(
+    use_lines: list,
+    milestone_map: dict,
+    phases: list,
+) -> dict:
+    """Pre-compute {use_line.id: set[PeriodType]} for UseLines with milestone FKs.
+
+    UseLines without active_from_milestone_id are not included; the engine
+    falls back to _USE_LINE_PHASE_MAP for those.
+    """
+    overrides: dict = {}
+    for ul in use_lines:
+        from_id = getattr(ul, "active_from_milestone_id", None)
+        if not from_id:
+            continue
+        m_from = milestone_map.get(from_id)
+        if m_from is None:
+            continue
+        mt_from = str(getattr(m_from, "milestone_type", "") or "").replace("MilestoneType.", "")
+        from_types = _MILESTONE_TYPE_TO_PERIOD_TYPES.get(mt_from, set())
+        if not from_types:
+            continue
+        to_id = getattr(ul, "spread_to_milestone_id", None)
+        if to_id:
+            m_to = milestone_map.get(to_id)
+            if m_to is not None:
+                mt_to = str(getattr(m_to, "milestone_type", "") or "").replace("MilestoneType.", "")
+                to_types = _MILESTONE_TYPE_TO_PERIOD_TYPES.get(mt_to, set())
+                if to_types:
+                    overrides[ul.id] = _period_types_in_range(from_types, to_types, phases)
+                    continue
+        overrides[ul.id] = from_types
+    return overrides
 
 _DEBT_FUNDER_TYPES = {
     "senior_debt", "mezzanine_debt", "bridge", "soft_loan",
@@ -2380,6 +2455,7 @@ def _compute_period(
     income_mode: str = "revenue_opex",
     first_stab_period: int = 0,
     project_id: UUID | None = None,
+    use_line_phase_overrides: dict | None = None,
 ) -> dict[str, Any]:
     gross_revenue = ZERO
     vacancy_loss = ZERO
@@ -2700,8 +2776,14 @@ def _compute_period(
         for ul in use_lines:
             if getattr(ul, "label", "") in _BALANCE_ONLY:
                 continue
-            ul_phase_str = str(ul.phase).replace("UseLinePhase.", "")
-            period_types = _USE_LINE_PHASE_MAP.get(ul_phase_str, set())
+            # Phase B: prefer milestone FK override; fall back to phase string
+            period_types = (
+                (use_line_phase_overrides or {}).get(ul.id)
+                or _USE_LINE_PHASE_MAP.get(
+                    str(getattr(ul, "phase", "") or "").replace("UseLinePhase.", ""),
+                    set(),
+                )
+            )
             if phase.period_type not in period_types:
                 continue
             total_amount = _to_decimal(ul.amount)
