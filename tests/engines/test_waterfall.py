@@ -11,7 +11,7 @@ from sqlalchemy.pool import StaticPool
 
 from app.engines.waterfall import _allocate_capital_calls, compute_waterfall
 from app.engines.waterfall import ModuleState  # noqa: PLC2701
-from app.models.capital import CapitalModule, FunderType, WaterfallResult, WaterfallTier
+from app.models.capital import CapitalModule, EquityRole, FunderType, VehicleType, WaterfallResult, WaterfallTier
 from app.schemas.capital import CapitalCarrySchema, CapitalExitSchema, CapitalSourceSchema
 from app.models.cashflow import CashFlow, OperationalOutputs, PeriodType
 from app.models.deal import DealModel, ProjectType
@@ -63,6 +63,8 @@ async def test_compute_waterfall_persists_results_and_metrics(db_session: AsyncS
         scenario_id=deal.id,
         label="LP Preferred Equity",
         funder_type=FunderType.preferred_equity.value,
+        vehicle_type=VehicleType.equity.value,
+        equity_role=EquityRole.lp.value,
         stack_position=2,
         source={"amount": "25000", "interest_rate_pct": 8.0},
         carry={"carry_type": "none", "payment_frequency": "monthly", "capitalized": False},
@@ -74,6 +76,8 @@ async def test_compute_waterfall_persists_results_and_metrics(db_session: AsyncS
         scenario_id=deal.id,
         label="GP Common Equity",
         funder_type=FunderType.common_equity.value,
+        vehicle_type=VehicleType.equity.value,
+        equity_role=EquityRole.gp.value,
         stack_position=3,
         source={"amount": "15000", "interest_rate_pct": 6.0},
         carry={"carry_type": "none", "payment_frequency": "monthly", "capitalized": False},
@@ -271,6 +275,8 @@ async def test_irr_hurdle_split_waits_until_lp_hurdle_is_met(db_session: AsyncSe
         scenario_id=deal.id,
         label="LP Preferred Equity",
         funder_type=FunderType.preferred_equity.value,
+        vehicle_type=VehicleType.equity.value,
+        equity_role=EquityRole.lp.value,
         stack_position=1,
         source={"amount": "80000", "interest_rate_pct": 8.0},
         carry={"carry_type": "none", "payment_frequency": "monthly", "capitalized": False},
@@ -282,6 +288,8 @@ async def test_irr_hurdle_split_waits_until_lp_hurdle_is_met(db_session: AsyncSe
         scenario_id=deal.id,
         label="GP Common Equity",
         funder_type=FunderType.common_equity.value,
+        vehicle_type=VehicleType.equity.value,
+        equity_role=EquityRole.gp.value,
         stack_position=2,
         source={"amount": "20000", "interest_rate_pct": 6.0},
         carry={"carry_type": "none", "payment_frequency": "monthly", "capitalized": False},
@@ -457,13 +465,14 @@ _MONEY_PLACES = Decimal("0.000001")
 
 
 def _make_equity_state(
-    funder_type: FunderType,
+    equity_role: EquityRole,
     stack_position: int,
     commitment: Decimal = _ZERO,
 ) -> ModuleState:
     module = CapitalModule(
         id=uuid4(),
-        funder_type=funder_type,
+        vehicle_type=VehicleType.equity.value,
+        equity_role=equity_role.value,
         stack_position=stack_position,
         label=f"Equity {stack_position}",
         active_phase_start=None,
@@ -480,7 +489,7 @@ def _make_equity_state(
 
 @pytest.mark.unit
 def test_single_uncapped_equity_absorbs_full_call() -> None:
-    state = _make_equity_state(FunderType.common_equity, stack_position=1)
+    state = _make_equity_state(EquityRole.gp, stack_position=1)
     allocs = _allocate_capital_calls(
         Decimal("1000000"), "construction", [state]
     )
@@ -490,8 +499,8 @@ def test_single_uncapped_equity_absorbs_full_call() -> None:
 
 @pytest.mark.unit
 def test_two_uncapped_equity_modules_split_pro_rata() -> None:
-    lp = _make_equity_state(FunderType.preferred_equity, stack_position=1)
-    gp = _make_equity_state(FunderType.common_equity, stack_position=2)
+    lp = _make_equity_state(EquityRole.lp, stack_position=1)
+    gp = _make_equity_state(EquityRole.gp, stack_position=2)
     allocs = _allocate_capital_calls(
         Decimal("1000000"), "construction", [lp, gp]
     )
@@ -505,9 +514,9 @@ def test_two_uncapped_equity_modules_split_pro_rata() -> None:
 @pytest.mark.unit
 def test_capped_lp_fills_first_uncapped_gp_absorbs_residual() -> None:
     lp = _make_equity_state(
-        FunderType.preferred_equity, stack_position=1, commitment=Decimal("2000000")
+        EquityRole.lp, stack_position=1, commitment=Decimal("2000000")
     )
-    gp = _make_equity_state(FunderType.common_equity, stack_position=2)
+    gp = _make_equity_state(EquityRole.gp, stack_position=2)
     allocs = _allocate_capital_calls(
         Decimal("2500000"), "construction", [lp, gp]
     )
