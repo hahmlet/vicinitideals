@@ -567,21 +567,19 @@ async def _compute_project_cashflow(
             # Phase E: per-period draw inflow — capital arrives as uses fire.
             # BALANCE_ONLY reserves injected as lump at phase start (month_index==0).
             # Non-BALANCE_ONLY uses draw matching inflow same period (net zero to balance).
-            # Exclude already-drawn reserves so they don't re-inject at subsequent
-            # phase starts when their phase key maps to multiple period_types.
-            _effective_balance_only = _BALANCE_ONLY_LABELS - _drawn_reserve_labels
             _draw = compute_period_draw_inflow(
                 phase=phase,
                 month_index=month_index,
                 use_lines=use_lines,
                 use_line_phase_overrides=_ul_phase_overrides,
-                balance_only_labels=_effective_balance_only,
+                balance_only_labels=_BALANCE_ONLY_LABELS,
                 use_line_phase_map=_USE_LINE_PHASE_MAP,
+                already_drawn_reserves=_drawn_reserve_labels,
             )
             if month_index == 0:
                 for _rul in use_lines:
                     _rlbl = getattr(_rul, "label", "")
-                    if _rlbl not in _effective_balance_only:
+                    if _rlbl not in _BALANCE_ONLY_LABELS or _rlbl in _drawn_reserve_labels:
                         continue
                     _rpt = (
                         (_ul_phase_overrides or {}).get(_rul.id)

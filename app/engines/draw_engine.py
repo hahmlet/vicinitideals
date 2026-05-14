@@ -35,6 +35,7 @@ def compute_period_draw_inflow(
     use_line_phase_overrides: dict[Any, Any] | None,
     balance_only_labels: set[str],
     use_line_phase_map: dict[str, set[Any]],
+    already_drawn_reserves: set[str] | None = None,
 ) -> Decimal:
     """Return total capital drawn inflow for this period.
 
@@ -62,8 +63,10 @@ def compute_period_draw_inflow(
             continue
 
         if label in balance_only_labels:
-            # Reserves: inject as lump inflow at phase activation only
-            if month_index == 0:
+            # Reserves: inject as lump inflow at phase activation only.
+            # Skip if already drawn in an earlier phase (prevents double-inject
+            # when the phase key maps to multiple period_types).
+            if month_index == 0 and label not in (already_drawn_reserves or set()):
                 total += amt
         else:
             # Regular uses: draw matches outflow timing
