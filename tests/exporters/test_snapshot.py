@@ -354,7 +354,6 @@ async def test_revert_to_snapshot_restores_draw_sources(session: AsyncSession):
         active_from_milestone="close",
         active_to_milestone="operation_stabilized",
         total_commitment=1500000,
-        funder_type="senior_debt",
     )
     session.add(draw_source)
     await session.flush()

@@ -148,7 +148,7 @@
         {% for s in _r.get('sources', []) %}
         <tr>
           <td>{{ s.label }}</td>
-          <td>{{ s.funder_type.replace('_', ' ').title() }}</td>
+          <td>{{ (s.vehicle_type or '').replace('_', ' ').title() or '—' }}</td>
           <td>
             {% for cid in s.covered_project_ids %}
               {# rollup serializes project_id as str; deal_projects[i].id is UUID.

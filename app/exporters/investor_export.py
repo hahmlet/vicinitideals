@@ -572,7 +572,7 @@ def _npv_levered(
     # If none have Equity class (auto-funded deals), fall through to sum all tiers.
     equity_ids = {
         str(m.id) for m in capital_modules
-        if _funder_class(m.funder_type) == "Equity"
+        if _funder_class(m) == "Equity"
     }
 
     per_period: dict[int, Decimal] = {}
@@ -1380,7 +1380,7 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         amount = junction_amount.get(module.id) or _coerce_decimal(
             (module.source or {}).get("amount") or 0
         )
-        if amount <= Decimal(1) and _funder_class(module.funder_type) == "Equity":
+        if amount <= Decimal(1) and _funder_class(module) == "Equity":
             continue
         ws.cell(row=line, column=1, value="Source").font = FONT_VALUE
         ws.cell(row=line, column=2, value=module.label or _funder_type_label(module)).font = FONT_VALUE
@@ -2066,7 +2066,7 @@ def _build_uw_cashflow(ws, registry: CellRegistry, ctx: dict) -> None:
         ) + _coerce_decimal(_j.amount or 0)
     _debt_y0 = Decimal(0)
     for _m in ctx.get("capital_modules", []):
-        if _funder_class(_m.funder_type) == "Debt":
+        if _funder_class(_m) == "Debt":
             _debt_y0 += _junc_dp.get(_m.id) or _coerce_decimal(
                 (_m.source or {}).get("amount") or 0
             )
@@ -2300,7 +2300,7 @@ def _build_sensitivity(
     _summary_s = ctx.get("rollup_summary") or {}
     _eq_req_s = _coerce_decimal((_summary_s.get("totals") or {}).get("equity_required") or 0)
     _has_equity_s = _eq_req_s > Decimal(1) or any(
-        _funder_class(m.funder_type) == "Equity"
+        _funder_class(m) == "Equity"
         and _coerce_decimal((m.source or {}).get("amount") or 0) > Decimal(1)
         for m in (ctx.get("capital_modules") or [])
     )
@@ -2320,29 +2320,24 @@ def _build_sensitivity(
 # ── Investor Returns sheet ────────────────────────────────────────────────────
 
 
-# Funder-type classification — drives which columns are meaningful per row.
-# Debt sources care about cost-of-capital (rate, amort, balloon, debt service);
-# equity sources care about returns (IRR, EM, distributions); grants/credits
-# are contributed-only.
-_DEBT_FUNDER_TYPES: frozenset[str] = frozenset({
-    "permanent_debt", "senior_debt", "mezzanine_debt", "bridge",
-    "construction_loan", "pre_development_loan", "acquisition_loan",
-    "soft_loan", "bond", "owner_loan",
-})
-_EQUITY_FUNDER_TYPES: frozenset[str] = frozenset({
-    "preferred_equity", "common_equity", "owner_investment",
-})
+def _funder_class(module_or_vt) -> str:
+    """Return one of `Debt` / `Equity` / `Grant` / `Forgivable Loan` / `Other` for display.
 
-
-def _funder_class(funder_type) -> str:
-    """Return one of `Debt` / `Equity` / `Grant` / `Other` for display."""
-    raw = (str(getattr(funder_type, "value", funder_type)) or "").lower()
-    if raw in _DEBT_FUNDER_TYPES:
+    Accepts a CapitalModule ORM object or a raw vehicle_type string.
+    """
+    if hasattr(module_or_vt, "vehicle_type"):
+        # ORM object — read vehicle_type directly
+        vt = str(getattr(module_or_vt, "vehicle_type", "") or "").replace("VehicleType.", "").lower()
+    else:
+        vt = (str(getattr(module_or_vt, "value", module_or_vt)) or "").lower()
+    if vt == "debt":
         return "Debt"
-    if raw in _EQUITY_FUNDER_TYPES:
+    if vt == "equity":
         return "Equity"
-    if raw in ("grant", "tax_credit"):
+    if vt == "grant":
         return "Grant"
+    if vt == "forgivable_loan":
+        return "Forgivable Loan"
     return "Other"
 
 
@@ -2555,7 +2550,7 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
             principal = _coerce_decimal(source.get("amount") or 0)
         rate_raw = source.get("interest_rate_pct") or carry.get("io_rate_pct") or 0
         rate = _coerce_pct(rate_raw) if rate_raw else None
-        funder_class = _funder_class(module.funder_type)
+        funder_class = _funder_class(module)
         if funder_class == "Equity" and principal <= Decimal(1):
             continue
 
@@ -2634,7 +2629,7 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
     _committed_equity = sum(
         junction_principal.get(m.id) or _coerce_decimal((m.source or {}).get("amount") or 0)
         for m in capital_modules
-        if _funder_class(m.funder_type) == "Equity"
+        if _funder_class(m) == "Equity"
     )
     _has_real_equity = _committed_equity > Decimal(1) or _equity_req_check > Decimal(1)
 
@@ -3531,7 +3526,7 @@ def _combined_em(
     total_dist = Decimal(0)
     total_contrib = Decimal(0)
     for module in capital_modules:
-        if _funder_class(module.funder_type) != "Equity":
+        if _funder_class(module) != "Equity":
             continue
         commitment = _coerce_decimal((module.source or {}).get("amount") or 0)
         if commitment <= 0:
@@ -3564,7 +3559,7 @@ def _coc_year_one(
     total_y1_dist = Decimal(0)
     total_contrib = Decimal(0)
     for module in capital_modules:
-        if _funder_class(module.funder_type) != "Equity":
+        if _funder_class(module) != "Equity":
             continue
         commitment = _coerce_decimal((module.source or {}).get("amount") or 0)
         if commitment <= 0:
@@ -3602,13 +3597,24 @@ def _project_sheet_name(idx: int, project_name: str | None) -> str:
     return f"P{idx} {truncated}".rstrip()
 
 
-def _is_lp_funder(funder_type) -> bool:
-    label = (str(getattr(funder_type, "value", funder_type)) or "").lower()
+def _is_lp_funder(module_or_role) -> bool:
+    """True when the module/equity_role indicates an LP investor."""
+    if hasattr(module_or_role, "equity_role"):
+        er = str(getattr(module_or_role, "equity_role", "") or "").replace("EquityRole.", "").lower()
+        if er:
+            return er == "lp"
+        # fall back to vehicle_type check — equity with no role treated as LP
+        return _funder_class(module_or_role) == "Equity"
+    label = (str(getattr(module_or_role, "value", module_or_role)) or "").lower()
     return "common_equity" in label or "preferred" in label or "lp" in label
 
 
-def _is_gp_funder(funder_type) -> bool:
-    label = (str(getattr(funder_type, "value", funder_type)) or "").lower()
+def _is_gp_funder(module_or_role) -> bool:
+    """True when the module/equity_role indicates a GP investor."""
+    if hasattr(module_or_role, "equity_role"):
+        er = str(getattr(module_or_role, "equity_role", "") or "").replace("EquityRole.", "").lower()
+        return er == "gp"
+    label = (str(getattr(module_or_role, "value", module_or_role)) or "").lower()
     return "owner_equity" in label or label == "gp" or "developer" in label
 
 
@@ -3636,9 +3642,9 @@ def _lp_gp_irr_from_rollup(
         if module is None or row.get("party_irr_pct") is None:
             continue
         irr_fraction = _coerce_pct(row.get("party_irr_pct"))
-        if _is_lp_funder(module.funder_type):
+        if _is_lp_funder(module):
             lp_vals.append(irr_fraction)
-        elif _is_gp_funder(module.funder_type):
+        elif _is_gp_funder(module):
             gp_vals.append(irr_fraction)
 
     lp_irr = sum(lp_vals, Decimal(0)) / Decimal(len(lp_vals)) if lp_vals else None
@@ -3671,10 +3677,10 @@ def _equity_multiples_from_rollup(
     for module in capital_modules:
         commitment = _coerce_decimal((module.source or {}).get("amount") or 0)
         cum = by_module.get(str(module.id), Decimal(0))
-        if _is_lp_funder(module.funder_type):
+        if _is_lp_funder(module):
             lp_dist += cum
             lp_contrib += commitment
-        elif _is_gp_funder(module.funder_type):
+        elif _is_gp_funder(module):
             gp_dist += cum
             gp_contrib += commitment
 
@@ -3740,7 +3746,7 @@ def _build_debt_schedule(ws, registry: CellRegistry, ctx: dict) -> None:
             j.capital_module_id, Decimal(0)
         ) + _coerce_decimal(j.amount or 0)
 
-    debt_modules = [m for m in capital_modules if _funder_class(m.funder_type) == "Debt"]
+    debt_modules = [m for m in capital_modules if _funder_class(m) == "Debt"]
 
     cur_row = 3
     if not debt_modules:
@@ -3814,13 +3820,11 @@ def _build_debt_schedule(ws, registry: CellRegistry, ctx: dict) -> None:
             name=f"s_loan_{m_idx}_balloon", fmt=ACCOUNTING,
         )
 
-        # Track largest permanent-debt module for the amort table below.
-        ft = (str(getattr(module.funder_type, "value", module.funder_type)) or "").lower()
-        if ft == "permanent_debt" and (perm_candidate is None or principal > perm_candidate[1]):
-            perm_candidate = (module, principal)
-        elif ft == "senior_debt" and perm_candidate is None:
-            # Senior debt as a fallback when no permanent_debt exists
-            perm_candidate = (module, principal)
+        # Track largest debt module for the amort table below.
+        ft_vt = str(getattr(module, "vehicle_type", "") or "").replace("VehicleType.", "")
+        if ft_vt == "debt":
+            if perm_candidate is None or principal > perm_candidate[1]:
+                perm_candidate = (module, principal)
         cur_row += 1
 
     # ── Perm Loan Amortization Table ──────────────────────────────────────
@@ -3986,8 +3990,8 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
     # Show the MAX across perm-debt modules as scenario-level summary.
     _perm_holds: list[int] = []
     for _cm in capital_modules:
-        _ft = str(getattr(_cm, "funder_type", "") or "").replace("FunderType.", "")
-        if _ft != "permanent_debt":
+        _cm_vt = str(getattr(_cm, "vehicle_type", "") or "").replace("VehicleType.", "")
+        if _cm_vt != "debt":
             continue
         _src = getattr(_cm, "source", None) or {}
         _h = _src.get("hold_term_years") if isinstance(_src, dict) else None
@@ -4259,7 +4263,7 @@ def _build_su_sheet(
         amount = junction_amount.get(module.id) or _coerce_decimal(
             (module.source or {}).get("amount") or 0
         )
-        if amount <= Decimal(1) and _funder_class(module.funder_type) == "Equity":
+        if amount <= Decimal(1) and _funder_class(module) == "Equity":
             continue
         ws.cell(row=line, column=1, value=module.label or _funder_type_label(module)).font = FONT_VALUE
         cell = ws.cell(row=line, column=2, value=_to_excel_number(amount))
@@ -4473,11 +4477,24 @@ def _project_column_labels(projects: list[Project]) -> list[str]:
 
 
 def _funder_type_label(module: CapitalModule) -> str:
-    raw = getattr(module, "funder_type", None)
-    if raw is None:
-        return "—"
-    name = getattr(raw, "value", str(raw))
-    return name.replace("FunderType.", "").replace("_", " ").title()
+    """Return a human-readable label for the module based on vehicle_type + equity_role."""
+    vt = str(getattr(module, "vehicle_type", "") or "").replace("VehicleType.", "")
+    er = str(getattr(module, "equity_role", "") or "").replace("EquityRole.", "")
+    if vt == "equity":
+        if er == "gp":
+            return "GP Equity"
+        if er == "lp":
+            return "LP Equity"
+        return "Equity"
+    if vt == "debt":
+        return "Debt"
+    if vt == "grant":
+        return "Grant"
+    if vt == "forgivable_loan":
+        return "Forgivable Loan"
+    # Legacy fallback — label contains the loan type in Deal Setup
+    lbl = (getattr(module, "label", "") or "").strip()
+    return lbl or "Capital Source"
 
 
 # ── Validator-driven glossary helpers ─────────────────────────────────────────

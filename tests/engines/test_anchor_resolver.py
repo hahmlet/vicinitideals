@@ -129,7 +129,7 @@ from datetime import date, timedelta, datetime, timezone as _tz
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.engines.anchor_resolver import resolve_project_start_dates
-from app.models.capital import CapitalModule, CapitalModuleProject, FunderType
+from app.models.capital import CapitalModule, CapitalModuleProject
 from app.models.deal import Deal, DealStatus, ProjectType, Scenario
 from app.models.milestone import Milestone, MilestoneType
 from app.models.org import Organization

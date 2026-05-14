@@ -24,7 +24,7 @@ from app.engines.cashflow import (
     is_shared_source,
     junction_amount_for,
 )
-from app.models.capital import CapitalModule, CapitalModuleProject, FunderType
+from app.models.capital import CapitalModule, CapitalModuleProject
 from app.models.deal import Deal, DealStatus, ProjectType, Scenario
 from app.models.org import Organization
 from app.models.project import Project
@@ -71,14 +71,14 @@ async def _make_module(
     session: AsyncSession,
     scenario_id: uuid.UUID,
     label: str,
-    funder_type: FunderType = FunderType.permanent_debt,
+    vehicle_type: str = "debt",
     stack_position: int = 0,
     amount: Decimal = Decimal("1000000"),
 ) -> CapitalModule:
     m = CapitalModule(
         scenario_id=scenario_id,
         label=label,
-        funder_type=funder_type,
+        vehicle_type=vehicle_type,
         stack_position=stack_position,
         source={"amount": str(amount)},
     )

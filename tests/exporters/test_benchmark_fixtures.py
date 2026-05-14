@@ -15,7 +15,7 @@ from app.engines.cashflow import compute_cash_flows
 from app.engines.waterfall import compute_waterfall
 from app.exporters import export_deal_model_json, import_deal_from_json, validate_deal_import_payload
 from app.models import Base  # imports all ORM models, enabling create_all
-from app.models.capital import CapitalModule, FunderType, WaterfallResult, WaterfallTier, WaterfallTierType
+from app.models.capital import CapitalModule, WaterfallResult, WaterfallTier, WaterfallTierType
 from app.models.cashflow import CashFlow, CashFlowLineItem, OperationalOutputs
 from app.models.deal import (
     Deal,
@@ -184,7 +184,7 @@ async def test_export_deal_model_json_includes_itemized_expense_lines(
         capital_module = CapitalModule(
             scenario_id=model.id,
             label="Benchmark Equity",
-            funder_type=FunderType.common_equity,
+            vehicle_type="equity",
             stack_position=1,
             source={"amount": 300000},
             carry={"carry_type": "none", "payment_frequency": "at_exit"},

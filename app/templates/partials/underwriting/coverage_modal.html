@@ -18,8 +18,8 @@
       <tr>
         <td><strong>Label</strong></td>
         <td>{{ module.label }}</td>
-        <td><strong>Funder type</strong></td>
-        <td>{{ (module.funder_type | string).replace('FunderType.', '').replace('_', ' ').title() }}</td>
+        <td><strong>Type</strong></td>
+        <td>{{ (module.vehicle_type | string).replace('VehicleType.', '').replace('_', ' ').title() if module.vehicle_type else '—' }}</td>
       </tr>
       <tr>
         <td><strong>Rate</strong></td>

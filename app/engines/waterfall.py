@@ -13,7 +13,6 @@ from sqlalchemy.orm import selectinload
 from app.models.capital import (
     CapitalModule,
     EquityRole,
-    FunderType,
     VehicleType,
     WaterfallResult,
     WaterfallTier,
@@ -48,38 +47,9 @@ PHASE_ORDER = {
     PeriodType.stabilized.value: 8,
     PeriodType.exit.value: 9,
 }
-DEBT_FUNDER_TYPES = {
-    FunderType.senior_debt.value,
-    FunderType.mezzanine_debt.value,
-    FunderType.bridge.value,
-    FunderType.soft_loan.value,
-    FunderType.construction_loan.value,
-    FunderType.bond.value,
-    FunderType.permanent_debt.value,
-    FunderType.acquisition_loan.value,
-    FunderType.pre_development_loan.value,
-    FunderType.owner_loan.value,
-}
-
-# Funder types for which Exit Vehicle applies (every loan with a real
-# ending).  Mirrors `_EXIT_VEHICLE_APPLIES` in cashflow.py — keep in sync.
-EXIT_VEHICLE_APPLIES = {
-    FunderType.permanent_debt.value,
-    FunderType.senior_debt.value,
-    FunderType.mezzanine_debt.value,
-    FunderType.bridge.value,
-    FunderType.construction_loan.value,
-    FunderType.acquisition_loan.value,
-    FunderType.pre_development_loan.value,
-    FunderType.soft_loan.value,
-    FunderType.bond.value,
-    FunderType.owner_loan.value,
-}
-EQUITY_FUNDER_TYPES = {
-    FunderType.preferred_equity.value,
-    FunderType.common_equity.value,
-    FunderType.tax_credit.value,
-}
+DEBT_FUNDER_TYPES: set[str] = set()  # Kept for backward compat; use vehicle_type == "debt" instead.
+EXIT_VEHICLE_APPLIES: set[str] = set()  # Kept for backward compat; use vehicle_type == "debt" instead.
+EQUITY_FUNDER_TYPES: set[str] = set()  # Kept for backward compat; use vehicle_type == "equity" instead.
 NON_RETURN_OF_CAPITAL_EXIT_TYPES = {"forgiven"}
 
 
@@ -386,7 +356,6 @@ async def _ensure_equity_and_tiers(
         synthetic_equity = CapitalModule(
             scenario_id=deal_uuid,
             label="Owner Equity",
-            funder_type=FunderType.common_equity,
             vehicle_type=VehicleType.equity.value,
             equity_role=EquityRole.gp.value,
             stack_position=max_position + 1,
@@ -548,7 +517,7 @@ def _build_investor_distribution_report(
             {
                 "capital_module_id": module.id,
                 "investor_name": module.label,
-                "funder_type": _enum_value(module.funder_type),
+                "vehicle_type": _enum_value(module.vehicle_type),
                 "stack_position": module.stack_position,
                 "committed_capital": committed_capital,
                 "total_cash_distributed": total_distributed,
@@ -1184,12 +1153,13 @@ def _resolve_waterfall_end_index(
     directly.  Non-exit-vehicle funder types (equity, grants, etc.) return the
     max index (active through exit).
     """
-    ft = _enum_value(module.funder_type) if module.funder_type is not None else ""
     max_index = max(PHASE_ORDER.values())
     # Equity, grants, and forgivable loans are perpetuity-like — active through exit.
     if _is_equity_module(module) or not _is_debt_module(module):
         return max_index
-    if ft not in EXIT_VEHICLE_APPLIES:
+    # EXIT_VEHICLE_APPLIES is now empty (funder_type dropped); all debt defaults to max_index.
+    # Specific exit vehicle behavior is driven by exit_terms["vehicle"] below.
+    if not EXIT_VEHICLE_APPLIES:
         return max_index
 
     exit_terms = module.exit_terms or {}
@@ -1372,27 +1342,17 @@ def _negative_total(period_cashflows: dict[int, Decimal]) -> Decimal:
 
 def _is_debt_module(module: CapitalModule) -> bool:
     vt = _enum_value(module.vehicle_type) if module.vehicle_type is not None else ""
-    if vt == VehicleType.debt.value:
-        return True
-    if vt in (VehicleType.equity.value, VehicleType.forgivable_loan.value, VehicleType.grant.value):
-        return False
-    return _enum_value(module.funder_type) in DEBT_FUNDER_TYPES
+    return vt == VehicleType.debt.value
 
 
 def _is_equity_module(module: CapitalModule) -> bool:
     vt = _enum_value(module.vehicle_type) if module.vehicle_type is not None else ""
-    if vt == VehicleType.equity.value:
-        return True
-    if vt in (VehicleType.debt.value, VehicleType.forgivable_loan.value, VehicleType.grant.value):
-        return False
-    return _enum_value(module.funder_type) in EQUITY_FUNDER_TYPES
+    return vt == VehicleType.equity.value
 
 
 def _is_gp_equity_module(module: CapitalModule) -> bool:
     er = _enum_value(module.equity_role) if module.equity_role is not None else ""
-    if er:
-        return er == EquityRole.gp.value
-    return _enum_value(module.funder_type) == FunderType.common_equity.value
+    return er == EquityRole.gp.value
 
 
 def _is_lp_equity_module(module: CapitalModule) -> bool:

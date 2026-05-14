@@ -1363,8 +1363,8 @@ async function startInvestorExport(modelId, profile) {
            all perm-debt modules + wizard staging via the form save handler. #}
         {%- set _perm_dscr = namespace(value=none) -%}
         {%- for _cm in (capital_modules or []) -%}
-          {%- set _ft = (_cm.funder_type | string | replace('FunderType.','')) -%}
-          {%- if _ft == 'permanent_debt' and _cm.source and _cm.source.get('dscr_min') is not none and _perm_dscr.value is none -%}
+          {%- set _vt = (_cm.vehicle_type | string | replace('VehicleType.','')) -%}
+          {%- if _vt == 'debt' and _cm.source and _cm.source.get('dscr_min') is not none and _perm_dscr.value is none -%}
             {%- set _perm_dscr.value = _cm.source.get('dscr_min') -%}
           {%- endif -%}
         {%- endfor -%}
@@ -1751,7 +1751,7 @@ document.addEventListener('keydown', function(e) {
               <input type="checkbox" name="share_source_ids" value="{{ m.id }}">
               <span>
                 {{ m.label }}
-                <span class="text-muted" style="font-size:11px">— {{ m.funder_type | replace('_',' ') | title if m.funder_type else 'Source' }}</span>
+                <span class="text-muted" style="font-size:11px">— {{ m.vehicle_type | replace('_',' ') | title if m.vehicle_type else 'Source' }}</span>
               </span>
             </label>
             {% endfor %}

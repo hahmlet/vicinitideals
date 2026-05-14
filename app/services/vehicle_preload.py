@@ -15,7 +15,7 @@ from typing import Any
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.capital import CapitalModule, FunderType
+from app.models.capital import CapitalModule
 from app.models.source_vehicle import SourceVehicle
 
 
@@ -56,7 +56,6 @@ async def preload_equity_modules(
         scenario_id=scenario_id,
         source_vehicle_id=gp_vehicle.id,
         label="GP Equity",
-        funder_type=FunderType.common_equity,
         vehicle_type="equity",
         equity_role="gp",
         stack_position=90,
@@ -68,7 +67,6 @@ async def preload_equity_modules(
         scenario_id=scenario_id,
         source_vehicle_id=lp_vehicle.id,
         label="LP Equity",
-        funder_type=FunderType.preferred_equity,
         vehicle_type="equity",
         equity_role="lp",
         stack_position=80,

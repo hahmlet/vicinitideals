@@ -20,7 +20,7 @@ from sqlalchemy.pool import StaticPool
 from app.api.deps import get_db
 from app.api.main import create_app
 from app.models.base import Base
-from app.models.capital import CapitalModule, FunderType, WaterfallResult, WaterfallTier, WaterfallTierType
+from app.models.capital import CapitalModule, WaterfallResult, WaterfallTier, WaterfallTierType
 from app.models.cashflow import CashFlow, CashFlowLineItem, OperationalOutputs, PeriodType
 from app.models.deal import (
     Deal,
@@ -219,7 +219,7 @@ async def _seed_model_for_run_tests(
         capital_module = CapitalModule(
             scenario_id=model.id,
             label="Sponsor Equity",
-            funder_type=FunderType.common_equity,
+            vehicle_type="equity",
             stack_position=1,
             source={"amount": 2000000},
             carry={"carry_type": "none", "payment_frequency": "at_exit"},
@@ -407,7 +407,7 @@ async def test_get_project_summary_returns_active_model_rollup(
             CapitalModule(
                 scenario_id=model.id,
                 label="Senior Loan",
-                funder_type=FunderType.senior_debt,
+                vehicle_type="debt",
                 stack_position=1,
                 source={"amount": 500000, "interest_rate_pct": 5.0},
                 carry={"carry_type": "pi", "payment_frequency": "monthly"},
@@ -1581,9 +1581,9 @@ async def test_update_and_delete_capital_modules_and_waterfall_tiers(
         f"/api/models/{model_id}/capital-modules",
         json={
             "label": "Senior Loan",
-            "funder_type": "senior_debt",
+            "vehicle_type": "debt",
             "stack_position": 1,
-            "source": {"amount": 700000, "interest_rate_pct": 6.1, "notes": "Initial term sheet"},
+            "source": {"amount": 700000, "interest_rate_pct": 6.1, "notes": "Initial term sheet", "hold_term_years": 10},
             "carry": {"carry_type": "io_only", "payment_frequency": "monthly", "capitalized": False},
             "exit_terms": {"exit_type": "full_payoff", "trigger": "sale", "notes": "Repay at exit"},
             "active_phase_start": "acquisition",
@@ -2230,7 +2230,7 @@ async def test_get_model_json_export_returns_portable_payload(
             id=capital_source_id,
             scenario_id=model.id,
             label="Common Equity",
-            funder_type=FunderType.common_equity,
+            vehicle_type="equity",
             stack_position=2,
             source={"amount": 325000},
             carry={"carry_type": "none", "payment_frequency": "at_exit"},
@@ -2353,7 +2353,8 @@ async def test_post_project_model_import_creates_nested_records(
             {
                 "id": source_module_id,
                 "label": "Preferred Equity",
-                "funder_type": "preferred_equity",
+                "vehicle_type": "equity",
+                "equity_role": "lp",
                 "stack_position": 1,
                 "source": {"amount": 400000, "interest_rate_pct": 10.0},
                 "carry": {"carry_type": "accruing", "payment_frequency": "at_exit"},
@@ -2463,7 +2464,7 @@ async def test_post_deals_import_creates_project_from_payload_and_links_existing
             "capital_stack": [
                 {
                     "label": "Imported Equity",
-                    "funder_type": "common_equity",
+                    "vehicle_type": "equity",
                     "stack_position": 1,
                     "source": {"amount": 450000},
                     "carry": {"carry_type": "none", "payment_frequency": "at_exit"},
@@ -2587,7 +2588,7 @@ async def test_exported_model_json_round_trips_through_validation_and_import(
             id=uuid4(),
             scenario_id=model.id,
             label="Round Trip Equity",
-            funder_type=FunderType.common_equity,
+            vehicle_type="equity",
             stack_position=1,
             source={"amount": 300000},
             carry={"carry_type": "none", "payment_frequency": "at_exit"},
@@ -2729,7 +2730,7 @@ async def test_get_model_excel_export_returns_multisheet_workbook(
         capital_module = CapitalModule(
             scenario_id=model.id,
             label="Senior Loan",
-            funder_type=FunderType.senior_debt,
+            vehicle_type="debt",
             stack_position=1,
             source={"amount": 1100000, "interest_rate_pct": 6.1},
             carry={"carry_type": "io_only", "payment_frequency": "monthly"},
@@ -2834,7 +2835,8 @@ async def test_get_waterfall_report_returns_investor_timelines_and_summary(
         lp_module = CapitalModule(
             scenario_id=model.id,
             label="LP Equity",
-            funder_type=FunderType.preferred_equity,
+            vehicle_type="equity",
+            equity_role="lp",
             stack_position=1,
             source={"amount": 40000},
             carry={"carry_type": "none", "payment_frequency": "at_exit"},
@@ -2845,7 +2847,8 @@ async def test_get_waterfall_report_returns_investor_timelines_and_summary(
         gp_module = CapitalModule(
             scenario_id=model.id,
             label="GP Promote",
-            funder_type=FunderType.common_equity,
+            vehicle_type="equity",
+            equity_role="gp",
             stack_position=2,
             source={"amount": 10000},
             carry={"carry_type": "none", "payment_frequency": "at_exit"},
@@ -2944,7 +2947,7 @@ async def test_get_waterfall_report_returns_investor_timelines_and_summary(
     lp_summary = next(item for item in data["investors"] if item["capital_module_id"] == str(lp_module_id))
     gp_summary = next(item for item in data["investors"] if item["capital_module_id"] == str(gp_module_id))
 
-    assert lp_summary["funder_type"] == FunderType.preferred_equity.value
+    assert lp_summary["vehicle_type"] == "equity"
     assert Decimal(str(lp_summary["committed_capital"])) == Decimal("40000")
     assert Decimal(str(lp_summary["total_cash_distributed"])) == Decimal("20000")
     assert Decimal(str(lp_summary["ending_cumulative_distributed"])) == Decimal("20000")
@@ -2957,7 +2960,7 @@ async def test_get_waterfall_report_returns_investor_timelines_and_summary(
         {"period": 3, "cash_distributed": "8000.000000", "cumulative_distributed": "20000.000000"},
     ]
 
-    assert gp_summary["funder_type"] == FunderType.common_equity.value
+    assert gp_summary["vehicle_type"] == "equity"
     assert Decimal(str(gp_summary["committed_capital"])) == Decimal("10000")
     assert Decimal(str(gp_summary["total_cash_distributed"])) == Decimal("7000")
     assert Decimal(str(gp_summary["ending_cumulative_distributed"])) == Decimal("7000")

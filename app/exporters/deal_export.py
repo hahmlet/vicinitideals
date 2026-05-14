@@ -226,7 +226,8 @@ def _export_scenario(scenario: DealModel) -> dict[str, Any]:
         "capital_modules": [
             {
                 "label": m.label,
-                "funder_type": _v(m.funder_type),
+                "vehicle_type": _v(m.vehicle_type),
+                "equity_role": _v(m.equity_role),
                 "stack_position": m.stack_position,
                 "source": m.source,
                 "carry": m.carry,
@@ -400,7 +401,8 @@ async def import_deal_json(
             mod = CapitalModule(
                 scenario_id=scenario.id,
                 label=cm_data["label"],
-                funder_type=cm_data["funder_type"],
+                vehicle_type=cm_data.get("vehicle_type"),
+                equity_role=cm_data.get("equity_role"),
                 stack_position=cm_data.get("stack_position", 0),
                 source=cm_data.get("source"),
                 carry=cm_data.get("carry"),

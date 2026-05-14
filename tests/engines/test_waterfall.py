@@ -11,7 +11,7 @@ from sqlalchemy.pool import StaticPool
 
 from app.engines.waterfall import _allocate_capital_calls, compute_waterfall
 from app.engines.waterfall import ModuleState  # noqa: PLC2701
-from app.models.capital import CapitalModule, EquityRole, FunderType, VehicleType, WaterfallResult, WaterfallTier
+from app.models.capital import CapitalModule, EquityRole, VehicleType, WaterfallResult, WaterfallTier
 from app.schemas.capital import CapitalCarrySchema, CapitalExitSchema, CapitalSourceSchema
 from app.models.cashflow import CashFlow, OperationalOutputs, PeriodType
 from app.models.deal import DealModel, ProjectType
@@ -51,7 +51,7 @@ async def test_compute_waterfall_persists_results_and_metrics(db_session: AsyncS
     senior_debt = CapitalModule(
         scenario_id=deal.id,
         label="Senior Construction Loan",
-        funder_type=FunderType.senior_debt.value,
+        vehicle_type=VehicleType.debt.value,
         stack_position=1,
         source={"amount": "60000", "interest_rate_pct": 6.0},
         carry={"carry_type": "io_only", "payment_frequency": "monthly", "capitalized": False},
@@ -62,7 +62,6 @@ async def test_compute_waterfall_persists_results_and_metrics(db_session: AsyncS
     lp_equity = CapitalModule(
         scenario_id=deal.id,
         label="LP Preferred Equity",
-        funder_type=FunderType.preferred_equity.value,
         vehicle_type=VehicleType.equity.value,
         equity_role=EquityRole.lp.value,
         stack_position=2,
@@ -75,7 +74,6 @@ async def test_compute_waterfall_persists_results_and_metrics(db_session: AsyncS
     gp_equity = CapitalModule(
         scenario_id=deal.id,
         label="GP Common Equity",
-        funder_type=FunderType.common_equity.value,
         vehicle_type=VehicleType.equity.value,
         equity_role=EquityRole.gp.value,
         stack_position=3,
@@ -274,7 +272,6 @@ async def test_irr_hurdle_split_waits_until_lp_hurdle_is_met(db_session: AsyncSe
     lp_equity = CapitalModule(
         scenario_id=deal.id,
         label="LP Preferred Equity",
-        funder_type=FunderType.preferred_equity.value,
         vehicle_type=VehicleType.equity.value,
         equity_role=EquityRole.lp.value,
         stack_position=1,
@@ -287,7 +284,6 @@ async def test_irr_hurdle_split_waits_until_lp_hurdle_is_met(db_session: AsyncSe
     gp_equity = CapitalModule(
         scenario_id=deal.id,
         label="GP Common Equity",
-        funder_type=FunderType.common_equity.value,
         vehicle_type=VehicleType.equity.value,
         equity_role=EquityRole.gp.value,
         stack_position=2,

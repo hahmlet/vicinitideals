@@ -71,7 +71,7 @@ class CapitalSourceSchema(BaseModel):
     # Prepay penalty as % of outstanding balloon balance at payoff
     prepay_penalty_pct: float | None = None
     # Modeled hold period in years for the loan. Required when the parent
-    # CapitalModule has funder_type == "permanent_debt" — the cashflow
+    # CapitalModule has vehicle_type == "debt" — the cashflow
     # engine reads this as the loan's balloon point and the deal-level
     # horizon resolver takes MAX across all perm-debt modules.
     hold_term_years: int | None = None
@@ -159,7 +159,8 @@ class CapitalExitSchema(BaseModel):
 
 class CapitalModuleBase(BaseModel):
     label: str
-    funder_type: str
+    vehicle_type: str | None = None
+    equity_role: str | None = None
     stack_position: int = 0
     source: CapitalSourceSchema | None = None
     carry: CapitalCarrySchema | None = None
@@ -168,13 +169,13 @@ class CapitalModuleBase(BaseModel):
     active_phase_end: str | None = None
 
     @model_validator(mode="after")
-    def _require_perm_debt_hold_term(self) -> "CapitalModuleBase":
-        ft = (self.funder_type or "").replace("FunderType.", "")
-        if ft == "permanent_debt":
+    def _require_debt_hold_term(self) -> "CapitalModuleBase":
+        vt = (self.vehicle_type or "").replace("VehicleType.", "")
+        if vt == "debt":
             hold = self.source.hold_term_years if self.source is not None else None
             if hold is None or hold <= 0:
                 raise ValueError(
-                    "permanent_debt CapitalModule requires source.hold_term_years > 0"
+                    "debt CapitalModule requires source.hold_term_years > 0"
                 )
         return self
 
@@ -186,7 +187,7 @@ class CapitalModuleCreate(CapitalModuleBase):
         {
             "scenario_id": _EXAMPLE_MODEL_ID,
             "label": "Senior Loan",
-            "funder_type": "debt",
+            "vehicle_type": "debt",
             "stack_position": 1,
             "source": {
                 "amount": "850000",
@@ -212,7 +213,8 @@ class CapitalModuleCreate(CapitalModuleBase):
 
 class CapitalModuleUpdate(BaseModel):
     label: str | None = None
-    funder_type: str | None = None
+    vehicle_type: str | None = None
+    equity_role: str | None = None
     stack_position: int | None = None
     source: CapitalSourceSchema | None = None
     carry: CapitalCarrySchema | None = None
@@ -239,7 +241,7 @@ class CapitalModuleRead(CapitalModuleBase):
             "id": _EXAMPLE_CAPITAL_MODULE_ID,
             "scenario_id": _EXAMPLE_MODEL_ID,
             "label": "Senior Loan",
-            "funder_type": "debt",
+            "vehicle_type": "debt",
             "stack_position": 1,
             "source": {"amount": "850000", "interest_rate_pct": 6.5},
             "carry": {"carry_type": "io_only", "payment_frequency": "monthly", "capitalized": False},
@@ -343,7 +345,6 @@ class DrawSourceBase(BaseModel):
     active_from_offset_days: int = 0
     active_to_offset_days: int = 0
     total_commitment: Decimal | None = None
-    funder_type: str | None = None
     capital_module_id: uuid.UUID | None = None
 
 
@@ -382,7 +383,7 @@ class InvestorDistributionPeriodRead(BaseModel):
 class InvestorDistributionSummaryRead(BaseModel):
     capital_module_id: uuid.UUID
     investor_name: str
-    funder_type: str
+    vehicle_type: str | None = None
     stack_position: int
     committed_capital: Decimal | None = None
     total_cash_distributed: Decimal = Decimal("0")
@@ -409,7 +410,7 @@ class WaterfallDistributionReportRead(BaseModel):
                 {
                     "capital_module_id": _EXAMPLE_CAPITAL_MODULE_ID,
                     "investor_name": "LP Equity",
-                    "funder_type": "common_equity",
+                    "vehicle_type": "equity",
                     "stack_position": 1,
                     "committed_capital": "40000",
                     "total_cash_distributed": "27000",

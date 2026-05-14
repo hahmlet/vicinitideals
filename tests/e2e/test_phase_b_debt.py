@@ -106,9 +106,11 @@ def _find_use_line(use_lines: list[dict], label: str) -> dict | None:
     return None
 
 
-def _find_module_by_funder_type(modules: list[dict], funder_type: str) -> dict | None:
+def _find_module_by_label(modules: list[dict], label_keyword: str) -> dict | None:
+    """Find first module whose label contains label_keyword (case-insensitive)."""
+    kw = label_keyword.lower()
     for m in modules:
-        if str(m.get("funder_type", "")) == funder_type:
+        if kw in str(m.get("label", "")).lower():
             return m
     return None
 
@@ -244,7 +246,7 @@ TEST_CASES = [
             ("Closing Costs", "16000", "close"),
         ],
         "expect_carry_math": {
-            "loan_key": "construction_loan",
+            "loan_key": "construction",
             "carry_type": "interest_reserve",
             "base_costs": "600000",
             "rate_pct": "7.0",
@@ -273,7 +275,7 @@ TEST_CASES = [
             ("Closing Costs", "16000", "close"),
         ],
         "expect_carry_math": {
-            "loan_key": "construction_loan",
+            "loan_key": "construction",
             "carry_type": "capitalized_interest",
             "base_costs": "600000",
             "rate_pct": "7.0",
@@ -302,7 +304,7 @@ TEST_CASES = [
             ("Closing Costs", "16000", "close"),
         ],
         "expect_carry_math": {
-            "loan_key": "construction_loan",
+            "loan_key": "construction",
             "carry_type": "interest_reserve",
             "base_costs": "500000",
             "rate_pct": "7.0",
@@ -395,8 +397,8 @@ def test_phase_b_debt(tc: dict, _seed_page, base_url: str) -> None:
     use_lines = _api_get(page, f"/api/models/{model_id}/use-lines")
     modules = _api_get(page, f"/api/models/{model_id}/capital-modules")
 
-    mod = _find_module_by_funder_type(modules, ecm["loan_key"])
-    assert mod is not None, f"Capital module {ecm['loan_key']} not found"
+    mod = _find_module_by_label(modules, ecm["loan_key"])
+    assert mod is not None, f"Capital module matching '{ecm['loan_key']}' not found"
     principal = Decimal(str((mod.get("source") or {}).get("amount", "0")))
 
     ir_or_ci = _find_use_line(use_lines, ecm["use_line_label"])
