@@ -717,6 +717,11 @@ class UseLine(Base):
     is_deferred: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     cost_category: Mapped[str | None] = mapped_column(String(60), nullable=True, default="soft")
     notes: Mapped[str | None] = mapped_column(Text, nullable=True)
+    # Source-Use eligibility routing (Phase C). Empty list = permissive (any source may fund).
+    # Non-empty list restricts funding to the listed CapitalModule UUIDs only.
+    eligible_module_ids: Mapped[list] = mapped_column(
+        ARRAY(UUID(as_uuid=True)), nullable=False, default=list, server_default="{}"
+    )
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now(),
