@@ -1151,29 +1151,129 @@ function ulTimingChanged(val) {
 
   {# ── Step 1: Name / Type ── #}
   <div id="sw-step-1">
-    {# ── Vehicle preset dropdown (shown only when adding new, not editing) ── #}
+    {# ── Vehicle preset card picker (shown only when adding new, not editing) ── #}
     {% if source_vehicles %}
-    <div class="form-field" style="margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border)">
-      <label class="form-label">Start from a preset <span style="font-weight:400;font-size:11px;color:var(--text-muted)">(optional)</span></label>
-      <select class="form-select" id="sw-vehicle-select" onchange="swApplyVehicle(this.value, '{{ model.id }}')">
-        <option value="">— Custom (blank) —</option>
-        {% if source_vehicles | selectattr('owner', 'equalto', 'org') | list %}
-        <optgroup label="Org Presets">
-          {% for v in source_vehicles if v.owner == 'org' %}
-          <option value="{{ v.id }}">{{ v.name }} — {{ v.funder_type | replace('_',' ') | title }}</option>
-          {% endfor %}
-        </optgroup>
-        {% endif %}
-        {% if source_vehicles | selectattr('owner', 'equalto', 'user') | list %}
-        <optgroup label="My Presets">
-          {% for v in source_vehicles if v.owner == 'user' %}
-          <option value="{{ v.id }}">{{ v.name }} — {{ v.funder_type | replace('_',' ') | title }}</option>
-          {% endfor %}
-        </optgroup>
-        {% endif %}
+    {#
+      vehicle_type → badge color:
+        equity         #22c55e (green)
+        debt           #f59e0b (amber)
+        forgivable_loan #a855f7 (purple)
+        grant          #14b8a6 (teal)
+    #}
+    <div style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border)">
+      <div style="font-size:13px;font-weight:600;margin-bottom:2px">Start from a Vehicle template
+        <span style="font-weight:400;font-size:11px;color:var(--text-muted)">(optional)</span>
+      </div>
+      <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px">
+        Pick a preset to pre-fill terms, or skip to enter manually.
+      </div>
+
+      {# Hidden select kept for JS swApplyVehicle — not visible to user #}
+      <select id="sw-vehicle-select" style="display:none"
+              onchange="swApplyVehicle(this.value, '{{ model.id }}')">
+        <option value=""></option>
+        {% for v in source_vehicles %}
+        <option value="{{ v.id }}">{{ v.name }}</option>
+        {% endfor %}
       </select>
-      <div id="sw-vehicle-hint" style="display:none;font-size:11px;color:var(--text-muted);margin-top:4px">
-        Pre-filled from preset — edit any field before saving.
+
+      {# Card grid #}
+      <div id="sw-vehicle-cards" style="display:flex;flex-direction:column;gap:6px">
+
+        {# "Custom (blank)" card — always first #}
+        <div class="sw-vcard sw-vcard--selected" data-vid=""
+             onclick="swSelectVehicleCard(this, '', '{{ model.id }}')"
+             style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;
+                    border:2px solid var(--accent);background:var(--accent-faint);cursor:pointer;
+                    transition:border-color .15s,background .15s">
+          <div style="flex:1;min-width:0">
+            <div style="font-size:13px;font-weight:600;color:var(--text-primary)">Custom (blank)</div>
+            <div style="font-size:11px;color:var(--text-muted)">Enter all details manually</div>
+          </div>
+        </div>
+
+        {% if source_vehicles | selectattr('owner', 'equalto', 'org') | list %}
+        <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+                    color:var(--text-muted);margin-top:4px;margin-bottom:2px;padding-left:2px">Org Presets</div>
+        {% for v in source_vehicles if v.owner == 'org' %}
+        {%- set vt = v.vehicle_type | default('') -%}
+        {%- if vt == 'equity' -%}
+          {%- set badge_bg = '#dcfce7' -%}{%- set badge_color = '#15803d' -%}
+        {%- elif vt == 'debt' -%}
+          {%- set badge_bg = '#fef3c7' -%}{%- set badge_color = '#92400e' -%}
+        {%- elif vt == 'forgivable_loan' -%}
+          {%- set badge_bg = '#f3e8ff' -%}{%- set badge_color = '#7e22ce' -%}
+        {%- else -%}
+          {%- set badge_bg = '#ccfbf1' -%}{%- set badge_color = '#0f766e' -%}
+        {%- endif -%}
+        {%- set type_label = vt | replace('_', ' ') | title -%}
+        {%- if vt == 'equity' and v.equity_role == 'gp' -%}{%- set role_label = ' · GP' -%}
+        {%- elif vt == 'equity' and v.equity_role == 'lp' -%}{%- set role_label = ' · LP' -%}
+        {%- else -%}{%- set role_label = '' -%}
+        {%- endif -%}
+        <div class="sw-vcard" data-vid="{{ v.id }}"
+             onclick="swSelectVehicleCard(this, '{{ v.id }}', '{{ model.id }}')"
+             style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;
+                    border:2px solid var(--border);background:var(--bg-card,#fff);cursor:pointer;
+                    transition:border-color .15s,background .15s">
+          <div style="flex:1;min-width:0;overflow:hidden">
+            <div style="font-size:13px;font-weight:600;color:var(--text-primary);
+                        white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ v.name }}</div>
+          </div>
+          <div style="flex-shrink:0;display:flex;align-items:center;gap:4px">
+            <span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;
+                         font-weight:600;background:{{ badge_bg }};color:{{ badge_color }}">
+              {{ type_label }}{{ role_label }}
+            </span>
+          </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        {% if source_vehicles | selectattr('owner', 'equalto', 'user') | list %}
+        <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+                    color:var(--text-muted);margin-top:4px;margin-bottom:2px;padding-left:2px">My Presets</div>
+        {% for v in source_vehicles if v.owner == 'user' %}
+        {%- set vt = v.vehicle_type | default('') -%}
+        {%- if vt == 'equity' -%}
+          {%- set badge_bg = '#dcfce7' -%}{%- set badge_color = '#15803d' -%}
+        {%- elif vt == 'debt' -%}
+          {%- set badge_bg = '#fef3c7' -%}{%- set badge_color = '#92400e' -%}
+        {%- elif vt == 'forgivable_loan' -%}
+          {%- set badge_bg = '#f3e8ff' -%}{%- set badge_color = '#7e22ce' -%}
+        {%- else -%}
+          {%- set badge_bg = '#ccfbf1' -%}{%- set badge_color = '#0f766e' -%}
+        {%- endif -%}
+        {%- set type_label = vt | replace('_', ' ') | title -%}
+        {%- if vt == 'equity' and v.equity_role == 'gp' -%}{%- set role_label = ' · GP' -%}
+        {%- elif vt == 'equity' and v.equity_role == 'lp' -%}{%- set role_label = ' · LP' -%}
+        {%- else -%}{%- set role_label = '' -%}
+        {%- endif -%}
+        <div class="sw-vcard" data-vid="{{ v.id }}"
+             onclick="swSelectVehicleCard(this, '{{ v.id }}', '{{ model.id }}')"
+             style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;
+                    border:2px solid var(--border);background:var(--bg-card,#fff);cursor:pointer;
+                    transition:border-color .15s,background .15s">
+          <div style="flex:1;min-width:0;overflow:hidden">
+            <div style="font-size:13px;font-weight:600;color:var(--text-primary);
+                        white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ v.name }}</div>
+          </div>
+          <div style="flex-shrink:0;display:flex;align-items:center;gap:4px">
+            <span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;
+                         font-weight:600;background:{{ badge_bg }};color:{{ badge_color }}">
+              {{ type_label }}{{ role_label }}
+            </span>
+          </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+      </div>{# end card grid #}
+
+      <div id="sw-vehicle-hint" style="display:none;margin-top:8px;padding:6px 10px;
+           border-radius:6px;background:var(--accent-faint);border:1px solid var(--accent);
+           font-size:11px;color:var(--text-secondary)">
+        Pre-filled from preset — review and edit any field before saving.
       </div>
     </div>
     {% endif %}
@@ -1470,6 +1570,24 @@ function ulTimingChanged(val) {
   if (_swExit) _swExit.addEventListener('change', function() { _updateStep3ForType(_type); });
   _updateStep3ForType(_type);
   _show(1);
+
+  // ── Source Vehicle card selection ──────────────────────────────────
+  window.swSelectVehicleCard = function(card, vehicleId, modelId) {
+    // Deselect all cards
+    document.querySelectorAll('#sw-vehicle-cards .sw-vcard').forEach(function(c) {
+      c.style.borderColor = 'var(--border)';
+      c.style.background  = 'var(--bg-card,#fff)';
+      c.classList.remove('sw-vcard--selected');
+    });
+    // Highlight chosen card
+    card.style.borderColor = 'var(--accent)';
+    card.style.background  = 'var(--accent-faint)';
+    card.classList.add('sw-vcard--selected');
+    // Sync hidden select and trigger prefill
+    var sel = document.getElementById('sw-vehicle-select');
+    if (sel) sel.value = vehicleId || '';
+    swApplyVehicle(vehicleId, modelId);
+  };
 
   // ── Source Vehicle prefill ──────────────────────────────────────────
   window.swApplyVehicle = async function(vehicleId, modelId) {

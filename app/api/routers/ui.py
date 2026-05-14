@@ -11428,7 +11428,14 @@ async def model_builder_line_form(
                 ).order_by(_SV_lf.label)
             )).scalars().all()
             _sv_list = [
-                {"id": str(v.id), "name": v.label, "funder_type": v.vehicle_type, "owner": v.scope}
+                {
+                    "id": str(v.id),
+                    "name": v.label,
+                    "funder_type": v.vehicle_type,
+                    "vehicle_type": v.vehicle_type,
+                    "equity_role": v.equity_role or "",
+                    "owner": v.scope,
+                }
                 for v in _all_svs_lf
             ]
 
