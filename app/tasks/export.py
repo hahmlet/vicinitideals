@@ -91,6 +91,7 @@ async def _run_investor_export_async(job_id: str) -> str:
             return "missing"
 
         scenario_id = job.scenario_id
+        _profile = job.export_profile or "internal"  # capture before commit expires attributes
 
         # Move to "calculating" so the UI status modal updates.
         job.status = ExportJobStatus.calculating
@@ -98,7 +99,7 @@ async def _run_investor_export_async(job_id: str) -> str:
 
         try:
             xlsx_bytes = await export_investor_workbook(
-                scenario_id, session, profile=job.export_profile or "internal"
+                scenario_id, session, profile=_profile
             )
         except Exception as exc:  # noqa: BLE001
             logger.exception("Investor export build failed for scenario %s", scenario_id)
@@ -109,7 +110,6 @@ async def _run_investor_export_async(job_id: str) -> str:
         deal = (
             await session.get(Deal, scenario.deal_id) if scenario and scenario.deal_id else None
         )
-        _profile = job.export_profile or "internal"
         filename = (
             make_investor_filename(scenario, deal, profile=_profile)
             if scenario
