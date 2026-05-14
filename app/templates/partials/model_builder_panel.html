@@ -256,12 +256,25 @@
         {%- set _src_amt = 0 -%}
       {%- endif -%}
       {%- set _retirement = (m.source.construction_retirement | float) if (m.source and m.source.get('construction_retirement')) else 0 -%}
+      {%- if m.vehicle_type == 'equity' -%}{%- set _vt_color = '#22c55e' -%}
+      {%- elif m.vehicle_type == 'debt' -%}{%- set _vt_color = '#f59e0b' -%}
+      {%- elif m.vehicle_type == 'forgivable_loan' -%}{%- set _vt_color = '#a855f7' -%}
+      {%- elif m.vehicle_type == 'grant' -%}{%- set _vt_color = '#14b8a6' -%}
+      {%- else -%}{%- set _vt_color = 'var(--text-muted)' -%}
+      {%- endif -%}
       <tr draggable="true" data-module-id="{{ m.id }}"
-          data-label="{{ m.label | lower }}" data-ftype="{{ (m.funder_type or '') | lower }}" data-amt="{{ _src_amt }}"
+          data-label="{{ m.label | lower }}" data-ftype="{{ (m.vehicle_type or m.funder_type or '') | lower }}" data-amt="{{ _src_amt }}"
           onclick="openEditLine('capital_modules', '{{ m.id }}', '{{ model.id }}')">
         <td class="text-muted text-small">{{ m.stack_position or '?' }}</td>
         <td style="font-weight:500">{{ m.label }}</td>
-        <td><span class="text-small text-muted" style="font-size:10px">{{ m.funder_type | replace('_', ' ') | title if m.funder_type else '—' }}</span></td>
+        <td>
+          {%- if m.vehicle_type -%}
+            <span style="font-size:10px;color:{{ _vt_color }};font-weight:600">{{ m.vehicle_type | replace('_', ' ') | title }}</span>
+            {%- if m.equity_role -%}<span style="font-size:9px;color:var(--text-muted);margin-left:3px">{{ m.equity_role | upper }}</span>{%- endif -%}
+          {%- else -%}
+            <span class="text-small text-muted" style="font-size:10px">{{ m.funder_type | replace('_', ' ') | title if m.funder_type else '—' }}</span>
+          {%- endif -%}
+        </td>
         <td class="col-right text-mono">
           {% if _src_amt %}{{ _src_amt | currency }}
           {% elif m.source and m.source.get('auto_size') %}<span style="color:var(--text-muted);font-size:11px">Compute →</span>
