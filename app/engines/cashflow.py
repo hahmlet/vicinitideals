@@ -1838,9 +1838,9 @@ async def _auto_size_debt_modules(
         carry = module.carry or {}
         # Rate may be in source["interest_rate_pct"] or flat carry["io_rate_pct"]
         rate_pct = src.get("interest_rate_pct") or carry.get("io_rate_pct")
-        # Per-loan DSCR floor: read from source.dscr_min (perm-debt only),
-        # fallback to PLACEHOLDER_DSCR (1.25).
-        dscr_min = _to_decimal(src.get("dscr_min") or PLACEHOLDER_DSCR)
+        # Per-loan DSCR floor: source.dscr_min → debt_terms staging → PLACEHOLDER_DSCR (1.25).
+        _dt_perm = dict((inputs.debt_terms or {}).get("permanent_debt") or {})
+        dscr_min = _to_decimal(src.get("dscr_min") or _dt_perm.get("dscr_min") or PLACEHOLDER_DSCR)
 
         # Get amort_term_years from carry (phased) or source
         op_carry = _get_phase_carry(carry, "operation")

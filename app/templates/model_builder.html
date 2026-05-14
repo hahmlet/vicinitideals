@@ -1368,10 +1368,13 @@ async function startInvestorExport(modelId, profile) {
             {%- set _perm_dscr.value = _cm.source.get('dscr_min') -%}
           {%- endif -%}
         {%- endfor -%}
+        {%- if _perm_dscr.value is none and inputs and inputs.debt_terms -%}
+          {%- set _perm_dscr.value = (inputs.debt_terms.get('permanent_debt') or {}).get('dscr_min') -%}
+        {%- endif -%}
         <div>
           <label class="field-label">DSCR Minimum (Permanent Debt)</label>
           <input class="filter-input" type="number" step="0.01" min="1.0" max="3.0" style="width:100%;margin-top:4px"
-                 name="dscr_minimum" value="{{ '%.2f' | format(_perm_dscr.value | float) if _perm_dscr.value is not none else '1.20' }}" placeholder="1.20">
+                 name="dscr_minimum" value="{{ '%.2f' | format(_perm_dscr.value | float) if _perm_dscr.value is not none else '1.25' }}" placeholder="1.25">
         </div>
         {% if inputs.debt_structure in ('construction_to_perm', 'construction_and_perm') %}
         <div>
