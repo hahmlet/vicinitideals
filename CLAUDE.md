@@ -165,12 +165,14 @@ docs/
 
 ### Financial Engine (cashflow.py)
 
-- **4 carry types**: `io_only` (True IO), `interest_reserve` (avg-draw `(N+1)/2`), `capitalized_interest` (PIK, full-balance `N`), `pi` (amortizing)
+- **4 carry types**: `io_only` (True IO), `interest_reserve` (avg-draw, day-precise via `period_interest_months()`), `capitalized_interest` (PIK, full-balance, day-precise via `period_interest_months()`), `pi` (amortizing). Statistical `(N+1)/2` and `N` factors are used for the principal sizing solve; period-level cash flows use `app/engines/interest.py:period_interest_months()` with actual day-count conventions.
 - **Per-loan active windows**: each loan's pre-op months from `_loan_pre_op_months(module)`, NOT global `constr_months_total`
 - **`_PERIOD_TYPE_RANK` + `_APS_TO_RANK`**: maps `active_phase_start` to phase ordering for windowed month counting
 - **Auto-sizing**: `_auto_size_debt_modules()` with one-pass algebraic divisor fold-in for closing costs (Sources = Uses invariant)
-- **DSCR-capped mode**: when DSCR cap binds, gap expected and real
+- **DSCR-capped mode**: principal capped via `newton_solve.solve_principal_for_dscr()` (Newton-Raphson with bisection fallback); when DSCR cap binds, gap is surfaced to user
+- **Source-Use eligibility**: `app/engines/source_routing.py` — `eligible_sources_for_use()` / `route_use_to_sources()`; permissive by default, whitelist via `capital_modules.eligible_use_tags` or `use_lines.eligible_module_ids`
 - **Default loan closing costs**: `_DEFAULT_LOAN_COSTS` table per `funder_type`
+- **`vehicle_type` + `equity_role` are canonical** on `CapitalModule` (post-0085); `funder_type` is a legacy bridge field retained for backward compat
 - Uses `Decimal` arithmetic throughout (`MONEY_PLACES = Decimal("0.000001")`)
 
 ### Milestone Timeline

@@ -71,7 +71,7 @@ Deal ──┬── Scenario (= "Variant")          ← DB table: scenarios; OR
 | **WaterfallTier** | `waterfall_tiers` | per-project (0048); joined at Underwriting-rollup layer | `project_id` nullable during 0048 backfill window |
 | **WaterfallResult** | `waterfall_results` | per-project | same |
 | **DrawSource** | `draw_sources` | per-project | same |
-| **UseLine** | `use_lines` | project-scoped | new `source_capital_module_id` (0048) attributes engine-injected reserves to their originating Source |
+| **UseLine** | `use_lines` | project-scoped | `source_capital_module_id` (0048) attributes engine-injected reserves to their originating Source; `eligible_module_ids` (0088) whitelists which Sources may fund this use |
 
 **Multi-project rule (post-0048).** A Scenario may have N Projects. Each Source is identified once on the Scenario (its `CapitalModule` row) and attached to 1+ Projects via `CapitalModuleProject` junction rows. One junction row = project-scoped Source. Multiple junction rows on the same module = shared Source. Each project owns its own UseLines, IncomeStreams, OpEx, OperationalInputs, Milestones, WaterfallTiers, DrawSources.
 
@@ -758,11 +758,14 @@ Scenario-scoped Source identity (lender, rate, carry type, exit terms). Per-proj
 | id | UUID | Yes | PK |
 | scenario_id | UUID FK to scenarios | Yes | |
 | label | str (255) | Yes | e.g. "Permanent Debt - Chase" |
-| funder_type | FunderType enum | Yes | See Section 13.1 |
+| funder_type | FunderType enum | Yes | Legacy bridge field; `vehicle_type` + `equity_role` are canonical post-0085 |
+| vehicle_type | str (20) or None | No | Snapshot from linked SourceVehicle: `equity`, `debt`, `forgivable_loan`, `grant` |
+| equity_role | str (10) or None | No | Snapshot from linked SourceVehicle: `gp`, `lp`, or NULL for debt/grant |
 | stack_position | int | Yes | Display order (0 = top) |
 | source | dict or None | No | JSONB: sizing inputs - see 12.1a |
 | carry | dict or None | No | JSONB: construction carry - see 12.1b |
 | exit_terms | dict or None | No | JSONB: balloon, prepay, refi cap rate |
+| eligible_use_tags | varchar[] | No | Whitelist of use `cost_category` tags this source may fund; empty = permissive (any use) |
 | active_phase_start | str (60) or None | No | Deprecated; loan window derived from exit vehicle |
 | active_phase_end | str (60) or None | No | Deprecated; retained in DB, not used by engine |
 | created_at | datetime | Yes | |
@@ -890,6 +893,47 @@ One row per source per project. Drives the self-referential draw-schedule engine
 | total_commitment | Numeric or None | No | None = auto-sized to total drawn |
 | funder_type | str (60) or None | No | Denormalized from CapitalModule for display |
 | capital_module_id | UUID FK to capital_modules or None | No | ondelete=SET NULL |
+| created_at | datetime | Yes | |
+
+---
+
+### 12.6 SourceVehicle (`source_vehicles`)
+
+Unified table replacing the former `org_source_vehicles` + `user_source_vehicles` two-table pattern (migration 0085). One row = one reusable funding source template (a lender product, equity fund, grant program, etc.) scoped to an org or individual user.
+
+| Column | Type | Required | Notes |
+|---|---|---|---|
+| id | UUID | Yes | PK |
+| scope | str (10) | Yes | `org` or `user` — ownership level |
+| owner_id | UUID | Yes | FK to `organizations.id` or `users.id` depending on `scope` |
+| label | str (200) | Yes | Human name; unique per (scope, owner_id) |
+| vehicle_type | str (20) | Yes | `equity`, `debt`, `forgivable_loan`, `grant` |
+| equity_role | str (10) or None | No | `gp` or `lp` — only set when `vehicle_type = equity` |
+| eligible_use_tags | varchar[] | No | Whitelist of use `cost_category` tags; empty = permissive |
+| interest_rate_pct | Numeric or None | No | Annual rate for debt/forgivable_loan vehicles |
+| carry_type | str (30) or None | No | `io_only`, `interest_reserve`, `capitalized_interest`, `pi` |
+| day_count_convention | str (20) | Yes | Default `actual_360` |
+| source_config / carry_config / exit_config | dict or None | No | JSONB templates copied to CapitalModule on attach |
+| created_at / updated_at | datetime | Yes | |
+
+**Key invariant.** `SourceVehicle` is a *template*; attaching it to a deal creates a `CapitalModule` whose `vehicle_type` and `equity_role` columns are snapshots copied at attach time. Changes to the template do not retroactively update existing modules.
+
+---
+
+### 12.7 CapitalDrawEvent (`capital_draw_events`)
+
+Audit trail of capital draws produced by each engine run (migration 0087). Prior rows for the scenario are purged and re-inserted on every `compute_cash_flows` call.
+
+| Column | Type | Required | Notes |
+|---|---|---|---|
+| id | UUID | Yes | PK |
+| scenario_id | UUID FK to scenarios | Yes | ondelete=CASCADE |
+| project_id | UUID FK to projects or None | No | ondelete=CASCADE; NULL = scenario-level event |
+| period | int | Yes | Month index within the cashflow timeline |
+| period_type | str (60) or None | No | Phase label (e.g. `construction`, `operation_stabilized`) |
+| amount | Numeric | Yes | Draw amount (positive = funding in) |
+| allocation_reason | str (40) | Yes | Default `period_funding` |
+| use_line_label | str (255) or None | No | Use line being funded, if applicable |
 | created_at | datetime | Yes | |
 
 ---

@@ -334,6 +334,8 @@ There are **four** economically distinct ways a loan can handle interest before 
 
 For `N = 12`, that is `rate/12 × 6.5 = 0.5417 × rate`. Compared to the naive 50% heuristic, the exact factor is 8% larger — material on short construction timelines.
 
+**Day-precise interest (Phase H, May 2026).** The statistical `(N+1)/2` and `N` factors above are used for the sizing solve (principal calculation). Monthly cashflow line items use `period_interest_months()` from `app/engines/interest.py`, which applies actual day-count conventions (`actual_360` default) for precise period-by-period interest accrual. The sizing factors remain the same algebraically; only the period-level cash flows gain day-count precision.
+
 **The full-balance factor for Capitalized Interest.** Capitalized interest (PIK) accrues on the full commitment from day one — there is no "average draw", because the lender imputes full balance. The factor is `rate/12 × N`.
 
 **Code (cashflow.py, construction loan branch around line 958):**
@@ -593,10 +595,11 @@ Some deals use a different sizing mode: size the loan to the **minimum DSCR** re
 1. Compute the gap-fill principal `P_gap` using §2.4.
 2. Compute the resulting DSCR at stabilization: `DSCR_gap = NOI / (P_gap × pmt_factor × 12)`.
 3. If `DSCR_gap ≥ module.source.dscr_min` (fallback `1.25`): use `P_gap` (the lender's minimum doesn't bind).
-4. Otherwise: cap the principal so DSCR exactly equals the minimum:
+4. Otherwise: cap the principal so DSCR exactly equals the minimum. This is solved iteratively by `newton_solve.solve_principal_for_dscr()` (Newton-Raphson with bisection fallback) because amortizing loans produce a non-linear relationship between principal and debt service:
    > `DS_target = NOI / DSCR_min / 12`
-   > `P_capped = DS_target × PV_annuity_factor`
-   > where `PV_annuity_factor = (1 − (1+i)^(-n)) / i`
+   > `P_capped` = Newton-Raphson root of `DS(P) − DS_target = 0`
+
+   The closed-form `P_capped = DS_target × PV_annuity_factor` (where `PV_annuity_factor = (1 − (1+i)^(-n)) / i`) is the starting guess and exact solution for standard amortizing loans; Newton-Raphson generalises this for IO-period and day-count variations.
 
 This shows the user a **real funding gap** in the S&U table (Uses > Sources) rather than silently levering up past what the lender would actually fund.
 
@@ -688,6 +691,15 @@ net_refi = perm_amount
 - Bridge payoff, prepay penalty, and financing costs are each separate line items
 
 **Perm sizing at stabilized NOI.** The perm's `dual_constraint` or `dscr_capped` sizing uses the engine's projected stabilized NOI (from income streams with escalation), not the going-in NOI. The cap rate for LTV defaults to the going-in cap but can be overridden via `source.refi_cap_rate_pct`. This is self-consistent: the only "invented" number is the deal's own NOI projection, which flows from the same income/expense assumptions used for every other metric.
+
+### 2.11 Source-Use eligibility routing (Phase H, May 2026)
+
+By default every capital source (CapitalModule) may fund any use line — the engine allocates draws from the full stack. Two optional whitelists restrict routing:
+
+- **`capital_modules.eligible_use_tags` (`varchar[]`)** — if non-empty, this source may only fund use lines whose `cost_category` matches one of the listed tags.
+- **`use_lines.eligible_module_ids` (`UUID[]`)** — if non-empty, this use may only be funded by the listed module IDs.
+
+Both whitelists default to empty (permissive). The `app/engines/source_routing.py` module implements `eligible_sources_for_use()` and `route_use_to_sources()`. When no whitelist applies, the routing falls back to the legacy stack-position allocation unchanged.
 
 ---
 
