@@ -35,29 +35,6 @@ class EquityRole(str, enum.Enum):
     lp = "lp"
 
 
-class FunderType(str, enum.Enum):
-    """Legacy 17-value taxonomy. Kept for backward compat with existing engine code and UI.
-
-    New code should use VehicleType + EquityRole on CapitalModule instead.
-    Will be removed after Phase G UI rewrite.
-    """
-    permanent_debt = "permanent_debt"           # amortizing long-term loan, no exit trigger
-    senior_debt = "senior_debt"
-    mezzanine_debt = "mezzanine_debt"
-    bridge = "bridge"                           # catch-all short-term bridge loan
-    construction_loan = "construction_loan"
-    pre_development_loan = "pre_development_loan"  # pre-closing costs (entitlements, design, due diligence)
-    acquisition_loan = "acquisition_loan"       # funds acquisition phase costs at LTV%
-    soft_loan = "soft_loan"
-    bond = "bond"                               # construction-to-perm converting loan
-    preferred_equity = "preferred_equity"
-    common_equity = "common_equity"
-    owner_loan = "owner_loan"
-    owner_investment = "owner_investment"
-    grant = "grant"
-    tax_credit = "tax_credit"
-    other = "other"  # kept for backend compatibility
-
 
 class WaterfallTierType(str, enum.Enum):
     debt_service = "debt_service"
@@ -79,9 +56,7 @@ class CapitalModule(Base):
         UUID(as_uuid=True), ForeignKey("scenarios.id"), nullable=False
     )
     label: Mapped[str] = mapped_column(String(255), nullable=False)
-    funder_type: Mapped[FunderType] = mapped_column(String(60), nullable=False)
-    # New 4-type classification (Phase A). Populated on new creates; NULL on legacy rows.
-    # Engine classifiers check this first, then fall back to funder_type.
+    # 4-type classification: equity / debt / forgivable_loan / grant
     vehicle_type: Mapped[str | None] = mapped_column(String(20), nullable=True)   # VehicleType value
     equity_role: Mapped[str | None] = mapped_column(String(10), nullable=True)    # EquityRole value or NULL
     stack_position: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
@@ -254,8 +229,6 @@ class DrawSource(Base):
     active_to_offset_days: Mapped[int] = mapped_column(Integer, nullable=False, default=0, server_default="0")
     # None = auto-sized to total drawn
     total_commitment: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
-    # Denormalized from CapitalModule for display without join
-    funder_type: Mapped[str | None] = mapped_column(String(60), nullable=True)
     # Link back to the CapitalModule this was created from (wizard saves both atomically)
     capital_module_id: Mapped[uuid.UUID | None] = mapped_column(
         UUID(as_uuid=True), ForeignKey("capital_modules.id", ondelete="SET NULL"), nullable=True

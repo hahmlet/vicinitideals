@@ -487,7 +487,7 @@
     "capital_stack": [
       {
         "label": "Tower Municipal Bond",
-        "funder_type": "bond",
+        "vehicle_type": "debt",
         "stack_position": 1,
         "source": {
           "amount": "1050000",
@@ -520,7 +520,7 @@
       },
       {
         "label": "Tower Permanent Debt",
-        "funder_type": "senior_debt",
+        "vehicle_type": "debt",
         "stack_position": 2,
         "source": {
           "amount": "1750000",
@@ -553,7 +553,7 @@
       },
       {
         "label": "Tower OR Grants",
-        "funder_type": "grant",
+        "vehicle_type": "grant",
         "stack_position": 3,
         "source": {
           "amount": "1480000",
@@ -586,7 +586,8 @@
       },
       {
         "label": "Tower Equity Investment",
-        "funder_type": "preferred_equity",
+        "vehicle_type": "equity",
+        "equity_role": "lp",
         "stack_position": 4,
         "source": {
           "amount": null,
@@ -2590,7 +2591,7 @@
   "capital_modules": [
     {
       "label": "Tower Municipal Bond",
-      "funder_type": "bond",
+      "vehicle_type": "debt",
       "stack_position": 1,
       "source": {
         "amount": "1050000",
@@ -2623,7 +2624,7 @@
     },
     {
       "label": "Tower Permanent Debt",
-      "funder_type": "senior_debt",
+      "vehicle_type": "debt",
       "stack_position": 2,
       "source": {
         "amount": "1750000",
@@ -2656,7 +2657,7 @@
     },
     {
       "label": "Tower OR Grants",
-      "funder_type": "grant",
+      "vehicle_type": "grant",
       "stack_position": 3,
       "source": {
         "amount": "1480000",
@@ -2689,7 +2690,8 @@
     },
     {
       "label": "Tower Equity Investment",
-      "funder_type": "preferred_equity",
+      "vehicle_type": "equity",
+        "equity_role": "lp",
       "stack_position": 4,
       "source": {
         "amount": null,

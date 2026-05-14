@@ -71,7 +71,7 @@ async def test_import_tower_ap_deal_creates_two_projects_and_one_portfolio(
                 "capital_modules": [
                     {
                         "label": "Tower Senior Loan",
-                        "funder_type": "senior_debt",
+                        "vehicle_type": "debt",
                         "stack_position": 1,
                         "source": {"amount": 800000, "interest_rate_pct": 6.0},
                         "carry": {"carry_type": "io_only", "payment_frequency": "monthly"},
@@ -81,7 +81,7 @@ async def test_import_tower_ap_deal_creates_two_projects_and_one_portfolio(
                     },
                     {
                         "label": "Tower Common Equity",
-                        "funder_type": "common_equity",
+                        "vehicle_type": "equity",
                         "stack_position": 2,
                         "source": {"pct_of_total_cost": 100},
                         "carry": {"carry_type": "none", "payment_frequency": "at_exit"},
@@ -135,7 +135,7 @@ async def test_import_tower_ap_deal_creates_two_projects_and_one_portfolio(
                 "capital_modules": [
                     {
                         "label": "A&P Senior Loan",
-                        "funder_type": "senior_debt",
+                        "vehicle_type": "debt",
                         "stack_position": 1,
                         "source": {"amount": 700000, "interest_rate_pct": 6.25},
                         "carry": {"carry_type": "io_only", "payment_frequency": "monthly"},
@@ -145,7 +145,7 @@ async def test_import_tower_ap_deal_creates_two_projects_and_one_portfolio(
                     },
                     {
                         "label": "A&P Common Equity",
-                        "funder_type": "common_equity",
+                        "vehicle_type": "equity",
                         "stack_position": 2,
                         "source": {"pct_of_total_cost": 100},
                         "carry": {"carry_type": "none", "payment_frequency": "at_exit"},

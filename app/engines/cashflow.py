@@ -371,7 +371,7 @@ async def _compute_project_cashflow(
                 prepay_penalty = _q(bridge_balloon * ppct / HUNDRED)
         # Financing costs for the perm loan (flat from closing cost data)
         perm_financing_costs = ZERO
-        perm_ft = str(getattr(cm, "funder_type", "") or "").replace("FunderType.", "")
+        perm_ft = _loan_subtype_from_module(cm)
         for cc in _DEFAULT_LOAN_COSTS.get(perm_ft, []):
             if "pct_of_principal" in cc:
                 perm_financing_costs += _q(perm_amount * Decimal(str(cc["pct_of_principal"])) / HUNDRED)
@@ -1253,24 +1253,42 @@ def _build_use_line_phase_overrides(
         overrides[ul.id] = from_types
     return overrides
 
-_DEBT_FUNDER_TYPES = {
-    "senior_debt", "mezzanine_debt", "bridge", "soft_loan",
-    "construction_loan", "bond", "permanent_debt",
-    "acquisition_loan", "pre_development_loan", "owner_loan",
-}
-
-
 def _is_debt_cm(m: object) -> bool:
-    """Return True if the capital module is a debt instrument.
-
-    Checks vehicle_type (4-type schema) first; falls back to funder_type for legacy rows.
-    """
+    """Return True if the capital module is a debt instrument (vehicle_type == "debt")."""
     vt = str(getattr(m, "vehicle_type", None) or "").replace("VehicleType.", "")
-    if vt == "debt":
-        return True
-    if vt in ("equity", "forgivable_loan", "grant"):
-        return False
-    return str(getattr(m, "funder_type", "") or "").replace("FunderType.", "") in _DEBT_FUNDER_TYPES
+    return vt == "debt"
+
+
+# ── Loan sub-type detection ───────────────────────────────────────────────────
+# Maps label keywords → legacy loan subtype keys used by _DEFAULT_LOAN_COSTS and
+# the bridge sizing block.  Labels are set by Deal Setup wizard to standardised
+# patterns (e.g. "Construction Loan (auto)", "Pre-Development Loan (auto)").
+# This replaces funder_type comparisons inside the Phase B engine paths.
+_LOAN_SUBTYPE_PATTERNS: list[tuple[str, str]] = [
+    ("pre-development", "pre_development_loan"),
+    ("pre_development",  "pre_development_loan"),
+    ("acquisition loan", "acquisition_loan"),
+    ("construction-to-perm", "bond"),
+    ("construction to perm", "bond"),
+    ("bond",            "bond"),
+    ("construction",    "construction_loan"),
+    ("bridge",          "bridge"),
+    ("permanent",       "permanent_debt"),
+    ("perm debt",       "permanent_debt"),
+]
+
+
+def _loan_subtype_from_module(m: object) -> str:
+    """Derive a legacy loan-subtype key from a module's label.
+
+    Used exclusively for _DEFAULT_LOAN_COSTS lookups and bridge sizing.
+    Returns an empty string when no known pattern matches.
+    """
+    label_lc = (getattr(m, "label", "") or "").lower()
+    for kw, subtype in _LOAN_SUBTYPE_PATTERNS:
+        if kw in label_lc:
+            return subtype
+    return ""
 
 # Funder types for which Exit Vehicle applies — every funding line that has
 # a real "ending" (matures, is refinanced, or is paid off at sale).  All
@@ -1434,7 +1452,7 @@ async def _auto_size_debt_modules(
     """
     _diag(f"=== _auto_size_debt_modules CALLED n_cap_mod={len(capital_modules)} n_ul={len(use_lines)}")
     for _dbg_cm in capital_modules:
-        _diag(f"  [pre-filter] cm={_dbg_cm.id} ft={getattr(_dbg_cm,'funder_type',None)} source={_dbg_cm.source}")
+        _diag(f"  [pre-filter] cm={_dbg_cm.id} vt={getattr(_dbg_cm,'vehicle_type',None)} source={_dbg_cm.source}")
     auto_modules = [m for m in capital_modules if (m.source or {}).get("auto_size")]
     if not auto_modules:
         _diag("EARLY RETURN: no auto_modules")
@@ -1442,7 +1460,7 @@ async def _auto_size_debt_modules(
 
     _diag(f"=== _auto_size_debt_modules CONTINUE n_auto={len(auto_modules)}")
     for _dm in capital_modules:
-        _diag(f"  [in] cm={_dm.id} ft={getattr(_dm,'funder_type',None)} auto_size={(_dm.source or {}).get('auto_size')} amt_src={(_dm.source or {}).get('amount')}")
+        _diag(f"  [in] cm={_dm.id} vt={getattr(_dm,'vehicle_type',None)} auto_size={(_dm.source or {}).get('auto_size')} amt_src={(_dm.source or {}).get('amount')}")
     for _dul in use_lines:
         _diag(f"  [in] ul label={getattr(_dul,'label','')!r} phase={getattr(_dul,'phase',None)} amt={getattr(_dul,'amount',None)} pid={getattr(_dul,'project_id',None)}")
 
@@ -1563,7 +1581,6 @@ async def _auto_size_debt_modules(
 
     if debt_types_list:
         # ── New multi-debt path ─────────────────────────────────────────────
-        _BRIDGE_FUNDER_TYPES = {"pre_development_loan", "acquisition_loan", "construction_loan", "bridge"}
         _PRE_DEV_USE_PHASES  = {"pre_construction"}
         _ACQ_USE_PHASES      = {"acquisition", "other"}
         _CONSTR_USE_PHASES   = {"construction", "renovation", "conversion"}
@@ -1574,7 +1591,7 @@ async def _auto_size_debt_modules(
         # should NOT grow constr_costs; they are financed by the perm gap-fill instead).
         _cc_labels: set[str] = set()
         for _pre_cm in capital_modules:
-            _pre_ft = str(getattr(_pre_cm, "funder_type", "") or "").replace("FunderType.", "")
+            _pre_ft = _loan_subtype_from_module(_pre_cm)
             if _pre_ft not in _DEFAULT_LOAN_COSTS or not (_pre_cm.source or {}).get("auto_size"):
                 continue
             _pre_cm_lbl = getattr(_pre_cm, "label", "") or _pre_ft.replace("_", " ").title()
@@ -1599,8 +1616,8 @@ async def _auto_size_debt_modules(
         _acq_months     = sum(p.months for p in phases if p.period_type == PeriodType.acquisition)
 
         for _m in list(auto_modules):
-            _ft = str(getattr(_m, "funder_type", "") or "")
-            if _ft not in _BRIDGE_FUNDER_TYPES:
+            _ft = _loan_subtype_from_module(_m)
+            if _ft not in {"pre_development_loan", "acquisition_loan", "construction_loan", "bridge"}:
                 continue
             _src    = dict(_m.source or {})
             _carry  = _m.carry or {}
@@ -1682,7 +1699,7 @@ async def _auto_size_debt_modules(
                 _principal = ZERO
             _src["amount"] = str(_q(_principal))
             _src["is_bridge"] = True
-            _diag(f"bridge sized cm={_m.id} ft={_ft} -> amount={_src['amount']}")
+            _diag(f"bridge sized cm={_m.id} subtype={_ft} -> amount={_src['amount']}")
             await session.execute(
                 sa_update(CapitalModule).where(CapitalModule.id == _m.id).values(source=_src)
             )
@@ -1710,8 +1727,8 @@ async def _auto_size_debt_modules(
             continue
         # Equity modules cannot retire debt — skip spurious pairs where a user
         # accidentally set exit_terms.vehicle to an equity source.
-        _retirer_ft = str(getattr(_retirer, "funder_type", "") or "").replace("FunderType.", "")
-        if _retirer_ft in {"common_equity", "preferred_equity", "owner_investment", "owner_loan"}:
+        _retirer_vt = str(getattr(_retirer, "vehicle_type", "") or "").replace("VehicleType.", "")
+        if _retirer_vt == "equity":
             continue
         # Already handled by the multi-debt path above (is_bridge already set)?
         _c_src = _candidate.source or {}
@@ -1749,8 +1766,8 @@ async def _auto_size_debt_modules(
     _diag(f"CC-INIT entering block debt_types_list={bool(debt_types_list)} auto_modules={[m.id for m in auto_modules]}")
     if debt_types_list and auto_modules:
         for _ccm in capital_modules:
-            _ccm_ft = str(getattr(_ccm, "funder_type", "") or "").replace("FunderType.", "")
-            _diag(f"  CC scan cm={_ccm.id} ft={_ccm_ft!r} in_defaults={_ccm_ft in _DEFAULT_LOAN_COSTS} auto_size={(_ccm.source or {}).get('auto_size')}")
+            _ccm_ft = _loan_subtype_from_module(_ccm)
+            _diag(f"  CC scan cm={_ccm.id} subtype={_ccm_ft!r} in_defaults={_ccm_ft in _DEFAULT_LOAN_COSTS} auto_size={(_ccm.source or {}).get('auto_size')}")
             if _ccm_ft not in _DEFAULT_LOAN_COSTS or not (_ccm.source or {}).get("auto_size"):
                 continue
             _ccm_lbl = getattr(_ccm, "label", "") or _ccm_ft.replace("_", " ").title()
@@ -2111,10 +2128,10 @@ async def _auto_size_debt_modules(
             src.pop("construction_retirement", None)
             changed = True
         if id(_cm) not in _retireds_now and src.get("is_bridge"):
-            # Only auto-clear is_bridge when the funder_type is NOT a
-            # bridge type — bridge-funder-type modules were sized as
-            # bridges via _BRIDGE_FUNDER_TYPES and should stay flagged.
-            _ft = str(getattr(_cm, "funder_type", "") or "").replace("FunderType.", "")
+            # Only auto-clear is_bridge when the module label does NOT indicate a
+            # bridge-typed loan — those were sized as bridges via the label-based
+            # detection path and should stay flagged.
+            _ft = _loan_subtype_from_module(_cm)
             if _ft not in {"pre_development_loan", "acquisition_loan",
                            "construction_loan", "bridge"}:
                 src.pop("is_bridge", None)
@@ -2186,7 +2203,7 @@ async def _auto_size_debt_modules(
     _diag(f"WRITE-BACK project_id={project_id} _cc_data_n={len(_cc_data)} cc_module_ids={[_cc_data[k]['module'].id for k in _cc_data]}")
     for _dk, _dv in _cc_data.items():
         _dm2 = _dv['module']
-        _diag(f"  cc module id={_dm2.id} ft={getattr(_dm2,'funder_type',None)} source.amount={(_dm2.source or {}).get('amount')} flat={_dv['flat']} pct={_dv['pct']}")
+        _diag(f"  cc module id={_dm2.id} vt={getattr(_dm2,'vehicle_type',None)} source.amount={(_dm2.source or {}).get('amount')} flat={_dv['flat']} pct={_dv['pct']}")
 
     # Update or create Operating Reserve use line
     if income_mode == "noi":
@@ -2372,7 +2389,7 @@ async def _auto_size_debt_modules(
     if _cc_data and project_id:
         for _cc_obj in _cc_data.values():
             _ccm_ref  = _cc_obj["module"]
-            _ccm_ft   = str(getattr(_ccm_ref, "funder_type", "") or "").replace("FunderType.", "")
+            _ccm_ft   = _loan_subtype_from_module(_ccm_ref)
             _ccm_lbl  = getattr(_ccm_ref, "label", "") or _ccm_ft.replace("_", " ").title()
             _ccm_p    = Decimal(str((_ccm_ref.source or {}).get("amount") or 0))
             _ccm_aps  = getattr(_ccm_ref, "active_phase_start", None) or ""
@@ -2399,6 +2416,7 @@ async def _auto_size_debt_modules(
                     _cc_exist.cost_category = "acquisition" if _ccm_ft == "acquisition_loan" else "soft"
                     session.add(_cc_exist)
                 elif _cc_amt > ZERO:
+                    _ccm_ft_for_cat = _loan_subtype_from_module(_ccm_ref)
                     _new_cc_ul = UseLine(
                         project_id=project_id,
                         source_capital_module_id=getattr(_ccm_ref, "id", None),
@@ -2406,7 +2424,7 @@ async def _auto_size_debt_modules(
                         phase=_ccm_phase,
                         amount=_cc_amt,
                         timing_type="first_day",
-                        cost_category="acquisition" if _ccm_ft == "acquisition_loan" else "soft",
+                        cost_category="acquisition" if _ccm_ft_for_cat == "acquisition_loan" else "soft",
                         notes="Auto-computed — edit to override",
                     )
                     session.add(_new_cc_ul)

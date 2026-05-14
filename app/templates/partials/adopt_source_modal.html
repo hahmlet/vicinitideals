@@ -38,7 +38,7 @@
         <div class="adopt-src-row-body">
           <div class="adopt-src-row-label">{{ m.label }}</div>
           <div class="adopt-src-row-meta">
-            <span>{{ (m.funder_type | string).replace('FunderType.', '').replace('_', ' ').title() if m.funder_type else 'Source' }}</span>
+            <span>{{ (m.vehicle_type | string).replace('VehicleType.', '').replace('_', ' ').title() if m.vehicle_type else 'Source' }}</span>
             {% if src.interest_rate_pct %}<span>· {{ '{:.2f}%'.format(src.interest_rate_pct | float) }}</span>{% endif %}
             {% if src.amount %}<span>· {{ src.amount | float | currency }}</span>{% endif %}
             {% if src.auto_size %}<span>· auto-sized</span>{% endif %}

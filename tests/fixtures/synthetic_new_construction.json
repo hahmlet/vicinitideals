@@ -201,7 +201,7 @@
     "capital_stack": [
       {
         "label": "Construction Loan",
-        "funder_type": "senior_debt",
+        "vehicle_type": "debt",
         "stack_position": 1,
         "source": {
           "amount": "1950000",
@@ -234,7 +234,7 @@
       },
       {
         "label": "Energy Grant",
-        "funder_type": "grant",
+        "vehicle_type": "grant",
         "stack_position": 2,
         "source": {
           "amount": "350000",
@@ -267,7 +267,7 @@
       },
       {
         "label": "Sponsor Equity",
-        "funder_type": "common_equity",
+        "vehicle_type": "equity",
         "stack_position": 3,
         "source": {
           "amount": null,
@@ -1734,7 +1734,7 @@
   "capital_modules": [
     {
       "label": "Construction Loan",
-      "funder_type": "senior_debt",
+      "vehicle_type": "debt",
       "stack_position": 1,
       "source": {
         "amount": "1950000",
@@ -1767,7 +1767,7 @@
     },
     {
       "label": "Energy Grant",
-      "funder_type": "grant",
+      "vehicle_type": "grant",
       "stack_position": 2,
       "source": {
         "amount": "350000",
@@ -1800,7 +1800,7 @@
     },
     {
       "label": "Sponsor Equity",
-      "funder_type": "common_equity",
+      "vehicle_type": "equity",
       "stack_position": 3,
       "source": {
         "amount": null,

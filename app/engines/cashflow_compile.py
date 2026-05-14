@@ -110,8 +110,8 @@ def _resolve_horizon_months(
     """
     max_hold_years = 0
     for cm in capital_modules or []:
-        ft = str(getattr(cm, "funder_type", "") or "").replace("FunderType.", "")
-        if ft != "permanent_debt":
+        vt = str(getattr(cm, "vehicle_type", "") or "").replace("VehicleType.", "")
+        if vt != "debt":
             continue
         src = getattr(cm, "source", None) or {}
         hold = src.get("hold_term_years") if isinstance(src, dict) else None
@@ -358,14 +358,9 @@ _PERIOD_TYPE_RANK: dict[PeriodType, int] = {
     PeriodType.exit:              6,
 }
 
-# Funder types that participate in Exit Vehicle pairing (debt that gets
-# refinanced or paid off at maturity/sale). Equity, grants, etc. are excluded
-# (they ride to perpetuity and the waterfall handles them at exit).
-_EXIT_VEHICLE_APPLIES = {
-    "permanent_debt", "senior_debt", "mezzanine_debt", "bridge",
-    "construction_loan", "acquisition_loan", "pre_development_loan",
-    "soft_loan", "bond", "owner_loan",
-}
+# Legacy funder-type set retained for backward compat imports only.
+# The canonical check is vehicle_type == "debt".
+_EXIT_VEHICLE_APPLIES: set[str] = set()
 
 
 def _module_rank(module: object, side: str) -> int:
@@ -394,8 +389,8 @@ def _resolve_active_end_rank(module: object, all_modules: list) -> int:
     Falls back to the legacy ``active_phase_end`` if vehicle is unset AND a
     legacy value is stored — this keeps old rows working until the DB cleanup.
     """
-    ft = str(getattr(module, "funder_type", "") or "").replace("FunderType.", "")
-    if ft not in _EXIT_VEHICLE_APPLIES:
+    vt = str(getattr(module, "vehicle_type", "") or "").replace("VehicleType.", "")
+    if vt != "debt":
         return 99
 
     exit_terms = getattr(module, "exit_terms", None) or {}

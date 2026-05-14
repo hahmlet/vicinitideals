@@ -340,11 +340,7 @@ _SOURCES_COLS = [
 _SOURCES_WIDTHS = [18, 30, 20, 14, 16, 16, 12, 24, 24, 18, 18, 10]
 _SOURCES_EDITABLE = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
-_FUNDER_TYPE_CHOICES = (
-    "permanent_debt, senior_debt, mezzanine_debt, bridge, construction_loan, "
-    "soft_loan, bond, preferred_equity, common_equity, owner_loan, "
-    "owner_investment, grant, tax_credit"
-)
+_VEHICLE_TYPE_CHOICES = "debt, equity, forgivable_loan, grant"
 _CARRY_CHOICES = "interest_reserve, io_only, capitalized_interest, pi, accruing, none"
 
 def _build_sources(ws: Worksheet, capital_modules: list[CapitalModule]) -> None:
@@ -371,7 +367,7 @@ def _build_sources(ws: Worksheet, capital_modules: list[CapitalModule]) -> None:
         ws.append([
             key,
             cm.label,
-            _to_v(cm.funder_type),
+            _to_v(cm.vehicle_type),
             cm.stack_position,
             _to_v(src.get("amount")) or "",
             src.get("interest_rate_pct") or "",
@@ -386,7 +382,7 @@ def _build_sources(ws: Worksheet, capital_modules: list[CapitalModule]) -> None:
     _style_editable_sheet(ws, _SOURCES_COLS, _SOURCES_WIDTHS, _SOURCES_EDITABLE)
     _add_instructions(
         ws,
-        f"Type choices: {_FUNDER_TYPE_CHOICES}. "
+        f"Type choices: {_VEHICLE_TYPE_CHOICES}. "
         f"Carry choices: {_CARRY_CHOICES}. "
         "Auto-Size: Yes = amount computed by model at Compute time."
     )

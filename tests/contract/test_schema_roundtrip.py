@@ -176,12 +176,13 @@ ROUND_TRIP_CASES: list[tuple[type, dict]] = [
         {
             "scenario_id": MODEL_ID,
             "label": "Senior Loan",
-            "funder_type": "debt",
+            "vehicle_type": "debt",
             "stack_position": 1,
             "source": {
                 "amount": "850000",
                 "interest_rate_pct": 6.5,
                 "funding_date_trigger": "construction_start",
+                "hold_term_years": 10,
             },
             "carry": {
                 "carry_type": "io_only",
@@ -204,9 +205,9 @@ ROUND_TRIP_CASES: list[tuple[type, dict]] = [
             "id": CAPITAL_MODULE_ID,
             "scenario_id": MODEL_ID,
             "label": "Senior Loan",
-            "funder_type": "debt",
+            "vehicle_type": "debt",
             "stack_position": 1,
-            "source": {"amount": "850000", "interest_rate_pct": 6.5},
+            "source": {"amount": "850000", "interest_rate_pct": 6.5, "hold_term_years": 10},
             "carry": {"carry_type": "io_only", "payment_frequency": "monthly", "capitalized": False},
             "exit_terms": {"exit_type": "full_payoff", "trigger": "sale"},
             "active_phase_start": "acquisition",

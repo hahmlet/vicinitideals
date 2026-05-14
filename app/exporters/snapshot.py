@@ -484,7 +484,7 @@ _CARRY_SKIP: frozenset[str] = frozenset({
 })
 
 _CAP_MODULE_TOP_FIELDS: dict[str, tuple[str, str]] = {
-    "funder_type":        ("Source Type",       "text"),
+    "vehicle_type":       ("Source Type",       "text"),
     "active_phase_start": ("Active From Phase", "text"),
     "active_phase_end":   ("Active To Phase",   "text"),
     "stack_position":     ("Stack Position",    "number"),
@@ -532,7 +532,7 @@ _DRAW_SOURCE_FIELDS: dict[str, tuple[str, str]] = {
     "annual_interest_rate":  ("Interest Rate",           "percent"),
     "draw_every_n_months":   ("Draw Frequency (months)", "number"),
     "source_type":           ("Source Type",             "text"),
-    "funder_type":           ("Funder Type",             "text"),
+    "source_type":           ("Source Type",             "text"),
     "active_from_milestone": ("Active From",             "text"),
     "active_to_milestone":   ("Active To",               "text"),
 }
@@ -575,8 +575,8 @@ def _entity_name(row: dict, entity_type: str) -> str:
         user_label = (row.get("label") or "").strip()
         if user_label:
             return user_label
-        ft = str(row.get("funder_type") or "").replace("FunderType.", "")
-        return _FUNDER_TYPE_LABELS.get(ft, "Capital Source")
+        vt = str(row.get("vehicle_type") or "").replace("VehicleType.", "")
+        return _FUNDER_TYPE_LABELS.get(vt, "Capital Source")
     if entity_type == "Milestone":
         raw = str(row.get("milestone_type") or "").replace("MilestoneType.", "")
         ms_label = _MILESTONE_TYPE_LABELS.get(raw, raw.replace("_", " ").title())

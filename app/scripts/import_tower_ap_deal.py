@@ -18,7 +18,7 @@ from app.config import settings
 from app.engines.cashflow import compute_cash_flows
 from app.engines.waterfall import compute_waterfall
 from app.models.base import Base
-from app.models.capital import CapitalModule, FunderType, WaterfallResult, WaterfallTier, WaterfallTierType
+from app.models.capital import CapitalModule, WaterfallResult, WaterfallTier, WaterfallTierType
 from app.models.cashflow import CashFlow, CashFlowLineItem, OperationalOutputs
 from app.models.deal import (
     Deal,
@@ -551,7 +551,7 @@ def _normalize_capital_modules(
             entries.append(
                 {
                     "label": f"{canonical_name} Senior Loan",
-                    "funder_type": "senior_debt",
+                    "vehicle_type": "debt",
                     "stack_position": 1,
                     "source": {"amount": float(loan_amount), "interest_rate_pct": 6.0},
                     "carry": {"carry_type": "io_only", "payment_frequency": "monthly"},
@@ -563,7 +563,7 @@ def _normalize_capital_modules(
         entries.append(
             {
                 "label": f"{canonical_name} Common Equity",
-                "funder_type": "common_equity",
+                "vehicle_type": "equity",
                 "stack_position": max(len(entries) + 1, 2),
                 "source": {"pct_of_total_cost": 100},
                 "carry": {"carry_type": "none", "payment_frequency": "at_exit"},
@@ -577,7 +577,8 @@ def _normalize_capital_modules(
     for index, item in enumerate(entries, start=1):
         cleaned = {
             "label": str(item.get("label") or item.get("name") or f"{canonical_name} Capital {index}"),
-            "funder_type": _enum_value(FunderType, item.get("funder_type") or item.get("type"), FunderType.other),
+            "vehicle_type": str(item.get("vehicle_type") or "equity"),
+            "equity_role": item.get("equity_role"),
             "stack_position": int(_clean_value(item.get("stack_position") or index) or index),
             "source": _json_safe(item.get("source") or item.get("terms") or {}),
             "carry": _json_safe(item.get("carry") or {"carry_type": "none", "payment_frequency": "monthly"}),
@@ -608,7 +609,7 @@ def _normalize_waterfall_tiers(
             (
                 module["label"]
                 for module in capital_modules
-                if _normalize_key(module.get("funder_type")) in {"senior_debt", "mezzanine_debt", "bridge", "construction_loan", "soft_loan", "bond"}
+                if module.get("vehicle_type") == "debt"
             ),
             None,
         )

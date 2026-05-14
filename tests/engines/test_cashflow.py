@@ -41,9 +41,9 @@ from app.engines.cashflow import (
 # ---------------------------------------------------------------------------
 
 class _FakeModule:
-    def __init__(self, funder_type: str, hold_term_years: int | None = None,
+    def __init__(self, vehicle_type: str, hold_term_years: int | None = None,
                  amort_term_years: int | None = None) -> None:
-        self.funder_type = funder_type
+        self.vehicle_type = vehicle_type
         src: dict[str, object] = {}
         if hold_term_years is not None:
             src["hold_term_years"] = hold_term_years
@@ -165,7 +165,7 @@ def test_build_phase_plan_major_reno_sequence() -> None:
     phases = _build_phase_plan(
         "value_add",
         inputs,
-        capital_modules=[_FakeModule("permanent_debt", hold_term_years=2)],
+        capital_modules=[_FakeModule("debt", hold_term_years=2)],
     )
 
     assert [phase.period_type for phase in phases] == [
@@ -261,7 +261,7 @@ def test_build_phase_plan_falls_back_when_some_milestones_are_missing() -> None:
 @pytest.mark.unit
 def test_resolve_horizon_single_perm_loan() -> None:
     months, src = _resolve_horizon_months(
-        capital_modules=[_FakeModule("permanent_debt", hold_term_years=25)],
+        capital_modules=[_FakeModule("debt", hold_term_years=25)],
         orm_milestones=None,
     )
     assert months == 300
@@ -272,8 +272,8 @@ def test_resolve_horizon_single_perm_loan() -> None:
 def test_resolve_horizon_multi_perm_takes_max() -> None:
     months, src = _resolve_horizon_months(
         capital_modules=[
-            _FakeModule("permanent_debt", hold_term_years=10),
-            _FakeModule("permanent_debt", hold_term_years=25),
+            _FakeModule("debt", hold_term_years=10),
+            _FakeModule("debt", hold_term_years=25),
         ],
         orm_milestones=None,
     )
@@ -334,7 +334,7 @@ def test_build_phase_plan_horizon_from_perm_debt_when_no_milestone_dates() -> No
     phases = _build_phase_plan(
         "acquisition",
         inputs,
-        capital_modules=[_FakeModule("permanent_debt", hold_term_years=10)],
+        capital_modules=[_FakeModule("debt", hold_term_years=10)],
     )
     stabilized = next(p for p in phases if p.period_type == PeriodType.stabilized)
     assert stabilized.months == 120  # 10y × 12mo

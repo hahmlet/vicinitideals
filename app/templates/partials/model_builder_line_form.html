@@ -697,25 +697,19 @@ function ulTimingChanged(val) {
 
 {#- Shared macros and data ─────────────────────────────────────────────────── #}
 {%- set _FT_LABELS = {
+  'debt':'Debt','equity':'Equity','forgivable_loan':'Forgivable Loan','grant':'Grant',
+  {# Legacy funder_type labels preserved for display of old data #}
   'permanent_debt':'Permanent Debt','senior_debt':'Senior Debt','mezzanine_debt':'Mezzanine Debt',
   'bridge':'Bridge Loan','construction_loan':'Construction Loan',
   'acquisition_loan':'Acquisition Loan','pre_development_loan':'Pre-Development Loan',
   'soft_loan':'Soft Loan','bond':'Bond',
   'preferred_equity':'Preferred Equity','common_equity':'Common Equity',
   'owner_loan':'Owner Loan','owner_investment':'Owner Investment',
-  'grant':'Grant','tax_credit':'Tax Credit','other':'Other',
+  'tax_credit':'Tax Credit','other':'Other',
 } -%}
-{# permanent_debt: amortizing long-term loan — no exit trigger, exits at end of amortization #}
-{%- set _ALL_TYPES = ['permanent_debt','senior_debt','mezzanine_debt','bridge','construction_loan',
-                      'acquisition_loan','pre_development_loan','soft_loan','bond',
-                      'preferred_equity','common_equity','owner_loan','owner_investment',
-                      'grant','tax_credit'] -%}
-{%- set _SIMPLE_TYPES = ['grant','tax_credit'] -%}
-{%- set _NO_CARRY_TYPES = ['grant','tax_credit','owner_investment'] -%}
-{# Exit Vehicle applies to all debt types (owner_loan now treated as debt). #}
-{%- set _EXIT_VEHICLE_TYPES = ['permanent_debt','senior_debt','mezzanine_debt','bridge',
-                                'construction_loan','acquisition_loan','pre_development_loan',
-                                'soft_loan','bond','owner_loan'] -%}
+{%- set _ALL_TYPES = ['debt','equity','forgivable_loan','grant'] -%}
+{%- set _SIMPLE_TYPES = ['grant','forgivable_loan'] -%}
+{%- set _EXIT_VEHICLE_TYPES = ['debt'] -%}
 
 {%- macro exit_fields(et_val, trig_val, prepay_val) %}
 {%- set _trig_norm = trig_val | replace(' ','_') | lower -%}
@@ -815,9 +809,8 @@ function ulTimingChanged(val) {
 </div>
 {%- endmacro %}
 
-{%- macro carry_fields(pre_ops, ops, funder_type='') %}
-{%- set _amort_types = ['permanent_debt','bond','senior_debt'] -%}
-{%- set _ops_default = 'pi' if (funder_type in _amort_types and not ops.get('carry_type')) else ops.get('carry_type','none') -%}
+{%- macro carry_fields(pre_ops, ops, vehicle_type='') %}
+{%- set _ops_default = 'pi' if (vehicle_type == 'debt' and not ops.get('carry_type')) else ops.get('carry_type','none') -%}
 <div style="font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px">Pre-Operations Phase</div>
 <div class="form-row" style="margin-bottom:8px">
   <div class="form-field">
@@ -897,12 +890,11 @@ function ulTimingChanged(val) {
 {# ══════════════════════════════════════════════════════════════════════════════
    EDIT MODE — locked type, all relevant fields visible
    ════════════════════════════════════════════════════════════════════════════ #}
-{%- set _ft = existing.funder_type | string | replace('FunderType.','') -%}
-{%- set _is_perm_debt = (_ft == 'permanent_debt') -%}
-{# Exit Vehicle is shown for every debt instrument including permanent_debt.
-   The dropdown defaults to Maturity for perm; Sale is always a valid alt. #}
-{%- set _show_exit = _ft in _EXIT_VEHICLE_TYPES -%}
-{%- set _show_carry = _ft not in _NO_CARRY_TYPES -%}
+{%- set _ft = existing.vehicle_type | string | replace('VehicleType.','') -%}
+{%- set _is_perm_debt = (_ft == 'debt') -%}
+{# Exit Vehicle is shown for every debt instrument. #}
+{%- set _show_exit = (_ft == 'debt') -%}
+{%- set _show_carry = (_ft != 'grant') -%}
 {%- set c_phases = existing.carry.phases if (existing.carry and existing.carry.get('phases')) else [] -%}
 {%- set _flat_carry = existing.carry if (existing.carry and not existing.carry.get('phases')) else {} -%}
 {%- set c_pre_ops = (c_phases | selectattr('name','equalto','pre_operations') | list | first)
@@ -914,7 +906,8 @@ function ulTimingChanged(val) {
       hx-target="#module-panel-content" hx-swap="innerHTML"
       hx-on::after-request="if(event.detail.successful) closeDrawer('line-item-drawer')"
       style="padding-bottom:8px">
-  <input type="hidden" name="funder_type" value="{{ _ft }}">
+  <input type="hidden" name="vehicle_type" value="{{ _ft }}">
+  <input type="hidden" name="equity_role" value="{{ existing.equity_role or '' }}">
 
   {# Locked type pill #}
   <div style="margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--border)">
@@ -1285,7 +1278,7 @@ function ulTimingChanged(val) {
     </div>
     <div class="form-field" style="margin-bottom:12px">
       <label class="form-label">Type</label>
-      <select class="form-select" name="funder_type" id="sw-type" onchange="swTypeChanged(this.value)">
+      <select class="form-select" name="vehicle_type" id="sw-type" onchange="swTypeChanged(this.value)">
         {% for t in _ALL_TYPES %}
         <option value="{{ t }}">{{ _FT_LABELS.get(t, t | replace('_',' ') | title) }}</option>
         {% endfor %}
@@ -1604,11 +1597,11 @@ function ulTimingChanged(val) {
       if (el) el.value = val;
     }
 
-    if (d.funder_type) {
+    if (d.vehicle_type) {
       var typeEl = document.getElementById('sw-type');
       if (typeEl) {
-        typeEl.value = d.funder_type;
-        if (window.swTypeChanged) swTypeChanged(d.funder_type);
+        typeEl.value = d.vehicle_type;
+        if (window.swTypeChanged) swTypeChanged(d.vehicle_type);
       }
     }
     setVal('source_interest_rate', d.source_interest_rate);

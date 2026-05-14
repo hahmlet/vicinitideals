@@ -110,7 +110,6 @@ async def rollup_draws(
                 else None,
                 "label": ds.label,
                 "source_type": ds.source_type,
-                "funder_type": ds.funder_type,
                 "active_from_milestone": ds.active_from_milestone,
                 "active_to_milestone": ds.active_to_milestone,
                 "draw_every_n_months": ds.draw_every_n_months,
@@ -172,7 +171,7 @@ async def rollup_sources(
             {
                 "id": str(m.id),
                 "label": m.label,
-                "funder_type": str(m.funder_type).replace("FunderType.", ""),
+                "vehicle_type": str(m.vehicle_type or ""),
                 "stack_position": m.stack_position,
                 "total_principal": total,
                 "covered_project_ids": covered,

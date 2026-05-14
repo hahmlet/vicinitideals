@@ -2130,7 +2130,7 @@ async def deals_new_page(
         ).order_by(_SVC.label)
     )).scalars()) if user else []
     ctx["source_vehicles"] = [
-        {"id": str(v.id), "name": v.label, "funder_type": v.vehicle_type, "owner": v.scope}
+        {"id": str(v.id), "name": v.label, "vehicle_type": v.vehicle_type, "owner": v.scope}
         for v in _all_svs
     ]
     return templates.TemplateResponse(request, "deals_new.html", ctx)
@@ -5293,8 +5293,6 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
 
     # Per-module-per-phase annual debt service for the carrying costs table rows.
     # carrying_detail[module_id_str][phase_name] = annual_amount (float)
-    _DEBT_FT = {"senior_debt", "mezzanine_debt", "bridge", "soft_loan",
-                "construction_loan", "bond", "permanent_debt"}
 
     def _annual_carry_amt(source: dict, carry_type: str) -> float:
         amount = source.get("amount")
@@ -5334,8 +5332,7 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
 
     carrying_detail: dict[str, dict[str, float]] = {}
     for _cm in capital_modules:
-        _ft = str(_cm.funder_type).replace("FunderType.", "")
-        if _ft not in _DEBT_FT:
+        if str(getattr(_cm, "vehicle_type", "") or "").replace("VehicleType.", "") != "debt":
             continue
         _src = dict(_cm.source or {})
         _carry = _cm.carry or {}
@@ -5421,10 +5418,9 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
     uses_total_val = sum(float(u.amount or 0) for u in use_lines)
 
     # Equity ownership — computed from equity-type capital modules
-    _EQUITY_TYPES = {"preferred_equity", "common_equity", "owner_investment", "owner_loan"}
     equity_modules = [
         m for m in capital_modules
-        if str(m.funder_type).replace("FunderType.", "") in _EQUITY_TYPES
+        if str(getattr(m, "vehicle_type", "") or "").replace("VehicleType.", "") == "equity"
     ]
     _total_equity = sum(
         float((m.source or {}).get("amount", 0) or 0) for m in equity_modules
@@ -5589,11 +5585,10 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
         # Derive end-phase string from Exit Vehicle when possible — matches
         # the engine's `_resolve_active_end_rank` logic.  Falls back to the
         # legacy `active_phase_end` field when vehicle is unset.
-        from app.engines.cashflow import _EXIT_VEHICLE_APPLIES as _EVA_SET
         def _gantt_end_phase(_cm: object) -> str | None:
-            ft = str(getattr(_cm, "funder_type", "") or "").replace("FunderType.", "")
-            if ft not in _EVA_SET:
-                # Non-exit-vehicle: runs through the end of the hold (display-wise)
+            vt = str(getattr(_cm, "vehicle_type", "") or "").replace("VehicleType.", "")
+            if vt != "debt":
+                # Non-debt: runs through the end of the hold (display-wise)
                 return "divestment"
             et = getattr(_cm, "exit_terms", None) or {}
             saved = (et.get("vehicle") or "").strip() if isinstance(et, dict) else ""
@@ -5637,12 +5632,12 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
             else:
                 _width = max(100.0 - _left, 1.5)
                 _fade = True
-            _ft = str(_cm.funder_type).replace("FunderType.", "")
-            _label = (_cm.label or _ft).replace(" (auto)", "").strip()
+            _vt = str(getattr(_cm, "vehicle_type", "") or "").replace("VehicleType.", "")
+            _label = (_cm.label or _vt).replace(" (auto)", "").strip()
             _cm_gantt_rows.append({
                 "label": _label,
-                "source_type": "equity" if "equity" in _ft.lower() else "debt",
-                "funder_type": _ft,
+                "source_type": _vt if _vt in ("equity", "debt", "grant", "forgivable_loan") else "debt",
+                "vehicle_type": _vt,
                 "left_pct": _left,
                 "width_pct": _width,
                 "fade_right": _fade,
@@ -5938,15 +5933,11 @@ async def handle_form_create_or_update(
         # Validate: must be one of the literals OR a UUID of another module on
         # the same scenario. Fall back to "maturity" if invalid.
         #
-        # Non-exit-vehicle funder types (equity, grants, etc.) are forced to
+        # Non-debt vehicle types (equity, grants, etc.) are forced to
         # "maturity" as a no-op sentinel — their UI hides Exit Vehicle entirely.
-        _funder_type = form.get("funder_type", "senior_debt")
-        _EXIT_VEHICLE_APPLIES_UI = {
-            "permanent_debt", "senior_debt", "mezzanine_debt", "bridge",
-            "construction_loan", "acquisition_loan", "pre_development_loan",
-            "soft_loan", "bond", "owner_loan",
-        }
-        if _funder_type not in _EXIT_VEHICLE_APPLIES_UI:
+        _vehicle_type = form.get("vehicle_type", "debt")
+        _equity_role = (form.get("equity_role") or "").strip() or None
+        if _vehicle_type != "debt":
             _vehicle_value = "maturity"
         else:
             _vehicle_raw = (form.get("exit_vehicle") or "").strip()
@@ -6034,7 +6025,8 @@ async def handle_form_create_or_update(
 
         data = {
             "label": form.get("label", ""),
-            "funder_type": _funder_type,
+            "vehicle_type": _vehicle_type,
+            "equity_role": _equity_role,
             "stack_position": final_pos,
             "source": source_d,
             "carry": carry_d,
@@ -6062,7 +6054,7 @@ async def handle_form_create_or_update(
                     setattr(row, k, v)
                 # Mirror perm-debt hold_term_years / dscr_min to wizard staging
                 # so re-opening Deal Setup wizard shows the latest value.
-                if data["funder_type"] == "permanent_debt" and (
+                if data["vehicle_type"] == "debt" and (
                     "hold_term_years" in source_d or "dscr_min" in source_d
                 ):
                     _default_proj = (await session.execute(
@@ -6099,7 +6091,6 @@ async def handle_form_create_or_update(
                         _ds_row.active_to_offset_days = _ds_to_offset
                         _ds_row.draw_every_n_months = _ds_frequency
                         _ds_row.annual_interest_rate = Decimal(str(_ds_rate))
-                        _ds_row.funder_type = data["funder_type"]
                         _ds_row.label = data["label"]
                 except (ValueError, TypeError):
                     pass
@@ -6107,9 +6098,8 @@ async def handle_form_create_or_update(
             _cm_id = _uuid_mod.uuid4()
             cm = CapitalModule(id=_cm_id, scenario_id=model_id, **data)
             session.add(cm)
-            # Auto-create linked DrawSource.  Non-exit-vehicle funder types
-            # map to source_type="equity" (single lump-sum draw in the engine).
-            _src_type = "debt" if data["funder_type"] in _EXIT_VEHICLE_APPLIES_UI else "equity"
+            # Auto-create linked DrawSource.  Non-debt vehicle types map to source_type="equity".
+            _src_type = "debt" if data["vehicle_type"] == "debt" else "equity"
             # Determine sort order for new DrawSource
             _max_sort = (await session.execute(
                 select(func.max(DrawSource.sort_order)).where(DrawSource.scenario_id == model_id)
@@ -6125,7 +6115,6 @@ async def handle_form_create_or_update(
                 active_to_milestone=_ds_to_ms or "maturity",
                 active_from_offset_days=_ds_from_offset,
                 active_to_offset_days=_ds_to_offset,
-                funder_type=data["funder_type"],
                 capital_module_id=_cm_id,
             )
             session.add(ds)
@@ -6662,7 +6651,8 @@ async def create_deal_copy(
         new_cm = CapitalModule(
             scenario_id=new_deal.id,
             label=cm.label,
-            funder_type=cm.funder_type,
+            vehicle_type=cm.vehicle_type,
+            equity_role=cm.equity_role,
             stack_position=cm.stack_position,
             source=cm.source,
             carry=cm.carry,
@@ -6937,7 +6927,8 @@ async def create_deal_project(
             _new_mod = _CM_create(
                 scenario_id=deal_id,
                 label=_m.label,
-                funder_type=_m.funder_type,
+                vehicle_type=_m.vehicle_type,
+                equity_role=_m.equity_role,
                 stack_position=_max_pos,
                 source=_src_copy,
                 carry=dict(_m.carry or {}),
@@ -7451,8 +7442,7 @@ async def save_model_settings(
                     select(CapitalModule).where(CapitalModule.scenario_id == model_id)
                 )).scalars())
                 for _cm in _perm_mods:
-                    _ft = str(_cm.funder_type).replace("FunderType.", "")
-                    if _ft != "permanent_debt":
+                    if str(getattr(_cm, "vehicle_type", "") or "").replace("VehicleType.", "") != "debt":
                         continue
                     _src = dict(_cm.source or {})
                     _src["hold_term_years"] = hold_int
@@ -7481,8 +7471,7 @@ async def save_model_settings(
                     select(CapitalModule).where(CapitalModule.scenario_id == model_id)
                 )).scalars())
                 for _cm in _dscr_mods:
-                    _ft = str(_cm.funder_type).replace("FunderType.", "")
-                    if _ft != "permanent_debt":
+                    if str(getattr(_cm, "vehicle_type", "") or "").replace("VehicleType.", "") != "debt":
                         continue
                     _src = dict(_cm.source or {})
                     _src["dscr_min"] = _dscr_val
@@ -7526,7 +7515,8 @@ async def save_model_settings(
                     continue
                 src = dict(src)
                 carry = dict(cm.carry or {})
-                ft = str(cm.funder_type).replace("FunderType.", "")
+                from app.engines.cashflow import _loan_subtype_from_module as _ls_fn
+                ft = _ls_fn(cm)
                 if ft in ("bond",) and perm_rate_pct:
                     src["interest_rate_pct"] = float(perm_rate_pct)
                     if "phases" in carry:
@@ -7803,7 +7793,7 @@ async def deal_setup_wizard_get(
         _perm = (await session.execute(
             select(CapitalModule).where(
                 CapitalModule.scenario_id == model_id,
-                CapitalModule.funder_type == "permanent_debt",
+                CapitalModule.vehicle_type == "debt",
             ).limit(1)
         )).scalar_one_or_none()
         if _perm is not None and isinstance(_perm.source, dict):
@@ -7859,7 +7849,7 @@ async def deal_setup_wizard_step(
     form = await request.form()
     step = int(form.get("step", 1))
     # Field-level validation errors collected during the step handler.
-    # Keyed by funder_type (or "_form" for cross-cutting errors).  When
+    # Keyed by vehicle_type (or "_form" for cross-cutting errors).  When
     # non-empty, the same step is re-rendered instead of advancing.
     wizard_errors: dict[str, str] = {}
 
@@ -8114,7 +8104,7 @@ async def deal_setup_wizard_complete(
     session: DBSession,
 ) -> Response:
     """Finalize setup: mark complete and auto-create the primary debt CapitalModule(s)."""
-    from app.models.capital import CapitalModule, CapitalModuleProject, FunderType
+    from app.models.capital import CapitalModule, CapitalModuleProject
 
     model = await session.get(DealModel, model_id)
     if model is None:
@@ -8152,7 +8142,7 @@ async def deal_setup_wizard_complete(
         )
     )).scalars())
     # Snapshot share state so wizard re-runs don't silently strip junctions
-    # added by Add Project. Map funder_type → set of non-default project IDs
+    # added by Add Project. Map vehicle_type → set of non-default project IDs
     # that had a junction on the OLD auto module. After recreation we restore
     # those junctions on the matching new module so shared auto-debt persists.
     _prior_auto_shares: dict[str, set[UUID]] = {}
@@ -8162,7 +8152,7 @@ async def deal_setup_wizard_complete(
                 CapitalModuleProject.capital_module_id.in_([cm.id for cm in existing_auto])
             )
         )).scalars())
-        _ft_by_mod = {cm.id: str(cm.funder_type).replace("FunderType.", "") for cm in existing_auto}
+        _ft_by_mod = {cm.id: str(getattr(cm, "vehicle_type", "") or "").replace("VehicleType.", "") for cm in existing_auto}
         for _j in _prior_junctions:
             if _j.project_id == default_project.id:
                 continue
@@ -8196,20 +8186,10 @@ async def deal_setup_wizard_complete(
         if _sv is not None:
             _sv_module_created = True
             _sv_label = f"{_sv.label} (auto)"
-            # Map vehicle_type → legacy funder_type for backward compat with existing engine code.
-            _sv_ft_map = {
-                "debt": "senior_debt", "forgivable_loan": "soft_loan",
-                "grant": "grant", "equity": "common_equity" if _sv.equity_role == "gp" else "preferred_equity",
-            }
-            _sv_ft_str = _sv_ft_map.get(_sv.vehicle_type or "", "other")
-            try:
-                _sv_ft = FunderType(_sv_ft_str)
-            except ValueError:
-                _sv_ft = FunderType.other
+            _sv_ft_str = _sv.vehicle_type or "debt"  # for _cc_preload_modules key
             session.add(CapitalModule(
                 scenario_id=model_id,
                 label=_sv_label,
-                funder_type=_sv_ft,
                 vehicle_type=_sv.vehicle_type,
                 equity_role=_sv.equity_role,
                 stack_position=1,
@@ -8221,7 +8201,7 @@ async def deal_setup_wizard_complete(
                 source_vehicle_id=model.source_vehicle_id,
             ))
             _cc_preload_modules.append({
-                "funder_type": _sv_ft_str,
+                "loan_subtype": _sv_ft_str,
                 "label": _sv_label,
                 "active_phase_start": _sv.active_phase_start or "acquisition",
             })
@@ -8233,13 +8213,10 @@ async def deal_setup_wizard_complete(
         # wizard steps were skipped (e.g. re-running on a backfilled deal).
         dmc = inputs.debt_milestone_config or {}
 
-        _FT_MAP: dict[str, FunderType] = {
-            "pre_development_loan": FunderType.pre_development_loan,
-            "acquisition_loan":     FunderType.acquisition_loan,
-            "construction_loan":    FunderType.construction_loan,
-            "bridge":               FunderType.bridge,
-            "permanent_debt":       FunderType.permanent_debt,
-            "construction_to_perm": FunderType.bond,
+        # Valid debt sub-type keys (used to validate/skip unknown entries).
+        _FT_MAP: set[str] = {
+            "pre_development_loan", "acquisition_loan", "construction_loan",
+            "bridge", "permanent_debt", "construction_to_perm",
         }
         _LABEL: dict[str, str] = {
             "pre_development_loan": "Pre-Development Loan",
@@ -8315,12 +8292,11 @@ async def deal_setup_wizard_complete(
         # ── Pass 1: pre-generate UUIDs so Exit Vehicle can reference siblings
         # by id.  Collect per-debt config so Pass 2 can resolve vehicle and
         # derive active_phase_end without rescanning the form.
-        _picked = {ft_str for ft_str in debt_types if _FT_MAP.get(ft_str) is not None}
+        _picked = {ft_str for ft_str in debt_types if ft_str in _FT_MAP}
         _module_plan: list[dict] = []
         _uuid_by_debt_type: dict[str, "_uuid_mod.UUID"] = {}
         for pos, ft_str in enumerate(debt_types, start=1):
-            ft = _FT_MAP.get(ft_str)
-            if ft is None:
+            if ft_str not in _FT_MAP:
                 continue
             cfg   = dmc.get(ft_str, {})
             terms = dt.get(ft_str, {})
@@ -8353,7 +8329,6 @@ async def deal_setup_wizard_complete(
             _module_plan.append({
                 "pos": pos,
                 "ft_str": ft_str,
-                "ft": ft,
                 "rate": rate,
                 "loan_type": loan_type,
                 "amort_years": amort_years,
@@ -8366,7 +8341,6 @@ async def deal_setup_wizard_complete(
         # and derived active_phase_end.
         for plan in _module_plan:
             ft_str      = plan["ft_str"]
-            ft          = plan["ft"]
             rate        = plan["rate"]
             loan_type   = plan["loan_type"]
             amort_years = plan["amort_years"]
@@ -8440,7 +8414,7 @@ async def deal_setup_wizard_complete(
                 id=cm_id,
                 scenario_id=model_id,
                 label=_cm_label_for_cc,
-                funder_type=ft,
+                vehicle_type="debt",
                 stack_position=pos,
                 source=_source_dict,
                 carry=carry,
@@ -8449,7 +8423,7 @@ async def deal_setup_wizard_complete(
                 active_phase_end=derived_end,
             ))
             _cc_preload_modules.append({
-                "funder_type": ft_str,
+                "loan_subtype": ft_str,
                 "label": _cm_label_for_cc,
                 "active_phase_start": active_from,
             })
@@ -8463,7 +8437,7 @@ async def deal_setup_wizard_complete(
             session.add(CapitalModule(
                 scenario_id=model_id,
                 label="Bond / Construction-to-Perm (auto)",
-                funder_type=FunderType.bond,
+                vehicle_type="debt",
                 stack_position=1,
                 source={"auto_size": True, "interest_rate_pct": perm_rate},
                 carry={
@@ -8484,7 +8458,7 @@ async def deal_setup_wizard_complete(
             session.add(CapitalModule(
                 scenario_id=model_id,
                 label="Construction Loan (auto)",
-                funder_type=FunderType.construction_loan,
+                vehicle_type="debt",
                 stack_position=1,
                 source={"auto_size": True, "interest_rate_pct": construction_rate},
                 carry={"carry_type": "io_only", "io_rate_pct": construction_rate},
@@ -8495,7 +8469,7 @@ async def deal_setup_wizard_complete(
             session.add(CapitalModule(
                 scenario_id=model_id,
                 label="Permanent Debt (auto)",
-                funder_type=FunderType.permanent_debt,
+                vehicle_type="debt",
                 stack_position=2,
                 source={"auto_size": True, "interest_rate_pct": perm_rate},
                 carry={"carry_type": "pi", "amort_term_years": amort_years, "io_rate_pct": perm_rate},
@@ -8510,7 +8484,7 @@ async def deal_setup_wizard_complete(
             session.add(CapitalModule(
                 scenario_id=model_id,
                 label="Permanent Debt (auto)",
-                funder_type=FunderType.permanent_debt,
+                vehicle_type="debt",
                 stack_position=1,
                 source={"auto_size": True, "interest_rate_pct": perm_rate},
                 carry={"carry_type": "pi", "amort_term_years": amort_years, "io_rate_pct": perm_rate},
@@ -8632,8 +8606,8 @@ async def deal_setup_wizard_complete(
             ))
         # Restore prior shared-with-other-projects junctions for this funder
         # type so wizard re-runs preserve coverage added via Add Project.
-        _mod_ft = str(_mod.funder_type).replace("FunderType.", "")
-        for _pid in _prior_auto_shares.get(_mod_ft, set()):
+        _mod_vt = str(getattr(_mod, "vehicle_type", "") or "").replace("VehicleType.", "")
+        for _pid in _prior_auto_shares.get(_mod_vt, set()):
             session.add(CapitalModuleProject(
                 capital_module_id=_mod.id,
                 project_id=_pid,
@@ -8664,7 +8638,7 @@ async def deal_setup_wizard_complete(
         "exit": "exit",                    "divestment": "exit",
     }
     for _cc_mod in _cc_preload_modules:
-        _cc_ft_str = _cc_mod["funder_type"]
+        _cc_ft_str = _cc_mod["loan_subtype"]
         # Map construction_to_perm → bond for cost lookup
         _cc_ft_key = "bond" if _cc_ft_str == "construction_to_perm" else _cc_ft_str
         _cost_names = _CC_PRELOAD_COSTS.get(_cc_ft_key)
@@ -9139,8 +9113,8 @@ async def model_builder(
                     if pid != active_project_id and pid in _proj_name_by_id
                 ]
                 if _other_names:
-                    _ft_str = str(_mod.funder_type).replace("FunderType.", "")
-                    wizard_share_info[_ft_str] = _other_names
+                    _vt_str = str(getattr(_mod, "vehicle_type", "") or "").replace("VehicleType.", "")
+                    wizard_share_info[_vt_str] = _other_names
 
     # Draw schedule data — loaded for draw_schedule and cashflow modules
     draw_schedule_data: dict = {}
@@ -9755,8 +9729,7 @@ def _compute_calc_status(data: dict) -> dict:
     # DSCR floor: read from the first perm-debt CapitalModule's source.dscr_min;
     # falls back to 1.20 if perm debt exists but value is unset.
     for _cm in capital_modules:
-        _ft = str(getattr(_cm, "funder_type", "") or "").replace("FunderType.", "")
-        if _ft != "permanent_debt":
+        if str(getattr(_cm, "vehicle_type", "") or "").replace("VehicleType.", "") != "debt":
             continue
         _src = getattr(_cm, "source", None) or {}
         try:
@@ -9810,9 +9783,7 @@ def _compute_calc_status(data: dict) -> dict:
         src = m.source or {}
         if src.get("is_bridge"):
             continue
-        ft = str(getattr(m, "funder_type", "")).replace("FunderType.", "")
-        if ft in {"permanent_debt", "senior_debt", "mezzanine_debt", "construction_loan",
-                  "acquisition_loan", "pre_development_loan", "bond", "bridge", "soft_loan"}:
+        if str(getattr(m, "vehicle_type", "") or "").replace("VehicleType.", "") == "debt":
             _jam = _junction_amts.get(str(m.id))
             amt = _jam if _jam is not None else src.get("amount")
             if amt:
@@ -11326,11 +11297,8 @@ async def model_builder_line_form(
     exit_vehicle_options: list[dict] = []
     show_exit_vehicle = False
     show_active_window = False
-    _EXIT_VEHICLE_APPLIES_UI = {
-        "permanent_debt", "senior_debt", "mezzanine_debt", "bridge",
-        "construction_loan", "acquisition_loan", "pre_development_loan",
-        "soft_loan", "bond", "owner_loan",
-    }
+    # Exit Vehicle applies to all debt modules (vehicle_type == "debt").
+    _EXIT_VEHICLE_APPLIES_UI: set[str] = set()  # unused — replaced by vehicle_type check below
     if type in ("capital_modules", "sources"):
         from app.engines.cashflow import (
             _APS_TO_RANK as _EXIT_APS_RANK,
@@ -11404,15 +11372,14 @@ async def model_builder_line_form(
         ):
             exit_vehicle_options.append(_opt(str(m.id), m.label or "(unlabeled)"))
 
-        # Gate Exit Vehicle + draw cadence UI on funder type.  Non-exit-vehicle
-        # funder types (equity, grants, tax credits, owner_investment) don't
-        # have a repayment concept — their form hides both.
-        _existing_ft = ""
-        if existing is not None and getattr(existing, "funder_type", None) is not None:
-            _existing_ft = str(existing.funder_type).replace("FunderType.", "")
-        # New modules default to senior_debt (see line form template default).
-        _effective_ft = _existing_ft or "senior_debt"
-        show_exit_vehicle = _effective_ft in _EXIT_VEHICLE_APPLIES_UI
+        # Gate Exit Vehicle + draw cadence UI on vehicle type.  Non-debt vehicle types
+        # (equity, grants, forgivable loans) don't have a repayment concept — form hides them.
+        _existing_vt = ""
+        if existing is not None:
+            _existing_vt = str(getattr(existing, "vehicle_type", "") or "").replace("VehicleType.", "")
+        # New modules default to debt (see line form template default).
+        _effective_vt = _existing_vt or "debt"
+        show_exit_vehicle = _effective_vt == "debt"
         show_active_window = show_exit_vehicle
 
     # Source vehicle presets for the wizard dropdown (only shown on add, not edit)
@@ -11431,7 +11398,6 @@ async def model_builder_line_form(
                 {
                     "id": str(v.id),
                     "name": v.label,
-                    "funder_type": v.vehicle_type,
                     "vehicle_type": v.vehicle_type,
                     "equity_role": v.equity_role or "",
                     "owner": v.scope,
@@ -11456,7 +11422,7 @@ async def model_builder_line_form(
         "exit_vehicle_options": exit_vehicle_options,
         "show_exit_vehicle": show_exit_vehicle,
         "show_active_window": show_active_window,
-        "exit_vehicle_applies": sorted(_EXIT_VEHICLE_APPLIES_UI),
+        "exit_vehicle_applies": [],  # deprecated — templates now use vehicle_type == "debt" check
         "opex_categories": STANDARD_OPEX_CATEGORIES,
         "default_category": (getattr(existing, "cost_category", None) if existing else None) or category,
         "use_cost_categories": USE_COST_CATEGORIES,
@@ -11514,7 +11480,8 @@ async def source_vehicle_prefill(
     return JSONResponse({
         "vehicle_name": vehicle.name,
         "owner": owner,
-        "funder_type": vehicle.funder_type,
+        "vehicle_type": vehicle.vehicle_type,
+        "equity_role": vehicle.equity_role,
         "source_interest_rate": source.get("interest_rate_pct"),
         "ltv_pct": source.get("ltv_pct"),
         "amort_term_years": source.get("amort_term_years"),
@@ -12461,12 +12428,6 @@ async def _load_draw_schedule_ctx(
             "operation_stabilized": "operation_stabilized",
             "divestment": "divestment",
         }
-        _debt_types = {
-            "senior_debt", "mezzanine_debt", "bridge", "construction_loan",
-            "soft_loan", "bond", "permanent_debt",
-            "acquisition_loan", "pre_development_loan", "owner_loan",
-        }
-
         for i, cm in enumerate(capital_modules):
             raw_from = cm.active_phase_start or "close"
             raw_to = cm.active_phase_end or "operation_stabilized"
@@ -12483,8 +12444,7 @@ async def _load_draw_schedule_ctx(
             rate_pct = src.get("interest_rate_pct") or 0.0
             annual_rate = Decimal(str(rate_pct)) / Decimal("100")
 
-            funder_raw = str(cm.funder_type).replace("FunderType.", "")
-            source_type = "debt" if funder_raw in _debt_types else "equity"
+            source_type = "debt" if str(getattr(cm, "vehicle_type", "") or "").replace("VehicleType.", "") == "debt" else "equity"
             draw_freq = 2 if source_type == "debt" else 1
 
             ds = DrawSource(
