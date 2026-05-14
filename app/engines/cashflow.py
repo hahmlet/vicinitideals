@@ -38,6 +38,7 @@ from app.models.manifest import WorkflowRunManifest
 from app.engines.draw_engine import compute_period_draw_inflow
 from app.engines.interest import period_interest_months
 from app.engines.newton_solve import solve_principal_for_dscr
+from types import SimpleNamespace as _SN
 from app.engines.source_routing import route_use_to_sources as _route_use_to_sources
 
 # Phase-plan + per-loan windowing + per-period structural helpers extracted
@@ -578,6 +579,13 @@ async def _compute_project_cashflow(
                     if month_index == 0
                     else DrawAllocationReason.period_funding
                 )
+                # Primary funding module: highest-priority eligible module for this
+                # period (permissive — all modules eligible until eligibility configured).
+                _routed = _route_use_to_sources(
+                    _SN(eligible_module_ids=[], cost_category=""),
+                    capital_modules,
+                )
+                _primary_mod_id = _routed[0].id if _routed else None
                 draw_event_rows.append(CapitalDrawEvent(
                     scenario_id=deal_uuid,
                     project_id=project.id,
@@ -585,6 +593,7 @@ async def _compute_project_cashflow(
                     period_type=phase.period_type.value,
                     amount=_q(_draw),
                     allocation_reason=_reason,
+                    module_id=_primary_mod_id,
                 ))
 
             # Cumulative cash balance:

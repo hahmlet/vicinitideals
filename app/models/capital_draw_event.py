@@ -50,6 +50,12 @@ class CapitalDrawEvent(Base):
     allocation_reason: Mapped[str] = mapped_column(
         String(40), nullable=False, default=DrawAllocationReason.period_funding
     )
+    module_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("capital_modules.id", ondelete="SET NULL"),
+        nullable=True,
+        index=True,
+    )
     use_line_label: Mapped[str | None] = mapped_column(String(255), nullable=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
