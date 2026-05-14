@@ -1,0 +1,142 @@
+{# vehicle_form.html — inline create or edit form for a SourceVehicle.
+   When vehicle is set: renders as an edit form (POST /settings/vehicles/{id}).
+   When vehicle is not set: renders as a create form (POST /settings/vehicles).
+   Caller sets _scope_override to "user" for user-scoped vehicles; defaults to "org".
+#}
+{%- set _is_edit = vehicle is defined and vehicle is not none -%}
+{%- set _action = "/settings/vehicles/" ~ vehicle.id if _is_edit else "/settings/vehicles" -%}
+{%- set _scope = (vehicle.scope if _is_edit else (_scope_override if _scope_override is defined else "org")) -%}
+
+<form method="post" action="{{ _action }}" style="display:grid;gap:12px">
+  <input type="hidden" name="scope" id="{{ 'new-vehicle-scope' if not _is_edit else '' }}" value="{{ _scope }}">
+  <input type="hidden" name="new-user-vehicle-scope" id="new-user-vehicle-scope" value="{{ _scope }}">
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+    {# Label #}
+    <div>
+      <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:4px">Label *</label>
+      <input type="text" name="label" value="{{ vehicle.label if _is_edit else '' }}"
+             placeholder="e.g. Senior Debt, LP Equity"
+             style="width:100%;padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:13px;box-sizing:border-box"
+             required>
+    </div>
+
+    {# Vehicle type #}
+    <div>
+      <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:4px">Type *</label>
+      <select name="vehicle_type" id="vf-type-{{ 'edit-' ~ vehicle.id if _is_edit else 'new' }}"
+              onchange="vfToggleFields(this)"
+              style="width:100%;padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:13px">
+        <option value="equity" {{ 'selected' if (_is_edit and vehicle.vehicle_type == 'equity') else '' }}>Equity</option>
+        <option value="debt" {{ 'selected' if (_is_edit and vehicle.vehicle_type == 'debt') else '' }}>Debt</option>
+        <option value="forgivable_loan" {{ 'selected' if (_is_edit and vehicle.vehicle_type == 'forgivable_loan') else '' }}>Forgivable Loan</option>
+        <option value="grant" {{ 'selected' if (_is_edit and vehicle.vehicle_type == 'grant') else '' }}>Grant</option>
+      </select>
+    </div>
+
+    {# Draw cadence #}
+    <div>
+      <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:4px">Draw Cadence</label>
+      <select name="draw_cadence"
+              style="width:100%;padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:13px">
+        <option value="monthly" {{ 'selected' if (not _is_edit or vehicle.draw_cadence == 'monthly') else '' }}>Monthly</option>
+        <option value="quarterly" {{ 'selected' if (_is_edit and vehicle.draw_cadence == 'quarterly') else '' }}>Quarterly</option>
+        <option value="lump_at_trigger" {{ 'selected' if (_is_edit and vehicle.draw_cadence == 'lump_at_trigger') else '' }}>Lump at Trigger</option>
+        <option value="residual_gap_filler" {{ 'selected' if (_is_edit and vehicle.draw_cadence == 'residual_gap_filler') else '' }}>Residual Gap Filler</option>
+      </select>
+    </div>
+  </div>
+
+  {# Equity-only fields #}
+  <div class="vf-equity-fields" style="display:{{ 'grid' if (not _is_edit or vehicle.vehicle_type == 'equity') else 'none' }};grid-template-columns:1fr 1fr;gap:12px">
+    <div>
+      <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:4px">Equity Role *</label>
+      <select name="equity_role"
+              style="width:100%;padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:13px">
+        <option value="gp" {{ 'selected' if (_is_edit and vehicle.equity_role == 'gp') else '' }}>GP (General Partner)</option>
+        <option value="lp" {{ 'selected' if (_is_edit and vehicle.equity_role == 'lp') else '' }}>LP (Limited Partner)</option>
+      </select>
+    </div>
+    <div>
+      <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:4px">Pref Return %</label>
+      <input type="number" name="pref_rate_pct" step="0.01" min="0"
+             value="{{ vehicle.pref_rate_pct if (_is_edit and vehicle.pref_rate_pct) else '' }}"
+             placeholder="e.g. 8.0"
+             style="width:100%;padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:13px;box-sizing:border-box">
+    </div>
+  </div>
+
+  {# Debt / forgivable_loan fields #}
+  <div class="vf-debt-fields" style="display:{{ 'grid' if (_is_edit and vehicle.vehicle_type in ('debt', 'forgivable_loan')) else 'none' }};grid-template-columns:1fr 1fr 1fr 1fr;gap:12px">
+    <div>
+      <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:4px">Interest Rate %</label>
+      <input type="number" name="interest_rate_pct" step="0.01" min="0"
+             value="{{ vehicle.interest_rate_pct if (_is_edit and vehicle.interest_rate_pct) else '' }}"
+             placeholder="e.g. 6.5"
+             style="width:100%;padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:13px;box-sizing:border-box">
+    </div>
+    <div>
+      <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:4px">Carry Type</label>
+      <select name="carry_type"
+              style="width:100%;padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:13px">
+        <option value="">— none —</option>
+        <option value="io_only" {{ 'selected' if (_is_edit and vehicle.carry_type == 'io_only') else '' }}>IO Only</option>
+        <option value="interest_reserve" {{ 'selected' if (_is_edit and vehicle.carry_type == 'interest_reserve') else '' }}>Interest Reserve</option>
+        <option value="capitalized_interest" {{ 'selected' if (_is_edit and vehicle.carry_type == 'capitalized_interest') else '' }}>Capitalized Interest</option>
+        <option value="pi" {{ 'selected' if (_is_edit and vehicle.carry_type == 'pi') else '' }}>P&amp;I</option>
+      </select>
+    </div>
+    <div>
+      <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:4px">IO Period (mo)</label>
+      <input type="number" name="io_period_months" step="1" min="0"
+             value="{{ vehicle.io_period_months if (_is_edit and vehicle.io_period_months) else '' }}"
+             placeholder="e.g. 24"
+             style="width:100%;padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:13px;box-sizing:border-box">
+    </div>
+    <div>
+      <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:4px">Amort Term (yr)</label>
+      <input type="number" name="amort_term_years" step="1" min="0"
+             value="{{ vehicle.amort_term_years if (_is_edit and vehicle.amort_term_years) else '' }}"
+             placeholder="e.g. 30"
+             style="width:100%;padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:13px;box-sizing:border-box">
+    </div>
+  </div>
+
+  {# Day-count convention (debt/forgivable only) #}
+  <div class="vf-debt-fields" style="display:{{ 'grid' if (_is_edit and vehicle.vehicle_type in ('debt', 'forgivable_loan')) else 'none' }};grid-template-columns:1fr 3fr;gap:12px">
+    <div>
+      <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:4px">Day Count</label>
+      <select name="day_count_convention"
+              style="width:100%;padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:13px">
+        <option value="actual_360" {{ 'selected' if (not _is_edit or vehicle.day_count_convention == 'actual_360') else '' }}>Actual/360 (default)</option>
+        <option value="actual_365" {{ 'selected' if (_is_edit and vehicle.day_count_convention == 'actual_365') else '' }}>Actual/365</option>
+        <option value="30_360" {{ 'selected' if (_is_edit and vehicle.day_count_convention == '30_360') else '' }}>30/360</option>
+      </select>
+    </div>
+    <div></div>
+  </div>
+
+  {# Actions #}
+  <div style="display:flex;gap:8px;margin-top:4px">
+    <button type="submit" class="btn btn-primary" style="font-size:13px;padding:7px 18px">
+      {{ 'Save Changes' if _is_edit else 'Create Vehicle' }}
+    </button>
+    <button type="button" class="btn btn-secondary" style="font-size:13px"
+            onclick="this.closest('form').closest('div[id]').style.display='none';document.querySelector('.btn.btn-primary[onclick*=new-vehicle]') && (document.querySelector('.btn.btn-primary[onclick*=new-vehicle]').style.display='')">
+      Cancel
+    </button>
+  </div>
+</form>
+
+<script>
+function vfToggleFields(sel) {
+  var form = sel.closest('form');
+  var vtype = sel.value;
+  form.querySelectorAll('.vf-equity-fields').forEach(function(el) {
+    el.style.display = vtype === 'equity' ? 'grid' : 'none';
+  });
+  form.querySelectorAll('.vf-debt-fields').forEach(function(el) {
+    el.style.display = (vtype === 'debt' || vtype === 'forgivable_loan') ? 'grid' : 'none';
+  });
+}
+</script>

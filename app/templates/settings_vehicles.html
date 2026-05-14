@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% block title %}Source Vehicles — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div style="flex:1;overflow-y:auto;min-height:0">
+<div class="page-header" style="display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid var(--border);background:var(--surface)">
+  <div>
+    <div class="page-title" style="font-size:20px;font-weight:700;color:var(--text)">Source Vehicles</div>
+    <div style="font-size:12px;color:var(--text-muted);margin-top:2px">Reusable capital source presets — equity, debt, forgivable loans, and grants</div>
+  </div>
+  <a href="/deals" class="btn btn-secondary">Back to Deals</a>
+</div>
+
+<div style="padding:24px;display:grid;gap:20px;max-width:900px">
+
+  {# ── Org Vehicles ──────────────────────────────────────────────────────── #}
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+    <div style="padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)">
+      <div style="font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em">Organization Vehicles</div>
+      <button class="btn btn-sm btn-primary" style="font-size:12px"
+              onclick="document.getElementById('new-vehicle-form').style.display='block';document.getElementById('new-vehicle-scope').value='org';this.style.display='none'">
+        + Add Vehicle
+      </button>
+    </div>
+
+    {# Inline new vehicle form (hidden until add button clicked) #}
+    <div id="new-vehicle-form" style="display:none;padding:16px 20px;background:var(--surface-alt);border-bottom:1px solid var(--border)">
+      {% include "partials/vehicle_form.html" %}
+    </div>
+
+    {% if org_vehicles %}
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead>
+        <tr style="background:var(--surface-alt)">
+          <th style="text-align:left;padding:10px 16px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text-muted)">Label</th>
+          <th style="text-align:left;padding:10px 16px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text-muted)">Type</th>
+          <th style="text-align:left;padding:10px 16px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text-muted)">Draw Cadence</th>
+          <th style="text-align:right;padding:10px 16px;border-bottom:1px solid var(--border)"></th>
+        </tr>
+      </thead>
+      <tbody id="org-vehicles-tbody">
+        {% for v in org_vehicles %}
+        <tr id="vehicle-row-{{ v.id }}" style="border-bottom:1px solid var(--border)">
+          <td style="padding:10px 16px;font-weight:500;color:var(--text)">{{ v.label }}</td>
+          <td style="padding:10px 16px">
+            {%- if v.vehicle_type == 'equity' -%}{%- set _vc = '#22c55e' -%}
+            {%- elif v.vehicle_type == 'debt' -%}{%- set _vc = '#f59e0b' -%}
+            {%- elif v.vehicle_type == 'forgivable_loan' -%}{%- set _vc = '#a855f7' -%}
+            {%- else -%}{%- set _vc = '#14b8a6' -%}
+            {%- endif -%}
+            <span style="font-size:11px;font-weight:600;color:{{ _vc }}">{{ vehicle_type_labels.get(v.vehicle_type, v.vehicle_type) | title }}</span>
+            {% if v.equity_role %}<span style="font-size:10px;color:var(--text-muted);margin-left:4px">· {{ v.equity_role | upper }}</span>{% endif %}
+          </td>
+          <td style="padding:10px 16px;color:var(--text-muted);font-size:12px">{{ v.draw_cadence | replace('_', ' ') | title }}</td>
+          <td style="padding:10px 16px;text-align:right;display:flex;gap:6px;justify-content:flex-end">
+            <button class="btn btn-sm btn-secondary" style="font-size:11px"
+                    hx-get="/settings/vehicles/{{ v.id }}/form"
+                    hx-target="#edit-form-{{ v.id }}"
+                    hx-swap="innerHTML"
+                    onclick="document.getElementById('edit-form-{{ v.id }}').style.display='block'">
+              Edit
+            </button>
+            <button class="btn btn-sm btn-ghost" style="font-size:11px;color:var(--color-red,#ef4444)"
+                    hx-delete="/settings/vehicles/{{ v.id }}"
+                    hx-confirm="Delete '{{ v.label }}'?"
+                    hx-target="#vehicle-row-{{ v.id }}"
+                    hx-swap="outerHTML">
+              Delete
+            </button>
+          </td>
+        </tr>
+        <tr id="edit-form-{{ v.id }}" style="display:none;background:var(--surface-alt)">
+          <td colspan="4" style="padding:0"></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div style="padding:32px 20px;text-align:center;color:var(--text-muted);font-size:13px">
+      No organization vehicles yet. Add one above to make it available in all deal models.
+    </div>
+    {% endif %}
+  </div>
+
+  {# ── User Vehicles ─────────────────────────────────────────────────────── #}
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+    <div style="padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)">
+      <div style="font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em">My Vehicles</div>
+      <button class="btn btn-sm btn-primary" style="font-size:12px"
+              onclick="document.getElementById('new-user-vehicle-form').style.display='block';document.getElementById('new-user-vehicle-scope').value='user';this.style.display='none'">
+        + Add Vehicle
+      </button>
+    </div>
+
+    <div id="new-user-vehicle-form" style="display:none;padding:16px 20px;background:var(--surface-alt);border-bottom:1px solid var(--border)">
+      {% set _scope_override = 'user' %}
+      {% include "partials/vehicle_form.html" %}
+    </div>
+
+    {% if user_vehicles %}
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead>
+        <tr style="background:var(--surface-alt)">
+          <th style="text-align:left;padding:10px 16px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text-muted)">Label</th>
+          <th style="text-align:left;padding:10px 16px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text-muted)">Type</th>
+          <th style="text-align:left;padding:10px 16px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text-muted)">Draw Cadence</th>
+          <th style="text-align:right;padding:10px 16px;border-bottom:1px solid var(--border)"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for v in user_vehicles %}
+        <tr id="vehicle-row-{{ v.id }}" style="border-bottom:1px solid var(--border)">
+          <td style="padding:10px 16px;font-weight:500">{{ v.label }}</td>
+          <td style="padding:10px 16px">
+            {%- if v.vehicle_type == 'equity' -%}{%- set _vc = '#22c55e' -%}
+            {%- elif v.vehicle_type == 'debt' -%}{%- set _vc = '#f59e0b' -%}
+            {%- elif v.vehicle_type == 'forgivable_loan' -%}{%- set _vc = '#a855f7' -%}
+            {%- else -%}{%- set _vc = '#14b8a6' -%}
+            {%- endif -%}
+            <span style="font-size:11px;font-weight:600;color:{{ _vc }}">{{ vehicle_type_labels.get(v.vehicle_type, v.vehicle_type) | title }}</span>
+            {% if v.equity_role %}<span style="font-size:10px;color:var(--text-muted);margin-left:4px">· {{ v.equity_role | upper }}</span>{% endif %}
+          </td>
+          <td style="padding:10px 16px;color:var(--text-muted);font-size:12px">{{ v.draw_cadence | replace('_', ' ') | title }}</td>
+          <td style="padding:10px 16px;text-align:right;display:flex;gap:6px;justify-content:flex-end">
+            <button class="btn btn-sm btn-secondary" style="font-size:11px"
+                    hx-get="/settings/vehicles/{{ v.id }}/form"
+                    hx-target="#edit-form-{{ v.id }}"
+                    hx-swap="innerHTML"
+                    onclick="document.getElementById('edit-form-{{ v.id }}').style.display='block'">
+              Edit
+            </button>
+            <button class="btn btn-sm btn-ghost" style="font-size:11px;color:var(--color-red,#ef4444)"
+                    hx-delete="/settings/vehicles/{{ v.id }}"
+                    hx-confirm="Delete '{{ v.label }}'?"
+                    hx-target="#vehicle-row-{{ v.id }}"
+                    hx-swap="outerHTML">
+              Delete
+            </button>
+          </td>
+        </tr>
+        <tr id="edit-form-{{ v.id }}" style="display:none;background:var(--surface-alt)">
+          <td colspan="4" style="padding:0"></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div style="padding:32px 20px;text-align:center;color:var(--text-muted);font-size:13px">
+      No personal vehicles yet.
+    </div>
+    {% endif %}
+  </div>
+
+</div>
+</div>
+{% endblock %}

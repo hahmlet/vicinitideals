@@ -2376,6 +2376,9 @@ async def create_deal(
         timing_type="first_day",
     ))
 
+    from app.services.vehicle_preload import preload_equity_modules
+    await preload_equity_modules(session, scenario.id, org_id)
+
     await session.commit()
 
     redirect_url = f"/models/{scenario.id}/builder" + ("?new=1" if new == "1" else "")
@@ -11521,6 +11524,211 @@ async def source_vehicle_prefill(
         "draw_active_from_milestone": source.get("draw_active_from_milestone"),
         "draw_active_from_offset_days": source.get("draw_active_from_offset_days"),
     })
+
+
+# ---------------------------------------------------------------------------
+# Source Vehicle management (Phase G)
+# ---------------------------------------------------------------------------
+
+_VEHICLE_TYPE_LABELS = {
+    "equity": "Equity",
+    "debt": "Debt",
+    "forgivable_loan": "Forgivable Loan",
+    "grant": "Grant",
+}
+
+
+@router.get("/settings/vehicles", response_class=HTMLResponse)
+async def vehicle_settings_page(
+    request: Request,
+    session: DBSession,
+) -> HTMLResponse:
+    user = await _get_user(session, request)
+    if user is None:
+        return RedirectResponse(url="/login?next=/settings/vehicles", status_code=303)
+
+    from app.models.source_vehicle import SourceVehicle as _SV_list
+    dedup_count, conflicts_count = await _get_counts(session)
+    address_issues_count = await _get_address_issues_count(session, user)
+
+    org_vehicles = (
+        await session.execute(
+            select(_SV_list).where(
+                _SV_list.scope == "org", _SV_list.owner_id == user.org_id
+            ).order_by(_SV_list.vehicle_type, _SV_list.label)
+        )
+    ).scalars().all()
+
+    user_vehicles = (
+        await session.execute(
+            select(_SV_list).where(
+                _SV_list.scope == "user", _SV_list.owner_id == user.id
+            ).order_by(_SV_list.vehicle_type, _SV_list.label)
+        )
+    ).scalars().all()
+
+    return templates.TemplateResponse(
+        request,
+        "settings_vehicles.html",
+        {
+            "org_vehicles": org_vehicles,
+            "user_vehicles": user_vehicles,
+            "vehicle_type_labels": _VEHICLE_TYPE_LABELS,
+            **_base_ctx(user, dedup_count, "", address_issues_count, conflicts_count=conflicts_count),
+        },
+    )
+
+
+@router.get("/settings/vehicles/{vehicle_id}/form", response_class=HTMLResponse)
+async def vehicle_edit_form(
+    request: Request,
+    vehicle_id: UUID,
+    session: DBSession,
+) -> HTMLResponse:
+    user = await _get_user(session, request)
+    if user is None:
+        return HTMLResponse("Unauthorized", status_code=401)
+
+    from app.models.source_vehicle import SourceVehicle as _SV_ef
+    vehicle = (await session.execute(
+        select(_SV_ef).where(
+            _SV_ef.id == vehicle_id,
+            (
+                ((_SV_ef.scope == "org") & (_SV_ef.owner_id == user.org_id)) |
+                ((_SV_ef.scope == "user") & (_SV_ef.owner_id == user.id))
+            ),
+        )
+    )).scalar_one_or_none()
+    if vehicle is None:
+        return HTMLResponse("Vehicle not found", status_code=404)
+
+    return templates.TemplateResponse(
+        request,
+        "partials/vehicle_form.html",
+        {"vehicle": vehicle, "vehicle_type_labels": _VEHICLE_TYPE_LABELS},
+    )
+
+
+@router.post("/settings/vehicles", response_class=HTMLResponse)
+async def vehicle_create(
+    request: Request,
+    session: DBSession,
+) -> HTMLResponse:
+    user = await _get_user(session, request)
+    if user is None:
+        return HTMLResponse("Unauthorized", status_code=401)
+
+    form = await request.form()
+    scope = str(form.get("scope", "org")).strip()
+    label = str(form.get("label", "")).strip()
+    vehicle_type = str(form.get("vehicle_type", "equity")).strip()
+    equity_role = str(form.get("equity_role", "")).strip() or None
+
+    if not label:
+        return HTMLResponse("<p class='text-muted'>Label is required.</p>", status_code=400)
+    if vehicle_type not in _VEHICLE_TYPE_LABELS:
+        return HTMLResponse("<p class='text-muted'>Invalid vehicle type.</p>", status_code=400)
+    if vehicle_type == "equity" and equity_role not in ("gp", "lp"):
+        return HTMLResponse("<p class='text-muted'>Equity vehicles must have GP or LP role.</p>", status_code=400)
+    if vehicle_type != "equity":
+        equity_role = None
+
+    owner_id = user.org_id if scope == "org" else user.id
+
+    from app.models.source_vehicle import SourceVehicle as _SV_cr
+    vehicle = _SV_cr(
+        scope=scope,
+        owner_id=owner_id,
+        label=label,
+        vehicle_type=vehicle_type,
+        equity_role=equity_role,
+        default_waterfall_position=int(form.get("default_waterfall_position") or 0),
+        draw_cadence=str(form.get("draw_cadence", "monthly") or "monthly"),
+        interest_rate_pct=form.get("interest_rate_pct") or None,
+        carry_type=form.get("carry_type") or None,
+        day_count_convention=str(form.get("day_count_convention", "actual_360") or "actual_360"),
+        io_period_months=int(form.get("io_period_months")) if form.get("io_period_months") else None,
+        amort_term_years=int(form.get("amort_term_years")) if form.get("amort_term_years") else None,
+        pref_rate_pct=form.get("pref_rate_pct") or None,
+        created_by=user.id,
+        updated_by=user.id,
+    )
+    session.add(vehicle)
+    await session.commit()
+
+    return RedirectResponse(url="/settings/vehicles", status_code=303)
+
+
+@router.post("/settings/vehicles/{vehicle_id}", response_class=HTMLResponse)
+async def vehicle_update(
+    request: Request,
+    vehicle_id: UUID,
+    session: DBSession,
+) -> HTMLResponse:
+    user = await _get_user(session, request)
+    if user is None:
+        return HTMLResponse("Unauthorized", status_code=401)
+
+    from app.models.source_vehicle import SourceVehicle as _SV_up
+    vehicle = (await session.execute(
+        select(_SV_up).where(
+            _SV_up.id == vehicle_id,
+            (
+                ((_SV_up.scope == "org") & (_SV_up.owner_id == user.org_id)) |
+                ((_SV_up.scope == "user") & (_SV_up.owner_id == user.id))
+            ),
+        )
+    )).scalar_one_or_none()
+    if vehicle is None:
+        return HTMLResponse("Vehicle not found", status_code=404)
+
+    form = await request.form()
+    vehicle.label = str(form.get("label", vehicle.label)).strip()
+    new_vt = str(form.get("vehicle_type", vehicle.vehicle_type)).strip()
+    if new_vt in _VEHICLE_TYPE_LABELS:
+        vehicle.vehicle_type = new_vt
+    er = str(form.get("equity_role", "")).strip() or None
+    vehicle.equity_role = er if vehicle.vehicle_type == "equity" else None
+    vehicle.draw_cadence = str(form.get("draw_cadence", vehicle.draw_cadence) or vehicle.draw_cadence)
+    vehicle.day_count_convention = str(form.get("day_count_convention", vehicle.day_count_convention) or "actual_360")
+    vehicle.interest_rate_pct = form.get("interest_rate_pct") or None
+    vehicle.carry_type = form.get("carry_type") or None
+    vehicle.io_period_months = int(form.get("io_period_months")) if form.get("io_period_months") else None
+    vehicle.amort_term_years = int(form.get("amort_term_years")) if form.get("amort_term_years") else None
+    vehicle.pref_rate_pct = form.get("pref_rate_pct") or None
+    vehicle.default_waterfall_position = int(form.get("default_waterfall_position") or vehicle.default_waterfall_position)
+    vehicle.updated_by = user.id
+    await session.commit()
+
+    return RedirectResponse(url="/settings/vehicles", status_code=303)
+
+
+@router.delete("/settings/vehicles/{vehicle_id}", response_class=HTMLResponse)
+async def vehicle_delete(
+    request: Request,
+    vehicle_id: UUID,
+    session: DBSession,
+) -> HTMLResponse:
+    user = await _get_user(session, request)
+    if user is None:
+        return HTMLResponse("Unauthorized", status_code=401)
+
+    from app.models.source_vehicle import SourceVehicle as _SV_del
+    vehicle = (await session.execute(
+        select(_SV_del).where(
+            _SV_del.id == vehicle_id,
+            (
+                ((_SV_del.scope == "org") & (_SV_del.owner_id == user.org_id)) |
+                ((_SV_del.scope == "user") & (_SV_del.owner_id == user.id))
+            ),
+        )
+    )).scalar_one_or_none()
+    if vehicle is None:
+        return HTMLResponse("", status_code=404)
+
+    await session.delete(vehicle)
+    await session.commit()
+    return HTMLResponse("")
 
 
 # ---------------------------------------------------------------------------
