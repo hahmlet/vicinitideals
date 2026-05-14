@@ -60,6 +60,9 @@ from app.models.cashflow import (  # noqa: F401
     OperationalOutputs,
 )
 
+# 7b. Capital draw events (FK → Scenario, Project)
+from app.models.capital_draw_event import CapitalDrawEvent, DrawAllocationReason  # noqa: F401
+
 # 8. Workflow manifests (FK → Scenario)
 from app.models.manifest import WorkflowRunManifest  # noqa: F401
 
@@ -148,6 +151,9 @@ __all__ = [
     "CashFlow",
     "CashFlowLineItem",
     "OperationalOutputs",
+    # Capital draw events
+    "CapitalDrawEvent",
+    "DrawAllocationReason",
     "WorkflowRunManifest",
     # Async export jobs
     "ExportJob",

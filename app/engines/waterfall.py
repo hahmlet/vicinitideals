@@ -648,37 +648,9 @@ async def _apply_levered_metrics(
     if outputs.project_irr_unlevered is None:
         outputs.project_irr_unlevered = _compute_xirr_pct(unlevered_cashflows) or ZERO
 
-    # Seed running_cumulative with total_sources so the Capital Balance column
-    # stays consistent with the cashflow engine's pre-seed. compute_cash_flows
-    # initialises cumulative_cash_flow = total_sources; without this offset the
-    # waterfall would restart from ZERO and overwrite the balance with bare NCF sums.
-    total_sources = ZERO
-    for cm_src in (
-        await session.execute(
-            select(CapitalModule).where(CapitalModule.scenario_id == deal_model_id)
-        )
-    ).scalars():
-        _amt = (cm_src.source or {}).get("amount")
-        if _amt:
-            total_sources += _q(_to_decimal(_amt))
-
-    # Resolve Operating Reserve amount — same seeding invariant as cashflow engine:
-    #   Capital Balance[first stab month] = reserve + min(0, NCF)
-    _op_reserve_row = (
-        await session.execute(
-            select(UseLine.amount)
-            .join(Project, Project.id == UseLine.project_id)
-            .where(
-                Project.scenario_id == deal_model_id,
-                UseLine.label == "Operating Reserve",
-            )
-            .limit(1)
-        )
-    ).scalar_one_or_none()
-    _op_reserve_amount = _to_decimal(_op_reserve_row) if _op_reserve_row is not None else ZERO
-
-    _operating_reserve_seeded = False
-    _stabilized_value = PeriodType.stabilized.value
+    # Phase E: cumulative_cash_flow in cashflow engine now starts at ZERO (per-period
+    # draw events replace the old total_sources pre-seed). Waterfall reads the stored
+    # cumulative_cash_flow values from CashFlow rows — no local re-seed needed.
 
     # Multi-project scope: WaterfallResult rows don't carry project_id today,
     # so debt_service_by_period[N] is the scenario-wide aggregate of DS for
