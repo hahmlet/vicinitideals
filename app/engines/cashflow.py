@@ -30,10 +30,12 @@ from app.models.cashflow import (
     PeriodType,
 )
 from app.models.capital import CapitalModule, CapitalModuleProject
+from app.models.capital_draw_event import CapitalDrawEvent, DrawAllocationReason
 from app.models.deal import IncomeStream, OperatingExpenseLine, OperationalInputs, Scenario, UseLine
 from app.models.milestone import Milestone, MilestoneType
 from app.models.project import Project
 from app.models.manifest import WorkflowRunManifest
+from app.engines.draw_engine import compute_period_draw_inflow
 
 # Phase-plan + per-loan windowing + per-period structural helpers extracted
 # to cashflow_compile.py (PR1 slices 1, 2, 3 of compile/evaluate split).
@@ -81,6 +83,22 @@ HUNDRED = Decimal("100")
 PLACEHOLDER_DSCR = Decimal("1.250000")
 # Max annual rent increase for LTL catchup — prevents unrealistic 20%+ jumps
 LTL_CATCHUP_CAP_PCT = Decimal("10")
+
+# Use line labels excluded from capital_outflow in NCF.
+# These are pre-funded reserves that remain in the capital balance until consumed;
+# they are NOT cash payments in the period they appear as use lines.
+# Phase E: these ARE included as draw inflows at phase activation (reserve pre-fund).
+_BALANCE_ONLY_LABELS: frozenset[str] = frozenset({
+    "Operating Reserve",
+    "Capitalized Construction Interest",
+    "Construction Interest Reserve",
+    "Capitalized Pre-Development Interest",
+    "Capitalized Acquisition Interest",
+    "Interest Reserve",
+    "Pre-Development Interest Reserve",
+    "Acquisition Interest Reserve",
+    "Lease-Up Reserve",
+})
 
 
 async def compute_cash_flows(
@@ -294,7 +312,7 @@ async def _compute_project_cashflow(
     # Reload module.source from DB after auto-sizing: SQLAlchemy's bulk UPDATE
     # (sa_update) may expire JSON columns on in-session ORM objects, making stale
     # reads possible before the next flush. A targeted refresh guarantees we see
-    # the auto-sized amounts when summing total_sources below.
+    # the auto-sized amounts when seeding draw events below.
     for cm in capital_modules:
         await session.refresh(cm, attribute_names=["source"])
 
@@ -309,16 +327,6 @@ async def _compute_project_cashflow(
 
     construction_debt_monthly = _sum_debt_service(capital_modules, is_construction=True)
     operation_debt_monthly = _sum_debt_service(capital_modules, is_construction=False)
-
-    # Sum all capital sources with a fixed amount — injected as period-0 inflow so
-    # Cash Balance starts positive and draws down through construction.
-    # pct_of_total_cost sources are skipped here (total_cost unknown pre-loop).
-    total_sources = ZERO
-    for cm in capital_modules:
-        src = cm.source or {}
-        amt = src.get("amount")
-        if amt:
-            total_sources += Decimal(str(amt))
 
     # ── Refi net proceeds computation ────────────────────────────────────────
     # When a perm module takes out a bridge (construction_retirement tagged),
@@ -381,9 +389,11 @@ async def _compute_project_cashflow(
     cash_flow_rows: list[CashFlow] = []
     line_item_rows: list[CashFlowLineItem] = []
     net_cash_flow_series: list[Decimal] = []
+    draw_event_rows: list[CapitalDrawEvent] = []
 
-    # Pre-seed cumulative with total sources so Cash Balance starts positive
-    cumulative_cash_flow = total_sources
+    # Phase E: start at zero. Capital draws flow in period-by-period as uses fire.
+    # Per-period draw inflows replace the old total_sources lump pre-seed.
+    cumulative_cash_flow = ZERO
     stabilized_noi_monthly: Decimal | None = None
     period = 0
     _operating_reserve_seeded = False
@@ -546,8 +556,37 @@ async def _compute_project_cashflow(
                             period_result["net_cash_flow"] - _pp_cost
                         )
 
+            # Phase E: per-period draw inflow — capital arrives as uses fire.
+            # BALANCE_ONLY reserves injected as lump at phase start (month_index==0).
+            # Non-BALANCE_ONLY uses draw matching inflow same period (net zero to balance).
+            _draw = compute_period_draw_inflow(
+                phase=phase,
+                month_index=month_index,
+                use_lines=use_lines,
+                use_line_phase_overrides=_ul_phase_overrides,
+                balance_only_labels=_BALANCE_ONLY_LABELS,
+                use_line_phase_map=_USE_LINE_PHASE_MAP,
+            )
+            if _draw > ZERO:
+                _reason = (
+                    DrawAllocationReason.acquisition
+                    if phase.period_type == PeriodType.acquisition
+                    else DrawAllocationReason.reserve_prefund
+                    if month_index == 0
+                    else DrawAllocationReason.period_funding
+                )
+                draw_event_rows.append(CapitalDrawEvent(
+                    scenario_id=deal_uuid,
+                    project_id=project.id,
+                    period=period,
+                    period_type=phase.period_type.value,
+                    amount=_q(_draw),
+                    allocation_reason=_reason,
+                ))
+
             # Cumulative cash balance:
-            #   Pre-stabilized (construction, lease-up) + exit: accumulate NCF fully.
+            #   Phase E: add draw inflow first (reserves pre-fund at phase start,
+            #     non-BALANCE_ONLY uses cancel with capital_outflow in NCF).
             #   First stabilized period: reset to the operating reserve.  The debt is
             #     sized so that cash flows through lease-up land exactly at the reserve
             #     amount when stabilization begins.
@@ -555,6 +594,7 @@ async def _compute_project_cashflow(
             #     add to balance.  Negative NCF drains the reserve — DO subtract.
             _is_stabilized = phase.period_type == PeriodType.stabilized
             _ncf = period_result["net_cash_flow"]
+            cumulative_cash_flow += _draw
             if _is_stabilized and not _operating_reserve_seeded:
                 cumulative_cash_flow = _op_reserve_amount
                 _operating_reserve_seeded = True
@@ -563,7 +603,7 @@ async def _compute_project_cashflow(
                 if _ncf < 0:
                     cumulative_cash_flow += _ncf
             else:
-                # Pre-seed (acquisition, construction, lease-up): accumulate all NCF
+                # Pre-stabilized (acquisition, construction, lease-up): accumulate all NCF
                 cumulative_cash_flow += _ncf
             cash_flow_rows.append(
                 CashFlow(
@@ -585,6 +625,11 @@ async def _compute_project_cashflow(
             line_item_rows.extend(period_result["line_items"])
             net_cash_flow_series.append(_q(period_result["net_cash_flow"]))
             period += 1
+
+    # Phase E: bulk-insert draw events for this project (prior rows purged above
+    # at the compute_cash_flows level alongside CashFlow / CashFlowLineItem).
+    if draw_event_rows:
+        session.add_all(draw_event_rows)
 
     total_project_cost = _calculate_total_project_cost(line_item_rows)
     # equity_required = the funding gap this project's equity must fill =
@@ -1069,6 +1114,9 @@ async def _purge_existing_outputs(session: AsyncSession, deal_model_id: UUID) ->
     await session.execute(
         delete(OperationalOutputs).where(OperationalOutputs.scenario_id == deal_model_id)
     )
+    await session.execute(
+        delete(CapitalDrawEvent).where(CapitalDrawEvent.scenario_id == deal_model_id)
+    )
 
 
 async def _purge_project_outputs(
@@ -1080,7 +1128,7 @@ async def _purge_project_outputs(
     — these exist only if migration 0050's backfill was skipped (never the
     case in practice, but the guard keeps the engine resilient).
     """
-    for model in (CashFlowLineItem, CashFlow, OperationalOutputs):
+    for model in (CashFlowLineItem, CashFlow, OperationalOutputs, CapitalDrawEvent):
         await session.execute(
             delete(model).where(
                 model.scenario_id == deal_model_id,
@@ -2759,22 +2807,9 @@ def _compute_period(
     # UseLine outflows: first_day fires at month_index==0; spread fires every month.
     # Balance-only lines (Operating Reserve, Capitalized Construction Interest) are excluded —
     # their costs are already captured via cash balance residual and debt_service respectively.
-    _BALANCE_ONLY = {
-        "Operating Reserve",
-        # CI labels — no per-period cash outflow (accrues to balance or reserve pays it)
-        "Capitalized Construction Interest",
-        "Construction Interest Reserve",
-        "Capitalized Pre-Development Interest",
-        "Capitalized Acquisition Interest",
-        # IR labels — pre-funded pool; no per-period cash outflow from project
-        "Interest Reserve",
-        "Pre-Development Interest Reserve",
-        "Acquisition Interest Reserve",
-        "Lease-Up Reserve",
-    }
     if use_lines:
         for ul in use_lines:
-            if getattr(ul, "label", "") in _BALANCE_ONLY:
+            if getattr(ul, "label", "") in _BALANCE_ONLY_LABELS:
                 continue
             # Phase B: prefer milestone FK override; fall back to phase string
             period_types = (
