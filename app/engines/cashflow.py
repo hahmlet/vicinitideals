@@ -150,6 +150,14 @@ async def compute_cash_flows(
             session=session,
             project_start_override=start_overrides.get(project.id),
         )
+
+    # Phase D: reconcile module.source["amount"] = Σ(junction.amount) across all projects.
+    # For single-project scenarios this is a no-op. For shared sources spanning multiple
+    # projects, each project auto-sizes its own junction amount independently; the module-
+    # level record should reflect the total rather than the last project's amount.
+    if len(projects) > 1:
+        await _reconcile_module_amounts_from_junctions(session, deal_uuid)
+
     return last_summary
 
 
@@ -815,6 +823,50 @@ async def _sync_junction_amounts_after_compute(
             )
             .values(amount=amt)
         )
+
+
+async def _reconcile_module_amounts_from_junctions(
+    session: AsyncSession,
+    scenario_id: UUID,
+) -> None:
+    """Set module.source["amount"] = Σ(junction.amount) across all projects.
+
+    Fixes the last-project-wins bug: when multiple projects share a Source,
+    each project's auto-size writes its own computed amount to
+    ``CapitalModule.source["amount"]``. After all per-project computations
+    complete, the module-level total should equal the sum of all per-project
+    junction amounts. For single-project scenarios, Σ(junction) == existing
+    amount and this is a no-op.
+    """
+    rows = (await session.execute(
+        select(CapitalModule, func.sum(CapitalModuleProject.amount).label("junction_total"))
+        .join(CapitalModuleProject, CapitalModuleProject.capital_module_id == CapitalModule.id)
+        .where(CapitalModule.scenario_id == scenario_id)
+        .group_by(CapitalModule.id)
+    )).all()
+
+    for module, junction_total in rows:
+        if junction_total is None:
+            continue
+        try:
+            total_dec = _q(Decimal(str(junction_total)))
+        except Exception:
+            continue
+        src = dict(module.source or {})
+        current = src.get("amount")
+        try:
+            current_dec = Decimal(str(current)) if current is not None else None
+        except Exception:
+            current_dec = None
+        if current_dec is not None and _q(current_dec) == total_dec:
+            continue
+        src["amount"] = str(total_dec)
+        await session.execute(
+            sa_update(CapitalModule)
+            .where(CapitalModule.id == module.id)
+            .values(source=src)
+        )
+        module.source = src
 
 
 async def _per_project_capital_modules(
