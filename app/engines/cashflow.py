@@ -1862,7 +1862,10 @@ async def _auto_size_debt_modules(
         # constr_io_factor is forced to zero to avoid double-counting.
         constr_io_factor = ZERO
         _constr_ct = _carry_type_for_phase(carry, is_construction=True)
-        if not debt_types_list and constr_rate_pct and constr_months_total > 0:
+        # Apply factor when there is no dedicated construction_loan handling its own DS.
+        # Covers both legacy (no debt_types_list) and multi-debt deals using perm-only structure.
+        _has_constr_loan = "construction_loan" in (debt_types_list or [])
+        if constr_rate_pct and constr_months_total > 0 and not _has_constr_loan:
             _c_monthly_rate = Decimal(str(constr_rate_pct)) / HUNDRED / Decimal("12")
             if _constr_ct == "pi" and amort_years > 0 and _c_monthly_rate > ZERO:
                 _cn = amort_years * 12
