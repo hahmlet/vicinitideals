@@ -433,6 +433,10 @@ async def _compute_project_cashflow(
         use_lines, milestone_map, phases
     )
 
+    # Reserve labels already drawn — prevents re-firing when a use_line's phase
+    # maps to multiple period_types (e.g. "operation" → lease_up + stabilized).
+    _drawn_reserve_labels: set[str] = set()
+
     for phase in phases:
         for month_index in range(phase.months):
             period_result = _compute_period(
@@ -563,14 +567,31 @@ async def _compute_project_cashflow(
             # Phase E: per-period draw inflow — capital arrives as uses fire.
             # BALANCE_ONLY reserves injected as lump at phase start (month_index==0).
             # Non-BALANCE_ONLY uses draw matching inflow same period (net zero to balance).
+            # Exclude already-drawn reserves so they don't re-inject at subsequent
+            # phase starts when their phase key maps to multiple period_types.
+            _effective_balance_only = _BALANCE_ONLY_LABELS - _drawn_reserve_labels
             _draw = compute_period_draw_inflow(
                 phase=phase,
                 month_index=month_index,
                 use_lines=use_lines,
                 use_line_phase_overrides=_ul_phase_overrides,
-                balance_only_labels=_BALANCE_ONLY_LABELS,
+                balance_only_labels=_effective_balance_only,
                 use_line_phase_map=_USE_LINE_PHASE_MAP,
             )
+            if month_index == 0:
+                for _rul in use_lines:
+                    _rlbl = getattr(_rul, "label", "")
+                    if _rlbl not in _effective_balance_only:
+                        continue
+                    _rpt = (
+                        (_ul_phase_overrides or {}).get(_rul.id)
+                        or _USE_LINE_PHASE_MAP.get(
+                            str(getattr(_rul, "phase", "") or "").replace("UseLinePhase.", ""),
+                            set(),
+                        )
+                    )
+                    if phase.period_type in _rpt:
+                        _drawn_reserve_labels.add(_rlbl)
             if _draw > ZERO:
                 _reason = (
                     DrawAllocationReason.acquisition
@@ -1181,7 +1202,9 @@ _USE_LINE_PHASE_MAP: dict[str, set[PeriodType]] = {
     "construction":    {PeriodType.construction, PeriodType.major_renovation, PeriodType.minor_renovation, PeriodType.conversion},
     "renovation":      {PeriodType.minor_renovation, PeriodType.major_renovation},
     "conversion":      {PeriodType.conversion},
-    "operation":       {PeriodType.lease_up, PeriodType.stabilized},
+    "operation":            {PeriodType.lease_up, PeriodType.stabilized},
+    "operation_lease_up":   {PeriodType.lease_up},
+    "operation_stabilized": {PeriodType.stabilized},
     "exit":            {PeriodType.exit},
     "other":           {PeriodType.acquisition},
 }
