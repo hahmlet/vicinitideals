@@ -12,7 +12,9 @@ from sqlalchemy.orm import selectinload
 
 from app.models.capital import (
     CapitalModule,
+    EquityRole,
     FunderType,
+    VehicleType,
     WaterfallResult,
     WaterfallTier,
     WaterfallTierType,
@@ -385,6 +387,8 @@ async def _ensure_equity_and_tiers(
             scenario_id=deal_uuid,
             label="Owner Equity",
             funder_type=FunderType.common_equity,
+            vehicle_type=VehicleType.equity.value,
+            equity_role=EquityRole.gp.value,
             stack_position=max_position + 1,
             source={"amount": "0", "notes": "Auto-created: org is 100% owner (no cash-in equity source configured)"},
             carry={"carry_type": "none"},
@@ -1152,7 +1156,7 @@ def _resolve_gp_proxy_state(
     all_states: list[ModuleState], equity_states: list[ModuleState]
 ) -> ModuleState:
     common_equity = [
-        state for state in equity_states if _enum_value(state.module.funder_type) == FunderType.common_equity.value
+        state for state in equity_states if _is_gp_equity_module(state.module)
     ]
     if common_equity:
         return sorted(common_equity, key=lambda state: state.module.stack_position)[-1]
@@ -1210,6 +1214,9 @@ def _resolve_waterfall_end_index(
     """
     ft = _enum_value(module.funder_type) if module.funder_type is not None else ""
     max_index = max(PHASE_ORDER.values())
+    # Equity, grants, and forgivable loans are perpetuity-like — active through exit.
+    if _is_equity_module(module) or not _is_debt_module(module):
+        return max_index
     if ft not in EXIT_VEHICLE_APPLIES:
         return max_index
 
@@ -1392,14 +1399,27 @@ def _negative_total(period_cashflows: dict[int, Decimal]) -> Decimal:
 
 
 def _is_debt_module(module: CapitalModule) -> bool:
+    vt = _enum_value(module.vehicle_type) if module.vehicle_type is not None else ""
+    if vt == VehicleType.debt.value:
+        return True
+    if vt in (VehicleType.equity.value, VehicleType.forgivable_loan.value, VehicleType.grant.value):
+        return False
     return _enum_value(module.funder_type) in DEBT_FUNDER_TYPES
 
 
 def _is_equity_module(module: CapitalModule) -> bool:
+    vt = _enum_value(module.vehicle_type) if module.vehicle_type is not None else ""
+    if vt == VehicleType.equity.value:
+        return True
+    if vt in (VehicleType.debt.value, VehicleType.forgivable_loan.value, VehicleType.grant.value):
+        return False
     return _enum_value(module.funder_type) in EQUITY_FUNDER_TYPES
 
 
 def _is_gp_equity_module(module: CapitalModule) -> bool:
+    er = _enum_value(module.equity_role) if module.equity_role is not None else ""
+    if er:
+        return er == EquityRole.gp.value
     return _enum_value(module.funder_type) == FunderType.common_equity.value
 
 
