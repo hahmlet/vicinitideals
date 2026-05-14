@@ -102,6 +102,7 @@ _BALANCE_ONLY_LABELS: frozenset[str] = frozenset({
     "Pre-Development Interest Reserve",
     "Acquisition Interest Reserve",
     "Lease-Up Reserve",
+    "Construction DS Reserve",
 })
 
 
@@ -1532,6 +1533,7 @@ async def _auto_size_debt_modules(
         "Pre-Development Interest Reserve",       # pre-dev IR
         "Acquisition Interest Reserve",           # acquisition IR
         "Lease-Up Reserve",
+        "Construction DS Reserve",
     }
 
     # Sum all non-exit use_lines as total project cost proxy
@@ -1828,6 +1830,8 @@ async def _auto_size_debt_modules(
     # resulting Lease-Up Reserve + Operating Reserve UseLines can carry a
     # source_capital_module_id back to that module (the "primary perm").
     _reserve_source_module: CapitalModule | None = None
+    _constr_ds_reserve: Decimal = ZERO
+    _constr_ds_source_module: CapitalModule | None = None
 
     for module in auto_modules:
         src = dict(module.source or {})
@@ -1857,11 +1861,16 @@ async def _auto_size_debt_modules(
         # In new multi-debt deals the construction loan handles its own IO, so perm's
         # constr_io_factor is forced to zero to avoid double-counting.
         constr_io_factor = ZERO
+        _constr_ct = _carry_type_for_phase(carry, is_construction=True)
         if not debt_types_list and constr_rate_pct and constr_months_total > 0:
-            constr_io_factor = (
-                Decimal(str(constr_rate_pct)) / HUNDRED / Decimal("12")
-                * Decimal(str(constr_months_total))
-            )
+            _c_monthly_rate = Decimal(str(constr_rate_pct)) / HUNDRED / Decimal("12")
+            if _constr_ct == "pi" and amort_years > 0 and _c_monthly_rate > ZERO:
+                _cn = amort_years * 12
+                _cf = (ONE + _c_monthly_rate) ** _cn
+                _pmt_f_c = _c_monthly_rate * _cf / (_cf - ONE)
+                constr_io_factor = _pmt_f_c * Decimal(str(constr_months_total))
+            else:
+                constr_io_factor = _c_monthly_rate * Decimal(str(constr_months_total))
 
         fixed = _fixed_sources(module)
         divisor = ONE - constr_io_factor
@@ -2017,6 +2026,10 @@ async def _auto_size_debt_modules(
             await session.execute(
                 sa_update(CapitalModule).where(CapitalModule.id == module.id).values(source=src)
             )
+            if constr_io_factor > ZERO and _constr_ct in ("io_only", "pi"):
+                _constr_ds_reserve += _q(principal * constr_io_factor)
+                if _constr_ds_source_module is None:
+                    _constr_ds_source_module = module
             module.source = src  # keep in-memory view consistent
             continue
 
@@ -2070,6 +2083,10 @@ async def _auto_size_debt_modules(
             await session.execute(
                 sa_update(CapitalModule).where(CapitalModule.id == module.id).values(source=src)
             )
+            if constr_io_factor > ZERO and _constr_ct in ("io_only", "pi"):
+                _constr_ds_reserve += _q(principal * constr_io_factor)
+                if _constr_ds_source_module is None:
+                    _constr_ds_source_module = module
             module.source = src
             continue
 
@@ -2092,6 +2109,10 @@ async def _auto_size_debt_modules(
         await session.execute(
             sa_update(CapitalModule).where(CapitalModule.id == module.id).values(source=src)
         )
+        if constr_io_factor > ZERO and _constr_ct in ("io_only", "pi"):
+            _constr_ds_reserve += _q(principal * constr_io_factor)
+            if _constr_ds_source_module is None:
+                _constr_ds_source_module = module
         module.source = src  # keep in-memory view consistent
 
     # Generic Exit Vehicle writeback: for every (retired, retirer) pair, tag
@@ -2341,6 +2362,37 @@ async def _auto_size_debt_modules(
         )
         session.add(new_lu)
         use_lines.append(new_lu)
+
+    # Construction DS Reserve: pre-fund debt service payments during construction/renovation.
+    # Applies only to cash-paying carry types (io_only, pi); CI/IR have their own use line mechanisms.
+    _cds_source_id = _constr_ds_source_module.id if _constr_ds_source_module else None
+    cds_reserve_found = False
+    for ul in use_lines:
+        if getattr(ul, "label", "") == "Construction DS Reserve":
+            if _constr_ds_reserve > ZERO:
+                ul.amount = _constr_ds_reserve
+                ul.notes = f"Auto-computed: debt service during {constr_months_total}-month construction funded from bond proceeds"
+                ul.source_capital_module_id = _cds_source_id
+                ul.cost_category = "soft"
+                session.add(ul)
+            else:
+                await session.delete(ul)
+                use_lines.remove(ul)
+            cds_reserve_found = True
+            break
+    if not cds_reserve_found and project_id and _constr_ds_reserve > ZERO:
+        new_cds = UseLine(
+            project_id=project_id,
+            source_capital_module_id=_cds_source_id,
+            label="Construction DS Reserve",
+            phase="construction",
+            amount=_constr_ds_reserve,
+            timing_type="first_day",
+            cost_category="soft",
+            notes=f"Auto-computed: debt service during {constr_months_total}-month construction funded from bond proceeds",
+        )
+        session.add(new_cds)
+        use_lines.append(new_cds)
 
     # Phase B: write interest use lines for pre_development_loan and acquisition_loan.
     # Label is carry-type-aware: IR → "…Interest Reserve", CI → "Capitalized … Interest".
