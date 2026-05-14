@@ -53,8 +53,10 @@ class UseLinePhase(str, enum.Enum):
 
 
 class UseLineTiming(str, enum.Enum):
-    first_day = "first_day"   # lump sum on month 1 of the phase
-    spread = "spread"         # divided evenly across all months of the phase
+    first_day = "first_day"              # legacy alias for lump_sum
+    spread = "spread"                    # legacy alias for spread_across_range
+    lump_sum = "lump_sum"                # fire once at active_from milestone date
+    spread_across_range = "spread_across_range"  # amortize across milestone window
 
 
 class IncomeStreamType(str, enum.Enum):
@@ -696,9 +698,20 @@ class UseLine(Base):
         nullable=True,
     )
     label: Mapped[str] = mapped_column(String(255), nullable=False)
-    phase: Mapped[UseLinePhase] = mapped_column(String(60), nullable=False)
-    milestone_key: Mapped[str | None] = mapped_column(String(60), nullable=True)
-    milestone_key_to: Mapped[str | None] = mapped_column(String(60), nullable=True)
+    # Legacy phase string — nullable; new rows use active_from_milestone_id instead.
+    # Engine falls back to this when the FK is NULL (Phase G UI will populate FKs).
+    phase: Mapped[str | None] = mapped_column(String(60), nullable=True)
+    # Milestone FK timing — preferred over phase string when set
+    active_from_milestone_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("milestones.id", ondelete="SET NULL"),
+        nullable=True,
+    )
+    spread_to_milestone_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("milestones.id", ondelete="SET NULL"),
+        nullable=True,
+    )
     amount: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=0)
     timing_type: Mapped[str] = mapped_column(String(20), nullable=False, default="first_day")
     is_deferred: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)

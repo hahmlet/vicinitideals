@@ -2372,7 +2372,6 @@ async def create_deal(
         label=f"{opportunity.name or 'Property'} - Acquisition",
         phase=UseLinePhase.acquisition,
         cost_category="acquisition",
-        milestone_key="close",
         amount=acq_cost,
         timing_type="first_day",
     ))
@@ -2612,7 +2611,6 @@ async def create_model_for_deal(
         label=f"{opportunity.name or 'Property'} - Acquisition",
         phase=UseLinePhase.acquisition,
         cost_category="acquisition",
-        milestone_key="close",
         amount=acq_cost,
         timing_type="first_day",
     ))
@@ -4499,7 +4497,6 @@ async def create_deal_from_listing(
         label=f"{opportunity.name or 'Property'} - Acquisition",
         phase=UseLinePhase.acquisition,
         cost_category="acquisition",
-        milestone_key="close",
         amount=Decimal(str(listing.asking_price)),
         timing_type="first_day",
         is_deferred=False,
@@ -5807,8 +5804,6 @@ async def handle_form_create_or_update(
         data: dict = {
             "label": form.get("label", ""),
             "phase": _phase,
-            "milestone_key": _ms_key,
-            "milestone_key_to": _ms_key_to,
             "amount": _fd(form.get("amount")) or Decimal("0"),
             "timing_type": form.get("timing_type") or "first_day",
             "is_deferred": form.get("is_deferred") == "true",
@@ -6861,7 +6856,6 @@ async def create_deal_project(
         label=f"{opp.name or 'Property'} - Acquisition",
         phase=UseLinePhase.acquisition,
         cost_category="acquisition",
-        milestone_key="close",
         amount=_acq_amount,
         timing_type="first_day",
     ))
@@ -12078,25 +12072,21 @@ async def _run_draw_schedule(
     _ms_date_idx  = {m["key"]: m["date"] for m in milestones_dated}
     engine_uses: list[UseLineItem] = []
     for ul in use_lines_db:
-        raw_phase = str(ul.phase).replace("UseLinePhase.", "")
-        ms_key = getattr(ul, "milestone_key", None) or _phase_to_ms.get(raw_phase, "close")
+        raw_phase = str(ul.phase or "").replace("UseLinePhase.", "")
+        ms_key = _phase_to_ms.get(raw_phase, "close")
         if ms_key not in _ms_keys_set and _ms_keys_set:
             ms_key = next(iter(_ms_keys_set))
         raw_timing   = str(ul.timing_type).replace("UseLineTiming.", "")
         spread_months = 1
         spread_to_date = None
-        if raw_timing == "spread":
-            ms_key_to = getattr(ul, "milestone_key_to", None)
-            if ms_key_to and ms_key_to in _ms_date_idx:
-                spread_to_date = _dt_cls.combine(_ms_date_idx[ms_key_to], _dt_cls.min.time())
-            else:
-                for i, m in enumerate(milestones_dated):
-                    if m["key"] == ms_key and i + 1 < len(milestones_dated):
-                        nxt = milestones_dated[i + 1]["date"]
-                        cur = m["date"]
-                        diff_months = (nxt.year - cur.year) * 12 + (nxt.month - cur.month)
-                        spread_months = max(1, diff_months)
-                        break
+        if raw_timing in ("spread", "spread_across_range"):
+            for i, m in enumerate(milestones_dated):
+                if m["key"] == ms_key and i + 1 < len(milestones_dated):
+                    nxt = milestones_dated[i + 1]["date"]
+                    cur = m["date"]
+                    diff_months = (nxt.year - cur.year) * 12 + (nxt.month - cur.month)
+                    spread_months = max(1, diff_months)
+                    break
         engine_uses.append(UseLineItem(
             key=str(ul.id), label=ul.label,
             category=_phase_to_cat.get(raw_phase, "other"),
@@ -12557,8 +12547,8 @@ async def calculate_draw_schedule(
     _ms_keys_set = {m["key"] for m in milestones_dated}
     unfunded_uses: list[dict] = []
     for ul in ctx["use_lines_db"]:
-        raw_phase = str(ul.phase).replace("UseLinePhase.", "")
-        ms_key = getattr(ul, "milestone_key", None) or _phase_to_ms.get(raw_phase, "close")
+        raw_phase = str(ul.phase or "").replace("UseLinePhase.", "")
+        ms_key = _phase_to_ms.get(raw_phase, "close")
         if ms_key not in _ms_keys_set and _ms_keys_set:
             ms_key = next(iter(_ms_keys_set))
         if ms_key not in _covered_ms_keys and (ul.amount or 0) > 0:

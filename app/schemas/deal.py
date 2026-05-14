@@ -441,7 +441,10 @@ _EXAMPLE_USE_LINE_ID = "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"
 
 class UseLineBase(BaseModel):
     label: str
-    phase: UseLinePhase
+    phase: UseLinePhase | None = None
+    # Phase B: milestone FK timing — preferred over phase string when set
+    active_from_milestone_id: uuid.UUID | None = None
+    spread_to_milestone_id: uuid.UUID | None = None
     amount: Decimal = Decimal("0")
     timing_type: str = "first_day"
     is_deferred: bool = False
@@ -465,6 +468,8 @@ class UseLineCreate(UseLineBase):
 class UseLineUpdate(BaseModel):
     label: str | None = None
     phase: UseLinePhase | None = None
+    active_from_milestone_id: uuid.UUID | None = None
+    spread_to_milestone_id: uuid.UUID | None = None
     amount: Decimal | None = None
     timing_type: str | None = None
     is_deferred: bool | None = None
