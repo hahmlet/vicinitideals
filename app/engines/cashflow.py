@@ -38,6 +38,7 @@ from app.models.manifest import WorkflowRunManifest
 from app.engines.draw_engine import compute_period_draw_inflow
 from app.engines.interest import period_interest_months
 from app.engines.newton_solve import solve_principal_for_dscr
+from app.engines.source_routing import route_use_to_sources as _route_use_to_sources
 
 # Phase-plan + per-loan windowing + per-period structural helpers extracted
 # to cashflow_compile.py (PR1 slices 1, 2, 3 of compile/evaluate split).
