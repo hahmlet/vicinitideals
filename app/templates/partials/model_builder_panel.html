@@ -270,7 +270,7 @@
         <td>
           {%- if m.vehicle_type -%}
             <span style="font-size:10px;color:{{ _vt_color }};font-weight:600">{{ m.vehicle_type | replace('_', ' ') | title }}</span>
-            {%- if m.equity_role -%}<span style="font-size:9px;color:var(--text-muted);margin-left:3px">{{ m.equity_role | upper }}</span>{%- endif -%}
+            {%- if m.equity_role -%}<span style="font-size:11px;color:{{ _vt_color }};font-weight:600;margin-left:4px">{{ m.equity_role | upper }}</span>{%- endif -%}
           {%- else -%}
             <span class="text-small text-muted" style="font-size:10px">—</span>
           {%- endif -%}
