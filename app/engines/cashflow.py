@@ -1508,6 +1508,14 @@ async def _auto_size_debt_modules(
     constr_months_total = sum(
         p.months for p in phases if p.period_type in _CONSTRUCTION_PERIOD_TYPES
     )
+    # Narrower count for Construction DS Reserve — excludes acquisition/hold since
+    # those phases don't incur building-related debt service; pure acquisition deals
+    # always have a 1-month acquisition phase which would otherwise trigger the reserve.
+    _actual_build_months = sum(
+        p.months for p in phases
+        if p.period_type in _CONSTRUCTION_PERIOD_TYPES
+        and p.period_type not in {PeriodType.acquisition, PeriodType.hold}
+    )
 
     # Count lease-up months — the perm debt must also cover these shortfalls so that
     # the cash balance at the first Stabilized period equals the Operating Reserve.
@@ -1865,15 +1873,15 @@ async def _auto_size_debt_modules(
         # Apply factor when there is no dedicated construction_loan handling its own DS.
         # Covers both legacy (no debt_types_list) and multi-debt deals using perm-only structure.
         _has_constr_loan = "construction_loan" in (debt_types_list or [])
-        if constr_rate_pct and constr_months_total > 0 and not _has_constr_loan:
+        if constr_rate_pct and _actual_build_months > 0 and not _has_constr_loan:
             _c_monthly_rate = Decimal(str(constr_rate_pct)) / HUNDRED / Decimal("12")
             if _constr_ct == "pi" and amort_years > 0 and _c_monthly_rate > ZERO:
                 _cn = amort_years * 12
                 _cf = (ONE + _c_monthly_rate) ** _cn
                 _pmt_f_c = _c_monthly_rate * _cf / (_cf - ONE)
-                constr_io_factor = _pmt_f_c * Decimal(str(constr_months_total))
+                constr_io_factor = _pmt_f_c * Decimal(str(_actual_build_months))
             else:
-                constr_io_factor = _c_monthly_rate * Decimal(str(constr_months_total))
+                constr_io_factor = _c_monthly_rate * Decimal(str(_actual_build_months))
 
         fixed = _fixed_sources(module)
         divisor = ONE - constr_io_factor
