@@ -139,7 +139,7 @@
             <td style="text-align:right" class="market-col">
               <div style="display:flex;align-items:center;justify-content:flex-end;gap:2px">
                 <span style="font-size:13px;color:var(--text-muted)">$</span>
-                <input type="text" name="unit_type_market_rent[]" value="" class="amount-input"
+                <input type="text" name="unit_type_market_rent[]" value="{{ u.avg_monthly_rent|round(0)|int }}" class="amount-input"
                        placeholder="optional"
                        style="width:80px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
               </div>
@@ -341,7 +341,7 @@ function addUnitRow() {
     <td style="text-align:right" class="market-col" style="${marketStyle}">
       <div style="display:flex;align-items:center;justify-content:flex-end;gap:2px">
         <span style="font-size:13px;color:var(--text-muted)">$</span>
-        <input type="text" name="unit_type_market_rent[]" value="" class="amount-input" placeholder="optional"
+        <input type="text" name="unit_type_market_rent[]" value="{{ u.avg_monthly_rent|round(0)|int }}" class="amount-input" placeholder="optional"
                style="width:80px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
       </div>
     </td>`;
