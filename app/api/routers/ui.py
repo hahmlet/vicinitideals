@@ -10923,12 +10923,15 @@ async def proforma_confirm(
                 count = int(row.get("unit_count") or 0)
                 if count <= 0:
                     continue
+                mkt_rent_raw = row.get("market_rent_per_unit")
+                mkt_rent = Decimal(str(mkt_rent_raw)) if mkt_rent_raw else None
                 session.add(IncomeStream(
                     project_id=project_id,
                     label=f"{row['label']} Rent",
                     stream_type=IncomeStreamType.residential_rent,
                     unit_count=count,
                     amount_per_unit_monthly=rent,
+                    catchup_target_rent=mkt_rent,
                     stabilized_occupancy_pct=Decimal("95"),
                     escalation_rate_pct_annual=Decimal("3"),
                     active_in_phases=["lease_up", "stabilized"],
