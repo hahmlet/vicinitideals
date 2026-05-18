@@ -653,3 +653,19 @@ def _loan_pre_op_months(module: object, capital_modules: list, phases: list) -> 
         if p.period_type in _CONSTRUCTION_PERIOD_TYPES
         and start_rank <= _PERIOD_TYPE_RANK.get(p.period_type, 99) < end_rank
     )
+
+
+def _loan_start_abs_month(module: object, phases: list) -> int:
+    """Absolute cashflow month index when this loan becomes active.
+
+    Mirrors _loan_pre_op_months: sums months for all phases whose rank is
+    strictly below the module's active_phase_start rank.  This gives the
+    offset needed to convert an absolute cashflow month to a loan-relative
+    month for carry schedule lookups.
+    """
+    start = str(getattr(module, "active_phase_start", "") or "")
+    start_rank = _APS_TO_RANK.get(start, 0)
+    return sum(
+        p.months for p in phases
+        if _PERIOD_TYPE_RANK.get(p.period_type, 99) < start_rank
+    )

@@ -141,6 +141,24 @@ class CapitalCarrySchema(BaseModel):
     # drop keys the engine adds in future rewrites.
     phases: list[dict] | None = None
 
+    # ── Flexible carry schedule (N-phase, supersedes `phases` when present) ──
+    # Ordered list of carry phases; each phase is active until the next starts.
+    # Duration types:
+    #   {"type": "months", "months": N}  — fixed N months from phase start
+    #   {"type": "milestone", "milestone_key": "construction"}  — ends when
+    #       that milestone phase begins (keys: close, pre_development,
+    #       construction, operation_lease_up, operation_stabilized)
+    #   {"type": "remainder"}  — extends to loan maturity; must be last
+    # Example: IR during construction → IO during lease-up → PI amortization:
+    #   [{"label": "IR", "carry_type": "interest_reserve",
+    #     "duration": {"type": "milestone", "milestone_key": "operation_lease_up"},
+    #     "rate_pct": 7.5},
+    #    {"label": "IO", "carry_type": "io_only",
+    #     "duration": {"type": "months", "months": 12}, "rate_pct": 6.5},
+    #    {"label": "PI", "carry_type": "pi",
+    #     "duration": {"type": "remainder"}, "rate_pct": 6.5, "amort_term_years": 30}]
+    schedule: list[dict] | None = None
+
 
 class CapitalExitSchema(BaseModel):
     exit_type: Literal[
