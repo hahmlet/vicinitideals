@@ -1604,6 +1604,26 @@ function ulTimingChanged(val) {
     btn.onclick     = isLast ? swSubmit : swNext;
     _step = step;
     _swError(null);  // clear any validation error on step change
+    // Re-apply pending carry state when step 4 becomes visible
+    if (step === 4) {
+      var _frm = document.getElementById('sw-form');
+      if (_frm) {
+        var _cw = document.querySelector('#sw-step-4 .carry-wrapper');
+        var _schedStr = _frm.dataset.pendingCarrySchedule;
+        if (_schedStr) {
+          try { prefillCarrySchedule(JSON.parse(_schedStr), _cw); } catch(e) {}
+        } else {
+          if (_cw) {
+            var _sr = _cw.querySelector('input[name="carry_schedule_mode"][value="simple"]');
+            if (_sr) { _sr.checked = true; carryModeSwitch(_sr, 'simple'); }
+          }
+          var _cctEl = document.querySelector('#sw-form [name="construction_carry_type"]');
+          var _octEl = document.querySelector('#sw-form [name="operation_carry_type"]');
+          if (_cctEl && _frm.dataset.pendingConstrCarryType) _cctEl.value = _frm.dataset.pendingConstrCarryType;
+          if (_octEl && _frm.dataset.pendingOperCarryType)   _octEl.value = _frm.dataset.pendingOperCarryType;
+        }
+      }
+    }
   }
 
   function _swError(msg) {
@@ -1704,17 +1724,18 @@ function ulTimingChanged(val) {
     setVal('ltv_pct', d.ltv_pct);
     setVal('amort_term_years', d.amort_term_years);
     setVal('hold_term_years', d.hold_term_years);
-    var wizardCarryWrapper = document.querySelector('#sw-step-4 .carry-wrapper');
-    if (d.carry_schedule && d.carry_schedule.length) {
-      prefillCarrySchedule(d.carry_schedule, wizardCarryWrapper);
-    } else {
-      // Ensure wizard carry panel shows simple mode (vehicle has no custom schedule)
-      if (wizardCarryWrapper) {
-        var simpleRadio = wizardCarryWrapper.querySelector('input[name="carry_schedule_mode"][value="simple"]');
-        if (simpleRadio) { simpleRadio.checked = true; carryModeSwitch(simpleRadio, 'simple'); }
+    // Store carry state for re-application when step 4 becomes visible (_show resets DOM).
+    var _swFrm = document.getElementById('sw-form');
+    if (_swFrm) {
+      if (d.carry_schedule && d.carry_schedule.length) {
+        _swFrm.dataset.pendingCarrySchedule = JSON.stringify(d.carry_schedule);
+        delete _swFrm.dataset.pendingConstrCarryType;
+        delete _swFrm.dataset.pendingOperCarryType;
+      } else {
+        delete _swFrm.dataset.pendingCarrySchedule;
+        _swFrm.dataset.pendingConstrCarryType = d.construction_carry_type || '';
+        _swFrm.dataset.pendingOperCarryType   = d.operation_carry_type   || '';
       }
-      setVal('construction_carry_type', d.construction_carry_type);
-      setVal('operation_carry_type', d.operation_carry_type);
     }
     if (d.perm_rate_pct) setVal('perm_rate_pct', d.perm_rate_pct);
     if (d.perm_term_years) setVal('perm_term_years', d.perm_term_years);
