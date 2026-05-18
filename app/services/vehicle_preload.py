@@ -10,6 +10,7 @@ Called from the POST /ui/deals/create-model endpoint before commit.
 from __future__ import annotations
 
 import uuid
+from decimal import Decimal
 from typing import Any
 
 from sqlalchemy import select
@@ -23,15 +24,20 @@ async def preload_equity_modules(
     session: AsyncSession,
     scenario_id: uuid.UUID,
     org_id: uuid.UUID,
+    project_id: uuid.UUID | None = None,
 ) -> list[CapitalModule]:
-    """Ensure scenario has GP Equity + LP Equity capital modules.
+    """Ensure scenario has GP Equity + LP Equity capital modules with project junctions.
 
     Finds existing org-level default vehicles by (scope, owner_id, equity_role).
     Creates vehicles if absent. Creates CapitalModule rows for the scenario.
+    Creates CapitalModuleProject junction rows so the engine and UI see $0 committed
+    amounts immediately — user edits via Coverage modal to set real amounts.
     Idempotent: returns immediately if equity modules already exist.
 
     Returns the newly created CapitalModule rows (empty list if already existed).
     """
+    from app.models.capital import CapitalModuleProject
+
     # Skip if equity modules already exist on this scenario
     existing = (
         await session.execute(
@@ -76,6 +82,21 @@ async def preload_equity_modules(
     )
     session.add(gp_module)
     session.add(lp_module)
+    await session.flush()
+
+    # Wire both modules to the project via junction rows so the engine loads them
+    # and the S&U panel shows $0 (not stale JSONB amounts from prior states).
+    if project_id is not None:
+        for mod in (lp_module, gp_module):
+            session.add(CapitalModuleProject(
+                capital_module_id=mod.id,
+                project_id=project_id,
+                amount=Decimal("0"),
+                active_from="acquisition",
+                active_to="exit",
+                auto_size=False,
+            ))
+
     return [gp_module, lp_module]
 
 

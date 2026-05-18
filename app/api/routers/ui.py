@@ -2377,7 +2377,7 @@ async def create_deal(
     ))
 
     from app.services.vehicle_preload import preload_equity_modules
-    await preload_equity_modules(session, scenario.id, org_id)
+    await preload_equity_modules(session, scenario.id, org_id, project_id=dev_project.id)
 
     await session.commit()
 
@@ -12488,6 +12488,11 @@ async def _run_draw_schedule(
             if _drawn is None:
                 continue
             ds.total_commitment = Decimal(str(_drawn))
+            # Equity draw sources: update draw_sources.total_commitment for display
+            # only — never overwrite capital module source["amount"] for equity
+            # because the sequential payoff model produces inflated figures.
+            if ds.source_type == "equity":
+                continue
             if ds.capital_module_id:
                 _cm = await session.get(CapitalModule, ds.capital_module_id)
                 if _cm:
