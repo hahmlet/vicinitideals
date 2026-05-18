@@ -7,6 +7,74 @@
 {%- set _action = "/settings/vehicles/" ~ vehicle.id if _is_edit else "/settings/vehicles" -%}
 {%- set _scope = (vehicle.scope if _is_edit else (_scope_override if _scope_override is defined else "org")) -%}
 
+{%- macro _vf_phase_row(sp={}, idx=0) -%}
+{%- set _dt = sp.get('duration', {}).get('type', 'months') -%}
+<div data-vf-phase style="display:grid;grid-template-columns:1.5fr 1.5fr 1.2fr 1.2fr 1fr 1fr auto;gap:6px;align-items:end;padding:8px;border:1px solid var(--border);border-radius:var(--radius)">
+  <div>
+    <label style="font-size:10px;color:var(--text-muted);display:block;margin-bottom:2px">Label</label>
+    <input type="text" name="v_carry_phase_label[]" value="{{ sp.get('label','') }}"
+           placeholder="e.g. IR"
+           style="width:100%;padding:5px 7px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:12px;box-sizing:border-box">
+  </div>
+  <div>
+    <label style="font-size:10px;color:var(--text-muted);display:block;margin-bottom:2px">Carry Type</label>
+    <select name="v_carry_phase_type[]" onchange="vCarryPhaseTypeChanged(this)"
+            style="width:100%;padding:5px 7px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:12px">
+      <option value="interest_reserve" {{ 'selected' if sp.get('carry_type')=='interest_reserve' }}>Int Reserve</option>
+      <option value="capitalized_interest" {{ 'selected' if sp.get('carry_type')=='capitalized_interest' }}>PIK / Cap Interest</option>
+      <option value="io_only" {{ 'selected' if sp.get('carry_type')=='io_only' }}>IO Only</option>
+      <option value="pi" {{ 'selected' if sp.get('carry_type')=='pi' }}>P&amp;I</option>
+      <option value="none" {{ 'selected' if sp.get('carry_type')=='none' }}>None</option>
+    </select>
+  </div>
+  <div>
+    <label style="font-size:10px;color:var(--text-muted);display:block;margin-bottom:2px">Duration</label>
+    <select name="v_carry_phase_duration_type[]" onchange="vCarryDurTypeChanged(this)"
+            style="width:100%;padding:5px 7px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:12px">
+      <option value="months" {{ 'selected' if _dt=='months' or not _dt }}>Fixed months</option>
+      <option value="milestone" {{ 'selected' if _dt=='milestone' }}>Until milestone</option>
+      <option value="remainder" {{ 'selected' if _dt=='remainder' }}>Remainder</option>
+    </select>
+  </div>
+  <div>
+    <div data-vf-dur-months style="display:{{ 'none' if _dt in ('milestone','remainder') else 'block' }}">
+      <label style="font-size:10px;color:var(--text-muted);display:block;margin-bottom:2px">Months</label>
+      <input type="number" name="v_carry_phase_months[]" min="1" step="1"
+             value="{{ sp.get('duration',{}).get('months','') }}"
+             style="width:100%;padding:5px 7px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:12px;box-sizing:border-box">
+    </div>
+    <div data-vf-dur-milestone style="display:{{ 'block' if _dt=='milestone' else 'none' }}">
+      <label style="font-size:10px;color:var(--text-muted);display:block;margin-bottom:2px">Until</label>
+      <select name="v_carry_phase_milestone_key[]"
+              style="width:100%;padding:5px 7px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:12px">
+        <option value="pre_development" {{ 'selected' if sp.get('duration',{}).get('milestone_key')=='pre_development' }}>Pre-Dev start</option>
+        <option value="construction" {{ 'selected' if sp.get('duration',{}).get('milestone_key')=='construction' }}>Construction start</option>
+        <option value="operation_lease_up" {{ 'selected' if sp.get('duration',{}).get('milestone_key')=='operation_lease_up' }}>Lease-Up start</option>
+        <option value="operation_stabilized" {{ 'selected' if sp.get('duration',{}).get('milestone_key')=='operation_stabilized' }}>Stabilized start</option>
+      </select>
+    </div>
+  </div>
+  <div>
+    <label style="font-size:10px;color:var(--text-muted);display:block;margin-bottom:2px">Rate %</label>
+    <input type="number" name="v_carry_phase_rate_pct[]" step="0.01" min="0"
+           value="{{ sp.get('rate_pct','') }}"
+           placeholder="e.g. 7.5"
+           style="width:100%;padding:5px 7px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:12px;box-sizing:border-box">
+  </div>
+  <div data-vf-amort style="display:{{ 'block' if sp.get('carry_type')=='pi' else 'none' }}">
+    <label style="font-size:10px;color:var(--text-muted);display:block;margin-bottom:2px">Amort (yr)</label>
+    <input type="number" name="v_carry_phase_amort_years[]" step="1" min="1"
+           value="{{ sp.get('amort_term_years','') }}"
+           placeholder="30"
+           style="width:100%;padding:5px 7px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:12px;box-sizing:border-box">
+  </div>
+  <div style="display:flex;align-items:flex-end">
+    <button type="button" onclick="vRemoveCarryPhase(this)" title="Remove phase"
+            style="padding:5px 8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text-muted);font-size:14px;cursor:pointer;line-height:1">×</button>
+  </div>
+</div>
+{%- endmacro -%}
+
 <form method="post" action="{{ _action }}" style="display:grid;gap:12px">
   <input type="hidden" name="scope" id="{{ 'new-vehicle-scope' if not _is_edit else '' }}" value="{{ _scope }}">
   <input type="hidden" name="new-user-vehicle-scope" id="new-user-vehicle-scope" value="{{ _scope }}">
@@ -102,6 +170,37 @@
     </div>
   </div>
 
+  {# Custom carry schedule (debt/forgivable only) #}
+  {%- set _has_v_schedule = _is_edit and vehicle.carry_config and vehicle.carry_config.get('schedule') -%}
+  <div class="vf-debt-block" style="display:{{ 'block' if (_is_edit and vehicle.vehicle_type in ('debt', 'forgivable_loan')) else 'none' }}">
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:8px">
+      <span style="font-size:11px;color:var(--text-muted)">Carry Mode</span>
+      <label style="display:flex;align-items:center;gap:4px;font-size:13px;cursor:pointer">
+        <input type="radio" name="v_carry_schedule_mode" value="simple"
+               {{ 'checked' if not _has_v_schedule else '' }}
+               onchange="vCarryModeSwitch(this.closest('form'))">
+        Simple
+      </label>
+      <label style="display:flex;align-items:center;gap:4px;font-size:13px;cursor:pointer">
+        <input type="radio" name="v_carry_schedule_mode" value="schedule"
+               {{ 'checked' if _has_v_schedule else '' }}
+               onchange="vCarryModeSwitch(this.closest('form'))">
+        Custom Schedule
+      </label>
+    </div>
+    <div class="vf-schedule-editor" style="display:{{ 'block' if _has_v_schedule else 'none' }}">
+      <div class="vf-phase-list" style="display:flex;flex-direction:column;gap:6px;margin-bottom:8px">
+        {%- if _has_v_schedule -%}
+          {%- for sp in vehicle.carry_config.schedule -%}
+            {{ _vf_phase_row(sp, loop.index0) }}
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+      <button type="button" class="btn btn-secondary" style="font-size:12px;padding:4px 12px"
+              onclick="vAddCarryPhase(this)">+ Add Phase</button>
+    </div>
+  </div>
+
   {# Day-count convention (debt/forgivable only) #}
   <div class="vf-debt-fields" style="display:{{ 'grid' if (_is_edit and vehicle.vehicle_type in ('debt', 'forgivable_loan')) else 'none' }};grid-template-columns:1fr 3fr;gap:12px">
     <div>
@@ -138,5 +237,61 @@ function vfToggleFields(sel) {
   form.querySelectorAll('.vf-debt-fields').forEach(function(el) {
     el.style.display = (vtype === 'debt' || vtype === 'forgivable_loan') ? 'grid' : 'none';
   });
+  form.querySelectorAll('.vf-debt-block').forEach(function(el) {
+    el.style.display = (vtype === 'debt' || vtype === 'forgivable_loan') ? 'block' : 'none';
+  });
+}
+
+function vCarryModeSwitch(form) {
+  var mode = form.querySelector('input[name="v_carry_schedule_mode"]:checked');
+  if (!mode) return;
+  var editor = form.querySelector('.vf-schedule-editor');
+  if (editor) editor.style.display = mode.value === 'schedule' ? 'block' : 'none';
+}
+
+function vCarryDurTypeChanged(sel) {
+  var row = sel.closest('[data-vf-phase]');
+  row.querySelector('[data-vf-dur-months]').style.display = sel.value === 'months' ? 'block' : 'none';
+  row.querySelector('[data-vf-dur-milestone]').style.display = sel.value === 'milestone' ? 'block' : 'none';
+}
+
+function vCarryPhaseTypeChanged(sel) {
+  var row = sel.closest('[data-vf-phase]');
+  row.querySelector('[data-vf-amort]').style.display = sel.value === 'pi' ? 'block' : 'none';
+}
+
+function vAddCarryPhase(btn) {
+  var list = btn.closest('.vf-schedule-editor').querySelector('.vf-phase-list');
+  var s = 'width:100%;padding:5px 7px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:12px;box-sizing:border-box';
+  var ss = s.replace('box-sizing:border-box','');
+  var html = '<div data-vf-phase style="display:grid;grid-template-columns:1.5fr 1.5fr 1.2fr 1.2fr 1fr 1fr auto;gap:6px;align-items:end;padding:8px;border:1px solid var(--border);border-radius:var(--radius)">'
+    + '<div><label style="font-size:10px;color:var(--text-muted);display:block;margin-bottom:2px">Label</label>'
+    + '<input type="text" name="v_carry_phase_label[]" placeholder="e.g. IR" style="' + s + '"></div>'
+    + '<div><label style="font-size:10px;color:var(--text-muted);display:block;margin-bottom:2px">Carry Type</label>'
+    + '<select name="v_carry_phase_type[]" onchange="vCarryPhaseTypeChanged(this)" style="' + ss + '">'
+    + '<option value="interest_reserve">Int Reserve</option><option value="capitalized_interest">PIK / Cap Interest</option>'
+    + '<option value="io_only">IO Only</option><option value="pi">P&I</option><option value="none">None</option></select></div>'
+    + '<div><label style="font-size:10px;color:var(--text-muted);display:block;margin-bottom:2px">Duration</label>'
+    + '<select name="v_carry_phase_duration_type[]" onchange="vCarryDurTypeChanged(this)" style="' + ss + '">'
+    + '<option value="months">Fixed months</option><option value="milestone">Until milestone</option>'
+    + '<option value="remainder">Remainder</option></select></div>'
+    + '<div><div data-vf-dur-months><label style="font-size:10px;color:var(--text-muted);display:block;margin-bottom:2px">Months</label>'
+    + '<input type="number" name="v_carry_phase_months[]" min="1" step="1" style="' + s + '"></div>'
+    + '<div data-vf-dur-milestone style="display:none"><label style="font-size:10px;color:var(--text-muted);display:block;margin-bottom:2px">Until</label>'
+    + '<select name="v_carry_phase_milestone_key[]" style="' + ss + '">'
+    + '<option value="pre_development">Pre-Dev start</option><option value="construction">Construction start</option>'
+    + '<option value="operation_lease_up">Lease-Up start</option><option value="operation_stabilized">Stabilized start</option>'
+    + '</select></div></div>'
+    + '<div><label style="font-size:10px;color:var(--text-muted);display:block;margin-bottom:2px">Rate %</label>'
+    + '<input type="number" name="v_carry_phase_rate_pct[]" step="0.01" min="0" placeholder="e.g. 7.5" style="' + s + '"></div>'
+    + '<div data-vf-amort style="display:none"><label style="font-size:10px;color:var(--text-muted);display:block;margin-bottom:2px">Amort (yr)</label>'
+    + '<input type="number" name="v_carry_phase_amort_years[]" step="1" min="1" placeholder="30" style="' + s + '"></div>'
+    + '<div style="display:flex;align-items:flex-end"><button type="button" onclick="vRemoveCarryPhase(this)" title="Remove"'
+    + ' style="padding:5px 8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text-muted);font-size:14px;cursor:pointer;line-height:1">×</button></div></div>';
+  list.insertAdjacentHTML('beforeend', html);
+}
+
+function vRemoveCarryPhase(btn) {
+  btn.closest('[data-vf-phase]').remove();
 }
 </script>

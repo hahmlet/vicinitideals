@@ -4820,6 +4820,53 @@ _ITEM_TYPE_TO_MODULE: dict[str, str] = {
 }
 
 
+def _parse_vehicle_carry_schedule(form) -> dict | None:
+    """Parse carry schedule arrays from a vehicle settings form into carry_config dict."""
+    labels = form.getlist("v_carry_phase_label[]")
+    types = form.getlist("v_carry_phase_type[]")
+    dur_types = form.getlist("v_carry_phase_duration_type[]")
+    months_vals = form.getlist("v_carry_phase_months[]")
+    milestones = form.getlist("v_carry_phase_milestone_key[]")
+    rates = form.getlist("v_carry_phase_rate_pct[]")
+    amorts = form.getlist("v_carry_phase_amort_years[]")
+    if not types:
+        return None
+    phases = []
+    for i, ct in enumerate(types):
+        ct = ct.strip()
+        if not ct or ct == "none":
+            continue
+        dur_type = (dur_types[i] if i < len(dur_types) else "remainder").strip()
+        if dur_type == "months":
+            try:
+                n = int(months_vals[i]) if i < len(months_vals) and months_vals[i].strip() else 0
+            except ValueError:
+                n = 0
+            dur: dict = {"type": "months", "months": n}
+        elif dur_type == "milestone":
+            mk = (milestones[i] if i < len(milestones) else "").strip()
+            dur = {"type": "milestone", "milestone_key": mk}
+        else:
+            dur = {"type": "remainder"}
+        p: dict = {
+            "label": (labels[i] if i < len(labels) else "").strip() or ct,
+            "carry_type": ct,
+            "duration": dur,
+        }
+        try:
+            if i < len(rates) and rates[i].strip():
+                p["rate_pct"] = float(rates[i].strip())
+        except ValueError:
+            pass
+        try:
+            if i < len(amorts) and amorts[i].strip():
+                p["amort_term_years"] = int(amorts[i].strip())
+        except ValueError:
+            pass
+        phases.append(p)
+    return {"schedule": phases} if phases else None
+
+
 def _fd(v: str | None) -> Decimal | None:
     """Parse an optional Decimal from a form field. Strips commas tolerantly."""
     if not v or not v.strip():
@@ -5899,36 +5946,67 @@ async def handle_form_create_or_update(
         constr_carry_type = form.get("construction_carry_type", "none")
         # Carry rate: use source rate so the engine finds it in both places
         _carry_rate = _fd(form.get("source_interest_rate"))
-        constr_phase: dict = {
-            "name": "construction",
-            "carry_type": constr_carry_type,
-            "payment_frequency": form.get("construction_payment_frequency", "monthly"),
-        }
-        if _carry_rate is not None:
-            constr_phase["io_rate_pct"] = float(_carry_rate)
-        if constr_carry_type == "converts_to_permanent":
-            if perm_rate := _fd(form.get("perm_rate_pct")):
-                constr_phase["perm_rate_pct"] = float(perm_rate)
-            if perm_term := _fi(form.get("perm_term_years"), None):
-                constr_phase["perm_term_years"] = perm_term
-            if perm_trig := form.get("perm_conversion_trigger"):
-                constr_phase["perm_conversion_trigger"] = perm_trig
-        _op_phase: dict = {
-            "name": "operation",
-            "carry_type": form.get("operation_carry_type", "none"),
-            "payment_frequency": form.get("operation_payment_frequency", "monthly"),
-        }
-        if _carry_rate is not None:
-            _op_phase["io_rate_pct"] = float(_carry_rate)
-        # Mirror amort_term_years onto the operation phase so the engine's
-        # phased-carry reader (`_get_phase_carry(carry, "operation")`) finds
-        # it without falling back to source.amort_term_years (the legacy
-        # flat-shape location).
-        if amort:
-            _op_phase["amort_term_years"] = amort
-        carry_d = {
-            "phases": [constr_phase, _op_phase],
-        }
+
+        _carry_schedule_mode = (form.get("carry_schedule_mode") or "simple").strip()
+        if _carry_schedule_mode == "schedule":
+            # Parse N-phase carry schedule from form arrays.
+            _sched_labels = form.getlist("carry_phase_label[]")
+            _sched_types = form.getlist("carry_phase_type[]")
+            _sched_dur_types = form.getlist("carry_phase_duration_type[]")
+            _sched_months = form.getlist("carry_phase_months[]")
+            _sched_milestones = form.getlist("carry_phase_milestone_key[]")
+            _sched_rates = form.getlist("carry_phase_rate_pct[]")
+            _sched_amorts = form.getlist("carry_phase_amort_years[]")
+            _schedule_phases: list[dict] = []
+            for _si in range(len(_sched_types)):
+                _p_ct = (_sched_types[_si] if _si < len(_sched_types) else "none").strip()
+                if not _p_ct or _p_ct == "none":
+                    continue
+                _p_dur_type = (_sched_dur_types[_si] if _si < len(_sched_dur_types) else "remainder").strip()
+                if _p_dur_type == "months":
+                    _p_dur: dict = {"type": "months", "months": int((_sched_months[_si] if _si < len(_sched_months) else "") or 0)}
+                elif _p_dur_type == "milestone":
+                    _p_dur = {"type": "milestone", "milestone_key": (_sched_milestones[_si] if _si < len(_sched_milestones) else "").strip()}
+                else:
+                    _p_dur = {"type": "remainder"}
+                _p: dict = {
+                    "label": (_sched_labels[_si] if _si < len(_sched_labels) else "").strip() or _p_ct,
+                    "carry_type": _p_ct,
+                    "duration": _p_dur,
+                }
+                _p_rate = _fd(_sched_rates[_si] if _si < len(_sched_rates) else None)
+                if _p_rate is not None:
+                    _p["rate_pct"] = float(_p_rate)
+                _p_amort = _fi(_sched_amorts[_si] if _si < len(_sched_amorts) else None, None)
+                if _p_amort:
+                    _p["amort_term_years"] = _p_amort
+                _schedule_phases.append(_p)
+            carry_d: dict = {"schedule": _schedule_phases}
+        else:
+            constr_phase: dict = {
+                "name": "construction",
+                "carry_type": constr_carry_type,
+                "payment_frequency": form.get("construction_payment_frequency", "monthly"),
+            }
+            if _carry_rate is not None:
+                constr_phase["io_rate_pct"] = float(_carry_rate)
+            if constr_carry_type == "converts_to_permanent":
+                if perm_rate := _fd(form.get("perm_rate_pct")):
+                    constr_phase["perm_rate_pct"] = float(perm_rate)
+                if perm_term := _fi(form.get("perm_term_years"), None):
+                    constr_phase["perm_term_years"] = perm_term
+                if perm_trig := form.get("perm_conversion_trigger"):
+                    constr_phase["perm_conversion_trigger"] = perm_trig
+            _op_phase: dict = {
+                "name": "operation",
+                "carry_type": form.get("operation_carry_type", "none"),
+                "payment_frequency": form.get("operation_payment_frequency", "monthly"),
+            }
+            if _carry_rate is not None:
+                _op_phase["io_rate_pct"] = float(_carry_rate)
+            if amort:
+                _op_phase["amort_term_years"] = amort
+            carry_d = {"phases": [constr_phase, _op_phase]}
         # Exit Vehicle: "maturity" | "sale" | "<module_uuid>" (retiring source).
         # Validate: must be one of the literals OR a UUID of another module on
         # the same scenario. Fall back to "maturity" if invalid.
@@ -11500,6 +11578,7 @@ async def source_vehicle_prefill(
         "draw_every_n_months": source.get("draw_every_n_months"),
         "draw_active_from_milestone": source.get("draw_active_from_milestone"),
         "draw_active_from_offset_days": source.get("draw_active_from_offset_days"),
+        "carry_schedule": carry.get("schedule"),
     })
 
 
@@ -11613,6 +11692,7 @@ async def vehicle_create(
     owner_id = user.org_id if scope == "org" else user.id
 
     from app.models.source_vehicle import SourceVehicle as _SV_cr
+    _v_carry_config = _parse_vehicle_carry_schedule(form)
     vehicle = _SV_cr(
         scope=scope,
         owner_id=owner_id,
@@ -11627,6 +11707,7 @@ async def vehicle_create(
         io_period_months=int(form.get("io_period_months")) if form.get("io_period_months") else None,
         amort_term_years=int(form.get("amort_term_years")) if form.get("amort_term_years") else None,
         pref_rate_pct=form.get("pref_rate_pct") or None,
+        carry_config=_v_carry_config if _v_carry_config else None,
         created_by=user.id,
         updated_by=user.id,
     )
@@ -11674,8 +11755,24 @@ async def vehicle_update(
     vehicle.amort_term_years = int(form.get("amort_term_years")) if form.get("amort_term_years") else None
     vehicle.pref_rate_pct = form.get("pref_rate_pct") or None
     vehicle.default_waterfall_position = int(form.get("default_waterfall_position") or vehicle.default_waterfall_position)
+    _new_carry_config = _parse_vehicle_carry_schedule(form)
+    vehicle.carry_config = _new_carry_config if _new_carry_config else vehicle.carry_config
     vehicle.updated_by = user.id
     await session.commit()
+
+    # Propagate carry schedule to all CapitalModules using this vehicle.
+    if _new_carry_config and _new_carry_config.get("schedule"):
+        _linked_modules = (await session.execute(
+            select(CapitalModule).where(CapitalModule.source_vehicle_id == vehicle_id)
+        )).scalars().all()
+        for _lm in _linked_modules:
+            _lm_carry = dict(_lm.carry or {})
+            if not _lm_carry.get("_schedule_override"):
+                _lm_carry["schedule"] = _new_carry_config["schedule"]
+                _lm.carry = _lm_carry
+                session.add(_lm)
+        if _linked_modules:
+            await session.commit()
 
     return RedirectResponse(url="/settings/vehicles", status_code=303)
 

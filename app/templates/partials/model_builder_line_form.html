@@ -808,79 +808,171 @@ function ulTimingChanged(val) {
 </div>
 {%- endmacro %}
 
-{%- macro carry_fields(pre_ops, ops, vehicle_type='') %}
+{%- macro carry_fields(pre_ops, ops, vehicle_type='', schedule=none) %}
 {%- set _ops_default = 'pi' if (vehicle_type == 'debt' and not ops.get('carry_type')) else ops.get('carry_type','none') -%}
-<div style="font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px">Pre-Operations Phase</div>
-<div class="form-row" style="margin-bottom:8px">
-  <div class="form-field">
-    <label class="form-label">Carry Type</label>
-    <select class="form-select" name="construction_carry_type" onchange="(function(s){var c=document.getElementById('constr-perm-fields');if(c)c.style.display=s.value==='converts_to_permanent'?'':'none';})(this)">
-      {% for ct in ['none','interest_reserve','io_only','capitalized_interest','pi','converts_to_permanent'] %}
-      <option value="{{ ct }}" {% if pre_ops.get('carry_type','none') == ct %}selected{% endif %}>
-        {%- if ct == 'interest_reserve' %}Interest Reserve
-        {%- elif ct == 'io_only' %}I&O Payment
-        {%- elif ct == 'capitalized_interest' %}Capitalized Interest
-        {%- elif ct == 'pi' %}P&I
-        {%- elif ct == 'converts_to_permanent' %}Construction-to-Perm Conversion
-        {%- else %}{{ ct | replace('_',' ') | title }}{% endif %}</option>
-      {% endfor %}
-    </select>
-  </div>
-  <div class="form-field">
-    <label class="form-label">Payment Frequency</label>
-    <select class="form-select" name="construction_payment_frequency">
-      {% for pf in ['monthly','quarterly','annual','at_exit'] %}
-      <option value="{{ pf }}" {% if pre_ops.get('payment_frequency','monthly') == pf %}selected{% endif %}>{{ pf | replace('_',' ') | title }}</option>
-      {% endfor %}
-    </select>
-  </div>
+{%- set _use_schedule = schedule is not none and schedule | length > 0 -%}
+
+{# Mode toggle #}
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+  <span style="font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted)">Carry</span>
+  <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px">
+    <input type="radio" name="carry_schedule_mode" value="simple"
+           onchange="carryModeSwitch(this,'simple')"
+           {% if not _use_schedule %}checked{% endif %}> Simple (2-phase)
+  </label>
+  <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px">
+    <input type="radio" name="carry_schedule_mode" value="schedule"
+           onchange="carryModeSwitch(this,'schedule')"
+           {% if _use_schedule %}checked{% endif %}> Custom Schedule
+  </label>
 </div>
-{%- set _show_c2p = pre_ops.get('carry_type') == 'converts_to_permanent' -%}
-<div id="constr-perm-fields" style="margin-bottom:16px;padding:12px;background:var(--surface-alt,#f9fafb);border:1px solid var(--border);border-radius:6px;{% if not _show_c2p %}display:none{% endif %}">
-  <div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:8px">Permanent Loan Terms (after conversion)</div>
+
+{# Simple 2-phase mode #}
+<div id="carry-simple-section" {% if _use_schedule %}style="display:none"{% endif %}>
+  <div style="font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px">Pre-Operations Phase</div>
+  <div class="form-row" style="margin-bottom:8px">
+    <div class="form-field">
+      <label class="form-label">Carry Type</label>
+      <select class="form-select" name="construction_carry_type" onchange="(function(s){var c=document.getElementById('constr-perm-fields');if(c)c.style.display=s.value==='converts_to_permanent'?'':'none';})(this)">
+        {% for ct in ['none','interest_reserve','io_only','capitalized_interest','pi','converts_to_permanent'] %}
+        <option value="{{ ct }}" {% if pre_ops.get('carry_type','none') == ct %}selected{% endif %}>
+          {%- if ct == 'interest_reserve' %}Interest Reserve
+          {%- elif ct == 'io_only' %}I&O Payment
+          {%- elif ct == 'capitalized_interest' %}Capitalized Interest
+          {%- elif ct == 'pi' %}P&I
+          {%- elif ct == 'converts_to_permanent' %}Construction-to-Perm Conversion
+          {%- else %}{{ ct | replace('_',' ') | title }}{% endif %}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-field">
+      <label class="form-label">Payment Frequency</label>
+      <select class="form-select" name="construction_payment_frequency">
+        {% for pf in ['monthly','quarterly','annual','at_exit'] %}
+        <option value="{{ pf }}" {% if pre_ops.get('payment_frequency','monthly') == pf %}selected{% endif %}>{{ pf | replace('_',' ') | title }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  {%- set _show_c2p = pre_ops.get('carry_type') == 'converts_to_permanent' -%}
+  <div id="constr-perm-fields" style="margin-bottom:16px;padding:12px;background:var(--surface-alt,#f9fafb);border:1px solid var(--border);border-radius:6px;{% if not _show_c2p %}display:none{% endif %}">
+    <div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:8px">Permanent Loan Terms (after conversion)</div>
+    <div class="form-row">
+      <div class="form-field">
+        <label class="form-label">Perm Rate (%)</label>
+        <input class="form-input" type="number" name="perm_rate_pct" step="0.1" min="0"
+               value="{{ pre_ops.get('perm_rate_pct', '') }}" placeholder="e.g. 6.5">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Perm Term (years)</label>
+        <input class="form-input" type="number" name="perm_term_years" step="1" min="1"
+               value="{{ pre_ops.get('perm_term_years', '') }}" placeholder="30">
+      </div>
+    </div>
+    <div class="form-field" style="margin-top:8px">
+      <label class="form-label">Conversion Trigger</label>
+      <select class="form-select" name="perm_conversion_trigger">
+        {% for trig in ['construction_completion','certificate_of_occupancy','stabilization','lease_up_complete'] %}
+        <option value="{{ trig }}" {% if pre_ops.get('perm_conversion_trigger') == trig %}selected{% endif %}>{{ trig | replace('_',' ') | title }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  <div style="font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px">Operations Phase</div>
   <div class="form-row">
     <div class="form-field">
-      <label class="form-label">Perm Rate (%)</label>
-      <input class="form-input" type="number" name="perm_rate_pct" step="0.1" min="0"
-             value="{{ pre_ops.get('perm_rate_pct', '') }}" placeholder="e.g. 6.5">
+      <label class="form-label">Carry Type</label>
+      <select class="form-select" name="operation_carry_type">
+        {% for ct in ['none','interest_reserve','io_only','capitalized_interest','pi'] %}
+        <option value="{{ ct }}" {% if _ops_default == ct %}selected{% endif %}>
+          {%- if ct == 'interest_reserve' %}Interest Reserve
+          {%- elif ct == 'io_only' %}I&O Payment
+          {%- elif ct == 'capitalized_interest' %}Capitalized Interest
+          {%- elif ct == 'pi' %}P&I
+          {%- else %}{{ ct | replace('_',' ') | title }}{%- endif %}</option>
+        {% endfor %}
+      </select>
     </div>
     <div class="form-field">
-      <label class="form-label">Perm Term (years)</label>
-      <input class="form-input" type="number" name="perm_term_years" step="1" min="1"
-             value="{{ pre_ops.get('perm_term_years', '') }}" placeholder="30">
+      <label class="form-label">Payment Frequency</label>
+      <select class="form-select" name="operation_payment_frequency">
+        {% for pf in ['monthly','quarterly','annual','at_exit'] %}
+        <option value="{{ pf }}" {% if ops.get('payment_frequency','monthly') == pf %}selected{% endif %}>{{ pf | replace('_',' ') | title }}</option>
+        {% endfor %}
+      </select>
     </div>
   </div>
-  <div class="form-field" style="margin-top:8px">
-    <label class="form-label">Conversion Trigger</label>
-    <select class="form-select" name="perm_conversion_trigger">
-      {% for trig in ['construction_completion','certificate_of_occupancy','stabilization','lease_up_complete'] %}
-      <option value="{{ trig }}" {% if pre_ops.get('perm_conversion_trigger') == trig %}selected{% endif %}>{{ trig | replace('_',' ') | title }}</option>
+</div>
+
+{# Custom schedule mode #}
+<div id="carry-schedule-section" {% if not _use_schedule %}style="display:none"{% endif %}>
+  <div id="carry-phase-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px">
+    {% if schedule %}
+      {% for sp in schedule %}
+      {{ _carry_phase_row(sp, loop.index0) }}
       {% endfor %}
-    </select>
+    {% endif %}
+  </div>
+  <button type="button" class="btn btn-ghost btn-sm" onclick="addCarryPhase()" style="font-size:12px">+ Add Phase</button>
+  <div style="font-size:11px;color:var(--text-muted);margin-top:6px">
+    Phases are applied in order. Last phase runs to loan maturity.
+    Milestone anchors: <em>close, pre_development, construction, operation_lease_up, operation_stabilized</em>
   </div>
 </div>
-<div style="font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px">Operations Phase</div>
-<div class="form-row">
-  <div class="form-field">
-    <label class="form-label">Carry Type</label>
-    <select class="form-select" name="operation_carry_type">
-      {% for ct in ['none','interest_reserve','io_only','capitalized_interest','pi'] %}
-      <option value="{{ ct }}" {% if _ops_default == ct %}selected{% endif %}>
+{%- endmacro %}
+
+{%- macro _carry_phase_row(sp={}, idx=0) %}
+{%- set _dur = sp.get('duration') or {} -%}
+{%- set _dur_type = _dur.get('type','remainder') -%}
+<div class="carry-phase-row" style="background:var(--surface-alt,#f9fafb);border:1px solid var(--border);border-radius:6px;padding:10px 12px">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+    <input class="form-input" type="text" name="carry_phase_label[]"
+           value="{{ sp.get('label','') }}" placeholder="Phase name" style="flex:1;font-size:12px">
+    <select class="form-select" name="carry_phase_type[]" onchange="carryPhaseTypeChanged(this)" style="font-size:12px">
+      {% for ct in ['interest_reserve','io_only','capitalized_interest','pi'] %}
+      <option value="{{ ct }}" {% if sp.get('carry_type') == ct %}selected{% endif %}>
         {%- if ct == 'interest_reserve' %}Interest Reserve
         {%- elif ct == 'io_only' %}I&O Payment
         {%- elif ct == 'capitalized_interest' %}Capitalized Interest
-        {%- elif ct == 'pi' %}P&I
-        {%- else %}{{ ct | replace('_',' ') | title }}{%- endif %}</option>
+        {%- elif ct == 'pi' %}P&I{% endif %}</option>
       {% endfor %}
     </select>
+    <button type="button" class="btn btn-ghost btn-sm" onclick="removeCarryPhase(this)"
+            style="font-size:11px;color:var(--danger,#dc2626);padding:2px 6px">✕</button>
   </div>
-  <div class="form-field">
-    <label class="form-label">Payment Frequency</label>
-    <select class="form-select" name="operation_payment_frequency">
-      {% for pf in ['monthly','quarterly','annual','at_exit'] %}
-      <option value="{{ pf }}" {% if ops.get('payment_frequency','monthly') == pf %}selected{% endif %}>{{ pf | replace('_',' ') | title }}</option>
-      {% endfor %}
-    </select>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end">
+    <div>
+      <label style="font-size:11px;color:var(--text-muted)">Duration</label>
+      <select class="form-select" name="carry_phase_duration_type[]" onchange="carryDurTypeChanged(this)" style="font-size:12px;width:auto">
+        <option value="months" {% if _dur_type == 'months' %}selected{% endif %}>Fixed months</option>
+        <option value="milestone" {% if _dur_type == 'milestone' %}selected{% endif %}>Until milestone</option>
+        <option value="remainder" {% if _dur_type == 'remainder' %}selected{% endif %}>Remainder of term</option>
+      </select>
+    </div>
+    <div class="carry-dur-months" {% if _dur_type != 'months' %}style="display:none"{% endif %}>
+      <label style="font-size:11px;color:var(--text-muted)">Months</label>
+      <input class="form-input" type="number" name="carry_phase_months[]" min="1" step="1"
+             value="{{ _dur.get('months','') }}" placeholder="12" style="width:70px;font-size:12px">
+    </div>
+    <div class="carry-dur-milestone" {% if _dur_type != 'milestone' %}style="display:none"{% endif %}>
+      <label style="font-size:11px;color:var(--text-muted)">Milestone</label>
+      <select class="form-select" name="carry_phase_milestone_key[]" style="font-size:12px;width:auto">
+        {% for mk in ['close','pre_development','construction','operation_lease_up','operation_stabilized'] %}
+        <option value="{{ mk }}" {% if _dur.get('milestone_key') == mk %}selected{% endif %}>
+          {{ mk | replace('_',' ') | title }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div>
+      <label style="font-size:11px;color:var(--text-muted)">Rate % (blank=inherit)</label>
+      <input class="form-input" type="number" name="carry_phase_rate_pct[]" step="0.01" min="0"
+             value="{{ sp.get('rate_pct','') }}" placeholder="inherit" style="width:90px;font-size:12px">
+    </div>
+    <div class="carry-amort-field" {% if sp.get('carry_type') != 'pi' %}style="display:none"{% endif %}>
+      <label style="font-size:11px;color:var(--text-muted)">Amort years</label>
+      <input class="form-input" type="number" name="carry_phase_amort_years[]" step="1" min="1"
+             value="{{ sp.get('amort_term_years','') }}" placeholder="30" style="width:70px;font-size:12px">
+    </div>
   </div>
 </div>
 {%- endmacro %}
@@ -894,8 +986,9 @@ function ulTimingChanged(val) {
 {# Exit Vehicle is shown for every debt instrument. #}
 {%- set _show_exit = (_ft == 'debt') -%}
 {%- set _show_carry = (_ft != 'grant') -%}
-{%- set c_phases = existing.carry.phases if (existing.carry and existing.carry.get('phases')) else [] -%}
-{%- set _flat_carry = existing.carry if (existing.carry and not existing.carry.get('phases')) else {} -%}
+{%- set c_schedule = existing.carry.schedule if (existing.carry and existing.carry.get('schedule')) else none -%}
+{%- set c_phases = existing.carry.phases if (existing.carry and existing.carry.get('phases') and not c_schedule) else [] -%}
+{%- set _flat_carry = existing.carry if (existing.carry and not existing.carry.get('phases') and not c_schedule) else {} -%}
 {%- set c_pre_ops = (c_phases | selectattr('name','equalto','pre_operations') | list | first)
                  or (c_phases | selectattr('name','equalto','construction')    | list | first)
                  or _flat_carry -%}
@@ -1049,7 +1142,7 @@ function ulTimingChanged(val) {
   {% if _show_carry %}
   <div class="form-section" style="border-bottom:none;margin-bottom:0;padding-bottom:0">
     <div class="form-section-title">Carry</div>
-    {{ carry_fields(c_pre_ops, c_ops, _ft) }}
+    {{ carry_fields(c_pre_ops, c_ops, _ft, c_schedule) }}
   </div>
   {% else %}
   <input type="hidden" name="construction_carry_type" value="none">
@@ -1607,8 +1700,12 @@ function ulTimingChanged(val) {
     setVal('ltv_pct', d.ltv_pct);
     setVal('amort_term_years', d.amort_term_years);
     setVal('hold_term_years', d.hold_term_years);
-    setVal('construction_carry_type', d.construction_carry_type);
-    setVal('operation_carry_type', d.operation_carry_type);
+    if (d.carry_schedule && d.carry_schedule.length) {
+      prefillCarrySchedule(d.carry_schedule);
+    } else {
+      setVal('construction_carry_type', d.construction_carry_type);
+      setVal('operation_carry_type', d.operation_carry_type);
+    }
     if (d.perm_rate_pct) setVal('perm_rate_pct', d.perm_rate_pct);
     if (d.perm_term_years) setVal('perm_term_years', d.perm_term_years);
     if (d.perm_conversion_trigger) setVal('perm_conversion_trigger', d.perm_conversion_trigger);
@@ -1904,6 +2001,105 @@ function ulTimingChanged(val) {
     _msAutoTrigger();  // run on load to pre-select best predecessor
   }
 })();
+</script>
+<script>
+// Carry schedule UI helpers
+function carryModeSwitch(radio, mode) {
+  var simple = document.getElementById('carry-simple-section');
+  var sched  = document.getElementById('carry-schedule-section');
+  if (!simple || !sched) return;
+  simple.style.display = mode === 'simple' ? '' : 'none';
+  sched.style.display  = mode === 'schedule' ? '' : 'none';
+}
+function carryDurTypeChanged(sel) {
+  var row = sel.closest('.carry-phase-row');
+  if (!row) return;
+  row.querySelector('.carry-dur-months').style.display    = sel.value === 'months'    ? '' : 'none';
+  row.querySelector('.carry-dur-milestone').style.display = sel.value === 'milestone' ? '' : 'none';
+}
+function carryPhaseTypeChanged(sel) {
+  var row = sel.closest('.carry-phase-row');
+  if (!row) return;
+  row.querySelector('.carry-amort-field').style.display = sel.value === 'pi' ? '' : 'none';
+}
+function addCarryPhase() {
+  var list = document.getElementById('carry-phase-list');
+  if (!list) return;
+  var tpl = `<div class="carry-phase-row" style="background:var(--surface-alt,#f9fafb);border:1px solid var(--border);border-radius:6px;padding:10px 12px">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+      <input class="form-input" type="text" name="carry_phase_label[]" placeholder="Phase name" style="flex:1;font-size:12px">
+      <select class="form-select" name="carry_phase_type[]" onchange="carryPhaseTypeChanged(this)" style="font-size:12px">
+        <option value="interest_reserve">Interest Reserve</option>
+        <option value="io_only">I&amp;O Payment</option>
+        <option value="capitalized_interest">Capitalized Interest</option>
+        <option value="pi">P&amp;I</option>
+      </select>
+      <button type="button" class="btn btn-ghost btn-sm" onclick="removeCarryPhase(this)" style="font-size:11px;color:var(--danger,#dc2626);padding:2px 6px">✕</button>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end">
+      <div>
+        <label style="font-size:11px;color:var(--text-muted)">Duration</label>
+        <select class="form-select" name="carry_phase_duration_type[]" onchange="carryDurTypeChanged(this)" style="font-size:12px;width:auto">
+          <option value="months">Fixed months</option>
+          <option value="milestone">Until milestone</option>
+          <option value="remainder" selected>Remainder of term</option>
+        </select>
+      </div>
+      <div class="carry-dur-months" style="display:none">
+        <label style="font-size:11px;color:var(--text-muted)">Months</label>
+        <input class="form-input" type="number" name="carry_phase_months[]" min="1" step="1" placeholder="12" style="width:70px;font-size:12px">
+      </div>
+      <div class="carry-dur-milestone" style="display:none">
+        <label style="font-size:11px;color:var(--text-muted)">Milestone</label>
+        <select class="form-select" name="carry_phase_milestone_key[]" style="font-size:12px;width:auto">
+          <option value="close">Close</option>
+          <option value="pre_development">Pre Development</option>
+          <option value="construction">Construction</option>
+          <option value="operation_lease_up">Operation Lease Up</option>
+          <option value="operation_stabilized">Operation Stabilized</option>
+        </select>
+      </div>
+      <div>
+        <label style="font-size:11px;color:var(--text-muted)">Rate % (blank=inherit)</label>
+        <input class="form-input" type="number" name="carry_phase_rate_pct[]" step="0.01" min="0" placeholder="inherit" style="width:90px;font-size:12px">
+      </div>
+      <div class="carry-amort-field" style="display:none">
+        <label style="font-size:11px;color:var(--text-muted)">Amort years</label>
+        <input class="form-input" type="number" name="carry_phase_amort_years[]" step="1" min="1" placeholder="30" style="width:70px;font-size:12px">
+      </div>
+    </div>
+  </div>`;
+  list.insertAdjacentHTML('beforeend', tpl);
+}
+function removeCarryPhase(btn) {
+  btn.closest('.carry-phase-row').remove();
+}
+// Prefill carry schedule from vehicle data
+function prefillCarrySchedule(schedule) {
+  if (!schedule || !schedule.length) return;
+  var list = document.getElementById('carry-phase-list');
+  if (!list) return;
+  list.innerHTML = '';
+  document.querySelector('input[name="carry_schedule_mode"][value="schedule"]').checked = true;
+  carryModeSwitch(null, 'schedule');
+  schedule.forEach(function(sp) { addCarryPhase(); });
+  var rows = list.querySelectorAll('.carry-phase-row');
+  schedule.forEach(function(sp, i) {
+    var row = rows[i];
+    if (!row) return;
+    row.querySelector('[name="carry_phase_label[]"]').value = sp.label || '';
+    row.querySelector('[name="carry_phase_type[]"]').value = sp.carry_type || 'io_only';
+    carryPhaseTypeChanged(row.querySelector('[name="carry_phase_type[]"]'));
+    var dur = sp.duration || {};
+    var durSel = row.querySelector('[name="carry_phase_duration_type[]"]');
+    durSel.value = dur.type || 'remainder';
+    carryDurTypeChanged(durSel);
+    if (dur.type === 'months') row.querySelector('[name="carry_phase_months[]"]').value = dur.months || '';
+    if (dur.type === 'milestone') row.querySelector('[name="carry_phase_milestone_key[]"]').value = dur.milestone_key || '';
+    if (sp.rate_pct != null) row.querySelector('[name="carry_phase_rate_pct[]"]').value = sp.rate_pct;
+    if (sp.amort_term_years) row.querySelector('[name="carry_phase_amort_years[]"]').value = sp.amort_term_years;
+  });
+}
 </script>
 {% endif %}
 </form>

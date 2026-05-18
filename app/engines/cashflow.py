@@ -62,6 +62,7 @@ from app.engines.cashflow_compile import (
     _is_expense_line_active,
     _is_stream_active,
     _loan_pre_op_months,
+    _loan_start_abs_month,
     _manifest_unit_count,
     _milestone_dates_from_orm,
     _module_rank,
@@ -330,8 +331,43 @@ async def _compute_project_cashflow(
         session, deal_uuid, project.id, capital_modules
     )
 
-    construction_debt_monthly = _sum_debt_service(capital_modules, is_construction=True)
-    operation_debt_monthly = _sum_debt_service(capital_modules, is_construction=False)
+    # Build milestone month map once for carry schedule resolution.
+    _milestone_month_map = _build_milestone_month_map(phases)
+
+    # Identify modules with a carry schedule so they can be excluded from the
+    # two-phase DS constants and handled per-period instead.
+    _schedule_module_ids: set = set()
+    for _scm in capital_modules:
+        if _is_debt_cm(_scm) and (_scm.carry or {}).get("schedule"):
+            _schedule_module_ids.add(_scm.id)
+
+    construction_debt_monthly = _sum_debt_service(
+        capital_modules, is_construction=True, exclude_ids=_schedule_module_ids
+    )
+    operation_debt_monthly = _sum_debt_service(
+        capital_modules, is_construction=False, exclude_ids=_schedule_module_ids
+    )
+
+    # Pre-compute per-absolute-month DS for schedule-based modules.
+    _total_months = sum(p.months for p in phases)
+    _schedule_period_ds: dict[int, Decimal] = {}
+    for _scm in capital_modules:
+        if _scm.id not in _schedule_module_ids:
+            continue
+        _scm_carry = _scm.carry or {}
+        _scm_schedule = _scm_carry.get("schedule", [])
+        _scm_principal = Decimal(str((_scm.source or {}).get("amount") or 0))
+        _scm_base_rate = (_scm.source or {}).get("interest_rate_pct")
+        _scm_start_abs = _loan_start_abs_month(_scm, phases)
+        _scm_resolved = _resolve_carry_schedule(_scm_schedule, _milestone_month_map, _scm_start_abs)
+        for _abs_m in range(_total_months):
+            _loan_m = _abs_m - _scm_start_abs
+            if _loan_m < 0:
+                continue
+            _active_phase = _carry_for_loan_month(_scm_resolved, _loan_m)
+            _ds = _period_ds_from_schedule_phase(_active_phase, _scm_principal, _scm_base_rate)
+            if _ds:
+                _schedule_period_ds[_abs_m] = _schedule_period_ds.get(_abs_m, ZERO) + _ds
 
     # ── Refi net proceeds computation ────────────────────────────────────────
     # When a perm module takes out a bridge (construction_retirement tagged),
@@ -453,6 +489,7 @@ async def _compute_project_cashflow(
                 stabilized_noi_monthly=stabilized_noi_monthly,
                 construction_debt_monthly=construction_debt_monthly,
                 operation_debt_monthly=operation_debt_monthly,
+                schedule_debt_monthly=_schedule_period_ds.get(period, ZERO),
                 income_mode=income_mode,
                 first_stab_period=_first_stab_period,
                 use_line_phase_overrides=_ul_phase_overrides,
@@ -1385,14 +1422,24 @@ _APS_TO_USE_PHASE: dict[str, str] = {
 
 
 def _carry_type_for_phase(carry: dict, is_construction: bool) -> str:
-    """Extract carry_type from either flat {carry_type:...} or phased {phases:[...]} format.
+    """Extract carry_type from either flat, phased, or schedule format.
 
+    For schedule format: construction → first phase; operation → first IO/PI phase.
     Normalises "accruing" → "capitalized_interest" in the cashflow engine only.
-    The waterfall engine keeps accruing distinct (side-pocket vs principal accrual).
     """
     def _norm(ct: str) -> str:
         return "capitalized_interest" if ct == "accruing" else ct
 
+    if carry.get("schedule"):
+        schedule = carry["schedule"]
+        if is_construction:
+            return _norm(schedule[0].get("carry_type", "none")) if schedule else "none"
+        # operations: find first IO or PI phase (IR/CI are pre-funded pre-op)
+        for p in schedule:
+            ct = _norm(p.get("carry_type", "none"))
+            if ct in ("io_only", "pi"):
+                return ct
+        return "none"
     if carry.get("phases"):
         target = "construction" if is_construction else "operation"
         for p in carry["phases"]:
@@ -1410,6 +1457,149 @@ def _get_phase_carry(carry: dict, phase_name: str) -> dict | None:
         if p.get("name") == phase_name:
             return p
     return None
+
+
+# ---------------------------------------------------------------------------
+# Flexible carry schedule helpers (N-phase, supersedes two-phase system)
+# ---------------------------------------------------------------------------
+
+#: Maps user-facing milestone keys to PeriodType so we can locate the phase's
+#: starting month in a compiled PhaseSpec list.
+_MILESTONE_KEY_TO_PERIOD: dict[str, "PeriodType"] = {
+    "close":                  PeriodType.acquisition,
+    "pre_development":        PeriodType.pre_construction,
+    "construction":           PeriodType.construction,
+    "operation_lease_up":     PeriodType.lease_up,
+    "operation_stabilized":   PeriodType.stabilized,
+}
+
+
+def _build_milestone_month_map(phases: list) -> dict[str, int]:
+    """Map milestone key → absolute cashflow month when that phase begins."""
+    result: dict[str, int] = {}
+    cursor = 0
+    for phase in phases:
+        for key, pt in _MILESTONE_KEY_TO_PERIOD.items():
+            if phase.period_type == pt and key not in result:
+                result[key] = cursor
+        cursor += phase.months
+    result["_total"] = cursor
+    return result
+
+
+def _resolve_carry_schedule(
+    schedule: list[dict],
+    milestone_month_map: dict[str, int],
+    loan_start_abs: int,
+) -> list[dict]:
+    """Expand a carry schedule into resolved phases with absolute loan-month boundaries.
+
+    Each returned dict has:
+      start_loan_month  — inclusive loan-relative month when phase becomes active
+      end_loan_month    — exclusive loan-relative month when phase ends (None = remainder)
+      carry_type        — normalised carry type string
+      rate_pct          — float or None (None = inherit from source)
+      amort_term_years  — int or None
+    """
+    resolved: list[dict] = []
+    cursor = 0
+    total_abs = milestone_month_map.get("_total", 0)
+    for phase in schedule:
+        dur = phase.get("duration") or {}
+        dur_type = dur.get("type", "remainder")
+
+        if dur_type == "months":
+            phase_end = cursor + int(dur.get("months") or 0)
+        elif dur_type == "milestone":
+            mk = dur.get("milestone_key", "")
+            abs_mk = milestone_month_map.get(mk, total_abs)
+            phase_end: int | None = max(0, abs_mk - loan_start_abs)
+        else:
+            phase_end = None  # remainder — extends to loan maturity
+
+        ct = (phase.get("carry_type") or "none").replace("accruing", "capitalized_interest")
+        resolved.append({
+            "start_loan_month": cursor,
+            "end_loan_month": phase_end,
+            "carry_type": ct,
+            "rate_pct": phase.get("rate_pct"),
+            "amort_term_years": phase.get("amort_term_years"),
+            "label": phase.get("label", ""),
+        })
+        if phase_end is None:
+            break  # remainder is always last
+        cursor = phase_end
+    return resolved
+
+
+def _carry_for_loan_month(resolved: list[dict], loan_month: int) -> dict:
+    """Return the active carry phase dict for a loan-relative month index."""
+    for phase in resolved:
+        end = phase["end_loan_month"]
+        if end is None or loan_month < end:
+            return phase
+    return resolved[-1] if resolved else {"carry_type": "none", "rate_pct": None}
+
+
+def _compute_preop_carry_cost(
+    schedule: list[dict],
+    funded: Decimal,
+    preop_months: int,
+    base_rate: Decimal,
+    milestone_month_map: dict[str, int],
+    loan_start_abs: int,
+) -> Decimal:
+    """Total IR + CI reserve cost for schedule phases that fall in the pre-op window.
+
+    Phases with carry_type io_only / pi within the pre-op window are NOT
+    pre-funded — they result in periodic monthly DS (handled in the main loop).
+    """
+    total = ZERO
+    total_abs = milestone_month_map.get("_total", 0)
+    cursor = 0
+    for phase in schedule:
+        dur = phase.get("duration") or {}
+        dur_type = dur.get("type", "remainder")
+        if dur_type == "months":
+            phase_end = cursor + int(dur.get("months") or 0)
+        elif dur_type == "milestone":
+            mk = dur.get("milestone_key", "")
+            abs_mk = milestone_month_map.get(mk, total_abs)
+            phase_end = max(0, abs_mk - loan_start_abs)
+        else:
+            phase_end = preop_months  # remainder — cap at pre-op boundary
+        phase_dur = max(0, min(phase_end, preop_months) - cursor)
+        if phase_dur > 0:
+            p_rate = Decimal(str(phase.get("rate_pct") or 0)) or base_rate
+            p_ct = (phase.get("carry_type") or "none").replace("accruing", "capitalized_interest")
+            if p_ct == "interest_reserve" and p_rate > ZERO:
+                total += period_interest_months(funded, phase_dur, float(p_rate), draw_schedule="linear")
+            elif p_ct == "capitalized_interest" and p_rate > ZERO:
+                total += period_interest_months(funded, phase_dur, float(p_rate), draw_schedule="lump")
+        if phase_end >= preop_months or dur_type == "remainder":
+            break
+        cursor = phase_end
+    return total
+
+
+def _period_ds_from_schedule_phase(
+    phase: dict,
+    principal: Decimal,
+    base_rate: float | None,
+) -> Decimal:
+    """Monthly DS contribution for a single carry schedule phase."""
+    ct = phase.get("carry_type", "none")
+    if ct in ("interest_reserve", "capitalized_interest", "none"):
+        return ZERO  # pre-funded or no DS
+    rate = phase.get("rate_pct") or base_rate
+    if not rate:
+        return ZERO
+    if ct == "io_only":
+        return _monthly_io(principal, rate)
+    if ct == "pi":
+        ay = int(phase.get("amort_term_years") or 30)
+        return _monthly_pmt(principal, rate, ay)
+    return ZERO
 
 
 def _pv_from_pmt(monthly_pmt: Decimal, rate_pct: float | None, amort_years: int) -> Decimal:
@@ -1664,12 +1854,17 @@ async def _auto_size_debt_modules(
                 _r = Decimal(str(_rate or 0))
                 _pre_ct = _carry_type_for_phase(_carry, is_construction=True)
                 _n = _loan_pre_op_months(_m, capital_modules, phases)
-                if _pre_ct == "interest_reserve" and _r > ZERO and _n > 0:
-                    # average-draw factor: principal drawn evenly over _n months
+                _pre_schedule = _carry.get("schedule")
+                if _pre_schedule and _n > 0 and _funded > ZERO:
+                    _interest_carry = _compute_preop_carry_cost(
+                        _pre_schedule, _funded, _n, _r, _milestone_month_map,
+                        _loan_start_abs_month(_m, phases),
+                    )
+                    _io_f = (_interest_carry / _funded) if _funded > ZERO else ZERO
+                elif _pre_ct == "interest_reserve" and _r > ZERO and _n > 0:
                     _interest_carry = period_interest_months(_funded, _n, _r, draw_schedule="linear")
                     _io_f = (_interest_carry / _funded) if _funded > ZERO else ZERO
                 elif _pre_ct == "capitalized_interest" and _r > ZERO and _n > 0:
-                    # full-balance factor: lump draw at month 0
                     _interest_carry = period_interest_months(_funded, _n, _r, draw_schedule="lump")
                     _io_f = (_interest_carry / _funded) if _funded > ZERO else ZERO
                 else:
@@ -1687,17 +1882,25 @@ async def _auto_size_debt_modules(
                 _r = Decimal(str(_rate or 0))
                 _acq_ct = _carry_type_for_phase(_carry, is_construction=True)
                 _n = _loan_pre_op_months(_m, capital_modules, phases)
-                if _principal > ZERO and _r > ZERO and _n > 0:
+                _acq_schedule = _carry.get("schedule")
+                if _acq_schedule and _n > 0 and _principal > ZERO:
+                    _acq_interest = _compute_preop_carry_cost(
+                        _acq_schedule, _principal, _n, _r, _milestone_month_map,
+                        _loan_start_abs_month(_m, phases),
+                    )
+                elif _principal > ZERO and _r > ZERO and _n > 0:
                     if _acq_ct == "interest_reserve":
                         _acq_interest = period_interest_months(_principal, _n, _r, draw_schedule="linear")
                     elif _acq_ct == "capitalized_interest":
                         _acq_interest = period_interest_months(_principal, _n, _r, draw_schedule="lump")
                     else:
                         _acq_interest = ZERO
-                    if _acq_interest > ZERO:
-                        _bridge_io["acquisition_loan"] = _acq_interest
-                        _bridge_io_carry_type["acquisition_loan"] = _acq_ct
-                        _bridge_io_module["acquisition_loan"] = _m.id
+                else:
+                    _acq_interest = ZERO
+                if _acq_interest > ZERO:
+                    _bridge_io["acquisition_loan"] = _acq_interest
+                    _bridge_io_carry_type["acquisition_loan"] = _acq_ct
+                    _bridge_io_module["acquisition_loan"] = _m.id
 
             elif _ft == "construction_loan":
                 _ltc = Decimal(str(_src.get("ltv_pct") or 75))
@@ -1705,7 +1908,14 @@ async def _auto_size_debt_modules(
                 _r = Decimal(str(_cr or 0))
                 _cl_ct = _carry_type_for_phase(_carry, is_construction=True)
                 _n = _loan_pre_op_months(_m, capital_modules, phases)
-                if _cl_ct == "interest_reserve" and _r > ZERO and _n > 0:
+                _cl_schedule = _carry.get("schedule")
+                if _cl_schedule and _n > 0 and _funded > ZERO:
+                    _interest_carry = _compute_preop_carry_cost(
+                        _cl_schedule, _funded, _n, _r, _milestone_month_map,
+                        _loan_start_abs_month(_m, phases),
+                    )
+                    _io_f = (_interest_carry / _funded) if _funded > ZERO else ZERO
+                elif _cl_ct == "interest_reserve" and _r > ZERO and _n > 0:
                     _interest_carry = period_interest_months(_funded, _n, _r, draw_schedule="linear")
                     _io_f = (_interest_carry / _funded) if _funded > ZERO else ZERO
                 elif _cl_ct == "capitalized_interest" and _r > ZERO and _n > 0:
@@ -2576,10 +2786,16 @@ def _balloon_balance(
     return _q(max(balance, ZERO))
 
 
-def _sum_debt_service(modules: list, is_construction: bool) -> Decimal:
+def _sum_debt_service(
+    modules: list,
+    is_construction: bool,
+    exclude_ids: set | None = None,
+) -> Decimal:
     """Compute total monthly debt service for construction or operation phase."""
     total = ZERO
     for m in modules:
+        if exclude_ids and getattr(m, "id", None) in exclude_ids:
+            continue
         if not _is_debt_cm(m):
             continue
         carry = m.carry or {}
@@ -2624,6 +2840,7 @@ def _compute_period(
     stabilized_noi_monthly: Decimal | None,
     construction_debt_monthly: Decimal = ZERO,
     operation_debt_monthly: Decimal = ZERO,
+    schedule_debt_monthly: Decimal = ZERO,
     income_mode: str = "revenue_opex",
     first_stab_period: int = 0,
     project_id: UUID | None = None,
@@ -2638,7 +2855,7 @@ def _compute_period(
         construction_debt_monthly
         if phase.period_type in _CONSTRUCTION_PERIOD_TYPES
         else operation_debt_monthly
-    )
+    ) + schedule_debt_monthly
     capital_inflow = ZERO
     capital_outflow = ZERO
     line_items: list[CashFlowLineItem] = []
