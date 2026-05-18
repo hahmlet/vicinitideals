@@ -521,15 +521,19 @@ def _sv_body_to_jsonb(body: dict) -> tuple[dict, dict, dict]:
         source["draw_active_from_offset_days"] = int(body["draw_active_from_offset_days"])
 
     carry: dict = {}
-    constr_ct = body.get("construction_carry_type")
-    oper_ct = body.get("operation_carry_type")
-    if constr_ct or oper_ct:
-        phases = []
-        if constr_ct:
-            phases.append({"name": "construction", "carry_type": constr_ct})
-        if oper_ct:
-            phases.append({"name": "operation", "carry_type": oper_ct})
-        carry["phases"] = phases
+    carry_schedule = body.get("carry_schedule")
+    if carry_schedule and isinstance(carry_schedule, list) and len(carry_schedule) > 0:
+        carry["schedule"] = carry_schedule
+    else:
+        constr_ct = body.get("construction_carry_type")
+        oper_ct = body.get("operation_carry_type")
+        if constr_ct or oper_ct:
+            phases = []
+            if constr_ct:
+                phases.append({"name": "construction", "carry_type": constr_ct})
+            if oper_ct:
+                phases.append({"name": "operation", "carry_type": oper_ct})
+            carry["phases"] = phases
 
     exit_cfg: dict = {}
     if body.get("exit_type"):

@@ -812,6 +812,8 @@ function ulTimingChanged(val) {
 {%- set _ops_default = 'pi' if (vehicle_type == 'debt' and not ops.get('carry_type')) else ops.get('carry_type','none') -%}
 {%- set _use_schedule = schedule is not none and schedule | length > 0 -%}
 
+<div class="carry-wrapper">
+
 {# Mode toggle #}
 <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
   <span style="font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted)">Carry</span>
@@ -828,7 +830,7 @@ function ulTimingChanged(val) {
 </div>
 
 {# Simple 2-phase mode #}
-<div id="carry-simple-section" {% if _use_schedule %}style="display:none"{% endif %}>
+<div class="carry-simple-section" {% if _use_schedule %}style="display:none"{% endif %}>
   <div style="font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px">Pre-Operations Phase</div>
   <div class="form-row" style="margin-bottom:8px">
     <div class="form-field">
@@ -905,20 +907,22 @@ function ulTimingChanged(val) {
 </div>
 
 {# Custom schedule mode #}
-<div id="carry-schedule-section" {% if not _use_schedule %}style="display:none"{% endif %}>
-  <div id="carry-phase-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px">
+<div class="carry-schedule-section" {% if not _use_schedule %}style="display:none"{% endif %}>
+  <div class="carry-phase-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px">
     {% if schedule %}
       {% for sp in schedule %}
       {{ _carry_phase_row(sp, loop.index0) }}
       {% endfor %}
     {% endif %}
   </div>
-  <button type="button" class="btn btn-ghost btn-sm" onclick="addCarryPhase()" style="font-size:12px">+ Add Phase</button>
+  <button type="button" class="btn btn-ghost btn-sm" onclick="addCarryPhase(this)" style="font-size:12px">+ Add Phase</button>
   <div style="font-size:11px;color:var(--text-muted);margin-top:6px">
     Phases are applied in order. Last phase runs to loan maturity.
     Milestone anchors: <em>close, pre_development, construction, operation_lease_up, operation_stabilized</em>
   </div>
 </div>
+
+</div>{# end .carry-wrapper #}
 {%- endmacro %}
 
 {%- macro _carry_phase_row(sp={}, idx=0) %}
@@ -2004,9 +2008,11 @@ function ulTimingChanged(val) {
 </script>
 <script>
 // Carry schedule UI helpers
-function carryModeSwitch(radio, mode) {
-  var simple = document.getElementById('carry-simple-section');
-  var sched  = document.getElementById('carry-schedule-section');
+function carryModeSwitch(el, mode) {
+  var wrapper = el ? el.closest('.carry-wrapper') : document.querySelectorAll('.carry-wrapper')[0];
+  if (!wrapper) return;
+  var simple = wrapper.querySelector('.carry-simple-section');
+  var sched  = wrapper.querySelector('.carry-schedule-section');
   if (!simple || !sched) return;
   simple.style.display = mode === 'simple' ? '' : 'none';
   sched.style.display  = mode === 'schedule' ? '' : 'none';
@@ -2022,8 +2028,9 @@ function carryPhaseTypeChanged(sel) {
   if (!row) return;
   row.querySelector('.carry-amort-field').style.display = sel.value === 'pi' ? '' : 'none';
 }
-function addCarryPhase() {
-  var list = document.getElementById('carry-phase-list');
+function addCarryPhase(btn) {
+  var wrapper = btn ? btn.closest('.carry-wrapper') : document.querySelectorAll('.carry-wrapper')[0];
+  var list = wrapper ? wrapper.querySelector('.carry-phase-list') : null;
   if (!list) return;
   var tpl = `<div class="carry-phase-row" style="background:var(--surface-alt,#f9fafb);border:1px solid var(--border);border-radius:6px;padding:10px 12px">
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
@@ -2077,12 +2084,15 @@ function removeCarryPhase(btn) {
 // Prefill carry schedule from vehicle data
 function prefillCarrySchedule(schedule) {
   if (!schedule || !schedule.length) return;
-  var list = document.getElementById('carry-phase-list');
+  var wrapper = document.querySelectorAll('.carry-wrapper')[0];
+  if (!wrapper) return;
+  var list = wrapper.querySelector('.carry-phase-list');
   if (!list) return;
   list.innerHTML = '';
-  document.querySelector('input[name="carry_schedule_mode"][value="schedule"]').checked = true;
-  carryModeSwitch(null, 'schedule');
-  schedule.forEach(function(sp) { addCarryPhase(); });
+  var scheduleRadio = wrapper.querySelector('input[name="carry_schedule_mode"][value="schedule"]');
+  if (scheduleRadio) scheduleRadio.checked = true;
+  carryModeSwitch(scheduleRadio || wrapper.querySelector('input[name="carry_schedule_mode"]'), 'schedule');
+  schedule.forEach(function(sp) { addCarryPhase(wrapper.querySelector('.carry-phase-list')); });
   var rows = list.querySelectorAll('.carry-phase-row');
   schedule.forEach(function(sp, i) {
     var row = rows[i];
