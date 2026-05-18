@@ -6276,16 +6276,17 @@ async def handle_form_create_or_update(
 
     elif item_type == "unit-mix":
         from uuid import uuid4 as _uuid4
+        def _fj(v): return float(v) if v is not None else None
         data = {
             "label": form.get("label", "").strip() or "Units",
             "unit_count": _fi(form.get("unit_count"), 1) or 1,
-            "avg_sqft": _fd(form.get("avg_sqft")),
-            "beds": _fd(form.get("beds")),
-            "baths": _fd(form.get("baths")),
-            "market_rent_per_unit": _fd(form.get("market_rent_per_unit")),
-            "in_place_rent_per_unit": _fd(form.get("in_place_rent_per_unit")),
+            "avg_sqft": _fj(_fd(form.get("avg_sqft"))),
+            "beds": _fj(_fd(form.get("beds"))),
+            "baths": _fj(_fd(form.get("baths"))),
+            "market_rent_per_unit": _fj(_fd(form.get("market_rent_per_unit"))),
+            "in_place_rent_per_unit": _fj(_fd(form.get("in_place_rent_per_unit"))),
             "unit_strategy": form.get("unit_strategy") or None,
-            "post_reno_rent_per_unit": _fd(form.get("post_reno_rent_per_unit")),
+            "post_reno_rent_per_unit": _fj(_fd(form.get("post_reno_rent_per_unit"))),
             "notes": form.get("notes") or None,
         }
         if project_id:
