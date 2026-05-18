@@ -1704,9 +1704,15 @@ function ulTimingChanged(val) {
     setVal('ltv_pct', d.ltv_pct);
     setVal('amort_term_years', d.amort_term_years);
     setVal('hold_term_years', d.hold_term_years);
+    var wizardCarryWrapper = document.querySelector('#sw-step-4 .carry-wrapper');
     if (d.carry_schedule && d.carry_schedule.length) {
-      prefillCarrySchedule(d.carry_schedule);
+      prefillCarrySchedule(d.carry_schedule, wizardCarryWrapper);
     } else {
+      // Ensure wizard carry panel shows simple mode (vehicle has no custom schedule)
+      if (wizardCarryWrapper) {
+        var simpleRadio = wizardCarryWrapper.querySelector('input[name="carry_schedule_mode"][value="simple"]');
+        if (simpleRadio) { simpleRadio.checked = true; carryModeSwitch(simpleRadio, 'simple'); }
+      }
       setVal('construction_carry_type', d.construction_carry_type);
       setVal('operation_carry_type', d.operation_carry_type);
     }
@@ -2081,10 +2087,11 @@ function addCarryPhase(btn) {
 function removeCarryPhase(btn) {
   btn.closest('.carry-phase-row').remove();
 }
-// Prefill carry schedule from vehicle data
-function prefillCarrySchedule(schedule) {
+// Prefill carry schedule from vehicle data.
+// Pass an explicit wrapper element when calling from a scoped context (e.g. wizard).
+function prefillCarrySchedule(schedule, wrapper) {
   if (!schedule || !schedule.length) return;
-  var wrapper = document.querySelectorAll('.carry-wrapper')[0];
+  if (!wrapper) wrapper = document.querySelectorAll('.carry-wrapper')[0];
   if (!wrapper) return;
   var list = wrapper.querySelector('.carry-phase-list');
   if (!list) return;

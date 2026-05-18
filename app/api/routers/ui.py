@@ -11558,18 +11558,27 @@ async def source_vehicle_prefill(
     # Only pre-fill exit vehicle if it's a named sentinel (not a stale UUID from another deal)
     safe_exit_vehicle = exit_vehicle_raw if exit_vehicle_raw in ("maturity", "sale") else None
 
+    # Prefer ORM columns (set by vehicle_form.html) over JSONB source_config (set by
+    # settings inline forms) so both creation paths return consistent prefill data.
+    _rate = (float(vehicle.interest_rate_pct) if vehicle.interest_rate_pct is not None
+             else source.get("interest_rate_pct"))
+    _amort = vehicle.amort_term_years or source.get("amort_term_years")
+    _fallback_ct = vehicle.carry_type  # set by vehicle_form.html; absent in settings-created vehicles
+    _constr_ct = constr.get("carry_type") or _fallback_ct
+    _oper_ct = oper.get("carry_type") or _fallback_ct
+
     return JSONResponse({
         "vehicle_name": vehicle.name,
         "owner": owner,
         "vehicle_type": vehicle.vehicle_type,
         "equity_role": vehicle.equity_role,
-        "source_interest_rate": source.get("interest_rate_pct"),
+        "source_interest_rate": _rate,
         "ltv_pct": source.get("ltv_pct"),
-        "amort_term_years": source.get("amort_term_years"),
+        "amort_term_years": _amort,
         "hold_term_years": source.get("hold_term_years"),
         "dscr_min": source.get("dscr_min"),
-        "construction_carry_type": constr.get("carry_type"),
-        "operation_carry_type": oper.get("carry_type"),
+        "construction_carry_type": _constr_ct,
+        "operation_carry_type": _oper_ct,
         "perm_rate_pct": oper.get("perm_rate_pct"),
         "perm_term_years": oper.get("perm_term_years"),
         "perm_conversion_trigger": oper.get("perm_conversion_trigger"),
