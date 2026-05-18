@@ -7841,6 +7841,21 @@ async def _seed_wizard_perm_defaults(inputs: "OperationalInputs", session: "DBSe
             await session.flush()
 
 
+async def _wizard_debt_vehicles(session: "AsyncSession", user) -> list[dict]:
+    """Debt+forgivable_loan Source Vehicles visible to this user (for Step 2 picker)."""
+    from app.models.source_vehicle import SourceVehicle as _SV_wiz
+    rows = (await session.execute(
+        select(_SV_wiz).where(
+            _SV_wiz.vehicle_type.in_(["debt", "forgivable_loan"]),
+            (
+                ((_SV_wiz.scope == "org") & (_SV_wiz.owner_id == user.org_id)) |
+                ((_SV_wiz.scope == "user") & (_SV_wiz.owner_id == user.id))
+            ),
+        ).order_by(_SV_wiz.label)
+    )).scalars().all()
+    return [{"id": str(v.id), "name": v.label, "vehicle_type": v.vehicle_type} for v in rows]
+
+
 @router.get("/ui/models/{model_id}/setup", response_class=HTMLResponse)
 async def deal_setup_wizard_get(
     request: Request,
@@ -7889,8 +7904,11 @@ async def deal_setup_wizard_get(
     # Seed perm-debt staging from user/org resolved defaults when not already set.
     if inputs is not None:
         await _seed_wizard_perm_defaults(inputs, session, request)
+    _wiz_user = await _get_user(session, request)
+    _svd = await _wizard_debt_vehicles(session, _wiz_user) if _wiz_user else []
     return templates.TemplateResponse(request, "partials/deal_setup_wizard.html", {
         "request": request, "model": model, "inputs": inputs, "step": step,
+        "source_vehicles_debt": _svd,
     })
 
 
@@ -8011,6 +8029,36 @@ async def deal_setup_wizard_step(
         selected = [t for t in form.getlist("debt_types") if t in _valid_types]
         if selected:
             inputs.debt_types = selected
+
+        # Per-debt-type Source Vehicle selection → pre-populate debt_terms so
+        # Step 4 shows vehicle's rate/carry without the user having to re-enter.
+        from app.models.source_vehicle import SourceVehicle as _SV_s2
+        _dt2 = dict(inputs.debt_terms or {})
+        for _ft2 in (selected or []):
+            _vid_raw = str(form.get(f"vehicle_id_{_ft2}", "") or "").strip()
+            _entry2 = dict(_dt2.get(_ft2, {}))
+            if not _vid_raw:
+                _entry2.pop("vehicle_id", None)
+                _dt2[_ft2] = _entry2
+                continue
+            try:
+                _vid = UUID(_vid_raw)
+            except (ValueError, AttributeError):
+                continue
+            _sv2 = (await session.execute(
+                select(_SV_s2).where(_SV_s2.id == _vid)
+            )).scalar_one_or_none()
+            if _sv2 is None:
+                continue
+            _entry2["vehicle_id"] = str(_vid)
+            if _sv2.interest_rate_pct is not None:
+                _entry2["rate_pct"] = float(_sv2.interest_rate_pct)
+            if _sv2.carry_type:
+                _entry2["loan_type"] = _sv2.carry_type
+            if _sv2.amort_term_years:
+                _entry2["amort_years"] = int(_sv2.amort_term_years)
+            _dt2[_ft2] = _entry2
+        inputs.debt_terms = _dt2 if _dt2 else inputs.debt_terms
     elif step == 3:
         # Per-debt milestone & Exit Vehicle config.  The old "Active To"
         # column is gone — end of loan is derived from Exit Vehicle in the
@@ -8148,11 +8196,14 @@ async def deal_setup_wizard_step(
         if lu_steep is not None:
             inputs.lease_up_curve_steepness = lu_steep
 
+    _post_user = await _get_user(session, request)
+    _post_svd = await _wizard_debt_vehicles(session, _post_user) if _post_user else []
+
     # If validation failed, don't persist and re-render the same step with errors
     if wizard_errors:
         return templates.TemplateResponse(request, "partials/deal_setup_wizard.html", {
             "request": request, "model": model, "inputs": inputs, "step": step,
-            "wizard_errors": wizard_errors,
+            "wizard_errors": wizard_errors, "source_vehicles_debt": _post_svd,
         })
 
     session.add(inputs)
@@ -8172,6 +8223,7 @@ async def deal_setup_wizard_step(
     await _seed_wizard_perm_defaults(inputs, session, request)
     return templates.TemplateResponse(request, "partials/deal_setup_wizard.html", {
         "request": request, "model": model, "inputs": inputs, "step": next_step,
+        "source_vehicles_debt": _post_svd,
     })
 
 
@@ -8488,6 +8540,8 @@ async def deal_setup_wizard_complete(
                         _source_dict["dscr_min"] = float(_dscr_raw)
                     except (TypeError, ValueError):
                         pass
+            _cm_vid_raw = dt.get(ft_str, {}).get("vehicle_id") if isinstance(dt, dict) else None
+            _cm_vid = UUID(_cm_vid_raw) if _cm_vid_raw else None
             session.add(CapitalModule(
                 id=cm_id,
                 scenario_id=model_id,
@@ -8499,6 +8553,7 @@ async def deal_setup_wizard_complete(
                 exit_terms=exit_terms_dict,
                 active_phase_start=active_from,
                 active_phase_end=derived_end,
+                source_vehicle_id=_cm_vid,
             ))
             _cc_preload_modules.append({
                 "loan_subtype": ft_str,

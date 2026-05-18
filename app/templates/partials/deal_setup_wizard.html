@@ -298,6 +298,15 @@
 
     {# ════════════════════════════════════════════════════════════════ STEP 2 — Debt Selection #}
     {% elif _step == 2 %}
+    {%- set _svd = source_vehicles_debt | default([]) -%}
+    {%- set _DEBT_CARDS = [
+      ('acquisition_loan',     'Acquisition Loan',       'Funds the property purchase and acquisition costs at Close. Sized by LTV on acquisition phase costs.'),
+      ('pre_development_loan', 'Pre-Development Loan',   'Short-term financing for entitlements, design, and due diligence before closing. Retired at Close.'),
+      ('bridge',               'Bridge Loan',            'Short-term catch-all financing that bridges two longer-term arrangements. Retired by permanent debt at stabilization.'),
+      ('construction_loan',    'Construction Loan',      'IO-only financing during the build phase. Taken out by permanent debt at Certificate of Occupancy.'),
+      ('construction_to_perm', 'Construction-to-Perm',   'One loan (e.g. a municipal bond) funds construction and converts to permanent debt at CO. Cannot be combined with separate Construction + Permanent.'),
+      ('permanent_debt',       'Permanent Debt',         'Long-term amortizing loan. Gap-fills to Total Project Cost. Extends in perpetuity through the hold period.'),
+    ] -%}
     <div class="wizard-header">
       <div class="wizard-title">Debt Stack</div>
       <div class="wizard-subtitle">Which debt instruments will be used in this deal? Select all that apply.</div>
@@ -309,65 +318,34 @@
       <div class="wizard-body">
         <div class="option-grid" id="debt-type-grid">
 
-          <label class="option-card {% if 'acquisition_loan' in _debt_types %}selected{% endif %}" id="card-acquisition_loan">
-            <input type="checkbox" name="debt_types" value="acquisition_loan"
-                   {% if 'acquisition_loan' in _debt_types %}checked{% endif %}
-                   onchange="onDebtTypeChange()">
-            <div>
-              <div class="option-card-title">Acquisition Loan</div>
-              <div class="option-card-desc">Funds the property purchase and acquisition costs at Close. Sized by LTV on acquisition phase costs.</div>
+          {% for _ft, _ft_label, _ft_desc in _DEBT_CARDS %}
+          {%- set _checked = _ft in _debt_types -%}
+          {%- set _saved_vid = (_dterms.get(_ft, {}) or {}).get('vehicle_id', '') -%}
+          <div>
+            <label class="option-card {% if _checked %}selected{% endif %}" id="card-{{ _ft }}">
+              <input type="checkbox" name="debt_types" value="{{ _ft }}"
+                     {% if _checked %}checked{% endif %}
+                     onchange="onDebtTypeChange()">
+              <div>
+                <div class="option-card-title">{{ _ft_label }}</div>
+                <div class="option-card-desc">{{ _ft_desc }}</div>
+              </div>
+            </label>
+            {% if _svd %}
+            <div id="vp-{{ _ft }}" style="display:{{ 'flex' if _checked else 'none' }};align-items:center;gap:8px;padding:6px 12px;border:1px solid var(--accent);border-top:none;border-radius:0 0 8px 8px;background:var(--accent-faint,#eff6ff)">
+              <span style="font-size:12px;color:var(--text-muted);white-space:nowrap;flex-shrink:0">Source Vehicle:</span>
+              <select name="vehicle_id_{{ _ft }}"
+                      style="flex:1;padding:3px 6px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:13px"
+                      onclick="event.stopPropagation()">
+                <option value="">— Use defaults —</option>
+                {% for v in _svd %}
+                <option value="{{ v.id }}" {% if _saved_vid == v.id %}selected{% endif %}>{{ v.name }}</option>
+                {% endfor %}
+              </select>
             </div>
-          </label>
-
-          <label class="option-card {% if 'pre_development_loan' in _debt_types %}selected{% endif %}" id="card-pre_development_loan">
-            <input type="checkbox" name="debt_types" value="pre_development_loan"
-                   {% if 'pre_development_loan' in _debt_types %}checked{% endif %}
-                   onchange="onDebtTypeChange()">
-            <div>
-              <div class="option-card-title">Pre-Development Loan</div>
-              <div class="option-card-desc">Short-term financing for entitlements, design, and due diligence before closing. Retired at Close.</div>
-            </div>
-          </label>
-
-          <label class="option-card {% if 'bridge' in _debt_types %}selected{% endif %}" id="card-bridge">
-            <input type="checkbox" name="debt_types" value="bridge"
-                   {% if 'bridge' in _debt_types %}checked{% endif %}
-                   onchange="onDebtTypeChange()">
-            <div>
-              <div class="option-card-title">Bridge Loan</div>
-              <div class="option-card-desc">Short-term catch-all financing that bridges two longer-term arrangements. Retired by permanent debt at stabilization.</div>
-            </div>
-          </label>
-
-          <label class="option-card {% if 'construction_loan' in _debt_types %}selected{% endif %}" id="card-construction_loan">
-            <input type="checkbox" name="debt_types" value="construction_loan"
-                   {% if 'construction_loan' in _debt_types %}checked{% endif %}
-                   onchange="onDebtTypeChange()">
-            <div>
-              <div class="option-card-title">Construction Loan</div>
-              <div class="option-card-desc">IO-only financing during the build phase. Taken out by permanent debt at Certificate of Occupancy.</div>
-            </div>
-          </label>
-
-          <label class="option-card {% if 'construction_to_perm' in _debt_types %}selected{% endif %}" id="card-construction_to_perm">
-            <input type="checkbox" name="debt_types" value="construction_to_perm"
-                   {% if 'construction_to_perm' in _debt_types %}checked{% endif %}
-                   onchange="onDebtTypeChange()">
-            <div>
-              <div class="option-card-title">Construction-to-Perm</div>
-              <div class="option-card-desc">One loan (e.g. a municipal bond) funds construction and converts to permanent debt at CO. Cannot be combined with separate Construction + Permanent.</div>
-            </div>
-          </label>
-
-          <label class="option-card {% if 'permanent_debt' in _debt_types %}selected{% endif %}" id="card-permanent_debt">
-            <input type="checkbox" name="debt_types" value="permanent_debt"
-                   {% if 'permanent_debt' in _debt_types %}checked{% endif %}
-                   onchange="onDebtTypeChange()">
-            <div>
-              <div class="option-card-title">Permanent Debt</div>
-              <div class="option-card-desc">Long-term amortizing loan. Gap-fills to Total Project Cost. Extends in perpetuity through the hold period.</div>
-            </div>
-          </label>
+            {% endif %}
+          </div>
+          {% endfor %}
 
         </div>
         <div id="debt-type-warning" style="display:none;margin-top:10px;padding:8px 12px;background:var(--warning-faint,#fef9c3);border:1px solid var(--warning,#ca8a04);border-radius:6px;font-size:12px;color:var(--warning-dark,#92400e)">
@@ -1080,10 +1058,17 @@ function onDebtTypeChange() {
     if (ctpCb) ctpCb.checked = false;
   }
 
-  // Sync .selected class to each card's checkbox state
-  document.querySelectorAll('#debt-type-grid .option-card').forEach(function(card) {
-    var cb = card.querySelector('input[type="checkbox"]');
-    if (cb) card.classList.toggle('selected', cb.checked);
+  // Sync .selected class and vehicle picker visibility to each card's checkbox state
+  document.querySelectorAll('#debt-type-grid input[type="checkbox"]').forEach(function(cb) {
+    var card = cb.closest('.option-card');
+    if (card) card.classList.toggle('selected', cb.checked);
+    var vp = document.getElementById('vp-' + cb.value);
+    if (vp) vp.style.display = cb.checked ? 'flex' : 'none';
+    // Clear vehicle selection when unchecking so stale IDs don't persist
+    if (!cb.checked && vp) {
+      var sel = vp.querySelector('select');
+      if (sel) sel.value = '';
+    }
   });
 
   // Require at least one selection before allowing Next
