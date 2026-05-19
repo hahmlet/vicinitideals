@@ -282,12 +282,14 @@ def test_wizard_finish_button_visible_and_clickable(
 
     # Advance through intermediate steps until Finish Setup button appears.
     # Step count can change as wizard evolves; loop is resilient to additions.
-    for _ in range(8):
+    # construction_to_perm adds extra steps vs simple single-loan configs;
+    # use a generous upper bound and never break on button visibility alone.
+    for _ in range(15):
         finish_btn = page.locator('#deal-setup-wizard button[type="submit"]:has-text("Finish Setup")')
         if finish_btn.count() > 0:
             break
         next_btn = page.locator('#deal-setup-wizard .wizard-footer button.btn-primary')
-        if next_btn.count() == 0 or not next_btn.first.is_visible():
+        if next_btn.count() == 0:
             break
         next_btn.first.click()
         wait_for_htmx(page)
@@ -894,8 +896,18 @@ def test_dscr_converges_to_minimum_in_noi_mode(_seed_page, base_url: str) -> Non
         page, model_id, project_id,
         milestone_types=["close", "construction", "operation_stabilized", "divestment"],
     )
-    # dscr_capped: DSCR is the only constraint — no LTV cap that can override it.
-    # dual_constraint would let a low acquisition_cost (LTV × $1M) bind instead.
+    # Add a large use line so LTV × total_cost > DSCR-constrained loan (~$4.93M at
+    # 70% LTV needs $7M+ in uses).  Without this, LTV binds instead of DSCR and
+    # DSCR converges to 6.32 rather than 1.15.
+    import json as _json
+    _ul = page.request.post(
+        f"{base_url}/api/models/{model_id}/use-lines",
+        headers={"Content-Type": "application/json"},
+        data=_json.dumps({"label": "Land Acquisition", "amount": "8000000",
+                          "milestone_key": "close", "scenario_id": model_id}),
+    )
+    assert _ul.status < 400, f"Failed to add use line: {_ul.status} {_ul.text()}"
+
     run_deal_setup_wizard(
         page, model_id,
         income_mode="noi",
