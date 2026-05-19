@@ -11643,7 +11643,7 @@ async def source_vehicle_prefill(
         "draw_every_n_months": source.get("draw_every_n_months"),
         "draw_active_from_milestone": source.get("draw_active_from_milestone"),
         "draw_active_from_offset_days": source.get("draw_active_from_offset_days"),
-        "carry_schedule": carry.get("phases"),
+        "carry_schedule": carry.get("schedule"),
     })
 
 

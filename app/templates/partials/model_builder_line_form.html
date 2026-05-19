@@ -1610,8 +1610,9 @@ function ulTimingChanged(val) {
       if (_frm) {
         var _cw = document.querySelector('#sw-step-4 .carry-wrapper');
         var _schedStr = _frm.dataset.pendingCarrySchedule;
+        console.log('[carry-dbg] step4', '_cw=', _cw, '_schedStr=', _schedStr ? _schedStr.substring(0,100) : null);
         if (_schedStr) {
-          try { prefillCarrySchedule(JSON.parse(_schedStr), _cw); } catch(e) {}
+          try { prefillCarrySchedule(JSON.parse(_schedStr), _cw); } catch(e) { console.error('[carry-dbg] prefill threw', e); }
         } else {
           if (_cw) {
             var _sr = _cw.querySelector('input[name="carry_schedule_mode"][value="simple"]');
@@ -2122,8 +2123,10 @@ function prefillCarrySchedule(schedule, wrapper) {
   // Directly toggle sections using scoped wrapper (avoids closest() finding wrong carry-wrapper).
   var _psimple = wrapper.querySelector('.carry-simple-section');
   var _psched  = wrapper.querySelector('.carry-schedule-section');
+  console.log('[carry-dbg] psimple=', _psimple, 'psched=', _psched);
   if (_psimple) _psimple.style.display = 'none';
   if (_psched)  _psched.style.display  = '';
+  console.log('[carry-dbg] after toggle psimple.display=', _psimple && _psimple.style.display, 'psched.display=', _psched && _psched.style.display);
   schedule.forEach(function(sp) { addCarryPhase(wrapper.querySelector('.carry-phase-list')); });
   var rows = list.querySelectorAll('.carry-phase-row');
   schedule.forEach(function(sp, i) {
