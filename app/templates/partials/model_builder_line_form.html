@@ -1028,14 +1028,14 @@ function ulTimingChanged(val) {
       </div>
     </div>
     {% endif %}
-    {% if _show_exit %}{# stack position only for non-simple types #}
+    {% if _show_exit or _ft == 'equity' %}
     <div class="form-field">
-      <label class="form-label">Stack Position <span style="font-weight:400;font-size:11px;color:var(--text-muted)">1=most senior</span></label>
+      <label class="form-label">Stack Position <span style="font-weight:400;font-size:11px;color:var(--text-muted)">1 = most senior</span></label>
       <input class="form-input" type="number" name="stack_position" step="1" min="1"
              value="{{ existing.stack_position if existing.stack_position else 1 }}">
     </div>
     {% else %}
-    <input type="hidden" name="stack_position" value="0">
+    <input type="hidden" name="stack_position" value="{{ existing.stack_position or 0 }}">
     {% endif %}
   </div>
 
