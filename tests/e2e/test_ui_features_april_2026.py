@@ -828,7 +828,6 @@ def test_model_settings_propagate_to_outputs(_seed_page, base_url: str) -> None:
     # Trigger initial compute and capture exit_cap + hold_period baseline
     resp1 = page.request.post(
         f"{base_url}/api/models/{model_id}/compute",
-        headers={"X-API-Key": "bfe713c841e93ba41177d12e21d3b821773292f3a318100ad8491a7d1748e6ea"},
     )
     baseline = resp1.json()
     baseline_noi = float(baseline.get("noi_stabilized") or 0)
@@ -848,7 +847,6 @@ def test_model_settings_propagate_to_outputs(_seed_page, base_url: str) -> None:
     # Re-run compute and verify outputs shifted
     resp2 = page.request.post(
         f"{base_url}/api/models/{model_id}/compute",
-        headers={"X-API-Key": "bfe713c841e93ba41177d12e21d3b821773292f3a318100ad8491a7d1748e6ea"},
     )
     after = resp2.json()
 
@@ -873,23 +871,35 @@ def test_model_settings_propagate_to_outputs(_seed_page, base_url: str) -> None:
 def test_dscr_converges_to_minimum_in_noi_mode(_seed_page, base_url: str) -> None:
     """Regression for NOI-mode DSCR drift.
 
-    Uses a known production deal (727004d8) that has a fully-seeded
-    dual_constraint + NOI-mode setup where DSCR is the binding constraint.
+    Seeds a fresh dual_constraint + NOI-mode deal so this test is self-contained.
     Pre-fix: DSCR displayed as 1.155680 with dscr_minimum=1.15.
     Post-fix: DSCR converges to exactly 1.150000.
 
     If this test fails, the NOI-mode escalation anchor fix regressed.
     """
-    page = _seed_page
-    known_deal_id = "727004d8-960c-4416-b8d7-9a7206602e99"
+    import uuid
+    from tests.e2e.seed import run_deal_setup_wizard
 
-    resp = page.request.post(
-        f"{base_url}/api/models/{known_deal_id}/compute",
-        headers={"X-API-Key": "bfe713c841e93ba41177d12e21d3b821773292f3a318100ad8491a7d1748e6ea"},
+    page = _seed_page
+    suffix = uuid.uuid4().hex[:6]
+    model_id = create_e2e_scenario(page, deal_name=f"E2E DSCR Regression {suffix}")
+    project_id = _extract_project_id(page)
+    submit_timeline_wizard(
+        page, model_id, project_id,
+        milestone_types=["close", "construction", "operation_stabilized", "divestment"],
     )
-    # If the known test deal was deleted, skip (can't regression-test against nothing)
-    if resp.status == 404:
-        pytest.skip(f"Reference deal {known_deal_id} no longer exists on prod")
+    run_deal_setup_wizard(
+        page, model_id,
+        income_mode="noi",
+        debt_types=["permanent_debt"],
+        debt_sizing_mode="dual_constraint",
+        dscr_minimum="1.15",
+    )
+    page.request.post(
+        f"{base_url}/ui/models/{model_id}/noi-inputs",
+        form={"noi_stabilized_input": "430000", "noi_escalation_rate_pct": "3"},
+    )
+    resp = page.request.post(f"{base_url}/api/models/{model_id}/compute")
     assert resp.status < 400, f"Compute failed: {resp.status}"
     result = resp.json()
     dscr = float(result.get("dscr") or 0)
@@ -939,7 +949,6 @@ def test_sensitivity_run_produces_grid(_seed_page, base_url: str) -> None:
     )
     page.request.post(
         f"{base_url}/api/models/{model_id}/compute",
-        headers={"X-API-Key": "bfe713c841e93ba41177d12e21d3b821773292f3a318100ad8491a7d1748e6ea"},
     )
 
     # Run sensitivity

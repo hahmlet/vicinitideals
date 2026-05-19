@@ -23,8 +23,17 @@ data/gis_cache/
 /loopnet_*.json
 /poly_*.json
 
-# Claude Code
-.claude/
+# Claude Code  14 shared project config is tracked; local/runtime files are not
+.claude/*
+!.claude/settings.json
+!.claude/hooks/
+!.claude/skills/
+.claude/settings.local.json
+.claude/state/
+.claude/worktrees/
+localcerts/
+Dockerfile.proxy
+docker-compose.override.yml
 
 # E2E test artifacts
 tests/e2e/auth-state.json

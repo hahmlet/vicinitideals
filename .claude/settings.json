@@ -1,0 +1,56 @@
+{
+  "autoCompactWindow": 300000,
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": false
+  },
+  "permissions": {
+    "deny": [
+      "Skill(home-assistant-os-skill)",
+      "Skill(node-red-skill)",
+      "Skill(plex-skill)",
+      "Skill(plane-skill)",
+      "mcp__HA-OS-MCP__*",
+      "mcp__node-red-mcp__*",
+      "mcp__plane__*",
+      "mcp__Wallabag-MCP__*"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python -m code_review_graph update --skip-flows",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python -m code_review_graph status",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pwsh -NonInteractive -ExecutionPolicy Bypass -File .claude/hooks/stop_verify.ps1",
+            "timeout": 120
+          }
+        ]
+      }
+    ]
+  }
+}

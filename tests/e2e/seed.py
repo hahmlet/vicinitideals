@@ -293,6 +293,13 @@ def run_deal_setup_wizard(
                 dscr_input = page.locator('[name="dscr_minimum"]')
                 if dscr_input.count() > 0:
                     dscr_input.fill(dscr_minimum)
+        elif debt_sizing_mode == "dual_constraint":
+            dual_radio = page.locator('input[name="debt_sizing_mode"][value="dual_constraint"]')
+            if dual_radio.count() > 0 and dual_radio.is_visible() and not dual_radio.is_checked():
+                dual_radio.click()
+            dscr_input = page.locator('[name="dscr_minimum"]')
+            if dscr_input.count() > 0 and dscr_input.is_visible():
+                dscr_input.fill(dscr_minimum)
 
         floor_input = page.locator('[name="construction_floor_pct"]')
         if floor_input.count() > 0 and floor_input.is_visible():
