@@ -932,7 +932,7 @@ function ulTimingChanged(val) {
   <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
     <input class="form-input" type="text" name="carry_phase_label[]"
            value="{{ sp.get('label','') }}" placeholder="Phase name" style="flex:1;font-size:12px">
-    <select class="form-select" name="carry_phase_type[]" onchange="carryPhaseTypeChanged(this)" style="font-size:12px">
+    <select class="form-select" name="carry_phase_type[]" onchange="carryPhaseTypeChanged(this)" style="font-size:12px;width:auto">
       {% for ct in ['interest_reserve','io_only','capitalized_interest','pi'] %}
       <option value="{{ ct }}" {% if sp.get('carry_type') == ct %}selected{% endif %}>
         {%- if ct == 'interest_reserve' %}Interest Reserve
@@ -1791,7 +1791,7 @@ function addCarryPhase(btn) {
   var tpl = '<div class="carry-phase-row" style="background:var(--surface-alt,#f9fafb);border:1px solid var(--border);border-radius:6px;padding:10px 12px">'
     + '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">'
     + '<input class="form-input" type="text" name="carry_phase_label[]" placeholder="Phase name" style="flex:1;font-size:12px">'
-    + '<select class="form-select" name="carry_phase_type[]" onchange="carryPhaseTypeChanged(this)" style="font-size:12px">'
+    + '<select class="form-select" name="carry_phase_type[]" onchange="carryPhaseTypeChanged(this)" style="font-size:12px;width:auto">'
     + '<option value="interest_reserve">Interest Reserve</option>'
     + '<option value="io_only">I&amp;O Payment</option>'
     + '<option value="capitalized_interest">Capitalized Interest</option>'
@@ -2166,7 +2166,7 @@ function addCarryPhase(btn) {
   var tpl = `<div class="carry-phase-row" style="background:var(--surface-alt,#f9fafb);border:1px solid var(--border);border-radius:6px;padding:10px 12px">
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
       <input class="form-input" type="text" name="carry_phase_label[]" placeholder="Phase name" style="flex:1;font-size:12px">
-      <select class="form-select" name="carry_phase_type[]" onchange="carryPhaseTypeChanged(this)" style="font-size:12px">
+      <select class="form-select" name="carry_phase_type[]" onchange="carryPhaseTypeChanged(this)" style="font-size:12px;width:auto">
         <option value="interest_reserve">Interest Reserve</option>
         <option value="io_only">I&amp;O Payment</option>
         <option value="capitalized_interest">Capitalized Interest</option>
