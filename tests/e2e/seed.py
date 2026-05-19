@@ -197,6 +197,17 @@ def _wizard_click_next_or_review(page: Page) -> None:
     page.wait_for_timeout(300)
 
 
+def _wizard_skip_proforma_if_present(page: Page) -> None:
+    """If the proforma upload interstitial (step 1.5) is showing, click Skip."""
+    try:
+        skip = page.wait_for_selector('a[hx-get*="proforma-skip"]', timeout=4000)
+        skip.click()
+        wait_for_htmx(page)
+        page.wait_for_selector('#debt-type-grid', timeout=8000)
+    except Exception:
+        pass  # Not on proforma step, proceed
+
+
 def run_deal_setup_wizard(
     page: Page,
     model_id: str,
@@ -228,6 +239,9 @@ def run_deal_setup_wizard(
     page.wait_for_selector(f'#deal-setup-wizard input[value="{income_mode}"]', timeout=5000)
     page.click(f'#deal-setup-wizard input[value="{income_mode}"]')
     _wizard_click_next_or_review(page)
+
+    # Step 1.5 — Pro forma upload (shown for revenue_opex): skip to debt setup
+    _wizard_skip_proforma_if_present(page)
 
     # Step 2 — Debt types
     page.wait_for_selector('#debt-type-grid', timeout=5000)
@@ -294,11 +308,11 @@ def run_deal_setup_wizard(
                 if dscr_input.count() > 0:
                     dscr_input.fill(dscr_minimum)
         elif debt_sizing_mode == "dual_constraint":
-            dual_radio = page.locator('input[name="debt_sizing_mode"][value="dual_constraint"]')
-            if dual_radio.count() > 0 and dual_radio.is_visible() and not dual_radio.is_checked():
-                dual_radio.click()
+            dual_toggle = page.locator('#opt-dual-constraint')
+            if dual_toggle.count() > 0 and dual_toggle.is_visible():
+                dual_toggle.click()
             dscr_input = page.locator('[name="dscr_minimum"]')
-            if dscr_input.count() > 0 and dscr_input.is_visible():
+            if dscr_input.count() > 0:
                 dscr_input.fill(dscr_minimum)
 
         floor_input = page.locator('[name="construction_floor_pct"]')
@@ -407,10 +421,13 @@ def add_use_line(
     timing_type: str = "first_day",
 ) -> None:
     """Add a use line via the uses wizard overlay (2-step JS wizard)."""
-    _safe_goto(page, f"/models/{model_id}/builder?module=sources_uses")
+    _safe_goto(page, f"/models/{model_id}/builder?module=uses")
 
-    # Click "+ Use" button to open the uses wizard overlay
-    page.click('button:has-text("+ Use")')
+    # "+ Add Line" button exists on the uses-only panel; "+ Add First Line" for empty state
+    add_btn = page.locator('button:has-text("+ Add Line")')
+    if add_btn.count() == 0 or not add_btn.first.is_visible():
+        add_btn = page.locator('button:has-text("+ Add First Line")')
+    add_btn.first.click()
     page.wait_for_selector('#uses-wizard-overlay #uw-next', timeout=8000)
     page.wait_for_timeout(500)
 

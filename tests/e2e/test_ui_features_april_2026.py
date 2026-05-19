@@ -16,7 +16,7 @@ from __future__ import annotations
 import pytest
 
 from tests.e2e.helpers import wait_for_htmx
-from tests.e2e.seed import create_e2e_scenario, submit_timeline_wizard, _extract_project_id
+from tests.e2e.seed import create_e2e_scenario, submit_timeline_wizard, _extract_project_id, _wizard_skip_proforma_if_present
 
 pytestmark = pytest.mark.e2e
 
@@ -56,6 +56,7 @@ def _advance_to_sizing_step(page) -> None:
     page.click('#deal-setup-wizard input[value="revenue_opex"]')
     page.click('#deal-setup-wizard .wizard-footer button.btn-primary')
     wait_for_htmx(page)
+    _wizard_skip_proforma_if_present(page)
     page.wait_for_timeout(400)
     # Step 2: debt types (permanent_debt)
     page.wait_for_selector('#debt-type-grid', timeout=8000)
@@ -279,17 +280,22 @@ def test_wizard_finish_button_visible_and_clickable(
     wait_for_htmx(page)
     page.wait_for_timeout(400)
 
-    # Advance through steps 3, 4, 5, 6 — accept defaults
-    for _ in range(4):
-        btn = page.locator('#deal-setup-wizard .wizard-footer button.btn-primary')
-        if btn.count() > 0:
-            btn.first.click()
-            wait_for_htmx(page)
-            page.wait_for_timeout(400)
+    # Advance through intermediate steps until Finish Setup button appears.
+    # Step count can change as wizard evolves; loop is resilient to additions.
+    for _ in range(8):
+        finish_btn = page.locator('#deal-setup-wizard button[type="submit"]:has-text("Finish Setup")')
+        if finish_btn.count() > 0:
+            break
+        next_btn = page.locator('#deal-setup-wizard .wizard-footer button.btn-primary')
+        if next_btn.count() == 0 or not next_btn.first.is_visible():
+            break
+        next_btn.first.click()
+        wait_for_htmx(page)
+        page.wait_for_timeout(500)
 
-    # Now on step 7 — verify Finish button is visible & clickable
+    # Verify Finish button is present on the final step
     finish_btn = page.locator('#deal-setup-wizard button[type="submit"]:has-text("Finish Setup")')
-    assert finish_btn.count() >= 1, "Finish Setup button should exist on step 7"
+    assert finish_btn.count() >= 1, "Finish Setup button should exist on final wizard step"
 
     # CRITICAL: the button must be in the viewport, not clipped by overflow.
     # Playwright's is_visible() checks display/visibility but not whether the
@@ -888,11 +894,13 @@ def test_dscr_converges_to_minimum_in_noi_mode(_seed_page, base_url: str) -> Non
         page, model_id, project_id,
         milestone_types=["close", "construction", "operation_stabilized", "divestment"],
     )
+    # dscr_capped: DSCR is the only constraint — no LTV cap that can override it.
+    # dual_constraint would let a low acquisition_cost (LTV × $1M) bind instead.
     run_deal_setup_wizard(
         page, model_id,
         income_mode="noi",
         debt_types=["permanent_debt"],
-        debt_sizing_mode="dual_constraint",
+        debt_sizing_mode="dscr_capped",
         dscr_minimum="1.15",
     )
     page.request.post(

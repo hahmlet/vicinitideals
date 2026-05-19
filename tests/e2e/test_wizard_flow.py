@@ -18,6 +18,7 @@ from tests.e2e.seed import (
     create_e2e_scenario,
     submit_timeline_wizard,
     _extract_project_id,
+    _wizard_skip_proforma_if_present,
 )
 
 pytestmark = pytest.mark.e2e
@@ -61,6 +62,7 @@ def test_wizard_step1_income_mode(_seed_page, base_url):
     page.click('input[value="revenue_opex"]')
     next_btn.click()
     wait_for_htmx(page)
+    _wizard_skip_proforma_if_present(page)
 
     # Should advance to step 2 (debt type grid)
     page.wait_for_selector("#debt-type-grid", timeout=5000)
@@ -81,6 +83,7 @@ def test_wizard_step2_debt_types(_seed_page, base_url):
     page.click('input[value="revenue_opex"]')
     page.click('#deal-setup-wizard button:has-text("Next")')
     wait_for_htmx(page)
+    _wizard_skip_proforma_if_present(page)
     page.wait_for_selector("#debt-type-grid", timeout=5000)
 
     # Debt type checkboxes should be present
@@ -121,6 +124,7 @@ def test_wizard_step3_dropdowns_not_clipped(_seed_page, base_url):
     page.click('input[value="revenue_opex"]')
     page.click('#deal-setup-wizard button:has-text("Next")')
     wait_for_htmx(page)
+    _wizard_skip_proforma_if_present(page)
     page.wait_for_selector("#debt-type-grid", timeout=5000)
     page.locator('#debt-type-grid input[value="construction_loan"]').check()
     page.locator('#debt-type-grid input[value="permanent_debt"]').check()
@@ -164,6 +168,7 @@ def test_wizard_step6_reserves_layout(_seed_page, base_url):
     page.click('input[value="revenue_opex"]')
     page.click('#deal-setup-wizard button:has-text("Next")')
     wait_for_htmx(page)
+    _wizard_skip_proforma_if_present(page)
     page.wait_for_selector("#debt-type-grid", timeout=5000)
     page.locator('#debt-type-grid input[value="construction_loan"]').check()
     page.locator('#debt-type-grid input[value="permanent_debt"]').check()

@@ -73,7 +73,7 @@ def seeded_deal(_seed_page) -> tuple[str, str]:
     add_income_stream(page, model_id, unit_count="20", amount_per_unit_monthly="1200")
     add_expense_line(page, model_id, "Property Management", "28800")
     add_expense_line(page, model_id, "Insurance", "7200")
-    add_expense_line(page, model_id, "Property Tax", "12000", escalation_pct="2")
+    add_expense_line(page, model_id, "Real Estate Taxes", "12000", escalation_pct="2")
 
     click_compute(page, model_id)
     return model_id, project_id
@@ -218,3 +218,4 @@ def test_divestment_shows_as_event(logged_in_page, base_url, seeded_deal):
     # The phase box has "Divestment" label and either "Event" or "1d" for duration
     assert "Event" in content or "1d" in content, \
         "Divestment should display as 'Event' or '1d', not '0 mo'"
+

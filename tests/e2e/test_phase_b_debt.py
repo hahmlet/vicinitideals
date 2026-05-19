@@ -357,7 +357,7 @@ def test_phase_b_debt(tc: dict, _seed_page, base_url: str) -> None:
     add_income_stream(page, model_id, unit_count="20", amount_per_unit_monthly="1200")
     add_expense_line(page, model_id, "Property Management", "28800")
     add_expense_line(page, model_id, "Insurance", "7200")
-    add_expense_line(page, model_id, "Property Tax", "12000", escalation_pct="2")
+    add_expense_line(page, model_id, "Real Estate Taxes", "12000", escalation_pct="2")
 
     # ── Compute via browser click ────────────────────────────────────────
     click_compute(page, model_id)
@@ -432,3 +432,4 @@ def test_phase_b_debt(tc: dict, _seed_page, base_url: str) -> None:
     assert Decimal(expected_n) / Decimal("3") <= effective_n <= Decimal(expected_n) * Decimal("3"), (
         f"Effective N={effective_n:.1f} not realistic vs expected ~{expected_n}"
     )
+

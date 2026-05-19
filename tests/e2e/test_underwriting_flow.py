@@ -124,7 +124,7 @@ def _seed_for_deal_type(
     _add_inc(page, model_id, unit_count="20", amount_per_unit_monthly="1200")
     _add_exp(page, model_id, "Property Management", "28800")
     _add_exp(page, model_id, "Insurance", "7200")
-    _add_exp(page, model_id, "Property Tax", "12000", escalation_pct="2")
+    _add_exp(page, model_id, "Real Estate Taxes", "12000", escalation_pct="2")
     _compute(page, model_id)
     return model_id, project_id
 
@@ -155,10 +155,15 @@ def two_project_deal(_seed_page, deal_type: str) -> tuple[str, str, str]:
         deal_type=deal_type,
     )
 
-    # Add a second project via POST (bypassing the drawer JS for stability).
+    # Add a second project via POST — endpoint now requires opportunity_id + acquisition_cost.
+    # List org opportunities (sorted last-seen DESC) and reuse the most recent one.
+    _opp_resp = page.request.get("/api/projects")
+    _opp_list = _opp_resp.json()
+    assert _opp_list, "No opportunities available to create Project 2"
+    _opp_id = str(_opp_list[0]["id"])
     page.request.post(
         f"/ui/deals/{model_id}/new-project",
-        form={"name": "Project 2", "deal_type": "acquisition"},
+        form={"name": "Project 2", "deal_type": "acquisition", "opportunity_id": _opp_id, "acquisition_cost": "800000"},
     )
 
     # Pull the new project's id off the builder's project tab row. Use a
@@ -876,3 +881,5 @@ def test_reserve_chip_names_a_real_source(
     assert not re.fullmatch(r"[0-9a-f-]{36}", label), (
         f"Reserve chip shows a raw UUID instead of a label: {label!r}"
     )
+
+

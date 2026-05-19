@@ -67,7 +67,7 @@ def test_slider_drawer_renders_and_persists_phantom_rows(
     assert page.locator("#gap-slider-rev").count() == 1
     assert page.locator("#gap-slider-opex").count() == 1
     assert page.locator("#gap-slider-pp").count() == 1
-    assert page.locator("button:has-text('Reset all')").count() == 1
+    assert page.locator("button:has-text('Reset and Recalc')").count() == 1
 
     # 4. POST a non-zero delta via API (faster + deterministic vs simulated drag)
     cookie = _session_cookie(page)

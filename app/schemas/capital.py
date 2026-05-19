@@ -186,8 +186,11 @@ class CapitalModuleBase(BaseModel):
     active_phase_start: str | None = None
     active_phase_end: str | None = None
 
+class CapitalModuleCreate(CapitalModuleBase):
+    scenario_id: uuid.UUID
+
     @model_validator(mode="after")
-    def _require_debt_hold_term(self) -> "CapitalModuleBase":
+    def _require_debt_hold_term(self) -> "CapitalModuleCreate":
         vt = (self.vehicle_type or "").replace("VehicleType.", "")
         if vt == "debt":
             hold = self.source.hold_term_years if self.source is not None else None
@@ -196,10 +199,6 @@ class CapitalModuleBase(BaseModel):
                     "debt CapitalModule requires source.hold_term_years > 0"
                 )
         return self
-
-
-class CapitalModuleCreate(CapitalModuleBase):
-    scenario_id: uuid.UUID
 
     model_config = _example_config(
         {
