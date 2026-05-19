@@ -6079,19 +6079,28 @@ async def handle_form_create_or_update(
             max_pos = max_pos_result.scalar_one_or_none() or 0
             explicit_pos = max_pos + 1
         final_pos = explicit_pos or 1
-        # Uniqueness: if another module already holds this position, shift it up to avoid conflict
+        # Uniqueness: if another module already holds this position, resolve the conflict.
         conflict_stmt = (
             select(CapitalModule)
             .where(CapitalModule.scenario_id == model_id, CapitalModule.stack_position == final_pos)
         )
         if item_id:
             conflict_stmt = conflict_stmt.where(CapitalModule.id != UUID(item_id))
-        if (await session.execute(conflict_stmt)).scalars().first() is not None:
-            # Auto-bump to next available position
-            max_pos_result = await session.execute(
-                select(func.max(CapitalModule.stack_position)).where(CapitalModule.scenario_id == model_id)
-            )
-            final_pos = (max_pos_result.scalar_one_or_none() or 0) + 1
+        _conflict_mod = (await session.execute(conflict_stmt)).scalars().first()
+        if _conflict_mod is not None:
+            if item_id:
+                # Edit: honor the user's chosen position — swap with the conflicting
+                # module so it takes the edited module's previous slot.
+                _editing_row = await session.get(CapitalModule, UUID(item_id))
+                _old_pos = (_editing_row.stack_position if _editing_row else None) or final_pos
+                _conflict_mod.stack_position = _old_pos
+                session.add(_conflict_mod)
+            else:
+                # Create: bump the new module to the end of the stack.
+                max_pos_result = await session.execute(
+                    select(func.max(CapitalModule.stack_position)).where(CapitalModule.scenario_id == model_id)
+                )
+                final_pos = (max_pos_result.scalar_one_or_none() or 0) + 1
         # Record which vehicle pre-filled this module (nullable; SET NULL on vehicle delete)
         _sv_id_raw = (form.get("source_vehicle_id") or "").strip()
         _sv_uuid: UUID | None = None
