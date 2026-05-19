@@ -285,10 +285,10 @@ def test_wizard_finish_button_visible_and_clickable(
     # construction_to_perm adds extra steps vs simple single-loan configs;
     # use a generous upper bound and never break on button visibility alone.
     for _ in range(15):
-        finish_btn = page.locator('#deal-setup-wizard button[type="submit"]:has-text("Finish Setup")')
+        finish_btn = page.locator('#deal-setup-wizard .wizard-footer button:has-text("Finish Setup")')
         if finish_btn.count() > 0:
             break
-        next_btn = page.locator('#deal-setup-wizard .wizard-footer button.btn-primary')
+        next_btn = page.locator('#deal-setup-wizard .wizard-footer button.btn-primary:not(:has-text("Finish Setup"))')
         if next_btn.count() == 0:
             break
         next_btn.first.click()
@@ -296,7 +296,7 @@ def test_wizard_finish_button_visible_and_clickable(
         page.wait_for_timeout(500)
 
     # Verify Finish button is present on the final step
-    finish_btn = page.locator('#deal-setup-wizard button[type="submit"]:has-text("Finish Setup")')
+    finish_btn = page.locator('#deal-setup-wizard .wizard-footer button:has-text("Finish Setup")')
     assert finish_btn.count() >= 1, "Finish Setup button should exist on final wizard step"
 
     # CRITICAL: the button must be in the viewport, not clipped by overflow.
