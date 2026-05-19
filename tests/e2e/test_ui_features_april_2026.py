@@ -280,22 +280,29 @@ def test_wizard_finish_button_visible_and_clickable(
     wait_for_htmx(page)
     page.wait_for_selector('#deal-setup-wizard .wizard-body', timeout=8000)
     page.wait_for_timeout(300)
-
     # Advance through intermediate steps until Finish Setup button appears.
     # Step count can change as wizard evolves; loop is resilient to additions.
     # construction_to_perm adds extra steps vs simple single-loan configs;
     # use a generous upper bound and never break on button visibility alone.
-    for _ in range(15):
+    for _ in range(20):
         finish_btn = page.locator('#deal-setup-wizard .wizard-footer button:has-text("Finish Setup")')
         if finish_btn.count() > 0:
             break
         next_btn = page.locator('#deal-setup-wizard .wizard-footer button.btn-primary')
         if next_btn.count() == 0:
             break
-        # Avoid clicking the Finish Setup button — stop the loop so the
-        # post-loop assertion can verify it.
-        if "Finish" in (next_btn.first.text_content() or ""):
+        _bt = next_btn.first.text_content() or ""
+        if "Finish" in _bt:
             break
+        # Fill required reserve fields so the "Review" step can advance.
+        # Without these, HTML5 validation blocks form submission and the
+        # wizard stays on the reserves step indefinitely.
+        floor_input = page.locator('[name="construction_floor_pct"]')
+        if floor_input.count() > 0 and floor_input.is_visible():
+            floor_input.fill("5.0")
+        reserve_input = page.locator('[name="operation_reserve_months"]')
+        if reserve_input.count() > 0 and reserve_input.is_visible():
+            reserve_input.fill("6")
         next_btn.first.click()
         wait_for_htmx(page)
         page.wait_for_selector('#deal-setup-wizard .wizard-body', timeout=8000)
