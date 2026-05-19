@@ -2119,7 +2119,11 @@ function prefillCarrySchedule(schedule, wrapper) {
   list.innerHTML = '';
   var scheduleRadio = wrapper.querySelector('input[name="carry_schedule_mode"][value="schedule"]');
   if (scheduleRadio) scheduleRadio.checked = true;
-  carryModeSwitch(scheduleRadio || wrapper.querySelector('input[name="carry_schedule_mode"]'), 'schedule');
+  // Directly toggle sections using scoped wrapper (avoids closest() finding wrong carry-wrapper).
+  var _psimple = wrapper.querySelector('.carry-simple-section');
+  var _psched  = wrapper.querySelector('.carry-schedule-section');
+  if (_psimple) _psimple.style.display = 'none';
+  if (_psched)  _psched.style.display  = '';
   schedule.forEach(function(sp) { addCarryPhase(wrapper.querySelector('.carry-phase-list')); });
   var rows = list.querySelectorAll('.carry-phase-row');
   schedule.forEach(function(sp, i) {
