@@ -278,7 +278,8 @@ def test_wizard_finish_button_visible_and_clickable(
             cb.check()
     page.click('#deal-setup-wizard .wizard-footer button.btn-primary')
     wait_for_htmx(page)
-    page.wait_for_timeout(400)
+    page.wait_for_selector('#deal-setup-wizard .wizard-body', timeout=8000)
+    page.wait_for_timeout(300)
 
     # Advance through intermediate steps until Finish Setup button appears.
     # Step count can change as wizard evolves; loop is resilient to additions.
@@ -288,8 +289,12 @@ def test_wizard_finish_button_visible_and_clickable(
         finish_btn = page.locator('#deal-setup-wizard .wizard-footer button:has-text("Finish Setup")')
         if finish_btn.count() > 0:
             break
-        next_btn = page.locator('#deal-setup-wizard .wizard-footer button.btn-primary').filter(has_not_text="Finish Setup")
+        next_btn = page.locator('#deal-setup-wizard .wizard-footer button.btn-primary')
         if next_btn.count() == 0:
+            break
+        # Avoid clicking the Finish Setup button — stop the loop so the
+        # post-loop assertion can verify it.
+        if "Finish" in (next_btn.first.text_content() or ""):
             break
         next_btn.first.click()
         wait_for_htmx(page)
