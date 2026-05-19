@@ -669,6 +669,8 @@ def _build_cover(ws, registry: CellRegistry, ctx: dict) -> None:
     summary_data = ctx.get("rollup_summary") or {}
     totals = summary_data.get("totals") or {}
     per_project = summary_data.get("per_project") or []
+    inputs_by_proj: dict = ctx.get("operational_inputs") or {}
+    unit_mix_by_proj: dict = ctx.get("unit_mix") or {}
 
     row = 1
 
@@ -744,13 +746,53 @@ def _build_cover(ws, registry: CellRegistry, ctx: dict) -> None:
            name="s_noi_basis", registry=registry, style="input")
     row += 2
 
-    # Project list — one row per project
+    # Project list — subheader per project + unit count + rentable sqft
     section_label(ws, row, "Projects", span_cols=2)
+    cur_row = row + 1
     for idx, proj in enumerate(projects, start=1):
-        ws.cell(row=row + idx, column=1, value=f"Project {idx}").font = FONT_LABEL
-        ws.cell(row=row + idx, column=2, value=proj.name or f"Project {idx}").font = FONT_VALUE
+        mix = unit_mix_by_proj.get(proj.id) or []
+        inp = inputs_by_proj.get(proj.id)
 
-    next_row = row + max(len(projects), 1) + 2
+        # Derive unit count: prefer unit_mix sum, fall back to OperationalInputs
+        if mix:
+            unit_total = sum(int(r.unit_count or 0) for r in mix)
+        elif inp is not None:
+            unit_total = int(inp.unit_count_new or 0) + int(inp.unit_count_existing or 0)
+        else:
+            unit_total = None
+
+        # Rentable sqft: sum(sqft_per_unit * unit_count) across unit mix rows
+        if mix and any(r.sqft for r in mix):
+            rentable_sqft = sum(
+                float(r.sqft or 0) * int(r.unit_count or 0) for r in mix
+            )
+        elif inp is not None and inp.building_sqft is not None:
+            rentable_sqft = float(inp.building_sqft)
+        else:
+            rentable_sqft = None
+
+        # Project subheader
+        cell = ws.cell(row=cur_row, column=1, value=proj.name or f"Project {idx}")
+        cell.font = FONT_SUBTITLE
+        ws.merge_cells(start_row=cur_row, start_column=1, end_row=cur_row, end_column=2)
+        cur_row += 1
+
+        ws.cell(row=cur_row, column=1, value="Units").font = FONT_LABEL
+        ws.cell(row=cur_row, column=2,
+                value=unit_total if unit_total is not None else "—").font = FONT_VALUE
+        cur_row += 1
+
+        ws.cell(row=cur_row, column=1, value="Rentable Sq Ft").font = FONT_LABEL
+        v_cell = ws.cell(row=cur_row, column=2,
+                         value=round(rentable_sqft) if rentable_sqft is not None else "—")
+        v_cell.font = FONT_VALUE
+        if rentable_sqft is not None:
+            v_cell.number_format = "#,##0"
+        cur_row += 1
+
+        cur_row += 1  # blank row between projects
+
+    next_row = cur_row + 1
 
     # Sources-Gap banner — fires when Uses exceed funded Sources by > $1.
     if gap > Decimal(1):
