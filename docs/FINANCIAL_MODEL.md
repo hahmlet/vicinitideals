@@ -2235,7 +2235,18 @@ On the Gantt, divestment gets a minimum display width of 30 days for visual pres
 
 ## Appendix C: Multi-Phase Carry Configuration (April 2026)
 
-### C.1 Phased carry format
+### C.0 Two carry formats
+
+Two JSONB shapes exist and serve different purposes:
+
+| Format | Where stored | Purpose |
+|---|---|---|
+| `phases` array (engine format) | `CapitalModule.carry` | Consumed by cashflow engine; max 2 phases named `construction` / `operation` |
+| `schedule` array (wizard format) | `SourceVehicle.carry_config` | UI template; arbitrary N phases with duration/milestone anchors; wizard pre-fills from this on vehicle select |
+
+The wizard's "Simple (2-phase)" mode writes flat `construction_carry_type` / `operation_carry_type` keys; the engine maps these to the `phases` format internally. The wizard's "Custom Schedule" mode writes the `schedule` array to `carry_config` on the vehicle (see DATA_MODEL.md §12.6a).
+
+### C.1 Phased carry format (engine)
 
 A single loan can have different carry types in different phases. The `carry` JSONB column stores this as:
 

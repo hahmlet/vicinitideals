@@ -788,11 +788,30 @@ Scenario-scoped Source identity (lender, rate, carry type, exit terms). Per-proj
 
 **12.1b carry JSONB keys:**
 
+Two formats coexist. The engine reads whichever is present; `phases` takes precedence.
+
+*Flat format* (simple two-phase):
+
 | Key | Notes |
 |---|---|
-| carry_type | io_only / interest_reserve / capitalized_interest / pi |
+| carry_type | `io_only` / `interest_reserve` / `capitalized_interest` / `pi` |
 | rate_pct | Annual carry rate (may differ from permanent rate) |
-| amort_term_years | Amortization years for pi carry type |
+| amort_term_years | Amortization years for `pi` carry type |
+| construction_carry_type | If present, overrides `carry_type` during construction window |
+| operation_carry_type | If present, overrides `carry_type` during operations window |
+
+*Phases format* (engine multi-phase):
+
+```json
+{
+  "phases": [
+    {"name": "construction", "carry_type": "interest_reserve", "io_rate_pct": 7.0},
+    {"name": "operation",    "carry_type": "pi", "io_rate_pct": 6.5, "amort_term_years": 30}
+  ]
+}
+```
+
+Phase `name` is always `construction` or `operation`. See `FINANCIAL_MODEL.md` Appendix C for rate resolution precedence.
 
 ---
 
@@ -913,8 +932,38 @@ Unified table replacing the former `org_source_vehicles` + `user_source_vehicles
 | interest_rate_pct | Numeric or None | No | Annual rate for debt/forgivable_loan vehicles |
 | carry_type | str (30) or None | No | `io_only`, `interest_reserve`, `capitalized_interest`, `pi` |
 | day_count_convention | str (20) | Yes | Default `actual_360` |
-| source_config / carry_config / exit_config | dict or None | No | JSONB templates copied to CapitalModule on attach |
+| source_config | dict or None | No | JSONB sizing defaults (same keys as 12.1a) copied to CapitalModule.source on attach |
+| carry_config | dict or None | No | JSONB carry template — see 12.6a below |
+| exit_config | dict or None | No | JSONB exit defaults copied to CapitalModule.exit_terms on attach |
 | created_at / updated_at | datetime | Yes | |
+
+**12.6a carry_config JSONB structure:**
+
+The wizard stores custom carry schedules under the `schedule` key:
+
+```json
+{
+  "schedule": [
+    {
+      "label": "Construction",
+      "carry_type": "interest_reserve",
+      "duration": {"type": "months", "months": 24},
+      "rate_pct": 7.0
+    },
+    {
+      "label": "Operations",
+      "carry_type": "pi",
+      "duration": {"type": "remainder"},
+      "rate_pct": 6.5,
+      "amort_term_years": 30
+    }
+  ]
+}
+```
+
+`duration.type` is `months` (fixed count), `milestone` (until a named milestone — `duration.milestone_key` set), or `remainder` (balance of loan term). When `schedule` is absent, `carry_config` may hold flat keys matching 12.1b.
+
+The `schedule` array is the UI template stored on the vehicle. When a vehicle is attached to a deal, `carry_config` is copied to `CapitalModule.carry` for engine consumption (engine format uses `phases` — see FINANCIAL_MODEL.md Appendix C).
 
 **Key invariant.** `SourceVehicle` is a *template*; attaching it to a deal creates a `CapitalModule` whose `vehicle_type` and `equity_role` columns are snapshots copied at attach time. Changes to the template do not retroactively update existing modules.
 
