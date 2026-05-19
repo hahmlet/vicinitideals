@@ -6013,7 +6013,7 @@ async def handle_form_create_or_update(
         #
         # Non-debt vehicle types (equity, grants, etc.) are forced to
         # "maturity" as a no-op sentinel — their UI hides Exit Vehicle entirely.
-        _vehicle_type = form.get("vehicle_type", "debt")
+        _vehicle_type = form.get("vehicle_type", "debt") or "debt"
         _equity_role = (form.get("equity_role") or "").strip() or None
         if _vehicle_type != "debt":
             _vehicle_value = "maturity"
