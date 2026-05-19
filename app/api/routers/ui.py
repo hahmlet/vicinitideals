@@ -11574,7 +11574,7 @@ async def model_builder_line_form(
 # ---------------------------------------------------------------------------
 
 
-@router.get("/source-vehicles/{vehicle_id}/prefill")
+@router.get("/ui/source-vehicles/{vehicle_id}/prefill")
 async def source_vehicle_prefill(
     request: Request,
     vehicle_id: UUID,

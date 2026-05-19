@@ -1610,9 +1610,8 @@ function ulTimingChanged(val) {
       if (_frm) {
         var _cw = document.querySelector('#sw-step-4 .carry-wrapper');
         var _schedStr = _frm.dataset.pendingCarrySchedule;
-        console.log('[carry-dbg] step4', '_cw=', _cw, '_schedStr=', _schedStr ? _schedStr.substring(0,100) : null);
         if (_schedStr) {
-          try { prefillCarrySchedule(JSON.parse(_schedStr), _cw); } catch(e) { console.error('[carry-dbg] prefill threw', e); }
+          try { prefillCarrySchedule(JSON.parse(_schedStr), _cw); } catch(e) {}
         } else {
           if (_cw) {
             var _sr = _cw.querySelector('input[name="carry_schedule_mode"][value="simple"]');
@@ -1751,6 +1750,110 @@ function ulTimingChanged(val) {
 })();
 </script>
 {%- endif %}
+
+<script>
+// Carry schedule UI helpers (capital module form)
+function carryModeSwitch(el, mode) {
+  if (typeof el === 'string') {
+    // called with mode string directly
+    var wrappers = document.querySelectorAll('.carry-wrapper');
+    wrappers.forEach(function(w) {
+      var s = w.querySelector('.carry-simple-section');
+      var c = w.querySelector('.carry-schedule-section');
+      if (s) s.style.display = mode === 'simple' ? '' : 'none';
+      if (c) c.style.display = mode === 'schedule' ? '' : 'none';
+    });
+    return;
+  }
+  var wrapper = el ? el.closest('.carry-wrapper') : document.querySelectorAll('.carry-wrapper')[0];
+  if (!wrapper) return;
+  var simple = wrapper.querySelector('.carry-simple-section');
+  var sched  = wrapper.querySelector('.carry-schedule-section');
+  if (!simple || !sched) return;
+  simple.style.display = mode === 'simple' ? '' : 'none';
+  sched.style.display  = mode === 'schedule' ? '' : 'none';
+}
+function carryDurTypeChanged(sel) {
+  var row = sel.closest('.carry-phase-row');
+  if (!row) return;
+  row.querySelector('.carry-dur-months').style.display   = sel.value === 'months'    ? '' : 'none';
+  row.querySelector('.carry-dur-milestone').style.display = sel.value === 'milestone' ? '' : 'none';
+}
+function carryPhaseTypeChanged(sel) {
+  var row = sel.closest('.carry-phase-row');
+  if (!row) return;
+  row.querySelector('.carry-amort-field').style.display = sel.value === 'pi' ? '' : 'none';
+}
+function addCarryPhase(btn) {
+  var wrapper = btn ? btn.closest('.carry-wrapper') : document.querySelectorAll('.carry-wrapper')[0];
+  var list = wrapper ? wrapper.querySelector('.carry-phase-list') : null;
+  if (!list) return;
+  var tpl = '<div class="carry-phase-row" style="background:var(--surface-alt,#f9fafb);border:1px solid var(--border);border-radius:6px;padding:10px 12px">'
+    + '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">'
+    + '<input class="form-input" type="text" name="carry_phase_label[]" placeholder="Phase name" style="flex:1;font-size:12px">'
+    + '<select class="form-select" name="carry_phase_type[]" onchange="carryPhaseTypeChanged(this)" style="font-size:12px">'
+    + '<option value="interest_reserve">Interest Reserve</option>'
+    + '<option value="io_only">I&amp;O Payment</option>'
+    + '<option value="capitalized_interest">Capitalized Interest</option>'
+    + '<option value="pi">P&amp;I</option>'
+    + '</select>'
+    + '<button type="button" class="btn btn-ghost btn-sm" onclick="removeCarryPhase(this)" style="font-size:11px;color:var(--danger,#dc2626);padding:2px 6px">\u2715</button>'
+    + '</div>'
+    + '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end">'
+    + '<div><label style="font-size:11px;color:var(--text-muted)">Duration</label>'
+    + '<select class="form-select" name="carry_phase_duration_type[]" onchange="carryDurTypeChanged(this)" style="font-size:12px;width:auto">'
+    + '<option value="months">Fixed months</option>'
+    + '<option value="milestone">Until milestone</option>'
+    + '<option value="remainder" selected>Remainder of term</option>'
+    + '</select></div>'
+    + '<div class="carry-dur-months" style="display:none"><label style="font-size:11px;color:var(--text-muted)">Months</label>'
+    + '<input class="form-input" type="number" name="carry_phase_months[]" min="1" step="1" placeholder="12" style="width:70px;font-size:12px"></div>'
+    + '<div class="carry-dur-milestone" style="display:none"><label style="font-size:11px;color:var(--text-muted)">Milestone</label>'
+    + '<select class="form-select" name="carry_phase_milestone_key[]" style="font-size:12px;width:auto">'
+    + '<option value="close">Close</option><option value="pre_development">Pre Development</option>'
+    + '<option value="construction">Construction</option><option value="operation_lease_up">Operation Lease Up</option>'
+    + '<option value="operation_stabilized">Operation Stabilized</option></select></div>'
+    + '<div><label style="font-size:11px;color:var(--text-muted)">Rate % (blank=inherit)</label>'
+    + '<input class="form-input" type="number" name="carry_phase_rate_pct[]" step="0.01" min="0" placeholder="inherit" style="width:90px;font-size:12px"></div>'
+    + '<div class="carry-amort-field" style="display:none"><label style="font-size:11px;color:var(--text-muted)">Amort years</label>'
+    + '<input class="form-input" type="number" name="carry_phase_amort_years[]" step="1" min="1" placeholder="30" style="width:70px;font-size:12px"></div>'
+    + '</div></div>';
+  list.insertAdjacentHTML('beforeend', tpl);
+}
+function removeCarryPhase(btn) {
+  btn.closest('.carry-phase-row').remove();
+}
+function prefillCarrySchedule(schedule, wrapper) {
+  if (!schedule || !schedule.length) return;
+  if (!wrapper) wrapper = document.querySelectorAll('.carry-wrapper')[0];
+  if (!wrapper) return;
+  var list = wrapper.querySelector('.carry-phase-list');
+  if (!list) return;
+  list.innerHTML = '';
+  var scheduleRadio = wrapper.querySelector('input[name="carry_schedule_mode"][value="schedule"]');
+  if (scheduleRadio) scheduleRadio.checked = true;
+  var _psimple = wrapper.querySelector('.carry-simple-section');
+  var _psched  = wrapper.querySelector('.carry-schedule-section');
+  if (_psimple) _psimple.style.display = 'none';
+  if (_psched)  _psched.style.display  = '';
+  schedule.forEach(function(sp) { addCarryPhase(wrapper.querySelector('.carry-phase-list')); });
+  var rows = list.querySelectorAll('.carry-phase-row');
+  schedule.forEach(function(sp, i) {
+    var row = rows[i]; if (!row) return;
+    row.querySelector('[name="carry_phase_label[]"]').value = sp.label || '';
+    row.querySelector('[name="carry_phase_type[]"]').value = sp.carry_type || 'io_only';
+    carryPhaseTypeChanged(row.querySelector('[name="carry_phase_type[]"]'));
+    var dur = sp.duration || {};
+    var durSel = row.querySelector('[name="carry_phase_duration_type[]"]');
+    durSel.value = dur.type || 'remainder';
+    carryDurTypeChanged(durSel);
+    if (dur.type === 'months') row.querySelector('[name="carry_phase_months[]"]').value = dur.months || '';
+    if (dur.type === 'milestone') row.querySelector('[name="carry_phase_milestone_key[]"]').value = dur.milestone_key || '';
+    if (sp.rate_pct != null) row.querySelector('[name="carry_phase_rate_pct[]"]').value = sp.rate_pct;
+    if (sp.amort_term_years) row.querySelector('[name="carry_phase_amort_years[]"]').value = sp.amort_term_years;
+  });
+}
+</script>
 
 {% elif form_type in ('waterfall', 'waterfall_tiers') %}
 {# ── Waterfall Tier form ── #}
@@ -2123,10 +2226,8 @@ function prefillCarrySchedule(schedule, wrapper) {
   // Directly toggle sections using scoped wrapper (avoids closest() finding wrong carry-wrapper).
   var _psimple = wrapper.querySelector('.carry-simple-section');
   var _psched  = wrapper.querySelector('.carry-schedule-section');
-  console.log('[carry-dbg] psimple=', _psimple, 'psched=', _psched);
   if (_psimple) _psimple.style.display = 'none';
   if (_psched)  _psched.style.display  = '';
-  console.log('[carry-dbg] after toggle psimple.display=', _psimple && _psimple.style.display, 'psched.display=', _psched && _psched.style.display);
   schedule.forEach(function(sp) { addCarryPhase(wrapper.querySelector('.carry-phase-list')); });
   var rows = list.querySelectorAll('.carry-phase-row');
   schedule.forEach(function(sp, i) {
