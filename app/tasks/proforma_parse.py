@@ -449,10 +449,15 @@ def build_opex_prompt(text: str) -> str:
 
 def _llm_client() -> Any:
     """Return an instructor-patched OpenAI client pointed at local Ollama."""
+    import httpx
     import instructor  # type: ignore
     from openai import OpenAI  # type: ignore
 
-    raw = OpenAI(base_url=settings.ollama_base_url, api_key="ollama")
+    raw = OpenAI(
+        base_url=settings.ollama_base_url,
+        api_key="ollama",
+        http_client=httpx.Client(timeout=httpx.Timeout(120.0)),
+    )
     return instructor.from_openai(raw, mode=instructor.Mode.JSON)
 
 
