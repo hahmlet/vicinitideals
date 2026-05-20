@@ -215,16 +215,29 @@ uv run ruff check app/ tests/                              # Lint
 
 ### Test Creation Requirement
 
-Every `app/` change must have a corresponding test change before marking work done:
+**Every plan must end with a test validation step.** Before marking any task done:
+
+1. **Review existing tests** — read the relevant test file(s) and check whether any existing tests cover the changed behavior. Update them if the change altered something they assert.
+2. **Write new tests if missing** — if no test exercises the new behavior, write one:
 
 | Changed area | Required test |
 |---|---|
 | `app/engines/` | Unit test in `tests/engines/` verifying the changed math/behavior |
 | `app/api/routers/` | Integration test in `tests/api/` covering the new/changed route |
-| New UI feature | E2E test in `tests/e2e/` exercising it in a browser |
+| New or changed UI feature | E2E test in `tests/e2e/` exercising it in a browser |
 | Bug fix | Test that would have caught the bug |
 
-The stop hook runs `pytest tests/ --ignore=tests/e2e` automatically when `app/` changes are detected. It blocks up to 3 times, then escalates. Bypass mid-refactor: `New-Item .claude/state/skip_verify.json`.
+3. **Run targeted E2E tests** — do not run the full suite. Run only the test file(s) that cover the changed feature:
+```bash
+# Example: wizard change → run only wizard tests
+$env:E2E_BASE_URL="https://viciniti.deals"; uv run pytest tests/e2e/test_wizard_flow.py -v
+
+# Example: underwriting change → run only underwriting tests
+$env:E2E_BASE_URL="https://viciniti.deals"; uv run pytest tests/e2e/test_underwriting_flow.py -v
+```
+Confirm they pass before stopping. If they fail, fix and re-run.
+
+The stop hook separately runs `pytest tests/ --ignore=tests/e2e` when `app/` changes are detected (up to 3 attempts, then escalates). Bypass mid-refactor: `New-Item .claude/state/skip_verify.json`.
 
 ### Phase B Debt Regression (scripts/test_phase_b_debt.py)
 8 tests covering Sources=Uses parity, DSCR-capped gaps, carry-type formula round-trips. Runs against live instance:
