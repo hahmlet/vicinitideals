@@ -352,14 +352,6 @@ async def _compute_project_cashflow(
     operation_debt_monthly = _sum_debt_service(
         capital_modules, is_construction=False, exclude_ids=_schedule_module_ids
     )
-    # Add operation-phase DS for scheduled-carry modules (e.g. IR→PI bonds).
-    # _sum_debt_service excludes them because per-period DS lives in
-    # _schedule_period_ds, but the DSCR aggregate still needs the typical
-    # operation-phase payment in its denominator — otherwise DSCR = NOI / 0
-    # and the dual-constraint sizing loop has no cap signal.
-    operation_debt_monthly += _scheduled_operation_ds(
-        capital_modules, _schedule_module_ids
-    )
 
     # Pre-compute per-absolute-month DS for schedule-based modules.
     _total_months = sum(p.months for p in phases)
@@ -775,8 +767,16 @@ async def _compute_project_cashflow(
         else ZERO
     )
 
-    # DSCR = Stabilized NOI / Annual Operation Debt Service
-    annual_operation_debt_service = operation_debt_monthly * Decimal("12")
+    # DSCR = Stabilized NOI / Annual Operation Debt Service.
+    # _schedule_module_ids are excluded from operation_debt_monthly because
+    # their per-period DS comes from _schedule_period_ds (not the two-phase
+    # constant). For the DSCR aggregate denominator, add back the operation-
+    # phase DS of each scheduled module — otherwise DSCR = NOI/0 and the
+    # dual-constraint sizing loop has no cap signal.
+    _dscr_op_debt_monthly = operation_debt_monthly + _scheduled_operation_ds(
+        capital_modules, _schedule_module_ids
+    )
+    annual_operation_debt_service = _dscr_op_debt_monthly * Decimal("12")
     dscr = (
         _q(noi_stabilized / annual_operation_debt_service)
         if annual_operation_debt_service > ZERO
