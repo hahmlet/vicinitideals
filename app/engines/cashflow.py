@@ -2061,6 +2061,13 @@ async def _auto_size_debt_modules(
             )
             if _cc_exist is not None and not getattr(_cc_exist, "is_auto_finance_cost", False):
                 continue
+            # On 2nd+ compute, the engine-managed FC row from the prior pass
+            # is already in total_uses via the initial use_lines sum.  For
+            # auto-sized modules subtract it back out so divisor fold-in can
+            # re-derive FC from the freshly-solved principal (no double-count).
+            # Fixed modules re-add the correct amount below from known principal.
+            if _cc_exist is not None and getattr(_cc_exist, "is_auto_finance_cost", False):
+                total_uses -= _q(Decimal(str(getattr(_cc_exist, "amount", 0) or 0)))
             _cc_data[id(_ccm)] = {"flat": ZERO, "pct": _fc_rate, "module": _ccm}
 
         for _cc_obj in _cc_data.values():
