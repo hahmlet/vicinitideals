@@ -31,6 +31,7 @@ from app.engines.cashflow import (
     _build_phase_plan,
     _compute_period,
     _resolve_horizon_months,
+    _schedule_preop_months,
     _scheduled_operation_ds,
     compute_cash_flows,
 )
@@ -561,6 +562,61 @@ def test_scheduled_operation_ds_ignores_pure_ir_schedule() -> None:
     )
 
     assert _scheduled_operation_ds([ir_only], {ir_only.id}) == Decimal("0")
+
+
+@pytest.mark.unit
+def test_schedule_preop_months_uses_months_duration() -> None:
+    """User entered 36 months IR — preop_months returns 36."""
+    schedule = [
+        {"carry_type": "interest_reserve",
+         "duration": {"type": "months", "months": 36}, "rate_pct": 6.0},
+        {"carry_type": "pi", "duration": {"type": "remainder"}, "rate_pct": 6.0},
+    ]
+    assert _schedule_preop_months(schedule, {"_total": 360}, 0) == 36
+
+
+@pytest.mark.unit
+def test_schedule_preop_months_uses_milestone_duration() -> None:
+    """IR phase ends at milestone — preop_months follows the milestone-month map."""
+    schedule = [
+        {"carry_type": "interest_reserve",
+         "duration": {"type": "milestone", "milestone_key": "stabilization"},
+         "rate_pct": 6.0},
+        {"carry_type": "pi", "duration": {"type": "remainder"}, "rate_pct": 6.0},
+    ]
+    # loan starts at absolute month 0; stabilization milestone at month 24
+    assert _schedule_preop_months(
+        schedule, {"_total": 360, "stabilization": 24}, 0
+    ) == 24
+
+
+@pytest.mark.unit
+def test_schedule_preop_months_sums_ir_and_ci_phases() -> None:
+    """Multiple pre-funded carry phases (IR + CI) sum together."""
+    schedule = [
+        {"carry_type": "interest_reserve",
+         "duration": {"type": "months", "months": 6}, "rate_pct": 6.0},
+        {"carry_type": "capitalized_interest",
+         "duration": {"type": "months", "months": 18}, "rate_pct": 6.0},
+        {"carry_type": "pi", "duration": {"type": "remainder"}, "rate_pct": 6.0},
+    ]
+    assert _schedule_preop_months(schedule, {"_total": 360}, 0) == 24
+
+
+@pytest.mark.unit
+def test_schedule_preop_months_ignores_pi_and_io() -> None:
+    """PI / IO phases are periodic, not pre-funded — excluded from preop sum."""
+    schedule = [
+        {"carry_type": "io_only",
+         "duration": {"type": "months", "months": 12}, "rate_pct": 6.0},
+        {"carry_type": "pi", "duration": {"type": "remainder"}, "rate_pct": 6.0},
+    ]
+    assert _schedule_preop_months(schedule, {"_total": 360}, 0) == 0
+
+
+@pytest.mark.unit
+def test_schedule_preop_months_empty_schedule() -> None:
+    assert _schedule_preop_months([], {"_total": 360}, 0) == 0
 
 
 @pytest.mark.unit

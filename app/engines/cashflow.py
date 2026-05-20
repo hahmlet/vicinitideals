@@ -1510,6 +1510,36 @@ def _carry_for_loan_month(resolved: list[dict], loan_month: int) -> dict:
     return resolved[-1] if resolved else {"carry_type": "none", "rate_pct": None}
 
 
+def _schedule_preop_months(
+    schedule: list[dict],
+    milestone_month_map: dict[str, int],
+    loan_start_abs: int,
+) -> int:
+    """Total months of IR + CI carry phases in a schedule.
+
+    Driven by what the user entered for each carry phase (months, milestone,
+    or remainder) — not the deal's construction timeline. Used to size both
+    constr_io_factor and the matching pre-funded Interest Reserve /
+    Capitalized Construction Interest Use line so they reference the same
+    duration and Sources = Uses.
+    """
+    if not schedule:
+        return 0
+    total_abs = milestone_month_map.get("_total", 0)
+    resolved = _resolve_carry_schedule(schedule, milestone_month_map, loan_start_abs)
+    total = 0
+    for phase in resolved:
+        ct = phase.get("carry_type")
+        if ct not in ("interest_reserve", "capitalized_interest"):
+            continue
+        start = int(phase.get("start_loan_month") or 0)
+        end = phase.get("end_loan_month")
+        if end is None:
+            end = max(0, total_abs - loan_start_abs)
+        total += max(0, int(end) - start)
+    return total
+
+
 def _compute_preop_carry_cost(
     schedule: list[dict],
     funded: Decimal,
@@ -2080,15 +2110,29 @@ async def _auto_size_debt_modules(
         # Apply factor when there is no dedicated construction_loan handling its own DS.
         # Covers both legacy (no debt_types_list) and multi-debt deals using perm-only structure.
         _has_constr_loan = "construction_loan" in (debt_types_list or [])
-        if constr_rate_pct and _actual_build_months > 0 and not _has_constr_loan:
+        # Phase-aware preop months: when the module has carry.schedule, size the
+        # factor off the schedule's IR/CI phase durations (months / milestone /
+        # remainder) rather than the deal's construction phase total. The IR Use
+        # line written downstream will use the same number, so Sources = Uses.
+        _module_schedule = (carry or {}).get("schedule") or []
+        _preop_months = (
+            _schedule_preop_months(
+                _module_schedule,
+                _milestone_month_map,
+                _loan_start_abs_month(module, phases),
+            )
+            if _module_schedule
+            else _actual_build_months
+        )
+        if constr_rate_pct and _preop_months > 0 and not _has_constr_loan:
             _c_monthly_rate = Decimal(str(constr_rate_pct)) / HUNDRED / Decimal("12")
             if _constr_ct == "pi" and amort_years > 0 and _c_monthly_rate > ZERO:
                 _cn = amort_years * 12
                 _cf = (ONE + _c_monthly_rate) ** _cn
                 _pmt_f_c = _c_monthly_rate * _cf / (_cf - ONE)
-                constr_io_factor = _pmt_f_c * Decimal(str(_actual_build_months))
+                constr_io_factor = _pmt_f_c * Decimal(str(_preop_months))
             else:
-                constr_io_factor = _c_monthly_rate * Decimal(str(_actual_build_months))
+                constr_io_factor = _c_monthly_rate * Decimal(str(_preop_months))
 
         fixed = _fixed_sources(module)
         divisor = ONE - constr_io_factor
@@ -2449,7 +2493,7 @@ async def _auto_size_debt_modules(
     )
     if _has_constr_loan_module:
         total_constr_io = _bridge_io.get("construction_loan", ZERO)
-    elif constr_months_total > 0:
+    else:
         for m in auto_modules:
             src3 = m.source or {}
             carry3 = m.carry or {}
@@ -2463,9 +2507,24 @@ async def _auto_size_debt_modules(
                 cr3 = src3.get("interest_rate_pct")
             if not cr3:
                 continue
+            # Use the module's own schedule duration when present (months /
+            # milestone / remainder, as the user entered), else fall back to
+            # the deal's construction-phase total.
+            _m_schedule = (carry3 or {}).get("schedule") or []
+            _m_preop_months = (
+                _schedule_preop_months(
+                    _m_schedule,
+                    _milestone_month_map,
+                    _loan_start_abs_month(m, phases),
+                )
+                if _m_schedule
+                else constr_months_total
+            )
+            if _m_preop_months <= 0:
+                continue
             _ds_carry = _q(
                 p3 * Decimal(str(cr3)) / HUNDRED / Decimal("12")
-                * Decimal(str(constr_months_total))
+                * Decimal(str(_m_preop_months))
             )
             if _ds_carry <= ZERO:
                 continue
