@@ -117,6 +117,12 @@ def logged_in_page(
 
     if getattr(request.node, "rep_call", None) and request.node.rep_call.failed:
         _dump_browser_console(console_msgs, page_errors)
+        screenshot_path = f"/tmp/e2e-fail-{request.node.name}.png"
+        try:
+            page.screenshot(path=screenshot_path, full_page=True)
+            print(f"\n  Screenshot saved: {screenshot_path}")
+        except Exception:
+            pass
 
     ctx.close()
 
