@@ -11404,7 +11404,7 @@ async def model_builder_line_form(
         from app.models.project import Project as _LFProject
         from app.models.milestone import Milestone as _LFMilestone
         _lf_proj = (await session.execute(
-            select(_LFProject).where(_LFProject.scenario_id == model_id).limit(1)
+            select(_LFProject).where(_LFProject.scenario_id == model_id).order_by(_LFProject.created_at.asc()).limit(1)
         )).scalar_one_or_none()
         if _lf_proj:
             _lf_opp_ms = list((await session.execute(
