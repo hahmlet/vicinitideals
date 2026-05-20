@@ -34,6 +34,13 @@ def _open_uses_panel(page: Page, base_url: str, model_id: str) -> None:
     page.goto(f"{base_url}/models/{model_id}/builder?module=sources_uses")
     wait_for_htmx(page)
     page.wait_for_selector("#module-panel-content", timeout=10_000)
+    # Timeline wizard overlay auto-opens on new value_add / new_construction
+    # deals (no timeline yet) and intercepts clicks. Hide it so row clicks
+    # for the Dev Fee tests reach their target.
+    page.evaluate(
+        "() => { const w = document.getElementById('timeline-wizard');"
+        " if (w) { w.style.display = 'none'; w.remove(); } }"
+    )
 
 
 def _dev_fee_row(page: Page):
