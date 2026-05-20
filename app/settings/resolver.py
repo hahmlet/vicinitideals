@@ -141,7 +141,8 @@ async def resolve_dev_fee_config(
     Returns: {enabled, pct, basis, timing, phase} as strings (caller casts).
     Falls back to 'acquisition' keys if deal_type not recognized.
     """
-    key_type = deal_type if deal_type in _DEV_FEE_DEAL_TYPES else "acquisition"
+    deal_type_str = getattr(deal_type, "value", deal_type)
+    key_type = deal_type_str if deal_type_str in _DEV_FEE_DEAL_TYPES else "acquisition"
     keys = {
         "enabled": "dev_fee_enabled",
         "pct": f"dev_fee_pct_{key_type}",

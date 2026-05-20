@@ -110,7 +110,7 @@ def logged_in_page(
 
     console_msgs: list[ConsoleMessage] = []
     page_errors: list[str] = []
-    page.on("console", console_msgs.append)
+    page.on("console", lambda msg: console_msgs.append(msg))
     page.on("pageerror", lambda err: page_errors.append(str(err)))
 
     yield page
