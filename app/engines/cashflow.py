@@ -2483,28 +2483,46 @@ async def _auto_size_debt_modules(
     )
 
     # Compute actual construction IO across auto-sized modules.
-    # New multi-debt path: construction loan IO is in _bridge_io["construction_loan"];
-    # perm does not pay IO during construction, so auto_modules loop would produce ZERO.
-    # Legacy path: iterate auto_modules (may include a phased perm with constr IO carry).
+    # Multi-debt path: dedicated construction_loan IO is in _bridge_io.
+    # Perm-only path (or any deal whose construction-period carry sits on the
+    # gap-fill module itself): the perm's principal was inflated by
+    # constr_io_factor — we need a matching Use line for that pre-funded
+    # interest reserve / capitalised interest, otherwise Sources > Uses by
+    # exactly P · monthly_rate · build_months.
     total_constr_io = ZERO
-    if debt_types_list:
+    _constr_int_perm_module: CapitalModule | None = None
+    _constr_int_perm_ct: str | None = None
+    _has_constr_loan_module = bool(
+        debt_types_list and "construction_loan" in debt_types_list
+    )
+    if _has_constr_loan_module:
         total_constr_io = _bridge_io.get("construction_loan", ZERO)
     elif constr_months_total > 0:
         for m in auto_modules:
             src3 = m.source or {}
             carry3 = m.carry or {}
             amt3 = src3.get("amount")
-            if amt3:
-                p3 = Decimal(str(amt3))
-                constr_carry3 = _get_phase_carry(carry3, "construction")
-                cr3 = (constr_carry3 or {}).get("io_rate_pct") if constr_carry3 else None
-                if not cr3:
-                    cr3 = src3.get("interest_rate_pct")
-                if cr3:
-                    total_constr_io += _q(
-                        p3 * Decimal(str(cr3)) / HUNDRED / Decimal("12")
-                        * Decimal(str(constr_months_total))
-                    )
+            if not amt3:
+                continue
+            p3 = Decimal(str(amt3))
+            constr_carry3 = _get_phase_carry(carry3, "construction")
+            cr3 = (constr_carry3 or {}).get("io_rate_pct") if constr_carry3 else None
+            if not cr3:
+                cr3 = src3.get("interest_rate_pct")
+            if not cr3:
+                continue
+            _ds_carry = _q(
+                p3 * Decimal(str(cr3)) / HUNDRED / Decimal("12")
+                * Decimal(str(constr_months_total))
+            )
+            if _ds_carry <= ZERO:
+                continue
+            total_constr_io += _ds_carry
+            if _constr_int_perm_module is None:
+                _constr_int_perm_module = m
+                _constr_int_perm_ct = _carry_type_for_phase(
+                    carry3, is_construction=True
+                )
 
     # Get project_id from the first use_line (all belong to the same project)
     project_id = getattr(use_lines[0], "project_id", None) if use_lines else None
@@ -2557,21 +2575,27 @@ async def _auto_size_debt_modules(
         "Construction Interest Reserve",   # legacy
         "Interest Reserve",                # IR carry type
     }
-    _constr_int_ct = _bridge_io_carry_type.get("construction_loan", "capitalized_interest")
+    _constr_int_ct = (
+        _bridge_io_carry_type.get("construction_loan")
+        or _constr_int_perm_ct
+        or "capitalized_interest"
+    )
     _constr_int_label = (
         "Interest Reserve"
         if _constr_int_ct == "interest_reserve"
         else "Capitalized Construction Interest"
     )
     _constr_int_notes = (
-        "Auto-computed: interest reserve pre-funded from construction loan proceeds."
+        "Auto-computed: interest reserve pre-funded from loan proceeds."
         if _constr_int_ct == "interest_reserve"
-        else "Auto-computed: IO capitalized into construction loan principal."
+        else "Auto-computed: IO capitalized into loan principal."
     )
     # Phase 2e1: tag the Construction IO reserve with the construction loan
-    # module id (already tracked by _bridge_io_module from Phase 2e's bridge
-    # sizing pass).
-    _ci_source_id = _bridge_io_module.get("construction_loan")
+    # module id when present; otherwise the perm module that carries the
+    # construction-period interest (perm-only structures with IR/CI carry).
+    _ci_source_id = _bridge_io_module.get("construction_loan") or (
+        _constr_int_perm_module.id if _constr_int_perm_module else None
+    )
     _ci_rows = [ul for ul in use_lines if getattr(ul, "label", "") in _CONSTR_INT_LABELS]
     if _ci_rows:
         _ci_keep = _ci_rows[0]
