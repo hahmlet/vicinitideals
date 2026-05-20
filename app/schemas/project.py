@@ -57,7 +57,7 @@ class ProjectCreate(ProjectBase):
 
 class ProjectRead(ProjectBase):
     id: uuid.UUID
-    org_id: uuid.UUID
+    org_id: uuid.UUID | None = None
     created_by_user_id: uuid.UUID | None = None
     created_at: datetime
 

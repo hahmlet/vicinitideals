@@ -140,7 +140,7 @@ def single_project_deal(_seed_page, deal_type: str) -> tuple[str, str]:
 
 
 @pytest.fixture(scope="module")
-def two_project_deal(_seed_page, deal_type: str) -> tuple[str, str, str]:
+def two_project_deal(_seed_page, base_url: str, deal_type: str) -> tuple[str, str, str]:
     """Multi-project deal for the current ``deal_type`` parameter.
 
     Returns (model_id, project_1_id, project_2_id). Project 2 stays at its
@@ -155,11 +155,11 @@ def two_project_deal(_seed_page, deal_type: str) -> tuple[str, str, str]:
         deal_type=deal_type,
     )
 
-    # Add a second project via POST — endpoint now requires opportunity_id + acquisition_cost.
-    # List org opportunities (sorted last-seen DESC) and reuse the most recent one.
-    _opp_resp = page.request.get("/api/projects")
+    _opp_resp = page.request.get(f"{base_url}/api/projects")
+    assert _opp_resp.status == 200, f"GET /api/projects: {_opp_resp.status} {_opp_resp.text()[:300]}"
     _opp_list = _opp_resp.json()
-    assert _opp_list, "No opportunities available to create Project 2"
+    assert isinstance(_opp_list, list) and len(_opp_list) > 0, \
+        f"Expected non-empty list, got {type(_opp_list).__name__}: {str(_opp_list)[:200]}"
     _opp_id = str(_opp_list[0]["id"])
     page.request.post(
         f"/ui/deals/{model_id}/new-project",
