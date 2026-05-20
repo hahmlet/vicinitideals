@@ -22,7 +22,7 @@ import httpx
 import pytest
 
 if TYPE_CHECKING:
-    from playwright.sync_api import Browser, Page
+    from playwright.sync_api import Browser, ConsoleMessage, Page
 
 BASE_URL: str = os.environ.get("E2E_BASE_URL", "http://localhost:8001")
 E2E_EMAIL: str = os.environ.get("E2E_EMAIL", "e2e@ketch.media")
@@ -32,6 +32,13 @@ E2E_PASSWORD: str = os.environ.get("E2E_PASSWORD", "e2e-test-password-2026")
 @pytest.fixture(scope="session")
 def base_url() -> str:
     return BASE_URL
+
+
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    """Attach phase results to the node so fixtures can inspect pass/fail."""
+    outcome = yield
+    setattr(item, f"rep_{outcome.get_result().when}", outcome.get_result())
 
 
 @pytest.fixture(scope="session")
@@ -80,12 +87,37 @@ def _auth_state_path(browser: "Browser", tmp_path_factory: pytest.TempPathFactor
     return state_path
 
 
+def _dump_browser_console(msgs: "list[ConsoleMessage]", errors: list[str]) -> None:
+    print("\n─── Browser console ────────────────────────────────────────────")
+    if not msgs and not errors:
+        print("  (no console messages captured)")
+    for m in msgs:
+        print(f"  [{m.type.upper()}] {m.text}")
+    for e in errors:
+        print(f"  [PAGE ERROR] {e}")
+    print("────────────────────────────────────────────────────────────────")
+
+
 @pytest.fixture
-def logged_in_page(browser: "Browser", _auth_state_path: str) -> Generator["Page", None, None]:
+def logged_in_page(
+    browser: "Browser",
+    _auth_state_path: str,
+    request: pytest.FixtureRequest,
+) -> Generator["Page", None, None]:
     """A fresh page pre-loaded with a valid session cookie."""
     ctx = browser.new_context(base_url=BASE_URL, storage_state=_auth_state_path)
     page = ctx.new_page()
+
+    console_msgs: list[ConsoleMessage] = []
+    page_errors: list[str] = []
+    page.on("console", console_msgs.append)
+    page.on("pageerror", lambda err: page_errors.append(str(err)))
+
     yield page
+
+    if getattr(request.node, "rep_call", None) and request.node.rep_call.failed:
+        _dump_browser_console(console_msgs, page_errors)
+
     ctx.close()
 
 
