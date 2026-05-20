@@ -9921,17 +9921,34 @@ def _compute_calc_status(data: dict) -> dict:
             dscr_val = float(outputs.dscr)
         except (TypeError, ValueError):
             dscr_val = None
-    # DSCR floor: read from the first perm-debt CapitalModule's source.dscr_min;
-    # falls back to 1.20 if perm debt exists but value is unset.
+    # DSCR floor: same precedence as the cashflow engine —
+    #   source.dscr_min → operational_inputs.debt_terms.permanent_debt.dscr_min → 1.20
+    _dt_perm_dscr: float | None = None
+    if inputs is not None:
+        _dt = getattr(inputs, "debt_terms", None) or {}
+        if isinstance(_dt, dict):
+            _dt_perm = _dt.get("permanent_debt") or {}
+            if isinstance(_dt_perm, dict):
+                try:
+                    _v_dt = _dt_perm.get("dscr_min")
+                    if _v_dt is not None:
+                        _dt_perm_dscr = float(_v_dt)
+                except (TypeError, ValueError):
+                    pass
     for _cm in capital_modules:
         if str(getattr(_cm, "vehicle_type", "") or "").replace("VehicleType.", "") != "debt":
             continue
         _src = getattr(_cm, "source", None) or {}
         try:
             _v = _src.get("dscr_min") if isinstance(_src, dict) else None
-            dscr_min = float(_v) if _v is not None else 1.20
+            if _v is not None:
+                dscr_min = float(_v)
+            elif _dt_perm_dscr is not None:
+                dscr_min = _dt_perm_dscr
+            else:
+                dscr_min = 1.20
         except (TypeError, ValueError):
-            dscr_min = 1.20
+            dscr_min = _dt_perm_dscr if _dt_perm_dscr is not None else 1.20
         break
 
     if dscr_val is None or dscr_min is None:
