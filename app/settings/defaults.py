@@ -54,6 +54,27 @@ SYSTEM_BASELINE: dict[str, str] = {
     "gp_split_pct": "20.0",
     "irr_hurdle_pct_tier1": "8.0",
     "pref_return_rate_pct": "6.0",
+    # ── Developer Fee (Org-Default, per deal_type) ───────────────────────────
+    # Auto-seeded on every new deal. Engine recomputes $ each pass from
+    # dev_fee_pct * basis. User overrides % in the Use drawer; $ is read-only.
+    # Set dev_fee_pct_<type> to 0 to effectively disable for that deal type.
+    "dev_fee_enabled": "true",
+    "dev_fee_pct_acquisition": "5.0",
+    "dev_fee_pct_value_add": "12.0",
+    "dev_fee_pct_conversion": "12.0",
+    "dev_fee_pct_new_construction": "12.0",
+    "dev_fee_basis_acquisition": "purchase_price",
+    "dev_fee_basis_value_add": "tpc_excl_self",
+    "dev_fee_basis_conversion": "tpc_excl_self",
+    "dev_fee_basis_new_construction": "tpc_excl_self",
+    "dev_fee_timing_acquisition": "first_day",
+    "dev_fee_timing_value_add": "spread",
+    "dev_fee_timing_conversion": "spread",
+    "dev_fee_timing_new_construction": "spread",
+    "dev_fee_phase_acquisition": "acquisition",
+    "dev_fee_phase_value_add": "construction",
+    "dev_fee_phase_conversion": "construction",
+    "dev_fee_phase_new_construction": "construction",
     # ── User-Default only (Type 3) ────────────────────────────────────────────
     "lease_up_curve_steepness": "5",
 }

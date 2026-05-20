@@ -237,6 +237,71 @@
     </details>
 
     <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+      <summary style="padding:14px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);list-style:none">Developer Fee (auto)</summary>
+      <div style="padding:0 18px 18px;display:grid;gap:14px">
+        <div style="font-size:11px;color:var(--text-muted);line-height:1.5">
+          A Developer Fee Use Line is auto-seeded on every new deal. The $ amount is recomputed every model pass from the % below times the chosen basis. Set the % to 0 for a deal type to effectively disable the fee for new deals of that type.
+        </div>
+        {% set _df_deal_type_labels = [
+          ('acquisition',      'Acquisition'),
+          ('value_add',        'Value-Add (Renovation)'),
+          ('conversion',       'Conversion'),
+          ('new_construction', 'New Construction'),
+        ] %}
+        {% for _dt, _dt_label in _df_deal_type_labels %}
+        <div style="border:1px solid var(--border);border-radius:6px;padding:10px 12px;background:var(--surface-2,#fafafa)">
+          <div style="font-size:12px;font-weight:600;margin-bottom:8px">{{ _dt_label }}</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px">
+            <div>
+              <label style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px;display:block">Fee %</label>
+              <input class="filter-input settings-field" type="number" step="0.1" min="0" max="100"
+                     data-fk="dev_fee_pct_{{ _dt }}"
+                     data-orig="{{ resolved.get('dev_fee_pct_' ~ _dt, '') }}"
+                     value="{{ resolved.get('dev_fee_pct_' ~ _dt, '') }}"
+                     style="width:100%">
+              {{ perm_checkbox('dev_fee_pct_' ~ _dt) }}
+            </div>
+            <div>
+              <label style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px;display:block">Basis</label>
+              <select class="filter-select settings-field"
+                      data-fk="dev_fee_basis_{{ _dt }}"
+                      data-orig="{{ resolved.get('dev_fee_basis_' ~ _dt, '') }}"
+                      style="width:100%">
+                <option value="purchase_price" {% if resolved.get('dev_fee_basis_' ~ _dt) == 'purchase_price' %}selected{% endif %}>Purchase price</option>
+                <option value="tpc_excl_self" {% if resolved.get('dev_fee_basis_' ~ _dt) == 'tpc_excl_self' %}selected{% endif %}>TPC excl. fee</option>
+              </select>
+              {{ perm_checkbox('dev_fee_basis_' ~ _dt) }}
+            </div>
+            <div>
+              <label style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px;display:block">Timing</label>
+              <select class="filter-select settings-field"
+                      data-fk="dev_fee_timing_{{ _dt }}"
+                      data-orig="{{ resolved.get('dev_fee_timing_' ~ _dt, '') }}"
+                      style="width:100%">
+                <option value="first_day" {% if resolved.get('dev_fee_timing_' ~ _dt) == 'first_day' %}selected{% endif %}>Lump sum</option>
+                <option value="spread" {% if resolved.get('dev_fee_timing_' ~ _dt) == 'spread' %}selected{% endif %}>Spread</option>
+              </select>
+              {{ perm_checkbox('dev_fee_timing_' ~ _dt) }}
+            </div>
+            <div>
+              <label style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px;display:block">Phase</label>
+              <select class="filter-select settings-field"
+                      data-fk="dev_fee_phase_{{ _dt }}"
+                      data-orig="{{ resolved.get('dev_fee_phase_' ~ _dt, '') }}"
+                      style="width:100%">
+                <option value="acquisition" {% if resolved.get('dev_fee_phase_' ~ _dt) == 'acquisition' %}selected{% endif %}>Acquisition</option>
+                <option value="pre_construction" {% if resolved.get('dev_fee_phase_' ~ _dt) == 'pre_construction' %}selected{% endif %}>Pre-construction</option>
+                <option value="construction" {% if resolved.get('dev_fee_phase_' ~ _dt) == 'construction' %}selected{% endif %}>Construction</option>
+              </select>
+              {{ perm_checkbox('dev_fee_phase_' ~ _dt) }}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </details>
+
+    <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
       <summary style="padding:14px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);list-style:none">Construction &amp; Timeline</summary>
       <div style="padding:0 18px 18px;display:grid;gap:12px">
         <div>

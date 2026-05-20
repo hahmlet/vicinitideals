@@ -127,6 +127,35 @@ def build_overridable_map(
     }
 
 
+_DEV_FEE_DEAL_TYPES = ("acquisition", "value_add", "conversion", "new_construction")
+
+
+async def resolve_dev_fee_config(
+    user_id: uuid.UUID,
+    org_id: uuid.UUID,
+    deal_type: str,
+    session: AsyncSession,
+) -> dict[str, str]:
+    """Resolve Developer Fee defaults for one deal type.
+
+    Returns: {enabled, pct, basis, timing, phase} as strings (caller casts).
+    Falls back to 'acquisition' keys if deal_type not recognized.
+    """
+    key_type = deal_type if deal_type in _DEV_FEE_DEAL_TYPES else "acquisition"
+    keys = {
+        "enabled": "dev_fee_enabled",
+        "pct": f"dev_fee_pct_{key_type}",
+        "basis": f"dev_fee_basis_{key_type}",
+        "timing": f"dev_fee_timing_{key_type}",
+        "phase": f"dev_fee_phase_{key_type}",
+    }
+    out: dict[str, str] = {}
+    for slot, fkey in keys.items():
+        val = await resolve_default(fkey, user_id, org_id, session)
+        out[slot] = val if val is not None else SYSTEM_BASELINE[fkey]
+    return out
+
+
 async def resolve_timeline_defaults(
     user_id: uuid.UUID,
     org_id: uuid.UUID,

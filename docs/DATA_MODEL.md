@@ -71,7 +71,7 @@ Deal ──┬── Scenario (= "Variant")          ← DB table: scenarios; OR
 | **WaterfallTier** | `waterfall_tiers` | per-project (0048); joined at Underwriting-rollup layer | `project_id` nullable during 0048 backfill window |
 | **WaterfallResult** | `waterfall_results` | per-project | same |
 | **DrawSource** | `draw_sources` | per-project | same |
-| **UseLine** | `use_lines` | project-scoped | `source_capital_module_id` (0048) attributes engine-injected reserves to their originating Source; `eligible_module_ids` (0088) whitelists which Sources may fund this use |
+| **UseLine** | `use_lines` | project-scoped | `source_capital_module_id` (0048) attributes engine-injected reserves to their originating Source; `eligible_module_ids` (0088) whitelists which Sources may fund this use. **Migration 0092** adds `is_auto_dev_fee` (bool), `dev_fee_pct` (Numeric 8,4), `dev_fee_basis` (`purchase_price` \| `tpc_excl_self`) for the auto Developer Fee row seeded on every new deal — engine recomputes `amount` each pass; UI exposes `%` only and locks `$`. See [FINANCIAL_MODEL.md §1.4](FINANCIAL_MODEL.md). |
 
 **Multi-project rule (post-0048).** A Scenario may have N Projects. Each Source is identified once on the Scenario (its `CapitalModule` row) and attached to 1+ Projects via `CapitalModuleProject` junction rows. One junction row = project-scoped Source. Multiple junction rows on the same module = shared Source. Each project owns its own UseLines, IncomeStreams, OpEx, OperationalInputs, Milestones, WaterfallTiers, DrawSources.
 
