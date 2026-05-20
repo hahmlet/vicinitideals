@@ -352,6 +352,14 @@ async def _compute_project_cashflow(
     operation_debt_monthly = _sum_debt_service(
         capital_modules, is_construction=False, exclude_ids=_schedule_module_ids
     )
+    # Add operation-phase DS for scheduled-carry modules (e.g. IR→PI bonds).
+    # _sum_debt_service excludes them because per-period DS lives in
+    # _schedule_period_ds, but the DSCR aggregate still needs the typical
+    # operation-phase payment in its denominator — otherwise DSCR = NOI / 0
+    # and the dual-constraint sizing loop has no cap signal.
+    operation_debt_monthly += _scheduled_operation_ds(
+        capital_modules, _schedule_module_ids
+    )
 
     # Pre-compute per-absolute-month DS for schedule-based modules.
     _total_months = sum(p.months for p in phases)
@@ -1584,6 +1592,38 @@ def _compute_preop_carry_cost(
         if phase_end >= preop_months or dur_type == "remainder":
             break
         cursor = phase_end
+    return total
+
+
+def _scheduled_operation_ds(
+    capital_modules: list, schedule_module_ids: set
+) -> Decimal:
+    """Sum monthly DS during the operation phase for scheduled-carry modules.
+
+    Each scheduled module contributes the DS of its last PI/IO carry phase
+    (typically the long-term P&I phase after IR/CI pre-funded phases). Used
+    to keep the DSCR aggregate non-zero when debt is sized via carry.schedule.
+    """
+    total = ZERO
+    for module in capital_modules:
+        if module.id not in schedule_module_ids:
+            continue
+        carry = module.carry or {}
+        principal = Decimal(str((module.source or {}).get("amount") or 0))
+        if principal <= ZERO:
+            continue
+        base_rate = (module.source or {}).get("interest_rate_pct")
+        operation_phase: dict | None = None
+        for phase in (carry.get("schedule") or []):
+            ct = (phase.get("carry_type") or "").replace(
+                "accruing", "capitalized_interest"
+            )
+            if ct in ("pi", "io_only"):
+                operation_phase = {**phase, "carry_type": ct}
+        if operation_phase is not None:
+            total += _period_ds_from_schedule_phase(
+                operation_phase, principal, base_rate
+            )
     return total
 
 

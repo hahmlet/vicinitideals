@@ -10,7 +10,7 @@ from sqlalchemy import select
 
 from app.models.field_conflict_log import FieldConflictAction, FieldConflictLog
 from app.models.ingestion import DedupCandidate, DedupStatus, IngestJob, RecordType
-from app.models.project import ScrapedListing
+from app.models.scraped_listing import ScrapedListing
 from app.scrapers.merge_enhancement import apply_enhancement, diff_fields
 
 

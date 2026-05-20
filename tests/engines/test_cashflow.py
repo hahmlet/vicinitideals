@@ -31,6 +31,7 @@ from app.engines.cashflow import (
     _build_phase_plan,
     _compute_period,
     _resolve_horizon_months,
+    _scheduled_operation_ds,
     compute_cash_flows,
 )
 
@@ -492,3 +493,95 @@ async def _seed_cashflow_deal(session: AsyncSession) -> UUID:
     session.add_all([inputs, rent, laundry])
     await session.flush()
     return deal.id
+
+
+class _ScheduledCarryModule:
+    """Lightweight stand-in for a debt CapitalModule with carry.schedule."""
+
+    def __init__(self, *, schedule: list[dict], amount: str = "1500000",
+                 rate_pct: float | None = 6.0) -> None:
+        self.id = uuid4()
+        self.source = {"amount": amount, "interest_rate_pct": rate_pct}
+        self.carry = {"schedule": schedule}
+
+
+@pytest.mark.unit
+def test_scheduled_operation_ds_includes_pi_phase() -> None:
+    """Regression: debt with carry.schedule (IR→PI bond) was excluded from the
+    operation-phase debt-service aggregate, producing DSCR = NOI/0 = 0 and
+    breaking the dual-constraint sizing loop. The new helper sums the
+    operation-phase PI payment from each scheduled module."""
+    bond = _ScheduledCarryModule(
+        schedule=[
+            {
+                "label": "IR",
+                "carry_type": "interest_reserve",
+                "duration": {"type": "months", "months": 6},
+                "rate_pct": 6.0,
+            },
+            {
+                "label": "PI",
+                "carry_type": "pi",
+                "duration": {"type": "remainder"},
+                "rate_pct": 6.0,
+                "amort_term_years": 30,
+            },
+        ],
+        amount="1500000",
+    )
+
+    ds = _scheduled_operation_ds([bond], {bond.id})
+
+    # PMT(1.5M, 6%/yr, 30yr) ≈ $8,991/mo
+    assert ds > Decimal("8900")
+    assert ds < Decimal("9100")
+
+
+@pytest.mark.unit
+def test_scheduled_operation_ds_skips_modules_not_in_set() -> None:
+    bond = _ScheduledCarryModule(
+        schedule=[
+            {"carry_type": "pi", "duration": {"type": "remainder"},
+             "rate_pct": 6.0, "amort_term_years": 30},
+        ],
+    )
+
+    assert _scheduled_operation_ds([bond], set()) == Decimal("0")
+
+
+@pytest.mark.unit
+def test_scheduled_operation_ds_ignores_pure_ir_schedule() -> None:
+    """A schedule with only interest_reserve / capitalized_interest phases (no
+    PI/IO operation phase) contributes zero — there's no recurring DS."""
+    ir_only = _ScheduledCarryModule(
+        schedule=[
+            {"carry_type": "interest_reserve",
+             "duration": {"type": "remainder"}, "rate_pct": 6.0},
+        ],
+    )
+
+    assert _scheduled_operation_ds([ir_only], {ir_only.id}) == Decimal("0")
+
+
+@pytest.mark.unit
+def test_scheduled_operation_ds_sums_multiple_modules() -> None:
+    bond_a = _ScheduledCarryModule(
+        schedule=[
+            {"carry_type": "pi", "duration": {"type": "remainder"},
+             "rate_pct": 6.0, "amort_term_years": 30},
+        ],
+        amount="1000000",
+    )
+    bond_b = _ScheduledCarryModule(
+        schedule=[
+            {"carry_type": "pi", "duration": {"type": "remainder"},
+             "rate_pct": 6.0, "amort_term_years": 30},
+        ],
+        amount="500000",
+    )
+
+    ds = _scheduled_operation_ds([bond_a, bond_b], {bond_a.id, bond_b.id})
+
+    # Combined PMT ≈ $8,991 (the same as the $1.5M test above)
+    assert ds > Decimal("8900")
+    assert ds < Decimal("9100")
