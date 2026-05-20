@@ -2024,20 +2024,28 @@ async def _auto_size_debt_modules(
             if _bio_amt > ZERO:
                 total_uses += _bio_amt
 
-    # ── Total Finance Costs (one row per CapitalModule) ─────────────────────────
-    # Apply DEFAULT_FINANCE_COST_PCT × principal to every module (loans + equity +
-    # grants).  Engine-managed rows carry is_auto_finance_cost=True.  A row where
-    # the flag is False is a user override — leave amount + pct alone, but still
-    # count it in total_uses via the initial sum (already done).
-    # For auto-sized modules: pct folded into the gap-fill divisor so principal
-    # sizes up to cover its own finance cost in one pass.
-    # For fixed-amount modules (equity, bridge, fixed loans): pct × known amount
-    # added directly to total_uses.
+    # ── Total Finance Costs (one row per DEBT CapitalModule) ────────────────────
+    # Apply DEFAULT_FINANCE_COST_PCT × principal to debt modules only.
+    # Equity / grants do not get finance cost rows yet — extending to non-debt
+    # sources requires Sources-side handling so they cover their own cost.
+    # Engine-managed rows carry is_auto_finance_cost=True.  A row where the
+    # flag is False is a user override → leave alone (already in total_uses).
+    # Auto-sized modules: pct folded into gap-fill divisor.
+    # Fixed-amount debt modules (pre-sized bridge): pct × known amount added
+    # directly to total_uses.
     _cc_data: dict = {}   # id(module) → {"flat": Decimal, "pct": Decimal, "module": m}
     _diag(f"CC-INIT entering block debt_types_list={bool(debt_types_list)} auto_modules={[m.id for m in auto_modules]}")
-    if debt_types_list:
+    if debt_types_list and auto_modules:
         _fc_rate = DEFAULT_FINANCE_COST_PCT / HUNDRED
+        _auto_mod_ids = {id(m) for m in auto_modules}
         for _ccm in capital_modules:
+            if not _is_debt_cm(_ccm):
+                continue
+            # Skip user-entered fixed debt with no auto_size and no pre-sizing.
+            _is_auto = id(_ccm) in _auto_mod_ids
+            _pre_sized = Decimal(str((_ccm.source or {}).get("amount") or 0)) > ZERO
+            if not _is_auto and not _pre_sized:
+                continue
             _ccm_lbl = (
                 getattr(_ccm, "label", "")
                 or _loan_subtype_from_module(_ccm).replace("_", " ").title()
@@ -2047,23 +2055,15 @@ async def _auto_size_debt_modules(
                 (ul for ul in use_lines if getattr(ul, "label", "") == _cc_full_lbl),
                 None,
             )
-            # User override — engine-managed flag turned off → leave alone.
-            # Row is already in total_uses via the initial sum.
             if _cc_exist is not None and not getattr(_cc_exist, "is_auto_finance_cost", False):
                 continue
             _cc_data[id(_ccm)] = {"flat": ZERO, "pct": _fc_rate, "module": _ccm}
 
-        # Add finance costs to total_uses now.
-        # Auto-sized modules (still in auto_modules): pct handled via divisor in gap-fill loop.
-        # Fixed/already-sized modules (bridge, equity, fixed-amount loans): pct × known amount.
-        _auto_mod_ids = {id(m) for m in auto_modules}
         for _cc_obj in _cc_data.values():
             _cc_ref = _cc_obj["module"]
             if id(_cc_ref) in _auto_mod_ids:
-                # Gap-fill module — % folded into divisor below.  No total_uses bump here.
-                pass
+                pass  # divisor fold-in below
             else:
-                # Fixed-amount module: principal/commitment known → add pct × amount.
                 _cc_br_p = Decimal(str((_cc_ref.source or {}).get("amount") or 0))
                 total_uses += _q(_cc_br_p * _cc_obj["pct"])
 
