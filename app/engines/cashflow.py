@@ -419,14 +419,8 @@ async def _compute_project_cashflow(
             ppct = _to_decimal(b_src.get("prepay_penalty_pct"))
             if ppct > ZERO:
                 prepay_penalty = _q(bridge_balloon * ppct / HUNDRED)
-        # Financing costs for the perm loan (flat from closing cost data)
-        perm_financing_costs = ZERO
-        perm_ft = _loan_subtype_from_module(cm)
-        for cc in _DEFAULT_LOAN_COSTS.get(perm_ft, []):
-            if "pct_of_principal" in cc:
-                perm_financing_costs += _q(perm_amount * Decimal(str(cc["pct_of_principal"])) / HUNDRED)
-            else:
-                perm_financing_costs += Decimal(str(cc["flat"]))
+        # Total Finance Costs for the perm loan (single global %)
+        perm_financing_costs = _q(perm_amount * DEFAULT_FINANCE_COST_PCT / HUNDRED)
         net_refi = _q(perm_amount - bridge_balloon - prepay_penalty - perm_financing_costs)
         _refi_event = {
             "perm_amount": perm_amount,
@@ -1332,9 +1326,10 @@ def _is_debt_cm(m: object) -> bool:
 
 
 # ── Loan sub-type detection ───────────────────────────────────────────────────
-# Maps label keywords → legacy loan subtype keys used by _DEFAULT_LOAN_COSTS and
-# the bridge sizing block.  Labels are set by Deal Setup wizard to standardised
-# patterns (e.g. "Construction Loan (auto)", "Pre-Development Loan (auto)").
+# Maps label keywords → legacy loan subtype keys used by bridge sizing and
+# cost-category assignment (acquisition_loan → "acquisition" cost cat).  Labels
+# are set by Deal Setup wizard to standardised patterns (e.g. "Construction
+# Loan (auto)", "Pre-Development Loan (auto)").
 # This replaces funder_type comparisons inside the Phase B engine paths.
 _LOAN_SUBTYPE_PATTERNS: list[tuple[str, str]] = [
     ("pre-development", "pre_development_loan"),
@@ -1353,7 +1348,7 @@ _LOAN_SUBTYPE_PATTERNS: list[tuple[str, str]] = [
 def _loan_subtype_from_module(m: object) -> str:
     """Derive a legacy loan-subtype key from a module's label.
 
-    Used exclusively for _DEFAULT_LOAN_COSTS lookups and bridge sizing.
+    Used for bridge sizing and finance-cost category assignment.
     Returns an empty string when no known pattern matches.
     """
     label_lc = (getattr(m, "label", "") or "").lower()
@@ -1368,53 +1363,14 @@ def _loan_subtype_from_module(m: object) -> str:
 # perpetuity-like from the engine's POV — single-draw, no vehicle UI.
 # NOTE: _EXIT_VEHICLE_APPLIES extracted to cashflow_compile.py.
 
-# ── Loan closing cost defaults ────────────────────────────────────────────────
-# Market-backed defaults (commloan.com, financelobby.com, aegisenvironmentalinc.com,
-# lornellre.com, mrrate.com — April 2026):
-#   Construction loan origination: 1.0% (banks 0.5–1%; private lenders 1–2%)
-#   Perm origination: 0.5% (bank 0.25–1.0%; agency 0.5% typical)
-#   Pre-dev / bridge origination: 1.5% (short-term bridge 1.5–3%)
-#   Lender legal: $5,000 flat (small-medium CRE deals; CMBS goes higher)
-#   ALTA survey: $3,500 ($2,500–$10,000 range; $3,500 representative)
-#   Phase I ESA: $2,500 ($2,000–$5,000; $2,500 is median for standard commercial)
-#   Appraisal: $3,500 ($3,000–$5,000+ for commercial)
-#   Bond counsel legal: $15,000 (specialized; $10,000–$25,000 range)
-#
-# Phase assignment: closing costs fire at the loan's active_phase_start so they
-# are excluded from phase-based bridge loan sizing (e.g. construction loan closing
-# costs in "pre_construction" are not part of constr_costs).  The perm gap-fills
-# to TPC which naturally covers them.
-_DEFAULT_LOAN_COSTS: dict[str, list[dict]] = {
-    "construction_loan": [
-        {"label": "Origination Fee",       "pct_of_principal": Decimal("1.0")},
-        {"label": "Lender Legal",          "flat": Decimal("5000")},
-        {"label": "Title / Survey",        "flat": Decimal("3500")},
-        {"label": "Environmental Phase I", "flat": Decimal("2500")},
-    ],
-    "permanent_debt": [
-        {"label": "Origination Fee",       "pct_of_principal": Decimal("0.5")},
-        {"label": "Lender Legal",          "flat": Decimal("5000")},
-        {"label": "Appraisal",             "flat": Decimal("3500")},
-        {"label": "Title",                 "flat": Decimal("2500")},
-    ],
-    "pre_development_loan": [
-        {"label": "Origination Fee",       "pct_of_principal": Decimal("1.5")},
-        {"label": "Lender Legal",          "flat": Decimal("3000")},
-    ],
-    "acquisition_loan": [
-        {"label": "Origination Fee",       "pct_of_principal": Decimal("1.0")},
-        {"label": "Lender Legal",          "flat": Decimal("5000")},
-        {"label": "Title / Survey",        "flat": Decimal("3500")},
-    ],
-    "bridge": [
-        {"label": "Origination Fee",       "pct_of_principal": Decimal("1.5")},
-        {"label": "Lender Legal",          "flat": Decimal("3000")},
-    ],
-    "bond": [
-        {"label": "Bond Issuance Fee",     "pct_of_principal": Decimal("1.0")},
-        {"label": "Bond Counsel Legal",    "flat": Decimal("15000")},
-    ],
-}
+# ── Total Finance Costs default ────────────────────────────────────────────────
+# Single global % applied to every CapitalModule's principal/commitment.
+# Covers origination + lender legal + appraisal + title + environmental + similar.
+# Engine writes one "{module.label} — Total Finance Costs" UseLine per module
+# with is_auto_finance_cost=True.  User edit to any field flips the flag to
+# False so engine stops recomputing; user delete then recompute regenerates.
+# TODO: per-source-type rates (grants vs equity vs debt) via org setting.
+DEFAULT_FINANCE_COST_PCT: Decimal = Decimal("2.0")
 
 # Maps CapitalModule.active_phase_start → UseLinePhase string for closing cost Use lines.
 # Covers both short-form values ("lease_up") and milestone-key variants ("operation_lease_up")
@@ -1851,18 +1807,17 @@ async def _auto_size_debt_modules(
         _ACQ_USE_PHASES      = {"acquisition", "other"}
         _CONSTR_USE_PHASES   = {"construction", "renovation", "conversion"}
 
-        # Pre-compute the full set of closing cost Use line labels for auto-sized modules.
-        # These are excluded from _phase_cost_sum so that closing costs do not inflate
-        # the bridge loan sizing (construction closing costs fire at pre_construction but
-        # should NOT grow constr_costs; they are financed by the perm gap-fill instead).
+        # Pre-compute the full set of Total Finance Costs Use line labels for ALL
+        # CapitalModules.  Excluded from _phase_cost_sum so finance costs do not
+        # inflate bridge loan sizing (they're folded into the perm gap-fill divisor
+        # for auto-sized modules; added directly for fixed-amount modules).
         _cc_labels: set[str] = set()
         for _pre_cm in capital_modules:
-            _pre_ft = _loan_subtype_from_module(_pre_cm)
-            if _pre_ft not in _DEFAULT_LOAN_COSTS or not (_pre_cm.source or {}).get("auto_size"):
-                continue
-            _pre_cm_lbl = getattr(_pre_cm, "label", "") or _pre_ft.replace("_", " ").title()
-            for _pre_cost in _DEFAULT_LOAN_COSTS[_pre_ft]:
-                _cc_labels.add(f"{_pre_cm_lbl} — {_pre_cost['label']}")
+            _pre_cm_lbl = (
+                getattr(_pre_cm, "label", "")
+                or _loan_subtype_from_module(_pre_cm).replace("_", " ").title()
+            )
+            _cc_labels.add(f"{_pre_cm_lbl} — Total Finance Costs")
 
         def _phase_cost_sum(phase_set: set) -> Decimal:
             return sum(
@@ -2039,50 +1994,47 @@ async def _auto_size_debt_modules(
             if _bio_amt > ZERO:
                 total_uses += _bio_amt
 
-    # ── Closing costs (Phase B multi-debt path only) ──────────────────────────
-    # For each auto-sized loan module with a funder_type in _DEFAULT_LOAN_COSTS:
-    #   - Bridge loans (already sized above): compute flat + % costs from known principal.
-    #   - Perm/gap-fill modules: flat costs added to total_uses; % costs folded into
-    #     divisor algebraically so perm sizes up to cover its own origination fee in
-    #     one pass (no multi-run convergence needed).
-    # Use-line sentinel: amount == 0 (or no row) → compute; amount > 0 → user override.
-    # User overrides are already in total_uses from the initial sum; we must not add them
-    # again, and must not recompute them.
+    # ── Total Finance Costs (one row per CapitalModule) ─────────────────────────
+    # Apply DEFAULT_FINANCE_COST_PCT × principal to every module (loans + equity +
+    # grants).  Engine-managed rows carry is_auto_finance_cost=True.  A row where
+    # the flag is False is a user override — leave amount + pct alone, but still
+    # count it in total_uses via the initial sum (already done).
+    # For auto-sized modules: pct folded into the gap-fill divisor so principal
+    # sizes up to cover its own finance cost in one pass.
+    # For fixed-amount modules (equity, bridge, fixed loans): pct × known amount
+    # added directly to total_uses.
     _cc_data: dict = {}   # id(module) → {"flat": Decimal, "pct": Decimal, "module": m}
     _diag(f"CC-INIT entering block debt_types_list={bool(debt_types_list)} auto_modules={[m.id for m in auto_modules]}")
-    if debt_types_list and auto_modules:
+    if debt_types_list:
+        _fc_rate = DEFAULT_FINANCE_COST_PCT / HUNDRED
         for _ccm in capital_modules:
-            _ccm_ft = _loan_subtype_from_module(_ccm)
-            _diag(f"  CC scan cm={_ccm.id} subtype={_ccm_ft!r} in_defaults={_ccm_ft in _DEFAULT_LOAN_COSTS} auto_size={(_ccm.source or {}).get('auto_size')}")
-            if _ccm_ft not in _DEFAULT_LOAN_COSTS or not (_ccm.source or {}).get("auto_size"):
+            _ccm_lbl = (
+                getattr(_ccm, "label", "")
+                or _loan_subtype_from_module(_ccm).replace("_", " ").title()
+            )
+            _cc_full_lbl = f"{_ccm_lbl} — Total Finance Costs"
+            _cc_exist = next(
+                (ul for ul in use_lines if getattr(ul, "label", "") == _cc_full_lbl),
+                None,
+            )
+            # User override — engine-managed flag turned off → leave alone.
+            # Row is already in total_uses via the initial sum.
+            if _cc_exist is not None and not getattr(_cc_exist, "is_auto_finance_cost", False):
                 continue
-            _ccm_lbl = getattr(_ccm, "label", "") or _ccm_ft.replace("_", " ").title()
-            _cc_flat = ZERO
-            _cc_pct  = ZERO
-            for _cc in _DEFAULT_LOAN_COSTS[_ccm_ft]:
-                _cc_full_lbl = f"{_ccm_lbl} — {_cc['label']}"
-                _cc_exist = next((ul for ul in use_lines if getattr(ul, "label", "") == _cc_full_lbl), None)
-                if _cc_exist and _to_decimal(getattr(_cc_exist, "amount", 0)) > ZERO:
-                    continue  # user override — already in total_uses from initial sum
-                if "pct_of_principal" in _cc:
-                    _cc_pct += Decimal(str(_cc["pct_of_principal"])) / HUNDRED
-                else:
-                    _cc_flat += Decimal(str(_cc["flat"]))
-            _cc_data[id(_ccm)] = {"flat": _cc_flat, "pct": _cc_pct, "module": _ccm}
+            _cc_data[id(_ccm)] = {"flat": ZERO, "pct": _fc_rate, "module": _ccm}
 
-        # Add closing costs to total_uses now.
-        # Bridge modules (already removed from auto_modules): flat + pct from sized principal.
-        # Perm/gap-fill modules still in auto_modules: flat only (pct folded into divisor below).
+        # Add finance costs to total_uses now.
+        # Auto-sized modules (still in auto_modules): pct handled via divisor in gap-fill loop.
+        # Fixed/already-sized modules (bridge, equity, fixed-amount loans): pct × known amount.
         _auto_mod_ids = {id(m) for m in auto_modules}
         for _cc_obj in _cc_data.values():
             _cc_ref = _cc_obj["module"]
             if id(_cc_ref) in _auto_mod_ids:
-                # Gap-fill module: add flat costs now; % handled via divisor in gap-fill loop
-                total_uses += _cc_obj["flat"]
+                # Gap-fill module — % folded into divisor below.  No total_uses bump here.
+                pass
             else:
-                # Bridge module: principal known, add flat + pct × principal
+                # Fixed-amount module: principal/commitment known → add pct × amount.
                 _cc_br_p = Decimal(str((_cc_ref.source or {}).get("amount") or 0))
-                total_uses += _cc_obj["flat"]
                 total_uses += _q(_cc_br_p * _cc_obj["pct"])
 
     # Lease-Up Reserve = perm debt service during lease-up minus ~1/3 stabilized NOI (phantom CF avg).
@@ -2744,12 +2696,14 @@ async def _auto_size_debt_modules(
                 session.add(_new_io_ul)
                 use_lines.append(_new_io_ul)
 
-    # ── Write closing cost Use lines ──────────────────────────────────────────
-    # All auto-sized modules now have final principals.  Write one Use line per
-    # default closing cost, using amount==0 as the "compute" sentinel.
-    # amount > 0 → user override → skip (already in DB, already correct in total_uses).
+    # ── Write Total Finance Costs Use lines (one per CapitalModule) ─────────────
+    # All auto-sized modules now have final principals.  Write/update one row per
+    # module labeled "{module.label} — Total Finance Costs", carrying
+    # is_auto_finance_cost=True so a later user edit (which flips the flag to
+    # False via the form handler) is respected on the next compute.
     _diag(f"CC-WRITEBACK guard: _cc_data={bool(_cc_data)} project_id={project_id} -> enter={bool(_cc_data and project_id)}")
     if _cc_data and project_id:
+        _fc_rate = DEFAULT_FINANCE_COST_PCT / HUNDRED
         for _cc_obj in _cc_data.values():
             _ccm_ref  = _cc_obj["module"]
             _ccm_ft   = _loan_subtype_from_module(_ccm_ref)
@@ -2758,40 +2712,40 @@ async def _auto_size_debt_modules(
             _ccm_aps  = getattr(_ccm_ref, "active_phase_start", None) or ""
             _ccm_phase = _APS_TO_USE_PHASE.get(_ccm_aps, "pre_construction")
 
-            for _cc in _DEFAULT_LOAN_COSTS[_ccm_ft]:
-                _cc_full_lbl = f"{_ccm_lbl} — {_cc['label']}"
-                _cc_exist = next(
-                    (ul for ul in use_lines if getattr(ul, "label", "") == _cc_full_lbl), None
+            _cc_full_lbl = f"{_ccm_lbl} — Total Finance Costs"
+            _cc_exist = next(
+                (ul for ul in use_lines if getattr(ul, "label", "") == _cc_full_lbl),
+                None,
+            )
+            # User override — flag turned off → leave untouched.
+            if _cc_exist is not None and not getattr(_cc_exist, "is_auto_finance_cost", False):
+                continue
+
+            _cc_amt = _q(_ccm_p * _fc_rate)
+            _diag(f"  CC write label={_cc_full_lbl!r} _ccm_p={_ccm_p} pct={_fc_rate} -> amt={_cc_amt} exist_id={getattr(_cc_exist,'id',None) if _cc_exist else None}")
+
+            _cc_cat = "acquisition" if _ccm_ft == "acquisition_loan" else "soft"
+            if _cc_exist is not None:
+                _cc_exist.amount = _cc_amt
+                _cc_exist.phase  = _ccm_phase
+                _cc_exist.source_capital_module_id = getattr(_ccm_ref, "id", None)
+                _cc_exist.cost_category = _cc_cat
+                _cc_exist.is_auto_finance_cost = True
+                session.add(_cc_exist)
+            elif _cc_amt > ZERO:
+                _new_cc_ul = UseLine(
+                    project_id=project_id,
+                    source_capital_module_id=getattr(_ccm_ref, "id", None),
+                    label=_cc_full_lbl,
+                    phase=_ccm_phase,
+                    amount=_cc_amt,
+                    timing_type="first_day",
+                    cost_category=_cc_cat,
+                    is_auto_finance_cost=True,
+                    notes="Auto-computed — edit any field to disable; delete to reset.",
                 )
-                if _cc_exist and _to_decimal(getattr(_cc_exist, "amount", 0)) > ZERO:
-                    continue  # user override — leave untouched
-
-                if "pct_of_principal" in _cc:
-                    _cc_amt = _q(_ccm_p * Decimal(str(_cc["pct_of_principal"])) / HUNDRED)
-                else:
-                    _cc_amt = Decimal(str(_cc["flat"]))
-                _diag(f"  CC write label={_cc_full_lbl!r} _ccm_p={_ccm_p} cc_def={_cc} -> amt={_cc_amt} exist_id={getattr(_cc_exist,'id',None) if _cc_exist else None}")
-
-                if _cc_exist:
-                    _cc_exist.amount = _cc_amt
-                    _cc_exist.phase  = _ccm_phase
-                    _cc_exist.source_capital_module_id = getattr(_ccm_ref, "id", None)
-                    _cc_exist.cost_category = "acquisition" if _ccm_ft == "acquisition_loan" else "soft"
-                    session.add(_cc_exist)
-                elif _cc_amt > ZERO:
-                    _ccm_ft_for_cat = _loan_subtype_from_module(_ccm_ref)
-                    _new_cc_ul = UseLine(
-                        project_id=project_id,
-                        source_capital_module_id=getattr(_ccm_ref, "id", None),
-                        label=_cc_full_lbl,
-                        phase=_ccm_phase,
-                        amount=_cc_amt,
-                        timing_type="first_day",
-                        cost_category="acquisition" if _ccm_ft_for_cat == "acquisition_loan" else "soft",
-                        notes="Auto-computed — edit to override",
-                    )
-                    session.add(_new_cc_ul)
-                    use_lines.append(_new_cc_ul)
+                session.add(_new_cc_ul)
+                use_lines.append(_new_cc_ul)
 
     await session.flush()
 

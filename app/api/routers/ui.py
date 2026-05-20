@@ -5899,6 +5899,11 @@ async def handle_form_create_or_update(
                     if form.get("notes") is not None:
                         row.notes = form.get("notes") or None
                 else:
+                    # User edit on an auto Total Finance Costs row turns off
+                    # the auto flag so engine stops recomputing.  User can
+                    # delete the row to reset; next compute regenerates it.
+                    if getattr(row, "is_auto_finance_cost", False):
+                        row.is_auto_finance_cost = False
                     for k, v in data.items():
                         setattr(row, k, v)
         elif project_id:

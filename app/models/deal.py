@@ -731,6 +731,11 @@ class UseLine(Base):
     dev_fee_pct: Mapped[object | None] = mapped_column(Numeric(8, 4), nullable=True)
     # 'purchase_price' or 'tpc_excl_self'
     dev_fee_basis: Mapped[str | None] = mapped_column(String(32), nullable=True)
+    # Engine-managed Total Finance Costs row (one per CapitalModule).
+    # User edit flips this to False; delete then recompute regenerates.
+    is_auto_finance_cost: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=False, server_default="false"
+    )
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now(),
