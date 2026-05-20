@@ -1701,6 +1701,10 @@ async def _auto_size_debt_modules(
         _diag("EARLY RETURN: no auto_modules")
         return
 
+    # Milestone map for schedule resolution (months / milestone / remainder).
+    # Needed by schedule-aware helpers when modules carry their own carry.schedule.
+    _milestone_month_map = _build_milestone_month_map(phases)
+
     _diag(f"=== _auto_size_debt_modules CONTINUE n_auto={len(auto_modules)}")
     for _dm in capital_modules:
         _diag(f"  [in] cm={_dm.id} vt={getattr(_dm,'vehicle_type',None)} auto_size={(_dm.source or {}).get('auto_size')} amt_src={(_dm.source or {}).get('amount')}")
