@@ -213,6 +213,19 @@ uv run pytest tests/e2e/ -q -m e2e                        # E2E (needs running a
 uv run ruff check app/ tests/                              # Lint
 ```
 
+### Test Creation Requirement
+
+Every `app/` change must have a corresponding test change before marking work done:
+
+| Changed area | Required test |
+|---|---|
+| `app/engines/` | Unit test in `tests/engines/` verifying the changed math/behavior |
+| `app/api/routers/` | Integration test in `tests/api/` covering the new/changed route |
+| New UI feature | E2E test in `tests/e2e/` exercising it in a browser |
+| Bug fix | Test that would have caught the bug |
+
+The stop hook runs `pytest tests/ --ignore=tests/e2e` automatically when `app/` changes are detected. It blocks up to 3 times, then escalates. Bypass mid-refactor: `New-Item .claude/state/skip_verify.json`.
+
 ### Phase B Debt Regression (scripts/test_phase_b_debt.py)
 8 tests covering Sources=Uses parity, DSCR-capped gaps, carry-type formula round-trips. Runs against live instance:
 ```bash

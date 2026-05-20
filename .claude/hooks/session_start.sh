@@ -5,6 +5,10 @@ set -euo pipefail
 cd "$(git rev-parse --show-toplevel)" 2>/dev/null || exit 0
 source "$(dirname "$0")/lib.sh"
 
+# Capture HEAD so stop hook can detect which app/ files changed this session
+mkdir -p .claude/state
+git rev-parse HEAD > .claude/state/session_start_head.txt 2>/dev/null || true
+
 # Fast sync steps (no docker needed)
 ensure_env_file
 
