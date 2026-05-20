@@ -376,7 +376,7 @@ def test_compute_button_keeps_user_on_underwriting(
     wait_for_htmx(page)
     # handleComputeResult does window.location.reload() from the underwriting
     # view — wait for that navigation instead of the result badge.
-    with page.expect_navigation(timeout=90_000):
+    with page.expect_navigation(timeout=30_000):
         page.click('button:has-text("Compute")')
     wait_for_htmx(page)
     # KPI strip should still be present — we're not on the per-project editor.

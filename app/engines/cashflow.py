@@ -3475,9 +3475,11 @@ def _compute_xirr(cash_flows: list[Decimal]) -> Decimal:
     dates = [_add_months(date(2026, 1, 1), idx) for idx in range(len(cash_flows))]
     try:
         result = pyxirr.xirr(dates, [float(amount) for amount in cash_flows])
+        if result is None or not (result == result):  # None or NaN
+            return ZERO
+        return _q(Decimal(str(result)) * HUNDRED)
     except Exception:
         return ZERO
-    return _q(Decimal(str(result)) * HUNDRED)
 
 
 def _expense_line_item(
