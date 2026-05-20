@@ -226,7 +226,7 @@ def test_underwriting_view_renders_kpi_strip(
         logged_in_page.locator(".uw-kpi-label:has-text('Projects')")
     ).to_be_visible()
     expect(
-        logged_in_page.locator(".uw-kpi-label:has-text('Total Project Cost')")
+        logged_in_page.locator(".uw-kpi-label:has-text('Total Uses')")
     ).to_be_visible()
     expect(
         logged_in_page.locator(".uw-kpi-label:has-text('Equity Required')")
@@ -248,7 +248,6 @@ def test_underwriting_view_renders_all_sections(
     wait_for_htmx(logged_in_page)
     for title in (
         "Per-Project Summary",
-        "Timeline Anchors",
         "Source Package",
         "Combined Cashflow",
         "Waterfall Distribution (joined)",
@@ -375,9 +374,11 @@ def test_compute_button_keeps_user_on_underwriting(
     page = logged_in_page
     page.goto(f"{base_url}/models/{model_id}/builder?view=underwriting")
     wait_for_htmx(page)
-    click_compute(page, model_id)
-    # Wait out the full-page reload triggered by handleComputeResult.
-    page.wait_for_url(re.compile(r"view=underwriting"), timeout=15_000)
+    # handleComputeResult does window.location.reload() from the underwriting
+    # view — wait for that navigation instead of the result badge.
+    with page.expect_navigation(timeout=30_000):
+        page.click('button:has-text("Compute")')
+    wait_for_htmx(page)
     # KPI strip should still be present — we're not on the per-project editor.
     expect(page.locator(".uw-kpi-strip")).to_be_visible(timeout=10_000)
 
@@ -443,6 +444,7 @@ def test_coverage_modal_per_project_amount_inputs_present(
 # Section 4. Timeline Anchors
 # ---------------------------------------------------------------------------
 
+@pytest.mark.skip(reason="Timeline anchors moved to Add Project drawer; panel no longer rendered in underwriting view")
 def test_anchors_panel_renders_with_optgroup_dropdown(
     logged_in_page: Page, base_url: str, two_project_deal: tuple[str, str, str]
 ) -> None:
