@@ -155,6 +155,7 @@ async def test_form_put_only_updates_pct_on_auto_row(
             "is_deferred": "true",
             "notes": "user note",
             "dev_fee_pct": "7.5",
+            "dev_fee_basis": "purchase_price",
         },
     )
     assert resp.status_code == 200, resp.text
@@ -168,6 +169,7 @@ async def test_form_put_only_updates_pct_on_auto_row(
     assert row.is_deferred is False               # preserved
     assert Decimal(str(row.amount)) == Decimal("0")  # engine owns $, not user
     assert Decimal(str(row.dev_fee_pct)) == Decimal("7.5")  # updated
+    assert row.dev_fee_basis == "purchase_price"  # basis toggled
     assert row.notes == "user note"               # notes updatable
 
 

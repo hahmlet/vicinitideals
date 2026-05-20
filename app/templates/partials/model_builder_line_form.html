@@ -43,7 +43,6 @@
       <label class="form-label">Developer Fee %</label>
       <input class="form-input" type="number" name="dev_fee_pct" step="0.1" min="0" max="100"
              value="{{ '%.2f' | format(existing.dev_fee_pct | float) if existing.dev_fee_pct is not none else '0.00' }}">
-      <div class="form-hint">Of {{ 'purchase price' if existing.dev_fee_basis == 'purchase_price' else 'TPC excluding this fee' }}.</div>
     </div>
     <div class="form-field">
       <label class="form-label">Current Amount</label>
@@ -52,6 +51,22 @@
              style="background:#f3f4f6;color:#6b7280;cursor:not-allowed">
       <div class="form-hint">Auto-calculated. Recomputes on save.</div>
     </div>
+  </div>
+  <div class="form-field" style="margin-bottom:8px">
+    <label class="form-label">Basis (denominator)</label>
+    <div style="display:flex;gap:16px;font-size:13px">
+      <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
+        <input type="radio" name="dev_fee_basis" value="purchase_price"
+               {% if existing.dev_fee_basis == 'purchase_price' %}checked{% endif %}>
+        Acquisition cost
+      </label>
+      <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
+        <input type="radio" name="dev_fee_basis" value="tpc_excl_self"
+               {% if existing.dev_fee_basis != 'purchase_price' %}checked{% endif %}>
+        TPC (excluding this fee)
+      </label>
+    </div>
+    <div class="form-hint">Same %, different denominator.</div>
   </div>
   <div class="form-field">
     <label class="form-label">Notes (optional)</label>

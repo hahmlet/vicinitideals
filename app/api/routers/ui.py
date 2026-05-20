@@ -5888,11 +5888,14 @@ async def handle_form_create_or_update(
             row = await session.get(UseLine, UUID(item_id))
             if row:
                 if row.is_auto_dev_fee:
-                    # Auto Dev Fee row: only the % is user-editable. Label,
-                    # phase, basis, amount ($) are managed by the engine.
+                    # Auto Dev Fee row: user edits % and basis only.
+                    # Label, phase, amount ($) are managed by the engine.
                     pct_raw = _fd(form.get("dev_fee_pct"))
                     if pct_raw is not None:
                         row.dev_fee_pct = pct_raw
+                    basis_raw = form.get("dev_fee_basis")
+                    if basis_raw in ("purchase_price", "tpc_excl_self"):
+                        row.dev_fee_basis = basis_raw
                     if form.get("notes") is not None:
                         row.notes = form.get("notes") or None
                 else:

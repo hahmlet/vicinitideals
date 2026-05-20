@@ -200,3 +200,43 @@ def test_zero_pct_persists_as_disable(
     assert "0%" in text or "0.0%" in text, (
         f"After setting % to 0 the row should show 0% (disabled state); got: {text!r}"
     )
+
+
+# ---------------------------------------------------------------------------
+# 6. Basis toggle (purchase_price ↔ tpc_excl_self) persists via drawer
+# ---------------------------------------------------------------------------
+
+
+def test_basis_toggle_persists(
+    logged_in_page: Page, base_url: str
+) -> None:
+    suffix = uuid.uuid4().hex[:6]
+    # new_construction defaults to tpc_excl_self — flip to purchase_price
+    model_id = create_e2e_scenario(
+        logged_in_page,
+        deal_name=f"E2E DevFee Basis {suffix}",
+        deal_type="new_construction",
+    )
+    page = logged_in_page
+    _open_uses_panel(page, base_url, model_id)
+
+    _dev_fee_row(page).click()
+    page.wait_for_selector("#line-item-drawer input[name='dev_fee_basis']", timeout=5000)
+
+    # Default for new_construction = tpc_excl_self → confirm and flip
+    pp_radio = page.locator("#line-item-drawer input[name='dev_fee_basis'][value='purchase_price']")
+    tpc_radio = page.locator("#line-item-drawer input[name='dev_fee_basis'][value='tpc_excl_self']")
+    assert tpc_radio.is_checked()
+    assert not pp_radio.is_checked()
+
+    pp_radio.check()
+    page.click("#line-item-drawer button[type=submit]")
+    wait_for_htmx(page)
+    page.wait_for_selector("#line-item-drawer", state="hidden", timeout=5000)
+
+    # Re-open drawer — purchase_price now checked
+    _dev_fee_row(page).click()
+    page.wait_for_selector("#line-item-drawer input[name='dev_fee_basis']", timeout=5000)
+    assert page.locator(
+        "#line-item-drawer input[name='dev_fee_basis'][value='purchase_price']"
+    ).is_checked()
