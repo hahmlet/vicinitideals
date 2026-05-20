@@ -654,6 +654,7 @@ USE_CATEGORY_PRESETS: dict[str, tuple[str, ...]] = {
         "Structural Engineering",
         "System Development Charges (SDCs)",
         "Title Insurance",
+        "Total Finance Costs",
     ),
     "hard": (
         "All Hard Costs",  # catch-all for quick proformas
