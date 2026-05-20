@@ -42,6 +42,7 @@ from app.models.project import Project, ProjectStatus
 from app.models.scraped_listing import ScrapedListing
 from app.models.realie_usage import RealieUsage
 from app.scrapers.realie import _current_month
+from app.settings.resolver import resolve_dev_fee_config
 
 router = APIRouter(include_in_schema=False)
 
@@ -2378,6 +2379,34 @@ async def create_deal(
 
     from app.services.vehicle_preload import preload_equity_modules
     await preload_equity_modules(session, scenario.id, org_id, project_id=dev_project.id)
+
+    # Auto Developer Fee — engine recomputes $ each pass; user overrides %
+    # in the Use drawer. Set pct=0 to effectively disable for this deal.
+    if user is not None:
+        dev_fee_cfg = await resolve_dev_fee_config(
+            user.id, org_id, deal_type, session
+        )
+        if str(dev_fee_cfg["enabled"]).lower() == "true":
+            try:
+                _pct = Decimal(dev_fee_cfg["pct"])
+            except (InvalidOperation, TypeError):
+                _pct = Decimal("0")
+            _phase_str = dev_fee_cfg["phase"]
+            try:
+                _phase_enum = UseLinePhase(_phase_str)
+            except ValueError:
+                _phase_enum = UseLinePhase.construction
+            session.add(UseLine(
+                project_id=dev_project.id,
+                label="Developer Fee",
+                phase=_phase_enum,
+                cost_category="soft",
+                amount=Decimal("0"),
+                timing_type=dev_fee_cfg["timing"],
+                is_auto_dev_fee=True,
+                dev_fee_pct=_pct,
+                dev_fee_basis=dev_fee_cfg["basis"],
+            ))
 
     await session.commit()
 
@@ -5858,8 +5887,17 @@ async def handle_form_create_or_update(
         if item_id:
             row = await session.get(UseLine, UUID(item_id))
             if row:
-                for k, v in data.items():
-                    setattr(row, k, v)
+                if row.is_auto_dev_fee:
+                    # Auto Dev Fee row: only the % is user-editable. Label,
+                    # phase, basis, amount ($) are managed by the engine.
+                    pct_raw = _fd(form.get("dev_fee_pct"))
+                    if pct_raw is not None:
+                        row.dev_fee_pct = pct_raw
+                    if form.get("notes") is not None:
+                        row.notes = form.get("notes") or None
+                else:
+                    for k, v in data.items():
+                        setattr(row, k, v)
         elif project_id:
             session.add(UseLine(project_id=project_id, **data))
 
@@ -6364,6 +6402,12 @@ async def handle_form_delete(
         return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
 
     if row is not None:
+        if item_type == "use-lines" and getattr(row, "is_auto_dev_fee", False):
+            return HTMLResponse(
+                "<p class='text-muted'>The auto Developer Fee Use Line cannot be "
+                "deleted. Set its % to 0 to disable.</p>",
+                status_code=403,
+            )
         await session.delete(row)
         await session.flush()
 

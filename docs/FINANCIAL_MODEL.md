@@ -297,6 +297,28 @@ constr_costs   = _phase_cost_sum({"construction", "renovation", "conversion"})
 
 **Why the `_cc_labels` exclusion?** Closing costs (origination fees, legal, title, appraisal, Phase I ESA) auto-fire at the loan's `active_phase_start`. If we sized the construction loan to include its own origination fee, the fee would grow the loan, which would grow the fee, which would grow the loan — a circular reference. Instead, closing costs are financed by the permanent debt gap-fill, never by the bridge loan being closed. See §2.5.
 
+### 1.4 Auto Developer Fee (Use line, computed)
+
+Every new deal seeds a `UseLine` flagged `is_auto_dev_fee=True`. The `amount` is recomputed every engine pass by `app/engines/dev_fee.py::recompute_auto_dev_fee` from a per-deal-type % times a basis. Users edit the % in the Use drawer; the $ field is read-only.
+
+**Per-deal-type defaults** (org-overridable, then user-overridable when org allows — see [docs/DATA_MODEL.md] for the resolver chain):
+
+| Deal type | Default % | Basis | Phase | Timing |
+|---|---|---|---|---|
+| acquisition | 5.0 | `purchase_price` | acquisition | first_day |
+| value_add | 12.0 | `tpc_excl_self` | construction | spread |
+| conversion | 12.0 | `tpc_excl_self` | construction | spread |
+| new_construction | 12.0 | `tpc_excl_self` | construction | spread |
+
+**Basis math**:
+
+- `purchase_price` → `pct × OperationalInputs.purchase_price` (falls back to summing acquisition-phase Use lines if `inputs.purchase_price` is null/zero)
+- `tpc_excl_self` → `pct × Σ(other UseLine.amount, excluding the auto Dev Fee row itself)`
+
+**Compute order**: dev-fee recompute runs *immediately before* `_auto_size_debt_modules`, so debt sizing reads the updated Uses total. Without this ordering, a value-add or new-construction deal would size its loans against a stale Uses total that excluded the dev fee.
+
+**Disabling for one deal**: set `dev_fee_pct` to 0 in the Use drawer. The auto Dev Fee Use line cannot be hard-deleted (delete endpoints return 403); zero-pct is the contract. Per-deal-type defaults at the org/user level can also be set to 0 to disable for all new deals of a type.
+
 ---
 
 ## 2. Sources / Debt Sizing

@@ -308,6 +308,11 @@ async def _compute_project_cashflow(
 
     income_mode: str = (deal_model.income_mode or "revenue_opex")
 
+    # Recompute auto Developer Fee Use Line BEFORE debt sizing so total Uses
+    # reflect the current % × basis. Mutates use_lines in place and flushes.
+    from app.engines.dev_fee import recompute_auto_dev_fee
+    await recompute_auto_dev_fee(use_lines, inputs, session)
+
     # Pre-size any auto_size=True debt modules before computing debt service
     await _auto_size_debt_modules(
         capital_modules, inputs, streams, expense_lines, use_lines, phases, session,

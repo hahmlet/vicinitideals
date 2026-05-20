@@ -154,6 +154,45 @@
     </div>
   </details>
 
+  {# ── Developer Fee (auto) ─────────────────────────────────────────── #}
+  <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+    <summary style="padding:14px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);list-style:none">Developer Fee (auto)</summary>
+    <div style="padding:0 18px 18px;display:grid;gap:14px">
+      <div style="font-size:11px;color:var(--text-muted);line-height:1.5">
+        Per-deal-type Developer Fee defaults applied to new deals you create.
+        Rows your org has locked appear disabled below. Set % to 0 to disable
+        for new deals of that type.
+      </div>
+      {% set _df_user_dts = [
+        ('acquisition',      'Acquisition'),
+        ('value_add',        'Value-Add (Renovation)'),
+        ('conversion',       'Conversion'),
+        ('new_construction', 'New Construction'),
+      ] %}
+      {% for _dt, _dt_label in _df_user_dts %}
+      <div style="border:1px solid var(--border);border-radius:6px;padding:10px 12px;background:var(--surface-2,#fafafa)">
+        <div style="font-size:12px;font-weight:600;margin-bottom:8px">{{ _dt_label }}</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px">
+          {{ user_field_number('dev_fee_pct_' ~ _dt, 'Fee %', '0.1', min='0', max='100', placeholder='0.0') }}
+          {{ user_field_select('dev_fee_basis_' ~ _dt, 'Basis', [
+            ('purchase_price', 'Purchase price'),
+            ('tpc_excl_self', 'TPC excl. fee'),
+          ]) }}
+          {{ user_field_select('dev_fee_timing_' ~ _dt, 'Timing', [
+            ('first_day', 'Lump sum'),
+            ('spread', 'Spread'),
+          ]) }}
+          {{ user_field_select('dev_fee_phase_' ~ _dt, 'Phase', [
+            ('acquisition', 'Acquisition'),
+            ('pre_construction', 'Pre-construction'),
+            ('construction', 'Construction'),
+          ]) }}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </details>
+
   {# ── Construction & Timeline ──────────────────────────────────────── #}
   <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
     <summary style="padding:14px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);list-style:none">Construction &amp; Timeline</summary>

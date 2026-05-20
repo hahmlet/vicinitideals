@@ -722,6 +722,14 @@ class UseLine(Base):
     eligible_module_ids: Mapped[list] = mapped_column(
         ARRAY(UUID(as_uuid=True)), nullable=False, default=list, server_default="{}"
     )
+    # Auto Developer Fee — engine recomputes `amount` each pass from
+    # dev_fee_pct * basis (see app/engines/dev_fee.py). One per scenario.
+    is_auto_dev_fee: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=False, server_default="false"
+    )
+    dev_fee_pct: Mapped[object | None] = mapped_column(Numeric(8, 4), nullable=True)
+    # 'purchase_price' or 'tpc_excl_self'
+    dev_fee_basis: Mapped[str | None] = mapped_column(String(32), nullable=True)
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now(),

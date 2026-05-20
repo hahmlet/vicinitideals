@@ -542,6 +542,11 @@ async def delete_use_line(
 ) -> Response:
     use_line = await _get_use_line_or_404(session, model_id, use_line_id)
     _assert_not_phantom_row(use_line.label, "UseLine")
+    if use_line.is_auto_dev_fee:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="The auto Developer Fee Use Line cannot be deleted. Set its % to 0 to disable.",
+        )
     await session.delete(use_line)
     await session.flush()
     return Response(status_code=status.HTTP_204_NO_CONTENT)

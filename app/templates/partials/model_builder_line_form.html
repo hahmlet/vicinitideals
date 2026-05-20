@@ -18,12 +18,51 @@
 
 {% if existing %}
 {# ── Edit mode: flat form ── #}
+{%- set _is_auto_devfee = existing.is_auto_dev_fee -%}
 <form hx-put="/ui/forms/{{ model.id }}/use-lines/{{ existing.id }}"
       hx-target="#module-panel-content"
       hx-swap="innerHTML"
       hx-on::after-request="if(event.detail.successful) closeDrawer('line-item-drawer')"
       style="padding-bottom:8px">
 
+  {% if _is_auto_devfee %}
+  {# ── Auto Developer Fee: minimal form, % is the only editable field ── #}
+  <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;padding:10px 12px;margin-bottom:14px;font-size:12px;color:#1e3a8a">
+    <strong>Auto Developer Fee.</strong> The $ amount is recomputed every model
+    pass from the % below times the
+    {% if existing.dev_fee_basis == 'purchase_price' %}purchase price{% else %}total project cost (excluding this fee){% endif %}.
+    Edit the % to change. Set to 0 to disable for this deal.
+  </div>
+  <input type="hidden" name="label" value="{{ existing.label }}">
+  <input type="hidden" name="cost_category" value="{{ existing.cost_category or 'soft' }}">
+  <input type="hidden" name="timing_type" value="{{ (existing.timing_type | string).replace('UseLineTiming.','') }}">
+  <input type="hidden" name="milestone_key" value="{{ existing.milestone_key or '' }}">
+  <input type="hidden" name="milestone_key_to" value="{{ existing.milestone_key_to or '' }}">
+  <div class="form-row" style="margin-bottom:8px">
+    <div class="form-field">
+      <label class="form-label">Developer Fee %</label>
+      <input class="form-input" type="number" name="dev_fee_pct" step="0.1" min="0" max="100"
+             value="{{ '%.2f' | format(existing.dev_fee_pct | float) if existing.dev_fee_pct is not none else '0.00' }}">
+      <div class="form-hint">Of {{ 'purchase price' if existing.dev_fee_basis == 'purchase_price' else 'TPC excluding this fee' }}.</div>
+    </div>
+    <div class="form-field">
+      <label class="form-label">Current Amount</label>
+      <input class="form-input" type="text" readonly disabled
+             value="{{ existing.amount | currency }}"
+             style="background:#f3f4f6;color:#6b7280;cursor:not-allowed">
+      <div class="form-hint">Auto-calculated. Recomputes on save.</div>
+    </div>
+  </div>
+  <div class="form-field">
+    <label class="form-label">Notes (optional)</label>
+    <input class="form-input" type="text" name="notes" value="{{ existing.notes or '' }}" placeholder="e.g. Reduced for partner deal">
+  </div>
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <button type="button" class="btn btn-secondary" onclick="closeDrawer('line-item-drawer')">Cancel</button>
+  </div>
+</form>
+{% else %}
   <div class="form-field">
     <label class="form-label">Label</label>
     {% if use_category_presets and default_category in use_category_presets %}
@@ -122,6 +161,7 @@ function ulTimingChanged(val) {
   if (h) h.textContent = val === 'spread' ? '(spread)' : '(optional)';
 }
 </script>
+{% endif %}{# end _is_auto_devfee branch #}
 
 {% else %}
 {# ── Create mode: 2-step wizard ── #}
