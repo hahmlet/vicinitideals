@@ -2518,6 +2518,14 @@ async def _auto_size_debt_modules(
                 cr3 = src3.get("interest_rate_pct")
             if not cr3:
                 continue
+            # IO/PI carry pays debt service in cash during construction — that
+            # cash carry is funded by the Construction DS Reserve line, not by
+            # a Capitalized Construction Interest / IR pool.  Writing both
+            # double-counts P × constr_io_factor in Uses (Sources < Uses by
+            # exactly one carry amount).  Skip IR writeback for IO/PI here.
+            _carry3_ct = _carry_type_for_phase(carry3, is_construction=True)
+            if _carry3_ct in ("io_only", "pi"):
+                continue
             # Use the module's own schedule duration when present (months /
             # milestone / remainder, as the user entered), else fall back to
             # the deal's construction-phase total.
