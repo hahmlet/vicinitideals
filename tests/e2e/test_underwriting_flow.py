@@ -155,12 +155,11 @@ def two_project_deal(_seed_page, base_url: str, deal_type: str) -> tuple[str, st
         deal_type=deal_type,
     )
 
-    _opp_resp = page.request.get(f"{base_url}/api/projects")
-    assert _opp_resp.status == 200, f"GET /api/projects: {_opp_resp.status} {_opp_resp.text()[:300]}"
-    _opp_list = _opp_resp.json()
-    assert isinstance(_opp_list, list) and len(_opp_list) > 0, \
-        f"Expected non-empty list, got {type(_opp_list).__name__}: {str(_opp_list)[:200]}"
-    _opp_id = str(_opp_list[0]["id"])
+    _proj_opps = page.request.get(f"{base_url}/api/models/{model_id}/project-opportunities")
+    assert _proj_opps.status == 200, f"project-opportunities: {_proj_opps.status} {_proj_opps.text()[:300]}"
+    _opps = _proj_opps.json()
+    _opp_id = next((r["opportunity_id"] for r in _opps if r["opportunity_id"]), None)
+    assert _opp_id, f"No opportunity_id found in projects: {_opps}"
     page.request.post(
         f"/ui/deals/{model_id}/new-project",
         form={"name": "Project 2", "deal_type": "acquisition", "opportunity_id": _opp_id, "acquisition_cost": "800000"},

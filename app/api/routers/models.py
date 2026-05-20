@@ -261,6 +261,22 @@ async def patch_deal_model(
 
 
 # ---------------------------------------------------------------------------
+# Project-opportunity mapping (used by E2E seed helpers)
+# ---------------------------------------------------------------------------
+
+@router.get("/models/{model_id}/project-opportunities")
+async def list_model_project_opportunities(model_id: UUID, session: DBSession) -> list[dict]:
+    """Return [{project_id, opportunity_id}] for all dev projects in this model."""
+    await _get_deal_or_404(session, model_id)
+    rows = (await session.execute(
+        select(Project.id, Project.opportunity_id)
+        .where(Project.scenario_id == model_id)
+        .order_by(Project.created_at.asc())
+    )).all()
+    return [{"project_id": str(r[0]), "opportunity_id": str(r[1]) if r[1] else None} for r in rows]
+
+
+# ---------------------------------------------------------------------------
 # Operational inputs (Project-level)
 # ---------------------------------------------------------------------------
 
