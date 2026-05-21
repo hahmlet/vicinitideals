@@ -15,8 +15,16 @@ Environment variables:
 
 from __future__ import annotations
 
+import asyncio
 import os
+import sys
 from typing import TYPE_CHECKING, Generator
+
+# Root tests/conftest.py pins WindowsSelectorEventLoopPolicy for asyncpg.
+# Playwright needs subprocess support, which requires ProactorEventLoop on
+# Windows. E2E tests don't touch asyncpg, so restore the default policy here.
+if sys.platform == "win32":
+    asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
 
 import httpx
 import pytest
