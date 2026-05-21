@@ -2055,8 +2055,19 @@ async def _auto_size_debt_modules(
                 or _loan_subtype_from_module(_ccm).replace("_", " ").title()
             )
             _cc_full_lbl = f"{_ccm_lbl} — Total Finance Costs"
+            # Match the existing FC row by module link + (auto-flag OR label
+            # suffix).  Matching by exact label alone breaks when the user
+            # edits the label on the override — engine then creates a duplicate.
+            _ccm_id = getattr(_ccm, "id", None)
             _cc_exist = next(
-                (ul for ul in use_lines if getattr(ul, "label", "") == _cc_full_lbl),
+                (
+                    ul for ul in use_lines
+                    if getattr(ul, "source_capital_module_id", None) == _ccm_id
+                    and (
+                        getattr(ul, "is_auto_finance_cost", False)
+                        or (getattr(ul, "label", "") or "").endswith(" — Total Finance Costs")
+                    )
+                ),
                 None,
             )
             if _cc_exist is not None and not getattr(_cc_exist, "is_auto_finance_cost", False):
@@ -2791,8 +2802,19 @@ async def _auto_size_debt_modules(
             _ccm_phase = _APS_TO_USE_PHASE.get(_ccm_aps, "pre_construction")
 
             _cc_full_lbl = f"{_ccm_lbl} — Total Finance Costs"
+            # Match the existing FC row by module link + (auto-flag OR label
+            # suffix).  Matching by exact label alone breaks when the user
+            # edits the label on the override — engine then creates a duplicate.
+            _ccm_id = getattr(_ccm_ref, "id", None)
             _cc_exist = next(
-                (ul for ul in use_lines if getattr(ul, "label", "") == _cc_full_lbl),
+                (
+                    ul for ul in use_lines
+                    if getattr(ul, "source_capital_module_id", None) == _ccm_id
+                    and (
+                        getattr(ul, "is_auto_finance_cost", False)
+                        or (getattr(ul, "label", "") or "").endswith(" — Total Finance Costs")
+                    )
+                ),
                 None,
             )
             # User override — flag turned off → leave untouched.
