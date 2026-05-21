@@ -9281,6 +9281,18 @@ async def model_builder(
     else:
         active_module = module or ("sources_uses" if _deal_setup_complete else "deal_setup")
 
+    # Canonicalize URL so it always carries ?project= for per-project views.
+    # Without this, HX-Current-URL on form posts/deletes lacks the project
+    # param and `_active_project_from_request` returns None, silently no-op'ing
+    # JSONB writes (e.g. unit-mix delete). Skip for scenario-level rollup view.
+    if active_view != "underwriting" and not project and active_project_id is not None:
+        _view_q = f"&view={view}" if view else ""
+        _new_q = f"&new={new}" if new else ""
+        return RedirectResponse(
+            url=f"/models/{model_id}/builder?module={active_module}&project={active_project_id}{_view_q}{_new_q}",
+            status_code=302,
+        )
+
     # Cash flow periods — only loaded when the cashflow module is active.
     # Multi-project: filter by active project_id so the per-project tab
     # doesn't interleave both projects' rows (which previously showed
