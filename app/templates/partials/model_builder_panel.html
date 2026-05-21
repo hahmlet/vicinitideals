@@ -947,7 +947,10 @@
   </div>
 </div>
 <div class="module-panel-body">
-  {% if expense_lines %}
+  {%- set _capex_per_unit = (inputs.capex_reserve_per_unit_annual | float) if inputs and inputs.capex_reserve_per_unit_annual else 0 -%}
+  {%- set _capex_units = total_units or 0 -%}
+  {%- set _capex_reserve_annual = _capex_per_unit * _capex_units -%}
+  {% if expense_lines or _capex_reserve_annual > 0 %}
   <table class="line-table">
     <thead>
       <tr>
@@ -978,17 +981,44 @@
         </td>
       </tr>
       {% endfor %}
+      {%- if _capex_reserve_annual > 0 %}
+      <tr onclick="openDrawer('model-settings-drawer')"
+          title="Edit in Deal Settings"
+          style="background:#f9fafb;cursor:pointer">
+        <td>
+          <span style="font-weight:500;font-style:italic">🔒 CapEx Reserve</span>
+          <div class="text-small text-muted" style="margin-top:2px">
+            ${{ _capex_per_unit | int }}/unit/yr × {{ _capex_units }} units — edit in Deal Settings
+          </div>
+        </td>
+        <td class="col-right">{{ _capex_reserve_annual | currency }}</td>
+        <td class="col-right">{{ inputs.expense_growth_rate_pct_annual | pct if inputs and inputs.expense_growth_rate_pct_annual else '—' }}</td>
+        <td style="width:32px;text-align:right;color:var(--text-muted)">⚙</td>
+      </tr>
+      {%- endif %}
     </tbody>
   </table>
-  <div class="line-table-footer">
-    <span class="line-total-label">Total Annual OpEx</span>
-    <span class="line-total-amount">{{ opex_annual | currency if opex_annual else '—' }}</span>
+  <div class="line-table-footer" style="flex-direction:column;align-items:flex-end;gap:4px">
+    <div style="display:flex;justify-content:space-between;width:100%">
+      <span class="line-total-label">Operating Expenses</span>
+      <span class="line-total-amount">{{ opex_annual | currency if opex_annual else '—' }}</span>
+    </div>
+    {%- if _capex_reserve_annual > 0 %}
+    <div style="display:flex;justify-content:space-between;width:100%">
+      <span class="line-total-label">CapEx Reserve</span>
+      <span class="line-total-amount">{{ _capex_reserve_annual | currency }}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;width:100%;border-top:1px solid var(--border);padding-top:4px;margin-top:2px">
+      <span class="line-total-label" style="font-weight:700">Total NOI Deduction</span>
+      <span class="line-total-amount">{{ ((opex_annual or 0) + _capex_reserve_annual) | currency }}</span>
+    </div>
+    {%- endif %}
   </div>
   {% else %}
   <div class="module-empty">
     <div class="module-empty-icon">📋</div>
     <div class="module-empty-title">No expense lines yet</div>
-    <div class="module-empty-desc">Add line items for property taxes, insurance, management fees, maintenance, utilities, and CapEx reserves.</div>
+    <div class="module-empty-desc">Add line items for property taxes, insurance, management fees, maintenance, and utilities. (CapEx Reserve is set per-unit in Deal Settings and appears here as a locked row.)</div>
     <div style="display:flex;gap:10px;justify-content:center;margin-top:16px">
       <button class="btn btn-primary" onclick="openAddLine('opex')">+ Add Line</button>
     </div>
