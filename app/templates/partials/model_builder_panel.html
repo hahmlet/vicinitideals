@@ -1037,6 +1037,7 @@
         <th>Label</th>
         <th>Type</th>
         <th class="col-right">Amount</th>
+        <th class="col-right">Max</th>
         <th>Carry</th>
         <th>Exit</th>
         <th></th>
@@ -1047,7 +1048,12 @@
       {# Same per-project junction override as the Sources table above. #}
       {%- set _j_amt = (capital_junction_amts or {}).get(m.id | string) -%}
       {%- set _disp_amt = _j_amt if _j_amt is not none else (m.source.amount if (m.source and m.source.get('amount')) else None) -%}
+      {%- set _max_val = m.source.maximum if (m.source and m.source.get('maximum') is not none) else None -%}
+      {%- set _under_util = _max_val is not none and _disp_amt is not none and (_disp_amt | float) < (_max_val | float) -%}
       <tr draggable="true" data-module-id="{{ m.id }}"
+          class="{% if _under_util %}row-under-utilized{% endif %}"
+          {% if _under_util %}title="Grant funded ${{ _disp_amt | int }} of ${{ _max_val | int }} maximum — ${{ ((_max_val | float) - (_disp_amt | float)) | int }} unused (eligible Uses don't cover cap)"
+          style="background:#fef9c3"{% endif %}
           onclick="openEditLine('capital_modules', '{{ m.id }}', '{{ model.id }}')">
         <td style="cursor:grab;color:var(--text-muted);font-size:16px;padding-right:4px;user-select:none"
             title="Drag to reorder" onclick="event.stopPropagation()">⠿</td>
@@ -1058,6 +1064,9 @@
           {% if _disp_amt is not none and _disp_amt %}{{ _disp_amt | currency }}
           {% elif m.source and m.source.get('pct_of_total_cost') %}{{ m.source.pct_of_total_cost }}% of costs
           {% else %}—{% endif %}
+        </td>
+        <td class="col-right text-small text-muted">
+          {% if _max_val is not none %}{{ _max_val | currency }}{% else %}—{% endif %}
         </td>
         <td class="text-small text-muted">
           {%- set ns = namespace(pre='', ops='') -%}

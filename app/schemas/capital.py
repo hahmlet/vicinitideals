@@ -54,6 +54,12 @@ class CapitalSourceSchema(BaseModel):
     model_config = ConfigDict(extra="allow")
 
     amount: Decimal | None = None
+    # Cap for grant/forgivable_loan/tax_credit sources with eligibility set.
+    # When `maximum` is non-null AND at least one Use has this module's ID in
+    # `use_lines.eligible_module_ids`, the engine computes `amount` =
+    # min(maximum, sum of eligible Use remaining buckets). When `maximum` is
+    # null, `amount` is the user-entered fixed contribution (legacy behavior).
+    maximum: Decimal | None = None
     pct_of_total_cost: float | None = None
     interest_rate_pct: float | None = None
     funding_date_trigger: str = ""

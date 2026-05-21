@@ -762,6 +762,36 @@ By default every capital source (CapitalModule) may fund any use line — the en
 
 Both whitelists default to empty (permissive). The `app/engines/source_routing.py` module implements `eligible_sources_for_use()` and `route_use_to_sources()`. When no whitelist applies, the routing falls back to the legacy stack-position allocation unchanged.
 
+#### 2.11.1 Capped-consumption grants (May 2026)
+
+Grants and other fixed-amount sources (grant, forgivable_loan, tax_credit) behave as **capped consumption** when per-Use eligibility is configured:
+
+- **`source.maximum` (JSONB key, Decimal)** — user-entered cap. Set when at least one Use references the source via `eligible_module_ids`.
+- **`source.amount`** — engine-computed each compute pass when `maximum` is set. Equals `min(maximum, sum of eligible Use remaining buckets)`.
+
+Resolution lives in [`app/engines/grant_caps.py`](../app/engines/grant_caps.py) — `resolve_grant_caps()` runs once at the top of `compute_cash_flows`, BEFORE `_auto_size_debt_modules`, so the gap-fill solver reads the correct grant contribution.
+
+**Consumption order within a single grant** (deterministic):
+
+1. Use start phase ascending (acquisition → construction → operation → stabilized)
+2. Use amount descending (ties broken largest first within same phase)
+
+**Multiple grants on the same Use** — `stack_position` ascending. Each grant decrements per-Use remaining buckets; later grants see only what earlier grants left behind. No pro-rata split.
+
+**Timing derivation** — `active_phase_start` / `active_phase_end` are re-derived from the covered Uses on every compute:
+
+- `active_phase_start` = earliest phase of any Use the grant consumed against
+- `active_phase_end` = latest phase of any Use the grant consumed against (capped — phases past where the cap fills are not included)
+
+**Under-utilization** — when `source.amount < source.maximum`, the S&U table renders the row yellow with a tooltip showing the unused balance.
+
+**Edge cases:**
+
+- Cap set but no eligibility selected → `source.amount = 0` (UI rejects this state at save; engine defends).
+- All eligibility unchecked at save → `source.maximum` cleared, source reverts to legacy fixed-amount behavior.
+- Use deleted → grant's eligibility list shrinks via `eligible_module_ids` referential cleanup; if it empties, grant reverts to legacy mode on next save.
+- Use timing changes → grant's `active_phase_*` recomputes on next compute.
+
 ---
 
 ## 3. Reserves
