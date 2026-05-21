@@ -1074,8 +1074,16 @@ function ulTimingChanged(val) {
     <label class="form-label">Name</label>
     <input class="form-input" type="text" name="label" required value="{{ existing.label }}">
   </div>
+  {%- set _is_fixed_amount = _ft in ['grant','forgivable_loan','tax_credit'] -%}
   <div class="form-row" style="margin-bottom:16px">
-    {% if existing.source and existing.source.get('amount') %}
+    {% if _is_fixed_amount %}
+    <div class="form-field">
+      <label class="form-label">Amount ($)</label>
+      <input class="form-input" type="number" name="source_amount" step="1" min="0" required
+             value="{{ (existing.source.amount | int) if existing.source and existing.source.get('amount') else '' }}"
+             placeholder="0">
+    </div>
+    {% elif existing.source and existing.source.get('amount') %}
     <div class="form-field">
       <label class="form-label">Commitment <span style="font-weight:400;font-size:11px;color:var(--text-muted)">auto-calculated</span></label>
       <div style="padding:8px 10px;background:var(--bg-muted,#f5f5f5);border-radius:6px;font-size:14px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--text-secondary)">
@@ -1433,7 +1441,14 @@ function ulTimingChanged(val) {
         {% endfor %}
       </select>
     </div>
-    <div class="form-hint" style="margin-top:4px;font-size:12px;color:var(--text-muted)">
+    <div class="form-row" id="sw-amount-row" style="display:none;margin-top:12px">
+      <div class="form-field" style="max-width:260px">
+        <label class="form-label">Amount ($)</label>
+        <input class="form-input" type="number" name="source_amount" id="sw-source-amount"
+               step="1" min="0" value="" placeholder="0">
+      </div>
+    </div>
+    <div class="form-hint" id="sw-autocalc-hint" style="margin-top:4px;font-size:12px;color:var(--text-muted)">
       Source amount is auto-calculated from Uses + carrying costs when you Compute.
     </div>
     {# Permanent debt: amortization term is captured in step 3; Exit Vehicle
@@ -1699,13 +1714,30 @@ function ulTimingChanged(val) {
         lbl && lbl.focus();
         return false;
       }
+      if (_FIXED_AMOUNT.indexOf(_type) >= 0) {
+        var amtIn = document.getElementById('sw-source-amount');
+        var v = amtIn && parseFloat(amtIn.value);
+        if (!v || v <= 0) {
+          _swError('Amount is required for this source type.');
+          amtIn && amtIn.focus();
+          return false;
+        }
+      }
     }
     return true;
   }
 
+  var _FIXED_AMOUNT = ['grant','forgivable_loan','tax_credit'];
   window.swTypeChanged = function(val) {
     _type = val;
     _updateStep3ForType(val);
+    var isFixed = _FIXED_AMOUNT.indexOf(val) >= 0;
+    var amtRow = document.getElementById('sw-amount-row');
+    var amtIn  = document.getElementById('sw-source-amount');
+    var hint   = document.getElementById('sw-autocalc-hint');
+    if (amtRow) amtRow.style.display = isFixed ? '' : 'none';
+    if (amtIn)  amtIn.required = isFixed;
+    if (hint)   hint.style.display = isFixed ? 'none' : '';
     _show(1);
   };
 
