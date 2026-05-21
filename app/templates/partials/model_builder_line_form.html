@@ -1074,7 +1074,7 @@ function ulTimingChanged(val) {
     <label class="form-label">Name</label>
     <input class="form-input" type="text" name="label" required value="{{ existing.label }}">
   </div>
-  {%- set _is_fixed_amount = _ft in ['grant','forgivable_loan','tax_credit'] -%}
+  {%- set _is_fixed_amount = _ft in ['grant','forgivable_loan','tax_credit','equity'] -%}
   <div class="form-row" style="margin-bottom:16px">
     {% if _is_fixed_amount %}
     <div class="form-field">
@@ -1727,7 +1727,7 @@ function ulTimingChanged(val) {
     return true;
   }
 
-  var _FIXED_AMOUNT = ['grant','forgivable_loan','tax_credit'];
+  var _FIXED_AMOUNT = ['grant','forgivable_loan','tax_credit','equity'];
   window.swTypeChanged = function(val) {
     _type = val;
     _updateStep3ForType(val);

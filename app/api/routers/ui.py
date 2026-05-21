@@ -5500,6 +5500,10 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
     deferred_total = sum(float(u.amount or 0) for u in deferred_uses)
     revenue_annual = _income_annual(income_streams)
     opex_annual = _sum_annual(expense_lines, "annual_amount")
+    _capex_per_unit = float(inputs.capex_reserve_per_unit_annual or 0) if inputs else 0.0
+    _total_units_for_reserve = sum((u.unit_count or 0) for u in unit_mix_rows)
+    capex_reserve_annual = _capex_per_unit * _total_units_for_reserve
+    opex_total_annual = (opex_annual or 0) + capex_reserve_annual
     # Multi-project Sources totals use per-project junction amounts so the
     # panel total doesn't show the scenario-wide (last-sized) principal.
     _cap_junction_amts: dict[str, float] = {}
@@ -5799,6 +5803,8 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
         "uses_total": uses_total_val,
         "revenue_annual": revenue_annual,
         "opex_annual": opex_annual,
+        "capex_reserve_annual": capex_reserve_annual,
+        "opex_total_annual": opex_total_annual,
         "carrying_annual": carrying_annual_computed,
         "carrying_detail": carrying_detail,
         "stabilized_month1_ncf": stabilized_month1_ncf,
@@ -6210,12 +6216,12 @@ async def handle_form_create_or_update(
                 data["source"] = source_d
                 for k, v in data.items():
                     setattr(row, k, v)
-                # Fixed-amount sources (grant/forgivable_loan/tax_credit): mirror the
+                # Fixed-amount sources (grant/forgivable_loan/tax_credit/equity): mirror the
                 # new source.amount onto the active-project junction row so the engine
                 # actually picks up the change. Without this the junction's stale amount
                 # overlays source.amount in memory at engine load and the new value is
                 # silently dropped.
-                if data["vehicle_type"] in ("grant", "forgivable_loan", "tax_credit"):
+                if data["vehicle_type"] in ("grant", "forgivable_loan", "tax_credit", "equity"):
                     from app.models.capital import CapitalModuleProject as _CMP_edit
                     _new_amt = Decimal(str(source_d.get("amount") or 0))
                     _active_pid = project_id if project_id is not None else (
@@ -10552,6 +10558,7 @@ async def model_module_nav(
             "use_line_count", "uses_total",
             "income_stream_count", "revenue_annual",
             "expense_line_count", "opex_annual",
+            "capex_reserve_annual", "opex_total_annual",
             "carrying_annual",
             "equity_ownership", "org_owner_fallback",
             "deferred_uses", "deferred_total", "profit_total",
