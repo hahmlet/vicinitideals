@@ -6210,6 +6210,35 @@ async def handle_form_create_or_update(
                 data["source"] = source_d
                 for k, v in data.items():
                     setattr(row, k, v)
+                # Fixed-amount sources (grant/forgivable_loan/tax_credit): mirror the
+                # new source.amount onto the active-project junction row so the engine
+                # actually picks up the change. Without this the junction's stale amount
+                # overlays source.amount in memory at engine load and the new value is
+                # silently dropped.
+                if data["vehicle_type"] in ("grant", "forgivable_loan", "tax_credit"):
+                    from app.models.capital import CapitalModuleProject as _CMP_edit
+                    _new_amt = Decimal(str(source_d.get("amount") or 0))
+                    _active_pid = project_id if project_id is not None else (
+                        default_project.id if default_project else None
+                    )
+                    if _active_pid is not None:
+                        _j_row = (await session.execute(
+                            select(_CMP_edit).where(
+                                _CMP_edit.capital_module_id == row.id,
+                                _CMP_edit.project_id == _active_pid,
+                            )
+                        )).scalar_one_or_none()
+                        if _j_row is None:
+                            session.add(_CMP_edit(
+                                capital_module_id=row.id,
+                                project_id=_active_pid,
+                                amount=_new_amt,
+                                active_from=None,
+                                active_to=row.active_phase_end,
+                                auto_size=False,
+                            ))
+                        else:
+                            _j_row.amount = _new_amt
                 # Mirror perm-debt hold_term_years / dscr_min to wizard staging
                 # so re-opening Deal Setup wizard shows the latest value.
                 if data["vehicle_type"] == "debt" and (
@@ -6256,6 +6285,28 @@ async def handle_form_create_or_update(
             _cm_id = _uuid_mod.uuid4()
             cm = CapitalModule(id=_cm_id, scenario_id=model_id, **data)
             session.add(cm)
+            # Create CapitalModuleProject junction row(s) — the engine's per-project
+            # query INNER JOINs on this table, so a module with no junction row is
+            # invisible to sizing/cashflow. Put the full source.amount on the active
+            # project; zero rows on other projects so the source appears in their
+            # coverage lists without double-counting.
+            from app.models.capital import CapitalModuleProject as _CMP_create
+            _all_projects = (await session.execute(
+                select(Project).where(Project.scenario_id == model_id).order_by(Project.created_at.asc())
+            )).scalars().all()
+            _src_amt_dec = Decimal(str(source_d.get("amount") or 0))
+            _is_auto = bool(source_d.get("auto_size"))
+            _primary_pid = project_id if project_id is not None else (default_project.id if default_project else None)
+            for _p in _all_projects:
+                _amt = _src_amt_dec if (_p.id == _primary_pid) else Decimal("0")
+                session.add(_CMP_create(
+                    capital_module_id=_cm_id,
+                    project_id=_p.id,
+                    amount=_amt,
+                    active_from=None,
+                    active_to=_derived_end_phase,
+                    auto_size=_is_auto,
+                ))
             # Auto-create linked DrawSource.  Non-debt vehicle types map to source_type="equity".
             _src_type = "debt" if data["vehicle_type"] == "debt" else "equity"
             # Determine sort order for new DrawSource
