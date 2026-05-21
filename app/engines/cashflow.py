@@ -1379,7 +1379,10 @@ DEFAULT_FINANCE_COST_PCT: Decimal = Decimal("2.0")
 _APS_TO_USE_PHASE: dict[str, str] = {
     "acquisition":          "acquisition",
     "close":                "acquisition",      # milestone key for "loan closes at acq"
+    "offer_made":           "acquisition",      # milestone key variant
+    "under_contract":       "acquisition",      # milestone key variant
     "pre_construction":     "pre_construction",
+    "pre_development":      "pre_construction", # milestone key variant
     "construction":         "construction",
     "lease_up":             "operation",
     "operation_lease_up":   "operation",        # milestone key variant
@@ -2832,7 +2835,15 @@ async def _auto_size_debt_modules(
             _ccm_lbl  = getattr(_ccm_ref, "label", "") or _ccm_ft.replace("_", " ").title()
             _ccm_p    = Decimal(str((_ccm_ref.source or {}).get("amount") or 0))
             _ccm_aps  = getattr(_ccm_ref, "active_phase_start", None) or ""
-            _ccm_phase = _APS_TO_USE_PHASE.get(_ccm_aps, "pre_construction")
+            # Finance costs (origination, lender legal, appraisal, title) are paid
+            # at LOAN CLOSING, not at loan activation. Refi-specific finance costs
+            # are handled separately by the refi event (cashflow.py refi block).
+            # Coerce later-stage activation values back to acquisition so the
+            # auto-FC UseLine fires at deal close, where the lender is actually
+            # paid. Default fallback is "acquisition" (the common case).
+            _ccm_phase = _APS_TO_USE_PHASE.get(_ccm_aps, "acquisition")
+            if _ccm_phase in {"operation", "exit"}:
+                _ccm_phase = "acquisition"
 
             _cc_full_lbl = f"{_ccm_lbl} — Total Finance Costs"
             # Match the existing FC row by module link + (auto-flag OR label
