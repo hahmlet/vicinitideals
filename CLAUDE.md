@@ -148,7 +148,7 @@ tests/
   engines/             # Unit tests: cashflow, draw_schedule, underwriting, waterfall
   api/, models/, exporters/, scrapers/, tasks/, contract/
   e2e/                 # Playwright E2E tests
-  conftest.py          # Shared fixtures: in-memory SQLite, seed helpers
+  conftest.py          # Shared fixtures: per-run Postgres test DB, seed helpers
 scripts/
   test_phase_b_debt.py # 8-test regression suite (Sources=Uses, DSCR parity, carry formulas)
 docs/
@@ -200,10 +200,29 @@ Old `Deal` ORM class now `Scenario`. `DealModel = Scenario` alias exists for bac
 ## Testing
 
 ### Test Infrastructure
-- **pytest-asyncio** (auto mode) with in-memory SQLite (`aiosqlite`)
-- Session-scoped engine, function-scoped sessions (rolled back per test)
+- **pytest-asyncio** (auto mode) with a dedicated Postgres test database on VM 114
+  (container `re-modeling-postgres-test`, port `5433`, tmpfs-backed)
+- Session-scoped event loop and engine. `CREATE DATABASE` per pytest run via sync
+  psycopg2 (outside any asyncio loop), `DROP DATABASE ... WITH (FORCE)` on teardown
+- Function-scoped session that `TRUNCATE`s all tables for the next test — safe even
+  when test code calls `session.commit()`
 - `httpx.AsyncClient` + `ASGITransport` for API integration tests
-- Seed helpers in `tests/conftest.py`: `seed_org()`, `seed_deal_model()`, `seed_deal_model_with_financials()`
+- Seed helpers in `tests/conftest.py`: `seed_org()`, `seed_deal_model()`,
+  `seed_deal_model_with_financials()`
+- A handful of legacy test files still spin up their own in-memory SQLite engine
+  inline (test_scenario, test_scraper, test_dedup, test_benchmark_fixtures, the
+  two tower_ap scripts, test_routers). They depend on the
+  `JSONB().with_variant(JSON(), "sqlite")` shims still present on a few models.
+  Migrate them to the shared Postgres conftest when touched.
+
+### Local dev: starting the test Postgres
+The container lives on VM 114 and runs from a standalone compose file:
+```bash
+mcp__proxmox-mcp__ssh_exec container_id=114 command="cd /root/stacks/vicinitideals && docker compose -f docker-compose.test.yml up -d"
+```
+It's restart-policy `unless-stopped`, so once started it stays up across VM reboots.
+Tests connect over LAN to `192.168.1.28:5433`. Override with `TEST_DATABASE_URL`
+when running tests from outside the LAN (e.g. CI).
 
 ### Running Tests
 ```bash

@@ -24,26 +24,6 @@ from app.models.project import (
 )
 
 
-@pytest.fixture
-async def db_session() -> AsyncGenerator[AsyncSession, None]:
-    from app.models import Base  # noqa: F401 — ensures all tables are registered
-
-    engine = create_async_engine(
-        "sqlite+aiosqlite:///:memory:",
-        connect_args={"check_same_thread": False},
-        poolclass=StaticPool,
-    )
-
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-
-    session_factory = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
-    async with session_factory() as session:
-        yield session
-
-    await engine.dispose()
-
-
 @pytest.mark.asyncio
 async def test_compute_waterfall_persists_results_and_metrics(db_session: AsyncSession) -> None:
     deal = await _seed_base_deal(db_session)

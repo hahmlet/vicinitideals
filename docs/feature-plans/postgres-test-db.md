@@ -1,81 +1,87 @@
-# Plan — Migrate Test DB from In-Memory SQLite to Postgres
+# Postgres Test DB
 
-**Status**: Drafted 2026-05-20. Not started.
+**Status**: Landed 2026-05-21. Branch `feature/postgres-test-db`.
 **Owner**: Steph
-**Depends on**: JSONB shim patch (landed 2026-05-20, branch `main`).
+**Replaces**: in-memory SQLite test fixtures.
 
-## Why
+## What shipped
 
-Test suite uses in-memory SQLite. Production uses PostgreSQL 16 with JSONB and ARRAY columns. To keep tests runnable on SQLite we ship per-column `with_variant(JSON(), "sqlite")` shims on every Postgres-specific type. This has cost us:
+Tests now run against a dedicated Postgres 16 container (`re-modeling-postgres-test`)
+instead of in-memory SQLite. Same image as production, full JSONB / ARRAY / server
+default parity, no shim divergence for new code.
 
-- **Recurring per-feature blocker**: every time a new model adds a JSONB/ARRAY column, integration tests collection-fail until shim is added. Three separate sessions hit this in the last month (memory IDs 9210, 9425, 9515).
-- **SQLite ≠ Postgres divergence risk**: SQLite JSON does not support Postgres operators (`@>`, `->>`, indexing on JSON keys). Engine code that uses those operators cannot be tested.
-- **No ARRAY semantics**: SQLite stores arrays as JSON text. Postgres `ANY()`, `&&`, `@>` array ops untestable.
-- **Pre-existing test failures masked**: 17 engine/waterfall tests fail post-shim — some may be SQLite-vs-Postgres behavior diffs we can't diagnose without parity.
+### Container
 
-## What changes
+Lives on VM 114, port `5433`, tmpfs-backed data dir (wiped on every container
+restart — never holds real data). Standalone compose file
+(`docker-compose.test.yml`) so production deploys never touch it.
 
-Replace `sqlite+aiosqlite:///:memory:` engine in `tests/conftest.py` with a Postgres engine pointed at a dedicated per-worker test database. Drop the `with_variant(JSON(), "sqlite")` shims everywhere they exist (~12 sites across 7 model files).
+Start command:
+```
+docker compose -f docker-compose.test.yml up -d
+```
 
-## Approach — per-worker isolated DBs
+Bound to `0.0.0.0:5433`. Test runners connect over LAN at `192.168.1.28:5433`.
 
-CI and local dev both already run Docker Compose with a Postgres container. Use it.
+### Conftest design
 
-### Local dev
+`tests/conftest.py` orchestrates per-run database lifecycle:
 
-- New env var `TEST_DATABASE_URL` defaults to `postgresql+asyncpg://re_modeling:re_modeling@localhost:5432/re_modeling_test`.
-- Test runner creates `re_modeling_test_<worker_id>` database per pytest-xdist worker (or `re_modeling_test` if no parallelism).
-- Session-scoped fixture: `CREATE DATABASE` → `alembic upgrade head` → yield engine → `DROP DATABASE` on teardown.
-- Function-scoped fixture: open transaction → yield session → `ROLLBACK` (current pattern, unchanged).
+1. **Session-scoped `_test_db_url`**: synchronous psycopg2 connection to the
+   maintenance DB. `CREATE DATABASE re_modeling_test_<uuid>` → run
+   `Base.metadata.create_all` via sync engine → yield connection URL →
+   `DROP DATABASE ... WITH (FORCE)` on teardown. **Synchronous** because
+   asyncpg connections are pinned to the asyncio loop that opened them; any
+   long-lived async session-scoped resource fights pytest-asyncio's loop
+   management.
+
+2. **Session-scoped `_test_engine`**: AsyncEngine bound to the per-run DB, with
+   `NullPool` to keep connection state minimal.
+
+3. **Function-scoped `session`**: yields a fresh `AsyncSession`, then issues
+   `TRUNCATE ... RESTART IDENTITY CASCADE` over all `Base.metadata` tables.
+   Truncate (vs SAVEPOINT rollback) handles tests that call `session.commit()`
+   internally — common in engine compute helpers.
+
+### Event loop policy
+
+`pyproject.toml` pins `asyncio_default_fixture_loop_scope = "session"` and
+`asyncio_default_test_loop_scope = "session"` so all tests share one event
+loop. On Windows the conftest also forces `WindowsSelectorEventLoopPolicy`
+because asyncpg + ProactorEventLoop drops connections on teardown.
 
 ### CI
 
-- Already has Postgres service. Reuse it.
-- Add step before pytest: `createdb re_modeling_test` (no-op if exists).
-- Set `TEST_DATABASE_URL` in workflow env.
+Both `light-gate` and `full-gate` jobs add an ephemeral `postgres-test`
+service container on port 5433, with `TEST_DATABASE_URL` pointed at
+`localhost:5433`. No reliance on the prod-style compose stack for the
+test DB.
 
-## Open decisions
+## Known limitations
 
-1. **Schema creation: Alembic vs `Base.metadata.create_all`?**
-   - Alembic: tests run real migrations. Catches migration bugs. Slower (~5–10s for all 94 migrations on cold DB).
-   - `create_all`: instant, matches current SQLite behavior. Misses migration ordering bugs.
-   - **Recommend**: `create_all` per worker, plus a separate `tests/migrations/test_alembic_upgrade.py` that runs all migrations sequentially against a throwaway DB. Best of both.
+- **7 legacy test files still use inline SQLite engines** instead of the shared
+  conftest: `test_scenario.py`, `test_scraper.py`, `test_import_tower_ap_deal.py`,
+  `test_tower_ap_parity.py`, `test_dedup.py`, `test_benchmark_fixtures.py`,
+  `test_routers.py`. These still need the `JSONB().with_variant(JSON(), "sqlite")`
+  shims on a handful of models to compile their schema. Migrate to the Postgres
+  conftest when touched; the shims can come off entirely once all seven are gone.
 
-2. **Per-test isolation: transaction rollback vs truncate?**
-   - Current: function-scoped session, `await sess.rollback()` on teardown. Works because SQLite `:memory:` is per-engine.
-   - With shared Postgres test DB: rollback works as long as test doesn't `commit()`. Most tests don't. Spots that do (a handful of seed helpers calling `flush()` then expecting persistence across sessions) need audit.
-   - Fallback: `TRUNCATE ... CASCADE` of all tables between tests. Slower but bulletproof.
+- **LAN-only access for local dev**: the test container is reachable on VM 114's
+  LAN IP only. Tests can't run offline (e.g. laptop on a coffee shop wifi without
+  VPN back to the homelab). Acceptable trade-off chosen to avoid installing
+  Docker Desktop or native Postgres on Windows.
 
-3. **Parallelism**: pytest-xdist not currently configured. Adding it amplifies the win (4–8× speedup) but multiplies DB setup cost. Defer unless test suite slow enough to matter.
+- **Some pre-existing test failures became visible** after the swap — stale
+  field references (`Project(deal_type=...)`) and inline `Opportunity(...)`
+  constructions that omit `source_url`. These were always broken; SQLite's
+  permissiveness or the test never running masked them. Out of scope for this
+  change.
 
-## Effort estimate
+## Follow-ups (separate work)
 
-- Conftest engine swap + per-worker DB management: **2–3h**
-- Strip `with_variant(JSON(), "sqlite")` shims from models: **1h**
-- Update CI workflow: **30m**
-- Smoke-test full suite, fix anything that relied on SQLite quirks: **1–2h**
-- Local dev setup docs (CLAUDE.md update): **30m**
-
-**Total: ~half-day project.**
-
-## Risks
-
-- **Postgres dependency for unit tests**: developers must have Docker + Postgres running to run tests. Currently `pytest tests/engines/` works with zero infra. Mitigation: keep one Postgres test DB always-running in the existing Compose stack so it's free if the project is already up.
-- **Test suite slowdown**: SQLite in-memory is ~milliseconds per fixture. Postgres TCP + transaction overhead adds tens of ms. Across hundreds of tests this could double runtime (current ~30s → ~60s). Acceptable for the parity win.
-- **CI cache invalidation**: per-worker DB creation slows cold CI starts by ~10s. Trivial.
-
-## Out of scope
-
-- Migrating E2E tests (already use live Postgres via deployed app).
-- Replacing SQLite for any non-test code path (none exists).
-- Adding integration tests that exercise Postgres-specific JSONB operators — that's a follow-up.
-
-## Rollout
-
-1. Land plan doc (this file).
-2. Branch `feature/postgres-test-db`. Worktree.
-3. Conftest swap + DB management fixtures. Run smoke (`pytest tests/engines/`).
-4. Strip shims one model file at a time, run targeted tests after each.
-5. Full suite green on Postgres. Compare pass count to current shimmed-SQLite baseline (107 pass / 17 fail). Investigate any newly-failing test before declaring done.
-6. CI workflow update.
-7. Merge. Delete shim helper if any centralized.
+1. Migrate the 7 inline-SQLite test files to the shared Postgres conftest.
+2. Strip every `with_variant(JSON(), "sqlite")` and `with_variant(JSONB, "postgresql")`
+   shim from model files once (1) lands.
+3. Fix the stale `Project(deal_type=...)` and seed-helper omissions surfaced by
+   the swap.
+4. Consider Tailscale if local-without-LAN testing becomes important.

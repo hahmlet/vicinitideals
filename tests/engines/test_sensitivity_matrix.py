@@ -22,25 +22,6 @@ from app.engines.sensitivity_matrix import (
 from tests.engines.test_cashflow import _seed_cashflow_deal
 
 
-@pytest.fixture
-async def db_session() -> AsyncGenerator[AsyncSession, None]:
-    from app.models import Base  # noqa: F401
-
-    engine = create_async_engine(
-        "sqlite+aiosqlite:///:memory:",
-        connect_args={"check_same_thread": False},
-        poolclass=StaticPool,
-    )
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-
-    factory = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
-    async with factory() as session:
-        yield session
-
-    await engine.dispose()
-
-
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_combined_mode_returns_5x5_grid_with_mode_field(

@@ -63,30 +63,6 @@ class _FakeMilestone:
 
 
 # ---------------------------------------------------------------------------
-# Shared in-memory DB fixture (mirrors conftest.py pattern for engine tests
-# that need a local, self-contained setup without the shared session-scoped engine)
-# ---------------------------------------------------------------------------
-
-@pytest.fixture
-async def db_session() -> AsyncGenerator[AsyncSession, None]:
-    from app.models import Base  # noqa: F401
-
-    engine = create_async_engine(
-        "sqlite+aiosqlite:///:memory:",
-        connect_args={"check_same_thread": False},
-        poolclass=StaticPool,
-    )
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-
-    factory = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
-    async with factory() as session:
-        yield session
-
-    await engine.dispose()
-
-
-# ---------------------------------------------------------------------------
 # Integration test — compute_cash_flows against in-memory DB
 # ---------------------------------------------------------------------------
 
