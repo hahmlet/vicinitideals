@@ -58,7 +58,7 @@
     <div class="module-label">3 · OpEx</div>
     <div class="module-meta">{{ expense_line_count }} line{{ 's' if expense_line_count != 1 else '' }}</div>
   </div>
-  <div class="module-total">{{ opex_annual | currency if opex_annual else '—' }}/yr</div>
+  <div class="module-total">{{ opex_total_annual | currency if opex_total_annual else '—' }}/yr</div>
 </a>
 {% endif %}
 

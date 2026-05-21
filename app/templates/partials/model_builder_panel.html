@@ -998,21 +998,9 @@
       {%- endif %}
     </tbody>
   </table>
-  <div class="line-table-footer" style="flex-direction:column;align-items:flex-end;gap:4px">
-    <div style="display:flex;justify-content:space-between;width:100%">
-      <span class="line-total-label">Operating Expenses</span>
-      <span class="line-total-amount">{{ opex_annual | currency if opex_annual else '—' }}</span>
-    </div>
-    {%- if _capex_reserve_annual > 0 %}
-    <div style="display:flex;justify-content:space-between;width:100%">
-      <span class="line-total-label">CapEx Reserve</span>
-      <span class="line-total-amount">{{ _capex_reserve_annual | currency }}</span>
-    </div>
-    <div style="display:flex;justify-content:space-between;width:100%;border-top:1px solid var(--border);padding-top:4px;margin-top:2px">
-      <span class="line-total-label" style="font-weight:700">Total NOI Deduction</span>
-      <span class="line-total-amount">{{ ((opex_annual or 0) + _capex_reserve_annual) | currency }}</span>
-    </div>
-    {%- endif %}
+  <div class="line-table-footer">
+    <span class="line-total-label">Total Annual OpEx{% if _capex_reserve_annual > 0 %} (incl. CapEx Reserve){% endif %}</span>
+    <span class="line-total-amount">{{ ((opex_annual or 0) + _capex_reserve_annual) | currency if ((opex_annual or 0) + _capex_reserve_annual) > 0 else '—' }}</span>
   </div>
   {% else %}
   <div class="module-empty">
@@ -1413,7 +1401,7 @@
     {%- set _noi_mo = (outputs.noi_stabilized | float / 12) if outputs.noi_stabilized else none -%}
     {%- set _tpc = outputs.total_project_cost | float if outputs.total_project_cost else none -%}
     {%- set _rev_ann = revenue_annual | float if revenue_annual else none -%}
-    {%- set _opex_ann = opex_annual | float if opex_annual else none -%}
+    {%- set _opex_ann = opex_total_annual | float if opex_total_annual else (opex_annual | float if opex_annual else none) -%}
     {%- set _carry_ann = carrying_annual | float if carrying_annual else none -%}
     {%- set _exit_cap = (inputs.exit_cap_rate_pct | float) if inputs and inputs.exit_cap_rate_pct else none -%}
     {%- set _mo1 = stabilized_month1_ncf | float if stabilized_month1_ncf is not none else none -%}

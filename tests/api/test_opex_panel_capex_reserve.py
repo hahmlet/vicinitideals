@@ -22,6 +22,16 @@ def _make_env():
     return templates.env
 
 
+def _stub_expense_line(label: str, amount: float, escalation: float = 3.0):
+    return SimpleNamespace(
+        id="e-" + label.replace(" ", "-").lower(),
+        label=label,
+        annual_amount=Decimal(str(amount)),
+        escalation_rate_pct_annual=Decimal(str(escalation)),
+        notes=None,
+    )
+
+
 def _render_opex_panel(
     *,
     capex_per_unit: float,
@@ -37,6 +47,8 @@ def _render_opex_panel(
         expense_growth_rate_pct_annual=Decimal(str(expense_growth)),
     )
     model = SimpleNamespace(id="00000000-0000-0000-0000-000000000001")
+    if expense_lines is None and opex_annual:
+        expense_lines = [_stub_expense_line("Operating Expenses", opex_annual)]
     return tpl.render(
         active_module="opex",
         model=model,
@@ -54,26 +66,34 @@ def _render_opex_panel(
 def test_opex_panel_renders_capex_reserve_row() -> None:
     html = _render_opex_panel(capex_per_unit=600, total_units=8, opex_annual=50000)
 
+    # Locked row visible in the table
     assert "CapEx Reserve" in html
     assert "Edit in Deal Settings" in html
     assert "model-settings-drawer" in html  # click target opens drawer
-    # $600/unit/yr × 8 units = $4,800/yr
+    # Row amount: $600/unit/yr × 8 units = $4,800/yr
     assert "$4,800" in html
-    assert "Total NOI Deduction" in html
+    # Footer rolls reserve into single Total Annual OpEx
+    assert "Total Annual OpEx" in html
+    assert "(incl. CapEx Reserve)" in html
+    # $50,000 + $4,800 = $54,800
+    assert "$54,800" in html
 
 
 def test_opex_panel_hides_capex_reserve_when_zero_units() -> None:
     html = _render_opex_panel(capex_per_unit=600, total_units=0, opex_annual=50000)
 
     assert "Edit in Deal Settings" not in html
-    assert "Total NOI Deduction" not in html
+    assert "(incl. CapEx Reserve)" not in html
+    # Footer still shows plain OpEx total
+    assert "$50,000" in html
 
 
 def test_opex_panel_hides_capex_reserve_when_per_unit_zero() -> None:
     html = _render_opex_panel(capex_per_unit=0, total_units=8, opex_annual=50000)
 
     assert "Edit in Deal Settings" not in html
-    assert "Total NOI Deduction" not in html
+    assert "(incl. CapEx Reserve)" not in html
+    assert "$50,000" in html
 
 
 @pytest.mark.parametrize(
