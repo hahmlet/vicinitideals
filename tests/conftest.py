@@ -43,12 +43,6 @@ from decimal import Decimal
 from typing import AsyncIterator
 from urllib.parse import urlsplit, urlunsplit
 
-# asyncpg on Windows is unstable on the default ProactorEventLoop — connections
-# error on close after the loop tears down. The SelectorEventLoop avoids those
-# proactor-specific code paths and is the recommended policy for asyncpg.
-if sys.platform == "win32":
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-
 import pytest
 import pytest_asyncio
 from httpx import ASGITransport, AsyncClient
@@ -88,6 +82,31 @@ _DEFAULT_TEST_DB_URL = (
     "postgresql+asyncpg://test:test@192.168.1.28:5433/re_modeling_test"
 )
 TEST_DATABASE_URL = os.environ.get("TEST_DATABASE_URL", _DEFAULT_TEST_DB_URL)
+
+
+# ---------------------------------------------------------------------------
+# Windows asyncio event loop policy — decided once per pytest invocation.
+#
+# asyncpg fails on Windows ProactorEventLoop (connection teardown errors).
+# Playwright needs ProactorEventLoop (subprocess transport for the Node driver).
+# These can't coexist in one process — policy is global, not per-loop.
+#
+# Resolution: inspect collected items after collection. If any E2E tests are
+# in the run → Proactor (Playwright wins, asyncpg unit tests in the same
+# invocation may flake, run them separately). Otherwise → Selector (default
+# safe choice for asyncpg-only runs). Hook fires before pytest-asyncio
+# creates the session loop, so the policy is in effect when it matters.
+# ---------------------------------------------------------------------------
+
+def pytest_collection_finish(session: "pytest.Session") -> None:
+    if sys.platform != "win32":
+        return
+    has_e2e = any("e2e" in str(item.path).replace("\\", "/").split("/tests/")[-1]
+                  for item in session.items)
+    if has_e2e:
+        asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
+    else:
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
 
 def _swap_database(url: str, new_db: str) -> str:
