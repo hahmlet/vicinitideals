@@ -10287,7 +10287,7 @@ async def _get_gap_adjustment_amounts(
             IncomeStream.project_id == project_id,
             IncomeStream.label == REVENUE_ADJUSTMENT_LABEL,
         )
-    )).scalar_one_or_none()
+    )).scalars().first()
     if rev and rev.amount_fixed_monthly is not None:
         try:
             out["revenue_monthly"] = float(rev.amount_fixed_monthly)
@@ -10298,7 +10298,7 @@ async def _get_gap_adjustment_amounts(
             OperatingExpenseLine.project_id == project_id,
             OperatingExpenseLine.label == OPEX_ADJUSTMENT_LABEL,
         )
-    )).scalar_one_or_none()
+    )).scalars().first()
     if opex and opex.annual_amount is not None:
         try:
             out["opex_annual"] = float(opex.annual_amount)
@@ -10309,7 +10309,7 @@ async def _get_gap_adjustment_amounts(
             UseLine.project_id == project_id,
             UseLine.label == PURCHASE_PRICE_ADJUSTMENT_LABEL,
         )
-    )).scalar_one_or_none()
+    )).scalars().first()
     if pp and pp.amount is not None:
         try:
             out["pp"] = float(pp.amount)
@@ -10338,7 +10338,7 @@ async def _has_any_gap_adjustment(session: AsyncSession, project_id: UUID) -> bo
             IncomeStream.project_id == project_id,
             IncomeStream.label == REVENUE_ADJUSTMENT_LABEL,
         )
-    )).scalar_one_or_none()
+    )).scalars().first()
     if rev and rev.amount_fixed_monthly and float(rev.amount_fixed_monthly) != 0:
         return True
     opex = (await session.execute(
@@ -10346,7 +10346,7 @@ async def _has_any_gap_adjustment(session: AsyncSession, project_id: UUID) -> bo
             OperatingExpenseLine.project_id == project_id,
             OperatingExpenseLine.label == OPEX_ADJUSTMENT_LABEL,
         )
-    )).scalar_one_or_none()
+    )).scalars().first()
     if opex and opex.annual_amount and float(opex.annual_amount) != 0:
         return True
     pp = (await session.execute(
@@ -10354,7 +10354,7 @@ async def _has_any_gap_adjustment(session: AsyncSession, project_id: UUID) -> bo
             UseLine.project_id == project_id,
             UseLine.label == PURCHASE_PRICE_ADJUSTMENT_LABEL,
         )
-    )).scalar_one_or_none()
+    )).scalars().first()
     if pp and pp.amount and float(pp.amount) != 0:
         return True
     return False

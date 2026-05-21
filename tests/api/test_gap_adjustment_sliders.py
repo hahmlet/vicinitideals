@@ -212,3 +212,69 @@ async def test_sliders_404_for_unknown_model(
         json={"revenue_delta_monthly": "1000"},
     )
     assert resp.status_code == 404
+
+
+@pytest.mark.asyncio
+async def test_sliders_concurrent_posts_produce_single_phantom_row(
+    client: AsyncClient,
+    session: AsyncSession,
+) -> None:
+    """Concurrent slider POSTs must not create duplicate phantom rows.
+
+    Regression: rapid-drag of the Gap Adjustment slider fired two POSTs
+    back-to-back. Both passed the SELECT-then-INSERT race in the upsert
+    helpers, leaving the project with two phantom rows per type. The next
+    page read used ``scalar_one_or_none()`` and crashed with
+    MultipleResultsFound. The partial unique indexes from migration 0094
+    plus the IntegrityError fallback in the upsert helpers serialize the
+    writes — one wins as INSERT, the other falls back to UPDATE.
+    """
+    import asyncio
+
+    model_id, project_id = await _seeded_model(session)
+
+    results = await asyncio.gather(
+        client.post(
+            f"/api/models/{model_id}/sliders",
+            json={
+                "revenue_delta_monthly": "1000",
+                "opex_delta_annual": "-5000",
+                "pp_delta": "-25000",
+            },
+        ),
+        client.post(
+            f"/api/models/{model_id}/sliders",
+            json={
+                "revenue_delta_monthly": "2000",
+                "opex_delta_annual": "-8000",
+                "pp_delta": "-40000",
+            },
+        ),
+    )
+    for resp in results:
+        assert resp.status_code == 200, resp.text
+
+    # Exactly one phantom row of each type exists for the project.
+    rev_rows = (await session.execute(
+        select(IncomeStream).where(
+            IncomeStream.project_id == project_id,
+            IncomeStream.label == REVENUE_ADJUSTMENT_LABEL,
+        )
+    )).scalars().all()
+    assert len(rev_rows) == 1
+
+    opex_rows = (await session.execute(
+        select(OperatingExpenseLine).where(
+            OperatingExpenseLine.project_id == project_id,
+            OperatingExpenseLine.label == OPEX_ADJUSTMENT_LABEL,
+        )
+    )).scalars().all()
+    assert len(opex_rows) == 1
+
+    pp_rows = (await session.execute(
+        select(UseLine).where(
+            UseLine.project_id == project_id,
+            UseLine.label == PURCHASE_PRICE_ADJUSTMENT_LABEL,
+        )
+    )).scalars().all()
+    assert len(pp_rows) == 1

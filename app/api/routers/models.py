@@ -10,6 +10,7 @@ from uuid import UUID
 from fastapi import APIRouter, HTTPException, Request, status
 from fastapi.responses import Response
 from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
 
 from app.api.deps import CurrentUserId, DBSession
 from app.engines.cashflow import compute_cash_flows
@@ -840,12 +841,16 @@ async def _upsert_revenue_phantom(
     project_id: UUID,
     monthly_amount: Decimal,
 ) -> IncomeStream:
+    # Race-safe upsert: SELECT-then-INSERT under partial unique index
+    # (migration 0094). Two concurrent slider POSTs both miss the SELECT,
+    # one INSERT wins, the other catches IntegrityError and falls back to
+    # an UPDATE on the row that did win. Last write wins, no duplicates.
     existing = (await session.execute(
         select(IncomeStream).where(
             IncomeStream.project_id == project_id,
             IncomeStream.label == REVENUE_ADJUSTMENT_LABEL,
         )
-    )).scalar_one_or_none()
+    )).scalars().first()
     if existing is not None:
         existing.amount_fixed_monthly = monthly_amount
         existing.stabilized_occupancy_pct = Decimal("100")
@@ -859,8 +864,23 @@ async def _upsert_revenue_phantom(
         # Active in operating phases only — adjustment to stabilized NOI.
         active_in_phases=["lease_up", "stabilized", "exit"],
     )
-    session.add(row)
-    return row
+    try:
+        async with session.begin_nested():
+            session.add(row)
+            await session.flush()
+        return row
+    except IntegrityError:
+        existing = (await session.execute(
+            select(IncomeStream).where(
+                IncomeStream.project_id == project_id,
+                IncomeStream.label == REVENUE_ADJUSTMENT_LABEL,
+            )
+        )).scalars().first()
+        if existing is None:
+            raise
+        existing.amount_fixed_monthly = monthly_amount
+        existing.stabilized_occupancy_pct = Decimal("100")
+        return existing
 
 
 async def _upsert_opex_phantom(
@@ -873,7 +893,7 @@ async def _upsert_opex_phantom(
             OperatingExpenseLine.project_id == project_id,
             OperatingExpenseLine.label == OPEX_ADJUSTMENT_LABEL,
         )
-    )).scalar_one_or_none()
+    )).scalars().first()
     if existing is not None:
         existing.annual_amount = annual_amount
         return existing
@@ -883,8 +903,22 @@ async def _upsert_opex_phantom(
         annual_amount=annual_amount,
         active_in_phases=["lease_up", "stabilized", "exit"],
     )
-    session.add(row)
-    return row
+    try:
+        async with session.begin_nested():
+            session.add(row)
+            await session.flush()
+        return row
+    except IntegrityError:
+        existing = (await session.execute(
+            select(OperatingExpenseLine).where(
+                OperatingExpenseLine.project_id == project_id,
+                OperatingExpenseLine.label == OPEX_ADJUSTMENT_LABEL,
+            )
+        )).scalars().first()
+        if existing is None:
+            raise
+        existing.annual_amount = annual_amount
+        return existing
 
 
 async def _upsert_pp_phantom(
@@ -897,7 +931,7 @@ async def _upsert_pp_phantom(
             UseLine.project_id == project_id,
             UseLine.label == PURCHASE_PRICE_ADJUSTMENT_LABEL,
         )
-    )).scalar_one_or_none()
+    )).scalars().first()
     if existing is not None:
         existing.amount = amount
         return existing
@@ -914,8 +948,22 @@ async def _upsert_pp_phantom(
         amount=amount,
         timing_type="first_day",
     )
-    session.add(row)
-    return row
+    try:
+        async with session.begin_nested():
+            session.add(row)
+            await session.flush()
+        return row
+    except IntegrityError:
+        existing = (await session.execute(
+            select(UseLine).where(
+                UseLine.project_id == project_id,
+                UseLine.label == PURCHASE_PRICE_ADJUSTMENT_LABEL,
+            )
+        )).scalars().first()
+        if existing is None:
+            raise
+        existing.amount = amount
+        return existing
 
 
 @router.post("/models/{model_id}/sliders", response_model=SliderResponse)
@@ -988,19 +1036,19 @@ async def update_gap_adjustment_sliders(
             IncomeStream.project_id == project.id,
             IncomeStream.label == REVENUE_ADJUSTMENT_LABEL,
         )
-    )).scalar_one_or_none()
+    )).scalars().first()
     opex = (await session.execute(
         select(OperatingExpenseLine).where(
             OperatingExpenseLine.project_id == project.id,
             OperatingExpenseLine.label == OPEX_ADJUSTMENT_LABEL,
         )
-    )).scalar_one_or_none()
+    )).scalars().first()
     pp = (await session.execute(
         select(UseLine).where(
             UseLine.project_id == project.id,
             UseLine.label == PURCHASE_PRICE_ADJUSTMENT_LABEL,
         )
-    )).scalar_one_or_none()
+    )).scalars().first()
 
     rev_amt = Decimal(str(revenue.amount_fixed_monthly)) if revenue and revenue.amount_fixed_monthly is not None else Decimal("0")
     opex_amt = Decimal(str(opex.annual_amount)) if opex and opex.annual_amount is not None else Decimal("0")
