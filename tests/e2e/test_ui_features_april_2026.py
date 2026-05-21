@@ -16,7 +16,7 @@ from __future__ import annotations
 import pytest
 
 from tests.e2e.helpers import wait_for_htmx
-from tests.e2e.seed import create_e2e_scenario, submit_timeline_wizard, _extract_project_id, _wizard_skip_proforma_if_present
+from tests.e2e.seed import create_e2e_scenario, submit_timeline_wizard, _extract_project_id
 
 pytestmark = pytest.mark.e2e
 
@@ -46,77 +46,37 @@ def feature_model_id(_seed_page) -> str:
 
 
 # ---------------------------------------------------------------------------
-# 1. Dual Constraint option in Deal Setup Wizard step 4
+# 1. Dual Constraint option in Deal Setup Wizard Step 1 (post-refactor location)
 # ---------------------------------------------------------------------------
-
-def _advance_to_sizing_step(page) -> None:
-    """Click through wizard steps 1-4 to reach step 5 (debt sizing mode)."""
-    # Step 1: income mode
-    page.wait_for_selector('#deal-setup-wizard input[value="revenue_opex"]', timeout=5000)
-    page.click('#deal-setup-wizard input[value="revenue_opex"]')
-    page.click('#deal-setup-wizard .wizard-footer button.btn-primary')
-    wait_for_htmx(page)
-    _wizard_skip_proforma_if_present(page)
-    page.wait_for_timeout(400)
-    # Step 2: debt types (permanent_debt)
-    page.wait_for_selector('#debt-type-grid', timeout=8000)
-    cb = page.locator('#debt-type-grid input[value="permanent_debt"]')
-    if cb.count() > 0 and not cb.is_checked():
-        cb.check()
-    page.click('#deal-setup-wizard .wizard-footer button.btn-primary')
-    wait_for_htmx(page)
-    page.wait_for_timeout(400)
-    # Step 3: milestone config — accept defaults
-    page.click('#deal-setup-wizard .wizard-footer button.btn-primary')
-    wait_for_htmx(page)
-    page.wait_for_timeout(400)
-    # Step 4: debt terms — accept defaults
-    page.click('#deal-setup-wizard .wizard-footer button.btn-primary')
-    wait_for_htmx(page)
-    page.wait_for_timeout(400)
-
 
 def test_wizard_shows_dual_constraint_option(
     logged_in_page, base_url: str, feature_model_id: str
 ) -> None:
-    """The debt sizing mode toggle in wizard step 5 should offer dual_constraint."""
+    """Step 1 sizing-mode toggle offers gap_fill / dscr_capped / dual_constraint."""
     page = logged_in_page
     page.goto(f"{base_url}/models/{feature_model_id}/builder?module=deal_setup")
     page.wait_for_selector("#deal-setup-wizard", timeout=15_000)
     wait_for_htmx(page)
 
-    _advance_to_sizing_step(page)
-
-    # Step 5: debt sizing mode — radios are hidden inside toggle labels.
-    # Wait for the label visibility, then verify radios exist in DOM.
-    page.wait_for_selector('#opt-dual-constraint', state="attached", timeout=10_000)
-
-    # Verify all three sizing options present
+    # All three sizing radios present on Step 1
     assert page.locator('input[name="debt_sizing_mode"][value="gap_fill"]').count() == 1
     assert page.locator('input[name="debt_sizing_mode"][value="dscr_capped"]').count() == 1
     assert page.locator('input[name="debt_sizing_mode"][value="dual_constraint"]').count() == 1
-
-    # Verify the Dual Constraint label is visible
     assert page.locator('label:has-text("Dual Constraint")').count() >= 1
 
 
 def test_wizard_dual_constraint_selectable(
     logged_in_page, base_url: str, feature_model_id: str
 ) -> None:
-    """Clicking the Dual Constraint toggle should mark it selected."""
+    """Clicking Dual Constraint radio on Step 1 marks it selected."""
     page = logged_in_page
     page.goto(f"{base_url}/models/{feature_model_id}/builder?module=deal_setup")
     page.wait_for_selector("#deal-setup-wizard", timeout=15_000)
     wait_for_htmx(page)
 
-    _advance_to_sizing_step(page)
-
-    # Click the dual_constraint option
-    page.wait_for_selector('#opt-dual-constraint', timeout=10_000)
-    page.click('#opt-dual-constraint')
+    page.click('input[name="debt_sizing_mode"][value="dual_constraint"]')
     page.wait_for_timeout(200)
 
-    # Verify it is now checked
     dual_radio = page.locator('input[name="debt_sizing_mode"][value="dual_constraint"]')
     assert dual_radio.is_checked(), "dual_constraint should be checked after click"
 
@@ -231,7 +191,7 @@ def test_outputs_panel_has_debt_yield_card(
 
 # ---------------------------------------------------------------------------
 # 5. Full wizard completion — CRITICAL regression test
-#    The Finish button on step 7 MUST be visible and clickable regardless of
+#    The Finish button on step 6 MUST be visible and clickable regardless of
 #    content height. This caught a real bug where the review step's content
 #    overflowed the viewport and the Finish button was unreachable.
 # ---------------------------------------------------------------------------
@@ -239,7 +199,7 @@ def test_outputs_panel_has_debt_yield_card(
 def test_wizard_finish_button_visible_and_clickable(
     _seed_page, base_url: str
 ) -> None:
-    """End-to-end wizard: create a fresh deal, navigate to step 7, verify the
+    """End-to-end wizard: create a fresh deal, navigate to final step, verify the
     Finish Setup button is visible and can be clicked to actually complete setup.
 
     This is the test that catches scroll/layout bugs where the button exists
@@ -294,15 +254,6 @@ def test_wizard_finish_button_visible_and_clickable(
         _bt = next_btn.first.text_content() or ""
         if "Finish" in _bt:
             break
-        # Fill required reserve fields so the "Review" step can advance.
-        # Without these, HTML5 validation blocks form submission and the
-        # wizard stays on the reserves step indefinitely.
-        floor_input = page.locator('[name="construction_floor_pct"]')
-        if floor_input.count() > 0 and floor_input.is_visible():
-            floor_input.fill("5.0")
-        reserve_input = page.locator('[name="operation_reserve_months"]')
-        if reserve_input.count() > 0 and reserve_input.is_visible():
-            reserve_input.fill("6")
         next_btn.first.click()
         wait_for_htmx(page)
         page.wait_for_selector('#deal-setup-wizard .wizard-body', timeout=8000)
@@ -410,60 +361,6 @@ def test_income_stream_form_has_advanced_value_add_section(
 
     # Default placeholders indicate they're optional (blank by default)
     assert "blank" in (catchup.get_attribute("placeholder") or "").lower()
-
-
-# ---------------------------------------------------------------------------
-# 8. Wizard step 6 — S-curve lease-up toggle
-# ---------------------------------------------------------------------------
-
-def test_wizard_step6_has_lease_up_curve_controls(
-    _seed_page, base_url: str
-) -> None:
-    """Step 6 (Reserves & Floors) should expose the lease-up curve toggle
-    and the steepness input when S-Curve is selected."""
-    import uuid
-    page = _seed_page
-    suffix = uuid.uuid4().hex[:6]
-    model_id = create_e2e_scenario(page, deal_name=f"E2E LeaseUp {suffix}")
-    project_id = _extract_project_id(page)
-    submit_timeline_wizard(
-        page, model_id, project_id,
-        milestone_types=["close", "construction", "operation_stabilized", "divestment"],
-    )
-
-    page.goto(f"{base_url}/models/{model_id}/builder?module=deal_setup")
-    page.wait_for_selector("#deal-setup-wizard", timeout=15_000)
-    wait_for_htmx(page)
-
-    # Advance through 5 steps to reach step 6
-    page.click('#deal-setup-wizard input[value="noi"]')
-    page.click('#deal-setup-wizard .wizard-footer button.btn-primary')
-    wait_for_htmx(page); page.wait_for_timeout(400)
-
-    page.wait_for_selector('#debt-type-grid', timeout=8000)
-    cb = page.locator('#debt-type-grid input[value="permanent_debt"]')
-    if cb.count() > 0 and not cb.is_checked():
-        cb.check()
-    page.click('#deal-setup-wizard .wizard-footer button.btn-primary')
-    wait_for_htmx(page); page.wait_for_timeout(400)
-
-    for _ in range(3):  # steps 3, 4, 5 → advance to 6
-        page.click('#deal-setup-wizard .wizard-footer button.btn-primary')
-        wait_for_htmx(page); page.wait_for_timeout(400)
-
-    # Step 6: lease-up curve dropdown present
-    curve_select = page.locator('select[name="lease_up_curve"]')
-    assert curve_select.count() == 1, "lease_up_curve select should be on step 6"
-
-    # Steepness input exists in DOM (may be hidden when linear is selected)
-    steep_input = page.locator('input[name="lease_up_curve_steepness"]')
-    assert steep_input.count() == 1, "lease_up_curve_steepness input should be present"
-
-    # When we switch to s_curve, steepness wrapper should become visible
-    curve_select.select_option("s_curve")
-    page.wait_for_timeout(200)
-    wrap = page.locator('#lu-steepness-wrap')
-    assert wrap.is_visible(), "Steepness wrapper should become visible when S-Curve selected"
 
 
 # ---------------------------------------------------------------------------

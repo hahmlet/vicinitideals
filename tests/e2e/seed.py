@@ -183,7 +183,7 @@ def submit_timeline_wizard(
 
 
 # ---------------------------------------------------------------------------
-# Deal setup wizard (steps 1–7)
+# Deal setup wizard (steps 1–6, post-May-2026 refactor)
 # ---------------------------------------------------------------------------
 
 def _wizard_click_next_or_review(page: Page) -> None:
@@ -197,17 +197,6 @@ def _wizard_click_next_or_review(page: Page) -> None:
     page.wait_for_timeout(300)
 
 
-def _wizard_skip_proforma_if_present(page: Page) -> None:
-    """If the proforma upload interstitial (step 1.5) is showing, click Skip."""
-    try:
-        skip = page.wait_for_selector('a[hx-get*="proforma-skip"]', timeout=4000)
-        skip.click()
-        wait_for_htmx(page)
-        page.wait_for_selector('#debt-type-grid', timeout=8000)
-    except Exception:
-        pass  # Not on proforma step, proceed
-
-
 def run_deal_setup_wizard(
     page: Page,
     model_id: str,
@@ -218,10 +207,26 @@ def run_deal_setup_wizard(
     debt_terms: dict[str, dict] | None = None,
     debt_sizing_mode: str = "gap_fill",
     dscr_minimum: str = "1.25",
-    construction_floor_pct: str = "5.0",
-    operation_reserve_months: str = "6",
+    # construction_floor_pct + operation_reserve_months are kept as kwargs for
+    # backwards compatibility with existing callers, but the wizard no longer
+    # prompts for them — values come from org/user defaults at deal create.
+    construction_floor_pct: str = "5.0",  # noqa: ARG001 — legacy kwarg
+    operation_reserve_months: str = "6",  # noqa: ARG001 — legacy kwarg
 ) -> None:
-    """Click through all 7 steps of the deal setup wizard."""
+    """Click through the 6-step deal setup wizard (post-May-2026 refactor).
+
+    Step map:
+      1 — Income mode + Permanent Debt Sizing mode + (optional) pro forma drop
+      2 — Debt stack (per-debt Source Vehicle picker)
+      3 — Per-debt milestones & Exit Vehicle  (skipped if every debt has vehicle)
+      4 — Per-debt loan terms                  (skipped if every debt has vehicle)
+      5 — Per-debt sizing (LTV / fixed / DSCR) (skipped if every debt has vehicle)
+      6 — Review + Finish
+
+    Reserves & Floors and Lease-up Curve are no longer prompted: their values
+    flow from the org/user defaults registry into OperationalInputs at deal
+    creation via app.services.scenario_factory.
+    """
     if debt_types is None:
         debt_types = ["permanent_debt"]
 
@@ -234,14 +239,16 @@ def run_deal_setup_wizard(
     page.wait_for_selector("#deal-setup-wizard", timeout=15_000)
     wait_for_htmx(page)
 
-    # Step 1 — Income mode
-    # Wait for the radio button to be present before clicking
+    # Step 1 — Income mode + Permanent Debt Sizing mode (+ pro forma drop zone)
     page.wait_for_selector(f'#deal-setup-wizard input[value="{income_mode}"]', timeout=5000)
     page.click(f'#deal-setup-wizard input[value="{income_mode}"]')
+    # Sizing mode lives on Step 1 now — pick it via the toggle radio.
+    if debt_sizing_mode in ("gap_fill", "dscr_capped", "dual_constraint"):
+        sizing_radio = page.locator(f'#deal-setup-wizard input[name="debt_sizing_mode"][value="{debt_sizing_mode}"]')
+        if sizing_radio.count() > 0:
+            sizing_radio.check()
+    # No file attached → button reads "Skip Import →" (revenue_opex) or "Next →" (noi).
     _wizard_click_next_or_review(page)
-
-    # Step 1.5 — Pro forma upload (shown for revenue_opex): skip to debt setup
-    _wizard_skip_proforma_if_present(page)
 
     # Step 2 — Debt types
     page.wait_for_selector('#debt-type-grid', timeout=5000)
@@ -251,33 +258,27 @@ def run_deal_setup_wizard(
             cb.check()
     _wizard_click_next_or_review(page)
 
-    # Step 3 — Milestone config (Active From / Exit Vehicle).
-    # "Active To" was removed (derived from Exit Vehicle server-side).
-    # "Retired By" was renamed to "Exit Vehicle" and now accepts:
-    #   "maturity" | "sale" | <sibling_debt_type_key>
-    # Legacy callers that pass `active_to` or `retired_by` still resolve:
-    # active_to is ignored; retired_by="perpetuity" → exit_vehicle="maturity".
-    _PHASE_VALUE_MAP = {
-        "operation_lease_up": "lease_up",
-        "operation_stabilized": "stabilized",
-        "divestment": "exit",
-    }
-    if milestone_config:
-        for dt, cfg in milestone_config.items():
-            if "active_from" in cfg:
-                val = _PHASE_VALUE_MAP.get(cfg["active_from"], cfg["active_from"])
-                page.select_option(f'[name="{dt}_active_from"]', val)
-            # Prefer the new field; fall back to legacy key for old callers.
-            vehicle = cfg.get("exit_vehicle") or cfg.get("retired_by")
-            if vehicle:
-                if vehicle == "perpetuity":
-                    vehicle = "maturity"
-                page.select_option(f'[name="{dt}_exit_vehicle"]', vehicle)
-    _wizard_click_next_or_review(page)
+    # Step 3 — Milestone config (skipped when every debt type carries a vehicle)
+    if page.locator('select[name$="_active_from"]').count() > 0:
+        _PHASE_VALUE_MAP = {
+            "operation_lease_up": "lease_up",
+            "operation_stabilized": "stabilized",
+            "divestment": "exit",
+        }
+        if milestone_config:
+            for dt, cfg in milestone_config.items():
+                if "active_from" in cfg:
+                    val = _PHASE_VALUE_MAP.get(cfg["active_from"], cfg["active_from"])
+                    page.select_option(f'[name="{dt}_active_from"]', val)
+                vehicle = cfg.get("exit_vehicle") or cfg.get("retired_by")
+                if vehicle:
+                    if vehicle == "perpetuity":
+                        vehicle = "maturity"
+                    page.select_option(f'[name="{dt}_exit_vehicle"]', vehicle)
+        _wizard_click_next_or_review(page)
 
-    # Step 4 — Debt terms (rate, carry type, amort)
-    if debt_terms:
-        # Wait for the first debt type's rate input to confirm step 4 rendered
+    # Step 4 — Debt terms (skipped when every debt type carries a vehicle)
+    if debt_terms and page.locator('[name$="_rate_pct"]').count() > 0:
         first_dt = next(iter(debt_terms))
         page.wait_for_selector(f'[name="{first_dt}_rate_pct"]', timeout=8000)
         for dt, terms in debt_terms.items():
@@ -293,53 +294,34 @@ def run_deal_setup_wizard(
                 amort_input = page.locator(f'[name="{dt}_amort_years"]')
                 if amort_input.count() > 0:
                     amort_input.fill(str(terms["amort_years"]))
-    _wizard_click_next_or_review(page)
-
-    # Remaining steps — fill fields if visible, then advance.
-    # The wizard may have 5-7 steps depending on debt configuration.
-    # Loop through remaining steps filling any recognized fields.
-    for _attempt in range(6):
-        # Fill any recognized fields on the current step
-        if debt_sizing_mode == "dscr_capped":
-            dscr_toggle = page.locator('.toggle-opt:has-text("DSCR-Capped")')
-            if dscr_toggle.count() > 0 and dscr_toggle.first.is_visible():
-                dscr_toggle.first.click()
-                dscr_input = page.locator('[name="dscr_minimum"]')
-                if dscr_input.count() > 0:
-                    dscr_input.fill(dscr_minimum)
-        elif debt_sizing_mode == "dual_constraint":
-            dual_toggle = page.locator('#opt-dual-constraint')
-            if dual_toggle.count() > 0 and dual_toggle.is_visible():
-                dual_toggle.click()
-            dscr_input = page.locator('[name="dscr_minimum"]')
-            if dscr_input.count() > 0:
-                dscr_input.fill(dscr_minimum)
-
-        floor_input = page.locator('[name="construction_floor_pct"]')
-        if floor_input.count() > 0 and floor_input.is_visible():
-            floor_input.fill(construction_floor_pct)
-
-        reserve_input = page.locator('[name="operation_reserve_months"]')
-        if reserve_input.count() > 0 and reserve_input.is_visible():
-            reserve_input.fill(operation_reserve_months)
-
-        # Check for Finish Setup (step 7 review page)
-        finish_btn = page.locator('#deal-setup-wizard .wizard-footer button:has-text("Finish Setup")')
-        if finish_btn.count() > 0 and finish_btn.is_visible():
-            finish_btn.click()
-            # HX-Redirect fires — wait for URL to change away from deal_setup
-            try:
-                page.wait_for_url("**/builder?module=sources_uses**", timeout=15_000)
-            except Exception:
-                try:
-                    page.wait_for_url("**/builder?module=noi**", timeout=5000)
-                except Exception:
-                    pass
-            wait_for_htmx(page)
-            return
-
-        # Advance to next step
         _wizard_click_next_or_review(page)
+    elif page.locator('[name$="_rate_pct"]').count() > 0:
+        # No specific terms requested but step is visible — accept defaults and advance.
+        _wizard_click_next_or_review(page)
+
+    # Step 5 — Per-debt sizing (LTV / fixed / DSCR). The permanent-debt sizing
+    # MODE was already chosen on Step 1; this step only collects DSCR minimum
+    # and per-loan LTV / fixed amount. Skipped when all debts have a vehicle.
+    if page.locator('[name="dscr_minimum"]').count() > 0:
+        dscr_input = page.locator('[name="dscr_minimum"]')
+        if dscr_input.is_visible():
+            dscr_input.fill(dscr_minimum)
+        _wizard_click_next_or_review(page)
+    elif page.locator('[name$="_ltv_pct"]').count() > 0:
+        _wizard_click_next_or_review(page)
+
+    # Step 6 — Review + Finish
+    finish_btn = page.locator('#deal-setup-wizard .wizard-footer button:has-text("Finish Setup")')
+    if finish_btn.count() > 0 and finish_btn.is_visible():
+        finish_btn.click()
+        try:
+            page.wait_for_url("**/builder?module=sources_uses**", timeout=15_000)
+        except Exception:
+            try:
+                page.wait_for_url("**/builder?module=noi**", timeout=5000)
+            except Exception:
+                pass
+        wait_for_htmx(page)
 
 
 # ---------------------------------------------------------------------------

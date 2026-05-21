@@ -2123,40 +2123,89 @@ async def deals_new_page(
     request: Request,
     session: DBSession,
     opp_id: str = Query(default=""),
+    from_opp: str = Query(default=""),
+    from_listing: str = Query(default=""),
+    clone_of: str = Query(default=""),
 ) -> HTMLResponse:
-    """Full-page wizard for creating a new deal (name + type)."""
+    """Single landing page for creating a new deal.
+
+    Query params carry context from upstream entry points so every "Create
+    Deal" button across the app funnels through this one URL:
+
+    - ``?from_opp=<opportunity_id>`` (alias: ``?opp_id=``) — pre-fill name +
+      asking-price from a linked Opportunity. Submit creates a new Scenario
+      linked to that Opportunity.
+    - ``?from_listing=<scraped_listing_id>`` — pre-fill from a ScrapedListing.
+      The listing is promoted into an Opportunity at submit time.
+    - ``?clone_of=<scenario_id>`` — pre-fill from an existing Scenario.
+      Submit clones the source's Projects, UseLines, IncomeStreams,
+      ExpenseLines, CapitalModules, WaterfallTiers, etc. while re-applying
+      current org Type 1 defaults.
+    """
     user = await _get_user(session, request)
     dedup_count, conflicts_count = await _get_counts(session)
     ctx = _base_ctx(user, dedup_count, "deals", conflicts_count=conflicts_count)
-    # Pre-populate name and pass opp_id so the form can link to an existing
-    # opportunity. Also pre-load the opportunity's first listing asking_price
-    # so the Acquisition Cost field can pre-fill — ensures the seeded
-    # UseLine always lands with a non-zero amount.
-    opp_name = ""
-    opp_asking_price: float | None = None
-    if opp_id:
+
+    # Normalize ``opp_id`` (legacy) → ``from_opp``. Both supported during the
+    # transition period; from_opp wins if both are set.
+    effective_opp_id = (from_opp or opp_id).strip()
+
+    pre_name: str = ""
+    pre_acquisition_cost: float | None = None
+    pre_deal_type: str = "acquisition"
+    banner_text: str = ""
+    context_kind: str = "blank"  # one of: blank | from_opp | from_listing | clone_of
+
+    if clone_of:
         try:
-            _opp = await session.get(Opportunity, UUID(opp_id))
-            if _opp:
-                opp_name = _opp.name or ""
-                if _opp.asking_price is not None and _opp.asking_price > 0:
-                    opp_asking_price = float(_opp.asking_price)
+            _src = await session.get(DealModel, UUID(clone_of))
         except ValueError:
-            opp_id = ""
-    ctx["opp_id"] = opp_id
-    ctx["opp_name"] = opp_name
-    ctx["opp_asking_price"] = opp_asking_price
-    from app.models.source_vehicle import SourceVehicle as _SVC
-    _all_svs = list((await session.execute(
-        select(_SVC).where(
-            ((_SVC.scope == "org") & (_SVC.owner_id == user.org_id)) |
-            ((_SVC.scope == "user") & (_SVC.owner_id == user.id))
-        ).order_by(_SVC.label)
-    )).scalars()) if user else []
-    ctx["source_vehicles"] = [
-        {"id": str(v.id), "name": v.label, "vehicle_type": v.vehicle_type, "owner": v.scope}
-        for v in _all_svs
-    ]
+            _src = None
+        if _src is not None:
+            context_kind = "clone_of"
+            pre_name = f"{_src.name} (Copy)"
+            pre_deal_type = getattr(_src.project_type, "value", _src.project_type) or "acquisition"
+            banner_text = f"Cloning from: {_src.name}"
+    elif from_listing:
+        try:
+            _listing = await session.get(
+                ScrapedListing, UUID(from_listing),
+                options=[selectinload(ScrapedListing.broker)],
+            )
+        except ValueError:
+            _listing = None
+        if _listing is not None:
+            context_kind = "from_listing"
+            pre_name = _listing.address_normalized or _listing.address_raw or "Unnamed Listing Deal"
+            if _listing.asking_price is not None and float(_listing.asking_price) > 0:
+                pre_acquisition_cost = float(_listing.asking_price)
+            banner_text = f"From listing: {pre_name}"
+    elif effective_opp_id:
+        try:
+            _opp = await session.get(Opportunity, UUID(effective_opp_id))
+        except ValueError:
+            _opp = None
+        if _opp is not None:
+            context_kind = "from_opp"
+            pre_name = _opp.name or ""
+            if _opp.asking_price is not None and _opp.asking_price > 0:
+                pre_acquisition_cost = float(_opp.asking_price)
+            banner_text = f"Linked to opportunity: {pre_name}"
+
+    ctx.update({
+        "context_kind": context_kind,
+        "banner_text": banner_text,
+        "from_opp": effective_opp_id if context_kind == "from_opp" else "",
+        "from_listing": from_listing if context_kind == "from_listing" else "",
+        "clone_of": clone_of if context_kind == "clone_of" else "",
+        "pre_name": pre_name,
+        "pre_acquisition_cost": pre_acquisition_cost,
+        "pre_deal_type": pre_deal_type,
+        # Legacy template variable kept for safety; new template prefers pre_acquisition_cost.
+        "opp_id": effective_opp_id,
+        "opp_name": pre_name,
+        "opp_asking_price": pre_acquisition_cost,
+    })
     return templates.TemplateResponse(request, "deals_new.html", ctx)
 
 
@@ -2261,16 +2310,59 @@ async def create_deal(
     session: DBSession,
     new: str = Query(default=""),
 ) -> HTMLResponse:
-    """Quick-create: Opportunity + Deal + default dev Project. Redirects to model builder.
-    If opportunity_id is provided in the form, links to an existing Opportunity instead of
-    creating a new one (used when coming from the opportunity detail page)."""
+    """Unified deal-creation entry point. All non-clone deal creations land here.
+
+    Form hidden fields carry context from /deals/new:
+      - ``opportunity_id`` — link to an existing Opportunity (from-opp path)
+      - ``listing_id``    — promote a ScrapedListing into an Opportunity
+                            (from-listing path); falls back to acquisition_cost
+                            taken from the listing if the form omits it.
+
+    Existing-Opportunity path: links to that Opportunity.
+    From-listing path: promotes the listing to org-scoped Opportunity.
+    Blank: creates a new manual Opportunity from the form name.
+
+    Clone path uses POST /ui/deals/{deal_id}/variant — separate handler
+    because of its deep-copy semantics.
+    """
     form = await request.form()
     name = str(form.get("name", "")).strip()
     deal_type_raw = str(form.get("deal_type", "acquisition")).strip()
     org_id_raw = str(form.get("org_id", "")).strip()
     opp_id_raw = str(form.get("opportunity_id", "")).strip()
+    listing_id_raw = str(form.get("listing_id", "")).strip()
     acq_cost_raw = str(form.get("acquisition_cost", "")).strip()
-    sv_id_raw = str(form.get("source_vehicle_id", "")).strip()
+
+    user = await _get_user(session, request)
+
+    # ── Listing-promotion path: resolve the ScrapedListing first so it can
+    # feed defaults into name + acq_cost when the form omits them.
+    listing: ScrapedListing | None = None
+    if listing_id_raw:
+        try:
+            listing = await session.get(
+                ScrapedListing, UUID(listing_id_raw),
+                options=[selectinload(ScrapedListing.broker)],
+            )
+        except ValueError:
+            listing = None
+        if listing is None:
+            return HTMLResponse("<p class='text-muted'>Listing not found.</p>", status_code=404)
+        # Enforce listing has a real asking price — without it the seeded
+        # Acquisition UseLine lands at $0 and downstream debt sizing produces
+        # gaps that can't be reconciled later.
+        if not listing.asking_price or float(listing.asking_price) <= 0:
+            return HTMLResponse(
+                "<p class='text-muted'>This listing has no asking price. "
+                "Set a price on the listing first, or create the deal manually "
+                "from <a href='/deals/new'>Deals → New</a>.</p>",
+                status_code=400,
+            )
+        # Listing-derived defaults when form fields are blank.
+        if not name:
+            name = listing.address_normalized or listing.address_raw or "Unnamed Listing Deal"
+        if not acq_cost_raw:
+            acq_cost_raw = str(listing.asking_price)
 
     if not name:
         return HTMLResponse("<p class='text-muted'>Deal name is required.</p>", status_code=400)
@@ -2289,8 +2381,6 @@ async def create_deal(
             "<p class='text-muted'>Acquisition cost must be greater than zero.</p>",
             status_code=400,
         )
-
-    user = await _get_user(session, request)
 
     # Resolve org_id: form value → user's org → first org
     org_id = None
@@ -2313,13 +2403,50 @@ async def create_deal(
     except ValueError:
         deal_type = ProjectType.acquisition
 
-    # If an existing opportunity ID was passed (from opp detail page), link to it instead.
+    # Resolve / create Opportunity. Three paths:
+    #   1. opportunity_id form field → link existing
+    #   2. listing_id form field → promote the ScrapedListing
+    #   3. blank → create a fresh manual Opportunity from the form name
     opportunity: Opportunity | None = None
     if opp_id_raw:
         try:
             opportunity = await session.get(Opportunity, UUID(opp_id_raw))
         except ValueError:
             pass
+
+    if opportunity is None and listing is not None:
+        # ScrapedListing IS the Opportunity (single-table inheritance) —
+        # check for an existing Deal linked via Scenario→Project before
+        # creating a duplicate.
+        existing_listing_deal = (await session.execute(
+            select(Deal)
+            .join(DealModel, DealModel.deal_id == Deal.id)
+            .join(Project, Project.scenario_id == DealModel.id)
+            .where(Project.opportunity_id == listing.id)
+            .limit(1)
+        )).scalar_one_or_none()
+        if existing_listing_deal is not None:
+            return RedirectResponse(url=f"/deals/{existing_listing_deal.id}", status_code=303)
+        opportunity = listing
+        if not opportunity.org_id:
+            opportunity.org_id = org_id
+            opportunity.opp_status = OpportunityStatus.active.value
+            if not opportunity.name:
+                opportunity.name = name
+            # Enrich parcel link from APN/address if missing
+            if opportunity.parcel_id is None and (opportunity.apn or opportunity.address_normalized):
+                try:
+                    from app.scrapers.parcel_enrichment import enrich_parcel as _enrich
+                    _parcel = await _enrich(
+                        session,
+                        address=opportunity.address_normalized or opportunity.address_raw,
+                        apn=opportunity.apn,
+                    )
+                    if _parcel is not None:
+                        opportunity.parcel_id = _parcel.id
+                except Exception:
+                    pass
+            await session.flush()
 
     _opportunity_is_new = False
     if opportunity is None:
@@ -2336,7 +2463,7 @@ async def create_deal(
         session.add(opportunity)
         await session.flush()
     else:
-        # Ensure parcel is linked on the Opportunity itself
+        # Existing-opp path: ensure parcel is linked on the Opportunity itself.
         if opportunity.parcel_id is None and (opportunity.apn or opportunity.address_normalized):
             try:
                 from app.scrapers.parcel_enrichment import enrich_parcel as _enrich
@@ -2360,29 +2487,15 @@ async def create_deal(
     session.add(top_deal)
     await session.flush()
 
-    scenario = DealModel(
+    from app.services.scenario_factory import create_scenario as _create_scenario
+    scenario, dev_project, _ = await _create_scenario(
+        session=session,
         deal_id=top_deal.id,
-        name="Base Case",
-        project_type=deal_type,
-        version=1,
-        is_active=True,
-        created_by_user_id=user.id if user else None,
-    )
-    if sv_id_raw:
-        try:
-            scenario.source_vehicle_id = UUID(sv_id_raw)
-        except ValueError:
-            pass
-    session.add(scenario)
-    await session.flush()
-
-    dev_project = Project(
-        scenario_id=scenario.id,
+        deal_type=deal_type,
+        user_id=user.id if user else None,
+        org_id=org_id,
         opportunity_id=opportunity.id,
-        name="Default Project",
     )
-    session.add(dev_project)
-    await session.flush()
 
     await _auto_assign_opportunity_to_project(opportunity, dev_project, session)
     for milestone in _seed_milestones(dev_project, deal_type):
@@ -2572,107 +2685,6 @@ async def update_deal(
             pass
     await session.commit()
     return RedirectResponse(url=f"/deals/{deal_id}", status_code=303)
-
-
-@router.post("/ui/deals/create-model", response_class=HTMLResponse)
-async def create_model_for_deal(
-    request: Request,
-    session: DBSession,
-) -> HTMLResponse:
-    """Create a new financial model (Deal + Project) for an existing Opportunity."""
-    form = await request.form()
-    opp_id_raw = str(form.get("opportunity_id", "")).strip()
-    name = str(form.get("name", "Base Case")).strip()
-    deal_type_raw = str(form.get("deal_type", "acquisition")).strip()
-    acq_cost_raw = str(form.get("acquisition_cost", "")).strip()
-
-    try:
-        opp_id = UUID(opp_id_raw)
-    except ValueError:
-        return HTMLResponse("<p class='text-muted'>Invalid opportunity ID.</p>", status_code=400)
-
-    opportunity = await session.get(Opportunity, opp_id)
-    if opportunity is None:
-        return HTMLResponse("<p class='text-muted'>Opportunity not found.</p>", status_code=404)
-
-    # Required: acquisition_cost > 0. Seeded UseLine ensures the new
-    # scenario has populated Uses on day one — same invariant as project 1.
-    try:
-        acq_cost = Decimal(acq_cost_raw) if acq_cost_raw else Decimal("0")
-    except (InvalidOperation, ValueError):
-        return HTMLResponse(
-            "<p class='text-muted'>Invalid acquisition cost.</p>", status_code=400,
-        )
-    if acq_cost <= 0:
-        return HTMLResponse(
-            "<p class='text-muted'>Acquisition cost must be greater than zero.</p>",
-            status_code=400,
-        )
-
-    user = await _get_user(session, request)
-    try:
-        deal_type = ProjectType(deal_type_raw)
-    except ValueError:
-        deal_type = ProjectType.acquisition
-
-    # Find or create a top-level Deal for this Opportunity (via Scenario→Project path)
-    existing_top_deal = (await session.execute(
-        select(Deal)
-        .join(DealModel, DealModel.deal_id == Deal.id)
-        .join(Project, Project.scenario_id == DealModel.id)
-        .where(Project.opportunity_id == opp_id)
-        .limit(1)
-    )).scalar_one_or_none()
-
-    if existing_top_deal is None:
-        existing_top_deal = Deal(
-            org_id=opportunity.org_id or (user.org_id if user else None),
-            name=name or "Base Case",
-            created_by_user_id=user.id if user else None,
-        )
-        session.add(existing_top_deal)
-        await session.flush()
-
-    # Count existing scenarios for version numbering
-    existing_version = int((await session.execute(
-        select(func.count()).select_from(DealModel).where(DealModel.deal_id == existing_top_deal.id)
-    )).scalar_one())
-
-    scenario = DealModel(
-        deal_id=existing_top_deal.id,
-        name=name or "Base Case",
-        project_type=deal_type,
-        version=existing_version + 1,
-        is_active=True,
-        created_by_user_id=user.id if user else None,
-    )
-    session.add(scenario)
-    await session.flush()
-
-    dev_project = Project(
-        scenario_id=scenario.id,
-        opportunity_id=opp_id,
-        name="Default Project",
-    )
-    session.add(dev_project)
-    await session.flush()
-
-    for milestone in _seed_milestones(dev_project, deal_type):
-        session.add(milestone)
-
-    # Seed the Acquisition UseLine with the user-confirmed cost.
-    session.add(UseLine(
-        project_id=dev_project.id,
-        label=f"{opportunity.name or 'Property'} - Acquisition",
-        phase=UseLinePhase.acquisition,
-        cost_category="acquisition",
-        amount=acq_cost,
-        timing_type="first_day",
-    ))
-
-    await session.commit()
-
-    return RedirectResponse(url=f"/models/{scenario.id}/builder", status_code=303)
 
 
 @router.post("/ui/deals/{deal_id}/link-parcel", response_class=HTMLResponse)
@@ -4441,125 +4453,6 @@ async def unarchive_listing(
     await session.refresh(listing)
     l = _build_listing_row(listing)
     return templates.TemplateResponse(request, "partials/listings_new_row.html", {"l": l})
-
-
-@router.post("/ui/listings/{listing_id}/create-deal", response_class=HTMLResponse)
-async def create_deal_from_listing(
-    request: Request,
-    listing_id: UUID,
-    session: DBSession,
-) -> HTMLResponse:
-    """Create a Deal + Scenario from a ScrapedListing. Redirects to model builder."""
-    listing = await session.get(
-        ScrapedListing, listing_id,
-        options=[selectinload(ScrapedListing.broker)]
-    )
-    if listing is None:
-        return HTMLResponse("<p class='text-muted'>Listing not found.</p>", status_code=404)
-
-    # Enforce: listing must have a non-zero asking price before we'll seed a
-    # deal off it. Without this we end up with a $0 Acquisition UseLine and
-    # the same recompute-gap bug we're fixing in the multi-project flow.
-    if not listing.asking_price or float(listing.asking_price) <= 0:
-        return HTMLResponse(
-            "<p class='text-muted'>This listing has no asking price. "
-            "Set a price on the listing first, or create the deal manually "
-            "from <a href='/deals/new'>Deals → New</a>.</p>",
-            status_code=400,
-        )
-
-    form = await request.form()
-    deal_type_raw = str(form.get("deal_type", "value_add")).strip()
-    try:
-        deal_type = ProjectType(deal_type_raw)
-    except ValueError:
-        deal_type = ProjectType.value_add
-
-    user = await _get_user(session, request)
-    from app.models.org import Organization
-    org = (await session.execute(select(Organization).limit(1))).scalar_one_or_none()
-    if org is None:
-        return HTMLResponse("<p class='text-muted'>No organization found.</p>", status_code=400)
-    org_id = (user.org_id if user else None) or org.id
-
-    deal_name = listing.address_normalized or listing.address_raw or "Unnamed Listing Deal"
-
-    # The listing IS the opportunity — promote it by setting org_id if not already set
-    opportunity = listing
-    if not opportunity.org_id:
-        opportunity.org_id = org_id
-        opportunity.opp_status = OpportunityStatus.active.value
-        if not opportunity.name:
-            opportunity.name = deal_name
-        # Enrich parcel link if missing
-        if opportunity.parcel_id is None and (opportunity.apn or opportunity.address_normalized):
-            try:
-                from app.scrapers.parcel_enrichment import enrich_parcel as _enrich
-                _parcel = await _enrich(session, address=opportunity.address_normalized or opportunity.address_raw, apn=opportunity.apn)
-                if _parcel is not None:
-                    opportunity.parcel_id = _parcel.id
-            except Exception:
-                pass
-        await session.flush()
-
-    # Check for existing Deal linked to this Opportunity via Scenario→Project
-    existing_deal = (await session.execute(
-        select(Deal)
-        .join(DealModel, DealModel.deal_id == Deal.id)
-        .join(Project, Project.scenario_id == DealModel.id)
-        .where(Project.opportunity_id == opportunity.id)
-        .limit(1)
-    )).scalar_one_or_none()
-
-    if existing_deal:
-        return RedirectResponse(url=f"/deals/{existing_deal.id}", status_code=303)
-
-    top_deal = Deal(
-        org_id=org_id,
-        name=deal_name,
-        created_by_user_id=user.id if user else None,
-    )
-    session.add(top_deal)
-    await session.flush()
-
-    scenario = DealModel(
-        deal_id=top_deal.id,
-        name="Base Case",
-        project_type=deal_type,
-        version=1,
-        is_active=True,
-        created_by_user_id=user.id if user else None,
-    )
-    session.add(scenario)
-    await session.flush()
-
-    dev_project = Project(
-        scenario_id=scenario.id,
-        opportunity_id=opportunity.id,
-        name="Default Project",
-    )
-    session.add(dev_project)
-    await session.flush()
-
-    await _auto_assign_opportunity_to_project(opportunity, dev_project, session)
-    for milestone in _seed_milestones(dev_project, deal_type):
-        session.add(milestone)
-
-    # Seed Acquisition use line from listing asking price (validated > 0
-    # at the top of this handler).
-    session.add(UseLine(
-        project_id=dev_project.id,
-        label=f"{opportunity.name or 'Property'} - Acquisition",
-        phase=UseLinePhase.acquisition,
-        cost_category="acquisition",
-        amount=Decimal(str(listing.asking_price)),
-        timing_type="first_day",
-        is_deferred=False,
-    ))
-
-    await session.commit()
-
-    return RedirectResponse(url=f"/models/{scenario.id}/builder", status_code=303)
 
 
 # ---------------------------------------------------------------------------
@@ -6727,10 +6620,17 @@ async def _copy_project_data(
     src_proj: Project,
     dst_proj: Project,
     session: AsyncSession,
+    *,
+    user_id: UUID | None = None,
+    org_id: UUID | None = None,
 ) -> None:
     """Copy milestones (with trigger remapping), use lines, income streams,
     expense lines, and operational inputs from src_proj to dst_proj.
-    Caller is responsible for deleting dst_proj's existing data first."""
+    Caller is responsible for deleting dst_proj's existing data first.
+
+    When ``user_id`` and ``org_id`` are provided, Type 1 (Org-Set) defaults
+    are re-applied to the copied OperationalInputs row so the clone picks up
+    current org policy instead of inheriting a stale baseline."""
     # Copy milestones (preserve trigger chain with remapped IDs)
     src_milestones = list((await session.execute(
         select(Milestone).where(Milestone.project_id == src_proj.id)
@@ -6809,6 +6709,19 @@ async def _copy_project_data(
             if col.name not in skip:
                 setattr(new_inputs, col.name, getattr(src_inputs, col.name, None))
         session.add(new_inputs)
+        # Clone path: re-apply Type 1 (Org-Set) defaults from current org so a
+        # cloned deal picks up the latest policy instead of stale source values.
+        # Type 2 inherits from source via the verbatim column copy above.
+        if user_id is not None and org_id is not None:
+            from app.services.scenario_factory import force_type1_on_existing
+            await session.flush()
+            await force_type1_on_existing(
+                session=session,
+                scenario=None,
+                inputs=new_inputs,
+                user_id=user_id,
+                org_id=org_id,
+            )
 
 
 @router.post("/ui/deals/{deal_id}/variant", response_class=HTMLResponse)
@@ -6828,17 +6741,27 @@ async def create_deal_copy(
     variant_name = str(form.get("name", "")).strip() or f"{source.name} (Copy)"
     selected_project_ids = set(form.getlist("project_ids"))
 
-    # New Scenario under same top-level Deal
-    new_deal = DealModel(
+    # New Scenario under same top-level Deal. Use the factory in Scenario-only
+    # mode so org/user defaults (Type 1) get re-applied and the source's Type 2
+    # values overlay them, while leaving Project + OperationalInputs creation
+    # to the per-source-project clone logic below.
+    from app.services.scenario_factory import create_scenario as _create_scenario
+    # Resolve org_id from the source Deal so defaults resolve against the
+    # right organization even when source's creator is no longer the caller.
+    _src_deal = await session.get(Deal, source.deal_id)
+    _org_id = _src_deal.org_id if _src_deal else (user.org_id if user else None)
+    new_deal, _, _ = await _create_scenario(
+        session=session,
         deal_id=source.deal_id,
+        deal_type=source.project_type,
+        user_id=user.id if user else None,
+        org_id=_org_id,
         name=variant_name,
-        project_type=source.project_type,
         version=source.version + 1,
         is_active=False,
-        created_by_user_id=user.id if user else None,
+        project_name=None,  # Scenario-only mode — clone loop creates Projects.
+        source_scenario=source,
     )
-    session.add(new_deal)
-    await session.flush()
 
     # Copy Projects (all if none selected, otherwise only checked ones)
     source_projects = list((await session.execute(
@@ -6863,7 +6786,11 @@ async def create_deal_copy(
         await session.flush()
         project_id_map[src_proj.id] = new_proj.id
 
-        await _copy_project_data(src_proj, new_proj, session)
+        await _copy_project_data(
+            src_proj, new_proj, session,
+            user_id=user.id if user else None,
+            org_id=_org_id,
+        )
 
     # Copy Scenario-level Capital modules + rebuild their project junction rows.
     from app.models.capital import CapitalModuleProject as _CMP
@@ -8062,9 +7989,20 @@ async def deal_setup_wizard_get(
         await _seed_wizard_perm_defaults(inputs, session, request)
     _wiz_user = await _get_user(session, request)
     _svd = await _wizard_debt_vehicles(session, _wiz_user) if _wiz_user else []
+
+    # Review (Step 6) Back button: jump to Step 2 when every selected debt has
+    # a vehicle (Steps 3-5 were skipped). Otherwise return to Step 5.
+    _review_back_step = 5
+    if step == 6 and inputs is not None:
+        _selected = inputs.debt_types or []
+        _dt_now = inputs.debt_terms or {}
+        if _selected and all((_dt_now.get(_ft) or {}).get("vehicle_id") for _ft in _selected):
+            _review_back_step = 2
+
     return templates.TemplateResponse(request, "partials/deal_setup_wizard.html", {
         "request": request, "model": model, "inputs": inputs, "step": step,
         "source_vehicles_debt": _svd,
+        "review_back_step": _review_back_step,
     })
 
 
@@ -8118,59 +8056,35 @@ async def deal_setup_wizard_step(
         select(OperationalInputs).where(OperationalInputs.project_id == default_project.id)
     )).scalar_one_or_none()
     if inputs is None:
-        # Auto-create a minimal OperationalInputs row so the wizard can proceed
-        inputs = OperationalInputs(
-            project_id=default_project.id,
-        )
+        # Legacy fallback: post-refactor every Scenario is created with an
+        # OperationalInputs row via app.services.scenario_factory, so this
+        # branch only fires for pre-factory deals. Create an empty row and
+        # apply current org/user defaults — same logic the factory uses on
+        # fresh deals — so the engine never sees a NULL Type 1 field.
+        from app.services.scenario_factory import apply_defaults_to_existing
+        inputs = OperationalInputs(project_id=default_project.id)
         session.add(inputs)
         await session.flush()
-
-        # Pre-populate from org/user defaults on first creation
         _wizard_user = await _get_user(session, request)
         if _wizard_user is not None:
+            await apply_defaults_to_existing(
+                session=session,
+                scenario=model,
+                inputs=inputs,
+                user_id=_wizard_user.id,
+                org_id=_wizard_user.org_id,
+            )
+        # Discount Rate / Hurdle lives on Scenario and tracks the org/user
+        # IRR Hurdle Tier 1 (required return for NPV + waterfall). The factory
+        # doesn't write it because it isn't in DEFAULT_REGISTRY (no scalar
+        # equivalent), so the legacy fallback handles it explicitly.
+        if _wizard_user is not None and model.discount_rate_pct is None:
             from decimal import Decimal as _D
-            from app.settings.resolver import resolve_all_defaults as _resolve_all
-            _defs = await _resolve_all(_wizard_user.id, _wizard_user.org_id, session)
-
-            _dsm = _defs.get("debt_sizing_mode")
-            if _dsm:
-                inputs.debt_sizing_mode = _dsm
-
-            _orm = _defs.get("operation_reserve_months")
-            if _orm is not None:
-                try:
-                    inputs.operation_reserve_months = int(_orm)
-                except (ValueError, TypeError):
-                    pass
-
-            _cfp = _defs.get("construction_floor_pct")
-            if _cfp is not None:
-                try:
-                    inputs.construction_floor_pct = _D(_cfp)
-                except Exception:
-                    pass
-
-            _noi = _defs.get("noi_escalation_rate_pct")
-            if _noi is not None:
-                try:
-                    inputs.noi_escalation_rate_pct = _D(_noi)
-                except Exception:
-                    pass
-
-            _luc = _defs.get("lease_up_curve")
-            if _luc:
-                inputs.lease_up_curve = _luc
-
-            _im = _defs.get("income_mode")
-            if _im:
-                inputs.income_mode = _im
-
-            # Discount Rate / Hurdle lives on Scenario, not OperationalInputs.
-            # Wire it to the org/user IRR Hurdle Tier 1 default (same concept:
-            # required return for NPV and waterfall). Skips if user already
-            # entered a value on the deal.
-            _irr1 = _defs.get("irr_hurdle_pct_tier1")
-            if _irr1 is not None and model.discount_rate_pct is None:
+            from app.settings.resolver import resolve_default as _resolve_one
+            _irr1 = await _resolve_one(
+                "irr_hurdle_pct_tier1", _wizard_user.id, _wizard_user.org_id, session,
+            )
+            if _irr1 is not None:
                 try:
                     model.discount_rate_pct = _D(_irr1)
                     session.add(model)
@@ -8179,12 +8093,22 @@ async def deal_setup_wizard_step(
 
     # Save current step's data
     if step == 1:
-        # Income mode selection (new step 1)
+        # Step 1 (new): income mode + permanent-debt sizing mode + optional
+        # pro forma upload. Three knobs on one screen; sizing-mode was moved
+        # off Step 5 in the May 2026 wizard refactor.
         income_mode = str(form.get("income_mode") or "revenue_opex")
         if income_mode not in ("revenue_opex", "noi"):
             income_mode = "revenue_opex"
         model.income_mode = income_mode
+
+        # Permanent-debt sizing mode (gap_fill / dscr_capped / dual_constraint)
+        sizing_mode = str(form.get("debt_sizing_mode") or "").strip()
+        if sizing_mode in ("gap_fill", "dscr_capped", "dual_constraint"):
+            inputs.debt_sizing_mode = sizing_mode
+
         session.add(model)
+        session.add(inputs)
+
         # Pre-fill NOI from linked opportunity's scraped listing
         if income_mode == "noi":
             await _prefill_noi_from_listing(model, default_project, inputs, session)
@@ -8326,7 +8250,10 @@ async def deal_setup_wizard_step(
         if not wizard_errors:
             inputs.debt_terms = dt_terms
     elif step == 5:
-        # Per-debt sizing approach; perm gap-fill / dscr-capped mode
+        # Per-debt sizing — LTV / fixed amount / minimum DSCR. The permanent-
+        # debt sizing-mode picker moved to Step 1 in the May 2026 refactor;
+        # this step is no longer responsible for it. Reserves & Floors (old
+        # Step 6) is gone entirely — those fields come from org defaults.
         dt_terms = dict(inputs.debt_terms or {})
         for ft in (inputs.debt_types or []):
             sizing_approach = form.get(f"{ft}_sizing_approach")
@@ -8338,7 +8265,6 @@ async def deal_setup_wizard_step(
                 if ltv_pct:         entry["ltv_pct"]        = float(ltv_pct)
                 if fixed_amount:    entry["fixed_amount"]   = float(fixed_amount)
                 dt_terms[ft] = entry
-        inputs.debt_sizing_mode = form.get("debt_sizing_mode") or inputs.debt_sizing_mode
         dscr_val = form.get("dscr_minimum")
         if dscr_val:
             try:
@@ -8348,21 +8274,6 @@ async def deal_setup_wizard_step(
             except (TypeError, ValueError):
                 pass
         inputs.debt_terms = dt_terms
-    elif step == 6:
-        # Reserves & Floors (renumbered from old step 5)
-        cf_pct = form.get("construction_floor_pct")
-        if cf_pct:
-            inputs.construction_floor_pct = Decimal(cf_pct)
-        or_months = form.get("operation_reserve_months")
-        if or_months:
-            inputs.operation_reserve_months = int(or_months)
-        # Lease-up occupancy curve (linear vs s_curve + steepness)
-        lu_curve = form.get("lease_up_curve")
-        if lu_curve in ("linear", "s_curve"):
-            inputs.lease_up_curve = lu_curve
-        lu_steep = _fd(form.get("lease_up_curve_steepness"))
-        if lu_steep is not None:
-            inputs.lease_up_curve_steepness = lu_steep
 
     _post_user = await _get_user(session, request)
     _post_svd = await _wizard_debt_vehicles(session, _post_user) if _post_user else []
@@ -8379,19 +8290,44 @@ async def deal_setup_wizard_step(
     await session.refresh(inputs)
     await session.refresh(model)
 
-    # After step 1 income-mode selection: offer pro forma upload when revenue_opex.
-    # NOI mode skips directly to debt setup (step 2).
-    if step == 1 and (model.income_mode or "revenue_opex") == "revenue_opex":
-        return templates.TemplateResponse(request, "partials/proforma_upload_step.html", {
-            "request": request, "model_id": model_id,
-        })
+    # ── Step 1 → optional pro forma upload ────────────────────────────────
+    # New (May 2026): the upload zone lives directly on Step 1 instead of a
+    # separate page. When a file is attached we dispatch into the preflight
+    # logic that used to live behind /proforma-preflight. With no file the
+    # user clicked "Skip Import →" (or NOI mode) and we advance to Step 2.
+    if step == 1:
+        _proforma_file = form.get("file")
+        # FormData returns a starlette UploadFile when one was attached, or a
+        # bare string ("") when the input was empty. Filter by truthy filename.
+        from starlette.datastructures import UploadFile as _StarletteUploadFile
+        if isinstance(_proforma_file, _StarletteUploadFile) and (_proforma_file.filename or ""):
+            return await _dispatch_proforma_preflight(
+                request=request, model_id=model_id, upload=_proforma_file,
+            )
 
+    # ── Step 2 → vehicle-skip routing ─────────────────────────────────────
+    # If every selected debt type was assigned a Source Vehicle, Steps 3-5
+    # (milestones, terms, sizing) are redundant — the vehicle carries that
+    # data already. Jump straight to Review. If ANY debt is on "Use defaults"
+    # we drop into 3/4/5 for all of them (per-debt skipping is future work).
     next_step = step + 1
-    # Seed perm-debt defaults so step 4 shows user/org preference, not template fallback.
+    review_back_step = step  # default: Review's back goes to the prior step
+    if step == 2:
+        _selected = inputs.debt_types or []
+        _dt_now = inputs.debt_terms or {}
+        _all_have_vehicle = bool(_selected) and all(
+            (_dt_now.get(_ft) or {}).get("vehicle_id") for _ft in _selected
+        )
+        if _all_have_vehicle:
+            next_step = 6
+            review_back_step = 2
+
+    # Seed perm-debt defaults so Step 4 shows user/org preference, not template fallback.
     await _seed_wizard_perm_defaults(inputs, session, request)
     return templates.TemplateResponse(request, "partials/deal_setup_wizard.html", {
         "request": request, "model": model, "inputs": inputs, "step": next_step,
         "source_vehicles_debt": _post_svd,
+        "review_back_step": review_back_step,
     })
 
 
@@ -10975,24 +10911,27 @@ async def download_import_template(model_id: UUID) -> StreamingResponse:
 # Pro forma import — preflight, upload, status, confirm, skip
 # ---------------------------------------------------------------------------
 
-@router.post("/ui/models/{model_id}/proforma-preflight", response_class=HTMLResponse)
-async def proforma_preflight(
+async def _dispatch_proforma_preflight(
+    *,
     request: Request,
     model_id: UUID,
-    file: UploadFile = File(...),
+    upload: UploadFile,
 ) -> HTMLResponse:
-    """Receive uploaded file. For .xlsx files, read sheet names + column
-    headers and return the sheet-picker fragment. For PDF/DOCX/HTML/etc.,
-    queue the parse task directly (whole-document mode) and return the
-    progress poller — there are no sheets to pick."""
+    """Stash the uploaded pro forma in redis, then return either the sheet
+    picker (for .xlsx) or the parse-progress poller (for PDF/DOCX/HTML).
+
+    Extracted helper so both the dedicated POST route and the Step 1 wizard
+    handler can dispatch the same flow when a file rides along with the
+    income-mode form.
+    """
     import openpyxl
     import os as _os
 
-    content = await file.read()
+    content = await upload.read()
     if not content:
         return HTMLResponse("<p class='text-red-500'>Empty file uploaded.</p>", status_code=400)
 
-    filename = file.filename or ""
+    filename = upload.filename or ""
     ext = _os.path.splitext(filename)[1].lower().lstrip(".")
     file_kind = "xlsx" if ext in {"xlsx", "xlsm", "xlsb"} else "doc"
 
@@ -11053,6 +10992,20 @@ async def proforma_preflight(
             "sheet_columns": sheet_columns,
             "STANDARD_OPEX_CATEGORIES": STANDARD_OPEX_CATEGORIES,
         },
+    )
+
+
+@router.post("/ui/models/{model_id}/proforma-preflight", response_class=HTMLResponse)
+async def proforma_preflight(
+    request: Request,
+    model_id: UUID,
+    file: UploadFile = File(...),
+) -> HTMLResponse:
+    """Receive uploaded file at the dedicated endpoint. Thin wrapper over
+    ``_dispatch_proforma_preflight`` — kept for direct re-upload (proforma-
+    restart) and for any external callers that still POST a file directly."""
+    return await _dispatch_proforma_preflight(
+        request=request, model_id=model_id, upload=file,
     )
 
 

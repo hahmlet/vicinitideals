@@ -58,6 +58,7 @@
   letter-spacing: .04em;
 }
 .nd-field input[type="text"],
+.nd-field input[type="number"],
 .nd-field select {
   width: 100%;
   box-sizing: border-box;
@@ -68,7 +69,7 @@
   background: var(--bg);
   color: var(--text);
 }
-.nd-field input[type="text"]:focus,
+.nd-field input:focus,
 .nd-field select:focus {
   outline: none;
   border-color: var(--accent);
@@ -90,75 +91,62 @@
       <div class="new-deal-subtitle">Give it a name and choose the project type. You can change these later.</div>
     </div>
 
-    <form method="post" action="/ui/deals/create">
-      {% if opp_id %}<input type="hidden" name="opportunity_id" value="{{ opp_id }}">{% endif %}
+    {# Submit URL branches on context: clone_of goes to the variant route
+       which deep-copies the source Scenario; everything else creates fresh
+       via the unified /ui/deals/create handler. #}
+    {% set submit_action = '/ui/deals/' + clone_of + '/variant' if clone_of else '/ui/deals/create' %}
+    <form method="post" action="{{ submit_action }}">
+      {% if from_opp %}<input type="hidden" name="opportunity_id" value="{{ from_opp }}">{% endif %}
+      {% if from_listing %}<input type="hidden" name="listing_id" value="{{ from_listing }}">{% endif %}
+
       <div class="new-deal-body">
 
-        {% if opp_id %}
+        {% if banner_text %}
         <div style="padding:8px 12px;border-radius:6px;background:#f0fdf4;border:1px solid #86efac;color:#166534;font-size:12px">
-          Linked to opportunity: <strong>{{ opp_name }}</strong>
+          {{ banner_text }}
         </div>
         {% endif %}
 
         <div class="nd-field">
           <label>Deal Name</label>
           <input type="text" name="name" required autofocus
-                 value="{{ opp_name }}"
+                 value="{{ pre_name }}"
                  placeholder="e.g. Oak Ave 12-Unit Conversion">
         </div>
 
         <div class="nd-field">
           <label>Deal Type</label>
           <select name="deal_type">
-            <option value="acquisition">Acquisition</option>
-            <option value="value_add">Value-Add</option>
-            <option value="conversion">Acquisition — Conversion</option>
-            <option value="new_construction">New Construction</option>
+            <option value="acquisition"      {% if pre_deal_type == 'acquisition'      %}selected{% endif %}>Acquisition</option>
+            <option value="value_add"        {% if pre_deal_type == 'value_add'        %}selected{% endif %}>Value-Add</option>
+            <option value="conversion"       {% if pre_deal_type == 'conversion'       %}selected{% endif %}>Acquisition — Conversion</option>
+            <option value="new_construction" {% if pre_deal_type == 'new_construction' %}selected{% endif %}>New Construction</option>
           </select>
         </div>
 
-        {% if source_vehicles %}
-        <div class="nd-field">
-          <label>Source Vehicle <span style="font-weight:400;color:var(--text-muted)">(optional)</span></label>
-          <select name="source_vehicle_id">
-            <option value="">Default</option>
-            {% if source_vehicles | selectattr('owner', 'equalto', 'org') | list %}
-            <optgroup label="Org Presets">
-              {% for v in source_vehicles if v.owner == 'org' %}
-              <option value="{{ v.id }}">{{ v.name }}</option>
-              {% endfor %}
-            </optgroup>
-            {% endif %}
-            {% if source_vehicles | selectattr('owner', 'equalto', 'user') | list %}
-            <optgroup label="My Presets">
-              {% for v in source_vehicles if v.owner == 'user' %}
-              <option value="{{ v.id }}">{{ v.name }}</option>
-              {% endfor %}
-            </optgroup>
-            {% endif %}
-          </select>
-          <div style="font-size:12px;color:var(--text-muted);margin-top:4px">
-            Pre-fills the auto-generated debt source with the selected preset's settings.
-          </div>
-        </div>
-        {% endif %}
-
+        {% if not clone_of %}
+        {# Clone path inherits acquisition cost from the source Scenario's
+           UseLines, so we don't ask again. Fresh-deal paths require it so the
+           seeded Acquisition UseLine lands with a real amount. #}
         <div class="nd-field">
           <label>Acquisition Cost</label>
           <input type="number" name="acquisition_cost" required min="1" step="any"
-                 value="{{ opp_asking_price if opp_asking_price else '' }}"
+                 value="{{ pre_acquisition_cost if pre_acquisition_cost else '' }}"
                  placeholder="e.g. 4500000">
           <div style="font-size:12px;color:var(--text-muted);margin-top:4px">
-            {% if opp_asking_price %}Pre-filled from the linked listing — edit if your underwriting price differs.
+            {% if pre_acquisition_cost %}Pre-filled from the linked listing — edit if your underwriting price differs.
             {% else %}Required so the seeded Acquisition use line lands with a real value.{% endif %}
           </div>
         </div>
+        {% endif %}
 
       </div>
 
       <div class="new-deal-footer">
         <a href="/deals" class="btn btn-ghost" style="font-size:13px;color:var(--text-muted)">✕ Cancel</a>
-        <button type="submit" class="btn btn-primary">Create Deal →</button>
+        <button type="submit" class="btn btn-primary">
+          {% if clone_of %}Clone Scenario →{% else %}Create Deal →{% endif %}
+        </button>
       </div>
     </form>
   </div>
