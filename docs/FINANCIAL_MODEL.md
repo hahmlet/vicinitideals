@@ -459,6 +459,21 @@ If any of those terms is zero (no construction phase, no lease-up, etc.) the for
 
 **What if `ds_divisor ≤ 0`?** That means the principal requirement, reserves, and lease-up carry exceed the amortization budget — i.e., the deal can't support the requested reserve structure. The engine falls back to an opex-based reserve without lease-up adjustment (cashflow.py:1126).
 
+#### Rate + amort precedence — must match what cashflow pays
+
+The sizer's `rate_pct` and `amort_years` are resolved by `_op_phase_rate_and_amort(carry, src)` (cashflow.py) with this precedence:
+
+1. **`carry.schedule[]` first IO/PI phase** — the same value `_period_ds_from_schedule_phase` uses to charge operating debt service month-over-month. Authoritative for any loan using the modern schedule format.
+2. **`carry.phases[name='operation']`** — legacy phased-carry format (deprecated, still supported).
+3. **`source.interest_rate_pct` / `source.amort_term_years`** — flat / legacy fallback.
+4. **`carry.io_rate_pct` / 30y** — final fallbacks for the oldest deal records.
+
+**Why it matters.** The sizer solves for the principal that hits the DSCR / gap-fill target *at a specific rate*. Cashflow then pays debt service at whatever rate the schedule says. If the two disagree, sized DSCR ≠ realised DSCR and the Operating Reserve UseLine writes a value different from what the sizer assumed, leaving a residual Sources gap.
+
+The Operating Reserve write-back at `actual_reserve = max(opex_monthly, ds_monthly) × reserve_months` uses the same helper so the sized-vs-paid invariant holds end-to-end.
+
+**Concrete example of the bug class (fixed May 2026).** Deal with `source.interest_rate_pct = 6.0` and `carry.schedule[PI].rate_pct = 5.5`, DSCR floor 1.15, dual-constraint mode. Pre-fix: sizer hit DSCR 1.15 at 6.0%, cashflow paid at 5.5% (~5.6% smaller payment), realised DSCR landed at `1.15 × pmt(6%)/pmt(5.5%) ≈ 1.214`. Post-fix: sizer uses 5.5% directly, realised DSCR ≈ 1.15.
+
 ### 2.5 Closing costs (Phase B only)
 
 #### Defaults

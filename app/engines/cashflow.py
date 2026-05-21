@@ -2505,7 +2505,12 @@ async def _auto_size_debt_modules(
     # Compute actual reserve (max of OpEx vs actual debt service, × reserve months)
     # opex_monthly_pre already computed above; re-use it here.
     opex_monthly = opex_monthly_pre
-    # Re-sum debt service now that amounts are set
+    # Re-sum debt service now that amounts are set. Rate + amort MUST come
+    # from the same source as _period_ds_from_schedule_phase (operating-phase
+    # schedule entry) so actual_reserve matches what cashflow actually pays —
+    # otherwise opex-fallback uses the wrong DS comparison and the Operating
+    # Reserve UseLine diverges from what the sizer assumed, producing a
+    # residual Sources gap.
     ds_monthly = ZERO
     for m in auto_modules:
         src2 = m.source or {}
@@ -2513,18 +2518,14 @@ async def _auto_size_debt_modules(
         amt2 = src2.get("amount")
         if amt2:
             p2 = Decimal(str(amt2))
-            op_carry2 = _get_phase_carry(carry2, "operation")
             ct2 = _carry_type_for_phase(carry2, is_construction=False)
-            rate2 = src2.get("interest_rate_pct")
+            rate2, ay2 = _op_phase_rate_and_amort(carry2, src2)
             if ct2 in ("interest_reserve", "capitalized_interest"):
                 pass  # no periodic DS; reserve sized on zero DS for this module
             elif ct2 == "io_only":
-                phase_rate2 = (op_carry2 or {}).get("io_rate_pct") if op_carry2 else None
-                ds_monthly += _monthly_io(p2, phase_rate2 or rate2)
+                ds_monthly += _monthly_io(p2, rate2)
             elif ct2 == "pi":
-                ay2 = int((op_carry2 or {}).get("amort_term_years") or src2.get("amort_term_years") or 30)
-                phase_rate2 = (op_carry2 or {}).get("io_rate_pct") if op_carry2 else None
-                ds_monthly += _monthly_pmt(p2, phase_rate2 or rate2, ay2)
+                ds_monthly += _monthly_pmt(p2, rate2, ay2)
     # In NOI mode there is no separate OpEx figure — size reserve on DS only
     actual_reserve = _q(
         ds_monthly * Decimal(reserve_months)
