@@ -28,7 +28,7 @@ from typing import Any
 
 import openpyxl
 from celery.utils.log import get_task_logger
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 from app.config import settings
 from app.models.deal import STANDARD_OPEX_CATEGORIES
@@ -45,10 +45,42 @@ _REDIS_TTL = 86_400  # 24 hours
 
 class UnitTypeResult(BaseModel):
     name: str = Field(description="Descriptive unit type name, e.g. '1BR', 'Studio', 'Tower Small'")
-    count: int = Field(description="Number of units of this type")
-    avg_sqft: float = Field(description="Average square footage per unit")
-    avg_monthly_rent: float = Field(description="Average gross monthly rent per unit in dollars")
-    confidence: float = Field(ge=0.0, le=1.0, description="Confidence score 0–1")
+    count: int = Field(default=0, description="Number of units of this type")
+    avg_sqft: float = Field(default=0.0, description="Average square footage per unit")
+    avg_monthly_rent: float = Field(default=0.0, description="Average gross monthly rent per unit in dollars")
+    confidence: float = Field(default=0.0, ge=0.0, le=1.0, description="Confidence score 0–1")
+
+    @field_validator("count", mode="before")
+    @classmethod
+    def _coerce_count(cls, v: Any) -> int:
+        if v is None or v == "":
+            return 0
+        try:
+            return int(float(v))
+        except (TypeError, ValueError):
+            return 0
+
+    @field_validator("avg_sqft", "avg_monthly_rent", mode="before")
+    @classmethod
+    def _coerce_float(cls, v: Any) -> float:
+        if v is None or v == "":
+            return 0.0
+        try:
+            return float(v)
+        except (TypeError, ValueError):
+            return 0.0
+
+    @field_validator("confidence", mode="before")
+    @classmethod
+    def _coerce_confidence(cls, v: Any) -> float:
+        if v is None or v == "":
+            return 0.0
+        if isinstance(v, bool):
+            return 1.0 if v else 0.0
+        try:
+            return float(v)
+        except (TypeError, ValueError):
+            return 0.0
 
 
 class ParsedRevenue(BaseModel):
@@ -57,18 +89,58 @@ class ParsedRevenue(BaseModel):
 
 class ExpenseLineResult(BaseModel):
     original_label: str = Field(description="Exact label as it appeared in the spreadsheet")
-    annual_amount: float = Field(description="Annual dollar amount (sum of monthly columns if source is monthly)")
+    annual_amount: float = Field(
+        default=0.0,
+        description="Annual dollar amount (sum of monthly columns if source is monthly)",
+    )
     mapped_category: str | None = Field(
         default=None,
         description="One of the STANDARD_OPEX_CATEGORIES, or null if unable to map",
     )
-    confidence: float = Field(ge=0.0, le=1.0, description="Confidence score 0–1 for the category mapping")
+    confidence: float = Field(
+        default=0.0,
+        ge=0.0,
+        le=1.0,
+        description="Confidence score 0–1 for the category mapping",
+    )
     is_operating_expense: bool = Field(
+        default=True,
         description=(
             "True for real operating expenses. False for below-the-line items that should be "
             "excluded: debt service, interest, depreciation, loan fees, amortization of financing costs."
-        )
+        ),
     )
+
+    @field_validator("annual_amount", mode="before")
+    @classmethod
+    def _coerce_amount(cls, v: Any) -> float:
+        if v is None or v == "":
+            return 0.0
+        try:
+            return float(v)
+        except (TypeError, ValueError):
+            return 0.0
+
+    @field_validator("confidence", mode="before")
+    @classmethod
+    def _coerce_confidence(cls, v: Any) -> float:
+        if v is None or v == "":
+            return 0.0
+        if isinstance(v, bool):
+            return 1.0 if v else 0.0
+        try:
+            return float(v)
+        except (TypeError, ValueError):
+            return 0.0
+
+    @field_validator("is_operating_expense", mode="before")
+    @classmethod
+    def _coerce_is_opex(cls, v: Any) -> bool:
+        if v is None:
+            return True
+        if isinstance(v, str):
+            return v.strip().lower() in {"true", "1", "yes", "y", "t"}
+        return bool(v)
 
 
 class ParsedExpenses(BaseModel):
@@ -270,6 +342,8 @@ def _postprocess_expense_lines(lines: list[dict]) -> list[dict]:
             line["annual_amount"] = round(float(line.get("annual_amount", 0)))
         except (TypeError, ValueError):
             line["annual_amount"] = 0
+        if line["annual_amount"] <= 0:
+            continue
         out.append(line)
     return out
 
