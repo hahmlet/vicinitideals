@@ -244,9 +244,7 @@
 function attachMatch(type, id) {
   document.getElementById('attach-type-input').value = type;
   document.getElementById('attach-id-input').value = id;
-  // Visual confirmation
-  var btn = document.getElementById('next-btn');
-  if (btn) btn.textContent = 'Next: Review →';
+  document.getElementById('attach-form').submit();
 }
 
 function skipAttach() {
