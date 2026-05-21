@@ -9465,7 +9465,7 @@ async def model_builder(
 
     ctx = {
         "model": model,
-        "project": opportunity,  # template uses `project.name` for the topbar breadcrumb
+        "project": active_project or opportunity,  # template uses `project.name` for the topbar breadcrumb
         "parent_deal_id": str(parent_deal_id) if parent_deal_id else None,
         "deal_variants": deal_variants,
         "deal_projects": deal_projects,
