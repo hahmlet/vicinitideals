@@ -8165,6 +8165,18 @@ async def deal_setup_wizard_step(
             if _im:
                 inputs.income_mode = _im
 
+            # Discount Rate / Hurdle lives on Scenario, not OperationalInputs.
+            # Wire it to the org/user IRR Hurdle Tier 1 default (same concept:
+            # required return for NPV and waterfall). Skips if user already
+            # entered a value on the deal.
+            _irr1 = _defs.get("irr_hurdle_pct_tier1")
+            if _irr1 is not None and model.discount_rate_pct is None:
+                try:
+                    model.discount_rate_pct = _D(_irr1)
+                    session.add(model)
+                except Exception:
+                    pass
+
     # Save current step's data
     if step == 1:
         # Income mode selection (new step 1)
@@ -9455,13 +9467,23 @@ async def model_builder(
     )
 
     # Override wizard_default_types from org/user resolved timeline template.
+    org_discount_rate_default: str | None = None
     if user is not None:
         from app.settings.resolver import resolve_timeline_defaults as _resolve_tl_bld
+        from app.settings.resolver import resolve_default as _resolve_one_bld
         _tl_template = await _resolve_tl_bld(user.id, user.org_id, session)
         _bld_deal_type = data.get("wizard_deal_type", "")
         _tl_for_dt = _tl_template.get(_bld_deal_type, {})
         data["wizard_default_types"] = [mt for mt, cfg in _tl_for_dt.items() if cfg.get("included")]
         data["wizard_timeline_template"] = _tl_template
+        # Discount Rate / Hurdle placeholder — mirror IRR Hurdle Tier 1 org/user
+        # default so the empty-field hint matches what the engine will use.
+        try:
+            org_discount_rate_default = await _resolve_one_bld(
+                "irr_hurdle_pct_tier1", user.id, user.org_id, session
+            )
+        except Exception:
+            org_discount_rate_default = None
 
     ctx = {
         "model": model,
@@ -9493,6 +9515,7 @@ async def model_builder(
         **draw_schedule_data,
         **_base_ctx(user, dedup_count, "deals", address_issues_count, conflicts_count=conflicts_count),
         "org_set_fields": frozenset({"debt_sizing_mode", "operation_reserve_months", "capex_reserve_per_unit_annual", "risk_free_rate_pct"}),
+        "org_discount_rate_default": org_discount_rate_default,
     }
     return templates.TemplateResponse(request, "model_builder.html", ctx)
 

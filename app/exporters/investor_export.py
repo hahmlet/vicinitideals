@@ -458,10 +458,7 @@ async def _load_all(session: AsyncSession, scenario_id: UUID) -> dict | None:
         "discount_rate_pct": (
             Decimal(str(scenario.discount_rate_pct))
             if scenario.discount_rate_pct is not None
-            else _DISCOUNT_RATE_DEFAULTS.get(
-                str(getattr(scenario, "project_type", "") or "").replace("ProjectType.", "").lower(),
-                Decimal("8.0"),
-            )
+            else await _resolve_discount_rate_default(scenario, deal, session)
         ),
         "milestones": milestones_by_project,
     }
@@ -960,6 +957,35 @@ _DISCOUNT_RATE_DEFAULTS: dict[str, Decimal] = {
     "conversion":       Decimal("10.0"),
     "new_construction": Decimal("12.0"),
 }
+
+
+async def _resolve_discount_rate_default(
+    scenario: Any,
+    deal: Any,
+    session: AsyncSession,
+) -> Decimal:
+    """Resolve the discount rate / hurdle when scenario.discount_rate_pct is NULL.
+
+    Resolution order:
+      1. Org/User default for ``irr_hurdle_pct_tier1`` (same concept: required
+         return for NPV and waterfall). Requires both a creator user and deal
+         org to look up.
+      2. Per-deal-type hardcoded fallback (8% / 10% / 12%).
+    """
+    user_id = getattr(scenario, "created_by_user_id", None)
+    org_id = getattr(deal, "org_id", None) if deal is not None else None
+    if user_id is not None and org_id is not None:
+        try:
+            from app.settings.resolver import resolve_default as _resolve_one
+            val = await _resolve_one("irr_hurdle_pct_tier1", user_id, org_id, session)
+            if val is not None and str(val).strip() != "":
+                return Decimal(str(val))
+        except Exception:
+            pass
+    return _DISCOUNT_RATE_DEFAULTS.get(
+        str(getattr(scenario, "project_type", "") or "").replace("ProjectType.", "").lower(),
+        Decimal("8.0"),
+    )
 
 
 # Default RAG thresholds by deal type.  Yellow band = green − 5pp (pct metrics)
