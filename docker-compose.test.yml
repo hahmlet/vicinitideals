@@ -1,0 +1,25 @@
+# Standalone compose file for the test Postgres container.
+# Run independently from the main stack so production deploys don't touch it:
+#   docker compose -f docker-compose.test.yml up -d
+#
+# Lives on VM 114 at /root/stacks/vicinitideals/docker-compose.test.yml.
+# Bound to 0.0.0.0:5433 so devs can connect over LAN at 192.168.1.28:5433.
+# Tmpfs data dir — wiped on every container restart, never holds real data.
+services:
+  postgres-test:
+    image: postgres:16
+    container_name: re-modeling-postgres-test
+    environment:
+      POSTGRES_DB: re_modeling_test
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+    ports:
+      - "5433:5432"
+    tmpfs:
+      - /var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U test -d re_modeling_test"]
+      interval: 5s
+      timeout: 5s
+      retries: 10

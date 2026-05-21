@@ -76,9 +76,16 @@ dev = [
     "fastapi>=0.110",
     "uvicorn[standard]>=0.29",
     "celery[redis]>=5.3",
+    # aiosqlite kept until legacy inline-SQLite test files (test_scenario,
+    # test_scraper, test_dedup, test_benchmark_fixtures, the two tower_ap
+    # script tests, test_routers) migrate to the Postgres conftest.
     "aiosqlite>=0.20",
     "openpyxl>=3.1",
     "ruff>=0.11",
+    # Sync Postgres driver used only by tests/conftest.py for CREATE/DROP
+    # DATABASE around the test session — those steps must run outside any
+    # asyncio loop. asyncpg handles every other interaction.
+    "psycopg2-binary>=2.9",
 ]
 e2e = [
     "pytest-playwright>=0.4",
@@ -92,6 +99,8 @@ packages = ["app"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
+asyncio_default_test_loop_scope = "session"
 testpaths = ["tests"]
 markers = [
     "unit: pure logic tests — no DB, no network (fast, <5s total)",

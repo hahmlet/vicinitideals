@@ -3,39 +3,62 @@
 All fixtures here are available to every test in the tests/ tree without
 explicit import.  Use these instead of writing per-file DB setup.
 
+Database backend
+----------------
+Tests run against a dedicated Postgres test container (re-modeling-postgres-test
+on VM 114, port 5433). Each pytest run creates a fresh database with a unique
+suffix, applies the full schema via Base.metadata.create_all, and drops the
+database on teardown. This gives true parity with the production Postgres
+schema — JSONB, ARRAY, server defaults, and Postgres-specific operators all
+behave identically to prod.
+
+Connection URL is read from TEST_DATABASE_URL (env var); defaults to the
+canonical LAN-accessible test container.
+
 Fixture scopes
 --------------
-engine   : session-scoped — one in-memory SQLite engine for the entire run.
-           Tables are created once; individual tests get isolated sessions.
-session  : function-scoped — a fresh async session per test, rolled back on
-           teardown so tests are isolated without re-creating tables.
-client   : function-scoped — an httpx.AsyncClient backed by the ASGI app with
-           the test DB injected; use for UI / API integration tests.
+_test_engine : session-scoped — creates the per-run database, yields one
+               AsyncEngine pointed at it, drops the database on teardown.
+session      : function-scoped — a fresh async session per test, rolled back
+               on teardown so tests are isolated without re-creating tables.
+client       : function-scoped — an httpx.AsyncClient backed by the ASGI app
+               with the test DB injected; use for UI / API integration tests.
 
 Seed helpers
 ------------
 seed_org()                  → Organization + User tuple
 seed_opportunity()          → Opportunity (requires org)
-seed_deal_model()                  → Deal + DealOpportunity + DealModel linked to an Opportunity
+seed_deal_model()           → Deal + DealModel linked to an Opportunity
 seed_deal_model_with_financials()  → DealModel + OperationalInputs + IncomeStream + OpEx line
 """
 
 from __future__ import annotations
 
+import asyncio
+import os
+import sys
 import uuid
 from collections.abc import AsyncGenerator
 from decimal import Decimal
 from typing import AsyncIterator
+from urllib.parse import urlsplit, urlunsplit
+
+# asyncpg on Windows is unstable on the default ProactorEventLoop — connections
+# error on close after the loop tears down. The SelectorEventLoop avoids those
+# proactor-specific code paths and is the recommended policy for asyncpg.
+if sys.platform == "win32":
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
 import pytest
 import pytest_asyncio
 from httpx import ASGITransport, AsyncClient
+from sqlalchemy import create_engine, text
 from sqlalchemy.ext.asyncio import (
     AsyncSession,
     async_sessionmaker,
     create_async_engine,
 )
-from sqlalchemy.pool import StaticPool
+from sqlalchemy.pool import NullPool
 
 from app.api.deps import get_db
 from app.api.main import create_app
@@ -43,7 +66,6 @@ from app.models import Base  # imports all ORM models, enabling create_all
 from app.models.deal import (
     Deal,
     DealModel,
-    DealOpportunity,
     IncomeStream,
     IncomeStreamType,
     OperatingExpenseLine,
@@ -59,45 +81,99 @@ from app.models.project import (
 )
 
 # ---------------------------------------------------------------------------
-# Engine — session-scoped (one per test run, tables created once)
+# Test database URL — connects to dedicated test Postgres container on VM 114.
+# Override with TEST_DATABASE_URL for CI or alternate hosts.
+# ---------------------------------------------------------------------------
+_DEFAULT_TEST_DB_URL = (
+    "postgresql+asyncpg://test:test@192.168.1.28:5433/re_modeling_test"
+)
+TEST_DATABASE_URL = os.environ.get("TEST_DATABASE_URL", _DEFAULT_TEST_DB_URL)
+
+
+def _swap_database(url: str, new_db: str) -> str:
+    """Return ``url`` with its path component replaced by ``/new_db``."""
+    parts = urlsplit(url)
+    return urlunsplit((parts.scheme, parts.netloc, f"/{new_db}", parts.query, parts.fragment))
+
+
+# ---------------------------------------------------------------------------
+# Engine lifecycle — split across two fixtures to dodge asyncpg's loop affinity
+#
+# asyncpg connections are pinned to the asyncio event loop that opened them.
+# pytest-asyncio creates a new event loop per test, so session-scoped async
+# connections explode on second use. To stay sane:
+#   1. DB CREATE / DROP runs through the sync psycopg2 driver (no loop).
+#   2. The AsyncEngine is function-scoped — fresh per test, disposed after.
+# Schema is created once, in the session-scoped DB fixture, also via sync.
 # ---------------------------------------------------------------------------
 
-@pytest.fixture(scope="session")
-def event_loop_policy():
-    """Use default asyncio policy — required by pytest-asyncio in session scope."""
-    import asyncio
-    return asyncio.DefaultEventLoopPolicy()
+def _sync_url(url: str) -> str:
+    """Strip the ``+asyncpg`` driver suffix so SQLAlchemy uses psycopg2 sync."""
+    return url.replace("+asyncpg", "")
 
 
 @pytest.fixture(scope="session")
-async def _test_engine():
-    """In-memory SQLite engine shared across the whole test session.
+def _test_db_url() -> str:
+    """Provision a unique Postgres database for this pytest run.
 
-    Uses StaticPool so all connections share the same in-memory database.
-    Base.metadata.create_all picks up every ORM model imported in models/__init__.py —
-    no manual table list needed.
+    Synchronous because the lifecycle (CREATE DATABASE → create_all → DROP
+    DATABASE) needs to live outside any asyncio event loop — see the comment
+    on the fixture block above.
     """
-    engine = create_async_engine(
-        "sqlite+aiosqlite:///:memory:",
-        connect_args={"check_same_thread": False},
-        poolclass=StaticPool,
-    )
+    run_db = f"re_modeling_test_{uuid.uuid4().hex[:12]}"
+    admin_url = _sync_url(TEST_DATABASE_URL)
+    run_url = _swap_database(TEST_DATABASE_URL, run_db)
 
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+    admin_engine = create_engine(admin_url, isolation_level="AUTOCOMMIT")
+    with admin_engine.connect() as conn:
+        conn.execute(text(f'CREATE DATABASE "{run_db}"'))
+    admin_engine.dispose()
 
-    yield engine
+    # Schema bootstrap also runs synchronously — no loop, no asyncpg.
+    sync_engine = create_engine(_sync_url(run_url))
+    Base.metadata.create_all(sync_engine)
+    sync_engine.dispose()
 
-    await engine.dispose()
+    try:
+        yield run_url
+    finally:
+        admin_engine = create_engine(admin_url, isolation_level="AUTOCOMMIT")
+        with admin_engine.connect() as conn:
+            conn.execute(text(f'DROP DATABASE IF EXISTS "{run_db}" WITH (FORCE)'))
+        admin_engine.dispose()
+
+
+@pytest_asyncio.fixture(scope="session", loop_scope="session")
+async def _test_engine(_test_db_url: str):
+    """Session-scoped AsyncEngine bound to the per-run test database.
+
+    Lives for the entire pytest session because asyncpg connections are
+    pinned to the event loop that opened them — and with
+    ``asyncio_default_test_loop_scope = "session"`` all tests share one loop,
+    so one engine + a connection pool is safe.
+    """
+    engine = create_async_engine(_test_db_url, poolclass=NullPool)
+    try:
+        yield engine
+    finally:
+        await engine.dispose()
 
 
 # ---------------------------------------------------------------------------
 # Session — function-scoped, rolled back after each test
 # ---------------------------------------------------------------------------
 
-@pytest.fixture
+@pytest_asyncio.fixture(loop_scope="session")
 async def session(_test_engine) -> AsyncGenerator[AsyncSession, None]:
-    """Yield a fresh async session; rolls back after each test for isolation."""
+    """Yield a fresh async session, then truncate all tables for the next test.
+
+    Why truncate-on-teardown instead of transaction rollback: tests in this
+    suite frequently call ``session.commit()`` (engine compute helpers commit
+    cashflow rows so subsequent queries see them). A SAVEPOINT-based rollback
+    fixture fights asyncpg's connection-bound state machine. Truncating the
+    schema between tests is a few ms on the test DB and gives full isolation
+    regardless of what the test code does with transactions.
+    """
     factory = async_sessionmaker(
         bind=_test_engine,
         class_=AsyncSession,
@@ -105,15 +181,29 @@ async def session(_test_engine) -> AsyncGenerator[AsyncSession, None]:
         autoflush=False,
     )
     async with factory() as sess:
-        yield sess
-        await sess.rollback()
+        try:
+            yield sess
+        finally:
+            await sess.close()
+
+    # Cleanup: wipe all rows so the next test starts from a clean slate.
+    table_names = ", ".join(f'"{t.name}"' for t in Base.metadata.sorted_tables)
+    if table_names:
+        async with _test_engine.begin() as conn:
+            await conn.execute(text(f"TRUNCATE {table_names} RESTART IDENTITY CASCADE"))
+
+
+@pytest_asyncio.fixture(loop_scope="session")
+async def db_session(session: AsyncSession) -> AsyncGenerator[AsyncSession, None]:
+    """Alias for legacy tests that ask for ``db_session`` instead of ``session``."""
+    yield session
 
 
 # ---------------------------------------------------------------------------
 # HTTP client — wires FastAPI app to the test DB via dependency override
 # ---------------------------------------------------------------------------
 
-@pytest.fixture
+@pytest_asyncio.fixture(loop_scope="session")
 async def client(session: AsyncSession) -> AsyncGenerator[AsyncClient, None]:
     """AsyncClient backed by the ASGI app with the test DB session injected."""
     app = create_app()
@@ -191,6 +281,7 @@ async def seed_opportunity(
         status=OpportunityStatus.active,
         project_category=OpportunityCategory.proposed,
         source=OpportunitySource.user_generated,
+        source_url=f"hypothetical://{uuid.uuid4().hex}",
         created_by_user_id=user.id,
     )
     session.add(opp)
@@ -206,7 +297,7 @@ async def seed_deal_model(
     name: str = "Base Case",
     project_type: ProjectType = ProjectType.value_add,
 ) -> DealModel:
-    """Create a top-level Deal + DealOpportunity + DealModel linked to an Opportunity.
+    """Create a top-level Deal + DealModel linked to an Opportunity.
 
     Returns the DealModel (financial model record).
     """
@@ -218,7 +309,6 @@ async def seed_deal_model(
     )
     session.add(top_deal)
     await session.flush()
-    session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id))
     deal_model = DealModel(
         id=uuid.uuid4(),
         deal_id=top_deal.id,
@@ -252,7 +342,6 @@ async def seed_deal_model_with_financials(
         scenario_id=deal_model.id,
         opportunity_id=opportunity.id,
         name="Main Project",
-        deal_type=deal_model.project_type.value,
     )
     session.add(project)
     await session.flush()
