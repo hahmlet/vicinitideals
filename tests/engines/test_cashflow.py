@@ -30,6 +30,7 @@ from app.engines.cashflow import (
     PhaseSpec,
     _build_phase_plan,
     _compute_period,
+    _op_phase_rate_and_amort,
     _resolve_horizon_months,
     _schedule_preop_months,
     _scheduled_operation_ds,
@@ -562,6 +563,84 @@ def test_scheduled_operation_ds_ignores_pure_ir_schedule() -> None:
     )
 
     assert _scheduled_operation_ds([ir_only], {ir_only.id}) == Decimal("0")
+
+
+@pytest.mark.unit
+def test_op_phase_rate_prefers_schedule_pi_over_source() -> None:
+    """Regression: when carry.schedule PI rate disagrees with source.interest_rate_pct,
+    the sizer must use the schedule rate (the rate cashflow actually pays) so
+    sized DSCR matches realised DSCR."""
+    carry = {
+        "schedule": [
+            {"label": "PI", "carry_type": "pi",
+             "duration": {"type": "remainder"}, "rate_pct": 5.5},
+        ],
+    }
+    src = {"interest_rate_pct": 6.0, "amort_term_years": 30}
+    rate, amort = _op_phase_rate_and_amort(carry, src)
+    assert rate == 5.5
+    assert amort == 30
+
+
+@pytest.mark.unit
+def test_op_phase_rate_prefers_schedule_io_over_source() -> None:
+    """IO-only phase rate also wins over source rate."""
+    carry = {
+        "schedule": [
+            {"carry_type": "io_only", "duration": {"type": "remainder"}, "rate_pct": 4.75},
+        ],
+    }
+    src = {"interest_rate_pct": 6.0}
+    rate, _amort = _op_phase_rate_and_amort(carry, src)
+    assert rate == 4.75
+
+
+@pytest.mark.unit
+def test_op_phase_rate_skips_ir_ci_phases() -> None:
+    """IR/CI phases are pre-funded, not operating DS — they don't supply the rate."""
+    carry = {
+        "schedule": [
+            {"carry_type": "interest_reserve",
+             "duration": {"type": "months", "months": 6}, "rate_pct": 4.0},
+            {"carry_type": "pi",
+             "duration": {"type": "remainder"}, "rate_pct": 5.5,
+             "amort_term_years": 25},
+        ],
+    }
+    src = {"interest_rate_pct": 6.0}
+    rate, amort = _op_phase_rate_and_amort(carry, src)
+    assert rate == 5.5
+    assert amort == 25
+
+
+@pytest.mark.unit
+def test_op_phase_rate_falls_back_to_source_when_no_schedule() -> None:
+    """Legacy modules without carry.schedule use source.interest_rate_pct."""
+    rate, amort = _op_phase_rate_and_amort(
+        carry={},
+        src={"interest_rate_pct": 6.5, "amort_term_years": 20},
+    )
+    assert rate == 6.5
+    assert amort == 20
+
+
+@pytest.mark.unit
+def test_op_phase_rate_falls_back_to_legacy_phased_carry() -> None:
+    """Older deals used carry.phases[name='operation'] — still honored."""
+    carry = {"phases": [
+        {"name": "construction", "carry_type": "io_only", "io_rate_pct": 7.0},
+        {"name": "operation", "carry_type": "pi", "rate_pct": 5.25, "amort_term_years": 28},
+    ]}
+    rate, amort = _op_phase_rate_and_amort(carry, src={"interest_rate_pct": 6.0})
+    assert rate == 5.25
+    assert amort == 28
+
+
+@pytest.mark.unit
+def test_op_phase_rate_defaults_amort_to_30() -> None:
+    """Missing amort everywhere → 30 year default."""
+    _rate, amort = _op_phase_rate_and_amort(carry={}, src={"interest_rate_pct": 6.0})
+    assert amort == 30
 
 
 @pytest.mark.unit

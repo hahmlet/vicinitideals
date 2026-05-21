@@ -1428,6 +1428,45 @@ def _get_phase_carry(carry: dict, phase_name: str) -> dict | None:
     return None
 
 
+def _op_phase_rate_and_amort(
+    carry: dict, src: dict
+) -> tuple[float | None, int]:
+    """Return (rate_pct, amort_years) for the operation-phase debt the
+    auto-sizer should use.
+
+    Must match the values _period_ds_from_schedule_phase will charge during
+    operation, otherwise sized DSCR will diverge from realised DSCR.
+
+    Precedence:
+      1. carry.schedule first IO/PI phase (what cashflow pays during op)
+      2. legacy carry.phases[name='operation']
+      3. source.interest_rate_pct / src.amort_term_years
+      4. flat carry.io_rate_pct / default 30y
+    """
+    sched_op_phase = next(
+        (
+            p for p in ((carry or {}).get("schedule") or [])
+            if p.get("carry_type") in ("io_only", "pi") and p.get("rate_pct") is not None
+        ),
+        None,
+    )
+    op_carry_legacy = _get_phase_carry(carry, "operation")
+    rate_pct = (
+        (sched_op_phase or {}).get("rate_pct")
+        or (op_carry_legacy or {}).get("io_rate_pct")
+        or (op_carry_legacy or {}).get("rate_pct")
+        or src.get("interest_rate_pct")
+        or (carry or {}).get("io_rate_pct")
+    )
+    amort_years = int(
+        (sched_op_phase or {}).get("amort_term_years")
+        or (op_carry_legacy or {}).get("amort_term_years")
+        or src.get("amort_term_years")
+        or 30
+    )
+    return rate_pct, amort_years
+
+
 # ---------------------------------------------------------------------------
 # Flexible carry schedule helpers (N-phase, supersedes two-phase system)
 # ---------------------------------------------------------------------------
@@ -2103,19 +2142,12 @@ async def _auto_size_debt_modules(
     for module in auto_modules:
         src = dict(module.source or {})
         carry = module.carry or {}
-        # Rate may be in source["interest_rate_pct"] or flat carry["io_rate_pct"]
-        rate_pct = src.get("interest_rate_pct") or carry.get("io_rate_pct")
+        # Sizer rate MUST match what cashflow pays — see _op_phase_rate_and_amort.
+        rate_pct, amort_years = _op_phase_rate_and_amort(carry, src)
         # Per-loan DSCR floor: source.dscr_min → debt_terms staging → PLACEHOLDER_DSCR (1.25).
         _dt_perm = dict((inputs.debt_terms or {}).get("permanent_debt") or {})
         dscr_min = _to_decimal(src.get("dscr_min") or _dt_perm.get("dscr_min") or PLACEHOLDER_DSCR)
-
-        # Get amort_term_years from carry (phased) or source
         op_carry = _get_phase_carry(carry, "operation")
-        amort_years = int(
-            (op_carry or {}).get("amort_term_years")
-            or src.get("amort_term_years")
-            or 30
-        )
 
         # Construction IO rate: use construction-phase carry rate if specified, else fall back to source rate
         constr_carry = _get_phase_carry(carry, "construction")
