@@ -61,6 +61,29 @@ class _UMRow:
         return None
 
 
+def _ensure_unit_mix_ids(project) -> bool:
+    """Backfill missing 'id' fields on unit_mix JSONB rows.
+
+    Legacy rows uploaded before unit_mix had stable IDs end up missing the
+    'id' key, which makes the delete handler unable to target them. Assign
+    UUIDs in place and mark the JSONB column dirty so the update persists.
+    """
+    if project is None or not project.unit_mix:
+        return False
+    from uuid import uuid4 as _u4
+    rows = list(project.unit_mix)
+    changed = False
+    for r in rows:
+        if not r.get("id"):
+            r["id"] = str(_u4())
+            changed = True
+    if changed:
+        from sqlalchemy.orm.attributes import flag_modified
+        project.unit_mix = rows
+        flag_modified(project, "unit_mix")
+    return changed
+
+
 # ---------------------------------------------------------------------------
 # Template setup
 # ---------------------------------------------------------------------------
@@ -5304,6 +5327,8 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
         )).scalars())
 
         # unit_mix is JSONB on Project; wrap dicts for attribute-compatible access
+        if default_project is not None and _ensure_unit_mix_ids(default_project):
+            await session.flush()
         unit_mix_rows = [_UMRow(r) for r in (default_project.unit_mix or [])] if default_project else []
 
     # Scope outputs to the active project. Phase 2b's migration 0051
@@ -6380,7 +6405,17 @@ async def handle_form_delete(
         return HTMLResponse("<p class='text-muted'>Model not found.</p>", status_code=404)
 
     module = _ITEM_TYPE_TO_MODULE.get(item_type, "uses")
-    uid = UUID(item_id)
+    try:
+        uid = UUID(item_id)
+    except (ValueError, AttributeError):
+        # Legacy unit-mix rows may have rendered without an id; surface a panel
+        # refresh rather than 500 so the user can retry after backfill runs.
+        if item_type == "unit-mix":
+            _active_proj_id = await _active_project_from_request(request, session, model_id)
+            panel_data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
+            ctx = {"model": model, "active_module": module, **panel_data}
+            return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
+        return HTMLResponse("<p class='text-muted'>Invalid item id.</p>", status_code=400)
 
     row = None
     if item_type == "use-lines":
@@ -6461,6 +6496,8 @@ async def apply_unit_mix_to_revenue(
         active_proj_id = default_project.id
 
     _active_proj = await session.get(Project, active_proj_id)
+    if _active_proj is not None and _ensure_unit_mix_ids(_active_proj):
+        await session.flush()
     unit_mix_rows = [_UMRow(r) for r in (_active_proj.unit_mix or [])] if _active_proj else []
     if not unit_mix_rows:
         panel_data = await _load_builder_data(session, model_id, project_id=active_proj_id)
