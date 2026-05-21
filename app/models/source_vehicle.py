@@ -20,6 +20,7 @@ import uuid
 from datetime import datetime
 
 from sqlalchemy import (
+    JSON,
     DateTime,
     ForeignKey,
     Integer,
@@ -72,11 +73,15 @@ class SourceVehicle(Base):
 
     # Equity — preferred return / waterfall
     pref_rate_pct: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
-    hurdle_tiers: Mapped[list | None] = mapped_column(JSONB, nullable=True)
+    hurdle_tiers: Mapped[list | None] = mapped_column(
+        JSONB().with_variant(JSON(), "sqlite"), nullable=True
+    )
 
     # LIHTC / HTC / OZ delivery schedule (equity only)
     # [{year_offset_from_pis: int, pct: Decimal}, ...] — null = single-amount at active_from
-    delivery_schedule: Mapped[list | None] = mapped_column(JSONB, nullable=True)
+    delivery_schedule: Mapped[list | None] = mapped_column(
+        JSONB().with_variant(JSON(), "sqlite"), nullable=True
+    )
 
     # Closing costs
     closing_costs_flat: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=0)
@@ -90,7 +95,10 @@ class SourceVehicle(Base):
 
     # Source-Use eligibility whitelist (empty = permissive / all Uses eligible)
     eligible_use_tags: Mapped[list] = mapped_column(
-        ARRAY(String), nullable=False, default=list, server_default="{}"
+        ARRAY(String).with_variant(JSON(), "sqlite"),
+        nullable=False,
+        default=list,
+        server_default="{}",
     )
 
     # Legacy phase window (preserved from migration 0081 org/user_source_vehicles)
@@ -98,9 +106,15 @@ class SourceVehicle(Base):
     active_phase_end: Mapped[str | None] = mapped_column(String(60), nullable=True)
 
     # Per-deal config templates (mirror CapitalModule JSONB columns)
-    source_config: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
-    carry_config: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
-    exit_config: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
+    source_config: Mapped[dict | None] = mapped_column(
+        JSONB().with_variant(JSON(), "sqlite"), nullable=True
+    )
+    carry_config: Mapped[dict | None] = mapped_column(
+        JSONB().with_variant(JSON(), "sqlite"), nullable=True
+    )
+    exit_config: Mapped[dict | None] = mapped_column(
+        JSONB().with_variant(JSON(), "sqlite"), nullable=True
+    )
 
     # Audit
     created_by: Mapped[uuid.UUID | None] = mapped_column(

@@ -721,7 +721,10 @@ class UseLine(Base):
     # Source-Use eligibility routing (Phase C). Empty list = permissive (any source may fund).
     # Non-empty list restricts funding to the listed CapitalModule UUIDs only.
     eligible_module_ids: Mapped[list] = mapped_column(
-        ARRAY(UUID(as_uuid=True)), nullable=False, default=list, server_default="{}"
+        ARRAY(UUID(as_uuid=True)).with_variant(JSON(), "sqlite"),
+        nullable=False,
+        default=list,
+        server_default="{}",
     )
     # Auto Developer Fee — engine recomputes `amount` each pass from
     # dev_fee_pct * basis (see app/engines/dev_fee.py). One per scenario.

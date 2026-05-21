@@ -74,7 +74,10 @@ class CapitalModule(Base):
     # Source-Use eligibility routing (Phase C). Empty list = permissive (funds any use).
     # Non-empty list restricts this source to use lines whose cost_category is in this list.
     eligible_use_tags: Mapped[list] = mapped_column(
-        ARRAY(String(100)), nullable=False, default=list, server_default="{}"
+        ARRAY(String(100)).with_variant(JSON(), "sqlite"),
+        nullable=False,
+        default=list,
+        server_default="{}",
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False

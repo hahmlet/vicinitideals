@@ -6,7 +6,7 @@ import enum
 import uuid
 from datetime import datetime
 
-from sqlalchemy import Boolean, DateTime, Float, ForeignKey, String, Text, func
+from sqlalchemy import JSON, Boolean, DateTime, Float, ForeignKey, String, Text, func
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -57,12 +57,12 @@ class InboundEmail(Base):
         nullable=True,
     )
     proforma_task_ids: Mapped[list] = mapped_column(
-        JSONB, nullable=False, default=list
+        JSONB().with_variant(JSON(), "sqlite"), nullable=False, default=list
     )
     error_message: Mapped[str | None] = mapped_column(Text(), nullable=True)
     debug_log: Mapped[str | None] = mapped_column(Text(), nullable=True)
     attachments_meta: Mapped[list] = mapped_column(
-        JSONB, nullable=False, default=list
+        JSONB().with_variant(JSON(), "sqlite"), nullable=False, default=list
     )
 
     # Relationships
