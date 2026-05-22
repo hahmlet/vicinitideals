@@ -852,9 +852,8 @@
         'construction_to_perm': [('Bond Issuance Fee','1.0%'),('Bond Counsel Legal','$15,000')],
     } -%}
     {% set _dsm = inputs.debt_sizing_mode or 'gap_fill' %}
-    {# Back-button target: when every selected debt has a vehicle, Step 3/4/5
-       were skipped — Back should return to Step 2. Otherwise return to Step 5. #}
-    {% set _back_step = 2 if (_debt_types and (_debt_types | map('extract_vehicle', _dterms) | select | list | length) == (_debt_types | length)) else 5 %}
+    {# Back-button target (review_back_step) is computed server-side and read
+       at line 1016. The unused dead template expression was previously here. #}
     <div class="wizard-header">
       <div class="wizard-title">Review Setup</div>
       <div class="wizard-subtitle">Confirm your debt stack. Loan amounts will be computed automatically.</div>

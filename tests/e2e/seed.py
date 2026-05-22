@@ -242,11 +242,15 @@ def run_deal_setup_wizard(
     # Step 1 — Income mode + Permanent Debt Sizing mode (+ pro forma drop zone)
     page.wait_for_selector(f'#deal-setup-wizard input[value="{income_mode}"]', timeout=5000)
     page.click(f'#deal-setup-wizard input[value="{income_mode}"]')
-    # Sizing mode lives on Step 1 now — pick it via the toggle radio.
+    # Sizing mode lives on Step 1 now — pick it via the toggle radio. The
+    # radio itself is hidden inside a <label class="toggle-opt"> whose onclick
+    # handler flips the underlying input — click the label, not the input.
     if debt_sizing_mode in ("gap_fill", "dscr_capped", "dual_constraint"):
-        sizing_radio = page.locator(f'#deal-setup-wizard input[name="debt_sizing_mode"][value="{debt_sizing_mode}"]')
-        if sizing_radio.count() > 0:
-            sizing_radio.check()
+        sizing_label = page.locator(
+            f'#deal-setup-wizard label.toggle-opt:has(input[name="debt_sizing_mode"][value="{debt_sizing_mode}"])'
+        )
+        if sizing_label.count() > 0:
+            sizing_label.first.click()
     # No file attached → button reads "Skip Import →" (revenue_opex) or "Next →" (noi).
     _wizard_click_next_or_review(page)
 
