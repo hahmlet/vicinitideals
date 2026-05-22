@@ -87,6 +87,13 @@ _NON_METRIC_NAMES = frozenset({
     "s_assumptions_project_type",
     "s_hold_years", "s_opex_growth_rate", "s_initial_occupancy",
     "s_operating_reserve_months",
+    # Assumptions Block A — formula-conversion plan commit 1 additions.
+    # Each is a user-editable input (vacancy %, capex reserve $/unit,
+    # selling cost %, discount rate). Not metrics in the doc sense; they
+    # *drive* the metrics that are documented (exit value, levered cash
+    # flow, DCF NPV).
+    "s_vacancy_pct", "s_capex_reserve_per_unit",
+    "s_selling_costs_pct", "s_discount_rate",
     # Per-project meta (header cells)
     "s_returns_combined_irr",  # alias for s_combined_irr
 })
@@ -96,12 +103,13 @@ _NON_METRIC_NAMES = frozenset({
 # inputs, S&U totals) where the per-instance name doesn't map 1:1 to a doc
 # metric — the doc-level metric is what's tagged.
 _NON_METRIC_PREFIXES = (
-    "s_module_",       # capital stack rows (per-module principal/rate)
+    "s_module_",       # capital stack rows (per-module principal/rate/term/amort/...)
     "s_waterfall_",    # waterfall tier sums (per-tier-type cash distributed)
     "s_assumptions_",  # assumption inputs
     "s_su_",           # scenario S&U panel totals (alias of Total Uses/Sources/Gap)
     "s_su2_",          # dedicated Sources & Uses sheet totals (category + grand totals)
     "s_loan_",         # Debt Schedule per-loan rows (rate/term/amort/balloon)
+    "s_tier_",         # Block D waterfall hurdle inputs (per-tier irr_hurdle/lp_split/gp_split)
 )
 
 

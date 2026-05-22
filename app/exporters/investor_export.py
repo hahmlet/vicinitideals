@@ -4020,10 +4020,18 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
     capital_modules: list[CapitalModule] = ctx["capital_modules"]
     junctions: list[CapitalModuleProject] = ctx["junctions"]
 
-    # Layout: 1 (label) + up to MAX_PROJECTS_PER_SCENARIO project columns.
+    # Layout: 1 (label) + max(MAX_PROJECTS_PER_SCENARIO, len(CAPITAL_STACK_HEADERS)-1)
+    # data columns. Block B writes into cols 2..1+N_projects; Block C writes
+    # into cols 1..len(CAPITAL_STACK_HEADERS). The sheet is sized for both.
     label_w = 36
     project_col_widths = [22] * MAX_PROJECTS_PER_SCENARIO
-    set_widths(ws, [label_w, *project_col_widths])
+    # Block C extra column widths for the post-expansion debt-assumption
+    # surface (commit 1 of the formula-conversion plan). Eight new fields
+    # added: term, amort, io_months, carry_type, day_count, dscr_min, ltv,
+    # prepay. Existing 6 cols stay (label, funder, principal, rate,
+    # auto-sized, covers).
+    block_c_extra_widths = [12, 12, 12, 14, 12, 12, 10, 12]
+    set_widths(ws, [label_w, *project_col_widths, *block_c_extra_widths])
 
     # ── Block A: Scenario-level ────────────────────────────────────────────
     # Default project's OperationalInputs carries scenario-level conceptual
@@ -4102,6 +4110,35 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
         name="s_asset_mgmt_fee", registry=registry, fmt=PCT, style="input",
     ); row += 1
 
+    # Formula-conversion plan §3.1 — new Block A inputs that downstream
+    # formulas need. All sourced from OperationalInputs (per-project today;
+    # the "default project" snapshot represents scenario-level intent until
+    # per-project assumption editing lands). Discount Rate is sourced from
+    # the Scenario record directly since it's truly scenario-scoped.
+    kv_row(
+        ws, row, "Vacancy Rate (hold)",
+        _pct_value(default_inputs, "hold_vacancy_rate_pct"),
+        name="s_vacancy_pct", registry=registry, fmt=PCT, style="input",
+    ); row += 1
+    kv_row(
+        ws, row, "CapEx Reserve / Unit / Yr",
+        _safe_decimal(default_inputs, "capex_reserve_per_unit_annual"),
+        name="s_capex_reserve_per_unit", registry=registry, fmt=ACCOUNTING,
+        style="input",
+    ); row += 1
+    kv_row(
+        ws, row, "Selling Costs",
+        _pct_value(default_inputs, "selling_costs_pct"),
+        name="s_selling_costs_pct", registry=registry, fmt=PCT, style="input",
+    ); row += 1
+    _discount_rate = ctx.get("discount_rate_pct")
+    kv_row(
+        ws, row, "Discount Rate / Hurdle",
+        (_discount_rate / Decimal(100)) if isinstance(_discount_rate, Decimal)
+        else None,
+        name="s_discount_rate", registry=registry, fmt=PCT, style="input",
+    ); row += 1
+
     # ── Block B: Per-project ───────────────────────────────────────────────
     block_b_row = row + 2
     section_label(
@@ -4141,13 +4178,15 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
     next_row = block_b_row + 2 + len(metrics)
 
     # ── Block C: Capital Stack ─────────────────────────────────────────────
+    # Expanded for formula-conversion (plan §3.1 / commit 1): every field
+    # that drives carry-cost math is surfaced as a named input cell so the
+    # Debt Schedule + Cash Flow formulas in later commits can reference
+    # them by name. Eight new columns added after Rate: Term, Amort, IO,
+    # Carry Type, Day Count, DSCR Min, LTV, Prepay. Original Auto-Sized?
+    # and Covers retain their position at the right edge.
     block_c_row = next_row + 2
-    section_label(ws, block_c_row, "C. Capital Stack", span_cols=6)
-    header_row(
-        ws,
-        block_c_row + 1,
-        ["Module", "Funder Type", "Principal", "Rate", "Auto-Sized?", "Covers"],
-    )
+    section_label(ws, block_c_row, "C. Capital Stack", span_cols=len(CAPITAL_STACK_HEADERS))
+    header_row(ws, block_c_row + 1, list(CAPITAL_STACK_HEADERS))
 
     junction_count_by_module: dict[UUID, int] = {}
     junction_principal_by_module: dict[UUID, Decimal] = {}
@@ -4170,9 +4209,12 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
         auto_size = bool(source.get("auto_size"))
         is_shared = junction_count_by_module.get(module.id, 0) > 1
 
+        # Col 1: Label (display).
         ws.cell(row=r, column=1, value=module.label or "—").font = FONT_VALUE
+        # Col 2: Funder Type (display).
         ws.cell(row=r, column=2, value=_funder_type_label(module)).font = FONT_VALUE
-        # Capital-stack principal and rate are user-editable inputs — blue.
+        # Cols 3-12: editable inputs (blue). Principal + Rate are existing;
+        # Term through Prepay are added in commit 1 of formula-conversion.
         registry.write(
             ws, r, 3, _coerce_decimal(principal),
             name=f"s_module_{m_idx}_principal", fmt=ACCOUNTING,
@@ -4183,9 +4225,50 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
             name=f"s_module_{m_idx}_rate", fmt=PCT,
             font=FONT_INPUT, align=ALIGN_RIGHT,
         )
-        ws.cell(row=r, column=5, value="Yes" if auto_size else "No").font = FONT_VALUE
+        registry.write(
+            ws, r, 5, _safe_int(source.get("hold_term_years")),
+            name=f"s_module_{m_idx}_term_years", fmt=INT_COMMA,
+            font=FONT_INPUT, align=ALIGN_RIGHT,
+        )
+        registry.write(
+            ws, r, 6, _safe_int(carry.get("amort_term_years")),
+            name=f"s_module_{m_idx}_amort_years", fmt=INT_COMMA,
+            font=FONT_INPUT, align=ALIGN_RIGHT,
+        )
+        registry.write(
+            ws, r, 7, _safe_int(carry.get("io_period_months")),
+            name=f"s_module_{m_idx}_io_months", fmt=INT_COMMA,
+            font=FONT_INPUT, align=ALIGN_RIGHT,
+        )
+        registry.write(
+            ws, r, 8, str(carry.get("carry_type") or ""),
+            name=f"s_module_{m_idx}_carry_type",
+            font=FONT_INPUT, align=ALIGN_RIGHT,
+        )
+        registry.write(
+            ws, r, 9, str(carry.get("day_count") or "30_360"),
+            name=f"s_module_{m_idx}_day_count",
+            font=FONT_INPUT, align=ALIGN_RIGHT,
+        )
+        registry.write(
+            ws, r, 10, _coerce_pct(source.get("dscr_min")),
+            name=f"s_module_{m_idx}_dscr_min", fmt="0.00",
+            font=FONT_INPUT, align=ALIGN_RIGHT,
+        )
+        registry.write(
+            ws, r, 11, _coerce_pct(source.get("ltv_pct")),
+            name=f"s_module_{m_idx}_ltv_pct", fmt=PCT,
+            font=FONT_INPUT, align=ALIGN_RIGHT,
+        )
+        registry.write(
+            ws, r, 12, _coerce_pct(source.get("prepay_penalty_pct")),
+            name=f"s_module_{m_idx}_prepay_pct", fmt=PCT,
+            font=FONT_INPUT, align=ALIGN_RIGHT,
+        )
+        # Cols 13-14: display-only meta.
+        ws.cell(row=r, column=13, value="Yes" if auto_size else "No").font = FONT_VALUE
         ws.cell(
-            row=r, column=6,
+            row=r, column=14,
             value=("shared (covers " + str(junction_count_by_module.get(module.id, 0)) + ")")
             if is_shared else "single project",
         ).font = FONT_VALUE
@@ -4196,8 +4279,81 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
             value="(no capital modules configured)",
         ).font = FONT_HINT
 
+    # ── Block D: Waterfall Hurdles ─────────────────────────────────────────
+    # Formula-conversion plan §3.1 — exposes waterfall tier inputs (priority,
+    # type, IRR hurdle, LP/GP split) as named cells so the Waterfall sheet
+    # formulas in commit 5 can reference them. One row per tier in the
+    # scenario's WaterfallTier rows.
+    block_d_row = block_c_row + 2 + max(len(capital_modules), 1) + 2
+    waterfall_tiers: list = ctx.get("waterfall_tiers", [])
+    section_label(ws, block_d_row, "D. Waterfall Hurdles", span_cols=6)
+    header_row(
+        ws,
+        block_d_row + 1,
+        ["Tier", "Type", "IRR Hurdle", "LP Split", "GP Split", "Notes"],
+    )
+    if waterfall_tiers:
+        for t_idx, tier in enumerate(
+            sorted(waterfall_tiers, key=lambda t: t.priority), start=1
+        ):
+            r = block_d_row + 1 + t_idx
+            ws.cell(row=r, column=1, value=tier.priority).font = FONT_VALUE
+            tier_type_label = getattr(tier.tier_type, "value", tier.tier_type) or ""
+            ws.cell(row=r, column=2, value=str(tier_type_label)).font = FONT_VALUE
+            registry.write(
+                ws, r, 3, _coerce_pct(tier.irr_hurdle_pct),
+                name=f"s_tier_{t_idx}_irr_hurdle", fmt=PCT,
+                font=FONT_INPUT, align=ALIGN_RIGHT,
+            )
+            registry.write(
+                ws, r, 4, _coerce_pct(tier.lp_split_pct),
+                name=f"s_tier_{t_idx}_lp_split", fmt=PCT,
+                font=FONT_INPUT, align=ALIGN_RIGHT,
+            )
+            registry.write(
+                ws, r, 5, _coerce_pct(tier.gp_split_pct),
+                name=f"s_tier_{t_idx}_gp_split", fmt=PCT,
+                font=FONT_INPUT, align=ALIGN_RIGHT,
+            )
+            ws.cell(row=r, column=6, value=tier.description or "").font = FONT_HINT
+    else:
+        ws.cell(
+            row=block_d_row + 2, column=1,
+            value="(no waterfall tiers configured)",
+        ).font = FONT_HINT
+
     freeze_top(ws, row=2)
     print_landscape(ws)
+
+
+# Block C header row — defined at module scope so tests and the sheet
+# builder share one source of truth.
+CAPITAL_STACK_HEADERS: tuple[str, ...] = (
+    "Module",          # col 1  — display
+    "Funder Type",     # col 2  — display
+    "Principal",       # col 3  — input
+    "Rate",            # col 4  — input
+    "Term (yrs)",      # col 5  — input
+    "Amort (yrs)",     # col 6  — input
+    "IO (mo)",         # col 7  — input
+    "Carry Type",      # col 8  — input
+    "Day Count",       # col 9  — input
+    "DSCR Min",        # col 10 — input
+    "LTV",             # col 11 — input
+    "Prepay",          # col 12 — input
+    "Auto-Sized?",     # col 13 — display
+    "Covers",          # col 14 — display
+)
+
+
+def _safe_int(raw) -> int | None:
+    """Coerce raw JSONB value to int, returning None on missing/invalid."""
+    if raw is None:
+        return None
+    try:
+        return int(raw)
+    except (TypeError, ValueError):
+        return None
 
 
 def _glossary_term_tokens(name: str) -> list[str]:
