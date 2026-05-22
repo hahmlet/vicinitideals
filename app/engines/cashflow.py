@@ -883,6 +883,62 @@ async def _load_deal_model(session: AsyncSession, deal_model_id: UUID) -> Scenar
     return result.scalar_one_or_none()
 
 
+def _phase_string_from_milestone_id(
+    milestone_id: "UUID | None",
+    milestone_map: "dict | None",
+) -> str | None:
+    """Resolve a milestones.id FK to its canonical phase-string value.
+
+    Returns the milestone's ``milestone_type`` (e.g. "close", "operation_stabilized")
+    which is accepted by both ``_APS_TO_USE_PHASE`` and ``_APS_TO_RANK``. Returns
+    ``None`` when the FK is unset or the milestone isn't in the map.
+    """
+    if not milestone_id or not milestone_map:
+        return None
+    m = milestone_map.get(milestone_id)
+    if m is None:
+        return None
+    mt = str(getattr(m, "milestone_type", "") or "").replace("MilestoneType.", "")
+    return mt or None
+
+
+def _apply_milestone_fk_overlay_inplace(
+    module: CapitalModule,
+    junction: CapitalModuleProject,
+    milestone_map: "dict",
+) -> None:
+    """Overlay milestone-FK-derived phase strings onto module.active_phase_start
+    / active_phase_end (in-memory only — not persisted).
+
+    Resolution order, highest priority first:
+      1. Junction's per-project milestone FK (multi-project scenarios)
+      2. Module's scenario-level milestone FK
+      3. Whatever the module already has on ``active_phase_start`` /
+         ``active_phase_end`` (legacy string field — unchanged)
+
+    The in-memory mutation makes downstream helpers that read the string
+    field (``_loan_pre_op_months``, ``_APS_TO_USE_PHASE`` lookups, refi-event
+    activation, etc.) automatically benefit from rename-safe, trigger-chain
+    aware milestone references without threading milestone_map through every
+    call site.
+    """
+    from_id = (
+        getattr(junction, "active_from_milestone_id", None)
+        or getattr(module, "active_from_milestone_id", None)
+    )
+    from_phase = _phase_string_from_milestone_id(from_id, milestone_map)
+    if from_phase:
+        module.active_phase_start = from_phase
+
+    to_id = (
+        getattr(junction, "active_to_milestone_id", None)
+        or getattr(module, "active_to_milestone_id", None)
+    )
+    to_phase = _phase_string_from_milestone_id(to_id, milestone_map)
+    if to_phase:
+        module.active_phase_end = to_phase
+
+
 def _apply_junction_overlay_inplace(
     session: AsyncSession,
     module: CapitalModule,
@@ -1048,8 +1104,35 @@ async def _per_project_capital_modules(
             .order_by(CapitalModule.stack_position)
         )
     ).all()
+    # Phase 2c2 (2026-05-21): build a milestone_map from every FK referenced
+    # by the loaded modules and junctions, then overlay milestone-derived phase
+    # strings onto module.active_phase_start / active_phase_end before the
+    # junction-amount overlay. This makes downstream engine reads of the
+    # legacy string field (loan pre-op months, _APS_TO_USE_PHASE lookups,
+    # refi-event activation) rename-safe and trigger-chain aware without
+    # threading a milestone_map through every call site.
+    milestone_ids: set[UUID] = set()
+    for module, junction in rows:
+        for attr_obj, attr_name in (
+            (module, "active_from_milestone_id"),
+            (module, "active_to_milestone_id"),
+            (junction, "active_from_milestone_id"),
+            (junction, "active_to_milestone_id"),
+        ):
+            mid = getattr(attr_obj, attr_name, None)
+            if mid:
+                milestone_ids.add(mid)
+    milestone_map: dict[UUID, Milestone] = {}
+    if milestone_ids:
+        ms_rows = (await session.execute(
+            select(Milestone).where(Milestone.id.in_(milestone_ids))
+        )).scalars().all()
+        milestone_map = {m.id: m for m in ms_rows}
+
     modules: list[CapitalModule] = []
     for module, junction in rows:
+        if milestone_map:
+            _apply_milestone_fk_overlay_inplace(module, junction, milestone_map)
         _apply_junction_overlay_inplace(session, module, junction)
         modules.append(module)
     if modules:
@@ -1091,10 +1174,41 @@ async def _per_project_capital_modules(
             amount=Decimal(str((cm.source or {}).get("amount") or 0)),
             active_from=cm.active_phase_start,
             active_to=cm.active_phase_end,
+            active_from_milestone_id=getattr(cm, "active_from_milestone_id", None),
+            active_to_milestone_id=getattr(cm, "active_to_milestone_id", None),
             auto_size=bool((cm.source or {}).get("auto_size")),
         ))
     await session.flush()
     _diag(f"self-healed junction: scenario={scenario_id} project={project_id} attached={len(all_modules)}")
+
+    # Overlay module-level milestone FK onto the freshly attached modules so
+    # downstream engine reads of active_phase_start respect FK over legacy
+    # string here too. (Self-healed junctions have no per-project override yet,
+    # so only module-FKs matter on this branch.)
+    self_heal_milestone_ids: set[UUID] = {
+        mid for cm in all_modules
+        for mid in (
+            getattr(cm, "active_from_milestone_id", None),
+            getattr(cm, "active_to_milestone_id", None),
+        )
+        if mid
+    }
+    if self_heal_milestone_ids:
+        ms_rows = (await session.execute(
+            select(Milestone).where(Milestone.id.in_(self_heal_milestone_ids))
+        )).scalars().all()
+        self_heal_map = {m.id: m for m in ms_rows}
+        for cm in all_modules:
+            from_phase = _phase_string_from_milestone_id(
+                getattr(cm, "active_from_milestone_id", None), self_heal_map
+            )
+            if from_phase:
+                cm.active_phase_start = from_phase
+            to_phase = _phase_string_from_milestone_id(
+                getattr(cm, "active_to_milestone_id", None), self_heal_map
+            )
+            if to_phase:
+                cm.active_phase_end = to_phase
     return all_modules
 
 

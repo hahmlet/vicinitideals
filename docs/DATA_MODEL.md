@@ -766,8 +766,10 @@ Scenario-scoped Source identity (lender, rate, carry type, exit terms). Per-proj
 | carry | dict or None | No | JSONB: construction carry - see 12.1b |
 | exit_terms | dict or None | No | JSONB: balloon, prepay, refi cap rate |
 | eligible_use_tags | varchar[] | No | Whitelist of use `cost_category` tags this source may fund; empty = permissive (any use) |
-| active_phase_start | str (60) or None | No | Deprecated; loan window derived from exit vehicle |
-| active_phase_end | str (60) or None | No | Deprecated; retained in DB, not used by engine |
+| active_phase_start | str (60) or None | No | Legacy phase key; superseded by `active_from_milestone_id` (kept as fallback) |
+| active_phase_end | str (60) or None | No | Legacy phase key; superseded by `active_to_milestone_id` (kept as fallback) |
+| active_from_milestone_id | UUID FK or None | No | (0095) FK to `milestones.id`, `ON DELETE SET NULL`; rename-safe, trigger-chain aware activation start. When set, overrides `active_phase_start` at engine load time |
+| active_to_milestone_id | UUID FK or None | No | (0095) FK to `milestones.id`, `ON DELETE SET NULL`; activation end |
 | created_at | datetime | Yes | |
 | updated_at | datetime | Yes | |
 
@@ -812,6 +814,33 @@ Two formats coexist. The engine reads whichever is present; `phases` takes prece
 ```
 
 Phase `name` is always `construction` or `operation`. See `FINANCIAL_MODEL.md` Appendix C for rate resolution precedence.
+
+---
+
+### 12.1c CapitalModuleProject (`capital_module_projects`)
+
+Junction row attaching a `CapitalModule` (scenario-scoped Source identity) to one of the scenario's projects. Single-project deals have one junction row per module; multi-project deals can attach a shared Source to multiple projects, each with its own amount, activation window, and milestone FKs.
+
+| Column | Type | Required | Notes |
+|---|---|---|---|
+| id | UUID | Yes | PK |
+| capital_module_id | UUID FK to capital_modules | Yes | ondelete=CASCADE |
+| project_id | UUID FK to projects | Yes | ondelete=CASCADE; `(capital_module_id, project_id)` unique |
+| amount | Numeric or None | No | Per-project principal override (Phase 2c1); when null, falls back to `module.source["amount"]` |
+| auto_size | bool | No | Per-project auto-size flag |
+| active_from | str (60) or None | No | Legacy phase key; overrides module-level `active_phase_start` for this project |
+| active_to | str (60) or None | No | Legacy phase key; overrides module-level `active_phase_end` for this project |
+| active_from_milestone_id | UUID FK or None | No | (0096) FK to `milestones.id`, `ON DELETE SET NULL`. Per-project activation start that points at a milestone on **this project** (not scenario-wide). Highest-priority source for activation timing at engine load |
+| active_to_milestone_id | UUID FK or None | No | (0096) FK to `milestones.id`, `ON DELETE SET NULL`. Per-project activation end |
+| created_at | datetime | Yes | |
+
+**Activation timing precedence (engine load, post-0096):**
+
+1. Junction FK (`capital_module_projects.active_from/to_milestone_id`) — per-project override, multi-project aware
+2. Module FK (`capital_modules.active_from/to_milestone_id`) — scenario-level default
+3. Legacy string field (`active_phase_start` / `active_phase_end`) — fallback for un-migrated deals
+
+`_per_project_capital_modules` in `app/engines/cashflow.py` resolves the FK→milestone_type at load time and writes it into the in-memory `module.active_phase_start` so downstream engine helpers (`_loan_pre_op_months`, `_APS_TO_USE_PHASE` lookups, refi activation) automatically use the rename-safe, trigger-chain-aware value.
 
 ---
 
