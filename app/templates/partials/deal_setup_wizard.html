@@ -329,17 +329,33 @@
         <div class="section-label" style="margin-top:0">Income Mode</div>
         <div class="option-grid">
 
-          <label class="option-card {% if _im == 'revenue_opex' %}selected{% endif %}">
-            <div class="option-card-head">
-              <input type="radio" name="income_mode" value="revenue_opex"
+          <div class="option-card {% if _im == 'revenue_opex' %}selected{% endif %}" id="card-revenue-opex">
+            <label class="option-card-head" for="im-revenue-opex" style="cursor:pointer;margin:0">
+              <input type="radio" id="im-revenue-opex" name="income_mode" value="revenue_opex"
                      {% if _im == 'revenue_opex' %}checked{% endif %}
                      onchange="onIncomeModeChange(this)">
               <div>
                 <div class="option-card-title">Revenue / OpEx</div>
                 <div class="option-card-desc">Model income streams and operating expenses line-by-line. NOI is computed from Revenue minus OpEx. Best for detailed underwriting.</div>
               </div>
+            </label>
+            {# Pro forma drop zone — nested inside the Revenue/OpEx card so it
+               appears/disappears with the selection. Hidden when NOI is picked. #}
+            <div id="proforma-block" {% if _im != 'revenue_opex' %}style="display:none"{% endif %}>
+              <label class="proforma-zone" for="proforma-file" id="proforma-zone"
+                     ondragover="onProformaDragOver(event)"
+                     ondragleave="onProformaDragLeave(event)"
+                     ondrop="onProformaDrop(event)"
+                     style="margin-top:12px">
+                <div class="proforma-zone-title">Drag a pro forma here or click to choose a file</div>
+                <div class="proforma-zone-hint">PDF, XLS, XLSX — we'll parse Revenue / OpEx into the model. Skip to enter values by hand.</div>
+                <input type="file" id="proforma-file" name="file" accept=".pdf,.xls,.xlsx" onchange="onProformaFile(this)">
+                <div id="proforma-pill" style="display:none">
+                  <div class="proforma-file-pill"><span id="proforma-name"></span><a href="#" onclick="clearProformaFile(event)" style="color:var(--accent);text-decoration:none">✕</a></div>
+                </div>
+              </label>
             </div>
-          </label>
+          </div>
 
           <label class="option-card {% if _im == 'noi' %}selected{% endif %}">
             <div class="option-card-head">
@@ -353,26 +369,6 @@
             </div>
           </label>
 
-        </div>
-
-        {# Pro forma upload zone — sits directly under Income Mode so the
-           upload lives next to the mode that uses it. Visible only for
-           revenue_opex.  When a file is selected, the Next button POSTs
-           to /proforma-preflight.  No file: button reads "Skip Import →"
-           (revenue_opex) or "Next →" (noi). #}
-        <div id="proforma-block" {% if _im != 'revenue_opex' %}style="display:none"{% endif %}>
-          <div class="section-label">Operating Pro Forma (optional)</div>
-          <label class="proforma-zone" id="proforma-zone"
-                 ondragover="onProformaDragOver(event)"
-                 ondragleave="onProformaDragLeave(event)"
-                 ondrop="onProformaDrop(event)">
-            <div class="proforma-zone-title">Drag a pro forma here or click to choose a file</div>
-            <div class="proforma-zone-hint">PDF, XLS, XLSX — we'll parse Revenue / OpEx into the model. Skip to enter values by hand.</div>
-            <input type="file" id="proforma-file" name="file" accept=".pdf,.xls,.xlsx" onchange="onProformaFile(this)">
-            <div id="proforma-pill" style="display:none">
-              <div class="proforma-file-pill"><span id="proforma-name"></span><a href="#" onclick="clearProformaFile(event)" style="color:var(--accent);text-decoration:none">✕</a></div>
-            </div>
-          </label>
         </div>
 
         <div class="section-label">Permanent Debt Sizing Mode</div>
