@@ -189,9 +189,21 @@ async def export_investor_workbook(
         _build_proforma_combined(pf_combined, registry, ctx)
 
     # Per-project sheets: all profiles. Sheet names `P{n} {Name}` truncated
-    # to Excel's 31-char ceiling. UW Summary hyperlinks resolve once these exist.
+    # to Excel's 31-char ceiling. UW Summary hyperlinks resolve once these
+    # exist.
+    #
+    # Formula-conversion plan §5 (commit 8): single-project consolidation.
+    # When a scenario has exactly one project, the per-project sheet
+    # duplicates content already on Underwriting Pro Forma / Cash Flow
+    # (combined == per-project when there's one project). Skip the P1
+    # sheet to reduce noise; UW Summary's mini-table HYPERLINK then
+    # points at Underwriting Pro Forma (or the formula-driven Pro Forma
+    # for the PF profile) instead of a P1 sheet that no longer exists.
     projects: list[Project] = ctx["projects"]
+    _single_project = len(projects) == 1
     for idx, project in enumerate(projects, start=1):
+        if _single_project:
+            continue
         if _profile in _HAS_PF:
             sheet_name = _project_sheet_name(idx, project.name)
             ws_proj = wb.create_sheet(sheet_name)
@@ -708,10 +720,14 @@ def _build_cover(ws, registry: CellRegistry, ctx: dict) -> None:
     kv_row(ws, row, "Levered IRR", combined_irr,
            name="s_cover_irr", registry=registry, fmt=PCT)
     row += 1
-    kv_row(ws, row, "Total Uses", uses_total,
+    # Formula-conversion plan §4.7 (commit 2): Cover Total Uses + Total
+    # Sources are cross-sheet references to the Sources & Uses sheet so
+    # edits to the per-project Use lines (or to Block C principals) ripple
+    # straight to the Cover hero block.
+    kv_row(ws, row, "Total Uses", "=s_su2_uses_total",
            name="s_cover_uses", registry=registry, fmt=ACCOUNTING)
     row += 1
-    kv_row(ws, row, "Total Sources", sources_total,
+    kv_row(ws, row, "Total Sources", "=s_su2_sources_total",
            name="s_cover_sources", registry=registry, fmt=ACCOUNTING)
     row += 1
     if carrying_costs > Decimal(0):
@@ -1513,8 +1529,14 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         ws.cell(row=pp_data, column=5, value=_to_excel_number(record.get("dscr"))).number_format = "0.000"
         levered = record.get("project_irr_levered")
         ws.cell(row=pp_data, column=6, value=_to_excel_number(_coerce_pct(levered) if levered is not None else None)).number_format = PCT
-        # Sheet hyperlink — resolves once commit 3's per-project sheets land.
-        sheet_label = _project_sheet_name(idx, project.name)
+        # Sheet hyperlink: for single-project scenarios the per-project
+        # sheet is suppressed (plan §5, commit 8) so point at the
+        # combined Pro Forma instead. Multi-project keeps the per-P
+        # sheet target.
+        if len(projects) == 1:
+            sheet_label = "Underwriting Pro Forma"
+        else:
+            sheet_label = _project_sheet_name(idx, project.name)
         ws.cell(
             row=pp_data, column=7,
             value=f'=HYPERLINK("#\'{sheet_label}\'!A1", "→ open")',
@@ -1947,12 +1969,64 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
         ("Debt Service", "debt_service", "r_uw_debt_service"),
         ("Net Cash Flow", "net_cash_flow", "r_uw_net_cash_flow"),
     ]
+
+    from openpyxl.utils import get_column_letter
+
+    # Formula-conversion plan §4.1 (commit 3): the rows whose math is a
+    # direct sum/difference of other rows on this sheet become formulas
+    # so LP edits to a single Use line / OpEx category propagate to the
+    # downstream KPIs. ``effective_gross_income`` = GrossRev + Vacancy
+    # (vacancy negative); ``noi`` = EGI - OpEx. Net Cash Flow + Debt
+    # Service stay as engine values until commit 4 wires the Debt
+    # Schedule sheet, then they convert too.
+    _DERIVED_FORMULA_FIELDS: dict[str, tuple[str, ...]] = {
+        # field name -> (sign, operand_field) pairs. Sign is "+" or "-"
+        # and applied to the operand field's cell on this same row block.
+        "effective_gross_income": ("+gross_revenue", "+vacancy_loss"),
+        "noi": ("+effective_gross_income", "-operating_expenses"),
+    }
+    # Track each engine-value row's coord so derived formulas can reference
+    # the actual cells. col=2 is Y0; each year_cols entry adds one column.
+    field_row: dict[str, int] = {}
+
     cur_row = 3
     for label, field, range_name in rows:
         ws.cell(row=cur_row, column=1, value=label).font = FONT_LABEL
+        field_row[field] = cur_row
+        derived = _DERIVED_FORMULA_FIELDS.get(field)
         for col_offset, year in enumerate(year_cols):
-            value = annual.get(year, {}).get(field, Decimal(0))
-            cell = ws.cell(row=cur_row, column=2 + col_offset, value=_to_excel_number(value))
+            col_idx = 2 + col_offset
+            if derived:
+                # Build per-year formula like ``=B3+B4`` referencing the
+                # corresponding column on the operand rows. Operand rows
+                # are guaranteed to be written before any derived row
+                # because the rows table orders inputs before derivations.
+                operands: list[str] = []
+                for spec in derived:
+                    sign, operand_field = spec[0], spec[1:]
+                    operand_row = field_row.get(operand_field)
+                    if operand_row is None:
+                        # Defensive: operand not yet written. Fall back to
+                        # engine value so we don't emit a broken formula.
+                        operands = []
+                        break
+                    col_letter = get_column_letter(col_idx)
+                    operands.append(f"{sign}{col_letter}{operand_row}")
+                if operands:
+                    formula = "=" + "".join(operands).lstrip("+")
+                    cell = ws.cell(row=cur_row, column=col_idx, value=formula)
+                else:
+                    value = annual.get(year, {}).get(field, Decimal(0))
+                    cell = ws.cell(
+                        row=cur_row, column=col_idx,
+                        value=_to_excel_number(value),
+                    )
+            else:
+                value = annual.get(year, {}).get(field, Decimal(0))
+                cell = ws.cell(
+                    row=cur_row, column=col_idx,
+                    value=_to_excel_number(value),
+                )
             cell.number_format = ACCOUNTING
             cell.font = FONT_VALUE
             cell.alignment = ALIGN_RIGHT
@@ -2082,6 +2156,8 @@ def _write_breakout_table(
 
 def _build_uw_cashflow(ws, registry: CellRegistry, ctx: dict) -> None:
     """Annual cash flow: NOI / Capital Events / Levered / Unlevered / DS / DSCR / Cum LCF."""
+    from openpyxl.utils import get_column_letter
+
     cash_flows: dict[UUID, list[CashFlow]] = ctx["cash_flows"]
     cash_flow_items: dict[UUID, list[CashFlowLineItem]] = ctx["cash_flow_items"]
 
@@ -2100,9 +2176,19 @@ def _build_uw_cashflow(ws, registry: CellRegistry, ctx: dict) -> None:
     header_row(ws, 2, ["Line Item", *[f"Y{y}" for y in year_cols]])
 
     cur_row = 3
+    # Track row index per series key so derived rows (DSCR, Unlevered,
+    # Cumulative, Levered) can reference the actual cells by column letter
+    # rather than emit hard-coded engine values. Keys are local labels
+    # (noi, capital_events, debt_proceeds, debt_service, levered, etc.).
+    series_row: dict[str, int] = {}
 
-    def write_series(label: str, source: dict[int, Decimal], range_name: str | None,
-                     fmt: str = ACCOUNTING) -> None:
+    def write_series(
+        label: str,
+        source: dict[int, Decimal],
+        range_name: str | None,
+        fmt: str = ACCOUNTING,
+        series_key: str | None = None,
+    ) -> None:
         nonlocal cur_row
         ws.cell(row=cur_row, column=1, value=label).font = FONT_LABEL
         for col_offset, year in enumerate(year_cols):
@@ -2116,14 +2202,51 @@ def _build_uw_cashflow(ws, registry: CellRegistry, ctx: dict) -> None:
                 range_name, ws.title, cur_row, cur_row, col=2,
                 end_col=1 + len(year_cols),
             )
+        if series_key:
+            series_row[series_key] = cur_row
+        cur_row += 1
+
+    def write_formula_series(
+        label: str,
+        formula_fn,
+        range_name: str | None,
+        fmt: str = ACCOUNTING,
+        series_key: str | None = None,
+    ) -> None:
+        """Write a derived row where each year cell is a formula string.
+
+        ``formula_fn(col_letter)`` returns the formula text (including the
+        leading ``=``) for one column. Mirrors write_series for layout
+        (label col, year cols, registry range, optional series_key) but
+        emits Excel formulas instead of engine scalars.
+        """
+        nonlocal cur_row
+        ws.cell(row=cur_row, column=1, value=label).font = FONT_LABEL
+        for col_offset, _year in enumerate(year_cols):
+            col_idx = 2 + col_offset
+            col_letter = get_column_letter(col_idx)
+            cell = ws.cell(row=cur_row, column=col_idx, value=formula_fn(col_letter))
+            cell.number_format = fmt
+            cell.font = FONT_VALUE
+            cell.alignment = ALIGN_RIGHT
+        if range_name and year_cols:
+            registry.register_range(
+                range_name, ws.title, cur_row, cur_row, col=2,
+                end_col=1 + len(year_cols),
+            )
+        if series_key:
+            series_row[series_key] = cur_row
         cur_row += 1
 
     noi_series = {y: annual.get(y, {}).get("noi", Decimal(0)) for y in year_cols}
     debt_series = {y: annual.get(y, {}).get("debt_service", Decimal(0)) for y in year_cols}
     ncf_series = {y: annual.get(y, {}).get("net_cash_flow", Decimal(0)) for y in year_cols}
 
-    write_series("NOI", noi_series, "r_uw_cf_noi")
-    write_series("Capital Events (acq + exit)", capital_events_by_year, "r_uw_cf_capital_events")
+    write_series("NOI", noi_series, "r_uw_cf_noi", series_key="noi")
+    write_series(
+        "Capital Events (acq + exit)", capital_events_by_year,
+        "r_uw_cf_capital_events", series_key="capital_events",
+    )
 
     # Debt proceeds drawn at acquisition close (Y0) — show as explicit inflow so
     # the LP can see: Acquisition Cost − Debt Proceeds = Net Equity Deployed.
@@ -2139,39 +2262,74 @@ def _build_uw_cashflow(ws, registry: CellRegistry, ctx: dict) -> None:
                 (_m.source or {}).get("amount") or 0
             )
     if _debt_y0 > Decimal(1):
-        write_series("Debt Proceeds (Y0 draws)", {0: _debt_y0}, "r_uw_cf_debt_proceeds")
-
-    write_series("Debt Service", debt_series, "r_uw_cf_debt_service")
-    write_series("Levered Cash Flow", ncf_series, "r_uw_cf_levered")
-
-    # Unlevered = engine's NCF + DS (= NOI + capital events, signed).
-    # Sourcing from NCF + DS instead of (NOI + signed_cap_events) keeps the
-    # row consistent with _combined_unlevered_irr which uses the same path.
-    unlevered_series = {
-        y: ncf_series.get(y, Decimal(0)) + debt_series.get(y, Decimal(0))
-        for y in year_cols
-    }
-    write_series("Unlevered Cash Flow", unlevered_series, "r_uw_cf_unlevered")
-
-    dscr_series = {}
-    for y in year_cols:
-        ds = debt_series.get(y, Decimal(0))
-        dscr_series[y] = (
-            (noi_series.get(y, Decimal(0)) / ds) if ds and ds != 0 else Decimal(0)
+        write_series(
+            "Debt Proceeds (Y0 draws)", {0: _debt_y0},
+            "r_uw_cf_debt_proceeds", series_key="debt_proceeds",
         )
-    write_series("DSCR (annual)", dscr_series, "r_uw_cf_dscr", fmt="0.000")
 
-    # Cumulative = running sum of Levered CF (engine's NCF). Capital events
-    # are already inside NCF via the engine's invariant, so adding them
-    # separately would double-count. This makes the row read as
-    # "cumulative cash to equity through period N" without needing the
-    # capital_events_by_year addition that was here before.
-    cumulative: dict[int, Decimal] = {}
-    running = Decimal(0)
-    for y in year_cols:
-        running += ncf_series.get(y, Decimal(0))
-        cumulative[y] = running
-    write_series("Cumulative Cash Flow", cumulative, "r_uw_cf_cumulative")
+    write_series(
+        "Debt Service", debt_series, "r_uw_cf_debt_service",
+        series_key="debt_service",
+    )
+
+    # Formula-conversion plan §4.2 (commit 4): Levered, Unlevered, DSCR,
+    # and Cumulative are clean sum/diff/ratio derivations of the engine
+    # rows written above. Wire them as formulas so an LP edit to NOI
+    # propagates through the deal-level cash flow downstream.
+    #
+    # Levered CF = NOI + Capital Events [+ Debt Proceeds] - Debt Service.
+    # Engine writes this as net_cash_flow already; building it from the
+    # other rows here means an LP can see the arithmetic and edit any
+    # operand to recompute.
+    noi_row = series_row["noi"]
+    capevt_row = series_row["capital_events"]
+    debt_proceeds_row = series_row.get("debt_proceeds")
+    ds_row = series_row["debt_service"]
+
+    def _levered_formula(col_letter: str) -> str:
+        terms = [f"{col_letter}{noi_row}", f"+{col_letter}{capevt_row}"]
+        if debt_proceeds_row is not None:
+            terms.append(f"+{col_letter}{debt_proceeds_row}")
+        terms.append(f"-{col_letter}{ds_row}")
+        return "=" + "".join(terms)
+
+    write_formula_series(
+        "Levered Cash Flow", _levered_formula, "r_uw_cf_levered",
+        series_key="levered",
+    )
+
+    # Unlevered = Levered + Debt Service. Matches the engine path used by
+    # _combined_unlevered_irr (NCF + DS). Reads as "cash flow before debt".
+    lev_row = series_row["levered"]
+
+    def _unlevered_formula(col_letter: str) -> str:
+        return f"={col_letter}{lev_row}+{col_letter}{ds_row}"
+
+    write_formula_series(
+        "Unlevered Cash Flow", _unlevered_formula, "r_uw_cf_unlevered",
+    )
+
+    # DSCR = NOI / Debt Service per column. IFERROR guards Y0 / zero-DS
+    # rows so a divide-by-zero shows as 0 instead of #DIV/0! in the
+    # workbook — matches the engine behavior which returns 0 when ds is 0.
+    def _dscr_formula(col_letter: str) -> str:
+        return (
+            f"=IFERROR({col_letter}{noi_row}/{col_letter}{ds_row},0)"
+        )
+
+    write_formula_series(
+        "DSCR (annual)", _dscr_formula, "r_uw_cf_dscr", fmt="0.000",
+    )
+
+    # Cumulative = running SUM of Levered CF from Y0 through current col.
+    # SUM($B$<lev_row>:<col_letter><lev_row>) lets Excel propagate edits
+    # without us needing to redo the prefix sum here.
+    def _cumulative_formula(col_letter: str) -> str:
+        return f"=SUM($B${lev_row}:{col_letter}{lev_row})"
+
+    write_formula_series(
+        "Cumulative Cash Flow", _cumulative_formula, "r_uw_cf_cumulative",
+    )
 
     freeze_top(ws, row=3)
     print_landscape(ws)
@@ -2681,10 +2839,29 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
             ws, cur_row, 7, distributions, registry,
             name=f"s_module_{m_idx}_distributions", fmt=ACCOUNTING,
         )
-        _write_optional(
-            ws, cur_row, 8, return_dollars, registry,
-            name=f"s_module_{m_idx}_return_dollars", fmt=ACCOUNTING,
-        )
+        # Formula-conversion plan §4.3 (commit 5): Return ($) is a clean
+        # derivation of (total_ds or distributions) - principal. When the
+        # operand exists we emit the formula so LP edits to the principal
+        # or distribution cells propagate; when missing, fall back to the
+        # em-dash via _write_optional.
+        return_formula: str | None = None
+        if funder_class == "Debt" and total_ds is not None and total_ds > 0:
+            return_formula = f"=F{cur_row}-D{cur_row}"
+        elif funder_class == "Equity" and distributions is not None:
+            return_formula = f"=G{cur_row}-D{cur_row}"
+        if return_formula is not None:
+            cell = ws.cell(row=cur_row, column=8, value=return_formula)
+            cell.number_format = ACCOUNTING
+            cell.font = FONT_VALUE
+            cell.alignment = ALIGN_RIGHT
+            registry.register(
+                f"s_module_{m_idx}_return_dollars", ws.title, cur_row, 8,
+            )
+        else:
+            _write_optional(
+                ws, cur_row, 8, return_dollars, registry,
+                name=f"s_module_{m_idx}_return_dollars", fmt=ACCOUNTING,
+            )
         _write_optional(
             ws, cur_row, 9, return_pct, registry,
             name=f"s_module_{m_idx}_return_pct", fmt=PCT,
@@ -2704,9 +2881,15 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
     section_label(ws, cur_row, "Scenario-Level Aggregates", span_cols=2)
     cur_row += 1
 
+    # Formula-conversion plan §4.3 (commit 5): Combined Levered IRR is
+    # IRR over the Levered Cash Flow row on 'Underwriting Cash Flow' —
+    # which itself is a formula chain back to NOI/CapEvents/DS. Edits
+    # anywhere upstream now propagate to this IRR cell via Excel's calc
+    # engine. IFERROR guards the no-equity / degenerate-stream case so a
+    # blank scenario shows 0% instead of #NUM!.
     kv_row(
         ws, cur_row, "Combined Levered IRR (scenario)",
-        _coerce_pct(totals.get("combined_irr_pct") or 0),
+        "=IFERROR(IRR(r_uw_cf_levered),0)",
         name="s_returns_combined_irr", registry=registry, fmt=PCT,
     ); cur_row += 1
 
@@ -3879,10 +4062,36 @@ def _build_debt_schedule(ws, registry: CellRegistry, ctx: dict) -> None:
             value=carry_type.replace("_", " ").title() if carry_type else _DASH,
         ).font = FONT_VALUE
         ws.cell(row=cur_row, column=9, value=day_count_label).font = FONT_VALUE
-        _write_optional(
-            ws, cur_row, 10, annual_pi, registry,
-            name=f"s_loan_{m_idx}_annual_pi", fmt=ACCOUNTING,
-        )
+        # Formula-conversion plan §4.4 (commit 6): Annual P&I for ``pi``
+        # carry-type loans is a clean PMT derivation of principal / rate /
+        # amort term. Wire it as a formula referencing the named-range
+        # inputs from the Loan Summary row (principal col C, rate col D)
+        # plus the amort years in col F, so an LP can change any of the
+        # three and watch Annual P&I recompute. Other carry types
+        # (io_only, interest_reserve, capitalized_interest) leave the
+        # cell as the engine value (None → em-dash) since their annual
+        # outlay isn't a simple PMT.
+        if carry_type == "pi" and rate_raw and principal > 0 and amort_years:
+            # PMT(rate/12, amort*12, -principal) * 12 yields a positive
+            # annual payment. Reference cells: principal=C<row>,
+            # rate=D<row>, amort_years=F<row>. amort_years is an int
+            # in col F (header "Amort (yrs)"). IFERROR guards against
+            # degenerate inputs (zero rate, zero term).
+            pmt_formula = (
+                f"=IFERROR(PMT(D{cur_row}/12,F{cur_row}*12,-C{cur_row})*12,0)"
+            )
+            cell = ws.cell(row=cur_row, column=10, value=pmt_formula)
+            cell.number_format = ACCOUNTING
+            cell.font = FONT_VALUE
+            cell.alignment = ALIGN_RIGHT
+            registry.register(
+                f"s_loan_{m_idx}_annual_pi", ws.title, cur_row, 10,
+            )
+        else:
+            _write_optional(
+                ws, cur_row, 10, annual_pi, registry,
+                name=f"s_loan_{m_idx}_annual_pi", fmt=ACCOUNTING,
+            )
         _write_optional(
             ws, cur_row, 11, balloon, registry,
             name=f"s_loan_{m_idx}_balloon", fmt=ACCOUNTING,
@@ -4020,10 +4229,18 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
     capital_modules: list[CapitalModule] = ctx["capital_modules"]
     junctions: list[CapitalModuleProject] = ctx["junctions"]
 
-    # Layout: 1 (label) + up to MAX_PROJECTS_PER_SCENARIO project columns.
+    # Layout: 1 (label) + max(MAX_PROJECTS_PER_SCENARIO, len(CAPITAL_STACK_HEADERS)-1)
+    # data columns. Block B writes into cols 2..1+N_projects; Block C writes
+    # into cols 1..len(CAPITAL_STACK_HEADERS). The sheet is sized for both.
     label_w = 36
     project_col_widths = [22] * MAX_PROJECTS_PER_SCENARIO
-    set_widths(ws, [label_w, *project_col_widths])
+    # Block C extra column widths for the post-expansion debt-assumption
+    # surface (commit 1 of the formula-conversion plan). Eight new fields
+    # added: term, amort, io_months, carry_type, day_count, dscr_min, ltv,
+    # prepay. Existing 6 cols stay (label, funder, principal, rate,
+    # auto-sized, covers).
+    block_c_extra_widths = [12, 12, 12, 14, 12, 12, 10, 12]
+    set_widths(ws, [label_w, *project_col_widths, *block_c_extra_widths])
 
     # ── Block A: Scenario-level ────────────────────────────────────────────
     # Default project's OperationalInputs carries scenario-level conceptual
@@ -4102,6 +4319,35 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
         name="s_asset_mgmt_fee", registry=registry, fmt=PCT, style="input",
     ); row += 1
 
+    # Formula-conversion plan §3.1 — new Block A inputs that downstream
+    # formulas need. All sourced from OperationalInputs (per-project today;
+    # the "default project" snapshot represents scenario-level intent until
+    # per-project assumption editing lands). Discount Rate is sourced from
+    # the Scenario record directly since it's truly scenario-scoped.
+    kv_row(
+        ws, row, "Vacancy Rate (hold)",
+        _pct_value(default_inputs, "hold_vacancy_rate_pct"),
+        name="s_vacancy_pct", registry=registry, fmt=PCT, style="input",
+    ); row += 1
+    kv_row(
+        ws, row, "CapEx Reserve / Unit / Yr",
+        _safe_decimal(default_inputs, "capex_reserve_per_unit_annual"),
+        name="s_capex_reserve_per_unit", registry=registry, fmt=ACCOUNTING,
+        style="input",
+    ); row += 1
+    kv_row(
+        ws, row, "Selling Costs",
+        _pct_value(default_inputs, "selling_costs_pct"),
+        name="s_selling_costs_pct", registry=registry, fmt=PCT, style="input",
+    ); row += 1
+    _discount_rate = ctx.get("discount_rate_pct")
+    kv_row(
+        ws, row, "Discount Rate / Hurdle",
+        (_discount_rate / Decimal(100)) if isinstance(_discount_rate, Decimal)
+        else None,
+        name="s_discount_rate", registry=registry, fmt=PCT, style="input",
+    ); row += 1
+
     # ── Block B: Per-project ───────────────────────────────────────────────
     block_b_row = row + 2
     section_label(
@@ -4141,13 +4387,15 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
     next_row = block_b_row + 2 + len(metrics)
 
     # ── Block C: Capital Stack ─────────────────────────────────────────────
+    # Expanded for formula-conversion (plan §3.1 / commit 1): every field
+    # that drives carry-cost math is surfaced as a named input cell so the
+    # Debt Schedule + Cash Flow formulas in later commits can reference
+    # them by name. Eight new columns added after Rate: Term, Amort, IO,
+    # Carry Type, Day Count, DSCR Min, LTV, Prepay. Original Auto-Sized?
+    # and Covers retain their position at the right edge.
     block_c_row = next_row + 2
-    section_label(ws, block_c_row, "C. Capital Stack", span_cols=6)
-    header_row(
-        ws,
-        block_c_row + 1,
-        ["Module", "Funder Type", "Principal", "Rate", "Auto-Sized?", "Covers"],
-    )
+    section_label(ws, block_c_row, "C. Capital Stack", span_cols=len(CAPITAL_STACK_HEADERS))
+    header_row(ws, block_c_row + 1, list(CAPITAL_STACK_HEADERS))
 
     junction_count_by_module: dict[UUID, int] = {}
     junction_principal_by_module: dict[UUID, Decimal] = {}
@@ -4170,9 +4418,12 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
         auto_size = bool(source.get("auto_size"))
         is_shared = junction_count_by_module.get(module.id, 0) > 1
 
+        # Col 1: Label (display).
         ws.cell(row=r, column=1, value=module.label or "—").font = FONT_VALUE
+        # Col 2: Funder Type (display).
         ws.cell(row=r, column=2, value=_funder_type_label(module)).font = FONT_VALUE
-        # Capital-stack principal and rate are user-editable inputs — blue.
+        # Cols 3-12: editable inputs (blue). Principal + Rate are existing;
+        # Term through Prepay are added in commit 1 of formula-conversion.
         registry.write(
             ws, r, 3, _coerce_decimal(principal),
             name=f"s_module_{m_idx}_principal", fmt=ACCOUNTING,
@@ -4183,9 +4434,60 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
             name=f"s_module_{m_idx}_rate", fmt=PCT,
             font=FONT_INPUT, align=ALIGN_RIGHT,
         )
-        ws.cell(row=r, column=5, value="Yes" if auto_size else "No").font = FONT_VALUE
+        registry.write(
+            ws, r, 5, _safe_int(source.get("hold_term_years")),
+            name=f"s_module_{m_idx}_term_years", fmt=INT_COMMA,
+            font=FONT_INPUT, align=ALIGN_RIGHT,
+        )
+        registry.write(
+            ws, r, 6, _safe_int(carry.get("amort_term_years")),
+            name=f"s_module_{m_idx}_amort_years", fmt=INT_COMMA,
+            font=FONT_INPUT, align=ALIGN_RIGHT,
+        )
+        registry.write(
+            ws, r, 7, _safe_int(carry.get("io_period_months")),
+            name=f"s_module_{m_idx}_io_months", fmt=INT_COMMA,
+            font=FONT_INPUT, align=ALIGN_RIGHT,
+        )
+        registry.write(
+            ws, r, 8, str(carry.get("carry_type") or ""),
+            name=f"s_module_{m_idx}_carry_type",
+            font=FONT_INPUT, align=ALIGN_RIGHT,
+        )
+        registry.write(
+            ws, r, 9, str(carry.get("day_count") or "30_360"),
+            name=f"s_module_{m_idx}_day_count",
+            font=FONT_INPUT, align=ALIGN_RIGHT,
+        )
+        # Block C numeric inputs may be None on debt modules that don't
+        # populate every field (e.g. an IO bridge loan without dscr_min /
+        # ltv / prepay terms). Guard against _coerce_pct(None) crashing —
+        # write the value through unchanged when present, blank otherwise.
+        _dscr_min = source.get("dscr_min")
+        _ltv = source.get("ltv_pct")
+        _prepay = source.get("prepay_penalty_pct")
+        registry.write(
+            ws, r, 10,
+            _coerce_pct(_dscr_min) if _dscr_min is not None else None,
+            name=f"s_module_{m_idx}_dscr_min", fmt="0.00",
+            font=FONT_INPUT, align=ALIGN_RIGHT,
+        )
+        registry.write(
+            ws, r, 11,
+            _coerce_pct(_ltv) if _ltv is not None else None,
+            name=f"s_module_{m_idx}_ltv_pct", fmt=PCT,
+            font=FONT_INPUT, align=ALIGN_RIGHT,
+        )
+        registry.write(
+            ws, r, 12,
+            _coerce_pct(_prepay) if _prepay is not None else None,
+            name=f"s_module_{m_idx}_prepay_pct", fmt=PCT,
+            font=FONT_INPUT, align=ALIGN_RIGHT,
+        )
+        # Cols 13-14: display-only meta.
+        ws.cell(row=r, column=13, value="Yes" if auto_size else "No").font = FONT_VALUE
         ws.cell(
-            row=r, column=6,
+            row=r, column=14,
             value=("shared (covers " + str(junction_count_by_module.get(module.id, 0)) + ")")
             if is_shared else "single project",
         ).font = FONT_VALUE
@@ -4196,8 +4498,81 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
             value="(no capital modules configured)",
         ).font = FONT_HINT
 
+    # ── Block D: Waterfall Hurdles ─────────────────────────────────────────
+    # Formula-conversion plan §3.1 — exposes waterfall tier inputs (priority,
+    # type, IRR hurdle, LP/GP split) as named cells so the Waterfall sheet
+    # formulas in commit 5 can reference them. One row per tier in the
+    # scenario's WaterfallTier rows.
+    block_d_row = block_c_row + 2 + max(len(capital_modules), 1) + 2
+    waterfall_tiers: list = ctx.get("waterfall_tiers", [])
+    section_label(ws, block_d_row, "D. Waterfall Hurdles", span_cols=6)
+    header_row(
+        ws,
+        block_d_row + 1,
+        ["Tier", "Type", "IRR Hurdle", "LP Split", "GP Split", "Notes"],
+    )
+    if waterfall_tiers:
+        for t_idx, tier in enumerate(
+            sorted(waterfall_tiers, key=lambda t: t.priority), start=1
+        ):
+            r = block_d_row + 1 + t_idx
+            ws.cell(row=r, column=1, value=tier.priority).font = FONT_VALUE
+            tier_type_label = getattr(tier.tier_type, "value", tier.tier_type) or ""
+            ws.cell(row=r, column=2, value=str(tier_type_label)).font = FONT_VALUE
+            registry.write(
+                ws, r, 3, _coerce_pct(tier.irr_hurdle_pct),
+                name=f"s_tier_{t_idx}_irr_hurdle", fmt=PCT,
+                font=FONT_INPUT, align=ALIGN_RIGHT,
+            )
+            registry.write(
+                ws, r, 4, _coerce_pct(tier.lp_split_pct),
+                name=f"s_tier_{t_idx}_lp_split", fmt=PCT,
+                font=FONT_INPUT, align=ALIGN_RIGHT,
+            )
+            registry.write(
+                ws, r, 5, _coerce_pct(tier.gp_split_pct),
+                name=f"s_tier_{t_idx}_gp_split", fmt=PCT,
+                font=FONT_INPUT, align=ALIGN_RIGHT,
+            )
+            ws.cell(row=r, column=6, value=tier.description or "").font = FONT_HINT
+    else:
+        ws.cell(
+            row=block_d_row + 2, column=1,
+            value="(no waterfall tiers configured)",
+        ).font = FONT_HINT
+
     freeze_top(ws, row=2)
     print_landscape(ws)
+
+
+# Block C header row — defined at module scope so tests and the sheet
+# builder share one source of truth.
+CAPITAL_STACK_HEADERS: tuple[str, ...] = (
+    "Module",          # col 1  — display
+    "Funder Type",     # col 2  — display
+    "Principal",       # col 3  — input
+    "Rate",            # col 4  — input
+    "Term (yrs)",      # col 5  — input
+    "Amort (yrs)",     # col 6  — input
+    "IO (mo)",         # col 7  — input
+    "Carry Type",      # col 8  — input
+    "Day Count",       # col 9  — input
+    "DSCR Min",        # col 10 — input
+    "LTV",             # col 11 — input
+    "Prepay",          # col 12 — input
+    "Auto-Sized?",     # col 13 — display
+    "Covers",          # col 14 — display
+)
+
+
+def _safe_int(raw) -> int | None:
+    """Coerce raw JSONB value to int, returning None on missing/invalid."""
+    if raw is None:
+        return None
+    try:
+        return int(raw)
+    except (TypeError, ValueError):
+        return None
 
 
 def _glossary_term_tokens(name: str) -> list[str]:
@@ -4231,7 +4606,20 @@ def _build_su_sheet(
     registry: CellRegistry,
     ctx: dict,
 ) -> None:
-    """Dedicated Sources & Uses sheet: per-project line detail + category summary + sources."""
+    """Dedicated Sources & Uses sheet: per-project line detail + category summary + sources.
+
+    Formula-conversion plan §4.6 (commit 2): every summable cell is a
+    formula, not a Decimal. Per-project Use-line subtotals use
+    ``=SUM(start:end)`` over the contiguous Use lines above them.
+    Per-project totals sum the subtotals. The Category Summary block
+    sums each category across projects. Sources reference the
+    per-module Principal cells on the Assumptions sheet directly via
+    defined names. ``s_su2_gap = s_su2_uses_total - s_su2_sources_total``.
+
+    Editing a Use-line amount in the per-project section ripples up to
+    its subtotal, project total, category summary, grand total, and
+    the Cover sheet's Total Uses cell — without re-running the engine.
+    """
     set_widths(ws, [42, 22])
 
     use_lines_by_project: dict = ctx.get("use_lines", {})
@@ -4244,7 +4632,13 @@ def _build_su_sheet(
     line += 2
 
     # ── Per-project sections ───────────────────────────────────────────────
-    total_by_cat: dict[str, Decimal] = {cat: Decimal(0) for cat in USE_COST_CATEGORIES}
+    # Track row addresses of per-project category subtotals so the
+    # Category Summary block can build cross-section sum formulas.
+    # Shape: {category: [row_1, row_2, ...]} one row per project that had
+    # any lines in that category.
+    cat_subtotal_rows: dict[str, list[int]] = {cat: [] for cat in USE_COST_CATEGORIES}
+    # Track per-project total rows for any future per-project rollup formulas.
+    _proj_total_rows: list[int] = []
 
     for idx, project in enumerate(projects, start=1):
         pid = project.id
@@ -4253,7 +4647,11 @@ def _build_su_sheet(
         section_label(ws, line, f"P{idx} — {project.name}", span_cols=2)
         line += 1
 
-        proj_total = Decimal(0)
+        # Track per-project subtotal cells so Total Uses P{n} can SUM them
+        # (subtotals are not contiguous across categories, so use a list
+        # of cell refs rather than a single SUM range).
+        proj_subtotal_refs: list[str] = []
+
         for cat in USE_COST_CATEGORIES:
             cat_label = USE_CATEGORY_LABELS.get(cat, cat.title())
             cat_lines = [
@@ -4266,26 +4664,35 @@ def _build_su_sheet(
             ws.cell(row=line, column=1, value=cat_label).font = FONT_LABEL
             line += 1
 
-            cat_total = Decimal(0)
+            first_line_row = line
             for ul in cat_lines:
                 amt = _coerce_decimal(ul.amount or 0)
                 ws.cell(row=line, column=1, value=f"  {ul.label or ''}").font = FONT_VALUE
                 ws.cell(row=line, column=2, value=_to_excel_number(amt)).number_format = ACCOUNTING
-                cat_total += amt
                 line += 1
+            last_line_row = line - 1
 
+            # Formula: SUM the contiguous Use-line cells just written.
+            # Cells live in column B (col 2).
+            subtotal_formula = f"=SUM(B{first_line_row}:B{last_line_row})"
             ws.cell(row=line, column=1, value=f"  Subtotal {cat_label}").font = FONT_LABEL
-            cell = ws.cell(row=line, column=2, value=_to_excel_number(cat_total))
+            cell = ws.cell(row=line, column=2, value=subtotal_formula)
             cell.number_format = ACCOUNTING
             cell.font = FONT_LABEL
-            total_by_cat[cat] += cat_total
-            proj_total += cat_total
+            cat_subtotal_rows[cat].append(line)
+            proj_subtotal_refs.append(f"B{line}")
             line += 1
 
+        # Per-project Total Uses: formula summing this project's category
+        # subtotals (non-contiguous so list-of-refs rather than SUM range).
+        proj_total_formula = (
+            "=" + "+".join(proj_subtotal_refs) if proj_subtotal_refs else "=0"
+        )
         ws.cell(row=line, column=1, value=f"Total Uses P{idx}").font = FONT_LABEL
-        cell = ws.cell(row=line, column=2, value=_to_excel_number(proj_total))
+        cell = ws.cell(row=line, column=2, value=proj_total_formula)
         cell.number_format = ACCOUNTING
         cell.font = FONT_LABEL
+        _proj_total_rows.append(line)
         line += 2
 
     # ── Category summary (all projects) ───────────────────────────────────
@@ -4297,26 +4704,37 @@ def _build_su_sheet(
         "soft":        "s_su2_soft_total",
         "hard":        "s_su2_hard_total",
     }
-    uses_grand_total = Decimal(0)
+    cat_summary_rows: dict[str, int] = {}
     for cat in USE_COST_CATEGORIES:
         cat_label = USE_CATEGORY_LABELS.get(cat, cat.title())
-        amount = total_by_cat.get(cat, Decimal(0))
+        # Formula sums the per-project subtotal cells for this category.
+        subtotal_refs = [f"B{r}" for r in cat_subtotal_rows[cat]]
+        formula = "=" + "+".join(subtotal_refs) if subtotal_refs else "=0"
         ws.cell(row=line, column=1, value=cat_label).font = FONT_VALUE
-        registry.write(
-            ws, line, 2, amount,
-            name=_su2_names[cat], fmt=ACCOUNTING, font=FONT_VALUE, align=ALIGN_RIGHT,
-        )
-        uses_grand_total += amount
+        cell = ws.cell(row=line, column=2, value=formula)
+        cell.number_format = ACCOUNTING
+        cell.font = FONT_VALUE
+        cell.alignment = ALIGN_RIGHT
+        registry.register(_su2_names[cat], ws.title, line, 2)
+        cat_summary_rows[cat] = line
         line += 1
 
+    # Total Uses: sum the category-total cells.
+    cat_sum_refs = [f"B{cat_summary_rows[c]}" for c in USE_COST_CATEGORIES]
+    uses_total_formula = "=" + "+".join(cat_sum_refs) if cat_sum_refs else "=0"
     ws.cell(row=line, column=1, value="Total Uses").font = FONT_LABEL
-    registry.write(
-        ws, line, 2, uses_grand_total,
-        name="s_su2_uses_total", fmt=ACCOUNTING, font=FONT_LABEL, align=ALIGN_RIGHT,
-    )
+    cell = ws.cell(row=line, column=2, value=uses_total_formula)
+    cell.number_format = ACCOUNTING
+    cell.font = FONT_LABEL
+    cell.alignment = ALIGN_RIGHT
+    registry.register("s_su2_uses_total", ws.title, line, 2)
+    uses_total_row = line
     line += 2
 
     # ── Sources ───────────────────────────────────────────────────────────
+    # Each non-equity source pulls its principal directly from the
+    # Assumptions sheet's Block C ``s_module_{m}_principal`` defined name,
+    # so editing the principal there ripples into Sources here.
     section_label(ws, line, "Sources", span_cols=2)
     line += 1
 
@@ -4326,40 +4744,56 @@ def _build_su_sheet(
             j.capital_module_id, Decimal(0)
         ) + _coerce_decimal(j.amount or 0)
 
-    sources_total = Decimal(0)
-    for module in capital_modules:
+    source_refs: list[str] = []
+    for m_idx, module in enumerate(capital_modules, start=1):
         amount = junction_amount.get(module.id) or _coerce_decimal(
             (module.source or {}).get("amount") or 0
         )
         if amount <= Decimal(1) and _funder_class(module) == "Equity":
             continue
         ws.cell(row=line, column=1, value=module.label or _funder_type_label(module)).font = FONT_VALUE
-        cell = ws.cell(row=line, column=2, value=_to_excel_number(amount))
+        # Reference the Assumptions-sheet Principal cell by defined name.
+        # Workbook-scoped defined names resolve without a sheet qualifier.
+        cell = ws.cell(row=line, column=2, value=f"=s_module_{m_idx}_principal")
         cell.number_format = ACCOUNTING
-        sources_total += amount
+        source_refs.append(f"B{line}")
         line += 1
 
-    _implied_equity = uses_grand_total - sources_total
-    if _implied_equity > Decimal(1):
-        ws.cell(row=line, column=1, value="Owner Equity (implied gap)").font = FONT_VALUE
-        cell = ws.cell(row=line, column=2, value=_to_excel_number(_implied_equity))
-        cell.number_format = ACCOUNTING
-        sources_total += _implied_equity
-        line += 1
-
-    ws.cell(row=line, column=1, value="Total Sources").font = FONT_LABEL
-    registry.write(
-        ws, line, 2, sources_total,
-        name="s_su2_sources_total", fmt=ACCOUNTING, font=FONT_LABEL, align=ALIGN_RIGHT,
-    )
+    # Implied equity: Uses − Sources. Computed as a formula so it tracks
+    # edits to either side.
+    if source_refs:
+        implied_equity_formula = (
+            f"=B{uses_total_row}-(" + "+".join(source_refs) + ")"
+        )
+    else:
+        implied_equity_formula = f"=B{uses_total_row}"
+    ws.cell(row=line, column=1, value="Owner Equity (implied gap)").font = FONT_VALUE
+    cell = ws.cell(row=line, column=2, value=implied_equity_formula)
+    cell.number_format = ACCOUNTING
+    source_refs.append(f"B{line}")
     line += 1
 
-    gap = uses_grand_total - sources_total
+    # Total Sources: sum of all source rows (including implied equity).
+    sources_total_formula = "=" + "+".join(source_refs) if source_refs else "=0"
+    ws.cell(row=line, column=1, value="Total Sources").font = FONT_LABEL
+    cell = ws.cell(row=line, column=2, value=sources_total_formula)
+    cell.number_format = ACCOUNTING
+    cell.font = FONT_LABEL
+    cell.alignment = ALIGN_RIGHT
+    registry.register("s_su2_sources_total", ws.title, line, 2)
+    sources_total_row = line
+    line += 1
+
+    # Gap: Uses − Sources. Pure formula referencing the totals above.
     ws.cell(row=line, column=1, value="Δ Sources Gap (Uses − Sources)").font = FONT_LABEL
-    registry.write(
-        ws, line, 2, gap,
-        name="s_su2_gap", fmt=ACCOUNTING, font=FONT_LABEL, align=ALIGN_RIGHT,
+    cell = ws.cell(
+        row=line, column=2,
+        value=f"=B{uses_total_row}-B{sources_total_row}",
     )
+    cell.number_format = ACCOUNTING
+    cell.font = FONT_LABEL
+    cell.alignment = ALIGN_RIGHT
+    registry.register("s_su2_gap", ws.title, line, 2)
 
 
 def _build_glossary(

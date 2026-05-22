@@ -9,6 +9,30 @@
 
 **Scope.** Sources, Uses, Revenue, OpEx, Reserves, Period Cash Flow, Debt Service, Waterfall, Profit Metrics (IRR/MOIC/Cash-on-Cash). The schema is defined in `app/models/*.py`; the math lives in `app/engines/cashflow.py` and `app/engines/waterfall.py`.
 
+**Formula-driven in the Excel export (2026-05-22, plan
+[investor-excel-formula-conversion.md](feature-plans/investor-excel-formula-conversion.md)).**
+The investor workbook ships these cells as live Excel formulas
+referencing the Assumptions / Cash Flow / Pro Forma cells instead of
+engine-computed scalars — an LP edit propagates on workbook recalc:
+
+- Sources & Uses: Project Total Uses, Category Subtotals, Total Uses,
+  Total Sources, Sources Gap, Implied Equity Required.
+- Cover: Total Uses and Total Sources headline values (cross-sheet
+  references to S&U totals).
+- Underwriting Pro Forma: Effective Gross Income, NOI (sum/diff of
+  same-sheet rows).
+- Underwriting Cash Flow: Levered Cash Flow, Unlevered Cash Flow,
+  DSCR (annual), Cumulative Cash Flow.
+- Investor Returns: Return ($) per CapitalModule, Combined Levered
+  IRR (scenario) — `=IFERROR(IRR(r_uw_cf_levered),0)`.
+- Debt Schedule: Loan Summary Annual P&I for `pi` carry-type rows
+  (`PMT(rate/12, amort*12, -principal) * 12`).
+
+Everything else — NOI per year, OpEx, Debt Service, Equity Multiple,
+sensitivity grid, waterfall tier accruals — stays engine-computed for
+now. The remaining conversion work is enumerated in the plan doc
+under "Out of plan-scope but follow-up candidates."
+
 **Conventions used throughout.**
 - `TPC` = Total Project Cost (all non-exit, non-balance-only Use lines)
 - `P` = principal of a sized loan

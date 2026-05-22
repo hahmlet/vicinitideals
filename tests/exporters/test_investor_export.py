@@ -39,6 +39,11 @@ def _commit_3_sheet_order(num_projects: int) -> tuple[str, ...]:
     Sources & Uses → Sensitivity → Investor Returns → Waterfall → Unit Mix →
     Debt Schedule → Assumptions → P{n} per-project sheets → Glossary.
     Waterfall and Unit Mix were added in commits cbd2828/be7b361.
+
+    Formula-conversion plan §5 (commit 8): single-project scenarios omit
+    the P1 sheet because Underwriting Pro Forma / Cash Flow already show
+    the same numbers when there's only one project. Multi-project keeps
+    the per-P{n} sheets unchanged.
     """
     base_pre = (
         "Cover",
@@ -53,6 +58,9 @@ def _commit_3_sheet_order(num_projects: int) -> tuple[str, ...]:
         "Debt Schedule",
         "Assumptions",
     )
+    if num_projects == 1:
+        # Single-project consolidation: P1 sheet suppressed.
+        return base_pre + ("Glossary & Methodology",)
     return base_pre + tuple(
         # Match the seeder's "Main Project" name; tests with custom names
         # build the expected roster themselves.
@@ -87,6 +95,13 @@ _NON_METRIC_NAMES = frozenset({
     "s_assumptions_project_type",
     "s_hold_years", "s_opex_growth_rate", "s_initial_occupancy",
     "s_operating_reserve_months",
+    # Assumptions Block A — formula-conversion plan commit 1 additions.
+    # Each is a user-editable input (vacancy %, capex reserve $/unit,
+    # selling cost %, discount rate). Not metrics in the doc sense; they
+    # *drive* the metrics that are documented (exit value, levered cash
+    # flow, DCF NPV).
+    "s_vacancy_pct", "s_capex_reserve_per_unit",
+    "s_selling_costs_pct", "s_discount_rate",
     # Per-project meta (header cells)
     "s_returns_combined_irr",  # alias for s_combined_irr
 })
@@ -96,12 +111,13 @@ _NON_METRIC_NAMES = frozenset({
 # inputs, S&U totals) where the per-instance name doesn't map 1:1 to a doc
 # metric — the doc-level metric is what's tagged.
 _NON_METRIC_PREFIXES = (
-    "s_module_",       # capital stack rows (per-module principal/rate)
+    "s_module_",       # capital stack rows (per-module principal/rate/term/amort/...)
     "s_waterfall_",    # waterfall tier sums (per-tier-type cash distributed)
     "s_assumptions_",  # assumption inputs
     "s_su_",           # scenario S&U panel totals (alias of Total Uses/Sources/Gap)
     "s_su2_",          # dedicated Sources & Uses sheet totals (category + grand totals)
     "s_loan_",         # Debt Schedule per-loan rows (rate/term/amort/balloon)
+    "s_tier_",         # Block D waterfall hurdle inputs (per-tier irr_hurdle/lp_split/gp_split)
 )
 
 
@@ -531,12 +547,27 @@ async def test_no_accidental_formula_strings(session: AsyncSession):
     tried to parse as a formula and failed.
 
     This test scans every populated cell across every sheet, asserts that
-    any value starting with ``=`` is one of the export's known formula
-    types (currently only ``HYPERLINK(...)``). Anything else is a bug.
+    any value starting with ``=`` is either:
+      - a known formula function call we emit (HYPERLINK, SUM, IRR, ...)
+      - a pure-arithmetic / named-range / cell-reference expression made
+        of characters Excel accepts in formulas
+
+    Anything else (display text containing high-Unicode chars, prose with
+    a stray ``=``, etc.) is a bug.
     """
     scenario = await _seed_minimal_scenario(session)
     blob = await export_investor_workbook(scenario.id, session)
     wb = load_workbook(BytesIO(blob), data_only=False)
+
+    # Allowed characters in a pure-arithmetic / named-range / A1-reference
+    # formula. Excludes whitespace and high-Unicode so the Phase F4 hint-
+    # cell bug pattern still trips this check.
+    _formula_char_re = re.compile(r"^=[A-Za-z0-9_!.+\-*/$:,()\"']+$")
+    _allowed_function_prefixes = (
+        "=HYPERLINK(", "=SUM(", "=IRR(", "=XIRR(", "=IF(", "=IFERROR(",
+        "=MAX(", "=MIN(", "=ROUND(", "=PMT(", "=IPMT(", "=PPMT(",
+        "=SUMPRODUCT(", "=NPV(",
+    )
 
     bad_cells: list[str] = []
     for sheet_name in wb.sheetnames:
@@ -546,10 +577,9 @@ async def test_no_accidental_formula_strings(session: AsyncSession):
                 v = cell.value
                 if not isinstance(v, str) or not v.startswith("="):
                     continue
-                # Allowed: real HYPERLINK formulas the export generates
-                # for in-workbook navigation + GitHub anchor links on the
-                # Glossary sheet.
-                if v.startswith("=HYPERLINK("):
+                if v.startswith(_allowed_function_prefixes):
+                    continue
+                if _formula_char_re.match(v):
                     continue
                 bad_cells.append(f"{sheet_name}!{cell.coordinate}: {v!r}")
 
