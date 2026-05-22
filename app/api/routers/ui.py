@@ -8689,11 +8689,37 @@ async def deal_setup_wizard_complete(
                         pass
             _cm_vid_raw = dt.get(ft_str, {}).get("vehicle_id") if isinstance(dt, dict) else None
             _cm_vid = UUID(_cm_vid_raw) if _cm_vid_raw else None
+
+            # If a Source Vehicle was picked for this debt type, inherit
+            # rate/term/sizing/carry/exit from the vehicle's JSONB presets.
+            # Vehicle wins on overlap; wizard form values fill in gaps.
+            _cm_vehicle_type = "debt"
+            if _cm_vid is not None:
+                from app.models.source_vehicle import SourceVehicle as _SVDebt
+                _sv_pick = (await session.execute(
+                    select(_SVDebt).where(_SVDebt.id == _cm_vid)
+                )).scalar_one_or_none()
+                if _sv_pick is not None:
+                    _cm_label_for_cc = f"{_sv_pick.label} (auto)"
+                    _cm_vehicle_type = _sv_pick.vehicle_type or "debt"
+                    _source_dict = {
+                        **(_sv_pick.source_config or {}),
+                        **{k: v for k, v in _source_dict.items() if k == "auto_size"},
+                    }
+                    if _sv_pick.carry_config:
+                        carry = dict(_sv_pick.carry_config)
+                    if _sv_pick.exit_config:
+                        exit_terms_dict = dict(_sv_pick.exit_config)
+                    if _sv_pick.active_phase_start:
+                        active_from = _sv_pick.active_phase_start
+                    if _sv_pick.active_phase_end:
+                        derived_end = _sv_pick.active_phase_end
+
             session.add(CapitalModule(
                 id=cm_id,
                 scenario_id=model_id,
                 label=_cm_label_for_cc,
-                vehicle_type="debt",
+                vehicle_type=_cm_vehicle_type,
                 stack_position=pos,
                 source=_source_dict,
                 carry=carry,
