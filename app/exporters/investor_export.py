@@ -5064,14 +5064,28 @@ def _pct_value(obj, attr: str) -> Decimal | None:
     return raw / Decimal(100)
 
 
-def _coerce_decimal(value) -> Decimal:
+def _coerce_decimal(value) -> Decimal | None:
+    """Coerce to ``Decimal``. ``None`` / empty-string in, ``None`` out.
+
+    Permissive on None because Block C / Block D / Source Returns all
+    call this on optional ORM fields (``tier.irr_hurdle_pct``,
+    ``source.dscr_min``, etc.). Crashing on missing data is the wrong
+    behavior for a display-only exporter — surface ``None`` instead and
+    let the caller's ``_write_optional`` / em-dash path render the
+    missing cell as ``—``.
+    """
+    if value is None or value == "":
+        return None
     if isinstance(value, Decimal):
         return value
     return Decimal(str(value))
 
 
-def _coerce_pct(value) -> Decimal:
-    return _coerce_decimal(value) / Decimal(100)
+def _coerce_pct(value) -> Decimal | None:
+    d = _coerce_decimal(value)
+    if d is None:
+        return None
+    return d / Decimal(100)
 
 
 # ── Pro Forma profile sheet builders ──────────────────────────────────────────
