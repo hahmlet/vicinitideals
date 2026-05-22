@@ -448,7 +448,7 @@ async def _load_deals(
     if types:
         deals = [
             d for d in deals
-            if _primary_scenario(d) and str(getattr(_primary_scenario(d).project_type, "value", _primary_scenario(d).project_type)) in types
+            if _primary_scenario(d) is None or str(getattr(_primary_scenario(d).project_type, "value", _primary_scenario(d).project_type)) in types
         ]
 
     return deals
