@@ -142,7 +142,12 @@ async def export_investor_workbook(
     _HAS_RETURNS   = {"internal", "lp"}              # Investor Returns + Waterfall
     _HAS_UNIT_MIX  = {"internal", "lp", "lender"}
     _HAS_DEBT      = {"internal", "lender"}          # Debt Schedule
-    _HAS_ASSUMPT   = {"internal", "lender"}          # Assumptions
+    # Proforma profile also needs Assumptions: the S&U Sources rows
+    # emit ``=s_module_<n>_principal`` formulas, and those names only
+    # get registered inside _build_assumptions Block C. Without the
+    # sheet the formulas become dangling references that show #NAME?
+    # in Excel. Including the sheet keeps the named-range graph intact.
+    _HAS_ASSUMPT   = {"internal", "lender", "proforma"}  # Assumptions
     _HAS_SENS      = {"internal", "lp"}              # Sensitivity (slow; skip for lender/proforma)
     _HAS_PF        = {"proforma"}                    # New formula-driven Pro Forma sheets
 
@@ -5098,12 +5103,53 @@ def _write_pf_table(
     cash_flow_items_for_scope,  # dict[UUID, list[CashFlowLineItem]]
 ) -> int:
     """Write the standard NOI build table + breakouts; return next free row."""
+    from openpyxl.utils import get_column_letter
+
+    # Formula-conversion parity with commit 3's _build_uw_proforma: rows
+    # whose math is a direct sum/difference of other rows on this sheet
+    # become Excel formulas so the proforma-profile workbook responds to
+    # LP edits the same way the internal/lp/lender Underwriting Pro Forma
+    # does. EGI = GrossRev + Vacancy (vacancy is signed negative); NOI =
+    # EGI - OpEx - CapEx Reserve. Net Cash Flow stays engine-driven until
+    # Debt Service formulas land.
+    _DERIVED_FORMULA_FIELDS: dict[str, tuple[str, ...]] = {
+        "effective_gross_income": ("+gross_revenue", "+vacancy_loss"),
+        "noi": ("+effective_gross_income", "-operating_expenses", "-capex_reserve"),
+    }
+    field_row: dict[str, int] = {}
+
     cur_row = start_row
     for label, field in _PF_ROWS:
         ws.cell(row=cur_row, column=1, value=label).font = FONT_LABEL
+        field_row[field] = cur_row
+        derived = _DERIVED_FORMULA_FIELDS.get(field)
         for col_offset, year in enumerate(year_cols):
-            value = annual.get(year, {}).get(field, Decimal(0))
-            cell = ws.cell(row=cur_row, column=2 + col_offset, value=_to_excel_number(value))
+            col_idx = 2 + col_offset
+            if derived:
+                operands: list[str] = []
+                for spec in derived:
+                    sign, operand_field = spec[0], spec[1:]
+                    operand_row = field_row.get(operand_field)
+                    if operand_row is None:
+                        operands = []
+                        break
+                    col_letter = get_column_letter(col_idx)
+                    operands.append(f"{sign}{col_letter}{operand_row}")
+                if operands:
+                    formula = "=" + "".join(operands).lstrip("+")
+                    cell = ws.cell(row=cur_row, column=col_idx, value=formula)
+                else:
+                    value = annual.get(year, {}).get(field, Decimal(0))
+                    cell = ws.cell(
+                        row=cur_row, column=col_idx,
+                        value=_to_excel_number(value),
+                    )
+            else:
+                value = annual.get(year, {}).get(field, Decimal(0))
+                cell = ws.cell(
+                    row=cur_row, column=col_idx,
+                    value=_to_excel_number(value),
+                )
             cell.number_format = ACCOUNTING
             cell.font = FONT_VALUE
             cell.alignment = ALIGN_RIGHT
