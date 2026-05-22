@@ -2138,6 +2138,8 @@ def _write_breakout_table(
 
 def _build_uw_cashflow(ws, registry: CellRegistry, ctx: dict) -> None:
     """Annual cash flow: NOI / Capital Events / Levered / Unlevered / DS / DSCR / Cum LCF."""
+    from openpyxl.utils import get_column_letter
+
     cash_flows: dict[UUID, list[CashFlow]] = ctx["cash_flows"]
     cash_flow_items: dict[UUID, list[CashFlowLineItem]] = ctx["cash_flow_items"]
 
@@ -2156,9 +2158,19 @@ def _build_uw_cashflow(ws, registry: CellRegistry, ctx: dict) -> None:
     header_row(ws, 2, ["Line Item", *[f"Y{y}" for y in year_cols]])
 
     cur_row = 3
+    # Track row index per series key so derived rows (DSCR, Unlevered,
+    # Cumulative, Levered) can reference the actual cells by column letter
+    # rather than emit hard-coded engine values. Keys are local labels
+    # (noi, capital_events, debt_proceeds, debt_service, levered, etc.).
+    series_row: dict[str, int] = {}
 
-    def write_series(label: str, source: dict[int, Decimal], range_name: str | None,
-                     fmt: str = ACCOUNTING) -> None:
+    def write_series(
+        label: str,
+        source: dict[int, Decimal],
+        range_name: str | None,
+        fmt: str = ACCOUNTING,
+        series_key: str | None = None,
+    ) -> None:
         nonlocal cur_row
         ws.cell(row=cur_row, column=1, value=label).font = FONT_LABEL
         for col_offset, year in enumerate(year_cols):
@@ -2172,14 +2184,51 @@ def _build_uw_cashflow(ws, registry: CellRegistry, ctx: dict) -> None:
                 range_name, ws.title, cur_row, cur_row, col=2,
                 end_col=1 + len(year_cols),
             )
+        if series_key:
+            series_row[series_key] = cur_row
+        cur_row += 1
+
+    def write_formula_series(
+        label: str,
+        formula_fn,
+        range_name: str | None,
+        fmt: str = ACCOUNTING,
+        series_key: str | None = None,
+    ) -> None:
+        """Write a derived row where each year cell is a formula string.
+
+        ``formula_fn(col_letter)`` returns the formula text (including the
+        leading ``=``) for one column. Mirrors write_series for layout
+        (label col, year cols, registry range, optional series_key) but
+        emits Excel formulas instead of engine scalars.
+        """
+        nonlocal cur_row
+        ws.cell(row=cur_row, column=1, value=label).font = FONT_LABEL
+        for col_offset, _year in enumerate(year_cols):
+            col_idx = 2 + col_offset
+            col_letter = get_column_letter(col_idx)
+            cell = ws.cell(row=cur_row, column=col_idx, value=formula_fn(col_letter))
+            cell.number_format = fmt
+            cell.font = FONT_VALUE
+            cell.alignment = ALIGN_RIGHT
+        if range_name and year_cols:
+            registry.register_range(
+                range_name, ws.title, cur_row, cur_row, col=2,
+                end_col=1 + len(year_cols),
+            )
+        if series_key:
+            series_row[series_key] = cur_row
         cur_row += 1
 
     noi_series = {y: annual.get(y, {}).get("noi", Decimal(0)) for y in year_cols}
     debt_series = {y: annual.get(y, {}).get("debt_service", Decimal(0)) for y in year_cols}
     ncf_series = {y: annual.get(y, {}).get("net_cash_flow", Decimal(0)) for y in year_cols}
 
-    write_series("NOI", noi_series, "r_uw_cf_noi")
-    write_series("Capital Events (acq + exit)", capital_events_by_year, "r_uw_cf_capital_events")
+    write_series("NOI", noi_series, "r_uw_cf_noi", series_key="noi")
+    write_series(
+        "Capital Events (acq + exit)", capital_events_by_year,
+        "r_uw_cf_capital_events", series_key="capital_events",
+    )
 
     # Debt proceeds drawn at acquisition close (Y0) — show as explicit inflow so
     # the LP can see: Acquisition Cost − Debt Proceeds = Net Equity Deployed.
@@ -2195,39 +2244,74 @@ def _build_uw_cashflow(ws, registry: CellRegistry, ctx: dict) -> None:
                 (_m.source or {}).get("amount") or 0
             )
     if _debt_y0 > Decimal(1):
-        write_series("Debt Proceeds (Y0 draws)", {0: _debt_y0}, "r_uw_cf_debt_proceeds")
-
-    write_series("Debt Service", debt_series, "r_uw_cf_debt_service")
-    write_series("Levered Cash Flow", ncf_series, "r_uw_cf_levered")
-
-    # Unlevered = engine's NCF + DS (= NOI + capital events, signed).
-    # Sourcing from NCF + DS instead of (NOI + signed_cap_events) keeps the
-    # row consistent with _combined_unlevered_irr which uses the same path.
-    unlevered_series = {
-        y: ncf_series.get(y, Decimal(0)) + debt_series.get(y, Decimal(0))
-        for y in year_cols
-    }
-    write_series("Unlevered Cash Flow", unlevered_series, "r_uw_cf_unlevered")
-
-    dscr_series = {}
-    for y in year_cols:
-        ds = debt_series.get(y, Decimal(0))
-        dscr_series[y] = (
-            (noi_series.get(y, Decimal(0)) / ds) if ds and ds != 0 else Decimal(0)
+        write_series(
+            "Debt Proceeds (Y0 draws)", {0: _debt_y0},
+            "r_uw_cf_debt_proceeds", series_key="debt_proceeds",
         )
-    write_series("DSCR (annual)", dscr_series, "r_uw_cf_dscr", fmt="0.000")
 
-    # Cumulative = running sum of Levered CF (engine's NCF). Capital events
-    # are already inside NCF via the engine's invariant, so adding them
-    # separately would double-count. This makes the row read as
-    # "cumulative cash to equity through period N" without needing the
-    # capital_events_by_year addition that was here before.
-    cumulative: dict[int, Decimal] = {}
-    running = Decimal(0)
-    for y in year_cols:
-        running += ncf_series.get(y, Decimal(0))
-        cumulative[y] = running
-    write_series("Cumulative Cash Flow", cumulative, "r_uw_cf_cumulative")
+    write_series(
+        "Debt Service", debt_series, "r_uw_cf_debt_service",
+        series_key="debt_service",
+    )
+
+    # Formula-conversion plan §4.2 (commit 4): Levered, Unlevered, DSCR,
+    # and Cumulative are clean sum/diff/ratio derivations of the engine
+    # rows written above. Wire them as formulas so an LP edit to NOI
+    # propagates through the deal-level cash flow downstream.
+    #
+    # Levered CF = NOI + Capital Events [+ Debt Proceeds] - Debt Service.
+    # Engine writes this as net_cash_flow already; building it from the
+    # other rows here means an LP can see the arithmetic and edit any
+    # operand to recompute.
+    noi_row = series_row["noi"]
+    capevt_row = series_row["capital_events"]
+    debt_proceeds_row = series_row.get("debt_proceeds")
+    ds_row = series_row["debt_service"]
+
+    def _levered_formula(col_letter: str) -> str:
+        terms = [f"{col_letter}{noi_row}", f"+{col_letter}{capevt_row}"]
+        if debt_proceeds_row is not None:
+            terms.append(f"+{col_letter}{debt_proceeds_row}")
+        terms.append(f"-{col_letter}{ds_row}")
+        return "=" + "".join(terms)
+
+    write_formula_series(
+        "Levered Cash Flow", _levered_formula, "r_uw_cf_levered",
+        series_key="levered",
+    )
+
+    # Unlevered = Levered + Debt Service. Matches the engine path used by
+    # _combined_unlevered_irr (NCF + DS). Reads as "cash flow before debt".
+    lev_row = series_row["levered"]
+
+    def _unlevered_formula(col_letter: str) -> str:
+        return f"={col_letter}{lev_row}+{col_letter}{ds_row}"
+
+    write_formula_series(
+        "Unlevered Cash Flow", _unlevered_formula, "r_uw_cf_unlevered",
+    )
+
+    # DSCR = NOI / Debt Service per column. IFERROR guards Y0 / zero-DS
+    # rows so a divide-by-zero shows as 0 instead of #DIV/0! in the
+    # workbook — matches the engine behavior which returns 0 when ds is 0.
+    def _dscr_formula(col_letter: str) -> str:
+        return (
+            f"=IFERROR({col_letter}{noi_row}/{col_letter}{ds_row},0)"
+        )
+
+    write_formula_series(
+        "DSCR (annual)", _dscr_formula, "r_uw_cf_dscr", fmt="0.000",
+    )
+
+    # Cumulative = running SUM of Levered CF from Y0 through current col.
+    # SUM($B$<lev_row>:<col_letter><lev_row>) lets Excel propagate edits
+    # without us needing to redo the prefix sum here.
+    def _cumulative_formula(col_letter: str) -> str:
+        return f"=SUM($B${lev_row}:{col_letter}{lev_row})"
+
+    write_formula_series(
+        "Cumulative Cash Flow", _cumulative_formula, "r_uw_cf_cumulative",
+    )
 
     freeze_top(ws, row=3)
     print_landscape(ws)
