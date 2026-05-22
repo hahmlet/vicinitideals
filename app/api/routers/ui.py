@@ -421,7 +421,7 @@ async def _load_deals(
     if hide_test:
         stmt = stmt.where(
             ~Deal.name.ilike("%e2e%") &
-            ~Deal.name.op("~*")(r"phase\s+\d+\s+test\s+\d+")
+            ~Deal.name.op("~*")(r"phase\s+\w+\s+test\s+\w+")
         )
 
     if q:
