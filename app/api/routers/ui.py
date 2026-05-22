@@ -2816,7 +2816,10 @@ def _apply_opp_filters(
     hide_test: bool = False,
 ) -> object:
     if hide_test:
-        stmt = stmt.where(~Opportunity.name.ilike("%e2e%"))
+        stmt = stmt.where(
+            ~Opportunity.name.ilike("%e2e%") &
+            ~Opportunity.name.op("~*")(r"phase\s+\w+\s+test\s+\w+")
+        )
     if favorited:
         stmt = stmt.where(Opportunity.is_favorited.is_(True))
     if jurisdiction:
