@@ -86,6 +86,12 @@ dev = [
     # DATABASE around the test session — those steps must run outside any
     # asyncio loop. asyncpg handles every other interaction.
     "psycopg2-binary>=2.9",
+    # Excel COM bridge for the investor-export formula-conversion parity
+    # tests (docs/feature-plans/investor-excel-formula-conversion.md §8).
+    # Used to force Excel to recalc a workbook so openpyxl can read the
+    # cached computed values via ``data_only=True``. Windows-only; CI
+    # gates the parity tests on platform so non-Windows runs skip them.
+    'pywin32>=306; platform_system == "Windows"',
 ]
 e2e = [
     "pytest-playwright>=0.4",

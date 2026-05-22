@@ -186,3 +186,157 @@ def count_formula_cells(blob: bytes) -> dict[str, int]:
         if _is_formula(value):
             counts[sheet] = counts.get(sheet, 0) + 1
     return counts
+
+
+# ── Excel recalc + computed-value access ──────────────────────────────────────
+#
+# openpyxl writes formulas as-text but cannot evaluate them. To compare an
+# engine-computed value (e.g. DSCR = 1.15) against the Excel cell that should
+# show that same value via a formula, the workbook must be opened by a real
+# formula engine that recalcs every cell and writes the computed values back
+# to the .xlsx cache. openpyxl then reads those cached values via
+# ``data_only=True``.
+#
+# The harness uses Excel COM on Windows (Office must be installed). A future
+# CI gate will swap in headless LibreOffice via the same interface
+# (``recalc_workbook(path)``) so non-Windows runs can execute the parity
+# tests too. The plan calls this out in §8 / §9.
+
+
+import platform  # noqa: E402 — kept near the COM helpers, not the top imports.
+import subprocess  # noqa: E402
+from pathlib import Path  # noqa: E402
+
+
+class RecalcUnavailableError(RuntimeError):
+    """Raised when no formula-evaluation engine is available on this host."""
+
+
+def recalc_with_excel_com(path: Path) -> None:
+    """Force-recalc a workbook in place via Excel COM (Windows + Office).
+
+    Opens ``path`` in a hidden Excel instance, runs ``Application.Calculate``
+    + ``Workbook.Save`` (which embeds the computed values into the .xlsx
+    cache), then closes Excel. After this call, ``load_workbook(path,
+    data_only=True)`` returns Excel-evaluated cell values for every formula
+    in the workbook.
+
+    Raises ``RecalcUnavailableError`` if pywin32 is missing or Excel is
+    not installed. Callers should catch and skip the test on those hosts.
+    """
+    if platform.system() != "Windows":
+        raise RecalcUnavailableError(
+            "Excel COM recalc is Windows-only; install LibreOffice or use "
+            "a different recalc backend on this host"
+        )
+    try:
+        import win32com.client  # type: ignore[import-not-found]
+    except ImportError as exc:
+        raise RecalcUnavailableError(
+            "pywin32 not installed in this environment"
+        ) from exc
+
+    abs_path = str(Path(path).resolve())
+    excel = win32com.client.Dispatch("Excel.Application")
+    excel.DisplayAlerts = False
+    excel.Visible = False
+    try:
+        wb = excel.Workbooks.Open(abs_path)
+        try:
+            excel.CalculateFull()
+            wb.Save()
+        finally:
+            wb.Close(SaveChanges=False)
+    finally:
+        excel.Quit()
+
+
+def recalc_with_libreoffice(path: Path) -> None:
+    """Headless LibreOffice recalc (Linux/macOS/Windows-with-LO).
+
+    Roundtrips the workbook through ``soffice --headless --convert-to xlsx``
+    which evaluates formulas and writes cached values into the output. The
+    resulting .xlsx replaces the original at ``path``.
+
+    Used as the CI backend on Linux runners where Excel COM is unavailable.
+    """
+    soffice = _find_soffice()
+    if soffice is None:
+        raise RecalcUnavailableError(
+            "LibreOffice (soffice) not found on PATH"
+        )
+    src = Path(path).resolve()
+    out_dir = src.parent
+    subprocess.run(
+        [soffice, "--headless", "--calc", "--convert-to", "xlsx",
+         "--outdir", str(out_dir), str(src)],
+        check=True, capture_output=True, timeout=120,
+    )
+    # LibreOffice writes <stem>.xlsx into out_dir; if it equals src we're
+    # done. If LO chose a different name (rare), surface that as an error.
+    if not src.exists():
+        raise RecalcUnavailableError(
+            f"LibreOffice convert did not produce {src.name}"
+        )
+
+
+def _find_soffice() -> str | None:
+    """Locate the ``soffice`` executable across platforms."""
+    import shutil
+    for name in ("soffice", "libreoffice"):
+        path = shutil.which(name)
+        if path:
+            return path
+    return None
+
+
+def recalc_workbook(path: Path) -> str:
+    """Recalc ``path`` with whichever engine is available.
+
+    Returns the backend name ("excel" or "libreoffice") on success.
+    Tries Excel COM first (faster, more accurate), then LibreOffice.
+    Raises ``RecalcUnavailableError`` if neither works.
+    """
+    if platform.system() == "Windows":
+        try:
+            recalc_with_excel_com(path)
+            return "excel"
+        except RecalcUnavailableError:
+            pass
+    recalc_with_libreoffice(path)
+    return "libreoffice"
+
+
+def read_named_value(path: Path, name: str, *, data_only: bool = True):
+    """Read the value of a defined name from a workbook.
+
+    With ``data_only=True``, returns the cached computed value (run
+    ``recalc_workbook`` first to make this meaningful). With
+    ``data_only=False``, returns the formula text (string starting with
+    ``=``) or the literal value if the cell isn't a formula.
+
+    Raises ``KeyError`` if the defined name doesn't exist.
+    """
+    from openpyxl import load_workbook
+    wb = load_workbook(path, data_only=data_only)
+    if name not in wb.defined_names:
+        raise KeyError(f"defined name {name!r} not in workbook")
+    destinations = list(wb.defined_names[name].destinations)
+    if not destinations:
+        raise KeyError(f"defined name {name!r} has no destinations")
+    sheet, ref = destinations[0]
+    # ref is "$A$3" style; openpyxl accepts it directly.
+    return wb[sheet][ref.replace("$", "")].value
+
+
+def read_formula_text(path: Path, name: str) -> str | None:
+    """Return the formula text behind a defined name, or None if not a formula.
+
+    Convenience wrapper around ``read_named_value(..., data_only=False)``
+    that filters to formula strings only. Used by parity tests that assert
+    a cell is formula-driven, not a hard-coded value.
+    """
+    raw = read_named_value(path, name, data_only=False)
+    if isinstance(raw, str) and raw.startswith("="):
+        return raw
+    return None
