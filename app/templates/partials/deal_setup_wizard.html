@@ -31,10 +31,8 @@
   width: 100%;
   max-width: 640px;
   box-shadow: 0 2px 12px rgba(0,0,0,.06);
-  overflow: hidden;
   display: flex;
   flex-direction: column;
-  max-height: calc(100vh - 80px);
 }
 .wizard-card > form {
   display: flex;
@@ -98,7 +96,6 @@
 .wizard-body {
   padding: 20px 28px 8px;
   flex: 1;
-  overflow-y: auto;
   min-height: 0;
 }
 .wizard-footer {
@@ -358,6 +355,26 @@
 
         </div>
 
+        {# Pro forma upload zone — sits directly under Income Mode so the
+           upload lives next to the mode that uses it. Visible only for
+           revenue_opex.  When a file is selected, the Next button POSTs
+           to /proforma-preflight.  No file: button reads "Skip Import →"
+           (revenue_opex) or "Next →" (noi). #}
+        <div id="proforma-block" {% if _im != 'revenue_opex' %}style="display:none"{% endif %}>
+          <div class="section-label">Operating Pro Forma (optional)</div>
+          <label class="proforma-zone" id="proforma-zone"
+                 ondragover="onProformaDragOver(event)"
+                 ondragleave="onProformaDragLeave(event)"
+                 ondrop="onProformaDrop(event)">
+            <div class="proforma-zone-title">Drag a pro forma here or click to choose a file</div>
+            <div class="proforma-zone-hint">PDF, XLS, XLSX — we'll parse Revenue / OpEx into the model. Skip to enter values by hand.</div>
+            <input type="file" id="proforma-file" name="file" accept=".pdf,.xls,.xlsx" onchange="onProformaFile(this)">
+            <div id="proforma-pill" style="display:none">
+              <div class="proforma-file-pill"><span id="proforma-name"></span><a href="#" onclick="clearProformaFile(event)" style="color:var(--accent);text-decoration:none">✕</a></div>
+            </div>
+          </label>
+        </div>
+
         <div class="section-label">Permanent Debt Sizing Mode</div>
         <div class="toggle-row">
           <label class="toggle-opt {% if _dsm == 'gap_fill' %}selected{% endif %}"
@@ -380,25 +397,6 @@
                    {% if _dsm == 'dual_constraint' %}checked{% endif %}>
             <div class="toggle-opt-title">Dual Constraint</div>
             <div class="toggle-opt-desc">MIN of LTV, DSCR, and gap-fill. Industry standard — lender funds the smaller.</div>
-          </label>
-        </div>
-
-        {# Pro forma upload — drop zone visible only when revenue_opex.  When
-           a file is dropped/selected, the Step 1 submit button changes to
-           "Import →" and the form action swaps to proforma-preflight.  With
-           no file, button is "Skip Import →" (revenue_opex) or "Next →" (noi). #}
-        <div id="proforma-block" {% if _im != 'revenue_opex' %}style="display:none"{% endif %}>
-          <div class="section-label">Operating Pro Forma (optional)</div>
-          <label class="proforma-zone" id="proforma-zone"
-                 ondragover="onProformaDragOver(event)"
-                 ondragleave="onProformaDragLeave(event)"
-                 ondrop="onProformaDrop(event)">
-            <div class="proforma-zone-title">Drag a pro forma here or click to choose a file</div>
-            <div class="proforma-zone-hint">PDF, XLS, XLSX — we'll parse Revenue / OpEx into the model. Skip to enter values by hand.</div>
-            <input type="file" id="proforma-file" name="file" accept=".pdf,.xls,.xlsx" onchange="onProformaFile(this)">
-            <div id="proforma-pill" style="display:none">
-              <div class="proforma-file-pill"><span id="proforma-name"></span><a href="#" onclick="clearProformaFile(event)" style="color:var(--accent);text-decoration:none">✕</a></div>
-            </div>
           </label>
         </div>
 
