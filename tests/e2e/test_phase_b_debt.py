@@ -106,6 +106,33 @@ def _find_use_line(use_lines: list[dict], label: str) -> dict | None:
     return None
 
 
+def _zero_auto_dev_fee(page, model_id: str) -> None:
+    """Set the auto Developer Fee UseLine `dev_fee_pct=0` so its $ amount
+    collapses to zero on the next engine pass. Required for Phase B carry
+    invariants (P == base + carry) — the auto dev fee otherwise lands in
+    construction phase for value-add deals and inflates loan sizing.
+
+    Matches by label since `UseLineRead` does not expose `is_auto_dev_fee`.
+    """
+    use_lines = _api_get(page, f"/api/models/{model_id}/use-lines")
+    auto = next(
+        (ul for ul in use_lines if str(ul.get("label", "")).strip().lower() == "developer fee"),
+        None,
+    )
+    if auto is None:
+        return
+    cookie = _get_session_cookie(page)
+    from urllib.parse import urlparse
+    parsed = urlparse(page.url)
+    base_url = f"{parsed.scheme}://{parsed.netloc}"
+    with httpx.Client(base_url=base_url, cookies={COOKIE_NAME: cookie}) as client:
+        resp = client.put(
+            f"/ui/forms/{model_id}/use-lines/{auto['id']}",
+            data={"dev_fee_pct": "0"},
+        )
+        assert resp.status_code == 200, f"zero dev fee PUT: {resp.status_code} {resp.text[:200]}"
+
+
 def _find_module_by_label(modules: list[dict], label_keyword: str) -> dict | None:
     """Find first module whose label contains label_keyword (case-insensitive)."""
     kw = label_keyword.lower()
@@ -353,6 +380,12 @@ def test_phase_b_debt(tc: dict, _seed_page, base_url: str) -> None:
     for label, amount, ms_key in tc["use_lines"]:
         add_use_line(page, model_id, label, amount, milestone_key=ms_key)
 
+    # ── Zero the auto Developer Fee UseLine ──────────────────────────────
+    # Phase B test data assumes constr_costs = explicit use_lines only. The
+    # auto-seeded Dev Fee (added per deal-create for all deal types) would
+    # otherwise add 12% × TPC into construction phase for value_add deals.
+    _zero_auto_dev_fee(page, model_id)
+
     # ── Add income + expenses via browser ────────────────────────────────
     add_income_stream(page, model_id, unit_count="20", amount_per_unit_monthly="1200")
     add_expense_line(page, model_id, "Property Management", "28800")
@@ -410,20 +443,6 @@ def test_phase_b_debt(tc: dict, _seed_page, base_url: str) -> None:
     rate = Decimal(ecm["rate_pct"])
 
     # Invariant 1: P == base + carry_amount
-    # NOTE (2026-05-22): variants ir_12mo and ci_12mo regress against this
-    # invariant after the auto Total Finance Costs UseLine was pinned to the
-    # acquisition phase (commit a2a9001). Closing-cost roll-in now flows
-    # through construction-loan sizing for value-add deals with pre_dev +
-    # construction phases, inflating P by ~$290k. Tracked separately; xfail
-    # so the green-on-prod ship is not blocked by a known issue.
-    if tc.get("id") in ("ir_12mo", "ci_12mo"):
-        if abs(principal - (base + actual_amt)) >= Decimal("1"):
-            import pytest as _pytest
-            _pytest.xfail(
-                "Known regression post-a2a9001 — Total Finance Costs UseLine "
-                "in acquisition phase inflates construction-loan principal for "
-                "IR/CI carry variants with pre_development milestone seeded."
-            )
     assert abs(principal - (base + actual_amt)) < Decimal("1"), (
         f"Balance check failed: P={principal} != base={base} + amt={actual_amt}"
     )
