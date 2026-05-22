@@ -102,6 +102,9 @@ _NON_METRIC_NAMES = frozenset({
     # flow, DCF NPV).
     "s_vacancy_pct", "s_capex_reserve_per_unit",
     "s_selling_costs_pct", "s_discount_rate",
+    # Phase B follow-up: Y1 OpEx cell exposed as a defined name so the
+    # S&U Operating Reserve UseLine formula resolves.
+    "s_y1_opex",
     # Per-project meta (header cells)
     "s_returns_combined_irr",  # alias for s_combined_irr
 })

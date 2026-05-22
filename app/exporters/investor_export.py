@@ -142,12 +142,13 @@ async def export_investor_workbook(
     _HAS_RETURNS   = {"internal", "lp"}              # Investor Returns + Waterfall
     _HAS_UNIT_MIX  = {"internal", "lp", "lender"}
     _HAS_DEBT      = {"internal", "lender"}          # Debt Schedule
-    # Proforma profile also needs Assumptions: the S&U Sources rows
-    # emit ``=s_<slug>_principal`` formulas, and those names only
-    # get registered inside _build_assumptions Block C. Without the
-    # sheet the formulas become dangling references that show #NAME?
-    # in Excel. Including the sheet keeps the named-range graph intact.
-    _HAS_ASSUMPT   = {"internal", "lender", "proforma"}  # Assumptions
+    # Every profile that renders S&U needs Assumptions too: S&U Sources
+    # rows emit ``=s_<slug>_principal`` formulas and the new Operating
+    # Reserve UseLine emits ``=s_operating_reserve_months*...``. Those
+    # defined names only get registered inside _build_assumptions
+    # (Block C + Block A). Without the sheet the formulas become
+    # dangling references that show #NAME? in Excel.
+    _HAS_ASSUMPT   = {"internal", "lp", "lender", "proforma"}  # Assumptions
     _HAS_SENS      = {"internal", "lp"}              # Sensitivity (slow; skip for lender/proforma)
     _HAS_PF        = {"proforma"}                    # New formula-driven Pro Forma sheets
 
@@ -2065,6 +2066,10 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
                 col=2,
                 end_col=1 + len(year_cols),
             )
+        # Phase B follow-up: expose Y1 OpEx as a workbook-scoped name so
+        # the S&U Operating Reserve UseLine formula resolves.
+        if field == "operating_expenses" and len(year_cols) >= 2:
+            registry.register("s_y1_opex", ws.title, cur_row, 3)
         cur_row += 1
 
     # OER (Operating Expense Ratio) = OpEx / EGI per year. Standard CRE
@@ -4702,7 +4707,18 @@ def _build_su_sheet(
             for ul in cat_lines:
                 amt = _coerce_decimal(ul.amount or 0)
                 ws.cell(row=line, column=1, value=f"  {ul.label or ''}").font = FONT_VALUE
-                ws.cell(row=line, column=2, value=_to_excel_number(amt)).number_format = ACCOUNTING
+                # Operating Reserve is a derived Use: months × Y1 OpEx ÷ 12.
+                # When the workbook includes a Pro Forma sheet (every profile
+                # that has S&U also has a Pro Forma) the Y1 OpEx cell is
+                # registered as ``s_y1_opex`` so this formula resolves at
+                # open-time. Assumptions sheet supplies ``s_operating_reserve_months``.
+                label_norm = (ul.label or "").strip().lower()
+                if "operating reserve" in label_norm or label_norm == "op reserve":
+                    formula = "=s_operating_reserve_months*s_y1_opex/12"
+                    cell = ws.cell(row=line, column=2, value=formula)
+                    cell.number_format = ACCOUNTING
+                else:
+                    ws.cell(row=line, column=2, value=_to_excel_number(amt)).number_format = ACCOUNTING
                 line += 1
             last_line_row = line - 1
 
@@ -5249,6 +5265,16 @@ def _write_pf_table(
             cell.number_format = ACCOUNTING
             cell.font = FONT_VALUE
             cell.alignment = ALIGN_RIGHT
+        # Phase B follow-up: expose Y1 OpEx as a workbook-scoped name. The
+        # proforma profile calls _write_pf_table twice (combined Pro Forma
+        # sheet + per-project Pro Forma sheets); only the first call should
+        # register the name to avoid collision.
+        if (
+            field == "operating_expenses"
+            and len(year_cols) >= 2
+            and "s_y1_opex" not in registry._names
+        ):
+            registry.register("s_y1_opex", ws.title, cur_row, 3)
         cur_row += 1
 
     # OER derived row — formula references the OpEx and EGI cells written
