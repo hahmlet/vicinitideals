@@ -143,7 +143,7 @@ async def export_investor_workbook(
     _HAS_UNIT_MIX  = {"internal", "lp", "lender"}
     _HAS_DEBT      = {"internal", "lender"}          # Debt Schedule
     # Proforma profile also needs Assumptions: the S&U Sources rows
-    # emit ``=s_module_<n>_principal`` formulas, and those names only
+    # emit ``=s_<slug>_principal`` formulas, and those names only
     # get registered inside _build_assumptions Block C. Without the
     # sheet the formulas become dangling references that show #NAME?
     # in Excel. Including the sheet keeps the named-range graph intact.
@@ -458,6 +458,7 @@ async def _load_all(session: AsyncSession, scenario_id: UUID) -> dict | None:
         "use_lines": use_lines_by_project,
         "unit_mix": unit_mix_by_project,
         "capital_modules": capital_modules,
+        "module_slugs": _compute_module_slugs(capital_modules),
         "junctions": junctions,
         "cash_flows": cash_flows_by_project,
         "cash_flow_items": cash_flow_items_by_project,
@@ -729,10 +730,10 @@ def _build_cover(ws, registry: CellRegistry, ctx: dict) -> None:
     # Sources are cross-sheet references to the Sources & Uses sheet so
     # edits to the per-project Use lines (or to Block C principals) ripple
     # straight to the Cover hero block.
-    kv_row(ws, row, "Total Uses", "=s_su2_uses_total",
+    kv_row(ws, row, "Total Uses", "=s_su_uses_total",
            name="s_cover_uses", registry=registry, fmt=ACCOUNTING)
     row += 1
-    kv_row(ws, row, "Total Sources", "=s_su2_sources_total",
+    kv_row(ws, row, "Total Sources", "=s_su_sources_total",
            name="s_cover_sources", registry=registry, fmt=ACCOUNTING)
     row += 1
     if carrying_costs > Decimal(0):
@@ -1452,10 +1453,12 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
     uses_total = sum(uses_by_cat.values(), Decimal(0))
     ws.cell(row=line, column=1, value="Use").font = FONT_LABEL
     ws.cell(row=line, column=2, value="Total Uses (excl. exit)").font = FONT_LABEL
-    registry.write(
-        ws, line, 3, uses_total,
-        name="s_su_uses_total", fmt=ACCOUNTING, font=FONT_LABEL, align=ALIGN_RIGHT,
-    )
+    # Reference the dedicated S&U sheet's grand total so this stays in sync
+    # when LP edits Block C principals. The S&U sheet registers the name.
+    _c = ws.cell(row=line, column=3, value="=s_su_uses_total")
+    _c.number_format = ACCOUNTING
+    _c.font = FONT_LABEL
+    _c.alignment = ALIGN_RIGHT
     line += 2
 
     # Sources — capital modules, deduplicated for shared modules via junctions
@@ -1492,19 +1495,19 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
 
     ws.cell(row=line, column=1, value="Source").font = FONT_LABEL
     ws.cell(row=line, column=2, value="Total Sources").font = FONT_LABEL
-    registry.write(
-        ws, line, 3, sources_total,
-        name="s_su_sources_total", fmt=ACCOUNTING, font=FONT_LABEL, align=ALIGN_RIGHT,
-    )
+    _c = ws.cell(row=line, column=3, value="=s_su_sources_total")
+    _c.number_format = ACCOUNTING
+    _c.font = FONT_LABEL
+    _c.alignment = ALIGN_RIGHT
     line += 1
 
-    gap = uses_total - sources_total
     ws.cell(row=line, column=1, value="Δ").font = FONT_LABEL
     ws.cell(row=line, column=2, value="Sources Gap (Uses − Sources)").font = FONT_LABEL
-    registry.write(
-        ws, line, 3, gap,
-        name="s_sources_gap", fmt=ACCOUNTING, font=FONT_LABEL, align=ALIGN_RIGHT,
-    )
+    _c = ws.cell(row=line, column=3, value="=s_su_uses_total-s_su_sources_total")
+    _c.number_format = ACCOUNTING
+    _c.font = FONT_LABEL
+    _c.alignment = ALIGN_RIGHT
+    registry.register("s_sources_gap", ws.title, line, 3)
     line += 2
 
     # ── Per-project mini-summary ───────────────────────────────────────────
@@ -2662,6 +2665,7 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
     summary = ctx.get("rollup_summary") or {}
     totals = summary.get("totals") or {}
     capital_modules: list[CapitalModule] = ctx["capital_modules"]
+    module_slugs: dict = ctx.get("module_slugs") or _compute_module_slugs(capital_modules)
     junctions: list[CapitalModuleProject] = ctx["junctions"]
     projects_by_id: dict[UUID, Project] = {p.id: p for p in ctx["projects"]}
     outputs_by_project: dict[UUID, OperationalOutputs] = ctx.get("outputs") or {}
@@ -2776,6 +2780,7 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
         source = module.source or {}
         carry = module.carry or {}
         mid_str = str(module.id)
+        slug = module_slugs.get(module.id) or f"module_{m_idx}"
         principal = junction_principal.get(module.id)
         if principal is None:
             principal = _coerce_decimal(source.get("amount") or 0)
@@ -2829,20 +2834,20 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
 
         registry.write(
             ws, cur_row, 4, principal,
-            name=f"s_module_{m_idx}_principal_returns", fmt=ACCOUNTING,
+            name=f"s_{slug}_principal_returns", fmt=ACCOUNTING,
             font=FONT_VALUE, align=ALIGN_RIGHT,
         )
         _write_optional(
             ws, cur_row, 5, rate, registry,
-            name=f"s_module_{m_idx}_rate_returns", fmt=PCT,
+            name=f"s_{slug}_rate_returns", fmt=PCT,
         )
         _write_optional(
             ws, cur_row, 6, total_ds, registry,
-            name=f"s_module_{m_idx}_total_ds", fmt=ACCOUNTING,
+            name=f"s_{slug}_total_ds", fmt=ACCOUNTING,
         )
         _write_optional(
             ws, cur_row, 7, distributions, registry,
-            name=f"s_module_{m_idx}_distributions", fmt=ACCOUNTING,
+            name=f"s_{slug}_distributions", fmt=ACCOUNTING,
         )
         # Formula-conversion plan §4.3 (commit 5): Return ($) is a clean
         # derivation of (total_ds or distributions) - principal. When the
@@ -2860,16 +2865,16 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
             cell.font = FONT_VALUE
             cell.alignment = ALIGN_RIGHT
             registry.register(
-                f"s_module_{m_idx}_return_dollars", ws.title, cur_row, 8,
+                f"s_{slug}_return_dollars", ws.title, cur_row, 8,
             )
         else:
             _write_optional(
                 ws, cur_row, 8, return_dollars, registry,
-                name=f"s_module_{m_idx}_return_dollars", fmt=ACCOUNTING,
+                name=f"s_{slug}_return_dollars", fmt=ACCOUNTING,
             )
         _write_optional(
             ws, cur_row, 9, return_pct, registry,
-            name=f"s_module_{m_idx}_return_pct", fmt=PCT,
+            name=f"s_{slug}_return_pct", fmt=PCT,
         )
         cur_row += 1
 
@@ -4232,6 +4237,7 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
     use_lines_by_project: dict[UUID, list[UseLine]] = ctx["use_lines"]
     unit_mix_by_project: dict[UUID, list] = ctx["unit_mix"]
     capital_modules: list[CapitalModule] = ctx["capital_modules"]
+    module_slugs: dict = ctx.get("module_slugs") or _compute_module_slugs(capital_modules)
     junctions: list[CapitalModuleProject] = ctx["junctions"]
 
     # Layout: 1 (label) + max(MAX_PROJECTS_PER_SCENARIO, len(CAPITAL_STACK_HEADERS)-1)
@@ -4422,6 +4428,7 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
         rate = source.get("interest_rate_pct") or carry.get("io_rate_pct") or 0
         auto_size = bool(source.get("auto_size"))
         is_shared = junction_count_by_module.get(module.id, 0) > 1
+        slug = module_slugs.get(module.id) or f"module_{m_idx}"
 
         # Col 1: Label (display).
         ws.cell(row=r, column=1, value=module.label or "—").font = FONT_VALUE
@@ -4431,37 +4438,37 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
         # Term through Prepay are added in commit 1 of formula-conversion.
         registry.write(
             ws, r, 3, _coerce_decimal(principal),
-            name=f"s_module_{m_idx}_principal", fmt=ACCOUNTING,
+            name=f"s_{slug}_principal", fmt=ACCOUNTING,
             font=FONT_INPUT, align=ALIGN_RIGHT,
         )
         registry.write(
             ws, r, 4, _coerce_pct(rate),
-            name=f"s_module_{m_idx}_rate", fmt=PCT,
+            name=f"s_{slug}_rate", fmt=PCT,
             font=FONT_INPUT, align=ALIGN_RIGHT,
         )
         registry.write(
             ws, r, 5, _safe_int(source.get("hold_term_years")),
-            name=f"s_module_{m_idx}_term_years", fmt=INT_COMMA,
+            name=f"s_{slug}_term_years", fmt=INT_COMMA,
             font=FONT_INPUT, align=ALIGN_RIGHT,
         )
         registry.write(
             ws, r, 6, _safe_int(carry.get("amort_term_years")),
-            name=f"s_module_{m_idx}_amort_years", fmt=INT_COMMA,
+            name=f"s_{slug}_amort_years", fmt=INT_COMMA,
             font=FONT_INPUT, align=ALIGN_RIGHT,
         )
         registry.write(
             ws, r, 7, _safe_int(carry.get("io_period_months")),
-            name=f"s_module_{m_idx}_io_months", fmt=INT_COMMA,
+            name=f"s_{slug}_io_months", fmt=INT_COMMA,
             font=FONT_INPUT, align=ALIGN_RIGHT,
         )
         registry.write(
             ws, r, 8, str(carry.get("carry_type") or ""),
-            name=f"s_module_{m_idx}_carry_type",
+            name=f"s_{slug}_carry_type",
             font=FONT_INPUT, align=ALIGN_RIGHT,
         )
         registry.write(
             ws, r, 9, str(carry.get("day_count") or "30_360"),
-            name=f"s_module_{m_idx}_day_count",
+            name=f"s_{slug}_day_count",
             font=FONT_INPUT, align=ALIGN_RIGHT,
         )
         # Block C numeric inputs may be None on debt modules that don't
@@ -4474,19 +4481,19 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
         registry.write(
             ws, r, 10,
             _coerce_pct(_dscr_min) if _dscr_min is not None else None,
-            name=f"s_module_{m_idx}_dscr_min", fmt="0.00",
+            name=f"s_{slug}_dscr_min", fmt="0.00",
             font=FONT_INPUT, align=ALIGN_RIGHT,
         )
         registry.write(
             ws, r, 11,
             _coerce_pct(_ltv) if _ltv is not None else None,
-            name=f"s_module_{m_idx}_ltv_pct", fmt=PCT,
+            name=f"s_{slug}_ltv_pct", fmt=PCT,
             font=FONT_INPUT, align=ALIGN_RIGHT,
         )
         registry.write(
             ws, r, 12,
             _coerce_pct(_prepay) if _prepay is not None else None,
-            name=f"s_module_{m_idx}_prepay_pct", fmt=PCT,
+            name=f"s_{slug}_prepay_pct", fmt=PCT,
             font=FONT_INPUT, align=ALIGN_RIGHT,
         )
         # Cols 13-14: display-only meta.
@@ -4619,7 +4626,7 @@ def _build_su_sheet(
     Per-project totals sum the subtotals. The Category Summary block
     sums each category across projects. Sources reference the
     per-module Principal cells on the Assumptions sheet directly via
-    defined names. ``s_su2_gap = s_su2_uses_total - s_su2_sources_total``.
+    defined names. ``s_su_gap = s_su_uses_total - s_su_sources_total``.
 
     Editing a Use-line amount in the per-project section ripples up to
     its subtotal, project total, category summary, grand total, and
@@ -4630,6 +4637,7 @@ def _build_su_sheet(
     use_lines_by_project: dict = ctx.get("use_lines", {})
     projects: list[Project] = ctx["projects"]
     capital_modules: list[CapitalModule] = ctx["capital_modules"]
+    module_slugs: dict = ctx.get("module_slugs") or _compute_module_slugs(capital_modules)
     junctions: list[CapitalModuleProject] = ctx["junctions"]
 
     line = 1
@@ -4704,10 +4712,10 @@ def _build_su_sheet(
     section_label(ws, line, "Category Summary (All Projects)", span_cols=2)
     line += 1
 
-    _su2_names = {
-        "acquisition": "s_su2_acq_total",
-        "soft":        "s_su2_soft_total",
-        "hard":        "s_su2_hard_total",
+    _su_cat_names = {
+        "acquisition": "s_su_acq_total",
+        "soft":        "s_su_soft_total",
+        "hard":        "s_su_hard_total",
     }
     cat_summary_rows: dict[str, int] = {}
     for cat in USE_COST_CATEGORIES:
@@ -4720,7 +4728,7 @@ def _build_su_sheet(
         cell.number_format = ACCOUNTING
         cell.font = FONT_VALUE
         cell.alignment = ALIGN_RIGHT
-        registry.register(_su2_names[cat], ws.title, line, 2)
+        registry.register(_su_cat_names[cat], ws.title, line, 2)
         cat_summary_rows[cat] = line
         line += 1
 
@@ -4732,13 +4740,13 @@ def _build_su_sheet(
     cell.number_format = ACCOUNTING
     cell.font = FONT_LABEL
     cell.alignment = ALIGN_RIGHT
-    registry.register("s_su2_uses_total", ws.title, line, 2)
+    registry.register("s_su_uses_total", ws.title, line, 2)
     uses_total_row = line
     line += 2
 
     # ── Sources ───────────────────────────────────────────────────────────
     # Each non-equity source pulls its principal directly from the
-    # Assumptions sheet's Block C ``s_module_{m}_principal`` defined name,
+    # Assumptions sheet's Block C ``s_<slug>_principal`` defined name,
     # so editing the principal there ripples into Sources here.
     section_label(ws, line, "Sources", span_cols=2)
     line += 1
@@ -4759,7 +4767,8 @@ def _build_su_sheet(
         ws.cell(row=line, column=1, value=module.label or _funder_type_label(module)).font = FONT_VALUE
         # Reference the Assumptions-sheet Principal cell by defined name.
         # Workbook-scoped defined names resolve without a sheet qualifier.
-        cell = ws.cell(row=line, column=2, value=f"=s_module_{m_idx}_principal")
+        slug = module_slugs.get(module.id) or f"module_{m_idx}"
+        cell = ws.cell(row=line, column=2, value=f"=s_{slug}_principal")
         cell.number_format = ACCOUNTING
         source_refs.append(f"B{line}")
         line += 1
@@ -4785,7 +4794,7 @@ def _build_su_sheet(
     cell.number_format = ACCOUNTING
     cell.font = FONT_LABEL
     cell.alignment = ALIGN_RIGHT
-    registry.register("s_su2_sources_total", ws.title, line, 2)
+    registry.register("s_su_sources_total", ws.title, line, 2)
     sources_total_row = line
     line += 1
 
@@ -4798,7 +4807,7 @@ def _build_su_sheet(
     cell.number_format = ACCOUNTING
     cell.font = FONT_LABEL
     cell.alignment = ALIGN_RIGHT
-    registry.register("s_su2_gap", ws.title, line, 2)
+    registry.register("s_su_gap", ws.title, line, 2)
 
 
 def _build_glossary(
@@ -5086,6 +5095,48 @@ def _coerce_pct(value) -> Decimal | None:
     if d is None:
         return None
     return d / Decimal(100)
+
+
+def _slugify_module_label(label: str | None, fallback_idx: int) -> str:
+    """Convert a CapitalModule.label into an Excel-name-safe slug fragment.
+
+    Lowercase, non-alphanumeric → ``_``, collapse runs, strip ends, cap at
+    40 chars. Empty/None label falls back to ``module_<idx>`` so blank
+    labels still produce stable, unique-per-position names.
+    """
+    if label:
+        s = "".join(c.lower() if c.isalnum() else "_" for c in label)
+        while "__" in s:
+            s = s.replace("__", "_")
+        s = s.strip("_")
+        if s:
+            return s[:40]
+    return f"module_{fallback_idx}"
+
+
+def _compute_module_slugs(capital_modules) -> dict:
+    """Build {module.id: slug} with collision-resolved, human-readable slugs.
+
+    On collision (two modules with the same slugified label) the second
+    gets ``_2``, third ``_3``, etc. ``stack_position`` is preferred as
+    the fallback index because it's stable across re-orderings; falls
+    back to enumerate index when ``stack_position`` is missing.
+    """
+    slugs: dict = {}
+    used: set[str] = set()
+    for i, m in enumerate(capital_modules, start=1):
+        base = _slugify_module_label(
+            getattr(m, "label", None),
+            getattr(m, "stack_position", None) or i,
+        )
+        slug = base
+        n = 2
+        while slug in used:
+            slug = f"{base}_{n}"
+            n += 1
+        used.add(slug)
+        slugs[m.id] = slug
+    return slugs
 
 
 # ── Pro Forma profile sheet builders ──────────────────────────────────────────

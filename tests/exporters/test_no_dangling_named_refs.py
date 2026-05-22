@@ -3,7 +3,7 @@ defined name. A dangling reference shows up as ``#NAME?`` when Excel
 opens the workbook — silently broken until the LP scrolls past.
 
 The bug we're guarding against: commit 2's S&U Sources rows emitted
-``=s_module_<n>_principal`` formulas. The defined name only gets
+``=s_<slug>_principal`` formulas. The defined name only gets
 registered inside ``_build_assumptions`` Block C. On the proforma
 profile, Assumptions wasn't rendered, so the formulas referenced a
 name that didn't exist. Fixed by adding proforma to ``_HAS_ASSUMPT``.

@@ -111,13 +111,24 @@ _NON_METRIC_NAMES = frozenset({
 # inputs, S&U totals) where the per-instance name doesn't map 1:1 to a doc
 # metric — the doc-level metric is what's tagged.
 _NON_METRIC_PREFIXES = (
-    "s_module_",       # capital stack rows (per-module principal/rate/term/amort/...)
     "s_waterfall_",    # waterfall tier sums (per-tier-type cash distributed)
     "s_assumptions_",  # assumption inputs
-    "s_su_",           # scenario S&U panel totals (alias of Total Uses/Sources/Gap)
-    "s_su2_",          # dedicated Sources & Uses sheet totals (category + grand totals)
+    "s_su_",           # Sources & Uses sheet totals (category + grand totals)
     "s_loan_",         # Debt Schedule per-loan rows (rate/term/amort/balloon)
     "s_tier_",         # Block D waterfall hurdle inputs (per-tier irr_hurdle/lp_split/gp_split)
+)
+
+# Capital-stack row suffixes — module names now slugified
+# (``s_<label-slug>_<suffix>``), so we can't anchor on a stable prefix.
+# Match by suffix instead.
+_MODULE_NAME_SUFFIXES = (
+    "_principal", "_principal_returns",
+    "_rate", "_rate_returns",
+    "_term_years", "_amort_years", "_io_months",
+    "_carry_type", "_day_count",
+    "_dscr_min", "_ltv_pct", "_prepay_pct",
+    "_total_ds", "_distributions",
+    "_return_dollars", "_return_pct",
 )
 
 
@@ -131,6 +142,8 @@ def _is_non_metric(name: str) -> bool:
     if name in _NON_METRIC_NAMES:
         return True
     if any(name.startswith(p) for p in _NON_METRIC_PREFIXES):
+        return True
+    if name.startswith("s_") and any(name.endswith(s) for s in _MODULE_NAME_SUFFIXES):
         return True
     # Per-project assumption inputs — match by suffix on the p<n>_ prefix.
     per_project_input_suffixes = {

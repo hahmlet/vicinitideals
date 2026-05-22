@@ -53,30 +53,30 @@ async def _seed_scenario(session: AsyncSession):
 # ── Formula-text assertions (no recalc needed) ────────────────────────────────
 
 
-async def test_s_su2_uses_total_is_formula(session: AsyncSession, tmp_path: Path):
-    """s_su2_uses_total is a SUM-of-category-totals formula."""
+async def test_s_su_uses_total_is_formula(session: AsyncSession, tmp_path: Path):
+    """s_su_uses_total is a SUM-of-category-totals formula."""
     scenario = await _seed_scenario(session)
     blob = await export_investor_workbook(scenario.id, session)
     path = tmp_path / "wb.xlsx"
     path.write_bytes(blob)
 
-    formula = read_formula_text(path, "s_su2_uses_total")
-    assert formula is not None, "s_su2_uses_total should be a formula, not a value"
+    formula = read_formula_text(path, "s_su_uses_total")
+    assert formula is not None, "s_su_uses_total should be a formula, not a value"
     # Must reference cell coords (the category-total rows), not be hard-coded.
     assert formula.startswith("="), formula
     assert "B" in formula, (
-        f"expected s_su2_uses_total to reference B-column cells; got {formula!r}"
+        f"expected s_su_uses_total to reference B-column cells; got {formula!r}"
     )
 
 
-async def test_s_su2_gap_references_uses_and_sources(session: AsyncSession, tmp_path: Path):
-    """s_su2_gap = uses_total - sources_total (cell-ref form)."""
+async def test_s_su_gap_references_uses_and_sources(session: AsyncSession, tmp_path: Path):
+    """s_su_gap = uses_total - sources_total (cell-ref form)."""
     scenario = await _seed_scenario(session)
     blob = await export_investor_workbook(scenario.id, session)
     path = tmp_path / "wb.xlsx"
     path.write_bytes(blob)
 
-    formula = read_formula_text(path, "s_su2_gap")
+    formula = read_formula_text(path, "s_su_gap")
     assert formula is not None
     # Subtraction proves it's the gap formula (not a SUM or single-cell ref).
     assert "-" in formula, formula
@@ -91,9 +91,9 @@ async def test_s_cover_uses_references_su_sheet(session: AsyncSession, tmp_path:
 
     formula = read_formula_text(path, "s_cover_uses")
     assert formula is not None
-    # Should reference the s_su2_uses_total defined name (workbook-scoped,
+    # Should reference the s_su_uses_total defined name (workbook-scoped,
     # so no sheet qualifier required).
-    assert "s_su2_uses_total" in formula, formula
+    assert "s_su_uses_total" in formula, formula
 
 
 async def test_s_cover_sources_references_su_sheet(session: AsyncSession, tmp_path: Path):
@@ -105,7 +105,7 @@ async def test_s_cover_sources_references_su_sheet(session: AsyncSession, tmp_pa
 
     formula = read_formula_text(path, "s_cover_sources")
     assert formula is not None
-    assert "s_su2_sources_total" in formula, formula
+    assert "s_su_sources_total" in formula, formula
 
 
 # ── Engine-vs-formula computed-value parity (requires recalc backend) ─────────
@@ -116,7 +116,7 @@ async def test_su_uses_total_evaluates_to_engine_value(
 ):
     """Step 3 of the parity pattern — Excel-computed value matches engine.
 
-    Exports, recalcs the workbook, reads ``s_su2_uses_total`` computed
+    Exports, recalcs the workbook, reads ``s_su_uses_total`` computed
     value, compares against the engine-computed total uses from
     ``_compute_sources_gap``. Catches both formula-correctness bugs
     (wrong SUM range, wrong cell coords) and any divergence between
@@ -136,7 +136,7 @@ async def test_su_uses_total_evaluates_to_engine_value(
     except RecalcUnavailableError as exc:
         pytest.skip(f"no recalc backend: {exc}")
 
-    excel_uses_total = read_named_value(path, "s_su2_uses_total", data_only=True)
+    excel_uses_total = read_named_value(path, "s_su_uses_total", data_only=True)
     # Tolerate Decimal-to-float round-trip noise.
     if excel_uses_total is None:
         excel_uses_total = 0
@@ -162,7 +162,7 @@ async def test_cover_uses_matches_su_uses_after_recalc(
         pytest.skip(f"no recalc backend: {exc}")
 
     cover_uses = read_named_value(path, "s_cover_uses", data_only=True) or 0
-    su_uses = read_named_value(path, "s_su2_uses_total", data_only=True) or 0
+    su_uses = read_named_value(path, "s_su_uses_total", data_only=True) or 0
     assert abs(float(cover_uses) - float(su_uses)) < 0.01, (
         f"Cover Total Uses ({cover_uses}) != S&U Total Uses ({su_uses}) "
         f"after recalc — cross-sheet defined-name ref is broken"
@@ -189,7 +189,7 @@ async def test_su_sources_total_evaluates_close_to_engine_value(
     except RecalcUnavailableError as exc:
         pytest.skip(f"no recalc backend: {exc}")
 
-    excel_sources = read_named_value(path, "s_su2_sources_total", data_only=True) or 0
+    excel_sources = read_named_value(path, "s_su_sources_total", data_only=True) or 0
     diff = abs(float(engine_sources) - float(excel_sources))
     # Allow $10k absolute tolerance to swallow implied-equity rounding.
     assert diff < 10_000, (
