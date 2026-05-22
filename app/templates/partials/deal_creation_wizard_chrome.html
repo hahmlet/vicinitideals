@@ -1,0 +1,47 @@
+{# Wizard chrome shown across deal-creation flow.
+
+   Used by:
+     - app/templates/deals_new.html           → Step 1 (Deal Basics)
+     - app/templates/model_builder.html       → Step 2 (Timeline) when wizard_mode + module=timeline
+                                              → Step 3 (Setup) when wizard_mode + module=deal_setup
+
+   Pass `dcw_step` ∈ {1, 2, 3} and optionally `dcw_deal_name`. #}
+{%- set _dcw_step = dcw_step | default(1) | int -%}
+{%- set _dcw_steps = [
+  (1, 'Deal Basics',  'Name, type, and acquisition cost.'),
+  (2, 'Timeline',     'Set the milestones that define this deal.'),
+  (3, 'Setup',        'Income, debt structure, and sizing.'),
+] -%}
+<div class="dcw-chrome" style="
+  padding: 16px 24px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 16px;
+  flex-shrink: 0;
+">
+  <div style="font-size:13px;font-weight:600;color:var(--text-secondary)">
+    {% if dcw_deal_name %}{{ dcw_deal_name }} — {% endif %}New Deal
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;flex:1">
+    {% for n, label, _desc in _dcw_steps %}
+    <div style="display:flex;align-items:center;gap:6px;
+                {% if n == _dcw_step %}color:var(--accent);font-weight:600
+                {% elif n < _dcw_step %}color:var(--success)
+                {% else %}color:var(--text-muted){% endif %};
+                font-size:12px">
+      <span style="
+        display:inline-flex;align-items:center;justify-content:center;
+        width:22px;height:22px;border-radius:50%;
+        font-size:11px;font-weight:700;
+        {% if n == _dcw_step %}background:var(--accent);color:white
+        {% elif n < _dcw_step %}background:var(--success);color:white
+        {% else %}background:var(--border);color:var(--text-muted){% endif %}
+      ">{% if n < _dcw_step %}✓{% else %}{{ n }}{% endif %}</span>
+      <span>{{ label }}</span>
+    </div>
+    {% if not loop.last %}
+    <div style="flex:0 0 auto;width:24px;height:1px;background:var(--border)"></div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>

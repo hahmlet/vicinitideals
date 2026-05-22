@@ -408,7 +408,16 @@
     {# ════════════════════════════════════════════════════════════════ STEP 2 — Debt Selection #}
     {% elif _step == 2 %}
     {%- set _svd = source_vehicles_debt | default([]) -%}
-    {%- set _DEBT_CARDS = [
+    {# Phase-gate map: card is hidden when its required phase is absent from the
+       timeline. Cards without an entry are always shown (acquisition / bridge /
+       permanent). Recomputed on every GET — milestones are source of truth. #}
+    {%- set _phases_present = phases_present | default([]) -%}
+    {%- set _DEBT_CARD_PHASE = {
+        'pre_development_loan': 'pre_development',
+        'construction_loan':    'construction',
+        'construction_to_perm': 'construction',
+    } -%}
+    {%- set _DEBT_CARDS_ALL = [
       ('acquisition_loan',     'Acquisition Loan',       'Funds the property purchase and acquisition costs at Close. Sized by LTV on acquisition phase costs.'),
       ('pre_development_loan', 'Pre-Development Loan',   'Short-term financing for entitlements, design, and due diligence before closing. Retired at Close.'),
       ('bridge',               'Bridge Loan',            'Short-term catch-all financing that bridges two longer-term arrangements. Retired by permanent debt at stabilization.'),
@@ -416,6 +425,13 @@
       ('construction_to_perm', 'Construction-to-Perm',   'One loan (e.g. a municipal bond) funds construction and converts to permanent debt at CO. Cannot be combined with separate Construction + Permanent.'),
       ('permanent_debt',       'Permanent Debt',         'Long-term amortizing loan. Gap-fills to Total Project Cost. Extends in perpetuity through the hold period.'),
     ] -%}
+    {%- set _DEBT_CARDS = [] -%}
+    {%- for _ft, _ft_label, _ft_desc in _DEBT_CARDS_ALL -%}
+      {%- set _req_phase = _DEBT_CARD_PHASE.get(_ft) -%}
+      {%- if (not _req_phase) or (_req_phase in _phases_present) -%}
+        {%- set _ = _DEBT_CARDS.append((_ft, _ft_label, _ft_desc)) -%}
+      {%- endif -%}
+    {%- endfor -%}
     <div class="wizard-header">
       <div class="wizard-title">Debt Stack</div>
       <div class="wizard-subtitle">Which debt instruments will be used in this deal? Select all that apply. Pick a Source Vehicle to inherit rate/term/sizing and skip the next three steps.</div>

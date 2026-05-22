@@ -2564,7 +2564,13 @@ async def create_deal(
 
     await session.commit()
 
-    redirect_url = f"/models/{scenario.id}/builder" + ("?new=1" if new == "1" else "")
+    # Single-flow wizard: land directly inside the wizard chrome at the timeline
+    # step. The user never sees the full builder UI until they finish the
+    # setup wizard. Builder route reads wizard=1 to hide sidebar/topbar and
+    # the approve-timeline handler reads _wizard to route into setup.
+    redirect_url = f"/models/{scenario.id}/builder?module=timeline&wizard=1"
+    if new == "1":
+        redirect_url += "&new=1"
     return RedirectResponse(url=redirect_url, status_code=303)
 
 
@@ -5172,6 +5178,21 @@ async def _staleness_map(session: AsyncSession, scenario_id: UUID) -> dict:
     }
 
 
+def _wizard_mode_from_request(request: Request) -> bool:
+    """Read the single-flow deal-creation wizard flag off the parent page.
+
+    HTMX form posts in the wizard chrome don't carry the `wizard=1` query
+    param themselves, but the browser's current URL (sent in HX-Current-URL)
+    does. Used by panel-render endpoints so the timeline approve button text
+    and sidebar visibility stay consistent across in-wizard mutations.
+    """
+    _hx_url = request.headers.get("HX-Current-URL", "")
+    if not _hx_url:
+        return False
+    from urllib.parse import urlparse, parse_qs
+    return parse_qs(urlparse(_hx_url).query).get("wizard", [""])[0] == "1"
+
+
 async def _active_project_from_request(
     request: Request, session: AsyncSession, model_id: UUID,
 ) -> UUID | None:
@@ -6376,7 +6397,7 @@ async def handle_form_create_or_update(
 
     await session.flush()
     panel_data = await _load_builder_data(session, model_id, project_id=project_id)
-    ctx = {"model": model, "active_module": module, **panel_data}
+    ctx = {"model": model, "active_module": module, "wizard_mode": _wizard_mode_from_request(request), **panel_data}
     return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
 
 
@@ -6402,7 +6423,7 @@ async def handle_form_delete(
         if item_type == "unit-mix":
             _active_proj_id = await _active_project_from_request(request, session, model_id)
             panel_data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
-            ctx = {"model": model, "active_module": module, **panel_data}
+            ctx = {"model": model, "active_module": module, "wizard_mode": _wizard_mode_from_request(request), **panel_data}
             return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
         return HTMLResponse("<p class='text-muted'>Invalid item id.</p>", status_code=400)
 
@@ -6430,7 +6451,7 @@ async def handle_form_delete(
         await session.flush()
         _active_proj_id2 = await _active_project_from_request(request, session, model_id)
         panel_data = await _load_builder_data(session, model_id, project_id=_active_proj_id2)
-        ctx = {"model": model, "active_module": module, **panel_data}
+        ctx = {"model": model, "active_module": module, "wizard_mode": _wizard_mode_from_request(request), **panel_data}
         return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
 
     if row is not None:
@@ -6445,7 +6466,7 @@ async def handle_form_delete(
 
     _active_proj_id = await _active_project_from_request(request, session, model_id)
     panel_data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
-    ctx = {"model": model, "active_module": module, **panel_data}
+    ctx = {"model": model, "active_module": module, "wizard_mode": _wizard_mode_from_request(request), **panel_data}
     return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
 
 
@@ -7912,16 +7933,27 @@ async def approve_timeline(
 
     Normal POST → approve (redirect to sources).
     POST with _unapprove=1 → re-open (redirect back to timeline).
+    POST with _wizard=1 → single-flow deal-creation wizard mode; redirect into
+    the setup wizard with wizard chrome still active.
     """
     proj = await session.get(Project, project_id)
     if proj is None:
         return HTMLResponse("<p class='text-muted'>Project not found.</p>", status_code=404)
     form = await request.form()
     unapprove = str(form.get("_unapprove", "")).strip() == "1"
+    wizard_mode = str(form.get("_wizard", "")).strip() == "1"
     proj.timeline_approved = not unapprove
     await session.commit()
     if unapprove:
-        return RedirectResponse(url=f"/models/{proj.scenario_id}/builder?project={project_id}&module=timeline", status_code=303)
+        _unapp_url = f"/models/{proj.scenario_id}/builder?project={project_id}&module=timeline"
+        if wizard_mode:
+            _unapp_url += "&wizard=1"
+        return RedirectResponse(url=_unapp_url, status_code=303)
+    if wizard_mode:
+        return RedirectResponse(
+            url=f"/models/{proj.scenario_id}/builder?project={project_id}&module=deal_setup&wizard=1",
+            status_code=303,
+        )
     return RedirectResponse(url=f"/models/{proj.scenario_id}/builder?project={project_id}&module=sources", status_code=303)
 
 
@@ -7949,6 +7981,31 @@ async def _wizard_active_from_options(
         mt = str(getattr(m, "milestone_type", "") or "").replace("MilestoneType.", "")
         label = m.label or _milestone_label(mt)
         out.append((mt, label))
+    return out
+
+
+async def _wizard_phases_present(
+    session: "AsyncSession",
+    default_project: "Project | None",
+) -> set[str]:
+    """Return the set of MilestoneType keys present on the default project.
+
+    Used by Step 2 of the setup wizard to filter the debt-card list:
+      - construction_loan / construction_to_perm require a Construction milestone
+      - pre_development_loan requires a Pre-Development milestone
+
+    Cards whose required phase is absent are hidden (not disabled) so the picker
+    stays uncluttered. Re-derived on every wizard GET/POST — milestones are the
+    source of truth, no persisted allow-list.
+    """
+    if default_project is None:
+        return set()
+    rows = list((await session.execute(
+        select(Milestone.milestone_type).where(Milestone.project_id == default_project.id)
+    )).scalars())
+    out: set[str] = set()
+    for mt in rows:
+        out.add(str(mt or "").replace("MilestoneType.", ""))
     return out
 
 
@@ -8066,11 +8123,13 @@ async def deal_setup_wizard_get(
         if _selected and all((_dt_now.get(_ft) or {}).get("vehicle_id") for _ft in _selected):
             _review_back_step = 2
 
+    _wiz_phases_present = await _wizard_phases_present(session, default_project)
     return templates.TemplateResponse(request, "partials/deal_setup_wizard.html", {
         "request": request, "model": model, "inputs": inputs, "step": step,
         "source_vehicles_debt": _svd,
         "wizard_active_from_opts": _wiz_active_from_opts,
         "review_back_step": _review_back_step,
+        "phases_present": _wiz_phases_present,
     })
 
 
@@ -8349,10 +8408,12 @@ async def deal_setup_wizard_step(
     # If validation failed, don't persist and re-render the same step with errors
     if wizard_errors:
         _post_active_from_opts = await _wizard_active_from_options(session, default_project)
+        _post_phases_present = await _wizard_phases_present(session, default_project)
         return templates.TemplateResponse(request, "partials/deal_setup_wizard.html", {
             "request": request, "model": model, "inputs": inputs, "step": step,
             "wizard_errors": wizard_errors, "source_vehicles_debt": _post_svd,
             "wizard_active_from_opts": _post_active_from_opts,
+            "phases_present": _post_phases_present,
         })
 
     session.add(inputs)
@@ -8395,11 +8456,13 @@ async def deal_setup_wizard_step(
     # Seed perm-debt defaults so Step 4 shows user/org preference, not template fallback.
     await _seed_wizard_perm_defaults(inputs, session, request)
     _next_active_from_opts = await _wizard_active_from_options(session, default_project)
+    _next_phases_present = await _wizard_phases_present(session, default_project)
     return templates.TemplateResponse(request, "partials/deal_setup_wizard.html", {
         "request": request, "model": model, "inputs": inputs, "step": next_step,
         "source_vehicles_debt": _post_svd,
         "wizard_active_from_opts": _next_active_from_opts,
         "review_back_step": review_back_step,
+        "phases_present": _next_phases_present,
     })
 
 
@@ -9213,6 +9276,7 @@ async def model_builder(
     project: str = Query(default=""),  # optional Project.id to view a specific project
     view: str = Query(default=""),  # "underwriting" for the scenario-level rollup; default = per-project
     new: str = Query(default=""),  # set to "1" when redirected from new deal creation
+    wizard: str = Query(default=""),  # "1" = single-flow deal-creation wizard mode (hide chrome)
 ) -> HTMLResponse:
     model = await session.get(DealModel, model_id)
     if model is None:
@@ -9546,6 +9610,7 @@ async def model_builder(
         "active_module": active_module,
         "deal_setup_complete": _deal_setup_complete,
         "new_deal": new == "1",
+        "wizard_mode": wizard == "1",
         "cash_flow_rows": cash_flow_rows,
         "multi_parcel_apns": multi_parcel_apns,
         "lot_size_mismatch": lot_size_mismatch_info,

@@ -1548,9 +1548,10 @@
     <button class="btn btn-secondary" onclick="openAddLine('milestones')">+ Add Milestone</button>
     {% if not timeline_approved and milestones %}
     <form method="post" action="/ui/projects/{{ default_project_id }}/approve-timeline" style="display:inline">
+      {% if wizard_mode %}<input type="hidden" name="_wizard" value="1">{% endif %}
       <button type="submit" class="btn btn-primary"
               {% if not timeline_approvable %}disabled title="Every milestone needs a position and a duration before approving"{% endif %}>
-        Approve Timeline →
+        {% if wizard_mode %}Approve &amp; Continue Setup →{% else %}Approve Timeline →{% endif %}
       </button>
     </form>
     {% endif %}
