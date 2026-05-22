@@ -4044,10 +4044,36 @@ def _build_debt_schedule(ws, registry: CellRegistry, ctx: dict) -> None:
             value=carry_type.replace("_", " ").title() if carry_type else _DASH,
         ).font = FONT_VALUE
         ws.cell(row=cur_row, column=9, value=day_count_label).font = FONT_VALUE
-        _write_optional(
-            ws, cur_row, 10, annual_pi, registry,
-            name=f"s_loan_{m_idx}_annual_pi", fmt=ACCOUNTING,
-        )
+        # Formula-conversion plan §4.4 (commit 6): Annual P&I for ``pi``
+        # carry-type loans is a clean PMT derivation of principal / rate /
+        # amort term. Wire it as a formula referencing the named-range
+        # inputs from the Loan Summary row (principal col C, rate col D)
+        # plus the amort years in col F, so an LP can change any of the
+        # three and watch Annual P&I recompute. Other carry types
+        # (io_only, interest_reserve, capitalized_interest) leave the
+        # cell as the engine value (None → em-dash) since their annual
+        # outlay isn't a simple PMT.
+        if carry_type == "pi" and rate_raw and principal > 0 and amort_years:
+            # PMT(rate/12, amort*12, -principal) * 12 yields a positive
+            # annual payment. Reference cells: principal=C<row>,
+            # rate=D<row>, amort_years=F<row>. amort_years is an int
+            # in col F (header "Amort (yrs)"). IFERROR guards against
+            # degenerate inputs (zero rate, zero term).
+            pmt_formula = (
+                f"=IFERROR(PMT(D{cur_row}/12,F{cur_row}*12,-C{cur_row})*12,0)"
+            )
+            cell = ws.cell(row=cur_row, column=10, value=pmt_formula)
+            cell.number_format = ACCOUNTING
+            cell.font = FONT_VALUE
+            cell.alignment = ALIGN_RIGHT
+            registry.register(
+                f"s_loan_{m_idx}_annual_pi", ws.title, cur_row, 10,
+            )
+        else:
+            _write_optional(
+                ws, cur_row, 10, annual_pi, registry,
+                name=f"s_loan_{m_idx}_annual_pi", fmt=ACCOUNTING,
+            )
         _write_optional(
             ws, cur_row, 11, balloon, registry,
             name=f"s_loan_{m_idx}_balloon", fmt=ACCOUNTING,
