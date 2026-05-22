@@ -264,10 +264,15 @@ def run_deal_setup_wizard(
 
     # Step 3 — Milestone config (skipped when every debt type carries a vehicle)
     if page.locator('select[name$="_active_from"]').count() > 0:
+        # Step 3 active_from dropdown is now populated from the project's
+        # milestone_type values (post capital-module-milestone-fk feature).
+        # Map legacy phase-keys callers still pass to the new milestone_type.
         _PHASE_VALUE_MAP = {
-            "operation_lease_up": "lease_up",
-            "operation_stabilized": "stabilized",
-            "divestment": "exit",
+            "acquisition":      "close",
+            "pre_construction": "pre_development",
+            "lease_up":         "operation_lease_up",
+            "stabilized":       "operation_stabilized",
+            "exit":             "divestment",
         }
         if milestone_config:
             for dt, cfg in milestone_config.items():

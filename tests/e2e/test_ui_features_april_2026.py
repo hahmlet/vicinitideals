@@ -74,7 +74,9 @@ def test_wizard_dual_constraint_selectable(
     page.wait_for_selector("#deal-setup-wizard", timeout=15_000)
     wait_for_htmx(page)
 
-    page.click('input[name="debt_sizing_mode"][value="dual_constraint"]')
+    # Underlying radio is hidden inside a clickable <label class="toggle-opt">
+    # whose onclick handler flips it. Click the label, not the input.
+    page.click('label.toggle-opt:has(input[name="debt_sizing_mode"][value="dual_constraint"])')
     page.wait_for_timeout(200)
 
     dual_radio = page.locator('input[name="debt_sizing_mode"][value="dual_constraint"]')
