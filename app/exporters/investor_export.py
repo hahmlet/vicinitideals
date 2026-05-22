@@ -2821,10 +2821,29 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
             ws, cur_row, 7, distributions, registry,
             name=f"s_module_{m_idx}_distributions", fmt=ACCOUNTING,
         )
-        _write_optional(
-            ws, cur_row, 8, return_dollars, registry,
-            name=f"s_module_{m_idx}_return_dollars", fmt=ACCOUNTING,
-        )
+        # Formula-conversion plan §4.3 (commit 5): Return ($) is a clean
+        # derivation of (total_ds or distributions) - principal. When the
+        # operand exists we emit the formula so LP edits to the principal
+        # or distribution cells propagate; when missing, fall back to the
+        # em-dash via _write_optional.
+        return_formula: str | None = None
+        if funder_class == "Debt" and total_ds is not None and total_ds > 0:
+            return_formula = f"=F{cur_row}-D{cur_row}"
+        elif funder_class == "Equity" and distributions is not None:
+            return_formula = f"=G{cur_row}-D{cur_row}"
+        if return_formula is not None:
+            cell = ws.cell(row=cur_row, column=8, value=return_formula)
+            cell.number_format = ACCOUNTING
+            cell.font = FONT_VALUE
+            cell.alignment = ALIGN_RIGHT
+            registry.register(
+                f"s_module_{m_idx}_return_dollars", ws.title, cur_row, 8,
+            )
+        else:
+            _write_optional(
+                ws, cur_row, 8, return_dollars, registry,
+                name=f"s_module_{m_idx}_return_dollars", fmt=ACCOUNTING,
+            )
         _write_optional(
             ws, cur_row, 9, return_pct, registry,
             name=f"s_module_{m_idx}_return_pct", fmt=PCT,
@@ -2844,9 +2863,15 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
     section_label(ws, cur_row, "Scenario-Level Aggregates", span_cols=2)
     cur_row += 1
 
+    # Formula-conversion plan §4.3 (commit 5): Combined Levered IRR is
+    # IRR over the Levered Cash Flow row on 'Underwriting Cash Flow' —
+    # which itself is a formula chain back to NOI/CapEvents/DS. Edits
+    # anywhere upstream now propagate to this IRR cell via Excel's calc
+    # engine. IFERROR guards the no-equity / degenerate-stream case so a
+    # blank scenario shows 0% instead of #NUM!.
     kv_row(
         ws, cur_row, "Combined Levered IRR (scenario)",
-        _coerce_pct(totals.get("combined_irr_pct") or 0),
+        "=IFERROR(IRR(r_uw_cf_levered),0)",
         name="s_returns_combined_irr", registry=registry, fmt=PCT,
     ); cur_row += 1
 
@@ -4390,18 +4415,28 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
             name=f"s_module_{m_idx}_day_count",
             font=FONT_INPUT, align=ALIGN_RIGHT,
         )
+        # Block C numeric inputs may be None on debt modules that don't
+        # populate every field (e.g. an IO bridge loan without dscr_min /
+        # ltv / prepay terms). Guard against _coerce_pct(None) crashing —
+        # write the value through unchanged when present, blank otherwise.
+        _dscr_min = source.get("dscr_min")
+        _ltv = source.get("ltv_pct")
+        _prepay = source.get("prepay_penalty_pct")
         registry.write(
-            ws, r, 10, _coerce_pct(source.get("dscr_min")),
+            ws, r, 10,
+            _coerce_pct(_dscr_min) if _dscr_min is not None else None,
             name=f"s_module_{m_idx}_dscr_min", fmt="0.00",
             font=FONT_INPUT, align=ALIGN_RIGHT,
         )
         registry.write(
-            ws, r, 11, _coerce_pct(source.get("ltv_pct")),
+            ws, r, 11,
+            _coerce_pct(_ltv) if _ltv is not None else None,
             name=f"s_module_{m_idx}_ltv_pct", fmt=PCT,
             font=FONT_INPUT, align=ALIGN_RIGHT,
         )
         registry.write(
-            ws, r, 12, _coerce_pct(source.get("prepay_penalty_pct")),
+            ws, r, 12,
+            _coerce_pct(_prepay) if _prepay is not None else None,
             name=f"s_module_{m_idx}_prepay_pct", fmt=PCT,
             font=FONT_INPUT, align=ALIGN_RIGHT,
         )
