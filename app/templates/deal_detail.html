@@ -322,7 +322,7 @@
         Financial Models
         {% if models %}<span style="font-size:11px;margin-left:4px;color:var(--text-muted)">({{ models | length }})</span>{% endif %}
       </div>
-      <button class="btn btn-primary btn-sm" onclick="openDrawer('new-model-drawer')">+ New Model</button>
+      <a class="btn btn-primary btn-sm" href="/deals/new?from_opp={{ opp_id }}">+ New Model</a>
     </div>
     {% if models %}
     {% for m in models %}
@@ -362,7 +362,7 @@
       <div class="empty-panel-icon">📊</div>
       <div class="empty-panel-title">No financial models yet</div>
       <div style="font-size:13px;margin-bottom:16px">Create a model to start building your deal analysis.</div>
-      <button class="btn btn-primary" onclick="openDrawer('new-model-drawer')">+ Create First Model</button>
+      <a class="btn btn-primary" href="/deals/new?from_opp={{ opp_id }}">+ Create First Model</a>
     </div>
     {% endif %}
   </div>
@@ -503,61 +503,6 @@
   </div>
 </div>
 {% endfor %}
-
-<!-- New Model drawer -->
-<div class="drawer-overlay" id="new-model-drawer" style="display:none">
-  <div class="drawer">
-    <div class="drawer-header">
-      <div>
-        <div class="drawer-title">New Financial Model</div>
-        <div class="text-small text-muted">Add a scenario model to this deal</div>
-      </div>
-      <span class="drawer-close" onclick="closeDrawer('new-model-drawer')">×</span>
-    </div>
-    <div class="drawer-body">
-      {% set _opp_price = namespace(value=none) %}
-      {% if opp and opp.scraped_listings %}
-        {% for _sl in opp.scraped_listings %}
-          {% if _opp_price.value is none and _sl.asking_price and _sl.asking_price > 0 %}
-            {% set _opp_price.value = _sl.asking_price %}
-          {% endif %}
-        {% endfor %}
-      {% endif %}
-      <form method="post" action="/ui/deals/create-model" style="display:flex;flex-direction:column;gap:14px">
-        <input type="hidden" name="opportunity_id" value="{{ opp_id }}">
-        <div>
-          <label class="field-label">Model Name</label>
-          <input class="filter-input" style="width:100%;margin-top:4px" type="text" name="name"
-                 value="Base Case" required>
-        </div>
-        <div>
-          <label class="field-label">Deal Type</label>
-          <select class="filter-select" style="width:100%;margin-top:4px" name="deal_type">
-            <option value="acquisition">Acquisition</option>
-            <option value="value_add">Value-Add</option>
-            <option value="conversion">Acquisition — Conversion</option>
-            <option value="new_construction">New Construction</option>
-          </select>
-        </div>
-        <div>
-          <label class="field-label">Acquisition Cost</label>
-          <input class="filter-input" style="width:100%;margin-top:4px"
-                 type="number" name="acquisition_cost" required min="1" step="any"
-                 value="{{ _opp_price.value if _opp_price.value else '' }}"
-                 placeholder="e.g. 4500000">
-          <div style="font-size:12px;color:var(--text-muted);margin-top:4px">
-            {% if _opp_price.value %}Pre-filled from the linked listing — edit if your underwriting price differs.
-            {% else %}Required so the seeded Acquisition use line lands with a real value.{% endif %}
-          </div>
-        </div>
-        <div style="display:flex;gap:8px;margin-top:6px">
-          <button type="submit" class="btn btn-primary">Create Model →</button>
-          <button type="button" class="btn btn-secondary" onclick="closeDrawer('new-model-drawer')">Cancel</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
 
 <!-- Link Parcel drawer -->
 <div class="drawer-overlay" id="link-parcel-drawer" style="display:none">

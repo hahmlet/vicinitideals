@@ -1,6 +1,18 @@
 {# Deal Setup Wizard — rendered in place of the builder-layout when deal_setup_complete=False #}
 {# Required context: model, inputs, step (1-6) #}
 {# Each step POSTs to /ui/models/{model.id}/setup/step and receives the next step as innerHTML swap #}
+{#
+   Post-refactor step map (May 2026):
+     1 — Income mode + Permanent Debt Sizing mode + (optional) pro forma upload
+     2 — Debt stack (per-debt Source Vehicle picker, nested in each card)
+     3 — Per-debt milestones & Exit Vehicle  (skipped when every selected debt has a vehicle)
+     4 — Per-debt loan terms                  (skipped when every selected debt has a vehicle)
+     5 — Per-debt sizing (LTV / fixed / DSCR) (skipped when every selected debt has a vehicle)
+     6 — Review + Finish
+   Reserves & Floors and Lease-up Curve are no longer prompted: their values
+   come from the org/user defaults registry (app/settings/defaults.py) via the
+   scenario_factory at deal-create time.
+#}
 
 <style>
 .wizard-shell {
@@ -20,9 +32,6 @@
   max-width: 640px;
   box-shadow: 0 2px 12px rgba(0,0,0,.06);
   overflow: hidden;
-  /* Sticky footer pattern: card fills viewport height, internal body scrolls,
-     footer stays visible. Prevents the Finish button from being clipped on
-     long review steps. */
   display: flex;
   flex-direction: column;
   max-height: calc(100vh - 80px);
@@ -110,8 +119,8 @@
 }
 .option-card {
   display: flex;
-  align-items: flex-start;
-  gap: 14px;
+  flex-direction: column;
+  gap: 10px;
   padding: 14px 16px;
   border: 2px solid var(--border);
   border-radius: 8px;
@@ -119,10 +128,33 @@
   transition: border-color .12s, background .12s;
 }
 .option-card:hover { border-color: var(--accent); background: var(--accent-faint); }
-.option-card input[type="radio"] { margin-top: 3px; flex-shrink: 0; accent-color: var(--accent); }
 .option-card.selected { border-color: var(--accent); background: var(--accent-faint); }
+.option-card-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.option-card input[type="radio"],
+.option-card input[type="checkbox"] { margin-top: 3px; flex-shrink: 0; accent-color: var(--accent); }
 .option-card-title { font-size: 14px; font-weight: 600; margin: 0 0 2px; }
 .option-card-desc  { font-size: 12px; color: var(--text-muted); margin: 0; }
+.option-card-vehicle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border);
+}
+.option-card-vehicle span { font-size: 12px; color: var(--text-muted); white-space: nowrap; flex-shrink: 0; }
+.option-card-vehicle select {
+  flex: 1;
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 13px;
+}
 /* Field rows */
 .field-row {
   display: flex;
@@ -191,6 +223,31 @@
 .toggle-opt.selected { border-color: var(--accent); background: var(--accent-faint); }
 .toggle-opt-title { font-size: 13px; font-weight: 600; margin: 0 0 2px; }
 .toggle-opt-desc  { font-size: 11px; color: var(--text-muted); margin: 0; }
+/* Pro forma drop zone */
+.proforma-zone {
+  margin-top: 18px;
+  border: 2px dashed var(--border);
+  border-radius: 8px;
+  padding: 18px;
+  text-align: center;
+  transition: border-color .12s, background .12s;
+}
+.proforma-zone.dragover { border-color: var(--accent); background: var(--accent-faint); }
+.proforma-zone-title { font-size: 13px; font-weight: 600; margin: 0 0 4px; }
+.proforma-zone-hint { font-size: 11px; color: var(--text-muted); margin: 0; }
+.proforma-zone input[type="file"] { display: none; }
+.proforma-file-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 4px 10px;
+  background: var(--accent-faint);
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--accent);
+}
 /* Review table */
 .review-table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
 .review-table td { padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
@@ -240,10 +297,10 @@
 
   <div class="wizard-card">
 
-    {# ── Progress indicator (hidden for step 0 — pre-check) ── #}
+    {# ── Progress indicator (6 numbered dots — Reserves step deleted, Review renumbered to 6) ── #}
     {% if _step > 0 %}
     <div class="wizard-progress">
-      {% for i in range(1, 8) %}
+      {% for i in range(1, 7) %}
         <div class="wizard-step-dot {% if i < _step %}done{% elif i == _step %}active{% endif %}">
           {% if i < _step %}✓{% else %}{{ i }}{% endif %}
         </div>
@@ -254,45 +311,103 @@
     </div>
     {% endif %}
 
-    {# ════════════════════════════════════════════════════════════════ STEP 1 #}
+    {# ════════════════════════════════════════════════════════════════ STEP 1 — Income mode + Sizing mode + pro forma #}
     {% if _step == 1 %}
     {% set _im = model.income_mode if model.income_mode else 'revenue_opex' %}
+    {% set _dsm = inputs.debt_sizing_mode or 'gap_fill' %}
     <div class="wizard-header">
-      <div class="wizard-title">Income Mode</div>
-      <div class="wizard-subtitle">How will operating income be modeled for this deal?</div>
+      <div class="wizard-title">Income &amp; Sizing</div>
+      <div class="wizard-subtitle">How will operating income be modeled, and how will permanent debt be sized?</div>
     </div>
-    <form hx-post="/ui/models/{{ model.id }}/setup/step"
+    {# Form posts as multipart so the optional pro forma file rides along.
+       Step handler routes to proforma-preflight when a file is attached. #}
+    <form id="step1-form"
+          hx-post="/ui/models/{{ model.id }}/setup/step"
           hx-target="#deal-setup-wizard"
-          hx-swap="outerHTML">
+          hx-swap="outerHTML"
+          hx-encoding="multipart/form-data">
       <input type="hidden" name="step" value="1">
       <div class="wizard-body">
+
+        <div class="section-label" style="margin-top:0">Income Mode</div>
         <div class="option-grid">
 
           <label class="option-card {% if _im == 'revenue_opex' %}selected{% endif %}">
-            <input type="radio" name="income_mode" value="revenue_opex"
-                   {% if _im == 'revenue_opex' %}checked{% endif %}
-                   onchange="selectOption(this)">
-            <div>
-              <div class="option-card-title">Revenue / OpEx</div>
-              <div class="option-card-desc">Model income streams and operating expenses line-by-line. NOI is computed from Revenue minus OpEx. Best for detailed underwriting.</div>
+            <div class="option-card-head">
+              <input type="radio" name="income_mode" value="revenue_opex"
+                     {% if _im == 'revenue_opex' %}checked{% endif %}
+                     onchange="onIncomeModeChange(this)">
+              <div>
+                <div class="option-card-title">Revenue / OpEx</div>
+                <div class="option-card-desc">Model income streams and operating expenses line-by-line. NOI is computed from Revenue minus OpEx. Best for detailed underwriting.</div>
+              </div>
             </div>
           </label>
 
           <label class="option-card {% if _im == 'noi' %}selected{% endif %}">
-            <input type="radio" name="income_mode" value="noi"
-                   {% if _im == 'noi' %}checked{% endif %}
-                   onchange="selectOption(this)">
-            <div>
-              <div class="option-card-title">NOI (Stabilized)</div>
-              <div class="option-card-desc">Enter a single stabilized NOI figure that escalates annually. Revenue and OpEx modules are replaced by a single NOI input. Ideal for acquisition underwriting from a listing NOI.</div>
+            <div class="option-card-head">
+              <input type="radio" name="income_mode" value="noi"
+                     {% if _im == 'noi' %}checked{% endif %}
+                     onchange="onIncomeModeChange(this)">
+              <div>
+                <div class="option-card-title">NOI (Stabilized)</div>
+                <div class="option-card-desc">Enter a single stabilized NOI figure that escalates annually. Revenue and OpEx modules are replaced by a single NOI input. Ideal for acquisition underwriting from a listing NOI.</div>
+              </div>
             </div>
           </label>
 
         </div>
+
+        <div class="section-label">Permanent Debt Sizing Mode</div>
+        <div class="toggle-row">
+          <label class="toggle-opt {% if _dsm == 'gap_fill' %}selected{% endif %}"
+                 onclick="selectToggle('debt_sizing_mode','gap_fill')">
+            <input type="radio" name="debt_sizing_mode" value="gap_fill"
+                   {% if _dsm == 'gap_fill' %}checked{% endif %}>
+            <div class="toggle-opt-title">Gap-Fill</div>
+            <div class="toggle-opt-desc">Debt sized to match Sources. May result in insufficient DSCR.</div>
+          </label>
+          <label class="toggle-opt {% if _dsm == 'dscr_capped' %}selected{% endif %}"
+                 onclick="selectToggle('debt_sizing_mode','dscr_capped')">
+            <input type="radio" name="debt_sizing_mode" value="dscr_capped"
+                   {% if _dsm == 'dscr_capped' %}checked{% endif %}>
+            <div class="toggle-opt-title">DSCR-Capped</div>
+            <div class="toggle-opt-desc">Debt sized to meet Minimum DSCR. May result in a Sources gap.</div>
+          </label>
+          <label class="toggle-opt {% if _dsm == 'dual_constraint' %}selected{% endif %}"
+                 onclick="selectToggle('debt_sizing_mode','dual_constraint')">
+            <input type="radio" name="debt_sizing_mode" value="dual_constraint"
+                   {% if _dsm == 'dual_constraint' %}checked{% endif %}>
+            <div class="toggle-opt-title">Dual Constraint</div>
+            <div class="toggle-opt-desc">MIN of LTV, DSCR, and gap-fill. Industry standard — lender funds the smaller.</div>
+          </label>
+        </div>
+
+        {# Pro forma upload — drop zone visible only when revenue_opex.  When
+           a file is dropped/selected, the Step 1 submit button changes to
+           "Import →" and the form action swaps to proforma-preflight.  With
+           no file, button is "Skip Import →" (revenue_opex) or "Next →" (noi). #}
+        <div id="proforma-block" {% if _im != 'revenue_opex' %}style="display:none"{% endif %}>
+          <div class="section-label">Operating Pro Forma (optional)</div>
+          <label class="proforma-zone" id="proforma-zone"
+                 ondragover="onProformaDragOver(event)"
+                 ondragleave="onProformaDragLeave(event)"
+                 ondrop="onProformaDrop(event)">
+            <div class="proforma-zone-title">Drag a pro forma here or click to choose a file</div>
+            <div class="proforma-zone-hint">PDF, XLS, XLSX — we'll parse Revenue / OpEx into the model. Skip to enter values by hand.</div>
+            <input type="file" id="proforma-file" name="file" accept=".pdf,.xls,.xlsx" onchange="onProformaFile(this)">
+            <div id="proforma-pill" style="display:none">
+              <div class="proforma-file-pill"><span id="proforma-name"></span><a href="#" onclick="clearProformaFile(event)" style="color:var(--accent);text-decoration:none">✕</a></div>
+            </div>
+          </label>
+        </div>
+
       </div>
       <div class="wizard-footer">
         <a href="/deals/{{ model.deal_id }}" class="btn btn-ghost" style="font-size:12px;color:var(--text-muted)">✕ Cancel</a>
-        <button type="submit" class="btn btn-primary">Next →</button>
+        <button type="submit" class="btn btn-primary" id="step1-submit">
+          {% if _im == 'revenue_opex' %}Skip Import →{% else %}Next →{% endif %}
+        </button>
       </div>
     </form>
 
@@ -309,7 +424,7 @@
     ] -%}
     <div class="wizard-header">
       <div class="wizard-title">Debt Stack</div>
-      <div class="wizard-subtitle">Which debt instruments will be used in this deal? Select all that apply.</div>
+      <div class="wizard-subtitle">Which debt instruments will be used in this deal? Select all that apply. Pick a Source Vehicle to inherit rate/term/sizing and skip the next three steps.</div>
     </div>
     <form hx-post="/ui/models/{{ model.id }}/setup/step"
           hx-target="#deal-setup-wizard"
@@ -321,8 +436,10 @@
           {% for _ft, _ft_label, _ft_desc in _DEBT_CARDS %}
           {%- set _checked = _ft in _debt_types -%}
           {%- set _saved_vid = (_dterms.get(_ft, {}) or {}).get('vehicle_id', '') -%}
-          <div>
-            <label class="option-card {% if _checked %}selected{% endif %}" id="card-{{ _ft }}">
+          {# Dropdown is NESTED inside the card so the card reads as one panel.
+             Visibility tracks the checkbox via JS in onDebtTypeChange(). #}
+          <label class="option-card {% if _checked %}selected{% endif %}" id="card-{{ _ft }}">
+            <div class="option-card-head">
               <input type="checkbox" name="debt_types" value="{{ _ft }}"
                      {% if _checked %}checked{% endif %}
                      onchange="onDebtTypeChange()">
@@ -330,13 +447,12 @@
                 <div class="option-card-title">{{ _ft_label }}</div>
                 <div class="option-card-desc">{{ _ft_desc }}</div>
               </div>
-            </label>
+            </div>
             {% if _svd %}
-            <div id="vp-{{ _ft }}" style="display:{{ 'flex' if _checked else 'none' }};align-items:center;gap:8px;padding:6px 12px;border:1px solid var(--accent);border-top:none;border-radius:0 0 8px 8px;background:var(--accent-faint,#eff6ff)">
-              <span style="font-size:12px;color:var(--text-muted);white-space:nowrap;flex-shrink:0">Source Vehicle:</span>
-              <select name="vehicle_id_{{ _ft }}"
-                      style="flex:1;padding:3px 6px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:13px"
-                      onclick="event.stopPropagation()">
+            <div class="option-card-vehicle" id="vp-{{ _ft }}"
+                 style="display:{{ 'flex' if _checked else 'none' }}">
+              <span>Source Vehicle:</span>
+              <select name="vehicle_id_{{ _ft }}" onclick="event.stopPropagation()">
                 <option value="">— Use defaults —</option>
                 {% for v in _svd %}
                 <option value="{{ v.id }}" {% if _saved_vid == v.id %}selected{% endif %}>{{ v.name }}</option>
@@ -344,7 +460,7 @@
               </select>
             </div>
             {% endif %}
-          </div>
+          </label>
           {% endfor %}
 
         </div>
@@ -395,10 +511,6 @@
         'permanent_debt':       'lease_up',
         'construction_to_perm': 'acquisition',
     } -%}
-    {# Exit Vehicle defaults — first picked debt in the preference chain wins,
-       else fall back to "maturity" (or "sale" for debt that typically balloons
-       at divestment).  Resolved in Jinja below so the dropdown pre-selects
-       the right option. #}
     {%- set _vehicle_pref_chain = {
         'pre_development_loan': ['acquisition_loan','construction_loan','construction_to_perm','bridge','maturity'],
         'acquisition_loan':     ['construction_loan','construction_to_perm','permanent_debt','bridge','maturity'],
@@ -443,11 +555,6 @@
           {% for dt in _debt_types %}
           {%- set _cfg = _dmc.get(dt, {}) -%}
           {%- set _from_val = _cfg.get('active_from') or _dt_from_defaults.get(dt, 'acquisition') -%}
-          {# Resolve default Exit Vehicle: walk the preference chain, pick the
-             first debt-type that the user actually selected in step 2; else
-             use the trailing sentinel (usually 'maturity' or 'sale').
-             Jinja doesn't support {% break %} without an extension, so we
-             use a `found` flag on a namespace to short-circuit. #}
           {%- set _chain = _vehicle_pref_chain.get(dt, ['maturity']) -%}
           {%- set _dv = namespace(value='maturity', found=false) -%}
           {%- for cand in _chain -%}
@@ -462,7 +569,6 @@
             {%- endif -%}
           {%- endfor -%}
           {%- set _vehicle_val = _cfg.get('exit_vehicle') or _cfg.get('retired_by') or _dv.value -%}
-          {# Legacy migration: 'perpetuity' from the old schema → 'maturity'. #}
           {%- if _vehicle_val == 'perpetuity' -%}{%- set _vehicle_val = 'maturity' -%}{%- endif -%}
           <tr style="border-bottom:1px solid var(--border)">
             <td style="padding:8px;font-weight:600">{{ _dt_labels.get(dt, dt) }}</td>
@@ -554,9 +660,6 @@
         {%- set _mcfg = _dmc.get(dt, {}) -%}
         {%- set _vehicle = _mcfg.get('exit_vehicle') or _mcfg.get('retired_by') or 'maturity' -%}
         {%- if _vehicle == 'perpetuity' -%}{%- set _vehicle = 'maturity' -%}{%- endif -%}
-        {# Amortization only applies when the loan runs to maturity.  If it's
-           retired by sale or a takeout source, the balloon exits before the
-           amort schedule completes, so the period is irrelevant. #}
         {%- set _show_amort = _vehicle == 'maturity' -%}
         <div class="section-label">{{ _dt_labels.get(dt, dt) }}</div>
         <div class="field-row">
@@ -603,7 +706,7 @@
       </div>
     </form>
 
-    {# ════════════════════════════════════════════════════════════════ STEP 5 — Debt Sizing #}
+    {# ════════════════════════════════════════════════════════════════ STEP 5 — Per-debt Sizing (LTV / fixed / DSCR) #}
     {% elif _step == 5 %}
     {%- set _dt_labels = {
         'pre_development_loan': 'Pre-Development Loan',
@@ -613,11 +716,10 @@
         'permanent_debt':       'Permanent Debt',
         'construction_to_perm': 'Construction-to-Perm',
     } -%}
-    {% set _dsm = inputs.debt_sizing_mode or 'gap_fill' %}
     {% set _dscr_min = (_dterms.get('permanent_debt', {}).get('dscr_min') | float) if _dterms.get('permanent_debt', {}).get('dscr_min') else 1.20 %}
     <div class="wizard-header">
       <div class="wizard-title">Debt Sizing</div>
-      <div class="wizard-subtitle">How will each loan be sized when you hit Compute?</div>
+      <div class="wizard-subtitle">Per-loan LTV / LTC caps. Permanent-debt sizing mode was already chosen on Step 1.</div>
     </div>
     <form hx-post="/ui/models/{{ model.id }}/setup/step"
           hx-target="#deal-setup-wizard"
@@ -625,8 +727,6 @@
       <input type="hidden" name="step" value="5">
       <div class="wizard-body">
 
-        {#- Per-loan LTV/LTC defaults and basis labels.  The engine applies
-            the resulting cap against the basis at compute time. -#}
         {%- set _ltv_defaults = {
             'pre_development_loan': 100,
             'acquisition_loan':     70,
@@ -659,8 +759,6 @@
           <tr style="border-bottom:1px solid var(--border)">
             <td style="padding:8px;font-weight:600">{{ _dt_labels.get(dt, dt) }}</td>
             {% if dt == 'bridge' %}
-            {#- Bridge keeps its fixed-vs-LTV toggle — the fixed amount path
-                short-circuits sizing entirely. -#}
             {%- set _bridge_approach = _dt_cfg.get('sizing_approach') or 'fixed' -%}
             {%- set _bridge_amt = _dt_cfg.get('fixed_amount') or '' -%}
             <td style="padding:8px">
@@ -698,39 +796,15 @@
         </table>
 
         {% if 'permanent_debt' in _debt_types or 'construction_to_perm' in _debt_types %}
-        <div class="section-label">Permanent Debt Sizing Mode</div>
-        <div class="toggle-row">
-          <label class="toggle-opt {% if _dsm == 'gap_fill' %}selected{% endif %}"
-                 id="opt-gap-fill" onclick="selectToggle('debt_sizing_mode','gap_fill')">
-            <input type="radio" name="debt_sizing_mode" value="gap_fill"
-                   {% if _dsm == 'gap_fill' %}checked{% endif %}>
-            <div class="toggle-opt-title">Gap-Fill</div>
-            <div class="toggle-opt-desc">Debt sized to match Sources. May result in insufficient DSCR.</div>
-          </label>
-          <label class="toggle-opt {% if _dsm == 'dscr_capped' %}selected{% endif %}"
-                 id="opt-dscr-capped" onclick="selectToggle('debt_sizing_mode','dscr_capped')">
-            <input type="radio" name="debt_sizing_mode" value="dscr_capped"
-                   {% if _dsm == 'dscr_capped' %}checked{% endif %}>
-            <div class="toggle-opt-title">DSCR-Capped</div>
-            <div class="toggle-opt-desc">Debt sized to meet Minimum DSCR. May result in a Sources gap.</div>
-          </label>
-          <label class="toggle-opt {% if _dsm == 'dual_constraint' %}selected{% endif %}"
-                 id="opt-dual-constraint" onclick="selectToggle('debt_sizing_mode','dual_constraint')">
-            <input type="radio" name="debt_sizing_mode" value="dual_constraint"
-                   {% if _dsm == 'dual_constraint' %}checked{% endif %}>
-            <div class="toggle-opt-title">Dual Constraint</div>
-            <div class="toggle-opt-desc">MIN of LTV, DSCR, and gap-fill. Industry standard — lender funds the smaller.</div>
-          </label>
-        </div>
         <div class="field-row" style="align-items:flex-end;margin-top:8px">
           <div class="field-group" style="max-width:160px">
             <label>Minimum DSCR</label>
             <input type="number" name="dscr_minimum" step="0.01" min="1.0" max="3.0"
                    value="{{ _dscr_min }}" placeholder="1.15">
+            <div class="field-hint">Used when sizing mode is DSCR-Capped or Dual Constraint.</div>
           </div>
         </div>
         {% else %}
-        <input type="hidden" name="debt_sizing_mode" value="{{ _dsm }}">
         <input type="hidden" name="dscr_minimum" value="{{ _dscr_min }}">
         {% endif %}
 
@@ -739,96 +813,12 @@
         <button type="button" class="btn btn-secondary"
                 hx-get="/ui/models/{{ model.id }}/setup?step=4"
                 hx-target="#deal-setup-wizard" hx-swap="outerHTML">← Back</button>
-        <button type="submit" class="btn btn-primary">Next →</button>
-      </div>
-    </form>
-
-    {# ════════════════════════════════════════════════════════════════ STEP 6 — Reserves & Floors #}
-    {% elif _step == 6 %}
-    <div class="wizard-header">
-      <div class="wizard-title">Reserves &amp; Floors</div>
-      <div class="wizard-subtitle">Minimum cash balances the debt must fund.</div>
-    </div>
-    {% set _cf_pct = inputs.construction_floor_pct | float if inputs and inputs.construction_floor_pct else 5.0 %}
-    {% set _or_mo  = inputs.operation_reserve_months | int if inputs and inputs.operation_reserve_months else 6 %}
-    {% set _lu_curve = inputs.lease_up_curve if inputs and inputs.lease_up_curve else 'linear' %}
-    {% set _lu_steep = inputs.lease_up_curve_steepness | float if inputs and inputs.lease_up_curve_steepness else 5.0 %}
-    <form hx-post="/ui/models/{{ model.id }}/setup/step"
-          hx-target="#deal-setup-wizard"
-          hx-swap="outerHTML">
-      <input type="hidden" name="step" value="6">
-      <div class="wizard-body">
-
-        <div style="display:grid;grid-template-columns:{% if _has_constr %}1fr 1fr{% else %}1fr{% endif %};gap:24px;align-items:start">
-
-        {% if _has_constr %}
-        <div>
-          <div class="section-label">Construction Floor</div>
-          <div class="field-row" style="align-items:flex-start">
-            <div class="field-group" style="max-width:180px">
-              <label>Floor (% of Total Project Cost)</label>
-              <input type="number" name="construction_floor_pct" step="0.5" min="0" max="25"
-                     value="{{ _cf_pct }}" placeholder="5.0">
-              <div class="field-hint">Minimum cash balance during construction. Covers IO timing gaps and cost overrun buffer. Typical: 5–10%.</div>
-            </div>
-          </div>
-        </div>
-        {% endif %}
-
-        <div>
-          <div class="section-label">Operating Reserve</div>
-          <div class="field-row" style="align-items:flex-start">
-            <div class="field-group" style="max-width:180px">
-              <label>Reserve (months)</label>
-              <input type="number" name="operation_reserve_months" step="1" min="0" max="24"
-                     value="{{ _or_mo }}" placeholder="6">
-              {% if model.income_mode == 'noi' %}
-              <div class="field-hint">Sized as N months of debt service (NOI mode). Lender-required. Typical: 6–12 months.</div>
-              {% else %}
-              <div class="field-hint">Sized as the greater of N months of OpEx or N months of debt service. Lender-required. Typical: 6–12 months.</div>
-              {% endif %}
-            </div>
-          </div>
-        </div>
-
-        </div>{# /grid #}
-
-        {# ── Lease-Up Occupancy Curve ─────────────────────────────────── #}
-        <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border)">
-          <div class="section-label">Lease-Up Occupancy Curve</div>
-          <div class="field-hint" style="margin-bottom:10px">
-            How occupancy ramps from initial to stabilized during lease-up. Linear is conservative; S-curve models realistic marketing-driven absorption (slow start, rapid middle, slow finish).
-          </div>
-          <div class="field-row" style="align-items:flex-start;gap:24px">
-            <div class="field-group" style="max-width:220px">
-              <label>Curve Shape</label>
-              <select name="lease_up_curve" id="lease-up-curve-select"
-                      onchange="document.getElementById('lu-steepness-wrap').style.display=this.value==='s_curve'?'':'none'">
-                <option value="linear" {% if _lu_curve != 's_curve' %}selected{% endif %}>Linear (default)</option>
-                <option value="s_curve" {% if _lu_curve == 's_curve' %}selected{% endif %}>S-Curve</option>
-              </select>
-            </div>
-            <div class="field-group" id="lu-steepness-wrap"
-                 style="max-width:200px;{% if _lu_curve != 's_curve' %}display:none{% endif %}">
-              <label>S-Curve Steepness</label>
-              <input type="number" name="lease_up_curve_steepness" step="0.5" min="1" max="10"
-                     value="{{ _lu_steep }}" placeholder="5">
-              <div class="field-hint">1 = nearly flat/linear · 10 = very steep. Typical: 5.</div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-      <div class="wizard-footer">
-        <button type="button" class="btn btn-secondary"
-                hx-get="/ui/models/{{ model.id }}/setup?step=5"
-                hx-target="#deal-setup-wizard" hx-swap="outerHTML">← Back</button>
         <button type="submit" class="btn btn-primary">Review →</button>
       </div>
     </form>
 
-    {# ════════════════════════════════════════════════════════════════ STEP 7 — Review #}
-    {% elif _step == 7 %}
+    {# ════════════════════════════════════════════════════════════════ STEP 6 — Review #}
+    {% elif _step == 6 %}
     {%- set _dt_labels = {
         'pre_development_loan': 'Pre-Development Loan',
         'acquisition_loan':     'Acquisition Loan',
@@ -862,6 +852,9 @@
         'construction_to_perm': [('Bond Issuance Fee','1.0%'),('Bond Counsel Legal','$15,000')],
     } -%}
     {% set _dsm = inputs.debt_sizing_mode or 'gap_fill' %}
+    {# Back-button target: when every selected debt has a vehicle, Step 3/4/5
+       were skipped — Back should return to Step 2. Otherwise return to Step 5. #}
+    {% set _back_step = 2 if (_debt_types and (_debt_types | map('extract_vehicle', _dterms) | select | list | length) == (_debt_types | length)) else 5 %}
     <div class="wizard-header">
       <div class="wizard-title">Review Setup</div>
       <div class="wizard-subtitle">Confirm your debt stack. Loan amounts will be computed automatically.</div>
@@ -956,10 +949,12 @@
               {% endif %}
             </td>
           </tr>
-          {% if _has_constr %}
-          <tr><td>Construction floor</td><td>{{ inputs.construction_floor_pct | float }}% of TPC</td></tr>
+          {% if _has_constr and inputs.construction_floor_pct %}
+          <tr><td>Construction floor</td><td>{{ inputs.construction_floor_pct | float }}% of TPC <span style="color:var(--text-muted);font-weight:normal">(org default)</span></td></tr>
           {% endif %}
-          <tr><td>Operating reserve</td><td>{{ inputs.operation_reserve_months }} months of max(OpEx OR Debt Serv.)</td></tr>
+          {% if inputs.operation_reserve_months %}
+          <tr><td>Operating reserve</td><td>{{ inputs.operation_reserve_months }} months of max(OpEx OR Debt Serv.) <span style="color:var(--text-muted);font-weight:normal">(org default)</span></td></tr>
+          {% endif %}
         </table>
 
         <div style="background:var(--accent-faint);border:1px solid var(--accent);border-radius:8px;padding:12px 14px;font-size:12px;margin-top:16px">
@@ -1016,8 +1011,9 @@
 
       </div>
       <div class="wizard-footer">
+        {# Back target chosen by server via review_back_step context, falling back to Step 5 #}
         <button type="button" class="btn btn-secondary"
-                hx-get="/ui/models/{{ model.id }}/setup?step=6"
+                hx-get="/ui/models/{{ model.id }}/setup?step={{ review_back_step | default(5) }}"
                 hx-target="#deal-setup-wizard" hx-swap="outerHTML">← Back</button>
         <button type="submit" class="btn btn-primary">Finish Setup →</button>
       </div>
@@ -1039,14 +1035,72 @@ function selectOption(radio) {
   radio.closest('.option-card').classList.add('selected');
 }
 
-// Step 5 — debt sizing mode toggle (gap_fill / dscr_capped)
+// Step 1 — income-mode change toggles pro forma drop zone visibility AND
+// adjusts the submit button label ("Skip Import →" / "Next →").
+function onIncomeModeChange(radio) {
+  selectOption(radio);
+  var pf = document.getElementById('proforma-block');
+  var btn = document.getElementById('step1-submit');
+  var file = document.getElementById('proforma-file');
+  if (radio.value === 'revenue_opex') {
+    if (pf) pf.style.display = '';
+    if (btn) btn.textContent = (file && file.files && file.files.length > 0) ? 'Import →' : 'Skip Import →';
+  } else {
+    if (pf) pf.style.display = 'none';
+    if (btn) btn.textContent = 'Next →';
+    // Clear any selected file when switching to NOI — proforma is irrelevant.
+    if (file) file.value = '';
+    var pill = document.getElementById('proforma-pill');
+    if (pill) pill.style.display = 'none';
+  }
+}
+
+// Step 1 — drop zone handlers
+function onProformaDragOver(e) {
+  e.preventDefault();
+  document.getElementById('proforma-zone').classList.add('dragover');
+}
+function onProformaDragLeave(e) {
+  document.getElementById('proforma-zone').classList.remove('dragover');
+}
+function onProformaDrop(e) {
+  e.preventDefault();
+  document.getElementById('proforma-zone').classList.remove('dragover');
+  var dt = e.dataTransfer;
+  if (dt && dt.files && dt.files.length > 0) {
+    var input = document.getElementById('proforma-file');
+    input.files = dt.files;
+    onProformaFile(input);
+  }
+}
+function onProformaFile(input) {
+  var pill = document.getElementById('proforma-pill');
+  var name = document.getElementById('proforma-name');
+  var btn  = document.getElementById('step1-submit');
+  if (input.files && input.files.length > 0) {
+    if (name) name.textContent = input.files[0].name;
+    if (pill) pill.style.display = '';
+    if (btn)  btn.textContent = 'Import →';
+  } else {
+    if (pill) pill.style.display = 'none';
+    if (btn)  btn.textContent = 'Skip Import →';
+  }
+}
+function clearProformaFile(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  var input = document.getElementById('proforma-file');
+  if (input) input.value = '';
+  onProformaFile(input || {files: null});
+}
+
+// Step 1 — debt sizing mode toggle
 function selectToggle(name, val) {
   document.querySelectorAll('.toggle-opt').forEach(function(opt) {
-    opt.classList.remove('selected');
     var r = opt.querySelector('input[type="radio"]');
     if (r && r.name === name) {
       r.checked = (r.value === val);
-      if (r.value === val) opt.classList.add('selected');
+      opt.classList.toggle('selected', r.value === val);
     }
   });
 }
@@ -1059,11 +1113,9 @@ function onDebtTypeChange() {
   var pdCb  = document.querySelector('#debt-type-grid input[value="permanent_debt"]');
 
   if (ctpCb && ctpCb.checked) {
-    // C-to-P selected: uncheck Construction and Permanent
     if (clCb) clCb.checked = false;
     if (pdCb) pdCb.checked = false;
   } else if (clCb && pdCb && clCb.checked && pdCb.checked) {
-    // Both Construction and Permanent selected: uncheck C-to-P
     if (ctpCb) ctpCb.checked = false;
   }
 
@@ -1073,14 +1125,12 @@ function onDebtTypeChange() {
     if (card) card.classList.toggle('selected', cb.checked);
     var vp = document.getElementById('vp-' + cb.value);
     if (vp) vp.style.display = cb.checked ? 'flex' : 'none';
-    // Clear vehicle selection when unchecking so stale IDs don't persist
     if (!cb.checked && vp) {
       var sel = vp.querySelector('select');
       if (sel) sel.value = '';
     }
   });
 
-  // Require at least one selection before allowing Next
   var anyChecked = !!document.querySelector('#debt-type-grid input[type="checkbox"]:checked');
   var form = document.querySelector('#debt-type-grid').closest('form');
   if (form) {

@@ -1068,7 +1068,7 @@ async function startInvestorExport(modelId, profile) {
     {{ d.name }}
   </a>
   {% endfor %}
-
+  <a href="/deals/new?clone_of={{ model.id }}" class="deal-tab deal-tab-add" title="Clone this scenario into a new variant">+ Variant</a>
 </div>
 
 {# ── Row 2: Underwriting tab + Projects in active deal ── #}
@@ -1595,52 +1595,6 @@ document.addEventListener('keydown', function(e) {
     </div>
     <div class="wizard-body" id="milestone-wizard-body">
       <div class="text-muted text-small">Loading…</div>
-    </div>
-  </div>
-</div>
-
-<!-- Create Variant drawer -->
-<div class="drawer-overlay" id="create-variant-drawer"
-    
-     style="display:none">
-  <div class="drawer">
-    <div class="drawer-header">
-      <div>
-        <div class="drawer-title">Create Deal Variant</div>
-        <div class="text-small text-muted">Copies all projects and settings into a new independent deal</div>
-      </div>
-      <span class="drawer-close" onclick="closeDrawer('create-variant-drawer')">×</span>
-    </div>
-    <div class="drawer-body">
-      <form method="post" action="/ui/deals/{{ model.id }}/variant" style="display:flex;flex-direction:column;gap:14px">
-        <div>
-          <label class="field-label">Deal Name</label>
-          <input class="filter-input" style="width:100%;margin-top:4px"
-                 type="text" name="name" required
-                 value="{{ model.name }} (Copy)"
-                 placeholder="e.g. Conservative Scenario">
-          <div style="font-size:12px;color:var(--text-muted);margin-top:6px">Once created, the new deal is fully independent — change anything without affecting this one.</div>
-        </div>
-        {% if deal_projects | length > 1 %}
-        <div>
-          <label class="field-label">Projects to Include</label>
-          <div style="margin-top:6px;display:flex;flex-direction:column;gap:6px">
-            {% for p in deal_projects %}
-            <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer">
-              <input type="checkbox" name="project_ids" value="{{ p.id }}" checked
-                     style="width:14px;height:14px;cursor:pointer">
-              {{ p.name }}
-            </label>
-            {% endfor %}
-          </div>
-          <div style="font-size:12px;color:var(--text-muted);margin-top:6px">Uncheck projects to exclude them from the variant.</div>
-        </div>
-        {% endif %}
-        <div style="display:flex;gap:8px;margin-top:6px">
-          <button type="submit" class="btn btn-primary">Create Variant →</button>
-          <button type="button" class="btn btn-secondary" onclick="closeDrawer('create-variant-drawer')">Cancel</button>
-        </div>
-      </form>
     </div>
   </div>
 </div>

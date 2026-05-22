@@ -5,7 +5,8 @@ Finds or creates org-level default SourceVehicle records for GP and LP equity,
 then creates CapitalModule rows for the new scenario so the model builder
 always starts with at least two equity sources.
 
-Called from the POST /ui/deals/create-model endpoint before commit.
+Called from POST /ui/deals/create (and the clone path) after the
+scenario_factory creates the Scenario, before commit.
 """
 from __future__ import annotations
 
