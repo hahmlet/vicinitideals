@@ -2869,6 +2869,12 @@ async def _auto_size_debt_modules(
             _diag(f"  CC write label={_cc_full_lbl!r} _ccm_p={_ccm_p} pct={_fc_rate} -> amt={_cc_amt} exist_id={getattr(_cc_exist,'id',None) if _cc_exist else None}")
 
             _cc_cat = "acquisition" if _ccm_ft == "acquisition_loan" else "soft"
+            # NOTE: auto-FC UseLine deliberately does NOT inherit the parent
+            # module's active_from_milestone_id. Finance costs (origination,
+            # title, appraisal, lender legal) are paid at LOAN CLOSING — which
+            # in this codebase is the "close" milestone, regardless of when the
+            # loan first becomes active. The UseLine phase is already coerced
+            # to "acquisition" upstream (see _ccm_phase derivation).
             if _cc_exist is not None:
                 _cc_exist.amount = _cc_amt
                 _cc_exist.phase  = _ccm_phase
