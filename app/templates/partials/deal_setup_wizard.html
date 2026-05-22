@@ -478,14 +478,23 @@
 
     {# ════════════════════════════════════════════════════════════════ STEP 3 — Milestone & Retirement #}
     {% elif _step == 3 %}
-    {%- set _phase_opts = [
-        ('pre_construction', 'Pre-Development'),
-        ('acquisition',      'Close / Acquisition'),
-        ('construction',     'Construction Start'),
-        ('lease_up',         'Certificate of Occupancy'),
-        ('stabilized',       'Stabilization'),
-        ('exit',             'Exit / Divestment'),
-    ] -%}
+    {# Prefer milestone-driven options when this project has a seeded timeline.
+       Each option's value is the milestone_type (e.g. "close", "operation_stabilized");
+       the wizard finalize handler resolves that into a CapitalModule milestone FK
+       so rename/date-drag/trigger-chains carry through to debt activation timing.
+       Falls back to the static phase keys when no milestones exist yet. #}
+    {%- if wizard_active_from_opts and wizard_active_from_opts|length > 0 -%}
+      {%- set _phase_opts = wizard_active_from_opts -%}
+    {%- else -%}
+      {%- set _phase_opts = [
+          ('pre_construction', 'Pre-Development'),
+          ('acquisition',      'Close / Acquisition'),
+          ('construction',     'Construction Start'),
+          ('lease_up',         'Certificate of Occupancy'),
+          ('stabilized',       'Stabilization'),
+          ('exit',             'Exit / Divestment'),
+      ] -%}
+    {%- endif -%}
     {%- set _dt_labels = {
         'pre_development_loan': 'Pre-Development Loan',
         'acquisition_loan':     'Acquisition Loan',

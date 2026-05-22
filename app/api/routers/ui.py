@@ -6335,6 +6335,16 @@ async def handle_form_create_or_update(
                 _um_proj.unit_mix = rows
                 session.add(_um_proj)
 
+    # Re-sync CapitalModule milestone FKs whenever debt sources OR milestones
+    # were touched in this request. Lookups are scenario-scoped and cheap; one
+    # round-trip per module. Engine reads the FK first, so the next compute
+    # will pick up any renamed milestone target without further user action.
+    if item_type in ("capital-modules", "milestones"):
+        from app.services.capital_module_milestones import (
+            sync_milestone_fks_for_scenario,
+        )
+        await sync_milestone_fks_for_scenario(session, model_id)
+
     await session.flush()
     panel_data = await _load_builder_data(session, model_id, project_id=project_id)
     ctx = {"model": model, "active_module": module, **panel_data}
@@ -7886,6 +7896,33 @@ async def approve_timeline(
     return RedirectResponse(url=f"/models/{proj.scenario_id}/builder?project={project_id}&module=sources", status_code=303)
 
 
+async def _wizard_active_from_options(
+    session: "AsyncSession",
+    default_project: "Project | None",
+) -> list[tuple[str, str]]:
+    """Build the Active From dropdown options for wizard step 3 from the
+    default project's seeded milestones. Each option is (key, label) where
+    `key` is the milestone_type the wizard submits (resolved to a CapitalModule
+    milestone FK during finalize). Labels fall back to a humanized form of the
+    milestone_type when no override label is set.
+    """
+    if default_project is None:
+        return []
+    rows = list((await session.execute(
+        select(Milestone)
+        .where(Milestone.project_id == default_project.id)
+        .order_by(Milestone.sequence_order, Milestone.id)
+    )).scalars())
+    if not rows:
+        return []
+    out: list[tuple[str, str]] = []
+    for m in rows:
+        mt = str(getattr(m, "milestone_type", "") or "").replace("MilestoneType.", "")
+        label = m.label or _milestone_label(mt)
+        out.append((mt, label))
+    return out
+
+
 async def _seed_wizard_perm_defaults(inputs: "OperationalInputs", session: "DBSession", request: "Request") -> None:
     """Seed permanent-debt staging from user/org resolved defaults when not already set."""
     _wiz_user = await _get_user(session, request)
@@ -7989,6 +8026,7 @@ async def deal_setup_wizard_get(
         await _seed_wizard_perm_defaults(inputs, session, request)
     _wiz_user = await _get_user(session, request)
     _svd = await _wizard_debt_vehicles(session, _wiz_user) if _wiz_user else []
+    _wiz_active_from_opts = await _wizard_active_from_options(session, default_project)
 
     # Review (Step 6) Back button: jump to Step 2 when every selected debt has
     # a vehicle (Steps 3-5 were skipped). Otherwise return to Step 5.
@@ -8002,6 +8040,7 @@ async def deal_setup_wizard_get(
     return templates.TemplateResponse(request, "partials/deal_setup_wizard.html", {
         "request": request, "model": model, "inputs": inputs, "step": step,
         "source_vehicles_debt": _svd,
+        "wizard_active_from_opts": _wiz_active_from_opts,
         "review_back_step": _review_back_step,
     })
 
@@ -8280,9 +8319,11 @@ async def deal_setup_wizard_step(
 
     # If validation failed, don't persist and re-render the same step with errors
     if wizard_errors:
+        _post_active_from_opts = await _wizard_active_from_options(session, default_project)
         return templates.TemplateResponse(request, "partials/deal_setup_wizard.html", {
             "request": request, "model": model, "inputs": inputs, "step": step,
             "wizard_errors": wizard_errors, "source_vehicles_debt": _post_svd,
+            "wizard_active_from_opts": _post_active_from_opts,
         })
 
     session.add(inputs)
@@ -8324,9 +8365,11 @@ async def deal_setup_wizard_step(
 
     # Seed perm-debt defaults so Step 4 shows user/org preference, not template fallback.
     await _seed_wizard_perm_defaults(inputs, session, request)
+    _next_active_from_opts = await _wizard_active_from_options(session, default_project)
     return templates.TemplateResponse(request, "partials/deal_setup_wizard.html", {
         "request": request, "model": model, "inputs": inputs, "step": next_step,
         "source_vehicles_debt": _post_svd,
+        "wizard_active_from_opts": _next_active_from_opts,
         "review_back_step": review_back_step,
     })
 
@@ -9072,6 +9115,17 @@ async def deal_setup_wizard_complete(
                 pass
     if _ht:
         model.health_thresholds = {**(model.health_thresholds or {}), **_ht}
+
+    # Resolve CapitalModule.active_from_milestone_id / active_to_milestone_id
+    # FKs from the active_phase_start / active_phase_end strings. Milestones
+    # are seeded earlier in this handler (per project), so the FK lookup is
+    # safe here. Engine prefers FK over string when both exist, so future
+    # milestone renames / date drags carry through to debt activation timing
+    # without touching the legacy string field.
+    from app.services.capital_module_milestones import (
+        sync_milestone_fks_for_scenario,
+    )
+    await sync_milestone_fks_for_scenario(session, model_id)
 
     await session.commit()
 

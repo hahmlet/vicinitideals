@@ -31,3 +31,66 @@ def test_legacy_default_loan_costs_removed():
         "Legacy _DEFAULT_LOAN_COSTS table should be removed; replaced by "
         "DEFAULT_FINANCE_COST_PCT single global rate."
     )
+
+
+@pytest.mark.unit
+def test_aps_map_covers_all_milestone_keys():
+    """All milestone-key strings the wizard can write must map to a use-line phase.
+
+    Unmapped values would default to "acquisition" via .get(), which is now safe
+    — but explicit mapping prevents silent fallback for known keys.
+    """
+    from app.engines.cashflow import _APS_TO_USE_PHASE
+    required_keys = {
+        "acquisition", "close", "offer_made", "under_contract",
+        "pre_construction", "pre_development",
+        "construction",
+        "lease_up", "operation_lease_up",
+        "stabilized", "operation_stabilized",
+        "exit", "divestment",
+    }
+    missing = required_keys - set(_APS_TO_USE_PHASE.keys())
+    assert not missing, f"_APS_TO_USE_PHASE missing milestone keys: {missing}"
+
+
+@pytest.mark.unit
+def test_auto_finance_cost_phase_coercion_for_late_activation():
+    """Finance costs are paid at LOAN CLOSING, not at loan activation.
+
+    Regression: perm debt with active_phase_start="operation_stabilized" (perm
+    activates at stab) was creating a "Total Finance Costs" UseLine in
+    phase="operation", landing the ~2% origination lump in stabilized month 1
+    and crushing Year 1 stab profit.
+
+    Fix: at the auto-FC writeback site, coerce operation/exit phase values
+    back to "acquisition" so the lump fires at deal close where the lender
+    is paid. Refi-specific finance costs are still handled separately by the
+    refi event.
+    """
+    from app.engines.cashflow import _APS_TO_USE_PHASE
+
+    def _coerce(aps: str) -> str:
+        phase = _APS_TO_USE_PHASE.get(aps, "acquisition")
+        if phase in {"operation", "exit"}:
+            phase = "acquisition"
+        return phase
+
+    # Late-activation perm debt → coerced to acquisition
+    assert _coerce("operation_stabilized") == "acquisition"
+    assert _coerce("stabilized") == "acquisition"
+    assert _coerce("lease_up") == "acquisition"
+    assert _coerce("operation_lease_up") == "acquisition"
+    assert _coerce("exit") == "acquisition"
+    assert _coerce("divestment") == "acquisition"
+    # Acquisition-time milestones stay at acquisition
+    assert _coerce("acquisition") == "acquisition"
+    assert _coerce("close") == "acquisition"
+    assert _coerce("offer_made") == "acquisition"
+    assert _coerce("under_contract") == "acquisition"
+    # Pre-construction / construction loans preserve their phase
+    assert _coerce("pre_construction") == "pre_construction"
+    assert _coerce("pre_development") == "pre_construction"
+    assert _coerce("construction") == "construction"
+    # Unknown / NULL → default acquisition (not "pre_construction" as before)
+    assert _coerce("") == "acquisition"
+    assert _coerce("garbage_value") == "acquisition"
