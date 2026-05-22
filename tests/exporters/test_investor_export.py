@@ -539,12 +539,27 @@ async def test_no_accidental_formula_strings(session: AsyncSession):
     tried to parse as a formula and failed.
 
     This test scans every populated cell across every sheet, asserts that
-    any value starting with ``=`` is one of the export's known formula
-    types (currently only ``HYPERLINK(...)``). Anything else is a bug.
+    any value starting with ``=`` is either:
+      - a known formula function call we emit (HYPERLINK, SUM, IRR, ...)
+      - a pure-arithmetic / named-range / cell-reference expression made
+        of characters Excel accepts in formulas
+
+    Anything else (display text containing high-Unicode chars, prose with
+    a stray ``=``, etc.) is a bug.
     """
     scenario = await _seed_minimal_scenario(session)
     blob = await export_investor_workbook(scenario.id, session)
     wb = load_workbook(BytesIO(blob), data_only=False)
+
+    # Allowed characters in a pure-arithmetic / named-range / A1-reference
+    # formula. Excludes whitespace and high-Unicode so the Phase F4 hint-
+    # cell bug pattern still trips this check.
+    _formula_char_re = re.compile(r"^=[A-Za-z0-9_!.+\-*/$:,()\"']+$")
+    _allowed_function_prefixes = (
+        "=HYPERLINK(", "=SUM(", "=IRR(", "=XIRR(", "=IF(", "=IFERROR(",
+        "=MAX(", "=MIN(", "=ROUND(", "=PMT(", "=IPMT(", "=PPMT(",
+        "=SUMPRODUCT(", "=NPV(",
+    )
 
     bad_cells: list[str] = []
     for sheet_name in wb.sheetnames:
@@ -554,10 +569,9 @@ async def test_no_accidental_formula_strings(session: AsyncSession):
                 v = cell.value
                 if not isinstance(v, str) or not v.startswith("="):
                     continue
-                # Allowed: real HYPERLINK formulas the export generates
-                # for in-workbook navigation + GitHub anchor links on the
-                # Glossary sheet.
-                if v.startswith("=HYPERLINK("):
+                if v.startswith(_allowed_function_prefixes):
+                    continue
+                if _formula_char_re.match(v):
                     continue
                 bad_cells.append(f"{sheet_name}!{cell.coordinate}: {v!r}")
 

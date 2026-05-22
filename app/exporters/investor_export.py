@@ -708,10 +708,14 @@ def _build_cover(ws, registry: CellRegistry, ctx: dict) -> None:
     kv_row(ws, row, "Levered IRR", combined_irr,
            name="s_cover_irr", registry=registry, fmt=PCT)
     row += 1
-    kv_row(ws, row, "Total Uses", uses_total,
+    # Formula-conversion plan §4.7 (commit 2): Cover Total Uses + Total
+    # Sources are cross-sheet references to the Sources & Uses sheet so
+    # edits to the per-project Use lines (or to Block C principals) ripple
+    # straight to the Cover hero block.
+    kv_row(ws, row, "Total Uses", "=s_su2_uses_total",
            name="s_cover_uses", registry=registry, fmt=ACCOUNTING)
     row += 1
-    kv_row(ws, row, "Total Sources", sources_total,
+    kv_row(ws, row, "Total Sources", "=s_su2_sources_total",
            name="s_cover_sources", registry=registry, fmt=ACCOUNTING)
     row += 1
     if carrying_costs > Decimal(0):
@@ -4387,7 +4391,20 @@ def _build_su_sheet(
     registry: CellRegistry,
     ctx: dict,
 ) -> None:
-    """Dedicated Sources & Uses sheet: per-project line detail + category summary + sources."""
+    """Dedicated Sources & Uses sheet: per-project line detail + category summary + sources.
+
+    Formula-conversion plan §4.6 (commit 2): every summable cell is a
+    formula, not a Decimal. Per-project Use-line subtotals use
+    ``=SUM(start:end)`` over the contiguous Use lines above them.
+    Per-project totals sum the subtotals. The Category Summary block
+    sums each category across projects. Sources reference the
+    per-module Principal cells on the Assumptions sheet directly via
+    defined names. ``s_su2_gap = s_su2_uses_total - s_su2_sources_total``.
+
+    Editing a Use-line amount in the per-project section ripples up to
+    its subtotal, project total, category summary, grand total, and
+    the Cover sheet's Total Uses cell — without re-running the engine.
+    """
     set_widths(ws, [42, 22])
 
     use_lines_by_project: dict = ctx.get("use_lines", {})
@@ -4400,7 +4417,13 @@ def _build_su_sheet(
     line += 2
 
     # ── Per-project sections ───────────────────────────────────────────────
-    total_by_cat: dict[str, Decimal] = {cat: Decimal(0) for cat in USE_COST_CATEGORIES}
+    # Track row addresses of per-project category subtotals so the
+    # Category Summary block can build cross-section sum formulas.
+    # Shape: {category: [row_1, row_2, ...]} one row per project that had
+    # any lines in that category.
+    cat_subtotal_rows: dict[str, list[int]] = {cat: [] for cat in USE_COST_CATEGORIES}
+    # Track per-project total rows for any future per-project rollup formulas.
+    _proj_total_rows: list[int] = []
 
     for idx, project in enumerate(projects, start=1):
         pid = project.id
@@ -4409,7 +4432,11 @@ def _build_su_sheet(
         section_label(ws, line, f"P{idx} — {project.name}", span_cols=2)
         line += 1
 
-        proj_total = Decimal(0)
+        # Track per-project subtotal cells so Total Uses P{n} can SUM them
+        # (subtotals are not contiguous across categories, so use a list
+        # of cell refs rather than a single SUM range).
+        proj_subtotal_refs: list[str] = []
+
         for cat in USE_COST_CATEGORIES:
             cat_label = USE_CATEGORY_LABELS.get(cat, cat.title())
             cat_lines = [
@@ -4422,26 +4449,35 @@ def _build_su_sheet(
             ws.cell(row=line, column=1, value=cat_label).font = FONT_LABEL
             line += 1
 
-            cat_total = Decimal(0)
+            first_line_row = line
             for ul in cat_lines:
                 amt = _coerce_decimal(ul.amount or 0)
                 ws.cell(row=line, column=1, value=f"  {ul.label or ''}").font = FONT_VALUE
                 ws.cell(row=line, column=2, value=_to_excel_number(amt)).number_format = ACCOUNTING
-                cat_total += amt
                 line += 1
+            last_line_row = line - 1
 
+            # Formula: SUM the contiguous Use-line cells just written.
+            # Cells live in column B (col 2).
+            subtotal_formula = f"=SUM(B{first_line_row}:B{last_line_row})"
             ws.cell(row=line, column=1, value=f"  Subtotal {cat_label}").font = FONT_LABEL
-            cell = ws.cell(row=line, column=2, value=_to_excel_number(cat_total))
+            cell = ws.cell(row=line, column=2, value=subtotal_formula)
             cell.number_format = ACCOUNTING
             cell.font = FONT_LABEL
-            total_by_cat[cat] += cat_total
-            proj_total += cat_total
+            cat_subtotal_rows[cat].append(line)
+            proj_subtotal_refs.append(f"B{line}")
             line += 1
 
+        # Per-project Total Uses: formula summing this project's category
+        # subtotals (non-contiguous so list-of-refs rather than SUM range).
+        proj_total_formula = (
+            "=" + "+".join(proj_subtotal_refs) if proj_subtotal_refs else "=0"
+        )
         ws.cell(row=line, column=1, value=f"Total Uses P{idx}").font = FONT_LABEL
-        cell = ws.cell(row=line, column=2, value=_to_excel_number(proj_total))
+        cell = ws.cell(row=line, column=2, value=proj_total_formula)
         cell.number_format = ACCOUNTING
         cell.font = FONT_LABEL
+        _proj_total_rows.append(line)
         line += 2
 
     # ── Category summary (all projects) ───────────────────────────────────
@@ -4453,26 +4489,37 @@ def _build_su_sheet(
         "soft":        "s_su2_soft_total",
         "hard":        "s_su2_hard_total",
     }
-    uses_grand_total = Decimal(0)
+    cat_summary_rows: dict[str, int] = {}
     for cat in USE_COST_CATEGORIES:
         cat_label = USE_CATEGORY_LABELS.get(cat, cat.title())
-        amount = total_by_cat.get(cat, Decimal(0))
+        # Formula sums the per-project subtotal cells for this category.
+        subtotal_refs = [f"B{r}" for r in cat_subtotal_rows[cat]]
+        formula = "=" + "+".join(subtotal_refs) if subtotal_refs else "=0"
         ws.cell(row=line, column=1, value=cat_label).font = FONT_VALUE
-        registry.write(
-            ws, line, 2, amount,
-            name=_su2_names[cat], fmt=ACCOUNTING, font=FONT_VALUE, align=ALIGN_RIGHT,
-        )
-        uses_grand_total += amount
+        cell = ws.cell(row=line, column=2, value=formula)
+        cell.number_format = ACCOUNTING
+        cell.font = FONT_VALUE
+        cell.alignment = ALIGN_RIGHT
+        registry.register(_su2_names[cat], ws.title, line, 2)
+        cat_summary_rows[cat] = line
         line += 1
 
+    # Total Uses: sum the category-total cells.
+    cat_sum_refs = [f"B{cat_summary_rows[c]}" for c in USE_COST_CATEGORIES]
+    uses_total_formula = "=" + "+".join(cat_sum_refs) if cat_sum_refs else "=0"
     ws.cell(row=line, column=1, value="Total Uses").font = FONT_LABEL
-    registry.write(
-        ws, line, 2, uses_grand_total,
-        name="s_su2_uses_total", fmt=ACCOUNTING, font=FONT_LABEL, align=ALIGN_RIGHT,
-    )
+    cell = ws.cell(row=line, column=2, value=uses_total_formula)
+    cell.number_format = ACCOUNTING
+    cell.font = FONT_LABEL
+    cell.alignment = ALIGN_RIGHT
+    registry.register("s_su2_uses_total", ws.title, line, 2)
+    uses_total_row = line
     line += 2
 
     # ── Sources ───────────────────────────────────────────────────────────
+    # Each non-equity source pulls its principal directly from the
+    # Assumptions sheet's Block C ``s_module_{m}_principal`` defined name,
+    # so editing the principal there ripples into Sources here.
     section_label(ws, line, "Sources", span_cols=2)
     line += 1
 
@@ -4482,40 +4529,56 @@ def _build_su_sheet(
             j.capital_module_id, Decimal(0)
         ) + _coerce_decimal(j.amount or 0)
 
-    sources_total = Decimal(0)
-    for module in capital_modules:
+    source_refs: list[str] = []
+    for m_idx, module in enumerate(capital_modules, start=1):
         amount = junction_amount.get(module.id) or _coerce_decimal(
             (module.source or {}).get("amount") or 0
         )
         if amount <= Decimal(1) and _funder_class(module) == "Equity":
             continue
         ws.cell(row=line, column=1, value=module.label or _funder_type_label(module)).font = FONT_VALUE
-        cell = ws.cell(row=line, column=2, value=_to_excel_number(amount))
+        # Reference the Assumptions-sheet Principal cell by defined name.
+        # Workbook-scoped defined names resolve without a sheet qualifier.
+        cell = ws.cell(row=line, column=2, value=f"=s_module_{m_idx}_principal")
         cell.number_format = ACCOUNTING
-        sources_total += amount
+        source_refs.append(f"B{line}")
         line += 1
 
-    _implied_equity = uses_grand_total - sources_total
-    if _implied_equity > Decimal(1):
-        ws.cell(row=line, column=1, value="Owner Equity (implied gap)").font = FONT_VALUE
-        cell = ws.cell(row=line, column=2, value=_to_excel_number(_implied_equity))
-        cell.number_format = ACCOUNTING
-        sources_total += _implied_equity
-        line += 1
-
-    ws.cell(row=line, column=1, value="Total Sources").font = FONT_LABEL
-    registry.write(
-        ws, line, 2, sources_total,
-        name="s_su2_sources_total", fmt=ACCOUNTING, font=FONT_LABEL, align=ALIGN_RIGHT,
-    )
+    # Implied equity: Uses − Sources. Computed as a formula so it tracks
+    # edits to either side.
+    if source_refs:
+        implied_equity_formula = (
+            f"=B{uses_total_row}-(" + "+".join(source_refs) + ")"
+        )
+    else:
+        implied_equity_formula = f"=B{uses_total_row}"
+    ws.cell(row=line, column=1, value="Owner Equity (implied gap)").font = FONT_VALUE
+    cell = ws.cell(row=line, column=2, value=implied_equity_formula)
+    cell.number_format = ACCOUNTING
+    source_refs.append(f"B{line}")
     line += 1
 
-    gap = uses_grand_total - sources_total
+    # Total Sources: sum of all source rows (including implied equity).
+    sources_total_formula = "=" + "+".join(source_refs) if source_refs else "=0"
+    ws.cell(row=line, column=1, value="Total Sources").font = FONT_LABEL
+    cell = ws.cell(row=line, column=2, value=sources_total_formula)
+    cell.number_format = ACCOUNTING
+    cell.font = FONT_LABEL
+    cell.alignment = ALIGN_RIGHT
+    registry.register("s_su2_sources_total", ws.title, line, 2)
+    sources_total_row = line
+    line += 1
+
+    # Gap: Uses − Sources. Pure formula referencing the totals above.
     ws.cell(row=line, column=1, value="Δ Sources Gap (Uses − Sources)").font = FONT_LABEL
-    registry.write(
-        ws, line, 2, gap,
-        name="s_su2_gap", fmt=ACCOUNTING, font=FONT_LABEL, align=ALIGN_RIGHT,
+    cell = ws.cell(
+        row=line, column=2,
+        value=f"=B{uses_total_row}-B{sources_total_row}",
     )
+    cell.number_format = ACCOUNTING
+    cell.font = FONT_LABEL
+    cell.alignment = ALIGN_RIGHT
+    registry.register("s_su2_gap", ws.title, line, 2)
 
 
 def _build_glossary(
