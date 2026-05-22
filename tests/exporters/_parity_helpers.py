@@ -307,6 +307,39 @@ def recalc_workbook(path: Path) -> str:
     return "libreoffice"
 
 
+# Excel's seven legacy error sentinels plus the two dynamic-array-era
+# ones. Excel writes these as the literal cell value when a formula
+# fails to resolve. Spotting them post-recalc is the cheapest way to
+# catch a whole class of dangling references / type mismatches the
+# engine-parity tests would otherwise pass right over.
+EXCEL_ERROR_VALUES: frozenset[str] = frozenset({
+    "#NAME?", "#REF!", "#VALUE!", "#DIV/0!", "#NUM!",
+    "#N/A", "#NULL!", "#SPILL!", "#CALC!",
+})
+
+
+def find_error_cells(path: Path) -> list[tuple[str, str, str]]:
+    """Scan every sheet for cells whose post-recalc value is an Excel
+    error sentinel (``#NAME?``, ``#REF!``, etc.).
+
+    Returns a list of ``(sheet, coordinate, error_value)`` tuples —
+    empty when the workbook is clean. Call ``recalc_workbook`` first so
+    the error values are actually written to the cells; openpyxl-only
+    loads won't surface them.
+    """
+    from openpyxl import load_workbook
+    wb = load_workbook(path, data_only=True)
+    errors: list[tuple[str, str, str]] = []
+    for sheet_name in wb.sheetnames:
+        ws = wb[sheet_name]
+        for row in ws.iter_rows():
+            for cell in row:
+                v = cell.value
+                if isinstance(v, str) and v in EXCEL_ERROR_VALUES:
+                    errors.append((sheet_name, cell.coordinate, v))
+    return errors
+
+
 def read_named_value(path: Path, name: str, *, data_only: bool = True):
     """Read the value of a defined name from a workbook.
 
