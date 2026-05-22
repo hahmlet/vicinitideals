@@ -401,6 +401,7 @@ async def _load_deals(
     model_filter=None,
     q: str = "",
     include_archived: bool = False,
+    hide_test: bool = False,
 ) -> list[Deal]:
     """Load Deals with their Scenarios and linked Opportunities for the deals page."""
     stmt = (
@@ -416,6 +417,9 @@ async def _load_deals(
 
     if not include_archived:
         stmt = stmt.where(Deal.status != DealStatus.archived)
+
+    if hide_test:
+        stmt = stmt.where(~Deal.name.ilike("%e2e%"))
 
     if q:
         stmt = stmt.where(Deal.name.ilike(f"%{q}%"))
@@ -959,6 +963,7 @@ def _base_ctx(
         # None / missing is treated as verified to avoid false positives.
         "user_email_verified": bool(getattr(user, "email_verified", True)) if user else True,
         "is_org_admin": bool(getattr(user, "is_org_admin", False)) if user else False,
+        "is_admin": bool(getattr(user, "is_admin", False)) if user else False,
         "active_nav": active_nav,
         "dedup_count": dedup_count,
         "address_issues_count": address_issues_count,
@@ -2222,12 +2227,16 @@ async def deals_page(
     type: list[str] = Query(default=[]),
     model: list[str] = Query(default=[]),
     include_archived: str = Query(default=""),
+    hide_test: str = Query(default=""),
 ) -> HTMLResponse:
     user = await _get_user(session, request)
     dedup_count, conflicts_count = await _get_counts(session)
 
     archived = include_archived == "1"
-    loaded_deals = await _load_deals(session, status, type, model, q, archived)
+    # Default hide_test ON for admin users when not explicitly set
+    is_admin = user is not None and bool(getattr(user, "is_admin", False))
+    effective_hide_test = (hide_test == "1") if hide_test != "" else is_admin
+    loaded_deals = await _load_deals(session, status, type, model, q, archived, effective_hide_test)
     deals = [_build_deal_row(d) for d in loaded_deals]
 
     total_result = await session.execute(
@@ -2259,6 +2268,7 @@ async def deals_page(
             "total_count": total_count,
             "archived_count": archived_count,
             "include_archived": archived,
+            "hide_test": effective_hide_test,
             "q": q,
             "status": status,
             "deal_type": type,
@@ -2283,9 +2293,10 @@ async def deals_rows(
     type: list[str] = Query(default=[]),
     model: list[str] = Query(default=[]),
     include_archived: str = Query(default=""),
+    hide_test: str = Query(default=""),
 ) -> HTMLResponse:
     archived = include_archived == "1"
-    loaded_deals = await _load_deals(session, status, type, model, q, archived)
+    loaded_deals = await _load_deals(session, status, type, model, q, archived, hide_test == "1")
     deals = [_build_deal_row(d) for d in loaded_deals]
     return templates.TemplateResponse(request, "partials/deals_rows.html", {"deals": deals})
 
@@ -2767,9 +2778,11 @@ async def opportunities_page(
             seen_jur.add(value)
             jurisdiction_options.append({"value": value, "label": label})
     jurisdiction_options.sort(key=lambda x: x["label"])
+    is_admin = user is not None and bool(getattr(user, "is_admin", False))
     return templates.TemplateResponse(request, "opportunities.html", {
         "request": request,
         "jurisdiction_options": jurisdiction_options,
+        "hide_test_default": is_admin,
         **_base_ctx(user, dedup_count, "opportunities", conflicts_count=conflicts_count),
     })
 
@@ -2797,7 +2810,10 @@ def _apply_opp_filters(
     min_units: int | None,
     max_units: int | None,
     property_type: list[str],
+    hide_test: bool = False,
 ) -> object:
+    if hide_test:
+        stmt = stmt.where(~Opportunity.name.ilike("%e2e%"))
     if favorited:
         stmt = stmt.where(Opportunity.is_favorited.is_(True))
     if jurisdiction:
@@ -2838,6 +2854,7 @@ async def opportunities_rows_deals(
     min_units: int | None = Query(default=None),
     max_units: int | None = Query(default=None),
     property_type: list[str] = Query(default=[]),
+    hide_test: str = Query(default=""),
 ) -> HTMLResponse:
     active_oppo_ids = select(Project.opportunity_id).where(
         Project.opportunity_id.isnot(None)
@@ -2851,7 +2868,7 @@ async def opportunities_rows_deals(
         )
         .order_by(Opportunity.last_seen_at.desc())
     )
-    stmt = _apply_opp_filters(stmt, favorited, jurisdiction, min_units, max_units, property_type)
+    stmt = _apply_opp_filters(stmt, favorited, jurisdiction, min_units, max_units, property_type, hide_test == "1")
     opps = _filter_opps(list((await session.execute(stmt)).scalars().unique()), q)
     return templates.TemplateResponse(request, "partials/opportunities_rows.html", {
         "request": request, "opps": opps, "table": "deals",
@@ -2868,6 +2885,7 @@ async def opportunities_rows_offmarket(
     min_units: int | None = Query(default=None),
     max_units: int | None = Query(default=None),
     property_type: list[str] = Query(default=[]),
+    hide_test: str = Query(default=""),
 ) -> HTMLResponse:
     active_oppo_ids = select(Project.opportunity_id).where(
         Project.opportunity_id.isnot(None)
@@ -2882,7 +2900,7 @@ async def opportunities_rows_offmarket(
         )
         .order_by(Opportunity.last_seen_at.desc())
     )
-    stmt = _apply_opp_filters(stmt, favorited, jurisdiction, min_units, max_units, property_type)
+    stmt = _apply_opp_filters(stmt, favorited, jurisdiction, min_units, max_units, property_type, hide_test == "1")
     opps = _filter_opps(list((await session.execute(stmt)).scalars().unique()), q)
     return templates.TemplateResponse(request, "partials/opportunities_rows.html", {
         "request": request, "opps": opps, "table": "offmarket",
@@ -2899,6 +2917,7 @@ async def opportunities_rows_onmarket(
     min_units: int | None = Query(default=None),
     max_units: int | None = Query(default=None),
     property_type: list[str] = Query(default=[]),
+    hide_test: str = Query(default=""),
 ) -> HTMLResponse:
     active_oppo_ids = select(Project.opportunity_id).where(
         Project.opportunity_id.isnot(None)
@@ -2913,7 +2932,7 @@ async def opportunities_rows_onmarket(
         )
         .order_by(Opportunity.last_seen_at.desc())
     )
-    stmt = _apply_opp_filters(stmt, favorited, jurisdiction, min_units, max_units, property_type)
+    stmt = _apply_opp_filters(stmt, favorited, jurisdiction, min_units, max_units, property_type, hide_test == "1")
     opps = _filter_opps(list((await session.execute(stmt)).scalars().unique()), q)
     return templates.TemplateResponse(request, "partials/opportunities_rows.html", {
         "request": request, "opps": opps, "table": "onmarket",

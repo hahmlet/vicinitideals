@@ -92,6 +92,12 @@ tr:hover .archive-btn { opacity: 1; }
         <input type="checkbox" name="include_archived" value="1" {% if include_archived %}checked{% endif %}>
         Include Archived
       </label>
+      {% if is_admin %}
+      <label class="archived-toggle" title="Hide deals with 'E2E' in the name">
+        <input type="checkbox" name="hide_test" value="1" {% if hide_test %}checked{% endif %}>
+        Hide Test Deals
+      </label>
+      {% endif %}
       <button type="button" class="btn btn-secondary btn-sm" data-filter-clear style="white-space:nowrap" title="Clear filters and reset">✕ Clear</button>
       <button type="button" class="btn btn-secondary btn-sm" id="saved-filter-save-btn" style="white-space:nowrap;display:none" title="Save current filters as a named view">★ Save filter</button>
       <span id="saved-filter-dropdown" style="display:none">
