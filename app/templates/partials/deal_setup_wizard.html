@@ -282,7 +282,7 @@
 {% set _dmc = (inputs.debt_milestone_config or {}) if inputs else {} %}
 {% set _dterms = (inputs.debt_terms or {}) if inputs else {} %}
 
-<div class="wizard-shell" id="deal-setup-wizard">
+<div class="wizard-shell" id="deal-setup-wizard" data-model-id="{{ model.id }}">
 
   <div style="text-align:center;margin-bottom:24px">
     <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted)">Deal Setup</div>
@@ -1146,4 +1146,137 @@ function toggleBridgeSizing(select) {
   if (fixedDiv) fixedDiv.style.display = isLtv ? 'none' : '';
   if (ltvDiv)   ltvDiv.style.display   = isLtv ? ''     : 'none';
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Wizard state persistence — saves in-progress step form values to
+// localStorage so they survive page refresh, tab close, and accidental
+// navigation. Keyed by wizard:{model_id}:{step}. State is cleared on
+// successful step submit. See docs/feature-plans/wizard-state-persistence.md.
+(function wizardStatePersistence(){
+  function getShell() {
+    return document.getElementById('deal-setup-wizard');
+  }
+  function getModelId() {
+    var s = getShell();
+    return s ? (s.dataset.modelId || s.getAttribute('data-model-id')) : null;
+  }
+  function getActiveStepForm() {
+    var s = getShell();
+    if (!s) return null;
+    // Find the visible step form by its hidden step input
+    var stepInputs = s.querySelectorAll('form input[name="step"]');
+    for (var i = 0; i < stepInputs.length; i++) {
+      var f = stepInputs[i].closest('form');
+      if (f && f.offsetParent !== null) {
+        return { form: f, step: stepInputs[i].value };
+      }
+    }
+    // Fall back to first form with a step input (covers display:none edge case)
+    if (stepInputs.length) {
+      return { form: stepInputs[0].closest('form'), step: stepInputs[0].value };
+    }
+    return null;
+  }
+  function storageKey(modelId, step) {
+    return 'wizard:' + modelId + ':' + step;
+  }
+  function serializeForm(form) {
+    var state = { radios: {}, checkboxes: {}, fields: {} };
+    var inputs = form.querySelectorAll('input[name], select[name], textarea[name]');
+    inputs.forEach(function(el){
+      if (!el.name) return;
+      var t = (el.type || el.tagName || '').toLowerCase();
+      if (t === 'hidden') return; // hidden inputs are server-controlled
+      if (t === 'radio') {
+        if (el.checked) state.radios[el.name] = el.value;
+      } else if (t === 'checkbox') {
+        state.checkboxes[el.name + '::' + el.value] = !!el.checked;
+      } else if (t === 'submit' || t === 'button' || t === 'reset' || t === 'file') {
+        return;
+      } else {
+        state.fields[el.name] = el.value;
+      }
+    });
+    return state;
+  }
+  function applyState(form, state) {
+    if (!state) return;
+    var radios = state.radios || {};
+    Object.keys(radios).forEach(function(name){
+      var val = radios[name];
+      form.querySelectorAll('input[type="radio"]').forEach(function(r){
+        if (r.name === name) {
+          var was = r.checked;
+          r.checked = (r.value === val);
+          if (r.checked && !was) r.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      });
+    });
+    var cbs = state.checkboxes || {};
+    Object.keys(cbs).forEach(function(key){
+      var idx = key.indexOf('::');
+      if (idx < 0) return;
+      var name = key.slice(0, idx), val = key.slice(idx + 2);
+      form.querySelectorAll('input[type="checkbox"]').forEach(function(cb){
+        if (cb.name === name && cb.value === val) {
+          var was = cb.checked;
+          cb.checked = !!cbs[key];
+          if (cb.checked !== was) cb.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      });
+    });
+    var f = state.fields || {};
+    Object.keys(f).forEach(function(name){
+      form.querySelectorAll('[name]').forEach(function(el){
+        if (el.name !== name) return;
+        var t = (el.type || el.tagName || '').toLowerCase();
+        if (t === 'hidden' || t === 'radio' || t === 'checkbox') return;
+        var was = el.value;
+        el.value = f[name];
+        if (el.value !== was) el.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+    });
+  }
+  function save() {
+    var modelId = getModelId();
+    var info = getActiveStepForm();
+    if (!modelId || !info) return;
+    try {
+      localStorage.setItem(storageKey(modelId, info.step), JSON.stringify(serializeForm(info.form)));
+    } catch (e) { /* quota / disabled — best-effort */ }
+  }
+  function restore() {
+    var modelId = getModelId();
+    var info = getActiveStepForm();
+    if (!modelId || !info) return;
+    var raw;
+    try { raw = localStorage.getItem(storageKey(modelId, info.step)); } catch (e) { return; }
+    if (!raw) return;
+    var state;
+    try { state = JSON.parse(raw); } catch (e) { return; }
+    applyState(info.form, state);
+  }
+  function clearStep(modelId, step) {
+    if (!modelId || !step) return;
+    try { localStorage.removeItem(storageKey(modelId, step)); } catch (e) {}
+  }
+  function wire() {
+    var info = getActiveStepForm();
+    if (!info || info.form.dataset.wizardStateWired) return;
+    info.form.dataset.wizardStateWired = '1';
+    info.form.addEventListener('input', save);
+    info.form.addEventListener('change', save);
+    info.form.addEventListener('htmx:afterRequest', function(evt){
+      var xhr = evt.detail && evt.detail.xhr;
+      if (xhr && xhr.status >= 200 && xhr.status < 400) {
+        clearStep(getModelId(), info.step);
+      }
+    });
+  }
+  function init() {
+    wire();
+    restore();
+  }
+  init();
+})();
 </script>
