@@ -14,9 +14,12 @@ Flow
 
 Redis key schema
 ----------------
-``proforma:{task_id}:file``      — raw xlsx bytes (bytes), TTL 24 h
-``proforma:{task_id}:progress``  — JSON progress object, TTL 24 h
-``proforma:{task_id}:result``    — JSON parse result, TTL 24 h
+``proforma:{task_id}:file``        — raw xlsx bytes (bytes), TTL 24 h
+``proforma:{task_id}:progress``    — JSON progress object, TTL 24 h
+``proforma:{task_id}:result``      — JSON parse result, TTL 24 h
+``proforma:{task_id}:file_hash``   — SHA-256 hex of file bytes, TTL 24 h
+``proforma:filehash:{hex}:result`` — JSON parse result by content hash, TTL 7 d
+``proforma:filehash:{hex}:parsed_at`` — ISO timestamp of cached parse, TTL 7 d
 """
 
 from __future__ import annotations
@@ -642,7 +645,25 @@ def parse_proforma(
             "expense_lines": expense_lines,
             "warnings": warnings,
         }
-        r.set(f"proforma:{task_id}:result", json.dumps(result), ex=_REDIS_TTL)
+        result_json = json.dumps(result)
+        r.set(f"proforma:{task_id}:result", result_json, ex=_REDIS_TTL)
+
+        # ── Content-hash cache: persist result for 7 days under SHA-256 key ──
+        # The preflight route stores the hash under proforma:{task_id}:file_hash.
+        # Subsequent uploads of the same file bytes hit this cache and skip LLM.
+        file_hash = r.get(f"proforma:{task_id}:file_hash")
+        if file_hash:
+            file_hash = file_hash.decode() if isinstance(file_hash, bytes) else str(file_hash)
+            from datetime import UTC as _UTC
+            from datetime import datetime as _dt
+            _HASH_TTL = 7 * 86_400
+            r.set(f"proforma:filehash:{file_hash}:result", result_json, ex=_HASH_TTL)
+            r.set(
+                f"proforma:filehash:{file_hash}:parsed_at",
+                _dt.now(_UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                ex=_HASH_TTL,
+            )
+
         _set_done(r, task_id)
 
     except Exception as exc:

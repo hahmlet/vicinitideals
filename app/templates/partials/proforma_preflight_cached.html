@@ -1,0 +1,89 @@
+{# Pro Forma Import — Cache Hit
+   Shown when the uploaded file's SHA-256 matches a parse result already in
+   Redis (TTL 7 days). Lets the user skip the LLM call.
+   Context: model_id, task_id, file_hash, file_kind, filename, parsed_at,
+            unit_type_count, expense_line_count, warning_count
+#}
+
+<div class="wizard-shell" id="deal-setup-wizard">
+
+  <div style="text-align:center;margin-bottom:24px">
+    <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px">Deal Setup</div>
+    <div style="font-size:12px;color:var(--text-muted)">Step 1 — Pro Forma Import — <strong style="color:var(--accent)">Cached Result Found</strong></div>
+  </div>
+
+  <div class="wizard-card">
+    <div class="wizard-header">
+      <div class="wizard-title">We've seen this file before</div>
+      <div class="wizard-subtitle">
+        {% if filename %}<code style="font-size:12px">{{ filename }}</code> — {% endif %}
+        previously parsed
+        {% if parsed_at %}on <strong>{{ parsed_at }}</strong>{% endif %}.
+        Found <strong>{{ unit_type_count }}</strong> unit type{{ 's' if unit_type_count != 1 else '' }} and
+        <strong>{{ expense_line_count }}</strong> expense line{{ 's' if expense_line_count != 1 else '' }}{% if warning_count %}, with {{ warning_count }} warning{{ 's' if warning_count != 1 else '' }}{% endif %}.
+      </div>
+    </div>
+
+    <div class="wizard-body" style="display:flex;flex-direction:column;gap:16px">
+
+      <div style="padding:14px;border:1px solid var(--border);border-radius:8px;background:color-mix(in srgb, var(--accent) 6%, var(--bg));display:flex;align-items:center;gap:12px">
+        <div style="font-size:20px;line-height:1">✓</div>
+        <div style="font-size:13px;color:var(--text)">
+          You can reuse the cached result instantly, or re-analyze the file (15–60s) for a fresh parse.
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+
+        <form hx-post="/ui/models/{{ model_id }}/proforma-use-cached"
+              hx-target="#deal-setup-wizard"
+              hx-swap="outerHTML"
+              style="display:inline">
+          <input type="hidden" name="task_id" value="{{ task_id }}">
+          <input type="hidden" name="file_hash" value="{{ file_hash }}">
+          <button type="submit" class="btn btn-primary">Use Cached Result →</button>
+        </form>
+
+        <form hx-post="/ui/models/{{ model_id }}/proforma-reanalyze"
+              hx-target="#deal-setup-wizard"
+              hx-swap="outerHTML"
+              style="display:inline">
+          <input type="hidden" name="task_id" value="{{ task_id }}">
+          <button type="submit" class="btn btn-secondary">Re-analyze (15–60s)</button>
+        </form>
+
+      </div>
+
+    </div>
+
+    <div class="wizard-footer">
+      <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">
+        <a hx-get="/ui/models/{{ model_id }}/proforma-restart"
+           hx-target="#deal-setup-wizard"
+           hx-swap="outerHTML"
+           style="font-size:12px;color:var(--text-muted);cursor:pointer;text-decoration:none">
+          ← Change file
+        </a>
+        <a hx-get="/ui/models/{{ model_id }}/proforma-skip"
+           hx-target="#deal-setup-wizard"
+           hx-swap="outerHTML"
+           style="font-size:12px;color:var(--text-muted);cursor:pointer;text-decoration:none">
+          Skip import →
+        </a>
+        <form hx-post="/ui/models/{{ model_id }}/proforma-purge-cache"
+              hx-target="#deal-setup-wizard"
+              hx-swap="outerHTML"
+              hx-confirm="Delete the cached parse result and re-analyze from scratch?"
+              style="display:inline;margin-left:auto">
+          <input type="hidden" name="task_id" value="{{ task_id }}">
+          <input type="hidden" name="file_hash" value="{{ file_hash }}">
+          <button type="submit"
+                  style="background:none;border:none;padding:0;font-size:12px;color:var(--text-muted);cursor:pointer;text-decoration:underline;text-underline-offset:2px">
+            Purge cached result and re-analyze from scratch
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>
