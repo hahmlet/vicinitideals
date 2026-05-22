@@ -428,9 +428,13 @@ async def _load_deals(
         known = [s for s in statuses if s in _STATUS_DB_MAP]
         targets = {_STATUS_DB_MAP[s] for s in known}
         if targets:
-            deals = [d for d in deals if _first_opportunity(d) and _first_opportunity(d).status in targets]
-        else:
-            deals = []
+            # Deals with no linked opportunity cannot be filtered by status — keep them.
+            # Deals with a linked opportunity are kept only if their status matches.
+            deals = [
+                d for d in deals
+                if _first_opportunity(d) is None or _first_opportunity(d).status in targets
+            ]
+        # If none of the selected status values map to DB values, no filtering is applied.
 
     model_filters = _as_list(model_filter)
     has_primary = "has" in model_filters
