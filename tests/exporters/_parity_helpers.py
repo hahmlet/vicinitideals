@@ -237,10 +237,27 @@ def recalc_with_excel_com(path: Path) -> None:
         ) from exc
 
     abs_path = str(Path(path).resolve())
-    excel = win32com.client.Dispatch("Excel.Application")
-    excel.DisplayAlerts = False
-    excel.Visible = False
+    # ``gencache.EnsureDispatch`` builds the COM type library cache so
+    # property setters and methods resolve through static dispatch. Plain
+    # ``Dispatch`` returns a dynamic proxy that on newer Office installs
+    # rejects both property setters (``excel.DisplayAlerts = False``) and
+    # methods (``excel.Quit()``) with ``AttributeError`` because the
+    # type library can't be auto-generated. When EnsureDispatch fails
+    # too (``This COM object can not automate the makepy process``),
+    # there's nothing we can do — surface as RecalcUnavailableError so
+    # tests skip cleanly instead of failing with a misleading trace.
     try:
+        excel = win32com.client.gencache.EnsureDispatch("Excel.Application")
+    except (TypeError, AttributeError) as exc:
+        raise RecalcUnavailableError(
+            f"Excel COM type library unavailable on this host "
+            f"(makepy automation failed: {exc!r}). Use LibreOffice or "
+            f"prime the gen_py cache manually."
+        ) from exc
+
+    try:
+        excel.DisplayAlerts = False
+        excel.Visible = False
         wb = excel.Workbooks.Open(abs_path)
         try:
             excel.CalculateFull()
@@ -248,7 +265,10 @@ def recalc_with_excel_com(path: Path) -> None:
         finally:
             wb.Close(SaveChanges=False)
     finally:
-        excel.Quit()
+        try:
+            excel.Quit()
+        except AttributeError:
+            pass
 
 
 def recalc_with_libreoffice(path: Path) -> None:

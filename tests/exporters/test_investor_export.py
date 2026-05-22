@@ -196,7 +196,6 @@ async def test_per_project_sheet_per_project(session: AsyncSession):
             scenario_id=scenario.id,
             opportunity_id=None,
             name=label,
-            deal_type="acquisition",
         )
         session.add(proj)
         await session.flush()
@@ -233,7 +232,6 @@ async def test_long_project_name_truncated_to_27_chars(session: AsyncSession):
         scenario_id=scenario.id,
         opportunity_id=None,
         name=long_name,
-        deal_type="acquisition",
     )
     session.add(long_proj)
     await session.flush()
