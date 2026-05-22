@@ -189,9 +189,21 @@ async def export_investor_workbook(
         _build_proforma_combined(pf_combined, registry, ctx)
 
     # Per-project sheets: all profiles. Sheet names `P{n} {Name}` truncated
-    # to Excel's 31-char ceiling. UW Summary hyperlinks resolve once these exist.
+    # to Excel's 31-char ceiling. UW Summary hyperlinks resolve once these
+    # exist.
+    #
+    # Formula-conversion plan §5 (commit 8): single-project consolidation.
+    # When a scenario has exactly one project, the per-project sheet
+    # duplicates content already on Underwriting Pro Forma / Cash Flow
+    # (combined == per-project when there's one project). Skip the P1
+    # sheet to reduce noise; UW Summary's mini-table HYPERLINK then
+    # points at Underwriting Pro Forma (or the formula-driven Pro Forma
+    # for the PF profile) instead of a P1 sheet that no longer exists.
     projects: list[Project] = ctx["projects"]
+    _single_project = len(projects) == 1
     for idx, project in enumerate(projects, start=1):
+        if _single_project:
+            continue
         if _profile in _HAS_PF:
             sheet_name = _project_sheet_name(idx, project.name)
             ws_proj = wb.create_sheet(sheet_name)
@@ -1517,8 +1529,14 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         ws.cell(row=pp_data, column=5, value=_to_excel_number(record.get("dscr"))).number_format = "0.000"
         levered = record.get("project_irr_levered")
         ws.cell(row=pp_data, column=6, value=_to_excel_number(_coerce_pct(levered) if levered is not None else None)).number_format = PCT
-        # Sheet hyperlink — resolves once commit 3's per-project sheets land.
-        sheet_label = _project_sheet_name(idx, project.name)
+        # Sheet hyperlink: for single-project scenarios the per-project
+        # sheet is suppressed (plan §5, commit 8) so point at the
+        # combined Pro Forma instead. Multi-project keeps the per-P
+        # sheet target.
+        if len(projects) == 1:
+            sheet_label = "Underwriting Pro Forma"
+        else:
+            sheet_label = _project_sheet_name(idx, project.name)
         ws.cell(
             row=pp_data, column=7,
             value=f'=HYPERLINK("#\'{sheet_label}\'!A1", "→ open")',

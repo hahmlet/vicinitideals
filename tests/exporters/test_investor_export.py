@@ -39,6 +39,11 @@ def _commit_3_sheet_order(num_projects: int) -> tuple[str, ...]:
     Sources & Uses → Sensitivity → Investor Returns → Waterfall → Unit Mix →
     Debt Schedule → Assumptions → P{n} per-project sheets → Glossary.
     Waterfall and Unit Mix were added in commits cbd2828/be7b361.
+
+    Formula-conversion plan §5 (commit 8): single-project scenarios omit
+    the P1 sheet because Underwriting Pro Forma / Cash Flow already show
+    the same numbers when there's only one project. Multi-project keeps
+    the per-P{n} sheets unchanged.
     """
     base_pre = (
         "Cover",
@@ -53,6 +58,9 @@ def _commit_3_sheet_order(num_projects: int) -> tuple[str, ...]:
         "Debt Schedule",
         "Assumptions",
     )
+    if num_projects == 1:
+        # Single-project consolidation: P1 sheet suppressed.
+        return base_pre + ("Glossary & Methodology",)
     return base_pre + tuple(
         # Match the seeder's "Main Project" name; tests with custom names
         # build the expected roster themselves.
