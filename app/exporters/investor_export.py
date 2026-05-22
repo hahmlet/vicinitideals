@@ -1993,6 +1993,15 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
         "effective_gross_income": ("+gross_revenue", "+vacancy_loss"),
         "noi": ("+effective_gross_income", "-operating_expenses"),
     }
+    # Phase B: rows whose Y_n>=2 values are a growth-rate chain on the
+    # prior year. Y0/Y1 stay as engine-computed seed values; Y2+ become
+    # ``=prev * (1 + s_opex_growth_rate)`` so a single Assumptions edit
+    # ripples through every downstream year. CapEx Reserve uses the same
+    # OpEx growth rate (no separate reserve-growth assumption today).
+    _GROWTH_CHAIN_FIELDS: dict[str, str] = {
+        "operating_expenses": "s_opex_growth_rate",
+        "capex_reserve": "s_opex_growth_rate",
+    }
     # Track each engine-value row's coord so derived formulas can reference
     # the actual cells. col=2 is Y0; each year_cols entry adds one column.
     field_row: dict[str, int] = {}
@@ -2002,6 +2011,7 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
         ws.cell(row=cur_row, column=1, value=label).font = FONT_LABEL
         field_row[field] = cur_row
         derived = _DERIVED_FORMULA_FIELDS.get(field)
+        growth_name = _GROWTH_CHAIN_FIELDS.get(field)
         for col_offset, year in enumerate(year_cols):
             col_idx = 2 + col_offset
             if derived:
@@ -2029,6 +2039,14 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
                         row=cur_row, column=col_idx,
                         value=_to_excel_number(value),
                     )
+            elif growth_name and col_offset >= 2:
+                # Y2+ for growth-chain fields: reference the prior-year
+                # cell on the same row and multiply by (1 + growth). Y0
+                # (pre-op) and Y1 (first stabilized year) keep engine
+                # values as the chain's seed.
+                prev_col = get_column_letter(col_idx - 1)
+                formula = f"={prev_col}{cur_row}*(1+{growth_name})"
+                cell = ws.cell(row=cur_row, column=col_idx, value=formula)
             else:
                 value = annual.get(year, {}).get(field, Decimal(0))
                 cell = ws.cell(
@@ -2053,15 +2071,18 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
     # operating-efficiency metric — typical multifamily targets 35-45%; a
     # number above 50% is a yellow flag for the LP. Rendered as a derived
     # ratio row immediately below CapEx Reserve, before the NOI line.
+    # Phase B: formula-driven so OpEx growth-chain edits flow into OER.
     ws.cell(row=cur_row, column=1, value="OER (OpEx ÷ EGI)").font = FONT_LABEL
-    for col_offset, year in enumerate(year_cols):
-        opex = annual.get(year, {}).get("operating_expenses", Decimal(0))
-        egi = annual.get(year, {}).get("effective_gross_income", Decimal(0))
-        oer = (opex / egi) if egi > 0 else None
-        cell = ws.cell(
-            row=cur_row, column=2 + col_offset,
-            value=_to_excel_number(oer) if oer is not None else _DASH,
-        )
+    opex_r = field_row.get("operating_expenses")
+    egi_r = field_row.get("effective_gross_income")
+    for col_offset, _year in enumerate(year_cols):
+        col_idx = 2 + col_offset
+        if opex_r is not None and egi_r is not None:
+            col_letter = get_column_letter(col_idx)
+            formula = f"=IFERROR({col_letter}{opex_r}/{col_letter}{egi_r},\"\")"
+            cell = ws.cell(row=cur_row, column=col_idx, value=formula)
+        else:
+            cell = ws.cell(row=cur_row, column=col_idx, value=_DASH)
         cell.number_format = PCT
         cell.font = FONT_VALUE
         cell.alignment = ALIGN_RIGHT
@@ -5181,6 +5202,11 @@ def _write_pf_table(
         "effective_gross_income": ("+gross_revenue", "+vacancy_loss"),
         "noi": ("+effective_gross_income", "-operating_expenses", "-capex_reserve"),
     }
+    # Phase B: OpEx + CapEx Reserve grow off Y1 via ``s_opex_growth_rate``.
+    _GROWTH_CHAIN_FIELDS: dict[str, str] = {
+        "operating_expenses": "s_opex_growth_rate",
+        "capex_reserve": "s_opex_growth_rate",
+    }
     field_row: dict[str, int] = {}
 
     cur_row = start_row
@@ -5188,6 +5214,7 @@ def _write_pf_table(
         ws.cell(row=cur_row, column=1, value=label).font = FONT_LABEL
         field_row[field] = cur_row
         derived = _DERIVED_FORMULA_FIELDS.get(field)
+        growth_name = _GROWTH_CHAIN_FIELDS.get(field)
         for col_offset, year in enumerate(year_cols):
             col_idx = 2 + col_offset
             if derived:
@@ -5209,6 +5236,10 @@ def _write_pf_table(
                         row=cur_row, column=col_idx,
                         value=_to_excel_number(value),
                     )
+            elif growth_name and col_offset >= 2:
+                prev_col = get_column_letter(col_idx - 1)
+                formula = f"={prev_col}{cur_row}*(1+{growth_name})"
+                cell = ws.cell(row=cur_row, column=col_idx, value=formula)
             else:
                 value = annual.get(year, {}).get(field, Decimal(0))
                 cell = ws.cell(
@@ -5220,16 +5251,20 @@ def _write_pf_table(
             cell.alignment = ALIGN_RIGHT
         cur_row += 1
 
-    # OER derived row
+    # OER derived row — formula references the OpEx and EGI cells written
+    # above so it updates in lock-step with the growth-chained OpEx values.
+    # IFERROR guards against EGI = 0 (pre-stabilization years).
     ws.cell(row=cur_row, column=1, value="OER (OpEx ÷ EGI)").font = FONT_LABEL
-    for col_offset, year in enumerate(year_cols):
-        opex = annual.get(year, {}).get("operating_expenses", Decimal(0))
-        egi = annual.get(year, {}).get("effective_gross_income", Decimal(0))
-        oer = (opex / egi) if egi > 0 else None
-        cell = ws.cell(
-            row=cur_row, column=2 + col_offset,
-            value=_to_excel_number(oer) if oer is not None else _DASH,
-        )
+    opex_r = field_row.get("operating_expenses")
+    egi_r = field_row.get("effective_gross_income")
+    for col_offset, _year in enumerate(year_cols):
+        col_idx = 2 + col_offset
+        if opex_r is not None and egi_r is not None:
+            col_letter = get_column_letter(col_idx)
+            formula = f"=IFERROR({col_letter}{opex_r}/{col_letter}{egi_r},\"\")"
+            cell = ws.cell(row=cur_row, column=col_idx, value=formula)
+        else:
+            cell = ws.cell(row=cur_row, column=col_idx, value=_DASH)
         cell.number_format = PCT
         cell.font = FONT_VALUE
         cell.alignment = ALIGN_RIGHT
