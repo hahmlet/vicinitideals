@@ -18,7 +18,7 @@ import uuid
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.capital import CapitalModule
+from app.models.capital import CapitalModule, CapitalModuleProject
 from app.models.milestone import Milestone, MilestoneType
 from app.models.project import Project
 
@@ -89,14 +89,68 @@ async def sync_milestone_fks_for_module(
         cm.active_to_milestone_id = None
 
 
+async def _find_milestone_id_for_project(
+    session: AsyncSession,
+    project_id: uuid.UUID,
+    ms_type: MilestoneType,
+) -> uuid.UUID | None:
+    """Return the deterministic milestone id for this type within one project."""
+    rows = (await session.execute(
+        select(Milestone.id)
+        .where(Milestone.project_id == project_id)
+        .where(Milestone.milestone_type == ms_type)
+        .order_by(Milestone.sequence_order, Milestone.id)
+        .limit(1)
+    )).first()
+    return rows[0] if rows else None
+
+
+async def sync_milestone_fks_for_junction(
+    session: AsyncSession,
+    junction: CapitalModuleProject,
+) -> None:
+    """Populate per-project active_from/to_milestone_id on a junction row
+    based on its legacy active_from / active_to string fields. Milestone
+    lookup is scoped to the junction's own project_id so multi-project
+    deals can anchor a shared CapitalModule to a different milestone on
+    each project."""
+    from_type = map_aps_to_milestone_type(junction.active_from)
+    if from_type is not None:
+        junction.active_from_milestone_id = await _find_milestone_id_for_project(
+            session, junction.project_id, from_type
+        )
+    else:
+        junction.active_from_milestone_id = None
+
+    to_type = map_aps_to_milestone_type(junction.active_to)
+    if to_type is not None:
+        junction.active_to_milestone_id = await _find_milestone_id_for_project(
+            session, junction.project_id, to_type
+        )
+    else:
+        junction.active_to_milestone_id = None
+
+
 async def sync_milestone_fks_for_scenario(
     session: AsyncSession,
     scenario_id: uuid.UUID,
 ) -> int:
-    """Sync FKs for every CapitalModule in a scenario. Returns rows touched."""
+    """Sync FKs for every CapitalModule and CapitalModuleProject junction in
+    a scenario. Returns the count of capital modules touched (junctions are
+    flushed alongside their modules)."""
     modules = list((await session.execute(
         select(CapitalModule).where(CapitalModule.scenario_id == scenario_id)
     )).scalars())
     for cm in modules:
         await sync_milestone_fks_for_module(session, cm)
+
+    if modules:
+        junctions = list((await session.execute(
+            select(CapitalModuleProject).where(
+                CapitalModuleProject.capital_module_id.in_([cm.id for cm in modules])
+            )
+        )).scalars())
+        for j in junctions:
+            await sync_milestone_fks_for_junction(session, j)
+
     return len(modules)

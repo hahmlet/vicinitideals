@@ -52,6 +52,20 @@ def test_map_aps_unknown_or_blank_returns_none():
 
 
 @pytest.mark.unit
+def test_service_exposes_junction_sync():
+    """Phase 2 (migration 0096) added per-project FKs on the junction. The
+    service must expose a parallel sync helper so the wizard finalize and
+    capital-modules form handler can keep junctions in lock-step too."""
+    from app.services.capital_module_milestones import (
+        sync_milestone_fks_for_junction,
+        sync_milestone_fks_for_scenario,
+    )
+
+    assert callable(sync_milestone_fks_for_junction)
+    assert callable(sync_milestone_fks_for_scenario)
+
+
+@pytest.mark.unit
 def test_aps_to_milestone_type_table_matches_migration():
     """Service-side table must match the migration's backfill table.
 

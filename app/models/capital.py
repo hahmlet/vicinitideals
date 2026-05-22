@@ -292,6 +292,20 @@ class CapitalModuleProject(Base):
     )
     active_from: Mapped[str | None] = mapped_column(String(60), nullable=True)
     active_to: Mapped[str | None] = mapped_column(String(60), nullable=True)
+    # Per-project milestone FKs — preferred over the legacy string fields
+    # above when set. Scoped to this junction's project, so multi-project
+    # deals can anchor a shared CapitalModule's activation to a different
+    # milestone on each project.
+    active_from_milestone_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("milestones.id", ondelete="SET NULL"),
+        nullable=True,
+    )
+    active_to_milestone_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("milestones.id", ondelete="SET NULL"),
+        nullable=True,
+    )
     active_from_offset_days: Mapped[int] = mapped_column(
         Integer, nullable=False, default=0, server_default="0"
     )
