@@ -27,6 +27,38 @@ from app.models.settings import OrgDealTypeDefault, OrgSetting, UserDealTypeDefa
 from app.settings.defaults import ORG_SET_FIELDS, SYSTEM_BASELINE
 from app.settings.resolver import resolve_all_defaults, resolve_default, resolve_timeline_defaults
 
+# Canonical SourceVehicle.vehicle_type values. Legacy `funder_type` strings
+# (senior_debt, mezzanine_debt, bridge, etc.) are collapsed at the boundary.
+_CANONICAL_VEHICLE_TYPES = {"equity", "debt", "forgivable_loan", "grant"}
+_LEGACY_TO_CANONICAL: dict[str, str] = {
+    "permanent_debt": "debt",
+    "senior_debt": "debt",
+    "mezzanine_debt": "debt",
+    "bridge": "debt",
+    "construction_loan": "debt",
+    "pre_development_loan": "debt",
+    "acquisition_loan": "debt",
+    "bond": "debt",
+    "owner_loan": "debt",
+    "soft_loan": "forgivable_loan",
+    "preferred_equity": "equity",
+    "common_equity": "equity",
+    "owner_investment": "equity",
+    "tax_credit": "grant",
+    "other": "debt",
+}
+
+
+def _normalize_vehicle_type(raw: object) -> str:
+    """Collapse legacy funder_type strings onto canonical vehicle_type.
+    Returns empty string for unknown / missing input so callers raise 400."""
+    v = (raw or "").strip().lower() if isinstance(raw, str) else ""
+    if not v:
+        return ""
+    if v in _CANONICAL_VEHICLE_TYPES:
+        return v
+    return _LEGACY_TO_CANONICAL.get(v, "")
+
 log = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/settings", tags=["settings"])
@@ -586,9 +618,12 @@ async def create_org_source_vehicle(
     _require_org_admin(user)
     body = await request.json()
     name = (body.get("name") or "").strip()
-    vehicle_type = (body.get("vehicle_type") or body.get("funder_type") or "").strip()
+    vehicle_type = _normalize_vehicle_type(body.get("vehicle_type") or body.get("funder_type"))
     if not name or not vehicle_type:
-        raise HTTPException(status_code=400, detail="name and vehicle_type are required")
+        raise HTTPException(
+            status_code=400,
+            detail="name and vehicle_type are required (vehicle_type must be one of: equity, debt, forgivable_loan, grant)",
+        )
     source_cfg, carry_cfg, exit_cfg = _sv_body_to_jsonb(body)
     from app.models.source_vehicle import SourceVehicle as _SV_create
     vehicle = _SV_create(
@@ -630,9 +665,12 @@ async def update_org_source_vehicle(
         raise HTTPException(status_code=404, detail="Vehicle not found")
     body = await request.json()
     name = (body.get("name") or "").strip()
-    vehicle_type = (body.get("vehicle_type") or body.get("funder_type") or "").strip()
+    vehicle_type = _normalize_vehicle_type(body.get("vehicle_type") or body.get("funder_type"))
     if not name or not vehicle_type:
-        raise HTTPException(status_code=400, detail="name and vehicle_type are required")
+        raise HTTPException(
+            status_code=400,
+            detail="name and vehicle_type are required (vehicle_type must be one of: equity, debt, forgivable_loan, grant)",
+        )
     vehicle.label = name
     vehicle.vehicle_type = vehicle_type
     if "equity_role" in body:
@@ -673,9 +711,12 @@ async def create_user_source_vehicle(
     user = await _get_user_or_401(current_user_id, session)
     body = await request.json()
     name = (body.get("name") or "").strip()
-    vehicle_type = (body.get("vehicle_type") or body.get("funder_type") or "").strip()
+    vehicle_type = _normalize_vehicle_type(body.get("vehicle_type") or body.get("funder_type"))
     if not name or not vehicle_type:
-        raise HTTPException(status_code=400, detail="name and vehicle_type are required")
+        raise HTTPException(
+            status_code=400,
+            detail="name and vehicle_type are required (vehicle_type must be one of: equity, debt, forgivable_loan, grant)",
+        )
     source_cfg, carry_cfg, exit_cfg = _sv_body_to_jsonb(body)
     from app.models.source_vehicle import SourceVehicle as _SV_ucreate
     vehicle = _SV_ucreate(
@@ -714,9 +755,12 @@ async def update_user_source_vehicle(
         raise HTTPException(status_code=404, detail="Vehicle not found")
     body = await request.json()
     name = (body.get("name") or "").strip()
-    vehicle_type = (body.get("vehicle_type") or body.get("funder_type") or "").strip()
+    vehicle_type = _normalize_vehicle_type(body.get("vehicle_type") or body.get("funder_type"))
     if not name or not vehicle_type:
-        raise HTTPException(status_code=400, detail="name and vehicle_type are required")
+        raise HTTPException(
+            status_code=400,
+            detail="name and vehicle_type are required (vehicle_type must be one of: equity, debt, forgivable_loan, grant)",
+        )
     vehicle.label = name
     vehicle.vehicle_type = vehicle_type
     if "equity_role" in body:

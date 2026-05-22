@@ -326,6 +326,19 @@
 </div>{# /user-prefs left col #}
 
 {# ── RIGHT COLUMN: Source Vehicles ── #}
+{% set _vt_labels = {
+  'equity': 'Equity',
+  'debt': 'Debt',
+  'forgivable_loan': 'Forgivable Loan',
+  'grant': 'Grant',
+} %}
+{% set _er_labels = {'gp': 'GP (General Partner)', 'lp': 'LP (Limited Partner)'} %}
+{% macro vt_display(vt, er) -%}
+  {%- set _vt = vt or 'debt' -%}
+  {%- if _vt == 'equity' and er -%}{{ _er_labels.get(er, er|upper) }} Equity
+  {%- else -%}{{ _vt_labels.get(_vt, _vt|replace('_',' ')|title) }}
+  {%- endif -%}
+{%- endmacro %}
 {% set _ft_labels = {
   'permanent_debt': 'Permanent Debt',
   'senior_debt': 'Senior Debt',
@@ -368,7 +381,7 @@
     <div style="padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;{% if loop.last %}border-bottom:none{% endif %}">
       <div style="flex:1;min-width:0">
         <div style="font-size:13px;font-weight:500;color:var(--text)">{{ v.name }}</div>
-        <div style="font-size:11px;color:var(--text-muted)">{{ _ft_labels.get(v.funder_type, v.funder_type | replace('_',' ') | title) }}</div>
+        <div style="font-size:11px;color:var(--text-muted)">{{ vt_display(v.vehicle_type, v.equity_role) }}</div>
       </div>
       <div style="font-size:11px;color:var(--text-muted);white-space:nowrap;display:flex;flex-direction:column;gap:1px;text-align:right">
         {% if v.source_config and v.source_config.get('interest_rate_pct') is not none %}
@@ -400,9 +413,18 @@
           </div>
           <div>
             <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Type *</label>
-            <select class="filter-select" id="sv-add-user-ft" style="width:100%">
-              {% for ft_val, ft_lbl in _ft_labels.items() %}
-              <option value="{{ ft_val }}">{{ ft_lbl }}</option>
+            <select class="filter-select" id="sv-add-user-vt" style="width:100%"
+                    onchange="svToggleEquityRole('sv-add-user', this.value)">
+              {% for vt_val, vt_lbl in _vt_labels.items() %}
+              <option value="{{ vt_val }}">{{ vt_lbl }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div id="sv-add-user-er-wrap" style="display:none">
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Equity Role *</label>
+            <select class="filter-select" id="sv-add-user-er" style="width:100%">
+              {% for er_val, er_lbl in _er_labels.items() %}
+              <option value="{{ er_val }}">{{ er_lbl }}</option>
               {% endfor %}
             </select>
           </div>
@@ -520,7 +542,7 @@
     <details style="border-bottom:1px solid var(--border){% if loop.last %};border-bottom:none{% endif %}">
       <summary style="padding:10px 14px;cursor:pointer;font-size:13px;list-style:none;display:flex;align-items:center;gap:8px">
         <span style="font-weight:500;color:var(--text);flex:1">{{ v.name }}</span>
-        <span style="font-size:11px;color:var(--text-muted)">{{ _ft_labels.get(v.funder_type, v.funder_type) }}</span>
+        <span style="font-size:11px;color:var(--text-muted)">{{ vt_display(v.vehicle_type, v.equity_role) }}</span>
       </summary>
       <div style="padding:0 14px 14px;display:grid;gap:8px">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
@@ -530,9 +552,18 @@
           </div>
           <div>
             <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Type *</label>
-            <select class="filter-select sv-user-ft" data-vid="{{ v.id }}" style="width:100%">
-              {% for ft_val, ft_lbl in _ft_labels.items() %}
-              <option value="{{ ft_val }}" {% if v.funder_type == ft_val %}selected{% endif %}>{{ ft_lbl }}</option>
+            <select class="filter-select sv-user-vt" data-vid="{{ v.id }}" style="width:100%"
+                    onchange="svToggleEquityRole('sv-user-er-wrap-{{ v.id }}', this.value, true)">
+              {% for vt_val, vt_lbl in _vt_labels.items() %}
+              <option value="{{ vt_val }}" {% if v.vehicle_type == vt_val %}selected{% endif %}>{{ vt_lbl }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div id="sv-user-er-wrap-{{ v.id }}" style="display:{{ 'block' if v.vehicle_type == 'equity' else 'none' }}">
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Equity Role *</label>
+            <select class="filter-select sv-user-er" data-vid="{{ v.id }}" style="width:100%">
+              {% for er_val, er_lbl in _er_labels.items() %}
+              <option value="{{ er_val }}" {% if v.equity_role == er_val %}selected{% endif %}>{{ er_lbl }}</option>
               {% endfor %}
             </select>
           </div>
@@ -675,6 +706,11 @@
   function svField(selector, vid) {
     return document.querySelector(selector + '[data-vid="' + vid + '"]');
   }
+  window.svToggleEquityRole = function(idPrefix, vt, exactWrapId) {
+    var wrapId = exactWrapId ? idPrefix : (idPrefix + '-er-wrap');
+    var el = document.getElementById(wrapId);
+    if (el) el.style.display = (vt === 'equity') ? 'block' : 'none';
+  };
   function svVal(selector, vid) {
     var el = svField(selector, vid);
     return el ? el.value.trim() : '';
@@ -701,7 +737,8 @@
     var isSchedule = modeEl && modeEl.value === 'schedule';
     var payload = {
       name: svVal('.sv-user-name', vid),
-      funder_type: svVal('.sv-user-ft', vid),
+      vehicle_type: svVal('.sv-user-vt', vid),
+      equity_role: (svVal('.sv-user-vt', vid) === 'equity' ? svVal('.sv-user-er', vid) : null),
       interest_rate_pct: parseFloat(svVal('.sv-user-rate', vid)) || null,
       ltv_pct: parseFloat(svVal('.sv-user-ltv', vid)) || null,
       dscr_min: parseFloat(svVal('.sv-user-dscr', vid)) || null,
@@ -773,13 +810,14 @@
 
   window.svSaveNewUser = async function() {
     var name = document.getElementById('sv-add-user-name').value.trim();
-    var ft = document.getElementById('sv-add-user-ft').value;
+    var vt = document.getElementById('sv-add-user-vt').value;
+    var er = (vt === 'equity') ? document.getElementById('sv-add-user-er').value : null;
     var errEl = document.getElementById('sv-add-user-err');
     if (!name) { svShowErr(errEl, 'Name is required.'); return; }
     var carryMode = document.querySelector('input[name="sv-add-user-carry-mode"]:checked');
     var isSchedule = carryMode && carryMode.value === 'schedule';
     var payload = {
-      name: name, funder_type: ft,
+      name: name, vehicle_type: vt, equity_role: er,
       interest_rate_pct: parseFloat(document.getElementById('sv-add-user-rate').value) || null,
       ltv_pct: parseFloat(document.getElementById('sv-add-user-ltv').value) || null,
       dscr_min: parseFloat(document.getElementById('sv-add-user-dscr').value) || null,

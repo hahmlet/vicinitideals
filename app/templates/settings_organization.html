@@ -464,6 +464,19 @@
 
 {# ── RIGHT: Source Vehicles ── #}
 {% if is_org_admin %}
+{% set _vt_labels_org = {
+  'equity': 'Equity',
+  'debt': 'Debt',
+  'forgivable_loan': 'Forgivable Loan',
+  'grant': 'Grant',
+} %}
+{% set _er_labels_org = {'gp': 'GP (General Partner)', 'lp': 'LP (Limited Partner)'} %}
+{% macro vt_display_org(vt, er) -%}
+  {%- set _vt = vt or 'debt' -%}
+  {%- if _vt == 'equity' and er -%}{{ _er_labels_org.get(er, er|upper) }} Equity
+  {%- else -%}{{ _vt_labels_org.get(_vt, _vt|replace('_',' ')|title) }}
+  {%- endif -%}
+{%- endmacro %}
 {% set _ft_labels_org = {
   'permanent_debt': 'Permanent Debt',
   'senior_debt': 'Senior Debt',
@@ -512,9 +525,18 @@
           </div>
           <div>
             <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Type *</label>
-            <select class="filter-select" id="sv-add-org-ft" style="width:100%">
-              {% for ft_val, ft_lbl in _ft_labels_org.items() %}
-              <option value="{{ ft_val }}">{{ ft_lbl }}</option>
+            <select class="filter-select" id="sv-add-org-vt" style="width:100%"
+                    onchange="svToggleEquityRoleOrg('sv-add-org', this.value)">
+              {% for vt_val, vt_lbl in _vt_labels_org.items() %}
+              <option value="{{ vt_val }}">{{ vt_lbl }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div id="sv-add-org-er-wrap" style="display:none">
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Equity Role *</label>
+            <select class="filter-select" id="sv-add-org-er" style="width:100%">
+              {% for er_val, er_lbl in _er_labels_org.items() %}
+              <option value="{{ er_val }}">{{ er_lbl }}</option>
               {% endfor %}
             </select>
           </div>
@@ -631,7 +653,7 @@
     <details style="border-bottom:1px solid var(--border){% if loop.last %};border-bottom:none{% endif %}">
       <summary style="padding:10px 14px;cursor:pointer;font-size:13px;list-style:none;display:flex;align-items:center;gap:8px">
         <span style="font-weight:500;color:var(--text);flex:1">{{ v.name }}</span>
-        <span style="font-size:11px;color:var(--text-muted)">{{ _ft_labels_org.get(v.funder_type, v.funder_type) }}</span>
+        <span style="font-size:11px;color:var(--text-muted)">{{ vt_display_org(v.vehicle_type, v.equity_role) }}</span>
       </summary>
       <div style="padding:0 14px 14px;display:grid;gap:8px">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
@@ -641,9 +663,18 @@
           </div>
           <div>
             <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Type *</label>
-            <select class="filter-select sv-org-ft" data-vid="{{ v.id }}" style="width:100%">
-              {% for ft_val, ft_lbl in _ft_labels_org.items() %}
-              <option value="{{ ft_val }}" {% if v.funder_type == ft_val %}selected{% endif %}>{{ ft_lbl }}</option>
+            <select class="filter-select sv-org-vt" data-vid="{{ v.id }}" style="width:100%"
+                    onchange="svToggleEquityRoleOrg('sv-org-er-wrap-{{ v.id }}', this.value, true)">
+              {% for vt_val, vt_lbl in _vt_labels_org.items() %}
+              <option value="{{ vt_val }}" {% if v.vehicle_type == vt_val %}selected{% endif %}>{{ vt_lbl }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div id="sv-org-er-wrap-{{ v.id }}" style="display:{{ 'block' if v.vehicle_type == 'equity' else 'none' }}">
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Equity Role *</label>
+            <select class="filter-select sv-org-er" data-vid="{{ v.id }}" style="width:100%">
+              {% for er_val, er_lbl in _er_labels_org.items() %}
+              <option value="{{ er_val }}" {% if v.equity_role == er_val %}selected{% endif %}>{{ er_lbl }}</option>
               {% endfor %}
             </select>
           </div>
@@ -786,6 +817,11 @@
 
 <script>
 (function() {
+  window.svToggleEquityRoleOrg = function(idPrefix, vt, exactWrapId) {
+    var wrapId = exactWrapId ? idPrefix : (idPrefix + '-er-wrap');
+    var el = document.getElementById(wrapId);
+    if (el) el.style.display = (vt === 'equity') ? 'block' : 'none';
+  };
   function svOrgField(selector, vid) {
     return document.querySelector(selector + '[data-vid="' + vid + '"]');
   }
@@ -852,7 +888,8 @@
     var isSchedule = modeEl && modeEl.value === 'schedule';
     var payload = {
       name: svOrgVal('.sv-org-name', vid),
-      funder_type: svOrgVal('.sv-org-ft', vid),
+      vehicle_type: svOrgVal('.sv-org-vt', vid),
+      equity_role: (svOrgVal('.sv-org-vt', vid) === 'equity' ? svOrgVal('.sv-org-er', vid) : null),
       interest_rate_pct: parseFloat(svOrgVal('.sv-org-rate', vid)) || null,
       ltv_pct: parseFloat(svOrgVal('.sv-org-ltv', vid)) || null,
       dscr_min: parseFloat(svOrgVal('.sv-org-dscr', vid)) || null,
@@ -886,13 +923,14 @@
 
   window.svOrgSaveNew = async function() {
     var name = document.getElementById('sv-add-org-name').value.trim();
-    var ft = document.getElementById('sv-add-org-ft').value;
+    var vt = document.getElementById('sv-add-org-vt').value;
+    var er = (vt === 'equity') ? document.getElementById('sv-add-org-er').value : null;
     var errEl = document.getElementById('sv-add-org-err');
     if (!name) { svOrgShowErr(errEl, 'Name is required.'); return; }
     var carryMode = document.querySelector('input[name="sv-add-org-carry-mode"]:checked');
     var isSchedule = carryMode && carryMode.value === 'schedule';
     var payload = {
-      name: name, funder_type: ft,
+      name: name, vehicle_type: vt, equity_role: er,
       interest_rate_pct: parseFloat(document.getElementById('sv-add-org-rate').value) || null,
       ltv_pct: parseFloat(document.getElementById('sv-add-org-ltv').value) || null,
       dscr_min: parseFloat(document.getElementById('sv-add-org-dscr').value) || null,
