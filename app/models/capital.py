@@ -65,6 +65,18 @@ class CapitalModule(Base):
     exit_terms: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     active_phase_start: Mapped[str | None] = mapped_column(String(60), nullable=True)
     active_phase_end: Mapped[str | None] = mapped_column(String(60), nullable=True)
+    # Milestone FK timing — preferred over phase string when set. Resolved via the
+    # scenario's milestone graph (trigger chains, date offsets all carry through).
+    active_from_milestone_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("milestones.id", ondelete="SET NULL"),
+        nullable=True,
+    )
+    active_to_milestone_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("milestones.id", ondelete="SET NULL"),
+        nullable=True,
+    )
     # FK to unified source_vehicles table (nullable; SET NULL when vehicle deleted).
     source_vehicle_id: Mapped[uuid.UUID | None] = mapped_column(
         UUID(as_uuid=True),
