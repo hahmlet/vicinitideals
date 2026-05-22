@@ -413,6 +413,26 @@ DSCR target, principal-to-LTV-cap) stays engine-side.
 
 ## 7. Build Order
 
+### Status (2026-05-22)
+
+| # | Title | Status | SHA |
+|---|---|---|---|
+| 0 | Audit + parity baseline | shipped | (see branch history) |
+| 1 | Assumptions sheet expansion | shipped | (see branch history) |
+| 2 | Sources & Uses + Cover formulas | shipped | (see branch history) |
+| 3 | Pro Forma EGI + NOI formulas | shipped | `53227af` |
+| 4 | Cash Flow derived-row formulas (Levered / Unlevered / DSCR / Cumulative) | shipped | `52a57cd` |
+| 5 | Investor Returns Return($) + Combined IRR formulas | shipped | `4842faa` |
+| 6 | Debt Schedule Annual P&I (PMT) formula | shipped — narrow | `a69ce0a` |
+| 7 | Sensitivity Data Table | **deferred** | openpyxl 3.x cannot emit Excel `TABLE()` array formulas cleanly; sheet stays engine-driven. Revisit when a viable openpyxl array-formula path lands. |
+| 8 | Single-project consolidation | shipped | `746c0fc` |
+| 9 | Cleanup + doc updates | this commit | — |
+
+**Out of plan-scope but follow-up candidates:**
+- Debt Schedule amort table (CUMIPMT / CUMPRINC per year) — adjacent to commit 6 but needs IO-vs-amort branch logic plus end-balance cross-row references.
+- Pro Forma / Cash Flow Debt Service rows — would chain back to the new `s_loan_*_annual_pi` named ranges; pending tier-aware allocation.
+- Investor Returns Equity Multiple / CoC / weighted IRR — needs new total-committed-equity and total-distributions named ranges.
+
 ### Commit 0 — Audit + parity baseline (prerequisite)
 
 - Capture the current export's output for a known fixture as the
