@@ -419,7 +419,10 @@ async def _load_deals(
         stmt = stmt.where(Deal.status != DealStatus.archived)
 
     if hide_test:
-        stmt = stmt.where(~Deal.name.ilike("%e2e%"))
+        stmt = stmt.where(
+            ~Deal.name.ilike("%e2e%") &
+            ~Deal.name.op("~*")(r"phase\s+\d+\s+test\s+\d+")
+        )
 
     if q:
         stmt = stmt.where(Deal.name.ilike(f"%{q}%"))
