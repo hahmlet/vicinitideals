@@ -1951,12 +1951,64 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
         ("Debt Service", "debt_service", "r_uw_debt_service"),
         ("Net Cash Flow", "net_cash_flow", "r_uw_net_cash_flow"),
     ]
+
+    from openpyxl.utils import get_column_letter
+
+    # Formula-conversion plan §4.1 (commit 3): the rows whose math is a
+    # direct sum/difference of other rows on this sheet become formulas
+    # so LP edits to a single Use line / OpEx category propagate to the
+    # downstream KPIs. ``effective_gross_income`` = GrossRev + Vacancy
+    # (vacancy negative); ``noi`` = EGI - OpEx. Net Cash Flow + Debt
+    # Service stay as engine values until commit 4 wires the Debt
+    # Schedule sheet, then they convert too.
+    _DERIVED_FORMULA_FIELDS: dict[str, tuple[str, ...]] = {
+        # field name -> (sign, operand_field) pairs. Sign is "+" or "-"
+        # and applied to the operand field's cell on this same row block.
+        "effective_gross_income": ("+gross_revenue", "+vacancy_loss"),
+        "noi": ("+effective_gross_income", "-operating_expenses"),
+    }
+    # Track each engine-value row's coord so derived formulas can reference
+    # the actual cells. col=2 is Y0; each year_cols entry adds one column.
+    field_row: dict[str, int] = {}
+
     cur_row = 3
     for label, field, range_name in rows:
         ws.cell(row=cur_row, column=1, value=label).font = FONT_LABEL
+        field_row[field] = cur_row
+        derived = _DERIVED_FORMULA_FIELDS.get(field)
         for col_offset, year in enumerate(year_cols):
-            value = annual.get(year, {}).get(field, Decimal(0))
-            cell = ws.cell(row=cur_row, column=2 + col_offset, value=_to_excel_number(value))
+            col_idx = 2 + col_offset
+            if derived:
+                # Build per-year formula like ``=B3+B4`` referencing the
+                # corresponding column on the operand rows. Operand rows
+                # are guaranteed to be written before any derived row
+                # because the rows table orders inputs before derivations.
+                operands: list[str] = []
+                for spec in derived:
+                    sign, operand_field = spec[0], spec[1:]
+                    operand_row = field_row.get(operand_field)
+                    if operand_row is None:
+                        # Defensive: operand not yet written. Fall back to
+                        # engine value so we don't emit a broken formula.
+                        operands = []
+                        break
+                    col_letter = get_column_letter(col_idx)
+                    operands.append(f"{sign}{col_letter}{operand_row}")
+                if operands:
+                    formula = "=" + "".join(operands).lstrip("+")
+                    cell = ws.cell(row=cur_row, column=col_idx, value=formula)
+                else:
+                    value = annual.get(year, {}).get(field, Decimal(0))
+                    cell = ws.cell(
+                        row=cur_row, column=col_idx,
+                        value=_to_excel_number(value),
+                    )
+            else:
+                value = annual.get(year, {}).get(field, Decimal(0))
+                cell = ws.cell(
+                    row=cur_row, column=col_idx,
+                    value=_to_excel_number(value),
+                )
             cell.number_format = ACCOUNTING
             cell.font = FONT_VALUE
             cell.alignment = ALIGN_RIGHT
