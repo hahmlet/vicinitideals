@@ -413,7 +413,7 @@ DSCR target, principal-to-LTV-cap) stays engine-side.
 
 ## 7. Build Order
 
-### Status (2026-05-22)
+### Status (2026-05-23)
 
 | # | Title | Status | SHA |
 |---|---|---|---|
@@ -424,14 +424,21 @@ DSCR target, principal-to-LTV-cap) stays engine-side.
 | 4 | Cash Flow derived-row formulas (Levered / Unlevered / DSCR / Cumulative) | shipped | `52a57cd` |
 | 5 | Investor Returns Return($) + Combined IRR formulas | shipped | `4842faa` |
 | 6 | Debt Schedule Annual P&I (PMT) formula | shipped — narrow | `a69ce0a` |
+| 6a | Pro Forma Debt Service per-year term gating | shipped | `2be5b78` |
+| 6b | Pro Forma Debt Service origination gating (construction-to-perm) | shipped | `2459cba` |
 | 7 | Sensitivity Data Table | **deferred** | openpyxl 3.x cannot emit Excel `TABLE()` array formulas cleanly; sheet stays engine-driven. Revisit when a viable openpyxl array-formula path lands. |
 | 8 | Single-project consolidation | shipped | `746c0fc` |
-| 9 | Cleanup + doc updates | this commit | — |
+| 9 | Cleanup + doc updates (drop engine writes duplicated by formulas, Appendix F audience tags, parser extension) | shipped | `2459cba` |
+| 8.1 | Unified `EXPECTED_FORMULA_CELLS` parity registry | shipped | `ff38a54` |
+| 8.2 | Round-trip edit test (`test_investor_export_formula_edit.py`) | shipped | (this branch) |
+| infra | UNO-driven LibreOffice recalc so cached values survive | shipped | `1b71053` |
+| infra | CI installs `libreoffice-calc` + `python3-uno` for parity tests | shipped | `2f8b35d` |
 
 **Out of plan-scope but follow-up candidates:**
 - Debt Schedule amort table (CUMIPMT / CUMPRINC per year) — adjacent to commit 6 but needs IO-vs-amort branch logic plus end-balance cross-row references.
-- Pro Forma / Cash Flow Debt Service rows — would chain back to the new `s_loan_*_annual_pi` named ranges; pending tier-aware allocation.
+- Pro Forma / Cash Flow Debt Service rows — would chain back to the new `s_loan_*_annual_pi` named ranges; pending tier-aware allocation. (commits 6a + 6b ship the per-year gating; tier-aware Source-Use allocation remains.)
 - Investor Returns Equity Multiple / CoC / weighted IRR — needs new total-committed-equity and total-distributions named ranges.
+- Pro Forma revenue / OpEx growth projections via `s_revenue_growth_rate` / `s_opex_growth_rate` — `test_changing_revenue_growth_rate_changes_exit_year_noi` xfails until this lands.
 
 ### Commit 0 — Audit + parity baseline (prerequisite)
 

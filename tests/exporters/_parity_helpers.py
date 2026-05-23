@@ -494,3 +494,23 @@ def read_formula_text(path: Path, name: str) -> str | None:
     if isinstance(raw, str) and raw.startswith("="):
         return raw
     return None
+
+
+def set_named_value(path: Path, name: str, value) -> None:
+    """Overwrite the cell behind a defined name with a literal value.
+
+    Used by the round-trip edit test (§8.2): mutate an input cell on the
+    Assumptions sheet, save, recalc, then read a downstream formula
+    cell to confirm the chain responded. Raises ``KeyError`` if the
+    defined name doesn't exist or has no destinations.
+    """
+    from openpyxl import load_workbook
+    wb = load_workbook(path, data_only=False)
+    if name not in wb.defined_names:
+        raise KeyError(f"defined name {name!r} not in workbook")
+    destinations = list(wb.defined_names[name].destinations)
+    if not destinations:
+        raise KeyError(f"defined name {name!r} has no destinations")
+    sheet, ref = destinations[0]
+    wb[sheet][ref.replace("$", "")] = value
+    wb.save(path)
