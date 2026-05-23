@@ -80,6 +80,7 @@ from app.models.deal import (
     USE_COST_CATEGORIES,
     Deal,
     DealModel,
+    IncomeStream,
     OperationalInputs,
     UseLine,
     normalize_opex_label,
@@ -349,6 +350,19 @@ async def _load_all(session: AsyncSession, scenario_id: UUID) -> dict | None:
         ).scalars():
             use_lines_by_project.setdefault(ul.project_id, []).append(ul)
 
+    income_streams_by_project: dict[UUID, list[IncomeStream]] = {
+        pid: [] for pid in project_ids
+    }
+    if project_ids:
+        for stream in (
+            await session.execute(
+                select(IncomeStream)
+                .where(IncomeStream.project_id.in_(project_ids))
+                .order_by(IncomeStream.project_id, IncomeStream.label)
+            )
+        ).scalars():
+            income_streams_by_project.setdefault(stream.project_id, []).append(stream)
+
     capital_modules = list(
         (
             await session.execute(
@@ -457,6 +471,7 @@ async def _load_all(session: AsyncSession, scenario_id: UUID) -> dict | None:
         "projects": projects,
         "operational_inputs": inputs_by_project,
         "use_lines": use_lines_by_project,
+        "income_streams": income_streams_by_project,
         "unit_mix": unit_mix_by_project,
         "capital_modules": capital_modules,
         "module_slugs": _compute_module_slugs(capital_modules),
@@ -2000,6 +2015,7 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
     # ripples through every downstream year. CapEx Reserve uses the same
     # OpEx growth rate (no separate reserve-growth assumption today).
     _GROWTH_CHAIN_FIELDS: dict[str, str] = {
+        "gross_revenue": "s_revenue_growth_rate",
         "operating_expenses": "s_opex_growth_rate",
         "capex_reserve": "s_opex_growth_rate",
     }
@@ -4335,6 +4351,17 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
         _pct_value(default_inputs, "exit_cap_rate_pct"),
         name="s_exit_cap_rate", registry=registry, fmt=PCT, style="input",
     ); row += 1
+    _streams_by_project: dict[UUID, list[IncomeStream]] = ctx.get(
+        "income_streams", {}
+    )
+    _default_streams = (
+        _streams_by_project.get(default_project.id, []) if default_project else []
+    )
+    kv_row(
+        ws, row, "Revenue Growth Rate (annual)",
+        _revenue_growth_default(_default_streams),
+        name="s_revenue_growth_rate", registry=registry, fmt=PCT, style="input",
+    ); row += 1
     kv_row(
         ws, row, "OpEx Growth Rate (annual)",
         _pct_value(default_inputs, "expense_growth_rate_pct_annual"),
@@ -5110,6 +5137,37 @@ def _pct_value(obj, attr: str) -> Decimal | None:
     return raw / Decimal(100)
 
 
+def _revenue_growth_default(streams: list[IncomeStream]) -> Decimal:
+    """Unit-count-weighted mean of stream escalation rates (as a fraction).
+
+    Phase A: the Pro Forma's gross_revenue growth chain uses a single
+    scenario-wide knob (s_revenue_growth_rate) so an LP editing one cell
+    re-flows every Y2+ year. The seed value comes from the underlying
+    stream-level escalation_rate_pct_annual, weighted by unit_count so a
+    100-unit residential stream's growth dominates a 1-unit laundry line.
+    Falls back to 3% (industry-standard rent-growth default) when no
+    streams or all weights are zero.
+    """
+    total_weight = Decimal(0)
+    weighted = Decimal(0)
+    for s in streams:
+        units = s.unit_count or 0
+        try:
+            weight = Decimal(int(units))
+        except (TypeError, ValueError):
+            weight = Decimal(0)
+        if weight <= 0:
+            weight = Decimal(1)
+        rate = _coerce_decimal(getattr(s, "escalation_rate_pct_annual", None))
+        if rate is None:
+            continue
+        weighted += weight * rate
+        total_weight += weight
+    if total_weight <= 0:
+        return Decimal("0.03")
+    return (weighted / total_weight) / Decimal(100)
+
+
 def _coerce_decimal(value) -> Decimal | None:
     """Coerce to ``Decimal``. ``None`` / empty-string in, ``None`` out.
 
@@ -5218,8 +5276,10 @@ def _write_pf_table(
         "effective_gross_income": ("+gross_revenue", "+vacancy_loss"),
         "noi": ("+effective_gross_income", "-operating_expenses", "-capex_reserve"),
     }
-    # Phase B: OpEx + CapEx Reserve grow off Y1 via ``s_opex_growth_rate``.
+    # Phase A/B: gross revenue grows off Y1 via ``s_revenue_growth_rate``;
+    # OpEx + CapEx Reserve via ``s_opex_growth_rate``.
     _GROWTH_CHAIN_FIELDS: dict[str, str] = {
+        "gross_revenue": "s_revenue_growth_rate",
         "operating_expenses": "s_opex_growth_rate",
         "capex_reserve": "s_opex_growth_rate",
     }
