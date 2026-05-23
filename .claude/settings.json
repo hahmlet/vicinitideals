@@ -26,6 +26,16 @@
             "timeout": 30
           }
         ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pwsh -NonInteractive -ExecutionPolicy Bypass -File .claude/hooks/financial_model_review.ps1",
+            "timeout": 15
+          }
+        ]
       }
     ],
     "SessionStart": [

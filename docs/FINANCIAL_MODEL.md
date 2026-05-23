@@ -2530,27 +2530,307 @@ When the user later finds real budget for any of those, they edit the underlying
 
 The investor workbook ships with selected metric cells wired as live Excel formulas referencing **defined names** rather than engine-computed Decimals. LP edits to upstream input cells re-derive downstream metrics inside the workbook without re-running the Python engine.
 
-Implementation lives in `app/exporters/investor_export.py`. The `CellRegistry` (in `_workbook_helpers.py`) tracks every named cell so cross-sheet formulas resolve at workbook write time.
+Implementation lives in [`app/exporters/investor_export.py`](../app/exporters/investor_export.py). The `CellRegistry` (in [`_workbook_helpers.py`](../app/exporters/_workbook_helpers.py)) tracks every named cell so cross-sheet formulas resolve at workbook write time.
 
-### F.1 Catalog of formula-driven cells
+### F.1 Data-Point Catalog
 
-| Sheet | Cell label | Formula | Inputs |
-|---|---|---|---|
-| Underwriting Summary | Yield on Cost | `=IFERROR(s_combined_noi/s_su_uses_total,"")` | NOI ÷ Total Uses |
-| Underwriting Summary | Going-In Cap Value | `=IFERROR(s_combined_noi/s_going_in_cap_rate,"")` | NOI ÷ Going-In Cap |
-| Underwriting Summary | Exit Cap Value | `=IFERROR(s_exit_year_noi/s_exit_cap_rate,"")` | Exit-year NOI ÷ Exit Cap |
-| Underwriting Summary | Cap Spread | `=IFERROR(s_yield_on_cost-s_going_in_cap_rate,"")` | YoC − Going-In Cap |
-| Underwriting Summary | Combined Equity Multiple | `=IFERROR(SUMIF(r_uw_cf_levered,">0")/(-SUMIF(r_uw_cf_levered,"<0")),0)` | Distributions ÷ Equity calls |
-| Investor Returns | Combined Levered IRR | `=IFERROR(IRR(r_uw_cf_levered),0)` | Annual levered CF row |
-| Investor Returns | Combined Equity Multiple | (same EM formula as UW Summary) | (same) |
-| UW Pro Forma | Debt Service (Y2+) | `=s_loan_1_annual_pi+s_loan_2_annual_pi+…` | Per-loan P&I, summed |
-| UW Pro Forma | Asset Mgmt Fee | `=IFERROR(-{col}{egi_row}*s_asset_mgmt_fee,0)` | EGI × fee rate |
-| UW Pro Forma | Net Cash Flow | `={col}{noi_row}-{col}{ds_row}` | NOI − DS |
-| UW Pro Forma | Revenue (Y2+) | `={col-1}{rev_row}*(1+s_revenue_growth_rate)` | Growth chain |
-| UW Pro Forma | OpEx / CapEx (Y2+) | `={col-1}{exp_row}*(1+s_opex_growth_rate)` | Growth chain |
-| Debt Schedule | Annual P&I (pi loans) | `=IFERROR(PMT(D{r}/12,F{r}*12,-C{r})*12,0)` | Loan summary rate × amort × principal |
-| Debt Schedule | Amort table (per year) | `Beg=$C${r}` / `=F{r-1}`; `Pmt=IF(io>=end,…,-PMT(…)*12)`; `Int=IF(io>=end,…,-CUMIPMT(…))`; `Prin=Pmt−Int`; `End=Beg−Prin` | Loan summary cells |
-| Cover hero | NOI / IRR / Cap Rate | `=s_combined_noi` / `=s_combined_irr` / `=s_combined_noi/s_su_uses_total` | Cross-sheet refs |
+Each row documents one data point: definition, named range, app-side calc, app-side caveats, Excel formula, Excel-side caveats, and a Refs column listing every other data point or named range mentioned in this row (for navigation + drift detection).
+
+**Slug convention:** anchor for each Data Point = lowercase-hyphenated form of column A (e.g. "Going-In Cap Value" → `#going-in-cap-value`, "NOI" → `#noi`).
+
+#### F.1.1 Returns / Profitability
+
+##### Combined Equity Multiple
+
+| Field | Value |
+|---|---|
+| **Definition** | Total equity distributions ÷ total equity contributions over hold. |
+| **Named Range** | `s_combined_equity_multiple` (UW Summary), `s_returns_combined_em` (Investor Returns) |
+| **App Calc/Use** | `app/exporters/investor_export.py:_combined_em` reads waterfall rollup; sum positive distributions ÷ sum negative contributions per equity module. |
+| **App Notes** | Returns `None` when total committed equity < $1 (auto-funded deals); falls back to `totals.combined_em_x` for implied-equity scenarios. |
+| **Excel Formula** | `=IFERROR(SUMIF(r_uw_cf_levered,">0")/(-SUMIF(r_uw_cf_levered,"<0")),0)` |
+| **Excel Notes** | Operates on annual Levered Cash Flow row, not monthly. Equity-call timing differs from engine's monthly waterfall — parity is ±0.5x, not bit-for-bit. |
+| **Refs** | [Levered Cash Flow](#levered-cash-flow), [s_combined_equity_multiple](#combined-equity-multiple), [s_returns_combined_em](#combined-equity-multiple), [r_uw_cf_levered](#levered-cash-flow) |
+
+##### Combined Levered IRR
+
+| Field | Value |
+|---|---|
+| **Definition** | Internal rate of return on the scenario's levered (after-debt) cash flow stream. |
+| **Named Range** | `s_combined_irr` (UW Summary), `s_returns_combined_irr` (Investor Returns) |
+| **App Calc/Use** | `app/engines/cashflow.py` computes `combined_irr_pct` via monthly XIRR over the period-level levered NCF; surfaced through `totals.combined_irr_pct`. |
+| **App Notes** | Engine uses monthly XIRR with explicit dates; annualized for display. |
+| **Excel Formula** | `=IFERROR(IRR(r_uw_cf_levered),0)` |
+| **Excel Notes** | Excel `IRR()` assumes evenly-spaced annual periods. Parity with engine's monthly XIRR is ±0.5pp, not exact. IFERROR swallows the no-equity / degenerate-stream case as 0. |
+| **Refs** | [Levered Cash Flow](#levered-cash-flow), [s_combined_irr](#combined-levered-irr), [s_returns_combined_irr](#combined-levered-irr), [r_uw_cf_levered](#levered-cash-flow) |
+
+##### Yield on Cost
+
+| Field | Value |
+|---|---|
+| **Definition** | Stabilized NOI ÷ Total Project Cost. Unlevered return on cost basis. |
+| **Named Range** | `s_yield_on_cost` |
+| **App Calc/Use** | `app/exporters/investor_export.py` computes as `combined_noi / total_uses` for the UW Summary KPI row. |
+| **App Notes** | Stabilized = first 12 ops months per default NOI basis. |
+| **Excel Formula** | `=IFERROR(s_combined_noi/s_su_uses_total,"")` |
+| **Excel Notes** | Both operands are scenario-level named cells; LP edits to revenue/OpEx (through NOI) or Use-line amounts (through Total Uses) re-derive YoC inside the workbook. |
+| **Refs** | [NOI](#noi), [Total Uses](#total-uses), [s_combined_noi](#noi), [s_su_uses_total](#total-uses), [s_yield_on_cost](#yield-on-cost) |
+
+#### F.1.2 Valuation
+
+##### Cap Spread
+
+| Field | Value |
+|---|---|
+| **Definition** | Yield on Cost − Going-In Cap Rate. Positive = yield premium (creating value above market cap); negative = paying above-market cap. |
+| **Named Range** | `s_cap_spread` |
+| **App Calc/Use** | `app/exporters/investor_export.py` Property Valuation block; engine still computes raw value to drive the "Yield premium / discount" hint text. |
+| **App Notes** | Hint text gated on `cap_spread > 0`. |
+| **Excel Formula** | `=IFERROR(s_yield_on_cost-s_going_in_cap_rate,"")` |
+| **Excel Notes** | Both operands are decimal fractions (e.g. 0.085 for 8.5%), so subtraction yields the spread directly. |
+| **Refs** | [Yield on Cost](#yield-on-cost), [Going-In Cap Rate](#going-in-cap-rate), [s_yield_on_cost](#yield-on-cost), [s_going_in_cap_rate](#going-in-cap-rate), [s_cap_spread](#cap-spread) |
+
+##### Exit Cap Value
+
+| Field | Value |
+|---|---|
+| **Definition** | Market value at exit = Exit-Year NOI ÷ Exit Cap Rate. Reconciles against DCF NPV. |
+| **Named Range** | `s_direct_cap_value` |
+| **App Calc/Use** | `app/exporters/investor_export.py` Property Valuation block; engine still computes for hint text ("Market value at exit ({pct}% cap, Y{n} NOI)"). |
+| **App Notes** | Exit year = `min(max(annual_periods), 10)`. |
+| **Excel Formula** | `=IFERROR(s_exit_year_noi/s_exit_cap_rate,"")` |
+| **Excel Notes** | `s_exit_year_noi` pointer = last column of UW Pro Forma NOI row, so edits to NOI growth chain feed through. |
+| **Refs** | [NOI](#noi), [Exit Cap Rate](#exit-cap-rate), [s_exit_year_noi](#noi), [s_exit_cap_rate](#exit-cap-rate), [s_direct_cap_value](#exit-cap-value) |
+
+##### Going-In Cap Value
+
+| Field | Value |
+|---|---|
+| **Definition** | Market value at acquisition = stabilized NOI ÷ Going-In Cap Rate. |
+| **Named Range** | `s_going_in_cap_value` |
+| **App Calc/Use** | `app/exporters/investor_export.py` Property Valuation block; engine still computes for hint text. |
+| **App Notes** | Uses stabilized (Y1) NOI, not exit-year. |
+| **Excel Formula** | `=IFERROR(s_combined_noi/s_going_in_cap_rate,"")` |
+| **Excel Notes** | LP edits to NOI (revenue / OpEx) and Going-In Cap input both flow through. |
+| **Refs** | [NOI](#noi), [Going-In Cap Rate](#going-in-cap-rate), [s_combined_noi](#noi), [s_going_in_cap_rate](#going-in-cap-rate), [s_going_in_cap_value](#going-in-cap-value) |
+
+#### F.1.3 Income / Operating
+
+##### Asset Mgmt Fee
+
+| Field | Value |
+|---|---|
+| **Definition** | Annual asset management fee charged to the scenario; modeled as a % of EGI. |
+| **Named Range** | `s_asset_mgmt_fee` (the rate input on Assumptions) |
+| **App Calc/Use** | `app/engines/cashflow.py` applies the fee as a monthly OpEx-adjacent line, debiting EGI. Pro Forma annual row aggregates monthly outlay. |
+| **App Notes** | Stored as decimal fraction (0.03 = 3%). |
+| **Excel Formula** | `=IFERROR(-{col}{egi_row}*s_asset_mgmt_fee,0)` |
+| **Excel Notes** | One formula per year column; `{col}{egi_row}` resolves to the same column on the [EGI](#egi) row. Negative sign — outflow. |
+| **Refs** | [EGI](#egi), [s_asset_mgmt_fee](#asset-mgmt-fee) |
+
+##### Net Cash Flow (Pro Forma)
+
+| Field | Value |
+|---|---|
+| **Definition** | NOI − Debt Service for the year. The "net" line before equity distributions. |
+| **Named Range** | (per-year cell; not separately named) |
+| **App Calc/Use** | `app/engines/cashflow.py` computes monthly NCF in `_compute_period`; annual aggregate emitted via `_DERIVED_FORMULA_FIELDS["net_cash_flow"] = ("+noi", "-debt_service")`. |
+| **App Notes** | Excludes capital events (sale proceeds, refi) — those land on the Levered Cash Flow row instead. |
+| **Excel Formula** | `={col}{noi_row}-{col}{ds_row}` |
+| **Excel Notes** | Per-year derived formula, generated by `_DERIVED_FORMULA_FIELDS` in `_build_uw_proforma`. Operand rows guaranteed written first by row-order. |
+| **Refs** | [NOI](#noi), [Debt Service](#debt-service) |
+
+##### OpEx Growth Chain (Y2+)
+
+| Field | Value |
+|---|---|
+| **Definition** | Operating expenses for Year N = Year N−1 × (1 + OpEx growth rate). |
+| **Named Range** | `s_opex_growth_rate` |
+| **App Calc/Use** | `app/engines/cashflow.py` applies escalation factor to monthly OpEx lines based on each line's `escalation_rate_pct`; Pro Forma annual row aggregates. |
+| **App Notes** | Engine supports per-line escalation rates; Excel chain uses one scenario-wide growth rate as a simplification. Y0 and Y1 keep engine values as seed. |
+| **Excel Formula** | `={col-1}{exp_row}*(1+s_opex_growth_rate)` |
+| **Excel Notes** | Diverges from engine when expense lines have heterogeneous escalation rates. Same chain feeds CapEx Reserve row. |
+| **Refs** | [s_opex_growth_rate](#opex-growth-chain-y2) |
+
+##### Revenue Growth Chain (Y2+)
+
+| Field | Value |
+|---|---|
+| **Definition** | Gross revenue for Year N = Year N−1 × (1 + revenue growth rate). |
+| **Named Range** | `s_revenue_growth_rate` |
+| **App Calc/Use** | `app/engines/cashflow.py` applies per-stream escalation rates to monthly revenue; Pro Forma annual row aggregates to year totals. |
+| **App Notes** | Engine default uses per-stream `escalation_rate_pct`; Excel chain collapses to a scenario-wide growth rate seeded by unit-count-weighted mean of stream escalations (`_revenue_growth_default`). |
+| **Excel Formula** | `={col-1}{rev_row}*(1+s_revenue_growth_rate)` |
+| **Excel Notes** | Y0 and Y1 keep engine values as seed; chain compounds Y2+. Diverges from engine for streams with non-default escalation. |
+| **Refs** | [s_revenue_growth_rate](#revenue-growth-chain-y2) |
+
+#### F.1.4 Debt
+
+##### Amort Annual Payment (per year)
+
+| Field | Value |
+|---|---|
+| **Definition** | Total P&I outlay for the year on the perm-loan amortization table. |
+| **Named Range** | (per-cell, not named) |
+| **App Calc/Use** | Pre-formula: engine computed via `_monthly_pmt × 12`. Now formula-only. |
+| **App Notes** | During IO window: equals interest only (no principal reduction). |
+| **Excel Formula** | `=IF($G${perm_row}>={end_period}, $C${perm_row}*$D${perm_row}, IFERROR(-PMT($D${perm_row}/12,$F${perm_row}*12,$C${perm_row})*12,0))` |
+| **Excel Notes** | References Loan Summary cells: C=principal, D=rate, F=amort yrs, G=IO months. IO branch fires when IO months cover the year-end month. |
+| **Refs** | [Loan Summary](#loan-summary) |
+
+##### Amort Beginning Balance
+
+| Field | Value |
+|---|---|
+| **Definition** | Loan balance at start of year on the perm-loan amortization table. |
+| **Named Range** | (per-cell, not named) |
+| **App Calc/Use** | Pre-formula: engine computed via `_balloon_balance`. Now formula-only. |
+| **App Notes** | Year 1 pulls principal; Year N reads prior year's End Balance. |
+| **Excel Formula** | Y1: `=$C${perm_row}` (absolute principal ref); Y2+: `=F{prev_row}` (prior End Balance) |
+| **Excel Notes** | Chain breaks if amort table is reordered; relative refs intentional. |
+| **Refs** | [Loan Summary](#loan-summary) |
+
+##### Amort Ending Balance
+
+| Field | Value |
+|---|---|
+| **Definition** | Loan balance at end of year = Beginning Balance − Principal Paid. |
+| **Named Range** | (per-cell, not named) |
+| **App Calc/Use** | Pre-formula: engine `_balloon_balance(end-of-year)`. Now formula-only derivation. |
+| **App Notes** | Should reach 0 at amort-term-end year (sweep enforced naturally by CUMPRINC chain). |
+| **Excel Formula** | `=B{cur_row}-E{cur_row}` |
+| **Excel Notes** | Pure cell arithmetic; no named-range refs. |
+| **Refs** | (none) |
+
+##### Amort Interest (per year)
+
+| Field | Value |
+|---|---|
+| **Definition** | Interest portion of the year's debt service on the perm-loan amortization table. |
+| **Named Range** | (per-cell, not named) |
+| **App Calc/Use** | Pre-formula: engine computed via average-balance approximation (`(beg + end) / 2 × rate × 12`). Now formula uses Excel's `CUMIPMT`. |
+| **App Notes** | Engine average-balance was display-only; period-level cashflow uses `period_interest_months` with actual day-count. |
+| **Excel Formula** | `=IF($G${perm_row}>={end_period}, $C${perm_row}*$D${perm_row}, IFERROR(-CUMIPMT($D${perm_row}/12,$F${perm_row}*12,$C${perm_row},{start_period},{end_period},0),0))` |
+| **Excel Notes** | CUMIPMT returns negative under Excel sign convention; negated. IO branch: interest = principal × rate. |
+| **Refs** | [Loan Summary](#loan-summary) |
+
+##### Amort Principal (per year)
+
+| Field | Value |
+|---|---|
+| **Definition** | Principal portion of the year's debt service = Annual Payment − Interest. |
+| **Named Range** | (per-cell, not named) |
+| **App Calc/Use** | Pre-formula: engine derived from `_balloon_balance` deltas. Now formula-only. |
+| **App Notes** | Zero during IO window. |
+| **Excel Formula** | `=C{cur_row}-D{cur_row}` |
+| **Excel Notes** | Pure cell arithmetic; no named-range refs. Equivalent to `CUMPRINC` but cheaper as a derivation from already-computed neighbors. |
+| **Refs** | (none) |
+
+##### Annual P&I (pi loans, Loan Summary)
+
+| Field | Value |
+|---|---|
+| **Definition** | Annual principal + interest payment for an amortizing (`carry_type == "pi"`) loan. |
+| **Named Range** | `s_loan_{n}_annual_pi` (one per pi loan, n = 1-based index) |
+| **App Calc/Use** | `app/engines/cashflow.py` `_monthly_pmt(...)*12` for engine-side aggregation. |
+| **App Notes** | Other carry types (`io_only`, `interest_reserve`, `capitalized_interest`) leave this cell at engine value (or em-dash) — formula path skipped because annual outlay isn't a simple PMT. |
+| **Excel Formula** | `=IFERROR(PMT(D{r}/12,F{r}*12,-C{r})*12,0)` |
+| **Excel Notes** | References Loan Summary cells: C=principal, D=rate (fraction), F=amort yrs. Negative principal flips PMT sign so result is positive annual payment. |
+| **Refs** | [Loan Summary](#loan-summary), [s_loan_n_annual_pi](#annual-pi-pi-loans-loan-summary) |
+
+##### Debt Service (Pro Forma per year)
+
+| Field | Value |
+|---|---|
+| **Definition** | Total debt service for the year, summed across all PMT-eligible loans active in that year. |
+| **Named Range** | (per-cell on the Debt Service row; not separately named) |
+| **App Calc/Use** | `app/engines/cashflow.py` sums period-level interest + principal across all debt modules per loan's active window (`_loan_pre_op_months`). |
+| **App Notes** | Engine respects per-loan `active_phase_start/end`; Excel formula only gates by `term_months` (hold end), not start. Construction-to-perm stacks where perm funds in Y2+ still overstate Y1 debt service. |
+| **Excel Formula** | `=IF(s_loan_1_term_months>={y*12},s_loan_1_annual_pi,0)+IF(s_loan_2_term_months>={y*12},s_loan_2_annual_pi,0)+…` |
+| **Excel Notes** | Per-year formula, threshold scales with the column's year. Y0 keeps engine value (construction-phase DS differs from stabilized PMT). |
+| **Refs** | [Loan Summary](#loan-summary), [Annual P&I](#annual-pi-pi-loans-loan-summary), [s_loan_n_term_months](#loan-summary), [s_loan_n_annual_pi](#annual-pi-pi-loans-loan-summary) |
+
+##### Loan Summary
+
+| Field | Value |
+|---|---|
+| **Definition** | Per-loan reference row on the Debt Schedule. Columns: Label, Funder, Principal (C), Rate (D), Term-months (E), Amort-yrs (F), IO-months (G), Carry, Day-Count, Annual P&I, Balloon. |
+| **Named Range** | `s_loan_{n}_principal`, `s_loan_{n}_rate`, `s_loan_{n}_term_months`, `s_loan_{n}_annual_pi`, `s_loan_{n}_balloon` (one set per debt module) |
+| **App Calc/Use** | `app/exporters/investor_export.py:_build_debt_schedule` enumerates debt modules, writes one row per loan, registers per-cell named ranges so downstream formulas can ref them. |
+| **App Notes** | Index `n` is 1-based and matches enumeration order — same order used by `_pmt_loan_indices` for Pro Forma DS SUM. |
+| **Excel Formula** | (input cells, not formulas) |
+| **Excel Notes** | Annual P&I cell on this row IS a formula for `pi`-carry loans — see [Annual P&I](#annual-pi-pi-loans-loan-summary). |
+| **Refs** | [Annual P&I](#annual-pi-pi-loans-loan-summary), [s_loan_n_principal](#loan-summary), [s_loan_n_rate](#loan-summary), [s_loan_n_term_months](#loan-summary), [s_loan_n_annual_pi](#annual-pi-pi-loans-loan-summary), [s_loan_n_balloon](#loan-summary) |
+
+#### F.1.5 Cover sheet
+
+##### Cover Hero — Cap Rate
+
+| Field | Value |
+|---|---|
+| **Definition** | Top-of-Cover snapshot of yield on cost. |
+| **Named Range** | (cell on Cover; not separately named) |
+| **App Calc/Use** | Cross-sheet ref to [Yield on Cost](#yield-on-cost) named range. |
+| **App Notes** | Cover renders before UW sheets; formula evaluation defers to Excel calc engine. |
+| **Excel Formula** | `=s_combined_noi/s_su_uses_total` |
+| **Excel Notes** | Same operands as YoC but unwrapped IFERROR — assumes the UW Summary already validates non-zero denominator. |
+| **Refs** | [NOI](#noi), [Total Uses](#total-uses), [Yield on Cost](#yield-on-cost), [s_combined_noi](#noi), [s_su_uses_total](#total-uses) |
+
+##### Cover Hero — IRR
+
+| Field | Value |
+|---|---|
+| **Definition** | Top-of-Cover snapshot of Combined Levered IRR. |
+| **Named Range** | (cell on Cover; not separately named) |
+| **App Calc/Use** | Cross-sheet ref to [Combined Levered IRR](#combined-levered-irr) named range. |
+| **App Notes** | Only emitted when profile renders UW Summary (so the named range exists). |
+| **Excel Formula** | `=s_combined_irr` |
+| **Excel Notes** | Pure cross-sheet ref. |
+| **Refs** | [Combined Levered IRR](#combined-levered-irr), [s_combined_irr](#combined-levered-irr) |
+
+##### Cover Hero — NOI
+
+| Field | Value |
+|---|---|
+| **Definition** | Top-of-Cover snapshot of stabilized NOI. |
+| **Named Range** | (cell on Cover; not separately named) |
+| **App Calc/Use** | Cross-sheet ref to [NOI](#noi) named range. |
+| **App Notes** | Same gating as Cap Rate / IRR hero cells. |
+| **Excel Formula** | `=s_combined_noi` |
+| **Excel Notes** | Pure cross-sheet ref. |
+| **Refs** | [NOI](#noi), [s_combined_noi](#noi) |
+
+#### F.1.6 Engine-only data points (pilot stubs)
+
+These data points are referenced by the formulas above but their *primary* computation lives in the engine, not as an Excel formula. Stub rows here so Refs links resolve; full Option-2 coverage (engine-only metrics + 1:1 mismatch notes) deferred to a future pass.
+
+##### Debt Service
+
+(Referenced by Net Cash Flow.) Engine: `app/engines/cashflow.py` per-period sum of interest + principal across active debt modules. See [Debt Service (Pro Forma per year)](#debt-service-pro-forma-per-year) for the Excel-side render.
+
+##### EGI
+
+(Effective Gross Income.) Engine: `app/engines/cashflow.py` computes as Gross Revenue × (1 − vacancy) per period. Workbook surfaces as a Pro Forma row; no named range yet. Excel Asset Mgmt Fee formula references the per-column EGI cell directly.
+
+##### Exit Cap Rate
+
+(Input cell on Assumptions.) Named range `s_exit_cap_rate`. User-editable percentage stored as decimal fraction; consumed by [Exit Cap Value](#exit-cap-value).
+
+##### Going-In Cap Rate
+
+(Input cell on Assumptions.) Named range `s_going_in_cap_rate`. User-editable percentage stored as decimal fraction; consumed by [Going-In Cap Value](#going-in-cap-value) and [Cap Spread](#cap-spread).
+
+##### Levered Cash Flow
+
+(Annual row on Underwriting Cash Flow.) Named range `r_uw_cf_levered`. Engine: `app/engines/cashflow.py` per-period NCF minus debt service plus capital events. Workbook row is an annual aggregate; consumed by [Combined Levered IRR](#combined-levered-irr) and [Combined Equity Multiple](#combined-equity-multiple).
+
+##### NOI
+
+(Net Operating Income.) Named range `s_combined_noi`. Engine: `app/engines/cashflow.py` computes monthly NOI = EGI − OpEx; stabilized-window aggregate exposed as `totals.noi_stabilized`. Consumed by [Yield on Cost](#yield-on-cost), [Going-In Cap Value](#going-in-cap-value), [Cover Hero — NOI](#cover-hero-noi), and (via `s_exit_year_noi`) [Exit Cap Value](#exit-cap-value).
+
+##### Total Uses
+
+(Sources & Uses subtotal.) Named range `s_su_uses_total`. Engine: `app/exporters/investor_export.py` sums UseLine amounts excluding the `exit` phase. Consumed by [Yield on Cost](#yield-on-cost) and [Cover Hero — Cap Rate](#cover-hero-cap-rate).
 
 ### F.2 Defined-name conventions
 
