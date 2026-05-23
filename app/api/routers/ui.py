@@ -9412,8 +9412,12 @@ async def model_builder(
     if active_view != "underwriting" and not project and active_project_id is not None:
         _view_q = f"&view={view}" if view else ""
         _new_q = f"&new={new}" if new else ""
+        # Preserve wizard=1 across the canonicalization redirect; otherwise the
+        # single-flow deal-creation chrome drops on the very first hop after
+        # /ui/deals/create.
+        _wiz_q = f"&wizard={wizard}" if wizard else ""
         return RedirectResponse(
-            url=f"/models/{model_id}/builder?module={active_module}&project={active_project_id}{_view_q}{_new_q}",
+            url=f"/models/{model_id}/builder?module={active_module}&project={active_project_id}{_view_q}{_new_q}{_wiz_q}",
             status_code=302,
         )
 
