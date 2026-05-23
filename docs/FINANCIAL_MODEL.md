@@ -2745,10 +2745,10 @@ Each row documents one data point: definition, named range, app-side calc, app-s
 | **Definition** | Total debt service for the year, summed across all PMT-eligible loans active in that year. |
 | **Named Range** | (per-cell on the Debt Service row; not separately named) |
 | **App Calc/Use** | `app/engines/cashflow.py` sums period-level interest + principal across all debt modules per loan's active window (`_loan_pre_op_months`). |
-| **App Notes** | Engine respects per-loan `active_phase_start/end`; Excel formula only gates by `term_months` (hold end), not start. Construction-to-perm stacks where perm funds in Y2+ still overstate Y1 debt service. |
-| **Excel Formula** | `=IF(s_loan_1_term_months>={y*12},s_loan_1_annual_pi,0)+IF(s_loan_2_term_months>={y*12},s_loan_2_annual_pi,0)+…` |
+| **App Notes** | Engine respects per-loan `active_phase_start/end`. Excel formula gates by both `term_months` (hold end) and, when registered, `perm_origination_month` (start of operations) — closes the prior Y1 overstatement for construction-to-perm stacks. Loans with no registered perm cell (single-project workbooks, pure-acquisition scenarios) keep the legacy term-only gate. |
+| **Excel Formula** | `=IF(AND(s_loan_1_term_months>={y*12},{y*12}>=s_loan_1_perm_origination_month),s_loan_1_annual_pi,0)+IF(s_loan_2_term_months>={y*12},s_loan_2_annual_pi,0)+…` (per-loan: `AND(...)` form when the loan has a registered perm cell, legacy term-only form otherwise) |
 | **Excel Notes** | Per-year formula, threshold scales with the column's year. Y0 keeps engine value (construction-phase DS differs from stabilized PMT). |
-| **Refs** | [Loan Summary](#loan-summary), [Annual P&I](#annual-pi-pi-loans-loan-summary), [s_loan_n_term_months](#loan-summary), [s_loan_n_annual_pi](#annual-pi-pi-loans-loan-summary) |
+| **Refs** | [Loan Summary](#loan-summary), [Annual P&I](#annual-pi-pi-loans-loan-summary), [Loan Perm Origination Month](#loan-perm-origination-month), [s_loan_n_term_months](#loan-summary), [s_loan_n_annual_pi](#annual-pi-pi-loans-loan-summary), [s_loan_n_perm_origination_month](#loan-perm-origination-month) |
 
 ##### Loan Summary
 
