@@ -131,6 +131,7 @@ async def export_investor_workbook(
     ctx = await _load_all(session, deal_model_id)
     if ctx is None:
         raise ValueError(f"Scenario {deal_model_id} was not found")
+    ctx["_profile"] = _profile
 
     wb = Workbook()
     registry = CellRegistry()
@@ -730,18 +731,32 @@ def _build_cover(ws, registry: CellRegistry, ctx: dict) -> None:
         for items in cash_flow_items.values()
     )
 
-    kv_row(ws, row, "Stabilized NOI", combined_noi,
-           name="s_cover_noi", registry=registry, fmt=ACCOUNTING)
-    row += 1
-    kv_row(ws, row, "Cap Rate on Cost", cap_rate_pct,
-           name="s_cover_cap_rate", registry=registry, fmt=PCT)
-    row += 1
+    # Formula-conversion plan §4.7: when UW Summary is rendered for this
+    # profile, point the Cover hero NOI / IRR cells at the named ranges
+    # registered there so LP edits to revenue/OpEx assumptions flow up. For
+    # proforma (no UW Summary), fall back to engine-computed scalars.
+    _has_uw_summary = ctx.get("_profile") in {"internal", "lp", "lender"}
+    kv_row(
+        ws, row, "Stabilized NOI",
+        "=s_combined_noi" if _has_uw_summary else combined_noi,
+        name="s_cover_noi", registry=registry, fmt=ACCOUNTING,
+    ); row += 1
+    # Cap Rate on Cost = Stabilized NOI / Total Uses. Both operands are
+    # available as named ranges when UW Summary + S&U render (always paired
+    # for the profiles that get UW Summary). IFERROR guards uses=0 edge.
+    kv_row(
+        ws, row, "Cap Rate on Cost",
+        ("=IFERROR(s_combined_noi/s_su_uses_total,\"\")" if _has_uw_summary else cap_rate_pct),
+        name="s_cover_cap_rate", registry=registry, fmt=PCT,
+    ); row += 1
     kv_row(ws, row, "DSCR (combined)", combined_dscr,
            name="s_cover_dscr", registry=registry, fmt="0.000")
     row += 1
-    kv_row(ws, row, "Levered IRR", combined_irr,
-           name="s_cover_irr", registry=registry, fmt=PCT)
-    row += 1
+    kv_row(
+        ws, row, "Levered IRR",
+        "=s_combined_irr" if _has_uw_summary else combined_irr,
+        name="s_cover_irr", registry=registry, fmt=PCT,
+    ); row += 1
     # Formula-conversion plan §4.7 (commit 2): Cover Total Uses + Total
     # Sources are cross-sheet references to the Sources & Uses sheet so
     # edits to the per-project Use lines (or to Block C principals) ripple
