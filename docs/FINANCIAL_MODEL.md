@@ -2526,3 +2526,52 @@ When the user later finds real budget for any of those, they edit the underlying
 
 ---
 
+## Appendix F: Investor Excel Export — Formula-Driven Cells (May 2026)
+
+The investor workbook ships with selected metric cells wired as live Excel formulas referencing **defined names** rather than engine-computed Decimals. LP edits to upstream input cells re-derive downstream metrics inside the workbook without re-running the Python engine.
+
+Implementation lives in `app/exporters/investor_export.py`. The `CellRegistry` (in `_workbook_helpers.py`) tracks every named cell so cross-sheet formulas resolve at workbook write time.
+
+### F.1 Catalog of formula-driven cells
+
+| Sheet | Cell label | Formula | Inputs |
+|---|---|---|---|
+| Underwriting Summary | Yield on Cost | `=IFERROR(s_combined_noi/s_su_uses_total,"")` | NOI ÷ Total Uses |
+| Underwriting Summary | Going-In Cap Value | `=IFERROR(s_combined_noi/s_going_in_cap_rate,"")` | NOI ÷ Going-In Cap |
+| Underwriting Summary | Exit Cap Value | `=IFERROR(s_exit_year_noi/s_exit_cap_rate,"")` | Exit-year NOI ÷ Exit Cap |
+| Underwriting Summary | Cap Spread | `=IFERROR(s_yield_on_cost-s_going_in_cap_rate,"")` | YoC − Going-In Cap |
+| Underwriting Summary | Combined Equity Multiple | `=IFERROR(SUMIF(r_uw_cf_levered,">0")/(-SUMIF(r_uw_cf_levered,"<0")),0)` | Distributions ÷ Equity calls |
+| Investor Returns | Combined Levered IRR | `=IFERROR(IRR(r_uw_cf_levered),0)` | Annual levered CF row |
+| Investor Returns | Combined Equity Multiple | (same EM formula as UW Summary) | (same) |
+| UW Pro Forma | Debt Service (Y2+) | `=s_loan_1_annual_pi+s_loan_2_annual_pi+…` | Per-loan P&I, summed |
+| UW Pro Forma | Asset Mgmt Fee | `=IFERROR(-{col}{egi_row}*s_asset_mgmt_fee,0)` | EGI × fee rate |
+| UW Pro Forma | Net Cash Flow | `={col}{noi_row}-{col}{ds_row}` | NOI − DS |
+| UW Pro Forma | Revenue (Y2+) | `={col-1}{rev_row}*(1+s_revenue_growth_rate)` | Growth chain |
+| UW Pro Forma | OpEx / CapEx (Y2+) | `={col-1}{exp_row}*(1+s_opex_growth_rate)` | Growth chain |
+| Debt Schedule | Annual P&I (pi loans) | `=IFERROR(PMT(D{r}/12,F{r}*12,-C{r})*12,0)` | Loan summary rate × amort × principal |
+| Debt Schedule | Amort table (per year) | `Beg=$C${r}` / `=F{r-1}`; `Pmt=IF(io>=end,…,-PMT(…)*12)`; `Int=IF(io>=end,…,-CUMIPMT(…))`; `Prin=Pmt−Int`; `End=Beg−Prin` | Loan summary cells |
+| Cover hero | NOI / IRR / Cap Rate | `=s_combined_noi` / `=s_combined_irr` / `=s_combined_noi/s_su_uses_total` | Cross-sheet refs |
+
+### F.2 Defined-name conventions
+
+- `s_*` — single scalar (one cell). E.g. `s_combined_noi`, `s_revenue_growth_rate`, `s_loan_3_annual_pi`.
+- `p<n>_*` — per-project scalar. E.g. `p1_noi_stabilized`.
+- `r_*` — multi-cell row range. E.g. `r_uw_cf_levered` is the annual Levered Cash Flow row on Underwriting Cash Flow.
+
+A test (`tests/exporters/test_investor_export.py::test_every_named_range_traces_to_doc_entry`) enforces that every `s_*` name on the workbook either maps to a metric documented elsewhere in this file or is explicitly listed as a non-metric input (assumption cell, header, etc.).
+
+### F.3 Parity with the engine
+
+Excel formulas only have to *track* engine values, not match bit-for-bit:
+
+- **Engine-side** is Decimal arithmetic with monthly periods and day-precise interest accrual (see §1–§6).
+- **Workbook-side** is Excel float arithmetic over annual columns. Excel's `IRR()` runs annual intervals; the engine's `combined_irr_pct` runs monthly XIRR.
+
+Parity tests in `tests/exporters/test_formula_parity_*.py` recalc workbooks via Excel COM (Windows) or LibreOffice headless and assert Excel-evaluated values match engine values within tolerances calibrated per metric (e.g. ±0.5pp for IRR, ±$1 for $-denominated cells, ±0.5x for EM). Tests skip when no recalc backend is available.
+
+### F.4 Graceful degradation
+
+- Every conditional metric is wrapped in `IFERROR(...,"")` or `IFERROR(...,0)` so missing inputs render as empty (or 0) rather than `#DIV/0!` / `#NUM!`.
+- The Debt Schedule's "Notes" block conditionally emits disclosure rows only when the underlying state is present (DSCR-capped sizing, interest-reserve carry, PIK carry). Vanilla perm-debt deals see no Notes section.
+- The Assumptions sheet's Block A includes editable `s_anchor_date` so the LP can overlay a reporting calendar on the relative Y0/Y1/Y2 grid without rebuilding the model.
+
