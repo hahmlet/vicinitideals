@@ -676,6 +676,29 @@
   {% set dcw_step = 3 if active_module == 'deal_setup' else 2 %}
   {% set dcw_deal_name = model.name %}
   {% include 'partials/deal_creation_wizard_chrome.html' %}
+  {# Wizard-card shell styles used by the timeline module when embedded in the
+     single-flow deal-creation wizard. Mirror deal_setup_wizard.html so the
+     three creation stages share the same visual frame. #}
+  <style>
+    .wizard-shell {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: flex-start;
+      padding: 40px 20px 0; flex: 1;
+    }
+    .wizard-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; width: 100%;
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+      display: flex; flex-direction: column;
+      overflow: hidden;
+    }
+    .wizard-footer {
+      padding: 16px 28px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+  </style>
 {% endif %}
 <div class="builder-topbar" style="position:relative{% if wizard_mode %};display:none{% endif %}">
   <div class="builder-breadcrumb">
@@ -1070,7 +1093,9 @@ async function startInvestorExport(modelId, profile) {
 </div>
 
 {# ── Row 1: Deal variants ── #}
-<div class="deal-tabs-row deal-tabs-row-variants">
+{# In single-flow creation wizard the variant + project tabs distract from
+   the linear flow. Hide them; user can return to them once Setup completes. #}
+<div class="deal-tabs-row deal-tabs-row-variants"{% if wizard_mode %} style="display:none"{% endif %}>
   {% for d in deal_variants %}
   <a href="/models/{{ d.id }}/builder"
      class="deal-tab {% if d.id == model.id %}active{% endif %}">
@@ -1092,7 +1117,7 @@ async function startInvestorExport(modelId, profile) {
   'fail': 'Failing — DSCR below minimum or Sources<Uses',
   'na': 'Not yet computed'
 } %}
-<div style="display:flex;align-items:stretch;position:sticky;top:40px;z-index:5;background:var(--surface);border-bottom:1px solid var(--border)">
+<div style="{% if wizard_mode %}display:none{% else %}display:flex{% endif %};align-items:stretch;position:sticky;top:40px;z-index:5;background:var(--surface);border-bottom:1px solid var(--border)">
   <div class="deal-tabs-row deal-tabs-row-projects" style="flex:1;min-width:0;border-bottom:none">
     {# Underwriting — scenario rollup, always the leftmost chip #}
     {% set _uw_overall = _sc.underwriting.overall %}
