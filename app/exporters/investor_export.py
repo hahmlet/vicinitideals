@@ -4433,8 +4433,160 @@ def _build_debt_schedule(ws, registry: CellRegistry, ctx: dict) -> None:
             cell.alignment = ALIGN_RIGHT
         cur_row += 1
 
+    # ── Construction-to-Perm Status (per loan) ────────────────────────────
+    # First slice of construction-to-perm formula gating: per-loan scalar
+    # cells that surface "when does this loan's permanent tranche
+    # originate" and "has perm origination occurred by loan term-end" as
+    # formulas referencing the per-project phase-plan cells registered by
+    # _build_project_sheet. Future debt-service formula gating can
+    # consume these named ranges directly.
+    _build_c2p_status_block(ws, registry, ctx, debt_modules, start_row=cur_row + 2)
+
     freeze_top(ws, row=3)
     print_landscape(ws)
+
+
+def _build_c2p_status_block(
+    ws,
+    registry: CellRegistry,
+    ctx: dict,
+    debt_modules: list,
+    *,
+    start_row: int,
+) -> None:
+    """Render the Construction-to-Perm Status section at the bottom of the
+    Debt Schedule sheet. One row per debt module that funds at least one
+    project with a registered perm-origination month.
+
+    For each such row the section writes:
+
+      ``s_loan_<n>_perm_origination_month`` — formula pulling
+      ``MAX(p<projidx>_perm_origination_month, ...)`` across the projects
+      this loan funds (multi-project loans take the latest perm switch,
+      most conservative for "is the loan active in operations").
+
+      ``s_loan_<n>_active_in_operations`` — boolean formula:
+      ``=IF(s_loan_<n>_term_months >= s_loan_<n>_perm_origination_month,
+      TRUE, FALSE)``. Tells an LP whether the loan's active term extends
+      past perm origination — i.e. whether its operations-phase carry
+      ever applies in-model.
+
+    Skipped entirely when no eligible projects exist (e.g. pure
+    acquisition scenarios with no construction-side phase).
+    """
+    projects: list[Project] = ctx.get("projects") or []
+    if not projects or not debt_modules:
+        return
+
+    junctions: list[CapitalModuleProject] = ctx.get("junctions") or []
+    inputs_by_project: dict = ctx.get("operational_inputs") or {}
+    milestones_by_project: dict = ctx.get("milestones") or {}
+    capital_modules: list = ctx.get("capital_modules") or []
+    scenario_obj = ctx.get("scenario")
+    raw_pt = getattr(scenario_obj, "project_type", None)
+    project_type_name = str(getattr(raw_pt, "value", raw_pt) or "")
+    if not project_type_name:
+        return
+
+    # Pre-compute which project indices (1-based, matching _build_project_sheet)
+    # have a registered perm_origination_month cell. Mirror the export's
+    # single-project skip — that path doesn't render per-project sheets, so
+    # the named cells don't exist either.
+    if len(projects) <= 1:
+        return
+
+    project_idx_by_id: dict = {p.id: idx for idx, p in enumerate(projects, start=1)}
+    perm_eligible_idx: set[int] = set()
+    for idx, project in enumerate(projects, start=1):
+        inputs = inputs_by_project.get(project.id)
+        if inputs is None:
+            continue
+        try:
+            windows = build_project_phase_windows(
+                project_type=project_type_name,
+                inputs=inputs,
+                milestones=milestones_by_project.get(project.id, []),
+                capital_modules=capital_modules,
+            )
+        except ValueError:
+            continue
+        if perm_origination_month(windows) is not None:
+            perm_eligible_idx.add(idx)
+
+    if not perm_eligible_idx:
+        return
+
+    # Junction lookup: module_id -> set of project_ids it funds.
+    module_projects: dict = {}
+    for j in junctions:
+        module_projects.setdefault(j.capital_module_id, set()).add(j.project_id)
+
+    section_label(ws, start_row, "Construction-to-Perm Status — Per Loan", span_cols=5)
+    header_row(
+        ws, start_row + 1,
+        ["Module", "Funds Project(s)", "Perm Origination Month",
+         "Loan Term (mo)", "Active in Operations"],
+    )
+    row = start_row + 2
+    any_written = False
+    for m_idx, module in enumerate(debt_modules, start=1):
+        funded_project_ids = module_projects.get(module.id, set())
+        eligible_proj_idxs = sorted(
+            project_idx_by_id[pid]
+            for pid in funded_project_ids
+            if pid in project_idx_by_id
+            and project_idx_by_id[pid] in perm_eligible_idx
+        )
+        if not eligible_proj_idxs:
+            continue
+
+        perm_name = f"s_loan_{m_idx}_perm_origination_month"
+        active_name = f"s_loan_{m_idx}_active_in_operations"
+        term_name = f"s_loan_{m_idx}_term_months"
+        per_proj_refs = ",".join(
+            f"p{idx}_perm_origination_month" for idx in eligible_proj_idxs
+        )
+        proj_display = ", ".join(f"P{idx}" for idx in eligible_proj_idxs)
+
+        ws.cell(row=row, column=1, value=module.label or _funder_type_label(module)).font = FONT_VALUE
+        ws.cell(row=row, column=2, value=proj_display).font = FONT_VALUE
+        # MAX across projects = the latest perm switch (most conservative
+        # bound for "loan is past perm origination").
+        perm_formula = f"=IFERROR(MAX({per_proj_refs}),\"\")"
+        registry.write(
+            ws, row, 3, perm_formula,
+            name=perm_name, fmt=INT_COMMA,
+            font=FONT_VALUE, align=ALIGN_RIGHT,
+        )
+        # Term column: cross-ref to the existing per-loan term cell so an
+        # LP edit to active window flows through automatically.
+        ws.cell(row=row, column=4, value=f"={term_name}").font = FONT_VALUE
+        ws.cell(row=row, column=4).number_format = INT_COMMA
+        ws.cell(row=row, column=4).alignment = ALIGN_RIGHT
+        # Active-in-operations boolean: TRUE iff the loan's term extends
+        # past perm origination. Returns FALSE (not #N/A) when either
+        # input is missing — keeps the section readable.
+        active_formula = (
+            f"=IFERROR(IF(AND(ISNUMBER({term_name}),"
+            f"ISNUMBER({perm_name}),{term_name}>={perm_name}),"
+            f"TRUE,FALSE),FALSE)"
+        )
+        registry.write(
+            ws, row, 5, active_formula,
+            name=active_name,
+            font=FONT_VALUE, align=ALIGN_RIGHT,
+        )
+        any_written = True
+        row += 1
+
+    # Defensive: if no rows ended up written (e.g. every debt module funds
+    # only ineligible projects), leave a hint instead of a header with no
+    # rows under it.
+    if not any_written:
+        ws.cell(
+            row=row, column=1,
+            value="(no debt modules fund a project with a construction-side phase)",
+        ).font = FONT_HINT
 
 
 def _pmt_loan_indices(capital_modules: list[CapitalModule]) -> list[int]:
