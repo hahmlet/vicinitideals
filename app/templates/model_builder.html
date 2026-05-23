@@ -2015,6 +2015,8 @@ function submitCloneFrom(e) {
   <input type="hidden" name="new_name" id="wizard-new-name-input">
   <input type="hidden" name="new_deal_type" id="wizard-new-deal-type-input">
   {% endif %}
+  {# Preserve single-flow wizard chrome across the timeline-wizard modal submit. #}
+  {% if wizard_mode %}<input type="hidden" name="_wizard" value="1">{% endif %}
 </form>
 
 <script>

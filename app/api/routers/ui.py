@@ -7920,7 +7920,10 @@ async def timeline_wizard_submit(
         prev = row
 
     await session.commit()
-    return RedirectResponse(url=f"/models/{proj.scenario_id}/builder?project={project_id}&module=timeline", status_code=303)
+    _tw_url = f"/models/{proj.scenario_id}/builder?project={project_id}&module=timeline"
+    if str(form.get("_wizard", "")).strip() == "1":
+        _tw_url += "&wizard=1"
+    return RedirectResponse(url=_tw_url, status_code=303)
 
 
 @router.post("/ui/projects/{project_id}/approve-timeline", response_class=HTMLResponse)
