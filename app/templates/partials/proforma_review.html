@@ -69,22 +69,21 @@
             Skipped the 15–60s LLM call.
           </div>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <form hx-post="/ui/models/{{ model_id }}/proforma-reanalyze"
-                  hx-target="#deal-setup-wizard"
-                  hx-swap="outerHTML"
-                  style="display:inline">
-              <input type="hidden" name="task_id" value="{{ task_id }}">
-              <button type="submit" style="background:none;border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:11px;color:var(--text);cursor:pointer">Re-analyze</button>
-            </form>
-            <form hx-post="/ui/models/{{ model_id }}/proforma-purge-cache"
-                  hx-target="#deal-setup-wizard"
-                  hx-swap="outerHTML"
-                  hx-confirm="Delete the cached parse result and re-analyze from scratch?"
-                  style="display:inline">
-              <input type="hidden" name="task_id" value="{{ task_id }}">
-              <input type="hidden" name="file_hash" value="{{ file_hash }}">
-              <button type="submit" style="background:none;border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:11px;color:var(--text-muted);cursor:pointer">Purge cache</button>
-            </form>
+            {# Nested <form> elements would close the outer confirm form and
+               break the Save & Continue submit. Use bare buttons + hx-vals. #}
+            <button type="button"
+                    hx-post="/ui/models/{{ model_id }}/proforma-reanalyze"
+                    hx-target="#deal-setup-wizard"
+                    hx-swap="outerHTML"
+                    hx-vals='{"task_id": "{{ task_id }}"}'
+                    style="background:none;border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:11px;color:var(--text);cursor:pointer">Re-analyze</button>
+            <button type="button"
+                    hx-post="/ui/models/{{ model_id }}/proforma-purge-cache"
+                    hx-target="#deal-setup-wizard"
+                    hx-swap="outerHTML"
+                    hx-confirm="Delete the cached parse result and re-analyze from scratch?"
+                    hx-vals='{"task_id": "{{ task_id }}", "file_hash": "{{ file_hash }}"}'
+                    style="background:none;border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:11px;color:var(--text-muted);cursor:pointer">Purge cache</button>
           </div>
         </div>
         {% endif %}
