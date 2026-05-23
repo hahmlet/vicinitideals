@@ -2976,6 +2976,70 @@ These are LP-facing metrics the engine computes for the Underwriting Summary / I
 | **Excel Notes** | Both Weighted EM and DCF NPV would gate on the same Excel `NPV`/`XNPV` decision — convert as a pair. |
 | **Refs** | [Combined Equity Multiple](#combined-equity-multiple), [DCF NPV](#dcf-npv), [s_weighted_equity_multiple](#weighted-equity-multiple) |
 
+#### F.1.8 Per-project phase plan (absolute month boundaries)
+
+These cells expose each project's phase boundaries as 1-based absolute month indices on its per-project sheet. They are computed by `app/engines/phase_plan.py:build_project_phase_windows` (which wraps the engine's `_build_phase_plan` to fold cumulative durations into `(start_month, end_month)` pairs) and registered by `app/exporters/investor_export.py:_build_project_sheet`. The cells are the foundation for future formula-driven construction-to-perm origination gating — a permanent-debt formula can now reference `p<n>_perm_origination_month` directly instead of re-walking the milestone trigger chain.
+
+##### Phase Start Month
+
+| Field | Value |
+|---|---|
+| **Definition** | Absolute, 1-based month index when a phase begins on a project's timeline. Acquisition is always month 1. |
+| **Named Range** | `p<n>_phase_<phase>_start_month` (e.g. `p1_phase_construction_start_month`, `p1_phase_stabilized_start_month`) |
+| **App Calc/Use** | `build_project_phase_windows` folds the cumulative sum of phase durations from `_build_phase_plan`. Phase membership rules (which phases apply to which project type) are unchanged — this only adds the absolute-month coordinate. |
+| **App Notes** | Phase set varies by `Scenario.project_type` (new_construction adds pre_construction + construction; conversion adds pre_construction + conversion; value_add adds optional pre_construction + major_renovation; acquisition opt-in adds minor_renovation). Zero-duration phases are dropped so a downstream formula never indexes an empty range. |
+| **Excel Formula** | (engine-written integer; consumed by formulas elsewhere) |
+| **Excel Notes** | Only registered when the per-project sheet renders (`len(projects) > 1` and `profile != "proforma"`). Single-project scenarios consolidate into the scenario-level sheets and skip the per-project sheet entirely. |
+| **Refs** | [Phase End Month](#phase-end-month), [Phase Duration Months](#phase-duration-months), [Perm Origination Month](#perm-origination-month) |
+
+##### Phase End Month
+
+| Field | Value |
+|---|---|
+| **Definition** | Last month of a phase, **inclusive** (1-based). A phase of `duration_months=3` starting at month 4 has `end_month=6`. |
+| **Named Range** | `p<n>_phase_<phase>_end_month` (e.g. `p1_phase_construction_end_month`) |
+| **App Calc/Use** | `build_project_phase_windows` computes `end_month = start_month + duration_months - 1`. |
+| **App Notes** | The month *after* a phase ends is `end_month + 1`. That convention is used by `perm_origination_month` to compute the construction-to-perm switchover. |
+| **Excel Formula** | (engine-written integer) |
+| **Excel Notes** | Used by future construction-to-perm origination formulas — the perm loan's "active from" month equals the last construction-side phase's `end_month + 1`. |
+| **Refs** | [Phase Start Month](#phase-start-month), [Perm Origination Month](#perm-origination-month) |
+
+##### Phase Duration Months
+
+| Field | Value |
+|---|---|
+| **Definition** | Length of a phase in months (positive integer). |
+| **Named Range** | `p<n>_phase_<phase>_duration_months` |
+| **App Calc/Use** | Equals `PhaseSpec.months` from `_build_phase_plan` — sourced from `OperationalInputs.construction_months` / `lease_up_months` / etc., with milestone-driven overrides via `_apply_milestone_phase_overrides`. |
+| **App Notes** | Zero-duration windows are dropped before registration, so every registered duration is ≥ 1. |
+| **Excel Formula** | (engine-written integer) |
+| **Excel Notes** | Sum across all phases of a project equals [Total Horizon Months](#total-horizon-months). |
+| **Refs** | [Phase Start Month](#phase-start-month), [Phase End Month](#phase-end-month) |
+
+##### Perm Origination Month
+
+| Field | Value |
+|---|---|
+| **Definition** | Absolute month a construction-to-perm loan would convert from its construction tranche to its permanent tranche. Defined as `end_month + 1` of the project's last construction-side phase. |
+| **Named Range** | `p<n>_perm_origination_month` |
+| **App Calc/Use** | `app/engines/phase_plan.py:perm_origination_month` scans the windows for the last phase whose `period_type` is in `(pre_construction, construction, conversion, major_renovation, minor_renovation)`. |
+| **App Notes** | Returns `None` — and the named cell is omitted — for pure-hold projects (`project_type=acquisition` with no opt-in renovation). Perm origination is undefined when there's no construction-side phase. |
+| **Excel Formula** | (engine-written integer when present) |
+| **Excel Notes** | Future construction-to-perm formulas should reference this cell via `IFERROR(p<n>_perm_origination_month, …)` so pure-hold projects with no cell don't break. |
+| **Refs** | [Phase End Month](#phase-end-month), [Annual P&I](#annual-pi-pi-loans-loan-summary), [Debt Service](#debt-service) |
+
+##### Total Horizon Months
+
+| Field | Value |
+|---|---|
+| **Definition** | Sum of all phase durations for a project — the full modeled timeline including exit month. |
+| **Named Range** | `p<n>_total_horizon_months` |
+| **App Calc/Use** | `app/engines/phase_plan.py:total_horizon_months` sums `PhaseWindow.duration_months` across the project's windows. Equals the last window's `end_month` (1-based inclusive). |
+| **App Notes** | Independent of `Scenario.discount_rate_pct` — purely a timeline length. |
+| **Excel Formula** | (engine-written integer) |
+| **Excel Notes** | Distinct from `p<n>_timeline_months` (which is the engine's `OperationalOutputs.total_timeline_months`). The two should match in steady state; divergence indicates either a milestone override or a zero-duration phase that was dropped. |
+| **Refs** | [Phase Duration Months](#phase-duration-months) |
+
 ### F.2 Defined-name conventions
 
 - `s_*` — single scalar (one cell). E.g. `s_combined_noi`, `s_revenue_growth_rate`, `s_loan_3_annual_pi`.
