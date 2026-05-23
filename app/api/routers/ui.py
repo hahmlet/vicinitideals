@@ -401,6 +401,7 @@ async def _load_deals(
     model_filter=None,
     q: str = "",
     include_archived: bool = False,
+    hide_test: bool = False,
 ) -> list[Deal]:
     """Load Deals with their Scenarios and linked Opportunities for the deals page."""
     stmt = (
@@ -417,6 +418,12 @@ async def _load_deals(
     if not include_archived:
         stmt = stmt.where(Deal.status != DealStatus.archived)
 
+    if hide_test:
+        stmt = stmt.where(
+            ~Deal.name.ilike("%e2e%") &
+            ~Deal.name.op("~*")(r"phase\s+\w+\s+test\s+\w+")
+        )
+
     if q:
         stmt = stmt.where(Deal.name.ilike(f"%{q}%"))
 
@@ -429,10 +436,10 @@ async def _load_deals(
         targets = {_STATUS_DB_MAP[s] for s in known}
         if targets:
             # Deals with no linked opportunity cannot be filtered by status — keep them.
-            # Deals with a linked opportunity are kept only if their status matches.
+            # Deals with a linked opportunity are kept only if their opp_status matches.
             deals = [
                 d for d in deals
-                if _first_opportunity(d) is None or _first_opportunity(d).status in targets
+                if _first_opportunity(d) is None or _first_opportunity(d).opp_status in targets
             ]
         # If none of the selected status values map to DB values, no filtering is applied.
 
@@ -448,7 +455,7 @@ async def _load_deals(
     if types:
         deals = [
             d for d in deals
-            if _primary_scenario(d) and str(getattr(_primary_scenario(d).project_type, "value", _primary_scenario(d).project_type)) in types
+            if _primary_scenario(d) is None or str(getattr(_primary_scenario(d).project_type, "value", _primary_scenario(d).project_type)) in types
         ]
 
     return deals
@@ -959,6 +966,7 @@ def _base_ctx(
         # None / missing is treated as verified to avoid false positives.
         "user_email_verified": bool(getattr(user, "email_verified", True)) if user else True,
         "is_org_admin": bool(getattr(user, "is_org_admin", False)) if user else False,
+        "is_admin": bool(getattr(user, "is_admin", False)) if user else False,
         "active_nav": active_nav,
         "dedup_count": dedup_count,
         "address_issues_count": address_issues_count,
@@ -2222,12 +2230,16 @@ async def deals_page(
     type: list[str] = Query(default=[]),
     model: list[str] = Query(default=[]),
     include_archived: str = Query(default=""),
+    hide_test: str = Query(default=""),
 ) -> HTMLResponse:
     user = await _get_user(session, request)
     dedup_count, conflicts_count = await _get_counts(session)
 
     archived = include_archived == "1"
-    loaded_deals = await _load_deals(session, status, type, model, q, archived)
+    # Default hide_test ON for admin users when not explicitly set
+    is_admin = user is not None and bool(getattr(user, "is_admin", False))
+    effective_hide_test = (hide_test == "1") if hide_test != "" else is_admin
+    loaded_deals = await _load_deals(session, status, type, model, q, archived, effective_hide_test)
     deals = [_build_deal_row(d) for d in loaded_deals]
 
     total_result = await session.execute(
@@ -2259,6 +2271,7 @@ async def deals_page(
             "total_count": total_count,
             "archived_count": archived_count,
             "include_archived": archived,
+            "hide_test": effective_hide_test,
             "q": q,
             "status": status,
             "deal_type": type,
@@ -2283,9 +2296,10 @@ async def deals_rows(
     type: list[str] = Query(default=[]),
     model: list[str] = Query(default=[]),
     include_archived: str = Query(default=""),
+    hide_test: str = Query(default=""),
 ) -> HTMLResponse:
     archived = include_archived == "1"
-    loaded_deals = await _load_deals(session, status, type, model, q, archived)
+    loaded_deals = await _load_deals(session, status, type, model, q, archived, hide_test == "1")
     deals = [_build_deal_row(d) for d in loaded_deals]
     return templates.TemplateResponse(request, "partials/deals_rows.html", {"deals": deals})
 
@@ -2550,7 +2564,13 @@ async def create_deal(
 
     await session.commit()
 
-    redirect_url = f"/models/{scenario.id}/builder" + ("?new=1" if new == "1" else "")
+    # Single-flow wizard: land directly inside the wizard chrome at the timeline
+    # step. The user never sees the full builder UI until they finish the
+    # setup wizard. Builder route reads wizard=1 to hide sidebar/topbar and
+    # the approve-timeline handler reads _wizard to route into setup.
+    redirect_url = f"/models/{scenario.id}/builder?module=timeline&wizard=1"
+    if new == "1":
+        redirect_url += "&new=1"
     return RedirectResponse(url=redirect_url, status_code=303)
 
 
@@ -2767,9 +2787,11 @@ async def opportunities_page(
             seen_jur.add(value)
             jurisdiction_options.append({"value": value, "label": label})
     jurisdiction_options.sort(key=lambda x: x["label"])
+    is_admin = user is not None and bool(getattr(user, "is_admin", False))
     return templates.TemplateResponse(request, "opportunities.html", {
         "request": request,
         "jurisdiction_options": jurisdiction_options,
+        "hide_test_default": is_admin,
         **_base_ctx(user, dedup_count, "opportunities", conflicts_count=conflicts_count),
     })
 
@@ -2797,7 +2819,13 @@ def _apply_opp_filters(
     min_units: int | None,
     max_units: int | None,
     property_type: list[str],
+    hide_test: bool = False,
 ) -> object:
+    if hide_test:
+        stmt = stmt.where(
+            ~Opportunity.name.ilike("%e2e%") &
+            ~Opportunity.name.op("~*")(r"phase\s+\w+\s+test\s+\w+")
+        )
     if favorited:
         stmt = stmt.where(Opportunity.is_favorited.is_(True))
     if jurisdiction:
@@ -2838,6 +2866,7 @@ async def opportunities_rows_deals(
     min_units: int | None = Query(default=None),
     max_units: int | None = Query(default=None),
     property_type: list[str] = Query(default=[]),
+    hide_test: str = Query(default=""),
 ) -> HTMLResponse:
     active_oppo_ids = select(Project.opportunity_id).where(
         Project.opportunity_id.isnot(None)
@@ -2851,7 +2880,7 @@ async def opportunities_rows_deals(
         )
         .order_by(Opportunity.last_seen_at.desc())
     )
-    stmt = _apply_opp_filters(stmt, favorited, jurisdiction, min_units, max_units, property_type)
+    stmt = _apply_opp_filters(stmt, favorited, jurisdiction, min_units, max_units, property_type, hide_test == "1")
     opps = _filter_opps(list((await session.execute(stmt)).scalars().unique()), q)
     return templates.TemplateResponse(request, "partials/opportunities_rows.html", {
         "request": request, "opps": opps, "table": "deals",
@@ -2868,6 +2897,7 @@ async def opportunities_rows_offmarket(
     min_units: int | None = Query(default=None),
     max_units: int | None = Query(default=None),
     property_type: list[str] = Query(default=[]),
+    hide_test: str = Query(default=""),
 ) -> HTMLResponse:
     active_oppo_ids = select(Project.opportunity_id).where(
         Project.opportunity_id.isnot(None)
@@ -2882,7 +2912,7 @@ async def opportunities_rows_offmarket(
         )
         .order_by(Opportunity.last_seen_at.desc())
     )
-    stmt = _apply_opp_filters(stmt, favorited, jurisdiction, min_units, max_units, property_type)
+    stmt = _apply_opp_filters(stmt, favorited, jurisdiction, min_units, max_units, property_type, hide_test == "1")
     opps = _filter_opps(list((await session.execute(stmt)).scalars().unique()), q)
     return templates.TemplateResponse(request, "partials/opportunities_rows.html", {
         "request": request, "opps": opps, "table": "offmarket",
@@ -2899,6 +2929,7 @@ async def opportunities_rows_onmarket(
     min_units: int | None = Query(default=None),
     max_units: int | None = Query(default=None),
     property_type: list[str] = Query(default=[]),
+    hide_test: str = Query(default=""),
 ) -> HTMLResponse:
     active_oppo_ids = select(Project.opportunity_id).where(
         Project.opportunity_id.isnot(None)
@@ -2913,7 +2944,7 @@ async def opportunities_rows_onmarket(
         )
         .order_by(Opportunity.last_seen_at.desc())
     )
-    stmt = _apply_opp_filters(stmt, favorited, jurisdiction, min_units, max_units, property_type)
+    stmt = _apply_opp_filters(stmt, favorited, jurisdiction, min_units, max_units, property_type, hide_test == "1")
     opps = _filter_opps(list((await session.execute(stmt)).scalars().unique()), q)
     return templates.TemplateResponse(request, "partials/opportunities_rows.html", {
         "request": request, "opps": opps, "table": "onmarket",
@@ -5147,6 +5178,21 @@ async def _staleness_map(session: AsyncSession, scenario_id: UUID) -> dict:
     }
 
 
+def _wizard_mode_from_request(request: Request) -> bool:
+    """Read the single-flow deal-creation wizard flag off the parent page.
+
+    HTMX form posts in the wizard chrome don't carry the `wizard=1` query
+    param themselves, but the browser's current URL (sent in HX-Current-URL)
+    does. Used by panel-render endpoints so the timeline approve button text
+    and sidebar visibility stay consistent across in-wizard mutations.
+    """
+    _hx_url = request.headers.get("HX-Current-URL", "")
+    if not _hx_url:
+        return False
+    from urllib.parse import urlparse, parse_qs
+    return parse_qs(urlparse(_hx_url).query).get("wizard", [""])[0] == "1"
+
+
 async def _active_project_from_request(
     request: Request, session: AsyncSession, model_id: UUID,
 ) -> UUID | None:
@@ -6351,7 +6397,7 @@ async def handle_form_create_or_update(
 
     await session.flush()
     panel_data = await _load_builder_data(session, model_id, project_id=project_id)
-    ctx = {"model": model, "active_module": module, **panel_data}
+    ctx = {"model": model, "active_module": module, "wizard_mode": _wizard_mode_from_request(request), **panel_data}
     return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
 
 
@@ -6377,7 +6423,7 @@ async def handle_form_delete(
         if item_type == "unit-mix":
             _active_proj_id = await _active_project_from_request(request, session, model_id)
             panel_data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
-            ctx = {"model": model, "active_module": module, **panel_data}
+            ctx = {"model": model, "active_module": module, "wizard_mode": _wizard_mode_from_request(request), **panel_data}
             return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
         return HTMLResponse("<p class='text-muted'>Invalid item id.</p>", status_code=400)
 
@@ -6405,7 +6451,7 @@ async def handle_form_delete(
         await session.flush()
         _active_proj_id2 = await _active_project_from_request(request, session, model_id)
         panel_data = await _load_builder_data(session, model_id, project_id=_active_proj_id2)
-        ctx = {"model": model, "active_module": module, **panel_data}
+        ctx = {"model": model, "active_module": module, "wizard_mode": _wizard_mode_from_request(request), **panel_data}
         return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
 
     if row is not None:
@@ -6420,7 +6466,7 @@ async def handle_form_delete(
 
     _active_proj_id = await _active_project_from_request(request, session, model_id)
     panel_data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
-    ctx = {"model": model, "active_module": module, **panel_data}
+    ctx = {"model": model, "active_module": module, "wizard_mode": _wizard_mode_from_request(request), **panel_data}
     return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
 
 
@@ -7874,7 +7920,10 @@ async def timeline_wizard_submit(
         prev = row
 
     await session.commit()
-    return RedirectResponse(url=f"/models/{proj.scenario_id}/builder?project={project_id}&module=timeline", status_code=303)
+    _tw_url = f"/models/{proj.scenario_id}/builder?project={project_id}&module=timeline"
+    if str(form.get("_wizard", "")).strip() == "1":
+        _tw_url += "&wizard=1"
+    return RedirectResponse(url=_tw_url, status_code=303)
 
 
 @router.post("/ui/projects/{project_id}/approve-timeline", response_class=HTMLResponse)
@@ -7887,16 +7936,27 @@ async def approve_timeline(
 
     Normal POST → approve (redirect to sources).
     POST with _unapprove=1 → re-open (redirect back to timeline).
+    POST with _wizard=1 → single-flow deal-creation wizard mode; redirect into
+    the setup wizard with wizard chrome still active.
     """
     proj = await session.get(Project, project_id)
     if proj is None:
         return HTMLResponse("<p class='text-muted'>Project not found.</p>", status_code=404)
     form = await request.form()
     unapprove = str(form.get("_unapprove", "")).strip() == "1"
+    wizard_mode = str(form.get("_wizard", "")).strip() == "1"
     proj.timeline_approved = not unapprove
     await session.commit()
     if unapprove:
-        return RedirectResponse(url=f"/models/{proj.scenario_id}/builder?project={project_id}&module=timeline", status_code=303)
+        _unapp_url = f"/models/{proj.scenario_id}/builder?project={project_id}&module=timeline"
+        if wizard_mode:
+            _unapp_url += "&wizard=1"
+        return RedirectResponse(url=_unapp_url, status_code=303)
+    if wizard_mode:
+        return RedirectResponse(
+            url=f"/models/{proj.scenario_id}/builder?project={project_id}&module=deal_setup&wizard=1",
+            status_code=303,
+        )
     return RedirectResponse(url=f"/models/{proj.scenario_id}/builder?project={project_id}&module=sources", status_code=303)
 
 
@@ -7924,6 +7984,31 @@ async def _wizard_active_from_options(
         mt = str(getattr(m, "milestone_type", "") or "").replace("MilestoneType.", "")
         label = m.label or _milestone_label(mt)
         out.append((mt, label))
+    return out
+
+
+async def _wizard_phases_present(
+    session: "AsyncSession",
+    default_project: "Project | None",
+) -> set[str]:
+    """Return the set of MilestoneType keys present on the default project.
+
+    Used by Step 2 of the setup wizard to filter the debt-card list:
+      - construction_loan / construction_to_perm require a Construction milestone
+      - pre_development_loan requires a Pre-Development milestone
+
+    Cards whose required phase is absent are hidden (not disabled) so the picker
+    stays uncluttered. Re-derived on every wizard GET/POST — milestones are the
+    source of truth, no persisted allow-list.
+    """
+    if default_project is None:
+        return set()
+    rows = list((await session.execute(
+        select(Milestone.milestone_type).where(Milestone.project_id == default_project.id)
+    )).scalars())
+    out: set[str] = set()
+    for mt in rows:
+        out.add(str(mt or "").replace("MilestoneType.", ""))
     return out
 
 
@@ -8041,11 +8126,13 @@ async def deal_setup_wizard_get(
         if _selected and all((_dt_now.get(_ft) or {}).get("vehicle_id") for _ft in _selected):
             _review_back_step = 2
 
+    _wiz_phases_present = await _wizard_phases_present(session, default_project)
     return templates.TemplateResponse(request, "partials/deal_setup_wizard.html", {
         "request": request, "model": model, "inputs": inputs, "step": step,
         "source_vehicles_debt": _svd,
         "wizard_active_from_opts": _wiz_active_from_opts,
         "review_back_step": _review_back_step,
+        "phases_present": _wiz_phases_present,
     })
 
 
@@ -8324,10 +8411,12 @@ async def deal_setup_wizard_step(
     # If validation failed, don't persist and re-render the same step with errors
     if wizard_errors:
         _post_active_from_opts = await _wizard_active_from_options(session, default_project)
+        _post_phases_present = await _wizard_phases_present(session, default_project)
         return templates.TemplateResponse(request, "partials/deal_setup_wizard.html", {
             "request": request, "model": model, "inputs": inputs, "step": step,
             "wizard_errors": wizard_errors, "source_vehicles_debt": _post_svd,
             "wizard_active_from_opts": _post_active_from_opts,
+            "phases_present": _post_phases_present,
         })
 
     session.add(inputs)
@@ -8370,11 +8459,13 @@ async def deal_setup_wizard_step(
     # Seed perm-debt defaults so Step 4 shows user/org preference, not template fallback.
     await _seed_wizard_perm_defaults(inputs, session, request)
     _next_active_from_opts = await _wizard_active_from_options(session, default_project)
+    _next_phases_present = await _wizard_phases_present(session, default_project)
     return templates.TemplateResponse(request, "partials/deal_setup_wizard.html", {
         "request": request, "model": model, "inputs": inputs, "step": next_step,
         "source_vehicles_debt": _post_svd,
         "wizard_active_from_opts": _next_active_from_opts,
         "review_back_step": review_back_step,
+        "phases_present": _next_phases_present,
     })
 
 
@@ -9188,6 +9279,7 @@ async def model_builder(
     project: str = Query(default=""),  # optional Project.id to view a specific project
     view: str = Query(default=""),  # "underwriting" for the scenario-level rollup; default = per-project
     new: str = Query(default=""),  # set to "1" when redirected from new deal creation
+    wizard: str = Query(default=""),  # "1" = single-flow deal-creation wizard mode (hide chrome)
 ) -> HTMLResponse:
     model = await session.get(DealModel, model_id)
     if model is None:
@@ -9320,8 +9412,12 @@ async def model_builder(
     if active_view != "underwriting" and not project and active_project_id is not None:
         _view_q = f"&view={view}" if view else ""
         _new_q = f"&new={new}" if new else ""
+        # Preserve wizard=1 across the canonicalization redirect; otherwise the
+        # single-flow deal-creation chrome drops on the very first hop after
+        # /ui/deals/create.
+        _wiz_q = f"&wizard={wizard}" if wizard else ""
         return RedirectResponse(
-            url=f"/models/{model_id}/builder?module={active_module}&project={active_project_id}{_view_q}{_new_q}",
+            url=f"/models/{model_id}/builder?module={active_module}&project={active_project_id}{_view_q}{_new_q}{_wiz_q}",
             status_code=302,
         )
 
@@ -9521,6 +9617,7 @@ async def model_builder(
         "active_module": active_module,
         "deal_setup_complete": _deal_setup_complete,
         "new_deal": new == "1",
+        "wizard_mode": wizard == "1",
         "cash_flow_rows": cash_flow_rows,
         "multi_parcel_apns": multi_parcel_apns,
         "lot_size_mismatch": lot_size_mismatch_info,

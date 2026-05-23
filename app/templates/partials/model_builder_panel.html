@@ -1539,14 +1539,16 @@
 
 {% elif active_module == 'timeline' %}
 
-<div class="module-panel-header">
+{% if wizard_mode %}<div class="wizard-shell"><div class="wizard-card" style="max-width:780px">{% endif %}
+
+<div class="module-panel-header"{% if wizard_mode %} style="padding:24px 28px 4px;border-bottom:none"{% endif %}>
   <div>
     <div class="module-panel-title">Timeline</div>
     <div class="module-panel-desc">Project milestones and durations — defines the full hold period from acquisition to exit.</div>
   </div>
   <div class="module-panel-actions">
-    <button class="btn btn-secondary" onclick="openAddLine('milestones')">+ Add Milestone</button>
-    {% if not timeline_approved and milestones %}
+    <button class="btn btn-secondary btn-sm" onclick="openAddLine('milestones')">+ Add Milestone</button>
+    {% if not wizard_mode and not timeline_approved and milestones %}
     <form method="post" action="/ui/projects/{{ default_project_id }}/approve-timeline" style="display:inline">
       <button type="submit" class="btn btn-primary"
               {% if not timeline_approvable %}disabled title="Every milestone needs a position and a duration before approving"{% endif %}>
@@ -1711,6 +1713,24 @@
   </div>
   {% endif %}
 </div>
+
+{% if wizard_mode %}
+<div class="wizard-footer">
+  <span style="font-size:12px;color:var(--text-muted)">Step 2 of 3 · Timeline</span>
+  {% if not timeline_approved and milestones %}
+  <form method="post" action="/ui/projects/{{ default_project_id }}/approve-timeline" style="display:inline">
+    <input type="hidden" name="_wizard" value="1">
+    <button type="submit" class="btn btn-primary"
+            {% if not timeline_approvable %}disabled title="Every milestone needs a position and a duration before approving"{% endif %}>
+      Approve &amp; Continue Setup →
+    </button>
+  </form>
+  {% else %}
+  <span style="font-size:12px;color:var(--text-muted)">Add at least one milestone to continue</span>
+  {% endif %}
+</div>
+</div></div>
+{% endif %}
 
 {% elif active_module == 'cashflow' %}
 

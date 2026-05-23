@@ -159,10 +159,13 @@ async def export_deal_model_json(session: AsyncSession, model_id: UUID) -> dict[
         OperatingExpenseLineRead.model_validate(line).model_dump(mode="json")
         for line in sorted(default_project.expense_lines if default_project else [], key=lambda item: (item.label or "", str(item.id)))
     ]
-    unit_mix = [
-        UnitMixRead.model_validate(u).model_dump(mode="json")
-        for u in sorted(default_project.unit_mix if default_project else [], key=lambda item: (item.get("label") or "", item.get("id") or ""))
-    ]
+    # unit_mix is JSONB on Project (migration 0067) — pass dicts through
+    # rather than re-validating with UnitMixRead, which expects id +
+    # project_id fields the JSONB form never carries.
+    unit_mix = sorted(
+        list(default_project.unit_mix if default_project and default_project.unit_mix else []),
+        key=lambda item: (item.get("label") or "", str(item.get("id") or "")),
+    )
     cash_flows = [
         CashFlowRead.model_validate(cash_flow).model_dump(mode="json")
         for cash_flow in sorted(model.cash_flows, key=lambda item: item.period)

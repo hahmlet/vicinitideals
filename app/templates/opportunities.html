@@ -118,6 +118,11 @@ tr:hover .archive-btn { opacity: 1; }
     <input type="number" name="max_units" placeholder="max" min="0">
   </span>
   <label class="fav-toggle"><input type="checkbox" name="favorited" value="1"> ★ Fav only</label>
+  {% if is_admin %}
+  <label class="fav-toggle" title="Hide opportunities with 'E2E' in the name">
+    <input type="checkbox" name="hide_test" value="1" {% if hide_test_default %}checked{% endif %}> Hide Test
+  </label>
+  {% endif %}
 </form>
 
 {# ── Active Deals ──────────────────────────────────────────────────────────── #}

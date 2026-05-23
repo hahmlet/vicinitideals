@@ -79,9 +79,11 @@
 {% endblock %}
 
 {% block content %}
-<div class="topbar">
-  <div style="font-size:15px;font-weight:700">New Deal</div>
-</div>
+{# Step 1 of the unified deal-creation wizard. Steps 2 (Timeline) and 3 (Setup)
+   are rendered by model_builder.html when wizard_mode=1. Same chrome partial
+   keeps the indicator consistent across all three surfaces. #}
+{% set dcw_step = 1 %}
+{% include 'partials/deal_creation_wizard_chrome.html' %}
 
 <div class="new-deal-shell">
 

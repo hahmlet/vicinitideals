@@ -278,7 +278,8 @@ async def test_revert_to_snapshot_restores_use_unitmix_and_milestones(session: A
     ).scalar_one()
 
     use_line = UseLine(project_id=project.id, label="Land", phase=UseLinePhase.acquisition, amount=1000000)
-    unit_mix = UnitMix(project_id=project.id, label="1BR", unit_count=8, market_rent_per_unit=1500)
+    # unit_mix is now JSONB on Project (migration 0067) — write list directly.
+    project.unit_mix = [{"label": "1BR", "unit_count": 8, "market_rent_per_unit": 1500}]
     m1 = Milestone(
         project_id=project.id,
         milestone_type=MilestoneType.pre_development,
@@ -287,7 +288,7 @@ async def test_revert_to_snapshot_restores_use_unitmix_and_milestones(session: A
         sequence_order=1,
         trigger_offset_days=0,
     )
-    session.add_all([use_line, unit_mix, m1])
+    session.add_all([use_line, m1])
     await session.flush()
     m2 = Milestone(
         project_id=project.id,
@@ -304,7 +305,7 @@ async def test_revert_to_snapshot_restores_use_unitmix_and_milestones(session: A
     snap = await capture_snapshot(session, scenario.id)
 
     await session.delete(use_line)
-    await session.delete(unit_mix)
+    project.unit_mix = None
     await session.delete(m1)
     await session.delete(m2)
     await session.flush()
@@ -313,7 +314,8 @@ async def test_revert_to_snapshot_restores_use_unitmix_and_milestones(session: A
     await session.commit()
 
     restored_use = list((await session.execute(select(UseLine).where(UseLine.project_id == project.id))).scalars())
-    restored_mix = list((await session.execute(select(UnitMix).where(UnitMix.project_id == project.id))).scalars())
+    await session.refresh(project)
+    restored_mix = project.unit_mix or []
     restored_ms = list(
         (
             await session.execute(
@@ -325,7 +327,7 @@ async def test_revert_to_snapshot_restores_use_unitmix_and_milestones(session: A
     )
 
     assert any(row.label == "Land" for row in restored_use)
-    assert any(row.label == "1BR" for row in restored_mix)
+    assert any((row.get("label") if isinstance(row, dict) else None) == "1BR" for row in restored_mix)
     assert len(restored_ms) == 2
     assert restored_ms[1].trigger_milestone_id == restored_ms[0].id
 
@@ -407,7 +409,6 @@ async def test_capture_snapshot_serializes_outputs_for_all_projects(session: Asy
         scenario_id=scenario.id,
         opportunity_id=opp.id,
         name="Second Project",
-        deal_type=getattr(scenario.project_type, "value", scenario.project_type),
     )
     session.add(second_project)
     await session.flush()

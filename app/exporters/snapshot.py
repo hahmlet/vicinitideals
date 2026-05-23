@@ -121,6 +121,10 @@ def _json_safe(obj: Any) -> Any:
     def _default(o: Any) -> Any:
         if isinstance(o, Decimal):
             return float(o)
+        if isinstance(o, UUID):
+            return str(o)
+        if isinstance(o, (date, datetime)):
+            return o.isoformat()
         raise TypeError(f"Object of type {type(o)} is not JSON serializable")
     return json.loads(json.dumps(obj, default=_default))
 
@@ -147,9 +151,14 @@ def _serialize_project_snapshot(project: Project) -> dict[str, Any]:
         _row_to_payload(row, exclude={"id", "project_id", "updated_at"})
         for row in sorted(project.expense_lines, key=lambda item: (item.label or "", str(item.id)))
     ]
+    # unit_mix is JSONB on Project (migration 0067) — list of dicts, not
+    # ORM rows. Pass through as-is, dropping internal keys for the snapshot.
     unit_mix = [
-        _row_to_payload(row, exclude={"id", "project_id", "updated_at"})
-        for row in sorted(project.unit_mix, key=lambda item: (item.label or "", str(item.id)))
+        {k: v for k, v in row.items() if k not in {"updated_at"}}
+        for row in sorted(
+            project.unit_mix or [],
+            key=lambda item: (item.get("label") or "", str(item.get("id") or "")),
+        )
     ]
     milestones = [
         {
@@ -219,7 +228,6 @@ async def _serialize_inputs(session: AsyncSession, scenario_id: UUID) -> dict[st
                     selectinload(Project.use_lines),
                     selectinload(Project.income_streams),
                     selectinload(Project.expense_lines),
-                    selectinload(Project.unit_mix),
                     selectinload(Project.milestones),
                 )
                 .order_by(Project.created_at.asc())
@@ -605,6 +613,7 @@ def _blob_diff(
     entity_type: str,
     field_map: dict[str, tuple[str, str]],
     skip: frozenset[str] | None = None,
+    blob_key: str | None = None,
 ) -> list[dict]:
     """Diff two JSONB dicts field-by-field, emitting only user-visible fields."""
     changes: list[dict] = []
@@ -621,8 +630,13 @@ def _blob_diff(
             if _numeric_eq(bv, av):
                 continue
         changes.append({
+            "entity": entity_type,
             "entity_label": entity_label,
             "entity_type": entity_type,
+            # ``field`` identifies the parent blob (``source`` / ``carry``)
+            # so consumers can group changes by which JSONB column moved;
+            # ``field_label`` carries the sub-field's display label.
+            "field": blob_key if blob_key is not None else k,
             "field_label": label,
             "fmt": fmt,
             "before": bv,
@@ -650,8 +664,10 @@ def _compare_rows(
             if _numeric_eq(bv, av):
                 continue
         changes.append({
+            "entity": entity_type,
             "entity_label": entity_label,
             "entity_type": entity_type,
+            "field": field_key,
             "field_label": field_label,
             "fmt": fmt,
             "before": bv,
@@ -662,7 +678,10 @@ def _compare_rows(
             b_blob = b_row.get(blob_key) or {}
             a_blob = a_row.get(blob_key) or {}
             if b_blob != a_blob:
-                changes.extend(_blob_diff(b_blob, a_blob, entity_label, entity_type, sub_map, skip))
+                changes.extend(_blob_diff(
+                    b_blob, a_blob, entity_label, entity_type, sub_map, skip,
+                    blob_key=blob_key,
+                ))
 
 
 def _entity_list_diff_v2(
@@ -752,8 +771,10 @@ def diff_snapshots(
             if _numeric_eq(bv, av):
                 continue
         input_changes.append({
+            "entity": "OperationalInputs",
             "entity_label": "Operating Inputs",
             "entity_type": "OperationalInputs",
+            "field": field_key,
             "field_label": field_label,
             "fmt": fmt,
             "before": bv,
@@ -933,8 +954,11 @@ async def revert_to_snapshot(
     await session.execute(delete(OperatingExpenseLine).where(
         OperatingExpenseLine.project_id.in_(target_project_ids)
     ))
-    # UnitMix
-    await session.execute(delete(UnitMix).where(UnitMix.project_id.in_(target_project_ids)))
+    # UnitMix is now a JSONB column on Project (migration 0067 dropped the
+    # table). Clear it by setting unit_mix=NULL on the affected projects;
+    # the snapshot payload's unit_mix list will be re-applied below.
+    for _proj in projects:
+        _proj.unit_mix = None
     # OperationalInputs (scalar row)
     await session.execute(delete(OperationalInputs).where(
         OperationalInputs.project_id.in_(target_project_ids)
@@ -1000,12 +1024,17 @@ async def revert_to_snapshot(
             except Exception:
                 logger.warning("snapshot revert: skipped OperatingExpenseLine restore", exc_info=True)
 
+        # unit_mix is JSONB on Project — assign the payload list directly.
+        # Defensive copy + filter so we drop any keys the schema doesn't
+        # know about while still reviving everything UnitMixBase validates.
+        restored_mix: list[dict] = []
         for mix_data in payload.get("unit_mix") or []:
             try:
                 parsed = UnitMixBase.model_validate(mix_data)
-                session.add(UnitMix(project_id=project.id, **parsed.model_dump(exclude_unset=True)))
+                restored_mix.append(parsed.model_dump(mode="json", exclude_unset=True))
             except Exception:
-                logger.warning("snapshot revert: skipped UnitMix restore", exc_info=True)
+                logger.warning("snapshot revert: skipped UnitMix entry", exc_info=True)
+        project.unit_mix = restored_mix or None
 
         milestone_rows: list[tuple[dict[str, Any], Milestone]] = []
         old_to_new_milestone_ids: dict[str, UUID] = {}

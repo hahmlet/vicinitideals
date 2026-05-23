@@ -162,21 +162,32 @@ async def test_block_c_module_rows_register_all_debt_inputs(session: AsyncSessio
     blob = await export_investor_workbook(scenario.id, session)
     wb, _ws = _load_assumptions(blob)
 
-    # The seeder may already have created one or more modules. Walk module
-    # ordinals 1..N (until a gap) and assert all 8 new suffixes registered.
-    found_any_module = False
-    for m_idx in range(1, 20):
-        sentinel = f"s_module_{m_idx}_principal"
-        if sentinel not in wb.defined_names:
-            break
-        found_any_module = True
-        for suffix in NEW_BLOCK_C_PER_MODULE_SUFFIXES:
-            name = f"s_module_{m_idx}_{suffix}"
-            assert name in wb.defined_names, (
-                f"module {m_idx} missing expected debt-input range {name}"
-            )
+    # Capital modules are named by slugified label, not ordinal. Identify
+    # each Block C module by walking the Assumptions sheet and reading the
+    # slugs the exporter registered on it. Debt Schedule's ``s_loan_<n>_*``
+    # rows live on a different sheet and don't collide.
+    assumptions_sheet_names = set()
+    for dn in wb.defined_names:
+        defined = wb.defined_names[dn]
+        for sheet, _ref in defined.destinations:
+            if sheet == "Assumptions":
+                assumptions_sheet_names.add(dn)
+                break
 
-    assert found_any_module, "no capital modules registered for the test fixture"
+    module_slugs = []
+    for name in assumptions_sheet_names:
+        if name.startswith("s_") and name.endswith("_principal"):
+            slug = name[len("s_"):-len("_principal")]
+            module_slugs.append(slug)
+
+    assert module_slugs, "no capital modules registered for the test fixture"
+
+    for slug in module_slugs:
+        for suffix in NEW_BLOCK_C_PER_MODULE_SUFFIXES:
+            name = f"s_{slug}_{suffix}"
+            assert name in wb.defined_names, (
+                f"module slug {slug!r} missing expected debt-input range {name}"
+            )
 
 
 # ── Block D — Waterfall hurdles ─────────────────────────────────────────────

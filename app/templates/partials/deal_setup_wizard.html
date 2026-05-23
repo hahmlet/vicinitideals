@@ -31,10 +31,8 @@
   width: 100%;
   max-width: 640px;
   box-shadow: 0 2px 12px rgba(0,0,0,.06);
-  overflow: hidden;
   display: flex;
   flex-direction: column;
-  max-height: calc(100vh - 80px);
 }
 .wizard-card > form {
   display: flex;
@@ -98,7 +96,6 @@
 .wizard-body {
   padding: 20px 28px 8px;
   flex: 1;
-  overflow-y: auto;
   min-height: 0;
 }
 .wizard-footer {
@@ -332,17 +329,33 @@
         <div class="section-label" style="margin-top:0">Income Mode</div>
         <div class="option-grid">
 
-          <label class="option-card {% if _im == 'revenue_opex' %}selected{% endif %}">
-            <div class="option-card-head">
-              <input type="radio" name="income_mode" value="revenue_opex"
+          <div class="option-card {% if _im == 'revenue_opex' %}selected{% endif %}" id="card-revenue-opex">
+            <label class="option-card-head" for="im-revenue-opex" style="cursor:pointer;margin:0">
+              <input type="radio" id="im-revenue-opex" name="income_mode" value="revenue_opex"
                      {% if _im == 'revenue_opex' %}checked{% endif %}
                      onchange="onIncomeModeChange(this)">
               <div>
                 <div class="option-card-title">Revenue / OpEx</div>
                 <div class="option-card-desc">Model income streams and operating expenses line-by-line. NOI is computed from Revenue minus OpEx. Best for detailed underwriting.</div>
               </div>
+            </label>
+            {# Pro forma drop zone — nested inside the Revenue/OpEx card so it
+               appears/disappears with the selection. Hidden when NOI is picked. #}
+            <div id="proforma-block" {% if _im != 'revenue_opex' %}style="display:none"{% endif %}>
+              <label class="proforma-zone" for="proforma-file" id="proforma-zone"
+                     ondragover="onProformaDragOver(event)"
+                     ondragleave="onProformaDragLeave(event)"
+                     ondrop="onProformaDrop(event)"
+                     style="margin-top:12px">
+                <div class="proforma-zone-title">Drag a pro forma here or click to choose a file</div>
+                <div class="proforma-zone-hint">PDF, XLS, XLSX — we'll parse Revenue / OpEx into the model. Skip to enter values by hand.</div>
+                <input type="file" id="proforma-file" name="file" accept=".pdf,.xls,.xlsx" onchange="onProformaFile(this)">
+                <div id="proforma-pill" style="display:none">
+                  <div class="proforma-file-pill"><span id="proforma-name"></span><a href="#" onclick="clearProformaFile(event)" style="color:var(--accent);text-decoration:none">✕</a></div>
+                </div>
+              </label>
             </div>
-          </label>
+          </div>
 
           <label class="option-card {% if _im == 'noi' %}selected{% endif %}">
             <div class="option-card-head">
@@ -383,25 +396,6 @@
           </label>
         </div>
 
-        {# Pro forma upload — drop zone visible only when revenue_opex.  When
-           a file is dropped/selected, the Step 1 submit button changes to
-           "Import →" and the form action swaps to proforma-preflight.  With
-           no file, button is "Skip Import →" (revenue_opex) or "Next →" (noi). #}
-        <div id="proforma-block" {% if _im != 'revenue_opex' %}style="display:none"{% endif %}>
-          <div class="section-label">Operating Pro Forma (optional)</div>
-          <label class="proforma-zone" id="proforma-zone"
-                 ondragover="onProformaDragOver(event)"
-                 ondragleave="onProformaDragLeave(event)"
-                 ondrop="onProformaDrop(event)">
-            <div class="proforma-zone-title">Drag a pro forma here or click to choose a file</div>
-            <div class="proforma-zone-hint">PDF, XLS, XLSX — we'll parse Revenue / OpEx into the model. Skip to enter values by hand.</div>
-            <input type="file" id="proforma-file" name="file" accept=".pdf,.xls,.xlsx" onchange="onProformaFile(this)">
-            <div id="proforma-pill" style="display:none">
-              <div class="proforma-file-pill"><span id="proforma-name"></span><a href="#" onclick="clearProformaFile(event)" style="color:var(--accent);text-decoration:none">✕</a></div>
-            </div>
-          </label>
-        </div>
-
       </div>
       <div class="wizard-footer">
         <a href="/deals/{{ model.deal_id }}" class="btn btn-ghost" style="font-size:12px;color:var(--text-muted)">✕ Cancel</a>
@@ -414,7 +408,16 @@
     {# ════════════════════════════════════════════════════════════════ STEP 2 — Debt Selection #}
     {% elif _step == 2 %}
     {%- set _svd = source_vehicles_debt | default([]) -%}
-    {%- set _DEBT_CARDS = [
+    {# Phase-gate map: card is hidden when its required phase is absent from the
+       timeline. Cards without an entry are always shown (acquisition / bridge /
+       permanent). Recomputed on every GET — milestones are source of truth. #}
+    {%- set _phases_present = phases_present | default([]) -%}
+    {%- set _DEBT_CARD_PHASE = {
+        'pre_development_loan': 'pre_development',
+        'construction_loan':    'construction',
+        'construction_to_perm': 'construction',
+    } -%}
+    {%- set _DEBT_CARDS_ALL = [
       ('acquisition_loan',     'Acquisition Loan',       'Funds the property purchase and acquisition costs at Close. Sized by LTV on acquisition phase costs.'),
       ('pre_development_loan', 'Pre-Development Loan',   'Short-term financing for entitlements, design, and due diligence before closing. Retired at Close.'),
       ('bridge',               'Bridge Loan',            'Short-term catch-all financing that bridges two longer-term arrangements. Retired by permanent debt at stabilization.'),
@@ -422,6 +425,13 @@
       ('construction_to_perm', 'Construction-to-Perm',   'One loan (e.g. a municipal bond) funds construction and converts to permanent debt at CO. Cannot be combined with separate Construction + Permanent.'),
       ('permanent_debt',       'Permanent Debt',         'Long-term amortizing loan. Gap-fills to Total Project Cost. Extends in perpetuity through the hold period.'),
     ] -%}
+    {%- set _DEBT_CARDS = [] -%}
+    {%- for _ft, _ft_label, _ft_desc in _DEBT_CARDS_ALL -%}
+      {%- set _req_phase = _DEBT_CARD_PHASE.get(_ft) -%}
+      {%- if (not _req_phase) or (_req_phase in _phases_present) -%}
+        {%- set _ = _DEBT_CARDS.append((_ft, _ft_label, _ft_desc)) -%}
+      {%- endif -%}
+    {%- endfor -%}
     <div class="wizard-header">
       <div class="wizard-title">Debt Stack</div>
       <div class="wizard-subtitle">Which debt instruments will be used in this deal? Select all that apply. Pick a Source Vehicle to inherit rate/term/sizing and skip the next three steps.</div>
