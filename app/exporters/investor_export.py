@@ -1383,15 +1383,16 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
     # rather than showing multiples against a near-zero denominator.
     _disc_rate = _coerce_decimal(ctx.get("discount_rate_pct") or Decimal("8.0"))
     _equity_req = _coerce_decimal(totals.get("equity_required") or 0)
-    equity_multiple = _combined_em(rollup_waterfall, capital_modules)
-    if equity_multiple is None and _equity_req > Decimal(1):
-        _raw_em = _coerce_decimal(totals.get("combined_em_x") or 0)
-        equity_multiple = _raw_em if _raw_em > 0 else None
+    # Formula-conversion plan §4.3 (commit 8): EM is now a SUMIF over the
+    # Underwriting Cash Flow levered row — positive flows are distributions,
+    # negative flows are equity calls. LP edits to NOI, debt service, or
+    # capital events on the upstream cells re-derive EM via Excel's calc
+    # engine. IFERROR guards the zero-equity / degenerate case.
     _kv_row_optional(
         ws, row, "Combined Equity Multiple",
-        equity_multiple,
+        '=IFERROR(SUMIF(r_uw_cf_levered,">0")/(-SUMIF(r_uw_cf_levered,"<0")),0)',
         name="s_combined_equity_multiple", registry=registry,
-        fmt="0.00\\x", hero=True,
+        fmt='0.00"×"', hero=True,
     ); row += 1
     w_em = _weighted_em_calc(rollup_waterfall, capital_modules, _equity_req, _disc_rate)
     _kv_row_optional(
@@ -3018,12 +3019,24 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
         name="s_returns_combined_irr", registry=registry, fmt=PCT,
     ); cur_row += 1
 
-    em_raw = _coerce_decimal(totals.get("combined_em_x") or 0)
-    kv_row(
-        ws, cur_row, "Combined Equity Multiple (scenario)",
-        (em_raw if em_raw > 0 else None) if _has_real_equity else None,
-        name="s_returns_combined_em", registry=registry, fmt='0.00"×"',
-    ); cur_row += 1
+    # Formula-conversion plan §4.3 (commit 8): EM is now a SUMIF over the
+    # Underwriting Cash Flow levered row so it tracks LP edits to upstream
+    # NOI / DS / capital events. When the scenario has no real equity
+    # stack, the formula resolves to 0 via IFERROR — but we keep the cell
+    # blank in that case to match the prior em-dash semantics.
+    if _has_real_equity:
+        kv_row(
+            ws, cur_row, "Combined Equity Multiple (scenario)",
+            '=IFERROR(SUMIF(r_uw_cf_levered,">0")/(-SUMIF(r_uw_cf_levered,"<0")),0)',
+            name="s_returns_combined_em", registry=registry, fmt='0.00"×"',
+        )
+    else:
+        kv_row(
+            ws, cur_row, "Combined Equity Multiple (scenario)",
+            None,
+            name="s_returns_combined_em", registry=registry, fmt='0.00"×"',
+        )
+    cur_row += 1
 
     by_tier = _waterfall_by_tier(rollup)
     pref_total = by_tier.get("pref_return", {}).get("cash_total", Decimal(0))
