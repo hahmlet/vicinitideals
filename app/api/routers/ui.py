@@ -11578,16 +11578,11 @@ async def proforma_confirm(
 
     await session.commit()
 
-    return templates.TemplateResponse(
-        request,
-        "partials/deal_setup_wizard.html",
-        {
-            "model_id": model_id,
-            "step": 2,
-            "inputs": inputs,
-            "model": deal_model,
-            "flash": "Revenue and expenses imported successfully.",
-        },
+    # Re-enter the wizard at Step 2 via the canonical GET handler so the full
+    # context (source_vehicles_debt, phases_present, review_back_step, etc.)
+    # is populated — without it the Source Vehicle dropdowns never render.
+    return await deal_setup_wizard_get(
+        request=request, model_id=model_id, session=session, step=2,
     )
 
 
@@ -11598,26 +11593,10 @@ async def proforma_skip(
     session: DBSession,
 ) -> HTMLResponse:
     """Skip pro forma import — advance wizard to Step 2 (debt types)."""
-    deal_model = await session.get(DealModel, model_id)
-    if not deal_model:
-        raise HTTPException(status_code=404, detail="Deal model not found")
-
-    skip_project = (await session.execute(
-        select(Project).where(Project.scenario_id == model_id).order_by(Project.created_at).limit(1)
-    )).scalar_one_or_none()
-    skip_inputs = (await session.execute(
-        select(OperationalInputs).where(OperationalInputs.project_id == skip_project.id)
-    )).scalar_one_or_none() if skip_project else None
-
-    return templates.TemplateResponse(
-        request,
-        "partials/deal_setup_wizard.html",
-        {
-            "model_id": model_id,
-            "step": 2,
-            "inputs": skip_inputs,
-            "model": deal_model,
-        },
+    # Delegate to the canonical GET so source_vehicles_debt et al. are
+    # populated (needed for the Source Vehicle dropdown on each debt card).
+    return await deal_setup_wizard_get(
+        request=request, model_id=model_id, session=session, step=2,
     )
 
 
