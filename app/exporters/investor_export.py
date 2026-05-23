@@ -2023,6 +2023,9 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
         # and applied to the operand field's cell on this same row block.
         "effective_gross_income": ("+gross_revenue", "+vacancy_loss"),
         "noi": ("+effective_gross_income", "-operating_expenses"),
+        # Phase E: Net Cash Flow is derived so the new Debt Service formula
+        # propagates through to the LP's bottom-line cash row.
+        "net_cash_flow": ("+noi", "-debt_service"),
     }
     # Phase B: rows whose Y_n>=2 values are a growth-rate chain on the
     # prior year. Y0/Y1 stay as engine-computed seed values; Y2+ become
@@ -2034,6 +2037,28 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
         "operating_expenses": "s_opex_growth_rate",
         "capex_reserve": "s_opex_growth_rate",
     }
+    # Phase E: Debt Service Y1+ becomes ``=SUM(s_loan_{i}_annual_pi, ...)``
+    # over the PMT-eligible loan named ranges so an LP changing principal
+    # or rate on the Debt Schedule sees the Pro Forma debt service flow.
+    # Only meaningful when the profile renders Debt Schedule AND at least
+    # one ``pi``-carry loan with rate + principal exists. Y0 stays at the
+    # engine value (construction-phase debt service often differs from the
+    # stabilized PMT). Approximation caveat: assumes the PMT loans are
+    # active in every year of the chain — fine for the common
+    # single-perm-debt stack; over-states debt service in years where a
+    # perm loan hasn't funded yet on a construction-to-perm stack.
+    _capital_modules: list[CapitalModule] = ctx["capital_modules"]
+    _profile = ctx.get("_profile")
+    _pmt_indices = (
+        _pmt_loan_indices(_capital_modules)
+        if _profile in {"internal", "lender"}
+        else []
+    )
+    _debt_service_formula = (
+        "=" + "+".join(f"s_loan_{i}_annual_pi" for i in _pmt_indices)
+        if _pmt_indices
+        else None
+    )
     # Track each engine-value row's coord so derived formulas can reference
     # the actual cells. col=2 is Y0; each year_cols entry adds one column.
     field_row: dict[str, int] = {}
@@ -2071,6 +2096,16 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
                         row=cur_row, column=col_idx,
                         value=_to_excel_number(value),
                     )
+            elif (
+                field == "debt_service"
+                and _debt_service_formula is not None
+                and col_offset >= 1
+            ):
+                # Phase E: Y1+ debt service = SUM of per-loan annual P&I
+                # named ranges (registered on the Debt Schedule sheet).
+                cell = ws.cell(
+                    row=cur_row, column=col_idx, value=_debt_service_formula,
+                )
             elif growth_name and col_offset >= 2:
                 # Y2+ for growth-chain fields: reference the prior-year
                 # cell on the same row and multiply by (1 + growth). Y0
@@ -4249,6 +4284,35 @@ def _build_debt_schedule(ws, registry: CellRegistry, ctx: dict) -> None:
     print_landscape(ws)
 
 
+def _pmt_loan_indices(capital_modules: list[CapitalModule]) -> list[int]:
+    """1-based indices of debt modules whose Annual P&I cell on the Debt
+    Schedule is a PMT formula (carry_type == 'pi', rate + principal +
+    amort all set). Enumeration order matches ``_build_debt_schedule``'s
+    ``enumerate(debt_modules, start=1)`` so the returned ints align with
+    the ``s_loan_{n}_annual_pi`` named ranges that sheet registers.
+
+    Used by ``_build_uw_proforma`` to emit the Pro Forma Debt Service
+    row as a SUM over those names so an LP editing rate or principal on
+    the Debt Schedule sees the Pro Forma debt service shift in lock-step.
+    """
+    out: list[int] = []
+    debt_modules = [m for m in capital_modules if _funder_class(m) == "Debt"]
+    for m_idx, module in enumerate(debt_modules, start=1):
+        source = module.source or {}
+        carry = module.carry or {}
+        principal = _coerce_decimal(source.get("amount") or 0) or Decimal(0)
+        rate_raw = source.get("interest_rate_pct") or carry.get("io_rate_pct") or 0
+        amort_years = source.get("amort_term_years") or 0
+        if (
+            _resolve_carry_type(carry) == "pi"
+            and rate_raw
+            and principal > 0
+            and amort_years
+        ):
+            out.append(m_idx)
+    return out
+
+
 def _resolve_carry_type(carry: dict) -> str:
     """Best-effort carry-type read from the carry JSON. Mirrors what the
     cashflow engine does (`_carry_type_for_phase`) but simpler — just pulls
@@ -5290,6 +5354,9 @@ def _write_pf_table(
     _DERIVED_FORMULA_FIELDS: dict[str, tuple[str, ...]] = {
         "effective_gross_income": ("+gross_revenue", "+vacancy_loss"),
         "noi": ("+effective_gross_income", "-operating_expenses", "-capex_reserve"),
+        # Parity with _build_uw_proforma Phase E: NCF derived from NOI and
+        # Debt Service so any future Debt Service formula flows through.
+        "net_cash_flow": ("+noi", "-debt_service"),
     }
     # Phase A/B: gross revenue grows off Y1 via ``s_revenue_growth_rate``;
     # OpEx + CapEx Reserve via ``s_opex_growth_rate``.
