@@ -229,6 +229,64 @@ async def test_preflight_empty_file_returns_400(client):
     assert resp.status_code == 400
 
 
+@pytest.mark.integration
+async def test_preflight_writes_scenario_resume_keys(client, redis_store):
+    """Preflight stores the file hash and filename keyed by scenario so the
+    wizard's Step-2 Back can resume on the review page."""
+    model_id = uuid4()
+    xlsx_bytes = _minimal_xlsx_bytes()
+    expected_hash = hashlib.sha256(xlsx_bytes).hexdigest()
+    expected_filename = "rentroll.xlsx"
+
+    resp = await client.post(
+        f"/ui/models/{model_id}/proforma-preflight",
+        files={"file": (expected_filename, xlsx_bytes, "application/octet-stream")},
+    )
+    assert resp.status_code == 200
+
+    hash_key = f"scenario:{model_id}:last_proforma_hash"
+    name_key = f"scenario:{model_id}:last_proforma_filename"
+    assert hash_key in redis_store
+    assert name_key in redis_store
+    stored_hash = redis_store[hash_key]
+    stored_name = redis_store[name_key]
+    if isinstance(stored_hash, (bytes, bytearray)):
+        stored_hash = stored_hash.decode()
+    if isinstance(stored_name, (bytes, bytearray)):
+        stored_name = stored_name.decode()
+    assert stored_hash == expected_hash
+    assert stored_name == expected_filename
+
+
+# ---------------------------------------------------------------------------
+# proforma-resume
+# ---------------------------------------------------------------------------
+
+@pytest.mark.integration
+async def test_resume_renders_review_when_cache_hit(client, redis_store):
+    """Step-2 Back: with a cached parse result still in Redis, resume renders
+    the review template with the cache banner instead of bouncing to upload."""
+    model_id = uuid4()
+    file_hash = "b" * 64
+    cached = {
+        "unit_types": [{"name": "1BR", "count": 8, "avg_sqft": 650, "avg_monthly_rent": 1400, "confidence": 0.9}],
+        "expense_lines": [],
+        "warnings": [],
+    }
+    redis_store[f"scenario:{model_id}:last_proforma_hash"] = file_hash.encode()
+    redis_store[f"scenario:{model_id}:last_proforma_filename"] = b"r.xlsx"
+    redis_store[f"proforma:filehash:{file_hash}:result"] = json.dumps(cached).encode()
+    redis_store[f"proforma:filehash:{file_hash}:parsed_at"] = b"2026-05-22T10:00:00Z"
+
+    resp = await client.get(f"/ui/models/{model_id}/proforma-resume")
+    assert resp.status_code == 200
+    body = resp.text
+    assert "proforma-confirm" in body
+    assert "Cached result" in body
+    assert file_hash in body
+    assert "r.xlsx" in body
+
+
 # ---------------------------------------------------------------------------
 # proforma-reanalyze
 # ---------------------------------------------------------------------------

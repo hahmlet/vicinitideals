@@ -11165,11 +11165,17 @@ async def _dispatch_proforma_preflight(
 
     task_id = str(_uuid_mod.uuid4())
     import redis as _redis  # type: ignore
+    _RESUME_TTL = 7 * 86_400
     r = _redis.from_url(settings.redis_url, decode_responses=False)
     r.set(f"proforma:{task_id}:file", content, ex=86_400)
     r.set(f"proforma:{task_id}:filename", filename, ex=86_400)
     r.set(f"proforma:{task_id}:kind", file_kind, ex=86_400)
     r.set(f"proforma:{task_id}:file_hash", file_hash, ex=86_400)
+    # Track the most-recent proforma hash + filename per scenario so the
+    # wizard's Step 2 "Back" can resume on the review page instead of
+    # forcing a re-upload. 7d TTL matches the cache TTL.
+    r.set(f"scenario:{model_id}:last_proforma_hash", file_hash.encode(), ex=_RESUME_TTL)
+    r.set(f"scenario:{model_id}:last_proforma_filename", filename.encode(), ex=_RESUME_TTL)
 
     # ── Content-hash cache check ───────────────────────────────────────────
     # Cache hit: skip the LLM call and render the review page directly with
@@ -11252,6 +11258,56 @@ async def proforma_restart(
     """Return the wizard at Step 1 so the user can upload a different file
     (or pick a different income mode). Re-uses the GET /setup handler so the
     full context (inputs, vehicles, phases) is populated."""
+    return await deal_setup_wizard_get(
+        request=request, model_id=model_id, session=session, step=1,
+    )
+
+
+@router.get("/ui/models/{model_id}/proforma-resume", response_class=HTMLResponse)
+async def proforma_resume(
+    request: Request,
+    model_id: UUID,
+    session: DBSession,
+) -> HTMLResponse:
+    """Wizard Step-2 "Back" target. If the scenario has a recent proforma
+    import whose parse result is still cached, re-render the review page
+    so the user can adjust line items without re-uploading. Falls back to
+    Step 1 (upload UI) when nothing is cached."""
+    import redis as _redis  # type: ignore
+
+    r = _redis.from_url(settings.redis_url, decode_responses=True)
+    file_hash = r.get(f"scenario:{model_id}:last_proforma_hash")
+    if file_hash:
+        cached_raw = r.get(f"proforma:filehash:{file_hash}:result")
+        if cached_raw:
+            try:
+                result = json.loads(cached_raw)
+            except Exception:
+                result = None
+            if result is not None:
+                filename = r.get(f"scenario:{model_id}:last_proforma_filename") or ""
+                parsed_at = r.get(f"proforma:filehash:{file_hash}:parsed_at") or ""
+                # Synthetic task_id — re-analyze/purge routes will gracefully
+                # handle missing file bytes (24h task TTL vs 7d hash TTL).
+                resume_task_id = str(_uuid_mod.uuid4())
+                r.set(f"proforma:{resume_task_id}:result", cached_raw, ex=86_400)
+                return templates.TemplateResponse(
+                    request,
+                    "partials/proforma_review.html",
+                    {
+                        "model_id": model_id,
+                        "task_id": resume_task_id,
+                        "unit_types": result.get("unit_types", []),
+                        "expense_lines": result.get("expense_lines", []),
+                        "warnings": result.get("warnings", []),
+                        "STANDARD_OPEX_CATEGORIES": STANDARD_OPEX_CATEGORIES,
+                        "from_cache": True,
+                        "file_hash": file_hash,
+                        "filename": filename,
+                        "parsed_at": parsed_at,
+                    },
+                )
+
     return await deal_setup_wizard_get(
         request=request, model_id=model_id, session=session, step=1,
     )
