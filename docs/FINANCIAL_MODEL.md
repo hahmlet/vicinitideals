@@ -3040,6 +3040,36 @@ These cells expose each project's phase boundaries as 1-based absolute month ind
 | **Excel Notes** | Distinct from `p<n>_timeline_months` (which is the engine's `OperationalOutputs.total_timeline_months`). The two should match in steady state; divergence indicates either a milestone override or a zero-duration phase that was dropped. |
 | **Refs** | [Phase Duration Months](#phase-duration-months) |
 
+#### F.1.9 Construction-to-Perm Status (per-loan)
+
+First slice of construction-to-perm formula gating. The Debt Schedule's "Construction-to-Perm Status" sub-section emits one row per debt module that funds at least one project with a registered perm-origination month. Each row's two formula cells let an LP see, at a glance, which loans cross the construction-to-perm boundary and whether their active term extends past it.
+
+Rendered by `app/exporters/investor_export.py:_build_c2p_status_block`. Skipped entirely for single-project workbooks (per-project sheets don't render, so the `p<n>_perm_origination_month` cells don't exist).
+
+##### Loan Perm Origination Month
+
+| Field | Value |
+|---|---|
+| **Definition** | Per-loan scalar: the month a construction-to-perm loan's permanent tranche would originate. For multi-project loans, the latest perm origination across funded projects (most conservative — "by this month, all funded projects are post-construction"). |
+| **Named Range** | `s_loan_<n>_perm_origination_month` |
+| **App Calc/Use** | `_build_c2p_status_block` walks the `capital_module_projects` junction to find each loan's funded projects, then writes a formula referencing those projects' `p<idx>_perm_origination_month` cells. |
+| **App Notes** | Engine-side, the loan's actual perm switch is governed by `carry.schedule` phases (per `_carry_type_for_phase`). This cell is the formula-side mirror — they should match for well-formed loans, but the engine value is authoritative when they disagree. |
+| **Excel Formula** | `=IFERROR(MAX(p<idx1>_perm_origination_month, p<idx2>_perm_origination_month, ...), "")` |
+| **Excel Notes** | Wrapped in `IFERROR` so the cell renders blank rather than `#NAME?` when none of the funded projects have a registered perm cell (e.g. all funded projects are pure-hold acquisition). |
+| **Refs** | [Perm Origination Month](#perm-origination-month), [Loan Active in Operations](#loan-active-in-operations), [s_loan_n_perm_origination_month](#loan-perm-origination-month) |
+
+##### Loan Active in Operations
+
+| Field | Value |
+|---|---|
+| **Definition** | Per-loan boolean: TRUE iff the loan's active term extends past perm origination — i.e. the loan's operations-phase carry ever applies in-model. |
+| **Named Range** | `s_loan_<n>_active_in_operations` |
+| **App Calc/Use** | `_build_c2p_status_block` writes the formula on the same row as the perm-origination cell. Term-months comes from the existing `s_loan_<n>_term_months` cell (registered by `_build_debt_schedule`'s Loan Summary section). |
+| **App Notes** | Returns `FALSE` (not `#N/A` or blank) when either input is missing — keeps the section readable in scenarios where one input didn't get a registered cell. |
+| **Excel Formula** | `=IFERROR(IF(AND(ISNUMBER(s_loan_n_term_months),ISNUMBER(s_loan_n_perm_origination_month),s_loan_n_term_months>=s_loan_n_perm_origination_month),TRUE,FALSE),FALSE)` |
+| **Excel Notes** | `AND(ISNUMBER(...))` guards keep the boolean from returning TRUE when either input is the empty-string `IFERROR` fallback from [Loan Perm Origination Month](#loan-perm-origination-month). |
+| **Refs** | [Loan Perm Origination Month](#loan-perm-origination-month), [s_loan_n_perm_origination_month](#loan-perm-origination-month), [s_loan_n_term_months](#loan-summary), [s_loan_n_active_in_operations](#loan-active-in-operations) |
+
 ### F.2 Defined-name conventions
 
 - `s_*` — single scalar (one cell). E.g. `s_combined_noi`, `s_revenue_growth_rate`, `s_loan_3_annual_pi`.
