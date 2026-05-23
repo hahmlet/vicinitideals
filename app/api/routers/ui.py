@@ -11092,58 +11092,16 @@ async def download_import_template(model_id: UUID) -> StreamingResponse:
 # Pro forma import — preflight, upload, status, confirm, skip
 # ---------------------------------------------------------------------------
 
-async def _dispatch_proforma_preflight(
-    *,
+def _render_proforma_sheet_picker(
     request: Request,
     model_id: UUID,
-    upload: UploadFile,
+    task_id: str,
+    content: bytes,
 ) -> HTMLResponse:
-    """Stash the uploaded pro forma in redis, then return either the sheet
-    picker (for .xlsx) or the parse-progress poller (for PDF/DOCX/HTML).
-
-    Extracted helper so both the dedicated POST route and the Step 1 wizard
-    handler can dispatch the same flow when a file rides along with the
-    income-mode form.
-    """
+    """Read sheet names + first-row columns from xlsx bytes and return the
+    sheet-picker fragment. Shared by the preflight dispatch and the
+    reanalyze flow (which reuses bytes already in Redis)."""
     import openpyxl
-    import os as _os
-
-    content = await upload.read()
-    if not content:
-        return HTMLResponse("<p class='text-red-500'>Empty file uploaded.</p>", status_code=400)
-
-    filename = upload.filename or ""
-    ext = _os.path.splitext(filename)[1].lower().lstrip(".")
-    file_kind = "xlsx" if ext in {"xlsx", "xlsm", "xlsb"} else "doc"
-
-    task_id = str(_uuid_mod.uuid4())
-    import redis as _redis  # type: ignore
-    r = _redis.from_url(settings.redis_url, decode_responses=False)
-    r.set(f"proforma:{task_id}:file", content, ex=86_400)
-    r.set(f"proforma:{task_id}:filename", filename, ex=86_400)
-    r.set(f"proforma:{task_id}:kind", file_kind, ex=86_400)
-
-    if file_kind == "doc":
-        # No sheets to pick — queue the task immediately and return the
-        # progress poller. MarkitDown will convert the whole document.
-        from app.tasks.proforma_parse import PARSE_PROFORMA_TASK
-        from app.tasks.celery_app import celery_app as _celery
-        _celery.send_task(
-            PARSE_PROFORMA_TASK,
-            kwargs={
-                "task_id": task_id,
-                "model_id": str(model_id),
-                "revenue_sheet": "",
-                "opex_sheet": "",
-                "property_column": None,
-                "file_kind": "doc",
-            },
-        )
-        return templates.TemplateResponse(
-            request,
-            "partials/proforma_progress.html",
-            {"model_id": model_id, "task_id": task_id},
-        )
 
     try:
         wb = openpyxl.load_workbook(io.BytesIO(content), data_only=True, read_only=True)
@@ -11176,6 +11134,94 @@ async def _dispatch_proforma_preflight(
     )
 
 
+async def _dispatch_proforma_preflight(
+    *,
+    request: Request,
+    model_id: UUID,
+    upload: UploadFile,
+) -> HTMLResponse:
+    """Stash the uploaded pro forma in redis, then return either the sheet
+    picker (for .xlsx) or the parse-progress poller (for PDF/DOCX/HTML).
+
+    Extracted helper so both the dedicated POST route and the Step 1 wizard
+    handler can dispatch the same flow when a file rides along with the
+    income-mode form.
+
+    Computes SHA-256 of the file bytes. If a parse result already lives in
+    Redis under ``proforma:filehash:{hash}:result`` (7-day TTL), returns the
+    cache-hit fragment so the user can skip the LLM call.
+    """
+    import hashlib
+    import os as _os
+
+    content = await upload.read()
+    if not content:
+        return HTMLResponse("<p class='text-red-500'>Empty file uploaded.</p>", status_code=400)
+
+    filename = upload.filename or ""
+    ext = _os.path.splitext(filename)[1].lower().lstrip(".")
+    file_kind = "xlsx" if ext in {"xlsx", "xlsm", "xlsb"} else "doc"
+    file_hash = hashlib.sha256(content).hexdigest()
+
+    task_id = str(_uuid_mod.uuid4())
+    import redis as _redis  # type: ignore
+    r = _redis.from_url(settings.redis_url, decode_responses=False)
+    r.set(f"proforma:{task_id}:file", content, ex=86_400)
+    r.set(f"proforma:{task_id}:filename", filename, ex=86_400)
+    r.set(f"proforma:{task_id}:kind", file_kind, ex=86_400)
+    r.set(f"proforma:{task_id}:file_hash", file_hash, ex=86_400)
+
+    # ── Content-hash cache check ───────────────────────────────────────────
+    r_str = _redis.from_url(settings.redis_url, decode_responses=True)
+    cached_raw = r_str.get(f"proforma:filehash:{file_hash}:result")
+    if cached_raw:
+        try:
+            cached_result = json.loads(cached_raw)
+        except Exception:
+            cached_result = None
+        if cached_result is not None:
+            parsed_at = r_str.get(f"proforma:filehash:{file_hash}:parsed_at") or ""
+            return templates.TemplateResponse(
+                request,
+                "partials/proforma_preflight_cached.html",
+                {
+                    "model_id": model_id,
+                    "task_id": task_id,
+                    "file_hash": file_hash,
+                    "file_kind": file_kind,
+                    "filename": filename,
+                    "parsed_at": parsed_at,
+                    "unit_type_count": len(cached_result.get("unit_types", [])),
+                    "expense_line_count": len(cached_result.get("expense_lines", [])),
+                    "warning_count": len(cached_result.get("warnings", [])),
+                },
+            )
+
+    if file_kind == "doc":
+        # No sheets to pick — queue the task immediately and return the
+        # progress poller. MarkitDown will convert the whole document.
+        from app.tasks.proforma_parse import PARSE_PROFORMA_TASK
+        from app.tasks.celery_app import celery_app as _celery
+        _celery.send_task(
+            PARSE_PROFORMA_TASK,
+            kwargs={
+                "task_id": task_id,
+                "model_id": str(model_id),
+                "revenue_sheet": "",
+                "opex_sheet": "",
+                "property_column": None,
+                "file_kind": "doc",
+            },
+        )
+        return templates.TemplateResponse(
+            request,
+            "partials/proforma_progress.html",
+            {"model_id": model_id, "task_id": task_id},
+        )
+
+    return _render_proforma_sheet_picker(request, model_id, task_id, content)
+
+
 @router.post("/ui/models/{model_id}/proforma-preflight", response_class=HTMLResponse)
 async def proforma_preflight(
     request: Request,
@@ -11198,6 +11244,127 @@ async def proforma_restart(request: Request, model_id: UUID) -> HTMLResponse:
         "partials/proforma_upload_step.html",
         {"model_id": model_id},
     )
+
+
+def _render_proforma_reanalyze(
+    request: Request,
+    model_id: UUID,
+    task_id: str,
+) -> HTMLResponse:
+    """Run a fresh parse for an already-uploaded file (bytes still in Redis).
+
+    For xlsx files, returns the sheet picker so the user can pick sheets again.
+    For doc files (PDF/DOCX/etc.), queues the Celery task immediately and
+    returns the progress poller.
+    """
+    import redis as _redis  # type: ignore
+
+    r = _redis.from_url(settings.redis_url, decode_responses=False)
+    file_bytes = r.get(f"proforma:{task_id}:file")
+    if not file_bytes:
+        return HTMLResponse(
+            "<p class='text-red-500'>Upload expired. Please re-upload the file.</p>",
+            status_code=410,
+        )
+
+    kind_raw = r.get(f"proforma:{task_id}:kind") or b"xlsx"
+    file_kind = kind_raw.decode() if isinstance(kind_raw, bytes) else str(kind_raw)
+
+    if file_kind == "doc":
+        from app.tasks.proforma_parse import PARSE_PROFORMA_TASK
+        from app.tasks.celery_app import celery_app as _celery
+        _celery.send_task(
+            PARSE_PROFORMA_TASK,
+            kwargs={
+                "task_id": task_id,
+                "model_id": str(model_id),
+                "revenue_sheet": "",
+                "opex_sheet": "",
+                "property_column": None,
+                "file_kind": "doc",
+            },
+        )
+        return templates.TemplateResponse(
+            request,
+            "partials/proforma_progress.html",
+            {"model_id": model_id, "task_id": task_id},
+        )
+
+    return _render_proforma_sheet_picker(request, model_id, task_id, file_bytes)
+
+
+@router.post("/ui/models/{model_id}/proforma-use-cached", response_class=HTMLResponse)
+async def proforma_use_cached(
+    request: Request,
+    model_id: UUID,
+    task_id: str = Form(...),
+    file_hash: str = Form(...),
+) -> HTMLResponse:
+    """Skip the Celery parse — render the review template directly from the
+    content-hash cache. Mirrors the cached result to the task-keyed result
+    key so downstream routes that read by task_id continue to work."""
+    import redis as _redis  # type: ignore
+
+    if not file_hash or len(file_hash) != 64:
+        return HTMLResponse("<p class='text-red-500'>Invalid cache reference.</p>", status_code=400)
+
+    r = _redis.from_url(settings.redis_url, decode_responses=True)
+    raw = r.get(f"proforma:filehash:{file_hash}:result")
+    if not raw:
+        return HTMLResponse(
+            "<p class='text-red-500'>Cached result has expired. Please re-analyze.</p>",
+            status_code=410,
+        )
+
+    try:
+        result = json.loads(raw)
+    except Exception:
+        return HTMLResponse("<p class='text-red-500'>Cached result corrupted.</p>", status_code=500)
+
+    # Mirror to task-keyed result so /proforma-confirm (reads by task_id) works
+    r.set(f"proforma:{task_id}:result", raw, ex=86_400)
+
+    return templates.TemplateResponse(
+        request,
+        "partials/proforma_review.html",
+        {
+            "model_id": model_id,
+            "task_id": task_id,
+            "unit_types": result.get("unit_types", []),
+            "expense_lines": result.get("expense_lines", []),
+            "warnings": result.get("warnings", []),
+            "STANDARD_OPEX_CATEGORIES": STANDARD_OPEX_CATEGORIES,
+        },
+    )
+
+
+@router.post("/ui/models/{model_id}/proforma-reanalyze", response_class=HTMLResponse)
+async def proforma_reanalyze(
+    request: Request,
+    model_id: UUID,
+    task_id: str = Form(...),
+) -> HTMLResponse:
+    """Skip the cache and run a fresh parse. Cache is left intact (use
+    /proforma-purge-cache to delete the cached result)."""
+    return _render_proforma_reanalyze(request, model_id, task_id)
+
+
+@router.post("/ui/models/{model_id}/proforma-purge-cache", response_class=HTMLResponse)
+async def proforma_purge_cache(
+    request: Request,
+    model_id: UUID,
+    task_id: str = Form(...),
+    file_hash: str = Form(...),
+) -> HTMLResponse:
+    """Delete the content-hash cache entry, then trigger a fresh parse."""
+    import redis as _redis  # type: ignore
+
+    if file_hash and len(file_hash) == 64:
+        r = _redis.from_url(settings.redis_url, decode_responses=True)
+        r.delete(f"proforma:filehash:{file_hash}:result")
+        r.delete(f"proforma:filehash:{file_hash}:parsed_at")
+
+    return _render_proforma_reanalyze(request, model_id, task_id)
 
 
 @router.post("/ui/models/{model_id}/upload-proforma", response_class=HTMLResponse)
