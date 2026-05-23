@@ -11172,6 +11172,9 @@ async def _dispatch_proforma_preflight(
     r.set(f"proforma:{task_id}:file_hash", file_hash, ex=86_400)
 
     # ── Content-hash cache check ───────────────────────────────────────────
+    # Cache hit: skip the LLM call and render the review page directly with
+    # cached data. A banner on the review page surfaces the cache origin and
+    # re-analyze/purge actions.
     r_str = _redis.from_url(settings.redis_url, decode_responses=True)
     cached_raw = r_str.get(f"proforma:filehash:{file_hash}:result")
     if cached_raw:
@@ -11181,19 +11184,23 @@ async def _dispatch_proforma_preflight(
             cached_result = None
         if cached_result is not None:
             parsed_at = r_str.get(f"proforma:filehash:{file_hash}:parsed_at") or ""
+            # Mirror cached result to task-keyed key so /proforma-confirm
+            # (reads by task_id) finds it.
+            r_str.set(f"proforma:{task_id}:result", cached_raw, ex=86_400)
             return templates.TemplateResponse(
                 request,
-                "partials/proforma_preflight_cached.html",
+                "partials/proforma_review.html",
                 {
                     "model_id": model_id,
                     "task_id": task_id,
+                    "unit_types": cached_result.get("unit_types", []),
+                    "expense_lines": cached_result.get("expense_lines", []),
+                    "warnings": cached_result.get("warnings", []),
+                    "STANDARD_OPEX_CATEGORIES": STANDARD_OPEX_CATEGORIES,
+                    "from_cache": True,
                     "file_hash": file_hash,
-                    "file_kind": file_kind,
                     "filename": filename,
                     "parsed_at": parsed_at,
-                    "unit_type_count": len(cached_result.get("unit_types", [])),
-                    "expense_line_count": len(cached_result.get("expense_lines", [])),
-                    "warning_count": len(cached_result.get("warnings", [])),
                 },
             )
 
@@ -11237,12 +11244,16 @@ async def proforma_preflight(
 
 
 @router.get("/ui/models/{model_id}/proforma-restart", response_class=HTMLResponse)
-async def proforma_restart(request: Request, model_id: UUID) -> HTMLResponse:
-    """Return the file upload step so the user can upload a different file."""
-    return templates.TemplateResponse(
-        request,
-        "partials/proforma_upload_step.html",
-        {"model_id": model_id},
+async def proforma_restart(
+    request: Request,
+    model_id: UUID,
+    session: DBSession,
+) -> HTMLResponse:
+    """Return the wizard at Step 1 so the user can upload a different file
+    (or pick a different income mode). Re-uses the GET /setup handler so the
+    full context (inputs, vehicles, phases) is populated."""
+    return await deal_setup_wizard_get(
+        request=request, model_id=model_id, session=session, step=1,
     )
 
 
@@ -11291,51 +11302,6 @@ def _render_proforma_reanalyze(
         )
 
     return _render_proforma_sheet_picker(request, model_id, task_id, file_bytes)
-
-
-@router.post("/ui/models/{model_id}/proforma-use-cached", response_class=HTMLResponse)
-async def proforma_use_cached(
-    request: Request,
-    model_id: UUID,
-    task_id: str = Form(...),
-    file_hash: str = Form(...),
-) -> HTMLResponse:
-    """Skip the Celery parse — render the review template directly from the
-    content-hash cache. Mirrors the cached result to the task-keyed result
-    key so downstream routes that read by task_id continue to work."""
-    import redis as _redis  # type: ignore
-
-    if not file_hash or len(file_hash) != 64:
-        return HTMLResponse("<p class='text-red-500'>Invalid cache reference.</p>", status_code=400)
-
-    r = _redis.from_url(settings.redis_url, decode_responses=True)
-    raw = r.get(f"proforma:filehash:{file_hash}:result")
-    if not raw:
-        return HTMLResponse(
-            "<p class='text-red-500'>Cached result has expired. Please re-analyze.</p>",
-            status_code=410,
-        )
-
-    try:
-        result = json.loads(raw)
-    except Exception:
-        return HTMLResponse("<p class='text-red-500'>Cached result corrupted.</p>", status_code=500)
-
-    # Mirror to task-keyed result so /proforma-confirm (reads by task_id) works
-    r.set(f"proforma:{task_id}:result", raw, ex=86_400)
-
-    return templates.TemplateResponse(
-        request,
-        "partials/proforma_review.html",
-        {
-            "model_id": model_id,
-            "task_id": task_id,
-            "unit_types": result.get("unit_types", []),
-            "expense_lines": result.get("expense_lines", []),
-            "warnings": result.get("warnings", []),
-            "STANDARD_OPEX_CATEGORIES": STANDARD_OPEX_CATEGORIES,
-        },
-    )
 
 
 @router.post("/ui/models/{model_id}/proforma-reanalyze", response_class=HTMLResponse)

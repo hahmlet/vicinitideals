@@ -1,10 +1,10 @@
 """Tests for the pro forma file content-hash cache routes.
 
-Covers preflight cache check, ``proforma-use-cached``,
-``proforma-reanalyze``, and ``proforma-purge-cache``. Redis is replaced by
-an in-memory stand-in so tests run without a live Redis. Celery's
-``send_task`` is stubbed so doc-kind reanalyze can be asserted without
-queuing real work.
+Covers preflight cache check (renders review template directly with cache
+banner), ``proforma-reanalyze``, and ``proforma-purge-cache``. Redis is
+replaced by an in-memory stand-in so tests run without a live Redis.
+Celery's ``send_task`` is stubbed so doc-kind reanalyze can be asserted
+without queuing real work.
 
 The routes under test do not touch the database, so this file builds its
 own ASGI client to avoid the conftest ``client`` fixture's
@@ -163,15 +163,17 @@ async def test_preflight_cache_miss_returns_sheet_picker(client):
 
 
 @pytest.mark.integration
-async def test_preflight_cache_hit_returns_cached_template(client, redis_store):
+async def test_preflight_cache_hit_renders_review_with_banner(client, redis_store):
+    """Cache hit skips the LLM call and renders the review template directly
+    with a banner exposing Re-analyze + Purge actions."""
     model_id = uuid4()
     xlsx_bytes = _minimal_xlsx_bytes()
     file_hash = hashlib.sha256(xlsx_bytes).hexdigest()
 
     cached = {
-        "unit_types": [{"name": "1BR"}],
-        "expense_lines": [{"label": "Insurance"}, {"label": "Taxes"}],
-        "warnings": ["one warning"],
+        "unit_types": [{"name": "1BR", "count": 10, "avg_sqft": 700, "avg_monthly_rent": 1500, "confidence": 0.9}],
+        "expense_lines": [],
+        "warnings": [],
     }
     redis_store[f"proforma:filehash:{file_hash}:result"] = json.dumps(cached).encode()
     redis_store[f"proforma:filehash:{file_hash}:parsed_at"] = b"2026-05-12T10:00:00Z"
@@ -182,12 +184,17 @@ async def test_preflight_cache_hit_returns_cached_template(client, redis_store):
     )
     assert resp.status_code == 200
     body = resp.text
-    assert "Use Cached Result" in body
+    # Review template (not the standalone cache prompt) — confirm form present
+    assert "proforma-confirm" in body
+    # Cache banner copy
+    assert "Cached result" in body
     assert "Re-analyze" in body
-    # The hash and counts come through the template
+    assert "Purge cache" in body
+    # file_hash flows into purge form
     assert file_hash in body
-    assert "1" in body  # 1 unit type
-    assert "2" in body  # 2 expense lines
+    # Cached result is mirrored to the task-keyed key for downstream confirm
+    mirror_keys = [k for k in redis_store if k.endswith(":result") and not k.startswith("proforma:filehash:")]
+    assert len(mirror_keys) == 1
 
 
 @pytest.mark.integration
@@ -218,58 +225,6 @@ async def test_preflight_empty_file_returns_400(client):
     resp = await client.post(
         f"/ui/models/{model_id}/proforma-preflight",
         files={"file": ("p.xlsx", b"", "application/octet-stream")},
-    )
-    assert resp.status_code == 400
-
-
-# ---------------------------------------------------------------------------
-# proforma-use-cached
-# ---------------------------------------------------------------------------
-
-@pytest.mark.integration
-async def test_use_cached_renders_review_and_mirrors_task_key(client, redis_store):
-    model_id = uuid4()
-    task_id = str(uuid4())
-    file_hash = "a" * 64
-
-    cached = {
-        "unit_types": [{
-            "name": "1BR", "count": 10, "avg_sqft": 700,
-            "avg_monthly_rent": 1500, "confidence": 0.9,
-        }],
-        "expense_lines": [],
-        "warnings": [],
-    }
-    redis_store[f"proforma:filehash:{file_hash}:result"] = json.dumps(cached).encode()
-
-    resp = await client.post(
-        f"/ui/models/{model_id}/proforma-use-cached",
-        data={"task_id": task_id, "file_hash": file_hash},
-    )
-    assert resp.status_code == 200
-    # Review template renders with the confirm form
-    assert "proforma-confirm" in resp.text
-    # Mirrored to task-keyed result key for downstream confirm flow
-    assert f"proforma:{task_id}:result" in redis_store
-
-
-@pytest.mark.integration
-async def test_use_cached_returns_410_when_expired(client):
-    """If the cache key is gone (or never existed), respond 410 Gone."""
-    model_id = uuid4()
-    resp = await client.post(
-        f"/ui/models/{model_id}/proforma-use-cached",
-        data={"task_id": str(uuid4()), "file_hash": "f" * 64},
-    )
-    assert resp.status_code == 410
-
-
-@pytest.mark.integration
-async def test_use_cached_rejects_malformed_hash(client):
-    model_id = uuid4()
-    resp = await client.post(
-        f"/ui/models/{model_id}/proforma-use-cached",
-        data={"task_id": str(uuid4()), "file_hash": "too-short"},
     )
     assert resp.status_code == 400
 
