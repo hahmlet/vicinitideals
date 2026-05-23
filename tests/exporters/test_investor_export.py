@@ -105,6 +105,12 @@ _NON_METRIC_NAMES = frozenset({
     # Phase B follow-up: Y1 OpEx cell exposed as a defined name so the
     # S&U Operating Reserve UseLine formula resolves.
     "s_y1_opex",
+    # Graceful-degradation anchor date: editable as-of date for Y0; input,
+    # not a metric.
+    "s_anchor_date",
+    # Phase A follow-up: scenario-wide revenue-growth knob (Pro Forma's
+    # gross_revenue growth chain). Input, not a metric.
+    "s_revenue_growth_rate",
     # Per-project meta (header cells)
     "s_returns_combined_irr",  # alias for s_combined_irr
 })

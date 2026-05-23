@@ -4532,6 +4532,22 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
         _safe_decimal(default_inputs, "operation_reserve_months"),
         name="s_operating_reserve_months", registry=registry, fmt=INT_COMMA, style="input",
     ); row += 1
+    # Graceful-degradation anchor date: lets the LP overlay their own
+    # reporting calendar on the relative Y0/Y1/Y2 grid. Defaulted to the
+    # scenario's creation date (most useful "as-of" anchor for a fresh
+    # underwriting); downstream sheets can pick this up wherever calendar
+    # dating is needed (DCF dating, milestone date-stamping) in future
+    # phases. Today: input-only, no downstream wiring.
+    _anchor_default = (
+        scenario.created_at.date()
+        if scenario.created_at is not None
+        else None
+    )
+    kv_row(
+        ws, row, "Anchor Date (Y0 as-of)",
+        _anchor_default.isoformat() if _anchor_default else "—",
+        name="s_anchor_date", registry=registry, style="input",
+    ); row += 1
     kv_row(
         ws, row, "Initial Occupancy",
         _pct_value(default_inputs, "initial_occupancy_pct"),
