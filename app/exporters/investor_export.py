@@ -2056,11 +2056,26 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
         if _profile in {"internal", "lender"}
         else []
     )
-    _debt_service_formula = (
-        "=" + "+".join(f"s_loan_{i}_annual_pi" for i in _pmt_indices)
-        if _pmt_indices
-        else None
-    )
+    def _debt_service_formula_for_year(y: int) -> str | None:
+        """Per-year Debt Service SUM, gated by each loan's term_months.
+
+        For year Y (1-indexed), each loan contributes its annual P&I
+        only if its hold term covers the end of that year — i.e.
+        ``s_loan_{i}_term_months >= Y*12``. A 10-year hold loan drops
+        out of the SUM starting in Y11 instead of overstating debt
+        service forever. Loans whose term cell is em-dash / blank fail
+        the >= test silently and contribute 0, which is the safe
+        graceful-degradation outcome.
+        """
+        if not _pmt_indices:
+            return None
+        year_end_months = y * 12
+        terms = [
+            f"IF(s_loan_{i}_term_months>={year_end_months},"
+            f"s_loan_{i}_annual_pi,0)"
+            for i in _pmt_indices
+        ]
+        return "=" + "+".join(terms)
     # Track each engine-value row's coord so derived formulas can reference
     # the actual cells. col=2 is Y0; each year_cols entry adds one column.
     field_row: dict[str, int] = {}
@@ -2100,13 +2115,15 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
                     )
             elif (
                 field == "debt_service"
-                and _debt_service_formula is not None
+                and _pmt_indices
                 and col_offset >= 1
             ):
-                # Phase E: Y1+ debt service = SUM of per-loan annual P&I
-                # named ranges (registered on the Debt Schedule sheet).
+                # Phase E: Y2+ debt service = SUM of per-loan annual P&I
+                # named ranges, gated by each loan's term_months so loans
+                # past their hold term drop out instead of overstating.
+                ds_formula = _debt_service_formula_for_year(year)
                 cell = ws.cell(
-                    row=cur_row, column=col_idx, value=_debt_service_formula,
+                    row=cur_row, column=col_idx, value=ds_formula,
                 )
             elif field == "asset_mgmt_fee":
                 # Phase C: Asset Mgmt Fee = -EGI * s_asset_mgmt_fee, every
@@ -4191,10 +4208,14 @@ def _build_debt_schedule(ws, registry: CellRegistry, ctx: dict) -> None:
         )
         _write_optional(ws, cur_row, 4, rate, registry,
                         name=f"s_loan_{m_idx}_rate", fmt=PCT)
-        ws.cell(
-            row=cur_row, column=5,
-            value=int(term_months) if term_months else _DASH,
-        ).font = FONT_VALUE
+        # Phase E refinement: register Term (months) as a named cell so the
+        # Pro Forma Debt Service per-year SUM can gate each loan by its
+        # hold term — a 10-year hold loan stops contributing P&I after Y10
+        # instead of overstating debt service across the entire chain.
+        _write_optional(
+            ws, cur_row, 5, int(term_months) if term_months else None,
+            registry, name=f"s_loan_{m_idx}_term_months", fmt=INT_COMMA,
+        )
         ws.cell(row=cur_row, column=6, value=int(amort_years)).font = FONT_VALUE
         ws.cell(row=cur_row, column=7, value=int(io_months)).font = FONT_VALUE
         ws.cell(
