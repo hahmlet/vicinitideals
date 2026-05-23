@@ -2058,25 +2058,56 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
         if _profile in {"internal", "lender"}
         else []
     )
-    def _debt_service_formula_for_year(y: int) -> str | None:
-        """Per-year Debt Service SUM, gated by each loan's term_months.
+    # Loans whose Debt Schedule row registered an
+    # ``s_loan_<n>_perm_origination_month`` cell. PI contributions for
+    # these loans are additionally gated on the year being past perm
+    # origination — closes the construction-to-perm overstatement gap
+    # called out below.
+    _perm_gated_loan_idxs: set[int] = (
+        set(_perm_origination_loan_idxs(ctx).keys())
+        if _profile in {"internal", "lender"}
+        else set()
+    )
 
-        For year Y (1-indexed), each loan contributes its annual P&I
-        only if its hold term covers the end of that year — i.e.
-        ``s_loan_{i}_term_months >= Y*12``. A 10-year hold loan drops
-        out of the SUM starting in Y11 instead of overstating debt
-        service forever. Loans whose term cell is em-dash / blank fail
-        the >= test silently and contribute 0, which is the safe
-        graceful-degradation outcome.
+    def _debt_service_formula_for_year(y: int) -> str | None:
+        """Per-year Debt Service SUM, gated by term + perm origination.
+
+        For year Y (1-indexed), each PI loan contributes its annual P&I
+        only when both conditions hold:
+
+          1. Loan's hold term covers the end of the year
+             (``s_loan_{i}_term_months >= Y*12``) — a 10-year hold loan
+             drops out of the SUM starting in Y11 instead of overstating
+             debt service forever.
+
+          2. Year-end is past perm origination
+             (``Y*12 >= s_loan_{i}_perm_origination_month``) — for
+             construction-to-perm loans, PI doesn't accrue during the
+             construction window. Skipped for loans without a registered
+             perm cell (pure-perm loans, single-project workbooks, or
+             pure-acquisition scenarios) — those keep the legacy
+             term-only gate.
+
+        Loans whose term cell is em-dash / blank fail the >= test
+        silently and contribute 0, which is the safe graceful-degradation
+        outcome.
         """
         if not _pmt_indices:
             return None
         year_end_months = y * 12
-        terms = [
-            f"IF(s_loan_{i}_term_months>={year_end_months},"
-            f"s_loan_{i}_annual_pi,0)"
-            for i in _pmt_indices
-        ]
+        terms = []
+        for i in _pmt_indices:
+            if i in _perm_gated_loan_idxs:
+                terms.append(
+                    f"IF(AND(s_loan_{i}_term_months>={year_end_months},"
+                    f"{year_end_months}>=s_loan_{i}_perm_origination_month),"
+                    f"s_loan_{i}_annual_pi,0)"
+                )
+            else:
+                terms.append(
+                    f"IF(s_loan_{i}_term_months>={year_end_months},"
+                    f"s_loan_{i}_annual_pi,0)"
+                )
         return "=" + "+".join(terms)
     # Track each engine-value row's coord so derived formulas can reference
     # the actual cells. col=2 is Y0; each year_cols entry adds one column.
@@ -4474,69 +4505,23 @@ def _build_c2p_status_block(
     Skipped entirely when no eligible projects exist (e.g. pure
     acquisition scenarios with no construction-side phase).
     """
-    projects: list[Project] = ctx.get("projects") or []
-    if not projects or not debt_modules:
+    if not debt_modules:
         return
 
-    junctions: list[CapitalModuleProject] = ctx.get("junctions") or []
-    inputs_by_project: dict = ctx.get("operational_inputs") or {}
-    milestones_by_project: dict = ctx.get("milestones") or {}
-    capital_modules: list = ctx.get("capital_modules") or []
-    scenario_obj = ctx.get("scenario")
-    raw_pt = getattr(scenario_obj, "project_type", None)
-    project_type_name = str(getattr(raw_pt, "value", raw_pt) or "")
-    if not project_type_name:
+    loan_proj_idxs = _perm_origination_loan_idxs(ctx)
+    if not loan_proj_idxs:
         return
 
-    # Pre-compute which project indices (1-based, matching _build_project_sheet)
-    # have a registered perm_origination_month cell. Mirror the export's
-    # single-project skip — that path doesn't render per-project sheets, so
-    # the named cells don't exist either.
-    if len(projects) <= 1:
-        return
-
-    project_idx_by_id: dict = {p.id: idx for idx, p in enumerate(projects, start=1)}
-    perm_eligible_idx: set[int] = set()
-    for idx, project in enumerate(projects, start=1):
-        inputs = inputs_by_project.get(project.id)
-        if inputs is None:
-            continue
-        try:
-            windows = build_project_phase_windows(
-                project_type=project_type_name,
-                inputs=inputs,
-                milestones=milestones_by_project.get(project.id, []),
-                capital_modules=capital_modules,
-            )
-        except ValueError:
-            continue
-        if perm_origination_month(windows) is not None:
-            perm_eligible_idx.add(idx)
-
-    if not perm_eligible_idx:
-        return
-
-    # Junction lookup: module_id -> set of project_ids it funds.
-    module_projects: dict = {}
-    for j in junctions:
-        module_projects.setdefault(j.capital_module_id, set()).add(j.project_id)
-
-    section_label(ws, start_row, "Construction-to-Perm Status — Per Loan", span_cols=5)
+    section_label(ws, start_row, "Construction-to-Perm Status — Per Loan", span_cols=6)
     header_row(
         ws, start_row + 1,
         ["Module", "Funds Project(s)", "Perm Origination Month",
-         "Loan Term (mo)", "Active in Operations"],
+         "Loan Term (mo)", "Active in Operations", "Notes"],
     )
     row = start_row + 2
     any_written = False
     for m_idx, module in enumerate(debt_modules, start=1):
-        funded_project_ids = module_projects.get(module.id, set())
-        eligible_proj_idxs = sorted(
-            project_idx_by_id[pid]
-            for pid in funded_project_ids
-            if pid in project_idx_by_id
-            and project_idx_by_id[pid] in perm_eligible_idx
-        )
+        eligible_proj_idxs = loan_proj_idxs.get(m_idx)
         if not eligible_proj_idxs:
             continue
 
@@ -4576,6 +4561,15 @@ def _build_c2p_status_block(
             name=active_name,
             font=FONT_VALUE, align=ALIGN_RIGHT,
         )
+        # Notes column consumes the active-in-operations boolean as a
+        # modeling sanity check — flags loans that retire before perm
+        # origination (likely a misconfigured active window: a loan
+        # cannot retire in construction and then re-originate as perm).
+        notes_formula = (
+            f"=IF({active_name},\"Active in ops by term end\","
+            f"\"⚠ Retires before perm origination — check active window\")"
+        )
+        ws.cell(row=row, column=6, value=notes_formula).font = FONT_HINT
         any_written = True
         row += 1
 
@@ -4587,6 +4581,77 @@ def _build_c2p_status_block(
             row=row, column=1,
             value="(no debt modules fund a project with a construction-side phase)",
         ).font = FONT_HINT
+
+
+def _perm_origination_loan_idxs(ctx: dict) -> dict[int, list[int]]:
+    """Return ``{loan_m_idx: [project_idxs]}`` for every debt module that
+    funds at least one project with a registered perm-origination cell.
+
+    Single source of truth for two consumers:
+
+      - ``_build_c2p_status_block`` — emits the Construction-to-Perm Status
+        section using the project-idx list to build the formula's
+        ``MAX(p<idx>_perm_origination_month, ...)`` expression.
+      - ``_debt_service_formula_for_year`` — gates each PI loan's annual
+        P&I contribution on the loan's perm origination month so PI
+        doesn't accrue during construction years.
+
+    Returns an empty dict when the workbook won't render per-project
+    sheets (single-project) or when no project has a construction-side
+    phase. The named cells these consumers reference (``p<idx>_*``)
+    don't exist in those cases, so the gating must fall back to the
+    legacy term-only formula.
+    """
+    projects: list = ctx.get("projects") or []
+    if len(projects) <= 1:
+        return {}
+    capital_modules: list[CapitalModule] = ctx.get("capital_modules") or []
+    junctions: list = ctx.get("junctions") or []
+    inputs_by_project: dict = ctx.get("operational_inputs") or {}
+    milestones_by_project: dict = ctx.get("milestones") or {}
+    scenario_obj = ctx.get("scenario")
+    raw_pt = getattr(scenario_obj, "project_type", None)
+    project_type_name = str(getattr(raw_pt, "value", raw_pt) or "")
+    if not project_type_name:
+        return {}
+
+    project_idx_by_id: dict = {p.id: idx for idx, p in enumerate(projects, start=1)}
+    perm_eligible_idx: set[int] = set()
+    for idx, project in enumerate(projects, start=1):
+        inputs = inputs_by_project.get(project.id)
+        if inputs is None:
+            continue
+        try:
+            windows = build_project_phase_windows(
+                project_type=project_type_name,
+                inputs=inputs,
+                milestones=milestones_by_project.get(project.id, []),
+                capital_modules=capital_modules,
+            )
+        except ValueError:
+            continue
+        if perm_origination_month(windows) is not None:
+            perm_eligible_idx.add(idx)
+
+    if not perm_eligible_idx:
+        return {}
+
+    module_projects: dict = {}
+    for j in junctions:
+        module_projects.setdefault(j.capital_module_id, set()).add(j.project_id)
+
+    debt_modules = [m for m in capital_modules if _funder_class(m) == "Debt"]
+    out: dict[int, list[int]] = {}
+    for m_idx, module in enumerate(debt_modules, start=1):
+        funded = module_projects.get(module.id, set())
+        eligible = sorted(
+            project_idx_by_id[pid] for pid in funded
+            if pid in project_idx_by_id
+            and project_idx_by_id[pid] in perm_eligible_idx
+        )
+        if eligible:
+            out[m_idx] = eligible
+    return out
 
 
 def _pmt_loan_indices(capital_modules: list[CapitalModule]) -> list[int]:
