@@ -172,6 +172,15 @@ def _is_non_metric(name: str) -> bool:
     # Per-project sheet meta + S&U totals (scoped variants of doc metrics).
     if m and m.group(1).startswith("uw_"):
         return True
+    # Phase plan cells (F.1.8): structural inputs that feed downstream
+    # formulas (e.g. s_loan_n_perm_origination_month, perm-gated Debt
+    # Service). The doc tags them at heading level 5 without an audience
+    # marker, so they're treated as non-metric structural cells here.
+    if m and (
+        m.group(1).startswith("phase_")
+        or m.group(1) in {"perm_origination_month", "total_horizon_months"}
+    ):
+        return True
     return False
 
 

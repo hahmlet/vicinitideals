@@ -10,8 +10,10 @@ Contract:
      both the term-months cell and the perm-origination cell — it must
      evaluate to TRUE when the loan's term extends past perm origination
      and FALSE otherwise.
-  3. The block is skipped entirely for single-project scenarios (per-project
-     sheets don't render, so the underlying ``p<idx>_*`` cells don't exist).
+  3. The block also renders for single-project scenarios: ``p1_*`` phase
+     cells are emitted on the Assumptions sheet (Block E) when the
+     per-project sheet is suppressed, so the same Debt Schedule
+     references resolve.
 """
 from __future__ import annotations
 
@@ -209,16 +211,28 @@ async def test_c2p_active_in_ops_formula_references_term_and_perm(
     pytest.fail("named range had no destination")
 
 
-async def test_c2p_block_skipped_for_single_project_scenario(
+async def test_c2p_block_renders_for_single_project_scenario(
     session: AsyncSession,
 ) -> None:
-    """Single-project workbooks don't render per-project sheets, so the
-    C2P block has nothing to reference — its named cells must not be
-    registered."""
+    """Single-project workbooks emit the phase plan on the Assumptions
+    sheet (Block E) so the Debt Schedule C2P block has p1_* cells to
+    reference. Both s_loan_1_perm_origination_month and
+    s_loan_1_active_in_operations must register."""
     scenario = await _seed_single_project_with_debt(session)
     blob = await export_investor_workbook(scenario.id, session)
     wb = load_workbook(BytesIO(blob), data_only=False)
 
     defined = {name for name in wb.defined_names}
-    assert "s_loan_1_perm_origination_month" not in defined
-    assert "s_loan_1_active_in_operations" not in defined
+    assert "p1_perm_origination_month" in defined, (
+        "single-project phase plan must emit p1_perm_origination_month on Assumptions"
+    )
+    assert "s_loan_1_perm_origination_month" in defined
+    assert "s_loan_1_active_in_operations" in defined
+
+    # Verify the perm cell sits on Assumptions (not on a P1 sheet, which
+    # is suppressed for single-project).
+    dn = wb.defined_names["p1_perm_origination_month"]
+    sheets = {sheet for sheet, _ in dn.destinations}
+    assert "Assumptions" in sheets, (
+        f"expected p1_perm_origination_month on Assumptions, got {sheets}"
+    )

@@ -3513,68 +3513,12 @@ def _build_project_sheet(
     ); cur += 1
 
     # ── Phase Plan (absolute month boundaries) ─────────────────────────────
-    # Exposes per-phase start_month / end_month / duration_months as named
-    # cells so future formula conversions (e.g. construction-to-perm
-    # origination gating) can reference them in-sheet without re-deriving
-    # the boundaries from the milestone trigger chain.
-    milestones_by_project: dict = ctx.get("milestones") or {}
-    project_milestones = milestones_by_project.get(project.id, [])
-    # project_type lives on Scenario (canonical), not Project — mirror the
-    # cashflow engine's _project_type_name() coercion to handle both raw
-    # strings and ProjectType enum instances.
-    scenario_obj = ctx.get("scenario")
-    raw_pt = getattr(scenario_obj, "project_type", None)
-    project_type_name = str(getattr(raw_pt, "value", raw_pt) or "")
-    phase_windows: list = []
-    if inputs is not None and project_type_name:
-        try:
-            phase_windows = build_project_phase_windows(
-                project_type=project_type_name,
-                inputs=inputs,
-                milestones=project_milestones,
-                capital_modules=capital_modules,
-            )
-        except ValueError:
-            # Unsupported project_type — skip the phase plan block rather
-            # than fail the whole export.
-            phase_windows = []
-    if phase_windows:
-        section_label(ws, cur + 1, "Phase Plan (months)", span_cols=2)
-        cur += 2
-        for window in phase_windows:
-            phase_name = window.period_type.value
-            kv_row(
-                ws, cur, f"  {phase_name} — start",
-                window.start_month,
-                name=f"p{project_idx}_phase_{phase_name}_start_month",
-                registry=registry, fmt=INT_COMMA,
-            ); cur += 1
-            kv_row(
-                ws, cur, f"  {phase_name} — end",
-                window.end_month,
-                name=f"p{project_idx}_phase_{phase_name}_end_month",
-                registry=registry, fmt=INT_COMMA,
-            ); cur += 1
-            kv_row(
-                ws, cur, f"  {phase_name} — duration",
-                window.duration_months,
-                name=f"p{project_idx}_phase_{phase_name}_duration_months",
-                registry=registry, fmt=INT_COMMA,
-            ); cur += 1
-        perm_month = perm_origination_month(phase_windows)
-        if perm_month is not None:
-            kv_row(
-                ws, cur, "Perm origination month",
-                perm_month,
-                name=f"p{project_idx}_perm_origination_month",
-                registry=registry, fmt=INT_COMMA,
-            ); cur += 1
-        kv_row(
-            ws, cur, "Total horizon (months)",
-            total_horizon_months(phase_windows),
-            name=f"p{project_idx}_total_horizon_months",
-            registry=registry, fmt=INT_COMMA,
-        ); cur += 1
+    cur = _emit_phase_plan_block(
+        ws, registry, ctx,
+        project_idx=project_idx, project=project,
+        inputs=inputs, capital_modules=capital_modules,
+        start_row=cur,
+    )
 
     # ── Project Pro Forma ──────────────────────────────────────────────────
     pf_row = cur + 2
@@ -4583,6 +4527,86 @@ def _build_c2p_status_block(
         ).font = FONT_HINT
 
 
+def _emit_phase_plan_block(
+    ws,
+    registry: CellRegistry,
+    ctx: dict,
+    *,
+    project_idx: int,
+    project,
+    inputs,
+    capital_modules: list,
+    start_row: int,
+) -> int:
+    """Emit the per-project Phase Plan block onto ``ws`` starting at
+    ``start_row``. Registers ``p{idx}_phase_*_{start,end,duration}_month``,
+    ``p{idx}_perm_origination_month`` (when construction-side phases exist),
+    and ``p{idx}_total_horizon_months``. Returns the next free row.
+
+    Single source of truth for both call sites: per-project sheet
+    (``_build_project_sheet``) for multi-project scenarios, and the
+    Assumptions sheet (``_build_assumptions``) for single-project
+    scenarios where the per-project sheet is suppressed.
+    """
+    milestones_by_project: dict = ctx.get("milestones") or {}
+    project_milestones = milestones_by_project.get(project.id, [])
+    scenario_obj = ctx.get("scenario")
+    raw_pt = getattr(scenario_obj, "project_type", None)
+    project_type_name = str(getattr(raw_pt, "value", raw_pt) or "")
+    phase_windows: list = []
+    if inputs is not None and project_type_name:
+        try:
+            phase_windows = build_project_phase_windows(
+                project_type=project_type_name,
+                inputs=inputs,
+                milestones=project_milestones,
+                capital_modules=capital_modules,
+            )
+        except ValueError:
+            phase_windows = []
+    if not phase_windows:
+        return start_row
+
+    cur = start_row
+    section_label(ws, cur + 1, "Phase Plan (months)", span_cols=2)
+    cur += 2
+    for window in phase_windows:
+        phase_name = window.period_type.value
+        kv_row(
+            ws, cur, f"  {phase_name} — start",
+            window.start_month,
+            name=f"p{project_idx}_phase_{phase_name}_start_month",
+            registry=registry, fmt=INT_COMMA,
+        ); cur += 1
+        kv_row(
+            ws, cur, f"  {phase_name} — end",
+            window.end_month,
+            name=f"p{project_idx}_phase_{phase_name}_end_month",
+            registry=registry, fmt=INT_COMMA,
+        ); cur += 1
+        kv_row(
+            ws, cur, f"  {phase_name} — duration",
+            window.duration_months,
+            name=f"p{project_idx}_phase_{phase_name}_duration_months",
+            registry=registry, fmt=INT_COMMA,
+        ); cur += 1
+    perm_month = perm_origination_month(phase_windows)
+    if perm_month is not None:
+        kv_row(
+            ws, cur, "Perm origination month",
+            perm_month,
+            name=f"p{project_idx}_perm_origination_month",
+            registry=registry, fmt=INT_COMMA,
+        ); cur += 1
+    kv_row(
+        ws, cur, "Total horizon (months)",
+        total_horizon_months(phase_windows),
+        name=f"p{project_idx}_total_horizon_months",
+        registry=registry, fmt=INT_COMMA,
+    ); cur += 1
+    return cur
+
+
 def _perm_origination_loan_idxs(ctx: dict) -> dict[int, list[int]]:
     """Return ``{loan_m_idx: [project_idxs]}`` for every debt module that
     funds at least one project with a registered perm-origination cell.
@@ -4596,14 +4620,14 @@ def _perm_origination_loan_idxs(ctx: dict) -> dict[int, list[int]]:
         P&I contribution on the loan's perm origination month so PI
         doesn't accrue during construction years.
 
-    Returns an empty dict when the workbook won't render per-project
-    sheets (single-project) or when no project has a construction-side
+    Returns an empty dict when no project has a construction-side
     phase. The named cells these consumers reference (``p<idx>_*``)
-    don't exist in those cases, so the gating must fall back to the
-    legacy term-only formula.
+    are written by ``_emit_phase_plan_block`` on the per-project sheet
+    (multi-project) or on the Assumptions sheet (single-project), so
+    they exist in both cases when a construction-side phase is present.
     """
     projects: list = ctx.get("projects") or []
-    if len(projects) <= 1:
+    if not projects:
         return {}
     capital_modules: list[CapitalModule] = ctx.get("capital_modules") or []
     junctions: list = ctx.get("junctions") or []
@@ -5080,6 +5104,26 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
             row=block_d_row + 2, column=1,
             value="(no waterfall tiers configured)",
         ).font = FONT_HINT
+
+    # ── Block E: Phase Plan (single-project only) ──────────────────────────
+    # Multi-project scenarios emit their per-project phase plan blocks on
+    # each P{n} sheet inside _build_project_sheet. Single-project
+    # scenarios suppress the P1 sheet (noise reduction), so emit the
+    # phase plan here instead — keeps p1_perm_origination_month /
+    # p1_total_horizon_months / p1_phase_*_{start,end,duration}_month
+    # cells available so the Debt Schedule's Construction-to-Perm Status
+    # block and the perm-gated Pro Forma debt service formula can
+    # reference them.
+    if len(projects) == 1:
+        single_project = projects[0]
+        single_inputs = inputs_by_project.get(single_project.id)
+        block_e_start = block_d_row + 1 + max(len(waterfall_tiers), 1) + 2
+        _emit_phase_plan_block(
+            ws, registry, ctx,
+            project_idx=1, project=single_project,
+            inputs=single_inputs, capital_modules=capital_modules,
+            start_row=block_e_start,
+        )
 
     freeze_top(ws, row=2)
     print_landscape(ws)
