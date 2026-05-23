@@ -121,11 +121,17 @@ async def test_export_deal_model_json_includes_itemized_expense_lines(
         org = (await session.execute(select(Organization))).scalar_one()
         user = (await session.execute(select(User))).scalar_one()
 
-        opportunity = Opportunity(id=uuid4(), org_id=org.id, name="Benchmark Export Opportunity")
+        opportunity = Opportunity(
+            id=uuid4(),
+            org_id=org.id,
+            name="Benchmark Export Opportunity",
+            source="manual",
+            source_id=uuid4().hex,
+            listing_url=f"https://example.com/listings/{uuid4().hex}",
+        )
         top_deal = Deal(id=uuid4(), org_id=org.id, name="Benchmark Export Deal", created_by_user_id=user.id)
         session.add_all([opportunity, top_deal])
         await session.flush()
-        session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id))
 
         model = DealModel(
             deal_id=top_deal.id,
@@ -143,7 +149,6 @@ async def test_export_deal_model_json_includes_itemized_expense_lines(
             scenario_id=model.id,
             opportunity_id=opportunity.id,
             name="Default Project",
-            deal_type=ProjectType.acquisition.value,
         )
         session.add(dev_project)
         await session.flush()

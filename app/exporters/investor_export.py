@@ -80,6 +80,7 @@ from app.models.deal import (
     USE_COST_CATEGORIES,
     Deal,
     DealModel,
+    IncomeStream,
     OperationalInputs,
     UseLine,
     normalize_opex_label,
@@ -142,12 +143,13 @@ async def export_investor_workbook(
     _HAS_RETURNS   = {"internal", "lp"}              # Investor Returns + Waterfall
     _HAS_UNIT_MIX  = {"internal", "lp", "lender"}
     _HAS_DEBT      = {"internal", "lender"}          # Debt Schedule
-    # Proforma profile also needs Assumptions: the S&U Sources rows
-    # emit ``=s_<slug>_principal`` formulas, and those names only
-    # get registered inside _build_assumptions Block C. Without the
-    # sheet the formulas become dangling references that show #NAME?
-    # in Excel. Including the sheet keeps the named-range graph intact.
-    _HAS_ASSUMPT   = {"internal", "lender", "proforma"}  # Assumptions
+    # Every profile that renders S&U needs Assumptions too: S&U Sources
+    # rows emit ``=s_<slug>_principal`` formulas and the new Operating
+    # Reserve UseLine emits ``=s_operating_reserve_months*...``. Those
+    # defined names only get registered inside _build_assumptions
+    # (Block C + Block A). Without the sheet the formulas become
+    # dangling references that show #NAME? in Excel.
+    _HAS_ASSUMPT   = {"internal", "lp", "lender", "proforma"}  # Assumptions
     _HAS_SENS      = {"internal", "lp"}              # Sensitivity (slow; skip for lender/proforma)
     _HAS_PF        = {"proforma"}                    # New formula-driven Pro Forma sheets
 
@@ -348,6 +350,19 @@ async def _load_all(session: AsyncSession, scenario_id: UUID) -> dict | None:
         ).scalars():
             use_lines_by_project.setdefault(ul.project_id, []).append(ul)
 
+    income_streams_by_project: dict[UUID, list[IncomeStream]] = {
+        pid: [] for pid in project_ids
+    }
+    if project_ids:
+        for stream in (
+            await session.execute(
+                select(IncomeStream)
+                .where(IncomeStream.project_id.in_(project_ids))
+                .order_by(IncomeStream.project_id, IncomeStream.label)
+            )
+        ).scalars():
+            income_streams_by_project.setdefault(stream.project_id, []).append(stream)
+
     capital_modules = list(
         (
             await session.execute(
@@ -456,6 +471,7 @@ async def _load_all(session: AsyncSession, scenario_id: UUID) -> dict | None:
         "projects": projects,
         "operational_inputs": inputs_by_project,
         "use_lines": use_lines_by_project,
+        "income_streams": income_streams_by_project,
         "unit_mix": unit_mix_by_project,
         "capital_modules": capital_modules,
         "module_slugs": _compute_module_slugs(capital_modules),
@@ -1999,6 +2015,7 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
     # ripples through every downstream year. CapEx Reserve uses the same
     # OpEx growth rate (no separate reserve-growth assumption today).
     _GROWTH_CHAIN_FIELDS: dict[str, str] = {
+        "gross_revenue": "s_revenue_growth_rate",
         "operating_expenses": "s_opex_growth_rate",
         "capex_reserve": "s_opex_growth_rate",
     }
@@ -2065,6 +2082,10 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
                 col=2,
                 end_col=1 + len(year_cols),
             )
+        # Phase B follow-up: expose Y1 OpEx as a workbook-scoped name so
+        # the S&U Operating Reserve UseLine formula resolves.
+        if field == "operating_expenses" and len(year_cols) >= 2:
+            registry.register("s_y1_opex", ws.title, cur_row, 3)
         cur_row += 1
 
     # OER (Operating Expense Ratio) = OpEx / EGI per year. Standard CRE
@@ -4330,6 +4351,17 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
         _pct_value(default_inputs, "exit_cap_rate_pct"),
         name="s_exit_cap_rate", registry=registry, fmt=PCT, style="input",
     ); row += 1
+    _streams_by_project: dict[UUID, list[IncomeStream]] = ctx.get(
+        "income_streams", {}
+    )
+    _default_streams = (
+        _streams_by_project.get(default_project.id, []) if default_project else []
+    )
+    kv_row(
+        ws, row, "Revenue Growth Rate (annual)",
+        _revenue_growth_default(_default_streams),
+        name="s_revenue_growth_rate", registry=registry, fmt=PCT, style="input",
+    ); row += 1
     kv_row(
         ws, row, "OpEx Growth Rate (annual)",
         _pct_value(default_inputs, "expense_growth_rate_pct_annual"),
@@ -4702,7 +4734,18 @@ def _build_su_sheet(
             for ul in cat_lines:
                 amt = _coerce_decimal(ul.amount or 0)
                 ws.cell(row=line, column=1, value=f"  {ul.label or ''}").font = FONT_VALUE
-                ws.cell(row=line, column=2, value=_to_excel_number(amt)).number_format = ACCOUNTING
+                # Operating Reserve is a derived Use: months × Y1 OpEx ÷ 12.
+                # When the workbook includes a Pro Forma sheet (every profile
+                # that has S&U also has a Pro Forma) the Y1 OpEx cell is
+                # registered as ``s_y1_opex`` so this formula resolves at
+                # open-time. Assumptions sheet supplies ``s_operating_reserve_months``.
+                label_norm = (ul.label or "").strip().lower()
+                if "operating reserve" in label_norm or label_norm == "op reserve":
+                    formula = "=s_operating_reserve_months*s_y1_opex/12"
+                    cell = ws.cell(row=line, column=2, value=formula)
+                    cell.number_format = ACCOUNTING
+                else:
+                    ws.cell(row=line, column=2, value=_to_excel_number(amt)).number_format = ACCOUNTING
                 line += 1
             last_line_row = line - 1
 
@@ -5094,6 +5137,37 @@ def _pct_value(obj, attr: str) -> Decimal | None:
     return raw / Decimal(100)
 
 
+def _revenue_growth_default(streams: list[IncomeStream]) -> Decimal:
+    """Unit-count-weighted mean of stream escalation rates (as a fraction).
+
+    Phase A: the Pro Forma's gross_revenue growth chain uses a single
+    scenario-wide knob (s_revenue_growth_rate) so an LP editing one cell
+    re-flows every Y2+ year. The seed value comes from the underlying
+    stream-level escalation_rate_pct_annual, weighted by unit_count so a
+    100-unit residential stream's growth dominates a 1-unit laundry line.
+    Falls back to 3% (industry-standard rent-growth default) when no
+    streams or all weights are zero.
+    """
+    total_weight = Decimal(0)
+    weighted = Decimal(0)
+    for s in streams:
+        units = s.unit_count or 0
+        try:
+            weight = Decimal(int(units))
+        except (TypeError, ValueError):
+            weight = Decimal(0)
+        if weight <= 0:
+            weight = Decimal(1)
+        rate = _coerce_decimal(getattr(s, "escalation_rate_pct_annual", None))
+        if rate is None:
+            continue
+        weighted += weight * rate
+        total_weight += weight
+    if total_weight <= 0:
+        return Decimal("0.03")
+    return (weighted / total_weight) / Decimal(100)
+
+
 def _coerce_decimal(value) -> Decimal | None:
     """Coerce to ``Decimal``. ``None`` / empty-string in, ``None`` out.
 
@@ -5202,8 +5276,10 @@ def _write_pf_table(
         "effective_gross_income": ("+gross_revenue", "+vacancy_loss"),
         "noi": ("+effective_gross_income", "-operating_expenses", "-capex_reserve"),
     }
-    # Phase B: OpEx + CapEx Reserve grow off Y1 via ``s_opex_growth_rate``.
+    # Phase A/B: gross revenue grows off Y1 via ``s_revenue_growth_rate``;
+    # OpEx + CapEx Reserve via ``s_opex_growth_rate``.
     _GROWTH_CHAIN_FIELDS: dict[str, str] = {
+        "gross_revenue": "s_revenue_growth_rate",
         "operating_expenses": "s_opex_growth_rate",
         "capex_reserve": "s_opex_growth_rate",
     }
@@ -5249,6 +5325,16 @@ def _write_pf_table(
             cell.number_format = ACCOUNTING
             cell.font = FONT_VALUE
             cell.alignment = ALIGN_RIGHT
+        # Phase B follow-up: expose Y1 OpEx as a workbook-scoped name. The
+        # proforma profile calls _write_pf_table twice (combined Pro Forma
+        # sheet + per-project Pro Forma sheets); only the first call should
+        # register the name to avoid collision.
+        if (
+            field == "operating_expenses"
+            and len(year_cols) >= 2
+            and "s_y1_opex" not in registry._names
+        ):
+            registry.register("s_y1_opex", ws.title, cur_row, 3)
         cur_row += 1
 
     # OER derived row — formula references the OpEx and EGI cells written
