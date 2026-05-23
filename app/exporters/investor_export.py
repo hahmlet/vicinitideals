@@ -4132,7 +4132,9 @@ def _build_debt_schedule(ws, registry: CellRegistry, ctx: dict) -> None:
         ).font = FONT_HINT
         cur_row += 1
 
-    perm_candidate: tuple[CapitalModule, Decimal] | None = None  # (module, principal)
+    # Track the Loan Summary row of the perm-loan winner so the amort
+    # table below can absolute-ref principal/rate/amort/IO cells.
+    perm_candidate: tuple[CapitalModule, Decimal, int] | None = None  # (module, principal, loan_row)
     for m_idx, module in enumerate(debt_modules, start=1):
         source = module.source or {}
         carry = module.carry or {}
@@ -4226,7 +4228,7 @@ def _build_debt_schedule(ws, registry: CellRegistry, ctx: dict) -> None:
         ft_vt = str(getattr(module, "vehicle_type", "") or "").replace("VehicleType.", "")
         if ft_vt == "debt":
             if perm_candidate is None or principal > perm_candidate[1]:
-                perm_candidate = (module, principal)
+                perm_candidate = (module, principal, cur_row)
         cur_row += 1
 
     # ── Sizing & Carry-Type Notes (graceful-degradation disclosure) ───────
@@ -4290,11 +4292,10 @@ def _build_debt_schedule(ws, registry: CellRegistry, ctx: dict) -> None:
     if perm_candidate is None:
         return
 
-    perm_module, perm_principal = perm_candidate
+    perm_module, perm_principal, perm_loan_row = perm_candidate
     perm_source = perm_module.source or {}
     perm_rate_raw = perm_source.get("interest_rate_pct") or 0
     perm_amort_yrs = int(perm_source.get("amort_term_years") or 30)
-    perm_io_months = int(perm_source.get("io_months") or 0)
 
     if not perm_rate_raw:
         return
@@ -4316,45 +4317,50 @@ def _build_debt_schedule(ws, registry: CellRegistry, ctx: dict) -> None:
     # table on a Phase 1 deal review.
     display_years = min(perm_amort_yrs, 30)
 
-    from app.engines.cashflow import _balloon_balance, _monthly_pmt
-    monthly_pi = _monthly_pmt(perm_principal, float(perm_rate_raw), perm_amort_yrs)
-    annual_pi_amount = monthly_pi * Decimal(12)
-    monthly_rate = _coerce_decimal(perm_rate_raw) / Decimal(100) / Decimal(12)
+    # Formula-conversion plan §4.4 (commit 7): the amort table is wired as
+    # CUMIPMT / CUMPRINC over the Loan Summary's principal/rate/amort/IO
+    # cells so LP edits flow through. Cell refs:
+    #   $C${perm_loan_row} = principal
+    #   $D${perm_loan_row} = rate (fraction, e.g. 0.065)
+    #   $F${perm_loan_row} = amort years (int)
+    #   $G${perm_loan_row} = IO months (int)
+    # CUMIPMT returns a negative number under Excel's sign convention; we
+    # negate to keep the amort table values positive. IO branch: payment =
+    # principal * rate (annual interest), principal_paid = 0.
+    PR = f"$C${perm_loan_row}"   # principal
+    RT = f"$D${perm_loan_row}"   # rate
+    AY = f"$F${perm_loan_row}"   # amort yrs
+    IO = f"$G${perm_loan_row}"   # io months
 
     for year in range(1, display_years + 1):
-        # Balance at start of year = balance at end of previous year
-        beg_balance = _balloon_balance(
-            perm_principal, float(perm_rate_raw), perm_amort_yrs,
-            (year - 1) * 12, io_months=perm_io_months,
-        )
-        end_balance = _balloon_balance(
-            perm_principal, float(perm_rate_raw), perm_amort_yrs,
-            year * 12, io_months=perm_io_months,
-        )
-        # Interest in year = average balance × rate × 12 (close enough for
-        # display purposes; the engine itself uses period-by-period exact
-        # accrual for the cashflow output)
-        interest_paid = (beg_balance + end_balance) / Decimal(2) * monthly_rate * Decimal(12)
-        # During IO period, full payment is interest, no principal reduction
-        if year * 12 <= perm_io_months:
-            year_payment = interest_paid
-            principal_paid = Decimal(0)
-        elif year == display_years and display_years >= perm_amort_yrs:
-            # Final row: sweep remaining balance to exactly $0 so the table is
-            # internally consistent (Beg − Principal = End = $0).
-            end_balance = Decimal(0)
-            principal_paid = beg_balance
-            year_payment = interest_paid + principal_paid
+        start_period = (year - 1) * 12 + 1
+        end_period = year * 12
+
+        # Beginning balance: first year pulls principal; later years reach
+        # back to the prior row's End Balance cell (col 6).
+        if year == 1:
+            beg_formula = f"={PR}"
         else:
-            year_payment = annual_pi_amount
-            principal_paid = year_payment - interest_paid
+            beg_formula = f"=F{cur_row - 1}"
+
+        annual_pmt_formula = (
+            f"=IF({IO}>={end_period},{PR}*{RT},"
+            f"IFERROR(-PMT({RT}/12,{AY}*12,{PR})*12,0))"
+        )
+        interest_formula = (
+            f"=IF({IO}>={end_period},{PR}*{RT},"
+            f"IFERROR(-CUMIPMT({RT}/12,{AY}*12,{PR},{start_period},{end_period},0),0))"
+        )
+        principal_formula = f"=C{cur_row}-D{cur_row}"  # AnnualPmt − Interest
+        end_formula = f"=B{cur_row}-E{cur_row}"  # Beg − Principal
 
         ws.cell(row=cur_row, column=1, value=year).font = FONT_VALUE
-        for col, value in enumerate(
-            (beg_balance, year_payment, interest_paid, principal_paid, end_balance),
+        for col, formula in enumerate(
+            (beg_formula, annual_pmt_formula, interest_formula,
+             principal_formula, end_formula),
             start=2,
         ):
-            cell = ws.cell(row=cur_row, column=col, value=_to_excel_number(value))
+            cell = ws.cell(row=cur_row, column=col, value=formula)
             cell.number_format = ACCOUNTING
             cell.font = FONT_VALUE
             cell.alignment = ALIGN_RIGHT
