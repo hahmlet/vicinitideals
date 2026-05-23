@@ -181,6 +181,46 @@ def test_under_utilized_grant_row_yellow(
 # ---------------------------------------------------------------------------
 
 
+def test_wizard_eligibility_flips_amount_to_maximum(
+    logged_in_page: Page, base_url: str
+) -> None:
+    """Add-wizard sw-step-1 mirrors edit-form behavior: ticking eligibility
+    swaps Amount → Maximum and validates the right field on Continue."""
+    suffix = uuid.uuid4().hex[:6]
+    model_id = create_e2e_scenario(
+        logged_in_page, deal_name=f"E2E EligWizard {suffix}", deal_type="acquisition"
+    )
+    page = logged_in_page
+    _open_sources_panel(page, base_url, model_id)
+
+    _add_use(page, "Site Work", "180000")
+
+    # Open Add Source wizard
+    page.evaluate("() => openAddLine('sources')")
+    page.wait_for_selector('#sw-form', timeout=5_000)
+    page.select_option('#sw-type', "grant")
+    page.fill('#sw-label', "OR-MEP")
+
+    # Initial state: Amount label visible
+    label = page.locator('#sw-amount-label')
+    assert label.inner_text().strip().startswith("Amount")
+
+    # Tick first eligibility checkbox → label flips
+    page.locator('.sw-eligibility-checkbox').first.check()
+    assert label.inner_text().strip().startswith("Maximum")
+    # Maximum input should now be visible and required
+    max_in = page.locator('#sw-source-maximum')
+    assert max_in.is_visible()
+    page.fill('#sw-source-maximum', "250000")
+
+    # Submit wizard
+    page.click('#sw-next')
+    wait_for_htmx(page)
+
+    row = page.locator("tr:has(td:has-text('OR-MEP'))").first
+    assert "250" in row.inner_text()
+
+
 def test_clearing_eligibility_reverts_to_amount(
     logged_in_page: Page, base_url: str
 ) -> None:

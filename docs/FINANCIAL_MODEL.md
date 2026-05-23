@@ -785,6 +785,11 @@ Resolution lives in [`app/engines/grant_caps.py`](../app/engines/grant_caps.py) 
 
 **Under-utilization** — when `source.amount < source.maximum`, the S&U table renders the row yellow with a tooltip showing the unused balance.
 
+**UI surfaces:**
+
+- **Edit drawer** (`partials/model_builder_line_form.html`) — eligibility checklist + Amount/Maximum label toggle for `grant`, `forgivable_loan`, `tax_credit`, and `equity` (`_FIXED_AMOUNT` set, inherited from Source vehicle refactor May 2026).
+- **Add wizard step 1** (`sw-step-1`) — same checklist appears once a fixed-amount type is selected; ticking ≥1 Use flips Amount → Maximum and `_swCheck` validates the active field.
+
 **Edge cases:**
 
 - Cap set but no eligibility selected → `source.amount = 0` (UI rejects this state at save; engine defends).
