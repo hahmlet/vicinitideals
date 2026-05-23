@@ -892,6 +892,10 @@ Pre-close milestones belong to an Opportunity; post-close milestones belong to a
 
 **Important:** Deals created before commit 5d5caf4 may have milestones with trigger_milestone_id = NULL even though they were intended as chained. Engine falls back to OperationalInputs.*_months scalars when trigger chain is broken. One-shot backfill script needed (see Section 11 / CLAUDE.md known issues).
 
+**Phase plan extraction (`app/engines/phase_plan.py`):**
+
+Per-project phase boundaries are not stored on the Milestone table — they are derived at runtime by `build_project_phase_windows(project_type, inputs, milestones, capital_modules)`. The function wraps the cashflow engine's `_build_phase_plan` to fold cumulative phase durations into a list of `PhaseWindow(period_type, start_month, end_month, duration_months)` records using 1-based absolute month indices. The investor Excel export registers each window as named workbook cells (`p<n>_phase_<phase>_start_month`, `..._end_month`, `..._duration_months`) plus two meta-cells (`p<n>_perm_origination_month`, `p<n>_total_horizon_months`). See `FINANCIAL_MODEL.md` §F.1.8 for the full catalog.
+
 ---
 
 ### 12.4 UnitMix

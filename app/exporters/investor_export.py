@@ -61,6 +61,11 @@ from app.exporters._workbook_helpers import (
     section_label,
     set_widths,
 )
+from app.engines.phase_plan import (
+    build_project_phase_windows,
+    perm_origination_month,
+    total_horizon_months,
+)
 from app.engines.sensitivity_matrix import compute_sensitivity_matrix
 from app.engines.underwriting_rollup import (
     rollup_summary,
@@ -3475,6 +3480,70 @@ def _build_project_sheet(
         name=f"p{project_idx}_timeline_months", registry=registry,
         fmt=INT_COMMA,
     ); cur += 1
+
+    # ── Phase Plan (absolute month boundaries) ─────────────────────────────
+    # Exposes per-phase start_month / end_month / duration_months as named
+    # cells so future formula conversions (e.g. construction-to-perm
+    # origination gating) can reference them in-sheet without re-deriving
+    # the boundaries from the milestone trigger chain.
+    milestones_by_project: dict = ctx.get("milestones") or {}
+    project_milestones = milestones_by_project.get(project.id, [])
+    # project_type lives on Scenario (canonical), not Project — mirror the
+    # cashflow engine's _project_type_name() coercion to handle both raw
+    # strings and ProjectType enum instances.
+    scenario_obj = ctx.get("scenario")
+    raw_pt = getattr(scenario_obj, "project_type", None)
+    project_type_name = str(getattr(raw_pt, "value", raw_pt) or "")
+    phase_windows: list = []
+    if inputs is not None and project_type_name:
+        try:
+            phase_windows = build_project_phase_windows(
+                project_type=project_type_name,
+                inputs=inputs,
+                milestones=project_milestones,
+                capital_modules=capital_modules,
+            )
+        except ValueError:
+            # Unsupported project_type — skip the phase plan block rather
+            # than fail the whole export.
+            phase_windows = []
+    if phase_windows:
+        section_label(ws, cur + 1, "Phase Plan (months)", span_cols=2)
+        cur += 2
+        for window in phase_windows:
+            phase_name = window.period_type.value
+            kv_row(
+                ws, cur, f"  {phase_name} — start",
+                window.start_month,
+                name=f"p{project_idx}_phase_{phase_name}_start_month",
+                registry=registry, fmt=INT_COMMA,
+            ); cur += 1
+            kv_row(
+                ws, cur, f"  {phase_name} — end",
+                window.end_month,
+                name=f"p{project_idx}_phase_{phase_name}_end_month",
+                registry=registry, fmt=INT_COMMA,
+            ); cur += 1
+            kv_row(
+                ws, cur, f"  {phase_name} — duration",
+                window.duration_months,
+                name=f"p{project_idx}_phase_{phase_name}_duration_months",
+                registry=registry, fmt=INT_COMMA,
+            ); cur += 1
+        perm_month = perm_origination_month(phase_windows)
+        if perm_month is not None:
+            kv_row(
+                ws, cur, "Perm origination month",
+                perm_month,
+                name=f"p{project_idx}_perm_origination_month",
+                registry=registry, fmt=INT_COMMA,
+            ); cur += 1
+        kv_row(
+            ws, cur, "Total horizon (months)",
+            total_horizon_months(phase_windows),
+            name=f"p{project_idx}_total_horizon_months",
+            registry=registry, fmt=INT_COMMA,
+        ); cur += 1
 
     # ── Project Pro Forma ──────────────────────────────────────────────────
     pf_row = cur + 2
