@@ -136,6 +136,24 @@ jobs:
       - name: Install dependencies (including e2e extras)
         run: uv sync --extra dev --extra e2e
 
+      - name: Install LibreOffice + UNO bindings for parity recalc tests
+        # The exporter parity tests (tests/exporters/test_formula_parity_*,
+        # test_property_valuation_formulas, test_investor_export_formula_parity)
+        # drive headless LibreOffice via UNO to recalc workbook formulas and
+        # read cached values back. Without these packages the tests skip
+        # with RecalcUnavailableError instead of exercising the assertions.
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libreoffice-calc \
+            libreoffice-core \
+            python3-uno
+          # Sanity-check: confirm system python3 can import uno.
+          /usr/bin/python3 -c "import uno; print('uno OK')"
+          # Sanity-check: confirm the OOXML Calc filter is registered.
+          soffice --headless --norestore --nologo --terminate_after_init \
+            -env:UserInstallation=file:///tmp/lo-ci-prewarm
+
       - name: Prepare environment file
         run: cp .env.example .env
 
