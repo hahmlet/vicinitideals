@@ -11476,6 +11476,11 @@ async def proforma_confirm(
     sqfts = form.getlist("unit_type_sqft[]")
     rents = form.getlist("unit_type_rent[]")
     market_rents = form.getlist("unit_type_market_rent[]")
+    # Indices of unit-mix rows the user kept checked. When the include list
+    # is absent (older clients), accept all rows for backward compat.
+    unit_included_raw = form.getlist("unit_type_include[]")
+    unit_included = {int(i) for i in unit_included_raw if str(i).strip().isdigit()}
+    unit_filter_enabled = bool(unit_included_raw)
 
     rent_type = (form.get("rent_type") or "in_place").strip().lower()
     rent_field = "market_rent_per_unit" if rent_type == "market" else "in_place_rent_per_unit"
@@ -11487,6 +11492,8 @@ async def proforma_confirm(
         project = proj_result.scalar_one()
         unit_mix_rows = []
         for idx, (name, count_s, sqft_s, rent_s) in enumerate(zip(names, counts, sqfts, rents)):
+            if unit_filter_enabled and idx not in unit_included:
+                continue
             name = name.strip()
             if not name:
                 continue
