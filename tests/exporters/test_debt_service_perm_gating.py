@@ -11,10 +11,16 @@ Contract:
            Y*12 >= s_loan_{i}_perm_origination_month)`` —
      not just the legacy term-only gate.
 
-  2. For a loan with no registered perm cell (single-project workbook,
-     pure-acquisition scenario, or loan funding no eligible project),
-     the formula keeps the legacy ``IF(term_months >= Y*12, annual_pi, 0)``
-     form so backward compatibility is preserved.
+  2. For a loan with no registered perm cell (pure-acquisition scenario
+     with no construction-side phase, or a loan funding no eligible
+     project), the formula keeps the legacy
+     ``IF(term_months >= Y*12, annual_pi, 0)`` form so backward
+     compatibility is preserved.
+
+  3. Single-project scenarios also gate on perm origination — the phase
+     plan emits onto the Assumptions sheet (Block E) when the
+     per-project sheet is suppressed, so single-project value_add deals
+     get the same perm-aware formula multi-project does.
 """
 from __future__ import annotations
 
@@ -161,11 +167,12 @@ async def test_multi_project_debt_service_gated_on_perm_origination(
     )
 
 
-async def test_single_project_debt_service_keeps_legacy_term_only_gate(
+async def test_single_project_debt_service_also_gated_on_perm_origination(
     session: AsyncSession,
 ) -> None:
-    """Backwards compat: single-project scenarios don't register the
-    per-project perm cells, so the formula must NOT reference them."""
+    """Single-project scenarios with a construction-side phase emit
+    p1_* cells on the Assumptions sheet, so the Debt Service formula
+    must gate on s_loan_1_perm_origination_month just like multi-project."""
     scenario = await _seed(session, multi_project=False)
     blob = await export_investor_workbook(scenario.id, session)
     wb = load_workbook(BytesIO(blob), data_only=False)
@@ -174,14 +181,21 @@ async def test_single_project_debt_service_keeps_legacy_term_only_gate(
     row = _find_debt_service_row(ws)
     assert row is not None
 
+    perm_gate_seen = False
     for col in range(2, ws.max_column + 1):
         cell = ws.cell(row=row, column=col)
-        if isinstance(cell.value, str) and cell.value.startswith("="):
-            # Must not reference a perm-origination cell that doesn't exist.
-            assert "perm_origination_month" not in cell.value, (
-                f"single-project Debt Service formula referenced "
-                f"perm_origination_month: {cell.value}"
-            )
+        if not isinstance(cell.value, str) or not cell.value.startswith("="):
+            continue
+        if (
+            "s_loan_1_perm_origination_month" in cell.value
+            and "AND(" in cell.value
+        ):
+            perm_gate_seen = True
+            break
+    assert perm_gate_seen, (
+        "single-project Debt Service must gate on s_loan_1_perm_origination_month "
+        "(phase plan now emits onto Assumptions for single-project too)"
+    )
 
 
 async def test_c2p_notes_column_consumes_active_in_operations(

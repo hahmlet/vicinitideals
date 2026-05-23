@@ -2745,7 +2745,7 @@ Each row documents one data point: definition, named range, app-side calc, app-s
 | **Definition** | Total debt service for the year, summed across all PMT-eligible loans active in that year. |
 | **Named Range** | (per-cell on the Debt Service row; not separately named) |
 | **App Calc/Use** | `app/engines/cashflow.py` sums period-level interest + principal across all debt modules per loan's active window (`_loan_pre_op_months`). |
-| **App Notes** | Engine respects per-loan `active_phase_start/end`. Excel formula gates by both `term_months` (hold end) and, when registered, `perm_origination_month` (start of operations) — closes the prior Y1 overstatement for construction-to-perm stacks. Loans with no registered perm cell (single-project workbooks, pure-acquisition scenarios) keep the legacy term-only gate. |
+| **App Notes** | Engine respects per-loan `active_phase_start/end`. Excel formula gates by both `term_months` (hold end) and, when registered, `perm_origination_month` (start of operations) — closes the prior Y1 overstatement for construction-to-perm stacks. Loans with no registered perm cell (pure-acquisition scenarios, loans funding only ineligible projects) keep the legacy term-only gate. Single-project value_add / new-construction scenarios get the perm-gated form since Block E on Assumptions emits `p1_perm_origination_month`. |
 | **Excel Formula** | `=IF(AND(s_loan_1_term_months>={y*12},{y*12}>=s_loan_1_perm_origination_month),s_loan_1_annual_pi,0)+IF(s_loan_2_term_months>={y*12},s_loan_2_annual_pi,0)+…` (per-loan: `AND(...)` form when the loan has a registered perm cell, legacy term-only form otherwise) |
 | **Excel Notes** | Per-year formula, threshold scales with the column's year. Y0 keeps engine value (construction-phase DS differs from stabilized PMT). |
 | **Refs** | [Loan Summary](#loan-summary), [Annual P&I](#annual-pi-pi-loans-loan-summary), [Loan Perm Origination Month](#loan-perm-origination-month), [s_loan_n_term_months](#loan-summary), [s_loan_n_annual_pi](#annual-pi-pi-loans-loan-summary), [s_loan_n_perm_origination_month](#loan-perm-origination-month) |
@@ -2978,7 +2978,11 @@ These are LP-facing metrics the engine computes for the Underwriting Summary / I
 
 #### F.1.8 Per-project phase plan (absolute month boundaries)
 
-These cells expose each project's phase boundaries as 1-based absolute month indices on its per-project sheet. They are computed by `app/engines/phase_plan.py:build_project_phase_windows` (which wraps the engine's `_build_phase_plan` to fold cumulative durations into `(start_month, end_month)` pairs) and registered by `app/exporters/investor_export.py:_build_project_sheet`. The cells are the foundation for future formula-driven construction-to-perm origination gating — a permanent-debt formula can now reference `p<n>_perm_origination_month` directly instead of re-walking the milestone trigger chain.
+These cells expose each project's phase boundaries as 1-based absolute month indices. They are computed by `app/engines/phase_plan.py:build_project_phase_windows` (which wraps the engine's `_build_phase_plan` to fold cumulative durations into `(start_month, end_month)` pairs) and registered by `app/exporters/investor_export.py:_emit_phase_plan_block`. The cells are the foundation for formula-driven construction-to-perm origination gating — a permanent-debt formula can reference `p<n>_perm_origination_month` directly instead of re-walking the milestone trigger chain.
+
+**Host sheet routing:**
+- **Multi-project scenarios** — emitted on each `P{n} <Name>` per-project sheet inside `_build_project_sheet`.
+- **Single-project scenarios** — the per-project sheet is suppressed (noise reduction since it would duplicate Underwriting Pro Forma), so the block is emitted on the Assumptions sheet under **Block E: Phase Plan (Per Project)**. Cell names are identical (`p1_*`) so downstream consumers like the Debt Schedule's C2P Status block and the Pro Forma Debt Service formula resolve unchanged in both layouts.
 
 ##### Phase Start Month
 
@@ -2989,7 +2993,7 @@ These cells expose each project's phase boundaries as 1-based absolute month ind
 | **App Calc/Use** | `build_project_phase_windows` folds the cumulative sum of phase durations from `_build_phase_plan`. Phase membership rules (which phases apply to which project type) are unchanged — this only adds the absolute-month coordinate. |
 | **App Notes** | Phase set varies by `Scenario.project_type` (new_construction adds pre_construction + construction; conversion adds pre_construction + conversion; value_add adds optional pre_construction + major_renovation; acquisition opt-in adds minor_renovation). Zero-duration phases are dropped so a downstream formula never indexes an empty range. |
 | **Excel Formula** | (engine-written integer; consumed by formulas elsewhere) |
-| **Excel Notes** | Only registered when the per-project sheet renders (`len(projects) > 1` and `profile != "proforma"`). Single-project scenarios consolidate into the scenario-level sheets and skip the per-project sheet entirely. |
+| **Excel Notes** | Registered on every workbook that has phase windows: per-project sheet for multi-project scenarios, Assumptions Block E for single-project scenarios. Skipped only for `profile == "proforma"` (engine-only path) or projects with no construction-side phase. |
 | **Refs** | [Phase End Month](#phase-end-month), [Phase Duration Months](#phase-duration-months), [Perm Origination Month](#perm-origination-month) |
 
 ##### Phase End Month
@@ -3044,7 +3048,7 @@ These cells expose each project's phase boundaries as 1-based absolute month ind
 
 First slice of construction-to-perm formula gating. The Debt Schedule's "Construction-to-Perm Status" sub-section emits one row per debt module that funds at least one project with a registered perm-origination month. Each row's two formula cells let an LP see, at a glance, which loans cross the construction-to-perm boundary and whether their active term extends past it.
 
-Rendered by `app/exporters/investor_export.py:_build_c2p_status_block`. Skipped entirely for single-project workbooks (per-project sheets don't render, so the `p<n>_perm_origination_month` cells don't exist).
+Rendered by `app/exporters/investor_export.py:_build_c2p_status_block`. Renders for both multi-project and single-project workbooks — single-project gets its `p1_*` phase cells from Assumptions Block E (see §F.1.8 host sheet routing). Skipped only when no debt module funds a project with a construction-side phase (e.g. pure-acquisition scenarios).
 
 ##### Loan Perm Origination Month
 
