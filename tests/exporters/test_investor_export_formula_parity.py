@@ -43,6 +43,7 @@ from app.models.capital import (
     EquityRole,
     VehicleType,
 )
+from app.models.deal import UseLine
 from app.models.project import Project
 from tests.conftest import (
     seed_deal_model_with_financials,
@@ -97,7 +98,22 @@ def _totals(ctx: dict[str, Any]) -> dict[str, Any]:
 
 
 EXPECTED_FORMULA_CELLS: list[FormulaCell] = [
+    # ── Cover sheet mirrors ───────────────────────────────────────────────────
+    # Cover's KPI cells are simple ``=s_<upstream>`` formulas. They give
+    # the parity test signal on every seeded scenario regardless of
+    # whether a full waterfall rollup ran.
+    FormulaCell(
+        named_range="s_cover_uses",
+        engine_value=lambda ctx: _totals(ctx).get("total_uses"),
+        label="Cover — Total Uses",
+        abs_tol=Decimal("1.0"),  # multi-million $ values
+        rel_tol=1e-6,
+        skip_if_engine_none=True,
+    ),
     # ── UW Summary ────────────────────────────────────────────────────────────
+    # Combined Equity Multiple is SUMIF-driven. Skips when the engine's
+    # waterfall hasn't run (combined_em_x = 0/None) — the per-sheet test
+    # in test_formula_parity_em uses the same skip pattern.
     FormulaCell(
         named_range="s_combined_equity_multiple",
         engine_value=lambda ctx: _totals(ctx).get("combined_em_x"),
@@ -146,6 +162,19 @@ async def _seed_scenario(session: AsyncSession):
             select(Project).where(Project.scenario_id == deal_model.id)
         )
     ).scalar_one()
+
+    # Use line so total_uses is non-zero and Cover mirror formulas have
+    # signal. Without this the engine's rollup totals are all 0 and every
+    # registry entry trips the engine-None skip branch.
+    session.add(UseLine(
+        project_id=project.id,
+        label="Purchase Price",
+        amount=Decimal("750000"),
+        phase="acquisition",
+        timing_type="first_day",
+        cost_category="hard",
+    ))
+    await session.flush()
 
     debt = CapitalModule(
         scenario_id=deal_model.id,

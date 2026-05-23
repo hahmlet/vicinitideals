@@ -203,6 +203,7 @@ def count_formula_cells(blob: bytes) -> dict[str, int]:
 # tests too. The plan calls this out in §8 / §9.
 
 
+import os  # noqa: E402
 import platform  # noqa: E402 — kept near the COM helpers, not the top imports.
 import subprocess  # noqa: E402
 from pathlib import Path  # noqa: E402
@@ -274,9 +275,19 @@ def recalc_with_excel_com(path: Path) -> None:
 def recalc_with_libreoffice(path: Path) -> None:
     """Headless LibreOffice recalc (Linux/macOS/Windows-with-LO).
 
-    Roundtrips the workbook through ``soffice --headless --convert-to xlsx``
-    which evaluates formulas and writes cached values into the output. The
-    resulting .xlsx replaces the original at ``path``.
+    ``soffice --convert-to xlsx`` does *not* write cached formula values
+    back into the .xlsx output — ``data_only=True`` then returns ``None``
+    for every formula cell, which makes recalc-based parity assertions
+    impossible. The workaround uses UNO directly:
+
+      1. Start a fresh soffice instance on a unique named pipe with an
+         isolated user profile (so concurrent test workers don't fight
+         for the singleton LO profile lock).
+      2. Run ``_lo_recalc.py`` under the system python3 (which has the
+         ``python3-uno`` bindings; uv's venv does not).
+      3. The helper opens the workbook, calls ``calculateAll()``, and
+         saves via ``storeToURL`` with the OOXML filter — which writes
+         cached values into ``<sheetData>`` so openpyxl can read them.
 
     Used as the CI backend on Linux runners where Excel COM is unavailable.
     """
@@ -285,18 +296,74 @@ def recalc_with_libreoffice(path: Path) -> None:
         raise RecalcUnavailableError(
             "LibreOffice (soffice) not found on PATH"
         )
+
+    # Locate a system python3 with the uno module available. The uv venv
+    # cannot import uno because python3-uno installs into the system
+    # site-packages only.
+    sys_python = _find_system_python_with_uno()
+    if sys_python is None:
+        raise RecalcUnavailableError(
+            "no system python3 with the uno module on PATH "
+            "(install python3-uno or equivalent)"
+        )
+
     src = Path(path).resolve()
-    out_dir = src.parent
-    subprocess.run(
-        [soffice, "--headless", "--calc", "--convert-to", "xlsx",
-         "--outdir", str(out_dir), str(src)],
-        check=True, capture_output=True, timeout=120,
+    if not src.exists():
+        raise RecalcUnavailableError(f"workbook not found: {src}")
+
+    helper = Path(__file__).parent / "_lo_recalc.py"
+    if not helper.exists():
+        raise RecalcUnavailableError(f"recalc helper missing: {helper}")
+
+    # Unique pipe + user profile so parallel test workers don't collide.
+    # ``os.getpid`` is enough — pytest-xdist workers fork from the runner
+    # and each gets its own PID.
+    import tempfile, uuid  # noqa: E401 — local import keeps top-of-file slim
+    pipe_name = f"vicinitideals-recalc-{os.getpid()}-{uuid.uuid4().hex[:8]}"
+    profile_dir = Path(tempfile.mkdtemp(prefix="lo-profile-"))
+    profile_url = profile_dir.as_uri()
+
+    soffice_proc = subprocess.Popen(
+        [
+            soffice, "--headless", "--norestore", "--nologo",
+            "--nodefault", "--nolockcheck", "--nofirststartwizard",
+            f"-env:UserInstallation={profile_url}",
+            f"--accept=pipe,name={pipe_name};urp;",
+        ],
+        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
     )
-    # LibreOffice writes <stem>.xlsx into out_dir; if it equals src we're
-    # done. If LO chose a different name (rare), surface that as an error.
+    try:
+        # ``_lo_recalc.py`` retries the resolver internally for ~15s, so
+        # we don't need to sleep here. Worst-case cold start completes
+        # well inside the helper's retry window.
+        result = subprocess.run(
+            [
+                sys_python, str(helper), str(src),
+                f"pipe,name={pipe_name};urp;",
+            ],
+            capture_output=True, timeout=120, text=True,
+        )
+        if result.returncode != 0:
+            raise RecalcUnavailableError(
+                f"UNO recalc failed (rc={result.returncode}): "
+                f"{result.stderr.strip() or result.stdout.strip()}"
+            )
+    finally:
+        soffice_proc.terminate()
+        try:
+            soffice_proc.wait(timeout=10)
+        except subprocess.TimeoutExpired:
+            soffice_proc.kill()
+            soffice_proc.wait(timeout=5)
+        # Best-effort profile cleanup. Leave behind if removal fails —
+        # tempdir cleanup is non-critical and racy soffice shutdowns
+        # sometimes hold file handles for a moment.
+        import shutil
+        shutil.rmtree(profile_dir, ignore_errors=True)
+
     if not src.exists():
         raise RecalcUnavailableError(
-            f"LibreOffice convert did not produce {src.name}"
+            f"UNO recalc did not preserve {src.name}"
         )
 
 
@@ -307,6 +374,40 @@ def _find_soffice() -> str | None:
         path = shutil.which(name)
         if path:
             return path
+    return None
+
+
+def _find_system_python_with_uno() -> str | None:
+    """Locate a system python3 interpreter that can import ``uno``.
+
+    ``python3-uno`` (Debian/Ubuntu) installs the bindings into
+    ``/usr/lib/python3/dist-packages/uno.py``, available to
+    ``/usr/bin/python3`` but not to the uv-managed venv. We probe a
+    short list of canonical interpreter paths and return the first one
+    whose ``import uno`` succeeds.
+    """
+    import shutil
+    candidates = [
+        "/usr/bin/python3",
+        shutil.which("python3"),
+        "/usr/lib/libreoffice/program/python",
+    ]
+    seen: set[str] = set()
+    for cand in candidates:
+        if not cand or cand in seen:
+            continue
+        seen.add(cand)
+        if not Path(cand).exists():
+            continue
+        try:
+            result = subprocess.run(
+                [cand, "-c", "import uno"],
+                capture_output=True, timeout=10,
+            )
+        except (subprocess.TimeoutExpired, OSError):
+            continue
+        if result.returncode == 0:
+            return cand
     return None
 
 
