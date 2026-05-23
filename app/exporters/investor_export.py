@@ -1644,21 +1644,22 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
 
     cur = val_row + 2
 
-    # Row 1: Yield on Cost
+    # Row 1: Yield on Cost — Phase D: formula-driven so it tracks LP edits
+    # to revenue/OpEx assumptions (through s_combined_noi on this sheet)
+    # and Use-line edits (through s_su_uses_total on the S&U sheet). The
+    # IFERROR fallback covers the s_su_uses_total == 0 / unconfigured
+    # case, so the formula is safe regardless of seed data quality.
     ws.cell(row=cur, column=1, value="Yield on Cost (NOI ÷ TPC)").font = FONT_LABEL
-    if yield_on_cost is not None:
-        registry.write(
-            ws, cur, 2, yield_on_cost,
-            name="s_yield_on_cost", fmt=PCT,
-            font=FONT_VALUE, align=ALIGN_RIGHT,
-        )
-        ws.cell(
-            row=cur, column=3,
-            value="Unlevered earnings rate vs cost basis",
-        ).font = FONT_HINT
-    else:
-        ws.cell(row=cur, column=2, value=_DASH).font = FONT_VALUE
-        registry.register("s_yield_on_cost", ws.title, cur, 2)
+    formula = "=IFERROR(s_combined_noi/s_su_uses_total,\"\")"
+    cell = ws.cell(row=cur, column=2, value=formula)
+    cell.number_format = PCT
+    cell.font = FONT_VALUE
+    cell.alignment = ALIGN_RIGHT
+    registry.register("s_yield_on_cost", ws.title, cur, 2)
+    ws.cell(
+        row=cur, column=3,
+        value="Unlevered earnings rate vs cost basis",
+    ).font = FONT_HINT
     cur += 1
 
     # Row 2: Going-In Cap Value
