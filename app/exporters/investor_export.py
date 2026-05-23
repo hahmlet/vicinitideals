@@ -1633,15 +1633,12 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
     )
     exit_year_noi = _exit_noi if _exit_noi > 0 else combined_noi
 
+    # yield_on_cost is still needed for the Cap Spread hint text ("Yield
+    # premium / Yield discount"); the cell itself is a formula.
+    # going_in_value / exit_value were removed after the Property Valuation
+    # block was converted to live formulas — see Appendix F in
+    # docs/FINANCIAL_MODEL.md for the catalog of formula-driven cells.
     yield_on_cost = (combined_noi / combined_tpc) if combined_tpc > 0 else None
-    going_in_value = (
-        (combined_noi * Decimal(100) / going_in_cap_pct_raw)
-        if going_in_cap_pct_raw > 0 else None
-    )
-    exit_value = (
-        (exit_year_noi * Decimal(100) / exit_cap_pct_raw)
-        if exit_cap_pct_raw > 0 else None
-    )
 
     cur = val_row + 2
 
@@ -3907,39 +3904,6 @@ def _combined_unlevered_irr(
     # _compute_xirr returns percent as whole number (e.g. 12.34 = 12.34%);
     # PCT format wants a fraction.
     return pct_whole / Decimal(100)
-
-
-def _combined_em(
-    rollup_waterfall: list[dict],
-    capital_modules: list[CapitalModule],
-) -> Decimal | None:
-    """Combined Equity Multiple = Σ equity distributions ÷ Σ equity contributions.
-
-    Walks the waterfall rollup for cumulative_distributed per equity
-    module, sums those, divides by the sum of equity-module commitments
-    (``source.amount``). Returns None when there's no equity stack OR no
-    waterfall data — better than reading a misleading 0 in the LP's eye.
-    """
-    by_module: dict[str, Decimal] = {}
-    for row in rollup_waterfall:
-        mid = row.get("capital_module_id")
-        if not mid:
-            continue
-        cum = _coerce_decimal(row.get("cumulative_distributed") or 0)
-        if cum > by_module.get(mid, Decimal(0)):
-            by_module[mid] = cum
-
-    total_dist = Decimal(0)
-    total_contrib = Decimal(0)
-    for module in capital_modules:
-        if _funder_class(module) != "Equity":
-            continue
-        commitment = _coerce_decimal((module.source or {}).get("amount") or 0)
-        if commitment <= 0:
-            continue
-        total_contrib += commitment
-        total_dist += by_module.get(str(module.id), Decimal(0))
-    return (total_dist / total_contrib) if total_contrib > 0 else None
 
 
 def _coc_year_one(
