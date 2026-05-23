@@ -2005,6 +2005,14 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
         ("Operating Expenses", "operating_expenses", "r_uw_opex"),
         ("CapEx Reserve", "capex_reserve", None),
         ("NOI", "noi", "r_uw_noi"),
+        # Phase C: Asset Mgmt Fee shown explicitly so the LP sees the
+        # sponsor's fee drag against NOI. Always rendered as a formula
+        # ``=IFERROR(-EGI*s_asset_mgmt_fee,0)`` — engine doesn't push this
+        # value to the annual rollup, so the row is purely informational
+        # and never carries an engine seed.
+        # No range name registered — informational row; named ranges on this
+        # sheet are reserved for engine-derived KPIs.
+        ("Asset Mgmt Fee", "asset_mgmt_fee", None),
         ("Debt Service", "debt_service", "r_uw_debt_service"),
         ("Net Cash Flow", "net_cash_flow", "r_uw_net_cash_flow"),
     ]
@@ -2106,6 +2114,21 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
                 cell = ws.cell(
                     row=cur_row, column=col_idx, value=_debt_service_formula,
                 )
+            elif field == "asset_mgmt_fee":
+                # Phase C: Asset Mgmt Fee = -EGI * s_asset_mgmt_fee, every
+                # year. IFERROR guards a missing s_asset_mgmt_fee gracefully.
+                egi_r = field_row.get("effective_gross_income")
+                if egi_r is not None:
+                    col_letter = get_column_letter(col_idx)
+                    formula = (
+                        f"=IFERROR(-{col_letter}{egi_r}*s_asset_mgmt_fee,0)"
+                    )
+                    cell = ws.cell(row=cur_row, column=col_idx, value=formula)
+                else:
+                    cell = ws.cell(
+                        row=cur_row, column=col_idx,
+                        value=_to_excel_number(Decimal(0)),
+                    )
             elif growth_name and col_offset >= 2:
                 # Y2+ for growth-chain fields: reference the prior-year
                 # cell on the same row and multiply by (1 + growth). Y0
@@ -5328,6 +5351,8 @@ _PF_ROWS: list[tuple[str, str]] = [
     ("Operating Expenses (OpEx)", "operating_expenses"),
     ("CapEx Reserve", "capex_reserve"),
     ("NOI (Net Operating Income)", "noi"),
+    # Phase C parity with _build_uw_proforma.
+    ("Asset Mgmt Fee", "asset_mgmt_fee"),
     ("Debt Service", "debt_service"),
     ("Net Cash Flow", "net_cash_flow"),
 ]
@@ -5393,6 +5418,20 @@ def _write_pf_table(
                     cell = ws.cell(
                         row=cur_row, column=col_idx,
                         value=_to_excel_number(value),
+                    )
+            elif field == "asset_mgmt_fee":
+                # Phase C parity with _build_uw_proforma.
+                egi_r = field_row.get("effective_gross_income")
+                if egi_r is not None:
+                    col_letter = get_column_letter(col_idx)
+                    formula = (
+                        f"=IFERROR(-{col_letter}{egi_r}*s_asset_mgmt_fee,0)"
+                    )
+                    cell = ws.cell(row=cur_row, column=col_idx, value=formula)
+                else:
+                    cell = ws.cell(
+                        row=cur_row, column=col_idx,
+                        value=_to_excel_number(Decimal(0)),
                     )
             elif growth_name and col_offset >= 2:
                 prev_col = get_column_letter(col_idx - 1)
