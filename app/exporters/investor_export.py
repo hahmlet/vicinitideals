@@ -4230,6 +4230,63 @@ def _build_debt_schedule(ws, registry: CellRegistry, ctx: dict) -> None:
                 perm_candidate = (module, principal)
         cur_row += 1
 
+    # ── Sizing & Carry-Type Notes (graceful-degradation disclosure) ───────
+    # Surface engine-driven approximations and binding constraints that the
+    # LP would otherwise have to infer from missing context. Each note is
+    # only emitted when the underlying condition is present, so the block
+    # stays empty (no header) for a vanilla perm-debt deal.
+    notes: list[str] = []
+    projects_list = ctx.get("projects") or []
+    default_inputs_dn = None
+    if projects_list:
+        default_inputs_dn = (ctx.get("operational_inputs") or {}).get(
+            projects_list[0].id
+        )
+    sizing_mode = getattr(default_inputs_dn, "debt_sizing_mode", None)
+    if sizing_mode == "dscr_capped":
+        notes.append(
+            "Debt sizing: DSCR-capped. Principals reflect the maximum loan "
+            "amount consistent with the minimum DSCR constraint. Editing "
+            "principal or rate in this workbook does NOT re-solve the DSCR "
+            "cap — recompute in the app to update."
+        )
+    elif sizing_mode == "dual_constraint":
+        notes.append(
+            "Debt sizing: dual constraint (DSCR-capped AND LTV-capped). "
+            "Principals reflect the binding of both constraints; the "
+            "tighter of the two governs."
+        )
+    carry_types_seen = {
+        _resolve_carry_type(m.carry or {}) for m in debt_modules
+    }
+    if "interest_reserve" in carry_types_seen:
+        notes.append(
+            "Interest reserve: shown values use the average-draw "
+            "approximation (draws-to-date ÷ 2). Engine cashflow uses "
+            "day-precise period-by-period accrual; small variances "
+            "between this sheet and the per-period schedule are expected."
+        )
+    if "capitalized_interest" in carry_types_seen:
+        notes.append(
+            "Capitalized interest (PIK): balance grows monthly at "
+            "rate ÷ 12. Debt service = 0 during the PIK window; "
+            "accrued interest is repaid at sale."
+        )
+    if notes:
+        cur_row += 1
+        section_label(ws, cur_row, "Notes", span_cols=6)
+        cur_row += 1
+        for note in notes:
+            cell = ws.cell(row=cur_row, column=1, value=note)
+            cell.font = FONT_HINT
+            cell.alignment = ALIGN_WRAP
+            ws.merge_cells(
+                start_row=cur_row, start_column=1,
+                end_row=cur_row, end_column=8,
+            )
+            ws.row_dimensions[cur_row].height = 30
+            cur_row += 1
+
     # ── Perm Loan Amortization Table ──────────────────────────────────────
     if perm_candidate is None:
         return
