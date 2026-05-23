@@ -1617,31 +1617,20 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
     combined_noi = _sum_per_project_field(per_project, "noi_stabilized")
     combined_tpc = _coerce_decimal(totals.get("total_project_cost") or 0)
 
-    # Exit-year NOI: sum monthly NOI for the last 12 months of the modeled hold
-    # (capped at Y10), matching the _per_year_irr_series convention.
-    # Yield-on-cost and Going-In Cap Value intentionally keep stabilized (Y1) NOI.
-    _cf_map: dict = ctx["cash_flows"]
-    _pnoi: dict[int, Decimal] = {}
-    for _cfl in _cf_map.values():
-        for _cf in _cfl:
-            _pnoi[_cf.period] = _pnoi.get(_cf.period, Decimal(0)) + _coerce_decimal(_cf.noi or 0)
-    _ann = _aggregate_scenario_annual(_cf_map)
-    _exit_yr = min(max(_ann) if _ann else 10, 10)
-    _exit_noi = sum(
-        (_pnoi.get(p, Decimal(0)) for p in range(_exit_yr * 12 - 11, _exit_yr * 12 + 1)),
-        Decimal(0),
-    )
-    exit_year_noi = _exit_noi if _exit_noi > 0 else combined_noi
-
+    # Engine-write cleanup (formula-conversion plan commit 8): the Yield on
+    # Cost, Going-In Cap Value, and Exit Cap Value cells are written as
+    # Excel formulas (rows below) so the Python-side Decimal computations
+    # those formulas replaced are no longer needed. `yield_on_cost` survives
+    # only as a sign-detector for the Cap Spread hint cell — its Decimal
+    # arithmetic does not feed any written value.
     yield_on_cost = (combined_noi / combined_tpc) if combined_tpc > 0 else None
-    going_in_value = (
-        (combined_noi * Decimal(100) / going_in_cap_pct_raw)
-        if going_in_cap_pct_raw > 0 else None
-    )
-    exit_value = (
-        (exit_year_noi * Decimal(100) / exit_cap_pct_raw)
-        if exit_cap_pct_raw > 0 else None
-    )
+    # Exit-year cap (used only by the Notes hint range for Exit Cap Value).
+    # The actual exit-year NOI is exposed as `s_exit_year_noi` from the
+    # Pro Forma builder; this `_exit_yr` is the display label. Falls back
+    # to 10 when no cashflow has been computed (degenerate fixture / first-
+    # render before compute).
+    _ann_years = _aggregate_scenario_annual(ctx.get("cash_flows") or {})
+    _exit_yr = min(max(_ann_years) if _ann_years else 10, 10)
 
     cur = val_row + 2
 
@@ -2057,21 +2046,24 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
         else []
     )
     def _debt_service_formula_for_year(y: int) -> str | None:
-        """Per-year Debt Service SUM, gated by each loan's term_months.
+        """Per-year Debt Service SUM, gated by each loan's active window.
 
         For year Y (1-indexed), each loan contributes its annual P&I
-        only if its hold term covers the end of that year — i.e.
-        ``s_loan_{i}_term_months >= Y*12``. A 10-year hold loan drops
-        out of the SUM starting in Y11 instead of overstating debt
-        service forever. Loans whose term cell is em-dash / blank fail
-        the >= test silently and contribute 0, which is the safe
-        graceful-degradation outcome.
+        only when its active window covers the end of that year — i.e.
+        ``s_loan_{i}_active_start_month <= Y*12`` AND
+        ``s_loan_{i}_term_months >= Y*12``. The active-start gate
+        suppresses construction-to-perm perm-loan debt service during
+        the pre-stabilization period (loan hasn't originated yet);
+        the term gate drops loans whose hold term has elapsed. Loans
+        whose gating cells are em-dash / blank fail both tests silently
+        and contribute 0, which is the safe graceful-degradation outcome.
         """
         if not _pmt_indices:
             return None
         year_end_months = y * 12
         terms = [
-            f"IF(s_loan_{i}_term_months>={year_end_months},"
+            f"IF(AND(s_loan_{i}_active_start_month<={year_end_months},"
+            f"s_loan_{i}_term_months>={year_end_months}),"
             f"s_loan_{i}_annual_pi,0)"
             for i in _pmt_indices
         ]
@@ -4134,13 +4126,14 @@ def _build_debt_schedule(ws, registry: CellRegistry, ctx: dict) -> None:
     capital_modules: list[CapitalModule] = ctx["capital_modules"]
     junctions: list[CapitalModuleProject] = ctx["junctions"]
 
-    set_widths(ws, [28, 16, 14, 10, 10, 10, 12, 18, 13, 14, 14])
+    set_widths(ws, [28, 16, 14, 10, 10, 10, 12, 18, 13, 14, 14, 13])
 
-    section_label(ws, 1, "Loan Summary — Per Capital Module", span_cols=11)
+    section_label(ws, 1, "Loan Summary — Per Capital Module", span_cols=12)
     header_row(
         ws, 2,
         ["Module", "Funder Type", "Principal", "Rate", "Term (mo)",
-         "Amort (yrs)", "IO Months", "Carry Type", "Day Count", "Annual P&I", "Balloon"],
+         "Amort (yrs)", "IO Months", "Carry Type", "Day Count", "Annual P&I",
+         "Balloon", "Active Start (mo)"],
     )
 
     # Junction-aggregated principal per module (mirrors the Investor Returns
@@ -4256,6 +4249,20 @@ def _build_debt_schedule(ws, registry: CellRegistry, ctx: dict) -> None:
         _write_optional(
             ws, cur_row, 11, balloon, registry,
             name=f"s_loan_{m_idx}_balloon", fmt=ACCOUNTING,
+        )
+        # Formula-conversion plan §4.3: register the loan's absolute
+        # origination month so the Pro Forma Debt Service per-year SUM can
+        # gate construction-to-perm stacks — a perm loan with
+        # active_phase_start="stabilized" should contribute $0 to debt
+        # service during the pre-stabilization period. Defaults to 0 when
+        # phase data is unavailable so the gate is permissive (loan treated
+        # as active from origin), preserving pre-gating behavior on legacy
+        # fixtures.
+        active_start = _loan_active_start_month(module, ctx) or 0
+        registry.write(
+            ws, cur_row, 12, active_start,
+            name=f"s_loan_{m_idx}_active_start_month", fmt=INT_COMMA,
+            font=FONT_VALUE, align=ALIGN_RIGHT,
         )
 
         # Track largest debt module for the amort table below.
@@ -4468,6 +4475,90 @@ def _loan_active_term_months(module: CapitalModule, ctx: dict) -> int | None:
     if not timeline_candidates:
         return None
     return max(timeline_candidates)
+
+
+def _default_project_phases(ctx: dict) -> list | None:
+    """Build the default (first) project's phase plan, cached on ctx.
+
+    Mirrors the engine's `_build_phase_plan` call site at the head of
+    `compute_cash_flows_for_project` so the exporter can derive per-loan
+    origination offsets without re-running the engine. Returns None when
+    the scenario has no projects or required inputs are missing — caller
+    falls back to assuming month-0 origination.
+    """
+    cached = ctx.get("_default_project_phases")
+    if cached is not None:
+        return cached if cached else None
+    projects = ctx.get("projects") or []
+    if not projects:
+        ctx["_default_project_phases"] = []
+        return None
+    project = projects[0]
+    inputs = (ctx.get("operational_inputs") or {}).get(project.id)
+    if inputs is None:
+        ctx["_default_project_phases"] = []
+        return None
+    scenario = ctx.get("scenario")
+    project_type = str(
+        getattr(getattr(scenario, "project_type", None), "value", None)
+        or getattr(scenario, "project_type", None)
+        or "acquisition"
+    )
+    orm_milestones = (ctx.get("milestones") or {}).get(project.id, [])
+    from app.engines.cashflow_compile import _build_phase_plan
+    has_lease_up = any(
+        str(m.milestone_type).replace("MilestoneType.", "") == "operation_lease_up"
+        for m in orm_milestones
+    )
+    has_pre_dev = any(
+        str(m.milestone_type).replace("MilestoneType.", "") == "pre_development"
+        for m in orm_milestones
+    )
+    has_constr = any(
+        str(m.milestone_type).replace("MilestoneType.", "") == "construction"
+        for m in orm_milestones
+    )
+    try:
+        phases = _build_phase_plan(
+            project_type, inputs,
+            milestone_dates=getattr(inputs, "milestone_dates", None),
+            has_lease_up_milestone=has_lease_up,
+            has_pre_development_milestone=has_pre_dev,
+            has_construction_milestone=has_constr,
+            capital_modules=ctx.get("capital_modules") or [],
+            orm_milestones=orm_milestones,
+        )
+    except (ValueError, AttributeError):
+        ctx["_default_project_phases"] = []
+        return None
+    ctx["_default_project_phases"] = phases
+    return phases
+
+
+def _loan_active_start_month(module: CapitalModule, ctx: dict) -> int | None:
+    """Absolute cashflow month at which a loan becomes active.
+
+    Mirrors the engine's `_loan_start_abs_month`: sums durations of all
+    phases whose rank is strictly below the module's `active_phase_start`
+    rank. Used by the Pro Forma Debt Service formula to gate per-loan
+    annual P&I in construction-to-perm stacks — a perm loan with
+    `active_phase_start="stabilized"` should contribute $0 to debt
+    service during the pre-stabilization period.
+
+    Returns None when phase data is unavailable; callers default to
+    treating the loan as active from month 0 (preserves the pre-gating
+    behavior so existing fixtures don't shift).
+    """
+    phases = _default_project_phases(ctx)
+    if phases is None:
+        return None
+    from app.engines.cashflow_compile import _APS_TO_RANK, _PERIOD_TYPE_RANK
+    start = str(getattr(module, "active_phase_start", "") or "")
+    start_rank = _APS_TO_RANK.get(start, 0)
+    return sum(
+        p.months for p in phases
+        if _PERIOD_TYPE_RANK.get(p.period_type, 99) < start_rank
+    )
 
 
 def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:

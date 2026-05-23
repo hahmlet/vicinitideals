@@ -51,6 +51,13 @@ DOC_PATH: Path = (
 _HEADER_RE = re.compile(r"^(#{2,3})\s+(.+?)\s*\[([\w,\s]+)\]\s*$")
 _PLAIN_HEADER_RE = re.compile(r"^#{2,3}\s+\S")
 
+# Matches the `**Investor export.**` subsection added by the formula-conversion
+# plan (commit 8). Captures the paragraph that follows, stopping at the next
+# blank line or end of body — same grammar as `**Definition.**` / `**Calculation.**`.
+_BOLD_EXPORT_NOTE = re.compile(
+    r"\*\*Investor export\.\*\*\s*(.*?)(?=\n\s*\n|\Z)", re.DOTALL
+)
+
 
 @dataclass(frozen=True)
 class MetricEntry:
@@ -63,6 +70,20 @@ class MetricEntry:
 
     def has_audience(self, audience: str) -> bool:
         return audience in self.audiences
+
+    @property
+    def export_note(self) -> str | None:
+        """Return the `**Investor export.**` paragraph if present.
+
+        Set on metrics whose investor-export cell is formula-driven
+        (commit 8 of the formula-conversion plan). Returns None when the
+        metric has no export note — typical for engine-only metrics
+        (pyxirr-driven Levered IRR per-project, etc.).
+        """
+        m = _BOLD_EXPORT_NOTE.search(self.body)
+        if m is None:
+            return None
+        return re.sub(r"\s+", " ", m.group(1)).strip()
 
 
 @dataclass

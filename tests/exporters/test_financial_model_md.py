@@ -79,3 +79,33 @@ def test_investor_audience_has_coverage():
         f"Expected investor-tagged metrics missing from FINANCIAL_MODEL.md: "
         f"{sorted(missing)}"
     )
+
+
+def test_formula_driven_metrics_carry_export_note():
+    """Formula-conversion plan commit 8: every metric whose cell in the
+    investor workbook is formula-driven (catalogued in Appendix F) must
+    carry an `**Investor export.**` paragraph in its glossary entry.
+    Surfaces via `MetricEntry.export_note` so future Glossary-sheet
+    expansion can render it without re-parsing the body.
+    """
+    report = parse_doc()
+    metrics_by_name = {m.name: m for m in report.metrics}
+    expected_with_note = {
+        "Yield on Cost",
+        "Going-In Cap Value",
+        "Cap Spread",
+        "Asset Management Fee",
+        "Debt Service",
+        "Equity Multiple (MOIC)",
+        "Levered IRR",
+    }
+    missing = [
+        name for name in expected_with_note
+        if metrics_by_name.get(name) is None
+        or metrics_by_name[name].export_note is None
+    ]
+    assert not missing, (
+        f"Formula-driven metrics missing **Investor export.** note: "
+        f"{sorted(missing)}. Add the paragraph in FINANCIAL_MODEL.md per "
+        f"Appendix F."
+    )

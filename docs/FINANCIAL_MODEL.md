@@ -1209,6 +1209,11 @@ yield_on_cost = NOI_stabilized / TPC
 Summary "Property Valuation" section from `OperationalOutputs.noi_stabilized`
 (summed across projects) and `OperationalOutputs.total_project_cost`.
 
+**Investor export.** Formula-driven (`s_yield_on_cost` =
+`=IFERROR(s_combined_noi/s_su_uses_total,"")`). LP edits to revenue/OpEx
+assumptions and Use-line amounts re-derive this without re-running the
+engine. See Appendix F for the full catalog.
+
 **Notes / edge cases.** Equivalent to "going-in cap rate on cost." Compare
 against the going-in market cap rate (`OperationalInputs.going_in_cap_rate_pct`)
 to read the deal's yield premium / discount — see Cap Spread.
@@ -1228,6 +1233,11 @@ going_in_cap_value = NOI_stabilized_combined / going_in_cap_rate
 Valuation section from `OperationalOutputs.noi_stabilized` and
 `OperationalInputs.going_in_cap_rate_pct`.
 
+**Investor export.** Formula-driven (`s_going_in_cap_value` =
+`=IFERROR(s_combined_noi/s_going_in_cap_rate,"")`). Edits to either
+the NOI source row or the Going-In Cap rate on the Assumptions sheet
+re-derive value in-workbook. See Appendix F.
+
 **Notes / edge cases.** Differs from Direct Cap Value (Exit Cap basis)
 only when the analyst sets going-in and exit cap rates differently, e.g.
 modeling cap-rate decompression on exit. Common conservative pattern:
@@ -1245,6 +1255,10 @@ cap_spread = yield_on_cost − going_in_cap_rate
 
 **Engine source.** Computed inline by the investor export's Property
 Valuation section.
+
+**Investor export.** Formula-driven (`s_cap_spread` =
+`=IFERROR(s_yield_on_cost-s_going_in_cap_rate,"")`). Tracks edits to
+both operands in-workbook. See Appendix F.
 
 **Notes / edge cases.** Positive spread → buying below-market cap (yield
 premium); negative → above-market acquisition price relative to NOI. A
@@ -1611,6 +1625,11 @@ if available_cash > 0 and am_fee_pct > 0:
 **Engine source.** `OperationalInputs.asset_mgmt_fee_pct` is the input;
 `compute_waterfall` (`app/engines/waterfall.py`) applies the deduction.
 
+**Investor export.** Formula-driven on UW Pro Forma — each year's cell
+is `=IFERROR(-{egi_col}{egi_row}*s_asset_mgmt_fee,0)` so LP edits to
+the EGI chain or the `s_asset_mgmt_fee` rate input ripple through
+without re-running the engine. See Appendix F.
+
 **Notes / edge cases.** Pre-distribution placement makes the AM fee senior to
 all investor distributions, consistent with how AM fees work in real fund
 structures.
@@ -1628,6 +1647,16 @@ debt_service_annual = Σ debt_service_monthly_per_loan × 12
 **Engine source.** `CashFlow.debt_service` (per project, per month). The
 investor export aggregates to annual buckets for the Cash Flow sheet
 (`r_uw_cf_debt_service`, `r_p<n>_cf_debt_service`).
+
+**Investor export.** Y1+ formula-driven on UW Pro Forma. Each year's
+Debt Service is a SUM of per-loan annual P&I named ranges, double-gated
+by each loan's active window:
+`IF(AND(s_loan_{i}_active_start_month<=Y*12,
+s_loan_{i}_term_months>=Y*12), s_loan_{i}_annual_pi, 0)`.
+The active-start gate suppresses construction-to-perm perm-loan debt
+service during the pre-stabilization period; the term gate drops loans
+whose hold term has elapsed. Y0 stays at the engine value (construction-
+phase carry often differs from the stabilized PMT). See Appendix F.
 
 **Notes / edge cases.** Construction-phase debt service uses the loan's
 construction carry rate; operations-phase uses P&I or interest-only per
@@ -1898,6 +1927,11 @@ equity_multiple = (total_LP_positive + total_GP_positive) / (total_LP_contribute
 
 **Why combined LP + GP?** This is the **project-level** equity multiple. Separate LP and GP multiples are also computed but are not the headline metric.
 
+**Investor export.** Formula-driven on both UW Summary and Investor
+Returns sheets via a SUMIF split of the Levered Cash Flow row:
+`=IFERROR(SUMIF(r_uw_cf_levered,">0")/(-SUMIF(r_uw_cf_levered,"<0")),0)`.
+Tracks LP edits to NOI, debt service, and capital events. See Appendix F.
+
 ### Weighted Equity Multiple [investor, app]
 
 **Definition.** Time-value-adjusted equity multiple at the investor's hurdle rate: (equity invested + NPV of distributions) ÷ equity invested. A 2.0× WEM means distributions are worth 2× equity in present-value terms at the hurdle rate.
@@ -2008,6 +2042,12 @@ levered_irr = XIRR(
 
 **Engine source.** `OperationalOutputs.levered_irr` (waterfall engine writes
 the authoritative value via `_apply_levered_metrics`).
+
+**Investor export.** The scenario-level "Combined Levered IRR" cell on
+the Investor Returns sheet is formula-driven via Excel's annual `IRR()`
+over the Levered Cash Flow row: `=IFERROR(IRR(r_uw_cf_levered),0)`.
+Per-module Return (%) cells stay engine-written (pyxirr monthly XIRR is
+not reproducible in pure Excel). See Appendix F for the parity caveat.
 
 **Notes / edge cases.** Levered IRR > unlevered IRR when leverage is
 accretive; reversed when the deal is over-levered. The spread is what the
@@ -2543,7 +2583,7 @@ Implementation lives in `app/exporters/investor_export.py`. The `CellRegistry` (
 | Underwriting Summary | Combined Equity Multiple | `=IFERROR(SUMIF(r_uw_cf_levered,">0")/(-SUMIF(r_uw_cf_levered,"<0")),0)` | Distributions ÷ Equity calls |
 | Investor Returns | Combined Levered IRR | `=IFERROR(IRR(r_uw_cf_levered),0)` | Annual levered CF row |
 | Investor Returns | Combined Equity Multiple | (same EM formula as UW Summary) | (same) |
-| UW Pro Forma | Debt Service (Y2+) | `=s_loan_1_annual_pi+s_loan_2_annual_pi+…` | Per-loan P&I, summed |
+| UW Pro Forma | Debt Service (Y1+) | `=IF(AND(s_loan_{i}_active_start_month<=Y*12, s_loan_{i}_term_months>=Y*12), s_loan_{i}_annual_pi, 0) + …` | Per-loan P&I, double-gated by origination month + hold term |
 | UW Pro Forma | Asset Mgmt Fee | `=IFERROR(-{col}{egi_row}*s_asset_mgmt_fee,0)` | EGI × fee rate |
 | UW Pro Forma | Net Cash Flow | `={col}{noi_row}-{col}{ds_row}` | NOI − DS |
 | UW Pro Forma | Revenue (Y2+) | `={col-1}{rev_row}*(1+s_revenue_growth_rate)` | Growth chain |
@@ -2574,4 +2614,5 @@ Parity tests in `tests/exporters/test_formula_parity_*.py` recalc workbooks via 
 - Every conditional metric is wrapped in `IFERROR(...,"")` or `IFERROR(...,0)` so missing inputs render as empty (or 0) rather than `#DIV/0!` / `#NUM!`.
 - The Debt Schedule's "Notes" block conditionally emits disclosure rows only when the underlying state is present (DSCR-capped sizing, interest-reserve carry, PIK carry). Vanilla perm-debt deals see no Notes section.
 - The Assumptions sheet's Block A includes editable `s_anchor_date` so the LP can overlay a reporting calendar on the relative Y0/Y1/Y2 grid without rebuilding the model.
+- Per-loan `s_loan_{n}_active_start_month` defaults to `0` when phase data is unavailable, making the Pro Forma Debt Service `AND()` gate permissive (loan treated as active from origin) — preserves pre-gating behavior on legacy fixtures without a phase plan.
 
