@@ -386,11 +386,10 @@ Before diagnosing a UI or infrastructure regression, check `docs/Troubleshooting
 
 ## Known Issues / Open Items
 
-1. **Backfill trigger chains**: deals created before commit `5d5caf4` have milestones with `trigger_milestone_id=None`, causing degenerate 1-month durations. One-shot backfill script needed.
-2. **X-Forwarded-For shows `192.168.1.1`**: UniFi SNAT on port forwards. Rate limiter buckets on proxy IP (global). Per-email limit still works. Accepted as-is.
-3. **Organization management**: no org creation UI or invite flow yet. First registered user auto-creates "Default Organization".
-4. **`docs/FINANCIAL_MODEL.md`** needs update for per-loan `_loan_pre_op_months`, trigger-chain requirements, `_PERIOD_TYPE_RANK` windowing logic.
-5. **Listing jurisdiction data inaccurate**: scraped `city` values from listing sources (Crexi/LoopNet) often use metro name instead of actual jurisdiction (e.g. Gresham listings tagged "Portland"). Fix: add `jurisdiction` column to `scraped_listings`, backfill via nearest-parcel lookup using lat/lng against 446K parcels with known jurisdictions, update scraper pipeline to assign jurisdiction on ingest.
+1. **X-Forwarded-For shows `192.168.1.1`**: UniFi SNAT on port forwards. Rate limiter buckets on proxy IP (global). Per-email limit still works. Accepted as-is.
+2. **Organization management**: no org creation UI or invite flow yet. First registered user auto-creates "Default Organization".
+3. **`docs/FINANCIAL_MODEL.md`** needs update for per-loan `_loan_pre_op_months`, trigger-chain requirements, `_PERIOD_TYPE_RANK` windowing logic.
+4. **Listing jurisdiction data inaccurate**: scraped `city` values from listing sources (Crexi/LoopNet) often use metro name instead of actual jurisdiction (e.g. Gresham listings tagged "Portland"). Fix: add `jurisdiction` column to `scraped_listings`, backfill via nearest-parcel lookup using lat/lng against 446K parcels with known jurisdictions, update scraper pipeline to assign jurisdiction on ingest.
 
 ---
 
