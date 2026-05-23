@@ -1662,69 +1662,61 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
     ).font = FONT_HINT
     cur += 1
 
-    # Row 2: Going-In Cap Value
+    # Row 2: Going-In Cap Value — formula tracks LP edits to NOI
+    # (via s_combined_noi) and Going-In Cap rate (s_going_in_cap_rate).
     ws.cell(
         row=cur, column=1, value="Going-In Cap Value (NOI ÷ Going-In Cap)"
     ).font = FONT_LABEL
-    if going_in_value is not None:
-        registry.write(
-            ws, cur, 2, going_in_value,
-            name="s_going_in_cap_value", fmt=ACCOUNTING,
-            font=FONT_VALUE, align=ALIGN_RIGHT,
-        )
-        ws.cell(
-            row=cur, column=3,
-            value=f"Market value at acquisition ({going_in_cap_pct_raw}% cap)",
-        ).font = FONT_HINT
-    else:
-        ws.cell(row=cur, column=2, value=_DASH).font = FONT_VALUE
-        ws.cell(
-            row=cur, column=3,
-            value="(no Going-In Cap configured)",
-        ).font = FONT_HINT
-        registry.register("s_going_in_cap_value", ws.title, cur, 2)
+    cell = ws.cell(
+        row=cur, column=2,
+        value='=IFERROR(s_combined_noi/s_going_in_cap_rate,"")',
+    )
+    cell.font = FONT_VALUE
+    cell.alignment = ALIGN_RIGHT
+    cell.number_format = ACCOUNTING
+    registry.register("s_going_in_cap_value", ws.title, cur, 2)
+    ws.cell(
+        row=cur, column=3,
+        value=f"Market value at acquisition ({going_in_cap_pct_raw}% cap)",
+    ).font = FONT_HINT
     cur += 1
 
-    # Row 3: Exit Cap Value (= Direct Cap, kept name for back-compat)
+    # Row 3: Exit Cap Value (= Direct Cap, kept name for back-compat).
+    # Formula tracks exit-year NOI (s_exit_year_noi) + Exit Cap (s_exit_cap_rate).
     ws.cell(
         row=cur, column=1, value="Exit Cap Value (NOI ÷ Exit Cap)"
     ).font = FONT_LABEL
-    if exit_value is not None:
-        registry.write(
-            ws, cur, 2, exit_value,
-            name="s_direct_cap_value", fmt=ACCOUNTING,
-            font=FONT_VALUE, align=ALIGN_RIGHT,
-        )
-        ws.cell(
-            row=cur, column=3,
-            value=f"Market value at exit ({exit_cap_pct_raw}% cap, Y{_exit_yr} NOI)",
-        ).font = FONT_HINT
-    else:
-        ws.cell(row=cur, column=2, value=_DASH).font = FONT_VALUE
-        ws.cell(
-            row=cur, column=3, value="(no Exit Cap configured)",
-        ).font = FONT_HINT
-        registry.register("s_direct_cap_value", ws.title, cur, 2)
+    cell = ws.cell(
+        row=cur, column=2,
+        value='=IFERROR(s_exit_year_noi/s_exit_cap_rate,"")',
+    )
+    cell.font = FONT_VALUE
+    cell.alignment = ALIGN_RIGHT
+    cell.number_format = ACCOUNTING
+    registry.register("s_direct_cap_value", ws.title, cur, 2)
+    ws.cell(
+        row=cur, column=3,
+        value=f"Market value at exit ({exit_cap_pct_raw}% cap, Y{_exit_yr} NOI)",
+    ).font = FONT_HINT
     cur += 1
 
-    # Row 4: Cap Spread (Yield on Cost − Going-In Cap)
+    # Row 4: Cap Spread (Yield on Cost − Going-In Cap) — both operands
+    # are named cells, so spread re-derives on LP edit.
     ws.cell(row=cur, column=1, value="Cap Spread (Yield − Going-In Cap)").font = FONT_LABEL
+    cell = ws.cell(
+        row=cur, column=2,
+        value='=IFERROR(s_yield_on_cost-s_going_in_cap_rate,"")',
+    )
+    cell.font = FONT_VALUE
+    cell.alignment = ALIGN_RIGHT
+    cell.number_format = PCT
+    registry.register("s_cap_spread", ws.title, cur, 2)
     if yield_on_cost is not None and going_in_cap_pct_raw > 0:
         cap_spread = yield_on_cost - (going_in_cap_pct_raw / Decimal(100))
-        registry.write(
-            ws, cur, 2, cap_spread,
-            name="s_cap_spread", fmt=PCT,
-            font=FONT_VALUE, align=ALIGN_RIGHT,
-        )
-        # Positive spread = yield premium (buying below market cap);
-        # negative = above-market acquisition price relative to NOI.
         ws.cell(
             row=cur, column=3,
             value=("Yield premium" if cap_spread > 0 else "Yield discount"),
         ).font = FONT_HINT
-    else:
-        ws.cell(row=cur, column=2, value=_DASH).font = FONT_VALUE
-        registry.register("s_cap_spread", ws.title, cur, 2)
     cur += 1
 
     # Row 5: DCF NPV — PV of levered cash flows less equity invested.
@@ -2160,6 +2152,13 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
         # the S&U Operating Reserve UseLine formula resolves.
         if field == "operating_expenses" and len(year_cols) >= 2:
             registry.register("s_y1_opex", ws.title, cur_row, 3)
+        # Phase D follow-up: expose the exit-year NOI cell (last column
+        # of the NOI row) so the UW Summary Exit Cap Value formula can
+        # reference a single named cell instead of duplicating the
+        # ``last 12 months of NOI`` aggregation engine-side.
+        if field == "noi" and year_cols:
+            exit_col = 1 + len(year_cols)
+            registry.register("s_exit_year_noi", ws.title, cur_row, exit_col)
         cur_row += 1
 
     # OER (Operating Expense Ratio) = OpEx / EGI per year. Standard CRE
@@ -4510,6 +4509,16 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
         ws, row, "Exit Cap Rate",
         _pct_value(default_inputs, "exit_cap_rate_pct"),
         name="s_exit_cap_rate", registry=registry, fmt=PCT, style="input",
+    ); row += 1
+    # Going-In Cap Rate at scenario level — sourced from default project's
+    # OperationalInputs (per-project today; promotes to scenario-level when
+    # editing lands). Needed so the UW Summary Property Valuation block's
+    # Going-In Cap Value can ref a single named cell instead of duplicating
+    # the per-project p1_going_in_cap_rate.
+    kv_row(
+        ws, row, "Going-In Cap Rate",
+        _pct_value(default_inputs, "going_in_cap_rate_pct"),
+        name="s_going_in_cap_rate", registry=registry, fmt=PCT, style="input",
     ); row += 1
     _streams_by_project: dict[UUID, list[IncomeStream]] = ctx.get(
         "income_streams", {}

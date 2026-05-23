@@ -111,6 +111,10 @@ _NON_METRIC_NAMES = frozenset({
     # Phase A follow-up: scenario-wide revenue-growth knob (Pro Forma's
     # gross_revenue growth chain). Input, not a metric.
     "s_revenue_growth_rate",
+    # Phase D: pointer to last column of UW Pro Forma NOI row — feeds the
+    # UW Summary Exit Cap Value formula. Same metric as s_combined_noi but
+    # at the exit year; not a separately documented number.
+    "s_exit_year_noi",
     # Per-project meta (header cells)
     "s_returns_combined_irr",  # alias for s_combined_irr
 })
