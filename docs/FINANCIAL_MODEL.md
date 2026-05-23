@@ -2800,37 +2800,181 @@ Each row documents one data point: definition, named range, app-side calc, app-s
 | **Excel Notes** | Pure cross-sheet ref. |
 | **Refs** | [NOI](#noi), [s_combined_noi](#noi) |
 
-#### F.1.6 Engine-only data points (pilot stubs)
+#### F.1.6 Engine-driven inputs + aggregates
 
-These data points are referenced by the formulas above but their *primary* computation lives in the engine, not as an Excel formula. Stub rows here so Refs links resolve; full Option-2 coverage (engine-only metrics + 1:1 mismatch notes) deferred to a future pass.
+These data points have a named cell on the workbook (so Excel formulas can reference them) but their *primary* computation lives in the engine. The cell value is an engine write, not a formula.
 
 ##### Debt Service
 
-(Referenced by Net Cash Flow.) Engine: `app/engines/cashflow.py` per-period sum of interest + principal across active debt modules. See [Debt Service (Pro Forma per year)](#debt-service-pro-forma-per-year) for the Excel-side render.
+| Field | Value |
+|---|---|
+| **Definition** | Total interest + principal outlay per period across all active debt modules. |
+| **Named Range** | (annual aggregate row on Underwriting Cash Flow; not separately named — referenced positionally) |
+| **App Calc/Use** | `app/engines/cashflow.py` sums `period_interest_months` + principal amortization per loan's active window; aggregated to annual columns in `app/exporters/investor_export.py:_build_uw_cashflow`. |
+| **App Notes** | Per-loan `active_phase_start/end` controls which periods contribute. Construction-phase debt service differs from stabilized PMT — see [Annual P&I](#annual-pi-pi-loans-loan-summary). |
+| **Excel Formula** | `—` (engine-written value; the Pro Forma version is [Debt Service (Pro Forma per year)](#debt-service-pro-forma-per-year), which IS a formula) |
+| **Excel Notes** | Annual aggregate over monthly periods loses sub-month precision. |
+| **Refs** | [Annual P&I](#annual-pi-pi-loans-loan-summary), [Debt Service (Pro Forma per year)](#debt-service-pro-forma-per-year) |
 
 ##### EGI
 
-(Effective Gross Income.) Engine: `app/engines/cashflow.py` computes as Gross Revenue × (1 − vacancy) per period. Workbook surfaces as a Pro Forma row; no named range yet. Excel Asset Mgmt Fee formula references the per-column EGI cell directly.
+| Field | Value |
+|---|---|
+| **Definition** | Effective Gross Income = Gross Revenue × (1 − vacancy). Pre-OpEx, post-vacancy income. |
+| **Named Range** | (per-year cell on Pro Forma row; not separately named) |
+| **App Calc/Use** | `app/engines/cashflow.py:_compute_period` applies stream-level vacancy + occupancy ramp to monthly Gross Revenue; annual EGI on the Pro Forma is the year-sum. |
+| **App Notes** | Vacancy is `1 − occupancy_pct`; occupancy uses a lease-up curve during the lease-up phase, snaps to stabilized after. |
+| **Excel Formula** | `—` (engine-written annual value) |
+| **Excel Notes** | Referenced positionally by the [Asset Mgmt Fee](#asset-mgmt-fee) formula (`{col}{egi_row}`). If the EGI row moves rows, the Asset Mgmt Fee `{egi_row}` placeholder needs to be re-resolved during emit. |
+| **Refs** | [Asset Mgmt Fee](#asset-mgmt-fee) |
 
 ##### Exit Cap Rate
 
-(Input cell on Assumptions.) Named range `s_exit_cap_rate`. User-editable percentage stored as decimal fraction; consumed by [Exit Cap Value](#exit-cap-value).
+| Field | Value |
+|---|---|
+| **Definition** | Discount rate applied to exit-year NOI to derive sale-time market value. Driver of terminal value in DCF / waterfall. |
+| **Named Range** | `s_exit_cap_rate` |
+| **App Calc/Use** | User-editable cell on Assumptions Block A; default from `Scenario.exit_cap_rate_pct` or org default. `_pct_value` converts the stored whole-percent (e.g. 6.5) to a decimal fraction (0.065). |
+| **App Notes** | Stored as decimal fraction in the named cell; **not** as whole-number percent. Formulas dividing by this cell get correct value directly. |
+| **Excel Formula** | (input cell, no formula) |
+| **Excel Notes** | LP-editable; edits flow through to [Exit Cap Value](#exit-cap-value). Format is PCT (renders as percent but stored as fraction). |
+| **Refs** | [Exit Cap Value](#exit-cap-value), [s_exit_cap_rate](#exit-cap-rate) |
 
 ##### Going-In Cap Rate
 
-(Input cell on Assumptions.) Named range `s_going_in_cap_rate`. User-editable percentage stored as decimal fraction; consumed by [Going-In Cap Value](#going-in-cap-value) and [Cap Spread](#cap-spread).
+| Field | Value |
+|---|---|
+| **Definition** | Capitalization rate at acquisition; used to derive market value from stabilized NOI. |
+| **Named Range** | `s_going_in_cap_rate` |
+| **App Calc/Use** | User-editable cell on Assumptions Block A; default from `Scenario.going_in_cap_rate_pct` or org default. `_pct_value` divides by 100 to store as fraction. |
+| **App Notes** | Stored as decimal fraction; same convention as [Exit Cap Rate](#exit-cap-rate). |
+| **Excel Formula** | (input cell, no formula) |
+| **Excel Notes** | LP-editable; edits flow through to [Going-In Cap Value](#going-in-cap-value) and [Cap Spread](#cap-spread). |
+| **Refs** | [Going-In Cap Value](#going-in-cap-value), [Cap Spread](#cap-spread), [Exit Cap Rate](#exit-cap-rate), [s_going_in_cap_rate](#going-in-cap-rate) |
 
 ##### Levered Cash Flow
 
-(Annual row on Underwriting Cash Flow.) Named range `r_uw_cf_levered`. Engine: `app/engines/cashflow.py` per-period NCF minus debt service plus capital events. Workbook row is an annual aggregate; consumed by [Combined Levered IRR](#combined-levered-irr) and [Combined Equity Multiple](#combined-equity-multiple).
+| Field | Value |
+|---|---|
+| **Definition** | Net cash flow available to equity per period = NCF − Debt Service + Capital Events − Equity Calls. |
+| **Named Range** | `r_uw_cf_levered` (annual row range on Underwriting Cash Flow) |
+| **App Calc/Use** | `app/engines/cashflow.py` computes monthly per-period; `_build_uw_cashflow` aggregates to annual columns and registers `r_uw_cf_levered` as the row range. |
+| **App Notes** | Includes capital events (sale proceeds, refi) and equity calls — distinct from [Net Cash Flow (Pro Forma)](#net-cash-flow-pro-forma) which excludes both. |
+| **Excel Formula** | (annual row; per-cell engine-written) |
+| **Excel Notes** | Consumed by [Combined Levered IRR](#combined-levered-irr) via `IRR()` and [Combined Equity Multiple](#combined-equity-multiple) via `SUMIF`. Annual aggregation loses sub-year equity-call/distribution timing — primary parity gap vs engine's monthly XIRR. |
+| **Refs** | [NOI](#noi), [Debt Service](#debt-service), [Combined Levered IRR](#combined-levered-irr), [Combined Equity Multiple](#combined-equity-multiple), [Net Cash Flow (Pro Forma)](#net-cash-flow-pro-forma), [r_uw_cf_levered](#levered-cash-flow) |
 
 ##### NOI
 
-(Net Operating Income.) Named range `s_combined_noi`. Engine: `app/engines/cashflow.py` computes monthly NOI = EGI − OpEx; stabilized-window aggregate exposed as `totals.noi_stabilized`. Consumed by [Yield on Cost](#yield-on-cost), [Going-In Cap Value](#going-in-cap-value), [Cover Hero — NOI](#cover-hero-noi), and (via `s_exit_year_noi`) [Exit Cap Value](#exit-cap-value).
+| Field | Value |
+|---|---|
+| **Definition** | Net Operating Income = EGI − Operating Expenses. The fundamental income measure for cap-rate valuation. |
+| **Named Range** | `s_combined_noi` (stabilized aggregate, scenario-level); `s_exit_year_noi` (last column of UW Pro Forma NOI row, used for terminal-value math). |
+| **App Calc/Use** | `app/engines/cashflow.py:_compute_period` produces monthly NOI; `totals.noi_stabilized` aggregates the stabilized-window months. `_build_uw_summary` registers `s_combined_noi`. The UW Pro Forma NOI row is per-year aggregate; `s_exit_year_noi` points at its last column. |
+| **App Notes** | Stabilized = first 12 months of the stabilized phase. Edits to revenue / OpEx flow through monthly engine → annual aggregate → named range. |
+| **Excel Formula** | (engine-written value; consumed by formulas elsewhere) |
+| **Excel Notes** | `s_combined_noi` is the Y1-stabilized number; `s_exit_year_noi` is Y_N where N = exit year. They differ when the OpEx/revenue growth chains compound. Formulas referencing the wrong one give materially wrong cap values. |
+| **Refs** | [EGI](#egi), [Yield on Cost](#yield-on-cost), [Going-In Cap Value](#going-in-cap-value), [Exit Cap Value](#exit-cap-value), [Cover Hero — NOI](#cover-hero-noi), [s_combined_noi](#noi), [s_exit_year_noi](#noi) |
 
 ##### Total Uses
 
-(Sources & Uses subtotal.) Named range `s_su_uses_total`. Engine: `app/exporters/investor_export.py` sums UseLine amounts excluding the `exit` phase. Consumed by [Yield on Cost](#yield-on-cost) and [Cover Hero — Cap Rate](#cover-hero-cap-rate).
+| Field | Value |
+|---|---|
+| **Definition** | Sum of all UseLine amounts in the scenario excluding the `exit` phase. The denominator of cost-basis metrics like Yield on Cost. |
+| **Named Range** | `s_su_uses_total` |
+| **App Calc/Use** | `app/exporters/investor_export.py:_build_su_sheet` aggregates `UseLine.amount` per cost category, then totals; the engine value `total_project_cost` in `OperationalOutputs` is the same number per project, summed across projects. |
+| **App Notes** | Excludes `phase=exit` UseLines (selling costs, exit fees) — those are netted from sale proceeds, not part of acquisition basis. |
+| **Excel Formula** | (engine-written value; consumed by formulas elsewhere) |
+| **Excel Notes** | Consumed by [Yield on Cost](#yield-on-cost) and [Cover Hero — Cap Rate](#cover-hero-cap-rate). Edits to UseLines on the S&U sheet re-derive this via the sheet's own SUM formulas (S&U Use rows are formulas — see S&U documentation in the formula-conversion plan). |
+| **Refs** | [Yield on Cost](#yield-on-cost), [Cover Hero — Cap Rate](#cover-hero-cap-rate), [s_su_uses_total](#total-uses) |
+
+#### F.1.7 Underwriting metrics (engine-only, no Excel formula)
+
+These are LP-facing metrics the engine computes for the Underwriting Summary / Investor Returns sheets but does not yet expose as formula-driven cells. Workbook cells hold the engine value; LP edits to upstream inputs do **not** propagate without re-running the Python engine.
+
+##### Cash-on-Cash (Year 1)
+
+| Field | Value |
+|---|---|
+| **Definition** | Year-1 cash distributions to equity ÷ equity contributed. |
+| **Named Range** | `s_coc_year_one` |
+| **App Calc/Use** | `app/exporters/investor_export.py:_coc_year_one` sums waterfall `cash_distributed` for periods 1–12 across equity modules; divides by total equity commitments. |
+| **App Notes** | Returns `None` when committed equity is $0 (auto-funded deals); falls back to scenario `equity_required` × Y1 distributions as the denominator. |
+| **Excel Formula** | `—` (engine value; no Excel formula yet) |
+| **Excel Notes** | Could be formulized as `SUMIF(r_uw_cf_levered, ">0", first 12 cells) / equity_basis` but Excel's `SUMIF` doesn't support positional slicing — would need `INDEX` / array tricks. Deferred. |
+| **Refs** | [Combined Equity Multiple](#combined-equity-multiple), [s_coc_year_one](#cash-on-cash-year-1) |
+
+##### DCF NPV
+
+| Field | Value |
+|---|---|
+| **Definition** | Net Present Value of levered cash flows at the configured hurdle rate. NPV > 0 = asset clears the hurdle; NPV < 0 = doesn't. |
+| **Named Range** | `s_dcf_npv` |
+| **App Calc/Use** | `app/exporters/investor_export.py:_npv_levered` discounts waterfall distributions and equity calls at `s_discount_rate`; subtracts initial equity contribution. |
+| **App Notes** | Hint text gates on `npv_lev > 0` to show "Value created above hurdle" vs "Return below hurdle". |
+| **Excel Formula** | `—` (engine value; could become `=IFERROR(NPV(s_discount_rate,r_uw_cf_levered),0)` but Excel `NPV` assumes period-1 start, not period-0; needs an explicit Y0 add-back. Deferred.) |
+| **Excel Notes** | Excel `NPV` discounts from period 1, not period 0 — naive conversion would understate NPV by the discount on the Y0 equity call. Use `XNPV` with explicit dates for parity. |
+| **Refs** | [Combined Levered IRR](#combined-levered-irr), [Levered Cash Flow](#levered-cash-flow), [s_dcf_npv](#dcf-npv) |
+
+##### DSCR (Minimum, Stabilized)
+
+| Field | Value |
+|---|---|
+| **Definition** | Debt Service Coverage Ratio = NOI ÷ Debt Service, minimum across all stabilized periods. Bank's primary debt-sizing constraint. |
+| **Named Range** | (not yet exposed as a named cell) |
+| **App Calc/Use** | `app/engines/underwriting.py:MetricsCalculator.calculate_dscr` takes per-period `dscr_for_period` from `CashFlowPeriod` (which is `noi / debt_service` per month), filters to stabilized periods, returns min + average. |
+| **App Notes** | When `debt_sizing_mode == "dscr_capped"`, the auto-sizer uses Newton-Raphson (`app/engines/newton_solve.py:solve_principal_for_dscr`) to size the loan such that the minimum DSCR exactly meets the target. |
+| **Excel Formula** | `—` (engine value only) |
+| **Excel Notes** | Could be formulized as `MIN(NOI_row/DS_row)` over the operating-period columns once a per-period DSCR row is named. The Debt Schedule's [Notes block](#debt-service-pro-forma-per-year) calls out when DSCR-cap was binding so the LP doesn't miss that the loan didn't size to LTV/LTC. |
+| **Refs** | [NOI](#noi), [Debt Service](#debt-service) |
+
+##### LTC (Loan-to-Cost)
+
+| Field | Value |
+|---|---|
+| **Definition** | Total debt principal ÷ Total Project Cost. Bank's cost-basis lending limit. |
+| **Named Range** | (not yet exposed) |
+| **App Calc/Use** | `app/engines/underwriting.py:MetricsCalculator.calculate_ltc` sums debt module principals, divides by `total_project_cost` from `OperationalOutputs`. |
+| **App Notes** | Auto-sizer respects `max_ltc_pct` from each loan's source config (default 75% for senior debt, see `_DEFAULT_LOAN_COSTS` in `cashflow.py`). |
+| **Excel Formula** | `—` (engine value only) |
+| **Excel Notes** | Could be formulized as `=SUM(s_loan_*_principal)/s_su_uses_total` once `SUMPRODUCT` or per-loan addition is wired (similar pattern to [Debt Service (Pro Forma per year)](#debt-service-pro-forma-per-year)). Deferred. |
+| **Refs** | [Total Uses](#total-uses), [Loan Summary](#loan-summary) |
+
+##### Operating Reserve
+
+| Field | Value |
+|---|---|
+| **Definition** | Cash held aside at stabilization to cover N months of OpEx + Debt Service. A bank covenant + LP risk buffer. |
+| **Named Range** | `s_operating_reserve_months` (the input — months count), `s_operating_reserve_dollars` (the derived $ amount as a UseLine, formula-driven on S&U) |
+| **App Calc/Use** | `app/engines/cashflow.py` seeds the reserve on the first stabilized period (`_operating_reserve_seeded`); the dollar amount is a UseLine sized by `operating_reserve_months × (annual OpEx + annual debt service) / 12`. |
+| **App Notes** | Drains in subsequent periods if cash flow goes negative — not a permanent escrow. |
+| **Excel Formula** | The S&U "Operating Reserve" UseLine row IS a formula (covered in S&U documentation, not in this catalog yet): `=s_operating_reserve_months*(s_y1_opex+s_y1_debt_service)/12` or similar. The Pro Forma operating-reserve seed is engine-written. |
+| **Excel Notes** | Two related cells: input months (`s_operating_reserve_months`) and derived dollars (`s_operating_reserve_dollars`). Both LP-editable indirectly via the months input. |
+| **Refs** | [Total Uses](#total-uses), [s_operating_reserve_months](#operating-reserve) |
+
+##### Total Project Cost (TPC)
+
+| Field | Value |
+|---|---|
+| **Definition** | Sum of all hard costs, soft costs, financing costs, and reserves needed to acquire + build + stabilize the project. Synonymous with Total Uses excluding exit-phase costs. |
+| **Named Range** | Same as [Total Uses](#total-uses) at the scenario level (`s_su_uses_total`). |
+| **App Calc/Use** | `app/engines/cashflow.py:_calculate_total_project_cost` sums all `CashFlowLineItem` amounts excluding the `exit` phase per project; engine emits as `OperationalOutputs.total_project_cost`. |
+| **App Notes** | The auto-sizer's one-pass divisor fold-in (`_auto_size_debt_modules`) ensures closing-cost UseLines are included in TPC so Sources = Uses balance holds. |
+| **Excel Formula** | `—` (engine value; identical to [Total Uses](#total-uses) in scenario aggregate) |
+| **Excel Notes** | Per-project TPC is on each project's per-project sheet (when present); scenario TPC is on S&U via [Total Uses](#total-uses). |
+| **Refs** | [Total Uses](#total-uses) |
+
+##### Weighted Equity Multiple
+
+| Field | Value |
+|---|---|
+| **Definition** | Risk-adjusted EM that incorporates the time value of money at the hurdle rate. `(Equity + NPV) / Equity`. Always ≥ 1.0 when NPV ≥ 0. |
+| **Named Range** | `s_weighted_equity_multiple` |
+| **App Calc/Use** | `app/exporters/investor_export.py:_weighted_em_calc` reads `_npv_levered` (DCF NPV) and divides by equity required. |
+| **App Notes** | Returns `None` when `equity_required < $1`. Hurdle rate from `Scenario.discount_rate_pct` (default 8% or org default). |
+| **Excel Formula** | `—` (engine value; could become `=IFERROR((s_dcf_npv+s_equity_required)/s_equity_required,1)` once `s_dcf_npv` is formula-driven and `s_equity_required` is named. Deferred — chained on DCF NPV conversion.) |
+| **Excel Notes** | Both Weighted EM and DCF NPV would gate on the same Excel `NPV`/`XNPV` decision — convert as a pair. |
+| **Refs** | [Combined Equity Multiple](#combined-equity-multiple), [DCF NPV](#dcf-npv), [s_weighted_equity_multiple](#weighted-equity-multiple) |
 
 ### F.2 Defined-name conventions
 

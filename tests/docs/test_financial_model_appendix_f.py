@@ -137,6 +137,14 @@ def test_excel_formula_named_ranges_appear_in_refs():
         if not formula or formula.startswith("("):
             # No formula — skip (engine-only stubs, input cells, etc.)
             continue
+        # Only validate cells that actually hold a real Excel formula.
+        # Real formula cells start with a backticked ``=`` (``` `=SUMIF... ` ```)
+        # or raw ``=``. Prose cells (engine-only rows that *discuss* a possible
+        # conversion via "could become `=...`") are not formula cells —
+        # validating their embedded tokens would force Refs to advertise
+        # deps that don't exist yet.
+        if not (formula.startswith("`=") or formula.startswith("=")):
+            continue
         tokens = set(NAMED_RANGE_RE.findall(formula))
         if not tokens:
             continue
