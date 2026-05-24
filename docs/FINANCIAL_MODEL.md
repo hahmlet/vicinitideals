@@ -3109,6 +3109,114 @@ Rendered by `app/exporters/investor_export.py:_build_c2p_status_block`. Renders 
 | **Excel Notes** | `AND(ISNUMBER(...))` guards keep the boolean from returning TRUE when either input is the empty-string `IFERROR` fallback from [Loan Perm Origination Month](#loan-perm-origination-month). |
 | **Refs** | [Loan Perm Origination Month](#loan-perm-origination-month), [s_loan_n_perm_origination_month](#loan-perm-origination-month), [s_loan_n_term_months](#loan-summary), [s_loan_n_active_in_operations](#loan-active-in-operations) |
 
+#### F.1.10 Revenue inputs (Assumptions Block F)
+
+Foundation of the engine-to-formula migration for the Pro Forma / Cash Flow / Unit Mix sheets. Every `IncomeStream` record in the scenario gets a row on Assumptions Block F with four user-editable input cells and one computed convenience cell. Downstream sheets can then write `=SUMPRODUCT(s_rev_<slug>_unit_count, s_rev_<slug>_rent_per_unit_monthly, s_rev_<slug>_occupancy_pct)` style formulas instead of baking the numbers in as hardcoded values.
+
+Rendered by `app/exporters/investor_export.py:_build_assumptions_revenue_block`. Slugs come from `_stream_slugs` — lowercased `label`, non-alphanumerics → `_`, collision-resolved with `_2` / `_3` suffixes, blank labels fall back to `stream_<idx>`.
+
+##### Stream Unit Count
+
+| Field | Value |
+|---|---|
+| **Definition** | Number of units in a revenue stream (typically a unit-type row: studios, 1BR, 2BR, etc.). `None` for fixed-amount streams like parking / laundry. |
+| **Named Range** | `s_rev_<slug>_unit_count` |
+| **App Calc/Use** | Mirrors `IncomeStream.unit_count` verbatim. Engine multiplies count × rent × occupancy to compute Gross Revenue. |
+| **App Notes** | Editable as an input — LP can model add-units scenarios by bumping this cell. Future Pro Forma Gross Revenue formula will SUMPRODUCT across all `s_rev_<slug>_unit_count` cells. |
+| **Excel Formula** | (input cell, integer) |
+| **Excel Notes** | Empty when the stream is fixed-amount; the Y1 monthly formula falls back to rent-only via `IFERROR`. |
+| **Refs** | [Stream Rent Per Unit Monthly](#stream-rent-per-unit-monthly), [Stream Y1 Monthly](#stream-y1-monthly) |
+
+##### Stream Rent Per Unit Monthly
+
+| Field | Value |
+|---|---|
+| **Definition** | Per-unit monthly rent for a revenue stream, gross of vacancy/concessions. |
+| **Named Range** | `s_rev_<slug>_rent_per_unit_monthly` |
+| **App Calc/Use** | Mirrors `IncomeStream.amount_per_unit_monthly`. |
+| **App Notes** | LP-editable input. Pro Forma Gross Revenue Y1 formula will multiply by unit_count × occupancy × 12. |
+| **Excel Formula** | (input cell) |
+| **Excel Notes** | For fixed-amount streams (parking, laundry, billboard), the unit_count cell is empty and this cell holds the full monthly amount. The Y1 monthly formula's `IFERROR` branch handles that case. |
+| **Refs** | [Stream Unit Count](#stream-unit-count), [Stream Y1 Monthly](#stream-y1-monthly) |
+
+##### Stream Occupancy Pct
+
+| Field | Value |
+|---|---|
+| **Definition** | Stabilized occupancy percentage applied to this stream's gross revenue. |
+| **Named Range** | `s_rev_<slug>_occupancy_pct` |
+| **App Calc/Use** | Mirrors `IncomeStream.stabilized_occupancy_pct`. Engine applies during stabilized periods; lease-up phases use a ramp instead. |
+| **App Notes** | Stored as 0–100 (e.g. 95.0). Excel display format is `0.0%`. |
+| **Excel Formula** | (input cell, 0–100) |
+| **Excel Notes** | Stream-level granularity lets LPs model unit-type-specific vacancy (e.g. studios 90%, 2BR 95%). |
+| **Refs** | [Stream Unit Count](#stream-unit-count), [Stream Y1 Monthly](#stream-y1-monthly) |
+
+##### Stream Escalation Pct
+
+| Field | Value |
+|---|---|
+| **Definition** | Annual rent escalation rate for this stream. Applied Y2+ in Pro Forma; Y1 = stabilized rent. |
+| **Named Range** | `s_rev_<slug>_escalation_pct` |
+| **App Calc/Use** | Mirrors `IncomeStream.escalation_rate_pct_annual`. |
+| **App Notes** | Per-stream so LP can model differential escalation (e.g. retail CAM 0%, residential 3%). Future Pro Forma Y2+ revenue formula: `=Y1 * (1 + s_rev_<slug>_escalation_pct/100)^(year-1)`. |
+| **Excel Formula** | (input cell, 0–100) |
+| **Excel Notes** | Distinct from scenario-level `s_revenue_growth_rate` which is the engine's default fallback when stream-level escalation is 0. |
+| **Refs** | [Stream Rent Per Unit Monthly](#stream-rent-per-unit-monthly) |
+
+##### Stream Y1 Monthly
+
+| Field | Value |
+|---|---|
+| **Definition** | Computed Y1 stabilized monthly revenue for the stream — gives an LP an at-a-glance sanity check on each line. |
+| **Named Range** | `s_rev_<slug>_y1_monthly` |
+| **App Calc/Use** | Formula cell, not stored on `IncomeStream`. Recomputes live when any of the three input cells change. |
+| **App Notes** | Future Pro Forma Gross Revenue Y1 will be `=SUMPRODUCT` across `s_rev_*_y1_monthly * 12` (annualizing). |
+| **Excel Formula** | `=IFERROR(s_rev_1_unit_count*s_rev_1_rent_per_unit_monthly*s_rev_1_occupancy_pct, s_rev_1_rent_per_unit_monthly*s_rev_1_occupancy_pct)` |
+| **Excel Notes** | `IFERROR` branch covers fixed-amount streams (no unit_count) — falls back to rent × occupancy. The `_1_` index in the formula is illustrative; the real slug embeds the stream label (e.g. `s_rev_1br_units_unit_count`). |
+| **Refs** | [Stream Unit Count](#stream-unit-count), [Stream Rent Per Unit Monthly](#stream-rent-per-unit-monthly), [Stream Occupancy Pct](#stream-occupancy-pct), [s_rev_n_unit_count](#stream-unit-count), [s_rev_n_rent_per_unit_monthly](#stream-rent-per-unit-monthly), [s_rev_n_occupancy_pct](#stream-occupancy-pct) |
+
+#### F.1.11 Operating Expense inputs (Assumptions Block G)
+
+Companion to §F.1.10 for OpEx side of the model. Every `OperatingExpenseLine` record in the scenario gets a row on Assumptions Block G with two user-editable input cells and one computed convenience cell. Downstream Pro Forma OpEx rows can reference these instead of hardcoding annual amounts.
+
+Rendered by `app/exporters/investor_export.py:_build_assumptions_opex_block`. Slugs come from `_opex_slugs` (same algorithm as `_stream_slugs`, blank labels fall back to `opex_<idx>`).
+
+##### OpEx Annual
+
+| Field | Value |
+|---|---|
+| **Definition** | Y1 annual operating expense for an OpEx line (property mgmt, insurance, taxes, etc.). |
+| **Named Range** | `s_opex_<slug>_annual` |
+| **App Calc/Use** | Mirrors `OperatingExpenseLine.annual_amount`. |
+| **App Notes** | LP-editable input. Future Pro Forma OpEx row Y1 formula: `=s_opex_<slug>_annual`. Y2+ applies escalation. |
+| **Excel Formula** | (input cell) |
+| **Excel Notes** | Total OpEx will be `=SUM(s_opex_*_annual)` on the Pro Forma sheet once that conversion lands. |
+| **Refs** | [OpEx Escalation Pct](#opex-escalation-pct), [OpEx Monthly](#opex-monthly) |
+
+##### OpEx Escalation Pct
+
+| Field | Value |
+|---|---|
+| **Definition** | Annual escalation rate for this OpEx line. Applied Y2+; Y1 = `s_opex_<slug>_annual`. |
+| **Named Range** | `s_opex_<slug>_escalation_pct` |
+| **App Calc/Use** | Mirrors `OperatingExpenseLine.escalation_rate_pct_annual`. |
+| **App Notes** | Per-line so LP can model contracted-rate lines (e.g. property tax CPI-capped at 2%) separately from market-driven lines (insurance +5%/yr). |
+| **Excel Formula** | (input cell, 0–100) |
+| **Excel Notes** | Distinct from scenario-level `s_opex_growth_rate` which the engine uses as default when this is 0. |
+| **Refs** | [OpEx Annual](#opex-annual) |
+
+##### OpEx Monthly
+
+| Field | Value |
+|---|---|
+| **Definition** | Computed Y1 monthly OpEx for the line — convenience cell for LPs reviewing per-line burden vs. revenue. |
+| **Named Range** | `s_opex_<slug>_monthly` |
+| **App Calc/Use** | Formula cell. Updates live with `s_opex_<slug>_annual`. |
+| **App Notes** | Not used by the engine — pure display convenience. Pro Forma uses annual figures. |
+| **Excel Formula** | `=s_opex_1_annual/12` |
+| **Excel Notes** | Reciprocal of the Pro Forma's annual-display convention. The `_1_` index is illustrative; real slug embeds the line label (e.g. `s_opex_property_management_annual`). |
+| **Refs** | [OpEx Annual](#opex-annual), [s_opex_n_annual](#opex-annual) |
+
 ### F.2 Defined-name conventions
 
 - `s_*` — single scalar (one cell). E.g. `s_combined_noi`, `s_revenue_growth_rate`, `s_loan_3_annual_pi`.

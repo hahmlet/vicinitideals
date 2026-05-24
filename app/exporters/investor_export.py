@@ -86,6 +86,7 @@ from app.models.deal import (
     Deal,
     DealModel,
     IncomeStream,
+    OperatingExpenseLine,
     OperationalInputs,
     UseLine,
     normalize_opex_label,
@@ -369,6 +370,19 @@ async def _load_all(session: AsyncSession, scenario_id: UUID) -> dict | None:
         ).scalars():
             income_streams_by_project.setdefault(stream.project_id, []).append(stream)
 
+    expense_lines_by_project: dict[UUID, list[OperatingExpenseLine]] = {
+        pid: [] for pid in project_ids
+    }
+    if project_ids:
+        for line in (
+            await session.execute(
+                select(OperatingExpenseLine)
+                .where(OperatingExpenseLine.project_id.in_(project_ids))
+                .order_by(OperatingExpenseLine.project_id, OperatingExpenseLine.label)
+            )
+        ).scalars():
+            expense_lines_by_project.setdefault(line.project_id, []).append(line)
+
     capital_modules = list(
         (
             await session.execute(
@@ -478,6 +492,7 @@ async def _load_all(session: AsyncSession, scenario_id: UUID) -> dict | None:
         "operational_inputs": inputs_by_project,
         "use_lines": use_lines_by_project,
         "income_streams": income_streams_by_project,
+        "expense_lines": expense_lines_by_project,
         "unit_mix": unit_mix_by_project,
         "capital_modules": capital_modules,
         "module_slugs": _compute_module_slugs(capital_modules),
@@ -5114,16 +5129,34 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
     # cells available so the Debt Schedule's Construction-to-Perm Status
     # block and the perm-gated Pro Forma debt service formula can
     # reference them.
+    cur_row = block_d_row + 1 + max(len(waterfall_tiers), 1) + 2
     if len(projects) == 1:
         single_project = projects[0]
         single_inputs = inputs_by_project.get(single_project.id)
-        block_e_start = block_d_row + 1 + max(len(waterfall_tiers), 1) + 2
-        _emit_phase_plan_block(
+        next_row = _emit_phase_plan_block(
             ws, registry, ctx,
             project_idx=1, project=single_project,
             inputs=single_inputs, capital_modules=capital_modules,
-            start_row=block_e_start,
+            start_row=cur_row,
         )
+        # Advance cursor only when the block actually emitted rows
+        # (returns start_row unchanged when no phase windows exist).
+        if next_row != cur_row:
+            cur_row = next_row + 2  # spacer before next block
+
+    # ── Block F: Revenue inputs (per stream) ──────────────────────────────
+    next_row = _build_assumptions_revenue_block(
+        ws, registry, ctx, start_row=cur_row,
+    )
+    if next_row != cur_row:
+        cur_row = next_row + 2
+
+    # ── Block G: Operating Expense inputs (per line) ──────────────────────
+    next_row = _build_assumptions_opex_block(
+        ws, registry, ctx, start_row=cur_row,
+    )
+    if next_row != cur_row:
+        cur_row = next_row + 2
 
     freeze_top(ws, row=2)
     print_landscape(ws)
@@ -5709,6 +5742,228 @@ def _coerce_pct(value) -> Decimal | None:
     if d is None:
         return None
     return d / Decimal(100)
+
+
+def _slugify_simple(label: str | None) -> str:
+    """Lowercase, non-alphanumeric → ``_``, collapse runs, strip ends,
+    cap at 40 chars. Returns empty string for None/empty input — the
+    caller is responsible for substituting a fallback (e.g. record
+    index) when the label is missing.
+    """
+    if not label:
+        return ""
+    s = "".join(c.lower() if c.isalnum() else "_" for c in label)
+    while "__" in s:
+        s = s.replace("__", "_")
+    return s.strip("_")[:40]
+
+
+def _stream_slugs(streams: list[IncomeStream]) -> dict[uuid.UUID, str]:
+    """Build ``{stream.id: slug}`` for Assumptions Block F (Revenue).
+
+    Collision-resolved with ``_2``, ``_3``, … suffixes so two streams
+    with the same label still get unique named cells. Empty labels fall
+    back to ``stream_<idx>`` where ``idx`` is the 1-based enumeration
+    position — stable across re-renders of the same scenario but not
+    across reordering, which matches the IncomeStream record's lack of
+    a stable display-order column.
+    """
+    out: dict[uuid.UUID, str] = {}
+    used: set[str] = set()
+    for i, s in enumerate(streams, start=1):
+        base = _slugify_simple(s.label) or f"stream_{i}"
+        slug = base
+        n = 2
+        while slug in used:
+            slug = f"{base}_{n}"
+            n += 1
+        used.add(slug)
+        out[s.id] = slug
+    return out
+
+
+def _opex_slugs(lines: list[OperatingExpenseLine]) -> dict[uuid.UUID, str]:
+    """Build ``{expense_line.id: slug}`` for Assumptions Block G (OpEx).
+
+    Same collision-resolution + fallback pattern as :func:`_stream_slugs`.
+    """
+    out: dict[uuid.UUID, str] = {}
+    used: set[str] = set()
+    for i, line in enumerate(lines, start=1):
+        base = _slugify_simple(line.label) or f"opex_{i}"
+        slug = base
+        n = 2
+        while slug in used:
+            slug = f"{base}_{n}"
+            n += 1
+        used.add(slug)
+        out[line.id] = slug
+    return out
+
+
+def _build_assumptions_revenue_block(
+    ws,
+    registry: CellRegistry,
+    ctx: dict,
+    *,
+    start_row: int,
+) -> int:
+    """Block F — Revenue inputs (per-project per-stream).
+
+    Renders one row per ``IncomeStream`` across all projects. Each row
+    registers four named cells the downstream Pro Forma / Cash Flow /
+    Unit Mix sheets can reference instead of hardcoding the same
+    numbers in multiple places:
+
+      ``s_rev_<slug>_unit_count``           — int
+      ``s_rev_<slug>_rent_per_unit_monthly`` — Decimal
+      ``s_rev_<slug>_occupancy_pct``         — Decimal (0–100)
+      ``s_rev_<slug>_escalation_pct``        — Decimal (0–100)
+
+    A fifth column writes the computed Y1 stabilized monthly revenue
+    (``unit_count × rent × occupancy/100``) as a formula referencing
+    the three input cells — gives an LP an at-a-glance "what's this
+    line worth?" check, and feeds future Pro Forma Gross Revenue
+    formulas via ``s_rev_<slug>_y1_monthly``.
+
+    Returns the next free row.
+    """
+    projects: list[Project] = ctx.get("projects") or []
+    streams_by_project: dict = ctx.get("income_streams") or {}
+    all_streams: list[tuple[int, IncomeStream]] = []
+    for idx, project in enumerate(projects, start=1):
+        for stream in streams_by_project.get(project.id, []):
+            all_streams.append((idx, stream))
+    if not all_streams:
+        return start_row
+
+    section_label(ws, start_row, "F. Revenue Inputs (per stream)", span_cols=7)
+    header_row(
+        ws, start_row + 1,
+        ["Project", "Stream", "Unit Count", "Rent / Unit / Mo",
+         "Occupancy %", "Escalation %", "Y1 Monthly (calc)"],
+    )
+
+    # Pre-build slugs per-project (ensures slugs unique within project,
+    # and we still namespace across projects via the per-project list).
+    slug_by_id: dict = {}
+    for idx, project in enumerate(projects, start=1):
+        slug_by_id.update(_stream_slugs(streams_by_project.get(project.id, [])))
+
+    row = start_row + 2
+    for project_idx, stream in all_streams:
+        slug = slug_by_id[stream.id]
+        ws.cell(row=row, column=1, value=f"P{project_idx}").font = FONT_VALUE
+        ws.cell(row=row, column=2, value=stream.label or "(unnamed)").font = FONT_VALUE
+
+        unit_count = stream.unit_count if stream.unit_count is not None else None
+        rent = _coerce_decimal(stream.amount_per_unit_monthly) or Decimal(0)
+        occ = _coerce_pct(stream.stabilized_occupancy_pct) or Decimal(0)
+        esc = _coerce_pct(stream.escalation_rate_pct_annual) or Decimal(0)
+
+        registry.write(
+            ws, row, 3, unit_count,
+            name=f"s_rev_{slug}_unit_count", fmt=INT_COMMA,
+            font=FONT_INPUT, align=ALIGN_RIGHT,
+        )
+        registry.write(
+            ws, row, 4, rent,
+            name=f"s_rev_{slug}_rent_per_unit_monthly", fmt=ACCOUNTING,
+            font=FONT_INPUT, align=ALIGN_RIGHT,
+        )
+        registry.write(
+            ws, row, 5, occ,
+            name=f"s_rev_{slug}_occupancy_pct", fmt=PCT,
+            font=FONT_INPUT, align=ALIGN_RIGHT,
+        )
+        registry.write(
+            ws, row, 6, esc,
+            name=f"s_rev_{slug}_escalation_pct", fmt=PCT,
+            font=FONT_INPUT, align=ALIGN_RIGHT,
+        )
+        # Y1 monthly formula: count × rent × occupancy. Wrapped in
+        # IFERROR so a missing unit_count cell (fixed-amount streams)
+        # falls back to the rent cell alone.
+        y1_formula = (
+            f"=IFERROR(s_rev_{slug}_unit_count*s_rev_{slug}_rent_per_unit_monthly*"
+            f"s_rev_{slug}_occupancy_pct,s_rev_{slug}_rent_per_unit_monthly*"
+            f"s_rev_{slug}_occupancy_pct)"
+        )
+        registry.write(
+            ws, row, 7, y1_formula,
+            name=f"s_rev_{slug}_y1_monthly", fmt=ACCOUNTING,
+            font=FONT_VALUE, align=ALIGN_RIGHT,
+        )
+        row += 1
+    return row
+
+
+def _build_assumptions_opex_block(
+    ws,
+    registry: CellRegistry,
+    ctx: dict,
+    *,
+    start_row: int,
+) -> int:
+    """Block G — Operating Expense inputs (per-project per-line).
+
+    Renders one row per ``OperatingExpenseLine`` across all projects.
+    Registers three named cells per row so future Pro Forma OpEx rows
+    can reference them instead of repeating the same hardcoded
+    numbers:
+
+      ``s_opex_<slug>_annual``       — Decimal (Y1 $)
+      ``s_opex_<slug>_escalation_pct`` — Decimal (0–100)
+      ``s_opex_<slug>_monthly`` (formula) — convenience for Y1 monthly
+
+    Returns the next free row.
+    """
+    projects: list[Project] = ctx.get("projects") or []
+    lines_by_project: dict = ctx.get("expense_lines") or {}
+    all_lines: list[tuple[int, OperatingExpenseLine]] = []
+    for idx, project in enumerate(projects, start=1):
+        for line in lines_by_project.get(project.id, []):
+            all_lines.append((idx, line))
+    if not all_lines:
+        return start_row
+
+    section_label(ws, start_row, "G. Operating Expense Inputs (per line)", span_cols=5)
+    header_row(
+        ws, start_row + 1,
+        ["Project", "Line Item", "Annual ($)", "Escalation %", "Y1 Monthly (calc)"],
+    )
+
+    slug_by_id: dict = {}
+    for idx, project in enumerate(projects, start=1):
+        slug_by_id.update(_opex_slugs(lines_by_project.get(project.id, [])))
+
+    row = start_row + 2
+    for project_idx, line in all_lines:
+        slug = slug_by_id[line.id]
+        ws.cell(row=row, column=1, value=f"P{project_idx}").font = FONT_VALUE
+        ws.cell(row=row, column=2, value=line.label or "(unnamed)").font = FONT_VALUE
+
+        annual = _coerce_decimal(line.annual_amount) or Decimal(0)
+        esc = _coerce_pct(line.escalation_rate_pct_annual) or Decimal(0)
+
+        registry.write(
+            ws, row, 3, annual,
+            name=f"s_opex_{slug}_annual", fmt=ACCOUNTING,
+            font=FONT_INPUT, align=ALIGN_RIGHT,
+        )
+        registry.write(
+            ws, row, 4, esc,
+            name=f"s_opex_{slug}_escalation_pct", fmt=PCT,
+            font=FONT_INPUT, align=ALIGN_RIGHT,
+        )
+        monthly_formula = f"=s_opex_{slug}_annual/12"
+        registry.write(
+            ws, row, 5, monthly_formula,
+            name=f"s_opex_{slug}_monthly", fmt=ACCOUNTING,
+            font=FONT_VALUE, align=ALIGN_RIGHT,
+        )
+        row += 1
+    return row
 
 
 def _slugify_module_label(label: str | None, fallback_idx: int) -> str:
