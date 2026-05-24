@@ -12130,6 +12130,7 @@ async def model_builder_line_form(
     # checkboxes for each Use; pre-tick those already referencing this module.
     _eligibility_uses: list[dict] = []
     if type in ("capital_modules", "sources", "capital-modules"):
+        from app.schemas.gap_adjustment_names import is_reserved_label
         _ul_rows = (await session.execute(
             select(UseLine)
             .join(Project, UseLine.project_id == Project.id)
@@ -12138,6 +12139,10 @@ async def model_builder_line_form(
         )).scalars().all()
         _existing_id_str = str(existing.id) if existing is not None else ""
         for _ul in _ul_rows:
+            if is_reserved_label(_ul.label or ""):
+                continue
+            if not _ul.amount or float(_ul.amount) <= 0:
+                continue
             _eligible_ids = _ul.eligible_module_ids or []
             _is_ticked = any(str(x) == _existing_id_str for x in _eligible_ids) if _existing_id_str else False
             _eligibility_uses.append({
