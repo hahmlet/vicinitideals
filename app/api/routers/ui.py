@@ -12129,7 +12129,7 @@ async def model_builder_line_form(
     # scenario across projects so the source-side edit form can render
     # checkboxes for each Use; pre-tick those already referencing this module.
     _eligibility_uses: list[dict] = []
-    if type == "capital-modules":
+    if type in ("capital_modules", "sources", "capital-modules"):
         _ul_rows = (await session.execute(
             select(UseLine)
             .join(Project, UseLine.project_id == Project.id)
