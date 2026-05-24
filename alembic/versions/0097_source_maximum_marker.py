@@ -16,15 +16,15 @@ Because `capital_modules.source` is a JSONB column with no fixed
 sub-schema, no DDL is required to add the key.  This migration exists
 purely to anchor the schema version that the new engine path expects.
 
-Revision ID: 0094
-Revises: 0093
+Revision ID: 0097
+Revises: 0096
 Create Date: 2026-05-20
 """
 
 from __future__ import annotations
 
-revision = "0094"
-down_revision = "0093"
+revision = "0097"
+down_revision = "0096"
 branch_labels = None
 depends_on = None
 
