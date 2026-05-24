@@ -313,6 +313,12 @@ async def _compute_project_cashflow(
     from app.engines.dev_fee import recompute_auto_dev_fee
     await recompute_auto_dev_fee(use_lines, inputs, session)
 
+    # Resolve grant caps (source.maximum) into actual source.amount based on
+    # per-Use eligibility. Must run BEFORE _auto_size_debt_modules so the
+    # gap-fill solver reads the capped grant contribution.
+    from app.engines.grant_caps import resolve_grant_caps
+    await resolve_grant_caps(capital_modules, use_lines, session)
+
     # Pre-size any auto_size=True debt modules before computing debt service
     await _auto_size_debt_modules(
         capital_modules, inputs, streams, expense_lines, use_lines, phases, session,

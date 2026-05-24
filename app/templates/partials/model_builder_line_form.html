@@ -1075,13 +1075,26 @@ function ulTimingChanged(val) {
     <input class="form-input" type="text" name="label" required value="{{ existing.label }}">
   </div>
   {%- set _is_fixed_amount = _ft in ['grant','forgivable_loan','tax_credit','equity'] -%}
+  {%- set _has_max = (existing.source and existing.source.get('maximum') is not none) if _is_fixed_amount else false -%}
+  {%- set _existing_amt = (existing.source.amount | int) if existing.source and existing.source.get('amount') else '' -%}
+  {%- set _existing_max = (existing.source.maximum | int) if _has_max else '' -%}
   <div class="form-row" style="margin-bottom:16px">
     {% if _is_fixed_amount %}
     <div class="form-field">
-      <label class="form-label">Amount ($)</label>
-      <input class="form-input" type="number" name="source_amount" step="1" min="0" required
-             value="{{ (existing.source.amount | int) if existing.source and existing.source.get('amount') else '' }}"
+      <label class="form-label" id="lf-amount-label">{{ "Maximum ($)" if _has_max else "Amount ($)" }}</label>
+      <input class="form-input" type="number" id="lf-source-amount-input"
+             name="source_amount" step="1" min="0"
+             value="{{ _existing_amt }}"
+             {% if _has_max %}disabled{% endif %}
              placeholder="0">
+      <input class="form-input" type="number" id="lf-source-maximum-input"
+             name="source_maximum" step="1" min="0"
+             value="{{ _existing_max }}"
+             {% if not _has_max %}disabled style="display:none"{% endif %}
+             placeholder="0">
+      <div id="lf-actual-display" style="font-size:11px;color:var(--text-muted);margin-top:4px;{% if not _has_max %}display:none{% endif %}">
+        Funded: ${{ _existing_amt if _existing_amt else 0 }} of ${{ _existing_max if _existing_max else 0 }} max
+      </div>
     </div>
     {% elif existing.source and existing.source.get('amount') %}
     <div class="form-field">
@@ -1099,6 +1112,59 @@ function ulTimingChanged(val) {
     </div>
     {% endif %}
   </div>
+
+  {# Per-Use eligibility checklist for grant / forgivable_loan / tax_credit.
+     Ticking ≥1 Use flips Amount → Maximum (cap-consumption mode). Engine
+     resolves source.amount each compute pass from min(maximum, eligible sum). #}
+  {% if _is_fixed_amount and eligibility_uses %}
+  <div class="form-section" style="margin-bottom:16px">
+    <div class="form-section-title">Eligibility <span style="font-weight:400;font-size:11px;color:var(--text-muted)">(optional — check Uses this source may fund)</span></div>
+    <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">
+      If checked, this source funds only the selected Uses up to the Maximum above.
+    </div>
+    <div id="lf-eligibility-list" style="display:flex;flex-direction:column;gap:6px;max-height:240px;overflow:auto;padding:4px 0">
+      {% for u in eligibility_uses %}
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer">
+        <input type="checkbox" name="eligible_use_ids" value="{{ u.id }}" class="lf-eligibility-checkbox"
+               {% if u.ticked %}checked{% endif %}>
+        <span>{{ u.label }} <span style="color:var(--text-muted);font-size:11px">— ${{ u.amount | int }}</span></span>
+      </label>
+      {% endfor %}
+    </div>
+  </div>
+  <script>
+  (function() {
+    var boxes = document.querySelectorAll('.lf-eligibility-checkbox');
+    var amtIn = document.getElementById('lf-source-amount-input');
+    var maxIn = document.getElementById('lf-source-maximum-input');
+    var label = document.getElementById('lf-amount-label');
+    var display = document.getElementById('lf-actual-display');
+    if (!boxes.length || !amtIn || !maxIn || !label) return;
+    function refresh() {
+      var anyChecked = false;
+      boxes.forEach(function(b) { if (b.checked) anyChecked = true; });
+      if (anyChecked) {
+        label.textContent = 'Maximum ($)';
+        amtIn.disabled = true;
+        amtIn.style.display = 'none';
+        maxIn.disabled = false;
+        maxIn.style.display = '';
+        if (!maxIn.value && amtIn.value) maxIn.value = amtIn.value;
+        if (display) display.style.display = '';
+      } else {
+        label.textContent = 'Amount ($)';
+        maxIn.disabled = true;
+        maxIn.style.display = 'none';
+        amtIn.disabled = false;
+        amtIn.style.display = '';
+        if (display) display.style.display = 'none';
+      }
+    }
+    boxes.forEach(function(b) { b.addEventListener('change', refresh); });
+    refresh();
+  })();
+  </script>
+  {% endif %}
 
   {% if _show_exit %}
   {#- LTV/LTC cap per loan — engine applies against the per-loan basis at
@@ -1443,14 +1509,39 @@ function ulTimingChanged(val) {
     </div>
     <div class="form-row" id="sw-amount-row" style="display:none;margin-top:12px">
       <div class="form-field" style="max-width:260px">
-        <label class="form-label">Amount ($)</label>
+        <label class="form-label" id="sw-amount-label">Amount ($)</label>
         <input class="form-input" type="number" name="source_amount" id="sw-source-amount"
                step="1" min="0" value="" placeholder="0">
+        <input class="form-input" type="number" name="source_maximum" id="sw-source-maximum"
+               step="1" min="0" value="" placeholder="0"
+               disabled style="display:none;margin-top:4px">
       </div>
     </div>
     <div class="form-hint" id="sw-autocalc-hint" style="margin-top:4px;font-size:12px;color:var(--text-muted)">
       Source amount is auto-calculated from Uses + carrying costs when you Compute.
     </div>
+
+    {# Per-Use eligibility checklist (sw add-wizard).  Mirrors the edit form
+       behavior: ticking ≥1 Use flips Amount → Maximum ($), and the Source
+       becomes capped consumption (engine resolves amount each compute). #}
+    {% if eligibility_uses %}
+    <div id="sw-eligibility-block" style="display:none;margin-top:12px">
+      <div style="font-weight:600;font-size:13px;margin-bottom:4px">Eligibility
+        <span style="font-weight:400;font-size:11px;color:var(--text-muted)">(optional — check Uses this source may fund)</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">
+        If checked, this source funds only the selected Uses up to the Maximum above.
+      </div>
+      <div id="sw-eligibility-list" style="display:flex;flex-direction:column;gap:6px;max-height:200px;overflow:auto;padding:4px 0">
+        {% for u in eligibility_uses %}
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer">
+          <input type="checkbox" name="eligible_use_ids" value="{{ u.id }}" class="sw-eligibility-checkbox">
+          <span>{{ u.label }} <span style="color:var(--text-muted);font-size:11px">— ${{ u.amount | int }}</span></span>
+        </label>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
     {# Permanent debt: amortization term is captured in step 3; Exit Vehicle
        in step 2 (defaults to Maturity, user may override to Sale). #}
   </div>
@@ -1706,6 +1797,40 @@ function ulTimingChanged(val) {
     _swError(null);
   }
 
+  function _swAnyEligibilityChecked() {
+    var any = false;
+    document.querySelectorAll('.sw-eligibility-checkbox').forEach(function(b) {
+      if (b.checked) any = true;
+    });
+    return any;
+  }
+
+  function _swRefreshAmountMode() {
+    var amtIn = document.getElementById('sw-source-amount');
+    var maxIn = document.getElementById('sw-source-maximum');
+    var lbl   = document.getElementById('sw-amount-label');
+    if (!amtIn || !maxIn || !lbl) return;
+    var anyChecked = _swAnyEligibilityChecked();
+    if (anyChecked) {
+      lbl.textContent = 'Maximum ($)';
+      amtIn.disabled = true;
+      amtIn.style.display = 'none';
+      amtIn.required = false;
+      maxIn.disabled = false;
+      maxIn.style.display = '';
+      maxIn.required = true;
+      if (!maxIn.value && amtIn.value) maxIn.value = amtIn.value;
+    } else {
+      lbl.textContent = 'Amount ($)';
+      maxIn.disabled = true;
+      maxIn.style.display = 'none';
+      maxIn.required = false;
+      amtIn.disabled = false;
+      amtIn.style.display = '';
+      amtIn.required = (_FIXED_AMOUNT.indexOf(_type) >= 0);
+    }
+  }
+
   function _swCheck() {
     if (_step === 1) {
       var lbl = document.getElementById('sw-label');
@@ -1715,12 +1840,23 @@ function ulTimingChanged(val) {
         return false;
       }
       if (_FIXED_AMOUNT.indexOf(_type) >= 0) {
-        var amtIn = document.getElementById('sw-source-amount');
-        var v = amtIn && parseFloat(amtIn.value);
-        if (!v || v <= 0) {
-          _swError('Amount is required for this source type.');
-          amtIn && amtIn.focus();
-          return false;
+        var anyChecked = _swAnyEligibilityChecked();
+        if (anyChecked) {
+          var maxIn = document.getElementById('sw-source-maximum');
+          var mv = maxIn && parseFloat(maxIn.value);
+          if (!mv || mv <= 0) {
+            _swError('Maximum is required when eligibility is set.');
+            maxIn && maxIn.focus();
+            return false;
+          }
+        } else {
+          var amtIn = document.getElementById('sw-source-amount');
+          var v = amtIn && parseFloat(amtIn.value);
+          if (!v || v <= 0) {
+            _swError('Amount is required for this source type.');
+            amtIn && amtIn.focus();
+            return false;
+          }
         }
       }
     }
@@ -1733,13 +1869,23 @@ function ulTimingChanged(val) {
     _updateStep3ForType(val);
     var isFixed = _FIXED_AMOUNT.indexOf(val) >= 0;
     var amtRow = document.getElementById('sw-amount-row');
-    var amtIn  = document.getElementById('sw-source-amount');
     var hint   = document.getElementById('sw-autocalc-hint');
+    var elBlock = document.getElementById('sw-eligibility-block');
     if (amtRow) amtRow.style.display = isFixed ? '' : 'none';
-    if (amtIn)  amtIn.required = isFixed;
     if (hint)   hint.style.display = isFixed ? 'none' : '';
+    if (elBlock) elBlock.style.display = isFixed ? '' : 'none';
+    if (!isFixed) {
+      // Wipe eligibility selection so non-fixed types don't smuggle it into POST
+      document.querySelectorAll('.sw-eligibility-checkbox').forEach(function(b) { b.checked = false; });
+    }
+    _swRefreshAmountMode();
     _show(1);
   };
+
+  // Wire eligibility checkbox change handlers
+  document.querySelectorAll('.sw-eligibility-checkbox').forEach(function(b) {
+    b.addEventListener('change', _swRefreshAmountMode);
+  });
 
   window.swNext = function() {
     if (!_swCheck()) return;

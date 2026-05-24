@@ -777,7 +777,8 @@ Scenario-scoped Source identity (lender, rate, carry type, exit terms). Per-proj
 
 | Key | Notes |
 |---|---|
-| amount | Principal (explicit) - overrides auto-sizing when set |
+| amount | Principal (explicit) - overrides auto-sizing when set. For grant/forgivable_loan/tax_credit with `maximum` set, engine writes the resolved cap-consumption value here each compute pass. |
+| maximum | Grant cap (grant / forgivable_loan / tax_credit only). When set, engine resolves `amount = min(maximum, sum of eligible Use buckets)` via `app/engines/grant_caps.py`. Set in tandem with `use_lines.eligible_module_ids` per-Use whitelist. See `FINANCIAL_MODEL.md` §2.11.1. |
 | interest_rate_pct | Annual rate (%) |
 | amort_term_years | Amortization schedule length |
 | hold_term_years | IO or balloon period (required for permanent_debt) |

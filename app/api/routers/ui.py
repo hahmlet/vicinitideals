@@ -5949,6 +5949,10 @@ async def handle_form_create_or_update(
         source_d: dict = {}
         if src_amt := _fd(form.get("source_amount")):
             source_d["amount"] = float(src_amt)
+        # Grant cap (per-Use eligibility). When set, source.amount is engine-
+        # computed each compute pass and ignored from form input above.
+        if src_max := _fd(form.get("source_maximum")):
+            source_d["maximum"] = float(src_max)
         if src_pct := _fd(form.get("source_pct")):
             source_d["pct_of_total_cost"] = float(src_pct)
         if src_rate := _fd(form.get("source_interest_rate")):
@@ -6276,6 +6280,68 @@ async def handle_form_create_or_update(
                 capital_module_id=_cm_id,
             )
             session.add(ds)
+
+        # ── Per-Use eligibility sync (source-side editor writes use-side column) ──
+        # Form field `eligible_use_ids[]` lists Use UUIDs this grant funds.
+        # Maintains `use_lines.eligible_module_ids` bidirectional consistency:
+        #   - For each ticked Use → append this module's ID
+        #   - For each previously-linked Use no longer ticked → remove this module's ID
+        # Also validates the cap/eligibility combination: maximum requires
+        # at least one Use checked, and any ticked Use requires a maximum.
+        _module_uuid_for_sync: UUID | None = None
+        if item_id:
+            try:
+                _module_uuid_for_sync = UUID(item_id)
+            except (ValueError, AttributeError):
+                _module_uuid_for_sync = None
+        else:
+            _module_uuid_for_sync = _cm_id if "_cm_id" in locals() else None
+
+        if _module_uuid_for_sync is not None:
+            _raw_ids = form.getlist("eligible_use_ids")
+            _new_eligible: set[UUID] = set()
+            for _rid in _raw_ids:
+                _rid = (_rid or "").strip()
+                if not _rid:
+                    continue
+                try:
+                    _new_eligible.add(UUID(_rid))
+                except (ValueError, AttributeError):
+                    continue
+
+            _has_maximum = source_d.get("maximum") is not None
+            # Validation: maximum + eligibility must agree
+            if _has_maximum and not _new_eligible:
+                from fastapi import HTTPException as _HTTPExc
+                raise _HTTPExc(
+                    status_code=422,
+                    detail="Maximum requires at least one eligible Use to be selected.",
+                )
+            if _new_eligible and not _has_maximum:
+                from fastapi import HTTPException as _HTTPExc
+                raise _HTTPExc(
+                    status_code=422,
+                    detail="Eligible Uses selected — Maximum must be entered.",
+                )
+
+            # Apply bi-directional sync against all Uses on this scenario
+            _all_uses = (await session.execute(
+                select(UseLine)
+                .join(Project, UseLine.project_id == Project.id)
+                .where(Project.scenario_id == model_id)
+            )).scalars().all()
+            _mod_id_str = str(_module_uuid_for_sync)
+            for _ul in _all_uses:
+                _cur = [x for x in (_ul.eligible_module_ids or [])]
+                _cur_strs = [str(x) for x in _cur]
+                _should_include = _ul.id in _new_eligible
+                _is_present = _mod_id_str in _cur_strs
+                if _should_include and not _is_present:
+                    _ul.eligible_module_ids = _cur + [_module_uuid_for_sync]
+                elif (not _should_include) and _is_present:
+                    _ul.eligible_module_ids = [
+                        x for x in _cur if str(x) != _mod_id_str
+                    ]
 
     elif item_type == "waterfall-tiers":
         data = {
@@ -12059,6 +12125,29 @@ async def model_builder_line_form(
                 for v in _all_svs_lf
             ]
 
+    # Per-Use eligibility checklist (grant cap UI). Pull all Use lines in this
+    # scenario across projects so the source-side edit form can render
+    # checkboxes for each Use; pre-tick those already referencing this module.
+    _eligibility_uses: list[dict] = []
+    if type == "capital-modules":
+        _ul_rows = (await session.execute(
+            select(UseLine)
+            .join(Project, UseLine.project_id == Project.id)
+            .where(Project.scenario_id == model_id)
+            .order_by(UseLine.label.asc())
+        )).scalars().all()
+        _existing_id_str = str(existing.id) if existing is not None else ""
+        for _ul in _ul_rows:
+            _eligible_ids = _ul.eligible_module_ids or []
+            _is_ticked = any(str(x) == _existing_id_str for x in _eligible_ids) if _existing_id_str else False
+            _eligibility_uses.append({
+                "id": str(_ul.id),
+                "label": _ul.label or "(unlabeled)",
+                "amount": float(_ul.amount or 0),
+                "phase": str(getattr(_ul.phase, "value", _ul.phase) or ""),
+                "ticked": _is_ticked,
+            })
+
     return templates.TemplateResponse(request, "partials/model_builder_line_form.html", {
         "model": model,
         "form_type": type,
@@ -12083,6 +12172,7 @@ async def model_builder_line_form(
         "use_category_labels": USE_CATEGORY_LABELS,
         "use_category_presets": USE_CATEGORY_PRESETS,
         "source_vehicles": _sv_list,
+        "eligibility_uses": _eligibility_uses,
     })
 
 
