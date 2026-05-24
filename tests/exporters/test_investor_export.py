@@ -129,6 +129,8 @@ _NON_METRIC_PREFIXES = (
     "s_su_",           # Sources & Uses sheet totals (category + grand totals)
     "s_loan_",         # Debt Schedule per-loan rows (rate/term/amort/balloon)
     "s_tier_",         # Block D waterfall hurdle inputs (per-tier irr_hurdle/lp_split/gp_split)
+    "s_rev_",          # Assumptions Block F revenue inputs (per IncomeStream)
+    "s_opex_",         # Assumptions Block G OpEx inputs (per OperatingExpenseLine)
 )
 
 # Capital-stack row suffixes — module names now slugified
