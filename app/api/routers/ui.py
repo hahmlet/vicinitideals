@@ -1019,9 +1019,12 @@ async def _stripe_api_request(
     }
     timeout = httpx.Timeout(20.0)
 
+    def _send() -> httpx.Response:
+        with httpx.Client(timeout=timeout, trust_env=False) as client:
+            return client.request(method, url, headers=headers, data=data, params=params)
+
     try:
-        async with httpx.AsyncClient(timeout=timeout, trust_env=False) as client:
-            resp = await client.request(method, url, headers=headers, data=data, params=params)
+        resp = await asyncio.to_thread(_send)
     except Exception as exc:  # pragma: no cover - network exception guard
         raise HTTPException(status_code=502, detail=f"Stripe connection failed: {exc}") from exc
 
