@@ -1054,6 +1054,21 @@ async def _get_stripe_customer_id(session: AsyncSession, user_id: UUID) -> str |
     return value or None
 
 
+async def _clear_stripe_customer_id(session: AsyncSession, user_id: UUID) -> None:
+    row = (
+        await session.execute(
+            select(UserSetting).where(
+                UserSetting.user_id == user_id,
+                UserSetting.field_key == "stripe_customer_id",
+            )
+        )
+    ).scalar_one_or_none()
+    if row is None:
+        return
+    await session.delete(row)
+    await session.commit()
+
+
 async def _ensure_stripe_customer_id(session: AsyncSession, user: User) -> str:
     existing_id = await _get_stripe_customer_id(session, user.id)
     if existing_id:
@@ -2228,22 +2243,38 @@ async def settings_billing_create_setup_session(
     if not _stripe_is_configured():
         return RedirectResponse(url="/settings/billing?stripe=config-missing", status_code=303)
 
+    def _checkout_payload(customer_id: str) -> list[tuple[str, str]]:
+        return [
+            ("mode", "setup"),
+            ("customer", customer_id),
+            ("payment_method_types[]", "card"),
+            ("billing_address_collection", "auto"),
+            ("success_url", f"{settings.app_base_url}/settings/billing?stripe=success"),
+            ("cancel_url", f"{settings.app_base_url}/settings/billing?stripe=cancel"),
+        ]
+
     try:
         customer_id = await _ensure_stripe_customer_id(session, user)
         checkout = await _stripe_api_request(
             "POST",
             "/v1/checkout/sessions",
-            data=[
-                ("mode", "setup"),
-                ("customer", customer_id),
-                ("payment_method_types[]", "card"),
-                ("billing_address_collection", "auto"),
-                ("success_url", f"{settings.app_base_url}/settings/billing?stripe=success"),
-                ("cancel_url", f"{settings.app_base_url}/settings/billing?stripe=cancel"),
-            ],
+            data=_checkout_payload(customer_id),
         )
-    except HTTPException:
-        return RedirectResponse(url="/settings/billing?stripe=error", status_code=303)
+    except HTTPException as exc:
+        detail = str(exc.detail or "")
+        if "No such customer" in detail or "resource_missing" in detail:
+            try:
+                await _clear_stripe_customer_id(session, user.id)
+                customer_id = await _ensure_stripe_customer_id(session, user)
+                checkout = await _stripe_api_request(
+                    "POST",
+                    "/v1/checkout/sessions",
+                    data=_checkout_payload(customer_id),
+                )
+            except HTTPException:
+                return RedirectResponse(url="/settings/billing?stripe=error", status_code=303)
+        else:
+            return RedirectResponse(url="/settings/billing?stripe=error", status_code=303)
 
     checkout_url = str(checkout.get("url") or "").strip()
     if not checkout_url:

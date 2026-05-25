@@ -1,11 +1,16 @@
 from __future__ import annotations
 
+import uuid
+
 import pytest
 from httpx import AsyncClient
+from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.api.routers import ui
 from app.api.auth import COOKIE_NAME, create_session_token
 from app.config import settings
+from app.models.settings import UserSetting
 from tests.conftest import seed_org
 
 
@@ -58,3 +63,58 @@ async def test_billing_setup_session_redirects_when_stripe_not_configured(
     )
     assert resp.status_code == 303
     assert resp.headers["location"] == "/settings/billing?stripe=config-missing"
+
+
+async def test_billing_setup_session_recovers_stale_customer_id(
+    client: AsyncClient,
+    session: AsyncSession,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(settings, "stripe_secret_key", "sk_test_dummy", raising=False)
+
+    org, user = await seed_org(session)
+    session.add(
+        UserSetting(
+            id=uuid.uuid4(),
+            user_id=user.id,
+            org_id=org.id,
+            field_key="stripe_customer_id",
+            value="cus_stale",
+        )
+    )
+    await session.commit()
+    await _auth(client, user.id)
+
+    calls: list[tuple[str, str, str | None]] = []
+
+    async def _fake_stripe_api_request(method, endpoint, *, data=None, params=None):
+        customer = None
+        if isinstance(data, list):
+            for k, v in data:
+                if k == "customer":
+                    customer = v
+                    break
+        calls.append((method, endpoint, customer))
+
+        if endpoint == "/v1/checkout/sessions" and customer == "cus_stale":
+            raise HTTPException(status_code=502, detail="Stripe API error: No such customer: 'cus_stale'")
+        if endpoint == "/v1/customers":
+            return {"id": "cus_fresh"}
+        if endpoint == "/v1/checkout/sessions":
+            return {"url": "https://checkout.stripe.com/c/pay/test_checkout_url"}
+        return {}
+
+    monkeypatch.setattr(ui, "_stripe_api_request", _fake_stripe_api_request)
+
+    resp = await client.post(
+        "/settings/billing/stripe/setup-session",
+        follow_redirects=False,
+    )
+
+    assert resp.status_code == 303
+    assert resp.headers["location"] == "https://checkout.stripe.com/c/pay/test_checkout_url"
+    assert (
+        ("POST", "/v1/checkout/sessions", "cus_stale") in calls
+        and ("POST", "/v1/customers", None) in calls
+        and ("POST", "/v1/checkout/sessions", "cus_fresh") in calls
+    )
