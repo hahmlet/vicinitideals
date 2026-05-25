@@ -1361,22 +1361,41 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
     # right number for a Primary-KPI block is a singular combined coverage
     # figure, not the weakest project's DSCR. Engine doesn't store DS as
     # a per-project scalar, so derive it from per-project (NOI ÷ DSCR).
+    # Phase 4 completion: prefer the Pro Forma Y1 NOI / Debt Service
+    # cells (formula chain back to Block F/G inputs and Debt Schedule)
+    # whenever both are positive — LP edits then ripple here. Engine
+    # fallback baked into the IF false branch covers pre-operational Y1
+    # scenarios where the formula chain would resolve to 0.
     combined_dscr = _combined_dscr(per_project)
+    _dscr_fallback = float(combined_dscr) if combined_dscr else 0
+    _dscr_formula = (
+        f"=IF(AND(s_pf_noi_y1>0,s_pf_debt_service_y1>0),"
+        f"s_pf_noi_y1/s_pf_debt_service_y1,{_dscr_fallback})"
+    )
     kv_row(
         ws, row, "Stabilized DSCR (combined)",
-        combined_dscr,
+        _dscr_formula,
         name="s_combined_dscr", registry=registry,
         fmt="0.000", hero=True,
     ); row += 1
+    _noi_fallback = float(_sum_per_project_field(per_project, "noi_stabilized") or 0)
+    _noi_formula = f"=IF(s_pf_noi_y1>0,s_pf_noi_y1,{_noi_fallback})"
     kv_row(
         ws, row, "Combined Stabilized NOI (DSCR basis)",
-        _sum_per_project_field(per_project, "noi_stabilized"),
+        _noi_formula,
         name="s_combined_noi", registry=registry,
         fmt=ACCOUNTING, hero=True,
     ); row += 1
+    # Phase 4 completion: Combined Levered IRR runs IRR() directly on the
+    # Underwriting Cash Flow levered row (r_uw_cf_levered). Same formula
+    # the Investor Returns sheet uses for s_returns_combined_irr — both
+    # KPIs compute against the single underlying range, so an upstream
+    # cash-flow edit ripples to both identically. Direct reference (vs
+    # aliasing s_returns_combined_irr) keeps the formula self-contained
+    # for the lender profile, which renders UW Summary but not Returns.
     kv_row(
         ws, row, "Combined Levered IRR",
-        _coerce_pct(totals.get("combined_irr_pct") or 0),
+        "=IFERROR(IRR(r_uw_cf_levered),0)",
         name="s_combined_irr", registry=registry,
         fmt=PCT, hero=True,
     ); row += 1
@@ -1386,10 +1405,23 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
     # exists). This is the actual modeled horizon, distinct from the
     # OperationalInputs.hold_period_years input on the Assumptions sheet
     # (which represents the user's intent for *stabilized* hold only).
-    longest_hold = _longest_hold_months(per_project)
+    # Phase 4 completion: Modeled Duration = MAX across each project's
+    # Assumptions phase-plan total horizon. Each project's phase block
+    # registers `p{idx}_total_horizon_months` (see
+    # `_emit_phase_plan_block`), so an LP edit to any phase duration
+    # ripples to the longest-hold KPI without re-running the engine.
+    # Single-project = literal ref; multi-project = MAX. Engine value
+    # (`_longest_hold_months`) is the fallback when no projects exist.
+    _horizon_names = [f"p{idx}_total_horizon_months" for idx in range(1, len(projects) + 1)]
+    if len(_horizon_names) == 1:
+        _duration_value = f"=IFERROR({_horizon_names[0]},0)"
+    elif len(_horizon_names) > 1:
+        _duration_value = f"=IFERROR(MAX({','.join(_horizon_names)}),0)"
+    else:
+        _duration_value = _longest_hold_months(per_project)
     kv_row(
         ws, row, "Total Modeled Duration (months)",
-        longest_hold,
+        _duration_value,
         name="s_modeled_duration_months", registry=registry,
         fmt=INT_COMMA, hero=True,
     ); row += 1
@@ -2324,6 +2356,17 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
         # the S&U Operating Reserve UseLine formula resolves.
         if field == "operating_expenses" and len(year_cols) >= 2:
             registry.register("s_y1_opex", ws.title, cur_row, 3)
+        # Phase 4 completion: expose Y1 Gross Revenue + Y1 NOI cells as
+        # workbook-scoped names so UW Summary's Combined Stabilized NOI
+        # (and any future input-derived KPI) can reference the actual
+        # formula chain — Block F/G edits ripple through Pro Forma Y1 →
+        # these names → downstream KPIs.
+        if field == "gross_revenue" and len(year_cols) >= 2:
+            registry.register("s_pf_gross_revenue_y1", ws.title, cur_row, 3)
+        if field == "noi" and len(year_cols) >= 2:
+            registry.register("s_pf_noi_y1", ws.title, cur_row, 3)
+        if field == "debt_service" and len(year_cols) >= 2:
+            registry.register("s_pf_debt_service_y1", ws.title, cur_row, 3)
         # Phase 3: emit one indented breakout row per OpEx line directly
         # below the Operating Expenses total. Each row references the
         # corresponding Block G cell so an LP can trace any single

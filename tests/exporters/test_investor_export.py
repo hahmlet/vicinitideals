@@ -117,6 +117,14 @@ _NON_METRIC_NAMES = frozenset({
     "s_exit_year_noi",
     # Per-project meta (header cells)
     "s_returns_combined_irr",  # alias for s_combined_irr
+    # Phase 4 hero-KPI conversion (2026-05-24): Pro Forma Y1 cells
+    # exposed as workbook-scoped names so UW Summary's Combined NOI
+    # and Stabilized DSCR formulas can resolve back to the Block F/G
+    # input chain. Each cell IS the metric it's named after (NOI Y1,
+    # debt service Y1, gross revenue Y1) — the doc entry lives under
+    # the parent metric (NOI / Debt Service / Gross Revenue), not as
+    # its own row.
+    "s_pf_noi_y1", "s_pf_debt_service_y1", "s_pf_gross_revenue_y1",
 })
 
 # Workbook ranges with these prefixes are not validated. Each prefix corresponds

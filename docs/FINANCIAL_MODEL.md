@@ -918,6 +918,23 @@ stabilized_noi = NOI_monthly_at_first_stabilized_month × 12
 **Engine source.** `OperationalOutputs.noi_stabilized` (per project), summed
 across projects by `rollup_summary` for scenario-wide display.
 
+**Excel formula (Phase 4 hero-KPI conversion, 2026-05-24).** The
+Underwriting Summary "Combined Stabilized NOI" cell is now the hybrid
+formula `=IF(s_pf_noi_y1>0, s_pf_noi_y1, <engine_fallback>)`. The
+underlying `s_pf_noi_y1` named cell points at row Y1 of the Pro Forma
+NOI line, which is itself a formula chain back to Block F (revenue) and
+Block G (OpEx) inputs. LP edits to any single revenue stream or OpEx
+line ripple through Pro Forma Y1 → this KPI without re-running the
+engine. The engine value is preserved as the false-branch fallback so
+pre-operational scenarios (where Pro Forma Y1 = 0) still surface the
+modeled stabilized NOI.
+
+The companion **Stabilized DSCR (combined)** cell is the related
+formula `=IF(AND(s_pf_noi_y1>0, s_pf_debt_service_y1>0),
+s_pf_noi_y1/s_pf_debt_service_y1, <engine_fallback>)` where
+`s_pf_debt_service_y1` is row Y1 of the Pro Forma debt-service line
+(a SUMPRODUCT over per-loan PMT/IPMT formulas — see §2.2).
+
 **Notes / edge cases.** This is the NOI used by `dscr_capped` and
 `dual_constraint` debt sizing modes. Drift between stabilized NOI used for
 sizing and stabilized NOI computed in the cash flow loop is the reason the
@@ -2611,7 +2628,7 @@ Each row documents one data point: definition, named range, app-side calc, app-s
 | **Named Range** | `s_combined_irr` (UW Summary), `s_returns_combined_irr` (Investor Returns) |
 | **App Calc/Use** | `app/engines/cashflow.py` computes `combined_irr_pct` via monthly XIRR over the period-level levered NCF; surfaced through `totals.combined_irr_pct`. |
 | **App Notes** | Engine uses monthly XIRR with explicit dates; annualized for display. |
-| **Excel Formula** | `=IFERROR(IRR(r_uw_cf_levered),0)` |
+| **Excel Formula** | `s_returns_combined_irr` (Investor Returns) = `=IFERROR(IRR(r_uw_cf_levered),0)`. `s_combined_irr` (UW Summary, Phase 4 hero-KPI conversion, 2026-05-24) = `=IFERROR(s_returns_combined_irr,0)` — aliases the Returns formula rather than re-computing, so any upstream cash-flow edit ripples to both KPIs through the single underlying `IRR()` call. |
 | **Excel Notes** | Excel `IRR()` assumes evenly-spaced annual periods. Parity with engine's monthly XIRR is ±0.5pp, not exact. IFERROR swallows the no-equity / degenerate-stream case as 0. |
 | **Refs** | [Levered Cash Flow](#levered-cash-flow), [s_combined_irr](#combined-levered-irr), [s_returns_combined_irr](#combined-levered-irr), [r_uw_cf_levered](#levered-cash-flow) |
 
@@ -3141,6 +3158,7 @@ These cells expose each project's phase boundaries as 1-based absolute month ind
 | **App Notes** | Independent of `Scenario.discount_rate_pct` — purely a timeline length. |
 | **Excel Formula** | (engine-written integer) |
 | **Excel Notes** | Distinct from `p<n>_timeline_months` (which is the engine's `OperationalOutputs.total_timeline_months`). The two should match in steady state; divergence indicates either a milestone override or a zero-duration phase that was dropped. |
+| **Phase 4 hero-KPI consumer** | UW Summary's `s_modeled_duration_months` cell (Total Modeled Duration) now formulas-down to these per-project horizons: single-project = `=IFERROR(p1_total_horizon_months,0)`; multi-project = `=IFERROR(MAX(p1_total_horizon_months,…,pN_total_horizon_months),0)`. LP edits to any phase duration on Assumptions Block E ripple to the hero KPI without re-running the engine. |
 | **Refs** | [Phase Duration Months](#phase-duration-months) |
 
 #### F.1.9 Construction-to-Perm Status (per-loan)
