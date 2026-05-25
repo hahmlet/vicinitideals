@@ -2695,6 +2695,18 @@ Each row documents one data point: definition, named range, app-side calc, app-s
 | **Excel Notes** | One ref per `OperatingExpenseLine` record across all projects, slugs from `_all_opex_slugs`. When no OpEx records exist the cell falls back to the engine value. |
 | **Refs** | [OpEx Annual](#opex-annual), [OpEx Growth Chain (Y2+)](#opex-growth-chain-y2), [s_opex_n_annual](#opex-annual) |
 
+##### OpEx Per-Line Breakout (Pro Forma transparency block)
+
+| Field | Value |
+|---|---|
+| **Definition** | One indented row per `OperatingExpenseLine` rendered directly below the Pro Forma's Operating Expenses total, exposing each line's annual ramp so the LP can trace any single expense back to its Assumptions Block G input. The total row is left unchanged — these are pure transparency rows, not summed back into anything downstream. |
+| **Named Range** | (cell-only — breakout rows are read-only references, no defined names) |
+| **App Calc/Use** | `_build_uw_proforma` walks `_all_opex_lines_ordered(ctx)` after writing the OpEx total row and emits one breakout per line using the slug from `_all_opex_slugs(ctx)`. |
+| **App Notes** | Y0 left blank (construction-phase OpEx is engine-governed, not derivable from stabilized inputs). Y1 = the line's `s_opex_<slug>_annual` cell. Y2+ = prior-year breakout cell × (1 + per-line `s_opex_<slug>_escalation_pct`), so heterogeneous escalation rates render correctly — each line ramps at its own rate rather than the sheet-wide `s_opex_growth_rate`. |
+| **Excel Formula** | Y1 = `=s_opex_<slug>_annual`; Y2+ = `={col-1}{row}*(1+s_opex_<slug>_escalation_pct)` |
+| **Excel Notes** | Labels start with the ``   •`` indent marker so the LP visually parses them as a sub-list of the Operating Expenses total. Hint font (italic, muted color) reinforces "transparency, not a primary KPI". |
+| **Refs** | [OpEx Y1 Sum (Block G chain seed)](#opex-y1-sum-block-g-chain-seed), [OpEx Annual](#opex-annual) |
+
 ##### OpEx Growth Chain (Y2+)
 
 | Field | Value |

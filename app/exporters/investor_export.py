@@ -2278,6 +2278,47 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
         # the S&U Operating Reserve UseLine formula resolves.
         if field == "operating_expenses" and len(year_cols) >= 2:
             registry.register("s_y1_opex", ws.title, cur_row, 3)
+        # Phase 3: emit one indented breakout row per OpEx line directly
+        # below the Operating Expenses total. Each row references the
+        # corresponding Block G cell so an LP can trace any single
+        # expense back to its input — and edit any one of them to see
+        # the total row (formula-driven since Phase 2) follow. Total row
+        # itself is left untouched; this is a transparency block. Y0
+        # stays blank because construction-phase OpEx is governed by
+        # the engine, not these stabilized inputs.
+        if field == "operating_expenses" and _opex_slug_list:
+            opex_lines = _all_opex_lines_ordered(ctx)
+            opex_slug_map = _all_opex_slugs(ctx)
+            for line in opex_lines:
+                slug = opex_slug_map.get(line.id)
+                if slug is None:
+                    continue
+                cur_row += 1
+                label = f"   • {line.label or 'Operating Expense'}"
+                ws.cell(row=cur_row, column=1, value=label).font = FONT_HINT
+                for col_offset, _year in enumerate(year_cols):
+                    col_idx = 2 + col_offset
+                    if col_offset == 0:
+                        # Y0 blank — construction-phase OpEx differs from
+                        # stabilized inputs.
+                        cell = ws.cell(row=cur_row, column=col_idx, value=None)
+                    elif col_offset == 1:
+                        cell = ws.cell(
+                            row=cur_row, column=col_idx,
+                            value=f"=s_opex_{slug}_annual",
+                        )
+                    else:
+                        prev_col = get_column_letter(col_idx - 1)
+                        cell = ws.cell(
+                            row=cur_row, column=col_idx,
+                            value=(
+                                f"={prev_col}{cur_row}"
+                                f"*(1+s_opex_{slug}_escalation_pct)"
+                            ),
+                        )
+                    cell.number_format = ACCOUNTING
+                    cell.font = FONT_HINT
+                    cell.alignment = ALIGN_RIGHT
         # Phase D follow-up: expose the exit-year NOI cell (last column
         # of the NOI row) so the UW Summary Exit Cap Value formula can
         # reference a single named cell instead of duplicating the
@@ -5891,6 +5932,21 @@ def _all_opex_slugs(ctx: dict) -> dict[uuid.UUID, str]:
     for project in projects:
         flat.extend(lines_by_project.get(project.id, []))
     return _opex_slugs(flat)
+
+
+def _all_opex_lines_ordered(ctx: dict) -> list[OperatingExpenseLine]:
+    """Return every OperatingExpenseLine across all projects in the
+    same flatten order :func:`_all_opex_slugs` resolves slugs against.
+    The breakout-row renderer pairs each line with its slug by walking
+    both lists in lockstep, so the order MUST match the slug map's
+    insertion order to avoid label/cell-reference mis-pairing.
+    """
+    projects: list[Project] = ctx.get("projects") or []
+    lines_by_project: dict = ctx.get("expense_lines") or {}
+    flat: list[OperatingExpenseLine] = []
+    for project in projects:
+        flat.extend(lines_by_project.get(project.id, []))
+    return flat
 
 
 def _build_assumptions_revenue_block(
