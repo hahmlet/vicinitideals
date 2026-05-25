@@ -2195,6 +2195,7 @@ async def settings_billing(
     request: Request,
     session: DBSession,
     stripe: str = Query(default=""),
+    err: str = Query(default=""),
 ) -> HTMLResponse:
     user = await _get_user(session, request)
     if user is None:
@@ -2226,6 +2227,7 @@ async def settings_billing(
             "cards_error": cards_error,
             "stripe_state": stripe,
             "stripe_state_message": _stripe_state_message(stripe),
+            "stripe_error_detail": (err or "").strip(),
             **_base_ctx(user, dedup_count, "", address_issues_count, conflicts_count=conflicts_count),
         },
     )
@@ -2271,10 +2273,18 @@ async def settings_billing_create_setup_session(
                     "/v1/checkout/sessions",
                     data=_checkout_payload(customer_id),
                 )
-            except HTTPException:
-                return RedirectResponse(url="/settings/billing?stripe=error", status_code=303)
+            except HTTPException as retry_exc:
+                retry_detail = quote_plus(str(retry_exc.detail or "")[:240])
+                return RedirectResponse(
+                    url=f"/settings/billing?stripe=error&err={retry_detail}",
+                    status_code=303,
+                )
         else:
-            return RedirectResponse(url="/settings/billing?stripe=error", status_code=303)
+            safe_detail = quote_plus(detail[:240])
+            return RedirectResponse(
+                url=f"/settings/billing?stripe=error&err={safe_detail}",
+                status_code=303,
+            )
 
     checkout_url = str(checkout.get("url") or "").strip()
     if not checkout_url:

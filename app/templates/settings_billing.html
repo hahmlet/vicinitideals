@@ -28,6 +28,12 @@
     </div>
     {% endif %}
 
+    {% if stripe_error_detail %}
+    <div style="margin-top:10px;font-size:12px;color:#b45309;background:#fffbeb;border:1px solid #fcd34d;padding:10px 12px;border-radius:8px;word-break:break-word">
+      Stripe detail: {{ stripe_error_detail }}
+    </div>
+    {% endif %}
+
     {% if stripe_configured %}
     <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
       <form method="post" action="/settings/billing/stripe/setup-session" style="margin:0">
