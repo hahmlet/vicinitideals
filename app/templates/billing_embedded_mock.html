@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Billing Embedded Mock — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div class="topbar">
+  <div class="topbar-title">Billing Embedded Mock</div>
+</div>
+
+<div class="content" style="max-width:980px;padding:24px">
+  <div class="card" style="padding:20px;margin-bottom:16px">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+      <div style="font-size:18px;font-weight:700;color:var(--text)">Stripe Embedded Checkout (Mock)</div>
+      {% if stripe_configured %}
+      <span class="badge badge-success">Ready</span>
+      {% else %}
+      <span class="badge badge-warning">Stripe Not Configured</span>
+      {% endif %}
+    </div>
+    <div style="font-size:13px;color:var(--text-muted);margin-top:8px">
+      URL-only test page for embedded checkout. Not linked in navigation.
+    </div>
+
+    {% if state == 'complete' %}
+    <div style="margin-top:12px;background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:10px 12px;color:#166534;font-size:13px">
+      Stripe returned to this page after checkout completion.
+    </div>
+    {% endif %}
+
+    {% if not stripe_configured %}
+    <div style="margin-top:12px;background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:10px 12px;color:#92400e;font-size:13px">
+      Set both STRIPE_SECRET_KEY and STRIPE_PUBLISHABLE_KEY in environment.
+    </div>
+    {% endif %}
+  </div>
+
+  {% if stripe_configured %}
+  <div class="card" style="padding:20px">
+    <div id="embedded-checkout" style="min-height:560px"></div>
+    <div id="embedded-error" style="display:none;margin-top:10px;font-size:13px;color:#b91c1c;background:#fef2f2;border:1px solid #fecaca;padding:10px 12px;border-radius:8px"></div>
+  </div>
+
+  <script src="https://js.stripe.com/v3/"></script>
+  <script>
+  (function () {
+    const stripe = Stripe("{{ stripe_publishable_key }}");
+    const errEl = document.getElementById('embedded-error');
+
+    async function fetchClientSecret() {
+      const resp = await fetch('/mock/billing/embedded/session', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' }
+      });
+      const data = await resp.json();
+      if (!resp.ok || !data.clientSecret) {
+        throw new Error(data.error || 'Unable to start embedded checkout');
+      }
+      return data.clientSecret;
+    }
+
+    async function mountEmbedded() {
+      try {
+        const checkout = await stripe.initEmbeddedCheckout({ fetchClientSecret });
+        checkout.mount('#embedded-checkout');
+      } catch (err) {
+        errEl.style.display = 'block';
+        errEl.textContent = 'Embedded checkout error: ' + (err && err.message ? err.message : String(err));
+      }
+    }
+
+    mountEmbedded();
+  })();
+  </script>
+  {% endif %}
+</div>
+{% endblock %}

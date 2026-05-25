@@ -985,6 +985,10 @@ def _stripe_secret_key() -> str:
     return (settings.stripe_secret_key or "").strip()
 
 
+def _stripe_publishable_key() -> str:
+    return (settings.stripe_publishable_key or "").strip()
+
+
 def _stripe_is_configured() -> bool:
     return bool(_stripe_secret_key())
 
@@ -2309,6 +2313,83 @@ async def settings_billing_create_setup_session(
     if not checkout_url:
         return RedirectResponse(url="/settings/billing?stripe=error", status_code=303)
     return RedirectResponse(url=checkout_url, status_code=303)
+
+
+@router.get("/mock/billing/embedded", response_class=HTMLResponse)
+async def billing_embedded_mock_page(
+    request: Request,
+    session: DBSession,
+    state: str = Query(default=""),
+) -> HTMLResponse:
+    user = await _get_user(session, request)
+    if user is None:
+        return RedirectResponse(url="/login?next=/mock/billing/embedded", status_code=303)
+
+    dedup_count, conflicts_count = await _get_counts(session)
+    address_issues_count = await _get_address_issues_count(session)
+
+    stripe_configured = _stripe_is_configured() and bool(_stripe_publishable_key())
+    return templates.TemplateResponse(
+        request,
+        "billing_embedded_mock.html",
+        {
+            "stripe_configured": stripe_configured,
+            "stripe_publishable_key": _stripe_publishable_key(),
+            "state": state,
+            **_base_ctx(user, dedup_count, "", address_issues_count, conflicts_count=conflicts_count),
+        },
+    )
+
+
+@router.post("/mock/billing/embedded/session", response_class=JSONResponse)
+async def billing_embedded_mock_create_session(
+    request: Request,
+    session: DBSession,
+) -> JSONResponse:
+    user = await _get_user(session, request)
+    if user is None:
+        return JSONResponse({"error": "Unauthorized"}, status_code=401)
+
+    if not _stripe_is_configured() or not _stripe_publishable_key():
+        return JSONResponse({"error": "Stripe keys are not configured"}, status_code=400)
+
+    def _embedded_payload(customer_id: str) -> list[tuple[str, str]]:
+        return [
+            ("mode", "setup"),
+            ("ui_mode", "embedded"),
+            ("customer", customer_id),
+            ("payment_method_types[]", "card"),
+            ("billing_address_collection", "auto"),
+            ("return_url", f"{settings.app_base_url}/mock/billing/embedded?state=complete"),
+        ]
+
+    try:
+        customer_id = await _ensure_stripe_customer_id(session, user)
+        checkout = await _stripe_api_request(
+            "POST",
+            "/v1/checkout/sessions",
+            data=_embedded_payload(customer_id),
+        )
+    except HTTPException as exc:
+        detail = str(exc.detail or "")
+        if "No such customer" in detail or "resource_missing" in detail:
+            try:
+                await _clear_stripe_customer_id(session, user.id)
+                customer_id = await _ensure_stripe_customer_id(session, user)
+                checkout = await _stripe_api_request(
+                    "POST",
+                    "/v1/checkout/sessions",
+                    data=_embedded_payload(customer_id),
+                )
+            except HTTPException as retry_exc:
+                return JSONResponse({"error": str(retry_exc.detail or "Stripe error")}, status_code=502)
+        else:
+            return JSONResponse({"error": detail or "Stripe error"}, status_code=502)
+
+    client_secret = str(checkout.get("client_secret") or "").strip()
+    if not client_secret:
+        return JSONResponse({"error": "Stripe did not return an embedded client_secret"}, status_code=502)
+    return JSONResponse({"clientSecret": client_secret})
 
 
 @router.post("/ui/admin/rlis-refresh")
