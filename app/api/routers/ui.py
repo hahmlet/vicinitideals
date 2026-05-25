@@ -404,6 +404,7 @@ async def _load_deals(
     q: str = "",
     include_archived: bool = False,
     hide_test: bool = False,
+    user: User | None = None,
 ) -> list[Deal]:
     """Load Deals with their Scenarios and linked Opportunities for the deals page."""
     stmt = (
@@ -416,6 +417,8 @@ async def _load_deals(
         )
         .order_by(Deal.created_at.desc())
     )
+
+    stmt = _apply_org_scope(stmt, user, Deal)
 
     if not include_archived:
         stmt = stmt.where(Deal.status != DealStatus.archived)
@@ -817,6 +820,21 @@ async def _get_user(session: DBSession, request: Request) -> User | None:
             return await session.get(User, uid)
 
     return None
+
+
+def _apply_org_scope(stmt, user: User | None, model: Any):
+    """Restrict a SELECT to rows owned by the current user's organization.
+
+    No-op when settings.org_isolation_enabled is False. When isolation is on
+    and the request has no authenticated user (or no org_id), returns an
+    empty-result statement rather than leaking org data.
+    """
+    if not settings.org_isolation_enabled:
+        return stmt
+    org_id = getattr(user, "org_id", None) if user is not None else None
+    if org_id is None:
+        return stmt.where(literal(False))
+    return stmt.where(model.org_id == org_id)
 
 
 async def _get_dedup_count(session: DBSession) -> int:
@@ -2585,18 +2603,22 @@ async def deals_page(
     # Default hide_test ON for admin users when not explicitly set
     is_admin = user is not None and bool(getattr(user, "is_admin", False))
     effective_hide_test = (hide_test == "1") if hide_test != "" else is_admin
-    loaded_deals = await _load_deals(session, status, type, model, q, archived, effective_hide_test)
+    loaded_deals = await _load_deals(
+        session, status, type, model, q, archived, effective_hide_test, user=user
+    )
     deals = [_build_deal_row(d) for d in loaded_deals]
 
-    total_result = await session.execute(
-        select(func.count()).select_from(Deal).where(Deal.status != DealStatus.archived)
+    total_stmt = _apply_org_scope(
+        select(func.count()).select_from(Deal).where(Deal.status != DealStatus.archived),
+        user, Deal,
     )
-    total_count = int(total_result.scalar_one())
+    total_count = int((await session.execute(total_stmt)).scalar_one())
 
-    archived_result = await session.execute(
-        select(func.count()).select_from(Deal).where(Deal.status == DealStatus.archived)
+    archived_stmt = _apply_org_scope(
+        select(func.count()).select_from(Deal).where(Deal.status == DealStatus.archived),
+        user, Deal,
     )
-    archived_count = int(archived_result.scalar_one())
+    archived_count = int((await session.execute(archived_stmt)).scalar_one())
 
     irr_values = [d["irr"] for d in deals if d["irr"] is not None]
     avg_irr = sum(irr_values) / len(irr_values) if irr_values else None
@@ -2644,8 +2666,11 @@ async def deals_rows(
     include_archived: str = Query(default=""),
     hide_test: str = Query(default=""),
 ) -> HTMLResponse:
+    user = await _get_user(session, request)
     archived = include_archived == "1"
-    loaded_deals = await _load_deals(session, status, type, model, q, archived, hide_test == "1")
+    loaded_deals = await _load_deals(
+        session, status, type, model, q, archived, hide_test == "1", user=user
+    )
     deals = [_build_deal_row(d) for d in loaded_deals]
     return templates.TemplateResponse(request, "partials/deals_rows.html", {"deals": deals})
 
@@ -2940,8 +2965,12 @@ async def deal_detail(
             selectinload(Deal.scenarios).selectinload(DealModel.projects).selectinload(Project.opportunity),
         ],
     )
-    if deal is None or (user is not None and deal.org_id != user.org_id):
+    if deal is None:
         return HTMLResponse("<p class='text-muted'>Deal not found.</p>", status_code=404)
+    if settings.org_isolation_enabled:
+        user_org_id = getattr(user, "org_id", None) if user is not None else None
+        if user_org_id is None or deal.org_id != user_org_id:
+            return HTMLResponse("<p class='text-muted'>Deal not found.</p>", status_code=404)
 
     opportunity = _first_opportunity(deal)
 
@@ -3018,7 +3047,7 @@ async def archive_deal(
     if deal is not None and (user is None or deal.org_id == user.org_id):
         deal.status = DealStatus.archived
         await session.flush()
-    loaded_deals = await _load_deals(session)
+    loaded_deals = await _load_deals(session, user=user)
     deals = [_build_deal_row(d) for d in loaded_deals]
     return templates.TemplateResponse(request, "partials/deals_rows.html", {"deals": deals})
 
@@ -3214,6 +3243,7 @@ async def opportunities_rows_deals(
     property_type: list[str] = Query(default=[]),
     hide_test: str = Query(default=""),
 ) -> HTMLResponse:
+    user = await _get_user(session, request)
     active_oppo_ids = select(Project.opportunity_id).where(
         Project.opportunity_id.isnot(None)
     )
@@ -3226,6 +3256,7 @@ async def opportunities_rows_deals(
         )
         .order_by(Opportunity.last_seen_at.desc())
     )
+    stmt = _apply_org_scope(stmt, user, Opportunity)
     stmt = _apply_opp_filters(stmt, favorited, jurisdiction, min_units, max_units, property_type, hide_test == "1")
     opps = _filter_opps(list((await session.execute(stmt)).scalars().unique()), q)
     return templates.TemplateResponse(request, "partials/opportunities_rows.html", {
@@ -3692,6 +3723,10 @@ async def opportunity_detail(
     )).scalar_one_or_none()
     if opp is None:
         return HTMLResponse("Not found", status_code=404)
+    if settings.org_isolation_enabled and opp.org_id is not None:
+        user_org_id = getattr(user, "org_id", None) if user is not None else None
+        if user_org_id is None or opp.org_id != user_org_id:
+            return HTMLResponse("Not found", status_code=404)
     return templates.TemplateResponse(request, "opportunity_detail.html", {
         "request": request, "opp": opp,
         **_base_ctx(user, dedup_count, "opportunities", conflicts_count=conflicts_count),
@@ -9692,6 +9727,13 @@ async def model_builder(
     if model is None:
         return HTMLResponse("<p class='text-muted'>Model not found.</p>", status_code=404)
 
+    user = await _get_user(session, request)
+    if settings.org_isolation_enabled:
+        user_org_id = getattr(user, "org_id", None) if user is not None else None
+        owning_deal = await session.get(Deal, model.deal_id) if model.deal_id else None
+        if user_org_id is None or owning_deal is None or owning_deal.org_id != user_org_id:
+            return HTMLResponse("<p class='text-muted'>Model not found.</p>", status_code=404)
+
     # `project` context var = the Opportunity (purchase target), for display in topbar
     # Find Opportunity via the first Project linked to this Scenario
     _first_proj = (await session.execute(
@@ -9701,7 +9743,6 @@ async def model_builder(
         await session.get(Opportunity, _first_proj.opportunity_id)
         if _first_proj and _first_proj.opportunity_id else None
     )
-    user = await _get_user(session, request)
     dedup_count, conflicts_count = await _get_counts(session)
     address_issues_count = await _get_address_issues_count(session)
 
@@ -12836,7 +12877,7 @@ async def portfolios_page(
     user = await _get_user(session, request)
     dedup_count, conflicts_count = await _get_counts(session)
 
-    portfolios_result = await session.execute(
+    portfolios_stmt = (
         select(Portfolio)
         .options(
             selectinload(Portfolio.portfolio_projects)
@@ -12847,6 +12888,8 @@ async def portfolios_page(
         )
         .order_by(Portfolio.created_at.desc())
     )
+    portfolios_stmt = _apply_org_scope(portfolios_stmt, user, Portfolio)
+    portfolios_result = await session.execute(portfolios_stmt)
     portfolios = list(portfolios_result.scalars().unique())
 
     # Build summary row per portfolio
@@ -12886,12 +12929,14 @@ async def deals_search(
     """HTMX deal search — returns an <ul> of results for portfolio add-deal picker."""
     if not q or len(q) < 2:
         return HTMLResponse("")
+    user = await _get_user(session, request)
     stmt = (
         select(Deal)
         .where(Deal.name.ilike(f"%{q}%"), Deal.status != DealStatus.archived)
         .order_by(Deal.name)
         .limit(8)
     )
+    stmt = _apply_org_scope(stmt, user, Deal)
     results = list((await session.execute(stmt)).scalars())
     if not results:
         return HTMLResponse('<li style="padding:8px 12px;color:var(--text-muted);font-size:13px">No deals found</li>')
@@ -12953,6 +12998,10 @@ async def portfolio_detail(
     )
     if portfolio is None:
         return HTMLResponse("<p class='text-muted'>Portfolio not found.</p>", status_code=404)
+    if settings.org_isolation_enabled:
+        user_org_id = getattr(user, "org_id", None) if user is not None else None
+        if user_org_id is None or portfolio.org_id != user_org_id:
+            return HTMLResponse("<p class='text-muted'>Portfolio not found.</p>", status_code=404)
 
     # Build deal summary rows
     deal_rows = []

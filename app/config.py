@@ -174,6 +174,14 @@ class Settings(BaseSettings):
     default_risk_free_rate_pct: float = 4.25
 
     # -------------------------------------------------------------------------
+    # Multi-tenant access control
+    # -------------------------------------------------------------------------
+    # When True, list endpoints (deals, opportunities, etc.) are scoped to the
+    # signed-in user's organization. Set to False only for single-tenant
+    # deployments or debugging cross-org visibility issues.
+    org_isolation_enabled: bool = True
+
+    # -------------------------------------------------------------------------
     # Alembic / migrations
     # -------------------------------------------------------------------------
     # Sync DSN used only by Alembic CLI (asyncpg cannot be used synchronously)
