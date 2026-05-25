@@ -1351,9 +1351,20 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         name="s_total_uses", registry=registry,
         fmt=ACCOUNTING, hero=True,
     ); row += 1
+    # Phase 4 KPI-tail: Equity Required = max(0, Total Uses − Σ debt
+    # principal). Both operands are S&U named cells whose own formulas
+    # chain back to Assumptions Block C (debt principal) and the
+    # per-project Use lines. LP edits to either side ripple through
+    # without re-running the engine. IFERROR + engine fallback covers
+    # pre-S&U / degenerate scenarios where the formula resolves to a
+    # non-numeric value.
+    _eq_req_fallback = float(_coerce_decimal(totals.get("equity_required") or 0))
+    _eq_req_formula = (
+        f"=IFERROR(MAX(0,s_su_uses_total-s_su_debt_sources_total),{_eq_req_fallback})"
+    )
     kv_row(
         ws, row, "Equity Required",
-        _coerce_decimal(totals.get("equity_required") or 0),
+        _eq_req_formula,
         name="s_equity_required", registry=registry,
         fmt=ACCOUNTING, hero=True,
     ); row += 1
@@ -5579,6 +5590,16 @@ def _build_su_sheet(
         source_refs.append(f"B{line}")
         line += 1
 
+    # Phase 4 KPI-tail: snapshot the debt-only source rows BEFORE the
+    # implied-equity row is appended, so Equity Required on UW Summary
+    # can formulaize as ``Uses - debt_sources`` rather than including
+    # the equity row in the denominator. Sums the same cells the
+    # implied-equity formula subtracts; ``=0`` for all-equity deals.
+    debt_source_refs = list(source_refs)
+    debt_sources_total_formula = (
+        "=" + "+".join(debt_source_refs) if debt_source_refs else "=0"
+    )
+
     # Implied equity: Uses − Sources. Computed as a formula so it tracks
     # edits to either side.
     if source_refs:
@@ -5614,6 +5635,20 @@ def _build_su_sheet(
     cell.font = FONT_LABEL
     cell.alignment = ALIGN_RIGHT
     registry.register("s_su_gap", ws.title, line, 2)
+    line += 1
+
+    # Phase 4 KPI-tail: Debt Sources Subtotal — sum of debt source rows
+    # only, excluding the implied-equity gap row. Visible (hint font)
+    # so an LP can see it ties out, and registered as
+    # ``s_su_debt_sources_total`` so the UW Summary Equity Required KPI
+    # can resolve as ``MAX(0, s_su_uses_total - s_su_debt_sources_total)``.
+    line += 1
+    ws.cell(row=line, column=1, value="Debt Sources Subtotal").font = FONT_HINT
+    cell = ws.cell(row=line, column=2, value=debt_sources_total_formula)
+    cell.number_format = ACCOUNTING
+    cell.font = FONT_HINT
+    cell.alignment = ALIGN_RIGHT
+    registry.register("s_su_debt_sources_total", ws.title, line, 2)
 
 
 def _build_glossary(

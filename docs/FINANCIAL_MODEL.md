@@ -221,6 +221,17 @@ junction-overlay path. The waterfall engine's in-place rewrite of
 `equity_required` is **skipped for multi-project scenarios** so the per-project
 numbers stay honest. See §1.0 for the full reconciliation.
 
+**Excel formula (Phase 4 KPI-tail conversion, 2026-05-24).** The
+Underwriting Summary "Equity Required" cell is now
+`=IFERROR(MAX(0, s_su_uses_total - s_su_debt_sources_total), <engine_fallback>)`.
+Both operands resolve to S&U named cells whose own formulas chain back
+to Assumptions Block C debt principals (`s_<slug>_principal`) and the
+per-project Use lines. LP edits to either side ripple to the hero KPI
+without re-running the engine. A new "Debt Sources Subtotal" row on
+the S&U sheet (named range `s_su_debt_sources_total`) sums only the
+debt source rows — excluding the implied-equity gap row — so the
+denominator matches the engine's definition.
+
 **Notes / edge cases.** Does *not* subtract committed equity in the Owner
 Equity / Preferred Equity modules — that role belongs to **Sources Gap**.
 Equity Required is the *raise target*; Sources Gap is the *remaining shortfall*.

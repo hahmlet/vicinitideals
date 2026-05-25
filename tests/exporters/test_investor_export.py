@@ -569,6 +569,19 @@ async def test_uw_summary_kpis_match_engine_outputs(session: AsyncSession):
                     f"got {cell_value!r}"
                 )
                 continue
+            if name == "s_equity_required":
+                # Phase 4 KPI-tail: formula = MAX(0, s_su_uses_total -
+                # s_su_debt_sources_total). Numeric parity is covered by
+                # the LibreOffice-recalc gate in formula-parity tests.
+                assert "s_su_uses_total" in cell_value, (
+                    f"{name}: formula must reference s_su_uses_total; "
+                    f"got {cell_value!r}"
+                )
+                assert "s_su_debt_sources_total" in cell_value, (
+                    f"{name}: formula must reference s_su_debt_sources_total; "
+                    f"got {cell_value!r}"
+                )
+                continue
             # For other KPIs that may become formulas in future phases,
             # follow a single dereference if it lands on a scalar.
             ref = cell_value.lstrip("=").strip()
