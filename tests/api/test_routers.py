@@ -297,6 +297,14 @@ async def test_missing_api_key_returns_403(client: AsyncClient) -> None:
 
 
 @pytest.mark.asyncio
+async def test_mock_billing_ui_path_bypasses_api_key_middleware(client: AsyncClient) -> None:
+    response = await client.get("/mock/billing/embedded")
+
+    assert response.status_code == 303
+    assert response.headers.get("location") == "/login?next=/mock/billing/embedded"
+
+
+@pytest.mark.asyncio
 async def test_not_found_http_exception_returns_structured_404_payload(
     client: AsyncClient,
     auth_headers: dict[str, str],

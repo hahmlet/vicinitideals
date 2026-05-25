@@ -55,6 +55,7 @@ _UI_PATH_PREFIXES = (
     "/reset-password",
     "/verify-email",
     "/resend-verification",
+    "/mock/",
 )
 
 # Paths that don't require an authenticated session (public)
