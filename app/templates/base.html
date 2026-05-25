@@ -116,6 +116,9 @@
       <span class="nav-badge nav-badge-alert">{{ conflicts_count if conflicts_count <= 99 else "99+" }}</span>
     </a>
     {% endif %}
+    <a href="/settings/billing" class="nav-item nav-item-muted">
+      <span class="nav-icon">💳</span> Billing
+    </a>
     {% if user_name == 'Stephen Ketch' %}
     <div class="settings-menu-wrap" id="settingsMenuWrap">
       <div class="settings-popup" id="settingsPopup" style="display:none">
@@ -134,6 +137,9 @@
         <a href="/settings/preferences" class="settings-popup-item">
           <span>🎛</span> My Preferences
         </a>
+        <a href="/settings/billing" class="settings-popup-item">
+          <span>💳</span> Billing
+        </a>
       </div>
       <button type="button" class="nav-item nav-item-muted settings-btn" onclick="toggleSettingsMenu()" id="settingsBtn">
         <span class="nav-icon">⚙</span> Settings <span id="app-version" style="opacity:.45;font-size:10px"></span>
@@ -147,6 +153,9 @@
         </a>
         <a href="/settings/preferences" class="settings-popup-item">
           <span>🎛</span> My Preferences
+        </a>
+        <a href="/settings/billing" class="settings-popup-item">
+          <span>💳</span> Billing
         </a>
       </div>
       <button type="button" class="nav-item nav-item-muted settings-btn" onclick="toggleSettingsMenu()" id="settingsBtn">

@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}Billing — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div class="topbar">
+  <div class="topbar-title">Billing</div>
+</div>
+
+<div class="content" style="max-width:940px;padding:24px">
+  <div class="card" style="padding:20px;margin-bottom:16px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap">
+      <div>
+        <div style="font-size:18px;font-weight:700;color:var(--text)">Payment Methods</div>
+        <div style="font-size:13px;color:var(--text-muted);margin-top:6px;max-width:620px">
+          Use Stripe's hosted checkout to add and validate a card. Card details are entered on Stripe, not stored directly in this app.
+        </div>
+      </div>
+      {% if stripe_configured %}
+      <span class="badge badge-success">Stripe Connected{% if stripe_test_mode %} (Test Mode){% endif %}</span>
+      {% else %}
+      <span class="badge badge-warning">Stripe Not Configured</span>
+      {% endif %}
+    </div>
+
+    {% if stripe_state_message %}
+    <div style="margin-top:14px;border:1px solid var(--border);border-radius:8px;padding:10px 12px;background:var(--bg)">
+      {{ stripe_state_message }}
+    </div>
+    {% endif %}
+
+    {% if stripe_configured %}
+    <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <form method="post" action="/settings/billing/stripe/setup-session" style="margin:0">
+        <button type="submit" class="btn btn-primary">Add or Update Card via Stripe</button>
+      </form>
+      <div style="font-size:12px;color:var(--text-muted)">
+        Redirects to Stripe Checkout (mode: setup).
+      </div>
+    </div>
+
+    {% if stripe_customer_id %}
+    <div style="margin-top:12px;font-size:12px;color:var(--text-muted)">
+      Stripe customer ID: {{ stripe_customer_id }}
+    </div>
+    {% endif %}
+    {% else %}
+    <div style="margin-top:16px;font-size:13px;color:var(--text-muted)">
+      Add STRIPE_SECRET_KEY in your environment to enable this page.
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="card" style="padding:20px;margin-bottom:16px">
+    <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:10px">Saved Cards</div>
+    {% if cards_error %}
+    <div style="font-size:13px;color:#b45309;background:#fffbeb;border:1px solid #fcd34d;padding:10px 12px;border-radius:8px">
+      Could not load saved cards right now: {{ cards_error }}
+    </div>
+    {% elif cards %}
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px">
+      {% for card in cards %}
+      <div style="border:1px solid var(--border);border-radius:8px;padding:10px 12px;background:var(--surface)">
+        <div style="font-weight:600;color:var(--text)">{{ card.brand }} •••• {{ card.last4 }}</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:4px">Expires {{ card.exp }}</div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div style="font-size:13px;color:var(--text-muted)">No saved cards yet.</div>
+    {% endif %}
+  </div>
+
+  <div class="card" style="padding:20px">
+    <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px">Stripe Test Cards</div>
+    <div style="font-size:13px;color:var(--text-muted);margin-bottom:10px">
+      When Stripe is in test mode, you can use these dummy card numbers on Stripe's checkout page.
+    </div>
+    <table class="data-table" style="width:100%;max-width:620px">
+      <thead>
+        <tr>
+          <th>Scenario</th>
+          <th>Card Number</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Success</td>
+          <td>4242 4242 4242 4242</td>
+          <td>Use any future expiry and CVC</td>
+        </tr>
+        <tr>
+          <td>Declined</td>
+          <td>4000 0000 0000 0002</td>
+          <td>Always declines</td>
+        </tr>
+        <tr>
+          <td>3D Secure</td>
+          <td>4000 0025 0000 3155</td>
+          <td>Prompts authentication flow</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

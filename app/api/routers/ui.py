@@ -16,9 +16,10 @@ from urllib.parse import quote_plus
 from uuid import UUID
 
 import httpx
-from fastapi import APIRouter, File, Form, HTTPException, Query, Request, UploadFile
+from fastapi import APIRouter, File, Form, HTTPException, Query, Request, Response, UploadFile
 from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse, RedirectResponse, StreamingResponse
 from fastapi.templating import Jinja2Templates
+from starlette.templating import _TemplateResponse
 from sqlalchemy import and_, func, literal, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
@@ -27,7 +28,7 @@ import app as _pkg
 from app.api.deps import DBSession
 from app.config import settings
 from app.models.broker import Broker, Brokerage
-from app.models.deal import STANDARD_OPEX_CATEGORIES, USE_CATEGORY_LABELS, USE_CATEGORY_PRESETS, USE_COST_CATEGORIES, Deal, DealModel, DealOpportunity, DealStatus, IncomeStream, IncomeStreamType, OperatingExpenseLine, OperationalInputs, ProjectType, UnitMix, UseLine, UseLinePhase
+from app.models.deal import Scenario, STANDARD_OPEX_CATEGORIES, USE_CATEGORY_LABELS, USE_CATEGORY_PRESETS, USE_COST_CATEGORIES, Deal, DealModel, DealOpportunity, DealStatus, IncomeStream, IncomeStreamType, OperatingExpenseLine, OperationalInputs, ProjectType, UnitMix, UseLine, UseLinePhase
 from app.models.ingestion import DedupCandidate, DedupStatus, IngestJob, RecordType, SavedSearchCriteria
 from app.models.org import Organization, User
 from app.models.capital import CapitalModule, DrawSource, WaterfallTier
@@ -41,6 +42,7 @@ from app.models.opportunity import Opportunity, OpportunitySource, OpportunitySt
 from app.models.project import Project, ProjectStatus
 from app.models.scraped_listing import ScrapedListing
 from app.models.realie_usage import RealieUsage
+from app.models.settings import UserSetting
 from app.scrapers.realie import _current_month
 from app.settings.resolver import resolve_dev_fee_config
 
@@ -977,6 +979,133 @@ def _base_ctx(
 def _require_settings_owner(user: User | None) -> None:
     if not (user and user.is_admin):
         raise HTTPException(status_code=404, detail="Not found")
+
+
+def _stripe_secret_key() -> str:
+    return (settings.stripe_secret_key or "").strip()
+
+
+def _stripe_is_configured() -> bool:
+    return bool(_stripe_secret_key())
+
+
+def _stripe_state_message(state: str | None) -> str | None:
+    if state == "success":
+        return "Payment method saved and validated by Stripe."
+    if state == "cancel":
+        return "Stripe checkout was cancelled before saving a payment method."
+    if state == "config-missing":
+        return "Billing is not configured yet. Add Stripe keys in environment settings first."
+    if state == "error":
+        return "Stripe returned an error while starting checkout. Try again in a moment."
+    return None
+
+
+async def _stripe_api_request(
+    method: str,
+    endpoint: str,
+    *,
+    data: dict[str, Any] | list[tuple[str, str]] | None = None,
+    params: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    api_key = _stripe_secret_key()
+    if not api_key:
+        raise HTTPException(status_code=400, detail="Stripe is not configured")
+
+    url = f"https://api.stripe.com{endpoint}"
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Accept": "application/json",
+    }
+    timeout = httpx.Timeout(20.0)
+
+    try:
+        async with httpx.AsyncClient(timeout=timeout, trust_env=False) as client:
+            resp = await client.request(method, url, headers=headers, data=data, params=params)
+    except Exception as exc:  # pragma: no cover - network exception guard
+        raise HTTPException(status_code=502, detail=f"Stripe connection failed: {exc}") from exc
+
+    body: dict[str, Any]
+    try:
+        body = resp.json()
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail="Stripe returned a non-JSON response") from exc
+
+    if resp.status_code >= 400:
+        err = body.get("error") if isinstance(body, dict) else None
+        err_msg = (err or {}).get("message") if isinstance(err, dict) else None
+        raise HTTPException(status_code=502, detail=f"Stripe API error: {err_msg or 'unknown error'}")
+
+    return body
+
+
+async def _get_stripe_customer_id(session: AsyncSession, user_id: UUID) -> str | None:
+    row = (
+        await session.execute(
+            select(UserSetting).where(
+                UserSetting.user_id == user_id,
+                UserSetting.field_key == "stripe_customer_id",
+            )
+        )
+    ).scalar_one_or_none()
+    if row is None:
+        return None
+    value = (row.value or "").strip()
+    return value or None
+
+
+async def _ensure_stripe_customer_id(session: AsyncSession, user: User) -> str:
+    existing_id = await _get_stripe_customer_id(session, user.id)
+    if existing_id:
+        return existing_id
+
+    payload: list[tuple[str, str]] = [
+        ("name", user.name or "Viciniti Deals user"),
+        ("metadata[user_id]", str(user.id)),
+        ("metadata[org_id]", str(user.org_id)),
+    ]
+    if user.email:
+        payload.append(("email", user.email))
+
+    customer = await _stripe_api_request("POST", "/v1/customers", data=payload)
+    customer_id = str(customer.get("id") or "").strip()
+    if not customer_id:
+        raise HTTPException(status_code=502, detail="Stripe customer creation failed")
+
+    row = UserSetting(
+        id=_uuid_mod.uuid4(),
+        user_id=user.id,
+        org_id=user.org_id,
+        field_key="stripe_customer_id",
+        value=customer_id,
+    )
+    session.add(row)
+    await session.commit()
+    return customer_id
+
+
+async def _list_stripe_payment_methods(customer_id: str) -> list[dict[str, str]]:
+    body = await _stripe_api_request(
+        "GET",
+        "/v1/payment_methods",
+        params={"customer": customer_id, "type": "card", "limit": 5},
+    )
+
+    rows: list[dict[str, str]] = []
+    for item in body.get("data", []):
+        card = item.get("card") or {}
+        brand = str(card.get("brand") or "card").title()
+        last4 = str(card.get("last4") or "••••")
+        exp_month = str(card.get("exp_month") or "").zfill(2)
+        exp_year = str(card.get("exp_year") or "")
+        rows.append(
+            {
+                "brand": brand,
+                "last4": last4,
+                "exp": f"{exp_month}/{exp_year}" if exp_month and exp_year else "",
+            }
+        )
+    return rows
 
 
 def _fmt_ts(ts: datetime | None) -> str:
@@ -2044,6 +2173,82 @@ async def settings_user_preferences(
             **_base_ctx(user, dedup_count, "", address_issues_count, conflicts_count=conflicts_count),
         },
     )
+
+
+@router.get("/settings/billing", response_class=HTMLResponse)
+async def settings_billing(
+    request: Request,
+    session: DBSession,
+    stripe: str = Query(default=""),
+) -> HTMLResponse:
+    user = await _get_user(session, request)
+    if user is None:
+        return RedirectResponse(url="/login?next=/settings/billing", status_code=303)
+
+    dedup_count, conflicts_count = await _get_counts(session)
+    address_issues_count = await _get_address_issues_count(session)
+
+    stripe_configured = _stripe_is_configured()
+    stripe_test_mode = _stripe_secret_key().startswith("sk_test_") if stripe_configured else False
+    customer_id = await _get_stripe_customer_id(session, user.id) if stripe_configured else None
+
+    cards: list[dict[str, str]] = []
+    cards_error: str | None = None
+    if stripe_configured and customer_id:
+        try:
+            cards = await _list_stripe_payment_methods(customer_id)
+        except HTTPException as exc:
+            cards_error = str(exc.detail)
+
+    return templates.TemplateResponse(
+        request,
+        "settings_billing.html",
+        {
+            "stripe_configured": stripe_configured,
+            "stripe_test_mode": stripe_test_mode,
+            "stripe_customer_id": customer_id,
+            "cards": cards,
+            "cards_error": cards_error,
+            "stripe_state": stripe,
+            "stripe_state_message": _stripe_state_message(stripe),
+            **_base_ctx(user, dedup_count, "", address_issues_count, conflicts_count=conflicts_count),
+        },
+    )
+
+
+@router.post("/settings/billing/stripe/setup-session", response_class=HTMLResponse)
+async def settings_billing_create_setup_session(
+    request: Request,
+    session: DBSession,
+) -> HTMLResponse:
+    user = await _get_user(session, request)
+    if user is None:
+        return RedirectResponse(url="/login?next=/settings/billing", status_code=303)
+
+    if not _stripe_is_configured():
+        return RedirectResponse(url="/settings/billing?stripe=config-missing", status_code=303)
+
+    try:
+        customer_id = await _ensure_stripe_customer_id(session, user)
+        checkout = await _stripe_api_request(
+            "POST",
+            "/v1/checkout/sessions",
+            data=[
+                ("mode", "setup"),
+                ("customer", customer_id),
+                ("payment_method_types[]", "card"),
+                ("billing_address_collection", "auto"),
+                ("success_url", f"{settings.app_base_url}/settings/billing?stripe=success"),
+                ("cancel_url", f"{settings.app_base_url}/settings/billing?stripe=cancel"),
+            ],
+        )
+    except HTTPException:
+        return RedirectResponse(url="/settings/billing?stripe=error", status_code=303)
+
+    checkout_url = str(checkout.get("url") or "").strip()
+    if not checkout_url:
+        return RedirectResponse(url="/settings/billing?stripe=error", status_code=303)
+    return RedirectResponse(url=checkout_url, status_code=303)
 
 
 @router.post("/ui/admin/rlis-refresh")
@@ -5087,12 +5292,7 @@ async def _staleness_map(session: AsyncSession, scenario_id: UUID) -> dict:
     deals won't light up as stale until a real edit happens.
     """
     from app.models.capital import CapitalModuleProject as _CMP
-    from app.models.deal import (
-        IncomeStream as _IS,
-        OperatingExpenseLine as _OEL,
-        OperationalInputs as _OI,
-        UseLine as _UL,
-    )
+    from app.models.deal import Scenario, IncomeStream as _IS, OperatingExpenseLine as _OEL, OperationalInputs as _OI, UseLine as _UL
     from app.models.project import ProjectAnchor as _PA
 
     # ── Scenario-scoped max(updated_at) — applies to every project on this scenario.
@@ -9536,7 +9736,7 @@ async def model_builder(
         )).scalar_one_or_none()
         if _active_anchor is not None:
             from app.engines.anchor_resolver import resolve_project_start_dates
-            from app.models.deal import Scenario as _Scn
+            from app.models.deal import Scenario, Scenario as _Scn
             _scn = await session.get(_Scn, model_id)
             await session.refresh(_scn, ["projects"])
             _resolved = await resolve_project_start_dates(_scn, session)

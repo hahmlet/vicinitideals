@@ -48,6 +48,14 @@ class Settings(BaseSettings):
     password_reset_token_max_age_seconds: int = 60 * 30      # 30 minutes
 
     # -------------------------------------------------------------------------
+    # Billing (Stripe)
+    # -------------------------------------------------------------------------
+    # Set stripe_secret_key to enable the Settings > Billing Stripe flow.
+    # Use test keys first (sk_test_...) to validate with Stripe test cards.
+    stripe_secret_key: str = ""
+    stripe_publishable_key: str = ""
+
+    # -------------------------------------------------------------------------
     # Error monitoring (BugSink — Sentry-SDK compatible)
     # -------------------------------------------------------------------------
     sentry_dsn: str | None = None
