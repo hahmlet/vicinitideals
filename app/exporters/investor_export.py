@@ -1332,9 +1332,20 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
     # ── Primary KPI block ──────────────────────────────────────────────────
     section_label(ws, row, "Primary KPIs", span_cols=2)
     row += 1
+    # Phase 4 KPI-tail: TPC = Total Uses − balance-only Uses (reserves
+    # + capitalized-interest stubs). Matches the engine's
+    # `_calculate_total_project_cost` which sums capital_event outflows
+    # and excludes the same _BALANCE_ONLY_LABELS set. LP edits to any
+    # Use-line amount or the operating-reserve months input ripple to
+    # this KPI without re-running the engine. Engine fallback in the
+    # IFERROR false-branch covers pre-S&U / degenerate scenarios.
+    _tpc_fallback = float(_coerce_decimal(totals.get("total_project_cost") or 0))
+    _tpc_formula = (
+        f"=IFERROR(s_su_uses_total-s_su_balance_only_total,{_tpc_fallback})"
+    )
     kv_row(
         ws, row, "Total Project Cost",
-        _coerce_decimal(totals.get("total_project_cost") or 0),
+        _tpc_formula,
         name="s_total_project_cost", registry=registry,
         fmt=ACCOUNTING, hero=True,
     ); row += 1
@@ -5458,6 +5469,14 @@ def _build_su_sheet(
     cat_subtotal_rows: dict[str, list[int]] = {cat: [] for cat in USE_COST_CATEGORIES}
     # Track per-project total rows for any future per-project rollup formulas.
     _proj_total_rows: list[int] = []
+    # Phase 4 KPI-tail: track every individual Use-line row whose label is
+    # in the engine's balance-only set (Operating Reserve, Lease-Up
+    # Reserve, capitalized-interest stubs) so the S&U sheet can emit a
+    # ``s_su_balance_only_total`` named cell. TPC = Total Uses minus
+    # this subtotal, matching the engine's `_calculate_total_project_cost`
+    # which excludes balance-only Use lines from capital_event outflows.
+    from app.engines.cashflow import _BALANCE_ONLY_LABELS
+    balance_only_refs: list[str] = []
 
     for idx, project in enumerate(projects, start=1):
         pid = project.id
@@ -5499,6 +5518,8 @@ def _build_su_sheet(
                     cell.number_format = ACCOUNTING
                 else:
                     ws.cell(row=line, column=2, value=_to_excel_number(amt)).number_format = ACCOUNTING
+                if (ul.label or "") in _BALANCE_ONLY_LABELS:
+                    balance_only_refs.append(f"B{line}")
                 line += 1
             last_line_row = line - 1
 
@@ -5649,6 +5670,23 @@ def _build_su_sheet(
     cell.font = FONT_HINT
     cell.alignment = ALIGN_RIGHT
     registry.register("s_su_debt_sources_total", ws.title, line, 2)
+    line += 1
+
+    # Phase 4 KPI-tail: Balance-Only Subtotal — sum of every Use-line
+    # row whose label is in the engine's _BALANCE_ONLY_LABELS set
+    # (Operating Reserve, Lease-Up Reserve, capitalized-interest
+    # stubs). Subtracted from Total Uses to derive TPC on the UW
+    # Summary, matching `_calculate_total_project_cost` which excludes
+    # these labels from capital_event outflows.
+    balance_only_formula = (
+        "=" + "+".join(balance_only_refs) if balance_only_refs else "=0"
+    )
+    ws.cell(row=line, column=1, value="Balance-Only Subtotal").font = FONT_HINT
+    cell = ws.cell(row=line, column=2, value=balance_only_formula)
+    cell.number_format = ACCOUNTING
+    cell.font = FONT_HINT
+    cell.alignment = ALIGN_RIGHT
+    registry.register("s_su_balance_only_total", ws.title, line, 2)
 
 
 def _build_glossary(

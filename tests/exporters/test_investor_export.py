@@ -582,6 +582,19 @@ async def test_uw_summary_kpis_match_engine_outputs(session: AsyncSession):
                     f"got {cell_value!r}"
                 )
                 continue
+            if name == "s_total_project_cost":
+                # Phase 4 KPI-tail: formula = s_su_uses_total -
+                # s_su_balance_only_total. Numeric parity covered by
+                # the LibreOffice-recalc gate.
+                assert "s_su_uses_total" in cell_value, (
+                    f"{name}: formula must reference s_su_uses_total; "
+                    f"got {cell_value!r}"
+                )
+                assert "s_su_balance_only_total" in cell_value, (
+                    f"{name}: formula must reference s_su_balance_only_total; "
+                    f"got {cell_value!r}"
+                )
+                continue
             # For other KPIs that may become formulas in future phases,
             # follow a single dereference if it lands on a scalar.
             ref = cell_value.lstrip("=").strip()

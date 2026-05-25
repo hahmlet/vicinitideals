@@ -157,6 +157,22 @@ TPC during the per-project loop and writes it to
 (`app/engines/underwriting_rollup.py`) sums it across projects for scenario
 display.
 
+**Excel formula (Phase 4 KPI-tail conversion, 2026-05-25).** The
+Underwriting Summary "Total Project Cost" cell is now
+`=IFERROR(s_su_uses_total - s_su_balance_only_total, <engine_fallback>)`.
+A new "Balance-Only Subtotal" row on the S&U sheet (named range
+`s_su_balance_only_total`) sums every Use-line row whose label is in
+the engine's `_BALANCE_ONLY_LABELS` set (Operating Reserve, Lease-Up
+Reserve, Capitalized Construction Interest, Construction Interest
+Reserve, Capitalized Pre-Development Interest, Capitalized Acquisition
+Interest, Interest Reserve, Pre-Development Interest Reserve,
+Acquisition Interest Reserve, Construction DS Reserve). Subtracting
+this from `s_su_uses_total` matches the engine's
+`_calculate_total_project_cost`, which excludes the same set from
+capital_event outflows. LP edits to any Use-line amount (or to
+`s_operating_reserve_months` for the derived Operating Reserve row)
+ripple to TPC without re-running the engine.
+
 **Notes / edge cases.** TPC excludes Operating Reserve, Lease-Up Reserve, and
 capitalized-interest stubs because those are derived from the principal we
 are sizing — including them would double-count loan-funded items as costs the
