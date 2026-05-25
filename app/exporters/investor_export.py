@@ -1506,6 +1506,20 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         name="s_weighted_equity_multiple", registry=registry,
         fmt="0.00\\x", hero=True,
     ); row += 1
+    # Phase 4 KPI-tail: CoC Y1 = first-year levered cash flow ÷ equity
+    # required. r_uw_cf_levered's first cell (INDEX ..., 1, 1) is Y1
+    # because year_cols starts at 1 (Y0 acquisition stub is intentionally
+    # skipped on UW Cash Flow). MAX(0, ...) clamps the negative-Y1 case
+    # (equity call in year one) to 0 so a deal still ramping shows
+    # 0% CoC rather than a misleading negative. LP edits to NOI,
+    # debt service, capital events on Y1 column or to Equity Required
+    # all ripple to CoC Y1 without re-running the engine.
+    #
+    # Parity vs engine: engine sums per-period waterfall
+    # cash_distributed across periods 1-12 (monthly grain) for the
+    # equity tiers; Excel formula uses annual aggregated Levered CF
+    # (sum of all tier distributions). Same approximation envelope
+    # as the Combined EM / WEM formulas on this row group.
     coc_y1 = _coc_year_one(rollup_waterfall, capital_modules)
     if coc_y1 is None and _equity_req > Decimal(1):
         # Auto-funded deals have $0 equity module commitments so _coc_year_one
@@ -1518,9 +1532,13 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         )
         if _y1_dists > 0:
             coc_y1 = _y1_dists / _equity_req
+    _coc_fallback = float(coc_y1) if coc_y1 is not None else 0
+    _coc_formula = (
+        f"=IFERROR(MAX(0,INDEX(r_uw_cf_levered,1,1))/s_equity_required,{_coc_fallback})"
+    )
     _kv_row_optional(
         ws, row, "Cash-on-Cash (Year 1)",
-        coc_y1,
+        _coc_formula,
         name="s_coc_year_one", registry=registry,
         fmt=PCT, hero=True,
     ); row += 1

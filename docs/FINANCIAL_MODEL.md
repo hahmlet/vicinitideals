@@ -3043,8 +3043,8 @@ These are LP-facing metrics the engine computes for the Underwriting Summary / I
 | **Named Range** | `s_coc_year_one` |
 | **App Calc/Use** | `app/exporters/investor_export.py:_coc_year_one` sums waterfall `cash_distributed` for periods 1–12 across equity modules; divides by total equity commitments. |
 | **App Notes** | Returns `None` when committed equity is $0 (auto-funded deals); falls back to scenario `equity_required` × Y1 distributions as the denominator. |
-| **Excel Formula** | `—` (engine value; no Excel formula yet) |
-| **Excel Notes** | Could be formulized as `SUMIF(r_uw_cf_levered, ">0", first 12 cells) / equity_basis` but Excel's `SUMIF` doesn't support positional slicing — would need `INDEX` / array tricks. Deferred. |
+| **Excel Formula** | Phase 4 KPI-tail conversion (2026-05-25): `=IFERROR(MAX(0,INDEX(r_uw_cf_levered,1,1))/s_equity_required, <engine_fallback>)`. `INDEX(...,1,1)` picks the first column of `r_uw_cf_levered` — which IS Y1 because `year_cols` on the Underwriting Cash Flow sheet starts at 1 (the Y0 acquisition stub is intentionally skipped on that sheet). `MAX(0, ...)` clamps the negative-Y1 case (equity call in year one) so a deal still ramping shows 0% CoC rather than a misleading negative. LP edits to NOI, debt service, or capital events on the Y1 column, or to Equity Required, ripple to CoC Y1 without re-running the engine. |
+| **Excel Notes** | Engine sums per-period waterfall `cash_distributed` across periods 1–12 (monthly grain) for equity tiers only; Excel formula uses annual aggregated Levered CF (sum of all tier distributions). Same approximation envelope as the Combined EM / WEM formulas on this row group. IFERROR catches the zero-equity / unconfigured-waterfall degenerate cases by falling back to the engine value. |
 | **Refs** | [Combined Equity Multiple](#combined-equity-multiple), [s_coc_year_one](#cash-on-cash-year-1) |
 
 ##### DCF NPV
