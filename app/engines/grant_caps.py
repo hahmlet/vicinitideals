@@ -30,8 +30,6 @@ from __future__ import annotations
 from decimal import Decimal
 from typing import TYPE_CHECKING, Any
 
-from sqlalchemy import update as sa_update
-
 if TYPE_CHECKING:
     from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -105,9 +103,6 @@ async def resolve_grant_caps(
     Persists changes via flush to DB; in-memory ORM objects are mutated
     so the gap-fill solver sees correct values immediately.
     """
-    # Lazy import to avoid circular import with cashflow.py
-    from app.models.capital import CapitalModule
-
     # Per-Use remaining bucket = full Use amount (engine has not yet
     # consumed anything in this compute pass).
     remaining: dict[Any, Decimal] = {
@@ -127,11 +122,6 @@ async def resolve_grant_caps(
             # UI prevents this state; engine defends.
             src["amount"] = str(ZERO)
             grant.source = src
-            await session.execute(
-                sa_update(CapitalModule)
-                .where(CapitalModule.id == grant.id)
-                .values(source=src)
-            )
             continue
 
         # Order: phase rank asc, amount desc (largest first within same phase)
@@ -173,15 +163,6 @@ async def resolve_grant_caps(
                 grant.active_phase_end = last_phase
 
         grant.source = src
-        await session.execute(
-            sa_update(CapitalModule)
-            .where(CapitalModule.id == grant.id)
-            .values(
-                source=src,
-                active_phase_start=grant.active_phase_start,
-                active_phase_end=grant.active_phase_end,
-            )
-        )
 
     await session.flush()
 
