@@ -180,6 +180,14 @@ this and the rollup exposes it as `rollup_summary["total_uses"]`. The
 Underwriting KPI strip displays it as the headline "Total Uses" tile (with
 TPC as a sub-label).
 
+**Excel formula (Phase 4 tail).** The "Total Uses" cell on Underwriting
+Summary is written as `=s_su_uses_total`, the per-row SUM total on the
+Sources & Uses sheet. An LP edit to any Use line on S&U ripples through
+to this KPI without re-running the engine. The Python value is retained
+only as the named range's address; Excel resolves the formula at file
+open. Semantic equivalence is exact — both sides compute
+`Σ UseLine.amount where phase != "exit"`.
+
 **Notes / edge cases.** Total Uses ≥ TPC. The delta is the sum of balance-only
 labels (Operating Reserve, Lease-Up Reserve, capitalized-interest reserves).
 The equity stack ultimately has to fund those out of pocket, which is why
@@ -2694,6 +2702,18 @@ Each row documents one data point: definition, named range, app-side calc, app-s
 | **Excel Formula** | `=SUM(s_opex_1_annual,s_opex_2_annual,…)` |
 | **Excel Notes** | One ref per `OperatingExpenseLine` record across all projects, slugs from `_all_opex_slugs`. When no OpEx records exist the cell falls back to the engine value. |
 | **Refs** | [OpEx Annual](#opex-annual), [OpEx Growth Chain (Y2+)](#opex-growth-chain-y2), [s_opex_n_annual](#opex-annual) |
+
+##### Revenue Per-Stream Breakout (Pro Forma transparency block)
+
+| Field | Value |
+|---|---|
+| **Definition** | One indented row per `IncomeStream` rendered directly below the Pro Forma's Gross Revenue total, exposing each stream's annual ramp so the LP can trace any single revenue line back to its Assumptions Block F input. Symmetric to the OpEx per-line breakout — total row left unchanged. |
+| **Named Range** | (cell-only — breakout rows are read-only references, no defined names) |
+| **App Calc/Use** | `_build_uw_proforma` walks `_all_revenue_streams_ordered(ctx)` after writing the Gross Revenue total row and emits one breakout per stream using the slug from `_all_revenue_slugs(ctx)`. |
+| **App Notes** | Y0 left blank (construction-phase revenue is engine-governed via lease-up ramp, not derivable from stabilized inputs). Y1 = the stream's `s_rev_<slug>_y1_monthly` cell × 12. Y2+ = prior-year breakout cell × (1 + per-stream `s_rev_<slug>_escalation_pct`), so rent-controlled and market-rate units can ramp at their own rates rather than the sheet-wide `s_revenue_growth_rate`. |
+| **Excel Formula** | Y1 = `=s_rev_<slug>_y1_monthly*12`; Y2+ = `={col-1}{row}*(1+s_rev_<slug>_escalation_pct)` |
+| **Excel Notes** | Labels start with the ``   •`` indent marker; hint font (italic, muted color) reinforces "transparency, not a primary KPI". Mirror of the OpEx Per-Line Breakout entry below. |
+| **Refs** | [Revenue Y1 Sum (Block F chain seed)](#revenue-y1-sum-block-f-chain-seed), [OpEx Per-Line Breakout (Pro Forma transparency block)](#opex-per-line-breakout-pro-forma-transparency-block) |
 
 ##### OpEx Per-Line Breakout (Pro Forma transparency block)
 

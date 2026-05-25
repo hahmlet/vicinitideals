@@ -545,6 +545,33 @@ async def test_uw_summary_kpis_match_engine_outputs(session: AsyncSession):
         cell_value = _resolve_named_cell(wb, uw.title, name)
         engine_value = float(expected_totals.get(key) or 0)
         assert cell_value is not None, f"named range {name} not found"
+        # Phase 4 tail: when the KPI cell is now a formula (e.g.
+        # s_total_uses = "=s_su_uses_total" which then resolves to its
+        # own SUM formula on the S&U sheet), openpyxl can't evaluate it
+        # without a recalc backend. Verify the formula references the
+        # expected upstream named range and skip the numeric parity
+        # for that single KPI — the formula contract itself is covered
+        # by test_phase34_tail.py and the downstream value is covered
+        # by the LibreOffice-recalc parity tests in
+        # test_formula_parity_proforma.py.
+        if isinstance(cell_value, str) and cell_value.startswith("="):
+            if name == "s_total_uses":
+                assert "s_su_uses_total" in cell_value, (
+                    f"{name}: expected formula to reference s_su_uses_total; "
+                    f"got {cell_value!r}"
+                )
+                continue
+            # For other KPIs that may become formulas in future phases,
+            # follow a single dereference if it lands on a scalar.
+            ref = cell_value.lstrip("=").strip()
+            resolved = _resolve_named_cell_any_sheet(wb, ref)
+            if isinstance(resolved, str) and resolved.startswith("="):
+                # Formula-of-formula; let downstream recalc tests cover it.
+                continue
+            cell_value = resolved
+            assert cell_value is not None, (
+                f"{name}: formula {ref!r} resolved to no value"
+            )
         assert abs(float(cell_value or 0) - engine_value) < 0.01, (
             f"{name}: cell={cell_value} vs engine={engine_value}"
         )
@@ -660,6 +687,20 @@ def _resolve_named_cell(wb, sheet_title: str, name: str):
     for resolved_sheet, ref in defined.destinations:
         if resolved_sheet != sheet_title:
             continue
+        sheet = wb[resolved_sheet]
+        ref_clean = ref.replace("$", "")
+        return sheet[ref_clean].value
+    return None
+
+
+def _resolve_named_cell_any_sheet(wb, name: str):
+    """Like :func:`_resolve_named_cell` but resolves on whichever sheet
+    actually owns the defined name. Used by the UW Summary KPI parity
+    check to follow Phase 4-tail formula references that target cells
+    on other sheets (e.g. ``s_su_uses_total`` on the S&U sheet)."""
+    if name not in wb.defined_names:
+        return None
+    for resolved_sheet, ref in wb.defined_names[name].destinations:
         sheet = wb[resolved_sheet]
         ref_clean = ref.replace("$", "")
         return sheet[ref_clean].value

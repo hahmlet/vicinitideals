@@ -1338,9 +1338,16 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         name="s_total_project_cost", registry=registry,
         fmt=ACCOUNTING, hero=True,
     ); row += 1
+    # Phase 4: Total Uses references the S&U sheet's total directly so
+    # any LP edit to a Use line on Sources & Uses ripples through to
+    # this KPI without re-running the engine. Both values are defined
+    # as "sum of UseLine.amount where phase != exit" (see engine
+    # rollup_summary.totals.total_uses and the S&U sheet's uses_total
+    # cell), so the formula is semantically equivalent to the prior
+    # engine-derived scalar.
     kv_row(
         ws, row, "Total Uses",
-        _coerce_decimal(totals.get("total_uses") or 0),
+        "=s_su_uses_total",
         name="s_total_uses", registry=registry,
         fmt=ACCOUNTING, hero=True,
     ); row += 1
@@ -2274,6 +2281,45 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
                 col=2,
                 end_col=1 + len(year_cols),
             )
+        # Phase 3: emit one indented breakout row per IncomeStream
+        # directly below the Gross Revenue total, mirroring the OpEx
+        # breakout block. Y0 blank (construction-phase revenue is
+        # engine-governed). Y1 = the stream's `s_rev_<slug>_y1_monthly`
+        # × 12, Y2+ = prior-year × (1 + per-stream
+        # `s_rev_<slug>_escalation_pct`). Per-stream escalation so a
+        # rent-controlled 1BR and market-rate 2BR can ramp at their own
+        # rates instead of collapsing onto `s_revenue_growth_rate`.
+        if field == "gross_revenue" and _rev_slug_list:
+            rev_streams = _all_revenue_streams_ordered(ctx)
+            rev_slug_map = _all_revenue_slugs(ctx)
+            for stream in rev_streams:
+                slug = rev_slug_map.get(stream.id)
+                if slug is None:
+                    continue
+                cur_row += 1
+                label = f"   • {stream.label or 'Income Stream'}"
+                ws.cell(row=cur_row, column=1, value=label).font = FONT_HINT
+                for col_offset, _year in enumerate(year_cols):
+                    col_idx = 2 + col_offset
+                    if col_offset == 0:
+                        cell = ws.cell(row=cur_row, column=col_idx, value=None)
+                    elif col_offset == 1:
+                        cell = ws.cell(
+                            row=cur_row, column=col_idx,
+                            value=f"=s_rev_{slug}_y1_monthly*12",
+                        )
+                    else:
+                        prev_col = get_column_letter(col_idx - 1)
+                        cell = ws.cell(
+                            row=cur_row, column=col_idx,
+                            value=(
+                                f"={prev_col}{cur_row}"
+                                f"*(1+s_rev_{slug}_escalation_pct)"
+                            ),
+                        )
+                    cell.number_format = ACCOUNTING
+                    cell.font = FONT_HINT
+                    cell.alignment = ALIGN_RIGHT
         # Phase B follow-up: expose Y1 OpEx as a workbook-scoped name so
         # the S&U Operating Reserve UseLine formula resolves.
         if field == "operating_expenses" and len(year_cols) >= 2:
@@ -5946,6 +5992,21 @@ def _all_opex_lines_ordered(ctx: dict) -> list[OperatingExpenseLine]:
     flat: list[OperatingExpenseLine] = []
     for project in projects:
         flat.extend(lines_by_project.get(project.id, []))
+    return flat
+
+
+def _all_revenue_streams_ordered(ctx: dict) -> list[IncomeStream]:
+    """Return every IncomeStream across all projects in the same
+    flatten order :func:`_all_revenue_slugs` resolves slugs against.
+    Mirrors :func:`_all_opex_lines_ordered` — the per-stream breakout
+    renderer pairs each stream with its slug by walking both lists in
+    lockstep.
+    """
+    projects: list[Project] = ctx.get("projects") or []
+    streams_by_project: dict = ctx.get("income_streams") or {}
+    flat: list[IncomeStream] = []
+    for project in projects:
+        flat.extend(streams_by_project.get(project.id, []))
     return flat
 
 
