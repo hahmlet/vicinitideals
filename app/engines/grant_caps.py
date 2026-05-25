@@ -125,7 +125,7 @@ async def resolve_grant_caps(
         if not eligible_uses or cap <= ZERO:
             # Cap with no eligibility selected → treat as 0 contribution.
             # UI prevents this state; engine defends.
-            src["amount"] = ZERO
+            src["amount"] = str(ZERO)
             grant.source = src
             await session.execute(
                 sa_update(CapitalModule)
@@ -152,7 +152,10 @@ async def resolve_grant_caps(
             consumed += take
             covered_uses.append(u)
 
-        src["amount"] = consumed
+        src["amount"] = str(consumed)
+        # Also normalize maximum to string for JSONB round-trip safety.
+        if src.get("maximum") is not None:
+            src["maximum"] = str(_to_decimal(src["maximum"]))
 
         # Active From/To derived from covered Uses (subset of eligible Uses
         # actually consumed by this grant under its cap).

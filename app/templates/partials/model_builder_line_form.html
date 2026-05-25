@@ -1122,6 +1122,10 @@ function ulTimingChanged(val) {
     <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">
       If checked, this source funds only the selected Uses up to the Maximum above.
     </div>
+    <div style="display:flex;gap:6px;margin-bottom:6px">
+      <button type="button" id="lf-elig-check-all" class="btn btn-secondary" style="font-size:11px;padding:2px 8px">Check all</button>
+      <button type="button" id="lf-elig-uncheck-all" class="btn btn-secondary" style="font-size:11px;padding:2px 8px">Uncheck all</button>
+    </div>
     <div id="lf-eligibility-list" style="display:flex;flex-direction:column;gap:6px;max-height:240px;overflow:auto;padding:4px 0">
       {% for u in eligibility_uses %}
       <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer">
@@ -1161,6 +1165,16 @@ function ulTimingChanged(val) {
       }
     }
     boxes.forEach(function(b) { b.addEventListener('change', refresh); });
+    var ca = document.getElementById('lf-elig-check-all');
+    var ua = document.getElementById('lf-elig-uncheck-all');
+    if (ca) ca.addEventListener('click', function() {
+      boxes.forEach(function(b) { b.checked = true; });
+      refresh();
+    });
+    if (ua) ua.addEventListener('click', function() {
+      boxes.forEach(function(b) { b.checked = false; });
+      refresh();
+    });
     refresh();
   })();
   </script>
@@ -1532,6 +1546,10 @@ function ulTimingChanged(val) {
       <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">
         If checked, this source funds only the selected Uses up to the Maximum above.
       </div>
+      <div style="display:flex;gap:6px;margin-bottom:6px">
+        <button type="button" id="sw-elig-check-all" class="btn btn-secondary" style="font-size:11px;padding:2px 8px">Check all</button>
+        <button type="button" id="sw-elig-uncheck-all" class="btn btn-secondary" style="font-size:11px;padding:2px 8px">Uncheck all</button>
+      </div>
       <div id="sw-eligibility-list" style="display:flex;flex-direction:column;gap:6px;max-height:200px;overflow:auto;padding:4px 0">
         {% for u in eligibility_uses %}
         <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer">
@@ -1885,6 +1903,16 @@ function ulTimingChanged(val) {
   // Wire eligibility checkbox change handlers
   document.querySelectorAll('.sw-eligibility-checkbox').forEach(function(b) {
     b.addEventListener('change', _swRefreshAmountMode);
+  });
+  var _swCa = document.getElementById('sw-elig-check-all');
+  var _swUa = document.getElementById('sw-elig-uncheck-all');
+  if (_swCa) _swCa.addEventListener('click', function() {
+    document.querySelectorAll('.sw-eligibility-checkbox').forEach(function(b) { b.checked = true; });
+    _swRefreshAmountMode();
+  });
+  if (_swUa) _swUa.addEventListener('click', function() {
+    document.querySelectorAll('.sw-eligibility-checkbox').forEach(function(b) { b.checked = false; });
+    _swRefreshAmountMode();
   });
 
   window.swNext = function() {
