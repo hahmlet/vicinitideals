@@ -12,7 +12,7 @@ from zoneinfo import ZoneInfo
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Any
-from urllib.parse import quote_plus
+from urllib.parse import quote_plus, urlencode
 from uuid import UUID
 
 import httpx
@@ -1020,8 +1020,24 @@ async def _stripe_api_request(
     timeout = httpx.Timeout(20.0)
 
     def _send() -> httpx.Response:
+        req_data: dict[str, Any] | None = None
+        req_content: bytes | None = None
+        req_headers = dict(headers)
+        if isinstance(data, list):
+            req_content = urlencode(data).encode("utf-8")
+            req_headers["Content-Type"] = "application/x-www-form-urlencoded"
+        else:
+            req_data = data
+
         with httpx.Client(timeout=timeout, trust_env=False) as client:
-            return client.request(method, url, headers=headers, data=data, params=params)
+            return client.request(
+                method,
+                url,
+                headers=req_headers,
+                data=req_data,
+                content=req_content,
+                params=params,
+            )
 
     try:
         resp = await asyncio.to_thread(_send)
