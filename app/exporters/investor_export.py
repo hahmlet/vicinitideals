@@ -2084,6 +2084,35 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
         else set()
     )
 
+    # Phase 2: Y1 Gross Revenue + Y1 OpEx become formulas referencing
+    # Assumptions Block F / G named cells. LP edits to a stream's rent
+    # or an OpEx line's annual amount now ripple forward via the Y2+
+    # growth chain that already exists. Y0 (pre-op) stays at engine
+    # value — construction-phase gross/opex are governed by the
+    # cashflow engine, not the stabilized inputs.
+    _rev_slug_list: list[str] = list(_all_revenue_slugs(ctx).values())
+    _opex_slug_list: list[str] = list(_all_opex_slugs(ctx).values())
+
+    def _gross_revenue_y1_formula() -> str | None:
+        """SUM of every stream's Y1 monthly cell × 12.
+
+        Returns None when no streams exist (defensive — Pro Forma still
+        shows engine value, which will be 0 anyway). Wrapped in
+        parentheses so the ``*12`` annualization applies to the whole
+        SUM rather than only the last term.
+        """
+        if not _rev_slug_list:
+            return None
+        refs = ",".join(f"s_rev_{s}_y1_monthly" for s in _rev_slug_list)
+        return f"=SUM({refs})*12"
+
+    def _opex_y1_formula() -> str | None:
+        """SUM of every OpEx line's annual cell."""
+        if not _opex_slug_list:
+            return None
+        refs = ",".join(f"s_opex_{s}_annual" for s in _opex_slug_list)
+        return f"=SUM({refs})"
+
     def _debt_service_formula_for_year(y: int) -> str | None:
         """Per-year Debt Service SUM, gated by term + perm origination.
 
@@ -2188,11 +2217,42 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
                         row=cur_row, column=col_idx,
                         value=_to_excel_number(Decimal(0)),
                     )
+            elif (
+                field == "gross_revenue"
+                and col_offset == 1
+                and _gross_revenue_y1_formula() is not None
+                and Decimal(annual.get(year, {}).get("gross_revenue", 0) or 0) > 0
+            ):
+                # Phase 2: Y1 Gross Revenue = SUM(Block F y1_monthly cells) * 12,
+                # but only when the engine shows Y1 is operationally active
+                # (gross_revenue > 0). When Y1 is still in a construction
+                # phase the engine returns 0; overriding with the stabilized
+                # input formula would misrepresent phase semantics, so we
+                # keep the engine seed (the growth chain picks up at the
+                # first stabilized year via the Y2+ branch).
+                cell = ws.cell(
+                    row=cur_row, column=col_idx,
+                    value=_gross_revenue_y1_formula(),
+                )
+            elif (
+                field == "operating_expenses"
+                and col_offset == 1
+                and _opex_y1_formula() is not None
+                and Decimal(annual.get(year, {}).get("operating_expenses", 0) or 0) > 0
+            ):
+                # Phase 2: Y1 OpEx = SUM(Block G annual cells), same
+                # phase-gating contract as gross_revenue above — engine
+                # value wins when Y1 is pre-operational.
+                cell = ws.cell(
+                    row=cur_row, column=col_idx,
+                    value=_opex_y1_formula(),
+                )
             elif growth_name and col_offset >= 2:
                 # Y2+ for growth-chain fields: reference the prior-year
                 # cell on the same row and multiply by (1 + growth). Y0
-                # (pre-op) and Y1 (first stabilized year) keep engine
-                # values as the chain's seed.
+                # (pre-op) keeps engine values as the chain's seed; Y1
+                # is now also formula-driven via the input-reference
+                # branches above (gross_revenue, operating_expenses).
                 prev_col = get_column_letter(col_idx - 1)
                 formula = f"={prev_col}{cur_row}*(1+{growth_name})"
                 cell = ws.cell(row=cur_row, column=col_idx, value=formula)
@@ -5801,6 +5861,38 @@ def _opex_slugs(lines: list[OperatingExpenseLine]) -> dict[uuid.UUID, str]:
     return out
 
 
+def _all_revenue_slugs(ctx: dict) -> dict[uuid.UUID, str]:
+    """Return ``{stream.id: slug}`` for every IncomeStream across all
+    projects in the scenario. Computed via a SINGLE ``_stream_slugs``
+    call over the flattened list so two streams with identical labels
+    on different projects collision-resolve globally (gets ``_2`` /
+    ``_3`` suffix) instead of silently shadowing one another.
+
+    Single source of truth: Assumptions Block F and the Pro Forma's
+    Gross Revenue formula both consume this map so the formula's
+    ``s_rev_<slug>_y1_monthly`` references always resolve.
+    """
+    projects: list[Project] = ctx.get("projects") or []
+    streams_by_project: dict = ctx.get("income_streams") or {}
+    flat: list[IncomeStream] = []
+    for project in projects:
+        flat.extend(streams_by_project.get(project.id, []))
+    return _stream_slugs(flat)
+
+
+def _all_opex_slugs(ctx: dict) -> dict[uuid.UUID, str]:
+    """Return ``{expense_line.id: slug}`` for every OperatingExpenseLine
+    across all projects in the scenario. Same global collision-resolution
+    contract as :func:`_all_revenue_slugs`.
+    """
+    projects: list[Project] = ctx.get("projects") or []
+    lines_by_project: dict = ctx.get("expense_lines") or {}
+    flat: list[OperatingExpenseLine] = []
+    for project in projects:
+        flat.extend(lines_by_project.get(project.id, []))
+    return _opex_slugs(flat)
+
+
 def _build_assumptions_revenue_block(
     ws,
     registry: CellRegistry,
@@ -5844,11 +5936,9 @@ def _build_assumptions_revenue_block(
          "Occupancy %", "Escalation %", "Y1 Monthly (calc)"],
     )
 
-    # Pre-build slugs per-project (ensures slugs unique within project,
-    # and we still namespace across projects via the per-project list).
-    slug_by_id: dict = {}
-    for idx, project in enumerate(projects, start=1):
-        slug_by_id.update(_stream_slugs(streams_by_project.get(project.id, [])))
+    # Cross-project slug map (single source of truth — same map the
+    # Pro Forma's Gross Revenue formula consumes).
+    slug_by_id = _all_revenue_slugs(ctx)
 
     row = start_row + 2
     for project_idx, stream in all_streams:
@@ -5933,9 +6023,7 @@ def _build_assumptions_opex_block(
         ["Project", "Line Item", "Annual ($)", "Escalation %", "Y1 Monthly (calc)"],
     )
 
-    slug_by_id: dict = {}
-    for idx, project in enumerate(projects, start=1):
-        slug_by_id.update(_opex_slugs(lines_by_project.get(project.id, [])))
+    slug_by_id = _all_opex_slugs(ctx)
 
     row = start_row + 2
     for project_idx, line in all_lines:
