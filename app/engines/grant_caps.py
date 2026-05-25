@@ -121,6 +121,8 @@ async def resolve_grant_caps(
             # Cap with no eligibility selected → treat as 0 contribution.
             # UI prevents this state; engine defends.
             src["amount"] = str(ZERO)
+            if src.get("maximum") is not None:
+                src["maximum"] = str(_to_decimal(src["maximum"]))
             grant.source = src
             continue
 

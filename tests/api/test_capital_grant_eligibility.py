@@ -205,3 +205,65 @@ async def test_clearing_eligibility_removes_back_reference(
     refreshed = await session.get(UseLine, use_line.id)
     assert refreshed is not None
     assert not any(str(x) == str(grant.id) for x in (refreshed.eligible_module_ids or []))
+
+
+# ---------------------------------------------------------------------------
+# Eligibility checklist must hide Gap Adjustment phantom rows and $0 Uses.
+# Engine-managed Gap Adjustment Uses cannot be funded by user-chosen grants;
+# $0 rows aren't actionable funding targets either.
+# ---------------------------------------------------------------------------
+
+
+async def test_line_form_eligibility_uses_excludes_gap_adjustment_and_zero(
+    client: AsyncClient, session: AsyncSession
+) -> None:
+    from tests.conftest import (
+        seed_org, seed_opportunity, seed_deal_model_with_financials,
+    )
+    from app.schemas.gap_adjustment_names import (
+        REVENUE_ADJUSTMENT_LABEL,
+        OPEX_ADJUSTMENT_LABEL,
+        PURCHASE_PRICE_ADJUSTMENT_LABEL,
+    )
+
+    org, user = await seed_org(session)
+    opp = await seed_opportunity(session, org, user)
+    deal_model, _, project, _ = await seed_deal_model_with_financials(session, opp, user)
+
+    real_use = UseLine(
+        project_id=project.id, label="Site Work", phase="construction",
+        amount=Decimal("180000"), cost_category="hard",
+    )
+    zero_use = UseLine(
+        project_id=project.id, label="Reserved Bucket", phase="construction",
+        amount=Decimal("0"), cost_category="soft",
+    )
+    gap_rev = UseLine(
+        project_id=project.id, label=REVENUE_ADJUSTMENT_LABEL, phase="construction",
+        amount=Decimal("50000"), cost_category="soft",
+    )
+    gap_opex = UseLine(
+        project_id=project.id, label=OPEX_ADJUSTMENT_LABEL, phase="construction",
+        amount=Decimal("50000"), cost_category="soft",
+    )
+    gap_pp = UseLine(
+        project_id=project.id, label=PURCHASE_PRICE_ADJUSTMENT_LABEL, phase="acquisition",
+        amount=Decimal("50000"), cost_category="hard",
+    )
+    session.add_all([real_use, zero_use, gap_rev, gap_opex, gap_pp])
+    await session.commit()
+
+    await _auth(client, user.id)
+    resp = await client.get(
+        f"/ui/models/{deal_model.id}/line-form",
+        params={"type": "capital_modules"},
+    )
+    assert resp.status_code == 200
+    html = resp.text
+
+    # Real Use shows; phantom + $0 Uses are filtered
+    assert "Site Work" in html
+    assert "Reserved Bucket" not in html
+    assert REVENUE_ADJUSTMENT_LABEL not in html
+    assert OPEX_ADJUSTMENT_LABEL not in html
+    assert PURCHASE_PRICE_ADJUSTMENT_LABEL not in html

@@ -65,7 +65,7 @@ async def test_cap_under_eligible_sum_amount_equals_cap() -> None:
     u1 = _Use(amount=Decimal("300000"), eligible_module_ids=[grant.id])
     u2 = _Use(amount=Decimal("200000"), eligible_module_ids=[grant.id])
     await resolve_grant_caps([grant], [u1, u2], _FakeSession())
-    assert grant.source["amount"] == Decimal("250000")
+    assert Decimal(grant.source["amount"]) == Decimal("250000")
 
 
 @pytest.mark.unit
@@ -74,7 +74,7 @@ async def test_cap_over_eligible_sum_amount_equals_eligible_sum() -> None:
     grant = _Module(source={"maximum": Decimal("250000")})
     u = _Use(amount=Decimal("180000"), eligible_module_ids=[grant.id])
     await resolve_grant_caps([grant], [u], _FakeSession())
-    assert grant.source["amount"] == Decimal("180000")
+    assert Decimal(grant.source["amount"]) == Decimal("180000")
     assert grant_is_under_utilized(grant)
 
 
@@ -88,8 +88,8 @@ async def test_two_grants_stack_position_wins_against_same_use() -> None:
         eligible_module_ids=[grant_a.id, grant_b.id],
     )
     await resolve_grant_caps([grant_a, grant_b], [use], _FakeSession())
-    assert grant_a.source["amount"] == Decimal("200000")
-    assert grant_b.source["amount"] == Decimal("0")
+    assert Decimal(grant_a.source["amount"]) == Decimal("200000")
+    assert Decimal(grant_b.source["amount"]) == Decimal("0")
     assert grant_is_under_utilized(grant_b)
 
 
@@ -111,7 +111,7 @@ async def test_consumption_order_phase_asc_amount_desc() -> None:
     await resolve_grant_caps([grant], [u_small, u_large], _FakeSession())
     # Cap fills entirely from u_large (300k cap room → 250k taken)
     # Active From/To both point at u_large's phase
-    assert grant.source["amount"] == Decimal("250000")
+    assert Decimal(grant.source["amount"]) == Decimal("250000")
     assert grant.active_phase_start == "construction"
     assert grant.active_phase_end == "construction"
 
@@ -133,7 +133,7 @@ async def test_consumption_order_earlier_phase_first() -> None:
     await resolve_grant_caps([grant], [u_constr, u_acq], _FakeSession())
     # acquisition (rank 1) consumed before construction (rank 2)
     # cap 450k = 300k acq + 150k constr
-    assert grant.source["amount"] == Decimal("450000")
+    assert Decimal(grant.source["amount"]) == Decimal("450000")
     assert grant.active_phase_start == "acquisition"
     assert grant.active_phase_end == "construction"
 
@@ -154,7 +154,7 @@ async def test_active_phase_caps_at_cap_consumption() -> None:
     )
     await resolve_grant_caps([grant], [u_acq, u_constr], _FakeSession())
     # Cap (200k) fully consumed by u_acq alone — construction never touched
-    assert grant.source["amount"] == Decimal("200000")
+    assert Decimal(grant.source["amount"]) == Decimal("200000")
     assert grant.active_phase_start == "acquisition"
     assert grant.active_phase_end == "acquisition"
 
@@ -165,7 +165,7 @@ async def test_no_eligible_uses_grant_contributes_zero() -> None:
     grant = _Module(source={"maximum": Decimal("250000")})
     use = _Use(amount=Decimal("100000"))  # no eligibility
     await resolve_grant_caps([grant], [use], _FakeSession())
-    assert grant.source["amount"] == Decimal("0")
+    assert Decimal(grant.source["amount"]) == Decimal("0")
 
 
 @pytest.mark.unit
@@ -175,7 +175,7 @@ async def test_zero_dollar_use_does_not_consume_cap() -> None:
     zero_use = _Use(amount=Decimal("0"), eligible_module_ids=[grant.id])
     real_use = _Use(amount=Decimal("180000"), eligible_module_ids=[grant.id])
     await resolve_grant_caps([grant], [zero_use, real_use], _FakeSession())
-    assert grant.source["amount"] == Decimal("180000")
+    assert Decimal(grant.source["amount"]) == Decimal("180000")
 
 
 @pytest.mark.unit
@@ -194,3 +194,67 @@ def test_grant_is_under_utilized_true_when_amount_below_max() -> None:
 def test_grant_is_under_utilized_false_when_fully_funded() -> None:
     g = _Module(source={"maximum": Decimal("250000"), "amount": Decimal("250000")})
     assert grant_is_under_utilized(g) is False
+
+
+# ---------------------------------------------------------------------------
+# Regression: source["amount"] and ["maximum"] must be JSON-serializable.
+# Bug: asyncpg's JSONB codec raises
+#   TypeError: Object of type Decimal is not JSON serializable
+# when grant.source contains a Decimal. Engine must write str(Decimal).
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_amount_and_maximum_are_json_serializable_after_resolve() -> None:
+    import json
+
+    grant = _Module(source={"maximum": Decimal("250000")})
+    u = _Use(amount=Decimal("180000"), eligible_module_ids=[grant.id])
+    await resolve_grant_caps([grant], [u], _FakeSession())
+
+    # json.dumps with default encoder must not raise — proves no raw Decimal
+    # leaks into JSONB writeback path.
+    payload = json.dumps(grant.source)
+    assert "180000" in payload
+    assert "250000" in payload
+    assert isinstance(grant.source["amount"], str)
+    assert isinstance(grant.source["maximum"], str)
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_amount_is_str_when_eligibility_empty() -> None:
+    """No eligibility selected → grant.amount must still be str (not Decimal)."""
+    import json
+
+    grant = _Module(source={"maximum": Decimal("250000")})
+    use = _Use(amount=Decimal("100000"))  # no eligibility
+    await resolve_grant_caps([grant], [use], _FakeSession())
+
+    json.dumps(grant.source)  # would raise if Decimal leaked
+    assert isinstance(grant.source["amount"], str)
+    assert grant.source["amount"] == "0"
+
+
+# ---------------------------------------------------------------------------
+# Regression: resolve_grant_caps must NOT issue bulk sa_update() against
+# CapitalModule because that expires JSONB column attributes on the in-memory
+# ORM objects, triggering a lazy refresh in _auto_size_debt_modules that
+# raises sqlalchemy.exc.MissingGreenlet outside the asyncpg greenlet bridge.
+# Guard by asserting the engine relies only on ORM dirty tracking (no
+# sa_update import in grant_caps.py).
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.unit
+def test_grant_caps_does_not_use_bulk_sa_update() -> None:
+    from pathlib import Path
+    import app.engines.grant_caps as gc
+
+    src = Path(gc.__file__).read_text(encoding="utf-8")
+    assert "sa_update" not in src, (
+        "grant_caps.py must not issue session.execute(sa_update(...)) — "
+        "bulk UPDATE expires JSONB attrs on ORM objects, triggering "
+        "MissingGreenlet in _auto_size_debt_modules. Use ORM dirty tracking."
+    )

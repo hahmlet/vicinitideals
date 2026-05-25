@@ -221,6 +221,43 @@ def test_wizard_eligibility_flips_amount_to_maximum(
     assert "250" in row.inner_text()
 
 
+def test_check_all_and_uncheck_all_buttons(
+    logged_in_page: Page, base_url: str
+) -> None:
+    """Edit drawer Check all / Uncheck all toggles every eligibility checkbox
+    in one click. Confirms label flips correctly."""
+    suffix = uuid.uuid4().hex[:6]
+    model_id = create_e2e_scenario(
+        logged_in_page, deal_name=f"E2E EligBulk {suffix}", deal_type="acquisition"
+    )
+    page = logged_in_page
+    _open_sources_panel(page, base_url, model_id)
+
+    _add_use(page, "Site Work", "180000")
+    _add_use(page, "Soft Costs", "60000")
+    _add_use(page, "FF&E", "40000")
+    _add_grant(page, "OR-MEP", "250000")
+    _open_grant_edit(page, "OR-MEP")
+
+    boxes = page.locator('.lf-eligibility-checkbox')
+    assert boxes.count() >= 3, f"Expected >=3 eligibility checkboxes, got {boxes.count()}"
+
+    page.click('#lf-elig-check-all')
+    for i in range(boxes.count()):
+        assert boxes.nth(i).is_checked(), f"box {i} not checked after Check all"
+    label = page.locator('#lf-amount-label')
+    assert label.inner_text().strip().startswith("Maximum"), (
+        "Label should flip to Maximum once any box is checked via Check all"
+    )
+
+    page.click('#lf-elig-uncheck-all')
+    for i in range(boxes.count()):
+        assert not boxes.nth(i).is_checked(), f"box {i} still checked after Uncheck all"
+    assert label.inner_text().strip().startswith("Amount"), (
+        "Label should revert to Amount after Uncheck all"
+    )
+
+
 def test_clearing_eligibility_reverts_to_amount(
     logged_in_page: Page, base_url: str
 ) -> None:
