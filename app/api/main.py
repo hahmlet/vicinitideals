@@ -32,6 +32,7 @@ logger = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 _UI_PATH_PREFIXES = (
     "/static/",
+    "/favicon.ico",
     "/deals",
     "/models/",
     "/buildings",
@@ -61,6 +62,7 @@ _UI_PATH_PREFIXES = (
 # Paths that don't require an authenticated session (public)
 _AUTH_EXEMPT_PATHS = (
     "/static/",
+    "/favicon.ico",
     "/health",
     "/login",
     "/logout",

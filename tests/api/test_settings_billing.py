@@ -118,3 +118,37 @@ async def test_billing_setup_session_recovers_stale_customer_id(
         and ("POST", "/v1/customers", None) in calls
         and ("POST", "/v1/checkout/sessions", "cus_fresh") in calls
     )
+
+
+async def test_embedded_mock_session_uses_embedded_page_ui_mode(
+    client: AsyncClient,
+    session: AsyncSession,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(settings, "stripe_secret_key", "sk_test_dummy", raising=False)
+    monkeypatch.setattr(settings, "stripe_publishable_key", "pk_test_dummy", raising=False)
+
+    org, user = await seed_org(session)
+    await session.commit()
+    await _auth(client, user.id)
+
+    captured: dict[str, str] = {}
+
+    async def _fake_stripe_api_request(method, endpoint, *, data=None, params=None):
+        if endpoint == "/v1/customers":
+            return {"id": "cus_embedded"}
+        if endpoint == "/v1/checkout/sessions":
+            if isinstance(data, list):
+                for k, v in data:
+                    if k == "ui_mode":
+                        captured["ui_mode"] = v
+            return {"client_secret": "cs_test_embedded_secret"}
+        return {}
+
+    monkeypatch.setattr(ui, "_stripe_api_request", _fake_stripe_api_request)
+
+    resp = await client.post("/mock/billing/embedded/session")
+
+    assert resp.status_code == 200
+    assert resp.json() == {"clientSecret": "cs_test_embedded_secret"}
+    assert captured.get("ui_mode") == "embedded_page"

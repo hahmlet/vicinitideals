@@ -2356,7 +2356,7 @@ async def billing_embedded_mock_create_session(
     def _embedded_payload(customer_id: str) -> list[tuple[str, str]]:
         return [
             ("mode", "setup"),
-            ("ui_mode", "embedded"),
+            ("ui_mode", "embedded_page"),
             ("customer", customer_id),
             ("payment_method_types[]", "card"),
             ("billing_address_collection", "auto"),
