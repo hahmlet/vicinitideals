@@ -1311,9 +1311,11 @@ unlevered risk premium the property earns over a T-bill.
 cap_rate_spread = yield_on_cost − risk_free_rate
 ```
 
-**Engine source.** Computed inline by the investor export Spread Stack
-section from `s_spread_cap_pct` (Yield on Cost) and `s_rfr_pct`
-(Risk-Free Rate).
+**Engine source.** Excel formula (Phase 4): the Cap Rate Spread cell on
+Underwriting Summary is written as `=IFERROR(s_spread_cap_pct-s_rfr_pct,0)`.
+`s_spread_cap_pct` is itself the formula `=IFERROR(s_combined_noi/s_total_project_cost,0)`,
+so an LP edit to revenue / OpEx / Use lines re-derives NOI + TPC upstream
+and the spread row follows without re-running the engine.
 
 **Notes / edge cases.** A cap rate spread of 150–250 bps over the 10Y
 Treasury is typical for stabilised multifamily. Below 100 bps the deal's
@@ -1336,9 +1338,15 @@ irr_spread_vs_cap   = levered_irr − yield_on_cost
 irr_spread_vs_rfr   = levered_irr − risk_free_rate
 ```
 
-**Engine source.** Computed inline by the investor export Spread Stack
-from `OperationalOutputs.levered_irr` (via `rollup_summary`) and the cap
-/ RFR inputs.
+**Engine source.** Excel formula (Phase 4): both IRR Spread cells on
+Underwriting Summary are written as formulas referencing
+`s_combined_irr` (from the Primary KPI block, sourced from
+`OperationalOutputs.levered_irr` via `rollup_summary`):
+
+```
+s_irr_spread      = =IFERROR(s_combined_irr-s_spread_cap_pct,0)
+s_irr_rfr_spread  = =IFERROR(s_combined_irr-s_rfr_pct,0)
+```
 
 **Notes / edge cases.** Negative IRR vs Cap spread means leverage is
 dilutive — the deal would return more unlevered. A positive spread of
