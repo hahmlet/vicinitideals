@@ -3115,8 +3115,8 @@ These are LP-facing metrics the engine computes for the Underwriting Summary / I
 | **Named Range** | `s_weighted_equity_multiple` |
 | **App Calc/Use** | `app/exporters/investor_export.py:_weighted_em_calc` reads `_npv_levered` (DCF NPV) and divides by equity required. |
 | **App Notes** | Returns `None` when `equity_required < $1`. Hurdle rate from `Scenario.discount_rate_pct` (default 8% or org default). |
-| **Excel Formula** | `—` (engine value; could become `=IFERROR((s_dcf_npv+s_equity_required)/s_equity_required,1)` once `s_dcf_npv` is formula-driven and `s_equity_required` is named. Deferred — chained on DCF NPV conversion.) |
-| **Excel Notes** | Both Weighted EM and DCF NPV would gate on the same Excel `NPV`/`XNPV` decision — convert as a pair. |
+| **Excel Formula** | Phase 4 KPI-tail conversion (2026-05-25): `=IFERROR(SUMPRODUCT((r_uw_cf_levered>0)*r_uw_cf_levered/(1+s_discount_rate)^(COLUMN(r_uw_cf_levered)-MIN(COLUMN(r_uw_cf_levered))))/s_equity_required, <engine_fallback>)`. Uses annual SUMPRODUCT discounting over the Underwriting Cash Flow levered row (net-to-equity after debt service) at the user-editable Block A discount rate. LP edits to the hurdle, to any revenue / OpEx / debt-service cell, or to the equity-required denominator all ripple to WEM without re-running the engine. |
+| **Excel Notes** | Engine uses **monthly** periods with `t/12` exponent against **equity-tier-only** waterfall distributions; Excel formula uses **annual** periods and the **aggregate** levered CF (sum of all tier distributions per period). Same approximation envelope as the Combined Equity Multiple formula already shipped on this row group — typical parity ±0.1×, worst case ±0.3× when waterfall has meaningful non-equity tiers. IFERROR catches zero-equity / no-distributions degenerate cases by falling back to the engine value. |
 | **Refs** | [Combined Equity Multiple](#combined-equity-multiple), [DCF NPV](#dcf-npv), [s_weighted_equity_multiple](#weighted-equity-multiple) |
 
 #### F.1.8 Per-project phase plan (absolute month boundaries)

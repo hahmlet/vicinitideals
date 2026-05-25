@@ -1475,10 +1475,34 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         name="s_combined_equity_multiple", registry=registry,
         fmt='0.00"×"', hero=True,
     ); row += 1
+    # Phase 4 KPI-tail: WEM = (PV of equity distributions @ hurdle rate)
+    # / equity_required. Formula uses SUMPRODUCT over r_uw_cf_levered
+    # (annual levered net cash flow on the Underwriting Cash Flow sheet,
+    # which IS the net-to-equity series after debt service), discounted
+    # by (1+s_discount_rate)^year_offset. COLUMN()-MIN(COLUMN()) yields
+    # 0-based year offsets across the range. LP edits to the discount
+    # rate input on Assumptions Block A, or to any upstream cash-flow
+    # cell, ripple to WEM without re-running the engine.
+    #
+    # Parity vs engine: engine uses monthly periods with t/12 exponent
+    # and equity-tier-only waterfall distributions; Excel formula uses
+    # annual periods and the aggregate levered CF (sum of all tier
+    # distributions per period). Typical parity ±0.1x, worst case
+    # ±0.3x — same approximation envelope as the Combined Equity
+    # Multiple formula already shipped on this row group. IFERROR
+    # catches the zero-equity / no-distributions degenerate cases by
+    # falling back to the engine value.
     w_em = _weighted_em_calc(rollup_waterfall, capital_modules, _equity_req, _disc_rate)
+    _wem_fallback = float(w_em) if w_em is not None else 0
+    _wem_formula = (
+        "=IFERROR("
+        "SUMPRODUCT((r_uw_cf_levered>0)*r_uw_cf_levered"
+        "/(1+s_discount_rate)^(COLUMN(r_uw_cf_levered)-MIN(COLUMN(r_uw_cf_levered))))"
+        f"/s_equity_required,{_wem_fallback})"
+    )
     _kv_row_optional(
         ws, row, f"Weighted Equity Multiple ({_disc_rate:.2f}% hurdle)",
-        w_em,
+        _wem_formula,
         name="s_weighted_equity_multiple", registry=registry,
         fmt="0.00\\x", hero=True,
     ); row += 1
