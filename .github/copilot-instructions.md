@@ -1,39 +1,47 @@
 # Copilot Agent Instructions — vicinitideals
 
-## Branch-First Rule
+## Start Here
 
-**Never work directly on `main`.** Before making any changes, create a dedicated branch:
+**Read `CLAUDE.md` in the repo root before doing anything.** It is the authoritative source for:
+- Tech stack, project structure, architecture
+- Coding conventions (Decimal for money, SQLAlchemy 2.0 style, Pydantic v2, uv not pip)
+- Deploy workflow
+- Testing requirements (every change needs a test)
+- Database safety rules (never `docker compose down -v`)
+
+Everything below is Copilot-specific and **overrides** the Claude Code-specific parts of CLAUDE.md.
+
+---
+
+## Branch-First — Always
+
+**Never work directly on `main`.** Before any changes:
 
 ```bash
-git checkout main
-git pull origin main
-git checkout -b feature/<slug>
+git checkout main && git pull origin main
+git checkout -b feature/<short-slug>
 ```
 
-Use a short slug describing the work (e.g. `feature/csrf-middleware`, `fix/cashflow-dscr`).
+Slug examples: `feature/csrf-middleware`, `fix/cashflow-dscr`, `refactor/waterfall-helpers`.
 
-## Why This Matters
+**Why:** Claude Code agents work in isolated git worktrees on their own branches. Committing to `main` causes push conflicts that overwrite in-flight Claude Code work.
 
-Claude Code agents run in separate git worktrees on their own branches. If you work on `main` and push, your changes can overwrite or conflict with in-flight Claude Code branch work. Each agent session must own its own branch.
+---
 
-## Workflow
+## Commit → Push → PR (never merge yourself)
 
-1. **Start**: `git checkout -b feature/<slug>` from fresh `main`
-2. **Work**: make all changes on that branch
-3. **Commit**: conventional commits (`feat:`, `fix:`, `refactor:`, `docs:`)
-4. **Push**: `git push origin feature/<slug>` — never `git push origin main`
-5. **PR**: open a pull request; do not merge yourself
+1. Commit with conventional prefix: `feat:`, `fix:`, `refactor:`, `docs:`, `chore:`
+2. Push to your branch: `git push origin feature/<slug>`
+3. Open a PR — do **not** merge it yourself and do **not** push to `main`
 
-## Deploy
+---
 
-Do **not** trigger deploys. Claude Code agents handle deployment after PR merge per the CLAUDE.md deploy workflow.
+## No Deploys
 
-## Key Files
+Do not trigger deploys. Claude Code agents handle deployment after PR merge via SSH to VM 114. See `CLAUDE.md` deploy section for the exact steps if context is needed.
 
-- `CLAUDE.md` — full project context, architecture, conventions (read this)
-- `docs/FINANCIAL_MODEL.md` — financial engine math reference
-- `docs/DATA_MODEL.md` — ORM schema reference
+---
 
 ## Package Manager
 
-Use `uv`, not `pip`. Example: `uv add <package>`, `uv run pytest`.
+`uv`, not `pip`. Run: `uv add <pkg>` · `uv run pytest` · `uv run ruff check app/ tests/`
