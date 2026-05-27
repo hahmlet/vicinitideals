@@ -57,7 +57,7 @@ def build_gate_plan(environment: str) -> list[GateDefinition]:
         GateDefinition(
             name="critical_lint",
             description="No critical Ruff lint errors (syntax / undefined names)",
-            command=(python, "-m", "ruff", "check", "vicinitideals", "tests", "--select", "E9,F63,F7,F82"),
+            command=(python, "-m", "ruff", "check", "app", "tests", "--select", "E9,F63,F7,F82"),
         ),
         GateDefinition(
             name="compose_config",

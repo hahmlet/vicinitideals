@@ -59,16 +59,17 @@ def upgrade() -> None:
         sa.Column("apn_normalized", sa.String(100), nullable=True),
     )
 
-    # Backfill apn_normalized from existing apn values
-    conn = op.get_bind()
-    rows = conn.execute(sa.text("SELECT id, apn FROM parcels WHERE apn IS NOT NULL")).fetchall()
-    if rows:
-        for row_id, apn in rows:
-            normalized = _normalize_apn(apn)
-            conn.execute(
-                sa.text("UPDATE parcels SET apn_normalized = :norm WHERE id = :id"),
-                {"norm": normalized, "id": row_id},
-            )
+    # Backfill only in online mode; --sql offline mode cannot run SELECT/UPDATE.
+    if not op.get_context().as_sql:
+        conn = op.get_bind()
+        rows = conn.execute(sa.text("SELECT id, apn FROM parcels WHERE apn IS NOT NULL")).fetchall()
+        if rows:
+            for row_id, apn in rows:
+                normalized = _normalize_apn(apn)
+                conn.execute(
+                    sa.text("UPDATE parcels SET apn_normalized = :norm WHERE id = :id"),
+                    {"norm": normalized, "id": row_id},
+                )
 
     op.create_index("ix_parcels_apn_normalized", "parcels", ["apn_normalized"])
 
