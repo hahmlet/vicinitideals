@@ -1938,14 +1938,16 @@ period i and `t_i` is the date of that period.
 materialized to `OperationalOutputs.lp_irr`; used as fallback in the Excel formula.
 
 **Excel export.** Named cell `s_lp_irr` on the Investor Returns sheet.
-Formula-driven (Phase 5f): `=IFERROR(IRR(r_returns_lp_cf), {engine_fallback})`.
+Formula-driven (Phase 5g): `=IFERROR(XIRR(r_returns_lp_cf,r_returns_cf_dates), {engine_fallback})`.
 `r_returns_lp_cf` is the annual LP cash flow series: Y0 = −committed LP equity,
 Y1..YN = waterfall distributions bucketed by year (`period // 12 + 1`).
+`r_returns_cf_dates` is a shared annual date series anchored at `DEFAULT_IRR_BASE_YEAR` (2020):
+Y0 = 2020-01-01, Y1 = 2021-01-01, …; shared by LP and GP XIRR calls.
 
-**Notes / edge cases.** Excel `IRR()` assumes equal annual periods; engine uses
-XIRR over monthly periods. For typical hold periods (3–10 years) the annual
-approximation is within 10–50 bp. When the CF series has no sign change (e.g.
-no equity configured), `IRR()` returns `#NUM!` and IFERROR substitutes the
+**Notes / edge cases.** Annual CF buckets with equal-annual date spacing make XIRR
+numerically identical to IRR() but semantically correct — allows future substitution
+of real deal dates without formula changes. When the CF series has no sign change
+(e.g. no equity configured), XIRR returns `#NUM!` and IFERROR substitutes the
 engine scalar.
 
 ### GP IRR [investor, app]
@@ -1959,7 +1961,7 @@ promote tier proceeds).
 materialized to `OperationalOutputs.gp_irr`; used as fallback in the Excel formula.
 
 **Excel export.** Named cell `s_gp_irr` on the Investor Returns sheet.
-Formula-driven (Phase 5f): `=IFERROR(IRR(r_returns_gp_cf), {engine_fallback})`.
+Formula-driven (Phase 5g): `=IFERROR(XIRR(r_returns_gp_cf,r_returns_cf_dates), {engine_fallback})`.
 
 **Notes / edge cases.** GP IRR usually exceeds LP IRR thanks to the promote;
 the spread quantifies the deal's promote economics.
