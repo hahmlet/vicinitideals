@@ -390,9 +390,10 @@
 {% set ns_rev = namespace(total=0) %}
 {% if income_streams %}
   {% for s in income_streams if s.label != _REV_LBL %}
-    {% if s.amount_fixed_monthly %}{% set ns_rev.total = ns_rev.total + (s.amount_fixed_monthly | float) %}{% endif %}
-    {% if s.amount_per_unit_monthly and s.unit_count %}
-      {% set ns_rev.total = ns_rev.total + ((s.amount_per_unit_monthly | float) * (s.unit_count | int)) %}
+    {% if s.amount_fixed_monthly is not none %}
+      {% set ns_rev.total = ns_rev.total + (s.amount_fixed_monthly | float) %}
+    {% elif s.amount_per_unit_monthly is not none %}
+      {% set ns_rev.total = ns_rev.total + ((s.amount_per_unit_monthly | float) * ((s.unit_count if s.unit_count is not none else 1) | int)) %}
     {% endif %}
   {% endfor %}
 {% endif %}
@@ -896,7 +897,12 @@
     </thead>
     <tbody>
       {% for s in income_streams %}
-      {% set monthly = (s.unit_count or 1) * (s.amount_per_unit_monthly or s.amount_fixed_monthly or 0) * ((s.stabilized_occupancy_pct or 95) / 100) %}
+      {% if s.amount_fixed_monthly is not none %}
+      {% set monthly_base = s.amount_fixed_monthly %}
+      {% else %}
+      {% set monthly_base = ((s.unit_count if s.unit_count is not none else 1) | int) * (s.amount_per_unit_monthly or 0) %}
+      {% endif %}
+      {% set monthly = monthly_base * ((s.stabilized_occupancy_pct or 95) / 100) %}
       {% set annual = monthly * 12 %}
       {%- set _is_rev_gap = (s.label == _GAP_REV_LBL) -%}
       {%- set _rev_gap_active = _is_rev_gap and s.amount_fixed_monthly and (s.amount_fixed_monthly | float) != 0 -%}
