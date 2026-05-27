@@ -18,9 +18,9 @@ def _diag(msg: str) -> None:
     if _DIAG_ENABLED:
         print(f"[VD_DIAG] {msg}", flush=True)
 
-from sqlalchemy import delete, func, select, update as sa_update
+from sqlalchemy import delete, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import attributes as sa_attributes, selectinload
+from sqlalchemy.orm import selectinload
 
 from app.models.cashflow import (
     CashFlow,
@@ -326,12 +326,11 @@ async def _compute_project_cashflow(
         income_mode=income_mode,
     )
 
-    # Reload module.source from DB after auto-sizing: SQLAlchemy's bulk UPDATE
-    # (sa_update) may expire JSON columns on in-session ORM objects, making stale
-    # reads possible before the next flush. A targeted refresh guarantees we see
-    # the auto-sized amounts when seeding draw events below.
-    for cm in capital_modules:
-        await session.refresh(cm, attribute_names=["source"])
+    # Flush auto-sized module.source changes (held as ORM-dirty in memory) so
+    # downstream raw-SQL reads see the auto-sized amounts. The earlier bulk
+    # sa_update path was replaced by ORM dirty tracking to avoid MissingGreenlet
+    # from expired JSONB attrs on in-session CapitalModule rows.
+    await session.flush()
 
     # Phase 2c1: sync the auto-sized amount back onto the per-project junction
     # row so the Coverage modal reflects the current computed amount and so
@@ -1006,14 +1005,17 @@ async def _sync_junction_amounts_after_compute(
             amt = Decimal(str(src_amount))
         except Exception:
             continue
-        await session.execute(
-            sa_update(CapitalModuleProject)
-            .where(
+        # ORM dirty tracking only. Bulk sa_update(CapitalModuleProject)
+        # expires junction-row attrs in the identity map and triggers a lazy
+        # refresh on later access — MissingGreenlet in async context.
+        junction = (await session.execute(
+            select(CapitalModuleProject).where(
                 CapitalModuleProject.capital_module_id == module.id,
                 CapitalModuleProject.project_id == project_id,
             )
-            .values(amount=amt)
-        )
+        )).scalar_one_or_none()
+        if junction is not None:
+            junction.amount = amt
 
 
 async def _reconcile_module_amounts_from_junctions(
@@ -1052,11 +1054,6 @@ async def _reconcile_module_amounts_from_junctions(
         if current_dec is not None and _q(current_dec) == total_dec:
             continue
         src["amount"] = str(total_dec)
-        await session.execute(
-            sa_update(CapitalModule)
-            .where(CapitalModule.id == module.id)
-            .values(source=src)
-        )
         module.source = src
 
 
@@ -2137,9 +2134,6 @@ async def _auto_size_debt_modules(
             _src["amount"] = str(_q(_principal))
             _src["is_bridge"] = True
             _diag(f"bridge sized cm={_m.id} subtype={_ft} -> amount={_src['amount']}")
-            await session.execute(
-                sa_update(CapitalModule).where(CapitalModule.id == _m.id).values(source=_src)
-            )
             _m.source = _src
             auto_modules = [x for x in auto_modules if x is not _m]  # remove from gap-fill loop
 
@@ -2462,14 +2456,11 @@ async def _auto_size_debt_modules(
             if principal < ZERO:
                 principal = ZERO
             src["amount"] = str(_q(principal))
-            await session.execute(
-                sa_update(CapitalModule).where(CapitalModule.id == module.id).values(source=src)
-            )
             if constr_io_factor > ZERO and _constr_ct in ("io_only", "pi"):
                 _constr_ds_reserve += _q(principal * constr_io_factor)
                 if _constr_ds_source_module is None:
                     _constr_ds_source_module = module
-            module.source = src  # keep in-memory view consistent
+            module.source = src  # ORM dirty tracking — flushed at end of compute
             continue
 
         if debt_sizing_mode == "dual_constraint":
@@ -2519,14 +2510,11 @@ async def _auto_size_debt_modules(
             else:
                 src["binding_constraint"] = "gap_fill"
             src["amount"] = str(_q(principal))
-            await session.execute(
-                sa_update(CapitalModule).where(CapitalModule.id == module.id).values(source=src)
-            )
             if constr_io_factor > ZERO and _constr_ct in ("io_only", "pi"):
                 _constr_ds_reserve += _q(principal * constr_io_factor)
                 if _constr_ds_source_module is None:
                     _constr_ds_source_module = module
-            module.source = src
+            module.source = src  # ORM dirty tracking — flushed at end of compute
             continue
 
         # gap_fill — principal already computed by _solve_principal_with_reserve above.
@@ -2545,14 +2533,11 @@ async def _auto_size_debt_modules(
         if principal < ZERO:
             principal = ZERO
         src["amount"] = str(_q(principal))
-        await session.execute(
-            sa_update(CapitalModule).where(CapitalModule.id == module.id).values(source=src)
-        )
         if constr_io_factor > ZERO and _constr_ct in ("io_only", "pi"):
             _constr_ds_reserve += _q(principal * constr_io_factor)
             if _constr_ds_source_module is None:
                 _constr_ds_source_module = module
-        module.source = src  # keep in-memory view consistent
+        module.source = src  # ORM dirty tracking — flushed at end of compute
 
     # Generic Exit Vehicle writeback: for every (retired, retirer) pair, tag
     # the retired loan is_bridge and write construction_retirement onto the
@@ -2570,19 +2555,9 @@ async def _auto_size_debt_modules(
 
         if not retired_src.get("is_bridge"):
             retired_src["is_bridge"] = True
-            await session.execute(
-                sa_update(CapitalModule)
-                .where(CapitalModule.id == _retired.id)
-                .values(source=retired_src)
-            )
             _retired.source = retired_src
 
         retirer_src["construction_retirement"] = retired_amount
-        await session.execute(
-            sa_update(CapitalModule)
-            .where(CapitalModule.id == _retirer.id)
-            .values(source=retirer_src)
-        )
         _retirer.source = retirer_src
 
         # Persist the resolved vehicle on the retired module's exit_terms so
@@ -2590,11 +2565,6 @@ async def _auto_size_debt_modules(
         retired_exit = dict(_retired.exit_terms or {})
         if retired_exit.get("vehicle") != str(_retirer.id):
             retired_exit["vehicle"] = str(_retirer.id)
-            await session.execute(
-                sa_update(CapitalModule)
-                .where(CapitalModule.id == _retired.id)
-                .values(exit_terms=retired_exit)
-            )
             _retired.exit_terms = retired_exit
 
     # Cleanup: strip stale construction_retirement / is_bridge from modules
@@ -2618,11 +2588,6 @@ async def _auto_size_debt_modules(
                 src.pop("is_bridge", None)
                 changed = True
         if changed:
-            await session.execute(
-                sa_update(CapitalModule)
-                .where(CapitalModule.id == _cm.id)
-                .values(source=src)
-            )
             _cm.source = src
 
     # Compute actual reserve (max of OpEx vs actual debt service, × reserve months)
