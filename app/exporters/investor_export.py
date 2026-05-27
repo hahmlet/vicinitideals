@@ -3494,10 +3494,25 @@ def _build_waterfall_structure(
             gp_pct_d = _coerce_decimal(tier.gp_split_pct or 0)
             lp_amt = distributed * lp_pct_d / Decimal(100)
             gp_amt = distributed * gp_pct_d / Decimal(100)
-            lp_c = ws.cell(row=cur, column=7, value=_to_excel_number(lp_amt))
-            lp_c.number_format = ACCOUNTING; lp_c.font = FONT_VALUE; lp_c.alignment = ALIGN_RIGHT
-            gp_c = ws.cell(row=cur, column=8, value=_to_excel_number(gp_amt))
-            gp_c.number_format = ACCOUNTING; gp_c.font = FONT_VALUE; gp_c.alignment = ALIGN_RIGHT
+            # Phase 5c: LP/GP amounts as formula-driven named cells.
+            # Assumptions Block D writes s_tier_{n}_lp_split / s_tier_{n}_gp_split
+            # as blue-input cells -- editing them + F9 reflows LP/GP here.
+            _lp_fallback = float(lp_amt)
+            _gp_fallback = float(gp_amt)
+            registry.write(
+                ws, cur, 7,
+                f"=IFERROR(s_waterfall_tier_{tier_idx}_distributed"
+                f"*s_tier_{tier_idx}_lp_split/100,{_lp_fallback})",
+                name=f"s_waterfall_tier_{tier_idx}_lp_amt", fmt=ACCOUNTING,
+                font=FONT_VALUE, align=ALIGN_RIGHT,
+            )
+            registry.write(
+                ws, cur, 8,
+                f"=IFERROR(s_waterfall_tier_{tier_idx}_distributed"
+                f"*s_tier_{tier_idx}_gp_split/100,{_gp_fallback})",
+                name=f"s_waterfall_tier_{tier_idx}_gp_amt", fmt=ACCOUNTING,
+                font=FONT_VALUE, align=ALIGN_RIGHT,
+            )
             cur += 1
     else:
         # Unconfigured — render canonical structure with $0 placeholders.
@@ -3512,8 +3527,18 @@ def _build_waterfall_structure(
                 name=f"s_waterfall_tier_{tier_idx}_distributed", fmt=ACCOUNTING,
                 font=FONT_VALUE, align=ALIGN_RIGHT,
             )
-            ws.cell(row=cur, column=7, value=_DASH).font = FONT_VALUE
-            ws.cell(row=cur, column=8, value=_DASH).font = FONT_VALUE
+            # Phase 5c: Register $0 named cells for unconfigured tiers so
+            # Slice 5d SUM formula resolves all 7 tier names without #NAME? errors.
+            registry.write(
+                ws, cur, 7, Decimal(0),
+                name=f"s_waterfall_tier_{tier_idx}_lp_amt", fmt=ACCOUNTING,
+                font=FONT_VALUE, align=ALIGN_RIGHT,
+            )
+            registry.write(
+                ws, cur, 8, Decimal(0),
+                name=f"s_waterfall_tier_{tier_idx}_gp_amt", fmt=ACCOUNTING,
+                font=FONT_VALUE, align=ALIGN_RIGHT,
+            )
             cur += 1
         cur += 1
         ws.cell(
