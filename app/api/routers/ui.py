@@ -1045,6 +1045,12 @@ def _stripe_state_message(state: str | None) -> str | None:
         return "No active Stripe subscription was found for this account."
     if state == "already-cancelled":
         return "This subscription is already cancelled."
+    if state == "card-default-updated":
+        return "Default payment card updated."
+    if state == "card-removed":
+        return "Payment card removed."
+    if state == "card-remove-error":
+        return "Could not remove that payment card right now."
     if state == "error":
         return "Stripe returned an error while starting checkout. Try again in a moment."
     return None
@@ -1167,7 +1173,14 @@ async def _ensure_stripe_customer_id(session: AsyncSession, user: User) -> str:
     return customer_id
 
 
+async def _get_customer_default_payment_method(customer_id: str) -> str | None:
+    customer = await _stripe_api_request("GET", f"/v1/customers/{customer_id}")
+    default_pm = str(((customer.get("invoice_settings") or {}).get("default_payment_method") or "")).strip()
+    return default_pm or None
+
+
 async def _list_stripe_payment_methods(customer_id: str) -> list[dict[str, str]]:
+    default_pm = await _get_customer_default_payment_method(customer_id)
     body = await _stripe_api_request(
         "GET",
         "/v1/payment_methods",
@@ -1183,9 +1196,11 @@ async def _list_stripe_payment_methods(customer_id: str) -> list[dict[str, str]]
         exp_year = str(card.get("exp_year") or "")
         rows.append(
             {
+                "id": str(item.get("id") or "").strip(),
                 "brand": brand,
                 "last4": last4,
                 "exp": f"{exp_month}/{exp_year}" if exp_month and exp_year else "",
+                "is_default": bool(default_pm and default_pm == str(item.get("id") or "").strip()),
             }
         )
     return rows
@@ -2593,6 +2608,75 @@ async def settings_billing_reactivate_subscription(
         )
         return RedirectResponse(url="/settings/billing?stripe=reactivated", status_code=303)
     return RedirectResponse(url="/settings/billing", status_code=303)
+
+
+@router.post("/settings/billing/stripe/payment-method/default", response_class=HTMLResponse)
+async def settings_billing_set_default_payment_method(
+    request: Request,
+    session: DBSession,
+    payment_method_id: str = Form(...),
+) -> HTMLResponse:
+    user = await _get_user(session, request)
+    if user is None:
+        return RedirectResponse(url="/login?next=/settings/billing", status_code=303)
+
+    if not _stripe_is_configured():
+        return RedirectResponse(url="/settings/billing?stripe=config-missing", status_code=303)
+
+    customer_id = await _get_stripe_customer_id(session, user.id)
+    if not customer_id:
+        return RedirectResponse(url="/settings/billing?stripe=no-subscription", status_code=303)
+
+    pm_id = (payment_method_id or "").strip()
+    if not pm_id:
+        return RedirectResponse(url="/settings/billing?stripe=card-remove-error", status_code=303)
+
+    await _stripe_api_request(
+        "POST",
+        f"/v1/customers/{customer_id}",
+        data=[("invoice_settings[default_payment_method]", pm_id)],
+    )
+    return RedirectResponse(url="/settings/billing?stripe=card-default-updated", status_code=303)
+
+
+@router.post("/settings/billing/stripe/payment-method/remove", response_class=HTMLResponse)
+async def settings_billing_remove_payment_method(
+    request: Request,
+    session: DBSession,
+    payment_method_id: str = Form(...),
+) -> HTMLResponse:
+    user = await _get_user(session, request)
+    if user is None:
+        return RedirectResponse(url="/login?next=/settings/billing", status_code=303)
+
+    if not _stripe_is_configured():
+        return RedirectResponse(url="/settings/billing?stripe=config-missing", status_code=303)
+
+    customer_id = await _get_stripe_customer_id(session, user.id)
+    if not customer_id:
+        return RedirectResponse(url="/settings/billing?stripe=no-subscription", status_code=303)
+
+    pm_id = (payment_method_id or "").strip()
+    if not pm_id:
+        return RedirectResponse(url="/settings/billing?stripe=card-remove-error", status_code=303)
+
+    try:
+        current_default = await _get_customer_default_payment_method(customer_id)
+        await _stripe_api_request("POST", f"/v1/payment_methods/{pm_id}/detach")
+
+        if current_default and current_default == pm_id:
+            remaining = await _list_stripe_payment_methods(customer_id)
+            fallback = next((c.get("id") for c in remaining if c.get("id")), None)
+            if fallback:
+                await _stripe_api_request(
+                    "POST",
+                    f"/v1/customers/{customer_id}",
+                    data=[("invoice_settings[default_payment_method]", str(fallback))],
+                )
+    except HTTPException:
+        return RedirectResponse(url="/settings/billing?stripe=card-remove-error", status_code=303)
+
+    return RedirectResponse(url="/settings/billing?stripe=card-removed", status_code=303)
 
 
 @router.post("/settings/billing/stripe/setup-session", response_class=HTMLResponse)

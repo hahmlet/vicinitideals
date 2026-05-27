@@ -294,3 +294,105 @@ async def test_settings_billing_embedded_session_subscribe_pro_annual_uses_price
     assert captured.get("line_items[0][price]") == "price_pro_annual_test_123"
     assert captured.get("line_items[0][quantity]") == "1"
     assert captured.get("subscription_data[trial_period_days]") == "30"
+
+
+async def test_settings_billing_set_default_payment_method_updates_customer(
+    client: AsyncClient,
+    session: AsyncSession,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(settings, "stripe_secret_key", "sk_test_dummy", raising=False)
+
+    org, user = await seed_org(session)
+    session.add(
+        UserSetting(
+            id=uuid.uuid4(),
+            user_id=user.id,
+            org_id=org.id,
+            field_key="stripe_customer_id",
+            value="cus_for_default",
+        )
+    )
+    await session.commit()
+    await _auth(client, user.id)
+
+    captured: dict[str, str] = {}
+
+    async def _fake_stripe_api_request(method, endpoint, *, data=None, params=None):
+        captured["method"] = method
+        captured["endpoint"] = endpoint
+        if isinstance(data, list):
+            for k, v in data:
+                if k == "invoice_settings[default_payment_method]":
+                    captured["default_pm"] = v
+        return {}
+
+    monkeypatch.setattr(ui, "_stripe_api_request", _fake_stripe_api_request)
+
+    resp = await client.post(
+        "/settings/billing/stripe/payment-method/default",
+        data={"payment_method_id": "pm_new_default"},
+        follow_redirects=False,
+    )
+
+    assert resp.status_code == 303
+    assert resp.headers["location"] == "/settings/billing?stripe=card-default-updated"
+    assert captured.get("method") == "POST"
+    assert captured.get("endpoint") == "/v1/customers/cus_for_default"
+    assert captured.get("default_pm") == "pm_new_default"
+
+
+async def test_settings_billing_remove_payment_method_sets_fallback_default(
+    client: AsyncClient,
+    session: AsyncSession,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(settings, "stripe_secret_key", "sk_test_dummy", raising=False)
+
+    org, user = await seed_org(session)
+    session.add(
+        UserSetting(
+            id=uuid.uuid4(),
+            user_id=user.id,
+            org_id=org.id,
+            field_key="stripe_customer_id",
+            value="cus_for_remove",
+        )
+    )
+    await session.commit()
+    await _auth(client, user.id)
+
+    calls: list[tuple[str, str, str | None]] = []
+
+    async def _fake_stripe_api_request(method, endpoint, *, data=None, params=None):
+        value: str | None = None
+        if isinstance(data, list):
+            for k, v in data:
+                if k == "invoice_settings[default_payment_method]":
+                    value = v
+                    break
+        calls.append((method, endpoint, value))
+        return {}
+
+    async def _fake_get_default(customer_id: str):
+        return "pm_old_default"
+
+    async def _fake_list_cards(customer_id: str):
+        return [
+            {"id": "pm_fallback", "brand": "Visa", "last4": "4242", "exp": "01/2030", "is_default": False},
+        ]
+
+    monkeypatch.setattr(ui, "_stripe_api_request", _fake_stripe_api_request)
+    monkeypatch.setattr(ui, "_get_customer_default_payment_method", _fake_get_default)
+    monkeypatch.setattr(ui, "_list_stripe_payment_methods", _fake_list_cards)
+
+    resp = await client.post(
+        "/settings/billing/stripe/payment-method/remove",
+        data={"payment_method_id": "pm_old_default"},
+        follow_redirects=False,
+    )
+
+    assert resp.status_code == 303
+    assert resp.headers["location"] == "/settings/billing?stripe=card-removed"
+    assert ("POST", "/v1/payment_methods/pm_old_default/detach", None) in calls
+    assert ("POST", "/v1/customers/cus_for_remove", "pm_fallback") in calls

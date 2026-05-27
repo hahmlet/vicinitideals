@@ -77,10 +77,10 @@
       <button type="button" class="btn btn-secondary stripe-embedded-trigger" data-intent="setup">
         Add or Update Card
       </button>
-      <button type="button" class="btn btn-primary stripe-embedded-trigger" data-intent="subscribe_pro_monthly" {% if not stripe_price_pro_monthly %}disabled{% endif %}>
+      <button type="button" class="btn btn-primary stripe-embedded-trigger" data-intent="subscribe_pro_monthly">
         Start Pro Monthly ($300)
       </button>
-      <button type="button" class="btn btn-primary stripe-embedded-trigger" data-intent="subscribe_pro_annual" {% if not stripe_price_pro_annual %}disabled{% endif %}>
+      <button type="button" class="btn btn-primary stripe-embedded-trigger" data-intent="subscribe_pro_annual">
         Start Pro Annual (20% Off)
       </button>
       {% if subscription and not subscription.cancel_at_period_end and subscription.status != 'canceled' %}
@@ -183,8 +183,26 @@
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px">
       {% for card in cards %}
       <div style="border:1px solid var(--border);border-radius:8px;padding:10px 12px;background:var(--surface)">
-        <div style="font-weight:600;color:var(--text)">{{ card.brand }} •••• {{ card.last4 }}</div>
+        <div style="display:flex;justify-content:space-between;gap:6px;align-items:center;flex-wrap:wrap">
+          <div style="font-weight:600;color:var(--text)">{{ card.brand }} •••• {{ card.last4 }}</div>
+          {% if card.is_default %}
+          <span class="badge badge-success">Default</span>
+          {% endif %}
+        </div>
         <div style="font-size:12px;color:var(--text-muted);margin-top:4px">Expires {{ card.exp }}</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">
+          {% if not card.is_default %}
+          <form method="post" action="/settings/billing/stripe/payment-method/default" style="margin:0">
+            <input type="hidden" name="payment_method_id" value="{{ card.id }}" />
+            <button type="submit" class="btn btn-secondary" style="padding:4px 8px;font-size:12px">Make Default</button>
+          </form>
+          {% endif %}
+          <button type="button" class="btn btn-secondary stripe-embedded-trigger" data-intent="setup" style="padding:4px 8px;font-size:12px">Edit</button>
+          <form method="post" action="/settings/billing/stripe/payment-method/remove" style="margin:0">
+            <input type="hidden" name="payment_method_id" value="{{ card.id }}" />
+            <button type="submit" class="btn btn-secondary" style="padding:4px 8px;font-size:12px">Remove</button>
+          </form>
+        </div>
       </div>
       {% endfor %}
     </div>
