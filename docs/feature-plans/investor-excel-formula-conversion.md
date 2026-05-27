@@ -431,7 +431,8 @@ DSCR target, principal-to-LTV-cap) stays engine-side.
 **Out of plan-scope but follow-up candidates:**
 - Debt Schedule amort table (CUMIPMT / CUMPRINC per year) — adjacent to commit 6 but needs IO-vs-amort branch logic plus end-balance cross-row references.
 - Pro Forma / Cash Flow Debt Service rows — would chain back to the new `s_loan_*_annual_pi` named ranges; pending tier-aware allocation.
-- Investor Returns Equity Multiple / CoC / weighted IRR — needs new total-committed-equity and total-distributions named ranges.
+- ~~Investor Returns Equity Multiple / CoC / weighted IRR — needs new total-committed-equity and total-distributions named ranges.~~ **Shipped in Phase 5d+5e** (`feature/phase5-5d`): `s_lp_distributions_total`, `s_gp_distributions_total` (formula), `s_lp_em`, `s_gp_em` (formula), `s_lp_irr`, `s_gp_irr`, `s_committed_lp_equity`, `s_committed_gp_equity` on Investor Returns.
+- Investor Returns LP/GP CoC Year 1 and IRR as live Excel formulas — requires emitting LP/GP annual cash flow rows (`r_returns_lp_cf` / `r_returns_gp_cf`) to the sheet. Deferred; LP/GP IRR currently written as engine scalars.
 
 ### Commit 0 — Audit + parity baseline (prerequisite)
 

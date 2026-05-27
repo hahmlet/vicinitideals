@@ -125,6 +125,10 @@ _NON_METRIC_NAMES = frozenset({
     # the parent metric (NOI / Debt Service / Gross Revenue), not as
     # its own row.
     "s_pf_noi_y1", "s_pf_debt_service_y1", "s_pf_gross_revenue_y1",
+    # Phase 5e: LP / GP committed equity — scalar inputs used by the EM
+    # formula (s_lp_em / s_gp_em divides by these). Not standalone metrics;
+    # they're the denominator in the EM formula, same role as s_equity_required.
+    "s_committed_lp_equity", "s_committed_gp_equity",
 })
 
 # Workbook ranges with these prefixes are not validated. Each prefix corresponds
@@ -448,6 +452,9 @@ _NAMED_RANGE_ALIASES: tuple[tuple[re.Pattern[str], str], ...] = (
     (re.compile(r"^r_sensitivity_grid_em$"), "Equity Multiple"),
     # Investor Returns sheet combined EM aggregate
     (re.compile(r"^s_returns_combined_em$"), "Equity Multiple"),
+    # Phase 5e: LP / GP per-party equity multiples — short named range
+    # (s_lp_em / s_gp_em); trace to the same "Equity Multiple" doc entry.
+    (re.compile(r"^s_(lp|gp)_em$"), "Equity Multiple"),
     # Spread Stack (added Phase Spread Stack / d6d812c + 42cb8d4)
     # s_rfr_pct is the Risk-Free Rate input; named differently from the
     # doc entry so an explicit alias is required.

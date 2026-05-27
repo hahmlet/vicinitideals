@@ -3377,6 +3377,124 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
         name="s_gp_promote_dollars", registry=registry, fmt=ACCOUNTING,
     ); cur_row += 1
 
+    # ── Phase 5d: LP / GP Distribution Totals (formula-driven) ───────────────
+    # s_lp_distributions_total / s_gp_distributions_total: IFERROR sums over
+    # the 7 canonical tier LP/GP amount cells written by Phase 5c
+    # _build_waterfall_structure. Editing Assumptions Block D split inputs + F9
+    # reflows these totals without re-running the engine.
+    cur_row += 1
+    section_label(ws, cur_row, "LP / GP Distribution Totals", span_cols=2)
+    cur_row += 1
+
+    # Engine fallbacks: aggregate from waterfall rollup + tier split percentages.
+    _dist_by_tier_id: dict[str, Decimal] = {}
+    for _wr in rollup:
+        _tid = _wr.get("tier_id") or ""
+        _dist_by_tier_id[_tid] = (
+            _dist_by_tier_id.get(_tid, Decimal(0))
+            + _coerce_decimal(_wr.get("cash_distributed") or 0)
+        )
+    _wf_tiers_sorted = sorted(
+        ctx.get("waterfall_tiers") or [],
+        key=lambda t: int(getattr(t, "priority", None) or 999),
+    )
+    _lp_dist_total_fb = Decimal(0)
+    _gp_dist_total_fb = Decimal(0)
+    for _t in _wf_tiers_sorted:
+        _td = _dist_by_tier_id.get(str(_t.id), Decimal(0))
+        _lp_dist_total_fb += _td * _coerce_decimal(getattr(_t, "lp_split_pct", None) or 0) / Decimal(100)
+        _gp_dist_total_fb += _td * _coerce_decimal(getattr(_t, "gp_split_pct", None) or 0) / Decimal(100)
+
+    _MAX_CANON = 7  # matches len(_CANONICAL_WATERFALL_TIERS)
+    _lp_sum_terms = "+".join(
+        f"IFERROR(s_waterfall_tier_{i}_lp_amt,0)" for i in range(1, _MAX_CANON + 1)
+    )
+    _gp_sum_terms = "+".join(
+        f"IFERROR(s_waterfall_tier_{i}_gp_amt,0)" for i in range(1, _MAX_CANON + 1)
+    )
+    kv_row(
+        ws, cur_row, "Total LP Distributions",
+        f"=IFERROR({_lp_sum_terms},{float(_lp_dist_total_fb)})",
+        name="s_lp_distributions_total", registry=registry, fmt=ACCOUNTING,
+    ); cur_row += 1
+    kv_row(
+        ws, cur_row, "Total GP Distributions",
+        f"=IFERROR({_gp_sum_terms},{float(_gp_dist_total_fb)})",
+        name="s_gp_distributions_total", registry=registry, fmt=ACCOUNTING,
+    ); cur_row += 1
+
+    # ── Phase 5e: LP / GP Returns Summary ─────────────────────────────────────
+    # s_lp_em / s_gp_em: live formulas = distributions / committed equity.
+    # s_lp_irr / s_gp_irr: engine-computed scalars (party_irr_pct from waterfall
+    # rollup). IRR formula requires LP/GP CF rows not yet emitted to the
+    # workbook; retained as named scalars so downstream Cross-sheet refs resolve.
+    cur_row += 1
+    section_label(ws, cur_row, "LP / GP Returns Summary", span_cols=2)
+    cur_row += 1
+
+    # Committed equity per funder class (scalar named cells; EM formula divides by these).
+    _committed_lp = sum(
+        (junction_principal.get(m.id) or _coerce_decimal((m.source or {}).get("amount") or 0))
+        for m in capital_modules if _is_lp_funder(m)
+    )
+    _committed_gp = sum(
+        (junction_principal.get(m.id) or _coerce_decimal((m.source or {}).get("amount") or 0))
+        for m in capital_modules if _is_gp_funder(m)
+    )
+    _kv_row_optional(
+        ws, cur_row, "LP Committed Equity",
+        _committed_lp if _committed_lp > 0 else None,
+        name="s_committed_lp_equity", registry=registry, fmt=ACCOUNTING,
+    ); cur_row += 1
+    _kv_row_optional(
+        ws, cur_row, "GP Committed Equity",
+        _committed_gp if _committed_gp > 0 else None,
+        name="s_committed_gp_equity", registry=registry, fmt=ACCOUNTING,
+    ); cur_row += 1
+
+    # LP / GP IRR — engine-computed scalars from waterfall party_irr_pct.
+    _lp_irr, _gp_irr = _lp_gp_irr_from_rollup(rollup, capital_modules)
+    _kv_row_optional(
+        ws, cur_row, "LP IRR",
+        _lp_irr,
+        name="s_lp_irr", registry=registry, fmt=PCT,
+    ); cur_row += 1
+    _kv_row_optional(
+        ws, cur_row, "GP IRR",
+        _gp_irr,
+        name="s_gp_irr", registry=registry, fmt=PCT,
+    ); cur_row += 1
+
+    # LP / GP Equity Multiple — live formulas using distribution totals.
+    if _committed_lp > 0:
+        _lp_em_fb = round(float(_lp_dist_total_fb / _committed_lp), 6) if _committed_lp else 0.0
+        kv_row(
+            ws, cur_row, "LP Equity Multiple",
+            f"=IFERROR(s_lp_distributions_total/s_committed_lp_equity,{_lp_em_fb})",
+            name="s_lp_em", registry=registry, fmt='0.00"×"',
+        )
+    else:
+        kv_row(
+            ws, cur_row, "LP Equity Multiple",
+            None,
+            name="s_lp_em", registry=registry, fmt='0.00"×"',
+        )
+    cur_row += 1
+    if _committed_gp > 0:
+        _gp_em_fb = round(float(_gp_dist_total_fb / _committed_gp), 6) if _committed_gp else 0.0
+        kv_row(
+            ws, cur_row, "GP Equity Multiple",
+            f"=IFERROR(s_gp_distributions_total/s_committed_gp_equity,{_gp_em_fb})",
+            name="s_gp_em", registry=registry, fmt='0.00"×"',
+        )
+    else:
+        kv_row(
+            ws, cur_row, "GP Equity Multiple",
+            None,
+            name="s_gp_em", registry=registry, fmt='0.00"×"',
+        )
+    cur_row += 1
+
     if _equity_req_check > Decimal(1) and _committed_equity <= Decimal(1):
         cur_row += 1
         note = ws.cell(

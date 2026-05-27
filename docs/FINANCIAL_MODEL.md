@@ -1983,6 +1983,35 @@ Where `CF_i` are individual cash flows (negative = contribution, positive = dist
 
 **Why 2020 as base year?** It's arbitrary — XIRR only cares about the date differences between flows, not their absolute values. 2020 is a round number inside the pyxirr-supported range.
 
+### LP Distributions Total [investor, app]
+
+**Definition.** Total cash distributed to LP investors across all waterfall tiers.
+
+**Calculation.** Sum of LP-share amounts across all configured waterfall tiers:
+```
+lp_distributions_total = Σ (tier_distributed × lp_split_pct / 100)  for each tier
+```
+
+**Excel export.** Named cell `s_lp_distributions_total` on the Investor Returns sheet.
+Formula-driven: `=IFERROR(IFERROR(s_waterfall_tier_1_lp_amt,0)+…+IFERROR(s_waterfall_tier_7_lp_amt,0), {engine_fallback})`.
+Editing Assumptions Block D LP split inputs and pressing F9 reflows this total without re-running the engine.
+
+**Engine source.** Computed from `WaterfallResult.cash_distributed` × `WaterfallTier.lp_split_pct` for each tier.
+
+### GP Distributions Total [investor, app]
+
+**Definition.** Total cash distributed to GP / sponsor across all waterfall tiers (includes pref return GP share, catch-up, residual/promote).
+
+**Calculation.** Mirror of LP Distributions Total for the GP side:
+```
+gp_distributions_total = Σ (tier_distributed × gp_split_pct / 100)  for each tier
+```
+
+**Excel export.** Named cell `s_gp_distributions_total` on the Investor Returns sheet.
+Formula-driven: `=IFERROR(IFERROR(s_waterfall_tier_1_gp_amt,0)+…+IFERROR(s_waterfall_tier_7_gp_amt,0), {engine_fallback})`.
+
+**Engine source.** Same as LP Distributions Total, GP side.
+
 ### Equity Multiple (MOIC) [investor, app]
 
 ```python
