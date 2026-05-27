@@ -2151,13 +2151,17 @@ function prefillCarrySchedule(schedule, wrapper) {
   <div class="form-row">
     <div class="form-field">
       <label class="form-label">LP Split (%)</label>
-      <input class="form-input" type="number" name="lp_split_pct" step="0.1" min="0" max="100"
+      <input class="form-input" type="number" name="lp_split_pct" id="waterfall-lp-split"
+             step="0.1" min="0" max="100"
              value="{{ existing.lp_split_pct | round(1) if existing else 100 }}" placeholder="100">
     </div>
     <div class="form-field">
       <label class="form-label">GP Split (%)</label>
-      <input class="form-input" type="number" name="gp_split_pct" step="0.1" min="0" max="100"
-             value="{{ existing.gp_split_pct | round(1) if existing else 0 }}" placeholder="0">
+      <input class="form-input" type="number" name="gp_split_pct" id="waterfall-gp-split"
+             step="0.1" min="0" max="100" readonly
+             value="{{ existing.gp_split_pct | round(1) if existing else 0 }}"
+             style="background:var(--surface-alt,#f9fafb);color:var(--text-muted);cursor:default">
+      <div class="form-hint">Auto: 100 − LP %</div>
     </div>
   </div>
 
@@ -2208,6 +2212,18 @@ function prefillCarrySchedule(schedule, wrapper) {
     sel.addEventListener('change', function() {
       ddf.style.display = sel.value === 'deferred_developer_fee' ? 'block' : 'none';
     });
+  }
+  var lp = document.getElementById('waterfall-lp-split');
+  var gp = document.getElementById('waterfall-gp-split');
+  if (lp && gp) {
+    function syncGp() {
+      var v = parseFloat(lp.value);
+      if (!isNaN(v)) {
+        gp.value = Math.round(Math.max(0, Math.min(100, 100 - v)) * 10) / 10;
+      }
+    }
+    lp.addEventListener('input', syncGp);
+    syncGp();
   }
 })();
 </script>
