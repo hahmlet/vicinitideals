@@ -287,8 +287,17 @@ def create_app() -> FastAPI:
         from app.api.csrf import make_csrf_token, validate_csrf_token, CSRF_HEADER
 
         # Resolve the authenticated user ID (if any) from the session cookie.
+        # Also accepts the legacy vd_user_id cookie so existing sessions still work.
+        import uuid as _uuid
         token = request.cookies.get(COOKIE_NAME)
         user_id = decode_session_token(token) if token else None
+        if user_id is None:
+            legacy = request.cookies.get("vd_user_id")
+            if legacy:
+                try:
+                    user_id = _uuid.UUID(legacy)
+                except ValueError:
+                    pass
         user_id_str = str(user_id) if user_id else None
 
         # Always expose the token to templates (empty string when unauthenticated).
