@@ -774,6 +774,9 @@
     </span>
     <button type="button" class="btn btn-sm btn-secondary" title="View parcels on map"
             onclick="openParcelMap('project','{{ active_project_id }}','{{ model.name | replace("'","\\'") | safe }}')">🗺</button>
+        {% if show_test_scenario_capture_button %}
+        <button type="button" class="btn btn-sm btn-secondary" onclick="openScenarioCaptureModal()">Create Test Scenario</button>
+        {% endif %}
     <button class="btn btn-sm btn-secondary" onclick="openDrawer('model-settings-drawer')">⚙ Settings</button>
     <button class="btn btn-sm btn-primary"
        hx-post="/api/models/{{ model.id }}/compute"
@@ -1091,6 +1094,35 @@ async function startInvestorExport(modelId, profile) {
 </script>
   </div>
 </div>
+
+{% if show_test_scenario_capture_button %}
+<div id="scenario-capture-modal" class="calc-status-modal" aria-hidden="true">
+  <div class="calc-status-modal-card" style="max-width:520px">
+    <div class="calc-status-modal-header">
+      <div>
+        <h3 class="calc-status-modal-title">Create Test Scenario</h3>
+        <div class="calc-status-modal-sub">Capture this deal into Scenario Library for fast reuse.</div>
+      </div>
+      <button type="button" class="calc-status-modal-close" onclick="closeScenarioCaptureModal()">×</button>
+    </div>
+    <form id="scenario-capture-form" onsubmit="submitScenarioCapture(event)">
+      <div class="calc-status-modal-body">
+        <label style="display:block;font-size:12px;font-weight:600;margin-bottom:6px">Name</label>
+        <input name="name" type="text" value="{{ model.name }} Snapshot" required style="width:100%;margin-bottom:12px">
+        <label style="display:block;font-size:12px;font-weight:600;margin-bottom:6px">Tags (comma separated)</label>
+        <input name="tags" type="text" placeholder="mf, dscr, edge-case" style="width:100%;margin-bottom:12px">
+        <label style="display:block;font-size:12px;font-weight:600;margin-bottom:6px">Note</label>
+        <textarea name="note" rows="3" placeholder="What makes this scenario useful?" style="width:100%"></textarea>
+        <div id="scenario-capture-result" style="margin-top:10px;font-size:12px;color:var(--text-muted)"></div>
+      </div>
+      <div class="calc-status-modal-footer">
+        <button type="button" class="btn btn-sm btn-secondary" onclick="closeScenarioCaptureModal()">Cancel</button>
+        <button type="submit" class="btn btn-sm btn-primary">Save to Library</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endif %}
 
 {# ── Row 1: Deal variants ── #}
 {# In single-flow creation wizard the variant + project tabs distract from
@@ -1520,6 +1552,46 @@ function saveModelName(el) {
   }).then(r => {
     if (!r.ok) { el.textContent = _originalModelName; }
   });
+}
+
+function openScenarioCaptureModal() {
+  const modal = document.getElementById('scenario-capture-modal');
+  if (modal) {
+    modal.style.display = 'flex';
+    modal.setAttribute('aria-hidden', 'false');
+  }
+}
+
+function closeScenarioCaptureModal() {
+  const modal = document.getElementById('scenario-capture-modal');
+  if (modal) {
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+  }
+}
+
+async function submitScenarioCapture(evt) {
+  evt.preventDefault();
+  const form = evt.target;
+  const resultEl = document.getElementById('scenario-capture-result');
+  if (resultEl) resultEl.textContent = 'Saving...';
+  try {
+    const formData = new FormData(form);
+    const resp = await fetch('/ui/models/{{ model.id }}/scenario-library', {
+      method: 'POST',
+      body: formData,
+      credentials: 'same-origin',
+    });
+    const data = await resp.json().catch(() => ({}));
+    if (!resp.ok) {
+      if (resultEl) resultEl.textContent = data.detail || 'Save failed';
+      return;
+    }
+    if (resultEl) resultEl.innerHTML = 'Saved. <a href="' + (data.redirect || '/admin/scenarios') + '">Open Scenario Library</a>';
+    setTimeout(closeScenarioCaptureModal, 900);
+  } catch (err) {
+    if (resultEl) resultEl.textContent = 'Save failed';
+  }
 }
 </script>
 

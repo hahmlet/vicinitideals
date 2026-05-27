@@ -102,6 +102,7 @@ from app.models.settings import OrgSetting, UserSetting  # noqa: F401
 
 # 15. Source Vehicles (FK → Organization, User)
 from app.models.source_vehicle import OrgSourceVehicle, SourceVehicle, UserSourceVehicle  # noqa: F401
+from app.models.scenario_library import ScenarioLibraryEntry  # noqa: F401
 
 # 16. Email ingest (FK → Organization, Deal — imported after Deal to respect FK order)
 from app.models.email_ingest import (  # noqa: F401
@@ -187,6 +188,7 @@ __all__ = [
     "SourceVehicle",
     "OrgSourceVehicle",
     "UserSourceVehicle",
+    "ScenarioLibraryEntry",
     # Email ingest
     "InboundEmail",
     "InboundEmailStatus",
