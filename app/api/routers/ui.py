@@ -6956,6 +6956,7 @@ async def handle_form_create_or_update(
                 if data["vehicle_type"] in ("grant", "forgivable_loan", "tax_credit", "equity"):
                     from app.models.capital import CapitalModuleProject as _CMP_edit
                     _new_amt = Decimal(str(source_d.get("amount") or 0))
+                    _auto_size_for_row = bool((row.source or {}).get("auto_size"))
                     _active_pid = project_id if project_id is not None else (
                         default_project.id if default_project else None
                     )
@@ -6973,7 +6974,7 @@ async def handle_form_create_or_update(
                                 amount=_new_amt,
                                 active_from=None,
                                 active_to=row.active_phase_end,
-                                auto_size=False,
+                                auto_size=_auto_size_for_row,
                             ))
                         else:
                             _j_row.amount = _new_amt
@@ -9410,13 +9411,15 @@ async def deal_setup_wizard_complete(
             _sv_module_created = True
             _sv_label = f"{_sv.label} (auto)"
             _sv_ft_str = _sv.vehicle_type or "debt"  # for _cc_preload_modules key
+            _sv_source = dict(_sv.source_config or {})
+            _sv_source.setdefault("auto_size", True)
             session.add(CapitalModule(
                 scenario_id=model_id,
                 label=_sv_label,
                 vehicle_type=_sv.vehicle_type,
                 equity_role=_sv.equity_role,
                 stack_position=1,
-                source={**(_sv.source_config or {}), "auto_size": True},
+                source=_sv_source,
                 carry=_sv.carry_config or {},
                 exit_terms=_sv.exit_config or {"exit_type": "full_payoff", "trigger": "end of hold period"},
                 active_phase_start=_sv.active_phase_start or "acquisition",
@@ -9648,10 +9651,12 @@ async def deal_setup_wizard_complete(
                 if _sv_pick is not None:
                     _cm_label_for_cc = f"{_sv_pick.label} (auto)"
                     _cm_vehicle_type = _sv_pick.vehicle_type or "debt"
-                    _source_dict = {
-                        **(_sv_pick.source_config or {}),
-                        **{k: v for k, v in _source_dict.items() if k == "auto_size"},
-                    }
+                    _sv_source = dict(_sv_pick.source_config or {})
+                    _sv_source.setdefault("auto_size", True)
+                    for _k, _v in _source_dict.items():
+                        if _k not in _sv_source:
+                            _sv_source[_k] = _v
+                    _source_dict = _sv_source
                     if _sv_pick.carry_config:
                         carry = dict(_sv_pick.carry_config)
                     if _sv_pick.exit_config:

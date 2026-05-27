@@ -454,6 +454,12 @@
           </div>
         </div>
         <div>
+          <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text);cursor:pointer">
+            <input id="sv-add-user-auto-size" type="checkbox" checked>
+            Auto-Size
+          </label>
+        </div>
+        <div>
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px">
             <span style="font-size:11px;color:var(--text-muted)">Carry</span>
             <label style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer">
@@ -593,6 +599,12 @@
           </div>
         </div>
         <div>
+          <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text);cursor:pointer">
+            <input class="sv-user-auto-size" data-vid="{{ v.id }}" type="checkbox" {% if sc.get('auto_size', True) %}checked{% endif %}>
+            Auto-Size
+          </label>
+        </div>
+        <div>
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px">
             <span style="font-size:11px;color:var(--text-muted)">Carry</span>
             <label style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer">
@@ -715,6 +727,10 @@
     var el = svField(selector, vid);
     return el ? el.value.trim() : '';
   }
+  function svChecked(selector, vid) {
+    var el = svField(selector, vid);
+    return !!(el && el.checked);
+  }
   function svReadSchedule(container) {
     var phases = [];
     container.querySelectorAll('.sv-phase-row').forEach(function(row) {
@@ -744,6 +760,7 @@
       dscr_min: parseFloat(svVal('.sv-user-dscr', vid)) || null,
       amort_term_years: parseInt(svVal('.sv-user-amort', vid)) || null,
       hold_term_years: parseInt(svVal('.sv-user-hold', vid)) || null,
+      auto_size: svChecked('.sv-user-auto-size', vid),
       exit_type: svVal('.sv-user-exit', vid) || null,
       draw_every_n_months: parseInt(svVal('.sv-user-draw-freq', vid)) || 1,
       draw_active_from_milestone: svVal('.sv-user-draw-from', vid) || null,
@@ -823,6 +840,7 @@
       dscr_min: parseFloat(document.getElementById('sv-add-user-dscr').value) || null,
       amort_term_years: parseInt(document.getElementById('sv-add-user-amort').value) || null,
       hold_term_years: parseInt(document.getElementById('sv-add-user-hold').value) || null,
+      auto_size: document.getElementById('sv-add-user-auto-size').checked,
       exit_type: document.getElementById('sv-add-user-exit').value || null,
       draw_every_n_months: parseInt(document.getElementById('sv-add-user-draw-freq').value) || 1,
       draw_active_from_milestone: document.getElementById('sv-add-user-draw-from').value || null,

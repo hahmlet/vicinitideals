@@ -532,9 +532,36 @@ from app.models.capital import CapitalModule as _CapitalModule  # noqa: E402
 from app.models.source_vehicle import SourceVehicle as _OSV, SourceVehicle as _USV  # noqa: E402
 
 
-def _sv_body_to_jsonb(body: dict) -> tuple[dict, dict, dict]:
+def _as_bool_or_none(value) -> bool | None:
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, (int, float)):
+        return bool(value)
+    if isinstance(value, str):
+        v = value.strip().lower()
+        if v in {"1", "true", "yes", "on"}:
+            return True
+        if v in {"0", "false", "no", "off", ""}:
+            return False
+    return None
+
+
+def _sv_body_to_jsonb(
+    body: dict,
+    *,
+    default_auto_size: bool | None = None,
+    existing_source: dict | None = None,
+) -> tuple[dict, dict, dict]:
     """Convert flat API body to (source_config, carry_config, exit_config) JSONB dicts."""
     source: dict = {}
+    _auto_size = _as_bool_or_none(body.get("auto_size")) if "auto_size" in body else None
+    if _auto_size is None and existing_source is not None and "auto_size" in existing_source:
+        _auto_size = bool(existing_source.get("auto_size"))
+    if _auto_size is None and default_auto_size is not None:
+        _auto_size = default_auto_size
+    if _auto_size is not None:
+        source["auto_size"] = _auto_size
+
     if body.get("interest_rate_pct") is not None:
         source["interest_rate_pct"] = float(body["interest_rate_pct"])
     if body.get("ltv_pct") is not None:
@@ -624,7 +651,7 @@ async def create_org_source_vehicle(
             status_code=400,
             detail="name and vehicle_type are required (vehicle_type must be one of: equity, debt, forgivable_loan, grant)",
         )
-    source_cfg, carry_cfg, exit_cfg = _sv_body_to_jsonb(body)
+    source_cfg, carry_cfg, exit_cfg = _sv_body_to_jsonb(body, default_auto_size=True)
     from app.models.source_vehicle import SourceVehicle as _SV_create
     vehicle = _SV_create(
         scope="org",
@@ -676,7 +703,11 @@ async def update_org_source_vehicle(
     if "equity_role" in body:
         vehicle.equity_role = body["equity_role"]
     vehicle.updated_by = user.id
-    vehicle.source_config, vehicle.carry_config, vehicle.exit_config = _sv_body_to_jsonb(body)
+    vehicle.source_config, vehicle.carry_config, vehicle.exit_config = _sv_body_to_jsonb(
+        body,
+        default_auto_size=True,
+        existing_source=vehicle.source_config,
+    )
     try:
         await session.commit()
     except _IntegrityError:
@@ -717,7 +748,7 @@ async def create_user_source_vehicle(
             status_code=400,
             detail="name and vehicle_type are required (vehicle_type must be one of: equity, debt, forgivable_loan, grant)",
         )
-    source_cfg, carry_cfg, exit_cfg = _sv_body_to_jsonb(body)
+    source_cfg, carry_cfg, exit_cfg = _sv_body_to_jsonb(body, default_auto_size=True)
     from app.models.source_vehicle import SourceVehicle as _SV_ucreate
     vehicle = _SV_ucreate(
         scope="user",
@@ -765,7 +796,11 @@ async def update_user_source_vehicle(
     vehicle.vehicle_type = vehicle_type
     if "equity_role" in body:
         vehicle.equity_role = body["equity_role"]
-    vehicle.source_config, vehicle.carry_config, vehicle.exit_config = _sv_body_to_jsonb(body)
+    vehicle.source_config, vehicle.carry_config, vehicle.exit_config = _sv_body_to_jsonb(
+        body,
+        default_auto_size=True,
+        existing_source=vehicle.source_config,
+    )
     try:
         await session.commit()
     except _IntegrityError:
