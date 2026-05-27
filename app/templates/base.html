@@ -130,9 +130,11 @@
         <a href="/settings/data-sources" class="settings-popup-item">
           <span>🧭</span> Data Sources
         </a>
+        {% if show_billing_settings_menu %}
         <a href="/settings/billing" class="settings-popup-item">
           <span>💳</span> Billing
         </a>
+        {% endif %}
         <a href="/settings/organization" class="settings-popup-item">
           <span>🏢</span> Organization
         </a>
@@ -150,9 +152,11 @@
         <a href="/settings/organization" class="settings-popup-item">
           <span>🏢</span> Organization
         </a>
+        {% if show_billing_settings_menu %}
         <a href="/settings/billing" class="settings-popup-item">
           <span>💳</span> Billing
         </a>
+        {% endif %}
         <a href="/settings/preferences" class="settings-popup-item">
           <span>🎛</span> My Preferences
         </a>

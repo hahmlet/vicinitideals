@@ -975,9 +975,13 @@ def _base_ctx(
     conflicts_count: int = 0,
 ) -> dict:
     initials = "??"
+    show_billing_settings_menu = False
     if user:
         parts = user.name.split()
         initials = (parts[0][0] + parts[-1][0]).upper() if len(parts) >= 2 else user.name[:2].upper()
+        user_name_norm = (user.name or "").strip().lower()
+        user_email_norm = (user.email or "").strip().lower()
+        show_billing_settings_menu = user_name_norm in {"stephen ketch", "stephen ketch+"} or user_email_norm == "stephenjketch@gmail.com"
     return {
         "user_name": user.name if user else "Guest",
         "user_initials": initials,
@@ -987,6 +991,7 @@ def _base_ctx(
         "user_email_verified": bool(getattr(user, "email_verified", True)) if user else True,
         "is_org_admin": bool(getattr(user, "is_org_admin", False)) if user else False,
         "is_admin": bool(getattr(user, "is_admin", False)) if user else False,
+        "show_billing_settings_menu": show_billing_settings_menu,
         "active_nav": active_nav,
         "dedup_count": dedup_count,
         "address_issues_count": address_issues_count,

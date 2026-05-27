@@ -45,6 +45,27 @@ async def test_billing_page_renders_for_authenticated_user(
     assert resp.status_code == 200
     assert "Billing" in resp.text
     assert "Stripe Not Fully Configured" in resp.text
+    assert '<a href="/settings/billing" class="settings-popup-item">' not in resp.text
+
+
+async def test_billing_menu_link_shows_for_stephen_ketch(
+    client: AsyncClient,
+    session: AsyncSession,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(settings, "stripe_secret_key", "", raising=False)
+
+    org, user = await seed_org(session)
+    user.name = "Stephen Ketch"
+    user.email = "stephenjketch@gmail.com"
+    session.add(user)
+    await session.commit()
+    await _auth(client, user.id)
+
+    resp = await client.get("/settings/billing")
+
+    assert resp.status_code == 200
+    assert '<a href="/settings/billing" class="settings-popup-item">' in resp.text
 
     scope_row = (
         await session.execute(
