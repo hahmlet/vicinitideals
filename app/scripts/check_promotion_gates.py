@@ -48,30 +48,40 @@ def build_gate_plan(environment: str) -> list[GateDefinition]:
     normalized = _normalize_environment(environment)
 
     python = sys.executable
-    plan = [
-        GateDefinition(
-            name="tests",
-            description="Unit + integration pytest suite passes (E2E runs separately)",
-            # Ignore E2E (runs separately) and legacy tests scoped to
-            # feature-flagged-off parcels/scraped-listings ingest. Those
-            # tests still reference the pre-rename ``ScrapedListing`` /
-            # ``clip_to_polygon`` symbols and will be rehabilitated or
-            # deleted alongside any decision to re-enable paid data
-            # ingestion (see launch-monetization-plan.md scope cuts).
-            command=(
-                python,
-                "-m",
-                "pytest",
-                "tests/",
-                "-q",
-                "--ignore=tests/e2e",
-                "--ignore=tests/api/test_routers.py",
-                "--ignore=tests/contract",
-                "--ignore=tests/scrapers/test_dedup.py",
-                "--ignore=tests/scrapers/test_loopnet.py",
-                "--ignore=tests/tasks/test_scraper.py",
-            ),
-        ),
+    plan: list[GateDefinition] = []
+
+    # The dev tier's pytest run is provided by CI's dedicated "Unit tests" /
+    # "Integration tests" steps; duplicating it here doubles light-gate runtime
+    # (full pytest against Postgres, no marker filter). Staging/production
+    # promotion still runs the full suite via this gate.
+    if normalized in {"staging", "production"}:
+        plan.append(
+            GateDefinition(
+                name="tests",
+                description="Unit + integration pytest suite passes (E2E runs separately)",
+                # Ignore E2E (runs separately) and legacy tests scoped to
+                # feature-flagged-off parcels/scraped-listings ingest. Those
+                # tests still reference the pre-rename ``ScrapedListing`` /
+                # ``clip_to_polygon`` symbols and will be rehabilitated or
+                # deleted alongside any decision to re-enable paid data
+                # ingestion (see launch-monetization-plan.md scope cuts).
+                command=(
+                    python,
+                    "-m",
+                    "pytest",
+                    "tests/",
+                    "-q",
+                    "--ignore=tests/e2e",
+                    "--ignore=tests/api/test_routers.py",
+                    "--ignore=tests/contract",
+                    "--ignore=tests/scrapers/test_dedup.py",
+                    "--ignore=tests/scrapers/test_loopnet.py",
+                    "--ignore=tests/tasks/test_scraper.py",
+                ),
+            )
+        )
+
+    plan.extend([
         GateDefinition(
             name="critical_lint",
             description="No critical Ruff lint errors (syntax / undefined names)",
@@ -82,7 +92,7 @@ def build_gate_plan(environment: str) -> list[GateDefinition]:
             description="Docker Compose file validates cleanly",
             command=("docker", "compose", "config", "--quiet"),
         ),
-    ]
+    ])
 
     if normalized in {"staging", "production"}:
         plan.append(

@@ -17,7 +17,10 @@ def test_build_gate_plan_includes_expected_checks_per_environment() -> None:
     staging = [gate.name for gate in build_gate_plan("staging")]
     production = [gate.name for gate in build_gate_plan("production")]
 
-    assert dev == ["tests", "critical_lint", "compose_config", "migration_dry_run"]
+    # Dev tier skips the "tests" gate — CI runs Ruff + Unit tests as
+    # dedicated steps, so running the full pytest suite here would
+    # double the light-gate runtime.
+    assert dev == ["critical_lint", "compose_config", "migration_dry_run"]
     assert staging == [
         "tests",
         "critical_lint",
