@@ -6180,7 +6180,7 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
             carrying_detail[_mid] = {"construction": _amt, "operation": _amt}
 
     waterfall_tiers = list((await session.execute(
-        select(WaterfallTier).where(WaterfallTier.scenario_id == model_id).order_by(WaterfallTier.priority)
+        select(WaterfallTier).where(WaterfallTier.scenario_id == model_id).order_by(WaterfallTier.priority, WaterfallTier.id)
     )).scalars())
 
     # Milestones for the default dev Project

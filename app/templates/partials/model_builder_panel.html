@@ -1403,6 +1403,50 @@
   </div>
   {% endif %}
 
+  {# ── Profit Waterfall ── #}
+  <div style="margin-bottom:24px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted)">Profit Waterfall</div>
+      <button class="btn btn-sm btn-secondary" onclick="openAddLine('waterfall_tiers')">+ Add Tier</button>
+    </div>
+    {% if waterfall_tiers %}
+    <table class="line-table">
+      <thead>
+        <tr>
+          <th style="width:36px">#</th>
+          <th>Type</th>
+          <th class="col-right">IRR Hurdle</th>
+          <th class="col-right">LP %</th>
+          <th class="col-right">GP %</th>
+          <th style="font-weight:400;color:var(--text-muted)">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for tier in waterfall_tiers %}
+        <tr onclick="openEditLine('waterfall_tiers', '{{ tier.id }}', '{{ model.id }}')">
+          <td style="font-weight:600;color:var(--text-muted)">{{ tier.priority }}</td>
+          <td style="font-weight:500">{{ tier.tier_type | string | replace('WaterfallTierType.', '') | replace('_', ' ') | title }}</td>
+          <td class="col-right">{{ '%.1f%%' | format(tier.irr_hurdle_pct | float) if tier.irr_hurdle_pct else '—' }}</td>
+          <td class="col-right" style="{% if tier.lp_split_pct and tier.lp_split_pct | float > 0 %}font-weight:600;color:var(--accent){% endif %}">{{ '%.1f%%' | format(tier.lp_split_pct | float) }}</td>
+          <td class="col-right">{{ '%.1f%%' | format(tier.gp_split_pct | float) }}</td>
+          <td class="text-small text-muted" style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ tier.description or '' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="text-small text-muted" style="margin-top:8px">Click a row to edit. Tiers pay out in priority order — lowest # first.</div>
+    {% else %}
+    <div style="background:var(--surface-alt,#f9fafb);border:1px solid var(--border);border-radius:8px;padding:16px;display:flex;align-items:flex-start;gap:12px">
+      <div style="font-size:20px;flex-shrink:0">💰</div>
+      <div>
+        <div style="font-weight:600;font-size:13px">No profit tiers configured</div>
+        <div class="text-small text-muted" style="margin-top:4px">By default, all profit routes to the GP/sponsor after debt service. Add tiers to split returns between LP and GP — preferred return, catchup, and promote.</div>
+        <button class="btn btn-sm btn-primary" style="margin-top:10px" onclick="openAddLine('waterfall_tiers')">+ Add First Tier</button>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
   {# ── Profit metrics ── #}
   <div>
     <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px">Profit Metrics</div>
@@ -2108,7 +2152,7 @@ function openAddLine(type, category) {
   var titles = {
     'uses': 'Add Use Line', 'revenue': 'Add Revenue Stream',
     'opex': 'Add Expense Line', 'opex_templates': 'OpEx Templates',
-    'waterfall': 'Add Waterfall Tier',
+    'waterfall': 'Add Waterfall Tier', 'waterfall_tiers': 'Add Waterfall Tier',
     'unit_mix': 'Add Unit Type',
   };
   document.getElementById('line-item-drawer-title').textContent = titles[type] || 'Add Line';
