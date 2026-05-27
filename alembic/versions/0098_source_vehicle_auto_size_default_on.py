@@ -22,7 +22,9 @@ def upgrade() -> None:
     op.execute(
         """
         UPDATE source_vehicles
-        SET source_config = COALESCE(source_config, '{}'::jsonb) || '{"auto_size": true}'::jsonb
+        SET source_config = (
+            COALESCE(source_config::jsonb, '{}'::jsonb) || '{"auto_size": true}'::jsonb
+        )::json
         """
     )
 
@@ -30,7 +32,9 @@ def upgrade() -> None:
     op.execute(
         """
         UPDATE capital_modules
-        SET source = COALESCE(source, '{}'::jsonb) || '{"auto_size": true}'::jsonb
+        SET source = (
+            COALESCE(source::jsonb, '{}'::jsonb) || '{"auto_size": true}'::jsonb
+        )::json
         """
     )
 
