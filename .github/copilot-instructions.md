@@ -9,36 +9,32 @@
 - Testing requirements (every change needs a test)
 - Database safety rules (never `docker compose down -v`)
 
-Everything below is Copilot-specific and **overrides** the Claude Code-specific parts of CLAUDE.md.
+Everything below is Copilot-specific workflow.
 
 ---
 
-## Branch-First — Always
+## Branch Before Working
 
-**Never work directly on `main`.** Before any changes:
+**Never commit to `main`.** Create a branch first:
 
 ```bash
 git checkout main && git pull origin main
 git checkout -b feature/<short-slug>
 ```
 
-Slug examples: `feature/csrf-middleware`, `fix/cashflow-dscr`, `refactor/waterfall-helpers`.
-
-**Why:** Claude Code agents work in isolated git worktrees on their own branches. Committing to `main` causes push conflicts that overwrite in-flight Claude Code work.
-
 ---
 
-## Commit → Push → PR (never merge yourself)
+## Full Workflow Per Session
 
-1. Commit with conventional prefix: `feat:`, `fix:`, `refactor:`, `docs:`, `chore:`
-2. Push to your branch: `git push origin feature/<slug>`
-3. Open a PR — do **not** merge it yourself and do **not** push to `main`
-
----
-
-## No Deploys
-
-Do not trigger deploys. Claude Code agents handle deployment after PR merge via SSH to VM 114. See `CLAUDE.md` deploy section for the exact steps if context is needed.
+1. Branch from fresh `main` (above)
+2. Make changes following `CLAUDE.md` conventions
+3. Run tests: `uv run pytest tests/ -q --ignore=tests/e2e`
+4. Lint: `uv run ruff check app/ tests/`
+5. Commit with conventional prefix (`feat:`, `fix:`, `refactor:`, `docs:`, `chore:`)
+6. Push branch: `git push origin feature/<slug>`
+7. Merge to main: `git checkout main && git merge feature/<slug> && git push origin main`
+8. Deploy: `ssh root@192.168.1.28 "bash /root/deploy-vicinitideals.sh"`
+9. Verify health check passes in deploy output
 
 ---
 
