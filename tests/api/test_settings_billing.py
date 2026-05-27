@@ -43,7 +43,7 @@ async def test_billing_page_renders_for_authenticated_user(
     resp = await client.get("/settings/billing")
     assert resp.status_code == 200
     assert "Billing" in resp.text
-    assert "Stripe Not Configured" in resp.text
+    assert "Stripe Not Fully Configured" in resp.text
 
 
 async def test_billing_setup_session_redirects_when_stripe_not_configured(
@@ -152,3 +152,81 @@ async def test_embedded_mock_session_uses_embedded_page_ui_mode(
     assert resp.status_code == 200
     assert resp.json() == {"clientSecret": "cs_test_embedded_secret"}
     assert captured.get("ui_mode") == "embedded_page"
+
+
+async def test_settings_billing_embedded_session_setup_intent_uses_embedded_page(
+    client: AsyncClient,
+    session: AsyncSession,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(settings, "stripe_secret_key", "sk_test_dummy", raising=False)
+    monkeypatch.setattr(settings, "stripe_publishable_key", "pk_test_dummy", raising=False)
+
+    org, user = await seed_org(session)
+    await session.commit()
+    await _auth(client, user.id)
+
+    captured: dict[str, str] = {}
+
+    async def _fake_stripe_api_request(method, endpoint, *, data=None, params=None):
+        if endpoint == "/v1/customers":
+            return {"id": "cus_settings"}
+        if endpoint == "/v1/checkout/sessions":
+            if isinstance(data, list):
+                for k, v in data:
+                    if k in {"mode", "ui_mode"}:
+                        captured[k] = v
+            return {"client_secret": "cs_test_setup_secret"}
+        return {}
+
+    monkeypatch.setattr(ui, "_stripe_api_request", _fake_stripe_api_request)
+
+    resp = await client.post(
+        "/settings/billing/stripe/embedded-session",
+        json={"intent": "setup"},
+    )
+
+    assert resp.status_code == 200
+    assert resp.json()["clientSecret"] == "cs_test_setup_secret"
+    assert captured.get("mode") == "setup"
+    assert captured.get("ui_mode") == "embedded_page"
+
+
+async def test_settings_billing_embedded_session_subscribe_pro_uses_price(
+    client: AsyncClient,
+    session: AsyncSession,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(settings, "stripe_secret_key", "sk_test_dummy", raising=False)
+    monkeypatch.setattr(settings, "stripe_publishable_key", "pk_test_dummy", raising=False)
+    monkeypatch.setattr(settings, "stripe_price_pro_monthly", "price_pro_test_123", raising=False)
+
+    org, user = await seed_org(session)
+    await session.commit()
+    await _auth(client, user.id)
+
+    captured: dict[str, str] = {}
+
+    async def _fake_stripe_api_request(method, endpoint, *, data=None, params=None):
+        if endpoint == "/v1/customers":
+            return {"id": "cus_settings"}
+        if endpoint == "/v1/checkout/sessions":
+            if isinstance(data, list):
+                for k, v in data:
+                    if k in {"mode", "ui_mode", "line_items[0][price]"}:
+                        captured[k] = v
+            return {"client_secret": "cs_test_subscribe_pro_secret"}
+        return {}
+
+    monkeypatch.setattr(ui, "_stripe_api_request", _fake_stripe_api_request)
+
+    resp = await client.post(
+        "/settings/billing/stripe/embedded-session",
+        json={"intent": "subscribe_pro"},
+    )
+
+    assert resp.status_code == 200
+    assert resp.json()["clientSecret"] == "cs_test_subscribe_pro_secret"
+    assert captured.get("mode") == "subscription"
+    assert captured.get("ui_mode") == "embedded_page"
+    assert captured.get("line_items[0][price]") == "price_pro_test_123"

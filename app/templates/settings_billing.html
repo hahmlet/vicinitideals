@@ -8,17 +8,17 @@
 
 <div class="content" style="max-width:940px;padding:24px">
   <div class="card" style="padding:20px;margin-bottom:16px">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:8px">
       <div>
-        <div style="font-size:18px;font-weight:700;color:var(--text)">Payment Methods</div>
+        <div style="font-size:18px;font-weight:700;color:var(--text)">Account Plan</div>
         <div style="font-size:13px;color:var(--text-muted);margin-top:6px;max-width:620px">
-          Use Stripe's hosted checkout to add and validate a card. Card details are entered on Stripe, not stored directly in this app.
+          Embedded billing flow for starting paid plans, changing card info, and managing cancellation.
         </div>
       </div>
-      {% if stripe_configured %}
+      {% if stripe_embedded_ready %}
       <span class="badge badge-success">Stripe Connected{% if stripe_test_mode %} (Test Mode){% endif %}</span>
       {% else %}
-      <span class="badge badge-warning">Stripe Not Configured</span>
+      <span class="badge badge-warning">Stripe Not Fully Configured</span>
       {% endif %}
     </div>
 
@@ -34,16 +34,126 @@
     </div>
     {% endif %}
 
-    {% if stripe_configured %}
-    <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
-      <form method="post" action="/settings/billing/stripe/setup-session" style="margin:0">
-        <button type="submit" class="btn btn-primary">Add or Update Card via Stripe</button>
-      </form>
-      <div style="font-size:12px;color:var(--text-muted)">
-        Redirects to Stripe Checkout (mode: setup).
+    {% if subscription_error %}
+    <div style="margin-top:12px;font-size:13px;color:#b45309;background:#fffbeb;border:1px solid #fcd34d;padding:10px 12px;border-radius:8px;word-break:break-word">
+      Could not load subscription status: {{ subscription_error }}
+    </div>
+    {% endif %}
+
+    <div style="margin-top:14px;border:1px solid var(--border);border-radius:8px;padding:12px;background:var(--surface)">
+      <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap">
+        <div style="font-size:14px;color:var(--text)">
+          <strong>Current plan:</strong>
+          {% if subscription %}
+          {{ subscription.plan_label }}
+          {% else %}
+          Free
+          {% endif %}
+        </div>
+        <div style="font-size:12px;color:var(--text-muted)">
+          {% if subscription %}
+          Status: {{ subscription.status }}{% if subscription.cancel_at_period_end %} (canceling at period end){% endif %}
+          {% else %}
+          No active Stripe subscription
+          {% endif %}
+        </div>
       </div>
+      {% if subscription and subscription.current_period_end %}
+      <div style="margin-top:6px;font-size:12px;color:var(--text-muted)">
+        Current period end: {{ subscription.current_period_end.strftime('%Y-%m-%d') }}
+      </div>
+      {% endif %}
     </div>
 
+    {% if stripe_embedded_ready %}
+    <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <button type="button" class="btn btn-secondary stripe-embedded-trigger" data-intent="setup">
+        Add or Update Card
+      </button>
+      <button type="button" class="btn btn-primary stripe-embedded-trigger" data-intent="subscribe_starter" {% if not stripe_price_starter_monthly %}disabled{% endif %}>
+        Choose Starter
+      </button>
+      <button type="button" class="btn btn-primary stripe-embedded-trigger" data-intent="subscribe_pro" {% if not stripe_price_pro_monthly %}disabled{% endif %}>
+        Choose Pro
+      </button>
+      {% if subscription and not subscription.cancel_at_period_end and subscription.status != 'canceled' %}
+      <form method="post" action="/settings/billing/stripe/subscription/cancel" style="margin:0">
+        <button type="submit" class="btn btn-secondary">Cancel at Period End</button>
+      </form>
+      {% endif %}
+      {% if subscription and subscription.cancel_at_period_end and subscription.status != 'canceled' %}
+      <form method="post" action="/settings/billing/stripe/subscription/reactivate" style="margin:0">
+        <button type="submit" class="btn btn-secondary">Undo Cancel</button>
+      </form>
+      {% endif %}
+    </div>
+
+    {% if not stripe_price_starter_monthly or not stripe_price_pro_monthly %}
+    <div style="margin-top:10px;font-size:12px;color:#92400e;background:#fffbeb;border:1px solid #fcd34d;padding:10px 12px;border-radius:8px">
+      Stripe plan prices are partially configured. Set STRIPE_PRICE_STARTER_MONTHLY and STRIPE_PRICE_PRO_MONTHLY to enable both plan buttons.
+    </div>
+    {% endif %}
+
+    <div class="card" style="padding:16px;margin-top:14px;background:var(--bg)">
+      <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px">Embedded Checkout</div>
+      <div id="embedded-checkout" style="min-height:560px"></div>
+      <div id="embedded-loading" style="display:none;margin-top:10px;font-size:12px;color:var(--text-muted)">Loading Stripe checkout...</div>
+      <div id="embedded-error" style="display:none;margin-top:10px;font-size:13px;color:#b91c1c;background:#fef2f2;border:1px solid #fecaca;padding:10px 12px;border-radius:8px"></div>
+    </div>
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+    (function () {
+      const stripe = Stripe("{{ stripe_publishable_key }}");
+      const triggers = document.querySelectorAll('.stripe-embedded-trigger');
+      const errEl = document.getElementById('embedded-error');
+      const loadingEl = document.getElementById('embedded-loading');
+      let currentIntent = 'setup';
+      let checkoutInstance = null;
+
+      async function fetchClientSecret() {
+        const resp = await fetch('/settings/billing/stripe/embedded-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ intent: currentIntent })
+        });
+        const data = await resp.json();
+        if (!resp.ok || !data.clientSecret) {
+          throw new Error(data.error || 'Unable to start embedded checkout');
+        }
+        return data.clientSecret;
+      }
+
+      async function mountEmbedded(intent) {
+        currentIntent = intent;
+        errEl.style.display = 'none';
+        errEl.textContent = '';
+        loadingEl.style.display = 'block';
+
+        try {
+          if (checkoutInstance) {
+            checkoutInstance.destroy();
+            checkoutInstance = null;
+          }
+          checkoutInstance = await stripe.initEmbeddedCheckout({ fetchClientSecret });
+          checkoutInstance.mount('#embedded-checkout');
+        } catch (err) {
+          errEl.style.display = 'block';
+          errEl.textContent = 'Embedded checkout error: ' + (err && err.message ? err.message : String(err));
+        } finally {
+          loadingEl.style.display = 'none';
+        }
+      }
+
+      triggers.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          mountEmbedded(btn.getAttribute('data-intent') || 'setup');
+        });
+      });
+
+      mountEmbedded('setup');
+    })();
+    </script>
     {% if stripe_customer_id %}
     <div style="margin-top:12px;font-size:12px;color:var(--text-muted)">
       Stripe customer ID: {{ stripe_customer_id }}
@@ -51,7 +161,7 @@
     {% endif %}
     {% else %}
     <div style="margin-top:16px;font-size:13px;color:var(--text-muted)">
-      Add STRIPE_SECRET_KEY in your environment to enable this page.
+      Add STRIPE_SECRET_KEY and STRIPE_PUBLISHABLE_KEY in your environment to enable embedded billing.
     </div>
     {% endif %}
   </div>

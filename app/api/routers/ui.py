@@ -1011,13 +1011,38 @@ def _stripe_is_configured() -> bool:
     return bool(_stripe_secret_key())
 
 
+def _stripe_price_catalog() -> dict[str, str]:
+    return {
+        "starter": (settings.stripe_price_starter_monthly or "").strip(),
+        "pro": (settings.stripe_price_pro_monthly or "").strip(),
+    }
+
+
+def _stripe_price_label(price_id: str | None) -> str:
+    price = (price_id or "").strip()
+    if not price:
+        return "Free"
+    for tier, configured_price in _stripe_price_catalog().items():
+        if configured_price and configured_price == price:
+            return tier.title()
+    return "Custom"
+
+
 def _stripe_state_message(state: str | None) -> str | None:
     if state == "success":
-        return "Payment method saved and validated by Stripe."
+        return "Stripe action completed successfully."
     if state == "cancel":
-        return "Stripe checkout was cancelled before saving a payment method."
+        return "Stripe checkout was cancelled before completion."
     if state == "config-missing":
         return "Billing is not configured yet. Add Stripe keys in environment settings first."
+    if state == "cancel-scheduled":
+        return "Subscription cancellation is scheduled for the end of the billing period."
+    if state == "reactivated":
+        return "Cancellation was removed. Subscription remains active."
+    if state == "no-subscription":
+        return "No active Stripe subscription was found for this account."
+    if state == "already-cancelled":
+        return "This subscription is already cancelled."
     if state == "error":
         return "Stripe returned an error while starting checkout. Try again in a moment."
     return None
@@ -1162,6 +1187,50 @@ async def _list_stripe_payment_methods(customer_id: str) -> list[dict[str, str]]
             }
         )
     return rows
+
+
+async def _get_stripe_subscription_summary(customer_id: str) -> dict[str, Any] | None:
+    body = await _stripe_api_request(
+        "GET",
+        "/v1/subscriptions",
+        params={"customer": customer_id, "status": "all", "limit": 10},
+    )
+    subs = [s for s in body.get("data", []) if isinstance(s, dict)]
+    if not subs:
+        return None
+
+    status_rank = {
+        "active": 0,
+        "trialing": 1,
+        "past_due": 2,
+        "incomplete": 3,
+        "unpaid": 4,
+        "canceled": 9,
+    }
+    subs.sort(key=lambda s: status_rank.get(str(s.get("status") or ""), 5))
+    sub = subs[0]
+
+    items = ((sub.get("items") or {}).get("data") or [])
+    first_item = items[0] if items else {}
+    price_id = str(((first_item.get("price") or {}).get("id") or "")).strip()
+
+    current_period_end: datetime | None = None
+    raw_period_end = sub.get("current_period_end")
+    try:
+        if raw_period_end is not None:
+            current_period_end = datetime.fromtimestamp(int(raw_period_end), UTC)
+    except Exception:
+        current_period_end = None
+
+    return {
+        "id": str(sub.get("id") or "").strip(),
+        "status": str(sub.get("status") or "unknown"),
+        "cancel_at_period_end": bool(sub.get("cancel_at_period_end")),
+        "current_period_end": current_period_end,
+        "item_id": str(first_item.get("id") or "").strip(),
+        "price_id": price_id,
+        "plan_label": _stripe_price_label(price_id),
+    }
 
 
 def _fmt_ts(ts: datetime | None) -> str:
@@ -2246,8 +2315,10 @@ async def settings_billing(
     address_issues_count = await _get_address_issues_count(session)
 
     stripe_configured = _stripe_is_configured()
+    stripe_embedded_ready = stripe_configured and bool(_stripe_publishable_key())
     stripe_test_mode = _stripe_secret_key().startswith("sk_test_") if stripe_configured else False
     customer_id = await _get_stripe_customer_id(session, user.id) if stripe_configured else None
+    price_catalog = _stripe_price_catalog()
 
     cards: list[dict[str, str]] = []
     cards_error: str | None = None
@@ -2257,21 +2328,173 @@ async def settings_billing(
         except HTTPException as exc:
             cards_error = str(exc.detail)
 
+    subscription: dict[str, Any] | None = None
+    subscription_error: str | None = None
+    if stripe_configured and customer_id:
+        try:
+            subscription = await _get_stripe_subscription_summary(customer_id)
+        except HTTPException as exc:
+            subscription_error = str(exc.detail)
+
     return templates.TemplateResponse(
         request,
         "settings_billing.html",
         {
             "stripe_configured": stripe_configured,
+            "stripe_embedded_ready": stripe_embedded_ready,
             "stripe_test_mode": stripe_test_mode,
+            "stripe_publishable_key": _stripe_publishable_key(),
             "stripe_customer_id": customer_id,
+            "stripe_price_starter_monthly": price_catalog.get("starter") or "",
+            "stripe_price_pro_monthly": price_catalog.get("pro") or "",
             "cards": cards,
             "cards_error": cards_error,
+            "subscription": subscription,
+            "subscription_error": subscription_error,
             "stripe_state": stripe,
             "stripe_state_message": _stripe_state_message(stripe),
             "stripe_error_detail": (err or "").strip(),
             **_base_ctx(user, dedup_count, "", address_issues_count, conflicts_count=conflicts_count),
         },
     )
+
+
+@router.post("/settings/billing/stripe/embedded-session", response_class=JSONResponse)
+async def settings_billing_embedded_session(
+    request: Request,
+    session: DBSession,
+) -> JSONResponse:
+    user = await _get_user(session, request)
+    if user is None:
+        return JSONResponse({"error": "Unauthorized"}, status_code=401)
+
+    if not _stripe_is_configured() or not _stripe_publishable_key():
+        return JSONResponse({"error": "Stripe keys are not configured"}, status_code=400)
+
+    try:
+        body = await request.json()
+    except Exception:
+        body = {}
+    intent = str((body or {}).get("intent") or "setup").strip().lower()
+
+    customer_id = await _ensure_stripe_customer_id(session, user)
+    price_catalog = _stripe_price_catalog()
+
+    payload: list[tuple[str, str]]
+    if intent == "setup":
+        payload = [
+            ("mode", "setup"),
+            ("ui_mode", "embedded_page"),
+            ("customer", customer_id),
+            ("payment_method_types[]", "card"),
+            ("billing_address_collection", "auto"),
+            ("return_url", f"{settings.app_base_url}/settings/billing?stripe=success"),
+        ]
+    elif intent in {"subscribe_starter", "subscribe_pro"}:
+        tier = intent.split("_", 1)[1]
+        price_id = (price_catalog.get(tier) or "").strip()
+        if not price_id:
+            return JSONResponse({"error": f"Stripe price for {tier} is not configured"}, status_code=400)
+        payload = [
+            ("mode", "subscription"),
+            ("ui_mode", "embedded_page"),
+            ("customer", customer_id),
+            ("line_items[0][price]", price_id),
+            ("line_items[0][quantity]", "1"),
+            ("allow_promotion_codes", "true"),
+            ("return_url", f"{settings.app_base_url}/settings/billing?stripe=success"),
+        ]
+    else:
+        return JSONResponse({"error": "Unsupported Stripe intent"}, status_code=400)
+
+    try:
+        checkout = await _stripe_api_request(
+            "POST",
+            "/v1/checkout/sessions",
+            data=payload,
+        )
+    except HTTPException as exc:
+        detail = str(exc.detail or "")
+        if "No such customer" in detail or "resource_missing" in detail:
+            try:
+                await _clear_stripe_customer_id(session, user.id)
+                customer_id = await _ensure_stripe_customer_id(session, user)
+                remapped = [(k, customer_id if k == "customer" else v) for k, v in payload]
+                checkout = await _stripe_api_request(
+                    "POST",
+                    "/v1/checkout/sessions",
+                    data=remapped,
+                )
+            except HTTPException as retry_exc:
+                return JSONResponse({"error": str(retry_exc.detail or "Stripe error")}, status_code=502)
+        else:
+            return JSONResponse({"error": detail or "Stripe error"}, status_code=502)
+
+    client_secret = str(checkout.get("client_secret") or "").strip()
+    if not client_secret:
+        return JSONResponse({"error": "Stripe did not return an embedded client_secret"}, status_code=502)
+
+    return JSONResponse({"clientSecret": client_secret, "intent": intent})
+
+
+@router.post("/settings/billing/stripe/subscription/cancel", response_class=HTMLResponse)
+async def settings_billing_cancel_subscription(
+    request: Request,
+    session: DBSession,
+) -> HTMLResponse:
+    user = await _get_user(session, request)
+    if user is None:
+        return RedirectResponse(url="/login?next=/settings/billing", status_code=303)
+
+    if not _stripe_is_configured():
+        return RedirectResponse(url="/settings/billing?stripe=config-missing", status_code=303)
+
+    customer_id = await _get_stripe_customer_id(session, user.id)
+    if not customer_id:
+        return RedirectResponse(url="/settings/billing?stripe=no-subscription", status_code=303)
+
+    summary = await _get_stripe_subscription_summary(customer_id)
+    if not summary:
+        return RedirectResponse(url="/settings/billing?stripe=no-subscription", status_code=303)
+    if summary.get("status") == "canceled":
+        return RedirectResponse(url="/settings/billing?stripe=already-cancelled", status_code=303)
+
+    await _stripe_api_request(
+        "POST",
+        f"/v1/subscriptions/{summary['id']}",
+        data=[("cancel_at_period_end", "true")],
+    )
+    return RedirectResponse(url="/settings/billing?stripe=cancel-scheduled", status_code=303)
+
+
+@router.post("/settings/billing/stripe/subscription/reactivate", response_class=HTMLResponse)
+async def settings_billing_reactivate_subscription(
+    request: Request,
+    session: DBSession,
+) -> HTMLResponse:
+    user = await _get_user(session, request)
+    if user is None:
+        return RedirectResponse(url="/login?next=/settings/billing", status_code=303)
+
+    if not _stripe_is_configured():
+        return RedirectResponse(url="/settings/billing?stripe=config-missing", status_code=303)
+
+    customer_id = await _get_stripe_customer_id(session, user.id)
+    if not customer_id:
+        return RedirectResponse(url="/settings/billing?stripe=no-subscription", status_code=303)
+
+    summary = await _get_stripe_subscription_summary(customer_id)
+    if not summary:
+        return RedirectResponse(url="/settings/billing?stripe=no-subscription", status_code=303)
+
+    if summary.get("cancel_at_period_end"):
+        await _stripe_api_request(
+            "POST",
+            f"/v1/subscriptions/{summary['id']}",
+            data=[("cancel_at_period_end", "false")],
+        )
+        return RedirectResponse(url="/settings/billing?stripe=reactivated", status_code=303)
+    return RedirectResponse(url="/settings/billing", status_code=303)
 
 
 @router.post("/settings/billing/stripe/setup-session", response_class=HTMLResponse)
