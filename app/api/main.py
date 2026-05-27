@@ -303,10 +303,16 @@ def create_app() -> FastAPI:
         # Always expose the token to templates (empty string when unauthenticated).
         request.state.csrf_token = make_csrf_token(user_id_str) if user_id_str else ""
 
-        # Validate on all mutating methods to non-exempt paths.
+        # Validate CSRF token on HTMX-initiated mutating requests only.
+        # Plain form POSTs and vanilla fetch calls from non-HTMX code are
+        # protected by SameSite=Lax session cookies (cross-site POSTs can't
+        # carry the session cookie).  HTMX requests carry hx-request:true,
+        # a custom header that cross-site attackers cannot set (blocked by
+        # CORS preflight), giving us a second CSRF signal.
+        is_htmx = request.headers.get("hx-request") == "true"
         path = request.url.path
         is_exempt = any(path.startswith(p) for p in _CSRF_EXEMPT_PATHS) or path == "/"
-        if request.method in _MUTATING and not is_exempt:
+        if is_htmx and request.method in _MUTATING and not is_exempt:
             if user_id_str is None:
                 # Unauthenticated mutating request — let downstream auth handle it.
                 return await call_next(request)

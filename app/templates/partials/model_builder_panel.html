@@ -584,7 +584,7 @@
     fetch('/api/models/' + modelId + '/sliders', {
       method: 'POST',
       credentials: 'include',  // session cookie must travel for auth
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json', 'X-CSRF-Token': (typeof _csrfToken === 'function' ? _csrfToken() : '')},
       body: JSON.stringify(body)
     }).then(function(r) {
       if (!r.ok) {
@@ -615,7 +615,7 @@
     fetch('/api/models/' + modelId + '/sliders', {
       method: 'POST',
       credentials: 'include',
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json', 'X-CSRF-Token': (typeof _csrfToken === 'function' ? _csrfToken() : '')},
       body: JSON.stringify(body)
     }).then(function(r) {
       if (!r.ok) {
