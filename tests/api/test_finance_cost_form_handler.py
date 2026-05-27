@@ -1,4 +1,4 @@
-"""Form handler: user edit on auto Total Finance Costs row flips
+﻿"""Form handler: user edit on auto Total Finance Costs row flips
 is_auto_finance_cost to False so the engine stops recomputing it.
 
 Delete + recompute regenerates the row with flag=True (engine writeback path,
@@ -24,7 +24,8 @@ pytestmark = pytest.mark.asyncio
 
 
 async def _auth(client: AsyncClient, user_id) -> None:
-    client.cookies.set(COOKIE_NAME, create_session_token(user_id))
+    from tests.conftest import set_client_auth
+    set_client_auth(client, user_id)
 
 
 async def test_user_edit_flips_auto_finance_cost_flag(

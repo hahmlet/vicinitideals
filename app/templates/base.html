@@ -59,7 +59,7 @@
 </style>
 {% block head %}{% endblock %}
 </head>
-<body>
+<body hx-headers='{"X-CSRF-Token": "{{ request.state.csrf_token }}"}'>
 
 {% if user_email_verified is defined and user_email_verified == false %}
 <div id="email-verify-banner" style="
@@ -856,6 +856,14 @@ document.addEventListener('click', function(e) {
 
   function _hasFilter() { return _filterQuery().length > 0; }
 
+  function _csrfToken() {
+    /* Read the CSRF token from the hx-headers attribute on <body>. */
+    try {
+      var h = document.body && document.body.getAttribute('hx-headers');
+      return h ? (JSON.parse(h)['X-CSRF-Token'] || '') : '';
+    } catch(e) { return ''; }
+  }
+
   var _saved = [];
   var _savedFetched = false;
 
@@ -906,6 +914,7 @@ document.addEventListener('click', function(e) {
     fd.append('query_string', _filterQuery());
     var r = await fetch('/api/saved-filters', {
       method: 'POST', body: fd, credentials: 'same-origin',
+      headers: { 'X-CSRF-Token': _csrfToken() },
     });
     if (!r.ok) {
       alert('Could not save filter.');
@@ -929,6 +938,7 @@ document.addEventListener('click', function(e) {
     if (!window.confirm('Delete saved filter "' + target.name + '"?')) return;
     var r = await fetch('/api/saved-filters/' + target.id, {
       method: 'DELETE', credentials: 'same-origin',
+      headers: { 'X-CSRF-Token': _csrfToken() },
     });
     if (!r.ok) { alert('Could not delete.'); return; }
     await _fetchSaved();

@@ -1,4 +1,4 @@
-"""Integration tests for the auto Developer Fee Use Line lifecycle:
+﻿"""Integration tests for the auto Developer Fee Use Line lifecycle:
 
 - Deal-create POST seeds an `is_auto_dev_fee=True` row per project_type
 - Form PUT honors the auto flag: only `dev_fee_pct` is editable, label /
@@ -27,7 +27,8 @@ pytestmark = pytest.mark.asyncio
 
 async def _auth(client: AsyncClient, user_id) -> None:
     """Attach a signed session cookie to the test client."""
-    client.cookies.set(COOKIE_NAME, create_session_token(user_id))
+    from tests.conftest import set_client_auth
+    set_client_auth(client, user_id)
 
 
 # ---------------------------------------------------------------------------

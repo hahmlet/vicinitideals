@@ -1,4 +1,4 @@
-"""Per-Use eligibility + grant cap (`source.maximum`) API behavior.
+﻿"""Per-Use eligibility + grant cap (`source.maximum`) API behavior.
 
 Tests the model-builder save handler in app/api/routers/ui.py:
   - `source_maximum` form field persists to source.maximum JSONB
@@ -27,7 +27,8 @@ pytestmark = pytest.mark.asyncio
 
 
 async def _auth(client: AsyncClient, user_id) -> None:
-    client.cookies.set(COOKIE_NAME, create_session_token(user_id))
+    from tests.conftest import set_client_auth
+    set_client_auth(client, user_id)
 
 
 async def test_save_grant_with_eligibility_persists_maximum(

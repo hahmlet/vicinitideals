@@ -79,6 +79,7 @@ STATUS_CODES: dict[int, str] = {
     404: "not_found",
     409: "conflict",
     422: "validation_error",
+    429: "too_many_requests",
     500: "internal_server_error",
 }
 
@@ -257,6 +258,91 @@ def create_app() -> FastAPI:
 
         from fastapi.responses import RedirectResponse as _RR
         return _RR(url=f"/login?next={request.url.path}", status_code=303)
+
+    # -----------------------------------------------------------------------
+    # CSRF protection — validates X-CSRF-Token on all state-mutating requests
+    # except auth-flow paths (login, register, forgot-password, etc.).
+    # Sets request.state.csrf_token so templates can inject the token into
+    # HTMX's hx-headers attribute on the <body> tag.
+    # NOTE: intentionally does NOT exempt /api/ — HTMX routes under /api/ are
+    # the primary surface this protection covers.
+    # -----------------------------------------------------------------------
+    _CSRF_EXEMPT_PATHS = (
+        "/static/",
+        "/favicon.ico",
+        "/health",
+        "/login",
+        "/logout",
+        "/register",
+        "/forgot-password",
+        "/reset-password",
+        "/verify-email",
+        "/resend-verification",
+    )
+    _MUTATING = frozenset({"POST", "PUT", "PATCH", "DELETE"})
+
+    @app.middleware("http")
+    async def csrf_protection(request: Request, call_next):
+        from app.api.auth import decode_session_token, COOKIE_NAME
+        from app.api.csrf import make_csrf_token, validate_csrf_token, CSRF_HEADER
+
+        # Resolve the authenticated user ID (if any) from the session cookie.
+        token = request.cookies.get(COOKIE_NAME)
+        user_id = decode_session_token(token) if token else None
+        user_id_str = str(user_id) if user_id else None
+
+        # Always expose the token to templates (empty string when unauthenticated).
+        request.state.csrf_token = make_csrf_token(user_id_str) if user_id_str else ""
+
+        # Validate on all mutating methods to non-exempt paths.
+        path = request.url.path
+        is_exempt = any(path.startswith(p) for p in _CSRF_EXEMPT_PATHS) or path == "/"
+        if request.method in _MUTATING and not is_exempt:
+            if user_id_str is None:
+                # Unauthenticated mutating request — let downstream auth handle it.
+                return await call_next(request)
+            presented = request.headers.get(CSRF_HEADER)
+            if not validate_csrf_token(presented, user_id_str):
+                return JSONResponse(
+                    status_code=403,
+                    content=_payload("forbidden", "CSRF token invalid or missing", None),
+                )
+
+        return await call_next(request)
+
+    # -----------------------------------------------------------------------
+    # Write rate limiting — caps POST/PUT/PATCH/DELETE per user (or IP when
+    # unauthenticated) to prevent automated abuse.
+    #   Authenticated:   200 writes / minute per user
+    #   Unauthenticated: 30 writes / minute per IP
+    # -----------------------------------------------------------------------
+    @app.middleware("http")
+    async def write_rate_limit(request: Request, call_next):
+        if request.method not in _MUTATING:
+            return await call_next(request)
+
+        from app.api.auth import decode_session_token, COOKIE_NAME
+        from app.api.rate_limit import check_rate_limit
+
+        token = request.cookies.get(COOKIE_NAME)
+        user_id = decode_session_token(token) if token else None
+
+        if user_id:
+            rl_key = f"write_rl:user:{user_id}"
+            allowed = await check_rate_limit(rl_key, max_count=200, window_seconds=60)
+        else:
+            client_ip = _resolve_client_ip(request) or "unknown"
+            rl_key = f"write_rl:ip:{client_ip}"
+            allowed = await check_rate_limit(rl_key, max_count=30, window_seconds=60)
+
+        if not allowed:
+            return JSONResponse(
+                status_code=429,
+                content=_payload("too_many_requests", "Too many requests — slow down and try again.", None),
+                headers={"Retry-After": "60"},
+            )
+
+        return await call_next(request)
 
     for router in ROUTERS:
         app.include_router(router, prefix="/api")

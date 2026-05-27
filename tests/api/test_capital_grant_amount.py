@@ -1,4 +1,4 @@
-"""Grant / forgivable_loan / tax_credit sources need a user-supplied
+﻿"""Grant / forgivable_loan / tax_credit sources need a user-supplied
 source_amount. The model builder form posts source_amount; the handler
 must persist it into CapitalModule.source["amount"].
 
@@ -23,7 +23,8 @@ pytestmark = pytest.mark.asyncio
 
 
 async def _auth(client: AsyncClient, user_id) -> None:
-    client.cookies.set(COOKIE_NAME, create_session_token(user_id))
+    from tests.conftest import set_client_auth
+    set_client_auth(client, user_id)
 
 
 @pytest.mark.parametrize("vehicle_type", ["grant", "forgivable_loan", "tax_credit"])

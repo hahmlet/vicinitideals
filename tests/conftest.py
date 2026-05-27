@@ -260,6 +260,21 @@ def auth_headers(api_key: str) -> dict[str, str]:
     }
 
 
+def set_client_auth(client: AsyncClient, user_id: "uuid.UUID | str") -> None:
+    """Set session cookie AND CSRF token header on *client* for an authenticated user.
+
+    Call this instead of ``client.cookies.set(COOKIE_NAME, ...)`` so that
+    the CSRF middleware (which validates X-CSRF-Token on all mutations) is
+    satisfied in integration tests.
+    """
+    from app.api.auth import COOKIE_NAME, create_session_token
+    from app.api.csrf import make_csrf_token
+
+    uid = str(user_id)
+    client.cookies.set(COOKIE_NAME, create_session_token(uid))
+    client.headers["X-CSRF-Token"] = make_csrf_token(uid)
+
+
 # ---------------------------------------------------------------------------
 # Seed helpers — call these in individual tests to populate the DB
 # ---------------------------------------------------------------------------

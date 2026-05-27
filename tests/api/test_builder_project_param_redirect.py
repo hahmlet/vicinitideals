@@ -1,4 +1,4 @@
-"""Builder route canonicalizes URL to always include ?project=.
+﻿"""Builder route canonicalizes URL to always include ?project=.
 
 Without project in URL, HX-Current-URL header on form posts/deletes
 omits it, so `_active_project_from_request` returns None and JSONB
@@ -24,7 +24,8 @@ pytestmark = pytest.mark.asyncio
 
 
 async def _auth(client: AsyncClient, user_id) -> None:
-    client.cookies.set(COOKIE_NAME, create_session_token(user_id))
+    from tests.conftest import set_client_auth
+    set_client_auth(client, user_id)
 
 
 async def _seed_minimal(session: AsyncSession) -> tuple[DealModel, Project, uuid.UUID]:

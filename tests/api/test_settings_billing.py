@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import uuid
 
@@ -19,7 +19,8 @@ pytestmark = pytest.mark.asyncio
 
 
 async def _auth(client: AsyncClient, user_id) -> None:
-    client.cookies.set(COOKIE_NAME, create_session_token(user_id))
+    from tests.conftest import set_client_auth
+    set_client_auth(client, user_id)
 
 
 async def test_billing_page_redirects_to_login_when_unauthenticated(
