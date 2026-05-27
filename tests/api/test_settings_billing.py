@@ -5,6 +5,7 @@ import uuid
 import pytest
 from httpx import AsyncClient
 from fastapi import HTTPException
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.routers import ui
@@ -44,6 +45,25 @@ async def test_billing_page_renders_for_authenticated_user(
     assert resp.status_code == 200
     assert "Billing" in resp.text
     assert "Stripe Not Fully Configured" in resp.text
+
+    scope_row = (
+        await session.execute(
+            select(UserSetting).where(
+                UserSetting.user_id == user.id,
+                UserSetting.field_key == "billing_scope",
+            )
+        )
+    ).scalar_one_or_none()
+    plan_row = (
+        await session.execute(
+            select(UserSetting).where(
+                UserSetting.user_id == user.id,
+                UserSetting.field_key == "billing_plan",
+            )
+        )
+    ).scalar_one_or_none()
+    assert scope_row is not None and scope_row.value == "user"
+    assert plan_row is not None and plan_row.value == "free_trial"
 
 
 async def test_billing_setup_session_redirects_when_stripe_not_configured(
@@ -192,7 +212,7 @@ async def test_settings_billing_embedded_session_setup_intent_uses_embedded_page
     assert captured.get("ui_mode") == "embedded_page"
 
 
-async def test_settings_billing_embedded_session_subscribe_pro_uses_price(
+async def test_settings_billing_embedded_session_subscribe_pro_monthly_uses_price(
     client: AsyncClient,
     session: AsyncSession,
     monkeypatch: pytest.MonkeyPatch,
@@ -213,7 +233,7 @@ async def test_settings_billing_embedded_session_subscribe_pro_uses_price(
         if endpoint == "/v1/checkout/sessions":
             if isinstance(data, list):
                 for k, v in data:
-                    if k in {"mode", "ui_mode", "line_items[0][price]"}:
+                    if k in {"mode", "ui_mode", "line_items[0][price]", "line_items[0][quantity]", "subscription_data[trial_period_days]"}:
                         captured[k] = v
             return {"client_secret": "cs_test_subscribe_pro_secret"}
         return {}
@@ -222,7 +242,7 @@ async def test_settings_billing_embedded_session_subscribe_pro_uses_price(
 
     resp = await client.post(
         "/settings/billing/stripe/embedded-session",
-        json={"intent": "subscribe_pro"},
+        json={"intent": "subscribe_pro_monthly"},
     )
 
     assert resp.status_code == 200
@@ -230,3 +250,47 @@ async def test_settings_billing_embedded_session_subscribe_pro_uses_price(
     assert captured.get("mode") == "subscription"
     assert captured.get("ui_mode") == "embedded_page"
     assert captured.get("line_items[0][price]") == "price_pro_test_123"
+    assert captured.get("line_items[0][quantity]") == "1"
+    assert captured.get("subscription_data[trial_period_days]") == "30"
+
+
+async def test_settings_billing_embedded_session_subscribe_pro_annual_uses_price(
+    client: AsyncClient,
+    session: AsyncSession,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(settings, "stripe_secret_key", "sk_test_dummy", raising=False)
+    monkeypatch.setattr(settings, "stripe_publishable_key", "pk_test_dummy", raising=False)
+    monkeypatch.setattr(settings, "stripe_price_pro_annual", "price_pro_annual_test_123", raising=False)
+
+    org, user = await seed_org(session)
+    await session.commit()
+    await _auth(client, user.id)
+
+    captured: dict[str, str] = {}
+
+    async def _fake_stripe_api_request(method, endpoint, *, data=None, params=None):
+        if endpoint == "/v1/customers":
+            return {"id": "cus_settings"}
+        if endpoint == "/v1/checkout/sessions":
+            if isinstance(data, list):
+                for k, v in data:
+                    if k in {"mode", "ui_mode", "line_items[0][price]", "line_items[0][quantity]", "subscription_data[trial_period_days]"}:
+                        captured[k] = v
+            return {"client_secret": "cs_test_subscribe_pro_annual_secret"}
+        return {}
+
+    monkeypatch.setattr(ui, "_stripe_api_request", _fake_stripe_api_request)
+
+    resp = await client.post(
+        "/settings/billing/stripe/embedded-session",
+        json={"intent": "subscribe_pro_annual"},
+    )
+
+    assert resp.status_code == 200
+    assert resp.json()["clientSecret"] == "cs_test_subscribe_pro_annual_secret"
+    assert captured.get("mode") == "subscription"
+    assert captured.get("ui_mode") == "embedded_page"
+    assert captured.get("line_items[0][price]") == "price_pro_annual_test_123"
+    assert captured.get("line_items[0][quantity]") == "1"
+    assert captured.get("subscription_data[trial_period_days]") == "30"

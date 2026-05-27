@@ -1013,18 +1013,20 @@ def _stripe_is_configured() -> bool:
 
 def _stripe_price_catalog() -> dict[str, str]:
     return {
-        "starter": (settings.stripe_price_starter_monthly or "").strip(),
-        "pro": (settings.stripe_price_pro_monthly or "").strip(),
+        "pro_monthly": (settings.stripe_price_pro_monthly or "").strip(),
+        "pro_annual": (settings.stripe_price_pro_annual or "").strip(),
     }
 
 
 def _stripe_price_label(price_id: str | None) -> str:
     price = (price_id or "").strip()
     if not price:
-        return "Free"
-    for tier, configured_price in _stripe_price_catalog().items():
-        if configured_price and configured_price == price:
-            return tier.title()
+        return "Free Trial"
+    catalog = _stripe_price_catalog()
+    if catalog.get("pro_monthly") and catalog["pro_monthly"] == price:
+        return "Pro Monthly"
+    if catalog.get("pro_annual") and catalog["pro_annual"] == price:
+        return "Pro Annual"
     return "Custom"
 
 
@@ -1212,7 +1214,15 @@ async def _get_stripe_subscription_summary(customer_id: str) -> dict[str, Any] |
 
     items = ((sub.get("items") or {}).get("data") or [])
     first_item = items[0] if items else {}
-    price_id = str(((first_item.get("price") or {}).get("id") or "")).strip()
+    price = first_item.get("price") or {}
+    price_id = str((price.get("id") or "")).strip()
+    interval = str(((price.get("recurring") or {}).get("interval") or "")).strip() or "month"
+
+    quantity = 1
+    try:
+        quantity = int(first_item.get("quantity") or 1)
+    except Exception:
+        quantity = 1
 
     current_period_end: datetime | None = None
     raw_period_end = sub.get("current_period_end")
@@ -1222,15 +1232,96 @@ async def _get_stripe_subscription_summary(customer_id: str) -> dict[str, Any] |
     except Exception:
         current_period_end = None
 
+    trial_end: datetime | None = None
+    raw_trial_end = sub.get("trial_end")
+    try:
+        if raw_trial_end is not None:
+            trial_end = datetime.fromtimestamp(int(raw_trial_end), UTC)
+    except Exception:
+        trial_end = None
+
     return {
         "id": str(sub.get("id") or "").strip(),
         "status": str(sub.get("status") or "unknown"),
         "cancel_at_period_end": bool(sub.get("cancel_at_period_end")),
         "current_period_end": current_period_end,
+        "trial_end": trial_end,
         "item_id": str(first_item.get("id") or "").strip(),
         "price_id": price_id,
+        "interval": interval,
+        "quantity": quantity,
         "plan_label": _stripe_price_label(price_id),
     }
+
+
+async def _upsert_user_setting(
+    session: AsyncSession,
+    *,
+    user: User,
+    field_key: str,
+    value: str,
+) -> None:
+    row = (
+        await session.execute(
+            select(UserSetting).where(
+                UserSetting.user_id == user.id,
+                UserSetting.field_key == field_key,
+            )
+        )
+    ).scalar_one_or_none()
+    if row is None:
+        row = UserSetting(
+            id=_uuid_mod.uuid4(),
+            user_id=user.id,
+            org_id=user.org_id,
+            field_key=field_key,
+            value=value,
+        )
+        session.add(row)
+    else:
+        row.value = value
+        session.add(row)
+
+
+async def _sync_user_billing_snapshot(
+    session: AsyncSession,
+    *,
+    user: User,
+    subscription: dict[str, Any] | None,
+) -> None:
+    if not subscription:
+        values = {
+            "billing_scope": "user",
+            "billing_plan": "free_trial",
+            "billing_status": "none",
+            "billing_interval": "none",
+            "billing_seats": "1",
+            "billing_subscription_id": "",
+            "billing_price_id": "",
+            "billing_cancel_at_period_end": "false",
+            "billing_current_period_end": "",
+            "billing_trial_end": "",
+        }
+    else:
+        current_period_end = subscription.get("current_period_end")
+        trial_end = subscription.get("trial_end")
+        interval = str(subscription.get("interval") or "month")
+        values = {
+            "billing_scope": "user",
+            "billing_plan": "pro",
+            "billing_status": str(subscription.get("status") or "unknown"),
+            "billing_interval": "annual" if interval == "year" else "monthly",
+            "billing_seats": str(subscription.get("quantity") or 1),
+            "billing_subscription_id": str(subscription.get("id") or ""),
+            "billing_price_id": str(subscription.get("price_id") or ""),
+            "billing_cancel_at_period_end": "true" if subscription.get("cancel_at_period_end") else "false",
+            "billing_current_period_end": current_period_end.isoformat() if isinstance(current_period_end, datetime) else "",
+            "billing_trial_end": trial_end.isoformat() if isinstance(trial_end, datetime) else "",
+        }
+
+    for key, val in values.items():
+        await _upsert_user_setting(session, user=user, field_key=key, value=val)
+    await session.commit()
 
 
 def _fmt_ts(ts: datetime | None) -> str:
@@ -2333,8 +2424,11 @@ async def settings_billing(
     if stripe_configured and customer_id:
         try:
             subscription = await _get_stripe_subscription_summary(customer_id)
+            await _sync_user_billing_snapshot(session, user=user, subscription=subscription)
         except HTTPException as exc:
             subscription_error = str(exc.detail)
+    else:
+        await _sync_user_billing_snapshot(session, user=user, subscription=None)
 
     return templates.TemplateResponse(
         request,
@@ -2345,8 +2439,9 @@ async def settings_billing(
             "stripe_test_mode": stripe_test_mode,
             "stripe_publishable_key": _stripe_publishable_key(),
             "stripe_customer_id": customer_id,
-            "stripe_price_starter_monthly": price_catalog.get("starter") or "",
-            "stripe_price_pro_monthly": price_catalog.get("pro") or "",
+            "stripe_price_pro_monthly": price_catalog.get("pro_monthly") or "",
+            "stripe_price_pro_annual": price_catalog.get("pro_annual") or "",
+            "stripe_trial_days": max(int(settings.stripe_trial_days or 0), 0),
             "cards": cards,
             "cards_error": cards_error,
             "subscription": subscription,
@@ -2390,11 +2485,12 @@ async def settings_billing_embedded_session(
             ("billing_address_collection", "auto"),
             ("return_url", f"{settings.app_base_url}/settings/billing?stripe=success"),
         ]
-    elif intent in {"subscribe_starter", "subscribe_pro"}:
-        tier = intent.split("_", 1)[1]
-        price_id = (price_catalog.get(tier) or "").strip()
+    elif intent in {"subscribe_pro_monthly", "subscribe_pro_annual"}:
+        tier_key = "pro_monthly" if intent == "subscribe_pro_monthly" else "pro_annual"
+        price_id = (price_catalog.get(tier_key) or "").strip()
         if not price_id:
-            return JSONResponse({"error": f"Stripe price for {tier} is not configured"}, status_code=400)
+            return JSONResponse({"error": f"Stripe price for {tier_key} is not configured"}, status_code=400)
+        trial_days = max(int(settings.stripe_trial_days or 0), 0)
         payload = [
             ("mode", "subscription"),
             ("ui_mode", "embedded_page"),
@@ -2404,6 +2500,8 @@ async def settings_billing_embedded_session(
             ("allow_promotion_codes", "true"),
             ("return_url", f"{settings.app_base_url}/settings/billing?stripe=success"),
         ]
+        if trial_days > 0:
+            payload.append(("subscription_data[trial_period_days]", str(trial_days)))
     else:
         return JSONResponse({"error": "Unsupported Stripe intent"}, status_code=400)
 

@@ -54,8 +54,9 @@ class Settings(BaseSettings):
     # Use test keys first (sk_test_...) to validate with Stripe test cards.
     stripe_secret_key: str = ""
     stripe_publishable_key: str = ""
-    stripe_price_starter_monthly: str = ""
     stripe_price_pro_monthly: str = ""
+    stripe_price_pro_annual: str = ""
+    stripe_trial_days: int = 30
 
     # -------------------------------------------------------------------------
     # Error monitoring (BugSink — Sentry-SDK compatible)

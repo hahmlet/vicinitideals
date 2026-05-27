@@ -12,7 +12,7 @@
       <div>
         <div style="font-size:18px;font-weight:700;color:var(--text)">Account Plan</div>
         <div style="font-size:13px;color:var(--text-muted);margin-top:6px;max-width:620px">
-          Embedded billing flow for starting paid plans, changing card info, and managing cancellation.
+          Per-user billing only. Start with a {{ stripe_trial_days }}-day free trial, then choose Pro monthly or annual prepay.
         </div>
       </div>
       {% if stripe_embedded_ready %}
@@ -65,16 +65,23 @@
       {% endif %}
     </div>
 
+    <div style="margin-top:12px;border:1px solid var(--border);border-radius:8px;padding:12px;background:var(--bg)">
+      <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px">Available Plans (1 seat)</div>
+      <div style="font-size:12px;color:var(--text-muted)">Free Trial: {{ stripe_trial_days }} days</div>
+      <div style="font-size:12px;color:var(--text-muted)">Pro Monthly: $300/month</div>
+      <div style="font-size:12px;color:var(--text-muted)">Pro Annual Prepay: $2,880/year (20% off)</div>
+    </div>
+
     {% if stripe_embedded_ready %}
     <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
       <button type="button" class="btn btn-secondary stripe-embedded-trigger" data-intent="setup">
         Add or Update Card
       </button>
-      <button type="button" class="btn btn-primary stripe-embedded-trigger" data-intent="subscribe_starter" {% if not stripe_price_starter_monthly %}disabled{% endif %}>
-        Choose Starter
+      <button type="button" class="btn btn-primary stripe-embedded-trigger" data-intent="subscribe_pro_monthly" {% if not stripe_price_pro_monthly %}disabled{% endif %}>
+        Start Pro Monthly ($300)
       </button>
-      <button type="button" class="btn btn-primary stripe-embedded-trigger" data-intent="subscribe_pro" {% if not stripe_price_pro_monthly %}disabled{% endif %}>
-        Choose Pro
+      <button type="button" class="btn btn-primary stripe-embedded-trigger" data-intent="subscribe_pro_annual" {% if not stripe_price_pro_annual %}disabled{% endif %}>
+        Start Pro Annual (20% Off)
       </button>
       {% if subscription and not subscription.cancel_at_period_end and subscription.status != 'canceled' %}
       <form method="post" action="/settings/billing/stripe/subscription/cancel" style="margin:0">
@@ -88,9 +95,9 @@
       {% endif %}
     </div>
 
-    {% if not stripe_price_starter_monthly or not stripe_price_pro_monthly %}
+    {% if not stripe_price_pro_monthly or not stripe_price_pro_annual %}
     <div style="margin-top:10px;font-size:12px;color:#92400e;background:#fffbeb;border:1px solid #fcd34d;padding:10px 12px;border-radius:8px">
-      Stripe plan prices are partially configured. Set STRIPE_PRICE_STARTER_MONTHLY and STRIPE_PRICE_PRO_MONTHLY to enable both plan buttons.
+      Stripe plan prices are partially configured. Set STRIPE_PRICE_PRO_MONTHLY and STRIPE_PRICE_PRO_ANNUAL to enable both Pro buttons.
     </div>
     {% endif %}
 
