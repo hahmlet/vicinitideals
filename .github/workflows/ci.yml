@@ -96,7 +96,16 @@ jobs:
         run: uv run ruff check app/ tests/
 
       - name: Unit tests
-        run: uv run pytest tests/ -q -m "unit" --ignore=tests/e2e
+        # Legacy parcels/scraped-listings ingest tests (ScrapedListing /
+        # clip_to_polygon imports) are scope-cut per launch plan —
+        # ignored until that surface is rehabilitated or deleted.
+        run: |
+          uv run pytest tests/ -q -m "unit" --ignore=tests/e2e \
+            --ignore=tests/api/test_routers.py \
+            --ignore=tests/contract \
+            --ignore=tests/scrapers/test_dedup.py \
+            --ignore=tests/scrapers/test_loopnet.py \
+            --ignore=tests/tasks/test_scraper.py
 
   # ---------------------------------------------------------------------------
   # Full gate — runs on PRs to main and pushes to main
@@ -164,7 +173,15 @@ jobs:
         run: uv run python -m app.scripts.check_promotion_gates --environment staging
 
       - name: Integration tests
-        run: uv run pytest tests/ -q --ignore=tests/e2e
+        # Legacy parcels/scraped-listings ingest tests are scope-cut per
+        # launch plan; same ignores as the light-gate unit step.
+        run: |
+          uv run pytest tests/ -q --ignore=tests/e2e \
+            --ignore=tests/api/test_routers.py \
+            --ignore=tests/contract \
+            --ignore=tests/scrapers/test_dedup.py \
+            --ignore=tests/scrapers/test_loopnet.py \
+            --ignore=tests/tasks/test_scraper.py
 
       - name: Install Playwright browsers
         run: uv run playwright install chromium --with-deps

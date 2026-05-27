@@ -22,6 +22,15 @@ depends_on = None
 
 
 def upgrade() -> None:
+    # Offline (--sql) mode cannot SELECT; emit a guarded ADD COLUMN that
+    # is a no-op when the column already exists.
+    if op.get_context().as_sql:
+        op.execute(
+            "ALTER TABLE scenarios "
+            "ADD COLUMN IF NOT EXISTS health_thresholds JSON"
+        )
+        return
+
     conn = op.get_bind()
     exists = conn.execute(
         sa.text(

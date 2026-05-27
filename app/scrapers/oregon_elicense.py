@@ -30,8 +30,12 @@ import html as html_lib
 import logging
 import re
 import urllib.parse
+from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field
-from typing import Any
+from typing import TYPE_CHECKING, Any
+
+if TYPE_CHECKING:
+    from playwright.async_api import Browser, Page
 
 logger = logging.getLogger(__name__)
 

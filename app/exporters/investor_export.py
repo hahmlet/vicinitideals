@@ -19,6 +19,7 @@ re-imported.
 from __future__ import annotations
 
 import re
+import uuid
 from datetime import date as _date, datetime
 from decimal import Decimal
 from io import BytesIO

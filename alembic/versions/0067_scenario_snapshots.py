@@ -22,7 +22,43 @@ branch_labels = None
 depends_on = None
 
 
+def _create_table() -> None:
+    op.create_table(
+        "scenario_snapshots",
+        sa.Column("id", UUID(as_uuid=True), primary_key=True),
+        sa.Column(
+            "scenario_id",
+            UUID(as_uuid=True),
+            sa.ForeignKey("scenarios.id", ondelete="CASCADE"),
+            nullable=False,
+            index=True,
+        ),
+        sa.Column("version", sa.Integer, nullable=False),
+        sa.Column(
+            "created_at",
+            sa.DateTime(timezone=True),
+            server_default=sa.func.now(),
+            nullable=False,
+        ),
+        sa.Column(
+            "triggered_by",
+            sa.String(20),
+            nullable=False,
+            server_default="compute",
+        ),
+        sa.Column("label", sa.Text, nullable=True),
+        sa.Column("inputs_json", JSONB, nullable=False),
+        sa.Column("outputs_json", JSONB, nullable=False),
+    )
+
+
 def upgrade() -> None:
+    # Offline (--sql) mode cannot SELECT; create unconditionally. Apply
+    # script idempotency is the operator's responsibility in --sql mode.
+    if op.get_context().as_sql:
+        _create_table()
+        return
+
     conn = op.get_bind()
     exists = conn.execute(
         sa.text(
@@ -31,33 +67,7 @@ def upgrade() -> None:
         )
     ).scalar()
     if not exists:
-        op.create_table(
-            "scenario_snapshots",
-            sa.Column("id", UUID(as_uuid=True), primary_key=True),
-            sa.Column(
-                "scenario_id",
-                UUID(as_uuid=True),
-                sa.ForeignKey("scenarios.id", ondelete="CASCADE"),
-                nullable=False,
-                index=True,
-            ),
-            sa.Column("version", sa.Integer, nullable=False),
-            sa.Column(
-                "created_at",
-                sa.DateTime(timezone=True),
-                server_default=sa.func.now(),
-                nullable=False,
-            ),
-            sa.Column(
-                "triggered_by",
-                sa.String(20),
-                nullable=False,
-                server_default="compute",
-            ),
-            sa.Column("label", sa.Text, nullable=True),
-            sa.Column("inputs_json", JSONB, nullable=False),
-            sa.Column("outputs_json", JSONB, nullable=False),
-        )
+        _create_table()
 
 
 def downgrade() -> None:

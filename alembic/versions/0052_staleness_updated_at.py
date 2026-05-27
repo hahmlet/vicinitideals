@@ -77,21 +77,32 @@ def upgrade() -> None:
     # created_at column (6 of 8); the two that don't — waterfall_tiers,
     # operational_inputs — are rarely-touched anyway and any false-positive
     # stale state clears on the next compute.
-    bind = op.get_bind()
-    if bind.dialect.name == "postgresql":
+    # Offline (--sql) mode cannot execute SELECT — emit the UPDATE
+    # unconditionally for each known table. Tables without created_at
+    # will raise on apply; that's fine because --sql output is reviewed
+    # by a human before execution.
+    if op.get_context().as_sql:
         for tbl in _TABLES:
-            existing = bind.execute(
-                sa.text(
-                    "SELECT column_name FROM information_schema.columns "
-                    "WHERE table_name = :t AND column_name = 'created_at'"
-                ),
-                {"t": tbl},
-            ).fetchone()
-            if existing:
-                op.execute(
-                    f"UPDATE {tbl} SET updated_at = created_at "
-                    "WHERE updated_at > created_at"
-                )
+            op.execute(
+                f"UPDATE {tbl} SET updated_at = created_at "
+                "WHERE updated_at > created_at"
+            )
+    else:
+        bind = op.get_bind()
+        if bind.dialect.name == "postgresql":
+            for tbl in _TABLES:
+                existing = bind.execute(
+                    sa.text(
+                        "SELECT column_name FROM information_schema.columns "
+                        "WHERE table_name = :t AND column_name = 'created_at'"
+                    ),
+                    {"t": tbl},
+                ).fetchone()
+                if existing:
+                    op.execute(
+                        f"UPDATE {tbl} SET updated_at = created_at "
+                        "WHERE updated_at > created_at"
+                    )
 
 
 def downgrade() -> None:

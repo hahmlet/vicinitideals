@@ -22,6 +22,13 @@ depends_on = None
 
 
 def upgrade() -> None:
+    if op.get_context().as_sql:
+        op.execute(
+            "ALTER TABLE operational_inputs "
+            "ADD COLUMN IF NOT EXISTS going_in_cap_rate_pct NUMERIC(18, 6)"
+        )
+        return
+
     conn = op.get_bind()
     exists = conn.execute(
         sa.text(

@@ -28,6 +28,8 @@ if TYPE_CHECKING:
     from fastapi import Request
     from sqlalchemy.ext.asyncio import AsyncSession
 
+    from app.models.org import User
+
 logger = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------

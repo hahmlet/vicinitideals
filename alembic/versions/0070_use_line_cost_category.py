@@ -24,54 +24,55 @@ depends_on = None
 
 
 def upgrade() -> None:
-    conn = op.get_bind()
-    exists = conn.execute(
-        sa.text(
-            "SELECT 1 FROM information_schema.columns "
-            "WHERE table_name='use_lines' AND column_name='cost_category'"
+    is_offline = op.get_context().as_sql
+    if is_offline:
+        op.execute(
+            "ALTER TABLE use_lines "
+            "ADD COLUMN IF NOT EXISTS cost_category VARCHAR(60) DEFAULT 'soft'"
         )
-    ).scalar()
-    if not exists:
-        op.add_column(
-            "use_lines",
-            sa.Column(
-                "cost_category",
-                sa.String(60),
-                nullable=True,
-                server_default="soft",
-            ),
-        )
+    else:
+        conn = op.get_bind()
+        exists = conn.execute(
+            sa.text(
+                "SELECT 1 FROM information_schema.columns "
+                "WHERE table_name='use_lines' AND column_name='cost_category'"
+            )
+        ).scalar()
+        if not exists:
+            op.add_column(
+                "use_lines",
+                sa.Column(
+                    "cost_category",
+                    sa.String(60),
+                    nullable=True,
+                    server_default="soft",
+                ),
+            )
 
     # Strategy: set acquisition and hard by label; everything else stays
-    # as the server_default 'soft'.
+    # as the server_default 'soft'. Both branches issue the same UPDATEs.
 
     # ── Acquisition ──────────────────────────────────────────────────────────
-    conn.execute(
-        sa.text(
-            "UPDATE use_lines SET cost_category = 'acquisition' WHERE "
-            "label LIKE '% - Acquisition'"
-            " OR label = 'Acquisition'"
-            " OR label = 'Purchase Price'"
-            " OR label LIKE 'Gap Adjustment%'"
-            " OR label LIKE 'Acquisition Loan (auto)%'"
-        )
+    op.execute(
+        "UPDATE use_lines SET cost_category = 'acquisition' WHERE "
+        "label LIKE '% - Acquisition'"
+        " OR label = 'Acquisition'"
+        " OR label = 'Purchase Price'"
+        " OR label LIKE 'Gap Adjustment%'"
+        " OR label LIKE 'Acquisition Loan (auto)%'"
     )
 
     # ── Hard ─────────────────────────────────────────────────────────────────
-    conn.execute(
-        sa.text(
-            "UPDATE use_lines SET cost_category = 'hard' WHERE "
-            "label = 'Construction'"
-            " OR label = 'Hard Construction'"
-        )
+    op.execute(
+        "UPDATE use_lines SET cost_category = 'hard' WHERE "
+        "label = 'Construction'"
+        " OR label = 'Hard Construction'"
     )
 
     # ── Soft (explicit, in case server_default didn't backfill nulls) ─────────
-    conn.execute(
-        sa.text(
-            "UPDATE use_lines SET cost_category = 'soft' "
-            "WHERE cost_category IS NULL"
-        )
+    op.execute(
+        "UPDATE use_lines SET cost_category = 'soft' "
+        "WHERE cost_category IS NULL"
     )
 
 
