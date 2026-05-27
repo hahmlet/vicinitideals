@@ -979,9 +979,8 @@ def _base_ctx(
     if user:
         parts = user.name.split()
         initials = (parts[0][0] + parts[-1][0]).upper() if len(parts) >= 2 else user.name[:2].upper()
-        user_name_norm = (user.name or "").strip().lower()
         user_email_norm = (user.email or "").strip().lower()
-        show_billing_settings_menu = user_name_norm in {"stephen ketch", "stephen ketch+"} or user_email_norm == "stephenjketch@gmail.com"
+        show_billing_settings_menu = user_email_norm == "stephenjketch@gmail.com"
     return {
         "user_name": user.name if user else "Guest",
         "user_initials": initials,
