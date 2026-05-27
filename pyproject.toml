@@ -42,6 +42,8 @@ api = [
     "python-multipart>=0.0.9",
     "bcrypt>=4.0",
     "itsdangerous>=2.1",
+    # Sensitivity engine returns pandas.DataFrame tables.
+    "pandas>=2.2",
 ]
 worker = [
     "celery[redis]>=5.3",
