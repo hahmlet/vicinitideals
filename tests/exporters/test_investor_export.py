@@ -143,12 +143,10 @@ _NON_METRIC_PREFIXES = (
     "s_tier_",         # Block D waterfall hurdle inputs (per-tier irr_hurdle/lp_split/gp_split)
     "s_rev_",          # Assumptions Block F revenue inputs (per IncomeStream)
     "s_opex_",         # Assumptions Block G OpEx inputs (per OperatingExpenseLine)
-    # Phase 5f: annual LP/GP CF series cells — intermediate IRR inputs, not
-    # standalone metrics. The metrics are s_lp_irr / s_gp_irr which reference
-    # the range r_returns_lp_cf / r_returns_gp_cf built from these rows.
-    "s_returns_lp_",   # s_returns_lp_y0, s_returns_lp_y1, … (annual LP CF)
-    "s_returns_gp_",   # s_returns_gp_y0, s_returns_gp_y1, … (annual GP CF)
-    "r_returns_",      # r_returns_lp_cf / r_returns_gp_cf (IRR range names)
+    # Phase 5f+5g: LP/GP CF + date series cells — intermediate XIRR inputs,
+    # not standalone metrics. Metrics are s_lp_irr / s_gp_irr (XIRR formulas).
+    "s_returns_",      # s_returns_lp_y*, s_returns_gp_y*, s_returns_date_y*
+    "r_returns_",      # r_returns_lp_cf / r_returns_gp_cf / r_returns_cf_dates
 )
 
 # Capital-stack row suffixes — module names now slugified

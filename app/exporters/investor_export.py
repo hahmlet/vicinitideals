@@ -19,7 +19,7 @@ re-imported.
 from __future__ import annotations
 
 import re
-from datetime import datetime
+from datetime import date as _date, datetime
 from decimal import Decimal
 from io import BytesIO
 from typing import Any
@@ -3423,10 +3423,10 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
         name="s_gp_distributions_total", registry=registry, fmt=ACCOUNTING,
     ); cur_row += 1
 
-    # ── Phase 5e+5f: LP / GP Returns Summary ────────────────────────────────
+    # ── Phase 5e+5f+5g: LP / GP Returns Summary ─────────────────────────────
     # s_lp_em / s_gp_em: live formulas = distributions / committed equity.
-    # s_lp_irr / s_gp_irr: live IRR() formulas over r_returns_lp_cf /
-    #   r_returns_gp_cf annual CF rows (emitted below as Phase 5f rows).
+    # s_lp_irr / s_gp_irr: live XIRR() formulas over r_returns_lp_cf /
+    #   r_returns_gp_cf CF rows + shared r_returns_cf_dates date series.
     # s_lp_coc_y1 / s_gp_coc_y1: live CoC formula = Y1 CF / committed equity.
     cur_row += 1
     section_label(ws, cur_row, "LP / GP Returns Summary", span_cols=2)
@@ -3452,11 +3452,15 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
         name="s_committed_gp_equity", registry=registry, fmt=ACCOUNTING,
     ); cur_row += 1
 
-    # ── Phase 5f: LP / GP Cash Flow Series ──────────────────────────────────
+    # ── Phase 5f+5g: LP / GP Cash Flow Series + Date Series ─────────────────
     # Annual LP/GP CF rows: Y0 = initial equity outflow (negative), Y1..YN =
     # waterfall distributions bucketed by year.  year = (period // 12) + 1 so
     # Y0 is purely the investment; Y1 is the first full-year distribution.
-    # Named ranges r_returns_lp_cf / r_returns_gp_cf are the IRR() arguments.
+    # Date anchor = 2020 (waterfall.DEFAULT_IRR_BASE_YEAR) — XIRR only needs
+    # date *differences*, not absolute dates; equal-annual spacing here is
+    # equivalent to IRR() but lets a future patch substitute real deal dates.
+    # r_returns_lp_cf / r_returns_gp_cf = XIRR values argument.
+    # r_returns_cf_dates = XIRR dates argument (shared LP + GP).
     _lp_module_ids = {m.id for m in capital_modules if _is_lp_funder(m)}
     _gp_module_ids = {m.id for m in capital_modules if _is_gp_funder(m)}
     _lp_by_year: dict[int, Decimal] = {}
@@ -3524,21 +3528,38 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
         _gp_cf_start_row, cur_row - 1, col=2,
     )
 
-    # ── IRR (live formula) + CoC Year 1 (live formula) ──────────────────────
+    # Date series — shared by LP and GP XIRR calls.
+    # Anchor: 2020 = waterfall.DEFAULT_IRR_BASE_YEAR; annual spacing.
+    _cf_dates_start_row = cur_row
+    for _yi in range(_n_cf_years + 1):
+        _d = _date(2020 + _yi, 1, 1)
+        _dc = ws.cell(row=cur_row, column=2, value=_d)
+        _dc.number_format = "YYYY-MM-DD"
+        _dc.font = FONT_VALUE
+        _dc.alignment = ALIGN_RIGHT
+        ws.cell(row=cur_row, column=1, value=f"CF Date Y{_yi}").font = FONT_LABEL
+        registry.register(f"s_returns_date_y{_yi}", ws.title, cur_row, 2)
+        cur_row += 1
+    registry.register_range(
+        "r_returns_cf_dates", ws.title,
+        _cf_dates_start_row, cur_row - 1, col=2,
+    )
+
+    # ── XIRR + CoC Year 1 (live formulas) ───────────────────────────────────
     cur_row += 1
-    # Engine fallbacks from party_irr_pct — used when IRR() can't converge
+    # Engine fallbacks from party_irr_pct — used when XIRR() can't converge
     # (e.g. all-zero or all-negative CFs in an unconfigured scenario).
     _lp_irr, _gp_irr = _lp_gp_irr_from_rollup(rollup, capital_modules)
     _lp_irr_fb = float(_lp_irr) if _lp_irr is not None else 0.0
     _gp_irr_fb = float(_gp_irr) if _gp_irr is not None else 0.0
     kv_row(
         ws, cur_row, "LP IRR",
-        f"=IFERROR(IRR(r_returns_lp_cf),{_lp_irr_fb})",
+        f"=IFERROR(XIRR(r_returns_lp_cf,r_returns_cf_dates),{_lp_irr_fb})",
         name="s_lp_irr", registry=registry, fmt=PCT,
     ); cur_row += 1
     kv_row(
         ws, cur_row, "GP IRR",
-        f"=IFERROR(IRR(r_returns_gp_cf),{_gp_irr_fb})",
+        f"=IFERROR(XIRR(r_returns_gp_cf,r_returns_cf_dates),{_gp_irr_fb})",
         name="s_gp_irr", registry=registry, fmt=PCT,
     ); cur_row += 1
 

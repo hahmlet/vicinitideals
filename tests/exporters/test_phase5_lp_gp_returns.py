@@ -1,4 +1,4 @@
-"""Phase 5d+5e+5f: LP/GP Distribution Totals + Returns Summary + CF Series.
+"""Phase 5d+5e+5f+5g: LP/GP Distribution Totals + Returns Summary + CF/Date Series.
 
 Contract:
   Phase 5d —
@@ -26,13 +26,18 @@ Contract:
        s_returns_lp_y1..yN = waterfall distributions bucketed by year
        r_returns_lp_cf = range covering all LP CF cells (Y0..YN)
        (mirror for GP: s_returns_gp_*, r_returns_gp_cf)
-  6. s_lp_irr / s_gp_irr converted to live formula:
-       =IFERROR(IRR(r_returns_lp_cf), {engine_fallback})
-  7. s_lp_coc_y1 / s_gp_coc_y1 added as live formula:
+  6. s_lp_coc_y1 / s_gp_coc_y1 added as live formula:
        =IFERROR(s_returns_lp_y1/s_committed_lp_equity, {fallback})
-  8. For unconfigured scenarios (no WaterfallTier / no LP-GP equity modules),
-     all named cells are still registered (formula or em-dash) so cross-sheet
-     refs resolve without #NAME?.
+
+  Phase 5g —
+  7. Shared date series emitted alongside CF rows:
+       s_returns_date_y0..yN = date(2020+yi, 1, 1) — annual, anchored to
+       waterfall.DEFAULT_IRR_BASE_YEAR so date differences match engine XIRR.
+       r_returns_cf_dates = range covering all date cells (shared LP + GP).
+  8. s_lp_irr / s_gp_irr use XIRR instead of IRR:
+       =IFERROR(XIRR(r_returns_lp_cf, r_returns_cf_dates), {engine_fallback})
+  9. For unconfigured scenarios (no WaterfallTier / no LP-GP equity modules),
+     all named cells still registered (formula or em-dash) — no #NAME? errors.
 """
 from __future__ import annotations
 
@@ -366,6 +371,9 @@ async def test_returns_summary_cells_registered_for_no_equity_scenario(
         "s_returns_gp_y0", "s_returns_gp_y1",
         "r_returns_lp_cf", "r_returns_gp_cf",
         "s_lp_coc_y1", "s_gp_coc_y1",
+        # Phase 5g date series — must be registered even with no equity
+        "s_returns_date_y0", "s_returns_date_y1",
+        "r_returns_cf_dates",
     ):
         assert cell_name in names, f"{cell_name} missing in unconfigured scenario"
 
@@ -427,30 +435,30 @@ async def test_lp_cf_y0_is_negative_committed_equity(session: AsyncSession) -> N
     )
 
 
-async def test_lp_irr_is_irr_formula(session: AsyncSession) -> None:
-    """s_lp_irr must be an IFERROR(IRR(r_returns_lp_cf),…) live formula."""
+async def test_lp_irr_is_xirr_formula(session: AsyncSession) -> None:
+    """s_lp_irr must be an IFERROR(XIRR(r_returns_lp_cf,r_returns_cf_dates),…) live formula."""
     scenario = await _seed_with_lp_gp_modules(session)
     blob = await export_investor_workbook(scenario.id, session)
     wb = load_workbook(BytesIO(blob), data_only=False)
     val = _get_named_value(wb, "s_lp_irr")
     assert isinstance(val, str), f"s_lp_irr must be a formula string; got {val!r}"
-    assert "IRR(r_returns_lp_cf)" in val, (
-        f"s_lp_irr must contain IRR(r_returns_lp_cf); got {val!r}"
+    assert "XIRR(r_returns_lp_cf,r_returns_cf_dates)" in val, (
+        f"s_lp_irr must contain XIRR(r_returns_lp_cf,r_returns_cf_dates); got {val!r}"
     )
     assert val.startswith("=IFERROR("), (
         f"s_lp_irr must start with =IFERROR(; got {val!r}"
     )
 
 
-async def test_gp_irr_is_irr_formula(session: AsyncSession) -> None:
-    """s_gp_irr must be an IFERROR(IRR(r_returns_gp_cf),…) live formula."""
+async def test_gp_irr_is_xirr_formula(session: AsyncSession) -> None:
+    """s_gp_irr must be an IFERROR(XIRR(r_returns_gp_cf,r_returns_cf_dates),…) live formula."""
     scenario = await _seed_with_lp_gp_modules(session)
     blob = await export_investor_workbook(scenario.id, session)
     wb = load_workbook(BytesIO(blob), data_only=False)
     val = _get_named_value(wb, "s_gp_irr")
     assert isinstance(val, str), f"s_gp_irr must be a formula string; got {val!r}"
-    assert "IRR(r_returns_gp_cf)" in val, (
-        f"s_gp_irr must contain IRR(r_returns_gp_cf); got {val!r}"
+    assert "XIRR(r_returns_gp_cf,r_returns_cf_dates)" in val, (
+        f"s_gp_irr must contain XIRR(r_returns_gp_cf,r_returns_cf_dates); got {val!r}"
     )
     assert val.startswith("=IFERROR("), (
         f"s_gp_irr must start with =IFERROR(; got {val!r}"
@@ -504,4 +512,61 @@ async def test_gp_coc_y1_is_iferror_formula(session: AsyncSession) -> None:
     )
     assert "s_committed_gp_equity" in val, (
         f"s_gp_coc_y1 must reference s_committed_gp_equity; got {val!r}"
+    )
+
+
+# ---------------------------------------------------------------------------
+# Phase 5g: Date Series for XIRR
+# ---------------------------------------------------------------------------
+
+async def test_date_series_y0_and_y1_cells_registered(session: AsyncSession) -> None:
+    """s_returns_date_y0 and s_returns_date_y1 exist on Investor Returns."""
+    scenario = await _seed_with_lp_gp_modules(session)
+    blob = await export_investor_workbook(scenario.id, session)
+    wb = load_workbook(BytesIO(blob), data_only=False)
+    names = _defined_names(wb)
+    assert "s_returns_date_y0" in names, "s_returns_date_y0 not registered"
+    assert "s_returns_date_y1" in names, "s_returns_date_y1 not registered"
+
+
+async def test_cf_date_range_registered(session: AsyncSession) -> None:
+    """r_returns_cf_dates range name exists (shared by LP + GP XIRR calls)."""
+    scenario = await _seed_with_lp_gp_modules(session)
+    blob = await export_investor_workbook(scenario.id, session)
+    wb = load_workbook(BytesIO(blob), data_only=False)
+    assert "r_returns_cf_dates" in _defined_names(wb), "r_returns_cf_dates range not registered"
+
+
+async def test_date_series_y0_is_date_value(session: AsyncSession) -> None:
+    """s_returns_date_y0 must be a date (or datetime) cell, anchored at 2020-01-01."""
+    from datetime import date, datetime
+
+    scenario = await _seed_with_lp_gp_modules(session)
+    blob = await export_investor_workbook(scenario.id, session)
+    wb = load_workbook(BytesIO(blob), data_only=True)
+    val = _get_named_value(wb, "s_returns_date_y0")
+    # openpyxl returns date or datetime depending on Excel serial encoding
+    assert isinstance(val, (date, datetime)), (
+        f"s_returns_date_y0 must be a date value; got {type(val).__name__} {val!r}"
+    )
+    year = val.year if isinstance(val, (date, datetime)) else None
+    assert year == 2020, (
+        f"s_returns_date_y0 must anchor at year 2020; got year={year}"
+    )
+
+
+async def test_date_series_y1_is_one_year_after_y0(session: AsyncSession) -> None:
+    """s_returns_date_y1 must be exactly one year after s_returns_date_y0."""
+    from datetime import date, datetime
+
+    scenario = await _seed_with_lp_gp_modules(session)
+    blob = await export_investor_workbook(scenario.id, session)
+    wb = load_workbook(BytesIO(blob), data_only=True)
+    y0 = _get_named_value(wb, "s_returns_date_y0")
+    y1 = _get_named_value(wb, "s_returns_date_y1")
+    assert isinstance(y0, (date, datetime)) and isinstance(y1, (date, datetime)), (
+        f"Date cells must be date values; y0={y0!r}, y1={y1!r}"
+    )
+    assert y1.year == y0.year + 1, (
+        f"s_returns_date_y1 must be 1 year after y0; got y0.year={y0.year}, y1.year={y1.year}"
     )
