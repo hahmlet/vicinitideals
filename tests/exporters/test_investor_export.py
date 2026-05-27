@@ -143,6 +143,12 @@ _NON_METRIC_PREFIXES = (
     "s_tier_",         # Block D waterfall hurdle inputs (per-tier irr_hurdle/lp_split/gp_split)
     "s_rev_",          # Assumptions Block F revenue inputs (per IncomeStream)
     "s_opex_",         # Assumptions Block G OpEx inputs (per OperatingExpenseLine)
+    # Phase 5f: annual LP/GP CF series cells — intermediate IRR inputs, not
+    # standalone metrics. The metrics are s_lp_irr / s_gp_irr which reference
+    # the range r_returns_lp_cf / r_returns_gp_cf built from these rows.
+    "s_returns_lp_",   # s_returns_lp_y0, s_returns_lp_y1, … (annual LP CF)
+    "s_returns_gp_",   # s_returns_gp_y0, s_returns_gp_y1, … (annual GP CF)
+    "r_returns_",      # r_returns_lp_cf / r_returns_gp_cf (IRR range names)
 )
 
 # Capital-stack row suffixes — module names now slugified
@@ -455,6 +461,9 @@ _NAMED_RANGE_ALIASES: tuple[tuple[re.Pattern[str], str], ...] = (
     # Phase 5e: LP / GP per-party equity multiples — short named range
     # (s_lp_em / s_gp_em); trace to the same "Equity Multiple" doc entry.
     (re.compile(r"^s_(lp|gp)_em$"), "Equity Multiple"),
+    # Phase 5f: LP / GP CoC Year 1 — party-scoped variant of the combined
+    # Cash-on-Cash Year 1 metric.
+    (re.compile(r"^s_(lp|gp)_coc_y1$"), "Cash-on-Cash Year 1"),
     # Spread Stack (added Phase Spread Stack / d6d812c + 42cb8d4)
     # s_rfr_pct is the Risk-Free Rate input; named differently from the
     # doc entry so an explicit alias is required.

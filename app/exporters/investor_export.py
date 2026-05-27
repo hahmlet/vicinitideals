@@ -3423,16 +3423,16 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
         name="s_gp_distributions_total", registry=registry, fmt=ACCOUNTING,
     ); cur_row += 1
 
-    # ── Phase 5e: LP / GP Returns Summary ─────────────────────────────────────
+    # ── Phase 5e+5f: LP / GP Returns Summary ────────────────────────────────
     # s_lp_em / s_gp_em: live formulas = distributions / committed equity.
-    # s_lp_irr / s_gp_irr: engine-computed scalars (party_irr_pct from waterfall
-    # rollup). IRR formula requires LP/GP CF rows not yet emitted to the
-    # workbook; retained as named scalars so downstream Cross-sheet refs resolve.
+    # s_lp_irr / s_gp_irr: live IRR() formulas over r_returns_lp_cf /
+    #   r_returns_gp_cf annual CF rows (emitted below as Phase 5f rows).
+    # s_lp_coc_y1 / s_gp_coc_y1: live CoC formula = Y1 CF / committed equity.
     cur_row += 1
     section_label(ws, cur_row, "LP / GP Returns Summary", span_cols=2)
     cur_row += 1
 
-    # Committed equity per funder class (scalar named cells; EM formula divides by these).
+    # Committed equity per funder class (scalar named cells; EM/CoC/IRR formulas use these).
     _committed_lp = sum(
         (junction_principal.get(m.id) or _coerce_decimal((m.source or {}).get("amount") or 0))
         for m in capital_modules if _is_lp_funder(m)
@@ -3452,18 +3452,123 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
         name="s_committed_gp_equity", registry=registry, fmt=ACCOUNTING,
     ); cur_row += 1
 
-    # LP / GP IRR — engine-computed scalars from waterfall party_irr_pct.
+    # ── Phase 5f: LP / GP Cash Flow Series ──────────────────────────────────
+    # Annual LP/GP CF rows: Y0 = initial equity outflow (negative), Y1..YN =
+    # waterfall distributions bucketed by year.  year = (period // 12) + 1 so
+    # Y0 is purely the investment; Y1 is the first full-year distribution.
+    # Named ranges r_returns_lp_cf / r_returns_gp_cf are the IRR() arguments.
+    _lp_module_ids = {m.id for m in capital_modules if _is_lp_funder(m)}
+    _gp_module_ids = {m.id for m in capital_modules if _is_gp_funder(m)}
+    _lp_by_year: dict[int, Decimal] = {}
+    _gp_by_year: dict[int, Decimal] = {}
+    for _wr in rollup:
+        _mid_str = _wr.get("capital_module_id")
+        if not _mid_str:
+            continue
+        try:
+            _mid = UUID(_mid_str)
+        except (ValueError, TypeError):
+            continue
+        _yr = int(_wr.get("period") or 0) // 12 + 1
+        _cd = _coerce_decimal(_wr.get("cash_distributed") or 0)
+        if _mid in _lp_module_ids:
+            _lp_by_year[_yr] = _lp_by_year.get(_yr, Decimal(0)) + _cd
+        elif _mid in _gp_module_ids:
+            _gp_by_year[_yr] = _gp_by_year.get(_yr, Decimal(0)) + _cd
+
+    _max_dist_year = max(
+        max(_lp_by_year.keys(), default=1),
+        max(_gp_by_year.keys(), default=1),
+    )
+    _n_cf_years = max(_max_dist_year, 1)  # at least Y0 + Y1
+
+    cur_row += 1
+    section_label(ws, cur_row, "LP / GP Cash Flow Series", span_cols=2)
+    cur_row += 1
+
+    # LP CF rows: Y0 = −committed_lp, Y1..YN = annual distributions
+    _lp_cf_start_row = cur_row
+    for _yi in range(_n_cf_years + 1):
+        _val = (
+            float(-_committed_lp) if _yi == 0
+            else float(_lp_by_year.get(_yi, Decimal(0)))
+        )
+        _cf_cell = ws.cell(row=cur_row, column=2, value=_val)
+        _cf_cell.number_format = ACCOUNTING
+        _cf_cell.font = FONT_VALUE
+        _cf_cell.alignment = ALIGN_RIGHT
+        ws.cell(row=cur_row, column=1, value=f"LP CF Y{_yi}").font = FONT_LABEL
+        registry.register(f"s_returns_lp_y{_yi}", ws.title, cur_row, 2)
+        cur_row += 1
+    registry.register_range(
+        "r_returns_lp_cf", ws.title,
+        _lp_cf_start_row, cur_row - 1, col=2,
+    )
+
+    # GP CF rows: Y0 = −committed_gp, Y1..YN = annual distributions
+    _gp_cf_start_row = cur_row
+    for _yi in range(_n_cf_years + 1):
+        _val = (
+            float(-_committed_gp) if _yi == 0
+            else float(_gp_by_year.get(_yi, Decimal(0)))
+        )
+        _cf_cell = ws.cell(row=cur_row, column=2, value=_val)
+        _cf_cell.number_format = ACCOUNTING
+        _cf_cell.font = FONT_VALUE
+        _cf_cell.alignment = ALIGN_RIGHT
+        ws.cell(row=cur_row, column=1, value=f"GP CF Y{_yi}").font = FONT_LABEL
+        registry.register(f"s_returns_gp_y{_yi}", ws.title, cur_row, 2)
+        cur_row += 1
+    registry.register_range(
+        "r_returns_gp_cf", ws.title,
+        _gp_cf_start_row, cur_row - 1, col=2,
+    )
+
+    # ── IRR (live formula) + CoC Year 1 (live formula) ──────────────────────
+    cur_row += 1
+    # Engine fallbacks from party_irr_pct — used when IRR() can't converge
+    # (e.g. all-zero or all-negative CFs in an unconfigured scenario).
     _lp_irr, _gp_irr = _lp_gp_irr_from_rollup(rollup, capital_modules)
-    _kv_row_optional(
+    _lp_irr_fb = float(_lp_irr) if _lp_irr is not None else 0.0
+    _gp_irr_fb = float(_gp_irr) if _gp_irr is not None else 0.0
+    kv_row(
         ws, cur_row, "LP IRR",
-        _lp_irr,
+        f"=IFERROR(IRR(r_returns_lp_cf),{_lp_irr_fb})",
         name="s_lp_irr", registry=registry, fmt=PCT,
     ); cur_row += 1
-    _kv_row_optional(
+    kv_row(
         ws, cur_row, "GP IRR",
-        _gp_irr,
+        f"=IFERROR(IRR(r_returns_gp_cf),{_gp_irr_fb})",
         name="s_gp_irr", registry=registry, fmt=PCT,
     ); cur_row += 1
+
+    # LP / GP CoC Year 1 — Y1 distributions / committed equity.
+    _lp_coc_y1_fb = (
+        round(float(_lp_by_year.get(1, Decimal(0)) / _committed_lp), 6)
+        if _committed_lp > 0 else 0.0
+    )
+    _gp_coc_y1_fb = (
+        round(float(_gp_by_year.get(1, Decimal(0)) / _committed_gp), 6)
+        if _committed_gp > 0 else 0.0
+    )
+    if _committed_lp > 0:
+        kv_row(
+            ws, cur_row, "LP CoC Year 1",
+            f"=IFERROR(s_returns_lp_y1/s_committed_lp_equity,{_lp_coc_y1_fb})",
+            name="s_lp_coc_y1", registry=registry, fmt=PCT,
+        )
+    else:
+        kv_row(ws, cur_row, "LP CoC Year 1", None, name="s_lp_coc_y1", registry=registry, fmt=PCT)
+    cur_row += 1
+    if _committed_gp > 0:
+        kv_row(
+            ws, cur_row, "GP CoC Year 1",
+            f"=IFERROR(s_returns_gp_y1/s_committed_gp_equity,{_gp_coc_y1_fb})",
+            name="s_gp_coc_y1", registry=registry, fmt=PCT,
+        )
+    else:
+        kv_row(ws, cur_row, "GP CoC Year 1", None, name="s_gp_coc_y1", registry=registry, fmt=PCT)
+    cur_row += 1
 
     # LP / GP Equity Multiple — live formulas using distribution totals.
     if _committed_lp > 0:

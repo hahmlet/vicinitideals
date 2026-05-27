@@ -1928,32 +1928,38 @@ Whatever remains after all earlier tiers — split by tier ratios. This is "the 
 
 ### LP IRR [investor, app]
 
-**Definition.** Internal rate of return on the LP cash flow stream, computed
-via XIRR over actual period dates.
+**Definition.** Internal rate of return on the LP cash flow stream.
 
 **Calculation.** Solve for `r` such that `Σ CF_LP_i / (1 + r)^((t_i − t_0) / 365) = 0`,
 where each `CF_LP_i` is the LP's net of contributions and distributions in
 period i and `t_i` is the date of that period.
 
 **Engine source.** `_compute_xirr_fraction` in `app/engines/waterfall.py`,
-materialized to `OperationalOutputs.lp_irr` (or scenario-aggregated via
-`rollup_irr`).
+materialized to `OperationalOutputs.lp_irr`; used as fallback in the Excel formula.
 
-**Notes / edge cases.** XIRR (not IRR) because periods are monthly but
-distributions can land on any period. The base year used for the
-period→date conversion is `2020` (`DEFAULT_IRR_BASE_YEAR` — only the date
-*differences* matter to the solver).
+**Excel export.** Named cell `s_lp_irr` on the Investor Returns sheet.
+Formula-driven (Phase 5f): `=IFERROR(IRR(r_returns_lp_cf), {engine_fallback})`.
+`r_returns_lp_cf` is the annual LP cash flow series: Y0 = −committed LP equity,
+Y1..YN = waterfall distributions bucketed by year (`period // 12 + 1`).
+
+**Notes / edge cases.** Excel `IRR()` assumes equal annual periods; engine uses
+XIRR over monthly periods. For typical hold periods (3–10 years) the annual
+approximation is within 10–50 bp. When the CF series has no sign change (e.g.
+no equity configured), `IRR()` returns `#NUM!` and IFERROR substitutes the
+engine scalar.
 
 ### GP IRR [investor, app]
 
-**Definition.** IRR on the GP cash flow stream — same mechanic as LP IRR, GP
-side.
+**Definition.** IRR on the GP cash flow stream — same mechanic as LP IRR, GP side.
 
 **Calculation.** XIRR over GP capital calls and distributions (including
 promote tier proceeds).
 
 **Engine source.** `_compute_xirr_fraction` in `app/engines/waterfall.py`,
-materialized to `OperationalOutputs.gp_irr`.
+materialized to `OperationalOutputs.gp_irr`; used as fallback in the Excel formula.
+
+**Excel export.** Named cell `s_gp_irr` on the Investor Returns sheet.
+Formula-driven (Phase 5f): `=IFERROR(IRR(r_returns_gp_cf), {engine_fallback})`.
 
 **Notes / edge cases.** GP IRR usually exceeds LP IRR thanks to the promote;
 the spread quantifies the deal's promote economics.
@@ -2057,6 +2063,12 @@ cash_on_cash_year_1_pct = (year_one_distributions / total_contributed) × 100
 **Plain English.** "If I put in $1M, how much cash did I receive in year 1 as a percentage of what I put in?" — a standard first-year yield metric that's easy to explain to investors.
 
 **Why "periods 0–11" and not "the year after stabilization"?** By convention, "year 1" means the first 12 months from deal close. If the deal is still in construction during year 1, cash-on-cash will be 0% or negative. That is the correct, honest number — the user should interpret it in context.
+
+**LP / GP party-scoped variants (Phase 5f).** Named cells `s_lp_coc_y1` and `s_gp_coc_y1` on the Investor Returns sheet compute CoC for each party separately:
+- `s_lp_coc_y1 = =IFERROR(s_returns_lp_y1 / s_committed_lp_equity, {fallback})`
+- `s_gp_coc_y1 = =IFERROR(s_returns_gp_y1 / s_committed_gp_equity, {fallback})`
+
+`s_returns_lp_y1` is the LP-side Y1 cash flow from the LP CF series row (sum of waterfall distributions to LP modules in periods 0–11). These cells alias to the "Cash-on-Cash Year 1" doc entry.
 
 #### Debt yield (already tagged above)
 

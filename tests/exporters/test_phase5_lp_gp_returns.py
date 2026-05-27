@@ -1,4 +1,4 @@
-"""Phase 5d+5e: LP/GP Distribution Totals + Returns Summary named cells.
+"""Phase 5d+5e+5f: LP/GP Distribution Totals + Returns Summary + CF Series.
 
 Contract:
   Phase 5d —
@@ -15,15 +15,24 @@ Contract:
   3. Investor Returns sheet writes:
        s_committed_lp_equity   — scalar: sum of LP module committed principals
        s_committed_gp_equity   — scalar: sum of GP module committed principals
-       s_lp_irr                — scalar: LP IRR from waterfall party_irr_pct
-       s_gp_irr                — scalar: GP IRR from waterfall party_irr_pct
        s_lp_em                 — formula: =IFERROR(s_lp_distributions_total/s_committed_lp_equity,…)
        s_gp_em                 — formula: =IFERROR(s_gp_distributions_total/s_committed_gp_equity,…)
   4. LP/GP EM formulas reference s_lp_distributions_total and s_committed_lp_equity,
      so editing split inputs + F9 reflows EM cells.
-  5. For unconfigured scenarios (no WaterfallTier / no LP-GP equity modules),
-     all named cells are still registered (em-dash or 0) so cross-sheet refs
-     resolve without #NAME?.
+
+  Phase 5f —
+  5. Investor Returns sheet emits annual LP/GP cash flow rows:
+       s_returns_lp_y0 = −committed_lp (initial investment, negative)
+       s_returns_lp_y1..yN = waterfall distributions bucketed by year
+       r_returns_lp_cf = range covering all LP CF cells (Y0..YN)
+       (mirror for GP: s_returns_gp_*, r_returns_gp_cf)
+  6. s_lp_irr / s_gp_irr converted to live formula:
+       =IFERROR(IRR(r_returns_lp_cf), {engine_fallback})
+  7. s_lp_coc_y1 / s_gp_coc_y1 added as live formula:
+       =IFERROR(s_returns_lp_y1/s_committed_lp_equity, {fallback})
+  8. For unconfigured scenarios (no WaterfallTier / no LP-GP equity modules),
+     all named cells are still registered (formula or em-dash) so cross-sheet
+     refs resolve without #NAME?.
 """
 from __future__ import annotations
 
@@ -343,7 +352,7 @@ async def test_committed_gp_equity_registered(session: AsyncSession) -> None:
 async def test_returns_summary_cells_registered_for_no_equity_scenario(
     session: AsyncSession,
 ) -> None:
-    """Unconfigured scenario: all LP/GP returns cells still registered (em-dash or 0)."""
+    """Unconfigured scenario: all LP/GP returns cells still registered (formula or em-dash)."""
     scenario = await _seed_no_equity(session)
     blob = await export_investor_workbook(scenario.id, session)
     wb = load_workbook(BytesIO(blob), data_only=False)
@@ -352,5 +361,147 @@ async def test_returns_summary_cells_registered_for_no_equity_scenario(
         "s_committed_lp_equity", "s_committed_gp_equity",
         "s_lp_irr", "s_gp_irr",
         "s_lp_em", "s_gp_em",
+        # Phase 5f cells — must be registered even with no equity
+        "s_returns_lp_y0", "s_returns_lp_y1",
+        "s_returns_gp_y0", "s_returns_gp_y1",
+        "r_returns_lp_cf", "r_returns_gp_cf",
+        "s_lp_coc_y1", "s_gp_coc_y1",
     ):
         assert cell_name in names, f"{cell_name} missing in unconfigured scenario"
+
+
+# ---------------------------------------------------------------------------
+# Phase 5f: Cash Flow Series + IRR formula + CoC Year 1
+# ---------------------------------------------------------------------------
+
+async def test_lp_cf_y0_and_y1_cells_registered(session: AsyncSession) -> None:
+    """s_returns_lp_y0 and s_returns_lp_y1 exist on Investor Returns."""
+    scenario = await _seed_with_lp_gp_modules(session)
+    blob = await export_investor_workbook(scenario.id, session)
+    wb = load_workbook(BytesIO(blob), data_only=False)
+    names = _defined_names(wb)
+    assert "s_returns_lp_y0" in names, "s_returns_lp_y0 not registered"
+    assert "s_returns_lp_y1" in names, "s_returns_lp_y1 not registered"
+
+
+async def test_gp_cf_y0_and_y1_cells_registered(session: AsyncSession) -> None:
+    """s_returns_gp_y0 and s_returns_gp_y1 exist on Investor Returns."""
+    scenario = await _seed_with_lp_gp_modules(session)
+    blob = await export_investor_workbook(scenario.id, session)
+    wb = load_workbook(BytesIO(blob), data_only=False)
+    names = _defined_names(wb)
+    assert "s_returns_gp_y0" in names, "s_returns_gp_y0 not registered"
+    assert "s_returns_gp_y1" in names, "s_returns_gp_y1 not registered"
+
+
+async def test_lp_cf_range_registered(session: AsyncSession) -> None:
+    """r_returns_lp_cf range name exists on Investor Returns."""
+    scenario = await _seed_with_lp_gp_modules(session)
+    blob = await export_investor_workbook(scenario.id, session)
+    wb = load_workbook(BytesIO(blob), data_only=False)
+    assert "r_returns_lp_cf" in _defined_names(wb), "r_returns_lp_cf range not registered"
+
+
+async def test_gp_cf_range_registered(session: AsyncSession) -> None:
+    """r_returns_gp_cf range name exists on Investor Returns."""
+    scenario = await _seed_with_lp_gp_modules(session)
+    blob = await export_investor_workbook(scenario.id, session)
+    wb = load_workbook(BytesIO(blob), data_only=False)
+    assert "r_returns_gp_cf" in _defined_names(wb), "r_returns_gp_cf range not registered"
+
+
+async def test_lp_cf_y0_is_negative_committed_equity(session: AsyncSession) -> None:
+    """s_returns_lp_y0 = −committed LP equity (initial investment, negative)."""
+    scenario = await _seed_with_lp_gp_modules(session)
+    blob = await export_investor_workbook(scenario.id, session)
+    wb = load_workbook(BytesIO(blob), data_only=False)
+    y0 = _get_named_value(wb, "s_returns_lp_y0")
+    committed = _get_named_value(wb, "s_committed_lp_equity")
+    assert isinstance(y0, (int, float)), f"s_returns_lp_y0 must be numeric; got {y0!r}"
+    assert isinstance(committed, (int, float)), (
+        f"s_committed_lp_equity must be numeric; got {committed!r}"
+    )
+    assert y0 < 0, f"LP CF Y0 must be negative (investment outflow); got {y0}"
+    assert abs(y0) == pytest.approx(committed, rel=1e-4), (
+        f"LP CF Y0 should equal −committed_lp_equity; Y0={y0}, committed={committed}"
+    )
+
+
+async def test_lp_irr_is_irr_formula(session: AsyncSession) -> None:
+    """s_lp_irr must be an IFERROR(IRR(r_returns_lp_cf),…) live formula."""
+    scenario = await _seed_with_lp_gp_modules(session)
+    blob = await export_investor_workbook(scenario.id, session)
+    wb = load_workbook(BytesIO(blob), data_only=False)
+    val = _get_named_value(wb, "s_lp_irr")
+    assert isinstance(val, str), f"s_lp_irr must be a formula string; got {val!r}"
+    assert "IRR(r_returns_lp_cf)" in val, (
+        f"s_lp_irr must contain IRR(r_returns_lp_cf); got {val!r}"
+    )
+    assert val.startswith("=IFERROR("), (
+        f"s_lp_irr must start with =IFERROR(; got {val!r}"
+    )
+
+
+async def test_gp_irr_is_irr_formula(session: AsyncSession) -> None:
+    """s_gp_irr must be an IFERROR(IRR(r_returns_gp_cf),…) live formula."""
+    scenario = await _seed_with_lp_gp_modules(session)
+    blob = await export_investor_workbook(scenario.id, session)
+    wb = load_workbook(BytesIO(blob), data_only=False)
+    val = _get_named_value(wb, "s_gp_irr")
+    assert isinstance(val, str), f"s_gp_irr must be a formula string; got {val!r}"
+    assert "IRR(r_returns_gp_cf)" in val, (
+        f"s_gp_irr must contain IRR(r_returns_gp_cf); got {val!r}"
+    )
+    assert val.startswith("=IFERROR("), (
+        f"s_gp_irr must start with =IFERROR(; got {val!r}"
+    )
+
+
+async def test_lp_coc_y1_registered(session: AsyncSession) -> None:
+    """s_lp_coc_y1 named cell exists on Investor Returns."""
+    scenario = await _seed_with_lp_gp_modules(session)
+    blob = await export_investor_workbook(scenario.id, session)
+    wb = load_workbook(BytesIO(blob), data_only=False)
+    assert "s_lp_coc_y1" in _defined_names(wb), "s_lp_coc_y1 not registered"
+
+
+async def test_gp_coc_y1_registered(session: AsyncSession) -> None:
+    """s_gp_coc_y1 named cell exists on Investor Returns."""
+    scenario = await _seed_with_lp_gp_modules(session)
+    blob = await export_investor_workbook(scenario.id, session)
+    wb = load_workbook(BytesIO(blob), data_only=False)
+    assert "s_gp_coc_y1" in _defined_names(wb), "s_gp_coc_y1 not registered"
+
+
+async def test_lp_coc_y1_is_iferror_formula(session: AsyncSession) -> None:
+    """s_lp_coc_y1 must be an IFERROR formula referencing s_returns_lp_y1."""
+    scenario = await _seed_with_lp_gp_modules(session)
+    blob = await export_investor_workbook(scenario.id, session)
+    wb = load_workbook(BytesIO(blob), data_only=False)
+    val = _get_named_value(wb, "s_lp_coc_y1")
+    assert isinstance(val, str) and val.startswith("=IFERROR("), (
+        f"s_lp_coc_y1 must be IFERROR formula; got {val!r}"
+    )
+    assert "s_returns_lp_y1" in val, (
+        f"s_lp_coc_y1 must reference s_returns_lp_y1; got {val!r}"
+    )
+    assert "s_committed_lp_equity" in val, (
+        f"s_lp_coc_y1 must reference s_committed_lp_equity; got {val!r}"
+    )
+
+
+async def test_gp_coc_y1_is_iferror_formula(session: AsyncSession) -> None:
+    """s_gp_coc_y1 must be an IFERROR formula referencing s_returns_gp_y1."""
+    scenario = await _seed_with_lp_gp_modules(session)
+    blob = await export_investor_workbook(scenario.id, session)
+    wb = load_workbook(BytesIO(blob), data_only=False)
+    val = _get_named_value(wb, "s_gp_coc_y1")
+    assert isinstance(val, str) and val.startswith("=IFERROR("), (
+        f"s_gp_coc_y1 must be IFERROR formula; got {val!r}"
+    )
+    assert "s_returns_gp_y1" in val, (
+        f"s_gp_coc_y1 must reference s_returns_gp_y1; got {val!r}"
+    )
+    assert "s_committed_gp_equity" in val, (
+        f"s_gp_coc_y1 must reference s_committed_gp_equity; got {val!r}"
+    )
