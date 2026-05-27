@@ -43,8 +43,11 @@ from app.models.project import Project, ProjectStatus
 from app.models.scraped_listing import ScrapedListing
 from app.models.realie_usage import RealieUsage
 from app.models.settings import UserSetting
+from app.models.scenario_library import ScenarioLibraryEntry
 from app.scrapers.realie import _current_month
 from app.settings.resolver import resolve_dev_fee_config
+from app.exporters.deal_snapshot import export_full_deal_snapshot
+from app.exporters.deal_export import import_deal_json
 
 router = APIRouter(include_in_schema=False)
 
@@ -976,11 +979,13 @@ def _base_ctx(
 ) -> dict:
     initials = "??"
     show_billing_settings_menu = False
+    show_test_scenario_capture_button = False
     if user:
         parts = user.name.split()
         initials = (parts[0][0] + parts[-1][0]).upper() if len(parts) >= 2 else user.name[:2].upper()
         user_email_norm = (user.email or "").strip().lower()
         show_billing_settings_menu = user_email_norm == "stephenjketch@gmail.com"
+        show_test_scenario_capture_button = user_email_norm == "stephenjketch@gmail.com"
     return {
         "user_name": user.name if user else "Guest",
         "user_initials": initials,
@@ -991,6 +996,7 @@ def _base_ctx(
         "is_org_admin": bool(getattr(user, "is_org_admin", False)) if user else False,
         "is_admin": bool(getattr(user, "is_admin", False)) if user else False,
         "show_billing_settings_menu": show_billing_settings_menu,
+        "show_test_scenario_capture_button": show_test_scenario_capture_button,
         "active_nav": active_nav,
         "dedup_count": dedup_count,
         "address_issues_count": address_issues_count,
@@ -1003,8 +1009,146 @@ def _require_settings_owner(user: User | None) -> None:
         raise HTTPException(status_code=404, detail="Not found")
 
 
+def _is_stephen_user(user: User | None) -> bool:
+    if user is None:
+        return False
+    return (user.email or "").strip().lower() == "stephenjketch@gmail.com"
+
+
+def _can_manage_scenario_library(user: User | None) -> bool:
+    return bool(user and user.is_admin) or _is_stephen_user(user)
+
+
 def _stripe_secret_key() -> str:
     return (settings.stripe_secret_key or "").strip()
+
+
+@router.get("/admin/scenarios", response_class=HTMLResponse)
+async def admin_scenarios_page(request: Request, session: DBSession) -> HTMLResponse:
+    user = await _get_user(session, request)
+    if not _can_manage_scenario_library(user):
+        raise HTTPException(status_code=404, detail="Not found")
+
+    dedup_count, conflicts_count = await _get_counts(session)
+    address_issues_count = await _get_address_issues_count(session)
+
+    entries: list[ScenarioLibraryEntry] = []
+    if user and user.org_id:
+        entries = list((await session.execute(
+            select(ScenarioLibraryEntry)
+            .where(ScenarioLibraryEntry.org_id == user.org_id)
+            .order_by(ScenarioLibraryEntry.created_at.desc())
+        )).scalars())
+
+    return templates.TemplateResponse(
+        request,
+        "admin_scenarios.html",
+        {
+            "entries": entries,
+            **_base_ctx(user, dedup_count, "deals", address_issues_count, conflicts_count=conflicts_count),
+        },
+    )
+
+
+@router.post("/ui/models/{model_id}/scenario-library", response_class=JSONResponse)
+async def create_scenario_library_entry(
+    request: Request,
+    model_id: UUID,
+    session: DBSession,
+) -> JSONResponse:
+    """Capture full-deal snapshot from builder into Scenario Library."""
+    user = await _get_user(session, request)
+    if not _is_stephen_user(user):
+        raise HTTPException(status_code=404, detail="Not found")
+
+    model = await session.get(DealModel, model_id)
+    if model is None:
+        raise HTTPException(status_code=404, detail="Model not found")
+    parent_deal = await session.get(Deal, model.deal_id)
+    if parent_deal is None:
+        raise HTTPException(status_code=404, detail="Deal not found")
+
+    # Org isolation: only capture within caller's org.
+    if user is None or user.org_id != parent_deal.org_id:
+        raise HTTPException(status_code=404, detail="Model not found")
+
+    form = await request.form()
+    name = str(form.get("name", "")).strip()
+    if not name:
+        name = f"{model.name} Snapshot"
+    note = str(form.get("note", "")).strip() or None
+    tags_raw = str(form.get("tags", "")).strip()
+    tags = [t.strip() for t in tags_raw.split(",") if t.strip()] if tags_raw else []
+
+    payload_json = await export_full_deal_snapshot(session=session, deal_id=parent_deal.id)
+    entry = ScenarioLibraryEntry(
+        org_id=parent_deal.org_id,
+        created_by_user_id=user.id if user else None,
+        source_deal_id=parent_deal.id,
+        source_scenario_id=model.id,
+        name=name,
+        tags=tags,
+        note=note,
+        payload_json=payload_json,
+    )
+    session.add(entry)
+    await session.commit()
+
+    return JSONResponse(
+        {
+            "id": str(entry.id),
+            "name": entry.name,
+            "redirect": "/admin/scenarios",
+        },
+        status_code=201,
+    )
+
+
+@router.post("/ui/admin/scenarios/{entry_id}/seed", response_class=JSONResponse)
+async def seed_scenario_library_entry(
+    request: Request,
+    entry_id: UUID,
+    session: DBSession,
+) -> JSONResponse:
+    user = await _get_user(session, request)
+    if not _can_manage_scenario_library(user):
+        raise HTTPException(status_code=404, detail="Not found")
+
+    entry = await session.get(ScenarioLibraryEntry, entry_id)
+    if entry is None:
+        raise HTTPException(status_code=404, detail="Scenario library entry not found")
+    if user is None or user.org_id != entry.org_id:
+        raise HTTPException(status_code=404, detail="Scenario library entry not found")
+
+    portable = (entry.payload_json or {}).get("portable") or {}
+    payload = portable.get("payload")
+    if not isinstance(payload, dict):
+        raise HTTPException(status_code=400, detail="Entry does not contain a portable payload")
+
+    new_deal = await import_deal_json(
+        session=session,
+        org_id=entry.org_id,
+        payload=payload,
+        created_by_user_id=user.id if user else None,
+    )
+    entry.seeded_count = int(entry.seeded_count or 0) + 1
+    entry.last_seeded_at = datetime.now(UTC)
+    await session.commit()
+
+    new_model = (await session.execute(
+        select(DealModel)
+        .where(DealModel.deal_id == new_deal.id)
+        .order_by(DealModel.created_at.asc())
+        .limit(1)
+    )).scalar_one_or_none()
+
+    return JSONResponse(
+        {
+            "deal_id": str(new_deal.id),
+            "model_id": str(new_model.id) if new_model else None,
+            "redirect": f"/models/{new_model.id}/builder" if new_model else f"/deals/{new_deal.id}",
+        }
+    )
 
 
 def _stripe_publishable_key() -> str:
