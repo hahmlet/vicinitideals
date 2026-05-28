@@ -352,7 +352,64 @@ def _postprocess_expense_lines(lines: list[dict]) -> list[dict]:
     return out
 
 
-def _sheet_to_text(ws: Any, property_column: str | None = None, max_rows: int = 200) -> str:
+def _parse_cell_range(r: str) -> tuple[int, int, int, int] | None:
+    """Parse an Excel cell range like 'A1:D45' into (min_row, max_row, min_col, max_col).
+
+    Uses openpyxl.utils.range_boundaries which handles both 'A1:D45' and
+    multi-letter columns like 'AA1:AC10'. Returns None if unparseable so
+    callers can fall back to the full sheet.
+    """
+    if not r or ":" not in r:
+        return None
+    try:
+        from openpyxl.utils import range_boundaries
+        min_col, min_row, max_col, max_row = range_boundaries(r.upper())
+        if min_row and max_row and min_col and max_col:
+            return min_row, max_row, min_col, max_col
+        return None
+    except Exception:
+        return None
+
+
+def _pdf_pages_to_text(file_bytes: bytes, pages: list[int]) -> str:
+    """Extract text from specific (0-based) pages of a PDF using pdfplumber.
+
+    pdfplumber is already installed as a transitive dep of markitdown[all].
+    Falls back to empty string on any error so the caller can surface a warning.
+    """
+    try:
+        import io as _io
+        import pdfplumber  # type: ignore
+        with pdfplumber.open(_io.BytesIO(file_bytes)) as pdf:
+            total = len(pdf.pages)
+            texts = [pdf.pages[i].extract_text() or "" for i in pages if 0 <= i < total]
+        return "\n\n".join(t for t in texts if t)
+    except Exception as exc:
+        logger.warning("pdfplumber page extraction failed: %s", exc)
+        return ""
+
+
+def _parse_pages(s: str) -> list[int]:
+    """Parse a page-range string like '12-15, 18' into 0-based page indices.
+
+    Accepts hyphen ranges ('12-15') and comma-separated individual pages ('12,14').
+    Input page numbers are 1-based (matching what PDF readers display); output is
+    0-based for pdfplumber.
+    """
+    pages: list[int] = []
+    for part in s.replace(" ", "").split(","):
+        if not part:
+            continue
+        if "-" in part:
+            lo, _, hi = part.partition("-")
+            if lo.isdigit() and hi.isdigit():
+                pages.extend(range(int(lo), int(hi) + 1))
+        elif part.isdigit():
+            pages.append(int(part))
+    return sorted({p - 1 for p in pages if p >= 1})  # 1-based → 0-based, dedupe
+
+
+def _sheet_to_text(ws: Any, property_column: str | None = None, max_rows: int = 200, cell_range: str | None = None) -> str:
     """Convert an openpyxl worksheet to a markdown table for the LLM.
 
     Column filtering strategy (applied in order):
@@ -361,6 +418,8 @@ def _sheet_to_text(ws: Any, property_column: str | None = None, max_rows: int = 
        column only — strips out monthly columns that bloat the prompt and cause
        the LLM to drop rows.
     3. Otherwise keep all columns.
+
+    If *cell_range* is given (e.g. 'A1:D45') only those cells are read.
 
     Output is a GitHub-flavored markdown table so the LLM can parse structure
     reliably without counting tabs.
@@ -378,8 +437,15 @@ def _sheet_to_text(ws: Any, property_column: str | None = None, max_rows: int = 
         # Catch year-range headers like "Jan - Dec 2025" → "jandec"
         return len(clean) >= 6 and clean[:3] in _MONTH_ABBRS and clean[-3:] in _MONTH_ABBRS
 
+    bounds = _parse_cell_range(cell_range) if cell_range else None
     raw_rows: list[list[str]] = []
-    for row in ws.iter_rows(max_row=min(ws.max_row, max_rows), values_only=True):
+    if bounds:
+        min_r, max_r, min_c, max_c = bounds
+        row_iter = ws.iter_rows(min_row=min_r, max_row=max_r, min_col=min_c, max_col=max_c, values_only=True)
+    else:
+        row_iter = ws.iter_rows(max_row=min(ws.max_row, max_rows), values_only=True)
+
+    for row in row_iter:
         if not any(c is not None for c in row):
             continue
         raw_rows.append([str(c).strip() if c is not None else "" for c in row])
@@ -565,12 +631,24 @@ def parse_proforma(
     opex_sheet: str,
     property_column: str | None = None,
     file_kind: str = "xlsx",
+    import_revenue: bool = True,
+    import_opex: bool = True,
+    revenue_range: str | None = None,
+    opex_range: str | None = None,
+    revenue_pages: list[int] | None = None,
+    opex_pages: list[int] | None = None,
 ) -> None:
     """Parse a pro forma file and write structured results to Redis.
 
     file_kind="xlsx": user has picked specific sheets via the preflight UI.
     file_kind="doc": PDF / DOCX / HTML / etc. — MarkitDown converts the
     whole document and the resulting markdown is fed to both LLM passes.
+
+    import_revenue / import_opex: skip the corresponding LLM pass entirely.
+    revenue_range / opex_range: cell range strings (e.g. 'A1:D45') scoping
+      each sheet extraction before inference.
+    revenue_pages / opex_pages: 0-based PDF page indices for selective
+      extraction from large documents.
     """
     r = _redis_client()
     warnings: list[str] = []
@@ -586,28 +664,47 @@ def parse_proforma(
             return
 
         if file_kind == "doc":
+            import os as _os
             filename_raw = r.get(f"proforma:{task_id}:filename") or b"document"
             filename = filename_raw.decode() if isinstance(filename_raw, bytes) else str(filename_raw)
-            doc_markdown = _markitdown_to_text(file_bytes, filename)
-            if not doc_markdown:
-                _set_error(r, task_id, "Could not extract text from this file. Try a PDF, DOCX, or XLSX.")
-                return
-            revenue_text = doc_markdown
-            opex_text = doc_markdown
+            ext = _os.path.splitext(filename)[1].lower().lstrip(".")
+
+            if ext == "pdf" and (revenue_pages or opex_pages):
+                revenue_text = _pdf_pages_to_text(file_bytes, revenue_pages) if revenue_pages else ""
+                opex_text = _pdf_pages_to_text(file_bytes, opex_pages) if opex_pages else ""
+                if not revenue_text and not opex_text:
+                    _set_error(r, task_id, "Could not extract text from the selected pages. Check page numbers and try again.")
+                    return
+            else:
+                doc_markdown = _markitdown_to_text(file_bytes, filename)
+                if not doc_markdown:
+                    _set_error(r, task_id, "Could not extract text from this file. Try a PDF, DOCX, or XLSX.")
+                    return
+                revenue_text = doc_markdown
+                opex_text = doc_markdown
+
+            if not import_revenue:
+                revenue_text = ""
+            if not import_opex:
+                opex_text = ""
         else:
             wb = openpyxl.load_workbook(io.BytesIO(file_bytes), data_only=True)
 
-            if revenue_sheet not in wb.sheetnames:
+            if not import_revenue:
+                revenue_text = ""
+            elif revenue_sheet not in wb.sheetnames:
                 warnings.append(f"Revenue sheet '{revenue_sheet}' not found — skipping revenue parse.")
                 revenue_text = ""
             else:
-                revenue_text = _sheet_to_text(wb[revenue_sheet])
+                revenue_text = _sheet_to_text(wb[revenue_sheet], cell_range=revenue_range)
 
-            if opex_sheet not in wb.sheetnames:
+            if not import_opex:
+                opex_text = ""
+            elif opex_sheet not in wb.sheetnames:
                 warnings.append(f"OpEx sheet '{opex_sheet}' not found — skipping expense parse.")
                 opex_text = ""
             else:
-                opex_text = _sheet_to_text(wb[opex_sheet], property_column=property_column)
+                opex_text = _sheet_to_text(wb[opex_sheet], property_column=property_column, cell_range=opex_range)
 
         client = _llm_client()
 

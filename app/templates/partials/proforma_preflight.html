@@ -1,5 +1,4 @@
-{# Pro Forma Import — Preflight: Sheet & Column Picker
-   Shown immediately after file upload (no LLM — just openpyxl sheetnames).
+{# Pro Forma Import — Preflight: Sheet & Range Picker (xlsx)
    Context: model_id, task_id, sheet_names (list), sheet_columns (dict name→list[str])
 #}
 
@@ -7,82 +6,118 @@
 
   <div style="text-align:center;margin-bottom:24px">
     <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px">Deal Setup</div>
-    <div style="font-size:12px;color:var(--text-muted)">Step 1 — Pro Forma Import — <strong style="color:var(--accent)">Select Sheets</strong></div>
+    <div style="font-size:12px;color:var(--text-muted)">Step 1 — Pro Forma Import — <strong style="color:var(--accent)">Where is the Data?</strong></div>
   </div>
 
   <style>
-    .sheet-option {
-      display: flex; align-items: center; gap: 10px;
-      padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px;
-      cursor: pointer; transition: border-color .15s, background .15s;
+    .pf-section { transition: opacity .15s; }
+    .pf-section.pf-disabled { opacity: .4; pointer-events: none; }
+    .pf-row { display: flex; gap: 12px; }
+    .pf-row > * { flex: 1; min-width: 0; }
+    .pf-select, .pf-input {
+      width: 100%; padding: 9px 12px;
+      border: 1px solid var(--border); border-radius: 8px;
+      background: var(--bg); color: var(--text); font-size: 13px;
+      box-sizing: border-box;
     }
-    .sheet-option:hover { border-color: var(--accent); }
-    .sheet-option:has(input:checked) {
-      border-color: var(--accent);
-      background: color-mix(in srgb, var(--accent) 5%, var(--bg));
+    .pf-select:disabled, .pf-input:disabled {
+      opacity: .5; cursor: not-allowed;
     }
+    .pf-label {
+      font-size: 12px; font-weight: 600; color: var(--text-muted);
+      display: flex; align-items: center; gap: 8px;
+      text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px;
+    }
+    .pf-hint { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+    .pf-section-inner { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+    .pf-check { width: 15px; height: 15px; cursor: pointer; accent-color: var(--accent); }
   </style>
 
   <div class="wizard-card">
     <div class="wizard-header">
-      <div class="wizard-title">Which sheets?</div>
-      <div class="wizard-subtitle">Tell us which sheet has revenue/unit data and which has operating expenses. We found {{ sheet_names|length }} sheet{{ 's' if sheet_names|length != 1 else '' }} in your file.</div>
+      <div class="wizard-title">Where is the Data?</div>
+      <div class="wizard-subtitle">Tell us where to look for your data — this will enhance accuracy.</div>
     </div>
 
-    <form hx-post="/ui/models/{{ model_id }}/upload-proforma"
+    <form id="pf-form"
+          hx-post="/ui/models/{{ model_id }}/upload-proforma"
           hx-target="#deal-setup-wizard"
           hx-swap="outerHTML"
           hx-include="[name='task_id']">
       <input type="hidden" name="task_id" value="{{ task_id }}">
 
-      <div class="wizard-body" style="display:flex;flex-direction:column;gap:20px">
+      <div class="wizard-body" style="display:flex;flex-direction:column;gap:24px">
 
-        {# Revenue sheet picker #}
-        <div>
-          <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em">Revenue / Rent Roll Sheet</label>
-          <div style="display:flex;flex-direction:column;gap:6px">
-            {% for name in sheet_names %}
-            <label class="sheet-option">
-              <input type="radio" name="revenue_sheet" value="{{ name }}"
-                     {% if loop.first %}checked{% endif %}>
+        {# ── Revenue section ── #}
+        <div id="pf-rev-section" class="pf-section">
+          <label class="pf-label">
+            <input class="pf-check" type="checkbox" id="pf-rev-enabled" name="revenue_enabled"
+                   value="on" checked onchange="pfToggle('rev')">
+            Revenue / Rent Roll
+          </label>
+          <div class="pf-section-inner">
+            <div class="pf-row">
               <div>
-                <div style="font-weight:600;font-size:13px">{{ name }}</div>
-                {% if sheet_columns[name] %}
-                <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Columns: {{ sheet_columns[name][:6]|join(', ') }}{% if sheet_columns[name]|length > 6 %} +{{ sheet_columns[name]|length - 6 }} more{% endif %}</div>
-                {% endif %}
+                <select id="pf-rev-sheet" name="revenue_sheet" class="pf-select"
+                        onchange="pfSheetChosen('rev', this.value, {{ sheet_columns|tojson }})"
+                        {% if sheet_names|length == 1 %}disabled{% endif %}>
+                  {% if sheet_names|length > 1 %}
+                    <option value="">— Select sheet —</option>
+                  {% endif %}
+                  {% for name in sheet_names %}
+                    <option value="{{ name }}"{% if sheet_names|length == 1 %} selected{% endif %}>{{ name }}</option>
+                  {% endfor %}
+                </select>
+                <div class="pf-hint">Sheet (required)</div>
               </div>
-            </label>
-            {% endfor %}
+              <div>
+                <input id="pf-rev-range" name="revenue_range" class="pf-input" type="text"
+                       placeholder="e.g. A1:C50"
+                       {% if sheet_names|length > 1 %}disabled{% endif %}>
+                <div class="pf-hint">Range (optional)</div>
+              </div>
+            </div>
           </div>
         </div>
 
-        {# OpEx sheet picker #}
-        <div>
-          <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em">Operating Expense Sheet</label>
-          <div style="display:flex;flex-direction:column;gap:6px">
-            {% for name in sheet_names %}
-            <label class="sheet-option">
-              <input type="radio" name="opex_sheet" value="{{ name }}"
-                     {% if loop.index == 2 or (sheet_names|length == 1 and loop.first) %}checked{% endif %}
-                     onchange="showColumnPicker('{{ name }}', {{ sheet_columns[name]|tojson }})">
+        {# ── OpEx section ── #}
+        <div id="pf-opex-section" class="pf-section">
+          <label class="pf-label">
+            <input class="pf-check" type="checkbox" id="pf-opex-enabled" name="opex_enabled"
+                   value="on" checked onchange="pfToggle('opex')">
+            Operating Expenses
+          </label>
+          <div class="pf-section-inner">
+            <div class="pf-row">
               <div>
-                <div style="font-weight:600;font-size:13px">{{ name }}</div>
-                {% if sheet_columns[name] %}
-                <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Columns: {{ sheet_columns[name][:6]|join(', ') }}{% if sheet_columns[name]|length > 6 %} +{{ sheet_columns[name]|length - 6 }} more{% endif %}</div>
-                {% endif %}
+                <select id="pf-opex-sheet" name="opex_sheet" class="pf-select"
+                        onchange="pfSheetChosen('opex', this.value, {{ sheet_columns|tojson }})"
+                        {% if sheet_names|length == 1 %}disabled{% endif %}>
+                  {% if sheet_names|length > 1 %}
+                    <option value="">— Select sheet —</option>
+                  {% endif %}
+                  {% for name in sheet_names %}
+                    <option value="{{ name }}"{% if sheet_names|length == 1 %} selected{% endif %}>{{ name }}</option>
+                  {% endfor %}
+                </select>
+                <div class="pf-hint">Sheet (required)</div>
               </div>
-            </label>
-            {% endfor %}
-          </div>
-        </div>
+              <div>
+                <input id="pf-opex-range" name="opex_range" class="pf-input" type="text"
+                       placeholder="e.g. A52:C100"
+                       {% if sheet_names|length > 1 %}disabled{% endif %}>
+                <div class="pf-hint">Range (optional)</div>
+              </div>
+            </div>
 
-        {# Property column picker — shown when multi-column sheet selected #}
-        <div id="property-column-picker" style="display:none">
-          <label style="font-size:12px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em">Which property column?</label>
-          <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">This sheet has multiple numeric columns. Select the one with this deal's expenses.</div>
-          <select name="property_column" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:13px">
-            <option value="">— All / Combined —</option>
-          </select>
+            {# Property column picker — shown when multi-column sheet selected #}
+            <div id="pf-col-picker" style="display:none">
+              <select name="property_column" class="pf-select">
+                <option value="">— All / Combined —</option>
+              </select>
+              <div class="pf-hint">Multiple numeric columns found — pick this deal's column, or leave blank to use all.</div>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -102,7 +137,7 @@
             Skip import →
           </a>
         </div>
-        <button type="submit" class="btn btn-primary">Analyze →</button>
+        <button id="pf-submit" type="submit" class="btn btn-primary">Analyze →</button>
       </div>
     </form>
   </div>
@@ -110,23 +145,84 @@
 </div>
 
 <script>
-function showColumnPicker(sheetName, columns) {
-  // Identify numeric-looking columns (skip the first — assume it's the label column)
-  const numeric = columns.slice(1).filter(c => c && c.trim() !== '');
-  const picker = document.getElementById('property-column-picker');
-  const sel = picker.querySelector('select');
-  sel.innerHTML = '<option value="">— All / Combined —</option>';
-  if (numeric.length > 1) {
-    numeric.forEach(col => {
-      const opt = document.createElement('option');
-      opt.value = col;
-      opt.textContent = col;
-      sel.appendChild(opt);
-    });
-    picker.style.display = 'block';
-  } else {
-    picker.style.display = 'none';
-  }
-}
+(function () {
+  var singleSheet = {{ (sheet_names|length == 1)|tojson }};
+  var sheetNames  = {{ sheet_names|tojson }};
 
+  // On single-sheet files the range inputs start enabled immediately
+  if (singleSheet) {
+    pfEnableRange('rev');
+    pfEnableRange('opex');
+  }
+
+  function pfEnableRange(side) {
+    document.getElementById('pf-' + side + '-range').disabled = false;
+  }
+
+  window.pfSheetChosen = function (side, val, sheetCols) {
+    var rangeEl = document.getElementById('pf-' + side + '-range');
+    rangeEl.disabled = !val;
+    if (val) rangeEl.focus();
+
+    // Property column picker (opex side only)
+    if (side === 'opex') {
+      var cols   = val ? (sheetCols[val] || []) : [];
+      var numeric = cols.slice(1).filter(function (c) { return c && c.trim(); });
+      var picker  = document.getElementById('pf-col-picker');
+      var sel     = picker.querySelector('select');
+      while (sel.firstChild) sel.removeChild(sel.firstChild);
+      var defOpt = document.createElement('option');
+      defOpt.value = ''; defOpt.textContent = '— All / Combined —';
+      sel.appendChild(defOpt);
+      if (numeric.length > 1) {
+        numeric.forEach(function (col) {
+          var opt = document.createElement('option');
+          opt.value = col; opt.textContent = col;
+          sel.appendChild(opt);
+        });
+        picker.style.display = 'block';
+      } else {
+        picker.style.display = 'none';
+      }
+    }
+    pfCheckSubmit();
+  };
+
+  window.pfToggle = function (side) {
+    var cb      = document.getElementById('pf-' + side + '-enabled');
+    var section = document.getElementById('pf-' + side + '-section');
+    // Grey the inner controls (not the label itself)
+    var inner   = section.querySelector('.pf-section-inner');
+    if (inner) inner.style.opacity = cb.checked ? '' : '.35';
+    var inputs  = section.querySelectorAll('select, input[type=text]');
+    inputs.forEach(function (el) { el.disabled = !cb.checked || (!singleSheet && el.tagName === 'INPUT'); });
+    // Re-enable range if sheet already chosen
+    if (cb.checked && !singleSheet) {
+      var sheetSel = document.getElementById('pf-' + side + '-sheet');
+      if (sheetSel && sheetSel.value) {
+        document.getElementById('pf-' + side + '-range').disabled = false;
+      }
+    }
+    pfCheckSubmit();
+  };
+
+  function pfCheckSubmit() {
+    var revOn  = document.getElementById('pf-rev-enabled').checked;
+    var opexOn = document.getElementById('pf-opex-enabled').checked;
+    document.getElementById('pf-submit').disabled = !revOn && !opexOn;
+  }
+
+  // Multi-sheet: require sheet selection before Analyze is enabled
+  if (!singleSheet) {
+    document.getElementById('pf-submit').disabled = true;
+    ['rev', 'opex'].forEach(function (side) {
+      document.getElementById('pf-' + side + '-sheet').addEventListener('change', function () {
+        // enable Analyze when at least one enabled section has a sheet chosen
+        var revOk  = !document.getElementById('pf-rev-enabled').checked  || !!document.getElementById('pf-rev-sheet').value;
+        var opexOk = !document.getElementById('pf-opex-enabled').checked || !!document.getElementById('pf-opex-sheet').value;
+        document.getElementById('pf-submit').disabled = !(revOk && opexOk);
+      });
+    });
+  }
+})();
 </script>

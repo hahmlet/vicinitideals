@@ -12218,8 +12218,26 @@ async def _dispatch_proforma_preflight(
             )
 
     if file_kind == "doc":
-        # No sheets to pick — queue the task immediately and return the
-        # progress poller. MarkitDown will convert the whole document.
+        if ext == "pdf":
+            # PDF: show page-picker preflight so user can scope large OMs
+            page_count: int | None = None
+            try:
+                import pdfplumber as _pdfplumber  # type: ignore
+                with _pdfplumber.open(io.BytesIO(content)) as _pdf:
+                    page_count = len(_pdf.pages)
+            except Exception:
+                pass
+            return templates.TemplateResponse(
+                request,
+                "partials/proforma_preflight_doc.html",
+                {
+                    "model_id": model_id,
+                    "task_id": task_id,
+                    "page_count": page_count,
+                    "filename": filename,
+                },
+            )
+        # Non-PDF doc (DOCX, HTML, etc.): queue immediately, MarkitDown converts whole doc
         from app.tasks.proforma_parse import PARSE_PROFORMA_TASK
         from app.tasks.celery_app import celery_app as _celery
         _celery.send_task(
@@ -12401,14 +12419,21 @@ async def upload_proforma(
     request: Request,
     model_id: UUID,
     task_id: str = Form(...),
-    revenue_sheet: str = Form(...),
-    opex_sheet: str = Form(...),
+    revenue_sheet: str = Form(""),
+    opex_sheet: str = Form(""),
     property_column: str = Form(""),
+    revenue_enabled: str = Form(""),
+    opex_enabled: str = Form(""),
+    revenue_range: str = Form(""),
+    opex_range: str = Form(""),
 ) -> HTMLResponse:
-    """Queue the Celery parse task with the user-selected sheet/column coordinates,
-    then return the progress-polling fragment."""
+    """Queue the Celery parse task with the user-selected sheet/column/range
+    coordinates, then return the progress-polling fragment."""
     from app.tasks.proforma_parse import PARSE_PROFORMA_TASK
     from app.tasks.celery_app import celery_app as _celery
+
+    import_revenue = revenue_enabled.strip() == "on"
+    import_opex = opex_enabled.strip() == "on"
 
     _celery.send_task(
         PARSE_PROFORMA_TASK,
@@ -12419,6 +12444,53 @@ async def upload_proforma(
             "opex_sheet": opex_sheet,
             "property_column": property_column or None,
             "file_kind": "xlsx",
+            "import_revenue": import_revenue,
+            "import_opex": import_opex,
+            "revenue_range": revenue_range.strip() or None,
+            "opex_range": opex_range.strip() or None,
+        },
+    )
+
+    return templates.TemplateResponse(
+        request,
+        "partials/proforma_progress.html",
+        {"model_id": model_id, "task_id": task_id},
+    )
+
+
+@router.post("/ui/models/{model_id}/upload-proforma-doc", response_class=HTMLResponse)
+async def upload_proforma_doc(
+    request: Request,
+    model_id: UUID,
+    task_id: str = Form(...),
+    revenue_enabled: str = Form(""),
+    opex_enabled: str = Form(""),
+    revenue_pages: str = Form(""),
+    opex_pages: str = Form(""),
+) -> HTMLResponse:
+    """Queue the Celery parse task for a PDF with user-selected page ranges,
+    then return the progress-polling fragment."""
+    from app.tasks.proforma_parse import PARSE_PROFORMA_TASK, _parse_pages
+    from app.tasks.celery_app import celery_app as _celery
+
+    import_revenue = revenue_enabled.strip() == "on"
+    import_opex = opex_enabled.strip() == "on"
+    rev_pages = _parse_pages(revenue_pages) if revenue_pages.strip() else None
+    opx_pages = _parse_pages(opex_pages) if opex_pages.strip() else None
+
+    _celery.send_task(
+        PARSE_PROFORMA_TASK,
+        kwargs={
+            "task_id": task_id,
+            "model_id": str(model_id),
+            "revenue_sheet": "",
+            "opex_sheet": "",
+            "property_column": None,
+            "file_kind": "doc",
+            "import_revenue": import_revenue,
+            "import_opex": import_opex,
+            "revenue_pages": rev_pages,
+            "opex_pages": opx_pages,
         },
     )
 
