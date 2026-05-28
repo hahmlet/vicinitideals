@@ -588,9 +588,10 @@ function ulTimingChanged(val) {
     <button type="submit" class="btn btn-primary">{% if existing %}Save Changes{% else %}Add Line{% endif %}</button>
     <button type="button" class="btn btn-secondary" onclick="closeDrawer('line-item-drawer')">Cancel</button>
     {% if existing %}
+      {%- set _opex_is_zero = (existing.annual_amount | float) == 0 -%}
     <button type="button" class="btn btn-danger" style="margin-left:auto"
             hx-delete="/ui/forms/{{ model.id }}/expense-lines/{{ existing.id }}"
-            hx-confirm="Delete '{{ existing.label }}'?"
+        {% if not _opex_is_zero %}hx-confirm="Delete '{{ existing.label }}'?"{% endif %}
             hx-target="#module-panel-content"
             hx-swap="innerHTML"
             hx-on::after-request="if(event.detail.successful) closeDrawer('line-item-drawer')">Delete</button>
