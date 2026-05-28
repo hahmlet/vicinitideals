@@ -2228,6 +2228,17 @@ async def settings_organization(
     org_users = [u for u in _all_members if u.membership_status != _MS.PENDING]
     pending_members = [u for u in _all_members if u.membership_status == _MS.PENDING]
 
+    from app.models.org import OrgInvite as _OrgInviteQ
+    pending_invites = (
+        await session.execute(
+            select(_OrgInviteQ).where(
+                _OrgInviteQ.org_id == user.org_id,
+                _OrgInviteQ.accepted_at.is_(None),
+                _OrgInviteQ.expires_at > datetime.now(UTC),
+            ).order_by(_OrgInviteQ.created_at.desc())
+        )
+    ).scalars().all()
+
     from app.models.settings import OrgSetting as _OrgSetting
     from app.settings.defaults import ORG_SET_FIELDS as _ORG_SET_FIELDS
     from app.settings.resolver import resolve_all_defaults as _resolve_all
@@ -2274,6 +2285,7 @@ async def settings_organization(
             "org": org,
             "org_users": org_users,
             "pending_members": pending_members,
+            "pending_invites": pending_invites,
             "user": user,
             "resolved": resolved,
             "org_settings_map": org_settings_map,
@@ -2408,15 +2420,78 @@ async def settings_organization_member_approve(
     member.membership_status = MembershipStatus.ACTIVE
     await session.commit()
 
+    return HTMLResponse("")
+
+
+# ---------------------------------------------------------------------------
+# POST /settings/organization/invites/{invite_id}/resend
+# ---------------------------------------------------------------------------
+
+_RESEND_1MIN_MAX = 1
+_RESEND_1MIN_WINDOW = 60
+_RESEND_TOTAL_MAX = 3
+_RESEND_TOTAL_WINDOW = 60 * 60 * 24 * 7  # 7 days, matches token expiry
+
+
+@router.post("/settings/organization/invites/{invite_id}/resend", response_class=HTMLResponse)
+async def settings_organization_invite_resend(
+    invite_id: UUID,
+    request: Request,
+    session: DBSession,
+) -> Response:
+    from datetime import timedelta
+
+    from app.api.rate_limit import check_rate_limit
+    from app.emails import make_invite_token, send_invite_email
+    from app.models.org import OrgInvite as _OrgInvite
     from markupsafe import escape as _esc
-    return HTMLResponse(
-        f'<tr id="pending-{member_id}">'
-        f'<td>{_esc(member.name)}</td>'
-        f'<td>{_esc(member.email) if member.email else "—"}</td>'
-        f'<td><span style="color:var(--success,#16a34a);font-weight:600;">Approved</span></td>'
-        f'<td></td>'
-        f'</tr>'
+
+    user = await _get_user(session, request)
+    if user is None:
+        return HTMLResponse("Not authenticated", status_code=401)
+    if not user.is_org_admin:
+        return HTMLResponse("Forbidden", status_code=403)
+
+    invite = await session.get(_OrgInvite, invite_id)
+    if invite is None or invite.org_id != user.org_id:
+        return HTMLResponse("Not found", status_code=404)
+    if invite.accepted_at is not None:
+        return HTMLResponse('<span style="color:var(--danger)">Invite already accepted.</span>', status_code=400)
+
+    allowed_1min = await check_rate_limit(
+        key=f"invite_resend_1min:{invite_id}",
+        max_count=_RESEND_1MIN_MAX,
+        window_seconds=_RESEND_1MIN_WINDOW,
     )
+    if not allowed_1min:
+        return HTMLResponse('<span style="color:var(--danger)">Wait 1 minute before resending.</span>', status_code=429)
+
+    allowed_total = await check_rate_limit(
+        key=f"invite_resend_total:{invite_id}",
+        max_count=_RESEND_TOTAL_MAX,
+        window_seconds=_RESEND_TOTAL_WINDOW,
+    )
+    if not allowed_total:
+        return HTMLResponse('<span style="color:var(--danger)">Maximum resends reached for this invite.</span>', status_code=429)
+
+    new_token = make_invite_token(invite.org_id, invite.email)
+    invite.token = new_token
+    invite.expires_at = datetime.now(UTC) + timedelta(seconds=settings.invite_token_max_age_seconds)
+    await session.commit()
+
+    org = await session.get(Organization, user.org_id)
+    invite_url = f"{settings.app_base_url}/register?invite={new_token}"
+    try:
+        await send_invite_email(
+            to=invite.email,
+            inviter_name=user.name,
+            org_name=org.name if org else "",
+            invite_url=invite_url,
+        )
+    except Exception:
+        pass
+
+    return HTMLResponse(f'<span style="color:var(--success,#16a34a);font-size:12px;">✓ Resent to {_esc(invite.email)}</span>')
 
 
 # ---------------------------------------------------------------------------

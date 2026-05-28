@@ -295,7 +295,7 @@ async def register_post(
             hashed_password=hash_password(password),
             is_active=True,
             is_org_admin=False,
-            membership_status=MembershipStatus.PENDING,
+            membership_status=MembershipStatus.ACTIVE if invite_token else MembershipStatus.PENDING,
             email_verified=False,
         )
         session.add(user)
@@ -321,7 +321,7 @@ async def register_post(
             pass
 
         token = create_session_token(user.id)
-        resp = RedirectResponse(url="/pending-approval", status_code=303)
+        resp = RedirectResponse(url="/deals" if invite_token else "/pending-approval", status_code=303)
         resp.set_cookie(COOKIE_NAME, token, max_age=SESSION_MAX_AGE, httponly=True, secure=True, samesite="lax")
         return resp
     else:

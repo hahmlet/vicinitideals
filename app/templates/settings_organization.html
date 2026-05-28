@@ -195,6 +195,43 @@
   </div>
   {% endif %}
 
+  {# ── Pending invites (admin only) ─────────────────────────────────────── #}
+  {% if user.is_org_admin and pending_invites %}
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:auto">
+    <div style="padding:16px 16px 0;display:flex;align-items:center;gap:8px">
+      <span style="font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em">Pending Invites</span>
+      <span style="background:#dbeafe;color:#1d4ed8;font-size:11px;font-weight:700;border-radius:9999px;padding:1px 7px">{{ pending_invites|length }}</span>
+    </div>
+    <table style="width:100%;border-collapse:collapse;font-size:13px;margin-top:8px">
+      <thead>
+        <tr style="background:var(--surface-alt)">
+          <th style="text-align:left;padding:10px 16px;border-bottom:1px solid var(--border)">Email</th>
+          <th style="text-align:left;padding:10px 16px;border-bottom:1px solid var(--border)">Sent</th>
+          <th style="text-align:left;padding:10px 16px;border-bottom:1px solid var(--border)">Expires</th>
+          <th style="text-align:left;padding:10px 16px;border-bottom:1px solid var(--border)">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for invite in pending_invites %}
+        <tr id="invite-row-{{ invite.id }}" style="border-bottom:1px solid var(--border)">
+          <td style="padding:10px 16px;font-weight:500">{{ invite.email }}</td>
+          <td style="padding:10px 16px;color:var(--text-muted)">{{ invite.created_at.strftime("%b %d, %Y") }}</td>
+          <td style="padding:10px 16px;color:var(--text-muted)">{{ invite.expires_at.strftime("%b %d, %Y") }}</td>
+          <td style="padding:10px 16px;display:flex;align-items:center;gap:8px">
+            <button class="btn btn-secondary"
+                    style="padding:4px 12px;font-size:12px"
+                    hx-post="/settings/organization/invites/{{ invite.id }}/resend"
+                    hx-target="#invite-resend-{{ invite.id }}"
+                    hx-swap="innerHTML">Resend</button>
+            <span id="invite-resend-{{ invite.id }}" style="font-size:12px;"></span>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start">
 <div>
   {# ── Underwriting defaults (admin only) ───────────────────────────────── #}
