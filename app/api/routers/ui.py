@@ -6703,7 +6703,7 @@ async def handle_form_create_or_update(
     elif item_type == "expense-lines":
         _aip_list = form.getlist("active_in_phases")
         active_phases = _aip_list if _aip_list else _fp(form.get("active_in_phases"), ["stabilized"])
-        per_type_val = form.get("per_type") or None
+        per_type_val = form.get("per_type") or "flat"
         per_value_val = _fd(form.get("per_value"))
         # For flat type, annual_amount mirrors per_value for backward-compat display
         # For per_unit/sqft types, annual_amount stays 0 until compute engine scales it
@@ -10036,26 +10036,26 @@ async def deal_setup_wizard_complete(
     # Seeded in all income modes — user may switch from NOI to revenue/opex.
     # (label, per_type, scale_with_lease_up, lease_up_floor_pct, active_phases)
     _OPEX_SEEDS = [
-        ("Real Estate Taxes",          "flat",     False, None,   ["lease_up", "stabilized"]),
-        ("Insurance",                  "flat",     False, None,   ["lease_up", "stabilized"]),
-        ("Property Management",        "per_unit", True,  25.0,   ["lease_up", "stabilized"]),
-        ("Utilities — Water/Sewer",    "per_unit", True,  50.0,   ["lease_up", "stabilized"]),
-        ("Utilities — Electric",       "flat",     True,  100.0,  ["lease_up", "stabilized"]),
-        ("Utilities — Gas",            "per_unit", True,  50.0,   ["lease_up", "stabilized"]),
-        ("Utilities — Trash",          "flat",     True,  75.0,   ["lease_up", "stabilized"]),
-        ("Repairs & Maintenance",      "per_unit", True,  25.0,   ["stabilized"]),
-        ("Marketing & Leasing",        "per_unit", True,  100.0,  ["lease_up", "stabilized"]),
-        ("Administrative",             "flat",     False, None,   ["lease_up", "stabilized"]),
-        ("Payroll",                    "flat",     False, None,   ["lease_up", "stabilized"]),
-        ("Landscaping & Snow Removal", "flat",     False, None,   ["lease_up", "stabilized"]),
-        ("Pest Control",               "flat",     False, None,   ["lease_up", "stabilized"]),
-        ("Cleaning & Janitorial",      "flat",     False, None,   ["lease_up", "stabilized"]),
-        ("Security",                   "flat",     False, None,   ["lease_up", "stabilized"]),
-        ("Resident Services",          "flat",     True,  25.0,   ["stabilized"]),
-        ("Jurisdiction Fees",           "flat",     False, None,   ["lease_up", "stabilized"]),
-        ("Legal",                       "flat",     False, None,   ["lease_up", "stabilized"]),
-        ("Bank/Software Fees",         "flat",     False, None,   ["lease_up", "stabilized"]),
-        ("Unit Turnover",              "per_unit", False, None,   ["stabilized"]),
+        ("Real Estate Taxes",          "flat", False, None,  ["lease_up", "stabilized"]),
+        ("Insurance",                  "flat", False, None,  ["lease_up", "stabilized"]),
+        ("Property Management",        "flat", True,  25.0,  ["lease_up", "stabilized"]),
+        ("Utilities — Water/Sewer",    "flat", True,  50.0,  ["lease_up", "stabilized"]),
+        ("Utilities — Electric",       "flat", True,  100.0, ["lease_up", "stabilized"]),
+        ("Utilities — Gas",            "flat", True,  50.0,  ["lease_up", "stabilized"]),
+        ("Utilities — Trash",          "flat", True,  75.0,  ["lease_up", "stabilized"]),
+        ("Repairs & Maintenance",      "flat", True,  25.0,  ["stabilized"]),
+        ("Marketing & Leasing",        "flat", True,  100.0, ["lease_up", "stabilized"]),
+        ("Administrative",             "flat", False, None,  ["lease_up", "stabilized"]),
+        ("Payroll",                    "flat", False, None,  ["lease_up", "stabilized"]),
+        ("Landscaping & Snow Removal", "flat", False, None,  ["lease_up", "stabilized"]),
+        ("Pest Control",               "flat", False, None,  ["lease_up", "stabilized"]),
+        ("Cleaning & Janitorial",      "flat", False, None,  ["lease_up", "stabilized"]),
+        ("Security",                   "flat", False, None,  ["lease_up", "stabilized"]),
+        ("Resident Services",          "flat", True,  25.0,  ["stabilized"]),
+        ("Jurisdiction Fees",          "flat", False, None,  ["lease_up", "stabilized"]),
+        ("Legal",                      "flat", False, None,  ["lease_up", "stabilized"]),
+        ("Bank/Software Fees",         "flat", False, None,  ["lease_up", "stabilized"]),
+        ("Unit Turnover",              "flat", False, None,  ["stabilized"]),
     ]
 
     for _opex_proj in all_scenario_projects:
@@ -11935,7 +11935,7 @@ async def download_import_template(model_id: UUID) -> StreamingResponse:
     for label, amt, per, esc, scale, floor, phases in [
         ("Property Tax", 18000, "flat", 3.0, "no", "", "stabilized"),
         ("Insurance", 9600, "flat", 3.0, "no", "", "stabilized"),
-        ("Property Management", 8, "per_unit", 3.0, "yes", 25, "lease_up, stabilized"),
+        ("Property Management", 8, "flat", 3.0, "yes", 25, "lease_up, stabilized"),
     ]:
         ws_opex.append([label, amt, per, esc, scale, floor, phases, ""])
 
@@ -12494,6 +12494,7 @@ async def proforma_confirm(
                     project_id=project_id,
                     label=label,
                     annual_amount=Decimal((amount_s or "0").replace(",", "")),
+                    per_type="flat",
                     escalation_rate_pct_annual=Decimal("3"),
                     active_in_phases=["lease_up", "stabilized"],
                     notes=orig_label.strip() if orig_label.strip() != label else None,

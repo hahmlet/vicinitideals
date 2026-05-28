@@ -441,7 +441,10 @@ async def create_expense_line(
 ) -> OperatingExpenseLine:
     await _get_deal_or_404(session, model_id)
     project = await _get_default_project_for_deal(session, model_id)
-    expense_line = OperatingExpenseLine(project_id=project.id, **payload.model_dump())
+    data = payload.model_dump()
+    if data.get("per_type") is None:
+        data["per_type"] = "flat"
+    expense_line = OperatingExpenseLine(project_id=project.id, **data)
     session.add(expense_line)
     await session.flush()
     await session.refresh(expense_line)
@@ -901,6 +904,7 @@ async def _upsert_opex_phantom(
         project_id=project_id,
         label=OPEX_ADJUSTMENT_LABEL,
         annual_amount=annual_amount,
+        per_type="flat",
         active_in_phases=["lease_up", "stabilized", "exit"],
     )
     try:
