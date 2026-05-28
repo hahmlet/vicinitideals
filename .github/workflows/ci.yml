@@ -148,6 +148,14 @@ jobs:
       - name: Prepare environment file
         run: cp .env.example .env
 
+      - name: Create external Postgres data volume
+        # docker-compose.yml declares postgres-data as `external` with the
+        # production name re-modeling-postgres-data so deploys reuse the
+        # named VM 114 volume. CI runners don't have that volume yet, so
+        # `docker compose up` aborts with "external volume not found".
+        # Pre-create it (empty) for the CI run.
+        run: docker volume create re-modeling-postgres-data
+
       - name: Start required services
         run: docker compose up -d --build postgres redis api
 
