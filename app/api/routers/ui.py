@@ -2408,10 +2408,11 @@ async def settings_organization_member_approve(
     member.membership_status = MembershipStatus.ACTIVE
     await session.commit()
 
+    from markupsafe import escape as _esc
     return HTMLResponse(
         f'<tr id="pending-{member_id}">'
-        f'<td>{member.name}</td>'
-        f'<td>{member.email or "—"}</td>'
+        f'<td>{_esc(member.name)}</td>'
+        f'<td>{_esc(member.email) if member.email else "—"}</td>'
         f'<td><span style="color:var(--success,#16a34a);font-weight:600;">Approved</span></td>'
         f'<td></td>'
         f'</tr>'

@@ -265,6 +265,16 @@ async def register_post(
         if result is None:
             return _err("This invite link has expired. Ask your admin to send a new one.")
         org_id, invited_email = result
+        if email.strip().lower() != invited_email.strip().lower():
+            return _err("This invite link is for a different email address.")
+        from app.models.org import OrgInvite as _OrgInvite
+        invite_row = (
+            await session.execute(
+                select(_OrgInvite).where(_OrgInvite.token == invite_token)
+            )
+        ).scalar_one_or_none()
+        if invite_row is not None and invite_row.accepted_at is not None:
+            return _err("This invite link has already been used.")
         join_org = await session.get(Organization, org_id)
         if join_org is None:
             return _err("The organization for this invite no longer exists.")
