@@ -2217,13 +2217,16 @@ async def settings_organization(
     address_issues_count = await _get_address_issues_count(session)
 
     org = await session.get(Organization, user.org_id)
-    org_users = list(
+    from app.models.org import MembershipStatus as _MS
+    _all_members = list(
         (
             await session.execute(
                 select(User).where(User.org_id == user.org_id).order_by(User.created_at)
             )
         ).scalars()
     )
+    org_users = [u for u in _all_members if u.membership_status != _MS.PENDING]
+    pending_members = [u for u in _all_members if u.membership_status == _MS.PENDING]
 
     from app.models.settings import OrgSetting as _OrgSetting
     from app.settings.defaults import ORG_SET_FIELDS as _ORG_SET_FIELDS
@@ -2270,6 +2273,7 @@ async def settings_organization(
         {
             "org": org,
             "org_users": org_users,
+            "pending_members": pending_members,
             "user": user,
             "resolved": resolved,
             "org_settings_map": org_settings_map,
@@ -2277,6 +2281,7 @@ async def settings_organization(
             "org_source_vehicles": org_source_vehicles,
             "timeline_defaults_map": timeline_defaults_map,
             "org_timeline_map": org_timeline_map,
+            "app_base_url": settings.app_base_url,
             **_base_ctx(user, dedup_count, "", address_issues_count, conflicts_count=conflicts_count),
         },
     )
@@ -2306,6 +2311,140 @@ async def settings_organization_post(
 
     # Redirect back to GET to show updated data
     return RedirectResponse(url="/settings/organization", status_code=303)
+
+
+# ---------------------------------------------------------------------------
+# POST /settings/organization/invite
+# ---------------------------------------------------------------------------
+
+_SETTINGS_INVITE_MAX = 10
+_SETTINGS_INVITE_WINDOW = 60 * 60  # 1 hour
+
+
+@router.post("/settings/organization/invite", response_class=HTMLResponse)
+async def settings_organization_invite(
+    request: Request,
+    session: DBSession,
+) -> Response:
+    from app.api.rate_limit import check_rate_limit
+    from app.emails import make_invite_token, send_invite_email
+    from app.models.org import OrgInvite
+    from datetime import UTC, timedelta
+
+    user = await _get_user(session, request)
+    if user is None:
+        return HTMLResponse("Not authenticated", status_code=401)
+    if not user.is_org_admin:
+        return HTMLResponse("Forbidden", status_code=403)
+
+    form = await request.form()
+    email = str(form.get("invite_email", "")).strip().lower()
+    if not email:
+        return HTMLResponse('<span style="color:var(--danger)">Email is required.</span>', status_code=400)
+
+    org = await session.get(Organization, user.org_id)
+    if org is None:
+        return HTMLResponse("Organization not found", status_code=404)
+
+    allowed = await check_rate_limit(
+        key=f"invite_org:{user.org_id}",
+        max_count=_SETTINGS_INVITE_MAX,
+        window_seconds=_SETTINGS_INVITE_WINDOW,
+    )
+    if not allowed:
+        return HTMLResponse('<span style="color:var(--danger)">Rate limit reached. Try again in an hour.</span>', status_code=429)
+
+    expires = datetime.now(UTC) + timedelta(seconds=settings.invite_token_max_age_seconds)
+    token = make_invite_token(org.id, email)
+    invite_rec = OrgInvite(
+        id=_uuid_mod.uuid4(),
+        org_id=org.id,
+        invited_by_id=user.id,
+        email=email,
+        token=token,
+        expires_at=expires,
+    )
+    session.add(invite_rec)
+    await session.commit()
+
+    invite_url = f"{settings.app_base_url}/register?invite={token}"
+    try:
+        await send_invite_email(
+            to=email,
+            inviter_name=user.name,
+            org_name=org.name,
+            invite_url=invite_url,
+        )
+    except Exception:
+        pass
+
+    return HTMLResponse(
+        f'<span style="color:var(--success,#16a34a);font-size:13px;">✓ Invite sent to {email}</span>'
+    )
+
+
+# ---------------------------------------------------------------------------
+# POST /settings/organization/members/{user_id}/approve
+# ---------------------------------------------------------------------------
+
+@router.post("/settings/organization/members/{member_id}/approve", response_class=HTMLResponse)
+async def settings_organization_member_approve(
+    member_id: UUID,
+    request: Request,
+    session: DBSession,
+) -> Response:
+    from app.models.org import MembershipStatus
+
+    user = await _get_user(session, request)
+    if user is None:
+        return HTMLResponse("Not authenticated", status_code=401)
+    if not user.is_org_admin:
+        return HTMLResponse("Forbidden", status_code=403)
+
+    member = await session.get(User, member_id)
+    if member is None or member.org_id != user.org_id:
+        return HTMLResponse("Not found", status_code=404)
+
+    member.membership_status = MembershipStatus.ACTIVE
+    await session.commit()
+
+    return HTMLResponse(
+        f'<tr id="pending-{member_id}">'
+        f'<td>{member.name}</td>'
+        f'<td>{member.email or "—"}</td>'
+        f'<td><span style="color:var(--success,#16a34a);font-weight:600;">Approved</span></td>'
+        f'<td></td>'
+        f'</tr>'
+    )
+
+
+# ---------------------------------------------------------------------------
+# POST /settings/organization/members/{user_id}/remove
+# ---------------------------------------------------------------------------
+
+@router.post("/settings/organization/members/{member_id}/remove", response_class=HTMLResponse)
+async def settings_organization_member_remove(
+    member_id: UUID,
+    request: Request,
+    session: DBSession,
+) -> Response:
+    user = await _get_user(session, request)
+    if user is None:
+        return HTMLResponse("Not authenticated", status_code=401)
+    if not user.is_org_admin:
+        return HTMLResponse("Forbidden", status_code=403)
+    if member_id == user.id:
+        return HTMLResponse("Cannot remove yourself", status_code=400)
+
+    member = await session.get(User, member_id)
+    if member is None or member.org_id != user.org_id:
+        return HTMLResponse("Not found", status_code=404)
+
+    await session.delete(member)
+    await session.commit()
+
+    # Return empty string — HTMX outerHTML swap on the row removes it
+    return HTMLResponse("")
 
 
 # ---------------------------------------------------------------------------
@@ -14604,5 +14743,199 @@ async def export_history_json_endpoint(
             "Content-Disposition": f'attachment; filename="history-{model_id}.json"',
         },
     )
+
+
+# ===========================================================================
+# Onboarding wizard
+# ===========================================================================
+
+def _slugify(text: str) -> str:
+    """Convert org name to URL-safe slug."""
+    import re
+    slug = text.lower().strip()
+    slug = re.sub(r"[^\w\s-]", "", slug)
+    slug = re.sub(r"[\s_]+", "-", slug)
+    slug = re.sub(r"-+", "-", slug).strip("-")
+    return slug[:100]
+
+
+@router.get("/onboarding", response_class=HTMLResponse)
+async def onboarding_get(request: Request, session: DBSession) -> Response:
+    """Entry point for new-user onboarding wizard (create org + invite)."""
+    user = await _get_user(session, request)
+    if user is None:
+        return RedirectResponse(url="/login", status_code=303)
+    if user.org_id is not None:
+        return RedirectResponse(url="/deals", status_code=303)
+    templates = Jinja2Templates(directory=str(Path(_pkg.__file__).parent / "templates"))
+    return templates.TemplateResponse(
+        request,
+        "onboarding.html",
+        {"user": user, "_step": 1, "inputs": {}},
+    )
+
+
+@router.post("/ui/onboarding/step", response_class=HTMLResponse)
+async def onboarding_step_post(request: Request, session: DBSession) -> Response:
+    """HTMX step handler — returns next wizard step (outerHTML swap)."""
+    from app.api.auth import COOKIE_NAME
+    user = await _get_user(session, request)
+    if user is None:
+        return RedirectResponse(url="/login", status_code=303)
+    if user.org_id is not None:
+        return RedirectResponse(url="/deals", status_code=303)
+
+    form = await request.form()
+    current_step = int(form.get("_step", "1"))
+    inputs: dict = {k: str(v) for k, v in form.items() if k != "_step"}
+
+    templates = Jinja2Templates(directory=str(Path(_pkg.__file__).parent / "templates"))
+
+    if current_step == 1:
+        org_name = inputs.get("org_name", "").strip()
+        org_slug = inputs.get("org_slug", "").strip()
+
+        if not org_name:
+            return templates.TemplateResponse(
+                request, "partials/onboarding_wizard.html",
+                {"user": user, "_step": 1, "inputs": inputs, "error": "Organization name is required."},
+            )
+        if not org_slug:
+            org_slug = _slugify(org_name)
+            inputs["org_slug"] = org_slug
+
+        # Validate slug uniqueness
+        taken = (
+            await session.execute(select(Organization).where(Organization.slug == org_slug))
+        ).scalar_one_or_none()
+        if taken is not None:
+            return templates.TemplateResponse(
+                request, "partials/onboarding_wizard.html",
+                {"user": user, "_step": 1, "inputs": inputs, "error": "That slug is already taken. Choose another."},
+            )
+        inputs["org_name"] = org_name
+        inputs["org_slug"] = org_slug
+        return templates.TemplateResponse(
+            request, "partials/onboarding_wizard.html",
+            {"user": user, "_step": 2, "inputs": inputs},
+        )
+
+    return templates.TemplateResponse(
+        request, "partials/onboarding_wizard.html",
+        {"user": user, "_step": current_step, "inputs": inputs},
+    )
+
+
+@router.get("/ui/onboarding/check-slug", response_class=HTMLResponse)
+async def onboarding_check_slug(
+    request: Request, session: DBSession, slug: str = Query(default="")
+) -> HTMLResponse:
+    """HTMX inline slug availability check. Returns a small indicator fragment."""
+    if not slug:
+        return HTMLResponse("")
+    normalized = _slugify(slug)
+    taken = (
+        await session.execute(select(Organization).where(Organization.slug == normalized))
+    ).scalar_one_or_none()
+    if taken:
+        return HTMLResponse(
+            '<span style="color:var(--danger);font-size:12px;">✗ Already taken</span>'
+        )
+    return HTMLResponse(
+        '<span style="color:var(--success,#16a34a);font-size:12px;">✓ Available</span>'
+    )
+
+
+_ONBOARDING_INVITE_MAX = 5
+_ONBOARDING_INVITE_WINDOW = 5 * 60  # 5 minutes
+
+
+@router.post("/ui/onboarding/complete", response_class=HTMLResponse)
+async def onboarding_complete_post(request: Request, session: DBSession) -> Response:
+    """Finalize onboarding: create org, assign to user, send invites."""
+    from app.api.rate_limit import check_rate_limit
+    from app.emails import make_invite_token, send_invite_email
+    from app.models.org import MembershipStatus, OrgInvite
+    from datetime import UTC, timedelta
+
+    user = await _get_user(session, request)
+    if user is None:
+        return RedirectResponse(url="/login", status_code=303)
+    if user.org_id is not None:
+        return RedirectResponse(url="/deals", status_code=303)
+
+    form = await request.form()
+    org_name = str(form.get("org_name", "")).strip()
+    org_slug = str(form.get("org_slug", "")).strip()
+    invite_emails = [
+        str(form.get(f"invite_email_{i}", "")).strip().lower()
+        for i in range(1, 6)
+        if str(form.get(f"invite_email_{i}", "")).strip()
+    ]
+
+    templates = Jinja2Templates(directory=str(Path(_pkg.__file__).parent / "templates"))
+
+    if not org_name or not org_slug:
+        return templates.TemplateResponse(
+            request, "partials/onboarding_wizard.html",
+            {"user": user, "_step": 1, "inputs": dict(form), "error": "Organization name and slug are required."},
+        )
+
+    # Verify slug still unique at commit time
+    taken = (
+        await session.execute(select(Organization).where(Organization.slug == org_slug))
+    ).scalar_one_or_none()
+    if taken is not None:
+        return templates.TemplateResponse(
+            request, "partials/onboarding_wizard.html",
+            {"user": user, "_step": 1, "inputs": dict(form), "error": "That slug is already taken. Choose another."},
+        )
+
+    # Create org
+    org = Organization(id=_uuid_mod.uuid4(), name=org_name, slug=org_slug)
+    session.add(org)
+    await session.flush()
+
+    # Assign user to org as admin
+    user.org_id = org.id
+    user.is_org_admin = True
+    user.membership_status = MembershipStatus.ACTIVE
+    await session.commit()
+
+    # Send invites (rate-limited)
+    if invite_emails:
+        allowed = await check_rate_limit(
+            key=f"invite_send:{user.id}",
+            max_count=_ONBOARDING_INVITE_MAX,
+            window_seconds=_ONBOARDING_INVITE_WINDOW,
+        )
+        if allowed:
+            expires = datetime.now(UTC) + timedelta(seconds=settings.invite_token_max_age_seconds)
+            for email in invite_emails[:5]:
+                if not email:
+                    continue
+                token = make_invite_token(org.id, email)
+                invite_rec = OrgInvite(
+                    id=_uuid_mod.uuid4(),
+                    org_id=org.id,
+                    invited_by_id=user.id,
+                    email=email,
+                    token=token,
+                    expires_at=expires,
+                )
+                session.add(invite_rec)
+                invite_url = f"{settings.app_base_url}/register?invite={token}"
+                try:
+                    await send_invite_email(
+                        to=email,
+                        inviter_name=user.name,
+                        org_name=org.name,
+                        invite_url=invite_url,
+                    )
+                except Exception:  # pragma: no cover
+                    pass
+            await session.commit()
+
+    return HTMLResponse("", status_code=200, headers={"HX-Redirect": "/deals"})
 
 

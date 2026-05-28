@@ -46,6 +46,7 @@ class Settings(BaseSettings):
     # Token lifetimes
     email_verify_token_max_age_seconds: int = 60 * 60 * 24  # 24 hours
     password_reset_token_max_age_seconds: int = 60 * 30      # 30 minutes
+    invite_token_max_age_seconds: int = 60 * 60 * 24 * 7    # 7 days
 
     # -------------------------------------------------------------------------
     # Billing (Stripe)

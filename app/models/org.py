@@ -1,4 +1,4 @@
-"""Organization, User, ProjectVisibility models."""
+"""Organization, User, OrgInvite, ProjectVisibility models."""
 
 import uuid
 from datetime import datetime
@@ -9,6 +9,11 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import UniqueConstraint
 
 from app.models.base import Base
+
+
+class MembershipStatus:
+    ACTIVE = "active"
+    PENDING = "pending"
 
 
 class Organization(Base):
@@ -34,6 +39,9 @@ class Organization(Base):
     portfolios: Mapped[list["Portfolio"]] = relationship(  # type: ignore[name-defined]
         "Portfolio", back_populates="organization"
     )
+    invites: Mapped[list["OrgInvite"]] = relationship(
+        "OrgInvite", back_populates="organization", cascade="all, delete-orphan"
+    )
 
 
 class User(Base):
@@ -43,8 +51,8 @@ class User(Base):
     id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
     )
-    org_id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("organizations.id"), nullable=False
+    org_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("organizations.id"), nullable=True
     )
     name: Mapped[str] = mapped_column(String(255), nullable=False)
     display_color: Mapped[str | None] = mapped_column(String(20), nullable=True)
@@ -75,14 +83,42 @@ class User(Base):
     email_verified_at: Mapped[datetime | None] = mapped_column(
         DateTime(timezone=True), nullable=True
     )
+    # 'active' = full access; 'pending' = joined via invite/link, awaiting admin approval.
+    membership_status: Mapped[str] = mapped_column(
+        String(20), nullable=False, default=MembershipStatus.ACTIVE, server_default="active"
+    )
 
     # Relationships
-    organization: Mapped["Organization"] = relationship(
+    organization: Mapped["Organization | None"] = relationship(
         "Organization", back_populates="users"
     )
     project_visibilities: Mapped[list["ProjectVisibility"]] = relationship(
         "ProjectVisibility", back_populates="user"
     )
+
+
+class OrgInvite(Base):
+    __tablename__ = "org_invites"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    org_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("organizations.id", ondelete="CASCADE"), nullable=False
+    )
+    invited_by_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False
+    )
+    email: Mapped[str] = mapped_column(String(255), nullable=False)
+    token: Mapped[str] = mapped_column(String(512), nullable=False, unique=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+    accepted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+
+    organization: Mapped["Organization"] = relationship("Organization", back_populates="invites")
+    invited_by: Mapped["User"] = relationship("User", foreign_keys=[invited_by_id])
 
 
 class ProjectVisibility(Base):

@@ -31,13 +31,14 @@ from app.api.rate_limit import check_rate_limit
 from app.config import settings
 from app.emails import (
     load_email_verification_token,
+    load_invite_token,
     load_password_reset_token,
     make_email_verification_token,
     make_password_reset_token,
     send_password_reset_email,
     send_verification_email,
 )
-from app.models.org import Organization, User
+from app.models.org import MembershipStatus, Organization, User
 
 logger = logging.getLogger(__name__)
 
@@ -118,6 +119,12 @@ async def login_post(
     user.last_login = datetime.now(UTC)
     await session.commit()
 
+    # Route based on onboarding state
+    if user.org_id is None:
+        next = "/onboarding"
+    elif user.membership_status == MembershipStatus.PENDING:
+        next = "/pending-approval"
+
     token = create_session_token(user.id)
     resp = RedirectResponse(url=next, status_code=303)
     resp.set_cookie(
@@ -152,14 +159,53 @@ async def register_get(
     request: Request,
     session: DBSession,
     error: str = Query(default=""),
+    org: str = Query(default=""),       # org slug — join via hard link
+    invite: str = Query(default=""),    # invite token — join via email invite
 ) -> HTMLResponse:
-    orgs = list(
-        (await session.execute(select(Organization).order_by(Organization.name))).scalars()
-    )
+    join_org = None
+    prefill_email = ""
+
+    if invite:
+        result = load_invite_token(invite)
+        if result is None:
+            return templates.TemplateResponse(
+                request,
+                "auth_message.html",
+                {
+                    "title": "Invite expired",
+                    "message": "This invite link has expired or is invalid. Ask your admin to send a new one.",
+                    "success": False,
+                },
+                status_code=400,
+            )
+        org_id, prefill_email = result
+        join_org = await session.get(Organization, org_id)
+    elif org:
+        join_org = (
+            await session.execute(select(Organization).where(Organization.slug == org))
+        ).scalar_one_or_none()
+        if join_org is None:
+            return templates.TemplateResponse(
+                request,
+                "auth_message.html",
+                {
+                    "title": "Organization not found",
+                    "message": "This invite link is no longer valid.",
+                    "success": False,
+                },
+                status_code=404,
+            )
+
     return templates.TemplateResponse(
         request,
         "register.html",
-        {"error": error, "orgs": orgs},
+        {
+            "error": error,
+            "join_org": join_org,
+            "prefill_email": prefill_email,
+            "invite_token": invite,
+            "org_slug": org,
+        },
     )
 
 
@@ -177,18 +223,22 @@ async def register_post(
     email = str(form.get("email", "")).strip().lower()
     password = str(form.get("password", ""))
     password_confirm = str(form.get("password_confirm", ""))
-    org_choice = str(form.get("org_choice", "")).strip()  # UUID or "new"
-    org_name_input = str(form.get("org_name", "")).strip()
+    invite_token = str(form.get("invite_token", "")).strip()
+    org_slug = str(form.get("org_slug", "")).strip()
 
-    orgs = list(
-        (await session.execute(select(Organization).order_by(Organization.name))).scalars()
-    )
-
-    def _err(msg: str) -> HTMLResponse:
+    def _err(msg: str, join_org: Organization | None = None, prefill_email: str = "") -> HTMLResponse:
         return templates.TemplateResponse(
             request,
             "register.html",
-            {"error": msg, "name": name, "email": email, "orgs": orgs},
+            {
+                "error": msg,
+                "name": name,
+                "email": email,
+                "join_org": join_org,
+                "prefill_email": prefill_email,
+                "invite_token": invite_token,
+                "org_slug": org_slug,
+            },
             status_code=400,
         )
 
@@ -201,9 +251,6 @@ async def register_post(
     if len(password) < 8:
         return _err("Password must be at least 8 characters.")
 
-    if not org_choice:
-        return _err("Please select or create an organization.")
-
     # Check email uniqueness
     existing = (
         await session.execute(select(User).where(User.email == email))
@@ -211,69 +258,111 @@ async def register_post(
     if existing is not None:
         return _err("An account with that email already exists.")
 
-    # Resolve or create org
-    is_org_admin = False
-    if org_choice == "new":
-        if not org_name_input:
-            return _err("Organization name is required when creating a new org.")
-        # Auto-generate slug from name (spaces → dashes, lowercase, dedupe if needed)
-        base_slug = "-".join(org_name_input.lower().split())
-        slug = base_slug
-        suffix = 1
-        while (
-            await session.execute(select(Organization).where(Organization.slug == slug))
-        ).scalar_one_or_none() is not None:
-            slug = f"{base_slug}-{suffix}"
-            suffix += 1
-        org = Organization(id=uuid.uuid4(), name=org_name_input, slug=slug)
-        session.add(org)
-        await session.flush()
-        is_org_admin = True  # Creator of a new org becomes Admin
-    else:
+    # Determine if joining an existing org
+    join_org: Organization | None = None
+    if invite_token:
+        result = load_invite_token(invite_token)
+        if result is None:
+            return _err("This invite link has expired. Ask your admin to send a new one.")
+        org_id, invited_email = result
+        join_org = await session.get(Organization, org_id)
+        if join_org is None:
+            return _err("The organization for this invite no longer exists.")
+    elif org_slug:
+        join_org = (
+            await session.execute(select(Organization).where(Organization.slug == org_slug))
+        ).scalar_one_or_none()
+        if join_org is None:
+            return _err("Organization not found.")
+
+    if join_org:
+        # Joining existing org — create as pending, await admin approval
+        user = User(
+            id=uuid.uuid4(),
+            org_id=join_org.id,
+            name=name,
+            email=email,
+            hashed_password=hash_password(password),
+            is_active=True,
+            is_org_admin=False,
+            membership_status=MembershipStatus.PENDING,
+            email_verified=False,
+        )
+        session.add(user)
+        await session.commit()
+
+        # Mark invite accepted if this was a tokenized invite
+        if invite_token:
+            from app.models.org import OrgInvite
+            invite_rec = (
+                await session.execute(
+                    select(OrgInvite).where(OrgInvite.token == invite_token)
+                )
+            ).scalar_one_or_none()
+            if invite_rec and invite_rec.accepted_at is None:
+                invite_rec.accepted_at = datetime.now(UTC)
+                await session.commit()
+
+        verify_token = make_email_verification_token(user.id)
+        verify_url = f"{settings.app_base_url}/verify-email?token={verify_token}"
         try:
-            org_id = uuid.UUID(org_choice)
-        except ValueError:
-            return _err("Invalid organization selection.")
-        org = await session.get(Organization, org_id)
-        if org is None:
-            return _err("Selected organization not found.")
+            await send_verification_email(to=email, name=name, verify_url=verify_url)
+        except Exception:  # pragma: no cover
+            pass
 
-    user = User(
-        id=uuid.uuid4(),
-        org_id=org.id,
-        name=name,
-        email=email,
-        hashed_password=hash_password(password),
-        is_active=True,
-        is_org_admin=is_org_admin,
-        email_verified=False,
+        token = create_session_token(user.id)
+        resp = RedirectResponse(url="/pending-approval", status_code=303)
+        resp.set_cookie(COOKIE_NAME, token, max_age=SESSION_MAX_AGE, httponly=True, secure=True, samesite="lax")
+        return resp
+    else:
+        # New user, no org yet — redirect to onboarding wizard
+        user = User(
+            id=uuid.uuid4(),
+            org_id=None,
+            name=name,
+            email=email,
+            hashed_password=hash_password(password),
+            is_active=True,
+            is_org_admin=False,
+            membership_status=MembershipStatus.ACTIVE,
+            email_verified=False,
+        )
+        session.add(user)
+        await session.commit()
+
+        verify_token = make_email_verification_token(user.id)
+        verify_url = f"{settings.app_base_url}/verify-email?token={verify_token}"
+        try:
+            await send_verification_email(to=email, name=name, verify_url=verify_url)
+        except Exception:  # pragma: no cover
+            pass
+
+        token = create_session_token(user.id)
+        resp = RedirectResponse(url="/onboarding", status_code=303)
+        resp.set_cookie(COOKIE_NAME, token, max_age=SESSION_MAX_AGE, httponly=True, secure=True, samesite="lax")
+        return resp
+
+
+# ---------------------------------------------------------------------------
+# GET /pending-approval
+# ---------------------------------------------------------------------------
+
+@router.get("/pending-approval", response_class=HTMLResponse)
+async def pending_approval_get(
+    request: Request,
+    session: DBSession,
+) -> Response:
+    user = await get_current_user(request, session)
+    if user is None:
+        return RedirectResponse(url="/login", status_code=303)
+    if user.membership_status != MembershipStatus.PENDING:
+        return RedirectResponse(url="/deals", status_code=303)
+    org = await session.get(Organization, user.org_id) if user.org_id else None
+    return templates.TemplateResponse(
+        request,
+        "pending_approval.html",
+        {"user": user, "org": org},
     )
-    session.add(user)
-    await session.commit()
-
-    # Fire-and-forget verification email — delivery failure does NOT block
-    # registration; the user can always hit "Resend verification" later.
-    verify_token = make_email_verification_token(user.id)
-    verify_url = f"{settings.app_base_url}/verify-email?token={verify_token}"
-    try:
-        await send_verification_email(to=email, name=name, verify_url=verify_url)
-    except Exception:  # pragma: no cover — logged inside sender
-        pass
-
-    # Soft gate: user is logged in immediately and sees an "unverified" banner
-    # until they click the link.  Verification is required only for flows
-    # that explicitly check user.email_verified.
-    token = create_session_token(user.id)
-    resp = RedirectResponse(url="/deals", status_code=303)
-    resp.set_cookie(
-        COOKIE_NAME,
-        token,
-        max_age=SESSION_MAX_AGE,
-        httponly=True,
-        secure=True,
-        samesite="lax",
-    )
-    return resp
 
 
 # ---------------------------------------------------------------------------
