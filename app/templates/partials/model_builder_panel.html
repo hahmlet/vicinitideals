@@ -970,6 +970,7 @@
       {% for e in expense_lines %}
       {%- set _is_opex_gap = (e.label == _GAP_OPEX_LBL) -%}
       {%- set _opex_gap_active = _is_opex_gap and e.annual_amount and (e.annual_amount | float) != 0 -%}
+        {%- set _opex_is_zero = (e.annual_amount | float) == 0 -%}
       <tr onclick="openEditLine('expense_lines', '{{ e.id }}', '{{ model.id }}')"
           {% if _opex_gap_active %}style="background:#fef3c7"{% elif _is_opex_gap %}style="background:#f3f4f6"{% endif %}>
         <td>
@@ -981,7 +982,7 @@
         <td style="width:32px;text-align:right">
           <button class="btn btn-sm btn-ghost"
                   hx-delete="/api/models/{{ model.id }}/expense-lines/{{ e.id }}"
-                  hx-confirm="Delete '{{ e.label }}'?"
+                  {% if not _opex_is_zero %}hx-confirm="Delete '{{ e.label }}'?"{% endif %}
                   hx-on::after-request="if(event.detail.successful) refreshPanel('opex')"
                   onclick="event.stopPropagation()">✕</button>
         </td>
@@ -1425,6 +1426,7 @@
           <th class="col-right">LP %</th>
           <th class="col-right">GP %</th>
           <th style="font-weight:400;color:var(--text-muted)">Description</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -1436,6 +1438,13 @@
           <td class="col-right" style="{% if tier.lp_split_pct and tier.lp_split_pct | float > 0 %}font-weight:600;color:var(--accent){% endif %}">{{ '%.1f%%' | format(tier.lp_split_pct | float) }}</td>
           <td class="col-right">{{ '%.1f%%' | format(tier.gp_split_pct | float) }}</td>
           <td class="text-small text-muted" style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ tier.description or '' }}</td>
+          <td style="width:32px;text-align:right">
+            <button class="btn btn-sm btn-ghost"
+                    hx-delete="/api/models/{{ model.id }}/waterfall-tiers/{{ tier.id }}"
+                    hx-confirm="Delete this tier?"
+                    hx-on::after-request="if(event.detail.successful) refreshPanel('owners_profit')"
+                    onclick="event.stopPropagation()">✕</button>
+          </td>
         </tr>
         {% endfor %}
       </tbody>

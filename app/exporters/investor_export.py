@@ -3447,14 +3447,14 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
         (junction_principal.get(m.id) or _coerce_decimal((m.source or {}).get("amount") or 0))
         for m in capital_modules if _is_gp_funder(m)
     )
-    _kv_row_optional(
+    kv_row(
         ws, cur_row, "LP Committed Equity",
-        _committed_lp if _committed_lp > 0 else None,
+        _committed_lp,
         name="s_committed_lp_equity", registry=registry, fmt=ACCOUNTING,
     ); cur_row += 1
-    _kv_row_optional(
+    kv_row(
         ws, cur_row, "GP Committed Equity",
-        _committed_gp if _committed_gp > 0 else None,
+        _committed_gp,
         name="s_committed_gp_equity", registry=registry, fmt=ACCOUNTING,
     ); cur_row += 1
 
@@ -3611,6 +3611,7 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
             None,
             name="s_lp_em", registry=registry, fmt='0.00"×"',
         )
+    registry.register("s_lp_equity_multiple", ws.title, cur_row, 2)
     cur_row += 1
     if _committed_gp > 0:
         _gp_em_fb = round(float(_gp_dist_total_fb / _committed_gp), 6) if _committed_gp else 0.0
@@ -3625,6 +3626,7 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
             None,
             name="s_gp_em", registry=registry, fmt='0.00"×"',
         )
+    registry.register("s_gp_equity_multiple", ws.title, cur_row, 2)
     cur_row += 1
 
     if _equity_req_check > Decimal(1) and _committed_equity <= Decimal(1):
