@@ -32,7 +32,7 @@ from app.exporters import (
     validate_deal_import_payload,
 )
 from app.models.cashflow import CashFlow, CashFlowLineItem, OperationalOutputs
-from app.models.deal import Deal, IncomeStream, OperatingExpenseLine, OperationalInputs, Scenario, UseLine
+from app.models.deal import Deal, IncomeStream, OperatingExpenseLine, OperationalInputs, Scenario, UseLine, resolve_opex_annual_amount
 from app.models.manifest import WorkflowRunManifest
 from app.models.project import Opportunity, Project
 from app.observability import (
@@ -444,6 +444,14 @@ async def create_expense_line(
     data = payload.model_dump()
     if data.get("per_type") is None:
         data["per_type"] = "flat"
+    if not data.get("active_in_phases"):
+        data["active_in_phases"] = ["lease_up", "stabilized"]
+    data["annual_amount"] = resolve_opex_annual_amount(
+        project,
+        data.get("per_type"),
+        data.get("per_value"),
+        data.get("annual_amount"),
+    )
     expense_line = OperatingExpenseLine(project_id=project.id, **data)
     session.add(expense_line)
     await session.flush()
@@ -461,9 +469,19 @@ async def update_expense_line(
 ) -> OperatingExpenseLine:
     expense_line = await _get_expense_line_or_404(session, model_id, expense_line_id)
     _assert_not_phantom_row(expense_line.label, "OperatingExpenseLine")
+    project = await _get_default_project_for_deal(session, model_id)
 
     for field, value in payload.model_dump(exclude_unset=True).items():
         setattr(expense_line, field, value)
+
+    if expense_line.per_type is None:
+        expense_line.per_type = "flat"
+    expense_line.annual_amount = resolve_opex_annual_amount(
+        project,
+        expense_line.per_type,
+        expense_line.per_value,
+        expense_line.annual_amount,
+    )
 
     await session.flush()
     await session.refresh(expense_line)

@@ -452,6 +452,12 @@ OPEX_SYNONYMS: dict[str, str] = {
     "Electricity": "Utilities — Electric",
     "Gas": "Utilities — Gas",
     "Natural Gas": "Utilities — Gas",
+    "Accounting & Legal": "Accounting",
+    "Internet — Common": "Telephone / Internet",
+    "Phone / Internet": "Telephone / Internet",
+    "Utilities - All": "Utilities — All",
+    "Utilities / All": "Utilities — All",
+    "CapEx": "CapEx Reserve",
     # Renamed categories — backward compat for existing DB rows
     "Compliance & Legal": "Legal",
 }
@@ -487,8 +493,10 @@ ALWAYS_SHOWN_OPEX_CATEGORIES: tuple[str, ...] = (
 # catch-all — anything that doesn't fit the standard list lumps in here.
 # Alphabetical. "Other" is the catch-all for anything that doesn't fit.
 STANDARD_OPEX_CATEGORIES: tuple[str, ...] = (
+    "Accounting",
     "Administrative",
     "Bank/Software Fees",
+    "CapEx Reserve",
     "Cleaning & Janitorial",
     "Insurance",
     "Jurisdiction Fees",
@@ -504,12 +512,69 @@ STANDARD_OPEX_CATEGORIES: tuple[str, ...] = (
     "Resident Services",
     "Security",
     "Source Compliance",
+    "Telephone / Internet",
     "Unit Turnover",
+    "Utilities — All",
     "Utilities — Electric",
     "Utilities — Gas",
     "Utilities — Trash",
     "Utilities — Water/Sewer",
 )
+
+
+def _project_total_units(project: object | None) -> int:
+    unit_mix = getattr(project, "unit_mix", None) or []
+    total_units = 0
+    for row in unit_mix:
+        if not isinstance(row, dict):
+            continue
+        try:
+            total_units += int(row.get("unit_count") or 0)
+        except (TypeError, ValueError):
+            continue
+    return total_units
+
+
+def _project_total_sqft(project: object | None) -> Decimal:
+    unit_mix = getattr(project, "unit_mix", None) or []
+    total_sqft = Decimal("0")
+    for row in unit_mix:
+        if not isinstance(row, dict):
+            continue
+        unit_count_raw = row.get("unit_count") or 0
+        sqft_raw = row.get("sqft") if row.get("sqft") is not None else row.get("avg_sqft")
+        try:
+            unit_count = Decimal(str(unit_count_raw))
+            sqft = Decimal(str(sqft_raw or 0))
+        except (TypeError, ValueError, InvalidOperation):
+            continue
+        total_sqft += unit_count * sqft
+    return total_sqft
+
+
+def resolve_opex_annual_amount(
+    project: object | None,
+    per_type: str | None,
+    per_value: object | None,
+    annual_amount: object | None = None,
+) -> Decimal:
+    """Convert an OpEx amount basis into an annual amount.
+
+    Flat entries treat ``per_value`` as the annual amount. Per-unit and
+    per-sqft entries scale against the current project's unit mix.
+    """
+    if per_value is None:
+        return Decimal(str(annual_amount or 0))
+
+    per_type_normalized = (per_type or "flat").strip()
+    per_value_decimal = Decimal(str(per_value))
+    if per_type_normalized == "flat":
+        return per_value_decimal
+    if per_type_normalized == "per_unit":
+        return per_value_decimal * Decimal(_project_total_units(project))
+    if per_type_normalized in {"per_sqft_residential", "per_sqft_commercial"}:
+        return per_value_decimal * _project_total_sqft(project)
+    return Decimal(str(annual_amount or per_value_decimal))
 
 
 class OperatingExpenseLine(Base):

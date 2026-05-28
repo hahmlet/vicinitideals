@@ -37,7 +37,8 @@ from app.models.manifest import WorkflowRunManifest
 from app.models.org import Organization, ProjectVisibility, User
 from app.models.parcel import Parcel, ParcelTransformation, ProjectParcel
 from app.models.portfolio import GanttEntry, Portfolio, PortfolioProject
-from app.models.project import Opportunity, Project, ScrapedListing
+from app.models.project import Opportunity, Project
+from app.models.scraped_listing import ScrapedListing
 from app.models.scenario import Scenario, ScenarioResult, ScenarioStatus
 from app.schemas.parcel import ClackamasParcelResult, OregonCityParcelResult, PortlandParcelResult
 from app.scrapers.arcgis import ArcGISLookupError
@@ -1397,6 +1398,9 @@ async def test_post_and_get_model_expense_lines_round_trip(
             name="Default Project",
             deal_type=ProjectType.acquisition,
         )
+        dev_project.unit_mix = [
+            {"label": "1BR", "unit_count": 12, "sqft": 700},
+        ]
         session.add(dev_project)
         await session.commit()
         model_id = model.id
@@ -1427,6 +1431,22 @@ async def test_post_and_get_model_expense_lines_round_trip(
     assert rows[0]["label"] == "Electric"
     assert rows[0]["active_in_phases"] == ["lease_up", "stabilized", "exit"]
     assert rows[0]["notes"] == "Owner-paid common area electric"
+
+    per_unit_response = await client.post(
+        f"/api/models/{model_id}/expense-lines",
+        json={
+            "label": "Telephone / Internet",
+            "per_type": "per_unit",
+            "per_value": "75",
+            "escalation_rate_pct_annual": "3.0",
+        },
+        headers=auth_headers,
+    )
+
+    assert per_unit_response.status_code == 201
+    per_unit_created = per_unit_response.json()
+    assert Decimal(str(per_unit_created["annual_amount"])) == Decimal("900")
+    assert per_unit_created["active_in_phases"] == ["lease_up", "stabilized"]
 
 
 @pytest.mark.asyncio
