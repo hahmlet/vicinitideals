@@ -340,8 +340,20 @@
               </div>
             </label>
             {# Pro forma drop zone — nested inside the Revenue/OpEx card so it
-               appears/disappears with the selection. Hidden when NOI is picked. #}
+               appears/disappears with the selection. Hidden when NOI is picked.
+               When proforma_task_id is set (email attachment pre-staged in Redis),
+               show a banner and auto-load the preflight via HTMX on page load. #}
             <div id="proforma-block" {% if _im != 'revenue_opex' %}style="display:none"{% endif %}>
+              {% if proforma_task_id %}
+              <div id="proforma-staged-loader"
+                   hx-get="/ui/models/{{ model.id }}/proforma-from-staged?task_id={{ proforma_task_id }}"
+                   hx-target="#deal-setup-wizard"
+                   hx-swap="outerHTML"
+                   hx-trigger="load"
+                   style="margin-top:12px;padding:10px 14px;border-radius:8px;background:#eff6ff;border:1px solid #93c5fd;font-size:13px;color:#1e40af">
+                📎 Loading pre-staged pro forma from email…
+              </div>
+              {% else %}
               <label class="proforma-zone" for="proforma-file" id="proforma-zone"
                      ondragover="onProformaDragOver(event)"
                      ondragleave="onProformaDragLeave(event)"
@@ -354,6 +366,7 @@
                   <div class="proforma-file-pill"><span id="proforma-name"></span><a href="#" onclick="clearProformaFile(event)" style="color:var(--accent);text-decoration:none">✕</a></div>
                 </div>
               </label>
+              {% endif %}
             </div>
           </div>
 

@@ -474,11 +474,36 @@ async def _process_async(inbound_email_id: str, resend_email_id: str) -> None:
             # Strip raw MIME after parsing (72h retention not needed at task time)
             email_row.raw_mime_b64 = None
 
-            # Store attachment metadata (strip payload from meta; stored temporarily)
-            attachments_meta = [
-                {k: v for k, v in a.items() if k != "payload_b64"}
-                for a in attachments
-            ]
+            # --- Stage proforma attachments in Redis before flushing meta ---
+            # Each .xlsx/.pdf gets a task_id so the deal-setup wizard can load
+            # it directly from Redis without re-upload (feature parity with
+            # manual upload flow). payload_b64 is kept in `attachments` but
+            # stripped from attachments_meta stored to the DB.
+            import os as _os
+            import redis as _redis  # type: ignore
+            _PROFORMA_TTL = 7 * 86_400  # 7 days, same as manual upload
+            _PROFORMA_EXTS = {"xlsx", "xlsm", "xlsb", "pdf"}
+            _r = _redis.from_url(settings.redis_url, decode_responses=False)
+
+            attachments_meta: list[dict] = []
+            for att in attachments:
+                meta: dict = {k: v for k, v in att.items() if k != "payload_b64"}
+                ext = _os.path.splitext(att.get("filename") or "")[1].lower().lstrip(".")
+                if ext in _PROFORMA_EXTS and att.get("payload_b64"):
+                    task_id = str(__import__("uuid").uuid4())
+                    file_bytes = base64.b64decode(att["payload_b64"])
+                    file_kind = "xlsx" if ext in {"xlsx", "xlsm", "xlsb"} else "doc"
+                    file_hash = hashlib.sha256(file_bytes).hexdigest()
+                    _r.set(f"proforma:{task_id}:file", file_bytes, ex=_PROFORMA_TTL)
+                    _r.set(f"proforma:{task_id}:filename", att["filename"].encode(), ex=_PROFORMA_TTL)
+                    _r.set(f"proforma:{task_id}:kind", file_kind.encode(), ex=_PROFORMA_TTL)
+                    _r.set(f"proforma:{task_id}:file_hash", file_hash.encode(), ex=_PROFORMA_TTL)
+                    meta["proforma_task_id"] = task_id
+                    debug_log.append(
+                        f"Staged proforma: {att['filename']!r} task_id={task_id} kind={file_kind}"
+                    )
+                attachments_meta.append(meta)
+
             email_row.attachments_meta = attachments_meta
             await session.commit()
 
@@ -502,99 +527,104 @@ async def _process_async(inbound_email_id: str, resend_email_id: str) -> None:
                 except Exception as exc:
                     logger.debug("Parcel match failed for %s: %s", info.address, exc)
 
-            # --- Deterministic source_id to prevent duplicate opportunities ---
-            source_id = hashlib.sha256(
-                f"{email_row.sender_email}|{email_row.subject}|{email_row.received_at}".encode()
-            ).hexdigest()[:32]
-
-            # --- Create Opportunity ----------------------------------------
-            # Email ingest stops at Opportunity. The user finishes deal
-            # creation via /deals/new?opp_id=<id> which builds the
-            # Deal+Scenario+Project from the Opportunity.
             asking_price_dec = None
             if info.asking_price and info.asking_price > 0:
                 asking_price_dec = Decimal(str(info.asking_price))
 
-            opp_name = (
-                info.address
-                or (email_row.subject or "Email Deal")[:255]
-            )
+            # --- Create one Opportunity per staged proforma attachment ------
+            # Each attachment that was staged in Redis becomes its own stub
+            # deal so the user can configure and parse each file independently.
+            # Non-proforma attachments (images, PDFs not for proforma, etc.)
+            # don't create Opportunities — they're display-only in the review.
+            #
+            # source_id is hashed per-attachment (sender+subject+received_at+
+            # filename) so multiple attachments in one email produce distinct,
+            # non-colliding Opportunities.
+            proforma_metas = [m for m in attachments_meta if m.get("proforma_task_id")]
+            if not proforma_metas:
+                # No stageable attachments — create a single Opportunity from
+                # the email metadata alone (original behavior).
+                proforma_metas = [{}]
 
-            opportunity = Opportunity(
-                org_id=email_row.org_id,
-                name=opp_name,
-                opp_status=OpportunityStatus.active.value,
-                source="email",
-                source_id=source_id,
-                source_url="",
-                promotion_source="email",
-                parcel_id=parcel_id,
-                address_raw=info.address,
-                asking_price=asking_price_dec,
-                units=info.unit_count,
-            )
-            session.add(opportunity)
+            opp_name_base = info.address or (email_row.subject or "Email Deal")[:255]
+            email_base_id = f"{email_row.sender_email}|{email_row.subject}|{email_row.received_at}"
+            first_opportunity: Opportunity | None = None
+            all_task_ids: list[str] = []
+
+            for idx, att_meta in enumerate(proforma_metas):
+                suffix = att_meta.get("filename") or str(idx)
+                source_id = hashlib.sha256(
+                    f"{email_base_id}|{suffix}".encode()
+                ).hexdigest()[:32]
+
+                opp_name = opp_name_base
+                if len(proforma_metas) > 1 and att_meta.get("filename"):
+                    # Disambiguate name when multiple attachments
+                    bare = _os.path.splitext(att_meta["filename"])[0]
+                    opp_name = f"{opp_name_base} — {bare}"
+
+                opportunity = Opportunity(
+                    org_id=email_row.org_id,
+                    name=opp_name[:255],
+                    opp_status=OpportunityStatus.active.value,
+                    source="email",
+                    source_id=source_id,
+                    source_url="",
+                    promotion_source="email",
+                    parcel_id=parcel_id,
+                    address_raw=info.address,
+                    asking_price=asking_price_dec,
+                    units=info.unit_count,
+                )
+                session.add(opportunity)
+                await session.flush()
+
+                if att_meta.get("proforma_task_id"):
+                    att_meta["opportunity_id"] = str(opportunity.id)
+                    all_task_ids.append(att_meta["proforma_task_id"])
+
+                if first_opportunity is None:
+                    first_opportunity = opportunity
+
+                # Create suggestions on every Opportunity (same LLM extraction
+                # shared across all attachments in this email).
+                src = SuggestionSourceType.llm_extraction.value
+                for field_path, value, conf in [
+                    ("address",          info.address,       info.address_confidence),
+                    ("acquisition_cost", str(info.asking_price) if info.asking_price else None, info.price_confidence),
+                    ("unit_count",       str(info.unit_count) if info.unit_count else None,     0.8),
+                    ("property_type",    info.property_type, 0.7),
+                ]:
+                    if value:
+                        session.add(EmailDealSuggestion(
+                            inbound_email_id=email_row.id,
+                            opportunity_id=opportunity.id,
+                            field_path=field_path,
+                            suggested_value=value,
+                            confidence=conf,
+                            source_type=src,
+                        ))
+
+                debug_log.append(
+                    f"Created Opportunity {opportunity.id} name={opp_name!r} "
+                    f"task_id={att_meta.get('proforma_task_id') or 'none'}"
+                )
+
+            # Persist the updated attachments_meta (now has opportunity_id per entry)
+            email_row.attachments_meta = attachments_meta
+            email_row.opportunity_id = first_opportunity.id if first_opportunity else None
+            email_row.proforma_task_ids = all_task_ids
             await session.flush()
-
-            email_row.opportunity_id = opportunity.id
-            await session.flush()
-
-            # --- Create suggestions ----------------------------------------
-            suggestions: list[EmailDealSuggestion] = []
-            src = SuggestionSourceType.llm_extraction.value
-
-            if info.address:
-                suggestions.append(EmailDealSuggestion(
-                    inbound_email_id=email_row.id,
-                    opportunity_id=opportunity.id,
-                    field_path="address",
-                    suggested_value=info.address,
-                    confidence=info.address_confidence,
-                    source_type=src,
-                ))
-            if info.asking_price:
-                suggestions.append(EmailDealSuggestion(
-                    inbound_email_id=email_row.id,
-                    opportunity_id=opportunity.id,
-                    field_path="acquisition_cost",
-                    suggested_value=str(info.asking_price),
-                    confidence=info.price_confidence,
-                    source_type=src,
-                ))
-            if info.unit_count:
-                suggestions.append(EmailDealSuggestion(
-                    inbound_email_id=email_row.id,
-                    opportunity_id=opportunity.id,
-                    field_path="unit_count",
-                    suggested_value=str(info.unit_count),
-                    confidence=0.8,
-                    source_type=src,
-                ))
-            if info.property_type:
-                suggestions.append(EmailDealSuggestion(
-                    inbound_email_id=email_row.id,
-                    opportunity_id=opportunity.id,
-                    field_path="property_type",
-                    suggested_value=info.property_type,
-                    confidence=0.7,
-                    source_type=src,
-                ))
-            for s in suggestions:
-                session.add(s)
-
-            # Note: proforma .xlsx parse is intentionally NOT queued here.
-            # parse_proforma needs a scenario_id (model_id) which doesn't
-            # exist yet. The /deals/new modal that creates the Deal+Scenario
-            # is the right place to kick off proforma parsing — track this
-            # as a follow-up when the modal-side integration lands.
 
             email_row.status = InboundEmailStatus.opportunity_created.value
-            debug_log.append("OK: pipeline complete, status=opportunity_created")
+            debug_log.append(
+                f"OK: pipeline complete, {len(proforma_metas)} opportunit{'y' if len(proforma_metas)==1 else 'ies'} created"
+            )
             email_row.debug_log = "\n".join(debug_log)[-50000:]
             await session.commit()
 
             # --- Notification email ---
-            await _notify_org(org, email_row, opportunity, info)
+            await _notify_org(org, email_row, first_opportunity or opportunity, info)
 
         except Exception as exc:
             import traceback

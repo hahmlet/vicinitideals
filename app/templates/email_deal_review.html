@@ -76,13 +76,20 @@
     <div class="attachment-section">
       <div class="deal-section-title">Attachments</div>
       {% for att in email.attachments_meta %}
-      <div class="attachment-item">
+      <div class="attachment-item" style="{% if att.opportunity_id %}border-color:var(--accent);{% endif %}">
         <span>📎</span>
-        <span>{{ att.filename or "file" }}</span>
-        <span style="color:var(--text-muted);font-size:11px;margin-left:auto">
+        <span style="font-weight:{% if att.opportunity_id %}600{% else %}400{% endif %}">{{ att.filename or "file" }}</span>
+        <span style="color:var(--text-muted);font-size:11px">
           {{ att.content_type or "" }}
           {% if att.size_bytes %} · {{ (att.size_bytes / 1024) | round(1) }} KB{% endif %}
         </span>
+        {% if att.opportunity_id %}
+        <a href="/deals/new?opp_id={{ att.opportunity_id }}{% if att.proforma_task_id %}&proforma_task_id={{ att.proforma_task_id }}{% endif %}"
+           class="btn btn-primary"
+           style="margin-left:auto;font-size:12px;padding:4px 12px">
+          Setup Deal →
+        </a>
+        {% endif %}
       </div>
       {% endfor %}
     </div>
@@ -215,12 +222,21 @@
 
 <div class="action-bar">
   <a href="/ui/email-inbox" class="btn btn-secondary">← Back to Inbox</a>
-  {% if opportunity %}
-  <a href="/deals/new?opp_id={{ opportunity.id }}" class="btn btn-primary">
-    Continue to Deal Setup →
-  </a>
-  {% elif email.status == "opportunity_created" %}
-  <button class="btn btn-primary" disabled>Opportunity not ready</button>
+  {# Multi-attachment: Setup Deal buttons are per-attachment in the left pane.
+     Show a fallback single button only when there are no attachment-linked opportunities. #}
+  {% set _has_att_opps = email.attachments_meta | selectattr("opportunity_id", "defined") | selectattr("opportunity_id") | list %}
+  {% if not _has_att_opps %}
+    {% if opportunity %}
+    <a href="/deals/new?opp_id={{ opportunity.id }}" class="btn btn-primary">
+      Continue to Deal Setup →
+    </a>
+    {% elif email.status == "opportunity_created" %}
+    <button class="btn btn-primary" disabled>Opportunity not ready</button>
+    {% endif %}
+  {% else %}
+  <span style="font-size:12px;color:var(--text-muted)">
+    {{ _has_att_opps | length }} deal stub{{ 's' if _has_att_opps | length != 1 }} ready — use Setup Deal buttons above
+  </span>
   {% endif %}
 </div>
 {% endblock %}
