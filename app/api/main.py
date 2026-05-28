@@ -105,6 +105,56 @@ def _is_ui_path(path: str) -> bool:
     return path == "/" or any(path.startswith(p) for p in _UI_PATH_PREFIXES)
 
 
+class _NoCacheHTMLMiddleware:
+    """ASGI middleware: add Cache-Control: no-store to all HTML page responses.
+
+    Prevents browsers from serving stale authenticated page content from cache
+    after logout (back-button attack).  Intercepts at the raw ASGI
+    http.response.start event so the header is reliably injected before any
+    bytes reach the client, regardless of how many BaseHTTPMiddleware layers
+    surround this middleware.
+
+    HTMX fragment requests are exempt — they are ephemeral partials, not
+    full-page snapshots that a browser would cache and replay.
+    """
+
+    def __init__(self, app: Any) -> None:
+        self.app = app
+
+    async def __call__(self, scope: Any, receive: Any, send: Any) -> None:
+        if scope["type"] != "http":
+            await self.app(scope, receive, send)
+            return
+
+        is_htmx = any(
+            name.lower() == b"hx-request" and value == b"true"
+            for name, value in scope.get("headers", [])
+        )
+
+        if is_htmx:
+            await self.app(scope, receive, send)
+            return
+
+        async def send_with_no_cache(message: Any) -> None:
+            if message["type"] == "http.response.start":
+                raw_headers: list[tuple[bytes, bytes]] = list(message.get("headers", []))
+                content_type = next(
+                    (v.decode() for n, v in raw_headers if n.lower() == b"content-type"),
+                    "",
+                )
+                if "text/html" in content_type:
+                    raw_headers = [
+                        (n, v) for n, v in raw_headers
+                        if n.lower() not in (b"cache-control", b"pragma")
+                    ]
+                    raw_headers.append((b"cache-control", b"no-store"))
+                    raw_headers.append((b"pragma", b"no-cache"))
+                    message = {**message, "headers": raw_headers}
+            await send(message)
+
+        await self.app(scope, receive, send_with_no_cache)
+
+
 def create_app() -> FastAPI:
     """Create and configure the FastAPI application instance."""
     from app.sentry_setup import init_sentry
@@ -258,6 +308,8 @@ def create_app() -> FastAPI:
 
         from fastapi.responses import RedirectResponse as _RR
         return _RR(url=f"/login?next={request.url.path}", status_code=303)
+
+    app.add_middleware(_NoCacheHTMLMiddleware)
 
     # -----------------------------------------------------------------------
     # CSRF protection — validates X-CSRF-Token on all state-mutating requests
