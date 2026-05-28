@@ -65,10 +65,9 @@ def main() -> None:
     try:
         parsed_exp: ParsedExpenses = client.chat.completions.create(
             model=settings.ollama_model,
-            response_format={"type": "json_object"},
+            response_model=ParsedExpenses,
             messages=[{"role": "user", "content": opex_prompt}],
-        ).choices[0].message.content
-        parsed_exp = ParsedExpenses.model_validate_json(parsed_exp)
+        )
         raw_lines = [e.model_dump() for e in parsed_exp.expense_lines]
         print("--- RAW LLM OUTPUT (before snap) ---")
         for r in raw_lines:

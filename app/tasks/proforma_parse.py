@@ -402,14 +402,19 @@ def _sheet_to_text(ws: Any, property_column: str | None = None, max_rows: int = 
             None,
         )
         if total_col is not None and total_col != 0:
-            keep = [0, total_col]
+            keep = [total_col]
 
-    def _filter(cells: list[str]) -> list[str]:
+    def _collapse(cells: list[str]) -> list[str]:
         if keep:
-            return [cells[i] for i in keep if i < len(cells)]
+            # Collapse all non-total cols into single label (first non-empty cell).
+            # Handles multi-column indent hierarchies (e.g. QuickBooks exports where
+            # sub-items sit in col 1-5 rather than col 0).
+            label = next((c for i, c in enumerate(cells) if i not in keep and c), "")
+            amount = cells[keep[0]] if keep[0] < len(cells) else ""
+            return [label, amount]
         return cells
 
-    filtered = [_filter(r) for r in raw_rows]
+    filtered = [_collapse(r) for r in raw_rows]
 
     # Build markdown table
     col_count = max(len(r) for r in filtered)
