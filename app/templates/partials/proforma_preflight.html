@@ -45,6 +45,10 @@
           hx-swap="outerHTML"
           hx-include="[name='task_id']">
       <input type="hidden" name="task_id" value="{{ task_id }}">
+      {% if sheet_names|length == 1 %}
+      <input type="hidden" name="revenue_sheet" value="{{ sheet_names[0] }}">
+      <input type="hidden" name="opex_sheet" value="{{ sheet_names[0] }}">
+      {% endif %}
 
       <div class="wizard-body" style="display:flex;flex-direction:column;gap:24px">
 
