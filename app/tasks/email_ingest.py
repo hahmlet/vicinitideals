@@ -498,6 +498,7 @@ async def _process_async(inbound_email_id: str, resend_email_id: str) -> None:
                     _r.set(f"proforma:{task_id}:filename", att["filename"].encode(), ex=_PROFORMA_TTL)
                     _r.set(f"proforma:{task_id}:kind", file_kind.encode(), ex=_PROFORMA_TTL)
                     _r.set(f"proforma:{task_id}:file_hash", file_hash.encode(), ex=_PROFORMA_TTL)
+                    _r.set(f"proforma:{task_id}:org_id", str(email_row.org_id).encode(), ex=_PROFORMA_TTL)
                     meta["proforma_task_id"] = task_id
                     debug_log.append(
                         f"Staged proforma: {att['filename']!r} task_id={task_id} kind={file_kind}"

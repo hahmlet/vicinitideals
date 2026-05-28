@@ -28,7 +28,7 @@ import app as _pkg
 from app.api.deps import DBSession
 from app.config import settings
 from app.models.broker import Broker, Brokerage
-from app.models.deal import Scenario, STANDARD_OPEX_CATEGORIES, USE_CATEGORY_LABELS, USE_CATEGORY_PRESETS, USE_COST_CATEGORIES, Deal, DealModel, DealOpportunity, DealStatus, IncomeStream, IncomeStreamType, OperatingExpenseLine, OperationalInputs, ProjectType, UnitMix, UseLine, UseLinePhase, resolve_opex_annual_amount
+from app.models.deal import Scenario, STANDARD_OPEX_CATEGORIES, USE_CATEGORY_LABELS, USE_CATEGORY_PRESETS, USE_COST_CATEGORIES, Deal, DealModel, DealOpportunity, DealStatus, IncomeStream, IncomeStreamType, OperatingExpenseLine, OperationalInputs, ProjectType, UnitMix, UseLine, UseLinePhase
 from app.models.ingestion import DedupCandidate, DedupStatus, IngestJob, RecordType, SavedSearchCriteria
 from app.models.org import Organization, User
 from app.models.capital import CapitalModule, DrawSource, WaterfallTier
@@ -2217,16 +2217,13 @@ async def settings_organization(
     address_issues_count = await _get_address_issues_count(session)
 
     org = await session.get(Organization, user.org_id)
-    from app.models.org import MembershipStatus as _MS
-    _all_members = list(
+    org_users = list(
         (
             await session.execute(
                 select(User).where(User.org_id == user.org_id).order_by(User.created_at)
             )
         ).scalars()
     )
-    org_users = [u for u in _all_members if u.membership_status != _MS.PENDING]
-    pending_members = [u for u in _all_members if u.membership_status == _MS.PENDING]
 
     from app.models.org import OrgInvite as _OrgInviteQ
     pending_invites = (
@@ -2284,7 +2281,6 @@ async def settings_organization(
         {
             "org": org,
             "org_users": org_users,
-            "pending_members": pending_members,
             "pending_invites": pending_invites,
             "user": user,
             "resolved": resolved,
@@ -2293,7 +2289,6 @@ async def settings_organization(
             "org_source_vehicles": org_source_vehicles,
             "timeline_defaults_map": timeline_defaults_map,
             "org_timeline_map": org_timeline_map,
-            "app_base_url": settings.app_base_url,
             **_base_ctx(user, dedup_count, "", address_issues_count, conflicts_count=conflicts_count),
         },
     )
@@ -2323,204 +2318,6 @@ async def settings_organization_post(
 
     # Redirect back to GET to show updated data
     return RedirectResponse(url="/settings/organization", status_code=303)
-
-
-# ---------------------------------------------------------------------------
-# POST /settings/organization/invite
-# ---------------------------------------------------------------------------
-
-_SETTINGS_INVITE_MAX = 10
-_SETTINGS_INVITE_WINDOW = 60 * 60  # 1 hour
-
-
-@router.post("/settings/organization/invite", response_class=HTMLResponse)
-async def settings_organization_invite(
-    request: Request,
-    session: DBSession,
-) -> Response:
-    from app.api.rate_limit import check_rate_limit
-    from app.emails import make_invite_token, send_invite_email
-    from app.models.org import OrgInvite
-    from datetime import UTC, timedelta
-
-    user = await _get_user(session, request)
-    if user is None:
-        return HTMLResponse("Not authenticated", status_code=401)
-    if not user.is_org_admin:
-        return HTMLResponse("Forbidden", status_code=403)
-
-    form = await request.form()
-    email = str(form.get("invite_email", "")).strip().lower()
-    if not email:
-        return HTMLResponse('<span style="color:var(--danger)">Email is required.</span>', status_code=400)
-
-    org = await session.get(Organization, user.org_id)
-    if org is None:
-        return HTMLResponse("Organization not found", status_code=404)
-
-    allowed = await check_rate_limit(
-        key=f"invite_org:{user.org_id}",
-        max_count=_SETTINGS_INVITE_MAX,
-        window_seconds=_SETTINGS_INVITE_WINDOW,
-    )
-    if not allowed:
-        return HTMLResponse('<span style="color:var(--danger)">Rate limit reached. Try again in an hour.</span>', status_code=429)
-
-    expires = datetime.now(UTC) + timedelta(seconds=settings.invite_token_max_age_seconds)
-    token = make_invite_token(org.id, email)
-    invite_rec = OrgInvite(
-        id=_uuid_mod.uuid4(),
-        org_id=org.id,
-        invited_by_id=user.id,
-        email=email,
-        token=token,
-        expires_at=expires,
-    )
-    session.add(invite_rec)
-    await session.commit()
-
-    invite_url = f"{settings.app_base_url}/register?invite={token}"
-    try:
-        await send_invite_email(
-            to=email,
-            inviter_name=user.name,
-            org_name=org.name,
-            invite_url=invite_url,
-        )
-    except Exception:
-        pass
-
-    return HTMLResponse(
-        f'<span style="color:var(--success,#16a34a);font-size:13px;">✓ Invite sent to {email}</span>'
-    )
-
-
-# ---------------------------------------------------------------------------
-# POST /settings/organization/members/{user_id}/approve
-# ---------------------------------------------------------------------------
-
-@router.post("/settings/organization/members/{member_id}/approve", response_class=HTMLResponse)
-async def settings_organization_member_approve(
-    member_id: UUID,
-    request: Request,
-    session: DBSession,
-) -> Response:
-    from app.models.org import MembershipStatus
-
-    user = await _get_user(session, request)
-    if user is None:
-        return HTMLResponse("Not authenticated", status_code=401)
-    if not user.is_org_admin:
-        return HTMLResponse("Forbidden", status_code=403)
-
-    member = await session.get(User, member_id)
-    if member is None or member.org_id != user.org_id:
-        return HTMLResponse("Not found", status_code=404)
-
-    member.membership_status = MembershipStatus.ACTIVE
-    await session.commit()
-
-    return HTMLResponse("")
-
-
-# ---------------------------------------------------------------------------
-# POST /settings/organization/invites/{invite_id}/resend
-# ---------------------------------------------------------------------------
-
-_RESEND_1MIN_MAX = 1
-_RESEND_1MIN_WINDOW = 60
-_RESEND_TOTAL_MAX = 3
-_RESEND_TOTAL_WINDOW = 60 * 60 * 24 * 7  # 7 days, matches token expiry
-
-
-@router.post("/settings/organization/invites/{invite_id}/resend", response_class=HTMLResponse)
-async def settings_organization_invite_resend(
-    invite_id: UUID,
-    request: Request,
-    session: DBSession,
-) -> Response:
-    from datetime import timedelta
-
-    from app.api.rate_limit import check_rate_limit
-    from app.emails import make_invite_token, send_invite_email
-    from app.models.org import OrgInvite as _OrgInvite
-    from markupsafe import escape as _esc
-
-    user = await _get_user(session, request)
-    if user is None:
-        return HTMLResponse("Not authenticated", status_code=401)
-    if not user.is_org_admin:
-        return HTMLResponse("Forbidden", status_code=403)
-
-    invite = await session.get(_OrgInvite, invite_id)
-    if invite is None or invite.org_id != user.org_id:
-        return HTMLResponse("Not found", status_code=404)
-    if invite.accepted_at is not None:
-        return HTMLResponse('<span style="color:var(--danger)">Invite already accepted.</span>', status_code=400)
-
-    allowed_1min = await check_rate_limit(
-        key=f"invite_resend_1min:{invite_id}",
-        max_count=_RESEND_1MIN_MAX,
-        window_seconds=_RESEND_1MIN_WINDOW,
-    )
-    if not allowed_1min:
-        return HTMLResponse('<span style="color:var(--danger)">Wait 1 minute before resending.</span>', status_code=429)
-
-    allowed_total = await check_rate_limit(
-        key=f"invite_resend_total:{invite_id}",
-        max_count=_RESEND_TOTAL_MAX,
-        window_seconds=_RESEND_TOTAL_WINDOW,
-    )
-    if not allowed_total:
-        return HTMLResponse('<span style="color:var(--danger)">Maximum resends reached for this invite.</span>', status_code=429)
-
-    new_token = make_invite_token(invite.org_id, invite.email)
-    invite.token = new_token
-    invite.expires_at = datetime.now(UTC) + timedelta(seconds=settings.invite_token_max_age_seconds)
-    await session.commit()
-
-    org = await session.get(Organization, user.org_id)
-    invite_url = f"{settings.app_base_url}/register?invite={new_token}"
-    try:
-        await send_invite_email(
-            to=invite.email,
-            inviter_name=user.name,
-            org_name=org.name if org else "",
-            invite_url=invite_url,
-        )
-    except Exception:
-        pass
-
-    return HTMLResponse(f'<span style="color:var(--success,#16a34a);font-size:12px;">✓ Resent to {_esc(invite.email)}</span>')
-
-
-# ---------------------------------------------------------------------------
-# POST /settings/organization/members/{user_id}/remove
-# ---------------------------------------------------------------------------
-
-@router.post("/settings/organization/members/{member_id}/remove", response_class=HTMLResponse)
-async def settings_organization_member_remove(
-    member_id: UUID,
-    request: Request,
-    session: DBSession,
-) -> Response:
-    user = await _get_user(session, request)
-    if user is None:
-        return HTMLResponse("Not authenticated", status_code=401)
-    if not user.is_org_admin:
-        return HTMLResponse("Forbidden", status_code=403)
-    if member_id == user.id:
-        return HTMLResponse("Cannot remove yourself", status_code=400)
-
-    member = await session.get(User, member_id)
-    if member is None or member.org_id != user.org_id:
-        return HTMLResponse("Not found", status_code=404)
-
-    await session.delete(member)
-    await session.commit()
-
-    # Return empty string — HTMX outerHTML swap on the row removes it
-    return HTMLResponse("")
 
 
 # ---------------------------------------------------------------------------
@@ -6930,16 +6727,15 @@ async def handle_form_create_or_update(
 
     elif item_type == "expense-lines":
         _aip_list = form.getlist("active_in_phases")
-        active_phases = _aip_list if _aip_list else _fp(form.get("active_in_phases"), ["lease_up", "stabilized"])
-        per_type_val = form.get("per_type") or "flat"
+        active_phases = _aip_list if _aip_list else _fp(form.get("active_in_phases"), ["stabilized"])
+        per_type_val = form.get("per_type") or None
         per_value_val = _fd(form.get("per_value"))
-        project = await session.get(Project, project_id) if project_id else None
-        annual_amt = resolve_opex_annual_amount(
-            project,
-            per_type_val,
-            per_value_val,
-            _fd(form.get("annual_amount")) or Decimal("0"),
-        )
+        # For flat type, annual_amount mirrors per_value for backward-compat display
+        # For per_unit/sqft types, annual_amount stays 0 until compute engine scales it
+        if per_value_val and per_type_val in (None, "flat"):
+            annual_amt = per_value_val
+        else:
+            annual_amt = _fd(form.get("annual_amount")) or Decimal("0")
         data = {
             "label": form.get("label", ""),
             "annual_amount": annual_amt,
@@ -10274,30 +10070,26 @@ async def deal_setup_wizard_complete(
     # Seeded in all income modes — user may switch from NOI to revenue/opex.
     # (label, per_type, scale_with_lease_up, lease_up_floor_pct, active_phases)
     _OPEX_SEEDS = [
-        ("Accounting",                 "flat", False, None,  ["lease_up", "stabilized"]),
-        ("Real Estate Taxes",          "flat", False, None,  ["lease_up", "stabilized"]),
-        ("Insurance",                  "flat", False, None,  ["lease_up", "stabilized"]),
-        ("Property Management",        "flat", True,  25.0,  ["lease_up", "stabilized"]),
-        ("Utilities — All",            "flat", False, None,  ["lease_up", "stabilized"]),
-        ("Utilities — Water/Sewer",    "flat", True,  50.0,  ["lease_up", "stabilized"]),
-        ("Utilities — Electric",       "flat", True,  100.0, ["lease_up", "stabilized"]),
-        ("Utilities — Gas",            "flat", True,  50.0,  ["lease_up", "stabilized"]),
-        ("Utilities — Trash",          "flat", True,  75.0,  ["lease_up", "stabilized"]),
-        ("Telephone / Internet",       "flat", False, None,  ["lease_up", "stabilized"]),
-        ("Repairs & Maintenance",      "flat", True,  25.0,  ["stabilized"]),
-        ("Marketing & Leasing",        "flat", True,  100.0, ["lease_up", "stabilized"]),
-        ("Administrative",             "flat", False, None,  ["lease_up", "stabilized"]),
-        ("Payroll",                    "flat", False, None,  ["lease_up", "stabilized"]),
-        ("Landscaping & Snow Removal", "flat", False, None,  ["lease_up", "stabilized"]),
-        ("Pest Control",               "flat", False, None,  ["lease_up", "stabilized"]),
-        ("Cleaning & Janitorial",      "flat", False, None,  ["lease_up", "stabilized"]),
-        ("Security",                   "flat", False, None,  ["lease_up", "stabilized"]),
-        ("Resident Services",          "flat", True,  25.0,  ["stabilized"]),
-        ("Jurisdiction Fees",          "flat", False, None,  ["lease_up", "stabilized"]),
-        ("Legal",                      "flat", False, None,  ["lease_up", "stabilized"]),
-        ("Bank/Software Fees",         "flat", False, None,  ["lease_up", "stabilized"]),
-        ("CapEx Reserve",              "flat", False, None,  ["lease_up", "stabilized"]),
-        ("Unit Turnover",              "flat", False, None,  ["stabilized"]),
+        ("Real Estate Taxes",          "flat",     False, None,   ["lease_up", "stabilized"]),
+        ("Insurance",                  "flat",     False, None,   ["lease_up", "stabilized"]),
+        ("Property Management",        "per_unit", True,  25.0,   ["lease_up", "stabilized"]),
+        ("Utilities — Water/Sewer",    "per_unit", True,  50.0,   ["lease_up", "stabilized"]),
+        ("Utilities — Electric",       "flat",     True,  100.0,  ["lease_up", "stabilized"]),
+        ("Utilities — Gas",            "per_unit", True,  50.0,   ["lease_up", "stabilized"]),
+        ("Utilities — Trash",          "flat",     True,  75.0,   ["lease_up", "stabilized"]),
+        ("Repairs & Maintenance",      "per_unit", True,  25.0,   ["stabilized"]),
+        ("Marketing & Leasing",        "per_unit", True,  100.0,  ["lease_up", "stabilized"]),
+        ("Administrative",             "flat",     False, None,   ["lease_up", "stabilized"]),
+        ("Payroll",                    "flat",     False, None,   ["lease_up", "stabilized"]),
+        ("Landscaping & Snow Removal", "flat",     False, None,   ["lease_up", "stabilized"]),
+        ("Pest Control",               "flat",     False, None,   ["lease_up", "stabilized"]),
+        ("Cleaning & Janitorial",      "flat",     False, None,   ["lease_up", "stabilized"]),
+        ("Security",                   "flat",     False, None,   ["lease_up", "stabilized"]),
+        ("Resident Services",          "flat",     True,  25.0,   ["stabilized"]),
+        ("Jurisdiction Fees",           "flat",     False, None,   ["lease_up", "stabilized"]),
+        ("Legal",                       "flat",     False, None,   ["lease_up", "stabilized"]),
+        ("Bank/Software Fees",         "flat",     False, None,   ["lease_up", "stabilized"]),
+        ("Unit Turnover",              "per_unit", False, None,   ["stabilized"]),
     ]
 
     for _opex_proj in all_scenario_projects:
@@ -12186,7 +11978,7 @@ async def download_import_template(model_id: UUID) -> StreamingResponse:
     for label, amt, per, esc, scale, floor, phases in [
         ("Property Tax", 18000, "flat", 3.0, "no", "", "stabilized"),
         ("Insurance", 9600, "flat", 3.0, "no", "", "stabilized"),
-        ("Property Management", 8, "flat", 3.0, "yes", 25, "lease_up, stabilized"),
+        ("Property Management", 8, "per_unit", 3.0, "yes", 25, "lease_up, stabilized"),
     ]:
         ws_opex.append([label, amt, per, esc, scale, floor, phases, ""])
 
@@ -12384,6 +12176,7 @@ async def proforma_preflight(
 async def proforma_from_staged(
     request: Request,
     model_id: UUID,
+    session: DBSession,
     task_id: str = Query(...),
 ) -> HTMLResponse:
     """Load a pre-staged proforma from Redis (email attachment path) and run
@@ -12392,9 +12185,27 @@ async def proforma_from_staged(
     Called by the deal setup wizard when the URL carries ``proforma_task_id``
     from an email attachment that was stashed in Redis during email ingest.
     """
+    # Auth + ownership — same guard pattern as model_builder.
+    user = await _get_user(session, request)
+    if user is None:
+        return HTMLResponse("Not authenticated", status_code=401)
+    model = await session.get(DealModel, model_id)
+    if model is None:
+        return HTMLResponse("Not found", status_code=404)
+    if settings.org_isolation_enabled:
+        owning_deal = await session.get(Deal, model.deal_id) if model.deal_id else None
+        if owning_deal is None or owning_deal.org_id != user.org_id:
+            return HTMLResponse("Not found", status_code=404)
+
     import redis as _redis  # type: ignore
 
     r = _redis.from_url(settings.redis_url, decode_responses=False)
+
+    # Cross-tenant guard: verify task_id was staged for this org.
+    stored_org = r.get(f"proforma:{task_id}:org_id")
+    if stored_org is not None and stored_org.decode() != str(user.org_id):
+        return HTMLResponse("Not found", status_code=404)
+
     file_bytes = r.get(f"proforma:{task_id}:file")
     if not file_bytes:
         return HTMLResponse(
@@ -12856,7 +12667,6 @@ async def proforma_confirm(
                     project_id=project_id,
                     label=label,
                     annual_amount=Decimal((amount_s or "0").replace(",", "")),
-                    per_type="flat",
                     escalation_rate_pct_annual=Decimal("3"),
                     active_in_phases=["lease_up", "stabilized"],
                     notes=orig_label.strip() if orig_label.strip() != label else None,
@@ -14961,199 +14771,5 @@ async def export_history_json_endpoint(
             "Content-Disposition": f'attachment; filename="history-{model_id}.json"',
         },
     )
-
-
-# ===========================================================================
-# Onboarding wizard
-# ===========================================================================
-
-def _slugify(text: str) -> str:
-    """Convert org name to URL-safe slug."""
-    import re
-    slug = text.lower().strip()
-    slug = re.sub(r"[^\w\s-]", "", slug)
-    slug = re.sub(r"[\s_]+", "-", slug)
-    slug = re.sub(r"-+", "-", slug).strip("-")
-    return slug[:100]
-
-
-@router.get("/onboarding", response_class=HTMLResponse)
-async def onboarding_get(request: Request, session: DBSession) -> Response:
-    """Entry point for new-user onboarding wizard (create org + invite)."""
-    user = await _get_user(session, request)
-    if user is None:
-        return RedirectResponse(url="/login", status_code=303)
-    if user.org_id is not None:
-        return RedirectResponse(url="/deals", status_code=303)
-    templates = Jinja2Templates(directory=str(Path(_pkg.__file__).parent / "templates"))
-    return templates.TemplateResponse(
-        request,
-        "onboarding.html",
-        {"user": user, "_step": 1, "inputs": {}},
-    )
-
-
-@router.post("/ui/onboarding/step", response_class=HTMLResponse)
-async def onboarding_step_post(request: Request, session: DBSession) -> Response:
-    """HTMX step handler — returns next wizard step (outerHTML swap)."""
-    from app.api.auth import COOKIE_NAME
-    user = await _get_user(session, request)
-    if user is None:
-        return RedirectResponse(url="/login", status_code=303)
-    if user.org_id is not None:
-        return RedirectResponse(url="/deals", status_code=303)
-
-    form = await request.form()
-    current_step = int(form.get("_step", "1"))
-    inputs: dict = {k: str(v) for k, v in form.items() if k != "_step"}
-
-    templates = Jinja2Templates(directory=str(Path(_pkg.__file__).parent / "templates"))
-
-    if current_step == 1:
-        org_name = inputs.get("org_name", "").strip()
-        org_slug = inputs.get("org_slug", "").strip()
-
-        if not org_name:
-            return templates.TemplateResponse(
-                request, "partials/onboarding_wizard.html",
-                {"user": user, "_step": 1, "inputs": inputs, "error": "Organization name is required."},
-            )
-        if not org_slug:
-            org_slug = _slugify(org_name)
-            inputs["org_slug"] = org_slug
-
-        # Validate slug uniqueness
-        taken = (
-            await session.execute(select(Organization).where(Organization.slug == org_slug))
-        ).scalar_one_or_none()
-        if taken is not None:
-            return templates.TemplateResponse(
-                request, "partials/onboarding_wizard.html",
-                {"user": user, "_step": 1, "inputs": inputs, "error": "That slug is already taken. Choose another."},
-            )
-        inputs["org_name"] = org_name
-        inputs["org_slug"] = org_slug
-        return templates.TemplateResponse(
-            request, "partials/onboarding_wizard.html",
-            {"user": user, "_step": 2, "inputs": inputs},
-        )
-
-    return templates.TemplateResponse(
-        request, "partials/onboarding_wizard.html",
-        {"user": user, "_step": current_step, "inputs": inputs},
-    )
-
-
-@router.get("/ui/onboarding/check-slug", response_class=HTMLResponse)
-async def onboarding_check_slug(
-    request: Request, session: DBSession, slug: str = Query(default="")
-) -> HTMLResponse:
-    """HTMX inline slug availability check. Returns a small indicator fragment."""
-    if not slug:
-        return HTMLResponse("")
-    normalized = _slugify(slug)
-    taken = (
-        await session.execute(select(Organization).where(Organization.slug == normalized))
-    ).scalar_one_or_none()
-    if taken:
-        return HTMLResponse(
-            '<span style="color:var(--danger);font-size:12px;">✗ Already taken</span>'
-        )
-    return HTMLResponse(
-        '<span style="color:var(--success,#16a34a);font-size:12px;">✓ Available</span>'
-    )
-
-
-_ONBOARDING_INVITE_MAX = 5
-_ONBOARDING_INVITE_WINDOW = 5 * 60  # 5 minutes
-
-
-@router.post("/ui/onboarding/complete", response_class=HTMLResponse)
-async def onboarding_complete_post(request: Request, session: DBSession) -> Response:
-    """Finalize onboarding: create org, assign to user, send invites."""
-    from app.api.rate_limit import check_rate_limit
-    from app.emails import make_invite_token, send_invite_email
-    from app.models.org import MembershipStatus, OrgInvite
-    from datetime import UTC, timedelta
-
-    user = await _get_user(session, request)
-    if user is None:
-        return RedirectResponse(url="/login", status_code=303)
-    if user.org_id is not None:
-        return RedirectResponse(url="/deals", status_code=303)
-
-    form = await request.form()
-    org_name = str(form.get("org_name", "")).strip()
-    org_slug = str(form.get("org_slug", "")).strip()
-    invite_emails = [
-        str(form.get(f"invite_email_{i}", "")).strip().lower()
-        for i in range(1, 6)
-        if str(form.get(f"invite_email_{i}", "")).strip()
-    ]
-
-    templates = Jinja2Templates(directory=str(Path(_pkg.__file__).parent / "templates"))
-
-    if not org_name or not org_slug:
-        return templates.TemplateResponse(
-            request, "partials/onboarding_wizard.html",
-            {"user": user, "_step": 1, "inputs": dict(form), "error": "Organization name and slug are required."},
-        )
-
-    # Verify slug still unique at commit time
-    taken = (
-        await session.execute(select(Organization).where(Organization.slug == org_slug))
-    ).scalar_one_or_none()
-    if taken is not None:
-        return templates.TemplateResponse(
-            request, "partials/onboarding_wizard.html",
-            {"user": user, "_step": 1, "inputs": dict(form), "error": "That slug is already taken. Choose another."},
-        )
-
-    # Create org
-    org = Organization(id=_uuid_mod.uuid4(), name=org_name, slug=org_slug)
-    session.add(org)
-    await session.flush()
-
-    # Assign user to org as admin
-    user.org_id = org.id
-    user.is_org_admin = True
-    user.membership_status = MembershipStatus.ACTIVE
-    await session.commit()
-
-    # Send invites (rate-limited)
-    if invite_emails:
-        allowed = await check_rate_limit(
-            key=f"invite_send:{user.id}",
-            max_count=_ONBOARDING_INVITE_MAX,
-            window_seconds=_ONBOARDING_INVITE_WINDOW,
-        )
-        if allowed:
-            expires = datetime.now(UTC) + timedelta(seconds=settings.invite_token_max_age_seconds)
-            for email in invite_emails[:5]:
-                if not email:
-                    continue
-                token = make_invite_token(org.id, email)
-                invite_rec = OrgInvite(
-                    id=_uuid_mod.uuid4(),
-                    org_id=org.id,
-                    invited_by_id=user.id,
-                    email=email,
-                    token=token,
-                    expires_at=expires,
-                )
-                session.add(invite_rec)
-                invite_url = f"{settings.app_base_url}/register?invite={token}"
-                try:
-                    await send_invite_email(
-                        to=email,
-                        inviter_name=user.name,
-                        org_name=org.name,
-                        invite_url=invite_url,
-                    )
-                except Exception:  # pragma: no cover
-                    pass
-            await session.commit()
-
-    return HTMLResponse("", status_code=200, headers={"HX-Redirect": "/deals"})
 
 
