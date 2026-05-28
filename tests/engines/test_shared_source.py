@@ -53,13 +53,11 @@ async def _seed_basics(session: AsyncSession) -> tuple[Scenario, Project, Projec
     p1 = Project(
         scenario_id=scenario.id,
         name="Project 1",
-        deal_type=ProjectType.acquisition.value,
         created_at=datetime(2026, 1, 1, tzinfo=timezone.utc),
     )
     p2 = Project(
         scenario_id=scenario.id,
         name="Project 2",
-        deal_type=ProjectType.acquisition.value,
         created_at=datetime(2026, 1, 2, tzinfo=timezone.utc),
     )
     session.add_all([p1, p2])
