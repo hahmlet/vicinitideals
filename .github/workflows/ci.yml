@@ -188,12 +188,15 @@ jobs:
         run: uv run python -m app.scripts.check_promotion_gates --environment staging
 
       - name: Integration tests
-        # Legacy parcels/scraped-listings ingest tests are scope-cut per
-        # launch plan; same ignores as the light-gate unit step.
-        # --timeout=60: hard kill any single test that hangs >1 min so
-        # CI surfaces the culprit instead of running until job timeout.
+        # Runs the same suite as the light-gate Unit tests step but
+        # without the `-m unit` marker filter, picking up integration-
+        # marked tests that exercise the ASGI app against Postgres.
+        # --timeout=60 prevents any single hung test from monopolizing
+        # the job. Tests that depend on the compose-network `redis`
+        # hostname fail-open via the rate limiter, so they cost time
+        # but don't break the gate.
         run: |
-          uv run pytest tests/ -q --timeout=60 --ignore=tests/e2e \
+          uv run pytest tests/ -q --timeout=60 -m "unit or integration" --ignore=tests/e2e \
             --ignore=tests/api/test_routers.py \
             --ignore=tests/contract \
             --ignore=tests/scrapers/test_dedup.py \
