@@ -33,37 +33,22 @@
 
 ---
 
-## What Still Needs to Be Done — Excel Export Side (Phase 5e)
+## Excel Export Status — All Done
 
-### The gap
-LP/GP **IRR cells** in the export workbook still show em-dashes. LP **Equity Multiple** (`lp_em`) does populate correctly because its formula references `s_lp_distributions_total` and `s_committed_lp_equity` — both already written.
+Phases 5d, 5e, 5f, 5g all shipped as of May 27, 2026.
 
-LP/GP IRR requires the engine to write a **per-class cash-flow series** — a column of period-level net cash flows for LP separately and GP separately — so the Excel `IRR()` or `XIRR()` formula has data to compute from.
-
-### What the exporter already has (Phase 5d baseline)
-- Named ranges `s_lp_distributions_total` and `s_committed_lp_equity` → EM formula works
-- LP/GP waterfall result rows exist in `WaterfallResult` table after `compute_waterfall()` runs
-- Excel export lives in `app/exporters/` — likely `excel.py` or similar
-
-### What Phase 5e needs to add
-1. **Engine**: after `compute_waterfall()`, aggregate per-period LP net cash flows:
-   - LP cash flow per period = LP distributions received − LP capital called
-   - Write as a series (one value per month or per year) to a named range or hidden column
-   - Same for GP
-2. **Exporter**: wire those series into IRR/XIRR formula cells in the workbook
-   - Named ranges probably: `lp_cf_series` / `gp_cf_series` (or period columns)
-   - IRR cell formula: `=XIRR(lp_cf_series, date_series)`
-
-### Key files to look at
-| File | Purpose |
+| Named range | Status |
 |---|---|
-| `app/engines/waterfall.py` | Waterfall engine — `compute_waterfall()`, `WaterfallResult` writes |
-| `app/exporters/` | Excel export — find the file that builds the investor returns sheet |
-| `app/models/capital.py` | `WaterfallResult` model — what per-period data is already stored |
-| `docs/FINANCIAL_MODEL.md` | Named range reference for Phase 5d cells already wired |
+| `s_lp_distributions_total` / `s_gp_distributions_total` | ✅ live |
+| `s_committed_lp_equity` / `s_committed_gp_equity` | ✅ live |
+| `s_lp_em` / `s_gp_em` | ✅ live (formula cells) |
+| `s_lp_coc_y1` / `s_gp_coc_y1` | ✅ live (formula cells) |
+| `r_returns_lp_cf` / `r_returns_gp_cf` | ✅ live (annual CF series rows) |
+| `r_returns_cf_dates` | ✅ live (shared date series) |
+| `s_lp_irr` / `s_gp_irr` | ✅ live — `=IFERROR(XIRR(r_returns_lp_cf, r_returns_cf_dates), fallback)` |
 
-### Suggested first step for next agent
-1. Read `app/engines/waterfall.py` — find where `WaterfallResult` rows are written, what fields exist (`tier_id`, `period`, `lp_distributed`, `gp_distributed`, etc.)
-2. Read the Excel exporter — find the investor returns sheet builder, see which named ranges are already written vs still em-dashes
-3. Check `docs/FINANCIAL_MODEL.md` for Phase 5 named range map
-4. Then build the per-period LP/GP CF aggregation and wire the XIRR cells
+Key commits: `c2801f1` (Phase 5g — XIRR), `bc041e5` (docs). Both in VM 114 HEAD as of this session.
+
+## All Items Complete
+
+Sensitivity sheet writes static engine-computed values at export time with note: *"For reference only. Changes to Excel Report do not update Sensitivity Data Table."* Dynamic `TABLE()` formula approach was abandoned — static values are sufficient and the disclaimer makes the limitation clear. `3ff3032`.
