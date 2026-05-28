@@ -33,6 +33,31 @@ _BACKFILL_ROWS = (
 
 def upgrade() -> None:
     # Insert only missing rows. Existing rows with the same label are left alone.
+    if op.get_context().as_sql:
+        # Offline (--sql) mode: emit one INSERT ... SELECT per label that
+        # adds a row for every project missing it. gen_random_uuid() is
+        # available on PG 13+ (pgcrypto core in 17, but we already use it
+        # via UUID() defaults elsewhere — equivalent in this DB).
+        for label in _BACKFILL_ROWS:
+            op.execute(
+                f"""
+                INSERT INTO operating_expense_lines (
+                    id, project_id, label, annual_amount, per_value, per_type,
+                    scale_with_lease_up, lease_up_floor_pct,
+                    escalation_rate_pct_annual, active_in_phases, notes
+                )
+                SELECT gen_random_uuid(), p.id, '{label}', 0, 0, 'flat',
+                       false, NULL, 3,
+                       ARRAY['lease_up', 'stabilized']::text[], NULL
+                FROM projects p
+                WHERE NOT EXISTS (
+                    SELECT 1 FROM operating_expense_lines o
+                    WHERE o.project_id = p.id AND o.label = '{label}'
+                )
+                """
+            )
+        return
+
     conn = op.get_bind()
     project_ids = [row[0] for row in conn.execute(sa.text("SELECT id FROM projects"))]
     for project_id in project_ids:
