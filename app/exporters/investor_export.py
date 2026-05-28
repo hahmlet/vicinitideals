@@ -2985,7 +2985,7 @@ def _build_sensitivity(
 
     ws.cell(
         row=last_row + 1, column=1,
-        value="Values are engine-computed. Re-export to refresh after changing assumptions.",
+        value="For reference only. Changes to Excel Report do not update Sensitivity Data Table.",
     ).font = FONT_SUBTITLE
 
     freeze_top(ws, row=5)  # freeze through x-axis header of first grid (row 4)
