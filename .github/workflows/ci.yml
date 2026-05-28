@@ -190,8 +190,10 @@ jobs:
       - name: Integration tests
         # Legacy parcels/scraped-listings ingest tests are scope-cut per
         # launch plan; same ignores as the light-gate unit step.
+        # --timeout=60: hard kill any single test that hangs >1 min so
+        # CI surfaces the culprit instead of running until job timeout.
         run: |
-          uv run pytest tests/ -q --ignore=tests/e2e \
+          uv run pytest tests/ -q --timeout=60 --ignore=tests/e2e \
             --ignore=tests/api/test_routers.py \
             --ignore=tests/contract \
             --ignore=tests/scrapers/test_dedup.py \
