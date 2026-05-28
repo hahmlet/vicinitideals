@@ -143,7 +143,7 @@ jobs:
         uses: astral-sh/setup-uv@v3
 
       - name: Install dependencies (including e2e extras)
-        run: uv sync --extra dev --extra e2e
+        run: uv sync --extra dev --extra api --extra e2e
 
       - name: Prepare environment file
         run: cp .env.example .env
