@@ -208,6 +208,8 @@ def _is_debt_or_total(label: str) -> bool:
 # category name and so fall under the fuzzy threshold.  Each keyword is
 # substring-matched against the lowercase raw label; first hit wins.
 _CATEGORY_KEYWORDS: tuple[tuple[str, str], ...] = (
+    ("utility",      "Utilities — All"),
+    ("utilities",    "Utilities — All"),
     ("electric",     "Utilities — Electric"),
     ("gas",          "Utilities — Gas"),
     ("water",        "Utilities — Water/Sewer"),
@@ -240,8 +242,9 @@ _CATEGORY_KEYWORDS: tuple[tuple[str, str], ...] = (
     ("off-site mgmt", "Property Management"),
     ("office",       "Administrative"),
     ("admin",        "Administrative"),
-    ("phone",        "Bank/Software Fees"),
-    ("internet",     "Bank/Software Fees"),
+    ("phone",        "Telephone / Internet"),
+    ("internet",     "Telephone / Internet"),
+    ("telecom",      "Telephone / Internet"),
     ("software",     "Bank/Software Fees"),
     ("computer",     "Bank/Software Fees"),
     ("bank",         "Bank/Software Fees"),
@@ -255,7 +258,11 @@ _CATEGORY_KEYWORDS: tuple[tuple[str, str], ...] = (
     ("ohcs",         "Source Compliance"),
     ("hud monit",    "Source Compliance"),
     ("legal",        "Legal"),
-    ("accounting",   "Legal"),
+    ("accounting",   "Accounting"),
+    ("bookkeep",     "Accounting"),
+    ("capex",        "CapEx Reserve"),
+    ("capital reserve", "CapEx Reserve"),
+    ("replacement reserve", "CapEx Reserve"),
     ("audit",        "Legal"),
     ("cpa",          "Legal"),
     ("license",      "Legal"),

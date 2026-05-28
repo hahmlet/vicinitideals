@@ -15,6 +15,7 @@ from app.tasks.proforma_parse import (
     ExpenseLineResult,
     ParsedExpenses,
     UnitTypeResult,
+    _snap_category,
     _postprocess_expense_lines,
 )
 
@@ -72,3 +73,19 @@ def test_unit_type_coerces_string_count():
     assert ut.count == 5
     assert ut.avg_sqft == 880.0
     assert ut.confidence == 1.0
+
+
+@pytest.mark.parametrize(
+    ("raw_label", "expected_category"),
+    [
+        ("Internet service", "Telephone / Internet"),
+        ("Telephone lines", "Telephone / Internet"),
+        ("Accounting", "Accounting"),
+        ("Bookkeeping", "Accounting"),
+        ("Replacement Reserve", "CapEx Reserve"),
+        ("CapEx", "CapEx Reserve"),
+        ("Utilities", "Utilities — All"),
+    ],
+)
+def test_snap_category_maps_new_standard_opex_keywords(raw_label: str, expected_category: str):
+    assert _snap_category(raw_label) == expected_category
