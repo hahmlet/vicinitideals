@@ -181,6 +181,7 @@ _DEBT_KEYWORDS: frozenset[str] = frozenset({
     "net operating", "subtotal", "total revenue", "utilities total",
     "total utilities", "total opex",
     "reserves", "capital reserve", "replacement reserve",
+    "capital expense",
     "ar writeoff", "bad debt",
 })
 
@@ -367,6 +368,15 @@ def _sheet_to_text(ws: Any, property_column: str | None = None, max_rows: int = 
     import re
 
     _TOTAL_HEADERS = {"total", "annual", "annual total", "ytd", "full year"}
+    _MONTH_ABBRS = frozenset({"jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"})
+    _cleaned_totals = {re.sub(r"[^a-z]", "", t) for t in _TOTAL_HEADERS}
+
+    def _is_total_header(h: str) -> bool:
+        clean = re.sub(r"[^a-z]", "", h.lower())
+        if clean in _cleaned_totals:
+            return True
+        # Catch year-range headers like "Jan - Dec 2025" → "jandec"
+        return len(clean) >= 6 and clean[:3] in _MONTH_ABBRS and clean[-3:] in _MONTH_ABBRS
 
     raw_rows: list[list[str]] = []
     for row in ws.iter_rows(max_row=min(ws.max_row, max_rows), values_only=True):
@@ -388,8 +398,7 @@ def _sheet_to_text(ws: Any, property_column: str | None = None, max_rows: int = 
         ]
     else:
         total_col = next(
-            (idx for idx, h in enumerate(header)
-             if re.sub(r"[^a-z]", "", h.lower()) in {re.sub(r"[^a-z]", "", t) for t in _TOTAL_HEADERS}),
+            (idx for idx, h in enumerate(header) if _is_total_header(h)),
             None,
         )
         if total_col is not None and total_col != 0:
