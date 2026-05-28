@@ -57,6 +57,8 @@ _UI_PATH_PREFIXES = (
     "/verify-email",
     "/resend-verification",
     "/mock/",
+    "/onboarding",
+    "/pending-approval",
 )
 
 # Paths that don't require an authenticated session (public)
@@ -258,6 +260,59 @@ def create_app() -> FastAPI:
 
         from fastapi.responses import RedirectResponse as _RR
         return _RR(url=f"/login?next={request.url.path}", status_code=303)
+
+    # -----------------------------------------------------------------------
+    # Onboarding guard — redirect authenticated users who haven't finished
+    # org setup or are pending approval to the appropriate page.
+    # -----------------------------------------------------------------------
+    _ONBOARDING_GUARD_EXEMPT = (
+        "/static/",
+        "/favicon.ico",
+        "/health",
+        "/login",
+        "/logout",
+        "/register",
+        "/forgot-password",
+        "/reset-password",
+        "/verify-email",
+        "/resend-verification",
+        "/onboarding",
+        "/pending-approval",
+        "/api/",
+        "/ui/onboarding",
+    )
+
+    @app.middleware("http")
+    async def onboarding_guard(request: Request, call_next):
+        path = request.url.path
+        is_exempt = any(path.startswith(p) for p in _ONBOARDING_GUARD_EXEMPT) or path == "/"
+        is_htmx = request.headers.get("hx-request") == "true"
+        if is_exempt or is_htmx:
+            return await call_next(request)
+
+        from app.api.auth import decode_session_token, COOKIE_NAME
+        from fastapi.responses import RedirectResponse as _RR
+
+        token = request.cookies.get(COOKIE_NAME)
+        if not token:
+            return await call_next(request)
+        user_id = decode_session_token(token)
+        if user_id is None:
+            return await call_next(request)
+
+        from app.db import AsyncSessionLocal
+        from app.models.org import MembershipStatus, User as _User
+        async with AsyncSessionLocal() as db:
+            user = await db.get(_User, user_id)
+
+        if user is None or not user.is_active:
+            return await call_next(request)
+        if user.org_id is None:
+            return _RR(url="/onboarding", status_code=303)
+        if user.membership_status == MembershipStatus.PENDING:
+            return _RR(url="/pending-approval", status_code=303)
+
+        return await call_next(request)
 
     # -----------------------------------------------------------------------
     # CSRF protection — validates X-CSRF-Token on all state-mutating requests

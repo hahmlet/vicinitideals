@@ -31,11 +31,32 @@
       <div>
         <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">Slug</div>
         {% if is_org_admin %}
-        <form method="post" style="display:flex;gap:8px;align-items:center">
+        <form method="post" style="display:flex;flex-direction:column;gap:6px"
+              onsubmit="return confirmSlugChange(this)">
           <input type="hidden" name="org_name" value="{{ org.name }}">
-          <input type="text" name="org_slug" value="{{ org.slug }}" style="flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:13px;font-family:monospace" required>
-          <button type="submit" class="btn btn-primary" style="padding:6px 12px;font-size:13px">Save</button>
+          <div style="display:flex;gap:8px;align-items:center">
+            <input type="text" name="org_slug" id="org_slug_input" value="{{ org.slug }}"
+                   data-original="{{ org.slug }}"
+                   style="flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:13px;font-family:monospace" required>
+            <button type="submit" class="btn btn-primary" style="padding:6px 12px;font-size:13px">Save</button>
+          </div>
+          <div id="slug-change-warning" style="display:none;font-size:12px;color:var(--warning,#b45309);background:#fffbeb;border:1px solid #fde68a;border-radius:4px;padding:6px 8px">
+            ⚠ Changing the slug will break your existing invite link. Anyone using the old link will not be able to join.
+          </div>
         </form>
+        <script>
+          document.getElementById('org_slug_input').addEventListener('input', function() {
+            var warn = document.getElementById('slug-change-warning');
+            warn.style.display = this.value !== this.dataset.original ? 'block' : 'none';
+          });
+          function confirmSlugChange(form) {
+            var input = form.querySelector('#org_slug_input');
+            if (input && input.value !== input.dataset.original) {
+              return confirm('Changing the slug will break your existing invite link. Anyone using the old link will not be able to join.\n\nContinue?');
+            }
+            return true;
+          }
+        </script>
         {% else %}
         <div style="font-size:13px;color:var(--text-muted);font-family:monospace">{{ org.slug }}</div>
         {% endif %}
@@ -46,6 +67,50 @@
       </div>
     </div>
   </div>
+
+  {# ── Invite link (admin only) ──────────────────────────────────────────── #}
+  {% if user.is_org_admin %}
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px">
+    <div style="font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px">Invite Link</div>
+    <div style="font-size:13px;color:var(--text-muted);margin-bottom:10px">
+      Anyone with this link can request to join your organization. Requests need your approval before they get access.
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <input type="text" id="invite-link-input"
+             value="{{ app_base_url }}/register?org={{ org.slug }}"
+             readonly
+             style="flex:1;padding:7px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);color:var(--text-muted);font-size:13px;font-family:monospace">
+      <button type="button" class="btn btn-secondary"
+              onclick="copyInviteLink()"
+              id="copy-invite-btn"
+              style="padding:6px 14px;font-size:13px;white-space:nowrap">Copy</button>
+    </div>
+    <script>
+      function copyInviteLink() {
+        var input = document.getElementById('invite-link-input');
+        var btn = document.getElementById('copy-invite-btn');
+        navigator.clipboard.writeText(input.value).then(function() {
+          btn.textContent = '✓ Copied';
+          setTimeout(function() { btn.textContent = 'Copy'; }, 2000);
+        });
+      }
+    </script>
+
+    {# Send invite by email #}
+    <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border)">
+      <div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px">Send invite by email</div>
+      <form hx-post="/settings/organization/invite"
+            hx-target="#invite-result"
+            hx-swap="innerHTML"
+            style="display:flex;gap:8px;align-items:center">
+        <input class="filter-input" type="email" name="invite_email"
+               placeholder="teammate@example.com" style="flex:1" required>
+        <button type="submit" class="btn btn-primary" style="padding:6px 14px;font-size:13px;white-space:nowrap">Send invite</button>
+      </form>
+      <div id="invite-result" style="margin-top:8px;min-height:20px;font-size:13px;"></div>
+    </div>
+  </div>
+  {% endif %}
 
   {# ── Members table ──────────────────────────────────────────────────────── #}
   <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:auto">
@@ -87,6 +152,48 @@
       </tbody>
     </table>
   </div>
+
+  {# ── Pending members (admin only) ─────────────────────────────────────── #}
+  {% if user.is_org_admin and pending_members %}
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:auto">
+    <div style="padding:16px 16px 0;display:flex;align-items:center;gap:8px">
+      <span style="font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em">Pending Approval</span>
+      <span style="background:#fef3c7;color:#92400e;font-size:11px;font-weight:700;border-radius:9999px;padding:1px 7px">{{ pending_members|length }}</span>
+    </div>
+    <table style="width:100%;border-collapse:collapse;font-size:13px;margin-top:8px">
+      <thead>
+        <tr style="background:var(--surface-alt)">
+          <th style="text-align:left;padding:10px 16px;border-bottom:1px solid var(--border)">Name</th>
+          <th style="text-align:left;padding:10px 16px;border-bottom:1px solid var(--border)">Email</th>
+          <th style="text-align:left;padding:10px 16px;border-bottom:1px solid var(--border)">Requested</th>
+          <th style="text-align:left;padding:10px 16px;border-bottom:1px solid var(--border)">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for member in pending_members %}
+        <tr id="pending-{{ member.id }}" style="border-bottom:1px solid var(--border)">
+          <td style="padding:10px 16px;font-weight:500">{{ member.name }}</td>
+          <td style="padding:10px 16px;color:var(--text-muted)">{{ member.email or "—" }}</td>
+          <td style="padding:10px 16px;color:var(--text-muted)">{{ member.created_at.strftime("%b %d, %Y") }}</td>
+          <td style="padding:10px 16px;display:flex;gap:8px">
+            <button class="btn btn-primary"
+                    style="padding:4px 12px;font-size:12px"
+                    hx-post="/settings/organization/members/{{ member.id }}/approve"
+                    hx-target="#pending-{{ member.id }}"
+                    hx-swap="outerHTML">Approve</button>
+            <button class="btn btn-secondary"
+                    style="padding:4px 12px;font-size:12px;color:var(--danger)"
+                    hx-post="/settings/organization/members/{{ member.id }}/remove"
+                    hx-target="#pending-{{ member.id }}"
+                    hx-swap="outerHTML"
+                    hx-confirm="Remove {{ member.name }} from the organization?">Remove</button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
 
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start">
 <div>

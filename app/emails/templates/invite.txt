@@ -1,0 +1,14 @@
+You've been invited to join {{ org_name }} on Viciniti Deals
+============================================================
+
+{{ inviter_name }} has invited you to join {{ org_name }}.
+
+Accept your invitation:
+{{ invite_url }}
+
+This invitation expires in 7 days.
+
+If you weren't expecting this, you can safely ignore this email.
+
+--
+Viciniti Deals · {{ app_base_url }}

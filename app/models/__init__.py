@@ -7,7 +7,7 @@ Import order matters: models with FK dependencies must be imported after their t
 from app.models.base import Base  # noqa: F401
 
 # 1. Core (no FK deps on other app tables)
-from app.models.org import Organization, ProjectVisibility, User  # noqa: F401
+from app.models.org import MembershipStatus, OrgInvite, Organization, ProjectVisibility, User  # noqa: F401
 from app.models.saved_filter import SavedFilter  # noqa: F401
 
 # 2. Opportunities (unified investment target — renamed from ScrapedListing)
@@ -117,6 +117,8 @@ __all__ = [
     "Organization",
     "User",
     "ProjectVisibility",
+    "MembershipStatus",
+    "OrgInvite",
     # Opportunity (unified investment target)
     "Opportunity",
     "OpportunityCategory",

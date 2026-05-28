@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Awaiting Approval — Viciniti Deals</title>
+  <link rel="stylesheet" href="/static/app.css">
+  <style>
+    body { justify-content: center; align-items: center; background: var(--bg); }
+    .pending-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 440px;
+      text-align: center;
+    }
+    .pending-brand { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 32px; }
+    .pending-brand span { color: var(--accent); }
+    .pending-icon { font-size: 40px; margin-bottom: 16px; }
+    .pending-title { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+    .pending-body { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 28px; }
+    .pending-org { font-weight: 600; color: var(--text); }
+    .pending-footer { font-size: 13px; color: var(--text-muted); margin-top: 24px; }
+    .pending-footer a { color: var(--accent); text-decoration: none; }
+    .pending-footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="pending-card">
+    <div class="pending-brand">Viciniti <span>Deals</span></div>
+    <div class="pending-icon">⏳</div>
+    <div class="pending-title">Waiting for approval</div>
+    <div class="pending-body">
+      Hi {{ user.name }}, your account has been created.
+      {% if org %}
+      An admin at <span class="pending-org">{{ org.name }}</span> needs to approve your access
+      before you can view deals and org data.
+      {% else %}
+      An org admin needs to approve your access before you can get started.
+      {% endif %}
+    </div>
+    <p style="font-size:13px;color:var(--text-muted);">
+      You'll need to sign in after you're approved.
+    </p>
+    <div class="pending-footer">
+      <a href="/logout">Sign out</a>
+    </div>
+  </div>
+</body>
+</html>

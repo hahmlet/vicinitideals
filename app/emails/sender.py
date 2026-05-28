@@ -138,6 +138,29 @@ async def send_password_reset_email(
     return result is not None
 
 
+async def send_invite_email(
+    *, to: str, inviter_name: str, org_name: str, invite_url: str
+) -> bool:
+    """Send an org invite email.  Returns True on successful submit."""
+    if not to:
+        return False
+    ctx = {
+        "inviter_name": inviter_name or "Someone",
+        "org_name": org_name,
+        "invite_url": invite_url,
+        "app_base_url": settings.app_base_url,
+    }
+    payload = {
+        "from": _from_field(),
+        "to": [to],
+        "subject": f"You've been invited to join {org_name} on Viciniti Deals",
+        "html": _render("invite.html", **ctx),
+        "text": _render("invite.txt", **ctx),
+    }
+    result = await _post(payload)
+    return result is not None
+
+
 _EXPORT_PROFILE_LABEL: dict[str, str] = {
     "internal": "Underwriting Model",
     "lp": "Investor Package",

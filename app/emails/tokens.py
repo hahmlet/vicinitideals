@@ -1,4 +1,4 @@
-"""Signed tokens for email verification and password reset.
+"""Signed tokens for email verification, password reset, and org invites.
 
 Reuses ``itsdangerous.URLSafeTimedSerializer`` (same library the session
 cookie uses) so there's no new crypto dependency.  Each token type has a
@@ -17,6 +17,10 @@ replayed as a reset token and vice-versa.
   password, the hash changes, the prefix no longer matches, and the old
   token is rejected even if replayed within its expiry window.
 - Max age: ``settings.password_reset_token_max_age_seconds`` (30 min default)
+
+### Org invite token
+- Payload: ``f"{org_id}:{email}"`` — binds the invite to a specific org and email.
+- Max age: ``settings.invite_token_max_age_seconds`` (7 days default)
 """
 
 from __future__ import annotations
@@ -29,6 +33,7 @@ from app.config import settings
 
 _VERIFY_SALT = "email-verify"
 _RESET_SALT = "password-reset"
+_INVITE_SALT = "org-invite"
 
 
 def _signer(salt: str) -> URLSafeTimedSerializer:
@@ -97,5 +102,30 @@ def load_password_reset_token(
         return None
     try:
         return uuid.UUID(user_id_str)
+    except ValueError:
+        return None
+
+
+# ── Org invite ────────────────────────────────────────────────────────────────
+
+def make_invite_token(org_id: uuid.UUID, email: str) -> str:
+    payload = f"{org_id}:{email.lower().strip()}"
+    return _signer(_INVITE_SALT).dumps(payload)
+
+
+def load_invite_token(token: str) -> tuple[uuid.UUID, str] | None:
+    """Return (org_id, email) if token is valid and not expired, else None."""
+    try:
+        raw = _signer(_INVITE_SALT).loads(
+            token,
+            max_age=settings.invite_token_max_age_seconds,
+        )
+    except (SignatureExpired, BadSignature):
+        return None
+    if ":" not in raw:
+        return None
+    org_id_str, email = raw.split(":", 1)
+    try:
+        return uuid.UUID(org_id_str), email
     except ValueError:
         return None

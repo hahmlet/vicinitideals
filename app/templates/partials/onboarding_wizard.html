@@ -1,0 +1,110 @@
+{# Partial — returned by HTMX step transitions (outerHTML swap on #onboarding-wizard). #}
+{# Also included by onboarding.html for the initial full-page render. #}
+<div id="onboarding-wizard" class="wizard-shell">
+
+  {# Step progress indicator #}
+  <div class="wizard-header">
+    <div class="wizard-brand">Viciniti <span>Deals</span></div>
+    <div class="wizard-steps">
+      <div class="wizard-step-dot {% if _step == 1 %}active{% elif _step > 1 %}done{% endif %}">1</div>
+      <span class="wizard-step-label">Your Organization</span>
+      <div class="wizard-step-connector"></div>
+      <div class="wizard-step-dot {% if _step == 2 %}active{% endif %}">2</div>
+      <span class="wizard-step-label">Invite Team</span>
+    </div>
+  </div>
+
+  <div class="wizard-card">
+    {% if _step == 1 %}
+    {# ── Step 1: Create Organization ─────────────────────────────── #}
+    <form hx-post="/ui/onboarding/step" hx-target="#onboarding-wizard" hx-swap="outerHTML">
+      <input type="hidden" name="_step" value="1">
+      <div class="wizard-body">
+        <div class="wizard-title">Name your organization</div>
+        <div class="wizard-sub">This is the workspace all your deals will live in. You can change the name later.</div>
+
+        {% if error %}
+        <div class="auth-error">{{ error }}</div>
+        {% endif %}
+
+        <div class="field-group">
+          <label for="org_name">Organization name</label>
+          <input class="filter-input" type="text" id="org_name" name="org_name"
+                 value="{{ inputs.org_name | default('') }}"
+                 placeholder="e.g. Ketch Capital"
+                 required autofocus
+                 oninput="autoSlug(this.value)">
+        </div>
+        <div class="field-group">
+          <label for="org_slug">URL slug <span style="font-weight:400;text-transform:none;">(used in invite links)</span></label>
+          <div class="slug-row">
+            <span class="slug-prefix">viciniti.deals/join/</span>
+            <input class="filter-input" type="text" id="org_slug" name="org_slug"
+                   value="{{ inputs.org_slug | default('') }}"
+                   placeholder="ketch-capital"
+                   required
+                   hx-get="/ui/onboarding/check-slug"
+                   hx-target="#slug-indicator"
+                   hx-trigger="keyup changed delay:400ms"
+                   hx-include="#org_slug"
+                   oninput="slugEdited = true">
+          </div>
+          <div id="slug-indicator" class="slug-indicator" style="margin-top:4px;min-height:18px;"></div>
+        </div>
+      </div>
+      <div class="wizard-footer">
+        <span></span>
+        <button class="btn btn-primary" type="submit">Continue →</button>
+      </div>
+    </form>
+
+    {% elif _step == 2 %}
+    {# ── Step 2: Invite Team ─────────────────────────────────────── #}
+    <form hx-post="/ui/onboarding/complete" hx-target="body" hx-swap="none">
+      <input type="hidden" name="org_name" value="{{ inputs.org_name | default('') }}">
+      <input type="hidden" name="org_slug" value="{{ inputs.org_slug | default('') }}">
+      <div class="wizard-body">
+        <div class="wizard-title">Invite your team</div>
+        <div class="wizard-sub">
+          Add up to 5 email addresses. They'll receive an invite link and need your approval before accessing deals.
+          You can also invite from your organization settings later.
+        </div>
+
+        {% if error %}
+        <div class="auth-error">{{ error }}</div>
+        {% endif %}
+
+        <div id="invite-rows">
+          <div class="invite-row">
+            <input class="filter-input" type="email" name="invite_email_1" placeholder="teammate@example.com" autocomplete="off">
+            <button type="button" class="add-btn" onclick="showRow(2)" id="add-btn-1">+ Add</button>
+          </div>
+          <div class="invite-row" id="invite-row-2" style="display:none">
+            <input class="filter-input" type="email" name="invite_email_2" placeholder="teammate@example.com" autocomplete="off">
+            <button type="button" class="add-btn" onclick="showRow(3)" id="add-btn-2">+ Add</button>
+          </div>
+          <div class="invite-row" id="invite-row-3" style="display:none">
+            <input class="filter-input" type="email" name="invite_email_3" placeholder="teammate@example.com" autocomplete="off">
+            <button type="button" class="add-btn" onclick="showRow(4)" id="add-btn-3">+ Add</button>
+          </div>
+          <div class="invite-row" id="invite-row-4" style="display:none">
+            <input class="filter-input" type="email" name="invite_email_4" placeholder="teammate@example.com" autocomplete="off">
+            <button type="button" class="add-btn" onclick="showRow(5)" id="add-btn-4">+ Add</button>
+          </div>
+          <div class="invite-row" id="invite-row-5" style="display:none">
+            <input class="filter-input" type="email" name="invite_email_5" placeholder="teammate@example.com" autocomplete="off">
+          </div>
+        </div>
+      </div>
+      <div class="wizard-footer">
+        <span class="skip-link"
+              hx-post="/ui/onboarding/complete"
+              hx-include="input[name='org_name'],input[name='org_slug']"
+              hx-target="body" hx-swap="none">Skip for now</span>
+        <button class="btn btn-primary" type="submit">Send invites &amp; finish</button>
+      </div>
+    </form>
+    {% endif %}
+
+  </div>
+</div>

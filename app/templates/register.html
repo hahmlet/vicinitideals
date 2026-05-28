@@ -16,42 +16,48 @@
       width: 100%;
       max-width: 400px;
     }
-    .auth-brand {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 24px;
-      text-align: center;
-    }
+    .auth-brand { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 24px; text-align: center; }
     .auth-brand span { color: var(--accent); }
     .auth-title { font-size: 20px; font-weight: 700; margin-bottom: 20px; text-align: center; }
     .auth-form { display: flex; flex-direction: column; gap: 14px; }
     .auth-form label { display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
-    .auth-form input, .auth-form select { width: 100%; }
-    .auth-form select { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-size: 13px; padding: 7px 10px; }
-    .auth-error {
-      background: var(--danger-light);
-      border: 1px solid #fca5a5;
-      border-radius: var(--radius-sm);
-      color: var(--danger);
-      font-size: 13px;
-      padding: 10px 12px;
-    }
+    .auth-form input { width: 100%; }
+    .auth-error { background: var(--danger-light); border: 1px solid #fca5a5; border-radius: var(--radius-sm); color: var(--danger); font-size: 13px; padding: 10px 12px; }
     .auth-footer { margin-top: 18px; text-align: center; font-size: 13px; color: var(--text-muted); }
     .auth-footer a { color: var(--accent); text-decoration: none; }
     .auth-footer a:hover { text-decoration: underline; }
+    .join-banner {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      font-size: 13px;
+      color: #1d4ed8;
+      margin-bottom: 4px;
+    }
   </style>
 </head>
 <body>
   <div class="auth-card">
     <div class="auth-brand">Viciniti <span>Deals</span></div>
+
+    {% if join_org %}
+    <div class="auth-title">Join {{ join_org.name }}</div>
+    <div class="join-banner">
+      You're creating an account to join <strong>{{ join_org.name }}</strong>.
+      An admin will need to approve your access before you can see the org's data.
+    </div>
+    {% else %}
     <div class="auth-title">Create account</div>
+    {% endif %}
 
     {% if error %}
     <div class="auth-error">{{ error }}</div>
     {% endif %}
 
     <form method="post" action="/register" class="auth-form">
+      <input type="hidden" name="invite_token" value="{{ invite_token | default('') }}">
+      <input type="hidden" name="org_slug" value="{{ org_slug | default('') }}">
       <div>
         <label for="name">Full name</label>
         <input class="filter-input" type="text" id="name" name="name"
@@ -60,9 +66,15 @@
       </div>
       <div>
         <label for="email">Email</label>
+        {% if prefill_email %}
+        <input class="filter-input" type="email" id="email" name="email"
+               value="{{ prefill_email }}" readonly
+               style="background:var(--bg);color:var(--text-muted)">
+        {% else %}
         <input class="filter-input" type="email" id="email" name="email"
                value="{{ email | default('') }}"
                placeholder="you@example.com" required>
+        {% endif %}
       </div>
       <div>
         <label for="password">Password</label>
@@ -74,41 +86,14 @@
         <input class="filter-input" type="password" id="password_confirm" name="password_confirm"
                placeholder="••••••••" required>
       </div>
-      <div>
-        <label for="org_choice">Organization</label>
-        <select id="org_choice" name="org_choice" required onchange="toggleNewOrg(this.value)">
-          <option value="" disabled selected>Select an organization…</option>
-          {% for org in orgs %}
-          <option value="{{ org.id }}">{{ org.name }}</option>
-          {% endfor %}
-          <option value="new">＋ Create new organization</option>
-        </select>
-      </div>
-      <div id="new_org_field" style="display:none">
-        <label for="org_name">New organization name</label>
-        <input class="filter-input" type="text" id="org_name" name="org_name"
-               placeholder="e.g. Acme Real Estate" autocomplete="organization">
-      </div>
-      <button class="btn btn-primary" type="submit" style="margin-top:4px">Create account</button>
+      <button class="btn btn-primary" type="submit" style="margin-top:4px">
+        {% if join_org %}Request to join{% else %}Create account{% endif %}
+      </button>
     </form>
 
     <div class="auth-footer">
       Already have an account? <a href="/login">Sign in</a>
     </div>
   </div>
-  <script>
-    function toggleNewOrg(val) {
-      var field = document.getElementById('new_org_field');
-      var input = document.getElementById('org_name');
-      if (val === 'new') {
-        field.style.display = 'block';
-        input.required = true;
-      } else {
-        field.style.display = 'none';
-        input.required = false;
-        input.value = '';
-      }
-    }
-  </script>
 </body>
 </html>
