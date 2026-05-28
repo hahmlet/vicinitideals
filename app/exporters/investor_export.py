@@ -2973,14 +2973,20 @@ def _build_sensitivity(
         and _coerce_decimal((m.source or {}).get("amount") or 0) > Decimal(1)
         for m in (ctx.get("capital_modules") or [])
     )
+    last_row = next_row
     if _has_equity_s and matrix.get("values_secondary") and matrix.get("metric_secondary"):
-        _render_sensitivity_grid(
+        last_row = _render_sensitivity_grid(
             ws, registry, matrix,
             grid_values=matrix["values_secondary"],
             metric_spec=matrix["metric_secondary"],
             start_row=next_row + 2,
             range_name="r_sensitivity_grid_em",
         )
+
+    ws.cell(
+        row=last_row + 1, column=1,
+        value="Values are engine-computed. Re-export to refresh after changing assumptions.",
+    ).font = FONT_SUBTITLE
 
     freeze_top(ws, row=5)  # freeze through x-axis header of first grid (row 4)
     print_landscape(ws)
