@@ -74,7 +74,7 @@
     .skip-link:hover { color: var(--text); }
   </style>
 </head>
-<body>
+<body hx-headers='{"X-CSRF-Token": "{{ request.state.csrf_token }}"}'>
   {% include "partials/onboarding_wizard.html" %}
 
   <script>

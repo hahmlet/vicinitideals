@@ -31,7 +31,7 @@
           <label for="org_name">Organization name</label>
           <input class="filter-input" type="text" id="org_name" name="org_name"
                  value="{{ inputs.org_name | default('') }}"
-                 placeholder="e.g. Ketch Capital"
+                 placeholder="e.g. Acme Capital"
                  required autofocus
                  oninput="autoSlug(this.value)">
         </div>
@@ -41,7 +41,7 @@
             <span class="slug-prefix">viciniti.deals/join/</span>
             <input class="filter-input" type="text" id="org_slug" name="org_slug"
                    value="{{ inputs.org_slug | default('') }}"
-                   placeholder="ketch-capital"
+                   placeholder="acme-capital"
                    required
                    hx-get="/ui/onboarding/check-slug"
                    hx-target="#slug-indicator"
