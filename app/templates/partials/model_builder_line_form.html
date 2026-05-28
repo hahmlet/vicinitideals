@@ -564,7 +564,7 @@ function ulTimingChanged(val) {
   <div class="form-field">
     <label class="form-label">Active Phases</label>
     <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px">
-      {%- set _opex_aip = existing.active_in_phases if existing else ['stabilized'] -%}
+      {%- set _opex_aip = existing.active_in_phases if existing else ['lease_up', 'stabilized'] -%}
       {%- for _ph, _ph_label in [('construction','Construction'),('lease_up','Lease-Up'),('stabilized','Stabilized')] %}
       <label style="display:flex;align-items:center;gap:4px;font-size:13px;cursor:pointer">
         <input type="checkbox" name="active_in_phases" value="{{ _ph }}"
@@ -601,20 +601,21 @@ function ulTimingChanged(val) {
 {% elif form_type == 'opex_templates' %}
 {# ── OpEx template picker ── #}
 {% set tpl_list = [
+  ('Accounting', 3600, 3.0),
   ('Property Tax', 18000, 3.0),
   ('Insurance', 9600, 3.0),
   ('Property Management', 12000, 3.0),
   ('Utilities — Electric', 4800, 3.0),
   ('Utilities — Water/Sewer', 3600, 3.0),
+  ('Utilities — All', 7200, 3.0),
   ('Repairs & Maintenance', 6000, 3.0),
   ('Landscaping', 2400, 3.0),
   ('CapEx Reserve', 7200, 3.0),
   ('Garbage / Refuse', 1800, 3.0),
-  ('Accounting & Legal', 3000, 3.0),
   ('Advertising & Leasing', 2400, 3.0),
   ('Unit Turnover', 4800, 3.0),
   ('Resident Services', 3600, 3.0),
-  ('Internet — Common', 1200, 3.0),
+  ('Telephone / Internet', 2400, 3.0),
 ] %}
 <p class="text-small text-muted" style="margin-bottom:12px">Click to add. You can edit amounts after adding.</p>
 <div style="display:flex;flex-direction:column;gap:6px">
@@ -626,7 +627,7 @@ function ulTimingChanged(val) {
     </div>
     <button class="btn btn-sm btn-secondary"
             hx-post="/ui/forms/{{ model.id }}/expense-lines"
-            hx-vals='{"label": "{{ label }}", "annual_amount": "{{ amount }}", "escalation_rate_pct_annual": "{{ esc }}", "active_in_phases": "stabilized"}'
+          hx-vals='{"label": "{{ label }}", "annual_amount": "{{ amount }}", "escalation_rate_pct_annual": "{{ esc }}", "active_in_phases": ["lease_up", "stabilized"]}'
             hx-target="#module-panel-content"
             hx-swap="innerHTML"
             hx-on::after-request="if(event.detail.successful) closeDrawer('line-item-drawer')">+ Add</button>

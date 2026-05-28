@@ -28,7 +28,7 @@ import app as _pkg
 from app.api.deps import DBSession
 from app.config import settings
 from app.models.broker import Broker, Brokerage
-from app.models.deal import Scenario, STANDARD_OPEX_CATEGORIES, USE_CATEGORY_LABELS, USE_CATEGORY_PRESETS, USE_COST_CATEGORIES, Deal, DealModel, DealOpportunity, DealStatus, IncomeStream, IncomeStreamType, OperatingExpenseLine, OperationalInputs, ProjectType, UnitMix, UseLine, UseLinePhase
+from app.models.deal import Scenario, STANDARD_OPEX_CATEGORIES, USE_CATEGORY_LABELS, USE_CATEGORY_PRESETS, USE_COST_CATEGORIES, Deal, DealModel, DealOpportunity, DealStatus, IncomeStream, IncomeStreamType, OperatingExpenseLine, OperationalInputs, ProjectType, UnitMix, UseLine, UseLinePhase, resolve_opex_annual_amount
 from app.models.ingestion import DedupCandidate, DedupStatus, IngestJob, RecordType, SavedSearchCriteria
 from app.models.org import Organization, User
 from app.models.capital import CapitalModule, DrawSource, WaterfallTier
@@ -6702,15 +6702,16 @@ async def handle_form_create_or_update(
 
     elif item_type == "expense-lines":
         _aip_list = form.getlist("active_in_phases")
-        active_phases = _aip_list if _aip_list else _fp(form.get("active_in_phases"), ["stabilized"])
+        active_phases = _aip_list if _aip_list else _fp(form.get("active_in_phases"), ["lease_up", "stabilized"])
         per_type_val = form.get("per_type") or "flat"
         per_value_val = _fd(form.get("per_value"))
-        # For flat type, annual_amount mirrors per_value for backward-compat display
-        # For per_unit/sqft types, annual_amount stays 0 until compute engine scales it
-        if per_value_val and per_type_val in (None, "flat"):
-            annual_amt = per_value_val
-        else:
-            annual_amt = _fd(form.get("annual_amount")) or Decimal("0")
+        project = await session.get(Project, project_id) if project_id else None
+        annual_amt = resolve_opex_annual_amount(
+            project,
+            per_type_val,
+            per_value_val,
+            _fd(form.get("annual_amount")) or Decimal("0"),
+        )
         data = {
             "label": form.get("label", ""),
             "annual_amount": annual_amt,
@@ -10036,13 +10037,16 @@ async def deal_setup_wizard_complete(
     # Seeded in all income modes — user may switch from NOI to revenue/opex.
     # (label, per_type, scale_with_lease_up, lease_up_floor_pct, active_phases)
     _OPEX_SEEDS = [
+        ("Accounting",                 "flat", False, None,  ["lease_up", "stabilized"]),
         ("Real Estate Taxes",          "flat", False, None,  ["lease_up", "stabilized"]),
         ("Insurance",                  "flat", False, None,  ["lease_up", "stabilized"]),
         ("Property Management",        "flat", True,  25.0,  ["lease_up", "stabilized"]),
+        ("Utilities — All",            "flat", False, None,  ["lease_up", "stabilized"]),
         ("Utilities — Water/Sewer",    "flat", True,  50.0,  ["lease_up", "stabilized"]),
         ("Utilities — Electric",       "flat", True,  100.0, ["lease_up", "stabilized"]),
         ("Utilities — Gas",            "flat", True,  50.0,  ["lease_up", "stabilized"]),
         ("Utilities — Trash",          "flat", True,  75.0,  ["lease_up", "stabilized"]),
+        ("Telephone / Internet",       "flat", False, None,  ["lease_up", "stabilized"]),
         ("Repairs & Maintenance",      "flat", True,  25.0,  ["stabilized"]),
         ("Marketing & Leasing",        "flat", True,  100.0, ["lease_up", "stabilized"]),
         ("Administrative",             "flat", False, None,  ["lease_up", "stabilized"]),
@@ -10055,6 +10059,7 @@ async def deal_setup_wizard_complete(
         ("Jurisdiction Fees",          "flat", False, None,  ["lease_up", "stabilized"]),
         ("Legal",                      "flat", False, None,  ["lease_up", "stabilized"]),
         ("Bank/Software Fees",         "flat", False, None,  ["lease_up", "stabilized"]),
+        ("CapEx Reserve",              "flat", False, None,  ["lease_up", "stabilized"]),
         ("Unit Turnover",              "flat", False, None,  ["stabilized"]),
     ]
 

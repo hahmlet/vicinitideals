@@ -372,7 +372,7 @@ def test_income_stream_form_has_advanced_value_add_section(
 def test_setup_complete_seeds_default_opex_lines(
     _seed_page, base_url: str
 ) -> None:
-    """Finishing the deal setup wizard should auto-seed 10 default OpEx
+    """Finishing the deal setup wizard should auto-seed the standard OpEx
     line items matching the consensus from CRE model cross-analysis."""
     import uuid
     page = _seed_page
@@ -398,15 +398,19 @@ def test_setup_complete_seeds_default_opex_lines(
     wait_for_htmx(page)
 
     expected_labels = [
+        "Accounting",
         "Real Estate Taxes",
         "Insurance",
         "Property Management",
+        "Utilities — All",
         "Repairs & Maintenance",
         "Marketing & Leasing",
         "Administrative",
         "Payroll",
         "Resident Services",
+        "Telephone / Internet",
         "Unit Turnover",
+        "CapEx Reserve",
     ]
     content = page.content()
     # & in labels gets rendered as &amp; in HTML — check for either form
