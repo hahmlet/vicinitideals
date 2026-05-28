@@ -2170,7 +2170,7 @@ function prefillCarrySchedule(schedule, wrapper) {
   <div class="form-field" style="max-width:50%">
     <label class="form-label">IRR Hurdle (%)</label>
     <input class="form-input" type="number" name="irr_hurdle_pct" step="0.1" min="0"
-           value="{{ existing.irr_hurdle_pct | round(1) if existing else '' }}"
+           value="{{ existing.irr_hurdle_pct | round(1) if existing and existing.irr_hurdle_pct is not none else '' }}"
            placeholder="e.g. 8.0 — leave blank if N/A">
   </div>
 
