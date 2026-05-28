@@ -515,6 +515,22 @@ async def test_gp_coc_y1_is_iferror_formula(session: AsyncSession) -> None:
     )
 
 
+async def test_lp_coc_year_one_alias_registered(session: AsyncSession) -> None:
+    """s_lp_coc_year_one long-form alias must exist for parity with s_coc_year_one."""
+    scenario = await _seed_with_lp_gp_modules(session)
+    blob = await export_investor_workbook(scenario.id, session)
+    wb = load_workbook(BytesIO(blob), data_only=False)
+    assert "s_lp_coc_year_one" in _defined_names(wb), "s_lp_coc_year_one alias missing"
+
+
+async def test_gp_coc_year_one_alias_registered(session: AsyncSession) -> None:
+    """s_gp_coc_year_one long-form alias must exist for parity with s_coc_year_one."""
+    scenario = await _seed_with_lp_gp_modules(session)
+    blob = await export_investor_workbook(scenario.id, session)
+    wb = load_workbook(BytesIO(blob), data_only=False)
+    assert "s_gp_coc_year_one" in _defined_names(wb), "s_gp_coc_year_one alias missing"
+
+
 # ---------------------------------------------------------------------------
 # Phase 5g: Date Series for XIRR
 # ---------------------------------------------------------------------------

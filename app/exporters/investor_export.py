@@ -3586,6 +3586,7 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
         )
     else:
         kv_row(ws, cur_row, "LP CoC Year 1", None, name="s_lp_coc_y1", registry=registry, fmt=PCT)
+    registry.register("s_lp_coc_year_one", ws.title, cur_row, 2)
     cur_row += 1
     if _committed_gp > 0:
         kv_row(
@@ -3595,6 +3596,7 @@ def _build_investor_returns(ws, registry: CellRegistry, ctx: dict) -> None:
         )
     else:
         kv_row(ws, cur_row, "GP CoC Year 1", None, name="s_gp_coc_y1", registry=registry, fmt=PCT)
+    registry.register("s_gp_coc_year_one", ws.title, cur_row, 2)
     cur_row += 1
 
     # LP / GP Equity Multiple — live formulas using distribution totals.
