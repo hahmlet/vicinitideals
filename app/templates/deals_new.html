@@ -100,10 +100,15 @@
     <form method="post" action="{{ submit_action }}">
       {% if from_opp %}<input type="hidden" name="opportunity_id" value="{{ from_opp }}">{% endif %}
       {% if from_listing %}<input type="hidden" name="listing_id" value="{{ from_listing }}">{% endif %}
+      {% if proforma_task_id %}<input type="hidden" name="proforma_task_id" value="{{ proforma_task_id }}">{% endif %}
 
       <div class="new-deal-body">
 
-        {% if banner_text %}
+        {% if proforma_task_id %}
+        <div style="padding:8px 12px;border-radius:6px;background:#eff6ff;border:1px solid #93c5fd;color:#1e40af;font-size:12px">
+          📎 Pro forma pre-loaded from email attachment — preflight will open automatically after deal creation.
+        </div>
+        {% elif banner_text %}
         <div style="padding:8px 12px;border-radius:6px;background:#f0fdf4;border:1px solid #86efac;color:#166534;font-size:12px">
           {{ banner_text }}
         </div>

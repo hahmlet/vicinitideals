@@ -3126,6 +3126,7 @@ async def deals_new_page(
     from_opp: str = Query(default=""),
     from_listing: str = Query(default=""),
     clone_of: str = Query(default=""),
+    proforma_task_id: str = Query(default=""),
 ) -> HTMLResponse:
     """Single landing page for creating a new deal.
 
@@ -3205,6 +3206,7 @@ async def deals_new_page(
         "opp_id": effective_opp_id,
         "opp_name": pre_name,
         "opp_asking_price": pre_acquisition_cost,
+        "proforma_task_id": proforma_task_id.strip(),
     })
     return templates.TemplateResponse(request, "deals_new.html", ctx)
 
@@ -3345,6 +3347,7 @@ async def create_deal(
     opp_id_raw = str(form.get("opportunity_id", "")).strip()
     listing_id_raw = str(form.get("listing_id", "")).strip()
     acq_cost_raw = str(form.get("acquisition_cost", "")).strip()
+    proforma_task_id_raw = str(form.get("proforma_task_id", "")).strip()
 
     user = await _get_user(session, request)
 
@@ -3566,6 +3569,16 @@ async def create_deal(
     redirect_url = f"/models/{scenario.id}/builder?module=timeline&wizard=1"
     if new == "1":
         redirect_url += "&new=1"
+    if proforma_task_id_raw:
+        # Stash in Redis so the deal-setup wizard can auto-load the preflight
+        # even after multiple redirects. Key is consumed when the wizard loads.
+        import redis as _redis  # type: ignore
+        _r2 = _redis.from_url(settings.redis_url, decode_responses=True)
+        _r2.set(
+            f"proforma:scenario:{scenario.id}:email_task_id",
+            proforma_task_id_raw,
+            ex=7 * 86_400,
+        )
     return RedirectResponse(url=redirect_url, status_code=303)
 
 
@@ -9195,12 +9208,21 @@ async def deal_setup_wizard_get(
             _review_back_step = 2
 
     _wiz_phases_present = await _wizard_phases_present(session, default_project)
+
+    # Recover proforma_task_id stashed by create_deal when the deal originated
+    # from an email attachment. The key is consumed (deleted) on first use so
+    # the auto-load banner only fires once.
+    import redis as _redis_sync  # type: ignore
+    _rw = _redis_sync.from_url(settings.redis_url, decode_responses=True)
+    _email_task_id = _rw.getdel(f"proforma:scenario:{model_id}:email_task_id") or ""
+
     return templates.TemplateResponse(request, "partials/deal_setup_wizard.html", {
         "request": request, "model": model, "inputs": inputs, "step": step,
         "source_vehicles_debt": _svd,
         "wizard_active_from_opts": _wiz_active_from_opts,
         "review_back_step": _review_back_step,
         "phases_present": _wiz_phases_present,
+        "proforma_task_id": _email_task_id,
     })
 
 
@@ -10356,6 +10378,7 @@ async def model_builder(
     view: str = Query(default=""),  # "underwriting" for the scenario-level rollup; default = per-project
     new: str = Query(default=""),  # set to "1" when redirected from new deal creation
     wizard: str = Query(default=""),  # "1" = single-flow deal-creation wizard mode (hide chrome)
+    proforma_task_id: str = Query(default=""),  # pre-staged file from email ingest
 ) -> HTMLResponse:
     model = await session.get(DealModel, model_id)
     if model is None:
@@ -10596,6 +10619,13 @@ async def model_builder(
     # (excluding the currently-active project). Step 7 of the wizard renders
     # a "shared with X" chip when this list is non-empty.
     wizard_share_info: dict[str, list[str]] = {}
+    if active_module == "deal_setup" and not proforma_task_id:
+        # Recover pre-staged proforma task ID from Redis when deal originated
+        # from an email attachment. Key is consumed on first read so the
+        # auto-load banner fires once only.
+        import redis as _redis_bld  # type: ignore
+        _rw_bld = _redis_bld.from_url(settings.redis_url, decode_responses=True)
+        proforma_task_id = _rw_bld.getdel(f"proforma:scenario:{model_id}:email_task_id") or ""
     if active_module == "deal_setup":
         _default_proj = (await session.execute(
             select(Project).where(Project.scenario_id == model_id).order_by(Project.created_at.asc()).limit(1)
@@ -10700,6 +10730,7 @@ async def model_builder(
         "deal_setup_complete": _deal_setup_complete,
         "new_deal": new == "1",
         "wizard_mode": wizard == "1",
+        "proforma_task_id": proforma_task_id.strip(),
         "cash_flow_rows": cash_flow_rows,
         "multi_parcel_apns": multi_parcel_apns,
         "lot_size_mismatch": lot_size_mismatch_info,
@@ -12346,6 +12377,45 @@ async def proforma_preflight(
     restart) and for any external callers that still POST a file directly."""
     return await _dispatch_proforma_preflight(
         request=request, model_id=model_id, upload=file,
+    )
+
+
+@router.get("/ui/models/{model_id}/proforma-from-staged", response_class=HTMLResponse)
+async def proforma_from_staged(
+    request: Request,
+    model_id: UUID,
+    task_id: str = Query(...),
+) -> HTMLResponse:
+    """Load a pre-staged proforma from Redis (email attachment path) and run
+    the same preflight flow as a manual upload — no file upload needed.
+
+    Called by the deal setup wizard when the URL carries ``proforma_task_id``
+    from an email attachment that was stashed in Redis during email ingest.
+    """
+    import redis as _redis  # type: ignore
+
+    r = _redis.from_url(settings.redis_url, decode_responses=False)
+    file_bytes = r.get(f"proforma:{task_id}:file")
+    if not file_bytes:
+        return HTMLResponse(
+            "<div class='wizard-shell' id='deal-setup-wizard'>"
+            "<div class='wizard-card'><p style='padding:20px;color:var(--text-muted)'>"
+            "Pre-staged file expired or not found. Please upload the file manually.</p>"
+            "</div></div>",
+            status_code=200,
+        )
+
+    filename_bytes = r.get(f"proforma:{task_id}:filename")
+    filename = filename_bytes.decode() if filename_bytes else "attachment.xlsx"
+
+    class _FakeUpload:
+        async def read(self) -> bytes:
+            return file_bytes  # type: ignore[return-value]
+
+    _FakeUpload.filename = filename  # type: ignore[attr-defined]
+
+    return await _dispatch_proforma_preflight(
+        request=request, model_id=model_id, upload=_FakeUpload(),  # type: ignore[arg-type]
     )
 
 
