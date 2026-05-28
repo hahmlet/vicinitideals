@@ -1435,8 +1435,9 @@
           <td style="font-weight:600;color:var(--text-muted)">{{ tier.priority }}</td>
           <td style="font-weight:500">{{ tier.tier_type | string | replace('WaterfallTierType.', '') | replace('_', ' ') | title }}</td>
           <td class="col-right">{{ '%.1f%%' | format(tier.irr_hurdle_pct | float) if tier.irr_hurdle_pct else '—' }}</td>
-          <td class="col-right" style="{% if tier.lp_split_pct and tier.lp_split_pct | float > 0 %}font-weight:600;color:var(--accent){% endif %}">{{ '%.1f%%' | format(tier.lp_split_pct | float) }}</td>
-          <td class="col-right">{{ '%.1f%%' | format(tier.gp_split_pct | float) }}</td>
+          {%- set _is_debt = tier.tier_type | string | replace('WaterfallTierType.', '') == 'debt_service' -%}
+          <td class="col-right" style="{% if not _is_debt and tier.lp_split_pct and tier.lp_split_pct | float > 0 %}font-weight:600;color:var(--accent){% endif %}">{{ '—' if _is_debt else '%.1f%%' | format(tier.lp_split_pct | float) }}</td>
+          <td class="col-right">{{ '—' if _is_debt else '%.1f%%' | format(tier.gp_split_pct | float) }}</td>
           <td class="text-small text-muted" style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ tier.description or '' }}</td>
           <td style="width:32px;text-align:right">
             <button class="btn btn-sm btn-ghost"
