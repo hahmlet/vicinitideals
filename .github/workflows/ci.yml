@@ -175,7 +175,7 @@ jobs:
         # (/root/deploy-vicinitideals.sh on VM 114). CI uses a fresh
         # postgres volume each run, so migrations must run explicitly
         # before the seed step or any test that hits the schema.
-        run: docker compose exec -T api alembic upgrade head
+        run: docker compose exec -T api python -m alembic upgrade head
 
       - name: Seed E2E test user
         run: |
