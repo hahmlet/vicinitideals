@@ -1002,7 +1002,7 @@ async def _sync_junction_amounts_after_compute(
         if src_amount is None:
             continue
         try:
-            amt = Decimal(str(src_amount))
+            amt = _whole_dollar(Decimal(str(src_amount)))
         except Exception:
             continue
         # ORM dirty tracking only. Bulk sa_update(CapitalModuleProject)
@@ -1855,7 +1855,9 @@ async def _auto_size_debt_modules(
     _diag(f"=== _auto_size_debt_modules CALLED n_cap_mod={len(capital_modules)} n_ul={len(use_lines)}")
     for _dbg_cm in capital_modules:
         _diag(f"  [pre-filter] cm={_dbg_cm.id} vt={getattr(_dbg_cm,'vehicle_type',None)} source={_dbg_cm.source}")
-    auto_modules = [m for m in capital_modules if (m.source or {}).get("auto_size")]
+    # Non-debt auto-sized sources (equity, grants) must NOT enter this loop.
+    # Grants are pre-resolved by resolve_grant_caps; equity gets a separate pass below.
+    auto_modules = [m for m in capital_modules if (m.source or {}).get("auto_size") and _is_debt_cm(m)]
     if not auto_modules:
         _diag("EARLY RETURN: no auto_modules")
         return
@@ -2131,7 +2133,7 @@ async def _auto_size_debt_modules(
 
             if _principal < ZERO:
                 _principal = ZERO
-            _src["amount"] = str(_q(_principal))
+            _src["amount"] = str(_whole_dollar(_principal))
             _src["is_bridge"] = True
             _diag(f"bridge sized cm={_m.id} subtype={_ft} -> amount={_src['amount']}")
             _m.source = _src
@@ -2455,7 +2457,7 @@ async def _auto_size_debt_modules(
 
             if principal < ZERO:
                 principal = ZERO
-            src["amount"] = str(_q(principal))
+            src["amount"] = str(_whole_dollar(principal))
             if constr_io_factor > ZERO and _constr_ct in ("io_only", "pi"):
                 _constr_ds_reserve += _q(principal * constr_io_factor)
                 if _constr_ds_source_module is None:
@@ -2509,7 +2511,7 @@ async def _auto_size_debt_modules(
                 src["binding_constraint"] = "dscr"
             else:
                 src["binding_constraint"] = "gap_fill"
-            src["amount"] = str(_q(principal))
+            src["amount"] = str(_whole_dollar(principal))
             if constr_io_factor > ZERO and _constr_ct in ("io_only", "pi"):
                 _constr_ds_reserve += _q(principal * constr_io_factor)
                 if _constr_ds_source_module is None:
@@ -2532,7 +2534,7 @@ async def _auto_size_debt_modules(
                     src["binding_constraint"] = "ltv"
         if principal < ZERO:
             principal = ZERO
-        src["amount"] = str(_q(principal))
+        src["amount"] = str(_whole_dollar(principal))
         if constr_io_factor > ZERO and _constr_ct in ("io_only", "pi"):
             _constr_ds_reserve += _q(principal * constr_io_factor)
             if _constr_ds_source_module is None:
@@ -2981,6 +2983,29 @@ async def _auto_size_debt_modules(
                 )
                 session.add(_new_cc_ul)
                 use_lines.append(_new_cc_ul)
+
+    # ── Equity auto-size pass ─────────────────────────────────────────────────
+    # After all debt is sized, set equity auto-sized modules to fill any remaining
+    # gap. In stack_position order: first equity gets the remainder, rest get $0.
+    # Grants are excluded — resolve_grant_caps already set their amounts.
+    _equity_auto = [
+        m for m in capital_modules
+        if (m.source or {}).get("auto_size")
+        and str(getattr(m, "vehicle_type", None) or "").replace("VehicleType.", "") == "equity"
+    ]
+    if _equity_auto:
+        _eq_covered = sum(
+            _to_decimal((_cm.source or {}).get("amount") or 0)
+            for _cm in capital_modules
+            if _cm not in _equity_auto and (_cm.source or {}).get("amount")
+        )
+        _eq_remaining = max(ZERO, total_uses - _eq_covered)
+        _eq_sorted = sorted(_equity_auto, key=lambda m: (m.stack_position or 999, m.id or 0))
+        for _i, _eq_m in enumerate(_eq_sorted):
+            _eq_src = dict(_eq_m.source or {})
+            _eq_src["amount"] = str(_whole_dollar(_eq_remaining if _i == 0 else ZERO))
+            _eq_m.source = _eq_src
+        _diag(f"equity auto-size pass: remaining={_eq_remaining} modules={[m.id for m in _eq_sorted]}")
 
     await session.flush()
 
@@ -3787,6 +3812,10 @@ def _to_decimal(value: Any, default: Decimal = ZERO) -> Decimal:
 
 def _q(value: Any) -> Decimal:
     return _to_decimal(value).quantize(MONEY_PLACES, rounding=ROUND_HALF_UP)
+
+
+def _whole_dollar(value: Any) -> Decimal:
+    return _to_decimal(value).quantize(Decimal("1"), rounding=ROUND_HALF_UP)
 
 
 def _clamp(value: Decimal, lower: Decimal, upper: Decimal) -> Decimal:

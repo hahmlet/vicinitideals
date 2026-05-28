@@ -21,6 +21,7 @@ from app.engines.cashflow import (
     _compute_period,
     _growth_factor,
     _monthly_pmt,
+    _whole_dollar,
     _stream_occupancy_pct,
 )
 from app.models.cashflow import PeriodType
@@ -135,6 +136,18 @@ class TestBalloonBalance:
         principal = Decimal("120000")
         balance = _balloon_balance(principal, 0.0, 10, months_elapsed=60, io_months=0)
         assert balance == principal
+
+
+class TestWholeDollarRounding:
+    """Auto-sized source amounts should be whole dollars (half-up rounding)."""
+
+    @pytest.mark.unit
+    def test_whole_dollar_rounds_half_up(self):
+        assert _whole_dollar(Decimal("3798844.500000")) == Decimal("3798845")
+
+    @pytest.mark.unit
+    def test_whole_dollar_rounds_down_below_half(self):
+        assert _whole_dollar(Decimal("3798844.499999")) == Decimal("3798844")
 
 
 # ===========================================================================

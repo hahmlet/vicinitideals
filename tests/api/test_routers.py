@@ -1422,6 +1422,7 @@ async def test_post_and_get_model_expense_lines_round_trip(
     assert "project_id" in created
     assert created["label"] == "Electric"
     assert Decimal(str(created["annual_amount"])) == Decimal("1200")
+    assert created["per_type"] == "flat"
 
     listed = await client.get(f"/api/models/{model_id}/expense-lines", headers=auth_headers)
 
@@ -1429,6 +1430,7 @@ async def test_post_and_get_model_expense_lines_round_trip(
     rows = listed.json()
     assert len(rows) == 1
     assert rows[0]["label"] == "Electric"
+    assert rows[0]["per_type"] == "flat"
     assert rows[0]["active_in_phases"] == ["lease_up", "stabilized", "exit"]
     assert rows[0]["notes"] == "Owner-paid common area electric"
 
