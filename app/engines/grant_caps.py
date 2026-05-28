@@ -73,8 +73,6 @@ def _to_decimal(v: Any) -> Decimal:
 
 def _grant_has_cap(module: Any) -> bool:
     src = module.source or {}
-    if src.get("auto_size"):
-        return False
     return src.get("maximum") is not None
 
 

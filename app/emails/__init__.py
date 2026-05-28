@@ -3,7 +3,7 @@
 Public API:
 - ``send_verification_email(to, name, verify_url)``
 - ``send_password_reset_email(to, name, reset_url)``
-- ``send_invite_email(to, inviter_name, org_name, invite_url)``
+- ``m- ``send_invite_email(to, inviter_name, org_name, invite_url)``
 - ``make_email_verification_token(user_id)``
 - ``load_email_verification_token(token)``
 - ``make_password_reset_token(user_id, password_hash_prefix)``
@@ -38,6 +38,5 @@ __all__ = [
     "make_invite_token",
     "make_password_reset_token",
     "send_invite_email",
-    "send_password_reset_email",
     "send_verification_email",
 ]
