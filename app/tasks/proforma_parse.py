@@ -180,8 +180,6 @@ _DEBT_KEYWORDS: frozenset[str] = frozenset({
     "total income", "total expenses", "total other", "net income",
     "net operating", "subtotal", "total revenue", "utilities total",
     "total utilities", "total opex",
-    "reserves", "capital reserve", "replacement reserve",
-    "capital expense",
     "ar writeoff", "bad debt",
 })
 
@@ -262,7 +260,10 @@ _CATEGORY_KEYWORDS: tuple[tuple[str, str], ...] = (
     ("bookkeep",     "Accounting"),
     ("capex",        "CapEx Reserve"),
     ("capital reserve", "CapEx Reserve"),
+    ("capital expense", "CapEx Reserve"),
     ("replacement reserve", "CapEx Reserve"),
+    ("carpet",       "CapEx Reserve"),
+    ("refurb",       "Unit Turnover"),
     ("audit",        "Legal"),
     ("cpa",          "Legal"),
     ("license",      "Legal"),
@@ -349,6 +350,10 @@ def _postprocess_expense_lines(lines: list[dict]) -> list[dict]:
         if snapped is None:
             snapped = _snap_category(line.get("mapped_category"))
         line["mapped_category"] = snapped
+        # If we can categorize it, it's an operating expense regardless of LLM judgment.
+        # Debt service items won't snap (no keyword match), so this is safe.
+        if snapped is not None:
+            line["is_operating_expense"] = True
         try:
             line["annual_amount"] = round(float(line.get("annual_amount", 0)))
         except (TypeError, ValueError):
@@ -605,7 +610,7 @@ def build_opex_prompt(text: str) -> str:
         "- 'Maint/Repair', 'Maintenance', 'Repairs' -> Repairs & Maintenance\n"
         "- 'Payroll', 'Wages', 'Salaries' -> Payroll\n"
         "- 'Turnover', 'Make-ready', 'Unit Turn' -> Unit Turnover\n"
-        "- 'Reserves', 'Capital Reserves', 'Replacement Reserves' -> set is_operating_expense=false\n"
+        "- 'Reserves', 'Capital Reserves', 'Replacement Reserves', 'CapEx', 'Carpets', 'Flooring', 'Refurbishment' -> CapEx Reserve (is_operating_expense=true)\n"
         "- 'AR Writeoffs', 'Bad Debt', 'Receivables' -> set is_operating_expense=false\n\n"
         f"SHEET DATA:\n{text}"
     )

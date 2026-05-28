@@ -2,14 +2,19 @@
 
 Covers:
   - Enhancement 1: _sheet_to_text() detects "Jan - Dec YYYY" as the total column
-  - Enhancement 2: _is_debt_or_total() excludes "Capital Expenses" section header
+  - Enhancement 2: CapEx items snap to valid categories and are included as OpEx
 """
 from __future__ import annotations
 
 import openpyxl
 import pytest
 
-from app.tasks.proforma_parse import _is_debt_or_total, _sheet_to_text
+from app.tasks.proforma_parse import (
+    _is_debt_or_total,
+    _postprocess_expense_lines,
+    _sheet_to_text,
+    _snap_category,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -81,27 +86,79 @@ def test_sheet_to_text_half_year_range_detected():
 
 
 # ---------------------------------------------------------------------------
-# Enhancement 2: "Capital Expenses" section header exclusion
+# Enhancement 2: CapEx items are valid expense categories, not excluded
 # ---------------------------------------------------------------------------
 
-def test_is_debt_or_total_capital_expenses():
-    assert _is_debt_or_total("Capital Expenses") is True
-
-
-def test_is_debt_or_total_capital_expenses_with_code():
-    # If LLM returns the label verbatim from a QBs export like "9000 - Capital Expenses"
-    assert _is_debt_or_total("9000 - Capital Expenses") is True
-
-
-def test_is_debt_or_total_capital_reserve_still_excluded():
-    """Regression: existing 'capital reserve' keyword still works."""
-    assert _is_debt_or_total("Capital Reserve") is True
-
-
 def test_is_debt_or_total_carpets_not_excluded():
-    """Individual CapEx items (child rows) must NOT be excluded by this keyword."""
     assert _is_debt_or_total("9005 - Carpets / Floors") is False
+
+
+def test_is_debt_or_total_capital_reserve_not_excluded():
+    """Capital Reserve is now a valid CapEx category — must not be excluded."""
+    assert _is_debt_or_total("Capital Reserve") is False
+
+
+def test_is_debt_or_total_replacement_reserve_not_excluded():
+    assert _is_debt_or_total("Replacement Reserve") is False
 
 
 def test_is_debt_or_total_insurance_not_excluded():
     assert _is_debt_or_total("6100 - Insurance") is False
+
+
+def test_snap_category_turnover_refurbishment():
+    """'Turnover Refurbishment' must snap to Unit Turnover via 'turnover' keyword."""
+    assert _snap_category("Turnover Refurbishment") == "Unit Turnover"
+
+
+def test_snap_category_carpets_floors():
+    """'Carpets / Floors' must snap to CapEx Reserve via 'carpet' keyword."""
+    assert _snap_category("9005 - Carpets / Floors") == "CapEx Reserve"
+
+
+def test_snap_category_capital_reserve():
+    """'Capital Reserve' must snap to CapEx Reserve."""
+    assert _snap_category("Capital Reserve") == "CapEx Reserve"
+
+
+def test_snap_category_replacement_reserve():
+    assert _snap_category("Replacement Reserve") == "CapEx Reserve"
+
+
+def test_postprocess_snapped_category_forces_is_opex_true():
+    """If snap succeeds, is_operating_expense must be True even if LLM said False."""
+    lines = [
+        {
+            "original_label": "Turnover Refurbishment",
+            "mapped_category": "Unit Turnover",
+            "is_operating_expense": False,
+            "annual_amount": 5000,
+            "confidence": 0.9,
+        },
+        {
+            "original_label": "Carpets / Floors",
+            "mapped_category": "CapEx Reserve",
+            "is_operating_expense": False,
+            "annual_amount": 3000,
+            "confidence": 0.8,
+        },
+    ]
+    result = _postprocess_expense_lines(lines)
+    assert len(result) == 2
+    assert all(r["is_operating_expense"] is True for r in result)
+
+
+def test_postprocess_debt_service_stays_excluded():
+    """Debt service items that don't snap must remain is_operating_expense=False."""
+    lines = [
+        {
+            "original_label": "Mortgage Interest",
+            "mapped_category": None,
+            "is_operating_expense": False,
+            "annual_amount": 50000,
+            "confidence": 0.9,
+        },
+    ]
+    result = _postprocess_expense_lines(lines)
+    assert len(result) == 1
+    assert result[0]["is_operating_expense"] is False
