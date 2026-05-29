@@ -9322,28 +9322,52 @@ async def deal_setup_wizard_step(
             if isinstance(f, _StarletteUploadFile) and (f.filename or "")
         ]
         if len(_pf_all) > 1:
-            # Multi-file: read all content, stage files 2..N to Redis queue,
-            # dispatch preflight for file 1. Confirm handler pops the queue.
-            import redis as _redis_mf, json as _json_mf
-            file_data = [(pf.filename or "", await pf.read()) for pf in _pf_all]
+            # Multi-file: stage all, extract sheet names / page counts, show
+            # combined config table (shared partial) for user to configure all
+            # files at once. Submit goes to /upload-proforma-multi.
+            import redis as _redis_mf
+            import openpyxl as _openpyxl_mf
+            import os as _os_mf
             r_mf = _redis_mf.from_url(settings.redis_url, decode_responses=False)
-            _queue_tids: list[str] = []
-            for _fname_q, _fbytes_q in file_data[1:]:
-                _tid_q = str(_uuid_mod.uuid4())
-                r_mf.set(f"proforma:{_tid_q}:file", _fbytes_q, ex=86400)
-                r_mf.set(f"proforma:{_tid_q}:filename", _fname_q.encode(), ex=86400)
-                _queue_tids.append(_tid_q)
-            _redis_mf.from_url(settings.redis_url, decode_responses=True).set(
-                f"scenario:{model_id}:proforma_queue",
-                _json_mf.dumps(_queue_tids),
-                ex=86400,
-            )
-            _fname0, _content0 = file_data[0]
-            class _MFUpload0:  # noqa: E301
-                filename = _fname0
-                async def read(self_) -> bytes: return _content0  # noqa: E704
-            return await _dispatch_proforma_preflight(
-                request=request, model_id=model_id, upload=_MFUpload0(),
+            files_ctx: list[dict] = []
+            for pf in _pf_all:
+                _content = await pf.read()
+                _fname = pf.filename or ""
+                _ext = _os_mf.path.splitext(_fname)[1].lower().lstrip(".")
+                _fkind = "xlsx" if _ext in {"xlsx", "xlsm", "xlsb"} else "doc"
+                _tid = str(_uuid_mod.uuid4())
+                r_mf.set(f"proforma:{_tid}:file", _content, ex=86400)
+                r_mf.set(f"proforma:{_tid}:filename", _fname.encode(), ex=86400)
+                _sheet_names: list[str] = []
+                _page_count: int | None = None
+                if _fkind == "xlsx":
+                    try:
+                        _wb = _openpyxl_mf.load_workbook(
+                            io.BytesIO(_content), data_only=True, read_only=True)
+                        _sheet_names = list(_wb.sheetnames)
+                        _wb.close()
+                    except Exception:
+                        pass
+                elif _ext == "pdf":
+                    try:
+                        import pdfplumber as _pdp_mf  # type: ignore
+                        with _pdp_mf.open(io.BytesIO(_content)) as _pdf:
+                            _page_count = len(_pdf.pages)
+                    except Exception:
+                        pass
+                files_ctx.append({
+                    "task_id": _tid,
+                    "filename": _fname,
+                    "file_kind": _fkind,
+                    "sheet_names": _sheet_names,
+                    "single_sheet": len(_sheet_names) == 1,
+                    "page_count": _page_count,
+                    "size_bytes": len(_content),
+                })
+            return templates.TemplateResponse(
+                request,
+                "partials/proforma_multi_preflight.html",
+                {"model_id": model_id, "files": files_ctx},
             )
         elif _pf_all:
             return await _dispatch_proforma_preflight(
@@ -12531,6 +12555,110 @@ async def upload_proforma_doc(
     )
 
 
+@router.post("/ui/models/{model_id}/upload-proforma-multi", response_class=HTMLResponse)
+async def upload_proforma_multi(
+    request: Request,
+    model_id: UUID,
+) -> HTMLResponse:
+    """Receive the multi-file config table, store email_config per file in Redis,
+    dispatch a Celery parse task per file, then return progress for the first file.
+    Subsequent files are processed in parallel; their results appear under the
+    same scenario when confirmed."""
+    import json as _json_multi
+    import redis as _redis_multi
+    from app.tasks.proforma_parse import PARSE_PROFORMA_TASK
+    from app.tasks.celery_app import celery_app as _celery_multi
+
+    form = await request.form()
+    r = _redis_multi.from_url(settings.redis_url, decode_responses=True)
+
+    rows: list[dict] = []
+    i = 0
+    while True:
+        task_id = form.get(f"task_id_{i}")
+        if task_id is None:
+            break
+        rows.append({
+            "task_id": str(task_id),
+            "file_kind": str(form.get(f"file_kind_{i}") or "doc"),
+            "rev_sheet": str(form.get(f"rev_sheet_{i}") or ""),
+            "rev_range": str(form.get(f"rev_range_{i}") or ""),
+            "opex_sheet": str(form.get(f"opex_sheet_{i}") or ""),
+            "opex_range": str(form.get(f"opex_range_{i}") or ""),
+            "rev_pages": str(form.get(f"rev_pages_{i}") or ""),
+            "opex_pages": str(form.get(f"opex_pages_{i}") or ""),
+        })
+        i += 1
+
+    if not rows:
+        return HTMLResponse("<p class='text-red-500'>No files submitted.</p>", status_code=400)
+
+    first_task_id: str | None = None
+    for row in rows:
+        tid = row["task_id"]
+        fkind = row["file_kind"]
+        import_revenue = bool(row["rev_sheet"] or row["rev_pages"])
+        import_opex = bool(row["opex_sheet"] or row["opex_pages"])
+
+        # If neither enabled, default both on so the file still gets processed
+        if not import_revenue and not import_opex:
+            import_revenue = True
+            import_opex = True
+
+        cfg = {
+            "file_kind": fkind,
+            "rev_sheet": row["rev_sheet"],
+            "rev_range": row["rev_range"],
+            "opex_sheet": row["opex_sheet"],
+            "opex_range": row["opex_range"],
+            "rev_pages": row["rev_pages"],
+            "opex_pages": row["opex_pages"],
+            "import_revenue": import_revenue,
+            "import_opex": import_opex,
+        }
+        r.set(f"proforma:{tid}:email_config", _json_multi.dumps(cfg), ex=7 * 86400)
+
+        # Parse page strings to 0-based index lists
+        def _pps(s: str) -> list[int] | None:
+            if not s.strip():
+                return None
+            pages: list[int] = []
+            for part in s.replace(" ", "").split(","):
+                if "-" in part:
+                    lo, _, hi = part.partition("-")
+                    if lo.isdigit() and hi.isdigit():
+                        pages.extend(range(int(lo), int(hi) + 1))
+                elif part.isdigit():
+                    pages.append(int(part))
+            return [p - 1 for p in sorted(set(pages)) if p >= 1] or None
+
+        _celery_multi.send_task(
+            PARSE_PROFORMA_TASK,
+            kwargs={
+                "task_id": tid,
+                "model_id": str(model_id),
+                "revenue_sheet": row["rev_sheet"],
+                "opex_sheet": row["opex_sheet"],
+                "property_column": None,
+                "file_kind": fkind,
+                "import_revenue": import_revenue,
+                "import_opex": import_opex,
+                "revenue_range": row["rev_range"] or None,
+                "opex_range": row["opex_range"] or None,
+                "revenue_pages": _pps(row["rev_pages"]),
+                "opex_pages": _pps(row["opex_pages"]),
+            },
+        )
+        if first_task_id is None:
+            first_task_id = tid
+
+    return templates.TemplateResponse(
+        request,
+        "partials/proforma_progress.html",
+        {"model_id": model_id, "task_id": first_task_id},
+    )
+
+
 @router.get("/ui/models/{model_id}/proforma-status/{task_id}", response_class=HTMLResponse)
 async def proforma_status(
     request: Request,
@@ -12749,34 +12877,6 @@ async def proforma_confirm(
                 pass
 
     await session.commit()
-
-    # Multi-file queue: if the user uploaded N files, pop the next staged file
-    # and show its preflight instead of advancing to Step 2.
-    import redis as _redis_q2, json as _json_q2
-    _rq = _redis_q2.from_url(settings.redis_url, decode_responses=True)
-    _queue_raw = _rq.getdel(f"scenario:{model_id}:proforma_queue")
-    if _queue_raw:
-        try:
-            _queue = _json_q2.loads(_queue_raw)
-        except Exception:
-            _queue = []
-        if _queue:
-            _next_tid = _queue[0]
-            _remaining = _queue[1:]
-            if _remaining:
-                _rq.set(f"scenario:{model_id}:proforma_queue",
-                        _json_q2.dumps(_remaining), ex=86400)
-            _rb = _redis_q2.from_url(settings.redis_url, decode_responses=False)
-            _next_bytes = _rb.get(f"proforma:{_next_tid}:file")
-            _next_fname_raw = _rb.get(f"proforma:{_next_tid}:filename")
-            _next_fname = _next_fname_raw.decode() if _next_fname_raw else "file"
-            if _next_bytes:
-                class _QUpload:  # noqa: E301
-                    filename = _next_fname
-                    async def read(self_) -> bytes: return _next_bytes  # noqa: E704
-                return await _dispatch_proforma_preflight(
-                    request=request, model_id=model_id, upload=_QUpload(),
-                )
 
     # Re-enter the wizard at Step 2 via the canonical GET handler so the full
     # context (source_vehicles_debt, phases_present, review_back_step, etc.)

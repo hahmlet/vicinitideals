@@ -1,0 +1,43 @@
+{# Multi-file proforma import — wizard shell.
+   Context: model_id, files (list — same schema as proforma_config_table expects)
+#}
+<div class="wizard-shell" id="deal-setup-wizard">
+
+  <div style="text-align:center;margin-bottom:24px">
+    <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px">Deal Setup</div>
+    <div style="font-size:12px;color:var(--text-muted)">Step 1 — Pro Forma Import — <strong style="color:var(--accent)">Where is the Data?</strong></div>
+  </div>
+
+  <div class="wizard-card">
+    <div class="wizard-header">
+      <div class="wizard-title">Where is the Data?</div>
+      <div class="wizard-subtitle">
+        {{ files | length }} file{{ 's' if files | length != 1 }} ready. Tell us which sheets or pages hold revenue and expense data.
+      </div>
+    </div>
+
+    <form id="pf-multi-form"
+          hx-post="/ui/models/{{ model_id }}/upload-proforma-multi"
+          hx-target="#deal-setup-wizard"
+          hx-swap="outerHTML"
+          hx-encoding="application/x-www-form-urlencoded"
+          style="overflow-x:auto">
+
+      {% with files=files, show_deal_name=False %}
+        {% include "partials/proforma_config_table.html" %}
+      {% endwith %}
+
+      <div style="margin-top:16px;display:flex;align-items:center;gap:12px">
+        <button type="submit" class="btn btn-primary">
+          Analyze {{ files | length }} file{{ 's' if files | length != 1 }} →
+        </button>
+        <a hx-get="/ui/models/{{ model_id }}/proforma-skip"
+           hx-target="#deal-setup-wizard"
+           hx-swap="outerHTML"
+           style="font-size:12px;color:var(--text-muted);cursor:pointer">
+          Skip import →
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
