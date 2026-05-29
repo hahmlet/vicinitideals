@@ -162,9 +162,14 @@ async def test_revenue_block_registers_one_cell_set_per_stream(
 async def test_revenue_block_y1_monthly_is_formula_referencing_inputs(
     session: AsyncSession,
 ) -> None:
-    """The Y1 monthly cell must be a formula consuming the three input
-    cells — that's the whole point of the block (edit count/rent/occ on
-    Assumptions, see Y1 monthly update in Excel)."""
+    """The Y1 monthly cell must be a formula consuming the count and
+    rent input cells — true gross potential rent (pre-vacancy). Edit
+    count/rent on Assumptions, see Y1 monthly update in Excel.
+
+    Note: occupancy is intentionally NOT referenced. It applies on the
+    Pro Forma via the Vacancy Loss row so EGI = Gross − Vacancy matches
+    the engine's `gross_revenue` field (pre-vacancy by convention).
+    """
     scenario = await _seed_with_extra_streams_and_opex(session)
     blob = await export_investor_workbook(scenario.id, session)
     wb = load_workbook(BytesIO(blob), data_only=False)
@@ -176,7 +181,10 @@ async def test_revenue_block_y1_monthly_is_formula_referencing_inputs(
         assert isinstance(formula, str) and formula.startswith("=")
         assert "s_rev_1br_units_unit_count" in formula
         assert "s_rev_1br_units_rent_per_unit_monthly" in formula
-        assert "s_rev_1br_units_occupancy_pct" in formula
+        assert "occupancy_pct" not in formula, (
+            "Y1 monthly must be pre-vacancy gross; occupancy belongs "
+            "on the Pro Forma Vacancy Loss row"
+        )
         return
     pytest.fail("s_rev_1br_units_y1_monthly had no destination")
 

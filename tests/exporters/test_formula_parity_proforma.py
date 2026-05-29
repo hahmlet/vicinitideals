@@ -190,3 +190,64 @@ async def test_noi_evaluates_to_engine_value(
             f"NOI Y{year} parity break: engine={engine_value}, "
             f"excel={excel_value}, diff={diff}"
         )
+
+
+async def test_egi_formula_subtracts_vacancy(session: AsyncSession):
+    """Each EGI cell must subtract Vacancy Loss, not add it.
+
+    Regression: prior to the vacancy-sign fix, EGI was emitted as
+    ``=GrossRev + Vacancy`` while the engine stored vacancy_loss as a
+    positive haircut and Pro Forma Gross Revenue was already net of
+    occupancy. The combined effect overstated NOI by the vacancy
+    amount. Fix flips the EGI sign to '-' and removes occupancy from
+    the rent_y1_monthly formula so Gross Revenue shows true GPR.
+    """
+    scenario = await _seed_scenario(session)
+    blob = await export_investor_workbook(scenario.id, session)
+    _wb, ws = _proforma_sheet(blob)
+
+    egi_row = _find_row_by_label(ws, "Effective Gross Income")
+    vac_row = _find_row_by_label(ws, "Vacancy Loss")
+    assert egi_row is not None and vac_row is not None
+
+    for c in range(2, ws.max_column + 1):
+        v = ws.cell(row=egi_row, column=c).value
+        if v is None:
+            break
+        assert isinstance(v, str) and v.startswith("=")
+        vac_ref = f"{chr(ord('A') + c - 1)}{vac_row}"
+        assert f"-{vac_ref}" in v, (
+            f"EGI Y{c - 2} formula must subtract vacancy ({vac_ref}); "
+            f"got {v!r}"
+        )
+
+
+async def test_rent_y1_monthly_excludes_occupancy(session: AsyncSession):
+    """``s_rev_<slug>_y1_monthly`` must be count × rent (pre-vacancy).
+
+    Regression: pre-fix formula multiplied by occupancy_pct, making
+    Pro Forma's Gross Revenue line already net of vacancy — which
+    then double-counted when the EGI formula added a positive vacancy
+    cell on top. Y1 monthly is now the true gross potential rent;
+    occupancy applies via the Vacancy Loss row and the EGI subtraction.
+    """
+    scenario = await _seed_scenario(session)
+    blob = await export_investor_workbook(scenario.id, session)
+    wb = load_workbook(BytesIO(blob), data_only=False)
+
+    rent_names = [
+        n for n in wb.defined_names
+        if n.startswith("s_rev_") and n.endswith("_y1_monthly")
+    ]
+    assert rent_names, "no s_rev_*_y1_monthly named ranges emitted"
+
+    for name in rent_names:
+        dn = wb.defined_names[name]
+        for sheet, coord in dn.destinations:
+            cell = wb[sheet][coord]
+            formula = cell.value
+            assert isinstance(formula, str) and formula.startswith("=")
+            assert "occupancy_pct" not in formula, (
+                f"{name} must NOT multiply by occupancy "
+                f"(applied on Pro Forma instead); got {formula!r}"
+            )

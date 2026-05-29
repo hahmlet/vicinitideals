@@ -2136,14 +2136,15 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
     # Formula-conversion plan §4.1 (commit 3): the rows whose math is a
     # direct sum/difference of other rows on this sheet become formulas
     # so LP edits to a single Use line / OpEx category propagate to the
-    # downstream KPIs. ``effective_gross_income`` = GrossRev + Vacancy
-    # (vacancy negative); ``noi`` = EGI - OpEx. Net Cash Flow + Debt
-    # Service stay as engine values until commit 4 wires the Debt
+    # downstream KPIs. ``effective_gross_income`` = GrossRev − Vacancy
+    # (vacancy stored as positive haircut, matching the engine's
+    # ``vacancy_loss`` field); ``noi`` = EGI − OpEx. Net Cash Flow +
+    # Debt Service stay as engine values until commit 4 wires the Debt
     # Schedule sheet, then they convert too.
     _DERIVED_FORMULA_FIELDS: dict[str, tuple[str, ...]] = {
         # field name -> (sign, operand_field) pairs. Sign is "+" or "-"
         # and applied to the operand field's cell on this same row block.
-        "effective_gross_income": ("+gross_revenue", "+vacancy_loss"),
+        "effective_gross_income": ("+gross_revenue", "-vacancy_loss"),
         "noi": ("+effective_gross_income", "-operating_expenses"),
         # Phase E: Net Cash Flow is derived so the new Debt Service formula
         # propagates through to the LP's bottom-line cash row.
@@ -6525,13 +6526,15 @@ def _build_assumptions_revenue_block(
             name=f"s_rev_{slug}_escalation_pct", fmt=PCT,
             font=FONT_INPUT, align=ALIGN_RIGHT,
         )
-        # Y1 monthly formula: count × rent × occupancy. Wrapped in
-        # IFERROR so a missing unit_count cell (fixed-amount streams)
-        # falls back to the rent cell alone.
+        # Y1 monthly formula: count × rent (true gross potential rent,
+        # pre-vacancy). Occupancy is applied separately on the Pro Forma
+        # via the Vacancy Loss line so EGI = Gross − Vacancy matches CRE
+        # convention and the engine's `gross_revenue` field. Wrapped in
+        # IFERROR so fixed-amount streams (no unit_count) fall back to
+        # the rent cell alone.
         y1_formula = (
-            f"=IFERROR(s_rev_{slug}_unit_count*s_rev_{slug}_rent_per_unit_monthly*"
-            f"s_rev_{slug}_occupancy_pct,s_rev_{slug}_rent_per_unit_monthly*"
-            f"s_rev_{slug}_occupancy_pct)"
+            f"=IFERROR(s_rev_{slug}_unit_count*s_rev_{slug}_rent_per_unit_monthly,"
+            f"s_rev_{slug}_rent_per_unit_monthly)"
         )
         registry.write(
             ws, row, 7, y1_formula,

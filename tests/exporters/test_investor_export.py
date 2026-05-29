@@ -460,8 +460,10 @@ _NAMED_RANGE_ALIASES: tuple[tuple[re.Pattern[str], str], ...] = (
     # (s_lp_em / s_gp_em); trace to the same "Equity Multiple" doc entry.
     (re.compile(r"^s_(lp|gp)_em$"), "Equity Multiple"),
     # Phase 5f: LP / GP CoC Year 1 — party-scoped variant of the combined
-    # Cash-on-Cash Year 1 metric.
+    # Cash-on-Cash Year 1 metric. Both short (_coc_y1) and long-form
+    # (_coc_year_one) aliases trace to the same doc entry.
     (re.compile(r"^s_(lp|gp)_coc_y1$"), "Cash-on-Cash Year 1"),
+    (re.compile(r"^s_(lp|gp)_coc_year_one$"), "Cash-on-Cash Year 1"),
     # Spread Stack (added Phase Spread Stack / d6d812c + 42cb8d4)
     # s_rfr_pct is the Risk-Free Rate input; named differently from the
     # doc entry so an explicit alias is required.
