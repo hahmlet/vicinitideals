@@ -117,3 +117,20 @@ async def test_builder_no_redirect_when_project_already_present(
     )
 
     assert resp.status_code == 200, resp.text
+
+
+async def test_builder_breadcrumb_uses_deal_name_not_project_name(
+    client: AsyncClient,
+    session: AsyncSession,
+) -> None:
+    deal_model, project, user_id = await _seed_minimal(session)
+    await _auth(client, user_id)
+
+    resp = await client.get(
+        f"/models/{deal_model.id}/builder?module=sources_uses&project={project.id}",
+        follow_redirects=False,
+    )
+
+    assert resp.status_code == 200, resp.text
+    # Top-left breadcrumb should show Deal.name from _seed_minimal.
+    assert "Builder Redirect Test" in resp.text

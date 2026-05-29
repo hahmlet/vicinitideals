@@ -413,7 +413,7 @@ async def email_create_deals(
             pass
 
     org_id = user.org_id
-    deal_type = ProjectType.multifamily
+    deal_type = ProjectType.value_add
     r = _redis.from_url(settings.redis_url, decode_responses=True)
 
     first_scenario_id: uuid.UUID | None = None

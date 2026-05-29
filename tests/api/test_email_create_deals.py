@@ -129,7 +129,7 @@ async def test_two_names_create_two_deals(session, redis_store):
             ) as client:
                 resp = await client.post(
                     f"/ui/deals/email/{email_row.id}/create-deals",
-                    headers={"X-User-ID": str(user.id)},
+                    headers={"X-User-ID": str(user.id), "hx-request": "true"},
                     data={
                         "task_id_0": "task-a1",
                         "file_kind_0": "xlsx",
@@ -218,7 +218,7 @@ async def test_same_name_groups_into_one_deal(session, redis_store):
             ) as client:
                 resp = await client.post(
                     f"/ui/deals/email/{email_row.id}/create-deals",
-                    headers={"X-User-ID": str(user.id)},
+                    headers={"X-User-ID": str(user.id), "hx-request": "true"},
                     data={
                         # Row 0: Deal A, revenue sheet
                         "task_id_0": "task-x1",
@@ -292,7 +292,7 @@ async def test_wrong_org_returns_404(session, redis_store):
             ) as client:
                 resp = await client.post(
                     f"/ui/deals/email/{email_row.id}/create-deals",
-                    headers={"X-User-ID": str(user2.id)},  # wrong org
+                    headers={"X-User-ID": str(user2.id), "hx-request": "true"},  # wrong org
                     data={
                         "task_id_0": "task-z1",
                         "file_kind_0": "xlsx",

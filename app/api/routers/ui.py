@@ -10176,10 +10176,11 @@ async def model_builder(
     if model is None:
         return HTMLResponse("<p class='text-muted'>Model not found.</p>", status_code=404)
 
+    owning_deal = await session.get(Deal, model.deal_id) if model.deal_id else None
+
     user = await _get_user(session, request)
     if settings.org_isolation_enabled:
         user_org_id = getattr(user, "org_id", None) if user is not None else None
-        owning_deal = await session.get(Deal, model.deal_id) if model.deal_id else None
         if user_org_id is None or owning_deal is None or owning_deal.org_id != user_org_id:
             return HTMLResponse("<p class='text-muted'>Model not found.</p>", status_code=404)
 
@@ -10507,7 +10508,8 @@ async def model_builder(
 
     ctx = {
         "model": model,
-        "project": active_project or opportunity,  # template uses `project.name` for the topbar breadcrumb
+        "project": active_project or opportunity,
+        "breadcrumb_deal_name": owning_deal.name if owning_deal else model.name,
         "parent_deal_id": str(parent_deal_id) if parent_deal_id else None,
         "deal_variants": deal_variants,
         "deal_projects": deal_projects,

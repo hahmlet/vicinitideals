@@ -706,15 +706,7 @@
     <a href="/deals/{{ parent_deal_id }}" style="font-size:12px;color:var(--text-muted);font-weight:400">← Deal</a>
     <span style="color:var(--text-muted);margin:0 6px;font-weight:400">/</span>
     {% endif %}
-    {% if active_project_id %}
-    <span class="proj-tab-name"
-          data-project-id="{{ active_project_id }}"
-          onclick="_startProjectRename(event)"
-          style="cursor:pointer"
-          title="Click to rename">{{ (project.name or project.address_normalized) if project else model.name }}</span>
-    {% else %}
-    <span>{{ (project.name or project.address_normalized) if project else model.name }}</span>
-    {% endif %}
+    <span>{{ breadcrumb_deal_name }}</span>
   </div>
 
   {# Center-top Calculation Status pill — clickable to open diagnostic modal.
@@ -2390,7 +2382,7 @@ document.addEventListener('mousedown', function(e) {
 </script>
 
 <script>
-// Inline rename for project name (breadcrumb + active tab).
+// Inline rename for project name on the active project tab.
 // Click .proj-tab-name → swap to input. Enter/blur → save. Escape → cancel.
 function _startProjectRename(ev) {
   ev = ev || window.event;
