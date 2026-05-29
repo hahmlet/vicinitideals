@@ -12,12 +12,13 @@
          * revenue  → DSCR + LTV (NOI driver)
          * opex     → DSCR + LTV (NOI driver)
 #}
-{%- set _ga = gap_adjustments or {'revenue_monthly': 0, 'opex_annual': 0, 'pp': 0} -%}
+{%- set _ga = gap_adjustments or {'revenue_annual': 0, 'opex_annual': 0, 'noi_annual': 0, 'pp': 0} -%}
 {%- set _ga_pp = (_ga.pp | float) -%}
-{%- set _ga_rev = (_ga.revenue_monthly | float) -%}
+{%- set _ga_rev = (_ga.revenue_annual | float) -%}
 {%- set _ga_opex = (_ga.opex_annual | float) -%}
+{%- set _ga_noi = (_ga.noi_annual | float) -%}
 {%- set _has_pp_adj = _ga_pp != 0 -%}
-{%- set _has_noi_adj = (_ga_rev != 0) or (_ga_opex != 0) -%}
+{%- set _has_noi_adj = (_ga_rev != 0) or (_ga_opex != 0) or (_ga_noi != 0) -%}
 {%- set _has_any_adj = _has_pp_adj or _has_noi_adj -%}
 
 <div class="calc-status-modal-header">

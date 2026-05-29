@@ -11365,19 +11365,21 @@ async def _get_gap_adjustment_amounts(
 ) -> dict[str, float]:
     """Return current Gap Adjustment phantom amounts as a dict.
 
-    Keys: ``revenue_monthly`` (IncomeStream.amount_fixed_monthly),
-    ``opex_annual`` (OperatingExpenseLine.annual_amount),
+    Keys: ``revenue_annual`` (IncomeStream.amount_fixed_monthly × 12),
+    ``opex_annual`` (OperatingExpenseLine.annual_amount for OpEx phantom),
+    ``noi_annual`` (OperatingExpenseLine.annual_amount for NOI phantom),
     ``pp`` (UseLine.amount).  Missing rows resolve to 0.0. Used by the
     calc-status modal to drive per-section yellow override + adjustment
     notes (Sources=Uses ← PP; DSCR/LTV ← Revenue + OpEx).
     """
     from app.schemas.gap_adjustment_names import (
+        NOI_ADJUSTMENT_LABEL,
         OPEX_ADJUSTMENT_LABEL,
         PURCHASE_PRICE_ADJUSTMENT_LABEL,
         REVENUE_ADJUSTMENT_LABEL,
     )
 
-    out = {"revenue_monthly": 0.0, "opex_annual": 0.0, "pp": 0.0}
+    out = {"revenue_annual": 0.0, "opex_annual": 0.0, "noi_annual": 0.0, "pp": 0.0}
     rev = (await session.execute(
         select(IncomeStream).where(
             IncomeStream.project_id == project_id,
@@ -11386,7 +11388,18 @@ async def _get_gap_adjustment_amounts(
     )).scalars().first()
     if rev and rev.amount_fixed_monthly is not None:
         try:
-            out["revenue_monthly"] = float(rev.amount_fixed_monthly)
+            out["revenue_annual"] = float(rev.amount_fixed_monthly) * 12
+        except (TypeError, ValueError):
+            pass
+    noi = (await session.execute(
+        select(OperatingExpenseLine).where(
+            OperatingExpenseLine.project_id == project_id,
+            OperatingExpenseLine.label == NOI_ADJUSTMENT_LABEL,
+        )
+    )).scalars().first()
+    if noi and noi.annual_amount is not None:
+        try:
+            out["noi_annual"] = float(noi.annual_amount)
         except (TypeError, ValueError):
             pass
     opex = (await session.execute(
@@ -11424,6 +11437,7 @@ async def _has_any_gap_adjustment(session: AsyncSession, project_id: UUID) -> bo
     rather than "for real."
     """
     from app.schemas.gap_adjustment_names import (
+        NOI_ADJUSTMENT_LABEL,
         OPEX_ADJUSTMENT_LABEL,
         PURCHASE_PRICE_ADJUSTMENT_LABEL,
         REVENUE_ADJUSTMENT_LABEL,
@@ -11436,6 +11450,14 @@ async def _has_any_gap_adjustment(session: AsyncSession, project_id: UUID) -> bo
         )
     )).scalars().first()
     if rev and rev.amount_fixed_monthly and float(rev.amount_fixed_monthly) != 0:
+        return True
+    noi = (await session.execute(
+        select(OperatingExpenseLine).where(
+            OperatingExpenseLine.project_id == project_id,
+            OperatingExpenseLine.label == NOI_ADJUSTMENT_LABEL,
+        )
+    )).scalars().first()
+    if noi and noi.annual_amount and float(noi.annual_amount) != 0:
         return True
     opex = (await session.execute(
         select(OperatingExpenseLine).where(
@@ -11618,7 +11640,7 @@ async def model_calc_status_modal(
         gap_adjustments = (
             await _get_gap_adjustment_amounts(session, _active_proj_id)
             if _active_proj_id is not None
-            else {"revenue_monthly": 0.0, "opex_annual": 0.0, "pp": 0.0}
+            else {"revenue_annual": 0.0, "opex_annual": 0.0, "noi_annual": 0.0, "pp": 0.0}
         )
         response = templates.TemplateResponse(
             request,

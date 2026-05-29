@@ -59,25 +59,23 @@ def _open_wizard(page, base_url: str, model_id: str) -> None:
 
 
 def _reach_upload_step(page) -> None:
-    """From the wizard root, pick Revenue/OpEx and advance to the
-    pro-forma upload step."""
+    """From the wizard root, pick Revenue/OpEx — proforma block is on step 1."""
     page.click('input[value="revenue_opex"]')
-    page.click('#deal-setup-wizard button:has-text("Next")')
     wait_for_htmx(page)
-    page.wait_for_selector("#proforma-file-input", timeout=10_000)
+    page.wait_for_selector("#proforma-file", timeout=10_000)
 
 
 def _upload(page, xlsx_bytes: bytes) -> None:
     page.set_input_files(
-        "#proforma-file-input",
+        "#proforma-file",
         files=[{
             "name": "p.xlsx",
             "mimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             "buffer": xlsx_bytes,
         }],
     )
-    # Manual file picker enables the submit button via onFileSelected; click it.
-    page.click("#upload-btn")
+    # File selection triggers onProformaFile → _pfRebuildPills → button "Import →"
+    page.click("#step1-submit")
     wait_for_htmx(page)
 
 

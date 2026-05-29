@@ -20,20 +20,24 @@ from pydantic import BaseModel, ConfigDict
 
 
 class SliderRequest(BaseModel):
-    """Three deltas — revenue (monthly), opex (annual), purchase price.
+    """Gap adjuster deltas — revenue/opex (annual) or NOI (annual), plus purchase price.
 
-    All three are optional and treated as absolute target values for the
-    corresponding phantom row, not increments. ``None`` (omitted field)
-    means "leave that phantom row untouched"; ``0`` means "set the phantom
-    row to zero" (which the UI may show as gray / un-highlighted).
+    All fields are optional absolute target values for the corresponding phantom
+    row, not increments. ``None`` (omitted) means "leave that phantom row
+    untouched"; ``0`` means "zero it out".
+
+    revenue_opex mode: use ``revenue_delta_annual`` and ``opex_delta_annual``.
+    noi mode: use ``noi_delta_annual``; revenue/opex fields are ignored.
+    ``pp_delta`` applies in both modes.
 
     Negative values are explicitly supported: a negative ``opex_delta_annual``
     means "imagine opex were $X lower"; a negative ``pp_delta`` means
     "imagine purchase price were $X lower" and reduces total Uses.
     """
 
-    revenue_delta_monthly: Decimal | None = None
+    revenue_delta_annual: Decimal | None = None
     opex_delta_annual: Decimal | None = None
+    noi_delta_annual: Decimal | None = None
     pp_delta: Decimal | None = None
     # Multi-project deals: phantom rows must land on the project the user is
     # currently viewing. Omit (default) → endpoint uses the scenario's
@@ -43,7 +47,7 @@ class SliderRequest(BaseModel):
     model_config = ConfigDict(
         json_schema_extra={
             "example": {
-                "revenue_delta_monthly": "1000",
+                "revenue_delta_annual": "12000",
                 "opex_delta_annual": "-12000",
                 "pp_delta": "-50000",
                 "project_id": "44444444-4444-4444-4444-444444444444",
@@ -59,13 +63,12 @@ class SliderResponse(BaseModel):
     consumes this to update the calc-status pill and the Sources/Uses panel.
     """
 
-    revenue_delta_monthly: Decimal
+    revenue_delta_annual: Decimal
     opex_delta_annual: Decimal
+    noi_delta_annual: Decimal
     pp_delta: Decimal
     has_any_adjustment: bool
-    """True iff any of the three deltas is non-zero. Drives the pill's
-    yellow override (any nonzero adjustment → all pill items yellow even
-    when thresholds pass)."""
+    """True iff any delta is non-zero. Drives the pill's yellow override."""
 
     dscr: Decimal | None = None
     total_project_cost: Decimal | None = None

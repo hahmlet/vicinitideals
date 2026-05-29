@@ -5,6 +5,7 @@
 {% set _GAP_REV_LBL = 'Gap Adjustment — Revenue' %}
 {% set _GAP_OPEX_LBL = 'Gap Adjustment — OpEx' %}
 {% set _GAP_PP_LBL = 'Gap Adjustment — Purchase Price' %}
+{% set _GAP_NOI_LBL = 'Gap Adjustment — NOI' %}
 
 {% if active_module == 'property' %}
 
@@ -369,18 +370,22 @@
 {% set _REV_LBL = _GAP_REV_LBL %}
 {% set _OPEX_LBL = _GAP_OPEX_LBL %}
 {% set _PP_LBL = _GAP_PP_LBL %}
+{% set _NOI_LBL = _GAP_NOI_LBL %}
+{% set _income_mode_gap = (model.income_mode if model is defined and model.income_mode else 'revenue_opex') %}
 {% set _rev_phantom = (income_streams | selectattr('label', 'equalto', _REV_LBL) | list | first) if income_streams else none %}
 {% set _opex_phantom = (expense_lines | selectattr('label', 'equalto', _OPEX_LBL) | list | first) if expense_lines else none %}
+{% set _noi_phantom = (expense_lines | selectattr('label', 'equalto', _NOI_LBL) | list | first) if expense_lines else none %}
 {% set _pp_phantom = (use_lines | selectattr('label', 'equalto', _PP_LBL) | list | first) if use_lines else none %}
-{% set _rev_amt = (_rev_phantom.amount_fixed_monthly | float) if (_rev_phantom and _rev_phantom.amount_fixed_monthly is not none) else 0 %}
+{% set _rev_amt = ((_rev_phantom.amount_fixed_monthly | float) * 12) if (_rev_phantom and _rev_phantom.amount_fixed_monthly is not none) else 0 %}
 {% set _opex_amt = (_opex_phantom.annual_amount | float) if (_opex_phantom and _opex_phantom.annual_amount is not none) else 0 %}
+{% set _noi_amt = (_noi_phantom.annual_amount | float) if (_noi_phantom and _noi_phantom.annual_amount is not none) else 0 %}
 {% set _pp_amt = (_pp_phantom.amount | float) if (_pp_phantom and _pp_phantom.amount is not none) else 0 %}
 
 {# Sources/Uses gap drives drawer visibility + PP slider range. uses_total
    and capital_total come from _load_builder_data; gap = uses - sources
    (positive = need to close gap by increasing sources or reducing uses). #}
 {% set _gap = ((uses_total | float) - (capital_total | float)) if (uses_total is not none and capital_total is not none) else 0 %}
-{% set _has_phantom = (_rev_amt != 0) or (_opex_amt != 0) or (_pp_amt != 0) %}
+{% set _has_phantom = (_rev_amt != 0) or (_opex_amt != 0) or (_noi_amt != 0) or (_pp_amt != 0) %}
 {% set _show_drawer = (_gap != 0) or _has_phantom %}
 
 {# Baselines computed unconditionally so the JS block (which renders
@@ -403,8 +408,9 @@
     {% if e.annual_amount %}{% set ns_op.total = ns_op.total + (e.annual_amount | float) %}{% endif %}
   {% endfor %}
 {% endif %}
-{% set _baseline_rev_monthly = ns_rev.total %}
+{% set _baseline_rev_annual = ns_rev.total * 12 %}
 {% set _baseline_opex_annual = ns_op.total %}
+{% set _baseline_noi_annual = (inputs.noi_stabilized_input | float) if (inputs and inputs.noi_stabilized_input is not none) else 0 %}
 {% set _acq_ul = (use_lines | selectattr('label', 'equalto', 'Acquisition') | list | first) if use_lines else none %}
 {% set _baseline_pp = (_acq_ul.amount | float) if _acq_ul else ((inputs.purchase_price | float) if (inputs and inputs.purchase_price) else 0) %}
 
@@ -419,21 +425,27 @@
    Revenue covers 60mo of gap, OpEx covers 6mo. Falls back to 25% of baseline
    when gap is small relative to baseline. #}
 {% set _gap_abs = (_gap if _gap >= 0 else -_gap) %}
-{% set _rev_step = 100 %}
+{% set _rev_step = 1200 %}
 {% set _opex_step = 500 %}
 {% set _pp_step = 1000 %}
-{% set _rev_raw = (_baseline_rev_monthly * 0.25) if _baseline_rev_monthly else 10000 %}
+{% set _noi_step = 1000 %}
+{% set _rev_raw = (_baseline_rev_annual * 0.25) if _baseline_rev_annual else 12000 %}
 {% set _rev_raw = _rev_raw if _rev_raw > (_gap_abs / 60) else (_gap_abs / 60) %}
 {% set _opex_raw = (_baseline_opex_annual * 0.25) if _baseline_opex_annual else 50000 %}
 {% set _opex_raw = _opex_raw if _opex_raw > (_gap_abs / 6) else (_gap_abs / 6) %}
 {% set _pp_raw = (_baseline_pp * 0.25) if _baseline_pp else 100000 %}
 {% set _pp_raw = _pp_raw if _pp_raw > (_gap_abs * 1.25) else (_gap_abs * 1.25) %}
+{% set _noi_raw = (_baseline_noi_annual * 0.25) if _baseline_noi_annual else 50000 %}
+{% set _noi_raw = _noi_raw if _noi_raw > (_gap_abs / 6) else (_gap_abs / 6) %}
 {% set _rev_range = (((_rev_raw / _rev_step) | round(0, 'ceil')) | int) * _rev_step %}
 {% set _opex_range = (((_opex_raw / _opex_step) | round(0, 'ceil')) | int) * _opex_step %}
 {% set _pp_range = (((_pp_raw / _pp_step) | round(0, 'ceil')) | int) * _pp_step %}
+{% set _noi_range = (((_noi_raw / _noi_step) | round(0, 'ceil')) | int) * _noi_step %}
 {# Guarantee range always covers the live stored adjustment — prevents browser
    clamping when range shrinks after a compute (gap closes → gap_abs → 0). #}
 {% set _pp_amt_abs = (_pp_amt if _pp_amt >= 0 else -_pp_amt) %}
+{% set _noi_amt_abs = (_noi_amt if _noi_amt >= 0 else -_noi_amt) %}
+{% set _noi_range = _noi_range if _noi_range >= _noi_amt_abs else (((_noi_amt_abs / _noi_step) | round(0, 'ceil') | int) * _noi_step) %}
 {% set _pp_range = _pp_range if _pp_range >= _pp_amt_abs else (((_pp_amt_abs / _pp_step) | round(0, 'ceil') | int) * _pp_step) %}
 {# Snap stop: pp value that exactly closes the remaining gap (pp phantom + gap → 0). #}
 {% set _pp_snap_value = ((_pp_amt | int) - (_gap | int)) %}
@@ -452,17 +464,58 @@
     Drag each slider to imagine a fix; pill stays yellow while any adjustment is non-zero.
   </p>
 
+{% if _income_mode_gap == 'noi' %}
+  {# ── NOI mode: single NOI adjustment + Purchase Price ── #}
+  <div style="display:grid;grid-template-columns:repeat(2, 1fr);gap:16px">
+
+    {# ── Annual NOI column ── #}
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <label for="gap-slider-noi" style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em">Annual NOI (/yr)</label>
+      <div id="gap-slider-noi-display" style="font-size:18px;font-weight:600;color:var(--text-primary);font-variant-numeric:tabular-nums">+$0</div>
+      <input type="range"
+             id="gap-slider-noi"
+             min="-{{ _noi_range }}" max="{{ _noi_range }}" step="{{ _noi_step }}"
+             value="{{ _noi_amt | int }}"
+             oninput="onGapSlide('noi', this.value, {{ _baseline_noi_annual }})"
+             onchange="postGapSliders('{{ model.id }}')"
+             style="width:100%">
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-muted)">
+        <span>-{{ _noi_range | int | currency }}</span>
+        <span>+{{ _noi_range | int | currency }}</span>
+      </div>
+    </div>
+
+    {# ── Purchase Price column ── #}
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <label for="gap-slider-pp" style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em">Purchase Price</label>
+      <div id="gap-slider-pp-display" style="font-size:18px;font-weight:600;color:var(--text-primary);font-variant-numeric:tabular-nums">+$0</div>
+      <input type="range"
+             id="gap-slider-pp"
+             min="-{{ _pp_range }}" max="{{ _pp_range }}" step="{{ _pp_step }}"
+             value="{{ _pp_amt | int }}"
+             oninput="onPpSlide(this.value, {{ _baseline_pp }})"
+             onchange="postGapSliders('{{ model.id }}')"
+             style="width:100%">
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-muted)">
+        <span>-{{ _pp_range | int | currency }}</span>
+        <span>+{{ _pp_range | int | currency }}</span>
+      </div>
+    </div>
+
+  </div>
+{% else %}
+  {# ── Revenue/OpEx mode: Revenue + OpEx + Purchase Price ── #}
   <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px">
 
     {# ── Revenue column ── #}
     <div style="display:flex;flex-direction:column;gap:6px">
-      <label for="gap-slider-rev" style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em">Revenue (/mo)</label>
+      <label for="gap-slider-rev" style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em">Revenue (/yr)</label>
       <div id="gap-slider-rev-display" style="font-size:18px;font-weight:600;color:var(--text-primary);font-variant-numeric:tabular-nums">+$0</div>
       <input type="range"
              id="gap-slider-rev"
              min="-{{ _rev_range }}" max="{{ _rev_range }}" step="{{ _rev_step }}"
              value="{{ _rev_amt | int }}"
-             oninput="onGapSlide('rev', this.value, {{ _baseline_rev_monthly }})"
+             oninput="onGapSlide('rev', this.value, {{ _baseline_rev_annual }})"
              onchange="postGapSliders('{{ model.id }}')"
              style="width:100%">
       <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-muted)">
@@ -506,6 +559,7 @@
     </div>
 
   </div>
+{% endif %}
 </div>
 
 {% endif %}{# /_show_drawer #}
@@ -556,12 +610,13 @@
   };
 
   // Initialize displays from current slider values on partial load.
-  ['rev', 'opex', 'pp'].forEach(function(kind) {
+  ['rev', 'opex', 'noi', 'pp'].forEach(function(kind) {
     var slider = document.getElementById('gap-slider-' + kind);
     if (!slider) return;
     var baselineMap = {
-      rev: {{ _baseline_rev_monthly }},
+      rev: {{ _baseline_rev_annual }},
       opex: {{ _baseline_opex_annual }},
+      noi: {{ _baseline_noi_annual }},
       pp: {{ _baseline_pp }}
     };
     window.onGapSlide(kind, slider.value, baselineMap[kind]);
@@ -573,10 +628,12 @@
   window.postGapSliders = function(modelId) {
     var rev = document.getElementById('gap-slider-rev');
     var opex = document.getElementById('gap-slider-opex');
+    var noi = document.getElementById('gap-slider-noi');
     var pp = document.getElementById('gap-slider-pp');
     var body = {
-      revenue_delta_monthly: rev ? rev.value : '0',
+      revenue_delta_annual: rev ? rev.value : '0',
       opex_delta_annual: opex ? opex.value : '0',
+      noi_delta_annual: noi ? noi.value : '0',
       pp_delta: _ppSnapStuck ? String(_ppSnapValue) : (pp ? pp.value : '0')
     };
     // Multi-project: phantom rows must land on the project the user is
@@ -610,8 +667,9 @@
   window.zeroGapAdjRow = function(modelId, kind, projectId) {
     var body = {};
     if (kind === 'pp') body.pp_delta = '0';
-    else if (kind === 'rev') body.revenue_delta_monthly = '0';
+    else if (kind === 'rev') body.revenue_delta_annual = '0';
     else if (kind === 'opex') body.opex_delta_annual = '0';
+    else if (kind === 'noi') body.noi_delta_annual = '0';
     if (projectId) body.project_id = projectId;
     fetch('/api/models/' + modelId + '/sliders', {
       method: 'POST',
@@ -634,13 +692,14 @@
 
   // Reset all three to zero, persist, refresh.
   window.resetGapSliders = function(modelId) {
-    ['rev', 'opex', 'pp'].forEach(function(kind) {
+    ['rev', 'opex', 'noi', 'pp'].forEach(function(kind) {
       var s = document.getElementById('gap-slider-' + kind);
       if (s) {
         s.value = 0;
         var baselineMap = {
-          rev: {{ _baseline_rev_monthly }},
+          rev: {{ _baseline_rev_annual }},
           opex: {{ _baseline_opex_annual }},
+          noi: {{ _baseline_noi_annual }},
           pp: {{ _baseline_pp }}
         };
         window.onGapSlide(kind, 0, baselineMap[kind]);

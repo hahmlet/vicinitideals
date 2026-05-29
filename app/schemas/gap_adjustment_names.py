@@ -35,11 +35,20 @@ Lives in the acquisition phase, sits directly below the actual Purchase Price
 use line. Negative amounts are allowed and effectively reduce total Uses.
 """
 
+NOI_ADJUSTMENT_LABEL: Final[str] = "Gap Adjustment — NOI"
+"""Reserved OperatingExpenseLine.label for the NOI-mode slider phantom row.
+
+Only written when income_mode == "noi". The cashflow engine reads this row in
+the NOI path and adds its annual_amount to noi_stabilized_input before sizing.
+Positive = assume higher NOI; negative = assume lower NOI.
+"""
+
 ALL_RESERVED_LABELS: Final[frozenset[str]] = frozenset(
     {
         REVENUE_ADJUSTMENT_LABEL,
         OPEX_ADJUSTMENT_LABEL,
         PURCHASE_PRICE_ADJUSTMENT_LABEL,
+        NOI_ADJUSTMENT_LABEL,
     }
 )
 

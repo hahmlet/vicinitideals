@@ -40,14 +40,13 @@ def _open_sources_panel(page: Page, base_url: str, model_id: str) -> None:
 
 
 def _add_use(page: Page, label: str, amount: str, phase: str = "construction") -> None:
-    page.evaluate(f"() => openAddLine('uses')")
-    page.wait_for_selector('#line-item-drawer input[name="label"]', timeout=5_000)
-    page.fill('#line-item-drawer input[name="label"]', label)
-    page.fill('#line-item-drawer input[name="amount"]', amount)
-    sel = page.locator('#line-item-drawer select[name="phase"]')
-    if sel.count() > 0:
-        sel.select_option(phase)
-    page.click('#line-item-drawer button[type="submit"]')
+    page.evaluate("() => openAddLine('uses')")
+    page.wait_for_selector('#uses-wizard-body input[name="label"]', timeout=5_000)
+    page.fill('#uses-wizard-body input[name="label"]', label)
+    page.fill('#uses-wizard-body input[name="amount"]', amount)
+    page.click('#uw-next')
+    wait_for_htmx(page)
+    page.click('#uw-next')
     wait_for_htmx(page)
 
 

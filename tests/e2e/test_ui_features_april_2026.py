@@ -308,7 +308,7 @@ def test_debt_type_ordering_acquisition_first(
     project_id = _extract_project_id(page)
     submit_timeline_wizard(
         page, model_id, project_id,
-        milestone_types=["close", "construction", "operation_stabilized", "divestment"],
+        milestone_types=["close", "pre_development", "construction", "operation_stabilized", "divestment"],
     )
 
     page.goto(f"{base_url}/models/{model_id}/builder?module=deal_setup")
@@ -398,19 +398,26 @@ def test_setup_complete_seeds_default_opex_lines(
     wait_for_htmx(page)
 
     expected_labels = [
-        "Accounting",
         "Real Estate Taxes",
         "Insurance",
         "Property Management",
-        "Utilities — All",
+        "Utilities — Water/Sewer",
+        "Utilities — Electric",
+        "Utilities — Gas",
+        "Utilities — Trash",
         "Repairs & Maintenance",
         "Marketing & Leasing",
         "Administrative",
         "Payroll",
+        "Landscaping & Snow Removal",
+        "Pest Control",
+        "Cleaning & Janitorial",
+        "Security",
         "Resident Services",
-        "Telephone / Internet",
+        "Jurisdiction Fees",
+        "Legal",
+        "Bank/Software Fees",
         "Unit Turnover",
-        "CapEx Reserve",
     ]
     content = page.content()
     # & in labels gets rendered as &amp; in HTML — check for either form

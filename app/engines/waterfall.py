@@ -398,15 +398,50 @@ async def _ensure_equity_and_tiers(
                 description=f"Auto: debt service for {debt_module.label}",
             ))
             priority += 1
-        # Residual: 100% to GP/owner
+        # Residual: split based on actual equity role composition.
+        # LP-only deal → 100% LP. GP-only or synthetic owner → 100% GP.
+        # Mixed → proportional to committed amounts (80/20 LP/GP if both zero).
+        _lp_only = bool(equity_modules) and all(
+            str(getattr(m, "equity_role", "") or "").lower() == "lp"
+            for m in equity_modules
+        )
+        _gp_only = not equity_modules or all(
+            str(getattr(m, "equity_role", "") or "").lower() == "gp"
+            for m in equity_modules
+        )
+        if _lp_only:
+            _res_lp, _res_gp = Decimal("100"), Decimal("0")
+            _res_desc = "Auto: residual cash flow to LP equity (100% LP)"
+        elif _gp_only:
+            _res_lp, _res_gp = Decimal("0"), Decimal("100")
+            _res_desc = "Auto: residual cash flow to owner (100% GP)"
+        else:
+            # Mixed LP + GP: proportional to committed amounts; 80/20 if both zero
+            _lp_amt = sum(
+                Decimal(str((m.source or {}).get("amount") or 0))
+                for m in equity_modules
+                if str(getattr(m, "equity_role", "") or "").lower() == "lp"
+            )
+            _gp_amt = sum(
+                Decimal(str((m.source or {}).get("amount") or 0))
+                for m in equity_modules
+                if str(getattr(m, "equity_role", "") or "").lower() == "gp"
+            )
+            _total = _lp_amt + _gp_amt
+            if _total > Decimal("0"):
+                _res_lp = (_lp_amt / _total * Decimal("100")).quantize(Decimal("0.01"))
+            else:
+                _res_lp = Decimal("80")
+            _res_gp = (Decimal("100") - _res_lp).quantize(Decimal("0.01"))
+            _res_desc = f"Auto: residual cash flow ({_res_lp}% LP / {_res_gp}% GP)"
         session.add(WaterfallTier(
             scenario_id=deal_uuid,
             capital_module_id=None,
             priority=priority,
             tier_type=WaterfallTierType.residual,
-            lp_split_pct=Decimal("0"),
-            gp_split_pct=Decimal("100"),
-            description="Auto: residual cash flow to owner (100% GP)",
+            lp_split_pct=_res_lp,
+            gp_split_pct=_res_gp,
+            description=_res_desc,
         ))
         await session.flush()
 

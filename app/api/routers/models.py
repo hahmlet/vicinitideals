@@ -16,6 +16,7 @@ from app.api.deps import CurrentUserId, DBSession
 from app.engines.cashflow import compute_cash_flows
 from app.schemas.gap_adjustment import SliderRequest, SliderResponse
 from app.schemas.gap_adjustment_names import (
+    NOI_ADJUSTMENT_LABEL,
     OPEX_ADJUSTMENT_LABEL,
     PURCHASE_PRICE_ADJUSTMENT_LABEL,
     REVENUE_ADJUSTMENT_LABEL,
@@ -943,6 +944,50 @@ async def _upsert_opex_phantom(
         return existing
 
 
+async def _upsert_noi_phantom(
+    session: DBSession,
+    project_id: UUID,
+    annual_amount: Decimal,
+) -> OperatingExpenseLine:
+    """Upsert the NOI gap-adjustment phantom for income_mode='noi' deals.
+
+    Stored as an OperatingExpenseLine with NOI_ADJUSTMENT_LABEL so the cashflow
+    engine can pick it up in the NOI path and add it to noi_stabilized_input.
+    Positive = assume higher NOI; negative = assume lower NOI.
+    """
+    existing = (await session.execute(
+        select(OperatingExpenseLine).where(
+            OperatingExpenseLine.project_id == project_id,
+            OperatingExpenseLine.label == NOI_ADJUSTMENT_LABEL,
+        )
+    )).scalars().first()
+    if existing is not None:
+        existing.annual_amount = annual_amount
+        return existing
+    row = OperatingExpenseLine(
+        project_id=project_id,
+        label=NOI_ADJUSTMENT_LABEL,
+        annual_amount=annual_amount,
+        per_type="flat",
+    )
+    try:
+        session.add(row)
+        await session.flush()
+        return row
+    except Exception:
+        await session.rollback()
+        existing = (await session.execute(
+            select(OperatingExpenseLine).where(
+                OperatingExpenseLine.project_id == project_id,
+                OperatingExpenseLine.label == NOI_ADJUSTMENT_LABEL,
+            )
+        )).scalars().first()
+        if existing is None:
+            raise
+        existing.annual_amount = annual_amount
+        return existing
+
+
 async def _upsert_pp_phantom(
     session: DBSession,
     project_id: UUID,
@@ -1005,7 +1050,8 @@ async def update_gap_adjustment_sliders(
     the post-compute metrics. The UI should debounce slider drag events
     to avoid hammering this endpoint mid-drag.
     """
-    await _get_deal_or_404(session, model_id)
+    scenario = await _get_deal_or_404(session, model_id)
+    income_mode = str(getattr(scenario, "income_mode", None) or "revenue_opex")
     # Multi-project: caller supplies project_id (UI passes active project's id).
     # Single-project / unspecified: fall back to the scenario's default (first)
     # project. Validates that the project belongs to this scenario to prevent
@@ -1021,10 +1067,16 @@ async def update_gap_adjustment_sliders(
     else:
         project = await _get_default_project_for_deal(session, model_id)
 
-    if payload.revenue_delta_monthly is not None:
-        await _upsert_revenue_phantom(session, project.id, payload.revenue_delta_monthly)
-    if payload.opex_delta_annual is not None:
-        await _upsert_opex_phantom(session, project.id, payload.opex_delta_annual)
+    if income_mode == "noi":
+        # NOI mode: revenue and opex sliders don't apply; use a single NOI delta.
+        if payload.noi_delta_annual is not None:
+            await _upsert_noi_phantom(session, project.id, payload.noi_delta_annual)
+    else:
+        # revenue_opex mode: UI sends annual revenue; store as monthly (÷12).
+        if payload.revenue_delta_annual is not None:
+            await _upsert_revenue_phantom(session, project.id, payload.revenue_delta_annual / Decimal("12"))
+        if payload.opex_delta_annual is not None:
+            await _upsert_opex_phantom(session, project.id, payload.opex_delta_annual)
     if payload.pp_delta is not None:
         await _upsert_pp_phantom(session, project.id, payload.pp_delta)
 
@@ -1065,6 +1117,12 @@ async def update_gap_adjustment_sliders(
             OperatingExpenseLine.label == OPEX_ADJUSTMENT_LABEL,
         )
     )).scalars().first()
+    noi_row = (await session.execute(
+        select(OperatingExpenseLine).where(
+            OperatingExpenseLine.project_id == project.id,
+            OperatingExpenseLine.label == NOI_ADJUSTMENT_LABEL,
+        )
+    )).scalars().first()
     pp = (await session.execute(
         select(UseLine).where(
             UseLine.project_id == project.id,
@@ -1072,15 +1130,19 @@ async def update_gap_adjustment_sliders(
         )
     )).scalars().first()
 
-    rev_amt = Decimal(str(revenue.amount_fixed_monthly)) if revenue and revenue.amount_fixed_monthly is not None else Decimal("0")
+    # Revenue stored monthly → return as annual (×12) to match UI's annual scale.
+    rev_monthly = Decimal(str(revenue.amount_fixed_monthly)) if revenue and revenue.amount_fixed_monthly is not None else Decimal("0")
+    rev_amt = rev_monthly * Decimal("12")
     opex_amt = Decimal(str(opex.annual_amount)) if opex and opex.annual_amount is not None else Decimal("0")
+    noi_amt = Decimal(str(noi_row.annual_amount)) if noi_row and noi_row.annual_amount is not None else Decimal("0")
     pp_amt = Decimal(str(pp.amount)) if pp and pp.amount is not None else Decimal("0")
 
     return SliderResponse(
-        revenue_delta_monthly=rev_amt,
+        revenue_delta_annual=rev_amt,
         opex_delta_annual=opex_amt,
+        noi_delta_annual=noi_amt,
         pp_delta=pp_amt,
-        has_any_adjustment=any(v != 0 for v in (rev_amt, opex_amt, pp_amt)),
+        has_any_adjustment=any(v != 0 for v in (rev_amt, opex_amt, noi_amt, pp_amt)),
         dscr=Decimal(str(outputs.dscr)) if outputs and outputs.dscr is not None else None,
         total_project_cost=(
             Decimal(str(outputs.total_project_cost))

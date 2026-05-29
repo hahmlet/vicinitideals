@@ -426,16 +426,13 @@ def test_coverage_modal_per_project_amount_inputs_present(
     wait_for_htmx(page)
     page.locator(".uw-cov-btn").first.click()
     expect(page.locator("#uw-cov-backdrop")).to_be_visible(timeout=5_000)
-    # Wait for the HTMX swap to actually land the per-project table —
-    # .count() doesn't auto-wait, so an expect() on the first amount
-    # input pins the test to the content-ready moment.
-    first_amount = page.locator(
-        "#uw-cov-body input[type='number'][name^='amount[']"
-    ).first
-    expect(first_amount).to_be_visible(timeout=5_000)
-    amount_inputs = page.locator(
-        "#uw-cov-body input[type='number'][name^='amount[']"
-    )
+    body = page.locator("#uw-cov-body")
+    expect(
+        body.locator(".uw-cov-section-title:has-text('Per-project coverage')")
+    ).to_be_visible(timeout=15_000)
+    # JS formatter converts type="number" → type="text" after swap;
+    # match on name only.
+    amount_inputs = body.locator("input[name^='amount[']")
     count = amount_inputs.count()
     assert count >= 2, f"Expected >=2 per-project amount inputs, got {count}"
 

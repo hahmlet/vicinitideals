@@ -1961,9 +1961,14 @@ async def _auto_size_debt_modules(
         return total
 
     if income_mode == "noi":
-        # NOI mode: use the user-entered stabilized NOI directly
+        # NOI mode: use the user-entered stabilized NOI + any gap adjustment phantom.
         _noi_input = _to_decimal(inputs.noi_stabilized_input) if inputs.noi_stabilized_input else ZERO
-        noi_annual = _noi_input
+        _noi_adj = ZERO
+        for _el_noi in expense_lines:
+            if getattr(_el_noi, "label", "") == "Gap Adjustment — NOI":
+                _noi_adj = _to_decimal(getattr(_el_noi, "annual_amount", 0) or 0)
+                break
+        noi_annual = _noi_input + _noi_adj
     elif prev_noi_stabilized is not None and prev_noi_stabilized > ZERO:
         # Use the previously computed NOI — more accurate than the estimator because
         # it includes escalation carry-in and capex reserve deductions.
@@ -2994,12 +2999,25 @@ async def _auto_size_debt_modules(
         and str(getattr(m, "vehicle_type", None) or "").replace("VehicleType.", "") == "equity"
     ]
     if _equity_auto:
+        # Equity gap-fill needs the FULL use-line total (including Operating
+        # Reserve and other balance-only labels excluded from the debt sizer's
+        # `total_uses`). Those rows appear in the Sources=Uses display; equity
+        # must cover whatever debt did not. The debt sizer excludes them because
+        # they're algebraically folded into the debt principal — so `_eq_covered`
+        # already includes the reserve inside the debt amount, and using the
+        # reserve-inclusive total here produces the correct zero remainder when
+        # debt covers everything, and the correct positive remainder otherwise.
+        _eq_total_uses = sum(
+            (_to_decimal(ul.amount) for ul in use_lines
+             if str(getattr(ul.phase, "value", ul.phase)) != "exit"),
+            ZERO,
+        )
         _eq_covered = sum(
             _to_decimal((_cm.source or {}).get("amount") or 0)
             for _cm in capital_modules
             if _cm not in _equity_auto and (_cm.source or {}).get("amount")
         )
-        _eq_remaining = max(ZERO, total_uses - _eq_covered)
+        _eq_remaining = max(ZERO, _eq_total_uses - _eq_covered)
         _eq_sorted = sorted(_equity_auto, key=lambda m: (m.stack_position or 999, m.id or 0))
         for _i, _eq_m in enumerate(_eq_sorted):
             _eq_src = dict(_eq_m.source or {})
@@ -3158,6 +3176,10 @@ def _compute_period(
         # because the NOI used for sizing (raw input) == NOI shown at first
         # stabilized month.
         _noi_annual = _to_decimal(inputs.noi_stabilized_input) if inputs.noi_stabilized_input else ZERO
+        for _el_noi in (expense_lines or []):
+            if getattr(_el_noi, "label", "") == "Gap Adjustment — NOI":
+                _noi_annual += _to_decimal(getattr(_el_noi, "annual_amount", 0) or 0)
+                break
         _esc_rate = _to_decimal(inputs.noi_escalation_rate_pct) if inputs.noi_escalation_rate_pct else Decimal("3")
         _esc_period = max(0, period - first_stab_period)
         _esc_factor = _growth_factor(_esc_rate, _esc_period)

@@ -23,6 +23,7 @@ import json
 import uuid
 
 import pytest
+from playwright.sync_api import expect
 
 from tests.e2e.helpers import wait_for_htmx
 from tests.e2e.seed import (
@@ -104,7 +105,7 @@ def test_step2_checkbox_saves_to_localstorage(_seed_page, base_url):
     _open_wizard(page, base_url, model_id)
 
     page.click('input[value="revenue_opex"]')
-    page.click('#deal-setup-wizard button:has-text("Next")')
+    page.click('#step1-submit')
     wait_for_htmx(page)
     page.wait_for_selector("#debt-type-grid", timeout=5000)
 
@@ -164,14 +165,14 @@ def test_step2_restores_from_localstorage_on_swap_in(_seed_page, base_url):
     _set_storage(page, f"wizard:{model_id}:2", json.dumps(state))
 
     page.click('input[value="revenue_opex"]')
-    page.click('#deal-setup-wizard button:has-text("Next")')
+    page.click('#step1-submit')
     wait_for_htmx(page)
     page.wait_for_selector("#debt-type-grid", timeout=5000)
 
     cl = page.locator('#debt-type-grid input[value="construction_loan"]')
     pd = page.locator('#debt-type-grid input[value="permanent_debt"]')
-    assert cl.is_checked(), "construction_loan should be restored from localStorage"
-    assert pd.is_checked(), "permanent_debt should be restored from localStorage"
+    expect(cl).to_be_checked(timeout=5000)
+    expect(pd).to_be_checked(timeout=5000)
 
 
 # ---------------------------------------------------------------------------
