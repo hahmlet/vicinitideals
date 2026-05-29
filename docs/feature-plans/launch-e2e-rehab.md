@@ -40,16 +40,12 @@ stale test → rewrite or delete. Remove the entry from the E2E step in
 
 ## Unit / integration files ignored
 
-- ~~`tests/engines/test_cashflow_hypothesis.py`~~ — superseded
-  2026-05-28 by the expanded 10-invariant version from
-  `feature/layer-d-hypothesis`. CI ignore lifted. **Latent engine bug
-  remains:** `_compute_period` produces a negative `effective_gross_income`
-  when `gross_revenue=0` and `vacancy_loss > 0` (falsifying example was
-  `gross=0, vacancy=0.04` during `lease_up`). The new test file dodges
-  this by constraining its strategy so it never generates the case, but
-  the underlying invariant violation (vacancy can exceed gross) is real
-  and should be fixed in `app/engines/cashflow.py`. Tracked here pending
-  triage.
+- ~~`tests/engines/test_cashflow_hypothesis.py`~~ — Closed 2026-05-28.
+  10-invariant version from `feature/layer-d-hypothesis` adopted
+  (commit `5d97548`); underlying EGI-floor engine bug fixed in
+  `75afc66`; CI deselects lifted in `cb2463b`. Layer D (Hypothesis
+  property-based engine testing) of the launch monetization plan is
+  closed.
 
 ## Whole E2E files ignored
 
