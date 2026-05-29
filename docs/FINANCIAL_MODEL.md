@@ -907,6 +907,14 @@ EGI = gross_revenue − vacancy_loss − bad_debt − concessions
 
 **Engine source.** `_compute_period` in `app/engines/cashflow.py`.
 
+**Floor invariant.** EGI is floored at zero. When `bad_debt + concessions > after_vacancy`
+(e.g. full vacancy with non-zero deduction percentages), both are scaled down proportionally
+so their sum equals `after_vacancy` exactly, preserving the accounting identity:
+
+```
+net_income + vacancy_loss + bad_debt + concessions == gross_revenue
+```
+
 **Notes / edge cases.** Bad debt and concessions are separate percentage
 deductions from GPR (default 0%). They match the standard CRE pro forma
 format and enable HelloData/CoStar feeds that supply them as distinct fields.
@@ -1013,7 +1021,13 @@ after_vacancy = escalated × occupancy_pct_this_phase
 vacancy = escalated − after_vacancy
 bad_debt = escalated × bad_debt_pct
 concessions = escalated × concessions_pct
-net_income = after_vacancy − bad_debt − concessions
+# proportional cap: if bad_debt + concessions > after_vacancy, scale both down
+# so net_income floors at 0 and accounting identity holds
+if bad_debt + concessions > after_vacancy:
+    scale = after_vacancy / (bad_debt + concessions)
+    bad_debt = bad_debt × scale
+    concessions = after_vacancy − bad_debt
+net_income = after_vacancy − bad_debt − concessions  # >= 0
 ```
 
 Summed across all active streams → gross_revenue, vacancy_loss, EGI.
