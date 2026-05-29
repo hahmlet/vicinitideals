@@ -30,10 +30,12 @@ from app.engines.cashflow import (
     PhaseSpec,
     _build_phase_plan,
     _compute_period,
+    _ir_lease_up_pool,
     _op_phase_rate_and_amort,
     _resolve_horizon_months,
     _schedule_preop_months,
     _scheduled_operation_ds,
+    _sum_ir_lease_up_interest,
     compute_cash_flows,
 )
 
@@ -696,3 +698,150 @@ def test_scheduled_operation_ds_sums_multiple_modules() -> None:
     # Combined PMT ≈ $8,991 (the same as the $1.5M test above)
     assert ds > Decimal("8900")
     assert ds < Decimal("9100")
+
+
+# ---------------------------------------------------------------------------
+# _ir_lease_up_pool — unit tests
+# ---------------------------------------------------------------------------
+
+def _make_lease_up_phase(months: int) -> PhaseSpec:
+    return PhaseSpec(period_type=PeriodType.lease_up, months=months)
+
+
+def _make_inputs_for_ir(
+    *,
+    initial_occupancy_pct: float = 0.0,
+    unit_count_new: int = 10,
+    lease_up_curve: str = "linear",
+) -> OperationalInputs:
+    return OperationalInputs(
+        unit_count_new=unit_count_new,
+        initial_occupancy_pct=Decimal(str(initial_occupancy_pct)),
+        lease_up_curve=lease_up_curve,
+    )
+
+
+def _make_rent_stream(amount_per_unit_monthly: float, unit_count: int = 10) -> IncomeStream:
+    return IncomeStream(
+        stream_type="residential_rent",
+        label="Rent",
+        amount_per_unit_monthly=Decimal(str(amount_per_unit_monthly)),
+        unit_count=unit_count,
+        stabilized_occupancy_pct=Decimal("95"),
+        active_in_phases=["lease_up", "stabilized"],
+    )
+
+
+def _make_opex_line(annual_amount: float) -> OperatingExpenseLine:
+    return OperatingExpenseLine(
+        label="Operating Expenses",
+        annual_amount=Decimal(str(annual_amount)),
+        active_in_phases=["lease_up", "stabilized"],
+    )
+
+
+@pytest.mark.unit
+def test_ir_lease_up_pool_no_streams_returns_full_interest() -> None:
+    """With no income streams, every month is a full shortfall."""
+    funded = Decimal("1000000")
+    rate_pct = Decimal("6")
+    n_months = 6
+    phase = _make_lease_up_phase(n_months)
+    inputs = _make_inputs_for_ir()
+
+    pool = _ir_lease_up_pool(funded, rate_pct, n_months, phase, [], [], inputs)
+
+    # Full interest: 1_000_000 × 6% / 12 × 6 months = 30_000
+    assert pool == Decimal("30000.000000")
+
+
+@pytest.mark.unit
+def test_ir_lease_up_pool_income_covers_all_months_returns_zero() -> None:
+    """When NOI > interest every month, no pre-funded reserve needed."""
+    funded = Decimal("500000")
+    rate_pct = Decimal("6")
+    # Monthly interest = 500_000 × 6% / 12 = 2_500
+    # Rent stream: 10 units × $500/unit at 95% stab occ = $4,750/mo at full occupancy
+    # initial_occupancy_pct=50 → even in month 0 income = 10 × 500 × 0.50 = 2,500 ≥ interest
+    # By month 5 income = 10 × 500 × 0.95 = 4,750 >> 2,500
+    stream = _make_rent_stream(500, unit_count=10)
+    inputs = _make_inputs_for_ir(initial_occupancy_pct=50.0)
+    phase = _make_lease_up_phase(6)
+
+    pool = _ir_lease_up_pool(funded, rate_pct, 6, phase, [stream], [], inputs)
+
+    assert pool == Decimal("0.000000")
+
+
+@pytest.mark.unit
+def test_ir_lease_up_pool_partial_ramp_returns_early_shortfalls() -> None:
+    """Income ramps from 0% to 95% occ; early months don't cover interest.
+
+    Loan: $1_200_000 at 5% → monthly interest = $5_000.
+    10 units × $800/unit at 95% stab occ, linear ramp from 0% over 12 months.
+    Month k (0-indexed): income = 10 × 800 × (0% + 95%×k/11) = 8_000 × occ_k.
+    Income covers interest once occ_k ≥ 5_000 / 8_000 = 62.5%.
+    Breakeven occupancy 62.5% → k ≥ 0.625 × 11 / 0.95 ≈ 7.24 → covered from month 8.
+    Months 0-7 contribute shortfall; months 8-11 contribute zero.
+    """
+    funded = Decimal("1200000")
+    rate_pct = Decimal("5")
+    stream = _make_rent_stream(800, unit_count=10)
+    inputs = _make_inputs_for_ir(initial_occupancy_pct=0.0)
+    phase = _make_lease_up_phase(12)
+
+    pool = _ir_lease_up_pool(funded, rate_pct, 12, phase, [stream], [], inputs)
+
+    # Pool must be > 0 (early months need IR) but < gross interest ($60_000)
+    assert pool > Decimal("0")
+    assert pool < Decimal("60000")
+    # Months 8-11 should be fully income-covered → pool < 8 months × 5_000 = 40_000
+    assert pool < Decimal("40000")
+
+
+@pytest.mark.unit
+def test_ir_lease_up_pool_opex_reduces_surplus() -> None:
+    """OpEx eats into income, so IR pool is larger than income-only offset."""
+    funded = Decimal("1000000")
+    rate_pct = Decimal("6")
+    stream = _make_rent_stream(500, unit_count=10)  # up to $4,750/mo at stab
+    opex = _make_opex_line(annual_amount=48000)     # $4,000/mo constant
+    inputs = _make_inputs_for_ir(initial_occupancy_pct=50.0)
+    phase = _make_lease_up_phase(6)
+
+    pool_with_opex = _ir_lease_up_pool(
+        funded, rate_pct, 6, phase, [stream], [opex], inputs
+    )
+    pool_no_opex = _ir_lease_up_pool(
+        funded, rate_pct, 6, phase, [stream], [], inputs
+    )
+
+    # OpEx reduces net surplus → more shortfall → larger IR pool
+    assert pool_with_opex >= pool_no_opex
+
+
+@pytest.mark.unit
+def test_ir_lease_up_pool_zero_months_returns_zero() -> None:
+    pool = _ir_lease_up_pool(
+        Decimal("1000000"), Decimal("6"), 0, _make_lease_up_phase(0), [], [], _make_inputs_for_ir()
+    )
+    assert pool == Decimal("0")
+
+
+@pytest.mark.unit
+def test_sum_ir_lease_up_interest_no_ir_modules_returns_zero() -> None:
+    """Modules without IR carry don't contribute."""
+    phases = [
+        PhaseSpec(period_type=PeriodType.construction, months=12),
+        PhaseSpec(period_type=PeriodType.lease_up, months=6),
+    ]
+    # IO-only module — not IR
+    m = _ScheduledCarryModule(
+        schedule=[{"carry_type": "io_only", "duration": {"type": "remainder"}, "rate_pct": 6.0}],
+        amount="1000000",
+    )
+    m.vehicle_type = "debt"
+    m.active_phase_start = "construction"
+    m.active_phase_end = "stabilized"
+    m.exit_terms = {}
+    assert _sum_ir_lease_up_interest([m], phases) == Decimal("0")

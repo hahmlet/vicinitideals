@@ -474,6 +474,11 @@ async def _compute_project_cashflow(
         use_lines, milestone_map, phases
     )
 
+    # Pre-compute monthly interest for IR-carry loans that extend through lease-up.
+    # Passed to _compute_period so income covers interest in those months rather
+    # than sending it to equity while the IR pool draws separately.
+    _ir_lease_up_monthly = _sum_ir_lease_up_interest(capital_modules, phases)
+
     # Reserve labels already drawn — prevents re-firing when a use_line's phase
     # maps to multiple period_types (e.g. "operation" → lease_up + stabilized).
     _drawn_reserve_labels: set[str] = set()
@@ -497,6 +502,7 @@ async def _compute_project_cashflow(
                 income_mode=income_mode,
                 first_stab_period=_first_stab_period,
                 use_line_phase_overrides=_ul_phase_overrides,
+                ir_lease_up_interest=_ir_lease_up_monthly,
             )
 
             if phase.period_type == PeriodType.stabilized and stabilized_noi_monthly is None:
@@ -1832,6 +1838,88 @@ def _estimate_stabilized_noi_monthly(
     return _q(gross_revenue - operating_expenses)
 
 
+def _ir_lease_up_pool(
+    funded: Decimal,
+    rate_pct: float | Decimal,
+    n_months: int,
+    lease_up_phase: "PhaseSpec",
+    streams: list,
+    expense_lines: list,
+    inputs: "OperationalInputs",
+) -> Decimal:
+    """IR pool required for lease-up months, net of operating income.
+
+    During lease-up income ramps from initial to stabilized occupancy using
+    the same curve logic (_stream_occupancy_pct) as the monthly cashflow engine.
+    Months where operating surplus ≥ interest need no pre-funded coverage;
+    only the per-month shortfall (interest − surplus, floored at 0) accumulates.
+
+    Construction-phase interest is handled separately by period_interest_months;
+    this function covers only the post-construction lease-up overlap.
+    """
+    if n_months <= 0 or lease_up_phase is None or rate_pct <= ZERO:
+        return ZERO
+    rate = Decimal(str(rate_pct))
+    monthly_interest = _q(funded * rate / HUNDRED / Decimal("12"))
+    lease_up_pt = PeriodType.lease_up
+    total = ZERO
+    for k in range(n_months):
+        income_m = ZERO
+        for s in streams:
+            if not _is_stream_active(s, lease_up_pt):
+                continue
+            occ = _stream_occupancy_pct(s, lease_up_phase, k, inputs)
+            base = _stream_base_amount(s)
+            bad_debt = _percent(getattr(s, "bad_debt_pct", None))
+            concessions = _percent(getattr(s, "concessions_pct", None))
+            income_m += _q(base * occ * (ONE - bad_debt - concessions))
+        opex_m = ZERO
+        for line in expense_lines:
+            if not _is_expense_line_active(line, lease_up_pt):
+                continue
+            opex_m += _q(_to_decimal(line.annual_amount) / Decimal("12"))
+        surplus_m = max(ZERO, income_m - opex_m)
+        total += max(ZERO, monthly_interest - surplus_m)
+    return _q(total)
+
+
+def _sum_ir_lease_up_interest(modules: list, phases: list) -> Decimal:
+    """Monthly interest for IR-carry loans that extend through lease-up.
+
+    After auto-sizing, call this to get the total monthly interest amount
+    that income should cover during lease-up (passed to _compute_period).
+    Only counts loans whose active window extends past the lease-up phase
+    (end_rank > 4, i.e. through stabilized or further).
+    """
+    lease_up_phase = next((p for p in phases if p.period_type == PeriodType.lease_up), None)
+    if not lease_up_phase:
+        return ZERO
+    total = ZERO
+    for m in modules:
+        if not _is_debt_cm(m):
+            continue
+        carry = m.carry or {}
+        ct = _carry_type_for_phase(carry, is_construction=True)
+        if ct != "interest_reserve":
+            continue
+        end_rank = _resolve_active_end_rank(m, modules)
+        if end_rank <= 4:
+            continue
+        src = m.source or {}
+        amount = _to_decimal(src.get("amount") or 0)
+        if amount <= ZERO:
+            continue
+        rate = Decimal(str(
+            src.get("interest_rate_pct")
+            or (carry.get("schedule") or [{}])[0].get("rate_pct")
+            or carry.get("io_rate_pct")
+            or 0
+        ))
+        if rate > ZERO:
+            total += _q(amount * rate / HUNDRED / Decimal("12"))
+    return total
+
+
 async def _auto_size_debt_modules(
     capital_modules: list,
     inputs: "OperationalInputs",
@@ -2063,6 +2151,12 @@ async def _auto_size_debt_modules(
                     _io_f = (_interest_carry / _funded) if _funded > ZERO else ZERO
                 elif _pre_ct == "interest_reserve" and _r > ZERO and _n > 0:
                     _interest_carry = period_interest_months(_funded, _n, _r, draw_schedule="linear")
+                    # Add lease-up IR shortfall if this loan extends past construction.
+                    _lu_phase = next((p for p in phases if p.period_type == PeriodType.lease_up), None)
+                    if _resolve_active_end_rank(_m, capital_modules) > 4 and _lu_phase:
+                        _interest_carry += _ir_lease_up_pool(
+                            _funded, _r, _lu_phase.months, _lu_phase, streams, expense_lines, inputs
+                        )
                     _io_f = (_interest_carry / _funded) if _funded > ZERO else ZERO
                 elif _pre_ct == "capitalized_interest" and _r > ZERO and _n > 0:
                     _interest_carry = period_interest_months(_funded, _n, _r, draw_schedule="lump")
@@ -2091,6 +2185,11 @@ async def _auto_size_debt_modules(
                 elif _principal > ZERO and _r > ZERO and _n > 0:
                     if _acq_ct == "interest_reserve":
                         _acq_interest = period_interest_months(_principal, _n, _r, draw_schedule="linear")
+                        _lu_phase = next((p for p in phases if p.period_type == PeriodType.lease_up), None)
+                        if _resolve_active_end_rank(_m, capital_modules) > 4 and _lu_phase:
+                            _acq_interest += _ir_lease_up_pool(
+                                _principal, _r, _lu_phase.months, _lu_phase, streams, expense_lines, inputs
+                            )
                     elif _acq_ct == "capitalized_interest":
                         _acq_interest = period_interest_months(_principal, _n, _r, draw_schedule="lump")
                     else:
@@ -2117,6 +2216,11 @@ async def _auto_size_debt_modules(
                     _io_f = (_interest_carry / _funded) if _funded > ZERO else ZERO
                 elif _cl_ct == "interest_reserve" and _r > ZERO and _n > 0:
                     _interest_carry = period_interest_months(_funded, _n, _r, draw_schedule="linear")
+                    _lu_phase = next((p for p in phases if p.period_type == PeriodType.lease_up), None)
+                    if _resolve_active_end_rank(_m, capital_modules) > 4 and _lu_phase:
+                        _interest_carry += _ir_lease_up_pool(
+                            _funded, _r, _lu_phase.months, _lu_phase, streams, expense_lines, inputs
+                        )
                     _io_f = (_interest_carry / _funded) if _funded > ZERO else ZERO
                 elif _cl_ct == "capitalized_interest" and _r > ZERO and _n > 0:
                     _interest_carry = period_interest_months(_funded, _n, _r, draw_schedule="lump")
@@ -2680,10 +2784,19 @@ async def _auto_size_debt_modules(
             )
             if _m_preop_months <= 0:
                 continue
+            # Split construction vs lease-up months so income ramp can offset
+            # the lease-up portion (construction months use gross interest).
+            _n_constr3 = _loan_pre_op_months(m, capital_modules, phases)
+            _n_lu3 = max(0, _m_preop_months - _n_constr3)
             _ds_carry = _q(
                 p3 * Decimal(str(cr3)) / HUNDRED / Decimal("12")
-                * Decimal(str(_m_preop_months))
+                * Decimal(str(_n_constr3))
             )
+            _lu_phase3 = next((p for p in phases if p.period_type == PeriodType.lease_up), None)
+            if _n_lu3 > 0 and _lu_phase3 and _carry3_ct == "interest_reserve":
+                _ds_carry += _ir_lease_up_pool(
+                    p3, cr3, _n_lu3, _lu_phase3, streams, expense_lines, inputs
+                )
             if _ds_carry <= ZERO:
                 continue
             total_constr_io += _ds_carry
@@ -3146,6 +3259,7 @@ def _compute_period(
     first_stab_period: int = 0,
     project_id: UUID | None = None,
     use_line_phase_overrides: dict | None = None,
+    ir_lease_up_interest: Decimal = ZERO,
 ) -> dict[str, Any]:
     gross_revenue = ZERO
     vacancy_loss = ZERO
@@ -3515,6 +3629,27 @@ def _compute_period(
     )
 
     noi = _q(effective_gross_income - operating_expenses - capex_reserve)
+
+    # During lease-up with IR carry active, operating income covers interest
+    # up to the available NOI rather than drawing from the pre-funded IR pool.
+    # The IR pool was sized to fund only the shortfall months, so income must
+    # explicitly service interest in months where it can cover it.
+    if phase.period_type == PeriodType.lease_up and ir_lease_up_interest > ZERO:
+        ir_income_coverage = _q(min(ir_lease_up_interest, max(ZERO, noi)))
+        if ir_income_coverage > ZERO:
+            debt_service = _q(debt_service + ir_income_coverage)
+            line_items.append(
+                CashFlowLineItem(
+                    deal_model_id=deal_model_id,
+                    period=period,
+                    category=LineItemCategory.debt_service,
+                    label="Interest from Operations (IR)",
+                    base_amount=ir_income_coverage,
+                    adjustments=_json_ready({"phase": phase.period_type.value}),
+                    net_amount=ir_income_coverage,
+                )
+            )
+
     net_cash_flow = _q(noi - debt_service - capital_outflow + capital_inflow)
 
     return {
