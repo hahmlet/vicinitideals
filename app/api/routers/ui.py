@@ -12216,6 +12216,53 @@ async def proforma_from_staged(
             status_code=200,
         )
 
+    # Fast-path: when the user pre-configured sheets/pages in the email review
+    # table, skip the picker and go straight to the Celery task.
+    r_str = _redis.from_url(settings.redis_url, decode_responses=True)
+    email_config_raw = r_str.get(f"proforma:{task_id}:email_config")
+    if email_config_raw:
+        cfg = json.loads(email_config_raw)
+        rev_pages_str: str = cfg.get("rev_pages") or ""
+        opex_pages_str: str = cfg.get("opex_pages") or ""
+
+        def _parse_page_str(s: str) -> list[int] | None:
+            if not s.strip():
+                return None
+            pages: list[int] = []
+            for part in s.replace(" ", "").split(","):
+                if "-" in part:
+                    lo, _, hi = part.partition("-")
+                    if lo.isdigit() and hi.isdigit():
+                        pages.extend(range(int(lo), int(hi) + 1))
+                elif part.isdigit():
+                    pages.append(int(part))
+            return [p - 1 for p in sorted(set(pages)) if p >= 1] or None
+
+        from app.tasks.celery_app import celery_app as _celery
+        from app.tasks.proforma_parse import PARSE_PROFORMA_TASK
+        _celery.send_task(
+            PARSE_PROFORMA_TASK,
+            kwargs={
+                "task_id": task_id,
+                "model_id": str(model_id),
+                "revenue_sheet": cfg.get("rev_sheet") or "",
+                "opex_sheet": cfg.get("opex_sheet") or "",
+                "property_column": None,
+                "file_kind": cfg.get("file_kind") or "xlsx",
+                "import_revenue": cfg.get("import_revenue", True),
+                "import_opex": cfg.get("import_opex", True),
+                "revenue_range": cfg.get("rev_range") or None,
+                "opex_range": cfg.get("opex_range") or None,
+                "revenue_pages": _parse_page_str(rev_pages_str),
+                "opex_pages": _parse_page_str(opex_pages_str),
+            },
+        )
+        return templates.TemplateResponse(
+            request,
+            "partials/proforma_progress.html",
+            {"model_id": model_id, "task_id": task_id},
+        )
+
     filename_bytes = r.get(f"proforma:{task_id}:filename")
     filename = filename_bytes.decode() if filename_bytes else "attachment.xlsx"
 

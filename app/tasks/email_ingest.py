@@ -425,8 +425,6 @@ async def _fetch_resend_raw_mime(
 
 
 async def _process_async(inbound_email_id: str, resend_email_id: str) -> None:
-    from decimal import Decimal
-
     from app.db import AsyncSessionLocal
     from app.models.email_ingest import (
         EmailDealSuggestion,
@@ -434,7 +432,6 @@ async def _process_async(inbound_email_id: str, resend_email_id: str) -> None:
         InboundEmailStatus,
         SuggestionSourceType,
     )
-    from app.models.opportunity import Opportunity, OpportunityStatus
 
     email_uuid = UUID(inbound_email_id)
     debug_log: list[str] = []
@@ -517,115 +514,49 @@ async def _process_async(inbound_email_id: str, resend_email_id: str) -> None:
             if org is None:
                 raise ValueError(f"Org {email_row.org_id} not found")
 
-            # --- Parcel match (best-effort) ---
-            parcel_id = None
-            if info.address:
-                try:
-                    from app.scrapers.parcel_enrichment import enrich_parcel
-                    parcel = await enrich_parcel(session, address=info.address)
-                    if parcel is not None:
-                        parcel_id = parcel.id
-                except Exception as exc:
-                    logger.debug("Parcel match failed for %s: %s", info.address, exc)
+            # --- Collect staged proforma task IDs ---
+            # Opportunities are NOT created here; the user assigns deal names
+            # and file configs in the review page config table, then submits
+            # to create deals. proforma_task_ids lets the review route know
+            # which Redis keys hold the staged files.
+            all_task_ids = [
+                m["proforma_task_id"]
+                for m in attachments_meta
+                if m.get("proforma_task_id")
+            ]
 
-            asking_price_dec = None
-            if info.asking_price and info.asking_price > 0:
-                asking_price_dec = Decimal(str(info.asking_price))
+            # --- Email-level suggestions (context for the review page) ---
+            # opportunity_id is nullable — suggestions are email-scoped here;
+            # they get linked to Opportunities when the user creates deals.
+            src = SuggestionSourceType.llm_extraction.value
+            for field_path, value, conf in [
+                ("address",          info.address,       info.address_confidence),
+                ("acquisition_cost", str(info.asking_price) if info.asking_price else None, info.price_confidence),
+                ("unit_count",       str(info.unit_count) if info.unit_count else None, 0.8),
+                ("property_type",    info.property_type, 0.7),
+            ]:
+                if value:
+                    session.add(EmailDealSuggestion(
+                        inbound_email_id=email_row.id,
+                        opportunity_id=None,
+                        field_path=field_path,
+                        suggested_value=value,
+                        confidence=conf,
+                        source_type=src,
+                    ))
 
-            # --- Create one Opportunity per staged proforma attachment ------
-            # Each attachment that was staged in Redis becomes its own stub
-            # deal so the user can configure and parse each file independently.
-            # Non-proforma attachments (images, PDFs not for proforma, etc.)
-            # don't create Opportunities — they're display-only in the review.
-            #
-            # source_id is hashed per-attachment (sender+subject+received_at+
-            # filename) so multiple attachments in one email produce distinct,
-            # non-colliding Opportunities.
-            proforma_metas = [m for m in attachments_meta if m.get("proforma_task_id")]
-            if not proforma_metas:
-                # No stageable attachments — create a single Opportunity from
-                # the email metadata alone (original behavior).
-                proforma_metas = [{}]
-
-            opp_name_base = info.address or (email_row.subject or "Email Deal")[:255]
-            email_base_id = f"{email_row.sender_email}|{email_row.subject}|{email_row.received_at}"
-            first_opportunity: Opportunity | None = None
-            all_task_ids: list[str] = []
-
-            for idx, att_meta in enumerate(proforma_metas):
-                suffix = att_meta.get("filename") or str(idx)
-                source_id = hashlib.sha256(
-                    f"{email_base_id}|{suffix}".encode()
-                ).hexdigest()[:32]
-
-                opp_name = opp_name_base
-                if len(proforma_metas) > 1 and att_meta.get("filename"):
-                    # Disambiguate name when multiple attachments
-                    bare = _os.path.splitext(att_meta["filename"])[0]
-                    opp_name = f"{opp_name_base} — {bare}"
-
-                opportunity = Opportunity(
-                    org_id=email_row.org_id,
-                    name=opp_name[:255],
-                    opp_status=OpportunityStatus.active.value,
-                    source="email",
-                    source_id=source_id,
-                    source_url="",
-                    promotion_source="email",
-                    parcel_id=parcel_id,
-                    address_raw=info.address,
-                    asking_price=asking_price_dec,
-                    units=info.unit_count,
-                )
-                session.add(opportunity)
-                await session.flush()
-
-                if att_meta.get("proforma_task_id"):
-                    att_meta["opportunity_id"] = str(opportunity.id)
-                    all_task_ids.append(att_meta["proforma_task_id"])
-
-                if first_opportunity is None:
-                    first_opportunity = opportunity
-
-                # Create suggestions on every Opportunity (same LLM extraction
-                # shared across all attachments in this email).
-                src = SuggestionSourceType.llm_extraction.value
-                for field_path, value, conf in [
-                    ("address",          info.address,       info.address_confidence),
-                    ("acquisition_cost", str(info.asking_price) if info.asking_price else None, info.price_confidence),
-                    ("unit_count",       str(info.unit_count) if info.unit_count else None,     0.8),
-                    ("property_type",    info.property_type, 0.7),
-                ]:
-                    if value:
-                        session.add(EmailDealSuggestion(
-                            inbound_email_id=email_row.id,
-                            opportunity_id=opportunity.id,
-                            field_path=field_path,
-                            suggested_value=value,
-                            confidence=conf,
-                            source_type=src,
-                        ))
-
-                debug_log.append(
-                    f"Created Opportunity {opportunity.id} name={opp_name!r} "
-                    f"task_id={att_meta.get('proforma_task_id') or 'none'}"
-                )
-
-            # Persist the updated attachments_meta (now has opportunity_id per entry)
-            email_row.attachments_meta = attachments_meta
-            email_row.opportunity_id = first_opportunity.id if first_opportunity else None
             email_row.proforma_task_ids = all_task_ids
             await session.flush()
 
-            email_row.status = InboundEmailStatus.opportunity_created.value
+            email_row.status = InboundEmailStatus.pending_review.value
             debug_log.append(
-                f"OK: pipeline complete, {len(proforma_metas)} opportunit{'y' if len(proforma_metas)==1 else 'ies'} created"
+                f"OK: staged {len(all_task_ids)} proforma file(s); awaiting user review"
             )
             email_row.debug_log = "\n".join(debug_log)[-50000:]
             await session.commit()
 
-            # --- Notification email ---
-            await _notify_org(org, email_row, first_opportunity or opportunity, info)
+            # --- Notification: files ready for review ---
+            await _notify_org(org, email_row, info)
 
         except Exception as exc:
             import traceback
@@ -644,10 +575,9 @@ async def _process_async(inbound_email_id: str, resend_email_id: str) -> None:
 async def _notify_org(
     org: Any,
     email_row: Any,
-    opportunity: Any,
     info: "ExtractedDealInfo",
 ) -> None:
-    """Send notification email to org admins when an opportunity is created from an inbound email."""
+    """Send notification email to org members when files are staged and ready for review."""
     if not settings.resend_api_key:
         return
 
@@ -666,17 +596,18 @@ async def _notify_org(
             )
             users = result.scalars().all()
 
+        n_files = len(email_row.proforma_task_ids or [])
         for user in users:
             if not user.email:
                 continue
-            subject = f"New opportunity from email: {email_row.subject or email_row.sender_email}"
+            subject = f"Email deal ready for review: {email_row.subject or email_row.sender_email}"
             body = (
-                f"A new opportunity was created from an inbound email.\n\n"
+                f"{n_files} file{'s' if n_files != 1 else ''} staged for deal creation.\n\n"
                 f"From: {email_row.sender_email}\n"
                 f"Subject: {email_row.subject or '(no subject)'}\n"
-                f"Address: {info.address or '(not detected)'}\n"
-                f"Asking Price: {'${:,.0f}'.format(info.asking_price) if info.asking_price else '(not detected)'}\n\n"
-                f"Review extracted fields and finish deal creation at:\n"
+                f"Detected address: {info.address or '(not detected)'}\n"
+                f"Detected price: {'${:,.0f}'.format(info.asking_price) if info.asking_price else '(not detected)'}\n\n"
+                f"Assign deal names and file configs at:\n"
                 f"{settings.app_base_url}/ui/deals/email/{email_row.id}/review"
             )
             payload = {
