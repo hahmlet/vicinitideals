@@ -14,9 +14,9 @@ These are correctness regressions in the financial model, not test maintenance. 
 
 | Item | Recommendation |
 |---|---|
-| `test_unified_wizard_flow::test_unified_wizard_data_reaches_deal_via_api` — Approve button disabled | **Verify in browser.** An always-disabled Approve button means either a validation check regressed or a required field wasn't seeded. If the button is actually disabled in the live UI on a valid deal, it's a product bug. |
-| `test_wizard_state_persistence::test_successful_step_submit_clears_localstorage_key` — key is None | **Verify in browser.** The clear-on-submit path may have genuinely regressed. If localStorage persists after a successful step submit, users re-entering the wizard get stale pre-filled state. Worth confirming manually before deleting the test. |
-| `test_opportunity_wizard::test_attach_parcel_advances_to_review` — parcel search returns no result | **Check seed data first.** Run `seed_e2e_user.py` and confirm parcel `2833 NE 62nd` exists. If it does and search still returns nothing, it's a backend regression. If seed doesn't create it, fix the seed. |
+| ~~`test_unified_wizard_flow::test_unified_wizard_data_reaches_deal_via_api` — Approve button disabled~~ | **Closed 2026-05-28.** Test passes as-is — no product bug found. |
+| ~~`test_wizard_state_persistence::test_successful_step_submit_clears_localstorage_key` — key is None~~ | **Fixed 2026-05-28.** `revenue_opex` is the default radio; clicking it fires no `change` event so localStorage was never written. Changed test click to `noi` to trigger the save handler. |
+| ~~`test_opportunity_wizard::test_attach_parcel_advances_to_review` — parcel search returns no result~~ | **Closed 2026-05-28.** Test passes as-is — seed data present, search backend healthy. |
 
 ### Priority 3 — Test maintenance (selector/template drift, no evidence of product regression)
 Fix these after P1/P2 are clear. Low risk — these are tests that have fallen out of sync with template changes.
@@ -66,12 +66,12 @@ stale test → rewrite or delete. Remove the entry from the E2E step in
 
 | Test | Failure |
 |---|---|
-| `test_opportunity_wizard.py::test_attach_parcel_advances_to_review` | "No match card for '2833 NE 62nd'" — parcel search returns no result; either seed data missing or search backend regressed |
+| ~~`test_opportunity_wizard.py::test_attach_parcel_advances_to_review`~~ | **Closed 2026-05-28.** Passes as-is. |
 | ~~`test_ui_features_april_2026.py::*`~~ | Whole file ignored — see above. |
 | `test_underwriting_flow.py::test_coverage_modal_per_project_amount_inputs_present` (both `acquisition` + `new_construction` params) | Coverage-modal locator not visible — modal layout / id drift |
-| `test_unified_wizard_flow.py::test_unified_wizard_data_reaches_deal_via_api` | Approve button disabled in the data-validation test path |
+| ~~`test_unified_wizard_flow.py::test_unified_wizard_data_reaches_deal_via_api`~~ | **Closed 2026-05-28.** Passes as-is. |
 | `test_wizard_state_persistence.py::test_step2_checkbox_saves_to_localstorage` | 30s click timeout — step 2 selector drift |
-| `test_wizard_state_persistence.py::test_successful_step_submit_clears_localstorage_key` | Asserted localStorage key is None — clear-on-submit path may have regressed |
+| ~~`test_wizard_state_persistence.py::test_successful_step_submit_clears_localstorage_key`~~ | **Fixed 2026-05-28.** `revenue_opex` is default; test now clicks `noi` to trigger `change` event. |
 | `test_wizard_state_persistence.py::test_step2_restores_from_localstorage_on_swap_in` | 30s click timeout — same step 2 surface |
 | ~~`test_phase_b_debt.py::test_phase_b_debt[chromium-ir_12mo]`~~ | **Fixed 2026-05-28.** Root cause: test omitted `ltv_pct=100`, so `_funded=75%*base_costs` and balance invariant failed. Set `ltv_pct=100` in test fixture; seed.py wizard helper now fills LTV in Step 5. |
 | ~~`test_phase_b_debt.py::test_phase_b_debt[chromium-ci_12mo]`~~ | **Fixed 2026-05-28.** Same root cause as ir_12mo. |

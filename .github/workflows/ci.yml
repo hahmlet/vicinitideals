@@ -219,11 +219,8 @@ jobs:
             --ignore=tests/e2e/test_grant_eligibility_flow.py \
             --ignore=tests/e2e/test_proforma_cache.py \
             --ignore=tests/e2e/test_ui_features_april_2026.py \
-            --deselect "tests/e2e/test_opportunity_wizard.py::test_attach_parcel_advances_to_review" \
             --deselect "tests/e2e/test_underwriting_flow.py::test_coverage_modal_per_project_amount_inputs_present" \
-            --deselect "tests/e2e/test_unified_wizard_flow.py::test_unified_wizard_data_reaches_deal_via_api" \
             --deselect "tests/e2e/test_wizard_state_persistence.py::test_step2_checkbox_saves_to_localstorage" \
-            --deselect "tests/e2e/test_wizard_state_persistence.py::test_successful_step_submit_clears_localstorage_key" \
             --deselect "tests/e2e/test_wizard_state_persistence.py::test_step2_restores_from_localstorage_on_swap_in"
         env:
           E2E_BASE_URL: http://localhost:8001

@@ -129,7 +129,9 @@ def test_successful_step_submit_clears_localstorage_key(_seed_page, base_url):
     _open_wizard(page, base_url, model_id)
     _clear_wizard_storage(page, model_id)
 
-    page.click('input[value="revenue_opex"]')
+    # revenue_opex is the default — clicking it fires no change event.
+    # Click noi to trigger the onChange save handler.
+    page.click('input[value="noi"]')
     wait_for_htmx(page)
     assert _get_storage(page, f"wizard:{model_id}:1") is not None
 
