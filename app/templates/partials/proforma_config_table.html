@@ -6,12 +6,16 @@
 #}
 <style>
 .pct-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.pct-table th { font-size: 11px; font-weight: 600; text-transform: uppercase;
+.pct-table th {
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
   letter-spacing: 0.05em; color: var(--text-muted); padding: 8px 10px;
   border-bottom: 2px solid var(--border); text-align: left; white-space: nowrap; }
-.pct-table td { padding: 10px; border-bottom: 1px solid var(--border-light); vertical-align: top; }
-.pct-table tr:last-child td { border-bottom: none; }
-.pct-table tr:hover td { background: var(--surface-muted); }
+.pct-table td { padding: 8px 10px; border-bottom: 1px solid var(--border-light); vertical-align: middle; }
+.pct-file-header td {
+  text-align: center; background: var(--surface-muted);
+  border-top: 2px solid var(--border); border-bottom: 1px solid var(--border-light);
+  padding: 8px 12px; }
+.pct-inputs-row td { border-bottom: 2px solid var(--border-light); padding: 10px; vertical-align: top; }
 .pct-table input[type="text"] {
   width: 100%; box-sizing: border-box; padding: 6px 8px;
   border: 1px solid var(--border); border-radius: 4px;
@@ -23,45 +27,44 @@
   font-size: 12px; background: var(--bg); color: var(--text); }
 .pct-table select:focus { outline: none; border-color: var(--accent); }
 .pct-badge { font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 4px;
-  border: 1px solid; display: inline-block; }
+  border: 1px solid; display: inline-block; margin-left: 6px; }
 .pct-badge.xlsx { border-color: #86efac; color: #166534; background: #f0fdf4; }
 .pct-badge.pdf  { border-color: #fca5a5; color: #991b1b; background: #fef2f2; }
 .pct-field { display: flex; flex-direction: column; gap: 4px; }
 .pct-flabel { font-size: 10px; font-weight: 600; color: var(--text-muted);
   text-transform: uppercase; letter-spacing: 0.04em; }
 .pct-hint { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
-.pct-skip { color: var(--text-muted); font-size: 12px; padding-top: 14px; text-align: center; }
+.pct-skip { color: var(--text-muted); font-size: 12px; text-align: center; }
 </style>
 
 <table class="pct-table">
   <thead>
     <tr>
-      <th style="width:140px">File</th>
       {% if show_deal_name %}<th style="min-width:140px">Deal Name</th>{% endif %}
-      <th>Revenue Sheet / Pages</th>
-      <th>Revenue Range</th>
-      <th>OpEx Sheet / Pages</th>
-      <th>OpEx Range</th>
+      <th>Revenue Sheet</th>
+      <th style="min-width:130px">Revenue Range</th>
+      <th>OpEx Sheet</th>
+      <th style="min-width:130px">OpEx Range</th>
     </tr>
   </thead>
   <tbody>
     {% for att in files %}
-    <input type="hidden" name="task_id_{{ loop.index0 }}" value="{{ att.task_id }}">
-    <input type="hidden" name="file_kind_{{ loop.index0 }}" value="{{ att.file_kind }}">
-    <tr>
-      {# File name + badge #}
-      <td>
-        <div style="font-weight:500;font-size:12px;word-break:break-word;margin-bottom:4px">{{ att.filename }}</div>
+    {# Hidden inputs sit in the file-header row #}
+    <tr class="pct-file-header">
+      <td colspan="{{ 4 + (1 if show_deal_name else 0) }}">
+        <input type="hidden" name="task_id_{{ loop.index0 }}" value="{{ att.task_id }}">
+        <input type="hidden" name="file_kind_{{ loop.index0 }}" value="{{ att.file_kind }}">
+        <span style="font-weight:600;font-size:13px">{{ att.filename }}</span>
         <span class="pct-badge {{ att.file_kind }}">{{ 'XLSX' if att.file_kind == 'xlsx' else 'PDF' }}</span>
         {% if att.size_bytes %}
-        <div style="font-size:10px;color:var(--text-muted);margin-top:3px">{{ (att.size_bytes / 1024) | round(1) }} KB</div>
+        <span style="font-size:11px;color:var(--text-muted);margin-left:8px">{{ (att.size_bytes / 1024) | round(1) }} KB</span>
         {% endif %}
         {% if att.file_kind != 'xlsx' and att.page_count %}
-        <div style="font-size:10px;color:var(--text-muted);margin-top:2px">{{ att.page_count }} pages</div>
+        <span style="font-size:11px;color:var(--text-muted);margin-left:6px">· {{ att.page_count }} pages</span>
         {% endif %}
       </td>
-
-      {# Deal name — email flow only #}
+    </tr>
+    <tr class="pct-inputs-row">
       {% if show_deal_name %}
       <td>
         <div class="pct-field">
@@ -74,7 +77,6 @@
       {% endif %}
 
       {% if att.file_kind == 'xlsx' %}
-      {# Revenue sheet + range #}
       <td>
         <div class="pct-field">
           <div class="pct-flabel">Sheet</div>
@@ -93,7 +95,6 @@
           <div class="pct-hint">Blank = full sheet</div>
         </div>
       </td>
-      {# OpEx sheet + range #}
       <td>
         <div class="pct-field">
           <div class="pct-flabel">Sheet</div>
@@ -114,7 +115,6 @@
       </td>
 
       {% else %}
-      {# PDF: page range inputs #}
       <td>
         <div class="pct-field">
           <div class="pct-flabel">Pages</div>
