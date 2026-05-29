@@ -224,10 +224,7 @@ jobs:
             --deselect "tests/e2e/test_unified_wizard_flow.py::test_unified_wizard_data_reaches_deal_via_api" \
             --deselect "tests/e2e/test_wizard_state_persistence.py::test_step2_checkbox_saves_to_localstorage" \
             --deselect "tests/e2e/test_wizard_state_persistence.py::test_successful_step_submit_clears_localstorage_key" \
-            --deselect "tests/e2e/test_wizard_state_persistence.py::test_step2_restores_from_localstorage_on_swap_in" \
-            --deselect "tests/e2e/test_phase_b_debt.py::test_phase_b_debt[chromium-ir_12mo]" \
-            --deselect "tests/e2e/test_phase_b_debt.py::test_phase_b_debt[chromium-ci_12mo]" \
-            --deselect "tests/e2e/test_phase_b_debt.py::test_phase_b_debt[chromium-ir_3mo_short]"
+            --deselect "tests/e2e/test_wizard_state_persistence.py::test_step2_restores_from_localstorage_on_swap_in"
         env:
           E2E_BASE_URL: http://localhost:8001
 

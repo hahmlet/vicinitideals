@@ -7,8 +7,8 @@ These are correctness regressions in the financial model, not test maintenance. 
 
 | Item | Recommendation |
 |---|---|
-| `test_phase_b_debt` — 3 failing variants (`ir_12mo`, `ci_12mo`, `ir_3mo_short`) | **Investigate + fix.** Principal solver disagrees with itself across carry types on small windows. Root cause likely in `cashflow.py` interest-reserve or capitalized-interest averaging logic. The gap magnitudes differ by carry type, suggesting the `(N+1)/2` statistical factor is wrong for short windows. |
-| `test_cashflow_hypothesis.py` | **Investigate first.** Negative operating income (`-0.04`) on a property-based input suggests either the invariant is too strict (e.g. it doesn't allow zero-income months during construction) or the cashflow engine allows NOI < 0 on a valid input combination. Run the failing case manually and inspect what inputs triggered it before deciding fix vs. tighten. |
+| ~~`test_phase_b_debt` — 3 failing variants (`ir_12mo`, `ci_12mo`, `ir_3mo_short`)~~ | **Fixed 2026-05-28.** Test fixtures omitted `ltv_pct=100`; `_funded=75%*base_costs` caused the balance invariant to fail. Fixed in commit `75afc66`. |
+| ~~`test_cashflow_hypothesis.py`~~ | **Fixed 2026-05-28.** `_compute_period` produced negative EGI when `bad_debt+concessions > after_vacancy`. Fix: proportionally cap both deductions so EGI floors at zero while preserving accounting identity. Fixed in commit `75afc66`. |
 
 ### Priority 2 — Likely real product bugs (verify before dismissing as drift)
 
@@ -77,11 +77,6 @@ stale test → rewrite or delete. Remove the entry from the E2E step in
 | `test_wizard_state_persistence.py::test_step2_checkbox_saves_to_localstorage` | 30s click timeout — step 2 selector drift |
 | `test_wizard_state_persistence.py::test_successful_step_submit_clears_localstorage_key` | Asserted localStorage key is None — clear-on-submit path may have regressed |
 | `test_wizard_state_persistence.py::test_step2_restores_from_localstorage_on_swap_in` | 30s click timeout — same step 2 surface |
-| `test_phase_b_debt.py::test_phase_b_debt[chromium-ir_12mo]` | Balance check failed: P=436553 != base=600000 + amt=16552.620182 — interest-reserve principal solve drift |
-| `test_phase_b_debt.py::test_phase_b_debt[chromium-ci_12mo]` | Balance check failed: P=451613 != base=600000 + amt=31612.903226 — capitalized-interest principal solve drift |
-| `test_phase_b_debt.py::test_phase_b_debt[chromium-ir_3mo_short]` | Balance check failed: P=355180 != base=500000 + amt=5179.704017 — short-window interest-reserve drift |
-
-The three `test_phase_b_debt` variants are **engine math regressions**,
-not UI drift — prioritize these over the template-selector drifts above,
-since they imply the debt principal solver disagrees with itself across
-carry types on small windows.
+| ~~`test_phase_b_debt.py::test_phase_b_debt[chromium-ir_12mo]`~~ | **Fixed 2026-05-28.** Root cause: test omitted `ltv_pct=100`, so `_funded=75%*base_costs` and balance invariant failed. Set `ltv_pct=100` in test fixture; seed.py wizard helper now fills LTV in Step 5. |
+| ~~`test_phase_b_debt.py::test_phase_b_debt[chromium-ci_12mo]`~~ | **Fixed 2026-05-28.** Same root cause as ir_12mo. |
+| ~~`test_phase_b_debt.py::test_phase_b_debt[chromium-ir_3mo_short]`~~ | **Fixed 2026-05-28.** Same root cause as ir_12mo. |
