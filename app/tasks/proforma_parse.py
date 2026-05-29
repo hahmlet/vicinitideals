@@ -160,7 +160,8 @@ def _redis_client() -> Any:
 
 
 def _set_progress(r: Any, task_id: str, step: int, total: int, message: str) -> None:
-    payload = json.dumps({"step": step, "total": total, "message": message, "status": "running"})
+    import time as _time
+    payload = json.dumps({"step": step, "total": total, "message": message, "status": "running", "updated_at": _time.time()})
     r.set(f"proforma:{task_id}:progress", payload, ex=_REDIS_TTL)
 
 

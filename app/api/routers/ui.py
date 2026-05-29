@@ -12717,6 +12717,18 @@ async def proforma_status(
         )
 
     if status != "done":
+        import time as _time
+        updated_at = progress.get("updated_at")
+        if updated_at and (_time.time() - float(updated_at)) > 180:
+            return templates.TemplateResponse(
+                request,
+                "partials/proforma_progress.html",
+                {
+                    "model_id": model_id,
+                    "task_id": task_id,
+                    "error": "Analysis timed out — the AI took too long to respond. Please try again.",
+                },
+            )
         return templates.TemplateResponse(
             request,
             "partials/proforma_progress.html",
