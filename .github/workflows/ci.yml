@@ -103,7 +103,6 @@ jobs:
           uv run pytest tests/ -q -m "unit" --ignore=tests/e2e \
             --ignore=tests/api/test_routers.py \
             --ignore=tests/contract \
-            --ignore=tests/engines/test_cashflow_hypothesis.py \
             --ignore=tests/scrapers/test_dedup.py \
             --ignore=tests/scrapers/test_loopnet.py \
             --ignore=tests/tasks/test_scraper.py
@@ -202,7 +201,6 @@ jobs:
             --ignore=tests/api/test_proforma_cache.py \
             --ignore=tests/contract \
             --ignore=tests/engines/test_cashflow.py \
-            --ignore=tests/engines/test_cashflow_hypothesis.py \
             --ignore=tests/engines/test_sensitivity_matrix.py \
             --ignore=tests/scrapers/test_dedup.py \
             --ignore=tests/scrapers/test_loopnet.py \
