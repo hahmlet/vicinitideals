@@ -6502,8 +6502,18 @@ def _build_assumptions_revenue_block(
         ws.cell(row=row, column=1, value=f"P{project_idx}").font = FONT_VALUE
         ws.cell(row=row, column=2, value=stream.label or "(unnamed)").font = FONT_VALUE
 
-        unit_count = stream.unit_count if stream.unit_count is not None else None
-        rent = _coerce_decimal(stream.amount_per_unit_monthly) or Decimal(0)
+        # Engine convention (`_stream_base_amount` in cashflow.py):
+        # prefer `amount_fixed_monthly` when set; else `unit_count *
+        # amount_per_unit_monthly` (NULL unit_count → 1). Mirror here so
+        # Y1 monthly cell matches engine `gross_revenue` for fixed-amount
+        # streams (ancillary income, gap adjustments, utility reimbursements).
+        fixed = _coerce_decimal(stream.amount_fixed_monthly)
+        if fixed is not None:
+            unit_count = 1
+            rent = fixed
+        else:
+            unit_count = stream.unit_count if stream.unit_count is not None else None
+            rent = _coerce_decimal(stream.amount_per_unit_monthly) or Decimal(0)
         occ = _coerce_pct(stream.stabilized_occupancy_pct) or Decimal(0)
         esc = _coerce_pct(stream.escalation_rate_pct_annual) or Decimal(0)
 
