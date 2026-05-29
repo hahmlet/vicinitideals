@@ -1211,6 +1211,15 @@ function ulTimingChanged(val) {
       <input class="form-input" type="number" name="ltv_pct" step="0.5" min="0" max="100"
              value="{{ _ltv_val if _ltv_val is not none else '' }}" placeholder="{{ _ltv_dflt }}">
     </div>
+    <div class="form-field" style="max-width:220px">
+      <label class="form-label">Draw Type <span style="font-weight:400;font-size:11px;color:var(--text-muted)">when balance starts</span></label>
+      {%- set _draw_type_val = (existing.source.get('draw_type') if existing and existing.source else None) -%}
+      <select class="form-select" name="draw_type">
+        <option value="" {% if not _draw_type_val %}selected{% endif %}>Default (by carry type)</option>
+        <option value="draw_down" {% if _draw_type_val == 'draw_down' %}selected{% endif %}>Draw Down</option>
+        <option value="fully_drawn" {% if _draw_type_val == 'fully_drawn' %}selected{% endif %}>Fully Drawn at Start</option>
+      </select>
+    </div>
   </div>
   {% endif %}
 
