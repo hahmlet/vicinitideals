@@ -260,7 +260,7 @@ TEST_CASES = [
         "phase_durations": {"pre_development": 60, "construction": 365, "operation_stabilized": 1095},
         "debt_types": ["construction_loan", "permanent_debt"],
         "debt_terms": {
-            "construction_loan": {"loan_type": "interest_reserve", "rate_pct": "7.0"},
+            "construction_loan": {"loan_type": "interest_reserve", "rate_pct": "7.0", "ltv_pct": "100"},
             "permanent_debt": {"loan_type": "pi", "rate_pct": "6.5", "amort_years": "30"},
         },
         "milestone_config": {
@@ -289,7 +289,7 @@ TEST_CASES = [
         "phase_durations": {"pre_development": 60, "construction": 365, "operation_stabilized": 1095},
         "debt_types": ["construction_loan", "permanent_debt"],
         "debt_terms": {
-            "construction_loan": {"loan_type": "capitalized_interest", "rate_pct": "7.0"},
+            "construction_loan": {"loan_type": "capitalized_interest", "rate_pct": "7.0", "ltv_pct": "100"},
             "permanent_debt": {"loan_type": "pi", "rate_pct": "6.5", "amort_years": "30"},
         },
         "milestone_config": {
@@ -318,7 +318,7 @@ TEST_CASES = [
         "phase_durations": {"construction": 90, "operation_stabilized": 730},
         "debt_types": ["construction_loan", "permanent_debt"],
         "debt_terms": {
-            "construction_loan": {"loan_type": "interest_reserve", "rate_pct": "7.0"},
+            "construction_loan": {"loan_type": "interest_reserve", "rate_pct": "7.0", "ltv_pct": "100"},
             "permanent_debt": {"loan_type": "pi", "rate_pct": "6.5", "amort_years": "30"},
         },
         "milestone_config": {

@@ -3257,11 +3257,19 @@ def _compute_period(
                 occupancy_pct = _stream_occupancy_pct(stream, phase, month_index, inputs)
                 after_vacancy = _q(escalated_amount * occupancy_pct)
                 vacancy = _q(escalated_amount - after_vacancy)
-                # Bad debt and concessions: separate % deductions from GPR
+                # Bad debt and concessions: % of GPR, but capped so EGI stays >= 0.
+                # When combined deductions exceed collected rent (e.g. full vacancy),
+                # scale both down proportionally so net_income floors at zero and the
+                # accounting identity (net + vacancy + bad_debt + concessions == GPR) holds.
                 bad_debt_pct = _percent(getattr(stream, "bad_debt_pct", None))
                 concessions_pct = _percent(getattr(stream, "concessions_pct", None))
                 bad_debt = _q(escalated_amount * bad_debt_pct)
                 concessions = _q(escalated_amount * concessions_pct)
+                _total_deductions = bad_debt + concessions
+                if _total_deductions > after_vacancy and _total_deductions > ZERO:
+                    _scale = after_vacancy / _total_deductions
+                    bad_debt = _q(bad_debt * _scale)
+                    concessions = after_vacancy - bad_debt
                 net_income = _q(after_vacancy - bad_debt - concessions)
             else:
                 escalated_amount = ZERO
