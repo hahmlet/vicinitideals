@@ -470,9 +470,9 @@
 
     {# ── Annual NOI column ── #}
     <div style="display:flex;flex-direction:column;gap:6px">
-      <div style="display:flex;align-items:baseline;justify-content:space-between">
+      <div style="display:flex;align-items:baseline;gap:6px">
+        <button type="button" onclick="var s=document.getElementById('gap-slider-noi');if(s){s.value=0;window.onGapSlide('noi',0,{{ _baseline_noi_annual }});}window.postGapSliders('{{ model.id }}')" style="font-size:10px;padding:1px 7px;background:transparent;border:1px solid var(--border,#e5e7eb);border-radius:4px;color:var(--text-muted);cursor:pointer;line-height:1.4;flex-shrink:0">Reset</button>
         <label for="gap-slider-noi" style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em">Annual NOI (/yr)</label>
-        <button type="button" onclick="var s=document.getElementById('gap-slider-noi');if(s){s.value=0;window.onGapSlide('noi',0,{{ _baseline_noi_annual }});}window.postGapSliders('{{ model.id }}')" style="font-size:10px;padding:1px 7px;background:transparent;border:1px solid var(--border,#e5e7eb);border-radius:4px;color:var(--text-muted);cursor:pointer;line-height:1.4">Reset</button>
       </div>
       <div id="gap-slider-noi-display" style="font-size:18px;font-weight:600;color:var(--text-primary);font-variant-numeric:tabular-nums">+$0</div>
       <input type="range"
@@ -490,9 +490,9 @@
 
     {# ── Purchase Price column (NOI mode) ── #}
     <div style="display:flex;flex-direction:column;gap:6px">
-      <div style="display:flex;align-items:baseline;justify-content:space-between">
+      <div style="display:flex;align-items:baseline;gap:6px">
+        <button type="button" onclick="var s=document.getElementById('gap-slider-pp');if(s){s.value=0;window.onGapSlide('pp',0,{{ _baseline_pp }});}window.postGapSliders('{{ model.id }}')" style="font-size:10px;padding:1px 7px;background:transparent;border:1px solid var(--border,#e5e7eb);border-radius:4px;color:var(--text-muted);cursor:pointer;line-height:1.4;flex-shrink:0">Reset</button>
         <label for="gap-slider-pp" style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em">Purchase Price</label>
-        <button type="button" onclick="var s=document.getElementById('gap-slider-pp');if(s){s.value=0;window.onGapSlide('pp',0,{{ _baseline_pp }});}window.postGapSliders('{{ model.id }}')" style="font-size:10px;padding:1px 7px;background:transparent;border:1px solid var(--border,#e5e7eb);border-radius:4px;color:var(--text-muted);cursor:pointer;line-height:1.4">Reset</button>
       </div>
       <div id="gap-slider-pp-display" style="font-size:18px;font-weight:600;color:var(--text-primary);font-variant-numeric:tabular-nums">+$0</div>
       <input type="range"
@@ -515,9 +515,9 @@
 
     {# ── Revenue column ── #}
     <div style="display:flex;flex-direction:column;gap:6px">
-      <div style="display:flex;align-items:baseline;justify-content:space-between">
+      <div style="display:flex;align-items:baseline;gap:6px">
+        <button type="button" onclick="var s=document.getElementById('gap-slider-rev');if(s){s.value=0;window.onGapSlide('rev',0,{{ _baseline_rev_annual }});}window.postGapSliders('{{ model.id }}')" style="font-size:10px;padding:1px 7px;background:transparent;border:1px solid var(--border,#e5e7eb);border-radius:4px;color:var(--text-muted);cursor:pointer;line-height:1.4;flex-shrink:0">Reset</button>
         <label for="gap-slider-rev" style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em">Revenue (/yr)</label>
-        <button type="button" onclick="var s=document.getElementById('gap-slider-rev');if(s){s.value=0;window.onGapSlide('rev',0,{{ _baseline_rev_annual }});}window.postGapSliders('{{ model.id }}')" style="font-size:10px;padding:1px 7px;background:transparent;border:1px solid var(--border,#e5e7eb);border-radius:4px;color:var(--text-muted);cursor:pointer;line-height:1.4">Reset</button>
       </div>
       <div id="gap-slider-rev-display" style="font-size:18px;font-weight:600;color:var(--text-primary);font-variant-numeric:tabular-nums">+$0</div>
       <input type="range"
@@ -535,9 +535,9 @@
 
     {# ── OpEx column ── #}
     <div style="display:flex;flex-direction:column;gap:6px">
-      <div style="display:flex;align-items:baseline;justify-content:space-between">
+      <div style="display:flex;align-items:baseline;gap:6px">
+        <button type="button" onclick="var s=document.getElementById('gap-slider-opex');if(s){s.value=0;window.onGapSlide('opex',0,{{ _baseline_opex_annual }});}window.postGapSliders('{{ model.id }}')" style="font-size:10px;padding:1px 7px;background:transparent;border:1px solid var(--border,#e5e7eb);border-radius:4px;color:var(--text-muted);cursor:pointer;line-height:1.4;flex-shrink:0">Reset</button>
         <label for="gap-slider-opex" style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em">OpEx (/yr)</label>
-        <button type="button" onclick="var s=document.getElementById('gap-slider-opex');if(s){s.value=0;window.onGapSlide('opex',0,{{ _baseline_opex_annual }});}window.postGapSliders('{{ model.id }}')" style="font-size:10px;padding:1px 7px;background:transparent;border:1px solid var(--border,#e5e7eb);border-radius:4px;color:var(--text-muted);cursor:pointer;line-height:1.4">Reset</button>
       </div>
       <div id="gap-slider-opex-display" style="font-size:18px;font-weight:600;color:var(--text-primary);font-variant-numeric:tabular-nums">+$0</div>
       <input type="range"
@@ -555,9 +555,9 @@
 
     {# ── Purchase Price column (Rev/OpEx mode) ── #}
     <div style="display:flex;flex-direction:column;gap:6px">
-      <div style="display:flex;align-items:baseline;justify-content:space-between">
+      <div style="display:flex;align-items:baseline;gap:6px">
+        <button type="button" onclick="var s=document.getElementById('gap-slider-pp');if(s){s.value=0;window.onGapSlide('pp',0,{{ _baseline_pp }});}window.postGapSliders('{{ model.id }}')" style="font-size:10px;padding:1px 7px;background:transparent;border:1px solid var(--border,#e5e7eb);border-radius:4px;color:var(--text-muted);cursor:pointer;line-height:1.4;flex-shrink:0">Reset</button>
         <label for="gap-slider-pp" style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em">Purchase Price</label>
-        <button type="button" onclick="var s=document.getElementById('gap-slider-pp');if(s){s.value=0;window.onGapSlide('pp',0,{{ _baseline_pp }});}window.postGapSliders('{{ model.id }}')" style="font-size:10px;padding:1px 7px;background:transparent;border:1px solid var(--border,#e5e7eb);border-radius:4px;color:var(--text-muted);cursor:pointer;line-height:1.4">Reset</button>
       </div>
       <div id="gap-slider-pp-display" style="font-size:18px;font-weight:600;color:var(--text-primary);font-variant-numeric:tabular-nums">+$0</div>
       <input type="range"
