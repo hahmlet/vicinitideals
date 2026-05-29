@@ -12710,6 +12710,7 @@ async def proforma_status(
     # Done — load result and render review UI
     raw_result = r.get(f"proforma:{task_id}:result")
     result = json.loads(raw_result) if raw_result else {"unit_types": [], "expense_lines": [], "warnings": []}
+    filename = r.get(f"proforma:{task_id}:filename") or ""
 
     return templates.TemplateResponse(
         request,
@@ -12721,6 +12722,7 @@ async def proforma_status(
             "expense_lines": result.get("expense_lines", []),
             "warnings": result.get("warnings", []),
             "STANDARD_OPEX_CATEGORIES": STANDARD_OPEX_CATEGORIES,
+            "filename": filename,
         },
     )
 

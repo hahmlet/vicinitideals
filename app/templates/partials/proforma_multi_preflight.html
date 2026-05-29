@@ -27,16 +27,16 @@
         {% include "partials/proforma_config_table.html" %}
       {% endwith %}
 
-      <div style="margin-top:16px;padding-left:10px;display:flex;align-items:center;gap:12px">
-        <button type="submit" class="btn btn-primary">
-          Analyze {{ files | length }} file{{ 's' if files | length != 1 }} →
-        </button>
+      <div style="margin-top:16px;padding:0 10px;display:flex;justify-content:flex-end;align-items:center;gap:16px">
         <a hx-get="/ui/models/{{ model_id }}/proforma-skip"
            hx-target="#deal-setup-wizard"
            hx-swap="outerHTML"
            style="font-size:12px;color:var(--text-muted);cursor:pointer">
           Skip import →
         </a>
+        <button type="submit" class="btn btn-primary">
+          Analyze {{ files | length }} file{{ 's' if files | length != 1 }} →
+        </button>
       </div>
     </form>
   </div>
