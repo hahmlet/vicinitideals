@@ -16,6 +16,7 @@ from app.models.base import Base
 class InboundEmailStatus(str, enum.Enum):
     pending = "pending"
     processing = "processing"
+    pending_review = "pending_review"   # files staged, awaiting user config table submit
     opportunity_created = "opportunity_created"
     failed = "failed"
     spam = "spam"

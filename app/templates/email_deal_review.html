@@ -5,35 +5,49 @@
 <style>
 .review-header { padding: 14px 20px; border-bottom: 1px solid var(--border); background: var(--surface); }
 .review-header-meta { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
-.review-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 0; height: calc(100vh - 120px); overflow: hidden; }
+.review-layout { display: grid; grid-template-columns: 3fr 2fr; gap: 0; height: calc(100vh - 113px); overflow: hidden; }
 .review-pane { overflow-y: auto; padding: 20px; }
 .review-pane-left { border-right: 1px solid var(--border); }
-.pane-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); margin-bottom: 12px; }
+.pane-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); margin-bottom: 14px; }
 
-/* Source pane */
-.email-body-text { font-family: monospace; font-size: 12px; line-height: 1.6; white-space: pre-wrap; background: var(--surface-muted); border-radius: 6px; padding: 14px; color: var(--text); max-height: 400px; overflow-y: auto; }
-.attachment-section { margin-top: 16px; }
-.attachment-item { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 6px; font-size: 13px; }
+/* Config table */
+.config-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.config-table th { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); padding: 8px 10px; border-bottom: 2px solid var(--border); text-align: left; white-space: nowrap; }
+.config-table td { padding: 10px; border-bottom: 1px solid var(--border-light); vertical-align: top; }
+.config-table tr:last-child td { border-bottom: none; }
+.config-table tr:hover td { background: var(--surface-muted); }
+.config-table input[type="text"] {
+  width: 100%; box-sizing: border-box; padding: 6px 8px;
+  border: 1px solid var(--border); border-radius: 4px;
+  font-size: 12px; background: var(--bg); color: var(--text);
+}
+.config-table input[type="text"]:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-faint); }
+.config-table select {
+  width: 100%; box-sizing: border-box; padding: 6px 8px;
+  border: 1px solid var(--border); border-radius: 4px;
+  font-size: 12px; background: var(--bg); color: var(--text);
+}
+.config-table select:focus { outline: none; border-color: var(--accent); }
+.file-badge { font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 4px; border: 1px solid; display: inline-block; }
+.file-badge.xlsx { border-color: #86efac; color: #166534; background: #f0fdf4; }
+.file-badge.pdf  { border-color: #fca5a5; color: #991b1b; background: #fef2f2; }
+.field-group { display: flex; flex-direction: column; gap: 4px; }
+.field-label { font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.range-hint { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+.skip-cell { color: var(--text-muted); font-size: 12px; padding-top: 14px; text-align: center; }
+.no-files-msg { color: var(--text-muted); font-size: 13px; padding: 20px 0; }
 
-/* Deal preview pane */
-.suggestion-row { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border-light); }
+/* Right pane */
+.suggestion-block { margin-bottom: 16px; }
+.suggestion-block-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border-light); }
+.suggestion-row { display: flex; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--border-light); }
 .suggestion-row:last-child { border-bottom: none; }
-.suggestion-label { font-size: 12px; color: var(--text-muted); width: 140px; flex-shrink: 0; padding-top: 2px; }
+.suggestion-label { font-size: 12px; color: var(--text-muted); width: 110px; flex-shrink: 0; padding-top: 1px; }
 .suggestion-value { flex: 1; font-size: 13px; font-weight: 500; }
-.suggestion-actions { display: flex; gap: 6px; align-items: center; }
-.chip { display: inline-flex; align-items: center; gap: 3px; font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 8px; cursor: pointer; border: 1px solid; white-space: nowrap; transition: all 0.1s; }
-.chip-accept { border-color: var(--success); color: var(--success); background: transparent; }
-.chip-accept:hover, .chip-accept.active { background: var(--success); color: white; }
-.chip-reject { border-color: var(--text-muted); color: var(--text-muted); background: transparent; }
-.chip-reject:hover { border-color: var(--danger); color: var(--danger); }
-.confidence-bar { width: 40px; height: 4px; border-radius: 2px; background: var(--border); overflow: hidden; }
-.confidence-fill { height: 100%; border-radius: 2px; background: var(--accent); }
-.warning-banner { background: #fffbeb; border: 1px solid #f59e0b; border-radius: 6px; padding: 10px 14px; font-size: 13px; color: #92400e; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-.deal-section { margin-bottom: 20px; }
-.deal-section-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border-light); }
-.no-suggestions { color: var(--text-muted); font-size: 13px; padding: 12px 0; }
-.status-processing { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #1d4ed8; }
-.action-bar { padding: 14px 20px; border-top: 1px solid var(--border); background: var(--surface); display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+.email-body-text { font-family: monospace; font-size: 12px; line-height: 1.6; white-space: pre-wrap; background: var(--surface-muted); border-radius: 6px; padding: 12px; color: var(--text); max-height: 300px; overflow-y: auto; }
+.status-processing { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #1d4ed8; margin-bottom: 12px; }
+.warning-banner { background: #fffbeb; border: 1px solid #f59e0b; border-radius: 6px; padding: 10px 14px; font-size: 13px; color: #92400e; margin-bottom: 12px; }
+.action-bar { padding: 14px 20px; border-top: 1px solid var(--border); background: var(--surface); display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 </style>
 {% endblock %}
 
@@ -46,7 +60,7 @@
     · {{ email.received_at.strftime("%b %d, %Y %I:%M %p") if email.received_at else "" }}
     · <span style="font-weight:600;color:
       {%- if email.status == 'opportunity_created' %}var(--success)
-      {%- elif email.status == 'processing' %}#1d4ed8
+      {%- elif email.status in ('processing', 'pending_review') %}#1d4ed8
       {%- elif email.status == 'failed' %}var(--danger)
       {%- else %}var(--text-muted){% endif -%}
     ">{{ email.status | replace("_", " ") | title }}</span>
@@ -54,82 +68,178 @@
     · <a href="/ui/email-inbox/{{ email.id }}/debug-log.txt"
          download
          style="font-size:12px;color:var(--text-muted);text-decoration:underline">
-        Download AI debug log (.txt)
+        Download AI debug log
       </a>
     {% endif %}
   </div>
 </div>
 
 <div class="review-layout">
-  <!-- LEFT: Source documents -->
+  <!-- LEFT: Config table -->
   <div class="review-pane review-pane-left">
-    <div class="pane-title">Source Documents</div>
+    <div class="pane-title">Deal Configuration</div>
 
-    {% if email.body_text %}
-    <div class="deal-section">
-      <div class="deal-section-title">Email Body</div>
-      <div class="email-body-text">{{ email.body_text }}</div>
-    </div>
+    {% if email.status == 'processing' %}
+    <div class="status-processing">⚙ Extracting and staging files — refresh in a few seconds.</div>
     {% endif %}
 
-    {% if email.attachments_meta %}
-    <div class="attachment-section">
-      <div class="deal-section-title">Attachments</div>
-      {% for att in email.attachments_meta %}
-      <div class="attachment-item" style="{% if att.opportunity_id %}border-color:var(--accent);{% endif %}">
-        <span>📎</span>
-        <span style="font-weight:{% if att.opportunity_id %}600{% else %}400{% endif %}">{{ att.filename or "file" }}</span>
-        <span style="color:var(--text-muted);font-size:11px">
-          {{ att.content_type or "" }}
-          {% if att.size_bytes %} · {{ (att.size_bytes / 1024) | round(1) }} KB{% endif %}
+    {% if email.status == 'failed' and email.error_message %}
+    <div class="warning-banner">⚠ Processing failed: {{ email.error_message }}</div>
+    {% endif %}
+
+    {% if staged_attachments %}
+    <form method="POST" action="/ui/deals/email/{{ email.id }}/create-deals">
+      <table class="config-table">
+        <thead>
+          <tr>
+            <th style="width:150px">File</th>
+            <th style="min-width:150px">Deal Name</th>
+            <th>Revenue Sheet / Pages</th>
+            <th>Revenue Range</th>
+            <th>OpEx Sheet / Pages</th>
+            <th>OpEx Range</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for att in staged_attachments %}
+          <input type="hidden" name="task_id_{{ loop.index0 }}" value="{{ att.task_id }}">
+          <input type="hidden" name="file_kind_{{ loop.index0 }}" value="{{ att.file_kind }}">
+          <tr>
+            {# File name + type badge #}
+            <td>
+              <div style="font-weight:500;font-size:12px;word-break:break-word;margin-bottom:4px">
+                {{ att.filename }}
+              </div>
+              <span class="file-badge {{ att.file_kind }}">
+                {{ 'XLSX' if att.file_kind == 'xlsx' else 'PDF' }}
+              </span>
+              {% if att.size_bytes %}
+              <div style="font-size:10px;color:var(--text-muted);margin-top:3px">
+                {{ (att.size_bytes / 1024) | round(1) }} KB
+              </div>
+              {% endif %}
+            </td>
+
+            {# Deal Name — same name = same deal #}
+            <td>
+              <div class="field-group">
+                <div class="field-label">Deal Name</div>
+                <input type="text" name="deal_name_{{ loop.index0 }}"
+                       placeholder="e.g. Brittany Place" required autocomplete="off">
+                <div class="range-hint">Same name = same deal</div>
+              </div>
+            </td>
+
+            {% if att.file_kind == 'xlsx' %}
+            {# Revenue sheet + range #}
+            <td>
+              <div class="field-group">
+                <div class="field-label">Sheet</div>
+                <select name="rev_sheet_{{ loop.index0 }}">
+                  <option value="">— skip revenue —</option>
+                  {% for sheet in att.sheet_names %}
+                  <option value="{{ sheet }}"{% if att.single_sheet %} selected{% endif %}>{{ sheet }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </td>
+            <td>
+              <div class="field-group">
+                <div class="field-label">Cell Range</div>
+                <input type="text" name="rev_range_{{ loop.index0 }}"
+                       placeholder="A1:D50 (optional)">
+                <div class="range-hint">Blank = full sheet</div>
+              </div>
+            </td>
+
+            {# OpEx sheet + range #}
+            <td>
+              <div class="field-group">
+                <div class="field-label">Sheet</div>
+                <select name="opex_sheet_{{ loop.index0 }}">
+                  <option value="">— skip OpEx —</option>
+                  {% for sheet in att.sheet_names %}
+                  <option value="{{ sheet }}"{% if att.single_sheet %} selected{% endif %}>{{ sheet }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </td>
+            <td>
+              <div class="field-group">
+                <div class="field-label">Cell Range</div>
+                <input type="text" name="opex_range_{{ loop.index0 }}"
+                       placeholder="A1:D50 (optional)">
+                <div class="range-hint">Blank = full sheet</div>
+              </div>
+            </td>
+
+            {% else %}
+            {# PDF: page ranges only, no cell ranges #}
+            <td>
+              <div class="field-group">
+                <div class="field-label">Pages</div>
+                <input type="text" name="rev_pages_{{ loop.index0 }}"
+                       placeholder="e.g. 1-3 (optional)">
+                <div class="range-hint">1-based; blank = all</div>
+              </div>
+            </td>
+            <td class="skip-cell">—</td>
+            <td>
+              <div class="field-group">
+                <div class="field-label">Pages</div>
+                <input type="text" name="opex_pages_{{ loop.index0 }}"
+                       placeholder="e.g. 4-6 (optional)">
+              </div>
+            </td>
+            <td class="skip-cell">—</td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div style="margin-top:16px;display:flex;align-items:center;gap:12px">
+        <button type="submit" class="btn btn-primary">Create Deals →</button>
+        <span style="font-size:12px;color:var(--text-muted)">
+          {{ staged_attachments | length }} file{{ 's' if staged_attachments | length != 1 }}.
+          Unique deal names create separate deals; same name groups files into one deal.
         </span>
-        {% if att.opportunity_id %}
-        <a href="/deals/new?opp_id={{ att.opportunity_id }}{% if att.proforma_task_id %}&proforma_task_id={{ att.proforma_task_id }}{% endif %}"
-           class="btn btn-primary"
-           style="margin-left:auto;font-size:12px;padding:4px 12px">
-          Setup Deal →
-        </a>
-        {% endif %}
+      </div>
+    </form>
+
+    {% elif email.status not in ('pending', 'processing') %}
+    <div class="no-files-msg">No proforma files staged for this email.</div>
+    {% endif %}
+
+    {# Non-staged attachments (images etc.) — display only #}
+    {% set _staged_ids = staged_attachments | map(attribute='task_id') | list %}
+    {% set _non_staged = [] %}
+    {% for att in email.attachments_meta or [] %}
+      {% if not att.get('proforma_task_id') %}{% set _ = _non_staged.append(att) %}{% endif %}
+    {% endfor %}
+    {% if _non_staged %}
+    <div style="margin-top:20px">
+      <div class="pane-title">Other Attachments</div>
+      {% for att in _non_staged %}
+      <div style="display:flex;align-items:center;gap:8px;padding:6px 0;font-size:12px;color:var(--text-muted);border-bottom:1px solid var(--border-light)">
+        <span>📎</span>
+        <span>{{ att.filename or "file" }}</span>
+        {% if att.size_bytes %}<span>· {{ (att.size_bytes / 1024) | round(1) }} KB</span>{% endif %}
       </div>
       {% endfor %}
     </div>
     {% endif %}
-
-    {% if not email.body_text and not email.attachments_meta %}
-    <div class="no-suggestions">Email body not yet available — processing in progress.</div>
-    {% endif %}
   </div>
 
-  <!-- RIGHT: Deal preview + suggestions -->
+  <!-- RIGHT: AI-extracted context — read-only -->
   <div class="review-pane">
-    <div class="pane-title">Deal Preview</div>
+    <div class="pane-title">AI Extracted Context</div>
 
-    {% if email.status == "processing" %}
-    <div class="status-processing">
-      <span>⚙</span> Extracting deal data — refresh in a few seconds.
-    </div>
-    {% endif %}
-
-    {% if email.status == "failed" and email.error_message %}
-    <div class="warning-banner">⚠ Processing failed: {{ email.error_message }}</div>
-    {% endif %}
-
-    {% set core_fields = ["address", "acquisition_cost", "unit_count", "property_type"] %}
-    {% set has_core = namespace(value=false) %}
-    {% for s in suggestions %}{% if s.field_path in core_fields %}{% set has_core.value = true %}{% endif %}{% endfor %}
-
-    {% set has_income = namespace(value=false) %}
-    {% for s in suggestions %}{% if s.field_path.startswith("income_stream") %}{% set has_income.value = true %}{% endif %}{% endfor %}
-
-    {% set has_expense = namespace(value=false) %}
-    {% for s in suggestions %}{% if s.field_path.startswith("expense_line") %}{% set has_expense.value = true %}{% endif %}{% endfor %}
-
-    <!-- Core deal fields section -->
-    {% if has_core.value %}
-    <div class="deal-section">
-      <div class="deal-section-title">Core Fields</div>
-      {% for s in suggestions %}{% if s.field_path in core_fields %}
-      <div class="suggestion-row" id="suggestion-{{ s.id }}">
+    {% if suggestions %}
+    <div class="suggestion-block">
+      <div class="suggestion-block-title">Detected Fields</div>
+      {% for s in suggestions %}
+      <div class="suggestion-row">
         <div class="suggestion-label">
           {% if s.field_path == "address" %}Address
           {% elif s.field_path == "acquisition_cost" %}Asking Price
@@ -144,99 +254,28 @@
             {{ s.suggested_value or "—" }}
           {% endif %}
         </div>
-        {% if s.confidence is not none %}
-        <div class="confidence-bar" title="{{ (s.confidence * 100) | int }}% confidence">
-          <div class="confidence-fill" style="width:{{ (s.confidence * 100) | int }}%"></div>
-        </div>
-        {% endif %}
-        <div class="suggestion-actions">
-          <button class="chip chip-accept {% if s.accepted == true %}active{% endif %}"
-                  hx-post="/api/email-suggestions/{{ s.id }}/accept"
-                  hx-target="#suggestion-{{ s.id }}"
-                  hx-swap="outerHTML">✓ Accept</button>
-          <button class="chip chip-reject"
-                  hx-post="/api/email-suggestions/{{ s.id }}/reject"
-                  hx-target="#suggestion-{{ s.id }}"
-                  hx-swap="outerHTML">Skip</button>
-        </div>
       </div>
-      {% endif %}{% endfor %}
+      {% endfor %}
     </div>
     {% endif %}
 
-    <!-- Income suggestions (from proforma) -->
-    {% if has_income.value %}
-    <div class="deal-section">
-      <div class="deal-section-title">Income (from Pro Forma)</div>
-      {% for s in suggestions %}{% if s.field_path.startswith("income_stream") %}
-      <div class="suggestion-row" id="suggestion-{{ s.id }}">
-        <div class="suggestion-label" style="font-size:12px">{{ s.field_path | replace("income_stream.", "") | replace("_", " ") | title }}</div>
-        <div class="suggestion-value">{{ s.suggested_value or "—" }}</div>
-        <div class="suggestion-actions">
-          <button class="chip chip-accept {% if s.accepted == true %}active{% endif %}"
-                  hx-patch="/api/email-suggestions/{{ s.id }}"
-                  hx-vals='{"accepted": true}'
-                  hx-target="#suggestion-{{ s.id }}"
-                  hx-swap="outerHTML">✓</button>
-          <button class="chip chip-reject"
-                  hx-patch="/api/email-suggestions/{{ s.id }}"
-                  hx-vals='{"accepted": false}'
-                  hx-target="#suggestion-{{ s.id }}"
-                  hx-swap="outerHTML">Skip</button>
-        </div>
-      </div>
-      {% endif %}{% endfor %}
+    {% if email.body_text %}
+    <div class="suggestion-block">
+      <div class="suggestion-block-title">Email Body</div>
+      <div class="email-body-text">{{ email.body_text }}</div>
     </div>
     {% endif %}
 
-    <!-- Expense suggestions (from proforma) -->
-    {% if has_expense.value %}
-    <div class="deal-section">
-      <div class="deal-section-title">Expenses (from Pro Forma)</div>
-      {% for s in suggestions %}{% if s.field_path.startswith("expense_line") %}
-      <div class="suggestion-row" id="suggestion-{{ s.id }}">
-        <div class="suggestion-label" style="font-size:12px">{{ s.field_path | replace("expense_line.", "") | replace("_", " ") | title }}</div>
-        <div class="suggestion-value">{{ s.suggested_value or "—" }}</div>
-        <div class="suggestion-actions">
-          <button class="chip chip-accept {% if s.accepted == true %}active{% endif %}"
-                  hx-patch="/api/email-suggestions/{{ s.id }}"
-                  hx-vals='{"accepted": true}'
-                  hx-target="#suggestion-{{ s.id }}"
-                  hx-swap="outerHTML">✓</button>
-          <button class="chip chip-reject"
-                  hx-patch="/api/email-suggestions/{{ s.id }}"
-                  hx-vals='{"accepted": false}'
-                  hx-target="#suggestion-{{ s.id }}"
-                  hx-swap="outerHTML">Skip</button>
-        </div>
-      </div>
-      {% endif %}{% endfor %}
-    </div>
-    {% endif %}
-
-    {% if not suggestions and email.status not in ["pending", "processing"] %}
-    <div class="no-suggestions">No suggestions extracted from this email.</div>
+    {% if not suggestions and not email.body_text and email.status not in ('pending', 'processing') %}
+    <div style="color:var(--text-muted);font-size:13px">No content extracted from this email.</div>
     {% endif %}
   </div>
 </div>
 
 <div class="action-bar">
   <a href="/ui/email-inbox" class="btn btn-secondary">← Back to Inbox</a>
-  {# Multi-attachment: Setup Deal buttons are per-attachment in the left pane.
-     Show a fallback single button only when there are no attachment-linked opportunities. #}
-  {% set _has_att_opps = email.attachments_meta | selectattr("opportunity_id", "defined") | selectattr("opportunity_id") | list %}
-  {% if not _has_att_opps %}
-    {% if opportunity %}
-    <a href="/deals/new?opp_id={{ opportunity.id }}" class="btn btn-primary">
-      Continue to Deal Setup →
-    </a>
-    {% elif email.status == "opportunity_created" %}
-    <button class="btn btn-primary" disabled>Opportunity not ready</button>
-    {% endif %}
-  {% else %}
-  <span style="font-size:12px;color:var(--text-muted)">
-    {{ _has_att_opps | length }} deal stub{{ 's' if _has_att_opps | length != 1 }} ready — use Setup Deal buttons above
-  </span>
+  {% if email.status == 'opportunity_created' %}
+  <span style="font-size:12px;color:var(--success);font-weight:600">✓ Deals created</span>
   {% endif %}
 </div>
 {% endblock %}
