@@ -3640,7 +3640,7 @@ def _compute_period(
             debt_service = _q(debt_service + ir_income_coverage)
             line_items.append(
                 CashFlowLineItem(
-                    deal_model_id=deal_model_id,
+                    scenario_id=deal_model_id,
                     period=period,
                     category=LineItemCategory.debt_service,
                     label="Interest from Operations (IR)",
