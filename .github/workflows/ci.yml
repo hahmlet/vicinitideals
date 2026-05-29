@@ -215,7 +215,7 @@ jobs:
         # Launch-prep scope-cut: pre-existing E2E failures unrelated to this
         # CI gate sweep are deselected here so the gate can land green.
         # Each entry is a known-broken test or whole-file that needs
-        # rehabilitation. See docs/follow-ups/launch-e2e-rehab.md.
+        # rehabilitation. See docs/feature-plans/launch-e2e-rehab.md.
         run: |
           uv run pytest tests/e2e/ -q -m e2e \
             --ignore=tests/e2e/test_grant_eligibility_flow.py \
