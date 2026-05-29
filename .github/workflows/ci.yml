@@ -36,15 +36,19 @@ jobs:
 
           CHANGED=$(git diff --name-only "$BASE"...HEAD 2>/dev/null || echo "")
 
-          # If ALL changed files are docs/templates/static, skip heavy gates
-          HEAVY_FILES=$(echo "$CHANGED" | grep -Ev '^(docs/|app/templates/|app/static/|\.github/skills/|\.md$|LICENSE|\.gitignore)' || true)
+          # Skip heavy gate ONLY for true docs (no behavior risk).
+          # Templates + static assets are rendered/served to users and routinely
+          # carry inline JS/HTMX attributes — a template-only change can still
+          # break E2E flows (see 2026-05-29 JS regression that bypassed CI
+          # because three commits in a row only touched app/templates/).
+          HEAVY_FILES=$(echo "$CHANGED" | grep -Ev '^(docs/|\.github/skills/|\.md$|LICENSE|\.gitignore)' || true)
 
           if [ -z "$HEAVY_FILES" ] && [ -n "$CHANGED" ]; then
             echo "skip_heavy=true" >> "$GITHUB_OUTPUT"
-            echo "Only docs/templates changed — skipping heavy gates"
+            echo "Only docs/skills changed — skipping heavy gates"
           else
             echo "skip_heavy=false" >> "$GITHUB_OUTPUT"
-            echo "Code changes detected — running all gates"
+            echo "Code/template/static changes detected — running all gates"
           fi
 
   # ---------------------------------------------------------------------------
