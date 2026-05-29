@@ -57,18 +57,56 @@ def _signer() -> URLSafeTimedSerializer:
     return URLSafeTimedSerializer(settings.secret_key, salt="session")
 
 
-def create_session_token(user_id: uuid.UUID) -> str:
-    """Sign a session token containing the user's UUID."""
-    return _signer().dumps(str(user_id))
+def create_session_token(
+    user_id: uuid.UUID,
+    *,
+    email_verified: bool | None = None,
+) -> str:
+    """Sign a session token containing the user's UUID.
+
+    When email_verified is provided, the claim is embedded so the
+    middleware gate can enforce verification without a DB read. Legacy
+    callers that omit it produce a UUID-only token, which the middleware
+    intentionally bypasses (back-compat for existing sessions).
+    """
+    if email_verified is None:
+        return _signer().dumps(str(user_id))
+    return _signer().dumps({"uid": str(user_id), "ev": bool(email_verified)})
+
+
+def _decode_session_payload(token: str) -> dict | str | None:
+    try:
+        return _signer().loads(token, max_age=SESSION_MAX_AGE)
+    except (SignatureExpired, BadSignature):
+        return None
 
 
 def decode_session_token(token: str) -> uuid.UUID | None:
     """Verify and decode a session token; returns UUID or None on failure."""
-    try:
-        raw = _signer().loads(token, max_age=SESSION_MAX_AGE)
-        return uuid.UUID(raw)
-    except (SignatureExpired, BadSignature, ValueError):
+    raw = _decode_session_payload(token)
+    if raw is None:
         return None
+    try:
+        if isinstance(raw, dict):
+            uid_raw = raw.get("uid")
+            if uid_raw is None:
+                return None
+            return uuid.UUID(str(uid_raw))
+        return uuid.UUID(str(raw))
+    except ValueError:
+        return None
+
+
+def decode_session_email_verified(token: str) -> bool | None:
+    """Return signed email-verified claim when present, else None.
+
+    Legacy UUID-only tokens have no claim; the caller should treat
+    None as "not enforced" rather than "unverified".
+    """
+    raw = _decode_session_payload(token)
+    if isinstance(raw, dict) and "ev" in raw:
+        return bool(raw.get("ev"))
+    return None
 
 
 # ---------------------------------------------------------------------------

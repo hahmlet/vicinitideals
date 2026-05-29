@@ -125,7 +125,7 @@ async def login_post(
     elif user.membership_status == MembershipStatus.PENDING:
         next = "/pending-approval"
 
-    token = create_session_token(user.id)
+    token = create_session_token(user.id, email_verified=bool(user.email_verified))
     resp = RedirectResponse(url=next, status_code=303)
     resp.set_cookie(
         COOKIE_NAME,
@@ -320,7 +320,7 @@ async def register_post(
         except Exception:  # pragma: no cover
             pass
 
-        token = create_session_token(user.id)
+        token = create_session_token(user.id, email_verified=False)
         resp = RedirectResponse(url="/deals" if invite_token else "/pending-approval", status_code=303)
         resp.set_cookie(COOKIE_NAME, token, max_age=SESSION_MAX_AGE, httponly=True, secure=True, samesite="lax")
         return resp
@@ -347,7 +347,7 @@ async def register_post(
         except Exception:  # pragma: no cover
             pass
 
-        token = create_session_token(user.id)
+        token = create_session_token(user.id, email_verified=False)
         resp = RedirectResponse(url="/onboarding", status_code=303)
         resp.set_cookie(COOKIE_NAME, token, max_age=SESSION_MAX_AGE, httponly=True, secure=True, samesite="lax")
         return resp
@@ -454,7 +454,7 @@ async def verify_email_get(
         user.email_verified_at = datetime.now(UTC)
         await session.commit()
 
-    return templates.TemplateResponse(
+    resp = templates.TemplateResponse(
         request,
         "auth_message.html",
         {
@@ -467,6 +467,45 @@ async def verify_email_get(
             "next_url": "/deals",
             "next_label": "Go to deals",
         },
+    )
+    # Re-issue the session cookie with the verified claim so the user
+    # passes the middleware gate without needing to log in again.
+    resp.set_cookie(
+        COOKIE_NAME,
+        create_session_token(user.id, email_verified=True),
+        max_age=SESSION_MAX_AGE,
+        httponly=True,
+        secure=True,
+        samesite="lax",
+    )
+    return resp
+
+
+# ---------------------------------------------------------------------------
+# GET /verify-email-required
+# ---------------------------------------------------------------------------
+
+@router.get("/verify-email-required", response_class=HTMLResponse)
+async def verify_email_required_get(
+    request: Request,
+    next: str = Query(default="/deals"),
+) -> HTMLResponse:
+    """Recovery page for logged-in users blocked by the verification gate."""
+    return templates.TemplateResponse(
+        request,
+        "auth_message.html",
+        {
+            "title": "Verify your email to continue",
+            "message": (
+                "Your account is signed in, but email verification is required "
+                "before you can access the app. Check your inbox (and spam folder), "
+                "then click the verification link."
+            ),
+            "success": False,
+            "next_url": "/profile?from=verify-gate&next=" + next,
+            "next_label": "Go to profile",
+        },
+        status_code=403,
     )
 
 
@@ -790,8 +829,9 @@ async def reset_password_post(
         user.email_verified_at = datetime.now(UTC)
     await session.commit()
 
-    # Log them in and redirect
-    session_token = create_session_token(user.id)
+    # Log them in and redirect. Reset link click proves mailbox ownership,
+    # so the session is issued with the verified claim.
+    session_token = create_session_token(user.id, email_verified=True)
     resp = RedirectResponse(url="/deals", status_code=303)
     resp.set_cookie(
         COOKIE_NAME,

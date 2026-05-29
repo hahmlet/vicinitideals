@@ -75,6 +75,20 @@ _AUTH_EXEMPT_PATHS = (
     "/api/",
 )
 
+# Paths an authenticated-but-unverified user may still access so they
+# can complete verification, finish onboarding, or sign out. Anything
+# outside this list (and not already in _AUTH_EXEMPT_PATHS) is gated.
+_EMAIL_VERIFICATION_EXEMPT_PATHS = (
+    "/verify-email",
+    "/verify-email-required",
+    "/resend-verification",
+    "/profile",
+    "/logout",
+    "/onboarding",
+    "/pending-approval",
+    "/invites/",
+)
+
 STATUS_CODES: dict[int, str] = {
     400: "bad_request",
     403: "forbidden",
@@ -300,10 +314,29 @@ def create_app() -> FastAPI:
         if is_exempt or is_htmx:
             return await call_next(request)
 
-        from app.api.auth import decode_session_token, COOKIE_NAME
+        from app.api.auth import COOKIE_NAME, decode_session_email_verified, decode_session_token
         token = request.cookies.get(COOKIE_NAME)
         # Also accept legacy vd_user_id cookie so existing sessions aren't broken
         if token and decode_session_token(token) is not None:
+            # Hard email-verification gate. Legacy UUID-only tokens have no
+            # claim → bypass (back-compat). Modern signed sessions with
+            # ev=False are bounced to the recovery page unless the path is
+            # in the verification-exempt list.
+            email_verified_claim = decode_session_email_verified(token)
+            if email_verified_claim is False and not any(
+                path.startswith(p) for p in _EMAIL_VERIFICATION_EXEMPT_PATHS
+            ):
+                from urllib.parse import quote
+
+                requested_path = request.url.path
+                if request.url.query:
+                    requested_path = f"{requested_path}?{request.url.query}"
+                next_url = quote(requested_path, safe="")
+                from fastapi.responses import RedirectResponse as _RR
+                return _RR(
+                    url=f"/verify-email-required?next={next_url}",
+                    status_code=303,
+                )
             return await call_next(request)
         if request.cookies.get("vd_user_id"):
             return await call_next(request)
