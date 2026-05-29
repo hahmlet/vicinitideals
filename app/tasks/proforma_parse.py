@@ -709,6 +709,12 @@ def parse_proforma(
                 revenue_text = ""
             else:
                 revenue_text = _sheet_to_text(wb[revenue_sheet], cell_range=revenue_range)
+                if not revenue_text:
+                    range_hint = f" (range {revenue_range})" if revenue_range else ""
+                    warnings.append(
+                        f"Revenue sheet '{revenue_sheet}'{range_hint} appears to contain no data — "
+                        "check that the sheet name and range are correct."
+                    )
 
             if not import_opex:
                 opex_text = ""
@@ -717,6 +723,12 @@ def parse_proforma(
                 opex_text = ""
             else:
                 opex_text = _sheet_to_text(wb[opex_sheet], property_column=property_column, cell_range=opex_range)
+                if not opex_text:
+                    range_hint = f" (range {opex_range})" if opex_range else ""
+                    warnings.append(
+                        f"OpEx sheet '{opex_sheet}'{range_hint} appears to contain no data — "
+                        "check that the sheet name and range are correct."
+                    )
 
         client = _llm_client()
 
@@ -753,9 +765,15 @@ def parse_proforma(
                     response_model=ParsedExpenses,
                     messages=[{"role": "user", "content": opex_prompt}],
                 )
-                expense_lines = _postprocess_expense_lines(
-                    [e.model_dump() for e in parsed_exp.expense_lines]
-                )
+                raw_lines = [e.model_dump() for e in parsed_exp.expense_lines]
+                expense_lines = _postprocess_expense_lines(raw_lines)
+                if not expense_lines and raw_lines:
+                    warnings.append(
+                        f"The AI found {len(raw_lines)} expense row(s) but all had $0 amounts. "
+                        "This usually means dollar amounts are stored as Excel formulas with no "
+                        "saved values. Open the file in Excel, press Ctrl+Alt+F9, save, and "
+                        "re-upload. Or set a range that includes the column with annual totals."
+                    )
             except Exception as exc:
                 logger.warning("OpEx parse failed: %s", exc)
                 warnings.append(f"OpEx parsing failed: {exc}")
