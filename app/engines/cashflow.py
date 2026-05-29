@@ -1705,6 +1705,21 @@ def _schedule_preop_months(
     return total
 
 
+def _draw_schedule_for(carry_type: str, draw_type: str | None) -> str:
+    """Map draw_type field → period_interest_months draw_schedule argument.
+
+    When draw_type is None, falls back to the carry-type convention that was
+    hardcoded before the draw_type field existed:
+      interest_reserve      → "linear"  (construction draw-down assumption)
+      capitalized_interest  → "lump"    (full-balance PIK assumption)
+    """
+    if draw_type == "fully_drawn":
+        return "lump"
+    if draw_type == "draw_down":
+        return "linear"
+    return "linear" if carry_type == "interest_reserve" else "lump"
+
+
 def _compute_preop_carry_cost(
     schedule: list[dict],
     funded: Decimal,
@@ -1712,6 +1727,7 @@ def _compute_preop_carry_cost(
     base_rate: Decimal,
     milestone_month_map: dict[str, int],
     loan_start_abs: int,
+    draw_type: str | None = None,
 ) -> Decimal:
     """Total IR + CI reserve cost for schedule phases that fall in the pre-op window.
 
@@ -1737,9 +1753,9 @@ def _compute_preop_carry_cost(
             p_rate = Decimal(str(phase.get("rate_pct") or 0)) or base_rate
             p_ct = (phase.get("carry_type") or "none").replace("accruing", "capitalized_interest")
             if p_ct == "interest_reserve" and p_rate > ZERO:
-                total += period_interest_months(funded, phase_dur, float(p_rate), draw_schedule="linear")
+                total += period_interest_months(funded, phase_dur, float(p_rate), draw_schedule=_draw_schedule_for("interest_reserve", draw_type))
             elif p_ct == "capitalized_interest" and p_rate > ZERO:
-                total += period_interest_months(funded, phase_dur, float(p_rate), draw_schedule="lump")
+                total += period_interest_months(funded, phase_dur, float(p_rate), draw_schedule=_draw_schedule_for("capitalized_interest", draw_type))
         if phase_end >= preop_months or dur_type == "remainder":
             break
         cursor = phase_end
@@ -2141,16 +2157,17 @@ async def _auto_size_debt_modules(
                 _funded = _q(pre_dev_costs * _ltc / HUNDRED)
                 _r = Decimal(str(_rate or 0))
                 _pre_ct = _carry_type_for_phase(_carry, is_construction=True)
+                _draw_type = _src.get("draw_type")
                 _n = _loan_pre_op_months(_m, capital_modules, phases)
                 _pre_schedule = _carry.get("schedule")
                 if _pre_schedule and _n > 0 and _funded > ZERO:
                     _interest_carry = _compute_preop_carry_cost(
                         _pre_schedule, _funded, _n, _r, _milestone_month_map,
-                        _loan_start_abs_month(_m, phases),
+                        _loan_start_abs_month(_m, phases), draw_type=_draw_type,
                     )
                     _io_f = (_interest_carry / _funded) if _funded > ZERO else ZERO
                 elif _pre_ct == "interest_reserve" and _r > ZERO and _n > 0:
-                    _interest_carry = period_interest_months(_funded, _n, _r, draw_schedule="linear")
+                    _interest_carry = period_interest_months(_funded, _n, _r, draw_schedule=_draw_schedule_for(_pre_ct, _draw_type))
                     # Add lease-up IR shortfall if this loan extends past construction.
                     _lu_phase = next((p for p in phases if p.period_type == PeriodType.lease_up), None)
                     if _resolve_active_end_rank(_m, capital_modules) > 4 and _lu_phase:
@@ -2159,7 +2176,7 @@ async def _auto_size_debt_modules(
                         )
                     _io_f = (_interest_carry / _funded) if _funded > ZERO else ZERO
                 elif _pre_ct == "capitalized_interest" and _r > ZERO and _n > 0:
-                    _interest_carry = period_interest_months(_funded, _n, _r, draw_schedule="lump")
+                    _interest_carry = period_interest_months(_funded, _n, _r, draw_schedule=_draw_schedule_for(_pre_ct, _draw_type))
                     _io_f = (_interest_carry / _funded) if _funded > ZERO else ZERO
                 else:
                     _io_f = ZERO
@@ -2175,23 +2192,24 @@ async def _auto_size_debt_modules(
                 _principal = _q(acq_costs * _ltv / HUNDRED)
                 _r = Decimal(str(_rate or 0))
                 _acq_ct = _carry_type_for_phase(_carry, is_construction=True)
+                _draw_type = _src.get("draw_type")
                 _n = _loan_pre_op_months(_m, capital_modules, phases)
                 _acq_schedule = _carry.get("schedule")
                 if _acq_schedule and _n > 0 and _principal > ZERO:
                     _acq_interest = _compute_preop_carry_cost(
                         _acq_schedule, _principal, _n, _r, _milestone_month_map,
-                        _loan_start_abs_month(_m, phases),
+                        _loan_start_abs_month(_m, phases), draw_type=_draw_type,
                     )
                 elif _principal > ZERO and _r > ZERO and _n > 0:
                     if _acq_ct == "interest_reserve":
-                        _acq_interest = period_interest_months(_principal, _n, _r, draw_schedule="linear")
+                        _acq_interest = period_interest_months(_principal, _n, _r, draw_schedule=_draw_schedule_for(_acq_ct, _draw_type))
                         _lu_phase = next((p for p in phases if p.period_type == PeriodType.lease_up), None)
                         if _resolve_active_end_rank(_m, capital_modules) > 4 and _lu_phase:
                             _acq_interest += _ir_lease_up_pool(
                                 _principal, _r, _lu_phase.months, _lu_phase, streams, expense_lines, inputs
                             )
                     elif _acq_ct == "capitalized_interest":
-                        _acq_interest = period_interest_months(_principal, _n, _r, draw_schedule="lump")
+                        _acq_interest = period_interest_months(_principal, _n, _r, draw_schedule=_draw_schedule_for(_acq_ct, _draw_type))
                     else:
                         _acq_interest = ZERO
                 else:
@@ -2206,16 +2224,17 @@ async def _auto_size_debt_modules(
                 _funded = _q(constr_costs * _ltc / HUNDRED)
                 _r = Decimal(str(_cr or 0))
                 _cl_ct = _carry_type_for_phase(_carry, is_construction=True)
+                _draw_type = _src.get("draw_type")
                 _n = _loan_pre_op_months(_m, capital_modules, phases)
                 _cl_schedule = _carry.get("schedule")
                 if _cl_schedule and _n > 0 and _funded > ZERO:
                     _interest_carry = _compute_preop_carry_cost(
                         _cl_schedule, _funded, _n, _r, _milestone_month_map,
-                        _loan_start_abs_month(_m, phases),
+                        _loan_start_abs_month(_m, phases), draw_type=_draw_type,
                     )
                     _io_f = (_interest_carry / _funded) if _funded > ZERO else ZERO
                 elif _cl_ct == "interest_reserve" and _r > ZERO and _n > 0:
-                    _interest_carry = period_interest_months(_funded, _n, _r, draw_schedule="linear")
+                    _interest_carry = period_interest_months(_funded, _n, _r, draw_schedule=_draw_schedule_for(_cl_ct, _draw_type))
                     _lu_phase = next((p for p in phases if p.period_type == PeriodType.lease_up), None)
                     if _resolve_active_end_rank(_m, capital_modules) > 4 and _lu_phase:
                         _interest_carry += _ir_lease_up_pool(
@@ -2223,7 +2242,7 @@ async def _auto_size_debt_modules(
                         )
                     _io_f = (_interest_carry / _funded) if _funded > ZERO else ZERO
                 elif _cl_ct == "capitalized_interest" and _r > ZERO and _n > 0:
-                    _interest_carry = period_interest_months(_funded, _n, _r, draw_schedule="lump")
+                    _interest_carry = period_interest_months(_funded, _n, _r, draw_schedule=_draw_schedule_for(_cl_ct, _draw_type))
                     _io_f = (_interest_carry / _funded) if _funded > ZERO else ZERO
                 else:
                     _io_f = ZERO
@@ -2414,7 +2433,15 @@ async def _auto_size_debt_modules(
                 _pmt_f_c = _c_monthly_rate * _cf / (_cf - ONE)
                 constr_io_factor = _pmt_f_c * Decimal(str(_preop_months))
             else:
-                constr_io_factor = _c_monthly_rate * Decimal(str(_preop_months))
+                # Perm loans default to fully_drawn (full balance at close).
+                # draw_type="draw_down" overrides to (N+1)/2 average-balance factor.
+                _perm_draw_type = src.get("draw_type")
+                _n_factor = (
+                    (Decimal(_preop_months + 1) / 2)
+                    if _perm_draw_type == "draw_down"
+                    else Decimal(str(_preop_months))
+                )
+                constr_io_factor = _c_monthly_rate * _n_factor
 
         fixed = _fixed_sources(module)
         divisor = ONE - constr_io_factor

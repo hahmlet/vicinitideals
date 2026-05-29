@@ -699,6 +699,14 @@
             <input class="filter-input" id="sv-add-org-dscr" type="number" step="0.01" placeholder="e.g. 1.25" style="width:100%">
           </div>
         </div>
+        <div>
+          <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Draw Type</label>
+          <select class="filter-input" id="sv-add-org-draw-type" style="width:100%;font-size:12px">
+            <option value="">Default (by carry type)</option>
+            <option value="draw_down">Draw Down</option>
+            <option value="fully_drawn">Fully Drawn at Start</option>
+          </select>
+        </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
           <div>
             <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Amort (yrs)</label>
@@ -842,6 +850,14 @@
             <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">DSCR Min</label>
             <input class="filter-input sv-org-dscr" type="number" step="0.01" value="{{ sc.get('dscr_min','') }}" data-vid="{{ v.id }}" style="width:100%">
           </div>
+        </div>
+        <div style="margin-top:6px">
+          <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Draw Type</label>
+          <select class="filter-input sv-org-draw-type" data-vid="{{ v.id }}" style="width:100%;font-size:12px">
+            <option value="" {% if not sc.get('draw_type') %}selected{% endif %}>Default (by carry type)</option>
+            <option value="draw_down" {% if sc.get('draw_type') == 'draw_down' %}selected{% endif %}>Draw Down</option>
+            <option value="fully_drawn" {% if sc.get('draw_type') == 'fully_drawn' %}selected{% endif %}>Fully Drawn at Start</option>
+          </select>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
           <div>
@@ -1053,6 +1069,7 @@
       interest_rate_pct: parseFloat(svOrgVal('.sv-org-rate', vid)) || null,
       ltv_pct: parseFloat(svOrgVal('.sv-org-ltv', vid)) || null,
       dscr_min: parseFloat(svOrgVal('.sv-org-dscr', vid)) || null,
+      draw_type: svOrgVal('.sv-org-draw-type', vid) || null,
       amort_term_years: parseInt(svOrgVal('.sv-org-amort', vid)) || null,
       hold_term_years: parseInt(svOrgVal('.sv-org-hold', vid)) || null,
       auto_size: svOrgChecked('.sv-org-auto-size', vid),
@@ -1095,6 +1112,7 @@
       interest_rate_pct: parseFloat(document.getElementById('sv-add-org-rate').value) || null,
       ltv_pct: parseFloat(document.getElementById('sv-add-org-ltv').value) || null,
       dscr_min: parseFloat(document.getElementById('sv-add-org-dscr').value) || null,
+      draw_type: document.getElementById('sv-add-org-draw-type').value || null,
       amort_term_years: parseInt(document.getElementById('sv-add-org-amort').value) || null,
       hold_term_years: parseInt(document.getElementById('sv-add-org-hold').value) || null,
       auto_size: document.getElementById('sv-add-org-auto-size').checked,

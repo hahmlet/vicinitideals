@@ -572,6 +572,8 @@ def _sv_body_to_jsonb(
         source["hold_term_years"] = int(body["hold_term_years"])
     if body.get("dscr_min") is not None:
         source["dscr_min"] = float(body["dscr_min"])
+    if body.get("draw_type") is not None:
+        source["draw_type"] = str(body["draw_type"])
     if body.get("draw_every_n_months") is not None:
         source["draw_every_n_months"] = int(body["draw_every_n_months"])
     if body.get("draw_active_from_milestone"):
@@ -659,6 +661,7 @@ async def create_org_source_vehicle(
         label=name,
         vehicle_type=vehicle_type,
         equity_role=body.get("equity_role"),
+        draw_type=body.get("draw_type"),
         source_config=source_cfg,
         carry_config=carry_cfg,
         exit_config=exit_cfg,
@@ -702,6 +705,8 @@ async def update_org_source_vehicle(
     vehicle.vehicle_type = vehicle_type
     if "equity_role" in body:
         vehicle.equity_role = body["equity_role"]
+    if "draw_type" in body:
+        vehicle.draw_type = body["draw_type"] or None
     vehicle.updated_by = user.id
     vehicle.source_config, vehicle.carry_config, vehicle.exit_config = _sv_body_to_jsonb(
         body,
@@ -756,6 +761,7 @@ async def create_user_source_vehicle(
         label=name,
         vehicle_type=vehicle_type,
         equity_role=body.get("equity_role"),
+        draw_type=body.get("draw_type"),
         source_config=source_cfg,
         carry_config=carry_cfg,
         exit_config=exit_cfg,
@@ -796,6 +802,8 @@ async def update_user_source_vehicle(
     vehicle.vehicle_type = vehicle_type
     if "equity_role" in body:
         vehicle.equity_role = body["equity_role"]
+    if "draw_type" in body:
+        vehicle.draw_type = body["draw_type"] or None
     vehicle.source_config, vehicle.carry_config, vehicle.exit_config = _sv_body_to_jsonb(
         body,
         default_auto_size=True,

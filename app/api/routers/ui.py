@@ -6777,6 +6777,8 @@ async def handle_form_create_or_update(
             source_d["prepay_penalty_pct"] = float(ppct)
         if ltv := _fd(form.get("ltv_pct")):
             source_d["ltv_pct"] = float(ltv)
+        if draw_type_raw := (form.get("draw_type") or "").strip():
+            source_d["draw_type"] = draw_type_raw if draw_type_raw in ("draw_down", "fully_drawn") else None
         constr_carry_type = form.get("construction_carry_type", "none")
         # Carry rate: use source rate so the engine finds it in both places
         _carry_rate = _fd(form.get("source_interest_rate"))

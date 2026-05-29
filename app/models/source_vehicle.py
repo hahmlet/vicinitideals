@@ -61,6 +61,7 @@ class SourceVehicle(Base):
     # Debt / forgivable_loan — interest carry
     interest_rate_pct: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
     carry_type: Mapped[str | None] = mapped_column(String(30), nullable=True)
+    draw_type: Mapped[str | None] = mapped_column(String(20), nullable=True)
     interest_payment_timing: Mapped[str | None] = mapped_column(String(30), nullable=True)
     day_count_convention: Mapped[str] = mapped_column(String(20), nullable=False, default="actual_360")
     io_period_months: Mapped[int | None] = mapped_column(Integer, nullable=True)

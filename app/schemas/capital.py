@@ -84,6 +84,10 @@ class CapitalSourceSchema(BaseModel):
     # Minimum DSCR floor for sizing. Used by the DSCR-capped auto-sizer when
     # this module is the perm loan being sized. Falls back to 1.20 if unset.
     dscr_min: float | None = None
+    # "fully_drawn" — full principal outstanding from day one (bond, term note).
+    # "draw_down"   — principal draws evenly across the carry period (construction loan).
+    # None — falls back to carry-type convention: IR→draw_down, CI→fully_drawn.
+    draw_type: str | None = None
 
 
 class CapitalCarrySchema(BaseModel):
