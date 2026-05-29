@@ -19,15 +19,15 @@ These are correctness regressions in the financial model, not test maintenance. 
 | ~~`test_opportunity_wizard::test_attach_parcel_advances_to_review` — parcel search returns no result~~ | **Closed 2026-05-28.** Test passes as-is — seed data present, search backend healthy. |
 
 ### Priority 3 — Test maintenance (selector/template drift, no evidence of product regression)
-Fix these after P1/P2 are clear. Low risk — these are tests that have fallen out of sync with template changes.
+**All P3 items closed 2026-05-29 (commits `c304450`, `e84c7c5`).** Selector fixes shipped to main; per-test deselects lifted in CI (see table below).
 
 | Item | Recommendation |
 |---|---|
-| `test_grant_eligibility_flow.py` (6 tests) | **Rewrite or delete.** Grant-eligibility drawer likely renamed or restructured. Open the feature in the live app and update selectors to match current HTML. If the feature was removed, delete the file and remove from CI. |
-| `test_proforma_cache.py` (2 tests) | **Rewrite.** 30s click timeout = selector targeting an element that no longer exists. The proforma upload surface has had multiple changes; rewrite against current UI flow. |
-| `test_ui_features_april_2026.py` (whole file) | **Triage as a group.** Run each test in isolation to separate genuine flake from selector drift. Tests covering debt-type ordering, default OpEx seed, and unit-mix round-trip are feature-critical — rewrite the failing ones rather than deleting. Rename the file if you rewrite the majority of it (date-named test files rot fast). |
-| `test_underwriting_flow::test_coverage_modal_per_project_amount_inputs_present` (2 params) | **Update selector.** Coverage modal ID or layout changed. Locate current modal `id` in `app/templates/` and update the locator. Low-risk fix. |
-| `test_wizard_state_persistence` — two 30s click timeouts on step 2 | **Update selector.** Step 2 element the test clicks was likely renamed in a template change. Grep `app/templates/` for current step-2 element IDs and update. |
+| ~~`test_grant_eligibility_flow.py` (6 tests)~~ | **Fixed 2026-05-29 (`c304450`).** `_add_use` helper updated to use `#uses-wizard-body` + `#uw-next`. |
+| ~~`test_proforma_cache.py` (2 tests)~~ | **Fixed 2026-05-29 (`c304450`).** `_reach_upload_step` + `_upload` selectors updated to `#proforma-file` + `#step1-submit`. CI ignore still in place pending green-run confirmation. |
+| ~~`test_ui_features_april_2026.py` (whole file)~~ | **Fixed 2026-05-29 (`c304450`).** Added `pre_development` milestone type; updated opex labels to 20-item list. |
+| ~~`test_underwriting_flow::test_coverage_modal_per_project_amount_inputs_present` (2 params)~~ | **Fixed 2026-05-29 (`c304450`).** Coverage modal inputs are `type=text` after JS formatter runs; selector matches `name^='amount['` instead. |
+| ~~`test_wizard_state_persistence` — two 30s click timeouts on step 2~~ | **Fixed 2026-05-29 (`c304450`).** Switched to stable `#step1-submit` id; `expect().to_be_checked()` for async restore. |
 
 ### Sequencing
 Fix P1 engine bugs first — they affect export accuracy and are user-visible. P2 items can be verified in the live app in 10 minutes each before spending time on test code. P3 is pure maintenance and can be batched into one sitting.
@@ -49,18 +49,15 @@ stale test → rewrite or delete. Remove the entry from the E2E step in
 
 ## Whole E2E files ignored
 
-- `tests/e2e/test_grant_eligibility_flow.py` — all 6 tests fail with
-  selector timeout on the grant-eligibility drawer. Likely template
-  selector drift since the test was written; possibly the drawer was
-  renamed or replaced.
-- `tests/e2e/test_proforma_cache.py` — both tests fail with a 30s click
-  timeout. Whole proforma upload + cache surface needs revisiting; also
-  ignored in the integration step.
-- `tests/e2e/test_ui_features_april_2026.py` — multiple tests in this
-  file fail intermittently (different test each run): debt-type
-  ordering, default-OpEx seed, unit-mix round-trip. Either the whole
-  surface this file exercises has drifted, or the file has flake from
-  shared seed state. Triage as a group.
+- ~~`tests/e2e/test_grant_eligibility_flow.py`~~ — **Closed 2026-05-29
+  (`c304450`).** Helper selector fixes; whole-file ignore lifted in CI.
+- `tests/e2e/test_proforma_cache.py` — selectors fixed in `c304450`
+  (`#proforma-file`, `#step1-submit`), but CI ignore still in place at
+  `.github/workflows/ci.yml:219` pending a confirmed green run. Lift
+  the ignore once verified.
+- ~~`tests/e2e/test_ui_features_april_2026.py`~~ — **Closed 2026-05-29
+  (`c304450`).** `pre_development` milestone + 20-item opex labels;
+  whole-file ignore lifted in CI.
 
 ## Per-test deselects
 
