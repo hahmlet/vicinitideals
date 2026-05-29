@@ -39,7 +39,7 @@ api = [
     "openpyxl>=3.1",
     "instructor>=1.3",
     "jinja2>=3.1",
-    "python-multipart>=0.0.9",
+    "python-multipart>=0.0.27",
     "bcrypt>=4.0",
     "itsdangerous>=2.1",
     # Sensitivity engine returns pandas.DataFrame tables.
