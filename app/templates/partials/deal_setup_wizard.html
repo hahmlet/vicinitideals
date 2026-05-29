@@ -359,12 +359,10 @@
                      ondragleave="onProformaDragLeave(event)"
                      ondrop="onProformaDrop(event)"
                      style="margin-top:12px">
-                <div class="proforma-zone-title">Drag a pro forma here or click to choose a file</div>
-                <div class="proforma-zone-hint">PDF, XLS, XLSX — we'll parse Revenue / OpEx into the model. Skip to enter values by hand.</div>
-                <input type="file" id="proforma-file" name="file" accept=".pdf,.xls,.xlsx" onchange="onProformaFile(this)">
-                <div id="proforma-pill" style="display:none">
-                  <div class="proforma-file-pill"><span id="proforma-name"></span><a href="#" onclick="clearProformaFile(event)" style="color:var(--accent);text-decoration:none">✕</a></div>
-                </div>
+                <div class="proforma-zone-title">Drag pro formas here or click to choose files</div>
+                <div class="proforma-zone-hint">PDF, XLS, XLSX — we'll parse Revenue / OpEx into the model. Drop multiple files to import them in sequence. Skip to enter values by hand.</div>
+                <input type="file" id="proforma-file" name="file" accept=".pdf,.xls,.xlsx" multiple onchange="onProformaFile(this)">
+                <div id="proforma-pills" style="display:none;margin-top:8px"></div>
               </label>
               {% endif %}
             </div>
@@ -1066,18 +1064,55 @@ function onIncomeModeChange(radio) {
   var file = document.getElementById('proforma-file');
   if (radio.value === 'revenue_opex') {
     if (pf) pf.style.display = '';
-    if (btn) btn.textContent = (file && file.files && file.files.length > 0) ? 'Import →' : 'Skip Import →';
+    if (btn) btn.textContent = (_pfDT && _pfDT.files && _pfDT.files.length > 0) ? 'Import →' : 'Skip Import →';
   } else {
     if (pf) pf.style.display = 'none';
     if (btn) btn.textContent = 'Next →';
     // Clear any selected file when switching to NOI — proforma is irrelevant.
     if (file) file.value = '';
-    var pill = document.getElementById('proforma-pill');
-    if (pill) pill.style.display = 'none';
+    var pills = document.getElementById('proforma-pills');
+    if (pills) pills.style.display = 'none';
+    _pfDT = new DataTransfer();
   }
 }
 
-// Step 1 — drop zone handlers
+// Step 1 — drop zone handlers (multi-file with DataTransfer accumulation)
+var _pfDT = new DataTransfer();
+function _pfRebuildPills() {
+  var container = document.getElementById('proforma-pills');
+  var btn = document.getElementById('step1-submit');
+  if (!container) return;
+  container.innerHTML = '';
+  var files = _pfDT.files;
+  if (files.length > 0) {
+    for (var i = 0; i < files.length; i++) {
+      (function(idx) {
+        var pill = document.createElement('div');
+        pill.className = 'proforma-file-pill';
+        pill.style.marginBottom = '4px';
+        var span = document.createElement('span');
+        span.textContent = files[idx].name;
+        var link = document.createElement('a');
+        link.href = '#';
+        link.style.cssText = 'color:var(--accent);text-decoration:none;margin-left:6px';
+        link.textContent = '×';
+        link.addEventListener('click', (function(i) {
+          return function(e) { removeProformaFile(e, i); };
+        })(idx));
+        pill.appendChild(span);
+        pill.appendChild(link);
+        container.appendChild(pill);
+      })(i);
+    }
+    container.style.display = '';
+    if (btn) btn.textContent = files.length > 1 ? ('Import ' + files.length + ' files →') : 'Import →';
+    var input = document.getElementById('proforma-file');
+    if (input) { try { input.files = _pfDT.files; } catch(ex) {} }
+  } else {
+    container.style.display = 'none';
+    if (btn) btn.textContent = 'Skip Import →';
+  }
+}
 function onProformaDragOver(e) {
   e.preventDefault();
   document.getElementById('proforma-zone').classList.add('dragover');
@@ -1089,31 +1124,28 @@ function onProformaDrop(e) {
   e.preventDefault();
   document.getElementById('proforma-zone').classList.remove('dragover');
   var dt = e.dataTransfer;
-  if (dt && dt.files && dt.files.length > 0) {
-    var input = document.getElementById('proforma-file');
-    input.files = dt.files;
-    onProformaFile(input);
+  if (dt && dt.files) {
+    for (var i = 0; i < dt.files.length; i++) { _pfDT.items.add(dt.files[i]); }
+    _pfRebuildPills();
   }
 }
 function onProformaFile(input) {
-  var pill = document.getElementById('proforma-pill');
-  var name = document.getElementById('proforma-name');
-  var btn  = document.getElementById('step1-submit');
-  if (input.files && input.files.length > 0) {
-    if (name) name.textContent = input.files[0].name;
-    if (pill) pill.style.display = '';
-    if (btn)  btn.textContent = 'Import →';
-  } else {
-    if (pill) pill.style.display = 'none';
-    if (btn)  btn.textContent = 'Skip Import →';
+  if (input && input.files) {
+    for (var i = 0; i < input.files.length; i++) { _pfDT.items.add(input.files[i]); }
   }
+  _pfRebuildPills();
+  if (input && 'value' in input) { try { input.value = ''; } catch(ex) {} }
 }
-function clearProformaFile(e) {
+function removeProformaFile(e, idx) {
   e.preventDefault();
   e.stopPropagation();
-  var input = document.getElementById('proforma-file');
-  if (input) input.value = '';
-  onProformaFile(input || {files: null});
+  _pfDT.items.remove(idx);
+  _pfRebuildPills();
+}
+function clearProformaFile(e) {
+  if (e) { e.preventDefault(); e.stopPropagation(); }
+  _pfDT = new DataTransfer();
+  _pfRebuildPills();
 }
 
 // Step 1 — debt sizing mode toggle

@@ -9316,13 +9316,38 @@ async def deal_setup_wizard_step(
     # logic that used to live behind /proforma-preflight. With no file the
     # user clicked "Skip Import →" (or NOI mode) and we advance to Step 2.
     if step == 1:
-        _proforma_file = form.get("file")
-        # FormData returns a starlette UploadFile when one was attached, or a
-        # bare string ("") when the input was empty. Filter by truthy filename.
         from starlette.datastructures import UploadFile as _StarletteUploadFile
-        if isinstance(_proforma_file, _StarletteUploadFile) and (_proforma_file.filename or ""):
+        _pf_all = [
+            f for f in form.getlist("file")
+            if isinstance(f, _StarletteUploadFile) and (f.filename or "")
+        ]
+        if len(_pf_all) > 1:
+            # Multi-file: read all content, stage files 2..N to Redis queue,
+            # dispatch preflight for file 1. Confirm handler pops the queue.
+            import redis as _redis_mf, json as _json_mf
+            file_data = [(pf.filename or "", await pf.read()) for pf in _pf_all]
+            r_mf = _redis_mf.from_url(settings.redis_url, decode_responses=False)
+            _queue_tids: list[str] = []
+            for _fname_q, _fbytes_q in file_data[1:]:
+                _tid_q = str(_uuid_mod.uuid4())
+                r_mf.set(f"proforma:{_tid_q}:file", _fbytes_q, ex=86400)
+                r_mf.set(f"proforma:{_tid_q}:filename", _fname_q.encode(), ex=86400)
+                _queue_tids.append(_tid_q)
+            _redis_mf.from_url(settings.redis_url, decode_responses=True).set(
+                f"scenario:{model_id}:proforma_queue",
+                _json_mf.dumps(_queue_tids),
+                ex=86400,
+            )
+            _fname0, _content0 = file_data[0]
+            class _MFUpload0:  # noqa: E301
+                filename = _fname0
+                async def read(self_) -> bytes: return _content0  # noqa: E704
             return await _dispatch_proforma_preflight(
-                request=request, model_id=model_id, upload=_proforma_file,
+                request=request, model_id=model_id, upload=_MFUpload0(),
+            )
+        elif _pf_all:
+            return await _dispatch_proforma_preflight(
+                request=request, model_id=model_id, upload=_pf_all[0],
             )
 
     # ── Step 2 → vehicle-skip routing ─────────────────────────────────────
@@ -12724,6 +12749,34 @@ async def proforma_confirm(
                 pass
 
     await session.commit()
+
+    # Multi-file queue: if the user uploaded N files, pop the next staged file
+    # and show its preflight instead of advancing to Step 2.
+    import redis as _redis_q2, json as _json_q2
+    _rq = _redis_q2.from_url(settings.redis_url, decode_responses=True)
+    _queue_raw = _rq.getdel(f"scenario:{model_id}:proforma_queue")
+    if _queue_raw:
+        try:
+            _queue = _json_q2.loads(_queue_raw)
+        except Exception:
+            _queue = []
+        if _queue:
+            _next_tid = _queue[0]
+            _remaining = _queue[1:]
+            if _remaining:
+                _rq.set(f"scenario:{model_id}:proforma_queue",
+                        _json_q2.dumps(_remaining), ex=86400)
+            _rb = _redis_q2.from_url(settings.redis_url, decode_responses=False)
+            _next_bytes = _rb.get(f"proforma:{_next_tid}:file")
+            _next_fname_raw = _rb.get(f"proforma:{_next_tid}:filename")
+            _next_fname = _next_fname_raw.decode() if _next_fname_raw else "file"
+            if _next_bytes:
+                class _QUpload:  # noqa: E301
+                    filename = _next_fname
+                    async def read(self_) -> bytes: return _next_bytes  # noqa: E704
+                return await _dispatch_proforma_preflight(
+                    request=request, model_id=model_id, upload=_QUpload(),
+                )
 
     # Re-enter the wizard at Step 2 via the canonical GET handler so the full
     # context (source_vehicles_debt, phases_present, review_back_step, etc.)
