@@ -49,12 +49,12 @@ Launch a self-serve, paid SaaS without personally onboarding users. Reduce scope
 - CSRF middleware on all writes (~1 day) — currently missing
 - Rate limiting on all POST/PUT/PATCH/DELETE (~1 day) — currently auth-only
 - Multi-tenant data isolation audit (~3 days) — remove "first org" fallback patterns in `ui.py:2414`, `ui.py:12582`, `scraper.py:534`
-- Hard email verification gate (~half day) — currently soft (yellow banner only)
+- ~~Hard email verification gate (~half day) — currently soft (yellow banner only)~~ **Done 2026-05-28 (PR #9, commit `6cf361e`).** Signed-session `ev` claim + middleware redirect to `/verify-email-required` for any auth-required UI route. Zero DB reads in gate path. Login/register/reset all rewire the session cookie with the current verified state. Exempt list covers `/verify-email`, `/resend-verification`, `/profile`, `/logout`, `/onboarding`, `/pending-approval`, `/invites/`.
 - Two-factor authentication via TOTP (`pyotp`) (~2 days) — optional for users, mandatory for org admins
 - Audit log inside org workspace (~3-5 days) — `audit_log` table, write on key mutations
 
 ### Multi-user / org
-- Org invite flow with tokenized email links (~3 days) — none currently exists
+- ~~Org invite flow with tokenized email links (~3 days) — none currently exists~~ **Done 2026-05-28 (commits `a9ffca9`, `3f853b0`, `e099d6f`, `4059739`, `4014c40`, `b2c88f4`; migration `0100`).** Invite = immediate access on accept; pending invites surfaced with resend; approve action live-updates UI. Live on prod.
 - Account delete + lightweight data export (~1 day)
 - Remove org-list dropdown from public register page — switch to: invite-link-only join, public signup creates fresh org
 
@@ -272,7 +272,11 @@ Add `--tracing on` to pytest-playwright config. Every E2E run produces a `.zip` 
 
 **Pre-launch effort:** ~1 hour config change. Massive ROI when chasing flaky failures from stranger-customer bug reports.
 
-### Layer D: Hypothesis property-based engine tests
+### Layer D: Hypothesis property-based engine tests — **Done 2026-05-28**
+
+**Status:** Closed. Commits `5d97548` (10-invariant suite + `valid_deal_strategy()`), `75afc66` (engine fix: EGI floor + phase-b balance invariant), `cb2463b` (CI deselect lifted). Live on prod.
+
+
 
 Add to engine tests only (not E2E). Hypothesis generates thousands of random valid deal configurations and checks invariants the human-written tests miss.
 
