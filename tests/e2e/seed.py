@@ -317,6 +317,12 @@ def run_deal_setup_wizard(
             dscr_input.fill(dscr_minimum)
         _wizard_click_next_or_review(page)
     elif page.locator('[name$="_ltv_pct"]').count() > 0:
+        if debt_terms:
+            for dt, terms in debt_terms.items():
+                if "ltv_pct" in terms:
+                    ltv_input = page.locator(f'[name="{dt}_ltv_pct"]')
+                    if ltv_input.count() > 0 and ltv_input.is_visible():
+                        ltv_input.fill(str(terms["ltv_pct"]))
         _wizard_click_next_or_review(page)
 
     # Step 6 — Review + Finish

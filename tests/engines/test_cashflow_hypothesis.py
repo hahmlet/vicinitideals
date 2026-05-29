@@ -62,7 +62,7 @@ def _period_case(draw) -> tuple[OperationalInputs, IncomeStream, PhaseSpec, int,
         stream_type=IncomeStreamType.residential_rent,
         label="Generated Rent",
         unit_count=unit_count,
-        amount_per_unit_monthly=draw(_money_strategy("400", "9000")),
+        amount_per_unit_monthly=draw(_money_strategy("0", "9000")),
         stabilized_occupancy_pct=stabilized_occ,
         bad_debt_pct=bad_debt_pct,
         concessions_pct=concessions_pct,
@@ -160,6 +160,7 @@ def test_compute_period_income_bounds(case) -> None:
     assert result["gross_revenue"] >= Decimal("0")
     assert result["vacancy_loss"] >= Decimal("0")
     assert result["vacancy_loss"] <= result["gross_revenue"]
+    assert result["effective_gross_income"] >= Decimal("0")
     assert result["effective_gross_income"] <= result["gross_revenue"]
 
 
