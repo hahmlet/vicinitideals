@@ -48,12 +48,13 @@ def build_gate_plan(environment: str) -> list[GateDefinition]:
     normalized = _normalize_environment(environment)
 
     python = sys.executable
-    plan = [
-        GateDefinition(
-            name="tests",
-            description="Full pytest suite passes",
-            command=(python, "-m", "pytest", "tests/", "-q"),
-        ),
+
+    # The pytest run is provided by CI's dedicated "Unit tests" / "Integration
+    # tests" steps in .github/workflows/ci.yml. Including it as a promotion
+    # gate here ran the full pytest suite against Postgres twice on full-gate
+    # builds and once on light-gate builds, ballooning runtime past the
+    # <2 min light target and hanging staging at >3h.
+    plan: list[GateDefinition] = [
         GateDefinition(
             name="critical_lint",
             description="No critical Ruff lint errors (syntax / undefined names)",

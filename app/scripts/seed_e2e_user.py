@@ -17,6 +17,7 @@ import argparse
 import asyncio
 import os
 import sys
+from datetime import datetime, timezone
 
 from sqlalchemy import select
 
@@ -39,14 +40,17 @@ async def seed_user(email: str, password: str) -> None:
             select(User).where(User.email == email)
         )).scalar_one_or_none()
 
+        now = datetime.now(timezone.utc)
+
         if existing is not None:
-            if not existing.hashed_password:
-                existing.hashed_password = hash_password(password)
-                existing.is_active = True
-                await session.commit()
-                print(f"E2E user {email} existed without password; password set.")
-            else:
-                print(f"E2E user {email} already seeded — no change.")
+            existing.org_id = org.id
+            existing.hashed_password = hash_password(password)
+            existing.is_active = True
+            existing.email_verified = True
+            existing.email_verified_at = existing.email_verified_at or now
+            existing.membership_status = "active"
+            await session.commit()
+            print(f"E2E user {email} refreshed: verified + active membership.")
             return
 
         user = User(
@@ -55,6 +59,9 @@ async def seed_user(email: str, password: str) -> None:
             email=email,
             hashed_password=hash_password(password),
             is_active=True,
+            email_verified=True,
+            email_verified_at=now,
+            membership_status="active",
         )
         session.add(user)
         await session.commit()

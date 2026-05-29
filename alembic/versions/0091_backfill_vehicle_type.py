@@ -44,6 +44,30 @@ _LABEL_MAP = [
 
 
 def upgrade() -> None:
+    # Offline (--sql) mode cannot fetch rows; emit a single
+    # label-keyword CASE expression so the generated script still
+    # produces a deterministic backfill.
+    if op.get_context().as_sql:
+        case_parts = []
+        for kw, vehicle_type, equity_role in _LABEL_MAP:
+            er_sql = "NULL" if equity_role is None else f"'{equity_role}'"
+            case_parts.append(
+                f"WHEN LOWER(label) LIKE '%{kw}%' "
+                f"THEN '{vehicle_type}'||'|'||COALESCE({er_sql}, '')"
+            )
+        op.execute(
+            "UPDATE capital_modules SET "
+            "vehicle_type = SPLIT_PART(CASE "
+            + " ".join(case_parts)
+            + " ELSE 'equity|gp' END, '|', 1), "
+            "equity_role = NULLIF(SPLIT_PART(CASE "
+            + " ".join(case_parts)
+            + " ELSE 'equity|gp' END, '|', 2), '') "
+            "WHERE vehicle_type IS NULL"
+        )
+        op.alter_column("capital_modules", "vehicle_type", nullable=False)
+        return
+
     conn = op.get_bind()
 
     # Backfill rows that still have NULL vehicle_type

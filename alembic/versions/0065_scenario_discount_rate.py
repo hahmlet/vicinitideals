@@ -21,6 +21,13 @@ depends_on = None
 
 
 def upgrade() -> None:
+    if op.get_context().as_sql:
+        op.execute(
+            "ALTER TABLE scenarios "
+            "ADD COLUMN IF NOT EXISTS discount_rate_pct NUMERIC(18, 6)"
+        )
+        return
+
     conn = op.get_bind()
     exists = conn.execute(
         sa.text(

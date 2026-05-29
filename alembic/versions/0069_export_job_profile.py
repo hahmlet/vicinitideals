@@ -20,6 +20,13 @@ depends_on = None
 
 
 def upgrade() -> None:
+    if op.get_context().as_sql:
+        op.execute(
+            "ALTER TABLE export_jobs "
+            "ADD COLUMN IF NOT EXISTS export_profile VARCHAR(20)"
+        )
+        return
+
     conn = op.get_bind()
     exists = conn.execute(
         sa.text(

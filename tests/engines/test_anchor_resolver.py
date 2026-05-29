@@ -152,13 +152,11 @@ async def _seed_two_projects(session: AsyncSession):
     p1 = Project(
         scenario_id=scenario.id,
         name="Project 1",
-        deal_type=ProjectType.acquisition.value,
         created_at=datetime(2026, 1, 1, tzinfo=_tz.utc),
     )
     p2 = Project(
         scenario_id=scenario.id,
         name="Project 2",
-        deal_type=ProjectType.acquisition.value,
         created_at=datetime(2026, 1, 2, tzinfo=_tz.utc),
     )
     session.add_all([p1, p2])

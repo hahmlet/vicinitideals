@@ -35,20 +35,32 @@ def upgrade() -> None:
     # Find the real name from pg_constraint and drop it. On SQLite (tests)
     # there's no enforced unique constraint to drop — Base.metadata builds
     # the new UniqueConstraint from the ORM class directly.
-    bind = op.get_bind()
-    if bind.dialect.name == "postgresql":
-        rows = bind.execute(
-            sa.text(
-                """
-                SELECT conname FROM pg_constraint
-                WHERE conrelid = 'operational_outputs'::regclass
-                  AND contype = 'u'
-                  AND pg_get_constraintdef(oid) = 'UNIQUE (scenario_id)'
-                """
-            )
-        ).fetchall()
-        for row in rows:
-            op.drop_constraint(row[0], "operational_outputs", type_="unique")
+    # Offline (--sql) mode cannot execute SELECT; skip the lookup-and-drop and
+    # emit a best-effort DROP CONSTRAINT IF EXISTS for the conventional name.
+    if op.get_context().as_sql:
+        op.execute(
+            "ALTER TABLE operational_outputs "
+            "DROP CONSTRAINT IF EXISTS operational_outputs_scenario_id_key"
+        )
+        op.execute(
+            "ALTER TABLE operational_outputs "
+            "DROP CONSTRAINT IF EXISTS operational_outputs_deal_model_id_key"
+        )
+    else:
+        bind = op.get_bind()
+        if bind.dialect.name == "postgresql":
+            rows = bind.execute(
+                sa.text(
+                    """
+                    SELECT conname FROM pg_constraint
+                    WHERE conrelid = 'operational_outputs'::regclass
+                      AND contype = 'u'
+                      AND pg_get_constraintdef(oid) = 'UNIQUE (scenario_id)'
+                    """
+                )
+            ).fetchall()
+            for row in rows:
+                op.drop_constraint(row[0], "operational_outputs", type_="unique")
 
     op.create_unique_constraint(
         _NEW_CONSTRAINT,
