@@ -24,14 +24,18 @@ stale test → rewrite or delete. Remove the entry from the E2E step in
 - `tests/e2e/test_proforma_cache.py` — both tests fail with a 30s click
   timeout. Whole proforma upload + cache surface needs revisiting; also
   ignored in the integration step.
+- `tests/e2e/test_ui_features_april_2026.py` — multiple tests in this
+  file fail intermittently (different test each run): debt-type
+  ordering, default-OpEx seed, unit-mix round-trip. Either the whole
+  surface this file exercises has drifted, or the file has flake from
+  shared seed state. Triage as a group.
 
 ## Per-test deselects
 
 | Test | Failure |
 |---|---|
 | `test_opportunity_wizard.py::test_attach_parcel_advances_to_review` | "No match card for '2833 NE 62nd'" — parcel search returns no result; either seed data missing or search backend regressed |
-| `test_ui_features_april_2026.py::test_debt_type_ordering_acquisition_first` | "Pre-Development Loan card missing" — debt type catalog likely changed |
-| `test_ui_features_april_2026.py::test_setup_complete_seeds_default_opex_lines` | "Missing seeded OpEx labels: ['Accounting', 'Utilities — All', 'Telephone / Internet']" — new-project setup flow no longer seeds the same default OpEx rows that migration 0099 backfills onto existing projects. Likely a seed-vs-backfill drift; pick one canonical source of truth |
+| ~~`test_ui_features_april_2026.py::*`~~ | Whole file ignored — see above. |
 | `test_underwriting_flow.py::test_coverage_modal_per_project_amount_inputs_present` (both `acquisition` + `new_construction` params) | Coverage-modal locator not visible — modal layout / id drift |
 | `test_unified_wizard_flow.py::test_unified_wizard_data_reaches_deal_via_api` | Approve button disabled in the data-validation test path |
 | `test_wizard_state_persistence.py::test_step2_checkbox_saves_to_localstorage` | 30s click timeout — step 2 selector drift |

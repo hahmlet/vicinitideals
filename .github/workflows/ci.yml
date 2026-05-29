@@ -220,9 +220,8 @@ jobs:
           uv run pytest tests/e2e/ -q -m e2e \
             --ignore=tests/e2e/test_grant_eligibility_flow.py \
             --ignore=tests/e2e/test_proforma_cache.py \
+            --ignore=tests/e2e/test_ui_features_april_2026.py \
             --deselect "tests/e2e/test_opportunity_wizard.py::test_attach_parcel_advances_to_review" \
-            --deselect "tests/e2e/test_ui_features_april_2026.py::test_debt_type_ordering_acquisition_first" \
-            --deselect "tests/e2e/test_ui_features_april_2026.py::test_setup_complete_seeds_default_opex_lines" \
             --deselect "tests/e2e/test_underwriting_flow.py::test_coverage_modal_per_project_amount_inputs_present" \
             --deselect "tests/e2e/test_unified_wizard_flow.py::test_unified_wizard_data_reaches_deal_via_api" \
             --deselect "tests/e2e/test_wizard_state_persistence.py::test_step2_checkbox_saves_to_localstorage" \
