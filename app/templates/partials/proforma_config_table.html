@@ -6,15 +6,16 @@
 #}
 <style>
 .pct-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.pct-table th {
-  font-size: 11px; font-weight: 600; text-transform: uppercase;
-  letter-spacing: 0.05em; color: var(--text-muted); padding: 8px 10px;
-  border-bottom: 2px solid var(--border); text-align: left; white-space: nowrap; }
 .pct-table td { padding: 8px 10px; border-bottom: 1px solid var(--border-light); vertical-align: middle; }
 .pct-file-header td {
   text-align: center; background: var(--surface-muted);
-  border-top: 2px solid var(--border); border-bottom: 1px solid var(--border-light);
+  border-top: 2px solid var(--border); border-bottom: none;
   padding: 8px 12px; }
+.pct-group-header td {
+  background: var(--surface-muted); padding: 3px 10px 5px;
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.07em; color: var(--text-muted); text-align: center;
+  border-bottom: 1px solid var(--border); }
 .pct-inputs-row td { border-bottom: 2px solid var(--border-light); padding: 10px; vertical-align: top; }
 .pct-table input[type="text"] {
   width: 100%; box-sizing: border-box; padding: 6px 8px;
@@ -35,26 +36,15 @@
   text-transform: uppercase; letter-spacing: 0.04em; }
 .pct-hint { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
 .pct-skip { color: var(--text-muted); font-size: 12px; text-align: center; }
+.pct-divider { border-left: 1px solid var(--border) !important; }
 </style>
 
 <div style="max-height:520px;overflow-y:auto;overflow-x:auto">
 <table class="pct-table">
-  <thead>
-    <tr>
-      {% if show_deal_name %}<th rowspan="2" style="min-width:140px;vertical-align:bottom">Deal Name</th>{% endif %}
-      <th colspan="2" style="text-align:center;border-bottom:1px solid var(--border-light)">Revenue</th>
-      <th colspan="2" style="text-align:center;border-bottom:1px solid var(--border-light)">OpEx</th>
-    </tr>
-    <tr>
-      <th>Sheet</th>
-      <th style="min-width:130px">Range</th>
-      <th>Sheet</th>
-      <th style="min-width:130px">Range</th>
-    </tr>
-  </thead>
   <tbody>
     {% for att in files %}
-    {# Hidden inputs sit in the file-header row #}
+
+    {# ── File header row ── #}
     <tr class="pct-file-header">
       <td colspan="{{ 4 + (1 if show_deal_name else 0) }}">
         <input type="hidden" name="task_id_{{ loop.index0 }}" value="{{ att.task_id }}">
@@ -69,6 +59,15 @@
         {% endif %}
       </td>
     </tr>
+
+    {# ── Group header row — Revenue | OpEx — repeats per file ── #}
+    <tr class="pct-group-header">
+      {% if show_deal_name %}<td></td>{% endif %}
+      <td colspan="2">Revenue</td>
+      <td colspan="2" class="pct-divider">OpEx</td>
+    </tr>
+
+    {# ── Input row ── #}
     <tr class="pct-inputs-row">
       {% if show_deal_name %}
       <td>
@@ -100,7 +99,7 @@
           <div class="pct-hint">Blank = full sheet</div>
         </div>
       </td>
-      <td>
+      <td class="pct-divider">
         <div class="pct-field">
           <div class="pct-flabel">Sheet</div>
           <select name="opex_sheet_{{ loop.index0 }}">
@@ -128,7 +127,7 @@
         </div>
       </td>
       <td class="pct-skip">—</td>
-      <td>
+      <td class="pct-divider">
         <div class="pct-field">
           <div class="pct-flabel">Pages</div>
           <input type="text" name="opex_pages_{{ loop.index0 }}" placeholder="e.g. 4-6 (optional)">
@@ -137,6 +136,7 @@
       <td class="pct-skip">—</td>
       {% endif %}
     </tr>
+
     {% endfor %}
   </tbody>
 </table>
