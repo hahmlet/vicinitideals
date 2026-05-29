@@ -37,14 +37,19 @@
 .pct-skip { color: var(--text-muted); font-size: 12px; text-align: center; }
 </style>
 
+<div style="max-height:520px;overflow-y:auto;overflow-x:auto">
 <table class="pct-table">
   <thead>
     <tr>
-      {% if show_deal_name %}<th style="min-width:140px">Deal Name</th>{% endif %}
-      <th>Revenue Sheet</th>
-      <th style="min-width:130px">Revenue Range</th>
-      <th>OpEx Sheet</th>
-      <th style="min-width:130px">OpEx Range</th>
+      {% if show_deal_name %}<th rowspan="2" style="min-width:140px;vertical-align:bottom">Deal Name</th>{% endif %}
+      <th colspan="2" style="text-align:center;border-bottom:1px solid var(--border-light)">Revenue</th>
+      <th colspan="2" style="text-align:center;border-bottom:1px solid var(--border-light)">OpEx</th>
+    </tr>
+    <tr>
+      <th>Sheet</th>
+      <th style="min-width:130px">Range</th>
+      <th>Sheet</th>
+      <th style="min-width:130px">Range</th>
     </tr>
   </thead>
   <tbody>
@@ -135,3 +140,4 @@
     {% endfor %}
   </tbody>
 </table>
+</div>
