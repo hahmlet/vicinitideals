@@ -36,6 +36,10 @@
   font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
   color: var(--text-muted); margin: 20px 0 10px;
 }
+.prf-mode-btn { font-size:10px; padding:2px 7px; cursor:pointer; border:1px solid var(--border); background:var(--bg); color:var(--text-muted); line-height:1.4; }
+.prf-mode-btn:first-child { border-radius:4px 0 0 4px; border-right:none; }
+.prf-mode-btn:last-child { border-radius:0 4px 4px 0; }
+.prf-mode-btn.active { background:var(--accent); color:#fff; border-color:var(--accent); }
 </style>
 
 <div class="wizard-shell" id="deal-setup-wizard">
@@ -156,12 +160,28 @@
             <td>
               <input type="text" name="unit_type_name[]" value="{{ u.name }}"
                      style="width:100%;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px">
+              <div style="display:flex;margin-top:5px">
+                <button type="button" class="prf-mode-btn active" onclick="prfSetMode(this,'unit')">Unit</button>
+                <button type="button" class="prf-mode-btn" onclick="prfSetMode(this,'flat')">Flat</button>
+              </div>
+              <input type="hidden" name="unit_type_mode[]" value="unit">
             </td>
-            <td style="text-align:right">
-              <input type="number" name="unit_type_count[]" value="{{ u.count }}" min="0"
-                     style="width:70px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
+            <td>
+              <div class="prf-unit-only" style="text-align:right">
+                <input type="number" name="unit_type_count[]" value="{{ u.count }}" min="0"
+                       style="width:70px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
+              </div>
+              <div class="prf-flat-only" style="display:none">
+                <select name="unit_type_stream_type[]"
+                        style="width:100%;border:1px solid var(--border);border-radius:6px;padding:5px 6px;background:var(--bg);color:var(--text);font-size:12px">
+                  <option value="commercial_rent">Commercial</option>
+                  <option value="parking">Parking</option>
+                  <option value="laundry">Laundry</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
             </td>
-            <td style="text-align:right">
+            <td style="text-align:right" class="prf-unit-only-cell">
               <input type="number" name="unit_type_sqft[]" value="{{ u.avg_sqft|round(0)|int }}" min="0"
                      style="width:80px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
             </td>
@@ -172,7 +192,7 @@
                        style="width:80px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
               </div>
             </td>
-            <td style="text-align:right" class="market-col">
+            <td style="text-align:right" class="market-col prf-unit-only-cell">
               <div style="display:flex;align-items:center;justify-content:flex-end;gap:2px">
                 <span style="font-size:13px;color:var(--text-muted)">$</span>
                 <input type="text" name="unit_type_market_rent[]" value="{{ u.avg_monthly_rent|round(0)|int }}" class="amount-input"
@@ -376,13 +396,36 @@ function addUnitRow() {
   const marketStyle = isInPlace ? '' : 'display:none';
   const tr = document.createElement('tr');
   tr.innerHTML = `
+    <td></td>
     <td><span class="conf-dot conf-high" title="Manually added"></span></td>
-    <td><input type="text" name="unit_type_name[]" value="" placeholder="e.g. 2BR/1BA"
-               style="width:100%;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px"></td>
-    <td style="text-align:right"><input type="number" name="unit_type_count[]" value="" min="0" placeholder="0"
-               style="width:70px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right"></td>
-    <td style="text-align:right"><input type="number" name="unit_type_sqft[]" value="" min="0" placeholder="0"
-               style="width:80px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right"></td>
+    <td>
+      <input type="text" name="unit_type_name[]" value="" placeholder="e.g. 2BR/1BA"
+             style="width:100%;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px">
+      <div style="display:flex;margin-top:5px">
+        <button type="button" class="prf-mode-btn active" onclick="prfSetMode(this,'unit')">Unit</button>
+        <button type="button" class="prf-mode-btn" onclick="prfSetMode(this,'flat')">Flat</button>
+      </div>
+      <input type="hidden" name="unit_type_mode[]" value="unit">
+    </td>
+    <td>
+      <div class="prf-unit-only" style="text-align:right">
+        <input type="number" name="unit_type_count[]" value="" min="0" placeholder="0"
+               style="width:70px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
+      </div>
+      <div class="prf-flat-only" style="display:none">
+        <select name="unit_type_stream_type[]"
+                style="width:100%;border:1px solid var(--border);border-radius:6px;padding:5px 6px;background:var(--bg);color:var(--text);font-size:12px">
+          <option value="commercial_rent">Commercial</option>
+          <option value="parking">Parking</option>
+          <option value="laundry">Laundry</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+    </td>
+    <td style="text-align:right" class="prf-unit-only-cell">
+      <input type="number" name="unit_type_sqft[]" value="" min="0" placeholder="0"
+             style="width:80px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
+    </td>
     <td style="text-align:right">
       <div style="display:flex;align-items:center;justify-content:flex-end;gap:2px">
         <span style="font-size:13px;color:var(--text-muted)">$</span>
@@ -390,7 +433,7 @@ function addUnitRow() {
                style="width:80px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
       </div>
     </td>
-    <td style="text-align:right" class="market-col" style="${marketStyle}">
+    <td style="text-align:right;${marketStyle}" class="market-col prf-unit-only-cell">
       <div style="display:flex;align-items:center;justify-content:flex-end;gap:2px">
         <span style="font-size:13px;color:var(--text-muted)">$</span>
         <input type="text" name="unit_type_market_rent[]" value="" class="amount-input" placeholder="optional"
@@ -400,6 +443,18 @@ function addUnitRow() {
   tbody.appendChild(tr);
   toggleMarketCol();
   tr.querySelector('input[name="unit_type_name[]"]').focus();
+}
+
+function prfSetMode(btn, mode) {
+  const row = btn.closest('tr');
+  if (!row) return;
+  const modeInput = row.querySelector('input[name="unit_type_mode[]"]');
+  if (modeInput) modeInput.value = mode;
+  row.querySelectorAll('.prf-mode-btn').forEach(b => b.classList.toggle('active', b === btn));
+  const isFlat = mode === 'flat';
+  row.querySelectorAll('.prf-unit-only').forEach(el => { el.style.display = isFlat ? 'none' : ''; });
+  row.querySelectorAll('.prf-flat-only').forEach(el => { el.style.display = isFlat ? '' : 'none'; });
+  row.querySelectorAll('.prf-unit-only-cell').forEach(el => { el.style.display = isFlat ? 'none' : ''; });
 }
 
 function addOpexRow() {

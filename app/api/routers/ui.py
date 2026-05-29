@@ -12793,6 +12793,8 @@ async def proforma_confirm(
     sqfts = form.getlist("unit_type_sqft[]")
     rents = form.getlist("unit_type_rent[]")
     market_rents = form.getlist("unit_type_market_rent[]")
+    modes = form.getlist("unit_type_mode[]")          # "unit" or "flat" per row
+    stream_types = form.getlist("unit_type_stream_type[]")  # flat-rate type per row
     # Indices of unit-mix rows the user kept checked. When the include list
     # is absent (older clients), accept all rows for backward compat.
     unit_included_raw = form.getlist("unit_type_include[]")
@@ -12807,12 +12809,25 @@ async def proforma_confirm(
             select(Project).where(Project.id == project_id)
         )
         project = proj_result.scalar_one()
+        _modes = modes if modes else ["unit"] * len(names)
+        _stypes = stream_types if stream_types else ["residential_rent"] * len(names)
         unit_mix_rows = []
-        for idx, (name, count_s, sqft_s, rent_s) in enumerate(zip(names, counts, sqfts, rents)):
+        flat_income_rows: list[dict] = []
+        for idx, (name, count_s, sqft_s, rent_s, row_mode, row_stype) in enumerate(
+            zip(names, counts, sqfts, rents, _modes, _stypes)
+        ):
             if unit_filter_enabled and idx not in unit_included:
                 continue
             name = name.strip()
             if not name:
+                continue
+            if row_mode == "flat":
+                try:
+                    flat_amt = Decimal((rent_s or "0").replace(",", ""))
+                except Exception:
+                    flat_amt = Decimal("0")
+                if flat_amt > 0:
+                    flat_income_rows.append({"label": name, "stream_type": row_stype, "flat_monthly": flat_amt})
                 continue
             try:
                 row = {
@@ -12845,9 +12860,10 @@ async def proforma_confirm(
             flag_modified(project, "unit_mix")
             session.add(project)
 
+        if unit_mix_rows or flat_income_rows:
             # Seed IncomeStream rows so the Revenue tab is populated.
             # Overwrite semantics: drop existing streams for this project, then
-            # insert one per unit mix row using rent_monthly as the base.
+            # insert one per row (unit or flat) using the submitted amounts.
             await session.execute(
                 delete(IncomeStream).where(IncomeStream.project_id == project_id)
             )
@@ -12866,6 +12882,22 @@ async def proforma_confirm(
                     amount_per_unit_monthly=rent,
                     catchup_target_rent=mkt_rent,
                     stabilized_occupancy_pct=Decimal("95"),
+                    escalation_rate_pct_annual=Decimal("3"),
+                    active_in_phases=["lease_up", "stabilized"],
+                ))
+            for flat in flat_income_rows:
+                try:
+                    stype = IncomeStreamType(flat["stream_type"])
+                except ValueError:
+                    stype = IncomeStreamType.other
+                session.add(IncomeStream(
+                    project_id=project_id,
+                    label=flat["label"],
+                    stream_type=stype,
+                    amount_fixed_monthly=flat["flat_monthly"],
+                    unit_count=None,
+                    amount_per_unit_monthly=None,
+                    stabilized_occupancy_pct=Decimal("100"),
                     escalation_rate_pct_annual=Decimal("3"),
                     active_in_phases=["lease_up", "stabilized"],
                 ))
