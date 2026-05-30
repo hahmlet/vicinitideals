@@ -6,6 +6,28 @@ The model has no period-level bank account simulation from Close to Stabilizatio
 
 ---
 
+## Status — 2026-05-30
+
+**Shipped (engine primitives):**
+
+| Commit | What | Files |
+|---|---|---|
+| `57fe0d3` | P2 + P3 (construction-phase rate lookup; carry on cumulative balance) | `app/engines/cashflow.py`, `app/engines/draw_schedule.py`, tests |
+| `a7e4945` | P4 + P6 (single-draw source routing by stack position + eligible categories; UI filter + writeback fix for grants/equity) | `app/engines/draw_schedule.py`, `app/api/routers/ui.py`, tests |
+| `a2b4785` | DrawScheduleInputs extension: opening_cash_balance, monthly_operating, stabilization_start_milestone | `app/engines/draw_schedule.py`, tests |
+| `d852004` | Standalone `app/engines/bank_account.py` simulator (pure stateless, no engine coupling) | `app/engines/bank_account.py`, tests |
+
+**Deferred / open:**
+- **P1** (cashflow vs draw_schedule interest-model unification) — postponed; both engines run independently for different views and don't yet need to share an interest model
+- **P5** (IR/LUR double-count fix) — my read of the code differs from the other agent's; flagged for separate review
+
+**Not yet wired:**
+- `compute_cash_flows` does NOT yet call `bank_account.simulate()` after sizing reserves
+- No Cash Flow Support Reserve UseLineItem is emitted yet
+- This is the integration step blocked by the size of the surgical change required to `cashflow.py` (3,846 lines)
+
+---
+
 ## Prerequisite Fixes (Blocking)
 
 Recent investigation by another agent surfaced four bugs that must be fixed before bank account integration is meaningful. The draw schedule output is currently unreliable — feeding it into cashflow.py would propagate errors.
