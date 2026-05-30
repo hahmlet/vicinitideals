@@ -31,11 +31,25 @@ The model has no period-level bank account simulation from Close to Stabilizatio
 - `a4649c6` extractor module shipped (B1)
 - `52061c9` proof wired into `compute_cash_flows`, observation-only (B2)
 - `cf086b3` wiring tests for the proof (B2c)
-- **`<pending>` Cash Flow Support Reserve auto-emission shipped behind `BANK_ACCOUNT_RESERVE_ENABLED` flag (B3)**
-  - Default OFF — set the env var to `1` on the VM to enable
+- `0b53a15` Cash Flow Support Reserve auto-emission shipped behind `BANK_ACCOUNT_RESERVE_ENABLED` flag (B3)
+  - Default OFF — set the env var to `1` on VM 114 to enable
   - Engine upserts a "Cash Flow Support Reserve" UseLine sized to `max_shortfall`
   - Idempotent: creates / updates / removes itself based on each proof
   - `/compute` outer loop re-iterates when the reserve changes so Sources = Uses on the next pass
+- **`<pending>` Persist proof on `OperationalOutputs.bank_account_proof` (migration 0102) + new Bank Account Proof KPI tile in the Underwriting view (B4)**
+  - Aggregates the worst max_shortfall + min balance across projects
+  - Green ✓ Solvent / red dollar gap when proof fails
+  - Tooltip explains the proof window (CO → Stabilization Start)
+
+### How to enable the auto-emission in production
+
+```bash
+# On VM 114, set the env var in the docker-compose override and restart:
+mcp__proxmox-mcp__ssh_exec container_id=114 command="grep -q BANK_ACCOUNT_RESERVE_ENABLED /root/stacks/vicinitideals/.env || echo 'BANK_ACCOUNT_RESERVE_ENABLED=1' >> /root/stacks/vicinitideals/.env"
+mcp__proxmox-mcp__ssh_exec container_id=114 command="cd /root/stacks/vicinitideals && docker compose up -d"
+```
+
+Disable by removing the env var (or setting to anything other than `1`).
 
 ---
 

@@ -74,6 +74,35 @@
       <div class="uw-kpi-label">Combined Levered IRR</div>
       <div class="uw-kpi-value">{{ '{:.2f}%'.format(_totals.get('combined_irr_pct', 0) | float) }}</div>
     </div>
+    {# Bank-account proof: aggregate the worst max_shortfall + min balance across projects.
+       Flag a deal as "solvent" only if every project's operating-phase proof passes. #}
+    {% set _ns_ba = namespace(worst_shortfall=0.0, min_balance=None, any_proof=false, any_unsolvent=false) %}
+    {% for _pp in _per_project %}
+      {%- set _bap = _pp.get('bank_account_proof') -%}
+      {%- if _bap -%}
+        {%- set _ns_ba.any_proof = true -%}
+        {%- set _shortfall = _bap.get('max_shortfall', '0') | float -%}
+        {%- if _shortfall > _ns_ba.worst_shortfall -%}{%- set _ns_ba.worst_shortfall = _shortfall -%}{%- endif -%}
+        {%- if not _bap.get('is_solvent') -%}{%- set _ns_ba.any_unsolvent = true -%}{%- endif -%}
+        {%- set _mb = _bap.get('min_balance', '0') | float -%}
+        {%- if _ns_ba.min_balance is none or _mb < _ns_ba.min_balance -%}{%- set _ns_ba.min_balance = _mb -%}{%- endif -%}
+      {%- endif -%}
+    {% endfor %}
+    <div class="uw-kpi">
+      <div class="uw-kpi-label">Bank Account Proof</div>
+      {% if not _ns_ba.any_proof %}
+        <div class="uw-kpi-value" style="color:var(--text-muted)">—</div>
+        <div style="font-size:10px;color:var(--text-muted);margin-top:2px">No proof yet</div>
+      {% elif _ns_ba.any_unsolvent %}
+        <div class="uw-kpi-value" style="color:#dc2626" title="Operating-phase cash balance drops below the Operating Reserve floor at some point during lease-up. The gap shown is the largest single-month shortfall across all projects.">
+          (${{ '{:,.0f}'.format(_ns_ba.worst_shortfall) }})
+        </div>
+        <div style="font-size:10px;color:var(--text-muted);margin-top:2px">Lease-up gap (Close → Stabilization)</div>
+      {% else %}
+        <div class="uw-kpi-value" style="color:#16a34a" title="Operating-phase cash balance stays at or above the Operating Reserve floor for every month between CO and Stabilization Start.">&check; Solvent</div>
+        <div style="font-size:10px;color:var(--text-muted);margin-top:2px">Lease-up min: ${{ '{:,.0f}'.format(_ns_ba.min_balance or 0) }}</div>
+      {% endif %}
+    </div>
   </div>
 
   {# ── Per-project summary (one row per Project) ──────────────────────── #}

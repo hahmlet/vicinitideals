@@ -1041,6 +1041,11 @@ async def _compute_project_cashflow(
             if action in ("created", "updated", "removed"):
                 summary["needs_recompute"] = True
         summary["bank_account_proof"] = bank_account_proof
+    # Persist the proof on OperationalOutputs so the Underwriting view can
+    # read it at render time without re-running the simulation. Always
+    # write — None when no proof window exists — so the column clears
+    # stale data on deals that no longer model an operating phase.
+    outputs.bank_account_proof = bank_account_proof
 
     # Tag every line-item with its owning project before persist. The
     # CashFlowLineItem / _expense_line_item constructors inside _compute_period

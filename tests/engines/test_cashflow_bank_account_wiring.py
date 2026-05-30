@@ -16,7 +16,7 @@ from app.engines.cashflow import (
     _upsert_cash_flow_support_reserve,
 )
 from app.engines.cashflow_compile import PhaseSpec
-from app.models.cashflow import PeriodType
+from app.models.cashflow import OperationalOutputs, PeriodType
 
 
 @dataclass
@@ -264,6 +264,21 @@ def test_upsert_no_project_id_skips_create():
     )
     assert action == "unchanged"
     assert use_lines == []
+
+
+@pytest.mark.unit
+def test_operational_outputs_carries_bank_account_proof_column():
+    """OperationalOutputs ORM model exposes bank_account_proof field."""
+    # Instantiate with the column set — ensures the SQLAlchemy mapping
+    # accepts the new JSON column added in migration 0102.
+    out = OperationalOutputs(
+        scenario_id=uuid.uuid4(),
+        bank_account_proof={"is_solvent": True, "max_shortfall": "0"},
+    )
+    assert out.bank_account_proof == {"is_solvent": True, "max_shortfall": "0"}
+    # Defaults to None when omitted
+    out2 = OperationalOutputs(scenario_id=uuid.uuid4())
+    assert out2.bank_account_proof is None
 
 
 @pytest.mark.unit

@@ -331,6 +331,7 @@ async def rollup_summary(
             "cap_rate_on_cost_pct": o.cap_rate_on_cost_pct,
             "debt_yield_pct": o.debt_yield_pct,
             "total_timeline_months": o.total_timeline_months,
+            "bank_account_proof": o.bank_account_proof,
         }
         for o in outputs
     ]
