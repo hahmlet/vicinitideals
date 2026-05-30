@@ -8,6 +8,12 @@ from typing import Any
 from uuid import UUID
 
 _DIAG_ENABLED = os.environ.get("VD_DIAG_AUTOSIZE") == "1"
+# Feature flag — when "1", the bank-account proof emits an auto-managed
+# "Cash Flow Support Reserve" UseLine sized to the operating-phase
+# shortfall. Default off so existing deals are unaffected until the proof
+# is validated on real data.
+_BANK_ACCOUNT_RESERVE_ENABLED = os.environ.get("BANK_ACCOUNT_RESERVE_ENABLED") == "1"
+_CASH_FLOW_SUPPORT_RESERVE_LABEL = "Cash Flow Support Reserve"
 
 
 def _diag(msg: str) -> None:
@@ -107,6 +113,73 @@ _BALANCE_ONLY_LABELS: frozenset[str] = frozenset({
     "Lease-Up Reserve",
     "Construction DS Reserve",
 })
+
+
+def _upsert_cash_flow_support_reserve(
+    *,
+    session: AsyncSession,
+    project_id: UUID | None,
+    use_lines: list,
+    amount: Decimal,
+    proof_result: dict,
+) -> str:
+    """Create / update / remove the auto-managed Cash Flow Support Reserve.
+
+    The reserve UseLine is engine-owned and idempotent: at any given moment
+    its amount equals the most recent bank-account proof's max_shortfall.
+
+    Behaviors:
+      amount > 0 + no existing row  → create
+      amount > 0 + existing differs → update
+      amount > 0 + existing matches → unchanged
+      amount == 0 + existing row    → remove (proof now passes)
+      amount == 0 + no existing row → unchanged (no-op)
+
+    Mutates use_lines in place so the caller's downstream loops see the
+    new row. Returns the action taken for inclusion in the summary.
+    """
+    existing = next(
+        (ul for ul in use_lines
+         if getattr(ul, "label", "") == _CASH_FLOW_SUPPORT_RESERVE_LABEL),
+        None,
+    )
+
+    if amount <= ZERO:
+        if existing is not None:
+            session.delete(existing)
+            use_lines.remove(existing)
+            return "removed"
+        return "unchanged"
+
+    notes = (
+        f"Auto-emitted by bank-account proof. Operating-phase max shortfall "
+        f"= {amount} on {proof_result.get('max_shortfall_date')}."
+    )
+
+    if existing is not None:
+        existing_amount = _to_decimal(getattr(existing, "amount", 0))
+        if existing_amount == amount:
+            return "unchanged"
+        existing.amount = amount
+        existing.notes = notes
+        session.add(existing)
+        return "updated"
+
+    if project_id is None:
+        return "unchanged"  # can't create without a project FK
+    new_ul = UseLine(
+        project_id=project_id,
+        source_capital_module_id=None,
+        label=_CASH_FLOW_SUPPORT_RESERVE_LABEL,
+        phase="operation",
+        amount=amount,
+        timing_type="first_day",
+        cost_category="soft",
+        notes=notes,
+    )
+    session.add(new_ul)
+    use_lines.append(new_ul)
+    return "created"
 
 
 def _run_bank_account_proof(
@@ -939,12 +1012,12 @@ async def _compute_project_cashflow(
         "debt_yield_pct": debt_yield_pct,
     }
 
-    # ── Bank-account proof (observation-only) ─────────────────────────────
-    # Run the operating-phase solvency proof. The result is added to the
-    # summary dict for diagnostics but does NOT yet feed back into reserve
-    # sizing — that's Step B3 (auto-emit Cash Flow Support Reserve when
-    # max_shortfall > 0). At this checkpoint we just confirm the proof
-    # runs end-to-end on every real deal without changing existing behavior.
+    # ── Bank-account proof + Cash Flow Support Reserve ────────────────────
+    # Run the operating-phase solvency proof, then (if the feature flag is
+    # on) upsert a "Cash Flow Support Reserve" UseLine sized to the
+    # max_shortfall. The reserve is engine-owned and idempotent: it auto-
+    # creates / updates / removes itself so reserve sizing converges on a
+    # solvent bank-account proof.
     bank_account_proof = _run_bank_account_proof(
         cash_flow_rows=cash_flow_rows,
         use_lines=use_lines,
@@ -952,6 +1025,21 @@ async def _compute_project_cashflow(
         milestone_dates=milestone_dates,
     )
     if bank_account_proof is not None:
+        if _BANK_ACCOUNT_RESERVE_ENABLED:
+            gap = _to_decimal(bank_account_proof.get("max_shortfall", "0"))
+            action = _upsert_cash_flow_support_reserve(
+                session=session,
+                project_id=project.id,
+                use_lines=use_lines,
+                amount=gap,
+                proof_result=bank_account_proof,
+            )
+            bank_account_proof["use_line_action"] = action
+            # Signal the /compute outer loop to re-iterate so the newly
+            # emitted / updated reserve is folded into reserve sizing and
+            # Sources = Uses on the next pass.
+            if action in ("created", "updated", "removed"):
+                summary["needs_recompute"] = True
         summary["bank_account_proof"] = bank_account_proof
 
     # Tag every line-item with its owning project before persist. The

@@ -26,6 +26,17 @@ The model has no period-level bank account simulation from Close to Stabilizatio
 - No Cash Flow Support Reserve UseLineItem is emitted yet
 - This is the integration step blocked by the size of the surgical change required to `cashflow.py` (3,846 lines)
 
+### Update — 2026-05-30 (later)
+
+- `a4649c6` extractor module shipped (B1)
+- `52061c9` proof wired into `compute_cash_flows`, observation-only (B2)
+- `cf086b3` wiring tests for the proof (B2c)
+- **`<pending>` Cash Flow Support Reserve auto-emission shipped behind `BANK_ACCOUNT_RESERVE_ENABLED` flag (B3)**
+  - Default OFF — set the env var to `1` on the VM to enable
+  - Engine upserts a "Cash Flow Support Reserve" UseLine sized to `max_shortfall`
+  - Idempotent: creates / updates / removes itself based on each proof
+  - `/compute` outer loop re-iterates when the reserve changes so Sources = Uses on the next pass
+
 ---
 
 ## Prerequisite Fixes (Blocking)

@@ -10,7 +10,11 @@ from decimal import Decimal
 
 import pytest
 
-from app.engines.cashflow import _run_bank_account_proof
+from app.engines.cashflow import (
+    _CASH_FLOW_SUPPORT_RESERVE_LABEL,
+    _run_bank_account_proof,
+    _upsert_cash_flow_support_reserve,
+)
 from app.engines.cashflow_compile import PhaseSpec
 from app.models.cashflow import PeriodType
 
@@ -111,6 +115,155 @@ def test_proof_solvent_when_reserves_cover_window():
     assert result["co_period"] == 13
     assert result["stabilized_period"] == 16
     assert result["months_simulated"] == 3
+
+
+class _StubSession:
+    """Minimal AsyncSession stand-in. Tracks add/delete calls; no real DB."""
+    def __init__(self) -> None:
+        self.added: list = []
+        self.deleted: list = []
+    def add(self, obj) -> None:
+        self.added.append(obj)
+    def delete(self, obj) -> None:
+        self.deleted.append(obj)
+
+
+def _proof_stub(max_shortfall: str, date: str = "2026-08-01") -> dict:
+    return {"max_shortfall": max_shortfall, "max_shortfall_date": date}
+
+
+import uuid
+
+
+@pytest.mark.unit
+def test_upsert_creates_new_use_line_when_gap_positive():
+    sess = _StubSession()
+    use_lines: list = []
+    pid = uuid.uuid4()
+    action = _upsert_cash_flow_support_reserve(
+        session=sess,
+        project_id=pid,
+        use_lines=use_lines,
+        amount=Decimal("75_000"),
+        proof_result=_proof_stub("75000"),
+    )
+    assert action == "created"
+    assert len(use_lines) == 1
+    ul = use_lines[0]
+    assert ul.label == _CASH_FLOW_SUPPORT_RESERVE_LABEL
+    assert ul.amount == Decimal("75_000")
+    assert ul.timing_type == "first_day"
+    assert ul.cost_category == "soft"
+    assert ul.project_id == pid
+    assert ul in sess.added
+
+
+@pytest.mark.unit
+def test_upsert_updates_existing_when_amount_changes():
+    # Use a real UseLine instance to exercise attribute assignment
+    from app.models.deal import UseLine
+    pid = uuid.uuid4()
+    existing = UseLine(
+        project_id=pid,
+        label=_CASH_FLOW_SUPPORT_RESERVE_LABEL,
+        amount=Decimal("50_000"),
+        timing_type="first_day",
+        cost_category="soft",
+    )
+    sess = _StubSession()
+    use_lines: list = [existing]
+    action = _upsert_cash_flow_support_reserve(
+        session=sess,
+        project_id=pid,
+        use_lines=use_lines,
+        amount=Decimal("90_000"),
+        proof_result=_proof_stub("90000"),
+    )
+    assert action == "updated"
+    assert existing.amount == Decimal("90_000")
+    assert len(use_lines) == 1
+
+
+@pytest.mark.unit
+def test_upsert_unchanged_when_amount_matches():
+    from app.models.deal import UseLine
+    pid = uuid.uuid4()
+    existing = UseLine(
+        project_id=pid,
+        label=_CASH_FLOW_SUPPORT_RESERVE_LABEL,
+        amount=Decimal("100_000"),
+        timing_type="first_day",
+        cost_category="soft",
+    )
+    sess = _StubSession()
+    use_lines = [existing]
+    action = _upsert_cash_flow_support_reserve(
+        session=sess,
+        project_id=pid,
+        use_lines=use_lines,
+        amount=Decimal("100_000"),
+        proof_result=_proof_stub("100000"),
+    )
+    assert action == "unchanged"
+    assert sess.added == []
+    assert sess.deleted == []
+
+
+@pytest.mark.unit
+def test_upsert_removes_existing_when_gap_zero():
+    from app.models.deal import UseLine
+    pid = uuid.uuid4()
+    existing = UseLine(
+        project_id=pid,
+        label=_CASH_FLOW_SUPPORT_RESERVE_LABEL,
+        amount=Decimal("75_000"),
+        timing_type="first_day",
+        cost_category="soft",
+    )
+    sess = _StubSession()
+    use_lines = [existing]
+    action = _upsert_cash_flow_support_reserve(
+        session=sess,
+        project_id=pid,
+        use_lines=use_lines,
+        amount=Decimal("0"),
+        proof_result=_proof_stub("0"),
+    )
+    assert action == "removed"
+    assert use_lines == []
+    assert existing in sess.deleted
+
+
+@pytest.mark.unit
+def test_upsert_unchanged_when_gap_zero_and_no_existing():
+    sess = _StubSession()
+    use_lines: list = []
+    action = _upsert_cash_flow_support_reserve(
+        session=sess,
+        project_id=uuid.uuid4(),
+        use_lines=use_lines,
+        amount=Decimal("0"),
+        proof_result=_proof_stub("0"),
+    )
+    assert action == "unchanged"
+    assert use_lines == []
+    assert sess.added == []
+
+
+@pytest.mark.unit
+def test_upsert_no_project_id_skips_create():
+    """Engine-emitted reserves need a project FK. No project = no create."""
+    sess = _StubSession()
+    use_lines: list = []
+    action = _upsert_cash_flow_support_reserve(
+        session=sess,
+        project_id=None,
+        use_lines=use_lines,
+        amount=Decimal("50_000"),
+        proof_result=_proof_stub("50000"),
+    )
+    assert action == "unchanged"
+    assert use_lines == []
 
 
 @pytest.mark.unit

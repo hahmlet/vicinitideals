@@ -662,6 +662,17 @@ async def compute_model_cashflows(model_id: UUID, request: Request, session: DBS
         for _iter in range(MAX_ITERATIONS):
             result = await compute_cash_flows(deal_model_id=model_id, session=session)
             iterations_used = _iter + 1
+            # Bank-account reserve convergence: when the engine has just
+            # created / updated / removed an auto-managed Cash Flow Support
+            # Reserve, the new reserve has not yet been folded into reserve
+            # sizing — re-run so Sources = Uses on the next pass. This
+            # supersedes the DSCR convergence break for the iteration that
+            # triggered the reserve change.
+            _needs_recompute = (
+                isinstance(result, dict) and result.get("needs_recompute") is True
+            )
+            if _needs_recompute and _iter < MAX_ITERATIONS - 1:
+                continue
             if not _should_iterate:
                 break
             _cur_dscr = result.get("dscr") if isinstance(result, dict) else None
