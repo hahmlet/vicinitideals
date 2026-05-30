@@ -14490,7 +14490,7 @@ async def _load_draw_schedule_ctx(
             annual_rate = Decimal(str(rate_pct)) / Decimal("100")
 
             source_type = "debt" if str(getattr(cm, "vehicle_type", "") or "").replace("VehicleType.", "") == "debt" else "equity"
-            if source_type == "equity" and not src.get("amount"):
+            if source_type != "debt":
                 continue
             draw_freq = 2 if source_type == "debt" else 1
 
