@@ -753,7 +753,7 @@ Each Capital Module's `exit_terms.vehicle` declares how its balance is resolved.
 
 `_EXIT_VEHICLE_APPLIES` = `{permanent_debt, senior_debt, mezzanine_debt, bridge, construction_loan, acquisition_loan, pre_development_loan, soft_loan, bond, owner_loan}`.
 
-All other funder types (preferred_equity, common_equity, owner_investment, grant, tax_credit, other) are perpetuity-like — the waterfall distributes them at exit, and the draw schedule funds them as a single lump-sum draw at their `active_from` milestone.  `owner_loan` is promoted to full debt treatment (accrues interest, gets a debt-service line, uses Exit Vehicle).  The UI hides Exit Vehicle + draw cadence for non-exit-vehicle types.
+All other funder types (preferred_equity, common_equity, owner_investment, grant, tax_credit, other) are perpetuity-like — the waterfall distributes them at exit. **These sources are excluded from the draw schedule engine** (`_run_draw_schedule` filters to debt modules only); equity and grant capital is the cashflow engine's residual, not a sequential draw-schedule layer.  `owner_loan` is promoted to full debt treatment (accrues interest, gets a debt-service line, uses Exit Vehicle).  The UI hides Exit Vehicle + draw cadence for non-exit-vehicle types.
 
 The engine computes pairings in a generic pre-pass. For every module `B`, `_resolve_vehicle(B, all_modules)` reads `B.exit_terms.vehicle` and returns the literal or the retiring module.
 
@@ -1046,7 +1046,7 @@ occupancy_month_i = clamp(initial_occ + step × i, 0, stabilized_occ)
 
 Where `initial_occ` defaults to 50% and `stabilized_occ` defaults to 95% (configurable per stream / per deal).
 
-**Why 50% initial?** This is the `OperationalInputs.initial_occupancy_pct` field. In new construction it might be 0%; in acquisition-with-repositioning it might be 60% (existing tenants retained). The default of 50% is a reasonable lease-up scenario that users will commonly overwrite.
+**Why 50% initial?** This is the `OperationalInputs.initial_occupancy_pct` field. In new construction it might be 0%; in acquisition-with-repositioning it might be 60% (existing tenants retained). The default of 50% when NULL is a conservative assumption. **As of 2026-05-29, the New Deal Wizard collects this value** (plus `lease_up_curve` and `lease_up_curve_steepness`) in the Lease-Up step (inline with Step 1 when a lease-up phase is present), so most new deals will have an explicit user-set value rather than the NULL default.
 
 **S-curve option.** When `OperationalInputs.lease_up_curve = "s_curve"`, the ramp uses a logistic function instead of linear:
 
@@ -3146,9 +3146,9 @@ These are LP-facing metrics the engine computes for the Underwriting Summary / I
 |---|---|
 | **Definition** | Cash held aside at stabilization to cover N months of OpEx + Debt Service. A bank covenant + LP risk buffer. |
 | **Named Range** | `s_operating_reserve_months` (the input — months count), `s_operating_reserve_dollars` (the derived $ amount as a UseLine, formula-driven on S&U) |
-| **App Calc/Use** | `app/engines/cashflow.py` seeds the reserve on the first stabilized period (`_operating_reserve_seeded`); the dollar amount is a UseLine sized by `operating_reserve_months × (annual OpEx + annual debt service) / 12`. |
-| **App Notes** | Drains in subsequent periods if cash flow goes negative — not a permanent escrow. |
-| **Excel Formula** | The S&U "Operating Reserve" UseLine row IS a formula (covered in S&U documentation, not in this catalog yet): `=s_operating_reserve_months*(s_y1_opex+s_y1_debt_service)/12` or similar. The Pro Forma operating-reserve seed is engine-written. |
+| **App Calc/Use** | `app/engines/cashflow.py` sizes the UseLine as `max(OpEx_monthly, DS_monthly) × reserve_months`, where `DS_monthly` is the stabilized PI payment. The `max()` ensures the reserve floor covers whichever is larger — important when debt service exceeds operating expenses. |
+| **App Notes** | Pre-funded at closing as a Use line. Not drawn down in the cashflow model (stabilized operations are cash-flow positive); functions as a stress buffer for unexpected vacancy or expense spikes. |
+| **Excel Formula** | S&U "Operating Reserve" row: `=s_operating_reserve_months * MAX(s_y1_opex, s_pf_debt_service_y1) / 12`. Both named ranges exist in the export registry. |
 | **Excel Notes** | Two related cells: input months (`s_operating_reserve_months`) and derived dollars (`s_operating_reserve_dollars`). Both LP-editable indirectly via the months input. |
 | **Refs** | [Total Uses](#total-uses), [s_operating_reserve_months](#operating-reserve) |
 
