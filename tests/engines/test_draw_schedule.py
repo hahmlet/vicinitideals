@@ -11,6 +11,7 @@ from app.engines.draw_schedule import (
     DrawScheduleCalculator,
     DrawScheduleConfig,
     DrawScheduleInputs,
+    OperatingMonth,
     SourceDef,
     UseLineItem,
 )
@@ -418,3 +419,111 @@ def test_stack_position_orders_single_draw_allocation():
     loan_uses_funded = sum(d.uses_funded for d in schedule.by_source["loan"])
     total = Decimal("300_000") + Decimal("200_000") + loan_uses_funded
     assert abs(total - Decimal("600_000")) < Decimal("0.01")
+
+
+# ---------------------------------------------------------------------------
+# Bank-account simulation: opening cash + lease-up operating CF + floor
+# ---------------------------------------------------------------------------
+
+def _ms_with_lease_up():
+    """Milestone set with operation_stabilized as the lease-up terminator."""
+    return [
+        DealMilestone("close",                "Close",             datetime(2025, 4, 1)),
+        DealMilestone("construction_start",   "Construction Start",datetime(2025, 5, 1)),
+        DealMilestone("co",                   "Certificate of Occ",datetime(2026, 5, 1)),
+        DealMilestone("operation_stabilized", "Stabilized",        datetime(2026, 11, 1)),
+    ]
+
+
+def test_opening_cash_seeds_balance_at_first_draw():
+    """Pre-funded reserves should appear in cash_balance at the first draw month."""
+    inputs = DrawScheduleInputs(
+        milestones=_ms_with_lease_up(),
+        uses=[
+            UseLineItem("hard", "Hard Costs", "hard_costs", Decimal("600_000"), "construction_start", 6),
+        ],
+        sources=[
+            SourceDef(
+                key="loan", label="Loan", source_type="debt",
+                draw_every_n_months=2, annual_interest_rate=Decimal("0.06"),
+                active_from_milestone="construction_start", active_to_milestone="co",
+            ),
+        ],
+        opening_cash_balance=Decimal("250_000"),
+    )
+    schedule = DrawScheduleCalculator(inputs).calculate()
+    constr_start_month = datetime(2025, 5, 1)
+    row = next(r for r in schedule.monthly_cash_flows if r.date == constr_start_month)
+    # First draw month should include the opening reserve in the draw_received total
+    assert row.draw_received >= Decimal("250_000")
+
+
+def test_lease_up_violation_when_lur_too_small():
+    """
+    Lease-up months with perm DS > income (and minimal LUR) should
+    drop the bank balance below the operational floor and be flagged.
+    """
+    inputs = DrawScheduleInputs(
+        milestones=_ms_with_lease_up(),
+        uses=[
+            UseLineItem("hard", "Hard Costs", "hard_costs", Decimal("600_000"), "construction_start", 6),
+        ],
+        sources=[
+            SourceDef(
+                key="loan", label="Loan", source_type="debt",
+                draw_every_n_months=2, annual_interest_rate=Decimal("0"),
+                active_from_milestone="construction_start", active_to_milestone="co",
+            ),
+        ],
+        # $50K opening cash at Close (insufficient LUR)
+        opening_cash_balance=Decimal("50_000"),
+        # 6 months of lease-up: income ramps 0 → $40K, opex flat $20K, perm DS $30K/mo
+        monthly_operating=[
+            OperatingMonth(datetime(2026, 5, 1),  Decimal("0"),      Decimal("20_000"), Decimal("30_000")),
+            OperatingMonth(datetime(2026, 6, 1),  Decimal("8_000"),  Decimal("20_000"), Decimal("30_000")),
+            OperatingMonth(datetime(2026, 7, 1),  Decimal("16_000"), Decimal("20_000"), Decimal("30_000")),
+            OperatingMonth(datetime(2026, 8, 1),  Decimal("24_000"), Decimal("20_000"), Decimal("30_000")),
+            OperatingMonth(datetime(2026, 9, 1),  Decimal("32_000"), Decimal("20_000"), Decimal("30_000")),
+            OperatingMonth(datetime(2026, 10, 1), Decimal("40_000"), Decimal("20_000"), Decimal("30_000")),
+        ],
+        config=DrawScheduleConfig(
+            min_reserve_operational=Decimal("100_000"),
+            operational_start_milestone="co",
+            stabilization_start_milestone="operation_stabilized",
+        ),
+    )
+    schedule = DrawScheduleCalculator(inputs).calculate()
+    # Lease-up phase should trip the operational floor
+    lease_up_violations = [v for v in schedule.violations if v.phase == "operational"]
+    assert len(lease_up_violations) > 0
+    assert all(v.shortfall > Decimal("0") for v in lease_up_violations)
+
+
+def test_simulation_stops_at_stabilization_start():
+    """Bank-account proof window ends at stabilization_start_milestone."""
+    inputs = DrawScheduleInputs(
+        milestones=_ms_with_lease_up(),
+        uses=[
+            UseLineItem("hard", "Hard Costs", "hard_costs", Decimal("600_000"), "construction_start", 6),
+        ],
+        sources=[
+            SourceDef(
+                key="loan", label="Loan", source_type="debt",
+                draw_every_n_months=2, annual_interest_rate=Decimal("0"),
+                active_from_milestone="construction_start", active_to_milestone="co",
+            ),
+        ],
+        opening_cash_balance=Decimal("200_000"),
+        monthly_operating=[
+            OperatingMonth(datetime(2026, 11, 1), Decimal("50_000"), Decimal("20_000"), Decimal("30_000")),
+            OperatingMonth(datetime(2026, 12, 1), Decimal("50_000"), Decimal("20_000"), Decimal("30_000")),
+        ],
+        config=DrawScheduleConfig(
+            min_reserve_operational=Decimal("0"),
+            stabilization_start_milestone="operation_stabilized",
+        ),
+    )
+    schedule = DrawScheduleCalculator(inputs).calculate()
+    last_month = schedule.monthly_cash_flows[-1].date
+    # Stabilization Start is 2026-11-01; simulation must not extend past it
+    assert last_month <= datetime(2026, 11, 1)

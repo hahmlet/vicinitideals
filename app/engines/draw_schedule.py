@@ -97,6 +97,24 @@ class DrawScheduleConfig:
     min_reserve_operational: Decimal = Decimal("0")   # cash floor during operations
     # Milestone key that marks the transition from construction to operational
     operational_start_milestone: str = "co"
+    # Milestone key marking the end of lease-up (start of stabilized ops). The
+    # bank-account proof window is Close → stabilization_start_milestone.
+    stabilization_start_milestone: str = "operation_stabilized"
+
+
+@dataclass
+class OperatingMonth:
+    """One month of operating cash activity (lease-up + stabilized).
+
+    Supplied by the caller (cashflow.py) from already-computed monthly
+    streams. The bank-account simulation adds income, subtracts opex
+    and perm DS to the running cash balance for every month at or
+    after operational_start_milestone.
+    """
+    date: datetime
+    income: Decimal = Decimal("0")     # gross collected income this month
+    opex: Decimal = Decimal("0")       # operating expense this month
+    perm_ds: Decimal = Decimal("0")    # perm-loan debt service this month
 
 
 @dataclass
@@ -106,6 +124,14 @@ class DrawScheduleInputs:
     uses: list[UseLineItem]
     sources: list[SourceDef]            # ordered by start milestone (Gantt order)
     config: DrawScheduleConfig = field(default_factory=DrawScheduleConfig)
+    # Pre-funded reserves seeded into the bank account at the first draw
+    # (Close). When provided, simulation starts cash_balance at this value
+    # so the OR/IR/LUR pools are visible in MonthlyCashFlow output.
+    opening_cash_balance: Decimal = Decimal("0")
+    # Operating cash flows during lease-up + stabilized (post-CO). Empty
+    # list means no operating phase modeled; the simulation collapses to
+    # the construction-only behavior.
+    monthly_operating: list[OperatingMonth] = field(default_factory=list)
 
 
 # ---------------------------------------------------------------------------
@@ -531,7 +557,12 @@ class DrawScheduleCalculator:
 
         Draws are received on their draw_date. Uses are paid each month.
         Interest accrues monthly on the cumulative outstanding debt balance.
-        Checks balance against construction/operational reserve floors.
+
+        When opening_cash_balance > 0 (pre-funded reserves), the simulation
+        seeds cash at the first draw month. When monthly_operating is
+        provided, post-CO months also add operating income and subtract
+        opex + perm DS — the bank-account proof window Close →
+        Stabilization Start.
         """
         if not self.inputs.milestones:
             return [], []
@@ -539,11 +570,18 @@ class DrawScheduleCalculator:
         config = self.inputs.config
         op_start_milestone = self._milestone_map.get(config.operational_start_milestone)
         op_start_date = _month_start(op_start_milestone.date) if op_start_milestone else datetime.max
+        stab_milestone = self._milestone_map.get(config.stabilization_start_milestone)
+        stab_date = _month_start(stab_milestone.date) if stab_milestone else datetime.max
 
         # Index draws by month (already normalized to 1st in _calc_source_draws)
         draws_by_month: dict[datetime, list[DrawEvent]] = {}
         for e in events:
             draws_by_month.setdefault(e.draw_date, []).append(e)
+
+        # Index operating cash flows by month (1st-of-month aligned)
+        op_by_month: dict[datetime, OperatingMonth] = {
+            _month_start(op.date): op for op in self.inputs.monthly_operating
+        }
 
         # Earliest draw date — don't enforce reserve floor before any source is active
         first_draw_date = min(e.draw_date for e in events) if events else datetime.max
@@ -560,41 +598,56 @@ class DrawScheduleCalculator:
             d = _add_months(d, 1)
 
         cash_balance = Decimal("0")
+        opening = self.inputs.opening_cash_balance or Decimal("0")
+        opening_seeded = False
         monthly_flows: list[MonthlyCashFlow] = []
         violations: list[BalanceViolation] = []
 
         for month in months:
+            # Seed pre-funded reserves at the first draw month (Close).
+            # Treated as part of draw_received so the row's net stays
+            # internally consistent (net + prior_balance == new_balance).
+            seed = Decimal("0")
+            if not opening_seeded and opening > 0 and month >= first_draw_date:
+                seed = opening
+                opening_seeded = True
+
             # Draws received this month (already include pre-funded carry)
             month_draws = draws_by_month.get(month, [])
-            draw_received = sum(e.total_draw for e in month_draws)
+            draw_received = sum(e.total_draw for e in month_draws) + seed
 
             # Uses paid this month
             uses_paid = monthly_uses.get(month, Decimal("0"))
+
+            # Operating cash flow (post-CO). Income inflow, opex+perm_ds outflow.
+            op = op_by_month.get(month)
+            op_income = op.income if op else Decimal("0")
+            op_outflow = (op.opex + op.perm_ds) if op else Decimal("0")
 
             # Interest is capitalized into the loan balance via carry_cost in each draw —
             # it is NOT a separate cash outflow. The self-referential draw formula ensures
             # the draw pre-funds the carry for the entire window.
             interest_paid = Decimal("0")
 
-            net = draw_received - uses_paid
+            net = draw_received + op_income - uses_paid - op_outflow
             cash_balance += net
 
             # Reserve floor — only enforced once the first source starts drawing
             if month < first_draw_date:
                 required_reserve = Decimal("0")
                 phase = "construction"
+            elif month >= op_start_date:
+                phase = "operational"
+                required_reserve = config.min_reserve_operational
             else:
-                phase = "operational" if month >= op_start_date else "construction"
-                required_reserve = (
-                    config.min_reserve_operational if phase == "operational"
-                    else config.min_reserve_construction
-                )
+                phase = "construction"
+                required_reserve = config.min_reserve_construction
             is_violation = cash_balance < required_reserve
 
             flow = MonthlyCashFlow(
                 date=month,
                 draw_received=draw_received,
-                uses_paid=uses_paid,
+                uses_paid=uses_paid + op_outflow,
                 interest_paid=interest_paid,
                 net=net,
                 cash_balance=cash_balance,
@@ -611,6 +664,11 @@ class DrawScheduleCalculator:
                     shortfall=required_reserve - cash_balance,
                     phase=phase,
                 ))
+
+            # Stop the proof window at Stabilization Start — operating-phase
+            # months past stabilization aren't part of the reserve proof.
+            if stab_milestone and month >= stab_date:
+                break
 
         return monthly_flows, violations
 
