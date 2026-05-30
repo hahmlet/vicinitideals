@@ -221,11 +221,14 @@ class DrawScheduleCalculator:
         for source in self.inputs.sources:
             # The first source's first draw includes the reserve floor buffer
             reserve_buffer = initial_reserve if is_first_source else Decimal("0")
-            source_events, prior_balance = self._calc_source_draws(
+            source_events, new_balance = self._calc_source_draws(
                 source, monthly_uses, prior_balance, reserve_buffer=reserve_buffer,
             )
             all_events.extend(source_events)
             is_first_source = False
+            # Only debt sources carry a balance forward (to be refinanced by the next source).
+            # Equity/grant capital is permanent — it doesn't get "paid off" by downstream debt.
+            prior_balance = new_balance if source.source_type == "debt" else Decimal("0")
 
         # 4. Sort chronologically
         all_events.sort(key=lambda e: (e.draw_date, e.source_key))

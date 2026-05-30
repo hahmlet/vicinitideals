@@ -1921,6 +1921,7 @@
   <div class="module-panel-actions">
     <button class="btn btn-sm btn-primary"
             hx-post="/api/models/{{ model.id }}/compute"
+            hx-swap="none"
             hx-on::after-request="if(event.detail.successful) refreshPanel('cashflow')"
             hx-indicator="#cf-compute-spin">
       ▶ Recompute
