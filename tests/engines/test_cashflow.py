@@ -30,6 +30,7 @@ from app.engines.cashflow import (
     PhaseSpec,
     _build_phase_plan,
     _compute_period,
+    _constr_phase_rate_pct,
     _ir_lease_up_pool,
     _op_phase_rate_and_amort,
     _resolve_horizon_months,
@@ -619,6 +620,78 @@ def test_op_phase_rate_defaults_amort_to_30() -> None:
     """Missing amort everywhere → 30 year default."""
     _rate, amort = _op_phase_rate_and_amort(carry={}, src={"interest_rate_pct": 6.0})
     assert amort == 30
+
+
+# ---------------------------------------------------------------------------
+# Construction-phase rate resolution (mirrors _op_phase_rate_and_amort)
+# ---------------------------------------------------------------------------
+
+@pytest.mark.unit
+def test_constr_phase_rate_prefers_schedule_ir_over_source() -> None:
+    """Regression: schedule-format carry with IR phase must supply the
+    construction rate. Prior behavior used `_get_phase_carry(carry, "construction")`
+    which only matched legacy phased format, falling back to source.interest_rate_pct
+    and overstating construction IR on schedule-format loans."""
+    carry = {
+        "schedule": [
+            {"label": "IR", "carry_type": "interest_reserve",
+             "duration": {"type": "milestone", "milestone": "operation_stabilized"},
+             "rate_pct": 5.5},
+            {"label": "PI", "carry_type": "pi",
+             "duration": {"type": "remainder"}, "rate_pct": 5.5},
+        ],
+    }
+    src = {"interest_rate_pct": 6.0}
+    assert _constr_phase_rate_pct(carry, src) == 5.5
+
+
+@pytest.mark.unit
+def test_constr_phase_rate_prefers_schedule_ci_over_source() -> None:
+    """Capitalized-interest phase rate also wins over source rate."""
+    carry = {
+        "schedule": [
+            {"carry_type": "capitalized_interest",
+             "duration": {"type": "months", "months": 18}, "rate_pct": 4.75},
+        ],
+    }
+    src = {"interest_rate_pct": 6.0}
+    assert _constr_phase_rate_pct(carry, src) == 4.75
+
+
+@pytest.mark.unit
+def test_constr_phase_rate_skips_pi_io_in_schedule() -> None:
+    """PI/IO phases are operation-phase carry — don't supply construction rate."""
+    carry = {
+        "schedule": [
+            {"carry_type": "pi",
+             "duration": {"type": "remainder"}, "rate_pct": 5.5},
+        ],
+    }
+    src = {"interest_rate_pct": 6.0}
+    # No IR/CI phase in schedule → falls back through legacy phases → source rate
+    assert _constr_phase_rate_pct(carry, src) == 6.0
+
+
+@pytest.mark.unit
+def test_constr_phase_rate_falls_back_to_legacy_phased_carry() -> None:
+    """Older deals used carry.phases[name='construction'] — still honored."""
+    carry = {"phases": [
+        {"name": "construction", "carry_type": "io_only", "io_rate_pct": 7.0},
+        {"name": "operation", "carry_type": "pi", "rate_pct": 5.25},
+    ]}
+    assert _constr_phase_rate_pct(carry, src={"interest_rate_pct": 6.0}) == 7.0
+
+
+@pytest.mark.unit
+def test_constr_phase_rate_falls_back_to_source_when_no_carry() -> None:
+    """Legacy modules without carry → source.interest_rate_pct."""
+    assert _constr_phase_rate_pct(carry={}, src={"interest_rate_pct": 6.5}) == 6.5
+
+
+@pytest.mark.unit
+def test_constr_phase_rate_returns_none_when_nothing_set() -> None:
+    """No schedule, no phases, no source rate → None."""
+    assert _constr_phase_rate_pct(carry={}, src={}) is None
 
 
 @pytest.mark.unit

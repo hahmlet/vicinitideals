@@ -1554,6 +1554,27 @@ def _get_phase_carry(carry: dict, phase_name: str) -> dict | None:
     return None
 
 
+def _constr_phase_rate_pct(carry: dict, src: dict) -> float | Decimal | None:
+    """Construction-phase interest rate, sourced with the same precedence as
+    `_op_phase_rate_and_amort` uses for the operation phase.
+
+    Precedence:
+      1. carry.schedule first IR/CI phase rate_pct (what cashflow charges pre-op)
+      2. legacy carry.phases[name='construction'] io_rate_pct / rate_pct
+      3. source.interest_rate_pct (legacy headline rate)
+    """
+    for p in (carry or {}).get("schedule") or []:
+        ct = p.get("carry_type")
+        if ct in ("interest_reserve", "capitalized_interest", "accruing") and p.get("rate_pct") is not None:
+            return p["rate_pct"]
+    constr_phase = _get_phase_carry(carry, "construction") or {}
+    return (
+        constr_phase.get("io_rate_pct")
+        or constr_phase.get("rate_pct")
+        or (src or {}).get("interest_rate_pct")
+    )
+
+
 def _op_phase_rate_and_amort(
     carry: dict, src: dict
 ) -> tuple[float | None, int]:
@@ -2147,10 +2168,7 @@ async def _auto_size_debt_modules(
             _src    = dict(_m.source or {})
             _carry  = _m.carry or {}
             _rate   = _src.get("interest_rate_pct") or _carry.get("io_rate_pct")
-            _cc     = _get_phase_carry(_carry, "construction")
-            _cr     = (_cc or {}).get("io_rate_pct") if _cc else None
-            if not _cr:
-                _cr = _rate
+            _cr     = _constr_phase_rate_pct(_carry, _src) or _rate
 
             if _ft == "pre_development_loan":
                 _ltc = Decimal(str(_src.get("ltv_pct") or 100))
@@ -2396,11 +2414,10 @@ async def _auto_size_debt_modules(
         dscr_min = _to_decimal(src.get("dscr_min") or _dt_perm.get("dscr_min") or PLACEHOLDER_DSCR)
         op_carry = _get_phase_carry(carry, "operation")
 
-        # Construction IO rate: use construction-phase carry rate if specified, else fall back to source rate
-        constr_carry = _get_phase_carry(carry, "construction")
-        constr_rate_pct = (constr_carry or {}).get("io_rate_pct") if constr_carry else None
-        if not constr_rate_pct:
-            constr_rate_pct = rate_pct
+        # Construction IO rate: schedule first (IR/CI phase), then legacy phased
+        # carry, then source headline rate. Falls back to op-phase rate if no
+        # construction rate found anywhere.
+        constr_rate_pct = _constr_phase_rate_pct(carry, src) or rate_pct
         # IO factor: fraction of principal consumed by construction IO over all constr phases
         # Solved algebraically: P = base / (1 - constr_io_factor) so that
         # cash at ops start = P - base = reserve (net of construction IO charges)
@@ -2782,10 +2799,7 @@ async def _auto_size_debt_modules(
             if not amt3:
                 continue
             p3 = Decimal(str(amt3))
-            constr_carry3 = _get_phase_carry(carry3, "construction")
-            cr3 = (constr_carry3 or {}).get("io_rate_pct") if constr_carry3 else None
-            if not cr3:
-                cr3 = src3.get("interest_rate_pct")
+            cr3 = _constr_phase_rate_pct(carry3, src3)
             if not cr3:
                 continue
             # IO/PI carry pays debt service in cash during construction — that

@@ -386,7 +386,12 @@ class DrawScheduleCalculator:
                 if denominator <= 0:
                     denominator = Decimal("0.0001")
                 total_draw = (uses_in_window + payoff + existing_balance * monthly_rate * n) / denominator
-                carry_cost = total_draw * monthly_rate * n
+                # Carry accrues on the FULL cumulative balance for the next
+                # n-month window, not just on this draw. The self-referential
+                # formula sizes total_draw to fund (B + D) × r × n; record the
+                # same here so the simulation and source summaries see the true
+                # interest cost.
+                carry_cost = (existing_balance + total_draw) * monthly_rate * n
             else:
                 carry_cost = Decimal("0")
                 total_draw = uses_in_window + payoff

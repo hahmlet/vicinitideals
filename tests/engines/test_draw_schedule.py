@@ -35,12 +35,12 @@ def milestones():
 # Self-referential draw sizing
 # ---------------------------------------------------------------------------
 
-def test_self_referential_draw_covers_carry_on_itself():
+def test_self_referential_draw_covers_carry_on_full_balance():
     """
-    For a debt source, each draw must include carry on the draw amount itself.
-    After the draw: outstanding_balance = prior_balance + draw.
-    Carry for the period = draw × monthly_rate × n (not just prior_balance × rate × n).
-    Verify: carry_cost == total_draw × monthly_rate × freq_months.
+    For a debt source, carry accrues on the FULL cumulative balance
+    (prior balance + this draw) over the n-month window, not just on the new
+    draw. The self-referential formula sizes total_draw to pre-fund this:
+    D = (uses + payoff + B × r × n) / (1 - r × n) implies carry = (B + D) × r × n.
     """
     inputs = DrawScheduleInputs(
         milestones=milestones(),
@@ -64,12 +64,10 @@ def test_self_referential_draw_covers_carry_on_itself():
     monthly_rate = Decimal("0.08") / Decimal("12")
 
     for draw in schedule.by_source["loan"]:
-        if draw.draw_number == 1:
-            continue  # first draw has no prior periods, carry=0
-        expected_carry = draw.total_draw * monthly_rate * Decimal("2")
+        expected_carry = (draw.balance_before + draw.total_draw) * monthly_rate * Decimal("2")
         assert abs(draw.carry_cost - expected_carry) < Decimal("0.01"), (
             f"Draw {draw.draw_number}: carry {draw.carry_cost} != "
-            f"expected {expected_carry} (draw × rate × freq)"
+            f"expected {expected_carry} ((B + D) × rate × freq)"
         )
 
 
