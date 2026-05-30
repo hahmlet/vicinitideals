@@ -414,6 +414,11 @@
 {% set _acq_ul = (use_lines | selectattr('label', 'equalto', 'Acquisition') | list | first) if use_lines else none %}
 {% set _baseline_pp = (_acq_ul.amount | float) if _acq_ul else ((inputs.purchase_price | float) if (inputs and inputs.purchase_price) else 0) %}
 
+{# Snap stop: pp value that exactly closes the remaining gap (pp phantom + gap → 0).
+   Defined here (outside the _show_drawer block) so the JS script below always has
+   a numeric literal to interpolate even when the drawer is hidden. #}
+{% set _pp_snap_value = ((_pp_amt | int) - (_gap | int)) %}
+
 {% if _show_drawer %}
 
 {# Ranges aligned to step grid (every multiple of step). Min/max are integer
@@ -447,8 +452,6 @@
 {% set _noi_amt_abs = (_noi_amt if _noi_amt >= 0 else -_noi_amt) %}
 {% set _noi_range = _noi_range if _noi_range >= _noi_amt_abs else (((_noi_amt_abs / _noi_step) | round(0, 'ceil') | int) * _noi_step) %}
 {% set _pp_range = _pp_range if _pp_range >= _pp_amt_abs else (((_pp_amt_abs / _pp_step) | round(0, 'ceil') | int) * _pp_step) %}
-{# Snap stop: pp value that exactly closes the remaining gap (pp phantom + gap → 0). #}
-{% set _pp_snap_value = ((_pp_amt | int) - (_gap | int)) %}
 
 <div id="gap-adj-drawer" style="margin-top:24px;padding:16px;border:1px solid var(--border,#e5e7eb);border-radius:8px;background:var(--surface-2,#f9fafb)">
   <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
