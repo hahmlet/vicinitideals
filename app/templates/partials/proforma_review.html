@@ -160,9 +160,20 @@
             <td>
               <input type="text" name="unit_type_name[]" value="{{ u.name }}"
                      style="width:100%;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px">
-              <div style="display:flex;margin-top:5px">
-                <button type="button" class="prf-mode-btn active" onclick="prfSetMode(this,'unit')">Unit</button>
-                <button type="button" class="prf-mode-btn" onclick="prfSetMode(this,'flat')">Flat</button>
+              <div style="display:flex;margin-top:5px;align-items:center;gap:6px;flex-wrap:wrap">
+                <div>
+                  <button type="button" class="prf-mode-btn active" onclick="prfSetMode(this,'unit')">Unit</button>
+                  <button type="button" class="prf-mode-btn" onclick="prfSetMode(this,'flat')">Flat</button>
+                </div>
+                <div class="prf-flat-only" style="display:none">
+                  <select name="unit_type_stream_type[]"
+                          style="border:1px solid var(--border);border-radius:6px;padding:4px 20px 4px 6px;background:var(--bg);color:var(--text);font-size:12px">
+                    <option value="commercial_rent">Commercial</option>
+                    <option value="parking">Parking</option>
+                    <option value="laundry">Laundry</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
               </div>
               <input type="hidden" name="unit_type_mode[]" value="unit">
             </td>
@@ -171,19 +182,12 @@
                 <input type="number" name="unit_type_count[]" value="{{ u.count }}" min="0"
                        style="width:70px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
               </div>
-              <div class="prf-flat-only" style="display:none">
-                <select name="unit_type_stream_type[]"
-                        style="width:100%;border:1px solid var(--border);border-radius:6px;padding:5px 6px;background:var(--bg);color:var(--text);font-size:12px">
-                  <option value="commercial_rent">Commercial</option>
-                  <option value="parking">Parking</option>
-                  <option value="laundry">Laundry</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
             </td>
-            <td style="text-align:right" class="prf-unit-only-cell">
-              <input type="number" name="unit_type_sqft[]" value="{{ u.avg_sqft|round(0)|int }}" min="0"
-                     style="width:80px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
+            <td style="text-align:right">
+              <div class="prf-unit-only">
+                <input type="number" name="unit_type_sqft[]" value="{{ u.avg_sqft|round(0)|int }}" min="0"
+                       style="width:80px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
+              </div>
             </td>
             <td style="text-align:right">
               <div style="display:flex;align-items:center;justify-content:flex-end;gap:2px">
@@ -192,8 +196,8 @@
                        style="width:80px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
               </div>
             </td>
-            <td style="text-align:right" class="market-col prf-unit-only-cell">
-              <div style="display:flex;align-items:center;justify-content:flex-end;gap:2px">
+            <td style="text-align:right" class="market-col">
+              <div class="prf-unit-only" style="display:flex;align-items:center;justify-content:flex-end;gap:2px">
                 <span style="font-size:13px;color:var(--text-muted)">$</span>
                 <input type="text" name="unit_type_market_rent[]" value="{{ u.avg_monthly_rent|round(0)|int }}" class="amount-input"
                        placeholder="optional"
@@ -401,9 +405,20 @@ function addUnitRow() {
     <td>
       <input type="text" name="unit_type_name[]" value="" placeholder="e.g. 2BR/1BA"
              style="width:100%;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px">
-      <div style="display:flex;margin-top:5px">
-        <button type="button" class="prf-mode-btn active" onclick="prfSetMode(this,'unit')">Unit</button>
-        <button type="button" class="prf-mode-btn" onclick="prfSetMode(this,'flat')">Flat</button>
+      <div style="display:flex;margin-top:5px;align-items:center;gap:6px;flex-wrap:wrap">
+        <div>
+          <button type="button" class="prf-mode-btn active" onclick="prfSetMode(this,'unit')">Unit</button>
+          <button type="button" class="prf-mode-btn" onclick="prfSetMode(this,'flat')">Flat</button>
+        </div>
+        <div class="prf-flat-only" style="display:none">
+          <select name="unit_type_stream_type[]"
+                  style="border:1px solid var(--border);border-radius:6px;padding:4px 20px 4px 6px;background:var(--bg);color:var(--text);font-size:12px">
+            <option value="commercial_rent">Commercial</option>
+            <option value="parking">Parking</option>
+            <option value="laundry">Laundry</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
       </div>
       <input type="hidden" name="unit_type_mode[]" value="unit">
     </td>
@@ -412,19 +427,12 @@ function addUnitRow() {
         <input type="number" name="unit_type_count[]" value="" min="0" placeholder="0"
                style="width:70px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
       </div>
-      <div class="prf-flat-only" style="display:none">
-        <select name="unit_type_stream_type[]"
-                style="width:100%;border:1px solid var(--border);border-radius:6px;padding:5px 6px;background:var(--bg);color:var(--text);font-size:12px">
-          <option value="commercial_rent">Commercial</option>
-          <option value="parking">Parking</option>
-          <option value="laundry">Laundry</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
     </td>
-    <td style="text-align:right" class="prf-unit-only-cell">
-      <input type="number" name="unit_type_sqft[]" value="" min="0" placeholder="0"
-             style="width:80px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
+    <td style="text-align:right">
+      <div class="prf-unit-only">
+        <input type="number" name="unit_type_sqft[]" value="" min="0" placeholder="0"
+               style="width:80px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
+      </div>
     </td>
     <td style="text-align:right">
       <div style="display:flex;align-items:center;justify-content:flex-end;gap:2px">
@@ -433,13 +441,13 @@ function addUnitRow() {
                style="width:80px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
       </div>
     </td>
-    <td style="text-align:right;${marketStyle}" class="market-col prf-unit-only-cell">
-      <div style="display:flex;align-items:center;justify-content:flex-end;gap:2px">
+    <td style="text-align:right;${marketStyle}" class="market-col">
+      <div class="prf-unit-only" style="display:flex;align-items:center;justify-content:flex-end;gap:2px">
         <span style="font-size:13px;color:var(--text-muted)">$</span>
         <input type="text" name="unit_type_market_rent[]" value="" class="amount-input" placeholder="optional"
                style="width:80px;border:1px solid var(--border);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--text);font-size:13px;text-align:right">
       </div>
-    </td>`;
+    </td>\`;
   tbody.appendChild(tr);
   toggleMarketCol();
   tr.querySelector('input[name="unit_type_name[]"]').focus();
@@ -454,7 +462,6 @@ function prfSetMode(btn, mode) {
   const isFlat = mode === 'flat';
   row.querySelectorAll('.prf-unit-only').forEach(el => { el.style.display = isFlat ? 'none' : ''; });
   row.querySelectorAll('.prf-flat-only').forEach(el => { el.style.display = isFlat ? '' : 'none'; });
-  row.querySelectorAll('.prf-unit-only-cell').forEach(el => { el.style.display = isFlat ? 'none' : ''; });
 }
 
 function addOpexRow() {
