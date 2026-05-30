@@ -407,6 +407,126 @@
           </label>
         </div>
 
+        {% if 'lease_up' in (phases_present or set()) %}
+        {% set _luc = (inputs.lease_up_curve or 'linear') if inputs else 'linear' %}
+        {% set _lus = ((inputs.lease_up_curve_steepness | float) if (inputs and inputs.lease_up_curve_steepness is not none) else 5) %}
+        {% set _init_occ_val = ((inputs.initial_occupancy_pct | int) if (inputs and inputs.initial_occupancy_pct is not none) else 0) %}
+        <div class="section-label" style="margin-top:20px">Lease-Up Absorption</div>
+
+        <div style="display:flex;gap:16px;margin-bottom:16px;align-items:flex-start">
+          <div style="flex:1">
+            <div style="font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:6px">Starting Occupancy at Month 1</div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <input type="range" name="initial_occupancy_pct" id="lup-initial-occ"
+                     min="0" max="75" step="5"
+                     value="{{ _init_occ_val }}"
+                     oninput="updateLeaseUpPreview()"
+                     style="flex:1">
+              <span id="lup-occ-val" style="font-size:14px;font-weight:700;min-width:36px;text-align:right">{{ _init_occ_val }}%</span>
+            </div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:4px">
+              0% = new construction (no pre-leasing). Higher = existing tenants staying through lease-up.
+            </div>
+          </div>
+
+          <div style="flex:0 0 168px">
+            <div style="font-size:10px;color:var(--text-muted);text-align:center;margin-bottom:4px;font-weight:600;letter-spacing:.04em;text-transform:uppercase">Occupancy Ramp</div>
+            <svg id="lup-preview-svg" width="168" height="56" style="display:block;border-radius:6px;overflow:hidden"></svg>
+            <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-muted);margin-top:3px">
+              <span>Mo. 1</span><span>Mo. 12</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:8px">Absorption Curve</div>
+        <div class="toggle-row" style="margin-bottom:12px">
+          <label class="toggle-opt {% if _luc == 'linear' %}selected{% endif %}"
+                 onclick="selectToggle('lease_up_curve','linear'); updateLeaseUpPreview()">
+            <input type="radio" name="lease_up_curve" value="linear"
+                   {% if _luc == 'linear' %}checked{% endif %}>
+            <div class="toggle-opt-title">Linear</div>
+            <div class="toggle-opt-desc">Steady, even absorption each month.</div>
+          </label>
+          <label class="toggle-opt {% if _luc == 's_curve' %}selected{% endif %}"
+                 onclick="selectToggle('lease_up_curve','s_curve'); updateLeaseUpPreview()">
+            <input type="radio" name="lease_up_curve" value="s_curve"
+                   {% if _luc == 's_curve' %}checked{% endif %}>
+            <div class="toggle-opt-title">S-Curve</div>
+            <div class="toggle-opt-desc">Slow start, rapid mid-phase, tapering to stabilization.</div>
+          </label>
+        </div>
+
+        <div id="lup-steepness-row" {% if _luc != 's_curve' %}style="display:none"{% endif %}>
+          <div style="font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:6px">Curve Steepness</div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <span style="font-size:11px;color:var(--text-muted);white-space:nowrap">Gradual</span>
+            <input type="range" name="lease_up_curve_steepness" id="lup-steepness"
+                   min="2" max="10" step="0.5"
+                   value="{{ _lus }}"
+                   oninput="updateLeaseUpPreview()"
+                   style="flex:1">
+            <span style="font-size:11px;color:var(--text-muted);white-space:nowrap">Steep</span>
+          </div>
+        </div>
+
+        <script>
+        (function() {
+          function updateLeaseUpPreview() {
+            var el = document.getElementById('lup-initial-occ');
+            if (!el) return;
+            var initOcc = parseInt(el.value, 10) / 100;
+            var stabOcc = 0.95;
+            var curveEl = document.querySelector('[name="lease_up_curve"]:checked');
+            var curveType = curveEl ? curveEl.value : 'linear';
+            var steepEl = document.getElementById('lup-steepness');
+            var k = steepEl ? parseFloat(steepEl.value) : 5;
+            var N = 12;
+            var occs = [];
+            for (var i = 0; i < N; i++) {
+              var occ;
+              if (curveType === 's_curve') {
+                var t = N > 1 ? i / (N - 1) : 1;
+                var raw = 1 / (1 + Math.exp(-k * (t - 0.5)));
+                var low = 1 / (1 + Math.exp(-k * -0.5));
+                var high = 1 / (1 + Math.exp(-k * 0.5));
+                var norm = high > low ? (raw - low) / (high - low) : t;
+                occ = initOcc + (stabOcc - initOcc) * norm;
+              } else {
+                var step = N > 1 ? (stabOcc - initOcc) / (N - 1) : 0;
+                occ = initOcc + step * i;
+              }
+              occs.push(Math.min(Math.max(occ, 0), 1));
+            }
+            var svgEl = document.getElementById('lup-preview-svg');
+            if (!svgEl) return;
+            var svgW = 168, svgH = 56, barW = 10, gap = 4, padL = 4;
+            var NS = 'http://www.w3.org/2000/svg';
+            while (svgEl.firstChild) svgEl.removeChild(svgEl.firstChild);
+            var bg = document.createElementNS(NS, 'rect');
+            bg.setAttribute('width', svgW); bg.setAttribute('height', svgH);
+            bg.setAttribute('fill', 'var(--surface-2)');
+            svgEl.appendChild(bg);
+            for (var j = 0; j < N; j++) {
+              var h = Math.max(2, Math.round(occs[j] * svgH));
+              var x = padL + j * (barW + gap);
+              var y = svgH - h;
+              var rect = document.createElementNS(NS, 'rect');
+              rect.setAttribute('x', x); rect.setAttribute('y', y);
+              rect.setAttribute('width', barW); rect.setAttribute('height', h);
+              rect.setAttribute('fill', 'var(--accent)'); rect.setAttribute('rx', '2');
+              svgEl.appendChild(rect);
+            }
+            var valEl = document.getElementById('lup-occ-val');
+            if (valEl) valEl.textContent = parseInt(el.value, 10) + '%';
+            var rowEl = document.getElementById('lup-steepness-row');
+            if (rowEl) rowEl.style.display = curveType === 's_curve' ? 'block' : 'none';
+          }
+          window.updateLeaseUpPreview = updateLeaseUpPreview;
+          updateLeaseUpPreview();
+        })();
+        </script>
+        {% endif %}
+
       </div>
       <div class="wizard-footer">
         <a href="/deals/{{ model.deal_id }}" class="btn btn-ghost" style="font-size:12px;color:var(--text-muted)">✕ Cancel</a>

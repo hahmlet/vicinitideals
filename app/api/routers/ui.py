@@ -9124,6 +9124,17 @@ async def deal_setup_wizard_step(
         if sizing_mode in ("gap_fill", "dscr_capped", "dual_constraint"):
             inputs.debt_sizing_mode = sizing_mode
 
+        # Lease-up absorption (only submitted when lease_up phase present)
+        _init_occ = _fd(form.get("initial_occupancy_pct"))
+        if _init_occ is not None:
+            inputs.initial_occupancy_pct = _init_occ
+        _curve = str(form.get("lease_up_curve") or "").strip()
+        if _curve in ("linear", "s_curve"):
+            inputs.lease_up_curve = _curve
+        _steepness = _fd(form.get("lease_up_curve_steepness"))
+        if _steepness is not None:
+            inputs.lease_up_curve_steepness = _steepness
+
         session.add(model)
         session.add(inputs)
 
