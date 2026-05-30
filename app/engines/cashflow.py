@@ -37,6 +37,8 @@ from app.models.project import Project
 from app.models.manifest import WorkflowRunManifest
 from app.engines.draw_engine import compute_period_draw_inflow
 from app.engines.interest import period_interest_months
+from app.engines.bank_account import simulate as _bank_account_simulate
+from app.engines.bank_account_extractor import extract_operating_proof_window
 from app.engines.newton_solve import solve_principal_for_dscr
 from types import SimpleNamespace as _SN
 from app.engines.source_routing import route_use_to_sources as _route_use_to_sources
@@ -105,6 +107,98 @@ _BALANCE_ONLY_LABELS: frozenset[str] = frozenset({
     "Lease-Up Reserve",
     "Construction DS Reserve",
 })
+
+
+def _run_bank_account_proof(
+    *,
+    cash_flow_rows: list,
+    use_lines: list,
+    phases: list,
+    milestone_dates: dict | None,
+) -> dict | None:
+    """Run the operating-phase bank-account solvency proof.
+
+    Returns a small summary dict with the min balance, max shortfall, and
+    solvency flag — or None if the proof window can't be derived (no
+    operating phases). Observation-only: callers do NOT consume the result
+    yet; this is the diagnostic stepping stone before auto-emitting a
+    Cash Flow Support Reserve UseLine when max_shortfall > 0.
+    """
+    if not cash_flow_rows or not phases:
+        return None
+
+    # Walk phases to find the first lease-up period (= CO). If no lease-up
+    # phase exists, fall back to the first stabilized period.
+    co_period: int | None = None
+    stab_period: int | None = None
+    cursor = 0
+    for ps in phases:
+        if ps.period_type == PeriodType.lease_up and co_period is None:
+            co_period = cursor
+        if ps.period_type == PeriodType.stabilized and stab_period is None:
+            stab_period = cursor
+            if co_period is None:
+                co_period = cursor
+        cursor += ps.months
+    if co_period is None:
+        return None  # no operating window to prove
+
+    # First period date — anchor from earliest milestone date the phase plan
+    # uses. Phase 0 is acquisition; its start = "acquisition_start" or
+    # "pre_construction_start" depending on whether pre-dev exists.
+    anchor_date: date | None = None
+    for key in ("pre_construction_start", "acquisition_start",
+                "construction_start", "lease_up_start"):
+        anchor_date = _first_milestone_date(milestone_dates or {}, (key,))
+        if anchor_date is not None:
+            break
+    if anchor_date is None:
+        return None  # can't anchor period 0 to a date
+
+    first_period_dt = datetime(anchor_date.year, anchor_date.month, 1)
+
+    bank_inputs = extract_operating_proof_window(
+        cash_flow_rows=cash_flow_rows,
+        use_lines=use_lines,
+        first_period_date=first_period_dt,
+        co_period=co_period,
+        stabilized_period=stab_period,
+    )
+    if not bank_inputs.months:
+        return None
+
+    report = _bank_account_simulate(
+        months=bank_inputs.months,
+        opening_cash=bank_inputs.opening_cash,
+        monthly_inflows=bank_inputs.monthly_inflows,
+        monthly_outflows=bank_inputs.monthly_outflows,
+        monthly_floor=bank_inputs.monthly_floor,
+    )
+
+    _diag(
+        f"bank-account proof: opening={report.opening_cash} "
+        f"min_balance={report.min_balance} "
+        f"max_shortfall={report.max_shortfall} "
+        f"is_solvent={report.is_solvent} "
+        f"window=[period {co_period}, {stab_period}) "
+        f"months={len(report.monthly)}"
+    )
+
+    return {
+        "opening_cash": str(report.opening_cash),
+        "min_balance": str(report.min_balance),
+        "min_balance_date": (
+            report.min_balance_date.isoformat() if report.min_balance_date else None
+        ),
+        "max_shortfall": str(report.max_shortfall),
+        "max_shortfall_date": (
+            report.max_shortfall_date.isoformat() if report.max_shortfall_date else None
+        ),
+        "is_solvent": report.is_solvent,
+        "co_period": co_period,
+        "stabilized_period": stab_period,
+        "months_simulated": len(report.monthly),
+    }
 
 
 async def compute_cash_flows(
@@ -844,6 +938,21 @@ async def _compute_project_cashflow(
         "dscr": dscr,
         "debt_yield_pct": debt_yield_pct,
     }
+
+    # ── Bank-account proof (observation-only) ─────────────────────────────
+    # Run the operating-phase solvency proof. The result is added to the
+    # summary dict for diagnostics but does NOT yet feed back into reserve
+    # sizing — that's Step B3 (auto-emit Cash Flow Support Reserve when
+    # max_shortfall > 0). At this checkpoint we just confirm the proof
+    # runs end-to-end on every real deal without changing existing behavior.
+    bank_account_proof = _run_bank_account_proof(
+        cash_flow_rows=cash_flow_rows,
+        use_lines=use_lines,
+        phases=phases,
+        milestone_dates=milestone_dates,
+    )
+    if bank_account_proof is not None:
+        summary["bank_account_proof"] = bank_account_proof
 
     # Tag every line-item with its owning project before persist. The
     # CashFlowLineItem / _expense_line_item constructors inside _compute_period
