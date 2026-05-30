@@ -407,7 +407,7 @@
           </label>
         </div>
 
-        {% if phases_present and 'lease_up' in phases_present %}
+        {% if phases_present and 'operation_lease_up' in phases_present %}
         {% set _luc = (inputs.lease_up_curve or 'linear') if inputs else 'linear' %}
         {% set _lus = ((inputs.lease_up_curve_steepness | float) if (inputs and inputs.lease_up_curve_steepness is not none) else 5) %}
         {% set _init_occ_val = ((inputs.initial_occupancy_pct | int) if (inputs and inputs.initial_occupancy_pct is not none) else 0) %}
