@@ -14316,17 +14316,42 @@ async def _run_draw_schedule(
             milestone_key=ms_key, spread_months=spread_months, spread_to_date=spread_to_date,
         ))
 
-    # ── Sources — always auto-size (total_commitment=None) ─────────────────
+    # ── Sources ────────────────────────────────────────────────────────────
+    # Include all funded sources (amount > 0 on the underlying CapitalModule).
+    # Debt auto-sizes (total_commitment=None). Grants/equity draw lump-sum
+    # capped at the module's configured source.amount and route against
+    # eligible_use_tags. Stack position drives routing priority.
     _last_real_ms  = milestones_dated[-1]["key"] if milestones_dated else "operation_stabilized"
     _real_ms_keys  = {m["key"] for m in milestones_dated}
+
+    _cm_ids = [ds.capital_module_id for ds in draw_sources_db if ds.capital_module_id]
+    _cm_by_id: dict = {}
+    if _cm_ids:
+        _cm_rows = list((await session.execute(
+            select(CapitalModule).where(CapitalModule.id.in_(_cm_ids))
+        )).scalars())
+        _cm_by_id = {cm.id: cm for cm in _cm_rows}
+
     engine_sources: list[SourceDef] = []
     for ds in draw_sources_db:
-        if ds.source_type != "debt":
+        cm = _cm_by_id.get(ds.capital_module_id) if ds.capital_module_id else None
+        cm_src = (cm.source or {}) if cm else {}
+        cm_amount = Decimal(str(cm_src.get("amount") or 0)) if cm else Decimal("0")
+        is_debt = ds.source_type == "debt"
+        # Funded check: debt is permitted with no preset amount (auto-sizes);
+        # grants/equity require a configured CapitalModule.source.amount > 0.
+        if not is_debt and cm_amount <= 0:
             continue
+
         _to  = ds.active_to_milestone   if ds.active_to_milestone   in _real_ms_keys else _last_real_ms
         _frm = ds.active_from_milestone if ds.active_from_milestone in _real_ms_keys else (
             milestones_dated[0]["key"] if milestones_dated else _to
         )
+        # Stack position + eligibility routing live on the CapitalModule.
+        stack_pos = int(getattr(cm, "stack_position", 0) or 0) if cm else 0
+        eligible_tags = list(getattr(cm, "eligible_use_tags", None) or [])
+        # Map UseLine cost_category → engine UseLineItem category tag
+        # (engine uses the same _phase_to_cat values defined above).
         engine_sources.append(SourceDef(
             key=str(ds.id), label=ds.label,
             source_type=ds.source_type,
@@ -14335,10 +14360,12 @@ async def _run_draw_schedule(
             active_from_milestone=_frm, active_to_milestone=_to,
             active_from_offset_days=getattr(ds, "active_from_offset_days", 0) or 0,
             active_to_offset_days=getattr(ds, "active_to_offset_days", 0) or 0,
-            total_commitment=None,  # auto-size always
-            # Non-exit-vehicle sources fund as a single lump-sum draw; the
-            # engine ignores the active_to milestone for these.
-            single_draw=(ds.source_type != "debt"),
+            # Debt auto-sizes; grants/equity cap at the configured amount.
+            total_commitment=None if is_debt else cm_amount,
+            # Non-exit-vehicle sources fund as a single lump-sum draw.
+            single_draw=not is_debt,
+            stack_position=stack_pos,
+            eligible_use_categories=eligible_tags,
         ))
     engine_sources.sort(key=lambda s: _ms_date_idx.get(s.active_from_milestone, _dt_cls.max))
 
@@ -14365,10 +14392,10 @@ async def _run_draw_schedule(
             if _drawn is None:
                 continue
             ds.total_commitment = Decimal(str(_drawn))
-            # Equity draw sources: update draw_sources.total_commitment for display
-            # only — never overwrite capital module source["amount"] for equity
-            # because the sequential payoff model produces inflated figures.
-            if ds.source_type == "equity":
+            # Only debt sources have engine-computed amounts that should flow
+            # back into CapitalModule.source["amount"]. Grants/equity are
+            # user-configured caps — preserve them.
+            if ds.source_type != "debt":
                 continue
             if ds.capital_module_id:
                 _cm = await session.get(CapitalModule, ds.capital_module_id)
@@ -14492,7 +14519,9 @@ async def _load_draw_schedule_ctx(
             annual_rate = Decimal(str(rate_pct)) / Decimal("100")
 
             source_type = "debt" if str(getattr(cm, "vehicle_type", "") or "").replace("VehicleType.", "") == "debt" else "equity"
-            if source_type != "debt":
+            # Skip zero-amount stubs (unfunded equity placeholders) — only
+            # seed sources that have a configured amount or auto-size as debt.
+            if source_type != "debt" and not src.get("amount"):
                 continue
             draw_freq = 2 if source_type == "debt" else 1
 

@@ -63,6 +63,13 @@ class SourceDef:
     Draws are auto-sized using the self-referential formula so the draw
     fully covers uses + carry (including carry on the draw itself).
     total_commitment=None means auto-calculated from the draw schedule.
+
+    Routing — single_draw sources (grants/equity) allocate up to
+    total_commitment against uses whose category is in
+    eligible_use_categories. Lower stack_position fills first; remainder
+    cascades to higher positions. Sequentially-drawn debt sources still
+    process in Gantt start order and inherit uses left after single_draw
+    allocations. eligible_use_categories empty = any category.
     """
     key: str
     label: str
@@ -73,12 +80,14 @@ class SourceDef:
     active_to_milestone: str            # source is repaid/closed at this milestone
     active_from_offset_days: int = 0    # offset from milestone date (e.g. +30)
     active_to_offset_days: int = 0      # offset from milestone date
-    total_commitment: Decimal | None = None  # None = auto-sized
+    total_commitment: Decimal | None = None  # None = auto-sized; required for single_draw
     # Non-exit-vehicle sources (grants, equity, tax credits, owner_investment)
     # fund as a single lump-sum draw at `active_from` and have no repayment
     # cadence.  When True, the engine emits exactly one DrawEvent regardless
     # of the milestone window.
     single_draw: bool = False
+    stack_position: int = 0             # routing priority; lower fills first
+    eligible_use_categories: list[str] = field(default_factory=list)  # empty = any
 
 
 @dataclass
@@ -202,8 +211,8 @@ class DrawScheduleCalculator:
     # ------------------------------------------------------------------
 
     def calculate(self) -> DrawSchedule:
-        # 1. Build monthly Use cash flows (date → amount)
-        monthly_uses = self._spread_uses()
+        # 1. Build category-aware monthly Use cash flows for routing
+        monthly_uses_by_cat = self._spread_uses_by_category()
 
         # 2. Determine the initial reserve buffer the first draw must cover.
         #    The construction reserve floor must be funded from the very first draw.
@@ -213,24 +222,53 @@ class DrawScheduleCalculator:
             config.min_reserve_operational,
         )
 
-        # 3. For each source, generate draw events
         all_events: list[DrawEvent] = []
-        prior_balance = Decimal("0")
-        is_first_source = True
 
+        # 3. Allocate single_draw sources first (grants, equity, tax credits).
+        #    Routed in stack_position order so senior grants/equity fill before
+        #    junior tranches; each source allocates up to total_commitment
+        #    against uses matching eligible_use_categories (empty = any),
+        #    front-loaded by date. Allocations are subtracted from
+        #    monthly_uses_by_cat so the debt pass sees only the residual uses.
+        single_draw_sources = sorted(
+            [s for s in self.inputs.sources if s.single_draw],
+            key=lambda s: (s.stack_position, s.key),
+        )
+        for source in single_draw_sources:
+            allocated, draw_date = self._allocate_single_draw(source, monthly_uses_by_cat)
+            if allocated <= 0 or draw_date is None:
+                continue
+            all_events.append(DrawEvent(
+                source_key=source.key,
+                source_label=source.label,
+                draw_number=1,
+                draw_date=draw_date,
+                uses_funded=allocated,
+                prior_source_payoff=Decimal("0"),
+                carry_cost=Decimal("0"),
+                total_draw=allocated,
+                balance_before=Decimal("0"),
+                balance_after=Decimal("0"),
+            ))
+
+        # 4. Flatten reduced uses for the sequential debt pass
+        monthly_uses = self._flatten_by_category(monthly_uses_by_cat)
+
+        # 5. Sequential debt loop on the residual uses (existing algorithm)
+        prior_balance = Decimal("0")
+        is_first_debt_source = True
         for source in self.inputs.sources:
-            # The first source's first draw includes the reserve floor buffer
-            reserve_buffer = initial_reserve if is_first_source else Decimal("0")
+            if source.single_draw:
+                continue
+            reserve_buffer = initial_reserve if is_first_debt_source else Decimal("0")
             source_events, new_balance = self._calc_source_draws(
                 source, monthly_uses, prior_balance, reserve_buffer=reserve_buffer,
             )
             all_events.extend(source_events)
-            is_first_source = False
-            # Only debt sources carry a balance forward (to be refinanced by the next source).
-            # Equity/grant capital is permanent — it doesn't get "paid off" by downstream debt.
-            prior_balance = new_balance if source.source_type == "debt" else Decimal("0")
+            is_first_debt_source = False
+            prior_balance = new_balance  # debt-only by construction
 
-        # 4. Sort chronologically
+        # 6. Sort chronologically
         all_events.sort(key=lambda e: (e.draw_date, e.source_key))
 
         # 5. Month-by-month cash simulation + reserve check
@@ -246,21 +284,30 @@ class DrawScheduleCalculator:
     # ------------------------------------------------------------------
 
     def _spread_uses(self) -> dict[datetime, Decimal]:
-        """Return {month_date: amount} mapping all Use line items.
+        """Return {month_date: amount} flattened across all categories."""
+        return self._flatten_by_category(self._spread_uses_by_category())
+
+    def _spread_uses_by_category(self) -> dict[datetime, dict[str, Decimal]]:
+        """Return {month_date: {category: amount}} for routing-aware allocation.
 
         When spread_to_date is set, uses day-level precision:
           daily_cost = total / total_days
           each month bucket gets daily_cost × days_in_that_month_within_range
         Otherwise falls back to equal monthly amounts via spread_months.
         """
-        monthly: dict[datetime, Decimal] = {}
+        monthly: dict[datetime, dict[str, Decimal]] = {}
+
+        def _add(bucket: datetime, category: str, amount: Decimal) -> None:
+            slot = monthly.setdefault(bucket, {})
+            slot[category] = slot.get(category, Decimal("0")) + amount
+
         for use in self.inputs.uses:
             milestone = self._milestone_map.get(use.milestone_key)
             if not milestone:
                 continue
+            cat = use.category
 
             if use.spread_to_date is not None and use.spread_to_date > milestone.date:
-                # Day-level spreading across exact date range
                 from_dt: datetime = milestone.date
                 to_dt: datetime = use.spread_to_date
                 total_days = (to_dt - from_dt).days
@@ -268,33 +315,89 @@ class DrawScheduleCalculator:
                     total_days = 1
                 daily_amount = use.total_amount / Decimal(total_days)
 
-                # Walk month by month, accumulating day-weighted amounts
                 cur = from_dt.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
                 end_month = to_dt.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
                 while cur <= end_month:
                     days_in_month = calendar.monthrange(cur.year, cur.month)[1]
                     month_end_dt = cur.replace(day=days_in_month)
-                    # Clamp to [from_dt, to_dt]
                     range_start = max(cur, from_dt)
                     range_end = min(month_end_dt, to_dt)
                     days_active = max(0, (range_end - range_start).days)
                     if days_active > 0:
-                        bucket = cur
-                        monthly[bucket] = monthly.get(bucket, Decimal("0")) + daily_amount * Decimal(days_active)
-                    # Advance to next month
+                        _add(cur, cat, daily_amount * Decimal(days_active))
                     if cur.month == 12:
                         cur = cur.replace(year=cur.year + 1, month=1)
                     else:
                         cur = cur.replace(month=cur.month + 1)
             else:
-                # Month-level fallback (lump sum or spread_months-based)
                 months = max(1, use.spread_months)
                 monthly_amount = use.total_amount / Decimal(months)
                 for m in range(months):
                     bucket = _month_start(_add_months(milestone.date, m))
-                    monthly[bucket] = monthly.get(bucket, Decimal("0")) + monthly_amount
+                    _add(bucket, cat, monthly_amount)
 
         return monthly
+
+    def _flatten_by_category(
+        self, by_cat: dict[datetime, dict[str, Decimal]]
+    ) -> dict[datetime, Decimal]:
+        """Collapse a category-aware spread back to {month: total}."""
+        return {month: sum(buckets.values()) for month, buckets in by_cat.items()}
+
+    def _allocate_single_draw(
+        self,
+        source: SourceDef,
+        monthly_uses_by_cat: dict[datetime, dict[str, Decimal]],
+    ) -> tuple[Decimal, datetime | None]:
+        """Allocate this single_draw source's commitment against eligible Uses.
+
+        Walks months in chronological order, consuming amounts from each
+        eligible category bucket until either the source's total_commitment
+        cap is reached or no eligible uses remain. Mutates monthly_uses_by_cat
+        in place (subtracts the allocated amounts).
+
+        Returns (allocated_amount, activation_date). Activation date is the
+        source's `active_from_milestone` + offset; falls back to the first
+        eligible month if that milestone is undated. Returns (0, None) if no
+        allocation possible.
+        """
+        cap = source.total_commitment
+        if cap is None or cap <= 0:
+            return Decimal("0"), None
+
+        eligible_cats = set(source.eligible_use_categories or [])
+
+        def _is_eligible(category: str) -> bool:
+            return not eligible_cats or category in eligible_cats
+
+        allocated = Decimal("0")
+        remaining = cap
+        for month in sorted(monthly_uses_by_cat.keys()):
+            if remaining <= 0:
+                break
+            slot = monthly_uses_by_cat[month]
+            for cat in list(slot.keys()):
+                if not _is_eligible(cat):
+                    continue
+                available = slot[cat]
+                if available <= 0:
+                    continue
+                take = min(available, remaining)
+                slot[cat] = available - take
+                allocated += take
+                remaining -= take
+                if remaining <= 0:
+                    break
+
+        if allocated <= 0:
+            return Decimal("0"), None
+
+        from_milestone = self._milestone_map.get(source.active_from_milestone)
+        if from_milestone:
+            activation = _month_start(from_milestone.date + timedelta(days=source.active_from_offset_days))
+        else:
+            activation = min(monthly_uses_by_cat.keys())
+        return allocated, activation
 
     # ------------------------------------------------------------------
     # Internal: generate draws for one source

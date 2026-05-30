@@ -282,3 +282,139 @@ def test_auto_sized_commitment():
     schedule = DrawScheduleCalculator(inputs).calculate()
     summary = schedule.source_summaries[0]
     assert summary.total_commitment == summary.total_drawn
+
+
+# ---------------------------------------------------------------------------
+# Single-draw routing (grants / equity with eligibility + stack position)
+# ---------------------------------------------------------------------------
+
+def test_grant_routes_against_eligible_category_only():
+    """
+    Grant scenario (OR-MEP / Energy Trust style):
+      $250K grant, eligible for Hard Costs only, stack position 1.
+      Senior construction loan covers the rest.
+
+    Expect the grant to take exactly $250K against Hard Costs and the
+    senior loan to cover the residual ($350K of Hard Costs + Soft Costs).
+    """
+    inputs = DrawScheduleInputs(
+        milestones=milestones(),
+        uses=[
+            UseLineItem("soft", "Soft Costs", "soft_costs", Decimal("100_000"), "construction_start", 6),
+            UseLineItem("hard", "Hard Costs", "hard_costs", Decimal("600_000"), "construction_start", 6),
+        ],
+        sources=[
+            SourceDef(
+                key="grant", label="OR-MEP Grant", source_type="grant",
+                draw_every_n_months=1, annual_interest_rate=Decimal("0"),
+                active_from_milestone="construction_start", active_to_milestone="co",
+                total_commitment=Decimal("250_000"),
+                single_draw=True,
+                stack_position=1,
+                eligible_use_categories=["hard_costs"],
+            ),
+            SourceDef(
+                key="loan", label="Construction Loan", source_type="debt",
+                draw_every_n_months=2, annual_interest_rate=Decimal("0.07"),
+                active_from_milestone="construction_start", active_to_milestone="co",
+                stack_position=10,
+            ),
+        ],
+    )
+
+    schedule = DrawScheduleCalculator(inputs).calculate()
+    grant_draws = schedule.by_source["grant"]
+    loan_draws = schedule.by_source["loan"]
+
+    assert len(grant_draws) == 1, "single_draw grant should produce exactly one draw"
+    assert grant_draws[0].total_draw == Decimal("250_000")
+    assert grant_draws[0].carry_cost == Decimal("0")
+
+    grant_total = sum(d.total_draw for d in grant_draws)
+    loan_uses_funded = sum(d.uses_funded for d in loan_draws)
+    # Grant + loan must fully fund the $700K of uses (loan also pre-funds its own carry).
+    assert abs((grant_total + loan_uses_funded) - Decimal("700_000")) < Decimal("0.01")
+
+
+def test_grant_does_not_consume_ineligible_uses():
+    """
+    Grant eligible only for Hard Costs sees only $400K of eligible uses,
+    even though commitment is $500K. Should draw $400K and stop.
+    """
+    inputs = DrawScheduleInputs(
+        milestones=milestones(),
+        uses=[
+            UseLineItem("land", "Land",       "land",       Decimal("1_000_000"), "close",              1),
+            UseLineItem("hard", "Hard Costs", "hard_costs", Decimal("400_000"),   "construction_start", 4),
+            UseLineItem("soft", "Soft Costs", "soft_costs", Decimal("200_000"),   "construction_start", 4),
+        ],
+        sources=[
+            SourceDef(
+                key="grant", label="Hard-Cost-Only Grant", source_type="grant",
+                draw_every_n_months=1, annual_interest_rate=Decimal("0"),
+                active_from_milestone="construction_start", active_to_milestone="co",
+                total_commitment=Decimal("500_000"),
+                single_draw=True,
+                stack_position=1,
+                eligible_use_categories=["hard_costs"],
+            ),
+            SourceDef(
+                key="loan", label="Loan", source_type="debt",
+                draw_every_n_months=2, annual_interest_rate=Decimal("0.07"),
+                active_from_milestone="close", active_to_milestone="co",
+                stack_position=10,
+            ),
+        ],
+    )
+
+    schedule = DrawScheduleCalculator(inputs).calculate()
+    grant_draws = schedule.by_source["grant"]
+    assert len(grant_draws) == 1
+    # Grant capped at the eligible pool ($400K), not its commitment ($500K)
+    assert grant_draws[0].total_draw == Decimal("400_000")
+
+
+def test_stack_position_orders_single_draw_allocation():
+    """
+    Two grants eligible for the same category; lower stack_position fills first.
+    Senior grant ($300K, stack 1) takes first $300K of Hard Costs;
+    junior grant ($200K, stack 2) takes the next $200K.
+    """
+    inputs = DrawScheduleInputs(
+        milestones=milestones(),
+        uses=[
+            UseLineItem("hard", "Hard Costs", "hard_costs", Decimal("600_000"), "construction_start", 6),
+        ],
+        sources=[
+            SourceDef(
+                key="junior", label="Junior Grant", source_type="grant",
+                draw_every_n_months=1, annual_interest_rate=Decimal("0"),
+                active_from_milestone="construction_start", active_to_milestone="co",
+                total_commitment=Decimal("200_000"),
+                single_draw=True, stack_position=2,
+                eligible_use_categories=["hard_costs"],
+            ),
+            SourceDef(
+                key="senior", label="Senior Grant", source_type="grant",
+                draw_every_n_months=1, annual_interest_rate=Decimal("0"),
+                active_from_milestone="construction_start", active_to_milestone="co",
+                total_commitment=Decimal("300_000"),
+                single_draw=True, stack_position=1,
+                eligible_use_categories=["hard_costs"],
+            ),
+            SourceDef(
+                key="loan", label="Loan", source_type="debt",
+                draw_every_n_months=2, annual_interest_rate=Decimal("0.06"),
+                active_from_milestone="construction_start", active_to_milestone="co",
+                stack_position=10,
+            ),
+        ],
+    )
+
+    schedule = DrawScheduleCalculator(inputs).calculate()
+    assert schedule.by_source["senior"][0].total_draw == Decimal("300_000")
+    assert schedule.by_source["junior"][0].total_draw == Decimal("200_000")
+    # Senior + junior + loan uses_funded = $600K of Hard Costs
+    loan_uses_funded = sum(d.uses_funded for d in schedule.by_source["loan"])
+    total = Decimal("300_000") + Decimal("200_000") + loan_uses_funded
+    assert abs(total - Decimal("600_000")) < Decimal("0.01")
