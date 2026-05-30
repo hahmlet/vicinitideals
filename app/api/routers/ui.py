@@ -14321,6 +14321,8 @@ async def _run_draw_schedule(
     _real_ms_keys  = {m["key"] for m in milestones_dated}
     engine_sources: list[SourceDef] = []
     for ds in draw_sources_db:
+        if ds.source_type != "debt":
+            continue
         _to  = ds.active_to_milestone   if ds.active_to_milestone   in _real_ms_keys else _last_real_ms
         _frm = ds.active_from_milestone if ds.active_from_milestone in _real_ms_keys else (
             milestones_dated[0]["key"] if milestones_dated else _to
