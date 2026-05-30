@@ -10470,6 +10470,7 @@ async def model_builder(
     # inputs=None and Step 7 (Review) crashes on `inputs.debt_sizing_mode`.
     wizard_step: int = 1
     deal_setup_inputs = data.get("inputs")
+    _wizard_phases_present_bld: set[str] = set()
     # Map debt_type → list of project names sharing the existing auto module
     # (excluding the currently-active project). Step 7 of the wizard renders
     # a "shared with X" chip when this list is non-empty.
@@ -10490,6 +10491,7 @@ async def model_builder(
                 select(OperationalInputs).where(OperationalInputs.project_id == _default_proj.id)
             )).scalar_one_or_none()
             wizard_step = 1
+            _wizard_phases_present_bld = await _wizard_phases_present(session, _default_proj)
             # Find existing auto modules + their junction-shared projects so
             # the Step 7 review can flag "shared with {project}" entries.
             from app.models.capital import CapitalModuleProject as _CMP_ws
@@ -10591,6 +10593,7 @@ async def model_builder(
         "multi_parcel_apns": multi_parcel_apns,
         "lot_size_mismatch": lot_size_mismatch_info,
         "step": wizard_step,
+        "phases_present": _wizard_phases_present_bld,
         "wizard_share_info": wizard_share_info,
         "calc_status_pill_html": calc_status_pill_html,
         **data,
