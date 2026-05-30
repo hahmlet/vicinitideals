@@ -18,6 +18,10 @@ Notes:
   to current engine code. That drift is what /compute would have produced on
   the next user click anyway.
 - Soft-deleted scenarios (``Scenario.is_active = False``) are skipped.
+- Test deals are skipped using the same filter as the deals/opportunities
+  UI (``hide_test``): name ILIKE '%e2e%' OR name matching the regex
+  ``phase\s+\w+\s+test\s+\w+`` (case-insensitive). Pass ``--include-test``
+  to override.
 - One commit per scenario so partial failures don't roll back successful
   scenarios.
 
@@ -36,11 +40,17 @@ import traceback
 import uuid
 from dataclasses import dataclass
 
-from sqlalchemy import select
+from sqlalchemy import not_, select
 
 from app.db import AsyncSessionLocal
 from app.engines.cashflow import compute_cash_flows
 from app.models.deal import Scenario
+
+
+# Test-deal filter — mirrors the ``hide_test`` clause in
+# ``app/api/routers/ui.py`` (lines ~426-430 and ~3633-3637). Any change there
+# should be mirrored here so the backfill skips the same fixture rows.
+_TEST_NAME_REGEX = r"phase\s+\w+\s+test\s+\w+"
 
 
 @dataclass
@@ -97,11 +107,17 @@ async def run(
     apply: bool,
     scenario_id: uuid.UUID | None,
     limit: int | None,
+    include_test: bool,
 ) -> None:
     # Collect target scenario IDs in a short-lived session, then process each
     # in its own session to keep commit boundaries clean.
     async with AsyncSessionLocal() as session:
         stmt = select(Scenario.id).where(Scenario.is_active.is_(True))
+        if not include_test:
+            stmt = stmt.where(
+                not_(Scenario.name.ilike("%e2e%"))
+                & not_(Scenario.name.op("~*")(_TEST_NAME_REGEX))
+            )
         if scenario_id is not None:
             stmt = stmt.where(Scenario.id == scenario_id)
         stmt = stmt.order_by(Scenario.id)
@@ -165,11 +181,21 @@ def main() -> None:
         default=None,
         help="Process at most N scenarios (sorted by id).",
     )
+    parser.add_argument(
+        "--include-test",
+        action="store_true",
+        help="Include test/E2E deals (default: skip them, matches UI hide_test filter).",
+    )
     args = parser.parse_args()
 
     try:
         asyncio.run(
-            run(apply=args.apply, scenario_id=args.scenario_id, limit=args.limit)
+            run(
+                apply=args.apply,
+                scenario_id=args.scenario_id,
+                limit=args.limit,
+                include_test=args.include_test,
+            )
         )
     except KeyboardInterrupt:
         print("\nInterrupted — partial results may be committed if --apply was set.")
