@@ -2772,7 +2772,18 @@ async def _auto_size_debt_modules(
         # 9 months because it ignores sticky fixed costs at low occupancy.
         _LEASE_UP_INCOME_FACTOR = Decimal("1") / Decimal("3")
         noi_monthly_est = noi_annual / Decimal("12") if noi_annual > ZERO else ZERO
-        lease_up_income_offset = _q(noi_monthly_est * _LEASE_UP_INCOME_FACTOR * Decimal(lease_up_months))
+        # The 1/3 NOI offset assumes income ramps during lease-up. If every
+        # income stream is gated to `stabilized` (or later), nothing actually
+        # collects during lease-up — the offset would over-credit and zero
+        # out the LUR, leaving perm DS uncovered. Detect that case and drop
+        # the offset to zero so the LUR covers full lease-up DS.
+        _streams_ramp_lease_up = any(
+            _is_stream_active(s, PeriodType.lease_up) for s in streams
+        )
+        if not _streams_ramp_lease_up:
+            lease_up_income_offset = ZERO
+        else:
+            lease_up_income_offset = _q(noi_monthly_est * _LEASE_UP_INCOME_FACTOR * Decimal(lease_up_months))
         effective_uses = total_uses - fixed - lease_up_income_offset
 
         if rate_pct:

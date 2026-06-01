@@ -476,3 +476,28 @@ def test_stress_deal_emits_cash_flow_support_and_converges_to_solvent():
     assert proof2 is not None
     assert proof2["is_solvent"] is True
     assert Decimal(proof2["max_shortfall"]) == Decimal("0")
+
+
+@pytest.mark.unit
+def test_is_stream_active_distinguishes_lease_up_ramp_from_stabilized_only():
+    """LUR sizing gates the 1/3 NOI offset on whether any income stream
+    is active during lease-up. Streams gated to `stabilized` (or later)
+    must not credit the offset — otherwise LUR collapses to zero and
+    perm DS during lease-up goes uncovered. This was the root cause of
+    the 5 production deals with bank-account shortfalls on 2026-06-01.
+    """
+    from app.engines.cashflow_compile import _is_stream_active
+    from app.models.cashflow import PeriodType
+
+    class _Stream:
+        def __init__(self, phases):
+            self.active_in_phases = phases
+
+    stabilized_only = _Stream(["stabilized"])
+    ramps_in_lease_up = _Stream(["lease_up", "stabilized"])
+
+    # Stabilized-only streams do NOT contribute to lease-up income —
+    # the LUR sizer must zero its income offset in this case.
+    assert _is_stream_active(stabilized_only, PeriodType.lease_up) is False
+    # Streams that explicitly include lease_up DO ramp — offset applies.
+    assert _is_stream_active(ramps_in_lease_up, PeriodType.lease_up) is True
