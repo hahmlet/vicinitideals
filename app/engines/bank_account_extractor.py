@@ -147,7 +147,129 @@ def extract_operating_proof_window(
     )
 
 
+def extract_full_window_proof(
+    *,
+    construction_monthly: list,
+    cash_flow_rows: list,
+    use_lines: list,
+    first_period_date: datetime,
+    co_period: int,
+    stabilized_period: int | None,
+    operating_reserve_amount: Decimal | None = None,
+) -> BankAccountInputs:
+    """Build bank-account inputs for the full Day 0 → Stabilization Start window.
+
+    Combines two segments into one contiguous monthly timeline:
+
+      Construction (Day 0 → CO):
+        Pulled from draw_schedule.MonthlyCashFlow rows.
+          inflow  = draw_received
+          outflow = uses_paid + interest_paid
+
+      Lease-up (CO → Stabilization Start):
+        Pulled from cashflow engine CashFlow rows.
+          inflow  = effective_gross_income
+          outflow = operating_expenses + debt_service
+
+    Both segments share the same Operating Reserve floor — the cushion the
+    engine must maintain across every simulated month, by construction.
+
+    Args:
+      construction_monthly: List of draw_schedule.MonthlyCashFlow records.
+        Empty list means no construction sim available; only lease-up
+        window is built (matches extract_operating_proof_window behavior).
+      cash_flow_rows: CashFlow ORM rows, ordered ascending by period.
+      use_lines: UseLine ORM rows. First-day reserve UseLines feed
+        opening_cash; "Operating Reserve" sets the floor unless overridden.
+      first_period_date: Period-0 anchor (deal start date), used to map
+        cash_flow_rows periods to calendar months.
+      co_period: CashFlow.period index at CO (lease-up begins here).
+      stabilized_period: CashFlow.period index at Stabilization Start
+        (sim ends one period before this). None = include every row from
+        co_period onward.
+      operating_reserve_amount: Overrides the Operating Reserve UseLine
+        amount for the floor map.
+
+    Returns BankAccountInputs ready for bank_account.simulate(). Months
+    appear in chronological order with no duplicates — if a construction
+    month and a lease-up row collide on the same calendar month, the
+    construction row wins (its draws/uses are the real cash events).
+    """
+    # Opening cash = sum of first-day reserves on UseLines (same rule as
+    # the lease-up-only extractor). Operating Reserve doubles as the floor.
+    opening = Decimal("0")
+    or_amount = Decimal("0")
+    for ul in use_lines:
+        label = getattr(ul, "label", "") or ""
+        timing = getattr(ul, "timing_type", "") or ""
+        amt = _to_dec(getattr(ul, "amount", 0))
+        if timing not in ("first_day", "lump_sum"):
+            continue
+        if label in _RESERVE_LABELS:
+            opening += amt
+            if label == "Operating Reserve":
+                or_amount = amt
+    if operating_reserve_amount is not None:
+        or_amount = operating_reserve_amount
+    floor_amt = or_amount
+
+    months: list[datetime] = []
+    inflows: dict[datetime, Decimal] = {}
+    outflows: dict[datetime, Decimal] = {}
+    floor: dict[datetime, Decimal] = {}
+    seen: set[datetime] = set()
+
+    # Segment 1: construction window (draw_schedule monthly cash flows).
+    for m in construction_monthly or []:
+        d = _month_start(m.date)
+        if d in seen:
+            continue
+        seen.add(d)
+        months.append(d)
+        inflows[d] = _to_dec(getattr(m, "draw_received", 0))
+        outflows[d] = (
+            _to_dec(getattr(m, "uses_paid", 0))
+            + _to_dec(getattr(m, "interest_paid", 0))
+        )
+        floor[d] = floor_amt
+
+    # Segment 2: lease-up window (cashflow engine rows).
+    rows_sorted = sorted(cash_flow_rows, key=lambda r: r.period)
+    if stabilized_period is None:
+        window_end = (rows_sorted[-1].period + 1) if rows_sorted else co_period
+    else:
+        window_end = stabilized_period
+
+    for row in rows_sorted:
+        if row.period < co_period or row.period >= window_end:
+            continue
+        d = _add_months(_month_start(first_period_date), row.period)
+        if d in seen:
+            # Construction sim already covered this month — keep its
+            # numbers (draws + uses are the real cash events during the
+            # construction window).
+            continue
+        seen.add(d)
+        months.append(d)
+        inflows[d] = _to_dec(getattr(row, "effective_gross_income", 0))
+        outflows[d] = (
+            _to_dec(getattr(row, "operating_expenses", 0))
+            + _to_dec(getattr(row, "debt_service", 0))
+        )
+        floor[d] = floor_amt
+
+    months.sort()
+    return BankAccountInputs(
+        months=months,
+        opening_cash=opening,
+        monthly_inflows=inflows,
+        monthly_outflows=outflows,
+        monthly_floor=floor,
+    )
+
+
 __all__ = [
     "BankAccountInputs",
     "extract_operating_proof_window",
+    "extract_full_window_proof",
 ]

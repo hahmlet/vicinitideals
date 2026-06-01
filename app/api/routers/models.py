@@ -627,12 +627,15 @@ async def compute_model_cashflows(model_id: UUID, request: Request, session: DBS
         user_id=user_id,
     )
     # Auto-size draw sources before cashflow: writes CapitalModule.source["amount"]
-    # so the cashflow + waterfall engines see correct committed amounts.
+    # so the cashflow + waterfall engines see correct committed amounts. Also
+    # capture the returned schedule's monthly_cash_flows; they feed the Day 0
+    # → Stabilization Start bank-account proof. We re-run inside the
+    # iteration loop too so the proof sees the latest reserve sizing.
+    from app.api.routers.ui import _run_draw_schedule  # lazy to avoid circular import
     try:
-        from app.api.routers.ui import _run_draw_schedule  # lazy to avoid circular import
-        await _run_draw_schedule(session, model_id, writeback=True)
+        _initial_schedule = await _run_draw_schedule(session, model_id, writeback=True)
     except Exception:
-        pass  # Don't block compute if draw schedule can't run (missing milestones etc.)
+        _initial_schedule = None  # Don't block compute if draw schedule can't run
 
     # ── Fix-point iteration for sizing convergence ──────────────────────────
     # When debt_sizing_mode is 'dscr_capped' or 'dual_constraint', the first
@@ -658,9 +661,29 @@ async def compute_model_cashflows(model_id: UUID, request: Request, session: DBS
     result: dict[str, Any] | None = None
     prev_dscr: Decimal | None = None
     iterations_used = 0
+    _schedule = _initial_schedule
     try:
         for _iter in range(MAX_ITERATIONS):
-            result = await compute_cash_flows(deal_model_id=model_id, session=session)
+            # Re-run draw schedule each iteration: reserves (Cash Flow
+            # Support, OR) can shift between passes, so the construction
+            # window must use the freshest sizing.
+            if _iter > 0:
+                try:
+                    _schedule = await _run_draw_schedule(
+                        session, model_id, writeback=True
+                    )
+                except Exception:
+                    _schedule = None
+            _construction_monthly = (
+                list(getattr(_schedule, "monthly_cash_flows", []) or [])
+                if _schedule is not None
+                else None
+            )
+            result = await compute_cash_flows(
+                deal_model_id=model_id,
+                session=session,
+                construction_monthly=_construction_monthly,
+            )
             iterations_used = _iter + 1
             # Bank-account reserve convergence: when the engine has just
             # created / updated / removed an auto-managed Cash Flow Support

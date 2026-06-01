@@ -44,7 +44,10 @@ from app.models.manifest import WorkflowRunManifest
 from app.engines.draw_engine import compute_period_draw_inflow
 from app.engines.interest import period_interest_months
 from app.engines.bank_account import simulate as _bank_account_simulate
-from app.engines.bank_account_extractor import extract_operating_proof_window
+from app.engines.bank_account_extractor import (
+    extract_full_window_proof,
+    extract_operating_proof_window,
+)
 from app.engines.newton_solve import solve_principal_for_dscr
 from types import SimpleNamespace as _SN
 from app.engines.source_routing import route_use_to_sources as _route_use_to_sources
@@ -188,14 +191,19 @@ def _run_bank_account_proof(
     use_lines: list,
     phases: list,
     milestone_dates: dict | None,
+    construction_monthly: list | None = None,
 ) -> dict | None:
-    """Run the operating-phase bank-account solvency proof.
+    """Run the bank-account solvency proof.
 
-    Returns a small summary dict with the min balance, max shortfall, and
-    solvency flag — or None if the proof window can't be derived (no
-    operating phases). Observation-only: callers do NOT consume the result
-    yet; this is the diagnostic stepping stone before auto-emitting a
-    Cash Flow Support Reserve UseLine when max_shortfall > 0.
+    With ``construction_monthly`` supplied (draw_schedule.MonthlyCashFlow
+    rows), the proof window covers Day 0 → Stabilization Start — every
+    month between deal start and stabilization is simulated against the
+    Operating Reserve floor. Without it, the window collapses to the
+    legacy CO → Stabilization Start range (lease-up only).
+
+    Returns a small summary dict with min balance, max shortfall, solvency
+    flag, and `proof_start` ("day_0" or "co") — or None if the proof
+    window can't be derived (no operating phases).
     """
     if not cash_flow_rows or not phases:
         return None
@@ -230,13 +238,25 @@ def _run_bank_account_proof(
 
     first_period_dt = datetime(anchor_date.year, anchor_date.month, 1)
 
-    bank_inputs = extract_operating_proof_window(
-        cash_flow_rows=cash_flow_rows,
-        use_lines=use_lines,
-        first_period_date=first_period_dt,
-        co_period=co_period,
-        stabilized_period=stab_period,
-    )
+    if construction_monthly:
+        bank_inputs = extract_full_window_proof(
+            construction_monthly=construction_monthly,
+            cash_flow_rows=cash_flow_rows,
+            use_lines=use_lines,
+            first_period_date=first_period_dt,
+            co_period=co_period,
+            stabilized_period=stab_period,
+        )
+        proof_start = "day_0"
+    else:
+        bank_inputs = extract_operating_proof_window(
+            cash_flow_rows=cash_flow_rows,
+            use_lines=use_lines,
+            first_period_date=first_period_dt,
+            co_period=co_period,
+            stabilized_period=stab_period,
+        )
+        proof_start = "co"
     if not bank_inputs.months:
         return None
 
@@ -271,11 +291,15 @@ def _run_bank_account_proof(
         "co_period": co_period,
         "stabilized_period": stab_period,
         "months_simulated": len(report.monthly),
+        "proof_start": proof_start,
     }
 
 
 async def compute_cash_flows(
-    deal_model_id: UUID | str, session: AsyncSession
+    deal_model_id: UUID | str,
+    session: AsyncSession,
+    *,
+    construction_monthly: list | None = None,
 ) -> dict[str, Any]:
     """Compute and persist operational cash flows for every Project in a Scenario.
 
@@ -340,6 +364,7 @@ async def compute_cash_flows(
             project=project,
             session=session,
             project_start_override=start_overrides.get(project.id),
+            construction_monthly=construction_monthly,
         )
 
     # Phase D: reconcile module.source["amount"] = Σ(junction.amount) across all projects.
@@ -359,6 +384,7 @@ async def _compute_project_cashflow(
     project: Project,
     session: AsyncSession,
     project_start_override: Any = None,
+    construction_monthly: list | None = None,
 ) -> dict[str, Any]:
     """Compute and persist cash flows for a single Project within a Scenario.
 
@@ -1023,6 +1049,7 @@ async def _compute_project_cashflow(
         use_lines=use_lines,
         phases=phases,
         milestone_dates=milestone_dates,
+        construction_monthly=construction_monthly,
     )
     if bank_account_proof is not None:
         if _BANK_ACCOUNT_RESERVE_ENABLED:
