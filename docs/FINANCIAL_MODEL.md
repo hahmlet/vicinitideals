@@ -400,7 +400,7 @@ The Phase B path is gated by `if debt_types_list:` in `_auto_size_debt_modules()
 
 There are **four** economically distinct ways a loan can handle interest before operations begin. Each produces a different principal for the same base cost, and each shows up differently on the S&U.
 
-| Carry type | Periodic DS? | Balance at takeout | Sizing factor |
+| Carry type | Periodic DS? | Balance at takeout | Default sizing factor |
 |---|---|---|---|
 | `io_only` (True IO) | Yes — cash paid monthly | Flat (= base cost) | `f_io = 0` |
 | `interest_reserve` | No — pre-funded pool | Base cost only | `f_io = rate/12 × (N+1)/2` |
@@ -418,6 +418,20 @@ For `N = 12`, that is `rate/12 × 6.5 = 0.5417 × rate`. Compared to the naive 5
 **Day-precise interest (Phase H, May 2026).** The statistical `(N+1)/2` and `N` factors above are used for the sizing solve (principal calculation). Monthly cashflow line items use `period_interest_months()` from `app/engines/interest.py`, which applies actual day-count conventions (`actual_360` default) for precise period-by-period interest accrual. The sizing factors remain the same algebraically; only the period-level cash flows gain day-count precision.
 
 **The full-balance factor for Capitalized Interest.** Capitalized interest (PIK) accrues on the full commitment from day one — there is no "average draw", because the lender imputes full balance. The factor is `rate/12 × N`.
+
+**Override: `source.draw_type` decouples carry type from draw schedule (May 2026).** The defaults above assume the conventional pairing — Interest Reserve goes with construction-style monthly draws (`(N+1)/2`); Capitalized Interest goes with a fully-drawn balance (`N`). Real products break this pairing: a tax-exempt bond carrying an Interest Reserve is *fully drawn* into escrow at close, so interest accrues on the full balance even though the carry type is IR.
+
+The optional `CapitalModule.source.draw_type` field overrides the default factor:
+
+| `draw_type` | Effect on `f_io` | Typical product |
+|---|---|---|
+| `"fully_drawn"` | `rate/12 × N` (full balance for whole period) | Bond, term note, perm loan with proceeds in escrow |
+| `"draw_down"` | `rate/12 × (N+1)/2` (average balance over linear draws) | Construction loan, mini-perm |
+| `null` (default) | Carry-type convention: IR → draw_down, CI → fully_drawn | Backward-compatible default |
+
+Both the principal solve and the Interest Reserve Use line writer (`app/engines/cashflow.py`, perm path around line 3130) read `draw_type` and apply the same factor — required for `Sources = Uses`. The mapping helper `_draw_schedule_for(carry_type, draw_type)` returns the `"lump"` (fully_drawn) or `"linear"` (draw_down) argument passed to `period_interest_months()`.
+
+For perm-only structures (no separate construction loan in the stack), the perm path substitutes `fully_drawn` when `draw_type` is null rather than the IR carry-type convention — perm proceeds are fully drawn at close in practice. Legacy modules without `draw_type` set continue to behave as before.
 
 **Code (cashflow.py, construction loan branch around line 958):**
 ```python

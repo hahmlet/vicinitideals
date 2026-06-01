@@ -788,6 +788,7 @@ Scenario-scoped Source identity (lender, rate, carry type, exit terms). Per-proj
 | refi_cap_rate_pct | Cap rate for refi LTV sizing; defaults to going-in cap if absent |
 | loan_type | io_only / interest_reserve / capitalized_interest / pi |
 | closing_costs_pct | Origination/closing fee as % of principal |
+| draw_type | `fully_drawn` / `draw_down` / null. Overrides default principal-draw assumption for pre-op interest sizing. `fully_drawn` (bond, term note): full principal outstanding from day one → interest factor `rate/12 × N`. `draw_down` (construction loan): principal drawn evenly across pre-op months → interest factor `rate/12 × (N+1)/2`. Null falls back to carry-type convention: IR→draw_down, CI→fully_drawn. Read by both principal solve and IR Use line writer; see `FINANCIAL_MODEL.md` §2.2. |
 
 **12.1b carry JSONB keys:**
 
