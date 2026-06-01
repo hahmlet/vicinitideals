@@ -2773,15 +2773,18 @@ async def _auto_size_debt_modules(
         _LEASE_UP_INCOME_FACTOR = Decimal("1") / Decimal("3")
         noi_monthly_est = noi_annual / Decimal("12") if noi_annual > ZERO else ZERO
         # The 1/3 NOI offset assumes income ramps during lease-up. If every
-        # income stream is gated to `stabilized` (or later), nothing actually
-        # collects during lease-up — the offset would over-credit and zero
-        # out the LUR, leaving perm DS uncovered. Detect that case and drop
-        # the offset to zero so the LUR covers full lease-up DS.
+        # income stream is gated to `stabilized` (or later), no revenue
+        # actually collects during lease-up — but OpEx still drains cash.
+        # Replace the positive NOI credit with a NEGATIVE offset equal to
+        # the projected OpEx burden so LUR covers (DS + OpEx) × L months.
+        # Uses stabilized opex_monthly_pre as a conservative estimate; real
+        # lease-up opex is typically lower (utilities / mgmt fee scale with
+        # occupancy) so this slightly over-sizes the LUR — safe error.
         _streams_ramp_lease_up = any(
             _is_stream_active(s, PeriodType.lease_up) for s in streams
         )
         if not _streams_ramp_lease_up:
-            lease_up_income_offset = ZERO
+            lease_up_income_offset = -_q(opex_monthly_pre * Decimal(lease_up_months))
         else:
             lease_up_income_offset = _q(noi_monthly_est * _LEASE_UP_INCOME_FACTOR * Decimal(lease_up_months))
         effective_uses = total_uses - fixed - lease_up_income_offset
