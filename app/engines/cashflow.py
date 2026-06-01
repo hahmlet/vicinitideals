@@ -13,7 +13,31 @@ _DIAG_ENABLED = os.environ.get("VD_DIAG_AUTOSIZE") == "1"
 # shortfall. Default off so existing deals are unaffected until the proof
 # is validated on real data.
 _BANK_ACCOUNT_RESERVE_ENABLED = os.environ.get("BANK_ACCOUNT_RESERVE_ENABLED") == "1"
+# Per-scenario allowlist — comma-separated UUIDs. When set, the feature is
+# active ONLY for these scenarios (regardless of the global flag).
+# Lets us pilot the auto-reserve on one test deal without touching the
+# rest of production. Empty/unset → global flag controls behavior.
+_BANK_ACCOUNT_RESERVE_ALLOWLIST: set[str] = {
+    s.strip().lower()
+    for s in (os.environ.get("BANK_ACCOUNT_RESERVE_ALLOWED_SCENARIOS") or "").split(",")
+    if s.strip()
+}
 _CASH_FLOW_SUPPORT_RESERVE_LABEL = "Cash Flow Support Reserve"
+
+
+def _bank_account_reserve_active_for(scenario_id: "UUID | str | None") -> bool:
+    """Decide whether the auto-managed Cash Flow Support Reserve should be
+    emitted for this scenario.
+
+    Precedence:
+      1. Per-scenario allowlist non-empty → only listed scenarios are active
+      2. Allowlist empty → global flag (BANK_ACCOUNT_RESERVE_ENABLED) wins
+    """
+    if _BANK_ACCOUNT_RESERVE_ALLOWLIST:
+        if scenario_id is None:
+            return False
+        return str(scenario_id).lower() in _BANK_ACCOUNT_RESERVE_ALLOWLIST
+    return _BANK_ACCOUNT_RESERVE_ENABLED
 
 
 def _diag(msg: str) -> None:
@@ -1052,7 +1076,7 @@ async def _compute_project_cashflow(
         construction_monthly=construction_monthly,
     )
     if bank_account_proof is not None:
-        if _BANK_ACCOUNT_RESERVE_ENABLED:
+        if _bank_account_reserve_active_for(deal_uuid):
             gap = _to_decimal(bank_account_proof.get("max_shortfall", "0"))
             action = _upsert_cash_flow_support_reserve(
                 session=session,

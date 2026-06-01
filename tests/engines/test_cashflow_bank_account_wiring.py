@@ -12,9 +12,11 @@ import pytest
 
 from app.engines.cashflow import (
     _CASH_FLOW_SUPPORT_RESERVE_LABEL,
+    _bank_account_reserve_active_for,
     _run_bank_account_proof,
     _upsert_cash_flow_support_reserve,
 )
+import app.engines.cashflow as _cashflow_mod
 from app.engines.cashflow_compile import PhaseSpec
 from app.models.cashflow import OperationalOutputs, PeriodType
 
@@ -136,6 +138,63 @@ import uuid
 
 
 @pytest.mark.unit
+@pytest.mark.unit
+def test_reserve_gate_global_flag_off_is_inactive(monkeypatch):
+    """Global flag off, allowlist empty → feature OFF for every scenario."""
+    monkeypatch.setattr(_cashflow_mod, "_BANK_ACCOUNT_RESERVE_ENABLED", False)
+    monkeypatch.setattr(_cashflow_mod, "_BANK_ACCOUNT_RESERVE_ALLOWLIST", set())
+    assert _bank_account_reserve_active_for("any-scenario-id") is False
+    assert _bank_account_reserve_active_for(None) is False
+
+
+@pytest.mark.unit
+def test_reserve_gate_global_flag_on_is_active(monkeypatch):
+    """Global flag on, allowlist empty → feature ON for every scenario."""
+    monkeypatch.setattr(_cashflow_mod, "_BANK_ACCOUNT_RESERVE_ENABLED", True)
+    monkeypatch.setattr(_cashflow_mod, "_BANK_ACCOUNT_RESERVE_ALLOWLIST", set())
+    assert _bank_account_reserve_active_for("any-scenario-id") is True
+
+
+@pytest.mark.unit
+def test_reserve_gate_allowlist_restricts_to_listed_scenarios(monkeypatch):
+    """Allowlist non-empty → only listed scenarios are active, even when the
+    global flag is OFF. Lets us pilot the feature on one test deal."""
+    monkeypatch.setattr(_cashflow_mod, "_BANK_ACCOUNT_RESERVE_ENABLED", False)
+    monkeypatch.setattr(
+        _cashflow_mod,
+        "_BANK_ACCOUNT_RESERVE_ALLOWLIST",
+        {"cf0e77c3-a445-434c-8788-6d948303d916"},
+    )
+    # Allowed scenario → active
+    assert _bank_account_reserve_active_for(
+        "cf0e77c3-a445-434c-8788-6d948303d916"
+    ) is True
+    # Case-insensitive match
+    assert _bank_account_reserve_active_for(
+        "CF0E77C3-A445-434C-8788-6D948303D916"
+    ) is True
+    # Other scenario → inactive
+    assert _bank_account_reserve_active_for(
+        "11111111-2222-3333-4444-555555555555"
+    ) is False
+    # None → inactive
+    assert _bank_account_reserve_active_for(None) is False
+
+
+@pytest.mark.unit
+def test_reserve_gate_allowlist_overrides_global_flag(monkeypatch):
+    """When the allowlist is set, the global flag is ignored — only listed
+    scenarios are active even if the global flag was ON."""
+    monkeypatch.setattr(_cashflow_mod, "_BANK_ACCOUNT_RESERVE_ENABLED", True)
+    monkeypatch.setattr(
+        _cashflow_mod,
+        "_BANK_ACCOUNT_RESERVE_ALLOWLIST",
+        {"only-this-scenario"},
+    )
+    assert _bank_account_reserve_active_for("only-this-scenario") is True
+    assert _bank_account_reserve_active_for("any-other-scenario") is False
+
+
 def test_upsert_creates_new_use_line_when_gap_positive():
     sess = _StubSession()
     use_lines: list = []
