@@ -72,6 +72,93 @@ def test_self_referential_draw_covers_carry_on_full_balance():
         )
 
 
+def test_funded_carry_skips_self_referential_capitalization():
+    """
+    When a loan's carry is pre-funded by a separate Interest Reserve UseLine
+    (carry_type=="interest_reserve" → SourceDef.funded_carry=True), the
+    draw must NOT capitalize additional carry on top. Otherwise we'd
+    double-count interest: once via the IR UseLine, again via the self-
+    referential formula's carry term.
+
+    With funded_carry=True: total_draw == uses + payoff (no carry markup);
+    carry_cost == 0; loan balance grows by uses only.
+    """
+    inputs = DrawScheduleInputs(
+        milestones=milestones(),
+        uses=[
+            UseLineItem("hard", "Hard Costs", "hard_costs", Decimal("600_000"),
+                        "construction_start", 6),
+        ],
+        sources=[
+            SourceDef(
+                key="loan",
+                label="Construction Loan (IR-pool funded)",
+                source_type="debt",
+                draw_every_n_months=2,
+                annual_interest_rate=Decimal("0.08"),  # rate set but…
+                active_from_milestone="construction_start",
+                active_to_milestone="co",
+                funded_carry=True,                       # …carry pre-funded
+            ),
+        ],
+    )
+    schedule = DrawScheduleCalculator(inputs).calculate()
+
+    total_uses = Decimal("600_000")
+    total_drawn = sum(d.total_draw for d in schedule.by_source["loan"])
+    total_carry = sum(d.carry_cost for d in schedule.by_source["loan"])
+
+    # Loan balance = uses only (no carry capitalized)
+    assert total_drawn == total_uses, (
+        f"funded_carry=True must fund only uses, got {total_drawn} vs {total_uses}"
+    )
+    assert total_carry == Decimal("0"), (
+        f"funded_carry=True must report zero carry_cost, got {total_carry}"
+    )
+
+
+def test_funded_carry_vs_capitalized_diverge_by_expected_amount():
+    """
+    For the same loan inputs, the funded_carry=True path should produce a
+    loan balance smaller than the self-referential capitalized path by
+    approximately the interest amount the IR pool would have covered.
+    """
+    base_kwargs = dict(
+        key="loan",
+        label="Construction Loan",
+        source_type="debt",
+        draw_every_n_months=2,
+        annual_interest_rate=Decimal("0.08"),
+        active_from_milestone="construction_start",
+        active_to_milestone="co",
+    )
+    capitalized_inputs = DrawScheduleInputs(
+        milestones=milestones(),
+        uses=[UseLineItem("hard", "Hard Costs", "hard_costs",
+                          Decimal("600_000"), "construction_start", 6)],
+        sources=[SourceDef(**base_kwargs, funded_carry=False)],
+    )
+    funded_inputs = DrawScheduleInputs(
+        milestones=milestones(),
+        uses=[UseLineItem("hard", "Hard Costs", "hard_costs",
+                          Decimal("600_000"), "construction_start", 6)],
+        sources=[SourceDef(**base_kwargs, funded_carry=True)],
+    )
+    cap = DrawScheduleCalculator(capitalized_inputs).calculate()
+    fund = DrawScheduleCalculator(funded_inputs).calculate()
+
+    cap_total = sum(d.total_draw for d in cap.by_source["loan"])
+    fund_total = sum(d.total_draw for d in fund.by_source["loan"])
+
+    # Capitalized path must exceed funded path by at least the carry amount.
+    diff = cap_total - fund_total
+    assert diff > Decimal("0"), (
+        f"capitalized total ({cap_total}) must exceed funded total ({fund_total})"
+    )
+    # And funded total must equal uses-only.
+    assert fund_total == Decimal("600_000")
+
+
 def test_naive_draw_underestimates_vs_self_referential():
     """
     Naive formula: D = uses + B × r × n

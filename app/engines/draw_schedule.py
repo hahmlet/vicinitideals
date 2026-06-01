@@ -88,6 +88,15 @@ class SourceDef:
     single_draw: bool = False
     stack_position: int = 0             # routing priority; lower fills first
     eligible_use_categories: list[str] = field(default_factory=list)  # empty = any
+    # True when the loan's construction-period interest is pre-funded by a
+    # separate Interest Reserve UseLine (carry_type=="interest_reserve" on
+    # the underlying CapitalModule). In that mode the IR pool drains
+    # monthly to pay the lender, so the draw must NOT self-capitalize
+    # carry on top of the uses_in_window — otherwise the engine double-
+    # counts interest (once via the IR UseLine, again via the self-
+    # referential carry term). With funded_carry=True, each draw funds
+    # only uses + payoff; carry_cost is recorded as 0.
+    funded_carry: bool = False
 
 
 @dataclass
@@ -510,7 +519,7 @@ class DrawScheduleCalculator:
             n = Decimal(freq)
             existing_balance = balance
 
-            if monthly_rate > 0:
+            if monthly_rate > 0 and not source.funded_carry:
                 denominator = Decimal("1") - monthly_rate * n
                 if denominator <= 0:
                     denominator = Decimal("0.0001")
@@ -522,6 +531,11 @@ class DrawScheduleCalculator:
                 # interest cost.
                 carry_cost = (existing_balance + total_draw) * monthly_rate * n
             else:
+                # funded_carry: the Interest Reserve UseLine (sized by the
+                # cashflow auto-sizer) is already in uses_in_window. The IR
+                # pool drains monthly to pay the lender — do NOT capitalize
+                # interest on top, or it gets double-counted.
+                # Or: equity / zero-rate source.
                 carry_cost = Decimal("0")
                 total_draw = uses_in_window + payoff
 

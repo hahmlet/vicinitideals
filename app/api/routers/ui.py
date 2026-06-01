@@ -14374,6 +14374,20 @@ async def _run_draw_schedule(
         # Stack position + eligibility routing live on the CapitalModule.
         stack_pos = int(getattr(cm, "stack_position", 0) or 0) if cm else 0
         eligible_tags = list(getattr(cm, "eligible_use_tags", None) or [])
+        # When the construction-phase carry_type is "interest_reserve",
+        # the cashflow auto-sizer creates a "Capitalized Construction
+        # Interest" UseLine that pre-funds the IR pool. The draw schedule
+        # already funds that UseLine via the debt draw — capitalizing
+        # additional carry into the loan principal would double-count
+        # interest. Flag the SourceDef so _calc_source_draws skips the
+        # self-referential carry term for these loans.
+        _funded_carry = False
+        if cm and is_debt:
+            _carry_dict = cm.carry or {}
+            for _ph in (_carry_dict.get("schedule") or []):
+                if _ph.get("carry_type") == "interest_reserve":
+                    _funded_carry = True
+                    break
         # Map UseLine cost_category → engine UseLineItem category tag
         # (engine uses the same _phase_to_cat values defined above).
         engine_sources.append(SourceDef(
@@ -14390,6 +14404,7 @@ async def _run_draw_schedule(
             single_draw=not is_debt,
             stack_position=stack_pos,
             eligible_use_categories=eligible_tags,
+            funded_carry=_funded_carry,
         ))
     engine_sources.sort(key=lambda s: _ms_date_idx.get(s.active_from_milestone, _dt_cls.max))
 

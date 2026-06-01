@@ -918,3 +918,46 @@ def test_sum_ir_lease_up_interest_no_ir_modules_returns_zero() -> None:
     m.active_phase_end = "stabilized"
     m.exit_terms = {}
     assert _sum_ir_lease_up_interest([m], phases) == Decimal("0")
+
+
+@pytest.mark.unit
+def test_sum_ir_lease_up_interest_uses_schedule_rate_over_source_rate() -> None:
+    """Rate lookup precedence: schedule-phase rate beats source headline rate.
+
+    A tax-exempt bond with carry.schedule rate_pct=5.5 and
+    source.interest_rate_pct=6.0 (the legacy headline rate) must size IR
+    using 5.5%, matching what the cashflow engine actually charges during
+    the IR phase. Source-first precedence would over-estimate IR by ~9%.
+    """
+    phases = [
+        PhaseSpec(period_type=PeriodType.construction, months=12),
+        PhaseSpec(period_type=PeriodType.lease_up, months=6),
+    ]
+    m = _ScheduledCarryModule(
+        schedule=[
+            {"label": "IR", "carry_type": "interest_reserve",
+             "duration": {"type": "milestone",
+                          "milestone_key": "operation_stabilized"},
+             "rate_pct": 5.5},
+            {"label": "PI", "carry_type": "pi",
+             "duration": {"type": "remainder"}, "rate_pct": 5.5},
+        ],
+        amount="10000000",
+        rate_pct=6.0,  # Headline source rate — must NOT win
+    )
+    m.vehicle_type = "debt"
+    m.active_phase_start = "construction"
+    m.active_phase_end = "stabilized"
+    m.exit_terms = {}
+
+    out = _sum_ir_lease_up_interest([m], phases)
+    expected = (Decimal("10000000") * Decimal("5.5") / Decimal("100")
+                / Decimal("12"))
+    assert abs(out - expected) < Decimal("0.01"), (
+        f"Schedule rate 5.5% must win over source 6.0%, got {out} "
+        f"vs expected {expected}"
+    )
+    # Verify the bug-direction: source-first would have given ~9% more.
+    bug_value = (Decimal("10000000") * Decimal("6.0") / Decimal("100")
+                 / Decimal("12"))
+    assert out < bug_value

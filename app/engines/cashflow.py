@@ -2175,10 +2175,14 @@ def _sum_ir_lease_up_interest(modules: list, phases: list) -> Decimal:
         amount = _to_decimal(src.get("amount") or 0)
         if amount <= ZERO:
             continue
+        # Use the schedule's IR-phase rate, not the headline source rate.
+        # The cashflow engine charges the schedule rate during the carry
+        # phase — pulling source.interest_rate_pct here over-estimates IR
+        # whenever the schedule rate differs from the headline rate
+        # (e.g. tax-exempt bonds with reduced carry-phase rate).
         rate = Decimal(str(
-            src.get("interest_rate_pct")
-            or (carry.get("schedule") or [{}])[0].get("rate_pct")
-            or carry.get("io_rate_pct")
+            _constr_phase_rate_pct(carry, src)
+            or src.get("interest_rate_pct")
             or 0
         ))
         if rate > ZERO:
