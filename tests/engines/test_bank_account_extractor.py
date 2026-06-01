@@ -38,6 +38,28 @@ class _FakeUseLine:
     timing_type: str = "first_day"
 
 
+def test_cash_flow_support_reserve_counts_toward_opening_cash():
+    """Convergence requirement: the auto-emitted "Cash Flow Support Reserve"
+    UseLine must feed opening_cash, otherwise the iteration loop spins at
+    the same shortfall forever and never converges. Engine emits the
+    reserve on iteration N → extractor must include it on iteration N+1.
+    """
+    use_lines = [
+        _FakeUseLine("Operating Reserve",        Decimal("100_000")),
+        _FakeUseLine("Cash Flow Support Reserve", Decimal("60_000")),
+    ]
+    rows = [_FakeRow(period=0, period_type="lease_up")]
+    out = extract_operating_proof_window(
+        cash_flow_rows=rows,
+        use_lines=use_lines,
+        first_period_date=datetime(2026, 1, 1),
+        co_period=0,
+    )
+    # OR + CFS = 160K. Without CFS feeding opening_cash, iteration loop
+    # would never close the shortfall the CFS was sized to plug.
+    assert out.opening_cash == Decimal("160_000")
+
+
 def test_opening_cash_sums_first_day_reserves():
     use_lines = [
         _FakeUseLine("Operating Reserve",     Decimal("100_000")),
