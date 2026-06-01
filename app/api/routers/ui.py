@@ -5817,12 +5817,17 @@ async def _lightweight_project_status_data(
             uses_total += float(ul.amount)
         except (TypeError, ValueError):
             continue
+    # Gap Adjustment is a per-project phantom — needed by the Account Balance
+    # factor in _compute_calc_status to flip Solvent → yellow when adjustments
+    # are masking a real Sources Gap.
+    has_gap_adjustment = await _has_any_gap_adjustment(session, project_id)
     return {
         "outputs": outputs,
         "inputs": inputs,
         "capital_modules": capital_modules,
         "capital_total": capital_total,
         "uses_total": uses_total,
+        "has_gap_adjustment": has_gap_adjustment,
     }
 
 
@@ -10549,8 +10554,15 @@ async def model_builder(
             "sources_uses": {"status": "na", "label": "See per-project chips", "detail": "", "meta": {}},
             "dscr": {"status": "na", "label": "See per-project chips", "detail": "", "meta": {}},
             "ltv": {"status": "na", "label": "See per-project chips", "detail": "", "meta": {}},
+            "account_balance": {"status": "na", "label": "See per-project chips", "detail": "", "meta": {}},
         }
     else:
+        # Compute _has_adj first so the Account Balance factor in
+        # _compute_calc_status can read it via data["has_gap_adjustment"].
+        _has_adj_pre = False
+        if active_project_id is not None:
+            _has_adj_pre = await _has_any_gap_adjustment(session, active_project_id)
+        data["has_gap_adjustment"] = _has_adj_pre
         _calc_status = _compute_calc_status(data)
     _has_adj = False
     if active_view != "underwriting" and active_project_id is not None:
@@ -11368,7 +11380,79 @@ def _compute_calc_status(data: dict) -> dict:
         }
 
     # ── Overall rollup ──
-    factors = [su_status, dscr_status, ltv_status]
+    # ── Factor 4: Account Balance (bank-account solvency proof) ──
+    # Binary status read from outputs.bank_account_proof.is_solvent. Color
+    # modulated by Sources Gap and Gap Adjustment so a solvent proof on a
+    # deal that doesn't really balance reads as "Solvent — with caveats."
+    ba_proof = (
+        outputs.bank_account_proof
+        if outputs is not None and getattr(outputs, "bank_account_proof", None)
+        else None
+    )
+    has_gap_adj = bool(data.get("has_gap_adjustment"))
+    has_sources_gap = (su_status["status"] == "fail")
+    if not ba_proof:
+        ba_status = {
+            "status": "na",
+            "label": "Account Balance not computed",
+            "detail": "Run Compute and add a project timeline to verify the deal stays solvent through stabilization.",
+            "meta": {"is_solvent": None, "max_shortfall": None, "months_simulated": None, "proof_start": None},
+        }
+    else:
+        _is_solvent = bool(ba_proof.get("is_solvent"))
+        _max_shortfall = ba_proof.get("max_shortfall", "0")
+        try:
+            _max_shortfall_f = float(_max_shortfall)
+        except (TypeError, ValueError):
+            _max_shortfall_f = 0.0
+        _months = int(ba_proof.get("months_simulated") or 0)
+        _proof_start = ba_proof.get("proof_start") or ""
+        ba_meta = {
+            "is_solvent": _is_solvent,
+            "max_shortfall": _max_shortfall_f,
+            "months_simulated": _months,
+            "proof_start": _proof_start,
+        }
+        if not _is_solvent:
+            ba_status = {
+                "status": "fail",
+                "label": f"Insolvent — max shortfall {_fmt_currency(_max_shortfall_f)}",
+                "detail": (
+                    f"Simulated bank account drops below the Operating Reserve floor during "
+                    f"the {_months}-month proof window. This indicates an engine sizing bug "
+                    f"— reserves or draws are off."
+                ),
+                "meta": ba_meta,
+            }
+        elif has_gap_adj or has_sources_gap:
+            _reasons: list[str] = []
+            if has_sources_gap:
+                _reasons.append("a Sources Gap is open")
+            if has_gap_adj:
+                _reasons.append("a Gap Adjustment is active")
+            ba_status = {
+                "status": "warn",
+                "label": "Solvent — with caveats",
+                "detail": (
+                    f"The bank-account proof passes over the {_months}-month window, "
+                    f"but {' and '.join(_reasons)}. The proof assumes Sources cover Uses; "
+                    f"solvency is structurally sound but operationally hypothetical until "
+                    f"the gap is closed or the adjustments are removed."
+                ),
+                "meta": ba_meta,
+            }
+        else:
+            ba_status = {
+                "status": "ok",
+                "label": "Solvent",
+                "detail": (
+                    f"Simulated bank account stays at or above the Operating Reserve floor "
+                    f"for every month of the {_months}-month proof window."
+                ),
+                "meta": ba_meta,
+            }
+
+    factors = [su_status, dscr_status, ltv_status, ba_status]
     failing_count = sum(1 for f in factors if f["status"] in ("fail", "warn"))
     if failing_count == 0:
         overall = "ok"
@@ -11381,6 +11465,7 @@ def _compute_calc_status(data: dict) -> dict:
         "sources_uses": su_status,
         "dscr": dscr_status,
         "ltv": ltv_status,
+        "account_balance": ba_status,
     }
 
 
@@ -11588,6 +11673,7 @@ async def _aggregate_status_for_underwriting(
         "sources_uses": {"status": "na", "label": "See per-project chips", "detail": "", "meta": {}},
         "dscr": {"status": "na", "label": "See per-project chips", "detail": "", "meta": {}},
         "ltv": {"status": "na", "label": "See per-project chips", "detail": "", "meta": {}},
+        "account_balance": {"status": "na", "label": "See per-project chips", "detail": "", "meta": {}},
     }
 
 

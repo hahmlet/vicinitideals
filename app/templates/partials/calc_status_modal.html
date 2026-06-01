@@ -3,7 +3,7 @@
    short label, and explanatory detail.
 
    Required context:
-     - status: dict with keys: overall, failing_count, sources_uses, dscr, ltv
+     - status: dict with keys: overall, failing_count, sources_uses, dscr, ltv, account_balance
      - model_id: str
      - gap_adjustments (optional): dict with revenue_monthly, opex_annual, pp.
        When present and non-zero, per-section status is overridden to "warn"
@@ -44,6 +44,7 @@
        ('sources_uses', 'Sources = Uses', status.sources_uses),
        ('dscr', 'DSCR (Debt Service Coverage)', status.dscr),
        ('ltv', 'LTV (Loan-to-Value)', status.ltv),
+       ('account_balance', 'Account Balance', status.account_balance),
   ] %}
   {# Per-section adjustment override: yellow when relevant phantom is non-zero
      AND underlying status is "ok" (real failures keep their fail/warn status). #}
@@ -137,6 +138,21 @@
         {% endfor %}
       </div>
       {% endif %}
+      {% elif key == 'account_balance' and factor.meta.get('months_simulated') %}
+      <div class="calc-status-row-meta">
+        <div><span>Status</span>
+          <span class="text-mono"
+                style="color:{% if factor.meta.is_solvent %}var(--success,#16a34a){% else %}var(--danger,#dc2626){% endif %}">
+            {% if factor.meta.is_solvent %}Solvent{% else %}Insolvent{% endif %}
+          </span></div>
+        <div><span>Proof window</span><span class="text-mono">{{ factor.meta.months_simulated }} months{% if factor.meta.proof_start %} from {{ factor.meta.proof_start|replace('_', ' ') }}{% endif %}</span></div>
+        {% if not factor.meta.is_solvent and factor.meta.max_shortfall %}
+        <div style="font-weight:700;border-top:1px solid var(--border);padding-top:4px;margin-top:4px">
+          <span>Max shortfall</span>
+          <span class="text-mono" style="color:var(--danger,#dc2626)">−${{ '{:,.0f}'.format(factor.meta.max_shortfall) }}</span>
+        </div>
+        {% endif %}
+      </div>
       {% endif %}
     </div>
   </div>
