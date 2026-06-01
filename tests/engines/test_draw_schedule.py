@@ -205,10 +205,17 @@ def test_no_violations_when_reserve_zero():
     assert schedule.violations == []
 
 
-def test_violation_detected_when_draws_too_infrequent():
+def test_prospective_draw_prevents_construction_violations():
     """
-    If a source draws every 6 months but uses hit every month,
-    cash goes negative between draws. Violation should be flagged.
+    Engine uses prospective windowing: each draw pre-funds uses from
+    its date through just before the next draw. Even when draws occur
+    every 6 months and uses hit monthly, construction-phase cash should
+    never dip below the reserve floor — the first draw sizes itself to
+    cover the whole window plus the reserve buffer.
+
+    Regression here would mean prospective draw sizing or reserve_buffer
+    logic broke, and the bank-account proof for construction no longer
+    holds.
     """
     inputs = DrawScheduleInputs(
         milestones=milestones(),
@@ -217,7 +224,7 @@ def test_violation_detected_when_draws_too_infrequent():
             UseLineItem("hard", "Hard Costs", "hard_costs", Decimal("600_000"), "construction_start", 6),
         ],
         sources=[
-            # Draws only every 6 months but monthly costs hit immediately
+            # Draws every 6 months but monthly costs hit immediately
             SourceDef(
                 key="loan", label="Loan", source_type="debt",
                 draw_every_n_months=6, annual_interest_rate=Decimal("0.0"),
@@ -230,10 +237,17 @@ def test_violation_detected_when_draws_too_infrequent():
     )
 
     schedule = DrawScheduleCalculator(inputs).calculate()
-    # With a $50k reserve floor and draws every 6 months, months 2-5 will be below reserve
-    assert not schedule.is_valid
-    assert len(schedule.violations) > 0
-    assert all(isinstance(v, BalanceViolation) for v in schedule.violations)
+    # First draw pre-funds the full 6-month window plus the reserve buffer.
+    first = schedule.events[0]
+    assert first.total_draw == Decimal("650000")  # $600k uses + $50k reserve
+    # No construction-phase violations — engine forward-funds the window.
+    construction_violations = [v for v in schedule.violations if v.phase == "construction"]
+    assert construction_violations == []
+    assert schedule.is_valid
+    # Cash never falls below the floor once it is enforced.
+    for flow in schedule.monthly_cash_flows:
+        if flow.required_reserve > 0:
+            assert flow.cash_balance >= flow.required_reserve
 
 
 def test_violation_shortfall_is_positive():
