@@ -403,7 +403,7 @@ async def test_irr_hurdle_split_waits_until_lp_hurdle_is_met(db_session: AsyncSe
 
 
 async def _seed_base_deal(session: AsyncSession) -> DealModel:
-    from app.models.deal import Deal, DealOpportunity
+    from app.models.deal import Deal
     org = Organization(id=uuid4(), name="Test Org", slug=f"test-org-{uuid4().hex[:8]}")
     user = User(id=uuid4(), org_id=org.id, name="Test User", display_color="#3366FF")
     opportunity = Opportunity(
@@ -413,6 +413,7 @@ async def _seed_base_deal(session: AsyncSession) -> DealModel:
         status=OpportunityStatus.active,
         project_category=OpportunityCategory.proposed,
         source=OpportunitySource.manual,
+        source_url=f"manual://{uuid4().hex}",
         created_by_user_id=user.id,
     )
     top_deal = Deal(id=uuid4(), org_id=org.id, name="Base Case", created_by_user_id=user.id)
@@ -426,8 +427,6 @@ async def _seed_base_deal(session: AsyncSession) -> DealModel:
         project_type=ProjectType.value_add,
     )
     session.add_all([org, user, opportunity, top_deal, deal])
-    await session.flush()
-    session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id))
     await session.flush()
     return deal
 

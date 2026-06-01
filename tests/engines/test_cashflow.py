@@ -401,9 +401,10 @@ async def _seed_cashflow_deal(session: AsyncSession) -> UUID:
         status=OpportunityStatus.active,
         project_category=OpportunityCategory.proposed,
         source=OpportunitySource.manual,
+        source_url=f"manual://{uuid4().hex}",
         created_by_user_id=user.id,
     )
-    from app.models.deal import Deal, DealOpportunity
+    from app.models.deal import Deal
     top_deal = Deal(id=uuid4(), org_id=org.id, name="Base Case", created_by_user_id=user.id)
     deal = DealModel(
         id=uuid4(),
@@ -416,14 +417,12 @@ async def _seed_cashflow_deal(session: AsyncSession) -> UUID:
     )
     session.add_all([org, user, opportunity, top_deal, deal])
     await session.flush()
-    session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id))
 
     project = Project(
         id=uuid4(),
         scenario_id=deal.id,
         opportunity_id=opportunity.id,
         name="12-unit Major Reno",
-        deal_type=ProjectType.value_add.value,
     )
     session.add(project)
     await session.flush()
