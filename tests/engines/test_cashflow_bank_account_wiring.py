@@ -382,3 +382,97 @@ def test_proof_surfaces_shortfall_when_underfunded():
     assert Decimal(result["max_shortfall"]) > Decimal("0")
     # Stabilized period is the boundary; only lease-up rows simulated
     assert result["months_simulated"] == 3
+
+
+@pytest.mark.unit
+def test_stress_deal_emits_cash_flow_support_and_converges_to_solvent():
+    """End-to-end stress: realistic underfunded lease-up triggers shortfall,
+    upsert emits a Cash Flow Support Reserve sized to plug it, the
+    re-proof with the augmented use_lines is solvent. Proves the full
+    detect → emit → converge loop the /compute iteration relies on.
+
+    Stress profile (mirrors a tight value-add deal):
+      - 6-month lease-up with $30K/mo perm DS plus $8K/mo OpEx
+      - Income ramps 0 → $40K (S-curve floor) over the window
+      - Existing reserves: OR=$60K, LUR=$40K → opening cash $100K, $60K floor
+      - Each month net negative until month 4 → bank drops below floor
+    """
+    phases = [
+        PhaseSpec(PeriodType.lease_up, 6),
+        PhaseSpec(PeriodType.stabilized, 12),
+    ]
+    rows = [
+        _Row(period=0, period_type=PeriodType.lease_up,
+             effective_gross_income=Decimal("0"),
+             operating_expenses=Decimal("8_000"),
+             debt_service=Decimal("30_000")),
+        _Row(period=1, period_type=PeriodType.lease_up,
+             effective_gross_income=Decimal("8_000"),
+             operating_expenses=Decimal("8_000"),
+             debt_service=Decimal("30_000")),
+        _Row(period=2, period_type=PeriodType.lease_up,
+             effective_gross_income=Decimal("16_000"),
+             operating_expenses=Decimal("8_000"),
+             debt_service=Decimal("30_000")),
+        _Row(period=3, period_type=PeriodType.lease_up,
+             effective_gross_income=Decimal("24_000"),
+             operating_expenses=Decimal("8_000"),
+             debt_service=Decimal("30_000")),
+        _Row(period=4, period_type=PeriodType.lease_up,
+             effective_gross_income=Decimal("32_000"),
+             operating_expenses=Decimal("8_000"),
+             debt_service=Decimal("30_000")),
+        _Row(period=5, period_type=PeriodType.lease_up,
+             effective_gross_income=Decimal("40_000"),
+             operating_expenses=Decimal("8_000"),
+             debt_service=Decimal("30_000")),
+        _Row(period=6, period_type=PeriodType.stabilized,
+             effective_gross_income=Decimal("48_000"),
+             operating_expenses=Decimal("8_000"),
+             debt_service=Decimal("30_000")),
+    ]
+    use_lines: list = [
+        _UL("Operating Reserve", Decimal("60_000")),
+        _UL("Lease-Up Reserve",  Decimal("40_000")),
+    ]
+
+    # Step 1 — proof under stress: expect shortfall
+    proof1 = _run_bank_account_proof(
+        cash_flow_rows=rows,
+        use_lines=use_lines,
+        phases=phases,
+        milestone_dates={"acquisition_start": "2026-01-01"},
+    )
+    assert proof1 is not None
+    assert proof1["is_solvent"] is False
+    gap = Decimal(proof1["max_shortfall"])
+    assert gap > Decimal("0")
+
+    # Step 2 — auto-emit Cash Flow Support Reserve sized to the gap
+    sess = _StubSession()
+    pid = uuid.uuid4()
+    action = _upsert_cash_flow_support_reserve(
+        session=sess,
+        project_id=pid,
+        use_lines=use_lines,
+        amount=gap,
+        proof_result=proof1,
+    )
+    assert action == "created"
+    cfs = next(ul for ul in use_lines
+               if getattr(ul, "label", "") == _CASH_FLOW_SUPPORT_RESERVE_LABEL)
+    assert cfs.amount == gap
+    assert cfs.timing_type == "first_day"
+    assert cfs.cost_category == "soft"
+    assert cfs.project_id == pid
+
+    # Step 3 — re-run proof with augmented use_lines → solvent (convergence)
+    proof2 = _run_bank_account_proof(
+        cash_flow_rows=rows,
+        use_lines=use_lines,
+        phases=phases,
+        milestone_dates={"acquisition_start": "2026-01-01"},
+    )
+    assert proof2 is not None
+    assert proof2["is_solvent"] is True
+    assert Decimal(proof2["max_shortfall"]) == Decimal("0")
