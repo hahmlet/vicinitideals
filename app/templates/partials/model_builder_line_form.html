@@ -110,7 +110,12 @@
     </div>
   </div>
   {% if milestones_dated_ds %}
-  {%- set _cur_ms = existing.milestone_key if existing.milestone_key else '' -%}
+  {# Sensible default milestone by cost category: hard costs almost always
+     belong on the construction milestone (fund-as-built). Without this
+     the dropdown's first option (close → phase=acquisition) is the
+     default, which lumps hard costs on day 0 and breaks Draw Down. #}
+  {%- set _default_ms = 'construction' if default_category == 'hard' else '' -%}
+  {%- set _cur_ms = existing.milestone_key if existing.milestone_key else _default_ms -%}
   {%- set _cur_ms_to = existing.milestone_key_to if existing.milestone_key_to else '' -%}
   <div class="form-row" id="ul-milestone-row">
     <div class="form-field">
@@ -240,12 +245,14 @@ function ulTimingChanged(val) {
       </div>
     </div>
     {% if milestones_dated_ds %}
+    {# Same category-aware default as the edit form above (see comment). #}
+    {%- set _default_ms_uw = 'construction' if default_category == 'hard' else '' -%}
     <div class="form-row">
       <div class="form-field">
         <label class="form-label">Active From</label>
         <select class="form-select" name="milestone_key">
           {% for ms in milestones_dated_ds if ms.date %}
-          <option value="{{ ms.key }}">{{ ms.label }}</option>
+          <option value="{{ ms.key }}" {% if ms.key == _default_ms_uw %}selected{% endif %}>{{ ms.label }}</option>
           {% endfor %}
         </select>
       </div>

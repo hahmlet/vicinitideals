@@ -6659,13 +6659,21 @@ async def handle_form_create_or_update(
             "maturity": "other",
         }
         _phase = _milestone_to_phase.get(_ms_key or "", "") or form.get("phase", "acquisition")
+        _cost_cat = form.get("cost_category") or "soft"
+        # Safety net: hard costs land at close milestone (phase=acquisition)
+        # if the user accepted the form's default. Hard costs almost always
+        # belong on the construction milestone — fund-as-built, not at
+        # close. This normalizes the data on save without overriding any
+        # explicit non-acquisition phase the user picked.
+        if _cost_cat == "hard" and _phase == "acquisition":
+            _phase = "construction"
         data: dict = {
             "label": form.get("label", ""),
             "phase": _phase,
             "amount": _fd(form.get("amount")) or Decimal("0"),
             "timing_type": form.get("timing_type") or "first_day",
             "is_deferred": form.get("is_deferred") == "true",
-            "cost_category": form.get("cost_category") or "soft",
+            "cost_category": _cost_cat,
             "notes": form.get("notes") or None,
         }
         if item_id:
