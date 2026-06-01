@@ -2777,14 +2777,25 @@ async def _auto_size_debt_modules(
         # actually collects during lease-up — but OpEx still drains cash.
         # Replace the positive NOI credit with a NEGATIVE offset equal to
         # the projected OpEx burden so LUR covers (DS + OpEx) × L months.
-        # Uses stabilized opex_monthly_pre as a conservative estimate; real
-        # lease-up opex is typically lower (utilities / mgmt fee scale with
-        # occupancy) so this slightly over-sizes the LUR — safe error.
+        # Apply the expense growth factor at lease-up midpoint so the sizer
+        # tracks the per-period opex the cashflow simulation actually charges
+        # (3 %/yr default growth × elapsed months produces a few-percent bump
+        # by the time the deal reaches lease-up).
         _streams_ramp_lease_up = any(
             _is_stream_active(s, PeriodType.lease_up) for s in streams
         )
         if not _streams_ramp_lease_up:
-            lease_up_income_offset = -_q(opex_monthly_pre * Decimal(lease_up_months))
+            _lu_start_period = sum(
+                p.months for p in phases
+                if p.period_type != PeriodType.lease_up
+                and _PERIOD_TYPE_RANK.get(p.period_type, 99)
+                    < _PERIOD_TYPE_RANK.get(PeriodType.lease_up, 99)
+            )
+            _lu_midpoint = _lu_start_period + Decimal(lease_up_months) / Decimal("2")
+            _opex_growth = _growth_factor(
+                inputs.expense_growth_rate_pct_annual, int(_lu_midpoint)
+            )
+            lease_up_income_offset = -_q(opex_monthly_pre * _opex_growth * Decimal(lease_up_months))
         else:
             lease_up_income_offset = _q(noi_monthly_est * _LEASE_UP_INCOME_FACTOR * Decimal(lease_up_months))
         effective_uses = total_uses - fixed - lease_up_income_offset
