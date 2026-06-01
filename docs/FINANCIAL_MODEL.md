@@ -3406,3 +3406,80 @@ Parity tests in `tests/exporters/test_formula_parity_*.py` recalc workbooks via 
 - The Debt Schedule's "Notes" block conditionally emits disclosure rows only when the underlying state is present (DSCR-capped sizing, interest-reserve carry, PIK carry). Vanilla perm-debt deals see no Notes section.
 - The Assumptions sheet's Block A includes editable `s_anchor_date` so the LP can overlay a reporting calendar on the relative Y0/Y1/Y2 grid without rebuilding the model.
 
+---
+
+## Appendix G: Bank-Account Solvency Proof (May 2026)
+
+The cashflow engine sizes reserves (OR, IR, LUR) as static lump sums funded at Close. The bank-account proof is a separate *period-level simulation* that walks the bank balance month by month from Day 0 (Close) through Stabilization Start and verifies it never dips below the operating reserve floor. A violation is engine-side proof that reserve sizing is wrong — it is not a user-facing warning.
+
+### G.1 Two simulators, one continuous window
+
+Pre-existing engines each cover half the window:
+
+- `app/engines/draw_schedule.py` — `_simulate_cash_balance()` produces `MonthlyCashFlow` rows for **Close → CO** (construction)
+- `app/engines/cashflow.py` — `_compute_project_cashflow()` produces `CashFlow` rows for **CO → exit** (operations, including lease-up)
+
+`extract_full_window_proof(...)` in `app/engines/bank_account_extractor.py` stitches the two into one continuous timeline:
+
+1. **Opening cash** = sum of `first_day` reserve UseLines (OR + IR + LUR + Cash Flow Support Reserve, etc.).
+2. **Segment 1 — construction** = `MonthlyCashFlow` rows from `draw_schedule.py`.
+3. **Segment 2 — lease-up** = `CashFlow` rows from `cashflow.py` filtered to months between CO and Stabilization Start.
+4. **Overlap resolution** = construction wins on any overlap month (the draw-schedule simulator owns construction).
+
+`_RESERVE_LABELS` in `bank_account_extractor.py` is the canonical set of reserve labels recognized at Close — "Operating Reserve", "Interest Reserve", "Lease-Up Reserve", "Cash Flow Support Reserve". Renaming a reserve elsewhere without updating this set will break the opening-cash invariant.
+
+### G.2 `funded_carry` flag on `SourceDef`
+
+The draw schedule engine has two interest models:
+
+| Model | When | Behavior |
+|---|---|---|
+| Self-referential capitalized | `funded_carry=False` and `annual_interest_rate > 0` | `D = (uses + payoff + B × r × n) / (1 − r × n)` — draw size grows to fund its own carry. |
+| Funded-carry pool | `funded_carry=True` | Carry on this loan is paid from a pre-funded Interest Reserve UseLine. Draw = `uses + payoff` only; `carry_cost = 0` to avoid double-counting (the IR pool already drained for the same interest). |
+
+`app/api/routers/ui.py` builds `SourceDef.funded_carry = True` when the `CapitalModule.carry.schedule` contains a phase with `carry_type="interest_reserve"`. Without this flag, the draw schedule and the cashflow engine would charge the same loan interest twice (once via capitalization in `_calc_source_draws`, once via the IR pool drawdown in `_compute_project_cashflow`).
+
+### G.3 Cash Flow Support Reserve — auto-emitted gap-filler
+
+When `extract_full_window_proof` detects a month where `cash_balance < required_reserve`, cashflow auto-emits a new `UseLine` labeled **"Cash Flow Support Reserve"** sized to plug the largest shortfall. It is:
+
+- `timing_type="first_day"` — funded at Close
+- `cost_category="soft"` — appears in Sources & Uses under soft costs
+- Included in `_RESERVE_LABELS` so the next sizing iteration counts it toward opening cash
+
+The compute loop in `app/api/routers/models.py` re-runs draw schedule + cashflow up to `MAX_ITERATIONS` times. Each iteration recomputes `construction_monthly` from the latest draw schedule and passes it to `compute_cash_flows`. Convergence: once Cash Flow Support is in opening cash, the next pass either eliminates the shortfall (gap → 0) or stabilizes at a fixed reserve amount within tolerance. If `_RESERVE_LABELS` omitted "Cash Flow Support Reserve", the loop would spin at the same shortfall forever — the emitted reserve wouldn't be recognized as opening cash.
+
+### G.4 Per-scenario allowlist
+
+The bank-account reserve emission is gated by `_bank_account_reserve_active_for(scenario_id)` in `cashflow.py`:
+
+```
+_BANK_ACCOUNT_RESERVE_ALLOWED_SCENARIOS = set from env BANK_ACCOUNT_RESERVE_ALLOWED_SCENARIOS
+_BANK_ACCOUNT_RESERVE_ENABLED          = global on/off (BANK_ACCOUNT_RESERVE_ENABLED env)
+```
+
+Precedence:
+
+1. If the allowlist env var is non-empty → only scenarios in the list have reserve emission active. All others fall back to the legacy `extract_operating_proof_window` path.
+2. If the allowlist is empty → the global flag applies to every scenario.
+
+This is a pilot-mode lever: ship to one production deal first, verify, then either remove the allowlist (everyone gets the feature) or expand it.
+
+### G.5 Files involved
+
+| File | Role |
+|---|---|
+| `app/engines/bank_account_extractor.py` | `extract_full_window_proof`, `_RESERVE_LABELS` |
+| `app/engines/draw_schedule.py` | `_simulate_cash_balance`, `_calc_source_draws`, `SourceDef.funded_carry` |
+| `app/engines/cashflow.py` | `_run_bank_account_proof`, `_bank_account_reserve_active_for`, Cash Flow Support emission |
+| `app/api/routers/ui.py` | Builds `SourceDef.funded_carry` from `CapitalModule.carry.schedule` |
+| `app/api/routers/models.py` | `/compute` iteration loop wiring `construction_monthly` between engines |
+
+### G.6 Convergence invariants (test coverage)
+
+- `tests/engines/test_bank_account_extractor.py` — opening-cash recognition, segment ordering, overlap resolution
+- `tests/engines/test_draw_schedule.py::test_funded_carry_skips_self_referential_capitalization` — `funded_carry=True` does not capitalize
+- `tests/engines/test_draw_schedule.py::test_funded_carry_vs_capitalized_diverge_by_expected_amount` — divergence equals expected interest pool
+- `tests/engines/test_cashflow_bank_account_wiring.py` — allowlist gate (4 tests covering all precedence cases)
+- `tests/engines/test_bank_account_extractor.py::test_cash_flow_support_reserve_counts_toward_opening_cash` — convergence regression
+
