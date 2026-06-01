@@ -14278,17 +14278,33 @@ async def _run_draw_schedule(
     ]
 
     # ── Use lines ───────────────────────────────────────────────────────────
+    # NOTE: This map must cover both UseLinePhase enum values AND off-enum
+    # strings that have been written to the DB by legacy or wizard paths
+    # (notably ``operation_lease_up`` for the Lease-Up Reserve UseLine).
+    # Anything missed here silently falls back to "close" and lands at
+    # day 0 of the deal, breaking lease-up reserve timing.
     _phase_to_ms = {
         "acquisition": "close", "pre_construction": "pre_development",
         "construction": "construction", "renovation": "construction",
         "conversion": "construction", "operation": "operation_stabilized",
         "exit": "divestment", "other": "close",
+        # Off-enum strings observed in production data:
+        "pre_development": "pre_development",
+        "lease_up": "operation_lease_up",
+        "operation_lease_up": "operation_lease_up",
+        "stabilized": "operation_stabilized",
+        "operation_stabilized": "operation_stabilized",
+        "divestment": "divestment",
     }
     _phase_to_cat = {
         "acquisition": "land", "pre_construction": "soft_costs",
         "construction": "hard_costs", "renovation": "hard_costs",
         "conversion": "hard_costs", "operation": "reserves",
         "exit": "fees", "other": "other",
+        "pre_development": "soft_costs",
+        "lease_up": "reserves", "operation_lease_up": "reserves",
+        "stabilized": "reserves", "operation_stabilized": "reserves",
+        "divestment": "fees",
     }
     _ms_keys_set = {m["key"] for m in milestones_dated}
     _ms_date_idx  = {m["key"]: m["date"] for m in milestones_dated}
@@ -14478,15 +14494,48 @@ async def _load_draw_schedule_ctx(
     milestone_keys = [m["key"] for m in milestones_dated]
 
     # ---------------------------------------------------------------------------
-    # Auto-seed draw_sources from capital_modules when none exist yet
+    # Reconcile draw_sources against capital_modules.
+    #
+    # CapitalModule is the source-of-truth for capital stack configuration;
+    # DrawSource is what the draw schedule engine actually iterates. The two
+    # tables drift apart when modules are added/removed after the initial
+    # auto-seed:
+    #   1. Orphans: DrawSources with ``capital_module_id=NULL`` (or pointing
+    #      to a deleted CapitalModule) leak into the engine output as
+    #      phantom rows in the Sources Summary KPI tile.
+    #   2. Missing: CapitalModules added after the first compute (e.g. a
+    #      grant or equity source added via "+ Source") never get a matching
+    #      DrawSource and silently never draw.
+    #
+    # Solution: every load reconciles. Cheap (one DB roundtrip for modules,
+    # one delete batch, one insert batch). Idempotent — no-op on healthy
+    # data. Mirrors the existing add/edit flows' DrawSource construction so
+    # rows look identical regardless of code path.
     # ---------------------------------------------------------------------------
-    if not draw_sources:
-        capital_modules = list((await session.execute(
-            select(CapitalModule)
-            .where(CapitalModule.scenario_id == model_id)
-            .order_by(CapitalModule.stack_position)
-        )).scalars())
+    capital_modules = list((await session.execute(
+        select(CapitalModule)
+        .where(CapitalModule.scenario_id == model_id)
+        .order_by(CapitalModule.stack_position)
+    )).scalars())
+    _cm_id_set = {cm.id for cm in capital_modules}
 
+    # Delete orphan DrawSources (no CapitalModule or pointing to a removed one).
+    _orphans = [
+        ds for ds in draw_sources
+        if (ds.capital_module_id is None or ds.capital_module_id not in _cm_id_set)
+    ]
+    if _orphans:
+        for ds in _orphans:
+            await session.delete(ds)
+        _orphan_ids = {ds.id for ds in _orphans}
+        draw_sources = [ds for ds in draw_sources if ds.id not in _orphan_ids]
+
+    # Identify CapitalModules with no matching DrawSource — these are the
+    # "added after initial seed" rows that need backfilling.
+    _cm_with_ds = {ds.capital_module_id for ds in draw_sources if ds.capital_module_id}
+    _missing_cms = [cm for cm in capital_modules if cm.id not in _cm_with_ds]
+
+    if _missing_cms or _orphans:
         # Map capital module phase strings → milestone keys (best-effort)
         _phase_to_ms = {
             "offer_made": "offer_made",
@@ -14502,7 +14551,10 @@ async def _load_draw_schedule_ctx(
             "operation_stabilized": "operation_stabilized",
             "divestment": "divestment",
         }
-        for i, cm in enumerate(capital_modules):
+        _next_sort = max(
+            (ds.sort_order or 0 for ds in draw_sources), default=0
+        ) + 1
+        for i, cm in enumerate(_missing_cms):
             raw_from = cm.active_phase_start or "close"
             raw_to = cm.active_phase_end or "operation_stabilized"
             ms_from = _phase_to_ms.get(raw_from, raw_from)
@@ -14529,7 +14581,7 @@ async def _load_draw_schedule_ctx(
                 id=_uuid_mod.uuid4(),
                 scenario_id=model_id,
                 capital_module_id=cm.id,
-                sort_order=i + 1,
+                sort_order=_next_sort + i,
                 label=cm.label,
                 source_type=source_type,
                 draw_every_n_months=draw_freq,
@@ -14540,13 +14592,14 @@ async def _load_draw_schedule_ctx(
             )
             session.add(ds)
 
-        if capital_modules:
-            await session.flush()
-            draw_sources = list((await session.execute(
-                select(DrawSource)
-                .where(DrawSource.scenario_id == model_id)
-                .order_by(DrawSource.sort_order)
-            )).scalars())
+        # Re-load draw_sources after orphan delete + missing insert so
+        # downstream code sees the canonical post-reconciliation set.
+        await session.flush()
+        draw_sources = list((await session.execute(
+            select(DrawSource)
+            .where(DrawSource.scenario_id == model_id)
+            .order_by(DrawSource.sort_order)
+        )).scalars())
 
     # ---------------------------------------------------------------------------
     # Auto-populate reserve floors from computed use lines when still unset
@@ -14821,11 +14874,20 @@ async def calculate_draw_schedule(
                 for i in range(from_idx, to_idx + 1):
                     _covered_ms_keys.add(milestones_dated[i]["key"])
     # Build use items for unfunded check
+    # Keep in sync with the same-named map in `_run_draw_schedule` (around
+    # line 14286). Both need to cover the off-enum strings written by
+    # legacy paths (notably ``operation_lease_up``).
     _phase_to_ms = {
         "acquisition": "close", "pre_construction": "pre_development",
         "construction": "construction", "renovation": "construction",
         "conversion": "construction", "operation": "operation_stabilized",
         "exit": "divestment", "other": "close",
+        "pre_development": "pre_development",
+        "lease_up": "operation_lease_up",
+        "operation_lease_up": "operation_lease_up",
+        "stabilized": "operation_stabilized",
+        "operation_stabilized": "operation_stabilized",
+        "divestment": "divestment",
     }
     _ms_keys_set = {m["key"] for m in milestones_dated}
     unfunded_uses: list[dict] = []
