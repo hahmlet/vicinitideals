@@ -119,6 +119,44 @@ def test_proof_solvent_when_reserves_cover_window():
     assert result["months_simulated"] == 3
 
 
+@pytest.mark.unit
+def test_proof_acquisition_only_runs_short_stabilized_window():
+    """Acquisition deals (no lease_up) get a short stabilized window proof.
+
+    The proof anchors at the stabilization start and covers
+    _ACQUISITION_PROOF_MONTHS to verify that OR + perm DS + stabilized OpEx
+    balance for the first months after close.
+    """
+    phases = [
+        PhaseSpec(PeriodType.acquisition, 1),
+        PhaseSpec(PeriodType.stabilized, 12),
+    ]
+    rows = [_Row(period=0, period_type=PeriodType.acquisition)]
+    rows.extend([
+        _Row(period=i, period_type=PeriodType.stabilized,
+             effective_gross_income=Decimal("15_000"),
+             operating_expenses=Decimal("5_000"),
+             debt_service=Decimal("8_000"))
+        for i in range(1, 13)
+    ])
+    use_lines = [
+        _UL("Operating Reserve", Decimal("50_000")),
+    ]
+    result = _run_bank_account_proof(
+        cash_flow_rows=rows,
+        use_lines=use_lines,
+        phases=phases,
+        milestone_dates={"acquisition_start": "2026-01-01"},
+    )
+    assert result is not None, "acquisition deal should produce a proof"
+    assert result["is_solvent"] is True
+    assert result["max_shortfall"] == "0"
+    # Window starts at stab_period and runs _ACQUISITION_PROOF_MONTHS rows.
+    assert result["proof_start"] == "stabilized"
+    assert result["co_period"] == result["stabilized_period"] == 1
+    assert result["months_simulated"] == 3
+
+
 class _StubSession:
     """Minimal AsyncSession stand-in. Tracks add/delete calls; no real DB."""
     def __init__(self) -> None:

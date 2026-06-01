@@ -24,6 +24,13 @@ _BANK_ACCOUNT_RESERVE_ALLOWLIST: set[str] = {
 }
 _CASH_FLOW_SUPPORT_RESERVE_LABEL = "Cash Flow Support Reserve"
 
+# Acquisition deals (turnkey rentals: acquisition → stabilized, no lease-up
+# phase) get a short proof window starting at stabilization. The window is
+# narrow because there is no ramp risk to model — it just sanity-checks that
+# the Operating Reserve, perm debt service, and stabilized OpEx balance for
+# the first months after close.
+_ACQUISITION_PROOF_MONTHS = 3
+
 
 def _bank_account_reserve_active_for(scenario_id: "UUID | str | None") -> bool:
     """Decide whether the auto-managed Cash Flow Support Reserve should be
@@ -248,6 +255,15 @@ def _run_bank_account_proof(
     if co_period is None:
         return None  # no operating window to prove
 
+    # Acquisition pattern: no lease_up phase → co_period fell back to stab_period.
+    # Extend the window N stabilized months so the extractor sees real rows;
+    # otherwise [co, stab) is empty and the proof aborts.
+    _acquisition_only = (stab_period is not None and co_period == stab_period)
+    if _acquisition_only:
+        proof_window_end = stab_period + _ACQUISITION_PROOF_MONTHS
+    else:
+        proof_window_end = stab_period
+
     # First period date — anchor from earliest milestone date the phase plan
     # uses. Phase 0 is acquisition; its start = "acquisition_start" or
     # "pre_construction_start" depending on whether pre-dev exists.
@@ -269,7 +285,7 @@ def _run_bank_account_proof(
             use_lines=use_lines,
             first_period_date=first_period_dt,
             co_period=co_period,
-            stabilized_period=stab_period,
+            stabilized_period=proof_window_end,
         )
         proof_start = "day_0"
     else:
@@ -278,9 +294,9 @@ def _run_bank_account_proof(
             use_lines=use_lines,
             first_period_date=first_period_dt,
             co_period=co_period,
-            stabilized_period=stab_period,
+            stabilized_period=proof_window_end,
         )
-        proof_start = "co"
+        proof_start = "stabilized" if _acquisition_only else "co"
     if not bank_inputs.months:
         return None
 
@@ -3112,8 +3128,12 @@ async def _auto_size_debt_modules(
             _n_constr3 = _loan_pre_op_months(m, capital_modules, phases)
             _n_lu3 = max(0, _m_preop_months - _n_constr3)
             _ds_carry = _q(
-                p3 * Decimal(str(cr3)) / HUNDRED / Decimal("12")
-                * Decimal(str(_n_constr3))
+                period_interest_months(
+                    p3,
+                    _n_constr3,
+                    float(cr3),
+                    draw_schedule=_draw_schedule_for(_carry3_ct, src3.get("draw_type")),
+                )
             )
             _lu_phase3 = next((p for p in phases if p.period_type == PeriodType.lease_up), None)
             if _n_lu3 > 0 and _lu_phase3 and _carry3_ct == "interest_reserve":
