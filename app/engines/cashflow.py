@@ -3127,12 +3127,15 @@ async def _auto_size_debt_modules(
             # the lease-up portion (construction months use gross interest).
             _n_constr3 = _loan_pre_op_months(m, capital_modules, phases)
             _n_lu3 = max(0, _m_preop_months - _n_constr3)
+            # Perm path: principal solve at line ~2710 defaults to fully_drawn
+            # when draw_type is unset. Match that default here so Sources = Uses.
+            _perm_draw_type3 = src3.get("draw_type") or "fully_drawn"
             _ds_carry = _q(
                 period_interest_months(
                     p3,
                     _n_constr3,
                     float(cr3),
-                    draw_schedule=_draw_schedule_for(_carry3_ct, src3.get("draw_type")),
+                    draw_schedule=_draw_schedule_for(_carry3_ct, _perm_draw_type3),
                 )
             )
             _lu_phase3 = next((p for p in phases if p.period_type == PeriodType.lease_up), None)
