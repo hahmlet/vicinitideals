@@ -74,6 +74,7 @@ from app.models.project import Project
 from app.models.manifest import WorkflowRunManifest
 from app.engines.draw_engine import compute_period_draw_inflow
 from app.engines.interest import period_interest_months
+from app.engines.period_engine import compound_accrual
 from app.engines.bank_account import simulate as _bank_account_simulate
 from app.engines.bank_account_extractor import (
     extract_full_window_proof,
@@ -2272,7 +2273,7 @@ def _compute_preop_carry_cost(
             if p_ct == "interest_reserve" and p_rate > ZERO:
                 total += period_interest_months(funded, phase_dur, float(p_rate), draw_schedule=_draw_schedule_for("interest_reserve", draw_type))
             elif p_ct == "capitalized_interest" and p_rate > ZERO:
-                total += period_interest_months(funded, phase_dur, float(p_rate), draw_schedule=_draw_schedule_for("capitalized_interest", draw_type))
+                total += compound_accrual(funded, p_rate / Decimal("1200"), phase_dur)
         if phase_end >= preop_months or dur_type == "remainder":
             break
         cursor = phase_end
@@ -2694,8 +2695,8 @@ async def _auto_size_debt_modules(
                         )
                     _io_f = (_interest_carry / _funded) if _funded > ZERO else ZERO
                 elif _pre_ct == "capitalized_interest" and _r > ZERO and _n > 0:
-                    _interest_carry = period_interest_months(_funded, _n, _r, draw_schedule=_draw_schedule_for(_pre_ct, _draw_type))
-                    _io_f = (_interest_carry / _funded) if _funded > ZERO else ZERO
+                    # Compound CI: _io_f = factor-1 makes _div = 2-factor → principal = funded/(2-factor)
+                    _io_f = (ONE + _r / Decimal("1200")) ** _n - ONE
                 else:
                     _io_f = ZERO
                 _div = ONE - _io_f
@@ -2727,7 +2728,7 @@ async def _auto_size_debt_modules(
                                 _principal, _r, _lu_phase.months, _lu_phase, streams, expense_lines, inputs
                             )
                     elif _acq_ct == "capitalized_interest":
-                        _acq_interest = period_interest_months(_principal, _n, _r, draw_schedule=_draw_schedule_for(_acq_ct, _draw_type))
+                        _acq_interest = compound_accrual(_principal, _r / Decimal("1200"), _n)
                     else:
                         _acq_interest = ZERO
                 else:
@@ -2760,8 +2761,8 @@ async def _auto_size_debt_modules(
                         )
                     _io_f = (_interest_carry / _funded) if _funded > ZERO else ZERO
                 elif _cl_ct == "capitalized_interest" and _r > ZERO and _n > 0:
-                    _interest_carry = period_interest_months(_funded, _n, _r, draw_schedule=_draw_schedule_for(_cl_ct, _draw_type))
-                    _io_f = (_interest_carry / _funded) if _funded > ZERO else ZERO
+                    # Compound CI: _io_f = factor-1 makes _div = 2-factor → principal = funded/(2-factor)
+                    _io_f = (ONE + _r / Decimal("1200")) ** _n - ONE
                 else:
                     _io_f = ZERO
                 _div = ONE - _io_f

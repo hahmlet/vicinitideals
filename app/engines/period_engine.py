@@ -58,6 +58,17 @@ def _d(v) -> Decimal:
         return ZERO
 
 
+def compound_accrual(
+    principal: Decimal,
+    monthly_rate: Decimal,
+    n_months: int,
+) -> Decimal:
+    """Compound interest on a known principal: P × ((1+r)^n − 1)."""
+    if monthly_rate <= ZERO or n_months <= 0:
+        return ZERO
+    return _q(principal * ((ONE + monthly_rate) ** n_months - ONE))
+
+
 def compound_draw_sizing(
     uses_and_payoff: Decimal,
     opening_balance: Decimal,
