@@ -52,22 +52,7 @@
       <div class="form-hint">Auto-calculated. Recomputes on save.</div>
     </div>
   </div>
-  <div class="form-field" style="margin-bottom:8px">
-    <label class="form-label">Basis (denominator)</label>
-    <div style="display:flex;gap:16px;font-size:13px">
-      <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
-        <input type="radio" name="dev_fee_basis" value="purchase_price"
-               {% if existing.dev_fee_basis == 'purchase_price' %}checked{% endif %}>
-        Acquisition cost
-      </label>
-      <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
-        <input type="radio" name="dev_fee_basis" value="tpc_excl_self"
-               {% if existing.dev_fee_basis != 'purchase_price' %}checked{% endif %}>
-        TPC (excluding this fee)
-      </label>
-    </div>
-    <div class="form-hint">Same %, different denominator.</div>
-  </div>
+  <input type="hidden" name="dev_fee_basis" value="tpc_excl_self">
 
   {# ── Acquisition Treatment ─────────────────────────────────────────── #}
   {%- set _at = existing.dev_fee_acquisition_treatment or '' -%}
@@ -159,6 +144,24 @@
             </div>
           {% endif %}
         </div>
+        {# Hidden template row — always present so dfeeAddReleaseRow() can clone even when all rows removed #}
+        <div id="dfee-row-tpl" style="display:none">
+          <div class="form-row" style="margin-bottom:6px">
+            <div class="form-field" style="flex:2">
+              <select class="form-select" name="release_milestone_key[]">
+                <option value="">— Select milestone —</option>
+                {% for ms in milestones_dated_ds if ms.date %}
+                <option value="{{ ms.key }}">{{ ms.label }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-field" style="max-width:110px">
+              <input class="form-input" type="number" name="release_weight_pct[]" step="0.01" min="0" placeholder="weight">
+            </div>
+            <button type="button" class="btn btn-secondary" style="padding:4px 10px"
+                    onclick="this.closest('.form-row').remove()">×</button>
+          </div>
+        </div>
         <button type="button" class="btn btn-secondary" style="padding:4px 10px;font-size:12px"
                 onclick="dfeeAddReleaseRow()">+ Add milestone</button>
         <div class="form-row" style="margin-top:14px">
@@ -205,14 +208,9 @@
 <script>
 function dfeeAddReleaseRow() {
   var box = document.getElementById('dfee-release-rows');
-  if (!box) return;
-  var src = box.querySelector('.form-row');
-  if (!src) return;
-  var clone = src.cloneNode(true);
-  clone.querySelectorAll('select,input').forEach(function(el){
-    if (el.tagName === 'SELECT') { el.selectedIndex = 0; }
-    else { el.value = ''; }
-  });
+  var tpl = document.getElementById('dfee-row-tpl');
+  if (!box || !tpl) return;
+  var clone = tpl.querySelector('.form-row').cloneNode(true);
   box.appendChild(clone);
 }
 </script>
