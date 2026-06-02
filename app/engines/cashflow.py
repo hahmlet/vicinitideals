@@ -721,6 +721,28 @@ async def _compute_project_cashflow(
             _paydown_total_by_debt_id.get(_ev.debt_module_id, ZERO) + _ev.amount
         )
 
+    # Phase B: pre-resolve dev_fee_topup periods so the per-month loop can
+    # emit an informational line item at the topup milestone. Same shape as
+    # `_paydown_period_to_event_idx` so it's cheap to consume in-loop.
+    _dev_fee_topup_period_to_source_idx: dict[int, list[int]] = {}
+    for _fr_idx, _fr in enumerate(_float_results):
+        _topup_amt = _to_decimal(getattr(_fr, "dev_fee_topup_amount", ZERO) or ZERO)
+        if _topup_amt <= ZERO:
+            continue
+        _topup_ms_id = getattr(_fr, "paydown_milestone_id", None)
+        if _topup_ms_id is None:
+            continue
+        _topup_period = resolve_milestone_period(
+            milestone_id=_topup_ms_id,
+            milestone_map=milestone_map,
+            milestone_month_map=_milestone_month_map,
+        )
+        if _topup_period is None:
+            continue
+        _dev_fee_topup_period_to_source_idx.setdefault(
+            _topup_period, []
+        ).append(_fr_idx)
+
     # Output purge happens once at the outer compute_cash_flows wrapper
     # before the per-project loop — not per-project here.
     cash_flow_rows: list[CashFlow] = []
@@ -894,6 +916,36 @@ async def _compute_project_cashflow(
                          "direction": "informational",
                          "detail": "float_paydown",
                          "debt_module_id": str(_pd_ev.debt_module_id)},
+                    ))
+
+            # ── Inject Phase B dev-fee-topup events (informational) ─────
+            # Same precedent as the debt paydown above: float earnings
+            # routed to deferred Dev Fee paydown are a discrete reduction
+            # of the deferred balance (consumed by the waterfall's
+            # `deferred_developer_fee` tier), NOT operating cash. We emit
+            # a line item so the cashflow display reflects the event; the
+            # waterfall reads the per-period topup totals out of
+            # `float_earnings_series["dev_fee_topup_periods"]`.
+            if period in _dev_fee_topup_period_to_source_idx:
+                for _fr_idx in _dev_fee_topup_period_to_source_idx[period]:
+                    _fr_topup = _float_results[_fr_idx]
+                    _topup_amt = _to_decimal(
+                        getattr(_fr_topup, "dev_fee_topup_amount", ZERO) or ZERO
+                    )
+                    if _topup_amt <= ZERO:
+                        continue
+                    period_result["line_items"].append(_expense_line_item(
+                        deal_uuid, period,
+                        LineItemCategory.capital_event,
+                        "Float earnings → Deferred Developer Fee paydown",
+                        _topup_amt,
+                        {"phase": phase.period_type.value,
+                         "direction": "informational",
+                         "detail": "dev_fee_topup",
+                         "float_source_id": str(_fr_topup.float_source_id),
+                         "parent_module_id":
+                             str(_fr_topup.parent_module_id)
+                             if _fr_topup.parent_module_id else None},
                     ))
 
             # ── Inject prepay penalties at exit ───────────��────────────────
@@ -1209,6 +1261,26 @@ async def _compute_project_cashflow(
     # balance schedule + warnings without re-running compute. Always write —
     # None when no float_earnings sources exist — so stale data clears.
     if _float_results or _float_warnings:
+        # Phase B: pre-resolve dev_fee_topup periods so the waterfall can
+        # consume them without re-loading milestones. Aggregates per-period
+        # topup amounts across all float sources whose milestone resolves.
+        _topup_by_period: dict[int, Decimal] = {}
+        for _fr in _float_results:
+            _topup_amt = _to_decimal(getattr(_fr, "dev_fee_topup_amount", ZERO) or ZERO)
+            if _topup_amt <= ZERO:
+                continue
+            _ms_id = getattr(_fr, "paydown_milestone_id", None)
+            if _ms_id is None:
+                continue
+            _p = resolve_milestone_period(
+                milestone_id=_ms_id,
+                milestone_map=milestone_map,
+                milestone_month_map=_milestone_month_map,
+            )
+            if _p is None:
+                continue
+            _topup_by_period[_p] = _topup_by_period.get(_p, ZERO) + _topup_amt
+
         outputs.float_earnings_series = {
             "sources": [
                 {
@@ -1232,6 +1304,13 @@ async def _compute_project_cashflow(
                 }
                 for r in _float_results
             ],
+            # Period number (str-keyed for JSONB) → total dev_fee_topup
+            # amount routed at that period across all float sources.
+            # Waterfall reads this when building the deferred Dev Fee
+            # balance schedule.
+            "dev_fee_topup_periods": {
+                str(p): float(a) for p, a in _topup_by_period.items()
+            },
             "warnings": list(_float_warnings),
         }
         if _float_warnings:

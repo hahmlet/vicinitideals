@@ -1390,8 +1390,9 @@ function ulTimingChanged(val) {
      The fields read by the engine live on the JSONB `source` column; the
      form posts them as `parent_module_id`, `yield_pct`, `dev_fee_split_pct`,
      `debt_paydown_split_pct`, `paydown_debt_module_id`, `paydown_milestone_id`.
-     Phase A: dev fee split is forced 0/locked; user-facing UI hides that
-     field. Phase B (with Dev Fee balance modeling) will re-enable it. #}
+     Phase B: dev fee split is re-enabled — routes float earnings to the
+     deferred Developer Fee balance (consumed by the waterfall's
+     `deferred_developer_fee` tier). #}
   {% if _ft == 'float_earnings' %}
   <div class="form-section">
     <div class="form-section-title">Float Earnings</div>
@@ -1429,13 +1430,16 @@ function ulTimingChanged(val) {
                step="1" min="0" max="100" value="{{ _dps_val }}">
       </div>
       <div class="form-field" style="max-width:180px">
-        <label class="form-label">Dev Fee Top-Up Split (%)
-          <span style="font-weight:400;font-size:11px;color:var(--text-muted)">Phase B — disabled</span>
-        </label>
+        <label class="form-label">Dev Fee Top-Up Split (%)</label>
+        {%- set _devs_val = (existing.source.get('dev_fee_split_pct') if existing and existing.source else '0') -%}
         <input class="form-input" type="number" name="dev_fee_split_pct"
-               step="1" min="0" max="0" value="0" disabled
-               title="Available once Dev Fee balance modeling ships">
+               step="1" min="0" max="100" value="{{ _devs_val }}"
+               title="Routes this share of float earnings to the deferred Developer Fee balance at the paydown milestone">
       </div>
+    </div>
+    <div class="form-hint" style="font-size:11px;color:var(--text-muted);margin-top:-4px;margin-bottom:6px">
+      Debt Paydown + Dev Fee Top-Up should sum to 100. Anything left over
+      stays in the float source and earns yield through the remaining horizon.
     </div>
     <div class="form-row">
       <div class="form-field">

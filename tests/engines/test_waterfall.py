@@ -497,3 +497,189 @@ def test_capped_lp_fills_first_uncapped_gp_absorbs_residual() -> None:
     )
     assert allocs[lp.module.id] == Decimal("2000000").quantize(_MONEY_PLACES)
     assert allocs[gp.module.id] == Decimal("500000").quantize(_MONEY_PLACES)
+
+
+# ---------------------------------------------------------------------------
+# Phase B — Deferred Dev Fee balance integration tests
+# ---------------------------------------------------------------------------
+
+
+async def _seed_project_with_auto_dev_fee(
+    session: AsyncSession,
+    deal: DealModel,
+    *,
+    deferred: str,
+) -> None:
+    """Attach a Project + auto-Dev-Fee UseLine to a scenario.
+
+    `deferred` is stored as a string on the auto Dev Fee row's
+    `dev_fee_binding_context`, matching engine-written shape.
+    """
+    from app.models.deal import UseLine
+    from app.models.project import Project
+
+    project = Project(
+        id=uuid4(),
+        scenario_id=deal.id,
+        name="Phase B Test Project",
+    )
+    session.add(project)
+    await session.flush()
+
+    auto_line = UseLine(
+        id=uuid4(),
+        project_id=project.id,
+        label="Developer Fee (auto)",
+        amount=Decimal("50000"),
+        cost_category="Soft Costs / Fees",
+        is_auto_dev_fee=True,
+        dev_fee_binding_context={
+            "deferred": deferred,
+            "funded_at_close": "40000",
+        },
+    )
+    session.add(auto_line)
+    await session.flush()
+
+
+@pytest.mark.asyncio
+async def test_phase_b_deferred_dev_fee_balance_drains_via_waterfall(
+    db_session: AsyncSession,
+) -> None:
+    """Auto-seeds a deferred_developer_fee tier when balance > 0, then
+    drains the balance from operating cash and persists the schedule."""
+    deal = await _seed_base_deal(db_session)
+    await _seed_project_with_auto_dev_fee(db_session, deal, deferred="10000")
+
+    db_session.add(
+        CapitalModule(
+            scenario_id=deal.id,
+            label="GP Common Equity",
+            vehicle_type=VehicleType.equity.value,
+            equity_role=EquityRole.gp.value,
+            stack_position=1,
+            source={"amount": "1"},
+            carry={"carry_type": "none"},
+            exit_terms={"exit_type": "profit_share", "trigger": "ongoing"},
+            active_phase_start="acquisition",
+            active_phase_end="exit",
+        )
+    )
+    db_session.add_all(
+        [
+            CashFlow(
+                scenario_id=deal.id,
+                period=p,
+                period_type=PeriodType.stabilized.value,
+                gross_revenue=Decimal("0"),
+                vacancy_loss=Decimal("0"),
+                effective_gross_income=Decimal("0"),
+                operating_expenses=Decimal("0"),
+                capex_reserve=Decimal("0"),
+                noi=Decimal("4000"),
+                debt_service=Decimal("0"),
+                net_cash_flow=Decimal("4000"),
+                cumulative_cash_flow=Decimal("0"),
+            )
+            for p in range(1, 6)
+        ]
+    )
+    await db_session.commit()
+
+    await compute_waterfall(deal.id, db_session)
+    await db_session.commit()
+
+    # Auto-seeded tier
+    tiers = list(
+        (
+            await db_session.execute(
+                select(WaterfallTier).where(WaterfallTier.scenario_id == deal.id)
+            )
+        ).scalars()
+    )
+    deferred_tiers = [
+        t for t in tiers if str(t.tier_type) == "deferred_developer_fee"
+    ]
+    assert len(deferred_tiers) == 1
+    assert deferred_tiers[0].capital_module_id is None
+
+    # Balance schedule persisted on default OO row
+    outputs = (
+        await db_session.execute(
+            select(OperationalOutputs).where(
+                OperationalOutputs.scenario_id == deal.id
+            )
+        )
+    ).scalar_one()
+    series = outputs.dev_fee_balance_series
+    assert series is not None
+    assert series["opening_at_close"] == "10000.000000"
+    # 5 periods × $4000 = $20k > $10k → fully paid within window
+    assert series["fully_paid_period"] is not None
+    assert series["fully_paid_period"] <= 5
+    # Closing balance at end is zero.
+    assert series["periods"][-1]["closing_balance"] == "0.000000"
+
+
+@pytest.mark.asyncio
+async def test_phase_b_no_deferred_balance_skips_tier_and_clears_series(
+    db_session: AsyncSession,
+) -> None:
+    """When the scenario has no deferred Dev Fee balance, the waterfall
+    must not auto-seed the tier and must write None to clear stale data."""
+    deal = await _seed_base_deal(db_session)
+    await _seed_project_with_auto_dev_fee(db_session, deal, deferred="0")
+
+    db_session.add(
+        CapitalModule(
+            scenario_id=deal.id,
+            label="GP Common Equity",
+            vehicle_type=VehicleType.equity.value,
+            equity_role=EquityRole.gp.value,
+            stack_position=1,
+            source={"amount": "1"},
+            carry={"carry_type": "none"},
+            exit_terms={"exit_type": "profit_share", "trigger": "ongoing"},
+            active_phase_start="acquisition",
+            active_phase_end="exit",
+        )
+    )
+    db_session.add(
+        CashFlow(
+            scenario_id=deal.id,
+            period=1,
+            period_type=PeriodType.stabilized.value,
+            gross_revenue=Decimal("0"),
+            vacancy_loss=Decimal("0"),
+            effective_gross_income=Decimal("0"),
+            operating_expenses=Decimal("0"),
+            capex_reserve=Decimal("0"),
+            noi=Decimal("4000"),
+            debt_service=Decimal("0"),
+            net_cash_flow=Decimal("4000"),
+            cumulative_cash_flow=Decimal("0"),
+        )
+    )
+    await db_session.commit()
+
+    await compute_waterfall(deal.id, db_session)
+    await db_session.commit()
+
+    tiers = list(
+        (
+            await db_session.execute(
+                select(WaterfallTier).where(WaterfallTier.scenario_id == deal.id)
+            )
+        ).scalars()
+    )
+    assert not [
+        t for t in tiers if str(t.tier_type) == "deferred_developer_fee"
+    ]
+    outputs = (
+        await db_session.execute(
+            select(OperationalOutputs).where(
+                OperationalOutputs.scenario_id == deal.id
+            )
+        )
+    ).scalar_one()
+    assert outputs.dev_fee_balance_series is None

@@ -144,6 +144,13 @@ class OperationalOutputs(Base):
     # Always written (None when no float_earnings sources exist) so stale
     # data clears when the user removes the last float source.
     float_earnings_series: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+    # Deferred Dev Fee balance series (Phase B float-earnings). Shape:
+    # {"opening_at_close": Decimal, "periods": [{"period": int,
+    # "opening_balance": Decimal, "paydown_amount": Decimal,
+    # "paydown_sources": {"waterfall": Decimal, "float_topup": Decimal},
+    # "closing_balance": Decimal}], "fully_paid_period": int | None}.
+    # None when scenario has no deferred Dev Fee balance > 0.
+    dev_fee_balance_series: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     computed_at: Mapped[datetime | None] = mapped_column(
         DateTime(timezone=True), nullable=True
     )

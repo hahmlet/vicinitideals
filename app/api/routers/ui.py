@@ -11342,6 +11342,38 @@ async def dev_fee_explainer_modal(
             }
         )
 
+    # Phase B: deferred Dev Fee balance schedule + float-earnings topup
+    # summary, both written by the engine onto OperationalOutputs.
+    outputs_row = (
+        await session.execute(
+            select(OperationalOutputs)
+            .join(Project, Project.id == OperationalOutputs.project_id)
+            .where(OperationalOutputs.scenario_id == model_id)
+            .order_by(Project.created_at.asc())
+            .limit(1)
+        )
+    ).scalar_one_or_none()
+    deferred_balance_series = (
+        outputs_row.dev_fee_balance_series if outputs_row else None
+    )
+    float_series = (
+        (outputs_row.float_earnings_series or {}) if outputs_row else {}
+    )
+    dev_fee_topup_sources = []
+    for src in (float_series.get("sources") or []):
+        topup = float(src.get("dev_fee_topup_amount") or 0)
+        if topup <= 0:
+            continue
+        parent_id = str(src.get("parent_module_id")) if src.get("parent_module_id") else None
+        parent_mod = modules_by_id.get(parent_id) if parent_id else None
+        dev_fee_topup_sources.append(
+            {
+                "parent_label": getattr(parent_mod, "label", None) or "(unknown)",
+                "topup_amount": topup,
+                "paydown_milestone_id": src.get("paydown_milestone_id"),
+            }
+        )
+
     return templates.TemplateResponse(
         request,
         "partials/dev_fee_explainer_modal.html",
@@ -11357,6 +11389,8 @@ async def dev_fee_explainer_modal(
             "structural_diff_detected": bool(
                 ctx.get("structural_diff_detected", False)
             ),
+            "deferred_balance_series": deferred_balance_series,
+            "dev_fee_topup_sources": dev_fee_topup_sources,
         },
     )
 

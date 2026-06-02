@@ -18,6 +18,10 @@ from app.models.capital import (
     WaterfallTier,
     WaterfallTierType,
 )
+from app.engines.dev_fee_balance import (
+    compute_deferred_balance_schedule,
+    serialize_balance_result,
+)
 from app.models.cashflow import CashFlow, OperationalOutputs, PeriodType
 from app.models.deal import Scenario, UseLine
 from app.models.manifest import WorkflowRunManifest
@@ -145,6 +149,18 @@ async def compute_waterfall(
     running_totals: dict[tuple[UUID, UUID], Decimal] = {}
     result_rows: list[WaterfallResult] = []
 
+    # Phase B (float earnings → deferred Dev Fee paydown).
+    # Track the balance period-by-period so a `deferred_developer_fee` tier
+    # can consume from `available_cash` here at run time; float-earnings
+    # topups are applied first at their target period (priority rule
+    # mirrors `compute_deferred_balance_schedule`).
+    _deferred_at_close = _read_deferred_dev_fee_at_close(deal_model)
+    _float_topups_by_period = _read_float_topup_periods(
+        deal_model.operational_outputs
+    )
+    _deferred_balance = _deferred_at_close
+    _waterfall_paydowns_by_period: dict[int, Decimal] = {}
+
     for cash_flow in cash_flows:
         phase_name = _enum_value(cash_flow.period_type)
         net_cash = _to_decimal(cash_flow.net_cash_flow)
@@ -169,7 +185,36 @@ async def compute_waterfall(
 
         _accrue_current_period_obligations(cash_flow.period, phase_name, module_states)
 
+        # Phase B: a float-earnings topup landing in this period reduces
+        # the deferred balance directly (mirrors Phase A's debt paydown
+        # event — `net_cash_flow` was deliberately left untouched for
+        # bank-account-proof conservatism, so we apply the topup as a
+        # discrete balance reduction here, then let the waterfall tier
+        # fill any remaining room from operating cash.
+        _ft_amt = _float_topups_by_period.get(cash_flow.period, ZERO)
+        if _ft_amt > ZERO and _deferred_balance > ZERO:
+            _ft_applied = _q(min(_ft_amt, _deferred_balance))
+            _deferred_balance = _q(_deferred_balance - _ft_applied)
+
         for tier in waterfall_tiers:
+            if (
+                _enum_value(tier.tier_type)
+                == WaterfallTierType.deferred_developer_fee.value
+            ):
+                # Deferred Dev Fee paydown — no capital module target;
+                # consumes available_cash up to remaining balance and
+                # records the period→amount for the balance schedule
+                # written post-loop to OperationalOutputs.
+                if _deferred_balance > ZERO and available_cash > ZERO:
+                    paydown = _q(min(available_cash, _deferred_balance))
+                    available_cash = _q(available_cash - paydown)
+                    _deferred_balance = _q(_deferred_balance - paydown)
+                    _waterfall_paydowns_by_period[cash_flow.period] = _q(
+                        _waterfall_paydowns_by_period.get(cash_flow.period, ZERO)
+                        + paydown
+                    )
+                continue
+
             target_states = _states_for_tier(
                 tier=tier,
                 all_states=module_states,
@@ -263,6 +308,20 @@ async def compute_waterfall(
             await session.flush()
 
     levered_metrics = await _apply_levered_metrics(deal_uuid, session)
+
+    # Phase B: persist the deferred Dev Fee balance schedule (period-by-
+    # period view the explainer modal renders). Runs after
+    # `_apply_levered_metrics` so the OO row is guaranteed to exist; we
+    # assemble the schedule from the run-time paydowns + topups so it
+    # matches what the waterfall actually consumed.
+    await _persist_deferred_dev_fee_balance(
+        deal_uuid=deal_uuid,
+        session=session,
+        deferred_at_close=_deferred_at_close,
+        period_count=max((row.period for row in cash_flows), default=0),
+        waterfall_paydowns_by_period=_waterfall_paydowns_by_period,
+        float_topups_by_period=_float_topups_by_period,
+    )
     distribution_report = _build_investor_distribution_report(
         deal_uuid=deal_uuid,
         capital_modules=capital_modules,
@@ -383,6 +442,11 @@ async def _ensure_equity_and_tiers(
         capital_modules.append(synthetic_equity)
         equity_modules.append(synthetic_equity)
 
+    # Phase B: read the deferred Dev Fee balance once so we can decide
+    # whether to auto-seed a `deferred_developer_fee` tier between debt
+    # service and residual.
+    _deferred_at_close_for_tier = _read_deferred_dev_fee_at_close(deal_model)
+
     # Auto-create tiers if none exist
     if not deal_model.waterfall_tiers:
         priority = 1
@@ -396,6 +460,21 @@ async def _ensure_equity_and_tiers(
                 lp_split_pct=Decimal("0"),
                 gp_split_pct=Decimal("0"),
                 description=f"Auto: debt service for {debt_module.label}",
+            ))
+            priority += 1
+        # Phase B: deferred Dev Fee paydown tier sits between debt service
+        # and residual. Only seeded when the scenario actually has a
+        # deferred Dev Fee balance > 0; capital_module_id stays NULL
+        # because the balance isn't held on a module.
+        if _deferred_at_close_for_tier > ZERO:
+            session.add(WaterfallTier(
+                scenario_id=deal_uuid,
+                capital_module_id=None,
+                priority=priority,
+                tier_type=WaterfallTierType.deferred_developer_fee,
+                lp_split_pct=Decimal("0"),
+                gp_split_pct=Decimal("0"),
+                description="Auto: deferred Developer Fee paydown",
             ))
             priority += 1
         # Residual: split based on actual equity role composition.
@@ -444,6 +523,42 @@ async def _ensure_equity_and_tiers(
             description=_res_desc,
         ))
         await session.flush()
+    else:
+        # Existing custom waterfall: still inject a deferred Dev Fee tier
+        # ahead of residual when the scenario has a deferred balance and
+        # no such tier exists yet. Bumping residual's priority keeps the
+        # ordering invariant (debt → deferred Dev Fee → residual).
+        if _deferred_at_close_for_tier > ZERO:
+            existing = list(deal_model.waterfall_tiers)
+            has_deferred = any(
+                _enum_value(t.tier_type)
+                == WaterfallTierType.deferred_developer_fee.value
+                for t in existing
+            )
+            if not has_deferred:
+                residual_tiers = [
+                    t for t in existing
+                    if _enum_value(t.tier_type) == WaterfallTierType.residual.value
+                ]
+                if residual_tiers:
+                    insert_priority = min(t.priority for t in residual_tiers)
+                    for t in existing:
+                        if t.priority >= insert_priority:
+                            t.priority += 1
+                else:
+                    insert_priority = max(
+                        (t.priority for t in existing), default=0
+                    ) + 1
+                session.add(WaterfallTier(
+                    scenario_id=deal_uuid,
+                    capital_module_id=None,
+                    priority=insert_priority,
+                    tier_type=WaterfallTierType.deferred_developer_fee,
+                    lp_split_pct=Decimal("0"),
+                    gp_split_pct=Decimal("0"),
+                    description="Auto: deferred Developer Fee paydown",
+                ))
+                await session.flush()
 
 
 async def get_waterfall_distribution_report(
@@ -731,6 +846,10 @@ async def _apply_levered_metrics(
 
 
 async def _load_deal_context(session: AsyncSession, deal_model_id: UUID) -> Scenario | None:
+    # `populate_existing=True` forces SQLAlchemy to refresh collections
+    # on a Scenario already in the identity map — `_ensure_equity_and_tiers`
+    # mutates the session between two consecutive _load calls, so without
+    # this the second load returns the cached empty collections.
     result = await session.execute(
         select(Scenario)
         .options(
@@ -739,10 +858,102 @@ async def _load_deal_context(session: AsyncSession, deal_model_id: UUID) -> Scen
             selectinload(Scenario.cash_flows),
             selectinload(Scenario.operational_outputs),
             selectinload(Scenario.projects).selectinload(Project.operational_inputs),
+            # Phase B: deferred Dev Fee balance is read from the auto Dev Fee
+            # UseLine's dev_fee_binding_context["deferred"] field.
+            selectinload(Scenario.projects).selectinload(Project.use_lines),
         )
         .where(Scenario.id == deal_model_id)
+        .execution_options(populate_existing=True)
     )
     return result.scalar_one_or_none()
+
+
+def _read_deferred_dev_fee_at_close(deal_model: Scenario) -> Decimal:
+    """Read the deferred Dev Fee balance at close from the auto Dev Fee
+    UseLine's `dev_fee_binding_context["deferred"]` field.
+
+    Phase B's deferred balance starts at this value at period 1. Returns
+    ZERO if no auto Dev Fee row exists or the context lacks a `deferred`
+    key (e.g. legacy data, or fully-funded-at-close scenarios).
+    """
+    for project in (deal_model.projects or []):
+        for use_line in (project.use_lines or []):
+            if not getattr(use_line, "is_auto_dev_fee", False):
+                continue
+            ctx = getattr(use_line, "dev_fee_binding_context", None) or {}
+            return _to_decimal(ctx.get("deferred"))
+    return ZERO
+
+
+def _read_float_topup_periods(
+    outputs: OperationalOutputs | None,
+) -> dict[int, Decimal]:
+    """Read pre-resolved `dev_fee_topup_periods` from
+    `OperationalOutputs.float_earnings_series` (written by cashflow.py).
+
+    The cashflow engine resolves each float source's `paydown_milestone_id`
+    to a period number using the same milestone_map it already loaded for
+    debt_paydown, and persists the aggregate as
+    `float_earnings_series["dev_fee_topup_periods"] = {str(period): amount}`.
+
+    Single OO row only — Scenario.operational_outputs is `uselist=False`,
+    matching the multi-project limitation called out in `_apply_levered_metrics`.
+    """
+    series = (outputs.float_earnings_series or {}) if outputs else {}
+    raw = series.get("dev_fee_topup_periods") or {}
+    out: dict[int, Decimal] = {}
+    for k, v in raw.items():
+        try:
+            p = int(k)
+        except (TypeError, ValueError):
+            continue
+        out[p] = out.get(p, ZERO) + _to_decimal(v)
+    return out
+
+
+async def _persist_deferred_dev_fee_balance(
+    *,
+    deal_uuid: UUID,
+    session: AsyncSession,
+    deferred_at_close: Decimal,
+    period_count: int,
+    waterfall_paydowns_by_period: dict[int, Decimal],
+    float_topups_by_period: dict[int, Decimal],
+) -> None:
+    """Build the deferred Dev Fee balance schedule and persist it onto the
+    scenario's default-project OperationalOutputs row.
+
+    Writes `None` to clear stale state when there is no deferred balance to
+    track (no auto Dev Fee row, or fully funded at close).
+    """
+    outputs_row = (
+        await session.execute(
+            select(OperationalOutputs)
+            .join(Project, Project.id == OperationalOutputs.project_id)
+            .where(OperationalOutputs.scenario_id == deal_uuid)
+            .order_by(Project.created_at.asc())
+            .limit(1)
+        )
+    ).scalar_one_or_none()
+    if outputs_row is None:
+        # `_apply_levered_metrics` ran before us and would have created an
+        # OO row — if there's still none here, the scenario has no
+        # projects (e.g. legacy data); nothing to persist.
+        return
+
+    if deferred_at_close <= ZERO or period_count <= 0:
+        outputs_row.dev_fee_balance_series = None
+        await session.flush()
+        return
+
+    schedule = compute_deferred_balance_schedule(
+        deferred_at_close=deferred_at_close,
+        period_count=int(period_count) + 1,
+        waterfall_paydowns_by_period=waterfall_paydowns_by_period,
+        float_topups_by_period=float_topups_by_period,
+    )
+    outputs_row.dev_fee_balance_series = serialize_balance_result(schedule)
+    await session.flush()
 
 
 def _resolve_total_project_cost(

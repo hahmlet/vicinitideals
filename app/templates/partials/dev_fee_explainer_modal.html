@@ -141,6 +141,71 @@
     {% endif %}
   </section>
 
+  {# Phase B — Float-earnings topup sources #}
+  {% if dev_fee_topup_sources %}
+    <section class="explainer-section">
+      <h4>Float-earnings topup</h4>
+      <p style="font-size:12px;color:var(--text-muted);margin:.25em 0 .5em">
+        Float sources route a share of their earnings to deferred Dev Fee
+        paydown. These hit the deferred balance directly at the paydown
+        milestone (not through operating cash).
+      </p>
+      <ul>
+        {% for s in dev_fee_topup_sources %}
+          <li>
+            {{ s.parent_label }} float earnings →
+            <strong>${{ '{:,.0f}'.format(s.topup_amount) }}</strong>
+            at milestone {{ s.paydown_milestone_id or '&mdash;' }}
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+
+  {# Phase B — Deferred Dev Fee balance schedule #}
+  {% if deferred_balance_series %}
+    <section class="explainer-section">
+      <h4>Deferred Dev Fee balance schedule</h4>
+      <p style="font-size:12px;color:var(--text-muted);margin:.25em 0 .5em">
+        Opening at close:
+        <strong>${{ deferred_balance_series.opening_at_close }}</strong>
+        &middot; Total paid:
+        <strong>${{ deferred_balance_series.total_paid }}</strong>
+        &middot; Remaining at horizon:
+        <strong>${{ deferred_balance_series.remaining_at_horizon }}</strong>
+        {% if deferred_balance_series.fully_paid_period is not none %}
+          &middot; Fully paid by period
+          <strong>{{ deferred_balance_series.fully_paid_period }}</strong>
+        {% endif %}
+      </p>
+      <table class="explainer-table">
+        <thead>
+          <tr>
+            <th>Period</th>
+            <th>Opening</th>
+            <th>Waterfall paydown</th>
+            <th>Float topup</th>
+            <th>Closing</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in deferred_balance_series.periods %}
+            {# Skip flat-tail rows (no activity AND no balance change) to keep the table compact #}
+            {% if row.paydown_from_waterfall != '0.000000' or row.paydown_from_float_topup != '0.000000' or loop.first %}
+              <tr>
+                <td>{{ row.period }}</td>
+                <td>${{ row.opening_balance }}</td>
+                <td>${{ row.paydown_from_waterfall }}</td>
+                <td>${{ row.paydown_from_float_topup }}</td>
+                <td>${{ row.closing_balance }}</td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+  {% endif %}
+
   {# 6. Release schedule #}
   {% if ctx.release_schedule %}
     <section class="explainer-section">

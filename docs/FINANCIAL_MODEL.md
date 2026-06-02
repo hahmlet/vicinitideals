@@ -3613,11 +3613,19 @@ capital stack shape changes. Pure amount edits do not trip the diff.
 
 ### H.9 Phase 2 / follow-up scope
 
-Not in V1, planned next:
+**Shipped — June 2026 (Float Earnings Phase B):** subordinate operating-
+cash consumption of the deferred Dev Fee portion. The CF waterfall now
+has a `deferred_developer_fee` tier (auto-seeded between
+`debt_service` and `residual` when `dev_fee_binding_context["deferred"]
+> 0`) that consumes available cash up to the remaining balance. Float-
+earnings topups are applied as discrete balance reductions at their
+paydown milestone period (priority over waterfall consumption, mirrors
+Phase A's debt-paydown event model — `net_cash_flow` is deliberately
+untouched for bank-account-proof conservatism). See Appendix I.4 and
+`docs/feature-plans/float-earnings-phase-b.md`.
 
-- Subordinate operating-cash consumption of the deferred Dev Fee portion
-  (sequenced post debt service, ahead of equity distributions, with
-  explicit ordering vs Cash Flow Support Reserve).
+Still pending:
+
 - Source Vehicle drawer "Developer Fee Rule" section with inheritance
   affordance.
 - UseLine drawer "Release Schedule" editor.
@@ -3670,9 +3678,9 @@ Reason for the conservative position: T-bond secondary-market sale timing cannot
 Float earnings route through one or both of two restricted Uses, controlled by a user-entered split `dev_fee_split_pct + debt_paydown_split_pct = 100`:
 
 - **Debt principal paydown** (Phase A) — at a user-chosen milestone, the target debt module's effective principal is reduced by the paydown amount. The reduction propagates into the exit balloon (`_balloon_balance`) and the prepay-penalty calculation. Per-period interest expense is NOT recomputed in v1 (matches the existing refi-event handling); this slightly overstates DS after the paydown. Phase B can revisit.
-- **Developer Fee top-up** (Phase B, gated off in v1) — requires the operating-cash subordinate Deferred Dev Fee consumption sink, which is a Phase 2 follow-up of the Multi-Source Developer Fee work (Appendix H.9). Until that ships, the UI forces the dev-fee split to 0 and the paydown split to 100.
+- **Developer Fee top-up** (Phase B, June 2026) — at the user-chosen paydown milestone the topup amount reduces the deferred Dev Fee balance directly. The CF waterfall's `deferred_developer_fee` tier additionally consumes operating cash up to any remaining balance, period by period (auto-seeded between `debt_service` and `residual` when the deferred balance > 0). The full balance schedule (opening, per-period paydown from waterfall vs from float topup, closing) is persisted on `OperationalOutputs.dev_fee_balance_series` and rendered in the Dev Fee explainer modal.
 
-The engine surfaces a `capital_event` line item at the paydown milestone (direction = `informational`) so the user sees the event in the cashflow without it being double-counted against the bank-account proof.
+The engine surfaces a `capital_event` line item at the paydown milestone for each of these (direction = `informational`, detail = `float_paydown` or `dev_fee_topup`) so the user sees the event in the cashflow without it being double-counted against the bank-account proof.
 
 ### I.5 Persistence and UI surface
 
@@ -3703,22 +3711,28 @@ This pattern mirrors `bank_account_proof` (Appendix G.4): always written so stal
 |---|---|
 | `app/engines/float_earnings.py` | Validation gate, closed-form balance math, split allocator, scenario orchestrator |
 | `app/engines/debt_paydown.py` | Paydown event collection, milestone-to-period resolution, per-debt totals |
-| `app/engines/cashflow.py` | Wires float-earnings into post-sizing flow, injects informational line items, reduces prepay-penalty basis |
+| `app/engines/dev_fee_balance.py` | (Phase B) Pure-function deferred Dev Fee balance schedule with float-topup-priority rule |
+| `app/engines/cashflow.py` | Wires float-earnings into post-sizing flow, injects informational line items (debt paydown + Phase B dev-fee topup), pre-resolves `dev_fee_topup_periods`, reduces prepay-penalty basis |
+| `app/engines/waterfall.py` | (Phase B) Consumes the `deferred_developer_fee` tier from operating cash, auto-seeds the tier when balance > 0, persists `dev_fee_balance_series` |
 | `app/engines/source_routing.py` | Excludes `float_earnings` from Use-funding eligibility (side-effect-only source) |
-| `app/models/capital.py` | `VehicleType.float_earnings` enum value |
-| `app/models/cashflow.py` | `OperationalOutputs.float_earnings_series` JSON column |
+| `app/models/capital.py` | `VehicleType.float_earnings` enum value; `WaterfallTierType.deferred_developer_fee` (Phase B) |
+| `app/models/cashflow.py` | `OperationalOutputs.float_earnings_series` JSON column; `dev_fee_balance_series` (Phase B) |
 | `app/schemas/capital.py` | `CapitalSourceSchema` float-earnings fields (parent ref, yield, splits, paydown FKs) |
-| `app/api/routers/ui.py` | Form handler parses the new fields; `model_builder_line_form` loads sibling capital modules + scenario milestones for the dropdowns |
-| `app/templates/partials/model_builder_line_form.html` | Float-earnings dropdown option, `balance_earns_interest` checkbox, form section with parent / paydown debt / paydown milestone dropdowns |
+| `app/api/routers/ui.py` | Form handler parses the new fields; `model_builder_line_form` loads sibling capital modules + scenario milestones for the dropdowns; `dev_fee_explainer_modal` enriches context with `dev_fee_balance_series` + per-source topup summary (Phase B) |
+| `app/templates/partials/model_builder_line_form.html` | Float-earnings dropdown option, `balance_earns_interest` checkbox, form section with parent / paydown debt / paydown milestone dropdowns; Dev Fee Top-Up split is editable (Phase B) |
+| `app/templates/partials/dev_fee_explainer_modal.html` | (Phase B) "Float-earnings topup" + "Deferred Dev Fee balance schedule" sections |
 | `alembic/versions/0104_operational_outputs_float_earnings.py` | Migration for the JSON column |
+| `alembic/versions/0107_dev_fee_balance_series.py` | (Phase B) Migration for `dev_fee_balance_series` |
 | `tests/engines/test_float_earnings.py` | Unit coverage (26 tests) |
+| `tests/engines/test_dev_fee_balance.py` | (Phase B) 12 unit tests for the balance helper |
+| `tests/engines/test_waterfall.py` | (Phase B) 2 integration tests for tier consumption + auto-seed |
 
 ### I.7 Known limitations
 
 | Limitation | Resolution |
 |---|---|
 | Per-period interest on the parent loan is not recomputed after a paydown (slight DS overstatement) | Phase B can extend the carry-schedule resolver to honor a "voluntary paydown" event |
-| Dev-fee top-up path forced to 0% | Lands when Dev Fee Phase 2 ships the operating-cash subordinate consumption of Deferred Dev Fee (Appendix H.9) |
 | Yield curve is a single user-entered annual % | Future option: scheduled fetch of the Treasury curve, with per-month yield indexing |
-| Integration + E2E tests not in this commit | Follow-up: API integration test for capital-module CRUD + E2E flow on reference deal `cf0e77c3-…` |
+| Multi-project scenarios: deferred Dev Fee balance reads from the default-project OO row only (`Scenario.operational_outputs` is `uselist=False`); matches the same limitation flagged in `_apply_levered_metrics` | Phase 2f+ multi-project waterfall work |
+| Integration + E2E tests for the float-earnings dropdowns are still pending | Follow-up: API integration test for capital-module CRUD + E2E flow on reference deal `cf0e77c3-…` |
 
