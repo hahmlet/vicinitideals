@@ -6755,7 +6755,6 @@ async def handle_form_create_or_update(
                                         cost_category="soft",
                                         is_auto_acquisition_fee=True,
                                         acquisition_fee_pct=_acq_pct,
-                                        milestone_key="close",
                                     ))
                                 else:
                                     if _acq_pct is not None:
