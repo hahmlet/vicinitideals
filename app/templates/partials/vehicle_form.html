@@ -215,6 +215,77 @@
     <div></div>
   </div>
 
+  {# ── Developer Fee Rule ───────────────────────────────────────────── #}
+  {%- set _ft = (vehicle.fee_terms if _is_edit else {}) or {} -%}
+  {%- set _ft_excl = _ft.get('basis_exclusions') or [] -%}
+  {%- set _ft_open = _ft.get('max_pct') or _ft.get('per_unit_cap') or _ft.get('absolute_cap') or _ft_excl or _ft.get('regulated') or _ft.get('notes') -%}
+  <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border)">
+    <details {% if _ft_open %}open{% endif %} style="margin:0">
+      <summary style="cursor:pointer;font-size:13px;font-weight:600;color:var(--text);padding:4px 0">
+        Developer Fee Rule
+        <span style="font-size:11px;color:var(--text-muted);font-weight:400;margin-left:6px">
+          caps this preset imposes on the auto Dev Fee
+        </span>
+      </summary>
+      <div style="margin-top:10px;padding-left:4px;display:grid;gap:10px">
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px">
+          <div>
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Max % of Basis</label>
+            <input class="filter-input" type="number" name="fee_terms_max_pct" step="0.01" min="0"
+                   value="{{ _ft.get('max_pct') if _ft.get('max_pct') is not none else '' }}"
+                   placeholder="e.g. 15" style="width:100%">
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Per-Unit Cap ($)</label>
+            <input class="filter-input" type="number" name="fee_terms_per_unit_cap" step="1" min="0"
+                   value="{{ _ft.get('per_unit_cap') if _ft.get('per_unit_cap') is not none else '' }}"
+                   placeholder="e.g. 15000" style="width:100%">
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Absolute Cap ($)</label>
+            <input class="filter-input" type="number" name="fee_terms_absolute_cap" step="1" min="0"
+                   value="{{ _ft.get('absolute_cap') if _ft.get('absolute_cap') is not none else '' }}"
+                   placeholder="e.g. 1500000" style="width:100%">
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px">Basis Exclusions</div>
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 12px;font-size:12px">
+            {% for cat,label in [
+              ('acquisition','Acquisition'),
+              ('hard_costs','Hard Costs'),
+              ('soft_costs','Soft Costs'),
+              ('financing_fees','Financing Fees'),
+              ('interest_reserve','Interest Reserve'),
+              ('operating_reserves','Operating Reserves'),
+              ('developer_overhead','Developer Overhead'),
+              ('consulting_fees','Consulting Fees'),
+            ] %}
+            <label style="display:flex;align-items:center;gap:6px">
+              <input type="checkbox" name="fee_terms_basis_exclusions[]" value="{{ cat }}"
+                     {% if cat in _ft_excl %}checked{% endif %}>
+              <span>{{ label }}</span>
+            </label>
+            {% endfor %}
+          </div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:4px">
+            Excluded categories drop out of this Source's Dev Fee basis sum.
+          </div>
+        </div>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px">
+          <input type="checkbox" name="fee_terms_regulated" {% if _ft.get('regulated') %}checked{% endif %}>
+          <span>Regulated rule (annotation for the explainer modal)</span>
+        </label>
+        <div>
+          <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px">Notes</label>
+          <textarea class="filter-input" name="fee_terms_notes" rows="2"
+                    placeholder="e.g. LIHTC 15% cap incl. acquisition"
+                    style="width:100%">{{ _ft.get('notes') or '' }}</textarea>
+        </div>
+      </div>
+    </details>
+  </div>
+
   {# Actions #}
   <div style="display:flex;gap:8px;margin-top:4px">
     <button type="submit" class="btn btn-primary" style="font-size:13px;padding:7px 18px">

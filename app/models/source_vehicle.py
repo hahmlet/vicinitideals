@@ -117,6 +117,19 @@ class SourceVehicle(Base):
         JSONB().with_variant(JSON(), "sqlite"), nullable=True
     )
 
+    # Developer Fee rule this preset imposes on the auto Dev Fee row.
+    # Schema: app.schemas.capital.CapitalFeeTermsSchema —
+    # ``{max_pct, per_unit_cap, absolute_cap, basis_exclusions[],
+    #    regulated, notes}``. Empty dict = no rule. Per-deal
+    # CapitalModule.fee_terms overrides on individual deals when
+    # fee_terms_inherited_from_type=False.
+    fee_terms: Mapped[dict] = mapped_column(
+        JSONB().with_variant(JSON(), "sqlite"),
+        nullable=False,
+        default=dict,
+        server_default="{}",
+    )
+
     # Audit
     created_by: Mapped[uuid.UUID | None] = mapped_column(
         UUID(as_uuid=True), ForeignKey("users.id"), nullable=True

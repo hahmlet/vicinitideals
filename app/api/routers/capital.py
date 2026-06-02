@@ -15,7 +15,6 @@ from app.api.deps import CurrentUserId, DBSession
 from app.engines.waterfall import compute_waterfall, get_waterfall_distribution_report
 from app.models.capital import (
     CapitalModule,
-    CapitalVehicleFeeDefaults,
     UseLineSourceFeeBasis,
     WaterfallResult,
     WaterfallTier,
@@ -34,9 +33,6 @@ from app.schemas.capital import (
     CapitalModuleBase,
     CapitalModuleRead,
     CapitalModuleUpdate,
-    CapitalVehicleFeeDefaultsCreate,
-    CapitalVehicleFeeDefaultsRead,
-    CapitalVehicleFeeDefaultsUpdate,
     WaterfallDistributionReportRead,
     WaterfallResultRead,
     WaterfallTierBase,
@@ -368,97 +364,6 @@ async def _current_user_org_id(session: DBSession, user_id: UUID) -> UUID:
     if user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return user.org_id
-
-
-@router.get(
-    "/capital-vehicle-fee-defaults",
-    response_model=list[CapitalVehicleFeeDefaultsRead],
-)
-async def list_vehicle_fee_defaults(
-    session: DBSession,
-    current_user_id: CurrentUserId,
-) -> list[CapitalVehicleFeeDefaults]:
-    org_id = await _current_user_org_id(session, current_user_id)
-    rows = (
-        await session.execute(
-            select(CapitalVehicleFeeDefaults).where(
-                CapitalVehicleFeeDefaults.org_id == org_id
-            )
-        )
-    ).scalars().all()
-    return list(rows)
-
-
-@router.post(
-    "/capital-vehicle-fee-defaults",
-    response_model=CapitalVehicleFeeDefaultsRead,
-    status_code=status.HTTP_201_CREATED,
-)
-async def create_vehicle_fee_default(
-    payload: CapitalVehicleFeeDefaultsCreate,
-    session: DBSession,
-    current_user_id: CurrentUserId,
-) -> CapitalVehicleFeeDefaults:
-    org_id = await _current_user_org_id(session, current_user_id)
-    fee_terms = (
-        payload.fee_terms.model_dump() if payload.fee_terms is not None else {}
-    )
-    row = CapitalVehicleFeeDefaults(
-        org_id=org_id,
-        vehicle_type=payload.vehicle_type,
-        equity_role=payload.equity_role,
-        fee_terms=_json_safe(fee_terms),
-    )
-    session.add(row)
-    try:
-        await session.flush()
-    except Exception as exc:
-        raise HTTPException(
-            status_code=409,
-            detail="Vehicle fee defaults row already exists for this (vehicle_type, equity_role)",
-        ) from exc
-    await session.refresh(row)
-    return row
-
-
-@router.patch(
-    "/capital-vehicle-fee-defaults/{row_id}",
-    response_model=CapitalVehicleFeeDefaultsRead,
-)
-async def update_vehicle_fee_default(
-    row_id: UUID,
-    payload: CapitalVehicleFeeDefaultsUpdate,
-    session: DBSession,
-    current_user_id: CurrentUserId,
-) -> CapitalVehicleFeeDefaults:
-    org_id = await _current_user_org_id(session, current_user_id)
-    row = await session.get(CapitalVehicleFeeDefaults, row_id)
-    if row is None or row.org_id != org_id:
-        raise HTTPException(status_code=404, detail="Vehicle fee defaults row not found")
-    data = payload.model_dump(exclude_unset=True)
-    if "fee_terms" in data and data["fee_terms"] is not None:
-        row.fee_terms = _json_safe(data["fee_terms"])
-    await session.flush()
-    await session.refresh(row)
-    return row
-
-
-@router.delete(
-    "/capital-vehicle-fee-defaults/{row_id}",
-    status_code=status.HTTP_204_NO_CONTENT,
-)
-async def delete_vehicle_fee_default(
-    row_id: UUID,
-    session: DBSession,
-    current_user_id: CurrentUserId,
-) -> Response:
-    org_id = await _current_user_org_id(session, current_user_id)
-    row = await session.get(CapitalVehicleFeeDefaults, row_id)
-    if row is None or row.org_id != org_id:
-        raise HTTPException(status_code=404, detail="Vehicle fee defaults row not found")
-    await session.delete(row)
-    await session.flush()
-    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 # ---------------------------------------------------------------------------

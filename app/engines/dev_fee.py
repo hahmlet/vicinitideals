@@ -33,7 +33,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.capital import (
     CapitalModule,
-    CapitalVehicleFeeDefaults,
     UseLineSourceFeeBasis,
 )
 from app.models.deal import OperationalInputs, UseLine
@@ -132,52 +131,55 @@ def _project_units(inputs: OperationalInputs | None) -> int:
 
 
 # ---------------------------------------------------------------------------
-# Inheritance resolution: live read of capital_vehicle_fee_defaults.
+# Inheritance resolution: live read of Source Vehicle preset fee_terms.
 # ---------------------------------------------------------------------------
 
 
 async def _load_vehicle_fee_defaults(
-    org_id: object | None,
+    modules: Sequence[CapitalModule],
     session: AsyncSession,
-) -> dict[tuple[str, str | None], dict]:
-    """Load `capital_vehicle_fee_defaults` for this org into a lookup map.
+) -> dict[object, dict]:
+    """Load fee_terms from each preset referenced by ``CapitalModule.source_vehicle_id``.
 
-    Returns ``{(vehicle_type, equity_role): fee_terms_dict}``. Empty when org
-    is None or no rows exist (engine then treats every CapitalModule as
-    having no inherited terms).
+    Returns ``{source_vehicle_id: fee_terms_dict}``. Modules with no
+    ``source_vehicle_id`` (manual-add, not from a preset) are absent and
+    fall back to the module's own ``fee_terms`` column.
     """
-    if org_id is None:
+    sv_ids = {
+        m.source_vehicle_id for m in modules if getattr(m, "source_vehicle_id", None)
+    }
+    if not sv_ids:
         return {}
+    from app.models.source_vehicle import SourceVehicle
+
     rows = (
         await session.execute(
-            select(CapitalVehicleFeeDefaults).where(
-                CapitalVehicleFeeDefaults.org_id == org_id
+            select(SourceVehicle.id, SourceVehicle.fee_terms).where(
+                SourceVehicle.id.in_(sv_ids)
             )
         )
-    ).scalars().all()
-    return {
-        (r.vehicle_type, r.equity_role): dict(r.fee_terms or {}) for r in rows
-    }
+    ).all()
+    return {row.id: dict(row.fee_terms or {}) for row in rows}
 
 
 def _effective_fee_terms(
     module: CapitalModule,
-    defaults_map: dict[tuple[str, str | None], dict],
+    defaults_map: dict[object, dict],
 ) -> dict:
-    """Resolve fee_terms for a CapitalModule, applying inheritance if flagged.
+    """Resolve fee_terms for a CapitalModule, applying preset inheritance.
 
-    Returns an empty dict when neither instance nor type defaults are set —
-    callers treat that as "no terms" and skip the Vehicle in the binding
-    constraint.
+    Returns an empty dict when neither instance override nor the preset
+    carries a rule — callers treat that as "no terms" and skip the Vehicle
+    in the binding constraint.
     """
     if not getattr(module, "fee_terms_inherited_from_type", True):
         return dict(getattr(module, "fee_terms", {}) or {})
-    key = (module.vehicle_type, module.equity_role)
-    inherited = defaults_map.get(key)
-    if inherited is not None:
-        return dict(inherited)
-    # Fall back to the instance column in case the row was written before
-    # inheritance was switched off. Otherwise empty.
+    sv_id = getattr(module, "source_vehicle_id", None)
+    if sv_id is not None:
+        inherited = defaults_map.get(sv_id)
+        if inherited:
+            return dict(inherited)
+    # No preset linkage or preset has no rule — fall back to instance column.
     return dict(getattr(module, "fee_terms", {}) or {})
 
 
@@ -696,7 +698,7 @@ async def recompute_auto_dev_fee(
         await session.flush()
         return
 
-    defaults_map = await _load_vehicle_fee_defaults(org_id, session)
+    defaults_map = await _load_vehicle_fee_defaults(modules, session)
     effective_terms_by_module: dict[object, dict] = {
         m.id: _effective_fee_terms(m, defaults_map) for m in modules
     }

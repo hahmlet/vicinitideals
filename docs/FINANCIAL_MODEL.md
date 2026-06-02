@@ -3517,8 +3517,8 @@ release schedule, and three acquisition treatments.
 | Layer | Source of truth |
 |---|---|
 | Org/User defaults | `org_settings` / `user_settings` keyed by deal type — `dev_fee_pct_*`, `dev_fee_basis_*`, `dev_fee_acquisition_treatment_*`, `dev_fee_acquisition_pct_*`, `acquisition_fee_pct_*`, `dev_fee_final_holdback_pct_*`, `dev_fee_milestone_weights_*` |
-| Source Vehicle Type defaults | `capital_vehicle_fee_defaults` table (org-scoped registry keyed on `vehicle_type`, `equity_role`) — ships empty; org admin populates |
-| Source Vehicle row (`CapitalModule`) | `fee_terms` JSONB + `fee_terms_inherited_from_type` flag — engine resolves live defaults when flag is True, instance overrides when False |
+| Source Vehicle preset | `source_vehicles.fee_terms` JSONB — per-preset rule edited at `/settings/vehicles`. Empty dict = no cap from this preset (renamed from per-Type defaults table; migration 0105 dropped `capital_vehicle_fee_defaults`) |
+| Source Vehicle row (`CapitalModule`) | `fee_terms` JSONB + `fee_terms_inherited_from_type` flag — when True, engine reads `SourceVehicle.fee_terms` from the preset referenced by `source_vehicle_id`; when False, the instance `fee_terms` is the source of truth |
 | Per-(UseLine × Vehicle) custom-Use override | `use_line_source_fee_basis` join table — required for any UseLine whose `cost_category` is outside the eight standard categories |
 
 ### H.2 Standard cost categories
@@ -3598,14 +3598,15 @@ capital stack shape changes. Pure amount edits do not trip the diff.
 | File | Role |
 |---|---|
 | `alembic/versions/0103_dev_fee_multi_source.py` | Schema migration |
-| `app/models/capital.py` | `CapitalModule.fee_terms`, `CapitalVehicleFeeDefaults`, `UseLineSourceFeeBasis` |
+| `app/models/capital.py` | `CapitalModule.fee_terms`, `UseLineSourceFeeBasis` |
+| `app/models/source_vehicle.py` | `SourceVehicle.fee_terms` (per-preset Dev Fee rule; migration 0105) |
 | `app/models/deal.py` | `UseLine.dev_fee_release_schedule`, `dev_fee_binding_context`, `is_auto_acquisition_fee`, `dev_fee_acquisition_treatment`, `dev_fee_acquisition_pct`, `acquisition_fee_pct` |
-| `app/schemas/capital.py` | `CapitalFeeTermsSchema`, `CapitalVehicleFeeDefaults*` CRUD |
+| `app/schemas/capital.py` | `CapitalFeeTermsSchema` |
 | `app/schemas/deal.py` | `DevFeeReleaseScheduleSchema`, `DevFeeBindingContextSchema`, `UseLineSourceFeeBasisSchema` |
 | `app/engines/dev_fee.py` | Multi-source pipeline (binding constraint, funded/deferred, release, structural diff) |
 | `app/engines/cashflow.py` | Call site passes `modules`, `org_id`, `milestone_dates` |
 | `app/settings/defaults.py` + `resolver.py` | 20 new keys + extended `resolve_dev_fee_config` |
-| `app/api/routers/capital.py` | `/capital-vehicle-fee-defaults` CRUD, `/models/{id}/use-line-source-fee-basis` CRUD |
+| `app/api/routers/capital.py` | `/models/{id}/use-line-source-fee-basis` CRUD |
 | `app/api/routers/ui.py` | `GET /ui/models/{id}/dev-fee/explainer` HTMX route |
 | `app/templates/partials/dev_fee_explainer_modal.html` | Explainer modal partial |
 | `tests/engines/test_dev_fee_multi_source.py` | 12 priority tests |

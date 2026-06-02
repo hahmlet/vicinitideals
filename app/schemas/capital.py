@@ -507,30 +507,4 @@ class WaterfallDistributionReportRead(BaseModel):
     )
 
 
-# ---------------------------------------------------------------------------
-# CapitalVehicleFeeDefaults schemas (Org-scoped Developer Fee defaults registry)
-# ---------------------------------------------------------------------------
-
-
-class CapitalVehicleFeeDefaultsBase(BaseModel):
-    vehicle_type: str
-    equity_role: str | None = None
-    fee_terms: CapitalFeeTermsSchema = Field(default_factory=CapitalFeeTermsSchema)
-
-
-class CapitalVehicleFeeDefaultsCreate(CapitalVehicleFeeDefaultsBase):
-    pass
-
-
-class CapitalVehicleFeeDefaultsUpdate(BaseModel):
-    fee_terms: CapitalFeeTermsSchema | None = None
-
-
-class CapitalVehicleFeeDefaultsRead(CapitalVehicleFeeDefaultsBase):
-    id: uuid.UUID
-    org_id: uuid.UUID
-    created_at: datetime
-    updated_at: datetime
-
-    model_config = ConfigDict(from_attributes=True)
 

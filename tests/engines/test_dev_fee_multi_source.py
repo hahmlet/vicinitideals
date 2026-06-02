@@ -14,8 +14,9 @@ from decimal import Decimal
 import pytest
 
 from app.engines.dev_fee import recompute_auto_dev_fee
-from app.models.capital import CapitalModule, CapitalVehicleFeeDefaults
+from app.models.capital import CapitalModule
 from app.models.deal import OperationalInputs, UseLine, UseLinePhase
+from app.models.source_vehicle import SourceVehicle
 
 
 def _ul(
@@ -58,6 +59,7 @@ def _module(
     equity_role: str | None = None,
     fee_terms: dict | None = None,
     fee_terms_inherited_from_type: bool = False,
+    source_vehicle_id: uuid.UUID | None = None,
 ) -> CapitalModule:
     return CapitalModule(
         id=uuid.uuid4(),
@@ -67,6 +69,7 @@ def _module(
         equity_role=equity_role,
         fee_terms=fee_terms or {},
         fee_terms_inherited_from_type=fee_terms_inherited_from_type,
+        source_vehicle_id=source_vehicle_id,
     )
 
 
@@ -341,27 +344,29 @@ async def test_legacy_treatment_includes_acquisition_in_basis(session):
 
 
 # ---------------------------------------------------------------------------
-# Vehicle Type defaults inheritance.
+# Source Vehicle preset inheritance.
 # ---------------------------------------------------------------------------
 
 
 @pytest.mark.unit
-async def test_inheritance_reads_live_vehicle_defaults(session):
-    """When ``fee_terms_inherited_from_type=True``, engine reads from the
-    capital_vehicle_fee_defaults table for this Vehicle's
-    (vehicle_type, equity_role)."""
+async def test_inheritance_reads_source_vehicle_preset(session):
+    """When ``fee_terms_inherited_from_type=True``, engine reads
+    ``fee_terms`` directly from the SourceVehicle preset referenced by
+    ``CapitalModule.source_vehicle_id``."""
     from tests.conftest import seed_org
-    org, _user = await seed_org(session)
+    org, user = await seed_org(session)
     org_id = org.id
-    # Seed a defaults row for vehicle_type="debt".
-    defaults = CapitalVehicleFeeDefaults(
+    preset = SourceVehicle(
         id=uuid.uuid4(),
-        org_id=org_id,
+        scope="org",
+        owner_id=org_id,
+        label="LIHTC Bond",
         vehicle_type="debt",
-        equity_role=None,
         fee_terms={"max_pct": "4.0"},
+        created_by=user.id,
+        updated_by=user.id,
     )
-    session.add(defaults)
+    session.add(preset)
     await session.flush()
 
     use_lines = [
@@ -379,6 +384,7 @@ async def test_inheritance_reads_live_vehicle_defaults(session):
         vehicle_type="debt",
         fee_terms={},
         fee_terms_inherited_from_type=True,
+        source_vehicle_id=preset.id,
     )
     await recompute_auto_dev_fee(
         use_lines, _inputs(), session, modules=[module], org_id=org_id
@@ -391,20 +397,23 @@ async def test_inheritance_reads_live_vehicle_defaults(session):
 
 
 @pytest.mark.unit
-async def test_override_ignores_vehicle_type_defaults(session):
+async def test_override_ignores_source_vehicle_preset(session):
     """When ``fee_terms_inherited_from_type=False``, the instance fee_terms
-    wins regardless of vehicle defaults."""
+    wins regardless of the linked preset's fee_terms."""
     from tests.conftest import seed_org
-    org, _user = await seed_org(session)
+    org, user = await seed_org(session)
     org_id = org.id
-    defaults = CapitalVehicleFeeDefaults(
+    preset = SourceVehicle(
         id=uuid.uuid4(),
-        org_id=org_id,
+        scope="org",
+        owner_id=org_id,
+        label="LIHTC Bond",
         vehicle_type="debt",
-        equity_role=None,
-        fee_terms={"max_pct": "3.0"},  # Defaults: tight cap.
+        fee_terms={"max_pct": "3.0"},  # Preset: tight cap.
+        created_by=user.id,
+        updated_by=user.id,
     )
-    session.add(defaults)
+    session.add(preset)
     await session.flush()
 
     use_lines = [
@@ -423,11 +432,12 @@ async def test_override_ignores_vehicle_type_defaults(session):
         vehicle_type="debt",
         fee_terms={"max_pct": "10.0"},  # Override: loose cap.
         fee_terms_inherited_from_type=False,
+        source_vehicle_id=preset.id,
     )
     await recompute_auto_dev_fee(
         use_lines, _inputs(), session, modules=[module], org_id=org_id
     )
     auto = next(u for u in use_lines if u.is_auto_dev_fee)
     ctx = auto.dev_fee_binding_context
-    # Override 10% × $1M = $100k — instance terms used, defaults ignored.
+    # Override 10% × $1M = $100k — instance terms used, preset ignored.
     assert Decimal(ctx["binding_dollar_cap"]) == Decimal("100000.000")

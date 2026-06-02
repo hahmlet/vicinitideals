@@ -5663,6 +5663,30 @@ def _parse_vehicle_carry_schedule(form) -> dict | None:
     return {"schedule": phases} if phases else None
 
 
+def _parse_vehicle_fee_terms(form) -> dict:
+    """Parse Developer Fee Rule fields from a vehicle settings form.
+
+    Empty dict means preset imposes no Dev Fee cap. Persisted to
+    ``SourceVehicle.fee_terms`` and inherited by CapitalModules created
+    from this preset.
+    """
+    out: dict = {}
+    if (_mp := _fd(form.get("fee_terms_max_pct"))) is not None:
+        out["max_pct"] = float(_mp)
+    if (_puc := _fd(form.get("fee_terms_per_unit_cap"))) is not None:
+        out["per_unit_cap"] = float(_puc)
+    if (_ac := _fd(form.get("fee_terms_absolute_cap"))) is not None:
+        out["absolute_cap"] = float(_ac)
+    _excl = [x.strip() for x in form.getlist("fee_terms_basis_exclusions[]") if x.strip()]
+    if _excl:
+        out["basis_exclusions"] = _excl
+    if form.get("fee_terms_regulated") == "on":
+        out["regulated"] = True
+    if (_notes := (form.get("fee_terms_notes") or "").strip()):
+        out["notes"] = _notes
+    return out
+
+
 def _fd(v: str | None) -> Decimal | None:
     """Parse an optional Decimal from a form field. Strips commas tolerantly."""
     if not v or not v.strip():
@@ -13980,6 +14004,7 @@ async def vehicle_create(
 
     from app.models.source_vehicle import SourceVehicle as _SV_cr
     _v_carry_config = _parse_vehicle_carry_schedule(form)
+    _v_fee_terms = _parse_vehicle_fee_terms(form)
     vehicle = _SV_cr(
         scope=scope,
         owner_id=owner_id,
@@ -13995,6 +14020,7 @@ async def vehicle_create(
         amort_term_years=int(form.get("amort_term_years")) if form.get("amort_term_years") else None,
         pref_rate_pct=form.get("pref_rate_pct") or None,
         carry_config=_v_carry_config if _v_carry_config else None,
+        fee_terms=_v_fee_terms,
         created_by=user.id,
         updated_by=user.id,
     )
@@ -14044,6 +14070,7 @@ async def vehicle_update(
     vehicle.default_waterfall_position = int(form.get("default_waterfall_position") or vehicle.default_waterfall_position)
     _new_carry_config = _parse_vehicle_carry_schedule(form)
     vehicle.carry_config = _new_carry_config if _new_carry_config else vehicle.carry_config
+    vehicle.fee_terms = _parse_vehicle_fee_terms(form)
     vehicle.updated_by = user.id
     await session.commit()
 
@@ -14090,161 +14117,6 @@ async def vehicle_delete(
     await session.delete(vehicle)
     await session.commit()
     return HTMLResponse("")
-
-
-# ---------------------------------------------------------------------------
-# Capital Vehicle Dev Fee Defaults (Org-scoped)
-# ---------------------------------------------------------------------------
-
-_CVD_VEHICLE_TYPE_CHOICES = [
-    ("equity", "Equity"),
-    ("debt", "Debt"),
-    ("forgivable_loan", "Forgivable Loan"),
-    ("grant", "Grant"),
-    ("tax_credit", "Tax Credit"),
-    ("subordinate_debt", "Subordinate Debt"),
-]
-_CVD_VEHICLE_TYPE_LABELS = dict(_CVD_VEHICLE_TYPE_CHOICES)
-_CVD_COST_CATEGORIES = [
-    ("acquisition", "Acquisition"),
-    ("hard_costs", "Hard Costs"),
-    ("soft_costs", "Soft Costs"),
-    ("financing_fees", "Financing Fees"),
-    ("interest_reserve", "Interest Reserve"),
-    ("operating_reserves", "Operating Reserves"),
-    ("developer_overhead", "Developer Overhead"),
-    ("consulting_fees", "Consulting Fees"),
-]
-
-
-def _cvd_parse_fee_terms(form) -> dict:
-    """Parse fee_terms dict from form fields. Returns {} when no fields set."""
-    out: dict = {}
-    if (_mp := _fd(form.get("max_pct"))) is not None:
-        out["max_pct"] = float(_mp)
-    if (_puc := _fd(form.get("per_unit_cap"))) is not None:
-        out["per_unit_cap"] = float(_puc)
-    if (_ac := _fd(form.get("absolute_cap"))) is not None:
-        out["absolute_cap"] = float(_ac)
-    _excl = [x.strip() for x in form.getlist("basis_exclusions[]") if x.strip()]
-    if _excl:
-        out["basis_exclusions"] = _excl
-    if form.get("regulated") == "on":
-        out["regulated"] = True
-    if (_notes := (form.get("notes") or "").strip()):
-        out["notes"] = _notes
-    return out
-
-
-@router.get("/settings/capital-vehicle-defaults", response_class=HTMLResponse)
-async def capital_vehicle_defaults_page(
-    request: Request,
-    session: DBSession,
-) -> HTMLResponse:
-    user = await _get_user(session, request)
-    if user is None:
-        return RedirectResponse(url="/login?next=/settings/capital-vehicle-defaults", status_code=303)
-
-    from app.models.capital import CapitalVehicleFeeDefaults
-    dedup_count, conflicts_count = await _get_counts(session)
-    address_issues_count = await _get_address_issues_count(session)
-
-    rows = (await session.execute(
-        select(CapitalVehicleFeeDefaults)
-        .where(CapitalVehicleFeeDefaults.org_id == user.org_id)
-        .order_by(CapitalVehicleFeeDefaults.vehicle_type, CapitalVehicleFeeDefaults.equity_role)
-    )).scalars().all()
-
-    return templates.TemplateResponse(
-        request,
-        "settings_capital_vehicle_defaults.html",
-        {
-            "defaults": rows,
-            "vehicle_type_labels": _CVD_VEHICLE_TYPE_LABELS,
-            "vehicle_type_choices": _CVD_VEHICLE_TYPE_CHOICES,
-            "cost_categories": _CVD_COST_CATEGORIES,
-            **_base_ctx(user, dedup_count, "", address_issues_count, conflicts_count=conflicts_count),
-        },
-    )
-
-
-@router.post("/settings/capital-vehicle-defaults", response_class=HTMLResponse)
-async def capital_vehicle_defaults_create(
-    request: Request,
-    session: DBSession,
-) -> HTMLResponse:
-    user = await _get_user(session, request)
-    if user is None:
-        return RedirectResponse(url="/login?next=/settings/capital-vehicle-defaults", status_code=303)
-
-    from app.models.capital import CapitalVehicleFeeDefaults
-
-    form = await request.form()
-    vehicle_type = (form.get("vehicle_type") or "").strip()
-    if vehicle_type not in _CVD_VEHICLE_TYPE_LABELS:
-        return HTMLResponse("Invalid vehicle type.", status_code=400)
-    equity_role = (form.get("equity_role") or "").strip() or None
-    if vehicle_type != "equity":
-        equity_role = None
-
-    row = CapitalVehicleFeeDefaults(
-        org_id=user.org_id,
-        vehicle_type=vehicle_type,
-        equity_role=equity_role,
-        fee_terms=_cvd_parse_fee_terms(form),
-    )
-    session.add(row)
-    try:
-        await session.commit()
-    except IntegrityError:
-        await session.rollback()
-        return HTMLResponse(
-            "A default for this vehicle type + equity role already exists.",
-            status_code=409,
-        )
-    return RedirectResponse(url="/settings/capital-vehicle-defaults", status_code=303)
-
-
-@router.post("/settings/capital-vehicle-defaults/{row_id}", response_class=HTMLResponse)
-async def capital_vehicle_defaults_update(
-    request: Request,
-    row_id: UUID,
-    session: DBSession,
-) -> HTMLResponse:
-    user = await _get_user(session, request)
-    if user is None:
-        return RedirectResponse(url="/login?next=/settings/capital-vehicle-defaults", status_code=303)
-
-    from app.models.capital import CapitalVehicleFeeDefaults
-    row = await session.get(CapitalVehicleFeeDefaults, row_id)
-    if row is None or row.org_id != user.org_id:
-        return HTMLResponse("Default not found", status_code=404)
-
-    form = await request.form()
-    row.fee_terms = _cvd_parse_fee_terms(form)
-    await session.commit()
-    return RedirectResponse(url="/settings/capital-vehicle-defaults", status_code=303)
-
-
-@router.delete("/settings/capital-vehicle-defaults/{row_id}", response_class=HTMLResponse)
-async def capital_vehicle_defaults_delete(
-    request: Request,
-    row_id: UUID,
-    session: DBSession,
-) -> HTMLResponse:
-    user = await _get_user(session, request)
-    if user is None:
-        return HTMLResponse("Unauthorized", status_code=401)
-
-    from app.models.capital import CapitalVehicleFeeDefaults
-    row = await session.get(CapitalVehicleFeeDefaults, row_id)
-    if row is None or row.org_id != user.org_id:
-        return HTMLResponse("", status_code=404)
-
-    await session.delete(row)
-    await session.commit()
-    return HTMLResponse("")
-
 
 # ---------------------------------------------------------------------------
 # Portfolios

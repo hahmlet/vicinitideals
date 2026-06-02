@@ -6,7 +6,7 @@
 - UseLine edit (`/ui/forms/{model}/use-lines/{id}`) on the auto Dev Fee row
   accepts `dev_fee_acquisition_treatment`, `dev_fee_acquisition_pct`,
   `acquisition_fee_pct`, and `release_milestone_key[] / release_weight_pct[]`.
-- Capital Vehicle Defaults page (`/settings/capital-vehicle-defaults`)
+- Source Vehicle preset ``fee_terms`` persistence (`/settings/vehicles`)
   GET renders + POST creates + POST updates a row.
 """
 
@@ -20,7 +20,7 @@ from httpx import AsyncClient
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.capital import CapitalModule, CapitalVehicleFeeDefaults
+from app.models.capital import CapitalModule
 from app.models.deal import UseLine, UseLinePhase
 from app.models.project import Project
 
@@ -277,94 +277,97 @@ async def test_dev_fee_row_release_schedule_persists(
 # Capital Vehicle Defaults Org settings page
 # ---------------------------------------------------------------------------
 
-async def test_capital_vehicle_defaults_page_renders(
+async def test_vehicle_preset_create_persists_fee_terms(
     client: AsyncClient,
     session: AsyncSession,
 ) -> None:
+    """Posting Dev Fee Rule fields on the vehicle preset form persists
+    them to ``SourceVehicle.fee_terms`` for inheritance by future
+    CapitalModules created from this preset."""
     from tests.conftest import seed_org
+    from app.models.source_vehicle import SourceVehicle
     org, user = await seed_org(session)
     await session.commit()
     await _auth(client, user.id)
 
-    resp = await client.get("/settings/capital-vehicle-defaults")
-    assert resp.status_code == 200
-    assert "Capital Vehicle Dev Fee Defaults" in resp.text
-    assert "No defaults configured" in resp.text
-
-
-async def test_capital_vehicle_defaults_create_and_update(
-    client: AsyncClient,
-    session: AsyncSession,
-) -> None:
-    from tests.conftest import seed_org
-    org, user = await seed_org(session)
-    await session.commit()
-    await _auth(client, user.id)
-
-    # Create
     resp = await client.post(
-        "/settings/capital-vehicle-defaults",
+        "/settings/vehicles",
         data=[
+            ("scope", "org"),
+            ("label", "LIHTC Bond"),
             ("vehicle_type", "debt"),
             ("equity_role", ""),
-            ("max_pct", "15"),
-            ("absolute_cap", "2000000"),
-            ("basis_exclusions[]", "acquisition"),
-            ("basis_exclusions[]", "operating_reserves"),
-            ("notes", "LIHTC bond cap"),
+            ("default_waterfall_position", "0"),
+            ("draw_cadence", "monthly"),
+            ("day_count_convention", "actual_360"),
+            ("fee_terms_max_pct", "15"),
+            ("fee_terms_absolute_cap", "2000000"),
+            ("fee_terms_basis_exclusions[]", "acquisition"),
+            ("fee_terms_basis_exclusions[]", "operating_reserves"),
+            ("fee_terms_regulated", "on"),
+            ("fee_terms_notes", "LIHTC bond cap"),
         ],
         follow_redirects=False,
     )
     assert resp.status_code == 303, resp.text
 
     rows = (await session.execute(
-        select(CapitalVehicleFeeDefaults).where(
-            CapitalVehicleFeeDefaults.org_id == user.org_id
-        )
+        select(SourceVehicle).where(SourceVehicle.label == "LIHTC Bond")
     )).scalars().all()
     assert len(rows) == 1
-    row = rows[0]
-    ft = row.fee_terms or {}
+    ft = rows[0].fee_terms or {}
     assert float(ft["max_pct"]) == 15.0
+    assert float(ft["absolute_cap"]) == 2000000.0
     assert set(ft["basis_exclusions"]) == {"acquisition", "operating_reserves"}
-
-    # Update
-    resp = await client.post(
-        f"/settings/capital-vehicle-defaults/{row.id}",
-        data=[
-            ("max_pct", "12"),
-            ("absolute_cap", "1500000"),
-            ("notes", "tightened cap"),
-        ],
-        follow_redirects=False,
-    )
-    assert resp.status_code == 303
-
-    session.expire_all()
-    row2 = await session.get(CapitalVehicleFeeDefaults, row.id)
-    assert float((row2.fee_terms or {})["max_pct"]) == 12.0
-    assert (row2.fee_terms or {})["notes"] == "tightened cap"
+    assert ft.get("regulated") is True
+    assert ft.get("notes") == "LIHTC bond cap"
 
 
-async def test_capital_vehicle_defaults_duplicate_returns_409(
+async def test_vehicle_preset_update_replaces_fee_terms(
     client: AsyncClient,
     session: AsyncSession,
 ) -> None:
+    """Updating the preset form rewrites ``fee_terms`` from the submitted
+    fields. Omitted fields are dropped — empty form = no cap."""
     from tests.conftest import seed_org
+    from app.models.source_vehicle import SourceVehicle
     org, user = await seed_org(session)
+    vehicle = SourceVehicle(
+        scope="org",
+        owner_id=user.org_id,
+        label="Bridge Loan",
+        vehicle_type="debt",
+        default_waterfall_position=0,
+        draw_cadence="monthly",
+        day_count_convention="actual_360",
+        fee_terms={"max_pct": 15.0, "notes": "stale"},
+        created_by=user.id,
+        updated_by=user.id,
+    )
+    session.add(vehicle)
     await session.commit()
     await _auth(client, user.id)
 
-    resp1 = await client.post(
-        "/settings/capital-vehicle-defaults",
-        data=[("vehicle_type", "debt"), ("max_pct", "15")],
+    resp = await client.post(
+        f"/settings/vehicles/{vehicle.id}",
+        data=[
+            ("label", "Bridge Loan"),
+            ("vehicle_type", "debt"),
+            ("equity_role", ""),
+            ("default_waterfall_position", "0"),
+            ("draw_cadence", "monthly"),
+            ("day_count_convention", "actual_360"),
+            ("fee_terms_max_pct", "12"),
+            ("fee_terms_notes", "tightened cap"),
+        ],
         follow_redirects=False,
     )
-    assert resp1.status_code == 303
+    assert resp.status_code == 303, resp.text
 
-    resp2 = await client.post(
-        "/settings/capital-vehicle-defaults",
-        data=[("vehicle_type", "debt"), ("max_pct", "10")],
-        follow_redirects=False,
-    )
-    assert resp2.status_code == 409
+    session.expire_all()
+    refreshed = await session.get(SourceVehicle, vehicle.id)
+    ft = refreshed.fee_terms or {}
+    assert float(ft["max_pct"]) == 12.0
+    assert ft.get("notes") == "tightened cap"
+    assert "absolute_cap" not in ft
+    assert "regulated" not in ft
