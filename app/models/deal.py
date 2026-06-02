@@ -782,6 +782,11 @@ class UseLine(Base):
     timing_type: Mapped[str] = mapped_column(String(20), nullable=False, default="first_day")
     is_deferred: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     cost_category: Mapped[str | None] = mapped_column(String(60), nullable=True, default="soft")
+    # Frozen at engine auto-create time so user renames don't break the
+    # Dev Fee basis inclusion config stored on Source Vehicle presets.
+    # NULL on user-added custom rows; classify_basis_bucket() falls back
+    # to label patterns then cost_category. See app/engines/dev_fee.py.
+    dev_fee_basis_bucket: Mapped[str | None] = mapped_column(String(40), nullable=True)
     notes: Mapped[str | None] = mapped_column(Text, nullable=True)
     # Source-Use eligibility routing (Phase C). Empty list = permissive (any source may fund).
     # Non-empty list restricts funding to the listed CapitalModule UUIDs only.

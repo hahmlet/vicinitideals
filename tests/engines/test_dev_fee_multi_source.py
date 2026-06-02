@@ -23,7 +23,7 @@ def _ul(
     *,
     label: str,
     amount: Decimal,
-    cost_category: str = "soft_costs",
+    cost_category: str = "soft",
     phase: UseLinePhase = UseLinePhase.construction,
     is_auto_dev_fee: bool = False,
     is_auto_acquisition_fee: bool = False,
@@ -32,7 +32,13 @@ def _ul(
     dev_fee_acquisition_treatment: str | None = None,
     dev_fee_acquisition_pct: Decimal | None = None,
     acquisition_fee_pct: Decimal | None = None,
+    dev_fee_basis_bucket: str | None = None,
 ) -> UseLine:
+    # Mirror engine auto-stamp behavior: acquisition-category land rows
+    # are stamped with the "acquisition" bucket at create time so
+    # `basis_exclusions: ["acquisition"]` on a Vehicle drops them.
+    if dev_fee_basis_bucket is None and cost_category == "acquisition":
+        dev_fee_basis_bucket = "acquisition"
     return UseLine(
         id=uuid.uuid4(),
         project_id=uuid.uuid4(),
@@ -42,6 +48,7 @@ def _ul(
         timing_type="first_day",
         is_deferred=False,
         cost_category=cost_category,
+        dev_fee_basis_bucket=dev_fee_basis_bucket,
         is_auto_dev_fee=is_auto_dev_fee,
         is_auto_acquisition_fee=is_auto_acquisition_fee,
         dev_fee_pct=dev_fee_pct,
@@ -96,7 +103,7 @@ async def test_single_vehicle_max_pct_with_basis_exclusion(session):
     """5.5% × (TPC − land) caps the fee."""
     use_lines = [
         _ul(label="Land", amount=Decimal("1000000"), cost_category="acquisition"),
-        _ul(label="Hard", amount=Decimal("2000000"), cost_category="hard_costs"),
+        _ul(label="Hard", amount=Decimal("2000000"), cost_category="hard"),
         _ul(
             label="Dev Fee",
             amount=Decimal("0"),
@@ -126,7 +133,7 @@ async def test_single_vehicle_max_pct_with_basis_exclusion(session):
 async def test_two_vehicles_min_binds(session):
     """Two Vehicles with different caps — strictest binds."""
     use_lines = [
-        _ul(label="Hard", amount=Decimal("4000000"), cost_category="hard_costs"),
+        _ul(label="Hard", amount=Decimal("4000000"), cost_category="hard"),
         _ul(
             label="Dev Fee",
             amount=Decimal("0"),
@@ -152,7 +159,7 @@ async def test_two_vehicles_min_binds(session):
 async def test_per_unit_cap_caps_fee(session):
     """Vehicle with per_unit_cap=25_000 × 100 units = $2.5M ceiling."""
     use_lines = [
-        _ul(label="Hard", amount=Decimal("100000000"), cost_category="hard_costs"),
+        _ul(label="Hard", amount=Decimal("100000000"), cost_category="hard"),
         _ul(
             label="Dev Fee",
             amount=Decimal("0"),
@@ -174,7 +181,7 @@ async def test_per_unit_cap_caps_fee(session):
 async def test_absolute_cap_caps_fee(session):
     """Vehicle with absolute_cap=$2M ceilings the fee at $2M."""
     use_lines = [
-        _ul(label="Hard", amount=Decimal("50000000"), cost_category="hard_costs"),
+        _ul(label="Hard", amount=Decimal("50000000"), cost_category="hard"),
         _ul(
             label="Dev Fee",
             amount=Decimal("0"),
@@ -196,7 +203,7 @@ async def test_absolute_cap_caps_fee(session):
 async def test_no_constrained_vehicles_no_binding(session):
     """When no Vehicle has fee_terms set, binding_source_id is None."""
     use_lines = [
-        _ul(label="Hard", amount=Decimal("4000000"), cost_category="hard_costs"),
+        _ul(label="Hard", amount=Decimal("4000000"), cost_category="hard"),
         _ul(
             label="Dev Fee",
             amount=Decimal("0"),
@@ -224,7 +231,7 @@ async def test_no_constrained_vehicles_no_binding(session):
 async def test_elected_fee_above_cap_reports_overage(session):
     """User elected % above binding cap — elected wins, overage reported."""
     use_lines = [
-        _ul(label="Hard", amount=Decimal("2000000"), cost_category="hard_costs"),
+        _ul(label="Hard", amount=Decimal("2000000"), cost_category="hard"),
         _ul(
             label="Dev Fee",
             amount=Decimal("0"),
@@ -256,7 +263,7 @@ async def test_excluded_treatment_removes_acquisition_from_basis(session):
     """`excluded` treatment removes acquisition cost_category from Dev Fee basis."""
     use_lines = [
         _ul(label="Land", amount=Decimal("1000000"), cost_category="acquisition"),
-        _ul(label="Hard", amount=Decimal("3000000"), cost_category="hard_costs"),
+        _ul(label="Hard", amount=Decimal("3000000"), cost_category="hard"),
         _ul(
             label="Dev Fee",
             amount=Decimal("0"),
@@ -276,7 +283,7 @@ async def test_split_rate_treatment_partitions_basis(session):
     """`split_rate` treatment: full pct on construction, reduced pct on acquisition."""
     use_lines = [
         _ul(label="Land", amount=Decimal("5000000"), cost_category="acquisition"),
-        _ul(label="Hard", amount=Decimal("20000000"), cost_category="hard_costs"),
+        _ul(label="Hard", amount=Decimal("20000000"), cost_category="hard"),
         _ul(
             label="Dev Fee",
             amount=Decimal("0"),
@@ -303,7 +310,7 @@ async def test_separate_fee_treatment_computes_acquisition_fee_row(session):
     )
     use_lines = [
         _ul(label="Land", amount=Decimal("8000000"), cost_category="acquisition"),
-        _ul(label="Hard", amount=Decimal("15000000"), cost_category="hard_costs"),
+        _ul(label="Hard", amount=Decimal("15000000"), cost_category="hard"),
         acq_row,
         _ul(
             label="Dev Fee",
@@ -328,7 +335,7 @@ async def test_legacy_treatment_includes_acquisition_in_basis(session):
     """Treatment=None preserves pre-0103 behavior (includes acquisition)."""
     use_lines = [
         _ul(label="Land", amount=Decimal("1000000"), cost_category="acquisition"),
-        _ul(label="Hard", amount=Decimal("3000000"), cost_category="hard_costs"),
+        _ul(label="Hard", amount=Decimal("3000000"), cost_category="hard"),
         _ul(
             label="Dev Fee",
             amount=Decimal("0"),
@@ -370,7 +377,7 @@ async def test_inheritance_reads_source_vehicle_preset(session):
     await session.flush()
 
     use_lines = [
-        _ul(label="Hard", amount=Decimal("5000000"), cost_category="hard_costs"),
+        _ul(label="Hard", amount=Decimal("5000000"), cost_category="hard"),
         _ul(
             label="Dev Fee",
             amount=Decimal("0"),
@@ -417,7 +424,7 @@ async def test_override_ignores_source_vehicle_preset(session):
     await session.flush()
 
     use_lines = [
-        _ul(label="Hard", amount=Decimal("1000000"), cost_category="hard_costs"),
+        _ul(label="Hard", amount=Decimal("1000000"), cost_category="hard"),
         _ul(
             label="Dev Fee",
             amount=Decimal("0"),

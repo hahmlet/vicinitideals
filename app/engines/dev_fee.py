@@ -40,21 +40,98 @@ from app.models.deal import OperationalInputs, UseLine
 ZERO = Decimal("0")
 _MONEY_PLACES = Decimal("0.01")
 
-# Standard auto-generated cost categories the engine recognizes for
-# ``basis_exclusions``. Custom UseLines whose cost_category is outside this
-# set route through use_line_source_fee_basis for inclusion decisions.
-STANDARD_COST_CATEGORIES = frozenset(
-    {
-        "acquisition",
-        "hard_costs",
-        "soft_costs",
-        "financing_fees",
-        "interest_reserve",
-        "operating_reserves",
-        "developer_overhead",
-        "consulting_fees",
-    }
+# Canonical Dev Fee basis buckets. Each bucket maps a UseLine to an
+# inclusion checkbox on the Source Vehicle preset form. Bucket order here
+# is the order shown in the UI.
+#
+# Buckets prefixed with "remaining_" catch user-added Uses that aren't an
+# engine-auto-created row; everything else corresponds to a specific
+# labeled UseLine the engine creates. The bucket key is stamped onto
+# the ``use_lines.dev_fee_basis_bucket`` column at create time so user
+# renames don't break classification.
+BASIS_BUCKETS: tuple[tuple[str, str], ...] = (
+    ("acquisition", "Acquisition"),
+    ("acq_remaining", "Remaining Acquisition"),
+    ("interest_reserve", "Interest Reserve"),
+    ("capitalized_interest", "Capitalized Interest"),
+    ("total_finance_costs", "Total Finance Costs"),
+    ("operating_reserve", "Operating Reserve"),
+    ("lease_up_reserve", "Lease-Up Reserve"),
+    ("construction_ds_reserve", "Construction DS Reserve"),
+    ("cash_flow_support_reserve", "Cash Flow Support Reserve"),
+    ("soft_remaining", "Remaining Soft Costs"),
+    ("hard_remaining", "Remaining Hard Costs"),
 )
+BASIS_BUCKET_KEYS: frozenset[str] = frozenset(k for k, _ in BASIS_BUCKETS)
+
+# Engine-created labels recognized by the bucket classifier when no stamped
+# bucket is present (covers legacy rows + the backfill path). Each set lists
+# all label variants that share a bucket. Gap Adjustment — Purchase Price
+# silently follows the Acquisition bucket per spec.
+_INTEREST_RESERVE_LABELS: frozenset[str] = frozenset({
+    "Interest Reserve",
+    "Pre-Development Interest Reserve",
+    "Acquisition Interest Reserve",
+    "Construction Interest Reserve",  # legacy alias for the construction IR row
+})
+_CAPITALIZED_INTEREST_LABELS: frozenset[str] = frozenset({
+    "Capitalized Construction Interest",
+    "Capitalized Pre-Development Interest",
+    "Capitalized Acquisition Interest",
+})
+_ACQUISITION_LABELS: frozenset[str] = frozenset({
+    "Acquisition",
+    "Gap Adjustment — Purchase Price",
+})
+_TOTAL_FINANCE_COSTS_SUFFIX: str = " — Total Finance Costs"
+
+
+def classify_basis_bucket(use_line: UseLine) -> str:
+    """Resolve the basis bucket for a UseLine.
+
+    Reads the stamped ``dev_fee_basis_bucket`` column first; if absent
+    (legacy rows pre-0106 / never-stamped), falls back to label patterns
+    matching engine-auto-created rows; final fallback is ``cost_category``
+    to land in one of the three ``*_remaining`` buckets.
+
+    Returns ``"other"`` when no rule matches — the caller treats this as a
+    custom row requiring a per-(UseLine, Vehicle) inclusion decision.
+    """
+    stamped = (getattr(use_line, "dev_fee_basis_bucket", None) or "").strip()
+    if stamped and stamped in BASIS_BUCKET_KEYS:
+        return stamped
+
+    label = (use_line.label or "").strip()
+    if label in _ACQUISITION_LABELS:
+        return "acquisition"
+    if label in _INTEREST_RESERVE_LABELS:
+        return "interest_reserve"
+    if label in _CAPITALIZED_INTEREST_LABELS:
+        return "capitalized_interest"
+    if label.endswith(_TOTAL_FINANCE_COSTS_SUFFIX):
+        return "total_finance_costs"
+    if label == "Operating Reserve":
+        return "operating_reserve"
+    if label == "Lease-Up Reserve":
+        return "lease_up_reserve"
+    if label == "Construction DS Reserve":
+        return "construction_ds_reserve"
+    if label == "Cash Flow Support Reserve":
+        return "cash_flow_support_reserve"
+
+    cat = (use_line.cost_category or "").lower()
+    if cat == "acquisition":
+        return "acq_remaining"
+    if cat == "soft":
+        return "soft_remaining"
+    if cat == "hard":
+        return "hard_remaining"
+    return "other"
+
+
+# Legacy alias kept for any external callers; the new bucket-key check is
+# the source of truth.
+STANDARD_COST_CATEGORIES = frozenset(BASIS_BUCKET_KEYS)
 
 # Acquisition treatment variants.
 ACQ_EXCLUDED = "excluded"
@@ -218,39 +295,36 @@ def _use_in_vehicle_basis(
 ) -> tuple[bool, bool]:
     """Return ``(included, decision_pending)`` for one (UseLine, Vehicle) pair.
 
-    Standard categories follow the Vehicle's ``basis_exclusions``. Custom
-    Uses (cost_category outside ``STANDARD_COST_CATEGORIES``) require a
-    ``use_line_source_fee_basis`` row; if missing, the engine flags the pair
-    as pending and conservatively excludes it.
+    Auto Dev Fee and auto Acquisition Fee rows are always excluded
+    (fee-on-fee handled by the elected-fee iterative solve).
 
-    The auto Dev Fee row and auto Acquisition Fee row are never in any
-    Vehicle's basis (fee-on-fee is handled in the elected-fee iterative
-    solve, not in the caps).
+    All other rows are classified into a ``BASIS_BUCKETS`` bucket. Buckets
+    listed in the Vehicle's ``fee_terms.basis_exclusions`` drop out of the
+    basis. Unrecognized rows (bucket ``"other"``) require a per-pair
+    inclusion override; missing override → pending + excluded.
     """
     if use_line.is_auto_dev_fee or getattr(use_line, "is_auto_acquisition_fee", False):
         return (False, False)
 
-    category = (use_line.cost_category or "").lower()
+    bucket = classify_basis_bucket(use_line)
 
     # basis_inclusions_override escape hatch (forward-looking; replaces all
-    # inclusion logic when set).
+    # bucket logic when set).
     inclusion_override = fee_terms.get("basis_inclusions_override")
     if isinstance(inclusion_override, list) and inclusion_override:
-        return (category in inclusion_override, False)
+        return (bucket in inclusion_override, False)
+
+    if bucket == "other":
+        key = (use_line.id, module.id)
+        if key in overrides_index:
+            return (overrides_index[key], False)
+        return (False, True)
 
     exclusions = fee_terms.get("basis_exclusions") or []
     if not isinstance(exclusions, list):
         exclusions = []
     exclusions_set = {str(e).lower() for e in exclusions}
-
-    if category in STANDARD_COST_CATEGORIES:
-        return (category not in exclusions_set, False)
-
-    # Custom use: look up override.
-    key = (use_line.id, module.id)
-    if key in overrides_index:
-        return (overrides_index[key], False)
-    return (False, True)
+    return (bucket not in exclusions_set, False)
 
 
 # ---------------------------------------------------------------------------

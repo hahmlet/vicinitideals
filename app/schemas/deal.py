@@ -535,6 +535,11 @@ class UseLineBase(BaseModel):
     amount: Decimal = Decimal("0")
     timing_type: str = "first_day"
     is_deferred: bool = False
+    cost_category: str | None = None
+    # Stamped at engine auto-create time. Round-trips through snapshot
+    # revert + deal export/import so user renames of engine-created rows
+    # don't lose their Dev Fee basis classification.
+    dev_fee_basis_bucket: str | None = None
     notes: str | None = None
 
 

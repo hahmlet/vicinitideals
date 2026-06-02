@@ -3323,6 +3323,7 @@ async def create_deal(
         label=f"{opportunity.name or 'Property'} - Acquisition",
         phase=UseLinePhase.acquisition,
         cost_category="acquisition",
+        dev_fee_basis_bucket="acquisition",
         amount=acq_cost,
         timing_type="first_day",
     ))
@@ -7758,6 +7759,8 @@ async def _copy_project_data(
             project_id=dst_proj.id,
             label=u.label, phase=u.phase,
             amount=u.amount, is_deferred=u.is_deferred, notes=u.notes,
+            cost_category=u.cost_category,
+            dev_fee_basis_bucket=u.dev_fee_basis_bucket,
         ))
 
     # Copy Income streams
@@ -8103,6 +8106,7 @@ async def create_deal_project(
         label=f"{opp.name or 'Property'} - Acquisition",
         phase=UseLinePhase.acquisition,
         cost_category="acquisition",
+        dev_fee_basis_bucket="acquisition",
         amount=_acq_amount,
         timing_type="first_day",
     ))
@@ -10073,6 +10077,8 @@ async def deal_setup_wizard_complete(
                 phase="operation",
                 amount=Decimal("0"),
                 timing_type="first_day",
+                cost_category="soft",
+                dev_fee_basis_bucket="operating_reserve",
                 notes="Sized at compute time: max(OpEx, Debt Service) × reserve months",
             ))
 
@@ -10169,6 +10175,7 @@ async def deal_setup_wizard_complete(
                         phase=_cc_phase,
                         amount=Decimal("0"),
                         timing_type="first_day",
+                        dev_fee_basis_bucket="total_finance_costs",
                         notes="Auto-computed — edit to override",
                     ))
 

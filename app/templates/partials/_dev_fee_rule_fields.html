@@ -12,7 +12,22 @@
 
   JS pairs with `svReadFeeTerms(prefix, vid)` (inline in each template).
 #}
-{%- macro dev_fee_rule_fields(prefix, ft={}, vid=None) -%}
+{#- Default basis_buckets list mirrors app.engines.dev_fee.BASIS_BUCKETS so
+    template callers don't need to thread context through every handler.
+    Keep in sync if BASIS_BUCKETS changes there. -#}
+{%- macro dev_fee_rule_fields(prefix, ft={}, vid=None, basis_buckets=[
+    ('acquisition','Acquisition'),
+    ('acq_remaining','Remaining Acquisition'),
+    ('interest_reserve','Interest Reserve'),
+    ('capitalized_interest','Capitalized Interest'),
+    ('total_finance_costs','Total Finance Costs'),
+    ('operating_reserve','Operating Reserve'),
+    ('lease_up_reserve','Lease-Up Reserve'),
+    ('construction_ds_reserve','Construction DS Reserve'),
+    ('cash_flow_support_reserve','Cash Flow Support Reserve'),
+    ('soft_remaining','Remaining Soft Costs'),
+    ('hard_remaining','Remaining Hard Costs'),
+]) -%}
 {%- set _excl = ft.get('basis_exclusions') or [] -%}
 {#- Open the section if the preset has any rule set (caps, exclusions,
     regulated, notes). An empty exclusion list is the default state, so it
@@ -62,16 +77,7 @@
           <span style="font-weight:400;font-style:italic;margin-left:6px">— only applies when Max % of Basis is set</span>
         </div>
         <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:4px 12px;font-size:12px">
-          {%- for cat, lbl in [
-            ('acquisition','Acquisition'),
-            ('hard_costs','Hard Costs'),
-            ('soft_costs','Soft Costs'),
-            ('financing_fees','Financing Fees'),
-            ('interest_reserve','Interest Reserve'),
-            ('operating_reserves','Operating Reserves'),
-            ('developer_overhead','Developer Overhead'),
-            ('consulting_fees','Consulting Fees'),
-          ] -%}
+          {%- for cat, lbl in basis_buckets -%}
           <label style="display:flex;align-items:center;gap:6px">
             <input type="checkbox" value="{{ cat }}"
                    {%- if _has_vid %} class="{{ prefix }}-ft-incl" data-vid="{{ vid }}"
@@ -82,7 +88,10 @@
           {%- endfor %}
         </div>
         <div style="font-size:10px;color:var(--text-muted);margin-top:4px">
-          Unchecked categories drop out of this Source's Dev Fee basis sum.
+          Unchecked buckets drop out of this Source's Dev Fee basis sum.
+          Bucket follows the engine-stamped classification so renaming a
+          line item (e.g. "Interest Reserve" → "IR — Senior") doesn't
+          break the setting.
         </div>
       </div>
       <label style="display:flex;align-items:center;gap:6px;font-size:12px">

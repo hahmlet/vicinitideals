@@ -801,10 +801,13 @@
     errEl.textContent = msg;
     errEl.style.display = msg ? '' : 'none';
   }
-  // Canonical Dev Fee basis categories — must match the macro's checkbox list.
+  // Canonical Dev Fee basis buckets — must match BASIS_BUCKETS in
+  // app/engines/dev_fee.py and the macro's checkbox list.
   var SV_FT_ALL_CATEGORIES = [
-    'acquisition','hard_costs','soft_costs','financing_fees',
-    'interest_reserve','operating_reserves','developer_overhead','consulting_fees'
+    'acquisition','acq_remaining','interest_reserve','capitalized_interest',
+    'total_finance_costs','operating_reserve','lease_up_reserve',
+    'construction_ds_reserve','cash_flow_support_reserve',
+    'soft_remaining','hard_remaining'
   ];
   // Read Developer Fee Rule fields into a fee_terms object.
   // prefix matches the macro call ('sv-add-user' or 'sv-user'); vid is set

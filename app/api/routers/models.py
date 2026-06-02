@@ -1048,6 +1048,7 @@ async def _upsert_pp_phantom(
         phase=UseLinePhase.acquisition,
         amount=amount,
         timing_type="first_day",
+        dev_fee_basis_bucket="acquisition",
     )
     try:
         async with session.begin_nested():

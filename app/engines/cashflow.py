@@ -209,6 +209,7 @@ def _upsert_cash_flow_support_reserve(
         amount=amount,
         timing_type="first_day",
         cost_category="soft",
+        dev_fee_basis_bucket="cash_flow_support_reserve",
         notes=notes,
     )
     session.add(new_ul)
@@ -3317,6 +3318,7 @@ async def _auto_size_debt_modules(
             amount=actual_reserve,
             timing_type="first_day",
             cost_category="soft",
+            dev_fee_basis_bucket="operating_reserve",
             notes=_reserve_notes,
         )
         session.add(new_op)
@@ -3345,6 +3347,10 @@ async def _auto_size_debt_modules(
         if _constr_int_ct == "interest_reserve"
         else "Auto-computed: IO capitalized into loan principal."
     )
+    _constr_int_bucket = (
+        "interest_reserve" if _constr_int_ct == "interest_reserve"
+        else "capitalized_interest"
+    )
     # Phase 2e1: tag the Construction IO reserve with the construction loan
     # module id when present; otherwise the perm module that carries the
     # construction-period interest (perm-only structures with IR/CI carry).
@@ -3359,6 +3365,7 @@ async def _auto_size_debt_modules(
         _ci_keep.notes = _constr_int_notes
         _ci_keep.source_capital_module_id = _ci_source_id
         _ci_keep.cost_category = "soft"
+        _ci_keep.dev_fee_basis_bucket = _constr_int_bucket
         session.add(_ci_keep)
         for _ci_dup in _ci_rows[1:]:
             await session.delete(_ci_dup)
@@ -3372,6 +3379,7 @@ async def _auto_size_debt_modules(
             amount=total_constr_io,
             timing_type="first_day",
             cost_category="soft",
+            dev_fee_basis_bucket=_constr_int_bucket,
             notes=_constr_int_notes,
         )
         session.add(new_ul)
@@ -3403,6 +3411,7 @@ async def _auto_size_debt_modules(
             amount=_lease_up_carry,
             timing_type="first_day",
             cost_category="soft",
+            dev_fee_basis_bucket="lease_up_reserve",
             notes=f"Auto-computed: perm debt service during {lease_up_months}-month lease-up net of ~1/3 stabilized NOI (phantom CF avg, 60/40 split, opex 50→100%)",
         )
         session.add(new_lu)
@@ -3434,6 +3443,7 @@ async def _auto_size_debt_modules(
             amount=_constr_ds_reserve,
             timing_type="first_day",
             cost_category="soft",
+            dev_fee_basis_bucket="construction_ds_reserve",
             notes=f"Auto-computed: debt service during {constr_months_total}-month construction funded from bond proceeds",
         )
         session.add(new_cds)
@@ -3466,6 +3476,10 @@ async def _auto_size_debt_modules(
                 if _bft_ct == "interest_reserve"
                 else f"Auto-computed: IO capitalized into {_bft.replace('_', ' ')} principal."
             )
+            _bbucket = (
+                "interest_reserve" if _bft_ct == "interest_reserve"
+                else "capitalized_interest"
+            )
             # Find any existing row with any known label for this loan type
             _bft_prefix = "Pre-Development" if "pre_dev" in _bft else "Acquisition"
             _existing_bio = next(
@@ -3481,6 +3495,7 @@ async def _auto_size_debt_modules(
                     _existing_bio.notes  = _bnotes
                     _existing_bio.source_capital_module_id = _bridge_io_module.get(_bft)
                     _existing_bio.cost_category = "soft"
+                    _existing_bio.dev_fee_basis_bucket = _bbucket
                     session.add(_existing_bio)
                 else:
                     await session.delete(_existing_bio)
@@ -3494,6 +3509,7 @@ async def _auto_size_debt_modules(
                     amount=_bio_amt,
                     timing_type="first_day",
                     cost_category="soft",
+                    dev_fee_basis_bucket=_bbucket,
                     notes=_bnotes,
                 )
                 session.add(_new_io_ul)
@@ -3559,6 +3575,7 @@ async def _auto_size_debt_modules(
                 _cc_exist.source_capital_module_id = getattr(_ccm_ref, "id", None)
                 _cc_exist.cost_category = _cc_cat
                 _cc_exist.is_auto_finance_cost = True
+                _cc_exist.dev_fee_basis_bucket = "total_finance_costs"
                 session.add(_cc_exist)
             elif _cc_amt > ZERO:
                 _new_cc_ul = UseLine(
@@ -3570,6 +3587,7 @@ async def _auto_size_debt_modules(
                     timing_type="first_day",
                     cost_category=_cc_cat,
                     is_auto_finance_cost=True,
+                    dev_fee_basis_bucket="total_finance_costs",
                     notes="Auto-computed — edit any field to disable; delete to reset.",
                 )
                 session.add(_new_cc_ul)

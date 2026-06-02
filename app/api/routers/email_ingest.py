@@ -457,6 +457,7 @@ async def email_create_deals(
             label=f"{deal_name} - Acquisition",
             phase=UseLinePhase.acquisition,
             cost_category="acquisition",
+            dev_fee_basis_bucket="acquisition",
             amount=acq_cost,
             timing_type="first_day",
         ))
