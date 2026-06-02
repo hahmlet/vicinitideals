@@ -3623,3 +3623,101 @@ Not in V1, planned next:
 - Capital Vehicle Defaults Org settings page.
 - Risk / tax layers and construction-fund reinvestment module.
 
+## Appendix I — Float Earnings on Day-1 Draws
+
+Some capital sources — most importantly tax-exempt construction bonds — are required to draw 100% of proceeds at closing. The cash sits in an account earning Treasury yield until it is paid out against construction Uses. Appendix I documents how the engine models that interest income, the routes it can take to benefit the deal, and the conservative invariants that protect reserve sizing.
+
+### I.1 Source taxonomy and trigger
+
+A new capital `vehicle_type` value, `float_earnings`, represents this kind of source. It is distinct from `debt`, `equity`, `forgivable_loan`, and `grant`, and is intentionally invisible to the waterfall (`waterfall.py` filters only `debt` vs `equity`) and to the source-routing gap-fill solver (`source_routing.eligible_sources_for_use` excludes it).
+
+Two flags on the **parent** source gate float-earnings computation:
+
+- `source.draw_type == "fully_drawn"` — parent must lump-draw on Day 1
+- `source.balance_earns_interest == True` — explicit opt-in by the user
+
+When either is missing, the engine pauses the child float-earnings source and surfaces a warning rather than silently producing zero. The child source remains in the Sources table with its config intact; it resumes earnings on the next recompute when the parent is fixed.
+
+### I.2 Closed-form balance schedule
+
+For a parent source with principal `P` drawn day 1, construction over `N` months, and annual user-entered yield `y%`, the engine computes a per-month series and the closed-form total:
+
+```
+balance(t)   = P × (1 − t/N)              for t in 0..N    (linear depletion)
+earnings(t)  = balance(t-1) × y/100/12    for t in 1..N
+total        = Σ earnings(t)
+             = P × y/100/12 × (N + 1)/2
+```
+
+Why linear depletion: it matches the `linear` draw-schedule convention already used by the interest-reserve sizer (`_draw_schedule_for("interest_reserve", "draw_down") == "linear"`). Float earnings then become a natural mirror image of IR on a lump-drawn loan.
+
+Why earnings are not reinvested into the balance: the dollars are committed downstream (to debt paydown or developer-fee top-up via the user-entered split) and never return to the parent's drawn balance. Compounding would overstate income.
+
+Implementation lives in `app/engines/float_earnings.py:compute_balance_schedule`.
+
+### I.3 Reserve-sizing invariant
+
+Float earnings DO NOT shrink any reserve. Specifically:
+
+- **Interest Reserve** — sized by `_auto_size_debt_modules()` which operates algebraically on principal × rate × duration. Float earnings run *after* this call and never reach the sizer's inputs.
+- **Operating Reserve / Lease-Up Reserve / Cash Flow Support Reserve** — sized by their respective extractors (`bank_account_extractor`, `_run_bank_account_proof`) which see the cashflow row stream and reserve UseLines. Float earnings never appear as cashflow inflows.
+
+Reason for the conservative position: T-bond secondary-market sale timing cannot be reliably aligned to construction draw needs. Treating the income as freely available would allow the engine to under-size reserves on the optimistic assumption that the bonds clear when the project needs cash. The sponsor would be exposed if that timing slipped.
+
+### I.4 Application paths
+
+Float earnings route through one or both of two restricted Uses, controlled by a user-entered split `dev_fee_split_pct + debt_paydown_split_pct = 100`:
+
+- **Debt principal paydown** (Phase A) — at a user-chosen milestone, the target debt module's effective principal is reduced by the paydown amount. The reduction propagates into the exit balloon (`_balloon_balance`) and the prepay-penalty calculation. Per-period interest expense is NOT recomputed in v1 (matches the existing refi-event handling); this slightly overstates DS after the paydown. Phase B can revisit.
+- **Developer Fee top-up** (Phase B, gated off in v1) — requires the operating-cash subordinate Deferred Dev Fee consumption sink, which is a Phase 2 follow-up of the Multi-Source Developer Fee work (Appendix H.9). Until that ships, the UI forces the dev-fee split to 0 and the paydown split to 100.
+
+The engine surfaces a `capital_event` line item at the paydown milestone (direction = `informational`) so the user sees the event in the cashflow without it being double-counted against the bank-account proof.
+
+### I.5 Persistence and UI surface
+
+Per-source results are persisted on `OperationalOutputs.float_earnings_series` (JSONB) with shape:
+
+```json
+{
+  "sources": [{
+    "float_source_id": "...",
+    "parent_module_id": "...",
+    "total_earnings": 229166.67,
+    "paydown_amount": 229166.67,
+    "dev_fee_topup_amount": 0,
+    "paydown_debt_module_id": "...",
+    "paydown_milestone_id": "...",
+    "schedule": [{"period": 1, "opening_balance": 10000000, "monthly_earnings": 41666.67, "closing_balance": 9000000}],
+    "warnings": []
+  }],
+  "warnings": []
+}
+```
+
+This pattern mirrors `bank_account_proof` (Appendix G.4): always written so stale data clears, None when no float-earnings sources exist.
+
+### I.6 Files involved
+
+| File | Role |
+|---|---|
+| `app/engines/float_earnings.py` | Validation gate, closed-form balance math, split allocator, scenario orchestrator |
+| `app/engines/debt_paydown.py` | Paydown event collection, milestone-to-period resolution, per-debt totals |
+| `app/engines/cashflow.py` | Wires float-earnings into post-sizing flow, injects informational line items, reduces prepay-penalty basis |
+| `app/engines/source_routing.py` | Excludes `float_earnings` from Use-funding eligibility (side-effect-only source) |
+| `app/models/capital.py` | `VehicleType.float_earnings` enum value |
+| `app/models/cashflow.py` | `OperationalOutputs.float_earnings_series` JSON column |
+| `app/schemas/capital.py` | `CapitalSourceSchema` float-earnings fields (parent ref, yield, splits, paydown FKs) |
+| `app/api/routers/ui.py` | Form handler parses the new fields; `model_builder_line_form` loads sibling capital modules + scenario milestones for the dropdowns |
+| `app/templates/partials/model_builder_line_form.html` | Float-earnings dropdown option, `balance_earns_interest` checkbox, form section with parent / paydown debt / paydown milestone dropdowns |
+| `alembic/versions/0104_operational_outputs_float_earnings.py` | Migration for the JSON column |
+| `tests/engines/test_float_earnings.py` | Unit coverage (26 tests) |
+
+### I.7 Known limitations
+
+| Limitation | Resolution |
+|---|---|
+| Per-period interest on the parent loan is not recomputed after a paydown (slight DS overstatement) | Phase B can extend the carry-schedule resolver to honor a "voluntary paydown" event |
+| Dev-fee top-up path forced to 0% | Lands when Dev Fee Phase 2 ships the operating-cash subordinate consumption of Deferred Dev Fee (Appendix H.9) |
+| Yield curve is a single user-entered annual % | Future option: scheduled fetch of the Treasury curve, with per-month yield indexing |
+| Integration + E2E tests not in this commit | Follow-up: API integration test for capital-module CRUD + E2E flow on reference deal `cf0e77c3-…` |
+

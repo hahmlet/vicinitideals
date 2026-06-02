@@ -136,6 +136,14 @@ class OperationalOutputs(Base):
     # max_shortfall_date, is_solvent, co_period, stabilized_period,
     # months_simulated, use_line_action?}.
     bank_account_proof: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+    # Float-earnings (T-bond yield on Day-1 draws) per-source results.
+    # Shape: {"sources": [{float_source_id, parent_module_id, total_earnings,
+    # paydown_amount, dev_fee_topup_amount, paydown_debt_module_id,
+    # paydown_milestone_id, schedule: [{period, opening_balance,
+    # monthly_earnings, closing_balance}], warnings}], "warnings": [...]}.
+    # Always written (None when no float_earnings sources exist) so stale
+    # data clears when the user removes the last float source.
+    float_earnings_series: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     computed_at: Mapped[datetime | None] = mapped_column(
         DateTime(timezone=True), nullable=True
     )

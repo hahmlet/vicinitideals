@@ -22,11 +22,19 @@ from app.models.base import Base
 
 
 class VehicleType(str, enum.Enum):
-    """4-type mechanical classification replacing the 17-value FunderType taxonomy."""
+    """Mechanical classification replacing the 17-value FunderType taxonomy.
+
+    `float_earnings` is a derived (non-cash-at-close) source that models
+    Treasury yield on a parent debt source forced to draw all proceeds on
+    Day 1 of construction. Its proceeds are restricted to two Uses
+    (developer fee top-up, debt principal paydown) and it is filtered out
+    of the waterfall by virtue of matching neither debt nor equity.
+    """
     equity = "equity"
     debt = "debt"
     forgivable_loan = "forgivable_loan"
     grant = "grant"
+    float_earnings = "float_earnings"
 
 
 class EquityRole(str, enum.Enum):

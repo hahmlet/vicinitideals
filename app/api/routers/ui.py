@@ -6855,6 +6855,34 @@ async def handle_form_create_or_update(
             source_d["ltv_pct"] = float(ltv)
         if draw_type_raw := (form.get("draw_type") or "").strip():
             source_d["draw_type"] = draw_type_raw if draw_type_raw in ("draw_down", "fully_drawn") else None
+        # Float-earnings on Day-1 draws — opt-in flag on parent source.
+        # Engine reads this flag together with `draw_type=fully_drawn` to
+        # decide whether to compute T-bond yield on the drawn balance.
+        if form.get("balance_earns_interest") in ("on", "true", "1"):
+            source_d["balance_earns_interest"] = True
+        # Float-earnings child-source fields (only meaningful when
+        # `vehicle_type == "float_earnings"`; engine ignores them otherwise).
+        if parent_mod_raw := (form.get("parent_module_id") or "").strip():
+            try:
+                source_d["parent_module_id"] = str(UUID(parent_mod_raw))
+            except ValueError:
+                pass
+        if yield_pct := _fd(form.get("yield_pct")):
+            source_d["yield_pct"] = float(yield_pct)
+        if dev_split := _fd(form.get("dev_fee_split_pct")):
+            source_d["dev_fee_split_pct"] = float(dev_split)
+        if debt_split := _fd(form.get("debt_paydown_split_pct")):
+            source_d["debt_paydown_split_pct"] = float(debt_split)
+        if paydown_debt_raw := (form.get("paydown_debt_module_id") or "").strip():
+            try:
+                source_d["paydown_debt_module_id"] = str(UUID(paydown_debt_raw))
+            except ValueError:
+                pass
+        if paydown_ms_raw := (form.get("paydown_milestone_id") or "").strip():
+            try:
+                source_d["paydown_milestone_id"] = str(UUID(paydown_ms_raw))
+            except ValueError:
+                pass
         constr_carry_type = form.get("construction_carry_type", "none")
         # Carry rate: use source rate so the engine finds it in both places
         _carry_rate = _fd(form.get("source_interest_rate"))
@@ -13695,6 +13723,44 @@ async def model_builder_line_form(
                 "ticked": _is_ticked,
             })
 
+    # Sibling CapitalModules + scenario milestones — used by the float-earnings
+    # child-source form to populate the parent / paydown-debt / paydown-milestone
+    # dropdowns. Loaded only on the capital-module form to keep other form types
+    # cheap. Editing module excludes itself from its own parent dropdown.
+    _sibling_capital_modules: list[dict] = []
+    _scenario_milestones: list[dict] = []
+    if type in ("capital_modules", "sources", "capital-modules"):
+        _editing_cm_id_str = str(existing.id) if existing is not None else ""
+        _cm_rows = (await session.execute(
+            select(CapitalModule)
+            .where(CapitalModule.scenario_id == model_id)
+            .order_by(CapitalModule.stack_position.asc(), CapitalModule.label.asc())
+        )).scalars().all()
+        for _cm in _cm_rows:
+            if str(_cm.id) == _editing_cm_id_str:
+                continue
+            _src = _cm.source or {}
+            _sibling_capital_modules.append({
+                "id": str(_cm.id),
+                "label": _cm.label or "(unlabeled)",
+                "vehicle_type": (str(_cm.vehicle_type or "")).replace("VehicleType.", ""),
+                "draw_type": _src.get("draw_type") or "",
+                "balance_earns_interest": bool(_src.get("balance_earns_interest")),
+            })
+
+        _ms_rows = (await session.execute(
+            select(Milestone)
+            .join(Project, Milestone.project_id == Project.id)
+            .where(Project.scenario_id == model_id)
+            .order_by(Milestone.project_id, Milestone.created_at.asc())
+        )).scalars().all()
+        for _ms in _ms_rows:
+            _scenario_milestones.append({
+                "id": str(_ms.id),
+                "label": _ms.label or (str(_ms.milestone_type or "")).replace("MilestoneType.", ""),
+                "milestone_type": str(_ms.milestone_type or "").replace("MilestoneType.", ""),
+            })
+
     return templates.TemplateResponse(request, "partials/model_builder_line_form.html", {
         "model": model,
         "form_type": type,
@@ -13720,6 +13786,8 @@ async def model_builder_line_form(
         "use_category_presets": USE_CATEGORY_PRESETS,
         "source_vehicles": _sv_list,
         "eligibility_uses": _eligibility_uses,
+        "sibling_capital_modules": _sibling_capital_modules,
+        "scenario_milestones": _scenario_milestones,
     })
 
 
