@@ -14139,7 +14139,7 @@ async def capital_vehicle_defaults_page(
 
     from app.models.capital import CapitalVehicleFeeDefaults
     dedup_count, conflicts_count = await _get_counts(session)
-    address_issues_count = await _get_address_issues_count(session, user)
+    address_issues_count = await _get_address_issues_count(session)
 
     rows = (await session.execute(
         select(CapitalVehicleFeeDefaults)
