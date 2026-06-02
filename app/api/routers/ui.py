@@ -11238,6 +11238,14 @@ async def dev_fee_explainer_modal(
     session: DBSession,
 ) -> HTMLResponse:
     """Render the Developer Fee calculation explainer modal."""
+    user = await _get_user(session, request)
+    scenario = await session.get(DealModel, model_id)
+    if scenario is None:
+        return HTMLResponse("<p class='text-muted'>Not found.</p>", status_code=404)
+    if settings.org_isolation_enabled:
+        user_org_id = getattr(user, "org_id", None) if user is not None else None
+        if user_org_id is None or scenario.org_id != user_org_id:
+            return HTMLResponse("<p class='text-muted'>Not found.</p>", status_code=404)
     # Locate the auto Dev Fee Use Line for this scenario. UseLines belong
     # to Projects which belong to a Scenario — join through Project.
     rows = list(
