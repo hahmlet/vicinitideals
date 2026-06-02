@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "partials/_dev_fee_rule_fields.html" import dev_fee_rule_fields %}
 {% block title %}My Preferences — Viciniti Deals{% endblock %}
 
 {% block content %}
@@ -532,6 +533,7 @@
             <input class="filter-input" id="sv-add-user-draw-days" type="number" step="1" min="0" placeholder="0" style="width:100%">
           </div>
         </div>
+        {{ dev_fee_rule_fields('sv-add-user') }}
         <div id="sv-add-user-err" style="display:none;color:var(--danger,#dc2626);font-size:12px"></div>
         <div style="display:flex;gap:8px">
           <button type="button" class="btn btn-primary" style="font-size:12px" onclick="svSaveNewUser()">Save</button>
@@ -713,6 +715,7 @@
             <input class="filter-input sv-user-draw-days" type="number" step="1" min="0" value="{{ sc.get('draw_active_from_offset_days', 0) }}" data-vid="{{ v.id }}" style="width:100%">
           </div>
         </div>
+        {{ dev_fee_rule_fields('sv-user', v.fee_terms or {}, v.id) }}
         <div class="sv-user-err" data-vid="{{ v.id }}" style="display:none;color:var(--danger,#dc2626);font-size:12px"></div>
         <div style="display:flex;gap:8px">
           <button type="button" class="btn btn-primary" style="font-size:12px" onclick="svSaveUser('{{ v.id }}')">Save</button>
@@ -782,6 +785,7 @@
       draw_every_n_months: parseInt(svVal('.sv-user-draw-freq', vid)) || 1,
       draw_active_from_milestone: svVal('.sv-user-draw-from', vid) || null,
       draw_active_from_offset_days: parseInt(svVal('.sv-user-draw-days', vid)) || 0,
+      fee_terms: svReadFeeTerms('sv-user', vid),
     };
     if (isSchedule) {
       var listEl = document.querySelector('.sv-user-phase-list[data-vid="' + vid + '"]');
@@ -796,6 +800,34 @@
     if (!errEl) return;
     errEl.textContent = msg;
     errEl.style.display = msg ? '' : 'none';
+  }
+  // Read Developer Fee Rule fields into a fee_terms object.
+  // prefix matches the macro call ('sv-add-user' or 'sv-user'); vid is set
+  // for per-row edit forms, null for the "add" form.
+  function svReadFeeTerms(prefix, vid) {
+    function field(suffix) {
+      return vid
+        ? document.querySelector('.' + prefix + '-ft-' + suffix + '[data-vid="' + vid + '"]')
+        : document.getElementById(prefix + '-ft-' + suffix);
+    }
+    var out = {};
+    var mpEl = field('max-pct');
+    if (mpEl && mpEl.value !== '') { var v = parseFloat(mpEl.value); if (!isNaN(v)) out.max_pct = v; }
+    var puEl = field('per-unit');
+    if (puEl && puEl.value !== '') { var v = parseFloat(puEl.value); if (!isNaN(v)) out.per_unit_cap = v; }
+    var acEl = field('abs-cap');
+    if (acEl && acEl.value !== '') { var v = parseFloat(acEl.value); if (!isNaN(v)) out.absolute_cap = v; }
+    var excl = [];
+    var checks = vid
+      ? document.querySelectorAll('.' + prefix + '-ft-excl[data-vid="' + vid + '"]:checked')
+      : document.querySelectorAll('input[name="' + prefix + '-ft-excl"]:checked');
+    checks.forEach(function(c) { excl.push(c.value); });
+    if (excl.length) out.basis_exclusions = excl;
+    var regEl = field('reg');
+    if (regEl && regEl.checked) out.regulated = true;
+    var notesEl = field('notes');
+    if (notesEl && notesEl.value.trim()) out.notes = notesEl.value.trim();
+    return out;
   }
 
   window.svToggleAddUser = function() {
@@ -863,6 +895,7 @@
       draw_every_n_months: parseInt(document.getElementById('sv-add-user-draw-freq').value) || 1,
       draw_active_from_milestone: document.getElementById('sv-add-user-draw-from').value || null,
       draw_active_from_offset_days: parseInt(document.getElementById('sv-add-user-draw-days').value) || 0,
+      fee_terms: svReadFeeTerms('sv-add-user', null),
     };
     if (isSchedule) {
       payload.carry_schedule = svReadSchedule(document.getElementById('sv-add-user-phase-list'));

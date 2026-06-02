@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "partials/_dev_fee_rule_fields.html" import dev_fee_rule_fields %}
 {% block title %}Organization — Viciniti Deals{% endblock %}
 
 {% block content %}
@@ -788,6 +789,7 @@
             <input class="filter-input" id="sv-add-org-draw-days" type="number" step="1" min="0" placeholder="0" style="width:100%">
           </div>
         </div>
+        {{ dev_fee_rule_fields('sv-add-org') }}
         <div id="sv-add-org-err" style="display:none;color:var(--danger,#dc2626);font-size:12px"></div>
         <div style="display:flex;gap:8px">
           <button type="button" class="btn btn-primary" style="font-size:12px" onclick="svOrgSaveNew()">Save</button>
@@ -969,6 +971,7 @@
             <input class="filter-input sv-org-draw-days" type="number" step="1" min="0" value="{{ sc.get('draw_active_from_offset_days', 0) }}" data-vid="{{ v.id }}" style="width:100%">
           </div>
         </div>
+        {{ dev_fee_rule_fields('sv-org', v.fee_terms or {}, v.id) }}
         <div class="sv-org-err" data-vid="{{ v.id }}" style="display:none;color:var(--danger,#dc2626);font-size:12px"></div>
         <div style="display:flex;gap:8px">
           <button type="button" class="btn btn-primary" style="font-size:12px" onclick="svOrgSave('{{ v.id }}')">Save</button>
@@ -1077,6 +1080,7 @@
       draw_every_n_months: parseInt(svOrgVal('.sv-org-draw-freq', vid)) || 1,
       draw_active_from_milestone: svOrgVal('.sv-org-draw-from', vid) || null,
       draw_active_from_offset_days: parseInt(svOrgVal('.sv-org-draw-days', vid)) || 0,
+      fee_terms: svOrgReadFeeTerms('sv-org', vid),
     };
     if (isSchedule) {
       var listEl = document.querySelector('.sv-org-phase-list[data-vid="' + vid + '"]');
@@ -1091,6 +1095,34 @@
     if (!errEl) return;
     errEl.textContent = msg;
     errEl.style.display = msg ? '' : 'none';
+  }
+  // Read Developer Fee Rule fields into a fee_terms object.
+  // prefix matches the macro call ('sv-add-org' or 'sv-org'); vid is set
+  // for per-row edit forms, null for the "add" form.
+  function svOrgReadFeeTerms(prefix, vid) {
+    function field(suffix) {
+      return vid
+        ? document.querySelector('.' + prefix + '-ft-' + suffix + '[data-vid="' + vid + '"]')
+        : document.getElementById(prefix + '-ft-' + suffix);
+    }
+    var out = {};
+    var mpEl = field('max-pct');
+    if (mpEl && mpEl.value !== '') { var v = parseFloat(mpEl.value); if (!isNaN(v)) out.max_pct = v; }
+    var puEl = field('per-unit');
+    if (puEl && puEl.value !== '') { var v = parseFloat(puEl.value); if (!isNaN(v)) out.per_unit_cap = v; }
+    var acEl = field('abs-cap');
+    if (acEl && acEl.value !== '') { var v = parseFloat(acEl.value); if (!isNaN(v)) out.absolute_cap = v; }
+    var excl = [];
+    var checks = vid
+      ? document.querySelectorAll('.' + prefix + '-ft-excl[data-vid="' + vid + '"]:checked')
+      : document.querySelectorAll('input[name="' + prefix + '-ft-excl"]:checked');
+    checks.forEach(function(c) { excl.push(c.value); });
+    if (excl.length) out.basis_exclusions = excl;
+    var regEl = field('reg');
+    if (regEl && regEl.checked) out.regulated = true;
+    var notesEl = field('notes');
+    if (notesEl && notesEl.value.trim()) out.notes = notesEl.value.trim();
+    return out;
   }
 
   window.svOrgToggleAdd = function() {
@@ -1120,6 +1152,7 @@
       draw_every_n_months: parseInt(document.getElementById('sv-add-org-draw-freq').value) || 1,
       draw_active_from_milestone: document.getElementById('sv-add-org-draw-from').value || null,
       draw_active_from_offset_days: parseInt(document.getElementById('sv-add-org-draw-days').value) || 0,
+      fee_terms: svOrgReadFeeTerms('sv-add-org', null),
     };
     if (isSchedule) {
       payload.carry_schedule = svOrgReadSchedule(document.getElementById('sv-add-org-phase-list'));

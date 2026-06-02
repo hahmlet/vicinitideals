@@ -665,6 +665,7 @@ async def create_org_source_vehicle(
         source_config=source_cfg,
         carry_config=carry_cfg,
         exit_config=exit_cfg,
+        fee_terms=body.get("fee_terms") or {},
         active_phase_start=body.get("active_phase_start"),
         active_phase_end=body.get("active_phase_end"),
         created_by=user.id,
@@ -707,6 +708,8 @@ async def update_org_source_vehicle(
         vehicle.equity_role = body["equity_role"]
     if "draw_type" in body:
         vehicle.draw_type = body["draw_type"] or None
+    if "fee_terms" in body:
+        vehicle.fee_terms = body.get("fee_terms") or {}
     vehicle.updated_by = user.id
     vehicle.source_config, vehicle.carry_config, vehicle.exit_config = _sv_body_to_jsonb(
         body,
@@ -765,6 +768,7 @@ async def create_user_source_vehicle(
         source_config=source_cfg,
         carry_config=carry_cfg,
         exit_config=exit_cfg,
+        fee_terms=body.get("fee_terms") or {},
         active_phase_start=body.get("active_phase_start"),
         active_phase_end=body.get("active_phase_end"),
     )
@@ -804,6 +808,8 @@ async def update_user_source_vehicle(
         vehicle.equity_role = body["equity_role"]
     if "draw_type" in body:
         vehicle.draw_type = body["draw_type"] or None
+    if "fee_terms" in body:
+        vehicle.fee_terms = body.get("fee_terms") or {}
     vehicle.source_config, vehicle.carry_config, vehicle.exit_config = _sv_body_to_jsonb(
         body,
         default_auto_size=True,
