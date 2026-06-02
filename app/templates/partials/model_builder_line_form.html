@@ -68,15 +68,154 @@
     </div>
     <div class="form-hint">Same %, different denominator.</div>
   </div>
+
+  {# ── Acquisition Treatment ─────────────────────────────────────────── #}
+  {%- set _at = existing.dev_fee_acquisition_treatment or '' -%}
+  <div class="form-field" style="margin-bottom:8px">
+    <label class="form-label">Acquisition Treatment</label>
+    <select class="form-select" name="dev_fee_acquisition_treatment" id="dfee-acq-treatment"
+            onchange="(function(s){
+              var split=document.getElementById('dfee-acq-split');
+              var sep=document.getElementById('dfee-acq-sep');
+              if(split) split.style.display = s.value==='split_rate' ? 'block':'none';
+              if(sep)   sep.style.display   = s.value==='separate_fee' ? 'block':'none';
+            })(this)">
+      <option value="" {% if not _at %}selected{% endif %}>Legacy (no acquisition adjustment)</option>
+      <option value="excluded"     {% if _at=='excluded' %}selected{% endif %}>Excluded — drop acquisition from basis</option>
+      <option value="split_rate"   {% if _at=='split_rate' %}selected{% endif %}>Split rate — reduced % on acquisition</option>
+      <option value="separate_fee" {% if _at=='separate_fee' %}selected{% endif %}>Separate fee — distinct Acquisition Fee row</option>
+    </select>
+    <div class="form-hint">Controls how acquisition cost factors into the fee.</div>
+  </div>
+  <div id="dfee-acq-split" class="form-field" style="margin-bottom:8px;display:{{ 'block' if _at=='split_rate' else 'none' }}">
+    <label class="form-label">Acquisition % (split-rate)</label>
+    <input class="form-input" type="number" name="dev_fee_acquisition_pct" step="0.1" min="0" max="100"
+           value="{{ '%.2f' | format(existing.dev_fee_acquisition_pct | float) if existing.dev_fee_acquisition_pct is not none else '' }}"
+           placeholder="e.g. 1.5">
+    <div class="form-hint">Reduced % applied to acquisition cost; main % stays on the rest of the basis.</div>
+  </div>
+  <div id="dfee-acq-sep" class="form-field" style="margin-bottom:8px;display:{{ 'block' if _at=='separate_fee' else 'none' }}">
+    <label class="form-label">Acquisition Fee %</label>
+    {%- set _acq_pct_existing = existing.acquisition_fee_pct -%}
+    <input class="form-input" type="number" name="acquisition_fee_pct" step="0.1" min="0" max="100"
+           value="{{ '%.2f' | format(_acq_pct_existing | float) if _acq_pct_existing is not none else '' }}"
+           placeholder="e.g. 1.0">
+    <div class="form-hint">Creates a parallel Acquisition Fee row = % × purchase price.</div>
+  </div>
+
+  {# ── Release Schedule ──────────────────────────────────────────────── #}
+  {%- set _sched = existing.dev_fee_release_schedule or {} -%}
+  {%- set _sched_weights = _sched.get('weights') or [] -%}
+  {%- set _sched_holdback = _sched.get('final_holdback') or {} -%}
+  {%- set _sched_open = _sched_weights or _sched_holdback -%}
+  <div class="form-section" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border)">
+    <input type="hidden" name="dev_fee_release_section" value="1">
+    <details {% if _sched_open %}open{% endif %} style="margin:0">
+      <summary style="cursor:pointer;font-size:13px;font-weight:600;color:var(--text);padding:4px 0">
+        Release Schedule
+        <span style="font-size:11px;color:var(--text-muted);font-weight:400;margin-left:6px">
+          when the fee is paid out
+        </span>
+      </summary>
+      <div style="margin-top:10px;padding-left:4px">
+        <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px">
+          Add one row per release milestone. Weights are auto-normalized to sum to 1.
+        </div>
+        <div id="dfee-release-rows">
+          {% if _sched_weights %}
+            {% for _w in _sched_weights %}
+            <div class="form-row" style="margin-bottom:6px">
+              <div class="form-field" style="flex:2">
+                <select class="form-select" name="release_milestone_key[]">
+                  <option value="">— Select milestone —</option>
+                  {% for ms in milestones_dated_ds if ms.date %}
+                  <option value="{{ ms.key }}" {% if ms.key == _w.get('milestone_key') %}selected{% endif %}>{{ ms.label }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="form-field" style="max-width:110px">
+                <input class="form-input" type="number" name="release_weight_pct[]" step="0.01" min="0"
+                       value="{{ _w.get('weight') }}" placeholder="weight">
+              </div>
+              <button type="button" class="btn btn-secondary" style="padding:4px 10px"
+                      onclick="this.closest('.form-row').remove()">×</button>
+            </div>
+            {% endfor %}
+          {% else %}
+            <div class="form-row" style="margin-bottom:6px">
+              <div class="form-field" style="flex:2">
+                <select class="form-select" name="release_milestone_key[]">
+                  <option value="">— Select milestone —</option>
+                  {% for ms in milestones_dated_ds if ms.date %}
+                  <option value="{{ ms.key }}">{{ ms.label }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="form-field" style="max-width:110px">
+                <input class="form-input" type="number" name="release_weight_pct[]" step="0.01" min="0" placeholder="weight">
+              </div>
+              <button type="button" class="btn btn-secondary" style="padding:4px 10px"
+                      onclick="this.closest('.form-row').remove()">×</button>
+            </div>
+          {% endif %}
+        </div>
+        <button type="button" class="btn btn-secondary" style="padding:4px 10px;font-size:12px"
+                onclick="dfeeAddReleaseRow()">+ Add milestone</button>
+        <div class="form-row" style="margin-top:14px">
+          <div class="form-field">
+            <label class="form-label" style="font-size:11px">Final Holdback %</label>
+            <input class="form-input" type="number" name="final_holdback_pct" step="0.1" min="0" max="100"
+                   value="{{ _sched_holdback.get('pct') if _sched_holdback.get('pct') is not none else '' }}"
+                   placeholder="e.g. 10">
+          </div>
+          <div class="form-field">
+            <label class="form-label" style="font-size:11px">Holdback Released At</label>
+            <select class="form-select" name="final_holdback_milestone_key">
+              <option value="">— Select milestone —</option>
+              {% for ms in milestones_dated_ds if ms.date %}
+              <option value="{{ ms.key }}" {% if ms.key == _sched_holdback.get('milestone_key') %}selected{% endif %}>{{ ms.label }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+      </div>
+    </details>
+  </div>
+
   <div class="form-field">
     <label class="form-label">Notes (optional)</label>
     <input class="form-input" type="text" name="notes" value="{{ existing.notes or '' }}" placeholder="e.g. Reduced for partner deal">
   </div>
+
+  {# ── Show calculation link ─────────────────────────────────────────── #}
+  <div style="margin:10px 0">
+    <a href="#" style="font-size:12px;color:var(--accent);text-decoration:underline"
+       hx-get="/ui/models/{{ model.id }}/dev-fee/explainer"
+       hx-target="#dev-fee-explainer-modal-body"
+       hx-on::after-request="if(event.detail.successful){var m=document.getElementById('dev-fee-explainer-modal');if(m)m.style.display='flex'}">
+      Show calculation →
+    </a>
+  </div>
+
   <div class="form-actions">
     <button type="submit" class="btn btn-primary">Save Changes</button>
     <button type="button" class="btn btn-secondary" onclick="closeDrawer('line-item-drawer')">Cancel</button>
   </div>
 </form>
+<script>
+function dfeeAddReleaseRow() {
+  var box = document.getElementById('dfee-release-rows');
+  if (!box) return;
+  var src = box.querySelector('.form-row');
+  if (!src) return;
+  var clone = src.cloneNode(true);
+  clone.querySelectorAll('select,input').forEach(function(el){
+    if (el.tagName === 'SELECT') { el.selectedIndex = 0; }
+    else { el.value = ''; }
+  });
+  box.appendChild(clone);
+}
+</script>
 {% else %}
   <div class="form-field">
     <label class="form-label">Label</label>
@@ -1455,6 +1594,87 @@ function ulTimingChanged(val) {
     </div>
   </div>
   {% endif %}
+
+  {# ── Developer Fee Rule ──────────────────────────────────────────────── #}
+  {%- set _ft = existing.fee_terms or {} -%}
+  {%- set _ft_inh = existing.fee_terms_inherited_from_type if existing.fee_terms_inherited_from_type is not none else true -%}
+  {%- set _ft_excl = _ft.get('basis_exclusions') or [] -%}
+  {%- set _ft_open = (not _ft_inh) or (_ft and (_ft.get('max_pct') or _ft.get('per_unit_cap') or _ft.get('absolute_cap') or _ft_excl or _ft.get('regulated') or _ft.get('notes'))) -%}
+  <div class="form-section" style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border)">
+    <input type="hidden" name="fee_terms_section" value="1">
+    <details {% if _ft_open %}open{% endif %} style="margin:0">
+      <summary style="cursor:pointer;font-size:13px;font-weight:600;color:var(--text);padding:4px 0">
+        Developer Fee Rule
+        <span style="font-size:11px;color:var(--text-muted);font-weight:400;margin-left:6px">
+          how much Developer Fee this Source allows
+        </span>
+      </summary>
+      <div style="margin-top:10px;padding-left:4px">
+        <label style="display:flex;align-items:center;gap:8px;margin-bottom:12px;font-size:13px">
+          <input type="checkbox" name="fee_terms_inherited" id="ft-inh-{{ existing.id }}"
+                 {% if _ft_inh %}checked{% endif %}
+                 onchange="(function(cb){var box=document.getElementById('ft-override-{{ existing.id }}');if(box)box.style.display=cb.checked?'none':'block';})(this)">
+          <span>Inherit defaults from this Vehicle Type</span>
+        </label>
+        <div id="ft-override-{{ existing.id }}" style="display:{{ 'none' if _ft_inh else 'block' }}">
+          <div class="form-row" style="margin-bottom:10px">
+            <div class="form-field">
+              <label class="form-label" style="font-size:11px">Max % of Basis</label>
+              <input class="form-input" type="number" name="fee_terms_max_pct" step="0.01" min="0"
+                     value="{{ _ft.get('max_pct') if _ft.get('max_pct') is not none else '' }}"
+                     placeholder="e.g. 15">
+            </div>
+            <div class="form-field">
+              <label class="form-label" style="font-size:11px">Per-Unit Cap ($)</label>
+              <input class="form-input" type="number" name="fee_terms_per_unit_cap" step="1" min="0"
+                     value="{{ _ft.get('per_unit_cap') if _ft.get('per_unit_cap') is not none else '' }}"
+                     placeholder="e.g. 15000">
+            </div>
+            <div class="form-field">
+              <label class="form-label" style="font-size:11px">Absolute Cap ($)</label>
+              <input class="form-input" type="number" name="fee_terms_absolute_cap" step="1" min="0"
+                     value="{{ _ft.get('absolute_cap') if _ft.get('absolute_cap') is not none else '' }}"
+                     placeholder="e.g. 1500000">
+            </div>
+          </div>
+          <div class="form-field" style="margin-bottom:10px">
+            <label class="form-label" style="font-size:11px">Basis Exclusions</label>
+            <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 14px;font-size:12px">
+              {% for cat,label in [
+                ('acquisition','Acquisition'),
+                ('hard_costs','Hard Costs'),
+                ('soft_costs','Soft Costs'),
+                ('financing_fees','Financing Fees'),
+                ('interest_reserve','Interest Reserve'),
+                ('operating_reserves','Operating Reserves'),
+                ('developer_overhead','Developer Overhead'),
+                ('consulting_fees','Consulting Fees'),
+              ] %}
+              <label style="display:flex;align-items:center;gap:6px">
+                <input type="checkbox" name="fee_terms_basis_exclusions[]" value="{{ cat }}"
+                       {% if cat in _ft_excl %}checked{% endif %}>
+                <span>{{ label }}</span>
+              </label>
+              {% endfor %}
+            </div>
+            <div class="form-hint" style="font-size:11px;color:var(--text-muted);margin-top:4px">
+              Excluded categories drop out of this Source's Dev Fee basis sum.
+            </div>
+          </div>
+          <label style="display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:13px">
+            <input type="checkbox" name="fee_terms_regulated"
+                   {% if _ft.get('regulated') %}checked{% endif %}>
+            <span>Regulated rule (annotation for the explainer modal)</span>
+          </label>
+          <div class="form-field" style="margin-bottom:4px">
+            <label class="form-label" style="font-size:11px">Notes</label>
+            <textarea class="form-input" name="fee_terms_notes" rows="2"
+                      placeholder="e.g. LIHTC 15% cap incl. acquisition">{{ _ft.get('notes') or '' }}</textarea>
+          </div>
+        </div>
+      </div>
+    </details>
+  </div>
 
   <div class="form-actions">
     <button type="submit" class="btn btn-primary">Save Changes</button>

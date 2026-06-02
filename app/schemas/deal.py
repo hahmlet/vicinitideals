@@ -7,7 +7,7 @@ from datetime import datetime
 from decimal import Decimal
 from typing import Any
 
-from pydantic import BaseModel, ConfigDict, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from app.schemas.gap_adjustment_names import is_reserved_label
 
@@ -439,6 +439,93 @@ class OperatingExpenseLineRead(OperatingExpenseLineBase):
 _EXAMPLE_USE_LINE_ID = "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"
 
 
+# ---------------------------------------------------------------------------
+# Dev Fee multi-source schemas (release schedule, binding context,
+# use_line_source_fee_basis join). See docs/feature-plans/developer-fee-
+# multi-source.md.
+# ---------------------------------------------------------------------------
+
+
+class DevFeeReleaseScheduleEntry(BaseModel):
+    """One milestone weight in the Dev Fee release schedule."""
+
+    milestone_id: uuid.UUID
+    weight: Decimal
+
+
+class DevFeeFinalHoldback(BaseModel):
+    """Final holdback portion of the Dev Fee, released at a single milestone."""
+
+    milestone_id: uuid.UUID
+    pct: Decimal
+
+
+class DevFeeReleaseScheduleSchema(BaseModel):
+    """Milestone-weighted Dev Fee release schedule.
+
+    Sum of all `weights[].weight` + `final_holdback.pct` must equal 1.0
+    (validated at API write time and again in the engine before scheduling).
+    Stored as JSONB on `use_lines.dev_fee_release_schedule`.
+    """
+
+    model_config = ConfigDict(extra="allow")
+
+    weights: list[DevFeeReleaseScheduleEntry] = Field(default_factory=list)
+    final_holdback: DevFeeFinalHoldback | None = None
+
+
+class DevFeePerSourceAllocation(BaseModel):
+    """One Source Vehicle's per-fee allowance + funded contribution."""
+
+    capital_module_id: uuid.UUID
+    vehicle_label: str | None = None
+    allowable: Decimal | None = None
+    funded_at_close: Decimal = Decimal("0")
+    basis: Decimal | None = None
+
+
+class PendingCustomUseDecision(BaseModel):
+    """One unresolved (custom UseLine x constrained Vehicle) inclusion decision."""
+
+    use_line_id: uuid.UUID
+    capital_module_id: uuid.UUID
+
+
+class DevFeeBindingContextSchema(BaseModel):
+    """Engine-written display data for the Dev Fee row.
+
+    Stored as JSONB on `use_lines.dev_fee_binding_context`. Read-only —
+    never user-written. The explainer modal renders this directly.
+    """
+
+    model_config = ConfigDict(extra="allow")
+
+    elected_fee: Decimal | None = None
+    binding_source_id: uuid.UUID | None = None
+    binding_dollar_cap: Decimal | None = None
+    overage: Decimal = Decimal("0")
+    per_source_allocation: list[DevFeePerSourceAllocation] = Field(default_factory=list)
+    headroom_by_source: dict[str, Decimal] = Field(default_factory=dict)
+    funded_at_close: Decimal = Decimal("0")
+    deferred: Decimal = Decimal("0")
+    release_schedule: list[dict] = Field(default_factory=list)
+    last_compute_signature: str | None = None
+    structural_diff_detected: bool = False
+    structural_diff_delta: dict = Field(default_factory=dict)
+    pending_custom_use_decisions: list[PendingCustomUseDecision] = Field(default_factory=list)
+    acquisition_treatment: str | None = None
+    # Acquisition Fee parallel block (when treatment="separate_fee").
+    acquisition_fee_context: dict | None = None
+
+
+class UseLineSourceFeeBasisSchema(BaseModel):
+    """Per-(UseLine x CapitalModule) custom-Use inclusion decision."""
+
+    use_line_id: uuid.UUID
+    capital_module_id: uuid.UUID
+    included_in_basis: bool
+
+
 class UseLineBase(BaseModel):
     label: str
     phase: UseLinePhase | None = None
@@ -474,6 +561,14 @@ class UseLineUpdate(BaseModel):
     timing_type: str | None = None
     is_deferred: bool | None = None
     notes: str | None = None
+    # Dev Fee multi-source fields (auto Dev Fee row only).
+    dev_fee_pct: Decimal | None = None
+    dev_fee_basis: str | None = None
+    dev_fee_release_schedule: DevFeeReleaseScheduleSchema | None = None
+    dev_fee_acquisition_treatment: str | None = None
+    dev_fee_acquisition_pct: Decimal | None = None
+    # Auto Acquisition Fee row only.
+    acquisition_fee_pct: Decimal | None = None
 
     _validate_label = field_validator("label")(_validate_label_not_reserved)
 

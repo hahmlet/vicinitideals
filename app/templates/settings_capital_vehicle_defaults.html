@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% block title %}Capital Vehicle Dev Fee Defaults — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div style="flex:1;overflow-y:auto;min-height:0">
+<div class="page-header" style="display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid var(--border);background:var(--surface)">
+  <div>
+    <div class="page-title" style="font-size:20px;font-weight:700;color:var(--text)">Capital Vehicle Dev Fee Defaults</div>
+    <div style="font-size:12px;color:var(--text-muted);margin-top:2px">
+      Default Developer Fee rule per Vehicle Type. Applied to NEW Source Vehicles created on deals.
+      Existing deals are unaffected until "Inherit defaults" is toggled off-and-on on the Vehicle row.
+    </div>
+  </div>
+  <a href="/settings/organization" class="btn btn-secondary">Back to Org Settings</a>
+</div>
+
+<div style="padding:24px;display:grid;gap:20px;max-width:1000px">
+
+  {# ── Existing defaults table ───────────────────────────────────────────── #}
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+    <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+      <div style="font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em">
+        Defaults by Vehicle Type
+      </div>
+      <button class="btn btn-sm btn-primary" type="button" style="font-size:12px"
+              onclick="document.getElementById('cvd-add-form').style.display='block';this.style.display='none'">
+        + Add Default
+      </button>
+    </div>
+
+    {% if defaults %}
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead>
+        <tr style="background:var(--surface-alt)">
+          <th style="text-align:left;padding:10px 16px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text-muted)">Vehicle Type</th>
+          <th style="text-align:left;padding:10px 16px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text-muted)">Equity Role</th>
+          <th style="text-align:right;padding:10px 16px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text-muted)">Max %</th>
+          <th style="text-align:right;padding:10px 16px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text-muted)">Per-Unit Cap</th>
+          <th style="text-align:right;padding:10px 16px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text-muted)">Absolute Cap</th>
+          <th style="text-align:left;padding:10px 16px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text-muted)">Excludes</th>
+          <th style="text-align:right;padding:10px 16px;border-bottom:1px solid var(--border)"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for d in defaults %}
+        {%- set _ft = d.fee_terms or {} -%}
+        <tr style="border-bottom:1px solid var(--border)">
+          <form method="post" action="/settings/capital-vehicle-defaults/{{ d.id }}"
+                style="display:contents">
+            <td style="padding:10px 16px;font-weight:500">{{ vehicle_type_labels.get(d.vehicle_type, d.vehicle_type) }}</td>
+            <td style="padding:10px 16px;color:var(--text-muted)">{{ d.equity_role | upper if d.equity_role else '—' }}</td>
+            <td style="padding:6px 12px;text-align:right">
+              <input type="number" name="max_pct" step="0.01" min="0" style="width:70px;text-align:right"
+                     value="{{ _ft.get('max_pct') if _ft.get('max_pct') is not none else '' }}">
+            </td>
+            <td style="padding:6px 12px;text-align:right">
+              <input type="number" name="per_unit_cap" step="1" min="0" style="width:90px;text-align:right"
+                     value="{{ _ft.get('per_unit_cap') if _ft.get('per_unit_cap') is not none else '' }}">
+            </td>
+            <td style="padding:6px 12px;text-align:right">
+              <input type="number" name="absolute_cap" step="1" min="0" style="width:100px;text-align:right"
+                     value="{{ _ft.get('absolute_cap') if _ft.get('absolute_cap') is not none else '' }}">
+            </td>
+            <td style="padding:6px 12px;font-size:11px">
+              {%- set _excl = _ft.get('basis_exclusions') or [] -%}
+              <details>
+                <summary style="cursor:pointer">{{ _excl | length }} category{{ '' if _excl|length == 1 else 'ies' }}</summary>
+                <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 10px;padding:6px 0">
+                  {% for cat,label in cost_categories %}
+                  <label style="display:flex;align-items:center;gap:4px">
+                    <input type="checkbox" name="basis_exclusions[]" value="{{ cat }}"
+                           {% if cat in _excl %}checked{% endif %}>
+                    <span>{{ label }}</span>
+                  </label>
+                  {% endfor %}
+                </div>
+              </details>
+            </td>
+            <td style="padding:6px 12px;text-align:right;white-space:nowrap">
+              <button type="submit" class="btn btn-sm btn-primary" style="font-size:11px;padding:3px 8px">Save</button>
+              <button type="button" class="btn btn-sm btn-danger" style="font-size:11px;padding:3px 8px;margin-left:4px"
+                      onclick="if(confirm('Delete this default?')){fetch('/settings/capital-vehicle-defaults/{{ d.id }}',{method:'DELETE'}).then(function(r){if(r.ok)location.reload()})}">×</button>
+            </td>
+          </form>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div style="padding:30px;text-align:center;color:var(--text-muted);font-size:13px">
+      No defaults configured. New Source Vehicles fall back to no fee rule (no caps enforced).
+    </div>
+    {% endif %}
+  </div>
+
+  {# ── Add form ──────────────────────────────────────────────────────────── #}
+  <div id="cvd-add-form" style="display:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+    <div style="padding:14px 18px;border-bottom:1px solid var(--border);font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em">
+      New Default
+    </div>
+    <form method="post" action="/settings/capital-vehicle-defaults" style="padding:18px;display:grid;gap:14px;max-width:600px">
+      <div class="form-row">
+        <div class="form-field">
+          <label class="form-label">Vehicle Type</label>
+          <select class="form-select" name="vehicle_type" required>
+            {% for vt,vlabel in vehicle_type_choices %}
+            <option value="{{ vt }}">{{ vlabel }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Equity Role (only for vehicle_type=equity)</label>
+          <select class="form-select" name="equity_role">
+            <option value="">— Any —</option>
+            <option value="gp">GP</option>
+            <option value="lp">LP</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label class="form-label">Max % of Basis</label>
+          <input class="form-input" type="number" name="max_pct" step="0.01" min="0" placeholder="e.g. 15">
+        </div>
+        <div class="form-field">
+          <label class="form-label">Per-Unit Cap ($)</label>
+          <input class="form-input" type="number" name="per_unit_cap" step="1" min="0" placeholder="e.g. 15000">
+        </div>
+        <div class="form-field">
+          <label class="form-label">Absolute Cap ($)</label>
+          <input class="form-input" type="number" name="absolute_cap" step="1" min="0" placeholder="e.g. 1500000">
+        </div>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Basis Exclusions</label>
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 14px;font-size:12px">
+          {% for cat,label in cost_categories %}
+          <label style="display:flex;align-items:center;gap:6px">
+            <input type="checkbox" name="basis_exclusions[]" value="{{ cat }}">
+            <span>{{ label }}</span>
+          </label>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="form-row">
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px">
+          <input type="checkbox" name="regulated">
+          <span>Regulated rule</span>
+        </label>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Notes</label>
+        <textarea class="form-input" name="notes" rows="2" placeholder="e.g. LIHTC 15% cap incl. acquisition"></textarea>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button type="submit" class="btn btn-primary">Create Default</button>
+        <button type="button" class="btn btn-secondary"
+                onclick="document.getElementById('cvd-add-form').style.display='none'">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+</div>
+</div>
+{% endblock %}

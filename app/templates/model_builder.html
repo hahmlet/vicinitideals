@@ -1576,6 +1576,24 @@ document.addEventListener('keydown', function(e) {
 
 {% include 'partials/export_chooser_modal.html' %}
 
+<!-- Dev Fee explainer modal -->
+<div id="dev-fee-explainer-modal" class="wizard-overlay" style="display:none;align-items:center;justify-content:center"
+     onclick="if(event.target===this)this.style.display='none'">
+  <div class="wizard-box" style="max-width:760px;max-height:85vh;overflow:auto">
+    <div class="wizard-header" style="display:flex;align-items:flex-start;justify-content:space-between">
+      <div>
+        <div class="wizard-title">Developer Fee Calculation</div>
+        <div class="wizard-subtitle" style="margin-top:4px;font-size:13px;color:var(--text-muted)">How the fee resolves across Sources</div>
+      </div>
+      <span style="font-size:22px;cursor:pointer;line-height:1;color:var(--text-muted)"
+            onclick="document.getElementById('dev-fee-explainer-modal').style.display='none'">×</span>
+    </div>
+    <div class="wizard-body" id="dev-fee-explainer-modal-body">
+      <div class="text-muted text-small">Loading…</div>
+    </div>
+  </div>
+</div>
+
 <!-- Source wizard (center-screen modal) -->
 <div class="wizard-overlay" id="source-wizard-overlay" style="display:none">
   <div class="wizard-box" style="max-width:680px">

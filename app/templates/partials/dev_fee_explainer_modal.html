@@ -1,0 +1,216 @@
+{# Developer Fee calculation explainer modal.
+   Rendered into #dev-fee-explainer-modal-body via HTMX.
+   Context: model_id, auto_line, ctx (dev_fee_binding_context dict),
+   modules_by_id (UUID -> CapitalModule), pending (list of pending pair
+   dicts), acquisition_treatment (str), structural_diff_detected (bool).
+#}
+
+<div class="dev-fee-explainer">
+  {% if structural_diff_detected %}
+    <div class="alert alert-warning" role="alert">
+      <strong>Capital stack changed.</strong>
+      Confirm Dev Fee treatment before relying on these numbers.
+    </div>
+  {% endif %}
+
+  {# 1. Pending custom-Use decisions #}
+  {% if pending %}
+    <section class="explainer-section">
+      <h4>Pending decisions</h4>
+      <p class="text-muted">
+        These custom Uses need an inclusion decision for the Vehicles below
+        before their fee basis is correct. Conservatively excluded until set.
+      </p>
+      <ul class="pending-list">
+        {% for pair in pending %}
+          <li>
+            <strong>{{ pair.use_line_label or pair.use_line_id }}</strong>
+            &mdash; in
+            <em>{{ pair.vehicle_label or pair.capital_module_id }}</em>?
+            <button
+              hx-put="/api/v1/models/{{ model_id }}/use-line-source-fee-basis"
+              hx-vals='{"use_line_id":"{{ pair.use_line_id }}","capital_module_id":"{{ pair.capital_module_id }}","included_in_basis":true}'
+              hx-ext="json-enc"
+              hx-swap="none"
+              class="btn-sm btn-success">Include</button>
+            <button
+              hx-put="/api/v1/models/{{ model_id }}/use-line-source-fee-basis"
+              hx-vals='{"use_line_id":"{{ pair.use_line_id }}","capital_module_id":"{{ pair.capital_module_id }}","included_in_basis":false}'
+              hx-ext="json-enc"
+              hx-swap="none"
+              class="btn-sm btn-secondary">Exclude</button>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+
+  {# 2. Acquisition treatment summary #}
+  <section class="explainer-section">
+    <h4>Acquisition treatment</h4>
+    <p>
+      Mode:
+      <strong>
+        {% if acquisition_treatment == 'separate_fee' %}Separate Acquisition Fee
+        {% elif acquisition_treatment == 'split_rate' %}Split-rate
+        {% elif acquisition_treatment == 'excluded' %}Excluded (acquisition out of basis)
+        {% else %}Legacy (no acquisition adjustment)
+        {% endif %}
+      </strong>
+      <small class="text-muted">
+        Change on the Dev Fee Use Line drawer.
+      </small>
+    </p>
+  </section>
+
+  {# 3. Elected fee #}
+  <section class="explainer-section">
+    <h4>Elected fee</h4>
+    <p>
+      Developer Fee: <strong>${{ ctx.elected_fee or '0' }}</strong>
+      {% if ctx.binding_dollar_cap %}
+        <small class="text-muted">
+          (binding cap: ${{ ctx.binding_dollar_cap }})
+        </small>
+      {% endif %}
+    </p>
+    {% if ctx.overage and ctx.overage != '0' %}
+      <p class="text-warning">
+        Overage above binding cap: <strong>${{ ctx.overage }}</strong>
+      </p>
+    {% endif %}
+  </section>
+
+  {# 4. Per-Vehicle allowance table #}
+  {% if ctx.allowance_table %}
+    <section class="explainer-section">
+      <h4>Per-Source allowance</h4>
+      <table class="explainer-table">
+        <thead>
+          <tr>
+            <th>Source</th>
+            <th>Type</th>
+            <th>Basis</th>
+            <th>Max %</th>
+            <th>Per-unit cap</th>
+            <th>Absolute cap</th>
+            <th>Allowable</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in ctx.allowance_table %}
+            <tr {% if row.is_binding %}class="binding-row"{% endif %}>
+              <td>{{ row.vehicle_label }}{% if row.is_binding %} <em>(binding)</em>{% endif %}</td>
+              <td>{{ row.vehicle_type }}</td>
+              <td>${{ row.basis }}</td>
+              <td>{% if row.max_pct %}{{ row.max_pct }}%{% else %}&mdash;{% endif %}</td>
+              <td>{% if row.per_unit_cap %}${{ row.per_unit_cap }}{% else %}&mdash;{% endif %}</td>
+              <td>{% if row.absolute_cap %}${{ row.absolute_cap }}{% else %}&mdash;{% endif %}</td>
+              <td>${{ row.allowable }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+  {% else %}
+    <section class="explainer-section">
+      <p class="text-muted">
+        No Source Vehicle has Dev Fee terms set. The elected fee flows
+        through unconstrained.
+      </p>
+    </section>
+  {% endif %}
+
+  {# 5. Funded vs deferred #}
+  <section class="explainer-section">
+    <h4>Funded vs deferred</h4>
+    <p>
+      Funded at close: <strong>${{ ctx.funded_at_close or '0' }}</strong>
+      &middot;
+      Deferred: <strong>${{ ctx.deferred or '0' }}</strong>
+    </p>
+    {% if ctx.per_source_allocation %}
+      <ul>
+        {% for alloc in ctx.per_source_allocation %}
+          <li>
+            {{ alloc.vehicle_label or alloc.capital_module_id }}:
+            funded ${{ alloc.funded_at_close }} of ${{ alloc.allowable }} allowable
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </section>
+
+  {# 6. Release schedule #}
+  {% if ctx.release_schedule %}
+    <section class="explainer-section">
+      <h4>Release schedule</h4>
+      <table class="explainer-table">
+        <thead>
+          <tr>
+            <th>Milestone</th>
+            <th>Date</th>
+            <th>Weight</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for receipt in ctx.release_schedule %}
+            <tr {% if receipt.type == 'final_holdback' %}class="holdback-row"{% endif %}>
+              <td>{{ receipt.milestone_id }}{% if receipt.type == 'final_holdback' %} <em>(holdback)</em>{% endif %}</td>
+              <td>{{ receipt.date or '&mdash;' }}</td>
+              <td>{{ receipt.weight }}</td>
+              <td>${{ receipt.amount }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+  {% endif %}
+
+  {# 7. Acquisition Fee parallel block (separate_fee mode) #}
+  {% if acquisition_treatment == 'separate_fee' and ctx.acquisition_fee_context %}
+    <section class="explainer-section acquisition-fee-block">
+      <h4>Acquisition Fee</h4>
+      <p>
+        Elected: <strong>${{ ctx.acquisition_fee_context.elected_fee or '0' }}</strong>
+        {% if ctx.acquisition_fee_context.binding_dollar_cap %}
+          <small class="text-muted">
+            (binding cap: ${{ ctx.acquisition_fee_context.binding_dollar_cap }})
+          </small>
+        {% endif %}
+      </p>
+      {% if ctx.acquisition_fee_context.allowance_table %}
+        <table class="explainer-table">
+          <thead>
+            <tr><th>Source</th><th>Basis</th><th>Allowable</th></tr>
+          </thead>
+          <tbody>
+            {% for row in ctx.acquisition_fee_context.allowance_table %}
+              <tr {% if row.is_binding %}class="binding-row"{% endif %}>
+                <td>{{ row.vehicle_label }}{% if row.is_binding %} <em>(binding)</em>{% endif %}</td>
+                <td>${{ row.basis }}</td>
+                <td>${{ row.allowable }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+    </section>
+  {% endif %}
+</div>
+
+<style>
+  .dev-fee-explainer .explainer-section { margin: 1em 0; }
+  .dev-fee-explainer .explainer-table { width: 100%; border-collapse: collapse; }
+  .dev-fee-explainer .explainer-table th,
+  .dev-fee-explainer .explainer-table td {
+    padding: 0.25em 0.5em;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+  }
+  .dev-fee-explainer .binding-row { font-weight: 600; background: #fef3c7; }
+  .dev-fee-explainer .holdback-row { font-style: italic; }
+  .dev-fee-explainer .acquisition-fee-block { background: #f3f4f6; padding: 1em; }
+  .dev-fee-explainer .pending-list li { margin: 0.5em 0; }
+</style>

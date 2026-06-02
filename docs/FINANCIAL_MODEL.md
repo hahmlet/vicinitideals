@@ -3497,12 +3497,137 @@ This is a pilot-mode lever: ship to one production deal first, verify, then eith
 - `tests/engines/test_cashflow_bank_account_wiring.py` — allowlist gate (4 tests covering all precedence cases)
 - `tests/engines/test_bank_account_extractor.py::test_cash_flow_support_reserve_counts_toward_opening_cash` — convergence regression
 
+## Appendix H: Multi-Source Developer Fee (June 2026)
 
-## Appendix H — Float Earnings on Day-1 Draws
+Pre-0103, Developer Fee was a single auto-managed UseLine
+(`is_auto_dev_fee=True`) with one global basis and one global %. In any deal
+with mixed capital — regulated/affordable Sources (LIHTC, tax-exempt bonds,
+HUD, HFA) alongside private debt or equity — each Source imposes a
+different rule about what TPC means and what fee it allows. The binding fee
+is the minimum allowable across all Sources, and which Source binds drives
+sponsor economics and deferred-fee sizing.
 
-Some capital sources — most importantly tax-exempt construction bonds — are required to draw 100% of proceeds at closing. The cash sits in an account earning Treasury yield until it is paid out against construction Uses. Appendix H documents how the engine models that interest income, the routes it can take to benefit the deal, and the conservative invariants that protect reserve sizing.
+Migration 0103 added the four-layer configuration hierarchy that supports
+this, the multi-source engine that computes per-Vehicle allowances and
+binding constraint, the funded-vs-deferred split, the milestone-based
+release schedule, and three acquisition treatments.
 
-### H.1 Source taxonomy and trigger
+### H.1 Four-layer configuration
+
+| Layer | Source of truth |
+|---|---|
+| Org/User defaults | `org_settings` / `user_settings` keyed by deal type — `dev_fee_pct_*`, `dev_fee_basis_*`, `dev_fee_acquisition_treatment_*`, `dev_fee_acquisition_pct_*`, `acquisition_fee_pct_*`, `dev_fee_final_holdback_pct_*`, `dev_fee_milestone_weights_*` |
+| Source Vehicle Type defaults | `capital_vehicle_fee_defaults` table (org-scoped registry keyed on `vehicle_type`, `equity_role`) — ships empty; org admin populates |
+| Source Vehicle row (`CapitalModule`) | `fee_terms` JSONB + `fee_terms_inherited_from_type` flag — engine resolves live defaults when flag is True, instance overrides when False |
+| Per-(UseLine × Vehicle) custom-Use override | `use_line_source_fee_basis` join table — required for any UseLine whose `cost_category` is outside the eight standard categories |
+
+### H.2 Standard cost categories
+
+Used by `basis_exclusions` on each Vehicle's `fee_terms`:
+
+`acquisition`, `hard_costs`, `soft_costs`, `financing_fees`,
+`interest_reserve`, `operating_reserves`, `developer_overhead`,
+`consulting_fees`.
+
+UseLines outside this set are treated as custom Uses. The engine reads
+`use_line_source_fee_basis` for `(use_line_id, capital_module_id)` to
+decide inclusion; if missing, the pair is flagged as a pending decision
+and conservatively excluded from the basis.
+
+### H.3 Binding constraint reducer
+
+For each Vehicle with at least one cap set on `fee_terms`
+(`max_pct` / `per_unit_cap` / `absolute_cap`):
+
+`allowable = min(max_pct × basis, per_unit_cap × units, absolute_cap)`
+
+where `basis = sum(use_lines included by this Vehicle's basis_exclusions
+and use_line_source_fee_basis)`.
+
+Engine takes the minimum allowable across all constrained Vehicles. This
+is the binding cap. **Elected fee always wins**: the engine never
+overrides the user-elected fee. Overage is reported in
+`UseLine.dev_fee_binding_context` and surfaced in the explainer modal.
+
+### H.4 Funded vs deferred split
+
+After the elected fee is fixed, the engine allocates greedily to
+constrained Vehicles (capacity-ordered) up to each Vehicle's allowance.
+Remainder = deferred. V1 keeps the full elected fee on the auto Dev Fee
+UseLine `amount` (today's Uses treatment); the funded/deferred split is
+reported in the binding context for display and is **informational only**
+in the cashflow engine today. Subordinate-claim operating-cash
+consumption of the deferred portion is a Phase 3b follow-up.
+
+### H.5 Milestone release schedule
+
+`UseLine.dev_fee_release_schedule` JSONB carries
+`{weights: [{milestone_id, weight}], final_holdback: {milestone_id, pct}}`.
+Weight sum + holdback pct must equal 1.0. Engine emits a list of dated
+receipts (`milestone_id`, `date`, `weight`, `amount`) in the binding
+context. Holdback releases at its assigned milestone.
+
+### H.6 Acquisition treatments
+
+`UseLine.dev_fee_acquisition_treatment` ∈ `{excluded, split_rate,
+separate_fee, NULL}`.
+
+| Treatment | Behavior |
+|---|---|
+| `excluded` | Standard Dev Fee on TPC excl. acquisition. No Acquisition Fee row. |
+| `split_rate` | Single auto Dev Fee row with basis partitioned: `dev_fee_pct × construction_basis + dev_fee_acquisition_pct × acquisition_basis`. Each half honors per-Vehicle `basis_exclusions`. |
+| `separate_fee` | Standard Dev Fee on construction basis PLUS a parallel auto Acquisition Fee UseLine (`is_auto_acquisition_fee=True`) where `amount = acquisition_fee_pct × purchase_price`. Both fees independently capped by each Vehicle's `fee_terms`; results stored side by side in `dev_fee_binding_context.acquisition_fee_context`. |
+| `NULL` (legacy) | Pre-0103 behavior — `tpc_excl_self` sums ALL non-self UseLines, including acquisition. Preserved for backward compat. |
+
+Defaults by deal type: `acquisition → separate_fee`,
+`value_add → split_rate`, `conversion → excluded`,
+`new_construction → excluded`.
+
+### H.7 Structural diff signal
+
+Each compute hashes `(sorted CapitalModule IDs, sorted non-auto UseLine
+IDs)` and writes it to
+`UseLine.dev_fee_binding_context.last_compute_signature`. Next compute
+compares against the previous signature; mismatch sets
+`structural_diff_detected=True`. The UI auto-opens the explainer modal
+with a warning banner so the user reconfirms the fee treatment when the
+capital stack shape changes. Pure amount edits do not trip the diff.
+
+### H.8 Files involved
+
+| File | Role |
+|---|---|
+| `alembic/versions/0103_dev_fee_multi_source.py` | Schema migration |
+| `app/models/capital.py` | `CapitalModule.fee_terms`, `CapitalVehicleFeeDefaults`, `UseLineSourceFeeBasis` |
+| `app/models/deal.py` | `UseLine.dev_fee_release_schedule`, `dev_fee_binding_context`, `is_auto_acquisition_fee`, `dev_fee_acquisition_treatment`, `dev_fee_acquisition_pct`, `acquisition_fee_pct` |
+| `app/schemas/capital.py` | `CapitalFeeTermsSchema`, `CapitalVehicleFeeDefaults*` CRUD |
+| `app/schemas/deal.py` | `DevFeeReleaseScheduleSchema`, `DevFeeBindingContextSchema`, `UseLineSourceFeeBasisSchema` |
+| `app/engines/dev_fee.py` | Multi-source pipeline (binding constraint, funded/deferred, release, structural diff) |
+| `app/engines/cashflow.py` | Call site passes `modules`, `org_id`, `milestone_dates` |
+| `app/settings/defaults.py` + `resolver.py` | 20 new keys + extended `resolve_dev_fee_config` |
+| `app/api/routers/capital.py` | `/capital-vehicle-fee-defaults` CRUD, `/models/{id}/use-line-source-fee-basis` CRUD |
+| `app/api/routers/ui.py` | `GET /ui/models/{id}/dev-fee/explainer` HTMX route |
+| `app/templates/partials/dev_fee_explainer_modal.html` | Explainer modal partial |
+| `tests/engines/test_dev_fee_multi_source.py` | 12 priority tests |
+
+### H.9 Phase 2 / follow-up scope
+
+Not in V1, planned next:
+
+- Subordinate operating-cash consumption of the deferred Dev Fee portion
+  (sequenced post debt service, ahead of equity distributions, with
+  explicit ordering vs Cash Flow Support Reserve).
+- Source Vehicle drawer "Developer Fee Rule" section with inheritance
+  affordance.
+- UseLine drawer "Release Schedule" editor.
+- Capital Vehicle Defaults Org settings page.
+- Risk / tax layers and construction-fund reinvestment module.
+
+## Appendix I — Float Earnings on Day-1 Draws
+
+Some capital sources — most importantly tax-exempt construction bonds — are required to draw 100% of proceeds at closing. The cash sits in an account earning Treasury yield until it is paid out against construction Uses. Appendix I documents how the engine models that interest income, the routes it can take to benefit the deal, and the conservative invariants that protect reserve sizing.
+
+### I.1 Source taxonomy and trigger
 
 A new capital `vehicle_type` value, `float_earnings`, represents this kind of source. It is distinct from `debt`, `equity`, `forgivable_loan`, and `grant`, and is intentionally invisible to the waterfall (`waterfall.py` filters only `debt` vs `equity`) and to the source-routing gap-fill solver (`source_routing.eligible_sources_for_use` excludes it).
 
@@ -3513,7 +3638,7 @@ Two flags on the **parent** source gate float-earnings computation:
 
 When either is missing, the engine pauses the child float-earnings source and surfaces a warning rather than silently producing zero. The child source remains in the Sources table with its config intact; it resumes earnings on the next recompute when the parent is fixed.
 
-### H.2 Closed-form balance schedule
+### I.2 Closed-form balance schedule
 
 For a parent source with principal `P` drawn day 1, construction over `N` months, and annual user-entered yield `y%`, the engine computes a per-month series and the closed-form total:
 
@@ -3530,7 +3655,7 @@ Why earnings are not reinvested into the balance: the dollars are committed down
 
 Implementation lives in `app/engines/float_earnings.py:compute_balance_schedule`.
 
-### H.3 Reserve-sizing invariant
+### I.3 Reserve-sizing invariant
 
 Float earnings DO NOT shrink any reserve. Specifically:
 
@@ -3539,16 +3664,16 @@ Float earnings DO NOT shrink any reserve. Specifically:
 
 Reason for the conservative position: T-bond secondary-market sale timing cannot be reliably aligned to construction draw needs. Treating the income as freely available would allow the engine to under-size reserves on the optimistic assumption that the bonds clear when the project needs cash. The sponsor would be exposed if that timing slipped.
 
-### H.4 Application paths
+### I.4 Application paths
 
 Float earnings route through one or both of two restricted Uses, controlled by a user-entered split `dev_fee_split_pct + debt_paydown_split_pct = 100`:
 
 - **Debt principal paydown** (Phase A) — at a user-chosen milestone, the target debt module's effective principal is reduced by the paydown amount. The reduction propagates into the exit balloon (`_balloon_balance`) and the prepay-penalty calculation. Per-period interest expense is NOT recomputed in v1 (matches the existing refi-event handling); this slightly overstates DS after the paydown. Phase B can revisit.
-- **Developer Fee top-up** (Phase B, gated off in v1) — requires Dev Fee to be modeled as its own balance, which is the responsibility of the in-flight `developer-fee-multi-source` feature plan. Until that lands, the UI forces the dev-fee split to 0 and the paydown split to 100.
+- **Developer Fee top-up** (Phase B, gated off in v1) — requires the operating-cash subordinate Deferred Dev Fee consumption sink, which is a Phase 2 follow-up of the Multi-Source Developer Fee work (Appendix H.9). Until that ships, the UI forces the dev-fee split to 0 and the paydown split to 100.
 
 The engine surfaces a `capital_event` line item at the paydown milestone (direction = `informational`) so the user sees the event in the cashflow without it being double-counted against the bank-account proof.
 
-### H.5 Persistence and UI surface
+### I.5 Persistence and UI surface
 
 Per-source results are persisted on `OperationalOutputs.float_earnings_series` (JSONB) with shape:
 
@@ -3571,7 +3696,7 @@ Per-source results are persisted on `OperationalOutputs.float_earnings_series` (
 
 This pattern mirrors `bank_account_proof` (Appendix G.4): always written so stale data clears, None when no float-earnings sources exist.
 
-### H.6 Files involved
+### I.6 Files involved
 
 | File | Role |
 |---|---|
@@ -3582,18 +3707,17 @@ This pattern mirrors `bank_account_proof` (Appendix G.4): always written so stal
 | `app/models/capital.py` | `VehicleType.float_earnings` enum value |
 | `app/models/cashflow.py` | `OperationalOutputs.float_earnings_series` JSON column |
 | `app/schemas/capital.py` | `CapitalSourceSchema` float-earnings fields (parent ref, yield, splits, paydown FKs) |
-| `app/api/routers/ui.py` | Form handler parses the new fields |
-| `app/templates/partials/model_builder_line_form.html` | Float-earnings dropdown option, `balance_earns_interest` checkbox, form section |
-| `alembic/versions/0103_operational_outputs_float_earnings.py` | Migration for the JSON column |
+| `app/api/routers/ui.py` | Form handler parses the new fields; `model_builder_line_form` loads sibling capital modules + scenario milestones for the dropdowns |
+| `app/templates/partials/model_builder_line_form.html` | Float-earnings dropdown option, `balance_earns_interest` checkbox, form section with parent / paydown debt / paydown milestone dropdowns |
+| `alembic/versions/0104_operational_outputs_float_earnings.py` | Migration for the JSON column |
 | `tests/engines/test_float_earnings.py` | Unit coverage (26 tests) |
 
-### H.7 Known limitations (Phase A → Phase B)
+### I.7 Known limitations
 
 | Limitation | Resolution |
 |---|---|
 | Per-period interest on the parent loan is not recomputed after a paydown (slight DS overstatement) | Phase B can extend the carry-schedule resolver to honor a "voluntary paydown" event |
-| Dev-fee top-up path forced to 0% | Lands with `developer-fee-multi-source` enhancement (Dev Fee balance modeling) |
-| UI uses raw-UUID text inputs for parent / paydown target / milestone | Phase A.2 polish — convert to dropdowns sourced from siblings + milestones context |
+| Dev-fee top-up path forced to 0% | Lands when Dev Fee Phase 2 ships the operating-cash subordinate consumption of Deferred Dev Fee (Appendix H.9) |
 | Yield curve is a single user-entered annual % | Future option: scheduled fetch of the Treasury curve, with per-month yield indexing |
 | Integration + E2E tests not in this commit | Follow-up: API integration test for capital-module CRUD + E2E flow on reference deal `cf0e77c3-…` |
 
