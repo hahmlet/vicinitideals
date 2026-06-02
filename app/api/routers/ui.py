@@ -11103,6 +11103,102 @@ async def adopt_source_write(
     return response
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# Developer Fee explainer modal (migration 0103). Surfaces the
+# dev_fee_binding_context written by the engine: per-Source allowance table,
+# binding constraint, funded/deferred split, release schedule, pending
+# custom-Use decisions, structural-diff signal.
+# ─────────────────────────────────────────────────────────────────────────────
+
+
+@router.get(
+    "/ui/models/{model_id}/dev-fee/explainer",
+    response_class=HTMLResponse,
+)
+async def dev_fee_explainer_modal(
+    request: Request,
+    model_id: UUID,
+    session: DBSession,
+) -> HTMLResponse:
+    """Render the Developer Fee calculation explainer modal."""
+    # Locate the auto Dev Fee Use Line for this scenario. UseLines belong
+    # to Projects which belong to a Scenario — join through Project.
+    rows = list(
+        (
+            await session.execute(
+                select(UseLine)
+                .join(Project, UseLine.project_id == Project.id)
+                .where(
+                    Project.scenario_id == model_id,
+                    UseLine.is_auto_dev_fee.is_(True),
+                )
+            )
+        ).scalars()
+    )
+    if not rows:
+        return HTMLResponse(
+            "<p class='text-muted'>No Developer Fee row on this scenario.</p>",
+            status_code=404,
+        )
+    auto_line = rows[0]
+    ctx = dict(getattr(auto_line, "dev_fee_binding_context", {}) or {})
+
+    # Module label lookup for nicer display.
+    modules = list(
+        (
+            await session.execute(
+                select(CapitalModule).where(
+                    CapitalModule.scenario_id == model_id
+                )
+            )
+        ).scalars()
+    )
+    modules_by_id = {str(m.id): m for m in modules}
+
+    # Enrich pending decisions with labels.
+    pending_raw = ctx.get("pending_custom_use_decisions") or []
+    use_lines_index = {
+        str(u.id): u
+        for u in (
+            await session.execute(
+                select(UseLine)
+                .join(Project, UseLine.project_id == Project.id)
+                .where(Project.scenario_id == model_id)
+            )
+        ).scalars()
+    }
+    pending = []
+    for pair in pending_raw:
+        ul = use_lines_index.get(str(pair.get("use_line_id")))
+        mod = modules_by_id.get(str(pair.get("capital_module_id")))
+        pending.append(
+            {
+                "use_line_id": pair.get("use_line_id"),
+                "capital_module_id": pair.get("capital_module_id"),
+                "use_line_label": getattr(ul, "label", None) if ul else None,
+                "vehicle_label": getattr(mod, "label", None) if mod else None,
+            }
+        )
+
+    return templates.TemplateResponse(
+        request,
+        "partials/dev_fee_explainer_modal.html",
+        {
+            "model_id": str(model_id),
+            "auto_line": auto_line,
+            "ctx": ctx,
+            "modules_by_id": modules_by_id,
+            "pending": pending,
+            "acquisition_treatment": getattr(
+                auto_line, "dev_fee_acquisition_treatment", None
+            ),
+            "structural_diff_detected": bool(
+                ctx.get("structural_diff_detected", False)
+            ),
+        },
+    )
+
+
 def _compute_calc_status(data: dict) -> dict:
     """Produce the 3-factor calculation status: Sources=Uses, DSCR, LTV.
 
