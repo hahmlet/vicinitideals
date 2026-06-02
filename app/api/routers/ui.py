@@ -21,6 +21,7 @@ from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse, Red
 from fastapi.templating import Jinja2Templates
 from starlette.templating import _TemplateResponse
 from sqlalchemy import and_, func, literal, or_, select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
@@ -6695,6 +6696,68 @@ async def handle_form_create_or_update(
                         row.dev_fee_basis = basis_raw
                     if form.get("notes") is not None:
                         row.notes = form.get("notes") or None
+                    # Acquisition treatment (4 variants: legacy None preserved
+                    # when no form key submitted).
+                    if "dev_fee_acquisition_treatment" in form:
+                        _t = (form.get("dev_fee_acquisition_treatment") or "").strip()
+                        row.dev_fee_acquisition_treatment = _t or None
+                        if _t == "split_rate":
+                            _ap = _fd(form.get("dev_fee_acquisition_pct"))
+                            row.dev_fee_acquisition_pct = _ap
+                        else:
+                            row.dev_fee_acquisition_pct = None
+                        # Manage parallel auto Acquisition Fee row.
+                        _proj = await session.get(Project, row.project_id) if row.project_id else None
+                        _scen_id = _proj.scenario_id if _proj else None
+                        if _scen_id is not None:
+                            _existing_acq = (await session.execute(
+                                select(UseLine).join(Project, UseLine.project_id == Project.id)
+                                .where(
+                                    Project.scenario_id == _scen_id,
+                                    UseLine.is_auto_acquisition_fee == True,  # noqa: E712
+                                )
+                            )).scalars().first()
+                            if _t == "separate_fee":
+                                _acq_pct = _fd(form.get("acquisition_fee_pct"))
+                                if _existing_acq is None:
+                                    session.add(UseLine(
+                                        project_id=row.project_id,
+                                        label="Acquisition Fee",
+                                        phase="acquisition",
+                                        amount=Decimal("0"),
+                                        timing_type="first_day",
+                                        cost_category="soft",
+                                        is_auto_acquisition_fee=True,
+                                        acquisition_fee_pct=_acq_pct,
+                                        milestone_key="close",
+                                    ))
+                                else:
+                                    if _acq_pct is not None:
+                                        _existing_acq.acquisition_fee_pct = _acq_pct
+                            else:
+                                if _existing_acq is not None:
+                                    await session.delete(_existing_acq)
+                    # Release schedule (milestone weights + final holdback).
+                    if form.get("dev_fee_release_section") == "1":
+                        _ms_keys = form.getlist("release_milestone_key[]")
+                        _ms_weights = form.getlist("release_weight_pct[]")
+                        _weights: list[dict] = []
+                        for _i in range(len(_ms_keys)):
+                            _k = (_ms_keys[_i] or "").strip()
+                            _w = _fd(_ms_weights[_i] if _i < len(_ms_weights) else None)
+                            if _k and _w is not None and _w > 0:
+                                _weights.append({"milestone_key": _k, "weight": float(_w)})
+                        _hold_pct = _fd(form.get("final_holdback_pct"))
+                        _hold_ms = (form.get("final_holdback_milestone_key") or "").strip() or None
+                        _sched: dict = {}
+                        if _weights:
+                            _sched["weights"] = _weights
+                        if _hold_pct is not None and _hold_pct > 0:
+                            _hb: dict = {"pct": float(_hold_pct)}
+                            if _hold_ms:
+                                _hb["milestone_key"] = _hold_ms
+                            _sched["final_holdback"] = _hb
+                        row.dev_fee_release_schedule = _sched
                 else:
                     # User edit on an auto Total Finance Costs row turns off
                     # the auto flag so engine stops recomputing.  User can
@@ -6959,6 +7022,29 @@ async def handle_form_create_or_update(
             except (ValueError, AttributeError):
                 pass
 
+        # Developer Fee Rule (fee_terms JSONB + inheritance flag).
+        # Section only renders on the edit form; presence of hidden sentinel
+        # `fee_terms_section` controls whether we touch these columns. Wizard
+        # creation skips this path entirely (defaults from migration: empty
+        # dict + inherited_from_type=True).
+        _ft_section_present = form.get("fee_terms_section") == "1"
+        _ft_inherited = form.get("fee_terms_inherited") == "on"
+        _ft_dict: dict = {}
+        if _ft_section_present and not _ft_inherited:
+            if (_mp := _fd(form.get("fee_terms_max_pct"))) is not None:
+                _ft_dict["max_pct"] = float(_mp)
+            if (_puc := _fd(form.get("fee_terms_per_unit_cap"))) is not None:
+                _ft_dict["per_unit_cap"] = float(_puc)
+            if (_ac := _fd(form.get("fee_terms_absolute_cap"))) is not None:
+                _ft_dict["absolute_cap"] = float(_ac)
+            _excl = [x.strip() for x in form.getlist("fee_terms_basis_exclusions[]") if x.strip()]
+            if _excl:
+                _ft_dict["basis_exclusions"] = _excl
+            if form.get("fee_terms_regulated") == "on":
+                _ft_dict["regulated"] = True
+            if (_notes := (form.get("fee_terms_notes") or "").strip()):
+                _ft_dict["notes"] = _notes
+
         data = {
             "label": form.get("label", ""),
             "vehicle_type": _vehicle_type,
@@ -6970,6 +7056,9 @@ async def handle_form_create_or_update(
             "active_phase_end": _derived_end_phase,
             "source_vehicle_id": _sv_uuid,
         }
+        if _ft_section_present:
+            data["fee_terms"] = _ft_dict
+            data["fee_terms_inherited_from_type"] = _ft_inherited
         # Draw schedule fields from form.  `ds_active_to_milestone` is ignored —
         # the repayment milestone is derived from Exit Vehicle (above).
         _ds_from_ms = form.get("ds_active_from_milestone") or ""
@@ -13923,6 +14012,160 @@ async def vehicle_delete(
         return HTMLResponse("", status_code=404)
 
     await session.delete(vehicle)
+    await session.commit()
+    return HTMLResponse("")
+
+
+# ---------------------------------------------------------------------------
+# Capital Vehicle Dev Fee Defaults (Org-scoped)
+# ---------------------------------------------------------------------------
+
+_CVD_VEHICLE_TYPE_CHOICES = [
+    ("equity", "Equity"),
+    ("debt", "Debt"),
+    ("forgivable_loan", "Forgivable Loan"),
+    ("grant", "Grant"),
+    ("tax_credit", "Tax Credit"),
+    ("subordinate_debt", "Subordinate Debt"),
+]
+_CVD_VEHICLE_TYPE_LABELS = dict(_CVD_VEHICLE_TYPE_CHOICES)
+_CVD_COST_CATEGORIES = [
+    ("acquisition", "Acquisition"),
+    ("hard_costs", "Hard Costs"),
+    ("soft_costs", "Soft Costs"),
+    ("financing_fees", "Financing Fees"),
+    ("interest_reserve", "Interest Reserve"),
+    ("operating_reserves", "Operating Reserves"),
+    ("developer_overhead", "Developer Overhead"),
+    ("consulting_fees", "Consulting Fees"),
+]
+
+
+def _cvd_parse_fee_terms(form) -> dict:
+    """Parse fee_terms dict from form fields. Returns {} when no fields set."""
+    out: dict = {}
+    if (_mp := _fd(form.get("max_pct"))) is not None:
+        out["max_pct"] = float(_mp)
+    if (_puc := _fd(form.get("per_unit_cap"))) is not None:
+        out["per_unit_cap"] = float(_puc)
+    if (_ac := _fd(form.get("absolute_cap"))) is not None:
+        out["absolute_cap"] = float(_ac)
+    _excl = [x.strip() for x in form.getlist("basis_exclusions[]") if x.strip()]
+    if _excl:
+        out["basis_exclusions"] = _excl
+    if form.get("regulated") == "on":
+        out["regulated"] = True
+    if (_notes := (form.get("notes") or "").strip()):
+        out["notes"] = _notes
+    return out
+
+
+@router.get("/settings/capital-vehicle-defaults", response_class=HTMLResponse)
+async def capital_vehicle_defaults_page(
+    request: Request,
+    session: DBSession,
+) -> HTMLResponse:
+    user = await _get_user(session, request)
+    if user is None:
+        return RedirectResponse(url="/login?next=/settings/capital-vehicle-defaults", status_code=303)
+
+    from app.models.capital import CapitalVehicleFeeDefaults
+    dedup_count, conflicts_count = await _get_counts(session)
+    address_issues_count = await _get_address_issues_count(session, user)
+
+    rows = (await session.execute(
+        select(CapitalVehicleFeeDefaults)
+        .where(CapitalVehicleFeeDefaults.org_id == user.org_id)
+        .order_by(CapitalVehicleFeeDefaults.vehicle_type, CapitalVehicleFeeDefaults.equity_role)
+    )).scalars().all()
+
+    return templates.TemplateResponse(
+        request,
+        "settings_capital_vehicle_defaults.html",
+        {
+            "defaults": rows,
+            "vehicle_type_labels": _CVD_VEHICLE_TYPE_LABELS,
+            "vehicle_type_choices": _CVD_VEHICLE_TYPE_CHOICES,
+            "cost_categories": _CVD_COST_CATEGORIES,
+            **_base_ctx(user, dedup_count, "", address_issues_count, conflicts_count=conflicts_count),
+        },
+    )
+
+
+@router.post("/settings/capital-vehicle-defaults", response_class=HTMLResponse)
+async def capital_vehicle_defaults_create(
+    request: Request,
+    session: DBSession,
+) -> HTMLResponse:
+    user = await _get_user(session, request)
+    if user is None:
+        return RedirectResponse(url="/login?next=/settings/capital-vehicle-defaults", status_code=303)
+
+    from app.models.capital import CapitalVehicleFeeDefaults
+
+    form = await request.form()
+    vehicle_type = (form.get("vehicle_type") or "").strip()
+    if vehicle_type not in _CVD_VEHICLE_TYPE_LABELS:
+        return HTMLResponse("Invalid vehicle type.", status_code=400)
+    equity_role = (form.get("equity_role") or "").strip() or None
+    if vehicle_type != "equity":
+        equity_role = None
+
+    row = CapitalVehicleFeeDefaults(
+        org_id=user.org_id,
+        vehicle_type=vehicle_type,
+        equity_role=equity_role,
+        fee_terms=_cvd_parse_fee_terms(form),
+    )
+    session.add(row)
+    try:
+        await session.commit()
+    except IntegrityError:
+        await session.rollback()
+        return HTMLResponse(
+            "A default for this vehicle type + equity role already exists.",
+            status_code=409,
+        )
+    return RedirectResponse(url="/settings/capital-vehicle-defaults", status_code=303)
+
+
+@router.post("/settings/capital-vehicle-defaults/{row_id}", response_class=HTMLResponse)
+async def capital_vehicle_defaults_update(
+    request: Request,
+    row_id: UUID,
+    session: DBSession,
+) -> HTMLResponse:
+    user = await _get_user(session, request)
+    if user is None:
+        return RedirectResponse(url="/login?next=/settings/capital-vehicle-defaults", status_code=303)
+
+    from app.models.capital import CapitalVehicleFeeDefaults
+    row = await session.get(CapitalVehicleFeeDefaults, row_id)
+    if row is None or row.org_id != user.org_id:
+        return HTMLResponse("Default not found", status_code=404)
+
+    form = await request.form()
+    row.fee_terms = _cvd_parse_fee_terms(form)
+    await session.commit()
+    return RedirectResponse(url="/settings/capital-vehicle-defaults", status_code=303)
+
+
+@router.delete("/settings/capital-vehicle-defaults/{row_id}", response_class=HTMLResponse)
+async def capital_vehicle_defaults_delete(
+    request: Request,
+    row_id: UUID,
+    session: DBSession,
+) -> HTMLResponse:
+    user = await _get_user(session, request)
+    if user is None:
+        return HTMLResponse("Unauthorized", status_code=401)
+
+    from app.models.capital import CapitalVehicleFeeDefaults
+    row = await session.get(CapitalVehicleFeeDefaults, row_id)
+    if row is None or row.org_id != user.org_id:
+        return HTMLResponse("", status_code=404)
+
+    await session.delete(row)
     await session.commit()
     return HTMLResponse("")
 
