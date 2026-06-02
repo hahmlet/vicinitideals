@@ -377,3 +377,103 @@ def test_full_window_feeds_simulate_end_to_end():
     assert report.monthly[3].balance == Decimal("90_000")
     assert report.is_solvent
     assert report.max_shortfall == Decimal("0")
+
+
+# ---------------------------------------------------------------------------
+# dev_fee_paydowns_by_period — deferred Dev Fee outflows from waterfall
+# ---------------------------------------------------------------------------
+
+
+def test_dev_fee_paydowns_added_to_outflows_in_operating_window():
+    """Waterfall-driven deferred Dev Fee paydowns must show up as outflows so
+    the proof's CFS sizing accounts for cash leaving the operating account."""
+    rows = [
+        _FakeRow(period=2, period_type="lease_up",
+                 effective_gross_income=Decimal("60_000"),
+                 operating_expenses=Decimal("20_000"), debt_service=Decimal("30_000")),
+        _FakeRow(period=3, period_type="lease_up",
+                 effective_gross_income=Decimal("80_000"),
+                 operating_expenses=Decimal("20_000"), debt_service=Decimal("30_000")),
+    ]
+    out = extract_operating_proof_window(
+        cash_flow_rows=rows,
+        use_lines=[_FakeUseLine("Operating Reserve", Decimal("50_000"))],
+        first_period_date=datetime(2026, 1, 1),
+        co_period=2,
+        stabilized_period=4,
+        dev_fee_paydowns_by_period={2: Decimal("10_000"), 3: Decimal("25_000")},
+    )
+    m2, m3 = out.months[0], out.months[1]
+    assert out.monthly_outflows[m2] == Decimal("60_000")  # 20K opex + 30K DS + 10K paydown
+    assert out.monthly_outflows[m3] == Decimal("75_000")  # 20K opex + 30K DS + 25K paydown
+
+
+def test_dev_fee_paydowns_none_is_noop_in_operating_window():
+    """Defaulting paydowns to None must preserve legacy outflow math."""
+    rows = [
+        _FakeRow(period=2, period_type="lease_up",
+                 effective_gross_income=Decimal("60_000"),
+                 operating_expenses=Decimal("20_000"), debt_service=Decimal("30_000")),
+    ]
+    out = extract_operating_proof_window(
+        cash_flow_rows=rows,
+        use_lines=[_FakeUseLine("Operating Reserve", Decimal("50_000"))],
+        first_period_date=datetime(2026, 1, 1),
+        co_period=2,
+        stabilized_period=3,
+    )
+    assert out.monthly_outflows[out.months[0]] == Decimal("50_000")
+
+
+def test_dev_fee_paydowns_added_to_outflows_in_full_window():
+    """Lease-up segment of full window picks up paydowns; construction segment
+    is unaffected (deferred Dev Fee paydowns only fire post-CO)."""
+    construction = [
+        _FakeMonthly(date=datetime(2026, 1, 1), draw_received=Decimal("100_000"),
+                     uses_paid=Decimal("100_000"), interest_paid=Decimal("0")),
+    ]
+    rows = [
+        _FakeRow(period=1, period_type="lease_up",
+                 effective_gross_income=Decimal("60_000"),
+                 operating_expenses=Decimal("20_000"), debt_service=Decimal("30_000")),
+        _FakeRow(period=2, period_type="lease_up",
+                 effective_gross_income=Decimal("80_000"),
+                 operating_expenses=Decimal("20_000"), debt_service=Decimal("30_000")),
+    ]
+    out = extract_full_window_proof(
+        construction_monthly=construction,
+        cash_flow_rows=rows,
+        use_lines=[_FakeUseLine("Operating Reserve", Decimal("50_000"))],
+        first_period_date=datetime(2026, 1, 1),
+        co_period=1,
+        stabilized_period=3,
+        dev_fee_paydowns_by_period={1: Decimal("15_000"), 2: Decimal("40_000")},
+    )
+    # Construction month outflow unchanged (paydown for period 1 only hits the
+    # lease-up row — construction segment owns period 0 here by calendar date).
+    m_c = out.months[0]
+    assert out.monthly_outflows[m_c] == Decimal("100_000")  # uses + interest, no paydown
+    # Lease-up months get paydowns folded into outflows.
+    m_l1 = out.months[1]
+    m_l2 = out.months[2]
+    assert out.monthly_outflows[m_l1] == Decimal("65_000")  # 20K opex + 30K DS + 15K paydown
+    assert out.monthly_outflows[m_l2] == Decimal("90_000")  # 20K opex + 30K DS + 40K paydown
+
+
+def test_dev_fee_paydown_for_unmatched_period_is_ignored():
+    """A paydown entry whose period falls outside the proof window must not
+    leak into outflows or shift the timeline."""
+    rows = [
+        _FakeRow(period=2, period_type="lease_up",
+                 effective_gross_income=Decimal("60_000"),
+                 operating_expenses=Decimal("20_000"), debt_service=Decimal("30_000")),
+    ]
+    out = extract_operating_proof_window(
+        cash_flow_rows=rows,
+        use_lines=[_FakeUseLine("Operating Reserve", Decimal("50_000"))],
+        first_period_date=datetime(2026, 1, 1),
+        co_period=2,
+        stabilized_period=3,
+        dev_fee_paydowns_by_period={99: Decimal("12_345")},  # period not in window
+    )
+    assert out.monthly_outflows[out.months[0]] == Decimal("50_000")

@@ -659,7 +659,9 @@ async def compute_model_cashflows(model_id: UUID, request: Request, session: DBS
     _should_iterate = _sizing_mode in _iterative_modes
 
     result: dict[str, Any] | None = None
+    waterfall_result: dict[str, Any] | None = None
     prev_dscr: Decimal | None = None
+    prev_dev_fee_paydown_total: Decimal | None = None
     iterations_used = 0
     _schedule = _initial_schedule
     try:
@@ -694,6 +696,33 @@ async def compute_model_cashflows(model_id: UUID, request: Request, session: DBS
             _needs_recompute = (
                 isinstance(result, dict) and result.get("needs_recompute") is True
             )
+
+            # Waterfall must run inside the loop so the NEXT iteration's
+            # bank-account proof reads this iter's deferred Dev Fee paydown
+            # schedule (via OperationalOutputs.dev_fee_balance_series). If the
+            # paydown total changes materially, force another pass so the
+            # proof — and the Cash Flow Support Reserve sized from it —
+            # reflects the fresh schedule.
+            try:
+                waterfall_result = await compute_waterfall(deal_model_id=model_id, session=session)
+            except ValueError:
+                waterfall_result = None
+            _cur_dev_fee_paydown_total = Decimal("0")
+            if isinstance(waterfall_result, dict):
+                _raw = waterfall_result.get("deferred_dev_fee_paydown_total")
+                if _raw is not None:
+                    try:
+                        _cur_dev_fee_paydown_total = Decimal(str(_raw))
+                    except Exception:
+                        _cur_dev_fee_paydown_total = Decimal("0")
+            _paydown_changed = (
+                prev_dev_fee_paydown_total is not None
+                and abs(_cur_dev_fee_paydown_total - prev_dev_fee_paydown_total) > Decimal("1.0")
+            )
+            prev_dev_fee_paydown_total = _cur_dev_fee_paydown_total
+            if _paydown_changed:
+                _needs_recompute = True
+
             if _needs_recompute and _iter < MAX_ITERATIONS - 1:
                 continue
             if not _should_iterate:
@@ -729,13 +758,9 @@ async def compute_model_cashflows(model_id: UUID, request: Request, session: DBS
     # - owner distributions flow out of the cash balance each period
     # - project_irr_levered and equity_required are correctly computed
     # - auto-creates equity module + tiers if not yet configured
-    waterfall_result: dict[str, Any] | None = None
-    try:
-        waterfall_result = await compute_waterfall(deal_model_id=model_id, session=session)
-    except ValueError:
-        # Cashflow succeeded — don't fail the whole request if waterfall can't run
-        # (e.g. no capital modules configured yet)
-        pass
+    # NOTE: waterfall now runs INSIDE the convergence loop above so the
+    # bank-account proof can read the latest deferred Dev Fee paydown schedule
+    # on the next iteration. `waterfall_result` holds the last-iteration value.
 
     completed_at = utc_now()
     duration_ms = elapsed_ms(started_at_monotonic)

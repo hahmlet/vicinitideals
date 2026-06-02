@@ -3463,6 +3463,16 @@ When `extract_full_window_proof` detects a month where `cash_balance < required_
 
 The compute loop in `app/api/routers/models.py` re-runs draw schedule + cashflow up to `MAX_ITERATIONS` times. Each iteration recomputes `construction_monthly` from the latest draw schedule and passes it to `compute_cash_flows`. Convergence: once Cash Flow Support is in opening cash, the next pass either eliminates the shortfall (gap → 0) or stabilizes at a fixed reserve amount within tolerance. If `_RESERVE_LABELS` omitted "Cash Flow Support Reserve", the loop would spin at the same shortfall forever — the emitted reserve wouldn't be recognized as opening cash.
 
+### G.3.1 Deferred Dev Fee paydown outflows
+
+The bank-account proof's outflow formula was `operating_expenses + debt_service` per row through 2026-06-02. After Float Earnings Phase B shipped, the CF waterfall began routing operating NCF to a `deferred_developer_fee` tier, draining real cash from the operating account that the proof was blind to. This caused the Cash Flow Support Reserve to undersize on any deal with a deferred Dev Fee balance.
+
+Fix (2026-06-02): each `_run_bank_account_proof` call now receives a `dev_fee_paydowns_by_period` dict — period → paydown amount from the prior iteration's waterfall — and the extractor folds those into `outflows[m]` alongside opex + debt service. The convergence loop in `compute_model_cashflows` runs the waterfall **inside** the loop (previously after) and trips `needs_recompute=True` whenever the deferred Dev Fee paydown total shifts by more than $1 between passes, so CFS sizing converges against a stable schedule.
+
+- Iteration 0: `dev_fee_balance_series` is empty on `OperationalOutputs`; proof sees no paydowns → matches pre-Phase-B behavior on new deals.
+- Iteration 1+: prior iteration's series populates the paydown dict; proof outflows reflect cash leaving the operating account into the dev fee creditor.
+- Only `paydown_from_waterfall` counts. `paydown_from_float_topup` is funded by a float source (not the operating account) and is invariant-preserving (Appendix I.2 — float earnings never appear in `effective_gross_income` either).
+
 ### G.4 Per-scenario allowlist
 
 The bank-account reserve emission is gated by `_bank_account_reserve_active_for(scenario_id)` in `cashflow.py`:

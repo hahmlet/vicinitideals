@@ -3,7 +3,7 @@ from __future__ import annotations
 import os
 from dataclasses import dataclass
 from datetime import date, datetime, timezone
-from decimal import Decimal, ROUND_HALF_UP
+from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from typing import Any
 from uuid import UUID
 
@@ -224,6 +224,7 @@ def _run_bank_account_proof(
     phases: list,
     milestone_dates: dict | None,
     construction_monthly: list | None = None,
+    dev_fee_paydowns_by_period: dict[int, Decimal] | None = None,
 ) -> dict | None:
     """Run the bank-account solvency proof.
 
@@ -287,6 +288,7 @@ def _run_bank_account_proof(
             first_period_date=first_period_dt,
             co_period=co_period,
             stabilized_period=proof_window_end,
+            dev_fee_paydowns_by_period=dev_fee_paydowns_by_period,
         )
         proof_start = "day_0"
     else:
@@ -296,6 +298,7 @@ def _run_bank_account_proof(
             first_period_date=first_period_dt,
             co_period=co_period,
             stabilized_period=proof_window_end,
+            dev_fee_paydowns_by_period=dev_fee_paydowns_by_period,
         )
         proof_start = "stabilized" if _acquisition_only else "co"
     if not bank_inputs.months:
@@ -527,6 +530,22 @@ async def _compute_project_cashflow(
         )
     )).scalar_one_or_none()
     prev_noi_stabilized = _to_decimal(prev_outputs.noi_stabilized) if prev_outputs else None
+
+    # Capture prior iteration's waterfall-driven deferred Dev Fee paydowns so
+    # the bank-account proof sees them as outflows from the operating account.
+    # Without this, the proof sums opex+debt_service only and undersizes the
+    # Cash Flow Support Reserve on deals that defer Dev Fee. The convergence
+    # loop drives the schedule to match the proof's sized reserve.
+    prev_dev_fee_paydowns: dict[int, Decimal] = {}
+    if prev_outputs is not None:
+        _series = prev_outputs.dev_fee_balance_series or {}
+        for _row in _series.get("periods", []) or []:
+            try:
+                _amt = Decimal(str(_row.get("paydown_from_waterfall", "0")))
+            except (InvalidOperation, ValueError, TypeError):
+                continue
+            if _amt > ZERO:
+                prev_dev_fee_paydowns[int(_row["period"])] = _amt
 
     # Flush any pending (unflushed) ORM objects from a prior compute pass
     # before the bulk DELETE runs.  With autoflush=False, session.add_all()
@@ -1233,6 +1252,7 @@ async def _compute_project_cashflow(
         phases=phases,
         milestone_dates=milestone_dates,
         construction_monthly=construction_monthly,
+        dev_fee_paydowns_by_period=prev_dev_fee_paydowns,
     )
     if bank_account_proof is not None:
         if _bank_account_reserve_active_for(deal_uuid):

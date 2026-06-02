@@ -85,6 +85,7 @@ def extract_operating_proof_window(
     co_period: int,                            # cash-flow row period at CO
     stabilized_period: int | None = None,      # row period at Stabilization Start; None = include all post-CO
     operating_reserve_amount: Decimal | None = None,  # OR floor; defaults to "Operating Reserve" UseLine
+    dev_fee_paydowns_by_period: dict[int, Decimal] | None = None,  # waterfall-driven deferred Dev Fee payments per CashFlow.period
 ) -> BankAccountInputs:
     """Build bank-account simulator inputs for the OPERATING proof window.
 
@@ -134,13 +135,18 @@ def extract_operating_proof_window(
     outflows: dict[datetime, Decimal] = {}
     floor: dict[datetime, Decimal] = {}
 
+    paydowns_map = dev_fee_paydowns_by_period or {}
     for row in rows_sorted:
         if row.period < co_period or row.period >= window_end:
             continue
         m = _add_months(_month_start(first_period_date), row.period)
         months.append(m)
         inflows[m] = _to_dec(row.effective_gross_income)
-        outflows[m] = _to_dec(row.operating_expenses) + _to_dec(row.debt_service)
+        outflows[m] = (
+            _to_dec(row.operating_expenses)
+            + _to_dec(row.debt_service)
+            + _to_dec(paydowns_map.get(row.period, 0))
+        )
         floor[m] = or_amount
 
     return BankAccountInputs(
@@ -161,6 +167,7 @@ def extract_full_window_proof(
     co_period: int,
     stabilized_period: int | None,
     operating_reserve_amount: Decimal | None = None,
+    dev_fee_paydowns_by_period: dict[int, Decimal] | None = None,
 ) -> BankAccountInputs:
     """Build bank-account inputs for the full Day 0 → Stabilization Start window.
 
@@ -245,6 +252,7 @@ def extract_full_window_proof(
     else:
         window_end = stabilized_period
 
+    paydowns_map = dev_fee_paydowns_by_period or {}
     for row in rows_sorted:
         if row.period < co_period or row.period >= window_end:
             continue
@@ -260,6 +268,7 @@ def extract_full_window_proof(
         outflows[d] = (
             _to_dec(getattr(row, "operating_expenses", 0))
             + _to_dec(getattr(row, "debt_service", 0))
+            + _to_dec(paydowns_map.get(row.period, 0))
         )
         floor[d] = floor_amt
 

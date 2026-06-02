@@ -517,6 +517,91 @@ def test_stress_deal_emits_cash_flow_support_and_converges_to_solvent():
 
 
 @pytest.mark.unit
+def test_proof_with_dev_fee_paydowns_grows_shortfall():
+    """Wiring: a non-empty `dev_fee_paydowns_by_period` must propagate through
+    `_run_bank_account_proof` to the extractor and inflate outflows so the
+    sized shortfall exceeds the no-paydown baseline."""
+    phases = [
+        PhaseSpec(PeriodType.lease_up, 3),
+        PhaseSpec(PeriodType.stabilized, 12),
+    ]
+    rows = [
+        _Row(period=0, period_type=PeriodType.lease_up,
+             effective_gross_income=Decimal("20_000"),
+             operating_expenses=Decimal("8_000"),
+             debt_service=Decimal("10_000")),
+        _Row(period=1, period_type=PeriodType.lease_up,
+             effective_gross_income=Decimal("20_000"),
+             operating_expenses=Decimal("8_000"),
+             debt_service=Decimal("10_000")),
+        _Row(period=2, period_type=PeriodType.lease_up,
+             effective_gross_income=Decimal("20_000"),
+             operating_expenses=Decimal("8_000"),
+             debt_service=Decimal("10_000")),
+    ]
+    use_lines = [_UL("Operating Reserve", Decimal("5_000"))]  # tight floor
+
+    baseline = _run_bank_account_proof(
+        cash_flow_rows=rows,
+        use_lines=use_lines,
+        phases=phases,
+        milestone_dates={"acquisition_start": "2026-01-01"},
+    )
+    with_paydowns = _run_bank_account_proof(
+        cash_flow_rows=rows,
+        use_lines=use_lines,
+        phases=phases,
+        milestone_dates={"acquisition_start": "2026-01-01"},
+        dev_fee_paydowns_by_period={0: Decimal("4_000"), 1: Decimal("4_000")},
+    )
+    assert baseline is not None and with_paydowns is not None
+    # Baseline NCF per row = 20K - 8K - 10K = +2K → opening 5K + 2K = 7K above floor.
+    assert baseline["is_solvent"] is True
+    # With 4K/mo paydown, NCF = -2K → 5K - 2K - 2K = 1K → 4K below 5K floor.
+    assert with_paydowns["is_solvent"] is False
+    assert Decimal(with_paydowns["max_shortfall"]) > Decimal(baseline["max_shortfall"])
+
+
+@pytest.mark.unit
+def test_proof_paydowns_none_matches_legacy_behavior():
+    """Wiring sanity: paydowns kwarg defaults to None and produces the same
+    proof a legacy caller without the kwarg would have produced."""
+    phases = [
+        PhaseSpec(PeriodType.lease_up, 3),
+        PhaseSpec(PeriodType.stabilized, 12),
+    ]
+    rows = [
+        _Row(period=i, period_type=PeriodType.lease_up,
+             effective_gross_income=Decimal("20_000"),
+             operating_expenses=Decimal("8_000"),
+             debt_service=Decimal("10_000"))
+        for i in range(3)
+    ]
+    use_lines = [_UL("Operating Reserve", Decimal("100_000"))]
+    legacy = _run_bank_account_proof(
+        cash_flow_rows=rows,
+        use_lines=use_lines,
+        phases=phases,
+        milestone_dates={"acquisition_start": "2026-01-01"},
+    )
+    explicit_none = _run_bank_account_proof(
+        cash_flow_rows=rows,
+        use_lines=use_lines,
+        phases=phases,
+        milestone_dates={"acquisition_start": "2026-01-01"},
+        dev_fee_paydowns_by_period=None,
+    )
+    empty_dict = _run_bank_account_proof(
+        cash_flow_rows=rows,
+        use_lines=use_lines,
+        phases=phases,
+        milestone_dates={"acquisition_start": "2026-01-01"},
+        dev_fee_paydowns_by_period={},
+    )
+    assert legacy == explicit_none == empty_dict
+
+
+@pytest.mark.unit
 def test_is_stream_active_distinguishes_lease_up_ramp_from_stabilized_only():
     """LUR sizing gates the 1/3 NOI offset on whether any income stream
     is active during lease-up. Streams gated to `stabilized` (or later)

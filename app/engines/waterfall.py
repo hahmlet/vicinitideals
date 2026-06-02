@@ -328,8 +328,13 @@ async def compute_waterfall(
         result_rows=result_rows,
     )
 
+    _deferred_dev_fee_paydown_total = sum(
+        _waterfall_paydowns_by_period.values(), ZERO
+    )
+
     summary = {
         "deal_model_id": str(deal_uuid),
+        "deferred_dev_fee_paydown_total": _deferred_dev_fee_paydown_total,
         "capital_module_count": len(capital_modules),
         "waterfall_tier_count": len(waterfall_tiers),
         "cash_flow_count": len(cash_flows),
