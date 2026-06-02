@@ -13916,7 +13916,7 @@ async def vehicle_settings_page(
 
     from app.models.source_vehicle import SourceVehicle as _SV_list
     dedup_count, conflicts_count = await _get_counts(session)
-    address_issues_count = await _get_address_issues_count(session, user)
+    address_issues_count = await _get_address_issues_count(session)
 
     org_vehicles = (
         await session.execute(
