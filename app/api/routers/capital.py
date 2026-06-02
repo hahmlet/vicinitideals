@@ -13,9 +13,16 @@ from sqlalchemy import select
 
 from app.api.deps import CurrentUserId, DBSession
 from app.engines.waterfall import compute_waterfall, get_waterfall_distribution_report
-from app.models.capital import CapitalModule, WaterfallResult, WaterfallTier
-from app.models.deal import Deal, Scenario
+from app.models.capital import (
+    CapitalModule,
+    CapitalVehicleFeeDefaults,
+    UseLineSourceFeeBasis,
+    WaterfallResult,
+    WaterfallTier,
+)
+from app.models.deal import Deal, Scenario, UseLine
 from app.models.org import User
+from app.models.project import Project
 from app.observability import (
     build_observability_payload,
     begin_observation,
@@ -27,12 +34,16 @@ from app.schemas.capital import (
     CapitalModuleBase,
     CapitalModuleRead,
     CapitalModuleUpdate,
+    CapitalVehicleFeeDefaultsCreate,
+    CapitalVehicleFeeDefaultsRead,
+    CapitalVehicleFeeDefaultsUpdate,
     WaterfallDistributionReportRead,
     WaterfallResultRead,
     WaterfallTierBase,
     WaterfallTierRead,
     WaterfallTierUpdate,
 )
+from app.schemas.deal import UseLineSourceFeeBasisSchema
 
 router = APIRouter(tags=["capital"])
 logger = logging.getLogger(__name__)
@@ -345,3 +356,201 @@ async def compute_model_waterfall(model_id: UUID, request: Request, session: DBS
         user_id=user_id,
     )
     return response
+
+
+# ---------------------------------------------------------------------------
+# Developer Fee multi-source endpoints (migration 0103).
+# ---------------------------------------------------------------------------
+
+
+async def _current_user_org_id(session: DBSession, user_id: UUID) -> UUID:
+    user = await session.get(User, user_id)
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user.org_id
+
+
+@router.get(
+    "/capital-vehicle-fee-defaults",
+    response_model=list[CapitalVehicleFeeDefaultsRead],
+)
+async def list_vehicle_fee_defaults(
+    session: DBSession,
+    current_user_id: CurrentUserId,
+) -> list[CapitalVehicleFeeDefaults]:
+    org_id = await _current_user_org_id(session, current_user_id)
+    rows = (
+        await session.execute(
+            select(CapitalVehicleFeeDefaults).where(
+                CapitalVehicleFeeDefaults.org_id == org_id
+            )
+        )
+    ).scalars().all()
+    return list(rows)
+
+
+@router.post(
+    "/capital-vehicle-fee-defaults",
+    response_model=CapitalVehicleFeeDefaultsRead,
+    status_code=status.HTTP_201_CREATED,
+)
+async def create_vehicle_fee_default(
+    payload: CapitalVehicleFeeDefaultsCreate,
+    session: DBSession,
+    current_user_id: CurrentUserId,
+) -> CapitalVehicleFeeDefaults:
+    org_id = await _current_user_org_id(session, current_user_id)
+    fee_terms = (
+        payload.fee_terms.model_dump() if payload.fee_terms is not None else {}
+    )
+    row = CapitalVehicleFeeDefaults(
+        org_id=org_id,
+        vehicle_type=payload.vehicle_type,
+        equity_role=payload.equity_role,
+        fee_terms=_json_safe(fee_terms),
+    )
+    session.add(row)
+    try:
+        await session.flush()
+    except Exception as exc:
+        raise HTTPException(
+            status_code=409,
+            detail="Vehicle fee defaults row already exists for this (vehicle_type, equity_role)",
+        ) from exc
+    await session.refresh(row)
+    return row
+
+
+@router.patch(
+    "/capital-vehicle-fee-defaults/{row_id}",
+    response_model=CapitalVehicleFeeDefaultsRead,
+)
+async def update_vehicle_fee_default(
+    row_id: UUID,
+    payload: CapitalVehicleFeeDefaultsUpdate,
+    session: DBSession,
+    current_user_id: CurrentUserId,
+) -> CapitalVehicleFeeDefaults:
+    org_id = await _current_user_org_id(session, current_user_id)
+    row = await session.get(CapitalVehicleFeeDefaults, row_id)
+    if row is None or row.org_id != org_id:
+        raise HTTPException(status_code=404, detail="Vehicle fee defaults row not found")
+    data = payload.model_dump(exclude_unset=True)
+    if "fee_terms" in data and data["fee_terms"] is not None:
+        row.fee_terms = _json_safe(data["fee_terms"])
+    await session.flush()
+    await session.refresh(row)
+    return row
+
+
+@router.delete(
+    "/capital-vehicle-fee-defaults/{row_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+)
+async def delete_vehicle_fee_default(
+    row_id: UUID,
+    session: DBSession,
+    current_user_id: CurrentUserId,
+) -> Response:
+    org_id = await _current_user_org_id(session, current_user_id)
+    row = await session.get(CapitalVehicleFeeDefaults, row_id)
+    if row is None or row.org_id != org_id:
+        raise HTTPException(status_code=404, detail="Vehicle fee defaults row not found")
+    await session.delete(row)
+    await session.flush()
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+# ---------------------------------------------------------------------------
+# Per-(UseLine x CapitalModule) custom-Use inclusion decisions.
+# ---------------------------------------------------------------------------
+
+
+@router.get(
+    "/models/{model_id}/use-line-source-fee-basis",
+    response_model=list[UseLineSourceFeeBasisSchema],
+)
+async def list_use_line_source_fee_basis(
+    model_id: UUID,
+    session: DBSession,
+    current_user_id: CurrentUserId,
+) -> list[UseLineSourceFeeBasis]:
+    await _get_deal_model_or_404(session, model_id, user_id=current_user_id)
+    use_line_ids = (
+        await session.execute(
+            select(UseLine.id)
+            .join(Project, UseLine.project_id == Project.id)
+            .where(Project.scenario_id == model_id)
+        )
+    ).scalars().all()
+    if not use_line_ids:
+        return []
+    rows = (
+        await session.execute(
+            select(UseLineSourceFeeBasis).where(
+                UseLineSourceFeeBasis.use_line_id.in_(use_line_ids)
+            )
+        )
+    ).scalars().all()
+    return list(rows)
+
+
+@router.put(
+    "/models/{model_id}/use-line-source-fee-basis",
+    response_model=UseLineSourceFeeBasisSchema,
+)
+async def upsert_use_line_source_fee_basis(
+    model_id: UUID,
+    payload: UseLineSourceFeeBasisSchema,
+    session: DBSession,
+    current_user_id: CurrentUserId,
+) -> UseLineSourceFeeBasis:
+    await _get_deal_model_or_404(session, model_id, user_id=current_user_id)
+    # Validate FK ownership: both the UseLine (via Project) and CapitalModule
+    # must belong to this scenario.
+    use_line = await session.get(UseLine, payload.use_line_id)
+    if use_line is None:
+        raise HTTPException(status_code=404, detail="Use line not found")
+    project = await session.get(Project, use_line.project_id)
+    if project is None or project.scenario_id != model_id:
+        raise HTTPException(status_code=404, detail="Use line not found")
+    module = await session.get(CapitalModule, payload.capital_module_id)
+    if module is None or module.scenario_id != model_id:
+        raise HTTPException(status_code=404, detail="Capital module not found")
+
+    row = await session.get(
+        UseLineSourceFeeBasis,
+        (payload.use_line_id, payload.capital_module_id),
+    )
+    if row is None:
+        row = UseLineSourceFeeBasis(
+            use_line_id=payload.use_line_id,
+            capital_module_id=payload.capital_module_id,
+            included_in_basis=payload.included_in_basis,
+        )
+        session.add(row)
+    else:
+        row.included_in_basis = payload.included_in_basis
+    await session.flush()
+    return row
+
+
+@router.delete(
+    "/models/{model_id}/use-line-source-fee-basis/{use_line_id}/{capital_module_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+)
+async def delete_use_line_source_fee_basis(
+    model_id: UUID,
+    use_line_id: UUID,
+    capital_module_id: UUID,
+    session: DBSession,
+    current_user_id: CurrentUserId,
+) -> Response:
+    await _get_deal_model_or_404(session, model_id, user_id=current_user_id)
+    row = await session.get(
+        UseLineSourceFeeBasis, (use_line_id, capital_module_id)
+    )
+    if row is not None:
+        await session.delete(row)
+        await session.flush()
+    return Response(status_code=status.HTTP_204_NO_CONTENT)

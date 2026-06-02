@@ -799,6 +799,51 @@ class UseLine(Base):
     dev_fee_pct: Mapped[object | None] = mapped_column(Numeric(8, 4), nullable=True)
     # 'purchase_price' or 'tpc_excl_self'
     dev_fee_basis: Mapped[str | None] = mapped_column(String(32), nullable=True)
+    # Milestone-weighted release schedule for the Dev Fee.
+    # Schema: app.schemas.deal.DevFeeReleaseScheduleSchema —
+    # `{weights: [{milestone_id, weight}], final_holdback: {milestone_id, pct}}`.
+    # Engine reads this on the auto Dev Fee row to produce a dated receipt
+    # timeline. Empty dict = no schedule (existing close-only behavior).
+    dev_fee_release_schedule: Mapped[dict] = mapped_column(
+        JSON().with_variant(JSONB, "postgresql"),
+        nullable=False,
+        default=dict,
+        server_default="{}",
+    )
+    # Engine-written display data for the Dev Fee row. Schema:
+    # app.schemas.deal.DevFeeBindingContextSchema. Contains binding_source_id,
+    # binding_dollar_cap, headroom_by_source, funded_at_close, deferred,
+    # per_source_allocation, last_compute_signature, structural_diff_detected,
+    # pending_custom_use_decisions. Display-only — never user-written.
+    dev_fee_binding_context: Mapped[dict] = mapped_column(
+        JSON().with_variant(JSONB, "postgresql"),
+        nullable=False,
+        default=dict,
+        server_default="{}",
+    )
+    # Auto Acquisition Fee row (sibling to is_auto_dev_fee). Engine emits
+    # this row when `dev_fee_acquisition_treatment="separate_fee"` on the
+    # Dev Fee row of the same scenario. Amount = `acquisition_fee_pct *
+    # purchase_price`. Removed when treatment is changed away.
+    is_auto_acquisition_fee: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=False, server_default="false"
+    )
+    # Acquisition treatment variant — set only on the auto Dev Fee row.
+    # One of: "separate_fee", "split_rate", "excluded". Default at seed
+    # comes from settings `dev_fee_acquisition_treatment_<deal_type>`.
+    dev_fee_acquisition_treatment: Mapped[str | None] = mapped_column(
+        String(16), nullable=True
+    )
+    # Reduced Dev Fee % applied to the acquisition portion of the basis
+    # when `dev_fee_acquisition_treatment="split_rate"`. Null otherwise.
+    dev_fee_acquisition_pct: Mapped[object | None] = mapped_column(
+        Numeric(8, 4), nullable=True
+    )
+    # Acquisition Fee target %, set only on the auto Acquisition Fee row.
+    # Engine recomputes amount = pct * purchase_price each pass.
+    acquisition_fee_pct: Mapped[object | None] = mapped_column(
+        Numeric(8, 4), nullable=True
+    )
     # Engine-managed Total Finance Costs row (one per CapitalModule).
     # User edit flips this to False; delete then recompute regenerates.
     is_auto_finance_cost: Mapped[bool] = mapped_column(

@@ -543,8 +543,19 @@ async def _compute_project_cashflow(
 
     # Recompute auto Developer Fee Use Line BEFORE debt sizing so total Uses
     # reflect the current % × basis. Mutates use_lines in place and flushes.
+    # Pass capital_modules + org + milestone_dates so the multi-source binding
+    # context (per-Source allowances, funded/deferred split, release schedule,
+    # structural diff) is populated for the explainer modal. Legacy behavior
+    # is preserved when no Vehicle has fee_terms set.
     from app.engines.dev_fee import recompute_auto_dev_fee
-    await recompute_auto_dev_fee(use_lines, inputs, session)
+    await recompute_auto_dev_fee(
+        use_lines,
+        inputs,
+        session,
+        modules=capital_modules,
+        milestone_dates=milestone_dates,
+        org_id=getattr(deal_model, "org_id", None),
+    )
 
     # Resolve grant caps (source.maximum) into actual source.amount based on
     # per-Use eligibility. Must run BEFORE _auto_size_debt_modules so the
