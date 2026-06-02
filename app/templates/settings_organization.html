@@ -1096,9 +1096,15 @@
     errEl.textContent = msg;
     errEl.style.display = msg ? '' : 'none';
   }
+  // Canonical Dev Fee basis categories — must match the macro's checkbox list.
+  var SV_FT_ALL_CATEGORIES = [
+    'acquisition','hard_costs','soft_costs','financing_fees',
+    'interest_reserve','operating_reserves','developer_overhead','consulting_fees'
+  ];
   // Read Developer Fee Rule fields into a fee_terms object.
   // prefix matches the macro call ('sv-add-org' or 'sv-org'); vid is set
-  // for per-row edit forms, null for the "add" form.
+  // for per-row edit forms, null for the "add" form. UI shows inclusions
+  // (all checked = full basis); persisted as the inverse `basis_exclusions`.
   function svOrgReadFeeTerms(prefix, vid) {
     function field(suffix) {
       return vid
@@ -1112,11 +1118,12 @@
     if (puEl && puEl.value !== '') { var v = parseFloat(puEl.value); if (!isNaN(v)) out.per_unit_cap = v; }
     var acEl = field('abs-cap');
     if (acEl && acEl.value !== '') { var v = parseFloat(acEl.value); if (!isNaN(v)) out.absolute_cap = v; }
-    var excl = [];
+    var included = new Set();
     var checks = vid
-      ? document.querySelectorAll('.' + prefix + '-ft-excl[data-vid="' + vid + '"]:checked')
-      : document.querySelectorAll('input[name="' + prefix + '-ft-excl"]:checked');
-    checks.forEach(function(c) { excl.push(c.value); });
+      ? document.querySelectorAll('.' + prefix + '-ft-incl[data-vid="' + vid + '"]:checked')
+      : document.querySelectorAll('input[name="' + prefix + '-ft-incl"]:checked');
+    checks.forEach(function(c) { included.add(c.value); });
+    var excl = SV_FT_ALL_CATEGORIES.filter(function(c) { return !included.has(c); });
     if (excl.length) out.basis_exclusions = excl;
     var regEl = field('reg');
     if (regEl && regEl.checked) out.regulated = true;

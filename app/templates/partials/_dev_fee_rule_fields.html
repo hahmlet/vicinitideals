@@ -14,6 +14,9 @@
 #}
 {%- macro dev_fee_rule_fields(prefix, ft={}, vid=None) -%}
 {%- set _excl = ft.get('basis_exclusions') or [] -%}
+{#- Open the section if the preset has any rule set (caps, exclusions,
+    regulated, notes). An empty exclusion list is the default state, so it
+    doesn't count toward "has rule". -#}
 {%- set _open = ft.get('max_pct') or ft.get('per_unit_cap') or ft.get('absolute_cap') or _excl or ft.get('regulated') or ft.get('notes') -%}
 {%- set _has_vid = vid is not none -%}
 {#- Selector helpers: when vid set, use class + data-vid; else, use unique ids -#}
@@ -54,7 +57,10 @@
         </div>
       </div>
       <div>
-        <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px">Basis Exclusions</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px">
+          Basis Inclusions
+          <span style="font-weight:400;font-style:italic;margin-left:6px">— only applies when Max % of Basis is set</span>
+        </div>
         <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:4px 12px;font-size:12px">
           {%- for cat, lbl in [
             ('acquisition','Acquisition'),
@@ -68,15 +74,15 @@
           ] -%}
           <label style="display:flex;align-items:center;gap:6px">
             <input type="checkbox" value="{{ cat }}"
-                   {%- if _has_vid %} class="{{ prefix }}-ft-excl" data-vid="{{ vid }}"
-                   {%- else %} name="{{ prefix }}-ft-excl"{% endif %}
-                   {% if cat in _excl %}checked{% endif %}>
+                   {%- if _has_vid %} class="{{ prefix }}-ft-incl" data-vid="{{ vid }}"
+                   {%- else %} name="{{ prefix }}-ft-incl"{% endif %}
+                   {% if cat not in _excl %}checked{% endif %}>
             <span>{{ lbl }}</span>
           </label>
           {%- endfor %}
         </div>
         <div style="font-size:10px;color:var(--text-muted);margin-top:4px">
-          Excluded categories drop out of this Source's Dev Fee basis sum.
+          Unchecked categories drop out of this Source's Dev Fee basis sum.
         </div>
       </div>
       <label style="display:flex;align-items:center;gap:6px;font-size:12px">
