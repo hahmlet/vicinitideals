@@ -404,7 +404,7 @@ There are **four** economically distinct ways a loan can handle interest before 
 |---|---|---|---|
 | `io_only` (True IO) | Yes — cash paid monthly | Flat (= base cost) | `f_io = 0` |
 | `interest_reserve` | No — pre-funded pool | Base cost only | `f_io = rate/12 × (N+1)/2` |
-| `capitalized_interest` | No — PIK accrual | Base + accrued interest | `f_io = rate/12 × N` |
+| `capitalized_interest` | No — PIK accrual | Base + accrued interest | `f_io = (1+rate/1200)^N − 1` |
 | `pi` | Yes — amortized | Decreasing | N/A (standard amort) |
 
 **Why four, not three?** Industry references (Argus, REFM, FDIC handbook) consistently separate True IO from Interest Reserve. Our engine formerly conflated them; Phase 1 of the carry-type rewrite (April 2026) split them to match practice.
@@ -417,7 +417,7 @@ For `N = 12`, that is `rate/12 × 6.5 = 0.5417 × rate`. Compared to the naive 5
 
 **Day-precise interest (Phase H, May 2026).** The statistical `(N+1)/2` and `N` factors above are used for the sizing solve (principal calculation). Monthly cashflow line items use `period_interest_months()` from `app/engines/interest.py`, which applies actual day-count conventions (`actual_360` default) for precise period-by-period interest accrual. The sizing factors remain the same algebraically; only the period-level cash flows gain day-count precision.
 
-**The full-balance factor for Capitalized Interest.** Capitalized interest (PIK) accrues on the full commitment from day one — there is no "average draw", because the lender imputes full balance. The factor is `rate/12 × N`.
+**The full-balance factor for Capitalized Interest.** Capitalized interest (PIK) accrues on the full commitment from day one — there is no "average draw", because the lender imputes full balance. The factor is `(1+rate/1200)^N − 1` (compound monthly accrual; June 2026). Prior versions used `rate/12 × N` (simple interest), which underestimates carry by ~3–4% on 12-month windows and more on longer windows. `draw_type` does not affect CI sizing — compound full-balance accrual applies unconditionally.
 
 **Override: `source.draw_type` decouples carry type from draw schedule (May 2026).** The defaults above assume the conventional pairing — Interest Reserve goes with construction-style monthly draws (`(N+1)/2`); Capitalized Interest goes with a fully-drawn balance (`N`). Real products break this pairing: a tax-exempt bond carrying an Interest Reserve is *fully drawn* into escrow at close, so interest accrues on the full balance even though the carry type is IR.
 
@@ -444,8 +444,8 @@ elif _ft == "construction_loan":
                  * (Decimal(_n + 1) / Decimal("2"))
                  ) if (_r > ZERO and _n > 0) else ZERO
     elif _cl_ct == "capitalized_interest":
-        _io_f = (_r / HUNDRED / Decimal("12") * Decimal(_n)
-                 ) if (_r > ZERO and _n > 0) else ZERO
+        # compound: _io_f = factor-1 → _div = 2-factor → principal = funded/(2-factor)
+        _io_f = (ONE + _r / Decimal("1200")) ** _n - ONE
     else:  # io_only
         _io_f = ZERO
     _div = ONE - _io_f
@@ -454,9 +454,13 @@ elif _ft == "construction_loan":
 
 > **April 2026 change:** `constr_months_total` was replaced by `_loan_pre_op_months(_m)` which computes month count within each loan's `[active_phase_start, active_phase_end)` window. See §2.8 for details.
 
-**Derivation of the principal solve.** We want the principal `P` to cover both base costs and interest:
-> `P = base_costs + interest_consumed = base_costs + P × f_io`
-> Solving for `P`: `P × (1 − f_io) = base_costs`, so `P = base_costs / (1 − f_io)`.
+**Derivation of the principal solve.** For IR/IO where `interest = P × f_io` (linear in P):
+> `P = base_costs + P × f_io` → `P = base_costs / (1 − f_io)`
+
+For CI where `interest = P × (F−1)` with `F = (1+r/1200)^N` (also linear in P):
+> `P = base_costs + P × (F−1)` → `P × (2−F) = base_costs` → `P = base_costs / (2−F)`
+
+In both cases `_div = 1 − f_io` so the same `_principal = funded / _div` line produces the right answer when `f_io` is set correctly for each carry type. CI sets `f_io = F−1` so that `_div = 2−F`.
 
 This is self-consistent: the interest amount `P − base_costs = P × f_io / (1 − f_io) × (1 − f_io) / 1 = base × f_io / (1 − f_io)`.
 
@@ -3448,7 +3452,7 @@ The draw schedule engine has two interest models:
 
 | Model | When | Behavior |
 |---|---|---|
-| Self-referential capitalized | `funded_carry=False` and `annual_interest_rate > 0` | `D = (uses + payoff + B × r × n) / (1 − r × n)` — draw size grows to fund its own carry. |
+| Self-referential capitalized | `funded_carry=False` and `annual_interest_rate > 0` | `D = (uses + payoff + B × (F−1)) / (2−F)` where `F = (1+r)^n` — compound interest version. For `n=1` (monthly draws) this is algebraically identical to the prior simple-interest formula `(uses + B×r)/(1−r)`. Implemented in `compound_draw_sizing()` in `app/engines/period_engine.py`. |
 | Funded-carry pool | `funded_carry=True` | Carry on this loan is paid from a pre-funded Interest Reserve UseLine. Draw = `uses + payoff` only; `carry_cost = 0` to avoid double-counting (the IR pool already drained for the same interest). |
 
 `app/api/routers/ui.py` builds `SourceDef.funded_carry = True` when the `CapitalModule.carry.schedule` contains a phase with `carry_type="interest_reserve"`. Without this flag, the draw schedule and the cashflow engine would charge the same loan interest twice (once via capitalization in `_calc_source_draws`, once via the IR pool drawdown in `_compute_project_cashflow`).
@@ -3493,6 +3497,7 @@ This is a pilot-mode lever: ship to one production deal first, verify, then eith
 
 | File | Role |
 |---|---|
+| `app/engines/period_engine.py` | `run_period_engine()`, `compound_draw_sizing()`, `compound_accrual()` — canonical carry math for all 4 carry types; IR pool tracking; bank balance accounting |
 | `app/engines/bank_account_extractor.py` | `extract_full_window_proof`, `_RESERVE_LABELS` |
 | `app/engines/draw_schedule.py` | `_simulate_cash_balance`, `_calc_source_draws`, `SourceDef.funded_carry` |
 | `app/engines/cashflow.py` | `_run_bank_account_proof`, `_bank_account_reserve_active_for`, Cash Flow Support emission |
