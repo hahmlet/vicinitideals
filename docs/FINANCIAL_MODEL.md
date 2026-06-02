@@ -3497,3 +3497,129 @@ This is a pilot-mode lever: ship to one production deal first, verify, then eith
 - `tests/engines/test_cashflow_bank_account_wiring.py` — allowlist gate (4 tests covering all precedence cases)
 - `tests/engines/test_bank_account_extractor.py::test_cash_flow_support_reserve_counts_toward_opening_cash` — convergence regression
 
+## Appendix H: Multi-Source Developer Fee (June 2026)
+
+Pre-0103, Developer Fee was a single auto-managed UseLine
+(`is_auto_dev_fee=True`) with one global basis and one global %. In any deal
+with mixed capital — regulated/affordable Sources (LIHTC, tax-exempt bonds,
+HUD, HFA) alongside private debt or equity — each Source imposes a
+different rule about what TPC means and what fee it allows. The binding fee
+is the minimum allowable across all Sources, and which Source binds drives
+sponsor economics and deferred-fee sizing.
+
+Migration 0103 added the four-layer configuration hierarchy that supports
+this, the multi-source engine that computes per-Vehicle allowances and
+binding constraint, the funded-vs-deferred split, the milestone-based
+release schedule, and three acquisition treatments.
+
+### H.1 Four-layer configuration
+
+| Layer | Source of truth |
+|---|---|
+| Org/User defaults | `org_settings` / `user_settings` keyed by deal type — `dev_fee_pct_*`, `dev_fee_basis_*`, `dev_fee_acquisition_treatment_*`, `dev_fee_acquisition_pct_*`, `acquisition_fee_pct_*`, `dev_fee_final_holdback_pct_*`, `dev_fee_milestone_weights_*` |
+| Source Vehicle Type defaults | `capital_vehicle_fee_defaults` table (org-scoped registry keyed on `vehicle_type`, `equity_role`) — ships empty; org admin populates |
+| Source Vehicle row (`CapitalModule`) | `fee_terms` JSONB + `fee_terms_inherited_from_type` flag — engine resolves live defaults when flag is True, instance overrides when False |
+| Per-(UseLine × Vehicle) custom-Use override | `use_line_source_fee_basis` join table — required for any UseLine whose `cost_category` is outside the eight standard categories |
+
+### H.2 Standard cost categories
+
+Used by `basis_exclusions` on each Vehicle's `fee_terms`:
+
+`acquisition`, `hard_costs`, `soft_costs`, `financing_fees`,
+`interest_reserve`, `operating_reserves`, `developer_overhead`,
+`consulting_fees`.
+
+UseLines outside this set are treated as custom Uses. The engine reads
+`use_line_source_fee_basis` for `(use_line_id, capital_module_id)` to
+decide inclusion; if missing, the pair is flagged as a pending decision
+and conservatively excluded from the basis.
+
+### H.3 Binding constraint reducer
+
+For each Vehicle with at least one cap set on `fee_terms`
+(`max_pct` / `per_unit_cap` / `absolute_cap`):
+
+`allowable = min(max_pct × basis, per_unit_cap × units, absolute_cap)`
+
+where `basis = sum(use_lines included by this Vehicle's basis_exclusions
+and use_line_source_fee_basis)`.
+
+Engine takes the minimum allowable across all constrained Vehicles. This
+is the binding cap. **Elected fee always wins**: the engine never
+overrides the user-elected fee. Overage is reported in
+`UseLine.dev_fee_binding_context` and surfaced in the explainer modal.
+
+### H.4 Funded vs deferred split
+
+After the elected fee is fixed, the engine allocates greedily to
+constrained Vehicles (capacity-ordered) up to each Vehicle's allowance.
+Remainder = deferred. V1 keeps the full elected fee on the auto Dev Fee
+UseLine `amount` (today's Uses treatment); the funded/deferred split is
+reported in the binding context for display and is **informational only**
+in the cashflow engine today. Subordinate-claim operating-cash
+consumption of the deferred portion is a Phase 3b follow-up.
+
+### H.5 Milestone release schedule
+
+`UseLine.dev_fee_release_schedule` JSONB carries
+`{weights: [{milestone_id, weight}], final_holdback: {milestone_id, pct}}`.
+Weight sum + holdback pct must equal 1.0. Engine emits a list of dated
+receipts (`milestone_id`, `date`, `weight`, `amount`) in the binding
+context. Holdback releases at its assigned milestone.
+
+### H.6 Acquisition treatments
+
+`UseLine.dev_fee_acquisition_treatment` ∈ `{excluded, split_rate,
+separate_fee, NULL}`.
+
+| Treatment | Behavior |
+|---|---|
+| `excluded` | Standard Dev Fee on TPC excl. acquisition. No Acquisition Fee row. |
+| `split_rate` | Single auto Dev Fee row with basis partitioned: `dev_fee_pct × construction_basis + dev_fee_acquisition_pct × acquisition_basis`. Each half honors per-Vehicle `basis_exclusions`. |
+| `separate_fee` | Standard Dev Fee on construction basis PLUS a parallel auto Acquisition Fee UseLine (`is_auto_acquisition_fee=True`) where `amount = acquisition_fee_pct × purchase_price`. Both fees independently capped by each Vehicle's `fee_terms`; results stored side by side in `dev_fee_binding_context.acquisition_fee_context`. |
+| `NULL` (legacy) | Pre-0103 behavior — `tpc_excl_self` sums ALL non-self UseLines, including acquisition. Preserved for backward compat. |
+
+Defaults by deal type: `acquisition → separate_fee`,
+`value_add → split_rate`, `conversion → excluded`,
+`new_construction → excluded`.
+
+### H.7 Structural diff signal
+
+Each compute hashes `(sorted CapitalModule IDs, sorted non-auto UseLine
+IDs)` and writes it to
+`UseLine.dev_fee_binding_context.last_compute_signature`. Next compute
+compares against the previous signature; mismatch sets
+`structural_diff_detected=True`. The UI auto-opens the explainer modal
+with a warning banner so the user reconfirms the fee treatment when the
+capital stack shape changes. Pure amount edits do not trip the diff.
+
+### H.8 Files involved
+
+| File | Role |
+|---|---|
+| `alembic/versions/0103_dev_fee_multi_source.py` | Schema migration |
+| `app/models/capital.py` | `CapitalModule.fee_terms`, `CapitalVehicleFeeDefaults`, `UseLineSourceFeeBasis` |
+| `app/models/deal.py` | `UseLine.dev_fee_release_schedule`, `dev_fee_binding_context`, `is_auto_acquisition_fee`, `dev_fee_acquisition_treatment`, `dev_fee_acquisition_pct`, `acquisition_fee_pct` |
+| `app/schemas/capital.py` | `CapitalFeeTermsSchema`, `CapitalVehicleFeeDefaults*` CRUD |
+| `app/schemas/deal.py` | `DevFeeReleaseScheduleSchema`, `DevFeeBindingContextSchema`, `UseLineSourceFeeBasisSchema` |
+| `app/engines/dev_fee.py` | Multi-source pipeline (binding constraint, funded/deferred, release, structural diff) |
+| `app/engines/cashflow.py` | Call site passes `modules`, `org_id`, `milestone_dates` |
+| `app/settings/defaults.py` + `resolver.py` | 20 new keys + extended `resolve_dev_fee_config` |
+| `app/api/routers/capital.py` | `/capital-vehicle-fee-defaults` CRUD, `/models/{id}/use-line-source-fee-basis` CRUD |
+| `app/api/routers/ui.py` | `GET /ui/models/{id}/dev-fee/explainer` HTMX route |
+| `app/templates/partials/dev_fee_explainer_modal.html` | Explainer modal partial |
+| `tests/engines/test_dev_fee_multi_source.py` | 12 priority tests |
+
+### H.9 Phase 2 / follow-up scope
+
+Not in V1, planned next:
+
+- Subordinate operating-cash consumption of the deferred Dev Fee portion
+  (sequenced post debt service, ahead of equity distributions, with
+  explicit ordering vs Cash Flow Support Reserve).
+- Source Vehicle drawer "Developer Fee Rule" section with inheritance
+  affordance.
+- UseLine drawer "Release Schedule" editor.
+- Capital Vehicle Defaults Org settings page.
+- Risk / tax layers and construction-fund reinvestment module.
+
