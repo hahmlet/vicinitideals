@@ -1595,7 +1595,12 @@ function ulTimingChanged(val) {
   </div>
   {% endif %}
 
-  {# ── Developer Fee Rule ──────────────────────────────────────────────── #}
+  {# ── Developer Fee Rule (per-deal override of the linked preset) ──────── #}
+  {# `fee_terms_inherited_from_type=True` (legacy column name) means "use   #}
+  {# the linked SourceVehicle preset's fee_terms"; False means "this row's #}
+  {# instance fee_terms column wins". Hidden sentinel `fee_terms_section`   #}
+  {# tells the save handler this UI block was present in the submitted     #}
+  {# form so it knows to touch the columns. #}
   {%- set _ft = existing.fee_terms or {} -%}
   {%- set _ft_inh = existing.fee_terms_inherited_from_type if existing.fee_terms_inherited_from_type is not none else true -%}
   {%- set _ft_excl = _ft.get('basis_exclusions') or [] -%}
@@ -1614,7 +1619,7 @@ function ulTimingChanged(val) {
           <input type="checkbox" name="fee_terms_inherited" id="ft-inh-{{ existing.id }}"
                  {% if _ft_inh %}checked{% endif %}
                  onchange="(function(cb){var box=document.getElementById('ft-override-{{ existing.id }}');if(box)box.style.display=cb.checked?'none':'block';})(this)">
-          <span>Inherit defaults from this Vehicle Type</span>
+          <span>Use the linked preset's rule (uncheck to override for this Source only)</span>
         </label>
         <div id="ft-override-{{ existing.id }}" style="display:{{ 'none' if _ft_inh else 'block' }}">
           <div class="form-row" style="margin-bottom:10px">
@@ -1638,27 +1643,24 @@ function ulTimingChanged(val) {
             </div>
           </div>
           <div class="form-field" style="margin-bottom:10px">
-            <label class="form-label" style="font-size:11px">Basis Exclusions</label>
+            <label class="form-label" style="font-size:11px">
+              Basis Inclusions
+              <span style="font-weight:400;font-style:italic;margin-left:6px;color:var(--text-muted)">— only applies when Max % of Basis is set</span>
+            </label>
             <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 14px;font-size:12px">
-              {% for cat,label in [
-                ('acquisition','Acquisition'),
-                ('hard_costs','Hard Costs'),
-                ('soft_costs','Soft Costs'),
-                ('financing_fees','Financing Fees'),
-                ('interest_reserve','Interest Reserve'),
-                ('operating_reserves','Operating Reserves'),
-                ('developer_overhead','Developer Overhead'),
-                ('consulting_fees','Consulting Fees'),
-              ] %}
+              {% for cat, label in basis_buckets %}
               <label style="display:flex;align-items:center;gap:6px">
-                <input type="checkbox" name="fee_terms_basis_exclusions[]" value="{{ cat }}"
-                       {% if cat in _ft_excl %}checked{% endif %}>
+                <input type="checkbox" name="fee_terms_basis_inclusions[]" value="{{ cat }}"
+                       {% if cat not in _ft_excl %}checked{% endif %}>
                 <span>{{ label }}</span>
               </label>
               {% endfor %}
             </div>
             <div class="form-hint" style="font-size:11px;color:var(--text-muted);margin-top:4px">
-              Excluded categories drop out of this Source's Dev Fee basis sum.
+              Unchecked buckets drop out of this Source's Dev Fee basis sum.
+              Bucket follows the engine-stamped classification — renaming
+              a line item (e.g. "Interest Reserve" → "IR — Senior") does
+              not break this setting.
             </div>
           </div>
           <label style="display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:13px">

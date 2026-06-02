@@ -45,6 +45,7 @@ from app.models.scraped_listing import ScrapedListing
 from app.models.realie_usage import RealieUsage
 from app.models.settings import UserSetting
 from app.scrapers.realie import _current_month
+from app.engines.dev_fee import BASIS_BUCKETS, BASIS_BUCKET_KEYS
 from app.settings.resolver import resolve_dev_fee_config
 
 router = APIRouter(include_in_schema=False)
@@ -7090,7 +7091,12 @@ async def handle_form_create_or_update(
                 _ft_dict["per_unit_cap"] = float(_puc)
             if (_ac := _fd(form.get("fee_terms_absolute_cap"))) is not None:
                 _ft_dict["absolute_cap"] = float(_ac)
-            _excl = [x.strip() for x in form.getlist("fee_terms_basis_exclusions[]") if x.strip()]
+            # UI shows inclusions (all-checked default = full basis); persist
+            # as the inverse `basis_exclusions` list of bucket keys the
+            # engine reads. Only writes the field when at least one bucket
+            # is excluded — keeps the JSONB minimal.
+            _incl = {x.strip() for x in form.getlist("fee_terms_basis_inclusions[]") if x.strip()}
+            _excl = sorted(BASIS_BUCKET_KEYS - _incl)
             if _excl:
                 _ft_dict["basis_exclusions"] = _excl
             if form.get("fee_terms_regulated") == "on":
@@ -13819,6 +13825,7 @@ async def model_builder_line_form(
         "eligibility_uses": _eligibility_uses,
         "sibling_capital_modules": _sibling_capital_modules,
         "scenario_milestones": _scenario_milestones,
+        "basis_buckets": BASIS_BUCKETS,
     })
 
 
