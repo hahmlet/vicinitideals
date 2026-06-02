@@ -35,6 +35,7 @@ class VehicleType(str, enum.Enum):
     forgivable_loan = "forgivable_loan"
     grant = "grant"
     float_earnings = "float_earnings"
+    deferred_developer_fee = "deferred_developer_fee"
 
 
 class EquityRole(str, enum.Enum):

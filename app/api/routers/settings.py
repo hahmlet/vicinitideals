@@ -29,7 +29,7 @@ from app.settings.resolver import resolve_all_defaults, resolve_default, resolve
 
 # Canonical SourceVehicle.vehicle_type values. Legacy `funder_type` strings
 # (senior_debt, mezzanine_debt, bridge, etc.) are collapsed at the boundary.
-_CANONICAL_VEHICLE_TYPES = {"equity", "debt", "forgivable_loan", "grant"}
+_CANONICAL_VEHICLE_TYPES = {"equity", "debt", "forgivable_loan", "grant", "deferred_developer_fee"}
 _LEGACY_TO_CANONICAL: dict[str, str] = {
     "permanent_debt": "debt",
     "senior_debt": "debt",
@@ -580,6 +580,8 @@ def _sv_body_to_jsonb(
         source["draw_active_from_milestone"] = body["draw_active_from_milestone"]
     if body.get("draw_active_from_offset_days") is not None:
         source["draw_active_from_offset_days"] = int(body["draw_active_from_offset_days"])
+    if body.get("defer_pct_of_dev_fee") is not None:
+        source["defer_pct_of_dev_fee"] = float(body["defer_pct_of_dev_fee"])
 
     carry: dict = {}
     carry_schedule = body.get("carry_schedule")

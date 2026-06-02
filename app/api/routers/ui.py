@@ -6783,6 +6783,10 @@ async def handle_form_create_or_update(
                                 _hb["milestone_key"] = _hold_ms
                             _sched["final_holdback"] = _hb
                         row.dev_fee_release_schedule = _sched
+                elif row.is_auto_acquisition_fee:
+                    _acq_pct_raw = _fd(form.get("acquisition_fee_pct"))
+                    if _acq_pct_raw is not None:
+                        row.acquisition_fee_pct = _acq_pct_raw
                 else:
                     # User edit on an auto Total Finance Costs row turns off
                     # the auto flag so engine stops recomputing.  User can
@@ -13831,6 +13835,20 @@ async def model_builder_line_form(
                 "milestone_type": str(_ms.milestone_type or "").replace("MilestoneType.", ""),
             })
 
+    has_acquisition_costs = False
+    if type in ("use_lines", "uses") and existing is not None:
+        _acq_count = (await session.execute(
+            select(func.count()).select_from(UseLine)
+            .join(Project, UseLine.project_id == Project.id)
+            .where(
+                Project.scenario_id == model_id,
+                UseLine.phase == "acquisition",
+                UseLine.is_auto_dev_fee == False,  # noqa: E712
+                UseLine.is_auto_acquisition_fee == False,  # noqa: E712
+            )
+        )).scalar_one()
+        has_acquisition_costs = _acq_count > 0
+
     return templates.TemplateResponse(request, "partials/model_builder_line_form.html", {
         "model": model,
         "form_type": type,
@@ -13859,6 +13877,7 @@ async def model_builder_line_form(
         "sibling_capital_modules": _sibling_capital_modules,
         "scenario_milestones": _scenario_milestones,
         "basis_buckets": BASIS_BUCKETS,
+        "has_acquisition_costs": has_acquisition_costs,
     })
 
 
@@ -13949,6 +13968,7 @@ _VEHICLE_TYPE_LABELS = {
     "debt": "Debt",
     "forgivable_loan": "Forgivable Loan",
     "grant": "Grant",
+    "deferred_developer_fee": "Deferred Developer Fee",
 }
 
 

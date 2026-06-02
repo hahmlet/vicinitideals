@@ -19,6 +19,7 @@
 {% if existing %}
 {# ── Edit mode: flat form ── #}
 {%- set _is_auto_devfee = existing.is_auto_dev_fee -%}
+{%- set _is_auto_acq_fee = existing.is_auto_acquisition_fee -%}
 <form hx-put="/ui/forms/{{ model.id }}/use-lines/{{ existing.id }}"
       hx-target="#module-panel-content"
       hx-swap="innerHTML"
@@ -54,45 +55,23 @@
   </div>
   <input type="hidden" name="dev_fee_basis" value="tpc_excl_self">
 
-  {# ── Acquisition Treatment ─────────────────────────────────────────── #}
-  {%- set _at = existing.dev_fee_acquisition_treatment or '' -%}
+  {# ── Acquisition Fee (auto-detected: shown only when acquisition-phase cost lines exist) ── #}
+  <input type="hidden" name="dev_fee_acquisition_treatment" value="{{ 'separate_fee' if has_acquisition_costs else '' }}">
+  {% if has_acquisition_costs %}
   <div class="form-field" style="margin-bottom:8px">
-    <label class="form-label">Acquisition Treatment</label>
-    <select class="form-select" name="dev_fee_acquisition_treatment" id="dfee-acq-treatment"
-            onchange="(function(s){
-              var split=document.getElementById('dfee-acq-split');
-              var sep=document.getElementById('dfee-acq-sep');
-              if(split) split.style.display = s.value==='split_rate' ? 'block':'none';
-              if(sep)   sep.style.display   = s.value==='separate_fee' ? 'block':'none';
-            })(this)">
-      <option value="" {% if not _at %}selected{% endif %}>Legacy (no acquisition adjustment)</option>
-      <option value="excluded"     {% if _at=='excluded' %}selected{% endif %}>Excluded — drop acquisition from basis</option>
-      <option value="split_rate"   {% if _at=='split_rate' %}selected{% endif %}>Split rate — reduced % on acquisition</option>
-      <option value="separate_fee" {% if _at=='separate_fee' %}selected{% endif %}>Separate fee — distinct Acquisition Fee row</option>
-    </select>
-    <div class="form-hint">Controls how acquisition cost factors into the fee.</div>
-  </div>
-  <div id="dfee-acq-split" class="form-field" style="margin-bottom:8px;display:{{ 'block' if _at=='split_rate' else 'none' }}">
-    <label class="form-label">Acquisition % (split-rate)</label>
-    <input class="form-input" type="number" name="dev_fee_acquisition_pct" step="0.1" min="0" max="100"
-           value="{{ '%.2f' | format(existing.dev_fee_acquisition_pct | float) if existing.dev_fee_acquisition_pct is not none else '' }}"
-           placeholder="e.g. 1.5">
-    <div class="form-hint">Reduced % applied to acquisition cost; main % stays on the rest of the basis.</div>
-  </div>
-  <div id="dfee-acq-sep" class="form-field" style="margin-bottom:8px;display:{{ 'block' if _at=='separate_fee' else 'none' }}">
-    <label class="form-label">Acquisition Fee %</label>
+    <label class="form-label">Acquisition Dev Fee %</label>
     {%- set _acq_pct_existing = existing.acquisition_fee_pct -%}
     <input class="form-input" type="number" name="acquisition_fee_pct" step="0.1" min="0" max="100"
            value="{{ '%.2f' | format(_acq_pct_existing | float) if _acq_pct_existing is not none else '' }}"
-           placeholder="e.g. 1.0">
-    <div class="form-hint">Creates a parallel Acquisition Fee row = % × purchase price.</div>
+           placeholder="e.g. 5.0">
+    <div class="form-hint">% × acquisition cost — auto-creates Acquisition Developer Fee row, paid 100% at Close.</div>
   </div>
+  {% endif %}
 
   {# ── Release Schedule ──────────────────────────────────────────────── #}
   {%- set _sched = existing.dev_fee_release_schedule or {} -%}
   {%- set _sched_weights = _sched.get('weights') or [] -%}
-  {%- set _sched_holdback = _sched.get('final_holdback') or {} -%}
-  {%- set _sched_open = _sched_weights or _sched_holdback -%}
+  {%- set _sched_open = _sched_weights | length > 0 -%}
   <div class="form-section" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border)">
     <input type="hidden" name="dev_fee_release_section" value="1">
     <details {% if _sched_open %}open{% endif %} style="margin:0">
@@ -164,23 +143,6 @@
         </div>
         <button type="button" class="btn btn-secondary" style="padding:4px 10px;font-size:12px"
                 onclick="dfeeAddReleaseRow()">+ Add milestone</button>
-        <div class="form-row" style="margin-top:14px">
-          <div class="form-field">
-            <label class="form-label" style="font-size:11px">Final Holdback %</label>
-            <input class="form-input" type="number" name="final_holdback_pct" step="0.1" min="0" max="100"
-                   value="{{ _sched_holdback.get('pct') if _sched_holdback.get('pct') is not none else '' }}"
-                   placeholder="e.g. 10">
-          </div>
-          <div class="form-field">
-            <label class="form-label" style="font-size:11px">Holdback Released At</label>
-            <select class="form-select" name="final_holdback_milestone_key">
-              <option value="">— Select milestone —</option>
-              {% for ms in milestones_dated_ds if ms.date %}
-              <option value="{{ ms.key }}" {% if ms.key == _sched_holdback.get('milestone_key') %}selected{% endif %}>{{ ms.label }}</option>
-              {% endfor %}
-            </select>
-          </div>
-        </div>
       </div>
     </details>
   </div>
@@ -214,6 +176,35 @@ function dfeeAddReleaseRow() {
   box.appendChild(clone);
 }
 </script>
+{% elif _is_auto_acq_fee %}
+{# ── Auto Acquisition Developer Fee: % only, paid 100% at Close ── #}
+  <div style="background:#fefce8;border:1px solid #fde68a;border-radius:6px;padding:10px 12px;margin-bottom:14px;font-size:12px;color:#78350f">
+    <strong>Acquisition Developer Fee.</strong> Paid 100% at Close. The $ amount is recomputed each model pass from the % below × acquisition cost.
+  </div>
+  <input type="hidden" name="label" value="{{ existing.label }}">
+  <input type="hidden" name="cost_category" value="{{ existing.cost_category or 'soft' }}">
+  <input type="hidden" name="timing_type" value="{{ (existing.timing_type | string).replace('UseLineTiming.','') }}">
+  <input type="hidden" name="milestone_key" value="{{ existing.milestone_key or '' }}">
+  <div class="form-row" style="margin-bottom:8px">
+    <div class="form-field">
+      <label class="form-label">Acquisition Dev Fee %</label>
+      <input class="form-input" type="number" name="acquisition_fee_pct" step="0.1" min="0" max="100"
+             value="{{ '%.2f' | format(existing.acquisition_fee_pct | float) if existing.acquisition_fee_pct is not none else '' }}"
+             placeholder="e.g. 5.0">
+    </div>
+    <div class="form-field">
+      <label class="form-label">Current Amount</label>
+      <input class="form-input" type="text" readonly disabled
+             value="{{ existing.amount | currency }}"
+             style="background:#f3f4f6;color:#6b7280;cursor:not-allowed">
+      <div class="form-hint">Auto-calculated. Recomputes on save.</div>
+    </div>
+  </div>
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <button type="button" class="btn btn-secondary" onclick="closeDrawer('line-item-drawer')">Cancel</button>
+  </div>
+</form>
 {% else %}
   <div class="form-field">
     <label class="form-label">Label</label>
