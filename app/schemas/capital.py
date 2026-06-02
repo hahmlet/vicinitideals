@@ -89,6 +89,25 @@ class CapitalSourceSchema(BaseModel):
     # None — falls back to carry-type convention: IR→draw_down, CI→fully_drawn.
     draw_type: str | None = None
 
+    # ── Float-earnings (Day-1-draw deposit interest) fields ──────────────
+    # On a *parent* source (vehicle_type debt/forgivable_loan/grant with
+    # draw_type="fully_drawn"): user toggle that opts the source's drawn-but-
+    # unspent balance into Treasury-yield earnings modeling. Off by default.
+    balance_earns_interest: bool | None = None
+
+    # The remaining fields apply only to sources whose vehicle_type ==
+    # "float_earnings". They are zero-impact on other source types.
+    parent_module_id: uuid.UUID | None = None
+    yield_pct: Decimal | None = None  # annual %, user-entered
+    # User-chosen split of total earnings. Must sum to 100.
+    # Phase A constraint: dev_fee split forced to 0 until Dev Fee balance
+    # modeling lands (see developer-fee-multi-source plan).
+    dev_fee_split_pct: Decimal | None = None
+    debt_paydown_split_pct: Decimal | None = None
+    # Where/when the paydown event hits.
+    paydown_debt_module_id: uuid.UUID | None = None
+    paydown_milestone_id: uuid.UUID | None = None
+
 
 class CapitalCarrySchema(BaseModel):
     """Carry config for a CapitalModule.

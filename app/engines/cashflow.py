@@ -662,6 +662,53 @@ async def _compute_project_cashflow(
         }
         break  # only one perm takeout per deal
 
+    # ── Float-earnings on Day-1 draws ────────────────────────────────────
+    # Treasury yield income on parent sources that draw 100% at start
+    # (typically tax-exempt construction bonds). Computed AFTER auto-sizing
+    # so reserves (IR / OR / LUR / CFSR) stay sized as if this float income
+    # doesn't exist — see docs/feature-plans/interest-earned-on-day-1-draws.md
+    # for the conservative reserve invariant.
+    from app.engines.float_earnings import compute_scenario_float_earnings
+    from app.engines.debt_paydown import (
+        collect_paydown_events,
+        events_at_period,
+        label_for_event,
+        resolve_milestone_period,
+    )
+
+    _float_constr_months = sum(
+        p.months for p in phases if p.period_type in _CONSTRUCTION_PERIOD_TYPES
+    )
+    _float_results = compute_scenario_float_earnings(
+        capital_modules=capital_modules,
+        milestones=orm_milestones,
+        construction_months=_float_constr_months,
+    )
+    _float_warnings: list[str] = [w for r in _float_results for w in r.warnings]
+    _paydown_events = collect_paydown_events(_float_results)
+
+    # Pre-resolve paydown firing periods + per-debt paydown totals once,
+    # so the per-month loop only does dict lookups.
+    _paydown_period_to_event_idx: dict[int, list[int]] = {}
+    _paydown_total_by_debt_id: dict[UUID, Decimal] = {}
+    for _ev_idx, _ev in enumerate(_paydown_events):
+        _ev_period = resolve_milestone_period(
+            milestone_id=_ev.milestone_id,
+            milestone_map=milestone_map,
+            milestone_month_map=_milestone_month_map,
+        )
+        if _ev_period is None:
+            _float_warnings.append(
+                f"Float-earnings paydown: milestone for "
+                f"'{label_for_event(event=_ev, capital_modules=capital_modules)}' "
+                f"could not be resolved to a cashflow month — paydown skipped."
+            )
+            continue
+        _paydown_period_to_event_idx.setdefault(_ev_period, []).append(_ev_idx)
+        _paydown_total_by_debt_id[_ev.debt_module_id] = (
+            _paydown_total_by_debt_id.get(_ev.debt_module_id, ZERO) + _ev.amount
+        )
+
     # Output purge happens once at the outer compute_cash_flows wrapper
     # before the per-project loop — not per-project here.
     cash_flow_rows: list[CashFlow] = []
@@ -813,6 +860,30 @@ async def _compute_project_cashflow(
                     )
                     _refi_injected = True
 
+            # ── Inject float-earnings paydown events (informational) ─────
+            # Float earnings come from a parent source's drawn-but-unspent
+            # T-bond balance; they are NOT operating cash. The paydown
+            # event records the reduction to the target debt module's
+            # outstanding balance (used by `_balloon_balance` below to
+            # shrink the exit payoff). `net_cash_flow` is NOT adjusted so
+            # the bank-account proof remains conservative.
+            if period in _paydown_period_to_event_idx:
+                for _pd_ev in events_at_period(
+                    events=_paydown_events,
+                    period_to_event_idx=_paydown_period_to_event_idx,
+                    period=period,
+                ):
+                    period_result["line_items"].append(_expense_line_item(
+                        deal_uuid, period,
+                        LineItemCategory.capital_event,
+                        label_for_event(event=_pd_ev, capital_modules=capital_modules),
+                        _pd_ev.amount,
+                        {"phase": phase.period_type.value,
+                         "direction": "informational",
+                         "detail": "float_paydown",
+                         "debt_module_id": str(_pd_ev.debt_module_id)},
+                    ))
+
             # ── Inject prepay penalties at exit ───────────��────────────────
             if phase.period_type == PeriodType.exit and month_index == 0:
                 for _pp_cm in capital_modules:
@@ -821,6 +892,14 @@ async def _compute_project_cashflow(
                     if _pp_pct <= ZERO or _pp_src.get("is_bridge"):
                         continue
                     _pp_amt = _to_decimal(_pp_src.get("amount"))
+                    # Voluntary float-earnings paydowns reduce the effective
+                    # principal driving the balloon and prepay calc. The cash
+                    # event was already injected above (informational); here
+                    # we reduce the basis so prepay penalty reflects the
+                    # smaller outstanding balance at payoff.
+                    _pp_paydown = _paydown_total_by_debt_id.get(_pp_cm.id, ZERO)
+                    if _pp_paydown > ZERO:
+                        _pp_amt = _pp_amt - _pp_paydown
                     if _pp_amt <= ZERO:
                         continue
                     _pp_carry = _pp_cm.carry or {}
@@ -1113,6 +1192,43 @@ async def _compute_project_cashflow(
     # write — None when no proof window exists — so the column clears
     # stale data on deals that no longer model an operating phase.
     outputs.bank_account_proof = bank_account_proof
+
+    # Persist float-earnings results so the UI can render the period-level
+    # balance schedule + warnings without re-running compute. Always write —
+    # None when no float_earnings sources exist — so stale data clears.
+    if _float_results or _float_warnings:
+        outputs.float_earnings_series = {
+            "sources": [
+                {
+                    "float_source_id": str(r.float_source_id),
+                    "parent_module_id": str(r.parent_module_id) if r.parent_module_id else None,
+                    "total_earnings": float(r.total_earnings),
+                    "paydown_amount": float(r.paydown_amount),
+                    "dev_fee_topup_amount": float(r.dev_fee_topup_amount),
+                    "paydown_debt_module_id": str(r.paydown_debt_module_id) if r.paydown_debt_module_id else None,
+                    "paydown_milestone_id": str(r.paydown_milestone_id) if r.paydown_milestone_id else None,
+                    "schedule": [
+                        {
+                            "period": row.period,
+                            "opening_balance": float(row.opening_balance),
+                            "monthly_earnings": float(row.monthly_earnings),
+                            "closing_balance": float(row.closing_balance),
+                        }
+                        for row in r.schedule
+                    ],
+                    "warnings": list(r.warnings),
+                }
+                for r in _float_results
+            ],
+            "warnings": list(_float_warnings),
+        }
+        if _float_warnings:
+            summary.setdefault("warnings", []).extend(_float_warnings)
+        summary["float_earnings_total"] = float(
+            sum((r.total_earnings for r in _float_results), ZERO)
+        )
+    else:
+        outputs.float_earnings_series = None
 
     # Tag every line-item with its owning project before persist. The
     # CashFlowLineItem / _expense_line_item constructors inside _compute_period

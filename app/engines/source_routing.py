@@ -32,6 +32,15 @@ def eligible_sources_for_use(
 
     result = []
     for m in capital_modules:
+        # Float-earnings sources are never Use funders. They produce
+        # side-effect outputs (debt-balloon reduction, dev fee top-up)
+        # handled by `app/engines/float_earnings.py`, NOT routed through
+        # the source-to-use eligibility solver. Excluding them here
+        # prevents the gap-fill solver from double-counting them.
+        vt = str(getattr(m, "vehicle_type", None) or "").replace("VehicleType.", "")
+        if vt == "float_earnings":
+            continue
+
         mod_tags = getattr(m, "eligible_use_tags", None) or []
 
         # Permissive: both empty → all eligible

@@ -762,6 +762,7 @@ function ulTimingChanged(val) {
 {#- Shared macros and data ─────────────────────────────────────────────────── #}
 {%- set _FT_LABELS = {
   'debt':'Debt','equity':'Equity','forgivable_loan':'Forgivable Loan','grant':'Grant',
+  'float_earnings':'Float Earnings (T-Bond Yield)',
   'permanent_debt':'Permanent Debt','senior_debt':'Senior Debt','mezzanine_debt':'Mezzanine Debt',
   'bridge':'Bridge Loan','construction_loan':'Construction Loan',
   'acquisition_loan':'Acquisition Loan','pre_development_loan':'Pre-Development Loan',
@@ -770,7 +771,7 @@ function ulTimingChanged(val) {
   'owner_loan':'Owner Loan','owner_investment':'Owner Investment',
   'tax_credit':'Tax Credit','other':'Other',
 } -%}
-{%- set _ALL_TYPES = ['debt','equity','forgivable_loan','grant'] -%}
+{%- set _ALL_TYPES = ['debt','equity','forgivable_loan','grant','float_earnings'] -%}
 {%- set _SIMPLE_TYPES = ['grant','forgivable_loan'] -%}
 {%- set _EXIT_VEHICLE_TYPES = ['debt'] -%}
 
@@ -1226,6 +1227,102 @@ function ulTimingChanged(val) {
         <option value="draw_down" {% if _draw_type_val == 'draw_down' %}selected{% endif %}>Draw Down</option>
         <option value="fully_drawn" {% if _draw_type_val == 'fully_drawn' %}selected{% endif %}>Fully Drawn at Start</option>
       </select>
+    </div>
+    {# Balance Earns Interest — opt-in flag for T-bond yield modeling on
+       the drawn-but-unspent balance. Only meaningful when Draw Type is
+       "Fully Drawn at Start"; engine ignores it otherwise. The float-
+       earnings child source (vehicle_type=float_earnings) reads this
+       flag together with draw_type to validate its parent. #}
+    {%- set _bei_val = (existing.source.get('balance_earns_interest') if existing and existing.source else False) -%}
+    <div class="form-field" style="max-width:260px">
+      <label class="form-label" style="display:flex;align-items:center;gap:8px;cursor:pointer">
+        <input type="checkbox" name="balance_earns_interest" value="on"
+               {% if _bei_val %}checked{% endif %}>
+        <span>Balance Earns Interest
+          <span style="font-weight:400;font-size:11px;color:var(--text-muted)">T-bond yield while undeployed</span>
+        </span>
+      </label>
+    </div>
+  </div>
+  {% endif %}
+
+  {# ── Float Earnings child-source fields ──────────────────────────────
+     Only rendered when this CapitalModule has vehicle_type=float_earnings.
+     The fields read by the engine live on the JSONB `source` column; the
+     form posts them as `parent_module_id`, `yield_pct`, `dev_fee_split_pct`,
+     `debt_paydown_split_pct`, `paydown_debt_module_id`, `paydown_milestone_id`.
+     Phase A: dev fee split is forced 0/locked; user-facing UI hides that
+     field. Phase B (with Dev Fee balance modeling) will re-enable it. #}
+  {% if _ft == 'float_earnings' %}
+  <div class="form-section">
+    <div class="form-section-title">Float Earnings</div>
+    <div class="form-hint" style="font-size:12px;color:var(--text-muted);margin-bottom:8px">
+      Models Treasury yield on a parent source's drawn-but-unspent balance.
+      Parent source must have Draw Type = Fully Drawn at Start <em>and</em>
+      Balance Earns Interest checked.
+    </div>
+    <div class="form-row">
+      <div class="form-field">
+        <label class="form-label">Parent Source</label>
+        {%- set _pmid_val = (existing.source.get('parent_module_id') if existing and existing.source else '') -%}
+        {%- set _pmid_val_str = (_pmid_val | string) if _pmid_val else '' -%}
+        <select class="form-input" name="parent_module_id">
+          <option value="">— select fully-drawn source —</option>
+          {%- for _cm in sibling_capital_modules or [] -%}
+            {%- if _cm.draw_type == 'fully_drawn' and _cm.balance_earns_interest -%}
+              <option value="{{ _cm.id }}"{% if _cm.id == _pmid_val_str %} selected{% endif %}>{{ _cm.label }}</option>
+            {%- endif -%}
+          {%- endfor -%}
+        </select>
+      </div>
+      <div class="form-field" style="max-width:160px">
+        <label class="form-label">Annual Yield (%)</label>
+        {%- set _yp_val = (existing.source.get('yield_pct') if existing and existing.source else '') -%}
+        <input class="form-input" type="number" name="yield_pct" step="0.01" min="0"
+               value="{{ _yp_val }}" placeholder="4.30">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-field" style="max-width:180px">
+        <label class="form-label">Debt Paydown Split (%)</label>
+        {%- set _dps_val = (existing.source.get('debt_paydown_split_pct') if existing and existing.source else '100') -%}
+        <input class="form-input" type="number" name="debt_paydown_split_pct"
+               step="1" min="0" max="100" value="{{ _dps_val }}">
+      </div>
+      <div class="form-field" style="max-width:180px">
+        <label class="form-label">Dev Fee Top-Up Split (%)
+          <span style="font-weight:400;font-size:11px;color:var(--text-muted)">Phase B — disabled</span>
+        </label>
+        <input class="form-input" type="number" name="dev_fee_split_pct"
+               step="1" min="0" max="0" value="0" disabled
+               title="Available once Dev Fee balance modeling ships">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-field">
+        <label class="form-label">Paydown Target — Debt Module</label>
+        {%- set _ptdm_val = (existing.source.get('paydown_debt_module_id') if existing and existing.source else '') -%}
+        {%- set _ptdm_val_str = (_ptdm_val | string) if _ptdm_val else '' -%}
+        <select class="form-input" name="paydown_debt_module_id">
+          <option value="">— select debt module —</option>
+          {%- for _cm in sibling_capital_modules or [] -%}
+            {%- if _cm.vehicle_type == 'debt' -%}
+              <option value="{{ _cm.id }}"{% if _cm.id == _ptdm_val_str %} selected{% endif %}>{{ _cm.label }}</option>
+            {%- endif -%}
+          {%- endfor -%}
+        </select>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Paydown Milestone</label>
+        {%- set _ptms_val = (existing.source.get('paydown_milestone_id') if existing and existing.source else '') -%}
+        {%- set _ptms_val_str = (_ptms_val | string) if _ptms_val else '' -%}
+        <select class="form-input" name="paydown_milestone_id">
+          <option value="">— select milestone —</option>
+          {%- for _ms in scenario_milestones or [] -%}
+            <option value="{{ _ms.id }}"{% if _ms.id == _ptms_val_str %} selected{% endif %}>{{ _ms.label }}{% if _ms.milestone_type and _ms.milestone_type != _ms.label %} ({{ _ms.milestone_type }}){% endif %}</option>
+          {%- endfor -%}
+        </select>
+      </div>
     </div>
   </div>
   {% endif %}
