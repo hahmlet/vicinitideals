@@ -11,9 +11,10 @@ When a source's active period ends, the next source's opening draw
 includes the payoff of the prior source's outstanding balance.
 
 Draw self-referential formula (debt sources):
-  D = (uses + B × r × n) / (1 - r × n)
-  where B = balance before draw, r = monthly rate, n = draw freq months.
-  This accounts for carry on the draw amount itself.
+  D = (uses + B × (F-1)) / (2 - F)   where F = (1 + r)^n
+  Compound interest version via period_engine.compound_draw_sizing().
+  For monthly draws (n=1) this is identical to the classic simple-interest form.
+  Carry = (B + D) × (F - 1).
 
 After calculating draws, a month-by-month simulation validates that the
 cash balance never drops below the configured reserve. Violations are
@@ -27,6 +28,8 @@ from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from decimal import Decimal
 from typing import Literal
+
+from app.engines.period_engine import compound_draw_sizing
 
 
 # ---------------------------------------------------------------------------
@@ -512,30 +515,21 @@ class DrawScheduleCalculator:
 
             payoff = prior_outstanding if i == 0 else Decimal("0")
 
-            # Self-referential draw sizing for debt:
-            # D = (uses + payoff + B × r × n) / (1 - r × n)
-            # Carry = interest on (prior balance + this draw) for n months.
-            # For equity (r=0): D = uses + payoff.
-            n = Decimal(freq)
+            # Self-referential draw sizing for debt — compound interest via
+            # period_engine.compound_draw_sizing(). For monthly draws (n=1)
+            # this is algebraically identical to the prior simple-interest form.
             existing_balance = balance
 
             if monthly_rate > 0 and not source.funded_carry:
-                denominator = Decimal("1") - monthly_rate * n
-                if denominator <= 0:
-                    denominator = Decimal("0.0001")
-                total_draw = (uses_in_window + payoff + existing_balance * monthly_rate * n) / denominator
-                # Carry accrues on the FULL cumulative balance for the next
-                # n-month window, not just on this draw. The self-referential
-                # formula sizes total_draw to fund (B + D) × r × n; record the
-                # same here so the simulation and source summaries see the true
-                # interest cost.
-                carry_cost = (existing_balance + total_draw) * monthly_rate * n
+                total_draw, carry_cost = compound_draw_sizing(
+                    uses_and_payoff=uses_in_window + payoff,
+                    opening_balance=existing_balance,
+                    monthly_rate=monthly_rate,
+                    n_months=freq,
+                )
             else:
-                # funded_carry: the Interest Reserve UseLine (sized by the
-                # cashflow auto-sizer) is already in uses_in_window. The IR
-                # pool drains monthly to pay the lender — do NOT capitalize
-                # interest on top, or it gets double-counted.
-                # Or: equity / zero-rate source.
+                # funded_carry: IR UseLine already in uses_in_window; don't
+                # capitalize interest on top (double-count). Or: equity / zero-rate.
                 carry_cost = Decimal("0")
                 total_draw = uses_in_window + payoff
 

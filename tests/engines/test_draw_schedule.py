@@ -39,9 +39,11 @@ def milestones():
 def test_self_referential_draw_covers_carry_on_full_balance():
     """
     For a debt source, carry accrues on the FULL cumulative balance
-    (prior balance + this draw) over the n-month window, not just on the new
-    draw. The self-referential formula sizes total_draw to pre-fund this:
-    D = (uses + payoff + B × r × n) / (1 - r × n) implies carry = (B + D) × r × n.
+    (prior balance + this draw) over the n-month window using compound interest:
+    carry = (B + D) × ((1 + r)^n - 1)
+
+    For monthly draws (n=1) this equals the simple-interest form (B + D) × r.
+    This test uses n=2 (bi-monthly) to exercise the compound path.
     """
     inputs = DrawScheduleInputs(
         milestones=milestones(),
@@ -63,12 +65,14 @@ def test_self_referential_draw_covers_carry_on_full_balance():
 
     schedule = DrawScheduleCalculator(inputs).calculate()
     monthly_rate = Decimal("0.08") / Decimal("12")
+    n = 2
+    factor = (Decimal("1") + monthly_rate) ** n
 
     for draw in schedule.by_source["loan"]:
-        expected_carry = (draw.balance_before + draw.total_draw) * monthly_rate * Decimal("2")
-        assert abs(draw.carry_cost - expected_carry) < Decimal("0.01"), (
+        expected_carry = (draw.balance_before + draw.total_draw) * (factor - Decimal("1"))
+        assert abs(draw.carry_cost - expected_carry.quantize(Decimal("0.000001"))) < Decimal("0.01"), (
             f"Draw {draw.draw_number}: carry {draw.carry_cost} != "
-            f"expected {expected_carry} ((B + D) × rate × freq)"
+            f"expected {expected_carry} ((B + D) × (F-1))"
         )
 
 

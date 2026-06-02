@@ -30,6 +30,7 @@ from app.engines.cashflow import (
     PhaseSpec,
     _build_phase_plan,
     _compute_period,
+    _compute_preop_carry_cost,
     _constr_phase_rate_pct,
     _ir_lease_up_pool,
     _op_phase_rate_and_amort,
@@ -960,3 +961,43 @@ def test_sum_ir_lease_up_interest_uses_schedule_rate_over_source_rate() -> None:
     bug_value = (Decimal("10000000") * Decimal("6.0") / Decimal("100")
                  / Decimal("12"))
     assert out < bug_value
+
+
+@pytest.mark.unit
+def test_compute_preop_carry_cost_ci_uses_compound_interest() -> None:
+    """CI pre-sizing in _compute_preop_carry_cost must use compound formula.
+
+    Simple interest: funded * r/1200 * n
+    Compound:        funded * ((1 + r/1200)^n - 1)
+
+    For r=8%, n=12: simple=$80,000 vs compound≈$83,000.
+    The result must match compound, not simple.
+    """
+    funded = Decimal("1000000")
+    rate = Decimal("8")
+    n = 12
+    schedule = [
+        {"carry_type": "capitalized_interest",
+         "duration": {"type": "months", "months": n}, "rate_pct": float(rate)},
+        {"carry_type": "pi", "duration": {"type": "remainder"}, "rate_pct": 8.0},
+    ]
+
+    result = _compute_preop_carry_cost(
+        schedule=schedule,
+        funded=funded,
+        preop_months=n,
+        base_rate=rate,
+        milestone_month_map={"_total": 360},
+        loan_start_abs=0,
+    )
+
+    monthly_rate = rate / Decimal("1200")
+    compound_expected = funded * ((Decimal("1") + monthly_rate) ** n - Decimal("1"))
+    simple_wrong = funded * monthly_rate * Decimal(str(n))
+
+    assert abs(result - compound_expected) < Decimal("1.00"), (
+        f"Expected compound {compound_expected:.2f}, got {result:.2f}"
+    )
+    assert abs(result - simple_wrong) > Decimal("100"), (
+        f"Result {result:.2f} matches simple interest — compound fix not applied"
+    )
