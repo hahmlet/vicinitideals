@@ -289,6 +289,72 @@ DEFAULT_REGISTRY: dict[str, DefaultSpec] = {
     "dev_fee_phase_new_construction": DefaultSpec(
         value="construction", target="no_destination", column=None, cast=str, type=2
     ),
+    # Dev Fee multi-source (migration 0103): acquisition treatment + holdback +
+    # milestone weights per deal type. Treatments: excluded / split_rate /
+    # separate_fee.
+    "dev_fee_acquisition_treatment_acquisition": DefaultSpec(
+        value="separate_fee", target="no_destination", column=None, cast=str, type=2
+    ),
+    "dev_fee_acquisition_treatment_value_add": DefaultSpec(
+        value="split_rate", target="no_destination", column=None, cast=str, type=2
+    ),
+    "dev_fee_acquisition_treatment_conversion": DefaultSpec(
+        value="excluded", target="no_destination", column=None, cast=str, type=2
+    ),
+    "dev_fee_acquisition_treatment_new_construction": DefaultSpec(
+        value="excluded", target="no_destination", column=None, cast=str, type=2
+    ),
+    "dev_fee_acquisition_pct_acquisition": DefaultSpec(
+        value="0.0", target="no_destination", column=None, cast=float, type=2
+    ),
+    "dev_fee_acquisition_pct_value_add": DefaultSpec(
+        value="1.5", target="no_destination", column=None, cast=float, type=2
+    ),
+    "dev_fee_acquisition_pct_conversion": DefaultSpec(
+        value="0.0", target="no_destination", column=None, cast=float, type=2
+    ),
+    "dev_fee_acquisition_pct_new_construction": DefaultSpec(
+        value="0.0", target="no_destination", column=None, cast=float, type=2
+    ),
+    "acquisition_fee_pct_acquisition": DefaultSpec(
+        value="2.0", target="no_destination", column=None, cast=float, type=2
+    ),
+    "acquisition_fee_pct_value_add": DefaultSpec(
+        value="0.0", target="no_destination", column=None, cast=float, type=2
+    ),
+    "acquisition_fee_pct_conversion": DefaultSpec(
+        value="0.0", target="no_destination", column=None, cast=float, type=2
+    ),
+    "acquisition_fee_pct_new_construction": DefaultSpec(
+        value="0.0", target="no_destination", column=None, cast=float, type=2
+    ),
+    "dev_fee_final_holdback_pct_acquisition": DefaultSpec(
+        value="0.0", target="no_destination", column=None, cast=float, type=2
+    ),
+    "dev_fee_final_holdback_pct_value_add": DefaultSpec(
+        value="10.0", target="no_destination", column=None, cast=float, type=2
+    ),
+    "dev_fee_final_holdback_pct_conversion": DefaultSpec(
+        value="10.0", target="no_destination", column=None, cast=float, type=2
+    ),
+    "dev_fee_final_holdback_pct_new_construction": DefaultSpec(
+        value="10.0", target="no_destination", column=None, cast=float, type=2
+    ),
+    # Milestone weights stored as a JSON-encoded list of
+    # {milestone_type: weight}. Empty default = no schedule (release at
+    # close); orgs populate via the UseLine drawer.
+    "dev_fee_milestone_weights_acquisition": DefaultSpec(
+        value="[]", target="no_destination", column=None, cast=str, type=2
+    ),
+    "dev_fee_milestone_weights_value_add": DefaultSpec(
+        value="[]", target="no_destination", column=None, cast=str, type=2
+    ),
+    "dev_fee_milestone_weights_conversion": DefaultSpec(
+        value="[]", target="no_destination", column=None, cast=str, type=2
+    ),
+    "dev_fee_milestone_weights_new_construction": DefaultSpec(
+        value="[]", target="no_destination", column=None, cast=str, type=2
+    ),
     # ── User-Default only (Type 3) ───────────────────────────────────────────
     "lease_up_curve_steepness": DefaultSpec(
         value="5",

@@ -149,11 +149,18 @@ async def resolve_dev_fee_config(
         "basis": f"dev_fee_basis_{key_type}",
         "timing": f"dev_fee_timing_{key_type}",
         "phase": f"dev_fee_phase_{key_type}",
+        # Multi-source (0103) keys — present even when the deal predates them
+        # via SYSTEM_BASELINE fallback.
+        "acquisition_treatment": f"dev_fee_acquisition_treatment_{key_type}",
+        "acquisition_pct": f"dev_fee_acquisition_pct_{key_type}",
+        "acquisition_fee_pct": f"acquisition_fee_pct_{key_type}",
+        "final_holdback_pct": f"dev_fee_final_holdback_pct_{key_type}",
+        "milestone_weights": f"dev_fee_milestone_weights_{key_type}",
     }
     out: dict[str, str] = {}
     for slot, fkey in keys.items():
         val = await resolve_default(fkey, user_id, org_id, session)
-        out[slot] = val if val is not None else SYSTEM_BASELINE[fkey]
+        out[slot] = val if val is not None else SYSTEM_BASELINE.get(fkey, "")
     return out
 
 
