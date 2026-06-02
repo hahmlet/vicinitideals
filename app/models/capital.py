@@ -15,7 +15,7 @@ from sqlalchemy import (
     UniqueConstraint,
     func,
 )
-from sqlalchemy.dialects.postgresql import ARRAY, UUID
+from sqlalchemy.dialects.postgresql import ARRAY, JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.models.base import Base
@@ -63,6 +63,21 @@ class CapitalModule(Base):
     source: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     carry: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     exit_terms: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+    # Developer Fee per-Source rule (multi-source dev fee, migration 0103).
+    # Schema: app.schemas.capital.CapitalFeeTermsSchema.
+    # When `fee_terms_inherited_from_type=True`, the engine resolves the
+    # live default from `capital_vehicle_fee_defaults` for this Vehicle's
+    # (vehicle_type, equity_role) at compute time and ignores this column.
+    # When False, this column is the source of truth.
+    fee_terms: Mapped[dict] = mapped_column(
+        JSONB().with_variant(JSON(), "sqlite"),
+        nullable=False,
+        default=dict,
+        server_default="{}",
+    )
+    fee_terms_inherited_from_type: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=True, server_default="true"
+    )
     active_phase_start: Mapped[str | None] = mapped_column(String(60), nullable=True)
     active_phase_end: Mapped[str | None] = mapped_column(String(60), nullable=True)
     # Milestone FK timing — preferred over phase string when set. Resolved via the
@@ -336,4 +351,91 @@ class CapitalModuleProject(Base):
     )
     project: Mapped["Project"] = relationship(  # type: ignore[name-defined]
         "Project", back_populates="capital_module_terms"
+    )
+
+
+class CapitalVehicleFeeDefaults(Base):
+    """Org-scoped Developer Fee defaults per (vehicle_type, equity_role).
+
+    Empty at migration time — org admins populate via the Capital Vehicle
+    Defaults settings screen. When a Source Vehicle (CapitalModule) row has
+    ``fee_terms_inherited_from_type=True``, the engine reads the matching
+    row from this table to resolve effective fee rules at compute time.
+
+    The four-layer config: Org/User defaults → Vehicle Type defaults (here)
+    → per-Vehicle ``fee_terms`` (CapitalModule) → per-``(UseLine x Vehicle)``
+    custom-Use overrides (``UseLineSourceFeeBasis``).
+    """
+
+    __tablename__ = "capital_vehicle_fee_defaults"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    org_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("organizations.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    vehicle_type: Mapped[str] = mapped_column(String(20), nullable=False)
+    equity_role: Mapped[str | None] = mapped_column(String(10), nullable=True)
+    fee_terms: Mapped[dict] = mapped_column(
+        JSONB().with_variant(JSON(), "sqlite"),
+        nullable=False,
+        default=dict,
+        server_default="{}",
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        onupdate=func.now(),
+        nullable=False,
+    )
+
+    __table_args__ = (
+        UniqueConstraint(
+            "org_id",
+            "vehicle_type",
+            "equity_role",
+            name="uq_vehicle_fee_defaults_org_type_role",
+        ),
+    )
+
+
+class UseLineSourceFeeBasis(Base):
+    """Per-``(UseLine x CapitalModule)`` inclusion decision for custom Uses.
+
+    Standard auto-generated cost categories (acquisition, hard_costs,
+    soft_costs, financing_fees, interest_reserve, operating_reserves,
+    developer_overhead, consulting_fees) are handled by the Source
+    Vehicle's ``basis_exclusions`` flag list. This join table exists for
+    user-added custom UseLines outside those categories — each row
+    records whether the custom Use is included in this Source Vehicle's
+    fee basis.
+
+    If no row exists for a (UseLine, Vehicle) pair where the Vehicle has
+    fee_terms set, the engine treats it as a *pending decision* and
+    surfaces it in the explainer modal for user action.
+    """
+
+    __tablename__ = "use_line_source_fee_basis"
+
+    use_line_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("use_lines.id", ondelete="CASCADE"),
+        primary_key=True,
+    )
+    capital_module_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("capital_modules.id", ondelete="CASCADE"),
+        primary_key=True,
+    )
+    included_in_basis: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=False, server_default="false"
+    )
+    set_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
     )

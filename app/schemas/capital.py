@@ -185,6 +185,31 @@ class CapitalExitSchema(BaseModel):
 # CapitalModule CRUD schemas
 # ---------------------------------------------------------------------------
 
+class CapitalFeeTermsSchema(BaseModel):
+    """Developer Fee per-Source rule, stored as JSONB on CapitalModule.fee_terms.
+
+    Every field is optional — null/missing means "no cap of this kind".
+
+    Standard cost categories the engine recognizes for ``basis_exclusions``:
+    ``acquisition``, ``hard_costs``, ``soft_costs``, ``financing_fees``,
+    ``interest_reserve``, ``operating_reserves``, ``developer_overhead``,
+    ``consulting_fees``. ``basis_inclusions_override`` is a forward-looking
+    escape hatch that, when set, replaces the inclusion logic entirely.
+
+    ``extra="allow"`` preserves engine-written keys for round-trip safety.
+    """
+
+    model_config = ConfigDict(extra="allow")
+
+    max_pct: Decimal | None = None
+    per_unit_cap: Decimal | None = None
+    absolute_cap: Decimal | None = None
+    basis_exclusions: list[str] = Field(default_factory=list)
+    basis_inclusions_override: list[str] | None = None
+    regulated: bool = False
+    notes: str | None = None
+
+
 class CapitalModuleBase(BaseModel):
     label: str
     vehicle_type: str | None = None
@@ -193,6 +218,8 @@ class CapitalModuleBase(BaseModel):
     source: CapitalSourceSchema | None = None
     carry: CapitalCarrySchema | None = None
     exit_terms: CapitalExitSchema | None = None
+    fee_terms: CapitalFeeTermsSchema | None = None
+    fee_terms_inherited_from_type: bool = True
     active_phase_start: str | None = None
     active_phase_end: str | None = None
 
@@ -246,6 +273,8 @@ class CapitalModuleUpdate(BaseModel):
     source: CapitalSourceSchema | None = None
     carry: CapitalCarrySchema | None = None
     exit_terms: CapitalExitSchema | None = None
+    fee_terms: CapitalFeeTermsSchema | None = None
+    fee_terms_inherited_from_type: bool | None = None
     active_phase_start: str | None = None
     active_phase_end: str | None = None
 
@@ -457,3 +486,32 @@ class WaterfallDistributionReportRead(BaseModel):
             ],
         }
     )
+
+
+# ---------------------------------------------------------------------------
+# CapitalVehicleFeeDefaults schemas (Org-scoped Developer Fee defaults registry)
+# ---------------------------------------------------------------------------
+
+
+class CapitalVehicleFeeDefaultsBase(BaseModel):
+    vehicle_type: str
+    equity_role: str | None = None
+    fee_terms: CapitalFeeTermsSchema = Field(default_factory=CapitalFeeTermsSchema)
+
+
+class CapitalVehicleFeeDefaultsCreate(CapitalVehicleFeeDefaultsBase):
+    pass
+
+
+class CapitalVehicleFeeDefaultsUpdate(BaseModel):
+    fee_terms: CapitalFeeTermsSchema | None = None
+
+
+class CapitalVehicleFeeDefaultsRead(CapitalVehicleFeeDefaultsBase):
+    id: uuid.UUID
+    org_id: uuid.UUID
+    created_at: datetime
+    updated_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)
+
