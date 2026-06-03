@@ -565,7 +565,11 @@ def _stream_occupancy_pct(
         return _q(stabilized_occupancy * (ONE - _percent(inputs.income_reduction_pct_during_reno)))
 
     if phase.period_type == PeriodType.lease_up:
-        initial_occupancy = _percent(inputs.initial_occupancy_pct, default=Decimal("50"))
+        # NULL initial_occupancy_pct → 0% (new construction). Matches the
+        # wizard slider default and the label "0% = new construction (no
+        # pre-leasing)". The old 50% default produced a silent mismatch
+        # where the slider showed 0 and the engine ran as 50.
+        initial_occupancy = _percent(inputs.initial_occupancy_pct, default=ZERO)
         if phase.months <= 1:
             return stabilized_occupancy
         curve = str(getattr(inputs, "lease_up_curve", None) or "linear")

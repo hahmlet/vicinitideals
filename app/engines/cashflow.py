@@ -2392,7 +2392,12 @@ def _odr_pool(
     if lease_up_months <= 0:
         return ZERO
 
-    initial_occ = _percent(inputs.initial_occupancy_pct, default=Decimal("50"))
+    # NULL initial_occupancy_pct → 0% (new construction, no pre-leasing).
+    # Matches the wizard slider default and label text ("0% = new
+    # construction (no pre-leasing). Higher = existing tenants staying
+    # through lease-up."). The old 50% default produced a silent
+    # mismatch where the UI showed 0 but the engine ran as if 50.
+    initial_occ = _percent(inputs.initial_occupancy_pct, default=ZERO)
     stabilized_occ = Decimal("0.95")
 
     stream_inputs: list[tuple[Decimal, Decimal, Decimal]] = []
@@ -4189,7 +4194,9 @@ def _compute_period(
                 lease_up_scale = ONE
                 if phase.period_type == PeriodType.lease_up and expense_line.scale_with_lease_up:
                     floor_pct = _percent(expense_line.lease_up_floor_pct, default=ZERO)
-                    initial_occ = _percent(inputs.initial_occupancy_pct, default=Decimal("50"))
+                    # NULL → 0% to match the wizard slider default; see
+                    # comment on _odr_pool's initial_occ for the rationale.
+                    initial_occ = _percent(inputs.initial_occupancy_pct, default=ZERO)
                     stabilized_occ = Decimal("0.95")  # default stabilized occupancy
                     if phase.months <= 1:
                         ramp_occ = stabilized_occ
