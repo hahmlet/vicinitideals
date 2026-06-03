@@ -365,6 +365,8 @@ function vfToggleFields(sel) {
   var vtype = sel.value;
   var isDebt = vtype === 'debt' || vtype === 'forgivable_loan';
   var isDeferred = vtype === 'deferred_developer_fee';
+  var isFloatEarnings = vtype === 'float_earnings';
+  var hideConfig = isDeferred || isFloatEarnings;
   form.querySelectorAll('.vf-equity-fields').forEach(function(el) {
     el.style.display = vtype === 'equity' ? 'grid' : 'none';
   });
@@ -384,10 +386,10 @@ function vfToggleFields(sel) {
     el.style.display = isDeferred ? 'block' : 'none';
   });
   form.querySelectorAll('.vf-cadence-wrap').forEach(function(el) {
-    el.style.display = isDeferred ? 'none' : '';
+    el.style.display = hideConfig ? 'none' : '';
   });
   form.querySelectorAll('.vf-fee-rule-section').forEach(function(el) {
-    el.style.display = isDeferred ? 'none' : '';
+    el.style.display = hideConfig ? 'none' : '';
   });
 }
 

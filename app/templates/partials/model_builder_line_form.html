@@ -899,7 +899,12 @@ function ulTimingChanged(val) {
   'owner_loan':'Owner Loan','owner_investment':'Owner Investment',
   'tax_credit':'Tax Credit','other':'Other',
 } -%}
-{%- set _ALL_TYPES = ['debt','equity','forgivable_loan','grant','float_earnings'] -%}
+{#- CANONICAL SOURCE VEHICLE TYPE LIST — keep in sync with ALL of:
+   settings_user.html (_vt_labels)
+   settings_organization.html (_vt_labels_org)
+   app/api/routers/ui.py (_VEHICLE_TYPE_LABELS)
+   When adding a new VehicleType, update all four locations. -#}
+{%- set _ALL_TYPES = ['debt','equity','forgivable_loan','grant','deferred_developer_fee','float_earnings'] -%}
 {%- set _SIMPLE_TYPES = ['grant','forgivable_loan'] -%}
 {%- set _EXIT_VEHICLE_TYPES = ['debt'] -%}
 

@@ -327,11 +327,18 @@
 </div>{# /user-prefs left col #}
 
 {# ── RIGHT COLUMN: Source Vehicles ── #}
+{# CANONICAL SOURCE VEHICLE TYPE LIST — keep in sync with ALL of:
+   settings_organization.html (_vt_labels_org)
+   app/api/routers/ui.py (_VEHICLE_TYPE_LABELS)
+   app/templates/partials/model_builder_line_form.html (_ALL_TYPES)
+   When adding a new VehicleType, update all four locations. #}
 {% set _vt_labels = {
   'equity': 'Equity',
   'debt': 'Debt',
   'forgivable_loan': 'Forgivable Loan',
   'grant': 'Grant',
+  'deferred_developer_fee': 'Deferred Developer Fee',
+  'float_earnings': 'Float Earnings (T-Bond Yield)',
 } %}
 {% set _er_labels = {'gp': 'GP (General Partner)', 'lp': 'LP (Limited Partner)'} %}
 {% macro vt_display(vt, er) -%}

@@ -13976,12 +13976,18 @@ async def source_vehicle_prefill(
 # Source Vehicle management (Phase G)
 # ---------------------------------------------------------------------------
 
+# CANONICAL SOURCE VEHICLE TYPE LIST — keep in sync with ALL of:
+# settings_user.html (_vt_labels)
+# settings_organization.html (_vt_labels_org)
+# app/templates/partials/model_builder_line_form.html (_ALL_TYPES)
+# When adding a new VehicleType, update all four locations.
 _VEHICLE_TYPE_LABELS = {
     "equity": "Equity",
     "debt": "Debt",
     "forgivable_loan": "Forgivable Loan",
     "grant": "Grant",
     "deferred_developer_fee": "Deferred Developer Fee",
+    "float_earnings": "Float Earnings (T-Bond Yield)",
 }
 
 
