@@ -3498,7 +3498,6 @@ async def update_deal(
     user = await _get_user(session, request)
     form = await request.form()
     name = str(form.get("name", "")).strip()
-    status_raw = str(form.get("status", "hypothetical")).strip()
 
     deal = await session.get(
         Deal,
@@ -3512,13 +3511,16 @@ async def update_deal(
 
     if name:
         deal.name = name
-    # Pipeline stage is stored on the linked Opportunity
-    opp = _first_opportunity(deal)
-    if opp is not None:
-        try:
+    # Pipeline stage (opp_status) is intentionally NOT updated here. Renaming
+    # must only rename — earlier versions of this handler accepted a `status`
+    # field, but the rename form sourced it from Opportunity.status (the
+    # scraped-listing status), not opp_status, and silently corrupted the
+    # pipeline stage on every rename.
+    if "status" in form:
+        status_raw = str(form.get("status", "")).strip()
+        opp = _first_opportunity(deal)
+        if opp is not None and status_raw in {"hypothetical", "active", "archived"}:
             opp.opp_status = status_raw
-        except ValueError:
-            pass
     await session.commit()
     return RedirectResponse(url=f"/deals/{deal_id}", status_code=303)
 
