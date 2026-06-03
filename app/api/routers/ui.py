@@ -6752,7 +6752,7 @@ async def handle_form_create_or_update(
                                         phase="acquisition",
                                         amount=Decimal("0"),
                                         timing_type="first_day",
-                                        cost_category="acquisition",
+                                        cost_category="soft",
                                         is_auto_acquisition_fee=True,
                                         acquisition_fee_pct=_acq_pct,
                                     ))
