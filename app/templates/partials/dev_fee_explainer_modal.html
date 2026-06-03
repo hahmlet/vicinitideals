@@ -67,16 +67,16 @@
   <section class="explainer-section">
     <h4>Elected fee</h4>
     <p>
-      Developer Fee: <strong>${{ ctx.elected_fee or '0' }}</strong>
+      Developer Fee: <strong>{{ (ctx.elected_fee or 0)|currency }}</strong>
       {% if ctx.binding_dollar_cap %}
         <small class="text-muted">
-          (binding cap: ${{ ctx.binding_dollar_cap }})
+          (binding cap: {{ ctx.binding_dollar_cap|currency }})
         </small>
       {% endif %}
     </p>
     {% if ctx.overage and ctx.overage != '0' %}
       <p class="text-warning">
-        Overage above binding cap: <strong>${{ ctx.overage }}</strong>
+        Overage above binding cap: <strong>{{ ctx.overage|currency }}</strong>
       </p>
     {% endif %}
   </section>
@@ -102,11 +102,11 @@
             <tr {% if row.is_binding %}class="binding-row"{% endif %}>
               <td>{{ row.vehicle_label }}{% if row.is_binding %} <em>(binding)</em>{% endif %}</td>
               <td>{{ row.vehicle_type }}</td>
-              <td>${{ row.basis }}</td>
+              <td>{{ row.basis|currency }}</td>
               <td>{% if row.max_pct %}{{ row.max_pct }}%{% else %}&mdash;{% endif %}</td>
-              <td>{% if row.per_unit_cap %}${{ row.per_unit_cap }}{% else %}&mdash;{% endif %}</td>
-              <td>{% if row.absolute_cap %}${{ row.absolute_cap }}{% else %}&mdash;{% endif %}</td>
-              <td>${{ row.allowable }}</td>
+              <td>{% if row.per_unit_cap %}{{ row.per_unit_cap|currency }}{% else %}&mdash;{% endif %}</td>
+              <td>{% if row.absolute_cap %}{{ row.absolute_cap|currency }}{% else %}&mdash;{% endif %}</td>
+              <td>{{ row.allowable|currency }}</td>
             </tr>
           {% endfor %}
         </tbody>
@@ -121,20 +121,38 @@
     </section>
   {% endif %}
 
-  {# 5. Funded vs deferred #}
+  {# 5. Funded vs deferred.
+       When a deferred-balance schedule exists (Phase B), use its opening
+       balance as the authoritative deferred amount — the greedy allowance
+       allocator in `_split_funded_deferred` only sees per-Source caps and
+       cannot tell that the elected fee is structurally deferred via a
+       Deferred Developer Fee (DDF) source. Header would otherwise read
+       "Deferred $0" while the schedule below shows a $1M+ opening
+       balance, contradicting itself. #}
   <section class="explainer-section">
     <h4>Funded vs deferred</h4>
+    {% if deferred_balance_series %}
+      {% set _deferred_amount = deferred_balance_series.opening_at_close|float %}
+      {% set _funded_amount = (ctx.elected_fee or 0)|float - _deferred_amount %}
+    {% else %}
+      {% set _deferred_amount = (ctx.deferred or 0)|float %}
+      {% set _funded_amount = (ctx.funded_at_close or 0)|float %}
+    {% endif %}
     <p>
-      Funded at close: <strong>${{ ctx.funded_at_close or '0' }}</strong>
+      Funded at close: <strong>{{ _funded_amount|currency }}</strong>
       &middot;
-      Deferred: <strong>${{ ctx.deferred or '0' }}</strong>
+      Deferred: <strong>{{ _deferred_amount|currency }}</strong>
     </p>
     {% if ctx.per_source_allocation %}
+      <p style="font-size:12px;color:var(--text-muted);margin:.25em 0">
+        Per-Source allowance utilization (cap headroom each Source provides,
+        not the amount each Source actually disburses at close):
+      </p>
       <ul>
         {% for alloc in ctx.per_source_allocation %}
           <li>
             {{ alloc.vehicle_label or alloc.capital_module_id }}:
-            funded ${{ alloc.funded_at_close }} of ${{ alloc.allowable }} allowable
+            {{ alloc.funded_at_close|currency }} of {{ alloc.allowable|currency }} allowable
           </li>
         {% endfor %}
       </ul>
@@ -153,8 +171,8 @@
       <ul>
         {% for s in dev_fee_topup_sources %}
           <li>
-            {{ s.parent_label }} float earnings →
-            <strong>${{ '{:,.0f}'.format(s.topup_amount) }}</strong>
+            {{ s.parent_label }} float earnings &rarr;
+            <strong>{{ s.topup_amount|currency }}</strong>
             at milestone {{ s.paydown_milestone_id or '&mdash;' }}
           </li>
         {% endfor %}
@@ -168,11 +186,11 @@
       <h4>Deferred Dev Fee balance schedule</h4>
       <p style="font-size:12px;color:var(--text-muted);margin:.25em 0 .5em">
         Opening at close:
-        <strong>${{ deferred_balance_series.opening_at_close }}</strong>
+        <strong>{{ deferred_balance_series.opening_at_close|currency }}</strong>
         &middot; Total paid:
-        <strong>${{ deferred_balance_series.total_paid }}</strong>
+        <strong>{{ deferred_balance_series.total_paid|currency }}</strong>
         &middot; Remaining at horizon:
-        <strong>${{ deferred_balance_series.remaining_at_horizon }}</strong>
+        <strong>{{ deferred_balance_series.remaining_at_horizon|currency }}</strong>
         {% if deferred_balance_series.fully_paid_period is not none %}
           &middot; Fully paid by period
           <strong>{{ deferred_balance_series.fully_paid_period }}</strong>
@@ -194,10 +212,10 @@
             {% if row.paydown_from_waterfall != '0.000000' or row.paydown_from_float_topup != '0.000000' or loop.first %}
               <tr>
                 <td>{{ row.period }}</td>
-                <td>${{ row.opening_balance }}</td>
-                <td>${{ row.paydown_from_waterfall }}</td>
-                <td>${{ row.paydown_from_float_topup }}</td>
-                <td>${{ row.closing_balance }}</td>
+                <td>{{ row.opening_balance|currency }}</td>
+                <td>{{ row.paydown_from_waterfall|currency }}</td>
+                <td>{{ row.paydown_from_float_topup|currency }}</td>
+                <td>{{ row.closing_balance|currency }}</td>
               </tr>
             {% endif %}
           {% endfor %}
@@ -225,7 +243,7 @@
               <td>{{ receipt.milestone_id }}{% if receipt.type == 'final_holdback' %} <em>(holdback)</em>{% endif %}</td>
               <td>{{ receipt.date or '&mdash;' }}</td>
               <td>{{ receipt.weight }}</td>
-              <td>${{ receipt.amount }}</td>
+              <td>{{ receipt.amount|currency }}</td>
             </tr>
           {% endfor %}
         </tbody>
@@ -238,10 +256,10 @@
     <section class="explainer-section acquisition-fee-block">
       <h4>Acquisition Fee</h4>
       <p>
-        Elected: <strong>${{ ctx.acquisition_fee_context.elected_fee or '0' }}</strong>
+        Elected: <strong>{{ (ctx.acquisition_fee_context.elected_fee or 0)|currency }}</strong>
         {% if ctx.acquisition_fee_context.binding_dollar_cap %}
           <small class="text-muted">
-            (binding cap: ${{ ctx.acquisition_fee_context.binding_dollar_cap }})
+            (binding cap: {{ ctx.acquisition_fee_context.binding_dollar_cap|currency }})
           </small>
         {% endif %}
       </p>
@@ -254,8 +272,8 @@
             {% for row in ctx.acquisition_fee_context.allowance_table %}
               <tr {% if row.is_binding %}class="binding-row"{% endif %}>
                 <td>{{ row.vehicle_label }}{% if row.is_binding %} <em>(binding)</em>{% endif %}</td>
-                <td>${{ row.basis }}</td>
-                <td>${{ row.allowable }}</td>
+                <td>{{ row.basis|currency }}</td>
+                <td>{{ row.allowable|currency }}</td>
               </tr>
             {% endfor %}
           </tbody>
