@@ -2990,10 +2990,21 @@ async def _auto_size_debt_modules(
                 # Capture lease-up carry = net debt service shortfall during lease-up.
                 # This becomes a Use line so Sources = Uses after compute.
                 if lease_up_months > 0:
-                    _lu = _q(principal * pmt_factor * Decimal(lease_up_months) - lease_up_income_offset)
-                    _lease_up_carry = _lu if _lu > ZERO else ZERO
-                    if _lu > ZERO:
-                        _reserve_source_module = module
+                    # IR-carry loans extending through lease-up (end_rank > 4) are still
+                    # interest-only during lease-up; their lease-up costs are captured by
+                    # _ir_lease_up_pool in total_constr_io.  Adding PI DS here would
+                    # double-count the same period.  Only compute LUR for loans that pay
+                    # cash DS (PI/IO carry) starting at CO.
+                    _constr_ct_lu = _carry_type_for_phase(carry, is_construction=True)
+                    _end_rank_lu = _resolve_active_end_rank(module, capital_modules)
+                    _ir_covers_lease_up = (
+                        _constr_ct_lu == "interest_reserve" and _end_rank_lu > 4
+                    )
+                    if not _ir_covers_lease_up:
+                        _lu = _q(principal * pmt_factor * Decimal(lease_up_months) - lease_up_income_offset)
+                        _lease_up_carry = _lu if _lu > ZERO else ZERO
+                        if _lu > ZERO:
+                            _reserve_source_module = module
                 # If no lease-up carry was captured, still tag the reserve
                 # source to the first auto-sized perm-like module so the
                 # Operating Reserve has a Source attribution.
