@@ -590,6 +590,10 @@ async def _compute_project_cashflow(
         income_mode=income_mode,
     )
 
+    # After debt sizing, auto-size any DDF module with auto_size=True.
+    # DDF is always last-resort: fills residual gap after all other sources.
+    _auto_size_ddf_module(capital_modules, use_lines)
+
     # Flush auto-sized module.source changes (held as ORM-dirty in memory) so
     # downstream raw-SQL reads see the auto-sized amounts. The earlier bulk
     # sa_update path was replaced by ORM dirty tracking to avoid MissingGreenlet
@@ -1874,6 +1878,56 @@ def _is_debt_cm(m: object) -> bool:
     """Return True if the capital module is a debt instrument (vehicle_type == "debt")."""
     vt = str(getattr(m, "vehicle_type", None) or "").replace("VehicleType.", "")
     return vt == "debt"
+
+def _auto_size_ddf_module(
+    capital_modules: list,
+    use_lines: list,
+) -> None:
+    """Size any deferred_developer_fee module with auto_size=True.
+
+    Runs after _auto_size_debt_modules so debt principals are final.
+    DDF = max(0, uses_total - other_sources_total), capped at the total
+    developer fee (sum of is_auto_dev_fee + is_auto_acquisition_fee lines).
+    """
+    _ZERO = Decimal("0")
+    ddf_modules = [
+        m for m in capital_modules
+        if str(getattr(m, "vehicle_type", None) or "").replace("VehicleType.", "") == "deferred_developer_fee"
+        and bool((m.source or {}).get("auto_size"))
+    ]
+    if not ddf_modules:
+        return
+
+    uses_total = sum(
+        (_to_decimal(getattr(ul, "amount", _ZERO)) for ul in use_lines),
+        _ZERO,
+    )
+    other_sources_total = sum(
+        (
+            _to_decimal((m.source or {}).get("amount", _ZERO))
+            for m in capital_modules
+            if str(getattr(m, "vehicle_type", None) or "").replace("VehicleType.", "")
+            not in ("deferred_developer_fee", "float_earnings")
+        ),
+        _ZERO,
+    )
+    gap = max(_ZERO, uses_total - other_sources_total)
+
+    dev_fee_total = sum(
+        (
+            _to_decimal(getattr(ul, "amount", _ZERO))
+            for ul in use_lines
+            if getattr(ul, "is_auto_dev_fee", False)
+            or getattr(ul, "is_auto_acquisition_fee", False)
+        ),
+        _ZERO,
+    )
+    ddf_amount = min(gap, dev_fee_total) if dev_fee_total > _ZERO else gap
+
+    for m in ddf_modules:
+        src = dict(m.source or {})
+        src["amount"] = float(ddf_amount)
+        m.source = src
 
 
 # ── Loan sub-type detection ───────────────────────────────────────────────────
