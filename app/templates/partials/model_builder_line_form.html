@@ -1456,7 +1456,7 @@ function ulTimingChanged(val) {
         <select class="form-input" name="paydown_milestone_id">
           <option value="">— select milestone —</option>
           {%- for _ms in scenario_milestones or [] -%}
-            <option value="{{ _ms.id }}"{% if _ms.id == _ptms_val_str %} selected{% endif %}>{{ _ms.label }}{% if _ms.milestone_type and _ms.milestone_type != _ms.label %} ({{ _ms.milestone_type }}){% endif %}</option>
+            <option value="{{ _ms.id }}"{% if _ms.id == _ptms_val_str %} selected{% endif %}>{{ _ms.label }}</option>
           {%- endfor -%}
         </select>
       </div>

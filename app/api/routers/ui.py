@@ -13820,6 +13820,7 @@ async def model_builder_line_form(
                 "vehicle_type": (str(_cm.vehicle_type or "")).replace("VehicleType.", ""),
                 "draw_type": _src.get("draw_type") or "",
                 "balance_earns_interest": bool(_src.get("balance_earns_interest")),
+                "balance_earns_interest": bool(_src.get("balance_earns_interest")),
             })
 
         _ms_rows = (await session.execute(
