@@ -13849,6 +13849,18 @@ async def model_builder_line_form(
         )).scalar_one()
         has_acquisition_costs = _acq_count > 0
 
+    acq_fee_pct_prefill = None
+    if existing is not None and getattr(existing, "is_auto_dev_fee", False):
+        _acq_fee_row = (await session.execute(
+            select(UseLine).join(Project, UseLine.project_id == Project.id)
+            .where(
+                Project.scenario_id == model_id,
+                UseLine.is_auto_acquisition_fee == True,  # noqa: E712
+            )
+        )).scalars().first()
+        if _acq_fee_row is not None:
+            acq_fee_pct_prefill = _acq_fee_row.acquisition_fee_pct
+
     return templates.TemplateResponse(request, "partials/model_builder_line_form.html", {
         "model": model,
         "form_type": type,
@@ -13878,6 +13890,7 @@ async def model_builder_line_form(
         "scenario_milestones": _scenario_milestones,
         "basis_buckets": BASIS_BUCKETS,
         "has_acquisition_costs": has_acquisition_costs,
+        "acq_fee_pct_prefill": acq_fee_pct_prefill,
     })
 
 

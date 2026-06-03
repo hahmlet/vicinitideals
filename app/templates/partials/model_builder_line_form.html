@@ -60,7 +60,7 @@
   {% if has_acquisition_costs %}
   <div class="form-field" style="margin-bottom:8px">
     <label class="form-label">Acquisition Dev Fee %</label>
-    {%- set _acq_pct_existing = existing.acquisition_fee_pct -%}
+    {%- set _acq_pct_existing = acq_fee_pct_prefill if (acq_fee_pct_prefill is defined and acq_fee_pct_prefill is not none) else existing.acquisition_fee_pct -%}
     <input class="form-input" type="number" name="acquisition_fee_pct" step="0.1" min="0" max="100"
            value="{{ '%.2f' | format(_acq_pct_existing | float) if _acq_pct_existing is not none else '' }}"
            placeholder="e.g. 5.0">
