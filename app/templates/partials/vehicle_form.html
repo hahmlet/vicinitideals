@@ -99,11 +99,12 @@
         <option value="debt" {{ 'selected' if (_is_edit and vehicle.vehicle_type == 'debt') else '' }}>Debt</option>
         <option value="forgivable_loan" {{ 'selected' if (_is_edit and vehicle.vehicle_type == 'forgivable_loan') else '' }}>Forgivable Loan</option>
         <option value="grant" {{ 'selected' if (_is_edit and vehicle.vehicle_type == 'grant') else '' }}>Grant</option>
+        <option value="deferred_developer_fee" {{ 'selected' if (_is_edit and vehicle.vehicle_type == 'deferred_developer_fee') else '' }}>Deferred Developer Fee</option>
       </select>
     </div>
 
     {# Draw cadence #}
-    <div>
+    <div class="vf-cadence-wrap">
       <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:4px">Draw Cadence</label>
       <select name="draw_cadence"
               style="width:100%;padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:13px">
@@ -134,8 +135,10 @@
     </div>
   </div>
 
-  {# Debt / forgivable_loan fields #}
-  <div class="vf-debt-fields" style="display:{{ 'grid' if (_is_edit and vehicle.vehicle_type in ('debt', 'forgivable_loan')) else 'none' }};grid-template-columns:1fr 1fr 1fr 1fr;gap:12px">
+  {# Interest Rate — shown for debt, forgivable_loan, deferred_developer_fee #}
+  {%- set _vt_has_rate = _is_edit and vehicle.vehicle_type in ('debt', 'forgivable_loan', 'deferred_developer_fee') -%}
+  {%- set _vt_is_deferred = _is_edit and vehicle.vehicle_type == 'deferred_developer_fee' -%}
+  <div class="vf-rate-row" style="display:{{ 'grid' if _vt_has_rate else 'none' }};grid-template-columns:1fr 1fr;gap:12px">
     <div>
       <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:4px">Interest Rate %</label>
       <input type="number" name="interest_rate_pct" step="0.01" min="0"
@@ -143,6 +146,18 @@
              placeholder="e.g. 6.5"
              style="width:100%;padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:13px;box-sizing:border-box">
     </div>
+    <div class="vf-deferred-pct" style="display:{{ 'block' if _vt_is_deferred else 'none' }}">
+      <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:4px">Deferred Dev Fee %</label>
+      <input type="number" name="defer_pct_of_dev_fee" step="0.1" min="0" max="100"
+             value="{{ (vehicle.source_config or {}).get('defer_pct_of_dev_fee', '') if _is_edit else '' }}"
+             placeholder="e.g. 30"
+             style="width:100%;padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:13px;box-sizing:border-box">
+      <div style="font-size:11px;color:var(--text-muted);margin-top:3px">% of dev fee deferred on each draw</div>
+    </div>
+  </div>
+
+  {# Debt / forgivable_loan only: Carry Type, IO Period, Amort Term #}
+  <div class="vf-debt-fields" style="display:{{ 'grid' if (_is_edit and vehicle.vehicle_type in ('debt', 'forgivable_loan')) else 'none' }};grid-template-columns:1fr 1fr 1fr;gap:12px">
     <div>
       <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:4px">Carry Type</label>
       <select name="carry_type"
@@ -172,7 +187,7 @@
 
   {# Custom carry schedule (debt/forgivable only) #}
   {%- set _has_v_schedule = _is_edit and vehicle.carry_config and vehicle.carry_config.get('schedule') -%}
-  <div class="vf-debt-block" style="display:{{ 'block' if (_is_edit and vehicle.vehicle_type in ('debt', 'forgivable_loan')) else 'none' }}">
+  <div class="vf-debt-block" style="display:{{ 'block' if (_is_edit and vehicle.vehicle_type in ('debt', 'forgivable_loan', 'deferred_developer_fee')) else 'none' }}">
     <div style="display:flex;align-items:center;gap:16px;margin-bottom:8px">
       <span style="font-size:11px;color:var(--text-muted)">Carry Mode</span>
       <label style="display:flex;align-items:center;gap:4px;font-size:13px;cursor:pointer">
@@ -219,7 +234,7 @@
   {%- set _ft = (vehicle.fee_terms if _is_edit else {}) or {} -%}
   {%- set _ft_excl = _ft.get('basis_exclusions') or [] -%}
   {%- set _ft_open = _ft.get('max_pct') or _ft.get('per_unit_cap') or _ft.get('absolute_cap') or _ft_excl or _ft.get('regulated') or _ft.get('notes') -%}
-  <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border)">
+  <div class="vf-fee-rule-section" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);display:{{ 'none' if (_is_edit and vehicle.vehicle_type == 'deferred_developer_fee') else '' }}">
     <details {% if _ft_open %}open{% endif %} style="margin:0">
       <summary style="cursor:pointer;font-size:13px;font-weight:600;color:var(--text);padding:4px 0">
         Developer Fee Rule
@@ -302,14 +317,28 @@
 function vfToggleFields(sel) {
   var form = sel.closest('form');
   var vtype = sel.value;
+  var isDebt = vtype === 'debt' || vtype === 'forgivable_loan';
+  var isDeferred = vtype === 'deferred_developer_fee';
   form.querySelectorAll('.vf-equity-fields').forEach(function(el) {
     el.style.display = vtype === 'equity' ? 'grid' : 'none';
   });
+  form.querySelectorAll('.vf-rate-row').forEach(function(el) {
+    el.style.display = (isDebt || isDeferred) ? 'grid' : 'none';
+  });
   form.querySelectorAll('.vf-debt-fields').forEach(function(el) {
-    el.style.display = (vtype === 'debt' || vtype === 'forgivable_loan') ? 'grid' : 'none';
+    el.style.display = isDebt ? 'grid' : 'none';
   });
   form.querySelectorAll('.vf-debt-block').forEach(function(el) {
-    el.style.display = (vtype === 'debt' || vtype === 'forgivable_loan') ? 'block' : 'none';
+    el.style.display = (isDebt || isDeferred) ? 'block' : 'none';
+  });
+  form.querySelectorAll('.vf-deferred-pct').forEach(function(el) {
+    el.style.display = isDeferred ? 'block' : 'none';
+  });
+  form.querySelectorAll('.vf-cadence-wrap').forEach(function(el) {
+    el.style.display = isDeferred ? 'none' : '';
+  });
+  form.querySelectorAll('.vf-fee-rule-section').forEach(function(el) {
+    el.style.display = isDeferred ? 'none' : '';
   });
 }
 

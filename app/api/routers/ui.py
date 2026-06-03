@@ -14088,6 +14088,11 @@ async def vehicle_create(
         pref_rate_pct=form.get("pref_rate_pct") or None,
         carry_config=_v_carry_config if _v_carry_config else None,
         fee_terms=_v_fee_terms,
+        source_config=(
+            {"defer_pct_of_dev_fee": float(form.get("defer_pct_of_dev_fee"))}
+            if vehicle_type == "deferred_developer_fee" and form.get("defer_pct_of_dev_fee")
+            else None
+        ),
         created_by=user.id,
         updated_by=user.id,
     )
@@ -14138,6 +14143,13 @@ async def vehicle_update(
     _new_carry_config = _parse_vehicle_carry_schedule(form)
     vehicle.carry_config = _new_carry_config if _new_carry_config else vehicle.carry_config
     vehicle.fee_terms = _parse_vehicle_fee_terms(form)
+    if vehicle.vehicle_type == "deferred_developer_fee":
+        _raw_defer = form.get("defer_pct_of_dev_fee")
+        vehicle.source_config = (
+            {"defer_pct_of_dev_fee": float(_raw_defer)}
+            if _raw_defer
+            else (vehicle.source_config or {})
+        )
     vehicle.updated_by = user.id
     await session.commit()
 
