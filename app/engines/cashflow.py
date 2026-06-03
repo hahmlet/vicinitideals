@@ -2211,16 +2211,19 @@ def _schedule_preop_months(
 def _draw_schedule_for(carry_type: str, draw_type: str | None) -> str:
     """Map draw_type field → period_interest_months draw_schedule argument.
 
-    When draw_type is None, falls back to the carry-type convention that was
-    hardcoded before the draw_type field existed:
-      interest_reserve      → "linear"  (construction draw-down assumption)
-      capitalized_interest  → "lump"    (full-balance PIK assumption)
+    Spec convention (reserves-spec-align, §2): "Interest accrues on the full
+    funded balance from Close." Both IR and CI carry now default to ``"lump"``
+    (full-balance accrual) so the IR pool covers the conservative lender case
+    where 100% of the loan is funded day one. The legacy ``"linear"`` default
+    for IR (average-draw N+1/2 factor) understated the reserve relative to
+    spec; callers that genuinely need linear draws must set
+    ``draw_type="draw_down"`` explicitly on the source.
     """
     if draw_type == "fully_drawn":
         return "lump"
     if draw_type == "draw_down":
         return "linear"
-    return "linear" if carry_type == "interest_reserve" else "lump"
+    return "lump"
 
 
 def _compute_preop_carry_cost(
@@ -2366,40 +2369,28 @@ def _ir_lease_up_pool(
     expense_lines: list,
     inputs: "OperationalInputs",
 ) -> Decimal:
-    """IR pool required for lease-up months, net of operating income.
+    """IR pool required for lease-up months. Spec convention: **LUR-blind**.
 
-    During lease-up income ramps from initial to stabilized occupancy using
-    the same curve logic (_stream_occupancy_pct) as the monthly cashflow engine.
-    Months where operating surplus ≥ interest need no pre-funded coverage;
-    only the per-month shortfall (interest − surplus, floored at 0) accumulates.
+    Per the reserves-spec-align design (§3.1), the Interest Reserve must
+    cover 100% of calculated interest over its active window — the lender
+    wants full interest funded at Close regardless of how lease-up rent
+    actually materializes. Revenue is therefore NOT netted against sized
+    interest; the ramping LUR becomes a principal-paydown sweep at runtime
+    (Slice 5) rather than a sizing offset.
 
-    Construction-phase interest is handled separately by period_interest_months;
-    this function covers only the post-construction lease-up overlap.
+    Returns ``funded × monthly_rate × n_months`` (full-balance accrual to
+    match the ``"lump"`` draw-schedule used in ``_draw_schedule_for``).
+    Parameters ``lease_up_phase``, ``streams``, ``expense_lines``, ``inputs``
+    are kept in the signature so callers (and future net-of-revenue modes)
+    do not need to be touched — but they are unused in the spec-aligned
+    path.
     """
-    if n_months <= 0 or lease_up_phase is None or rate_pct <= ZERO:
+    del lease_up_phase, streams, expense_lines, inputs  # LUR-blind by design.
+    if n_months <= 0 or rate_pct <= ZERO:
         return ZERO
     rate = Decimal(str(rate_pct))
     monthly_interest = _q(funded * rate / HUNDRED / Decimal("12"))
-    lease_up_pt = PeriodType.lease_up
-    total = ZERO
-    for k in range(n_months):
-        income_m = ZERO
-        for s in streams:
-            if not _is_stream_active(s, lease_up_pt):
-                continue
-            occ = _stream_occupancy_pct(s, lease_up_phase, k, inputs)
-            base = _stream_base_amount(s)
-            bad_debt = _percent(getattr(s, "bad_debt_pct", None))
-            concessions = _percent(getattr(s, "concessions_pct", None))
-            income_m += _q(base * occ * (ONE - bad_debt - concessions))
-        opex_m = ZERO
-        for line in expense_lines:
-            if not _is_expense_line_active(line, lease_up_pt):
-                continue
-            opex_m += _q(_to_decimal(line.annual_amount) / Decimal("12"))
-        surplus_m = max(ZERO, income_m - opex_m)
-        total += max(ZERO, monthly_interest - surplus_m)
-    return _q(total)
+    return _q(monthly_interest * Decimal(n_months))
 
 
 def _sum_ir_lease_up_interest(modules: list, phases: list) -> Decimal:
@@ -2485,6 +2476,13 @@ async def _auto_size_debt_modules(
 
     debt_sizing_mode = inputs.debt_sizing_mode or "gap_fill"
     reserve_months = int(inputs.operation_reserve_months or 6)
+    # Operating Reserve basis: spec §3.3 parametrize sizing on {ds | opex |
+    # opex_plus_ds}. Default "ds" matches the current behavior. Slice 5 adds
+    # the DB column + UI; for now the attribute is read defensively so an
+    # un-migrated scenario falls back to the default cleanly.
+    operating_reserve_basis = (
+        getattr(inputs, "operation_reserve_basis", None) or "ds"
+    )
 
     # ── Per-loan active-window phase months ─────────────────────────────────
     # Each loan's IR/CI interest accrues only during the phases within its
@@ -3037,10 +3035,28 @@ async def _auto_size_debt_modules(
             else:
                 pmt_factor = ONE / Decimal(n) if n > 0 else ZERO
 
-            # Try closed-form DS-based reserve (reserve sized at stabilization)
-            ds_divisor = divisor - pmt_factor * Decimal(reserve_months + lease_up_months)
+            # OR basis routing (spec §3.3 / critique #1):
+            #   - "ds"          → OR = DS × R; balance-dependent → folded into divisor.
+            #   - "opex"        → OR = OpEx × R; balance-independent → added to effective_uses.
+            #   - "opex_plus_ds"→ both: DS portion in divisor, OpEx portion in effective_uses.
+            # When OR_basis includes DS the divisor still closes the {IR, OR}
+            # simultaneous system in one pass — IR contributes `f_c`, OR-on-DS
+            # contributes `pmt_factor·R`, both per principal.
+            _or_uses_ds = operating_reserve_basis in ("ds", "opex_plus_ds")
+            _or_uses_opex = operating_reserve_basis in ("opex", "opex_plus_ds")
+            _r_in_divisor = Decimal(reserve_months) if _or_uses_ds else ZERO
+            _or_opex_fixed = (
+                _q(opex_monthly_pre * Decimal(reserve_months))
+                if _or_uses_opex
+                else ZERO
+            )
+
+            # Try closed-form simultaneous solve. `pmt_factor · lease_up_months`
+            # still represents PI-loan DS during lease-up (Slice 5 cleans this
+            # up when _lease_up_carry is deleted under the IO-only assumption).
+            ds_divisor = divisor - pmt_factor * (_r_in_divisor + Decimal(lease_up_months))
             if ds_divisor > ZERO:
-                principal = _q(effective_uses / ds_divisor)
+                principal = _q((effective_uses + _or_opex_fixed) / ds_divisor)
                 # Capture lease-up carry = net debt service shortfall during lease-up.
                 # This becomes a Use line so Sources = Uses after compute.
                 if lease_up_months > 0:
@@ -3290,12 +3306,23 @@ async def _auto_size_debt_modules(
                 ds_monthly += _monthly_io(p2, rate2)
             elif ct2 == "pi":
                 ds_monthly += _monthly_pmt(p2, rate2, ay2)
-    # In NOI mode there is no separate OpEx figure — size reserve on DS only
-    actual_reserve = _q(
-        ds_monthly * Decimal(reserve_months)
-        if income_mode == "noi"
-        else max(opex_monthly, ds_monthly) * Decimal(reserve_months)
-    )
+    # In NOI mode there is no separate OpEx figure — size reserve on DS only,
+    # regardless of operating_reserve_basis.
+    if income_mode == "noi":
+        actual_reserve = _q(ds_monthly * Decimal(reserve_months))
+        _or_basis_label = "Debt Service"
+        _or_basis_monthly = ds_monthly
+    else:
+        if operating_reserve_basis == "ds":
+            _or_basis_monthly = ds_monthly
+            _or_basis_label = "Debt Service"
+        elif operating_reserve_basis == "opex":
+            _or_basis_monthly = opex_monthly
+            _or_basis_label = "OpEx"
+        else:  # opex_plus_ds
+            _or_basis_monthly = opex_monthly + ds_monthly
+            _or_basis_label = "OpEx + Debt Service"
+        actual_reserve = _q(_or_basis_monthly * Decimal(reserve_months))
 
     # Compute actual construction IO across auto-sized modules.
     # Multi-debt path: dedicated construction_loan IO is in _bridge_io.
@@ -3383,12 +3410,8 @@ async def _auto_size_debt_modules(
         _diag(f"  cc module id={_dm2.id} vt={getattr(_dm2,'vehicle_type',None)} source.amount={(_dm2.source or {}).get('amount')} flat={_dv['flat']} pct={_dv['pct']}")
 
     # Update or create Operating Reserve use line
-    if income_mode == "noi":
-        _reserve_basis = "Debt Service"
-        _reserve_amount_basis = ds_monthly
-    else:
-        _reserve_basis = "Debt Service" if ds_monthly >= opex_monthly else "OpEx"
-        _reserve_amount_basis = max(opex_monthly, ds_monthly)
+    _reserve_basis = _or_basis_label
+    _reserve_amount_basis = _or_basis_monthly
     _reserve_notes = (
         f"Auto-computed ({_reserve_basis} basis): "
         f"${_reserve_amount_basis:,.0f}/mo × {reserve_months} months"

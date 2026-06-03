@@ -829,33 +829,35 @@ def test_ir_lease_up_pool_no_streams_returns_full_interest() -> None:
 
 
 @pytest.mark.unit
-def test_ir_lease_up_pool_income_covers_all_months_returns_zero() -> None:
-    """When NOI > interest every month, no pre-funded reserve needed."""
+def test_ir_lease_up_pool_income_does_not_offset_sized_interest() -> None:
+    """LUR-blind: even a fully-covering income stream cannot shrink IR.
+
+    Pre-spec behavior netted NOI against sized interest and could return 0
+    when revenue covered every month. Spec §3.1 forbids that: the lender
+    funds the **full** sized interest at Close; ramping rent becomes a
+    runtime principal-paydown sweep (Slice 5), not a sizing offset.
+    """
     funded = Decimal("500000")
     rate_pct = Decimal("6")
-    # Monthly interest = 500_000 × 6% / 12 = 2_500
-    # Rent stream: 10 units × $500/unit at 95% stab occ = $4,750/mo at full occupancy
-    # initial_occupancy_pct=50 → even in month 0 income = 10 × 500 × 0.50 = 2,500 ≥ interest
-    # By month 5 income = 10 × 500 × 0.95 = 4,750 >> 2,500
+    # Income stream that, pre-spec, would have driven the pool to zero.
     stream = _make_rent_stream(500, unit_count=10)
     inputs = _make_inputs_for_ir(initial_occupancy_pct=50.0)
     phase = _make_lease_up_phase(6)
 
     pool = _ir_lease_up_pool(funded, rate_pct, 6, phase, [stream], [], inputs)
 
-    assert pool == Decimal("0.000000")
+    # 500_000 × 6% / 12 × 6 = 15_000
+    assert pool == Decimal("15000.000000")
 
 
 @pytest.mark.unit
-def test_ir_lease_up_pool_partial_ramp_returns_early_shortfalls() -> None:
-    """Income ramps from 0% to 95% occ; early months don't cover interest.
+def test_ir_lease_up_pool_partial_ramp_does_not_alter_pool() -> None:
+    """LUR-blind: a slow ramp produces the same IR as no income at all.
 
-    Loan: $1_200_000 at 5% → monthly interest = $5_000.
-    10 units × $800/unit at 95% stab occ, linear ramp from 0% over 12 months.
-    Month k (0-indexed): income = 10 × 800 × (0% + 95%×k/11) = 8_000 × occ_k.
-    Income covers interest once occ_k ≥ 5_000 / 8_000 = 62.5%.
-    Breakeven occupancy 62.5% → k ≥ 0.625 × 11 / 0.95 ≈ 7.24 → covered from month 8.
-    Months 0-7 contribute shortfall; months 8-11 contribute zero.
+    Pre-spec, this test asserted that early-month shortfalls reduced the
+    pool below the gross interest figure. Under the spec the pool equals
+    gross interest exactly — the lease-up sweep handles whatever NOI does
+    show up at runtime.
     """
     funded = Decimal("1200000")
     rate_pct = Decimal("5")
@@ -865,20 +867,22 @@ def test_ir_lease_up_pool_partial_ramp_returns_early_shortfalls() -> None:
 
     pool = _ir_lease_up_pool(funded, rate_pct, 12, phase, [stream], [], inputs)
 
-    # Pool must be > 0 (early months need IR) but < gross interest ($60_000)
-    assert pool > Decimal("0")
-    assert pool < Decimal("60000")
-    # Months 8-11 should be fully income-covered → pool < 8 months × 5_000 = 40_000
-    assert pool < Decimal("40000")
+    # 1_200_000 × 5% / 12 × 12 = 60_000
+    assert pool == Decimal("60000.000000")
 
 
 @pytest.mark.unit
-def test_ir_lease_up_pool_opex_reduces_surplus() -> None:
-    """OpEx eats into income, so IR pool is larger than income-only offset."""
+def test_ir_lease_up_pool_ignores_opex() -> None:
+    """LUR-blind: OpEx cannot enlarge the IR pool either.
+
+    Pre-spec, OpEx reduced NOI and therefore enlarged the IR shortfall.
+    Under the spec, OpEx falls under ODR (Slice 4); IR stays scoped to
+    lender interest only.
+    """
     funded = Decimal("1000000")
     rate_pct = Decimal("6")
-    stream = _make_rent_stream(500, unit_count=10)  # up to $4,750/mo at stab
-    opex = _make_opex_line(annual_amount=48000)     # $4,000/mo constant
+    stream = _make_rent_stream(500, unit_count=10)
+    opex = _make_opex_line(annual_amount=48000)
     inputs = _make_inputs_for_ir(initial_occupancy_pct=50.0)
     phase = _make_lease_up_phase(6)
 
@@ -889,8 +893,10 @@ def test_ir_lease_up_pool_opex_reduces_surplus() -> None:
         funded, rate_pct, 6, phase, [stream], [], inputs
     )
 
-    # OpEx reduces net surplus → more shortfall → larger IR pool
-    assert pool_with_opex >= pool_no_opex
+    # Both must equal funded × rate / 12 × months — OpEx & rent are inert.
+    expected = Decimal("1000000") * Decimal("6") / Decimal("100") / Decimal("12") * Decimal("6")
+    assert pool_with_opex == pool_no_opex
+    assert pool_with_opex == expected.quantize(Decimal("0.000001"))
 
 
 @pytest.mark.unit

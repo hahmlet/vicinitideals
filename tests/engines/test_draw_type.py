@@ -24,9 +24,12 @@ class TestDrawScheduleFor:
     def test_draw_down_overrides_ir(self):
         assert _draw_schedule_for("interest_reserve", "draw_down") == "linear"
 
-    # None falls back to carry-type convention (backward compat)
-    def test_none_ir_defaults_to_linear(self):
-        assert _draw_schedule_for("interest_reserve", None) == "linear"
+    # None falls back to the spec default: full funded balance at Close.
+    # reserves-spec-align Slice 3 — IR sizing reads the full balance from day
+    # one, not an averaged draw, so the default is "lump" for every carry
+    # type that does not opt into draw-down behavior.
+    def test_none_ir_defaults_to_lump(self):
+        assert _draw_schedule_for("interest_reserve", None) == "lump"
 
     def test_none_ci_defaults_to_lump(self):
         assert _draw_schedule_for("capitalized_interest", None) == "lump"
@@ -37,11 +40,12 @@ class TestDrawScheduleFor:
     def test_none_pi_defaults_to_lump(self):
         assert _draw_schedule_for("pi", None) == "lump"
 
-    # Unknown / empty draw_type falls back too
-    def test_empty_string_falls_back_to_carry_convention(self):
-        # Empty string is not a recognized draw_type — falls through to carry-type rule.
+    # Unknown / empty draw_type falls back to the same lump default.
+    def test_empty_string_falls_back_to_lump_default(self):
+        # Empty string is not a recognized draw_type — falls through to the
+        # spec default ("lump"), matching IR's full-balance-at-Close convention.
         result = _draw_schedule_for("interest_reserve", "")
-        assert result == "linear"  # IR carry-type fallback
+        assert result == "lump"
 
     def test_fully_drawn_exact_string(self):
         assert _draw_schedule_for("interest_reserve", "fully_drawn") == "lump"
