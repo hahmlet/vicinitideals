@@ -145,7 +145,6 @@ _BALANCE_ONLY_LABELS: frozenset[str] = frozenset({
     "Interest Reserve",
     "Pre-Development Interest Reserve",
     "Acquisition Interest Reserve",
-    "Lease-Up Reserve",
     "Construction DS Reserve",
 })
 
@@ -2562,7 +2561,6 @@ async def _auto_size_debt_modules(
         "Interest Reserve",                       # construction IR
         "Pre-Development Interest Reserve",       # pre-dev IR
         "Acquisition Interest Reserve",           # acquisition IR
-        "Lease-Up Reserve",
         "Construction DS Reserve",
     }
 
@@ -3434,6 +3432,11 @@ async def _auto_size_debt_modules(
         session.add(new_op)
         use_lines.append(new_op)
 
+    # Merge Lease-Up Reserve into Interest Reserve: perm DS shortfall during lease-up
+    # is pre-stabilization carry, same as construction IR.  Add to total_constr_io so
+    # the single IR use line covers the full pre-stabilization reserve pool.
+    total_constr_io += _lease_up_carry
+
     # Update or create construction interest use line (balance-only: not a cash outflow).
     # Label depends on carry type: IR → "Interest Reserve", CI → "Capitalized Construction Interest".
     # Collect ALL rows matching any known construction interest label, keep exactly one.
@@ -3453,7 +3456,7 @@ async def _auto_size_debt_modules(
         else "Capitalized Construction Interest"
     )
     _constr_int_notes = (
-        "Auto-computed: interest reserve pre-funded from loan proceeds."
+        "Auto-computed: interest reserve pre-funded from loan proceeds (includes lease-up DS shortfall)."
         if _constr_int_ct == "interest_reserve"
         else "Auto-computed: IO capitalized into loan principal."
     )
@@ -3495,37 +3498,12 @@ async def _auto_size_debt_modules(
         session.add(new_ul)
         use_lines.append(new_ul)
 
-    # Update or create Lease-Up Reserve use line (balance-only: perm DS shortfall during lease-up)
-    # Source attribution: the module whose DS drove _lease_up_carry above.
-    _lu_source_id = _reserve_source_module.id if _reserve_source_module else None
-    lu_reserve_found = False
-    for ul in use_lines:
+    # Lease-Up Reserve is merged into Interest Reserve (total_constr_io += _lease_up_carry above).
+    # Delete any stale LUR rows left from before this change.
+    for ul in list(use_lines):
         if getattr(ul, "label", "") == "Lease-Up Reserve":
-            if _lease_up_carry > ZERO:
-                ul.amount = _lease_up_carry
-                ul.notes = f"Auto-computed: perm debt service during {lease_up_months}-month lease-up net of ~1/3 stabilized NOI (phantom CF avg, 60/40 split, opex 50→100%)"
-                ul.source_capital_module_id = _lu_source_id
-                ul.cost_category = "soft"
-                session.add(ul)
-            else:
-                await session.delete(ul)
-                use_lines.remove(ul)
-            lu_reserve_found = True
-            break
-    if not lu_reserve_found and project_id and _lease_up_carry > ZERO:
-        new_lu = UseLine(
-            project_id=project_id,
-            source_capital_module_id=_lu_source_id,
-            label="Lease-Up Reserve",
-            phase="operation_lease_up",
-            amount=_lease_up_carry,
-            timing_type="first_day",
-            cost_category="soft",
-            dev_fee_basis_bucket="lease_up_reserve",
-            notes=f"Auto-computed: perm debt service during {lease_up_months}-month lease-up net of ~1/3 stabilized NOI (phantom CF avg, 60/40 split, opex 50→100%)",
-        )
-        session.add(new_lu)
-        use_lines.append(new_lu)
+            await session.delete(ul)
+            use_lines.remove(ul)
 
     # Construction DS Reserve: pre-fund debt service payments during construction/renovation.
     # Applies only to cash-paying carry types (io_only, pi); CI/IR have their own use line mechanisms.
