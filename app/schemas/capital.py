@@ -193,7 +193,7 @@ class CapitalExitSchema(BaseModel):
     exit_type: Literal[
         "full_payoff", "tranche_payoff", "equity_conversion", "profit_share", "forgiven"
     ]
-    trigger: str
+    trigger: str | None = None
     tranches: list[dict] | None = None
     equity_conversion_pct: float | None = None
     profit_share_pct: float | None = None
