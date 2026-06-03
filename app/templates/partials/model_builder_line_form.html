@@ -1379,26 +1379,12 @@ function ulTimingChanged(val) {
   </div>
   {% endif %}
 
-  {# ── Float Earnings split JS — auto-complement so debt+dev always = 100 ─── #}
-  {% if _ft == 'float_earnings' %}
-  <script>
-  function feSplitSync(changedInput, otherId) {
-    var other = document.getElementById(otherId);
-    if (!other) return;
-    var val = Math.min(100, Math.max(0, parseFloat(changedInput.value) || 0));
-    other.value = 100 - val;
-  }
-  </script>
-  {% endif %}
-
   {# ── Float Earnings child-source fields ──────────────────────────────
      Only rendered when this CapitalModule has vehicle_type=float_earnings.
-     The fields read by the engine live on the JSONB `source` column; the
-     form posts them as `parent_module_id`, `yield_pct`, `dev_fee_split_pct`,
-     `debt_paydown_split_pct`, `paydown_debt_module_id`, `paydown_milestone_id`.
-     Phase B: dev fee split is re-enabled — routes float earnings to the
-     deferred Developer Fee balance (consumed by the waterfall's
-     `deferred_developer_fee` tier). #}
+     The fields read by the engine live on the JSONB source column; the
+     form posts them as parent_module_id, yield_pct, waterfall_milestone_id.
+     All earnings flow as a lump sum into the GP/LP waterfall at the chosen
+     milestone; the waterfall distributes them through its normal tier order. #}
   {% if _ft == 'float_earnings' %}
   <div class="form-section">
     <div class="form-section-title">Float Earnings</div>
@@ -1429,44 +1415,11 @@ function ulTimingChanged(val) {
       </div>
     </div>
     <div class="form-row">
-      <div class="form-field" style="max-width:180px">
-        <label class="form-label">Debt Paydown Split (%)</label>
-        {%- set _dps_val = (existing.source.get('debt_paydown_split_pct') if existing and existing.source else '0') -%}
-        <input class="form-input" type="number" name="debt_paydown_split_pct" id="fe-debt-split"
-               step="1" min="0" max="100" value="{{ _dps_val }}"
-               oninput="feSplitSync(this, 'fe-dev-split')">
-      </div>
-      <div class="form-field" style="max-width:180px">
-        <label class="form-label">Dev Fee Top-Up Split (%)</label>
-        {%- set _devs_val = (existing.source.get('dev_fee_split_pct') if existing and existing.source else '100') -%}
-        <input class="form-input" type="number" name="dev_fee_split_pct" id="fe-dev-split"
-               step="1" min="0" max="100" value="{{ _devs_val }}"
-               oninput="feSplitSync(this, 'fe-debt-split')"
-               title="Routes this share of float earnings to the deferred Developer Fee balance at the paydown milestone">
-      </div>
-    </div>
-    <div class="form-hint" id="fe-split-hint" style="font-size:11px;color:var(--text-muted);margin-top:-4px;margin-bottom:6px">
-      Debt Paydown + Dev Fee Top-Up must sum to 100%. Remainder defaults to Dev Fee.
-    </div>
-    <div class="form-row">
       <div class="form-field">
-        <label class="form-label">Paydown Target — Debt Module</label>
-        {%- set _ptdm_val = (existing.source.get('paydown_debt_module_id') if existing and existing.source else '') -%}
-        {%- set _ptdm_val_str = (_ptdm_val | string) if _ptdm_val else '' -%}
-        <select class="form-input" name="paydown_debt_module_id">
-          <option value="">— select debt module —</option>
-          {%- for _cm in sibling_capital_modules or [] -%}
-            {%- if _cm.vehicle_type == 'debt' -%}
-              <option value="{{ _cm.id }}"{% if _cm.id == _ptdm_val_str %} selected{% endif %}>{{ _cm.label }}</option>
-            {%- endif -%}
-          {%- endfor -%}
-        </select>
-      </div>
-      <div class="form-field">
-        <label class="form-label">Paydown Milestone</label>
-        {%- set _ptms_val = (existing.source.get('paydown_milestone_id') if existing and existing.source else '') -%}
+        <label class="form-label">Waterfall Milestone</label>
+        {%- set _ptms_val = (existing.source.get('waterfall_milestone_id') or existing.source.get('paydown_milestone_id') if existing and existing.source else '') -%}
         {%- set _ptms_val_str = (_ptms_val | string) if _ptms_val else '' -%}
-        <select class="form-input" name="paydown_milestone_id">
+        <select class="form-input" name="waterfall_milestone_id">
           <option value="">— select milestone —</option>
           {%- for _ms in scenario_milestones or [] -%}
             <option value="{{ _ms.id }}"{% if _ms.id == _ptms_val_str %} selected{% endif %}>{{ _ms.label }}</option>
@@ -1476,6 +1429,7 @@ function ulTimingChanged(val) {
     </div>
   </div>
   {% endif %}
+
 
   {% if _is_perm_debt %}
   {# Permanent debt: amortization term + interest rate.  Exit Vehicle is
