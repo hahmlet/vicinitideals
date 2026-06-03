@@ -121,7 +121,7 @@ For single-project scenarios (every production deal today) the loop runs once, i
 
 **`OperationalOutputs.equity_required` semantics (post 2026-04-25).** Two engines write this field along distinct paths:
 
-- **Cashflow engine (per project, multi-project)**: `equity_required = max(0, Σ UseLines (excluding exit phase) − Σ debt module principal via junction)`. Uses Σ Uses (which includes Operating Reserve, Lease-Up Reserve, capitalized-interest stubs) — *not* TPC. This is the target equity check the project's equity stack must bring at close. The cashflow engine writes one row per project; the rollup sums them.
+- **Cashflow engine (per project, multi-project)**: `equity_required = max(0, Σ UseLines (excluding exit phase) − Σ debt module principal via junction)`. Uses Σ Uses (which includes Interest Reserve, Operating Deficit Reserve, Operating Reserve, capitalized-interest stubs) — *not* TPC. See [FINANCIAL_MODEL.md §3](FINANCIAL_MODEL.md) for the three-reserve tiled-timeline model (post-2026-06-03 reserves-spec-align). This is the target equity check the project's equity stack must bring at close. The cashflow engine writes one row per project; the rollup sums them.
 - **Waterfall engine (single-project only)**: overwrites the default project's row with the richer `Σ |negative LP+GP capital calls|` from the actual waterfall allocation. For multi-project deals the waterfall *skips* this overwrite (the scenario-wide sum dumped onto one project's row produced wildly inflated numbers like $7.7M equity for a $2.7M project).
 
 **Sources Gap (Underwriting KPI)** = `Σ Total Uses across projects − Σ junction-scoped Sources (debt + committed equity)`. Distinct from Equity Required:

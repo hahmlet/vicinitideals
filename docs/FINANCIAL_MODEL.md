@@ -1201,7 +1201,17 @@ occupancy_month_i = clamp(initial_occ + step × i, 0, stabilized_occ)
 
 Where `initial_occ` defaults to 50% and `stabilized_occ` defaults to 95% (configurable per stream / per deal).
 
-**Why 50% initial?** This is the `OperationalInputs.initial_occupancy_pct` field. In new construction it might be 0%; in acquisition-with-repositioning it might be 60% (existing tenants retained). The default of 50% when NULL is a conservative assumption. **As of 2026-05-29, the New Deal Wizard collects this value** (plus `lease_up_curve` and `lease_up_curve_steepness`) in the Lease-Up step (inline with Step 1 when a lease-up phase is present), so most new deals will have an explicit user-set value rather than the NULL default.
+**Why 0% initial when NULL?** This is the `OperationalInputs.initial_occupancy_pct` field. In new construction it should be 0%; in acquisition-with-repositioning it should be ~60% (existing tenants retained). **As of 2026-06-03 the engine defaults NULL to 0%** (matching the wizard slider's default rendering and the slider label text "0% = new construction (no pre-leasing)"). Before that date the engine defaulted NULL to 50%, which produced a silent mismatch where the wizard slider rendered at 0 but the cash-flow loop ran the deal as if the slider were at 50 — surfaced on deal `cf0e77c3` when Operating Deficit Reserve sized at $0 despite an actual operating shortfall. The New Deal Wizard (collected since 2026-05-29) supplies an explicit value on the way in for all new deals; legacy deals on NULL now read 0%.
+
+**Shared ramp helper (2026-06-03).** The lease-up occupancy formula lives in `app/engines/cashflow_compile.py:lease_up_ramp_occupancy` and is called from three call sites that previously had divergent implementations:
+
+| Call site | What it scales | Pre-2026-06-03 behavior |
+|---|---|---|
+| `_stream_occupancy_pct` | Per-stream revenue occupancy | Read `lease_up_curve` (linear / s_curve) |
+| `_compute_period` OpEx ramp | Per-line OpEx where `scale_with_lease_up = True` | **Always linear** regardless of slider |
+| `_odr_pool` integral | OpEx side of `Σ max(OpEx − LUR, 0)` | **Always linear** regardless of slider |
+
+Result of the divergence: an S-curve deal had revenue ramping S-shape while OpEx ramped linear, producing a shape mismatch that fed into Operating Deficit Reserve sizing. The shared helper aligns all three call sites — revenue, OpEx, and ODR now walk the same curve with the same `initial_occupancy_pct`, `stabilized_occupancy` (0.95), and `lease_up_curve_steepness` (default 5) inputs.
 
 **S-curve option.** When `OperationalInputs.lease_up_curve = "s_curve"`, the ramp uses a logistic function instead of linear:
 
@@ -1400,6 +1410,8 @@ else:
 **Why `scale_with_lease_up` and `lease_up_floor_pct`?** Some expense lines (utilities, trash, leasing commissions) scale directly with occupancy — `scale_with_lease_up = True`, `lease_up_floor_pct = 0`. Others (property taxes, insurance, base salaries) are fixed — `scale_with_lease_up = False`, they stay at 100% regardless. Some are in between (maintenance at 50% minimum even when empty) — `scale_with_lease_up = True, lease_up_floor_pct = 0.5`.
 
 The default when creating a new expense line is `scale_with_lease_up = False` (conservative: costs show at full during lease-up). Users opt in to lease-up scaling.
+
+**Ramp curve consistency (2026-06-03).** When `scale_with_lease_up = True`, the OpEx ramp now calls the shared `lease_up_ramp_occupancy` helper in `app/engines/cashflow_compile.py` — the same helper that drives revenue occupancy and ODR sizing. Result: if the slider is set to S-curve, both revenue and OpEx ramp on the S-curve; if linear, both ramp linearly. Prior to this change, revenue honored the slider while OpEx always ran linear, producing a shape mismatch on S-curve deals.
 
 ### 5.3 Standard OpEx categories
 
@@ -2406,7 +2418,7 @@ The pill replaces the legacy sidebar "Sources = Uses" banner (removed April 18 2
 | `PLACEHOLDER_DSCR` | `Decimal("1.25")` | cashflow.py | Fallback if `CapitalModule.source.dscr_min` not set on perm-debt module |
 | `_LEASE_UP_INCOME_FACTOR` | `1/3` | cashflow.py | Phantom CF avg income during lease-up |
 | `operation_reserve_months` | `6` (default) | OperationalInputs | Reserve horizon for gap-fill sizing |
-| `initial_occupancy_pct` | `50` (default) | OperationalInputs | Starting point of lease-up ramp |
+| `initial_occupancy_pct` | `0` (default when NULL, as of 2026-06-03) | OperationalInputs | Starting point of lease-up ramp. Wizard slider supplies an explicit value on new deals. |
 | `stabilized_occupancy_pct` | `95` (default) | IncomeStream | Ending point of lease-up ramp |
 | `expense_growth_rate_pct_annual` | `3` (default) | OperationalInputs | Annual OpEx escalation |
 | `noi_escalation_rate_pct` | `3` (default) | OperationalInputs | NOI-mode escalation |
