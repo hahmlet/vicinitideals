@@ -57,6 +57,7 @@ BASIS_BUCKETS: tuple[tuple[str, str], ...] = (
     ("capitalized_interest", "Capitalized Interest"),
     ("total_finance_costs", "Total Finance Costs"),
     ("operating_reserve", "Operating Reserve"),
+    ("operating_deficit_reserve", "Operating Deficit Reserve"),
     ("construction_ds_reserve", "Construction DS Reserve"),
     ("cash_flow_support_reserve", "Cash Flow Support Reserve"),
     ("soft_remaining", "Remaining Soft Costs"),
@@ -112,6 +113,8 @@ def classify_basis_bucket(use_line: UseLine) -> str:
         return "total_finance_costs"
     if label == "Operating Reserve":
         return "operating_reserve"
+    if label == "Operating Deficit Reserve":
+        return "operating_deficit_reserve"
     if label == "Construction DS Reserve":
         return "construction_ds_reserve"
     if label == "Cash Flow Support Reserve":

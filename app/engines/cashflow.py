@@ -2360,6 +2360,88 @@ def _estimate_stabilized_noi_monthly(
     return _q(gross_revenue - operating_expenses)
 
 
+def _odr_pool(
+    streams: list,
+    expense_lines: list,
+    inputs: "OperationalInputs",
+    lease_up_months: int,
+) -> Decimal:
+    """Operating Deficit Reserve — Σ max(OpEx_k − LUR_k, 0) across lease-up.
+
+    Spec §3.2: ODR funds the gap between operating cost and effective rent
+    while the property absorbs from initial → stabilized occupancy. Sizes
+    off the deal's curves (income ramp + opex ramp) so the pool reflects
+    exactly the months the property cannot self-fund OpEx.
+
+    Returns ``ZERO`` when ``lease_up_months <= 0`` — ODR is not auto-created
+    on pure acquisition / stabilized deals (gating is enforced at the
+    write-back site).
+
+    The ramp model mirrors the period loop's contract: occupancy steps
+    linearly from ``initial_occupancy_pct`` to ``stabilized_occupancy_pct``;
+    per-stream effective revenue scales by ``(occ × (1 − bad_debt −
+    concessions))``; expense lines flagged ``scale_with_lease_up`` follow
+    the same ramp (floored at ``lease_up_floor_pct``); other lines stay
+    at their stabilized monthly run-rate. Balance-independent — does not
+    enter the principal divisor solve.
+    """
+    if lease_up_months <= 0:
+        return ZERO
+
+    initial_occ = _percent(inputs.initial_occupancy_pct, default=Decimal("50"))
+    stabilized_occ = Decimal("0.95")
+
+    stream_inputs: list[tuple[Decimal, Decimal, Decimal]] = []
+    for stream in streams:
+        if not _is_stream_active(stream, PeriodType.lease_up):
+            continue
+        base = _stream_base_amount(stream)
+        occ_target = _percent(stream.stabilized_occupancy_pct, default=Decimal("95"))
+        bad_debt = _percent(getattr(stream, "bad_debt_pct", None))
+        concessions = _percent(getattr(stream, "concessions_pct", None))
+        net_factor = ONE - bad_debt - concessions
+        stream_inputs.append((base, occ_target, net_factor))
+
+    expense_inputs: list[tuple[Decimal, bool, Decimal]] = []
+    for line in expense_lines:
+        if not _is_expense_line_active(line, PeriodType.lease_up):
+            continue
+        monthly = _q(_to_decimal(line.annual_amount) / Decimal("12"))
+        scale_with_ramp = bool(getattr(line, "scale_with_lease_up", False))
+        floor_pct = _percent(getattr(line, "lease_up_floor_pct", None), default=ZERO)
+        expense_inputs.append((monthly, scale_with_ramp, floor_pct))
+
+    pool = ZERO
+    for k in range(lease_up_months):
+        if lease_up_months <= 1:
+            ramp_occ = stabilized_occ
+        else:
+            step = (stabilized_occ - initial_occ) / Decimal(lease_up_months - 1)
+            ramp_occ = max(min(initial_occ + step * Decimal(k), stabilized_occ), ZERO)
+
+        income_k = ZERO
+        for base, occ_target, net_factor in stream_inputs:
+            stream_occ = (
+                (ramp_occ / stabilized_occ) * occ_target
+                if stabilized_occ > ZERO
+                else ZERO
+            )
+            income_k += _q(base * stream_occ * net_factor)
+
+        opex_k = ZERO
+        for monthly, scale_with_ramp, floor_pct in expense_inputs:
+            scale = ONE
+            if scale_with_ramp:
+                scale = max(ramp_occ, floor_pct)
+            opex_k += _q(monthly * scale)
+
+        deficit = opex_k - income_k
+        if deficit > ZERO:
+            pool += deficit
+
+    return _q(pool)
+
+
 def _ir_lease_up_pool(
     funded: Decimal,
     rate_pct: float | Decimal,
@@ -2526,6 +2608,10 @@ async def _auto_size_debt_modules(
     # Keep it here so pre-rename DB rows don't get counted in the gap-fill total.
     _BALANCE_ONLY_LABELS = {
         "Operating Reserve",
+        # Operating Deficit Reserve — engine-sized off curves and re-written
+        # below. Excluded from the input total so the row's prior amount does
+        # not double-count when the deal is recomputed.
+        "Operating Deficit Reserve",
         # CI labels (100% factor — balance grows, use line is the accrued amount)
         "Capitalized Construction Interest",
         "Construction Interest Reserve",          # legacy label — aliased for backward compat
@@ -2591,6 +2677,16 @@ async def _auto_size_debt_modules(
         active = {str(phase) for phase in (line.active_in_phases or [])}
         if "stabilized" in active or "operation_stabilized" in active:
             opex_monthly_pre += _q(_to_decimal(line.annual_amount) / Decimal("12"))
+
+    # Operating Deficit Reserve — spec §3.2. Curve-driven, balance-independent,
+    # gated on the presence of a lease-up phase. Computed up front so it can
+    # enter ``total_uses`` for the principal solve; written back as a UseLine
+    # after sizing completes. ``"Operating Deficit Reserve"`` lives in
+    # ``_BALANCE_ONLY_LABELS`` so the prior amount on the row does not
+    # double-count when the deal recomputes.
+    _odr_amount = _odr_pool(streams, expense_lines, inputs, lease_up_months)
+    if _odr_amount > ZERO:
+        total_uses += _odr_amount
 
     # Phase B: new multi-debt path when debt_types is explicitly set on inputs.
     # Bridge loans (pre_development_loan, acquisition_loan, construction_loan, bridge)
@@ -3441,6 +3537,39 @@ async def _auto_size_debt_modules(
         )
         session.add(new_op)
         use_lines.append(new_op)
+
+    # Operating Deficit Reserve writeback. Spec §3.2: gated on the presence of
+    # a lease-up phase. ``_odr_amount`` was computed up front and folded into
+    # ``total_uses`` for the principal solve; here we surface it as a UseLine
+    # so it appears in the Sources & Uses and the cash-flow line items can key
+    # off ``label == "Operating Deficit Reserve"`` in Slice 5's waterfall.
+    _odr_notes = (
+        f"Auto-computed: Σ max(OpEx − LUR, 0) over {lease_up_months} lease-up months"
+        if lease_up_months > 0
+        else "Auto-cleared: no lease-up phase in timeline"
+    )
+    odr_found = False
+    for ul in use_lines:
+        if getattr(ul, "label", "") == "Operating Deficit Reserve":
+            ul.amount = _odr_amount
+            ul.notes = _odr_notes
+            ul.cost_category = "soft"
+            session.add(ul)
+            odr_found = True
+            break
+    if not odr_found and project_id and _odr_amount > ZERO:
+        new_odr = UseLine(
+            project_id=project_id,
+            label="Operating Deficit Reserve",
+            phase="lease_up",
+            amount=_odr_amount,
+            timing_type="first_day",
+            cost_category="soft",
+            dev_fee_basis_bucket="operating_deficit_reserve",
+            notes=_odr_notes,
+        )
+        session.add(new_odr)
+        use_lines.append(new_odr)
 
     # Merge Lease-Up Reserve into Interest Reserve: perm DS shortfall during lease-up
     # is pre-stabilization carry, same as construction IR.  Add to total_constr_io so

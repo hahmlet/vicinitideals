@@ -19,7 +19,11 @@ from types import SimpleNamespace
 
 import pytest
 
-from app.engines.cashflow import _draw_schedule_for, _ir_lease_up_pool
+from app.engines.cashflow import _draw_schedule_for, _ir_lease_up_pool, _odr_pool
+from app.engines.dev_fee import BASIS_BUCKET_KEYS, classify_basis_bucket
+from app.models.deal import IncomeStream, OperationalInputs, OperatingExpenseLine, UseLine
+
+ZERO = Decimal("0")
 
 
 @pytest.mark.unit
@@ -153,3 +157,163 @@ def test_ir_lease_up_pool_signature_kept_for_call_site_compat():
         expense_lines=[],
         inputs=None,
     )
+
+
+# ---------------------------------------------------------------------------
+# Operating Deficit Reserve (ODR) — Slice 4
+# ---------------------------------------------------------------------------
+
+
+def _odr_inputs(initial_occupancy_pct: float = 0.0) -> OperationalInputs:
+    return OperationalInputs(
+        initial_occupancy_pct=Decimal(str(initial_occupancy_pct)),
+    )
+
+
+def _odr_stream(rent_per_unit: float, unit_count: int, stab_occ: float = 95.0) -> IncomeStream:
+    return IncomeStream(
+        stream_type="residential_rent",
+        label="Rent",
+        amount_per_unit_monthly=Decimal(str(rent_per_unit)),
+        unit_count=unit_count,
+        stabilized_occupancy_pct=Decimal(str(stab_occ)),
+        active_in_phases=["lease_up", "stabilized"],
+    )
+
+
+def _odr_opex(annual_amount: float, scale_with_lease_up: bool = False) -> OperatingExpenseLine:
+    return OperatingExpenseLine(
+        label="Operating Expenses",
+        annual_amount=Decimal(str(annual_amount)),
+        active_in_phases=["lease_up", "stabilized"],
+        scale_with_lease_up=scale_with_lease_up,
+    )
+
+
+@pytest.mark.unit
+def test_odr_zero_lease_up_months_returns_zero():
+    """Spec §3.2 gating — ODR is not auto-created without a lease-up phase."""
+    assert _odr_pool(
+        streams=[_odr_stream(2000, 10)],
+        expense_lines=[_odr_opex(120000)],
+        inputs=_odr_inputs(),
+        lease_up_months=0,
+    ) == ZERO
+
+
+@pytest.mark.unit
+def test_odr_flat_opex_no_income_equals_total_opex():
+    """With zero rent the deficit each month is the full OpEx."""
+    pool = _odr_pool(
+        streams=[],
+        expense_lines=[_odr_opex(120000)],         # $10k / mo
+        inputs=_odr_inputs(initial_occupancy_pct=0.0),
+        lease_up_months=12,
+    )
+    # 12 × $10k = $120k
+    assert pool == Decimal("120000.000000")
+
+
+@pytest.mark.unit
+def test_odr_income_at_or_above_opex_returns_zero():
+    """Spec §3.2 — `max(OpEx − LUR, 0)` so over-coverage cannot reduce ODR below 0.
+
+    Starting at stabilized occupancy from month 0 means LUR ≥ OpEx every
+    month, even though the helper does still iterate. The clamp must hold.
+    """
+    pool = _odr_pool(
+        streams=[_odr_stream(2000, 10)],           # 10 × $2000 × 0.95 = $19k / mo cap
+        expense_lines=[_odr_opex(120000)],         # $10k / mo
+        inputs=_odr_inputs(initial_occupancy_pct=95.0),
+        lease_up_months=12,
+    )
+    assert pool == ZERO
+
+
+@pytest.mark.unit
+def test_odr_slower_absorption_produces_larger_pool():
+    """Spec §3.2 endogenous window — slower ramp = bigger ODR.
+
+    Same opex, same stabilized rent, but a 24-month ramp starting from 0%
+    occupancy spends more months under-water than a 12-month ramp.
+    """
+    streams = [_odr_stream(1500, 10)]               # 10 × $1500 × 0.95 = $14,250 / mo cap
+    expenses = [_odr_opex(120000)]                  # $10k / mo
+    fast = _odr_pool(streams, expenses, _odr_inputs(0.0), lease_up_months=12)
+    slow = _odr_pool(streams, expenses, _odr_inputs(0.0), lease_up_months=24)
+    assert slow > fast
+    assert fast > ZERO
+
+
+@pytest.mark.unit
+def test_odr_scale_with_lease_up_reduces_pool():
+    """Expense lines flagged ``scale_with_lease_up`` ramp with occupancy
+    too, so the early-month deficit is smaller than a flat-opex baseline."""
+    streams = [_odr_stream(1500, 10)]
+    flat = _odr_pool(
+        streams=streams,
+        expense_lines=[_odr_opex(120000, scale_with_lease_up=False)],
+        inputs=_odr_inputs(0.0),
+        lease_up_months=12,
+    )
+    ramped = _odr_pool(
+        streams=streams,
+        expense_lines=[_odr_opex(120000, scale_with_lease_up=True)],
+        inputs=_odr_inputs(0.0),
+        lease_up_months=12,
+    )
+    assert ramped < flat
+
+
+@pytest.mark.unit
+def test_odr_inactive_lines_ignored():
+    """OpEx lines not active in the lease-up phase are excluded entirely."""
+    inactive = OperatingExpenseLine(
+        label="Stabilized-Only Reserve",
+        annual_amount=Decimal("60000"),
+        active_in_phases=["stabilized"],       # NOT in lease_up
+    )
+    pool = _odr_pool(
+        streams=[],
+        expense_lines=[_odr_opex(120000), inactive],
+        inputs=_odr_inputs(),
+        lease_up_months=6,
+    )
+    # Inactive line skipped → 6 × $10k from the active line only.
+    assert pool == Decimal("60000.000000")
+
+
+# ---------------------------------------------------------------------------
+# Dev Fee basis bucket integration
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.unit
+def test_odr_basis_bucket_registered():
+    """``operating_deficit_reserve`` must be a recognized BASIS_BUCKETS key
+    so the multi-source Dev Fee binding pipeline can include / exclude ODR
+    via the standard ``basis_exclusions`` mechanism."""
+    assert "operating_deficit_reserve" in BASIS_BUCKET_KEYS
+
+
+@pytest.mark.unit
+def test_odr_label_classifies_to_correct_bucket():
+    """Unstamped legacy rows labeled "Operating Deficit Reserve" must
+    classify to the new bucket via the label fallback path."""
+    ul = UseLine(
+        label="Operating Deficit Reserve",
+        cost_category="soft",
+    )
+    assert classify_basis_bucket(ul) == "operating_deficit_reserve"
+
+
+@pytest.mark.unit
+def test_stamped_bucket_wins_over_label():
+    """The stamped column is authoritative — preserves classification when
+    the user renames the row."""
+    ul = UseLine(
+        label="Renamed By User",
+        cost_category="soft",
+        dev_fee_basis_bucket="operating_deficit_reserve",
+    )
+    assert classify_basis_bucket(ul) == "operating_deficit_reserve"
