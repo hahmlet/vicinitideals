@@ -155,7 +155,7 @@ async def compute_waterfall(
     # topups are applied first at their target period (priority rule
     # mirrors `compute_deferred_balance_schedule`).
     _deferred_at_close = _read_deferred_dev_fee_at_close(deal_model)
-    _float_topups_by_period = _read_float_topup_periods(
+    _found_money_by_period = _read_found_money_periods(
         deal_model.operational_outputs
     )
     _deferred_balance = _deferred_at_close
@@ -185,16 +185,12 @@ async def compute_waterfall(
 
         _accrue_current_period_obligations(cash_flow.period, phase_name, module_states)
 
-        # Phase B: a float-earnings topup landing in this period reduces
-        # the deferred balance directly (mirrors Phase A's debt paydown
-        # event — `net_cash_flow` was deliberately left untouched for
-        # bank-account-proof conservatism, so we apply the topup as a
-        # discrete balance reduction here, then let the waterfall tier
-        # fill any remaining room from operating cash.
-        _ft_amt = _float_topups_by_period.get(cash_flow.period, ZERO)
-        if _ft_amt > ZERO and _deferred_balance > ZERO:
-            _ft_applied = _q(min(_ft_amt, _deferred_balance))
-            _deferred_balance = _q(_deferred_balance - _ft_applied)
+        # Found money landing in this period is added to available_cash
+        # and flows through the normal waterfall tier order (debt service
+        # → DDF → residual equity split).
+        _fm_amt = _found_money_by_period.get(cash_flow.period, ZERO)
+        if _fm_amt > ZERO:
+            available_cash = _q(available_cash + _fm_amt)
 
         for tier in waterfall_tiers:
             if (
@@ -320,7 +316,7 @@ async def compute_waterfall(
         deferred_at_close=_deferred_at_close,
         period_count=max((row.period for row in cash_flows), default=0),
         waterfall_paydowns_by_period=_waterfall_paydowns_by_period,
-        float_topups_by_period=_float_topups_by_period,
+        float_topups_by_period={},
     )
     distribution_report = _build_investor_distribution_report(
         deal_uuid=deal_uuid,
@@ -890,22 +886,21 @@ def _read_deferred_dev_fee_at_close(deal_model: Scenario) -> Decimal:
     return ZERO
 
 
-def _read_float_topup_periods(
+def _read_found_money_periods(
     outputs: OperationalOutputs | None,
 ) -> dict[int, Decimal]:
-    """Read pre-resolved `dev_fee_topup_periods` from
+    """Read pre-resolved `found_money_periods` from
     `OperationalOutputs.float_earnings_series` (written by cashflow.py).
 
-    The cashflow engine resolves each float source's `paydown_milestone_id`
-    to a period number using the same milestone_map it already loaded for
-    debt_paydown, and persists the aggregate as
-    `float_earnings_series["dev_fee_topup_periods"] = {str(period): amount}`.
+    The cashflow engine resolves each float source's `waterfall_milestone_id`
+    to a period number and persists the aggregate as
+    `float_earnings_series["found_money_periods"] = {str(period): amount}`.
 
     Single OO row only — Scenario.operational_outputs is `uselist=False`,
     matching the multi-project limitation called out in `_apply_levered_metrics`.
     """
     series = (outputs.float_earnings_series or {}) if outputs else {}
-    raw = series.get("dev_fee_topup_periods") or {}
+    raw = series.get("found_money_periods") or {}
     out: dict[int, Decimal] = {}
     for k, v in raw.items():
         try:

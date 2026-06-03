@@ -6915,18 +6915,9 @@ async def handle_form_create_or_update(
                 pass
         if yield_pct := _fd(form.get("yield_pct")):
             source_d["yield_pct"] = float(yield_pct)
-        if dev_split := _fd(form.get("dev_fee_split_pct")):
-            source_d["dev_fee_split_pct"] = float(dev_split)
-        if debt_split := _fd(form.get("debt_paydown_split_pct")):
-            source_d["debt_paydown_split_pct"] = float(debt_split)
-        if paydown_debt_raw := (form.get("paydown_debt_module_id") or "").strip():
+        if wf_ms_raw := (form.get("waterfall_milestone_id") or "").strip():
             try:
-                source_d["paydown_debt_module_id"] = str(UUID(paydown_debt_raw))
-            except ValueError:
-                pass
-        if paydown_ms_raw := (form.get("paydown_milestone_id") or "").strip():
-            try:
-                source_d["paydown_milestone_id"] = str(UUID(paydown_ms_raw))
+                source_d["waterfall_milestone_id"] = str(UUID(wf_ms_raw))
             except ValueError:
                 pass
         constr_carry_type = form.get("construction_carry_type", "none")
@@ -11391,7 +11382,7 @@ async def dev_fee_explainer_modal(
             {
                 "parent_label": getattr(parent_mod, "label", None) or "(unknown)",
                 "topup_amount": topup,
-                "paydown_milestone_id": src.get("paydown_milestone_id"),
+                "waterfall_milestone_id": src.get("waterfall_milestone_id") or src.get("paydown_milestone_id"),
             }
         )
 

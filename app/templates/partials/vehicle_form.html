@@ -280,7 +280,7 @@
   {%- set _ft = (vehicle.fee_terms if _is_edit else {}) or {} -%}
   {%- set _ft_excl = _ft.get('basis_exclusions') or [] -%}
   {%- set _ft_open = _ft.get('max_pct') or _ft.get('per_unit_cap') or _ft.get('absolute_cap') or _ft_excl or _ft.get('regulated') or _ft.get('notes') -%}
-  <div class="vf-fee-rule-section" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);display:{{ 'none' if (_is_edit and vehicle.vehicle_type == 'deferred_developer_fee') else '' }}">
+  <div class="vf-fee-rule-section" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);display:{{ 'none' if (_is_edit and vehicle.vehicle_type in ('deferred_developer_fee', 'float_earnings')) else '' }}">
     <details {% if _ft_open %}open{% endif %} style="margin:0">
       <summary style="cursor:pointer;font-size:13px;font-weight:600;color:var(--text);padding:4px 0">
         Developer Fee Rule

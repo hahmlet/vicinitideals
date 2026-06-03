@@ -4,22 +4,20 @@ Models interest income earned on the drawn-but-unspent balance of a parent
 capital source that is forced to draw 100% of proceeds on Day 1 of
 construction (tax-exempt construction bonds being the canonical case).
 
-Design constraints (per `docs/feature-plans/interest-earned-on-day-1-draws.md`):
+Design constraints:
   - Earnings DO NOT shrink reserves (IR / OR / LUR / CFSR). This module
     runs strictly after `_auto_size_debt_modules()` and the bank-account
     proof.
-  - Earnings route to one or both of (a) developer fee top-up, (b) debt
-    principal paydown at a user-chosen milestone. The split is user-set.
-  - Phase A ships paydown only — dev fee top-up is forced to 0 in the UI
-    until the in-flight developer-fee balance work lands.
+  - All earnings route to the GP/LP profit waterfall as a lump sum at the
+    user-chosen waterfall milestone. The waterfall distributes them through
+    its normal tier order (debt service → DDF → residual equity split).
   - Compute-time validation surfaces broken preconditions (missing parent,
-    parent flipped to `draw_down`, deleted paydown target/milestone) as
-    standard compute warnings. No live UI banners.
+    parent flipped to `draw_down`) as standard compute warnings.
 
 Conservative assumption: parent balance depletes linearly across the
 construction period, matching the `linear` draw-schedule convention used
 by the interest-reserve sizer. Earnings flow out of the balance (they
-don't compound back into it) because the dollars are routed downstream.
+don't compound back into it).
 """
 
 from __future__ import annotations
@@ -76,7 +74,6 @@ class FloatBalanceRow:
 @dataclass(frozen=True)
 class FloatValidation:
     earnings_blocked: bool     # parent missing or wrong-state — zero earnings
-    paydown_blocked: bool      # debt/milestone FK broken — zero paydown only
     warnings: list[str] = field(default_factory=list)
 
 
@@ -85,10 +82,7 @@ class FloatEarningsResult:
     float_source_id: UUID
     parent_module_id: UUID | None
     total_earnings: Decimal
-    paydown_amount: Decimal
-    dev_fee_topup_amount: Decimal
-    paydown_debt_module_id: UUID | None
-    paydown_milestone_id: UUID | None
+    waterfall_milestone_id: UUID | None   # period when earnings hit the waterfall
     schedule: list[FloatBalanceRow] = field(default_factory=list)
     warnings: list[str] = field(default_factory=list)
 
@@ -108,10 +102,6 @@ def validate_float_source(
     `earnings_blocked` true when the parent reference is missing or the
     parent is no longer in a state that produces float (draw_type flipped
     away from `fully_drawn`, or `balance_earns_interest` toggled off).
-
-    `paydown_blocked` true only when the user opted into a debt paydown
-    split but the target debt module or milestone is missing. Earnings
-    still flow to the dev fee top-up share in that case.
     """
     warnings: list[str] = []
     source = float_module.source or {}
@@ -122,61 +112,29 @@ def validate_float_source(
         warnings.append(
             f"Float-earnings source '{label}' has no parent — no earnings computed."
         )
-        return FloatValidation(earnings_blocked=True, paydown_blocked=True, warnings=warnings)
+        return FloatValidation(earnings_blocked=True, warnings=warnings)
 
     parent = next((m for m in capital_modules if m.id == parent_uuid), None)
     if parent is None:
         warnings.append(
             f"Float-earnings source '{label}' references a parent that no longer exists — no earnings computed."
         )
-        return FloatValidation(earnings_blocked=True, paydown_blocked=True, warnings=warnings)
+        return FloatValidation(earnings_blocked=True, warnings=warnings)
 
     parent_source = parent.source or {}
     if parent_source.get("draw_type") != "fully_drawn":
         warnings.append(
             f"Float-earnings source '{label}' paused: parent '{parent.label}' no longer draws at start."
         )
-        return FloatValidation(earnings_blocked=True, paydown_blocked=True, warnings=warnings)
+        return FloatValidation(earnings_blocked=True, warnings=warnings)
 
     if not parent_source.get("balance_earns_interest"):
         warnings.append(
             f"Float-earnings source '{label}' paused: parent '{parent.label}' has 'Balance Earns Interest' turned off."
         )
-        return FloatValidation(earnings_blocked=True, paydown_blocked=True, warnings=warnings)
+        return FloatValidation(earnings_blocked=True, warnings=warnings)
 
-    # Paydown FK integrity — only checked when user opted into a paydown split.
-    paydown_blocked = False
-    debt_split = _coerce_decimal(source.get("debt_paydown_split_pct"))
-    if debt_split > ZERO:
-        paydown_uuid = _coerce_uuid(source.get("paydown_debt_module_id"))
-        if paydown_uuid is None:
-            warnings.append(
-                f"Float-earnings '{label}': paydown skipped — no debt module selected."
-            )
-            paydown_blocked = True
-        elif not any(m.id == paydown_uuid for m in capital_modules):
-            warnings.append(
-                f"Float-earnings '{label}': paydown skipped — target debt module deleted."
-            )
-            paydown_blocked = True
-
-        milestone_uuid = _coerce_uuid(source.get("paydown_milestone_id"))
-        if milestone_uuid is None:
-            warnings.append(
-                f"Float-earnings '{label}': paydown skipped — no milestone selected."
-            )
-            paydown_blocked = True
-        elif not any(ms.id == milestone_uuid for ms in milestones):
-            warnings.append(
-                f"Float-earnings '{label}': paydown skipped — target milestone deleted."
-            )
-            paydown_blocked = True
-
-    return FloatValidation(
-        earnings_blocked=False,
-        paydown_blocked=paydown_blocked,
-        warnings=warnings,
-    )
+    return FloatValidation(earnings_blocked=False, warnings=warnings)
 
 
 # ----------------------------------------------------------------------------
@@ -228,24 +186,6 @@ def compute_balance_schedule(
     return _q(total_earnings), schedule
 
 
-def split_earnings(
-    *,
-    total: Decimal,
-    dev_fee_split_pct: Decimal,
-    debt_paydown_split_pct: Decimal,
-) -> tuple[Decimal, Decimal]:
-    """Apply the user-entered split. Returns (dev_fee_amount, paydown_amount).
-
-    Valid uses are Deferred Dev Fee and Debt Paydown only. Debt paydown gets
-    exactly its stated %; everything else (including any unallocated remainder)
-    goes to dev fee. Defaults to 100% dev fee when neither split is set.
-    """
-    debt_pct = min(HUNDRED, max(ZERO, debt_paydown_split_pct or ZERO))
-    paydown_amount = _q(total * debt_pct / HUNDRED)
-    dev_amount = _q(total - paydown_amount)
-    return dev_amount, paydown_amount
-
-
 # ----------------------------------------------------------------------------
 # Top-level entry point
 # ----------------------------------------------------------------------------
@@ -259,14 +199,9 @@ def compute_scenario_float_earnings(
     """Compute float-earnings for every `vehicle_type == "float_earnings"`
     source in the scenario.
 
-    Caller responsibilities:
-      - render each result's `warnings` into the standard compute warnings UI
-      - feed `paydown_amount` + `paydown_debt_module_id` +
-        `paydown_milestone_id` into `app/engines/debt_paydown.apply_paydown()`
-      - feed `dev_fee_topup_amount` into the developer-fee balance writer
-        (Phase B; ignored in Phase A — defaults force 100% to paydown)
-
-    This function does NOT mutate the inputs.
+    All earnings route to the GP/LP profit waterfall as a lump sum at the
+    `waterfall_milestone_id` period. The waterfall distributes them through
+    its normal tier order.
     """
     results: list[FloatEarningsResult] = []
 
@@ -285,10 +220,7 @@ def compute_scenario_float_earnings(
                     float_source_id=fm.id,
                     parent_module_id=None,
                     total_earnings=ZERO,
-                    paydown_amount=ZERO,
-                    dev_fee_topup_amount=ZERO,
-                    paydown_debt_module_id=None,
-                    paydown_milestone_id=None,
+                    waterfall_milestone_id=None,
                     schedule=[],
                     warnings=verdict.warnings,
                 )
@@ -297,7 +229,6 @@ def compute_scenario_float_earnings(
 
         parent_uuid = _coerce_uuid(source.get("parent_module_id"))
         parent = next((m for m in capital_modules if m.id == parent_uuid), None)
-        # `parent` cannot be None here — validate_float_source would have set earnings_blocked.
 
         parent_principal = _coerce_decimal((parent.source or {}).get("amount"))
         yield_pct = _coerce_decimal(source.get("yield_pct"))
@@ -308,29 +239,18 @@ def compute_scenario_float_earnings(
             yield_pct=yield_pct,
         )
 
-        dev_amount, paydown_amount = split_earnings(
-            total=total,
-            dev_fee_split_pct=_coerce_decimal(source.get("dev_fee_split_pct")),
-            debt_paydown_split_pct=_coerce_decimal(source.get("debt_paydown_split_pct")),
+        # Support legacy key `paydown_milestone_id` for backward compat with
+        # existing source JSONB rows written before this simplification.
+        waterfall_ms_id = _coerce_uuid(
+            source.get("waterfall_milestone_id") or source.get("paydown_milestone_id")
         )
-
-        paydown_debt_id = _coerce_uuid(source.get("paydown_debt_module_id"))
-        paydown_ms_id = _coerce_uuid(source.get("paydown_milestone_id"))
-
-        if verdict.paydown_blocked:
-            paydown_amount = ZERO
-            paydown_debt_id = None
-            paydown_ms_id = None
 
         results.append(
             FloatEarningsResult(
                 float_source_id=fm.id,
                 parent_module_id=parent.id,
                 total_earnings=total,
-                paydown_amount=paydown_amount,
-                dev_fee_topup_amount=dev_amount,
-                paydown_debt_module_id=paydown_debt_id,
-                paydown_milestone_id=paydown_ms_id,
+                waterfall_milestone_id=waterfall_ms_id,
                 schedule=schedule,
                 warnings=verdict.warnings,
             )

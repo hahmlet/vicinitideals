@@ -1606,6 +1606,7 @@ function ulTimingChanged(val) {
   </div>
   {% endif %}
 
+  {% if _ft != 'float_earnings' %}
   {# ── Developer Fee Rule (per-deal override of the linked preset) ──────── #}
   {# `fee_terms_inherited_from_type=True` (legacy column name) means "use   #}
   {# the linked SourceVehicle preset's fee_terms"; False means "this row's #}
@@ -1688,6 +1689,7 @@ function ulTimingChanged(val) {
       </div>
     </details>
   </div>
+  {% endif %}
 
   <div class="form-actions">
     <button type="submit" class="btn btn-primary">Save Changes</button>
