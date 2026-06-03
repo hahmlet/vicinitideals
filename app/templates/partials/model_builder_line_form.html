@@ -1379,6 +1379,18 @@ function ulTimingChanged(val) {
   </div>
   {% endif %}
 
+  {# ── Float Earnings split JS — auto-complement so debt+dev always = 100 ─── #}
+  {% if _ft == 'float_earnings' %}
+  <script>
+  function feSplitSync(changedInput, otherId) {
+    var other = document.getElementById(otherId);
+    if (!other) return;
+    var val = Math.min(100, Math.max(0, parseFloat(changedInput.value) || 0));
+    other.value = 100 - val;
+  }
+  </script>
+  {% endif %}
+
   {# ── Float Earnings child-source fields ──────────────────────────────
      Only rendered when this CapitalModule has vehicle_type=float_earnings.
      The fields read by the engine live on the JSONB `source` column; the
@@ -1419,21 +1431,22 @@ function ulTimingChanged(val) {
     <div class="form-row">
       <div class="form-field" style="max-width:180px">
         <label class="form-label">Debt Paydown Split (%)</label>
-        {%- set _dps_val = (existing.source.get('debt_paydown_split_pct') if existing and existing.source else '100') -%}
-        <input class="form-input" type="number" name="debt_paydown_split_pct"
-               step="1" min="0" max="100" value="{{ _dps_val }}">
+        {%- set _dps_val = (existing.source.get('debt_paydown_split_pct') if existing and existing.source else '0') -%}
+        <input class="form-input" type="number" name="debt_paydown_split_pct" id="fe-debt-split"
+               step="1" min="0" max="100" value="{{ _dps_val }}"
+               oninput="feSplitSync(this, 'fe-dev-split')">
       </div>
       <div class="form-field" style="max-width:180px">
         <label class="form-label">Dev Fee Top-Up Split (%)</label>
-        {%- set _devs_val = (existing.source.get('dev_fee_split_pct') if existing and existing.source else '0') -%}
-        <input class="form-input" type="number" name="dev_fee_split_pct"
+        {%- set _devs_val = (existing.source.get('dev_fee_split_pct') if existing and existing.source else '100') -%}
+        <input class="form-input" type="number" name="dev_fee_split_pct" id="fe-dev-split"
                step="1" min="0" max="100" value="{{ _devs_val }}"
+               oninput="feSplitSync(this, 'fe-debt-split')"
                title="Routes this share of float earnings to the deferred Developer Fee balance at the paydown milestone">
       </div>
     </div>
-    <div class="form-hint" style="font-size:11px;color:var(--text-muted);margin-top:-4px;margin-bottom:6px">
-      Debt Paydown + Dev Fee Top-Up should sum to 100. Anything left over
-      stays in the float source and earns yield through the remaining horizon.
+    <div class="form-hint" id="fe-split-hint" style="font-size:11px;color:var(--text-muted);margin-top:-4px;margin-bottom:6px">
+      Debt Paydown + Dev Fee Top-Up must sum to 100%. Remainder defaults to Dev Fee.
     </div>
     <div class="form-row">
       <div class="form-field">

@@ -258,6 +258,7 @@
         {%- set _src_amt = 0 -%}
       {%- endif -%}
       {%- set _retirement = (m.source.construction_retirement | float) if (m.source and m.source.get('construction_retirement')) else 0 -%}
+      {%- set _is_fe = ((m.vehicle_type | string | replace('VehicleType.','')) == 'float_earnings') -%}
       {%- if m.vehicle_type == 'equity' -%}{%- set _vt_color = '#22c55e' -%}
       {%- elif m.vehicle_type == 'debt' -%}{%- set _vt_color = '#f59e0b' -%}
       {%- elif m.vehicle_type == 'forgivable_loan' -%}{%- set _vt_color = '#a855f7' -%}
@@ -270,7 +271,9 @@
         <td class="text-muted text-small">{{ m.stack_position or '?' }}</td>
         <td style="font-weight:500">{{ m.label }}</td>
         <td>
-          {%- if m.vehicle_type -%}
+          {%- if _is_fe -%}
+            <span style="font-size:10px;color:#3b82f6;font-weight:600;background:#dbeafe;padding:1px 6px;border-radius:8px">Found Money</span>
+          {%- elif m.vehicle_type -%}
             <span style="font-size:10px;color:{{ _vt_color }};font-weight:600">{{ m.vehicle_type | replace('_', ' ') | title }}</span>
             {%- if m.equity_role -%}<span style="font-size:11px;color:{{ _vt_color }};font-weight:600;margin-left:4px">{{ m.equity_role | upper }}</span>{%- endif -%}
           {%- else -%}
@@ -278,7 +281,10 @@
           {%- endif -%}
         </td>
         <td class="col-right text-mono">
-          {% if _src_amt %}{{ _src_amt | currency }}
+          {% if _is_fe %}
+            {% if _src_amt %}<span style="color:#3b82f6;font-style:italic">{{ _src_amt | currency }}</span>
+            {% else %}<span style="color:var(--text-muted);font-size:11px">Calc →</span>{% endif %}
+          {% elif _src_amt %}{{ _src_amt | currency }}
           {% elif m.source and m.source.get('auto_size') %}<span style="color:var(--text-muted);font-size:11px">Compute →</span>
           {% else %}—{% endif %}
         </td>
@@ -350,12 +356,44 @@
       {% for m in capital_modules %}
         {%- set _jam = (capital_junction_amts or {}).get(m.id | string) -%}
         {%- set _mamt = _jam if _jam is not none else (m.source.amount if (m.source and m.source.get('amount')) else 0) -%}
-        {% if _mamt and not (m.source and m.source.get('is_bridge')) %}{% set ns.total = ns.total + (_mamt | float) %}{% endif %}
+        {% if _mamt and not (m.source and m.source.get('is_bridge')) and not ((m.vehicle_type | string | replace('VehicleType.','')) == 'float_earnings') %}{% set ns.total = ns.total + (_mamt | float) %}{% endif %}
       {% endfor %}
       {% if ns.total %}{{ ns.total | currency }}
       {% else %}<span style="color:var(--text-muted);font-size:11px">Compute →</span>{% endif %}
     </span>
   </div>
+  {# Found Money block — float_earnings sources shown below the main Sources Total #}
+  {%- set _fe_modules = capital_modules | selectattr('vehicle_type', 'defined') | list -%}
+  {%- set ns_fe = namespace(has_fe=false) -%}
+  {%- for m in capital_modules -%}
+    {%- if (m.vehicle_type | string | replace('VehicleType.','')) == 'float_earnings' and m.source and m.source.get('amount') -%}
+      {%- set ns_fe.has_fe = true -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- if ns_fe.has_fe -%}
+  <div style="margin-top:6px;padding:8px 12px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px">
+    <div style="font-size:10px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Found Money</div>
+    {%- for m in capital_modules -%}
+      {%- if (m.vehicle_type | string | replace('VehicleType.','')) == 'float_earnings' and m.source and m.source.get('amount') -%}
+        {%- set _fe_total = m.source.get('amount') | float -%}
+        {%- set _fe_series = (float_earnings_series or {}).get(m.id | string, {}) -%}
+        {%- set _fe_dev = _fe_series.get('dev_fee_topup_amount', _fe_total) | float -%}
+        {%- set _fe_pay = _fe_series.get('paydown_amount', 0) | float -%}
+        <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:12px;color:#1e40af">
+          <span style="font-weight:500">{{ m.label }}</span>
+          <span style="font-weight:600;color:#2563eb">{{ _fe_total | currency }}</span>
+        </div>
+        <div style="font-size:11px;color:#3b82f6;margin-top:1px;padding-left:8px">
+          {%- if _fe_pay > 0 -%}
+            Dev Fee: {{ _fe_dev | currency }} · Debt Paydown: {{ _fe_pay | currency }}
+          {%- else -%}
+            → Dev Fee Top-Up: {{ _fe_dev | currency }}
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+  {%- endif -%}
   {% else %}
   <div class="module-empty" style="padding:24px 0">
     <div class="module-empty-icon">💰</div>

@@ -236,16 +236,13 @@ def split_earnings(
 ) -> tuple[Decimal, Decimal]:
     """Apply the user-entered split. Returns (dev_fee_amount, paydown_amount).
 
-    When neither split is set, defaults to 100% paydown — safest in Phase A
-    since dev fee top-up requires balance modeling that hasn't shipped yet.
+    Valid uses are Deferred Dev Fee and Debt Paydown only. Debt paydown gets
+    exactly its stated %; everything else (including any unallocated remainder)
+    goes to dev fee. Defaults to 100% dev fee when neither split is set.
     """
-    dev_pct = max(ZERO, dev_fee_split_pct or ZERO)
-    debt_pct = max(ZERO, debt_paydown_split_pct or ZERO)
-    total_pct = dev_pct + debt_pct
-    if total_pct <= ZERO:
-        return ZERO, _q(total)
-    dev_amount = _q(total * dev_pct / total_pct)
-    paydown_amount = _q(total - dev_amount)
+    debt_pct = min(HUNDRED, max(ZERO, debt_paydown_split_pct or ZERO))
+    paydown_amount = _q(total * debt_pct / HUNDRED)
+    dev_amount = _q(total - paydown_amount)
     return dev_amount, paydown_amount
 
 

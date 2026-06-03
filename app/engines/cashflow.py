@@ -1342,6 +1342,16 @@ async def _compute_project_cashflow(
     else:
         outputs.float_earnings_series = None
 
+    # Write computed total_earnings back to each float_earnings module's
+    # source["amount"] so the S&U panel can show the Found Money amount
+    # without re-running the engine. Zero clears stale values when blocked.
+    for _fr in _float_results:
+        _fm = next((m for m in capital_modules if m.id == _fr.float_source_id), None)
+        if _fm is not None:
+            _new_src = dict(_fm.source or {})
+            _new_src["amount"] = float(_fr.total_earnings)
+            _fm.source = _new_src
+
     # Tag every line-item with its owning project before persist. The
     # CashFlowLineItem / _expense_line_item constructors inside _compute_period
     # default project_id=None; this sweep gives the Underwriting rollup a

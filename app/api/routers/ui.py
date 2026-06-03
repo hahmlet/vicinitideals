@@ -5592,6 +5592,10 @@ def _capital_total(modules: list, junction_amts: dict[str, float] | None = None)
         if m.source and isinstance(m.source, dict):
             if m.source.get("is_bridge"):
                 continue
+            # float_earnings is Found Money — computed post-sizing, shown separately
+            _vt = str(getattr(m, "vehicle_type", "") or "").replace("VehicleType.", "")
+            if _vt == "float_earnings":
+                continue
             if junction_amts is not None:
                 amt = junction_amts.get(str(m.id), 0.0)
             else:
@@ -6306,6 +6310,18 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
         capital_modules, junction_amts=_cap_junction_amts if project_id is not None else None
     )
     uses_total_val = sum(float(u.amount or 0) for u in use_lines)
+    # Load float_earnings_series for Found Money display in Sources panel.
+    _fe_outputs = (
+        await session.execute(
+            select(OperationalOutputs).where(
+                OperationalOutputs.scenario_id == model_id,
+                OperationalOutputs.project_id == project_id,
+            )
+        )
+    ).scalar_one_or_none() if project_id is not None else None
+    _float_earnings_series: dict = (
+        (_fe_outputs.float_earnings_series or {}) if _fe_outputs is not None else {}
+    )
 
     # Equity ownership — computed from equity-type capital modules
     equity_modules = [
@@ -6567,6 +6583,7 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
         # uses this in the Sources table so Project N's tab shows Project N's
         # share, not the scenario-wide last-sized amount.
         "capital_junction_amts": _cap_junction_amts,
+        "float_earnings_series": _float_earnings_series,
         "waterfall_tiers": waterfall_tiers,
         "milestones": milestones,
         "milestone_rows": [
