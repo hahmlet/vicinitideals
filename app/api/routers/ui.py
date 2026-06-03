@@ -13829,10 +13829,11 @@ async def model_builder_line_form(
             .order_by(Milestone.project_id, Milestone.created_at.asc())
         )).scalars().all()
         for _ms in _ms_rows:
+            _ms_key = str(_ms.milestone_type or "").replace("MilestoneType.", "")
             _scenario_milestones.append({
                 "id": str(_ms.id),
-                "label": _ms.label or (str(_ms.milestone_type or "")).replace("MilestoneType.", ""),
-                "milestone_type": str(_ms.milestone_type or "").replace("MilestoneType.", ""),
+                "label": _ms.label or _milestone_label(_ms_key),
+                "milestone_type": _ms_key,
             })
 
     has_acquisition_costs = False

@@ -1869,6 +1869,12 @@ function ulTimingChanged(val) {
     <div class="form-hint" id="sw-autocalc-hint" style="margin-top:4px;font-size:12px;color:var(--text-muted)">
       Source amount is auto-calculated from Uses + carrying costs when you Compute.
     </div>
+    <div class="form-row" id="sw-yield-row" style="display:none;margin-top:12px">
+      <div class="form-field" style="max-width:200px">
+        <label class="form-label">Annual Yield (%)</label>
+        <input class="form-input" type="number" name="yield_pct" step="0.01" min="0" placeholder="4.30">
+      </div>
+    </div>
 
     {# Per-Use eligibility checklist (sw add-wizard).  Mirrors the edit form
        behavior: ticking ≥1 Use flips Amount → Maximum ($), and the Source
@@ -2223,12 +2229,15 @@ function ulTimingChanged(val) {
     _type = val;
     _updateStep3ForType(val);
     var isFixed = _FIXED_AMOUNT.indexOf(val) >= 0;
+    var isFloat = val === 'float_earnings';
     var amtRow = document.getElementById('sw-amount-row');
     var hint   = document.getElementById('sw-autocalc-hint');
     var elBlock = document.getElementById('sw-eligibility-block');
+    var yieldRow = document.getElementById('sw-yield-row');
     if (amtRow) amtRow.style.display = isFixed ? '' : 'none';
     if (hint)   hint.style.display = isFixed ? 'none' : '';
     if (elBlock) elBlock.style.display = isFixed ? '' : 'none';
+    if (yieldRow) yieldRow.style.display = isFloat ? '' : 'none';
     if (!isFixed) {
       // Wipe eligibility selection so non-fixed types don't smuggle it into POST
       document.querySelectorAll('.sw-eligibility-checkbox').forEach(function(b) { b.checked = false; });
