@@ -223,6 +223,29 @@ def _run_bank_account_proof(
         f"months={len(report.monthly)}"
     )
 
+    # ── Stabilization-anchor validation (reserves-spec-align Slice 5d) ────
+    # Per spec critique #4: the user anchors the Stabilization milestone
+    # by hand. Reserve windows reference that anchor (IR up to it, OR
+    # from it). If the user puts Stabilization BEFORE the operating
+    # curves can actually carry DS (NOI < DS at the anchor), the IR
+    # window ends prematurely and OR silently absorbs what should still
+    # be IR coverage — the "no gap by construction" promise is defeated.
+    # The validator computes the first operating-window period where
+    # NOI >= DS (the curve-derived natural Stabilization point) and
+    # compares it to the user-anchored stab_period.
+    #   anchor earlier than curve  → "error"  (hard config issue)
+    #   anchor later than curve    → "warning" (conservative; OR carries
+    #                                more, deal still pencils)
+    #   anchor matches curve       → None
+    # The validator is purely informational on the proof row; it does
+    # NOT block compute. The Underwriting render layer surfaces it as a
+    # banner.
+    stabilization_anchor = _validate_stabilization_anchor(
+        cash_flow_rows=cash_flow_rows,
+        co_period=co_period,
+        stabilized_period=stab_period,
+    )
+
     return {
         "opening_cash": str(report.opening_cash),
         "min_balance": str(report.min_balance),
@@ -238,6 +261,96 @@ def _run_bank_account_proof(
         "stabilized_period": stab_period,
         "months_simulated": len(report.monthly),
         "proof_start": proof_start,
+        "stabilization_anchor": stabilization_anchor,
+    }
+
+
+def _validate_stabilization_anchor(
+    *,
+    cash_flow_rows: list,
+    co_period: int,
+    stabilized_period: int | None,
+) -> dict | None:
+    """Compare the user-anchored Stabilization to the curve-derived one.
+
+    Walks the cash-flow rows from ``co_period`` forward and finds the
+    first month where ``NOI >= debt_service`` — the natural point at
+    which the operating curves can carry the lender's debt service on
+    their own (no reserve draw needed). The reserves-spec-align spec
+    (§4 / critique #4) treats that month as the curve-derived
+    Stabilization point.
+
+    Outcomes:
+      * ``status="error"``   user's Stabilization < curve-derived month
+        (IR window ends too early; OR is being asked to carry what
+        should still be IR coverage; the "no gap by construction"
+        promise breaks).
+      * ``status="warning"`` user's Stabilization > curve-derived month
+        (conservative — OR carries more than necessary; deal still
+        pencils but more equity is parked in reserves than required).
+      * ``None``             anchors match (or the validator can't
+        derive a curve-derived month — e.g. NOI never catches DS in
+        the modeled window).
+    """
+    if not cash_flow_rows or stabilized_period is None:
+        return None
+
+    rows_by_period = {
+        getattr(r, "period", None): r for r in cash_flow_rows
+        if getattr(r, "period", None) is not None
+    }
+    if not rows_by_period:
+        return None
+
+    # First operating-window month where NOI >= DS.
+    curve_period: int | None = None
+    for p in sorted(rows_by_period):
+        if p < co_period:
+            continue
+        row = rows_by_period[p]
+        noi = Decimal(str(getattr(row, "noi", 0) or 0))
+        ds = Decimal(str(getattr(row, "debt_service", 0) or 0))
+        if ds <= ZERO:
+            # No DS this month (post-payoff or fully IR-funded with the
+            # sweep already covering it) — not a meaningful comparison.
+            continue
+        if noi >= ds:
+            curve_period = p
+            break
+
+    if curve_period is None:
+        # NOI never catches DS in the modeled window — the deal itself
+        # under-performs the debt; surface that as the proof's
+        # is_solvent flag, not here.
+        return None
+
+    if curve_period == stabilized_period:
+        return None
+
+    if stabilized_period < curve_period:
+        status = "error"
+        message = (
+            f"Stabilization anchored at period {stabilized_period} but "
+            f"NOI does not cover DS until period {curve_period}. "
+            f"Interest Reserve ends before lease-up can carry the debt; "
+            f"Operating Reserve will absorb the gap. Move the "
+            f"Stabilization milestone to period {curve_period} or later."
+        )
+    else:
+        status = "warning"
+        message = (
+            f"Stabilization anchored at period {stabilized_period} but "
+            f"NOI covered DS as early as period {curve_period}. "
+            f"Operating Reserve will be sized for a longer pre-stab "
+            f"runway than the operating curves require."
+        )
+
+    return {
+        "status": status,
+        "curve_derived_period": curve_period,
+        "anchored_period": stabilized_period,
+        "gap_months": stabilized_period - curve_period,
+        "message": message,
     }
 
 

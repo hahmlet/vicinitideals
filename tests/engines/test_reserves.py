@@ -19,7 +19,12 @@ from types import SimpleNamespace
 
 import pytest
 
-from app.engines.cashflow import _draw_schedule_for, _ir_lease_up_pool, _odr_pool
+from app.engines.cashflow import (
+    _draw_schedule_for,
+    _ir_lease_up_pool,
+    _odr_pool,
+    _validate_stabilization_anchor,
+)
 from app.engines.dev_fee import BASIS_BUCKET_KEYS, classify_basis_bucket
 from app.models.deal import IncomeStream, OperationalInputs, OperatingExpenseLine, UseLine
 
@@ -483,3 +488,162 @@ def test_interest_invariance_to_lur_sweep():
     # shrink it.
     assert zero_rev["debt_service"] == ZERO
     assert full_rev["debt_service"] == ZERO
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# Stabilization-anchor validator (Slice 5d, critique #4)
+# ──────────────────────────────────────────────────────────────────────────
+
+
+def _cf_row(period: int, noi: float, ds: float) -> SimpleNamespace:
+    """Minimal cash-flow row stand-in. _validate_stabilization_anchor only
+    reads .period / .noi / .debt_service.
+    """
+    return SimpleNamespace(
+        period=period,
+        noi=Decimal(str(noi)),
+        debt_service=Decimal(str(ds)),
+    )
+
+
+@pytest.mark.unit
+def test_stabilization_anchor_matches_curve_returns_none():
+    """User anchor lines up with the curve-derived NOI≥DS month — no
+    warning, no error, validator returns None.
+    """
+    rows = [
+        _cf_row(0, 0, 3000),     # lease-up month 0: NOI = 0
+        _cf_row(1, 1000, 3000),  # ramp
+        _cf_row(2, 2500, 3000),  # still short
+        _cf_row(3, 3500, 3000),  # NOI catches DS here
+        _cf_row(4, 4000, 3000),  # stabilized
+    ]
+    result = _validate_stabilization_anchor(
+        cash_flow_rows=rows,
+        co_period=0,
+        stabilized_period=3,
+    )
+    assert result is None
+
+
+@pytest.mark.unit
+def test_stabilization_anchor_earlier_than_curve_returns_error():
+    """User anchors Stabilization BEFORE the curve catches DS — IR window
+    ends prematurely and OR is being asked to absorb what should still be
+    IR coverage. Validator must return ``status="error"``.
+    """
+    rows = [
+        _cf_row(0, 0, 3000),
+        _cf_row(1, 1000, 3000),
+        _cf_row(2, 2500, 3000),
+        _cf_row(3, 3500, 3000),  # curve catches DS
+    ]
+    result = _validate_stabilization_anchor(
+        cash_flow_rows=rows,
+        co_period=0,
+        stabilized_period=1,  # anchored 2 months too early
+    )
+    assert result is not None
+    assert result["status"] == "error"
+    assert result["curve_derived_period"] == 3
+    assert result["anchored_period"] == 1
+    assert result["gap_months"] == -2
+    assert "Operating Reserve" in result["message"]
+
+
+@pytest.mark.unit
+def test_stabilization_anchor_later_than_curve_returns_warning():
+    """User anchors Stabilization AFTER the curve catches DS — deal still
+    pencils but OR is sized for a longer runway than needed. Validator
+    returns ``status="warning"``.
+    """
+    rows = [
+        _cf_row(0, 0, 3000),
+        _cf_row(1, 3500, 3000),  # curve catches DS very early
+        _cf_row(2, 4000, 3000),
+        _cf_row(3, 4500, 3000),
+        _cf_row(4, 5000, 3000),
+        _cf_row(5, 5000, 3000),
+    ]
+    result = _validate_stabilization_anchor(
+        cash_flow_rows=rows,
+        co_period=0,
+        stabilized_period=5,  # anchored 4 months later than needed
+    )
+    assert result is not None
+    assert result["status"] == "warning"
+    assert result["curve_derived_period"] == 1
+    assert result["anchored_period"] == 5
+    assert result["gap_months"] == 4
+
+
+@pytest.mark.unit
+def test_stabilization_anchor_noi_never_catches_ds_returns_none():
+    """Deal under-performs the debt — NOI < DS in every modeled month.
+    There is no curve-derived Stabilization month; the validator returns
+    None and lets the proof's ``is_solvent`` flag surface the real issue
+    (the deal itself, not the anchor placement).
+    """
+    rows = [
+        _cf_row(0, 0, 3000),
+        _cf_row(1, 500, 3000),
+        _cf_row(2, 1000, 3000),
+        _cf_row(3, 1500, 3000),
+        _cf_row(4, 2000, 3000),
+    ]
+    result = _validate_stabilization_anchor(
+        cash_flow_rows=rows,
+        co_period=0,
+        stabilized_period=4,
+    )
+    assert result is None
+
+
+@pytest.mark.unit
+def test_stabilization_anchor_skips_months_with_zero_ds():
+    """Months with DS == 0 (post-payoff, fully IR-funded with sweep, etc.)
+    are not meaningful for the NOI≥DS comparison — they would trivially
+    satisfy the inequality and skew the curve-derived month earlier than
+    the real lender-coverage point. Validator must skip them.
+    """
+    rows = [
+        _cf_row(0, 0, 0),        # IR window — DS funded by reserve; skip
+        _cf_row(1, 100, 0),      # same; should not match curve here
+        _cf_row(2, 2000, 3000),  # DS appears; NOI short
+        _cf_row(3, 3500, 3000),  # NOI catches DS here
+    ]
+    result = _validate_stabilization_anchor(
+        cash_flow_rows=rows,
+        co_period=0,
+        stabilized_period=3,
+    )
+    # Anchor matches the curve-derived period 3.
+    assert result is None
+
+
+@pytest.mark.unit
+def test_stabilization_anchor_no_rows_returns_none():
+    """No cash-flow rows means nothing to evaluate. Validator must not
+    raise; it returns None and lets the proof short-circuit.
+    """
+    result = _validate_stabilization_anchor(
+        cash_flow_rows=[],
+        co_period=0,
+        stabilized_period=12,
+    )
+    assert result is None
+
+
+@pytest.mark.unit
+def test_stabilization_anchor_missing_stab_period_returns_none():
+    """The proof passes ``stab_period=None`` when no stabilized phase is
+    present in the timeline (acquisition-only deals). Validator must
+    short-circuit cleanly.
+    """
+    rows = [_cf_row(0, 0, 3000), _cf_row(1, 3500, 3000)]
+    result = _validate_stabilization_anchor(
+        cash_flow_rows=rows,
+        co_period=0,
+        stabilized_period=None,
+    )
+    assert result is None
