@@ -6092,6 +6092,13 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
     project_id = default_project.id if default_project else None
     timeline_approved = default_project.timeline_approved if default_project else False
 
+    # Foolproofing: every project needs an operation_stabilized milestone so
+    # reserve windows (IR, ODR, OR) have a deterministic Stabilization anchor.
+    # Idempotent; flushes only when the milestone was missing.
+    if default_project is not None:
+        from app.services.stabilization_milestone import ensure_stabilization_milestone
+        await ensure_stabilization_milestone(session, default_project)
+
     inputs = None
     use_lines: list = []
     income_streams: list = []
