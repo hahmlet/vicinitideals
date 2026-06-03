@@ -13972,6 +13972,23 @@ _VEHICLE_TYPE_LABELS = {
 }
 
 
+def _build_deferred_source_config(form: Any) -> dict:
+    sc: dict = {}
+    _raw_defer = form.get("defer_pct_of_dev_fee")
+    if _raw_defer:
+        sc["defer_pct_of_dev_fee"] = float(_raw_defer)
+    _rel_keys = list(form.getlist("sv_rel_milestone_key[]"))
+    _rel_weights = list(form.getlist("sv_rel_weight_pct[]"))
+    _release = [
+        {"milestone_key": k, "weight": float(w)}
+        for k, w in zip(_rel_keys, _rel_weights)
+        if k and w
+    ]
+    if _release:
+        sc["release_schedule"] = _release
+    return sc
+
+
 @router.get("/settings/vehicles", response_class=HTMLResponse)
 async def vehicle_settings_page(
     request: Request,
@@ -14088,11 +14105,7 @@ async def vehicle_create(
         pref_rate_pct=form.get("pref_rate_pct") or None,
         carry_config=_v_carry_config if _v_carry_config else None,
         fee_terms=_v_fee_terms,
-        source_config=(
-            {"defer_pct_of_dev_fee": float(form.get("defer_pct_of_dev_fee"))}
-            if vehicle_type == "deferred_developer_fee" and form.get("defer_pct_of_dev_fee")
-            else None
-        ),
+        source_config=_build_deferred_source_config(form) if vehicle_type == "deferred_developer_fee" else None,
         created_by=user.id,
         updated_by=user.id,
     )
@@ -14144,12 +14157,7 @@ async def vehicle_update(
     vehicle.carry_config = _new_carry_config if _new_carry_config else vehicle.carry_config
     vehicle.fee_terms = _parse_vehicle_fee_terms(form)
     if vehicle.vehicle_type == "deferred_developer_fee":
-        _raw_defer = form.get("defer_pct_of_dev_fee")
-        vehicle.source_config = (
-            {"defer_pct_of_dev_fee": float(_raw_defer)}
-            if _raw_defer
-            else (vehicle.source_config or {})
-        )
+        vehicle.source_config = _build_deferred_source_config(form)
     vehicle.updated_by = user.id
     await session.commit()
 

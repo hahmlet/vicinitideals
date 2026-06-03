@@ -185,6 +185,52 @@
     </div>
   </div>
 
+  {# Release Schedule — deferred_developer_fee only: when deferred balance is repaid #}
+  {%- set _sv_rel_sched = (vehicle.source_config or {}).get('release_schedule', []) if _is_edit else [] -%}
+  <div class="vf-deferred-release" style="display:{{ 'block' if _vt_is_deferred else 'none' }};padding:10px 0 6px;border-top:1px solid var(--border);margin-top:4px">
+    <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:4px">
+      Release Schedule
+      <span style="font-size:11px;color:var(--text-muted);font-weight:400;margin-left:6px">when deferred balance is repaid</span>
+    </div>
+    <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px">Add one row per milestone. Weights auto-normalize to 1.</div>
+    <div id="vf-rel-rows" style="display:flex;flex-direction:column;gap:6px;margin-bottom:8px">
+      {%- if _sv_rel_sched -%}
+        {%- for _r in _sv_rel_sched -%}
+        <div class="vf-rel-row" style="display:grid;grid-template-columns:2fr 1fr auto;gap:8px;align-items:end">
+          <select name="sv_rel_milestone_key[]" class="sv-org-rel-ms" style="padding:5px 8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:12px">
+            <option value="">— Milestone —</option>
+            {% for mv,ml in [('close','Close'),('pre_development','Pre-Dev Start'),('construction','Construction Start'),('operation_lease_up','Lease-Up Start'),('operation_stabilized','Stabilized Start')] %}
+            <option value="{{ mv }}" {{ 'selected' if _r.get('milestone_key') == mv else '' }}>{{ ml }}</option>
+            {% endfor %}
+          </select>
+          <input type="number" name="sv_rel_weight_pct[]" class="sv-org-rel-w" step="0.01" min="0"
+                 value="{{ _r.get('weight','') }}" placeholder="weight"
+                 style="padding:5px 8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:12px;box-sizing:border-box">
+          <button type="button" onclick="this.closest('.vf-rel-row').remove()"
+                  style="padding:5px 8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text-muted);font-size:14px;cursor:pointer;line-height:1">×</button>
+        </div>
+        {%- endfor -%}
+      {%- else -%}
+      <div class="vf-rel-row" style="display:grid;grid-template-columns:2fr 1fr auto;gap:8px;align-items:end">
+        <select name="sv_rel_milestone_key[]" class="sv-org-rel-ms" style="padding:5px 8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:12px">
+          <option value="">— Milestone —</option>
+          <option value="close">Close</option>
+          <option value="pre_development">Pre-Dev Start</option>
+          <option value="construction">Construction Start</option>
+          <option value="operation_lease_up">Lease-Up Start</option>
+          <option value="operation_stabilized">Stabilized Start</option>
+        </select>
+        <input type="number" name="sv_rel_weight_pct[]" class="sv-org-rel-w" step="0.01" min="0" placeholder="weight"
+               style="padding:5px 8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:12px;box-sizing:border-box">
+        <button type="button" onclick="this.closest('.vf-rel-row').remove()"
+                style="padding:5px 8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text-muted);font-size:14px;cursor:pointer;line-height:1">×</button>
+      </div>
+      {%- endif -%}
+    </div>
+    <button type="button" class="btn btn-secondary" style="font-size:12px;padding:4px 12px"
+            onclick="vfAddRelRow()">+ Add milestone</button>
+  </div>
+
   {# Custom carry schedule (debt/forgivable only) #}
   {%- set _has_v_schedule = _is_edit and vehicle.carry_config and vehicle.carry_config.get('schedule') -%}
   <div class="vf-debt-block" style="display:{{ 'block' if (_is_edit and vehicle.vehicle_type in ('debt', 'forgivable_loan', 'deferred_developer_fee')) else 'none' }}">
@@ -334,12 +380,36 @@ function vfToggleFields(sel) {
   form.querySelectorAll('.vf-deferred-pct').forEach(function(el) {
     el.style.display = isDeferred ? 'block' : 'none';
   });
+  form.querySelectorAll('.vf-deferred-release').forEach(function(el) {
+    el.style.display = isDeferred ? 'block' : 'none';
+  });
   form.querySelectorAll('.vf-cadence-wrap').forEach(function(el) {
     el.style.display = isDeferred ? 'none' : '';
   });
   form.querySelectorAll('.vf-fee-rule-section').forEach(function(el) {
     el.style.display = isDeferred ? 'none' : '';
   });
+}
+
+function vfAddRelRow() {
+  var box = document.getElementById('vf-rel-rows');
+  if (!box) return;
+  var s = 'padding:5px 8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font-size:12px';
+  var sel = '<select name="sv_rel_milestone_key[]" class="sv-org-rel-ms" style="' + s + '">'
+    + '<option value="">— Milestone —</option>'
+    + '<option value="close">Close</option>'
+    + '<option value="pre_development">Pre-Dev Start</option>'
+    + '<option value="construction">Construction Start</option>'
+    + '<option value="operation_lease_up">Lease-Up Start</option>'
+    + '<option value="operation_stabilized">Stabilized Start</option>'
+    + '</select>';
+  var inp = '<input type="number" name="sv_rel_weight_pct[]" class="sv-org-rel-w" step="0.01" min="0" placeholder="weight" style="' + s + ';box-sizing:border-box">';
+  var btn = '<button type="button" onclick="this.closest(\'.vf-rel-row\').remove()" style="padding:5px 8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text-muted);font-size:14px;cursor:pointer;line-height:1">×</button>';
+  var row = document.createElement('div');
+  row.className = 'vf-rel-row';
+  row.style.cssText = 'display:grid;grid-template-columns:2fr 1fr auto;gap:8px;align-items:end';
+  row.innerHTML = sel + inp + btn;
+  box.appendChild(row);
 }
 
 function vCarryModeSwitch(form) {

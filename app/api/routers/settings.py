@@ -582,6 +582,14 @@ def _sv_body_to_jsonb(
         source["draw_active_from_offset_days"] = int(body["draw_active_from_offset_days"])
     if body.get("defer_pct_of_dev_fee") is not None:
         source["defer_pct_of_dev_fee"] = float(body["defer_pct_of_dev_fee"])
+    if "release_schedule" in body:
+        _rel = body["release_schedule"]
+        if isinstance(_rel, list):
+            source["release_schedule"] = [
+                {"milestone_key": r.get("milestone_key"), "weight": float(r.get("weight", 0))}
+                for r in _rel
+                if r.get("milestone_key") and r.get("weight") is not None
+            ]
 
     carry: dict = {}
     carry_schedule = body.get("carry_schedule")
