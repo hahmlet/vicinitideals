@@ -699,10 +699,12 @@ async def compute_model_cashflows(model_id: UUID, request: Request, session: DBS
 
             # Waterfall must run inside the loop so the NEXT iteration's
             # bank-account proof reads this iter's deferred Dev Fee paydown
-            # schedule (via OperationalOutputs.dev_fee_balance_series). If the
-            # paydown total changes materially, force another pass so the
-            # proof — and the Cash Flow Support Reserve sized from it —
-            # reflects the fresh schedule.
+            # schedule (via OperationalOutputs.dev_fee_balance_series). If
+            # the paydown total changes materially, force another pass so
+            # the proof reflects the fresh schedule. (Pre-reserves-spec-align,
+            # the proof's max_shortfall also sized a Cash Flow Support Reserve
+            # UseLine — that helper was removed in Slice 5b; the proof is now
+            # validation-only and ODR funds the operating shortfall.)
             try:
                 waterfall_result = await compute_waterfall(deal_model_id=model_id, session=session)
             except ValueError:

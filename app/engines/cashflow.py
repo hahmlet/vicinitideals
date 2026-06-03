@@ -8,21 +8,6 @@ from typing import Any
 from uuid import UUID
 
 _DIAG_ENABLED = os.environ.get("VD_DIAG_AUTOSIZE") == "1"
-# Feature flag — when "1", the bank-account proof emits an auto-managed
-# "Cash Flow Support Reserve" UseLine sized to the operating-phase
-# shortfall. Default off so existing deals are unaffected until the proof
-# is validated on real data.
-_BANK_ACCOUNT_RESERVE_ENABLED = os.environ.get("BANK_ACCOUNT_RESERVE_ENABLED") == "1"
-# Per-scenario allowlist — comma-separated UUIDs. When set, the feature is
-# active ONLY for these scenarios (regardless of the global flag).
-# Lets us pilot the auto-reserve on one test deal without touching the
-# rest of production. Empty/unset → global flag controls behavior.
-_BANK_ACCOUNT_RESERVE_ALLOWLIST: set[str] = {
-    s.strip().lower()
-    for s in (os.environ.get("BANK_ACCOUNT_RESERVE_ALLOWED_SCENARIOS") or "").split(",")
-    if s.strip()
-}
-_CASH_FLOW_SUPPORT_RESERVE_LABEL = "Cash Flow Support Reserve"
 
 # Acquisition deals (turnkey rentals: acquisition → stabilized, no lease-up
 # phase) get a short proof window starting at stabilization. The window is
@@ -30,21 +15,6 @@ _CASH_FLOW_SUPPORT_RESERVE_LABEL = "Cash Flow Support Reserve"
 # the Operating Reserve, perm debt service, and stabilized OpEx balance for
 # the first months after close.
 _ACQUISITION_PROOF_MONTHS = 3
-
-
-def _bank_account_reserve_active_for(scenario_id: "UUID | str | None") -> bool:
-    """Decide whether the auto-managed Cash Flow Support Reserve should be
-    emitted for this scenario.
-
-    Precedence:
-      1. Per-scenario allowlist non-empty → only listed scenarios are active
-      2. Allowlist empty → global flag (BANK_ACCOUNT_RESERVE_ENABLED) wins
-    """
-    if _BANK_ACCOUNT_RESERVE_ALLOWLIST:
-        if scenario_id is None:
-            return False
-        return str(scenario_id).lower() in _BANK_ACCOUNT_RESERVE_ALLOWLIST
-    return _BANK_ACCOUNT_RESERVE_ENABLED
 
 
 def _diag(msg: str) -> None:
@@ -147,74 +117,6 @@ _BALANCE_ONLY_LABELS: frozenset[str] = frozenset({
     "Acquisition Interest Reserve",
     "Construction DS Reserve",
 })
-
-
-def _upsert_cash_flow_support_reserve(
-    *,
-    session: AsyncSession,
-    project_id: UUID | None,
-    use_lines: list,
-    amount: Decimal,
-    proof_result: dict,
-) -> str:
-    """Create / update / remove the auto-managed Cash Flow Support Reserve.
-
-    The reserve UseLine is engine-owned and idempotent: at any given moment
-    its amount equals the most recent bank-account proof's max_shortfall.
-
-    Behaviors:
-      amount > 0 + no existing row  → create
-      amount > 0 + existing differs → update
-      amount > 0 + existing matches → unchanged
-      amount == 0 + existing row    → remove (proof now passes)
-      amount == 0 + no existing row → unchanged (no-op)
-
-    Mutates use_lines in place so the caller's downstream loops see the
-    new row. Returns the action taken for inclusion in the summary.
-    """
-    existing = next(
-        (ul for ul in use_lines
-         if getattr(ul, "label", "") == _CASH_FLOW_SUPPORT_RESERVE_LABEL),
-        None,
-    )
-
-    if amount <= ZERO:
-        if existing is not None:
-            session.delete(existing)
-            use_lines.remove(existing)
-            return "removed"
-        return "unchanged"
-
-    notes = (
-        f"Auto-emitted by bank-account proof. Operating-phase max shortfall "
-        f"= {amount} on {proof_result.get('max_shortfall_date')}."
-    )
-
-    if existing is not None:
-        existing_amount = _to_decimal(getattr(existing, "amount", 0))
-        if existing_amount == amount:
-            return "unchanged"
-        existing.amount = amount
-        existing.notes = notes
-        session.add(existing)
-        return "updated"
-
-    if project_id is None:
-        return "unchanged"  # can't create without a project FK
-    new_ul = UseLine(
-        project_id=project_id,
-        source_capital_module_id=None,
-        label=_CASH_FLOW_SUPPORT_RESERVE_LABEL,
-        phase="operation",
-        amount=amount,
-        timing_type="first_day",
-        cost_category="soft",
-        dev_fee_basis_bucket="cash_flow_support_reserve",
-        notes=notes,
-    )
-    session.add(new_ul)
-    use_lines.append(new_ul)
-    return "created"
 
 
 def _run_bank_account_proof(
@@ -533,9 +435,10 @@ async def _compute_project_cashflow(
 
     # Capture prior iteration's waterfall-driven deferred Dev Fee paydowns so
     # the bank-account proof sees them as outflows from the operating account.
-    # Without this, the proof sums opex+debt_service only and undersizes the
-    # Cash Flow Support Reserve on deals that defer Dev Fee. The convergence
-    # loop drives the schedule to match the proof's sized reserve.
+    # Pre-reserves-spec-align, the proof's max_shortfall fed into a Cash Flow
+    # Support Reserve UseLine; that helper was removed in Slice 5b — ODR
+    # (Slice 4) is the engine's first-class home for the operating shortfall,
+    # and the proof is now validation-only.
     prev_dev_fee_paydowns: dict[int, Decimal] = {}
     if prev_outputs is not None:
         _series = prev_outputs.dev_fee_balance_series or {}
@@ -1176,12 +1079,15 @@ async def _compute_project_cashflow(
         "debt_yield_pct": debt_yield_pct,
     }
 
-    # ── Bank-account proof + Cash Flow Support Reserve ────────────────────
-    # Run the operating-phase solvency proof, then (if the feature flag is
-    # on) upsert a "Cash Flow Support Reserve" UseLine sized to the
-    # max_shortfall. The reserve is engine-owned and idempotent: it auto-
-    # creates / updates / removes itself so reserve sizing converges on a
-    # solvent bank-account proof.
+    # ── Bank-account proof (validation only) ──────────────────────────────
+    # Per the reserves-spec-align design (§3 / spec critique #4), the
+    # bank-account proof is a sanity check on the new IR / ODR / OR reserve
+    # set — not the sizing path for a "Cash Flow Support Reserve" UseLine.
+    # The CFSR auto-upsert was removed in Slice 5b; Operating Deficit
+    # Reserve (Slice 4) is the engine's first-class home for the operating
+    # shortfall. Slice 5d will extend the proof with a Stabilization-anchor
+    # validator so an early-anchored Stabilization milestone surfaces as a
+    # deal-level error instead of being silently absorbed by OR.
     bank_account_proof = _run_bank_account_proof(
         cash_flow_rows=cash_flow_rows,
         use_lines=use_lines,
@@ -1191,21 +1097,6 @@ async def _compute_project_cashflow(
         dev_fee_paydowns_by_period=prev_dev_fee_paydowns,
     )
     if bank_account_proof is not None:
-        if _bank_account_reserve_active_for(deal_uuid):
-            gap = _to_decimal(bank_account_proof.get("max_shortfall", "0"))
-            action = _upsert_cash_flow_support_reserve(
-                session=session,
-                project_id=project.id,
-                use_lines=use_lines,
-                amount=gap,
-                proof_result=bank_account_proof,
-            )
-            bank_account_proof["use_line_action"] = action
-            # Signal the /compute outer loop to re-iterate so the newly
-            # emitted / updated reserve is folded into reserve sizing and
-            # Sources = Uses on the next pass.
-            if action in ("created", "updated", "removed"):
-                summary["needs_recompute"] = True
         summary["bank_account_proof"] = bank_account_proof
     # Persist the proof on OperationalOutputs so the Underwriting view can
     # read it at render time without re-running the simulation. Always

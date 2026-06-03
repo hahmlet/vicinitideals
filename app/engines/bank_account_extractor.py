@@ -32,12 +32,8 @@ _RESERVE_LABELS = {
     "Pre-Development Interest Reserve",
     "Acquisition Interest Reserve",
     "Lease-Up Reserve",
+    "Operating Deficit Reserve",       # reserves-spec-align Slice 4
     "Capitalized Construction Interest",
-    # Auto-emitted by the bank-account proof itself when max_shortfall > 0.
-    # Included here so opening_cash on the next iteration reflects the new
-    # reserve, letting the convergence loop close the gap instead of
-    # spinning at the same shortfall until MAX_ITERATIONS.
-    "Cash Flow Support Reserve",
 }
 
 

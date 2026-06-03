@@ -51,7 +51,11 @@ class BankAccountReport:
     # Max shortfall across the window — the additional reserve the engine
     # would need to seed at Close to keep the balance at-or-above floor
     # through every simulated month. >0 means the proof failed; the gap
-    # IS the Cash Flow Support Reserve amount.
+    # is informational only after reserves-spec-align Slice 5b — Operating
+    # Deficit Reserve (Slice 4) is sized off the OpEx vs LUR curves rather
+    # than the bank-account post-hoc shortfall, so a non-zero
+    # `max_shortfall` here signals a configuration error (likely an early-
+    # anchored Stabilization milestone — see Slice 5d's validator).
     max_shortfall: Decimal = Decimal("0")
     max_shortfall_date: datetime | None = None
     is_solvent: bool = True  # max_shortfall == 0
