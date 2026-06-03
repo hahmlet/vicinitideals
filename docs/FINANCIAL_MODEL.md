@@ -854,45 +854,182 @@ Resolution lives in [`app/engines/grant_caps.py`](../app/engines/grant_caps.py) 
 
 ## 3. Reserves
 
-### Operating Reserve [investor, lender, app]
+> **2026-06 reserves-spec-align note.** This section was rewritten in
+> June 2026 to reflect the spec-aligned reserve model that landed in
+> commits `f2233ba` … `624210b`. The previous model used a `Lease-Up
+> Reserve` (LUR-aware IR) plus a debugging-era `Cash Flow Support
+> Reserve` (CFSR) sized from a bank-account proof. Both concepts are
+> retired. The three reserves below now tile the timeline with no
+> gaps by construction:
+>
+> | Reserve | Window |
+> |---|---|
+> | Interest Reserve (IR) | Debt Source Start → Stabilization |
+> | Operating Deficit Reserve (ODR) | Lease-Up start → Stabilization |
+> | Operating Reserve (OR) | Stabilization → end of model |
+>
+> The Stabilization milestone is now a runtime requirement (auto-
+> created by `ensure_stabilization_milestone` on every builder load
+> and backfilled by Alembic 0110 for pre-existing projects).
 
-**Formula.**
+### Interest Reserve (IR) [investor, lender, app]
+
+**Window.** Debt Source Start → Stabilization. Spans pre-development,
+acquisition, construction, and lease-up phases under a single
+umbrella. Multiple internal **sources of interest** (pre-dev loan,
+acquisition loan, construction loan, lease-up accrual) are summed
+inside the sizer; the writer collapses them into one
+`Interest Reserve` UseLine so the user-facing S&U panel does not
+balkanize a single concept.
+
+**Formula — LUR-blind.**
 ```
-if income_mode == "noi":
-    operating_reserve = DS_monthly × R
-else (revenue_opex mode):
-    operating_reserve = max(OpEx_monthly, DS_monthly) × R
+IR = Σ_m=1..N  P × period_rate(m)
 ```
+where `N = months between Source Start and Stabilization`,
+`P = full funded principal` (the **lump** draw schedule, not the
+legacy `(N+1)/2` linear average), and `period_rate(m)` is the
+day-count-precise monthly rate from `app/engines/interest.py:period_interest_months()`.
 
-Where `R = operation_reserve_months` (default 6).
+**Critically, IR is *not* offset by Lease-Up Revenue (LUR).** The
+lender's full interest is funded at Close, regardless of how the
+operating curve ramps. Excess LUR during lease-up does not shrink
+IR sized; it sweeps to **principal paydown** at runtime — see §6.5.
 
-**Why `max(OpEx, DS)`?** At stabilization, two obligations compete for the reserve bucket: debt service and operating costs. They are both ongoing. The reserve must cover whichever is larger, because a project short on opex cash defaults on vendors and eventually on the lender anyway.
+**Sizing/accrual basis identity.** The period loop accrues interest
+on the **interest-bearing balance** (held flat at the original funded
+principal) using the same `period_interest_months` helper that
+sized IR. Under a zero-revenue counterfactual the cumulative
+period-loop accrual exactly equals the sized IR pool. This is
+locked by `tests/engines/test_reserves.py::test_interest_invariance_to_lur_sweep`.
 
-In NOI mode the user has input stabilized NOI directly, so OpEx is not broken out — we size on DS alone.
+**Why LUR-blind?** Per spec critique #2: if LUR netted against IR
+sizing, then during the runtime period loop any revenue shortfall
+would manifest as an IR over-draw (interest > funded IR), and the
+lender would see late payment. LUR-blind sizing + DS-flat convention
++ sweep-to-principal collectively guarantee that the lender always
+sees their full interest, and that excess revenue accrues to the
+borrower's benefit via a smaller balloon — not via a smaller IR.
 
-**How it's enforced.** The entire gap-fill debt solve (§2.4) is designed so that the cash balance at month 1 of stabilized = exactly the operating reserve. The cash flow loop then seeds `cumulative_cash_flow` to the reserve amount at that point (cashflow.py:189):
+### Operating Deficit Reserve (ODR) [investor, lender, app]
 
-```python
-if _is_stabilized and not _operating_reserve_seeded:
-    cumulative_cash_flow = _op_reserve_amount
-    _operating_reserve_seeded = True
+**Window.** Lease-Up start → Stabilization. Only created when a
+Lease-Up phase exists in the timeline.
+
+**Formula — curve-driven.**
 ```
-
-**Plain English.** "Size the loan so that after all construction costs, lease-up carry, and IO payments, the project has exactly `reserve_months × max(OpEx, DS)` left in the bank at first stabilized month."
-
-### Lease-Up Reserve [investor, lender, app]
-
-**Formula.**
+ODR = Σ_m in lease_up_window  max(OpEx(m) − LUR(m), 0)
 ```
-LeaseUpReserve = (P × f_m × L) − (1/3 × NOI_monthly × L)
-               = (DS during lease-up) − (phantom income during lease-up)
+where both `OpEx(m)` and `LUR(m)` come from the per-month operating
+curves (occupancy ramp × stream rents on the income side; phase
+ramps on the expense side). Months where revenue covers OpEx
+contribute zero. The sum is balance-independent — it depends on the
+operating curves, not on the principal — so it enters the
+auto-sizing solve as a fixed Use, not a divisor term.
+
+**ODR window is endogenous.** A slower absorption curve produces
+both a **larger** ODR amount AND a **later** ODR end month. ODR is
+not a fixed `R × month` rectangle; it is a curve-driven integral.
+A scenario without a Lease-Up phase skips ODR entirely (acquisition
+deals, turnkey rentals).
+
+**Excess at window end.** Any unused ODR balance at Stabilization
+sweeps to principal — same plumbing as the LUR sweep (§6.5).
+
+**Replaces.** The legacy "Cash Flow Support Reserve" (CFSR) that
+was sized post-hoc from a bank-account proof. ODR is sized from
+the same curves the lender underwrites, not from a circular
+self-funding feedback loop, so the auto-sizer converges in one
+pass.
+
+### Operating Reserve (OR) [investor, lender, app]
+
+**Window.** Stabilization → end of model.
+
+**Formula — parametrized basis.**
 ```
+OR = R × basis(OR_basis_mode)
+```
+where `R = operation_reserve_months` (default 6) and
+`basis(...)` is selected from `OperationalInputs.operation_reserve_basis`:
 
-This is the **net debt-service shortfall** during lease-up that the permanent loan cannot cover from income alone.
+| `operation_reserve_basis` | basis |
+|---|---|
+| `ds` (default) | `DS_monthly` |
+| `opex` | `OpEx_monthly` (stabilized) |
+| `opex_plus_ds` | `DS_monthly + OpEx_monthly` (stabilized) |
 
-**Why is it a separate Use line?** Because it is part of what the perm loan must cover, and if we didn't surface it, Sources would not equal Uses. The gap-fill formula produces this exact number as a by-product (`_lu = principal × pmt_factor × L − lease_up_income_offset`) and we write it to the `Lease-Up Reserve` Use line so the S&U balances.
+**Simultaneous solve with IR when `OR_basis = ds`.** Per spec
+critique #1, the `ds` basis makes OR principal-dependent (DS scales
+with the loan), creating a second balance-dependent reserve on top
+of IR-covers-IR. The auto-sizer's closed-form divisor folds both
+terms into one expression (see §2.4 — the `1 − f_c − f_IR − f_OR`
+denominator). When the closed form does not converge cleanly the
+solver falls back to `newton_solve.solve_principal_for_dscr` with
+both reserves recomputed per pass.
 
-**Plain English.** "How much does the lender need to advance beyond TPC so the project can make its debt payments during the months where income is ramping and can't cover them?"
+**Unused at end of model.** OR is held; released as part of the
+exit cash flow at payoff.
+
+### Stabilization milestone is required
+
+All three reserve windows reference the Stabilization milestone. The
+runtime service `app/services/stabilization_milestone.py:ensure_stabilization_milestone`
+auto-creates one on every builder load when missing, anchored to
+the natural predecessor (operation_lease_up > construction >
+pre_development > close). Alembic 0110 backfilled all pre-existing
+projects.
+
+The bank-account proof (`_run_bank_account_proof`) extends to a
+**Stabilization-anchor validator** (Slice 5d): it computes the
+first operating-window month where `NOI ≥ DS` from the actual
+curves — the curve-derived Stabilization point — and compares
+against the user's anchor:
+
+| Anchor vs curve | Result |
+|---|---|
+| Anchor earlier than curve | `status="error"` — IR window ends before NOI can carry DS; OR is absorbing what should still be IR coverage. Red banner. |
+| Anchor later than curve | `status="warning"` — OR sized for longer runway than needed. Conservative; deal still pencils. |
+| Anchor matches curve | No payload added. |
+
+The validator does **not** block compute. It surfaces on the
+Underwriting view via `OperationalOutputs.bank_account_proof.stabilization_anchor`.
+
+### Plain English (all three)
+
+> **IR.** "Cover every dollar of interest the lender wants from
+> Source Start through Stabilization. Don't take credit for the
+> rent that hasn't shown up yet."
+>
+> **ODR.** "Cover the months where OpEx is higher than the rent
+> ramp can pay. Stop covering once Stabilization arrives — the
+> deal can carry itself from then on."
+>
+> **OR.** "Park `R` months of cushion at Stabilization so the
+> deal survives a quarter or two of bad performance without
+> defaulting."
+
+### Retired reserve concepts
+
+The following UseLine labels are no longer auto-emitted by the
+engine. Alembic 0109 remaps any leftover `dev_fee_basis_bucket`
+values to the new vocabulary; the labels themselves no longer
+appear in `BASIS_BUCKETS`.
+
+| Retired label | Replacement |
+|---|---|
+| `Lease-Up Reserve` | Subsumed into umbrella `Interest Reserve` |
+| `Construction DS Reserve` | Subsumed into umbrella `Interest Reserve` |
+| `Cash Flow Support Reserve` | `Operating Deficit Reserve` (curve-driven) |
+| `Pre-Development Interest Reserve` | Subsumed into umbrella `Interest Reserve` |
+| `Acquisition Interest Reserve` | Subsumed into umbrella `Interest Reserve` |
+| `Construction Interest Reserve` | Subsumed into umbrella `Interest Reserve` |
+
+The `_lease_up_carry` PI-amortization-during-lease-up code path
+and the `Construction DS Reserve` UseLine writer are retained in
+the engine but no longer fire for IR-carry loans on the new spec
+(they remain as fallbacks for legacy non-IR PI loans). Their
+removal is tracked as an open item.
 
 ---
 
