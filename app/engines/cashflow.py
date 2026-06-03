@@ -4348,27 +4348,35 @@ def _compute_period(
 
     noi = _q(effective_gross_income - operating_expenses - capex_reserve)
 
-    # During lease-up with IR carry active, operating income covers interest
-    # up to the available NOI rather than drawing from the pre-funded IR pool.
-    # The IR pool was sized to fund only the shortfall months, so income must
-    # explicitly service interest in months where it can cover it.
+    # Spec §3 / §7 — LUR sweep to principal during the IR window.
+    # Pre-spec, this block netted NOI against sized interest by inflating
+    # ``debt_service``. That made the IR pool look smaller than the lender
+    # actually funded and let lease-up rent shrink the sized reserve. Under
+    # the spec, IR pays 100% of interest during its window (sized LUR-blind
+    # in ``_ir_lease_up_pool``); excess NOI sweeps to principal — reducing
+    # the lender's payoff balance, not the interest-bearing balance, not the
+    # sized DS amount. The sweep shows up here as a real cash outflow so the
+    # period's distributable cash equals the post-sweep residual.
+    lur_sweep = ZERO
     if phase.period_type == PeriodType.lease_up and ir_lease_up_interest > ZERO:
-        ir_income_coverage = _q(min(ir_lease_up_interest, max(ZERO, noi)))
-        if ir_income_coverage > ZERO:
-            debt_service = _q(debt_service + ir_income_coverage)
+        lur_sweep = max(ZERO, noi)
+        if lur_sweep > ZERO:
             line_items.append(
                 CashFlowLineItem(
                     scenario_id=deal_model_id,
                     period=period,
                     category=LineItemCategory.debt_service,
-                    label="Interest from Operations (IR)",
-                    base_amount=ir_income_coverage,
-                    adjustments=_json_ready({"phase": phase.period_type.value}),
-                    net_amount=ir_income_coverage,
+                    label="LUR Sweep to Principal",
+                    base_amount=lur_sweep,
+                    adjustments=_json_ready({
+                        "phase": phase.period_type.value,
+                        "applies_to": "payoff_balance_only",
+                    }),
+                    net_amount=lur_sweep,
                 )
             )
 
-    net_cash_flow = _q(noi - debt_service - capital_outflow + capital_inflow)
+    net_cash_flow = _q(noi - debt_service - capital_outflow + capital_inflow - lur_sweep)
 
     return {
         "gross_revenue": _q(gross_revenue),
@@ -4378,6 +4386,7 @@ def _compute_period(
         "capex_reserve": _q(capex_reserve),
         "noi": noi,
         "debt_service": debt_service,
+        "lur_sweep": lur_sweep,
         "net_cash_flow": net_cash_flow,
         "line_items": line_items,
     }

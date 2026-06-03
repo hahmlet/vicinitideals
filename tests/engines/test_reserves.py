@@ -317,3 +317,169 @@ def test_stamped_bucket_wins_over_label():
         dev_fee_basis_bucket="operating_deficit_reserve",
     )
     assert classify_basis_bucket(ul) == "operating_deficit_reserve"
+
+
+# ---------------------------------------------------------------------------
+# LUR sweep in _compute_period — Slice 5a
+# ---------------------------------------------------------------------------
+
+
+from uuid import uuid4                                       # noqa: E402
+from app.engines.cashflow import _compute_period             # noqa: E402
+from app.engines.phase_plan import PhaseSpec                 # noqa: E402
+from app.models.cashflow import PeriodType                   # noqa: E402
+
+
+def _stab_inputs(initial_occupancy_pct: float = 95.0) -> OperationalInputs:
+    """Inputs that produce non-zero NOI during the lease-up phase used in
+    the sweep tests. Stab cap rate / mgmt fee zeroed so the math is
+    transparent."""
+    return OperationalInputs(
+        project_id=uuid4(),
+        unit_count_new=10,
+        initial_occupancy_pct=Decimal(str(initial_occupancy_pct)),
+        opex_per_unit_annual=Decimal("0"),
+        expense_growth_rate_pct_annual=Decimal("0"),
+        mgmt_fee_pct=Decimal("0"),
+        property_tax_annual=Decimal("0"),
+        insurance_annual=Decimal("0"),
+        capex_reserve_per_unit_annual=Decimal("0"),
+        exit_cap_rate_pct=Decimal("5"),
+        selling_costs_pct=Decimal("2"),
+    )
+
+
+def _lease_up_stream(rent: float, units: int, stab_occ: float = 95.0) -> IncomeStream:
+    pid = uuid4()
+    return IncomeStream(
+        project_id=pid,
+        stream_type="residential_rent",
+        label="Rent",
+        amount_per_unit_monthly=Decimal(str(rent)),
+        unit_count=units,
+        stabilized_occupancy_pct=Decimal(str(stab_occ)),
+        active_in_phases=["lease_up", "stabilized"],
+    )
+
+
+@pytest.mark.unit
+def test_lur_sweep_replaces_ir_income_coverage_during_lease_up():
+    """Spec §3 — IR pays 100% of interest during lease-up; excess NOI
+    sweeps to principal. The pre-spec ``debt_service`` inflation by
+    ``min(ir_lease_up_interest, max(0, noi))`` must be gone, replaced by
+    a real cash outflow that reduces ``net_cash_flow``.
+    """
+    result = _compute_period(
+        deal_model_id=uuid4(),
+        period=0,
+        phase=PhaseSpec(PeriodType.lease_up, 12),
+        month_index=11,                                  # late lease-up: occupancy ramped up
+        inputs=_stab_inputs(initial_occupancy_pct=95.0),
+        streams=[_lease_up_stream(2000, 10)],            # 10 × $2000 × 0.95 = $19k / mo
+        expense_lines=[],
+        stabilized_noi_monthly=None,
+        construction_debt_monthly=ZERO,
+        operation_debt_monthly=ZERO,
+        ir_lease_up_interest=Decimal("5000"),
+    )
+
+    # DS unchanged from the input — IR pays the sized interest from its own
+    # pool, not by routing NOI through `debt_service`.
+    assert result["debt_service"] == ZERO
+    # Excess NOI sweeps; sweep amount equals NOI (post-OpEx, post-capex).
+    assert result["lur_sweep"] > ZERO
+    assert result["lur_sweep"] == result["noi"]
+    # Distributable cash = NOI − DS − sweep = 0 during lease-up under spec.
+    assert result["net_cash_flow"] == ZERO
+
+    sweep_rows = [
+        li for li in result["line_items"]
+        if getattr(li, "label", "") == "LUR Sweep to Principal"
+    ]
+    assert len(sweep_rows) == 1
+    meta = sweep_rows[0].adjustments or {}
+    assert meta.get("applies_to") == "payoff_balance_only"
+
+
+@pytest.mark.unit
+def test_lur_sweep_zero_when_noi_zero():
+    """No NOI → no sweep. DS still zero (IR pays it)."""
+    result = _compute_period(
+        deal_model_id=uuid4(),
+        period=0,
+        phase=PhaseSpec(PeriodType.lease_up, 12),
+        month_index=0,
+        inputs=_stab_inputs(initial_occupancy_pct=0.0),
+        streams=[],                                       # no revenue
+        expense_lines=[],
+        stabilized_noi_monthly=None,
+        ir_lease_up_interest=Decimal("5000"),
+    )
+    assert result["debt_service"] == ZERO
+    assert result["lur_sweep"] == ZERO
+    sweep_rows = [
+        li for li in result["line_items"]
+        if getattr(li, "label", "") == "LUR Sweep to Principal"
+    ]
+    assert sweep_rows == []
+
+
+@pytest.mark.unit
+def test_lur_sweep_absent_outside_ir_window():
+    """Stabilized periods don't sweep — sized DS comes from operations now."""
+    result = _compute_period(
+        deal_model_id=uuid4(),
+        period=12,
+        phase=PhaseSpec(PeriodType.stabilized, 12),
+        month_index=0,
+        inputs=_stab_inputs(initial_occupancy_pct=95.0),
+        streams=[_lease_up_stream(2000, 10)],
+        expense_lines=[],
+        stabilized_noi_monthly=None,
+        operation_debt_monthly=Decimal("3000"),
+        ir_lease_up_interest=Decimal("5000"),             # passed but inert in stab
+    )
+    # Sized DS flows through; no sweep.
+    assert result["debt_service"] == Decimal("3000")
+    assert result["lur_sweep"] == ZERO
+
+
+@pytest.mark.unit
+def test_interest_invariance_to_lur_sweep():
+    """Spec §7 / critique #2 — total interest the lender accrues over the
+    lease-up window must be independent of how much LUR shows up. The
+    period helper does not recompute interest; it accepts the sized
+    monthly amount as a parameter. So whether the period has heavy or
+    zero revenue, the IR-funded interest the helper sees is constant.
+    This locks the contract that the period helper never touches
+    ``ir_lease_up_interest`` when handling the sweep.
+    """
+    sized_interest = Decimal("5000")
+    zero_rev = _compute_period(
+        deal_model_id=uuid4(),
+        period=0,
+        phase=PhaseSpec(PeriodType.lease_up, 12),
+        month_index=0,
+        inputs=_stab_inputs(initial_occupancy_pct=0.0),
+        streams=[],
+        expense_lines=[],
+        stabilized_noi_monthly=None,
+        ir_lease_up_interest=sized_interest,
+    )
+    full_rev = _compute_period(
+        deal_model_id=uuid4(),
+        period=0,
+        phase=PhaseSpec(PeriodType.lease_up, 12),
+        month_index=11,
+        inputs=_stab_inputs(initial_occupancy_pct=95.0),
+        streams=[_lease_up_stream(2000, 10)],
+        expense_lines=[],
+        stabilized_noi_monthly=None,
+        ir_lease_up_interest=sized_interest,
+    )
+    # Sized interest is not echoed into `debt_service` in either case;
+    # the IR pool funds it externally to the period loop. The lender's
+    # accrual is therefore invariant to NOI — the LUR sweep doesn't
+    # shrink it.
+    assert zero_rev["debt_service"] == ZERO
+    assert full_rev["debt_service"] == ZERO
