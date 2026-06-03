@@ -66,7 +66,7 @@ class CapitalModule(Base):
     )
     label: Mapped[str] = mapped_column(String(255), nullable=False)
     # 4-type classification: equity / debt / forgivable_loan / grant
-    vehicle_type: Mapped[str | None] = mapped_column(String(20), nullable=True)   # VehicleType value
+    vehicle_type: Mapped[str | None] = mapped_column(String(50), nullable=True)   # VehicleType value
     equity_role: Mapped[str | None] = mapped_column(String(10), nullable=True)    # EquityRole value or NULL
     stack_position: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     source: Mapped[dict | None] = mapped_column(JSON, nullable=True)
