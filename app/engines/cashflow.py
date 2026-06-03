@@ -61,6 +61,7 @@ from app.engines.source_routing import route_use_to_sources as _route_use_to_sou
 # importing from app.engines.cashflow.
 from app.engines.cashflow_compile import (
     PhaseSpec,
+    lease_up_ramp_occupancy,
     _APS_TO_RANK,
     _CONSTRUCTION_PERIOD_TYPES,
     _EXIT_VEHICLE_APPLIES,
@@ -2420,13 +2421,22 @@ def _odr_pool(
         floor_pct = _percent(getattr(line, "lease_up_floor_pct", None), default=ZERO)
         expense_inputs.append((monthly, scale_with_ramp, floor_pct))
 
+    # Use the same curve as the period-loop and revenue side. Reading
+    # `lease_up_curve` and `lease_up_curve_steepness` directly off
+    # inputs keeps the three call sites byte-identical.
+    _lu_curve = str(getattr(inputs, "lease_up_curve", None) or "linear")
+    _lu_steep = getattr(inputs, "lease_up_curve_steepness", None)
+
     pool = ZERO
     for k in range(lease_up_months):
-        if lease_up_months <= 1:
-            ramp_occ = stabilized_occ
-        else:
-            step = (stabilized_occ - initial_occ) / Decimal(lease_up_months - 1)
-            ramp_occ = max(min(initial_occ + step * Decimal(k), stabilized_occ), ZERO)
+        ramp_occ = lease_up_ramp_occupancy(
+            initial_occ=initial_occ,
+            stabilized_occ=stabilized_occ,
+            month_index=k,
+            months=lease_up_months,
+            curve=_lu_curve,
+            steepness=_lu_steep,
+        )
 
         income_k = ZERO
         for base, occ_target, net_factor in stream_inputs:
@@ -4198,11 +4208,19 @@ def _compute_period(
                     # comment on _odr_pool's initial_occ for the rationale.
                     initial_occ = _percent(inputs.initial_occupancy_pct, default=ZERO)
                     stabilized_occ = Decimal("0.95")  # default stabilized occupancy
-                    if phase.months <= 1:
-                        ramp_occ = stabilized_occ
-                    else:
-                        step = (stabilized_occ - initial_occ) / Decimal(phase.months - 1)
-                        ramp_occ = _clamp(initial_occ + step * Decimal(month_index), ZERO, stabilized_occ)
+                    # Use the shared lease-up ramp helper so OpEx tracks
+                    # whichever curve (linear / s_curve) the wizard slider
+                    # picked. Same helper is used by _stream_occupancy_pct
+                    # on the revenue side and by _odr_pool when sizing the
+                    # Operating Deficit Reserve.
+                    ramp_occ = lease_up_ramp_occupancy(
+                        initial_occ=initial_occ,
+                        stabilized_occ=stabilized_occ,
+                        month_index=month_index,
+                        months=phase.months,
+                        curve=str(getattr(inputs, "lease_up_curve", None) or "linear"),
+                        steepness=getattr(inputs, "lease_up_curve_steepness", None),
+                    )
                     lease_up_scale = _clamp(ramp_occ, floor_pct, ONE)
                 line_amount = _q(line_base * lease_up_scale)
             else:

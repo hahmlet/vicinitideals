@@ -546,6 +546,49 @@ def _is_expense_line_active(expense_line: OperatingExpenseLine, period_type: Per
     return phase_name == PeriodType.exit.value and PeriodType.stabilized.value in active_in_phases
 
 
+def lease_up_ramp_occupancy(
+    *,
+    initial_occ: Decimal,
+    stabilized_occ: Decimal,
+    month_index: int,
+    months: int,
+    curve: str,
+    steepness: object,
+) -> Decimal:
+    """Shared lease-up ramp formula. Returns the occupancy fraction at
+    ``month_index`` (0-based) of a ``months``-long lease-up window.
+
+    Used by ``_stream_occupancy_pct`` (revenue side) AND by the OpEx
+    scaling in ``_compute_period`` AND by ``_odr_pool`` (sizing). All
+    three must walk the same curve or the operating-deficit math breaks:
+    revenue and OpEx would ramp at different shapes during lease-up,
+    and ODR sized off one curve would not match the cash-flow loop
+    running the other.
+
+    Curve modes:
+      * ``"linear"``   — steady step from ``initial_occ`` to
+        ``stabilized_occ`` over the window.
+      * ``"s_curve"``  — logistic sigmoid; slow start, fast middle,
+        slow finish. ``steepness`` (≈ 2..10, default 5) controls how
+        pronounced the S is.
+    """
+    if months <= 1:
+        return stabilized_occ
+    if curve == "s_curve":
+        import math
+        k = float(steepness or 5)
+        t_norm = float(month_index) / float(months - 1)
+        raw = 1.0 / (1.0 + math.exp(-k * (t_norm - 0.5)))
+        low = 1.0 / (1.0 + math.exp(-k * (-0.5)))
+        high = 1.0 / (1.0 + math.exp(-k * 0.5))
+        normalized = (raw - low) / (high - low) if high > low else t_norm
+        occ = initial_occ + (stabilized_occ - initial_occ) * Decimal(str(normalized))
+        return _q(_clamp(occ, ZERO, stabilized_occ))
+    # Default: linear ramp.
+    step = (stabilized_occ - initial_occ) / Decimal(months - 1)
+    return _q(_clamp(initial_occ + (step * Decimal(month_index)), ZERO, stabilized_occ))
+
+
 def _stream_occupancy_pct(
     stream: IncomeStream,
     phase: PhaseSpec,
@@ -570,27 +613,14 @@ def _stream_occupancy_pct(
         # pre-leasing)". The old 50% default produced a silent mismatch
         # where the slider showed 0 and the engine ran as 50.
         initial_occupancy = _percent(inputs.initial_occupancy_pct, default=ZERO)
-        if phase.months <= 1:
-            return stabilized_occupancy
-        curve = str(getattr(inputs, "lease_up_curve", None) or "linear")
-        if curve == "s_curve":
-            # Logistic S-curve: slow start → fast middle → slow finish
-            # occ(t) = initial + (stab - initial) × sigmoid(k × (t/N - 0.5))
-            # where sigmoid(x) = 1 / (1 + e^(-x)), normalized so sigmoid(0)=0, sigmoid(N)=1
-            import math
-            k = float(getattr(inputs, "lease_up_curve_steepness", None) or 5)
-            t_norm = float(month_index) / float(phase.months - 1)  # 0.0 → 1.0
-            # Shift so midpoint is at 0.5, scale by steepness
-            raw = 1.0 / (1.0 + math.exp(-k * (t_norm - 0.5)))
-            # Normalize: map sigmoid(k*-0.5)..sigmoid(k*0.5) → 0..1
-            low = 1.0 / (1.0 + math.exp(-k * (-0.5)))
-            high = 1.0 / (1.0 + math.exp(-k * 0.5))
-            normalized = (raw - low) / (high - low) if high > low else t_norm
-            occ = initial_occupancy + (stabilized_occupancy - initial_occupancy) * Decimal(str(normalized))
-            return _q(_clamp(occ, ZERO, stabilized_occupancy))
-        # Default: linear ramp
-        step = (stabilized_occupancy - initial_occupancy) / Decimal(phase.months - 1)
-        return _q(_clamp(initial_occupancy + (step * Decimal(month_index)), ZERO, stabilized_occupancy))
+        return lease_up_ramp_occupancy(
+            initial_occ=initial_occupancy,
+            stabilized_occ=stabilized_occupancy,
+            month_index=month_index,
+            months=phase.months,
+            curve=str(getattr(inputs, "lease_up_curve", None) or "linear"),
+            steepness=getattr(inputs, "lease_up_curve_steepness", None),
+        )
 
     if phase.period_type in {PeriodType.stabilized, PeriodType.exit}:
         return stabilized_occupancy
