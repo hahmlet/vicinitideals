@@ -2028,8 +2028,10 @@ function ulTimingChanged(val) {
   var _step = 1;
   var _type = document.getElementById('sw-type').value;
 
+  var _SOLO = ['float_earnings'];   // step 1 only: auto-computed, no carry/draw config
   function _stepsFor(t) {
     var hasExit = _EXIT_VEHICLE_APPLIES.indexOf(t) >= 0;
+    if (_SOLO.indexOf(t) >= 0)      return [1];                // float_earnings: name + type only
     if (_SIMPLE.indexOf(t) >= 0)    return [1, 5];             // grant/tax_credit: name + draw
     if (_PERM_DEBT.indexOf(t) >= 0) return [1, 2, 3, 4, 5];    // permanent_debt: exit (maturity|sale) + loan terms + carry + draw
     if (_NO_CARRY.indexOf(t) >= 0) {
