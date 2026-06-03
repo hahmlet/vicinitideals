@@ -3628,16 +3628,16 @@ capital stack shape changes. Pure amount edits do not trip the diff.
 
 ### H.9 Phase 2 / follow-up scope
 
-**Shipped — June 2026 (Float Earnings Phase B):** subordinate operating-
-cash consumption of the deferred Dev Fee portion. The CF waterfall now
-has a `deferred_developer_fee` tier (auto-seeded between
-`debt_service` and `residual` when `dev_fee_binding_context["deferred"]
-> 0`) that consumes available cash up to the remaining balance. Float-
-earnings topups are applied as discrete balance reductions at their
-paydown milestone period (priority over waterfall consumption, mirrors
-Phase A's debt-paydown event model — `net_cash_flow` is deliberately
-untouched for bank-account-proof conservatism). See Appendix I.4 and
-`docs/feature-plans/float-earnings-phase-b.md`.
+**Shipped — June 2026 (Float Earnings Phase B, simplified):** all float
+earnings route directly to the GP/LP profit waterfall as a lump sum
+at the user-chosen **Waterfall Milestone**. The `deferred_developer_fee`
+tier (auto-seeded between `debt_service` and `residual` when the DDF
+capital module amount > 0) consumes operating cash period-by-period
+up to the remaining DDF balance. Found-money injection into `available_cash`
+at the milestone period then flows through normal tier order
+(debt service → DDF → residual equity split). The split-routing model
+(dev_fee_split_pct / debt_paydown_split_pct) was removed in favour of
+this single clean path. See Appendix I.4 and I.5.
 
 Still pending:
 
@@ -3688,66 +3688,134 @@ Float earnings DO NOT shrink any reserve. Specifically:
 
 Reason for the conservative position: T-bond secondary-market sale timing cannot be reliably aligned to construction draw needs. Treating the income as freely available would allow the engine to under-size reserves on the optimistic assumption that the bonds clear when the project needs cash. The sponsor would be exposed if that timing slipped.
 
-### I.4 Application paths
+### I.4 Application path — "Found Money"
 
-Float earnings route through one or both of two restricted Uses, controlled by a user-entered split `dev_fee_split_pct + debt_paydown_split_pct = 100`:
+All float earnings route to the GP/LP profit waterfall as a **lump sum** at the
+user-chosen **Waterfall Milestone**. No split routing, no direct debt paydown,
+no direct Dev Fee balance reduction.
 
-- **Debt principal paydown** (Phase A) — at a user-chosen milestone, the target debt module's effective principal is reduced by the paydown amount. The reduction propagates into the exit balloon (`_balloon_balance`) and the prepay-penalty calculation. Per-period interest expense is NOT recomputed in v1 (matches the existing refi-event handling); this slightly overstates DS after the paydown. Phase B can revisit.
-- **Developer Fee top-up** (Phase B, June 2026) — at the user-chosen paydown milestone the topup amount reduces the deferred Dev Fee balance directly. The CF waterfall's `deferred_developer_fee` tier additionally consumes operating cash up to any remaining balance, period by period (auto-seeded between `debt_service` and `residual` when the deferred balance > 0). The full balance schedule (opening, per-period paydown from waterfall vs from float topup, closing) is persisted on `OperationalOutputs.dev_fee_balance_series` and rendered in the Dev Fee explainer modal.
+Mechanics:
+1. `cashflow.py` resolves the waterfall milestone to a period number and writes it into
+   `float_earnings_series["found_money_periods"]` (a `{str(period): amount}` dict).
+2. In the waterfall loop, at that period the lump sum is added to `available_cash`.
+3. Normal tier order applies: debt service is paid first, then DDF balance (if any),
+   then residual equity split. Float earnings are not ring-fenced — they flow wherever
+   the deal's tier ordering directs them.
 
-The engine surfaces a `capital_event` line item at the paydown milestone for each of these (direction = `informational`, detail = `float_paydown` or `dev_fee_topup`) so the user sees the event in the cashflow without it being double-counted against the bank-account proof.
+The engine does **not** surface a separate `capital_event` line item for the injection;
+the amount becomes visible through the DDF Recov. column (if the DDF tier consumes it)
+or the equity distribution rows in the waterfall report.
+
+**Backward compat:** the legacy `paydown_milestone_id` key on `CapitalSourceSchema` is
+still read if `waterfall_milestone_id` is absent, so existing source JSONB rows continue
+to work without re-save.
 
 ### I.5 Persistence and UI surface
 
-Per-source results are persisted on `OperationalOutputs.float_earnings_series` (JSONB) with shape:
+Per-source results are persisted on `OperationalOutputs.float_earnings_series` (JSONB):
 
 ```json
 {
   "sources": [{
     "float_source_id": "...",
     "parent_module_id": "...",
-    "total_earnings": 229166.67,
-    "paydown_amount": 229166.67,
-    "dev_fee_topup_amount": 0,
-    "paydown_debt_module_id": "...",
-    "paydown_milestone_id": "...",
+    "total_earnings": 302017.47,
+    "waterfall_milestone_id": "...",
     "schedule": [{"period": 1, "opening_balance": 10000000, "monthly_earnings": 41666.67, "closing_balance": 9000000}],
     "warnings": []
   }],
+  "found_money_periods": {"43": 302017.47},
   "warnings": []
 }
 ```
 
-This pattern mirrors `bank_account_proof` (Appendix G.4): always written so stale data clears, None when no float-earnings sources exist.
+`found_money_periods` is a `{str(period): amount}` dict pre-resolved by `cashflow.py`
+so the waterfall loop can inject lump sums with a dict lookup rather than re-loading
+milestones. It is the only key the waterfall reads from this blob.
+
+The computed `total_earnings` is also written back to the float_earnings capital
+module's `source["amount"]` at the end of each cashflow compute, so the S&U panel
+shows the Found Money dollar amount without re-running the engine.
+
+`OperationalOutputs.dev_fee_balance_series` tracks the DDF repayment schedule:
+
+```json
+{
+  "opening_at_close": "628195.68",
+  "fully_paid_period": 40,
+  "total_paid": "628195.68",
+  "remaining_at_horizon": "0",
+  "periods": [{
+    "period": 1,
+    "opening_balance": "628195.68",
+    "paydown_from_waterfall": "12563.91",
+    "paydown_from_float_topup": "0",
+    "closing_balance": "615631.77"
+  }, ...]
+}
+```
+
+`opening_at_close` = the DDF **capital module** `source["amount"]` (what was contributed
+as a source and needs to be repaid), not the total developer fee deferred.
+
+Both columns follow `bank_account_proof` (Appendix G.4) semantics: always written so
+stale data clears, None when no relevant source/module exists.
 
 ### I.6 Files involved
 
 | File | Role |
 |---|---|
-| `app/engines/float_earnings.py` | Validation gate, closed-form balance math, split allocator, scenario orchestrator |
-| `app/engines/debt_paydown.py` | Paydown event collection, milestone-to-period resolution, per-debt totals |
-| `app/engines/dev_fee_balance.py` | (Phase B) Pure-function deferred Dev Fee balance schedule with float-topup-priority rule |
-| `app/engines/cashflow.py` | Wires float-earnings into post-sizing flow, injects informational line items (debt paydown + Phase B dev-fee topup), pre-resolves `dev_fee_topup_periods`, reduces prepay-penalty basis |
-| `app/engines/waterfall.py` | (Phase B) Consumes the `deferred_developer_fee` tier from operating cash, auto-seeds the tier when balance > 0, persists `dev_fee_balance_series` |
-| `app/engines/source_routing.py` | Excludes `float_earnings` from Use-funding eligibility (side-effect-only source) |
-| `app/models/capital.py` | `VehicleType.float_earnings` enum value; `WaterfallTierType.deferred_developer_fee` (Phase B) |
-| `app/models/cashflow.py` | `OperationalOutputs.float_earnings_series` JSON column; `dev_fee_balance_series` (Phase B) |
-| `app/schemas/capital.py` | `CapitalSourceSchema` float-earnings fields (parent ref, yield, splits, paydown FKs) |
-| `app/api/routers/ui.py` | Form handler parses the new fields; `model_builder_line_form` loads sibling capital modules + scenario milestones for the dropdowns; `dev_fee_explainer_modal` enriches context with `dev_fee_balance_series` + per-source topup summary (Phase B) |
-| `app/templates/partials/model_builder_line_form.html` | Float-earnings dropdown option, `balance_earns_interest` checkbox, form section with parent / paydown debt / paydown milestone dropdowns; Dev Fee Top-Up split is editable (Phase B) |
-| `app/templates/partials/dev_fee_explainer_modal.html` | (Phase B) "Float-earnings topup" + "Deferred Dev Fee balance schedule" sections |
-| `alembic/versions/0104_operational_outputs_float_earnings.py` | Migration for the JSON column |
-| `alembic/versions/0107_dev_fee_balance_series.py` | (Phase B) Migration for `dev_fee_balance_series` |
-| `tests/engines/test_float_earnings.py` | Unit coverage (26 tests) |
-| `tests/engines/test_dev_fee_balance.py` | (Phase B) 12 unit tests for the balance helper |
-| `tests/engines/test_waterfall.py` | (Phase B) 2 integration tests for tier consumption + auto-seed |
+| `app/engines/float_earnings.py` | Validation gate, closed-form balance math, scenario orchestrator. `FloatEarningsResult` carries `float_source_id`, `parent_module_id`, `total_earnings`, `waterfall_milestone_id`, `schedule`, `warnings` — no split fields. |
+| `app/engines/dev_fee_balance.py` | Pure-function DDF balance schedule; `compute_deferred_balance_schedule` + `serialize_balance_result`. `float_topups_by_period` param accepted but passed as `{}` — found money no longer reduces the DDF balance directly. |
+| `app/engines/cashflow.py` | Pre-resolves `found_money_periods` dict from float results; writes `total_earnings` back to each float module's `source["amount"]`; runs `_auto_size_ddf_module()` after `_auto_size_debt_modules()`. |
+| `app/engines/waterfall.py` | DDF tier auto-seeded when DDF capital module amount > 0 (reads `_read_deferred_dev_fee_at_close` from the module, not the use line). Found money injected into `available_cash` at the milestone period. Persists `dev_fee_balance_series` on `OperationalOutputs`. |
+| `app/engines/source_routing.py` | Excludes `float_earnings` from Use-funding eligibility. |
+| `app/models/capital.py` | `VehicleType.float_earnings`; `VehicleType.deferred_developer_fee`; `WaterfallTierType.deferred_developer_fee` |
+| `app/models/cashflow.py` | `OperationalOutputs.float_earnings_series` and `dev_fee_balance_series` JSON columns |
+| `app/schemas/capital.py` | `CapitalSourceSchema` float-earnings fields (parent ref, yield, `waterfall_milestone_id`). `CapitalExitSchema.trigger` is optional (`str \| None = None`) to accommodate DDF modules whose `exit_terms` lack a trigger. |
+| `app/api/routers/ui.py` | CF routes load `dev_fee_balance_series` into template context as `ddf_recovery_by_period` + `ddf_balance_by_period`. Float source save handler writes `waterfall_milestone_id` (reads legacy `paydown_milestone_id` for compat). |
+| `app/templates/partials/model_builder_line_form.html` | Float-earnings form: parent module picker, yield %, Waterfall Milestone picker. Split % fields removed. Developer Fee Rule section hidden for `float_earnings` vehicle type. |
+| `app/templates/partials/model_builder_panel.html` | CF table has DDF Recov. (orange, period paydown from waterfall) and DDF Bal. (remaining balance) columns. S&U "Found Money" summary block shows total earnings → GP/LP Profit Waterfall. |
+| `app/templates/partials/vehicle_form.html` | Developer Fee Rule section hidden for `float_earnings` vehicle type. |
+| `alembic/versions/0104_operational_outputs_float_earnings.py` | Migration for `float_earnings_series` column |
+| `alembic/versions/0107_dev_fee_balance_series.py` | Migration for `dev_fee_balance_series` column |
+| `tests/engines/test_float_earnings.py` | Unit coverage |
+| `tests/engines/test_dev_fee_balance.py` | Unit tests for balance schedule helper |
+| `tests/engines/test_waterfall.py` | Integration tests for DDF tier consumption + auto-seed |
 
 ### I.7 Known limitations
 
 | Limitation | Resolution |
 |---|---|
-| Per-period interest on the parent loan is not recomputed after a paydown (slight DS overstatement) | Phase B can extend the carry-schedule resolver to honor a "voluntary paydown" event |
-| Yield curve is a single user-entered annual % | Future option: scheduled fetch of the Treasury curve, with per-month yield indexing |
-| Multi-project scenarios: deferred Dev Fee balance reads from the default-project OO row only (`Scenario.operational_outputs` is `uselist=False`); matches the same limitation flagged in `_apply_levered_metrics` | Phase 2f+ multi-project waterfall work |
-| Integration + E2E tests for the float-earnings dropdowns are still pending | Follow-up: API integration test for capital-module CRUD + E2E flow on reference deal `cf0e77c3-…` |
+| Yield curve is a single user-entered annual % | Future: scheduled fetch of Treasury curve with per-month yield indexing |
+| Multi-project scenarios: DDF balance reads from the default-project OO row only (`Scenario.operational_outputs` is `uselist=False`); matches same limitation in `_apply_levered_metrics` | Phase 2f+ multi-project waterfall work |
+| Integration + E2E tests for the float-earnings Waterfall Milestone form field are still pending | Follow-up: API integration test for capital-module CRUD + E2E flow |
+| DDF opening balance is the DDF capital module amount, not the total deferred dev fee — if the developer deferred more than the gap-fill amount, the excess dev fee recovery is not modeled in the DDF balance schedule | Phase 2+ full dev-fee payout tracking |
+
+### I.8 DDF auto-sizing
+
+When a `deferred_developer_fee` capital module has `source.auto_size == true`, the
+engine automatically sets its `source["amount"]` to fill the residual Sources = Uses
+gap after all debt modules have been sized:
+
+```
+ddf_amount = min(gap, dev_fee_total)
+gap        = max(0, uses_total − other_sources_total)
+dev_fee_total = Σ use_lines where is_auto_dev_fee or is_auto_acquisition_fee
+```
+
+`other_sources_total` excludes `deferred_developer_fee` and `float_earnings` vehicle
+types. The DDF is intentionally last-resort: `_auto_size_ddf_module()` runs in
+`cashflow.py` after `_auto_size_debt_modules()` completes.
+
+This means:
+- If debt auto-sizing already closes the gap, DDF amount → $0 (still in stack, just
+  draws nothing).
+- If a gap remains, DDF fills it up to the available developer fee pool.
+- `float_earnings` is excluded from Sources total so found-money never inflates the
+  apparent Sources balance and masks a real gap.
+
+The Gap Adjustment slider (`/models/{id}/gap-adjust`) operates on top of this: it
+adds/removes a phantom use line to shift the Sources = Uses balance after
+auto-sizing has run.
 

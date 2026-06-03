@@ -759,12 +759,12 @@ Scenario-scoped Source identity (lender, rate, carry type, exit terms). Per-proj
 | scenario_id | UUID FK to scenarios | Yes | |
 | label | str (255) | Yes | e.g. "Permanent Debt - Chase" |
 | funder_type | FunderType enum | Yes | Legacy bridge field; `vehicle_type` + `equity_role` are canonical post-0085 |
-| vehicle_type | str (20) or None | No | Snapshot from linked SourceVehicle: `equity`, `debt`, `forgivable_loan`, `grant` |
+| vehicle_type | str (50) or None | No | Snapshot from linked SourceVehicle: `equity`, `debt`, `forgivable_loan`, `grant`, `float_earnings`, `deferred_developer_fee` (VARCHAR expanded 20→50 in migration 0108) |
 | equity_role | str (10) or None | No | Snapshot from linked SourceVehicle: `gp`, `lp`, or NULL for debt/grant |
 | stack_position | int | Yes | Display order (0 = top) |
 | source | dict or None | No | JSONB: sizing inputs - see 12.1a |
 | carry | dict or None | No | JSONB: construction carry - see 12.1b |
-| exit_terms | dict or None | No | JSONB: balloon, prepay, refi cap rate |
+| exit_terms | dict or None | No | JSONB: balloon, prepay, refi cap rate. Validated by `CapitalExitSchema`; `trigger` field is optional (`str \| None`) to accommodate DDF modules that store only `exit_type` + `vehicle` |
 | eligible_use_tags | varchar[] | No | Whitelist of use `cost_category` tags this source may fund; empty = permissive (any use) |
 | active_phase_start | str (60) or None | No | Legacy phase key; superseded by `active_from_milestone_id` (kept as fallback) |
 | active_phase_end | str (60) or None | No | Legacy phase key; superseded by `active_to_milestone_id` (kept as fallback) |
@@ -816,6 +816,26 @@ Two formats coexist. The engine reads whichever is present; `phases` takes prece
 ```
 
 Phase `name` is always `construction` or `operation`. See `FINANCIAL_MODEL.md` Appendix C for rate resolution precedence.
+
+**12.1c source JSONB keys — `float_earnings` vehicle type:**
+
+| Key | Notes |
+|---|---|
+| parent_module_id | UUID of the capital module whose proceeds earn float (must have `draw_type == "fully_drawn"` and `balance_earns_interest == true`) |
+| yield_pct | Annual yield %; engine uses linear-depletion model over construction months |
+| waterfall_milestone_id | UUID of the milestone at which total earnings hit the GP/LP waterfall as a lump sum. Legacy key `paydown_milestone_id` is also read for backward compat. |
+| amount | Written back by engine after each compute (= `FloatEarningsResult.total_earnings`); not user-entered |
+
+`float_earnings` modules are excluded from the Sources = Uses gap and from source-routing eligibility (`source_routing.py`). See `FINANCIAL_MODEL.md` Appendix I.
+
+**12.1d source JSONB keys — `deferred_developer_fee` vehicle type:**
+
+| Key | Notes |
+|---|---|
+| amount | Auto-sized by `_auto_size_ddf_module()` to fill the residual Sources = Uses gap after debt modules are sized, capped at the total dev fee use line amount. Can also be set manually. |
+| auto_size | Bool; when `true`, engine sets `amount` each compute pass (same mechanic as `auto_size` on debt modules) |
+
+The DDF module's `amount` becomes the opening balance for `OperationalOutputs.dev_fee_balance_series` — it represents what was contributed as a capital source and will be repaid from operating cash flows. This is distinct from `dev_fee_binding_context["deferred"]` (total developer fee deferred, which may be larger). See `FINANCIAL_MODEL.md` Appendix I.8.
 
 ---
 
