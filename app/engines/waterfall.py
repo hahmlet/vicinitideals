@@ -870,19 +870,19 @@ async def _load_deal_context(session: AsyncSession, deal_model_id: UUID) -> Scen
 
 
 def _read_deferred_dev_fee_at_close(deal_model: Scenario) -> Decimal:
-    """Read the deferred Dev Fee balance at close from the auto Dev Fee
-    UseLine's `dev_fee_binding_context["deferred"]` field.
+    """Read the DDF opening balance from the deferred_developer_fee capital module's
+    source amount — i.e. what was actually contributed as a source and needs to be
+    repaid from operating cash flows.
 
-    Phase B's deferred balance starts at this value at period 1. Returns
-    ZERO if no auto Dev Fee row exists or the context lacks a `deferred`
-    key (e.g. legacy data, or fully-funded-at-close scenarios).
+    Returns ZERO when no DDF module exists or its amount is zero (deal has no
+    deferred-fee capital contribution).
     """
-    for project in (deal_model.projects or []):
-        for use_line in (project.use_lines or []):
-            if not getattr(use_line, "is_auto_dev_fee", False):
-                continue
-            ctx = getattr(use_line, "dev_fee_binding_context", None) or {}
-            return _to_decimal(ctx.get("deferred"))
+    for module in (deal_model.capital_modules or []):
+        vt = (getattr(module, "vehicle_type", None) or "").replace("VehicleType.", "")
+        if vt == "deferred_developer_fee":
+            amount = _to_decimal((module.source or {}).get("amount", 0))
+            if amount > ZERO:
+                return amount
     return ZERO
 
 
