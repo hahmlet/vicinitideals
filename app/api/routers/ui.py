@@ -11284,7 +11284,8 @@ async def dev_fee_explainer_modal(
         return HTMLResponse("<p class='text-muted'>Not found.</p>", status_code=404)
     if settings.org_isolation_enabled:
         user_org_id = getattr(user, "org_id", None) if user is not None else None
-        if user_org_id is None or scenario.org_id != user_org_id:
+        _deal = await session.get(Deal, scenario.deal_id)
+        if user_org_id is None or _deal is None or _deal.org_id != user_org_id:
             return HTMLResponse("<p class='text-muted'>Not found.</p>", status_code=404)
     # Locate the auto Dev Fee Use Line for this scenario. UseLines belong
     # to Projects which belong to a Scenario — join through Project.
