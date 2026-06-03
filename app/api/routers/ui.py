@@ -10573,6 +10573,22 @@ async def model_builder(
             _cf_q.order_by(CashFlow.period)
         )).scalars())
 
+
+    _ddf_recovery_by_period: dict[int, float] = {}
+    _ddf_balance_by_period: dict[int, float] = {}
+    if active_module == "cashflow":
+        _oo_ddf_q = select(OperationalOutputs.dev_fee_balance_series).where(
+            OperationalOutputs.scenario_id == model_id
+        )
+        if active_project_id is not None:
+            _oo_ddf_q = _oo_ddf_q.where(OperationalOutputs.project_id == active_project_id)
+        _ddf_series = (await session.execute(_oo_ddf_q)).scalar_one_or_none() or {}
+        for _ddf_p in (_ddf_series.get("periods") or []):
+            _ddf_prd = int(_ddf_p.get("period", 0))
+            _ddf_recov = float(_ddf_p.get("paydown_from_waterfall") or 0) + float(_ddf_p.get("paydown_from_float_topup") or 0)
+            if _ddf_recov > 0:
+                _ddf_recovery_by_period[_ddf_prd] = _ddf_recov
+            _ddf_balance_by_period[_ddf_prd] = float(_ddf_p.get("closing_balance") or 0)
     # Multi-parcel detection — opportunity IS the listing; APN is on opportunity directly
     import re as _re
     multi_parcel_apns: list[str] = []
@@ -10775,6 +10791,8 @@ async def model_builder(
         "wizard_mode": wizard == "1",
         "proforma_task_id": proforma_task_id.strip(),
         "cash_flow_rows": cash_flow_rows,
+        "ddf_recovery_by_period": _ddf_recovery_by_period,
+        "ddf_balance_by_period": _ddf_balance_by_period,
         "multi_parcel_apns": multi_parcel_apns,
         "lot_size_mismatch": lot_size_mismatch_info,
         "step": wizard_step,
@@ -10827,6 +10845,22 @@ async def builder_panel(
             _cf_q2.order_by(CashFlow.period)
         )).scalars())
         ctx["cash_flow_rows"] = cf_rows
+        _oo_ddf_q2 = select(OperationalOutputs.dev_fee_balance_series).where(
+            OperationalOutputs.scenario_id == model_id
+        )
+        if _active_proj_id is not None:
+            _oo_ddf_q2 = _oo_ddf_q2.where(OperationalOutputs.project_id == _active_proj_id)
+        _ddf_s2 = (await session.execute(_oo_ddf_q2)).scalar_one_or_none() or {}
+        _ddf_rec2: dict[int, float] = {}
+        _ddf_bal2: dict[int, float] = {}
+        for _p2 in (_ddf_s2.get('periods') or []):
+            _pr2 = int(_p2.get('period', 0))
+            _r2 = float(_p2.get('paydown_from_waterfall') or 0) + float(_p2.get('paydown_from_float_topup') or 0)
+            if _r2 > 0:
+                _ddf_rec2[_pr2] = _r2
+            _ddf_bal2[_pr2] = float(_p2.get('closing_balance') or 0)
+        ctx['ddf_recovery_by_period'] = _ddf_rec2
+        ctx['ddf_balance_by_period'] = _ddf_bal2
 
     # Draw schedule data — loaded for draw_schedule and cashflow modules
     if module in ("draw_schedule", "cashflow"):

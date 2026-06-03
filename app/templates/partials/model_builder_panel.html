@@ -2035,6 +2035,8 @@
       <th class="col-right">OpEx</th>
       <th class="col-right">NOI</th>
       <th class="col-right">Debt Svc</th>
+      <th class="col-right" title="Deferred developer fee recovered from operating cash flow this period">DDF Recov.</th>
+      <th class="col-right" title="Remaining deferred developer fee balance after this period">DDF Bal.</th>
       <th class="col-right" title="Use line outflows and capital events (sale proceeds at exit)">Capital</th>
       <th class="col-right">Net CF</th>
       <th class="col-right" title="Unspent construction loan proceeds during the build phase. Starts at total debt drawn, drains as costs are paid. Blank during operations.">Capital Bal.</th>
@@ -2054,7 +2056,7 @@
     {%- if is_first_positive -%}{%- set ns.first_positive_done = true -%}{%- endif -%}
     {% if phase != ns.cur_phase %}
     <tr style="background:var(--surface-2,#f3f4f6)">
-      <td colspan="12" style="font-size:10px;font-weight:700;letter-spacing:.05em;color:var(--text-muted);padding:6px 8px;text-transform:uppercase">
+      <td colspan="14" style="font-size:10px;font-weight:700;letter-spacing:.05em;color:var(--text-muted);padding:6px 8px;text-transform:uppercase">
         {{ phase_label }}
       </td>
     </tr>
@@ -2073,6 +2075,10 @@
       <td class="col-right text-mono" style="color:var(--danger,#dc2626)">{{ neg(row.operating_expenses) }}</td>
       <td class="col-right text-mono" style="font-weight:600">{{ row.noi | currency if row.noi and row.noi | float != 0 else '—' }}</td>
       <td class="col-right text-mono" style="color:var(--danger,#dc2626)">{{ neg(row.debt_service) }}</td>
+      {%- set _ddf_r = (ddf_recovery_by_period or {})[row.period] if row.period in (ddf_recovery_by_period or {}) else 0 -%}
+      {%- set _ddf_b = (ddf_balance_by_period or {})[row.period] if row.period in (ddf_balance_by_period or {}) else none -%}
+      <td class="col-right text-mono" style="color:{% if _ddf_r > 0 %}var(--warning,#d97706){% else %}var(--text-muted){% endif %}">{{ _ddf_r | currency if _ddf_r > 0 else '—' }}</td>
+      <td class="col-right text-mono text-small" style="color:var(--text-muted)">{{ _ddf_b | currency if _ddf_b is not none and _ddf_b > 0.5 else '—' }}</td>
       <td class="col-right text-mono" style="{% if capital_col < -1 %}color:var(--danger,#dc2626){% elif capital_col > 1 %}color:var(--success,#16a34a){% endif %}">
         {%- if capital_col < -1 -%}(${{ '{:,.0f}'.format(capital_col | abs) }}){%- elif capital_col > 1 -%}${{ '{:,.0f}'.format(capital_col) }}{%- else -%}—{%- endif -%}
       </td>
