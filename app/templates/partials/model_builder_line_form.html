@@ -23,7 +23,7 @@
 <form hx-put="/ui/forms/{{ model.id }}/use-lines/{{ existing.id }}"
       hx-target="#module-panel-content"
       hx-swap="innerHTML"
-      hx-on::after-request="if(event.detail.successful) closeDrawer('line-item-drawer')"
+      hx-on::after-request="if(event.detail.elt === this && event.detail.successful) closeDrawer('line-item-drawer')"
       style="padding-bottom:8px">
 
   {% if _is_auto_devfee %}

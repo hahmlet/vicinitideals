@@ -1074,6 +1074,7 @@ async def _upsert_pp_phantom(
         amount=amount,
         timing_type="first_day",
         dev_fee_basis_bucket="acquisition",
+        cost_category="acquisition",
     )
     try:
         async with session.begin_nested():
@@ -1090,6 +1091,7 @@ async def _upsert_pp_phantom(
         if existing is None:
             raise
         existing.amount = amount
+        existing.cost_category = "acquisition"
         return existing
 
 

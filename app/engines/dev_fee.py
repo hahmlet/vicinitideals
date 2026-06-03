@@ -36,6 +36,7 @@ from app.models.capital import (
     UseLineSourceFeeBasis,
 )
 from app.models.deal import OperationalInputs, UseLine
+from app.schemas.gap_adjustment_names import PURCHASE_PRICE_ADJUSTMENT_LABEL
 
 ZERO = Decimal("0")
 _MONEY_PLACES = Decimal("0.01")
@@ -173,11 +174,17 @@ def _resolve_purchase_price(
     inputs: OperationalInputs | None,
     use_lines: Iterable[UseLine],
 ) -> Decimal:
-    """Prefer OperationalInputs.purchase_price; fall back to acquisition-phase Uses."""
+    """Prefer OperationalInputs.purchase_price + any PP gap adjustment; fall back to acquisition-phase Uses."""
+    use_lines = list(use_lines)
+    pp_adj = ZERO
+    for u in use_lines:
+        if getattr(u, "label", None) == PURCHASE_PRICE_ADJUSTMENT_LABEL:
+            pp_adj = _to_decimal(u.amount)
+            break
     if inputs is not None:
         pp = _to_decimal(inputs.purchase_price)
         if pp > ZERO:
-            return pp
+            return pp + pp_adj
     total = ZERO
     for u in use_lines:
         if u.is_auto_dev_fee or getattr(u, "is_auto_acquisition_fee", False):
