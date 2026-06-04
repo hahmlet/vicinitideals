@@ -6604,10 +6604,19 @@ def _per_project_value_raw(
     if key == "project_type":
         return getattr(project, "deal_type", "") or ""
     if key == "acquisition_price":
-        # Heuristic: sum acquisition-phase Use lines. Commit 4 will switch
-        # to Project.acquisition_price once the schema refactor lands.
+        # Prefer Project.acquisition_price (authoritative when set). Fall
+        # back to summing only Use lines whose cost_category == "acquisition"
+        # — the true land/building cost rows. The old heuristic summed every
+        # phase=="acquisition" Use line, which on multi-source deals sweeps in
+        # Dev Fee, IR, ODR, Operating Reserve, Finance Costs (all auto-tagged
+        # phase=acquisition by the engine) and over-stated the purchase price
+        # by several million.
+        explicit = getattr(project, "acquisition_price", None)
+        if explicit is not None:
+            return _coerce_decimal(explicit)
         return sum(
-            (_coerce_decimal(ul.amount) for ul in use_lines if _is_acquisition_phase(ul)),
+            (_coerce_decimal(ul.amount) for ul in use_lines
+             if str(ul.cost_category or "") == "acquisition"),
             Decimal(0),
         ) or None
     if key == "avg_in_place_rent":
