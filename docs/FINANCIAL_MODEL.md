@@ -1139,6 +1139,85 @@ convergence loop. Phase B (commit ``dc4de2c``) routes operating
 NCF through a ``deferred_developer_fee`` waterfall tier so the
 ``debt_paydown_split`` and ``dev_fee_split`` interact correctly.
 
+### Acquisition Fee [investor, lender, app]
+
+**Definition.** A separate sponsor fee paid at close, computed as a
+percentage of the purchase price. Appears as its own UseLine when
+``dev_fee_acquisition_treatment="separate_fee"`` on the auto Dev Fee
+row; the engine maintains it via ``is_auto_acquisition_fee=True`` so
+the amount re-derives whenever the purchase price changes.
+
+**Calculation.**
+```
+acquisition_fee_amount = acquisition_fee_pct × purchase_price
+```
+
+**Excel surfaces.**
+- ``s_acquisition_fee`` — first-occurrence cell in the S&U Acquisition
+  cost section (auto Acquisition Fee rows render under Acquisition
+  rather than Soft Costs, regardless of their stored ``cost_category``).
+- ``s_acquisition_fee_pct`` — input percentage on Block A of the
+  Assumptions sheet.
+
+**Engine source.** ``app/engines/dev_fee.py``; the Acquisition Fee row
+is created and maintained alongside the auto Dev Fee row whenever the
+treatment is ``separate_fee``. Setting any other treatment deletes the
+row.
+
+### Dev Fee Caps (per Source) [investor, lender, app]
+
+**Definition.** Each ``CapitalModule`` may carry a ``fee_terms``
+JSONB rule that limits how much of the Developer Fee that source can
+fund. The engine evaluates every source's allowable amount and the
+lowest one becomes the **binding** cap — the source the deal would
+hit first if Dev Fee were sized up.
+
+**Cap kinds (any field optional — null means "no cap of this kind").**
+- ``max_pct`` — maximum Dev Fee as a percentage of basis.
+- ``per_unit_cap`` — maximum dollars per unit (residential).
+- ``absolute_cap`` — a hard dollar ceiling.
+- ``basis_inclusions_override`` / ``basis_exclusions`` — which cost
+  buckets feed the basis for this source.
+
+**Excel surface.** ``r_su_dev_fee_caps`` — table on the S&U sheet
+under the Sources block, one row per CapitalModule with non-empty
+``fee_terms``. Columns: Source, Max %, Per-Unit Cap, Absolute Cap,
+Allowable $, Binding (✓/—). The binding row is rendered bold; the
+binding source is read from
+``UseLine.dev_fee_binding_context.binding_source_id``.
+
+**Engine source.** ``app/engines/dev_fee.py`` — the multi-source
+binding pipeline (``_compute_one_fee`` + binding selector). Per-source
+allowables are persisted on the Dev Fee UseLine's
+``dev_fee_binding_context.per_source_allocation``.
+
+### Dev Fee Release Schedule [investor, lender, app]
+
+**Definition.** Milestone-weighted disbursement plan for the
+Developer Fee. Each weight is a fraction (0–1) tied to a milestone;
+when that milestone clears, the engine releases ``weight × elected_fee``
+in that period. A separate ``final_holdback`` releases its ``pct`` at
+the chosen milestone. Sum of all ``weights[].weight + final_holdback.pct``
+must equal 1.0 (validated at write and again before scheduling).
+
+**Stored shape.** ``UseLine.dev_fee_release_schedule``:
+```
+{
+  "weights": [{"milestone_id": UUID, "weight": Decimal}, ...],
+  "final_holdback": {"milestone_id": UUID, "pct": Decimal}
+}
+```
+
+**Excel surface.** ``r_su_dev_fee_release`` — table on the S&U sheet
+under the Caps block, one row per weight plus a final holdback row.
+Columns: Milestone, Weight %, Holdback %. Mini-block omitted when
+schedule is empty (legacy "release at close" behavior).
+
+**Engine source.** ``app/engines/dev_fee.py`` — the schedule drives
+the timing entries on the auto Dev Fee row. The Assumptions sheet
+cell ``s_dev_fee_final_holdback_pct`` mirrors the final-holdback
+percentage for at-a-glance review.
+
 ### Retired reserve concepts
 
 The following UseLine labels are no longer auto-emitted by the
