@@ -1009,6 +1009,60 @@ Underwriting view via `OperationalOutputs.bank_account_proof.stabilization_ancho
 > deal survives a quarter or two of bad performance without
 > defaulting."
 
+### Cash Flow Support Reserve (CFSR) [investor, lender, app]
+
+**Status.** Retired as an auto-emitted reserve. CFSR remains in the
+engine vocabulary as a **manual / per-scenario-allowlist** label so
+legacy deals continue to load and per-deal LP requests can be
+honored. New deals should size ODR (curve-driven) instead.
+
+**Where it can still appear.** A `UseLine` carrying the label
+`Cash Flow Support Reserve` is treated as balance-only (excluded
+from TPC), carried as opening cash in the bank-account proof
+(included in `bank_account_extractor._RESERVE_LABELS`), and
+rendered on the S&U sheet under its own row with a named cell
+`s_cfsr_amount`.
+
+**Why retired.** CFSR was sized post-hoc from a bank-account-proof
+shortfall, creating a circular self-funding loop that needed
+multiple convergence passes. ODR sizes off the same operating
+curves the lender underwrites and clears in one pass.
+
+### Bank-Account Solvency Proof [investor, lender, app]
+
+**Definition.** A period-level simulation that walks the bank
+balance month by month from Day 0 (Close) through Stabilization
+and verifies the balance never breaches the operating reserve
+floor. Surfaces as `OperationalOutputs.bank_account_proof`.
+
+**Reported fields (engine output).**
+```
+{
+  "opening_cash":          Day-0 cash from reserve Uses,
+  "min_balance":           lowest cash held over the window,
+  "min_balance_date":      ISO date of the lowest-cash month,
+  "max_shortfall":         largest dip below the reserve floor,
+  "max_shortfall_date":    ISO date of the worst breach,
+  "is_solvent":            True when no breach occurred,
+  "co_period":             month index of Construction Completion,
+  "stabilized_period":     month index of Stabilization,
+  "months_simulated":      window length,
+  "proof_start":           "day_0" | "co" | "stabilized",
+  "stabilization_anchor":  user-vs-curve anchor validator (Slice 5d)
+}
+```
+
+**Investor Summary tile.** The Excel export's Underwriting Summary
+sheet aggregates across projects, picks the worst-case (lowest
+`min_balance`) row, and emits the named cells
+`s_bank_proof_min_balance`, `s_bank_proof_min_balance_date`, and
+`s_bank_proof_is_solvent`. Insolvent rows additionally emit
+`s_bank_proof_max_shortfall` and `s_bank_proof_max_shortfall_date`.
+
+**Engine source.** `_run_bank_account_proof` in
+`app/engines/cashflow.py`; window extraction in
+`app/engines/bank_account_extractor.py`. Full math in Appendix G.
+
 ### Retired reserve concepts
 
 The following UseLine labels are no longer auto-emitted by the

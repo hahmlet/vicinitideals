@@ -1544,6 +1544,75 @@ def _build_uw_summary(ws, registry: CellRegistry, ctx: dict) -> None:
         fmt=PCT, hero=True,
     ); row += 1
 
+    # ── Bank-Account Cushion (solvency proof) ─────────────────────────────
+    # Slice 1 (Export v3): surface the bank-account proof the engine runs
+    # over the Day-0 → Stabilization window. Picks the project with the
+    # lowest min_balance across the rollup (worst-case cushion). Em-dash
+    # rows are emitted when no proof was persisted (pre-0102 deals) so
+    # the workbook structure stays stable.
+    worst_proof: dict | None = None
+    for _pp in per_project:
+        _proof = _pp.get("bank_account_proof") if isinstance(_pp, dict) else None
+        if not _proof:
+            continue
+        try:
+            _mb = Decimal(str(_proof.get("min_balance") or 0))
+        except Exception:
+            continue
+        if worst_proof is None:
+            worst_proof = _proof
+            continue
+        try:
+            _curr = Decimal(str(worst_proof.get("min_balance") or 0))
+        except Exception:
+            _curr = Decimal(0)
+        if _mb < _curr:
+            worst_proof = _proof
+    if worst_proof is not None:
+        row += 1
+        section_label(ws, row, "Bank-Account Cushion", span_cols=2)
+        row += 1
+        _kv_row_optional(
+            ws, row, "Lowest Cash Balance",
+            _coerce_decimal(worst_proof.get("min_balance") or 0),
+            name="s_bank_proof_min_balance", registry=registry,
+            fmt=ACCOUNTING, hero=True,
+        ); row += 1
+        _mb_date = worst_proof.get("min_balance_date")
+        ws.cell(row=row, column=1, value="Lowest Cash Month").font = FONT_LABEL
+        ws.cell(row=row, column=1).alignment = ALIGN_LEFT
+        _date_cell = ws.cell(row=row, column=2, value=(_mb_date or _DASH))
+        _date_cell.font = FONT_HERO_VALUE
+        _date_cell.fill = FILL_HERO
+        _date_cell.alignment = ALIGN_RIGHT
+        registry.register("s_bank_proof_min_balance_date", ws.title, row, 2)
+        row += 1
+        _is_solvent = bool(worst_proof.get("is_solvent"))
+        ws.cell(row=row, column=1, value="Solvent (no reserve breach)").font = FONT_LABEL
+        ws.cell(row=row, column=1).alignment = ALIGN_LEFT
+        _sol_cell = ws.cell(row=row, column=2, value=("Yes" if _is_solvent else "No"))
+        _sol_cell.font = FONT_HERO_VALUE
+        _sol_cell.fill = FILL_HERO
+        _sol_cell.alignment = ALIGN_RIGHT
+        registry.register("s_bank_proof_is_solvent", ws.title, row, 2)
+        row += 1
+        if not _is_solvent:
+            _kv_row_optional(
+                ws, row, "Max Shortfall",
+                _coerce_decimal(worst_proof.get("max_shortfall") or 0),
+                name="s_bank_proof_max_shortfall", registry=registry,
+                fmt=ACCOUNTING, hero=True,
+            ); row += 1
+            _ms_date = worst_proof.get("max_shortfall_date")
+            ws.cell(row=row, column=1, value="Max Shortfall Month").font = FONT_LABEL
+            ws.cell(row=row, column=1).alignment = ALIGN_LEFT
+            _ms_cell = ws.cell(row=row, column=2, value=(_ms_date or _DASH))
+            _ms_cell.font = FONT_HERO_VALUE
+            _ms_cell.fill = FILL_HERO
+            _ms_cell.alignment = ALIGN_RIGHT
+            registry.register("s_bank_proof_max_shortfall_date", ws.title, row, 2)
+            row += 1
+
     # ── Spread Stack ──────────────────────────────────────────────────────────
     # Three rows anchoring risk-adjusted return context:
     #   RFR → Cap Rate (unlevered going-in premium over T-bill)
@@ -5851,6 +5920,15 @@ def _build_su_sheet(
                     ws.cell(row=line, column=2, value=_to_excel_number(amt)).number_format = ACCOUNTING
                 if (ul.label or "") in _BALANCE_ONLY_LABELS:
                     balance_only_refs.append(f"B{line}")
+                # Slice 1 (Export v3): name the ODR / CFSR cells so the
+                # UW Summary and other sheets can reference them by name.
+                # First-occurrence wins when multiple projects carry the
+                # reserve — subsequent rows are summed into the named
+                # cell via the balance-only roll-up below.
+                if "operating deficit reserve" in label_norm and "s_odr_amount" not in registry._names:
+                    registry.register("s_odr_amount", ws.title, line, 2)
+                if "cash flow support reserve" in label_norm and "s_cfsr_amount" not in registry._names:
+                    registry.register("s_cfsr_amount", ws.title, line, 2)
                 line += 1
             last_line_row = line - 1
 
