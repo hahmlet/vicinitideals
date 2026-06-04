@@ -109,6 +109,8 @@ LTL_CATCHUP_CAP_PCT = Decimal("10")
 # Phase E: these ARE included as draw inflows at phase activation (reserve pre-fund).
 _BALANCE_ONLY_LABELS: frozenset[str] = frozenset({
     "Operating Reserve",
+    "Operating Deficit Reserve",
+    "Cash Flow Support Reserve",
     "Capitalized Construction Interest",
     "Construction Interest Reserve",
     "Capitalized Pre-Development Interest",
@@ -2621,29 +2623,10 @@ async def _auto_size_debt_modules(
         p.months for p in phases if p.period_type == PeriodType.lease_up
     )
 
-    # System-managed balance-only labels — excluded from total_uses (handled in sizing directly)
-    # Lease-Up Reserve is also excluded: it's derived from P after solving, not an input to it.
-    # "Construction Interest Reserve" is the legacy label (renamed → Capitalized Construction Interest).
-    # Keep it here so pre-rename DB rows don't get counted in the gap-fill total.
-    _BALANCE_ONLY_LABELS = {
-        "Operating Reserve",
-        # Operating Deficit Reserve — engine-sized off curves and re-written
-        # below. Excluded from the input total so the row's prior amount does
-        # not double-count when the deal is recomputed.
-        "Operating Deficit Reserve",
-        # CI labels (100% factor — balance grows, use line is the accrued amount)
-        "Capitalized Construction Interest",
-        "Construction Interest Reserve",          # legacy label — aliased for backward compat
-        "Capitalized Pre-Development Interest",
-        "Capitalized Acquisition Interest",
-        # IR labels (avg-draw factor — pre-funded pool, use line is the reserve bucket)
-        "Interest Reserve",                       # construction IR
-        "Pre-Development Interest Reserve",       # pre-dev IR
-        "Acquisition Interest Reserve",           # acquisition IR
-        "Construction DS Reserve",
-    }
-
-    # Sum all non-exit use_lines as total project cost proxy
+    # Sum all non-exit use_lines as total project cost proxy.
+    # Balance-only labels (reserves + capitalized interest) are excluded from
+    # the input total via the module-level _BALANCE_ONLY_LABELS — they're
+    # handled directly in sizing and would double-count otherwise.
     total_uses = ZERO
     for ul in use_lines:
         phase_str = str(getattr(ul.phase, "value", ul.phase))
