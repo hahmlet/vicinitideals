@@ -105,7 +105,18 @@ async def test_unknown_deal_type_falls_back_to_acquisition(session):
 
 
 @pytest.mark.unit
-async def test_returns_all_four_slots(session):
+async def test_returns_all_slots(session):
+    """Resolver returns every slot the dev-fee multi-source model needs.
+
+    Original 5-slot shape (enabled/pct/basis/timing/phase) was extended
+    by migration 0103 with 5 multi-source keys:
+    acquisition_treatment, acquisition_pct, acquisition_fee_pct,
+    final_holdback_pct, milestone_weights.
+    """
     org, user = await seed_org(session)
     cfg = await resolve_dev_fee_config(user.id, org.id, "new_construction", session)
-    assert set(cfg.keys()) == {"enabled", "pct", "basis", "timing", "phase"}
+    assert set(cfg.keys()) == {
+        "enabled", "pct", "basis", "timing", "phase",
+        "acquisition_treatment", "acquisition_pct", "acquisition_fee_pct",
+        "final_holdback_pct", "milestone_weights",
+    }
