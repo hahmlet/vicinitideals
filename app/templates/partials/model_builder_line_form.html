@@ -38,8 +38,8 @@
   <input type="hidden" name="label" value="{{ existing.label }}">
   <input type="hidden" name="cost_category" value="{{ existing.cost_category or 'soft' }}">
   <input type="hidden" name="timing_type" value="{{ (existing.timing_type | string).replace('UseLineTiming.','') }}">
-  <input type="hidden" name="milestone_key" value="{{ existing.milestone_key or '' }}">
-  <input type="hidden" name="milestone_key_to" value="{{ existing.milestone_key_to or '' }}">
+  <input type="hidden" name="milestone_key" value="{{ cur_active_from_key or '' }}">
+  <input type="hidden" name="milestone_key_to" value="{{ cur_active_to_key or '' }}">
   <div class="form-row" style="margin-bottom:8px">
     <div class="form-field">
       <label class="form-label">Developer Fee %</label>
@@ -231,7 +231,7 @@ function dfeeAddReleaseRow() {
   <input type="hidden" name="label" value="{{ existing.label }}">
   <input type="hidden" name="cost_category" value="{{ existing.cost_category or 'soft' }}">
   <input type="hidden" name="timing_type" value="{{ (existing.timing_type | string).replace('UseLineTiming.','') }}">
-  <input type="hidden" name="milestone_key" value="{{ existing.milestone_key or '' }}">
+  <input type="hidden" name="milestone_key" value="{{ cur_active_from_key or '' }}">
   <div class="form-row" style="margin-bottom:8px">
     <div class="form-field">
       <label class="form-label">Acquisition Dev Fee %</label>
@@ -290,8 +290,11 @@ function dfeeAddReleaseRow() {
      the dropdown's first option (close → phase=acquisition) is the
      default, which lumps hard costs on day 0 and breaks Draw Down. #}
   {%- set _default_ms = 'construction' if default_category == 'hard' else '' -%}
-  {%- set _cur_ms = existing.milestone_key if existing.milestone_key else _default_ms -%}
-  {%- set _cur_ms_to = existing.milestone_key_to if existing.milestone_key_to else '' -%}
+  {# Active From / To are stored as milestone FKs (migration 0086). Route
+     resolves them to milestone_type keys (cur_active_from_key / cur_active_to_key)
+     so the dropdown can pre-select the user's saved choice. #}
+  {%- set _cur_ms = (cur_active_from_key if cur_active_from_key else _default_ms) -%}
+  {%- set _cur_ms_to = (cur_active_to_key if cur_active_to_key else '') -%}
   <div class="form-row" id="ul-milestone-row">
     <div class="form-field">
       <label class="form-label">Active From</label>

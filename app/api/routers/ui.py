@@ -6580,10 +6580,19 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
                 _beds = int(_u.beds or 1)
                 ami_unit_data[str(_u.id)] = _get_ami_tier(_beds, _proposed)
 
+    # Map milestone UUID → milestone_type key string (e.g. "operation_lease_up").
+    # Template uses this to render Use line Active From labels without reading
+    # the legacy milestone_key string column (dropped in migration 0086).
+    _ms_id_to_key: dict[str, str] = {}
+    for _ms in milestones:
+        _mt = _ms.milestone_type
+        _ms_id_to_key[str(_ms.id)] = _mt.value if hasattr(_mt, "value") else str(_mt)
+
     return {
         "inputs": inputs,
         "outputs": outputs,
         "use_lines": use_lines,
+        "ms_id_to_key": _ms_id_to_key,
         "income_streams": income_streams,
         "expense_lines": expense_lines,
         "unit_mix_rows": unit_mix_rows,
@@ -6725,9 +6734,29 @@ async def handle_form_create_or_update(
         # explicit non-acquisition phase the user picked.
         if _cost_cat == "hard" and _phase == "acquisition":
             _phase = "construction"
+        # Resolve milestone_key strings → milestone UUID FKs. Migration 0086
+        # dropped the legacy milestone_key column in favor of FKs; without
+        # this lookup the user's Active From pick is silently lost for any
+        # row whose phase string can't distinguish lease-up vs stabilized.
+        from app.services.capital_module_milestones import (
+            map_aps_to_milestone_type as _map_aps_to_mt,
+            _find_milestone_id_for_project as _find_ms_for_proj,
+        )
+        _ms_id = None
+        _ms_id_to = None
+        if project_id and _ms_key and _ms_key != "maturity":
+            _mt_from = _map_aps_to_mt(_ms_key)
+            if _mt_from is not None:
+                _ms_id = await _find_ms_for_proj(session, project_id, _mt_from)
+        if project_id and _ms_key_to and _ms_key_to != "maturity":
+            _mt_to = _map_aps_to_mt(_ms_key_to)
+            if _mt_to is not None:
+                _ms_id_to = await _find_ms_for_proj(session, project_id, _mt_to)
         data: dict = {
             "label": form.get("label", ""),
             "phase": _phase,
+            "active_from_milestone_id": _ms_id,
+            "spread_to_milestone_id": _ms_id_to,
             "amount": _fd(form.get("amount")) or Decimal("0"),
             "timing_type": form.get("timing_type") or "first_day",
             "is_deferred": form.get("is_deferred") == "true",
@@ -6825,6 +6854,8 @@ async def handle_form_create_or_update(
                     # picker for auto-FC rows; this is the server-side guard.
                     if getattr(row, "is_auto_finance_cost", False):
                         data.pop("phase", None)
+                        data.pop("active_from_milestone_id", None)
+                        data.pop("spread_to_milestone_id", None)
                         row.is_auto_finance_cost = False
                     for k, v in data.items():
                         setattr(row, k, v)
@@ -13952,6 +13983,27 @@ async def model_builder_line_form(
                         auto_fc_milestone_key = _mt.value if hasattr(_mt, "value") else str(_mt)
                         auto_fc_milestone_label = _src_ms.label or _milestone_label(auto_fc_milestone_key)
 
+    # Pre-resolve the existing Use Line's Active From / To milestone keys so
+    # the drawer dropdown can pre-select the user's saved choice. Migration
+    # 0086 dropped the legacy milestone_key string column, so the template
+    # cannot read it directly off the row anymore.
+    cur_active_from_key = ""
+    cur_active_to_key = ""
+    if type in ("use_lines", "uses") and existing is not None:
+        from app.models.milestone import Milestone as _ULMilestone
+        _from_id = getattr(existing, "active_from_milestone_id", None)
+        if _from_id is not None:
+            _from_ms = await session.get(_ULMilestone, _from_id)
+            if _from_ms is not None:
+                _mtf = _from_ms.milestone_type
+                cur_active_from_key = _mtf.value if hasattr(_mtf, "value") else str(_mtf)
+        _to_id = getattr(existing, "spread_to_milestone_id", None)
+        if _to_id is not None:
+            _to_ms = await session.get(_ULMilestone, _to_id)
+            if _to_ms is not None:
+                _mtt = _to_ms.milestone_type
+                cur_active_to_key = _mtt.value if hasattr(_mtt, "value") else str(_mtt)
+
     return templates.TemplateResponse(request, "partials/model_builder_line_form.html", {
         "model": model,
         "form_type": type,
@@ -13985,6 +14037,8 @@ async def model_builder_line_form(
         "auto_fc_source_label": auto_fc_source_label,
         "auto_fc_milestone_key": auto_fc_milestone_key,
         "auto_fc_milestone_label": auto_fc_milestone_label,
+        "cur_active_from_key": cur_active_from_key,
+        "cur_active_to_key": cur_active_to_key,
     })
 
 
