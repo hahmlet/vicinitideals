@@ -4696,8 +4696,15 @@ def _calculate_total_project_cost(line_items: list[CashFlowLineItem]) -> Decimal
     for item in line_items:
         if item.category != LineItemCategory.capital_event:
             continue
+        # Only true outflows count toward TPC. "inflow" lines are Sources
+        # (loan proceeds, equity injections). "informational" lines are
+        # internal money-routing — e.g. Float Earnings recycled into the
+        # waterfall as Found Money — that are reported as capital_events
+        # so the cashflow series ties out, but never represent net new
+        # spend. Including them double-counts the Float Earnings amount
+        # against TPC.
         direction = (item.adjustments or {}).get("direction")
-        if direction != "inflow":
+        if direction == "outflow":
             total += _to_decimal(item.net_amount)
     return _q(total)
 
