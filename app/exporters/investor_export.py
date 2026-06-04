@@ -6424,6 +6424,16 @@ def _build_su_sheet(
         header_row(ws, line, ["Milestone", "Weight %", "Holdback %"])
         line += 1
         sched_top = line
+        # Release weights are stored two ways in the wild:
+        #   - As fractions ≤ 1.0 (the schema's intended shape, weights[].weight)
+        #   - As whole-number percentages (40.0, 60.0) — what the UI writes via
+        #     the release_section form. Normalize to a fraction before rendering
+        #     so the Excel PCT format (which multiplies by 100) displays
+        #     correctly in both cases.
+        def _as_fraction(raw):
+            d = _coerce_decimal(raw or 0)
+            return d / Decimal(100) if d > Decimal(1) else d
+
         for w in weights:
             ms_key = (
                 str(w.get("milestone_id"))
@@ -6432,8 +6442,8 @@ def _build_su_sheet(
             )
             ms_label = ms_label_by_id.get(ms_key, ms_key or "—")
             ws.cell(row=line, column=1, value=ms_label).font = FONT_VALUE
-            weight_pct = _coerce_decimal(w.get("weight") or 0)
-            c = ws.cell(row=line, column=2, value=_to_excel_number(weight_pct))
+            weight_frac = _as_fraction(w.get("weight"))
+            c = ws.cell(row=line, column=2, value=_to_excel_number(weight_frac))
             c.number_format = PCT
             c.font = FONT_VALUE
             c.alignment = ALIGN_RIGHT
@@ -6446,8 +6456,8 @@ def _build_su_sheet(
             )
             ms_label = ms_label_by_id.get(ms_key, ms_key or "—")
             ws.cell(row=line, column=1, value=f"{ms_label} (final holdback)").font = FONT_LABEL
-            hold_pct = _coerce_decimal(final_holdback.get("pct") or 0)
-            c = ws.cell(row=line, column=3, value=_to_excel_number(hold_pct))
+            hold_frac = _as_fraction(final_holdback.get("pct"))
+            c = ws.cell(row=line, column=3, value=_to_excel_number(hold_frac))
             c.number_format = PCT
             c.font = FONT_LABEL
             c.alignment = ALIGN_RIGHT
