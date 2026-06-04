@@ -1063,6 +1063,82 @@ sheet aggregates across projects, picks the worst-case (lowest
 `app/engines/cashflow.py`; window extraction in
 `app/engines/bank_account_extractor.py`. Full math in Appendix G.
 
+### Deferred Developer Fee Balance [investor, lender, app]
+
+**Definition.** The unpaid portion of the Developer Fee that the
+sponsor agrees to leave in the deal at Close, repaid from
+operating cash flow per the waterfall. Persisted as
+``OperationalOutputs.dev_fee_balance_series`` (Phase B, 2026-06-02).
+
+**Schedule shape.**
+```
+{
+  "opening_at_close":    str(Decimal),
+  "fully_paid_period":   int | None,
+  "total_paid":          str(Decimal),
+  "remaining_at_horizon": str(Decimal),
+  "periods": [
+    {
+      "period":                 int,
+      "opening_balance":        str(Decimal),
+      "paydown_from_waterfall": str(Decimal),
+      "paydown_from_float_topup": str(Decimal),
+      "closing_balance":        str(Decimal),
+    }
+  ]
+}
+```
+
+**Excel surfaces (Underwriting Cash Flow).**
+- ``r_uw_cf_ddf_balance`` — end-of-year closing balance, summed
+  across projects. Y0 carries ``opening_at_close``. Years past
+  ``fully_paid_period`` show $0.
+- ``r_uw_cf_ddf_recovered`` — sum of ``paydown_from_waterfall +
+  paydown_from_float_topup`` for periods inside each year.
+
+**Engine source.** ``app/engines/dev_fee_balance.py``;
+``OperationalOutputs.dev_fee_balance_series`` written by
+``compute_waterfall``. Float-paydown contributions come via
+``float_topups_by_milestone`` (Float Earnings Phase B).
+
+### Float Earnings (Found Money) [investor, lender, app]
+
+**Definition.** Treasury-yield earnings on a parent debt source's
+drawn-but-unspent balance during construction. When a debt
+module's ``balance_earns_interest=True``, the funded principal
+sitting in the deposit account between Close and full deployment
+earns interest at the user-entered ``yield_pct``. The accumulated
+yield is then re-injected into the deal as a "Found Money"
+source.
+
+**Source schema.** A separate ``CapitalModule`` carries
+``vehicle_type="float_earnings"``, ``source.parent_module_id``
+pointing at the debt module, ``source.yield_pct`` (annual %), and
+splits ``dev_fee_split_pct`` / ``debt_paydown_split_pct``
+controlling where the accrued amount lands.
+
+**Engine output.** ``OperationalOutputs.float_earnings_series``:
+```
+{
+  "sources":             [{float_source_id, parent_module_id,
+                            total_earnings, schedule[...]}],
+  "found_money_periods": {str(period): float},
+  "warnings":            [...]
+}
+```
+
+**Excel surface.** ``r_uw_cf_float_earnings`` row on Underwriting
+Cash Flow sums ``found_money_periods`` per year. The S&U Sources
+block already renders each float-earnings ``CapitalModule`` as
+its own row via the existing ``s_<slug>_principal`` mechanism —
+no extra named cell needed.
+
+**Engine source.** ``app/engines/float_earnings.py``;
+``compute_scenario_float_earnings`` runs inside the cashflow
+convergence loop. Phase B (commit ``dc4de2c``) routes operating
+NCF through a ``deferred_developer_fee`` waterfall tier so the
+``debt_paydown_split`` and ``dev_fee_split`` interact correctly.
+
 ### Retired reserve concepts
 
 The following UseLine labels are no longer auto-emitted by the

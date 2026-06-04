@@ -923,6 +923,113 @@ def _period_to_year(period: int) -> int:
     return (period - 1) // 12 + 1
 
 
+def _ddf_balance_annual(
+    outputs_by_project: dict,
+    year_cols: list[int],
+) -> tuple[dict[int, Decimal], dict[int, Decimal]]:
+    """Roll the per-project ``dev_fee_balance_series`` into two annual
+    series: (closing_balance_by_year, recovered_by_year).
+
+    ``closing_balance_by_year[y]`` is the sum across all projects of the
+    DDF closing balance at the END of year ``y`` — i.e. the closing
+    balance of the highest period that falls in year ``y``. Years with
+    no periods inherit the prior year's closing balance (forward-fill)
+    so the row reads as a step function from peak to zero.
+
+    ``recovered_by_year[y]`` is the sum across projects of every
+    ``paydown_from_waterfall + paydown_from_float_topup`` whose period
+    lands in year ``y``. Y0 captures no paydowns; the cash flow
+    waterfall doesn't fire on the acquisition close period.
+
+    Projects without a series contribute zero. Returns ``({}, {})`` when
+    no project carries one (Slice 2 skips the rows in that case).
+    """
+    closing: dict[int, Decimal] = {y: Decimal(0) for y in year_cols}
+    recovered: dict[int, Decimal] = {y: Decimal(0) for y in year_cols}
+    found_any = False
+    for outputs in outputs_by_project.values():
+        series = getattr(outputs, "dev_fee_balance_series", None)
+        if not series:
+            continue
+        found_any = True
+        try:
+            opening = Decimal(str(series.get("opening_at_close") or 0))
+        except Exception:
+            opening = Decimal(0)
+        # Per-project, per-year: highest period's closing balance wins,
+        # paydowns aggregate.
+        last_cb_per_year: dict[int, Decimal] = {}
+        last_period_per_year: dict[int, int] = {}
+        paydown_per_year: dict[int, Decimal] = {}
+        for row in series.get("periods") or []:
+            try:
+                period = int(row.get("period") or 0)
+            except Exception:
+                continue
+            year = _period_to_year(period)
+            try:
+                cb = Decimal(str(row.get("closing_balance") or 0))
+            except Exception:
+                cb = Decimal(0)
+            try:
+                pw = Decimal(str(row.get("paydown_from_waterfall") or 0))
+                pf = Decimal(str(row.get("paydown_from_float_topup") or 0))
+            except Exception:
+                pw = pf = Decimal(0)
+            if period > last_period_per_year.get(year, -1):
+                last_period_per_year[year] = period
+                last_cb_per_year[year] = cb
+            paydown_per_year[year] = paydown_per_year.get(year, Decimal(0)) + pw + pf
+        # Forward-fill closing balances across year_cols starting from
+        # the project's opening_at_close. Y0 = opening; subsequent
+        # years inherit the prior year's value when no period landed
+        # in that year (e.g. fully paid before Y3 → Y3+ stays at 0).
+        prev = opening
+        for y in year_cols:
+            if y == 0:
+                cb_y = opening
+            elif y in last_cb_per_year:
+                cb_y = last_cb_per_year[y]
+            else:
+                cb_y = prev
+            closing[y] += cb_y
+            recovered[y] += paydown_per_year.get(y, Decimal(0))
+            prev = cb_y
+    if not found_any:
+        return {}, {}
+    return closing, recovered
+
+
+def _float_earnings_annual(
+    outputs_by_project: dict,
+    year_cols: list[int],
+) -> dict[int, Decimal]:
+    """Roll per-project ``float_earnings_series.found_money_periods``
+    into per-year totals, summed across projects.
+
+    Found money is the operating-account injection from a float source's
+    accumulated yield. Periods are JSONB-stringified (str keys) so we
+    coerce back to int before bucketing.
+    """
+    out: dict[int, Decimal] = {y: Decimal(0) for y in year_cols}
+    found_any = False
+    for outputs in outputs_by_project.values():
+        series = getattr(outputs, "float_earnings_series", None)
+        if not series:
+            continue
+        for period_str, amount in (series.get("found_money_periods") or {}).items():
+            try:
+                period = int(period_str)
+                amt = Decimal(str(amount or 0))
+            except Exception:
+                continue
+            year = _period_to_year(period)
+            if year in out:
+                out[year] += amt
+                found_any = True
+    return out if found_any else {}
+
+
 def _max_year(rows: list[CashFlow]) -> int:
     if not rows:
         return 0
@@ -2844,6 +2951,30 @@ def _build_uw_cashflow(ws, registry: CellRegistry, ctx: dict) -> None:
     write_formula_series(
         "Cumulative Cash Flow", _cumulative_formula, "r_uw_cf_cumulative",
     )
+
+    # ── Slice 2 (Export v3): Deferred Dev Fee + Float Earnings rows ───
+    # Only render when at least one project carries the corresponding
+    # OperationalOutputs JSONB series. Skipping cleanly on legacy /
+    # pre-Phase-B deals keeps the sheet structure stable.
+    outputs_by_project = ctx.get("outputs") or {}
+    ddf_closing, ddf_recovered = _ddf_balance_annual(
+        outputs_by_project, year_cols,
+    )
+    if ddf_closing:
+        write_series(
+            "Deferred Dev Fee Balance", ddf_closing,
+            "r_uw_cf_ddf_balance", series_key="ddf_balance",
+        )
+        write_series(
+            "Deferred Dev Fee Recovered", ddf_recovered,
+            "r_uw_cf_ddf_recovered", series_key="ddf_recovered",
+        )
+    float_money = _float_earnings_annual(outputs_by_project, year_cols)
+    if float_money:
+        write_series(
+            "Float Earnings (Found Money)", float_money,
+            "r_uw_cf_float_earnings", series_key="float_earnings",
+        )
 
     freeze_top(ws, row=3)
     print_landscape(ws)
