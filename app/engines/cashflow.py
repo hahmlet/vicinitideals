@@ -2986,13 +2986,12 @@ async def _auto_size_debt_modules(
     _constr_ds_source_module: CapitalModule | None = None
 
     # Combined-stack DSCR support: when FIXED (non-auto-sized) debts are in
-    # the stack, DSCR cap on each auto debt must apply to NOI net of fixed
-    # debt service — else the engine sizes each auto debt as if it were the
-    # only loan, and combined-stack DSCR silently breaches the floor.
+    # the stack, DSCR cap on each auto debt must enforce the combined ratio
+    # NOI / (fixed_DS + auto_DS) ≥ dscr_min. Solving for auto_DS gives
+    # auto_DS ≤ NOI/dscr_min − fixed_DS, which is equivalent to passing
+    # (NOI − dscr_min × fixed_DS) into solve_principal_for_dscr(target=dscr_min).
+    # Computed per-module below because dscr_min is per-loan.
     _fixed_debt_ds_annual = _sum_fixed_debt_ds_annual(capital_modules)
-    noi_for_auto_dscr = noi_annual - _fixed_debt_ds_annual
-    if noi_for_auto_dscr < ZERO:
-        noi_for_auto_dscr = ZERO
 
     for module in auto_modules:
         src = dict(module.source or {})
@@ -3223,18 +3222,21 @@ async def _auto_size_debt_modules(
             # must resolve via equity/scope.
             if rate_pct and principal > ZERO and dscr_min > ZERO:
                 gf_ds_monthly = _monthly_pmt(principal, rate_pct, amort_years)
+                # Combined-stack DSCR: NOI / (fixed_DS + auto_DS) ≥ dscr_min
+                _combined_ds_annual = _fixed_debt_ds_annual + gf_ds_monthly * Decimal("12")
                 gf_dscr = (
-                    noi_for_auto_dscr / (gf_ds_monthly * Decimal("12"))
-                    if gf_ds_monthly > ZERO
+                    noi_annual / _combined_ds_annual
+                    if _combined_ds_annual > ZERO
                     else Decimal("999")
                 )
                 if gf_dscr < dscr_min:
-                    # Hard cap binds: compute P at exactly DSCR_min
-                    if noi_for_auto_dscr <= ZERO:
+                    # Hard cap binds: compute P at exactly combined DSCR_min
+                    _noi_for_auto = noi_annual - dscr_min * _fixed_debt_ds_annual
+                    if _noi_for_auto <= ZERO:
                         principal = ZERO
                     else:
                         principal = solve_principal_for_dscr(
-                            noi_annual=noi_for_auto_dscr,
+                            noi_annual=_noi_for_auto,
                             target_dscr=dscr_min,
                             rate_pct=Decimal(str(rate_pct)),
                             amort_years=amort_years,
@@ -3294,11 +3296,13 @@ async def _auto_size_debt_modules(
 
             p_dscr = Decimal("999999999999")
             if rate_pct and dscr_min > ZERO:
-                if noi_for_auto_dscr <= ZERO:
+                # Combined-stack DSCR: solve so NOI/(fixed_DS+auto_DS)=dscr_min.
+                _noi_for_auto = noi_annual - dscr_min * _fixed_debt_ds_annual
+                if _noi_for_auto <= ZERO:
                     p_dscr = ZERO
                 else:
                     p_dscr = solve_principal_for_dscr(
-                        noi_annual=noi_for_auto_dscr,
+                        noi_annual=_noi_for_auto,
                         target_dscr=dscr_min,
                         rate_pct=Decimal(str(rate_pct)),
                         amort_years=amort_years,
