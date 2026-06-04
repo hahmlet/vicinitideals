@@ -33,6 +33,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.exporters._doc_validator import MetricEntry, parse_doc
 from app.exporters._workbook_helpers import (
     ACCOUNTING,
+    ALIGN_CENTER,
     ALIGN_LEFT,
     ALIGN_RIGHT,
     ALIGN_WRAP,
@@ -5661,6 +5662,64 @@ def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
         name="s_discount_rate", registry=registry, fmt=PCT, style="input",
     ); row += 1
 
+    # Slice 3: Dev Fee multi-source assumption surfaces.
+    # acquisition_treatment = "separate_fee" | "split_rate" | "excluded".
+    # acquisition_fee_pct = % of purchase price (separate_fee mode only).
+    # dev_fee_acquisition_pct = reduced rate on acq portion (split_rate mode).
+    # dev_fee_final_holdback_pct = % held back to final milestone.
+    _auto_dev_fee_ul = None
+    _auto_acq_fee_ul = None
+    for _uls in use_lines_by_project.values():
+        for _ul in _uls:
+            if getattr(_ul, "is_auto_dev_fee", False) and _auto_dev_fee_ul is None:
+                _auto_dev_fee_ul = _ul
+            if getattr(_ul, "is_auto_acquisition_fee", False) and _auto_acq_fee_ul is None:
+                _auto_acq_fee_ul = _ul
+    _acq_treatment = (
+        getattr(_auto_dev_fee_ul, "dev_fee_acquisition_treatment", None)
+        if _auto_dev_fee_ul is not None else None
+    )
+    if _acq_treatment:
+        kv_row(
+            ws, row, "Dev Fee Acquisition Treatment",
+            str(_acq_treatment),
+            name="s_dev_fee_acquisition_treatment", registry=registry,
+            style="input",
+        ); row += 1
+    _acq_fee_pct = (
+        getattr(_auto_acq_fee_ul, "acquisition_fee_pct", None)
+        if _auto_acq_fee_ul is not None else None
+    )
+    if _acq_fee_pct is not None:
+        kv_row(
+            ws, row, "Acquisition Fee %",
+            _coerce_decimal(_acq_fee_pct) / Decimal(100),
+            name="s_acquisition_fee_pct", registry=registry, fmt=PCT,
+            style="input",
+        ); row += 1
+    _dev_fee_acq_pct = (
+        getattr(_auto_dev_fee_ul, "dev_fee_acquisition_pct", None)
+        if _auto_dev_fee_ul is not None else None
+    )
+    if _dev_fee_acq_pct is not None:
+        kv_row(
+            ws, row, "Dev Fee % on Acquisition (split rate)",
+            _coerce_decimal(_dev_fee_acq_pct) / Decimal(100),
+            name="s_dev_fee_acquisition_pct", registry=registry, fmt=PCT,
+            style="input",
+        ); row += 1
+    _sched = (
+        getattr(_auto_dev_fee_ul, "dev_fee_release_schedule", None) or {}
+    ) if _auto_dev_fee_ul is not None else {}
+    _final_holdback = _sched.get("final_holdback") or None
+    if _final_holdback and _final_holdback.get("pct") is not None:
+        kv_row(
+            ws, row, "Dev Fee Final Holdback %",
+            _coerce_decimal(_final_holdback.get("pct")) / Decimal(100),
+            name="s_dev_fee_final_holdback_pct", registry=registry, fmt=PCT,
+            style="input",
+        ); row += 1
+
     # ── Block B: Per-project ───────────────────────────────────────────────
     block_b_row = row + 2
     section_label(
@@ -5972,13 +6031,27 @@ def _build_su_sheet(
     its subtotal, project total, category summary, grand total, and
     the Cover sheet's Total Uses cell — without re-running the engine.
     """
-    set_widths(ws, [42, 22])
+    # Slice 3: widen cols 3-6 so the Dev Fee Caps mini-block at the foot
+    # of the sheet has room for max %, per-unit cap, absolute cap,
+    # allowable $, and binding (✓/—).
+    set_widths(ws, [42, 22, 14, 14, 14, 12])
 
     use_lines_by_project: dict = ctx.get("use_lines", {})
     projects: list[Project] = ctx["projects"]
     capital_modules: list[CapitalModule] = ctx["capital_modules"]
     module_slugs: dict = ctx.get("module_slugs") or _compute_module_slugs(capital_modules)
     junctions: list[CapitalModuleProject] = ctx["junctions"]
+    milestones_by_project: dict = ctx.get("milestones", {})
+
+    # Slice 3: auto Acquisition Fee rows persist with cost_category="soft"
+    # (engine convention) but the LP expects them in the Acquisition cost
+    # section — the fee IS part of the acquisition spend, not a soft cost
+    # of construction. This effective-category routing keeps the DB shape
+    # untouched while the workbook renders them where they belong.
+    def _effective_cat(ul) -> str:
+        if getattr(ul, "is_auto_acquisition_fee", False):
+            return "acquisition"
+        return str(ul.cost_category or "soft")
 
     line = 1
     section_label(ws, line, "Sources & Uses", span_cols=2)
@@ -6017,7 +6090,7 @@ def _build_su_sheet(
             cat_label = USE_CATEGORY_LABELS.get(cat, cat.title())
             cat_lines = [
                 ul for ul in uls
-                if str(ul.cost_category or "soft") == cat
+                if _effective_cat(ul) == cat
                 and str(getattr(ul.phase, "value", ul.phase) or "") != "exit"
             ]
             if not cat_lines:
@@ -6060,6 +6133,14 @@ def _build_su_sheet(
                     registry.register("s_odr_amount", ws.title, line, 2)
                 if "cash flow support reserve" in label_norm and "s_cfsr_amount" not in registry._names:
                     registry.register("s_cfsr_amount", ws.title, line, 2)
+                # Slice 3: name the auto Acquisition Fee cell so UW Summary and
+                # Glossary can cite it. First-occurrence wins on multi-project
+                # rollups (rare — most acquisitions are single-project).
+                if (
+                    getattr(ul, "is_auto_acquisition_fee", False)
+                    and "s_acquisition_fee" not in registry._names
+                ):
+                    registry.register("s_acquisition_fee", ws.title, line, 2)
                 line += 1
             last_line_row = line - 1
 
@@ -6227,6 +6308,155 @@ def _build_su_sheet(
     cell.font = FONT_HINT
     cell.alignment = ALIGN_RIGHT
     registry.register("s_su_balance_only_total", ws.title, line, 2)
+    line += 2
+
+    # ── Slice 3: Dev Fee Caps (per-Source) ────────────────────────────────
+    # Surface fee_terms caps from every CapitalModule that carries a Dev Fee
+    # rule. Binding source — the cap that "bites" hardest, taken from the
+    # engine-written dev_fee_binding_context.binding_source_id on the auto
+    # Dev Fee UseLine — gets the bold row.
+    auto_dev_fee_uls = [
+        ul for uls in use_lines_by_project.values()
+        for ul in uls
+        if getattr(ul, "is_auto_dev_fee", False)
+    ]
+    auto_dev_fee_ul = auto_dev_fee_uls[0] if auto_dev_fee_uls else None
+    modules_with_fee_terms = [
+        m for m in capital_modules if (m.fee_terms or {})
+    ]
+    if auto_dev_fee_ul is not None and modules_with_fee_terms:
+        binding_ctx = auto_dev_fee_ul.dev_fee_binding_context or {}
+        binding_id_raw = binding_ctx.get("binding_source_id")
+        binding_id = str(binding_id_raw) if binding_id_raw else None
+        per_source_alloc = {
+            str(a.get("capital_module_id")): a
+            for a in (binding_ctx.get("per_source_allocation") or [])
+        }
+
+        section_label(ws, line, "Dev Fee Caps (per Source)", span_cols=6)
+        line += 1
+        header_row(
+            ws, line,
+            ["Source", "Max %", "Per-Unit Cap", "Absolute Cap", "Allowable $", "Binding"],
+        )
+        line += 1
+        caps_top = line
+        for module in modules_with_fee_terms:
+            terms = module.fee_terms or {}
+            is_binding = binding_id is not None and binding_id == str(module.id)
+            row_font = FONT_LABEL if is_binding else FONT_VALUE
+            alloc = per_source_alloc.get(str(module.id)) or {}
+
+            ws.cell(
+                row=line, column=1,
+                value=module.label or _funder_type_label(module),
+            ).font = row_font
+
+            max_pct = terms.get("max_pct")
+            max_pct_val = (
+                _coerce_decimal(max_pct) / Decimal(100)
+                if max_pct is not None else None
+            )
+            c = ws.cell(row=line, column=2, value=_to_excel_number(max_pct_val))
+            c.number_format = PCT
+            c.font = row_font
+            c.alignment = ALIGN_RIGHT
+
+            per_unit = terms.get("per_unit_cap")
+            c = ws.cell(
+                row=line, column=3,
+                value=_to_excel_number(_coerce_decimal(per_unit)) if per_unit is not None else None,
+            )
+            c.number_format = ACCOUNTING
+            c.font = row_font
+            c.alignment = ALIGN_RIGHT
+
+            abs_cap = terms.get("absolute_cap")
+            c = ws.cell(
+                row=line, column=4,
+                value=_to_excel_number(_coerce_decimal(abs_cap)) if abs_cap is not None else None,
+            )
+            c.number_format = ACCOUNTING
+            c.font = row_font
+            c.alignment = ALIGN_RIGHT
+
+            allowable = alloc.get("allowable")
+            c = ws.cell(
+                row=line, column=5,
+                value=_to_excel_number(_coerce_decimal(allowable)) if allowable is not None else None,
+            )
+            c.number_format = ACCOUNTING
+            c.font = row_font
+            c.alignment = ALIGN_RIGHT
+
+            c = ws.cell(
+                row=line, column=6,
+                value=("✓" if is_binding else "—"),
+            )
+            c.font = row_font
+            c.alignment = ALIGN_CENTER
+            line += 1
+        caps_bottom = line - 1
+        registry.register_range(
+            "r_su_dev_fee_caps", ws.title, caps_top, caps_bottom, 1,
+            end_col=6,
+        )
+        line += 1
+
+    # ── Slice 3: Dev Fee Release Schedule ─────────────────────────────────
+    # Milestone-weighted release: one row per milestone weight, plus an
+    # optional final holdback row. Skip entirely when schedule is empty
+    # (most legacy deals — fee released at close).
+    sched = (auto_dev_fee_ul.dev_fee_release_schedule or {}) if auto_dev_fee_ul else {}
+    weights = sched.get("weights") or []
+    final_holdback = sched.get("final_holdback") or None
+    if weights or final_holdback:
+        # Flatten milestones across all projects into a {id: label} lookup
+        # for friendly row labels. The release schedule's milestone_id
+        # references a Milestone row by UUID.
+        ms_label_by_id: dict[str, str] = {}
+        for ms_list in milestones_by_project.values():
+            for ms in ms_list:
+                ms_label_by_id[str(ms.id)] = ms.label or ms.milestone_type or ""
+
+        section_label(ws, line, "Dev Fee Release Schedule", span_cols=6)
+        line += 1
+        header_row(ws, line, ["Milestone", "Weight %", "Holdback %"])
+        line += 1
+        sched_top = line
+        for w in weights:
+            ms_key = (
+                str(w.get("milestone_id"))
+                if w.get("milestone_id") is not None
+                else (w.get("milestone_key") or "")
+            )
+            ms_label = ms_label_by_id.get(ms_key, ms_key or "—")
+            ws.cell(row=line, column=1, value=ms_label).font = FONT_VALUE
+            weight_pct = _coerce_decimal(w.get("weight") or 0)
+            c = ws.cell(row=line, column=2, value=_to_excel_number(weight_pct))
+            c.number_format = PCT
+            c.font = FONT_VALUE
+            c.alignment = ALIGN_RIGHT
+            line += 1
+        if final_holdback:
+            ms_key = (
+                str(final_holdback.get("milestone_id"))
+                if final_holdback.get("milestone_id") is not None
+                else (final_holdback.get("milestone_key") or "")
+            )
+            ms_label = ms_label_by_id.get(ms_key, ms_key or "—")
+            ws.cell(row=line, column=1, value=f"{ms_label} (final holdback)").font = FONT_LABEL
+            hold_pct = _coerce_decimal(final_holdback.get("pct") or 0)
+            c = ws.cell(row=line, column=3, value=_to_excel_number(hold_pct))
+            c.number_format = PCT
+            c.font = FONT_LABEL
+            c.alignment = ALIGN_RIGHT
+            line += 1
+        sched_bottom = line - 1
+        registry.register_range(
+            "r_su_dev_fee_release", ws.title, sched_top, sched_bottom, 1,
+            end_col=3,
+        )
 
 
 def _build_glossary(
