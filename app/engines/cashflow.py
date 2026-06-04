@@ -3002,6 +3002,15 @@ async def _auto_size_debt_modules(
     _constr_ds_reserve: Decimal = ZERO
     _constr_ds_source_module: CapitalModule | None = None
 
+    # Combined-stack DSCR support: when FIXED (non-auto-sized) debts are in
+    # the stack, DSCR cap on each auto debt must apply to NOI net of fixed
+    # debt service — else the engine sizes each auto debt as if it were the
+    # only loan, and combined-stack DSCR silently breaches the floor.
+    _fixed_debt_ds_annual = _sum_fixed_debt_ds_annual(capital_modules)
+    noi_for_auto_dscr = noi_annual - _fixed_debt_ds_annual
+    if noi_for_auto_dscr < ZERO:
+        noi_for_auto_dscr = ZERO
+
     for module in auto_modules:
         src = dict(module.source or {})
         carry = module.carry or {}
@@ -3229,21 +3238,24 @@ async def _auto_size_debt_modules(
             # The resulting Sources gap = (TPC + flat_costs + P_capped·perm_pct
             # + reserve) − P_capped − fixed is a real funding gap the user
             # must resolve via equity/scope.
-            if rate_pct and principal > ZERO and noi_annual > ZERO and dscr_min > ZERO:
+            if rate_pct and principal > ZERO and dscr_min > ZERO:
                 gf_ds_monthly = _monthly_pmt(principal, rate_pct, amort_years)
                 gf_dscr = (
-                    noi_annual / (gf_ds_monthly * Decimal("12"))
+                    noi_for_auto_dscr / (gf_ds_monthly * Decimal("12"))
                     if gf_ds_monthly > ZERO
                     else Decimal("999")
                 )
                 if gf_dscr < dscr_min:
                     # Hard cap binds: compute P at exactly DSCR_min
-                    principal = solve_principal_for_dscr(
-                        noi_annual=noi_annual,
-                        target_dscr=dscr_min,
-                        rate_pct=Decimal(str(rate_pct)),
-                        amort_years=amort_years,
-                    )
+                    if noi_for_auto_dscr <= ZERO:
+                        principal = ZERO
+                    else:
+                        principal = solve_principal_for_dscr(
+                            noi_annual=noi_for_auto_dscr,
+                            target_dscr=dscr_min,
+                            rate_pct=Decimal(str(rate_pct)),
+                            amort_years=amort_years,
+                        )
                     # Note: no closing-cost re-inflation here. The lender's cap
                     # is on DS(P), not on P·(1−perm_pct).  Any closing cost
                     # shortfall surfaces as a real Sources gap downstream.
@@ -3298,13 +3310,16 @@ async def _auto_size_debt_modules(
                 p_ltv = _q(property_value * ltv)
 
             p_dscr = Decimal("999999999999")
-            if rate_pct and noi_annual > ZERO and dscr_min > ZERO:
-                p_dscr = solve_principal_for_dscr(
-                    noi_annual=noi_annual,
-                    target_dscr=dscr_min,
-                    rate_pct=Decimal(str(rate_pct)),
-                    amort_years=amort_years,
-                )
+            if rate_pct and dscr_min > ZERO:
+                if noi_for_auto_dscr <= ZERO:
+                    p_dscr = ZERO
+                else:
+                    p_dscr = solve_principal_for_dscr(
+                        noi_annual=noi_for_auto_dscr,
+                        target_dscr=dscr_min,
+                        rate_pct=Decimal(str(rate_pct)),
+                        amort_years=amort_years,
+                    )
 
             principal = min(p_gapfill, p_ltv, p_dscr)
             if principal < ZERO:
@@ -3888,6 +3903,30 @@ def _monthly_pmt(principal: Decimal, rate_pct: float | None, amort_years: int = 
     n = amort_years * 12
     factor = (ONE + monthly_rate) ** n
     return _q(principal * monthly_rate * factor / (factor - ONE))
+
+
+def _sum_fixed_debt_ds_annual(capital_modules: list) -> Decimal:
+    """Annual P&I on every fixed (non-auto-sized) debt module in the stack.
+
+    Auto-debt DSCR cap must apply to NOI net of this total — otherwise the
+    engine sizes each auto loan as if it were the only debt, and combined-
+    stack DSCR silently breaches the floor.
+    """
+    total = ZERO
+    for m in capital_modules:
+        if not _is_debt_cm(m):
+            continue
+        src = m.source or {}
+        if src.get("auto_size"):
+            continue
+        amt = _to_decimal(src.get("amount") or 0)
+        if amt <= ZERO:
+            continue
+        rate, amort = _op_phase_rate_and_amort(m.carry or {}, src)
+        if not rate:
+            continue
+        total += _monthly_pmt(amt, rate, amort) * Decimal("12")
+    return total
 
 
 def _monthly_io(principal: Decimal, rate_pct: float | None) -> Decimal:
