@@ -3777,15 +3777,14 @@ async def _auto_size_debt_modules(
             _ccm_lbl  = getattr(_ccm_ref, "label", "") or _ccm_ft.replace("_", " ").title()
             _ccm_p    = Decimal(str((_ccm_ref.source or {}).get("amount") or 0))
             _ccm_aps  = getattr(_ccm_ref, "active_phase_start", None) or ""
-            # Finance costs (origination, lender legal, appraisal, title) are paid
-            # at LOAN CLOSING, not at loan activation. Refi-specific finance costs
-            # are handled separately by the refi event (cashflow.py refi block).
-            # Coerce later-stage activation values back to acquisition so the
-            # auto-FC UseLine fires at deal close, where the lender is actually
-            # paid. Default fallback is "acquisition" (the common case).
+            # Auto-FC UseLine timing inherits from the parent Source: copy the
+            # active_from_milestone_id FK + phase string straight off the
+            # CapitalModule.  UI locks Active From for auto-FC rows so the two
+            # stay in sync (see model_builder_line_form.html + ui.py handler).
+            # Refi-specific finance costs are still handled by the refi event
+            # below (this block runs at origination only).
             _ccm_phase = _APS_TO_USE_PHASE.get(_ccm_aps, "acquisition")
-            if _ccm_phase in {"operation", "exit"}:
-                _ccm_phase = "acquisition"
+            _ccm_from_ms_id = getattr(_ccm_ref, "active_from_milestone_id", None)
 
             _cc_full_lbl = f"{_ccm_lbl} — Total Finance Costs"
             # Match the existing FC row by module link + (auto-flag OR label
@@ -3811,15 +3810,14 @@ async def _auto_size_debt_modules(
             _diag(f"  CC write label={_cc_full_lbl!r} _ccm_p={_ccm_p} pct={_fc_rate} -> amt={_cc_amt} exist_id={getattr(_cc_exist,'id',None) if _cc_exist else None}")
 
             _cc_cat = "acquisition" if _ccm_ft == "acquisition_loan" else "soft"
-            # NOTE: auto-FC UseLine deliberately does NOT inherit the parent
-            # module's active_from_milestone_id. Finance costs (origination,
-            # title, appraisal, lender legal) are paid at LOAN CLOSING — which
-            # in this codebase is the "close" milestone, regardless of when the
-            # loan first becomes active. The UseLine phase is already coerced
-            # to "acquisition" upstream (see _ccm_phase derivation).
+            # Auto-FC UseLine inherits active_from_milestone_id from the parent
+            # module so the row's Active From milestone mirrors the Source.
+            # Locked on the UI (see model_builder_line_form.html + ui.py
+            # form handler) so the user cannot drift the two apart.
             if _cc_exist is not None:
                 _cc_exist.amount = _cc_amt
                 _cc_exist.phase  = _ccm_phase
+                _cc_exist.active_from_milestone_id = _ccm_from_ms_id
                 _cc_exist.source_capital_module_id = getattr(_ccm_ref, "id", None)
                 _cc_exist.cost_category = _cc_cat
                 _cc_exist.is_auto_finance_cost = True
@@ -3831,6 +3829,7 @@ async def _auto_size_debt_modules(
                     source_capital_module_id=getattr(_ccm_ref, "id", None),
                     label=_cc_full_lbl,
                     phase=_ccm_phase,
+                    active_from_milestone_id=_ccm_from_ms_id,
                     amount=_cc_amt,
                     timing_type="first_day",
                     cost_category=_cc_cat,

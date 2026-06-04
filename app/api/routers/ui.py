@@ -6817,7 +6817,14 @@ async def handle_form_create_or_update(
                     # User edit on an auto Total Finance Costs row turns off
                     # the auto flag so engine stops recomputing.  User can
                     # delete the row to reset; next compute regenerates it.
+                    #
+                    # EXCEPT Active From: timing is locked to the parent
+                    # Source — drop phase from the form payload so the row's
+                    # active_from_milestone_id (set by the engine from the
+                    # Source's FK) stays authoritative. UI also hides the
+                    # picker for auto-FC rows; this is the server-side guard.
                     if getattr(row, "is_auto_finance_cost", False):
+                        data.pop("phase", None)
                         row.is_auto_finance_cost = False
                     for k, v in data.items():
                         setattr(row, k, v)
@@ -13915,6 +13922,27 @@ async def model_builder_line_form(
         if _acq_fee_row is not None:
             acq_fee_pct_prefill = _acq_fee_row.acquisition_fee_pct
 
+    # Auto-FC rows: resolve the parent Source's Active From milestone for the
+    # locked, read-only "Active From" display in the line form.
+    auto_fc_source_label = None
+    auto_fc_milestone_key = None
+    auto_fc_milestone_label = None
+    if existing is not None and getattr(existing, "is_auto_finance_cost", False):
+        _src_cm_id = getattr(existing, "source_capital_module_id", None)
+        if _src_cm_id is not None:
+            from app.models.capital import CapitalModule as _AFCModule
+            from app.models.milestone import Milestone as _AFCMilestone
+            _src_cm = await session.get(_AFCModule, _src_cm_id)
+            if _src_cm is not None:
+                auto_fc_source_label = getattr(_src_cm, "label", None) or "Source"
+                _src_ms_id = getattr(_src_cm, "active_from_milestone_id", None)
+                if _src_ms_id is not None:
+                    _src_ms = await session.get(_AFCMilestone, _src_ms_id)
+                    if _src_ms is not None:
+                        _mt = _src_ms.milestone_type
+                        auto_fc_milestone_key = _mt.value if hasattr(_mt, "value") else str(_mt)
+                        auto_fc_milestone_label = _src_ms.label or _milestone_label(auto_fc_milestone_key)
+
     return templates.TemplateResponse(request, "partials/model_builder_line_form.html", {
         "model": model,
         "form_type": type,
@@ -13945,6 +13973,9 @@ async def model_builder_line_form(
         "basis_buckets": BASIS_BUCKETS,
         "has_acquisition_costs": has_acquisition_costs,
         "acq_fee_pct_prefill": acq_fee_pct_prefill,
+        "auto_fc_source_label": auto_fc_source_label,
+        "auto_fc_milestone_key": auto_fc_milestone_key,
+        "auto_fc_milestone_label": auto_fc_milestone_label,
     })
 
 

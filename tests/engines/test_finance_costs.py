@@ -54,43 +54,61 @@ def test_aps_map_covers_all_milestone_keys():
 
 
 @pytest.mark.unit
-def test_auto_finance_cost_phase_coercion_for_late_activation():
-    """Finance costs are paid at LOAN CLOSING, not at loan activation.
+def test_auto_finance_cost_phase_inherits_from_source():
+    """Auto-FC UseLine phase mirrors the parent Source's active_phase_start.
 
-    Regression: perm debt with active_phase_start="operation_stabilized" (perm
-    activates at stab) was creating a "Total Finance Costs" UseLine in
-    phase="operation", landing the ~2% origination lump in stabilized month 1
-    and crushing Year 1 stab profit.
+    Per user requirement (Jun 2026): auto-generated FC rows must inherit
+    start period from their Source and be locked on the UI. The engine
+    no longer coerces phase strings — it copies the mapping directly so
+    the FC row fires at the same milestone the loan first becomes active.
 
-    Fix: at the auto-FC writeback site, coerce operation/exit phase values
-    back to "acquisition" so the lump fires at deal close where the lender
-    is paid. Refi-specific finance costs are still handled separately by the
-    refi event.
+    The Active From milestone FK is the load-bearing timing — phase is the
+    legacy string fallback used when the FK is NULL.
     """
     from app.engines.cashflow import _APS_TO_USE_PHASE
 
-    def _coerce(aps: str) -> str:
-        phase = _APS_TO_USE_PHASE.get(aps, "acquisition")
-        if phase in {"operation", "exit"}:
-            phase = "acquisition"
-        return phase
+    def _phase(aps: str) -> str:
+        return _APS_TO_USE_PHASE.get(aps, "acquisition")
 
-    # Late-activation perm debt → coerced to acquisition
-    assert _coerce("operation_stabilized") == "acquisition"
-    assert _coerce("stabilized") == "acquisition"
-    assert _coerce("lease_up") == "acquisition"
-    assert _coerce("operation_lease_up") == "acquisition"
-    assert _coerce("exit") == "acquisition"
-    assert _coerce("divestment") == "acquisition"
-    # Acquisition-time milestones stay at acquisition
-    assert _coerce("acquisition") == "acquisition"
-    assert _coerce("close") == "acquisition"
-    assert _coerce("offer_made") == "acquisition"
-    assert _coerce("under_contract") == "acquisition"
-    # Pre-construction / construction loans preserve their phase
-    assert _coerce("pre_construction") == "pre_construction"
-    assert _coerce("pre_development") == "pre_construction"
-    assert _coerce("construction") == "construction"
-    # Unknown / NULL → default acquisition (not "pre_construction" as before)
-    assert _coerce("") == "acquisition"
-    assert _coerce("garbage_value") == "acquisition"
+    # Acquisition-time loans
+    assert _phase("acquisition") == "acquisition"
+    assert _phase("close") == "acquisition"
+    assert _phase("offer_made") == "acquisition"
+    assert _phase("under_contract") == "acquisition"
+    # Pre-construction / construction loans inherit their phase
+    assert _phase("pre_construction") == "pre_construction"
+    assert _phase("pre_development") == "pre_construction"
+    assert _phase("construction") == "construction"
+    # Operation / exit loans inherit their phase (no coercion). The Source's
+    # active_from_milestone_id FK is the canonical timing carrier; phase is
+    # the legacy string that trails it.
+    assert _phase("operation_stabilized") == "operation"
+    assert _phase("stabilized") == "operation"
+    assert _phase("lease_up") == "operation"
+    assert _phase("operation_lease_up") == "operation"
+    assert _phase("exit") == "exit"
+    assert _phase("divestment") == "exit"
+    # Unknown / NULL → acquisition fallback
+    assert _phase("") == "acquisition"
+    assert _phase("garbage_value") == "acquisition"
+
+
+@pytest.mark.unit
+def test_engine_auto_fc_writeback_copies_milestone_fk():
+    """Engine writeback block copies parent module's active_from_milestone_id
+    onto the auto-FC UseLine — both on create and on update. Static inspection
+    of the writeback source: both code paths must set the FK so renaming or
+    moving the Source's start milestone propagates to the FC row.
+    """
+    import inspect
+    import app.engines.cashflow as cf
+    src = inspect.getsource(cf)
+    assert "_ccm_from_ms_id = getattr(_ccm_ref, \"active_from_milestone_id\", None)" in src, (
+        "Engine must read parent module's active_from_milestone_id."
+    )
+    assert "active_from_milestone_id=_ccm_from_ms_id" in src, (
+        "Engine must set active_from_milestone_id on new auto-FC UseLine."
+    )
+    assert "_cc_exist.active_from_milestone_id = _ccm_from_ms_id" in src, (
+        "Engine must update active_from_milestone_id on existing auto-FC UseLine."
+    )

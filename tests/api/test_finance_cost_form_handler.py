@@ -79,3 +79,61 @@ async def test_user_edit_flips_auto_finance_cost_flag(
         "the engine stops recomputing it."
     )
     assert Decimal(str(row.amount)) == Decimal("17500")
+
+
+async def test_auto_fc_row_form_drops_phase_change(
+    client: AsyncClient, session: AsyncSession
+) -> None:
+    """A hand-crafted POST that tries to change milestone_key/phase on an
+    auto-FC row must be rejected server-side. The UI hides the picker for
+    auto-FC rows; this guards the API endpoint directly.
+    """
+    from tests.conftest import (
+        seed_org, seed_opportunity, seed_deal_model_with_financials,
+    )
+
+    org, user = await seed_org(session)
+    opp = await seed_opportunity(session, org, user)
+    deal_model, _, _, _ = await seed_deal_model_with_financials(session, opp, user)
+    project = (
+        await session.execute(
+            select(Project).where(Project.scenario_id == deal_model.id)
+        )
+    ).scalar_one()
+
+    auto_row = UseLine(
+        id=uuid4(),
+        project_id=project.id,
+        label="Assumable Debt — Total Finance Costs",
+        phase=UseLinePhase.acquisition,
+        cost_category="soft",
+        amount=Decimal("20000"),
+        timing_type="first_day",
+        is_auto_finance_cost=True,
+    )
+    session.add(auto_row)
+    await session.commit()
+    await _auth(client, user.id)
+
+    # Hand-crafted POST attempting to move Active From to "construction"
+    resp = await client.put(
+        f"/ui/forms/{deal_model.id}/use-lines/{auto_row.id}",
+        data={
+            "label": "Assumable Debt — Total Finance Costs",
+            "amount": "20000",
+            "cost_category": "soft",
+            "timing_type": "first_day",
+            "is_deferred": "false",
+            "milestone_key": "construction",  # attempted Active From change
+        },
+    )
+    assert resp.status_code == 200, resp.text
+
+    session.expire_all()
+    row = await session.get(UseLine, auto_row.id)
+    assert row is not None
+    # Server must NOT have persisted the phase change from milestone_key.
+    assert str(row.phase or "").replace("UseLinePhase.", "") == "acquisition", (
+        "Auto-FC row phase must remain locked to the parent Source even when "
+        "a milestone_key change is POSTed directly."
+    )
