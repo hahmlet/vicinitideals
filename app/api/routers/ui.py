@@ -6905,6 +6905,15 @@ async def handle_form_create_or_update(
             source_d["pct_of_total_cost"] = float(src_pct)
         if src_rate := _fd(form.get("source_interest_rate")):
             source_d["interest_rate_pct"] = float(src_rate)
+        # Per-Source override for the auto Total Finance Costs UseLine.
+        # Blank / 0 falls back to engine global default (DEFAULT_FINANCE_COST_PCT).
+        if "source_finance_cost_pct" in form:
+            _fc_raw = form.get("source_finance_cost_pct")
+            if _fc_raw is None or str(_fc_raw).strip() == "":
+                source_d["finance_cost_pct"] = None
+            else:
+                _fc_val = _fd(_fc_raw)
+                source_d["finance_cost_pct"] = float(_fc_val) if _fc_val is not None else None
         if cp := form.get("compounding_period"):
             source_d["compounding_period"] = cp
         if amort := _fi(form.get("amort_term_years"), None):

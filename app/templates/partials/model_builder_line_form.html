@@ -990,6 +990,23 @@ function ulTimingChanged(val) {
 </div>
 {%- endmacro %}
 
+{# Finance Cost % override — debt-only. Blank field falls back to the engine
+   global default (currently 2.0%). Auto Total Finance Costs row in Uses is
+   recomputed as this % × principal each compute pass. #}
+{%- macro finance_cost_field(fc_val) %}
+<div class="form-row" style="margin-bottom:12px">
+  <div class="form-field">
+    <label class="form-label">Finance Cost (%)
+      <span style="font-weight:400;font-size:11px;color:var(--text-muted)">% of principal</span>
+    </label>
+    <input class="form-input" type="number" name="source_finance_cost_pct" step="0.01" min="0" max="20"
+           value="{{ fc_val }}" placeholder="2.0 — blank = default">
+    <div class="form-hint">Origination + lender legal + appraisal + title combined. Drives the auto "Total Finance Costs" row in Uses.</div>
+  </div>
+  <div class="form-field"></div>
+</div>
+{%- endmacro %}
+
 {%- macro permanent_debt_fields(term_val, rate_val, cp_val, stack_val, hold_val='') %}
 <div class="form-row" style="margin-bottom:12px">
   {# Amortization is only meaningful when the loan runs to maturity.  The
@@ -1513,6 +1530,9 @@ function ulTimingChanged(val) {
         existing.stack_position if existing.stack_position else 1,
         existing.source.hold_term_years if existing.source and existing.source.get('hold_term_years') else ''
     ) }}
+    {{ finance_cost_field(
+        existing.source.finance_cost_pct if existing.source and existing.source.get('finance_cost_pct') is not none else ''
+    ) }}
   </div>
   <script>
   (function() {
@@ -1541,6 +1561,9 @@ function ulTimingChanged(val) {
         existing.stack_position if existing.stack_position else 1,
         existing.source.interest_rate_pct if existing.source and existing.source.get('interest_rate_pct') else '',
         existing.source.compounding_period if existing.source and existing.source.get('compounding_period') else 'monthly'
+    ) }}
+    {{ finance_cost_field(
+        existing.source.finance_cost_pct if existing.source and existing.source.get('finance_cost_pct') is not none else ''
     ) }}
   </div>
   {% else %}
@@ -1969,6 +1992,18 @@ function ulTimingChanged(val) {
           {% endfor %}
         </select>
       </div>
+    </div>
+    {# Finance Cost % — debt-only. Engine ignores for equity/grants. #}
+    <div class="form-row" id="sw-fc-row" style="margin-bottom:12px">
+      <div class="form-field">
+        <label class="form-label">Finance Cost (%)
+          <span style="font-weight:400;font-size:11px;color:var(--text-muted)">% of principal</span>
+        </label>
+        <input class="form-input" type="number" name="source_finance_cost_pct" step="0.01" min="0" max="20"
+               value="" placeholder="2.0 — blank = default">
+        <div class="form-hint">Origination + lender legal + appraisal + title combined. Drives the auto "Total Finance Costs" row in Uses.</div>
+      </div>
+      <div class="form-field"></div>
     </div>
   </div>
 

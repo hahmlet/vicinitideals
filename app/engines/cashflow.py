@@ -703,8 +703,9 @@ async def _compute_project_cashflow(
             ppct = _to_decimal(b_src.get("prepay_penalty_pct"))
             if ppct > ZERO:
                 prepay_penalty = _q(bridge_balloon * ppct / HUNDRED)
-        # Total Finance Costs for the perm loan (single global %)
-        perm_financing_costs = _q(perm_amount * DEFAULT_FINANCE_COST_PCT / HUNDRED)
+        # Total Finance Costs for the perm loan — per-module rate (source.finance_cost_pct)
+        # with fallback to DEFAULT_FINANCE_COST_PCT. ``cm`` here is the perm module.
+        perm_financing_costs = _q(perm_amount * _resolve_fc_rate(cm))
         net_refi = _q(perm_amount - bridge_balloon - prepay_penalty - perm_financing_costs)
         _refi_event = {
             "perm_amount": perm_amount,
@@ -1984,6 +1985,25 @@ def _loan_subtype_from_module(m: object) -> str:
 # TODO: per-source-type rates (grants vs equity vs debt) via org setting.
 DEFAULT_FINANCE_COST_PCT: Decimal = Decimal("2.0")
 
+
+def _resolve_fc_rate(module) -> Decimal:
+    """Resolve the Total Finance Costs rate for a CapitalModule.
+
+    Per-Source override: ``module.source.finance_cost_pct`` (entered as a
+    percent value like 1.5 meaning 1.5%). Falls back to the global
+    ``DEFAULT_FINANCE_COST_PCT`` constant when null/missing.
+
+    Returns the rate as a fraction (e.g. 0.02 for 2.0%).
+    """
+    src = getattr(module, "source", None) or {}
+    raw = src.get("finance_cost_pct")
+    if raw is None or raw == "":
+        return DEFAULT_FINANCE_COST_PCT / HUNDRED
+    try:
+        return Decimal(str(raw)) / HUNDRED
+    except (TypeError, ValueError, InvalidOperation):
+        return DEFAULT_FINANCE_COST_PCT / HUNDRED
+
 # Maps CapitalModule.active_phase_start → UseLinePhase string for closing cost Use lines.
 # Covers both short-form values ("lease_up") and milestone-key variants ("operation_lease_up")
 # that the wizard stores verbatim from form data.  Unmapped values fall back to
@@ -2925,7 +2945,7 @@ async def _auto_size_debt_modules(
     _cc_data: dict = {}   # id(module) → {"flat": Decimal, "pct": Decimal, "module": m}
     _diag(f"CC-INIT entering block debt_types_list={bool(debt_types_list)} auto_modules={[m.id for m in auto_modules]}")
     if debt_types_list and auto_modules:
-        _fc_rate = DEFAULT_FINANCE_COST_PCT / HUNDRED
+        # Per-module rate resolved below from source.finance_cost_pct → global default.
         _auto_mod_ids = {id(m) for m in auto_modules}
         for _ccm in capital_modules:
             if not _is_debt_cm(_ccm):
@@ -2964,7 +2984,7 @@ async def _auto_size_debt_modules(
             # Fixed modules re-add the correct amount below from known principal.
             if _cc_exist is not None and getattr(_cc_exist, "is_auto_finance_cost", False):
                 total_uses -= _q(Decimal(str(getattr(_cc_exist, "amount", 0) or 0)))
-            _cc_data[id(_ccm)] = {"flat": ZERO, "pct": _fc_rate, "module": _ccm}
+            _cc_data[id(_ccm)] = {"flat": ZERO, "pct": _resolve_fc_rate(_ccm), "module": _ccm}
 
         for _cc_obj in _cc_data.values():
             _cc_ref = _cc_obj["module"]
@@ -3770,9 +3790,9 @@ async def _auto_size_debt_modules(
     # False via the form handler) is respected on the next compute.
     _diag(f"CC-WRITEBACK guard: _cc_data={bool(_cc_data)} project_id={project_id} -> enter={bool(_cc_data and project_id)}")
     if _cc_data and project_id:
-        _fc_rate = DEFAULT_FINANCE_COST_PCT / HUNDRED
         for _cc_obj in _cc_data.values():
             _ccm_ref  = _cc_obj["module"]
+            _fc_rate = _cc_obj["pct"]  # per-module rate (already resolved at sizing pass)
             _ccm_ft   = _loan_subtype_from_module(_ccm_ref)
             _ccm_lbl  = getattr(_ccm_ref, "label", "") or _ccm_ft.replace("_", " ").title()
             _ccm_p    = Decimal(str((_ccm_ref.source or {}).get("amount") or 0))

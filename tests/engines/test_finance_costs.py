@@ -94,6 +94,67 @@ def test_auto_finance_cost_phase_inherits_from_source():
 
 
 @pytest.mark.unit
+def test_resolve_fc_rate_falls_back_to_default():
+    """Per-Source override resolver: NULL/missing → DEFAULT_FINANCE_COST_PCT.
+
+    Mirrors the engine contract: source.finance_cost_pct is the canonical
+    override. Empty string, None, and missing key all fall back.
+    """
+    from app.engines.cashflow import _resolve_fc_rate, DEFAULT_FINANCE_COST_PCT
+
+    class _Mod:
+        def __init__(self, src):
+            self.source = src
+
+    default = DEFAULT_FINANCE_COST_PCT / Decimal("100")
+    assert _resolve_fc_rate(_Mod({})) == default
+    assert _resolve_fc_rate(_Mod({"finance_cost_pct": None})) == default
+    assert _resolve_fc_rate(_Mod({"finance_cost_pct": ""})) == default
+    assert _resolve_fc_rate(_Mod(None)) == default
+
+
+@pytest.mark.unit
+def test_resolve_fc_rate_uses_override_when_set():
+    """Per-Source override resolver: numeric override returns pct/100."""
+    from app.engines.cashflow import _resolve_fc_rate
+
+    class _Mod:
+        def __init__(self, src):
+            self.source = src
+
+    # 1.5% override
+    assert _resolve_fc_rate(_Mod({"finance_cost_pct": 1.5})) == Decimal("1.5") / Decimal("100")
+    # 0% override → forces zero (valid distinct from None)
+    assert _resolve_fc_rate(_Mod({"finance_cost_pct": 0})) == Decimal("0")
+    # String form (form data sometimes flows through as str)
+    assert _resolve_fc_rate(_Mod({"finance_cost_pct": "3.25"})) == Decimal("3.25") / Decimal("100")
+    # Garbage value falls back
+    from app.engines.cashflow import DEFAULT_FINANCE_COST_PCT
+    default = DEFAULT_FINANCE_COST_PCT / Decimal("100")
+    assert _resolve_fc_rate(_Mod({"finance_cost_pct": "abc"})) == default
+
+
+@pytest.mark.unit
+def test_engine_writeback_threads_per_module_rate():
+    """Static inspection: writeback pulls rate from _cc_data[id(module)]['pct'],
+    which is populated via _resolve_fc_rate at the sizing pass. This ensures
+    each module's auto-FC amount uses its own resolved rate, not a stale global.
+    """
+    import inspect
+    import app.engines.cashflow as cf
+    src = inspect.getsource(cf)
+    # Sizing pass populates pct via the resolver
+    assert '"pct": _resolve_fc_rate(_ccm)' in src, (
+        "Sizing pass must resolve per-module rate into _cc_data."
+    )
+    # Writeback consumes per-module pct (not a single global _fc_rate computed
+    # before the loop).
+    assert '_fc_rate = _cc_obj["pct"]' in src, (
+        "Writeback loop must read each module's resolved rate from _cc_data."
+    )
+
+
+@pytest.mark.unit
 def test_engine_auto_fc_writeback_copies_milestone_fk():
     """Engine writeback block copies parent module's active_from_milestone_id
     onto the auto-FC UseLine — both on create and on update. Static inspection

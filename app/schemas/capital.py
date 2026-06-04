@@ -62,6 +62,11 @@ class CapitalSourceSchema(BaseModel):
     maximum: Decimal | None = None
     pct_of_total_cost: float | None = None
     interest_rate_pct: float | None = None
+    # Per-Source override for the auto Total Finance Costs UseLine. When NULL,
+    # the engine falls back to DEFAULT_FINANCE_COST_PCT (currently 2.0%).
+    # Folded into the auto-size divisor algebraically so the override resolves
+    # without iteration (see cashflow.py auto-FC writeback + divisor fold-in).
+    finance_cost_pct: float | None = None
     funding_date_trigger: str = ""
     draws: list[CapitalDraw] = []
     notes: str = ""
