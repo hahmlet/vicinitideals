@@ -48,7 +48,12 @@
     <div class="module-label">2 · Revenue</div>
     <div class="module-meta">{{ income_stream_count }} stream{{ 's' if income_stream_count != 1 else '' }}</div>
   </div>
-  <div class="module-total">{{ revenue_annual | currency if revenue_annual else '—' }}/yr</div>
+  <div class="module-total" style="display:grid;grid-template-columns:auto auto;gap:1px 10px;align-items:baseline;text-align:right;font-size:11px">
+    <span style="font-size:9px;text-transform:uppercase;letter-spacing:.03em;color:var(--text-muted)">Day 0</span>
+    <span style="font-size:9px;text-transform:uppercase;letter-spacing:.03em;color:var(--text-muted)">Stab.</span>
+    <span>{{ revenue_annual | currency if revenue_annual else '—' }}</span>
+    <span style="font-weight:600">{{ stabilized_revenue_annual | currency if stabilized_revenue_annual is not none else '—' }}</span>
+  </div>
 </a>
 
 <a href="{{ nav_base_path }}?module=opex{{ _proj_qs }}"
@@ -56,9 +61,14 @@
   <div class="module-icon module-icon-opex">📋</div>
   <div class="module-info">
     <div class="module-label">3 · OpEx</div>
-    <div class="module-meta">{{ expense_line_count }} line{{ 's' if expense_line_count != 1 else '' }}</div>
+    <div class="module-meta">{{ expense_line_count }} line{{ 's' if expense_line_count != 1 else '' }}{% if capex_reserve_annual %} · capex {{ capex_reserve_annual | currency }} below NOI{% endif %}</div>
   </div>
-  <div class="module-total">{{ opex_total_annual | currency if opex_total_annual else '—' }}/yr</div>
+  <div class="module-total" style="display:grid;grid-template-columns:auto auto;gap:1px 10px;align-items:baseline;text-align:right;font-size:11px">
+    <span style="font-size:9px;text-transform:uppercase;letter-spacing:.03em;color:var(--text-muted)">Day 0</span>
+    <span style="font-size:9px;text-transform:uppercase;letter-spacing:.03em;color:var(--text-muted)">Stab.</span>
+    <span>{{ opex_annual | currency if opex_annual else '—' }}</span>
+    <span style="font-weight:600">{{ stabilized_opex_annual | currency if stabilized_opex_annual is not none else '—' }}</span>
+  </div>
 </a>
 {% endif %}
 
@@ -82,7 +92,12 @@
       {% if deferred_uses %} · DDF {{ deferred_total | currency }}{% endif %}
     </div>
   </div>
-  <div class="module-total">{{ profit_total | currency if profit_total else '—' }}</div>
+  <div class="module-total" style="display:grid;grid-template-columns:auto auto;gap:1px 10px;align-items:baseline;text-align:right;font-size:11px">
+    <span style="font-size:9px;text-transform:uppercase;letter-spacing:.03em;color:var(--text-muted)">NOI</span>
+    <span style="font-size:9px;text-transform:uppercase;letter-spacing:.03em;color:var(--text-muted)">After Debt</span>
+    <span>{{ profit_total | currency if profit_total else '—' }}</span>
+    <span style="font-weight:600;{% if profit_runrate_after_debt is not none and profit_runrate_after_debt < 0 %}color:var(--danger,#dc2626){% endif %}">{{ profit_runrate_after_debt | currency if profit_runrate_after_debt is not none else '—' }}</span>
+  </div>
 </a>
 
 {% if phase_summaries.has_divestment %}

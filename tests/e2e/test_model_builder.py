@@ -86,3 +86,21 @@ def test_sources_uses_nav_card_present(logged_in_page, base_url: str, model_id: 
     wait_for_htmx(logged_in_page)
     # "1 · Sources & Uses" module label should appear somewhere in the nav
     assert logged_in_page.locator("#module-nav-cards .module-label:has-text('Sources')").count() >= 1
+
+
+def test_nav_cards_day0_stabilized_columns(logged_in_page, base_url: str, model_id: str) -> None:
+    """Revenue/OpEx nav cards expose Day 0 | Stabilized columns; Owners & Profit
+    exposes NOI | After Debt (run-rate after debt carry)."""
+    logged_in_page.goto(f"{base_url}/models/{model_id}/builder")
+    logged_in_page.wait_for_selector("#module-nav-cards", timeout=15_000)
+    wait_for_htmx(logged_in_page)
+    nav = logged_in_page.locator("#module-nav-cards")
+    # Owners & Profit card always renders in both income modes — assert its new
+    # two-column basis tags are present.
+    assert nav.locator(".module-label:has-text('Owners')").count() >= 1
+    assert nav.locator("text=After Debt").count() >= 1
+    # Revenue/OpEx cards only render in revenue_opex mode; when present they carry
+    # the Day 0 / Stab. basis tags.
+    if nav.locator(".module-label:has-text('Revenue')").count() >= 1:
+        assert nav.locator("text=Day 0").count() >= 1
+        assert nav.locator("text=Stab.").count() >= 1

@@ -6335,18 +6335,44 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
             )).scalar_one_or_none()
         carrying_annual_computed: float | None = float(_ops_avg) * 12 if _ops_avg else 0.0
 
-        # First stabilized period NCF → first-month and first-year profit metrics
+        # First stabilized period → profit metrics + run-rate (annualized)
+        # revenue/opex.  Run-rate = first stabilized month × 12, the SAME basis
+        # as noi_stabilized, so the nav cards' Stabilized column subtracts
+        # cleanly: stabilized_revenue − stabilized_opex − carrying = NOI − DS.
         _stab_rows = list((await session.execute(
-            _cf_scope(select(_CashFlow.net_cash_flow))
+            _cf_scope(select(
+                _CashFlow.net_cash_flow,
+                _CashFlow.effective_gross_income,
+                _CashFlow.operating_expenses,
+            ))
             .where(_CashFlow.period_type == _PT.stabilized)
             .order_by(_CashFlow.period)
-        )).scalars())
-        stabilized_month1_ncf: float | None = float(_stab_rows[0]) if _stab_rows else None
-        stabilized_year1_ncf: float | None = float(sum(_stab_rows[:12])) if _stab_rows else None
+        )).all())
+        if _stab_rows:
+            _stab_ncf = [float(r[0]) for r in _stab_rows]
+            stabilized_month1_ncf: float | None = _stab_ncf[0]
+            stabilized_year1_ncf: float | None = float(sum(_stab_ncf[:12]))
+            stabilized_revenue_annual: float | None = float(_stab_rows[0][1]) * 12
+            stabilized_opex_annual: float | None = float(_stab_rows[0][2]) * 12
+            # Profit run-rate after debt carry = NOI run-rate − annual debt service.
+            profit_runrate_after_debt: float | None = (
+                stabilized_revenue_annual
+                - stabilized_opex_annual
+                - (carrying_annual_computed or 0.0)
+            )
+        else:
+            stabilized_month1_ncf = None
+            stabilized_year1_ncf = None
+            stabilized_revenue_annual = None
+            stabilized_opex_annual = None
+            profit_runrate_after_debt = None
     else:
         carrying_annual_computed = None  # not yet computed
         stabilized_month1_ncf = None
         stabilized_year1_ncf = None
+        stabilized_revenue_annual = None
+        stabilized_opex_annual = None
+        profit_runrate_after_debt = None
 
     capital_modules = list((await session.execute(
         select(CapitalModule).where(CapitalModule.scenario_id == model_id).order_by(CapitalModule.stack_position)
@@ -6791,6 +6817,9 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
         "carrying_detail": carrying_detail,
         "stabilized_month1_ncf": stabilized_month1_ncf,
         "stabilized_year1_ncf": stabilized_year1_ncf,
+        "stabilized_revenue_annual": stabilized_revenue_annual,
+        "stabilized_opex_annual": stabilized_opex_annual,
+        "profit_runrate_after_debt": profit_runrate_after_debt,
         "divestment_total": _sum_amount(exit_lines),
         "profit_total": float(outputs.noi_stabilized) if outputs and outputs.noi_stabilized else None,
         "equity_ownership": equity_ownership,
@@ -12356,6 +12385,8 @@ async def model_module_nav(
             "expense_line_count", "opex_annual",
             "capex_reserve_annual", "opex_total_annual",
             "carrying_annual",
+            "stabilized_revenue_annual", "stabilized_opex_annual",
+            "profit_runrate_after_debt",
             "equity_ownership", "org_owner_fallback",
             "deferred_uses", "deferred_total", "profit_total",
             "divestment_total", "phase_summaries", "outputs",
