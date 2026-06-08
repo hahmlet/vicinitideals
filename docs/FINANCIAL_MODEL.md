@@ -955,9 +955,19 @@ where `R = operation_reserve_months` (default 6) and
 
 | `operation_reserve_basis` | basis |
 |---|---|
-| `ds` (default) | `DS_monthly` |
+| `ds` (default) | `max(DS_monthly, OpEx_monthly)` — DS-driven, with an OpEx floor |
 | `opex` | `OpEx_monthly` (stabilized) |
 | `opex_plus_ds` | `DS_monthly + OpEx_monthly` (stabilized) |
+
+> **OpEx floor on the `ds` basis.** The gap-fill auto-sizer funds the
+> reserve on `max(opex_monthly, ds_monthly)` (its `ds_check <
+> opex_monthly_pre` fallback — §2.4). The write-back therefore books the
+> same `max()` for the `ds` basis, otherwise a low-leverage / high-opex
+> deal (monthly opex > monthly debt service) would have the loan size for
+> the larger opex-based reserve while only booking the smaller DS-based
+> reserve — a phantom Sources/Uses surplus. The `99/100` case has
+> `DS_monthly > OpEx_monthly`, so the floor is inert and the basis is
+> effectively DS-only.
 
 **Simultaneous solve with IR when `OR_basis = ds`.** Per spec
 critique #1, the `ds` basis makes OR principal-dependent (DS scales
