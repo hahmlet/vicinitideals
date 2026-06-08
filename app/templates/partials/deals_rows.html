@@ -36,9 +36,9 @@
     {% if deal.equity_multiple %}{{ "%.2fx"|format(deal.equity_multiple) }}{% else %}—{% endif %}
   </td>
   <td class="col-right text-mono {% if deal.gap_adj is none %}col-muted{% endif %}"
-      {% if deal.gap_adj is not none %}style="color:{% if deal.gap_has_adj %}#d97706{% else %}#16a34a{% endif %}"{% endif %}
-      title="{% if deal.gap_has_adj %}Includes one or more gap-adjustment sliders{% else %}No gap adjustments applied{% endif %}">
-    {{ deal.gap_adj | currency }}
+      {% if deal.gap_adj is not none %}style="color:{% if deal.gap_has_adj %}#d97706{% elif deal.gap_adj != 0 %}#dc2626{% else %}#16a34a{% endif %}"{% endif %}
+      title="{% if deal.gap_has_adj %}Funding gap with one or more gap-adjustment sliders applied{% elif deal.gap_adj is not none and deal.gap_adj != 0 %}Unadjusted funding gap — deal is short{% else %}Fully funded, no adjustments{% endif %}">
+    {% if deal.gap_adj is none %}—{% elif deal.gap_adj < 0 %}-${{ '{:,.0f}'.format(-deal.gap_adj) }}{% else %}${{ '{:,.0f}'.format(deal.gap_adj) }}{% endif %}
   </td>
   <td class="text-small text-muted">{{ deal.last_updated_fmt or "—" }}</td>
   <td>

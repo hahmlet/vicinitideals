@@ -394,15 +394,18 @@ async def _gap_adj_by_scenario(
 ) -> dict[UUID, dict]:
     """Batch-compute the live Sources/Uses gap + adjustment flag per scenario.
 
-    Gap = Σ UseLine.amount (excluding exit-phase lines, *including* the
-    negative Purchase-Price gap-adjustment phantom) − Σ committed source
-    principal (CapitalModuleProject amounts). Mirrors the Underwriting
-    "Sources Gap" KPI so the deals-list column reconciles with the per-deal
-    panel.
+    Gap = Σ committed source principal (CapitalModuleProject amounts) −
+    Σ UseLine.amount (excluding exit-phase lines, *including* the negative
+    Purchase-Price gap-adjustment phantom). Signed so a funding shortfall
+    reads as a negative number; rounded to whole dollars so float noise
+    doesn't register as a phantom gap. Mirrors the Underwriting "Sources
+    Gap" KPI (sign-flipped) so the deals-list column reconciles with the
+    per-deal panel.
 
     ``has_adj`` is True when any Gap Adjustment phantom row (Purchase Price,
     Revenue, OpEx, or NOI) carries a nonzero amount on the scenario's
-    projects — drives green (no adjustments) vs. yellow (adjusted) coloring.
+    projects — drives cell coloring: yellow when adjusted, red when a gap
+    remains with no adjustments, green when fully funded and unadjusted.
 
     One batched query per axis — avoids the per-project N+1 of
     ``_get_gap_adjustment_amounts``/``_has_any_gap_adjustment`` across a list.
@@ -499,8 +502,8 @@ async def _gap_adj_by_scenario(
     )
 
     for scn_id in scenario_ids:
-        gap = uses_by_scn.get(scn_id, _zero) - src_by_scn.get(scn_id, _zero)
-        out[scn_id] = {"gap": float(gap), "has_adj": scn_id in adj_scn}
+        net = src_by_scn.get(scn_id, _zero) - uses_by_scn.get(scn_id, _zero)
+        out[scn_id] = {"gap": float(round(net)), "has_adj": scn_id in adj_scn}
     return out
 
 

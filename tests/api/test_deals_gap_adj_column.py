@@ -3,9 +3,11 @@
 Covers ``_gap_adj_by_scenario`` (the batched live Sources/Uses gap +
 adjustment-flag computation) and the rendered column on GET /deals.
 
-Gap = Σ UseLine.amount (excl exit phase, incl the negative Purchase-Price
-gap-adjustment phantom) − Σ committed source principal. ``has_adj`` is True
-when any Gap Adjustment phantom row carries a nonzero amount.
+Gap = Σ committed source principal − Σ UseLine.amount (excl exit phase, incl
+the negative Purchase-Price gap-adjustment phantom); signed so a funding
+shortfall is negative. ``has_adj`` is True when any Gap Adjustment phantom row
+carries a nonzero amount. Cell colors: red = gap, no adjustments; amber =
+adjustments applied; green = fully funded, no adjustments.
 """
 
 from __future__ import annotations
@@ -84,8 +86,9 @@ async def test_gap_adj_base_gap_no_adjustment(session: AsyncSession) -> None:
     result = await _gap_adj_by_scenario(session, [scenario_id])
 
     info = result[scenario_id]
-    # 1,000,000 uses (exit-phase 500k excluded) − 600,000 sources = 400,000.
-    assert info["gap"] == pytest.approx(400000.0)
+    # 600,000 sources − 1,000,000 uses (exit-phase 500k excluded) = -400,000
+    # (signed; a funding shortfall reads as a negative number).
+    assert info["gap"] == pytest.approx(-400000.0)
     assert info["has_adj"] is False
 
 
@@ -107,8 +110,8 @@ async def test_gap_adj_with_purchase_price_phantom(session: AsyncSession) -> Non
     result = await _gap_adj_by_scenario(session, [scenario_id])
 
     info = result[scenario_id]
-    # Uses fall to 900,000; gap = 900,000 − 600,000 = 300,000.
-    assert info["gap"] == pytest.approx(300000.0)
+    # Uses fall to 900,000; gap = 600,000 − 900,000 = -300,000.
+    assert info["gap"] == pytest.approx(-300000.0)
     # A nonzero phantom flips the flag → yellow in the UI.
     assert info["has_adj"] is True
 
@@ -140,23 +143,39 @@ def _row(**overrides) -> dict:
     return base
 
 
-def test_deals_rows_partial_colors_gap_adj_by_adjustment_flag() -> None:
-    """The Gap Adj cell is green with no adjustments, amber with any."""
+def test_deals_rows_partial_colors_gap_adj_three_states() -> None:
+    """Cell color: green (funded, no adj), red (gap, no adj), amber (adjusted);
+    shortfalls render as negative dollars."""
     from app.api.routers.ui import templates
 
     tmpl = templates.env.get_template("partials/deals_rows.html")
 
-    green = tmpl.render(deals=[_row(gap_adj=400000.0, gap_has_adj=False)])
-    assert "$400,000" in green
+    # Fully funded, no adjustments → green, shown as $0.
+    green = tmpl.render(deals=[_row(gap_adj=0.0, gap_has_adj=False)])
+    assert "$0" in green
     assert "#16a34a" in green  # green
-    assert "#d97706" not in green
+    assert "#dc2626" not in green and "#d97706" not in green
 
-    amber = tmpl.render(deals=[_row(gap_adj=300000.0, gap_has_adj=True)])
-    assert "$300,000" in amber
+    # Gap with no adjustments → red, shown as a negative number.
+    red = tmpl.render(deals=[_row(gap_adj=-400000.0, gap_has_adj=False)])
+    assert "-$400,000" in red
+    assert "#dc2626" in red  # red
+    assert "#d97706" not in red
+
+    # Adjustments applied (gap remains) → amber, even when negative.
+    amber = tmpl.render(deals=[_row(gap_adj=-300000.0, gap_has_adj=True)])
+    assert "-$300,000" in amber
     assert "#d97706" in amber  # amber
+    assert "#dc2626" not in amber
 
+    # Adjustments applied but gap fully closed ($0) → still amber.
+    amber_zero = tmpl.render(deals=[_row(gap_adj=0.0, gap_has_adj=True)])
+    assert "#d97706" in amber_zero
+    assert "#16a34a" not in amber_zero
+
+    # No scenario / no data → muted dash, no color.
     none = tmpl.render(deals=[_row(gap_adj=None)])
     assert "—" in none
-    # No color styling applied when there is no gap value to show.
     assert "#16a34a" not in none
     assert "#d97706" not in none
+    assert "#dc2626" not in none
