@@ -389,6 +389,144 @@ def _build_deal_row(deal: Deal) -> dict:
     }
 
 
+async def _gap_adj_by_scenario(
+    session: DBSession, scenario_ids: list[UUID]
+) -> dict[UUID, dict]:
+    """Batch-compute the live Sources/Uses gap + adjustment flag per scenario.
+
+    Gap = Σ UseLine.amount (excluding exit-phase lines, *including* the
+    negative Purchase-Price gap-adjustment phantom) − Σ committed source
+    principal (CapitalModuleProject amounts). Mirrors the Underwriting
+    "Sources Gap" KPI so the deals-list column reconciles with the per-deal
+    panel.
+
+    ``has_adj`` is True when any Gap Adjustment phantom row (Purchase Price,
+    Revenue, OpEx, or NOI) carries a nonzero amount on the scenario's
+    projects — drives green (no adjustments) vs. yellow (adjusted) coloring.
+
+    One batched query per axis — avoids the per-project N+1 of
+    ``_get_gap_adjustment_amounts``/``_has_any_gap_adjustment`` across a list.
+    """
+    from app.models.capital import CapitalModuleProject
+    from app.schemas.gap_adjustment_names import (
+        NOI_ADJUSTMENT_LABEL,
+        OPEX_ADJUSTMENT_LABEL,
+        PURCHASE_PRICE_ADJUSTMENT_LABEL,
+        REVENUE_ADJUSTMENT_LABEL,
+    )
+
+    out: dict[UUID, dict] = {}
+    if not scenario_ids:
+        return out
+    _zero = Decimal("0")
+
+    # Σ Uses by scenario (exclude exit phase, mirror rollup_summary).
+    uses_by_scn: dict[UUID, Decimal] = {}
+    uses_rows = (
+        await session.execute(
+            select(Project.scenario_id, UseLine.amount, UseLine.phase)
+            .join(Project, Project.id == UseLine.project_id)
+            .where(Project.scenario_id.in_(scenario_ids))
+        )
+    ).all()
+    for scn_id, amt, phase in uses_rows:
+        if str(getattr(phase, "value", phase) or "") == UseLinePhase.exit.value:
+            continue
+        uses_by_scn[scn_id] = uses_by_scn.get(scn_id, _zero) + Decimal(str(amt or 0))
+
+    # Σ committed source principal by scenario.
+    src_by_scn: dict[UUID, Decimal] = {}
+    src_rows = (
+        await session.execute(
+            select(
+                CapitalModule.scenario_id,
+                func.coalesce(func.sum(CapitalModuleProject.amount), 0),
+            )
+            .join(
+                CapitalModuleProject,
+                CapitalModuleProject.capital_module_id == CapitalModule.id,
+            )
+            .where(CapitalModule.scenario_id.in_(scenario_ids))
+            .group_by(CapitalModule.scenario_id)
+        )
+    ).all()
+    for scn_id, total in src_rows:
+        src_by_scn[scn_id] = Decimal(str(total or 0))
+
+    # Scenarios carrying any nonzero Gap Adjustment phantom row.
+    adj_scn: set[UUID] = set()
+    adj_scn.update(
+        (
+            await session.execute(
+                select(Project.scenario_id)
+                .join(UseLine, UseLine.project_id == Project.id)
+                .where(
+                    Project.scenario_id.in_(scenario_ids),
+                    UseLine.label == PURCHASE_PRICE_ADJUSTMENT_LABEL,
+                    UseLine.amount != 0,
+                )
+            )
+        ).scalars()
+    )
+    adj_scn.update(
+        (
+            await session.execute(
+                select(Project.scenario_id)
+                .join(IncomeStream, IncomeStream.project_id == Project.id)
+                .where(
+                    Project.scenario_id.in_(scenario_ids),
+                    IncomeStream.label == REVENUE_ADJUSTMENT_LABEL,
+                    IncomeStream.amount_fixed_monthly.isnot(None),
+                    IncomeStream.amount_fixed_monthly != 0,
+                )
+            )
+        ).scalars()
+    )
+    adj_scn.update(
+        (
+            await session.execute(
+                select(Project.scenario_id)
+                .join(OperatingExpenseLine, OperatingExpenseLine.project_id == Project.id)
+                .where(
+                    Project.scenario_id.in_(scenario_ids),
+                    OperatingExpenseLine.label.in_(
+                        [OPEX_ADJUSTMENT_LABEL, NOI_ADJUSTMENT_LABEL]
+                    ),
+                    OperatingExpenseLine.annual_amount != 0,
+                )
+            )
+        ).scalars()
+    )
+
+    for scn_id in scenario_ids:
+        gap = uses_by_scn.get(scn_id, _zero) - src_by_scn.get(scn_id, _zero)
+        out[scn_id] = {"gap": float(gap), "has_adj": scn_id in adj_scn}
+    return out
+
+
+async def _build_deal_rows(session: DBSession, loaded_deals: list[Deal]) -> list[dict]:
+    """Build deal-row dicts and attach the live ``gap_adj`` + ``gap_has_adj``.
+
+    Gap data is loaded in one batched pass keyed by primary-scenario id so the
+    deals list stays a fixed number of queries regardless of row count.
+    """
+    rows = [_build_deal_row(d) for d in loaded_deals]
+    scn_of_row: list[UUID | None] = []
+    scn_ids: list[UUID] = []
+    for d in loaded_deals:
+        scn = _primary_scenario(d)
+        sid = scn.id if scn else None
+        scn_of_row.append(sid)
+        if sid is not None:
+            scn_ids.append(sid)
+    gap_map = await _gap_adj_by_scenario(session, scn_ids)
+    for row, sid in zip(rows, scn_of_row):
+        info = gap_map.get(sid) if sid is not None else None
+        row["gap_adj"] = info["gap"] if info else None
+        row["gap_has_adj"] = bool(info["has_adj"]) if info else False
+    return rows
+
+
 # Maps UI filter value → DB enum. Statuses not in this map (under_contract, closed)
 # don't exist in the DB yet — selecting them returns 0 results intentionally.
 _STATUS_DB_MAP = {
@@ -3031,7 +3169,7 @@ async def deals_page(
     loaded_deals = await _load_deals(
         session, status, type, model, q, archived, effective_hide_test, user=user
     )
-    deals = [_build_deal_row(d) for d in loaded_deals]
+    deals = await _build_deal_rows(session, loaded_deals)
 
     total_stmt = _apply_org_scope(
         select(func.count()).select_from(Deal).where(Deal.status != DealStatus.archived),
@@ -3096,7 +3234,7 @@ async def deals_rows(
     loaded_deals = await _load_deals(
         session, status, type, model, q, archived, hide_test == "1", user=user
     )
-    deals = [_build_deal_row(d) for d in loaded_deals]
+    deals = await _build_deal_rows(session, loaded_deals)
     return templates.TemplateResponse(request, "partials/deals_rows.html", {"deals": deals})
 
 
@@ -3485,7 +3623,7 @@ async def archive_deal(
         deal.status = DealStatus.archived
         await session.flush()
     loaded_deals = await _load_deals(session, user=user)
-    deals = [_build_deal_row(d) for d in loaded_deals]
+    deals = await _build_deal_rows(session, loaded_deals)
     return templates.TemplateResponse(request, "partials/deals_rows.html", {"deals": deals})
 
 

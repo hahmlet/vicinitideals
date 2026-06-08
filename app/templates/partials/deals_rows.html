@@ -35,6 +35,11 @@
   <td class="col-right text-mono {% if deal.equity_multiple %}{% else %}col-muted{% endif %}">
     {% if deal.equity_multiple %}{{ "%.2fx"|format(deal.equity_multiple) }}{% else %}—{% endif %}
   </td>
+  <td class="col-right text-mono {% if deal.gap_adj is none %}col-muted{% endif %}"
+      {% if deal.gap_adj is not none %}style="color:{% if deal.gap_has_adj %}#d97706{% else %}#16a34a{% endif %}"{% endif %}
+      title="{% if deal.gap_has_adj %}Includes one or more gap-adjustment sliders{% else %}No gap adjustments applied{% endif %}">
+    {{ deal.gap_adj | currency }}
+  </td>
   <td class="text-small text-muted">{{ deal.last_updated_fmt or "—" }}</td>
   <td>
     <button class="btn btn-ghost btn-sm archive-btn"
@@ -45,7 +50,7 @@
 </tr>
 {% else %}
 <tr>
-  <td colspan="10">
+  <td colspan="11">
     <div class="empty-state">
       <div class="empty-icon">🏠</div>
       <div class="empty-title">No deals yet</div>
