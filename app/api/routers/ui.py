@@ -364,6 +364,23 @@ def _deal_building_description(deal: Deal) -> str | None:
     return None
 
 
+def _levered_profit(noi: float | None, dscr: float | None) -> float | None:
+    """Annual stabilized profit = NOI − annual operation debt service.
+
+    The engine defines ``DSCR = stabilized NOI / annual operation debt
+    service`` (cashflow.py), so debt carry = NOI / DSCR. DSCR is None when a
+    scenario carries no operating debt (carry = 0 → profit = NOI); a
+    non-positive DSCR leaves profit undefined.
+    """
+    if noi is None:
+        return None
+    if dscr is None:
+        return noi
+    if dscr > 0:
+        return noi - noi / dscr
+    return None
+
+
 def _build_deal_row(deal: Deal) -> dict:
     scenario = _primary_scenario(deal)
     opp = _first_opportunity(deal)
@@ -383,6 +400,10 @@ def _build_deal_row(deal: Deal) -> dict:
         "address": _deal_address(deal),
         "building_description": _deal_building_description(deal),
         "noi": float(outputs.noi_stabilized) if outputs and outputs.noi_stabilized is not None else None,
+        "profit": _levered_profit(
+            float(outputs.noi_stabilized) if outputs and outputs.noi_stabilized is not None else None,
+            float(outputs.dscr) if outputs and outputs.dscr is not None else None,
+        ),
         "irr": float(outputs.project_irr_levered) if outputs and outputs.project_irr_levered is not None else None,
         "equity_multiple": None,  # TODO: load from SensitivityResult (needs join)
         "last_updated_fmt": deal.created_at.strftime("%b %-d, %Y") if deal.created_at else None,

@@ -18,7 +18,7 @@ import pytest
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.routers.ui import _gap_adj_by_scenario
+from app.api.routers.ui import _gap_adj_by_scenario, _levered_profit
 from app.models.capital import CapitalModule, CapitalModuleProject
 from app.models.deal import UseLine, UseLinePhase
 from app.models.project import Project
@@ -121,6 +121,17 @@ async def test_gap_adj_empty_scenario_list_returns_empty(session: AsyncSession) 
     assert await _gap_adj_by_scenario(session, []) == {}
 
 
+def test_levered_profit() -> None:
+    # DSCR 1.25 → debt service = NOI/1.25; profit = NOI − NOI/1.25.
+    assert _levered_profit(100000.0, 1.25) == pytest.approx(20000.0)
+    # No operating debt (DSCR None) → carry is 0, profit equals NOI.
+    assert _levered_profit(100000.0, None) == 100000.0
+    # No NOI → undefined.
+    assert _levered_profit(None, 1.25) is None
+    # Non-positive DSCR → undefined (avoid div-by-zero / nonsense).
+    assert _levered_profit(100000.0, 0.0) is None
+
+
 def _row(**overrides) -> dict:
     base = {
         "id": "deal-1",
@@ -133,6 +144,7 @@ def _row(**overrides) -> dict:
         "primary_model_name": None,
         "primary_model_id": None,
         "noi": None,
+        "profit": None,
         "irr": None,
         "equity_multiple": None,
         "gap_adj": None,
@@ -179,3 +191,16 @@ def test_deals_rows_partial_colors_gap_adj_three_states() -> None:
     assert "#16a34a" not in none
     assert "#d97706" not in none
     assert "#dc2626" not in none
+
+
+def test_deals_rows_partial_renders_profit() -> None:
+    from app.api.routers.ui import templates
+
+    tmpl = templates.env.get_template("partials/deals_rows.html")
+
+    html = tmpl.render(deals=[_row(profit=20000.0)])
+    assert "$20,000" in html
+
+    # No profit value → muted dash.
+    blank = tmpl.render(deals=[_row(profit=None)])
+    assert "—" in blank

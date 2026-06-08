@@ -29,6 +29,7 @@
     {% endif %}
   </td>
   <td class="col-right text-mono">{{ deal.noi | currency }}</td>
+  <td class="col-right text-mono {% if deal.profit is none %}col-muted{% endif %}">{{ deal.profit | currency }}</td>
   <td class="col-right {% if deal.irr %}irr-value{% else %}col-muted{% endif %}">
     {{ deal.irr | pct }}
   </td>
@@ -50,7 +51,7 @@
 </tr>
 {% else %}
 <tr>
-  <td colspan="11">
+  <td colspan="12">
     <div class="empty-state">
       <div class="empty-icon">🏠</div>
       <div class="empty-title">No deals yet</div>
