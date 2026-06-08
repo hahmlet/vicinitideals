@@ -2326,6 +2326,32 @@ Whatever remains after all earlier tiers — split by tier ratios. This is "the 
 
 ### 7.4 Profit metrics
 
+### Stabilized profit: run-rate vs Year-1 sum [app]
+
+The builder surfaces **two distinct annual profit figures** at stabilization.
+They differ on purpose and must not be conflated:
+
+| Figure | Definition | Engine source | Where shown |
+|---|---|---|---|
+| **Run-rate (annual)** | First stabilized month × 12 — the same basis as `noi_stabilized`. NOI − annual debt service. Steady recurring profit, escalation not yet compounded across the year. | `profit_runrate_after_debt` in `_load_builder_data` = `stabilized_revenue_annual − stabilized_opex_annual − carrying_annual`, where the revenue/opex run-rates are the first stabilized `effective_gross_income` / `operating_expenses` row × 12. | Owners & Profit panel "Stabilized Run-Rate" box; nav cards' **Stabilized** column; "Profit — Mo. 1" × 12. |
+| **Year-1 sum** | Sum of the actual first 12 stabilized months' `net_cash_flow`. | `stabilized_year1_ncf` = `sum(stab_rows[:12])`. | Owners & Profit panel "Profit — Yr. 1 (Stabilized)" card. |
+
+**Why they differ.** Rent escalates each month (`noi_escalation_rate_pct`,
+applied monthly) while operating debt service is flat. So the 12 monthly cash
+flows climb across Year 1, and their **sum exceeds the run-rate** (month-1 × 12)
+by the within-year escalation. The run-rate is the clean recurring number; the
+Year-1 sum is the realized first-year distributable. Neither is "wrong" — they
+answer different questions.
+
+**Nav-card columns.** Revenue and OpEx nav cards show **Day 0** (input-basis,
+un-escalated: `revenue_annual` / `opex_annual`) and **Stabilized** (run-rate:
+`stabilized_revenue_annual` / `stabilized_opex_annual`). The capex reserve is
+**below the NOI line** — excluded from the OpEx card total (shown as a meta
+note) to match the engine, which does not subtract capex reserve inside NOI.
+This is why `Stabilized Revenue − Stabilized OpEx − Carrying = NOI − DS =`
+run-rate profit reconciles cleanly, while a naïve `Day-0 Revenue − Day-0 OpEx
+(incl. capex) − Stabilized Carrying` understates it.
+
 ### LP IRR [investor, app]
 
 **Definition.** Internal rate of return on the LP cash flow stream.

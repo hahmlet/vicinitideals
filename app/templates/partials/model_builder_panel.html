@@ -1601,10 +1601,28 @@
     {%- set _exit_cap = (inputs.exit_cap_rate_pct | float) if inputs and inputs.exit_cap_rate_pct else none -%}
     {%- set _mo1 = stabilized_month1_ncf | float if stabilized_month1_ncf is not none else none -%}
     {%- set _yr1 = stabilized_year1_ncf | float if stabilized_year1_ncf is not none else none -%}
+    {%- set _stab_rev = stabilized_revenue_annual | float if stabilized_revenue_annual is not none else none -%}
+    {%- set _stab_opex = stabilized_opex_annual | float if stabilized_opex_annual is not none else none -%}
+    {%- set _rr_profit = profit_runrate_after_debt | float if profit_runrate_after_debt is not none else none -%}
+    {# Stabilized run-rate reconciliation — ties to the nav cards' Stabilized column #}
+    {% if _stab_rev is not none %}
+    <div class="stat-card" style="margin-bottom:12px;cursor:help"
+         title="Stabilized run-rate = the first stabilized month annualized (×12), the same basis as NOI and the 'Stabilized' column on the module nav cards.&#10;&#10;Steady-state recurring profit BEFORE the year-1 escalation creep shown below. Debt service is flat, so this is the clean recurring figure.">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px">Stabilized Run-Rate (annual)</div>
+      <table style="width:100%;font-size:13px;border-collapse:collapse">
+        <tr><td style="padding:2px 0">Revenue (EGI)</td><td style="text-align:right">{{ _stab_rev | currency }}</td></tr>
+        <tr><td style="padding:2px 0">− OpEx</td><td style="text-align:right">{{ _stab_opex | currency if _stab_opex is not none else '—' }}</td></tr>
+        <tr style="border-top:1px solid var(--border)"><td style="padding:3px 0;font-weight:600">= NOI</td><td style="text-align:right;font-weight:600">{{ outputs.noi_stabilized | currency if outputs.noi_stabilized else '—' }}</td></tr>
+        <tr><td style="padding:2px 0">− Debt Carry</td><td style="text-align:right">{{ _carry_ann | currency if _carry_ann is not none else '—' }}</td></tr>
+        <tr style="border-top:2px solid var(--border)"><td style="padding:4px 0;font-weight:700">= Profit (run-rate)</td><td style="text-align:right;font-weight:700;{% if _rr_profit is not none and _rr_profit < 0 %}color:var(--danger,#dc2626){% elif _rr_profit is not none and _rr_profit > 0 %}color:var(--success,#16a34a){% endif %}">{{ _rr_profit | currency if _rr_profit is not none else '—' }}</td></tr>
+      </table>
+      <div style="font-size:10px;color:var(--text-muted);margin-top:6px">First stabilized month × 12 — matches the Stabilized column on the module cards. The <strong>Yr. 1</strong> figure below is higher because rent escalates within the year while debt service stays flat.</div>
+    </div>
+    {% endif %}
     {# Row 1: stabilized profit — first month and first year #}
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
       <div class="stat-card" style="cursor:help;{% if _mo1 and _mo1 > 0 %}border-color:var(--success,#16a34a);{% elif _mo1 and _mo1 < 0 %}border-color:var(--danger,#dc2626);{% endif %}"
-           title="Net cash flow in the first stabilized month (Revenue − OpEx − Debt Service).&#10;&#10;This is the monthly distributable profit at stabilization — before escalation. Positive = cash-flowing.">
+           title="Net cash flow in the first stabilized month (Revenue − OpEx − Debt Service).&#10;&#10;This is the monthly distributable profit at stabilization — before escalation. × 12 = the annual run-rate above. Positive = cash-flowing.">
         <div class="stat-label">Profit — Mo. 1 (Stabilized)</div>
         <div class="stat-value" style="{% if _mo1 and _mo1 > 0 %}color:var(--success,#16a34a){% elif _mo1 and _mo1 < 0 %}color:var(--danger,#dc2626){% endif %}">
           {%- if _mo1 is not none -%}
@@ -1614,7 +1632,7 @@
         <div style="font-size:10px;color:var(--text-muted);margin-top:2px">after debt service</div>
       </div>
       <div class="stat-card" style="cursor:help;{% if _yr1 and _yr1 > 0 %}border-color:var(--success,#16a34a);{% elif _yr1 and _yr1 < 0 %}border-color:var(--danger,#dc2626);{% endif %}"
-           title="Sum of net cash flow over the first 12 stabilized months (Year 1 distributable).&#10;&#10;Includes rent escalation within year 1 but no vacancy bump or major OpEx changes.">
+           title="Sum of the actual first 12 stabilized months (Year-1 distributable).&#10;&#10;HIGHER than the run-rate above (first month × 12) because rent escalates each month while debt service stays flat — so the run-rate understates Year 1 by the within-year escalation. No vacancy bump or major OpEx changes assumed.">
         <div class="stat-label">Profit — Yr. 1 (Stabilized)</div>
         <div class="stat-value" style="{% if _yr1 and _yr1 > 0 %}color:var(--success,#16a34a){% elif _yr1 and _yr1 < 0 %}color:var(--danger,#dc2626){% endif %}">
           {%- if _yr1 is not none -%}
