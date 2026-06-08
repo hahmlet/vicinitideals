@@ -3451,8 +3451,19 @@ async def _auto_size_debt_modules(
         _or_basis_monthly = ds_monthly
     else:
         if operating_reserve_basis == "ds":
-            _or_basis_monthly = ds_monthly
-            _or_basis_label = "Debt Service"
+            # Mirror the loan-sizer's opex fallback (the gap-fill solve sizes the
+            # reserve on the LARGER of monthly debt service or monthly opex — see
+            # the `ds_check < opex_monthly_pre` branch above). Booking pure DS
+            # here understates Uses whenever opex exceeds DS (low-leverage /
+            # high-opex deals), so the loan funds a bigger reserve than the model
+            # books → phantom Sources/Uses surplus. Take the max so the booked
+            # reserve equals what the sizer actually funded.
+            if opex_monthly > ds_monthly:
+                _or_basis_monthly = opex_monthly
+                _or_basis_label = "OpEx (exceeds Debt Service)"
+            else:
+                _or_basis_monthly = ds_monthly
+                _or_basis_label = "Debt Service"
         elif operating_reserve_basis == "opex":
             _or_basis_monthly = opex_monthly
             _or_basis_label = "OpEx"
