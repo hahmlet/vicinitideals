@@ -145,6 +145,16 @@ async def consolidate(commit: bool, run_compute: bool) -> None:
             name=HOST_SCENARIO_NAME,
             project_type=first_scn.project_type,
             income_mode=first_scn.income_mode,
+            # Scenario-level financial settings drive engine behaviour that is NOT
+            # captured in per-project rows — notably risk_free_rate_pct, which the
+            # float/T-yield engine reads to value Treasury earnings on drawn bond
+            # balances. A NULL host rate silently zeroes every project's float.
+            # Inherit the full settings block from the first source scenario.
+            risk_free_rate_pct=first_scn.risk_free_rate_pct,
+            discount_rate_pct=first_scn.discount_rate_pct,
+            min_reserve_construction=first_scn.min_reserve_construction,
+            min_reserve_operational=first_scn.min_reserve_operational,
+            health_thresholds=first_scn.health_thresholds,
         )
         session.add(host_scn)
         await session.flush()
@@ -232,10 +242,19 @@ async def consolidate(commit: bool, run_compute: bool) -> None:
                 nm_cm = new_mod_by_old[cm.id]
                 _normalise_bond_label(nm_cm)
                 src_json = nm_cm.source or {}
-                if (nm_cm.vehicle_type or "") == "float_earnings" and src_json.get("parent_module_id"):
-                    parent_old = UUID(str(src_json["parent_module_id"]))
+                if (nm_cm.vehicle_type or "") == "float_earnings":
                     new_src = copy.deepcopy(src_json)
-                    new_src["parent_module_id"] = str(_remap(parent_old, module_map))
+                    if src_json.get("parent_module_id"):
+                        parent_old = UUID(str(src_json["parent_module_id"]))
+                        new_src["parent_module_id"] = str(_remap(parent_old, module_map))
+                    # Float earnings route to the waterfall at a milestone period.
+                    # That milestone id must be remapped to this project's cloned
+                    # milestone — otherwise the routing target doesn't exist in the
+                    # host scenario and the earnings silently zero out.
+                    for _ms_key in ("waterfall_milestone_id", "paydown_milestone_id"):
+                        _old_ms = src_json.get(_ms_key)
+                        if _old_ms:
+                            new_src[_ms_key] = str(_remap(UUID(str(_old_ms)), ms_map))
                     nm_cm.source = new_src
 
             # f. Capital-module-project junctions (synthesise if missing)
