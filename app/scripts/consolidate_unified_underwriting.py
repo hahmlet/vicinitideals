@@ -104,11 +104,12 @@ def _remap(value, id_map: dict[UUID, UUID]):
 
 
 def _is_auto_use_line(ul: UseLine) -> bool:
-    return bool(
-        getattr(ul, "is_auto_dev_fee", False)
-        or getattr(ul, "is_auto_acquisition_fee", False)
-        or getattr(ul, "is_auto_finance_cost", False)
-    )
+    # Only skip finance-cost rows: compute_cash_flows regenerates those from the
+    # (re)sized debt on every run. Auto Dev Fee and Acquisition Fee rows are NOT
+    # regenerated from scratch — recompute_auto_dev_fee only *updates an existing*
+    # row (returns early when the auto line is absent), so dropping them here would
+    # permanently delete each project's developer fee / acquisition fee. Copy them.
+    return bool(getattr(ul, "is_auto_finance_cost", False))
 
 
 def _normalise_bond_label(module: CapitalModule) -> None:
