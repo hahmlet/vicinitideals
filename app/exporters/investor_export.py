@@ -159,7 +159,7 @@ async def export_investor_workbook(
     # (Block C + Block A). Without the sheet the formulas become
     # dangling references that show #NAME? in Excel.
     _HAS_ASSUMPT   = {"internal", "lp", "lender", "proforma"}  # Assumptions
-    _HAS_SENS      = {"internal", "lp"}              # Sensitivity (slow; skip for lender/proforma)
+    _HAS_SENS: set[str] = set()                      # Sensitivity disabled — re-enable when needed
     _HAS_PF        = {"proforma"}                    # New formula-driven Pro Forma sheets
 
     cover = wb.active
