@@ -110,7 +110,7 @@ from app.models.project import Project
 from app.config import settings as _app_settings
 
 # Hard cap from the plan; enforced upstream so we never need 3-digit ordinals.
-MAX_PROJECTS_PER_SCENARIO = 5
+MAX_PROJECTS_PER_SCENARIO = 8
 
 # Sheet-name prefix is exactly 4 chars (`P` + 1- or 2-digit ordinal + space),
 # leaving 27 chars for the project name within Excel's 31-char ceiling.

@@ -8293,8 +8293,8 @@ async def create_deal_project(
     project_count = int((await session.execute(
         select(func.count()).select_from(Project).where(Project.scenario_id == deal_id)
     )).scalar_one())
-    if project_count >= 5:
-        return HTMLResponse("<p class='text-muted'>Maximum 5 projects per deal.</p>", status_code=400)
+    if project_count >= 8:
+        return HTMLResponse("<p class='text-muted'>Maximum 8 projects per deal.</p>", status_code=400)
 
     form = await request.form()
     project_name = str(form.get("name", "")).strip() or f"Project {project_count + 1}"
@@ -8781,7 +8781,7 @@ async def split_multiparcel_projects(
         proj_count = await session.scalar(
             select(func.count()).select_from(Project).where(Project.scenario_id == deal_id)
         ) or 0
-        if proj_count >= 5:
+        if proj_count >= 8:
             break
         new_proj = Project(
             scenario_id=deal_id,
