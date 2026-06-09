@@ -1354,7 +1354,7 @@
    each perm-debt CapitalModule.source.hold_term_years) #}
 <div class="carry-assumptions-block" style="margin-bottom:18px">
   <div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);margin-bottom:10px">Exit Assumptions</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
     <label class="carry-field-label">
       <span>Exit Cap Rate (%)</span>
       <input class="form-input carry-inline-input" type="number" step="0.1" min="0"
@@ -1377,16 +1377,39 @@
              hx-swap="none"
              hx-on::after-request="if(event.detail.successful) refreshPanel('divestment')">
     </label>
+    <label class="carry-field-label">
+      <span>Sale Price Override ($)</span>
+      <input class="form-input carry-inline-input" type="number" step="1000" min="0"
+             value="{{ inputs.sale_price_override if inputs and inputs.sale_price_override is not none else '' }}"
+             placeholder="blank → use cap rate"
+             hx-trigger="change"
+             hx-put="/api/models/{{ model.id }}/inputs"
+             hx-vals="js:{sale_price_override: parseFloat(event.target.value) || null}"
+             hx-swap="none"
+             hx-on::after-request="if(event.detail.successful) refreshPanel('divestment')">
+    </label>
   </div>
-  {% if inputs and inputs.exit_cap_rate_pct %}
   {%- set _exit_noi = outputs.noi_stabilized if outputs and outputs.noi_stabilized else none -%}
-  {% if _exit_noi %}
+  {% if inputs and inputs.sale_price_override and inputs.sale_price_override > 0 %}
+  <div style="margin-top:10px;font-size:13px;color:var(--text-muted)">
+    Sale price (manual override): <strong style="color:var(--text-primary)">{{ inputs.sale_price_override | currency }}</strong>
+    {% if inputs.selling_costs_pct %}
+    — net of {{ inputs.selling_costs_pct }}% selling costs:
+    <strong style="color:var(--text-primary)">{{ (inputs.sale_price_override * (1 - inputs.selling_costs_pct / 100)) | currency }}</strong>
+    {% endif %}
+  </div>
+  {% elif inputs and inputs.exit_cap_rate_pct %}
+  {% if _exit_noi and _exit_noi > 0 %}
   <div style="margin-top:10px;font-size:13px;color:var(--text-muted)">
     Estimated sale price: <strong style="color:var(--text-primary)">{{ (_exit_noi / (inputs.exit_cap_rate_pct / 100)) | currency }}</strong>
     {% if inputs.selling_costs_pct %}
     — net of {{ inputs.selling_costs_pct }}% selling costs:
     <strong style="color:var(--text-primary)">{{ (_exit_noi / (inputs.exit_cap_rate_pct / 100) * (1 - inputs.selling_costs_pct / 100)) | currency }}</strong>
     {% endif %}
+  </div>
+  {% elif _exit_noi is not none and _exit_noi <= 0 %}
+  <div style="margin-top:8px;font-size:12px;color:var(--color-warning,#f59e0b)">
+    ⚠ Stabilized NOI is negative — cap-rate sale price is invalid. Enter a Sale Price Override above to value this exit.
   </div>
   {% endif %}
   {% else %}
