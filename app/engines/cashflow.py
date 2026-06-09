@@ -3049,7 +3049,15 @@ async def _auto_size_debt_modules(
                 _loan_start_abs_month(module, phases),
             )
             if _module_schedule
-            else _actual_build_months
+            # IR/CI carry: use the same month count the IR writeback uses
+            # (_loan_pre_op_months includes acquisition phase).  IO/PI carry
+            # keeps _actual_build_months to avoid sizing a reserve for a loan
+            # that pays cash DS from day 1.
+            else (
+                _loan_pre_op_months(module, capital_modules, phases)
+                if _constr_ct in ("interest_reserve", "capitalized_interest")
+                else _actual_build_months
+            )
         )
         if constr_rate_pct and _preop_months > 0 and not _has_constr_loan:
             _c_monthly_rate = Decimal(str(constr_rate_pct)) / HUNDRED / Decimal("12")
