@@ -62,12 +62,18 @@ async def _seed(session: AsyncSession):
         session.add(p)
         await session.flush()
         projects.append(p)
+        bond_source = {"amount": amt, "interest_rate_pct": rate}
+        # The slice that feeds the float carries balance_earns_interest — the
+        # survivor must inherit it so the repointed float keeps paying yield.
+        if i == 3:
+            bond_source["balance_earns_interest"] = True
+            bond_source["draw_type"] = "fully_drawn"
         m = CapitalModule(
             scenario_id=scn.id,
             label=LABEL,
             vehicle_type="debt",
             stack_position=1 if i < 2 else 2,
-            source={"amount": amt, "interest_rate_pct": rate},
+            source=bond_source,
             exit_terms={},
         )
         session.add(m)
@@ -130,6 +136,8 @@ async def test_unify_collapses_to_single_bond(session: AsyncSession):
     assert survivor.source["interest_rate_pct"] == "6.0"
     assert Decimal(survivor.source["amount"]) == Decimal("10000000")
     assert survivor.exit_terms["vehicle"] == "maturity"
+    # Float eligibility inherited from the slice that had it.
+    assert survivor.source["balance_earns_interest"] is True
 
     # All four project slices now hang off the survivor.
     slices = list(

@@ -158,6 +158,13 @@ async def unify(
     src = dict(survivor.source or {})
     src["interest_rate_pct"] = unified_rate
     src["amount"] = str(total)
+    # Preserve float-earnings eligibility. Float modules only pay yield when
+    # their parent bond is flagged balance_earns_interest (float_earnings.py
+    # gate). The float parents get repointed to the survivor above — so if ANY
+    # merged slice fed a float, the survivor must carry the flag too, else the
+    # T-yield silently zeroes out.
+    if any((m.source or {}).get("balance_earns_interest") for m in mods):
+        src["balance_earns_interest"] = True
     survivor.source = src
     et = dict(survivor.exit_terms or {})
     et["vehicle"] = "maturity"
