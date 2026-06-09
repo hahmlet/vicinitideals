@@ -4646,7 +4646,17 @@ def _phase_capital_events(
 
     if phase.period_type == PeriodType.exit:
         sale_proceeds = ZERO
-        if stabilized_noi_monthly is not None and _percent(inputs.exit_cap_rate_pct) > ZERO:
+        _override = (
+            _to_decimal(inputs.sale_price_override)
+            if getattr(inputs, "sale_price_override", None) is not None
+            else None
+        )
+        if _override is not None and _override > ZERO:
+            # Manual sale-price override wins over cap-rate valuation. Needed when
+            # stabilized NOI is negative (lease-up drag), where NOI / exit_cap
+            # produces a meaningless or negative sale price.
+            sale_proceeds = _q(_override)
+        elif stabilized_noi_monthly is not None and _percent(inputs.exit_cap_rate_pct) > ZERO:
             _esc_rate = _to_decimal(inputs.noi_escalation_rate_pct) if inputs.noi_escalation_rate_pct else Decimal("3")
             _esc_period = max(0, period - first_stab_period)
             _exit_noi = _q(stabilized_noi_monthly * _growth_factor(_esc_rate, _esc_period))

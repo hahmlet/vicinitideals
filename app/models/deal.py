@@ -352,6 +352,12 @@ class OperationalInputs(Base):
     # Exit (deprecated scalar: use UseLine with phase=exit instead)
     exit_cap_rate_pct: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=5, server_default="5")
     selling_costs_pct: Mapped[object] = mapped_column(Numeric(18, 6), nullable=False, default=0)
+    # Manual sale-price override. When set (> 0), the exit/disposition value uses
+    # this figure instead of stabilized NOI / exit_cap_rate_pct. Needed for
+    # projects whose stabilized NOI is negative (lease-up drag), where the
+    # cap-rate formula yields a meaningless or negative sale price. NULL/0 → fall
+    # back to cap-rate valuation.
+    sale_price_override: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
 
     # Milestone tracking
     milestone_dates: Mapped[dict[str, str] | None] = mapped_column(JSON, nullable=True)

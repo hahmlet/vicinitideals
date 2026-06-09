@@ -200,6 +200,8 @@ class OperationalInputsBase(BaseModel):
     exit_cap_rate_pct: Decimal = Decimal("0")
     # Deprecated exit scalar — use UseLine with phase=exit
     selling_costs_pct: Decimal = Decimal("0")
+    # Manual sale-price override; when > 0, wins over NOI / exit_cap valuation.
+    sale_price_override: Decimal | None = None
 
     milestone_dates: dict[str, str] | None = None
 
