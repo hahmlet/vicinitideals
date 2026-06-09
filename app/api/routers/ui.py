@@ -6374,9 +6374,19 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
         stabilized_opex_annual = None
         profit_runrate_after_debt = None
 
-    capital_modules = list((await session.execute(
-        select(CapitalModule).where(CapitalModule.scenario_id == model_id).order_by(CapitalModule.stack_position)
-    )).scalars())
+    # On a single-project tab, show only that project's Sources (the modules
+    # attached to it via the junction). Loading every scenario module here made
+    # each project tab list all 8 projects' Sources — a ~$54M phantom sum even
+    # though the balance pill (junction-scoped) read correct. The aggregate /
+    # Combined Pool view (project_id is None) still shows the full stack.
+    if project_id is not None:
+        capital_modules = await _per_project_capital_modules_ui(
+            session, model_id, project_id
+        )
+    else:
+        capital_modules = list((await session.execute(
+            select(CapitalModule).where(CapitalModule.scenario_id == model_id).order_by(CapitalModule.stack_position)
+        )).scalars())
 
     # Per-module-per-phase annual debt service for the carrying costs table rows.
     # carrying_detail[module_id_str][phase_name] = annual_amount (float)
