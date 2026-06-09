@@ -10728,12 +10728,10 @@ async def model_builder(
             rollup_irr,
             rollup_sources,
             rollup_summary,
-            rollup_waterfall,
         )
         underwriting_rollup_data = {
             "cashflow": await rollup_cashflow(model_id, session),
             "sources": await rollup_sources(model_id, session),
-            "waterfall": await rollup_waterfall(model_id, session),
             "draws": await rollup_draws(model_id, session),
             "combined_irr_pct": await rollup_irr(model_id, session),
             "summary": await rollup_summary(model_id, session),

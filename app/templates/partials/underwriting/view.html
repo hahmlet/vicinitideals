@@ -250,41 +250,6 @@
     </div>
   </div>
 
-  {# ── Joined Waterfall ───────────────────────────────────────────────── #}
-  <div class="uw-section">
-    <div class="uw-section-title">Waterfall Distribution (joined)</div>
-    <div class="uw-table-scroll">
-      <table class="uw-table">
-        <thead>
-          <tr>
-            <th>Project</th>
-            <th class="num">Period</th>
-            <th class="num">Tier</th>
-            <th>Type</th>
-            <th class="num">Cash Distributed</th>
-            <th class="num">Cumulative</th>
-            <th class="num">Party IRR %</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for w in _r.get('waterfall', []) %}
-          {% set wproj = (deal_projects | selectattr('id', 'equalto', w.project_id) | list | first) if w.project_id else None %}
-          <tr>
-            <td>{% if wproj %}{{ wproj.name }}{% else %}—{% endif %}</td>
-            <td class="num">{{ w.period }}</td>
-            <td class="num">{{ w.tier_priority if w.tier_priority is not none else '—' }}</td>
-            <td>{{ (w.tier_type or '—').replace('_', ' ').title() }}</td>
-            <td class="num">${{ '{:,.0f}'.format(w.cash_distributed | float) if w.cash_distributed else '$0' }}</td>
-            <td class="num">${{ '{:,.0f}'.format(w.cumulative_distributed | float) if w.cumulative_distributed else '$0' }}</td>
-            <td class="num">{{ '{:.2f}%'.format(w.party_irr_pct | float) if w.party_irr_pct else '—' }}</td>
-          </tr>
-          {% else %}
-          <tr><td colspan="7" class="text-muted" style="text-align:center;padding:20px">No waterfall distributions computed yet.</td></tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </div>
 </div>
 
 <style>
