@@ -12444,8 +12444,8 @@ async def download_investor_export(
     if scenario is None:
         return HTMLResponse("Not found", status_code=404)
     deal = await session.get(Deal, scenario.deal_id) if scenario.deal_id else None
-    workbook_bytes = await export_investor_workbook(model_id, session, profile=profile)
     filename = make_investor_filename(scenario, deal)
+    workbook_bytes = await export_investor_workbook(model_id, session, profile=profile)
     return StreamingResponse(
         iter([workbook_bytes]),
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
