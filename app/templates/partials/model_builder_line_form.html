@@ -2632,7 +2632,7 @@ function prefillCarrySchedule(schedule, wrapper) {
 {# ── Milestone form ── #}
 {%- set _cur_type = existing.milestone_type | string | replace('MilestoneType.','') if existing else '' -%}
 {%- set _cur_label = phase_labels.get(_cur_type, _cur_type | replace('_',' ') | title) if existing else '' -%}
-{%- set _is_anchor = (existing and existing.trigger_milestone_id is none and existing.target_date) -%}
+{%- set _is_anchor = (existing and existing.trigger_milestone_id is none) -%}
 {%- set _cur_trigger_id = existing.trigger_milestone_id | string if existing and existing.trigger_milestone_id else '' -%}
 
 <form {% if existing %}hx-put="/ui/forms/{{ model.id }}/milestones/{{ existing.id }}"{% else %}hx-post="/ui/forms/{{ model.id }}/milestones"{% endif %}
