@@ -1226,13 +1226,10 @@ async def _compute_project_cashflow(
     outputs.bank_account_proof = bank_account_proof
 
     # CFSR auto-upsert: if bank proof shows insolvency write a "Cash Flow
-    # Support Reserve" use line = max_shortfall.  Next recompute folds it into
-    # total_uses so:
-    #   gap_fill deals   → bond grows to cover it → bank account solvent
-    #   dscr/ltv-capped  → bond stays capped → equity gap absorbs the extra use
-    #                       → bank account still becomes solvent
-    # Either way the bank account is made solvent; the gap (equity required)
-    # is the user-visible signal for capped deals.
+    # Support Reserve" use line = max_shortfall.  On the next recompute CFSR
+    # enters opening_cash (bank_account_extractor reads all _RESERVE_LABELS),
+    # which cures the solvency gap.  CFSR is equity-funded; it does NOT grow
+    # the bond principal (excluded from total_uses in _auto_size_debt_modules).
     if (
         bank_account_proof is not None
         and bank_account_proof.get("is_solvent") is False
@@ -2805,16 +2802,12 @@ async def _auto_size_debt_modules(
     if _odr_amount > ZERO:
         total_uses += _odr_amount
 
-    # Cash Flow Support Reserve — written by the prior bank-proof pass when
-    # the deal is insolvent and not DSCR/LTV-bound.  Balance-independent, so
-    # fold into total_uses directly (same pattern as ODR) so the bond covers
-    # it on the next compute iteration.
-    for _ul_cfsr in use_lines:
-        if getattr(_ul_cfsr, "label", "") == "Cash Flow Support Reserve":
-            _cfsr_prior = _to_decimal(getattr(_ul_cfsr, "amount", 0) or 0)
-            if _cfsr_prior > ZERO:
-                total_uses += _cfsr_prior
-            break
+    # Note: Cash Flow Support Reserve is intentionally excluded from total_uses
+    # here. Including it causes a feedback loop on gap_fill deals: CFSR inflates
+    # uses → bond grows → larger DS → larger shortfall → larger CFSR → repeat.
+    # CFSR is a BALANCE_ONLY reserve funded by equity (not the bond), so it
+    # doesn't need to enter the gap-fill principal solve. For dscr/ltv-capped
+    # deals the bond stays at its cap regardless, so exclusion has no effect there.
 
     # Phase B: new multi-debt path when debt_types is explicitly set on inputs.
     # Bridge loans (pre_development_loan, acquisition_loan, construction_loan, bridge)
