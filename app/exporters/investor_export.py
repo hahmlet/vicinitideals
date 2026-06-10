@@ -2277,7 +2277,11 @@ def _per_year_irr_series(
 
 
 def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
-    """Annual P&L summed across projects: Y0 → Y10 (or longest hold)."""
+    """Annual P&L summed across projects: Y0 → Y10 (or longest hold).
+
+    Layout: col A = project grouping label (merged over bullet rows),
+    col B = line item labels, col C+ = year data.
+    """
     cash_flows: dict[UUID, list[CashFlow]] = ctx["cash_flows"]
     cash_flow_items: dict[UUID, list[CashFlowLineItem]] = ctx["cash_flow_items"]
 
@@ -2285,10 +2289,11 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
     max_year = min(max(annual) if annual else 0, 10)
     year_cols = list(range(0, max(max_year, 1) + 1))
 
-    set_widths(ws, [30, *([14] * (len(year_cols) + 1))])
+    # Col A (project grouping, 16), Col B (line item label, 30), Col C+ (years)
+    set_widths(ws, [16, 30, *([14] * (len(year_cols) + 1))])
 
-    section_label(ws, 1, "Pro Forma — Annual P&L (combined across projects)", span_cols=len(year_cols) + 1)
-    header_row(ws, 2, ["Line Item", *[f"Y{y}" for y in year_cols]])
+    section_label(ws, 1, "Pro Forma — Annual P&L (combined across projects)", span_cols=len(year_cols) + 2)
+    header_row(ws, 2, ["", "Line Item", *[f"Y{y}" for y in year_cols]])
 
     rows: list[tuple[str, str, str | None]] = [
         ("Gross Revenue", "gross_revenue", "r_uw_gross_revenue"),
@@ -2297,13 +2302,6 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
         ("Operating Expenses", "operating_expenses", "r_uw_opex"),
         ("CapEx Reserve", "capex_reserve", None),
         ("NOI", "noi", "r_uw_noi"),
-        # Phase C: Asset Mgmt Fee shown explicitly so the LP sees the
-        # sponsor's fee drag against NOI. Always rendered as a formula
-        # ``=IFERROR(-EGI*s_asset_mgmt_fee,0)`` — engine doesn't push this
-        # value to the annual rollup, so the row is purely informational
-        # and never carries an engine seed.
-        # No range name registered — informational row; named ranges on this
-        # sheet are reserved for engine-derived KPIs.
         ("Asset Mgmt Fee", "asset_mgmt_fee", None),
         ("Debt Service", "debt_service", "r_uw_debt_service"),
         ("Net Cash Flow", "net_cash_flow", "r_uw_net_cash_flow"),
@@ -2311,43 +2309,21 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
 
     from openpyxl.utils import get_column_letter
 
-    # Formula-conversion plan §4.1 (commit 3): the rows whose math is a
-    # direct sum/difference of other rows on this sheet become formulas
-    # so LP edits to a single Use line / OpEx category propagate to the
-    # downstream KPIs. ``effective_gross_income`` = GrossRev − Vacancy
-    # (vacancy stored as positive haircut, matching the engine's
-    # ``vacancy_loss`` field); ``noi`` = EGI − OpEx. Net Cash Flow +
-    # Debt Service stay as engine values until commit 4 wires the Debt
-    # Schedule sheet, then they convert too.
+    # vacancy_loss cells are written as negative numbers so the LP reads a
+    # negative row. EGI = GrossRev + Vacancy (signed) avoids double-negative.
+    # noi = EGI − OpEx − CapEx matches cashflow engine invariant.
+    # capex_reserve is NOT in _GROWTH_CHAIN_FIELDS: the engine already applies
+    # expense_growth per period; using engine values directly prevents the
+    # Y1=0 anchor bug when construction runs through Y1 and Y2+ are operational.
     _DERIVED_FORMULA_FIELDS: dict[str, tuple[str, ...]] = {
-        # field name -> (sign, operand_field) pairs. Sign is "+" or "-"
-        # and applied to the operand field's cell on this same row block.
-        "effective_gross_income": ("+gross_revenue", "-vacancy_loss"),
-        "noi": ("+effective_gross_income", "-operating_expenses"),
-        # Phase E: Net Cash Flow is derived so the new Debt Service formula
-        # propagates through to the LP's bottom-line cash row.
+        "effective_gross_income": ("+gross_revenue", "+vacancy_loss"),
+        "noi": ("+effective_gross_income", "-operating_expenses", "-capex_reserve"),
         "net_cash_flow": ("+noi", "-debt_service"),
     }
-    # Phase B: rows whose Y_n>=2 values are a growth-rate chain on the
-    # prior year. Y0/Y1 stay as engine-computed seed values; Y2+ become
-    # ``=prev * (1 + s_opex_growth_rate)`` so a single Assumptions edit
-    # ripples through every downstream year. CapEx Reserve uses the same
-    # OpEx growth rate (no separate reserve-growth assumption today).
     _GROWTH_CHAIN_FIELDS: dict[str, str] = {
         "gross_revenue": "s_revenue_growth_rate",
         "operating_expenses": "s_opex_growth_rate",
-        "capex_reserve": "s_opex_growth_rate",
     }
-    # Phase E: Debt Service Y1+ becomes ``=SUM(s_loan_{i}_annual_pi, ...)``
-    # over the PMT-eligible loan named ranges so an LP changing principal
-    # or rate on the Debt Schedule sees the Pro Forma debt service flow.
-    # Only meaningful when the profile renders Debt Schedule AND at least
-    # one ``pi``-carry loan with rate + principal exists. Y0 stays at the
-    # engine value (construction-phase debt service often differs from the
-    # stabilized PMT). Approximation caveat: assumes the PMT loans are
-    # active in every year of the chain — fine for the common
-    # single-perm-debt stack; over-states debt service in years where a
-    # perm loan hasn't funded yet on a construction-to-perm stack.
     _capital_modules: list[CapitalModule] = ctx["capital_modules"]
     _profile = ctx.get("_profile")
     _pmt_indices = (
@@ -2355,69 +2331,22 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
         if _profile in {"internal", "lender"}
         else []
     )
-    # Loans whose Debt Schedule row registered an
-    # ``s_loan_<n>_perm_origination_month`` cell. PI contributions for
-    # these loans are additionally gated on the year being past perm
-    # origination — closes the construction-to-perm overstatement gap
-    # called out below.
     _perm_gated_loan_idxs: set[int] = (
         set(_perm_origination_loan_idxs(ctx).keys())
         if _profile in {"internal", "lender"}
         else set()
     )
 
-    # Phase 2: Y1 Gross Revenue + Y1 OpEx become formulas referencing
-    # Assumptions Block F / G named cells. LP edits to a stream's rent
-    # or an OpEx line's annual amount now ripple forward via the Y2+
-    # growth chain that already exists. Y0 (pre-op) stays at engine
-    # value — construction-phase gross/opex are governed by the
-    # cashflow engine, not the stabilized inputs.
     _rev_slug_list: list[str] = list(_all_revenue_slugs(ctx).values())
     _opex_slug_list: list[str] = list(_all_opex_slugs(ctx).values())
 
     def _gross_revenue_y1_formula() -> str | None:
-        """SUM of every stream's Y1 monthly cell × 12.
-
-        Returns None when no streams exist (defensive — Pro Forma still
-        shows engine value, which will be 0 anyway). Wrapped in
-        parentheses so the ``*12`` annualization applies to the whole
-        SUM rather than only the last term.
-        """
         if not _rev_slug_list:
             return None
         refs = ",".join(f"s_rev_{s}_y1_monthly" for s in _rev_slug_list)
         return f"=SUM({refs})*12"
 
-    def _opex_y1_formula() -> str | None:
-        """SUM of every OpEx line's annual cell."""
-        if not _opex_slug_list:
-            return None
-        refs = ",".join(f"s_opex_{s}_annual" for s in _opex_slug_list)
-        return f"=SUM({refs})"
-
     def _debt_service_formula_for_year(y: int) -> str | None:
-        """Per-year Debt Service SUM, gated by term + perm origination.
-
-        For year Y (1-indexed), each PI loan contributes its annual P&I
-        only when both conditions hold:
-
-          1. Loan's hold term covers the end of the year
-             (``s_loan_{i}_term_months >= Y*12``) — a 10-year hold loan
-             drops out of the SUM starting in Y11 instead of overstating
-             debt service forever.
-
-          2. Year-end is past perm origination
-             (``Y*12 >= s_loan_{i}_perm_origination_month``) — for
-             construction-to-perm loans, PI doesn't accrue during the
-             construction window. Skipped for loans without a registered
-             perm cell (pure-perm loans, single-project workbooks, or
-             pure-acquisition scenarios) — those keep the legacy
-             term-only gate.
-
-        Loans whose term cell is em-dash / blank fail the >= test
-        silently and contribute 0, which is the safe graceful-degradation
-        outcome.
-        """
         if not _pmt_indices:
             return None
         year_end_months = y * 12
@@ -2435,30 +2364,104 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
                     f"s_loan_{i}_annual_pi,0)"
                 )
         return "=" + "+".join(terms)
-    # Track each engine-value row's coord so derived formulas can reference
-    # the actual cells. col=2 is Y0; each year_cols entry adds one column.
+
+    # col C (index 3) = Y0; col D (4) = Y1; named cells at Y1 use col=4
     field_row: dict[str, int] = {}
+
+    _projects_list = ctx.get("projects") or []
+    _streams_by_project = ctx.get("income_streams") or {}
+    _expense_lines_by_project = ctx.get("expense_lines") or {}
+
+    def _emit_project_bullet_rows(slug_map: dict, items_by_project: dict,
+                                   get_label, get_y1_formula, get_yn_formula) -> None:
+        """Emit per-project grouped bullet rows; merge col A with project name."""
+        nonlocal cur_row
+        for project in _projects_list:
+            proj_items = [
+                (slug_map.get(item.id), get_label(item))
+                for item in items_by_project.get(project.id, [])
+                if slug_map.get(item.id) is not None
+            ]
+            if not proj_items:
+                continue
+            proj_first_row = cur_row + 1
+            for slug, item_label in proj_items:
+                cur_row += 1
+                ws.cell(row=cur_row, column=2,
+                        value=f"   • {item_label}").font = FONT_HINT
+                for co, _year in enumerate(year_cols):
+                    ci = 3 + co
+                    if co == 0:
+                        cell = ws.cell(row=cur_row, column=ci, value=None)
+                    elif co == 1:
+                        cell = ws.cell(row=cur_row, column=ci,
+                                       value=get_y1_formula(slug))
+                    else:
+                        prev_col = get_column_letter(ci - 1)
+                        cell = ws.cell(row=cur_row, column=ci,
+                                       value=get_yn_formula(slug, prev_col, cur_row))
+                    cell.number_format = ACCOUNTING
+                    cell.font = FONT_HINT
+                    cell.alignment = ALIGN_RIGHT
+            proj_last_row = cur_row
+            ws.merge_cells(start_row=proj_first_row, start_column=1,
+                            end_row=proj_last_row, end_column=1)
+            plbl = ws.cell(row=proj_first_row, column=1,
+                           value=project.name or "Project")
+            plbl.font = FONT_HINT
+            plbl.alignment = ALIGN_WRAP
 
     cur_row = 3
     for label, field, range_name in rows:
-        ws.cell(row=cur_row, column=1, value=label).font = FONT_LABEL
+        # ── Operating expenses: bullets FIRST, then SUM total ─────────────
+        if field == "operating_expenses" and _opex_slug_list:
+            opex_slug_map = _all_opex_slugs(ctx)
+            first_opex_bullet = cur_row + 1
+            _emit_project_bullet_rows(
+                slug_map=opex_slug_map,
+                items_by_project=_expense_lines_by_project,
+                get_label=lambda ln: ln.label or "Operating Expense",
+                get_y1_formula=lambda slug: f"=s_opex_{slug}_annual",
+                get_yn_formula=lambda slug, pc, r: f"={pc}{r}*(1+s_opex_{slug}_escalation_pct)",
+            )
+            last_opex_bullet = cur_row
+            cur_row += 1
+            ws.cell(row=cur_row, column=2, value=label).font = FONT_LABEL
+            field_row[field] = cur_row
+            for col_offset, year in enumerate(year_cols):
+                col_idx = 3 + col_offset
+                col_letter = get_column_letter(col_idx)
+                if first_opex_bullet <= last_opex_bullet:
+                    cell = ws.cell(row=cur_row, column=col_idx,
+                                   value=f"=SUM({col_letter}{first_opex_bullet}:{col_letter}{last_opex_bullet})")
+                else:
+                    v = annual.get(year, {}).get(field, Decimal(0))
+                    cell = ws.cell(row=cur_row, column=col_idx,
+                                   value=_to_excel_number(v))
+                cell.number_format = ACCOUNTING
+                cell.font = FONT_VALUE
+                cell.alignment = ALIGN_RIGHT
+            if range_name and year_cols:
+                registry.register_range(range_name, ws.title, cur_row, cur_row,
+                                         col=3, end_col=2 + len(year_cols))
+            if len(year_cols) >= 2:
+                registry.register("s_y1_opex", ws.title, cur_row, 4)
+            cur_row += 1
+            continue
+
+        # ── Normal row emission ────────────────────────────────────────────
+        ws.cell(row=cur_row, column=2, value=label).font = FONT_LABEL
         field_row[field] = cur_row
         derived = _DERIVED_FORMULA_FIELDS.get(field)
         growth_name = _GROWTH_CHAIN_FIELDS.get(field)
         for col_offset, year in enumerate(year_cols):
-            col_idx = 2 + col_offset
+            col_idx = 3 + col_offset
             if derived:
-                # Build per-year formula like ``=B3+B4`` referencing the
-                # corresponding column on the operand rows. Operand rows
-                # are guaranteed to be written before any derived row
-                # because the rows table orders inputs before derivations.
                 operands: list[str] = []
                 for spec in derived:
                     sign, operand_field = spec[0], spec[1:]
                     operand_row = field_row.get(operand_field)
                     if operand_row is None:
-                        # Defensive: operand not yet written. Fall back to
-                        # engine value so we don't emit a broken formula.
                         operands = []
                         break
                     col_letter = get_column_letter(col_idx)
@@ -2468,208 +2471,80 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
                     cell = ws.cell(row=cur_row, column=col_idx, value=formula)
                 else:
                     value = annual.get(year, {}).get(field, Decimal(0))
-                    cell = ws.cell(
-                        row=cur_row, column=col_idx,
-                        value=_to_excel_number(value),
-                    )
+                    if field == "vacancy_loss":
+                        value = -value
+                    cell = ws.cell(row=cur_row, column=col_idx,
+                                   value=_to_excel_number(value))
             elif (
                 field == "debt_service"
                 and _pmt_indices
                 and col_offset >= 1
             ):
-                # Phase E: Y2+ debt service = SUM of per-loan annual P&I
-                # named ranges, gated by each loan's term_months so loans
-                # past their hold term drop out instead of overstating.
                 ds_formula = _debt_service_formula_for_year(year)
-                cell = ws.cell(
-                    row=cur_row, column=col_idx, value=ds_formula,
-                )
+                cell = ws.cell(row=cur_row, column=col_idx, value=ds_formula)
             elif field == "asset_mgmt_fee":
-                # Phase C: Asset Mgmt Fee = -EGI * s_asset_mgmt_fee, every
-                # year. IFERROR guards a missing s_asset_mgmt_fee gracefully.
                 egi_r = field_row.get("effective_gross_income")
                 if egi_r is not None:
                     col_letter = get_column_letter(col_idx)
-                    formula = (
-                        f"=IFERROR(-{col_letter}{egi_r}*s_asset_mgmt_fee,0)"
-                    )
+                    formula = f"=IFERROR(-{col_letter}{egi_r}*s_asset_mgmt_fee,0)"
                     cell = ws.cell(row=cur_row, column=col_idx, value=formula)
                 else:
-                    cell = ws.cell(
-                        row=cur_row, column=col_idx,
-                        value=_to_excel_number(Decimal(0)),
-                    )
+                    cell = ws.cell(row=cur_row, column=col_idx,
+                                   value=_to_excel_number(Decimal(0)))
             elif (
                 field == "gross_revenue"
                 and col_offset == 1
                 and _gross_revenue_y1_formula() is not None
                 and Decimal(annual.get(year, {}).get("gross_revenue", 0) or 0) > 0
             ):
-                # Phase 2: Y1 Gross Revenue = SUM(Block F y1_monthly cells) * 12,
-                # but only when the engine shows Y1 is operationally active
-                # (gross_revenue > 0). When Y1 is still in a construction
-                # phase the engine returns 0; overriding with the stabilized
-                # input formula would misrepresent phase semantics, so we
-                # keep the engine seed (the growth chain picks up at the
-                # first stabilized year via the Y2+ branch).
-                cell = ws.cell(
-                    row=cur_row, column=col_idx,
-                    value=_gross_revenue_y1_formula(),
-                )
-            elif (
-                field == "operating_expenses"
-                and col_offset == 1
-                and _opex_y1_formula() is not None
-                and Decimal(annual.get(year, {}).get("operating_expenses", 0) or 0) > 0
-            ):
-                # Phase 2: Y1 OpEx = SUM(Block G annual cells), same
-                # phase-gating contract as gross_revenue above — engine
-                # value wins when Y1 is pre-operational.
-                cell = ws.cell(
-                    row=cur_row, column=col_idx,
-                    value=_opex_y1_formula(),
-                )
+                cell = ws.cell(row=cur_row, column=col_idx,
+                               value=_gross_revenue_y1_formula())
             elif growth_name and col_offset >= 2:
-                # Y2+ for growth-chain fields: reference the prior-year
-                # cell on the same row and multiply by (1 + growth). Y0
-                # (pre-op) keeps engine values as the chain's seed; Y1
-                # is now also formula-driven via the input-reference
-                # branches above (gross_revenue, operating_expenses).
                 prev_col = get_column_letter(col_idx - 1)
                 formula = f"={prev_col}{cur_row}*(1+{growth_name})"
                 cell = ws.cell(row=cur_row, column=col_idx, value=formula)
             else:
                 value = annual.get(year, {}).get(field, Decimal(0))
-                cell = ws.cell(
-                    row=cur_row, column=col_idx,
-                    value=_to_excel_number(value),
-                )
+                if field == "vacancy_loss":
+                    value = -value
+                cell = ws.cell(row=cur_row, column=col_idx,
+                               value=_to_excel_number(value))
             cell.number_format = ACCOUNTING
             cell.font = FONT_VALUE
             cell.alignment = ALIGN_RIGHT
         if range_name and year_cols:
             registry.register_range(
-                range_name,
-                ws.title,
-                cur_row,
-                cur_row,
-                col=2,
-                end_col=1 + len(year_cols),
+                range_name, ws.title, cur_row, cur_row,
+                col=3, end_col=2 + len(year_cols),
             )
-        # Phase 3: emit one indented breakout row per IncomeStream
-        # directly below the Gross Revenue total, mirroring the OpEx
-        # breakout block. Y0 blank (construction-phase revenue is
-        # engine-governed). Y1 = the stream's `s_rev_<slug>_y1_monthly`
-        # × 12, Y2+ = prior-year × (1 + per-stream
-        # `s_rev_<slug>_escalation_pct`). Per-stream escalation so a
-        # rent-controlled 1BR and market-rate 2BR can ramp at their own
-        # rates instead of collapsing onto `s_revenue_growth_rate`.
-        if field == "gross_revenue" and _rev_slug_list:
-            rev_streams = _all_revenue_streams_ordered(ctx)
-            rev_slug_map = _all_revenue_slugs(ctx)
-            for stream in rev_streams:
-                slug = rev_slug_map.get(stream.id)
-                if slug is None:
-                    continue
-                cur_row += 1
-                label = f"   • {stream.label or 'Income Stream'}"
-                ws.cell(row=cur_row, column=1, value=label).font = FONT_HINT
-                for col_offset, _year in enumerate(year_cols):
-                    col_idx = 2 + col_offset
-                    if col_offset == 0:
-                        cell = ws.cell(row=cur_row, column=col_idx, value=None)
-                    elif col_offset == 1:
-                        cell = ws.cell(
-                            row=cur_row, column=col_idx,
-                            value=f"=s_rev_{slug}_y1_monthly*12",
-                        )
-                    else:
-                        prev_col = get_column_letter(col_idx - 1)
-                        cell = ws.cell(
-                            row=cur_row, column=col_idx,
-                            value=(
-                                f"={prev_col}{cur_row}"
-                                f"*(1+s_rev_{slug}_escalation_pct)"
-                            ),
-                        )
-                    cell.number_format = ACCOUNTING
-                    cell.font = FONT_HINT
-                    cell.alignment = ALIGN_RIGHT
-        # Phase B follow-up: expose Y1 OpEx as a workbook-scoped name so
-        # the S&U Operating Reserve UseLine formula resolves.
-        if field == "operating_expenses" and len(year_cols) >= 2:
-            registry.register("s_y1_opex", ws.title, cur_row, 3)
-        # Phase 4 completion: expose Y1 Gross Revenue + Y1 NOI cells as
-        # workbook-scoped names so UW Summary's Combined Stabilized NOI
-        # (and any future input-derived KPI) can reference the actual
-        # formula chain — Block F/G edits ripple through Pro Forma Y1 →
-        # these names → downstream KPIs.
+        # Named cell registrations before bullet emission (cur_row = total row)
         if field == "gross_revenue" and len(year_cols) >= 2:
-            registry.register("s_pf_gross_revenue_y1", ws.title, cur_row, 3)
+            registry.register("s_pf_gross_revenue_y1", ws.title, cur_row, 4)
         if field == "noi" and len(year_cols) >= 2:
-            registry.register("s_pf_noi_y1", ws.title, cur_row, 3)
+            registry.register("s_pf_noi_y1", ws.title, cur_row, 4)
         if field == "debt_service" and len(year_cols) >= 2:
-            registry.register("s_pf_debt_service_y1", ws.title, cur_row, 3)
-        # Phase 3: emit one indented breakout row per OpEx line directly
-        # below the Operating Expenses total. Each row references the
-        # corresponding Block G cell so an LP can trace any single
-        # expense back to its input — and edit any one of them to see
-        # the total row (formula-driven since Phase 2) follow. Total row
-        # itself is left untouched; this is a transparency block. Y0
-        # stays blank because construction-phase OpEx is governed by
-        # the engine, not these stabilized inputs.
-        if field == "operating_expenses" and _opex_slug_list:
-            opex_lines = _all_opex_lines_ordered(ctx)
-            opex_slug_map = _all_opex_slugs(ctx)
-            for line in opex_lines:
-                slug = opex_slug_map.get(line.id)
-                if slug is None:
-                    continue
-                cur_row += 1
-                label = f"   • {line.label or 'Operating Expense'}"
-                ws.cell(row=cur_row, column=1, value=label).font = FONT_HINT
-                for col_offset, _year in enumerate(year_cols):
-                    col_idx = 2 + col_offset
-                    if col_offset == 0:
-                        # Y0 blank — construction-phase OpEx differs from
-                        # stabilized inputs.
-                        cell = ws.cell(row=cur_row, column=col_idx, value=None)
-                    elif col_offset == 1:
-                        cell = ws.cell(
-                            row=cur_row, column=col_idx,
-                            value=f"=s_opex_{slug}_annual",
-                        )
-                    else:
-                        prev_col = get_column_letter(col_idx - 1)
-                        cell = ws.cell(
-                            row=cur_row, column=col_idx,
-                            value=(
-                                f"={prev_col}{cur_row}"
-                                f"*(1+s_opex_{slug}_escalation_pct)"
-                            ),
-                        )
-                    cell.number_format = ACCOUNTING
-                    cell.font = FONT_HINT
-                    cell.alignment = ALIGN_RIGHT
-        # Phase D follow-up: expose the exit-year NOI cell (last column
-        # of the NOI row) so the UW Summary Exit Cap Value formula can
-        # reference a single named cell instead of duplicating the
-        # ``last 12 months of NOI`` aggregation engine-side.
+            registry.register("s_pf_debt_service_y1", ws.title, cur_row, 4)
         if field == "noi" and year_cols:
-            exit_col = 1 + len(year_cols)
+            exit_col = 2 + len(year_cols)
             registry.register("s_exit_year_noi", ws.title, cur_row, exit_col)
+        # Revenue bullet rows grouped by project with merged col A label
+        if field == "gross_revenue" and _rev_slug_list:
+            rev_slug_map = _all_revenue_slugs(ctx)
+            _emit_project_bullet_rows(
+                slug_map=rev_slug_map,
+                items_by_project=_streams_by_project,
+                get_label=lambda s: s.label or "Income Stream",
+                get_y1_formula=lambda slug: f"=s_rev_{slug}_y1_monthly*12",
+                get_yn_formula=lambda slug, pc, r: f"={pc}{r}*(1+s_rev_{slug}_escalation_pct)",
+            )
         cur_row += 1
 
-    # OER (Operating Expense Ratio) = OpEx / EGI per year. Standard CRE
-    # operating-efficiency metric — typical multifamily targets 35-45%; a
-    # number above 50% is a yellow flag for the LP. Rendered as a derived
-    # ratio row immediately below CapEx Reserve, before the NOI line.
-    # Phase B: formula-driven so OpEx growth-chain edits flow into OER.
-    ws.cell(row=cur_row, column=1, value="OER (OpEx ÷ EGI)").font = FONT_LABEL
+    # OER (Operating Expense Ratio) = OpEx / EGI per year.
+    ws.cell(row=cur_row, column=2, value="OER (OpEx ÷ EGI)").font = FONT_LABEL
     opex_r = field_row.get("operating_expenses")
     egi_r = field_row.get("effective_gross_income")
     for col_offset, _year in enumerate(year_cols):
-        col_idx = 2 + col_offset
+        col_idx = 3 + col_offset
         if opex_r is not None and egi_r is not None:
             col_letter = get_column_letter(col_idx)
             formula = f"=IFERROR({col_letter}{opex_r}/{col_letter}{egi_r},\"\")"
@@ -2682,15 +2557,10 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
     if year_cols:
         registry.register_range(
             "r_uw_oer", ws.title, cur_row, cur_row,
-            col=2, end_col=1 + len(year_cols),
+            col=3, end_col=2 + len(year_cols),
         )
     cur_row += 1
 
-    # Revenue + OpEx breakouts: separate tables driven by line items.
-    # Category-aware aggregation — Revenue from `income` line items
-    # (per-stream labels, Option C: same label across projects = one row),
-    # OpEx from `expense` line items (per-category labels). Capital events
-    # show on the Underwriting Cash Flow sheet, not here.
     by_category = _aggregate_scenario_line_items_by_category(cash_flow_items)
 
     cur_row += 1
@@ -4339,6 +4209,22 @@ def _build_project_sheet(
     write_proj_series("Debt Service", debt_series, f"r_p{project_idx}_cf_debt_service")
     write_proj_series("Levered Cash Flow", ncf_series, f"r_p{project_idx}_cf_levered")
 
+    # Float earnings: T-Bond / money-market yield on reserve balances
+    _fe_raw = getattr(outputs, "float_earnings_series", None) if outputs else None
+    _float_series: dict[int, Decimal] = {}
+    if _fe_raw:
+        for _period_str, _fe_amt in (_fe_raw.get("found_money_periods") or {}).items():
+            try:
+                _fe_year = _period_to_year(int(_period_str))
+                _float_series[_fe_year] = (
+                    _float_series.get(_fe_year, Decimal(0))
+                    + Decimal(str(_fe_amt or 0))
+                )
+            except Exception:
+                pass
+    if _float_series:
+        write_proj_series("Float Earnings", _float_series, f"r_p{project_idx}_cf_float_earnings")
+
     # V2-B: Unlevered = engine NCF + DS (matches IRR helper path).
     # Cumulative = running sum of NCF (capital events already inside NCF
     # via engine invariant; adding them separately would double-count).
@@ -5290,15 +5176,14 @@ def _emit_phase_plan_block(
     start_row: int,
 ) -> int:
     """Emit the per-project Phase Plan block onto ``ws`` starting at
-    ``start_row``. Registers ``p{idx}_phase_*_{start,end,duration}_month``,
-    ``p{idx}_perm_origination_month`` (when construction-side phases exist),
-    and ``p{idx}_total_horizon_months``. Returns the next free row.
+    ``start_row``. Registers ``p{idx}_perm_origination_month`` (when
+    construction-side phases exist) and ``p{idx}_total_horizon_months``.
+    Returns the next free row.
 
-    Single source of truth for both call sites: per-project sheet
-    (``_build_project_sheet``) for multi-project scenarios, and the
-    Assumptions sheet (``_build_assumptions``) for single-project
-    scenarios where the per-project sheet is suppressed.
+    Table layout: Phase | Start | Duration (days) | Duration (months)
     """
+    import calendar as _calendar
+
     milestones_by_project: dict = ctx.get("milestones") or {}
     project_milestones = milestones_by_project.get(project.id, [])
     scenario_obj = ctx.get("scenario")
@@ -5318,43 +5203,62 @@ def _emit_phase_plan_block(
     if not phase_windows:
         return start_row
 
+    # Resolve project reference date (month 1 anchor) from milestones
+    ref_date = None
+    if project_milestones:
+        ms_map = {m.id: m for m in project_milestones}
+        dated = sorted(
+            (m.computed_start(ms_map) for m in project_milestones),
+            key=lambda d: d or _date.max,
+        )
+        ref_date = next((d for d in dated if d is not None), None)
+
+    def _add_months(d: _date, months: int) -> _date:
+        m = d.month - 1 + months
+        y = d.year + m // 12
+        mo = m % 12 + 1
+        return _date(y, mo, min(d.day, _calendar.monthrange(y, mo)[1]))
+
     cur = start_row
-    section_label(ws, cur + 1, "Phase Plan (months)", span_cols=2)
+    section_label(ws, cur + 1, "Phase Plan", span_cols=4)
     cur += 2
+    header_row(ws, cur, ["Phase", "Start", "Days", "Months"])
+    cur += 1
+
+    from openpyxl.utils import get_column_letter as _gcl
     for window in phase_windows:
-        phase_name = window.period_type.value
-        kv_row(
-            ws, cur, f"  {phase_name} — start",
-            window.start_month,
-            name=f"p{project_idx}_phase_{phase_name}_start_month",
-            registry=registry, fmt=INT_COMMA,
-        ); cur += 1
-        kv_row(
-            ws, cur, f"  {phase_name} — end",
-            window.end_month,
-            name=f"p{project_idx}_phase_{phase_name}_end_month",
-            registry=registry, fmt=INT_COMMA,
-        ); cur += 1
-        kv_row(
-            ws, cur, f"  {phase_name} — duration",
-            window.duration_months,
-            name=f"p{project_idx}_phase_{phase_name}_duration_months",
-            registry=registry, fmt=INT_COMMA,
-        ); cur += 1
+        phase_label = window.period_type.value.replace("_", " ").title()
+        if ref_date is not None:
+            start_dt = _add_months(ref_date, window.start_month - 1)
+            start_str = start_dt.strftime("%b %Y")
+        else:
+            start_str = f"M{window.start_month}"
+        duration_days = window.duration_months * 30
+        ws.cell(row=cur, column=1, value=phase_label).font = FONT_VALUE
+        ws.cell(row=cur, column=2, value=start_str).font = FONT_VALUE
+        c_days = ws.cell(row=cur, column=3, value=duration_days)
+        c_days.font = FONT_VALUE
+        c_days.number_format = INT_COMMA
+        c_mo = ws.cell(row=cur, column=4, value=float(window.duration_months))
+        c_mo.font = FONT_VALUE
+        c_mo.number_format = "0.0"
+        cur += 1
+
+    # Utility rows for named ranges consumed by Debt Schedule formulas
     perm_month = perm_origination_month(phase_windows)
     if perm_month is not None:
-        kv_row(
-            ws, cur, "Perm origination month",
-            perm_month,
-            name=f"p{project_idx}_perm_origination_month",
-            registry=registry, fmt=INT_COMMA,
-        ); cur += 1
-    kv_row(
-        ws, cur, "Total horizon (months)",
-        total_horizon_months(phase_windows),
-        name=f"p{project_idx}_total_horizon_months",
-        registry=registry, fmt=INT_COMMA,
-    ); cur += 1
+        ws.cell(row=cur, column=1, value="Perm origination month").font = FONT_HINT
+        c_pm = ws.cell(row=cur, column=2, value=perm_month)
+        c_pm.font = FONT_HINT
+        c_pm.number_format = INT_COMMA
+        registry.register(f"p{project_idx}_perm_origination_month", ws.title, cur, 2)
+        cur += 1
+    ws.cell(row=cur, column=1, value="Total horizon (months)").font = FONT_HINT
+    c_th = ws.cell(row=cur, column=2, value=total_horizon_months(phase_windows))
+    c_th.font = FONT_HINT
+    c_th.number_format = INT_COMMA
+    registry.register(f"p{project_idx}_total_horizon_months", ws.title, cur, 2)
+    cur += 1
     return cur
 
 
@@ -6043,6 +5947,11 @@ def _build_su_sheet(
     junctions: list[CapitalModuleProject] = ctx["junctions"]
     milestones_by_project: dict = ctx.get("milestones", {})
 
+    # Pre-index junctions by project for per-project companion source blocks
+    junctions_by_project: dict = {}
+    for _j in junctions:
+        junctions_by_project.setdefault(_j.project_id, []).append(_j)
+
     # Slice 3: auto Acquisition Fee rows persist with cost_category="soft"
     # (engine convention) but the LP expects them in the Acquisition cost
     # section — the fee IS part of the acquisition spend, not a soft cost
@@ -6165,7 +6074,39 @@ def _build_su_sheet(
         cell.number_format = ACCOUNTING
         cell.font = FONT_LABEL
         _proj_total_rows.append(line)
-        line += 2
+        line += 1
+
+        # Companion Sources for this project (junction-scoped amounts)
+        proj_junctions = junctions_by_project.get(pid, [])
+        if proj_junctions:
+            ws.cell(row=line, column=1, value="  Sources").font = FONT_LABEL
+            line += 1
+            _proj_src_refs: list[str] = []
+            for _pj in proj_junctions:
+                _pmod = next(
+                    (m for m in capital_modules if m.id == _pj.capital_module_id), None
+                )
+                if _pmod is None:
+                    continue
+                _pamt = _coerce_decimal(_pj.amount or 0)
+                ws.cell(
+                    row=line, column=1,
+                    value=f"    {_pmod.label or _funder_type_label(_pmod)}",
+                ).font = FONT_HINT
+                _pc = ws.cell(row=line, column=2, value=_to_excel_number(_pamt))
+                _pc.number_format = ACCOUNTING
+                _pc.font = FONT_HINT
+                _proj_src_refs.append(f"B{line}")
+                line += 1
+            if _proj_src_refs:
+                _src_sum = "=" + "+".join(_proj_src_refs)
+                ws.cell(row=line, column=1, value=f"  Total Sources P{idx}").font = FONT_LABEL
+                _sc = ws.cell(row=line, column=2, value=_src_sum)
+                _sc.number_format = ACCOUNTING
+                _sc.font = FONT_LABEL
+                line += 1
+
+        line += 1  # blank between projects
 
     # ── Category summary (all projects) ───────────────────────────────────
     section_label(ws, line, "Category Summary (All Projects)", span_cols=2)
