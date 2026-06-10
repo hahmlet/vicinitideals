@@ -33,6 +33,7 @@ _RESERVE_LABELS = {
     "Acquisition Interest Reserve",
     "Lease-Up Reserve",
     "Operating Deficit Reserve",       # reserves-spec-align Slice 4
+    "Cash Flow Support Reserve",       # auto-upserted for non-DSCR-bound insolvent deals
     "Capitalized Construction Interest",
 }
 
