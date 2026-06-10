@@ -36,6 +36,8 @@ def compute_period_draw_inflow(
     balance_only_labels: set[str],
     use_line_phase_map: dict[str, set[Any]],
     already_drawn_reserves: set[str] | None = None,
+    use_line_spread_months: dict | None = None,
+    use_line_spread_last_phase: dict | None = None,
 ) -> Decimal:
     """Return total capital drawn inflow for this period.
 
@@ -72,12 +74,24 @@ def compute_period_draw_inflow(
             # Regular uses: draw matches outflow timing
             timing = str(getattr(ul, "timing_type", "first_day")).replace("UseLineTiming.", "")
             if timing in ("spread", "spread_across_range"):
-                n = max(phase.months, 1)
-                monthly = _q(amt / Decimal(str(n)))
-                if month_index == n - 1:
-                    total += amt - _q(monthly * Decimal(str(n - 1)))
+                total_n_override = (use_line_spread_months or {}).get(ul.id)
+                if total_n_override:
+                    # Multi-phase spread: divide by total months across all active phases
+                    monthly = _q(amt / Decimal(str(total_n_override)))
+                    last_info = (use_line_spread_last_phase or {}).get(ul.id)
+                    if (last_info and phase.period_type == last_info[0]
+                            and month_index == last_info[1] - 1):
+                        total += amt - _q(monthly * Decimal(str(total_n_override - 1)))
+                    else:
+                        total += monthly
                 else:
-                    total += monthly
+                    # Single-phase / legacy: divide by current phase months
+                    n = max(phase.months, 1)
+                    monthly = _q(amt / Decimal(str(n)))
+                    if month_index == n - 1:
+                        total += amt - _q(monthly * Decimal(str(n - 1)))
+                    else:
+                        total += monthly
             else:
                 # first_day / lump_sum: lump on month 0
                 if month_index == 0:

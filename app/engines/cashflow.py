@@ -797,6 +797,9 @@ async def _compute_project_cashflow(
     _ul_phase_overrides = _build_use_line_phase_overrides(
         use_lines, milestone_map, phases
     )
+    _ul_spread_months, _ul_spread_last_phase = _build_use_line_spread_months(
+        use_lines, _ul_phase_overrides, phases
+    )
 
     # Pre-compute monthly interest for IR-carry loans that extend through lease-up.
     # Passed to _compute_period so income covers interest in those months rather
@@ -826,6 +829,8 @@ async def _compute_project_cashflow(
                 income_mode=income_mode,
                 first_stab_period=_first_stab_period,
                 use_line_phase_overrides=_ul_phase_overrides,
+                use_line_spread_months=_ul_spread_months,
+                use_line_spread_last_phase=_ul_spread_last_phase,
                 ir_lease_up_interest=_ir_lease_up_monthly,
             )
 
@@ -974,6 +979,8 @@ async def _compute_project_cashflow(
                 balance_only_labels=_BALANCE_ONLY_LABELS,
                 use_line_phase_map=_USE_LINE_PHASE_MAP,
                 already_drawn_reserves=_drawn_reserve_labels,
+                use_line_spread_months=_ul_spread_months,
+                use_line_spread_last_phase=_ul_spread_last_phase,
             )
             if month_index == 0:
                 for _rul in use_lines:
@@ -1906,6 +1913,45 @@ def _build_use_line_phase_overrides(
                     continue
         overrides[ul.id] = from_types
     return overrides
+
+
+def _build_use_line_spread_months(
+    use_lines: list,
+    ul_phase_overrides: dict,
+    phases: list,
+) -> tuple[dict, dict]:
+    """Pre-compute total spread months for spread-timing UseLines that span multiple phases.
+
+    Returns:
+        spread_total_months: {ul_id: total_months_in_range}
+        spread_last_phase:   {ul_id: (last_period_type, last_phase_months)}
+
+    Only populated for use lines with milestone FK overrides that cover more than
+    one phase. Single-phase lines fall back to the per-phase logic in the engine.
+    """
+    total_months: dict = {}
+    last_phase: dict = {}
+    for ul in use_lines:
+        timing = str(getattr(ul, "timing_type", "first_day")).replace("UseLineTiming.", "")
+        if timing not in ("spread", "spread_across_range"):
+            continue
+        active_types = ul_phase_overrides.get(ul.id)
+        if not active_types:
+            continue
+        t = 0
+        last_pt = None
+        last_pm = 0
+        for p in phases:
+            if p.period_type in active_types:
+                t += p.months
+                last_pt = p.period_type
+                last_pm = p.months
+        if t > 0:
+            total_months[ul.id] = t
+            if last_pt is not None:
+                last_phase[ul.id] = (last_pt, last_pm)
+    return total_months, last_phase
+
 
 def _is_debt_cm(m: object) -> bool:
     """Return True if the capital module is a debt instrument (vehicle_type == "debt")."""
@@ -4096,6 +4142,8 @@ def _compute_period(
     first_stab_period: int = 0,
     project_id: UUID | None = None,
     use_line_phase_overrides: dict | None = None,
+    use_line_spread_months: dict | None = None,
+    use_line_spread_last_phase: dict | None = None,
     ir_lease_up_interest: Decimal = ZERO,
 ) -> dict[str, Any]:
     gross_revenue = ZERO
@@ -4440,15 +4488,23 @@ def _compute_period(
             if total_amount == ZERO:
                 continue
             ul_timing = str(getattr(ul, "timing_type", "first_day")).replace("UseLineTiming.", "")
-            if ul_timing == "spread":
-                # Divide evenly across all months of this phase
-                monthly_amount = _q(total_amount / Decimal(str(max(phase.months, 1))))
-                # Rounding remainder: add to last month
-                if month_index == phase.months - 1:
-                    monthly_amount = total_amount - _q(monthly_amount * Decimal(str(phase.months - 1)))
+            if ul_timing in ("spread", "spread_across_range"):
+                total_n_override = (use_line_spread_months or {}).get(ul.id)
+                if total_n_override:
+                    # Multi-phase spread: divide by total months across all active phases
+                    monthly_amount = _q(total_amount / Decimal(str(total_n_override)))
+                    last_info = (use_line_spread_last_phase or {}).get(ul.id)
+                    if (last_info and phase.period_type == last_info[0]
+                            and month_index == last_info[1] - 1):
+                        monthly_amount = total_amount - _q(monthly_amount * Decimal(str(total_n_override - 1)))
+                else:
+                    # Single-phase: divide by current phase months (legacy behaviour)
+                    monthly_amount = _q(total_amount / Decimal(str(max(phase.months, 1))))
+                    if month_index == phase.months - 1:
+                        monthly_amount = total_amount - _q(monthly_amount * Decimal(str(phase.months - 1)))
                 amount = monthly_amount
             else:
-                # first_day: lump sum on month 0 only
+                # first_day / lump_sum: lump on month 0 only
                 if month_index != 0:
                     continue
                 amount = total_amount
