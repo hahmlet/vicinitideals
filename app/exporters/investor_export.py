@@ -43,7 +43,9 @@ from app.exporters._workbook_helpers import (
     FILL_RAG_GREEN,
     FILL_RAG_RED,
     FILL_RAG_YELLOW,
+    FILL_SECTION,
     FONT_HERO_VALUE,
+    FONT_SECTION,
     FONT_HINT,
     FONT_INPUT,
     FONT_LABEL,
@@ -2373,14 +2375,18 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
     _expense_lines_by_project = ctx.get("expense_lines") or {}
 
     def _emit_project_bullet_rows(slug_map: dict, items_by_project: dict,
-                                   get_label, get_y1_formula, get_yn_formula) -> None:
-        """Emit per-project grouped bullet rows; merge col A with project name."""
+                                   get_label, get_y1_formula, get_yn_formula, *,
+                                   filter_fn=None) -> None:
+        """Emit per-project grouped bullet rows; merge col A with project name.
+        filter_fn(item) -> bool: skip item when returns False (used to hide zero rows).
+        """
         nonlocal cur_row
         for project in _projects_list:
             proj_items = [
                 (slug_map.get(item.id), get_label(item))
                 for item in items_by_project.get(project.id, [])
                 if slug_map.get(item.id) is not None
+                and (filter_fn is None or filter_fn(item))
             ]
             if not proj_items:
                 continue
@@ -2423,6 +2429,7 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
                 get_label=lambda ln: ln.label or "Operating Expense",
                 get_y1_formula=lambda slug: f"=s_opex_{slug}_annual",
                 get_yn_formula=lambda slug, pc, r: f"={pc}{r}*(1+s_opex_{slug}_escalation_pct)",
+                filter_fn=lambda ln: _coerce_decimal(ln.annual_amount or 0) > 0,
             )
             last_opex_bullet = cur_row
             cur_row += 1
@@ -2536,6 +2543,10 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
                 get_label=lambda s: s.label or "Income Stream",
                 get_y1_formula=lambda slug: f"=s_rev_{slug}_y1_monthly*12",
                 get_yn_formula=lambda slug, pc, r: f"={pc}{r}*(1+s_rev_{slug}_escalation_pct)",
+                filter_fn=lambda s: (
+                    _coerce_decimal(s.amount_per_unit_monthly or 0) > 0
+                    or _coerce_decimal(s.amount_fixed_monthly or 0) > 0
+                ),
             )
         cur_row += 1
 
@@ -5938,7 +5949,7 @@ def _build_su_sheet(
     # Slice 3: widen cols 3-6 so the Dev Fee Caps mini-block at the foot
     # of the sheet has room for max %, per-unit cap, absolute cap,
     # allowable $, and binding (✓/—).
-    set_widths(ws, [42, 22, 14, 14, 14, 12])
+    set_widths(ws, [30, 14, 4, 24, 14, 12])
 
     use_lines_by_project: dict = ctx.get("use_lines", {})
     projects: list[Project] = ctx["projects"]
@@ -5987,12 +5998,17 @@ def _build_su_sheet(
         pid = project.id
         uls = use_lines_by_project.get(pid, [])
 
-        section_label(ws, line, f"P{idx} — {project.name}", span_cols=2)
+        section_label(ws, line, f"P{idx} — {project.name}", span_cols=3)
+        _src_hdr = ws.cell(row=line, column=4, value="Sources")
+        _src_hdr.font = FONT_SECTION
+        _src_hdr.fill = FILL_SECTION
+        _src_hdr.alignment = ALIGN_LEFT
+        ws.merge_cells(start_row=line, start_column=4, end_row=line, end_column=5)
+        ws.cell(row=line, column=5).fill = FILL_SECTION
         line += 1
 
-        # Track per-project subtotal cells so Total Uses P{n} can SUM them
-        # (subtotals are not contiguous across categories, so use a list
-        # of cell refs rather than a single SUM range).
+        use_data_start = line
+
         proj_subtotal_refs: list[str] = []
 
         for cat in USE_COST_CATEGORIES:
@@ -6064,8 +6080,6 @@ def _build_su_sheet(
             proj_subtotal_refs.append(f"B{line}")
             line += 1
 
-        # Per-project Total Uses: formula summing this project's category
-        # subtotals (non-contiguous so list-of-refs rather than SUM range).
         proj_total_formula = (
             "=" + "+".join(proj_subtotal_refs) if proj_subtotal_refs else "=0"
         )
@@ -6074,39 +6088,35 @@ def _build_su_sheet(
         cell.number_format = ACCOUNTING
         cell.font = FONT_LABEL
         _proj_total_rows.append(line)
-        line += 1
 
-        # Companion Sources for this project (junction-scoped amounts)
-        proj_junctions = junctions_by_project.get(pid, [])
-        if proj_junctions:
-            ws.cell(row=line, column=1, value="  Sources").font = FONT_LABEL
-            line += 1
-            _proj_src_refs: list[str] = []
-            for _pj in proj_junctions:
-                _pmod = next(
-                    (m for m in capital_modules if m.id == _pj.capital_module_id), None
-                )
-                if _pmod is None:
-                    continue
-                _pamt = _coerce_decimal(_pj.amount or 0)
-                ws.cell(
-                    row=line, column=1,
-                    value=f"    {_pmod.label or _funder_type_label(_pmod)}",
-                ).font = FONT_HINT
-                _pc = ws.cell(row=line, column=2, value=_to_excel_number(_pamt))
-                _pc.number_format = ACCOUNTING
-                _pc.font = FONT_HINT
-                _proj_src_refs.append(f"B{line}")
-                line += 1
-            if _proj_src_refs:
-                _src_sum = "=" + "+".join(_proj_src_refs)
-                ws.cell(row=line, column=1, value=f"  Total Sources P{idx}").font = FONT_LABEL
-                _sc = ws.cell(row=line, column=2, value=_src_sum)
-                _sc.number_format = ACCOUNTING
-                _sc.font = FONT_LABEL
-                line += 1
+        # Sources in cols 4-5, parallel to uses starting from use_data_start;
+        # Total Sources on the same row as Total Uses P{n}.
+        from openpyxl.utils import get_column_letter as _gcl_su
+        _SRC_LBL, _SRC_AMT = 4, 5
+        _SRC_LETTER = _gcl_su(_SRC_AMT)
+        _src_line = use_data_start
+        _proj_src_refs: list[str] = []
+        for _pj in junctions_by_project.get(pid, []):
+            _pmod = next((m for m in capital_modules if m.id == _pj.capital_module_id), None)
+            if _pmod is None:
+                continue
+            ws.cell(row=_src_line, column=_SRC_LBL,
+                    value=_pmod.label or _funder_type_label(_pmod)).font = FONT_VALUE
+            _pc = ws.cell(row=_src_line, column=_SRC_AMT,
+                          value=_to_excel_number(_coerce_decimal(_pj.amount or 0)))
+            _pc.number_format = ACCOUNTING
+            _pc.font = FONT_VALUE
+            _pc.alignment = ALIGN_RIGHT
+            _proj_src_refs.append(f"{_SRC_LETTER}{_src_line}")
+            _src_line += 1
+        ws.cell(row=line, column=_SRC_LBL, value=f"Total Sources P{idx}").font = FONT_LABEL
+        _sc = ws.cell(row=line, column=_SRC_AMT,
+                      value="=" + "+".join(_proj_src_refs) if _proj_src_refs else "=0")
+        _sc.number_format = ACCOUNTING
+        _sc.font = FONT_LABEL
+        _sc.alignment = ALIGN_RIGHT
 
-        line += 1  # blank between projects
+        line += 2  # total-uses row + blank separator
 
     # ── Category summary (all projects) ───────────────────────────────────
     section_label(ws, line, "Category Summary (All Projects)", span_cols=2)
@@ -7123,7 +7133,8 @@ def _write_pf_table(
     _GROWTH_CHAIN_FIELDS: dict[str, str] = {
         "gross_revenue": "s_revenue_growth_rate",
         "operating_expenses": "s_opex_growth_rate",
-        "capex_reserve": "s_opex_growth_rate",
+        # capex_reserve excluded: engine applies expense_growth per period;
+        # anchoring at Y1=0 (construction-phase) would zero out all years.
     }
     field_row: dict[str, int] = {}
 
