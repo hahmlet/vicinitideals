@@ -7,7 +7,7 @@ Run once: uv run python app/scripts/backfill_unit_counts.py
 """
 import asyncio
 from sqlalchemy import select, func, update
-from app.database import AsyncSessionLocal
+from app.db import AsyncSessionLocal
 from app.models.deal import IncomeStream, OperationalInputs
 from app.models.project import Project
 
