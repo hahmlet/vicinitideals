@@ -1224,7 +1224,7 @@ async def _compute_project_cashflow(
     if (
         bank_account_proof is not None
         and bank_account_proof.get("is_solvent") is False
-        and (bank_account_proof.get("max_shortfall") or 0) > 0
+        and _to_decimal(bank_account_proof.get("max_shortfall") or 0) > ZERO
     ):
         _cfsr_binding = any(
             (m.source or {}).get("binding_constraint") in ("dscr", "ltv")
@@ -1232,7 +1232,7 @@ async def _compute_project_cashflow(
             if (m.source or {}).get("auto_size")
         )
         if not _cfsr_binding:
-            _cfsr_amt = _q(Decimal(str(bank_account_proof["max_shortfall"])))
+            _cfsr_amt = _q(_to_decimal(bank_account_proof["max_shortfall"]))
             _cfsr_existing = [ul for ul in use_lines if getattr(ul, "label", "") == "Cash Flow Support Reserve"]
             if _cfsr_existing:
                 _cfsr_existing[0].amount = _cfsr_amt
