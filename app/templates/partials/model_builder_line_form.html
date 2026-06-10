@@ -2679,11 +2679,9 @@ function prefillCarrySchedule(schedule, wrapper) {
     <label class="form-label">Start Position</label>
     <div style="display:flex;gap:6px;margin-top:4px">
       <button type="button" id="ms-btn-fixed"
-              class="btn btn-sm {% if _init_mode == 'fixed' %}btn-primary{% else %}btn-secondary{% endif %}"
-              onclick="_msModeSwitch('fixed')">📌 Fixed Date</button>
+              class="btn btn-sm {% if _init_mode == 'fixed' %}btn-primary{% else %}btn-secondary{% endif %}">📌 Fixed Date</button>
       <button type="button" id="ms-btn-rel"
-              class="btn btn-sm {% if _init_mode == 'relational' %}btn-primary{% else %}btn-secondary{% endif %}"
-              onclick="_msModeSwitch('relational')">→ Starts After</button>
+              class="btn btn-sm {% if _init_mode == 'relational' %}btn-primary{% else %}btn-secondary{% endif %}">→ Starts After</button>
     </div>
   </div>
   {% endif %}
@@ -2759,7 +2757,8 @@ function prefillCarrySchedule(schedule, wrapper) {
 <script>
 (function() {
   var isAnchor      = {{ 'true' if _is_anchor else 'false' }};
-  var triggerEndIso = {{ trigger_end_date | tojson }};  // ISO string or null
+  var triggerEndIso = {{ trigger_end_date | tojson }};
+  var msCurrentMode = {{ "'fixed'" if _init_mode == 'fixed' else "'relational'" }};
   var startEl  = document.getElementById('ms-start');
   var durEl    = document.getElementById('ms-duration');
   var offsetEl = document.getElementById('ms-offset');
@@ -2770,8 +2769,8 @@ function prefillCarrySchedule(schedule, wrapper) {
   }
   function updateEnd() {
     var dur = parseInt(durEl ? durEl.value : '0', 10) || 0;
-    var _effectiveAnchor = isAnchor || (typeof _msCurrentMode !== 'undefined' && _msCurrentMode === 'fixed');
-    if (_effectiveAnchor) {
+    var effectiveAnchor = isAnchor || msCurrentMode === 'fixed';
+    if (effectiveAnchor) {
       if (startEl && startEl.value && dur > 0) {
         var d = new Date(startEl.value + 'T00:00:00');
         d.setDate(d.getDate() + dur);
@@ -2780,7 +2779,6 @@ function prefillCarrySchedule(schedule, wrapper) {
         endEl.value = '—';
       }
     } else {
-      // Trigger mode: triggerEnd + offset + duration
       if (triggerEndIso && dur > 0) {
         var offset = parseInt(offsetEl ? offsetEl.value : '0', 10) || 0;
         var d = new Date(triggerEndIso + 'T00:00:00');
@@ -2791,32 +2789,32 @@ function prefillCarrySchedule(schedule, wrapper) {
       }
     }
   }
+  function msModeSwitch(mode) {
+    msCurrentMode = mode;
+    var fixedBlock = document.getElementById('ms-fixed-block');
+    var relBlock   = document.getElementById('ms-rel-block');
+    var fixedBtn   = document.getElementById('ms-btn-fixed');
+    var relBtn     = document.getElementById('ms-btn-rel');
+    var isFixed = (mode === 'fixed');
+    if (fixedBlock) fixedBlock.style.display = isFixed ? '' : 'none';
+    if (relBlock)   relBlock.style.display   = isFixed ? 'none' : '';
+    if (fixedBtn) { fixedBtn.classList.toggle('btn-primary', isFixed);  fixedBtn.classList.toggle('btn-secondary', !isFixed); }
+    if (relBtn)   { relBtn.classList.toggle('btn-primary', !isFixed);   relBtn.classList.toggle('btn-secondary', isFixed); }
+    var fixedInputs = fixedBlock ? fixedBlock.querySelectorAll('input,select') : [];
+    var relInputs   = relBlock   ? relBlock.querySelectorAll('input,select')   : [];
+    Array.from(fixedInputs).forEach(function(el){ el.disabled = !isFixed; });
+    Array.from(relInputs).forEach(function(el){   el.disabled = isFixed; });
+    updateEnd();
+  }
+  var fixedBtnEl = document.getElementById('ms-btn-fixed');
+  var relBtnEl   = document.getElementById('ms-btn-rel');
+  if (fixedBtnEl) fixedBtnEl.addEventListener('click', function() { msModeSwitch('fixed'); });
+  if (relBtnEl)   relBtnEl.addEventListener('click',   function() { msModeSwitch('relational'); });
   if (startEl)  startEl.addEventListener('change', updateEnd);
   if (durEl)    durEl.addEventListener('input',    updateEnd);
   if (offsetEl) offsetEl.addEventListener('input', updateEnd);
-  updateEnd();  // run once on load in case values already set
+  msModeSwitch(msCurrentMode);
 })();
-
-var _msCurrentMode = {{ "'fixed'" if _init_mode == 'fixed' else "'relational'" }};
-function _msModeSwitch(mode) {
-  _msCurrentMode = mode;
-  var fixedBlock = document.getElementById('ms-fixed-block');
-  var relBlock   = document.getElementById('ms-rel-block');
-  var fixedBtn   = document.getElementById('ms-btn-fixed');
-  var relBtn     = document.getElementById('ms-btn-rel');
-  var isFixed = (mode === 'fixed');
-  if (fixedBlock) fixedBlock.style.display = isFixed ? '' : 'none';
-  if (relBlock)   relBlock.style.display   = isFixed ? 'none' : '';
-  if (fixedBtn) { fixedBtn.classList.toggle('btn-primary', isFixed);  fixedBtn.classList.toggle('btn-secondary', !isFixed); }
-  if (relBtn)   { relBtn.classList.toggle('btn-primary', !isFixed);   relBtn.classList.toggle('btn-secondary', isFixed); }
-  var fixedInputs = fixedBlock ? fixedBlock.querySelectorAll('input,select') : [];
-  var relInputs   = relBlock   ? relBlock.querySelectorAll('input,select')   : [];
-  Array.from(fixedInputs).forEach(function(el){ el.disabled = !isFixed; });
-  Array.from(relInputs).forEach(function(el){   el.disabled = isFixed; });
-  if (typeof updateEnd === 'function') updateEnd();
-}
-// init on load
-(function(){ _msModeSwitch(_msCurrentMode); })();
 </script>
 
   <div class="form-actions">
