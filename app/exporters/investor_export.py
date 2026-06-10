@@ -6035,26 +6035,8 @@ def _build_su_sheet(
             for ul in cat_lines:
                 amt = _coerce_decimal(ul.amount or 0)
                 ws.cell(row=line, column=1, value=f"  {ul.label or ''}").font = FONT_VALUE
-                # Operating Reserve is a derived Use: months × MAX(Y1 OpEx,
-                # Y1 Debt Service) ÷ 12. Mirrors the cashflow engine
-                # `_auto_size_modules` rule (max of OpEx vs debt service
-                # carries N months of coverage on whichever obligation is
-                # larger). When the workbook includes a Pro Forma sheet
-                # (every profile that has S&U also has a Pro Forma) the
-                # Y1 OpEx + Y1 Debt Service cells are registered as
-                # ``s_y1_opex`` and ``s_pf_debt_service_y1`` so this formula
-                # resolves at open-time. Assumptions sheet supplies
-                # ``s_operating_reserve_months``.
                 label_norm = (ul.label or "").strip().lower()
-                if "operating reserve" in label_norm or label_norm == "op reserve":
-                    formula = (
-                        "=s_operating_reserve_months*"
-                        "MAX(s_y1_opex,s_pf_debt_service_y1)/12"
-                    )
-                    cell = ws.cell(row=line, column=2, value=formula)
-                    cell.number_format = ACCOUNTING
-                else:
-                    ws.cell(row=line, column=2, value=_to_excel_number(amt)).number_format = ACCOUNTING
+                ws.cell(row=line, column=2, value=_to_excel_number(amt)).number_format = ACCOUNTING
                 if (ul.label or "") in _BALANCE_ONLY_LABELS:
                     balance_only_refs.append(f"B{line}")
                 # Slice 1 (Export v3): name the ODR / CFSR cells so the
