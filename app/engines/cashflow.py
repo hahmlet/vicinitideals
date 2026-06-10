@@ -1197,14 +1197,11 @@ async def _compute_project_cashflow(
     }
 
     # ── Bank-account proof (validation only) ──────────────────────────────
-    # Per the reserves-spec-align design (§3 / spec critique #4), the
-    # bank-account proof is a sanity check on the new IR / ODR / OR reserve
-    # set — not the sizing path for a "Cash Flow Support Reserve" UseLine.
-    # The CFSR auto-upsert was removed in Slice 5b; Operating Deficit
-    # Reserve (Slice 4) is the engine's first-class home for the operating
-    # shortfall. Slice 5d will extend the proof with a Stabilization-anchor
-    # validator so an early-anchored Stabilization milestone surfaces as a
-    # deal-level error instead of being silently absorbed by OR.
+    # Bank-account proof.  When insolvency is detected and no debt module is
+    # bound by DSCR/LTV cap, the engine writes a Cash Flow Support Reserve
+    # use line equal to max_shortfall.  On the next recompute, that CFSR
+    # folds into total_uses so the bond grows to cover it.  For legitimately
+    # capped deals the insolvency is left intact as a user-visible gap signal.
     bank_account_proof = _run_bank_account_proof(
         cash_flow_rows=cash_flow_rows,
         use_lines=use_lines,
@@ -1220,6 +1217,35 @@ async def _compute_project_cashflow(
     # write — None when no proof window exists — so the column clears
     # stale data on deals that no longer model an operating phase.
     outputs.bank_account_proof = bank_account_proof
+
+    # CFSR auto-upsert: if bank proof shows insolvency and no auto-sized debt
+    # module is DSCR/LTV-bound, write a "Cash Flow Support Reserve" use line
+    # = max_shortfall.  Next recompute folds it into sizing and closes the gap.
+    if (
+        bank_account_proof is not None
+        and bank_account_proof.get("is_solvent") is False
+        and (bank_account_proof.get("max_shortfall") or 0) > 0
+    ):
+        _cfsr_binding = any(
+            (m.source or {}).get("binding_constraint") in ("dscr", "ltv")
+            for m in capital_modules
+            if (m.source or {}).get("auto_size")
+        )
+        if not _cfsr_binding:
+            _cfsr_amt = _q(Decimal(str(bank_account_proof["max_shortfall"])))
+            _cfsr_existing = [ul for ul in use_lines if getattr(ul, "label", "") == "Cash Flow Support Reserve"]
+            if _cfsr_existing:
+                _cfsr_existing[0].amount = _cfsr_amt
+                session.add(_cfsr_existing[0])
+            else:
+                session.add(UseLine(
+                    project_id=project.id,
+                    label="Cash Flow Support Reserve",
+                    phase="operation",
+                    amount=_cfsr_amt,
+                    cost_category="soft",
+                    timing_type="first_day",
+                ))
 
     # Persist float-earnings results so the UI can render the period-level
     # balance schedule + warnings without re-running compute. Always write —
@@ -2709,6 +2735,17 @@ async def _auto_size_debt_modules(
     _odr_amount = _odr_pool(streams, expense_lines, inputs, lease_up_months)
     if _odr_amount > ZERO:
         total_uses += _odr_amount
+
+    # Cash Flow Support Reserve — written by the prior bank-proof pass when
+    # the deal is insolvent and not DSCR/LTV-bound.  Balance-independent, so
+    # fold into total_uses directly (same pattern as ODR) so the bond covers
+    # it on the next compute iteration.
+    for _ul_cfsr in use_lines:
+        if getattr(_ul_cfsr, "label", "") == "Cash Flow Support Reserve":
+            _cfsr_prior = _to_decimal(getattr(_ul_cfsr, "amount", 0) or 0)
+            if _cfsr_prior > ZERO:
+                total_uses += _cfsr_prior
+            break
 
     # Phase B: new multi-debt path when debt_types is explicitly set on inputs.
     # Bridge loans (pre_development_loan, acquisition_loan, construction_loan, bridge)
