@@ -1238,7 +1238,10 @@ async def _compute_project_cashflow(
         _cfsr_amt = _q(_to_decimal(bank_account_proof["max_shortfall"]))
         _cfsr_existing = [ul for ul in use_lines if getattr(ul, "label", "") == "Cash Flow Support Reserve"]
         if _cfsr_existing:
-            _cfsr_existing[0].amount = _cfsr_amt
+            # Accumulate rather than replace so convergence is guaranteed in one
+            # pass: opening_cash gains the full shortfall, not half of it.
+            _cfsr_old = _q(_to_decimal(getattr(_cfsr_existing[0], "amount", 0) or 0))
+            _cfsr_existing[0].amount = _cfsr_old + _cfsr_amt
             session.add(_cfsr_existing[0])
         else:
             session.add(UseLine(

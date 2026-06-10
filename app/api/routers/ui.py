@@ -10441,6 +10441,19 @@ async def deal_setup_wizard_complete(
         _cc_lbl  = _cc_mod["label"]
         _cc_phase = _APS_TO_PHASE.get(_cc_mod["active_phase_start"] or "", "pre_construction")
         for _proj in all_scenario_projects:
+            # Skip itemized stubs once the engine has written a TFC summary for
+            # this module+project.  Stubs are pre-compute scaffolding; once the
+            # engine's single "Total Finance Costs" row exists, re-creating
+            # stubs that the user deleted just creates noise.
+            _tfc_summary_exists = (await session.execute(
+                select(UseLine.id).where(
+                    UseLine.project_id == _proj.id,
+                    UseLine.label == f"{_cc_lbl} — Total Finance Costs",
+                    UseLine.is_auto_finance_cost == True,
+                ).limit(1)
+            )).scalar_one_or_none()
+            if _tfc_summary_exists is not None:
+                continue
             for _cost_name in _cost_names:
                 _full_cc_lbl = f"{_cc_lbl} — {_cost_name}"
                 _existing_cc = (await session.execute(
