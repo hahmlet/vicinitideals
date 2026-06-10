@@ -1226,7 +1226,12 @@ async def _compute_project_cashflow(
         and bank_account_proof.get("is_solvent") is False
         and _to_decimal(bank_account_proof.get("max_shortfall") or 0) > ZERO
     ):
-        _cfsr_binding = any(
+        # Only block CFSR when an explicit DSCR/LTV cap is configured AND binding.
+        # gap_fill deals always get CFSR — their binding_constraint may say "dscr"
+        # simply because negative NOI makes DSCR negative, not because the user
+        # set a cap.
+        _dsm = (inputs.debt_sizing_mode or "gap_fill") if inputs else "gap_fill"
+        _cfsr_binding = _dsm in ("dscr_capped", "dual_constraint") and any(
             (m.source or {}).get("binding_constraint") in ("dscr", "ltv")
             for m in capital_modules
             if (m.source or {}).get("auto_size")
