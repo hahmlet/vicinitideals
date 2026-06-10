@@ -1912,6 +1912,30 @@ def _build_use_line_phase_overrides(
                     overrides[ul.id] = _period_types_in_range(from_types, to_types, phases)
                     continue
         overrides[ul.id] = from_types
+
+    # Second pass: for first_day non-reserve use lines that have no FK override
+    # and whose phase string maps to multiple period_types, limit to the FIRST
+    # matching period_type in the phase plan.  This prevents double-firing when
+    # phase="operation" maps to {lease_up, stabilized} — the use should fire
+    # once at the start of lease_up, not again at the start of stabilized.
+    for ul in use_lines:
+        if ul.id in overrides:
+            continue
+        timing = str(getattr(ul, "timing_type", "first_day")).replace("UseLineTiming.", "")
+        if timing not in ("first_day", "lump_sum"):
+            continue
+        label = getattr(ul, "label", "")
+        if label in _BALANCE_ONLY_LABELS:
+            continue  # reserves intentionally re-draw at each phase activation
+        phase_key = str(getattr(ul, "phase", "") or "").replace("UseLinePhase.", "")
+        phase_types = _USE_LINE_PHASE_MAP.get(phase_key, set())
+        if len(phase_types) <= 1:
+            continue  # single period_type — no double-fire risk
+        for p in phases:
+            if p.period_type in phase_types:
+                overrides[ul.id] = {p.period_type}
+                break
+
     return overrides
 
 
