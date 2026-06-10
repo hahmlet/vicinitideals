@@ -7492,7 +7492,16 @@ async def handle_form_create_or_update(
             _src_amt_dec = Decimal(str(source_d.get("amount") or 0))
             _is_auto = bool(source_d.get("auto_size"))
             _primary_pid = project_id if project_id is not None else (default_project.id if default_project else None)
-            for _p in _all_projects:
+            # Project-specific vehicle types get one junction row (primary project only).
+            # Shared types (debt/equity/forgivable_loan) get a row per project so the
+            # source appears in every project's coverage list.
+            _PROJECT_SPECIFIC_VT = {"deferred_developer_fee", "grant", "float_earnings"}
+            _junc_projects = (
+                [_p for _p in _all_projects if _p.id == _primary_pid]
+                if _vehicle_type in _PROJECT_SPECIFIC_VT
+                else _all_projects
+            )
+            for _p in _junc_projects:
                 _amt = _src_amt_dec if (_p.id == _primary_pid) else Decimal("0")
                 session.add(_CMP_create(
                     capital_module_id=_cm_id,
