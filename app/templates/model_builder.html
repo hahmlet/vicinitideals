@@ -1970,20 +1970,14 @@ function submitCloneFrom(e) {
         <div style="max-width:360px;margin-top:8px;display:flex;flex-direction:column;gap:16px">
           <div>
             <label class="field-label" style="display:block;margin-bottom:6px">Start Date</label>
+            <input class="filter-input" type="date" id="wizard-anchor-date"
+                   {% if active_project_anchor_date is defined and active_project_anchor_date %}value="{{ active_project_anchor_date.isoformat() }}"{% endif %}
+                   style="width:100%;font-size:15px;padding:9px 12px">
             {% if active_project_anchor_date is defined and active_project_anchor_date %}
-            {# Project is anchored to a parent milestone — start date is derived,
-               not user-editable. Show the resolved date and parent context, but
-               still write the value into the hidden input the wizard JS reads. #}
-            <input type="hidden" id="wizard-anchor-date" value="{{ active_project_anchor_date.isoformat() }}">
-            <div class="filter-input" style="width:100%;font-size:15px;padding:9px 12px;background:var(--surface-alt,#f9fafb);color:var(--text-muted);cursor:not-allowed">
-              {{ active_project_anchor_date.strftime('%m/%d/%Y') }}
-            </div>
             <div style="font-size:12px;color:var(--text-muted);margin-top:6px">
-              Anchored to <strong>{{ active_project_anchor_parent.name if active_project_anchor_parent else 'parent project' }}</strong> — start shifts automatically when the parent milestone shifts. Edit the anchor offset on the parent project to change.
+              Currently anchored to <strong>{{ active_project_anchor_parent.name if active_project_anchor_parent else 'parent project' }}</strong>. Saving with a manual date will detach this project from that anchor.
             </div>
             {% else %}
-            <input class="filter-input" type="date" id="wizard-anchor-date"
-                   style="width:100%;font-size:15px;padding:9px 12px">
             <div style="font-size:12px;color:var(--text-muted);margin-top:6px">Fixed anchor — all other milestones position relative to this.</div>
             {% endif %}
           </div>

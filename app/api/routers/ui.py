@@ -9154,8 +9154,11 @@ async def timeline_wizard_submit(
         "close":          30,
     }
 
-    # Clear existing milestones for this project
+    # Clear existing milestones and detach any ProjectAnchor — user is setting
+    # a manual start date; they can re-anchor later via Timeline Anchors panel.
     await session.execute(sa_delete(Milestone).where(Milestone.project_id == project_id))
+    from app.models.project import ProjectAnchor as _PA_wiz
+    await session.execute(sa_delete(_PA_wiz).where(_PA_wiz.project_id == project_id))
     await session.flush()
 
     has_divestment = "divestment" in selected_types
