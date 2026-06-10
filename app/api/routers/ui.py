@@ -10331,12 +10331,16 @@ async def deal_setup_wizard_complete(
         other_inputs.debt_types = inputs.debt_types
         other_inputs.debt_structure = inputs.debt_structure
         other_inputs.debt_milestone_config = inputs.debt_milestone_config
-        # Sizing-policy fields are scenario-level too. Without them every
-        # non-default project silently falls back to gap-fill on compute,
-        # so DSCR caps don't bind and debt over-leverages without a gap.
-        other_inputs.debt_sizing_mode = inputs.debt_sizing_mode
-        other_inputs.construction_floor_pct = inputs.construction_floor_pct
-        other_inputs.operation_reserve_months = inputs.operation_reserve_months
+        # Sizing-policy fields default from the scenario when not yet set.
+        # Only propagate when the other project has no explicit value — this
+        # preserves per-project overrides (e.g. gap_fill on an arbitrage
+        # deal when the rest of the pool uses dual_constraint).
+        if other_inputs.debt_sizing_mode is None:
+            other_inputs.debt_sizing_mode = inputs.debt_sizing_mode
+        if other_inputs.construction_floor_pct is None:
+            other_inputs.construction_floor_pct = inputs.construction_floor_pct
+        if other_inputs.operation_reserve_months is None:
+            other_inputs.operation_reserve_months = inputs.operation_reserve_months
 
     # Create $0 Operating Reserve placeholder in Uses for every project
     # (populated at compute time). Multi-project deals each need their own.
