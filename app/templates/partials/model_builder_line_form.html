@@ -2758,7 +2758,7 @@ function prefillCarrySchedule(schedule, wrapper) {
 (function() {
   var isAnchor      = {{ 'true' if _is_anchor else 'false' }};
   var triggerEndIso = {{ trigger_end_date | tojson }};
-  var msCurrentMode = {{ "'fixed'" if _init_mode == 'fixed' else "'relational'" }};
+  var msCurrentMode = {{ _init_mode | tojson }};
   var startEl  = document.getElementById('ms-start');
   var durEl    = document.getElementById('ms-duration');
   var offsetEl = document.getElementById('ms-offset');
