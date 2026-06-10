@@ -154,8 +154,11 @@ async def _get_use_line_or_404(
 ) -> UseLine:
     await _get_deal_or_404(session, model_id)
     use_line = await session.get(UseLine, use_line_id)
-    project = await _get_default_project_for_deal(session, model_id)
-    if use_line is None or use_line.project_id != project.id:
+    if use_line is None:
+        raise HTTPException(status_code=404, detail="Use line not found")
+    from app.models.project import Project as _ULProject
+    _ul_proj = await session.get(_ULProject, use_line.project_id)
+    if _ul_proj is None or _ul_proj.scenario_id != model_id:
         raise HTTPException(status_code=404, detail="Use line not found")
     return use_line
 
