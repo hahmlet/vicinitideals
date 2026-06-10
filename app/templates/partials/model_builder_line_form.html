@@ -2632,7 +2632,7 @@ function prefillCarrySchedule(schedule, wrapper) {
 {# ── Milestone form ── #}
 {%- set _cur_type = existing.milestone_type | string | replace('MilestoneType.','') if existing else '' -%}
 {%- set _cur_label = phase_labels.get(_cur_type, _cur_type | replace('_',' ') | title) if existing else '' -%}
-{%- set _is_anchor = (existing and existing.trigger_milestone_id is none) -%}
+{%- set _is_anchor = (existing and existing.trigger_milestone_id is none and existing.target_date) -%}
 {%- set _cur_trigger_id = existing.trigger_milestone_id | string if existing and existing.trigger_milestone_id else '' -%}
 
 <form {% if existing %}hx-put="/ui/forms/{{ model.id }}/milestones/{{ existing.id }}"{% else %}hx-post="/ui/forms/{{ model.id }}/milestones"{% endif %}
@@ -2665,48 +2665,72 @@ function prefillCarrySchedule(schedule, wrapper) {
   </div>
   {% endif %}
 
-  {# Anchor: date picker. Non-anchor: trigger dropdown + offset #}
-  {% if _is_anchor %}
-  {# Anchor milestone — fixed date, no trigger #}
-  <input type="hidden" name="trigger_milestone_id" value="">
-  <input type="hidden" name="trigger_offset_days" value="0">
-  <div class="form-field" style="margin-bottom:16px">
-    <label class="form-label">Start Date <span style="font-weight:400;font-size:11px;color:var(--text-muted)">(anchor — fixed)</span></label>
-    <input class="form-input" type="date" name="target_date" id="ms-start"
-           value="{{ existing.target_date.strftime('%Y-%m-%d') if existing and existing.target_date else '' }}"
-           style="margin-top:4px">
-  </div>
-  {% else %}
-  {# Trigger-based milestone #}
-  <input type="hidden" name="target_date" value="">
+  {# Determine initial mode:
+     - has trigger                   → relational
+     - no trigger + has date         → fixed (true anchor)
+     - no trigger + no date          → fixed (user must set date to make it an anchor)
+  #}
+  {%- set _has_trigger = existing and existing.trigger_milestone_id is not none -%}
+  {%- set _init_mode = 'relational' if _has_trigger else 'fixed' -%}
+
+  {# Mode toggle — only shown when siblings exist (otherwise fixed is the only option) #}
+  {% if sibling_milestones %}
   <div class="form-field" style="margin-bottom:12px">
-    <label class="form-label">Starts After</label>
-    <select class="form-select" name="trigger_milestone_id" id="ms-trigger" style="margin-top:4px">
-      <option value="">— select a phase —</option>
-      {% for sib in sibling_milestones %}
-      {%- set sib_type = sib.milestone_type | string | replace('MilestoneType.','') -%}
-      {%- set sib_label = phase_labels.get(sib_type, sib_type | replace('_',' ') | title) -%}
-      {%- set is_circular = sib.id in circular_ids -%}
-      <option value="{{ sib.id }}"
-              data-ms-type="{{ sib_type }}"
-              {% if sib.id | string == _cur_trigger_id %}selected{% endif %}
-              {% if is_circular %}disabled style="color:#9ca3af"{% endif %}>
-        {{ sib_label }}{% if is_circular %} (circular){% endif %}
-      </option>
-      {% endfor %}
-    </select>
-    <div class="form-hint">This phase starts when the selected phase ends</div>
-  </div>
-  <div class="form-field" style="margin-bottom:16px;max-width:180px">
-    <label class="form-label">+ Offset Days</label>
-    <input class="form-input" type="number" name="trigger_offset_days" id="ms-offset"
-           step="1" min="0"
-           value="{{ existing.trigger_offset_days if existing else 0 }}"
-           placeholder="0"
-           style="margin-top:4px">
-    <div class="form-hint">Days after the trigger's end date</div>
+    <label class="form-label">Start Position</label>
+    <div style="display:flex;gap:6px;margin-top:4px">
+      <button type="button" id="ms-btn-fixed"
+              class="btn btn-sm {% if _init_mode == 'fixed' %}btn-primary{% else %}btn-secondary{% endif %}"
+              onclick="_msModeSwitch('fixed')">📌 Fixed Date</button>
+      <button type="button" id="ms-btn-rel"
+              class="btn btn-sm {% if _init_mode == 'relational' %}btn-primary{% else %}btn-secondary{% endif %}"
+              onclick="_msModeSwitch('relational')">→ Starts After</button>
+    </div>
   </div>
   {% endif %}
+
+  {# Fixed-date section #}
+  <div id="ms-fixed-block" {% if _init_mode != 'fixed' %}style="display:none"{% endif %}>
+    <input type="hidden" name="trigger_milestone_id" value="" id="ms-trigger-hidden">
+    <input type="hidden" name="trigger_offset_days" value="0" id="ms-offset-hidden">
+    <div class="form-field" style="margin-bottom:16px">
+      <label class="form-label">Start Date{% if _is_anchor %} <span style="font-weight:400;font-size:11px;color:var(--text-muted)">(anchor — fixed)</span>{% endif %}</label>
+      <input class="form-input" type="date" name="target_date" id="ms-start"
+             value="{{ existing.target_date.strftime('%Y-%m-%d') if existing and existing.target_date else '' }}"
+             style="margin-top:4px">
+    </div>
+  </div>
+
+  {# Relational section #}
+  <div id="ms-rel-block" {% if _init_mode != 'relational' %}style="display:none"{% endif %}>
+    <input type="hidden" name="target_date" value="" id="ms-date-hidden">
+    <div class="form-field" style="margin-bottom:12px">
+      <label class="form-label">Starts After</label>
+      <select class="form-select" name="trigger_milestone_id" id="ms-trigger" style="margin-top:4px">
+        <option value="">— select a phase —</option>
+        {% for sib in sibling_milestones %}
+        {%- set sib_type = sib.milestone_type | string | replace('MilestoneType.','') -%}
+        {%- set sib_label = phase_labels.get(sib_type, sib_type | replace('_',' ') | title) -%}
+        {%- set is_circular = sib.id in circular_ids -%}
+        <option value="{{ sib.id }}"
+                data-ms-type="{{ sib_type }}"
+                {% if sib.id | string == _cur_trigger_id %}selected{% endif %}
+                {% if is_circular %}disabled style="color:#9ca3af"{% endif %}>
+          {{ sib_label }}{% if is_circular %} (circular){% endif %}
+        </option>
+        {% endfor %}
+      </select>
+      <div class="form-hint">This phase starts when the selected phase ends</div>
+    </div>
+    <div class="form-field" style="margin-bottom:16px;max-width:180px">
+      <label class="form-label">+ Offset Days</label>
+      <input class="form-input" type="number" name="trigger_offset_days" id="ms-offset"
+             step="1" min="0"
+             value="{{ existing.trigger_offset_days if existing else 0 }}"
+             placeholder="0"
+             style="margin-top:4px">
+      <div class="form-hint">Days after the trigger's end date</div>
+    </div>
+  </div>
 
   <div class="form-row">
     <div class="form-field">
@@ -2746,7 +2770,8 @@ function prefillCarrySchedule(schedule, wrapper) {
   }
   function updateEnd() {
     var dur = parseInt(durEl ? durEl.value : '0', 10) || 0;
-    if (isAnchor) {
+    var _effectiveAnchor = isAnchor || (typeof _msCurrentMode !== 'undefined' && _msCurrentMode === 'fixed');
+    if (_effectiveAnchor) {
       if (startEl && startEl.value && dur > 0) {
         var d = new Date(startEl.value + 'T00:00:00');
         d.setDate(d.getDate() + dur);
@@ -2771,6 +2796,27 @@ function prefillCarrySchedule(schedule, wrapper) {
   if (offsetEl) offsetEl.addEventListener('input', updateEnd);
   updateEnd();  // run once on load in case values already set
 })();
+
+var _msCurrentMode = {{ "'fixed'" if _init_mode == 'fixed' else "'relational'" }};
+function _msModeSwitch(mode) {
+  _msCurrentMode = mode;
+  var fixedBlock = document.getElementById('ms-fixed-block');
+  var relBlock   = document.getElementById('ms-rel-block');
+  var fixedBtn   = document.getElementById('ms-btn-fixed');
+  var relBtn     = document.getElementById('ms-btn-rel');
+  var isFixed = (mode === 'fixed');
+  if (fixedBlock) fixedBlock.style.display = isFixed ? '' : 'none';
+  if (relBlock)   relBlock.style.display   = isFixed ? 'none' : '';
+  if (fixedBtn) { fixedBtn.classList.toggle('btn-primary', isFixed);  fixedBtn.classList.toggle('btn-secondary', !isFixed); }
+  if (relBtn)   { relBtn.classList.toggle('btn-primary', !isFixed);   relBtn.classList.toggle('btn-secondary', isFixed); }
+  var fixedInputs = fixedBlock ? fixedBlock.querySelectorAll('input,select') : [];
+  var relInputs   = relBlock   ? relBlock.querySelectorAll('input,select')   : [];
+  Array.from(fixedInputs).forEach(function(el){ el.disabled = !isFixed; });
+  Array.from(relInputs).forEach(function(el){   el.disabled = isFixed; });
+  if (typeof updateEnd === 'function') updateEnd();
+}
+// init on load
+(function(){ _msModeSwitch(_msCurrentMode); })();
 </script>
 
   <div class="form-actions">
