@@ -4,7 +4,7 @@ Given the already-computed CashFlow rows + UseLines + phase plan for a
 project, builds the four input maps the bank-account simulator needs:
 
     months          — proof window, period-aligned month-start dates
-    opening_cash    — sum of pre-funded "first_day" reserves at Close
+    opening_cash    — sum of all reserve use lines (any timing) at Close
     monthly_inflows — operating income per month (post-CO)
     monthly_outflows— opex + debt service per month (post-CO)
     monthly_floor   — required reserve floor per month
@@ -93,24 +93,22 @@ def extract_operating_proof_window(
       - effective_gross_income → inflow
       - operating_expenses + debt_service → outflow
 
-    Reserves are sourced from use_lines whose label is in _RESERVE_LABELS
-    and whose timing_type indicates first-day funding. The sum becomes
-    opening_cash.
+    Reserves are sourced from use_lines whose label is in _RESERVE_LABELS,
+    regardless of timing_type. BALANCE_ONLY reserves are excluded from NCF
+    outflows by the engine, so they remain on hand regardless of draw timing.
+    The sum becomes opening_cash.
 
     The floor map sets the Operating Reserve amount for every month at or
     after the CO row. Pre-CO months (if any are passed in) get a 0 floor.
     """
     rows_sorted = sorted(cash_flow_rows, key=lambda r: r.period)
 
-    # Opening cash = sum of first-day reserves on UseLines.
+    # Opening cash = sum of all reserve UseLines (any timing_type).
     opening = Decimal("0")
     or_amount = Decimal("0")
     for ul in use_lines:
         label = getattr(ul, "label", "") or ""
-        timing = getattr(ul, "timing_type", "") or ""
         amt = _to_dec(getattr(ul, "amount", 0))
-        if timing not in ("first_day", "lump_sum"):
-            continue
         if label in _RESERVE_LABELS:
             opening += amt
             if label == "Operating Reserve":
@@ -204,16 +202,13 @@ def extract_full_window_proof(
     month and a lease-up row collide on the same calendar month, the
     construction row wins (its draws/uses are the real cash events).
     """
-    # Opening cash = sum of first-day reserves on UseLines (same rule as
-    # the lease-up-only extractor). Operating Reserve doubles as the floor.
+    # Opening cash = sum of all reserve UseLines (any timing_type; same rule
+    # as the lease-up-only extractor). Operating Reserve doubles as the floor.
     opening = Decimal("0")
     or_amount = Decimal("0")
     for ul in use_lines:
         label = getattr(ul, "label", "") or ""
-        timing = getattr(ul, "timing_type", "") or ""
         amt = _to_dec(getattr(ul, "amount", 0))
-        if timing not in ("first_day", "lump_sum"):
-            continue
         if label in _RESERVE_LABELS:
             opening += amt
             if label == "Operating Reserve":
