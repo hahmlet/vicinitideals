@@ -1218,39 +1218,33 @@ async def _compute_project_cashflow(
     # stale data on deals that no longer model an operating phase.
     outputs.bank_account_proof = bank_account_proof
 
-    # CFSR auto-upsert: if bank proof shows insolvency and no auto-sized debt
-    # module is DSCR/LTV-bound, write a "Cash Flow Support Reserve" use line
-    # = max_shortfall.  Next recompute folds it into sizing and closes the gap.
+    # CFSR auto-upsert: if bank proof shows insolvency write a "Cash Flow
+    # Support Reserve" use line = max_shortfall.  Next recompute folds it into
+    # total_uses so:
+    #   gap_fill deals   → bond grows to cover it → bank account solvent
+    #   dscr/ltv-capped  → bond stays capped → equity gap absorbs the extra use
+    #                       → bank account still becomes solvent
+    # Either way the bank account is made solvent; the gap (equity required)
+    # is the user-visible signal for capped deals.
     if (
         bank_account_proof is not None
         and bank_account_proof.get("is_solvent") is False
         and _to_decimal(bank_account_proof.get("max_shortfall") or 0) > ZERO
     ):
-        # Only block CFSR when an explicit DSCR/LTV cap is configured AND binding.
-        # gap_fill deals always get CFSR — their binding_constraint may say "dscr"
-        # simply because negative NOI makes DSCR negative, not because the user
-        # set a cap.
-        _dsm = (inputs.debt_sizing_mode or "gap_fill") if inputs else "gap_fill"
-        _cfsr_binding = _dsm in ("dscr_capped", "dual_constraint") and any(
-            (m.source or {}).get("binding_constraint") in ("dscr", "ltv")
-            for m in capital_modules
-            if (m.source or {}).get("auto_size")
-        )
-        if not _cfsr_binding:
-            _cfsr_amt = _q(_to_decimal(bank_account_proof["max_shortfall"]))
-            _cfsr_existing = [ul for ul in use_lines if getattr(ul, "label", "") == "Cash Flow Support Reserve"]
-            if _cfsr_existing:
-                _cfsr_existing[0].amount = _cfsr_amt
-                session.add(_cfsr_existing[0])
-            else:
-                session.add(UseLine(
-                    project_id=project.id,
-                    label="Cash Flow Support Reserve",
-                    phase="operation",
-                    amount=_cfsr_amt,
-                    cost_category="soft",
-                    timing_type="first_day",
-                ))
+        _cfsr_amt = _q(_to_decimal(bank_account_proof["max_shortfall"]))
+        _cfsr_existing = [ul for ul in use_lines if getattr(ul, "label", "") == "Cash Flow Support Reserve"]
+        if _cfsr_existing:
+            _cfsr_existing[0].amount = _cfsr_amt
+            session.add(_cfsr_existing[0])
+        else:
+            session.add(UseLine(
+                project_id=project.id,
+                label="Cash Flow Support Reserve",
+                phase="operation",
+                amount=_cfsr_amt,
+                cost_category="soft",
+                timing_type="first_day",
+            ))
 
     # Persist float-earnings results so the UI can render the period-level
     # balance schedule + warnings without re-running compute. Always write —
