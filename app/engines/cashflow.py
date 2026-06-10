@@ -2805,12 +2805,16 @@ async def _auto_size_debt_modules(
     if _odr_amount > ZERO:
         total_uses += _odr_amount
 
-    # Note: Cash Flow Support Reserve is intentionally excluded from total_uses
-    # here. Including it causes a feedback loop on gap_fill deals: CFSR inflates
-    # uses → bond grows → larger DS → larger shortfall → larger CFSR → repeat.
-    # CFSR is a BALANCE_ONLY reserve funded by equity (not the bond), so it
-    # doesn't need to enter the gap-fill principal solve. For dscr/ltv-capped
-    # deals the bond stays at its cap regardless, so exclusion has no effect there.
+    # CFSR from the prior pass: include in total_uses so the bond covers it.
+    # The accumulation write-back (amount += shortfall) ensures convergence:
+    # compute 1 writes CFSR=S, compute 2 grows bond by S, new shortfall ≈ marginal
+    # DS on S (<<S), CFSR converges within 2-3 passes. S&U balances.
+    for _ul_cfsr in use_lines:
+        if getattr(_ul_cfsr, "label", "") == "Cash Flow Support Reserve":
+            _cfsr_prior = _to_decimal(getattr(_ul_cfsr, "amount", 0) or 0)
+            if _cfsr_prior > ZERO:
+                total_uses += _cfsr_prior
+            break
 
     # Phase B: new multi-debt path when debt_types is explicitly set on inputs.
     # Bridge loans (pre_development_loan, acquisition_loan, construction_loan, bridge)
