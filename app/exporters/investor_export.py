@@ -2323,7 +2323,6 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
         "net_cash_flow": ("+noi", "-debt_service"),
     }
     _GROWTH_CHAIN_FIELDS: dict[str, str] = {
-        "gross_revenue": "s_revenue_growth_rate",
         "operating_expenses": "s_opex_growth_rate",
     }
     _capital_modules: list[CapitalModule] = ctx["capital_modules"]
@@ -2341,12 +2340,6 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
 
     _rev_slug_list: list[str] = list(_all_revenue_slugs(ctx).values())
     _opex_slug_list: list[str] = list(_all_opex_slugs(ctx).values())
-
-    def _gross_revenue_y1_formula() -> str | None:
-        if not _rev_slug_list:
-            return None
-        refs = ",".join(f"s_rev_{s}_y1_monthly" for s in _rev_slug_list)
-        return f"=SUM({refs})*12"
 
     def _debt_service_formula_for_year(y: int) -> str | None:
         if not _pmt_indices:
@@ -2456,6 +2449,45 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
             cur_row += 1
             continue
 
+        # ── Gross revenue: bullets FIRST, then SUM total ───────────────────
+        if field == "gross_revenue" and _rev_slug_list:
+            rev_slug_map = _all_revenue_slugs(ctx)
+            first_rev_bullet = cur_row + 1
+            _emit_project_bullet_rows(
+                slug_map=rev_slug_map,
+                items_by_project=_streams_by_project,
+                get_label=lambda s: s.label or "Income Stream",
+                get_y1_formula=lambda slug: f"=s_rev_{slug}_y1_monthly*12",
+                get_yn_formula=lambda slug, pc, r: f"={pc}{r}*(1+s_rev_{slug}_escalation_pct)",
+                filter_fn=lambda s: (
+                    _coerce_decimal(s.amount_per_unit_monthly or 0) > 0
+                    or _coerce_decimal(s.amount_fixed_monthly or 0) > 0
+                ),
+            )
+            last_rev_bullet = cur_row
+            cur_row += 1
+            ws.cell(row=cur_row, column=2, value=label).font = FONT_LABEL
+            field_row[field] = cur_row
+            for col_offset, year in enumerate(year_cols):
+                col_idx = 3 + col_offset
+                col_letter = get_column_letter(col_idx)
+                if first_rev_bullet <= last_rev_bullet:
+                    cell = ws.cell(row=cur_row, column=col_idx,
+                                   value=f"=SUM({col_letter}{first_rev_bullet}:{col_letter}{last_rev_bullet})")
+                else:
+                    v = annual.get(year, {}).get(field, Decimal(0))
+                    cell = ws.cell(row=cur_row, column=col_idx, value=_to_excel_number(v))
+                cell.number_format = ACCOUNTING
+                cell.font = FONT_VALUE
+                cell.alignment = ALIGN_RIGHT
+            if range_name and year_cols:
+                registry.register_range(range_name, ws.title, cur_row, cur_row,
+                                         col=3, end_col=2 + len(year_cols))
+            if len(year_cols) >= 2:
+                registry.register("s_pf_gross_revenue_y1", ws.title, cur_row, 4)
+            cur_row += 1
+            continue
+
         # ── Normal row emission ────────────────────────────────────────────
         ws.cell(row=cur_row, column=2, value=label).font = FONT_LABEL
         field_row[field] = cur_row
@@ -2498,14 +2530,6 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
                 else:
                     cell = ws.cell(row=cur_row, column=col_idx,
                                    value=_to_excel_number(Decimal(0)))
-            elif (
-                field == "gross_revenue"
-                and col_offset == 1
-                and _gross_revenue_y1_formula() is not None
-                and Decimal(annual.get(year, {}).get("gross_revenue", 0) or 0) > 0
-            ):
-                cell = ws.cell(row=cur_row, column=col_idx,
-                               value=_gross_revenue_y1_formula())
             elif growth_name and col_offset >= 2:
                 prev_col = get_column_letter(col_idx - 1)
                 formula = f"={prev_col}{cur_row}*(1+{growth_name})"
@@ -2524,9 +2548,7 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
                 range_name, ws.title, cur_row, cur_row,
                 col=3, end_col=2 + len(year_cols),
             )
-        # Named cell registrations before bullet emission (cur_row = total row)
-        if field == "gross_revenue" and len(year_cols) >= 2:
-            registry.register("s_pf_gross_revenue_y1", ws.title, cur_row, 4)
+        # Named cell registrations
         if field == "noi" and len(year_cols) >= 2:
             registry.register("s_pf_noi_y1", ws.title, cur_row, 4)
         if field == "debt_service" and len(year_cols) >= 2:
@@ -2534,20 +2556,6 @@ def _build_uw_proforma(ws, registry: CellRegistry, ctx: dict) -> None:
         if field == "noi" and year_cols:
             exit_col = 2 + len(year_cols)
             registry.register("s_exit_year_noi", ws.title, cur_row, exit_col)
-        # Revenue bullet rows grouped by project with merged col A label
-        if field == "gross_revenue" and _rev_slug_list:
-            rev_slug_map = _all_revenue_slugs(ctx)
-            _emit_project_bullet_rows(
-                slug_map=rev_slug_map,
-                items_by_project=_streams_by_project,
-                get_label=lambda s: s.label or "Income Stream",
-                get_y1_formula=lambda slug: f"=s_rev_{slug}_y1_monthly*12",
-                get_yn_formula=lambda slug, pc, r: f"={pc}{r}*(1+s_rev_{slug}_escalation_pct)",
-                filter_fn=lambda s: (
-                    _coerce_decimal(s.amount_per_unit_monthly or 0) > 0
-                    or _coerce_decimal(s.amount_fixed_monthly or 0) > 0
-                ),
-            )
         cur_row += 1
 
     # OER (Operating Expense Ratio) = OpEx / EGI per year.
