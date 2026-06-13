@@ -1225,21 +1225,31 @@ async def _compute_project_cashflow(
     # stale data on deals that no longer model an operating phase.
     outputs.bank_account_proof = bank_account_proof
 
-    # CFSR auto-upsert: if bank proof shows insolvency write a "Cash Flow
-    # Support Reserve" use line = max_shortfall.  On the next recompute CFSR
-    # enters opening_cash (bank_account_extractor reads all _RESERVE_LABELS),
-    # which cures the solvency gap.  CFSR is equity-funded; it does NOT grow
-    # the bond principal (excluded from total_uses in _auto_size_debt_modules).
+    # CFSR auto-upsert: if the bank proof shows insolvency, grow a "Cash Flow
+    # Support Reserve" use line by the residual max_shortfall. On the next pass
+    # CFSR enters opening_cash (bank_account_extractor reads all _RESERVE_LABELS)
+    # AND folds into total_uses (_auto_size_debt_modules), so the bond grows to
+    # cover it and Sources=Uses holds. Each pass reports the *residual* shortfall
+    # (prior CFSR already credited), so accumulating converges to a fixed point.
+    #
+    # Convergence is driven within a single compute click by the endpoint's
+    # fix-point loop: we set summary["needs_recompute"] whenever we grow the
+    # reserve, and stop once the residual falls below the tolerance. The endpoint
+    # zeroes any persisted CFSR before the first pass, so this accumulation
+    # always starts fresh → repeated clicks are idempotent (no runaway stacking,
+    # which previously diverged for capitalized-interest deals).
+    _CFSR_CONVERGENCE_TOL = Decimal("1.0")  # $1 — below this S&U is balanced
     if (
         bank_account_proof is not None
         and bank_account_proof.get("is_solvent") is False
-        and _to_decimal(bank_account_proof.get("max_shortfall") or 0) > ZERO
+        and _to_decimal(bank_account_proof.get("max_shortfall") or 0)
+        > _CFSR_CONVERGENCE_TOL
     ):
         _cfsr_amt = _q(_to_decimal(bank_account_proof["max_shortfall"]))
         _cfsr_existing = [ul for ul in use_lines if getattr(ul, "label", "") == "Cash Flow Support Reserve"]
         if _cfsr_existing:
-            # Accumulate rather than replace so convergence is guaranteed in one
-            # pass: opening_cash gains the full shortfall, not half of it.
+            # Accumulate the residual rather than replace so opening_cash gains
+            # the full cumulative shortfall, not just the latest pass's slice.
             _cfsr_old = _q(_to_decimal(getattr(_cfsr_existing[0], "amount", 0) or 0))
             _cfsr_existing[0].amount = _cfsr_old + _cfsr_amt
             session.add(_cfsr_existing[0])
@@ -1252,6 +1262,10 @@ async def _compute_project_cashflow(
                 cost_category="soft",
                 timing_type="first_day",
             ))
+        # Signal the endpoint loop to re-size the bond around the grown reserve
+        # so Sources=Uses converges within one click. The loop's divergence guard
+        # stops it if the residual ever stops shrinking (structural insolvency).
+        summary["needs_recompute"] = True
 
     # Persist float-earnings results so the UI can render the period-level
     # balance schedule + warnings without re-running compute. Always write —

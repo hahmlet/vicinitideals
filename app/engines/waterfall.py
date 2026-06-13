@@ -1518,11 +1518,26 @@ def _normalized_splits(tier: WaterfallTier) -> tuple[Decimal, Decimal]:
     return _q(lp_split / total), _q(gp_split / total)
 
 
+# party_irr_pct is NUMERIC(18, 6): values must round to abs < 10^12. A
+# degenerate cash-flow series (near-zero equity vs positive distributions) can
+# make pyxirr return an astronomically large IRR (1.3e12 % observed in prod),
+# which overflows the column and 500s the entire compute batch insert. Drop such
+# nonsensical results to None rather than crash — no real IRR approaches this.
+_IRR_PCT_LIMIT = Decimal("1e11")  # 100 billion %
+
+
 def _compute_xirr_pct(period_cashflows: dict[int, Decimal]) -> Decimal | None:
     irr_fraction = _compute_xirr_fraction(period_cashflows)
     if irr_fraction is None:
         return None
-    return _q(irr_fraction * HUNDRED)
+    # Guard non-finite results before quantizing: a degenerate series can make
+    # pyxirr return inf/nan, and _q() raises InvalidOperation on those.
+    if not irr_fraction.is_finite():
+        return None
+    pct = _q(irr_fraction * HUNDRED)
+    if abs(pct) >= _IRR_PCT_LIMIT:
+        return None
+    return pct
 
 
 def _compute_xirr_fraction(period_cashflows: dict[int, Decimal]) -> Decimal | None:
