@@ -281,9 +281,10 @@ def test_capital_balance_transition_at_stabilization(
 ) -> None:
     """Cash balance at first stabilized period ≈ operating reserve.
 
-    The cashflow table has two balance columns:
-      - Capital Bal. (cells[10]): unspent construction draws — active during construction
-      - Cash Bal.    (cells[11]): liquid cash reserve — seeded at first stabilized month
+    The cashflow table has two balance columns (read by header name in
+    read_cashflow_table, not fixed index — DDF columns shifted positions):
+      - Capital Bal.: unspent construction draws — active during construction
+      - Cash Bal.:    liquid cash reserve — seeded at first stabilized month
 
     At the construction→stabilized boundary, the engine resets the cash balance
     to the operating reserve (§3.1 in FINANCIAL_MODEL.md). This test verifies
