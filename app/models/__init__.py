@@ -93,10 +93,8 @@ from app.models.milestone import Milestone  # noqa: F401
 # 13. Realie usage tracking (no FK deps)
 from app.models.realie_usage import RealieUsage  # noqa: F401
 
-# 14. LoopNet scraper support: API call tracking, snapshot history, conflict log
-from app.models.api_call_log import ApiCallLog  # noqa: F401
+# 14. Field conflict log (dedup merge audit — used by Crexi ingest)
 from app.models.field_conflict_log import FieldConflictAction, FieldConflictLog  # noqa: F401
-from app.models.listing_snapshot import ListingSnapshot  # noqa: F401
 from app.models.map_polygon import MapPolygon  # noqa: F401
 from app.models.settings import OrgSetting, UserSetting  # noqa: F401
 
@@ -177,9 +175,7 @@ __all__ = [
     "SavedSearchCriteria",
     # Realie usage
     "RealieUsage",
-    # LoopNet scraper support
-    "ApiCallLog",
-    "ListingSnapshot",
+    # Field conflict log (dedup merge audit)
     "FieldConflictLog",
     "FieldConflictAction",
     # Org & user defaults

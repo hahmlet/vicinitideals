@@ -31,14 +31,14 @@ from app.models.ingestion import IngestJob
 from app.models.realie_usage import RealieUsage
 from app.observability import format_timestamp, log_observation, new_trace_id, utc_now
 from app.scrapers.realie import RealieEnricher, _current_month
-from app.tasks.scraper import _scrape_crexi, scrape_crexi, scrape_loopnet
+from app.tasks.scraper import _scrape_crexi, scrape_crexi
 
 router = APIRouter(tags=["ingest"])
 logger = logging.getLogger(__name__)
 
 
 class IngestTriggerRequest(BaseModel):
-    source: Literal["loopnet", "crexi"] | None = None
+    source: Literal["crexi"] | None = None
     search_params: dict[str, Any] = Field(default_factory=dict)
 
 
@@ -83,8 +83,7 @@ async def trigger_ingest_job(
     payload: IngestTriggerRequest | None = None,
 ) -> dict[str, str]:
     request = payload or IngestTriggerRequest()
-    if request.source in (None, "loopnet"):
-        # LoopNet ingest is intentionally disabled; Crexi remains active.
+    if request.source is None:
         request.source = "crexi"
     triggered_by = str(current_user_id)
     trace_id = new_trace_id(getattr(http_request.state, "trace_id", None))
