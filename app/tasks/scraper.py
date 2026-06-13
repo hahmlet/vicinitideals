@@ -41,7 +41,7 @@ from app.scrapers.realie import detect_address_issue
 from app.tasks.celery_app import celery_app
 
 logger = get_task_logger(__name__)
-SUPPORTED_SOURCES = {"loopnet", "crexi"}
+SUPPORTED_SOURCES = {"crexi"}
 
 
 @celery_app.task(name="app.tasks.scraper.scrape_listings")
@@ -76,29 +76,6 @@ def scrape_crexi(
     """Run the dedicated Crexi ingestion flow on the scraping queue."""
     del self
     return asyncio.run(_scrape_crexi(triggered_by=triggered_by, trace_id=trace_id, max_results=max_results))
-
-
-@celery_app.task(
-    name="app.tasks.scraper.scrape_loopnet",
-    bind=True,
-    max_retries=3,
-)
-def scrape_loopnet(
-    self,
-    search_params: dict[str, Any] | None = None,
-    triggered_by: str | None = None,
-    trace_id: str | None = None,
-) -> str:
-    """Run the dedicated LoopNet ingestion flow on the scraping queue."""
-    del self
-    return asyncio.run(
-        _scrape_listings(
-            source="loopnet",
-            search_params=search_params or {},
-            triggered_by=triggered_by,
-            trace_id=trace_id,
-        )
-    )
 
 
 async def _scrape_crexi(
@@ -1329,7 +1306,6 @@ def _build_listing_values(
 
 __all__ = [
     "scrape_crexi",
-    "scrape_loopnet",
     "scrape_listings",
     "upsert_brokers",
     "upsert_scraped_listings",

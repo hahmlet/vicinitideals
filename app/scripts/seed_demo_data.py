@@ -209,7 +209,7 @@ async def seed() -> None:
                 broker_key="David Seto",
             ),
             dict(
-                source="loopnet", source_id="8b3c1d22-aa01", source_url="https://www.loopnet.com/listing/8b3c1d22",
+                source="crexi", source_id="8b3c1d22-aa01", source_url="https://www.crexi.com/properties/8b3c1d22",
                 address_raw="619 NE 190th Ave, Gresham, OR 97030",
                 address_normalized="619 NE 190th Ave, Gresham, OR 97030",
                 street="619 NE 190th Ave", city="Gresham", state_code="OR", zip_code="97030",
@@ -248,7 +248,7 @@ async def seed() -> None:
                 broker_key="David Seto",
             ),
             dict(
-                source="loopnet", source_id="f9e8d7c6-b5a4", source_url="https://www.loopnet.com/listing/f9e8d7c6",
+                source="crexi", source_id="f9e8d7c6-b5a4", source_url="https://www.crexi.com/properties/f9e8d7c6",
                 address_raw="4821 SE Powell Blvd, Portland, OR 97206",
                 address_normalized="4821 SE Powell Blvd, Portland, OR 97206",
                 street="4821 SE Powell Blvd", city="Portland", state_code="OR", zip_code="97206",

@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 
 def load_polygons(path: str | None = None) -> list[dict[str, Any]]:
     """Read the polygons JSON file. Returns only polygons with is_active=true."""
-    p = Path(path or settings.loopnet_polygon_path)
+    p = Path(path or settings.market_polygons_path)
     with p.open("r", encoding="utf-8") as f:
         data = json.load(f)
     return [poly for poly in data if poly.get("is_active")]
