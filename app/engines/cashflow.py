@@ -1262,10 +1262,16 @@ async def _compute_project_cashflow(
                 cost_category="soft",
                 timing_type="first_day",
             ))
-        # Signal the endpoint loop to re-size the bond around the grown reserve
-        # so Sources=Uses converges within one click. The loop's divergence guard
-        # stops it if the residual ever stops shrinking (structural insolvency).
-        summary["needs_recompute"] = True
+        # NOTE: we deliberately do NOT force the endpoint's fix-point loop to
+        # re-size (no summary["needs_recompute"] here). Forcing multi-debt
+        # construction deals to iterate exposed a non-idempotency in the
+        # bridge/retirement writeback inside _auto_size_debt_modules — the
+        # construction loan principal drifts across passes (it can size below
+        # its own base cost), breaking the P == base + carry invariant. One-click
+        # Sources=Uses convergence therefore needs that writeback made
+        # pass-stable first; tracked as a follow-up. The CFSR reset in the
+        # compute endpoint still guarantees idempotency (no cross-click stacking
+        # / overflow), which is the load-bearing safety fix.
 
     # Persist float-earnings results so the UI can render the period-level
     # balance schedule + warnings without re-running compute. Always write —

@@ -229,6 +229,11 @@ def test_under_utilized_grant_row_yellow(
     _add_use(page, "Site Work", "180000")
     _add_grant(page, "OR-MEP", "250000")
     _open_grant_edit(page, "OR-MEP")
+    # Eligibility is permissive by default — a new grant is eligible to ALL uses,
+    # so every box renders checked. Just checking Site Work leaves the large
+    # Acquisition use eligible and the grant funds its full 250k cap (not
+    # under-utilized). Uncheck-all first so ONLY Site Work (180k) is eligible.
+    page.click("#lf-elig-uncheck-all")
     site_work_box = page.locator(
         "#lf-eligibility-list label:has-text('Site Work') input.lf-eligibility-checkbox"
     )
