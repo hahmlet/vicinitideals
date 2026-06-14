@@ -9,7 +9,7 @@ from uuid import UUID
 
 from fastapi import APIRouter, HTTPException, Request, status
 from fastapi.responses import Response
-from sqlalchemy import select
+from sqlalchemy import select, update
 from sqlalchemy.exc import IntegrityError
 
 from app.api.deps import CurrentUserId, DBSession
@@ -661,10 +661,31 @@ async def compute_model_cashflows(model_id: UUID, request: Request, session: DBS
     _iterative_modes = {"dscr_capped", "dual_constraint"}
     _should_iterate = _sizing_mode in _iterative_modes
 
+    # Idempotency: zero any Cash Flow Support Reserve persisted by a prior
+    # compute so this run converges to a fresh fixed point. Without this the
+    # auto-grown reserve stacks across clicks and, for capitalized-interest
+    # deals, diverges (runaway bond → numeric overflow → 500). The engine
+    # re-grows it from zero each compute via its needs_recompute loop below.
+    try:
+        await session.execute(
+            update(UseLine)
+            .where(UseLine.label == "Cash Flow Support Reserve")
+            .where(
+                UseLine.project_id.in_(
+                    select(Project.id).where(Project.scenario_id == model_id)
+                )
+            )
+            .values(amount=Decimal("0"))
+        )
+        await session.flush()
+    except Exception:
+        pass  # never block compute on a reserve reset
+
     result: dict[str, Any] | None = None
     waterfall_result: dict[str, Any] | None = None
     prev_dscr: Decimal | None = None
     prev_dev_fee_paydown_total: Decimal | None = None
+    _prev_shortfall: Decimal | None = None
     iterations_used = 0
     _schedule = _initial_schedule
     try:
@@ -727,6 +748,28 @@ async def compute_model_cashflows(model_id: UUID, request: Request, session: DBS
             prev_dev_fee_paydown_total = _cur_dev_fee_paydown_total
             if _paydown_changed:
                 _needs_recompute = True
+
+            # Divergence guard for the Cash Flow Support Reserve loop. A solvable
+            # shortfall shrinks each pass as the reserve (and bond) fill it. If it
+            # stops shrinking, the deal is structurally insolvent — the bond can't
+            # outrun its own debt service — so stop and leave the residual gap as
+            # a user-visible signal rather than iterate toward a numeric blow-up.
+            _cur_shortfall: Decimal | None = None
+            if isinstance(result, dict):
+                _bap = result.get("bank_account_proof")
+                if isinstance(_bap, dict) and _bap.get("max_shortfall") is not None:
+                    try:
+                        _cur_shortfall = Decimal(str(_bap["max_shortfall"]))
+                    except Exception:
+                        _cur_shortfall = None
+            _diverging = (
+                _prev_shortfall is not None
+                and _cur_shortfall is not None
+                and _cur_shortfall >= _prev_shortfall
+            )
+            _prev_shortfall = _cur_shortfall
+            if _diverging:
+                break
 
             if _needs_recompute and _iter < MAX_ITERATIONS - 1:
                 continue

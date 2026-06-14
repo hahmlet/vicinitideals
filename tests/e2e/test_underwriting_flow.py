@@ -246,11 +246,12 @@ def test_underwriting_view_renders_all_sections(
         f"{base_url}/models/{model_id}/builder?view=underwriting"
     )
     wait_for_htmx(logged_in_page)
+    # "Waterfall Distribution (joined)" was removed (6468e03, Jun 9): the joined
+    # 187k-row table was locking the browser, so it no longer renders here.
     for title in (
         "Per-Project Summary",
         "Source Package",
         "Combined Cashflow",
-        "Waterfall Distribution (joined)",
     ):
         expect(
             logged_in_page.locator(f".uw-section-title:has-text('{title}')")

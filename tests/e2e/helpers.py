@@ -119,46 +119,74 @@ def read_cashflow_table(page: Page) -> list[dict]:
             "period":          int,   # month number shown in "Mo." column
             "phase":           str,   # normalised phase name ("stabilized", "construction", …)
             "net_cf":          float, # Net CF column (positive = inflow)
-            "capital_balance": float, # Capital Balance column (running sum from total_sources)
+            "capital_balance": float, # Capital Bal. (construction) or Cash Bal. (ops)
         }
 
-    Phase banner rows (single <td colspan=11>) are skipped automatically.
-    Values are parsed through parse_currency so parenthetical negatives work.
+    Columns are located **by header name**, not fixed index — the cashflow
+    table has grown columns over time (e.g. the two DDF columns added Jun
+    2026), and position-based reads silently picked up the wrong column. The
+    cashflow table is identified as the ``.line-table`` whose header row
+    contains a "Net CF" column. Phase-banner rows (single colspan <td>) are
+    skipped automatically. Values are parsed through parse_currency so
+    parenthetical negatives work.
     """
-    rows_raw: list[dict] = page.evaluate("""() => {
-        const rows = document.querySelectorAll('.line-table tbody tr');
-        return Array.from(rows)
-            .filter(r => r.querySelectorAll('td').length >= 11)
-            .map(r => {
-                const cells = r.querySelectorAll('td');
-                // cells[10] = Capital Bal. (construction phases)
-                // cells[11] = Cash Bal. (operational phases)
-                // Use whichever has a value
-                const capBal = cells[10] ? cells[10].innerText.trim() : '';
-                const cashBal = cells.length > 11 && cells[11] ? cells[11].innerText.trim() : '';
-                const balance = cashBal && cashBal !== '—' ? cashBal : capBal;
-                return {
-                    period:          cells[0].innerText.trim(),
-                    phase:           cells[1].innerText.trim(),
-                    net_cf:          cells[9].innerText.trim(),
-                    capital_balance: balance
-                };
-            });
+    table = page.evaluate("""() => {
+        const norm = (s) => s.trim().toLowerCase().replace(/\\s+/g, ' ');
+        // Pick the .line-table whose header row has a "Net CF" column.
+        const tables = Array.from(document.querySelectorAll('table.line-table'));
+        const cf = tables.find(t =>
+            Array.from(t.querySelectorAll('thead th'))
+                .some(th => norm(th.innerText) === 'net cf')
+        );
+        if (!cf) return { headers: [], rows: [] };
+        const headers = Array.from(cf.querySelectorAll('thead th'))
+            .map(th => norm(th.innerText));
+        const rows = Array.from(cf.querySelectorAll('tbody tr'))
+            // Data rows have one <td> per header; phase banners have a single
+            // colspanned <td>.
+            .filter(r => r.querySelectorAll('td').length >= headers.length)
+            .map(r => Array.from(r.querySelectorAll('td')).map(td => td.innerText.trim()));
+        return { headers, rows };
     }""")
 
+    headers: list[str] = table["headers"]
+    rows: list[list[str]] = table["rows"]
+    if not headers:
+        return []
+
+    def _idx(*names: str) -> int:
+        for n in names:
+            if n in headers:
+                return headers.index(n)
+        return -1
+
+    # "Mo." renders as the period column; balances split across construction
+    # ("capital bal.") and operations ("cash bal.").
+    period_i = _idx("mo.", "month", "period")
+    phase_i = _idx("phase")
+    net_cf_i = _idx("net cf")
+    cap_bal_i = _idx("capital bal.")
+    cash_bal_i = _idx("cash bal.")
+
+    def _cell(cells: list[str], i: int) -> str:
+        return cells[i] if 0 <= i < len(cells) else ""
+
     result = []
-    for row in rows_raw:
+    for cells in rows:
         try:
-            period = int(row["period"])
+            period = int(_cell(cells, period_i))
         except (ValueError, TypeError):
             period = -1
+        cap_bal = _cell(cells, cap_bal_i)
+        cash_bal = _cell(cells, cash_bal_i)
+        balance = cash_bal if cash_bal and cash_bal != "—" else cap_bal
         # "Stabilized" → "stabilized", "Operation Lease Up" → "operation_lease_up"
-        phase_raw = row["phase"].strip().lower().replace(" ", "_")
+        phase_raw = _cell(cells, phase_i).strip().lower().replace(" ", "_")
         result.append({
             "period":          period,
             "phase":           phase_raw,
-            "net_cf":          parse_currency(row["net_cf"]),
-            "capital_balance": parse_currency(row["capital_balance"]),
+            "net_cf":          parse_currency(_cell(cells, net_cf_i)),
+            "capital_balance": parse_currency(balance),
         })
     return result
 

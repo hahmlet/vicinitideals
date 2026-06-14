@@ -138,15 +138,20 @@ def _drive_timeline_wizard_in_flow(
             label = _PHASE_TYPE_LABELS.get(mt_str, mt_str.replace("_", " ").title())
             row = page.locator(
                 f'#module-panel-content tr:has(td:has-text("{label}"))'
+            ).first
+            # Wait for the row to render before interacting. A bare count() > 0
+            # check races on a cold CI container — the first milestone row may
+            # not be painted yet, so the duration write was silently skipped, the
+            # milestone kept duration 0, and the approval gate stayed disabled.
+            # wait_for() fails loud if the row genuinely never appears.
+            row.wait_for(state="visible", timeout=10_000)
+            row.click()
+            page.wait_for_selector(
+                '#line-item-drawer [name="duration_days"]', timeout=8_000
             )
-            if row.count() > 0:
-                row.first.click()
-                page.wait_for_selector(
-                    '#line-item-drawer [name="duration_days"]', timeout=8_000
-                )
-                page.fill('#line-item-drawer [name="duration_days"]', str(days))
-                page.click('#line-item-drawer button[type="submit"]')
-                wait_for_htmx(page)
+            page.fill('#line-item-drawer [name="duration_days"]', str(days))
+            page.click('#line-item-drawer button[type="submit"]')
+            wait_for_htmx(page)
 
 
 # ---------------------------------------------------------------------------
@@ -351,12 +356,28 @@ def test_unified_wizard_data_reaches_deal_via_api(
             "divestment": 1,
         },
     )
-    page.goto(f"/models/{model_id}/builder?module=timeline&wizard=1")
-    wait_for_htmx(page)
-    page.wait_for_timeout(1000)
-    approve = page.locator('button:has-text("Approve & Continue Setup")')
-    approve.wait_for(state="visible", timeout=10_000)
-    assert approve.is_enabled(), "Approve button disabled in data-validation test"
+    # The approval gate (timeline_approvable) only opens once every milestone —
+    # including Construction — has a committed position + duration. On a cold CI
+    # container there's a lag between the final per-milestone duration write
+    # committing and the gate re-reading it, so a one-shot is_enabled() check
+    # races (passes instantly against prod, intermittently disabled in CI).
+    # Reload the timeline and re-check until the gate opens.
+    approve = None
+    for _attempt in range(8):
+        page.goto(f"/models/{model_id}/builder?module=timeline&wizard=1")
+        wait_for_htmx(page)
+        approve = page.locator('button:has-text("Approve & Continue Setup")')
+        approve.wait_for(state="visible", timeout=10_000)
+        if approve.is_enabled():
+            break
+        page.wait_for_timeout(1000)
+    if approve is None or not approve.is_enabled():
+        _tl = page.locator("#module-panel-content")
+        _dump = _tl.inner_text() if _tl.count() else "(timeline panel not found)"
+        raise AssertionError(
+            "Approve button stayed disabled after retries — a milestone is "
+            f"missing a position or duration. Timeline table:\n{_dump}"
+        )
     approve.click()
     page.wait_for_url(
         lambda url: "module=deal_setup" in url and "/builder" in url,

@@ -681,10 +681,11 @@ def test_calc_status_pill_endpoint_returns_html(
         "pill must have either ok or warn class"
 
 
-def test_calc_status_modal_shows_three_factors(
+def test_calc_status_modal_shows_four_factors(
     logged_in_page, base_url: str, feature_model_id: str
 ) -> None:
-    """The modal endpoint should render 3 factor rows: S=U, DSCR, LTV."""
+    """The modal endpoint should render 4 factor rows: S=U, DSCR, LTV,
+    Account Balance (the 4th row was added bcf9fb7, Jun 1)."""
     page = logged_in_page
     page.goto(
         f"{base_url}/ui/models/{feature_model_id}/calc-status/modal",
@@ -692,15 +693,16 @@ def test_calc_status_modal_shows_three_factors(
     )
     wait_for_htmx(page)
 
-    # Must contain all three factor titles
+    # Must contain all four factor titles
     content = page.content()
     assert "Sources = Uses" in content, "modal should show Sources = Uses factor"
     assert "DSCR" in content, "modal should show DSCR factor"
     assert "LTV" in content, "modal should show LTV factor"
+    assert "Account Balance" in content, "modal should show Account Balance factor"
 
-    # Must render 3 status rows
+    # Must render 4 status rows
     rows = page.locator('.calc-status-row')
-    assert rows.count() == 3, f"Expected 3 calc-status rows, got {rows.count()}"
+    assert rows.count() == 4, f"Expected 4 calc-status rows, got {rows.count()}"
 
 
 def test_calc_status_pill_visible_in_topbar(

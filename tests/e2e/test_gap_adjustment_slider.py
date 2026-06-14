@@ -55,7 +55,7 @@ def test_slider_drawer_renders_and_persists_phantom_rows(
     ) as c:
         r0 = c.post(
             f"/api/models/{model_id}/sliders",
-            json={"revenue_delta_monthly": "100"},
+            json={"revenue_delta_annual": "100"},
         )
         assert r0.status_code == 200, r0.text
 
@@ -77,10 +77,16 @@ def test_slider_drawer_renders_and_persists_phantom_rows(
     }
     cookies = {"vd_session": cookie} if cookie else {}
     with httpx.Client(base_url=base_url, headers=headers, cookies=cookies, timeout=30) as c:
+        # Values are aligned to the slider step grid (rev step=1200, opex=500,
+        # pp=1000) so step 6 can assert the sliders pre-fill to these exact
+        # numbers. A non-grid value (e.g. 500 on a 1200 step) is faithfully
+        # persisted but the <input type=range> snaps its *displayed* value to
+        # the nearest grid point on reload — that's a browser widget quirk, not
+        # a persistence bug, so we avoid it here.
         r = c.post(
             f"/api/models/{model_id}/sliders",
             json={
-                "revenue_delta_monthly": "500",
+                "revenue_delta_annual": "1200",
                 "opex_delta_annual": "-3000",
                 "pp_delta": "-25000",
             },
@@ -88,9 +94,12 @@ def test_slider_drawer_renders_and_persists_phantom_rows(
         assert r.status_code == 200, r.text
         body = r.json()
 
-    # 5. Response shape contract
+    # 5. Response shape contract.
+    # revenue_delta_annual round-trips through a monthly phantom (annual / 12
+    # stored, × 12 echoed), so it can pick up sub-cent rounding drift — compare
+    # with tolerance. opex/pp are stored directly and stay exact.
     assert body["has_any_adjustment"] is True
-    assert Decimal(body["revenue_delta_monthly"]) == Decimal("500")
+    assert abs(Decimal(body["revenue_delta_annual"]) - Decimal("1200")) < Decimal("0.01")
     assert Decimal(body["opex_delta_annual"]) == Decimal("-3000")
     assert Decimal(body["pp_delta"]) == Decimal("-25000")
     # DSCR / equity_required / total_project_cost present (post-compute happened)
@@ -106,7 +115,7 @@ def test_slider_drawer_renders_and_persists_phantom_rows(
     # ±1 step tolerance rather than exact match.
     rev_val = int(page.locator("#gap-slider-rev").input_value())
     pp_val = int(page.locator("#gap-slider-pp").input_value())
-    assert abs(rev_val - 500) <= 100, f"revenue slider didn't pre-fill near 500: {rev_val}"
+    assert abs(rev_val - 1200) <= 600, f"revenue slider didn't pre-fill near 1200: {rev_val}"
     assert abs(pp_val - (-25000)) <= 1000, f"pp slider didn't pre-fill near -25000: {pp_val}"
 
     # Pill yellow override: text says "Balanced w/ adjustments" OR underlying real
@@ -139,13 +148,13 @@ def test_slider_reset_zeroes_phantoms(
         # Set non-zero
         c.post(
             f"/api/models/{model_id}/sliders",
-            json={"revenue_delta_monthly": "1000"},
+            json={"revenue_delta_annual": "1000"},
         )
         # Reset
         r = c.post(
             f"/api/models/{model_id}/sliders",
             json={
-                "revenue_delta_monthly": "0",
+                "revenue_delta_annual": "0",
                 "opex_delta_annual": "0",
                 "pp_delta": "0",
             },
@@ -175,7 +184,7 @@ def test_slider_perimeter_blocks_direct_phantom_mutation(
         # Materialize phantom rev row
         c.post(
             f"/api/models/{model_id}/sliders",
-            json={"revenue_delta_monthly": "500"},
+            json={"revenue_delta_annual": "500"},
         )
         # Find the phantom IncomeStream
         r = c.get(f"/api/models/{model_id}/income-streams")
