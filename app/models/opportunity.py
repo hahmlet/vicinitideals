@@ -310,50 +310,36 @@ class Opportunity(Base):
         """unit_count with Parcel fallback. Pass parcel to avoid extra query."""
         if self.units is not None:
             return self.units
-        return getattr(parcel, "unit_count", None) if parcel else (
-            self.parcel.unit_count if self.parcel else None
-        )
+        return getattr(parcel, "unit_count", None) if parcel else None
 
     def effective_building_sqft(self, parcel: "Parcel | None" = None) -> object | None:
         """building_sqft with Parcel fallback."""
         if self.gba_sqft is not None:
             return self.gba_sqft
-        return getattr(parcel, "building_sqft", None) if parcel else (
-            self.parcel.building_sqft if self.parcel else None
-        )
+        return getattr(parcel, "building_sqft", None) if parcel else None
 
     # ── Display properties (use these in all templates, never raw columns) ─
     # NULL on Opportunity = defer to Parcel (county-authoritative seed).
 
     @builtins.property
     def display_units(self) -> int | None:
-        if self.units is not None:
-            return self.units
-        return self.parcel.unit_count if self.parcel else None
+        return self.units
 
     @builtins.property
     def display_sqft(self) -> object | None:
-        if self.gba_sqft is not None:
-            return self.gba_sqft
-        return self.parcel.building_sqft if self.parcel else None
+        return self.gba_sqft
 
     @builtins.property
     def display_year_built(self) -> int | None:
-        if self.year_built is not None:
-            return self.year_built
-        return self.parcel.year_built if self.parcel else None
+        return self.year_built
 
     @builtins.property
     def display_lot_sqft(self) -> object | None:
-        if self.lot_sqft is not None:
-            return self.lot_sqft
-        return self.parcel.lot_sqft if self.parcel else None
+        return self.lot_sqft
 
     @builtins.property
     def display_property_type(self) -> str | None:
-        if self.property_type:
-            return self.property_type
-        return self.parcel.rlis_land_use if self.parcel else None
+        return self.property_type
 
     # ── Compatibility synonyms (keep existing code working) ───────────────
     listing_url = synonym("source_url")
