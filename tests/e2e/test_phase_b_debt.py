@@ -445,9 +445,11 @@ def test_phase_b_debt(tc: dict, _seed_page, base_url: str) -> None:
     # bridge/retirement writeback in _auto_size_debt_modules pass-stable and the
     # wizard seed helper fills per-loan LTV (so the construction loan sizes at
     # 100% LTC, not the default).
+    _persisted_ltv = (mod.get("source") or {}).get("ltv_pct")
     _balance_off = abs(principal - (base + actual_amt)) >= Decimal("1")
     assert not _balance_off, (
-        f"Balance check failed: P={principal} != base={base} + amt={actual_amt}"
+        f"Balance check failed: P={principal} != base={base} + amt={actual_amt} "
+        f"(construction module persisted ltv_pct={_persisted_ltv!r})"
     )
 
     # Invariant 2: formula consistency — back-solve effective N

@@ -340,17 +340,24 @@ def run_deal_setup_wizard(
     if dscr_input.count() > 0 or ltv_present:
         if dscr_input.count() > 0 and dscr_input.first.is_visible():
             dscr_input.first.fill(dscr_minimum)
-        if ltv_present and debt_terms:
+        if debt_terms:
             for dt, terms in debt_terms.items():
-                if "ltv_pct" in terms:
-                    ltv_input = page.locator(f'[name="{dt}_ltv_pct"]').first
-                    if ltv_input.count() > 0:
-                        ltv_input.fill(str(terms["ltv_pct"]))
-                        got = ltv_input.input_value()
-                        assert got == str(terms["ltv_pct"]), (
-                            f"{dt}_ltv_pct did not accept {terms['ltv_pct']} "
-                            f"(got {got!r}) — Step 5 likely had not swapped in"
-                        )
+                if "ltv_pct" not in terms:
+                    continue
+                ltv_input = page.locator(f'[name="{dt}_ltv_pct"]').first
+                # The caller explicitly asked to cap this loan, so its input MUST
+                # be on Step 5. If it is missing the deal would silently size at
+                # the default cap — fail loudly with the rendered step instead.
+                assert ltv_input.count() > 0, (
+                    f"{dt}_ltv_pct input not found on Step 5 — debt row missing "
+                    f"(step body:\n{page.locator('#deal-setup-wizard .wizard-body').inner_text()[:600]})"
+                )
+                ltv_input.fill(str(terms["ltv_pct"]))
+                got = ltv_input.input_value()
+                assert got == str(terms["ltv_pct"]), (
+                    f"{dt}_ltv_pct did not accept {terms['ltv_pct']} "
+                    f"(got {got!r}) — Step 5 likely had not swapped in"
+                )
         _wizard_click_next_or_review(page)
 
     # Step 6 — Review + Finish
