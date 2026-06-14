@@ -25,15 +25,27 @@ JSONB on `Project` (not a separate table) — field reference in FINANCIAL_MODEL
 
 ## 1. Entity Hierarchy
 
-The market-data entities link as: Parcel (parcel_id FK, nullable) <- Opportunity (opportunity_id FK) <- Project -> Deal/Scenario
+> **⚠️ Parcel intelligence DECOMMISSIONED (migration 0113, 2026-06-14).** The entire
+> parcel/county-GIS subsystem was removed: `parcels` (446K rows) and `parcel_transformations`
+> tables dropped; `opportunities.parcel_id`, `opportunities.parcel_conflicts_ack`, and
+> `projects.parcel_id` columns dropped; parcel scrapers, seeding, enrichment, geo matching,
+> and reconciliation code deleted. **Sections 2, 3, and 4 below describe the removed subsystem
+> and are retained for historical reference only — they no longer reflect the live schema.**
+> Physical attributes now live exclusively on `Opportunity` own-columns (no Parcel fallback).
+> Pre-drop data backed up to `/root/backups` on VM 114. Kept: `Opportunity.apn` /
+> `apn_normalized` and manual jurisdiction fields. KNN comps + JSON export/import read
+> Opportunity own-columns. (See DC-5c in the parcel-decommission roadmap.)
 
-Physical attributes (units, gba_sqft, year_built, lot_sqft, property_type) live as nullable columns on Opportunity. NULL = read from Parcel (county-authoritative seed). Non-null = permanent user override. Access via display_* properties only -- never raw columns.
+The financial entities link as: Opportunity (opportunity_id FK, nullable) <- Project -> Deal/Scenario
+
+Physical attributes (units, gba_sqft, year_built, lot_sqft, property_type) live as nullable columns on Opportunity. NULL = unknown (no county seed anymore). Non-null = user-entered or scraped (Crexi) value. Access via display_* properties only -- never raw columns.
 
 > **Removed (migration 0072):** Building entity, buildings table, scraped_listings table (renamed to opportunities), deal_opportunities junction, project_parcels junction, opportunity_buildings junction, standalone unit_mix table (JSONB on Project now). ScrapedListing remains as a Python import alias only.
+>
+> **Removed (migration 0113):** Parcel entity + `parcels` table, ParcelTransformation + `parcel_transformations` table, `opportunities.parcel_id` (+FK), `opportunities.parcel_conflicts_ack`, `projects.parcel_id` (+FK). Parcel/GIS scrapers, seeding, enrichment, and reconciliation modules deleted.
 
 | Entity | Table | Purpose | Key |
 |---|---|---|---|
-| **Parcel** | `parcels` | GIS/assessor ground truth for a physical tax lot | `apn` (unique) |
 | **Opportunity** | `opportunities` | Unified investment target (scraped or manually created); was scraped_listings | `(source, source_id)` unique |
 | **Broker** | `brokers` | Contact from listing source (Crexi/LoopNet) | `crexi_broker_id` (unique) |
 | **IngestJob** | `ingest_jobs` | Telemetry record for a scrape run | `id` (UUID) |
@@ -147,11 +159,10 @@ Read-side helpers already in `app/engines/cashflow.py`:
 
 ### Relationship Cardinalities
 
-- One Opportunity <-> one Parcel (optional; linked via parcel matching service)
 - One Opportunity <- many Projects (lineage FK; physical data deep-copied at project create)
-- One Parcel <- many Opportunities (same property listed multiple times)
-- Many ProjectParcels ↔ one Parcel (parcel can be in multiple deals)
-- Many ProjectParcels ↔ one Opportunity (deal can include multiple parcels)
+
+> Parcel relationships removed in migration 0113 (parcel decommission). Opportunities no
+> longer link to a Parcel; physical data lives on Opportunity own-columns.
 
 ---
 
