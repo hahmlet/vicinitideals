@@ -2995,36 +2995,6 @@ async def billing_embedded_mock_create_session(
     return JSONResponse({"clientSecret": client_secret})
 
 
-@router.post("/ui/admin/rlis-refresh")
-async def admin_rlis_refresh(
-    request: Request,
-    session: DBSession,
-) -> JSONResponse:
-    """
-    Dispatch rlis_quarterly_refresh_task to the Celery default queue.
-    Assumes rlis_delta.py has already been run (cache + sidecar are fresh).
-    Returns the Celery task ID.
-    """
-    from app.tasks.parcel_seed import rlis_quarterly_refresh_task
-    user = await _get_user(session, request)
-    _require_settings_owner(user)
-    result = rlis_quarterly_refresh_task.delay()
-    return JSONResponse({"task_id": result.id, "status": "queued"})
-
-
-@router.post("/ui/admin/seed-rlis")
-async def admin_seed_rlis(
-    request: Request,
-    session: DBSession,
-) -> JSONResponse:
-    """Dispatch seed_rlis_task — re-seeds parcels from the cached taxlot GeoJSON."""
-    from app.tasks.parcel_seed import seed_rlis_task
-    user = await _get_user(session, request)
-    _require_settings_owner(user)
-    result = seed_rlis_task.delay()
-    return JSONResponse({"task_id": result.id, "status": "queued"})
-
-
 @router.post("/ui/admin/backfill-listing-buckets")
 async def admin_backfill_listing_buckets(
     session: DBSession,
@@ -3064,19 +3034,6 @@ async def admin_backfill_listing_buckets(
 
     await session.commit()
     return JSONResponse({"updated": updated})
-
-
-@router.post("/ui/admin/classify-parcels")
-async def admin_classify_parcels(
-    request: Request,
-    session: DBSession,
-) -> JSONResponse:
-    """Dispatch classify_parcels_task — classifies parcels with data but no bucket."""
-    from app.tasks.parcel_seed import classify_parcels_task
-    user = await _get_user(session, request)
-    _require_settings_owner(user)
-    result = classify_parcels_task.delay()
-    return JSONResponse({"task_id": result.id, "status": "queued"})
 
 
 @router.get("/deals/new", response_class=HTMLResponse)
@@ -3410,19 +3367,6 @@ async def create_deal(
             opportunity.opp_status = OpportunityStatus.active.value
             if not opportunity.name:
                 opportunity.name = name
-            # Enrich parcel link from APN/address if missing
-            if opportunity.parcel_id is None and (opportunity.apn or opportunity.address_normalized):
-                try:
-                    from app.scrapers.parcel_enrichment import enrich_parcel as _enrich
-                    _parcel = await _enrich(
-                        session,
-                        address=opportunity.address_normalized or opportunity.address_raw,
-                        apn=opportunity.apn,
-                    )
-                    if _parcel is not None:
-                        opportunity.parcel_id = _parcel.id
-                except Exception:
-                    pass
             await session.flush()
 
     _opportunity_is_new = False
@@ -3440,19 +3384,6 @@ async def create_deal(
         session.add(opportunity)
         await session.flush()
     else:
-        # Existing-opp path: ensure parcel is linked on the Opportunity itself.
-        if opportunity.parcel_id is None and (opportunity.apn or opportunity.address_normalized):
-            try:
-                from app.scrapers.parcel_enrichment import enrich_parcel as _enrich
-                _p = await _enrich(
-                    session,
-                    address=opportunity.address_normalized or opportunity.address_raw,
-                    apn=opportunity.apn,
-                )
-                if _p is not None:
-                    opportunity.parcel_id = _p.id
-            except Exception:
-                pass
         await session.flush()
 
     # Deal → Scenario (financial plan) → Project → Opportunity
@@ -4433,240 +4364,6 @@ def _build_parcel_row(p: Parcel) -> dict:
         "overridden_fields": [],
         "scraped_at_fmt": p.scraped_at.strftime("%b %-d, %Y") if p.scraped_at else None,
     }
-
-
-_PARCEL_PAGE_SIZE = 500
-
-# Oregon DOR state class → display label mapping (grouped for filter UI)
-_STATE_CLASS_GROUPS: dict[str, tuple[str, list[str]]] = {
-    "residential":  ("Residential (SFR)",     ["101", "100", "541"]),
-    "multifamily":  ("Multi-Family / Apt",     ["551", "550"]),
-    "commercial":   ("Commercial",             ["201", "200"]),
-    "industrial":   ("Industrial",             ["401", "400"]),
-    "farm":         ("Farm / Timber",          ["701", "700", "301", "300", "303"]),
-    "exempt":       ("Exempt / Gov / Utility", ["801", "800", "641", "640", "601", "600"]),
-}
-
-
-def _parcel_jurisdiction_clause(jurisdictions: list[str]):
-    """Build a SQL clause matching Parcel.jurisdiction, with county-scoped unincorporated.
-
-    City values match ``jurisdiction`` directly. The special ``uninc:<County>`` prefix
-    matches ``jurisdiction='unincorporated' AND county=<County>``, so the filter can
-    distinguish unincorporated Multnomah from unincorporated Clackamas.
-    """
-    cities: list[str] = []
-    uninc_counties: list[str] = []
-    for j in jurisdictions:
-        if j.startswith("uninc:"):
-            uninc_counties.append(j[6:])
-        else:
-            cities.append(j)
-    clauses = []
-    if cities:
-        clauses.append(Parcel.jurisdiction.in_(cities))
-    if uninc_counties:
-        clauses.append(
-            and_(Parcel.jurisdiction == "unincorporated", Parcel.county.in_(uninc_counties))
-        )
-    if not clauses:
-        return literal(False)
-    return or_(*clauses) if len(clauses) > 1 else clauses[0]
-
-
-async def _get_parcel_jurisdictions(session) -> list[dict]:
-    """Return sorted {value, label} entries for the parcels jurisdiction filter.
-
-    Splits the literal ``unincorporated`` jurisdiction into per-county rows
-    (``uninc:Clackamas``, ``uninc:Multnomah``) so the UI can filter each
-    unincorporated area separately.
-    """
-    rows = (await session.execute(
-        select(Parcel.jurisdiction, Parcel.county, func.count())
-        .where(Parcel.jurisdiction.isnot(None))
-        .group_by(Parcel.jurisdiction, Parcel.county)
-    )).all()
-
-    city_totals: dict[str, int] = {}
-    uninc_totals: dict[str, int] = {}
-    for jurisdiction_name, county, cnt in rows:
-        if jurisdiction_name == "unincorporated":
-            key = (county or "Unknown").strip()
-            uninc_totals[key] = uninc_totals.get(key, 0) + cnt
-        else:
-            city_totals[jurisdiction_name] = city_totals.get(jurisdiction_name, 0) + cnt
-
-    out: list[dict] = [
-        {"value": name, "label": f"{name.title()} ({cnt})"}
-        for name, cnt in sorted(city_totals.items())
-    ]
-    for county, cnt in sorted(uninc_totals.items()):
-        out.append({"value": f"uninc:{county}", "label": f"Unin. {county} ({cnt})"})
-    return out
-
-
-def _parcel_base_stmt(
-    q: str, zoning: list[str], jurisdiction,
-    use_group, min_acres: str, max_acres: str,
-    min_year: str, max_year: str,
-):
-    stmt = select(Parcel).order_by(Parcel.apn)
-    if q:
-        # Also match apn_normalized with the punctuation-stripped query so searches
-        # like "1S3E10AD -05800" / "1S3E10AD 05800" / "1S3E10AD05800" all resolve
-        # to the same parcel regardless of how the stored APN is formatted.
-        q_compact = normalize_apn(q)
-        clauses = [Parcel.apn.ilike(f"%{q}%"), Parcel.address_normalized.ilike(f"%{q}%")]
-        if q_compact:
-            clauses.append(Parcel.apn_normalized.ilike(f"%{q_compact}%"))
-        stmt = stmt.where(or_(*clauses))
-    if zoning:
-        stmt = stmt.where(Parcel.zoning_code.in_(zoning))
-    jurs = _as_list(jurisdiction)
-    if jurs:
-        stmt = stmt.where(_parcel_jurisdiction_clause(jurs))
-    use_groups = [g for g in _as_list(use_group) if g in _STATE_CLASS_GROUPS]
-    if use_groups:
-        codes: list[str] = []
-        for g in use_groups:
-            codes.extend(_STATE_CLASS_GROUPS[g][1])
-        stmt = stmt.where(Parcel.state_class.in_(codes))
-    if min_acres:
-        try:
-            stmt = stmt.where(Parcel.gis_acres >= float(min_acres))
-        except ValueError:
-            pass
-    if max_acres:
-        try:
-            stmt = stmt.where(Parcel.gis_acres <= float(max_acres))
-        except ValueError:
-            pass
-    if min_year:
-        try:
-            stmt = stmt.where(Parcel.year_built >= int(min_year))
-        except ValueError:
-            pass
-    if max_year:
-        try:
-            stmt = stmt.where(Parcel.year_built <= int(max_year))
-        except ValueError:
-            pass
-    return stmt
-
-
-def _parcel_filter_ctx(
-    q: str, zoning: list[str], jurisdiction,
-    use_group, min_acres: str, max_acres: str,
-    min_year: str, max_year: str,
-) -> dict:
-    return {
-        "q": q, "zoning": zoning,
-        "jurisdiction": _as_list(jurisdiction),
-        "use_group": _as_list(use_group),
-        "min_acres": min_acres, "max_acres": max_acres,
-        "min_year": min_year, "max_year": max_year,
-        "use_group_options": [(k, v[0]) for k, v in _STATE_CLASS_GROUPS.items()],
-    }
-
-
-@router.get("/parcels", response_class=HTMLResponse)
-async def parcels_page(
-    request: Request, session: DBSession,
-    q: str = Query(default=""),
-    zoning: list[str] = Query(default=[]),
-    jurisdiction: list[str] = Query(default=[]),
-    use_group: list[str] = Query(default=[]),
-    min_acres: str = Query(default=""),
-    max_acres: str = Query(default=""),
-    min_year: str = Query(default=""),
-    max_year: str = Query(default=""),
-    offset: int = Query(default=0, ge=0),
-) -> HTMLResponse:
-    user = await _get_user(session, request)
-    dedup_count, conflicts_count = await _get_counts(session)
-    base = _parcel_base_stmt(q, zoning, jurisdiction, use_group, min_acres, max_acres, min_year, max_year)
-    filtered_count, total = await asyncio.gather(
-        session.execute(select(func.count()).select_from(base.subquery())),
-        session.execute(select(func.count()).select_from(Parcel)),
-    )
-    filtered_count = int(filtered_count.scalar_one())
-    total = int(total.scalar_one())
-    parcels_list = list((await session.execute(base.offset(offset).limit(_PARCEL_PAGE_SIZE))).scalars())
-    zoning_codes_stmt = select(Parcel.zoning_code).where(Parcel.zoning_code.isnot(None)).distinct().order_by(Parcel.zoning_code)
-    if jurisdiction:
-        zoning_codes_stmt = zoning_codes_stmt.where(_parcel_jurisdiction_clause(jurisdiction))
-    zoning_codes_result = (await session.execute(zoning_codes_stmt)).all()
-    zoning_codes = [r[0] for r in zoning_codes_result]
-    jurisdictions = await _get_parcel_jurisdictions(session)
-    parcels_data = [_build_parcel_row(p) for p in parcels_list]
-    return templates.TemplateResponse(request, "parcels.html", {
-        "parcels": parcels_data,
-        "total_count": total,
-        "filtered_count": filtered_count,
-        "page_size": _PARCEL_PAGE_SIZE,
-        "offset": offset,
-        "zoning_codes": zoning_codes,
-        "jurisdictions": jurisdictions,
-        **_parcel_filter_ctx(q, zoning, jurisdiction, use_group, min_acres, max_acres, min_year, max_year),
-        **_base_ctx(user, dedup_count, "parcels", conflicts_count=conflicts_count),
-    })
-
-
-@router.get("/ui/parcels/rows", response_class=HTMLResponse)
-async def parcels_rows(
-    request: Request, session: DBSession,
-    q: str = Query(default=""),
-    zoning: list[str] = Query(default=[]),
-    jurisdiction: list[str] = Query(default=[]),
-    use_group: list[str] = Query(default=[]),
-    min_acres: str = Query(default=""),
-    max_acres: str = Query(default=""),
-    min_year: str = Query(default=""),
-    max_year: str = Query(default=""),
-    offset: int = Query(default=0, ge=0),
-) -> HTMLResponse:
-    base = _parcel_base_stmt(q, zoning, jurisdiction, use_group, min_acres, max_acres, min_year, max_year)
-    filtered_count, total = await asyncio.gather(
-        session.execute(select(func.count()).select_from(base.subquery())),
-        session.execute(select(func.count()).select_from(Parcel)),
-    )
-    filtered_count = int(filtered_count.scalar_one())
-    total = int(total.scalar_one())
-    parcels_list = list((await session.execute(base.offset(offset).limit(_PARCEL_PAGE_SIZE))).scalars())
-    parcels_data = [_build_parcel_row(p) for p in parcels_list]
-    return templates.TemplateResponse(request, "partials/parcels_rows.html", {
-        "parcels": parcels_data,
-        "total_count": total,
-        "filtered_count": filtered_count,
-        "page_size": _PARCEL_PAGE_SIZE,
-        "offset": offset,
-        **_parcel_filter_ctx(q, zoning, jurisdiction, use_group, min_acres, max_acres, min_year, max_year),
-    })
-
-
-@router.get("/ui/parcels/{parcel_id}/detail", response_class=HTMLResponse)
-async def parcel_detail(request: Request, parcel_id: UUID, session: DBSession) -> HTMLResponse:
-    parcel = await session.get(Parcel, parcel_id)
-    if parcel is None:
-        return HTMLResponse("<p class='text-muted'>Not found.</p>")
-    return templates.TemplateResponse(request, "partials/parcel_detail.html", {"p": _build_parcel_row(parcel)})
-
-
-@router.post("/ui/parcels/{parcel_id}/gis-refresh", response_class=HTMLResponse)
-async def parcel_gis_refresh(request: Request, parcel_id: UUID, session: DBSession) -> HTMLResponse:
-    """Pull fresh GIS data for a parcel from the appropriate county source and re-render the detail panel."""
-    from app.scrapers.parcel_enrichment import enrich_parcel
-
-    parcel = await session.get(Parcel, parcel_id)
-    if parcel is None:
-        return HTMLResponse("<p class='text-muted'>Parcel not found.</p>", status_code=404)
-
-    address = parcel.address_normalized or parcel.address_raw
-    updated = await enrich_parcel(session, address=address, apn=parcel.apn)
-    await session.commit()
-
-    result = updated or parcel
-    return templates.TemplateResponse(request, "partials/parcel_detail.html", {"p": _build_parcel_row(result)})
 
 
 # ---------------------------------------------------------------------------
