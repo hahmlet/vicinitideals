@@ -7,12 +7,19 @@ import pytest
 
 from app.schemas.broker import BrokerCreate
 from app.schemas.scraped_listing import ScrapedListingCreate
-from app.scrapers.crexi import CrxiScraper, _broker_key, _parse_summary_details
+from app.scrapers.crexi import (
+    CrxiScraper,
+    _broker_key,
+    _build_proxy_url,
+    _parse_summary_details,
+)
 
 
 class _FakeResponse:
-    def __init__(self, payload: dict | list):
+    def __init__(self, payload: dict | list, *, ok: bool = True, status_code: int = 200):
         self._payload = payload
+        self.ok = ok
+        self.status_code = status_code
 
     def json(self):
         return self._payload
@@ -23,7 +30,7 @@ class _FakeResponse:
 
 class _FakeAsyncSession:
     last_impersonate: str | None = None
-    search_skips: list[int] = []
+    search_cities: list[str | None] = []
     sleep_calls: list[float] = []
 
     def __init__(self, *args, impersonate: str | None = None, headers=None, **kwargs):
@@ -37,22 +44,26 @@ class _FakeAsyncSession:
         return None
 
     async def post(self, url: str, json: dict | None = None, **kwargs):
+        # Auth is disabled, so the scraper fetches one slice per city (skip=0),
+        # not skip-based pagination. Return distinct listings per city slice.
         assert url == "https://api.crexi.com/assets/search"
-        skip = (json or {}).get("skip", 0)
-        _FakeAsyncSession.search_skips.append(skip)
-        if skip == 0:
+        body = json or {}
+        cities = body.get("cities") or []
+        city = cities[0] if cities else None
+        _FakeAsyncSession.search_cities.append(city)
+        if city == "Portland":
             return _FakeResponse(
                 {
                     "data": [
                         {"id": 101, "urlSlug": "gresham-101"},
                         {"id": 102, "urlSlug": "gresham-102"},
                     ],
-                    "totalCount": 3,
+                    "totalCount": 2,
                 }
             )
-        if skip == 2:
-            return _FakeResponse({"data": [{"id": 103, "urlSlug": "gresham-103"}], "totalCount": 3})
-        raise AssertionError(f"Unexpected skip value: {skip}")
+        if city == "Gresham":
+            return _FakeResponse({"data": [{"id": 103, "urlSlug": "gresham-103"}], "totalCount": 1})
+        raise AssertionError(f"Unexpected city: {city}")
 
     async def get(self, url: str, **kwargs):
         if url.endswith("/101"):
@@ -196,13 +207,19 @@ async def test_fetch_all_paginates_maps_listings_and_deduplicates_brokers(monkey
 
     monkeypatch.setattr("app.scrapers.crexi.AsyncSession", _FakeAsyncSession)
     monkeypatch.setattr("app.scrapers.crexi.asyncio.sleep", _fake_sleep)
+    _FakeAsyncSession.search_cities = []
+    _FakeAsyncSession.sleep_calls = []
 
     scraper = CrxiScraper(page_size=2, batch_size=2, batch_delay_seconds=0.3)
-    listings, brokers = await scraper.fetch_all()
+    # polygons=[] skips post-fetch geo clipping so the test is deterministic.
+    listings, brokers, source_total = await scraper.fetch_all(polygons=[])
 
     assert _FakeAsyncSession.last_impersonate == "chrome136"
-    assert _FakeAsyncSession.search_skips == [0, 2]
-    assert _FakeAsyncSession.sleep_calls == [0.3]
+    assert _FakeAsyncSession.search_cities == ["Portland", "Gresham"]
+    assert source_total == 3  # 2 (Portland) + 1 (Gresham)
+    # batch_delay honored on every sleep (exact count is incidental to call structure).
+    assert _FakeAsyncSession.sleep_calls
+    assert all(delay == 0.3 for delay in _FakeAsyncSession.sleep_calls)
 
     assert all(isinstance(item, ScrapedListingCreate) for item in listings)
     assert len(listings) == 3
@@ -210,7 +227,7 @@ async def test_fetch_all_paginates_maps_listings_and_deduplicates_brokers(monkey
     first = listings[0]
     assert first.source == "crexi"
     assert first.source_id == "101"
-    assert first.source_url == "https://www.crexi.com/properties/gresham-101"
+    assert first.source_url == "https://www.crexi.com/properties/101/gresham-101"
     assert first.listing_name == "Gresham 12-Unit"
     assert first.asking_price == Decimal("1250000")
     assert first.cap_rate == Decimal("0.0625")
@@ -229,3 +246,40 @@ async def test_fetch_all_paginates_maps_listings_and_deduplicates_brokers(monkey
     assert brokers[0].is_platinum is True
     assert brokers[1].brokerage_name == "NW Apartments"
     assert _broker_key({"id": 5001, "globalId": "broker-5001"}) == "crexi:5001"
+
+
+def test_build_proxy_url_off_by_default_even_with_creds(monkeypatch):
+    """Default: go direct. Dead residential proxy must NOT be used even if creds remain."""
+    from app.config import settings
+
+    monkeypatch.setattr(settings, "crexi_use_proxy", False, raising=False)
+    monkeypatch.setattr(settings, "proxyon_residential_username", "u", raising=False)
+    monkeypatch.setattr(settings, "proxyon_residential_password", "p", raising=False)
+    monkeypatch.setattr(settings, "proxyon_residential_host", "residential.proxyon.io", raising=False)
+    monkeypatch.setattr(settings, "proxyon_residential_port", 1111, raising=False)
+
+    assert _build_proxy_url() is None
+
+
+def test_build_proxy_url_used_when_flag_on(monkeypatch):
+    """Opt-in: with the flag on and creds present, the proxy URL is built."""
+    from app.config import settings
+
+    monkeypatch.setattr(settings, "crexi_use_proxy", True, raising=False)
+    monkeypatch.setattr(settings, "proxyon_residential_username", "u", raising=False)
+    monkeypatch.setattr(settings, "proxyon_residential_password", "p", raising=False)
+    monkeypatch.setattr(settings, "proxyon_residential_host", "residential.proxyon.io", raising=False)
+    monkeypatch.setattr(settings, "proxyon_residential_port", 1111, raising=False)
+
+    assert _build_proxy_url() == "http://u:p@residential.proxyon.io:1111"
+
+
+def test_build_proxy_url_none_when_flag_on_but_no_creds(monkeypatch):
+    """Flag on but no creds → still direct (no malformed proxy URL)."""
+    from app.config import settings
+
+    monkeypatch.setattr(settings, "crexi_use_proxy", True, raising=False)
+    monkeypatch.setattr(settings, "proxyon_residential_username", "", raising=False)
+    monkeypatch.setattr(settings, "proxyon_residential_password", "", raising=False)
+
+    assert _build_proxy_url() is None

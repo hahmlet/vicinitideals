@@ -86,6 +86,13 @@ class Settings(BaseSettings):
     crexi_username: str = ""
     crexi_password: str = ""
 
+    # Crexi fetch path. Default OFF: scrape Crexi's API directly from the app host.
+    # The legacy residential proxy (ProxyOn) is gone/expired and returns CONNECT 403,
+    # which silently failed every nightly run. Direct fetch from VM 114 works for our
+    # low volume (Portland+Gresham, ~100 listings, once daily). Flip to True only if a
+    # working residential proxy is reconfigured AND Crexi starts blocking the host IP.
+    crexi_use_proxy: bool = False
+
     # Crexi listing lifecycle — auto-archive de-listed listings.
     # A Crexi opportunity not re-seen in `stale_days` (or whose source status
     # says sold/off-market) is archived (data kept, hidden from active views).

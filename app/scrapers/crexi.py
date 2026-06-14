@@ -47,9 +47,18 @@ _AUTH_CITIES: set[str] = set()
 
 
 def _build_proxy_url() -> str | None:
-    """Return a Proxyon residential proxy URL if credentials are configured."""
+    """Return a Proxyon residential proxy URL, or None to fetch direct.
+
+    Direct fetch is the default: ``crexi_use_proxy`` is off because the legacy
+    residential proxy expired and returned CONNECT 403 on every run, silently
+    breaking the nightly scrape. Crexi's API is reachable directly from the app
+    host at our volume. Set ``crexi_use_proxy=True`` (with valid creds) only if a
+    working proxy is restored and Crexi begins blocking the host IP.
+    """
     try:
         from app.config import settings  # local import avoids circular deps in tests
+        if not settings.crexi_use_proxy:
+            return None
         user = settings.proxyon_residential_username
         password = settings.proxyon_residential_password
         host = settings.proxyon_residential_host
