@@ -3902,12 +3902,11 @@ async def opportunity_wizard_step(
         })
 
     elif step == 2:
-        # Step 2: optional parcel/listing attachment.
-        # Form sends attach_type ('listing'|'parcel'|'') and attach_id (UUID str).
+        # Step 2: property linking was removed (parcel decommission); the step
+        # is now a pass-through that advances to the review screen.
         opp = await session.get(Opportunity, UUID(opp_id_str)) if opp_id_str else None
         if opp is None:
             return HTMLResponse("Opportunity not found", status_code=400)
-
 
         deal_type = str(form.get("deal_type", "value_add"))
         return templates.TemplateResponse(request, "opportunity_wizard.html", {
