@@ -1262,16 +1262,20 @@ async def _compute_project_cashflow(
                 cost_category="soft",
                 timing_type="first_day",
             ))
-        # NOTE: we deliberately do NOT force the endpoint's fix-point loop to
-        # re-size (no summary["needs_recompute"] here). Forcing multi-debt
-        # construction deals to iterate exposed a non-idempotency in the
-        # bridge/retirement writeback inside _auto_size_debt_modules — the
-        # construction loan principal drifts across passes (it can size below
-        # its own base cost), breaking the P == base + carry invariant. One-click
-        # Sources=Uses convergence therefore needs that writeback made
-        # pass-stable first; tracked as a follow-up. The CFSR reset in the
-        # compute endpoint still guarantees idempotency (no cross-click stacking
-        # / overflow), which is the load-bearing safety fix.
+        # Drive the endpoint's fix-point loop to re-size so the bond grows to
+        # cover the freshly-grown reserve and Sources=Uses balances in a single
+        # compute click. (Previously suppressed: forcing multi-debt construction
+        # deals to iterate was thought to expose a non-idempotency in the
+        # bridge/retirement writeback in _auto_size_debt_modules — the
+        # construction loan principal drifting below its own base cost — and a
+        # capitalized-interest runaway. PR #15's CFSR reset + overflow-safe
+        # accumulation + the endpoint's divergence guard neutralised both: the
+        # construction-loan principal is now pass-stable at base+carry, and a
+        # structurally insolvent deal stops at the divergence break leaving its
+        # residual gap as a user-visible signal instead of blowing up. Verified
+        # by tests/api/test_c2p_oneclick_convergence.py across IR/CI/IO carry
+        # types and the acquisition retire-and-replace structure.)
+        summary["needs_recompute"] = True
 
     # Persist float-earnings results so the UI can render the period-level
     # balance schedule + warnings without re-running compute. Always write —
