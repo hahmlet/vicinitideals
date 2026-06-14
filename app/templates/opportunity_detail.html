@@ -49,12 +49,6 @@
     <span style="font-size:13px">{{ opp.display_name }}</span>
   </div>
   <div style="display:flex;gap:8px">
-    {% if opp.parcel_id %}
-    <button type="button" class="btn btn-secondary"
-            onclick="openParcelMap('opportunity','{{ opp.id }}','{{ opp.display_name | replace("'","\\'") | safe }}')">
-      Parcels
-    </button>
-    {% endif %}
     {% if not opp.archived %}
     <form method="post" action="/ui/opportunities/{{ opp.id }}/archive" style="margin:0">
       <button type="submit" class="btn btn-secondary btn-sm">Archive</button>
