@@ -309,17 +309,32 @@ def run_deal_setup_wizard(
         _wizard_click_next_or_review(page)
 
     # Step 5 — Per-debt sizing (LTV / fixed / DSCR). The permanent-debt sizing
-    # MODE was already chosen on Step 1; this step collects the DSCR minimum
-    # AND every loan's per-loan LTV / LTC cap. Skipped when all debts have a
-    # source vehicle (which inherits sizing from the template).
+    # MODE was already chosen on Step 1; this step persists the DSCR minimum AND
+    # every loan's per-loan LTV / LTC cap. Skipped when all debts have a source
+    # vehicle (which inherits sizing from the template).
     #
-    # NOTE: the DSCR minimum field is ALWAYS in the DOM — rendered as a visible
-    # input in DSCR/dual-constraint mode and as a HIDDEN input otherwise. So a
-    # bare `dscr_minimum count > 0` check is always true and must NOT gate the
-    # per-loan LTV fills, or gap-fill deals silently keep each loan's default
-    # LTV (e.g. construction loan at 75% LTC) instead of what the caller asked
-    # for. Fill the DSCR minimum only when it's visible, and always fill the
-    # per-loan LTV caps when those inputs are present.
+    # Each wizard step is a server round-trip: the cap value is RENDERED
+    # server-side from previously-saved terms, so the helper must land on Step 5
+    # and fill the input *before* the "Review →" submit, or the loan keeps its
+    # default cap (e.g. construction loan at 75% LTC). Two footguns are guarded
+    # here:
+    #   1. The DSCR minimum field is ALWAYS in the DOM — visible in DSCR /
+    #      dual-constraint mode, a HIDDEN input otherwise. A bare
+    #      `dscr_minimum count > 0` check is always true and must NOT gate the
+    #      per-loan LTV fills.
+    #   2. The Step 4→5 transition settles via a generic network-idle wait,
+    #      which on slow CI runners can return before the swap lands in the DOM.
+    #      Reading the LTV inputs then misses them and the deal silently sizes at
+    #      its default cap. When the caller asked for per-loan LTV caps, wait
+    #      explicitly for Step 5 to be the rendered step, then assert each fill
+    #      stuck so a missed swap fails loudly instead of sizing wrong.
+    expect_ltv = bool(debt_terms) and any("ltv_pct" in t for t in debt_terms.values())
+    if expect_ltv:
+        # The step marker is a hidden input, so wait for "attached", not "visible".
+        page.wait_for_selector(
+            '#deal-setup-wizard input[name="step"][value="5"]',
+            state="attached", timeout=8000,
+        )
     dscr_input = page.locator('[name="dscr_minimum"]')
     ltv_present = page.locator('[name$="_ltv_pct"]').count() > 0
     if dscr_input.count() > 0 or ltv_present:
@@ -328,9 +343,14 @@ def run_deal_setup_wizard(
         if ltv_present and debt_terms:
             for dt, terms in debt_terms.items():
                 if "ltv_pct" in terms:
-                    ltv_input = page.locator(f'[name="{dt}_ltv_pct"]')
-                    if ltv_input.count() > 0 and ltv_input.is_visible():
+                    ltv_input = page.locator(f'[name="{dt}_ltv_pct"]').first
+                    if ltv_input.count() > 0:
                         ltv_input.fill(str(terms["ltv_pct"]))
+                        got = ltv_input.input_value()
+                        assert got == str(terms["ltv_pct"]), (
+                            f"{dt}_ltv_pct did not accept {terms['ltv_pct']} "
+                            f"(got {got!r}) — Step 5 likely had not swapped in"
+                        )
         _wizard_click_next_or_review(page)
 
     # Step 6 — Review + Finish
