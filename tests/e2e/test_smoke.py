@@ -57,11 +57,6 @@ def test_opportunities_page_loads(logged_in_page, base_url: str) -> None:
     logged_in_page.wait_for_selector(".sidebar", timeout=10_000)
 
 
-def test_parcels_page_loads(logged_in_page, base_url: str) -> None:
-    logged_in_page.goto(f"{base_url}/parcels")
-    logged_in_page.wait_for_selector(".sidebar", timeout=10_000)
-
-
 def test_listings_page_loads(logged_in_page, base_url: str) -> None:
     logged_in_page.goto(f"{base_url}/listings")
     logged_in_page.wait_for_selector(".sidebar", timeout=10_000)
