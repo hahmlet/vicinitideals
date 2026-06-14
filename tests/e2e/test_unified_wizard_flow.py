@@ -131,27 +131,39 @@ def _drive_timeline_wizard_in_flow(
     # Per-milestone durations — every non-anchor phase needs a duration before
     # approve un-disables.
     if phase_durations:
-        page.goto(f"/models/{model_id}/builder?module=timeline&wizard=1")
-        page.wait_for_selector("#module-panel-content", timeout=10_000)
-        wait_for_htmx(page)
         for mt_str, days in phase_durations.items():
             label = _PHASE_TYPE_LABELS.get(mt_str, mt_str.replace("_", " ").title())
-            row = page.locator(
-                f'#module-panel-content tr:has(td:has-text("{label}"))'
-            ).first
-            # Wait for the row to render before interacting. A bare count() > 0
-            # check races on a cold CI container — the first milestone row may
-            # not be painted yet, so the duration write was silently skipped, the
-            # milestone kept duration 0, and the approval gate stayed disabled.
-            # wait_for() fails loud if the row genuinely never appears.
-            row.wait_for(state="visible", timeout=10_000)
-            row.click()
-            page.wait_for_selector(
-                '#line-item-drawer [name="duration_days"]', timeout=8_000
+            # The drawer submit is an HTMX POST. On a cold/slow CI container the
+            # POST can be lost — the drawer not yet wired, or the write not
+            # committed before we move on — leaving the milestone at duration 0
+            # and the approval gate permanently disabled (a one-shot fill races,
+            # and re-checking approve later can't recover a write that never
+            # landed). Reload the panel, set the duration, then VERIFY it
+            # committed by reading the row back; retry the whole open-fill-submit
+            # until the row shows the duration, and fail loud if it never does.
+            committed = False
+            for _attempt in range(5):
+                page.goto(f"/models/{model_id}/builder?module=timeline&wizard=1")
+                page.wait_for_selector("#module-panel-content", timeout=10_000)
+                wait_for_htmx(page)
+                row = page.locator(
+                    f'#module-panel-content tr:has(td:has-text("{label}"))'
+                ).first
+                row.wait_for(state="visible", timeout=10_000)
+                if f"{days}d" in row.inner_text():
+                    committed = True
+                    break
+                row.click()
+                page.wait_for_selector(
+                    '#line-item-drawer [name="duration_days"]', timeout=8_000
+                )
+                page.fill('#line-item-drawer [name="duration_days"]', str(days))
+                page.click('#line-item-drawer button[type="submit"]')
+                wait_for_htmx(page)
+                page.wait_for_timeout(500)
+            assert committed, (
+                f"milestone {label} duration {days}d never committed after retries"
             )
-            page.fill('#line-item-drawer [name="duration_days"]', str(days))
-            page.click('#line-item-drawer button[type="submit"]')
-            wait_for_htmx(page)
 
 
 # ---------------------------------------------------------------------------
