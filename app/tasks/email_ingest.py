@@ -5,12 +5,11 @@ Flow
 1. Webhook handler creates InboundEmail row (status=pending) and queues this task.
 2. Task decodes raw MIME, extracts body_text and attachments, stores body_text in DB.
 3. LLM call extracts: address, asking_price, unit_count, property_type from subject+body.
-4. Parcel match via enrich_parcel() (best-effort, silent fail).
-5. Creates Deal + Scenario + Project + OperationalInputs (preliminary=True).
-6. Creates EmailDealSuggestion rows for each extracted field.
-7. Queues parse_proforma for any .xlsx attachments.
-8. Updates status → opportunity_created (or failed on exception).
-9. Sends notification email to org members.
+4. Creates Deal + Scenario + Project + OperationalInputs (preliminary=True).
+5. Creates EmailDealSuggestion rows for each extracted field.
+6. Queues parse_proforma for any .xlsx attachments.
+7. Updates status → opportunity_created (or failed on exception).
+8. Sends notification email to org members.
 
 Redis key schema
 ----------------

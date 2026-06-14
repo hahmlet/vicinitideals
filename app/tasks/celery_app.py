@@ -17,7 +17,6 @@ celery_app = Celery(
     include=[
         "app.tasks.scraper",
         "app.tasks.scenario",
-        "app.tasks.parcel_seed",
         "app.tasks.oregon_elicense",
         "app.tasks.export",
         "app.tasks.proforma_parse",
@@ -44,11 +43,6 @@ celery_app.conf.update(
         "scrape-crexi-daily": {
             "task": "app.tasks.scraper.scrape_crexi",
             "schedule": crontab(hour=6, minute=0),
-        },
-        # Parcel enrichment queue: drip-enrich Prime/Target every 2 minutes
-        "enrich-prime-target-parcels": {
-            "task": "app.tasks.parcel_seed.enrich_prime_target_parcels",
-            "schedule": crontab(minute="*/2"),
         },
         # Oregon eLicense: monthly enrichment sweep on 2nd at 05:00 UTC.
         # Re-enriches brokers whose license data is >30d old or never pulled.

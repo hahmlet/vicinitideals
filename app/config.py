@@ -86,25 +86,6 @@ class Settings(BaseSettings):
     crexi_username: str = ""
     crexi_password: str = ""
 
-    # Gresham parcel lookup (REAL-65)
-    gresham_arcgis_mapserver_url: str = "https://gis.greshamoregon.gov/ext/rest/services/Taxlots/MapServer"
-    gresham_arcgis_taxlot_layer_id: int = 0
-    gresham_arcgis_address_layer_id: int = 0
-    gresham_arcgis_timeout_seconds: float = 20.0
-
-    # Clackamas exact-address parcel lookup (REAL-68)
-    clackamas_maps_base_url: str = "https://maps.clackamas.us"
-    clackamas_maps_timeout_seconds: float = 20.0
-
-    # Oregon City exact-address parcel lookup (REAL-69)
-    oregoncity_arcgis_address_url: str = "https://maps.orcity.org/arcgis/rest/services/AddressPts_PUBLIC/MapServer/0/query"
-    oregoncity_arcgis_taxlot_url: str = "https://maps.orcity.org/arcgis/rest/services/Taxlots_PUBLIC/MapServer/0/query"
-    oregoncity_arcgis_timeout_seconds: float = 20.0
-
-    # Portland exact-address parcel lookup (REAL-67)
-    portlandmaps_base_url: str = "https://www.portlandmaps.com/arcgis/rest/services"
-    portlandmaps_timeout_seconds: float = 20.0
-
     # -------------------------------------------------------------------------
     # Realie.ai property data enrichment (https://realie.ai)
     # Free tier: 25 calls/month. Hard lock enforced in RealieEnricher.

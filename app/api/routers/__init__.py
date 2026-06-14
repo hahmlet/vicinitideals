@@ -8,7 +8,6 @@ from app.api.routers import (
     ingest,
     listings,
     models,
-    parcels,
     portfolios,
     projects,
     scenarios,
@@ -19,7 +18,6 @@ from app.api.routers import (
 ROUTERS = [
     users.router,
     projects.router,
-    parcels.router,
     deals.router,
     models.router,
     capital.router,

@@ -27,7 +27,6 @@ from app.models.project import Opportunity, Project
 from app.schemas.org import ProjectVisibilityRead
 from app.schemas.parcel import ParcelTransformationBase, ParcelTransformationRead, ProjectParcelRead
 from app.schemas.project import ProjectCreate, ProjectRead
-from app.scrapers.arcgis import lookup_gresham_candidates
 
 router = APIRouter(tags=["projects"])
 
@@ -189,12 +188,9 @@ async def _resolve_parcel_for_attachment(
         if parcel is not None:
             return parcel
 
-    live_matches = await lookup_gresham_candidates(apn=payload.apn, address=payload.address)
-    if not live_matches:
-        raise HTTPException(status_code=404, detail="Parcel not found via lookup")
-    if len(live_matches) > 1:
-        raise HTTPException(status_code=409, detail="Multiple parcels matched the lookup; refine by APN.")
-    return await _upsert_parcel_from_lookup(session, live_matches[0])
+    # County-GIS live parcel lookup removed in parcel decommission (DC-3).
+    # Attachment now resolves only via an existing parcel_id or APN match.
+    raise HTTPException(status_code=404, detail="Parcel not found")
 
 
 @router.get("/projects", response_model=list[ProjectRead])

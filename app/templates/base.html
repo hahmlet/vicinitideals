@@ -89,9 +89,6 @@
     <a href="/opportunities" class="nav-item {% if active_nav == 'opportunities' %}active{% endif %}">
       <span class="nav-icon">🏢</span> Opportunities
     </a>
-    <a href="/parcels" class="nav-item {% if active_nav == 'parcels' %}active{% endif %}">
-      <span class="nav-icon">📐</span> Parcels
-    </a>
 
     <a href="/brokers" class="nav-item {% if active_nav == 'brokers' %}active{% endif %}">
       <span class="nav-icon">👤</span> Brokers
@@ -663,7 +660,7 @@ document.addEventListener('click', function(e) {
         html += '</div></label>';
       }
     } else if (parcels.length && !parcels[0].has_geometry) {
-      html += '<div style="color:var(--text-muted);font-size:12px;margin-top:8px">Overlay data requires parcel geometry. <a href="/parcels" style="color:var(--accent)">Pull GIS data</a> to enable overlays.</div>';
+      html += '<div style="color:var(--text-muted);font-size:12px;margin-top:8px">Overlay data requires parcel geometry.</div>';
     } else if (parcels.length === 0) {
       html += '<div style="color:var(--text-muted);font-size:12px">No parcels found for this context.</div>';
     }
