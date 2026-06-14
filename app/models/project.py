@@ -52,9 +52,6 @@ class Project(Base):
         ForeignKey("opportunities.id", ondelete="SET NULL"),
         nullable=True,
     )
-    parcel_id: Mapped[uuid.UUID | None] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("parcels.id"), nullable=True
-    )
     name: Mapped[str] = mapped_column(String(255), nullable=False, default="Default Project")
     proposed_use: Mapped[str | None] = mapped_column(String(60), nullable=True)
     acquisition_price: Mapped[object | None] = mapped_column(Numeric(18, 2), nullable=True)
@@ -73,9 +70,6 @@ class Project(Base):
     )
     opportunity: Mapped["Opportunity | None"] = relationship(  # type: ignore[name-defined]
         "Opportunity", back_populates="dev_projects"
-    )
-    parcel: Mapped["Parcel | None"] = relationship(  # type: ignore[name-defined]
-        "Parcel", foreign_keys=[parcel_id]
     )
     use_lines: Mapped[list["UseLine"]] = relationship(  # type: ignore[name-defined]
         "UseLine", back_populates="project"

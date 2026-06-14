@@ -3,14 +3,10 @@
 Renamed from ScrapedListing / scraped_listings table. Scraped rows and
 manually-created rows share this table, distinguished by `source`.
 
-Physical attributes (unit_count, building_sqft, year_built, etc.) already
-populated by scrapers. NULL = read from parcel.*; non-null = permanent user
-override. Parcel is the authoritative seed; these columns govern once set.
-
-Override pattern:
-    display_sqft     = opportunity.building_sqft  ?? parcel.building_sqft
-    display_units    = opportunity.unit_count      ?? parcel.unit_count
-    display_year     = opportunity.year_built      ?? parcel.year_built
+Physical attributes (unit_count, building_sqft, year_built, etc.) are populated
+by scrapers or manual entry and live directly on this row. The Opportunity owns
+these columns outright (the parcel-intelligence subsystem was decommissioned);
+the display_* properties simply return the column value or None.
 """
 
 from __future__ import annotations
@@ -64,7 +60,7 @@ ProjectSource = OpportunitySource
 
 class Opportunity(Base):
     """Unified investment target — scraped listing promoted to opportunity, or
-    manually created. Physical attributes from scrapers; Parcel fills gaps.
+    manually created. Physical attributes from scrapers or manual entry.
     """
 
     __tablename__ = "opportunities"
@@ -99,8 +95,8 @@ class Opportunity(Base):
     lat: Mapped[object | None] = mapped_column(Numeric(10, 7), nullable=True)
     lng: Mapped[object | None] = mapped_column(Numeric(10, 7), nullable=True)
 
-    # ── Physical attributes (Parcel-override) ─────────────────────────────
-    # NULL = defer to parcel.*; non-null = permanent user override.
+    # ── Physical attributes ────────────────────────────────────────────
+    # NULL = unknown; non-null = the authoritative value for this opportunity.
     property_type: Mapped[str | None] = mapped_column(String(120), nullable=True)
     sub_type: Mapped[list[str] | None] = mapped_column(
         ARRAY(String).with_variant(JSON(), "sqlite"), nullable=True,
@@ -165,9 +161,6 @@ class Opportunity(Base):
     broker_id: Mapped[uuid.UUID | None] = mapped_column(
         UUID(as_uuid=True), ForeignKey("brokers.id"), nullable=True
     )
-    parcel_id: Mapped[uuid.UUID | None] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("parcels.id"), nullable=True
-    )
 
     # ── Opportunity metadata (set at/after promotion) ─────────────────────
     org_id: Mapped[uuid.UUID | None] = mapped_column(
@@ -221,7 +214,6 @@ class Opportunity(Base):
 
     # ── User interaction state ────────────────────────────────────────────
     is_favorited: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
-    parcel_conflicts_ack: Mapped[dict | None] = mapped_column(JSON, nullable=True)
 
     # HelloData.ai enrichment
     hellodata_skip: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
@@ -245,9 +237,6 @@ class Opportunity(Base):
     broker: Mapped["Broker | None"] = relationship(  # type: ignore[name-defined]
         "Broker", back_populates="scraped_listings", foreign_keys=[broker_id],
     )
-    parcel: Mapped["Parcel | None"] = relationship(  # type: ignore[name-defined]
-        "Parcel", foreign_keys=[parcel_id],
-    )
     organization: Mapped["Organization | None"] = relationship(  # type: ignore[name-defined]
         "Organization", foreign_keys=[org_id],
     )
@@ -269,9 +258,6 @@ class Opportunity(Base):
     )
     permit_stubs: Mapped[list["PermitStub"]] = relationship(  # type: ignore[name-defined]
         "PermitStub", back_populates="opportunity",
-    )
-    parcel_transformations: Mapped[list["ParcelTransformation"]] = relationship(  # type: ignore[name-defined]
-        "ParcelTransformation", back_populates="opportunity",
     )
     project_visibilities: Mapped[list["ProjectVisibility"]] = relationship(  # type: ignore[name-defined]
         "ProjectVisibility", back_populates="opportunity",
@@ -306,20 +292,7 @@ class Opportunity(Base):
         """User-set name override; falls back to address or listing_name."""
         return self.name or self.listing_name or self.address_normalized or self.address_raw or str(self.id)
 
-    def effective_unit_count(self, parcel: "Parcel | None" = None) -> int | None:  # type: ignore[name-defined]
-        """unit_count with Parcel fallback. Pass parcel to avoid extra query."""
-        if self.units is not None:
-            return self.units
-        return getattr(parcel, "unit_count", None) if parcel else None
-
-    def effective_building_sqft(self, parcel: "Parcel | None" = None) -> object | None:
-        """building_sqft with Parcel fallback."""
-        if self.gba_sqft is not None:
-            return self.gba_sqft
-        return getattr(parcel, "building_sqft", None) if parcel else None
-
     # ── Display properties (use these in all templates, never raw columns) ─
-    # NULL on Opportunity = defer to Parcel (county-authoritative seed).
 
     @builtins.property
     def display_units(self) -> int | None:

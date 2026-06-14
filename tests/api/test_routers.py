@@ -35,7 +35,6 @@ from app.models.deal import (
 from app.models.ingestion import DedupCandidate, DedupStatus, IngestJob, RecordType
 from app.models.manifest import WorkflowRunManifest
 from app.models.org import Organization, ProjectVisibility, User
-from app.models.parcel import Parcel, ParcelTransformation, ProjectParcel
 from app.models.portfolio import GanttEntry, Portfolio, PortfolioProject
 from app.models.project import Opportunity, Project
 from app.models.scraped_listing import ScrapedListing
@@ -74,9 +73,6 @@ async def test_session_factory() -> AsyncGenerator[async_sessionmaker[AsyncSessi
                         Portfolio.__table__,
                         PortfolioProject.__table__,
                         GanttEntry.__table__,
-                        Parcel.__table__,
-                        ProjectParcel.__table__,
-                        ParcelTransformation.__table__,
                         Deal.__table__,
                         DealOpportunity.__table__,
                         DealModel.__table__,
@@ -1830,149 +1826,6 @@ async def test_dedup_review_endpoints_list_pending_and_resolve_candidates(
 
 
 @pytest.mark.asyncio
-async def test_patch_and_delete_project_parcel_link(
-    client: AsyncClient,
-    test_session_factory: async_sessionmaker[AsyncSession],
-    auth_headers: dict[str, str],
-) -> None:
-    async with test_session_factory() as session:
-        org = (await session.execute(Organization.__table__.select())).first()
-        assert org is not None
-
-        opportunity = Opportunity(org_id=org.id, name="Project Parcel CRUD", status="active")
-        parcel = Parcel(
-            apn="R222222222",
-            address_normalized="222 SE OAK ST GRESHAM OR 97030",
-            address_raw="222 SE Oak St",
-        )
-        session.add_all([opportunity, parcel])
-        await session.commit()
-        project_id = opportunity.id
-        parcel_id = parcel.id
-
-    attach_response = await client.post(
-        f"/api/projects/{project_id}/parcels",
-        json={
-            "parcel_id": str(parcel_id),
-            "relationship_type": "unchanged",
-            "notes": "Original parcel link",
-        },
-        headers=auth_headers,
-    )
-    assert attach_response.status_code == 201
-
-    patch_response = await client.patch(
-        f"/api/projects/{project_id}/parcels/{parcel_id}",
-        json={
-            "relationship_type": "merged_in",
-            "notes": "Merged into redevelopment assemblage",
-        },
-        headers=auth_headers,
-    )
-    assert patch_response.status_code == 200
-    updated = patch_response.json()
-    assert updated["relationship_type"] == "merged_in"
-    assert updated["notes"] == "Merged into redevelopment assemblage"
-    assert updated["parcel"]["apn"] == "R222222222"
-
-    linked = await client.get(f"/api/projects/{project_id}/parcels", headers=auth_headers)
-    assert linked.status_code == 200
-    assert linked.json()[0]["relationship_type"] == "merged_in"
-
-    delete_response = await client.delete(
-        f"/api/projects/{project_id}/parcels/{parcel_id}",
-        headers=auth_headers,
-    )
-    assert delete_response.status_code == 204
-    assert delete_response.content == b""
-
-    empty_list = await client.get(f"/api/projects/{project_id}/parcels", headers=auth_headers)
-    assert empty_list.status_code == 200
-    assert empty_list.json() == []
-
-    missing_delete = await client.delete(
-        f"/api/projects/{project_id}/parcels/{parcel_id}",
-        headers=auth_headers,
-    )
-    assert missing_delete.status_code == 404
-
-
-@pytest.mark.asyncio
-async def test_project_transformations_crud_round_trip(
-    client: AsyncClient,
-    test_session_factory: async_sessionmaker[AsyncSession],
-    auth_headers: dict[str, str],
-) -> None:
-    async with test_session_factory() as session:
-        org = (await session.execute(Organization.__table__.select())).first()
-        assert org is not None
-
-        opportunity = Opportunity(org_id=org.id, name="Transformation Project", status="active")
-        session.add(opportunity)
-        await session.commit()
-        project_id = opportunity.id
-
-    create_response = await client.post(
-        f"/api/projects/{project_id}/transformations",
-        json={
-            "transformation_type": "lot_merger",
-            "input_apns": ["R111111111", "R222222222"],
-            "output_apns": ["R333333333"],
-            "effective_lot_sqft": "12500",
-            "notes": "Initial city merger filing",
-            "effective_date": "2026-04-02",
-        },
-        headers=auth_headers,
-    )
-    assert create_response.status_code == 201
-    created = create_response.json()
-    transformation_id = created["id"]
-    assert created["project_id"] == str(project_id)
-    assert created["transformation_type"] == "lot_merger"
-    assert created["output_apns"] == ["R333333333"]
-
-    patch_response = await client.patch(
-        f"/api/projects/{project_id}/transformations/{transformation_id}",
-        json={
-            "output_apns": ["R333333333", "R333333334"],
-            "effective_lot_sqft": "13050",
-            "notes": "Recorded final lot dimensions",
-            "effective_date": "2026-05-15",
-        },
-        headers=auth_headers,
-    )
-    assert patch_response.status_code == 200
-    updated = patch_response.json()
-    assert updated["output_apns"] == ["R333333333", "R333333334"]
-    assert Decimal(str(updated["effective_lot_sqft"])) == Decimal("13050")
-    assert updated["notes"] == "Recorded final lot dimensions"
-    assert updated["effective_date"] == "2026-05-15"
-
-    list_response = await client.get(
-        f"/api/projects/{project_id}/transformations",
-        headers=auth_headers,
-    )
-    assert list_response.status_code == 200
-    rows = list_response.json()
-    assert len(rows) == 1
-    assert rows[0]["id"] == transformation_id
-    assert rows[0]["output_apns"] == ["R333333333", "R333333334"]
-
-    delete_response = await client.delete(
-        f"/api/projects/{project_id}/transformations/{transformation_id}",
-        headers=auth_headers,
-    )
-    assert delete_response.status_code == 204
-
-    list_after_delete = await client.get(
-        f"/api/projects/{project_id}/transformations",
-        headers=auth_headers,
-    )
-    assert list_after_delete.status_code == 200
-    assert list_after_delete.json() == []
-
-
-@pytest.mark.asyncio
 async def test_get_model_json_export_returns_portable_payload(
     client: AsyncClient,
     test_session_factory: async_sessionmaker[AsyncSession],
@@ -1983,7 +1836,18 @@ async def test_get_model_json_export_returns_portable_payload(
         user = (await session.execute(User.__table__.select())).first()
         assert org is not None and user is not None
 
-        opportunity = Opportunity(org_id=org.id, name="JSON Export Project", status="active")
+        opportunity = Opportunity(
+            org_id=org.id,
+            name="JSON Export Project",
+            status="active",
+            apn="R765432100",
+            address_normalized="123 Main St, Gresham, OR 97030",
+            address_raw="123 Main St",
+            lot_sqft=Decimal("7405"),
+            year_built=1998,
+            gba_sqft=Decimal("2400"),
+            property_type="Multifamily",
+        )
         session.add(opportunity)
         await session.flush()
 
@@ -1991,19 +1855,6 @@ async def test_get_model_json_export_returns_portable_payload(
         session.add(top_deal)
         await session.flush()
         session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id))
-
-        parcel = Parcel(
-            apn="R765432100",
-            address_normalized="123 Main St, Gresham, OR 97030",
-            address_raw="123 Main St",
-            lot_sqft=Decimal("7405"),
-            year_built=1998,
-            building_sqft=Decimal("2400"),
-            current_use="Multifamily",
-        )
-        session.add(parcel)
-        await session.flush()
-        session.add(ProjectParcel(project_id=opportunity.id, parcel_id=parcel.id, relationship_type="unchanged"))
 
         model = DealModel(
             deal_id=top_deal.id,
@@ -2222,7 +2073,7 @@ async def test_post_project_model_import_creates_nested_records(
 
 
 @pytest.mark.asyncio
-async def test_post_deals_import_creates_project_from_payload_and_links_existing_parcel(
+async def test_post_deals_import_creates_project_from_payload(
     client: AsyncClient,
     test_session_factory: async_sessionmaker[AsyncSession],
     auth_headers: dict[str, str],
@@ -2230,19 +2081,6 @@ async def test_post_deals_import_creates_project_from_payload_and_links_existing
     async with test_session_factory() as session:
         org = (await session.execute(Organization.__table__.select())).first()
         assert org is not None
-
-        session.add(
-            Parcel(
-                apn="RIMPORT123",
-                address_normalized="456 Oak Ave, Portland, OR 97201",
-                address_raw="456 Oak Ave",
-                lot_sqft=Decimal("8800"),
-                year_built=2005,
-                building_sqft=Decimal("6200"),
-                current_use="Multifamily",
-            )
-        )
-        await session.commit()
 
     payload = {
         "schema_version": "deal-json-v1",
@@ -2312,12 +2150,6 @@ async def test_post_deals_import_creates_project_from_payload_and_links_existing
     assert project_response.status_code == 200
     assert project_response.json()["name"] == "Agent Imported Project"
 
-    linked = await client.get(f"/api/projects/{data['project_id']}/parcels", headers=auth_headers)
-    assert linked.status_code == 200
-    linked_rows = linked.json()
-    assert len(linked_rows) == 1
-    assert linked_rows[0]["parcel"]["apn"] == "RIMPORT123"
-
     models_response = await client.get(f"/api/projects/{data['project_id']}/models", headers=auth_headers)
     assert models_response.status_code == 200
     assert len(models_response.json()) == 1
@@ -2339,23 +2171,6 @@ async def test_exported_model_json_round_trips_through_validation_and_import(
         target_project = Opportunity(org_id=org.id, name="Round Trip Target", status="active")
         session.add_all([source_project, target_project])
         await session.flush()
-
-        parcel = Parcel(
-            apn="RROUNDTRIP1",
-            address_normalized="789 Pine St, Portland, OR 97205",
-            address_raw="789 Pine St",
-            lot_sqft=Decimal("5000"),
-            current_use="Multifamily",
-        )
-        session.add(parcel)
-        await session.flush()
-        session.add(
-            ProjectParcel(
-                project_id=source_project.id,
-                parcel_id=parcel.id,
-                relationship_type="unchanged",
-            )
-        )
 
         top_deal = Deal(org_id=org.id, name="Round Trip Deal", created_by_user_id=user.id)
         session.add(top_deal)

@@ -19,12 +19,6 @@ from app.models.opportunity import (  # noqa: F401
 )
 from app.models.project import PermitStub, Project  # noqa: F401
 
-# 3. Parcels (FK → Opportunity)
-from app.models.parcel import (  # noqa: F401
-    Parcel,
-    ParcelTransformation,
-)
-
 # 4. Listing identity / broker models
 from app.models.broker import Broker, BrokerDisciplinaryAction, Brokerage  # noqa: F401
 from app.models.scraped_listing import ScrapedListing  # noqa: F401  (alias for Opportunity)
@@ -125,9 +119,6 @@ __all__ = [
     "Project",
     "PermitStub",
     "ScrapedListing",    # alias for Opportunity
-    # Parcel
-    "Parcel",
-    "ParcelTransformation",
     # Brokers
     "Brokerage",
     "Broker",
