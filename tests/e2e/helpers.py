@@ -11,11 +11,59 @@ from playwright.sync_api import Page
 # HTMX / navigation
 # ---------------------------------------------------------------------------
 
-def wait_for_htmx(page: Page, timeout: int = 8000) -> None:
-    """Wait for in-flight HTMX requests to settle using network idle.
+# Injected once per page: track in-flight HTMX requests so waits can block on
+# the request lifecycle instead of bare network-idle (which can return in the
+# gap between an action and htmx dispatching its request).
+_HTMX_TRACKER = """
+(() => {
+  if (window.__htmxTrackerInstalled) return;
+  window.__htmxTrackerInstalled = true;
+  window.__htmxPending = 0;
+  window.__htmxLastDone = Date.now();
+  const inc = () => { window.__htmxPending++; };
+  const dec = () => {
+    window.__htmxPending = Math.max(0, window.__htmxPending - 1);
+    window.__htmxLastDone = Date.now();
+  };
+  document.addEventListener('htmx:beforeRequest', inc);
+  document.addEventListener('htmx:afterRequest', dec);
+  document.addEventListener('htmx:responseError', dec);
+  document.addEventListener('htmx:sendError', dec);
+})();
+"""
 
-    Falls back cleanly if no requests are in flight.
+
+def wait_for_htmx(page: Page, timeout: int = 8000) -> None:
+    """Block until in-flight HTMX requests have completed and settled.
+
+    Tracks the htmx request lifecycle (beforeRequest/afterRequest) rather than
+    relying on bare network-idle. Network-idle can fire in the window between a
+    triggering action and htmx actually dispatching its request, letting the
+    next action run before the server has saved — the cause of cold-CI flakiness
+    where a save (or a save->recompute chain) had not landed when the test read
+    the result.
+
+    Steps: (1) install the tracker, (2) let a just-triggered request dispatch,
+    (3) wait until no htmx request is in flight AND it has been briefly quiet
+    (absorbs cascading chains where one response triggers the next request),
+    (4) network-idle backstop for any non-htmx fetches. Best-effort throughout —
+    falls back cleanly if htmx is absent or anything goes wrong.
     """
+    try:
+        page.evaluate(_HTMX_TRACKER)
+    except Exception:
+        pass
+    # Bridge the action -> dispatch gap so an about-to-start request is counted.
+    page.wait_for_timeout(120)
+    try:
+        page.wait_for_function(
+            "() => (window.__htmxPending || 0) === 0 "
+            "&& (Date.now() - (window.__htmxLastDone || 0)) > 250",
+            timeout=timeout,
+        )
+    except Exception:
+        pass
+    # Backstop for any non-htmx fetches (plain JS fetch, images, etc.).
     try:
         page.wait_for_load_state("networkidle", timeout=timeout)
     except Exception:
