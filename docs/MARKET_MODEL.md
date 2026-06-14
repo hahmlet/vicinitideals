@@ -7,6 +7,13 @@ intelligence counterpart of `FINANCIAL_MODEL.md` (cashflow math) and
 
 **Last updated**: 2026-04-16
 
+> **Status (2026-06):** The KNN comp engine is **retained** but is not yet a production
+> deal-creation feature (Integration Points in §5 remain planned). The decommissioned
+> *data-acquisition* pieces that fed it — the **LoopNet** comp source and the **HelloData**
+> enrichment harness — are gone; their detail moved to the **Archive** at the end of this
+> doc. KNN now sources every feature-vector input from `Opportunity` own-fields
+> (`unit_count`, `year_built`, `building_sqft`, `jurisdiction`/`city`), not from a linked parcel.
+
 ---
 
 ## 1. Overview
@@ -65,12 +72,14 @@ Optional fields that improve comp quality when present:
 | Source | Status | Contribution |
 |---|---|---|
 | Crexi scraped listings | Active | Primary comp pool (~50 eligible) |
-| LoopNet scraped listings | Disabled | Would add comps if re-enabled |
-| HelloData quarterly dump | Planned | ~50 properties/quarter with institutional-quality rent/expense detail |
 | Manual enhancement | Planned | UI for filling gaps in existing listings |
 
 As new sources are added, eligible listings automatically join the
 comp pool — no configuration changes needed.
+
+> **Decommissioned:** the **LoopNet** comp source (subscription cancelled) and the
+> **HelloData** quarterly enrichment dump were removed — see Archive. Crexi is the
+> only live comp source.
 
 ---
 
@@ -167,7 +176,8 @@ At `deal_setup_wizard_complete()`, after creating blank IncomeStream
 and OperatingExpenseLine rows:
 
 1. Query KNN for the deal's subject property characteristics
-   (units, vintage, sqft/unit, jurisdiction from linked parcel)
+   (units, vintage, sqft/unit, jurisdiction — all from `Opportunity` own-fields;
+   the former linked-parcel source was decommissioned)
 2. If sufficient comps found (>= `min_comps`):
    - Prefill `IncomeStream.amount_per_unit_monthly` from
      `noi_per_unit / 12` (as a starting point)
@@ -188,7 +198,10 @@ In the model builder, a collapsible panel showing:
 
 ### 5.3 Quarterly Refresh (Planned)
 
-When HelloData data is ingested:
+> The HelloData quarterly-dump trigger was **decommissioned** (see Archive); manual
+> enhancement is the remaining refresh path.
+
+When new eligible listings are ingested:
 1. New properties meeting eligibility criteria join the comp pool
 2. Existing deals do NOT auto-update (user's assumptions are final)
 3. User can manually "re-run market recommendations" to see updated comps
@@ -197,38 +210,13 @@ When HelloData data is ingested:
 
 ## 6. Future Enhancements
 
-### 6.1 HelloData Integration — SHIPPED (2026-04-17)
+### 6.1 HelloData Integration — DECOMMISSIONED (removed 2026-06)
 
-The HelloData.ai enrichment harness is live (`app/scrapers/hellodata.py`).
-Calls four endpoints per property (~$1.50/listing at default rates):
-
-| Endpoint | Purpose | Stored On ScrapedListing |
-|---|---|---|
-| `/property/search` | Resolve HelloData property ID | `hellodata_property_id`, `hellodata_raw_search` |
-| `/property/market_rents` | Unit-level rent predictions | `hellodata_raw_rents`, synthesized `hellodata_market_rent_per_unit/sqft` |
-| `/property/expense_benchmarks` | ML-predicted OpEx + NOI | `hellodata_raw_expenses`, synthesized `hellodata_egi_per_unit`, `hellodata_noi_per_unit`, `hellodata_opex_per_unit`, `hellodata_occupancy_pct` |
-| `/property/comparables` | Optional: nearby comps | `hellodata_raw_comparables` |
-
-**Budget enforcement** (`HelloDataUsage` table):
-- Monthly cost cap in cents (default $100/month)
-- Per-call cost configurable in `settings.hellodata_cost_per_call_cents` (default 50)
-- Hard lock once monthly budget is reached
-- Per-run `--max-dollars` cap via CLI
-
-**Portland exclusion** (safety):
-- `_is_portland()` checks `jurisdiction` (reconciled) then `city` (broker) against
-  `PORTLAND_JURISDICTION_VALUES`.  Portland listings are never paid for,
-  enforcing the CLAUDE.md Market Coverage Policy.
-
-**Comp pool integration**:
-- Eligibility filter now accepts listings with EITHER broker NOI OR
-  `hellodata_noi_per_unit > 0`.
-- `CompResult.noi_source` records `"broker"` vs `"hellodata"` for audit.
-- Broker-reported NOI wins when present (pertains to the exact property);
-  HelloData synthesized values fill the gap for listings without broker financials.
-- Same preference order applies to occupancy.
-
-**CLI**: `docker exec vicinitideals-api python -m app.scripts.enrich_hellodata`
+The HelloData.ai enrichment harness (`app/scrapers/hellodata.py`) was removed in the
+decommission (DC-2). Its full historical detail is preserved in the **Archive** at the
+end of this doc. The `hellodata_*` columns on `opportunities` were intentionally **kept**
+(deferred drop) but are no longer written; comp eligibility and NOI seeding now fall back
+to broker-reported Crexi fields + manual entry.
 
 ### 6.2 Future Enhancements
 
@@ -314,6 +302,59 @@ values instead of $0.
 | `WEIGHT_LOCATION` | 0.5 | `app/engines/market.py` |
 | `SQFT_PER_UNIT_NORM` | 1500 | `app/engines/market.py` |
 
-These are tunable.  As the comp pool grows and HelloData data arrives,
-weights may be adjusted based on backtesting recommendation accuracy
-against known deal outcomes.
+These are tunable.  As the comp pool grows, weights may be adjusted based on
+backtesting recommendation accuracy against known deal outcomes.
+
+---
+
+## Archive — Decommissioned Comp Data Sources
+
+> **🗄 ARCHIVED — does not reflect the live system.** The KNN engine itself is retained
+> (see §1–§8). What was removed are the *data-acquisition* sources that fed it. Crexi
+> remains the only live comp source; KNN sources its feature-vector inputs from
+> `Opportunity` own-fields. The `hellodata_*` columns on `opportunities` were kept
+> (deferred drop) but are no longer written.
+
+### A1. LoopNet comp source
+
+LoopNet scraped listings were a secondary comp source (subscription cancelled, scraper
+removed in DC-1). When active, eligible LoopNet listings joined the comp pool on the same
+eligibility criteria as Crexi (§2.1).
+
+### A2. HelloData enrichment harness (was §6.1 — SHIPPED 2026-04-17, removed 2026-06)
+
+The HelloData.ai enrichment harness (`app/scrapers/hellodata.py`) called four endpoints
+per property (~$1.50/listing at default rates):
+
+| Endpoint | Purpose | Stored On Opportunity |
+|---|---|---|
+| `/property/search` | Resolve HelloData property ID | `hellodata_property_id`, `hellodata_raw_search` |
+| `/property/market_rents` | Unit-level rent predictions | `hellodata_raw_rents`, synthesized `hellodata_market_rent_per_unit/sqft` |
+| `/property/expense_benchmarks` | ML-predicted OpEx + NOI | `hellodata_raw_expenses`, synthesized `hellodata_egi_per_unit`, `hellodata_noi_per_unit`, `hellodata_opex_per_unit`, `hellodata_occupancy_pct` |
+| `/property/comparables` | Optional: nearby comps | `hellodata_raw_comparables` |
+
+**Budget enforcement** (`HelloDataUsage` table):
+- Monthly cost cap in cents (default $100/month)
+- Per-call cost configurable in `settings.hellodata_cost_per_call_cents` (default 50)
+- Hard lock once monthly budget is reached
+- Per-run `--max-dollars` cap via CLI
+
+**Portland exclusion** (safety):
+- `_is_portland()` checks `jurisdiction` then `city` against
+  `PORTLAND_JURISDICTION_VALUES`.  Portland listings were never paid for,
+  enforcing the CLAUDE.md Market Coverage Policy.
+
+**Comp pool integration** (while active):
+- Eligibility filter accepted listings with EITHER broker NOI OR
+  `hellodata_noi_per_unit > 0`.
+- `CompResult.noi_source` recorded `"broker"` vs `"hellodata"` for audit.
+- Broker-reported NOI won when present; HelloData synthesized values filled the gap
+  for listings without broker financials. Same preference order applied to occupancy.
+
+**CLI** (removed): `docker exec vicinitideals-api python -m app.scripts.enrich_hellodata`
+
+### A3. Parcel-derived KNN inputs
+
+Before the parcel decommission (migration 0113), KNN sourced subject-property
+characteristics (units, vintage, sqft/unit, jurisdiction) from the linked **parcel**.
+These now come from `Opportunity` own-fields; the distance math (§3) is unchanged.

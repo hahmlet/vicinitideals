@@ -1,6 +1,8 @@
 # RE-Modeling Platform — Project Overview
 
-A self-hosted real estate financial modeling and deal intelligence platform. It combines proactive parcel/listing ingestion from multiple data sources with a full deal underwriting engine and an interactive model builder UI — all running on private infrastructure.
+A self-hosted real estate financial modeling and deal intelligence platform. It combines **Crexi** commercial-listing ingestion and KNN market comps with a full deal underwriting engine and an interactive model builder UI — all running on private infrastructure.
+
+> **Scope (2026-06):** the original parcel / county-GIS intelligence half was **decommissioned** — see the Archive at the end of this doc. Live data intelligence is Crexi listings + KNN comps.
 
 ---
 
@@ -8,11 +10,11 @@ A self-hosted real estate financial modeling and deal intelligence platform. It 
 
 The platform exists to answer two questions for a real estate investment team:
 
-**"What is out there?"** — A continuously refreshed inventory of all qualifying parcels in the target market (Multnomah + Clackamas County, OR, excluding Portland), pulled from commercial listing platforms and county/GIS sources, whether or not the property is actively listed for sale.
+**"What is on the market?"** — A continuously refreshed inventory of **Crexi** commercial listings in the target market (Multnomah + Clackamas County, OR, excluding Portland), with KNN comps to benchmark each against similar properties.
 
 **"Does this deal work?"** — A full financial model for any deal under consideration: uses, sources, debt carry, operating cash flow, equity waterfall, draw schedule, and sensitivity analysis — with all outputs exportable to Excel.
 
-The two halves share a common data model: a parcel record lives in the system before a deal exists, and a deal attaches to it when the team decides to pursue.
+A listing flows into an Opportunity, which a Deal attaches to when the team decides to pursue. (The original county-GIS *parcel* inventory that pre-seeded properties before they were listed was decommissioned — see Archive.)
 
 ---
 
@@ -49,29 +51,24 @@ The two halves share a common data model: a parcel record lives in the system be
 
 | Source | Data |
 |---|---|
-| **Crexi** | Commercial listings (routed through ProxyOn residential proxy) |
-| **LoopNet** | Commercial listings |
-| **Portland Maps API** | Property assessment, zoning, ownership |
-| **Oregon City assessor** | Property records |
-| **Clackamas County** | Property/tax records |
-| **ArcGIS (Gresham OR)** | Parcel geometry, zoning layers |
-| **Oregon Statewide Address Points** | Bulk parcel seed universe (~300-400k features filtered to Multnomah + Clackamas) |
-| **REALie** | Real estate listing data API |
-| **ProxyOn** | Residential + datacenter proxy pool for scraping |
+| **Crexi** | Commercial listings (routed through ProxyOn residential proxy) — the one live scraper |
+| **ProxyOn** | Residential + datacenter proxy pool for scraping (used by Crexi) |
+
+> LoopNet, Portland Maps, Oregon City, Clackamas County, Gresham ArcGIS, Oregon Address Points, and REALie were **decommissioned** with the parcel subsystem — see Archive.
 
 ---
 
 ## 3. Major Components
 
-### 3a. Data Ingestion & Parcel Intelligence
+### 3a. Data Ingestion (Crexi Listings)
 
-The platform maintains a living inventory of parcels, not just listings. Key subsystems:
+The platform ingests **Crexi** commercial listings into an Opportunity inventory. Key subsystems:
 
-- **Scrapers** (`vicinitideals/scrapers/`) — one module per source (Crexi, LoopNet, Portland Maps, ArcGIS, Oregon City, Clackamas, REALie, Redfin enrichment). Each normalizes raw API/HTML responses into the shared schema.
-- **Parcel enrichment** (`parcel_enrichment.py`) — enriches raw parcel stubs with owner, assessed value, geometry, zoning from county GIS after initial ingest.
-- **Deduplication engine** (`dedup.py`) — cross-source fuzzy matching on APN + address to merge listing records onto the canonical parcel.
-- **Celery task pipeline** (`vicinitideals/tasks/`) — `scraper.py` (main ingest), `parcel_seed.py` (bulk stub creation from Oregon Address Points), scheduled via Celery beat.
-- **GIS cache** (`data/gis_cache/`, `tools/gis_cache/`) — local ArcGIS layer cache with quarterly refresh policy; avoids hitting external APIs on every request.
+- **Crexi scraper** (`app/scrapers/crexi.py` + `app/tasks/scraper.py`) — normalizes raw responses into the shared Opportunity schema; daily Celery beat on the scraping queue.
+- **Deduplication engine** (`app/scrapers/dedup.py`) — fuzzy matching on address + unit count to flag near-duplicate Crexi listings for human review.
+- **KNN comps** (`app/engines/market.py`) — benchmarks an Opportunity against similar listings; see [MARKET_MODEL.md](MARKET_MODEL.md).
+
+> The parcel / county-GIS intelligence layer (multi-source scrapers, parcel enrichment, parcel seeding, GIS cache) was **decommissioned** — see Archive.
 
 See: [docs/ops/](docs/ops/) for operational runbooks, [docs/verification/](docs/verification/) for QA baselines.
 
@@ -97,7 +94,6 @@ See: [docs/testing-strategy.md](docs/testing-strategy.md) for engine test covera
 
 - **Deal** → Opportunity → Project → Milestones (timeline)
 - **Scenario** → UseLines, CapitalModules, IncomeStreams, ExpenseLines, DrawSources, WaterfallTiers
-- **Parcel** → ScrapedListings (many listings per parcel)
 - **Portfolio** → Portfolio entries linking deals to portfolios
 - **Output** — `OperationalOutputs` (computed cashflow, stored as JSON blob)
 
@@ -120,9 +116,11 @@ An HTMX-driven interface (`vicinitideals/templates/`) that lets a user build and
 
 See: [docs/ui-plan.md](docs/ui-plan.md) for the full UI specification.
 
-### 3e. Listings & Parcel Browser
+### 3e. Listings Browser
 
-Full-screen listings table with filter sidebar (status, price, zoning, county, broker, property type). Parcel detail drawer shows ownership, assessment, geometry, attached listings, and linked deals. Dedup comparison UI for resolving near-duplicate listings.
+Full-screen Opportunities table with filter sidebar (status, price, zoning, county, broker, property type) and a dedup comparison UI for resolving near-duplicate Crexi listings.
+
+> The parcel browser, parcel detail drawer (ownership / assessment / geometry / map), and the Map (Leaflet / zone painter) were **decommissioned** — see Archive.
 
 ---
 
@@ -158,3 +156,20 @@ See: [docs/ops/](docs/ops/) for release checklist and rollback runbook.
 | [docs/verification/](docs/verification/) | QA test matrix, model output drift baselines |
 | [docs/security/](docs/security/) | Security considerations |
 | [docs/api/](docs/api/examples/) | API payload examples |
+
+---
+
+## Archive — Decommissioned Parcel Intelligence
+
+> **🗄 ARCHIVED — does not reflect the live platform.** The parcel / county-GIS intelligence half was removed in 2026-06 (migrations 0072 building entity, 0113 parcel tables; code removed across DC-1…DC-5). Schema-level detail is in [DATA_MODEL.md → Archive](DATA_MODEL.md). **Kept live:** Crexi ingest, KNN comps, `Opportunity.apn` / `lat` / `lng`, and the manual jurisdiction field.
+
+**Removed external data sources:** LoopNet (subscription cancelled), Portland Maps API, Oregon City assessor, Clackamas County, Gresham ArcGIS, Oregon Statewide Address Points (parcel seed universe), REALie.
+
+**Removed subsystem — Data Ingestion & Parcel Intelligence:**
+- Multi-source parcel **scrapers** — one module per county-GIS source (Portland Maps, ArcGIS, Oregon City, Clackamas, plus REALie / HelloData).
+- **Parcel enrichment** — owner / assessed value / geometry / zoning from county GIS.
+- **Parcel seeding** — bulk stub creation from Oregon Address Points (~430K parcels).
+- **GIS cache** — local ArcGIS layer cache with quarterly refresh.
+- The original premise that *"a parcel record lives in the system before a deal exists"* — properties now enter only as Crexi listings.
+
+**Removed UI:** the parcel browser, the parcel detail drawer (ownership / assessment / geometry / attached listings), and the **Map** (Leaflet / zone painter).
