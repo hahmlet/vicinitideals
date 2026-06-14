@@ -85,18 +85,6 @@
 .metric-value { font-size: 14px; font-weight: 700; }
 .metric-irr { color: var(--success); }
 
-.parcel-card {
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 14px 16px;
-  background: var(--surface);
-  margin-bottom: 8px;
-  cursor: pointer;
-  transition: border-color 0.1s;
-}
-.parcel-card:hover { border-color: var(--accent); }
-.parcel-card-apn { font-size: 11px; color: var(--text-muted); font-family: var(--font-mono, monospace); }
-.parcel-card-address { font-size: 14px; font-weight: 600; margin: 4px 0; }
 
 .empty-panel {
   text-align: center;
@@ -214,7 +202,6 @@
 
 {% if flash_error %}
 {% set _err_msgs = {
-  'parcel_not_found': 'Parcel not found — verify the APN and try again.',
   'no_opportunity': 'No property linked to this deal.',
 } %}
 <div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:12px 16px;margin-bottom:16px;color:#dc2626;font-size:13px">

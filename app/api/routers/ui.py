@@ -2896,7 +2896,6 @@ async def deal_detail(
 
     buildings = []  # Building entity removed — physical attrs now on Opportunity
 
-    parcels = []  # parcel-to-deal linking removed (parcel decommission)
 
     # Financial models (Scenarios) for this Deal
     models = []
@@ -2940,7 +2939,6 @@ async def deal_detail(
             "status_display": status_display,
             "status_badge": status_badge,
             "buildings": buildings,
-            "parcels": parcels,
             "models": models,
             "gantt_data": gantt_data,
             "active_tab": tab,
@@ -3524,7 +3522,7 @@ async def building_detail(request: Request, property_id: UUID, session: DBSessio
 
 
 # ---------------------------------------------------------------------------
-# Parcels
+# Address helpers
 # ---------------------------------------------------------------------------
 
 def _extract_city(address_normalized: str | None) -> str | None:
@@ -7363,7 +7361,7 @@ async def add_project_search(
     q: str = Query(default=""),
 ) -> HTMLResponse:
     """HTMX search for the Add-Project drawer. Mirrors the wizard step 2
-    parcel/opp search UX: returns one best-match opportunity card.
+    opportunity search UX: returns one best-match opportunity card.
 
     Eligibility: any opp the user can see (their org OR scraped/null-org),
     excluding archived rows. Flags rows already bound to a project on this
@@ -14401,19 +14399,18 @@ async def update_draw_source_window(
 
 
 # ── Saved Filters ────────────────────────────────────────────────────────────
-# Per-user, per-page named filter snapshots used by the Listings/Parcels/
+# Per-user, per-page named filter snapshots used by the Listings/
 # Opportunities/Deals filter bars. Stored as the URL query string the page
 # already speaks, so loading a saved filter == redirect to /<page>?<query>
 # and the URL itself is shareable.
 
-_SAVED_FILTER_PAGES = {"listings", "parcels", "opportunities", "deals"}
+_SAVED_FILTER_PAGES = {"listings", "opportunities", "deals"}
 
 
 def _saved_filter_landing(page: str) -> str:
     """Map a filter-form page key back to the URL the saved filter loads against."""
     return {
         "listings": "/listings",
-        "parcels": "/parcels",
         "opportunities": "/opportunities",
         "deals": "/deals",
     }.get(page, "/")

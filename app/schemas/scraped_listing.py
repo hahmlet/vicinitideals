@@ -116,7 +116,6 @@ class ScrapedListingBase(BaseModel):
 class ScrapedListingCreate(ScrapedListingBase):
     ingest_job_id: uuid.UUID | None = None
     broker_id: uuid.UUID | None = None
-    parcel_id: uuid.UUID | None = None
     property_id: uuid.UUID | None = None
     linked_project_id: uuid.UUID | None = None
 
@@ -129,7 +128,6 @@ class ScrapedListingRead(ScrapedListingBase):
     id: uuid.UUID
     ingest_job_id: uuid.UUID | None = None
     broker_id: uuid.UUID | None = None
-    parcel_id: uuid.UUID | None = None
     property_id: uuid.UUID | None = None
     linked_project_id: uuid.UUID | None = None
     listed_at: datetime | None = None
@@ -140,7 +138,7 @@ class ScrapedListingRead(ScrapedListingBase):
     matches_saved_criteria: bool = False
     canonical_id: uuid.UUID | None = None
 
-    # Parcel reconciliation
+    # Listing reconciliation metadata (jurisdiction is the live field)
     jurisdiction: str | None = None
     match_strategy: str | None = None
     match_confidence: float | None = None

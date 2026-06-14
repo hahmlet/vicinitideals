@@ -37,7 +37,6 @@ _UI_PATH_PREFIXES = (
     "/models/",
     "/buildings",
     "/opportunities",
-    "/parcels",
     "/listings",
     "/portfolios",
     "/brokers",

@@ -1,6 +1,6 @@
 {# HTMX partial — wizard step 2 match result card.
-   match_type: 'listing' | 'parcel'
-   match: Opportunity or Parcel instance
+   match_type: 'listing'
+   match: Opportunity instance
    opp_id: current wizard opportunity id (str)
 #}
 <div class="match-card">
@@ -16,19 +16,6 @@
     <button type="button" class="btn btn-primary btn-sm"
             onclick="attachMatch('listing', '{{ match.id }}')">
       ✓ Attach this listing
-    </button>
-  {% elif match_type == 'parcel' %}
-    <div class="match-card-title">{{ match.address_normalized or match.apn }}</div>
-    <div class="match-card-meta">
-      Source: County Parcel ({{ match.county or 'OR' }})
-      {% if match.unit_count %} · {{ match.unit_count }} units{% endif %}
-      {% if match.building_sqft %} · {{ "{:,.0f}".format(match.building_sqft | float) }} sqft{% endif %}
-      {% if match.year_built %} · Built {{ match.year_built }}{% endif %}
-      {% if match.rlis_land_use %} · {{ match.rlis_land_use }}{% endif %}
-    </div>
-    <button type="button" class="btn btn-primary btn-sm"
-            onclick="attachMatch('parcel', '{{ match.id }}')">
-      ✓ Attach this parcel
     </button>
   {% endif %}
 </div>

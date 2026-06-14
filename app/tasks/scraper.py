@@ -347,7 +347,7 @@ async def upsert_scraped_listings(
     upserted = 0
     skipped = 0
 
-    # Track newly-inserted listings that need parcel auto-linking:
+    # Track newly-inserted listings for downstream classification:
     # (listing_id, apn, address_normalized, county, city, zoning, property_type)
     new_listing_ids: list[tuple[Any, str | None, str | None, str | None, str | None, str | None, str | None]] = []
 

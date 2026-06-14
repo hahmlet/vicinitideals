@@ -17,7 +17,7 @@
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px">
     {% for p in portfolios %}
     <a href="/portfolios/{{ p.id }}" style="text-decoration:none;color:inherit">
-      <div class="parcel-card" style="cursor:pointer;transition:border-color 0.1s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+      <div class="portfolio-card" style="cursor:pointer;transition:border-color 0.1s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
         <div style="display:flex;justify-content:space-between;align-items:flex-start">
           <div style="font-size:15px;font-weight:700;color:var(--text)">{{ p.name }}</div>
           <span class="badge badge-blue">{{ p.deal_count }} deal{{ 's' if p.deal_count != 1 else '' }}</span>

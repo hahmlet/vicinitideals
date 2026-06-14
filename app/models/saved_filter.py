@@ -1,6 +1,6 @@
 """SavedFilter — per-user, per-page named query-string snapshots.
 
-Used by Listings/Parcels/Opportunities/Deals filter bars to let the user
+Used by Listings/Opportunities/Deals filter bars to let the user
 save a working filter set, recall it from a dropdown, or share its URL.
 The ``q`` (search) param is excluded by the UI when saving so a saved
 filter represents a market slice rather than a one-off search.

@@ -3,7 +3,7 @@
 Entity hierarchy:
   Deal          — top-level investment thesis; groups Opportunities + Scenarios
   Scenario      — one financial plan for the deal (was DealModel / the old deals table)
-  Project       — post-acquisition dev effort within a Scenario (one per parcel/building)
+  Project       — post-acquisition dev effort within a Scenario (one per opportunity)
 
 The old `Deal` ORM class is now `Scenario`.  A backward-compat alias DealModel = Scenario
 is kept so existing code continues to import without immediate churn.

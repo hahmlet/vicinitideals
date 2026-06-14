@@ -43,7 +43,7 @@
 }
 .settings-popup-item:hover { background: var(--bg); }
 
-/* Shared multi-select checkbox dropdown (filter bars on Listings/Parcels/Opportunities/Deals) */
+/* Shared multi-select checkbox dropdown (filter bars on Listings/Opportunities/Deals) */
 .ms-dropdown { position: relative; display: inline-block; }
 .ms-btn { cursor: pointer; }
 .ms-panel {
@@ -504,7 +504,7 @@ document.addEventListener('click', function(e) {
 // Any form tagged `data-filter-form="<key>"` has its current state mirrored
 // to localStorage on every change. When the page loads with a bare URL (no
 // query string) we restore by navigating to the saved query — so listings,
-// parcels, opportunities, and deals each remember their last filter set
+// listings, opportunities, and deals each remember their last filter set
 // across navigation.
 //
 // Buttons tagged `data-filter-clear` wipe both URL and storage.
