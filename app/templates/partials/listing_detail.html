@@ -8,10 +8,6 @@
     <button type="submit" class="btn btn-primary btn-sm">+ Create Opportunity</button>
   </form>
   {% endif %}
-  <button type="button" class="btn btn-secondary btn-sm"
-          onclick="openParcelMap('listing','{{ l.id }}','{{ (l.address_normalized or l.address_raw or '') | replace("'","\\'")|safe }}')">
-    🗺 Map
-  </button>
 </div>
 
 <!-- Status + source chip -->

@@ -510,10 +510,6 @@ def create_app() -> FastAPI:
     from app.api.routers.ui import router as ui_router
     app.include_router(ui_router)
 
-    # Tools router — internal tooling pages (zone painter, etc.), no /api prefix
-    from app.api.routers.tools import router as tools_router
-    app.include_router(tools_router)
-
     # Email ingest UI router — inbox and review pages, no /api prefix
     from app.api.routers.email_ingest import ui_router as email_ingest_ui_router
     app.include_router(email_ingest_ui_router)

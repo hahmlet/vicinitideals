@@ -764,8 +764,6 @@
         <div class="investor-export-error hidden"></div>
       </div>
     </span>
-    <button type="button" class="btn btn-sm btn-secondary" title="View parcels on map"
-            onclick="openParcelMap('project','{{ active_project_id }}','{{ model.name | replace("'","\\'") | safe }}')">🗺</button>
     <button class="btn btn-sm btn-secondary" onclick="openDrawer('model-settings-drawer')">⚙ Settings</button>
     <button class="btn btn-sm btn-primary"
        hx-post="/api/models/{{ model.id }}/compute"
