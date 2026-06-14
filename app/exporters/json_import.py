@@ -16,7 +16,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.exporters.json_export import EXPORT_SCHEMA_VERSION
 from app.models.capital import CapitalModule, WaterfallTier
 from app.models.deal import Deal, DealModel, IncomeStream, OperatingExpenseLine, OperationalInputs
-from app.models.parcel import Parcel
 from app.models.project import Opportunity, Project, ProjectCategory, ProjectSource, ProjectStatus
 from app.schemas.capital import CapitalModuleBase, WaterfallTierBase
 from app.schemas.deal import (
@@ -386,27 +385,18 @@ async def import_deal_from_json(
 
     parcel_number = (project_meta.ParcelNumber or "").strip().upper()
     if parcel_number:
-        parcel = (
-            await session.execute(select(Parcel).where(Parcel.apn == parcel_number))
-        ).scalar_one_or_none()
-        if parcel is None:
-            parcel = Parcel(apn=parcel_number)
-            session.add(parcel)
-
+        opportunity.apn = parcel_number
         if project_meta.UnparsedAddress:
-            parcel.address_normalized = project_meta.UnparsedAddress
-            parcel.address_raw = project_meta.UnparsedAddress
+            opportunity.address_normalized = project_meta.UnparsedAddress
+            opportunity.address_raw = project_meta.UnparsedAddress
         if project_meta.LotSizeSquareFeet is not None:
-            parcel.lot_sqft = project_meta.LotSizeSquareFeet
+            opportunity.lot_sqft = project_meta.LotSizeSquareFeet
         if project_meta.YearBuilt is not None:
-            parcel.year_built = project_meta.YearBuilt
+            opportunity.year_built = project_meta.YearBuilt
         if project_meta.BuildingAreaTotal is not None:
-            parcel.building_sqft = project_meta.BuildingAreaTotal
+            opportunity.gba_sqft = project_meta.BuildingAreaTotal
         if project_meta.PropertyType:
-            parcel.current_use = project_meta.PropertyType
-
-        await session.flush()
-        opportunity.parcel_id = parcel.id
+            opportunity.property_type = project_meta.PropertyType
         await session.flush()
 
     model_result = await import_deal_model_json(

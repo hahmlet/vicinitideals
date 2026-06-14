@@ -34,9 +34,6 @@ from app.models.ingestion import DedupCandidate, DedupStatus, IngestJob, RecordT
 from app.models.org import Organization, User
 from app.models.capital import CapitalModule, DrawSource, WaterfallTier
 from app.models.cashflow import OperationalOutputs
-from app.models.parcel import Parcel
-from app.reconciliation.matcher import normalize_apn
-from app.reconciliation.conflict_rules import _FIELD_MAP, auto_resolve_conflict
 from app.models.portfolio import Portfolio, PortfolioProject
 from app.models.milestone import DEFAULT_DURATIONS, Milestone, MilestoneType, MilestoneType as MT
 from app.models.opportunity import Opportunity, OpportunitySource, OpportunityStatus
@@ -1029,102 +1026,9 @@ async def _get_address_issues_count(session: AsyncSession) -> int:
         return 0
 
 
-_CONFLICT_PCT_TOL = 0.05
-
-
-def _pct_conflict(a, b) -> bool:
-    if a is None or b is None:
-        return False
-    try:
-        fa, fb = float(a), float(b)
-        if fb == 0:
-            return fa != 0
-        return abs(fa - fb) / fb > _CONFLICT_PCT_TOL
-    except (TypeError, ValueError):
-        return False
-
-
-def _parcel_map_url(parcel: "Parcel") -> str:
-    j = (parcel.jurisdiction or "").lower().strip()
-    if j == "portland":
-        return "https://www.portlandmaps.com/"
-    if j == "gresham":
-        return "https://gis.greshamoregon.gov/GreshamMap/"
-    county = (parcel.county or "").lower().strip()
-    if county == "multnomah":
-        return "https://www.portlandmaps.com/"
-    return "https://www.clackamas.us/cmap"
-
-
-def _build_conflicts(opps: list) -> list:
-    """Return list of (opp, field_key, opp_val, parcel_val, map_url) tuples."""
-    conflicts = []
-    for opp in opps:
-        p = opp.parcel
-        if p is None:
-            continue
-        ack = opp.parcel_conflicts_ack or {}
-        url = _parcel_map_url(p)
-        if "units" not in ack and opp.units is not None and p.unit_count is not None and opp.units != p.unit_count:
-            conflicts.append((opp, "units", opp.units, p.unit_count, url))
-        if "gba_sqft" not in ack and _pct_conflict(opp.gba_sqft, p.building_sqft):
-            conflicts.append((opp, "gba_sqft", opp.gba_sqft, p.building_sqft, url))
-        if "year_built" not in ack and opp.year_built is not None and p.year_built is not None and opp.year_built != p.year_built:
-            conflicts.append((opp, "year_built", opp.year_built, p.year_built, url))
-        if "lot_sqft" not in ack and _pct_conflict(opp.lot_sqft, p.lot_sqft):
-            conflicts.append((opp, "lot_sqft", opp.lot_sqft, p.lot_sqft, url))
-    return conflicts
-
-
-def _apply_auto_resolutions(opps: list) -> int:
-    """Apply auto-resolution rules to ORM objects in place.
-
-    Checks every conflict field on every linked Opportunity.  When a rule
-    fires the ORM object is mutated (no commit — caller owns the session)
-    and the field is acked so it no longer surfaces in the queue.
-
-    Returns the number of field resolutions applied.
-    """
-    resolved = 0
-    _null_fields = {"units", "gba_sqft", "year_built", "lot_sqft"}
-    for opp in opps:
-        p = opp.parcel
-        if p is None:
-            continue
-        ack = dict(opp.parcel_conflicts_ack or {})
-        changed = False
-        for field, (opp_attr, parcel_attr) in _FIELD_MAP.items():
-            if field in ack:
-                continue
-            opp_val = getattr(opp, opp_attr, None)
-            par_val = getattr(p, parcel_attr, None)
-            if opp_val is None or par_val is None:
-                continue
-            action = auto_resolve_conflict(field, opp_val, par_val)
-            if action is None:
-                continue
-            if action == "use_parcel" and field in _null_fields:
-                setattr(opp, opp_attr, None)
-            ack[field] = action
-            changed = True
-            resolved += 1
-        if changed:
-            opp.parcel_conflicts_ack = ack
-    return resolved
-
-
 async def _get_conflicts_count(session: AsyncSession) -> int:
-    """Count Opportunities with at least one unacknowledged parcel field conflict."""
-    try:
-        stmt = (
-            select(Opportunity)
-            .options(selectinload(Opportunity.parcel))
-            .where(Opportunity.parcel_id.isnot(None), Opportunity.archived.is_(False))
-        )
-        opps = list((await session.execute(stmt)).scalars().unique())
-        return len(set(c[0].id for c in _build_conflicts(opps)))
-    except Exception:
-        return 0
+    """Parcel conflict queue removed (parcel decommission). Always zero."""
+    return 0
 
 
 async def _get_counts(session: AsyncSession) -> tuple[int, int]:
@@ -1935,7 +1839,6 @@ async def settings_data_sources(
     dedup_count, conflicts_count = await _get_counts(session)
     address_issues_count = await _get_address_issues_count(session)
 
-    parcel_count = int((await session.execute(select(func.count()).select_from(Parcel))).scalar_one())
 
     # cache_file: path relative to /app/data/gis_cache/  (empty = not cached as file)
     # ping_host:  hostname key used to share one liveness check across all layers on that host
@@ -1945,19 +1848,6 @@ async def settings_data_sources(
                 "notes": notes, "cache_file": cache_file, "ping_host": ping_host}
 
     groups = [
-        {
-            "id": "parcel_seeding", "title": "Parcel Seeding", "provider": "",
-            "layers": [
-                _layer("Metro RLIS Taxlots", "tax_lots_metro_rlis", "FeatureServer", "Active",
-                       f"Primary seed — ~430k features (Multnomah + Clackamas). {parcel_count:,} parcels in DB. "
-                       "Polygon geometry + assessed values. Owner name stripped in public layer. Monthly refresh by Metro.",
-                       cache_file="oregon/tax_lots_metro_rlis.geojson", ping_host="services2.arcgis.com"),
-                _layer("Oregon Address Points", "address_points_or", "FeatureServer", "Cached",
-                       "462,110 features downloaded. PARCEL_ID 0% populated by Portland/Clackamas 911 agencies — "
-                       "cannot be used for parcel seeding. Retained for potential address enrichment.",
-                       cache_file="oregon/address_points_or.geojson", ping_host="services8.arcgis.com"),
-            ],
-        },
         {
             "id": "boundary_routing", "title": "Boundary & Routing", "provider": "",
             "layers": [
@@ -2999,11 +2889,9 @@ async def billing_embedded_mock_create_session(
 async def admin_backfill_listing_buckets(
     session: DBSession,
 ) -> JSONResponse:
-    """Classify all ScrapedListings that have no priority_bucket yet.
-    Uses zoning/county/property_type from the linked Parcel if available,
-    otherwise falls back to listing fields."""
+    """Classify all ScrapedListings that have no priority_bucket yet,
+    using the listing's own zoning / county / jurisdiction fields."""
     from app.utils.priority import classify as _classify
-    from app.models.parcel import Parcel
 
     stmt = (
         select(ScrapedListing)
@@ -3013,20 +2901,12 @@ async def admin_backfill_listing_buckets(
     listings = list((await session.execute(stmt)).scalars())
     updated = 0
     for listing in listings:
-        parcel: Parcel | None = None
-        if listing.parcel_id:
-            parcel = await session.get(Parcel, listing.parcel_id)
-        elif listing.apn:
-            parcel = (await session.execute(
-                select(Parcel).where(Parcel.apn == listing.apn.split(",")[0].strip().upper())
-            )).scalar_one_or_none()
-
         bucket = _classify(
-            zoning_code=(parcel.zoning_code if parcel else None) or listing.zoning,
-            zoning_description=(parcel.zoning_description if parcel else None),
-            county=(parcel.county if parcel else None) or listing.county,
-            jurisdiction=(parcel.jurisdiction if parcel else None) or listing.city,
-            current_use=(parcel.current_use if parcel else None),
+            zoning_code=listing.zoning,
+            zoning_description=None,
+            county=listing.county,
+            jurisdiction=listing.city,
+            current_use=None,
             property_type=listing.property_type,
         )
         listing.priority_bucket = bucket.value
@@ -3740,7 +3620,6 @@ async def opportunities_rows_deals(
     )
     stmt = (
         select(Opportunity)
-        .options(selectinload(Opportunity.parcel))
         .where(
             Opportunity.id.in_(active_oppo_ids),
             Opportunity.archived.is_(False),
@@ -3772,7 +3651,6 @@ async def opportunities_rows_offmarket(
     )
     stmt = (
         select(Opportunity)
-        .options(selectinload(Opportunity.parcel))
         .where(
             Opportunity.promotion_source == "manual",
             Opportunity.id.notin_(active_oppo_ids),
@@ -3804,7 +3682,6 @@ async def opportunities_rows_onmarket(
     )
     stmt = (
         select(Opportunity)
-        .options(selectinload(Opportunity.parcel))
         .where(
             Opportunity.promotion_source.in_(["loopnet", "crexi", "scraper"]),
             Opportunity.id.notin_(active_oppo_ids),
@@ -3843,89 +3720,6 @@ async def toggle_opportunity_favorite(
     )
 
 
-# ── Opportunity conflicts page ────────────────────────────────────────────────
-
-@router.get("/ui/opportunities/conflicts", response_class=HTMLResponse)
-async def opportunities_conflicts(
-    request: Request,
-    session: DBSession,
-) -> HTMLResponse:
-    """Show field-level conflicts between Opportunity physical attrs and linked Parcel."""
-    user = await _get_user(session, request)
-    dedup_count, conflicts_count = await _get_counts(session)
-
-    stmt = (
-        select(Opportunity)
-        .options(selectinload(Opportunity.parcel))
-        .where(
-            Opportunity.parcel_id.isnot(None),
-            Opportunity.archived.is_(False),
-        )
-        .order_by(Opportunity.last_seen_at.desc())
-    )
-    opps = list((await session.execute(stmt)).scalars().unique())
-
-    # Auto-resolve any conflicts that match the rules before showing the queue
-    auto_count = _apply_auto_resolutions(opps)
-    if auto_count:
-        await session.commit()
-
-    conflicts = _build_conflicts(opps)
-
-    return templates.TemplateResponse(request, "conflicts.html", {
-        "request": request, "conflicts": conflicts,
-        **_base_ctx(user, dedup_count, "conflicts", conflicts_count=len(set(c[0].id for c in conflicts))),
-    })
-
-
-@router.post("/ui/opportunities/conflicts/auto-resolve", response_class=HTMLResponse)
-async def trigger_conflict_auto_resolve(
-    request: Request,
-    session: DBSession,
-) -> HTMLResponse:
-    """Enqueue a background task to auto-resolve all existing conflicts.
-
-    Returns a small status fragment suitable for HTMX swap.
-    """
-    from app.tasks.conflict_backflow import conflict_backflow_task  # noqa: PLC0415
-    task = conflict_backflow_task.delay()
-    return HTMLResponse(
-        f'<span class="badge badge-gray" title="task id: {task.id}">Auto-resolve queued</span>',
-        status_code=202,
-    )
-
-
-@router.post("/ui/opportunities/{opp_id}/conflicts/resolve", response_class=HTMLResponse)
-async def resolve_opportunity_conflict(
-    request: Request,
-    session: DBSession,
-    opp_id: UUID,
-) -> HTMLResponse:
-    """Resolve a single field conflict: use_listing, use_parcel, or dismiss."""
-    form = await request.form()
-    field = str(form.get("field", ""))
-    action = str(form.get("action", ""))
-
-    opp = await session.get(Opportunity, opp_id)
-    if opp is None or not field:
-        return HTMLResponse("Not found", status_code=404)
-
-    if action == "use_parcel":
-        # NULL out opp field — defers to parcel via display_* property
-        _null_map = {
-            "units": "units", "gba_sqft": "gba_sqft",
-            "year_built": "year_built", "lot_sqft": "lot_sqft",
-        }
-        if field in _null_map:
-            setattr(opp, _null_map[field], None)
-
-    # Both use_listing and dismiss: ack the field to suppress from queue
-    ack = dict(opp.parcel_conflicts_ack or {})
-    ack[field] = action
-    opp.parcel_conflicts_ack = ack
-
-    await session.commit()
-    return HTMLResponse("", status_code=200)
 
 
 # ── Opportunity creation wizard ────────────────────────────────────────────────
@@ -3996,7 +3790,7 @@ async def opportunity_wizard_search(
     q: str = Query(default=""),
     opp_id: str = Query(default=""),
 ) -> HTMLResponse:
-    """Step 2 HTMX search — finds a matching scraped Opportunity or Parcel."""
+    """Step 2 HTMX search - finds a matching scraped Opportunity."""
     if not q or len(q.strip()) < 3:
         return HTMLResponse("")
 
@@ -4030,24 +3824,6 @@ async def opportunity_wizard_search(
             "request": request,
             "match_type": "listing",
             "match": matched_opp,
-            "opp_id": opp_id,
-        })
-
-    # Priority 2: fall back to Parcel search
-    parcel_stmt = (
-        select(Parcel)
-        .where(
-            Parcel.address_normalized.ilike(f"%{q.strip()}%")
-        )
-        .limit(1)
-    )
-    matched_parcel = (await session.execute(parcel_stmt)).scalar_one_or_none()
-
-    if matched_parcel:
-        return templates.TemplateResponse(request, "partials/wizard_match_card.html", {
-            "request": request,
-            "match_type": "parcel",
-            "match": matched_parcel,
             "opp_id": opp_id,
         })
 
@@ -4126,39 +3902,11 @@ async def opportunity_wizard_step(
         })
 
     elif step == 2:
-        # Step 2: optional parcel/listing attachment.
-        # Form sends attach_type ('listing'|'parcel'|'') and attach_id (UUID str).
+        # Step 2: property linking was removed (parcel decommission); the step
+        # is now a pass-through that advances to the review screen.
         opp = await session.get(Opportunity, UUID(opp_id_str)) if opp_id_str else None
         if opp is None:
             return HTMLResponse("Opportunity not found", status_code=400)
-
-        attach_type = str(form.get("attach_type", "") or "").strip()
-        attach_id_raw = str(form.get("attach_id", "") or "").strip()
-
-        if attach_type == "parcel" and attach_id_raw:
-            try:
-                opp.parcel_id = UUID(attach_id_raw)
-            except ValueError:
-                pass
-        elif attach_type == "listing" and attach_id_raw:
-            # Link via parcel if the matched listing already has one
-            try:
-                linked_opp = await session.get(Opportunity, UUID(attach_id_raw))
-                if linked_opp and linked_opp.parcel_id:
-                    opp.parcel_id = linked_opp.parcel_id
-            except ValueError:
-                pass
-        # "skip" or empty = no attachment; proceed to review
-
-        await session.commit()
-
-        # Re-fetch with parcel eager-loaded so step 3 template can render
-        # opp.parcel.address_normalized without an async lazy load.
-        opp = (await session.execute(
-            select(Opportunity)
-            .where(Opportunity.id == UUID(opp_id_str))
-            .options(selectinload(Opportunity.parcel))
-        )).scalar_one()
 
         deal_type = str(form.get("deal_type", "value_add"))
         return templates.TemplateResponse(request, "opportunity_wizard.html", {
@@ -4208,7 +3956,6 @@ async def opportunity_detail(
         select(Opportunity)
         .where(Opportunity.id == opp_id)
         .options(
-            selectinload(Opportunity.parcel),
             selectinload(Opportunity.dev_projects).selectinload(Project.scenario),
         )
     )).scalar_one_or_none()
@@ -7413,9 +7160,8 @@ async def _auto_assign_opportunity_to_project(
     project: Project,
     session: AsyncSession,
 ) -> None:
-    """Set project.parcel_id from opportunity.parcel_id when available."""
-    if project.parcel_id is None and opportunity.parcel_id is not None:
-        project.parcel_id = opportunity.parcel_id
+    """No-op - project<->parcel linking removed (parcel decommission)."""
+    return None
 
 
 async def _copy_project_data(
@@ -8054,7 +7800,6 @@ async def delete_deal_project(
     """
     from sqlalchemy import delete as sa_delete
     from app.models.portfolio import GanttEntry
-    from app.models.parcel import ParcelTransformation
     from app.models.org import ProjectVisibility
     from app.models.project import PermitStub
 
@@ -8081,7 +7826,6 @@ async def delete_deal_project(
     # Defensive deletes for tables whose FK isn't ondelete=CASCADE everywhere.
     await session.execute(sa_delete(PortfolioProject).where(PortfolioProject.project_id == project_id))
     await session.execute(sa_delete(GanttEntry).where(GanttEntry.project_id == project_id))
-    await session.execute(sa_delete(ParcelTransformation).where(ParcelTransformation.project_id == project_id))
     await session.execute(sa_delete(ProjectVisibility).where(ProjectVisibility.project_id == project_id))
     await session.execute(sa_delete(PermitStub).where(PermitStub.project_id == project_id))
     # Milestones: must delete via raw SQL BEFORE session.delete(proj) so the
@@ -8172,88 +7916,6 @@ async def add_project_search(
         "match": matched,
         "already_bound": (matched is not None and matched.id in bound_ids),
     })
-
-
-@router.post("/ui/deals/{deal_id}/split-projects", response_class=HTMLResponse)
-async def split_multiparcel_projects(
-    deal_id: UUID,
-    session: DBSession,
-) -> HTMLResponse:
-    """Split a multi-APN listing into one Project per parcel in the same Scenario."""
-    import re as _re
-
-    scenario = await session.get(DealModel, deal_id)
-    if scenario is None:
-        return HTMLResponse("")
-
-    # Get existing single project
-    existing_proj = (await session.execute(
-        select(Project).where(Project.scenario_id == deal_id).order_by(Project.created_at.asc()).limit(1)
-    )).scalar_one_or_none()
-    if existing_proj is None:
-        return HTMLResponse("")
-
-    # Opportunity IS the listing — APN is directly on the opportunity row
-    opp = await session.get(Opportunity, existing_proj.opportunity_id) if existing_proj.opportunity_id else None
-    if opp is None:
-        return HTMLResponse("")
-
-    if not opp.apn or not _re.search(r"[,;]", opp.apn):
-        return HTMLResponse("")
-
-    apns = [a.strip() for a in _re.split(r"[,;]", opp.apn) if a.strip()]
-    if len(apns) < 2:
-        return HTMLResponse("")
-
-    try:
-        pt = ProjectType(scenario.project_type) if scenario and scenario.project_type else ProjectType.acquisition
-    except ValueError:
-        pt = ProjectType.acquisition
-
-    # Rename existing project to include first APN and seed its parcel assignment
-    existing_proj.name = f"Project 1 — {apns[0]}"
-    await _auto_assign_opportunity_to_project(opp, existing_proj, session)
-
-    # Parcel lookup helper: find parcel by APN for per-project scoping
-    async def _parcel_for_apn(apn: str) -> "Parcel | None":
-        return (await session.execute(
-            select(Parcel).where(Parcel.apn == apn).limit(1)
-        )).scalar_one_or_none()
-
-    # Create one new project per remaining APN
-    for i, apn in enumerate(apns[1:], start=2):
-        proj_count = await session.scalar(
-            select(func.count()).select_from(Project).where(Project.scenario_id == deal_id)
-        ) or 0
-        if proj_count >= 8:
-            break
-        new_proj = Project(
-            scenario_id=deal_id,
-            opportunity_id=existing_proj.opportunity_id,
-            name=f"Project {i} — {apn}",
-        )
-        session.add(new_proj)
-        await session.flush()
-        await _auto_assign_opportunity_to_project(opp, new_proj, session)
-        parcel = await _parcel_for_apn(apn)
-        if parcel:
-            new_proj.parcel_id = parcel.id
-        for milestone in _seed_milestones(new_proj, pt):
-            session.add(milestone)
-
-    await session.flush()
-
-    return RedirectResponse(url=f"/models/{deal_id}/builder", status_code=303)
-
-
-@router.post("/ui/deals/{deal_id}/dismiss-multiparcel", response_class=HTMLResponse)
-async def dismiss_multiparcel_banner(
-    deal_id: UUID,
-    session: DBSession,
-) -> HTMLResponse:
-    """Suppress the multi-parcel banner for this opportunity."""
-    # multi_parcel_dismissed was on the old Opportunity entity — no longer supported.
-    return HTMLResponse("")  # replaces the banner with nothing
 
 
 @router.post("/ui/models/{model_id}/stack-order", response_class=HTMLResponse)
@@ -10298,25 +9960,6 @@ async def model_builder(
             if _ddf_recov > 0:
                 _ddf_recovery_by_period[_ddf_prd] = _ddf_recov
             _ddf_balance_by_period[_ddf_prd] = float(_ddf_p.get("closing_balance") or 0)
-    # Multi-parcel detection — opportunity IS the listing; APN is on opportunity directly
-    import re as _re
-    multi_parcel_apns: list[str] = []
-    if opportunity and opportunity.apn and len(deal_projects) <= 1:
-        if _re.search(r"[,;]", opportunity.apn):
-            multi_parcel_apns = [a.strip() for a in _re.split(r"[,;]", opportunity.apn) if a.strip()]
-
-    # Lot-size mismatch detection — flag from parcel reconciliation
-    lot_size_mismatch_info: dict | None = None
-    if opportunity and opportunity.lot_size_mismatch and opportunity.parcel_id:
-        _p = await session.get(Parcel, opportunity.parcel_id)
-        if _p:
-            _parcel_lot = float(_p.lot_sqft) if _p.lot_sqft else (float(_p.gis_acres) * 43560 if _p.gis_acres else None)
-            _listing_lot = float(opportunity.lot_sqft) if opportunity.lot_sqft else None
-            if _parcel_lot and _listing_lot:
-                lot_size_mismatch_info = {
-                    "listing_sqft": f"{_listing_lot:,.0f}",
-                    "parcel_sqft": f"{_parcel_lot:,.0f}",
-                }
 
     # Active project object (for Clone From drawer label)
     active_project = next((p for p in deal_projects if p.id == active_project_id), None)
@@ -10502,8 +10145,6 @@ async def model_builder(
         "cash_flow_rows": cash_flow_rows,
         "ddf_recovery_by_period": _ddf_recovery_by_period,
         "ddf_balance_by_period": _ddf_balance_by_period,
-        "multi_parcel_apns": multi_parcel_apns,
-        "lot_size_mismatch": lot_size_mismatch_info,
         "step": wizard_step,
         "phases_present": _wizard_phases_present_bld,
         "wizard_share_info": wizard_share_info,

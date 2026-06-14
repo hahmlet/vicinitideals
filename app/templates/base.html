@@ -109,12 +109,6 @@
       <span class="nav-badge nav-badge-alert">{{ cleanup_count if cleanup_count <= 99 else "99+" }}</span>
     </a>
     {% endif %}
-    {% if (conflicts_count or 0) > 0 %}
-    <a href="/ui/opportunities/conflicts" class="nav-item {% if active_nav == 'conflicts' %}active{% endif %}" style="color:var(--warning)">
-      <span class="nav-icon">⚡</span> Property Conflicts
-      <span class="nav-badge nav-badge-alert">{{ conflicts_count if conflicts_count <= 99 else "99+" }}</span>
-    </a>
-    {% endif %}
     {% if user_name == 'Stephen Ketch' %}
     <div class="settings-menu-wrap" id="settingsMenuWrap">
       <div class="settings-popup" id="settingsPopup" style="display:none">

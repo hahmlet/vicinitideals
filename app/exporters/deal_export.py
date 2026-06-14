@@ -77,7 +77,6 @@ from app.models.deal import (
     UseLine,
 )
 from app.models.opportunity import Opportunity
-from app.models.parcel import Parcel
 from app.models.project import Project
 
 DEAL_EXPORT_VERSION = "deal-v1"
@@ -257,8 +256,8 @@ def _export_scenario(scenario: DealModel) -> dict[str, Any]:
 
 def _export_opportunity(opp: Opportunity) -> dict[str, Any]:
     parcel_entry = (
-        {"apn": opp.parcel.apn, "address": opp.parcel.address_normalized or opp.parcel.address_raw}
-        if opp.parcel is not None else None
+        {"apn": opp.apn, "address": opp.address_normalized or opp.address_raw}
+        if opp.apn else None
     )
     return {
         "name": opp.name or opp.display_name,
@@ -278,7 +277,6 @@ async def export_deal_json(session: AsyncSession, deal_id: UUID) -> dict[str, An
             selectinload(Deal.scenarios).options(
                 selectinload(DealModel.projects).options(
                     selectinload(Project.opportunity).options(
-                        selectinload(Opportunity.parcel),
                         selectinload(Opportunity.broker),
                     ),
                     selectinload(Project.operational_inputs),
@@ -364,20 +362,15 @@ async def import_deal_json(
         await session.flush()
         opp_map[idx] = opp
 
-        # Parcel — look up by APN; only one parcel per opportunity now
+        # Restore APN / address onto the opportunity (parcels decommissioned)
         for p_data in opp_data.get("parcels") or []:
             apn = (p_data.get("apn") or "").strip()
             if not apn:
                 continue
-            parcel = (
-                await session.execute(select(Parcel).where(Parcel.apn == apn))
-            ).scalar_one_or_none()
-            if parcel is None:
-                parcel = Parcel(apn=apn, address_normalized=p_data.get("address"))
-                session.add(parcel)
-                await session.flush()
-            opp.parcel_id = parcel.id
-            break  # single parcel FK per opportunity
+            opp.apn = apn
+            if p_data.get("address"):
+                opp.address_normalized = p_data.get("address")
+            break  # single parcel block per opportunity
 
         await session.flush()
 
