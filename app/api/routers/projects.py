@@ -1,14 +1,12 @@
-"""Project and project-parcel API endpoints."""
+"""Project API endpoints."""
 
 from __future__ import annotations
 
-from datetime import UTC, date, datetime
-from decimal import Decimal
 from typing import Any
 from uuid import UUID
 
-from fastapi import APIRouter, HTTPException, Query, Response, status
-from pydantic import BaseModel, model_validator
+from fastapi import APIRouter, HTTPException, Query, status
+from pydantic import BaseModel
 from sqlalchemy import and_, func, or_, select
 from sqlalchemy.orm import selectinload
 
@@ -17,15 +15,8 @@ from app.models.capital import CapitalModule
 from app.models.cashflow import OperationalOutputs
 from app.models.deal import DealModel, IncomeStream, OperatingExpenseLine
 from app.models.org import Organization, ProjectVisibility
-from app.models.parcel import (
-    Parcel,
-    ParcelTransformation,
-    ParcelTransformationType,
-    ProjectParcelRelationship,
-)
 from app.models.project import Opportunity, Project
 from app.schemas.org import ProjectVisibilityRead
-from app.schemas.parcel import ParcelTransformationBase, ParcelTransformationRead, ProjectParcelRead
 from app.schemas.project import ProjectCreate, ProjectRead
 
 router = APIRouter(tags=["projects"])
@@ -33,46 +24,6 @@ router = APIRouter(tags=["projects"])
 
 class ProjectVisibilityUpdate(BaseModel):
     hidden: bool = False
-
-
-class ProjectParcelAttachRequest(BaseModel):
-    parcel_id: UUID | None = None
-    apn: str | None = None
-    address: str | None = None
-    relationship_type: ProjectParcelRelationship = ProjectParcelRelationship.unchanged
-    notes: str | None = None
-
-    @model_validator(mode="after")
-    def _validate_locator(self) -> "ProjectParcelAttachRequest":
-        if self.parcel_id is None and not (self.apn and self.apn.strip()) and not (self.address and self.address.strip()):
-            raise ValueError("Provide `parcel_id`, `apn`, or `address` to attach a parcel.")
-        return self
-
-
-class ProjectParcelUpdateRequest(BaseModel):
-    relationship_type: ProjectParcelRelationship | None = None
-    notes: str | None = None
-
-    @model_validator(mode="after")
-    def _validate_update(self) -> "ProjectParcelUpdateRequest":
-        if not self.model_fields_set:
-            raise ValueError("Provide at least one field to update.")
-        return self
-
-
-class ParcelTransformationUpdateRequest(BaseModel):
-    transformation_type: ParcelTransformationType | None = None
-    input_apns: list[str] | None = None
-    output_apns: list[str] | None = None
-    effective_lot_sqft: Decimal | None = None
-    notes: str | None = None
-    effective_date: date | None = None
-
-    @model_validator(mode="after")
-    def _validate_update(self) -> "ParcelTransformationUpdateRequest":
-        if not self.model_fields_set:
-            raise ValueError("Provide at least one field to update.")
-        return self
 
 
 async def _get_project_or_404(session: DBSession, project_id: UUID) -> Opportunity:
@@ -153,44 +104,6 @@ def _serialize_project_outputs(outputs: OperationalOutputs | None) -> dict[str, 
         "project_irr_unlevered": outputs.project_irr_unlevered,
         "computed_at": outputs.computed_at,
     }
-
-
-async def _upsert_parcel_from_lookup(session: DBSession, parcel_data: dict) -> Parcel:
-    parcel = (
-        await session.execute(select(Parcel).where(Parcel.apn == parcel_data["apn"]))
-    ).scalar_one_or_none()
-    if parcel is None:
-        parcel = Parcel(apn=parcel_data["apn"])
-        session.add(parcel)
-
-    for field, value in parcel_data.items():
-        setattr(parcel, field, value)
-
-    parcel.scraped_at = datetime.now(UTC)
-    await session.flush()
-    return parcel
-
-
-async def _resolve_parcel_for_attachment(
-    session: DBSession,
-    payload: ProjectParcelAttachRequest,
-) -> Parcel:
-    if payload.parcel_id is not None:
-        parcel = await session.get(Parcel, payload.parcel_id)
-        if parcel is None:
-            raise HTTPException(status_code=404, detail="Parcel not found")
-        return parcel
-
-    if payload.apn and payload.apn.strip():
-        parcel = (
-            await session.execute(select(Parcel).where(Parcel.apn == payload.apn.strip().upper()))
-        ).scalar_one_or_none()
-        if parcel is not None:
-            return parcel
-
-    # County-GIS live parcel lookup removed in parcel decommission (DC-3).
-    # Attachment now resolves only via an existing parcel_id or APN match.
-    raise HTTPException(status_code=404, detail="Parcel not found")
 
 
 @router.get("/projects", response_model=list[ProjectRead])
@@ -301,161 +214,3 @@ async def update_project_visibility(
 
     await session.flush()
     return visibility
-
-
-def _build_parcel_link(
-    project_id: UUID,
-    parcel: Parcel,
-    rel_type: ProjectParcelRelationship = ProjectParcelRelationship.unchanged,
-    notes: str | None = None,
-) -> dict[str, Any]:
-    """Build a ProjectParcelRead-compatible dict from the new single-FK model."""
-    return {
-        "project_id": project_id,
-        "parcel_id": parcel.id,
-        "relationship_type": rel_type,
-        "notes": notes,
-        "parcel": parcel,
-    }
-
-
-@router.get("/projects/{project_id}/parcels", response_model=list[ProjectParcelRead])
-async def list_project_parcels(project_id: UUID, session: DBSession) -> list[dict]:
-    opp = await _get_project_or_404(session, project_id)
-    if opp.parcel_id is None:
-        return []
-    parcel = await session.get(Parcel, opp.parcel_id)
-    if parcel is None:
-        return []
-    return [_build_parcel_link(project_id, parcel)]
-
-
-@router.post(
-    "/projects/{project_id}/parcels",
-    response_model=ProjectParcelRead,
-    status_code=status.HTTP_201_CREATED,
-)
-async def attach_parcel_to_project(
-    project_id: UUID,
-    payload: ProjectParcelAttachRequest,
-    session: DBSession,
-) -> dict:
-    opp = await _get_project_or_404(session, project_id)
-    parcel = await _resolve_parcel_for_attachment(session, payload)
-    opp.parcel_id = parcel.id
-    session.add(opp)
-    await session.flush()
-    return _build_parcel_link(project_id, parcel, payload.relationship_type, payload.notes)
-
-
-@router.patch("/projects/{project_id}/parcels/{parcel_id}", response_model=ProjectParcelRead)
-async def update_project_parcel(
-    project_id: UUID,
-    parcel_id: UUID,
-    payload: ProjectParcelUpdateRequest,
-    session: DBSession,
-) -> dict:
-    opp = await _get_project_or_404(session, project_id)
-    if opp.parcel_id != parcel_id:
-        raise HTTPException(status_code=404, detail="Project parcel link not found")
-    parcel = await session.get(Parcel, parcel_id)
-    if parcel is None:
-        raise HTTPException(status_code=404, detail="Parcel not found")
-    rel = payload.relationship_type or ProjectParcelRelationship.unchanged
-    return _build_parcel_link(project_id, parcel, rel, payload.notes)
-
-
-@router.delete("/projects/{project_id}/parcels/{parcel_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_project_parcel(
-    project_id: UUID,
-    parcel_id: UUID,
-    session: DBSession,
-) -> Response:
-    opp = await _get_project_or_404(session, project_id)
-    if opp.parcel_id != parcel_id:
-        raise HTTPException(status_code=404, detail="Project parcel link not found")
-    opp.parcel_id = None
-    session.add(opp)
-    await session.flush()
-    return Response(status_code=status.HTTP_204_NO_CONTENT)
-
-
-@router.get(
-    "/projects/{project_id}/transformations",
-    response_model=list[ParcelTransformationRead],
-)
-async def list_project_transformations(
-    project_id: UUID,
-    session: DBSession,
-) -> list[ParcelTransformation]:
-    await _get_project_or_404(session, project_id)
-
-    result = await session.execute(
-        select(ParcelTransformation)
-        .where(ParcelTransformation.project_id == project_id)
-        .order_by(ParcelTransformation.effective_date.asc(), ParcelTransformation.id.asc())
-    )
-    return list(result.scalars())
-
-
-@router.post(
-    "/projects/{project_id}/transformations",
-    response_model=ParcelTransformationRead,
-    status_code=status.HTTP_201_CREATED,
-)
-async def create_project_transformation(
-    project_id: UUID,
-    payload: ParcelTransformationBase,
-    session: DBSession,
-) -> ParcelTransformation:
-    await _get_project_or_404(session, project_id)
-
-    transformation = ParcelTransformation(project_id=project_id, **payload.model_dump())
-    session.add(transformation)
-    await session.flush()
-    await session.refresh(transformation)
-    return transformation
-
-
-@router.patch(
-    "/projects/{project_id}/transformations/{transformation_id}",
-    response_model=ParcelTransformationRead,
-)
-async def update_project_transformation(
-    project_id: UUID,
-    transformation_id: UUID,
-    payload: ParcelTransformationUpdateRequest,
-    session: DBSession,
-) -> ParcelTransformation:
-    await _get_project_or_404(session, project_id)
-
-    transformation = await session.get(ParcelTransformation, transformation_id)
-    if transformation is None or transformation.project_id != project_id:
-        raise HTTPException(status_code=404, detail="Parcel transformation not found")
-
-    for field, value in payload.model_dump(exclude_unset=True).items():
-        setattr(transformation, field, value)
-
-    await session.flush()
-    await session.refresh(transformation)
-    return transformation
-
-
-@router.delete(
-    "/projects/{project_id}/transformations/{transformation_id}",
-    status_code=status.HTTP_204_NO_CONTENT,
-)
-async def delete_project_transformation(
-    project_id: UUID,
-    transformation_id: UUID,
-    session: DBSession,
-) -> Response:
-    await _get_project_or_404(session, project_id)
-
-    transformation = await session.get(ParcelTransformation, transformation_id)
-    if transformation is None or transformation.project_id != project_id:
-        raise HTTPException(status_code=404, detail="Parcel transformation not found")
-
-    await session.delete(transformation)
-    await session.flush()
-    return Response(status_code=status.HTTP_204_NO_CONTENT)

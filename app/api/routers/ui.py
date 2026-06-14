@@ -3506,12 +3506,7 @@ async def deal_detail(
 
     buildings = []  # Building entity removed — physical attrs now on Opportunity
 
-    # Parcel linked directly to the Opportunity
-    parcels = []
-    if opportunity and opportunity.parcel_id:
-        parcel = await session.get(Parcel, opportunity.parcel_id)
-        if parcel:
-            parcels = [_build_parcel_row(parcel)]
+    parcels = []  # parcel-to-deal linking removed (parcel decommission)
 
     # Financial models (Scenarios) for this Deal
     models = []
@@ -3615,42 +3610,6 @@ async def update_deal(
         if opp is not None and status_raw in {"hypothetical", "active", "archived"}:
             opp.opp_status = status_raw
     await session.commit()
-    return RedirectResponse(url=f"/deals/{deal_id}", status_code=303)
-
-
-@router.post("/ui/deals/{deal_id}/link-parcel", response_class=HTMLResponse)
-async def link_parcel_to_deal(
-    request: Request,
-    deal_id: UUID,
-    session: DBSession,
-) -> HTMLResponse:
-    form = await request.form()
-    apn = str(form.get("apn", "")).strip()
-    rel_raw = str(form.get("relationship", "unchanged")).strip()
-
-    # Find parcel by APN
-    parcel_result = await session.execute(select(Parcel).where(Parcel.apn == apn))
-    parcel = parcel_result.scalar_one_or_none()
-    if parcel is None:
-        return RedirectResponse(
-            url=f"/deals/{deal_id}?error=parcel_not_found",
-            status_code=303,
-        )
-
-    # Get the primary opportunity and set parcel_id directly
-    deal = await session.get(
-        Deal, deal_id,
-        options=[
-            selectinload(Deal.scenarios).selectinload(DealModel.projects).selectinload(Project.opportunity),
-        ],
-    )
-    opp = _first_opportunity(deal) if deal else None
-    if opp is None:
-        return RedirectResponse(url=f"/deals/{deal_id}?error=no_opportunity", status_code=303)
-
-    opp.parcel_id = parcel.id
-    await session.commit()
-
     return RedirectResponse(url=f"/deals/{deal_id}", status_code=303)
 
 
@@ -4331,39 +4290,6 @@ _STATE_CLASS_LABELS: dict[str, str] = {
     "801": "Exempt", "800": "Exempt (Vacant)", "641": "Utility", "640": "Utility (Vacant)",
     "601": "Mining", "600": "Mining (Vacant)", "000": "Unknown",
 }
-
-
-def _build_parcel_row(p: Parcel) -> dict:
-    city = _extract_city(p.address_normalized)
-    return {
-        "id": str(p.id),
-        "apn": p.apn,
-        "address": p.address_normalized or p.address_raw or "",
-        "street": (p.address_normalized or "").split(",")[0] if p.address_normalized else "",
-        "city_state_zip": ", ".join(
-            part.strip() for part in (p.address_normalized or "").split(",")[1:]
-        ) if p.address_normalized else "",
-        "address_city": city,
-        "jurisdiction_mismatch": False,
-        "zoning_code": p.zoning_code,
-        "zoning_description": p.zoning_description,
-        "lot_sqft": float(p.lot_sqft) if p.lot_sqft else None,
-        "gis_acres": float(p.gis_acres) if p.gis_acres else None,
-        "state_class": p.state_class,
-        "state_class_label": _STATE_CLASS_LABELS.get(p.state_class or "", None),
-        "total_assessed_value": float(p.total_assessed_value) if p.total_assessed_value else None,
-        "assessed_value_land": float(p.assessed_value_land) if p.assessed_value_land else None,
-        "assessed_value_improvements": float(p.assessed_value_improvements) if p.assessed_value_improvements else None,
-        "year_built": p.year_built,
-        "owner_name": p.owner_name,
-        "owner_mailing_address": p.owner_mailing_address,
-        "current_use": p.current_use,
-        "county": p.county,
-        "jurisdiction": p.jurisdiction,
-        "priority_bucket": p.priority_bucket,
-        "overridden_fields": [],
-        "scraped_at_fmt": p.scraped_at.strftime("%b %-d, %Y") if p.scraped_at else None,
-    }
 
 
 # ---------------------------------------------------------------------------
