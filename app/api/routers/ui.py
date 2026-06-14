@@ -2894,9 +2894,6 @@ async def deal_detail(
 
     opportunity = _first_opportunity(deal)
 
-    buildings = []  # Building entity removed — physical attrs now on Opportunity
-
-
     # Financial models (Scenarios) for this Deal
     models = []
     for scenario in deal.scenarios:
@@ -2938,7 +2935,6 @@ async def deal_detail(
             "status_key": status_key,
             "status_display": status_display,
             "status_badge": status_badge,
-            "buildings": buildings,
             "models": models,
             "gantt_data": gantt_data,
             "active_tab": tab,
@@ -2999,15 +2995,6 @@ async def update_deal(
             opp.opp_status = status_raw
     await session.commit()
     return RedirectResponse(url=f"/deals/{deal_id}", status_code=303)
-
-
-# ---------------------------------------------------------------------------
-# Buildings
-# ---------------------------------------------------------------------------
-
-def _build_building_row(prop: object) -> dict:
-    """Stub — Building entity removed. Physical attrs now on Opportunity."""
-    return {}
 
 
 # ── Opportunities ─────────────────────────────────────────────────────────────
@@ -3268,7 +3255,6 @@ async def opportunity_wizard_get(
     user = await _get_user(session, request)
     dedup_count, conflicts_count = await _get_counts(session)
     opp = None
-    buildings: list = []  # Building entity removed
     if opp_id:
         try:
             opp = await session.get(Opportunity, UUID(opp_id))
@@ -3276,7 +3262,7 @@ async def opportunity_wizard_get(
             pass
     ctx = {
         "request": request, "step": step, "opp": opp,
-        "opp_id": opp_id, "buildings": buildings,
+        "opp_id": opp_id,
         "deal_type": request.query_params.get("deal_type", ""),
         "opp_asking_price": "", "opp_notes": "",
         "deal_type_label": "",
@@ -3492,33 +3478,6 @@ async def archive_opportunity(
     opp.opp_status = OpportunityStatus.archived.value
     await session.commit()
     return RedirectResponse("/opportunities", status_code=303)
-
-
-
-@router.get("/buildings", response_class=HTMLResponse)
-async def buildings_page(
-    request: Request,
-    session: DBSession,
-    q: str = Query(default=""),
-    source: str = Query(default=""),
-) -> HTMLResponse:
-    """Building inventory page — removed. Physical attributes now live on Opportunity."""
-    user = await _get_user(session, request)
-    dedup_count, conflicts_count = await _get_counts(session)
-    return RedirectResponse("/opportunities", status_code=302)
-
-
-@router.get("/ui/buildings/rows", response_class=HTMLResponse)
-async def buildings_rows(
-    request: Request, session: DBSession,
-    q: str = Query(default=""), source: str = Query(default=""),
-) -> HTMLResponse:
-    return HTMLResponse("<p class='text-muted'>Building inventory removed.</p>")
-
-
-@router.get("/ui/buildings/{property_id}/detail", response_class=HTMLResponse)
-async def building_detail(request: Request, property_id: UUID, session: DBSession) -> HTMLResponse:
-    return HTMLResponse("<p class='text-muted'>Building entity removed.</p>", status_code=410)
 
 
 # ---------------------------------------------------------------------------
@@ -6652,15 +6611,6 @@ async def run_sensitivity_analysis(
     panel_data = await _load_builder_data(session, model_id)
     ctx = {"model": model, "active_module": "sensitivity", **panel_data}
     return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
-
-
-async def _sync_opportunity_buildings_to_projects(
-    opportunity: Opportunity,
-    buildings: object,
-    session: AsyncSession,
-) -> None:
-    """No-op stub — Building entity removed. Physical attrs live on Opportunity."""
-    pass
 
 
 async def _auto_assign_opportunity_to_project(

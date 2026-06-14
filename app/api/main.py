@@ -35,7 +35,6 @@ _UI_PATH_PREFIXES = (
     "/favicon.ico",
     "/deals",
     "/models/",
-    "/buildings",
     "/opportunities",
     "/listings",
     "/portfolios",
