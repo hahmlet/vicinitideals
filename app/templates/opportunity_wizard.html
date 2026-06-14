@@ -213,16 +213,9 @@
         </table>
 
         <div class="section-label">Linked Property</div>
-        {% if opp and opp.parcel_id %}
-          <div style="font-size:13px;color:var(--success);padding:8px 0">
-            ✓ Parcel attached
-            {% if opp.parcel %}— {{ opp.parcel.address_normalized or opp.parcel.apn }}{% endif %}
-          </div>
-        {% else %}
-          <div style="font-size:13px;color:var(--text-muted);padding:8px 0">
-            No property linked — you can attach one from the opportunity detail page.
-          </div>
-        {% endif %}
+        <div style="font-size:13px;color:var(--text-muted);padding:8px 0">
+          No property linked - opportunities are created standalone.
+        </div>
 
         <div style="background:var(--accent-faint);border:1px solid var(--accent);border-radius:8px;padding:12px 14px;font-size:12px;margin-top:12px">
           <strong>What happens next:</strong> The opportunity is created. You can then create a Deal and financial model against it.

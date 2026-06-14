@@ -359,7 +359,6 @@ async def upsert_scraped_listings(
             listing_payload=payload,
         )
         values["broker_id"] = _resolve_listing_broker_id(payload, broker_id_map)
-        values["parcel_id"] = listing.parcel_id
 
         upsert_stmt = _build_upsert_statement(
             dialect_name=dialect_name,
@@ -370,39 +369,38 @@ async def upsert_scraped_listings(
         row = (await session.execute(upsert_stmt)).one()
         if row.inserted:
             upserted += 1
-            if not listing.parcel_id:
-                new_listing_ids.append((
-                    row.id,
-                    values.get("apn"),
-                    values.get("address_normalized"),
-                    values.get("county"),
-                    values.get("city"),
-                    values.get("zoning"),
-                    values.get("property_type"),
-                ))
+            new_listing_ids.append((
+                row.id,
+                values.get("apn"),
+                values.get("address_normalized"),
+                values.get("county"),
+                values.get("city"),
+                values.get("zoning"),
+                values.get("property_type"),
+            ))
         else:
             skipped += 1
 
     await session.flush()
 
-    # Auto-link or create parcels for newly-inserted listings
+    # Classify newly-inserted listings into priority buckets
     if new_listing_ids:
-        await _auto_link_parcels(session, new_listing_ids)
+        await _classify_new_listings(session, new_listing_ids)
         await session.flush()
 
     return upserted, skipped
 
 
-async def _auto_link_parcels(
+async def _classify_new_listings(
     session: Any,
     new_listing_ids: list[tuple[Any, str | None, str | None, str | None, str | None, str | None, str | None]],
 ) -> None:
-    """For each newly-inserted listing, match to a Parcel via three-tier cascade, classify, and reconcile."""
+    """Classify each newly-inserted listing into a priority bucket from its own fields.
+
+    Parcel matching was removed (parcel decommission); classification now uses
+    the listing's own zoning / county / jurisdiction values.
+    """
     from datetime import UTC, datetime as _dt
-    from app.reconciliation.matcher import (
-        apply_reconciliation,
-        reconcile_listing_to_parcel,
-    )
     from app.utils.priority import classify as _classify
 
     for listing_id, apn, address, county, city, zoning, property_type in new_listing_ids:
@@ -410,26 +408,18 @@ async def _auto_link_parcels(
             listing = await session.get(ScrapedListing, listing_id)
             if listing is None:
                 continue
-
-            parcel, strategy, confidence = await reconcile_listing_to_parcel(session, listing)
-
-            if parcel is not None:
-                await apply_reconciliation(session, listing, parcel, strategy, confidence)
-
-            # Classify the listing from whatever data we have (listing fields may differ from parcel)
-            # Prefer parcel fields if available, fall back to listing fields
             bucket = _classify(
-                zoning_code=(parcel.zoning_code if parcel else None) or zoning,
-                zoning_description=(parcel.zoning_description if parcel else None),
-                county=(parcel.county if parcel else None) or county,
-                jurisdiction=(parcel.jurisdiction if parcel else None) or city,
-                current_use=(parcel.current_use if parcel else None),
+                zoning_code=zoning,
+                zoning_description=None,
+                county=county,
+                jurisdiction=city,
+                current_use=None,
                 property_type=property_type,
             )
             listing.priority_bucket = bucket.value
             listing.priority_bucket_at = _dt.now(UTC)
         except Exception as exc:  # noqa: BLE001
-            logger.warning("Parcel auto-link failed for listing %s: %s", listing_id, exc)
+            logger.warning("Listing classify failed for %s: %s", listing_id, exc)
 
 
 async def _flag_saved_search_matches(
@@ -688,17 +678,16 @@ async def _scrape_listings(
                 ).scalars()
             )
 
-            # Auto-link unlinked listings to parcels (mirrors Crexi path)
-            unlinked = [
+            # Classify newly-persisted listings into priority buckets.
+            to_classify = [
                 (
                     sl.id, sl.apn, sl.address_normalized or sl.address_raw,
                     sl.county, sl.city, sl.zoning, sl.property_type,
                 )
                 for sl in persisted_listings
-                if sl.parcel_id is None
             ]
-            if unlinked:
-                await _auto_link_parcels(session, unlinked)
+            if to_classify:
+                await _classify_new_listings(session, to_classify)
                 await session.flush()
 
             await _flag_saved_search_matches(persisted_listings, session=session)
@@ -865,7 +854,6 @@ def _build_upsert_statement(
                 table.c.listed_at: values["listed_at"],
                 table.c.updated_at_source: values["updated_at_source"],
                 table.c.broker_id: values.get("broker_id"),
-                table.c.parcel_id: values.get("parcel_id"),
                 table.c.matches_saved_criteria: values["matches_saved_criteria"],
                 table.c.scraped_at: func.now(),
                 # is_new is NOT cleared on re-scrape — only user actions (promote/archive) clear it
@@ -1297,7 +1285,6 @@ def _build_listing_values(
         "canonical_id": None,
         "last_seen_at": func.now(),
         "broker_id": None,
-        "parcel_id": None,
         "realie_skip": detect_address_issue(
             str(address).strip() if address not in (None, "") else None
         ) is not None,

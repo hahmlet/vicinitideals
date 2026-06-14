@@ -1161,38 +1161,6 @@ async function startInvestorExport(modelId, profile) {
   {% endif %}
 </div>
 
-{% if multi_parcel_apns %}
-<div id="multiparcel-banner" style="
-  margin:0 0 0 0;padding:10px 16px;
-  background:#fef3c7;border-bottom:1px solid #f59e0b;
-  display:flex;align-items:center;gap:12px;font-size:13px;color:#92400e">
-  <span>⬡ This listing includes {{ multi_parcel_apns | length }} parcels
-    ({{ multi_parcel_apns | join(', ') }}).
-    Model as one combined project, or split into staged development projects?
-  </span>
-  <button class="btn btn-sm btn-primary"
-          hx-post="/ui/deals/{{ model.id }}/split-projects"
-          hx-target="#multiparcel-banner"
-          hx-swap="outerHTML"
-          hx-confirm="Create {{ multi_parcel_apns | length }} separate projects? This cannot be undone.">
-    Split into {{ multi_parcel_apns | length }} Projects
-  </button>
-  <button class="btn btn-sm btn-secondary"
-          hx-post="/ui/deals/{{ model.id }}/dismiss-multiparcel"
-          hx-target="#multiparcel-banner"
-          hx-swap="outerHTML">
-    Keep Combined
-  </button>
-</div>
-{% endif %}
-{% if lot_size_mismatch %}
-<div style="
-  margin:0 0 0 0;padding:10px 16px;
-  background:#fef3c7;border-bottom:1px solid #f59e0b;
-  display:flex;align-items:center;gap:12px;font-size:13px;color:#92400e">
-  <span>Listing claims {{ lot_size_mismatch.listing_sqft }} sqft but the matched parcel is {{ lot_size_mismatch.parcel_sqft }} sqft &mdash; this may be a multi-parcel assemblage. Add additional parcels in the Property tab if needed.</span>
-</div>
-{% endif %}
 
 {% if active_module == 'deal_setup' %}
 {# ── Deal Setup Wizard — full-width, replaces normal builder layout ── #}

@@ -76,11 +76,7 @@ def _split_reso_address(address: str | None) -> tuple[str | None, str | None, st
 
 
 def _build_project_payload(project: Opportunity | None) -> dict[str, Any]:
-    parcel = None
-    if project is not None:
-        parcel = project.parcel
-
-    address = None if parcel is None else (parcel.address_normalized or parcel.address_raw)
+    address = None if project is None else (project.address_normalized or project.address_raw)
     city, state, postal = _split_reso_address(address)
 
     status = None
@@ -97,11 +93,11 @@ def _build_project_payload(project: Opportunity | None) -> dict[str, Any]:
         "City": city,
         "StateOrProvince": state,
         "PostalCode": postal,
-        "ParcelNumber": None if parcel is None else parcel.apn,
-        "LotSizeSquareFeet": None if parcel is None else _json_scalar(parcel.lot_sqft),
-        "YearBuilt": None if parcel is None else parcel.year_built,
-        "BuildingAreaTotal": None if parcel is None else _json_scalar(parcel.building_sqft),
-        "PropertyType": None if parcel is None else parcel.current_use,
+        "ParcelNumber": None if project is None else project.apn,
+        "LotSizeSquareFeet": None if project is None else _json_scalar(project.lot_sqft),
+        "YearBuilt": None if project is None else project.year_built,
+        "BuildingAreaTotal": None if project is None else _json_scalar(project.gba_sqft),
+        "PropertyType": None if project is None else project.property_type,
         "Status": status,
         "ProjectCategory": project_category,
         "Source": source,
@@ -117,7 +113,7 @@ async def export_deal_model_json(session: AsyncSession, model_id: UUID) -> dict[
                 selectinload(Project.operational_inputs),
                 selectinload(Project.income_streams),
                 selectinload(Project.expense_lines),
-                selectinload(Project.opportunity).selectinload(Opportunity.parcel),
+                selectinload(Project.opportunity),
             ),
             selectinload(DealModel.operational_outputs),
             selectinload(DealModel.cash_flows),
@@ -139,7 +135,6 @@ async def export_deal_model_json(session: AsyncSession, model_id: UUID) -> dict[
     if opportunity_id:
         opp_result = await session.execute(
             select(Opportunity)
-            .options(selectinload(Opportunity.parcel))
             .where(Opportunity.id == opportunity_id)
         )
         opportunity = opp_result.scalar_one_or_none()
