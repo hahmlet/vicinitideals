@@ -12,7 +12,7 @@
 
 ## Strategy
 
-Launch a self-serve, paid SaaS without personally onboarding users. Reduce scope by deferring data-acquisition features (parcels, scraped listings) until revenue justifies paid data sources. Lean on existing homelab infrastructure (Proxmox VM 114, Ollama VM 104, Plane Cloud, LiteLLM) — no new hardware. Use existing AI subscriptions (Claude Max, Copilot Pro) for bug triage automation — no API credits.
+Launch a self-serve, paid SaaS without personally onboarding users. Scope is already lean: the parcel / county-GIS data-acquisition subsystem (parcels, LoopNet, REALie, HelloData, the Map) was **decommissioned** in 2026-06, leaving only Crexi listing import + KNN comps — which stay feature-flagged off at launch until revenue justifies paid data sources. Lean on existing homelab infrastructure (Proxmox VM 114, Ollama VM 104, Plane Cloud, LiteLLM) — no new hardware. Use existing AI subscriptions (Claude Max, Copilot Pro) for bug triage automation — no API credits.
 
 ---
 
@@ -27,17 +27,22 @@ Launch a self-serve, paid SaaS without personally onboarding users. Reduce scope
 - Auth / billing / org membership / invites
 - **Multifamily asset class only** — see Asset Class Scope
 
-### Out of scope at launch (feature-flag off, retain code)
+### Decommissioned (removed 2026-06 — not retained)
+The parcel-intelligence data-acquisition subsystem was **deleted**, not flagged off. Re-enabling
+any of these is a rebuild, not a flag flip (code lives only in git history):
 - Parcel inventory + browser
-- Scraped listings (Crexi, LoopNet, REALie)
+- LoopNet + REALie scraped listings
 - County GIS scrapers (Portland Maps, Clackamas, Oregon City, Gresham)
 - Map view
-- Broker pipeline + dedup
 - HelloData enrichment
-- Most of [data_intel.py](app/api/routers/) sub-router from refactor plan (~2,600 lines, 28 routes)
+
+### Out of scope at launch (feature-flag off, code retained)
+- **Crexi** listing ingest + KNN comps — retained and working, but gated off at launch (bring-your-own-deals)
+- Broker pipeline + dedup
+- Most of [data_intel.py](app/api/routers/) sub-router from refactor plan (~700 lines after the decommission)
 - Email body parsing (cut — keep attachment-only path)
 
-**Re-enable trigger:** when revenue justifies paid data subscription (Reonomy ~$500/mo, ATTOM ~$1k/mo, CompStak ~$2k/mo). Customers fund it.
+**Re-enable trigger (retained-but-flagged items):** when revenue justifies turning data acquisition back on, or a paid data subscription (Reonomy ~$500/mo, ATTOM ~$1k/mo, CompStak ~$2k/mo) is customer-funded.
 
 **Marketing reframe:** "Bring your deals. We model them." (not "We find deals for you.")
 
@@ -562,7 +567,7 @@ Single focused 2-week pass, sequenced after onboarding work (Week 8-9). Onboardi
 - Status page (UptimeRobot etc.) — Plane public roadmap doubles as status communication
 - Sentry / Bugsink — Copilot triage + GitHub issues serve the same need
 - Guided product tour library — too brittle for the value
-- Scraper reliability work, jurisdiction backfill, parcel hardening — feature-flagged off
+- Scraper reliability work / jurisdiction backfill / parcel hardening — N/A: the parcel-intelligence subsystem was decommissioned (2026-06); only Crexi ingest remains, flagged off at launch
 
 ---
 
@@ -665,7 +670,7 @@ Single focused 2-week pass, sequenced after onboarding work (Week 8-9). Onboardi
 1. **Weeks 1-2:** Security (CSRF, rate limiting, isolation audit, 2FA, audit log) + Cloudflare Tunnel + off-VM backups + DKIM/SPF/DMARC
 2. **Week 2-3:** LLC + EIN + business bank + insurance + Termly setup + lawyer review (parallel with code work)
 3. **Week 3-4:** Stripe + Stripe Tax integration + email verification hard gate + org invite flow + suspension flow
-4. **Week 4-5:** Feature-flag off parcels/listings + email ingest cutover (file-only + hardening) + LiteLLM routing config + replacement reserves OpEx gap fix
+4. **Week 4-5:** Feature-flag off the retained Crexi/broker surface (parcels/GIS/Map already removed in the 2026-06 decommission) + email ingest cutover (file-only + hardening) + LiteLLM routing config + replacement reserves OpEx gap fix
 5. **Week 5-6:** JSON export resurrection + scrub mode + in-app bug widget + GitHub issues integration + Copilot triage wiring
 6. **Week 6-7:** Testing strategy — Scenario Library admin page + 8-10 MF scenarios + Playwright parameterization + Trace Viewer enabled + Hypothesis property-based invariants
 7. **Week 7:** Beta env setup on separate LXC + deploy promotion flow
@@ -775,10 +780,10 @@ git push origin main
 
 - SOC 2 Type 1 (only if customer requires)
 - Phase 2a/2b refactor (ui.py split, service layer)
-- Parcel + listing re-enablement (when paid data subscriptions justified)
+- Parcel / county-GIS data-acquisition rebuild — the subsystem was **decommissioned** in 2026-06 (not feature-flagged off; the scrapers, parcel tables, and Map were removed). Bringing it back is a fresh build, gated on paid data subscriptions being justified.
 - Org-level billing
 - International / EU pricing (would trigger Paddle reconsideration)
-- HelloData and other paid enrichment
+- HelloData and other paid enrichment — the HelloData scraper/harness was removed in the 2026-06 decommission; re-adding it would be a fresh build, not a config toggle
 
 ---
 

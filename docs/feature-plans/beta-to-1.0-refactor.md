@@ -9,8 +9,9 @@
 ## Verdict
 
 Refactor still has real, structural impact — and the case is stronger than in May.
-The monolith grew: `ui.py` is now **16,036 lines / 151 route handlers** (was 12,228 / 123).
-Without restructuring, every feature gets slower to add and every bug harder to find.
+Even after the decommission trimmed it, `ui.py` is **14,559 lines / 133 route handlers** (was
+16,036 / 151 pre-decommission, 12,228 / 123 in May). Without restructuring, every feature gets
+slower to add and every bug harder to find.
 
 Stack is well-chosen. No migrations needed. FastAPI + HTMX + SQLAlchemy 2.0 + PostgreSQL 16 +
 Redis 7 stays as-is. UI overhaul is **out of scope** — design handled separately.
@@ -18,13 +19,13 @@ Redis 7 stays as-is. UI overhaul is **out of scope** — design handled separate
 **1.0 is now two tracks:**
 
 1. **Code-structure cleanup** — split `ui.py`, extract a service layer, kill duplication.
-2. **Scope reduction** — **decommission the parcel-intelligence subsystem** down to the parts
-   that work: Opportunities, Deals, Brokers, Crexi listing import, and KNN comps. Everything
-   else (parcel/GIS scraping, Map, LoopNet, REALie, HelloData, jurisdiction tagging, geo
-   matching, parcel/building UI) gets archived and removed.
+2. **Scope reduction** — **the parcel-intelligence decommission shipped** (2026-06). The app is
+   now down to the parts that work: Opportunities, Deals, Brokers, Crexi listing import, and KNN
+   comps. Everything else (parcel/GIS scraping, the Map, LoopNet, REALie, HelloData, geo matching,
+   parcel/building UI) was removed. See the decommission record below.
 
-The security half of the original Phase 1 already shipped (see below), so this plan's Phase 1
-is now decommission + the remaining quick wins.
+The security half of the original Phase 1 also shipped (see below), so Phase 1 is now just the
+remaining quick wins.
 
 ---
 
@@ -39,18 +40,19 @@ is now decommission + the remaining quick wins.
 > - **Capital schema settled** — `funder_type` dropped; `vehicle_type` + `equity_role` canonical on `CapitalModule`.
 > - **Dev-fee multi-source engine** — `fee_terms` JSONB (migration 0103).
 > - **Reserves refactor** — ODR is a first-class UseLine; lease-up merged into interest reserve (0109–0111).
+> - **Parcel-intelligence decommission** (2026-06) — LoopNet, HelloData scraper, county-GIS pipeline, the Map, the parcel tables (migration 0113), and the Building-entity stubs all removed; Crexi import + KNN comps retained. Trimmed `ui.py` by ~1,500 lines / 18 routes. Full record in the decommission section below.
 
 ---
 
 ## Evidence (current state)
 
-### ui.py is 16,036 lines with 151 route handlers
+### ui.py is 14,559 lines with 133 route handlers
 
-Grown from ~7,900 (early) → 12,228 (May) → **16,036 (now)**, no `ui/` subdirectory — the split
-has not started. Handles deals, model builder, timeline wizard, portfolio, parcels, dedup,
-brokers — all in one file. The `handle_form_create_or_update` hub still fans out to 300+
-downstream nodes. The parcel decommission (below) deletes a chunk of these routes, making the
-eventual split smaller.
+Grew ~7,900 (early) → 12,228 (May) → 16,036 (pre-decommission) → **14,559 (now)**, no `ui/`
+subdirectory — the split has not started. Handles deals, model builder, timeline wizard,
+portfolio, brokers, Crexi-listing dedup — all in one file. The `handle_form_create_or_update`
+hub still fans out to 300+ downstream nodes. The parcel decommission (below) already deleted a
+chunk of these routes, shrinking the eventual split.
 
 ### Code duplication (still live)
 
@@ -64,9 +66,10 @@ eventual split smaller.
 - `deals_new.html`, `model_builder.html` (×2 — main + Add-Project drawer), `opportunity_wizard.html`
 - `ProjectType` enum exists at `app/models/deal.py:36` with matching values. Templates don't use it.
 
-**Property types — 2 files, drifted:**
-- `opportunities.html` (6): `Multifamily, Office, Retail, Industrial, Land, Mixed Use`
-- `partials/building_form_fields.html` (8): `Multifamily, Mixed Use, Commercial, Retail, Industrial, Single Family, Vacant Land, Other`
+**Property types — now single-source (was 2 drifted files):**
+- `opportunities.html` (6): `Multifamily, Office, Retail, Industrial, Land, Mixed Use` — the only
+  remaining list. The 8-item `building_form_fields.html` copy was deleted with the parcel/building
+  decommission. Promote this to the `ProjectType` enum or a shared partial before it drifts again.
 
 **Python defaults — `offer_made` conflicts:**
 - `DEFAULT_DURATIONS` in `app/models/milestone.py` → **14 days**
@@ -92,82 +95,63 @@ eventual split smaller.
 
 ---
 
-## Parcel Intelligence: Decommission
+## Parcel Intelligence: Decommission — DONE (2026-06)
 
-The parcel-intelligence half (scrape listings + county GIS, maintain a living ~446K-parcel
-inventory, KNN comps) was built but is effectively non-functional, and validating it against
-real-world data would cost roughly **3× the effort already invested**. Decision: **rip it out,
-archive the code, keep only what works.** Crexi listing import and the KNN comps engine survive;
-everything else is removed.
+The parcel-intelligence half (scrape county GIS, maintain a living ~446K-parcel inventory,
+LoopNet/HelloData/REALie, the Map, parcel/building UI) was built but effectively non-functional;
+validating it would have cost ~**3× the effort already invested**. Decision: **rip it out, keep
+only what works.** Crexi listing import and the KNN comps engine survive; everything else is gone.
 
-### Keep / Kill
+Full record in the `project_parcel_decommission` notes and the **Archive** sections of
+`docs/DATA_MODEL.md`, `PROJECT_OVERVIEW.md`, and `MARKET_MODEL.md`.
 
-| Keep | Kill / archive |
-|---|---|
-| **Opportunities** (manual + Crexi) | LoopNet (subscription cancelled) — `app/scrapers/loopnet.py`, `loopnet_broker.py`, `app/tasks/loopnet_ingest.py`, `app/models/listing_snapshot.py`, 3 beat entries, 6 config fields (~1,944 lines) |
-| **Deals** | HelloData — `app/scrapers/hellodata.py`, `app/scripts/enrich_hellodata.py`, `app/models/hellodata_usage.py`, config + `market.py` read paths |
-| **Brokers** (+ Oregon eLicense) | REALie enrichment |
-| **Crexi** import (`app/scrapers/crexi.py`, daily `scrape-crexi-daily`) → Oppos | County GIS scrapers — PortlandMaps, Clackamas, Oregon City, Gresham ArcGIS (`app/scrapers/{portlandmaps,clackamas,oregoncity,arcgis}.py`) |
-| **KNN comps** (`app/engines/market.py`) — repointed to Oppo-native inputs | Parcel seeding/enrichment (`app/tasks/parcel_seed*`, `app/scrapers/parcel_enrichment.py`) |
-| | Jurisdiction tagging + geo parcel matching (`app/services/parcel_matching.py`) |
-| | The **Map** (`app/templates/listings_map.html`, `/tools/listings/map*`) |
-| | Parcel/building UI — `app/templates/parcels.html`, `partials/parcel_detail.html`, `partials/building_form_fields.html`, `dedup.html`, `app/models/parcel.py`, and `/parcels`, `/ui/parcels/*`, `/dedup*` routes |
+### What shipped
 
-**Why these two roots failed (for the record):** jurisdiction tagging was wrong (scraped `city`
-often the metro name — Gresham listings tagged "Portland"), which poisoned both comps and the
-browse filter; and county GIS was only ever wired as per-address *lookup*, never as a batch
-feeder, so the "living inventory" was an RLIS snapshot plus a slow ≤500/tick drip. Crexi was the
-only live ingest path actually working.
+- **DC-1 — LoopNet deleted.** Scrapers, `app/tasks/loopnet_ingest`, `listing_snapshot` model,
+  3 beat entries, `loopnet_*` config removed; 496 orphan LoopNet Opportunity rows purged.
+- **DC-2 — HelloData removed.** Scraper / CLI / budget-tracker / config deleted; `market.py`
+  decoupled from `hellodata_*` (comps fall back to Crexi fields + manual entry).
+- **DC-3 — Parcel + county-GIS pipeline removed.** PortlandMaps / Clackamas / Oregon City /
+  Gresham ArcGIS scrapers, parcel seed/enrich, geo matching, jurisdiction tagging deleted.
+- **DC-4 — The Map removed.** Leaflet, zone painter, `/tools/listings/map*` deleted.
+- **DC-5 — Parcel tables dropped** (migration 0113): `parcels` (446K rows) +
+  `parcel_transformations`, and `opportunities.parcel_id` / `parcel_conflicts_ack` /
+  `projects.parcel_id`. KNN repointed to `Opportunity` own-fields (jurisdiction→city fallback).
+- **Building entity** — orphaned stub routes / helpers / templates removed (the entity itself
+  was gone since migration 0072).
+- Dead-crumb sweeps + the schema-doc Archive sections.
 
-### Decommission steps (low-risk → high)
+**Kept live:** Opportunities, Deals, Brokers (+ Oregon eLicense), Crexi import (`scrape-crexi-daily`),
+KNN comps, `Opportunity.apn` / `apn_normalized` / `lat` / `lng`, manual jurisdiction.
 
-- **DC-1 — Delete LoopNet.** Remove code, 3 Celery beat entries, `loopnet_*` config fields, and
-  **delete LoopNet Opportunity rows** from the DB. Subscription is already cancelled.
-- **DC-2 — Remove HelloData.** Delete scraper/CLI/budget-tracker/config. Decouple
-  `app/engines/market.py:154–276` from the `hellodata_*` fields so comps fall back gracefully to
-  scraped Crexi fields + manual entry. Defer dropping the now-dead `hellodata_*` columns to a
-  later migration (cheap to leave nullable).
-- **DC-3 — Remove parcel + GIS pipeline.** County-GIS scrapers, parcel seed/enrich, geo
-  matching, jurisdiction tagging. **Archive the code first** — tag a branch (e.g.
-  `archive/parcel-intelligence`) or move to an `archive/` dir before deletion, so it can be
-  resurrected without git spelunking.
-- **DC-4 — Remove parcel/building/map/dedup UI.** Routes + templates listed above. Trim the nav.
-- **DC-5 — Repoint KNN.** `market.py` currently keys on `jurisdiction` + parcel-derived sqft.
-  After removal, source its inputs from Oppo-native fields (`unit_count`, `year_built`, building
-  sqft, and a manually-entered jurisdiction/city). Also replace the bare `except Exception: pass`
-  so a KNN failure is logged, not silent. Goal: comps keep working on the leaner data.
+**Left alone (Steph, 2026-06-14):** the dormant `OpportunitySource.loopnet` enum,
+`Broker.loopnet_broker_id`, and the `hellodata_*` / `jurisdiction` columns — "not production
+features at the moment." No further parcel-DB drops planned.
+
+### Still pending (carried into Phase 1 / 1.5)
+
 - **DC-6 — Fix the `hide_test` filter** so Crexi Oppos display (the test-data filter currently
-  hides them alongside LoopNet).
-
-### New builds (small follow-ons)
-
-- **Crexi listing lifecycle.** A scheduled task that moves stale / expired / sold Crexi listings
-  into an **Archived** Opportunity status — data retained, hidden from active views. Needs an
-  `archived` (or lifecycle-status) field on `Opportunity` + a Celery beat task with a staleness
-  rule (e.g. not seen in N days, or source marks sold).
-- **Opportunity ↔ Broker link.** Add a broker association to `Opportunity` (FK or M2M) and a
-  broker picker in the Oppo create/edit UI so **manually-created Oppos can be tied to a Broker**.
-  Brokers already exist with normalization + dedup; this just wires the relationship + UI.
-
-### Schema impact (update `docs/DATA_MODEL.md` when executed)
-
-- `Opportunity`: add broker link; add archived/lifecycle status.
-- Delete LoopNet `Opportunity` rows (data migration / one-shot script).
-- Drop `parcel`, `listing_snapshot`, `hellodata_usage` models and their tables (staged).
-- Defer dropping dead `hellodata_*` / GIS / jurisdiction columns on `Opportunity`.
+  hides them alongside the old LoopNet rows).
+- **Crexi listing lifecycle.** A scheduled task moving stale / expired / sold Crexi listings into
+  an **Archived** Opportunity status — data retained, hidden from active views. Needs an
+  `archived` / lifecycle-status field on `Opportunity` + a Celery beat task with a staleness rule.
+- **Opportunity ↔ Broker link.** Broker FK/M2M on `Opportunity` + a broker picker in the Oppo
+  create/edit UI so manually-created Oppos can be tied to a Broker. Brokers already have dedup;
+  this just wires the relationship + UI. (Schema impact: broker link + archived status on
+  `Opportunity` — update `docs/DATA_MODEL.md` when built.)
 
 ---
 
-## ui.py Split — 7 Sub-Routers (recomputed for 16k / 151)
+## ui.py Split — 7 Sub-Routers (recomputed for 14.5k / 133)
 
-The 151 routes still divide cleanly by domain. Estimates are approximate and **shrink after the
-parcel decommission** — `data_intel` loses parcels/map/dedup/building; the whole split gets easier.
+The 133 routes still divide cleanly by domain. Estimates are approximate; they already **shrank
+with the parcel decommission** — `data_intel` lost parcels/map/building, so the whole split is easier.
 
 | New file | Est. lines | What's inside |
 |---|---|---|
 | `ui/settings.py` | ~900 | Root, splash, `/settings/*`, admin tasks |
 | `ui/deals_pipeline.py` | ~2,600 | Deal list/CRUD, opportunities, opportunity wizard, **broker link** |
-| `ui/data_intel.py` | ~900 (post-decommission) | Brokers + Crexi-sourced Oppos only — parcels/map/dedup/buildings deleted |
+| `ui/data_intel.py` | ~700 | Brokers + Crexi-sourced Oppos + Crexi dedup — parcels/map/building routes already deleted |
 | `ui/model_builder.py` | ~3,800 | Builder page, panel, forms handler, project ops, sensitivity, anchors, source coverage, calc status |
 | `ui/wizards.py` | ~1,800 | Timeline wizard, approve timeline, deal setup wizard |
 | `ui/model_outputs.py` | ~2,400 | Excel/investor exports, draw schedule, line form, NOI inputs, source vehicle prefill, history |
@@ -193,9 +177,11 @@ so no import breakage there. Move-code and change-code go in **separate commits*
 
 ~~CSRF · write rate-limiting · per-route auth · `funder_type` drop · `selling_costs_pct` wiring~~
 
-### Phase 1 — Decommission + quick wins
+### Phase 1 — Quick wins (decommission DONE)
 
-- **DC-1…DC-6** (parcel-intelligence decommission, above).
+The parcel decommission (DC-1…DC-5) shipped — see the section above. Remaining:
+
+- **DC-6** — `hide_test` filter fix so Crexi Oppos display.
 - Deal-type enum in templates (`ProjectType` via Jinja loop, 3+ files).
 - Gantt CSS extraction → single shared block in `base.html`.
 - Property-type list consolidation (see Open Decisions for canonical list).
@@ -225,7 +211,7 @@ save. No new infrastructure — done alongside 2a/2b since the routes are alread
 ### Phase 3 — Cleanup (no deadline)
 
 - `equity_multiple` → hide in UI until the SensitivityResult join is built.
-- Celery queue simplification (fewer workers once scraping shrinks to Crexi only).
+- Celery queue simplification (scraping is now Crexi-only — fewer workers warranted).
 - HTMX upgrade 1.9.x → 1.10+.
 - Backward-compat alias cleanup (`DealModel`, `ScenarioResult`) once all callers updated.
 
@@ -233,9 +219,10 @@ save. No new infrastructure — done alongside 2a/2b since the routes are alread
 
 ## Open Decisions
 
-1. **Canonical property-type list** — *Recommend the 8-item `building_form_fields` superset*
-   (`Multifamily, Mixed Use, Commercial, Retail, Industrial, Single Family, Vacant Land, Other`)
-   and map `opportunities.html` onto it. Business confirm before code.
+1. **Canonical property-type list** — the 8-item `building_form_fields` superset was deleted with
+   the decommission; `opportunities.html`'s 6-item list (`Multifamily, Office, Retail, Industrial,
+   Land, Mixed Use`) is now the only one. Decide the canonical set (keep these 6, or restore the
+   wider list) and back it with the `ProjectType` enum. Business confirm before code.
 2. **equity_multiple** — *Recommend hide in UI* until the join exists. (Confirm.)
 
 All other May-era open decisions are resolved: LoopNet → delete; HelloData → eliminate;
