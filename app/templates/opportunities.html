@@ -234,18 +234,27 @@ function toggleSection(name) {
     return qs.toString();
   }
 
+  var loadAbort = null;
   function loadAll() {
+    // Cancel in-flight fetches from a previous loadAll so a slow, stale response
+    // (e.g. the large unfiltered Active Deals table) can't land late and overwrite
+    // the current filter state. Without this, toggling Hide Test left the Active
+    // Deals table stuck on the wrong/stale set until a hard refresh.
+    if (loadAbort) loadAbort.abort();
+    loadAbort = new AbortController();
+    var signal = loadAbort.signal;
     var params = getFilterQS();
     tables.forEach(function(t) {
       var el = document.getElementById(t.id);
       if (!el) return;
-      fetch(t.url + (params ? '?' + params : ''), {credentials: 'same-origin'})
+      fetch(t.url + (params ? '?' + params : ''), {credentials: 'same-origin', signal: signal})
         .then(function(r) { return r.text(); })
         .then(function(html) {
           el.innerHTML = html;
           if (window.htmx) htmx.process(el);
           updateCounts();
-        });
+        })
+        .catch(function(err) { if (err.name !== 'AbortError') throw err; });
     });
   }
 
