@@ -1,0 +1,21 @@
+<div id="opp-broker-section">
+  <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin:16px 0 10px">
+    Broker
+  </div>
+  <div class="card" style="padding:14px 16px">
+    <form hx-post="/ui/opportunities/{{ opp.id }}/set-broker"
+          hx-target="#opp-broker-section" hx-swap="outerHTML"
+          style="display:flex;gap:8px;align-items:center">
+      <select name="broker_id" style="flex:1">
+        <option value="">— None —</option>
+        {% for b in brokers %}
+        <option value="{{ b.id }}" {% if b.id == opp_broker_id %}selected{% endif %}>{{ b.label }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit" class="btn btn-secondary btn-sm">Save</button>
+    </form>
+    {% if broker_saved %}
+    <div style="font-size:11px;color:var(--success, #16a34a);margin-top:6px">Saved ✓</div>
+    {% endif %}
+  </div>
+</div>

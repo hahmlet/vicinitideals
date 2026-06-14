@@ -40,7 +40,7 @@ import traceback
 import uuid
 from dataclasses import dataclass
 
-from sqlalchemy import not_, select
+from sqlalchemy import func, not_, select
 
 from app.db import AsyncSessionLocal
 from app.engines.cashflow import compute_cash_flows
@@ -114,9 +114,11 @@ async def run(
     async with AsyncSessionLocal() as session:
         stmt = select(Scenario.id).where(Scenario.is_active.is_(True))
         if not include_test:
+            # NULL-safe: a NULL name is not a test fixture (mirrors the ui.py fix).
+            _hn = func.coalesce(Scenario.name, "")
             stmt = stmt.where(
-                not_(Scenario.name.ilike("%e2e%"))
-                & not_(Scenario.name.op("~*")(_TEST_NAME_REGEX))
+                not_(_hn.ilike("%e2e%"))
+                & not_(_hn.op("~*")(_TEST_NAME_REGEX))
             )
         if scenario_id is not None:
             stmt = stmt.where(Scenario.id == scenario_id)

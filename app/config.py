@@ -86,6 +86,14 @@ class Settings(BaseSettings):
     crexi_username: str = ""
     crexi_password: str = ""
 
+    # Crexi listing lifecycle — auto-archive de-listed listings.
+    # A Crexi opportunity not re-seen in `stale_days` (or whose source status
+    # says sold/off-market) is archived (data kept, hidden from active views).
+    # Guard: only runs when the scraper itself was seen within `health_days`,
+    # so a stalled scraper can't wrongly archive the whole live inventory.
+    crexi_archive_stale_days: int = 21
+    crexi_archive_scraper_health_days: int = 3
+
     # -------------------------------------------------------------------------
     # Realie.ai property data enrichment (https://realie.ai)
     # Free tier: 25 calls/month. Hard lock enforced in RealieEnricher.

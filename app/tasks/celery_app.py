@@ -44,6 +44,13 @@ celery_app.conf.update(
             "task": "app.tasks.scraper.scrape_crexi",
             "schedule": crontab(hour=6, minute=0),
         },
+        # Crexi listing lifecycle: archive de-listed listings daily at 07:00 UTC
+        # (after the 06:00 scrape, so freshly re-seen listings are excluded).
+        # Self-protecting — no-ops if the scraper itself has gone stale.
+        "archive-stale-crexi-daily": {
+            "task": "app.tasks.scraper.archive_stale_crexi_listings",
+            "schedule": crontab(hour=7, minute=0),
+        },
         # Oregon eLicense: monthly enrichment sweep on 2nd at 05:00 UTC.
         # Re-enriches brokers whose license data is >30d old or never pulled.
         "oregon-elicense-monthly-sweep": {

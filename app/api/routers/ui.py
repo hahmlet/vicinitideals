@@ -585,9 +585,13 @@ async def _load_deals(
         stmt = stmt.where(Deal.status != DealStatus.archived)
 
     if hide_test:
+        # NULL-safe: a row with no name is NOT a test fixture. Without coalesce,
+        # ~NULL.ilike(...) evaluates to NULL and the row is silently excluded —
+        # which hid every Crexi opportunity (all have NULL name).
+        _hn = func.coalesce(Deal.name, "")
         stmt = stmt.where(
-            ~Deal.name.ilike("%e2e%") &
-            ~Deal.name.op("~*")(r"phase\s+\w+\s+test\s+\w+")
+            ~_hn.ilike("%e2e%") &
+            ~_hn.op("~*")(r"phase\s+\w+\s+test\s+\w+")
         )
 
     if q:
@@ -3063,9 +3067,13 @@ def _apply_opp_filters(
     hide_test: bool = False,
 ) -> object:
     if hide_test:
+        # NULL-safe: a row with no name is NOT a test fixture. Without coalesce,
+        # ~NULL.ilike(...) evaluates to NULL and the row is silently excluded —
+        # which hid every Crexi opportunity (all have NULL name).
+        _hn = func.coalesce(Opportunity.name, "")
         stmt = stmt.where(
-            ~Opportunity.name.ilike("%e2e%") &
-            ~Opportunity.name.op("~*")(r"phase\s+\w+\s+test\s+\w+")
+            ~_hn.ilike("%e2e%") &
+            ~_hn.op("~*")(r"phase\s+\w+\s+test\s+\w+")
         )
     if favorited:
         stmt = stmt.where(Opportunity.is_favorited.is_(True))
@@ -3230,6 +3238,16 @@ def _safe_uuid_str(raw: str) -> str:
         return ""
 
 
+def _parse_optional_uuid(raw: str) -> UUID | None:
+    """Parse a UUID, or return None for blank/invalid input (e.g. a '— None —' pick)."""
+    if not raw:
+        return None
+    try:
+        return UUID(raw)
+    except ValueError:
+        return None
+
+
 def _safe_return_path(raw: str) -> str:
     """Only allow same-origin paths starting with `/` and free of CRLF / scheme.
 
@@ -3241,6 +3259,26 @@ def _safe_return_path(raw: str) -> str:
     if any(ch in raw for ch in ("\r", "\n")):
         return ""
     return raw
+
+
+async def _broker_options(session: DBSession) -> list[dict]:
+    """Brokers as ``{id, label}`` dicts for a manual-opportunity broker picker.
+
+    Eager-loads brokerage so the label can include the firm without a lazy
+    load in the template. Ordered by name. ~450 rows — fine for a native
+    ``<select>`` (browsers handle thousands and type-to-search works).
+    """
+    rows = (await session.execute(
+        select(Broker)
+        .options(selectinload(Broker.brokerage))
+        .order_by(Broker.last_name, Broker.first_name)
+    )).scalars().unique().all()
+    options: list[dict] = []
+    for b in rows:
+        full = f"{b.last_name or ''}, {b.first_name or ''}".strip(", ").strip() or "Unknown"
+        firm = b.brokerage.name if b.brokerage else None
+        options.append({"id": str(b.id), "label": f"{full} · {firm}" if firm else full})
+    return options
 
 
 @router.get("/ui/opportunities/wizard", response_class=HTMLResponse)
@@ -3263,6 +3301,8 @@ async def opportunity_wizard_get(
     ctx = {
         "request": request, "step": step, "opp": opp,
         "opp_id": opp_id,
+        "brokers": await _broker_options(session),
+        "opp_broker_id": str(opp.broker_id) if opp and opp.broker_id else "",
         "deal_type": request.query_params.get("deal_type", ""),
         "opp_asking_price": "", "opp_notes": "",
         "deal_type_label": "",
@@ -3353,6 +3393,7 @@ async def opportunity_wizard_step(
         name = str(form.get("name", "")).strip()
         deal_type = str(form.get("deal_type", "value_add"))
         notes = str(form.get("notes", "") or "").strip()
+        broker_id = _parse_optional_uuid(str(form.get("broker_id", "") or "").strip())
 
         if opp_id_str:
             try:
@@ -3371,6 +3412,7 @@ async def opportunity_wizard_step(
                 org_id=org.id,
                 name=name,
                 notes=notes,
+                broker_id=broker_id,
                 source="manual",
                 source_url="",
                 promotion_source="manual",
@@ -3380,6 +3422,7 @@ async def opportunity_wizard_step(
         else:
             opp.name = name
             opp.notes = notes
+            opp.broker_id = broker_id
 
         await session.commit()
         await session.refresh(opp)
@@ -3461,6 +3504,8 @@ async def opportunity_detail(
             return HTMLResponse("Not found", status_code=404)
     return templates.TemplateResponse(request, "opportunity_detail.html", {
         "request": request, "opp": opp,
+        "brokers": await _broker_options(session),
+        "opp_broker_id": str(opp.broker_id) if opp.broker_id else "",
         **_base_ctx(user, dedup_count, "opportunities", conflicts_count=conflicts_count),
     })
 
@@ -3478,6 +3523,32 @@ async def archive_opportunity(
     opp.opp_status = OpportunityStatus.archived.value
     await session.commit()
     return RedirectResponse("/opportunities", status_code=303)
+
+
+@router.post("/ui/opportunities/{opp_id}/set-broker", response_class=HTMLResponse)
+async def set_opportunity_broker(
+    request: Request,
+    opp_id: UUID,
+    session: DBSession,
+) -> HTMLResponse:
+    """Set/clear the broker on an opportunity. Returns the broker editor partial (HTMX swap)."""
+    user = await _get_user(session, request)
+    opp = await session.get(Opportunity, opp_id)
+    if opp is None:
+        return HTMLResponse("Not found", status_code=404)
+    if settings.org_isolation_enabled and opp.org_id is not None:
+        user_org_id = getattr(user, "org_id", None) if user is not None else None
+        if user_org_id is None or opp.org_id != user_org_id:
+            return HTMLResponse("Not found", status_code=404)
+    form = await request.form()
+    opp.broker_id = _parse_optional_uuid(str(form.get("broker_id", "") or "").strip())
+    await session.commit()
+    return templates.TemplateResponse(request, "partials/opportunity_broker.html", {
+        "request": request, "opp": opp,
+        "brokers": await _broker_options(session),
+        "opp_broker_id": str(opp.broker_id) if opp.broker_id else "",
+        "broker_saved": True,
+    })
 
 
 # ---------------------------------------------------------------------------

@@ -134,6 +134,19 @@
           </div>
         </div>
 
+        <div class="field-row">
+          <div class="fg">
+            <label>Broker</label>
+            <select name="broker_id">
+              <option value="">— None —</option>
+              {% for b in brokers %}
+              <option value="{{ b.id }}" {% if b.id == opp_broker_id %}selected{% endif %}>{{ b.label }}</option>
+              {% endfor %}
+            </select>
+            <div class="hint">Optional — the listing/selling broker for this opportunity.</div>
+          </div>
+        </div>
+
       </div>
       <div class="wiz-footer">
         <a href="/opportunities" class="btn btn-secondary">Cancel</a>

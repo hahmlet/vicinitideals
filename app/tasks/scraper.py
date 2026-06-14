@@ -5,14 +5,14 @@ from __future__ import annotations
 import asyncio
 import re
 import uuid
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from decimal import Decimal, InvalidOperation
 from typing import Any
 
 import httpx
 import usaddress
 from celery.utils.log import get_task_logger
-from sqlalchemy import case, func, literal_column, select, update
+from sqlalchemy import case, func, literal_column, or_, select, update
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 from sqlalchemy.dialects.sqlite import insert as sqlite_insert
 
@@ -60,6 +60,89 @@ def scrape_listings(
             trace_id=trace_id,
         )
     )
+
+
+# Source listing statuses that mean "no longer actively for sale" → archive.
+_CREXI_ARCHIVE_STATUSES = {
+    "sold", "off market", "off-market", "withdrawn",
+    "expired", "closed", "leased", "under contract",
+}
+
+
+@celery_app.task(name="app.tasks.scraper.archive_stale_crexi_listings", bind=True)
+def archive_stale_crexi_listings(self, dry_run: bool = False) -> dict[str, Any]:
+    """Archive Crexi opportunities that have dropped off the listing source.
+
+    Self-protecting: if the Crexi scraper itself has not run within
+    ``crexi_archive_scraper_health_days``, the task no-ops — a stalled scraper
+    must not be mistaken for the whole inventory going stale. Opportunities
+    already linked to a Deal/Project are never auto-archived.
+    """
+    del self
+    return asyncio.run(_archive_stale_crexi_listings(dry_run=dry_run))
+
+
+async def _archive_stale_crexi_listings(dry_run: bool = False) -> dict[str, Any]:
+    from app.models.project import Project
+
+    now = datetime.now(UTC)
+    health_cut = now - timedelta(days=settings.crexi_archive_scraper_health_days)
+    stale_cut = now - timedelta(days=settings.crexi_archive_stale_days)
+    crexi = OpportunitySource.crexi.value
+
+    async with AsyncSessionLocal() as session:
+        latest_seen = (await session.execute(
+            select(func.max(Opportunity.last_seen_at)).where(Opportunity.source == crexi)
+        )).scalar_one_or_none()
+
+        if latest_seen is None:
+            logger.info("archive_stale_crexi: no Crexi listings; nothing to do")
+            return {"archived": 0, "scanned": 0, "skipped_reason": "no_crexi_listings"}
+
+        if latest_seen < health_cut:
+            logger.warning(
+                "archive_stale_crexi: scraper looks stalled (latest seen %s, health cutoff %s) "
+                "— skipping to protect live inventory",
+                latest_seen, health_cut,
+            )
+            return {
+                "archived": 0, "scanned": 0, "skipped_reason": "scraper_stale",
+                "latest_seen": latest_seen.isoformat(),
+            }
+
+        has_project = (
+            select(Project.id).where(Project.opportunity_id == Opportunity.id).exists()
+        )
+        candidates = (await session.execute(
+            select(Opportunity).where(
+                Opportunity.source == crexi,
+                Opportunity.archived.is_(False),
+                ~has_project,
+                or_(
+                    Opportunity.last_seen_at < stale_cut,
+                    func.lower(func.coalesce(Opportunity.status, "")).in_(_CREXI_ARCHIVE_STATUSES),
+                ),
+            )
+        )).scalars().all()
+
+        if not dry_run:
+            for opp in candidates:
+                opp.archived = True
+                opp.opp_status = OpportunityStatus.archived.value
+            await session.commit()
+
+        logger.info(
+            "archive_stale_crexi: %s candidate(s) %s (stale_days=%s)",
+            len(candidates),
+            "would archive (dry-run)" if dry_run else "archived",
+            settings.crexi_archive_stale_days,
+        )
+        return {
+            "archived": 0 if dry_run else len(candidates),
+            "scanned": len(candidates),
+            "dry_run": dry_run,
+            "stale_days": settings.crexi_archive_stale_days,
+        }
 
 
 @celery_app.task(
