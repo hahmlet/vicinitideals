@@ -309,15 +309,23 @@ def run_deal_setup_wizard(
         _wizard_click_next_or_review(page)
 
     # Step 5 — Per-debt sizing (LTV / fixed / DSCR). The permanent-debt sizing
-    # MODE was already chosen on Step 1; this step only collects DSCR minimum
-    # and per-loan LTV / fixed amount. Skipped when all debts have a vehicle.
-    if page.locator('[name="dscr_minimum"]').count() > 0:
-        dscr_input = page.locator('[name="dscr_minimum"]')
-        if dscr_input.is_visible():
-            dscr_input.fill(dscr_minimum)
-        _wizard_click_next_or_review(page)
-    elif page.locator('[name$="_ltv_pct"]').count() > 0:
-        if debt_terms:
+    # MODE was already chosen on Step 1; this step collects the DSCR minimum
+    # AND every loan's per-loan LTV / LTC cap. Skipped when all debts have a
+    # source vehicle (which inherits sizing from the template).
+    #
+    # NOTE: the DSCR minimum field is ALWAYS in the DOM — rendered as a visible
+    # input in DSCR/dual-constraint mode and as a HIDDEN input otherwise. So a
+    # bare `dscr_minimum count > 0` check is always true and must NOT gate the
+    # per-loan LTV fills, or gap-fill deals silently keep each loan's default
+    # LTV (e.g. construction loan at 75% LTC) instead of what the caller asked
+    # for. Fill the DSCR minimum only when it's visible, and always fill the
+    # per-loan LTV caps when those inputs are present.
+    dscr_input = page.locator('[name="dscr_minimum"]')
+    ltv_present = page.locator('[name$="_ltv_pct"]').count() > 0
+    if dscr_input.count() > 0 or ltv_present:
+        if dscr_input.count() > 0 and dscr_input.first.is_visible():
+            dscr_input.first.fill(dscr_minimum)
+        if ltv_present and debt_terms:
             for dt, terms in debt_terms.items():
                 if "ltv_pct" in terms:
                     ltv_input = page.locator(f'[name="{dt}_ltv_pct"]')

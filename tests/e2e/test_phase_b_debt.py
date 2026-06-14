@@ -168,14 +168,6 @@ TEST_CASES = [
         "id": "constr_perm_io_12mo",
         "name": "Phase B Test 2 — Construction + Perm (12mo, True IO)",
         "deal_type": "value_add",
-        "xfail_gap": True,
-        "xfail_reason": (
-            "Sources=Uses now converges in one compute (the reserve fix-point "
-            "is re-enabled — see tests/api/test_c2p_oneclick_convergence.py). "
-            "xfail_gap kept as a guard in case the operating shortfall diverges "
-            "through the wizard's income/expense profile; the divergence guard "
-            "then leaves a residual gap by design."
-        ),
         "milestones": ["close", "pre_development", "construction", "operation_stabilized", "divestment"],
         "phase_durations": {"pre_development": 90, "construction": 365, "operation_stabilized": 1095},
         "debt_types": ["construction_loan", "permanent_debt"],
@@ -264,16 +256,6 @@ TEST_CASES = [
         "id": "ir_12mo",
         "name": "Phase B Test 6 — Interest Reserve (12mo)",
         "deal_type": "value_add",
-        "xfail_gap": True,
-        "xfail_balance": True,
-        "xfail_reason": (
-            "Sources=Uses now converges in one compute (the reserve fix-point "
-            "is re-enabled — see tests/api/test_c2p_oneclick_convergence.py). "
-            "The per-loan carry invariant P==base+carry still drifts because the "
-            "setup wizard skips the per-loan LTV step for a construction loan "
-            "that has an exit vehicle, so it sizes at its default LTV instead of "
-            "the requested 100% — a separate wizard-plumbing follow-up."
-        ),
         "milestones": ["close", "pre_development", "construction", "operation_stabilized", "divestment"],
         "phase_durations": {"pre_development": 60, "construction": 365, "operation_stabilized": 1095},
         "debt_types": ["construction_loan", "permanent_debt"],
@@ -303,17 +285,6 @@ TEST_CASES = [
         "id": "ci_12mo",
         "name": "Phase B Test 7 — Capitalized Interest (12mo)",
         "deal_type": "value_add",
-        "xfail_gap": True,
-        "xfail_balance": True,
-        "xfail_reason": (
-            "Sources=Uses now converges in one compute (the reserve fix-point "
-            "is re-enabled — see tests/api/test_c2p_oneclick_convergence.py, "
-            "which proves capitalized_interest no longer runs away). The "
-            "per-loan carry invariant P==base+carry still drifts because the "
-            "setup wizard skips the per-loan LTV step for a construction loan "
-            "that has an exit vehicle, so it sizes at its default LTV instead of "
-            "the requested 100% — a separate wizard-plumbing follow-up."
-        ),
         "milestones": ["close", "pre_development", "construction", "operation_stabilized", "divestment"],
         "phase_durations": {"pre_development": 60, "construction": 365, "operation_stabilized": 1095},
         "debt_types": ["construction_loan", "permanent_debt"],
@@ -343,16 +314,6 @@ TEST_CASES = [
         "id": "ir_3mo_short",
         "name": "Phase B Test 8 — Short Construction (3mo, IR)",
         "deal_type": "acquisition",
-        "xfail_balance": True,
-        "xfail_reason": (
-            "Sources=Uses balances. The per-loan carry invariant P==base+carry "
-            "drifts because the setup wizard skips the per-loan LTV step for a "
-            "construction loan that has an exit vehicle, so it sizes at its "
-            "default LTV instead of the requested 100% — a separate "
-            "wizard-plumbing follow-up. The engine itself sizes P=base+carry "
-            "correctly when LTV is supplied (proven in "
-            "tests/api/test_c2p_oneclick_convergence.py)."
-        ),
         "milestones": ["close", "construction", "operation_stabilized", "divestment"],
         "phase_durations": {"construction": 90, "operation_stabilized": 730},
         "debt_types": ["construction_loan", "permanent_debt"],
@@ -453,10 +414,6 @@ def test_phase_b_debt(tc: dict, _seed_page, base_url: str) -> None:
         # surplus up to 11% of uses as acceptable (real deals don't need $0 balance).
         max_surplus = max(100, uses_total * 0.11) if uses_total else 100
         assert gap <= max_surplus, f"Sources should be ≤ Uses for DSCR-capped, gap={gap}"
-    elif tc.get("xfail_gap"):
-        # Known gap due to missing wizard UI support (e.g., C2P debt terms)
-        if abs(gap) >= 100:
-            pytest.xfail(f"Known gap: ${gap:.0f} — {tc.get('xfail_reason', 'see test case')}")
     else:
         # Gap-fill: Sources = Uses within $100
         assert abs(gap) < 100, f"Sources ≠ Uses: gap=${gap:.0f} (sources={sources_total}, uses={uses_total})"
@@ -482,20 +439,13 @@ def test_phase_b_debt(tc: dict, _seed_page, base_url: str) -> None:
     rate = Decimal(ecm["rate_pct"])
 
     # Invariant 1: P == base + carry_amount.
-    # This is a SINGLE-DEBT invariant: it assumes one loan funds its own base.
-    # For multi-debt retire-and-replace structures (a construction loan retired
-    # by a perm loan) the construction-loan principal can drift off base+carry in
-    # a single compute — the bridge/retirement writeback in
-    # _auto_size_debt_modules isn't pass-stable yet (follow-up to PR #15). Such
-    # cases set xfail_balance; Sources=Uses still holds, only this per-loan carry
-    # invariant is affected.
+    # The loan principal must fund its own base cost plus its capitalized carry.
+    # Holds for both single-debt and multi-debt retire-and-replace structures
+    # (a construction loan retired by a perm loan) now that PR #18 made the
+    # bridge/retirement writeback in _auto_size_debt_modules pass-stable and the
+    # wizard seed helper fills per-loan LTV (so the construction loan sizes at
+    # 100% LTC, not the default).
     _balance_off = abs(principal - (base + actual_amt)) >= Decimal("1")
-    if _balance_off and tc.get("xfail_balance"):
-        pytest.xfail(
-            f"Known multi-debt sizing drift: P={principal} != "
-            f"base={base} + carry={actual_amt} — "
-            f"{tc.get('xfail_reason', 'see test case')}"
-        )
     assert not _balance_off, (
         f"Balance check failed: P={principal} != base={base} + amt={actual_amt}"
     )
