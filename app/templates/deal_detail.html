@@ -249,10 +249,10 @@
 </div>
 {% endif %}
 
-{# Two-column: deal info + parcels (left) | financial models (right) #}
+{# Two-column: deal info (left) | financial models (right) #}
 <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:24px;align-items:start;margin-bottom:32px">
 
-  {# Left: deal details + parcels #}
+  {# Left: deal details #}
   <div>
     <div class="section-title mb-12">Deal Details</div>
     <div style="margin-bottom:24px">
@@ -284,35 +284,6 @@
       {% endif %}
     </div>
 
-    {# Parcels #}
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-      <div class="section-title" style="margin:0">Parcels</div>
-      <button class="btn btn-secondary btn-sm" onclick="openDrawer('link-parcel-drawer')">+ Link</button>
-    </div>
-    {% if parcels %}
-    {% for p in parcels %}
-    <div class="parcel-card" onclick="openDrawer('parcel-drawer-{{ loop.index0 }}')">
-      <div class="parcel-card-apn">{{ p.apn }}</div>
-      <div class="parcel-card-address">{{ p.address or '—' }}</div>
-      <div style="display:flex;gap:16px;margin-top:8px;flex-wrap:wrap">
-        {% if p.zoning_code %}
-        <div style="font-size:12px"><span class="text-muted">Zoning</span> {{ p.zoning_code }}</div>
-        {% endif %}
-        {% if p.lot_sqft %}
-        <div style="font-size:12px"><span class="text-muted">Lot</span> {{ p.lot_sqft | number_fmt }} sf</div>
-        {% endif %}
-        {% if p.total_assessed_value %}
-        <div style="font-size:12px"><span class="text-muted">Assessed</span> {{ p.total_assessed_value | currency }}</div>
-        {% endif %}
-        {% if p.owner_name %}
-        <div style="font-size:12px"><span class="text-muted">Owner</span> {{ p.owner_name }}</div>
-        {% endif %}
-      </div>
-    </div>
-    {% endfor %}
-    {% else %}
-    <div style="font-size:13px;color:var(--text-muted);padding:8px 0">No parcels linked.</div>
-    {% endif %}
   </div>
 
   {# Right: financial models #}
@@ -442,101 +413,6 @@
   {% endif %}
 </div>
 
-</div>
-
-<!-- Parcel detail drawers -->
-{% for p in parcels %}
-<div class="drawer-overlay" id="parcel-drawer-{{ loop.index0 }}" style="display:none">
-  <div class="drawer">
-    <div class="drawer-header">
-      <div>
-        <div class="drawer-title">{{ p.address or p.apn }}</div>
-        <div class="text-small text-muted" style="font-family:var(--font-mono,monospace)">{{ p.apn }}</div>
-      </div>
-      <span class="drawer-close" onclick="closeDrawer('parcel-drawer-{{ loop.index0 }}')">×</span>
-    </div>
-    <div class="drawer-body" style="display:flex;flex-direction:column;gap:10px">
-      {% if p.zoning_code %}
-      <div class="field-row"><div class="field-key">Zoning</div>
-        <div class="field-value">{{ p.zoning_code }}{% if p.zoning_description %} — {{ p.zoning_description }}{% endif %}</div>
-      </div>
-      {% endif %}
-      {% if p.lot_sqft %}
-      <div class="field-row"><div class="field-key">Lot</div>
-        <div class="field-value">{{ p.lot_sqft | number_fmt }} sf{% if p.gis_acres %} · {{ "%.2f"|format(p.gis_acres) }} ac{% endif %}</div>
-      </div>
-      {% endif %}
-      {% if p.state_class_label %}
-      <div class="field-row"><div class="field-key">Use Class</div><div class="field-value">{{ p.state_class_label }}</div></div>
-      {% endif %}
-      {% if p.current_use %}
-      <div class="field-row"><div class="field-key">Current Use</div><div class="field-value">{{ p.current_use }}</div></div>
-      {% endif %}
-      {% if p.year_built %}
-      <div class="field-row"><div class="field-key">Year Built</div><div class="field-value">{{ p.year_built }}</div></div>
-      {% endif %}
-      {% if p.total_assessed_value %}
-      <div class="field-row"><div class="field-key">Assessed Value</div><div class="field-value">{{ p.total_assessed_value | currency }}</div></div>
-      {% endif %}
-      {% if p.assessed_value_land %}
-      <div class="field-row"><div class="field-key">Land Value</div><div class="field-value">{{ p.assessed_value_land | currency }}</div></div>
-      {% endif %}
-      {% if p.assessed_value_improvements %}
-      <div class="field-row"><div class="field-key">Improvements</div><div class="field-value">{{ p.assessed_value_improvements | currency }}</div></div>
-      {% endif %}
-      {% if p.owner_name %}
-      <div class="field-row"><div class="field-key">Owner</div><div class="field-value">{{ p.owner_name }}</div></div>
-      {% endif %}
-      {% if p.owner_mailing_address %}
-      <div class="field-row"><div class="field-key">Mailing</div><div class="field-value">{{ p.owner_mailing_address }}</div></div>
-      {% endif %}
-      {% if p.jurisdiction %}
-      <div class="field-row"><div class="field-key">Jurisdiction</div><div class="field-value">{{ p.jurisdiction }}</div></div>
-      {% endif %}
-      {% if p.county %}
-      <div class="field-row"><div class="field-key">County</div><div class="field-value">{{ p.county }}</div></div>
-      {% endif %}
-      <div style="margin-top:8px;padding-top:12px;border-top:1px solid var(--border)">
-        <a href="/parcels?q={{ p.apn | urlencode }}" class="btn btn-secondary btn-sm">View full parcel record →</a>
-      </div>
-    </div>
-  </div>
-</div>
-{% endfor %}
-
-<!-- Link Parcel drawer -->
-<div class="drawer-overlay" id="link-parcel-drawer" style="display:none">
-  <div class="drawer">
-    <div class="drawer-header">
-      <div>
-        <div class="drawer-title">Link Parcel</div>
-        <div class="text-small text-muted">Connect a parcel to this deal by APN</div>
-      </div>
-      <span class="drawer-close" onclick="closeDrawer('link-parcel-drawer')">×</span>
-    </div>
-    <div class="drawer-body">
-      <form method="post" action="/ui/deals/{{ deal_id }}/link-parcel"
-            style="display:flex;flex-direction:column;gap:14px">
-        <div>
-          <label class="field-label">APN (Assessor Parcel Number)</label>
-          <input class="filter-input" style="width:100%;margin-top:4px" type="text" name="apn"
-                 placeholder="e.g. R698400130" required>
-        </div>
-        <div>
-          <label class="field-label">Relationship</label>
-          <select class="filter-select" style="width:100%;margin-top:4px" name="relationship">
-            <option value="unchanged">Unchanged</option>
-            <option value="merged_in">Merged In</option>
-            <option value="split_from">Split From</option>
-          </select>
-        </div>
-        <div style="display:flex;gap:8px;margin-top:6px">
-          <button type="submit" class="btn btn-primary">Link Parcel</button>
-          <button type="button" class="btn btn-secondary" onclick="closeDrawer('link-parcel-drawer')">Cancel</button>
-        </div>
-      </form>
-    </div>
-  </div>
 </div>
 
 </div>
