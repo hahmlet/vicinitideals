@@ -79,7 +79,11 @@ def test_opening_cash_sums_first_day_reserves():
     assert out.opening_cash == Decimal("500_000")
 
 
-def test_reserves_with_non_first_day_timing_skipped():
+def test_reserves_counted_regardless_of_timing():
+    # Reserves are funded at close, so every reserve use line contributes to
+    # opening_cash regardless of its timing_type (fix 56e13bb: the proof must
+    # not under-count opening cash and report a phantom shortfall just because
+    # a reserve carries a non-first-day timing label).
     use_lines = [
         _FakeUseLine("Operating Reserve", Decimal("100_000"), timing_type="first_day"),
         _FakeUseLine("Operating Reserve", Decimal("999_999"), timing_type="monthly"),
@@ -91,7 +95,7 @@ def test_reserves_with_non_first_day_timing_skipped():
         first_period_date=datetime(2026, 1, 1),
         co_period=0,
     )
-    assert out.opening_cash == Decimal("100_000")
+    assert out.opening_cash == Decimal("1_099_999")
 
 
 def test_rows_outside_window_excluded():
