@@ -17,9 +17,9 @@ from sqlalchemy.orm import selectinload
 from app.db import AsyncSessionLocal
 from app.engines.cashflow import compute_cash_flows
 from app.models.cashflow import CashFlow, OperationalOutputs, PeriodType
-from app.models.deal import DealModel, OperationalInputs
+from app.models.deal import Scenario, OperationalInputs
 from app.models.project import Project
-from app.models.scenario import Scenario, ScenarioResult, ScenarioStatus
+from app.models.scenario import Scenario, SensitivityResult, ScenarioStatus
 from app.observability import begin_observation, elapsed_ms, log_observation
 from app.tasks.celery_app import celery_app
 
@@ -256,8 +256,8 @@ async def _prepare_scenario_run(
             return None
 
         result_check = await session.execute(
-            select(ScenarioResult.id)
-            .where(ScenarioResult.sensitivity_id == scenario_id)
+            select(SensitivityResult.id)
+            .where(SensitivityResult.sensitivity_id == scenario_id)
             .limit(1)
         )
         has_existing_results = result_check.first() is not None
@@ -363,7 +363,7 @@ async def _persist_scenario_result(
             raise ValueError(f"Scenario {scenario_id} was not found")
 
         session.add(
-            ScenarioResult(
+            SensitivityResult(
                 sensitivity_id=scenario_id,
                 run_number=max(int(getattr(scenario, "run_count", 1) or 1), 1),
                 variable_value=_q(value),
@@ -430,7 +430,7 @@ async def _load_scenario(session: AsyncSession, scenario_id: UUID) -> Scenario |
     result = await session.execute(
         select(Scenario)
         .options(
-            selectinload(Scenario.scenario).selectinload(DealModel.projects).selectinload(Project.operational_inputs)
+            selectinload(Scenario.scenario).selectinload(Scenario.projects).selectinload(Project.operational_inputs)
         )
         .where(Scenario.id == scenario_id)
     )

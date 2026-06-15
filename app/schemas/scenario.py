@@ -1,6 +1,6 @@
 """Sensitivity (sensitivity analysis sweep) and SensitivityResult schemas.
 
-Previously named Scenario/ScenarioResult — renamed to match the ORM rename.
+Previously named Scenario/SensitivityResult — renamed to match the ORM rename.
 Backward-compat aliases (ScenarioCreate, ScenarioRead, etc.) are kept so
 existing code continues to import without immediate churn.
 """
@@ -48,14 +48,13 @@ class SensitivityRead(SensitivityBase):
     model_config = {"from_attributes": True}
 
 
-# Backward-compat aliases
 ScenarioCreate = SensitivityCreate
 ScenarioRead = SensitivityRead
 ScenarioStatus = SensitivityStatus
 
 
 # ---------------------------------------------------------------------------
-# SensitivityResult (was ScenarioResult)
+# SensitivityResult (was SensitivityResult)
 # ---------------------------------------------------------------------------
 
 class SensitivityResultBase(BaseModel):
@@ -79,9 +78,6 @@ class SensitivityResultRead(SensitivityResultBase):
     model_config = {"from_attributes": True}
 
 
-# Backward-compat aliases
-ScenarioResultCreate = SensitivityResultCreate
-ScenarioResultRead = SensitivityResultRead
 
 
 # ---------------------------------------------------------------------------

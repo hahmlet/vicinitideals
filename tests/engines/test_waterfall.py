@@ -14,7 +14,7 @@ from app.engines.waterfall import ModuleState  # noqa: PLC2701
 from app.models.capital import CapitalModule, EquityRole, VehicleType, WaterfallResult, WaterfallTier
 from app.schemas.capital import CapitalCarrySchema, CapitalExitSchema, CapitalSourceSchema
 from app.models.cashflow import CashFlow, OperationalOutputs, PeriodType
-from app.models.deal import DealModel, ProjectType
+from app.models.deal import Scenario, ProjectType
 from app.models.org import Organization, User
 from app.models.project import (
     Opportunity,
@@ -402,7 +402,7 @@ async def test_irr_hurdle_split_waits_until_lp_hurdle_is_met(db_session: AsyncSe
     assert Decimal(str(gp_period_3_split.cash_distributed)) > Decimal("0.000000")
 
 
-async def _seed_base_deal(session: AsyncSession) -> DealModel:
+async def _seed_base_deal(session: AsyncSession) -> Scenario:
     from app.models.deal import Deal
     org = Organization(id=uuid4(), name="Test Org", slug=f"test-org-{uuid4().hex[:8]}")
     user = User(id=uuid4(), org_id=org.id, name="Test User", display_color="#3366FF")
@@ -417,7 +417,7 @@ async def _seed_base_deal(session: AsyncSession) -> DealModel:
         created_by_user_id=user.id,
     )
     top_deal = Deal(id=uuid4(), org_id=org.id, name="Base Case", created_by_user_id=user.id)
-    deal = DealModel(
+    deal = Scenario(
         id=uuid4(),
         deal_id=top_deal.id,
         created_by_user_id=user.id,
@@ -506,7 +506,7 @@ def test_capped_lp_fills_first_uncapped_gp_absorbs_residual() -> None:
 
 async def _seed_project_with_auto_dev_fee(
     session: AsyncSession,
-    deal: DealModel,
+    deal: Scenario,
     *,
     deferred: str,
 ) -> None:

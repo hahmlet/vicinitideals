@@ -15,12 +15,12 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.exporters.json_export import EXPORT_SCHEMA_VERSION
 from app.models.capital import CapitalModule, WaterfallTier
-from app.models.deal import Deal, DealModel, IncomeStream, OperatingExpenseLine, OperationalInputs
+from app.models.deal import Deal, Scenario, IncomeStream, OperatingExpenseLine, OperationalInputs
 from app.models.project import Opportunity, Project, ProjectCategory, ProjectSource, ProjectStatus
 from app.schemas.capital import CapitalModuleBase, WaterfallTierBase
 from app.schemas.deal import (
-    DealModelBase,
-    DealModelRead,
+    ScenarioBase,
+    ScenarioRead,
     IncomeStreamBase,
     OperatingExpenseLineBase,
     OperationalInputsBase,
@@ -121,7 +121,7 @@ class DealProjectData(BaseModel):
 class DealImportPayload(BaseModel):
     schema_version: str
     project: DealProjectData | None = None
-    deal_model: DealModelBase
+    deal_model: ScenarioBase
     operational_inputs: OperationalInputsBase | None = None
     income_streams: list[IncomeStreamBase] = Field(default_factory=list)
     expense_lines: list[OperatingExpenseLineBase] = Field(default_factory=list)
@@ -153,7 +153,7 @@ class DealImportPayload(BaseModel):
             data["deal_model"] = {
                 key: value
                 for key, value in deal_model_mapping.items()
-                if key in DealModelBase.model_fields
+                if key in ScenarioBase.model_fields
             }
 
         return data
@@ -168,14 +168,14 @@ class DealImportValidationResult(BaseModel):
 
 
 class DealImportResult(BaseModel):
-    model: DealModelRead
+    model: ScenarioRead
     counts: dict[str, int] = Field(default_factory=dict)
     warnings: list[str] = Field(default_factory=list)
 
 
 class DealPayloadImportResult(BaseModel):
     project: ProjectRead
-    model: DealModelRead
+    model: ScenarioRead
     counts: dict[str, int] = Field(default_factory=dict)
     warnings: list[str] = Field(default_factory=list)
 
@@ -256,8 +256,8 @@ async def import_deal_model_json(
     # Find or create top-level Deal linked to this Opportunity (via Project)
     existing_top_deal = (await session.execute(
         select(Deal)
-        .join(DealModel, DealModel.deal_id == Deal.id)
-        .join(Project, Project.scenario_id == DealModel.id)
+        .join(Scenario, Scenario.deal_id == Deal.id)
+        .join(Project, Project.scenario_id == Scenario.id)
         .where(Project.opportunity_id == project_id)
         .limit(1)
     )).scalar_one_or_none()
@@ -273,7 +273,7 @@ async def import_deal_model_json(
         session.add(existing_top_deal)
         await session.flush()
 
-    model = DealModel(
+    model = Scenario(
         deal_id=existing_top_deal.id,
         created_by_user_id=created_by_user_id,
         **parsed.deal_model.model_dump(exclude_unset=True),
@@ -344,7 +344,7 @@ async def import_deal_model_json(
     await session.refresh(model)
 
     return DealImportResult(
-        model=DealModelRead.model_validate(model),
+        model=ScenarioRead.model_validate(model),
         counts=_build_counts(parsed),
         warnings=validation.warnings,
     )

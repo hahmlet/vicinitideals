@@ -88,7 +88,7 @@ from app.models.deal import (
     USE_CATEGORY_LABELS,
     USE_COST_CATEGORIES,
     Deal,
-    DealModel,
+    Scenario,
     IncomeStream,
     OperatingExpenseLine,
     OperationalInputs,
@@ -284,7 +284,7 @@ _PROFILE_SUFFIX: dict[str, str] = {
 
 
 def make_investor_filename(
-    scenario: DealModel,
+    scenario: Scenario,
     deal: Deal | None,
     profile: str = "internal",
 ) -> str:
@@ -308,7 +308,7 @@ async def _load_all(session: AsyncSession, scenario_id: UUID) -> dict | None:
     rows, and rollup outputs.
     """
     scenario = (
-        await session.execute(select(DealModel).where(DealModel.id == scenario_id))
+        await session.execute(select(Scenario).where(Scenario.id == scenario_id))
     ).scalar_one_or_none()
     if scenario is None:
         return None
@@ -718,7 +718,7 @@ def _write_cover_timeline(
 def _build_cover(ws, registry: CellRegistry, ctx: dict) -> None:
     """Cover sheet: key metrics summary, deal/scenario metadata, project list."""
     set_widths(ws, [30, 16, 14, 10, 12])
-    scenario: DealModel = ctx["scenario"]
+    scenario: Scenario = ctx["scenario"]
     deal: Deal | None = ctx["deal"]
     org: Organization | None = ctx["org"]
     projects: list[Project] = ctx["projects"]
@@ -5420,7 +5420,7 @@ def _loan_active_term_months(module: CapitalModule, ctx: dict) -> int | None:
 
 def _build_assumptions(ws, registry: CellRegistry, ctx: dict) -> None:
     """Assumptions sheet: scenario-level / per-project / capital-stack blocks."""
-    scenario: DealModel = ctx["scenario"]
+    scenario: Scenario = ctx["scenario"]
     projects: list[Project] = ctx["projects"]
     inputs_by_project: dict[UUID, OperationalInputs] = ctx["operational_inputs"]
     use_lines_by_project: dict[UUID, list[UseLine]] = ctx["use_lines"]

@@ -32,7 +32,7 @@ from app.schemas.scenario import (
     ScenarioComparisonRead,
     ScenarioMetricDeltaRead,
     ScenarioRead,
-    ScenarioResultRead,
+    SensitivityResultRead,
     ScenarioVariableDescriptorRead,
     SensitivityResultRead,
 )

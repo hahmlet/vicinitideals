@@ -40,7 +40,7 @@ from app.exporters.json_export import export_deal_model_json
 from app.models.capital import CapitalModule, CapitalModuleProject, DrawSource, WaterfallResult, WaterfallTier
 from app.models.cashflow import CashFlowLineItem, OperationalOutputs
 from app.models.deal import (
-    DealModel,
+    Scenario,
     IncomeStream,
     OperatingExpenseLine,
     OperationalInputs,

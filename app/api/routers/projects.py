@@ -13,7 +13,7 @@ from sqlalchemy.orm import selectinload
 from app.api.deps import CurrentUserId, DBSession
 from app.models.capital import CapitalModule
 from app.models.cashflow import OperationalOutputs
-from app.models.deal import DealModel, IncomeStream, OperatingExpenseLine
+from app.models.deal import Scenario, IncomeStream, OperatingExpenseLine
 from app.models.org import Organization, ProjectVisibility
 from app.models.project import Opportunity, Project
 from app.schemas.org import ProjectVisibilityRead
@@ -33,14 +33,14 @@ async def _get_project_or_404(session: DBSession, project_id: UUID) -> Opportuni
     return project
 
 
-async def _resolve_project_deal_model(session: DBSession, project_id: UUID) -> DealModel | None:
+async def _resolve_project_deal_model(session: DBSession, project_id: UUID) -> Scenario | None:
     # Find Scenarios via Projects that reference this Opportunity
     result = await session.execute(
-        select(DealModel)
-        .options(selectinload(DealModel.operational_outputs))
-        .join(Project, Project.scenario_id == DealModel.id)
+        select(Scenario)
+        .options(selectinload(Scenario.operational_outputs))
+        .join(Project, Project.scenario_id == Scenario.id)
         .where(Project.opportunity_id == project_id)
-        .order_by(DealModel.is_active.desc(), DealModel.version.desc(), DealModel.created_at.desc())
+        .order_by(Scenario.is_active.desc(), Scenario.version.desc(), Scenario.created_at.desc())
     )
     models = list(result.scalars().unique())
     if not models:

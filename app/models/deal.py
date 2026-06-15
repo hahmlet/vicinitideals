@@ -2,10 +2,10 @@
 
 Entity hierarchy:
   Deal          — top-level investment thesis; groups Opportunities + Scenarios
-  Scenario      — one financial plan for the deal (was DealModel / the old deals table)
+  Scenario      — one financial plan for the deal (was Scenario / the old deals table)
   Project       — post-acquisition dev effort within a Scenario (one per opportunity)
 
-The old `Deal` ORM class is now `Scenario`.  A backward-compat alias DealModel = Scenario
+The old `Deal` ORM class is now `Scenario`.  The old `Deal` ORM class is now `Scenario`.
 is kept so existing code continues to import without immediate churn.
 """
 
@@ -129,15 +129,15 @@ class DealOpportunity:  # type: ignore[no-redef]
 
 
 # ---------------------------------------------------------------------------
-# Scenario — one financial plan for a Deal (was DealModel / deals table)
+# Scenario — one financial plan for a Deal (was Scenario / deals table)
 # ---------------------------------------------------------------------------
 
 class Scenario(Base):
     """A financial scenario for a Deal — one specific plan for how to pursue it.
 
-    Was previously called DealModel (and stored in the `deals` table).
+    Was previously called Scenario (and stored in the `deals` table).
     Multiple Scenarios can exist per Deal; each represents a different end state
-    or financing approach.  The DealModel alias is kept for backward compat.
+    or financing approach.  The Scenario alias is kept for backward compat.
     """
 
     __tablename__ = "scenarios"
@@ -225,8 +225,6 @@ class Scenario(Base):
     source_vehicle_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), nullable=True)
 
 
-# Backward-compat alias — old code importing DealModel still works
-DealModel = Scenario
 
 
 # ---------------------------------------------------------------------------
@@ -387,7 +385,7 @@ class OperationalInputs(Base):
     # Asset management fee as % of (NOI - debt service), deducted pre-waterfall
     asset_mgmt_fee_pct: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
 
-    # ── NOI mode inputs (only used when DealModel.income_mode == 'noi') ──────
+    # ── NOI mode inputs (only used when Scenario.income_mode == 'noi') ──────
     # Annual stabilized NOI entered/pre-filled from listing; NULL = not yet set
     noi_stabilized_input: Mapped[object | None] = mapped_column(Numeric(18, 6), nullable=True)
     # True when noi_stabilized_input was silently seeded by the KNN comp engine

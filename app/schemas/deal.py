@@ -93,7 +93,7 @@ class DealRead(DealBase):
 
 
 # ---------------------------------------------------------------------------
-# Scenario (financial plan for a Deal — was DealModel)
+# Scenario (financial plan for a Deal — was Scenario)
 # ---------------------------------------------------------------------------
 
 class ScenarioBase(BaseModel):
@@ -145,10 +145,6 @@ class ScenarioRead(ScenarioBase):
     )
 
 
-# Backward-compat aliases — old code importing DealModel* still works
-DealModelBase = ScenarioBase
-DealModelCreate = ScenarioCreate
-DealModelRead = ScenarioRead
 
 
 # ---------------------------------------------------------------------------

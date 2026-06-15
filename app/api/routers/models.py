@@ -45,8 +45,8 @@ from app.observability import (
 )
 from app.schemas.deal import (
     CashFlowRead,
-    ScenarioBase as DealModelBase,
-    ScenarioRead as DealModelRead,
+    ScenarioBase as ScenarioBase,
+    ScenarioRead as ScenarioRead,
     IncomeStreamBase,
     IncomeStreamRead,
     IncomeStreamUpdate,
@@ -66,7 +66,7 @@ router = APIRouter(tags=["models"])
 logger = logging.getLogger(__name__)
 
 
-class DealModelCreateRequest(DealModelBase):
+class DealModelCreateRequest(ScenarioBase):
     created_by_user_id: UUID | None = None
 
 
@@ -167,7 +167,7 @@ async def _get_use_line_or_404(
 # Opportunities (was "Projects") — collection of Deals
 # ---------------------------------------------------------------------------
 
-@router.get("/opportunities/{opportunity_id}/models", response_model=list[DealModelRead])
+@router.get("/opportunities/{opportunity_id}/models", response_model=list[ScenarioRead])
 async def list_opportunity_models(opportunity_id: UUID, session: DBSession) -> list[Scenario]:
     opp = await session.get(Opportunity, opportunity_id)
     if opp is None:
@@ -186,7 +186,7 @@ async def list_opportunity_models(opportunity_id: UUID, session: DBSession) -> l
 
 @router.post(
     "/opportunities/{opportunity_id}/models",
-    response_model=DealModelRead,
+    response_model=ScenarioRead,
     status_code=status.HTTP_201_CREATED,
 )
 async def create_opportunity_model(
@@ -224,7 +224,7 @@ async def create_opportunity_model(
 
 
 # Legacy route — kept for backward compat (UI still uses /projects/{id}/models)
-@router.get("/projects/{project_id}/models", response_model=list[DealModelRead])
+@router.get("/projects/{project_id}/models", response_model=list[ScenarioRead])
 async def list_project_models(project_id: UUID, session: DBSession) -> list[Scenario]:
     """Backward-compat: project_id here is an Opportunity ID."""
     return await list_opportunity_models(opportunity_id=project_id, session=session)
@@ -232,7 +232,7 @@ async def list_project_models(project_id: UUID, session: DBSession) -> list[Scen
 
 @router.post(
     "/projects/{project_id}/models",
-    response_model=DealModelRead,
+    response_model=ScenarioRead,
     status_code=status.HTTP_201_CREATED,
 )
 async def create_project_model(
@@ -246,11 +246,11 @@ async def create_project_model(
     )
 
 
-class DealModelPatchRequest(DealModelBase):
+class DealModelPatchRequest(ScenarioBase):
     name: str | None = None
 
 
-@router.patch("/models/{model_id}", response_model=DealModelRead)
+@router.patch("/models/{model_id}", response_model=ScenarioRead)
 async def patch_deal_model(
     model_id: UUID,
     payload: DealModelPatchRequest,

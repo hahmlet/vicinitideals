@@ -24,7 +24,7 @@ from app.config import settings
 from app.models.capital import CapitalModule, DrawSource, WaterfallTier
 from app.models.deal import (
     Deal,
-    DealModel,
+    Scenario,
     IncomeStream,
     IncomeStreamType,
     OperatingExpenseLine,
@@ -62,7 +62,7 @@ async def download_model_export(
     ``docs/feature-plans/investor-excel-export-v2.md``.
     """
     from app.exporters.excel_export import export_deal_model_workbook, make_export_filename
-    model = await session.get(DealModel, model_id)
+    model = await session.get(Scenario, model_id)
     if model is None:
         return HTMLResponse("Not found", status_code=404)
     workbook_bytes = await export_deal_model_workbook(model_id, session)
@@ -82,7 +82,7 @@ async def download_investor_export(
 ) -> StreamingResponse:
     """Download the LP-facing investor Excel workbook for this Scenario."""
     from app.exporters.investor_export import export_investor_workbook, make_investor_filename
-    scenario = await session.get(DealModel, model_id)
+    scenario = await session.get(Scenario, model_id)
     if scenario is None:
         return HTMLResponse("Not found", status_code=404)
     deal = await session.get(Deal, scenario.deal_id) if scenario.deal_id else None
@@ -130,7 +130,7 @@ async def preflight_investor_export(
     user = await _get_user(session, request)
     if user is None:
         return JSONResponse({"error": "not authenticated"}, status_code=401)
-    scenario = await session.get(DealModel, model_id)
+    scenario = await session.get(Scenario, model_id)
     if scenario is None:
         return JSONResponse({"error": "scenario not found"}, status_code=404)
 
@@ -189,7 +189,7 @@ async def start_investor_export_async(
     user = await _get_user(session, request)
     if user is None:
         return JSONResponse({"error": "not authenticated"}, status_code=401)
-    scenario = await session.get(DealModel, model_id)
+    scenario = await session.get(Scenario, model_id)
     if scenario is None:
         return JSONResponse({"error": "scenario not found"}, status_code=404)
 
@@ -609,7 +609,7 @@ async def proforma_from_staged(
     user = await _get_user(session, request)
     if user is None:
         return HTMLResponse("Not authenticated", status_code=401)
-    model = await session.get(DealModel, model_id)
+    model = await session.get(Scenario, model_id)
     if model is None:
         return HTMLResponse("Not found", status_code=404)
     if settings.org_isolation_enabled:
@@ -1129,7 +1129,7 @@ async def proforma_confirm(
 
     form = await request.form()
 
-    deal_model = await session.get(DealModel, model_id)
+    deal_model = await session.get(Scenario, model_id)
     if not deal_model:
         raise HTTPException(status_code=404, detail="Deal model not found")
 
@@ -1326,7 +1326,7 @@ async def save_noi_inputs(
     session: DBSession,
 ) -> HTMLResponse:
     """Save NOI mode inputs (stabilized NOI + escalation rate) and return refreshed form."""
-    model = await session.get(DealModel, model_id)
+    model = await session.get(Scenario, model_id)
     if model is None:
         return HTMLResponse("Not found", status_code=404)
     default_project = (await session.execute(
@@ -1401,7 +1401,7 @@ async def model_builder_line_form(
     category: str = Query(default="soft"),
 ) -> HTMLResponse:
     """Serves the add/edit form inside the line-item drawer."""
-    model = await session.get(DealModel, model_id)
+    model = await session.get(Scenario, model_id)
     if model is None:
         return HTMLResponse("<p class='text-muted'>Model not found.</p>", status_code=404)
 
@@ -2208,7 +2208,7 @@ async def _load_draw_schedule_ctx(
     from app.models.project import Project
     from app.models.milestone import Milestone
 
-    model = await session.get(DealModel, model_id)
+    model = await session.get(Scenario, model_id)
     if model is None:
         return {}
 
@@ -2500,7 +2500,7 @@ async def add_draw_source(
     total_commitment: str = Form(""),
 ) -> HTMLResponse:
     """Add a draw source row."""
-    model = await session.get(DealModel, model_id)
+    model = await session.get(Scenario, model_id)
     if model is None:
         return HTMLResponse("Model not found", status_code=404)
 
@@ -2568,7 +2568,7 @@ async def update_draw_schedule_settings(
     min_reserve_operational: str = Form("0"),
 ) -> HTMLResponse:
     """Update reserve floor settings on the scenario."""
-    model = await session.get(DealModel, model_id)
+    model = await session.get(Scenario, model_id)
     if model is None:
         return HTMLResponse("Model not found", status_code=404)
 
@@ -2724,7 +2724,7 @@ async def history_drawer(
     if user is None:
         return HTMLResponse('<p style="color:var(--text-muted)">Not authenticated</p>', status_code=401)
 
-    model = await session.get(DealModel, model_id, options=[selectinload(DealModel.deal)])
+    model = await session.get(Scenario, model_id, options=[selectinload(Scenario.deal)])
     if model is None:
         return HTMLResponse('<p style="color:var(--text-muted)">Model not found</p>', status_code=404)
     if model.deal is None or model.deal.org_id != user.org_id:
@@ -2759,7 +2759,7 @@ async def revert_snapshot(
     if user is None:
         return HTMLResponse('<p style="color:var(--color-error)">Not authenticated</p>', status_code=401)
 
-    model = await session.get(DealModel, model_id, options=[selectinload(DealModel.deal)])
+    model = await session.get(Scenario, model_id, options=[selectinload(Scenario.deal)])
     if model is None:
         return HTMLResponse('<p style="color:var(--color-error)">Model not found</p>', status_code=404)
     if model.deal is None or model.deal.org_id != user.org_id:
@@ -2790,7 +2790,7 @@ async def export_history_json_endpoint(
     if user is None:
         return JSONResponse({"error": "not authenticated"}, status_code=401)
 
-    model = await session.get(DealModel, model_id, options=[selectinload(DealModel.deal)])
+    model = await session.get(Scenario, model_id, options=[selectinload(Scenario.deal)])
     if model is None:
         return JSONResponse({"error": "model not found"}, status_code=404)
     if model.deal is None or model.deal.org_id != user.org_id:

@@ -28,12 +28,11 @@ from app.models.scraped_listing import ScrapedListing  # noqa: F401  (alias for 
 #    + Project-level line-item models (FK → Project)
 from app.models.deal import (  # noqa: F401
     Deal,
-    DealModel,       # backward-compat alias for Scenario
     DealOpportunity,  # stub — removed in migration 0067; kept for import compat
     IncomeStream,
     OperatingExpenseLine,
     OperationalInputs,
-    Scenario,        # financial plan (was DealModel / the old deals table)
+    Scenario,        # financial plan
     ScenarioSnapshot,
     UnitMix,         # stub — removed in migration 0072; kept for import compat
     UseLine,
@@ -65,7 +64,6 @@ from app.models.export_job import ExportJob, ExportJobStatus  # noqa: F401
 
 # 9. Sensitivity analysis (FK → Opportunity, Scenario, User)
 from app.models.scenario import (  # noqa: F401
-    ScenarioResult,    # backward-compat alias for SensitivityResult
     Sensitivity,
     SensitivityResult,
     SensitivityStatus,
@@ -127,7 +125,6 @@ __all__ = [
     "Deal",
     "DealOpportunity",   # stub — removed in 0067
     "Scenario",
-    "DealModel",
     "OperationalInputs",
     "IncomeStream",
     "OperatingExpenseLine",
@@ -153,7 +150,6 @@ __all__ = [
     "Sensitivity",
     "SensitivityResult",
     "SensitivityStatus",
-    "ScenarioResult",
     # Portfolio
     "Portfolio",
     "PortfolioProject",

@@ -11,7 +11,7 @@ from sqlalchemy.pool import StaticPool
 
 from app.models.cashflow import CashFlow, CashFlowLineItem, OperationalOutputs, PeriodType
 from app.models.deal import (
-    DealModel,
+    Scenario,
     IncomeStream,
     OperatingExpenseLine,
     OperationalInputs,
@@ -407,7 +407,7 @@ async def _seed_cashflow_deal(session: AsyncSession) -> UUID:
     )
     from app.models.deal import Deal
     top_deal = Deal(id=uuid4(), org_id=org.id, name="Base Case", created_by_user_id=user.id)
-    deal = DealModel(
+    deal = Scenario(
         id=uuid4(),
         deal_id=top_deal.id,
         created_by_user_id=user.id,

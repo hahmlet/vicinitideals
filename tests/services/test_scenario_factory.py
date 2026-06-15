@@ -11,7 +11,7 @@ from decimal import Decimal
 
 import pytest
 
-from app.models.deal import Deal, DealModel, ProjectType
+from app.models.deal import Deal, Scenario, ProjectType
 from app.models.settings import OrgSetting
 from app.services.scenario_factory import create_scenario
 from app.settings.defaults import DEFAULT_REGISTRY

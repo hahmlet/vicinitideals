@@ -19,7 +19,7 @@ from app.models.capital import CapitalModule, WaterfallResult, WaterfallTier, Wa
 from app.models.cashflow import CashFlow, CashFlowLineItem, OperationalOutputs
 from app.models.deal import (
     Deal,
-    DealModel,
+    Scenario,
     DealOpportunity,
     IncomeStream,
     IncomeStreamType,
@@ -133,7 +133,7 @@ async def test_export_deal_model_json_includes_itemized_expense_lines(
         session.add_all([opportunity, top_deal])
         await session.flush()
 
-        model = DealModel(
+        model = Scenario(
             deal_id=top_deal.id,
             created_by_user_id=user.id,
             name="Benchmark Export Deal",

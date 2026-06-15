@@ -28,8 +28,8 @@ Seed helpers
 ------------
 seed_org()                  → Organization + User tuple
 seed_opportunity()          → Opportunity (requires org)
-seed_deal_model()           → Deal + DealModel linked to an Opportunity
-seed_deal_model_with_financials()  → DealModel + OperationalInputs + IncomeStream + OpEx line
+seed_deal_model()           → Deal + Scenario linked to an Opportunity
+seed_deal_model_with_financials()  → Scenario + OperationalInputs + IncomeStream + OpEx line
 """
 
 from __future__ import annotations
@@ -59,7 +59,7 @@ from app.api.main import create_app
 from app.models import Base  # imports all ORM models, enabling create_all
 from app.models.deal import (
     Deal,
-    DealModel,
+    Scenario,
     IncomeStream,
     IncomeStreamType,
     OperatingExpenseLine,
@@ -330,10 +330,10 @@ async def seed_deal_model(
     *,
     name: str = "Base Case",
     project_type: ProjectType = ProjectType.value_add,
-) -> DealModel:
-    """Create a top-level Deal + DealModel linked to an Opportunity.
+) -> Scenario:
+    """Create a top-level Deal + Scenario linked to an Opportunity.
 
-    Returns the DealModel (financial model record).
+    Returns the Scenario (financial model record).
     """
     top_deal = Deal(
         id=uuid.uuid4(),
@@ -343,7 +343,7 @@ async def seed_deal_model(
     )
     session.add(top_deal)
     await session.flush()
-    deal_model = DealModel(
+    deal_model = Scenario(
         id=uuid.uuid4(),
         deal_id=top_deal.id,
         created_by_user_id=user.id,
@@ -361,8 +361,8 @@ async def seed_deal_model_with_financials(
     session: AsyncSession,
     opportunity: Opportunity,
     user: User,
-) -> tuple[DealModel, OperationalInputs, IncomeStream, OperatingExpenseLine]:
-    """Create a DealModel with OperationalInputs, one IncomeStream, and one OpEx line.
+) -> tuple[Scenario, OperationalInputs, IncomeStream, OperatingExpenseLine]:
+    """Create a Scenario with OperationalInputs, one IncomeStream, and one OpEx line.
 
     Returns (deal_model, inputs, income_stream, opex_line).
     """

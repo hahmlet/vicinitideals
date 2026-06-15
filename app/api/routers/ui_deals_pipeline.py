@@ -22,7 +22,7 @@ from app.models.broker import Broker
 from app.models.capital import CapitalModule
 from app.models.deal import (
     Deal,
-    DealModel,
+    Scenario,
     DealOpportunity,
     DealStatus,
     IncomeStream,
@@ -274,9 +274,9 @@ async def _load_deals(
         select(Deal)
         .options(
             selectinload(Deal.scenarios)
-                .selectinload(DealModel.projects)
+                .selectinload(Scenario.projects)
                 .selectinload(Project.opportunity),
-            selectinload(Deal.scenarios).selectinload(DealModel.operational_outputs),
+            selectinload(Deal.scenarios).selectinload(Scenario.operational_outputs),
         )
         .order_by(Deal.created_at.desc())
     )
@@ -375,7 +375,7 @@ async def deals_new_page(
 
     if clone_of:
         try:
-            _src = await session.get(DealModel, UUID(clone_of))
+            _src = await session.get(Scenario, UUID(clone_of))
         except ValueError:
             _src = None
         if _src is not None:
@@ -634,8 +634,8 @@ async def create_deal(
         # creating a duplicate.
         existing_listing_deal = (await session.execute(
             select(Deal)
-            .join(DealModel, DealModel.deal_id == Deal.id)
-            .join(Project, Project.scenario_id == DealModel.id)
+            .join(Scenario, Scenario.deal_id == Deal.id)
+            .join(Project, Project.scenario_id == Scenario.id)
             .where(Project.opportunity_id == listing.id)
             .limit(1)
         )).scalar_one_or_none()
@@ -770,9 +770,9 @@ async def deal_detail(
         Deal,
         deal_id,
         options=[
-            selectinload(Deal.scenarios).selectinload(DealModel.operational_outputs),
-            selectinload(Deal.scenarios).selectinload(DealModel.projects).selectinload(Project.milestones),
-            selectinload(Deal.scenarios).selectinload(DealModel.projects).selectinload(Project.opportunity),
+            selectinload(Deal.scenarios).selectinload(Scenario.operational_outputs),
+            selectinload(Deal.scenarios).selectinload(Scenario.projects).selectinload(Project.milestones),
+            selectinload(Deal.scenarios).selectinload(Scenario.projects).selectinload(Project.opportunity),
         ],
     )
     if deal is None:
@@ -865,7 +865,7 @@ async def update_deal(
         Deal,
         deal_id,
         options=[
-            selectinload(Deal.scenarios).selectinload(DealModel.projects).selectinload(Project.opportunity),
+            selectinload(Deal.scenarios).selectinload(Scenario.projects).selectinload(Project.opportunity),
         ],
     )
     if deal is None or (user is not None and deal.org_id != user.org_id):

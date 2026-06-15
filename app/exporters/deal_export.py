@@ -69,7 +69,7 @@ from sqlalchemy.orm import selectinload
 from app.models.capital import CapitalModule, WaterfallTier
 from app.models.deal import (
     Deal,
-    DealModel,
+    Scenario,
     DealStatus,
     IncomeStream,
     OperatingExpenseLine,
@@ -211,7 +211,7 @@ def _export_project(project: Project) -> dict[str, Any]:
     }
 
 
-def _export_scenario(scenario: DealModel) -> dict[str, Any]:
+def _export_scenario(scenario: Scenario) -> dict[str, Any]:
     return {
         "name": scenario.name,
         "version": scenario.version,
@@ -275,7 +275,7 @@ async def export_deal_json(session: AsyncSession, deal_id: UUID) -> dict[str, An
         select(Deal)
         .options(
             selectinload(Deal.scenarios).options(
-                selectinload(DealModel.projects).options(
+                selectinload(Scenario.projects).options(
                     selectinload(Project.opportunity).options(
                         selectinload(Opportunity.broker),
                     ),
@@ -284,8 +284,8 @@ async def export_deal_json(session: AsyncSession, deal_id: UUID) -> dict[str, An
                     selectinload(Project.expense_lines),
                     selectinload(Project.income_streams),
                 ),
-                selectinload(DealModel.capital_modules),
-                selectinload(DealModel.waterfall_tiers),
+                selectinload(Scenario.capital_modules),
+                selectinload(Scenario.waterfall_tiers),
             ),
         )
         .where(Deal.id == deal_id)
@@ -376,7 +376,7 @@ async def import_deal_json(
 
     # Scenarios
     for s_data in deal_data.get("scenarios") or []:
-        scenario = DealModel(
+        scenario = Scenario(
             deal_id=deal.id,
             name=s_data["name"],
             version=s_data.get("version", 1),

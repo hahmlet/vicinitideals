@@ -25,7 +25,7 @@ from app.config import settings
 from app.models.capital import CapitalModule, DrawSource, WaterfallTier
 from app.models.deal import (
     Deal,
-    DealModel,
+    Scenario,
     IncomeStream,
     IncomeStreamType,
     OperatingExpenseLine,
@@ -74,7 +74,7 @@ async def timeline_wizard_submit(
 
     # If name/type provided (new deal wizard step 0), update deal records
     if new_name or new_deal_type_raw:
-        scenario = await session.get(DealModel, proj.scenario_id)
+        scenario = await session.get(Scenario, proj.scenario_id)
         if scenario:
             if new_deal_type_raw:
                 try:
@@ -346,7 +346,7 @@ async def deal_setup_wizard_get(
     step: int = Query(default=-1),
 ) -> HTMLResponse:
     """Render a single wizard step fragment (used by Back buttons and direct links)."""
-    model = await session.get(DealModel, model_id)
+    model = await session.get(Scenario, model_id)
     if model is None:
         return HTMLResponse("Not found", status_code=404)
     default_project = (await session.execute(
@@ -419,7 +419,7 @@ async def deal_setup_wizard_get(
 
 
 async def _prefill_noi_from_listing(
-    model: "DealModel",
+    model: "Scenario",
     default_project: "Project",
     inputs: "OperationalInputs",
     session: "AsyncSession",
@@ -455,7 +455,7 @@ async def deal_setup_wizard_step(
     # non-empty, the same step is re-rendered instead of advancing.
     wizard_errors: dict[str, str] = {}
 
-    model = await session.get(DealModel, model_id)
+    model = await session.get(Scenario, model_id)
     if model is None:
         return HTMLResponse("Not found", status_code=404)
     default_project = (await session.execute(
@@ -820,7 +820,7 @@ async def deal_setup_wizard_complete(
     """Finalize setup: mark complete and auto-create the primary debt CapitalModule(s)."""
     from app.models.capital import CapitalModule, CapitalModuleProject
 
-    model = await session.get(DealModel, model_id)
+    model = await session.get(Scenario, model_id)
     if model is None:
         return HTMLResponse("Not found", status_code=404)
     default_project = (await session.execute(
