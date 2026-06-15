@@ -14,7 +14,7 @@ Self-hosted real estate financial modeling + deal intelligence platform for Port
 
 ## Tech Stack
 
-FastAPI 0.110+ (Python 3.12+) · SQLAlchemy 2.0 async + asyncpg · Alembic · Celery 5.3+ (3 queues: default, scraping, analysis) · Redis · PostgreSQL 16 · Jinja2 + HTMX · pyxirr (IRR/XIRR) · openpyxl · Pydantic v2 · pydantic-settings · httpx · curl-cffi · uv (package manager) · Docker Compose · Ruff (linter)
+FastAPI 0.110+ (Python 3.12+) · SQLAlchemy 2.0 async + asyncpg · Alembic · Celery 5.3+ (2 queues: default, analysis) · Redis · PostgreSQL 16 · Jinja2 + HTMX 2.0.9 · pyxirr (IRR/XIRR) · openpyxl · Pydantic v2 · pydantic-settings · httpx · curl-cffi · uv (package manager) · Docker Compose · Ruff (linter)
 
 ---
 
@@ -33,7 +33,6 @@ FastAPI 0.110+ (Python 3.12+) · SQLAlchemy 2.0 async + asyncpg · Alembic · Ce
 **Docker services** (in `docker-compose.yml`):
 - `vicinitideals-api` (FastAPI, port 8001→8000)
 - `vicinitideals-worker-default` (Celery, `-Q default -c 2`)
-- `vicinitideals-worker-scraping` (Celery, `-Q scraping -c 1`)
 - `vicinitideals-worker-analysis` (Celery, `-Q analysis -c 2`)
 - `vicinitideals-beat` (Celery beat scheduler)
 - `vicinitideals-static` (nginx:alpine, port 8002)
@@ -189,7 +188,7 @@ Scenario → UseLines, CapitalModules, IncomeStreams, ExpenseLines, DrawSources,
 Parcel → ScrapedListings (many listings per parcel)
 ```
 
-Old `Deal` ORM class now `Scenario`. `DealModel = Scenario` alias exists for backward compat.
+Old `Deal` ORM class now `Scenario`. (`DealModel` alias removed 2026-06-15.)
 
 ### Capital Stack
 

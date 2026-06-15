@@ -57,7 +57,7 @@ Physical attributes (units, gba_sqft, year_built, lot_sqft, property_type) live 
 The listing/parcel half of the schema above feeds into the financial half below. The canonical entities:
 
 ```
-Deal ──┬── Scenario (= "Variant")          ← DB table: scenarios; ORM class: DealModel
+Deal ──┬── Scenario (= "Variant")          ← DB table: scenarios; ORM class: Scenario
        │       │
        │       ├── Project ─────────────── UseLine, IncomeStream, OperatingExpenseLine,
        │       │        │                  OperationalInputs, unit_mix (JSONB), Milestone
@@ -75,7 +75,7 @@ Deal ──┬── Scenario (= "Variant")          ← DB table: scenarios; OR
 | Entity | Table | Scope | Notes |
 |---|---|---|---|
 | **Deal** | `deals` | top-level investment thesis | ORM: `Deal` |
-| **Scenario / Variant** | `scenarios` | one financial plan per Deal; carries N Projects | ORM: `DealModel` (legacy name) |
+| **Scenario / Variant** | `scenarios` | one financial plan per Deal; carries N Projects | ORM: `Scenario` |
 | **Project** | `projects` | individual development effort; own timeline/uses/sources | `scenario_id` FK |
 | **CapitalModule** | `capital_modules` | a Source (lender + rate + carry type + exit terms) | scenario-scoped |
 | **CapitalModuleProject** | `capital_module_projects` | **junction (added 0048)**: per-project amount, active window, `auto_size` | `(capital_module_id, project_id)` unique |
@@ -904,8 +904,8 @@ Partial revert is not supported. `Scenario.version` is not decremented on revert
 
 | Source | Module | Data Provided | Refresh |
 |---|---|---|---|
-| **Crexi** | `app/scrapers/crexi.py` | Address, lat/lng, property type, units, asking price, cap rate, NOI, zoning, APN, occupancy, description, broker contacts | Celery beat (scraping queue) |
-| **LoopNet** | `app/tasks/scraper.py` via Scrapling LXC 134 | Same field set as Crexi (normalized to common schema) | Celery beat (scraping queue) |
+| **Crexi** | `app/scrapers/crexi.py` | Address, lat/lng, property type, units, asking price, cap rate, NOI, zoning, APN, occupancy, description, broker contacts | Celery beat (default queue, daily 06:00 UTC) |
+| ~~LoopNet~~ | ~~decommissioned~~ | — | — |
 | **Realie.ai** | `app/scrapers/realie.py` | Full property data (80+ fields), stored as `realie_raw_json` | 25 calls/month budget, enriches listings post-ingest |
 | **HelloData.ai** | `app/scrapers/hellodata.py` | Unit-level market rents, ML-predicted OpEx/NOI, comparables, occupancy | Pay-per-call (~$0.50/endpoint); monthly cost budget; Portland excluded per policy |
 

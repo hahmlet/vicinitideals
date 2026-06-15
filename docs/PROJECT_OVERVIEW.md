@@ -64,7 +64,7 @@ A listing flows into an Opportunity, which a Deal attaches to when the team deci
 
 The platform ingests **Crexi** commercial listings into an Opportunity inventory. Key subsystems:
 
-- **Crexi scraper** (`app/scrapers/crexi.py` + `app/tasks/scraper.py`) — normalizes raw responses into the shared Opportunity schema; daily Celery beat on the scraping queue.
+- **Crexi scraper** (`app/scrapers/crexi.py` + `app/tasks/scraper.py`) — normalizes raw responses into the shared Opportunity schema; daily Celery beat on the default queue.
 - **Deduplication engine** (`app/scrapers/dedup.py`) — fuzzy matching on address + unit count to flag near-duplicate Crexi listings for human review.
 - **KNN comps** (`app/engines/market.py`) — benchmarks an Opportunity against similar listings; see [MARKET_MODEL.md](MARKET_MODEL.md).
 
@@ -135,12 +135,13 @@ git push origin main
 Domain: `viciniti.deals` (proxied by LXC 109 NGINX)
 
 Docker services defined in `docker-compose.yml`:
-- `re-modeling-api` (FastAPI, port 8001)
-- `re-modeling-worker` (Celery, default queue)
-- `re-modeling-scraper` (Celery, scraping queue)
-- `re-modeling-analysis` (Celery, analysis queue)
-- `re-modeling-postgres`
-- `re-modeling-redis`
+- `vicinitideals-api` (FastAPI, port 8001→8000)
+- `vicinitideals-worker-default` (Celery, `-Q default -c 2`)
+- `vicinitideals-worker-analysis` (Celery, `-Q analysis -c 2`)
+- `vicinitideals-beat` (Celery beat scheduler)
+- `vicinitideals-static` (nginx:alpine, port 8002)
+- `re-modeling-postgres` (PostgreSQL 16)
+- `re-modeling-redis` (Redis 7)
 
 See: [docs/ops/](docs/ops/) for release checklist and rollback runbook.
 
