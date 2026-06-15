@@ -8,7 +8,6 @@ sub-router — that would create a circular dependency.
 from __future__ import annotations
 
 from datetime import date
-from decimal import Decimal
 from typing import Any
 from uuid import UUID
 
@@ -642,33 +641,7 @@ def _build_portfolio_gantt(portfolio_entries: "list[tuple[str, str, Deal]]") -> 
 # Model-builder shared helpers (used by model builder and model outputs)
 # ---------------------------------------------------------------------------
 
-class _UMRow:
-    """Attribute-compatible proxy for unit_mix JSONB dicts."""
-    def __init__(self, d: dict) -> None:
-        self.__dict__.update(d)
-
-    def __getattr__(self, k: str):
-        return None
-
-
-def _fd(v: str | None) -> Decimal | None:
-    """Parse an optional Decimal from a form field. Strips commas tolerantly."""
-    if not v or not v.strip():
-        return None
-    try:
-        return Decimal(v.strip().replace(",", ""))
-    except Exception:
-        return None
-
-
-def _fi(v: str | None, default: int = 0) -> int:
-    """Parse an optional int from a form field."""
-    if not v or not v.strip():
-        return default
-    try:
-        return int(v.strip())
-    except Exception:
-        return default
+from app.utils.form_helpers import _UMRow, _fd, _fi  # noqa: F401  re-exported for router imports
 
 
 def _builder_gantt_from_milestones(project: "Project | None", milestones: list) -> "dict | None":
