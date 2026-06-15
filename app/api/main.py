@@ -512,6 +512,10 @@ def create_app() -> FastAPI:
     from app.api.routers.ui_settings import router as ui_settings_router
     app.include_router(ui_settings_router)
 
+    # Listings/brokers/dedup sub-router (Phase 2a split)
+    from app.api.routers.ui_data_intel import router as ui_data_intel_router
+    app.include_router(ui_data_intel_router)
+
     # Email ingest UI router — inbox and review pages, no /api prefix
     from app.api.routers.email_ingest import ui_router as email_ingest_ui_router
     app.include_router(email_ingest_ui_router)
