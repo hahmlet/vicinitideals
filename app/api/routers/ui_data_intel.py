@@ -24,7 +24,8 @@ from sqlalchemy.orm import selectinload
 
 from app.api.deps import DBSession
 from app.models.broker import Broker, Brokerage
-from app.models.deal import Deal, Scenario, Project
+from app.models.deal import Deal, Scenario
+from app.models.project import Project
 from app.models.ingestion import DedupCandidate, DedupStatus, RecordType
 from app.models.scraped_listing import ScrapedListing
 from app.api.routers.ui_helpers import (
