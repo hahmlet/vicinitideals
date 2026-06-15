@@ -254,6 +254,19 @@ def _base_ctx(
         "conflicts_count": conflicts_count,
     }
 
+
+# ---------------------------------------------------------------------------
+# General form / query helpers
+# ---------------------------------------------------------------------------
+
+def _as_list(v) -> list[str]:
+    """Coerce a FastAPI query-param value to a plain list of non-empty strings."""
+    if isinstance(v, list):
+        return [x for x in v if x]
+    if isinstance(v, str) and v:
+        return [v]
+    return []
+
 # ---------------------------------------------------------------------------
 # Jinja2 templates — shared across all sub-routers
 # ---------------------------------------------------------------------------
