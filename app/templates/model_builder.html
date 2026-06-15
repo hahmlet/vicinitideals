@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "_macros.html" import debt_sizing_options %}
+{% from "_macros.html" import debt_sizing_options, project_type_options %}
 {% block title %}{{ model.name }} — Model Builder{% endblock %}
 
 {% block head %}
@@ -1270,10 +1270,7 @@ async function startInvestorExport(modelId, profile) {
           <label class="field-label">Deal Type</label>
           <select class="filter-select" style="width:100%;margin-top:4px" name="deal_type">
             {% set _pt = model.project_type.value if model.project_type is not string else model.project_type %}
-            <option value="acquisition" {% if _pt == 'acquisition' %}selected{% endif %}>Acquisition</option>
-            <option value="value_add" {% if _pt == 'value_add' %}selected{% endif %}>Value-Add</option>
-            <option value="conversion" {% if _pt == 'conversion' %}selected{% endif %}>Conversion</option>
-            <option value="new_construction" {% if _pt == 'new_construction' %}selected{% endif %}>New Construction</option>
+            {{ project_type_options(_pt) }}
           </select>
         </div>
         <div class="divider"></div>
@@ -1663,10 +1660,7 @@ document.addEventListener('keydown', function(e) {
         <div>
           <label class="field-label">Project Type</label>
           <select class="filter-select" style="width:100%;margin-top:4px" name="deal_type">
-            <option value="acquisition" {% if model.project_type | string | replace('ProjectType.','') == 'acquisition' %}selected{% endif %}>Acquisition</option>
-            <option value="value_add" {% if model.project_type | string | replace('ProjectType.','') == 'value_add' %}selected{% endif %}>Value-Add</option>
-            <option value="conversion" {% if model.project_type | string | replace('ProjectType.','') == 'conversion' %}selected{% endif %}>Conversion</option>
-            <option value="new_construction" {% if model.project_type | string | replace('ProjectType.','') == 'new_construction' %}selected{% endif %}>New Construction</option>
+            {{ project_type_options(model.project_type | string | replace('ProjectType.','')) }}
           </select>
           <div style="font-size:12px;color:var(--text-muted);margin-top:6px">You'll set up this project's timeline after creating it.</div>
         </div>

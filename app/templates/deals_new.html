@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import project_type_options %}
 {% block title %}New Deal — Viciniti Deals{% endblock %}
 
 {% block head %}
@@ -124,10 +125,7 @@
         <div class="nd-field">
           <label>Deal Type</label>
           <select name="deal_type">
-            <option value="acquisition"      {% if pre_deal_type == 'acquisition'      %}selected{% endif %}>Acquisition</option>
-            <option value="value_add"        {% if pre_deal_type == 'value_add'        %}selected{% endif %}>Value-Add</option>
-            <option value="conversion"       {% if pre_deal_type == 'conversion'       %}selected{% endif %}>Acquisition — Conversion</option>
-            <option value="new_construction" {% if pre_deal_type == 'new_construction' %}selected{% endif %}>New Construction</option>
+            {{ project_type_options(pre_deal_type) }}
           </select>
         </div>
 

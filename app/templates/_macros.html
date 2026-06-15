@@ -42,3 +42,11 @@
 {%- endmacro %}
 
 {% macro debt_sizing_options(current) %}<option value="gap_fill" {% if (current or 'gap_fill') == 'gap_fill' %}selected{% endif %}>Gap-fill (Uses − Equity)</option><option value="dscr_capped" {% if current == 'dscr_capped' %}selected{% endif %}>DSCR-capped (max debt from NOI)</option><option value="dual_constraint" {% if current == 'dual_constraint' %}selected{% endif %}>Dual Constraint (MIN of LTV, DSCR, gap-fill)</option>{% endmacro %}
+
+
+{% macro project_type_options(current) %}
+<option value="acquisition" {% if current == 'acquisition' %}selected{% endif %}>Acquisition</option>
+<option value="value_add" {% if current == 'value_add' %}selected{% endif %}>Value-Add</option>
+<option value="conversion" {% if current == 'conversion' %}selected{% endif %}>Acquisition — Conversion</option>
+<option value="new_construction" {% if current == 'new_construction' %}selected{% endif %}>New Construction</option>
+{% endmacro %}
