@@ -528,6 +528,10 @@ def create_app() -> FastAPI:
     from app.api.routers.ui_model_outputs import router as ui_model_outputs_router
     app.include_router(ui_model_outputs_router)
 
+    # Wizards sub-router (Phase 2a split)
+    from app.api.routers.ui_wizards import router as ui_wizards_router
+    app.include_router(ui_wizards_router)
+
     # Email ingest UI router — inbox and review pages, no /api prefix
     from app.api.routers.email_ingest import ui_router as email_ingest_ui_router
     app.include_router(email_ingest_ui_router)
