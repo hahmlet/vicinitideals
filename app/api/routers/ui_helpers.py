@@ -8,7 +8,9 @@ sub-router — that would create a circular dependency.
 from __future__ import annotations
 
 from datetime import date
+from decimal import Decimal
 from typing import Any
+from uuid import UUID
 
 from fastapi import HTTPException, Request
 from sqlalchemy import func, literal, select
@@ -634,6 +636,85 @@ def _build_portfolio_gantt(portfolio_entries: "list[tuple[str, str, Deal]]") -> 
 
     month_ticks, year_spans = _compute_gantt_axis(global_epoch, g_min, g_max, any_has_dates)
     return {"has_dates": any_has_dates, "month_ticks": month_ticks, "year_spans": year_spans, "rows": rows}
+
+
+# ---------------------------------------------------------------------------
+# Model-builder shared helpers (used by model builder and model outputs)
+# ---------------------------------------------------------------------------
+
+class _UMRow:
+    """Attribute-compatible proxy for unit_mix JSONB dicts."""
+    def __init__(self, d: dict) -> None:
+        self.__dict__.update(d)
+
+    def __getattr__(self, k: str):
+        return None
+
+
+def _fd(v: str | None) -> Decimal | None:
+    """Parse an optional Decimal from a form field. Strips commas tolerantly."""
+    if not v or not v.strip():
+        return None
+    try:
+        return Decimal(v.strip().replace(",", ""))
+    except Exception:
+        return None
+
+
+def _fi(v: str | None, default: int = 0) -> int:
+    """Parse an optional int from a form field."""
+    if not v or not v.strip():
+        return default
+    try:
+        return int(v.strip())
+    except Exception:
+        return default
+
+
+def _builder_gantt_from_milestones(project: "Project | None", milestones: list) -> "dict | None":
+    """Build Gantt v2 data from pre-loaded milestones for the model builder timeline panel."""
+    if not project or not milestones:
+        return None
+    bars, epoch, has_dates = _extract_milestone_bars(project, milestones=milestones)
+    if not bars:
+        return None
+    raw_rows = [{"project_name": project.name, "bars": bars}]
+    _override_stabilized_cap(raw_rows)
+    g_min = min(b["display_start_day"] for b in bars)
+    g_max = max(b["display_start_day"] + b["display_duration_days"] for b in bars)
+    _gantt_apply_pct(bars, g_min, g_max)
+    bars.sort(key=lambda b: b["display_start_day"])
+    month_ticks, year_spans = _compute_gantt_axis(epoch, g_min, g_max, has_dates)
+    return {
+        "has_dates": has_dates,
+        "epoch": epoch,
+        "g_min": g_min,
+        "g_max": g_max,
+        "month_ticks": month_ticks,
+        "year_spans": year_spans,
+        "rows": _bars_to_phase_rows(bars),
+    }
+
+
+async def _active_project_from_request(
+    request: Request, session: AsyncSession, model_id: UUID,
+) -> UUID | None:
+    """Extract the active project_id from HX-Current-URL's ``?project=`` query param."""
+    _hx_url = request.headers.get("HX-Current-URL", "")
+    if not _hx_url:
+        return None
+    from urllib.parse import urlparse, parse_qs
+    _qs_proj = parse_qs(urlparse(_hx_url).query).get("project", [""])[0]
+    if not _qs_proj:
+        return None
+    try:
+        _candidate = UUID(_qs_proj)
+    except ValueError:
+        return None
+    _candidate_proj = await session.get(Project, _candidate)
+    if _candidate_proj and _candidate_proj.scenario_id == model_id:
+        return _candidate_proj.id
+    return None
 
 
 # ---------------------------------------------------------------------------
