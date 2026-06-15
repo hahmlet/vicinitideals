@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import debt_sizing_options %}
 {% block title %}{{ model.name }} — Model Builder{% endblock %}
 
 {% block head %}
@@ -1341,9 +1342,7 @@ async function startInvestorExport(modelId, profile) {
         <div>
           <label class="field-label">Debt Sizing</label>
           <select class="filter-select" style="width:100%;margin-top:4px" name="debt_sizing_mode">
-            <option value="gap_fill" {% if (inputs.debt_sizing_mode or 'gap_fill') == 'gap_fill' %}selected{% endif %}>Gap-fill (Uses − Equity)</option>
-            <option value="dscr_capped" {% if inputs.debt_sizing_mode == 'dscr_capped' %}selected{% endif %}>DSCR-capped (max debt from NOI)</option>
-            <option value="dual_constraint" {% if inputs.debt_sizing_mode == 'dual_constraint' %}selected{% endif %}>Dual Constraint (MIN of LTV, DSCR, gap-fill)</option>
+            {{ debt_sizing_options(inputs.debt_sizing_mode) }}
           </select>
         </div>
         <div>

@@ -40,3 +40,5 @@
     {%- endif -%}
   {%- endif -%}
 {%- endmacro %}
+
+{% macro debt_sizing_options(current) %}<option value="gap_fill" {% if (current or 'gap_fill') == 'gap_fill' %}selected{% endif %}>Gap-fill (Uses − Equity)</option><option value="dscr_capped" {% if current == 'dscr_capped' %}selected{% endif %}>DSCR-capped (max debt from NOI)</option><option value="dual_constraint" {% if current == 'dual_constraint' %}selected{% endif %}>Dual Constraint (MIN of LTV, DSCR, gap-fill)</option>{% endmacro %}
