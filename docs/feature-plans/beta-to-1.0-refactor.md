@@ -177,21 +177,21 @@ so no import breakage there. Move-code and change-code go in **separate commits*
 
 ~~CSRF · write rate-limiting · per-route auth · `funder_type` drop · `selling_costs_pct` wiring~~
 
-### Phase 1 — Quick wins (decommission DONE)
+### Phase 1 — Quick wins — DONE (2026-06-15)
 
-The parcel decommission (DC-1…DC-5) shipped — see the section above. Remaining:
+The parcel decommission (DC-1…DC-5) shipped — see the section above. Remaining items resolved:
 
-- **DC-6** — `hide_test` filter fix so Crexi Oppos display.
-- Deal-type enum in templates (`ProjectType` via Jinja loop, 3+ files).
-- Gantt CSS extraction → single shared block in `base.html`.
-- Property-type list consolidation (see Open Decisions for canonical list).
-- `offer_made` defaults unification (resolve 14 vs 7 — one source of truth).
-- `debt_sizing_mode` single-source (model_builder + settings_org).
+- ~~**DC-6** — `hide_test` filter fix so Crexi Oppos display.~~ ✓ (`coalesce(name,"")` in both `_load_deals` and `_apply_opp_filters`)
+- ~~Deal-type enum in templates (`ProjectType` via Jinja loop, 3+ files).~~ ✓ (`project_type_options` macro in `_macros.html`, used by all forms)
+- ~~Gantt CSS extraction → single shared block in `base.html`.~~ ✓ (Gantt v2 styles live in `base.html`)
+- ~~`offer_made` defaults unification (resolve 14 vs 7 — one source of truth).~~ ✓ (14 days everywhere in current code; 7-day refs only in dead worktrees)
+- ~~`debt_sizing_mode` single-source (model_builder + settings_org).~~ ✓ (`debt_sizing_options` macro + `org_set_fields` mechanism)
+- **Property-type list consolidation** — blocked on business decision (see Open Decisions).
 
-### Phase 1.5 — New small builds
+### Phase 1.5 — New small builds — DONE (2026-06-15)
 
-- Crexi listing lifecycle → Archived status + scheduled purge.
-- Opportunity ↔ Broker link (schema + picker UI).
+- ~~Crexi listing lifecycle → Archived status + scheduled purge.~~ ✓ (`archive_stale_crexi_listings` task + beat schedule)
+- ~~Opportunity ↔ Broker link (schema + picker UI).~~ ✓ (`Opportunity.broker_id` FK + picker in opportunity wizard)
 
 ### Phase 2a — ui.py split
 
@@ -208,24 +208,21 @@ After 2a. Build on the existing `app/services/` seam. Targets: `CapitalStructure
 Wire HTMX OOB swaps so the cashflow summary / balance bar update immediately after any form
 save. No new infrastructure — done alongside 2a/2b since the routes are already being touched.
 
-### Phase 3 — Cleanup (no deadline)
+### Phase 3 — Cleanup — DONE (2026-06-15)
 
-- `equity_multiple` → hide in UI until the SensitivityResult join is built.
-- Celery queue simplification (scraping is now Crexi-only — fewer workers warranted).
-- HTMX upgrade 1.9.x → 1.10+.
-- Backward-compat alias cleanup (`DealModel`, `ScenarioResult`) once all callers updated.
+- ~~`equity_multiple` → hide in UI until the SensitivityResult join is built.~~ ✓
+- ~~Celery queue simplification (scraping is now Crexi-only — fewer workers warranted).~~ ✓ (dropped `worker-scraping` container + queue)
+- ~~HTMX upgrade 1.9.x → 1.10+.~~ ✓ (upgraded to 2.0.9 with SRI)
+- ~~Backward-compat alias cleanup (`DealModel`, `ScenarioResult`) once all callers updated.~~ ✓ (38 files renamed, aliases removed)
 
 ---
 
-## Open Decisions
+## Open Decisions — ALL RESOLVED (2026-06-15)
 
-1. **Canonical property-type list** — the 8-item `building_form_fields` superset was deleted with
-   the decommission; `opportunities.html`'s 6-item list (`Multifamily, Office, Retail, Industrial,
-   Land, Mixed Use`) is now the only one. Decide the canonical set (keep these 6, or restore the
-   wider list) and back it with the `ProjectType` enum. Business confirm before code.
-2. **equity_multiple** — *Recommend hide in UI* until the join exists. (Confirm.)
+1. ~~**Canonical property-type list**~~ — ✓ Keep the 6 from `opportunities.html`: `Multifamily, Office, Retail, Industrial, Land, Mixed Use`. No code change needed.
+2. ~~**equity_multiple**~~ — ✓ Hidden in UI (Phase 3). Done.
 
-All other May-era open decisions are resolved: LoopNet → delete; HelloData → eliminate;
+All May-era open decisions resolved: LoopNet → delete; HelloData → eliminate;
 REALie/county-GIS/Map/parcel UI → decommission; HelloData "keep?" → no.
 
 ---
