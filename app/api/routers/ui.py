@@ -36,7 +36,7 @@ from app.models.capital import CapitalModule, DrawSource, WaterfallTier
 from app.models.cashflow import OperationalOutputs
 from app.models.portfolio import Portfolio, PortfolioProject
 from app.models.milestone import DEFAULT_DURATIONS, Milestone, MilestoneType, MilestoneType as MT
-from app.models.opportunity import Opportunity, OpportunitySource, OpportunityStatus
+from app.models.opportunity import OPPORTUNITY_PROPERTY_TYPES, Opportunity, OpportunitySource, OpportunityStatus
 from app.models.project import Project, ProjectStatus
 from app.models.scraped_listing import ScrapedListing
 from app.models.realie_usage import RealieUsage
@@ -3037,6 +3037,7 @@ async def opportunities_page(
         "request": request,
         "jurisdiction_options": jurisdiction_options,
         "hide_test_default": is_admin,
+        "property_types": OPPORTUNITY_PROPERTY_TYPES,
         **_base_ctx(user, dedup_count, "opportunities", conflicts_count=conflicts_count),
     })
 

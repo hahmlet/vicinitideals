@@ -109,9 +109,7 @@ tr:hover .archive-btn { opacity: 1; }
   </div>
   <select name="property_type" class="filter-select">
     <option value="">All types</option>
-    <option>Multifamily</option><option>Office</option><option>Retail</option>
-    <option>Industrial</option><option>Land</option><option>Mixed Use</option>
-    <option>Hospitality</option><option>Medical</option>
+    {% for pt in property_types %}<option>{{ pt }}</option>{% endfor %}
   </select>
   <span class="units-range">
     Units <input type="number" name="min_units" placeholder="min" min="0"> –
