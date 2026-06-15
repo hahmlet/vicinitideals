@@ -291,12 +291,12 @@ async def test_sliders_noi_mode_writes_noi_phantom_not_revenue(
 ) -> None:
     """In NOI mode, noi_delta_annual writes an OperatingExpenseLine with
     NOI_ADJUSTMENT_LABEL; the revenue phantom is left untouched."""
-    from app.models.deal import DealModel
+    from app.models.deal import Scenario
     model_id, project_id = await _seeded_model(session)
 
     # Switch the scenario to NOI mode.
     deal = (await session.execute(
-        select(DealModel).where(DealModel.id == model_id)
+        select(Scenario).where(Scenario.id == model_id)
     )).scalar_one()
     deal.income_mode = "noi"
     await session.commit()
@@ -338,11 +338,11 @@ async def test_sliders_noi_mode_has_any_adjustment_driven_by_noi_phantom(
     session: AsyncSession,
 ) -> None:
     """has_any_adjustment is True when only noi_delta_annual is nonzero."""
-    from app.models.deal import DealModel
+    from app.models.deal import Scenario
     model_id, project_id = await _seeded_model(session)
 
     deal = (await session.execute(
-        select(DealModel).where(DealModel.id == model_id)
+        select(Scenario).where(Scenario.id == model_id)
     )).scalar_one()
     deal.income_mode = "noi"
     await session.commit()

@@ -17,7 +17,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.deps import DBSession
 from app.config import settings
-from app.models.deal import Deal, DealModel, ProjectType
+from app.models.deal import Deal, Scenario, ProjectType
 from app.models.ingestion import DedupCandidate, DedupStatus
 from app.models.milestone import DEFAULT_DURATIONS, Milestone, MilestoneType
 from app.models.opportunity import Opportunity
@@ -106,7 +106,7 @@ _TYPE_DISPLAY: dict[str, str] = {
 # Deal entity helpers
 # ---------------------------------------------------------------------------
 
-def _primary_scenario(deal: Deal) -> DealModel | None:
+def _primary_scenario(deal: Deal) -> Scenario | None:
     """Return the active Scenario (financial plan) for a Deal."""
     active = [s for s in deal.scenarios if s.is_active]
     if active:

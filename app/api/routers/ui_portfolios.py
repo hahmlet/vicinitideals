@@ -15,7 +15,7 @@ from sqlalchemy.orm import selectinload
 
 from app.api.deps import DBSession
 from app.config import settings
-from app.models.deal import Deal, DealModel, DealStatus
+from app.models.deal import Deal, Scenario, DealStatus
 from app.models.portfolio import Portfolio, PortfolioProject
 from app.models.project import Project
 from app.api.routers.ui_helpers import (
@@ -51,7 +51,7 @@ async def portfolios_page(
                 .selectinload(PortfolioProject.opportunity),
             selectinload(Portfolio.portfolio_projects)
                 .selectinload(PortfolioProject.scenario)
-                .selectinload(DealModel.operational_outputs),
+                .selectinload(Scenario.operational_outputs),
         )
         .order_by(Portfolio.created_at.desc())
     )
@@ -160,7 +160,7 @@ async def portfolio_detail(
                 .selectinload(PortfolioProject.opportunity),
             selectinload(Portfolio.portfolio_projects)
                 .selectinload(PortfolioProject.scenario)
-                .selectinload(DealModel.operational_outputs),
+                .selectinload(Scenario.operational_outputs),
         ],
     )
     if portfolio is None:
@@ -190,12 +190,12 @@ async def portfolio_detail(
     if opp_ids:
         deals_stmt = (
             select(Deal)
-            .join(DealModel, DealModel.deal_id == Deal.id)
-            .join(Project, Project.scenario_id == DealModel.id)
+            .join(Scenario, Scenario.deal_id == Deal.id)
+            .join(Project, Project.scenario_id == Scenario.id)
             .where(Project.opportunity_id.in_(opp_ids))
             .options(
-                selectinload(Deal.scenarios).selectinload(DealModel.projects).selectinload(Project.milestones),
-                selectinload(Deal.scenarios).selectinload(DealModel.projects).selectinload(Project.opportunity),
+                selectinload(Deal.scenarios).selectinload(Scenario.projects).selectinload(Project.milestones),
+                selectinload(Deal.scenarios).selectinload(Scenario.projects).selectinload(Project.opportunity),
             )
             .distinct()
         )
@@ -254,7 +254,7 @@ async def portfolio_add_deal(
     deal = await session.get(
         Deal, deal_id,
         options=[
-            selectinload(Deal.scenarios).selectinload(DealModel.projects),
+            selectinload(Deal.scenarios).selectinload(Scenario.projects),
         ],
     )
     if deal is None:

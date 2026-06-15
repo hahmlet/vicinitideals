@@ -21,7 +21,7 @@ from typing import Any
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.deal import (
-    DealModel,
+    Scenario,
     OperationalInputs,
     ProjectType,
     Scenario,
@@ -188,7 +188,7 @@ async def create_scenario(
         resolved = {k: v.value for k, v in DEFAULT_REGISTRY.items()}
 
     # ── Scenario row ────────────────────────────────────────────────────────
-    scenario = DealModel(
+    scenario = Scenario(
         deal_id=deal_id,
         name=name,
         project_type=deal_type,

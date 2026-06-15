@@ -99,10 +99,10 @@ async def compute_waterfall(
     deal_uuid = UUID(str(deal_model_id))
     deal_model = await _load_deal_context(session, deal_uuid)
     if deal_model is None:
-        raise ValueError(f"DealModel {deal_uuid} was not found")
+        raise ValueError(f"Scenario {deal_uuid} was not found")
 
     if not deal_model.capital_modules:
-        raise ValueError(f"DealModel {deal_uuid} has no CapitalModule rows")
+        raise ValueError(f"Scenario {deal_uuid} has no CapitalModule rows")
 
     # Auto-create equity module and/or tiers if missing
     await _ensure_equity_and_tiers(deal_uuid, deal_model, session)
@@ -568,7 +568,7 @@ async def get_waterfall_distribution_report(
     deal_uuid = UUID(str(deal_model_id))
     deal_model = await _load_deal_context(session, deal_uuid)
     if deal_model is None:
-        raise ValueError(f"DealModel {deal_uuid} was not found")
+        raise ValueError(f"Scenario {deal_uuid} was not found")
 
     capital_modules = sorted(
         deal_model.capital_modules,

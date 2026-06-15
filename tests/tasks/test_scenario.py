@@ -13,7 +13,7 @@ from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
 from app.models.base import Base
 from app.models.cashflow import CashFlow, OperationalOutputs
-from app.models.deal import Deal, DealModel, DealOpportunity, OperationalInputs, ProjectType
+from app.models.deal import Deal, Scenario, DealOpportunity, OperationalInputs, ProjectType
 from app.models.manifest import WorkflowRunManifest
 from app.models.org import Organization, User
 from app.models.project import (
@@ -26,7 +26,7 @@ from app.models.project import (
     ProjectSource,
     ProjectStatus,
 )
-from app.models.scenario import Scenario, ScenarioResult, ScenarioStatus
+from app.models.scenario import Scenario, SensitivityResult, ScenarioStatus
 from app.tasks.scenario import run_scenario
 
 
@@ -55,13 +55,13 @@ async def test_session_factory(tmp_path):
                         Deal.__table__,
                         DealOpportunity.__table__,
                         Project.__table__,
-                        DealModel.__table__,
+                        Scenario.__table__,
                         OperationalInputs.__table__,
                         CashFlow.__table__,
                         OperationalOutputs.__table__,
                         WorkflowRunManifest.__table__,
                         Scenario.__table__,
-                        ScenarioResult.__table__,
+                        SensitivityResult.__table__,
                     ],
                 ),
             )
@@ -127,9 +127,9 @@ async def test_run_scenario_writes_one_result_per_step(
         results = list(
             (
                 await session.execute(
-                    select(ScenarioResult)
-                    .where(ScenarioResult.sensitivity_id == scenario_id)
-                    .order_by(ScenarioResult.variable_value.asc())
+                    select(SensitivityResult)
+                    .where(SensitivityResult.sensitivity_id == scenario_id)
+                    .order_by(SensitivityResult.variable_value.asc())
                 )
             ).scalars()
         )
@@ -212,9 +212,9 @@ async def test_run_scenario_preserves_prior_results_with_incremented_run_number(
         first_run_results = list(
             (
                 await session.execute(
-                    select(ScenarioResult)
-                    .where(ScenarioResult.sensitivity_id == scenario_id)
-                    .order_by(ScenarioResult.run_number.asc(), ScenarioResult.variable_value.asc())
+                    select(SensitivityResult)
+                    .where(SensitivityResult.sensitivity_id == scenario_id)
+                    .order_by(SensitivityResult.run_number.asc(), SensitivityResult.variable_value.asc())
                 )
             ).scalars()
         )
@@ -233,9 +233,9 @@ async def test_run_scenario_preserves_prior_results_with_incremented_run_number(
         results = list(
             (
                 await session.execute(
-                    select(ScenarioResult)
-                    .where(ScenarioResult.sensitivity_id == scenario_id)
-                    .order_by(ScenarioResult.run_number.asc(), ScenarioResult.variable_value.asc())
+                    select(SensitivityResult)
+                    .where(SensitivityResult.sensitivity_id == scenario_id)
+                    .order_by(SensitivityResult.run_number.asc(), SensitivityResult.variable_value.asc())
                 )
             ).scalars()
         )
@@ -294,7 +294,7 @@ async def test_run_scenario_marks_invalid_variable_failed(
         results = list(
             (
                 await session.execute(
-                    select(ScenarioResult).where(ScenarioResult.sensitivity_id == scenario_id)
+                    select(SensitivityResult).where(SensitivityResult.sensitivity_id == scenario_id)
                 )
             ).scalars()
         )
@@ -325,7 +325,7 @@ async def _seed_scenario(test_session_factory, variable: str = "operational.exit
             created_by_user_id=user.id,
         )
         deal_opp = DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id)
-        deal = DealModel(
+        deal = Scenario(
             id=uuid4(),
             deal_id=top_deal.id,
             created_by_user_id=user.id,

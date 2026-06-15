@@ -22,7 +22,7 @@ from app.models.capital import CapitalModule, WaterfallResult, WaterfallTier, Wa
 from app.models.cashflow import CashFlow, CashFlowLineItem, OperationalOutputs
 from app.models.deal import (
     Deal,
-    DealModel,
+    Scenario,
     DealOpportunity,
     IncomeStream,
     IncomeStreamType,
@@ -35,7 +35,7 @@ from app.models.portfolio import Portfolio, PortfolioProject
 from app.models.project import Opportunity, Project, ProjectCategory, ProjectSource, ProjectStatus
 from app.schemas.capital import CapitalModuleBase, WaterfallTierBase
 from app.schemas.deal import (
-    DealModelBase,
+    ScenarioBase,
     IncomeStreamBase,
     OperatingExpenseLineBase,
     OperationalInputsBase,
@@ -54,7 +54,7 @@ SCHEMA_TABLES = [
     Opportunity.__table__,
     Project.__table__,
     Portfolio.__table__,
-    DealModel.__table__,
+    Scenario.__table__,
     OperationalInputs.__table__,
     IncomeStream.__table__,
     OperatingExpenseLine.__table__,
@@ -356,7 +356,7 @@ def _normalize_project_entry(entry: dict[str, Any]) -> DealImportSpec:
     if not isinstance(raw_deal_model, dict):
         raw_deal_model = {}
     inferred_project_type = _infer_project_type(entry)
-    deal_model_payload = DealModelBase.model_validate(
+    deal_model_payload = ScenarioBase.model_validate(
         {
             "name": str(raw_deal_model.get("name") or canonical_name),
             "version": int(raw_deal_model.get("version") or 1),
@@ -741,14 +741,14 @@ async def _upsert_deal_model(
     opportunity: Opportunity,
     user: User,
     payload: dict[str, Any],
-) -> DealModel:
+) -> Scenario:
     deal_model = (
         await session.execute(
-            select(DealModel)
-            .join(Deal, Deal.id == DealModel.deal_id)
+            select(Scenario)
+            .join(Deal, Deal.id == Scenario.deal_id)
             .join(DealOpportunity, DealOpportunity.deal_id == Deal.id)
-            .where(DealOpportunity.opportunity_id == opportunity.id, DealModel.name == payload["name"])
-            .order_by(DealModel.version.desc())
+            .where(DealOpportunity.opportunity_id == opportunity.id, Scenario.name == payload["name"])
+            .order_by(Scenario.version.desc())
         )
     ).scalars().first()
 
@@ -772,7 +772,7 @@ async def _upsert_deal_model(
             session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id))
             await session.flush()
 
-        deal_model = DealModel(deal_id=top_deal.id, created_by_user_id=user.id, **payload)
+        deal_model = Scenario(deal_id=top_deal.id, created_by_user_id=user.id, **payload)
         session.add(deal_model)
         await session.flush()
         # Ensure a default dev Project exists for this scenario
@@ -801,7 +801,7 @@ async def _upsert_deal_model(
 async def _replace_deal_children(
     session: AsyncSession,
     *,
-    deal_model: DealModel,
+    deal_model: Scenario,
     operational_inputs: dict[str, Any],
     income_streams: list[dict[str, Any]],
     expense_lines: list[dict[str, Any]],
@@ -859,7 +859,7 @@ async def _upsert_portfolio_project(
     *,
     portfolio: Portfolio,
     project: Opportunity,
-    deal_model: DealModel,
+    deal_model: Scenario,
     project_payload: dict[str, Any],
     capital_contribution: Any,
 ) -> PortfolioProject:

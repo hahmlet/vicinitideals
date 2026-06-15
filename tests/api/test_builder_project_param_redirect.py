@@ -1,4 +1,4 @@
-﻿"""Builder route canonicalizes URL to always include ?project=.
+"""Builder route canonicalizes URL to always include ?project=.
 
 Without project in URL, HX-Current-URL header on form posts/deletes
 omits it, so `_active_project_from_request` returns None and JSONB
@@ -15,7 +15,7 @@ from httpx import AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.auth import COOKIE_NAME, create_session_token
-from app.models.deal import DealModel, ProjectType
+from app.models.deal import Scenario, ProjectType
 from app.models.opportunity import Opportunity
 from app.models.project import Project
 
@@ -28,7 +28,7 @@ async def _auth(client: AsyncClient, user_id) -> None:
     set_client_auth(client, user_id)
 
 
-async def _seed_minimal(session: AsyncSession) -> tuple[DealModel, Project, uuid.UUID]:
+async def _seed_minimal(session: AsyncSession) -> tuple[Scenario, Project, uuid.UUID]:
     """Seed org/user/opportunity/deal_model/project — minimal fields only."""
     from tests.conftest import seed_org, seed_opportunity
     from app.models.deal import Deal
@@ -45,7 +45,7 @@ async def _seed_minimal(session: AsyncSession) -> tuple[DealModel, Project, uuid
     session.add(top_deal)
     await session.flush()
 
-    deal_model = DealModel(
+    deal_model = Scenario(
         id=uuid.uuid4(),
         deal_id=top_deal.id,
         created_by_user_id=user.id,

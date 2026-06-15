@@ -13,12 +13,12 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from app.models.deal import DealModel
+from app.models.deal import Scenario
 from app.models.project import Opportunity, Project, ProjectCategory, ProjectSource, ProjectStatus
 from app.schemas.capital import CapitalModuleRead, WaterfallResultRead, WaterfallTierRead
 from app.schemas.deal import (
     CashFlowRead,
-    DealModelRead,
+    ScenarioRead,
     IncomeStreamRead,
     UnitMixRead,
     OperatingExpenseLineRead,
@@ -107,21 +107,21 @@ def _build_project_payload(project: Opportunity | None) -> dict[str, Any]:
 async def export_deal_model_json(session: AsyncSession, model_id: UUID) -> dict[str, Any]:
     """Return a canonical JSON payload for a deal model and its nested records."""
     result = await session.execute(
-        select(DealModel)
+        select(Scenario)
         .options(
-            selectinload(DealModel.projects).options(
+            selectinload(Scenario.projects).options(
                 selectinload(Project.operational_inputs),
                 selectinload(Project.income_streams),
                 selectinload(Project.expense_lines),
                 selectinload(Project.opportunity),
             ),
-            selectinload(DealModel.operational_outputs),
-            selectinload(DealModel.cash_flows),
-            selectinload(DealModel.capital_modules),
-            selectinload(DealModel.waterfall_tiers),
-            selectinload(DealModel.waterfall_results),
+            selectinload(Scenario.operational_outputs),
+            selectinload(Scenario.cash_flows),
+            selectinload(Scenario.capital_modules),
+            selectinload(Scenario.waterfall_tiers),
+            selectinload(Scenario.waterfall_results),
         )
-        .where(DealModel.id == model_id)
+        .where(Scenario.id == model_id)
     )
     model = result.scalar_one_or_none()
     if model is None:
@@ -178,7 +178,7 @@ async def export_deal_model_json(session: AsyncSession, model_id: UUID) -> dict[
         for result in sorted(model.waterfall_results, key=lambda item: (item.period, str(item.id)))
     ]
 
-    deal_model_payload = DealModelRead.model_validate(model).model_dump(mode="json")
+    deal_model_payload = ScenarioRead.model_validate(model).model_dump(mode="json")
     deal_model_payload.update(
         {
             "operational_inputs": operational_inputs,

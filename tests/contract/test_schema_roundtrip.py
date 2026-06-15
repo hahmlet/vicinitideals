@@ -16,8 +16,8 @@ from app.schemas.capital import (
     WaterfallTierUpdate,
 )
 from app.schemas.deal import (
-    DealModelCreate,
-    DealModelRead,
+    ScenarioCreate,
+    ScenarioRead,
     IncomeStreamCreate,
     IncomeStreamRead,
     IncomeStreamUpdate,
@@ -64,7 +64,7 @@ ROUND_TRIP_CASES: list[tuple[type, dict]] = [
         },
     ),
     (
-        DealModelCreate,
+        ScenarioCreate,
         {
             "deal_id": PROJECT_ID,
             "created_by_user_id": USER_ID,
@@ -75,7 +75,7 @@ ROUND_TRIP_CASES: list[tuple[type, dict]] = [
         },
     ),
     (
-        DealModelRead,
+        ScenarioRead,
         {
             "id": MODEL_ID,
             "deal_id": PROJECT_ID,
@@ -324,8 +324,8 @@ def test_contract_payload_examples_keep_expected_decimal_strings() -> None:
     [
         (ProjectCreate,),
         (ProjectRead,),
-        (DealModelCreate,),
-        (DealModelRead,),
+        (ScenarioCreate,),
+        (ScenarioRead,),
         (OperationalInputsCreate,),
         (OperationalInputsRead,),
         (IncomeStreamCreate,),

@@ -14,7 +14,7 @@ from sqlalchemy.orm import selectinload
 
 from app.api.deps import DBSession
 from app.models.cashflow import CashFlow, PeriodType
-from app.models.deal import DealModel, OperationalInputs
+from app.models.deal import Scenario, OperationalInputs
 from app.models.project import Project
 from app.models.org import Organization
 from app.models.portfolio import GanttEntry, GanttPhase, Portfolio, PortfolioProject
@@ -261,8 +261,8 @@ async def _load_portfolio_projects(
         select(PortfolioProject)
         .options(
             selectinload(PortfolioProject.opportunity),
-            selectinload(PortfolioProject.scenario).selectinload(DealModel.projects).selectinload(Project.operational_inputs),
-            selectinload(PortfolioProject.scenario).selectinload(DealModel.operational_outputs),
+            selectinload(PortfolioProject.scenario).selectinload(Scenario.projects).selectinload(Project.operational_inputs),
+            selectinload(PortfolioProject.scenario).selectinload(Scenario.operational_outputs),
         )
         .where(PortfolioProject.portfolio_id == portfolio_id)
         .order_by(PortfolioProject.project_id.asc())
@@ -273,20 +273,20 @@ async def _load_portfolio_projects(
 async def _resolve_portfolio_deal_model(
     session: DBSession,
     portfolio_project: PortfolioProject,
-) -> DealModel | None:
+) -> Scenario | None:
     linked_model = portfolio_project.scenario
     if linked_model is not None and linked_model.is_active:
         return linked_model
 
     result = await session.execute(
-        select(DealModel)
+        select(Scenario)
         .options(
-            selectinload(DealModel.projects).selectinload(Project.operational_inputs),
-            selectinload(DealModel.operational_outputs),
+            selectinload(Scenario.projects).selectinload(Project.operational_inputs),
+            selectinload(Scenario.operational_outputs),
         )
-        .join(Project, Project.scenario_id == DealModel.id)
+        .join(Project, Project.scenario_id == Scenario.id)
         .where(Project.opportunity_id == portfolio_project.project_id)
-        .order_by(DealModel.is_active.desc(), DealModel.version.desc(), DealModel.created_at.desc())
+        .order_by(Scenario.is_active.desc(), Scenario.version.desc(), Scenario.created_at.desc())
     )
     models = list(result.scalars())
     if not models:

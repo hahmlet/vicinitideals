@@ -28,7 +28,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 
 from app.db import AsyncSessionLocal
-from app.models.deal import Deal, DealModel, UseLine, UseLinePhase
+from app.models.deal import Deal, Scenario, UseLine, UseLinePhase
 from app.models.project import Project
 from app.models.settings import OrgSetting
 from app.settings.defaults import SYSTEM_BASELINE
@@ -76,7 +76,7 @@ async def run(apply: bool) -> None:
                     skipped_existing += 1
                     continue
 
-                scenario = await session.get(DealModel, project.scenario_id)
+                scenario = await session.get(Scenario, project.scenario_id)
                 if scenario is None:
                     errors += 1
                     continue

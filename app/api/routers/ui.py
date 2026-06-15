@@ -29,7 +29,7 @@ import app as _pkg
 from app.api.deps import DBSession
 from app.config import settings
 from app.models.broker import Broker, Brokerage
-from app.models.deal import Scenario, STANDARD_OPEX_CATEGORIES, USE_CATEGORY_LABELS, USE_CATEGORY_PRESETS, USE_COST_CATEGORIES, Deal, DealModel, DealOpportunity, DealStatus, IncomeStream, IncomeStreamType, OperatingExpenseLine, OperationalInputs, ProjectType, UnitMix, UseLine, UseLinePhase
+from app.models.deal import Scenario, STANDARD_OPEX_CATEGORIES, USE_CATEGORY_LABELS, USE_CATEGORY_PRESETS, USE_COST_CATEGORIES, Deal, Scenario, DealOpportunity, DealStatus, IncomeStream, IncomeStreamType, OperatingExpenseLine, OperationalInputs, ProjectType, UnitMix, UseLine, UseLinePhase
 from app.models.ingestion import DedupCandidate, DedupStatus, IngestJob, RecordType, SavedSearchCriteria
 from app.models.org import Organization, User
 from app.models.capital import CapitalModule, DrawSource, WaterfallTier
@@ -468,8 +468,8 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
 
     project_id: if provided, load data for that specific Project; else default to first.
     """
-    # Load the scenario (DealModel) to access income_mode and deal_id
-    _scenario = await session.get(DealModel, model_id)
+    # Load the scenario (Scenario) to access income_mode and deal_id
+    _scenario = await session.get(Scenario, model_id)
 
     # Resolve active Project for this Scenario
     default_project = None
@@ -782,7 +782,7 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
     org_name = "Sponsor"
     try:
         from app.models.org import Organization as _Org
-        _scenario_for_org = await session.get(DealModel, model_id)
+        _scenario_for_org = await session.get(Scenario, model_id)
         if _scenario_for_org:
             _deal_for_org = await session.get(Deal, _scenario_for_org.deal_id)
             if _deal_for_org and _deal_for_org.org_id:
@@ -1170,7 +1170,7 @@ async def handle_form_create_or_update(
     item_id: str = "",
 ) -> HTMLResponse:
     """Accept form-encoded data, persist the mutation, return refreshed panel HTML."""
-    model = await session.get(DealModel, model_id)
+    model = await session.get(Scenario, model_id)
     if model is None:
         return HTMLResponse("<p class='text-muted'>Model not found.</p>", status_code=404)
 
@@ -1227,7 +1227,7 @@ async def handle_form_delete(
     session: DBSession,
 ) -> HTMLResponse:
     """Delete a line item and return the refreshed panel HTML."""
-    model = await session.get(DealModel, model_id)
+    model = await session.get(Scenario, model_id)
     if model is None:
         return HTMLResponse("<p class='text-muted'>Model not found.</p>", status_code=404)
 
@@ -1303,7 +1303,7 @@ async def apply_unit_mix_to_revenue(
     "All Units" stay put — the user deletes them manually once the
     per-unit-type streams look right.
     """
-    model = await session.get(DealModel, model_id)
+    model = await session.get(Scenario, model_id)
     if model is None:
         return HTMLResponse("<p class='text-muted'>Model not found.</p>", status_code=404)
 
@@ -1423,7 +1423,7 @@ async def run_sensitivity_analysis(
     panel so the user sees results inline."""
     from app.engines.sensitivity_matrix import compute_sensitivity_matrix
 
-    model = await session.get(DealModel, model_id)
+    model = await session.get(Scenario, model_id)
     if model is None:
         return HTMLResponse("<p class='text-muted'>Model not found.</p>", status_code=404)
 
@@ -1587,7 +1587,7 @@ async def create_deal_copy(
 ) -> HTMLResponse:
     """Deep-copy a Scenario into a new Scenario with the same Projects, milestones, and line items."""
     from decimal import Decimal as _Dec
-    source = await session.get(DealModel, deal_id)
+    source = await session.get(Scenario, deal_id)
     if source is None:
         return HTMLResponse("<p class='text-muted'>Deal not found.</p>", status_code=404)
 
@@ -1781,7 +1781,7 @@ async def create_deal_project(
     session: DBSession,
 ) -> HTMLResponse:
     """Add a new Project to an existing Scenario (max 5). Redirects to builder with timeline wizard."""
-    deal = await session.get(DealModel, deal_id)
+    deal = await session.get(Scenario, deal_id)
     if deal is None:
         return HTMLResponse("<p class='text-muted'>Deal not found.</p>", status_code=404)
 
@@ -2241,7 +2241,7 @@ async def save_stack_order(
     await session.flush()
     _active_proj_id = await _active_project_from_request(request, session, model_id)
     panel_data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
-    model = await session.get(DealModel, model_id)
+    model = await session.get(Scenario, model_id)
     return await _builder_panel_oob_response(request, model, "sources", panel_data, _active_proj_id, session)
 
 
@@ -2264,7 +2264,7 @@ async def reorder_capital_modules(
     await session.flush()
     _active_proj_id = await _active_project_from_request(request, session, model_id)
     panel_data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
-    model = await session.get(DealModel, model_id)
+    model = await session.get(Scenario, model_id)
     ctx = {"model": model, "active_module": "sources", **panel_data}
     return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
 
@@ -2294,7 +2294,7 @@ async def save_model_settings(
     construction_rate_pct = form.get("construction_rate_pct")
     perm_amort_years = form.get("perm_amort_years")
 
-    deal = await session.get(DealModel, model_id)
+    deal = await session.get(Scenario, model_id)
     if deal is None:
         return HTMLResponse("<p class='text-muted'>Not found.</p>", status_code=404)
 
@@ -2494,7 +2494,7 @@ async def model_builder(
     wizard: str = Query(default=""),  # "1" = single-flow deal-creation wizard mode (hide chrome)
     proforma_task_id: str = Query(default=""),  # pre-staged file from email ingest
 ) -> HTMLResponse:
-    model = await session.get(DealModel, model_id)
+    model = await session.get(Scenario, model_id)
     if model is None:
         return HTMLResponse("<p class='text-muted'>Model not found.</p>", status_code=404)
 
@@ -2597,10 +2597,10 @@ async def model_builder(
     deal_variants: list = []
     if opportunity:
         _dv_result = await session.execute(
-            select(DealModel)
-            .join(Project, Project.scenario_id == DealModel.id)
+            select(Scenario)
+            .join(Project, Project.scenario_id == Scenario.id)
             .where(Project.opportunity_id == opportunity.id)
-            .order_by(DealModel.created_at)
+            .order_by(Scenario.created_at)
         )
         deal_variants = list(_dv_result.scalars().unique())
     if not deal_variants:
@@ -2685,7 +2685,7 @@ async def model_builder(
         )).scalar_one_or_none()
         if _active_anchor is not None:
             from app.engines.anchor_resolver import resolve_project_start_dates
-            from app.models.deal import Scenario, Scenario as _Scn
+            from app.models.deal import Scenario as _Scn
             _scn = await session.get(_Scn, model_id)
             await session.refresh(_scn, ["projects"])
             _resolved = await resolve_project_start_dates(_scn, session)
@@ -2881,7 +2881,7 @@ async def builder_panel(
     """HTMX endpoint — returns the panel partial after a mutation."""
     from app.models.cashflow import CashFlow
 
-    model = await session.get(DealModel, model_id)
+    model = await session.get(Scenario, model_id)
     if model is None:
         return HTMLResponse("<p class='text-muted'>Model not found.</p>", status_code=404)
 
@@ -3380,7 +3380,7 @@ async def dev_fee_explainer_modal(
 ) -> HTMLResponse:
     """Render the Developer Fee calculation explainer modal."""
     user = await _get_user(session, request)
-    scenario = await session.get(DealModel, model_id)
+    scenario = await session.get(Scenario, model_id)
     if scenario is None:
         return HTMLResponse("<p class='text-muted'>Not found.</p>", status_code=404)
     if settings.org_isolation_enabled:

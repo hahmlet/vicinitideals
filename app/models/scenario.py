@@ -1,9 +1,9 @@
 """Sensitivity (sensitivity/scenario analysis sweep), SensitivityResult models.
 
-Was previously named Scenario/ScenarioResult.  Renamed to free up the `scenarios`
+Was previously named Scenario/SensitivityResult.  Renamed to free up the `scenarios`
 table name for the new Deal→Scenario financial plan entity in deal.py.
 
-Backward-compat aliases are kept so existing code importing Scenario/ScenarioResult
+Backward-compat aliases are kept so existing code importing Scenario/SensitivityResult
 continues to work without immediate churn.
 """
 
@@ -25,14 +25,13 @@ class SensitivityStatus(str, enum.Enum):
     failed = "failed"
 
 
-# Backward-compat alias
 ScenarioStatus = SensitivityStatus
 
 
 class Sensitivity(Base):
     """A sensitivity / scenario-analysis sweep — varies one input across a range.
 
-    Previously named Scenario.  The DealModel-level financial plan is now also
+    Previously named Scenario.  The Scenario-level financial plan is now also
     called a Scenario (in deal.py), so this class was renamed to avoid collision.
     """
 
@@ -104,5 +103,3 @@ class SensitivityResult(Base):
     sensitivity: Mapped["Sensitivity"] = relationship("Sensitivity", back_populates="results")
 
 
-# Backward-compat alias
-ScenarioResult = SensitivityResult

@@ -31,7 +31,7 @@ from app.exporters.investor_export import (
     export_investor_workbook,
     make_investor_filename,
 )
-from app.models.deal import Deal, DealModel
+from app.models.deal import Deal, Scenario
 from app.models.export_job import ExportJob, ExportJobStatus
 from app.models.org import User
 from app.tasks.celery_app import celery_app
@@ -106,7 +106,7 @@ async def _run_investor_export_async(job_id: str) -> str:
             await _mark_failed(session, job_uuid, f"build error: {exc}")
             return "failed"
 
-        scenario = await session.get(DealModel, scenario_id)
+        scenario = await session.get(Scenario, scenario_id)
         deal = (
             await session.get(Deal, scenario.deal_id) if scenario and scenario.deal_id else None
         )
@@ -150,7 +150,7 @@ async def _send_export(session, job_uuid: UUID) -> bool:
     if job is None:
         return False
     user = await session.get(User, job.user_id)
-    scenario = await session.get(DealModel, job.scenario_id)
+    scenario = await session.get(Scenario, job.scenario_id)
     deal = (
         await session.get(Deal, scenario.deal_id) if scenario and scenario.deal_id else None
     )

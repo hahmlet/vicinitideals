@@ -24,7 +24,7 @@ from app.models.capital import CapitalModule, WaterfallResult, WaterfallTier, Wa
 from app.models.cashflow import CashFlow, CashFlowLineItem, OperationalOutputs, PeriodType
 from app.models.deal import (
     Deal,
-    DealModel,
+    Scenario,
     DealOpportunity,
     IncomeStream,
     IncomeStreamType,
@@ -38,7 +38,7 @@ from app.models.org import Organization, ProjectVisibility, User
 from app.models.portfolio import GanttEntry, Portfolio, PortfolioProject
 from app.models.project import Opportunity, Project
 from app.models.scraped_listing import ScrapedListing
-from app.models.scenario import Scenario, ScenarioResult, ScenarioStatus
+from app.models.scenario import Scenario, SensitivityResult, ScenarioStatus
 from app.tasks.scenario import run_scenario
 
 
@@ -75,13 +75,13 @@ async def test_session_factory() -> AsyncGenerator[async_sessionmaker[AsyncSessi
                         GanttEntry.__table__,
                         Deal.__table__,
                         DealOpportunity.__table__,
-                        DealModel.__table__,
+                        Scenario.__table__,
                         Project.__table__,  # dev effort entity (FK → deals)
                         OperationalInputs.__table__,
                         IncomeStream.__table__,
                         OperatingExpenseLine.__table__,
                         Scenario.__table__,
-                        ScenarioResult.__table__,
+                        SensitivityResult.__table__,
                         CashFlow.__table__,
                         CashFlowLineItem.__table__,
                         OperationalOutputs.__table__,
@@ -155,7 +155,7 @@ async def _seed_model_for_run_tests(
     await session.flush()
     session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id))
 
-    model = DealModel(
+    model = Scenario(
         deal_id=top_deal.id,
         created_by_user_id=user.id,
         name="Workflow Run Deal",
@@ -387,7 +387,7 @@ async def test_get_project_summary_returns_active_model_rollup(
         await session.flush()
         session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id))
 
-        model = DealModel(
+        model = Scenario(
             deal_id=top_deal.id,
             created_by_user_id=user.id,
             name="Summary Base Case",
@@ -634,7 +634,7 @@ async def test_post_project_scenarios_rejects_invalid_input(
         await session.flush()
         session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id))
 
-        model = DealModel(
+        model = Scenario(
             deal_id=top_deal.id,
             created_by_user_id=user.id,
             name="Scenario Guard Deal",
@@ -696,7 +696,7 @@ async def test_post_project_scenarios_accepts_valid_range(
         await session.flush()
         session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id))
 
-        model = DealModel(
+        model = Scenario(
             deal_id=top_deal.id,
             created_by_user_id=user.id,
             name="Scenario Valid Deal",
@@ -771,7 +771,7 @@ async def test_get_scenario_status_includes_model_version_snapshot_after_run(
         await session.flush()
         session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id))
 
-        model = DealModel(
+        model = Scenario(
             deal_id=top_deal.id,
             created_by_user_id=user.id,
             name="Scenario Status Deal",
@@ -877,7 +877,7 @@ async def test_get_scenario_results_defaults_to_latest_run_and_supports_run_quer
         await session.flush()
         session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id))
 
-        model = DealModel(
+        model = Scenario(
             deal_id=top_deal.id,
             created_by_user_id=user.id,
             name="Scenario Results Deal",
@@ -912,25 +912,25 @@ async def test_get_scenario_results_defaults_to_latest_run_and_supports_run_quer
 
         session.add_all(
             [
-                ScenarioResult(
+                SensitivityResult(
                     sensitivity_id=scenario.id,
                     run_number=1,
                     variable_value=Decimal("4.500000"),
                     project_irr_pct=Decimal("15.000000"),
                 ),
-                ScenarioResult(
+                SensitivityResult(
                     sensitivity_id=scenario.id,
                     run_number=1,
                     variable_value=Decimal("5.000000"),
                     project_irr_pct=Decimal("14.750000"),
                 ),
-                ScenarioResult(
+                SensitivityResult(
                     sensitivity_id=scenario.id,
                     run_number=2,
                     variable_value=Decimal("5.500000"),
                     project_irr_pct=Decimal("14.500000"),
                 ),
-                ScenarioResult(
+                SensitivityResult(
                     sensitivity_id=scenario.id,
                     run_number=2,
                     variable_value=Decimal("6.000000"),
@@ -983,7 +983,7 @@ async def test_get_scenario_compare_returns_variance_and_attribution_contract(
         await session.flush()
         session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id))
 
-        model = DealModel(
+        model = Scenario(
             deal_id=top_deal.id,
             created_by_user_id=user.id,
             name="Scenario Compare Deal",
@@ -1026,7 +1026,7 @@ async def test_get_scenario_compare_returns_variance_and_attribution_contract(
 
         session.add_all(
             [
-                ScenarioResult(
+                SensitivityResult(
                     sensitivity_id=scenario.id,
                     variable_value=Decimal("4.500000"),
                     project_irr_pct=Decimal("16.000000"),
@@ -1035,7 +1035,7 @@ async def test_get_scenario_compare_returns_variance_and_attribution_contract(
                     equity_multiple=Decimal("3.200000"),
                     cash_on_cash_year1_pct=Decimal("11.500000"),
                 ),
-                ScenarioResult(
+                SensitivityResult(
                     sensitivity_id=scenario.id,
                     variable_value=Decimal("5.500000"),
                     project_irr_pct=Decimal("15.000000"),
@@ -1044,7 +1044,7 @@ async def test_get_scenario_compare_returns_variance_and_attribution_contract(
                     equity_multiple=Decimal("3.000000"),
                     cash_on_cash_year1_pct=Decimal("11.000000"),
                 ),
-                ScenarioResult(
+                SensitivityResult(
                     sensitivity_id=scenario.id,
                     variable_value=Decimal("6.000000"),
                     project_irr_pct=Decimal("14.500000"),
@@ -1188,14 +1188,14 @@ async def test_compute_portfolio_gantt_and_summary_include_project_rollups(
             DealOpportunity(deal_id=top_deal_b.id, opportunity_id=project_b.id),
         ])
 
-        model_a = DealModel(
+        model_a = Scenario(
             deal_id=top_deal_a.id,
             created_by_user_id=user.id,
             name="Burnside Base Case",
             project_type=ProjectType.new_construction,
             is_active=True,
         )
-        model_b = DealModel(
+        model_b = Scenario(
             deal_id=top_deal_b.id,
             created_by_user_id=user.id,
             name="Division Base Case",
@@ -1377,7 +1377,7 @@ async def test_post_and_get_model_expense_lines_round_trip(
         await session.flush()
         session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id))
 
-        model = DealModel(
+        model = Scenario(
             deal_id=top_deal.id,
             created_by_user_id=user.id,
             name="Expense Line Deal",
@@ -1464,7 +1464,7 @@ async def test_update_and_delete_model_income_stream_and_expense_line(
         await session.flush()
         session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id))
 
-        model = DealModel(
+        model = Scenario(
             deal_id=top_deal.id,
             created_by_user_id=user.id,
             name="Editable Assumptions Deal",
@@ -1582,7 +1582,7 @@ async def test_update_and_delete_capital_modules_and_waterfall_tiers(
         await session.flush()
         session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id))
 
-        model = DealModel(
+        model = Scenario(
             deal_id=top_deal.id,
             created_by_user_id=user.id,
             name="Capital Editor Deal",
@@ -1856,7 +1856,7 @@ async def test_get_model_json_export_returns_portable_payload(
         await session.flush()
         session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id))
 
-        model = DealModel(
+        model = Scenario(
             deal_id=top_deal.id,
             created_by_user_id=user.id,
             name="JSON Export Deal",
@@ -2059,7 +2059,7 @@ async def test_post_project_model_import_creates_nested_records(
     }
 
     async with test_session_factory() as session:
-        models = (await session.execute(DealModel.__table__.select())).all()
+        models = (await session.execute(Scenario.__table__.select())).all()
         inputs = (await session.execute(OperationalInputs.__table__.select())).all()
         streams = (await session.execute(IncomeStream.__table__.select())).all()
         modules = (await session.execute(CapitalModule.__table__.select())).all()
@@ -2177,7 +2177,7 @@ async def test_exported_model_json_round_trips_through_validation_and_import(
         await session.flush()
         session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=source_project.id))
 
-        model = DealModel(
+        model = Scenario(
             deal_id=top_deal.id,
             created_by_user_id=user.id,
             name="Round Trip Deal",
@@ -2289,7 +2289,7 @@ async def test_get_model_excel_export_returns_multisheet_workbook(
         await session.flush()
         session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id))
 
-        model = DealModel(
+        model = Scenario(
             deal_id=top_deal.id,
             created_by_user_id=user.id,
             name="Tower Test Deal",
@@ -2445,7 +2445,7 @@ async def test_get_waterfall_report_returns_investor_timelines_and_summary(
         await session.flush()
         session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id))
 
-        model = DealModel(
+        model = Scenario(
             deal_id=top_deal.id,
             created_by_user_id=user.id,
             name="Investor Distribution Deal",

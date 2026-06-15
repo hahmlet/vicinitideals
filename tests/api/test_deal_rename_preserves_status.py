@@ -51,7 +51,7 @@ async def _scaffold(session: AsyncSession, opp_status: str = "active"):
     session.add(project)
     await session.flush()
 
-    # The route loads Deal (top-level), not DealModel — fetch its id.
+    # The route loads Deal (top-level), not Scenario — fetch its id.
     top_deal_id = deal_model.deal_id
     await session.commit()
     return user, opp, top_deal_id

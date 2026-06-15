@@ -54,7 +54,7 @@ from sqlalchemy.orm import selectinload
 from app.models.capital import CapitalModule, WaterfallTier
 from app.models.cashflow import CashFlow, OperationalOutputs
 from app.models.deal import (
-    DealModel,
+    Scenario,
     IncomeStream,
     OperatingExpenseLine,
     OperationalInputs,
@@ -86,7 +86,7 @@ async def export_deal_model_workbook(deal_model_id: UUID, session: AsyncSession)
     """Return a round-trip-capable XLSX workbook for the requested deal model."""
     data = await _load_all(session, deal_model_id)
     if data is None:
-        raise ValueError(f"DealModel {deal_model_id} was not found")
+        raise ValueError(f"Scenario {deal_model_id} was not found")
 
     model, project, inputs, use_lines, income_streams, expense_lines, \
         capital_modules, waterfall_tiers, cash_flows, outputs, milestones = data
@@ -123,7 +123,7 @@ async def export_deal_model_workbook(deal_model_id: UUID, session: AsyncSession)
     return buf.getvalue()
 
 
-def make_export_filename(model: DealModel) -> str:
+def make_export_filename(model: Scenario) -> str:
     slug = re.sub(r"[^a-z0-9]+", "-", (model.name or "deal").lower()).strip("-") or "deal"
     return f"{slug}.xlsx"
 
@@ -132,7 +132,7 @@ def make_export_filename(model: DealModel) -> str:
 
 async def _load_all(session: AsyncSession, model_id: UUID):
     model = (await session.execute(
-        select(DealModel).where(DealModel.id == model_id)
+        select(Scenario).where(Scenario.id == model_id)
     )).scalar_one_or_none()
     if model is None:
         return None
@@ -191,7 +191,7 @@ async def _load_all(session: AsyncSession, model_id: UUID):
 
 # ── Summary (read-only) ───────────────────────────────────────────────────────
 
-def _build_summary(ws: Worksheet, model: DealModel, outputs: OperationalOutputs | None) -> None:
+def _build_summary(ws: Worksheet, model: Scenario, outputs: OperationalOutputs | None) -> None:
     _header_row(ws, ["Metric", "Value"])
     rows = [
         ("Model Name",              model.name),
@@ -392,7 +392,7 @@ def _build_sources(ws: Worksheet, capital_modules: list[CapitalModule]) -> None:
 
 def _build_setup(
     ws: Worksheet,
-    model: DealModel,
+    model: Scenario,
     project: Project | None,
     inputs: OperationalInputs | None,
     milestones: list[Milestone],
