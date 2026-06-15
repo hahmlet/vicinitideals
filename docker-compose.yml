@@ -50,24 +50,6 @@ services:
       - vicinitideals-network
     restart: unless-stopped
 
-  worker-scraping:
-    build:
-      context: .
-      target: worker
-    container_name: vicinitideals-worker-scraping
-    command: celery -A app.tasks.celery_app worker -Q scraping -c 1
-    env_file: .env
-    volumes:
-      - ./data:/app/data
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-    networks:
-      - vicinitideals-network
-    restart: unless-stopped
-
   worker-analysis:
     build:
       context: .

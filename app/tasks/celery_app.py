@@ -29,14 +29,11 @@ celery_app.conf.update(
     task_default_queue="default",
     task_queues=(
         Queue("default"),
-        Queue("scraping"),
         Queue("analysis"),
     ),
     task_routes={
-        "app.tasks.scraper.*": {"queue": "scraping"},
         "app.tasks.scenario.*": {"queue": "analysis"},
         "app.tasks.proforma_parse.*": {"queue": "analysis"},
-        "app.tasks.oregon_elicense.*": {"queue": "scraping"},
         "app.tasks.export.*": {"queue": "analysis"},
         "app.tasks.email_ingest.*": {"queue": "analysis"},
     },

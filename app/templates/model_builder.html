@@ -2257,9 +2257,12 @@ function _initSourcesDrag() {
         panel.innerHTML = html;
         htmx.process(panel);
         _initSourcesDrag();
-        // refresh calc status pill
         htmx.ajax('GET', '/ui/models/{{ model.id }}/calc-status', {
           target: '#calc-status-pill-container', swap: 'innerHTML'
+        });
+        var _m = new URLSearchParams(window.location.search).get('module') || '';
+        htmx.ajax('GET', '/ui/models/{{ model.id }}/module-nav?module=' + encodeURIComponent(_m), {
+          target: '#module-nav-cards', swap: 'innerHTML'
         });
       });
   });

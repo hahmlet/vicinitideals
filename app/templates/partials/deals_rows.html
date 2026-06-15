@@ -33,9 +33,6 @@
   <td class="col-right {% if deal.irr %}irr-value{% else %}col-muted{% endif %}">
     {{ deal.irr | pct }}
   </td>
-  <td class="col-right text-mono {% if deal.equity_multiple %}{% else %}col-muted{% endif %}">
-    {% if deal.equity_multiple %}{{ "%.2fx"|format(deal.equity_multiple) }}{% else %}—{% endif %}
-  </td>
   <td class="col-right text-mono {% if deal.gap_adj is none %}col-muted{% endif %}"
       {% if deal.gap_adj is not none %}style="color:{% if deal.gap_has_adj %}#d97706{% elif deal.gap_adj != 0 %}#dc2626{% else %}#16a34a{% endif %}"{% endif %}
       title="{% if deal.gap_has_adj %}Funding gap with one or more gap-adjustment sliders applied{% elif deal.gap_adj is not none and deal.gap_adj != 0 %}Unadjusted funding gap — deal is short{% else %}Fully funded, no adjustments{% endif %}">

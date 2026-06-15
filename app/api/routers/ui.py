@@ -2265,7 +2265,8 @@ async def reorder_capital_modules(
     _active_proj_id = await _active_project_from_request(request, session, model_id)
     panel_data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
     model = await session.get(DealModel, model_id)
-    return await _builder_panel_oob_response(request, model, "sources", panel_data, _active_proj_id, session)
+    ctx = {"model": model, "active_module": "sources", **panel_data}
+    return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
 
 
 @router.post("/ui/models/{model_id}/settings", response_class=HTMLResponse)
