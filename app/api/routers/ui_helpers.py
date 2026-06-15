@@ -16,8 +16,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.deps import DBSession
 from app.config import settings
-from app.models.deal import Deal, DealModel
+from app.models.deal import Deal, DealModel, ProjectType
 from app.models.ingestion import DedupCandidate, DedupStatus
+from app.models.milestone import DEFAULT_DURATIONS, Milestone, MilestoneType
 from app.models.opportunity import Opportunity
 from app.models.org import User
 from app.models.project import Project
@@ -633,3 +634,34 @@ def _build_portfolio_gantt(portfolio_entries: "list[tuple[str, str, Deal]]") -> 
 
     month_ticks, year_spans = _compute_gantt_axis(global_epoch, g_min, g_max, any_has_dates)
     return {"has_dates": any_has_dates, "month_ticks": month_ticks, "year_spans": year_spans, "rows": rows}
+
+
+# ---------------------------------------------------------------------------
+# Cross-router helpers (used by both deals pipeline and model builder)
+# ---------------------------------------------------------------------------
+
+def _seed_milestones(project: Project, deal_type: ProjectType) -> list[Milestone]:
+    """Return unseeded Milestone rows for a new dev Project based on deal_type defaults."""
+    durations = DEFAULT_DURATIONS.get(deal_type.value, {})
+    milestones = []
+    for seq, (type_str, duration) in enumerate(durations.items(), start=1):
+        try:
+            mtype = MilestoneType(type_str)
+        except ValueError:
+            continue
+        milestones.append(Milestone(
+            project_id=project.id,
+            milestone_type=mtype,
+            duration_days=duration,
+            sequence_order=seq,
+        ))
+    return milestones
+
+
+async def _auto_assign_opportunity_to_project(
+    opportunity: Opportunity,
+    project: Project,
+    session: AsyncSession,
+) -> None:
+    """No-op - project<->parcel linking removed (parcel decommission)."""
+    return None

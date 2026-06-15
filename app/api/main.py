@@ -520,6 +520,10 @@ def create_app() -> FastAPI:
     from app.api.routers.ui_portfolios import router as ui_portfolios_router
     app.include_router(ui_portfolios_router)
 
+    # Deals pipeline + opportunities sub-router (Phase 2a split)
+    from app.api.routers.ui_deals_pipeline import router as ui_deals_pipeline_router
+    app.include_router(ui_deals_pipeline_router)
+
     # Email ingest UI router — inbox and review pages, no /api prefix
     from app.api.routers.email_ingest import ui_router as email_ingest_ui_router
     app.include_router(email_ingest_ui_router)
