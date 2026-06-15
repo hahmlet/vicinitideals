@@ -21,6 +21,7 @@ celery_app = Celery(
         "app.tasks.export",
         "app.tasks.proforma_parse",
         "app.tasks.email_ingest",
+        "app.tasks.maintenance",
     ],
 )
 
@@ -63,6 +64,14 @@ celery_app.conf.update(
         "broker-dedup-daily": {
             "task": "app.tasks.oregon_elicense.broker_dedup_sweep",
             "schedule": crontab(hour=6, minute=0),
+        },
+        # Test-deal janitor: daily 08:00 UTC. Hard-deletes accumulated E2E /
+        # regression test deals (anything Hide-Test hides) older than the age
+        # guard, so they stop piling up. Scoped to the test-name pattern only —
+        # never touches a real deal. Idempotent: no-op when nothing matches.
+        "purge-test-deals-daily": {
+            "task": "app.tasks.maintenance.purge_test_deals_task",
+            "schedule": crontab(hour=8, minute=0),
         },
     },
     timezone="UTC",

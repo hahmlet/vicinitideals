@@ -101,6 +101,12 @@ class Settings(BaseSettings):
     crexi_archive_stale_days: int = 21
     crexi_archive_scraper_health_days: int = 3
 
+    # Test-deal janitor — daily purge of accumulated E2E / regression test deals
+    # (anything the Hide-Test filter hides). Age guard: only sweep deals older
+    # than this many hours, so an in-flight test run's fresh deal is never deleted
+    # mid-run. See app/services/test_cleanup.py + app/tasks/maintenance.py.
+    test_deal_purge_min_age_hours: int = 6
+
     # -------------------------------------------------------------------------
     # Realie.ai property data enrichment (https://realie.ai)
     # Free tier: 25 calls/month. Hard lock enforced in RealieEnricher.
