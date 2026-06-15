@@ -253,3 +253,26 @@ def _base_ctx(
         "address_issues_count": address_issues_count,
         "conflicts_count": conflicts_count,
     }
+
+# ---------------------------------------------------------------------------
+# Jinja2 templates — shared across all sub-routers
+# ---------------------------------------------------------------------------
+
+from pathlib import Path
+from urllib.parse import quote_plus
+
+import app as _pkg
+from fastapi.templating import Jinja2Templates
+
+_PACKAGE_DIR = Path(_pkg.__file__).parent
+_TEMPLATES_DIR = _PACKAGE_DIR / "templates"
+
+templates = Jinja2Templates(directory=str(_TEMPLATES_DIR))
+
+templates.env.filters["currency"] = _fmt_currency
+templates.env.filters["currency_m"] = _fmt_currency_m
+templates.env.filters["pct"] = _fmt_pct
+templates.env.filters["multiple"] = _fmt_multiple
+templates.env.filters["number_fmt"] = _fmt_number
+templates.env.filters["urlencode"] = quote_plus
+
