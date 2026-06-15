@@ -94,61 +94,6 @@
 .empty-panel-icon { font-size: 32px; margin-bottom: 8px; }
 .empty-panel-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
 
-/* ── Gantt v2 ── */
-.g2-wrap { position: relative; overflow-x: auto; padding-bottom: 8px; min-width: 520px; }
-.g2-axis {
-  display: flex; border-bottom: 2px solid var(--border); margin-bottom: 4px;
-  background: var(--surface); position: relative; z-index: 2;
-}
-.g2-axis-spacer { width: 130px; flex-shrink: 0; }
-.g2-axis-track { flex: 1; position: relative; }
-.g2-years { position: relative; height: 24px; border-bottom: 1px solid var(--border); overflow: hidden; }
-.g2-year-span {
-  position: absolute; top: 0; bottom: 0; display: flex; align-items: center;
-  padding-left: 6px; font-size: 14px; font-weight: 700; color: var(--text);
-  border-left: 1px solid var(--border); white-space: nowrap; overflow: hidden; box-sizing: border-box;
-}
-.g2-months { position: relative; height: 20px; }
-.g2-month {
-  position: absolute; top: 0; font-size: 12px; color: var(--text-muted);
-  transform: translateX(-50%); line-height: 20px; white-space: nowrap; user-select: none;
-}
-.g2-month-year { color: var(--text); font-weight: 700; }
-.g2-vlines {
-  position: absolute; left: 130px; top: 0; right: 0; bottom: 0; pointer-events: none; z-index: 0;
-}
-.g2-vline { position: absolute; top: 0; bottom: 0; width: 1px; background: rgba(0,0,0,0.05); }
-.g2-vline-year { background: rgba(0,0,0,0.11); }
-.g2-project-hdr { display: flex; align-items: center; padding: 10px 0 4px 0; margin-top: 2px; }
-.g2-project-hdr-name {
-  width: 130px; flex-shrink: 0; font-size: 13px; font-weight: 700; color: var(--text);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 8px; box-sizing: border-box;
-}
-.g2-project-hdr-line { flex: 1; height: 1px; background: var(--border); }
-.g2-row { display: flex; align-items: center; gap: 12px; margin-bottom: 5px; position: relative; z-index: 1; }
-.g2-label {
-  width: 130px; flex-shrink: 0; font-size: 14px; color: var(--text-muted);
-  text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  padding-left: 16px; box-sizing: border-box;
-}
-.g2-track { flex: 1; position: relative; height: 32px; }
-.g2-bar {
-  position: absolute; top: 3px; height: 26px; border-radius: 4px;
-  display: flex; align-items: center; padding: 0 8px;
-  font-size: 13px; font-weight: 600; color: #fff;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  transition: opacity 0.1s; cursor: default;
-}
-.g2-bar:hover { opacity: 0.85; }
-.gantt-phase-offer        { background: #7c3aed; }
-.gantt-phase-contract     { background: #db2777; }
-.gantt-phase-close        { background: #dc2626; }
-.gantt-phase-predev       { background: #d97706; }
-.gantt-phase-construction { background: #059669; }
-.gantt-phase-leaseup      { background: #0284c7; }
-.gantt-phase-stabilized   { background: #2563eb; }
-.gantt-phase-exit         { background: #374151; }
-.gantt-phase-other        { background: #6b7280; }
 </style>
 {% endblock %}
 

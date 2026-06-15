@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import debt_sizing_options %}
 {% from "partials/_dev_fee_rule_fields.html" import dev_fee_rule_fields %}
 {% block title %}Organization — Viciniti Deals{% endblock %}
 
@@ -269,9 +270,7 @@
         <div>
           <label style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;display:block">Debt Sizing Method</label>
           <select class="filter-select settings-field" data-fk="debt_sizing_mode" data-orig="{{ resolved.get('debt_sizing_mode', 'gap_fill') }}" style="width:100%">
-            <option value="gap_fill" {% if (resolved.get('debt_sizing_mode') or 'gap_fill') == 'gap_fill' %}selected{% endif %}>Gap-fill (Uses − Equity)</option>
-            <option value="dscr_capped" {% if resolved.get('debt_sizing_mode') == 'dscr_capped' %}selected{% endif %}>DSCR-capped (max from NOI)</option>
-            <option value="dual_constraint" {% if resolved.get('debt_sizing_mode') == 'dual_constraint' %}selected{% endif %}>Dual Constraint (MIN of LTV, DSCR, gap-fill)</option>
+            {{ debt_sizing_options(resolved.get('debt_sizing_mode')) }}
           </select>
           {{ perm_checkbox("debt_sizing_mode", locked=True) }}
         </div>

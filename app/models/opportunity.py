@@ -58,6 +58,12 @@ ProjectCategory = OpportunityCategory
 ProjectSource = OpportunitySource
 
 
+OPPORTUNITY_PROPERTY_TYPES: list[str] = [
+    "Multifamily", "Office", "Retail", "Industrial", "Land", "Mixed Use",
+    "Hospitality", "Medical",
+]
+
+
 class Opportunity(Base):
     """Unified investment target — scraped listing promoted to opportunity, or
     manually created. Physical attributes from scrapers or manual entry.

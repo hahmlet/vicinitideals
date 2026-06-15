@@ -36,7 +36,7 @@ from app.models.capital import CapitalModule, DrawSource, WaterfallTier
 from app.models.cashflow import OperationalOutputs
 from app.models.portfolio import Portfolio, PortfolioProject
 from app.models.milestone import DEFAULT_DURATIONS, Milestone, MilestoneType, MilestoneType as MT
-from app.models.opportunity import Opportunity, OpportunitySource, OpportunityStatus
+from app.models.opportunity import OPPORTUNITY_PROPERTY_TYPES, Opportunity, OpportunitySource, OpportunityStatus
 from app.models.project import Project, ProjectStatus
 from app.models.scraped_listing import ScrapedListing
 from app.models.realie_usage import RealieUsage
@@ -3037,6 +3037,7 @@ async def opportunities_page(
         "request": request,
         "jurisdiction_options": jurisdiction_options,
         "hide_test_default": is_admin,
+        "property_types": OPPORTUNITY_PROPERTY_TYPES,
         **_base_ctx(user, dedup_count, "opportunities", conflicts_count=conflicts_count),
     })
 
@@ -7769,15 +7770,10 @@ async def timeline_wizard_submit(
         anchor_duration = 0
 
     _STABILIZED_AUTO_DAYS = 10950  # 30 years — applied when no divestment milestone
-    # Hardcoded default durations for acquisition-phase milestones when the
-    # user hasn't supplied an override.  Trigger chain (Pass 2 below) wires
-    # these in submitted order, so "Close Starts After Under Contract" etc.
-    # falls out automatically whenever the predecessor is present.
-    _ACQUISITION_DEFAULT_DAYS: dict[str, int] = {
-        "offer_made":     7,
-        "under_contract": 30,
-        "close":          30,
-    }
+    # Default durations for acquisition-phase milestones when the user has not
+    # supplied an override — sourced from DEFAULT_DURATIONS so values stay in sync.
+    # Trigger chain (Pass 2 below) wires these in submitted order.
+    _ACQUISITION_DEFAULT_DAYS: dict[str, int] = DEFAULT_DURATIONS["acquisition"]
 
     # Clear existing milestones and detach any ProjectAnchor — user is setting
     # a manual start date; they can re-anchor later via Timeline Anchors panel.

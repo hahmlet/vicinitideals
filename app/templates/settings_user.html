@@ -73,7 +73,7 @@
     <div style="padding:0 18px 18px;display:grid;gap:12px">
       {{ user_field_select("debt_sizing_mode", "Debt Sizing Method", [
         ("gap_fill", "Gap-fill (Uses − Equity)"),
-        ("dscr_capped", "DSCR-capped (max from NOI)"),
+        ("dscr_capped", "DSCR-capped (max debt from NOI)"),
         ("dual_constraint", "Dual Constraint (MIN of LTV, DSCR, gap-fill)"),
       ]) }}
       {{ user_field_number("operation_reserve_months", "Operating Reserve (months)", "1", placeholder="6",
