@@ -1113,6 +1113,53 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
     }
 
 
+async def _builder_panel_oob_response(
+    request: Request,
+    model,
+    active_module: str,
+    panel_data: dict,
+    project_id: UUID | None,
+    session: AsyncSession,
+    extra_ctx: dict | None = None,
+) -> HTMLResponse:
+    """Return builder panel HTML with OOB calc-status pill and module-nav swaps appended."""
+    ctx = {
+        "request": request,
+        "model": model,
+        "active_module": active_module,
+        "wizard_mode": _wizard_mode_from_request(request),
+        **panel_data,
+        **(extra_ctx or {}),
+    }
+    panel_html = templates.env.get_template("partials/model_builder_panel.html").render(ctx)
+
+    _cs = _compute_calc_status(panel_data)
+    _has_adj = await _has_any_gap_adjustment(session, project_id) if project_id else False
+    _pill_html = _render_calc_status_pill_html(_cs, model.id, has_any_adjustment=_has_adj)
+    oob_pill = f'<div id="calc-status-pill-container" hx-swap-oob="innerHTML">{_pill_html}</div>'
+
+    nav_ctx = {
+        "active_module": active_module,
+        "locked": not panel_data.get("timeline_approved", False),
+        "deal_setup_complete": panel_data.get("deal_setup_complete", False),
+        "nav_base_path": f"/models/{model.id}/builder",
+        **{k: panel_data.get(k) for k in (
+            "capital_module_count", "capital_total",
+            "use_line_count", "uses_total", "income_stream_count", "revenue_annual",
+            "expense_line_count", "opex_annual", "capex_reserve_annual", "opex_total_annual",
+            "carrying_annual", "stabilized_revenue_annual", "stabilized_opex_annual",
+            "profit_runrate_after_debt", "equity_ownership", "org_owner_fallback",
+            "deferred_uses", "deferred_total", "profit_total", "divestment_total",
+            "phase_summaries", "outputs", "income_mode", "noi_annual",
+            "unit_mix_count", "total_units", "default_project_id",
+        )},
+    }
+    nav_html = templates.env.get_template("partials/model_builder_nav_cards.html").render(nav_ctx)
+    oob_nav = f'<div id="module-nav-cards" hx-swap-oob="innerHTML">{nav_html}</div>'
+
+    return HTMLResponse(panel_html + oob_pill + oob_nav)
+
+
 @router.post("/ui/forms/{model_id}/{item_type}", response_class=HTMLResponse)
 @router.put("/ui/forms/{model_id}/{item_type}/{item_id}", response_class=HTMLResponse)
 async def handle_form_create_or_update(
@@ -1168,8 +1215,7 @@ async def handle_form_create_or_update(
 
     await session.flush()
     panel_data = await _load_builder_data(session, model_id, project_id=project_id)
-    ctx = {"model": model, "active_module": module, "wizard_mode": _wizard_mode_from_request(request), **panel_data}
-    return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
+    return await _builder_panel_oob_response(request, model, module, panel_data, project_id, session)
 
 
 @router.delete("/ui/forms/{model_id}/{item_type}/{item_id}", response_class=HTMLResponse)
@@ -1194,8 +1240,7 @@ async def handle_form_delete(
         if item_type == "unit-mix":
             _active_proj_id = await _active_project_from_request(request, session, model_id)
             panel_data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
-            ctx = {"model": model, "active_module": module, "wizard_mode": _wizard_mode_from_request(request), **panel_data}
-            return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
+            return await _builder_panel_oob_response(request, model, module, panel_data, _active_proj_id, session)
         return HTMLResponse("<p class='text-muted'>Invalid item id.</p>", status_code=400)
 
     row = None
@@ -1222,8 +1267,7 @@ async def handle_form_delete(
         await session.flush()
         _active_proj_id2 = await _active_project_from_request(request, session, model_id)
         panel_data = await _load_builder_data(session, model_id, project_id=_active_proj_id2)
-        ctx = {"model": model, "active_module": module, "wizard_mode": _wizard_mode_from_request(request), **panel_data}
-        return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
+        return await _builder_panel_oob_response(request, model, module, panel_data, _active_proj_id2, session)
 
     if row is not None:
         if item_type == "use-lines" and getattr(row, "is_auto_dev_fee", False):
@@ -1237,8 +1281,7 @@ async def handle_form_delete(
 
     _active_proj_id = await _active_project_from_request(request, session, model_id)
     panel_data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
-    ctx = {"model": model, "active_module": module, "wizard_mode": _wizard_mode_from_request(request), **panel_data}
-    return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
+    return await _builder_panel_oob_response(request, model, module, panel_data, _active_proj_id, session)
 
 
 @router.post("/ui/models/{model_id}/unit-mix/apply-to-revenue", response_class=HTMLResponse)
@@ -1282,8 +1325,7 @@ async def apply_unit_mix_to_revenue(
     unit_mix_rows = [_UMRow(r) for r in (_active_proj.unit_mix or [])] if _active_proj else []
     if not unit_mix_rows:
         panel_data = await _load_builder_data(session, model_id, project_id=active_proj_id)
-        ctx = {"model": model, "active_module": "property", **panel_data}
-        return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
+        return await _builder_panel_oob_response(request, model, "property", panel_data, active_proj_id, session)
 
     # Build the candidate stream list from each UnitMix row's strategy.
     # Additive sync filters this list against existing labels below.
@@ -1356,8 +1398,7 @@ async def apply_unit_mix_to_revenue(
     # Return the refreshed Revenue panel — the sync banner triggers from
     # there, so stay oriented on Revenue rather than bouncing to Property.
     panel_data = await _load_builder_data(session, model_id, project_id=active_proj_id)
-    ctx = {"model": model, "active_module": "revenue", **panel_data}
-    return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
+    return await _builder_panel_oob_response(request, model, "revenue", panel_data, active_proj_id, session)
 
 
 def _to_decimal_or_none(v) -> Decimal | None:
@@ -1402,9 +1443,10 @@ async def run_sensitivity_analysis(
     except ValueError as e:
         # Bad axis/metric combo — surface the error in the panel
         panel_data = await _load_builder_data(session, model_id)
-        ctx = {"model": model, "active_module": "sensitivity", **panel_data,
-               "sensitivity_error": str(e)}
-        return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
+        return await _builder_panel_oob_response(
+            request, model, "sensitivity", panel_data, None, session,
+            extra_ctx={"sensitivity_error": str(e)},
+        )
 
     # Persist on OperationalOutputs.sensitivity_matrix (JSON column).
     # compute_sensitivity_matrix runs a final compute_cash_flows so a fresh
@@ -1424,8 +1466,7 @@ async def run_sensitivity_analysis(
         await session.flush()
 
     panel_data = await _load_builder_data(session, model_id)
-    ctx = {"model": model, "active_module": "sensitivity", **panel_data}
-    return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
+    return await _builder_panel_oob_response(request, model, "sensitivity", panel_data, None, session)
 
 
 async def _copy_project_data(
@@ -2199,10 +2240,9 @@ async def save_stack_order(
             m.stack_position = val
     await session.flush()
     _active_proj_id = await _active_project_from_request(request, session, model_id)
-    ctx = await _load_builder_data(session, model_id, project_id=_active_proj_id)
-    ctx["request"] = request
-    ctx["active_module"] = "sources"
-    return templates.TemplateResponse(request, "partials/model_builder_panel.html", ctx)
+    panel_data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
+    model = await session.get(DealModel, model_id)
+    return await _builder_panel_oob_response(request, model, "sources", panel_data, _active_proj_id, session)
 
 
 @router.post("/ui/models/{model_id}/capital-modules/reorder", response_class=HTMLResponse)
@@ -2223,14 +2263,9 @@ async def reorder_capital_modules(
             pass
     await session.flush()
     _active_proj_id = await _active_project_from_request(request, session, model_id)
-    ctx = await _load_builder_data(session, model_id, project_id=_active_proj_id)
-    ctx["request"] = request
-    ctx["active_module"] = "sources"
+    panel_data = await _load_builder_data(session, model_id, project_id=_active_proj_id)
     model = await session.get(DealModel, model_id)
-    return templates.TemplateResponse(
-        request, "partials/model_builder_panel.html",
-        {"model": model, "active_module": "sources", **ctx}
-    )
+    return await _builder_panel_oob_response(request, model, "sources", panel_data, _active_proj_id, session)
 
 
 @router.post("/ui/models/{model_id}/settings", response_class=HTMLResponse)
