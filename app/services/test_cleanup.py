@@ -6,12 +6,17 @@ exact same FK-ordered delete graph and the exact same match predicate.
 
 What counts as a test deal
 --------------------------
-The same predicate the ``hide_test`` UI filter uses, applied to the row ``name``::
+Applied to the row ``name``::
 
-    name ILIKE '%e2e%'  OR  name ~* 'phase\\s+\\w+\\s+test\\s+\\w+'
+    name ILIKE '%e2e%'
+    OR name ~* 'phase\\s+\\w+\\s+test\\s+\\w+'
+    OR name ~* '^diag\\s+[0-9a-f]{6}$'
 
-so "anything Hide Test hides" is exactly what gets deleted and nothing else.
-(NULL names coalesce to '' so they never match.)
+The first two branches are exactly the ``hide_test`` UI filter ("anything Hide
+Test hides"). The third matches the throwaway ``DIAG <6 hex>`` deals an external
+diagnostic harness leaves behind — a narrow, anchored pattern so a real name
+like "Diagnostics Center" or "Diagonal Plaza" can never match. (NULL names
+coalesce to '' so they never match.)
 
 A wizard "deal" is an ``Opportunity`` + a top-level ``Deal`` + a ``Scenario``
 (``scenarios.deal_id`` -> ``deals.id``) + one or more ``Project`` rows
@@ -47,12 +52,15 @@ from typing import Any
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
-# Matches the hide_test UI filter exactly (app/api/routers/ui.py:_apply_opp_filters).
-# Unqualified ``name`` resolves to the table of each enclosing query (opportunities
-# or deals — both have a ``name`` column).
+# Test-deal predicate. The first two branches mirror the hide_test UI filter
+# (app/api/routers/ui.py:_apply_opp_filters); the third sweeps the external
+# diagnostic harness's throwaway ``DIAG <6 hex>`` deals. Unqualified ``name``
+# resolves to the table of each enclosing query (opportunities or deals — both
+# have a ``name`` column).
 _MATCH = (
     r"coalesce(name, '') ILIKE '%e2e%' "
-    r"OR coalesce(name, '') ~* 'phase\s+\w+\s+test\s+\w+'"
+    r"OR coalesce(name, '') ~* 'phase\s+\w+\s+test\s+\w+' "
+    r"OR coalesce(name, '') ~* '^diag\s+[0-9a-f]{6}$'"
 )
 
 

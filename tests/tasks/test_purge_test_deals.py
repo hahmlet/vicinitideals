@@ -106,6 +106,35 @@ async def test_dry_run_changes_nothing(session: AsyncSession):
     assert await session.get(Deal, deal_id) is not None
 
 
+async def test_purges_diag_harness_deal_keeps_lookalikes(session: AsyncSession):
+    """``DIAG <6 hex>`` diagnostic deals are swept; real lookalike names are kept."""
+    org, user = await seed_org(session)
+
+    diag = await _test_opp(session, org, user, name="DIAG 0c317c", age_hours=48)
+    diag_dm, *_ = await seed_deal_model_with_financials(session, diag, user)
+
+    real1 = await _test_opp(session, org, user, name="Diagnostics Center", age_hours=48)
+    real1_dm, *_ = await seed_deal_model_with_financials(session, real1, user)
+    real2 = await _test_opp(session, org, user, name="Diagonal Plaza", age_hours=48)
+    real2_dm, *_ = await seed_deal_model_with_financials(session, real2, user)
+
+    await session.commit()
+    diag_id, diag_deal = diag.id, diag_dm.deal_id
+    real1_id, real1_deal = real1.id, real1_dm.deal_id
+    real2_id, real2_deal = real2.id, real2_dm.deal_id
+
+    result = await purge_test_deals(session, execute=True, max_age_hours=24)
+    session.expunge_all()
+
+    assert result["matched"]["opportunities"] == 1
+    assert await session.get(Opportunity, diag_id) is None
+    assert await session.get(Deal, diag_deal) is None
+    assert await session.get(Opportunity, real1_id) is not None
+    assert await session.get(Deal, real1_deal) is not None
+    assert await session.get(Opportunity, real2_id) is not None
+    assert await session.get(Deal, real2_deal) is not None
+
+
 async def test_sweeps_orphan_test_deal_with_zero_matching_opps(session: AsyncSession):
     """A test-named Deal whose scenario is already gone still gets swept."""
     org, user = await seed_org(session)
