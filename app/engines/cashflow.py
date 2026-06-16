@@ -3992,6 +3992,16 @@ async def _auto_size_debt_modules(
                 _cc_exist.is_auto_finance_cost = True
                 _cc_exist.dev_fee_basis_bucket = "total_finance_costs"
                 session.add(_cc_exist)
+                # Remove wizard-generated $0 itemized stubs now superseded by the TFC row.
+                await session.execute(
+                    delete(UseLine).where(
+                        UseLine.project_id == project_id,
+                        UseLine.is_auto_finance_cost == False,  # noqa: E712
+                        UseLine.amount == ZERO,
+                        UseLine.label.startswith(f"{_ccm_lbl} — "),
+                        UseLine.label != _cc_full_lbl,
+                    )
+                )
             elif _cc_amt > ZERO:
                 _new_cc_ul = UseLine(
                     project_id=project_id,
@@ -4008,6 +4018,16 @@ async def _auto_size_debt_modules(
                 )
                 session.add(_new_cc_ul)
                 use_lines.append(_new_cc_ul)
+                # Remove wizard-generated $0 itemized stubs now superseded by the TFC row.
+                await session.execute(
+                    delete(UseLine).where(
+                        UseLine.project_id == project_id,
+                        UseLine.is_auto_finance_cost == False,  # noqa: E712
+                        UseLine.amount == ZERO,
+                        UseLine.label.startswith(f"{_ccm_lbl} — "),
+                        UseLine.label != _cc_full_lbl,
+                    )
+                )
 
     # ── Equity auto-size pass ─────────────────────────────────────────────────
     # After all debt is sized, set equity auto-sized modules to fill any remaining

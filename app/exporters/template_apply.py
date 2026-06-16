@@ -5,9 +5,10 @@ from decimal import Decimal
 from typing import Any
 from uuid import UUID
 
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.deal import IncomeStream, OperatingExpenseLine
+from app.models.deal import IncomeStream, OperatingExpenseLine, OperationalInputs
 
 
 async def apply_template_to_project(
@@ -15,7 +16,7 @@ async def apply_template_to_project(
     template_json: dict[str, Any],
     project_id: UUID,
 ) -> None:
-    """Seed income streams and expense lines from a template into a project."""
+    """Seed income streams, expense lines, and debt stack from a template into a project."""
     for s in template_json.get("income_streams") or []:
         stream_type = s.get("stream_type") or "residential_rent"
         label = s.get("label") or "Income"
@@ -55,3 +56,13 @@ async def apply_template_to_project(
             active_in_phases=e.get("active_in_phases") or [],
             notes=e.get("notes"),
         ))
+
+    # Seed debt_types so the deal setup wizard pre-checks the right loans.
+    tmpl_debt_types = (template_json.get("operational_inputs") or {}).get("debt_types") or []
+    if tmpl_debt_types:
+        oi = (await session.execute(
+            select(OperationalInputs).where(OperationalInputs.project_id == project_id)
+        )).scalar_one_or_none()
+        if oi is not None:
+            oi.debt_types = tmpl_debt_types
+            session.add(oi)
