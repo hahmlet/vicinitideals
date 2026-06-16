@@ -131,11 +131,10 @@ async def create_portfolio(
     user = await _get_user(session, request)
     org_id = user.org_id if user else None
     if org_id is None:
-        from app.models.org import Organization
-        first_org = (await session.execute(select(Organization).limit(1))).scalar_one_or_none()
-        if first_org is None:
-            return HTMLResponse("<p class='text-muted'>No organization found.</p>", status_code=400)
-        org_id = first_org.id
+        return HTMLResponse(
+            "<p class='text-muted'>No organization on your account. Complete account setup first.</p>",
+            status_code=403,
+        )
 
     p = Portfolio(org_id=org_id, name=name)
     session.add(p)

@@ -1174,6 +1174,13 @@ async def handle_form_create_or_update(
     if model is None:
         return HTMLResponse("<p class='text-muted'>Model not found.</p>", status_code=404)
 
+    if settings.org_isolation_enabled:
+        _wuser = await _get_user(session, request)
+        _wuser_org = getattr(_wuser, "org_id", None) if _wuser is not None else None
+        _wdeal = await session.get(Deal, model.deal_id) if model.deal_id else None
+        if _wuser_org is None or _wdeal is None or _wdeal.org_id != _wuser_org:
+            return HTMLResponse("<p class='text-muted'>Model not found.</p>", status_code=404)
+
     # Resolve active Project for line items that belong to Project level.
     # Multi-project deals: prefer the project from the form's active URL
     # (HX-Current-URL header carries it), fall back to the oldest project.
