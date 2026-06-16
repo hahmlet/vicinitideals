@@ -409,6 +409,16 @@ async def deals_new_page(
                 pre_acquisition_cost = float(_opp.asking_price)
             banner_text = f"Linked to opportunity: {pre_name}"
 
+    # Load scenario templates for the template picker
+    from app.models.scenario_template import ScenarioTemplate as _ST
+    _templates_for_picker = []
+    if user is not None and user.org_id is not None:
+        _templates_for_picker = list((await session.execute(
+            select(_ST)
+            .where(_ST.org_id == user.org_id)
+            .order_by(_ST.created_at.desc())
+        )).scalars())
+
     ctx.update({
         "context_kind": context_kind,
         "banner_text": banner_text,
@@ -423,6 +433,7 @@ async def deals_new_page(
         "opp_name": pre_name,
         "opp_asking_price": pre_acquisition_cost,
         "proforma_task_id": proforma_task_id.strip(),
+        "scenario_templates": _templates_for_picker,
     })
     return templates.TemplateResponse(request, "deals_new.html", ctx)
 
@@ -546,6 +557,7 @@ async def create_deal(
     listing_id_raw = str(form.get("listing_id", "")).strip()
     acq_cost_raw = str(form.get("acquisition_cost", "")).strip()
     proforma_task_id_raw = str(form.get("proforma_task_id", "")).strip()
+    template_id_raw = str(form.get("template_id", "")).strip()
 
     user = await _get_user(session, request)
 
@@ -733,6 +745,20 @@ async def create_deal(
             ))
 
     await session.commit()
+
+    # Apply scenario template if one was selected
+    if template_id_raw:
+        try:
+            _tmpl_id = UUID(template_id_raw)
+            from app.models.scenario_template import ScenarioTemplate as _STCreate
+            _tmpl = await session.get(_STCreate, _tmpl_id)
+            if _tmpl and _tmpl.org_id == org_id:
+                from app.exporters.template_apply import apply_template_to_project
+                async with session.begin_nested():
+                    await apply_template_to_project(session, _tmpl.template_json, dev_project.id)
+                await session.commit()
+        except Exception:
+            pass  # template application failure should not block deal creation
 
     # Single-flow wizard: land directly inside the wizard chrome at the timeline
     # step. The user never sees the full builder UI until they finish the

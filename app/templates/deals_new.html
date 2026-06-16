@@ -129,6 +129,19 @@
           </select>
         </div>
 
+        {% if scenario_templates %}
+        <div class="nd-field">
+          <label>Start from Template <span style="font-size:11px;font-weight:400;color:var(--text-muted)">(optional)</span></label>
+          <select name="template_id">
+            <option value="">— Blank deal —</option>
+            {% for tmpl in scenario_templates %}
+            <option value="{{ tmpl.id }}">{{ tmpl.name }}{% if tmpl.project_type %} · {{ tmpl.project_type }}{% endif %}</option>
+            {% endfor %}
+          </select>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:4px">Copies line item structure (OpEx, income streams) from the template. Dollar values not carried over.</div>
+        </div>
+        {% endif %}
+
         {% if not clone_of %}
         {# Clone path inherits acquisition cost from the source Scenario's
            UseLines, so we don't ask again. Fresh-deal paths require it so the
