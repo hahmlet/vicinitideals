@@ -1,0 +1,59 @@
+{% if not templates %}
+<p class="text-muted" style="font-size:13px;margin:0">No templates saved yet. Open a deal's model builder and use <strong>Save as Template</strong> to create one.</p>
+{% else %}
+<table class="data-table" style="width:100%">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Created</th>
+      <th>Default</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for tmpl in templates %}
+    <tr id="tmpl-row-{{ tmpl.id }}">
+      <td style="font-weight:500">{{ tmpl.name }}</td>
+      <td>{{ tmpl.project_type or "—" }}</td>
+      <td style="color:var(--text-muted);font-size:12px">{{ tmpl.created_at.strftime("%-m/%-d/%Y") }}</td>
+      <td>
+        {% set tid = tmpl.id | string %}
+        {% if tid == org_default_id and tid == user_default_id %}
+          <span class="badge">Org + Yours</span>
+        {% elif tid == org_default_id %}
+          <span class="badge">Org default</span>
+        {% elif tid == user_default_id %}
+          <span class="badge">Your default</span>
+        {% else %}
+          <span id="default-result-{{ tmpl.id }}"></span>
+          <button class="btn btn-xs btn-ghost"
+            hx-post="/ui/settings/scenario-templates/{{ tmpl.id }}/set-user-default"
+            hx-target="#default-result-{{ tmpl.id }}"
+            hx-swap="innerHTML">
+            Set as mine
+          </button>
+          {% if user.is_org_admin %}
+          <button class="btn btn-xs btn-ghost"
+            hx-post="/ui/settings/scenario-templates/{{ tmpl.id }}/set-org-default"
+            hx-target="#default-result-{{ tmpl.id }}"
+            hx-swap="innerHTML">
+            Set as org
+          </button>
+          {% endif %}
+        {% endif %}
+      </td>
+      <td style="text-align:right">
+        <button class="btn btn-xs btn-danger"
+          hx-post="/ui/settings/scenario-templates/{{ tmpl.id }}/delete"
+          hx-target="#tmpl-row-{{ tmpl.id }}"
+          hx-swap="outerHTML"
+          hx-confirm="Delete template '{{ tmpl.name }}'?">
+          Delete
+        </button>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}

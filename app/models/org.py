@@ -27,6 +27,9 @@ class Organization(Base):
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
+    default_template_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), nullable=True
+    )
 
     # Relationships
     users: Mapped[list["User"]] = relationship("User", back_populates="organization")
@@ -86,6 +89,9 @@ class User(Base):
     # 'active' = full access; 'pending' = joined via invite/link, awaiting admin approval.
     membership_status: Mapped[str] = mapped_column(
         String(20), nullable=False, default=MembershipStatus.ACTIVE, server_default="active"
+    )
+    default_template_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), nullable=True
     )
 
     # Relationships

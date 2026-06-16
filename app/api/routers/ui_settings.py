@@ -834,6 +834,15 @@ async def settings_organization(
         for r in _org_tl_rows
     }
 
+    from app.models.scenario_template import ScenarioTemplate as _ST_org
+    org_templates = list((await session.execute(
+        select(_ST_org)
+        .where(_ST_org.org_id == user.org_id)
+        .order_by(_ST_org.created_at.desc())
+    )).scalars())
+    org_default_template_id = str(org.default_template_id) if org and org.default_template_id else None
+    user_default_template_id = str(user.default_template_id) if user.default_template_id else None
+
     return templates.TemplateResponse(
         request,
         "settings_organization.html",
@@ -848,6 +857,9 @@ async def settings_organization(
             "org_source_vehicles": org_source_vehicles,
             "timeline_defaults_map": timeline_defaults_map,
             "org_timeline_map": org_timeline_map,
+            "org_templates": org_templates,
+            "org_default_template_id": org_default_template_id,
+            "user_default_template_id": user_default_template_id,
             **_base_ctx(user, dedup_count, "", address_issues_count, conflicts_count=conflicts_count),
         },
     )
@@ -1760,4 +1772,106 @@ async def vehicle_delete(
     await session.delete(vehicle)
     await session.commit()
     return HTMLResponse("")
+
+
+# ── Scenario Templates ────────────────────────────────────────────────────────
+
+@router.get("/ui/settings/scenario-templates", response_class=HTMLResponse)
+async def scenario_templates_partial(
+    request: Request,
+    session: DBSession,
+) -> HTMLResponse:
+    """HTMX partial — template list for org settings page."""
+    from app.models.scenario_template import ScenarioTemplate as _ST
+    user = await _get_user(session, request)
+    if user is None or user.org_id is None:
+        return HTMLResponse("")
+    org = await session.get(Organization, user.org_id)
+    rows = list((await session.execute(
+        select(_ST)
+        .where(_ST.org_id == user.org_id)
+        .order_by(_ST.created_at.desc())
+    )).scalars())
+    org_default = getattr(org, "default_template_id", None) if org else None
+    user_default = getattr(user, "default_template_id", None)
+    return templates.TemplateResponse(
+        request, "partials/scenario_templates_list.html",
+        {
+            "templates": rows,
+            "org_default_id": str(org_default) if org_default else None,
+            "user_default_id": str(user_default) if user_default else None,
+            "user": user,
+        },
+    )
+
+
+@router.post("/ui/settings/scenario-templates/{template_id}/delete", response_class=HTMLResponse)
+async def delete_scenario_template(
+    request: Request,
+    template_id: UUID,
+    session: DBSession,
+) -> HTMLResponse:
+    from app.models.scenario_template import ScenarioTemplate as _ST
+    user = await _get_user(session, request)
+    if user is None or user.org_id is None:
+        return HTMLResponse("", status_code=403)
+    row = (await session.execute(
+        select(_ST).where(_ST.id == template_id, _ST.org_id == user.org_id)
+    )).scalar_one_or_none()
+    if row is None:
+        return HTMLResponse("", status_code=404)
+    await session.delete(row)
+    # Clear default pointers that referenced this template
+    org = await session.get(Organization, user.org_id)
+    if org and getattr(org, "default_template_id", None) == template_id:
+        org.default_template_id = None
+    users_with_default = list((await session.execute(
+        select(User).where(User.org_id == user.org_id, User.default_template_id == template_id)
+    )).scalars())
+    for u in users_with_default:
+        u.default_template_id = None
+    await session.commit()
+    return HTMLResponse("")
+
+
+@router.post("/ui/settings/scenario-templates/{template_id}/set-org-default", response_class=HTMLResponse)
+async def set_org_default_template(
+    request: Request,
+    template_id: UUID,
+    session: DBSession,
+) -> HTMLResponse:
+    from app.models.scenario_template import ScenarioTemplate as _ST
+    user = await _get_user(session, request)
+    if user is None or user.org_id is None or not user.is_org_admin:
+        return HTMLResponse("", status_code=403)
+    row = (await session.execute(
+        select(_ST).where(_ST.id == template_id, _ST.org_id == user.org_id)
+    )).scalar_one_or_none()
+    if row is None:
+        return HTMLResponse("", status_code=404)
+    org = await session.get(Organization, user.org_id)
+    if org:
+        org.default_template_id = template_id
+    await session.commit()
+    return HTMLResponse('<span class="badge badge-success">Set as org default</span>')
+
+
+@router.post("/ui/settings/scenario-templates/{template_id}/set-user-default", response_class=HTMLResponse)
+async def set_user_default_template(
+    request: Request,
+    template_id: UUID,
+    session: DBSession,
+) -> HTMLResponse:
+    from app.models.scenario_template import ScenarioTemplate as _ST
+    user = await _get_user(session, request)
+    if user is None or user.org_id is None:
+        return HTMLResponse("", status_code=403)
+    row = (await session.execute(
+        select(_ST).where(_ST.id == template_id, _ST.org_id == user.org_id)
+    )).scalar_one_or_none()
+    if row is None:
+        return HTMLResponse("", status_code=404)
+    user.default_template_id = template_id
+    await session.commit()
+    return HTMLResponse('<span class="badge badge-success">Set as your default</span>')
 

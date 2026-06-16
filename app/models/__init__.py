@@ -88,6 +88,9 @@ from app.models.realie_usage import RealieUsage  # noqa: F401
 # 14. Field conflict log (dedup merge audit — used by Crexi ingest)
 from app.models.field_conflict_log import FieldConflictAction, FieldConflictLog  # noqa: F401
 from app.models.map_polygon import MapPolygon  # noqa: F401
+
+# 15. Scenario templates (FK → Organization, User, Scenario)
+from app.models.scenario_template import ScenarioTemplate  # noqa: F401
 from app.models.settings import OrgSetting, UserSetting  # noqa: F401
 
 # 15. Source Vehicles (FK → Organization, User)

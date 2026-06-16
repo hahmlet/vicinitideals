@@ -2809,3 +2809,59 @@ async def export_history_json_endpoint(
     )
 
 
+# ── Save as Template ──────────────────────────────────────────────────────────
+
+@router.post("/ui/models/{model_id}/save-as-template", response_class=HTMLResponse)
+async def save_as_template(
+    request: Request,
+    model_id: UUID,
+    session: DBSession,
+) -> HTMLResponse:
+    """Extract a scenario's structure as a reusable scenario template."""
+    from datetime import UTC, datetime
+    from app.exporters.template_export import extract_template_json
+    from app.models.deal import Deal, Scenario
+    from app.models.scenario_template import ScenarioTemplate
+
+    user = await _get_user(session, request)
+    if user is None or user.org_id is None:
+        return HTMLResponse("<p class='text-muted'>Not authenticated.</p>", status_code=401)
+
+    scenario = await session.get(Scenario, model_id)
+    if scenario is None:
+        return HTMLResponse("<p class='text-muted'>Scenario not found.</p>", status_code=404)
+
+    deal = await session.get(Deal, scenario.deal_id) if scenario.deal_id else None
+    if settings.org_isolation_enabled:
+        if deal is None or deal.org_id != user.org_id:
+            return HTMLResponse("<p class='text-muted'>Scenario not found.</p>", status_code=404)
+
+    form = await request.form()
+    name = str(form.get("name", "")).strip()[:200]
+    description = str(form.get("description", "")).strip()[:500] or None
+    if not name:
+        return HTMLResponse("<p class='text-muted'>Template name is required.</p>", status_code=400)
+
+    template_json = await extract_template_json(session, model_id)
+
+    tmpl = ScenarioTemplate(
+        org_id=user.org_id,
+        created_by_user_id=user.id,
+        source_scenario_id=model_id,
+        name=name,
+        description=description,
+        project_type=template_json.get("project_type"),
+        template_json=template_json,
+        created_at=datetime.now(UTC),
+    )
+    session.add(tmpl)
+    await session.commit()
+
+    return HTMLResponse(
+        f'<div class="alert alert-success" style="margin:0">'
+        f'Template "<strong>{name}</strong>" saved. '
+        f'<a href="/settings/organization#scenario-templates">View in Settings →</a>'
+        f'</div>'
+    )
+
+
