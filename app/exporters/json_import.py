@@ -111,9 +111,9 @@ class DealProjectData(BaseModel):
     YearBuilt: int | None = None
     BuildingAreaTotal: Decimal | None = None
     PropertyType: str | None = None
-    Status: ProjectStatus = ProjectStatus.active
-    ProjectCategory: ProjectCategory = ProjectCategory.proposed
-    Source: ProjectSource = ProjectSource.manual
+    Status: ProjectStatus | None = ProjectStatus.active
+    ProjectCategory: ProjectCategory | None = ProjectCategory.proposed
+    Source: ProjectSource | None = ProjectSource.manual
 
     model_config = {"extra": "allow"}
 
