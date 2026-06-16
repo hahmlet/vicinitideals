@@ -6,7 +6,7 @@ import json
 from collections.abc import Mapping
 from datetime import date, datetime
 from decimal import Decimal
-from typing import Any
+from typing import Any, Optional
 from uuid import UUID
 
 from pydantic import BaseModel, Field, ValidationError, model_validator
@@ -111,9 +111,9 @@ class DealProjectData(BaseModel):
     YearBuilt: int | None = None
     BuildingAreaTotal: Decimal | None = None
     PropertyType: str | None = None
-    Status: ProjectStatus | None = ProjectStatus.active
-    ProjectCategory: ProjectCategory | None = ProjectCategory.proposed
-    Source: ProjectSource | None = ProjectSource.manual
+    Status: Optional[ProjectStatus] = ProjectStatus.active
+    ProjectCategory: Optional[ProjectCategory] = ProjectCategory.proposed
+    Source: Optional[ProjectSource] = ProjectSource.manual
 
     model_config = {"extra": "allow"}
 
