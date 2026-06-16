@@ -1080,6 +1080,9 @@
       Structural starting points for new deals. Create them from a deal's model builder.
     </span>
   </div>
+  {% set templates = org_templates %}
+  {% set org_default_id = org_default_template_id %}
+  {% set user_default_id = user_default_template_id %}
   {% include "partials/scenario_templates_list.html" %}
 </div>
 
