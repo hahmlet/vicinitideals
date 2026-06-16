@@ -26,7 +26,7 @@ def upgrade() -> None:
         sa.Column("name", sa.Text(), nullable=False),
         sa.Column("description", sa.Text(), nullable=True),
         sa.Column("project_type", sa.String(50), nullable=True),
-        sa.Column("template_json", JSONB(), nullable=False, server_default="'{}'"),
+        sa.Column("template_json", JSONB(), nullable=False, server_default=sa.text("'{}'")),
         sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("NOW()"), nullable=False),
     )
     op.create_index("ix_scenario_templates_org_id", "scenario_templates", ["org_id"])
