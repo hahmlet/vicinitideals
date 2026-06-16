@@ -1487,34 +1487,38 @@ function saveModelName(el) {
 </div>
 
 <!-- Save as Template modal -->
-<div id="save-template-modal" class="calc-status-modal" style="display:none"
-     onclick="if(event.target===this){closeSaveAsTemplateModal();}">
-  <div class="calc-status-modal-card" style="max-width:480px;padding:28px 32px">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-      <div style="font-size:16px;font-weight:600">Save as Template</div>
-      <button class="btn btn-sm btn-ghost" onclick="closeSaveAsTemplateModal()">✕</button>
+<div id="save-template-modal" class="calc-status-modal" style="display:none">
+  <div class="calc-status-modal-card" style="max-width:480px">
+    <div class="calc-status-modal-header">
+      <div class="calc-status-modal-title" style="font-size:16px">Save as Template</div>
+      <button class="calc-status-modal-close" onclick="closeSaveAsTemplateModal()">&#x2715;</button>
     </div>
-    <form id="save-template-form">
-      <div style="margin-bottom:14px">
-        <label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:4px">Template name *</label>
-        <input id="save-template-name" type="text" class="filter-input" style="width:100%"
-               placeholder="e.g. Standard Bridge Multifamily" maxlength="200">
-      </div>
-      <div style="margin-bottom:20px">
-        <label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:4px">Description (optional)</label>
-        <textarea id="save-template-desc" class="filter-input" style="width:100%;height:60px;resize:vertical"
-                  maxlength="500" placeholder="Notes about when to use this template"></textarea>
-      </div>
-      <p style="font-size:12px;color:var(--text-muted);margin-bottom:18px">
-        Saves the deal structure — line item labels, capital stack, waterfall, milestone relationships.
-        Property-specific dollar values and dates are stripped.
-      </p>
-      <div id="save-template-result" style="margin-bottom:12px"></div>
-      <div style="display:flex;gap:10px;justify-content:flex-end">
+    <div class="calc-status-modal-body">
+      <form id="save-template-form">
+        <div style="margin-bottom:14px">
+          <label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:4px">Template name *</label>
+          <input id="save-template-name" type="text" class="filter-input" style="width:100%"
+                 placeholder="e.g. Standard Bridge Multifamily" maxlength="200">
+        </div>
+        <div style="margin-bottom:16px">
+          <label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:4px">Description (optional)</label>
+          <textarea id="save-template-desc" class="filter-input" style="width:100%;height:60px;resize:vertical"
+                    maxlength="500" placeholder="Notes about when to use this template"></textarea>
+        </div>
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px">
+          Saves the deal structure — line item labels, capital stack, waterfall, milestone relationships.
+          Property-specific dollar values and dates are stripped.
+        </p>
+        <div id="save-template-result" style="margin-bottom:8px"></div>
+      </form>
+    </div>
+    <div class="calc-status-modal-footer">
+      <span></span>
+      <div style="display:flex;gap:10px">
         <button type="button" class="btn btn-sm btn-ghost" onclick="closeSaveAsTemplateModal()">Cancel</button>
         <button type="button" class="btn btn-sm btn-primary" onclick="submitSaveAsTemplate()">Save Template</button>
       </div>
-    </form>
+    </div>
   </div>
 </div>
 <script>
