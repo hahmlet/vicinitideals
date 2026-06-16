@@ -576,6 +576,43 @@ _UNIT_MIX_FIELDS: dict[str, tuple[str, str]] = {
     "post_reno_rent_per_unit": ("Post-Reno Rent/Unit", "currency"),
 }
 
+# ── Skip sets — fields suppressed from diff display ───────────────────────────
+# Each entity type has a skip set of internal/computed field names that should
+# never appear in the history drawer even when their values change.
+# Field dicts above act as *display hints* (label + format); any field NOT in
+# the skip set and NOT in the hint dict is auto-labelled from its snake_case key
+# and shown with "text" formatting. This means new schema fields appear
+# automatically without any code change here.
+
+_SCALAR_SKIP_COMMON: frozenset[str] = frozenset({
+    "id", "created_at", "updated_at",
+    "scenario_id", "project_id", "deal_id", "org_id",
+})
+
+_OPS_INPUTS_SKIP: frozenset[str] = _SCALAR_SKIP_COMMON
+_INCOME_STREAM_SKIP: frozenset[str] = _SCALAR_SKIP_COMMON | frozenset({"sort_order"})
+_EXPENSE_SKIP: frozenset[str] = _SCALAR_SKIP_COMMON | frozenset({"sort_order"})
+_USE_LINE_SKIP: frozenset[str] = _SCALAR_SKIP_COMMON | frozenset({"sort_order"})
+_UNIT_MIX_SKIP: frozenset[str] = _SCALAR_SKIP_COMMON | frozenset({"sort_order"})
+_MILESTONE_SKIP: frozenset[str] = _SCALAR_SKIP_COMMON | frozenset({
+    "sequence_order",
+    "trigger_milestone_id",  # internal UUID reference, not user-editable
+})
+_CAP_MODULE_TOP_SKIP: frozenset[str] = _SCALAR_SKIP_COMMON | frozenset({
+    "sort_order", "funder_type",
+    # JSONB blob columns — handled separately by blob_fields parameter
+    "source", "carry", "exit_terms",
+    # Complex arrays not suitable for scalar diff
+    "eligible_use_tags",
+})
+_WATERFALL_SKIP: frozenset[str] = _SCALAR_SKIP_COMMON | frozenset({"sort_order"})
+_DRAW_SOURCE_SKIP: frozenset[str] = _SCALAR_SKIP_COMMON | frozenset({"sort_order"})
+
+
+def _auto_label(field_key: str) -> str:
+    """Derive a human-readable label from a snake_case field name."""
+    return field_key.replace("_", " ").title()
+
 
 def _entity_name(row: dict, entity_type: str) -> str:
     """Return a user-facing name for a data row."""
@@ -619,9 +656,10 @@ def _blob_diff(
     changes: list[dict] = []
     all_keys = (set(before.keys()) | set(after.keys())) - (skip or frozenset())
     for k in sorted(all_keys):
-        if k not in field_map:
-            continue
-        label, fmt = field_map[k]
+        if k in field_map:
+            label, fmt = field_map[k]
+        else:
+            label, fmt = _auto_label(k), "text"
         bv = before.get(k)
         av = after.get(k)
         if bv == av:
@@ -653,9 +691,23 @@ def _compare_rows(
     scalar_fields: dict[str, tuple[str, str]],
     blob_fields: dict[str, tuple[dict[str, tuple[str, str]], frozenset[str]]] | None,
     changes: list[dict],
+    scalar_skip: frozenset[str] | None = None,
 ) -> None:
-    """Append field-level diffs between two entity rows into changes."""
-    for field_key, (field_label, fmt) in scalar_fields.items():
+    """Append field-level diffs between two entity rows into changes.
+
+    Iterates all keys present in either row, skipping internal fields in
+    scalar_skip and blob keys (handled separately).  scalar_fields provides
+    display hints (label + format); unknown keys get auto-labelled from their
+    snake_case name and shown as "text".
+    """
+    _blob_keys = frozenset(blob_fields or {})
+    _skip = (scalar_skip or frozenset()) | _blob_keys
+    all_keys = (set(b_row.keys()) | set(a_row.keys())) - _skip
+    for field_key in sorted(all_keys):
+        if field_key in scalar_fields:
+            field_label, fmt = scalar_fields[field_key]
+        else:
+            field_label, fmt = _auto_label(field_key), "text"
         bv = b_row.get(field_key)
         av = a_row.get(field_key)
         if bv == av:
@@ -690,6 +742,7 @@ def _entity_list_diff_v2(
     entity_type: str,
     scalar_fields: dict[str, tuple[str, str]],
     blob_fields: dict[str, tuple[dict[str, tuple[str, str]], frozenset[str]]] | None = None,
+    scalar_skip: frozenset[str] | None = None,
 ) -> list[dict]:
     """Produce human-readable per-field change rows for a list of entities.
 
@@ -713,7 +766,7 @@ def _entity_list_diff_v2(
     # Pass 1: ID-matched pairs
     for key in sorted(common_keys):
         label = _entity_name(a_map[key], entity_type)
-        _compare_rows(b_map[key], a_map[key], label, entity_type, scalar_fields, blob_fields, changes)
+        _compare_rows(b_map[key], a_map[key], label, entity_type, scalar_fields, blob_fields, changes, scalar_skip)
 
     # Pass 2: group unmatched by display name
     b_by_name: dict[str, list[dict]] = {}
@@ -730,7 +783,7 @@ def _entity_list_diff_v2(
         n_pairs = min(len(b_list), len(a_list))
         # Paired same-name rows: compare fields (usually no-op for recreated rows)
         for i in range(n_pairs):
-            _compare_rows(b_list[i], a_list[i], name, entity_type, scalar_fields, blob_fields, changes)
+            _compare_rows(b_list[i], a_list[i], name, entity_type, scalar_fields, blob_fields, changes, scalar_skip)
         # Genuine removals
         for _ in range(len(b_list) - n_pairs):
             changes.append({"entity_label": name, "entity_type": entity_type, "change": "removed"})
@@ -759,10 +812,12 @@ def diff_snapshots(
 
     input_changes: list[dict] = []
 
-    # OperationalInputs — only user-visible fields
+    # OperationalInputs — all non-internal fields; hint dict provides labels/format
     b_oi = b_in.get("operational_inputs") or {}
     a_oi = a_in.get("operational_inputs") or {}
-    for field_key, (field_label, fmt) in _OPS_INPUTS_FIELDS.items():
+    _oi_all = (set(b_oi.keys()) | set(a_oi.keys())) - _OPS_INPUTS_SKIP
+    for field_key in sorted(_oi_all):
+        field_label, fmt = _OPS_INPUTS_FIELDS.get(field_key) or (_auto_label(field_key), "text")
         bv = b_oi.get(field_key)
         av = a_oi.get(field_key)
         if bv == av:
@@ -787,6 +842,7 @@ def diff_snapshots(
         a_in.get("income_streams") or [],
         "IncomeStream",
         _INCOME_STREAM_FIELDS,
+        scalar_skip=_INCOME_STREAM_SKIP,
     ))
 
     # ExpenseLine
@@ -795,6 +851,7 @@ def diff_snapshots(
         a_in.get("expense_lines") or [],
         "ExpenseLine",
         _EXPENSE_FIELDS,
+        scalar_skip=_EXPENSE_SKIP,
     ))
 
     # UseLine
@@ -803,6 +860,7 @@ def diff_snapshots(
         a_in.get("use_lines") or [],
         "UseLine",
         _USE_LINE_FIELDS,
+        scalar_skip=_USE_LINE_SKIP,
     ))
 
     # UnitMix
@@ -811,6 +869,7 @@ def diff_snapshots(
         a_in.get("unit_mix") or [],
         "UnitMix",
         _UNIT_MIX_FIELDS,
+        scalar_skip=_UNIT_MIX_SKIP,
     ))
 
     # Milestone
@@ -819,6 +878,7 @@ def diff_snapshots(
         a_in.get("milestones") or [],
         "Milestone",
         _MILESTONE_FIELDS,
+        scalar_skip=_MILESTONE_SKIP,
     ))
 
     # CapitalModule — expand source and carry blobs into individual fields
@@ -831,6 +891,7 @@ def diff_snapshots(
             "source": (_SOURCE_FIELDS, _SOURCE_SKIP),
             "carry": (_CARRY_FIELDS, _CARRY_SKIP),
         },
+        scalar_skip=_CAP_MODULE_TOP_SKIP,
     ))
 
     # WaterfallTier
@@ -839,6 +900,7 @@ def diff_snapshots(
         a_in.get("waterfall_tiers") or [],
         "WaterfallTier",
         _WATERFALL_FIELDS,
+        scalar_skip=_WATERFALL_SKIP,
     ))
 
     # DrawSource
@@ -847,6 +909,7 @@ def diff_snapshots(
         a_in.get("draw_sources") or [],
         "DrawSource",
         _DRAW_SOURCE_FIELDS,
+        scalar_skip=_DRAW_SOURCE_SKIP,
     ))
 
     # Output diff — only _OUTPUT_KEYS; by_project is too noisy for the UI.
