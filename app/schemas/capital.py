@@ -10,7 +10,7 @@ from __future__ import annotations
 import uuid
 from datetime import date, datetime
 from decimal import Decimal
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
@@ -73,7 +73,7 @@ class CapitalSourceSchema(BaseModel):
     # ── Phase B (multi-debt path) fields ─────────────────────────────────
     auto_size: bool | None = None
     is_bridge: bool | None = None
-    construction_retirement: str | None = None
+    construction_retirement: Any = None
     ltv_pct: float | None = None
     sizing_approach: str | None = None
     fixed_amount: float | None = None
