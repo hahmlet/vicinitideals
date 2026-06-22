@@ -222,11 +222,13 @@
 .toggle-opt-desc  { font-size: 11px; color: var(--text-muted); margin: 0; }
 /* Pro forma drop zone */
 .proforma-zone {
-  margin-top: 18px;
-  border: 2px dashed var(--border);
-  border-radius: 4px;
+  display: block;
+  margin-top: 4px;
+  border: 2px dotted var(--border);
+  border-radius: 8px;
   padding: 18px;
   text-align: center;
+  cursor: pointer;
   transition: border-color .12s, background .12s;
 }
 .proforma-zone.dragover { border-color: var(--accent); background: var(--accent-faint); }
@@ -354,7 +356,7 @@
                 📎 Loading pre-staged pro forma from email…
               </div>
               {% else %}
-              <label class="proforma-zone" for="proforma-file" id="proforma-zone"
+              <label class="proforma-zone" id="proforma-zone"
                      ondragover="onProformaDragOver(event)"
                      ondragleave="onProformaDragLeave(event)"
                      ondrop="onProformaDrop(event)"
