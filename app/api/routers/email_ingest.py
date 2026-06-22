@@ -69,10 +69,18 @@ async def receive_inbound_email(
     from app.models.email_ingest import InboundEmail, InboundEmailStatus
     from app.models.org import Organization
 
-    org_result = await session.execute(select(Organization).limit(1))
-    org = org_result.scalar_one_or_none()
-    if org is None:
-        raise HTTPException(status_code=500, detail="No organization configured")
+    if settings.inbound_email_org_id is not None:
+        org = await session.get(Organization, settings.inbound_email_org_id)
+        if org is None:
+            raise HTTPException(status_code=500, detail="INBOUND_EMAIL_ORG_ID set but org not found")
+    else:
+        orgs = (await session.execute(select(Organization))).scalars().all()
+        if len(orgs) != 1:
+            raise HTTPException(
+                status_code=500,
+                detail=f"Set INBOUND_EMAIL_ORG_ID in .env — {len(orgs)} org(s) found",
+            )
+        org = orgs[0]
 
     email_row = InboundEmail(
         id=uuid.uuid4(),

@@ -1316,12 +1316,10 @@ async def opportunity_wizard_step(
             opp = None
 
         if opp is None:
-            from app.models.org import Organization as _Org
-            org = (await session.execute(select(_Org).limit(1))).scalar_one_or_none()
-            if org is None:
+            if user is None or user.org_id is None:
                 return HTMLResponse("No organization found", status_code=400)
             opp = Opportunity(
-                org_id=org.id,
+                org_id=user.org_id,
                 name=name,
                 notes=notes,
                 broker_id=broker_id,

@@ -1,5 +1,7 @@
 """Application settings — reads from environment / .env file."""
 
+from uuid import UUID
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -137,6 +139,10 @@ class Settings(BaseSettings):
     # Generate with: openssl rand -hex 32
     # Resend inbound webhook signing secret (from Resend dashboard, Svix format: whsec_...)
     resend_webhook_secret: str = ""
+    # Explicit org to assign inbound emails to. Set in .env for multi-org deployments.
+    # If unset, the webhook falls back to the single org in the DB and fails hard if
+    # multiple orgs exist (prevents silent cross-tenant assignment).
+    inbound_email_org_id: UUID | None = None
 
     # -------------------------------------------------------------------------
     # Financial model defaults
