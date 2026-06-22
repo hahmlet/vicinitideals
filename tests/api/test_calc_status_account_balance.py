@@ -10,7 +10,7 @@ from types import SimpleNamespace as _SN
 
 import pytest
 
-from app.api.routers.ui import _compute_calc_status
+from app.api.routers.ui_model_builder import _compute_calc_status
 
 
 def _outputs(**overrides):

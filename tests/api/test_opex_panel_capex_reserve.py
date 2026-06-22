@@ -15,7 +15,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from app.api.routers.ui import templates
+from app.api.routers.ui_helpers import templates
 
 
 def _make_env():

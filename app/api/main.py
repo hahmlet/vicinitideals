@@ -505,8 +505,8 @@ def create_app() -> FastAPI:
     app.include_router(auth_router)
 
     # UI router — HTML pages, no API key required
-    from app.api.routers.ui import router as ui_router
-    app.include_router(ui_router)
+    from app.api.routers.ui_model_builder import router as ui_model_builder_router
+    app.include_router(ui_model_builder_router)
 
     # Settings/billing/vehicle sub-router (Phase 2a split)
     from app.api.routers.ui_settings import router as ui_settings_router

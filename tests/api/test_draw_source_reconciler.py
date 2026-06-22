@@ -22,7 +22,7 @@ import pytest
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.routers.ui import _load_draw_schedule_ctx
+from app.api.routers.ui_model_outputs import _load_draw_schedule_ctx
 from app.models.capital import CapitalModule, DrawSource
 
 

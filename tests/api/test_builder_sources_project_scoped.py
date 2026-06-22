@@ -18,7 +18,7 @@ from decimal import Decimal
 import pytest
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.routers.ui import _load_builder_data
+from app.api.routers.ui_model_builder import _load_builder_data
 from app.models.capital import CapitalModule, CapitalModuleProject
 from app.models.deal import Deal, DealStatus, ProjectType, Scenario
 from app.models.org import Organization

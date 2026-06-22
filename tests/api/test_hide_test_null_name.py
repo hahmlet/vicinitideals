@@ -15,7 +15,7 @@ import pytest
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.routers.ui import _apply_opp_filters
+from app.api.routers.ui_deals_pipeline import _apply_opp_filters
 from app.models.opportunity import Opportunity, OpportunitySource
 from tests.conftest import seed_org
 

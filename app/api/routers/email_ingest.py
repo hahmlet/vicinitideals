@@ -197,7 +197,7 @@ async def email_inbox(
     session: DBSession,
 ) -> HTMLResponse:
     """Email inbox — lists all inbound emails for the org."""
-    from app.api.routers.ui import _base_ctx, _get_counts  # noqa: PLC0415
+    from app.api.routers.ui_helpers import _base_ctx, _get_counts  # noqa: PLC0415
     from app.models.email_ingest import InboundEmail
     from app.models.org import User
 
@@ -233,7 +233,7 @@ async def email_deal_review(
 ) -> HTMLResponse:
     """Config table: one row per staged proforma file. User assigns deal names
     and sheet/page ranges, then submits to create deals in bulk."""
-    from app.api.routers.ui import _base_ctx, _get_counts  # noqa: PLC0415
+    from app.api.routers.ui_helpers import _base_ctx, _get_counts  # noqa: PLC0415
     from app.models.email_ingest import EmailDealSuggestion, InboundEmail
     from app.models.org import User
 
@@ -348,7 +348,7 @@ async def email_create_deals(
     from fastapi.responses import RedirectResponse
     from sqlalchemy import select as _select
 
-    from app.api.routers.ui import (
+    from app.api.routers.ui_helpers import (
         _auto_assign_opportunity_to_project,
         _seed_milestones,
     )

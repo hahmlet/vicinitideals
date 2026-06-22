@@ -18,7 +18,7 @@ import pytest
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.routers.ui import _gap_adj_by_scenario, _levered_profit
+from app.api.routers.ui_deals_pipeline import _gap_adj_by_scenario, _levered_profit
 from app.models.capital import CapitalModule, CapitalModuleProject
 from app.models.deal import UseLine, UseLinePhase
 from app.models.project import Project
@@ -158,7 +158,7 @@ def _row(**overrides) -> dict:
 def test_deals_rows_partial_colors_gap_adj_three_states() -> None:
     """Cell color: green (funded, no adj), red (gap, no adj), amber (adjusted);
     shortfalls render as negative dollars."""
-    from app.api.routers.ui import templates
+    from app.api.routers.ui_helpers import templates
 
     tmpl = templates.env.get_template("partials/deals_rows.html")
 
@@ -194,7 +194,7 @@ def test_deals_rows_partial_colors_gap_adj_three_states() -> None:
 
 
 def test_deals_rows_partial_renders_profit() -> None:
-    from app.api.routers.ui import templates
+    from app.api.routers.ui_helpers import templates
 
     tmpl = templates.env.get_template("partials/deals_rows.html")
 

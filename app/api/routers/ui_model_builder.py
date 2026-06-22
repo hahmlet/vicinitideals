@@ -1,4 +1,4 @@
-"""HTML UI routes — Jinja2 templates served directly from FastAPI."""
+"""Model builder UI routes — builder page, form handler, panel, sensitivity, project ops."""
 
 from __future__ import annotations
 

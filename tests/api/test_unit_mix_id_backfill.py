@@ -12,7 +12,7 @@ import uuid
 
 import pytest
 
-from app.api.routers.ui import _ensure_unit_mix_ids
+from app.api.routers.ui_model_builder import _ensure_unit_mix_ids
 
 
 class _StubProject:

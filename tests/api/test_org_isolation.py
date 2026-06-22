@@ -60,7 +60,7 @@ async def test_helper_scopes_query_when_flag_on(session: AsyncSession) -> None:
     matching user.org_id when isolation is enabled, and an empty result
     when the user has no org."""
     from sqlalchemy import select
-    from app.api.routers.ui import _apply_org_scope
+    from app.api.routers.ui_helpers import _apply_org_scope
     from app.config import settings as _settings
     from app.models.deal import Deal
 

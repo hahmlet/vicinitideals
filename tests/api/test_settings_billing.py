@@ -8,7 +8,7 @@ from fastapi import HTTPException
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.routers import ui
+from app.api.routers import ui_settings as ui
 from app.api.auth import COOKIE_NAME, create_session_token
 from app.config import settings
 from app.models.settings import UserSetting

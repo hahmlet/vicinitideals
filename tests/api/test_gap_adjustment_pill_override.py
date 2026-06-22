@@ -95,7 +95,7 @@ async def test_pill_yellow_when_revenue_adjustment_nonzero(
 
     # Render the pill directly via the helper to test the override logic
     # without depending on the full builder data path.
-    from app.api.routers.ui import (
+    from app.api.routers.ui_model_builder import (
         _has_any_gap_adjustment,
         _render_calc_status_pill_html,
     )
@@ -122,7 +122,7 @@ async def test_pill_yellow_when_pp_adjustment_nonzero(
 ) -> None:
     """A nonzero PP phantom row triggers has_any_gap_adjustment, even
     when Revenue and OpEx phantoms are absent."""
-    from app.api.routers.ui import _has_any_gap_adjustment
+    from app.api.routers.ui_model_builder import _has_any_gap_adjustment
     model_id, project_id = await _seeded_model(session)
 
     session.add(UseLine(
@@ -146,7 +146,7 @@ async def test_pill_not_yellow_when_phantom_amount_is_zero(
 
     The row exists but represents no adjustment, so the pill should
     render normally."""
-    from app.api.routers.ui import _has_any_gap_adjustment
+    from app.api.routers.ui_model_builder import _has_any_gap_adjustment
     model_id, project_id = await _seeded_model(session)
 
     session.add_all([
@@ -183,7 +183,7 @@ async def test_real_failure_still_warns(
 ) -> None:
     """If the model has a real DSCR/Sources failure, the existing warn
     label wins — has_any_adjustment doesn't downgrade real failures."""
-    from app.api.routers.ui import _render_calc_status_pill_html
+    from app.api.routers.ui_model_builder import _render_calc_status_pill_html
     from uuid import uuid4
 
     fake_fail_status = {

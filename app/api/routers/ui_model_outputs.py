@@ -706,7 +706,7 @@ async def proforma_restart(
     """Return the wizard at Step 1 so the user can upload a different file
     (or pick a different income mode). Re-uses the GET /setup handler so the
     full context (inputs, vehicles, phases) is populated."""
-    from app.api.routers.ui import deal_setup_wizard_get
+    from app.api.routers.ui_wizards import deal_setup_wizard_get
     return await deal_setup_wizard_get(
         request=request, model_id=model_id, session=session, step=1,
     )
@@ -757,7 +757,7 @@ async def proforma_resume(
                     },
                 )
 
-    from app.api.routers.ui import deal_setup_wizard_get
+    from app.api.routers.ui_wizards import deal_setup_wizard_get
     return await deal_setup_wizard_get(
         request=request, model_id=model_id, session=session, step=1,
     )
@@ -1298,7 +1298,7 @@ async def proforma_confirm(
     # Re-enter the wizard at Step 2 via the canonical GET handler so the full
     # context (source_vehicles_debt, phases_present, review_back_step, etc.)
     # is populated — without it the Source Vehicle dropdowns never render.
-    from app.api.routers.ui import deal_setup_wizard_get
+    from app.api.routers.ui_wizards import deal_setup_wizard_get
     return await deal_setup_wizard_get(
         request=request, model_id=model_id, session=session, step=2,
     )
@@ -1313,7 +1313,7 @@ async def proforma_skip(
     """Skip pro forma import — advance wizard to Step 2 (debt types)."""
     # Delegate to the canonical GET so source_vehicles_debt et al. are
     # populated (needed for the Source Vehicle dropdown on each debt card).
-    from app.api.routers.ui import deal_setup_wizard_get
+    from app.api.routers.ui_wizards import deal_setup_wizard_get
     return await deal_setup_wizard_get(
         request=request, model_id=model_id, session=session, step=2,
     )

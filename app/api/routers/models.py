@@ -634,7 +634,7 @@ async def compute_model_cashflows(model_id: UUID, request: Request, session: DBS
     # capture the returned schedule's monthly_cash_flows; they feed the Day 0
     # → Stabilization Start bank-account proof. We re-run inside the
     # iteration loop too so the proof sees the latest reserve sizing.
-    from app.api.routers.ui import _run_draw_schedule  # lazy to avoid circular import
+    from app.api.routers.ui_model_outputs import _run_draw_schedule  # lazy to avoid circular import
     try:
         _initial_schedule = await _run_draw_schedule(session, model_id, writeback=True)
     except Exception:

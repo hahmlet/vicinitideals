@@ -9,7 +9,7 @@ from __future__ import annotations
 from decimal import Decimal
 from types import SimpleNamespace
 
-from app.api.routers.ui import templates
+from app.api.routers.ui_helpers import templates
 
 
 def _make_stream(*, unit_count: int | None, per_unit: Decimal | None, fixed: Decimal | None):
