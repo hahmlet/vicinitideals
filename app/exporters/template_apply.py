@@ -50,7 +50,7 @@ async def apply_template_to_project(
             project_id=project_id,
             label=label,
             annual_amount=Decimal("0"),
-            per_type=e.get("per_type") or "flat",
+            per_type="flat",
             scale_with_lease_up=bool(e.get("scale_with_lease_up")),
             escalation_rate_pct_annual=esc,
             active_in_phases=e.get("active_in_phases") or [],
