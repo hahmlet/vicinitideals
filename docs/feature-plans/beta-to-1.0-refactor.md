@@ -41,7 +41,7 @@ remaining quick wins.
 > - **Dev-fee multi-source engine** — `fee_terms` JSONB (migration 0103).
 > - **Reserves refactor** — ODR is a first-class UseLine; lease-up merged into interest reserve (0109–0111).
 > - **Parcel-intelligence decommission** (2026-06) — LoopNet, HelloData scraper, county-GIS pipeline, the Map, the parcel tables (migration 0113), and the Building-entity stubs all removed; Crexi import + KNN comps retained. Trimmed `ui.py` by ~1,500 lines / 18 routes. Full record in the decommission section below.
-> - **ui.py split — partial** (2026-06) — 4 of 8 sub-routers extracted: `ui_settings.py`, `ui_deals_pipeline.py`, `ui_wizards.py`, `ui_model_outputs.py`. `ui.py` is now ~7,900 lines (was 14,559). See Phase 2a status table.
+> - **ui.py split — complete** (2026-06) — all 8 sub-routers extracted and registered: `ui_settings.py`, `ui_deals_pipeline.py`, `ui_wizards.py`, `ui_model_outputs.py`, `ui_data_intel.py`, `ui_portfolios.py`, `ui_model_builder.py`, `ui_helpers.py`. `ui.py` deleted. See Phase 2a status table.
 > - **Scenario Templates** (migration 0114, 2026-06) — `scenario_templates` table + `ScenarioTemplate` model; save-from-model UI (`model_builder.html`), settings management (`ui_settings.py`), apply-on-deal-create (seeds income streams, expense lines, debt types from template). Wizard Step 2 pre-checks debt types from template; engine cleans up wizard $0 closing-cost stubs after compute.
 > - **Opportunity wizard cleanup** (2026-06) — removed "Link a Property" Step 2; wizard is now 2 steps (parcel decommission follow-on).
 
@@ -52,9 +52,8 @@ remaining quick wins.
 ### ui.py — split in progress (~7,900 lines remaining)
 
 Grew ~7,900 (early) → 12,228 (May) → 16,036 (pre-decommission) → 14,559 (post-decommission) → **~7,900 (now, split underway)**.
-4 of 8 sub-routers extracted (settings, deals_pipeline, wizards, model_outputs). Remaining:
-model_builder (heaviest — `handle_form_create_or_update` fans out to 300+ nodes), data_intel,
-portfolios, _helpers.
+All 8 sub-routers extracted. `ui.py` deleted. `ui_model_builder.py` contains only model builder
+routes (builder page, panel, forms handler, project ops, sensitivity, calc status).
 
 ### Code duplication (still live)
 
@@ -189,10 +188,9 @@ The parcel decommission (DC-1…DC-5) shipped — see the section above. Remaini
 - ~~Crexi listing lifecycle → Archived status + scheduled purge.~~ ✓ (`archive_stale_crexi_listings` task + beat schedule)
 - ~~Opportunity ↔ Broker link (schema + picker UI).~~ ✓ (`Opportunity.broker_id` FK + picker in opportunity wizard)
 
-### Phase 2a — ui.py split — IN PROGRESS
+### Phase 2a — ui.py split — DONE (2026-06-22)
 
-`ui.py` is now **~7,900 lines** (down from 14,559). Four sub-routers extracted; four remain.
-Each extracted module runs alongside `ui.py` (routes not yet deleted from the original).
+`ui.py` deleted. All 8 sub-routers extracted and registered in `main.py`.
 
 | Sub-router | Status |
 |---|---|
@@ -200,22 +198,21 @@ Each extracted module runs alongside `ui.py` (routes not yet deleted from the or
 | `ui_deals_pipeline.py` | **Done ✓** (deal list/CRUD, opportunities, opp wizard, deal creation) |
 | `ui_wizards.py` | **Done ✓** (timeline wizard, deal setup wizard) |
 | `ui_model_outputs.py` | **Done ✓** (exports, draw schedule, save-as-template, NOI, history) |
-| `ui_data_intel.py` | Pending (brokers, Crexi-sourced oppos, Crexi dedup) |
-| `ui_portfolios.py` | Pending (portfolios, deal search, saved filters) |
-| `ui_model_builder.py` | Pending — last; `handle_form_create_or_update` hub stays until 2b |
-| `ui/_helpers.py` | Pending (shared: `_get_user`, `_load_builder_data`, `_fmt_currency`, …) |
+| `ui_data_intel.py` | **Done ✓** (brokers, Crexi-sourced oppos, Crexi dedup) |
+| `ui_portfolios.py` | **Done ✓** (portfolios, deal search, saved filters) |
+| `ui_model_builder.py` | **Done ✓** (builder page, panel, forms handler, project ops, sensitivity, calc status) |
+| `ui_helpers.py` | **Done ✓** (shared: auth/scope, count queries, base context, formatting) |
 
-Next: extract `_helpers.py`, then `ui_data_intel.py` and `ui_portfolios.py`. Delete extracted routes from `ui.py` after each. Do `model_builder.py` last.
+### Phase 2b — Service layer extraction — DONE (2026-06)
 
-### Phase 2b — Service layer extraction
+`app/services/model_builder_forms/` exists with 7 entity files: `capital_module.py`,
+`expense_line.py`, `income_stream.py`, `milestone.py`, `unit_mix.py`, `use_line.py`,
+`waterfall_tier.py`. `handle_form_create_or_update` dispatches to these via lazy import.
 
-After 2a. Build on the existing `app/services/` seam. Targets: `CapitalStructureService`,
-`TimelineService`, `CashflowService`. Result: a new carry type touches ~3 files, not 6+.
+### Phase 2c — Responsiveness fix — DONE (2026-06)
 
-### Phase 2c — Responsiveness fix
-
-Wire HTMX OOB swaps so the cashflow summary / balance bar update immediately after any form
-save. No new infrastructure — done alongside 2a/2b since the routes are already being touched.
+`_builder_panel_oob_response` wired in 11 call sites across the builder router — returns
+panel HTML + OOB swaps for calc-status pill and module nav cards after every form save.
 
 ### Phase 3 — Cleanup — DONE (2026-06-15)
 
