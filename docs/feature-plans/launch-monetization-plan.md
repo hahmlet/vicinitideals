@@ -25,6 +25,7 @@ Launch a self-serve, paid SaaS without personally onboarding users. Scope is alr
 - Proforma .xlsx parser
 - Portfolios
 - Auth / billing / org membership / invites
+- Scenario Templates (migration 0114, 2026-06) — user-created deal templates; seeds income streams, expense lines, debt types + source vehicles on deal create. Distinct from the Scenario Library (admin-seeded curated scenarios — see Testing Strategy).
 - **Multifamily asset class only** — see Asset Class Scope
 
 ### Decommissioned (removed 2026-06 — not retained)
@@ -51,9 +52,9 @@ any of these is a rebuild, not a flag flip (code lives only in git history):
 ## Critical Path to Paid Signups
 
 ### Security (must complete before any paid customer)
-- CSRF middleware on all writes (~1 day) — currently missing
-- Rate limiting on all POST/PUT/PATCH/DELETE (~1 day) — currently auth-only
-- Multi-tenant data isolation audit (~3 days) — remove "first org" fallback patterns in `ui.py:2414`, `ui.py:12582`, `scraper.py:534`
+- ~~CSRF middleware on all writes (~1 day)~~ **Done 2026-05-27 (`app/api/csrf.py` + middleware in `app/api/main.py`).** Stateless signed tokens, HTMX header injection.
+- ~~Rate limiting on all POST/PUT/PATCH/DELETE (~1 day)~~ **Done 2026-05-27 (`app/api/rate_limit.py`).** 200/min per user, 30/min per IP on all mutation methods; `/forgot-password` has additional 3/hr per email limit.
+- Multi-tenant data isolation audit (~1 day remaining) — original `ui.py:2414`, `ui.py:12582`, `scraper.py:534` all gone (ui.py deleted, LoopNet scraper decommissioned). Two first-org fallbacks remain: `email_ingest.py:72` and `ui_deals_pipeline.py:1320`.
 - ~~Hard email verification gate (~half day) — currently soft (yellow banner only)~~ **Done 2026-05-28 (PR #9, commit `6cf361e`).** Signed-session `ev` claim + middleware redirect to `/verify-email-required` for any auth-required UI route. Zero DB reads in gate path. Login/register/reset all rewire the session cookie with the current verified state. Exempt list covers `/verify-email`, `/resend-verification`, `/profile`, `/logout`, `/onboarding`, `/pending-approval`, `/invites/`.
 - Two-factor authentication via TOTP (`pyotp`) (~2 days) — optional for users, mandatory for org admins
 - Audit log inside org workspace (~3-5 days) — `audit_log` table, write on key mutations
@@ -545,7 +546,7 @@ Single focused 2-week pass, sequenced after onboarding work (Week 8-9). Onboardi
 
 **Suggested execution pattern:**
 1. Day 1-2: Write [docs/GLOSSARY.md](../GLOSSARY.md) + canonical button/field macros in `app/templates/_buttons.html`
-2. Day 3-5: Terminology sweep — grep + replace across `app/templates/`, `app/api/routers/ui.py`
+2. Day 3-5: Terminology sweep — grep + replace across `app/templates/`, `app/api/routers/ui_*.py` (8 sub-routers)
 3. Day 6-8: Deal Creation flow polish (wizards, buttons, empty states)
 4. Day 9-10: Empty/loading/error state pass
 5. Day 11-12: Spacing/hierarchy + pill/badge consolidation
@@ -557,7 +558,7 @@ Single focused 2-week pass, sequenced after onboarding work (Week 8-9). Onboardi
 
 ## What We're Explicitly NOT Doing
 
-- Phase 2a/2b refactor (ui.py split into 7 sub-routers, service layer extraction) — pure internal velocity, defer indefinitely
+- ~~Phase 2a/2b refactor (ui.py split into 7 sub-routers, service layer extraction)~~ **Done 2026-06-22.** All 8 sub-routers extracted and live (`ui_model_builder`, `ui_settings`, `ui_deals_pipeline`, `ui_wizards`, `ui_model_outputs`, `ui_data_intel`, `ui_portfolios`, `ui_helpers`). `ui.py` deleted. Service layer (`app/services/model_builder_forms/`, 7 entity files) and HTMX OOB swaps also complete. See [beta-to-1.0-refactor.md](beta-to-1.0-refactor.md).
 - Full UI redesign — handled separately, not justified by 100-user ceiling
 - Migration to Cloudflare Workers — Python stack doesn't run there, full rewrite not justified
 - Migration to managed hosting (Fly.io, Railway, Render) — VM 114 handles 100 users 20x over
@@ -779,7 +780,7 @@ git push origin main
 ## Deferred to Year 2+
 
 - SOC 2 Type 1 (only if customer requires)
-- Phase 2a/2b refactor (ui.py split, service layer)
+- ~~Phase 2a/2b refactor (ui.py split, service layer)~~ **Done 2026-06-22** (see above)
 - Parcel / county-GIS data-acquisition rebuild — the subsystem was **decommissioned** in 2026-06 (not feature-flagged off; the scrapers, parcel tables, and Map were removed). Bringing it back is a fresh build, gated on paid data subscriptions being justified.
 - Org-level billing
 - International / EU pricing (would trigger Paddle reconsideration)
