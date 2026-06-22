@@ -113,7 +113,14 @@ When user indicates session ending, run through before closing:
 ```
 app/
   api/routers/
-    ui.py              # HTMX UI routes (~7900 lines, most active file)
+    ui_model_builder.py  # Model builder routes (builder page, panel, forms, sensitivity, calc status)
+    ui_settings.py       # Settings, org, source vehicles, scenario templates
+    ui_deals_pipeline.py # Deal list/CRUD, opportunities, opp wizard, deal creation
+    ui_wizards.py        # Timeline wizard, deal setup wizard
+    ui_model_outputs.py  # Excel/investor export, draw schedule, NOI, history
+    ui_data_intel.py     # Brokers, Crexi-sourced oppos, Crexi dedup
+    ui_portfolios.py     # Portfolios, deal search, saved filters
+    ui_helpers.py        # Shared helpers (auth/scope, formatting, base context)
     auth_routes.py     # Login, register, verify email, password reset
     capital.py         # Capital stack API
     deals.py, scenarios.py, projects.py, listings.py, parcels.py, ...

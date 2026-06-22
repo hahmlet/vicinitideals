@@ -378,6 +378,18 @@ Every new deal seeds a `UseLine` flagged `is_auto_dev_fee=True`. The `amount` is
 
 **Disabling for one deal**: set `dev_fee_pct` to 0 in the Use drawer. The auto Dev Fee Use line cannot be hard-deleted (delete endpoints return 403); zero-pct is the contract. Per-deal-type defaults at the org/user level can also be set to 0 to disable for all new deals of a type.
 
+### 1.5 Auto Finance Cost write-back (Use line, computed)
+
+After sizing each loan, the engine writes or updates a `UseLine` named `"{loan label} — Total Finance Costs"` (`is_auto_finance_cost=True`) with the actual computed total financing cost for that module. This is a write-back to the S&U table so the user can see exactly what the engine charged.
+
+**Wizard stub cleanup (2026-06-22):** When a deal is created from the Deal Setup Wizard, the wizard pre-seeds `$0` UseLines for each closing-cost item per loan (e.g. `"Raymond James Bond — Appraisal"`, `"Raymond James Bond — Lender Legal"`). These stubs become stale once the engine computes and writes the real TFC row. During TFC write-back, the engine now deletes any stub rows that match all of:
+- `is_auto_finance_cost=False` (user-visible, not engine-owned)
+- `amount == 0` (never edited by user)
+- label starts with `"{loan label} — "` (belongs to this loan)
+- label is not the TFC row itself (`!= "{loan label} — Total Finance Costs"`)
+
+This means the first compute run produces a clean S&U — only the real TFC row remains per loan. If a user has edited any stub (non-zero amount), it is preserved.
+
 ---
 
 ## 2. Sources / Debt Sizing
@@ -393,6 +405,8 @@ Every new deal seeds a `UseLine` flagged `is_auto_dev_fee=True`. The `amount` is
 - `OperationalInputs.debt_types`: ordered list like `["pre_development_loan", "acquisition_loan", "construction_loan", "permanent_debt"]`
 - Bridge loans sized independently to phase costs, then removed from the gap-fill pool
 - Permanent debt gap-fills to TPC
+
+**Template seeding (2026-06-22):** When a deal is created from a Scenario Template, `app/exporters/template_apply.py` seeds `OperationalInputs.debt_types` from the template's `operational_inputs.debt_types` field. It also seeds `debt_terms` (source vehicle IDs per funder type) via a merge that preserves any existing values. This ensures the Deal Setup Wizard pre-populates the correct loan types and source vehicles for the selected template.
 
 The Phase B path is gated by `if debt_types_list:` in `_auto_size_debt_modules()`.
 
@@ -3034,7 +3048,7 @@ No ORM CHECK constraints, no Pydantic `ge=0`, no UI input minimums prevent negat
 The calc-status pill (top of the model builder page) normally renders green ("✓ Calculation Valid") when Sources=Uses, DSCR≥floor, and LTV≤cap. When *any* phantom row has a nonzero amount, that green state is overridden to yellow ("⚠ Balanced w/ adjustments"):
 
 ```python
-# app/api/routers/ui.py — _render_calc_status_pill_html
+# app/api/routers/ui_model_builder.py — _render_calc_status_pill_html
 if status["overall"] == "ok" and has_any_adjustment:
     label = "⚠ Balanced w/ adjustments"
     cls = "warn"
@@ -3849,7 +3863,7 @@ The draw schedule engine has two interest models:
 | Self-referential capitalized | `funded_carry=False` and `annual_interest_rate > 0` | `D = (uses + payoff + B × (F−1)) / (2−F)` where `F = (1+r)^n` — compound interest version. For `n=1` (monthly draws) this is algebraically identical to the prior simple-interest formula `(uses + B×r)/(1−r)`. Implemented in `compound_draw_sizing()` in `app/engines/period_engine.py`. |
 | Funded-carry pool | `funded_carry=True` | Carry on this loan is paid from a pre-funded Interest Reserve UseLine. Draw = `uses + payoff` only; `carry_cost = 0` to avoid double-counting (the IR pool already drained for the same interest). |
 
-`app/api/routers/ui.py` builds `SourceDef.funded_carry = True` when the `CapitalModule.carry.schedule` contains a phase with `carry_type="interest_reserve"`. Without this flag, the draw schedule and the cashflow engine would charge the same loan interest twice (once via capitalization in `_calc_source_draws`, once via the IR pool drawdown in `_compute_project_cashflow`).
+`app/api/routers/ui_model_outputs.py` builds `SourceDef.funded_carry = True` when the `CapitalModule.carry.schedule` contains a phase with `carry_type="interest_reserve"`. Without this flag, the draw schedule and the cashflow engine would charge the same loan interest twice (once via capitalization in `_calc_source_draws`, once via the IR pool drawdown in `_compute_project_cashflow`).
 
 ### G.3 Cash Flow Support Reserve — auto-emitted gap-filler
 
@@ -3895,7 +3909,7 @@ This is a pilot-mode lever: ship to one production deal first, verify, then eith
 | `app/engines/bank_account_extractor.py` | `extract_full_window_proof`, `_RESERVE_LABELS` |
 | `app/engines/draw_schedule.py` | `_simulate_cash_balance`, `_calc_source_draws`, `SourceDef.funded_carry` |
 | `app/engines/cashflow.py` | `_run_bank_account_proof`, `_bank_account_reserve_active_for`, Cash Flow Support emission |
-| `app/api/routers/ui.py` | Builds `SourceDef.funded_carry` from `CapitalModule.carry.schedule` |
+| `app/api/routers/ui_model_outputs.py` | Builds `SourceDef.funded_carry` from `CapitalModule.carry.schedule` |
 | `app/api/routers/models.py` | `/compute` iteration loop wiring `construction_monthly` between engines |
 
 ### G.6 Convergence invariants (test coverage)
@@ -4016,7 +4030,7 @@ capital stack shape changes. Pure amount edits do not trip the diff.
 | `app/engines/cashflow.py` | Call site passes `modules`, `org_id`, `milestone_dates` |
 | `app/settings/defaults.py` + `resolver.py` | 20 new keys + extended `resolve_dev_fee_config` |
 | `app/api/routers/capital.py` | `/models/{id}/use-line-source-fee-basis` CRUD |
-| `app/api/routers/ui.py` | `GET /ui/models/{id}/dev-fee/explainer` HTMX route |
+| `app/api/routers/ui_model_builder.py` | `GET /ui/models/{id}/dev-fee/explainer` HTMX route |
 | `app/templates/partials/dev_fee_explainer_modal.html` | Explainer modal partial |
 | `tests/engines/test_dev_fee_multi_source.py` | 12 priority tests |
 
@@ -4167,7 +4181,7 @@ stale data clears, None when no relevant source/module exists.
 | `app/models/capital.py` | `VehicleType.float_earnings`; `VehicleType.deferred_developer_fee`; `WaterfallTierType.deferred_developer_fee` |
 | `app/models/cashflow.py` | `OperationalOutputs.float_earnings_series` and `dev_fee_balance_series` JSON columns |
 | `app/schemas/capital.py` | `CapitalSourceSchema` float-earnings fields (parent ref, yield, `waterfall_milestone_id`). `CapitalExitSchema.trigger` is optional (`str \| None = None`) to accommodate DDF modules whose `exit_terms` lack a trigger. |
-| `app/api/routers/ui.py` | CF routes load `dev_fee_balance_series` into template context as `ddf_recovery_by_period` + `ddf_balance_by_period`. Float source save handler writes `waterfall_milestone_id` (reads legacy `paydown_milestone_id` for compat). |
+| `app/api/routers/ui_model_builder.py` | CF routes load `dev_fee_balance_series` into template context as `ddf_recovery_by_period` + `ddf_balance_by_period`. Float source save handler writes `waterfall_milestone_id` (reads legacy `paydown_milestone_id` for compat). |
 | `app/templates/partials/model_builder_line_form.html` | Float-earnings form: parent module picker, yield %, Waterfall Milestone picker. Split % fields removed. Developer Fee Rule section hidden for `float_earnings` vehicle type. |
 | `app/templates/partials/model_builder_panel.html` | CF table has DDF Recov. (orange, period paydown from waterfall) and DDF Bal. (remaining balance) columns. S&U "Found Money" summary block shows total earnings → GP/LP Profit Waterfall. |
 | `app/templates/partials/vehicle_form.html` | Developer Fee Rule section hidden for `float_earnings` vehicle type. |
