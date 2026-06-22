@@ -1102,7 +1102,7 @@
           {% if _opex_gap_active %}style="background:#fef3c7"{% elif _is_opex_gap %}style="background:#f3f4f6"{% endif %}>
         <td>
           <span style="font-weight:500">{{ e.label }}</span>
-          {% if e.notes %}<div class="text-small text-muted" style="margin-top:2px">{{ e.notes }}</div>{% endif %}
+          {% if e.notes and e.notes != 'None' %}<div class="text-small text-muted" style="margin-top:2px">{{ e.notes }}</div>{% endif %}
         </td>
         <td class="col-right">{{ e.annual_amount | currency }}</td>
         <td class="col-right">{{ e.escalation_rate_pct_annual | pct }}</td>

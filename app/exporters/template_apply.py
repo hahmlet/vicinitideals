@@ -50,19 +50,30 @@ async def apply_template_to_project(
             project_id=project_id,
             label=label,
             annual_amount=Decimal("0"),
-            per_type=e.get("per_type"),
+            per_type=e.get("per_type") or "flat",
             scale_with_lease_up=bool(e.get("scale_with_lease_up")),
             escalation_rate_pct_annual=esc,
             active_in_phases=e.get("active_in_phases") or [],
             notes=e.get("notes"),
         ))
 
-    # Seed debt_types so the deal setup wizard pre-checks the right loans.
-    tmpl_debt_types = (template_json.get("operational_inputs") or {}).get("debt_types") or []
-    if tmpl_debt_types:
+    # Seed debt_types and debt_terms (Source Vehicle per loan type) from template.
+    tmpl_oi = template_json.get("operational_inputs") or {}
+    tmpl_debt_types = tmpl_oi.get("debt_types") or []
+    tmpl_debt_terms = tmpl_oi.get("debt_terms") or {}
+    if tmpl_debt_types or tmpl_debt_terms:
         oi = (await session.execute(
             select(OperationalInputs).where(OperationalInputs.project_id == project_id)
         )).scalar_one_or_none()
         if oi is not None:
-            oi.debt_types = tmpl_debt_types
+            if tmpl_debt_types:
+                oi.debt_types = tmpl_debt_types
+            if tmpl_debt_terms:
+                merged = dict(oi.debt_terms or {})
+                for ft, terms in tmpl_debt_terms.items():
+                    if ft not in merged:
+                        merged[ft] = terms
+                    elif terms.get("vehicle_id") and not merged[ft].get("vehicle_id"):
+                        merged[ft] = {**merged[ft], "vehicle_id": terms["vehicle_id"]}
+                oi.debt_terms = merged
             session.add(oi)
