@@ -8,6 +8,7 @@ Extracted from ui.py (Phase 2a). Covers:
 """
 from __future__ import annotations
 
+import html as _html
 import io
 import json
 import uuid as _uuid_mod
@@ -900,6 +901,103 @@ async def broker_oregon_update(
     return templates.TemplateResponse(request, "partials/broker_detail.html", {"b": b})
 
 
+@router.get("/ui/brokers/quick-create-form", response_class=HTMLResponse)
+async def broker_quick_create_form(request: Request) -> HTMLResponse:
+    """Inline form for creating a new broker from the opportunity wizard."""
+    return HTMLResponse("""
+<div style="margin-top:10px;border:1px solid var(--border);border-radius:6px;padding:14px;background:var(--surface)">
+  <div style="font-size:13px;font-weight:600;margin-bottom:10px">New Broker</div>
+  <form hx-post="/ui/brokers/quick-create" hx-target="#wizard-broker-select-wrap" hx-swap="outerHTML">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+      <div>
+        <label style="font-size:11px;font-weight:600;display:block;margin-bottom:2px">First Name *</label>
+        <input type="text" name="first_name" required style="width:100%">
+      </div>
+      <div>
+        <label style="font-size:11px;font-weight:600;display:block;margin-bottom:2px">Last Name *</label>
+        <input type="text" name="last_name" required style="width:100%">
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+      <div>
+        <label style="font-size:11px;font-weight:600;display:block;margin-bottom:2px">Email</label>
+        <input type="email" name="email" style="width:100%">
+      </div>
+      <div>
+        <label style="font-size:11px;font-weight:600;display:block;margin-bottom:2px">Brokerage</label>
+        <input type="text" name="brokerage_name" placeholder="Firm name" style="width:100%">
+      </div>
+    </div>
+    <div style="display:flex;gap:6px">
+      <button type="submit" class="btn btn-sm btn-primary">Create</button>
+      <button type="button" class="btn btn-sm btn-ghost"
+              onclick="document.getElementById('broker-quick-create-modal').innerHTML=''">Cancel</button>
+    </div>
+  </form>
+</div>
+""")
+
+
+@router.post("/ui/brokers/quick-create", response_class=HTMLResponse)
+async def broker_quick_create(
+    request: Request,
+    session: DBSession,
+    first_name: str = Form(...),
+    last_name: str = Form(...),
+    email: str = Form(default=""),
+    brokerage_name: str = Form(default=""),
+) -> HTMLResponse:
+    """Create a broker inline from the opportunity wizard; returns OOB swap updating the select."""
+    brokerage_id = None
+    if brokerage_name.strip():
+        existing_brkg = (await session.execute(
+            select(Brokerage).where(func.lower(Brokerage.name) == brokerage_name.strip().lower())
+        )).scalar_one_or_none()
+        if existing_brkg:
+            brokerage_id = existing_brkg.id
+        else:
+            new_brkg = Brokerage(name=brokerage_name.strip())
+            session.add(new_brkg)
+            await session.flush()
+            brokerage_id = new_brkg.id
+
+    broker = Broker(
+        first_name=first_name.strip() or None,
+        last_name=last_name.strip() or None,
+        email=email.strip() or None,
+        brokerage_id=brokerage_id,
+    )
+    session.add(broker)
+    await session.commit()
+    await session.refresh(broker)
+
+    rows = (await session.execute(
+        select(Broker)
+        .options(selectinload(Broker.brokerage))
+        .order_by(Broker.last_name, Broker.first_name)
+    )).scalars().unique().all()
+
+    opts = ['<option value="">— None —</option>']
+    for b in rows:
+        full = f"{b.last_name or ''}, {b.first_name or ''}".strip(", ").strip() or "Unknown"
+        firm = b.brokerage.name if b.brokerage else None
+        label = _html.escape(f"{full} · {firm}" if firm else full)
+        sel = " selected" if b.id == broker.id else ""
+        opts.append(f'<option value="{b.id}"{sel}>{label}</option>')
+
+    new_btn = ('<button type="button" class="btn btn-sm btn-secondary"'
+               ' hx-get="/ui/brokers/quick-create-form"'
+               ' hx-target="#broker-quick-create-modal"'
+               ' hx-swap="innerHTML">+ New</button>')
+
+    html = (
+        '<div id="wizard-broker-select-wrap" style="display:flex;gap:6px;align-items:center">'
+        f'<select name="broker_id" style="flex:1">{"".join(opts)}</select>'
+        f'{new_btn}'
+        '</div>'
+        '<div id="broker-quick-create-modal" hx-swap-oob="innerHTML"></div>'
+    )
+    return HTMLResponse(html)
 
 
 # ---------------------------------------------------------------------------

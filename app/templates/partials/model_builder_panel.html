@@ -176,10 +176,11 @@
         {%- set _gap_active = _is_gap_adj and line.amount and (line.amount | float) != 0 -%}
         {%- set _is_engine = line.source_capital_module_id is not none -%}
         {%- set _is_auto_df = line.is_auto_dev_fee -%}
+        {%- set _is_cfsr = (line.label == 'Cash Flow Support Reserve') -%}
         <tr data-label="{{ line.label | lower }}" data-ms="{{ _ms_key }}" data-amt="{{ line.amount or 0 }}"
-            {% if _is_engine %}style="opacity:.75"{% elif _gap_active %}style="background:#fef3c7"{% elif _is_gap_adj %}style="background:#f3f4f6"{% elif _is_auto_df %}style="background:#eff6ff"{% endif %}
+            {% if _is_engine or _is_cfsr %}style="opacity:.75"{% elif _gap_active %}style="background:#fef3c7"{% elif _is_gap_adj %}style="background:#f3f4f6"{% elif _is_auto_df %}style="background:#eff6ff"{% endif %}
             onclick="openEditLine('use_lines', '{{ line.id }}', '{{ model.id }}')">
-          <td style="font-weight:500">{{ line.label }}{% if _is_auto_df %} <span class="text-small text-muted" title="Auto-calculated from %; edit % in drawer">🔒 {{ '%.1f' | format(line.dev_fee_pct | float) if line.dev_fee_pct is not none else '0' }}%</span>{% elif line.label in ('Operating Reserve', 'Acquisition Interest Reserve', 'Pre-Development Interest Reserve', 'Interest Reserve', 'Capitalized Construction Interest', 'Capitalized Pre-Development Interest', 'Capitalized Acquisition Interest', 'Lease-Up Reserve') and '(auto)' not in line.label %} <span class="text-small text-muted">(auto)</span>{% endif %}{# Phase 3d: show which Source this engine-injected reserve came from (set by Phase 2e tagging on bridge IO + closing costs) #}{% if line.source_capital_module_id %}{% set _src = (capital_modules | selectattr('id', 'equalto', line.source_capital_module_id) | list | first) %}{% if _src %} <span title="Engine-injected from the {{ _src.label }} Source" style="display:inline-block;font-size:10px;margin-left:4px;padding:1px 7px;background:#eff6ff;color:#1e40af;border-radius:10px;font-weight:500">from: {{ _src.label }}</span>{% endif %}{% endif %}</td>
+          <td style="font-weight:500">{{ line.label }}{% if _is_auto_df %} <span class="text-small text-muted" title="Auto-calculated from %; edit % in drawer">🔒 {{ '%.1f' | format(line.dev_fee_pct | float) if line.dev_fee_pct is not none else '0' }}%</span>{% elif line.label in ('Operating Reserve', 'Acquisition Interest Reserve', 'Pre-Development Interest Reserve', 'Interest Reserve', 'Capitalized Construction Interest', 'Capitalized Pre-Development Interest', 'Capitalized Acquisition Interest', 'Lease-Up Reserve', 'Cash Flow Support Reserve') and '(auto)' not in line.label %} <span class="text-small text-muted">(auto)</span>{% endif %}{# Phase 3d: show which Source this engine-injected reserve came from (set by Phase 2e tagging on bridge IO + closing costs) #}{% if line.source_capital_module_id %}{% set _src = (capital_modules | selectattr('id', 'equalto', line.source_capital_module_id) | list | first) %}{% if _src %} <span title="Engine-injected from the {{ _src.label }} Source" style="display:inline-block;font-size:10px;margin-left:4px;padding:1px 7px;background:#eff6ff;color:#1e40af;border-radius:10px;font-weight:500">from: {{ _src.label }}</span>{% endif %}{% endif %}</td>
           <td><span class="text-small text-muted" style="font-size:11px">
             {%- set _disp_from = (ms_id_to_key.get(line.active_from_milestone_id | string) if line.active_from_milestone_id else None) -%}
             {%- set _disp_to = (ms_id_to_key.get(line.spread_to_milestone_id | string) if line.spread_to_milestone_id else None) -%}
@@ -188,7 +189,7 @@
           </span></td>
           <td class="col-right text-mono">{{ line.amount | currency }}</td>
           <td style="width:28px;text-align:right">
-            {% if not _is_engine and not _is_auto_df %}
+            {% if not _is_engine and not _is_auto_df and not _is_cfsr %}
             {% if _is_gap_adj %}
             {# Phantom Gap Adjustment row — ✕ zeroes the slider rather than
                hard-deleting (router guard would 403 a direct DELETE). #}

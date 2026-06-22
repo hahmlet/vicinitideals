@@ -1371,66 +1371,6 @@ async def deal_setup_wizard_complete(
             ))
 
     # ── Pre-load $0 closing cost Use line stubs for Phase B modules ──────────
-    # Cost names match _DEFAULT_LOAN_COSTS in cashflow.py (keep in sync).
-    # amount=0 → engine computes at run time; amount>0 → user override, engine skips.
-    # Users see and edit these in the S&U table before running Compute.
-    _CC_PRELOAD_COSTS: dict[str, list[str]] = {
-        "construction_loan":    ["Origination Fee", "Lender Legal", "Title / Survey", "Environmental Phase I"],
-        "permanent_debt":       ["Origination Fee", "Lender Legal", "Appraisal", "Title"],
-        "pre_development_loan": ["Origination Fee", "Lender Legal"],
-        "acquisition_loan":     ["Origination Fee", "Lender Legal", "Title / Survey"],
-        "bridge":               ["Origination Fee", "Lender Legal"],
-        "bond":                 ["Bond Issuance Fee", "Bond Counsel Legal"],
-    }
-    _APS_TO_PHASE: dict[str, str] = {
-        "acquisition": "acquisition",      "close": "acquisition",
-        "pre_construction": "pre_construction",
-        "construction": "construction",
-        "lease_up": "operation",           "operation_lease_up": "operation",
-        "stabilized": "operation",         "operation_stabilized": "operation",
-        "exit": "exit",                    "divestment": "exit",
-    }
-    for _cc_mod in _cc_preload_modules:
-        _cc_ft_str = _cc_mod["loan_subtype"]
-        # Map construction_to_perm → bond for cost lookup
-        _cc_ft_key = "bond" if _cc_ft_str == "construction_to_perm" else _cc_ft_str
-        _cost_names = _CC_PRELOAD_COSTS.get(_cc_ft_key)
-        if not _cost_names:
-            continue
-        _cc_lbl  = _cc_mod["label"]
-        _cc_phase = _APS_TO_PHASE.get(_cc_mod["active_phase_start"] or "", "pre_construction")
-        for _proj in all_scenario_projects:
-            # Skip itemized stubs once the engine has written a TFC summary for
-            # this module+project.  Stubs are pre-compute scaffolding; once the
-            # engine's single "Total Finance Costs" row exists, re-creating
-            # stubs that the user deleted just creates noise.
-            _tfc_summary_exists = (await session.execute(
-                select(UseLine.id).where(
-                    UseLine.project_id == _proj.id,
-                    UseLine.label == f"{_cc_lbl} — Total Finance Costs",
-                    UseLine.is_auto_finance_cost == True,
-                ).limit(1)
-            )).scalar_one_or_none()
-            if _tfc_summary_exists is not None:
-                continue
-            for _cost_name in _cost_names:
-                _full_cc_lbl = f"{_cc_lbl} — {_cost_name}"
-                _existing_cc = (await session.execute(
-                    select(UseLine).where(
-                        UseLine.project_id == _proj.id,
-                        UseLine.label == _full_cc_lbl,
-                    )
-                )).scalar_one_or_none()
-                if _existing_cc is None:
-                    session.add(UseLine(
-                        project_id=_proj.id,
-                        label=_full_cc_lbl,
-                        phase=_cc_phase,
-                        amount=Decimal("0"),
-                        timing_type="first_day",
-                        dev_fee_basis_bucket="total_finance_costs",
-                        notes="Auto-computed — edit to override",
-                    ))
 
     # ── UnitMix: seed from opportunity if none exist ─────────────────────────
     # unit_mix is JSONB on Project; shape: [{label, unit_count, beds, baths, sqft, rent_monthly, notes}]
