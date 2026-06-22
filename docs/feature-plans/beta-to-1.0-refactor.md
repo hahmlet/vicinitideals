@@ -41,18 +41,20 @@ remaining quick wins.
 > - **Dev-fee multi-source engine** — `fee_terms` JSONB (migration 0103).
 > - **Reserves refactor** — ODR is a first-class UseLine; lease-up merged into interest reserve (0109–0111).
 > - **Parcel-intelligence decommission** (2026-06) — LoopNet, HelloData scraper, county-GIS pipeline, the Map, the parcel tables (migration 0113), and the Building-entity stubs all removed; Crexi import + KNN comps retained. Trimmed `ui.py` by ~1,500 lines / 18 routes. Full record in the decommission section below.
+> - **ui.py split — partial** (2026-06) — 4 of 8 sub-routers extracted: `ui_settings.py`, `ui_deals_pipeline.py`, `ui_wizards.py`, `ui_model_outputs.py`. `ui.py` is now ~7,900 lines (was 14,559). See Phase 2a status table.
+> - **Scenario Templates** (migration 0114, 2026-06) — `scenario_templates` table + `ScenarioTemplate` model; save-from-model UI (`model_builder.html`), settings management (`ui_settings.py`), apply-on-deal-create (seeds income streams, expense lines, debt types from template). Wizard Step 2 pre-checks debt types from template; engine cleans up wizard $0 closing-cost stubs after compute.
+> - **Opportunity wizard cleanup** (2026-06) — removed "Link a Property" Step 2; wizard is now 2 steps (parcel decommission follow-on).
 
 ---
 
 ## Evidence (current state)
 
-### ui.py is 14,559 lines with 133 route handlers
+### ui.py — split in progress (~7,900 lines remaining)
 
-Grew ~7,900 (early) → 12,228 (May) → 16,036 (pre-decommission) → **14,559 (now)**, no `ui/`
-subdirectory — the split has not started. Handles deals, model builder, timeline wizard,
-portfolio, brokers, Crexi-listing dedup — all in one file. The `handle_form_create_or_update`
-hub still fans out to 300+ downstream nodes. The parcel decommission (below) already deleted a
-chunk of these routes, shrinking the eventual split.
+Grew ~7,900 (early) → 12,228 (May) → 16,036 (pre-decommission) → 14,559 (post-decommission) → **~7,900 (now, split underway)**.
+4 of 8 sub-routers extracted (settings, deals_pipeline, wizards, model_outputs). Remaining:
+model_builder (heaviest — `handle_form_create_or_update` fans out to 300+ nodes), data_intel,
+portfolios, _helpers.
 
 ### Code duplication (still live)
 
@@ -128,17 +130,11 @@ KNN comps, `Opportunity.apn` / `apn_normalized` / `lat` / `lng`, manual jurisdic
 `Broker.loopnet_broker_id`, and the `hellodata_*` / `jurisdiction` columns — "not production
 features at the moment." No further parcel-DB drops planned.
 
-### Still pending (carried into Phase 1 / 1.5)
+### Still pending — ALL DONE (shipped in Phase 1 / 1.5)
 
-- **DC-6 — Fix the `hide_test` filter** so Crexi Oppos display (the test-data filter currently
-  hides them alongside the old LoopNet rows).
-- **Crexi listing lifecycle.** A scheduled task moving stale / expired / sold Crexi listings into
-  an **Archived** Opportunity status — data retained, hidden from active views. Needs an
-  `archived` / lifecycle-status field on `Opportunity` + a Celery beat task with a staleness rule.
-- **Opportunity ↔ Broker link.** Broker FK/M2M on `Opportunity` + a broker picker in the Oppo
-  create/edit UI so manually-created Oppos can be tied to a Broker. Brokers already have dedup;
-  this just wires the relationship + UI. (Schema impact: broker link + archived status on
-  `Opportunity` — update `docs/DATA_MODEL.md` when built.)
+- ~~**DC-6 — Fix the `hide_test` filter**~~ ✓ (`coalesce(name,"")` in `_load_deals` + `_apply_opp_filters`)
+- ~~**Crexi listing lifecycle.**~~ ✓ (`archive_stale_crexi_listings` Celery task + beat schedule; `archived` status on `Opportunity`)
+- ~~**Opportunity ↔ Broker link.**~~ ✓ (`Opportunity.broker_id` FK + broker picker in opportunity wizard)
 
 ---
 
@@ -186,17 +182,30 @@ The parcel decommission (DC-1…DC-5) shipped — see the section above. Remaini
 - ~~Gantt CSS extraction → single shared block in `base.html`.~~ ✓ (Gantt v2 styles live in `base.html`)
 - ~~`offer_made` defaults unification (resolve 14 vs 7 — one source of truth).~~ ✓ (14 days everywhere in current code; 7-day refs only in dead worktrees)
 - ~~`debt_sizing_mode` single-source (model_builder + settings_org).~~ ✓ (`debt_sizing_options` macro + `org_set_fields` mechanism)
-- **Property-type list consolidation** — blocked on business decision (see Open Decisions).
+- ~~**Property-type list consolidation**~~ ✓ (keep 6 from `opportunities.html`, no code change needed — see Open Decisions)
 
 ### Phase 1.5 — New small builds — DONE (2026-06-15)
 
 - ~~Crexi listing lifecycle → Archived status + scheduled purge.~~ ✓ (`archive_stale_crexi_listings` task + beat schedule)
 - ~~Opportunity ↔ Broker link (schema + picker UI).~~ ✓ (`Opportunity.broker_id` FK + picker in opportunity wizard)
 
-### Phase 2a — ui.py split
+### Phase 2a — ui.py split — IN PROGRESS
 
-Extract `_helpers.py` first, then one sub-router per PR, run E2E after each, delete from `ui.py`.
-Do `model_builder.py` last. Smaller than the May estimate thanks to the decommission.
+`ui.py` is now **~7,900 lines** (down from 14,559). Four sub-routers extracted; four remain.
+Each extracted module runs alongside `ui.py` (routes not yet deleted from the original).
+
+| Sub-router | Status |
+|---|---|
+| `ui_settings.py` | **Done ✓** (settings, org, source vehicles, scenario templates) |
+| `ui_deals_pipeline.py` | **Done ✓** (deal list/CRUD, opportunities, opp wizard, deal creation) |
+| `ui_wizards.py` | **Done ✓** (timeline wizard, deal setup wizard) |
+| `ui_model_outputs.py` | **Done ✓** (exports, draw schedule, save-as-template, NOI, history) |
+| `ui_data_intel.py` | Pending (brokers, Crexi-sourced oppos, Crexi dedup) |
+| `ui_portfolios.py` | Pending (portfolios, deal search, saved filters) |
+| `ui_model_builder.py` | Pending — last; `handle_form_create_or_update` hub stays until 2b |
+| `ui/_helpers.py` | Pending (shared: `_get_user`, `_load_builder_data`, `_fmt_currency`, …) |
+
+Next: extract `_helpers.py`, then `ui_data_intel.py` and `ui_portfolios.py`. Delete extracted routes from `ui.py` after each. Do `model_builder.py` last.
 
 ### Phase 2b — Service layer extraction
 
