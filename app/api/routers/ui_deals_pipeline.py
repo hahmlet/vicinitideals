@@ -1098,7 +1098,7 @@ async def opportunities_rows_onmarket(
     stmt = (
         select(Opportunity)
         .where(
-            Opportunity.promotion_source.in_(["loopnet", "crexi", "scraper"]),
+            Opportunity.source.in_(["loopnet", "loopnet_lease", "crexi", "scraper"]),
             Opportunity.id.notin_(active_oppo_ids),
             Opportunity.archived.is_(False),
         )
@@ -1246,7 +1246,7 @@ async def opportunity_wizard_search(
     stmt = (
         select(Opportunity)
         .where(
-            Opportunity.promotion_source.in_(["loopnet", "crexi", "scraper"]),
+            Opportunity.source.in_(["loopnet", "loopnet_lease", "crexi", "scraper"]),
             Opportunity.archived.is_(False),
         )
         .order_by(Opportunity.last_seen_at.desc())
