@@ -315,7 +315,7 @@ async def upsert_brokers(
                 await session.execute(
                     select(Brokerage.id).where(
                         func.lower(Brokerage.name) == brokerage_name.lower()
-                    )
+                    ).limit(1)
                 )
             ).scalar_one_or_none()
             if existing_brokerage_id is not None:

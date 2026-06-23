@@ -159,7 +159,17 @@ async def _merge_group(
         )
         report.listings_reassigned += len(result.fetchall())
 
-        # Reassign disciplinary actions
+        # Reassign disciplinary actions — drop loser's cases already on winner
+        # to avoid violating uq_broker_disciplinary_actions_broker_case.
+        winner_cases = select(BrokerDisciplinaryAction.case_number).where(
+            BrokerDisciplinaryAction.broker_id == winner.id
+        )
+        await session.execute(
+            delete(BrokerDisciplinaryAction).where(
+                BrokerDisciplinaryAction.broker_id == loser.id,
+                BrokerDisciplinaryAction.case_number.in_(winner_cases),
+            )
+        )
         result = await session.execute(
             update(BrokerDisciplinaryAction)
             .where(BrokerDisciplinaryAction.broker_id == loser.id)
