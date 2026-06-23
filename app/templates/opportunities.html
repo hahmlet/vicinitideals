@@ -386,8 +386,12 @@ function toggleSection(name) {
     }
 
     populateSavedSelect();
-    updateSaveBtn();
-    loadAll();
+    if (window.location.search) {
+      applyFilterQS(window.location.search);
+    } else {
+      updateSaveBtn();
+      loadAll();
+    }
   });
 
   document.addEventListener('htmx:afterSettle', updateCounts);
