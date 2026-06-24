@@ -1352,4 +1352,7 @@ computed at render time as `Project - Task - Label - Stage - MM-DD-YYYY.ext`
 (sanitized for iOS/Windows), so toggling stage or moving a doc between tasks
 renames it for free. Every document now lives in a task — task-less docs are
 auto-filed into a per-project "Misc." task (also backfilled by `0121`). Whole-
-deal downloads stream a zip foldered `Project/Task/file`.
+deal downloads stream a zip foldered `Project/Task/file`. `document_tasks.notes`
+now holds a sanitized rich-text subset (bold/italic/strike + bullet/numbered
+lists, allow-list HTML) edited via the per-task Notes button; downloads flatten
+it to indented plain text as `notes.txt`.
