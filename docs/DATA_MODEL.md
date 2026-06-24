@@ -1325,6 +1325,7 @@ metadata + the `storage_key` pointer. See `app/storage/documents.py`.
 | `storage_key` | str(1024) | path relative to the storage root |
 | `status` | enum `active`/`archived` | archive hides from default view; recoverable |
 | `archived_at` | timestamptz | set when archived |
+| `task_id` | UUID FK → document_tasks (SET NULL) | optional grouping under a task ("subfolder"); null = project root (Phase 2) |
 | `uploaded_by_user_id` | UUID FK → users (SET NULL) | null for guest uploads (Phase 3) |
 | `preview_status` | enum `none`/`pending`/`ready`/`failed` | Office→PDF conversion (Phase 1b) |
 | `preview_key` | str(1024) | storage key of the converted PDF when `ready` |
@@ -1336,5 +1337,64 @@ Index `ix_documents_project_status` on `(org_id, project_id, status)`.
 Scenario→Deal (`app/api/routers/ui_documents.py:_project_org_id`), so each
 Document denormalizes `org_id` to allow direct org-scoped access checks.
 
-Migration: `0115_document_room.py`. Future phases add `document_tasks`
-(task view) and `document_shares` (external links).
+Migrations: `0115_document_room.py` (documents), `0116_document_tasks.py`
+(task view + `documents.task_id`), `0117_document_shares.py` (external links).
+
+### Task view (`document_tasks`)
+
+A document-collection task / "subfolder" tracking *what still needs
+collecting* — status, due date, notes only. Tracking-only: no assignee, no
+manual ordering, no activity log, and it never gates financial-model behavior
+(mirrors, does not extend, `Project.timeline_approved`).
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | UUID PK | |
+| `org_id` | UUID FK → organizations (CASCADE) | |
+| `project_id` | UUID FK → projects (CASCADE) | |
+| `title` | str(512) | |
+| `status` | enum `pending`/`in_progress`/`complete` | inline-editable in the task list |
+| `notes` | text | free-text, nullable |
+| `due_date` | date | hard-coded due date; used when `due_milestone_id` is null |
+| `due_milestone_id` | UUID FK → milestones (SET NULL) | milestone-relational due date |
+| `due_offset_days` | int (default 0) | offset added to the milestone's `computed_end()` |
+| `created_at` / `updated_at` | timestamptz | |
+
+Index `ix_document_tasks_project` on `(org_id, project_id, status)`.
+
+`DocumentTask.computed_due_date(milestone_map)` resolves the effective due
+date: when `due_milestone_id` is set it returns
+`Milestone.computed_end(milestone_map) + due_offset_days` (the same chain-walk
+the timeline engine uses), else the hard-coded `due_date`. The task-zip
+download bundles the task's active documents plus a generated `notes.txt`.
+
+### External sharing (`document_shares`)
+
+A revocable external share link letting lenders/brokers/sellers reach a
+project's document room **without an org account**. The public URL carries an
+`itsdangerous` token (salt `"doc-share"`, see `app/emails/tokens.py`:
+`make_/load_doc_share_token`, max age `settings.doc_share_token_max_age_seconds`)
+encoding the share `id`. Validity is DB-backed: every guest request loads the
+row, so a link can be revoked instantly (`revoked=True`) regardless of the
+token's own signature/expiry. **No passcode.**
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | UUID PK | encoded in the share token |
+| `org_id` | UUID FK → organizations (CASCADE) | |
+| `project_id` | UUID FK → projects (CASCADE) | scope of the link |
+| `label` | str(255) | display name, nullable (e.g. "Sent to lender") |
+| `created_by_user_id` | UUID FK → users (SET NULL) | owner who created the link |
+| `revoked` | bool (default false) | non-revoked = active |
+| `revoked_at` | timestamptz | set on revoke |
+| `created_at` / `updated_at` | timestamptz | |
+
+Index `ix_document_shares_project` on `(org_id, project_id)`.
+
+Guest access is served by the share routes in `app/api/routers/ui_documents.py`
+(template `share_documents.html` + `share_*` partials); the `/share/...` prefix
+is exempt from the API-key and session gates in `app/api/main.py`. A guest on a
+valid, non-revoked link may **view, upload, and download** tasks/documents but
+never **archive or delete** (no destructive routes exist under the guest
+prefix). Guest upload filenames are sanitized and the guest viewer escapes
+user-supplied content (stored-XSS hardening).
