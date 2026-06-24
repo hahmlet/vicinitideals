@@ -163,6 +163,16 @@ table.doc-table { width: 100%; border-collapse: collapse; }
     </div>
   </form>
 
+  <div class="doc-toolbar" style="gap:10px">
+    <label class="doc-filt-lbl"><input type="checkbox" id="task-select-all" onclick="taskToggleAll(this)"> Select all files</label>
+    <div class="doc-bulk" id="task-bulk" style="display:none;margin-left:0">
+      <button type="button" class="btn btn-secondary btn-sm" onclick="taskZipSelected()">⬇ Download</button>
+      <button type="button" class="btn btn-secondary btn-sm" onclick="taskBulk('archive')">🗄 Archive</button>
+      <button type="button" class="btn btn-secondary btn-sm" onclick="taskBulk('delete')">🗑 Delete</button>
+      <button type="button" class="btn btn-secondary btn-sm" onclick="taskBulkMove()">↪ Move</button>
+    </div>
+  </div>
+
   {% include "partials/task_rows.html" %}
 
 {% endif %}
@@ -176,6 +186,7 @@ table.doc-table { width: 100%; border-collapse: collapse; }
 </div>
 
 {% include "partials/upload_modal.html" %}
+{% include "partials/move_modal.html" %}
 
 <!-- Viewer modal -->
 <div class="doc-modal" id="doc-modal" onclick="if(event.target===this)docCloseViewer()">
@@ -200,6 +211,7 @@ table.doc-table { width: 100%; border-collapse: collapse; }
 <script>
 function docToggleAll(master) {
   document.querySelectorAll('.doc-check').forEach(function (cb) { cb.checked = master.checked; });
+  docUpdateBulkBar();
 }
 function docSelectedIds() {
   return Array.prototype.slice.call(document.querySelectorAll('.doc-check:checked'))
@@ -210,6 +222,99 @@ function docZipSelected(projectId) {
   if (!ids.length) { alert('Select at least one document to download.'); return; }
   var qs = ids.map(function (id) { return 'ids=' + encodeURIComponent(id); }).join('&');
   window.location = '/ui/projects/' + projectId + '/documents/zip?' + qs;
+}
+
+// ── Bulk-action bars appear only when ≥1 document is checked ───────────────
+var TASK_STATUS = '{{ status }}';
+function docUpdateBulkBar() {
+  var bar = document.getElementById('doc-bulk');
+  if (bar) bar.style.display = docSelectedIds().length ? 'flex' : 'none';
+}
+function taskSelectedChecks() {
+  return Array.prototype.slice.call(document.querySelectorAll('.task-check:checked'));
+}
+function taskToggleAll(master) {
+  document.querySelectorAll('.task-check').forEach(function (cb) { cb.checked = master.checked; });
+  taskUpdateBulkBar();
+}
+function taskUpdateBulkBar() {
+  var all = document.querySelectorAll('.task-check'), sel = taskSelectedChecks();
+  var bar = document.getElementById('task-bulk');
+  if (bar) bar.style.display = sel.length ? 'flex' : 'none';
+  var master = document.getElementById('task-select-all');
+  if (master) {
+    master.checked = all.length > 0 && sel.length === all.length;
+    master.indeterminate = sel.length > 0 && sel.length < all.length;
+  }
+}
+// Delegated so HTMX-swapped rows/cards keep working; reset bars after a swap.
+document.addEventListener('change', function (e) {
+  if (!e.target.classList) return;
+  if (e.target.classList.contains('doc-check')) docUpdateBulkBar();
+  if (e.target.classList.contains('task-check')) taskUpdateBulkBar();
+});
+document.body.addEventListener('htmx:afterSwap', function () {
+  docUpdateBulkBar(); taskUpdateBulkBar();
+});
+
+// ── Move selected documents to a task (both views, via the move modal) ─────
+function _selNames(checks, sel) {
+  return checks.map(function (cb) {
+    var scope = cb.closest(sel), n = scope && scope.querySelector('.doc-name');
+    return n ? n.textContent.trim() : 'Document';
+  });
+}
+function docOpenMove() {
+  var checks = Array.prototype.slice.call(document.querySelectorAll('.doc-check:checked'));
+  if (!checks.length) { alert('Select at least one document to move.'); return; }
+  VDMOVE.open({
+    ids: checks.map(function (cb) { return cb.value; }), names: _selNames(checks, 'tr'),
+    tasks: {{ task_options | tojson }},
+    url: '/ui/projects/{{ project_id }}/documents/bulk',
+    target: '#doc-panel', swap: 'outerHTML',
+    extra: function () { return Object.assign({ action: 'move', view: 'documents' }, vdDocFields()); }
+  });
+}
+function taskBulkMove() {
+  var checks = taskSelectedChecks();
+  if (!checks.length) { alert('Select at least one document to move.'); return; }
+  VDMOVE.open({
+    ids: checks.map(function (cb) { return cb.value; }), names: _selNames(checks, '.task-doc'),
+    tasks: {{ task_options | tojson }},
+    url: '/ui/projects/{{ project_id }}/documents/bulk',
+    target: '#task-list', swap: 'outerHTML',
+    extra: function () { return { action: 'move', view: 'tasks', status: TASK_STATUS }; }
+  });
+}
+// ── Task View bulk archive / delete / download ────────────────────────────
+function taskBulk(action) {
+  var checks = taskSelectedChecks();
+  if (!checks.length) { alert('Select at least one document.'); return; }
+  if (action === 'delete' &&
+      !window.confirm('Permanently delete the selected documents? This cannot be undone.')) return;
+  var fd = new FormData();
+  fd.append('action', action); fd.append('view', 'tasks'); fd.append('status', TASK_STATUS);
+  checks.forEach(function (cb) { fd.append('ids', cb.value); });
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', '/ui/projects/{{ project_id }}/documents/bulk');
+  xhr.onload = function () {
+    if (xhr.status < 200 || xhr.status >= 300) { alert('Action failed (' + xhr.status + ').'); return; }
+    var tgt = document.getElementById('task-list');
+    if (!tgt) return;
+    var tmp = document.createElement('div'); tmp.innerHTML = xhr.responseText.trim();
+    var node = tmp.firstElementChild;
+    tgt.replaceWith(node);
+    if (window.htmx && node) htmx.process(node);
+    taskUpdateBulkBar();
+  };
+  xhr.onerror = function () { alert('Action failed.'); };
+  xhr.send(fd);
+}
+function taskZipSelected() {
+  var ids = taskSelectedChecks().map(function (cb) { return cb.value; });
+  if (!ids.length) { alert('Select at least one document to download.'); return; }
+  var qs = ids.map(function (id) { return 'ids=' + encodeURIComponent(id); }).join('&');
+  window.location = '/ui/projects/{{ project_id }}/documents/zip?' + qs;
 }
 // Sort/filter state lives in #doc-filter-form's hidden inputs (single source of
 // truth). Controls mutate it then re-fire the form, which swaps the panel.

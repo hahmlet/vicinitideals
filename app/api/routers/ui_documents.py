@@ -764,6 +764,10 @@ async def documents_bulk(
     session: DBSession,
     action: str = Form(...),
     ids: list[UUID] = Form(default=[]),
+    task_choice: str = Form(default=""),
+    new_task: str = Form(default=""),
+    view: str = Form(default="documents"),
+    status: str = Form(default="all"),
     show: str = Form(default="active"),
     sort: str = Form(default="date"),
     direction: str = Form(default="desc"),
@@ -771,10 +775,12 @@ async def documents_bulk(
     date_from: str = Form(default=""),
     date_to: str = Form(default=""),
 ) -> HTMLResponse:
-    """Archive / recover / delete the selected documents (mutating, swaps rows).
+    """Bulk archive / recover / delete / move the selected documents.
 
-    Bulk *download* is a separate GET (``/documents/zip``) so the browser
-    handles the file save instead of HTMX trying to swap a binary body.
+    Re-renders the document panel (``view='documents'``) or the task list
+    (``view='tasks'``) so the same action works from either tab. Bulk *download*
+    is a separate GET (``/documents/zip``) so the browser handles the file save
+    instead of HTMX trying to swap a binary body.
     """
     user, org_id, project = await _require_project(session, request, project_id)
     selected: list[Document] = []
@@ -801,10 +807,20 @@ async def documents_bulk(
             if d.preview_key:
                 delete_document(d.preview_key)
             await session.delete(d)
+    elif action == "move":
+        # One shared cache so a "create new task" choice yields a single task.
+        new_cache: dict[str, UUID] = {}
+        target_task = await _resolve_task_choice(
+            session, org_id, project_id, task_choice, new_task, new_cache
+        )
+        for d in selected:
+            d.task_id = target_task
     else:
         raise HTTPException(status_code=400, detail="Unknown bulk action")
 
     await session.commit()
+    if view == "tasks":
+        return await _tasks_list_response(request, session, org_id, project_id, status)
     q = _doc_query(sort=sort, direction=direction, ext=ext, date_from=date_from, date_to=date_to)
     docs = await _load_docs(session, org_id, project_id, show, q)
     available_exts = await _distinct_exts(session, org_id, project_id)
@@ -1199,12 +1215,18 @@ async def task_delete(
 ) -> HTMLResponse:
     user, task = await _require_task(session, request, task_id)
     org_id, project_id = task.org_id, task.project_id
-    # Detach documents from the task (keep the files); then delete the task.
+    # Keep the files but re-file them into 'Misc.' (every doc lives in a task);
+    # then delete the task. Skip when deleting Misc. itself to avoid a self-ref.
     docs = (
         await session.execute(select(Document).where(Document.task_id == task_id))
     ).scalars().all()
-    for d in docs:
-        d.task_id = None
+    if docs and task.title.strip().lower() != "misc.":
+        misc = await _get_or_create_misc_task(session, org_id, project_id)
+        for d in docs:
+            d.task_id = misc.id
+    else:
+        for d in docs:
+            d.task_id = None
     await session.delete(task)
     await session.commit()
     return await _tasks_list_response(request, session, org_id, project_id, status)

@@ -25,6 +25,7 @@
   <div class="task-docs">
     {% for d in t.documents %}
     <div class="task-doc">
+      <input type="checkbox" class="task-check" value="{{ d.id }}" title="Select">
       {% if d.viewable %}
       <button type="button" class="doc-name js-doc-view" data-doc-id="{{ d.id }}" data-doc-name="{{ d.display_name }}">{{ d.icon }} {{ d.display_name }}</button>
       {% else %}

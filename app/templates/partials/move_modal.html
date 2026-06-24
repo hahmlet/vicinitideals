@@ -1,0 +1,139 @@
+{# ─────────────────────────────────────────────────────────────────────────────
+   Shared "Move to task" modal. Lists the selected documents and one Task picker
+   (existing tasks + "Create new task…"); Confirm moves them all in one request.
+
+     VDMOVE.open({
+       ids:    ['uuid', ...],          // selected document ids
+       names:  ['Display name', ...],  // parallel to ids (shown in the table)
+       tasks:  [{id,title}, ...],      // task options
+       url:    '/ui/projects/<pid>/documents/bulk',
+       target: '#doc-panel',           // element to replace with the response
+       swap:   'outerHTML',            // 'outerHTML' | 'innerHTML'
+       extra:  () => ({action:'move', view:'documents', ...})  // extra form fields
+     })
+
+   Include ONCE per page (owns #vdmove-* ids + window.VDMOVE).
+   ───────────────────────────────────────────────────────────────────────────── #}
+<style>
+  #vdmove-modal { display:none; position:fixed; inset:0; z-index:1001;
+    background:rgba(15,23,42,.55); align-items:center; justify-content:center; padding:24px; }
+  #vdmove-box { background:var(--surface,#fff); color:var(--text,#1f2430); border-radius:12px;
+    width:min(620px,100%); max-height:86vh; display:flex; flex-direction:column;
+    box-shadow:0 24px 60px rgba(15,23,42,.35); }
+  #vdmove-head { padding:16px 20px; border-bottom:1px solid var(--border,#e2e5ea); }
+  #vdmove-head h3 { margin:0; font-size:16px; }
+  #vdmove-head .vdmove-sub { font-size:12px; color:var(--text-muted,#6b7280); }
+  #vdmove-list { overflow-y:auto; padding:8px 20px; flex:1; }
+  .vdmove-item { font-size:13px; padding:6px 0; border-bottom:1px solid var(--border,#eef0f3);
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  #vdmove-pick { padding:14px 20px; border-top:1px solid var(--border,#e2e5ea);
+    display:flex; flex-direction:column; gap:8px; }
+  #vdmove-pick label { font-size:11px; text-transform:uppercase; letter-spacing:.04em;
+    color:var(--text-muted,#9aa1ad); }
+  #vdmove-task, #vdmove-newtask { width:100%; padding:7px 8px; border:1px solid var(--border,#e2e5ea);
+    border-radius:6px; font-size:13px; background:var(--bg,#fff); }
+  #vdmove-newtask { display:none; }
+  #vdmove-foot { padding:14px 20px; border-top:1px solid var(--border,#e2e5ea);
+    display:flex; align-items:center; gap:10px; }
+  #vdmove-foot .vdmove-spacer { flex:1; }
+</style>
+
+<div id="vdmove-modal" onclick="if(event.target===this)VDMOVE.cancel()">
+  <div id="vdmove-box">
+    <div id="vdmove-head">
+      <h3>Move to task</h3>
+      <span class="vdmove-sub" id="vdmove-sub"></span>
+    </div>
+    <div id="vdmove-list"></div>
+    <div id="vdmove-pick">
+      <label for="vdmove-task">Task</label>
+      <select id="vdmove-task" onchange="VDMOVE.onTask()"></select>
+      <input type="text" id="vdmove-newtask" placeholder="New task name">
+    </div>
+    <div id="vdmove-foot">
+      <span class="vdmove-spacer"></span>
+      <button type="button" class="btn btn-secondary btn-sm" onclick="VDMOVE.cancel()">Cancel</button>
+      <button type="button" class="btn btn-primary btn-sm" id="vdmove-submit" onclick="VDMOVE.submit()">↪ Move</button>
+    </div>
+  </div>
+</div>
+
+<script>
+window.VDMOVE = (function () {
+  var cfg = null;
+  function $(id) { return document.getElementById(id); }
+
+  function open(c) {
+    if (!c.ids || !c.ids.length) { alert('Select at least one document to move.'); return; }
+    cfg = c;
+    $('vdmove-sub').textContent = c.ids.length + ' document' + (c.ids.length === 1 ? '' : 's');
+    var list = $('vdmove-list'); list.innerHTML = '';
+    (c.names || []).forEach(function (n) {
+      var row = document.createElement('div');
+      row.className = 'vdmove-item'; row.textContent = '📄 ' + n;
+      list.appendChild(row);
+    });
+    var sel = $('vdmove-task'); var opts = '';
+    (c.tasks || []).forEach(function (t) {
+      opts += '<option value="' + t.id + '">' + escapeHtml(t.title) + '</option>';
+    });
+    opts += '<option value="__new__">➕ Create new task…</option>';
+    sel.innerHTML = opts; sel.value = (c.tasks && c.tasks.length) ? c.tasks[0].id : '__new__';
+    onTask();
+    $('vdmove-newtask').value = '';
+    $('vdmove-modal').style.display = 'flex';
+  }
+
+  function onTask() {
+    var isNew = $('vdmove-task').value === '__new__';
+    $('vdmove-newtask').style.display = isNew ? 'block' : 'none';
+    if (isNew) $('vdmove-newtask').focus();
+  }
+
+  function cancel() { $('vdmove-modal').style.display = 'none'; cfg = null; }
+
+  function submit() {
+    if (!cfg) return;
+    var choice = $('vdmove-task').value;
+    var fd = new FormData();
+    cfg.ids.forEach(function (id) { fd.append('ids', id); });
+    fd.append('task_choice', choice);
+    fd.append('new_task', choice === '__new__' ? ($('vdmove-newtask').value || '') : '');
+    var extra = (typeof cfg.extra === 'function') ? cfg.extra() : (cfg.extra || {});
+    Object.keys(extra).forEach(function (k) { fd.append(k, extra[k]); });
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', cfg.url);
+    $('vdmove-submit').disabled = true;
+    xhr.onload = function () {
+      $('vdmove-submit').disabled = false;
+      if (xhr.status >= 200 && xhr.status < 300) { swap(xhr.responseText); cancel(); }
+      else { alert('Move failed (' + xhr.status + ').'); }
+    };
+    xhr.onerror = function () { $('vdmove-submit').disabled = false; alert('Move failed.'); };
+    xhr.send(fd);
+  }
+
+  function swap(html) {
+    var tgt = document.querySelector(cfg.target);
+    if (!tgt) return;
+    var parent = tgt.parentNode;
+    if (cfg.swap === 'innerHTML') { tgt.innerHTML = html; if (window.htmx) htmx.process(tgt); }
+    else {
+      var tmp = document.createElement('div'); tmp.innerHTML = html.trim();
+      var node = tmp.firstElementChild;
+      tgt.replaceWith(node);
+      if (window.htmx && node) htmx.process(node);
+      else if (window.htmx && parent) htmx.process(parent);
+    }
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  return { open: open, onTask: onTask, cancel: cancel, submit: submit };
+})();
+</script>

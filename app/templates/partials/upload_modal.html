@@ -126,7 +126,8 @@ window.VDUP = (function () {
       taskCell.textContent = '🔒 ' + (cfg.lockedTitle || 'This task');
     } else {
       var sel = document.createElement('select'); sel.className = 'vdup-task';
-      var opts = '';
+      var hasMisc = (cfg.tasks || []).some(function (t) { return t.title.toLowerCase() === 'misc.'; });
+      var opts = hasMisc ? '' : '<option value="__misc__" selected>Misc.</option>';
       (cfg.tasks || []).forEach(function (t) {
         var s = (t.title.toLowerCase() === 'misc.') ? ' selected' : '';
         opts += '<option value="' + t.id + '"' + s + '>' + escapeHtml(t.title) + '</option>';

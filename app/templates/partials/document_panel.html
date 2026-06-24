@@ -15,7 +15,7 @@
       <a href="#" onclick="docSetShow('active');return false;" class="{% if show != 'archived' %}active{% endif %}">Active</a>
       <a href="#" onclick="docSetShow('archived');return false;" class="{% if show == 'archived' %}active{% endif %}">Archived</a>
     </div>
-    <div class="doc-bulk">
+    <div class="doc-bulk" id="doc-bulk" style="display:none">
       <button type="button" class="btn btn-secondary btn-sm"
               onclick="docZipSelected('{{ project_id }}')">⬇ Download</button>
       {% if show == "archived" %}
@@ -37,6 +37,7 @@
               hx-vals='{"action":"delete"}'
               hx-confirm="Permanently delete the selected documents? This cannot be undone."
               hx-target="#doc-panel" hx-swap="outerHTML">🗑 Delete</button>
+      <button type="button" class="btn btn-secondary btn-sm" onclick="docOpenMove()">↪ Move</button>
     </div>
   </div>
 
