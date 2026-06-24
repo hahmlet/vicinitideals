@@ -54,7 +54,11 @@
       align-items: center; justify-content: center; }
     .doc-modal.open { display: flex; }
     .doc-modal-box { background: #fff; width: 88vw; height: 90vh; border-radius: 8px; display: flex; flex-direction: column; overflow: hidden; }
-    .doc-modal iframe, .doc-modal img { flex: 1; border: none; width: 100%; height: 100%; object-fit: contain; }
+    #doc-modal-body { flex: 1; display: flex; overflow: auto; min-height: 0; }
+    #doc-modal-body iframe { flex: 1; border: none; width: 100%; }
+    #doc-modal-body.is-image { display: block; background: #1b1f27; }
+    #doc-modal-body.is-image img { display: block; width: 100%; max-width: none; height: auto; }
+    .doc-zoom { display: flex; align-items: center; gap: 4px; }
     .doc-modal-bar { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-bottom: 1px solid var(--border); }
   </style>
 </head>
@@ -96,17 +100,36 @@
     <div class="doc-modal-box">
       <div class="doc-modal-bar">
         <strong id="doc-modal-name" style="flex:1"></strong>
-        <button type="button" class="btn btn-secondary btn-sm" onclick="gCloseViewer()">✕ Close</button>
+        <span class="doc-zoom" id="doc-zoom-ctrl" style="display:none">
+          <button type="button" class="btn btn-sm" onclick="gZoom(-1)" title="Zoom out">−</button>
+          <span id="doc-zoom-pct" style="min-width:48px;text-align:center;font-size:12px">100%</span>
+          <button type="button" class="btn btn-sm" onclick="gZoom(1)" title="Zoom in">+</button>
+          <button type="button" class="btn btn-sm" onclick="gZoomReset()" title="Fit">Reset</button>
+        </span>
+        <button type="button" class="btn btn-sm" onclick="gCloseViewer()">✕ Close</button>
       </div>
-      <div id="doc-modal-body" style="flex:1;display:flex"></div>
+      <div id="doc-modal-body"></div>
     </div>
   </div>
 
   <script>
+    var _gZoom = 1;
+    function _gApplyZoom() {
+      var img = document.getElementById('doc-modal-img');
+      if (!img) return;
+      img.style.width = (_gZoom * 100) + '%';
+      document.getElementById('doc-zoom-pct').textContent = Math.round(_gZoom * 100) + '%';
+    }
+    function gZoom(dir) {
+      _gZoom *= (dir > 0 ? 1.25 : 0.8);
+      _gZoom = Math.min(10, Math.max(0.1, _gZoom));
+      _gApplyZoom();
+    }
+    function gZoomReset() { _gZoom = 1; _gApplyZoom(); }
     function gCloseViewer() {
       var m = document.getElementById('doc-modal');
       m.classList.remove('open');
-      document.getElementById('doc-modal-body').innerHTML = '';
+      document.getElementById('doc-modal-body').replaceChildren();
     }
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') gCloseViewer(); });
     document.body.addEventListener('click', function (e) {
@@ -117,14 +140,35 @@
       // id is a server-issued UUID; build the URL from it only.
       var url = '/share/{{ token }}/documents/' + encodeURIComponent(id) + '/view';
       document.getElementById('doc-modal-name').textContent = name;
+      var body = document.getElementById('doc-modal-body');
+      var ctrl = document.getElementById('doc-zoom-ctrl');
       var isImg = /\.(jpe?g|png)$/.test(name.toLowerCase());
       // Build via DOM APIs — never interpolate the untrusted filename into HTML.
-      var el;
-      if (isImg) { el = document.createElement('img'); el.src = url; el.alt = name; }
-      else { el = document.createElement('iframe'); el.src = url; }
-      document.getElementById('doc-modal-body').replaceChildren(el);
+      if (isImg) {
+        _gZoom = 1;
+        var img = document.createElement('img');
+        img.id = 'doc-modal-img';
+        img.src = url;
+        img.alt = name;
+        body.replaceChildren(img);
+        body.classList.add('is-image');
+        ctrl.style.display = 'flex';
+        _gApplyZoom();
+      } else {
+        var frame = document.createElement('iframe');
+        frame.src = url;
+        body.replaceChildren(frame);
+        body.classList.remove('is-image');
+        ctrl.style.display = 'none';
+      }
       document.getElementById('doc-modal').classList.add('open');
     });
+    // Ctrl+scroll zooms the image preview.
+    document.getElementById('doc-modal-body').addEventListener('wheel', function (e) {
+      if (!e.ctrlKey || !document.getElementById('doc-modal-img')) return;
+      e.preventDefault();
+      gZoom(e.deltaY < 0 ? 1 : -1);
+    }, { passive: false });
   </script>
 </body>
 </html>
