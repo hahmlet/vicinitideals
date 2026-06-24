@@ -7,13 +7,13 @@ Owner create/revoke routes require an authenticated session (CI/LAN).
 from __future__ import annotations
 
 import uuid
+from datetime import datetime, timedelta, timezone
 
 import pytest
 from httpx import AsyncClient
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.emails.tokens import make_doc_share_token
 from app.models.deal import Deal, Scenario, ProjectType
 from app.models.document import Document, DocumentShare, DocumentTask
 from app.models.opportunity import Opportunity
@@ -56,7 +56,12 @@ async def _seed_project(session: AsyncSession):
 
 
 async def _seed_share(session: AsyncSession, org, project, *, revoked=False) -> DocumentShare:
-    share = DocumentShare(org_id=org.id, project_id=project.id, label="Lender", revoked=revoked)
+    from app.api.routers.ui_documents import _generate_share_slug
+
+    share = DocumentShare(
+        org_id=org.id, project_id=project.id, label="Lender",
+        revoked=revoked, slug=_generate_share_slug(),
+    )
     session.add(share)
     await session.commit()
     return share
@@ -67,7 +72,7 @@ async def _seed_share(session: AsyncSession, org, project, *, revoked=False) -> 
 async def test_guest_page_loads(client: AsyncClient, session: AsyncSession):
     project, _user, org = await _seed_project(session)
     share = await _seed_share(session, org, project)
-    token = make_doc_share_token(share.id)
+    token = share.slug
 
     resp = await client.get(f"/share/{token}")
     assert resp.status_code == 200, resp.text
@@ -82,15 +87,25 @@ async def test_guest_invalid_token_404(client: AsyncClient, session: AsyncSessio
 async def test_guest_revoked_share_404(client: AsyncClient, session: AsyncSession):
     project, _user, org = await _seed_project(session)
     share = await _seed_share(session, org, project, revoked=True)
-    token = make_doc_share_token(share.id)
+    token = share.slug
 
     assert (await client.get(f"/share/{token}")).status_code == 404
+
+
+async def test_guest_expired_share_404(client: AsyncClient, session: AsyncSession):
+    project, _user, org = await _seed_project(session)
+    share = await _seed_share(session, org, project)
+    # Age the row past the max-age window — link must stop resolving.
+    share.created_at = datetime.now(timezone.utc) - timedelta(days=365)
+    await session.commit()
+
+    assert (await client.get(f"/share/{share.slug}")).status_code == 404
 
 
 async def test_guest_upload_and_download(client: AsyncClient, session: AsyncSession):
     project, _user, org = await _seed_project(session)
     share = await _seed_share(session, org, project)
-    token = make_doc_share_token(share.id)
+    token = share.slug
 
     up = await client.post(
         f"/share/{token}/upload",
@@ -112,7 +127,7 @@ async def test_guest_upload_and_download(client: AsyncClient, session: AsyncSess
 async def test_guest_cannot_access_other_project_doc(client: AsyncClient, session: AsyncSession):
     project, _user, org = await _seed_project(session)
     share = await _seed_share(session, org, project)
-    token = make_doc_share_token(share.id)
+    token = share.slug
     # A document on a DIFFERENT project — must not be reachable via this token.
     other_project, _u2, other_org = await _seed_project(session)
     other_doc = Document(
@@ -129,7 +144,7 @@ async def test_guest_cannot_access_other_project_doc(client: AsyncClient, sessio
 async def test_guest_task_upload(client: AsyncClient, session: AsyncSession):
     project, _user, org = await _seed_project(session)
     share = await _seed_share(session, org, project)
-    token = make_doc_share_token(share.id)
+    token = share.slug
     task = DocumentTask(org_id=org.id, project_id=project.id, title="Leases")
     session.add(task)
     await session.commit()
@@ -148,7 +163,7 @@ async def test_guest_task_upload(client: AsyncClient, session: AsyncSession):
 async def test_guest_has_no_destructive_route(client: AsyncClient, session: AsyncSession):
     project, _user, org = await _seed_project(session)
     share = await _seed_share(session, org, project)
-    token = make_doc_share_token(share.id)
+    token = share.slug
     # No archive/delete endpoint exists under /share/. A bulk-style POST 404s.
     resp = await client.post(f"/share/{token}/bulk", data={"action": "delete"})
     assert resp.status_code in (404, 405)

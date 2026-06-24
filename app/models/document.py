@@ -197,11 +197,16 @@ class DocumentShare(Base):
     __tablename__ = "document_shares"
     __table_args__ = (
         Index("ix_document_shares_project", "org_id", "project_id"),
+        Index("ix_document_shares_slug", "slug", unique=True),
     )
 
     id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
     )
+    # Short, URL-friendly random code (base58 — no 0/O/I/l). Guests reach the
+    # room via /share/{slug}. Unguessable; validity is still DB-backed (revoked
+    # flag + created_at age check), not embedded in the code.
+    slug: Mapped[str] = mapped_column(String(32), nullable=False)
     org_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True),
         ForeignKey("organizations.id", ondelete="CASCADE"),

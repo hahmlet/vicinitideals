@@ -34,7 +34,6 @@ from app.config import settings
 _VERIFY_SALT = "email-verify"
 _RESET_SALT = "password-reset"
 _INVITE_SALT = "org-invite"
-_DOC_SHARE_SALT = "doc-share"
 
 
 def _signer(salt: str) -> URLSafeTimedSerializer:
@@ -132,23 +131,3 @@ def load_invite_token(token: str) -> tuple[uuid.UUID, str] | None:
         return None
 
 
-# ── Document share ────────────────────────────────────────────────────────────
-
-def make_doc_share_token(share_id: uuid.UUID) -> str:
-    return _signer(_DOC_SHARE_SALT).dumps(str(share_id))
-
-
-def load_doc_share_token(token: str) -> uuid.UUID | None:
-    """Return the DocumentShare id if the token is valid + unexpired, else None.
-
-    Signature/expiry only — revocation is checked against the DB row by the
-    caller, so a revoked share fails even within the token's expiry window.
-    """
-    try:
-        raw = _signer(_DOC_SHARE_SALT).loads(
-            token,
-            max_age=settings.doc_share_token_max_age_seconds,
-        )
-        return uuid.UUID(raw)
-    except (SignatureExpired, BadSignature, ValueError):
-        return None

@@ -19,8 +19,9 @@ from __future__ import annotations
 
 import io
 import os
+import secrets
 import zipfile
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from uuid import UUID
 
 from fastapi import APIRouter, File, Form, HTTPException, Query, Request, UploadFile
@@ -35,7 +36,6 @@ from app.api.routers.ui_helpers import (
     templates,
 )
 from app.config import settings
-from app.emails.tokens import load_doc_share_token, make_doc_share_token
 from app.models.deal import Deal, Scenario
 from app.models.document import (
     Document,
@@ -814,16 +814,40 @@ async def task_zip(request: Request, task_id: UUID, session: DBSession) -> Strea
 # External sharing (Phase 3)
 # ---------------------------------------------------------------------------
 
-def _share_url(request: Request, token: str) -> str:
-    return f"{str(request.base_url).rstrip('/')}/share/{token}"
+# Base58 alphabet — digits + letters minus the ambiguous 0 O I l. A 10-char
+# code from this set is 58**10 ≈ 4.3e17 possibilities: unguessable in practice.
+_SLUG_ALPHABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
+_SLUG_LEN = 10
+
+
+def _generate_share_slug() -> str:
+    return "".join(secrets.choice(_SLUG_ALPHABET) for _ in range(_SLUG_LEN))
+
+
+async def _unique_share_slug(session: DBSession) -> str:
+    """A fresh slug not already present (collision odds are negligible, but the
+    unique index makes a clash a hard error — so retry a few times)."""
+    for _ in range(6):
+        slug = _generate_share_slug()
+        exists = (
+            await session.execute(
+                select(DocumentShare.id).where(DocumentShare.slug == slug)
+            )
+        ).first()
+        if exists is None:
+            return slug
+    raise HTTPException(status_code=500, detail="Could not allocate a share link.")
+
+
+def _share_url(request: Request, slug: str) -> str:
+    return f"{str(request.base_url).rstrip('/')}/share/{slug}"
 
 
 def _share_vm(share: DocumentShare, request: Request) -> dict:
-    token = make_doc_share_token(share.id)
     return {
         "id": str(share.id),
         "label": share.label or "",
-        "url": _share_url(request, token),
+        "url": _share_url(request, share.slug),
         "revoked": share.revoked,
     }
 
@@ -872,6 +896,7 @@ async def share_create(
         DocumentShare(
             org_id=org_id,
             project_id=project_id,
+            slug=await _unique_share_slug(session),
             label=(label.strip() or None),
             created_by_user_id=getattr(user, "id", None),
         )
@@ -901,15 +926,24 @@ async def share_revoke(
 # ── Guest access (token-gated, no session) ─────────────────────────────────
 
 async def _resolve_share(session: DBSession, token: str) -> tuple[DocumentShare, Project]:
-    """Resolve a share token to (share, project). 404 if invalid/revoked/gone."""
+    """Resolve a share slug to (share, project). 404 if invalid/revoked/expired/gone.
+
+    Validity is fully DB-backed: the slug is just a random lookup key. A share
+    is rejected if revoked or older than ``doc_share_token_max_age_seconds``.
+    """
     if not settings.documents_module_enabled:
         raise HTTPException(status_code=404, detail="Not found")
-    share_id = load_doc_share_token(token)
-    if share_id is None:
-        raise HTTPException(status_code=404, detail="This link is invalid or expired.")
-    share = await session.get(DocumentShare, share_id)
+    share = (
+        await session.execute(
+            select(DocumentShare).where(DocumentShare.slug == token)
+        )
+    ).scalar_one_or_none()
     if share is None or share.revoked:
-        raise HTTPException(status_code=404, detail="This link has been turned off.")
+        raise HTTPException(status_code=404, detail="This link is invalid or has been turned off.")
+    max_age = settings.doc_share_token_max_age_seconds
+    if max_age and share.created_at is not None:
+        if datetime.now(timezone.utc) - share.created_at > timedelta(seconds=max_age):
+            raise HTTPException(status_code=404, detail="This link has expired.")
     project = await session.get(Project, share.project_id)
     if project is None:
         raise HTTPException(status_code=404, detail="Not found")
