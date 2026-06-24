@@ -41,6 +41,17 @@ class DocumentStatus(str, enum.Enum):
     archived = "archived"
 
 
+class DocumentStage(str, enum.Enum):
+    """Review stage of a document — distinct from active/archived lifecycle.
+
+    Feeds the enforced naming scheme (`… - Draft - MM-DD-YYYY`). User-toggleable
+    at any time without re-uploading.
+    """
+
+    draft = "draft"
+    final = "final"
+
+
 class DocumentPreviewStatus(str, enum.Enum):
     none = "none"        # native render (PDF/image) or preview not requested
     pending = "pending"  # Office→PDF conversion queued / in flight
@@ -75,7 +86,19 @@ class Document(Base):
         ForeignKey("document_tasks.id", ondelete="SET NULL"),
         nullable=True,
     )
+    # Original filename exactly as uploaded — retained for audit / reverse
+    # lookup. The *displayed* name is computed from the naming scheme at render
+    # time (project · task · label · stage · upload-date); this column is never
+    # rewritten after creation.
     filename: Mapped[str] = mapped_column(String(512), nullable=False)
+    # User-entered name component for the scheme (defaults to the upload stem).
+    name_label: Mapped[str] = mapped_column(
+        String(512), nullable=False, default="", server_default=""
+    )
+    # Review stage — drives the scheme's "Draft"/"Final" segment.
+    stage: Mapped[DocumentStage] = mapped_column(
+        String(20), nullable=False, default=DocumentStage.draft, server_default="draft"
+    )
     content_type: Mapped[str | None] = mapped_column(String(255), nullable=True)
     size_bytes: Mapped[int] = mapped_column(BigInteger, nullable=False, default=0)
     sha256: Mapped[str | None] = mapped_column(String(64), nullable=True)

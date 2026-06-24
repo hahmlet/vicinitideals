@@ -253,6 +253,8 @@
   {% if parent_deal_id %}
   <div class="uw-section" style="margin-top:18px">
     <div class="uw-section-title">🔗 Share this deal</div>
+    <a class="btn btn-secondary btn-sm" style="margin-bottom:10px;display:inline-block"
+       href="/ui/deals/{{ parent_deal_id }}/documents/zip">⬇ Download all documents (Deal → Project → Task)</a>
     <div hx-get="/ui/deals/{{ parent_deal_id }}/deal-shares" hx-trigger="load" hx-swap="innerHTML">
       <p class="text-muted" style="font-size:13px;margin:0">Loading…</p>
     </div>

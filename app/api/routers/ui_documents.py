@@ -42,6 +42,7 @@ from app.models.document import (
     Document,
     DocumentPreviewStatus,
     DocumentShare,
+    DocumentStage,
     DocumentStatus,
     DocumentTask,
     DocumentTaskStatus,
@@ -106,6 +107,56 @@ def _sanitize_filename(name: str) -> str:
     return base[:255]
 
 
+# ── Enforced naming scheme ───────────────────────────────────────────────────
+# Displayed/downloaded name = "Project - Task - Label - Stage - MM-DD-YYYY.ext".
+# The stored `filename` keeps the original upload name (audit); the scheme name
+# is computed at render time so toggling stage or moving tasks renames for free.
+
+_WIN_FORBIDDEN = set('<>:"/\\|?*')
+_STAGE_LABEL = {DocumentStage.draft: "Draft", DocumentStage.final: "Final"}
+
+
+def _safe_component(s: str) -> str:
+    """Make one filename segment legal on iOS + Windows.
+
+    Drops path separators, the Windows-reserved characters (``<>:"/\\|?*``) and
+    control chars, collapses whitespace, and trims leading/trailing dots/spaces
+    (Windows rejects trailing dot/space).
+    """
+    cleaned = "".join(
+        " " if (c in _WIN_FORBIDDEN or ord(c) < 32) else c for c in (s or "")
+    )
+    cleaned = " ".join(cleaned.split()).strip(" .")
+    return cleaned[:80]
+
+
+def _doc_stage(doc: Document) -> DocumentStage:
+    v = doc.stage
+    return v if isinstance(v, DocumentStage) else DocumentStage(str(v))
+
+
+def _scheme_name(
+    project_name: str, task_title: str, name_label: str,
+    stage: DocumentStage, when, ext: str,
+) -> str:
+    parts = [
+        _safe_component(project_name) or "Project",
+        _safe_component(task_title) or "Misc.",
+        _safe_component(name_label) or "Document",
+        _STAGE_LABEL.get(stage, "Draft"),
+        f"{when:%m-%d-%Y}" if when else "",
+    ]
+    base = " - ".join(p for p in parts if p)[:240]
+    return f"{base}{ext}"
+
+
+def _doc_display_name(doc: Document, project_name: str, task_title: str) -> str:
+    return _scheme_name(
+        project_name, task_title, doc.name_label or "",
+        _doc_stage(doc), doc.created_at, _ext(doc.filename),
+    )
+
+
 def _fmt_date(d) -> str:
     """Portable 'Mon D, YYYY' (no platform-specific %-d)."""
     return f"{d:%b} {d.day}, {d.year}"
@@ -127,11 +178,16 @@ def _human_size(num: int) -> str:
     return f"{size:.1f} GB"
 
 
-def _doc_vm(doc: Document) -> dict:
+def _doc_vm(doc: Document, project_name: str = "", task_title: str = "") -> dict:
     ext = _ext(doc.filename)
+    stage = _doc_stage(doc)
     return {
         "id": str(doc.id),
-        "filename": doc.filename,
+        "filename": doc.filename,  # original upload name (audit)
+        "display_name": _doc_display_name(doc, project_name, task_title),
+        "name_label": doc.name_label or "",
+        "stage": stage.value,
+        "task_id": str(doc.task_id) if doc.task_id else "",
         "ext": ext,
         "icon": _EXT_ICONS.get(ext, "📄"),
         "size_human": _human_size(doc.size_bytes),
@@ -139,6 +195,179 @@ def _doc_vm(doc: Document) -> dict:
         "viewable": ext in _INLINE_MEDIA or doc.preview_status == DocumentPreviewStatus.ready,
         "status": doc.status.value if hasattr(doc.status, "value") else doc.status,
     }
+
+
+async def _task_title_map(
+    session: DBSession, org_id: UUID, project_id: UUID
+) -> dict[UUID, str]:
+    rows = (
+        await session.execute(
+            select(DocumentTask.id, DocumentTask.title).where(
+                DocumentTask.org_id == org_id, DocumentTask.project_id == project_id
+            )
+        )
+    ).all()
+    return {r[0]: r[1] for r in rows}
+
+
+async def _doc_vms(
+    session: DBSession, org_id: UUID, project, docs: list[Document]
+) -> list[dict]:
+    """Build doc view-models with their scheme display names resolved."""
+    tmap = await _task_title_map(session, org_id, project.id)
+    return [_doc_vm(d, project.name, tmap.get(d.task_id, "Misc.")) for d in docs]
+
+
+async def _doc_download_name(session: DBSession, doc: Document) -> str:
+    """The scheme name used for downloads / zip entries (project · task · …)."""
+    project = await session.get(Project, doc.project_id)
+    pname = project.name if project else "Project"
+    title = "Misc."
+    if doc.task_id:
+        task = await session.get(DocumentTask, doc.task_id)
+        if task:
+            title = task.title
+    return _doc_display_name(doc, pname, title)
+
+
+def _zip_add(zf: zipfile.ZipFile, seen: dict[str, int], path: str, data: bytes) -> None:
+    """Write ``data`` at ``path``, de-colliding duplicate names in the archive."""
+    if path in seen:
+        seen[path] += 1
+        stem, ext = os.path.splitext(path)
+        path = f"{stem} ({seen[path]}){ext}"
+    else:
+        seen[path] = 0
+    zf.writestr(path, data)
+
+
+async def _write_project_docs_to_zip(
+    zf: zipfile.ZipFile, seen: dict[str, int],
+    session: DBSession, org_id: UUID, project, *, prefix: str = "",
+) -> int:
+    """Write a project's active docs into ``zf`` under ``{prefix}{Task}/{name}``.
+
+    Returns the number of files written. Names use the enforced scheme.
+    """
+    docs = await _load_docs(session, org_id, project.id, "active")
+    tmap = await _task_title_map(session, org_id, project.id)
+    written = 0
+    for d in docs:
+        task_title = tmap.get(d.task_id, "Misc.")
+        folder = f"{prefix}{_safe_component(task_title) or 'Misc.'}/"
+        name = _doc_display_name(d, project.name, task_title)
+        try:
+            _zip_add(zf, seen, folder + name, open_document(d.storage_key))
+            written += 1
+        except FileNotFoundError:
+            continue
+    return written
+
+
+def _zip_streaming_response(buf: io.BytesIO, filename: str) -> StreamingResponse:
+    buf.seek(0)
+    safe = _safe_header_filename(filename) or "documents.zip"
+    return StreamingResponse(
+        iter([buf.getvalue()]),
+        media_type="application/zip",
+        headers={"Content-Disposition": f'attachment; filename="{safe}"'},
+    )
+
+
+async def _build_deal_zip(
+    session: DBSession, org_id: UUID, deal_name: str, projects: list
+) -> StreamingResponse:
+    """Whole-deal archive, foldered Deal → Project → Task → file."""
+    buf = io.BytesIO()
+    seen: dict[str, int] = {}
+    with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zf:
+        for p in projects:
+            await _write_project_docs_to_zip(
+                zf, seen, session, org_id, p,
+                prefix=f"{_safe_component(p.name) or 'Project'}/",
+            )
+    safe_deal = (_safe_component(deal_name) or "deal").replace(" ", "_")
+    return _zip_streaming_response(buf, f"{safe_deal}.zip")
+
+
+async def _task_options(
+    session: DBSession, org_id: UUID, project_id: UUID
+) -> list[dict]:
+    """Task picker options for the upload modal + per-row move control."""
+    rows = (
+        await session.execute(
+            select(DocumentTask.id, DocumentTask.title)
+            .where(DocumentTask.org_id == org_id, DocumentTask.project_id == project_id)
+            .order_by(func.lower(DocumentTask.title).asc())
+        )
+    ).all()
+    return [{"id": str(r[0]), "title": r[1]} for r in rows]
+
+
+async def _get_or_create_misc_task(
+    session: DBSession, org_id: UUID, project_id: UUID
+) -> DocumentTask:
+    """Every document must live in a task; the catch-all is 'Misc.'."""
+    existing = (
+        await session.execute(
+            select(DocumentTask).where(
+                DocumentTask.org_id == org_id,
+                DocumentTask.project_id == project_id,
+                func.lower(DocumentTask.title) == "misc.",
+            )
+        )
+    ).scalars().first()
+    if existing is not None:
+        return existing
+    task = DocumentTask(org_id=org_id, project_id=project_id, title="Misc.")
+    session.add(task)
+    await session.flush()
+    return task
+
+
+async def _resolve_task_choice(
+    session: DBSession, org_id: UUID, project_id: UUID,
+    choice: str, new_title: str, new_cache: dict[str, UUID],
+) -> UUID:
+    """Map an upload row's task choice to a task id.
+
+    ``__new__`` creates (or reuses) a task named ``new_title``; a UUID selects an
+    existing task (validated against the project); anything else → 'Misc.'.
+    """
+    choice = (choice or "").strip()
+    if choice == "__new__":
+        title = _safe_component(new_title) or "Untitled"
+        key = title.lower()
+        if key in new_cache:
+            return new_cache[key]
+        existing = (
+            await session.execute(
+                select(DocumentTask).where(
+                    DocumentTask.org_id == org_id,
+                    DocumentTask.project_id == project_id,
+                    func.lower(DocumentTask.title) == key,
+                )
+            )
+        ).scalars().first()
+        if existing is not None:
+            new_cache[key] = existing.id
+            return existing.id
+        task = DocumentTask(org_id=org_id, project_id=project_id, title=title)
+        session.add(task)
+        await session.flush()
+        new_cache[key] = task.id
+        return task.id
+    if choice and choice != "__misc__":
+        try:
+            tid = UUID(choice)
+        except ValueError:
+            tid = None
+        if tid is not None:
+            task = await session.get(DocumentTask, tid)
+            if task and task.org_id == org_id and task.project_id == project_id:
+                return task.id
+    misc = await _get_or_create_misc_task(session, org_id, project_id)
+    return misc.id
 
 
 async def _project_org_id(session: DBSession, project_id: UUID) -> UUID | None:
@@ -183,23 +412,46 @@ async def _require_document(session: DBSession, request: Request, document_id: U
     return user, doc
 
 
+def _label_default(filename: str) -> str:
+    """Default name component = upload stem (extension stripped)."""
+    return os.path.splitext(filename or "")[0]
+
+
 async def _save_uploads(
     session: DBSession,
     org_id: UUID,
     project_id: UUID,
     files: list[UploadFile],
     user_id: UUID | None,
-    task_id: UUID | None = None,
+    *,
+    labels: list[str] | None = None,
+    stages: list[str] | None = None,
+    task_choices: list[str] | None = None,
+    new_titles: list[str] | None = None,
+    forced_task_id: UUID | None = None,
 ) -> tuple[list[str], list[Document]]:
     """Validate + persist uploaded files; return (errors, docs-needing-preview).
 
-    Does NOT commit — caller commits and enqueues previews.
+    Per-file metadata arrays (``labels``/``stages``/``task_choices``/
+    ``new_titles``) align by index with ``files``. When ``forced_task_id`` is
+    set (task-view upload) the task choice is ignored and every file lands there.
+    Files that fail validation still consume their index so later files stay
+    aligned with their metadata. Does NOT commit.
     """
     allowed = settings.document_allowed_extensions_set
     max_bytes = settings.document_max_size_bytes
+    labels = labels or []
+    stages = stages or []
+    task_choices = task_choices or []
+    new_titles = new_titles or []
     errors: list[str] = []
     created_for_preview: list[Document] = []
-    for up in files:
+    new_cache: dict[str, UUID] = {}
+
+    def _at(arr: list[str], i: int) -> str:
+        return arr[i] if i < len(arr) else ""
+
+    for i, up in enumerate(files):
         name = _sanitize_filename(up.filename or "")
         if not name:
             continue
@@ -214,6 +466,20 @@ async def _save_uploads(
         if len(content) > max_bytes:
             errors.append(f"{name}: exceeds {max_bytes // (1024 * 1024)} MB limit")
             continue
+
+        # Resolve target task.
+        if forced_task_id is not None:
+            task_id = forced_task_id
+        else:
+            task_id = await _resolve_task_choice(
+                session, org_id, project_id,
+                _at(task_choices, i), _at(new_titles, i), new_cache,
+            )
+
+        label = _safe_component(_at(labels, i)) or _label_default(name) or "Document"
+        stage_raw = (_at(stages, i) or "").strip().lower()
+        stage = DocumentStage.final if stage_raw == "final" else DocumentStage.draft
+
         key = build_storage_key(org_id, project_id, name)
         sha = save_document(key, content)
         needs_preview = ext in _PREVIEW_EXTS
@@ -222,6 +488,8 @@ async def _save_uploads(
             project_id=project_id,
             task_id=task_id,
             filename=name[:512],
+            name_label=label[:512],
+            stage=stage,
             content_type=(up.content_type or None),
             size_bytes=len(content),
             sha256=sha,
@@ -346,9 +614,11 @@ async def _deal_for_project(session: DBSession, project: Project) -> Deal | None
     return (await session.execute(stmt)).scalar_one_or_none()
 
 
-def _panel_response(
+async def _panel_response(
     request: Request,
-    project_id: UUID,
+    session: DBSession,
+    org_id: UUID,
+    project,
     docs: list[Document],
     show: str,
     q: dict,
@@ -361,12 +631,16 @@ def _panel_response(
         request,
         "partials/document_panel.html",
         {
-            "project_id": str(project_id),
-            "documents": [_doc_vm(d) for d in docs],
+            "project_id": str(project.id),
+            "project_name": project.name,
+            "documents": await _doc_vms(session, org_id, project, docs),
+            "task_options": await _task_options(session, org_id, project.id),
             "show": show,
             "q": q,
             "available_exts": available_exts,
             "upload_errors": errors or [],
+            "allowed_ext": ",".join(sorted(settings.document_allowed_extensions_set)),
+            "max_size_mb": settings.document_max_size_bytes // (1024 * 1024),
         },
     )
 
@@ -413,13 +687,14 @@ async def documents_page(
             "project_name": project.name,
             "deal_id": str(deal.id) if deal else None,
             "deal_name": deal.name if deal else "Deal",
-            "documents": [_doc_vm(d) for d in docs],
+            "documents": await _doc_vms(session, org_id, project, docs),
             "show": show,
             "view": view,
             "status": status,
             "q": q,
             "available_exts": available_exts,
             "tasks": task_vms,
+            "task_options": await _task_options(session, org_id, project_id),
             "milestone_options": milestone_options,
             "max_size_mb": settings.document_max_size_bytes // (1024 * 1024),
             "allowed_ext": ",".join(sorted(settings.document_allowed_extensions_set)),
@@ -447,7 +722,7 @@ async def documents_rows(
     q = _doc_query(sort=sort, direction=direction, ext=ext, date_from=date_from, date_to=date_to)
     docs = await _load_docs(session, org_id, project_id, show, q)
     available_exts = await _distinct_exts(session, org_id, project_id)
-    return _panel_response(request, project_id, docs, show, q, available_exts)
+    return await _panel_response(request, session, org_id, project, docs, show, q, available_exts)
 
 
 @router.post("/ui/projects/{project_id}/documents/upload", response_class=HTMLResponse)
@@ -456,6 +731,10 @@ async def documents_upload(
     project_id: UUID,
     session: DBSession,
     files: list[UploadFile] = File(default=[]),
+    name_label: list[str] = Form(default=[]),
+    stage: list[str] = Form(default=[]),
+    task_choice: list[str] = Form(default=[]),
+    new_task: list[str] = Form(default=[]),
     show: str = Form(default="active"),
     sort: str = Form(default="date"),
     direction: str = Form(default="desc"),
@@ -465,14 +744,17 @@ async def documents_upload(
 ) -> HTMLResponse:
     user, org_id, project = await _require_project(session, request, project_id)
     errors, created_for_preview = await _save_uploads(
-        session, org_id, project_id, files, getattr(user, "id", None)
+        session, org_id, project_id, files, getattr(user, "id", None),
+        labels=name_label, stages=stage, task_choices=task_choice, new_titles=new_task,
     )
     await session.commit()
     _enqueue_previews(created_for_preview)
     q = _doc_query(sort=sort, direction=direction, ext=ext, date_from=date_from, date_to=date_to)
     docs = await _load_docs(session, org_id, project_id, show, q)
     available_exts = await _distinct_exts(session, org_id, project_id)
-    return _panel_response(request, project_id, docs, show, q, available_exts, errors)
+    return await _panel_response(
+        request, session, org_id, project, docs, show, q, available_exts, errors
+    )
 
 
 @router.post("/ui/projects/{project_id}/documents/bulk", response_class=HTMLResponse)
@@ -526,7 +808,69 @@ async def documents_bulk(
     q = _doc_query(sort=sort, direction=direction, ext=ext, date_from=date_from, date_to=date_to)
     docs = await _load_docs(session, org_id, project_id, show, q)
     available_exts = await _distinct_exts(session, org_id, project_id)
-    return _panel_response(request, project_id, docs, show, q, available_exts)
+    return await _panel_response(request, session, org_id, project, docs, show, q, available_exts)
+
+
+async def _panel_after_doc_change(
+    request, session, org_id, project, *,
+    show, sort, direction, ext, date_from, date_to,
+):
+    q = _doc_query(sort=sort, direction=direction, ext=ext, date_from=date_from, date_to=date_to)
+    docs = await _load_docs(session, org_id, project.id, show, q)
+    available_exts = await _distinct_exts(session, org_id, project.id)
+    return await _panel_response(request, session, org_id, project, docs, show, q, available_exts)
+
+
+@router.post("/ui/documents/{document_id}/stage", response_class=HTMLResponse)
+async def document_set_stage(
+    request: Request,
+    document_id: UUID,
+    session: DBSession,
+    stage: str = Form(...),
+    show: str = Form(default="active"),
+    sort: str = Form(default="date"),
+    direction: str = Form(default="desc"),
+    ext: str = Form(default=""),
+    date_from: str = Form(default=""),
+    date_to: str = Form(default=""),
+) -> HTMLResponse:
+    """Toggle a document's Draft/Final stage — no re-upload, renames for free."""
+    user, doc = await _require_document(session, request, document_id)
+    doc.stage = DocumentStage.final if stage.strip().lower() == "final" else DocumentStage.draft
+    await session.commit()
+    project = await session.get(Project, doc.project_id)
+    return await _panel_after_doc_change(
+        request, session, doc.org_id, project,
+        show=show, sort=sort, direction=direction, ext=ext, date_from=date_from, date_to=date_to,
+    )
+
+
+@router.post("/ui/documents/{document_id}/move", response_class=HTMLResponse)
+async def document_move(
+    request: Request,
+    document_id: UUID,
+    session: DBSession,
+    task_choice: str = Form(...),
+    new_task: str = Form(default=""),
+    show: str = Form(default="active"),
+    sort: str = Form(default="date"),
+    direction: str = Form(default="desc"),
+    ext: str = Form(default=""),
+    date_from: str = Form(default=""),
+    date_to: str = Form(default=""),
+) -> HTMLResponse:
+    """Move a document to another task (or 'Misc.'). Stage is retained; the
+    displayed name updates to the new task automatically."""
+    user, doc = await _require_document(session, request, document_id)
+    doc.task_id = await _resolve_task_choice(
+        session, doc.org_id, doc.project_id, task_choice, new_task, {}
+    )
+    await session.commit()
+    project = await session.get(Project, doc.project_id)
+    return await _panel_after_doc_change(
+        request, session, doc.org_id, project,
+        show=show, sort=sort, direction=direction, ext=ext, date_from=date_from, date_to=date_to,
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -539,11 +883,12 @@ async def document_download(
 ) -> StreamingResponse:
     user, doc = await _require_document(session, request, document_id)
     content = open_document(doc.storage_key)
+    dl_name = await _doc_download_name(session, doc)
     return StreamingResponse(
         iter([content]),
         media_type=doc.content_type or "application/octet-stream",
         headers={
-            "Content-Disposition": f'attachment; filename="{_safe_header_filename(doc.filename)}"'
+            "Content-Disposition": f'attachment; filename="{_safe_header_filename(dl_name)}"'
         },
     )
 
@@ -598,28 +943,28 @@ async def documents_zip(
     if not docs:
         raise HTTPException(status_code=404, detail="Not found")
 
+    tmap = await _task_title_map(session, org_id, project_id)
     buf = io.BytesIO()
     seen: dict[str, int] = {}
     with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zf:
         for d in docs:
-            name = d.filename or "file"
-            # De-collide identical names within the archive.
-            if name in seen:
-                seen[name] += 1
-                stem, ext = os.path.splitext(name)
-                name = f"{stem} ({seen[name]}){ext}"
-            else:
-                seen[name] = 0
+            task_title = tmap.get(d.task_id, "Misc.")
+            name = _doc_display_name(d, project.name, task_title)
             try:
-                zf.writestr(name, open_document(d.storage_key))
+                _zip_add(zf, seen, name, open_document(d.storage_key))
             except FileNotFoundError:
                 continue
-    buf.seek(0)
-    return StreamingResponse(
-        iter([buf.getvalue()]),
-        media_type="application/zip",
-        headers={"Content-Disposition": 'attachment; filename="documents.zip"'},
-    )
+    return _zip_streaming_response(buf, "documents.zip")
+
+
+@router.get("/ui/deals/{deal_id}/documents/zip")
+async def deal_documents_zip(
+    request: Request, deal_id: UUID, session: DBSession
+) -> StreamingResponse:
+    """Whole-deal download — every project's docs, foldered Project/Task/file."""
+    user, deal = await _require_deal(session, request, deal_id)
+    projects = await _deal_projects(session, deal.id)
+    return await _build_deal_zip(session, deal.org_id, deal.name, projects)
 
 
 # ---------------------------------------------------------------------------
@@ -658,7 +1003,9 @@ async def _task_docs(session: DBSession, org_id: UUID, project_id: UUID, task_id
     return list((await session.execute(stmt)).scalars().all())
 
 
-def _task_vm(task: DocumentTask, docs: list[Document], milestone_map: dict) -> dict:
+def _task_vm(
+    task: DocumentTask, docs: list[Document], milestone_map: dict, project_name: str = ""
+) -> dict:
     due = task.computed_due_date(milestone_map)
     status = task.status.value if hasattr(task.status, "value") else task.status
     return {
@@ -673,7 +1020,7 @@ def _task_vm(task: DocumentTask, docs: list[Document], milestone_map: dict) -> d
         "due_milestone_id": str(task.due_milestone_id) if task.due_milestone_id else "",
         "due_offset_days": task.due_offset_days or 0,
         "doc_count": len(docs),
-        "documents": [_doc_vm(d) for d in docs],
+        "documents": [_doc_vm(d, project_name, task.title) for d in docs],
     }
 
 
@@ -691,10 +1038,12 @@ async def _build_task_vms(
     session: DBSession, org_id: UUID, project_id: UUID, status: str, milestone_map: dict
 ) -> list[dict]:
     tasks = await _load_tasks(session, org_id, project_id, status)
+    project = await session.get(Project, project_id)
+    pname = project.name if project else ""
     vms = []
     for t in tasks:
         docs = await _task_docs(session, org_id, project_id, t.id)
-        vms.append(_task_vm(t, docs, milestone_map))
+        vms.append(_task_vm(t, docs, milestone_map, pname))
     return vms
 
 
@@ -738,10 +1087,12 @@ async def _task_card_response(
 ):
     mm = await _milestone_map(session, project_id)
     docs = await _task_docs(session, org_id, project_id, task.id)
+    project = await session.get(Project, project_id)
+    pname = project.name if project else ""
     return templates.TemplateResponse(
         request,
         "partials/task_card.html",
-        {"project_id": str(project_id), "t": _task_vm(task, docs, mm)},
+        {"project_id": str(project_id), "t": _task_vm(task, docs, mm, pname)},
     )
 
 
@@ -786,12 +1137,14 @@ async def task_edit_drawer(
     user, task = await _require_task(session, request, task_id)
     mm = await _milestone_map(session, task.project_id)
     docs = await _task_docs(session, task.org_id, task.project_id, task.id)
+    project = await session.get(Project, task.project_id)
+    pname = project.name if project else ""
     return templates.TemplateResponse(
         request,
         "partials/task_drawer.html",
         {
             "project_id": str(task.project_id),
-            "t": _task_vm(task, docs, mm),
+            "t": _task_vm(task, docs, mm, pname),
             "milestone_options": _milestone_options(mm),
         },
     )
@@ -863,10 +1216,14 @@ async def task_upload(
     task_id: UUID,
     session: DBSession,
     files: list[UploadFile] = File(default=[]),
+    name_label: list[str] = Form(default=[]),
+    stage: list[str] = Form(default=[]),
 ) -> HTMLResponse:
     user, task = await _require_task(session, request, task_id)
+    # Task-view upload is hard-locked to this task — no task choice offered.
     errors, created_for_preview = await _save_uploads(
-        session, task.org_id, task.project_id, files, getattr(user, "id", None), task_id=task.id
+        session, task.org_id, task.project_id, files, getattr(user, "id", None),
+        labels=name_label, stages=stage, forced_task_id=task.id,
     )
     await session.commit()
     _enqueue_previews(created_for_preview)
@@ -878,6 +1235,8 @@ async def task_zip(request: Request, task_id: UUID, session: DBSession) -> Strea
     """Zip all of a task's active documents plus a notes.txt of task metadata."""
     user, task = await _require_task(session, request, task_id)
     docs = await _task_docs(session, task.org_id, task.project_id, task.id)
+    project = await session.get(Project, task.project_id)
+    pname = project.name if project else "Project"
     mm = await _milestone_map(session, task.project_id)
     due = task.computed_due_date(mm)
     status = task.status.value if hasattr(task.status, "value") else task.status
@@ -895,24 +1254,13 @@ async def task_zip(request: Request, task_id: UUID, session: DBSession) -> Strea
     with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zf:
         zf.writestr("notes.txt", notes_txt)
         for d in docs:
-            name = d.filename or "file"
-            if name in seen:
-                seen[name] += 1
-                stem, ext = os.path.splitext(name)
-                name = f"{stem} ({seen[name]}){ext}"
-            else:
-                seen[name] = 0
+            name = _doc_display_name(d, pname, task.title)
             try:
-                zf.writestr(name, open_document(d.storage_key))
+                _zip_add(zf, seen, name, open_document(d.storage_key))
             except FileNotFoundError:
                 continue
-    buf.seek(0)
-    safe = _safe_header_filename(task.title).replace(" ", "_") or "task"
-    return StreamingResponse(
-        iter([buf.getvalue()]),
-        media_type="application/zip",
-        headers={"Content-Disposition": f'attachment; filename="{safe}.zip"'},
-    )
+    safe = (_safe_component(task.title) or "task").replace(" ", "_")
+    return _zip_streaming_response(buf, f"{safe}.zip")
 
 
 # ---------------------------------------------------------------------------
@@ -1205,7 +1553,7 @@ async def _guest_require_document(
 
 
 def _guest_rows_response(
-    request: Request, base: str, docs: list[Document], q: dict,
+    request: Request, base: str, vms: list[dict], q: dict,
     available_exts: list[str], errors: list[str] | None = None,
 ):
     return templates.TemplateResponse(
@@ -1213,7 +1561,7 @@ def _guest_rows_response(
         "partials/share_doc_rows.html",
         {
             "base": base,
-            "documents": [_doc_vm(d) for d in docs],
+            "documents": vms,
             "q": q,
             "available_exts": available_exts,
             "errors": errors or [],
@@ -1241,7 +1589,8 @@ async def _render_guest_page(
             "base": base,
             "deal_home_url": deal_home_url,
             "project_name": project.name,
-            "documents": [_doc_vm(d) for d in docs],
+            "documents": await _doc_vms(session, org_id, project, docs),
+            "task_options": await _task_options(session, org_id, project.id),
             "q": q,
             "available_exts": available_exts,
             "view": view,
@@ -1256,16 +1605,24 @@ async def _render_guest_page(
 async def _render_guest_rows(request, session, org_id, project, base, q):
     docs = await _load_docs(session, org_id, project.id, "active", q)
     available_exts = await _distinct_exts(session, org_id, project.id)
-    return _guest_rows_response(request, base, docs, q, available_exts)
+    vms = await _doc_vms(session, org_id, project, docs)
+    return _guest_rows_response(request, base, vms, q, available_exts)
 
 
-async def _do_guest_upload(request, session, org_id, project, base, files, q):
-    errors, created_for_preview = await _save_uploads(session, org_id, project.id, files, None)
+async def _do_guest_upload(
+    request, session, org_id, project, base, files, q,
+    *, labels=None, stages=None, task_choices=None, new_titles=None,
+):
+    errors, created_for_preview = await _save_uploads(
+        session, org_id, project.id, files, None,
+        labels=labels, stages=stages, task_choices=task_choices, new_titles=new_titles,
+    )
     await session.commit()
     _enqueue_previews(created_for_preview)
     docs = await _load_docs(session, org_id, project.id, "active", q)
     available_exts = await _distinct_exts(session, org_id, project.id)
-    return _guest_rows_response(request, base, docs, q, available_exts, errors)
+    vms = await _doc_vms(session, org_id, project, docs)
+    return _guest_rows_response(request, base, vms, q, available_exts, errors)
 
 
 async def _stream_guest_download(session, org_id, project, document_id):
@@ -1274,10 +1631,11 @@ async def _stream_guest_download(session, org_id, project, document_id):
         data = open_document(doc.storage_key)
     except FileNotFoundError:
         raise HTTPException(status_code=404, detail="File missing")
+    dl_name = await _doc_download_name(session, doc)
     return StreamingResponse(
         iter([data]),
         media_type=doc.content_type or "application/octet-stream",
-        headers={"Content-Disposition": f'attachment; filename="{_safe_header_filename(doc.filename)}"'},
+        headers={"Content-Disposition": f'attachment; filename="{_safe_header_filename(dl_name)}"'},
     )
 
 
@@ -1302,28 +1660,11 @@ async def _stream_guest_view(session, org_id, project, document_id):
 
 
 async def _stream_guest_zip(session, org_id, project):
-    docs = await _load_docs(session, org_id, project.id, "active")
     buf = io.BytesIO()
     seen: dict[str, int] = {}
     with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zf:
-        for d in docs:
-            name = d.filename or "file"
-            if name in seen:
-                seen[name] += 1
-                stem, fext = os.path.splitext(name)
-                name = f"{stem} ({seen[name]}){fext}"
-            else:
-                seen[name] = 0
-            try:
-                zf.writestr(name, open_document(d.storage_key))
-            except FileNotFoundError:
-                continue
-    buf.seek(0)
-    return StreamingResponse(
-        iter([buf.getvalue()]),
-        media_type="application/zip",
-        headers={"Content-Disposition": 'attachment; filename="documents.zip"'},
-    )
+        await _write_project_docs_to_zip(zf, seen, session, org_id, project)
+    return _zip_streaming_response(buf, "documents.zip")
 
 
 async def _render_guest_tasks(request, session, org_id, project, base, status):
@@ -1336,12 +1677,16 @@ async def _render_guest_tasks(request, session, org_id, project, base, status):
     )
 
 
-async def _do_guest_task_upload(request, session, org_id, project, base, task_id, files):
+async def _do_guest_task_upload(
+    request, session, org_id, project, base, task_id, files,
+    *, labels=None, stages=None,
+):
     task = await session.get(DocumentTask, task_id)
     if task is None or task.project_id != project.id or task.org_id != org_id:
         raise HTTPException(status_code=404, detail="Not found")
     errors, created_for_preview = await _save_uploads(
-        session, org_id, project.id, files, None, task_id=task.id
+        session, org_id, project.id, files, None,
+        labels=labels, stages=stages, forced_task_id=task.id,
     )
     await session.commit()
     _enqueue_previews(created_for_preview)
@@ -1350,7 +1695,7 @@ async def _do_guest_task_upload(request, session, org_id, project, base, task_id
     return templates.TemplateResponse(
         request,
         "partials/share_task_card.html",
-        {"base": base, "t": _task_vm(task, docs, mm)},
+        {"base": base, "t": _task_vm(task, docs, mm, project.name)},
     )
 
 
@@ -1374,24 +1719,13 @@ async def _stream_guest_task_zip(session, org_id, project, task_id):
     with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zf:
         zf.writestr("notes.txt", notes_txt)
         for d in docs:
-            name = d.filename or "file"
-            if name in seen:
-                seen[name] += 1
-                stem, fext = os.path.splitext(name)
-                name = f"{stem} ({seen[name]}){fext}"
-            else:
-                seen[name] = 0
+            name = _doc_display_name(d, project.name, task.title)
             try:
-                zf.writestr(name, open_document(d.storage_key))
+                _zip_add(zf, seen, name, open_document(d.storage_key))
             except FileNotFoundError:
                 continue
-    buf.seek(0)
-    safe = _safe_header_filename(task.title).replace(" ", "_") or "task"
-    return StreamingResponse(
-        iter([buf.getvalue()]),
-        media_type="application/zip",
-        headers={"Content-Disposition": f'attachment; filename="{safe}.zip"'},
-    )
+    safe = (_safe_component(task.title) or "task").replace(" ", "_")
+    return _zip_streaming_response(buf, f"{safe}.zip")
 
 
 # ── Project guest routes (base = /share/{slug}) ──────────────────────────────
@@ -1426,12 +1760,19 @@ async def guest_rows(
 async def guest_upload(
     request: Request, token: str, session: DBSession,
     files: list[UploadFile] = File(default=[]),
+    name_label: list[str] = Form(default=[]),
+    stage: list[str] = Form(default=[]),
+    task_choice: list[str] = Form(default=[]),
+    new_task: list[str] = Form(default=[]),
     sort: str = Form(default="date"), direction: str = Form(default="desc"),
     ext: str = Form(default=""), date_from: str = Form(default=""), date_to: str = Form(default=""),
 ) -> HTMLResponse:
     share, project = await _resolve_share(session, token)
     q = _doc_query(sort=sort, direction=direction, ext=ext, date_from=date_from, date_to=date_to)
-    return await _do_guest_upload(request, session, share.org_id, project, f"/share/{token}", files, q)
+    return await _do_guest_upload(
+        request, session, share.org_id, project, f"/share/{token}", files, q,
+        labels=name_label, stages=stage, task_choices=task_choice, new_titles=new_task,
+    )
 
 
 @router.get("/share/{token}/documents/{document_id}/download")
@@ -1468,10 +1809,13 @@ async def guest_tasks(
 async def guest_task_upload(
     request: Request, token: str, task_id: UUID, session: DBSession,
     files: list[UploadFile] = File(default=[]),
+    name_label: list[str] = Form(default=[]),
+    stage: list[str] = Form(default=[]),
 ) -> HTMLResponse:
     share, project = await _resolve_share(session, token)
     return await _do_guest_task_upload(
-        request, session, share.org_id, project, f"/share/{token}", task_id, files
+        request, session, share.org_id, project, f"/share/{token}", task_id, files,
+        labels=name_label, stages=stage,
     )
 
 
@@ -1507,7 +1851,24 @@ async def deal_share_landing(
     return templates.TemplateResponse(
         request,
         "share_deal_home.html",
-        {"deal_name": deal.name if deal else "Deal", "projects": cards},
+        {
+            "deal_name": deal.name if deal else "Deal",
+            "projects": cards,
+            "zip_url": f"/d/{slug}/zip",
+        },
+    )
+
+
+@router.get("/d/{slug}/zip")
+async def deal_share_zip(
+    request: Request, slug: str, session: DBSession
+) -> StreamingResponse:
+    """Whole-deal guest download — Project/Task/file, every project in the deal."""
+    ds = await _resolve_deal_share(session, slug)
+    deal = await session.get(Deal, ds.deal_id)
+    projects = await _deal_projects(session, ds.deal_id)
+    return await _build_deal_zip(
+        session, ds.org_id, deal.name if deal else "deal", projects
     )
 
 
@@ -1543,13 +1904,18 @@ async def deal_guest_rows(
 async def deal_guest_upload(
     request: Request, slug: str, project_id: UUID, session: DBSession,
     files: list[UploadFile] = File(default=[]),
+    name_label: list[str] = Form(default=[]),
+    stage: list[str] = Form(default=[]),
+    task_choice: list[str] = Form(default=[]),
+    new_task: list[str] = Form(default=[]),
     sort: str = Form(default="date"), direction: str = Form(default="desc"),
     ext: str = Form(default=""), date_from: str = Form(default=""), date_to: str = Form(default=""),
 ) -> HTMLResponse:
     ds, project = await _resolve_deal_project(session, slug, project_id)
     q = _doc_query(sort=sort, direction=direction, ext=ext, date_from=date_from, date_to=date_to)
     return await _do_guest_upload(
-        request, session, ds.org_id, project, f"/d/{slug}/p/{project_id}", files, q
+        request, session, ds.org_id, project, f"/d/{slug}/p/{project_id}", files, q,
+        labels=name_label, stages=stage, task_choices=task_choice, new_titles=new_task,
     )
 
 
@@ -1592,10 +1958,13 @@ async def deal_guest_tasks(
 async def deal_guest_task_upload(
     request: Request, slug: str, project_id: UUID, task_id: UUID, session: DBSession,
     files: list[UploadFile] = File(default=[]),
+    name_label: list[str] = Form(default=[]),
+    stage: list[str] = Form(default=[]),
 ) -> HTMLResponse:
     ds, project = await _resolve_deal_project(session, slug, project_id)
     return await _do_guest_task_upload(
-        request, session, ds.org_id, project, f"/d/{slug}/p/{project_id}", task_id, files
+        request, session, ds.org_id, project, f"/d/{slug}/p/{project_id}", task_id, files,
+        labels=name_label, stages=stage,
     )
 
 

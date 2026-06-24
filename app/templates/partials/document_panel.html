@@ -66,9 +66,11 @@
       <tr>
         <th style="width:28px"><input type="checkbox" onclick="docToggleAll(this)"></th>
         <th class="doc-sort" onclick="docSort('name')">Name {% if q.sort == 'name' %}{{ '▲' if q.direction == 'asc' else '▼' }}{% endif %}</th>
-        <th class="doc-sort" style="width:90px" onclick="docSort('size')">Size {% if q.sort == 'size' %}{{ '▲' if q.direction == 'asc' else '▼' }}{% endif %}</th>
-        <th class="doc-sort" style="width:190px" onclick="docSort('date')">Uploaded {% if q.sort == 'date' %}{{ '▲' if q.direction == 'asc' else '▼' }}{% endif %}</th>
-        <th style="width:120px"></th>
+        <th style="width:96px">Status</th>
+        <th style="width:160px">Task</th>
+        <th class="doc-sort" style="width:80px" onclick="docSort('size')">Size {% if q.sort == 'size' %}{{ '▲' if q.direction == 'asc' else '▼' }}{% endif %}</th>
+        <th class="doc-sort" style="width:180px" onclick="docSort('date')">Uploaded {% if q.sort == 'date' %}{{ '▲' if q.direction == 'asc' else '▼' }}{% endif %}</th>
+        <th style="width:110px"></th>
       </tr>
     </thead>
     {% include "partials/document_rows.html" %}

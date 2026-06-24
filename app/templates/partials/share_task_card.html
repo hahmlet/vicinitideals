@@ -12,20 +12,16 @@
     {% for d in t.documents %}
     <div class="task-doc">
       {% if d.viewable %}
-      <button type="button" class="doc-name js-doc-view" data-doc-id="{{ d.id }}" data-doc-name="{{ d.filename }}">{{ d.icon }} {{ d.filename }}</button>
+      <button type="button" class="doc-name js-doc-view" data-doc-id="{{ d.id }}" data-doc-name="{{ d.display_name }}">{{ d.icon }} {{ d.display_name }}</button>
       {% else %}
-      <a class="doc-name" href="{{ base }}/documents/{{ d.id }}/download" style="text-decoration:none">{{ d.icon }} {{ d.filename }}</a>
+      <a class="doc-name" href="{{ base }}/documents/{{ d.id }}/download" style="text-decoration:none">{{ d.icon }} {{ d.display_name }}</a>
       {% endif %}
+      <span class="task-doc-stage {{ d.stage }}">{{ 'Final' if d.stage == 'final' else 'Draft' }}</span>
       <span style="color:var(--text-muted)">{{ d.size_human }}</span>
     </div>
     {% endfor %}
   </div>
 
-  <form class="g-upload" style="margin-top:8px"
-        hx-post="{{ base }}/tasks/{{ t.id }}/upload"
-        hx-target="#g-task-card-{{ t.id }}" hx-swap="outerHTML"
-        hx-encoding="multipart/form-data">
-    <input type="file" name="files" multiple style="font-size:12px">
-    <button type="submit" class="btn btn-secondary btn-sm">⬆ Add files</button>
-  </form>
+  <button type="button" class="btn btn-secondary btn-sm" style="margin-top:8px"
+          onclick='VDUP.open({url:"{{ base }}/tasks/{{ t.id }}/upload", target:"#g-task-card-{{ t.id }}", swap:"outerHTML", locked:true, lockedTitle:{{ t.title | tojson }}, accept:"", fields:function(){return {};}})'>⬆ Add files</button>
 </div>

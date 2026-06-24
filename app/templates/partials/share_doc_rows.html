@@ -28,6 +28,7 @@
   <table>
     <thead><tr>
       <th class="g-sort" onclick="gSort('name')">Name {% if q and q.sort == 'name' %}{{ '▲' if q.direction == 'asc' else '▼' }}{% endif %}</th>
+      <th>Status</th>
       <th class="g-sort" onclick="gSort('size')">Size {% if q and q.sort == 'size' %}{{ '▲' if q.direction == 'asc' else '▼' }}{% endif %}</th>
       <th class="g-sort" onclick="gSort('date')">Added {% if q and q.sort == 'date' %}{{ '▲' if q.direction == 'asc' else '▼' }}{% endif %}</th>
       <th></th>
@@ -37,11 +38,13 @@
       <tr>
         <td>
           {% if d.viewable %}
-          <button type="button" class="doc-name js-doc-view" data-doc-id="{{ d.id }}" data-doc-name="{{ d.filename }}">{{ d.icon }} {{ d.filename }}</button>
+          <button type="button" class="doc-name js-doc-view" data-doc-id="{{ d.id }}" data-doc-name="{{ d.display_name }}">{{ d.icon }} {{ d.display_name }}</button>
           {% else %}
-          <a class="doc-name" href="{{ base }}/documents/{{ d.id }}/download" style="text-decoration:none">{{ d.icon }} {{ d.filename }}</a>
+          <a class="doc-name" href="{{ base }}/documents/{{ d.id }}/download" style="text-decoration:none">{{ d.icon }} {{ d.display_name }}</a>
           {% endif %}
+          <span class="g-orig">📎 {{ d.filename }}</span>
         </td>
+        <td><span class="g-stage {{ d.stage }}">{{ 'Final' if d.stage == 'final' else 'Draft' }}</span></td>
         <td>{{ d.size_human }}</td>
         <td style="color:var(--text-muted)">{{ d.created_fmt }}</td>
         <td><a class="btn btn-secondary btn-sm" href="{{ base }}/documents/{{ d.id }}/download">⬇</a></td>

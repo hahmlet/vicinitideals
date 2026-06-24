@@ -8,10 +8,26 @@
       <td><input type="checkbox" class="doc-check" name="ids" value="{{ d.id }}"></td>
       <td>
         {% if d.viewable %}
-        <button type="button" class="doc-name js-doc-view" data-doc-id="{{ d.id }}" data-doc-name="{{ d.filename }}">{{ d.icon }} {{ d.filename }}</button>
+        <button type="button" class="doc-name js-doc-view" data-doc-id="{{ d.id }}" data-doc-name="{{ d.display_name }}">{{ d.icon }} {{ d.display_name }}</button>
         {% else %}
-        <a class="doc-name" style="text-decoration:none" href="/ui/documents/{{ d.id }}/download">{{ d.icon }} {{ d.filename }}</a>
+        <a class="doc-name" style="text-decoration:none" href="/ui/documents/{{ d.id }}/download">{{ d.icon }} {{ d.display_name }}</a>
         {% endif %}
+        <span class="doc-orig" title="Originally uploaded filename">📎 {{ d.filename }}</span>
+      </td>
+      <td>
+        <select class="doc-stage-sel {% if d.stage == 'final' %}doc-stage-final{% endif %}"
+                onchange="docStage('{{ d.id }}', this)" title="Document status">
+          <option value="draft" {% if d.stage != 'final' %}selected{% endif %}>Draft</option>
+          <option value="final" {% if d.stage == 'final' %}selected{% endif %}>Final</option>
+        </select>
+      </td>
+      <td>
+        <select class="doc-move-sel" onchange="docMove('{{ d.id }}', this)" title="Move to task">
+          {% for t in task_options %}
+          <option value="{{ t.id }}" {% if t.id == d.task_id %}selected{% endif %}>{{ t.title }}</option>
+          {% endfor %}
+          <option value="__new__">➕ New task…</option>
+        </select>
       </td>
       <td>{{ d.size_human }}</td>
       <td>{{ d.created_fmt }}</td>
@@ -45,7 +61,7 @@
     </tr>
     {% endfor %}
   {% else %}
-    <tr><td colspan="5"><div class="doc-empty">
+    <tr><td colspan="7"><div class="doc-empty">
       {% if q and (q.ext or q.date_from or q.date_to) %}No documents match these filters.
       {% else %}No {{ "archived" if show == "archived" else "active" }} documents yet.{% endif %}
     </div></td></tr>

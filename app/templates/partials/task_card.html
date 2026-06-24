@@ -26,20 +26,16 @@
     {% for d in t.documents %}
     <div class="task-doc">
       {% if d.viewable %}
-      <button type="button" class="doc-name js-doc-view" data-doc-id="{{ d.id }}" data-doc-name="{{ d.filename }}">{{ d.icon }} {{ d.filename }}</button>
+      <button type="button" class="doc-name js-doc-view" data-doc-id="{{ d.id }}" data-doc-name="{{ d.display_name }}">{{ d.icon }} {{ d.display_name }}</button>
       {% else %}
-      <a class="doc-name" style="text-decoration:none" href="/ui/documents/{{ d.id }}/download">{{ d.icon }} {{ d.filename }}</a>
+      <a class="doc-name" style="text-decoration:none" href="/ui/documents/{{ d.id }}/download">{{ d.icon }} {{ d.display_name }}</a>
       {% endif %}
+      <span class="task-doc-stage {{ d.stage }}">{{ 'Final' if d.stage == 'final' else 'Draft' }}</span>
       <span style="color:var(--text-muted)">{{ d.size_human }}</span>
     </div>
     {% endfor %}
   </div>
 
-  <form class="task-upload" style="margin-top:8px"
-        hx-post="/ui/tasks/{{ t.id }}/upload"
-        hx-target="#task-card-{{ t.id }}" hx-swap="outerHTML"
-        hx-encoding="multipart/form-data">
-    <input type="file" name="files" multiple style="font-size:12px">
-    <button type="submit" class="btn btn-secondary btn-sm">⬆ Add files</button>
-  </form>
+  <button type="button" class="btn btn-secondary btn-sm" style="margin-top:8px"
+          onclick='VDUP.open({url:"/ui/tasks/{{ t.id }}/upload", target:"#task-card-{{ t.id }}", swap:"outerHTML", locked:true, lockedTitle:{{ t.title | tojson }}, accept:"", fields:function(){return {};}})'>⬆ Add files</button>
 </div>

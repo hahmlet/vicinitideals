@@ -1345,3 +1345,11 @@ page (`/d/{slug}`) lists the projects and each opens the shared room at
 `/d/{slug}/p/{project_id}`. Both share types are validated entirely in the DB
 (revoked flag + `created_at` age check vs `doc_share_token_max_age_seconds`).
 `document_task_templates` (`0118`) seeds org-default tasks onto new projects.
+`0121` adds the enforced naming scheme: `documents.name_label` (user-entered
+name component) + `documents.stage` (draft/final). The *stored* `filename` is
+now the original upload name (audit); the *displayed/downloaded* name is
+computed at render time as `Project - Task - Label - Stage - MM-DD-YYYY.ext`
+(sanitized for iOS/Windows), so toggling stage or moving a doc between tasks
+renames it for free. Every document now lives in a task — task-less docs are
+auto-filed into a per-project "Misc." task (also backfilled by `0121`). Whole-
+deal downloads stream a zip foldered `Project/Task/file`.

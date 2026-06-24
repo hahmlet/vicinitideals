@@ -21,6 +21,12 @@
 .doc-upload { border: 2px dashed var(--border); border-radius: 8px; padding: 16px;
   display: flex; align-items: center; gap: 14px; margin-bottom: 16px; background: var(--surface); }
 .doc-upload-hint { font-size: 12px; color: var(--text-muted); }
+.doc-upload { cursor: pointer; display: flex; align-items: center; gap: 12px; }
+.doc-upload.drag { border-color: var(--accent); background: rgba(37,99,235,.06); }
+.doc-orig { font-size: 11px; color: var(--text-muted); display: block; margin-top: 2px; }
+.doc-stage-sel, .doc-move-sel { padding: 3px 6px; border: 1px solid var(--border);
+  border-radius: 6px; font-size: 12px; background: var(--bg); max-width: 150px; }
+.doc-stage-final { border-color: #16a34a; color: #166534; }
 
 .doc-toolbar { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
 .doc-sort { cursor: pointer; user-select: none; white-space: nowrap; }
@@ -128,16 +134,14 @@ table.doc-table { width: 100%; border-collapse: collapse; }
 {% if view != "tasks" %}
 
   {% if show != "archived" %}
-  <form class="doc-upload"
-        hx-post="/ui/projects/{{ project_id }}/documents/upload"
-        hx-target="#doc-panel"
-        hx-swap="outerHTML"
-        hx-include="#doc-filter-form"
-        hx-encoding="multipart/form-data">
-    <input type="file" name="files" multiple accept="{{ allowed_ext }}">
-    <button type="submit" class="btn btn-primary btn-sm">⬆ Upload</button>
-    <span class="doc-upload-hint">{{ allowed_ext }} · max {{ max_size_mb }} MB each</span>
-  </form>
+  <div class="doc-upload" id="doc-dropzone"
+       onclick="VDUP.open(docUploadCfg())"
+       ondragover="event.preventDefault();this.classList.add('drag')"
+       ondragleave="this.classList.remove('drag')"
+       ondrop="event.preventDefault();this.classList.remove('drag');VDUP.openFiles(docUploadCfg(),event.dataTransfer.files)">
+    <button type="button" class="btn btn-primary btn-sm">⬆ Upload</button>
+    <span class="doc-upload-hint">Click or drag files here · {{ allowed_ext }} · max {{ max_size_mb }} MB each</span>
+  </div>
   {% endif %}
 
   <div id="doc-panel">{% include "partials/document_panel.html" %}</div>
@@ -170,6 +174,8 @@ table.doc-table { width: 100%; border-collapse: collapse; }
     <div id="task-drawer-body" style="overflow:auto"></div>
   </div>
 </div>
+
+{% include "partials/upload_modal.html" %}
 
 <!-- Viewer modal -->
 <div class="doc-modal" id="doc-modal" onclick="if(event.target===this)docCloseViewer()">
@@ -228,6 +234,40 @@ function docClearFilters() {
   f.elements['date_from'].value = '';
   f.elements['date_to'].value = '';
   htmx.trigger(f, 'change');
+}
+// Current sort/filter view-state — sent with uploads + per-row changes so the
+// swapped panel keeps the same view.
+function vdDocFields() {
+  var f = document.getElementById('doc-filter-form'), o = {};
+  if (f) ['show', 'sort', 'direction', 'ext', 'date_from', 'date_to'].forEach(function (k) {
+    if (f.elements[k]) o[k] = f.elements[k].value;
+  });
+  return o;
+}
+function docUploadCfg() {
+  return {
+    url: '/ui/projects/{{ project_id }}/documents/upload',
+    target: '#doc-panel', swap: 'outerHTML',
+    tasks: {{ task_options | tojson }},
+    locked: false, accept: '{{ allowed_ext }}', fields: vdDocFields
+  };
+}
+// Per-row stage toggle + task move → re-render the panel (preserves view).
+function docPostRow(docId, path, extra) {
+  var v = vdDocFields();
+  Object.keys(extra || {}).forEach(function (k) { v[k] = extra[k]; });
+  htmx.ajax('POST', '/ui/documents/' + docId + path,
+    { target: '#doc-panel', swap: 'outerHTML', values: v });
+}
+function docStage(docId, sel) { docPostRow(docId, '/stage', { stage: sel.value }); }
+function docMove(docId, sel) {
+  if (sel.value === '__new__') {
+    var name = window.prompt('New task name:');
+    if (!name) { return; }
+    docPostRow(docId, '/move', { task_choice: '__new__', new_task: name });
+  } else {
+    docPostRow(docId, '/move', { task_choice: sel.value });
+  }
 }
 var _docZoom = 1;
 function _docApplyZoom() {

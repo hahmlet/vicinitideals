@@ -1,0 +1,235 @@
+{# ─────────────────────────────────────────────────────────────────────────────
+   Shared upload modal (wizard-style). One row per selected file with editable
+   Name, Status (Draft/Final) and Task. Cancel purges the selection; Upload
+   sends one multipart request with per-file metadata + a progress bar.
+
+   Used by both the authed document room and the guest share page. Trigger it:
+
+     VDUP.open({
+       url:     '/ui/projects/<pid>/documents/upload',   // POST target
+       target:  '#doc-panel',         // element to replace with the response
+       swap:    'outerHTML',          // 'outerHTML' | 'innerHTML'
+       tasks:   [{id,title}, ...],    // task picker options (omit if locked)
+       locked:  false,                // true → task is fixed (task-view upload)
+       lockedTitle: 'Tenant Leases',  // shown when locked
+       accept:  '.pdf,.png,...',      // file input accept attr
+       fields:  () => ({show:'active', sort:'date', ...})  // extra form fields
+     })
+
+   Include this partial ONCE per page (it owns global #vdup-* ids + window.VDUP).
+   ───────────────────────────────────────────────────────────────────────────── #}
+<style>
+  #vdup-modal { display:none; position:fixed; inset:0; z-index:1000;
+    background:rgba(15,23,42,.55); align-items:center; justify-content:center; padding:24px; }
+  #vdup-box { background:var(--surface,#fff); color:var(--text,#1f2430); border-radius:12px;
+    width:min(860px,100%); max-height:88vh; display:flex; flex-direction:column;
+    box-shadow:0 24px 60px rgba(15,23,42,.35); }
+  #vdup-head { padding:16px 20px; border-bottom:1px solid var(--border,#e2e5ea);
+    display:flex; align-items:baseline; gap:10px; }
+  #vdup-head h3 { margin:0; font-size:16px; }
+  #vdup-head .vdup-sub { font-size:12px; color:var(--text-muted,#6b7280); }
+  #vdup-rows { overflow-y:auto; padding:8px 20px; flex:1; }
+  .vdup-row { display:grid; grid-template-columns:1.6fr 92px 1.4fr 24px; gap:10px;
+    align-items:center; padding:10px 0; border-bottom:1px solid var(--border,#eef0f3); }
+  .vdup-row .vdup-orig { grid-column:1 / -1; font-size:11px; color:var(--text-muted,#9aa1ad);
+    margin-top:-4px; }
+  .vdup-row input[type=text], .vdup-row select { width:100%; padding:6px 8px;
+    border:1px solid var(--border,#e2e5ea); border-radius:6px; font-size:13px; background:var(--bg,#fff); }
+  .vdup-newtask { display:none; margin-top:6px; }
+  .vdup-x { cursor:pointer; border:none; background:none; color:var(--text-muted,#9aa1ad);
+    font-size:16px; line-height:1; }
+  .vdup-x:hover { color:#dc2626; }
+  .vdup-lockt { font-size:13px; color:var(--text-muted,#6b7280); padding:6px 0; }
+  .vdup-colhead { display:grid; grid-template-columns:1.6fr 92px 1.4fr 24px; gap:10px;
+    font-size:11px; text-transform:uppercase; letter-spacing:.04em; color:var(--text-muted,#9aa1ad);
+    padding:6px 20px 0; }
+  #vdup-progress { display:none; padding:0 20px 4px; }
+  #vdup-bartrack { height:6px; background:var(--border,#e2e5ea); border-radius:3px; overflow:hidden; }
+  #vdup-bar { height:100%; width:0; background:var(--accent,#2563eb); transition:width .15s; }
+  #vdup-foot { padding:14px 20px; border-top:1px solid var(--border,#e2e5ea);
+    display:flex; align-items:center; gap:10px; }
+  #vdup-foot .vdup-spacer { flex:1; }
+  #vdup-pct { font-size:12px; color:var(--text-muted,#6b7280); }
+</style>
+
+<input type="file" id="vdup-input" multiple style="display:none"
+       onchange="VDUP.onPick(event)">
+
+<div id="vdup-modal" onclick="if(event.target===this)VDUP.cancel()">
+  <div id="vdup-box">
+    <div id="vdup-head">
+      <h3>Upload documents</h3>
+      <span class="vdup-sub" id="vdup-sub"></span>
+    </div>
+    <div class="vdup-colhead" id="vdup-colhead">
+      <span>File name</span><span>Status</span><span>Task</span><span></span>
+    </div>
+    <div id="vdup-rows"></div>
+    <div id="vdup-progress">
+      <div id="vdup-bartrack"><div id="vdup-bar"></div></div>
+    </div>
+    <div id="vdup-foot">
+      <span class="vdup-sub" id="vdup-count"></span>
+      <span id="vdup-pct"></span>
+      <span class="vdup-spacer"></span>
+      <button type="button" class="btn btn-secondary btn-sm" onclick="VDUP.addMore()">+ Add files</button>
+      <button type="button" class="btn btn-secondary btn-sm" onclick="VDUP.cancel()">Cancel</button>
+      <button type="button" class="btn btn-primary btn-sm" id="vdup-submit" onclick="VDUP.submit()">⬆ Upload</button>
+    </div>
+  </div>
+</div>
+
+<script>
+window.VDUP = (function () {
+  var cfg = null, files = [];
+  function $(id) { return document.getElementById(id); }
+
+  function open(c) {
+    cfg = c; files = [];
+    var inp = $('vdup-input');
+    inp.value = '';
+    inp.setAttribute('accept', c.accept || '');
+    inp.click();                       // file picker; rows render on pick
+  }
+  function addMore() { $('vdup-input').click(); }
+
+  function openFiles(c, list) {                 // drag-and-drop entry point
+    cfg = c; files = [];
+    for (var i = 0; i < list.length; i++) files.push(list[i]);
+    if (files.length) { render(); show(); }
+  }
+
+  function onPick(e) {
+    var picked = e.target.files;
+    for (var i = 0; i < picked.length; i++) files.push(picked[i]);
+    e.target.value = '';
+    if (files.length) { render(); show(); }
+  }
+
+  function stem(name) { var i = name.lastIndexOf('.'); return i > 0 ? name.slice(0, i) : name; }
+
+  function rowEl(f, idx) {
+    var row = document.createElement('div');
+    row.className = 'vdup-row';
+    // Name input (default = upload stem).
+    var nameWrap = document.createElement('div');
+    var name = document.createElement('input');
+    name.type = 'text'; name.className = 'vdup-name'; name.value = stem(f.name);
+    nameWrap.appendChild(name);
+    // Status.
+    var stat = document.createElement('select'); stat.className = 'vdup-stage';
+    stat.innerHTML = '<option value="draft">Draft</option><option value="final">Final</option>';
+    // Task (or locked label).
+    var taskCell = document.createElement('div');
+    if (cfg.locked) {
+      taskCell.className = 'vdup-lockt';
+      taskCell.textContent = '🔒 ' + (cfg.lockedTitle || 'This task');
+    } else {
+      var sel = document.createElement('select'); sel.className = 'vdup-task';
+      var opts = '';
+      (cfg.tasks || []).forEach(function (t) {
+        var s = (t.title.toLowerCase() === 'misc.') ? ' selected' : '';
+        opts += '<option value="' + t.id + '"' + s + '>' + escapeHtml(t.title) + '</option>';
+      });
+      opts += '<option value="__new__">➕ Create new task…</option>';
+      sel.innerHTML = opts;
+      var nt = document.createElement('input');
+      nt.type = 'text'; nt.className = 'vdup-newtask'; nt.placeholder = 'New task name';
+      sel.addEventListener('change', function () {
+        nt.style.display = (sel.value === '__new__') ? 'block' : 'none';
+        if (sel.value === '__new__') nt.focus();
+      });
+      taskCell.appendChild(sel); taskCell.appendChild(nt);
+    }
+    // Remove.
+    var x = document.createElement('button');
+    x.type = 'button'; x.className = 'vdup-x'; x.textContent = '✕';
+    x.onclick = function () { removeRow(idx); };
+
+    var orig = document.createElement('div');
+    orig.className = 'vdup-orig'; orig.textContent = 'uploaded as ' + f.name;
+
+    row.appendChild(nameWrap); row.appendChild(stat); row.appendChild(taskCell); row.appendChild(x);
+    row.appendChild(orig);
+    return row;
+  }
+
+  function render() {
+    var body = $('vdup-rows'); body.innerHTML = '';
+    files.forEach(function (f, i) { body.appendChild(rowEl(f, i)); });
+    $('vdup-count').textContent = files.length + ' file' + (files.length === 1 ? '' : 's');
+    $('vdup-sub').textContent = cfg.locked
+      ? 'into ' + (cfg.lockedTitle || 'this task')
+      : 'pick a task per file';
+    $('vdup-colhead').style.gridTemplateColumns = cfg.locked ? '1.6fr 92px 1.4fr 24px' : '';
+  }
+
+  function removeRow(i) { files.splice(i, 1); if (!files.length) cancel(); else render(); }
+
+  function show() { $('vdup-progress').style.display = 'none'; $('vdup-pct').textContent = '';
+    $('vdup-bar').style.width = '0'; $('vdup-modal').style.display = 'flex'; }
+  function hide() { $('vdup-modal').style.display = 'none'; }
+  function cancel() { files = []; $('vdup-input').value = ''; hide(); }   // purge
+
+  function submit() {
+    if (!files.length) { cancel(); return; }
+    var rows = $('vdup-rows').children;
+    var fd = new FormData();
+    for (var i = 0; i < files.length; i++) {
+      var r = rows[i];
+      fd.append('files', files[i]);
+      fd.append('name_label', r.querySelector('.vdup-name').value || '');
+      fd.append('stage', r.querySelector('.vdup-stage').value || 'draft');
+      if (!cfg.locked) {
+        var sel = r.querySelector('.vdup-task');
+        fd.append('task_choice', sel.value);
+        fd.append('new_task', sel.value === '__new__'
+          ? (r.querySelector('.vdup-newtask').value || '') : '');
+      }
+    }
+    var extra = (typeof cfg.fields === 'function') ? cfg.fields() : (cfg.fields || {});
+    Object.keys(extra).forEach(function (k) { fd.append(k, extra[k]); });
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', cfg.url);
+    $('vdup-submit').disabled = true;
+    $('vdup-progress').style.display = 'block';
+    xhr.upload.onprogress = function (e) {
+      if (!e.lengthComputable) return;
+      var p = Math.round(e.loaded / e.total * 100);
+      $('vdup-bar').style.width = p + '%'; $('vdup-pct').textContent = p + '%';
+    };
+    xhr.onload = function () {
+      $('vdup-submit').disabled = false;
+      if (xhr.status >= 200 && xhr.status < 300) {
+        swap(xhr.responseText); cancel();
+      } else { alert('Upload failed (' + xhr.status + ').'); }
+    };
+    xhr.onerror = function () { $('vdup-submit').disabled = false; alert('Upload failed.'); };
+    xhr.send(fd);
+  }
+
+  function swap(html) {
+    var tgt = document.querySelector(cfg.target);
+    if (!tgt) return;
+    var parent = tgt.parentNode;
+    if (cfg.swap === 'innerHTML') { tgt.innerHTML = html; if (window.htmx) htmx.process(tgt); }
+    else {
+      var tmp = document.createElement('div'); tmp.innerHTML = html.trim();
+      var node = tmp.firstElementChild;
+      tgt.replaceWith(node);
+      if (window.htmx && node) htmx.process(node);
+      else if (window.htmx && parent) htmx.process(parent);
+    }
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  return { open: open, openFiles: openFiles, addMore: addMore, onPick: onPick,
+           removeRow: removeRow, cancel: cancel, submit: submit };
+})();
+</script>

@@ -117,7 +117,9 @@ async def test_guest_upload_and_download(client: AsyncClient, session: AsyncSess
     doc = (
         await session.execute(select(Document).where(Document.project_id == project.id))
     ).scalar_one()
-    assert doc.task_id is None
+    # Documents now always live in a task; a task-less doc-view upload auto-files
+    # into the project's "Misc." task.
+    assert doc.task_id is not None
 
     dl = await client.get(f"/share/{token}/documents/{doc.id}/download")
     assert dl.status_code == 200
