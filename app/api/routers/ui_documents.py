@@ -89,6 +89,21 @@ def _safe_header_filename(name: str) -> str:
     return cleaned[:255] or "file"
 
 
+def _sanitize_filename(name: str) -> str:
+    """Normalize an uploaded filename before persisting (defense-in-depth).
+
+    Strips path components and any HTML/quote/control characters so a stored
+    name can never carry markup into a rendered page or break headers/zip
+    entries — independent of any client-side escaping at display time.
+    """
+    # Drop any directory parts a client may send (e.g. "../etc", "C:\\x\\y").
+    base = (name or "").replace("\\", "/").rsplit("/", 1)[-1].strip()
+    # Remove control chars and characters that enable markup/quote injection.
+    base = "".join(c for c in base if c.isprintable() and c not in '<>:"\'`')
+    base = base.strip(". ")  # no leading/trailing dots or spaces
+    return base[:255]
+
+
 def _fmt_date(d) -> str:
     """Portable 'Mon D, YYYY' (no platform-specific %-d)."""
     return f"{d:%b} {d.day}, {d.year}"
@@ -183,7 +198,7 @@ async def _save_uploads(
     errors: list[str] = []
     created_for_preview: list[Document] = []
     for up in files:
-        name = (up.filename or "").strip()
+        name = _sanitize_filename(up.filename or "")
         if not name:
             continue
         ext = _ext(name)
@@ -871,14 +886,12 @@ async def share_revoke(
 ) -> HTMLResponse:
     if not settings.documents_module_enabled:
         raise HTTPException(status_code=404, detail="Not found")
-    user = await _get_user(session, request)
     share = await session.get(DocumentShare, share_id)
     if share is None:
         raise HTTPException(status_code=404, detail="Not found")
-    if settings.org_isolation_enabled:
-        user_org = getattr(user, "org_id", None)
-        if user_org is None or share.org_id != user_org:
-            raise HTTPException(status_code=404, detail="Not found")
+    # Authorize via the share's project — identical ownership path as create,
+    # so cross-project (and cross-org) revoke is rejected with 404.
+    await _require_project(session, request, share.project_id)
     share.revoked = True
     share.revoked_at = datetime.now(timezone.utc)
     await session.commit()
