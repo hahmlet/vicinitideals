@@ -1,0 +1,35 @@
+{# Org default-task templates — seeded onto every new project. #}
+<div id="task-templates-list">
+  {% if not task_templates %}
+  <p class="text-muted" style="font-size:13px;margin:0 0 12px">No default tasks yet. Add one below — it'll be created automatically on every new project.</p>
+  {% else %}
+  <table class="data-table" style="width:100%;margin-bottom:12px">
+    <thead><tr><th>Task name</th><th></th></tr></thead>
+    <tbody>
+      {% for t in task_templates %}
+      <tr id="task-tmpl-row-{{ t.id }}">
+        <td style="font-weight:500">{{ t.title }}</td>
+        <td style="text-align:right">
+          <button class="btn btn-xs btn-danger"
+            hx-post="/ui/settings/task-templates/{{ t.id }}/delete"
+            hx-target="#task-templates-list"
+            hx-swap="outerHTML"
+            hx-confirm="Delete default task '{{ t.title }}'? Existing projects are not affected.">
+            Delete
+          </button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+  <form hx-post="/ui/settings/task-templates"
+        hx-target="#task-templates-list" hx-swap="outerHTML"
+        hx-on::after-request="this.reset()"
+        style="display:flex;gap:8px">
+    <input type="text" name="title" placeholder="New default task (e.g. Tenant Leases)" required
+           style="flex:1;max-width:360px;padding:6px 10px;border:1px solid var(--border);border-radius:6px">
+    <button type="submit" class="btn btn-sm btn-primary">+ Add Task</button>
+  </form>
+</div>

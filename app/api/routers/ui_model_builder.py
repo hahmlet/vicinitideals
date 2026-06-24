@@ -1858,6 +1858,10 @@ async def create_deal_project(
     session.add(new_proj)
     await session.flush()
 
+    # Seed org-default document tasks onto this new project (no-op if none).
+    from app.services.document_task_seeding import seed_default_tasks
+    await seed_default_tasks(session, opp.org_id, new_proj.id)
+
     await _auto_assign_opportunity_to_project(opp, new_proj, session)
 
     for milestone in _seed_milestones(new_proj, pt):

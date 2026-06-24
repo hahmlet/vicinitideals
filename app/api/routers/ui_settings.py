@@ -19,7 +19,7 @@ from zoneinfo import ZoneInfo
 import httpx
 from fastapi import APIRouter, Form, HTTPException, Query, Request, Response
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
@@ -1874,4 +1874,65 @@ async def set_user_default_template(
     user.default_template_id = template_id
     await session.commit()
     return HTMLResponse('<span class="badge badge-success">Set as your default</span>')
+
+
+# ── Document Task Templates (org default tasks seeded onto new projects) ──────
+
+async def _task_templates_response(request: Request, session: DBSession, user) -> HTMLResponse:
+    from app.models.document import DocumentTaskTemplate as _TT
+    rows = list((await session.execute(
+        select(_TT)
+        .where(_TT.org_id == user.org_id)
+        .order_by(_TT.sort_order.asc(), _TT.created_at.asc())
+    )).scalars())
+    return templates.TemplateResponse(
+        request, "partials/task_templates_list.html",
+        {"task_templates": rows, "user": user},
+    )
+
+
+@router.get("/ui/settings/task-templates", response_class=HTMLResponse)
+async def task_templates_partial(request: Request, session: DBSession) -> HTMLResponse:
+    """HTMX partial — org default-task template list for the settings page."""
+    user = await _get_user(session, request)
+    if user is None or user.org_id is None:
+        return HTMLResponse("")
+    return await _task_templates_response(request, session, user)
+
+
+@router.post("/ui/settings/task-templates", response_class=HTMLResponse)
+async def create_task_template(
+    request: Request, session: DBSession, title: str = Form(...)
+) -> HTMLResponse:
+    from app.models.document import DocumentTaskTemplate as _TT
+    user = await _get_user(session, request)
+    if user is None or user.org_id is None:
+        return HTMLResponse("", status_code=403)
+    title = (title or "").strip()
+    if title:
+        # New template sorts after existing ones.
+        max_order = (await session.execute(
+            select(func.coalesce(func.max(_TT.sort_order), 0)).where(_TT.org_id == user.org_id)
+        )).scalar_one()
+        session.add(_TT(org_id=user.org_id, title=title[:512], sort_order=int(max_order) + 1))
+        await session.commit()
+    return await _task_templates_response(request, session, user)
+
+
+@router.post("/ui/settings/task-templates/{template_id}/delete", response_class=HTMLResponse)
+async def delete_task_template(
+    request: Request, template_id: UUID, session: DBSession
+) -> HTMLResponse:
+    from app.models.document import DocumentTaskTemplate as _TT
+    user = await _get_user(session, request)
+    if user is None or user.org_id is None:
+        return HTMLResponse("", status_code=403)
+    row = (await session.execute(
+        select(_TT).where(_TT.id == template_id, _TT.org_id == user.org_id)
+    )).scalar_one_or_none()
+    if row is None:
+        return HTMLResponse("", status_code=404)
+    await session.delete(row)
+    await session.commit()
+    return await _task_templates_response(request, session, user)
 

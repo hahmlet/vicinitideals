@@ -219,6 +219,9 @@ async def create_opportunity_model(
     )
     session.add(project)
     await session.flush()
+    # Seed org-default document tasks onto the new project (no-op if none).
+    from app.services.document_task_seeding import seed_default_tasks
+    await seed_default_tasks(session, opp.org_id, project.id)
     await session.refresh(scenario)
     return scenario
 

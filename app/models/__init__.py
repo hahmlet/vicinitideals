@@ -112,6 +112,7 @@ from app.models.document import (  # noqa: F401
     DocumentStatus,
     DocumentTask,
     DocumentTaskStatus,
+    DocumentTaskTemplate,
 )
 
 __all__ = [
@@ -197,4 +198,5 @@ __all__ = [
     "DocumentTask",
     "DocumentTaskStatus",
     "DocumentShare",
+    "DocumentTaskTemplate",
 ]

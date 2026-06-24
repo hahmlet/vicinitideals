@@ -219,6 +219,10 @@ async def create_scenario(
     session.add(project)
     await session.flush()
 
+    # Seed org-default document tasks onto the new project (no-op if none).
+    from app.services.document_task_seeding import seed_default_tasks
+    await seed_default_tasks(session, org_id, project.id)
+
     # ── OperationalInputs row ───────────────────────────────────────────────
     inputs = OperationalInputs(project_id=project.id)
     _apply_operational_inputs_defaults(inputs, resolved)

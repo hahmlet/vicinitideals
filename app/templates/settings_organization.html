@@ -1086,6 +1086,19 @@
   {% include "partials/scenario_templates_list.html" %}
 </div>
 
+{# ── Task Templates ────────────────────────────────────────────────────────── #}
+<div id="task-templates" style="padding-top:24px;border-top:1px solid var(--border)">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+    <div style="font-size:15px;font-weight:600">Task Templates</div>
+    <span style="font-size:12px;color:var(--text-muted)">
+      Default document tasks created automatically on every new project. No effect on existing projects.
+    </span>
+  </div>
+  <div hx-get="/ui/settings/task-templates" hx-trigger="load" hx-swap="innerHTML">
+    <p class="text-muted" style="font-size:13px;margin:0">Loading…</p>
+  </div>
+</div>
+
 </div>{# /right-col #}
 
 </div>{# /bottom-row grid #}
