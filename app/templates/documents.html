@@ -144,7 +144,7 @@ table.doc-table { width: 100%; border-collapse: collapse; }
   </div>
   {% endif %}
 
-  <div id="doc-panel">{% include "partials/document_panel.html" %}</div>
+  {% include "partials/document_panel.html" %}{# partial root IS #doc-panel #}
 
 {% else %}
 
