@@ -38,6 +38,7 @@ from app.api.routers.ui_helpers import (
 from app.config import settings
 from app.models.deal import Deal, Scenario
 from app.models.document import (
+    DealShare,
     Document,
     DocumentPreviewStatus,
     DocumentShare,
@@ -1026,41 +1027,176 @@ async def share_revoke(
     return await _share_panel_response(request, session, share.org_id, share.project_id)
 
 
+# ── Deal-wide share management (authed; surfaced on the Underwriting tab) ─────
+
+async def _require_deal(session: DBSession, request: Request, deal_id: UUID):
+    """Return (user, deal) or raise 404 (also for cross-org access)."""
+    if not settings.documents_module_enabled:
+        raise HTTPException(status_code=404, detail="Not found")
+    user = await _get_user(session, request)
+    deal = await session.get(Deal, deal_id)
+    if deal is None:
+        raise HTTPException(status_code=404, detail="Not found")
+    if settings.org_isolation_enabled:
+        user_org = getattr(user, "org_id", None)
+        if user_org is None or deal.org_id is None or deal.org_id != user_org:
+            raise HTTPException(status_code=404, detail="Not found")
+    return user, deal
+
+
+def _deal_share_vm(share: DealShare, request: Request) -> dict:
+    return {
+        "id": str(share.id),
+        "label": share.label or "",
+        "url": f"{str(request.base_url).rstrip('/')}/d/{share.slug}",
+        "revoked": share.revoked,
+    }
+
+
+async def _load_deal_shares(session: DBSession, org_id: UUID, deal_id: UUID):
+    stmt = (
+        select(DealShare)
+        .where(DealShare.org_id == org_id, DealShare.deal_id == deal_id, DealShare.revoked.is_(False))
+        .order_by(DealShare.created_at.desc())
+    )
+    return list((await session.execute(stmt)).scalars().all())
+
+
+async def _unique_deal_share_slug(session: DBSession) -> str:
+    for _ in range(6):
+        slug = _generate_share_slug()
+        exists = (
+            await session.execute(select(DealShare.id).where(DealShare.slug == slug))
+        ).first()
+        if exists is None:
+            return slug
+    raise HTTPException(status_code=500, detail="Could not allocate a share link.")
+
+
+async def _deal_share_panel_response(request, session, org_id, deal_id):
+    shares = await _load_deal_shares(session, org_id, deal_id)
+    return templates.TemplateResponse(
+        request,
+        "partials/deal_share_panel.html",
+        {"deal_id": str(deal_id), "shares": [_deal_share_vm(s, request) for s in shares]},
+    )
+
+
+@router.get("/ui/deals/{deal_id}/deal-shares", response_class=HTMLResponse)
+async def deal_shares_list(
+    request: Request, deal_id: UUID, session: DBSession
+) -> HTMLResponse:
+    user, deal = await _require_deal(session, request, deal_id)
+    return await _deal_share_panel_response(request, session, deal.org_id, deal_id)
+
+
+@router.post("/ui/deals/{deal_id}/deal-shares", response_class=HTMLResponse)
+async def deal_share_create(
+    request: Request, deal_id: UUID, session: DBSession, label: str = Form(default="")
+) -> HTMLResponse:
+    user, deal = await _require_deal(session, request, deal_id)
+    session.add(
+        DealShare(
+            org_id=deal.org_id,
+            deal_id=deal_id,
+            slug=await _unique_deal_share_slug(session),
+            label=(label.strip() or None),
+            created_by_user_id=getattr(user, "id", None),
+        )
+    )
+    await session.commit()
+    return await _deal_share_panel_response(request, session, deal.org_id, deal_id)
+
+
+@router.post("/ui/deal-shares/{share_id}/revoke", response_class=HTMLResponse)
+async def deal_share_revoke(
+    request: Request, share_id: UUID, session: DBSession
+) -> HTMLResponse:
+    if not settings.documents_module_enabled:
+        raise HTTPException(status_code=404, detail="Not found")
+    share = await session.get(DealShare, share_id)
+    if share is None:
+        raise HTTPException(status_code=404, detail="Not found")
+    # Authorize via the share's deal — same ownership path as create.
+    await _require_deal(session, request, share.deal_id)
+    share.revoked = True
+    share.revoked_at = datetime.now(timezone.utc)
+    await session.commit()
+    return await _deal_share_panel_response(request, session, share.org_id, share.deal_id)
+
+
 # ── Guest access (token-gated, no session) ─────────────────────────────────
 
-async def _resolve_share(session: DBSession, token: str) -> tuple[DocumentShare, Project]:
-    """Resolve a share slug to (share, project). 404 if invalid/revoked/expired/gone.
+def _share_age_ok(created_at) -> bool:
+    """True if the share is within the configured max-age window."""
+    max_age = settings.doc_share_token_max_age_seconds
+    if not max_age or created_at is None:
+        return True
+    return datetime.now(timezone.utc) - created_at <= timedelta(seconds=max_age)
 
-    Validity is fully DB-backed: the slug is just a random lookup key. A share
-    is rejected if revoked or older than ``doc_share_token_max_age_seconds``.
-    """
+
+async def _resolve_share(session: DBSession, token: str) -> tuple[DocumentShare, Project]:
+    """Resolve a project share slug to (share, project). 404 if invalid/revoked/
+    expired/gone. Validity is fully DB-backed; the slug is just a lookup key."""
     if not settings.documents_module_enabled:
         raise HTTPException(status_code=404, detail="Not found")
     share = (
-        await session.execute(
-            select(DocumentShare).where(DocumentShare.slug == token)
-        )
+        await session.execute(select(DocumentShare).where(DocumentShare.slug == token))
     ).scalar_one_or_none()
-    if share is None or share.revoked:
-        raise HTTPException(status_code=404, detail="This link is invalid or has been turned off.")
-    max_age = settings.doc_share_token_max_age_seconds
-    if max_age and share.created_at is not None:
-        if datetime.now(timezone.utc) - share.created_at > timedelta(seconds=max_age):
-            raise HTTPException(status_code=404, detail="This link has expired.")
+    if share is None or share.revoked or not _share_age_ok(share.created_at):
+        raise HTTPException(status_code=404, detail="This link is invalid, expired, or turned off.")
     project = await session.get(Project, share.project_id)
     if project is None:
         raise HTTPException(status_code=404, detail="Not found")
     return share, project
 
 
+async def _resolve_deal_share(session: DBSession, slug: str) -> DealShare:
+    """Resolve a deal share slug to the DealShare row. 404 if invalid/revoked/expired."""
+    if not settings.documents_module_enabled:
+        raise HTTPException(status_code=404, detail="Not found")
+    ds = (
+        await session.execute(select(DealShare).where(DealShare.slug == slug))
+    ).scalar_one_or_none()
+    if ds is None or ds.revoked or not _share_age_ok(ds.created_at):
+        raise HTTPException(status_code=404, detail="This link is invalid, expired, or turned off.")
+    return ds
+
+
+async def _resolve_deal_project(
+    session: DBSession, slug: str, project_id: UUID
+) -> tuple[DealShare, Project]:
+    """Resolve (deal slug, project_id) → (deal_share, project), enforcing that
+    the project actually belongs to the shared deal."""
+    ds = await _resolve_deal_share(session, slug)
+    project = await session.get(Project, project_id)
+    if project is None:
+        raise HTTPException(status_code=404, detail="Not found")
+    scenario = await session.get(Scenario, project.scenario_id)
+    if scenario is None or scenario.deal_id != ds.deal_id:
+        raise HTTPException(status_code=404, detail="Not found")
+    return ds, project
+
+
+async def _deal_projects(session: DBSession, deal_id: UUID) -> list[Project]:
+    """All projects under a deal (across its scenarios), with doc counts."""
+    stmt = (
+        select(Project)
+        .join(Scenario, Scenario.id == Project.scenario_id)
+        .where(Scenario.deal_id == deal_id)
+        .order_by(Project.name.asc())
+    )
+    return list((await session.execute(stmt)).scalars().all())
+
+
 async def _guest_require_document(
-    session: DBSession, share: DocumentShare, document_id: UUID
+    session: DBSession, org_id: UUID, project_id: UUID, document_id: UUID
 ) -> Document:
     doc = await session.get(Document, document_id)
     if (
         doc is None
-        or doc.project_id != share.project_id
-        or doc.org_id != share.org_id
+        or doc.project_id != project_id
+        or doc.org_id != org_id
         or doc.status != DocumentStatus.active
     ):
         raise HTTPException(status_code=404, detail="Not found")
@@ -1068,14 +1204,14 @@ async def _guest_require_document(
 
 
 def _guest_rows_response(
-    request: Request, token: str, docs: list[Document], q: dict,
+    request: Request, base: str, docs: list[Document], q: dict,
     available_exts: list[str], errors: list[str] | None = None,
 ):
     return templates.TemplateResponse(
         request,
         "partials/share_doc_rows.html",
         {
-            "token": token,
+            "base": base,
             "documents": [_doc_vm(d) for d in docs],
             "q": q,
             "available_exts": available_exts,
@@ -1084,32 +1220,25 @@ def _guest_rows_response(
     )
 
 
-@router.get("/share/{token}", response_class=HTMLResponse)
-async def guest_documents_page(
-    request: Request,
-    token: str,
-    session: DBSession,
-    view: str = Query(default="documents"),
-    status: str = Query(default="all"),
-    sort: str = Query(default="date"),
-    direction: str = Query(default="desc"),
-    ext: str = Query(default=""),
-    date_from: str = Query(default=""),
-    date_to: str = Query(default=""),
-) -> HTMLResponse:
-    share, project = await _resolve_share(session, token)
-    q = _doc_query(sort=sort, direction=direction, ext=ext, date_from=date_from, date_to=date_to)
-    docs = await _load_docs(session, share.org_id, project.id, "active", q)
-    available_exts = await _distinct_exts(session, share.org_id, project.id)
+# ── Shared guest renderers (project share vs deal share differ only in `base`
+#    and how the (org, project) context is resolved). ───────────────────────────
+
+async def _render_guest_page(
+    request, session, org_id, project, base, *,
+    view, status, q, deal_home_url=None,
+):
+    docs = await _load_docs(session, org_id, project.id, "active", q)
+    available_exts = await _distinct_exts(session, org_id, project.id)
     task_vms: list[dict] = []
     if view == "tasks":
         mm = await _milestone_map(session, project.id)
-        task_vms = await _build_task_vms(session, share.org_id, project.id, status, mm)
+        task_vms = await _build_task_vms(session, org_id, project.id, status, mm)
     return templates.TemplateResponse(
         request,
         "share_documents.html",
         {
-            "token": token,
+            "base": base,
+            "deal_home_url": deal_home_url,
             "project_name": project.name,
             "documents": [_doc_vm(d) for d in docs],
             "q": q,
@@ -1123,54 +1252,23 @@ async def guest_documents_page(
     )
 
 
-@router.get("/share/{token}/rows", response_class=HTMLResponse)
-async def guest_rows(
-    request: Request,
-    token: str,
-    session: DBSession,
-    sort: str = Query(default="date"),
-    direction: str = Query(default="desc"),
-    ext: str = Query(default=""),
-    date_from: str = Query(default=""),
-    date_to: str = Query(default=""),
-) -> HTMLResponse:
-    share, project = await _resolve_share(session, token)
-    q = _doc_query(sort=sort, direction=direction, ext=ext, date_from=date_from, date_to=date_to)
-    docs = await _load_docs(session, share.org_id, project.id, "active", q)
-    available_exts = await _distinct_exts(session, share.org_id, project.id)
-    return _guest_rows_response(request, token, docs, q, available_exts)
+async def _render_guest_rows(request, session, org_id, project, base, q):
+    docs = await _load_docs(session, org_id, project.id, "active", q)
+    available_exts = await _distinct_exts(session, org_id, project.id)
+    return _guest_rows_response(request, base, docs, q, available_exts)
 
 
-@router.post("/share/{token}/upload", response_class=HTMLResponse)
-async def guest_upload(
-    request: Request,
-    token: str,
-    session: DBSession,
-    files: list[UploadFile] = File(default=[]),
-    sort: str = Form(default="date"),
-    direction: str = Form(default="desc"),
-    ext: str = Form(default=""),
-    date_from: str = Form(default=""),
-    date_to: str = Form(default=""),
-) -> HTMLResponse:
-    share, project = await _resolve_share(session, token)
-    errors, created_for_preview = await _save_uploads(
-        session, share.org_id, project.id, files, None
-    )
+async def _do_guest_upload(request, session, org_id, project, base, files, q):
+    errors, created_for_preview = await _save_uploads(session, org_id, project.id, files, None)
     await session.commit()
     _enqueue_previews(created_for_preview)
-    q = _doc_query(sort=sort, direction=direction, ext=ext, date_from=date_from, date_to=date_to)
-    docs = await _load_docs(session, share.org_id, project.id, "active", q)
-    available_exts = await _distinct_exts(session, share.org_id, project.id)
-    return _guest_rows_response(request, token, docs, q, available_exts, errors)
+    docs = await _load_docs(session, org_id, project.id, "active", q)
+    available_exts = await _distinct_exts(session, org_id, project.id)
+    return _guest_rows_response(request, base, docs, q, available_exts, errors)
 
 
-@router.get("/share/{token}/documents/{document_id}/download")
-async def guest_download(
-    request: Request, token: str, document_id: UUID, session: DBSession
-) -> StreamingResponse:
-    share, project = await _resolve_share(session, token)
-    doc = await _guest_require_document(session, share, document_id)
+async def _stream_guest_download(session, org_id, project, document_id):
+    doc = await _guest_require_document(session, org_id, project.id, document_id)
     try:
         data = open_document(doc.storage_key)
     except FileNotFoundError:
@@ -1178,18 +1276,12 @@ async def guest_download(
     return StreamingResponse(
         iter([data]),
         media_type=doc.content_type or "application/octet-stream",
-        headers={
-            "Content-Disposition": f'attachment; filename="{_safe_header_filename(doc.filename)}"'
-        },
+        headers={"Content-Disposition": f'attachment; filename="{_safe_header_filename(doc.filename)}"'},
     )
 
 
-@router.get("/share/{token}/documents/{document_id}/view")
-async def guest_view(
-    request: Request, token: str, document_id: UUID, session: DBSession
-) -> StreamingResponse:
-    share, project = await _resolve_share(session, token)
-    doc = await _guest_require_document(session, share, document_id)
+async def _stream_guest_view(session, org_id, project, document_id):
+    doc = await _guest_require_document(session, org_id, project.id, document_id)
     ext = _ext(doc.filename)
     if ext in _INLINE_MEDIA:
         key, media = doc.storage_key, (doc.content_type or "application/octet-stream")
@@ -1204,16 +1296,12 @@ async def guest_view(
     return StreamingResponse(
         iter([data]),
         media_type=media,
-        headers={
-            "Content-Disposition": f'inline; filename="{_safe_header_filename(doc.filename)}"'
-        },
+        headers={"Content-Disposition": f'inline; filename="{_safe_header_filename(doc.filename)}"'},
     )
 
 
-@router.get("/share/{token}/zip")
-async def guest_zip(request: Request, token: str, session: DBSession) -> StreamingResponse:
-    share, project = await _resolve_share(session, token)
-    docs = await _load_docs(session, share.org_id, project.id, "active")
+async def _stream_guest_zip(session, org_id, project):
+    docs = await _load_docs(session, org_id, project.id, "active")
     buf = io.BytesIO()
     seen: dict[str, int] = {}
     with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zf:
@@ -1237,55 +1325,39 @@ async def guest_zip(request: Request, token: str, session: DBSession) -> Streami
     )
 
 
-@router.get("/share/{token}/tasks", response_class=HTMLResponse)
-async def guest_tasks(
-    request: Request, token: str, session: DBSession, status: str = Query(default="all")
-) -> HTMLResponse:
-    share, project = await _resolve_share(session, token)
+async def _render_guest_tasks(request, session, org_id, project, base, status):
     mm = await _milestone_map(session, project.id)
-    vms = await _build_task_vms(session, share.org_id, project.id, status, mm)
+    vms = await _build_task_vms(session, org_id, project.id, status, mm)
     return templates.TemplateResponse(
         request,
         "partials/share_task_rows.html",
-        {"token": token, "tasks": vms, "status": status or "all"},
+        {"base": base, "tasks": vms, "status": status or "all"},
     )
 
 
-@router.post("/share/{token}/tasks/{task_id}/upload", response_class=HTMLResponse)
-async def guest_task_upload(
-    request: Request,
-    token: str,
-    task_id: UUID,
-    session: DBSession,
-    files: list[UploadFile] = File(default=[]),
-) -> HTMLResponse:
-    share, project = await _resolve_share(session, token)
+async def _do_guest_task_upload(request, session, org_id, project, base, task_id, files):
     task = await session.get(DocumentTask, task_id)
-    if task is None or task.project_id != project.id or task.org_id != share.org_id:
+    if task is None or task.project_id != project.id or task.org_id != org_id:
         raise HTTPException(status_code=404, detail="Not found")
     errors, created_for_preview = await _save_uploads(
-        session, share.org_id, project.id, files, None, task_id=task.id
+        session, org_id, project.id, files, None, task_id=task.id
     )
     await session.commit()
     _enqueue_previews(created_for_preview)
     mm = await _milestone_map(session, project.id)
-    docs = await _task_docs(session, share.org_id, project.id, task.id)
+    docs = await _task_docs(session, org_id, project.id, task.id)
     return templates.TemplateResponse(
         request,
         "partials/share_task_card.html",
-        {"token": token, "t": _task_vm(task, docs, mm)},
+        {"base": base, "t": _task_vm(task, docs, mm)},
     )
 
 
-@router.get("/share/{token}/tasks/{task_id}/download")
-async def guest_task_zip(
-    request: Request, token: str, task_id: UUID, session: DBSession
-) -> StreamingResponse:
-    share, project = await _resolve_share(session, token)
+async def _stream_guest_task_zip(session, org_id, project, task_id):
     task = await session.get(DocumentTask, task_id)
-    if task is None or task.project_id != project.id or task.org_id != share.org_id:
+    if task is None or task.project_id != project.id or task.org_id != org_id:
         raise HTTPException(status_code=404, detail="Not found")
-    docs = await _task_docs(session, share.org_id, project.id, task.id)
+    docs = await _task_docs(session, org_id, project.id, task.id)
     mm = await _milestone_map(session, project.id)
     due = task.computed_due_date(mm)
     status = task.status.value if hasattr(task.status, "value") else task.status
@@ -1319,3 +1391,216 @@ async def guest_task_zip(
         media_type="application/zip",
         headers={"Content-Disposition": f'attachment; filename="{safe}.zip"'},
     )
+
+
+# ── Project guest routes (base = /share/{slug}) ──────────────────────────────
+
+@router.get("/share/{token}", response_class=HTMLResponse)
+async def guest_documents_page(
+    request: Request, token: str, session: DBSession,
+    view: str = Query(default="documents"), status: str = Query(default="all"),
+    sort: str = Query(default="date"), direction: str = Query(default="desc"),
+    ext: str = Query(default=""), date_from: str = Query(default=""), date_to: str = Query(default=""),
+) -> HTMLResponse:
+    share, project = await _resolve_share(session, token)
+    q = _doc_query(sort=sort, direction=direction, ext=ext, date_from=date_from, date_to=date_to)
+    return await _render_guest_page(
+        request, session, share.org_id, project, f"/share/{token}",
+        view=view, status=status, q=q,
+    )
+
+
+@router.get("/share/{token}/rows", response_class=HTMLResponse)
+async def guest_rows(
+    request: Request, token: str, session: DBSession,
+    sort: str = Query(default="date"), direction: str = Query(default="desc"),
+    ext: str = Query(default=""), date_from: str = Query(default=""), date_to: str = Query(default=""),
+) -> HTMLResponse:
+    share, project = await _resolve_share(session, token)
+    q = _doc_query(sort=sort, direction=direction, ext=ext, date_from=date_from, date_to=date_to)
+    return await _render_guest_rows(request, session, share.org_id, project, f"/share/{token}", q)
+
+
+@router.post("/share/{token}/upload", response_class=HTMLResponse)
+async def guest_upload(
+    request: Request, token: str, session: DBSession,
+    files: list[UploadFile] = File(default=[]),
+    sort: str = Form(default="date"), direction: str = Form(default="desc"),
+    ext: str = Form(default=""), date_from: str = Form(default=""), date_to: str = Form(default=""),
+) -> HTMLResponse:
+    share, project = await _resolve_share(session, token)
+    q = _doc_query(sort=sort, direction=direction, ext=ext, date_from=date_from, date_to=date_to)
+    return await _do_guest_upload(request, session, share.org_id, project, f"/share/{token}", files, q)
+
+
+@router.get("/share/{token}/documents/{document_id}/download")
+async def guest_download(
+    request: Request, token: str, document_id: UUID, session: DBSession
+) -> StreamingResponse:
+    share, project = await _resolve_share(session, token)
+    return await _stream_guest_download(session, share.org_id, project, document_id)
+
+
+@router.get("/share/{token}/documents/{document_id}/view")
+async def guest_view(
+    request: Request, token: str, document_id: UUID, session: DBSession
+) -> StreamingResponse:
+    share, project = await _resolve_share(session, token)
+    return await _stream_guest_view(session, share.org_id, project, document_id)
+
+
+@router.get("/share/{token}/zip")
+async def guest_zip(request: Request, token: str, session: DBSession) -> StreamingResponse:
+    share, project = await _resolve_share(session, token)
+    return await _stream_guest_zip(session, share.org_id, project)
+
+
+@router.get("/share/{token}/tasks", response_class=HTMLResponse)
+async def guest_tasks(
+    request: Request, token: str, session: DBSession, status: str = Query(default="all")
+) -> HTMLResponse:
+    share, project = await _resolve_share(session, token)
+    return await _render_guest_tasks(request, session, share.org_id, project, f"/share/{token}", status)
+
+
+@router.post("/share/{token}/tasks/{task_id}/upload", response_class=HTMLResponse)
+async def guest_task_upload(
+    request: Request, token: str, task_id: UUID, session: DBSession,
+    files: list[UploadFile] = File(default=[]),
+) -> HTMLResponse:
+    share, project = await _resolve_share(session, token)
+    return await _do_guest_task_upload(
+        request, session, share.org_id, project, f"/share/{token}", task_id, files
+    )
+
+
+@router.get("/share/{token}/tasks/{task_id}/download")
+async def guest_task_zip(
+    request: Request, token: str, task_id: UUID, session: DBSession
+) -> StreamingResponse:
+    share, project = await _resolve_share(session, token)
+    return await _stream_guest_task_zip(session, share.org_id, project, task_id)
+
+
+# ── Deal guest routes (one link → pick a project → base = /d/{slug}/p/{pid}) ──
+
+@router.get("/d/{slug}", response_class=HTMLResponse)
+async def deal_share_landing(
+    request: Request, slug: str, session: DBSession
+) -> HTMLResponse:
+    ds = await _resolve_deal_share(session, slug)
+    deal = await session.get(Deal, ds.deal_id)
+    projects = await _deal_projects(session, ds.deal_id)
+    cards = []
+    for p in projects:
+        n_docs = (
+            await session.execute(
+                select(func.count(Document.id)).where(
+                    Document.project_id == p.id,
+                    Document.org_id == ds.org_id,
+                    Document.status == DocumentStatus.active,
+                )
+            )
+        ).scalar_one()
+        cards.append({"name": p.name, "doc_count": n_docs, "url": f"/d/{slug}/p/{p.id}"})
+    return templates.TemplateResponse(
+        request,
+        "share_deal_home.html",
+        {"deal_name": deal.name if deal else "Deal", "projects": cards},
+    )
+
+
+@router.get("/d/{slug}/p/{project_id}", response_class=HTMLResponse)
+async def deal_guest_page(
+    request: Request, slug: str, project_id: UUID, session: DBSession,
+    view: str = Query(default="documents"), status: str = Query(default="all"),
+    sort: str = Query(default="date"), direction: str = Query(default="desc"),
+    ext: str = Query(default=""), date_from: str = Query(default=""), date_to: str = Query(default=""),
+) -> HTMLResponse:
+    ds, project = await _resolve_deal_project(session, slug, project_id)
+    q = _doc_query(sort=sort, direction=direction, ext=ext, date_from=date_from, date_to=date_to)
+    return await _render_guest_page(
+        request, session, ds.org_id, project, f"/d/{slug}/p/{project_id}",
+        view=view, status=status, q=q, deal_home_url=f"/d/{slug}",
+    )
+
+
+@router.get("/d/{slug}/p/{project_id}/rows", response_class=HTMLResponse)
+async def deal_guest_rows(
+    request: Request, slug: str, project_id: UUID, session: DBSession,
+    sort: str = Query(default="date"), direction: str = Query(default="desc"),
+    ext: str = Query(default=""), date_from: str = Query(default=""), date_to: str = Query(default=""),
+) -> HTMLResponse:
+    ds, project = await _resolve_deal_project(session, slug, project_id)
+    q = _doc_query(sort=sort, direction=direction, ext=ext, date_from=date_from, date_to=date_to)
+    return await _render_guest_rows(
+        request, session, ds.org_id, project, f"/d/{slug}/p/{project_id}", q
+    )
+
+
+@router.post("/d/{slug}/p/{project_id}/upload", response_class=HTMLResponse)
+async def deal_guest_upload(
+    request: Request, slug: str, project_id: UUID, session: DBSession,
+    files: list[UploadFile] = File(default=[]),
+    sort: str = Form(default="date"), direction: str = Form(default="desc"),
+    ext: str = Form(default=""), date_from: str = Form(default=""), date_to: str = Form(default=""),
+) -> HTMLResponse:
+    ds, project = await _resolve_deal_project(session, slug, project_id)
+    q = _doc_query(sort=sort, direction=direction, ext=ext, date_from=date_from, date_to=date_to)
+    return await _do_guest_upload(
+        request, session, ds.org_id, project, f"/d/{slug}/p/{project_id}", files, q
+    )
+
+
+@router.get("/d/{slug}/p/{project_id}/documents/{document_id}/download")
+async def deal_guest_download(
+    request: Request, slug: str, project_id: UUID, document_id: UUID, session: DBSession
+) -> StreamingResponse:
+    ds, project = await _resolve_deal_project(session, slug, project_id)
+    return await _stream_guest_download(session, ds.org_id, project, document_id)
+
+
+@router.get("/d/{slug}/p/{project_id}/documents/{document_id}/view")
+async def deal_guest_view(
+    request: Request, slug: str, project_id: UUID, document_id: UUID, session: DBSession
+) -> StreamingResponse:
+    ds, project = await _resolve_deal_project(session, slug, project_id)
+    return await _stream_guest_view(session, ds.org_id, project, document_id)
+
+
+@router.get("/d/{slug}/p/{project_id}/zip")
+async def deal_guest_zip(
+    request: Request, slug: str, project_id: UUID, session: DBSession
+) -> StreamingResponse:
+    ds, project = await _resolve_deal_project(session, slug, project_id)
+    return await _stream_guest_zip(session, ds.org_id, project)
+
+
+@router.get("/d/{slug}/p/{project_id}/tasks", response_class=HTMLResponse)
+async def deal_guest_tasks(
+    request: Request, slug: str, project_id: UUID, session: DBSession,
+    status: str = Query(default="all"),
+) -> HTMLResponse:
+    ds, project = await _resolve_deal_project(session, slug, project_id)
+    return await _render_guest_tasks(
+        request, session, ds.org_id, project, f"/d/{slug}/p/{project_id}", status
+    )
+
+
+@router.post("/d/{slug}/p/{project_id}/tasks/{task_id}/upload", response_class=HTMLResponse)
+async def deal_guest_task_upload(
+    request: Request, slug: str, project_id: UUID, task_id: UUID, session: DBSession,
+    files: list[UploadFile] = File(default=[]),
+) -> HTMLResponse:
+    ds, project = await _resolve_deal_project(session, slug, project_id)
+    return await _do_guest_task_upload(
+        request, session, ds.org_id, project, f"/d/{slug}/p/{project_id}", task_id, files
+    )
+
+
+@router.get("/d/{slug}/p/{project_id}/tasks/{task_id}/download")
+async def deal_guest_task_zip(
+    request: Request, slug: str, project_id: UUID, task_id: UUID, session: DBSession
+) -> StreamingResponse:
+    ds, project = await _resolve_deal_project(session, slug, project_id)
+    return await _stream_guest_task_zip(session, ds.org_id, project, task_id)

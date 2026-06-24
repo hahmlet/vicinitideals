@@ -59,6 +59,7 @@ _UI_PATH_PREFIXES = (
     "/onboarding",
     "/pending-approval",
     "/share/",
+    "/d/",
 )
 
 # Paths that don't require an authenticated session (public)
@@ -73,7 +74,8 @@ _AUTH_EXEMPT_PATHS = (
     "/reset-password",
     "/verify-email",
     "/api/",
-    "/share/",  # guest document-room access, gated by signed share token
+    "/share/",  # guest project document-room access, gated by random share slug
+    "/d/",  # guest deal-wide document access, gated by random deal-share slug
 )
 
 # Paths an authenticated-but-unverified user may still access so they
@@ -366,6 +368,8 @@ def create_app() -> FastAPI:
         "/pending-approval",
         "/api/",
         "/ui/onboarding",
+        "/share/",
+        "/d/",
     )
 
     @app.middleware("http")

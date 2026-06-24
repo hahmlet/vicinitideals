@@ -1,0 +1,44 @@
+{# Deal-wide share management. Lives on the Underwriting tab. hx-target for
+   create/revoke swaps. One link grants guest access to EVERY project in the
+   deal (guest picks a project on a landing page). Self-contained styles so it
+   renders correctly inside the builder. #}
+<div id="deal-share-panel" style="border:1px solid var(--border);border-radius:10px;padding:16px 18px;background:var(--surface)">
+  <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+    <strong style="font-size:15px">Share entire deal</strong>
+    <span style="font-size:12px;color:var(--text-muted)">
+      One link to every project in this deal. Guests pick a project, then view / upload / download.
+      <strong>Exposes all projects</strong> — revoke any time, auto-expires in 30 days.
+    </span>
+  </div>
+
+  <form hx-post="/ui/deals/{{ deal_id }}/deal-shares"
+        hx-target="#deal-share-panel" hx-swap="outerHTML"
+        hx-on::after-request="this.reset()"
+        style="display:flex;gap:8px;margin-bottom:12px">
+    <input type="text" name="label" placeholder="Label (optional, e.g. Lender)"
+           style="flex:1;max-width:260px;padding:6px 10px;border:1px solid var(--border);border-radius:6px">
+    <button type="submit" class="btn btn-primary btn-sm">+ Create deal link</button>
+  </form>
+
+  {% if shares %}
+  <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px">
+    {% for s in shares %}
+    <li style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <div style="flex:1;min-width:200px;display:flex;align-items:center;gap:8px">
+        {% if s.label %}<span style="font-size:12px;font-weight:600;color:var(--text-muted)">{{ s.label }}</span>{% endif %}
+        <input type="text" readonly value="{{ s.url }}" onclick="this.select()"
+               style="flex:1;min-width:160px;padding:5px 8px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:var(--bg)">
+      </div>
+      <button type="button" class="btn btn-secondary btn-sm"
+              onclick="navigator.clipboard.writeText('{{ s.url }}')">Copy</button>
+      <button type="button" class="btn btn-secondary btn-sm"
+              hx-post="/ui/deal-shares/{{ s.id }}/revoke"
+              hx-confirm="Turn off this link? Everyone holding it loses access to the whole deal immediately."
+              hx-target="#deal-share-panel" hx-swap="outerHTML">Revoke</button>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <div style="font-size:13px;color:var(--text-muted)">No active deal links. Create one to share every project at once.</div>
+  {% endif %}
+</div>

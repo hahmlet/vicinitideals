@@ -1336,5 +1336,12 @@ Index `ix_documents_project_status` on `(org_id, project_id, status)`.
 Scenario→Deal (`app/api/routers/ui_documents.py:_project_org_id`), so each
 Document denormalizes `org_id` to allow direct org-scoped access checks.
 
-Migration: `0115_document_room.py`. Future phases add `document_tasks`
-(task view) and `document_shares` (external links).
+Migration: `0115_document_room.py`. `document_tasks` (task view) and
+`document_shares` (per-project external links) followed. `document_shares`
+gained a short random `slug` (base58, no 0/O/I/l) in `0119`, replacing the old
+signed-token URL. `deal_shares` (`0120`) is the deal-wide variant: one revocable
+slug grants guests access to **every** project under a deal — the guest landing
+page (`/d/{slug}`) lists the projects and each opens the shared room at
+`/d/{slug}/p/{project_id}`. Both share types are validated entirely in the DB
+(revoked flag + `created_at` age check vs `doc_share_token_max_age_seconds`).
+`document_task_templates` (`0118`) seeds org-default tasks onto new projects.

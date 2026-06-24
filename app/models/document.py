@@ -275,3 +275,55 @@ class DocumentTaskTemplate(Base):
         onupdate=func.now(),
         nullable=False,
     )
+
+
+class DealShare(Base):
+    """A revocable guest link to a whole Deal's document rooms.
+
+    Unlike ``DocumentShare`` (one Project), a DealShare grants a guest access to
+    every Project under the Deal: the landing page lists the projects and the
+    guest picks one to work in. Validity is DB-backed (``revoked`` flag +
+    ``created_at`` age check); ``slug`` is the same short base58 code style.
+    """
+
+    __tablename__ = "deal_shares"
+    __table_args__ = (
+        Index("ix_deal_shares_deal", "org_id", "deal_id"),
+        Index("ix_deal_shares_slug", "slug", unique=True),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    slug: Mapped[str] = mapped_column(String(32), nullable=False)
+    org_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("organizations.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    deal_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("deals.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    label: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    created_by_user_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("users.id", ondelete="SET NULL"),
+        nullable=True,
+    )
+    revoked: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=False, server_default="false"
+    )
+    revoked_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        onupdate=func.now(),
+        nullable=False,
+    )

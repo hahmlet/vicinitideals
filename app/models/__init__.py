@@ -108,6 +108,7 @@ from app.models.email_ingest import (  # noqa: F401
 from app.models.document import (  # noqa: F401
     Document,
     DocumentPreviewStatus,
+    DealShare,
     DocumentShare,
     DocumentStatus,
     DocumentTask,
@@ -197,6 +198,7 @@ __all__ = [
     "DocumentPreviewStatus",
     "DocumentTask",
     "DocumentTaskStatus",
+    "DealShare",
     "DocumentShare",
     "DocumentTaskTemplate",
 ]

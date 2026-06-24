@@ -17,6 +17,8 @@
     .g-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
     .g-title { font-size: 20px; font-weight: 700; }
     .g-sub { color: var(--text-muted); font-size: 13px; margin-bottom: 18px; }
+    .g-back { display: inline-block; font-size: 13px; color: var(--primary); text-decoration: none; margin-bottom: 10px; }
+    .g-back:hover { text-decoration: underline; }
     .g-tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
     .g-tab { padding: 8px 14px; text-decoration: none; color: var(--text-muted); border-bottom: 2px solid transparent; }
     .g-tab.active { color: var(--text); border-bottom-color: var(--primary); font-weight: 600; }
@@ -68,32 +70,33 @@
 </head>
 <body>
   <div class="wrap">
+    {% if deal_home_url %}<a class="g-back" href="{{ deal_home_url }}">← All projects in this deal</a>{% endif %}
     <div class="g-head"><div class="g-title">📁 {{ project_name }}</div></div>
     <div class="g-sub">Shared document room — you can view, download, and upload files.</div>
 
     <div class="g-tabs">
-      <a class="g-tab {% if view != 'tasks' %}active{% endif %}" href="/share/{{ token }}?view=documents">Documents</a>
-      <a class="g-tab {% if view == 'tasks' %}active{% endif %}" href="/share/{{ token }}?view=tasks">Tasks</a>
+      <a class="g-tab {% if view != 'tasks' %}active{% endif %}" href="{{ base }}?view=documents">Documents</a>
+      <a class="g-tab {% if view == 'tasks' %}active{% endif %}" href="{{ base }}?view=tasks">Tasks</a>
     </div>
 
     {% if view != 'tasks' %}
       <div class="g-toolbar">
-        <form class="g-upload" hx-post="/share/{{ token }}/upload"
+        <form class="g-upload" hx-post="{{ base }}/upload"
               hx-target="#g-doc-rows" hx-swap="outerHTML"
               hx-include="#g-filter-form" hx-encoding="multipart/form-data">
           <input type="file" name="files" multiple accept="{{ allowed_ext }}">
           <button type="submit" class="btn btn-primary btn-sm">⬆ Upload</button>
         </form>
-        <a class="btn btn-secondary btn-sm" href="/share/{{ token }}/zip">⬇ Download all</a>
+        <a class="btn btn-secondary btn-sm" href="{{ base }}/zip">⬇ Download all</a>
       </div>
       {% include "partials/share_doc_rows.html" %}
     {% else %}
       <div class="g-toolbar">
         <div class="g-filter">
-          <a href="/share/{{ token }}?view=tasks&status=all" class="{% if status not in ['pending','in_progress','complete'] %}active{% endif %}">All</a>
-          <a href="/share/{{ token }}?view=tasks&status=pending" class="{% if status == 'pending' %}active{% endif %}">Pending</a>
-          <a href="/share/{{ token }}?view=tasks&status=in_progress" class="{% if status == 'in_progress' %}active{% endif %}">In Progress</a>
-          <a href="/share/{{ token }}?view=tasks&status=complete" class="{% if status == 'complete' %}active{% endif %}">Complete</a>
+          <a href="{{ base }}?view=tasks&status=all" class="{% if status not in ['pending','in_progress','complete'] %}active{% endif %}">All</a>
+          <a href="{{ base }}?view=tasks&status=pending" class="{% if status == 'pending' %}active{% endif %}">Pending</a>
+          <a href="{{ base }}?view=tasks&status=in_progress" class="{% if status == 'in_progress' %}active{% endif %}">In Progress</a>
+          <a href="{{ base }}?view=tasks&status=complete" class="{% if status == 'complete' %}active{% endif %}">Complete</a>
         </div>
       </div>
       {% include "partials/share_task_rows.html" %}
@@ -160,7 +163,7 @@
       var id = btn.getAttribute('data-doc-id');
       var name = btn.getAttribute('data-doc-name') || 'Document';
       // id is a server-issued UUID; build the URL from it only.
-      var url = '/share/{{ token }}/documents/' + encodeURIComponent(id) + '/view';
+      var url = '{{ base }}/documents/' + encodeURIComponent(id) + '/view';
       document.getElementById('doc-modal-name').textContent = name;
       var body = document.getElementById('doc-modal-body');
       var ctrl = document.getElementById('doc-zoom-ctrl');

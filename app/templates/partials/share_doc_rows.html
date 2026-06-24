@@ -5,7 +5,7 @@
   {% if errors %}<div class="g-errors">{% for e in errors %}{{ e }}<br>{% endfor %}</div>{% endif %}
 
   <form id="g-filter-form" class="g-toolbar"
-        hx-get="/share/{{ token }}/rows"
+        hx-get="{{ base }}/rows"
         hx-target="#g-doc-rows" hx-swap="outerHTML" hx-trigger="change">
     <input type="hidden" name="sort" value="{{ q.sort if q else 'date' }}">
     <input type="hidden" name="direction" value="{{ q.direction if q else 'desc' }}">
@@ -39,12 +39,12 @@
           {% if d.viewable %}
           <button type="button" class="doc-name js-doc-view" data-doc-id="{{ d.id }}" data-doc-name="{{ d.filename }}">{{ d.icon }} {{ d.filename }}</button>
           {% else %}
-          <a class="doc-name" href="/share/{{ token }}/documents/{{ d.id }}/download" style="text-decoration:none">{{ d.icon }} {{ d.filename }}</a>
+          <a class="doc-name" href="{{ base }}/documents/{{ d.id }}/download" style="text-decoration:none">{{ d.icon }} {{ d.filename }}</a>
           {% endif %}
         </td>
         <td>{{ d.size_human }}</td>
         <td style="color:var(--text-muted)">{{ d.created_fmt }}</td>
-        <td><a class="btn btn-secondary btn-sm" href="/share/{{ token }}/documents/{{ d.id }}/download">⬇</a></td>
+        <td><a class="btn btn-secondary btn-sm" href="{{ base }}/documents/{{ d.id }}/download">⬇</a></td>
       </tr>
       {% endfor %}
     </tbody>
