@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ project_name }} — Shared Documents</title>
+  <script src="https://unpkg.com/htmx.org@2.0.9/dist/htmx.min.js"></script>
+  <style>
+    :root {
+      --bg: #f6f7f9; --surface: #fff; --border: #e2e5ea; --text: #1f2430;
+      --text-muted: #6b7280; --primary: #2563eb;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text);
+      font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    .wrap { max-width: 920px; margin: 0 auto; padding: 24px 20px 60px; }
+    .g-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
+    .g-title { font-size: 20px; font-weight: 700; }
+    .g-sub { color: var(--text-muted); font-size: 13px; margin-bottom: 18px; }
+    .g-tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+    .g-tab { padding: 8px 14px; text-decoration: none; color: var(--text-muted); border-bottom: 2px solid transparent; }
+    .g-tab.active { color: var(--text); border-bottom-color: var(--primary); font-weight: 600; }
+    .btn { display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; border-radius: 6px;
+      border: 1px solid var(--border); background: var(--surface); color: var(--text);
+      cursor: pointer; font: inherit; text-decoration: none; }
+    .btn-primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .btn-sm { padding: 4px 9px; font-size: 13px; }
+    .g-toolbar { display: flex; gap: 8px; align-items: center; margin-bottom: 14px; flex-wrap: wrap; }
+    .g-upload { display: flex; gap: 8px; align-items: center; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+    th { font-size: 11px; text-transform: uppercase; color: var(--text-muted); }
+    .doc-name { background: none; border: none; padding: 0; color: var(--primary); cursor: pointer; font: inherit; }
+    .g-filter { display: flex; gap: 6px; margin-left: auto; }
+    .g-filter a { font-size: 12px; padding: 3px 8px; border-radius: 6px; color: var(--text-muted); text-decoration: none; }
+    .g-filter a.active { background: var(--primary); color: #fff; }
+    /* task cards */
+    .task-list { display: flex; flex-direction: column; gap: 10px; }
+    .task-card { border: 1px solid var(--border); border-radius: 8px; background: var(--surface); padding: 12px 14px; }
+    .task-card-head { display: flex; align-items: center; gap: 10px; }
+    .task-title { font-weight: 600; flex: 1; }
+    .task-badge { font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+    .task-badge.pending { background: #fef3c7; color: #92400e; }
+    .task-badge.in_progress { background: #dbeafe; color: #1e40af; }
+    .task-badge.complete { background: #dcfce7; color: #166534; }
+    .task-meta { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+    .task-notes { font-size: 12px; margin-top: 6px; white-space: pre-wrap; }
+    .task-docs { margin-top: 8px; display: flex; flex-direction: column; gap: 3px; }
+    .task-doc { font-size: 12px; display: flex; gap: 8px; align-items: center; }
+    .task-empty { text-align: center; padding: 36px; color: var(--text-muted); }
+    .g-errors { color: #b91c1c; font-size: 12px; margin: 6px 0; }
+    /* viewer modal */
+    .doc-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 50;
+      align-items: center; justify-content: center; }
+    .doc-modal.open { display: flex; }
+    .doc-modal-box { background: #fff; width: 88vw; height: 90vh; border-radius: 8px; display: flex; flex-direction: column; overflow: hidden; }
+    .doc-modal iframe, .doc-modal img { flex: 1; border: none; width: 100%; height: 100%; object-fit: contain; }
+    .doc-modal-bar { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-bottom: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="g-head"><div class="g-title">📁 {{ project_name }}</div></div>
+    <div class="g-sub">Shared document room — you can view, download, and upload files.</div>
+
+    <div class="g-tabs">
+      <a class="g-tab {% if view != 'tasks' %}active{% endif %}" href="/share/{{ token }}?view=documents">Documents</a>
+      <a class="g-tab {% if view == 'tasks' %}active{% endif %}" href="/share/{{ token }}?view=tasks">Tasks</a>
+    </div>
+
+    {% if view != 'tasks' %}
+      <div class="g-toolbar">
+        <form class="g-upload" hx-post="/share/{{ token }}/upload"
+              hx-target="#g-doc-rows" hx-swap="outerHTML" hx-encoding="multipart/form-data">
+          <input type="file" name="files" multiple accept="{{ allowed_ext }}">
+          <button type="submit" class="btn btn-primary btn-sm">⬆ Upload</button>
+        </form>
+        <a class="btn btn-secondary btn-sm" href="/share/{{ token }}/zip">⬇ Download all</a>
+      </div>
+      {% include "partials/share_doc_rows.html" %}
+    {% else %}
+      <div class="g-toolbar">
+        <div class="g-filter">
+          <a href="/share/{{ token }}?view=tasks&status=all" class="{% if status not in ['pending','in_progress','complete'] %}active{% endif %}">All</a>
+          <a href="/share/{{ token }}?view=tasks&status=pending" class="{% if status == 'pending' %}active{% endif %}">Pending</a>
+          <a href="/share/{{ token }}?view=tasks&status=in_progress" class="{% if status == 'in_progress' %}active{% endif %}">In Progress</a>
+          <a href="/share/{{ token }}?view=tasks&status=complete" class="{% if status == 'complete' %}active{% endif %}">Complete</a>
+        </div>
+      </div>
+      {% include "partials/share_task_rows.html" %}
+    {% endif %}
+  </div>
+
+  <!-- Viewer modal -->
+  <div class="doc-modal" id="doc-modal" onclick="if(event.target===this)gCloseViewer()">
+    <div class="doc-modal-box">
+      <div class="doc-modal-bar">
+        <strong id="doc-modal-name" style="flex:1"></strong>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="gCloseViewer()">✕ Close</button>
+      </div>
+      <div id="doc-modal-body" style="flex:1;display:flex"></div>
+    </div>
+  </div>
+
+  <script>
+    function gCloseViewer() {
+      var m = document.getElementById('doc-modal');
+      m.classList.remove('open');
+      document.getElementById('doc-modal-body').innerHTML = '';
+    }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') gCloseViewer(); });
+    document.body.addEventListener('click', function (e) {
+      var btn = e.target.closest('.js-doc-view');
+      if (!btn) return;
+      var id = btn.getAttribute('data-doc-id');
+      var name = btn.getAttribute('data-doc-name') || 'Document';
+      var url = '/share/{{ token }}/documents/' + id + '/view';
+      document.getElementById('doc-modal-name').textContent = name;
+      var lower = name.toLowerCase();
+      var isImg = /\.(jpe?g|png)$/.test(lower);
+      document.getElementById('doc-modal-body').innerHTML = isImg
+        ? '<img src="' + url + '" alt="' + name + '">'
+        : '<iframe src="' + url + '"></iframe>';
+      document.getElementById('doc-modal').classList.add('open');
+    });
+  </script>
+</body>
+</html>

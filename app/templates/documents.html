@@ -73,6 +73,21 @@ table.doc-table { width: 100%; border-collapse: collapse; }
 .task-field label { display: block; font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 3px; }
 .task-field input, .task-field select, .task-field textarea {
   width: 100%; padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; font: inherit; }
+
+/* Share panel */
+.share-panel-slot { display: none; margin-top: 12px; }
+.share-panel-slot.open { display: block; }
+.share-panel { border: 1px solid var(--border); border-radius: 8px; background: var(--surface); padding: 12px 14px; }
+.share-head { margin-bottom: 10px; }
+.share-hint { display: block; font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.share-create { display: flex; gap: 8px; margin-bottom: 10px; }
+.share-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.share-item { display: flex; align-items: center; gap: 10px; }
+.share-item-main { flex: 1; display: flex; align-items: center; gap: 8px; min-width: 0; }
+.share-label { font-size: 12px; font-weight: 600; white-space: nowrap; }
+.share-url { flex: 1; font-size: 12px; padding: 5px 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); }
+.share-item-actions { display: flex; gap: 6px; }
+.share-empty { font-size: 12px; color: var(--text-muted); }
 </style>
 {% endblock %}
 
@@ -85,7 +100,15 @@ table.doc-table { width: 100%; border-collapse: collapse; }
     {% if deal_id %}<a href="/deals/{{ deal_id }}">{{ deal_name }}</a> /{% endif %}
     {{ project_name }}
   </div>
-  <div class="doc-title">📁 {{ project_name }} — Documents</div>
+  <div class="doc-title">
+    📁 {{ project_name }} — Documents
+    <button type="button" class="btn btn-secondary btn-sm" style="margin-left:12px;vertical-align:middle"
+            hx-get="/ui/projects/{{ project_id }}/shares"
+            hx-target="#share-panel-slot" hx-swap="innerHTML"
+            hx-on::after-request="document.getElementById('share-panel-slot').classList.toggle('open')">🔗 Share</button>
+  </div>
+
+  <div id="share-panel-slot" class="share-panel-slot"></div>
 
   <div class="doc-tabs">
     <a class="doc-tab {% if view != 'tasks' %}active{% endif %}" href="?view=documents">Document View</a>

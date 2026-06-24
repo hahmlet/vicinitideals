@@ -58,6 +58,7 @@ _UI_PATH_PREFIXES = (
     "/mock/",
     "/onboarding",
     "/pending-approval",
+    "/share/",
 )
 
 # Paths that don't require an authenticated session (public)
@@ -72,6 +73,7 @@ _AUTH_EXEMPT_PATHS = (
     "/reset-password",
     "/verify-email",
     "/api/",
+    "/share/",  # guest document-room access, gated by signed share token
 )
 
 # Paths an authenticated-but-unverified user may still access so they

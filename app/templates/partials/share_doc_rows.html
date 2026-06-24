@@ -1,0 +1,27 @@
+{# Guest document rows — hx-target for upload swaps. #}
+<div id="g-doc-rows">
+  {% if errors %}<div class="g-errors">{% for e in errors %}{{ e }}<br>{% endfor %}</div>{% endif %}
+  {% if documents %}
+  <table>
+    <thead><tr><th>Name</th><th>Size</th><th>Added</th><th></th></tr></thead>
+    <tbody>
+      {% for d in documents %}
+      <tr>
+        <td>
+          {% if d.viewable %}
+          <button type="button" class="doc-name js-doc-view" data-doc-id="{{ d.id }}" data-doc-name="{{ d.filename }}">{{ d.icon }} {{ d.filename }}</button>
+          {% else %}
+          <a class="doc-name" href="/share/{{ token }}/documents/{{ d.id }}/download" style="text-decoration:none">{{ d.icon }} {{ d.filename }}</a>
+          {% endif %}
+        </td>
+        <td>{{ d.size_human }}</td>
+        <td style="color:var(--text-muted)">{{ d.created_fmt }}</td>
+        <td><a class="btn btn-secondary btn-sm" href="/share/{{ token }}/documents/{{ d.id }}/download">⬇</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="task-empty">No documents yet. Use Upload above to add files.</div>
+  {% endif %}
+</div>

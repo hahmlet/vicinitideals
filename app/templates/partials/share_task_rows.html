@@ -1,0 +1,10 @@
+{# Guest task list. #}
+<div id="g-task-list" class="task-list">
+  {% if tasks %}
+    {% for t in tasks %}
+      {% include "partials/share_task_card.html" %}
+    {% endfor %}
+  {% else %}
+    <div class="task-empty">No tasks{% if status in ['pending','in_progress','complete'] %} with this status{% endif %} yet.</div>
+  {% endif %}
+</div>

@@ -35,10 +35,12 @@ from app.api.routers.ui_helpers import (
     templates,
 )
 from app.config import settings
+from app.emails.tokens import load_doc_share_token, make_doc_share_token
 from app.models.deal import Deal, Scenario
 from app.models.document import (
     Document,
     DocumentPreviewStatus,
+    DocumentShare,
     DocumentStatus,
     DocumentTask,
     DocumentTaskStatus,
@@ -87,6 +89,18 @@ def _safe_header_filename(name: str) -> str:
     return cleaned[:255] or "file"
 
 
+def _fmt_date(d) -> str:
+    """Portable 'Mon D, YYYY' (no platform-specific %-d)."""
+    return f"{d:%b} {d.day}, {d.year}"
+
+
+def _fmt_datetime(dt) -> str:
+    """Portable 'Mon D, YYYY H:MM AM/PM' (no platform-specific %-d/%-I)."""
+    hour = ((dt.hour - 1) % 12) + 1
+    ampm = "AM" if dt.hour < 12 else "PM"
+    return f"{dt:%b} {dt.day}, {dt.year} {hour}:{dt.minute:02d} {ampm}"
+
+
 def _human_size(num: int) -> str:
     size = float(num or 0)
     for unit in ("B", "KB", "MB", "GB"):
@@ -104,7 +118,7 @@ def _doc_vm(doc: Document) -> dict:
         "ext": ext,
         "icon": _EXT_ICONS.get(ext, "📄"),
         "size_human": _human_size(doc.size_bytes),
-        "created_fmt": doc.created_at.strftime("%b %-d, %Y %-I:%M %p") if doc.created_at else "—",
+        "created_fmt": _fmt_datetime(doc.created_at) if doc.created_at else "—",
         "viewable": ext in _INLINE_MEDIA or doc.preview_status == DocumentPreviewStatus.ready,
         "status": doc.status.value if hasattr(doc.status, "value") else doc.status,
     }
@@ -533,7 +547,7 @@ def _task_vm(task: DocumentTask, docs: list[Document], milestone_map: dict) -> d
         "status": status,
         "status_label": str(status).replace("_", " ").title(),
         "notes": task.notes or "",
-        "due_fmt": due.strftime("%b %-d, %Y") if due else "—",
+        "due_fmt": _fmt_date(due) if due else "—",
         "due_is_relative": task.due_milestone_id is not None,
         "due_date_val": task.due_date.isoformat() if task.due_date else "",
         "due_milestone_id": str(task.due_milestone_id) if task.due_milestone_id else "",
@@ -766,6 +780,335 @@ async def task_zip(request: Request, task_id: UUID, session: DBSession) -> Strea
                 seen[name] += 1
                 stem, ext = os.path.splitext(name)
                 name = f"{stem} ({seen[name]}){ext}"
+            else:
+                seen[name] = 0
+            try:
+                zf.writestr(name, open_document(d.storage_key))
+            except FileNotFoundError:
+                continue
+    buf.seek(0)
+    safe = _safe_header_filename(task.title).replace(" ", "_") or "task"
+    return StreamingResponse(
+        iter([buf.getvalue()]),
+        media_type="application/zip",
+        headers={"Content-Disposition": f'attachment; filename="{safe}.zip"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# External sharing (Phase 3)
+# ---------------------------------------------------------------------------
+
+def _share_url(request: Request, token: str) -> str:
+    return f"{str(request.base_url).rstrip('/')}/share/{token}"
+
+
+def _share_vm(share: DocumentShare, request: Request) -> dict:
+    token = make_doc_share_token(share.id)
+    return {
+        "id": str(share.id),
+        "label": share.label or "",
+        "url": _share_url(request, token),
+        "revoked": share.revoked,
+    }
+
+
+async def _load_shares(session: DBSession, org_id: UUID, project_id: UUID):
+    stmt = (
+        select(DocumentShare)
+        .where(
+            DocumentShare.org_id == org_id,
+            DocumentShare.project_id == project_id,
+            DocumentShare.revoked.is_(False),
+        )
+        .order_by(DocumentShare.created_at.desc())
+    )
+    return list((await session.execute(stmt)).scalars().all())
+
+
+async def _share_panel_response(
+    request: Request, session: DBSession, org_id: UUID, project_id: UUID
+):
+    shares = await _load_shares(session, org_id, project_id)
+    return templates.TemplateResponse(
+        request,
+        "partials/share_panel.html",
+        {"project_id": str(project_id), "shares": [_share_vm(s, request) for s in shares]},
+    )
+
+
+@router.get("/ui/projects/{project_id}/shares", response_class=HTMLResponse)
+async def shares_list(
+    request: Request, project_id: UUID, session: DBSession
+) -> HTMLResponse:
+    user, org_id, project = await _require_project(session, request, project_id)
+    return await _share_panel_response(request, session, org_id, project_id)
+
+
+@router.post("/ui/projects/{project_id}/shares", response_class=HTMLResponse)
+async def share_create(
+    request: Request,
+    project_id: UUID,
+    session: DBSession,
+    label: str = Form(default=""),
+) -> HTMLResponse:
+    user, org_id, project = await _require_project(session, request, project_id)
+    session.add(
+        DocumentShare(
+            org_id=org_id,
+            project_id=project_id,
+            label=(label.strip() or None),
+            created_by_user_id=getattr(user, "id", None),
+        )
+    )
+    await session.commit()
+    return await _share_panel_response(request, session, org_id, project_id)
+
+
+@router.post("/ui/shares/{share_id}/revoke", response_class=HTMLResponse)
+async def share_revoke(
+    request: Request, share_id: UUID, session: DBSession
+) -> HTMLResponse:
+    if not settings.documents_module_enabled:
+        raise HTTPException(status_code=404, detail="Not found")
+    user = await _get_user(session, request)
+    share = await session.get(DocumentShare, share_id)
+    if share is None:
+        raise HTTPException(status_code=404, detail="Not found")
+    if settings.org_isolation_enabled:
+        user_org = getattr(user, "org_id", None)
+        if user_org is None or share.org_id != user_org:
+            raise HTTPException(status_code=404, detail="Not found")
+    share.revoked = True
+    share.revoked_at = datetime.now(timezone.utc)
+    await session.commit()
+    return await _share_panel_response(request, session, share.org_id, share.project_id)
+
+
+# ── Guest access (token-gated, no session) ─────────────────────────────────
+
+async def _resolve_share(session: DBSession, token: str) -> tuple[DocumentShare, Project]:
+    """Resolve a share token to (share, project). 404 if invalid/revoked/gone."""
+    if not settings.documents_module_enabled:
+        raise HTTPException(status_code=404, detail="Not found")
+    share_id = load_doc_share_token(token)
+    if share_id is None:
+        raise HTTPException(status_code=404, detail="This link is invalid or expired.")
+    share = await session.get(DocumentShare, share_id)
+    if share is None or share.revoked:
+        raise HTTPException(status_code=404, detail="This link has been turned off.")
+    project = await session.get(Project, share.project_id)
+    if project is None:
+        raise HTTPException(status_code=404, detail="Not found")
+    return share, project
+
+
+async def _guest_require_document(
+    session: DBSession, share: DocumentShare, document_id: UUID
+) -> Document:
+    doc = await session.get(Document, document_id)
+    if (
+        doc is None
+        or doc.project_id != share.project_id
+        or doc.org_id != share.org_id
+        or doc.status != DocumentStatus.active
+    ):
+        raise HTTPException(status_code=404, detail="Not found")
+    return doc
+
+
+@router.get("/share/{token}", response_class=HTMLResponse)
+async def guest_documents_page(
+    request: Request,
+    token: str,
+    session: DBSession,
+    view: str = Query(default="documents"),
+    status: str = Query(default="all"),
+) -> HTMLResponse:
+    share, project = await _resolve_share(session, token)
+    docs = await _load_docs(session, share.org_id, project.id, "active")
+    task_vms: list[dict] = []
+    if view == "tasks":
+        mm = await _milestone_map(session, project.id)
+        task_vms = await _build_task_vms(session, share.org_id, project.id, status, mm)
+    return templates.TemplateResponse(
+        request,
+        "share_documents.html",
+        {
+            "token": token,
+            "project_name": project.name,
+            "documents": [_doc_vm(d) for d in docs],
+            "view": view,
+            "status": status,
+            "tasks": task_vms,
+            "max_size_mb": settings.document_max_size_bytes // (1024 * 1024),
+            "allowed_ext": ",".join(sorted(settings.document_allowed_extensions_set)),
+        },
+    )
+
+
+@router.post("/share/{token}/upload", response_class=HTMLResponse)
+async def guest_upload(
+    request: Request,
+    token: str,
+    session: DBSession,
+    files: list[UploadFile] = File(default=[]),
+) -> HTMLResponse:
+    share, project = await _resolve_share(session, token)
+    errors, created_for_preview = await _save_uploads(
+        session, share.org_id, project.id, files, None
+    )
+    await session.commit()
+    _enqueue_previews(created_for_preview)
+    docs = await _load_docs(session, share.org_id, project.id, "active")
+    return templates.TemplateResponse(
+        request,
+        "partials/share_doc_rows.html",
+        {"token": token, "documents": [_doc_vm(d) for d in docs], "errors": errors},
+    )
+
+
+@router.get("/share/{token}/documents/{document_id}/download")
+async def guest_download(
+    request: Request, token: str, document_id: UUID, session: DBSession
+) -> StreamingResponse:
+    share, project = await _resolve_share(session, token)
+    doc = await _guest_require_document(session, share, document_id)
+    try:
+        data = open_document(doc.storage_key)
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="File missing")
+    return StreamingResponse(
+        iter([data]),
+        media_type=doc.content_type or "application/octet-stream",
+        headers={
+            "Content-Disposition": f'attachment; filename="{_safe_header_filename(doc.filename)}"'
+        },
+    )
+
+
+@router.get("/share/{token}/documents/{document_id}/view")
+async def guest_view(
+    request: Request, token: str, document_id: UUID, session: DBSession
+) -> StreamingResponse:
+    share, project = await _resolve_share(session, token)
+    doc = await _guest_require_document(session, share, document_id)
+    ext = _ext(doc.filename)
+    if ext in _INLINE_MEDIA:
+        key, media = doc.storage_key, (doc.content_type or "application/octet-stream")
+    elif doc.preview_status == DocumentPreviewStatus.ready and doc.preview_key:
+        key, media = doc.preview_key, "application/pdf"
+    else:
+        raise HTTPException(status_code=404, detail="No preview available")
+    try:
+        data = open_document(key)
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="File missing")
+    return StreamingResponse(
+        iter([data]),
+        media_type=media,
+        headers={
+            "Content-Disposition": f'inline; filename="{_safe_header_filename(doc.filename)}"'
+        },
+    )
+
+
+@router.get("/share/{token}/zip")
+async def guest_zip(request: Request, token: str, session: DBSession) -> StreamingResponse:
+    share, project = await _resolve_share(session, token)
+    docs = await _load_docs(session, share.org_id, project.id, "active")
+    buf = io.BytesIO()
+    seen: dict[str, int] = {}
+    with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zf:
+        for d in docs:
+            name = d.filename or "file"
+            if name in seen:
+                seen[name] += 1
+                stem, fext = os.path.splitext(name)
+                name = f"{stem} ({seen[name]}){fext}"
+            else:
+                seen[name] = 0
+            try:
+                zf.writestr(name, open_document(d.storage_key))
+            except FileNotFoundError:
+                continue
+    buf.seek(0)
+    return StreamingResponse(
+        iter([buf.getvalue()]),
+        media_type="application/zip",
+        headers={"Content-Disposition": 'attachment; filename="documents.zip"'},
+    )
+
+
+@router.get("/share/{token}/tasks", response_class=HTMLResponse)
+async def guest_tasks(
+    request: Request, token: str, session: DBSession, status: str = Query(default="all")
+) -> HTMLResponse:
+    share, project = await _resolve_share(session, token)
+    mm = await _milestone_map(session, project.id)
+    vms = await _build_task_vms(session, share.org_id, project.id, status, mm)
+    return templates.TemplateResponse(
+        request,
+        "partials/share_task_rows.html",
+        {"token": token, "tasks": vms, "status": status or "all"},
+    )
+
+
+@router.post("/share/{token}/tasks/{task_id}/upload", response_class=HTMLResponse)
+async def guest_task_upload(
+    request: Request,
+    token: str,
+    task_id: UUID,
+    session: DBSession,
+    files: list[UploadFile] = File(default=[]),
+) -> HTMLResponse:
+    share, project = await _resolve_share(session, token)
+    task = await session.get(DocumentTask, task_id)
+    if task is None or task.project_id != project.id or task.org_id != share.org_id:
+        raise HTTPException(status_code=404, detail="Not found")
+    errors, created_for_preview = await _save_uploads(
+        session, share.org_id, project.id, files, None, task_id=task.id
+    )
+    await session.commit()
+    _enqueue_previews(created_for_preview)
+    mm = await _milestone_map(session, project.id)
+    docs = await _task_docs(session, share.org_id, project.id, task.id)
+    return templates.TemplateResponse(
+        request,
+        "partials/share_task_card.html",
+        {"token": token, "t": _task_vm(task, docs, mm)},
+    )
+
+
+@router.get("/share/{token}/tasks/{task_id}/download")
+async def guest_task_zip(
+    request: Request, token: str, task_id: UUID, session: DBSession
+) -> StreamingResponse:
+    share, project = await _resolve_share(session, token)
+    task = await session.get(DocumentTask, task_id)
+    if task is None or task.project_id != project.id or task.org_id != share.org_id:
+        raise HTTPException(status_code=404, detail="Not found")
+    docs = await _task_docs(session, share.org_id, project.id, task.id)
+    mm = await _milestone_map(session, project.id)
+    due = task.computed_due_date(mm)
+    status = task.status.value if hasattr(task.status, "value") else task.status
+    notes_txt = (
+        f"Task: {task.title}\r\n"
+        f"Status: {str(status).replace('_', ' ').title()}\r\n"
+        f"Due: {due.strftime('%Y-%m-%d') if due else 'not set'}\r\n"
+        f"Documents: {len(docs)}\r\n"
+        f"\r\nNotes:\r\n{task.notes or '(none)'}\r\n"
+    )
+    buf = io.BytesIO()
+    seen: dict[str, int] = {}
+    with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zf:
+        zf.writestr("notes.txt", notes_txt)
+        for d in docs:
+            name = d.filename or "file"
+            if name in seen:
+                seen[name] += 1
+                stem, fext = os.path.splitext(name)
+                name = f"{stem} ({seen[name]}){fext}"
             else:
                 seen[name] = 0
             try:

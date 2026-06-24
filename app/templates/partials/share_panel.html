@@ -1,0 +1,39 @@
+{# Owner share-management panel. hx-target for create/revoke swaps. #}
+<div id="share-panel" class="share-panel">
+  <div class="share-head">
+    <strong>External share links</strong>
+    <span class="share-hint">Anyone with a link can view, upload, and download — but not archive or delete. Revoke any time.</span>
+  </div>
+
+  <form class="share-create" hx-post="/ui/projects/{{ project_id }}/shares"
+        hx-target="#share-panel" hx-swap="outerHTML"
+        hx-on::after-request="this.reset()">
+    <input type="text" name="label" placeholder="Label (optional, e.g. Lender)"
+           style="flex:1;max-width:240px;padding:6px 10px;border:1px solid var(--border);border-radius:6px">
+    <button type="submit" class="btn btn-primary btn-sm">+ Create link</button>
+  </form>
+
+  {% if shares %}
+  <ul class="share-list">
+    {% for s in shares %}
+    <li class="share-item">
+      <div class="share-item-main">
+        {% if s.label %}<span class="share-label">{{ s.label }}</span>{% endif %}
+        <input class="share-url" type="text" readonly value="{{ s.url }}"
+               onclick="this.select()">
+      </div>
+      <div class="share-item-actions">
+        <button type="button" class="btn btn-secondary btn-sm"
+                onclick="navigator.clipboard.writeText('{{ s.url }}')">Copy</button>
+        <button type="button" class="btn btn-secondary btn-sm"
+                hx-post="/ui/shares/{{ s.id }}/revoke"
+                hx-confirm="Turn off this link? Anyone holding it will lose access immediately."
+                hx-target="#share-panel" hx-swap="outerHTML">Revoke</button>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <div class="share-empty">No active links. Create one to share this room.</div>
+  {% endif %}
+</div>

@@ -18,7 +18,18 @@ import enum
 import uuid
 from datetime import date, datetime, timedelta
 
-from sqlalchemy import BigInteger, Date, DateTime, ForeignKey, Index, Integer, String, Text, func
+from sqlalchemy import (
+    BigInteger,
+    Boolean,
+    Date,
+    DateTime,
+    ForeignKey,
+    Index,
+    Integer,
+    String,
+    Text,
+    func,
+)
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -170,3 +181,56 @@ class DocumentTask(Base):
                 if end is not None:
                     return end + timedelta(days=self.due_offset_days or 0)
         return self.due_date
+
+
+class DocumentShare(Base):
+    """A revocable external share link for a Project's document room.
+
+    The link carries a signed token (``itsdangerous``) whose payload is this
+    row's id. Validity is DB-backed: a share can be revoked instantly
+    (``revoked=True``) regardless of the token's signature/expiry. Guests
+    reaching the room via a valid, non-revoked share may view tasks/documents,
+    upload, and download — but NOT archive or delete (no destructive routes
+    are exposed under the guest prefix). No passcode gate.
+    """
+
+    __tablename__ = "document_shares"
+    __table_args__ = (
+        Index("ix_document_shares_project", "org_id", "project_id"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    org_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("organizations.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    project_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("projects.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    # Optional human label, e.g. "Sent to lender".
+    label: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    created_by_user_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("users.id", ondelete="SET NULL"),
+        nullable=True,
+    )
+    revoked: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=False, server_default="false"
+    )
+    revoked_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        onupdate=func.now(),
+        nullable=False,
+    )
