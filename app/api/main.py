@@ -35,6 +35,7 @@ _UI_PATH_PREFIXES = (
     "/favicon.ico",
     "/deals",
     "/models/",
+    "/projects/",
     "/opportunities",
     "/listings",
     "/portfolios",
@@ -531,6 +532,10 @@ def create_app() -> FastAPI:
     # Wizards sub-router (Phase 2a split)
     from app.api.routers.ui_wizards import router as ui_wizards_router
     app.include_router(ui_wizards_router)
+
+    # Document-room sub-router (per-project file upload/download/view)
+    from app.api.routers.ui_documents import router as ui_documents_router
+    app.include_router(ui_documents_router)
 
     # Email ingest UI router — inbox and review pages, no /api prefix
     from app.api.routers.email_ingest import ui_router as email_ingest_ui_router

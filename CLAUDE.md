@@ -308,6 +308,7 @@ uv run python scripts/test_phase_b_debt.py --base-url https://viciniti.deals --a
 - **NEVER run `docker compose down -v`** — deletes volume and all data
 - DB name and user remain `re_modeling` (intentional legacy name — renaming requires dump/restore)
 - Alembic migrations run automatically during deploy (`alembic upgrade head`)
+- **Document-room files** live on disk at `/app/data/doc_room/` (under the `./data:/app/data` bind mount), NOT in Postgres. Postgres holds only metadata (`documents` table). This directory must be in the backup routine — Postgres-only backups won't capture uploaded file bytes.
 
 ---
 

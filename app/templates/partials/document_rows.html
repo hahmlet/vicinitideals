@@ -1,0 +1,56 @@
+{# tbody for the document table — hx-target for upload / bulk / filter swaps.
+   Rendered standalone (oob=True) on HTMX responses; {% include %}d into
+   documents.html on full-page load (oob undefined → no OOB error block). #}
+<tbody id="doc-tbody">
+  {% if documents %}
+    {% for d in documents %}
+    <tr>
+      <td><input type="checkbox" class="doc-check" name="ids" value="{{ d.id }}"></td>
+      <td>
+        {% if d.viewable %}
+        <button type="button" class="doc-name js-doc-view" data-doc-id="{{ d.id }}" data-doc-name="{{ d.filename }}">{{ d.icon }} {{ d.filename }}</button>
+        {% else %}
+        <a class="doc-name" style="text-decoration:none" href="/ui/documents/{{ d.id }}/download">{{ d.icon }} {{ d.filename }}</a>
+        {% endif %}
+      </td>
+      <td>{{ d.size_human }}</td>
+      <td>{{ d.created_fmt }}</td>
+      <td>
+        <div class="doc-rowact">
+          {% if d.viewable %}
+          <button type="button" class="doc-iconbtn js-doc-view" title="View" data-doc-id="{{ d.id }}" data-doc-name="{{ d.filename }}">👁</button>
+          {% endif %}
+          <a class="doc-iconbtn" title="Download" href="/ui/documents/{{ d.id }}/download">⬇</a>
+          {% if d.status == "archived" %}
+          <button type="button" class="doc-iconbtn" title="Recover"
+                  hx-post="/ui/projects/{{ project_id }}/documents/bulk"
+                  hx-vals='{"action":"recover","ids":"{{ d.id }}","show":"{{ show }}"}'
+                  hx-target="#doc-tbody" hx-swap="outerHTML">♻</button>
+          {% else %}
+          <button type="button" class="doc-iconbtn" title="Archive"
+                  hx-post="/ui/projects/{{ project_id }}/documents/bulk"
+                  hx-vals='{"action":"archive","ids":"{{ d.id }}","show":"{{ show }}"}'
+                  hx-target="#doc-tbody" hx-swap="outerHTML">🗄</button>
+          {% endif %}
+          <button type="button" class="doc-iconbtn" title="Delete"
+                  hx-post="/ui/projects/{{ project_id }}/documents/bulk"
+                  hx-vals='{"action":"delete","ids":"{{ d.id }}","show":"{{ show }}"}'
+                  hx-confirm="Permanently delete this document? This cannot be undone."
+                  hx-target="#doc-tbody" hx-swap="outerHTML">🗑</button>
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+  {% else %}
+    <tr><td colspan="5"><div class="doc-empty">No {{ "archived" if show == "archived" else "active" }} documents yet.</div></td></tr>
+  {% endif %}
+</tbody>
+{% if oob %}
+<div id="upload-errors" hx-swap-oob="true">
+  {% if upload_errors %}
+  <div class="doc-errors">
+    {% for e in upload_errors %}<div>⚠ {{ e }}</div>{% endfor %}
+  </div>
+  {% endif %}
+</div>
+{% endif %}

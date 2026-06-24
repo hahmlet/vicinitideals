@@ -256,6 +256,7 @@ def _base_ctx(
         "dedup_count": dedup_count,
         "address_issues_count": address_issues_count,
         "conflicts_count": conflicts_count,
+        "documents_module_enabled": settings.documents_module_enabled,
     }
 
 

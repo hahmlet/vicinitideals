@@ -104,6 +104,13 @@ from app.models.email_ingest import (  # noqa: F401
     SuggestionSourceType,
 )
 
+# 17. Document room (FK → Organization, Project, User)
+from app.models.document import (  # noqa: F401
+    Document,
+    DocumentPreviewStatus,
+    DocumentStatus,
+)
+
 __all__ = [
     "Base",
     # Org
@@ -180,4 +187,8 @@ __all__ = [
     "InboundEmailStatus",
     "EmailDealSuggestion",
     "SuggestionSourceType",
+    # Document room
+    "Document",
+    "DocumentStatus",
+    "DocumentPreviewStatus",
 ]

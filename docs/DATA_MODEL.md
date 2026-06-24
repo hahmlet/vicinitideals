@@ -1302,3 +1302,39 @@ broker-provided city via `COALESCE(jurisdiction, city)` in UI filters.
 
 
 ---
+
+---
+
+## Document Room (`documents`)
+
+Per-project file store backing the document-room module (Phase 1). A
+`Document` is one uploaded file scoped to a **Project** (sub-component of a
+Deal). File *bytes* live on disk under `settings.document_storage_path`
+(`/app/data/doc_room/{org_id}/{project_id}/{uuid}{ext}`); the row holds only
+metadata + the `storage_key` pointer. See `app/storage/documents.py`.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | UUID PK | |
+| `org_id` | UUID FK → organizations (CASCADE) | denormalized from Scenario→Deal for org-scoped queries |
+| `project_id` | UUID FK → projects (CASCADE) | owning project |
+| `filename` | str(512) | original upload name |
+| `content_type` | str(255) | from the upload, nullable |
+| `size_bytes` | bigint | |
+| `sha256` | str(64) | hex digest computed on save |
+| `storage_key` | str(1024) | path relative to the storage root |
+| `status` | enum `active`/`archived` | archive hides from default view; recoverable |
+| `archived_at` | timestamptz | set when archived |
+| `uploaded_by_user_id` | UUID FK → users (SET NULL) | null for guest uploads (Phase 3) |
+| `preview_status` | enum `none`/`pending`/`ready`/`failed` | Office→PDF conversion (Phase 1b) |
+| `preview_key` | str(1024) | storage key of the converted PDF when `ready` |
+| `created_at` / `updated_at` | timestamptz | |
+
+Index `ix_documents_project_status` on `(org_id, project_id, status)`.
+
+`projects` has no `org_id` of its own — org is resolved through
+Scenario→Deal (`app/api/routers/ui_documents.py:_project_org_id`), so each
+Document denormalizes `org_id` to allow direct org-scoped access checks.
+
+Migration: `0115_document_room.py`. Future phases add `document_tasks`
+(task view) and `document_shares` (external links).

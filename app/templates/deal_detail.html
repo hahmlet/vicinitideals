@@ -239,6 +239,10 @@
         <div class="model-meta">v{{ m.version }} · {{ m.type_display }} · {{ m.project_name }}</div>
       </div>
       <div class="model-metrics">
+        {% if documents_module_enabled and m.project_id %}
+        <a class="btn btn-secondary btn-sm" href="/projects/{{ m.project_id }}/documents"
+           onclick="event.stopPropagation()" title="Document room for this project">📁 Documents</a>
+        {% endif %}
         {% if m.noi is not none %}
         <div class="metric-pill">
           <div class="metric-label">NOI</div>

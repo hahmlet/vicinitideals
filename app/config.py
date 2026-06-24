@@ -161,6 +161,33 @@ class Settings(BaseSettings):
     org_isolation_enabled: bool = True
 
     # -------------------------------------------------------------------------
+    # Document room (per-project file storage)
+    # -------------------------------------------------------------------------
+    # Master flag for the document-room module (nav entry + routes). Off-switch
+    # for a clean rollback without code changes.
+    documents_module_enabled: bool = True
+    # Filesystem root for uploaded document bytes. Lives under the existing
+    # ./data:/app/data Docker volume. Metadata stays in Postgres.
+    document_storage_path: str = "/app/data/doc_room"
+    # Per-file upload ceiling (bytes). 50 MB covers leases / rent rolls / plans.
+    document_max_size_bytes: int = 50 * 1024 * 1024
+    # Comma-separated allowed file extensions (lowercase, dot-prefixed).
+    document_allowed_extensions: str = ".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png"
+    # Gotenberg service for Office→PDF preview conversion (Phase 1b).
+    gotenberg_url: str = "http://gotenberg:3000"
+    # External share-link lifetime (Phase 3). 30 days default.
+    doc_share_token_max_age_seconds: int = 60 * 60 * 24 * 30
+
+    @property
+    def document_allowed_extensions_set(self) -> set[str]:
+        """Parse document_allowed_extensions into a lowercase set of extensions."""
+        return {
+            e.strip().lower()
+            for e in self.document_allowed_extensions.split(",")
+            if e.strip()
+        }
+
+    # -------------------------------------------------------------------------
     # Alembic / migrations
     # -------------------------------------------------------------------------
     # Sync DSN used only by Alembic CLI (asyncpg cannot be used synchronously)

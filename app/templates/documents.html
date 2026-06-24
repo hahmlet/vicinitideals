@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% block title %}{{ project_name }} — Documents — Viciniti Deals{% endblock %}
+
+{% block head %}
+<style>
+.doc-header { padding: 20px 24px 0; }
+.doc-breadcrumb { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.doc-breadcrumb a { color: var(--text-muted); text-decoration: none; }
+.doc-breadcrumb a:hover { color: var(--text); }
+.doc-title { font-size: 20px; font-weight: 700; color: var(--text); line-height: 1.2; }
+
+.doc-tabs { display: flex; gap: 4px; margin-top: 16px; border-bottom: 1px solid var(--border); }
+.doc-tab { padding: 8px 16px; font-size: 14px; font-weight: 600; color: var(--text-muted);
+  border-bottom: 2px solid transparent; cursor: pointer; text-decoration: none; }
+.doc-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.doc-tab.disabled { color: var(--text-muted); opacity: 0.5; cursor: not-allowed; }
+.doc-tab .soon { font-size: 10px; background: var(--border); border-radius: 8px; padding: 1px 6px; margin-left: 4px; }
+
+.doc-body { padding: 20px 24px; }
+
+.doc-upload { border: 2px dashed var(--border); border-radius: 8px; padding: 16px;
+  display: flex; align-items: center; gap: 14px; margin-bottom: 16px; background: var(--surface); }
+.doc-upload-hint { font-size: 12px; color: var(--text-muted); }
+
+.doc-toolbar { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.doc-filter { display: flex; gap: 2px; }
+.doc-filter a { font-size: 13px; padding: 5px 12px; border: 1px solid var(--border);
+  color: var(--text-muted); text-decoration: none; }
+.doc-filter a:first-child { border-radius: 6px 0 0 6px; }
+.doc-filter a:last-child { border-radius: 0 6px 6px 0; border-left: none; }
+.doc-filter a.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.doc-bulk { margin-left: auto; display: flex; gap: 6px; }
+
+table.doc-table { width: 100%; border-collapse: collapse; }
+.doc-table th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--text-muted); padding: 8px 10px; border-bottom: 1px solid var(--border); }
+.doc-table td { padding: 10px; border-bottom: 1px solid var(--border); font-size: 13px; vertical-align: middle; }
+.doc-name { font-weight: 600; color: var(--text); cursor: pointer; background: none; border: none;
+  font-size: 13px; padding: 0; text-align: left; }
+.doc-name:hover { color: var(--accent); text-decoration: underline; }
+.doc-rowact { display: flex; gap: 6px; justify-content: flex-end; }
+.doc-iconbtn { background: none; border: none; cursor: pointer; font-size: 14px; padding: 2px 4px; color: var(--text-muted); }
+.doc-iconbtn:hover { color: var(--text); }
+.doc-empty { text-align: center; padding: 40px; color: var(--text-muted); }
+.doc-errors { color: var(--danger,#dc2626); font-size: 12px; margin-bottom: 10px; }
+
+/* Viewer modal */
+.doc-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1000;
+  display: none; align-items: center; justify-content: center; }
+.doc-modal.open { display: flex; }
+.doc-modal-box { background: var(--surface); width: 90vw; height: 90vh; border-radius: 8px;
+  display: flex; flex-direction: column; overflow: hidden; }
+.doc-modal-head { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--border); }
+.doc-modal-title { font-weight: 600; font-size: 14px; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.doc-modal iframe { flex: 1; border: none; width: 100%; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="content">
+
+<div class="doc-header">
+  <div class="doc-breadcrumb">
+    <a href="/deals">Deals</a> /
+    {% if deal_id %}<a href="/deals/{{ deal_id }}">{{ deal_name }}</a> /{% endif %}
+    {{ project_name }}
+  </div>
+  <div class="doc-title">📁 {{ project_name }} — Documents</div>
+
+  <div class="doc-tabs">
+    <span class="doc-tab active">Document View</span>
+    <span class="doc-tab disabled" title="Coming in Phase 2">Task View <span class="soon">soon</span></span>
+  </div>
+</div>
+
+<div class="doc-body">
+
+  {% if show != "archived" %}
+  <form class="doc-upload"
+        hx-post="/ui/projects/{{ project_id }}/documents/upload"
+        hx-target="#doc-tbody"
+        hx-swap="outerHTML"
+        hx-encoding="multipart/form-data">
+    <input type="hidden" name="show" value="{{ show }}">
+    <input type="file" name="files" multiple accept="{{ allowed_ext }}">
+    <button type="submit" class="btn btn-primary btn-sm">⬆ Upload</button>
+    <span class="doc-upload-hint">{{ allowed_ext }} · max {{ max_size_mb }} MB each</span>
+  </form>
+  {% endif %}
+
+  <div id="upload-errors"></div>
+
+  <div class="doc-toolbar">
+    <div class="doc-filter">
+      <a href="?show=active" class="{% if show != 'archived' %}active{% endif %}">Active</a>
+      <a href="?show=archived" class="{% if show == 'archived' %}active{% endif %}">Archived</a>
+    </div>
+    <div class="doc-bulk">
+      <button type="button" class="btn btn-secondary btn-sm"
+              onclick="docZipSelected('{{ project_id }}')">⬇ Download</button>
+      {% if show == "archived" %}
+      <button type="button" class="btn btn-secondary btn-sm"
+              hx-post="/ui/projects/{{ project_id }}/documents/bulk"
+              hx-include=".doc-check"
+              hx-vals='{"action":"recover","show":"archived"}'
+              hx-target="#doc-tbody" hx-swap="outerHTML">♻ Recover</button>
+      {% else %}
+      <button type="button" class="btn btn-secondary btn-sm"
+              hx-post="/ui/projects/{{ project_id }}/documents/bulk"
+              hx-include=".doc-check"
+              hx-vals='{"action":"archive","show":"active"}'
+              hx-target="#doc-tbody" hx-swap="outerHTML">🗄 Archive</button>
+      {% endif %}
+      <button type="button" class="btn btn-secondary btn-sm"
+              hx-post="/ui/projects/{{ project_id }}/documents/bulk"
+              hx-include=".doc-check"
+              hx-vals='{"action":"delete","show":"{{ show }}"}'
+              hx-confirm="Permanently delete the selected documents? This cannot be undone."
+              hx-target="#doc-tbody" hx-swap="outerHTML">🗑 Delete</button>
+    </div>
+  </div>
+
+  <table class="doc-table">
+    <thead>
+      <tr>
+        <th style="width:28px"><input type="checkbox" onclick="docToggleAll(this)"></th>
+        <th>Name</th>
+        <th style="width:90px">Size</th>
+        <th style="width:190px">Uploaded</th>
+        <th style="width:120px"></th>
+      </tr>
+    </thead>
+    {% include "partials/document_rows.html" %}
+  </table>
+</div>
+
+<!-- Viewer modal -->
+<div class="doc-modal" id="doc-modal" onclick="if(event.target===this)docCloseViewer()">
+  <div class="doc-modal-box">
+    <div class="doc-modal-head">
+      <span class="doc-modal-title" id="doc-modal-title"></span>
+      <a class="btn btn-secondary btn-sm" id="doc-modal-dl" href="#" target="_blank">⬇ Download</a>
+      <button class="btn btn-secondary btn-sm" onclick="docCloseViewer()">✕ Close</button>
+    </div>
+    <iframe id="doc-modal-frame" src="about:blank"></iframe>
+  </div>
+</div>
+
+</div>
+
+<script>
+function docToggleAll(master) {
+  document.querySelectorAll('.doc-check').forEach(function (cb) { cb.checked = master.checked; });
+}
+function docSelectedIds() {
+  return Array.prototype.slice.call(document.querySelectorAll('.doc-check:checked'))
+    .map(function (cb) { return cb.value; });
+}
+function docZipSelected(projectId) {
+  var ids = docSelectedIds();
+  if (!ids.length) { alert('Select at least one document to download.'); return; }
+  var qs = ids.map(function (id) { return 'ids=' + encodeURIComponent(id); }).join('&');
+  window.location = '/ui/projects/' + projectId + '/documents/zip?' + qs;
+}
+function docOpenViewer(id, name) {
+  document.getElementById('doc-modal-title').textContent = name;
+  document.getElementById('doc-modal-frame').src = '/ui/documents/' + id + '/view';
+  document.getElementById('doc-modal-dl').href = '/ui/documents/' + id + '/download';
+  document.getElementById('doc-modal').classList.add('open');
+}
+function docCloseViewer() {
+  document.getElementById('doc-modal').classList.remove('open');
+  document.getElementById('doc-modal-frame').src = 'about:blank';
+}
+// Delegated so HTMX-swapped rows keep working without re-binding.
+document.addEventListener('click', function (e) {
+  var el = e.target.closest('.js-doc-view');
+  if (el) { docOpenViewer(el.dataset.docId, el.dataset.docName); }
+});
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape') { docCloseViewer(); }
+});
+</script>
+{% endblock %}
