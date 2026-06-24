@@ -1,9 +1,37 @@
-{# Guest document rows — hx-target for upload swaps. #}
+{# Guest document rows — single swap region (#g-doc-rows) for upload / sort /
+   filter. Sort+filter state lives in #g-filter-form; controls mutate it and
+   re-fire it (see gSort/gClearFilters in share_documents.html). #}
 <div id="g-doc-rows">
   {% if errors %}<div class="g-errors">{% for e in errors %}{{ e }}<br>{% endfor %}</div>{% endif %}
+
+  <form id="g-filter-form" class="g-toolbar"
+        hx-get="/share/{{ token }}/rows"
+        hx-target="#g-doc-rows" hx-swap="outerHTML" hx-trigger="change">
+    <input type="hidden" name="sort" value="{{ q.sort if q else 'date' }}">
+    <input type="hidden" name="direction" value="{{ q.direction if q else 'desc' }}">
+    <label class="g-filt-lbl">Type
+      <select name="ext" class="g-filt-in">
+        <option value="">All types</option>
+        {% for e in available_exts %}
+        <option value="{{ e }}" {% if q and q.ext == e %}selected{% endif %}>{{ e[1:]|upper }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label class="g-filt-lbl">From <input type="date" name="date_from" value="{{ q.date_from if q else '' }}" class="g-filt-in"></label>
+    <label class="g-filt-lbl">To <input type="date" name="date_to" value="{{ q.date_to if q else '' }}" class="g-filt-in"></label>
+    {% if q and (q.ext or q.date_from or q.date_to) %}
+    <button type="button" class="btn btn-sm" onclick="gClearFilters()">✕ Clear</button>
+    {% endif %}
+  </form>
+
   {% if documents %}
   <table>
-    <thead><tr><th>Name</th><th>Size</th><th>Added</th><th></th></tr></thead>
+    <thead><tr>
+      <th class="g-sort" onclick="gSort('name')">Name {% if q and q.sort == 'name' %}{{ '▲' if q.direction == 'asc' else '▼' }}{% endif %}</th>
+      <th class="g-sort" onclick="gSort('size')">Size {% if q and q.sort == 'size' %}{{ '▲' if q.direction == 'asc' else '▼' }}{% endif %}</th>
+      <th class="g-sort" onclick="gSort('date')">Added {% if q and q.sort == 'date' %}{{ '▲' if q.direction == 'asc' else '▼' }}{% endif %}</th>
+      <th></th>
+    </tr></thead>
     <tbody>
       {% for d in documents %}
       <tr>
@@ -22,6 +50,9 @@
     </tbody>
   </table>
   {% else %}
-  <div class="task-empty">No documents yet. Use Upload above to add files.</div>
+  <div class="task-empty">
+    {% if q and (q.ext or q.date_from or q.date_to) %}No documents match these filters.
+    {% else %}No documents yet. Use Upload above to add files.{% endif %}
+  </div>
   {% endif %}
 </div>

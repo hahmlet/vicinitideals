@@ -4,7 +4,7 @@
 {% block head %}
 <style>
 .doc-header { padding: 20px 24px 0; }
-.doc-breadcrumb { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.doc-breadcrumb { font-size: 16px; color: var(--text-muted); margin-bottom: 6px; }
 .doc-breadcrumb a { color: var(--text-muted); text-decoration: none; }
 .doc-breadcrumb a:hover { color: var(--text); }
 .doc-title { font-size: 20px; font-weight: 700; color: var(--text); line-height: 1.2; }
@@ -23,6 +23,10 @@
 .doc-upload-hint { font-size: 12px; color: var(--text-muted); }
 
 .doc-toolbar { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.doc-sort { cursor: pointer; user-select: none; white-space: nowrap; }
+.doc-sort:hover { color: var(--accent); }
+.doc-filt-lbl { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); }
+.doc-filt-in { padding: 5px 8px; border: 1px solid var(--border); border-radius: 6px; font: inherit; font-size: 13px; color: var(--text); background: var(--surface); }
 .doc-filter { display: flex; gap: 2px; }
 .doc-filter a { font-size: 13px; padding: 5px 12px; border: 1px solid var(--border);
   color: var(--text-muted); text-decoration: none; }
@@ -101,7 +105,7 @@ table.doc-table { width: 100%; border-collapse: collapse; }
 <div class="doc-header">
   <div class="doc-breadcrumb">
     <a href="/deals">Deals</a> /
-    {% if deal_id %}<a href="/deals/{{ deal_id }}">{{ deal_name }}</a> /{% endif %}
+    {% if deal_id %}<a href="/models/{{ project.scenario_id }}/builder?project={{ project_id }}">{{ deal_name }}</a> /{% endif %}
     {{ project_name }}
   </div>
   <div class="doc-title">
@@ -126,60 +130,17 @@ table.doc-table { width: 100%; border-collapse: collapse; }
   {% if show != "archived" %}
   <form class="doc-upload"
         hx-post="/ui/projects/{{ project_id }}/documents/upload"
-        hx-target="#doc-tbody"
+        hx-target="#doc-panel"
         hx-swap="outerHTML"
+        hx-include="#doc-filter-form"
         hx-encoding="multipart/form-data">
-    <input type="hidden" name="show" value="{{ show }}">
     <input type="file" name="files" multiple accept="{{ allowed_ext }}">
     <button type="submit" class="btn btn-primary btn-sm">⬆ Upload</button>
     <span class="doc-upload-hint">{{ allowed_ext }} · max {{ max_size_mb }} MB each</span>
   </form>
   {% endif %}
 
-  <div id="upload-errors"></div>
-
-  <div class="doc-toolbar">
-    <div class="doc-filter">
-      <a href="?show=active" class="{% if show != 'archived' %}active{% endif %}">Active</a>
-      <a href="?show=archived" class="{% if show == 'archived' %}active{% endif %}">Archived</a>
-    </div>
-    <div class="doc-bulk">
-      <button type="button" class="btn btn-secondary btn-sm"
-              onclick="docZipSelected('{{ project_id }}')">⬇ Download</button>
-      {% if show == "archived" %}
-      <button type="button" class="btn btn-secondary btn-sm"
-              hx-post="/ui/projects/{{ project_id }}/documents/bulk"
-              hx-include=".doc-check"
-              hx-vals='{"action":"recover","show":"archived"}'
-              hx-target="#doc-tbody" hx-swap="outerHTML">♻ Recover</button>
-      {% else %}
-      <button type="button" class="btn btn-secondary btn-sm"
-              hx-post="/ui/projects/{{ project_id }}/documents/bulk"
-              hx-include=".doc-check"
-              hx-vals='{"action":"archive","show":"active"}'
-              hx-target="#doc-tbody" hx-swap="outerHTML">🗄 Archive</button>
-      {% endif %}
-      <button type="button" class="btn btn-secondary btn-sm"
-              hx-post="/ui/projects/{{ project_id }}/documents/bulk"
-              hx-include=".doc-check"
-              hx-vals='{"action":"delete","show":"{{ show }}"}'
-              hx-confirm="Permanently delete the selected documents? This cannot be undone."
-              hx-target="#doc-tbody" hx-swap="outerHTML">🗑 Delete</button>
-    </div>
-  </div>
-
-  <table class="doc-table">
-    <thead>
-      <tr>
-        <th style="width:28px"><input type="checkbox" onclick="docToggleAll(this)"></th>
-        <th>Name</th>
-        <th style="width:90px">Size</th>
-        <th style="width:190px">Uploaded</th>
-        <th style="width:120px"></th>
-      </tr>
-    </thead>
-    {% include "partials/document_rows.html" %}
-  </table>
+  <div id="doc-panel">{% include "partials/document_panel.html" %}</div>
 
 {% else %}
 
@@ -243,6 +204,30 @@ function docZipSelected(projectId) {
   if (!ids.length) { alert('Select at least one document to download.'); return; }
   var qs = ids.map(function (id) { return 'ids=' + encodeURIComponent(id); }).join('&');
   window.location = '/ui/projects/' + projectId + '/documents/zip?' + qs;
+}
+// Sort/filter state lives in #doc-filter-form's hidden inputs (single source of
+// truth). Controls mutate it then re-fire the form, which swaps the panel.
+function docSort(field) {
+  var f = document.getElementById('doc-filter-form');
+  if (!f) return;
+  var sort = f.elements['sort'], dir = f.elements['direction'];
+  if (sort.value === field) { dir.value = (dir.value === 'asc' ? 'desc' : 'asc'); }
+  else { sort.value = field; dir.value = 'asc'; }
+  htmx.trigger(f, 'change');
+}
+function docSetShow(show) {
+  var f = document.getElementById('doc-filter-form');
+  if (!f) return;
+  f.elements['show'].value = show;
+  htmx.trigger(f, 'change');
+}
+function docClearFilters() {
+  var f = document.getElementById('doc-filter-form');
+  if (!f) return;
+  f.elements['ext'].value = '';
+  f.elements['date_from'].value = '';
+  f.elements['date_to'].value = '';
+  htmx.trigger(f, 'change');
 }
 var _docZoom = 1;
 function _docApplyZoom() {

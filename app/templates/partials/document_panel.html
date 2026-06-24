@@ -1,0 +1,76 @@
+{# Full document panel: errors + toolbar + filters + sortable table.
+   Single swap region (#doc-panel) for tab / sort / filter / upload / bulk.
+   Sort+filter state is held in #doc-filter-form's inputs; every control
+   mutates that form and re-fires it (see docSort/docSetShow in documents.html).
+   Upload + bulk hx-include the form so mutations preserve the current view. #}
+<div id="doc-panel">
+  {% if upload_errors %}
+  <div class="doc-errors" id="upload-errors">
+    {% for e in upload_errors %}<div>⚠ {{ e }}</div>{% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="doc-toolbar">
+    <div class="doc-filter">
+      <a href="#" onclick="docSetShow('active');return false;" class="{% if show != 'archived' %}active{% endif %}">Active</a>
+      <a href="#" onclick="docSetShow('archived');return false;" class="{% if show == 'archived' %}active{% endif %}">Archived</a>
+    </div>
+    <div class="doc-bulk">
+      <button type="button" class="btn btn-secondary btn-sm"
+              onclick="docZipSelected('{{ project_id }}')">⬇ Download</button>
+      {% if show == "archived" %}
+      <button type="button" class="btn btn-secondary btn-sm"
+              hx-post="/ui/projects/{{ project_id }}/documents/bulk"
+              hx-include="#doc-filter-form, .doc-check"
+              hx-vals='{"action":"recover"}'
+              hx-target="#doc-panel" hx-swap="outerHTML">♻ Recover</button>
+      {% else %}
+      <button type="button" class="btn btn-secondary btn-sm"
+              hx-post="/ui/projects/{{ project_id }}/documents/bulk"
+              hx-include="#doc-filter-form, .doc-check"
+              hx-vals='{"action":"archive"}'
+              hx-target="#doc-panel" hx-swap="outerHTML">🗄 Archive</button>
+      {% endif %}
+      <button type="button" class="btn btn-secondary btn-sm"
+              hx-post="/ui/projects/{{ project_id }}/documents/bulk"
+              hx-include="#doc-filter-form, .doc-check"
+              hx-vals='{"action":"delete"}'
+              hx-confirm="Permanently delete the selected documents? This cannot be undone."
+              hx-target="#doc-panel" hx-swap="outerHTML">🗑 Delete</button>
+    </div>
+  </div>
+
+  <form id="doc-filter-form" class="doc-toolbar" style="gap:14px"
+        hx-get="/ui/projects/{{ project_id }}/documents/rows"
+        hx-target="#doc-panel" hx-swap="outerHTML" hx-trigger="change">
+    <input type="hidden" name="show" value="{{ show }}">
+    <input type="hidden" name="sort" value="{{ q.sort }}">
+    <input type="hidden" name="direction" value="{{ q.direction }}">
+    <label class="doc-filt-lbl">Type
+      <select name="ext" class="doc-filt-in">
+        <option value="">All types</option>
+        {% for e in available_exts %}
+        <option value="{{ e }}" {% if q.ext == e %}selected{% endif %}>{{ e[1:]|upper }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label class="doc-filt-lbl">From <input type="date" name="date_from" value="{{ q.date_from }}" class="doc-filt-in"></label>
+    <label class="doc-filt-lbl">To <input type="date" name="date_to" value="{{ q.date_to }}" class="doc-filt-in"></label>
+    {% if q.ext or q.date_from or q.date_to %}
+    <button type="button" class="btn btn-secondary btn-sm" onclick="docClearFilters()">✕ Clear filters</button>
+    {% endif %}
+  </form>
+
+  <table class="doc-table">
+    <thead>
+      <tr>
+        <th style="width:28px"><input type="checkbox" onclick="docToggleAll(this)"></th>
+        <th class="doc-sort" onclick="docSort('name')">Name {% if q.sort == 'name' %}{{ '▲' if q.direction == 'asc' else '▼' }}{% endif %}</th>
+        <th class="doc-sort" style="width:90px" onclick="docSort('size')">Size {% if q.sort == 'size' %}{{ '▲' if q.direction == 'asc' else '▼' }}{% endif %}</th>
+        <th class="doc-sort" style="width:190px" onclick="docSort('date')">Uploaded {% if q.sort == 'date' %}{{ '▲' if q.direction == 'asc' else '▼' }}{% endif %}</th>
+        <th style="width:120px"></th>
+      </tr>
+    </thead>
+    {% include "partials/document_rows.html" %}
+  </table>
+</div>

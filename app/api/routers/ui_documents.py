@@ -26,7 +26,7 @@ from uuid import UUID
 
 from fastapi import APIRouter, File, Form, HTTPException, Query, Request, UploadFile
 from fastapi.responses import HTMLResponse, StreamingResponse
-from sqlalchemy import select
+from sqlalchemy import func, select
 
 from app.api.deps import DBSession
 from app.api.routers.ui_helpers import (
@@ -253,17 +253,85 @@ def _enqueue_previews(docs: list[Document]) -> None:
         pass
 
 
-async def _load_docs(session: DBSession, org_id: UUID, project_id: UUID, show: str):
-    status = DocumentStatus.archived if show == "archived" else DocumentStatus.active
-    stmt = (
-        select(Document)
-        .where(
-            Document.org_id == org_id,
-            Document.project_id == project_id,
-            Document.status == status,
+_SORT_FIELDS = {"name", "size", "date"}
+
+
+def _parse_iso_date(s: str | None):
+    if not s:
+        return None
+    try:
+        return date.fromisoformat(s.strip())
+    except (ValueError, AttributeError):
+        return None
+
+
+def _doc_query(
+    *, sort: str = "date", direction: str = "desc",
+    ext: str = "", date_from: str = "", date_to: str = "",
+) -> dict:
+    """Normalize the doc list view-state (sort + filters) into a context dict
+    that templates echo back into links / hx-vals so swaps preserve state."""
+    sort = sort if sort in _SORT_FIELDS else "date"
+    direction = "asc" if direction == "asc" else "desc"
+    e = (ext or "").strip().lower().lstrip(".")
+    return {
+        "sort": sort,
+        "direction": direction,
+        "ext": f".{e}" if e else "",
+        "date_from": (date_from or "").strip(),
+        "date_to": (date_to or "").strip(),
+    }
+
+
+async def _distinct_exts(session: DBSession, org_id: UUID, project_id: UUID) -> list[str]:
+    """Extensions (with dot, lowercased) present across a project's documents —
+    drives the filter dropdown. Spans both active + archived so the option list
+    is stable when toggling tabs."""
+    rows = (
+        await session.execute(
+            select(Document.filename).where(
+                Document.org_id == org_id, Document.project_id == project_id
+            )
         )
-        .order_by(Document.created_at.desc())
+    ).scalars().all()
+    return sorted({_ext(f) for f in rows if _ext(f)})
+
+
+async def _load_docs(
+    session: DBSession,
+    org_id: UUID,
+    project_id: UUID,
+    show: str,
+    q: dict | None = None,
+):
+    q = q or _doc_query()
+    status = DocumentStatus.archived if show == "archived" else DocumentStatus.active
+    stmt = select(Document).where(
+        Document.org_id == org_id,
+        Document.project_id == project_id,
+        Document.status == status,
     )
+    # Extension filter (filename ends with the chosen ".ext").
+    if q.get("ext"):
+        stmt = stmt.where(func.lower(Document.filename).like(f"%{q['ext']}"))
+    # Upload date range (inclusive on both ends, by calendar day, UTC).
+    df = _parse_iso_date(q.get("date_from"))
+    if df is not None:
+        stmt = stmt.where(
+            Document.created_at >= datetime(df.year, df.month, df.day, tzinfo=timezone.utc)
+        )
+    dt = _parse_iso_date(q.get("date_to"))
+    if dt is not None:
+        end = datetime(dt.year, dt.month, dt.day, tzinfo=timezone.utc) + timedelta(days=1)
+        stmt = stmt.where(Document.created_at < end)
+    # Sort.
+    if q.get("sort") == "name":
+        col = func.lower(Document.filename)
+    elif q.get("sort") == "size":
+        col = Document.size_bytes
+    else:
+        col = Document.created_at
+    stmt = stmt.order_by(col.asc() if q.get("direction") == "asc" else col.desc())
     return list((await session.execute(stmt)).scalars().all())
 
 
@@ -276,22 +344,27 @@ async def _deal_for_project(session: DBSession, project: Project) -> Deal | None
     return (await session.execute(stmt)).scalar_one_or_none()
 
 
-def _rows_response(
+def _panel_response(
     request: Request,
     project_id: UUID,
     docs: list[Document],
     show: str,
+    q: dict,
+    available_exts: list[str],
     errors: list[str] | None = None,
 ):
+    """Render the full document panel (toolbar + filters + sortable table).
+    Used as the single swap region for tab/sort/filter/upload/bulk changes."""
     return templates.TemplateResponse(
         request,
-        "partials/document_rows.html",
+        "partials/document_panel.html",
         {
             "project_id": str(project_id),
             "documents": [_doc_vm(d) for d in docs],
             "show": show,
+            "q": q,
+            "available_exts": available_exts,
             "upload_errors": errors or [],
-            "oob": True,
         },
     )
 
@@ -308,11 +381,18 @@ async def documents_page(
     show: str = Query(default="active"),
     view: str = Query(default="documents"),
     status: str = Query(default="all"),
+    sort: str = Query(default="date"),
+    direction: str = Query(default="desc"),
+    ext: str = Query(default=""),
+    date_from: str = Query(default=""),
+    date_to: str = Query(default=""),
 ) -> HTMLResponse:
     user, org_id, project = await _require_project(session, request, project_id)
     dedup_count, conflicts_count = await _get_counts(session)
     deal = await _deal_for_project(session, project)
-    docs = await _load_docs(session, org_id, project_id, show)
+    q = _doc_query(sort=sort, direction=direction, ext=ext, date_from=date_from, date_to=date_to)
+    docs = await _load_docs(session, org_id, project_id, show, q)
+    available_exts = await _distinct_exts(session, org_id, project_id)
 
     task_vms: list[dict] = []
     milestone_options: list[dict] = []
@@ -335,6 +415,8 @@ async def documents_page(
             "show": show,
             "view": view,
             "status": status,
+            "q": q,
+            "available_exts": available_exts,
             "tasks": task_vms,
             "milestone_options": milestone_options,
             "max_size_mb": settings.document_max_size_bytes // (1024 * 1024),
@@ -353,10 +435,17 @@ async def documents_rows(
     project_id: UUID,
     session: DBSession,
     show: str = Query(default="active"),
+    sort: str = Query(default="date"),
+    direction: str = Query(default="desc"),
+    ext: str = Query(default=""),
+    date_from: str = Query(default=""),
+    date_to: str = Query(default=""),
 ) -> HTMLResponse:
     user, org_id, project = await _require_project(session, request, project_id)
-    docs = await _load_docs(session, org_id, project_id, show)
-    return _rows_response(request, project_id, docs, show)
+    q = _doc_query(sort=sort, direction=direction, ext=ext, date_from=date_from, date_to=date_to)
+    docs = await _load_docs(session, org_id, project_id, show, q)
+    available_exts = await _distinct_exts(session, org_id, project_id)
+    return _panel_response(request, project_id, docs, show, q, available_exts)
 
 
 @router.post("/ui/projects/{project_id}/documents/upload", response_class=HTMLResponse)
@@ -366,6 +455,11 @@ async def documents_upload(
     session: DBSession,
     files: list[UploadFile] = File(default=[]),
     show: str = Form(default="active"),
+    sort: str = Form(default="date"),
+    direction: str = Form(default="desc"),
+    ext: str = Form(default=""),
+    date_from: str = Form(default=""),
+    date_to: str = Form(default=""),
 ) -> HTMLResponse:
     user, org_id, project = await _require_project(session, request, project_id)
     errors, created_for_preview = await _save_uploads(
@@ -373,8 +467,10 @@ async def documents_upload(
     )
     await session.commit()
     _enqueue_previews(created_for_preview)
-    docs = await _load_docs(session, org_id, project_id, show)
-    return _rows_response(request, project_id, docs, show, errors)
+    q = _doc_query(sort=sort, direction=direction, ext=ext, date_from=date_from, date_to=date_to)
+    docs = await _load_docs(session, org_id, project_id, show, q)
+    available_exts = await _distinct_exts(session, org_id, project_id)
+    return _panel_response(request, project_id, docs, show, q, available_exts, errors)
 
 
 @router.post("/ui/projects/{project_id}/documents/bulk", response_class=HTMLResponse)
@@ -385,6 +481,11 @@ async def documents_bulk(
     action: str = Form(...),
     ids: list[UUID] = Form(default=[]),
     show: str = Form(default="active"),
+    sort: str = Form(default="date"),
+    direction: str = Form(default="desc"),
+    ext: str = Form(default=""),
+    date_from: str = Form(default=""),
+    date_to: str = Form(default=""),
 ) -> HTMLResponse:
     """Archive / recover / delete the selected documents (mutating, swaps rows).
 
@@ -420,8 +521,10 @@ async def documents_bulk(
         raise HTTPException(status_code=400, detail="Unknown bulk action")
 
     await session.commit()
-    docs = await _load_docs(session, org_id, project_id, show)
-    return _rows_response(request, project_id, docs, show)
+    q = _doc_query(sort=sort, direction=direction, ext=ext, date_from=date_from, date_to=date_to)
+    docs = await _load_docs(session, org_id, project_id, show, q)
+    available_exts = await _distinct_exts(session, org_id, project_id)
+    return _panel_response(request, project_id, docs, show, q, available_exts)
 
 
 # ---------------------------------------------------------------------------
@@ -964,6 +1067,23 @@ async def _guest_require_document(
     return doc
 
 
+def _guest_rows_response(
+    request: Request, token: str, docs: list[Document], q: dict,
+    available_exts: list[str], errors: list[str] | None = None,
+):
+    return templates.TemplateResponse(
+        request,
+        "partials/share_doc_rows.html",
+        {
+            "token": token,
+            "documents": [_doc_vm(d) for d in docs],
+            "q": q,
+            "available_exts": available_exts,
+            "errors": errors or [],
+        },
+    )
+
+
 @router.get("/share/{token}", response_class=HTMLResponse)
 async def guest_documents_page(
     request: Request,
@@ -971,9 +1091,16 @@ async def guest_documents_page(
     session: DBSession,
     view: str = Query(default="documents"),
     status: str = Query(default="all"),
+    sort: str = Query(default="date"),
+    direction: str = Query(default="desc"),
+    ext: str = Query(default=""),
+    date_from: str = Query(default=""),
+    date_to: str = Query(default=""),
 ) -> HTMLResponse:
     share, project = await _resolve_share(session, token)
-    docs = await _load_docs(session, share.org_id, project.id, "active")
+    q = _doc_query(sort=sort, direction=direction, ext=ext, date_from=date_from, date_to=date_to)
+    docs = await _load_docs(session, share.org_id, project.id, "active", q)
+    available_exts = await _distinct_exts(session, share.org_id, project.id)
     task_vms: list[dict] = []
     if view == "tasks":
         mm = await _milestone_map(session, project.id)
@@ -985,6 +1112,8 @@ async def guest_documents_page(
             "token": token,
             "project_name": project.name,
             "documents": [_doc_vm(d) for d in docs],
+            "q": q,
+            "available_exts": available_exts,
             "view": view,
             "status": status,
             "tasks": task_vms,
@@ -994,12 +1123,35 @@ async def guest_documents_page(
     )
 
 
+@router.get("/share/{token}/rows", response_class=HTMLResponse)
+async def guest_rows(
+    request: Request,
+    token: str,
+    session: DBSession,
+    sort: str = Query(default="date"),
+    direction: str = Query(default="desc"),
+    ext: str = Query(default=""),
+    date_from: str = Query(default=""),
+    date_to: str = Query(default=""),
+) -> HTMLResponse:
+    share, project = await _resolve_share(session, token)
+    q = _doc_query(sort=sort, direction=direction, ext=ext, date_from=date_from, date_to=date_to)
+    docs = await _load_docs(session, share.org_id, project.id, "active", q)
+    available_exts = await _distinct_exts(session, share.org_id, project.id)
+    return _guest_rows_response(request, token, docs, q, available_exts)
+
+
 @router.post("/share/{token}/upload", response_class=HTMLResponse)
 async def guest_upload(
     request: Request,
     token: str,
     session: DBSession,
     files: list[UploadFile] = File(default=[]),
+    sort: str = Form(default="date"),
+    direction: str = Form(default="desc"),
+    ext: str = Form(default=""),
+    date_from: str = Form(default=""),
+    date_to: str = Form(default=""),
 ) -> HTMLResponse:
     share, project = await _resolve_share(session, token)
     errors, created_for_preview = await _save_uploads(
@@ -1007,12 +1159,10 @@ async def guest_upload(
     )
     await session.commit()
     _enqueue_previews(created_for_preview)
-    docs = await _load_docs(session, share.org_id, project.id, "active")
-    return templates.TemplateResponse(
-        request,
-        "partials/share_doc_rows.html",
-        {"token": token, "documents": [_doc_vm(d) for d in docs], "errors": errors},
-    )
+    q = _doc_query(sort=sort, direction=direction, ext=ext, date_from=date_from, date_to=date_to)
+    docs = await _load_docs(session, share.org_id, project.id, "active", q)
+    available_exts = await _distinct_exts(session, share.org_id, project.id)
+    return _guest_rows_response(request, token, docs, q, available_exts, errors)
 
 
 @router.get("/share/{token}/documents/{document_id}/download")
