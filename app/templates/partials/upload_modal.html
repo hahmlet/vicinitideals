@@ -138,7 +138,10 @@ window.VDUP = (function () {
       sel.addEventListener('change', function () {
         nt.style.display = (sel.value === '__new__') ? 'block' : 'none';
         if (sel.value === '__new__') nt.focus();
+        syncPending();
       });
+      // Typing a new-task name makes it selectable in the OTHER rows.
+      nt.addEventListener('input', syncPending);
       taskCell.appendChild(sel); taskCell.appendChild(nt);
     }
     // Remove.
@@ -162,9 +165,52 @@ window.VDUP = (function () {
       ? 'into ' + (cfg.lockedTitle || 'this task')
       : 'pick a task per file';
     $('vdup-colhead').style.gridTemplateColumns = cfg.locked ? '1.6fr 92px 1.4fr 24px' : '';
+    if (!cfg.locked) syncPending();
   }
 
   function removeRow(i) { files.splice(i, 1); if (!files.length) cancel(); else render(); }
+
+  // Names typed into any row's "Create new task…" field, so the OTHER rows can
+  // pick the same pending task. Backend dedups same-titled new tasks per upload.
+  function pendingNames() {
+    var rows = $('vdup-rows').children, out = [];
+    for (var i = 0; i < rows.length; i++) {
+      var sel = rows[i].querySelector('.vdup-task');
+      var nt = rows[i].querySelector('.vdup-newtask');
+      if (sel && sel.value === '__new__' && nt && nt.value.trim()) {
+        var v = nt.value.trim();
+        if (out.indexOf(v) < 0) out.push(v);
+      }
+    }
+    return out;
+  }
+
+  function syncPending() {
+    var names = pendingNames();
+    var rows = $('vdup-rows').children;
+    for (var i = 0; i < rows.length; i++) {
+      var sel = rows[i].querySelector('.vdup-task');
+      if (!sel) continue;
+      var cur = sel.value;
+      // Offer all pending names, plus this row's own current selection so it
+      // isn't dropped if its source name changes mid-edit.
+      var offer = names.slice();
+      if (cur.indexOf('new:') === 0) {
+        var keep = cur.slice(4);
+        if (offer.indexOf(keep) < 0) offer.push(keep);
+      }
+      Array.prototype.slice.call(sel.querySelectorAll('option[data-newref]'))
+        .forEach(function (o) { o.remove(); });
+      var createOpt = sel.querySelector('option[value="__new__"]');
+      offer.forEach(function (nm) {
+        var o = document.createElement('option');
+        o.value = 'new:' + nm; o.textContent = nm + ' (new)';
+        o.setAttribute('data-newref', '1');
+        sel.insertBefore(o, createOpt);
+      });
+      sel.value = cur;   // restore selection after rebuild
+    }
+  }
 
   function show() { $('vdup-progress').style.display = 'none'; $('vdup-pct').textContent = '';
     $('vdup-bar').style.width = '0'; $('vdup-modal').style.display = 'flex'; }
@@ -182,9 +228,16 @@ window.VDUP = (function () {
       fd.append('stage', r.querySelector('.vdup-stage').value || 'draft');
       if (!cfg.locked) {
         var sel = r.querySelector('.vdup-task');
-        fd.append('task_choice', sel.value);
-        fd.append('new_task', sel.value === '__new__'
-          ? (r.querySelector('.vdup-newtask').value || '') : '');
+        var val = sel.value;
+        if (val.indexOf('new:') === 0) {
+          // Row reuses a pending new task created in another row.
+          fd.append('task_choice', '__new__');
+          fd.append('new_task', val.slice(4));
+        } else {
+          fd.append('task_choice', val);
+          fd.append('new_task', val === '__new__'
+            ? (r.querySelector('.vdup-newtask').value || '') : '');
+        }
       }
     }
     var extra = (typeof cfg.fields === 'function') ? cfg.fields() : (cfg.fields || {});

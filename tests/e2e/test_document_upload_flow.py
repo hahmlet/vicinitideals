@@ -87,3 +87,36 @@ def test_upload_status_toggle_renames_without_reupload(
     page.locator(".doc-table .doc-stage-sel").first.select_option("final")
     final = page.locator(".doc-table .doc-name", has_text="Survey - Final")
     expect(final.first).to_be_visible(timeout=10_000)
+
+
+def test_new_task_in_one_row_is_selectable_in_others(
+    logged_in_page: Page, tmp_path
+) -> None:
+    page = logged_in_page
+    create_e2e_scenario(page, deal_name="E2E Docs Shared Task")
+    project_id = _extract_project_id(page)
+    page.goto(f"/projects/{project_id}/documents")
+
+    a = tmp_path / "a.pdf"
+    a.write_bytes(b"%PDF-1.4 a\n")
+    b = tmp_path / "b.pdf"
+    b.write_bytes(b"%PDF-1.4 b\n")
+    with page.expect_file_chooser() as fc:
+        page.click("#doc-dropzone")
+    fc.value.set_files([str(a), str(b)])
+    expect(page.locator("#vdup-modal")).to_be_visible()
+    expect(page.locator(".vdup-row")).to_have_count(2)
+
+    rows = page.locator(".vdup-row")
+    # Row 0 creates a new task.
+    rows.nth(0).locator(".vdup-task").select_option("__new__")
+    rows.nth(0).locator(".vdup-newtask").fill("Diligence")
+
+    # Row 1 can now pick that pending task (propagated to its dropdown).
+    rows.nth(1).locator(".vdup-task").select_option("new:Diligence")
+
+    page.click("#vdup-submit")
+
+    # Both files land in the one "Diligence" task — two scheme names carry it.
+    diligence = page.locator(".doc-table .doc-name", has_text="- Diligence -")
+    expect(diligence).to_have_count(2, timeout=15_000)
