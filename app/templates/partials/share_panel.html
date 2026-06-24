@@ -2,14 +2,25 @@
 <div id="share-panel" class="share-panel">
   <div class="share-head">
     <strong>External share links</strong>
-    <span class="share-hint">Anyone with a link can view, upload, and download — but not archive or delete. Revoke any time.</span>
+    <span class="share-hint">Guests can always view. Choose per link whether they may download or upload — never archive or delete. Set an optional expiry, or revoke any time.</span>
   </div>
 
   <form class="share-create" hx-post="/ui/projects/{{ project_id }}/shares"
         hx-target="#share-panel" hx-swap="outerHTML"
-        hx-on::after-request="this.reset()">
+        hx-on::after-request="this.reset()"
+        style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
     <input type="text" name="label" placeholder="Label (optional, e.g. Lender)"
            style="flex:1;max-width:240px;padding:6px 10px;border:1px solid var(--border);border-radius:6px">
+    <label class="share-opt"><input type="checkbox" name="can_download" value="true" checked> Download</label>
+    <label class="share-opt"><input type="checkbox" name="can_upload" value="true"> Upload</label>
+    <label class="share-opt">Expires
+      <select name="expires_days" style="padding:5px 8px;border:1px solid var(--border);border-radius:6px">
+        <option value="0">Never</option>
+        <option value="7">7 days</option>
+        <option value="30">30 days</option>
+        <option value="90">90 days</option>
+      </select>
+    </label>
     <button type="submit" class="btn btn-primary btn-sm">+ Create link</button>
   </form>
 
@@ -21,6 +32,10 @@
         {% if s.label %}<span class="share-label">{{ s.label }}</span>{% endif %}
         <input class="share-url" type="text" readonly value="{{ s.url }}"
                onclick="this.select()">
+        <span class="share-perms" style="font-size:12px;color:var(--text-muted)">
+          View{% if s.can_download %} · Download{% endif %}{% if s.can_upload %} · Upload{% endif %}
+          · {% if s.expired %}<span style="color:#b91c1c">Expired {{ s.expires_fmt }}</span>{% else %}Expires {{ s.expires_fmt }}{% endif %}
+        </span>
       </div>
       <div class="share-item-actions">
         <button type="button" class="btn btn-secondary btn-sm"

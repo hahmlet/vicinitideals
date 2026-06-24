@@ -3,7 +3,7 @@
   <div class="task-card-head">
     <span class="task-badge {{ t.status }}">{{ t.status_label }}</span>
     <span class="task-title">{{ t.title }}</span>
-    <a class="btn btn-secondary btn-sm" href="/share/{{ token }}/tasks/{{ t.id }}/download">⬇ Download</a>
+    {% if can_download %}<a class="btn btn-secondary btn-sm" href="/share/{{ token }}/tasks/{{ t.id }}/download">⬇ Download</a>{% endif %}
   </div>
   <div class="task-meta">Due: {{ t.due_fmt }} · {{ t.doc_count }} file{{ "" if t.doc_count == 1 else "s" }}</div>
   {% if t.notes %}<div class="task-notes">{{ t.notes }}</div>{% endif %}
@@ -13,14 +13,17 @@
     <div class="task-doc">
       {% if d.viewable %}
       <button type="button" class="doc-name js-doc-view" data-doc-id="{{ d.id }}" data-doc-name="{{ d.filename }}">{{ d.icon }} {{ d.filename }}</button>
-      {% else %}
+      {% elif can_download %}
       <a class="doc-name" href="/share/{{ token }}/documents/{{ d.id }}/download" style="text-decoration:none">{{ d.icon }} {{ d.filename }}</a>
+      {% else %}
+      <span class="doc-name" style="color:var(--text)">{{ d.icon }} {{ d.filename }}</span>
       {% endif %}
       <span style="color:var(--text-muted)">{{ d.size_human }}</span>
     </div>
     {% endfor %}
   </div>
 
+  {% if can_upload %}
   <form class="g-upload" style="margin-top:8px"
         hx-post="/share/{{ token }}/tasks/{{ t.id }}/upload"
         hx-target="#g-task-card-{{ t.id }}" hx-swap="outerHTML"
@@ -28,4 +31,5 @@
     <input type="file" name="files" multiple style="font-size:12px">
     <button type="submit" class="btn btn-secondary btn-sm">⬆ Add files</button>
   </form>
+  {% endif %}
 </div>

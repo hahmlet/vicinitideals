@@ -61,7 +61,7 @@
 <body>
   <div class="wrap">
     <div class="g-head"><div class="g-title">📁 {{ project_name }}</div></div>
-    <div class="g-sub">Shared document room — you can view, download, and upload files.</div>
+    <div class="g-sub">Shared document room — you can view{% if can_download %}, download{% endif %}{% if can_upload %}, and upload{% endif %} files.</div>
 
     <div class="g-tabs">
       <a class="g-tab {% if view != 'tasks' %}active{% endif %}" href="/share/{{ token }}?view=documents">Documents</a>
@@ -69,14 +69,20 @@
     </div>
 
     {% if view != 'tasks' %}
+      {% if can_upload or can_download %}
       <div class="g-toolbar">
+        {% if can_upload %}
         <form class="g-upload" hx-post="/share/{{ token }}/upload"
               hx-target="#g-doc-rows" hx-swap="outerHTML" hx-encoding="multipart/form-data">
           <input type="file" name="files" multiple accept="{{ allowed_ext }}">
           <button type="submit" class="btn btn-primary btn-sm">⬆ Upload</button>
         </form>
+        {% endif %}
+        {% if can_download %}
         <a class="btn btn-secondary btn-sm" href="/share/{{ token }}/zip">⬇ Download all</a>
+        {% endif %}
       </div>
+      {% endif %}
       {% include "partials/share_doc_rows.html" %}
     {% else %}
       <div class="g-toolbar">

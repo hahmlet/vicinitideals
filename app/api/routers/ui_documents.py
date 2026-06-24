@@ -20,7 +20,7 @@ from __future__ import annotations
 import io
 import os
 import zipfile
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from uuid import UUID
 
 from fastapi import APIRouter, File, Form, HTTPException, Query, Request, UploadFile
@@ -820,11 +820,17 @@ def _share_url(request: Request, token: str) -> str:
 
 def _share_vm(share: DocumentShare, request: Request) -> dict:
     token = make_doc_share_token(share.id)
+    now = datetime.now(timezone.utc)
+    expired = share.expires_at is not None and share.expires_at < now
     return {
         "id": str(share.id),
         "label": share.label or "",
         "url": _share_url(request, token),
         "revoked": share.revoked,
+        "can_upload": share.can_upload,
+        "can_download": share.can_download,
+        "expires_fmt": share.expires_at.strftime("%b %-d, %Y") if share.expires_at else "Never",
+        "expired": expired,
     }
 
 
@@ -866,14 +872,23 @@ async def share_create(
     project_id: UUID,
     session: DBSession,
     label: str = Form(default=""),
+    can_upload: bool = Form(default=False),
+    can_download: bool = Form(default=False),
+    expires_days: int = Form(default=0),
 ) -> HTMLResponse:
     user, org_id, project = await _require_project(session, request, project_id)
+    expires_at = None
+    if expires_days and expires_days > 0:
+        expires_at = datetime.now(timezone.utc) + timedelta(days=expires_days)
     session.add(
         DocumentShare(
             org_id=org_id,
             project_id=project_id,
             label=(label.strip() or None),
             created_by_user_id=getattr(user, "id", None),
+            can_upload=bool(can_upload),
+            can_download=bool(can_download),
+            expires_at=expires_at,
         )
     )
     await session.commit()
@@ -908,7 +923,7 @@ async def _resolve_share(session: DBSession, token: str) -> tuple[DocumentShare,
     if share_id is None:
         raise HTTPException(status_code=404, detail="This link is invalid or expired.")
     share = await session.get(DocumentShare, share_id)
-    if share is None or share.revoked:
+    if share is None or not share.is_active(datetime.now(timezone.utc)):
         raise HTTPException(status_code=404, detail="This link has been turned off.")
     project = await session.get(Project, share.project_id)
     if project is None:
@@ -954,6 +969,8 @@ async def guest_documents_page(
             "view": view,
             "status": status,
             "tasks": task_vms,
+            "can_upload": share.can_upload,
+            "can_download": share.can_download,
             "max_size_mb": settings.document_max_size_bytes // (1024 * 1024),
             "allowed_ext": ",".join(sorted(settings.document_allowed_extensions_set)),
         },
@@ -968,6 +985,8 @@ async def guest_upload(
     files: list[UploadFile] = File(default=[]),
 ) -> HTMLResponse:
     share, project = await _resolve_share(session, token)
+    if not share.can_upload:
+        raise HTTPException(status_code=403, detail="Uploads are disabled for this link")
     errors, created_for_preview = await _save_uploads(
         session, share.org_id, project.id, files, None
     )
@@ -977,7 +996,12 @@ async def guest_upload(
     return templates.TemplateResponse(
         request,
         "partials/share_doc_rows.html",
-        {"token": token, "documents": [_doc_vm(d) for d in docs], "errors": errors},
+        {
+            "token": token,
+            "documents": [_doc_vm(d) for d in docs],
+            "errors": errors,
+            "can_download": share.can_download,
+        },
     )
 
 
@@ -986,6 +1010,8 @@ async def guest_download(
     request: Request, token: str, document_id: UUID, session: DBSession
 ) -> StreamingResponse:
     share, project = await _resolve_share(session, token)
+    if not share.can_download:
+        raise HTTPException(status_code=403, detail="Downloads are disabled for this link")
     doc = await _guest_require_document(session, share, document_id)
     try:
         data = open_document(doc.storage_key)
@@ -1029,6 +1055,8 @@ async def guest_view(
 @router.get("/share/{token}/zip")
 async def guest_zip(request: Request, token: str, session: DBSession) -> StreamingResponse:
     share, project = await _resolve_share(session, token)
+    if not share.can_download:
+        raise HTTPException(status_code=403, detail="Downloads are disabled for this link")
     docs = await _load_docs(session, share.org_id, project.id, "active")
     buf = io.BytesIO()
     seen: dict[str, int] = {}
@@ -1063,7 +1091,13 @@ async def guest_tasks(
     return templates.TemplateResponse(
         request,
         "partials/share_task_rows.html",
-        {"token": token, "tasks": vms, "status": status or "all"},
+        {
+            "token": token,
+            "tasks": vms,
+            "status": status or "all",
+            "can_upload": share.can_upload,
+            "can_download": share.can_download,
+        },
     )
 
 
@@ -1076,6 +1110,8 @@ async def guest_task_upload(
     files: list[UploadFile] = File(default=[]),
 ) -> HTMLResponse:
     share, project = await _resolve_share(session, token)
+    if not share.can_upload:
+        raise HTTPException(status_code=403, detail="Uploads are disabled for this link")
     task = await session.get(DocumentTask, task_id)
     if task is None or task.project_id != project.id or task.org_id != share.org_id:
         raise HTTPException(status_code=404, detail="Not found")
@@ -1089,7 +1125,12 @@ async def guest_task_upload(
     return templates.TemplateResponse(
         request,
         "partials/share_task_card.html",
-        {"token": token, "t": _task_vm(task, docs, mm)},
+        {
+            "token": token,
+            "t": _task_vm(task, docs, mm),
+            "can_upload": share.can_upload,
+            "can_download": share.can_download,
+        },
     )
 
 
@@ -1098,6 +1139,8 @@ async def guest_task_zip(
     request: Request, token: str, task_id: UUID, session: DBSession
 ) -> StreamingResponse:
     share, project = await _resolve_share(session, token)
+    if not share.can_download:
+        raise HTTPException(status_code=403, detail="Downloads are disabled for this link")
     task = await session.get(DocumentTask, task_id)
     if task is None or task.project_id != project.id or task.org_id != share.org_id:
         raise HTTPException(status_code=404, detail="Not found")

@@ -1375,8 +1375,8 @@ project's document room **without an org account**. The public URL carries an
 `itsdangerous` token (salt `"doc-share"`, see `app/emails/tokens.py`:
 `make_/load_doc_share_token`, max age `settings.doc_share_token_max_age_seconds`)
 encoding the share `id`. Validity is DB-backed: every guest request loads the
-row, so a link can be revoked instantly (`revoked=True`) regardless of the
-token's own signature/expiry. **No passcode.**
+row, so a link can be revoked instantly (`revoked=True`) or auto-expire
+(`expires_at`) regardless of the token's own signature/expiry. **No passcode.**
 
 | Column | Type | Notes |
 |---|---|---|
@@ -1385,16 +1385,25 @@ token's own signature/expiry. **No passcode.**
 | `project_id` | UUID FK → projects (CASCADE) | scope of the link |
 | `label` | str(255) | display name, nullable (e.g. "Sent to lender") |
 | `created_by_user_id` | UUID FK → users (SET NULL) | owner who created the link |
+| `can_upload` | bool (default false) | per-link toggle — guest may upload |
+| `can_download` | bool (default true) | per-link toggle — guest may download |
+| `expires_at` | timestamptz | optional auto-expiry; null = never |
 | `revoked` | bool (default false) | non-revoked = active |
 | `revoked_at` | timestamptz | set on revoke |
 | `created_at` / `updated_at` | timestamptz | |
 
 Index `ix_document_shares_project` on `(org_id, project_id)`.
 
-Guest access is served by the share routes in `app/api/routers/ui_documents.py`
-(template `share_documents.html` + `share_*` partials); the `/share/...` prefix
-is exempt from the API-key and session gates in `app/api/main.py`. A guest on a
-valid, non-revoked link may **view, upload, and download** tasks/documents but
-never **archive or delete** (no destructive routes exist under the guest
-prefix). Guest upload filenames are sanitized and the guest viewer escapes
-user-supplied content (stored-XSS hardening).
+`DocumentShare.is_active(now)` is the single validity gate: a link is usable
+only while not revoked and not past `expires_at`. Guest access is served by the
+share routes in `app/api/routers/ui_documents.py` (template
+`share_documents.html` + `share_*` partials); the `/share/...` prefix is exempt
+from the API-key and session gates in `app/api/main.py`. **View is always
+allowed**; **download** and **upload** are per-link toggles enforced on the
+guest routes (403 when off) and hidden in the guest UI; **archive/delete** are
+never exposed (no destructive routes exist under the guest prefix). Guest
+upload filenames are sanitized and the guest viewer escapes user-supplied
+content (stored-XSS hardening).
+
+Migrations: `0117_document_shares.py` (table), `0118_document_share_permissions.py`
+(`can_upload` / `can_download` / `expires_at`).

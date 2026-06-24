@@ -219,6 +219,18 @@ class DocumentShare(Base):
         ForeignKey("users.id", ondelete="SET NULL"),
         nullable=True,
     )
+    # Per-link guest permissions. View is always allowed; these gate the
+    # upload and download routes. Archive/delete are never exposed to guests.
+    can_upload: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=False, server_default="false"
+    )
+    can_download: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=True, server_default="true"
+    )
+    # Optional auto-expiry; null = never expires.
+    expires_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
     revoked: Mapped[bool] = mapped_column(
         Boolean, nullable=False, default=False, server_default="false"
     )
@@ -234,3 +246,11 @@ class DocumentShare(Base):
         onupdate=func.now(),
         nullable=False,
     )
+
+    def is_active(self, now: datetime) -> bool:
+        """A link is usable only while not revoked and not past its expiry."""
+        if self.revoked:
+            return False
+        if self.expires_at is not None and self.expires_at < now:
+            return False
+        return True

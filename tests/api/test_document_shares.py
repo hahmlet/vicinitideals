@@ -55,8 +55,25 @@ async def _seed_project(session: AsyncSession):
     return project, user, org
 
 
-async def _seed_share(session: AsyncSession, org, project, *, revoked=False) -> DocumentShare:
-    share = DocumentShare(org_id=org.id, project_id=project.id, label="Lender", revoked=revoked)
+async def _seed_share(
+    session: AsyncSession,
+    org,
+    project,
+    *,
+    revoked=False,
+    can_upload=True,
+    can_download=True,
+    expires_at=None,
+) -> DocumentShare:
+    share = DocumentShare(
+        org_id=org.id,
+        project_id=project.id,
+        label="Lender",
+        revoked=revoked,
+        can_upload=can_upload,
+        can_download=can_download,
+        expires_at=expires_at,
+    )
     session.add(share)
     await session.commit()
     return share
@@ -172,3 +189,75 @@ async def test_owner_create_and_revoke(client: AsyncClient, session: AsyncSessio
     await session.refresh(share)
     assert share.revoked is True
     assert share.revoked_at is not None
+
+
+# ── Per-link permissions + expiry ──────────────────────────────────────────
+
+async def test_owner_create_with_permissions_and_expiry(
+    client: AsyncClient, session: AsyncSession
+):
+    project, user, org = await _seed_project(session)
+    await _auth(client, user.id)
+
+    created = await client.post(
+        f"/ui/projects/{project.id}/shares",
+        data={"label": "Lender", "can_upload": "true", "expires_days": "7"},
+    )
+    assert created.status_code == 200, created.text
+    share = (
+        await session.execute(select(DocumentShare).where(DocumentShare.project_id == project.id))
+    ).scalar_one()
+    # can_download checkbox omitted → False; can_upload checked → True.
+    assert share.can_upload is True
+    assert share.can_download is False
+    assert share.expires_at is not None
+
+
+async def test_guest_upload_blocked_when_disabled(client: AsyncClient, session: AsyncSession):
+    project, _user, org = await _seed_project(session)
+    share = await _seed_share(session, org, project, can_upload=False)
+    token = make_doc_share_token(share.id)
+
+    resp = await client.post(
+        f"/share/{token}/upload",
+        files={"files": ("nope.pdf", b"%PDF no", "application/pdf")},
+    )
+    assert resp.status_code == 403
+
+
+async def test_guest_download_blocked_but_view_allowed(
+    client: AsyncClient, session: AsyncSession
+):
+    project, _user, org = await _seed_project(session)
+    # Upload allowed so we can stage a file; download disabled.
+    share = await _seed_share(session, org, project, can_upload=True, can_download=False)
+    token = make_doc_share_token(share.id)
+
+    up = await client.post(
+        f"/share/{token}/upload",
+        files={"files": ("look.pdf", b"%PDF look", "application/pdf")},
+    )
+    assert up.status_code == 200
+    doc = (
+        await session.execute(select(Document).where(Document.project_id == project.id))
+    ).scalar_one()
+
+    # Download is gated...
+    assert (await client.get(f"/share/{token}/documents/{doc.id}/download")).status_code == 403
+    assert (await client.get(f"/share/{token}/zip")).status_code == 403
+    # ...but inline view of a PDF is always allowed.
+    view = await client.get(f"/share/{token}/documents/{doc.id}/view")
+    assert view.status_code == 200
+    assert view.headers["content-type"].startswith("application/pdf")
+
+
+async def test_guest_expired_share_404(client: AsyncClient, session: AsyncSession):
+    from datetime import datetime, timedelta, timezone
+
+    project, _user, org = await _seed_project(session)
+    share = await _seed_share(
+        session, org, project, expires_at=datetime.now(timezone.utc) - timedelta(days=1)
+    )
+    token = make_doc_share_token(share.id)
+
+    assert (await client.get(f"/share/{token}")).status_code == 404

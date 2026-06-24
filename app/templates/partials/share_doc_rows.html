@@ -10,18 +10,20 @@
         <td>
           {% if d.viewable %}
           <button type="button" class="doc-name js-doc-view" data-doc-id="{{ d.id }}" data-doc-name="{{ d.filename }}">{{ d.icon }} {{ d.filename }}</button>
-          {% else %}
+          {% elif can_download %}
           <a class="doc-name" href="/share/{{ token }}/documents/{{ d.id }}/download" style="text-decoration:none">{{ d.icon }} {{ d.filename }}</a>
+          {% else %}
+          <span class="doc-name" style="color:var(--text)">{{ d.icon }} {{ d.filename }}</span>
           {% endif %}
         </td>
         <td>{{ d.size_human }}</td>
         <td style="color:var(--text-muted)">{{ d.created_fmt }}</td>
-        <td><a class="btn btn-secondary btn-sm" href="/share/{{ token }}/documents/{{ d.id }}/download">⬇</a></td>
+        <td>{% if can_download %}<a class="btn btn-secondary btn-sm" href="/share/{{ token }}/documents/{{ d.id }}/download">⬇</a>{% endif %}</td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
   {% else %}
-  <div class="task-empty">No documents yet. Use Upload above to add files.</div>
+  <div class="task-empty">No documents yet.{% if can_upload %} Use Upload above to add files.{% endif %}</div>
   {% endif %}
 </div>
