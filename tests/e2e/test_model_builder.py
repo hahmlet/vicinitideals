@@ -104,3 +104,34 @@ def test_nav_cards_day0_stabilized_columns(logged_in_page, base_url: str, model_
     if nav.locator(".module-label:has-text('Revenue')").count() >= 1:
         assert nav.locator("text=Day 0").count() >= 1
         assert nav.locator("text=Stab.").count() >= 1
+
+
+# ---------------------------------------------------------------------------
+# Documents module card — per-project document room entry point
+# ---------------------------------------------------------------------------
+
+def test_documents_module_card_links_to_room(
+    logged_in_page, base_url: str, model_id: str
+) -> None:
+    """The Documents module card appears in the sidebar and links to the active
+    project's document room (/projects/{id}/documents)."""
+    logged_in_page.goto(f"{base_url}/models/{model_id}/builder")
+    logged_in_page.wait_for_selector(".module-stack", timeout=15_000)
+    card = logged_in_page.locator("a.module-card:has-text('Documents')")
+    assert card.count() >= 1
+    href = card.first.get_attribute("href")
+    assert href and "/documents" in href
+
+
+def test_documents_module_opens_room(
+    logged_in_page, base_url: str, model_id: str
+) -> None:
+    """Clicking the Documents card navigates to the document room page."""
+    logged_in_page.goto(f"{base_url}/models/{model_id}/builder")
+    logged_in_page.wait_for_selector(".module-stack", timeout=15_000)
+    logged_in_page.locator("a.module-card:has-text('Documents')").first.click()
+    logged_in_page.wait_for_url("**/projects/**/documents", timeout=15_000)
+    assert logged_in_page.locator("text=Documents").count() >= 1
+    # Both tabs render in the room.
+    assert logged_in_page.locator(".doc-tab:has-text('Document View')").count() >= 1
+    assert logged_in_page.locator(".doc-tab:has-text('Task View')").count() >= 1

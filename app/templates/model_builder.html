@@ -1235,6 +1235,19 @@ async function startInvestorExport(modelId, profile) {
     {% set nav_base_path = request.url.path %}
     {% include 'partials/model_builder_nav_cards.html' %}
     </div>
+
+    {# ── Documents — per-project document room + tasks (ungated, opens full page) ── #}
+    {% if documents_module_enabled and active_project_id %}
+    <div style="height:1px;background:var(--border);margin:0;flex-shrink:0"></div>
+    <a href="/projects/{{ active_project_id }}/documents"
+       class="module-card" title="Document room for this project">
+      <div class="module-icon" style="background:#e0e7ff;font-size:14px">📁</div>
+      <div class="module-info">
+        <div class="module-label">Documents</div>
+        <div class="module-meta">Files &amp; tasks for this project</div>
+      </div>
+    </a>
+    {% endif %}
   </div>
 
   <!-- Right: active module panel -->
