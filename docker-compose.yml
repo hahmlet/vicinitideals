@@ -86,6 +86,16 @@ services:
       - vicinitideals-network
     restart: unless-stopped
 
+  gotenberg:
+    image: gotenberg/gotenberg:8
+    container_name: vicinitideals-gotenberg
+    command:
+      - gotenberg
+      - --libreoffice-restart-after=10
+    networks:
+      - vicinitideals-network
+    restart: unless-stopped
+
   static-files:
     image: nginx:alpine
     container_name: vicinitideals-static

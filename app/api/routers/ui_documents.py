@@ -20,7 +20,7 @@ from __future__ import annotations
 import io
 import os
 import zipfile
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from uuid import UUID
 
 from fastapi import APIRouter, File, Form, HTTPException, Query, Request, UploadFile
@@ -36,7 +36,14 @@ from app.api.routers.ui_helpers import (
 )
 from app.config import settings
 from app.models.deal import Deal, Scenario
-from app.models.document import Document, DocumentPreviewStatus, DocumentStatus
+from app.models.document import (
+    Document,
+    DocumentPreviewStatus,
+    DocumentStatus,
+    DocumentTask,
+    DocumentTaskStatus,
+)
+from app.models.milestone import Milestone
 from app.models.project import Project
 from app.storage.documents import (
     build_storage_key,
@@ -54,6 +61,9 @@ _INLINE_MEDIA: dict[str, str] = {
     ".jpeg": "image/jpeg",
     ".png": "image/png",
 }
+
+# Office formats that get a server-side PDF preview (Phase 1b conversion).
+_PREVIEW_EXTS = {".doc", ".docx", ".xls", ".xlsx"}
 
 _EXT_ICONS: dict[str, str] = {
     ".pdf": "📕",
@@ -142,6 +152,78 @@ async def _require_document(session: DBSession, request: Request, document_id: U
     return user, doc
 
 
+async def _save_uploads(
+    session: DBSession,
+    org_id: UUID,
+    project_id: UUID,
+    files: list[UploadFile],
+    user_id: UUID | None,
+    task_id: UUID | None = None,
+) -> tuple[list[str], list[Document]]:
+    """Validate + persist uploaded files; return (errors, docs-needing-preview).
+
+    Does NOT commit — caller commits and enqueues previews.
+    """
+    allowed = settings.document_allowed_extensions_set
+    max_bytes = settings.document_max_size_bytes
+    errors: list[str] = []
+    created_for_preview: list[Document] = []
+    for up in files:
+        name = (up.filename or "").strip()
+        if not name:
+            continue
+        ext = _ext(name)
+        if ext not in allowed:
+            errors.append(f"{name}: file type not allowed")
+            continue
+        content = await up.read()
+        if not content:
+            errors.append(f"{name}: empty file skipped")
+            continue
+        if len(content) > max_bytes:
+            errors.append(f"{name}: exceeds {max_bytes // (1024 * 1024)} MB limit")
+            continue
+        key = build_storage_key(org_id, project_id, name)
+        sha = save_document(key, content)
+        needs_preview = ext in _PREVIEW_EXTS
+        doc = Document(
+            org_id=org_id,
+            project_id=project_id,
+            task_id=task_id,
+            filename=name[:512],
+            content_type=(up.content_type or None),
+            size_bytes=len(content),
+            sha256=sha,
+            storage_key=key,
+            status=DocumentStatus.active,
+            preview_status=(
+                DocumentPreviewStatus.pending if needs_preview else DocumentPreviewStatus.none
+            ),
+            uploaded_by_user_id=user_id,
+        )
+        session.add(doc)
+        if needs_preview:
+            created_for_preview.append(doc)
+    return errors, created_for_preview
+
+
+def _enqueue_previews(docs: list[Document]) -> None:
+    """Queue Office→PDF conversion for newly uploaded docs (best-effort).
+
+    A broker outage must never fail the upload itself — the original file is
+    already saved and downloadable; the preview is a bonus.
+    """
+    if not docs:
+        return
+    try:
+        from app.tasks.document_preview import convert_document_preview
+
+        for d in docs:
+            convert_document_preview.delay(str(d.id))
+    except Exception:
+        pass
+
+
 async def _load_docs(session: DBSession, org_id: UUID, project_id: UUID, show: str):
     status = DocumentStatus.archived if show == "archived" else DocumentStatus.active
     stmt = (
@@ -195,11 +277,21 @@ async def documents_page(
     project_id: UUID,
     session: DBSession,
     show: str = Query(default="active"),
+    view: str = Query(default="documents"),
+    status: str = Query(default="all"),
 ) -> HTMLResponse:
     user, org_id, project = await _require_project(session, request, project_id)
     dedup_count, conflicts_count = await _get_counts(session)
     deal = await _deal_for_project(session, project)
     docs = await _load_docs(session, org_id, project_id, show)
+
+    task_vms: list[dict] = []
+    milestone_options: list[dict] = []
+    if view == "tasks":
+        mm = await _milestone_map(session, project_id)
+        milestone_options = _milestone_options(mm)
+        task_vms = await _build_task_vms(session, org_id, project_id, status, mm)
+
     return templates.TemplateResponse(
         request,
         "documents.html",
@@ -212,6 +304,10 @@ async def documents_page(
             "deal_name": deal.name if deal else "Deal",
             "documents": [_doc_vm(d) for d in docs],
             "show": show,
+            "view": view,
+            "status": status,
+            "tasks": task_vms,
+            "milestone_options": milestone_options,
             "max_size_mb": settings.document_max_size_bytes // (1024 * 1024),
             "allowed_ext": ",".join(sorted(settings.document_allowed_extensions_set)),
         },
@@ -243,40 +339,11 @@ async def documents_upload(
     show: str = Form(default="active"),
 ) -> HTMLResponse:
     user, org_id, project = await _require_project(session, request, project_id)
-    allowed = settings.document_allowed_extensions_set
-    errors: list[str] = []
-    for up in files:
-        name = (up.filename or "").strip()
-        if not name:
-            continue
-        ext = _ext(name)
-        if ext not in allowed:
-            errors.append(f"{name}: file type not allowed")
-            continue
-        content = await up.read()
-        if not content:
-            errors.append(f"{name}: empty file skipped")
-            continue
-        if len(content) > settings.document_max_size_bytes:
-            errors.append(f"{name}: exceeds {settings.document_max_size_bytes // (1024 * 1024)} MB limit")
-            continue
-        key = build_storage_key(org_id, project_id, name)
-        sha = save_document(key, content)
-        session.add(
-            Document(
-                org_id=org_id,
-                project_id=project_id,
-                filename=name[:512],
-                content_type=(up.content_type or None),
-                size_bytes=len(content),
-                sha256=sha,
-                storage_key=key,
-                status=DocumentStatus.active,
-                preview_status=DocumentPreviewStatus.none,
-                uploaded_by_user_id=getattr(user, "id", None),
-            )
-        )
+    errors, created_for_preview = await _save_uploads(
+        session, org_id, project_id, files, getattr(user, "id", None)
+    )
     await session.commit()
+    _enqueue_previews(created_for_preview)
     docs = await _load_docs(session, org_id, project_id, show)
     return _rows_response(request, project_id, docs, show, errors)
 
@@ -418,4 +485,297 @@ async def documents_zip(
         iter([buf.getvalue()]),
         media_type="application/zip",
         headers={"Content-Disposition": 'attachment; filename="documents.zip"'},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Task view (Phase 2)
+# ---------------------------------------------------------------------------
+
+_TASK_STATUSES = ("pending", "in_progress", "complete")
+
+
+async def _milestone_map(session: DBSession, project_id: UUID) -> dict:
+    ms = (
+        await session.execute(select(Milestone).where(Milestone.project_id == project_id))
+    ).scalars().all()
+    return {m.id: m for m in ms}
+
+
+def _milestone_options(milestone_map: dict) -> list[dict]:
+    opts = []
+    for m in milestone_map.values():
+        mtype = m.milestone_type.value if hasattr(m.milestone_type, "value") else m.milestone_type
+        opts.append({"id": str(m.id), "label": m.label or str(mtype).replace("_", " ").title()})
+    return opts
+
+
+async def _task_docs(session: DBSession, org_id: UUID, project_id: UUID, task_id: UUID):
+    stmt = (
+        select(Document)
+        .where(
+            Document.org_id == org_id,
+            Document.project_id == project_id,
+            Document.task_id == task_id,
+            Document.status == DocumentStatus.active,
+        )
+        .order_by(Document.created_at.desc())
+    )
+    return list((await session.execute(stmt)).scalars().all())
+
+
+def _task_vm(task: DocumentTask, docs: list[Document], milestone_map: dict) -> dict:
+    due = task.computed_due_date(milestone_map)
+    status = task.status.value if hasattr(task.status, "value") else task.status
+    return {
+        "id": str(task.id),
+        "title": task.title,
+        "status": status,
+        "status_label": str(status).replace("_", " ").title(),
+        "notes": task.notes or "",
+        "due_fmt": due.strftime("%b %-d, %Y") if due else "—",
+        "due_is_relative": task.due_milestone_id is not None,
+        "due_date_val": task.due_date.isoformat() if task.due_date else "",
+        "due_milestone_id": str(task.due_milestone_id) if task.due_milestone_id else "",
+        "due_offset_days": task.due_offset_days or 0,
+        "doc_count": len(docs),
+        "documents": [_doc_vm(d) for d in docs],
+    }
+
+
+async def _load_tasks(session: DBSession, org_id: UUID, project_id: UUID, status: str | None):
+    stmt = select(DocumentTask).where(
+        DocumentTask.org_id == org_id, DocumentTask.project_id == project_id
+    )
+    if status in _TASK_STATUSES:
+        stmt = stmt.where(DocumentTask.status == status)
+    stmt = stmt.order_by(DocumentTask.created_at.asc())
+    return list((await session.execute(stmt)).scalars().all())
+
+
+async def _build_task_vms(
+    session: DBSession, org_id: UUID, project_id: UUID, status: str, milestone_map: dict
+) -> list[dict]:
+    tasks = await _load_tasks(session, org_id, project_id, status)
+    vms = []
+    for t in tasks:
+        docs = await _task_docs(session, org_id, project_id, t.id)
+        vms.append(_task_vm(t, docs, milestone_map))
+    return vms
+
+
+async def _require_task(session: DBSession, request: Request, task_id: UUID):
+    if not settings.documents_module_enabled:
+        raise HTTPException(status_code=404, detail="Not found")
+    user = await _get_user(session, request)
+    task = await session.get(DocumentTask, task_id)
+    if task is None:
+        raise HTTPException(status_code=404, detail="Not found")
+    if settings.org_isolation_enabled:
+        user_org = getattr(user, "org_id", None)
+        if user_org is None or task.org_id != user_org:
+            raise HTTPException(status_code=404, detail="Not found")
+    return user, task
+
+
+def _parse_due_date(value: str | None) -> date | None:
+    if not value:
+        return None
+    try:
+        return date.fromisoformat(value.strip())
+    except ValueError:
+        return None
+
+
+async def _tasks_list_response(
+    request: Request, session: DBSession, org_id: UUID, project_id: UUID, status: str
+):
+    mm = await _milestone_map(session, project_id)
+    vms = await _build_task_vms(session, org_id, project_id, status, mm)
+    return templates.TemplateResponse(
+        request,
+        "partials/task_rows.html",
+        {"project_id": str(project_id), "tasks": vms, "status": status or "all"},
+    )
+
+
+async def _task_card_response(
+    request: Request, session: DBSession, org_id: UUID, project_id: UUID, task: DocumentTask
+):
+    mm = await _milestone_map(session, project_id)
+    docs = await _task_docs(session, org_id, project_id, task.id)
+    return templates.TemplateResponse(
+        request,
+        "partials/task_card.html",
+        {"project_id": str(project_id), "t": _task_vm(task, docs, mm)},
+    )
+
+
+@router.get("/ui/projects/{project_id}/tasks", response_class=HTMLResponse)
+async def tasks_list(
+    request: Request,
+    project_id: UUID,
+    session: DBSession,
+    status: str = Query(default="all"),
+) -> HTMLResponse:
+    user, org_id, project = await _require_project(session, request, project_id)
+    return await _tasks_list_response(request, session, org_id, project_id, status)
+
+
+@router.post("/ui/projects/{project_id}/tasks", response_class=HTMLResponse)
+async def task_create(
+    request: Request,
+    project_id: UUID,
+    session: DBSession,
+    title: str = Form(...),
+    status: str = Form(default="all"),
+) -> HTMLResponse:
+    user, org_id, project = await _require_project(session, request, project_id)
+    title = (title or "").strip()
+    if title:
+        session.add(
+            DocumentTask(
+                org_id=org_id,
+                project_id=project_id,
+                title=title[:512],
+                status=DocumentTaskStatus.pending,
+            )
+        )
+        await session.commit()
+    return await _tasks_list_response(request, session, org_id, project_id, status)
+
+
+@router.get("/ui/tasks/{task_id}/edit", response_class=HTMLResponse)
+async def task_edit_drawer(
+    request: Request, task_id: UUID, session: DBSession
+) -> HTMLResponse:
+    user, task = await _require_task(session, request, task_id)
+    mm = await _milestone_map(session, task.project_id)
+    docs = await _task_docs(session, task.org_id, task.project_id, task.id)
+    return templates.TemplateResponse(
+        request,
+        "partials/task_drawer.html",
+        {
+            "project_id": str(task.project_id),
+            "t": _task_vm(task, docs, mm),
+            "milestone_options": _milestone_options(mm),
+        },
+    )
+
+
+@router.post("/ui/tasks/{task_id}", response_class=HTMLResponse)
+async def task_update(
+    request: Request,
+    task_id: UUID,
+    session: DBSession,
+    title: str | None = Form(default=None),
+    status: str | None = Form(default=None),
+    notes: str | None = Form(default=None),
+    due_kind: str | None = Form(default=None),
+    due_date: str | None = Form(default=None),
+    due_milestone_id: str | None = Form(default=None),
+    due_offset_days: int = Form(default=0),
+) -> HTMLResponse:
+    user, task = await _require_task(session, request, task_id)
+    if title is not None and title.strip():
+        task.title = title.strip()[:512]
+    if status in _TASK_STATUSES:
+        task.status = DocumentTaskStatus(status)
+    if notes is not None:
+        task.notes = notes.strip() or None
+    # Due date: explicit kind switch (hard-coded vs relative-to-milestone).
+    if due_kind == "milestone" and due_milestone_id:
+        try:
+            task.due_milestone_id = UUID(due_milestone_id)
+            task.due_offset_days = int(due_offset_days or 0)
+            task.due_date = None
+        except ValueError:
+            pass
+    elif due_kind == "date":
+        task.due_date = _parse_due_date(due_date)
+        task.due_milestone_id = None
+        task.due_offset_days = 0
+    elif due_kind == "none":
+        task.due_date = None
+        task.due_milestone_id = None
+        task.due_offset_days = 0
+    await session.commit()
+    return await _task_card_response(request, session, task.org_id, task.project_id, task)
+
+
+@router.post("/ui/tasks/{task_id}/delete", response_class=HTMLResponse)
+async def task_delete(
+    request: Request,
+    task_id: UUID,
+    session: DBSession,
+    status: str = Form(default="all"),
+) -> HTMLResponse:
+    user, task = await _require_task(session, request, task_id)
+    org_id, project_id = task.org_id, task.project_id
+    # Detach documents from the task (keep the files); then delete the task.
+    docs = (
+        await session.execute(select(Document).where(Document.task_id == task_id))
+    ).scalars().all()
+    for d in docs:
+        d.task_id = None
+    await session.delete(task)
+    await session.commit()
+    return await _tasks_list_response(request, session, org_id, project_id, status)
+
+
+@router.post("/ui/tasks/{task_id}/upload", response_class=HTMLResponse)
+async def task_upload(
+    request: Request,
+    task_id: UUID,
+    session: DBSession,
+    files: list[UploadFile] = File(default=[]),
+) -> HTMLResponse:
+    user, task = await _require_task(session, request, task_id)
+    errors, created_for_preview = await _save_uploads(
+        session, task.org_id, task.project_id, files, getattr(user, "id", None), task_id=task.id
+    )
+    await session.commit()
+    _enqueue_previews(created_for_preview)
+    return await _task_card_response(request, session, task.org_id, task.project_id, task)
+
+
+@router.get("/ui/tasks/{task_id}/download")
+async def task_zip(request: Request, task_id: UUID, session: DBSession) -> StreamingResponse:
+    """Zip all of a task's active documents plus a notes.txt of task metadata."""
+    user, task = await _require_task(session, request, task_id)
+    docs = await _task_docs(session, task.org_id, task.project_id, task.id)
+    mm = await _milestone_map(session, task.project_id)
+    due = task.computed_due_date(mm)
+    status = task.status.value if hasattr(task.status, "value") else task.status
+
+    notes_txt = (
+        f"Task: {task.title}\r\n"
+        f"Status: {str(status).replace('_', ' ').title()}\r\n"
+        f"Due: {due.strftime('%Y-%m-%d') if due else 'not set'}\r\n"
+        f"Documents: {len(docs)}\r\n"
+        f"\r\nNotes:\r\n{task.notes or '(none)'}\r\n"
+    )
+
+    buf = io.BytesIO()
+    seen: dict[str, int] = {}
+    with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zf:
+        zf.writestr("notes.txt", notes_txt)
+        for d in docs:
+            name = d.filename or "file"
+            if name in seen:
+                seen[name] += 1
+                stem, ext = os.path.splitext(name)
+                name = f"{stem} ({seen[name]}){ext}"
+            else:
+                seen[name] = 0
+            try:
+                zf.writestr(name, open_document(d.storage_key))
+            except FileNotFoundError:
+                continue
+    buf.seek(0)
+    safe = _safe_header_filename(task.title).replace(" ", "_") or "task"
+    return StreamingResponse(
+        iter([buf.getvalue()]),
+        media_type="application/zip",
+        headers={"Content-Disposition": f'attachment; filename="{safe}.zip"'},
     )

@@ -109,6 +109,8 @@ from app.models.document import (  # noqa: F401
     Document,
     DocumentPreviewStatus,
     DocumentStatus,
+    DocumentTask,
+    DocumentTaskStatus,
 )
 
 __all__ = [
@@ -191,4 +193,6 @@ __all__ = [
     "Document",
     "DocumentStatus",
     "DocumentPreviewStatus",
+    "DocumentTask",
+    "DocumentTaskStatus",
 ]

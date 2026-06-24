@@ -1,0 +1,45 @@
+{# Single task card. id task-card-{id} = hx-target for per-task updates. #}
+<div class="task-card" id="task-card-{{ t.id }}">
+  <div class="task-card-head">
+    <span class="task-badge {{ t.status }}">{{ t.status_label }}</span>
+    <span class="task-title">{{ t.title }}</span>
+    <div class="task-actions">
+      <button type="button" class="btn btn-secondary btn-sm"
+              hx-get="/ui/tasks/{{ t.id }}/edit"
+              hx-target="#task-drawer-body" hx-swap="innerHTML"
+              hx-on::after-request="taskOpenDrawer()">✎ Edit</button>
+      <a class="btn btn-secondary btn-sm" href="/ui/tasks/{{ t.id }}/download">⬇ Download</a>
+      <button type="button" class="btn btn-secondary btn-sm"
+              hx-post="/ui/tasks/{{ t.id }}/delete"
+              hx-vals='{"status":"all"}'
+              hx-confirm="Delete this task? Its files are kept and moved back to the project root."
+              hx-target="#task-list" hx-swap="outerHTML">🗑</button>
+    </div>
+  </div>
+  <div class="task-meta">
+    Due: {{ t.due_fmt }}{% if t.due_is_relative %} <span title="Relative to timeline milestone">⛓</span>{% endif %}
+    · {{ t.doc_count }} file{{ "" if t.doc_count == 1 else "s" }}
+  </div>
+  {% if t.notes %}<div class="task-notes">{{ t.notes }}</div>{% endif %}
+
+  <div class="task-docs">
+    {% for d in t.documents %}
+    <div class="task-doc">
+      {% if d.viewable %}
+      <button type="button" class="doc-name js-doc-view" data-doc-id="{{ d.id }}" data-doc-name="{{ d.filename }}">{{ d.icon }} {{ d.filename }}</button>
+      {% else %}
+      <a class="doc-name" style="text-decoration:none" href="/ui/documents/{{ d.id }}/download">{{ d.icon }} {{ d.filename }}</a>
+      {% endif %}
+      <span style="color:var(--text-muted)">{{ d.size_human }}</span>
+    </div>
+    {% endfor %}
+  </div>
+
+  <form class="task-upload" style="margin-top:8px"
+        hx-post="/ui/tasks/{{ t.id }}/upload"
+        hx-target="#task-card-{{ t.id }}" hx-swap="outerHTML"
+        hx-encoding="multipart/form-data">
+    <input type="file" name="files" multiple style="font-size:12px">
+    <button type="submit" class="btn btn-secondary btn-sm">⬆ Add files</button>
+  </form>
+</div>

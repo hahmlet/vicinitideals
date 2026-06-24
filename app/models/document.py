@@ -16,9 +16,9 @@ from __future__ import annotations
 
 import enum
 import uuid
-from datetime import datetime
+from datetime import date, datetime, timedelta
 
-from sqlalchemy import BigInteger, DateTime, ForeignKey, Index, String, func
+from sqlalchemy import BigInteger, Date, DateTime, ForeignKey, Index, Integer, String, Text, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -58,6 +58,12 @@ class Document(Base):
         ForeignKey("projects.id", ondelete="CASCADE"),
         nullable=False,
     )
+    # Optional "subfolder" — the task this file belongs to. Null = project root.
+    task_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("document_tasks.id", ondelete="SET NULL"),
+        nullable=True,
+    )
     filename: Mapped[str] = mapped_column(String(512), nullable=False)
     content_type: Mapped[str | None] = mapped_column(String(255), nullable=True)
     size_bytes: Mapped[int] = mapped_column(BigInteger, nullable=False, default=0)
@@ -86,3 +92,81 @@ class Document(Base):
         onupdate=func.now(),
         nullable=False,
     )
+
+
+class DocumentTaskStatus(str, enum.Enum):
+    pending = "pending"
+    in_progress = "in_progress"
+    complete = "complete"
+
+
+class DocumentTask(Base):
+    """A document-collection task ("subfolder") within a Project's room.
+
+    Tracking-only: status/due are for keeping the user oriented. There is NO
+    gating — completion never triggers or blocks anything (mirrors, does not
+    extend, ``Project.timeline_approved``). Due date is either hard-coded
+    (``due_date``) or resolved relative to a Milestone (``due_milestone_id`` +
+    ``due_offset_days``) via :meth:`computed_due_date`.
+    """
+
+    __tablename__ = "document_tasks"
+    __table_args__ = (
+        Index("ix_document_tasks_project", "org_id", "project_id", "status"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
+    org_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("organizations.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    project_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("projects.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    title: Mapped[str] = mapped_column(String(512), nullable=False)
+    status: Mapped[DocumentTaskStatus] = mapped_column(
+        String(20), nullable=False, default=DocumentTaskStatus.pending, server_default="pending"
+    )
+    notes: Mapped[str | None] = mapped_column(Text, nullable=True)
+    # Hard-coded due date (used when due_milestone_id is null).
+    due_date: Mapped[date | None] = mapped_column(Date, nullable=True)
+    # Relational due date: resolves to milestone end + offset_days.
+    due_milestone_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("milestones.id", ondelete="SET NULL"),
+        nullable=True,
+    )
+    due_offset_days: Mapped[int] = mapped_column(
+        Integer, nullable=False, default=0, server_default="0"
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        onupdate=func.now(),
+        nullable=False,
+    )
+
+    def computed_due_date(
+        self, milestone_map: "dict[uuid.UUID, object] | None" = None
+    ) -> date | None:
+        """Resolve the effective due date.
+
+        Relative (milestone) due dates win when set: milestone end + offset.
+        ``milestone_map`` maps milestone id → Milestone (for trigger-chain
+        resolution via ``computed_end``). Falls back to ``due_date``.
+        """
+        if self.due_milestone_id is not None and milestone_map is not None:
+            milestone = milestone_map.get(self.due_milestone_id)
+            if milestone is not None:
+                end = milestone.computed_end(milestone_map)
+                if end is not None:
+                    return end + timedelta(days=self.due_offset_days or 0)
+        return self.due_date

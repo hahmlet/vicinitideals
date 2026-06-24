@@ -1,0 +1,63 @@
+{# Task edit drawer body — loaded into #task-drawer-body, opened as modal. #}
+<form hx-post="/ui/tasks/{{ t.id }}"
+      hx-target="#task-card-{{ t.id }}" hx-swap="outerHTML"
+      hx-on::after-request="if(event.detail.successful) taskCloseDrawer()"
+      style="padding:16px">
+  <div style="display:flex;align-items:center;margin-bottom:12px">
+    <div style="font-weight:700;font-size:15px;flex:1">Edit Task</div>
+    <button type="button" class="btn btn-secondary btn-sm" onclick="taskCloseDrawer()">✕</button>
+  </div>
+
+  <div class="task-field">
+    <label>Title</label>
+    <input type="text" name="title" value="{{ t.title }}" required>
+  </div>
+
+  <div class="task-field">
+    <label>Status</label>
+    <select name="status">
+      <option value="pending" {% if t.status == 'pending' %}selected{% endif %}>Pending</option>
+      <option value="in_progress" {% if t.status == 'in_progress' %}selected{% endif %}>In Progress</option>
+      <option value="complete" {% if t.status == 'complete' %}selected{% endif %}>Complete</option>
+    </select>
+  </div>
+
+  <div class="task-field">
+    <label>Due date</label>
+    <select name="due_kind" onchange="taskDueKind(this.value)">
+      <option value="none" {% if not t.due_date_val and not t.due_milestone_id %}selected{% endif %}>No due date</option>
+      <option value="date" {% if t.due_date_val %}selected{% endif %}>Specific date</option>
+      <option value="milestone" {% if t.due_milestone_id %}selected{% endif %}>Relative to timeline</option>
+    </select>
+  </div>
+
+  <div class="task-field" id="due-date-row" style="display:{% if t.due_date_val %}block{% else %}none{% endif %}">
+    <label>Date</label>
+    <input type="date" name="due_date" value="{{ t.due_date_val }}">
+  </div>
+
+  <div class="task-field" id="due-milestone-row" style="display:{% if t.due_milestone_id %}block{% else %}none{% endif %}">
+    <label>Milestone</label>
+    <select name="due_milestone_id">
+      {% for m in milestone_options %}
+      <option value="{{ m.id }}" {% if m.id == t.due_milestone_id %}selected{% endif %}>{{ m.label }}</option>
+      {% endfor %}
+    </select>
+    <label style="margin-top:6px">Offset (days after milestone end)</label>
+    <input type="number" name="due_offset_days" value="{{ t.due_offset_days }}">
+    {% if not milestone_options %}<div style="font-size:11px;color:var(--text-muted);margin-top:4px">No milestones on this project yet — set up the timeline first.</div>{% endif %}
+  </div>
+
+  <div class="task-field">
+    <label>Notes</label>
+    <textarea name="notes" rows="4">{{ t.notes }}</textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Save</button>
+</form>
+<script>
+function taskDueKind(v) {
+  document.getElementById('due-date-row').style.display = (v === 'date') ? 'block' : 'none';
+  document.getElementById('due-milestone-row').style.display = (v === 'milestone') ? 'block' : 'none';
+}
+</script>

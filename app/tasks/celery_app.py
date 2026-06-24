@@ -22,6 +22,7 @@ celery_app = Celery(
         "app.tasks.proforma_parse",
         "app.tasks.email_ingest",
         "app.tasks.maintenance",
+        "app.tasks.document_preview",
     ],
 )
 
@@ -36,6 +37,7 @@ celery_app.conf.update(
         "app.tasks.proforma_parse.*": {"queue": "analysis"},
         "app.tasks.export.*": {"queue": "analysis"},
         "app.tasks.email_ingest.*": {"queue": "analysis"},
+        "app.tasks.document_preview.*": {"queue": "analysis"},
     },
     beat_schedule={
         "scrape-crexi-daily": {

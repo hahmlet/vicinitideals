@@ -1,0 +1,10 @@
+{# Task list container — hx-target for create/delete/filter swaps. #}
+<div id="task-list" class="task-list">
+  {% if tasks %}
+    {% for t in tasks %}
+      {% include "partials/task_card.html" %}
+    {% endfor %}
+  {% else %}
+    <div class="task-empty">No tasks{% if status in ['pending','in_progress','complete'] %} with this status{% endif %} yet. Add one above to start tracking what to collect.</div>
+  {% endif %}
+</div>

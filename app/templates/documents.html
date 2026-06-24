@@ -53,6 +53,26 @@ table.doc-table { width: 100%; border-collapse: collapse; }
 .doc-modal-head { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--border); }
 .doc-modal-title { font-weight: 600; font-size: 14px; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .doc-modal iframe { flex: 1; border: none; width: 100%; }
+
+/* Task view */
+.task-list { display: flex; flex-direction: column; gap: 10px; }
+.task-card { border: 1px solid var(--border); border-radius: 8px; background: var(--surface); padding: 12px 14px; }
+.task-card-head { display: flex; align-items: center; gap: 10px; }
+.task-title { font-weight: 600; font-size: 14px; flex: 1; min-width: 0; }
+.task-badge { font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+.task-badge.pending { background: #fef3c7; color: #92400e; }
+.task-badge.in_progress { background: #dbeafe; color: #1e40af; }
+.task-badge.complete { background: #dcfce7; color: #166534; }
+.task-meta { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+.task-notes { font-size: 12px; color: var(--text); margin-top: 6px; white-space: pre-wrap; }
+.task-docs { margin-top: 8px; display: flex; flex-direction: column; gap: 3px; }
+.task-doc { font-size: 12px; display: flex; gap: 8px; align-items: center; }
+.task-actions { display: flex; gap: 6px; }
+.task-empty { text-align: center; padding: 36px; color: var(--text-muted); }
+.task-field { display: block; margin-bottom: 12px; }
+.task-field label { display: block; font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 3px; }
+.task-field input, .task-field select, .task-field textarea {
+  width: 100%; padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; font: inherit; }
 </style>
 {% endblock %}
 
@@ -68,12 +88,13 @@ table.doc-table { width: 100%; border-collapse: collapse; }
   <div class="doc-title">📁 {{ project_name }} — Documents</div>
 
   <div class="doc-tabs">
-    <span class="doc-tab active">Document View</span>
-    <span class="doc-tab disabled" title="Coming in Phase 2">Task View <span class="soon">soon</span></span>
+    <a class="doc-tab {% if view != 'tasks' %}active{% endif %}" href="?view=documents">Document View</a>
+    <a class="doc-tab {% if view == 'tasks' %}active{% endif %}" href="?view=tasks">Task View</a>
   </div>
 </div>
 
 <div class="doc-body">
+{% if view != "tasks" %}
 
   {% if show != "archived" %}
   <form class="doc-upload"
@@ -132,6 +153,34 @@ table.doc-table { width: 100%; border-collapse: collapse; }
     </thead>
     {% include "partials/document_rows.html" %}
   </table>
+
+{% else %}
+
+  <form class="doc-toolbar" hx-post="/ui/projects/{{ project_id }}/tasks"
+        hx-target="#task-list" hx-swap="outerHTML"
+        hx-on::after-request="this.reset()">
+    <input type="hidden" name="status" value="{{ status }}">
+    <input type="text" name="title" placeholder="New task (e.g. Tenant Leases)" required
+           style="flex:1;max-width:360px;padding:6px 10px;border:1px solid var(--border);border-radius:6px">
+    <button type="submit" class="btn btn-primary btn-sm">+ Add Task</button>
+    <div class="doc-filter" style="margin-left:auto">
+      <a href="?view=tasks&status=all" class="{% if status not in ['pending','in_progress','complete'] %}active{% endif %}">All</a>
+      <a href="?view=tasks&status=pending" class="{% if status == 'pending' %}active{% endif %}">Pending</a>
+      <a href="?view=tasks&status=in_progress" class="{% if status == 'in_progress' %}active{% endif %}">In Progress</a>
+      <a href="?view=tasks&status=complete" class="{% if status == 'complete' %}active{% endif %}">Complete</a>
+    </div>
+  </form>
+
+  {% include "partials/task_rows.html" %}
+
+{% endif %}
+</div>
+
+<!-- Task edit drawer (loaded on demand) -->
+<div class="doc-modal" id="task-drawer-modal" onclick="if(event.target===this)taskCloseDrawer()">
+  <div class="doc-modal-box" style="width:560px;height:auto;max-height:90vh">
+    <div id="task-drawer-body" style="overflow:auto"></div>
+  </div>
 </div>
 
 <!-- Viewer modal -->
@@ -178,7 +227,12 @@ document.addEventListener('click', function (e) {
   if (el) { docOpenViewer(el.dataset.docId, el.dataset.docName); }
 });
 document.addEventListener('keydown', function (e) {
-  if (e.key === 'Escape') { docCloseViewer(); }
+  if (e.key === 'Escape') { docCloseViewer(); taskCloseDrawer(); }
 });
+function taskOpenDrawer() { document.getElementById('task-drawer-modal').classList.add('open'); }
+function taskCloseDrawer() {
+  var m = document.getElementById('task-drawer-modal');
+  if (m) { m.classList.remove('open'); document.getElementById('task-drawer-body').innerHTML = ''; }
+}
 </script>
 {% endblock %}
