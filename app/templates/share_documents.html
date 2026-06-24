@@ -114,13 +114,15 @@
       if (!btn) return;
       var id = btn.getAttribute('data-doc-id');
       var name = btn.getAttribute('data-doc-name') || 'Document';
-      var url = '/share/{{ token }}/documents/' + id + '/view';
+      // id is a server-issued UUID; build the URL from it only.
+      var url = '/share/{{ token }}/documents/' + encodeURIComponent(id) + '/view';
       document.getElementById('doc-modal-name').textContent = name;
-      var lower = name.toLowerCase();
-      var isImg = /\.(jpe?g|png)$/.test(lower);
-      document.getElementById('doc-modal-body').innerHTML = isImg
-        ? '<img src="' + url + '" alt="' + name + '">'
-        : '<iframe src="' + url + '"></iframe>';
+      var isImg = /\.(jpe?g|png)$/.test(name.toLowerCase());
+      // Build via DOM APIs — never interpolate the untrusted filename into HTML.
+      var el;
+      if (isImg) { el = document.createElement('img'); el.src = url; el.alt = name; }
+      else { el = document.createElement('iframe'); el.src = url; }
+      document.getElementById('doc-modal-body').replaceChildren(el);
       document.getElementById('doc-modal').classList.add('open');
     });
   </script>
