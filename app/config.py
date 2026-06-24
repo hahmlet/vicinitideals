@@ -172,7 +172,7 @@ class Settings(BaseSettings):
     # Per-file upload ceiling (bytes). 50 MB covers leases / rent rolls / plans.
     document_max_size_bytes: int = 50 * 1024 * 1024
     # Comma-separated allowed file extensions (lowercase, dot-prefixed).
-    document_allowed_extensions: str = ".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png"
+    document_allowed_extensions: str = ".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png,.txt"
     # Gotenberg service for Office→PDF preview conversion (Phase 1b).
     gotenberg_url: str = "http://gotenberg:3000"
     # External share-link lifetime (Phase 3). 30 days default.

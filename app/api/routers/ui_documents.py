@@ -63,6 +63,7 @@ _INLINE_MEDIA: dict[str, str] = {
     ".jpg": "image/jpeg",
     ".jpeg": "image/jpeg",
     ".png": "image/png",
+    ".txt": "text/plain; charset=utf-8",
 }
 
 # Office formats that get a server-side PDF preview (Phase 1b conversion).
@@ -1284,7 +1285,7 @@ async def _stream_guest_view(session, org_id, project, document_id):
     doc = await _guest_require_document(session, org_id, project.id, document_id)
     ext = _ext(doc.filename)
     if ext in _INLINE_MEDIA:
-        key, media = doc.storage_key, (doc.content_type or "application/octet-stream")
+        key, media = doc.storage_key, _INLINE_MEDIA[ext]
     elif doc.preview_status == DocumentPreviewStatus.ready and doc.preview_key:
         key, media = doc.preview_key, "application/pdf"
     else:
