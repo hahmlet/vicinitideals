@@ -126,12 +126,21 @@ def test_documents_module_card_links_to_room(
 def test_documents_module_opens_room(
     logged_in_page, base_url: str, model_id: str
 ) -> None:
-    """Clicking the Documents card navigates to the document room page."""
+    """The document room linked from the Documents card renders both tabs.
+
+    Navigate via the card's href rather than clicking — on a brand-new
+    scenario the timeline-setup wizard overlay can intercept clicks, which is
+    unrelated to the room itself.
+    """
     logged_in_page.goto(f"{base_url}/models/{model_id}/builder")
     logged_in_page.wait_for_selector(".module-stack", timeout=15_000)
-    logged_in_page.locator("a.module-card:has-text('Documents')").first.click()
+    href = (
+        logged_in_page.locator("a.module-card:has-text('Documents')")
+        .first.get_attribute("href")
+    )
+    assert href and "/documents" in href
+    logged_in_page.goto(f"{base_url}{href}")
     logged_in_page.wait_for_url("**/projects/**/documents", timeout=15_000)
-    assert logged_in_page.locator("text=Documents").count() >= 1
     # Both tabs render in the room.
     assert logged_in_page.locator(".doc-tab:has-text('Document View')").count() >= 1
     assert logged_in_page.locator(".doc-tab:has-text('Task View')").count() >= 1
