@@ -6,7 +6,7 @@
     <a class="btn btn-secondary btn-sm" href="{{ base }}/tasks/{{ t.id }}/download">⬇ Download</a>
   </div>
   <div class="task-meta">Due: {{ t.due_fmt }} · {{ t.doc_count }} file{{ "" if t.doc_count == 1 else "s" }}</div>
-  {% if t.notes %}<div class="task-notes">{{ t.notes }}</div>{% endif %}
+  {% if t.has_notes %}<div class="task-notes">{{ t.notes_html | safe }}</div>{% endif %}
 
   <div class="task-docs">
     {% for d in t.documents %}

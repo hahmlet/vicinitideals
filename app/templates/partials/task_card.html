@@ -3,6 +3,8 @@
   <div class="task-card-head">
     <span class="task-badge {{ t.status }}">{{ t.status_label }}</span>
     <span class="task-title">{{ t.title }}</span>
+    <button type="button" class="btn btn-secondary btn-sm task-notes-btn{% if t.has_notes %} has-notes{% endif %}"
+            onclick="notesToggle('{{ t.id }}')" title="Notes">📝 Notes{% if t.has_notes %} •{% endif %}</button>
     <div class="task-actions">
       <button type="button" class="btn btn-secondary btn-sm"
               hx-get="/ui/tasks/{{ t.id }}/edit"
@@ -20,7 +22,23 @@
     Due: {{ t.due_fmt }}{% if t.due_is_relative %} <span title="Relative to timeline milestone">⛓</span>{% endif %}
     · {{ t.doc_count }} file{{ "" if t.doc_count == 1 else "s" }}
   </div>
-  {% if t.notes %}<div class="task-notes">{{ t.notes }}</div>{% endif %}
+  <div class="task-notes-slot" id="task-notes-{{ t.id }}" style="display:none">
+    <div class="rt-toolbar">
+      <button type="button" onmousedown="return false" onclick="rtCmd('{{ t.id }}','bold')" title="Bold"><b>B</b></button>
+      <button type="button" onmousedown="return false" onclick="rtCmd('{{ t.id }}','italic')" title="Italic"><i>I</i></button>
+      <button type="button" onmousedown="return false" onclick="rtCmd('{{ t.id }}','strikeThrough')" title="Strikethrough"><s>S</s></button>
+      <button type="button" onmousedown="return false" onclick="rtCmd('{{ t.id }}','insertUnorderedList')" title="Bullet list">• List</button>
+      <button type="button" onmousedown="return false" onclick="rtCmd('{{ t.id }}','insertOrderedList')" title="Numbered list">1. List</button>
+      <span class="rt-hint">Tab / Shift+Tab to nest</span>
+    </div>
+    <div class="rt-editor" contenteditable="true" id="rt-{{ t.id }}"
+         data-original="{{ t.notes_html | e }}"
+         onkeydown="rtKey(event,'{{ t.id }}')">{{ t.notes_html | safe }}</div>
+    <div class="rt-actions">
+      <button type="button" class="btn btn-primary btn-sm" onclick="notesSave('{{ t.id }}')">Save notes</button>
+      <button type="button" class="btn btn-secondary btn-sm" onclick="notesCancel('{{ t.id }}')">Cancel</button>
+    </div>
+  </div>
 
   <div class="task-docs">
     {% for d in t.documents %}

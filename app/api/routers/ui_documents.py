@@ -17,11 +17,13 @@ document-level routes can scope directly. All access funnels through
 
 from __future__ import annotations
 
+import html
 import io
 import os
 import secrets
 import zipfile
 from datetime import date, datetime, timedelta, timezone
+from html.parser import HTMLParser
 from uuid import UUID
 
 from fastapi import APIRouter, File, Form, HTTPException, Query, Request, UploadFile
@@ -261,6 +263,14 @@ async def _write_project_docs_to_zip(
             written += 1
         except FileNotFoundError:
             continue
+    # A notes.txt per task that has notes (formatting flattened to plain text).
+    for task in await _load_tasks(session, org_id, project.id, "all"):
+        text = _notes_html_to_text(task.notes)
+        if not text:
+            continue
+        folder = f"{prefix}{_safe_component(task.title) or 'Misc.'}/"
+        body = text.replace("\n", "\r\n").encode("utf-8")
+        _zip_add(zf, seen, folder + "notes.txt", body)
     return written
 
 
@@ -1019,6 +1029,148 @@ async def _task_docs(session: DBSession, org_id: UUID, project_id: UUID, task_id
     return list((await session.execute(stmt)).scalars().all())
 
 
+# ---------------------------------------------------------------------------
+# Task notes: a tiny rich-text subset (bold/italic/strike/lists). Stored as
+# sanitized HTML; converted to indented plain text for .txt downloads.
+# ---------------------------------------------------------------------------
+
+# Inbound tag → canonical tag. Everything else is dropped (its text is kept).
+_NOTES_TAG_MAP = {
+    "b": "strong", "strong": "strong", "i": "em", "em": "em",
+    "s": "s", "strike": "s", "del": "s", "u": "u",
+    "ul": "ul", "ol": "ol", "li": "li", "p": "p", "div": "div", "br": "br",
+}
+_NOTES_DROP_CONTENT = {"script", "style"}
+_NOTES_MAX_LEN = 20_000
+
+
+class _NotesSanitizer(HTMLParser):
+    """Allow-list sanitizer: keeps only formatting/list tags, strips every
+    attribute, balances tags. Defends against stored-XSS in task notes."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.out: list[str] = []
+        self.stack: list[str] = []
+        self.drop_depth = 0
+
+    def handle_starttag(self, tag: str, attrs: object) -> None:
+        if tag in _NOTES_DROP_CONTENT:
+            self.drop_depth += 1
+            return
+        canon = _NOTES_TAG_MAP.get(tag)
+        if canon is None:
+            return
+        if canon == "br":
+            self.out.append("<br>")
+            return
+        self.out.append(f"<{canon}>")
+        self.stack.append(canon)
+
+    def handle_startendtag(self, tag: str, attrs: object) -> None:
+        if _NOTES_TAG_MAP.get(tag) == "br":
+            self.out.append("<br>")
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag in _NOTES_DROP_CONTENT:
+            self.drop_depth = max(0, self.drop_depth - 1)
+            return
+        canon = _NOTES_TAG_MAP.get(tag)
+        if canon is None or canon == "br":
+            return
+        if canon in self.stack:
+            while self.stack:
+                t = self.stack.pop()
+                self.out.append(f"</{t}>")
+                if t == canon:
+                    break
+
+    def handle_data(self, data: str) -> None:
+        if self.drop_depth == 0:
+            self.out.append(html.escape(data, quote=False))
+
+    def result(self) -> str:
+        while self.stack:
+            self.out.append(f"</{self.stack.pop()}>")
+        return "".join(self.out)
+
+
+def _sanitize_notes_html(raw: str | None) -> str:
+    """Return safe notes HTML, or '' when empty after stripping tags."""
+    if not raw or not raw.strip():
+        return ""
+    parser = _NotesSanitizer()
+    parser.feed(raw[:_NOTES_MAX_LEN])
+    parser.close()
+    cleaned = parser.result().strip()
+    # Empty shell (e.g. "<p></p>" / "<br>") → treat as no notes.
+    if not html.unescape(_strip_tags(cleaned)).strip():
+        return ""
+    return cleaned[:_NOTES_MAX_LEN]
+
+
+def _strip_tags(s: str) -> str:
+    out, depth = [], 0
+    for ch in s:
+        if ch == "<":
+            depth += 1
+        elif ch == ">":
+            depth = max(0, depth - 1)
+        elif depth == 0:
+            out.append(ch)
+    return "".join(out)
+
+
+class _NotesToText(HTMLParser):
+    """Flatten notes HTML to readable plain text: bullets become '- ', ordered
+    items number per level, nesting indents 4 spaces. Inline formatting drops."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.lines: list[str] = [""]
+        self.lists: list[list] = []  # each: [kind, counter]
+
+    def _newline(self) -> None:
+        self.lines.append("")
+
+    def handle_starttag(self, tag: str, attrs: object) -> None:
+        if tag in ("ul", "ol"):
+            self.lists.append([tag, 0])
+        elif tag == "li":
+            if self.lines[-1].strip():
+                self._newline()
+            indent = "    " * max(0, len(self.lists) - 1)
+            if self.lists and self.lists[-1][0] == "ol":
+                self.lists[-1][1] += 1
+                marker = f"{self.lists[-1][1]}. "
+            else:
+                marker = "- "
+            self.lines[-1] = indent + marker
+        elif tag in ("br", "p", "div"):
+            if self.lines[-1].strip():
+                self._newline()
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag in ("ul", "ol") and self.lists:
+            self.lists.pop()
+
+    def handle_data(self, data: str) -> None:
+        self.lines[-1] += data.replace("\r", "").replace("\n", " ")
+
+    def text(self) -> str:
+        lines = [ln.rstrip() for ln in self.lines]
+        return "\n".join(lines).strip()
+
+
+def _notes_html_to_text(raw: str | None) -> str:
+    if not raw or not raw.strip():
+        return ""
+    parser = _NotesToText()
+    parser.feed(raw)
+    parser.close()
+    return parser.text()
+
+
 def _task_vm(
     task: DocumentTask, docs: list[Document], milestone_map: dict, project_name: str = ""
 ) -> dict:
@@ -1030,6 +1182,8 @@ def _task_vm(
         "status": status,
         "status_label": str(status).replace("_", " ").title(),
         "notes": task.notes or "",
+        "notes_html": _sanitize_notes_html(task.notes),
+        "has_notes": bool(_sanitize_notes_html(task.notes)),
         "due_fmt": _fmt_date(due) if due else "—",
         "due_is_relative": task.due_milestone_id is not None,
         "due_date_val": task.due_date.isoformat() if task.due_date else "",
@@ -1185,7 +1339,7 @@ async def task_update(
     if status in _TASK_STATUSES:
         task.status = DocumentTaskStatus(status)
     if notes is not None:
-        task.notes = notes.strip() or None
+        task.notes = _sanitize_notes_html(notes) or None
     # Due date: explicit kind switch (hard-coded vs relative-to-milestone).
     if due_kind == "milestone" and due_milestone_id:
         try:
@@ -1202,6 +1356,20 @@ async def task_update(
         task.due_date = None
         task.due_milestone_id = None
         task.due_offset_days = 0
+    await session.commit()
+    return await _task_card_response(request, session, task.org_id, task.project_id, task)
+
+
+@router.post("/ui/tasks/{task_id}/notes", response_class=HTMLResponse)
+async def task_set_notes(
+    request: Request,
+    task_id: UUID,
+    session: DBSession,
+    notes_html: str = Form(default=""),
+) -> HTMLResponse:
+    """Save a task's rich-text notes (sanitized) and re-render its card."""
+    user, task = await _require_task(session, request, task_id)
+    task.notes = _sanitize_notes_html(notes_html) or None
     await session.commit()
     return await _task_card_response(request, session, task.org_id, task.project_id, task)
 
@@ -1268,7 +1436,7 @@ async def task_zip(request: Request, task_id: UUID, session: DBSession) -> Strea
         f"Status: {str(status).replace('_', ' ').title()}\r\n"
         f"Due: {due.strftime('%Y-%m-%d') if due else 'not set'}\r\n"
         f"Documents: {len(docs)}\r\n"
-        f"\r\nNotes:\r\n{task.notes or '(none)'}\r\n"
+        f"\r\nNotes:\r\n{(_notes_html_to_text(task.notes) or '(none)').replace(chr(10), chr(13) + chr(10))}\r\n"
     )
 
     buf = io.BytesIO()
@@ -1734,7 +1902,7 @@ async def _stream_guest_task_zip(session, org_id, project, task_id):
         f"Status: {str(status).replace('_', ' ').title()}\r\n"
         f"Due: {due.strftime('%Y-%m-%d') if due else 'not set'}\r\n"
         f"Documents: {len(docs)}\r\n"
-        f"\r\nNotes:\r\n{task.notes or '(none)'}\r\n"
+        f"\r\nNotes:\r\n{(_notes_html_to_text(task.notes) or '(none)').replace(chr(10), chr(13) + chr(10))}\r\n"
     )
     buf = io.BytesIO()
     seen: dict[str, int] = {}
