@@ -2197,17 +2197,19 @@ async def delete_scenario_variant(
     sibling_scenarios = (await session.execute(
         select(Scenario).where(Scenario.deal_id == owning_deal.id)
     )).scalars().all()
-    if len(sibling_scenarios) <= 1:
-        return RedirectResponse(url=f"/models/{deal_id}/builder?view=underwriting", status_code=303)
 
-    survivor = next(s for s in sibling_scenarios if s.id != deal_id)
-    survivor_proj = (await session.execute(
-        select(Project).where(Project.scenario_id == survivor.id).limit(1)
-    )).scalar_one_or_none()
-    redirect_url = (
-        f"/models/{survivor.id}/builder?project={survivor_proj.id}"
-        if survivor_proj else f"/models/{survivor.id}/builder?view=underwriting"
-    )
+    is_last = len(sibling_scenarios) <= 1
+    if is_last:
+        redirect_url = "/deals"
+    else:
+        survivor = next(s for s in sibling_scenarios if s.id != deal_id)
+        survivor_proj = (await session.execute(
+            select(Project).where(Project.scenario_id == survivor.id).limit(1)
+        )).scalar_one_or_none()
+        redirect_url = (
+            f"/models/{survivor.id}/builder?project={survivor_proj.id}"
+            if survivor_proj else f"/models/{survivor.id}/builder?view=underwriting"
+        )
 
     project_ids = (await session.execute(
         select(Project.id).where(Project.scenario_id == deal_id)
@@ -2248,6 +2250,8 @@ async def delete_scenario_variant(
     await session.execute(sa_delete(WorkflowRunManifest).where(WorkflowRunManifest.scenario_id == deal_id))
 
     await session.execute(sa_delete(Scenario).where(Scenario.id == deal_id))
+    if is_last:
+        await session.execute(sa_delete(Deal).where(Deal.id == owning_deal.id))
     await session.commit()
 
     return RedirectResponse(url=redirect_url, status_code=303)
