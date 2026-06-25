@@ -2234,9 +2234,9 @@ async def delete_scenario_variant(
     await session.execute(sa_delete(Sensitivity).where(Sensitivity.scenario_id == deal_id))
     await session.execute(sa_delete(WorkflowRunManifest).where(WorkflowRunManifest.scenario_id == deal_id))
 
-    await session.flush()
-    await session.refresh(scenario)
-    await session.delete(scenario)
+    # Bulk delete bypasses ORM collection handling — lets DB CASCADE handle
+    # capital_modules, waterfall_tiers, draw_sources, projects, etc.
+    await session.execute(sa_delete(Scenario).where(Scenario.id == deal_id))
     await session.commit()
 
     return RedirectResponse(url=redirect_url, status_code=303)
