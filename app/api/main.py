@@ -314,9 +314,14 @@ def create_app() -> FastAPI:
         path = request.url.path
         is_exempt = any(path.startswith(p) for p in _AUTH_EXEMPT_PATHS) or path == "/"
         is_htmx = request.headers.get("hx-request") == "true"
-        # API-key authenticated requests (e.g. MCP clients) bypass the session-cookie gate.
-        # validate_api_key_header middleware still validates the key downstream.
-        has_valid_api_key = request.headers.get("X-API-Key") == settings.vicinitideals_api_key
+        # MCP clients authenticate via API key; they have no session cookie, so
+        # the session gate would redirect them to /login. Bypass only for /mcp
+        # paths when the key is valid; validate_api_key_header still runs downstream.
+        import hmac as _hmac
+        has_valid_api_key = path.startswith("/mcp") and _hmac.compare_digest(
+            request.headers.get("X-API-Key", ""),
+            settings.vicinitideals_api_key,
+        )
         if is_exempt or is_htmx or has_valid_api_key:
             return await call_next(request)
 
@@ -558,15 +563,20 @@ def create_app() -> FastAPI:
     # UI routers are excluded automatically (include_in_schema=False on all ui_* routers).
     # "ingest" excluded: it only triggers scrapers, not useful for agent queries.
     # /mcp is NOT in _UI_PATH_PREFIXES so validate_api_key_header middleware runs.
-    # headers forwards X-User-ID from each MCP call to the internal /api/ route calls.
-    from fastapi_mcp import FastApiMCP
-    FastApiMCP(
-        app,
-        name="VicinitiDeals",
-        description="Real estate deal underwriting and financial modeling platform",
-        exclude_tags=["ingest"],
-        headers=["X-User-ID"],
-    ).mount()
+    # User identity is injected server-side via http_client so MCP clients cannot
+    # spoof X-User-ID (headers=[] prevents any client header from being forwarded).
+    if settings.mcp_user_id:
+        import httpx as _httpx
+        from fastapi_mcp import FastApiMCP
+        _mcp_client = _httpx.AsyncClient(headers={"X-User-ID": settings.mcp_user_id})
+        FastApiMCP(
+            app,
+            name="VicinitiDeals",
+            description="Real estate deal underwriting and financial modeling platform",
+            exclude_tags=["ingest"],
+            http_client=_mcp_client,
+            headers=[],
+        ).mount()
 
     return app
 
