@@ -76,7 +76,6 @@ _AUTH_EXEMPT_PATHS = (
     "/api/",
     "/share/",  # guest project document-room access, gated by random share slug
     "/d/",  # guest deal-wide document access, gated by random deal-share slug
-    "/mcp",  # MCP server — protected by X-API-Key middleware instead
 )
 
 # Paths an authenticated-but-unverified user may still access so they
@@ -315,7 +314,10 @@ def create_app() -> FastAPI:
         path = request.url.path
         is_exempt = any(path.startswith(p) for p in _AUTH_EXEMPT_PATHS) or path == "/"
         is_htmx = request.headers.get("hx-request") == "true"
-        if is_exempt or is_htmx:
+        # API-key authenticated requests (e.g. MCP clients) bypass the session-cookie gate.
+        # validate_api_key_header middleware still validates the key downstream.
+        has_valid_api_key = request.headers.get("X-API-Key") == settings.vicinitideals_api_key
+        if is_exempt or is_htmx or has_valid_api_key:
             return await call_next(request)
 
         from app.api.auth import COOKIE_NAME, decode_session_email_verified, decode_session_token
@@ -554,13 +556,16 @@ def create_app() -> FastAPI:
 
     # MCP server — exposes JSON API routes as tools for agent workflows.
     # UI routers are excluded automatically (include_in_schema=False on all ui_* routers).
-    # Phase 1: read-only (GET only). Remove include_methods to enable write tools.
+    # "ingest" excluded: it only triggers scrapers, not useful for agent queries.
+    # /mcp is NOT in _UI_PATH_PREFIXES so validate_api_key_header middleware runs.
+    # headers forwards X-User-ID from each MCP call to the internal /api/ route calls.
     from fastapi_mcp import FastApiMCP
     FastApiMCP(
         app,
         name="VicinitiDeals",
         description="Real estate deal underwriting and financial modeling platform",
-        include_methods=["GET"],
+        exclude_tags=["ingest"],
+        headers=["X-User-ID"],
     ).mount()
 
     return app
