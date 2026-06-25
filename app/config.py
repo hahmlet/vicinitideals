@@ -33,6 +33,9 @@ class Settings(BaseSettings):
     # -------------------------------------------------------------------------
     vicinitideals_api_key: str = "changeme-generate-with-openssl-rand-hex-32"
     secret_key: str = "changeme-generate-with-openssl-rand-hex-32"
+    # MCP server: user UUID injected server-side into every tool call so MCP
+    # clients cannot spoof identity by sending a different X-User-ID header.
+    mcp_user_id: str = ""
 
     # -------------------------------------------------------------------------
     # Transactional email (Resend — https://resend.com)
