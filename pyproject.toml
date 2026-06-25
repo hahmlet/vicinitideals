@@ -25,6 +25,7 @@ dependencies = [
 [project.optional-dependencies]
 api = [
     "fastapi>=0.110",
+    "fastapi-mcp>=0.4",
     "celery[redis]>=5.3",
     "httpx>=0.27",
     "curl-cffi>=0.7",
