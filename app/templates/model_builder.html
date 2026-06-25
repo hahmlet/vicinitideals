@@ -478,6 +478,17 @@
   border-right: none;
 }
 .deal-tab.deal-tab-add:hover { color: var(--accent); background: var(--accent-faint); }
+.deal-tab.deal-tab-delete {
+  color: var(--danger, #dc2626);
+  font-size: 12px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0 10px;
+  height: 100%;
+}
+.deal-tab.deal-tab-delete:hover { background: #fef2f2; }
 
 /* ── Editable model name in sidebar ── */
 .module-name-editable {
@@ -1095,6 +1106,14 @@ async function startInvestorExport(modelId, profile) {
   </a>
   {% endfor %}
   <a href="/deals/new?clone_of={{ model.id }}" class="deal-tab deal-tab-add" title="Clone this scenario into a new variant">+ Variant</a>
+  {% if deal_variants | length > 1 %}
+  <form method="post" action="/ui/deals/{{ model.id }}/delete-variant"
+        data-name="{{ model.name }}"
+        style="display:inline;margin:0"
+        onsubmit="return confirm('Delete variant “' + this.dataset.name + '”?\n\nAll projects, capital, and cash flows for this variant will be permanently removed.')">
+    <button type="submit" class="deal-tab deal-tab-delete" title="Delete this variant">✕ Delete</button>
+  </form>
+  {% endif %}
 </div>
 
 {# ── Row 2: Underwriting tab + Projects in active deal ── #}
