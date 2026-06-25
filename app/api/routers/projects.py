@@ -135,7 +135,22 @@ async def list_projects(
         )
 
     result = await session.execute(stmt)
-    return list(result.scalars())
+    # Explicitly construct ProjectRead to map opp_status → status.
+    # Opportunity.status holds scraper-sourced strings ('Active') which don't
+    # match the ProjectStatus enum; opp_status holds the canonical enum value.
+    opps = list(result.scalars())
+    return [
+        ProjectRead(
+            id=p.id,
+            name=p.name,
+            status=p.opp_status,
+            project_category=p.project_category,
+            org_id=p.org_id,
+            created_by_user_id=p.created_by_user_id,
+            created_at=None,
+        )
+        for p in opps
+    ]
 
 
 @router.post("/projects", response_model=ProjectRead, status_code=status.HTTP_201_CREATED)

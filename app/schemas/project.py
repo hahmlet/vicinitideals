@@ -33,8 +33,8 @@ from app.schemas.scraped_listing import (
 # ---------------------------------------------------------------------------
 
 class ProjectBase(BaseModel):
-    name: str
-    status: ProjectStatus = ProjectStatus.hypothetical
+    name: str | None = None
+    status: ProjectStatus | None = None
     project_category: ProjectCategory = ProjectCategory.proposed
     source: ProjectSource | None = None
 
@@ -59,7 +59,7 @@ class ProjectRead(ProjectBase):
     id: uuid.UUID
     org_id: uuid.UUID | None = None
     created_by_user_id: uuid.UUID | None = None
-    created_at: datetime
+    created_at: datetime | None = None
 
     model_config = _example_config(
         {
