@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 {% from "_macros.html" import debt_sizing_options, project_type_options %}
 {% block title %}{{ model.name }} — Model Builder{% endblock %}
 
@@ -479,14 +479,18 @@
 }
 .deal-tab.deal-tab-add:hover { color: var(--accent); background: var(--accent-faint); }
 .deal-tab.deal-tab-delete {
+  -webkit-appearance: none;
+  appearance: none;
   color: var(--danger, #dc2626);
   font-size: 12px;
   border: none;
+  border-right: 1px solid var(--border);
   background: none;
   cursor: pointer;
   font-family: inherit;
   padding: 0 10px;
   height: 100%;
+  line-height: 1;
 }
 .deal-tab.deal-tab-delete:hover { background: #fef2f2; }
 
@@ -1106,11 +1110,12 @@ async function startInvestorExport(modelId, profile) {
   </a>
   {% endfor %}
   <a href="/deals/new?clone_of={{ model.id }}" class="deal-tab deal-tab-add" title="Clone this scenario into a new variant">+ Variant</a>
-  <form method=”post” action=”/ui/deals/{{ model.id }}/delete-variant”
-        data-name=”{{ model.name }}”
-        style=”display:inline;margin:0”
-        onsubmit=”return confirm('Delete variant “' + this.dataset.name + '”?\n\nAll projects, capital, and cash flows for this variant will be permanently removed.')”>
-    <button type=”submit” class=”deal-tab deal-tab-delete” title=”Delete this variant”>✕ Delete</button>
+  <form method="post" action="/ui/deals/{{ model.id }}/delete-variant"
+        data-name="{{ model.name }}"
+        style="display:inline;margin:0"
+        onsubmit="return confirm('Delete variant "' + this.dataset.name + '"?
+All projects, capital, and cash flows will be permanently removed.')">
+    <button type="submit" class="deal-tab deal-tab-delete" title="Delete this variant">✕ Delete</button>
   </form>
 </div>
 
