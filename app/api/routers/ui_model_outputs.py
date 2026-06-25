@@ -2341,7 +2341,7 @@ async def _load_draw_schedule_ctx(
             # seed sources that have a configured amount or auto-size as debt.
             if source_type != "debt" and not src.get("amount"):
                 continue
-            draw_freq = 2 if source_type == "debt" else 1
+            draw_freq = int(src.get("draw_every_n_months") or (2 if source_type == "debt" else 1))
 
             ds = DrawSource(
                 id=_uuid_mod.uuid4(),
