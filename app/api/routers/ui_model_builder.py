@@ -2194,22 +2194,42 @@ async def delete_scenario_variant(
     if owning_deal is None or owning_deal.org_id != user.org_id:
         raise HTTPException(status_code=403)
 
-    sibling_scenarios = (await session.execute(
-        select(Scenario).where(Scenario.deal_id == owning_deal.id)
-    )).scalars().all()
+    # "Variants" in the UI are scenarios sharing the same Opportunity via Projects
+    # (same logic as deal_variants in the builder GET route).
+    opp = (await session.execute(
+        select(Opportunity).join(Project, Project.opportunity_id == Opportunity.id)
+        .where(Project.scenario_id == deal_id).limit(1)
+    )).scalar_one_or_none()
 
-    is_last = len(sibling_scenarios) <= 1
-    if is_last:
-        redirect_url = "/deals"
+    if opp:
+        sibling_ids_result = await session.execute(
+            select(Scenario.id)
+            .join(Project, Project.scenario_id == Scenario.id)
+            .where(Project.opportunity_id == opp.id)
+            .where(Scenario.id != deal_id)
+            .order_by(Scenario.created_at)
+            .limit(1)
+        )
+        survivor_id = sibling_ids_result.scalar_one_or_none()
     else:
-        survivor = next(s for s in sibling_scenarios if s.id != deal_id)
+        survivor_id = None
+
+    if survivor_id:
         survivor_proj = (await session.execute(
-            select(Project).where(Project.scenario_id == survivor.id).limit(1)
+            select(Project).where(Project.scenario_id == survivor_id).limit(1)
         )).scalar_one_or_none()
         redirect_url = (
-            f"/models/{survivor.id}/builder?project={survivor_proj.id}"
-            if survivor_proj else f"/models/{survivor.id}/builder?view=underwriting"
+            f"/models/{survivor_id}/builder?project={survivor_proj.id}"
+            if survivor_proj else f"/models/{survivor_id}/builder?view=underwriting"
         )
+    else:
+        redirect_url = "/deals"
+
+    # Delete parent Deal too if this was its only Scenario
+    deal_scenario_count = (await session.execute(
+        select(func.count()).select_from(Scenario).where(Scenario.deal_id == owning_deal.id)
+    )).scalar_one()
+    is_last = deal_scenario_count <= 1
 
     project_ids = (await session.execute(
         select(Project.id).where(Project.scenario_id == deal_id)
