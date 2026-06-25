@@ -554,13 +554,11 @@ def create_app() -> FastAPI:
 
     # MCP server — exposes JSON API routes as tools for agent workflows.
     # UI routers are excluded automatically (include_in_schema=False on all ui_* routers).
-    # Phase 1: read-only (GET only). Remove include_methods to enable write tools.
     from fastapi_mcp import FastApiMCP
     FastApiMCP(
         app,
         name="VicinitiDeals",
         description="Real estate deal underwriting and financial modeling platform",
-        include_methods=["GET"],
     ).mount()
 
     return app
