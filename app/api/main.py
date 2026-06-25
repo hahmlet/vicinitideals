@@ -580,7 +580,7 @@ def create_app() -> FastAPI:
             exclude_tags=["ingest"],
             http_client=_mcp_client,
             headers=[],
-        ).mount()
+        ).mount_http()
 
     return app
 
