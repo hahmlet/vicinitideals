@@ -266,7 +266,8 @@
     <div class="uw-section-title" style="color:var(--danger,#dc2626)">Danger zone</div>
     <p style="font-size:13px;color:var(--text-secondary);margin:0 0 10px">Delete this variant ({{ model.name }}) and all its data. Cannot be undone.</p>
     <form method="post" action="/ui/deals/{{ model.id }}/delete-variant"
-          onsubmit="return confirm('Delete variant "{{ model.name }}"?\n\nThis permanently removes all projects, capital, cash flows, and documents for this variant. There is no undo.')">
+          data-name="{{ model.name }}"
+          onsubmit="return confirm('Delete variant “' + this.dataset.name + '”?\n\nThis permanently removes all projects, capital, cash flows, and documents for this variant. There is no undo.')">
       <button type="submit" class="btn btn-danger btn-sm">Delete this variant</button>
     </form>
   </div>

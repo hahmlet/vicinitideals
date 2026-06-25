@@ -2163,6 +2163,7 @@ async def delete_deal_project(
 
 @router.post("/ui/deals/{deal_id}/delete-variant")
 async def delete_scenario_variant(
+    request: Request,
     deal_id: UUID,
     session: DBSession,
 ) -> RedirectResponse:
@@ -2179,11 +2180,17 @@ async def delete_scenario_variant(
     from app.models.scenario import Sensitivity, SensitivityResult
     from app.models.manifest import WorkflowRunManifest
 
+    user = await _get_user(session, request)
+    if user is None:
+        raise HTTPException(status_code=403)
+
     scenario = await session.get(Scenario, deal_id)
     if scenario is None:
         raise HTTPException(status_code=404)
 
     owning_deal = await session.get(Deal, scenario.deal_id)
+    if owning_deal is None or owning_deal.org_id != user.org_id:
+        raise HTTPException(status_code=403)
 
     sibling_scenarios = (await session.execute(
         select(Scenario).where(Scenario.deal_id == owning_deal.id)
