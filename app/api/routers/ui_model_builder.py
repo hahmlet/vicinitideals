@@ -2179,7 +2179,8 @@ async def delete_scenario_variant(
     from app.models.project import PermitStub
     from app.models.scenario import Sensitivity, SensitivityResult
     from app.models.manifest import WorkflowRunManifest
-    from app.models.cashflow import CashFlowLineItem
+    from app.models.cashflow import CashFlow, CashFlowLineItem, OperationalOutputs as _OpOut
+    from app.models.capital import WaterfallResult, WaterfallTier as _WTier
 
     user = await _get_user(session, request)
     if user is None:
@@ -2212,8 +2213,11 @@ async def delete_scenario_variant(
         select(Project.id).where(Project.scenario_id == deal_id)
     )).scalars().all()
 
+    # Many legacy FKs on scenarios.id have NO ACTION (no cascade) — must delete
+    # those children explicitly before deleting the scenario row.
+
     if project_ids:
-        # cash_flow_line_items.income_stream_id has no CASCADE — must delete before income_streams
+        # income_stream_id FK on cash_flow_line_items has no CASCADE
         await session.execute(sa_delete(CashFlowLineItem).where(CashFlowLineItem.project_id.in_(project_ids)))
         await session.execute(sa_delete(UseLine).where(UseLine.project_id.in_(project_ids)))
         await session.execute(sa_delete(IncomeStream).where(IncomeStream.project_id.in_(project_ids)))
@@ -2225,6 +2229,15 @@ async def delete_scenario_variant(
         await session.execute(sa_delete(PermitStub).where(PermitStub.project_id.in_(project_ids)))
         await session.execute(sa_delete(Milestone).where(Milestone.project_id.in_(project_ids)))
 
+    # Scenario-level NO ACTION FKs — delete in dependency order:
+    # waterfall_results/tiers reference capital_modules.id (no CASCADE), so
+    # delete them before capital_modules.
+    await session.execute(sa_delete(WaterfallResult).where(WaterfallResult.scenario_id == deal_id))
+    await session.execute(sa_delete(_WTier).where(_WTier.scenario_id == deal_id))
+    await session.execute(sa_delete(CapitalModule).where(CapitalModule.scenario_id == deal_id))
+    await session.execute(sa_delete(CashFlowLineItem).where(CashFlowLineItem.scenario_id == deal_id))
+    await session.execute(sa_delete(CashFlow).where(CashFlow.scenario_id == deal_id))
+    await session.execute(sa_delete(_OpOut).where(_OpOut.scenario_id == deal_id))
     await session.execute(sa_delete(PortfolioProject).where(PortfolioProject.scenario_id == deal_id))
     sensitivity_ids = (await session.execute(
         select(Sensitivity.id).where(Sensitivity.scenario_id == deal_id)
@@ -2234,8 +2247,6 @@ async def delete_scenario_variant(
     await session.execute(sa_delete(Sensitivity).where(Sensitivity.scenario_id == deal_id))
     await session.execute(sa_delete(WorkflowRunManifest).where(WorkflowRunManifest.scenario_id == deal_id))
 
-    # Bulk delete bypasses ORM collection handling — lets DB CASCADE handle
-    # capital_modules, waterfall_tiers, draw_sources, projects, etc.
     await session.execute(sa_delete(Scenario).where(Scenario.id == deal_id))
     await session.commit()
 
