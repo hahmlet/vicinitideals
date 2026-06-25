@@ -2179,6 +2179,7 @@ async def delete_scenario_variant(
     from app.models.project import PermitStub
     from app.models.scenario import Sensitivity, SensitivityResult
     from app.models.manifest import WorkflowRunManifest
+    from app.models.cashflow import CashFlowLineItem
 
     user = await _get_user(session, request)
     if user is None:
@@ -2212,6 +2213,8 @@ async def delete_scenario_variant(
     )).scalars().all()
 
     if project_ids:
+        # cash_flow_line_items.income_stream_id has no CASCADE — must delete before income_streams
+        await session.execute(sa_delete(CashFlowLineItem).where(CashFlowLineItem.project_id.in_(project_ids)))
         await session.execute(sa_delete(UseLine).where(UseLine.project_id.in_(project_ids)))
         await session.execute(sa_delete(IncomeStream).where(IncomeStream.project_id.in_(project_ids)))
         await session.execute(sa_delete(OperatingExpenseLine).where(OperatingExpenseLine.project_id.in_(project_ids)))
