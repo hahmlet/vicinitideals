@@ -572,7 +572,14 @@ def create_app() -> FastAPI:
     if settings.mcp_user_id:
         import httpx as _httpx
         from fastapi_mcp import FastApiMCP
-        _mcp_client = _httpx.AsyncClient(headers={"X-User-ID": settings.mcp_user_id})
+        # ASGI transport: calls FastAPI directly (no HTTP round-trip).
+        # base_url is required by httpx but arbitrary since ASGI bypasses DNS.
+        # X-User-ID injected here so MCP clients cannot supply their own identity.
+        _mcp_client = _httpx.AsyncClient(
+            transport=_httpx.ASGITransport(app=app),
+            base_url="http://localhost",
+            headers={"X-User-ID": settings.mcp_user_id},
+        )
         FastApiMCP(
             app,
             name="VicinitiDeals",
