@@ -51,7 +51,7 @@ class SourceVehicle(Base):
     label: Mapped[str] = mapped_column(String(200), nullable=False)
 
     # Core type (4 mechanical types replacing 17-value FunderType)
-    vehicle_type: Mapped[str] = mapped_column(String(20), nullable=False)  # "equity"|"debt"|"forgivable_loan"|"grant"
+    vehicle_type: Mapped[str] = mapped_column(String(50), nullable=False)
     equity_role: Mapped[str | None] = mapped_column(String(10), nullable=True)  # "gp"|"lp"|NULL
 
     # Ordering / routing
