@@ -2161,6 +2161,77 @@ async def delete_deal_project(
     return RedirectResponse(url=f"/models/{deal_id}/builder", status_code=303)
 
 
+@router.post("/ui/deals/{deal_id}/delete-variant")
+async def delete_scenario_variant(
+    deal_id: UUID,
+    session: DBSession,
+) -> RedirectResponse:
+    """Delete an entire Scenario variant and all its child rows.
+
+    `deal_id` is the Scenario id (consistent with other builder routes).
+    The owning Deal must keep at least one Scenario, so deletion is silently
+    rejected when only one remains.
+    """
+    from sqlalchemy import delete as sa_delete
+    from app.models.portfolio import GanttEntry
+    from app.models.org import ProjectVisibility
+    from app.models.project import PermitStub
+    from app.models.scenario import Sensitivity, SensitivityResult
+    from app.models.manifest import WorkflowRunManifest
+
+    scenario = await session.get(Scenario, deal_id)
+    if scenario is None:
+        raise HTTPException(status_code=404)
+
+    owning_deal = await session.get(Deal, scenario.deal_id)
+
+    sibling_scenarios = (await session.execute(
+        select(Scenario).where(Scenario.deal_id == owning_deal.id)
+    )).scalars().all()
+    if len(sibling_scenarios) <= 1:
+        return RedirectResponse(url=f"/models/{deal_id}/builder?view=underwriting", status_code=303)
+
+    survivor = next(s for s in sibling_scenarios if s.id != deal_id)
+    survivor_proj = (await session.execute(
+        select(Project).where(Project.scenario_id == survivor.id).limit(1)
+    )).scalar_one_or_none()
+    redirect_url = (
+        f"/models/{survivor.id}/builder?project={survivor_proj.id}"
+        if survivor_proj else f"/models/{survivor.id}/builder?view=underwriting"
+    )
+
+    project_ids = (await session.execute(
+        select(Project.id).where(Project.scenario_id == deal_id)
+    )).scalars().all()
+
+    if project_ids:
+        await session.execute(sa_delete(UseLine).where(UseLine.project_id.in_(project_ids)))
+        await session.execute(sa_delete(IncomeStream).where(IncomeStream.project_id.in_(project_ids)))
+        await session.execute(sa_delete(OperatingExpenseLine).where(OperatingExpenseLine.project_id.in_(project_ids)))
+        await session.execute(sa_delete(OperationalInputs).where(OperationalInputs.project_id.in_(project_ids)))
+        await session.execute(sa_delete(PortfolioProject).where(PortfolioProject.project_id.in_(project_ids)))
+        await session.execute(sa_delete(GanttEntry).where(GanttEntry.project_id.in_(project_ids)))
+        await session.execute(sa_delete(ProjectVisibility).where(ProjectVisibility.project_id.in_(project_ids)))
+        await session.execute(sa_delete(PermitStub).where(PermitStub.project_id.in_(project_ids)))
+        await session.execute(sa_delete(Milestone).where(Milestone.project_id.in_(project_ids)))
+
+    await session.execute(sa_delete(PortfolioProject).where(PortfolioProject.scenario_id == deal_id))
+    sensitivity_ids = (await session.execute(
+        select(Sensitivity.id).where(Sensitivity.scenario_id == deal_id)
+    )).scalars().all()
+    if sensitivity_ids:
+        await session.execute(sa_delete(SensitivityResult).where(SensitivityResult.sensitivity_id.in_(sensitivity_ids)))
+    await session.execute(sa_delete(Sensitivity).where(Sensitivity.scenario_id == deal_id))
+    await session.execute(sa_delete(WorkflowRunManifest).where(WorkflowRunManifest.scenario_id == deal_id))
+
+    await session.flush()
+    await session.refresh(scenario)
+    await session.delete(scenario)
+    await session.commit()
+
+    return RedirectResponse(url=redirect_url, status_code=303)
+
+
 @router.get("/ui/deals/{deal_id}/add-project/search", response_class=HTMLResponse)
 async def add_project_search(
     deal_id: UUID,
