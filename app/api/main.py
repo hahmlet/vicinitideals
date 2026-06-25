@@ -229,6 +229,10 @@ def create_app() -> FastAPI:
             return await call_next(request)
         if _is_ui_path(request.url.path):
             return await call_next(request)
+        # MCP transport requests don't carry X-User-ID — identity is injected
+        # server-side into each tool call via FastApiMCP's http_client.
+        if request.url.path.startswith("/mcp"):
+            return await call_next(request)
 
         header_value = request.headers.get("X-User-ID")
         if not header_value:
