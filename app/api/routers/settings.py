@@ -29,7 +29,7 @@ from app.settings.resolver import resolve_all_defaults, resolve_default, resolve
 
 # Canonical SourceVehicle.vehicle_type values. Legacy `funder_type` strings
 # (senior_debt, mezzanine_debt, bridge, etc.) are collapsed at the boundary.
-_CANONICAL_VEHICLE_TYPES = {"equity", "debt", "forgivable_loan", "grant", "deferred_developer_fee"}
+_CANONICAL_VEHICLE_TYPES = {"equity", "debt", "forgivable_loan", "grant", "deferred_developer_fee", "float_earnings"}
 _LEGACY_TO_CANONICAL: dict[str, str] = {
     "permanent_debt": "debt",
     "senior_debt": "debt",
