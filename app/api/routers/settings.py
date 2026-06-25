@@ -590,6 +590,8 @@ def _sv_body_to_jsonb(
                 for r in _rel
                 if r.get("milestone_key") and r.get("weight") is not None
             ]
+    if body.get("waterfall_milestone"):
+        source["waterfall_milestone"] = str(body["waterfall_milestone"])
 
     carry: dict = {}
     carry_schedule = body.get("carry_schedule")
