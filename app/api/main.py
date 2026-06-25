@@ -76,6 +76,7 @@ _AUTH_EXEMPT_PATHS = (
     "/api/",
     "/share/",  # guest project document-room access, gated by random share slug
     "/d/",  # guest deal-wide document access, gated by random deal-share slug
+    "/mcp",  # MCP server — protected by X-API-Key middleware instead
 )
 
 # Paths an authenticated-but-unverified user may still access so they
@@ -550,6 +551,17 @@ def create_app() -> FastAPI:
     # Static files (CSS, etc.) — must be mounted after routes
     if _static_dir.exists():
         app.mount("/static", StaticFiles(directory=str(_static_dir)), name="static")
+
+    # MCP server — exposes JSON API routes as tools for agent workflows.
+    # UI routers are excluded automatically (include_in_schema=False on all ui_* routers).
+    # Phase 1: read-only (GET only). Remove include_methods to enable write tools.
+    from fastapi_mcp import FastApiMCP
+    FastApiMCP(
+        app,
+        name="VicinitiDeals",
+        description="Real estate deal underwriting and financial modeling platform",
+        include_methods=["GET"],
+    ).mount()
 
     return app
 
