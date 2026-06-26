@@ -86,7 +86,7 @@ class Opportunity(Base):
     source_id: Mapped[str] = mapped_column(
         String(255), nullable=False, default=lambda: uuid.uuid4().hex
     )
-    source_url: Mapped[str] = mapped_column("listing_url", Text, nullable=False)
+    source_url: Mapped[str | None] = mapped_column("listing_url", Text, nullable=True)
     raw_json: Mapped[dict | None] = mapped_column(JSON, nullable=True)
 
     # ── Location ──────────────────────────────────────────────────────────
