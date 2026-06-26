@@ -160,7 +160,7 @@ async def create_project(payload: ProjectCreate, session: DBSession) -> Opportun
         raise HTTPException(status_code=404, detail="Organization not found")
 
     data = payload.model_dump()
-    data.setdefault("source", "user_generated")
+    data["source"] = data.get("source") or "user_generated"
     project = Opportunity(**data)
     session.add(project)
     await session.flush()
