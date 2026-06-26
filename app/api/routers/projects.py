@@ -159,7 +159,9 @@ async def create_project(payload: ProjectCreate, session: DBSession) -> Opportun
     if organization is None:
         raise HTTPException(status_code=404, detail="Organization not found")
 
-    project = Opportunity(**payload.model_dump())
+    data = payload.model_dump()
+    data.setdefault("source", "user_generated")
+    project = Opportunity(**data)
     session.add(project)
     await session.flush()
     await session.refresh(project)
