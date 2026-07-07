@@ -49,6 +49,13 @@ _LEGACY_TO_CANONICAL: dict[str, str] = {
 }
 
 
+_VEHICLE_TYPE_ERR = (
+    "name and vehicle_type are required (vehicle_type must be one of: "
+    + ", ".join(sorted(_CANONICAL_VEHICLE_TYPES))
+    + ")"
+)
+
+
 def _normalize_vehicle_type(raw: object) -> str:
     """Collapse legacy funder_type strings onto canonical vehicle_type.
     Returns empty string for unknown / missing input so callers raise 400."""
@@ -663,7 +670,7 @@ async def create_org_source_vehicle(
     if not name or not vehicle_type:
         raise HTTPException(
             status_code=400,
-            detail="name and vehicle_type are required (vehicle_type must be one of: equity, debt, forgivable_loan, grant)",
+            detail=_VEHICLE_TYPE_ERR,
         )
     source_cfg, carry_cfg, exit_cfg = _sv_body_to_jsonb(body, default_auto_size=True)
     from app.models.source_vehicle import SourceVehicle as _SV_create
@@ -712,7 +719,7 @@ async def update_org_source_vehicle(
     if not name or not vehicle_type:
         raise HTTPException(
             status_code=400,
-            detail="name and vehicle_type are required (vehicle_type must be one of: equity, debt, forgivable_loan, grant)",
+            detail=_VEHICLE_TYPE_ERR,
         )
     vehicle.label = name
     vehicle.vehicle_type = vehicle_type
@@ -766,7 +773,7 @@ async def create_user_source_vehicle(
     if not name or not vehicle_type:
         raise HTTPException(
             status_code=400,
-            detail="name and vehicle_type are required (vehicle_type must be one of: equity, debt, forgivable_loan, grant)",
+            detail=_VEHICLE_TYPE_ERR,
         )
     source_cfg, carry_cfg, exit_cfg = _sv_body_to_jsonb(body, default_auto_size=True)
     from app.models.source_vehicle import SourceVehicle as _SV_ucreate
@@ -812,7 +819,7 @@ async def update_user_source_vehicle(
     if not name or not vehicle_type:
         raise HTTPException(
             status_code=400,
-            detail="name and vehicle_type are required (vehicle_type must be one of: equity, debt, forgivable_loan, grant)",
+            detail=_VEHICLE_TYPE_ERR,
         )
     vehicle.label = name
     vehicle.vehicle_type = vehicle_type

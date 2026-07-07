@@ -360,7 +360,6 @@ async def create_income_stream(
     return stream
 
 
-@router.put("/models/{model_id}/income-streams/{stream_id}", response_model=IncomeStreamRead)
 def _assert_not_phantom_row(label: str | None, row_kind: str) -> None:
     """Reject mutations to Gap Adjustment phantom rows via the public API.
 
@@ -382,6 +381,7 @@ def _assert_not_phantom_row(label: str | None, row_kind: str) -> None:
         )
 
 
+@router.put("/models/{model_id}/income-streams/{stream_id}", response_model=IncomeStreamRead)
 @router.patch("/models/{model_id}/income-streams/{stream_id}", response_model=IncomeStreamRead)
 async def update_income_stream(
     model_id: UUID,

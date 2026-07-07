@@ -334,20 +334,21 @@ async def download_import_template(model_id: UUID) -> StreamingResponse:
         ws.row_dimensions[2].height = 36
 
     # ── Uses sheet ─────────────────────────────────────────────────────────────
+    phase_values = [p.value for p in UseLinePhase]
     ws_uses = wb.active
     ws_uses.title = "Uses"
     _header_row(ws_uses, ["Label", "Phase", "Amount ($)", "Deferred Dev Fee?", "Notes"], hdr_fill_uses)
     _hint_row(ws_uses, [
         "e.g. Hard Costs, Soft Costs, Contingency",
-        "acquisition | pre_development | construction | exit",
+        " | ".join(phase_values),
         "Dollar amount (no commas)",
         "yes / no — deferred developer fee?",
         "Optional notes",
     ])
-    # Phase validation
+    # Phase validation — derived from the canonical UseLinePhase enum
     phase_dv = DataValidation(
         type="list",
-        formula1='"acquisition,pre_development,construction,exit"',
+        formula1='"{}"'.format(",".join(phase_values)),
         allow_blank=True,
     )
     ws_uses.add_data_validation(phase_dv)
