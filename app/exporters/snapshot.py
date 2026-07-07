@@ -51,13 +51,18 @@ from app.models.deal import (
 )
 from app.models.milestone import Milestone
 from app.models.project import Project
-from app.schemas.capital import CapitalModuleBase, DrawSourceBase, WaterfallTierBase
 from app.schemas.deal import (
     IncomeStreamBase,
     OperatingExpenseLineBase,
     OperationalInputsBase,
-    UseLineBase,
     UnitMixBase,
+)
+from app.services.deal_restore import (
+    restore_capital_modules,
+    restore_draw_sources,
+    restore_milestones,
+    restore_use_lines,
+    restore_waterfall_tiers,
 )
 
 # ── Helpers ──────────────────────────────────────────────────────────────────
@@ -95,38 +100,6 @@ def _clean(obj: Any) -> Any:
     if isinstance(obj, list):
         return [_clean(i) for i in obj]
     return _coerce(obj)
-
-
-def _parse_iso_date(value: Any) -> date | None:
-    if value is None:
-        return None
-    if isinstance(value, date):
-        return value
-    if isinstance(value, str):
-        try:
-            return date.fromisoformat(value)
-        except ValueError:
-            return None
-    return None
-
-
-def _json_safe(obj: Any) -> Any:
-    """Convert a Pydantic model_dump() result to JSON-safe types.
-
-    model_dump(mode='json') serializes Decimal as str, which breaks the
-    cashflow engine when those strings are stored in JSONB columns.  This
-    helper round-trips through json.dumps (using float for Decimal) so the
-    returned dict contains only Python native JSON types (float, not str).
-    """
-    def _default(o: Any) -> Any:
-        if isinstance(o, Decimal):
-            return float(o)
-        if isinstance(o, UUID):
-            return str(o)
-        if isinstance(o, (date, datetime)):
-            return o.isoformat()
-        raise TypeError(f"Object of type {type(o)} is not JSON serializable")
-    return json.loads(json.dumps(obj, default=_default))
 
 
 def _row_to_payload(row: Any, *, exclude: set[str]) -> dict[str, Any]:
@@ -1050,6 +1023,12 @@ async def revert_to_snapshot(
     await session.flush()
 
     # ── Re-insert from snapshot ──────────────────────────────────────────────
+    # UseLines are restored AFTER milestones and capital modules exist so
+    # their eligible_module_ids and milestone FKs can be remapped onto the
+    # newly created rows (see app/services/deal_restore.py).
+    milestone_id_map: dict[str, UUID] = {}
+    deferred_use_lines: list[tuple[UUID, list[dict]]] = []
+
     for project in projects:
         payload = payload_by_project.get(str(project.id))
         if payload is None:
@@ -1066,12 +1045,7 @@ async def revert_to_snapshot(
             except Exception:
                 logger.warning("snapshot revert: skipped OperationalInputs restore", exc_info=True)
 
-        for use_data in payload.get("use_lines") or []:
-            try:
-                parsed = UseLineBase.model_validate(use_data)
-                session.add(UseLine(project_id=project.id, **parsed.model_dump(exclude_unset=True)))
-            except Exception:
-                logger.warning("snapshot revert: skipped UseLine restore", exc_info=True)
+        deferred_use_lines.append((project.id, payload.get("use_lines") or []))
 
         for stream_data in payload.get("income_streams") or []:
             try:
@@ -1099,71 +1073,47 @@ async def revert_to_snapshot(
                 logger.warning("snapshot revert: skipped UnitMix entry", exc_info=True)
         project.unit_mix = restored_mix or None
 
-        milestone_rows: list[tuple[dict[str, Any], Milestone]] = []
-        old_to_new_milestone_ids: dict[str, UUID] = {}
-        for ms_data in payload.get("milestones") or []:
-            try:
-                new_ms = Milestone(
-                    project_id=project.id,
-                    milestone_type=str(ms_data.get("milestone_type") or ""),
-                    duration_days=int(ms_data.get("duration_days") or 0),
-                    target_date=_parse_iso_date(ms_data.get("target_date")),
-                    sequence_order=int(ms_data.get("sequence_order") or 1),
-                    label=ms_data.get("label"),
-                    trigger_offset_days=int(ms_data.get("trigger_offset_days") or 0),
-                    trigger_milestone_id=None,
-                )
-                session.add(new_ms)
-                await session.flush()
-                old_id = ms_data.get("id")
-                if old_id:
-                    old_to_new_milestone_ids[str(old_id)] = new_ms.id
-                milestone_rows.append((ms_data, new_ms))
-            except Exception:
-                logger.warning("snapshot revert: skipped Milestone restore", exc_info=True)
+        await restore_milestones(
+            session,
+            project_id=project.id,
+            milestone_payloads=payload.get("milestones") or [],
+            milestone_id_map=milestone_id_map,
+            log_context="snapshot revert",
+        )
 
-        for ms_data, new_ms in milestone_rows:
-            old_trigger_id = ms_data.get("trigger_milestone_id")
-            if old_trigger_id and str(old_trigger_id) in old_to_new_milestone_ids:
-                new_ms.trigger_milestone_id = old_to_new_milestone_ids[str(old_trigger_id)]
+    cap_id_map, cap_auto_size = await restore_capital_modules(
+        session,
+        scenario_id=scenario_id,
+        module_payloads=inputs.get("capital_modules") or [],
+        milestone_id_map=milestone_id_map,
+        log_context="snapshot revert",
+    )
 
-    cap_id_map: dict[str, UUID] = {}
-    cap_auto_size: dict[str, bool] = {}  # new_cap_id_str → source.auto_size for fallback junctions
-    for mod_data in inputs.get("capital_modules") or []:
-        try:
-            old_id = mod_data.get("id")
-            _src_auto = bool((mod_data.get("source") or {}).get("auto_size"))
-            payload = _json_safe(CapitalModuleBase.model_validate(mod_data).model_dump(exclude_unset=True))
-            payload.pop("id", None)
-            new_mod = CapitalModule(scenario_id=scenario_id, **payload)
-            session.add(new_mod)
-            await session.flush()
-            if old_id:
-                cap_id_map[str(old_id)] = new_mod.id
-                cap_auto_size[str(new_mod.id)] = _src_auto
-        except Exception:
-            logger.warning("snapshot revert: skipped CapitalModule restore", exc_info=True)
+    for restore_project_id, use_rows in deferred_use_lines:
+        await restore_use_lines(
+            session,
+            project_id=restore_project_id,
+            use_line_payloads=use_rows,
+            cap_id_map=cap_id_map,
+            milestone_id_map=milestone_id_map,
+            log_context="snapshot revert",
+        )
 
-    for ds_data in inputs.get("draw_sources") or []:
-        try:
-            old_cap_id = ds_data.get("capital_module_id")
-            payload = _json_safe(DrawSourceBase.model_validate(ds_data).model_dump(exclude_unset=True))
-            if old_cap_id and str(old_cap_id) in cap_id_map:
-                payload["capital_module_id"] = cap_id_map[str(old_cap_id)]
-            session.add(DrawSource(scenario_id=scenario_id, **payload))
-        except Exception:
-            logger.warning("snapshot revert: skipped DrawSource restore", exc_info=True)
+    await restore_draw_sources(
+        session,
+        scenario_id=scenario_id,
+        draw_source_payloads=inputs.get("draw_sources") or [],
+        cap_id_map=cap_id_map,
+        log_context="snapshot revert",
+    )
 
-    for tier_data in inputs.get("waterfall_tiers") or []:
-        try:
-            old_cap_id = tier_data.get("capital_module_id")
-            payload = _json_safe(WaterfallTierBase.model_validate(tier_data).model_dump(exclude_unset=True))
-            payload.pop("id", None)
-            if old_cap_id and str(old_cap_id) in cap_id_map:
-                payload["capital_module_id"] = cap_id_map[str(old_cap_id)]
-            session.add(WaterfallTier(scenario_id=scenario_id, **payload))
-        except Exception:
-            logger.warning("snapshot revert: skipped WaterfallTier restore", exc_info=True)
+    await restore_waterfall_tiers(
+        session,
+        scenario_id=scenario_id,
+        tier_payloads=inputs.get("waterfall_tiers") or [],
+        cap_id_map=cap_id_map,
+        log_context="snapshot revert",
+    )
 
     # ── Restore capital_module_projects junction entries ─────────────────────
     junc_data_list = inputs.get("capital_module_projects")

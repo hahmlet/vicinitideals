@@ -6,6 +6,7 @@ import json
 from collections.abc import Mapping
 from datetime import date, datetime
 from decimal import Decimal
+from enum import Enum
 from typing import Any, Optional
 from uuid import UUID
 
@@ -14,18 +15,26 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.exporters.json_export import EXPORT_SCHEMA_VERSION
-from app.models.capital import CapitalModule, WaterfallTier
 from app.models.deal import Deal, Scenario, IncomeStream, OperatingExpenseLine, OperationalInputs
 from app.models.project import Opportunity, Project, ProjectCategory, ProjectSource, ProjectStatus
-from app.schemas.capital import CapitalModuleBase, WaterfallTierBase
+from app.schemas.capital import CapitalModuleBase, DrawSourceBase, WaterfallTierBase
 from app.schemas.deal import (
     ScenarioBase,
     ScenarioRead,
     IncomeStreamBase,
     OperatingExpenseLineBase,
     OperationalInputsBase,
+    UnitMixBase,
+    UseLineBase,
 )
 from app.schemas.project import ProjectRead
+from app.services.deal_restore import (
+    restore_capital_modules,
+    restore_draw_sources,
+    restore_milestones,
+    restore_use_lines,
+    restore_waterfall_tiers,
+)
 
 DEAL_JSON_SCHEMA: dict[str, Any] = {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -33,7 +42,10 @@ DEAL_JSON_SCHEMA: dict[str, Any] = {
     "type": "object",
     "required": ["schema_version", "project", "deal_model"],
     "properties": {
-        "schema_version": {"type": "string", "enum": [EXPORT_SCHEMA_VERSION, "deal-json-v1"]},
+        "schema_version": {
+            "type": "string",
+            "enum": [EXPORT_SCHEMA_VERSION, "deal-json-v2", "deal-json-v1"],
+        },
         "export_type": {"type": "string", "default": "deal"},
         "project": {
             "type": "object",
@@ -68,8 +80,12 @@ DEAL_JSON_SCHEMA: dict[str, Any] = {
         "operational_inputs": {"type": ["object", "null"]},
         "income_streams": {"type": "array"},
         "expense_lines": {"type": "array"},
+        "use_lines": {"type": "array"},
+        "unit_mix": {"type": "array"},
+        "milestones": {"type": "array"},
         "capital_modules": {"type": "array"},
         "waterfall_tiers": {"type": "array"},
+        "draw_sources": {"type": "array"},
         "outputs": {"type": ["object", "null"]},
         "cash_flows": {"type": "array"},
     },
@@ -100,6 +116,31 @@ class WaterfallTierImportData(WaterfallTierBase):
     id: UUID | None = None
 
 
+class UseLineImportData(UseLineBase):
+    id: UUID | None = None
+
+
+class DrawSourceImportData(DrawSourceBase):
+    id: UUID | None = None
+
+
+class MilestoneImportData(BaseModel):
+    """One exported milestone row (v3). ``id`` is the stable key that
+    ``trigger_milestone_id`` chains reference; import re-creates rows with
+    new UUIDs and rewires the chains via the old→new map."""
+
+    model_config = {"extra": "ignore"}
+
+    id: UUID | None = None
+    milestone_type: str
+    duration_days: int = 0
+    target_date: date | None = None
+    sequence_order: int = 1
+    label: str | None = None
+    trigger_milestone_id: UUID | None = None
+    trigger_offset_days: int = 0
+
+
 class DealProjectData(BaseModel):
     Name: str | None = None
     UnparsedAddress: str | None = None
@@ -127,6 +168,13 @@ class DealImportPayload(BaseModel):
     expense_lines: list[OperatingExpenseLineBase] = Field(default_factory=list)
     capital_modules: list[CapitalModuleImportData] = Field(default_factory=list)
     waterfall_tiers: list[WaterfallTierImportData] = Field(default_factory=list)
+    # ── deal-json-v3 blocks (absent from v1/v2 payloads → empty defaults) ──
+    use_lines: list[UseLineImportData] = Field(default_factory=list)
+    milestones: list[MilestoneImportData] = Field(default_factory=list)
+    draw_sources: list[DrawSourceImportData] = Field(default_factory=list)
+    # unit_mix rows are free-form JSONB dicts on Project; validated through
+    # UnitMixBase at persist time (invalid rows are skipped with a warning).
+    unit_mix: list[dict] = Field(default_factory=list)
 
     @model_validator(mode="before")
     @classmethod
@@ -146,6 +194,10 @@ class DealImportPayload(BaseModel):
                 ("capital_stack", "capital_modules"),
                 ("capital_modules", "capital_modules"),
                 ("waterfall_tiers", "waterfall_tiers"),
+                ("use_lines", "use_lines"),
+                ("milestones", "milestones"),
+                ("draw_sources", "draw_sources"),
+                ("unit_mix", "unit_mix"),
             ):
                 if target_key not in data and source_key in deal_model_mapping:
                     data[target_key] = deal_model_mapping[source_key]
@@ -185,6 +237,11 @@ def _build_counts(payload: DealImportPayload) -> dict[str, int]:
         "income_streams": len(payload.income_streams),
         "capital_modules": len(payload.capital_modules),
         "waterfall_tiers": len(payload.waterfall_tiers),
+        "expense_lines": len(payload.expense_lines),
+        "use_lines": len(payload.use_lines),
+        "milestones": len(payload.milestones),
+        "draw_sources": len(payload.draw_sources),
+        "unit_mix": len(payload.unit_mix),
     }
 
 
@@ -194,10 +251,10 @@ def validate_deal_import_payload(payload: Mapping[str, Any]) -> DealImportValida
     warnings: list[str] = []
     schema_version = payload.get("schema_version") if isinstance(payload, Mapping) else None
 
-    # Accept both the current version and the previous v1 for backward
-    # compatibility.  v1 exports predate Phase B and simply lack the newer
-    # fields — Pydantic will treat them as None / default when parsing.
-    _SUPPORTED_VERSIONS = {EXPORT_SCHEMA_VERSION, "deal-json-v1"}
+    # Accept the current version plus v2 and v1 for backward compatibility.
+    # Older exports simply lack the newer fields/blocks — Pydantic treats
+    # them as None / empty defaults when parsing.
+    _SUPPORTED_VERSIONS = {EXPORT_SCHEMA_VERSION, "deal-json-v2", "deal-json-v1"}
     if schema_version not in _SUPPORTED_VERSIONS:
         errors.append(
             f"Unsupported schema_version '{schema_version}'. "
@@ -317,28 +374,86 @@ async def import_deal_model_json(
             )
         )
 
-    capital_module_id_map: dict[UUID, UUID] = {}
-    for capital_module in parsed.capital_modules:
-        module = CapitalModule(
-            scenario_id=model.id,
-            **_json_safe(capital_module.model_dump(exclude={"id"}, exclude_unset=True)),
-        )
-        session.add(module)
-        await session.flush()
-        if capital_module.id is not None:
-            capital_module_id_map[capital_module.id] = module.id
+    warnings = list(validation.warnings)
 
-    for waterfall_tier in parsed.waterfall_tiers:
-        tier_payload = waterfall_tier.model_dump(exclude={"id"}, exclude_unset=True)
-        if waterfall_tier.capital_module_id is not None:
-            remapped_capital_id = capital_module_id_map.get(waterfall_tier.capital_module_id)
-            if remapped_capital_id is None:
-                raise ValueError(
-                    "waterfall_tiers references a capital_module_id that is not present in the import payload"
+    def _dump_with_id(item: BaseModel) -> dict[str, Any]:
+        """JSON-safe dump preserving unset-ness, with the stable id restored."""
+        data = item.model_dump(mode="json", exclude_unset=True)
+        item_id = getattr(item, "id", None)
+        if item_id is not None:
+            data["id"] = str(item_id)
+        return data
+
+    # unit_mix is JSONB on Project — validate rows and skip anything broken.
+    # Dump in python mode + _json_safe so Decimals land as JSON numbers, not
+    # strings (mode="json" stringifies Decimal, which drifts on re-export).
+    restored_mix: list[dict] = []
+    for mix_data in parsed.unit_mix:
+        try:
+            restored_mix.append(
+                _json_safe(
+                    UnitMixBase.model_validate(mix_data).model_dump(
+                        exclude_unset=True
+                    )
                 )
-            tier_payload["capital_module_id"] = remapped_capital_id
+            )
+        except ValidationError:
+            warnings.append("Skipped one unit_mix row that failed validation.")
+    if restored_mix:
+        dev_project.unit_mix = restored_mix
 
-        session.add(WaterfallTier(scenario_id=model.id, **tier_payload))
+    # v3 blocks — shared restore helpers handle the old→new ID remapping:
+    # milestones first (trigger chains), then capital modules (milestone
+    # anchors), then use lines (eligible_module_ids + milestone FKs), then
+    # draw sources and waterfall tiers (capital module + project FKs).
+    milestone_id_map = await restore_milestones(
+        session,
+        project_id=dev_project.id,
+        milestone_payloads=[_dump_with_id(ms) for ms in parsed.milestones],
+        log_context="deal import",
+        strict=True,
+    )
+
+    capital_module_id_map, _ = await restore_capital_modules(
+        session,
+        scenario_id=model.id,
+        module_payloads=[_dump_with_id(m) for m in parsed.capital_modules],
+        milestone_id_map=milestone_id_map,
+        log_context="deal import",
+        strict=True,
+    )
+
+    await restore_use_lines(
+        session,
+        project_id=dev_project.id,
+        use_line_payloads=[_dump_with_id(u) for u in parsed.use_lines],
+        cap_id_map=capital_module_id_map,
+        milestone_id_map=milestone_id_map,
+        log_context="deal import",
+        strict=True,
+    )
+
+    await restore_draw_sources(
+        session,
+        scenario_id=model.id,
+        draw_source_payloads=[_dump_with_id(ds) for ds in parsed.draw_sources],
+        cap_id_map=capital_module_id_map,
+        default_project_id=dev_project.id,
+        log_context="deal import",
+        strict=True,
+        on_missing_capital_module="error",
+    )
+
+    await restore_waterfall_tiers(
+        session,
+        scenario_id=model.id,
+        tier_payloads=[_dump_with_id(t) for t in parsed.waterfall_tiers],
+        cap_id_map=capital_module_id_map,
+        default_project_id=dev_project.id,
+        log_context="deal import",
+        strict=True,
+        on_missing_capital_module="error",
+    )
 
     await session.flush()
     await session.refresh(model)
@@ -346,7 +461,7 @@ async def import_deal_model_json(
     return DealImportResult(
         model=ScenarioRead.model_validate(model),
         counts=_build_counts(parsed),
-        warnings=validation.warnings,
+        warnings=warnings,
     )
 
 
@@ -371,12 +486,22 @@ async def import_deal_from_json(
         or parsed.deal_model.name
     )
 
+    # NB: use .value, not str() — str() on a (str, Enum) mixin yields
+    # "OpportunitySource.manual", which is not a valid column value and made
+    # ProjectRead validation reject every imported project.
+    def _enum_value(value: Any, default: str) -> str:
+        if value is None:
+            return default
+        return value.value if isinstance(value, Enum) else str(value)
+
     opportunity = Opportunity(
         org_id=org_id,
         name=project_name,
-        opp_status=str(project_meta.Status),
-        project_category=str(project_meta.ProjectCategory),
-        source=str(project_meta.Source),
+        opp_status=_enum_value(project_meta.Status, ProjectStatus.active.value),
+        project_category=_enum_value(
+            project_meta.ProjectCategory, ProjectCategory.proposed.value
+        ),
+        source=_enum_value(project_meta.Source, ProjectSource.manual.value),
         source_url="",  # manual entry
         created_by_user_id=created_by_user_id,
     )

@@ -148,7 +148,17 @@ async def create_capital_module(
     current_user_id: CurrentUserId,
 ) -> CapitalModule:
     await _get_deal_model_or_404(session, model_id, user_id=current_user_id)
-    module = CapitalModule(scenario_id=model_id, **_json_safe(payload.model_dump()))
+    # Milestone FK anchors are managed by the capital-module milestone service
+    # (scoped to this scenario's milestone graph). They exist on the Base for
+    # deal-json-v3 round-trip only — strip from the unvalidated public create.
+    module = CapitalModule(
+        scenario_id=model_id,
+        **_json_safe(
+            payload.model_dump(
+                exclude={"active_from_milestone_id", "active_to_milestone_id"}
+            )
+        ),
+    )
     session.add(module)
     await session.flush()
     await session.refresh(module)
@@ -227,7 +237,11 @@ async def create_waterfall_tier(
 ) -> WaterfallTier:
     await _get_deal_model_or_404(session, model_id, user_id=current_user_id)
     await _validate_capital_module_reference(session, model_id, payload.capital_module_id)
-    tier = WaterfallTier(scenario_id=model_id, **payload.model_dump())
+    # project_id exists on WaterfallTierBase for deal-json-v3 round-trip only;
+    # the public create has no project-scope validation, so strip it here.
+    tier = WaterfallTier(
+        scenario_id=model_id, **payload.model_dump(exclude={"project_id"})
+    )
     session.add(tier)
     await session.flush()
     await session.refresh(tier)

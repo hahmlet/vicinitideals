@@ -106,6 +106,18 @@ class ScenarioBase(BaseModel):
     # OperationalInputs.noi_stabilized_input).  Added to JSON export in
     # deal-json-v2 so Phase B NOI-mode deals round-trip correctly.
     income_mode: str = "revenue_opex"
+    # ── deal-json-v3 round-trip fields (mirror ORM Scenario) ─────────────
+    # Reserve floors for draw schedule validation.
+    min_reserve_construction: Decimal | None = None
+    min_reserve_operational: Decimal | None = None
+    # 10Y Treasury at underwriting time; NULL → settings default (4.25%).
+    risk_free_rate_pct: Decimal | None = None
+    # Investor hurdle rate for DCF NPV / WEM; NULL → 8.0% default.
+    discount_rate_pct: Decimal | None = None
+    # Deal Health RAG threshold overrides (occ/oer/dscr/margin greens).
+    health_thresholds: dict | None = None
+    # Source Vehicle selected at deal creation (no FK — org or user scope).
+    source_vehicle_id: uuid.UUID | None = None
 
 
 class ScenarioCreate(ScenarioBase):
@@ -167,6 +179,7 @@ class OperationalInputsBase(BaseModel):
     hold_vacancy_rate_pct: Decimal | None = None
 
     entitlement_months: int | None = None
+    entitlement_cost: Decimal | None = None
     carrying_cost_pct_annual: Decimal | None = None
 
     # Deprecated construction/renovation cost scalars — use UseLine rows
@@ -192,6 +205,7 @@ class OperationalInputsBase(BaseModel):
     property_tax_annual: Decimal = Decimal("0")
     insurance_annual: Decimal = Decimal("0")
     capex_reserve_per_unit_annual: Decimal = Decimal("0")
+    going_in_cap_rate_pct: Decimal | None = None
 
     exit_cap_rate_pct: Decimal = Decimal("0")
     # Deprecated exit scalar — use UseLine with phase=exit
@@ -238,6 +252,13 @@ class OperationalInputsBase(BaseModel):
     # ── NOI mode inputs (used when Scenario.income_mode == 'noi') ───────
     noi_stabilized_input: Decimal | None = None
     noi_escalation_rate_pct: Decimal = Decimal("3")
+    # Engine-owned: True when noi_stabilized_input was auto-seeded by the
+    # KNN comp engine. In the Base for round-trip fidelity only — the
+    # public inputs upsert route strips it (see models.py).
+    noi_auto_seeded: bool = False
+
+    # Affordable housing — enables AMI rent tier columns (deal-json-v3).
+    affordable_housing_project: bool = False
 
 
 class OperationalInputsCreate(OperationalInputsBase):
@@ -539,6 +560,40 @@ class UseLineBase(BaseModel):
     # don't lose their Dev Fee basis classification.
     dev_fee_basis_bucket: str | None = None
     notes: str | None = None
+    # ── deal-json-v3 round-trip fields (mirror ORM UseLine) ──────────────
+    # Source-Use eligibility routing: CapitalModule UUID whitelist. Restore
+    # helpers remap these to the NEW module IDs on import/revert.
+    eligible_module_ids: list[uuid.UUID] = Field(default_factory=list)
+    # Engine-owned flags/blobs. In the Base for round-trip fidelity only —
+    # the public create route strips them (see USE_LINE_ENGINE_OWNED_FIELDS
+    # and models.py create_use_line); UseLineUpdate never exposes them.
+    is_auto_dev_fee: bool = False
+    is_auto_acquisition_fee: bool = False
+    is_auto_finance_cost: bool = False
+    # Engine-written display blob (binding source, headroom, allocations).
+    dev_fee_binding_context: dict = Field(default_factory=dict)
+    # Dev Fee multi-source config (auto Dev Fee row only).
+    dev_fee_pct: Decimal | None = None
+    dev_fee_basis: str | None = None
+    # Kept as a raw dict (not DevFeeReleaseScheduleSchema) so engine-written
+    # keys survive the round-trip. Contains milestone_ids — remapped by the
+    # restore helpers on import/revert.
+    dev_fee_release_schedule: dict = Field(default_factory=dict)
+    dev_fee_acquisition_treatment: str | None = None
+    dev_fee_acquisition_pct: Decimal | None = None
+    # Auto Acquisition Fee row only.
+    acquisition_fee_pct: Decimal | None = None
+
+
+# Engine-owned UseLine fields that must never be writable through the public
+# create/update API. They exist on UseLineBase purely so snapshot revert and
+# deal-json export/import round-trip engine state without loss.
+USE_LINE_ENGINE_OWNED_FIELDS: frozenset[str] = frozenset({
+    "is_auto_dev_fee",
+    "is_auto_acquisition_fee",
+    "is_auto_finance_cost",
+    "dev_fee_binding_context",
+})
 
 
 class UseLineCreate(UseLineBase):
