@@ -14,6 +14,8 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
+from app.schemas.vocab import CarryTypeLiteral, DayCountLiteral
+
 _EXAMPLE_MODEL_ID = "44444444-4444-4444-4444-444444444444"
 _EXAMPLE_CAPITAL_MODULE_ID = "99999999-9999-9999-9999-999999999999"
 _EXAMPLE_WATERFALL_TIER_ID = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
@@ -137,14 +139,7 @@ class CapitalCarrySchema(BaseModel):
 
     model_config = ConfigDict(extra="allow")
 
-    carry_type: Literal[
-        "io_only",
-        "interest_reserve",
-        "capitalized_interest",
-        "accruing",
-        "pi",
-        "none",
-    ] | None = None
+    carry_type: CarryTypeLiteral | None = None
     io_period_months: int | None = None
     io_to_pi_trigger: str | None = None
     payment_frequency: Literal["monthly", "quarterly", "annual", "at_exit"] = "monthly"
@@ -167,7 +162,7 @@ class CapitalCarrySchema(BaseModel):
     # "actual_365": actual days, 365-day year.
     # "actual_360": actual days, 360-day year (highest effective rate).
     # NULL treated as "30_360" by the engine and exporter.
-    day_count: Literal["30_360", "actual_365", "actual_360"] | None = None
+    day_count: DayCountLiteral | None = None
 
     # Phased carry (io_then_pi etc.).  Each phase is a dict with at least
     # {name, carry_type} plus optional {io_rate_pct, amort_term_years, ...}.

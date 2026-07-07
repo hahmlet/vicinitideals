@@ -15,6 +15,18 @@ from app.models.deal import OperationalInputs, UseLine
 from app.models.project import Project
 from app.utils.form_helpers import _fd, _fi
 
+# active_phase_start → milestone key that ends the phase window. Used to
+# derive the deprecated `active_phase_end` server-side from the Exit Vehicle.
+# Keys must stay within app.schemas.vocab.ACTIVE_PHASE_KEYS (contract-tested).
+_APS_TO_MS = {
+    "acquisition": "close", "close": "close",
+    "pre_construction": "pre_development",
+    "construction": "construction",
+    "lease_up": "operation_lease_up", "operation_lease_up": "operation_lease_up",
+    "stabilized": "operation_stabilized", "operation_stabilized": "operation_stabilized",
+    "exit": "divestment", "divestment": "divestment",
+}
+
 
 async def save_capital_module(
     session: AsyncSession,
@@ -176,15 +188,8 @@ async def save_capital_module(
     # Derive `active_phase_end` + `active_to_milestone` from the vehicle.
     # `active_phase_end` is deprecated as a user input but still written
     # server-side from the vehicle so legacy read-paths (Gantt, reports)
-    # keep working without a DB migration.
-    _APS_TO_MS = {
-        "acquisition": "close", "close": "close",
-        "pre_construction": "pre_development",
-        "construction": "construction",
-        "lease_up": "operation_lease_up", "operation_lease_up": "operation_lease_up",
-        "stabilized": "operation_stabilized", "operation_stabilized": "operation_stabilized",
-        "exit": "divestment", "divestment": "divestment",
-    }
+    # keep working without a DB migration. Mapping is the module-level
+    # _APS_TO_MS (hoisted so the vocab contract test can import it).
     _retirer_aps: str | None = None
     if _vehicle_value not in {"maturity", "sale"} and _vehicle_value:
         try:

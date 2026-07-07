@@ -327,11 +327,12 @@
 </div>{# /user-prefs left col #}
 
 {# ── RIGHT COLUMN: Source Vehicles ── #}
-{# CANONICAL SOURCE VEHICLE TYPE LIST — keep in sync with ALL of:
-   settings_organization.html (_vt_labels_org)
-   app/api/routers/ui.py (_VEHICLE_TYPE_LABELS)
-   app/templates/partials/model_builder_line_form.html (_ALL_TYPES)
-   When adding a new VehicleType, update all four locations. #}
+{# CANONICAL SOURCE VEHICLE TYPE LIST — canonical source is VehicleType in
+   app/models/capital.py (exposed via app/schemas/vocab.py VEHICLE_TYPES).
+   Kept in sync with settings_organization.html (_vt_labels_org),
+   app/api/routers/ui_settings.py (_VEHICLE_TYPE_LABELS),
+   partials/model_builder_line_form.html (_ALL_TYPES), and
+   partials/vehicle_form.html — enforced by tests/contract/test_vocab_sync.py. #}
 {% set _vt_labels = {
   'equity': 'Equity',
   'debt': 'Debt',

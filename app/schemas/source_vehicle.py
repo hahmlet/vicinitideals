@@ -8,6 +8,13 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from app.schemas.vocab import (
+    CarryTypeLiteral,
+    DayCountLiteral,
+    EquityRoleLiteral,
+    VehicleTypeLiteral,
+)
+
 
 class HurdleTier(BaseModel):
     irr_hurdle_pct: Decimal
@@ -34,13 +41,11 @@ class VehicleCarryConfig(BaseModel):
 
     model_config = ConfigDict(extra="allow")
 
-    carry_type: Literal[
-        "io_only", "interest_reserve", "capitalized_interest", "pi", "none"
-    ] | None = None
+    carry_type: CarryTypeLiteral | None = None
     io_rate_pct: float | None = None
     io_period_months: int | None = None
     amort_term_years: int | None = None
-    day_count: Literal["30_360", "actual_365", "actual_360"] | None = None
+    day_count: DayCountLiteral | None = None
     phases: list[dict] | None = None
 
 
@@ -57,21 +62,19 @@ class SourceVehicleCreate(BaseModel):
     scope: Literal["org", "user"]
     owner_id: uuid.UUID
     label: str = Field(..., max_length=200)
-    vehicle_type: Literal["equity", "debt", "forgivable_loan", "grant"]
-    equity_role: Literal["gp", "lp"] | None = None
+    vehicle_type: VehicleTypeLiteral
+    equity_role: EquityRoleLiteral | None = None
     default_waterfall_position: int = 0
     draw_cadence: Literal[
         "monthly", "bi_monthly", "quarterly", "lump_at_trigger", "residual_gap_filler"
     ] = "monthly"
     # Debt / forgivable_loan fields
     interest_rate_pct: Decimal | None = None
-    carry_type: Literal[
-        "io_only", "interest_reserve", "capitalized_interest", "pi"
-    ] | None = None
+    carry_type: CarryTypeLiteral | None = None
     interest_payment_timing: Literal[
         "monthly_arrears", "quarterly_arrears", "at_maturity", "accrue_to_balance"
     ] | None = None
-    day_count_convention: Literal["actual_360", "actual_365", "30_360"] = "actual_360"
+    day_count_convention: DayCountLiteral = "actual_360"
     io_period_months: int | None = None
     amort_term_years: int | None = None
     # Floating rate fields (debt / forgivable_loan)
@@ -103,20 +106,18 @@ class SourceVehicleCreate(BaseModel):
 
 class SourceVehicleUpdate(BaseModel):
     label: str | None = Field(default=None, max_length=200)
-    vehicle_type: Literal["equity", "debt", "forgivable_loan", "grant"] | None = None
-    equity_role: Literal["gp", "lp"] | None = None
+    vehicle_type: VehicleTypeLiteral | None = None
+    equity_role: EquityRoleLiteral | None = None
     default_waterfall_position: int | None = None
     draw_cadence: Literal[
         "monthly", "bi_monthly", "quarterly", "lump_at_trigger", "residual_gap_filler"
     ] | None = None
     interest_rate_pct: Decimal | None = None
-    carry_type: Literal[
-        "io_only", "interest_reserve", "capitalized_interest", "pi"
-    ] | None = None
+    carry_type: CarryTypeLiteral | None = None
     interest_payment_timing: Literal[
         "monthly_arrears", "quarterly_arrears", "at_maturity", "accrue_to_balance"
     ] | None = None
-    day_count_convention: Literal["actual_360", "actual_365", "30_360"] | None = None
+    day_count_convention: DayCountLiteral | None = None
     io_period_months: int | None = None
     amort_term_years: int | None = None
     rate_series_ref: str | None = None
