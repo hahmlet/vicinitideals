@@ -15,7 +15,12 @@ from sqlalchemy.orm import selectinload
 
 from app.models.deal import Scenario
 from app.models.project import Opportunity, Project, ProjectCategory, ProjectSource, ProjectStatus
-from app.schemas.capital import CapitalModuleRead, WaterfallResultRead, WaterfallTierRead
+from app.schemas.capital import (
+    CapitalModuleRead,
+    DrawSourceRead,
+    WaterfallResultRead,
+    WaterfallTierRead,
+)
 from app.schemas.deal import (
     CashFlowRead,
     ScenarioRead,
@@ -24,6 +29,7 @@ from app.schemas.deal import (
     OperatingExpenseLineRead,
     OperationalInputsRead,
     OperationalOutputsRead,
+    UseLineRead,
 )
 
 # v2 (April 2026): Phase B fields added to OperationalInputsBase
@@ -35,7 +41,19 @@ from app.schemas.deal import (
 # the Phase 1 fields (io_rate_pct, amort_term_years, phases, auto_size,
 # is_bridge, etc.) so carry and source JSONB columns round-trip without
 # silently dropping keys.
-EXPORT_SCHEMA_VERSION = "deal-json-v2"
+#
+# v3 (July 2026): the export gained `use_lines`, `milestones` (with stable
+# ids + trigger_milestone_id chains so import can rewire them), and
+# `draw_sources` blocks; import additionally accepts `unit_mix` (which v2
+# already exported).  The Base schemas were widened to mirror the ORM:
+# CapitalModuleBase (+eligible_use_tags, source_vehicle_id, milestone FK
+# anchors), WaterfallTierBase (+project_id), ScenarioBase (+min_reserve_*,
+# risk_free/discount rates, health_thresholds, source_vehicle_id),
+# OperationalInputsBase (+entitlement_cost, going_in_cap_rate_pct,
+# noi_auto_seeded, affordable_housing_project), UseLineBase
+# (+eligible_module_ids, is_auto_*, dev_fee_* fields).  v1/v2 payloads
+# still import unchanged.
+EXPORT_SCHEMA_VERSION = "deal-json-v3"
 
 
 def _json_scalar(value: Any) -> Any:
@@ -113,6 +131,8 @@ async def export_deal_model_json(session: AsyncSession, model_id: UUID) -> dict[
                 selectinload(Project.operational_inputs),
                 selectinload(Project.income_streams),
                 selectinload(Project.expense_lines),
+                selectinload(Project.use_lines),
+                selectinload(Project.milestones),
                 selectinload(Project.opportunity),
             ),
             selectinload(Scenario.operational_outputs),
@@ -120,6 +140,7 @@ async def export_deal_model_json(session: AsyncSession, model_id: UUID) -> dict[
             selectinload(Scenario.capital_modules),
             selectinload(Scenario.waterfall_tiers),
             selectinload(Scenario.waterfall_results),
+            selectinload(Scenario.draw_sources),
         )
         .where(Scenario.id == model_id)
     )
@@ -161,6 +182,40 @@ async def export_deal_model_json(session: AsyncSession, model_id: UUID) -> dict[
         list(default_project.unit_mix if default_project and default_project.unit_mix else []),
         key=lambda item: (item.get("label") or "", str(item.get("id") or "")),
     )
+    # v3: use_lines carry stable ids so import can remap eligible_module_ids
+    # and milestone FKs onto the newly created rows.
+    use_lines = [
+        UseLineRead.model_validate(line).model_dump(mode="json")
+        for line in sorted(
+            default_project.use_lines if default_project else [],
+            key=lambda item: (item.label or "", str(item.id)),
+        )
+    ]
+    # v3: milestones export stable ids + trigger_milestone_id chains; import
+    # re-creates them two-pass and rewires the chains to the new ids.
+    milestones = [
+        {
+            "id": str(ms.id),
+            "milestone_type": _json_scalar(ms.milestone_type),
+            "duration_days": ms.duration_days,
+            "target_date": ms.target_date.isoformat() if ms.target_date else None,
+            "sequence_order": ms.sequence_order,
+            "label": ms.label,
+            "trigger_milestone_id": str(ms.trigger_milestone_id) if ms.trigger_milestone_id else None,
+            "trigger_offset_days": ms.trigger_offset_days,
+        }
+        for ms in sorted(
+            default_project.milestones if default_project else [],
+            key=lambda item: (item.sequence_order, str(item.id)),
+        )
+    ]
+    # v3: draw schedule sources (scenario-level, linked to capital modules).
+    draw_sources = [
+        DrawSourceRead.model_validate(source).model_dump(mode="json")
+        for source in sorted(
+            model.draw_sources, key=lambda item: (item.sort_order, str(item.id))
+        )
+    ]
     cash_flows = [
         CashFlowRead.model_validate(cash_flow).model_dump(mode="json")
         for cash_flow in sorted(model.cash_flows, key=lambda item: item.period)
@@ -206,10 +261,13 @@ async def export_deal_model_json(session: AsyncSession, model_id: UUID) -> dict[
         "operational_outputs": outputs,
         "income_streams": income_streams,
         "expense_lines": expense_lines,
+        "use_lines": use_lines,
         "unit_mix": unit_mix,
+        "milestones": milestones,
         "capital_modules": capital_modules,
         "waterfall_tiers": waterfall_tiers,
         "waterfall_results": waterfall_results,
+        "draw_sources": draw_sources,
     }
 
 

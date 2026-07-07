@@ -241,6 +241,15 @@ class CapitalModuleBase(BaseModel):
     fee_terms_inherited_from_type: bool = True
     active_phase_start: str | None = None
     active_phase_end: str | None = None
+    # ── deal-json-v3 round-trip fields (mirror ORM CapitalModule) ────────
+    # Milestone FK timing — preferred over the phase strings when set.
+    # Restore helpers remap these to the NEW milestone IDs on import/revert.
+    active_from_milestone_id: uuid.UUID | None = None
+    active_to_milestone_id: uuid.UUID | None = None
+    # FK to unified source_vehicles table (nullable).
+    source_vehicle_id: uuid.UUID | None = None
+    # Source-Use eligibility routing (Phase C). Empty list = permissive.
+    eligible_use_tags: list[str] = Field(default_factory=list)
 
 class CapitalModuleCreate(CapitalModuleBase):
     scenario_id: uuid.UUID
@@ -336,6 +345,9 @@ class CapitalModuleRead(CapitalModuleBase):
 class WaterfallTierBase(BaseModel):
     priority: int
     tier_type: str
+    # Waterfall is per-project going forward (nullable during backfill).
+    # Included for deal-json-v3 round-trip; import remaps to the new project.
+    project_id: uuid.UUID | None = None
     irr_hurdle_pct: Decimal | None = None
     lp_split_pct: Decimal = Decimal("0")
     gp_split_pct: Decimal = Decimal("0")
@@ -421,6 +433,15 @@ class DrawSourceBase(BaseModel):
     active_to_offset_days: int = 0
     total_commitment: Decimal | None = None
     capital_module_id: uuid.UUID | None = None
+
+
+class DrawSourceRead(DrawSourceBase):
+    """Read/export shape for DrawSource — used by the deal-json-v3 exporter."""
+
+    id: uuid.UUID
+    scenario_id: uuid.UUID
+
+    model_config = ConfigDict(from_attributes=True)
 
 
 # ---------------------------------------------------------------------------

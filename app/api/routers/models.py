@@ -55,6 +55,7 @@ from app.schemas.deal import (
     OperationalInputsBase,
     OperationalInputsRead,
     OperationalOutputsRead,
+    USE_LINE_ENGINE_OWNED_FIELDS,
     UseLineCreate,
     UseLineRead,
     UseLineUpdate,
@@ -312,6 +313,10 @@ async def upsert_operational_inputs(
     ).scalar_one_or_none()
 
     payload_data = payload.model_dump(exclude_unset=True)
+    # Engine-owned: noi_auto_seeded is set by the KNN comp auto-seed path and
+    # cleared by the NOI form handler. It lives on OperationalInputsBase only
+    # for deal-json-v3 round-trip fidelity — never writable via the public API.
+    payload_data.pop("noi_auto_seeded", None)
     if inputs is None:
         inputs = OperationalInputs(project_id=project.id, **payload_data)
         session.add(inputs)
@@ -538,7 +543,12 @@ async def create_use_line(
 ) -> UseLine:
     await _get_deal_or_404(session, model_id)
     project = await _get_default_project_for_deal(session, model_id)
-    use_line = UseLine(project_id=project.id, **payload.model_dump())
+    # Engine-owned fields (is_auto_*, dev_fee_binding_context) exist on
+    # UseLineBase only for round-trip fidelity — strip from the public API.
+    use_line = UseLine(
+        project_id=project.id,
+        **payload.model_dump(exclude=USE_LINE_ENGINE_OWNED_FIELDS),
+    )
     session.add(use_line)
     await session.flush()
     await session.refresh(use_line)
