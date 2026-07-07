@@ -340,6 +340,32 @@ function dfeeAddReleaseRow() {
       {% endfor %}
     </select>
   </div>
+
+  {# ── Funding Source whitelist (use_lines.eligible_module_ids) ──
+     Use-level whitelist wins outright over Source-level category tags in
+     routing (app/engines/source_routing.py). All unchecked = permissive
+     (any Source may fund this Use). #}
+  {% if eligible_source_modules %}
+  <div class="form-field">
+    <input type="hidden" name="eligible_module_ids_section" value="1">
+    <label class="form-label">Funding Sources
+      <span style="font-weight:400;font-size:11px;color:var(--text-muted)">(optional — check Sources allowed to fund this Use)</span>
+    </label>
+    <div class="form-hint" style="margin-bottom:6px">
+      If checked, only the selected Sources may fund this Use. Leave all unchecked to allow any Source.
+    </div>
+    <div id="ul-source-whitelist" style="display:flex;flex-direction:column;gap:6px;max-height:200px;overflow:auto;padding:4px 0">
+      {% for m in eligible_source_modules %}
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer">
+        <input type="checkbox" name="eligible_module_ids" value="{{ m.id }}"
+               {% if m.ticked %}checked{% endif %}>
+        <span>{{ m.label }} <span style="color:var(--text-muted);font-size:11px">— {{ m.vehicle_type_label }}</span></span>
+      </label>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
   <div class="form-actions">
     <button type="submit" class="btn btn-primary">Save Changes</button>
     <button type="button" class="btn btn-secondary" onclick="closeDrawer('line-item-drawer')">Cancel</button>
@@ -1012,7 +1038,7 @@ function ulTimingChanged(val) {
 </div>
 {%- endmacro %}
 
-{%- macro permanent_debt_fields(term_val, rate_val, cp_val, stack_val, hold_val='') %}
+{%- macro permanent_debt_fields(term_val, rate_val, cp_val, stack_val, hold_val='', dscr_val='') %}
 <div class="form-row" style="margin-bottom:12px">
   {# Amortization is only meaningful when the loan runs to maturity.  The
      edit-form JS below hides this field when Exit Vehicle != 'maturity'. #}
@@ -1045,6 +1071,12 @@ function ulTimingChanged(val) {
       <option value="{{ cp }}" {% if cp_val == cp %}selected{% endif %}>{{ cp | replace('_',' ') | title }}</option>
       {% endfor %}
     </select>
+  </div>
+  <div class="form-field">
+    <label class="form-label">DSCR Min <span style="font-weight:400;font-size:11px;color:var(--text-muted)">sizing floor</span></label>
+    <input class="form-input" type="number" name="dscr_min" step="0.01" min="0" max="5"
+           value="{{ dscr_val }}" placeholder="1.25">
+    <div class="form-hint">Lender's minimum DSCR — caps principal in DSCR-capped / dual-constraint sizing. Blank = default.</div>
   </div>
 </div>
 {%- endmacro %}
@@ -1392,6 +1424,34 @@ function ulTimingChanged(val) {
   </script>
   {% endif %}
 
+  {# ── Use Category Eligibility (eligible_use_tags routing whitelist) ──
+     Restricts which Use cost categories this Source may fund during
+     gap-fill routing (app/engines/source_routing.py). All unchecked =
+     permissive (funds any category). Options derive from the canonical
+     USE_COST_CATEGORIES context — do not hardcode values here. #}
+  {% if _ft != 'float_earnings' and use_cost_categories %}
+  <div class="form-section" style="margin-bottom:16px">
+    <input type="hidden" name="eligible_use_tags_section" value="1">
+    <div class="form-section-title">Use Category Eligibility
+      <span style="font-weight:400;font-size:11px;color:var(--text-muted)">(optional — check cost categories this Source may fund)</span>
+    </div>
+    <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">
+      If checked, this Source funds only Uses in the selected categories.
+      Leave all unchecked to allow any Use.
+    </div>
+    {%- set _cur_tags = existing.eligible_use_tags or [] -%}
+    <div style="display:flex;gap:16px;flex-wrap:wrap;padding:4px 0">
+      {% for _uc in use_cost_categories %}
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer">
+        <input type="checkbox" name="eligible_use_tags" value="{{ _uc }}"
+               {% if _uc in _cur_tags %}checked{% endif %}>
+        <span>{{ use_category_labels.get(_uc, _uc | title) }}</span>
+      </label>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
   {% if _show_exit %}
   {#- LTV/LTC cap per loan — engine applies against the per-loan basis at
       compute time.  Leave blank to disable the cap for this source. -#}
@@ -1533,7 +1593,8 @@ function ulTimingChanged(val) {
         existing.source.interest_rate_pct if existing.source and existing.source.get('interest_rate_pct') else '',
         existing.source.compounding_period if existing.source and existing.source.get('compounding_period') else 'monthly',
         existing.stack_position if existing.stack_position else 1,
-        existing.source.hold_term_years if existing.source and existing.source.get('hold_term_years') else ''
+        existing.source.hold_term_years if existing.source and existing.source.get('hold_term_years') else '',
+        existing.source.dscr_min if existing.source and existing.source.get('dscr_min') is not none else ''
     ) }}
     {{ finance_cost_field(
         existing.source.finance_cost_pct if existing.source and existing.source.get('finance_cost_pct') is not none else ''
@@ -1982,6 +2043,11 @@ function ulTimingChanged(val) {
         <input class="form-input" type="number" name="stack_position" step="1" min="1"
                value="" placeholder="1">
       </div>
+      <div class="form-field">
+        <label class="form-label">DSCR Min <span style="font-weight:400;font-size:10px;color:var(--text-muted)">sizing floor</span></label>
+        <input class="form-input" type="number" name="dscr_min" step="0.01" min="0" max="5"
+               value="" placeholder="1.25">
+      </div>
     </div>
     <div class="form-row" style="margin-bottom:12px">
       <div class="form-field">
@@ -2385,6 +2451,7 @@ function ulTimingChanged(val) {
     setVal('ltv_pct', d.ltv_pct);
     setVal('amort_term_years', d.amort_term_years);
     setVal('hold_term_years', d.hold_term_years);
+    setVal('dscr_min', d.dscr_min);
     // Store carry state for re-application when step 4 becomes visible (_show resets DOM).
     var _swFrm = document.getElementById('sw-form');
     if (_swFrm) {

@@ -67,6 +67,10 @@ async def save_capital_module(
         source_d["prepay_penalty_pct"] = float(ppct)
     if ltv := _fd(form.get("ltv_pct")):
         source_d["ltv_pct"] = float(ltv)
+    # Per-loan DSCR floor for debt sizing. Engine precedence:
+    # source.dscr_min → debt_terms staging → PLACEHOLDER_DSCR (1.25).
+    if dscr_min := _fd(form.get("dscr_min")):
+        source_d["dscr_min"] = float(dscr_min)
     if draw_type_raw := (form.get("draw_type") or "").strip():
         source_d["draw_type"] = draw_type_raw if draw_type_raw in ("draw_down", "fully_drawn") else None
     # Float-earnings on Day-1 draws — opt-in flag on parent source.
@@ -276,6 +280,15 @@ async def save_capital_module(
         if (_notes := (form.get("fee_terms_notes") or "").strip()):
             _ft_dict["notes"] = _notes
 
+    # Source-Use routing tags (cost-category whitelist; empty = permissive).
+    # Hidden sentinel `eligible_use_tags_section` marks forms that render the
+    # tag editor — forms without it (wizard steps, legacy posts) leave the
+    # column untouched so an edit elsewhere can't silently wipe the tags.
+    _tags_section_present = form.get("eligible_use_tags_section") == "1"
+    _use_tags = [
+        t for t in ((s or "").strip() for s in form.getlist("eligible_use_tags")) if t
+    ]
+
     data = {
         "label": form.get("label", ""),
         "vehicle_type": _vehicle_type,
@@ -287,6 +300,8 @@ async def save_capital_module(
         "active_phase_end": _derived_end_phase,
         "source_vehicle_id": _sv_uuid,
     }
+    if _tags_section_present:
+        data["eligible_use_tags"] = _use_tags
     if _ft_section_present:
         data["fee_terms"] = _ft_dict
         data["fee_terms_inherited_from_type"] = _ft_inherited
@@ -451,6 +466,14 @@ async def save_capital_module(
             _module_uuid_for_sync = None
     else:
         _module_uuid_for_sync = _cm_id if "_cm_id" in locals() else None
+
+    # Sync only runs for fixed-amount vehicle types — the only forms that
+    # render the `eligible_use_ids` checklist. Debt (etc.) forms never post
+    # the field, so running the removal pass for them would silently strip
+    # this module from use-side whitelists set via the Use-line form.
+    _FIXED_AMOUNT_VTS = ("grant", "forgivable_loan", "tax_credit", "equity")
+    if _vehicle_type not in _FIXED_AMOUNT_VTS:
+        _module_uuid_for_sync = None
 
     if _module_uuid_for_sync is not None:
         _raw_ids = form.getlist("eligible_use_ids")

@@ -1760,6 +1760,35 @@ async def model_builder_line_form(
                 "milestone_type": _ms_key,
             })
 
+    # Use-line edit form: Funding Source whitelist picker (eligible_module_ids).
+    # Lists the scenario's CapitalModules (minus float_earnings, which are
+    # never Use funders) with tick state from the Use's saved whitelist.
+    _eligible_source_modules: list[dict] = []
+    if (
+        type in ("use_lines", "uses")
+        and existing is not None
+        and not getattr(existing, "is_auto_dev_fee", False)
+        and not getattr(existing, "is_auto_acquisition_fee", False)
+        and not getattr(existing, "is_auto_finance_cost", False)
+    ):
+        _ul_ticked_ids = {str(x) for x in (getattr(existing, "eligible_module_ids", None) or [])}
+        _ul_cm_rows = (await session.execute(
+            select(CapitalModule)
+            .where(CapitalModule.scenario_id == model_id)
+            .order_by(CapitalModule.stack_position.asc(), CapitalModule.label.asc())
+        )).scalars().all()
+        for _cm in _ul_cm_rows:
+            _cm_vt = str(_cm.vehicle_type or "").replace("VehicleType.", "")
+            if _cm_vt == "float_earnings":
+                continue
+            _eligible_source_modules.append({
+                "id": str(_cm.id),
+                "label": _cm.label or "(unlabeled)",
+                "vehicle_type": _cm_vt,
+                "vehicle_type_label": _cm_vt.replace("_", " ").title(),
+                "ticked": str(_cm.id) in _ul_ticked_ids,
+            })
+
     has_acquisition_costs = False
     if type in ("use_lines", "uses") and existing is not None:
         _acq_count = (await session.execute(
@@ -1853,6 +1882,7 @@ async def model_builder_line_form(
         "use_category_presets": USE_CATEGORY_PRESETS,
         "source_vehicles": _sv_list,
         "eligibility_uses": _eligibility_uses,
+        "eligible_source_modules": _eligible_source_modules,
         "sibling_capital_modules": _sibling_capital_modules,
         "scenario_milestones": _scenario_milestones,
         "basis_buckets": BASIS_BUCKETS,
