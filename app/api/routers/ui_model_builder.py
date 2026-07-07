@@ -167,6 +167,44 @@ _ITEM_TYPE_TO_MODULE: dict[str, str] = {
     "unit-mix": "property",
 }
 
+# Capital-module Gantt: active_phase_* → ordered candidate (milestone_key,
+# side) tuples. side="end" means the phase begins when that milestone
+# completes; side="start" when it starts. The first candidate present on the
+# deal's timeline wins, so a phase like "construction" resolves against
+# whichever work-phase milestone the project actually uses. Keys must stay
+# within app.schemas.vocab.ACTIVE_PHASE_KEYS (contract-tested).
+_CM_PHASE_TO_MS: dict[str, list[tuple[str, str]]] = {
+    "acquisition":          [("close", "end"), ("under_contract", "end"), ("offer_made", "end")],
+    "pre_development":      [("pre_development", "start"), ("close", "end")],
+    "pre_construction":     [("pre_development", "start"), ("close", "end")],
+    "construction":         [
+        ("construction", "start"),
+        ("minor_renovation", "start"),
+        ("major_renovation", "start"),
+        ("renovation", "start"),
+        ("conversion", "start"),
+        ("close", "end"),  # fallback: construction begins right after close
+    ],
+    "lease_up":             [
+        ("operation_lease_up", "start"),
+        ("construction", "end"),
+        ("minor_renovation", "end"),
+        ("major_renovation", "end"),
+        ("close", "end"),
+    ],
+    "operation_lease_up":   [("operation_lease_up", "start")],
+    "stabilized":           [
+        ("operation_stabilized", "start"),
+        ("operation_lease_up", "end"),
+    ],
+    "operation_stabilized": [("operation_stabilized", "start")],
+    "exit":                 [("divestment", "start"), ("operation_stabilized", "end")],
+    "divestment":           [("divestment", "start"), ("operation_stabilized", "end")],
+    # Legacy value written by the pre-cleanup wizard — treat as "runs
+    # through divestment" so the bar renders to the far right.
+    "perpetuity":           [("divestment", "start"), ("operation_stabilized", "end")],
+}
+
 
 
 from app.utils.form_helpers import _fp
@@ -843,55 +881,8 @@ async def _load_builder_data(session: AsyncSession, model_id: UUID, project_id: 
     # phase is set the bar extends to the right edge with a fade-out (perpetuity
     # convention for equity / permanent debt). Zero-amount modules are hidden
     # unless explicitly auto-sized (placeholder dashed bar).
-    #
-    # Phase → (milestone_key, side) mapping:
-    # - side="end": the phase begins when that milestone *completes* (e.g.
-    #   "acquisition" phase starts when the Close milestone ends — money
-    #   changes hands at the end of the closing process).
-    # - side="start": the phase begins when that milestone *starts* (e.g.
-    #   "construction" phase starts at Construction milestone start).
-    # Phase → ordered list of candidate (milestone_key, side) tuples.  The
-    # first candidate whose milestone is actually on this deal's timeline is
-    # used.  This lets a single phase like "construction" resolve against
-    # whichever work-phase milestone the project uses: `construction` for new
-    # construction, `minor_renovation` / `major_renovation` for acq-reno
-    # deals, `conversion` for conversions, etc.
-    # Each candidate list walks from the ideal match to progressively looser
-    # fallbacks, so a bar still resolves when the exact milestone isn't on
-    # this deal's timeline.  Example: an acq-minor-reno deal may have no
-    # `construction` or `minor_renovation` milestone — "construction" phase
-    # then falls back to `close.end` (construction starts right after close).
-    _CM_PHASE_TO_MS: dict[str, list[tuple[str, str]]] = {
-        "acquisition":          [("close", "end"), ("under_contract", "end"), ("offer_made", "end")],
-        "pre_development":      [("pre_development", "start"), ("close", "end")],
-        "pre_construction":     [("pre_development", "start"), ("close", "end")],
-        "construction":         [
-            ("construction", "start"),
-            ("minor_renovation", "start"),
-            ("major_renovation", "start"),
-            ("renovation", "start"),
-            ("conversion", "start"),
-            ("close", "end"),  # fallback: construction begins right after close
-        ],
-        "lease_up":             [
-            ("operation_lease_up", "start"),
-            ("construction", "end"),
-            ("minor_renovation", "end"),
-            ("major_renovation", "end"),
-            ("close", "end"),
-        ],
-        "operation_lease_up":   [("operation_lease_up", "start")],
-        "stabilized":           [
-            ("operation_stabilized", "start"),
-            ("operation_lease_up", "end"),
-        ],
-        "operation_stabilized": [("operation_stabilized", "start")],
-        "exit":                 [("divestment", "start"), ("operation_stabilized", "end")],
-        "divestment":           [("divestment", "start"), ("operation_stabilized", "end")],
-        # Legacy value written by the pre-cleanup wizard — treat as "runs
-        # through divestment" so the bar renders to the far right.
-        "perpetuity":           [("divestment", "start"), ("operation_stabilized", "end")],
-    }
+    # Phase → milestone mapping lives in the module-level _CM_PHASE_TO_MS
+    # (hoisted so the vocab contract test can import it).
     _cm_gantt_rows: list[dict] = []
     _bgd_cm = _builder_gantt_from_milestones(default_project, milestones)
     if _bgd_cm and capital_modules:

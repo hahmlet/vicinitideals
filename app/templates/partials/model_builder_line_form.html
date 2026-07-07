@@ -941,6 +941,7 @@ function ulTimingChanged(val) {
 {%- set _FT_LABELS = {
   'debt':'Debt','equity':'Equity','forgivable_loan':'Forgivable Loan','grant':'Grant',
   'float_earnings':'Float Earnings (T-Bond Yield)',
+  'deferred_developer_fee':'Deferred Developer Fee',
   'permanent_debt':'Permanent Debt','senior_debt':'Senior Debt','mezzanine_debt':'Mezzanine Debt',
   'bridge':'Bridge Loan','construction_loan':'Construction Loan',
   'acquisition_loan':'Acquisition Loan','pre_development_loan':'Pre-Development Loan',
@@ -949,11 +950,12 @@ function ulTimingChanged(val) {
   'owner_loan':'Owner Loan','owner_investment':'Owner Investment',
   'tax_credit':'Tax Credit','other':'Other',
 } -%}
-{#- CANONICAL SOURCE VEHICLE TYPE LIST — keep in sync with ALL of:
-   settings_user.html (_vt_labels)
-   settings_organization.html (_vt_labels_org)
-   app/api/routers/ui.py (_VEHICLE_TYPE_LABELS)
-   When adding a new VehicleType, update all four locations. -#}
+{#- CANONICAL SOURCE VEHICLE TYPE LIST — canonical source is VehicleType in
+   app/models/capital.py (exposed via app/schemas/vocab.py VEHICLE_TYPES).
+   Kept in sync with settings_user.html (_vt_labels),
+   settings_organization.html (_vt_labels_org),
+   app/api/routers/ui_settings.py (_VEHICLE_TYPE_LABELS), and
+   partials/vehicle_form.html — enforced by tests/contract/test_vocab_sync.py. -#}
 {%- set _ALL_TYPES = ['debt','equity','forgivable_loan','grant','deferred_developer_fee','float_earnings'] -%}
 {%- set _SIMPLE_TYPES = ['grant','forgivable_loan'] -%}
 {%- set _EXIT_VEHICLE_TYPES = ['debt'] -%}
