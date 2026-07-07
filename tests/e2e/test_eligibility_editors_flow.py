@@ -80,12 +80,26 @@ def _add_debt(page: Page, label: str, rate: str = "6.50") -> None:
     page.wait_for_selector("#sw-step-5", state="visible", timeout=5_000)
     page.click("#sw-next")
     wait_for_htmx(page)
+    # The wizard overlay intercepts pointer events until dismissed — wait for
+    # it to hide before callers click the new row (mirrors _add_use).
+    page.wait_for_function(
+        "() => { const o = document.getElementById('source-wizard-overlay');"
+        " return !o || getComputedStyle(o).display === 'none'; }",
+        timeout=8_000,
+    )
     row = page.locator(f"tr:has(td:has-text('{label}'))").first
     row.wait_for(state="attached", timeout=10_000)
 
 
 def _open_edit_drawer(page: Page, label: str, ready_selector: str) -> None:
     """Click the row for `label` and wait for its drawer form to render."""
+    # The add-source wizard (and a prior save) can leave #line-item-drawer
+    # open; its .drawer-overlay intercepts pointer events over the table.
+    # Close it the same way the × button does before clicking the row.
+    page.evaluate(
+        "() => { const d = document.getElementById('line-item-drawer');"
+        " if (d && getComputedStyle(d).display !== 'none') d.style.display = 'none'; }"
+    )
     row = page.locator(f"tr:has(td:has-text('{label}'))").first
     row.click()
     page.wait_for_selector("#line-item-drawer", timeout=5_000)
@@ -119,6 +133,10 @@ def test_debt_drawer_dscr_min_and_tags_roundtrip(
         f"New debt source should have a blank DSCR Min; got {dscr_in.input_value()!r}"
     )
     dscr_in.fill("1.35")
+
+    # hold_term_years is `required` on the debt edit form and wizard-created
+    # sources leave it blank — an empty value silently blocks form submit.
+    page.fill('#line-item-drawer input[name="hold_term_years"]', "10")
 
     # Tag editor: all unchecked by default (permissive). Restrict to hard costs.
     tag_boxes = page.locator('#line-item-drawer input[name="eligible_use_tags"]')
@@ -170,6 +188,8 @@ def test_debt_drawer_unchecking_tags_reverts_to_permissive(
 
     _add_debt(page, "Senior Loan TC")
     _open_edit_drawer(page, "Senior Loan TC", '#line-item-drawer input[name="dscr_min"]')
+    # Required on the debt form; blank silently blocks submit (see test 1).
+    page.fill('#line-item-drawer input[name="hold_term_years"]', "10")
     page.locator(
         '#line-item-drawer input[name="eligible_use_tags"][value="soft"]'
     ).check()
