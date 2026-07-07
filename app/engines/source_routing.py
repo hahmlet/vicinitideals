@@ -6,7 +6,7 @@ Non-empty whitelist activates matching: a source is eligible for a use
 when either the source's eligible_use_tags OR the use's eligible_module_ids
 is non-empty and the source/use ID is in that list.
 
-Routing order: stable sort on (waterfall_position, cost_of_capital, source_id).
+Routing order: stable sort on (stack_position, id).
 """
 from __future__ import annotations
 
