@@ -52,6 +52,13 @@ FastAPI 0.110+ (Python 3.12+) · SQLAlchemy 2.0 async + asyncpg · Alembic · Ce
 
 Deploy script runs: `git pull → docker compose build → alembic upgrade head → docker compose up -d → health check`
 
+**Pre-deploy self-check (non-trivial financial-engine changes).** Deploys are unattended and go straight to production money math, so before deploying a change to `app/engines/`, state plainly:
+1. The user-visible behavior that changed.
+2. Which invariant could break (Sources = Uses, DSCR parity, carry-type round-trip).
+3. The test that proves it still holds — and confirm that test passed.
+
+If you can't answer all three, you have an open unknown that shouldn't go live. Skip this gate for docs/template/config-only changes.
+
 **Manual fallback** (if MCP unavailable):
 ```bash
 # SSH to VM 114 directly
@@ -69,6 +76,15 @@ Primary checkout (`c:\Users\Steph\Repos\vicinitideals`) stays on `main`. Branche
 **When to use worktree:**
 - **Bug fixes, small tweaks, doc edits, config changes** → work on `main` in primary checkout. No worktree.
 - **New features, refactors, risky changes** → **confirm with user first** before creating worktree. Don't start branched work in primary checkout.
+
+**Surface unknowns before you build.** When Claude hits a gap between your instructions (the map) and what you actually want (the territory), it guesses — and on money math a wrong guess ships to prod. For features and refactors, close the gaps up front:
+
+- **Interview first, one question at a time.** Before starting a feature/refactor, ask clarifying questions ordered by architectural impact — highest-impact first, one per turn — and record the answers as a short decision list the plan references. Don't batch ten questions at once or silently assume a default on a load-bearing choice.
+- **Plans lead with volatile decisions, not chronology.** Order the plan by what's most likely to change: data models, field names, JSONB schema shapes (`source`/`carry`/`exit_terms`), and API contracts first; mechanical wiring last. A naming or schema decision (e.g. canonical `vehicle_type`/`equity_role` vs. legacy `funder_type`) belongs at the top of the plan for review, not discovered mid-implementation.
+- **Keep implementation notes for engine/migration work.** For changes to `app/engines/` or Alembic migrations, maintain a running log of assumptions, deviations, and surprises as you go, and surface it in the commit/PR body (feeds the end-of-session "decisions not captured in commit messages" item).
+- **Blindspot pass before unfamiliar high-complexity code.** Before modifying an engine you haven't touched recently (`cashflow.py` ~1800 lines, `waterfall.py`, `draw_schedule.py`), do a read-only pass first — check `docs/Troubleshooting/`, `git log` for the file, and its `tests/engines/` cases to surface invariants, edge cases, and historical pitfalls before writing code.
+
+**Convert unknown-knowns into written knowns.** When a session surfaces an implicit convention that wasn't written down anywhere (an "obvious to us, invisible to Claude" rule), add it to this file — Coding Conventions, Known Issues, or the relevant section. Every session should shrink the gap between what the team assumes and what the instructions actually say.
 
 **Per-worktree setup** (from primary):
 ```bash
@@ -105,6 +121,7 @@ When user indicates session ending, run through before closing:
    - [docs/PROJECT_OVERVIEW.md](docs/PROJECT_OVERVIEW.md) — overall architecture
 
    Don't write doc updates every commit — only when behavior, schema, or invariants changed.
+5. **Capture surfaced unknown-knowns** — if the session revealed an implicit convention, invariant, or gotcha that wasn't written down, add it to `CLAUDE.md` (Coding Conventions / Known Issues) so the next session starts with it as a known.
 
 ---
 
