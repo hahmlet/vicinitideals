@@ -78,6 +78,7 @@ from app.engines.underwriting_rollup import (
 from app.models.capital import (
     CapitalModule,
     CapitalModuleProject,
+    DrawSource,
     WaterfallResult,
     WaterfallTier,
 )
@@ -154,6 +155,7 @@ async def export_investor_workbook(
     _HAS_RETURNS   = {"internal", "lp"}              # Investor Returns + Waterfall
     _HAS_UNIT_MIX  = {"internal", "lp", "lender"}
     _HAS_DEBT      = {"internal", "lender"}          # Debt Schedule
+    _HAS_DRAWS     = {"internal", "lender"}          # Draw Schedule (monthly funding)
     # Every profile that renders S&U needs Assumptions too: S&U Sources
     # rows emit ``=s_<slug>_principal`` formulas and the new Operating
     # Reserve UseLine emits ``=s_operating_reserve_months*...``. Those
@@ -196,6 +198,15 @@ async def export_investor_workbook(
     if _profile in _HAS_DEBT:
         debt_schedule = wb.create_sheet("Debt Schedule")
         _build_debt_schedule(debt_schedule, registry, ctx)
+
+    # Draw Schedule empty-state convention: unlike the Waterfall sheet
+    # (which renders placeholder rows when tiers are missing), this sheet
+    # is skipped entirely when the scenario has no DrawSource rows — a
+    # funding matrix with zero sources carries no information for a
+    # lender, and absence reads correctly as "no draw facility modeled".
+    if _profile in _HAS_DRAWS and ctx["draw_sources"]:
+        draw_ws = wb.create_sheet("Draw Schedule")
+        _build_draw_schedule(draw_ws, registry, ctx)
 
     if _profile in _HAS_ASSUMPT:
         assumptions = wb.create_sheet("Assumptions")
@@ -410,6 +421,35 @@ async def _load_all(session: AsyncSession, scenario_id: UUID) -> dict | None:
             ).scalars()
         )
 
+    # ── Draw schedule (lender funding schedule) ────────────────────────────
+    # Reuses the draw-schedule panel's engine path
+    # (ui_model_outputs._run_draw_schedule) so the workbook shows the exact
+    # month-by-month schedule the UI renders — including the panel's
+    # DrawSource ↔ CapitalModule reconciliation (idempotent; a no-op on
+    # healthy data, and the same reconciliation every panel load performs).
+    # Function-level import: the router imports this module lazily too, so
+    # a top-level import would risk a cycle. Any failure degrades to
+    # ``draw_schedule=None`` — the Draw Schedule sheet then renders the
+    # source roster without the monthly draw matrix.
+    draw_schedule = None
+    try:
+        from app.api.routers.ui_model_outputs import _run_draw_schedule
+
+        draw_schedule = await _run_draw_schedule(session, scenario_id)
+    except Exception:
+        draw_schedule = None
+    # Load DrawSource rows AFTER the engine run — reconciliation inside
+    # _run_draw_schedule may have backfilled or pruned rows.
+    draw_sources = list(
+        (
+            await session.execute(
+                select(DrawSource)
+                .where(DrawSource.scenario_id == scenario_id)
+                .order_by(DrawSource.sort_order)
+            )
+        ).scalars()
+    )
+
     # ── Cashflow / waterfall / rollup data (commit 2) ──────────────────────
     # Per-project cashflow + line items so the UW Pro Forma / Cash Flow
     # sheets can aggregate to annual buckets and the Investor Returns sheet
@@ -501,6 +541,8 @@ async def _load_all(session: AsyncSession, scenario_id: UUID) -> dict | None:
         "capital_modules": capital_modules,
         "module_slugs": _compute_module_slugs(capital_modules),
         "junctions": junctions,
+        "draw_sources": draw_sources,
+        "draw_schedule": draw_schedule,
         "cash_flows": cash_flows_by_project,
         "cash_flow_items": cash_flow_items_by_project,
         "outputs": outputs_by_project,
@@ -5074,6 +5116,229 @@ def _build_debt_schedule(ws, registry: CellRegistry, ctx: dict) -> None:
     _build_c2p_status_block(ws, registry, ctx, debt_modules, start_row=cur_row + 2)
 
     freeze_top(ws, row=3)
+    print_landscape(ws)
+
+
+def _build_draw_schedule(ws, registry: CellRegistry, ctx: dict) -> None:
+    """Draw Schedule — month-by-month funding matrix, grouped by capital module.
+
+    Lender package sheet ("lenders often want a month-by-month funding
+    schedule"). Two sections:
+
+      Monthly Funding Matrix: one row per DrawSource (grouped under its
+      CapitalModule in capital-stack order), one column per calendar month
+      of the draw window. Cells are the engine's ``total_draw`` for that
+      source/month (uses funded + prior-source payoff + carry). A Total
+      Drawn SUM column closes each row; a Monthly Total row and a
+      Cumulative Drawn row close each column.
+
+      Source Summary: per-source aggregates (draw count, total drawn,
+      carry cost, commitment, active window) from the engine's
+      SourceSummary rows.
+
+    The matrix is a static snapshot of the draw-schedule engine output
+    (values, not formulas) — re-sizing draws requires the engine's
+    self-referential solve, which Excel can't replicate with a PMT-style
+    formula. Totals are plain SUM formulas over cell ranges. No named
+    ranges are registered here, so nothing feeds the doc-driven Glossary
+    (keeps the _doc_validator contract untouched).
+
+    Empty-state convention: the caller skips this sheet entirely when the
+    scenario has no DrawSource rows (contrast with the Waterfall sheet's
+    placeholder rows — an empty funding matrix carries no information for
+    a lender). When sources exist but the engine couldn't produce a
+    schedule (e.g. milestones lack dates), the sheet renders the source
+    roster plus a hint instead of the monthly matrix.
+    """
+    from openpyxl.utils import get_column_letter
+
+    draw_sources: list[DrawSource] = ctx["draw_sources"]
+    schedule = ctx.get("draw_schedule")
+    capital_modules: list[CapitalModule] = ctx["capital_modules"]
+    module_by_id = {m.id: m for m in capital_modules}
+
+    # Group sources under their module in capital-stack order; sources with
+    # no surviving module link (shouldn't happen post-reconciliation, but
+    # be graceful) sort last under their own sort_order.
+    module_order = {m.id: i for i, m in enumerate(capital_modules)}
+    sources_sorted = sorted(
+        draw_sources,
+        key=lambda ds: (
+            module_order.get(ds.capital_module_id, len(module_order)),
+            ds.sort_order or 0,
+        ),
+    )
+
+    def _module_label(ds: DrawSource) -> str:
+        module = module_by_id.get(ds.capital_module_id)
+        if module is None:
+            return "(no linked module)"
+        return module.label or _funder_type_label(module)
+
+    # ── Roster fallback: sources exist but no computed schedule ───────────
+    events_by_source: dict[str, list] = {}
+    if schedule is not None:
+        events_by_source = schedule.by_source or {}
+    all_events = [e for evs in events_by_source.values() for e in evs]
+
+    if not all_events:
+        set_widths(ws, [26, 26, 10, 14, 16])
+        section_label(ws, 1, "Draw Schedule — Funding Sources", span_cols=5)
+        header_row(ws, 2, ["Capital Module", "Source", "Type",
+                           "Cadence (mo)", "Commitment"])
+        cur_row = 3
+        for ds in sources_sorted:
+            ws.cell(row=cur_row, column=1, value=_module_label(ds)).font = FONT_VALUE
+            ws.cell(row=cur_row, column=2, value=ds.label).font = FONT_VALUE
+            ws.cell(row=cur_row, column=3, value=(ds.source_type or "").title()).font = FONT_VALUE
+            ws.cell(row=cur_row, column=4, value=int(ds.draw_every_n_months or 1)).font = FONT_VALUE
+            commitment = _coerce_decimal(ds.total_commitment)
+            cell = ws.cell(
+                row=cur_row, column=5,
+                value=commitment if commitment is not None else _DASH,
+            )
+            if commitment is not None:
+                cell.number_format = ACCOUNTING
+            cell.font = FONT_VALUE
+            cell.alignment = ALIGN_RIGHT
+            cur_row += 1
+        cur_row += 1
+        hint = ws.cell(
+            row=cur_row, column=1,
+            value=("(monthly draw matrix populates once the timeline has dated "
+                   "milestones and the draw schedule is computed in the app)"),
+        )
+        hint.font = FONT_HINT
+        freeze_top(ws, row=3)
+        print_landscape(ws)
+        return
+
+    # ── Monthly Funding Matrix ────────────────────────────────────────────
+    first_dt = min(e.draw_date for e in all_events)
+    last_dt = max(e.draw_date for e in all_events)
+    months: list[_date] = []
+    cur = _date(first_dt.year, first_dt.month, 1)
+    end = _date(last_dt.year, last_dt.month, 1)
+    while cur <= end:
+        months.append(cur)
+        cur = _date(cur.year + 1, 1, 1) if cur.month == 12 else _date(cur.year, cur.month + 1, 1)
+
+    n_months = len(months)
+    first_month_col = 4                     # A=Module, B=Source, C=Type
+    total_col = first_month_col + n_months  # Total Drawn column
+    set_widths(ws, [26, 26, 10] + [13] * n_months + [15])
+
+    section_label(ws, 1, "Draw Schedule — Monthly Funding by Source", span_cols=6)
+    header_row(
+        ws, 2,
+        ["Capital Module", "Source", "Type"]
+        + [f"{m:%b %Y}" for m in months]
+        + ["Total Drawn"],
+    )
+
+    # Bucket each source's draws by calendar month.
+    month_index = {m: i for i, m in enumerate(months)}
+
+    first_data_row = 3
+    cur_row = first_data_row
+    prev_module_id = object()  # sentinel so the first row always prints its group
+    for ds in sources_sorted:
+        group_label = _module_label(ds) if ds.capital_module_id != prev_module_id else ""
+        prev_module_id = ds.capital_module_id
+        ws.cell(row=cur_row, column=1, value=group_label).font = FONT_LABEL
+        ws.cell(row=cur_row, column=2, value=ds.label).font = FONT_VALUE
+        ws.cell(row=cur_row, column=3, value=(ds.source_type or "").title()).font = FONT_VALUE
+
+        by_month: dict[int, Decimal] = {}
+        for event in events_by_source.get(str(ds.id), []):
+            bucket = _date(event.draw_date.year, event.draw_date.month, 1)
+            idx = month_index.get(bucket)
+            if idx is None:
+                continue
+            by_month[idx] = by_month.get(idx, Decimal(0)) + Decimal(str(event.total_draw))
+        for idx, amount in by_month.items():
+            cell = ws.cell(row=cur_row, column=first_month_col + idx, value=amount)
+            cell.number_format = ACCOUNTING
+            cell.font = FONT_VALUE
+            cell.alignment = ALIGN_RIGHT
+
+        # Total Drawn — SUM over this row's month cells so the row proves
+        # itself against the Source Summary below.
+        first_l = get_column_letter(first_month_col)
+        last_l = get_column_letter(total_col - 1)
+        cell = ws.cell(
+            row=cur_row, column=total_col,
+            value=f"=SUM({first_l}{cur_row}:{last_l}{cur_row})",
+        )
+        cell.number_format = ACCOUNTING
+        cell.font = FONT_VALUE
+        cell.alignment = ALIGN_RIGHT
+        cur_row += 1
+
+    last_data_row = cur_row - 1
+
+    # Monthly Total row — SUM down each month column + grand total.
+    total_row = cur_row
+    ws.cell(row=total_row, column=1, value="Total").font = FONT_SECTION
+    for col in range(first_month_col, total_col + 1):
+        col_l = get_column_letter(col)
+        cell = ws.cell(
+            row=total_row, column=col,
+            value=f"=SUM({col_l}{first_data_row}:{col_l}{last_data_row})",
+        )
+        cell.number_format = ACCOUNTING
+        cell.font = FONT_SECTION
+        cell.alignment = ALIGN_RIGHT
+    cur_row += 1
+
+    # Cumulative Drawn row — running total of the Monthly Total row.
+    cum_row = cur_row
+    ws.cell(row=cum_row, column=1, value="Cumulative Drawn").font = FONT_LABEL
+    first_l = get_column_letter(first_month_col)
+    for col in range(first_month_col, total_col):
+        col_l = get_column_letter(col)
+        cell = ws.cell(
+            row=cum_row, column=col,
+            value=f"=SUM(${first_l}${total_row}:{col_l}${total_row})",
+        )
+        cell.number_format = ACCOUNTING
+        cell.font = FONT_VALUE
+        cell.alignment = ALIGN_RIGHT
+    cur_row += 2
+
+    # ── Source Summary ────────────────────────────────────────────────────
+    section_label(ws, cur_row, "Source Summary", span_cols=6)
+    cur_row += 1
+    header_row(
+        ws, cur_row,
+        ["Source", "Type", "Active From", "Active To",
+         "Draws", "Total Drawn", "Carry Cost", "Commitment"],
+    )
+    cur_row += 1
+    summaries = list(schedule.source_summaries or [])
+    for summ in summaries:
+        ws.cell(row=cur_row, column=1, value=summ.source_label).font = FONT_VALUE
+        ws.cell(row=cur_row, column=2, value=(summ.source_type or "").title()).font = FONT_VALUE
+        for col, dt in ((3, summ.active_from), (4, summ.active_to)):
+            cell = ws.cell(row=cur_row, column=col, value=dt.date() if dt else None)
+            cell.number_format = DATE_FMT
+            cell.font = FONT_VALUE
+        ws.cell(row=cur_row, column=5, value=int(summ.draw_count or 0)).font = FONT_VALUE
+        for col, amount in (
+            (6, summ.total_drawn),
+            (7, summ.total_carry_cost),
+            (8, summ.total_commitment),
+        ):
+            cell = ws.cell(row=cur_row, column=col, value=_coerce_decimal(amount))
+            cell.number_format = ACCOUNTING
+            cell.font = FONT_VALUE
+            cell.alignment = ALIGN_RIGHT
+        cur_row += 1
+
+    # Freeze the two header rows AND the Module/Source/Type columns so the
+    # month matrix scrolls under a stable left rail (the Debt Schedule's
+    # freeze_top(row=3) equivalent, extended for the wide-matrix layout).
+    ws.freeze_panes = f"{get_column_letter(first_month_col)}{first_data_row}"
     print_landscape(ws)
 
 
