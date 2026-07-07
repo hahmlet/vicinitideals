@@ -85,6 +85,50 @@ class ExtractedDealInfo(BaseModel):
     )
 
 
+def _suggestion_fields(info: ExtractedDealInfo) -> list[tuple[str, str | None, float]]:
+    """Map extracted deal info to ``(field_path, value, confidence)`` rows.
+
+    Empty/None values are filtered out by the persist step; this returns the
+    full field vocabulary so callers/tests see every path we may suggest.
+    """
+    return [
+        ("address",          info.address,       info.address_confidence),
+        ("acquisition_cost", str(info.asking_price) if info.asking_price else None, info.price_confidence),
+        ("unit_count",       str(info.unit_count) if info.unit_count else None, 0.8),
+        ("property_type",    info.property_type,  0.7),
+        ("broker_name",      info.broker_name,    0.7),
+        ("broker_email",     info.broker_email,   0.7),
+    ]
+
+
+async def _persist_suggestions(
+    session: Any,
+    inbound_email_id: "UUID",
+    info: ExtractedDealInfo,
+) -> int:
+    """Create one EmailDealSuggestion row per non-empty extracted field.
+
+    opportunity_id stays NULL — suggestions are email-scoped until the user
+    creates deals from the review page. Returns the number of rows added.
+    """
+    from app.models.email_ingest import EmailDealSuggestion, SuggestionSourceType
+
+    src = SuggestionSourceType.llm_extraction.value
+    count = 0
+    for field_path, value, conf in _suggestion_fields(info):
+        if value:
+            session.add(EmailDealSuggestion(
+                inbound_email_id=inbound_email_id,
+                opportunity_id=None,
+                field_path=field_path,
+                suggested_value=value,
+                confidence=conf,
+                source_type=src,
+            ))
+            count += 1
+    return count
+
+
 # ---------------------------------------------------------------------------
 # LLM client (same pattern as proforma_parse.py)
 # ---------------------------------------------------------------------------
@@ -434,12 +478,7 @@ async def _fetch_resend_raw_mime(
 
 async def _process_async(inbound_email_id: str, resend_email_id: str) -> None:
     from app.db import AsyncSessionLocal
-    from app.models.email_ingest import (
-        EmailDealSuggestion,
-        InboundEmail,
-        InboundEmailStatus,
-        SuggestionSourceType,
-    )
+    from app.models.email_ingest import InboundEmail, InboundEmailStatus
 
     email_uuid = UUID(inbound_email_id)
     debug_log: list[str] = []
@@ -536,22 +575,10 @@ async def _process_async(inbound_email_id: str, resend_email_id: str) -> None:
             # --- Email-level suggestions (context for the review page) ---
             # opportunity_id is nullable — suggestions are email-scoped here;
             # they get linked to Opportunities when the user creates deals.
-            src = SuggestionSourceType.llm_extraction.value
-            for field_path, value, conf in [
-                ("address",          info.address,       info.address_confidence),
-                ("acquisition_cost", str(info.asking_price) if info.asking_price else None, info.price_confidence),
-                ("unit_count",       str(info.unit_count) if info.unit_count else None, 0.8),
-                ("property_type",    info.property_type, 0.7),
-            ]:
-                if value:
-                    session.add(EmailDealSuggestion(
-                        inbound_email_id=email_row.id,
-                        opportunity_id=None,
-                        field_path=field_path,
-                        suggested_value=value,
-                        confidence=conf,
-                        source_type=src,
-                    ))
+            # Includes broker_name/broker_email so review-submit can
+            # find-or-create a Broker and link it to the Opportunity.
+            n_suggestions = await _persist_suggestions(session, email_row.id, info)
+            debug_log.append(f"Suggestions persisted: {n_suggestions}")
 
             email_row.proforma_task_ids = all_task_ids
             await session.flush()
