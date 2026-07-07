@@ -27,11 +27,10 @@ from app.exporters import (
     DealImportResult,
     DealImportValidationResult,
     export_deal_model_json,
-    export_deal_model_workbook,
     import_deal_model_json,
-    make_export_filename,
     validate_deal_import_payload,
 )
+from app.exporters.investor_export import export_investor_workbook, make_investor_filename
 from app.models.cashflow import CashFlow, CashFlowLineItem, OperationalOutputs
 from app.models.deal import Deal, IncomeStream, OperatingExpenseLine, OperationalInputs, Scenario, UseLine, resolve_opex_annual_amount
 from app.models.manifest import WorkflowRunManifest
@@ -952,10 +951,18 @@ async def import_project_model(
 
 
 @router.get("/models/{model_id}/export/xlsx")
-async def export_model_xlsx(model_id: UUID, session: DBSession) -> Response:
+async def export_model_xlsx(
+    model_id: UUID,
+    session: DBSession,
+    profile: str = "internal",
+) -> Response:
+    """Excel export of the model. ``profile`` picks the sheet set:
+    internal (default, full underwriting), lp, lender, or proforma —
+    unknown values fall back to internal inside the exporter."""
     model = await _get_deal_or_404(session, model_id)
-    workbook_bytes = await export_deal_model_workbook(deal_model_id=model_id, session=session)
-    filename = make_export_filename(model)
+    workbook_bytes = await export_investor_workbook(model_id, session, profile=profile)
+    deal = await session.get(Deal, model.deal_id) if model.deal_id else None
+    filename = make_investor_filename(model, deal, profile=profile)
     return Response(
         content=workbook_bytes,
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",

@@ -5,16 +5,12 @@ lender / sponsor audience. See ``docs/feature-plans/investor-excel-export-v2.md`
 for the full design (sheet order, named-range convention, doc-driven
 glossary, build sequencing).
 
-**Build status.** Commit 1 of the build sequence ships the audit-spine
-sheets (Cover, Assumptions, Glossary). Commits 2/3 add the
-underwriting-rollup sheets (Underwriting Summary, Pro Forma, Cash Flow,
-Investor Returns) and the per-project sheets respectively. Sheet order
-on disk grows toward the §2 final order as those commits land.
-
-**Why this exists alongside ``excel_export.py``.** The round-trip exporter
-is deprecated (see its docstring); it served the importer round-trip use
-case. This module is the LP-facing artifact and is not intended to be
-re-imported.
+This is the ONLY Excel exporter: the legacy round-trip exporter
+(``excel_export.py``) was deleted 2026-07 — its promised re-importer was
+never built, so it carried no capability this module lacks. Both the UI
+download route and ``GET /api/models/{id}/export/xlsx`` serve this
+workbook (profile-selectable). It is not intended to be re-imported;
+canonical round-trip is the JSON export.
 """
 from __future__ import annotations
 

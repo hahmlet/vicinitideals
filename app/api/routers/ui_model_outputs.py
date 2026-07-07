@@ -50,30 +50,6 @@ from app.api.routers.ui_helpers import (
 
 router = APIRouter(include_in_schema=False)
 
-@router.get("/ui/models/{model_id}/export.xlsx")
-async def download_model_export(
-    model_id: UUID,
-    session: DBSession,
-) -> StreamingResponse:
-    """Download a round-trip-capable Excel workbook for this deal model.
-
-    Deprecated path; superseded by ``/investor-export.xlsx``. Kept available
-    while the investor export bakes — see plan §10 in
-    ``docs/feature-plans/investor-excel-export-v2.md``.
-    """
-    from app.exporters.excel_export import export_deal_model_workbook, make_export_filename
-    model = await session.get(Scenario, model_id)
-    if model is None:
-        return HTMLResponse("Not found", status_code=404)
-    workbook_bytes = await export_deal_model_workbook(model_id, session)
-    filename = make_export_filename(model)
-    return StreamingResponse(
-        iter([workbook_bytes]),
-        media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        headers={"Content-Disposition": f"attachment; filename={filename}"},
-    )
-
-
 @router.get("/ui/models/{model_id}/investor-export.xlsx")
 async def download_investor_export(
     model_id: UUID,

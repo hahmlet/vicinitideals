@@ -196,8 +196,6 @@ class CellRegistry:
 def to_excel_value(value: Any) -> Any:
     """Coerce a Python value into something openpyxl will accept cleanly.
 
-    Mirrors the round-trip exporter's ``_to_v`` (excel_export.py:588) so
-    behaviour is consistent across the two exporters during the rollout.
     Returns "" for None so empty cells render as blanks rather than the
     literal string "None".
     """
