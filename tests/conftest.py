@@ -109,6 +109,34 @@ def pytest_collection_finish(session: "pytest.Session") -> None:
         asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
 
+# ---------------------------------------------------------------------------
+# Marker auto-assignment — every collected test gets exactly one suite marker.
+#
+# CI selects with ``-m unit`` / ``-m "unit or integration"``. Historically only
+# ~370 of 1300+ tests carried a marker, so CI silently skipped the rest. Rather
+# than hand-marking every file (and re-leaking the hole with each new file),
+# derive the marker at collection time: anything requesting a DB-backed fixture
+# is integration, tests under tests/e2e/ are e2e, everything else is unit.
+# Explicit markers on a test/file always win.
+# ---------------------------------------------------------------------------
+
+_SUITE_MARKERS = {"unit", "integration", "slow", "e2e"}
+_DB_FIXTURES = {"session", "db_session", "client", "_test_engine", "_test_db_url"}
+
+
+def pytest_collection_modifyitems(config, items):
+    for item in items:
+        if _SUITE_MARKERS & {m.name for m in item.iter_markers()}:
+            continue
+        path = str(item.path).replace("\\", "/")
+        if "/tests/e2e/" in path:
+            item.add_marker(pytest.mark.e2e)
+        elif _DB_FIXTURES & set(getattr(item, "fixturenames", ())):
+            item.add_marker(pytest.mark.integration)
+        else:
+            item.add_marker(pytest.mark.unit)
+
+
 def _swap_database(url: str, new_db: str) -> str:
     """Return ``url`` with its path component replaced by ``/new_db``."""
     parts = urlsplit(url)
@@ -178,12 +206,44 @@ async def _test_engine(_test_db_url: str):
         await engine.dispose()
 
 
+@pytest_asyncio.fixture(scope="session", loop_scope="session")
+async def _rebind_app_db(_test_engine, _test_db_url: str):
+    """Point the app's global engine/session factory at the per-run test DB.
+
+    Middleware (onboarding guard) and task code use ``app.db.AsyncSessionLocal``
+    directly — FastAPI dependency overrides never see those code paths. Without
+    this rebind they connect to ``settings.database_url`` (the Docker-network
+    hostname), which fails DNS resolution outside the compose network and
+    surfaces as 500s in any test that sends a session cookie.
+
+    Deliberately NOT autouse: the ``session`` fixture depends on it, so any
+    DB-touching test gets the rebind, while pure-unit runs (``-m unit``) never
+    provision a Postgres database at all.
+    """
+    import app.db as app_db
+    from app.config import settings
+
+    prior_engine = app_db.engine
+    prior_url = settings.database_url
+
+    app_db.engine = _test_engine
+    app_db.AsyncSessionLocal.configure(bind=_test_engine)
+    settings.database_url = _test_db_url
+
+    try:
+        yield
+    finally:
+        settings.database_url = prior_url
+        app_db.AsyncSessionLocal.configure(bind=prior_engine)
+        app_db.engine = prior_engine
+
+
 # ---------------------------------------------------------------------------
 # Session — function-scoped, rolled back after each test
 # ---------------------------------------------------------------------------
 
 @pytest_asyncio.fixture(loop_scope="session")
-async def session(_test_engine) -> AsyncGenerator[AsyncSession, None]:
+async def session(_test_engine, _rebind_app_db) -> AsyncGenerator[AsyncSession, None]:
     """Yield a fresh async session, then truncate all tables for the next test.
 
     Why truncate-on-teardown instead of transaction rollback: tests in this
