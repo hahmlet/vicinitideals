@@ -2507,18 +2507,11 @@ async def add_draw_source(
     total_commitment: str = Form(""),
 ) -> HTMLResponse:
     """Add a draw source row."""
+    from app.services import draw_sources as _ds_service
+
     model = await session.get(Scenario, model_id)
     if model is None:
         return HTMLResponse("Model not found", status_code=404)
-
-    # Determine next sort_order
-    max_order_row = (await session.execute(
-        select(DrawSource.sort_order)
-        .where(DrawSource.scenario_id == model_id)
-        .order_by(DrawSource.sort_order.desc())
-        .limit(1)
-    )).scalar_one_or_none()
-    next_order = (max_order_row or 0) + 1
 
     commitment = None
     if total_commitment.strip():
@@ -2527,20 +2520,17 @@ async def add_draw_source(
         except Exception:
             commitment = None
 
-    ds = DrawSource(
-        id=_uuid_mod.uuid4(),
-        scenario_id=model_id,
-        sort_order=next_order,
-        label=label.strip(),
+    await _ds_service.create_draw_source(
+        session,
+        model_id,
+        label=label,
         source_type=source_type,
-        draw_every_n_months=max(1, draw_every_n_months),
+        draw_every_n_months=draw_every_n_months,
         annual_interest_rate=Decimal(annual_interest_rate.strip() or "0"),
         active_from_milestone=active_from_milestone,
         active_to_milestone=active_to_milestone,
         total_commitment=commitment,
     )
-    session.add(ds)
-    await session.flush()
 
     ctx = await _load_draw_schedule_ctx(session, model_id)
     ctx["request"] = request
@@ -2556,10 +2546,11 @@ async def delete_draw_source(
     session: DBSession,
 ) -> HTMLResponse:
     """Delete a draw source row."""
-    ds = await session.get(DrawSource, source_id)
-    if ds and ds.scenario_id == model_id:
-        await session.delete(ds)
-        await session.flush()
+    from app.services import draw_sources as _ds_service
+
+    ds = await _ds_service.get_draw_source_for_model(session, model_id, source_id)
+    if ds is not None:
+        await _ds_service.delete_draw_source(session, ds)
     ctx = await _load_draw_schedule_ctx(session, model_id)
     ctx["request"] = request
     ctx["active_module"] = "draw_schedule"
@@ -2706,11 +2697,14 @@ async def update_draw_source_window(
     active_to_milestone: str = Form(...),
 ) -> HTMLResponse:
     """Update the active window (from/to milestone) of a draw source."""
-    ds = await session.get(DrawSource, source_id)
-    if ds and ds.scenario_id == model_id:
-        ds.active_from_milestone = active_from_milestone
-        ds.active_to_milestone = active_to_milestone
-        await session.flush()
+    from app.services import draw_sources as _ds_service
+
+    ds = await _ds_service.get_draw_source_for_model(session, model_id, source_id)
+    if ds is not None:
+        await _ds_service.update_draw_source(session, ds, {
+            "active_from_milestone": active_from_milestone,
+            "active_to_milestone": active_to_milestone,
+        })
     ctx = await _load_draw_schedule_ctx(session, model_id)
     ctx["request"] = request
     ctx["active_module"] = "draw_schedule"

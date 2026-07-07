@@ -435,6 +435,61 @@ class DrawSourceBase(BaseModel):
     capital_module_id: uuid.UUID | None = None
 
 
+class DrawSourceCreate(BaseModel):
+    """REST create shape — scenario comes from the URL path.
+
+    ``sort_order=None`` appends the source after the scenario's current
+    maximum (mirrors the builder UI's Add Source behavior)."""
+
+    project_id: uuid.UUID | None = None
+    sort_order: int | None = None
+    label: str
+    source_type: str = "equity"
+    draw_every_n_months: int = 1
+    annual_interest_rate: Decimal = Decimal("0")
+    active_from_milestone: str
+    active_to_milestone: str
+    active_from_offset_days: int = 0
+    active_to_offset_days: int = 0
+    total_commitment: Decimal | None = None
+    capital_module_id: uuid.UUID | None = None
+
+    model_config = _example_config(
+        {
+            "label": "LP Equity",
+            "source_type": "equity",
+            "draw_every_n_months": 1,
+            "active_from_milestone": "close",
+            "active_to_milestone": "construction",
+            "total_commitment": "2500000",
+        }
+    )
+
+
+class DrawSourceUpdate(BaseModel):
+    """Partial update — only provided fields are applied."""
+
+    project_id: uuid.UUID | None = None
+    sort_order: int | None = None
+    label: str | None = None
+    source_type: str | None = None
+    draw_every_n_months: int | None = None
+    annual_interest_rate: Decimal | None = None
+    active_from_milestone: str | None = None
+    active_to_milestone: str | None = None
+    active_from_offset_days: int | None = None
+    active_to_offset_days: int | None = None
+    total_commitment: Decimal | None = None
+    capital_module_id: uuid.UUID | None = None
+
+    model_config = _example_config(
+        {
+            "active_from_milestone": "construction",
+            "active_to_milestone": "operation_stabilized",
+        }
+    )
+
+
 class DrawSourceRead(DrawSourceBase):
     """Read/export shape for DrawSource — used by the deal-json-v3 exporter."""
 

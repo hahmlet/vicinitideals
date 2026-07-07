@@ -47,6 +47,11 @@ from app.api.routers.ui_model_outputs import (
     _dispatch_proforma_preflight,
     _milestone_label,
 )
+from app.services.milestones import (
+    MilestoneSpec,
+    clear_project_timeline,
+    create_milestone_chain,
+)
 
 router = APIRouter(include_in_schema=False)
 
@@ -57,7 +62,6 @@ async def timeline_wizard_submit(
     session: DBSession,
 ) -> HTMLResponse:
     """Process wizard form: clear seeded milestones, create anchor + selected milestones."""
-    from sqlalchemy import delete as sa_delete
     from datetime import date as _date
 
     proj = await session.get(Project, project_id)
@@ -115,10 +119,7 @@ async def timeline_wizard_submit(
 
     # Clear existing milestones and detach any ProjectAnchor — user is setting
     # a manual start date; they can re-anchor later via Timeline Anchors panel.
-    await session.execute(sa_delete(Milestone).where(Milestone.project_id == project_id))
-    from app.models.project import ProjectAnchor as _PA_wiz
-    await session.execute(sa_delete(_PA_wiz).where(_PA_wiz.project_id == project_id))
-    await session.flush()
+    await clear_project_timeline(session, project_id)
 
     has_divestment = "divestment" in selected_types
     valid_types = {mt.value for mt in MilestoneType}
@@ -132,7 +133,8 @@ async def timeline_wizard_submit(
             ordered_types.append(mt_str)
             seen.add(mt_str)
 
-    # Two-pass creation so we can build a trigger chain.
+    # Two-pass creation (via app.services.milestones — shared with the REST
+    # milestone router) so we can build a trigger chain.
     # Pass 1: instantiate every milestone with its duration + target_date
     # on the anchor.  Pass 2: assign trigger_milestone_id so each non-anchor
     # milestone starts at the end of the previous one in submitted order.
@@ -141,8 +143,8 @@ async def timeline_wizard_submit(
     # cashflow engine falls back to the legacy OperationalInputs scalar
     # fields (which are NULL on wizard-created deals) → every phase
     # defaults to 1 month and the carry-type math collapses.
-    created: list[Milestone] = []
-    for seq, mt_str in enumerate(ordered_types):
+    specs: list[MilestoneSpec] = []
+    for mt_str in ordered_types:
         mt = MilestoneType(mt_str)
         is_anchor = mt == anchor_mt
 
@@ -166,31 +168,13 @@ async def timeline_wizard_submit(
         else:
             dur = 0
 
-        row = Milestone(
-            project_id=project_id,
+        specs.append(MilestoneSpec(
             milestone_type=mt,
-            target_date=anchor_date if is_anchor else None,
             duration_days=dur,
-            sequence_order=seq,
-        )
-        session.add(row)
-        created.append(row)
+            target_date=anchor_date if is_anchor else None,
+        ))
 
-    # Flush so every Milestone gets a primary key before we wire trigger refs.
-    await session.flush()
-
-    # Pass 2: build the trigger chain in submitted order.  Each non-anchor
-    # milestone triggers off the previous one with offset=0 so its start date
-    # equals the prior milestone's end date (prev.start + prev.duration_days).
-    prev: Milestone | None = None
-    for row in created:
-        if row.milestone_type == anchor_mt:
-            prev = row
-            continue
-        if prev is not None:
-            row.trigger_milestone_id = prev.id
-            row.trigger_offset_days = 0
-        prev = row
+    await create_milestone_chain(session, project_id, specs)
 
     await session.commit()
     _tw_url = f"/models/{proj.scenario_id}/builder?project={project_id}&module=timeline"
