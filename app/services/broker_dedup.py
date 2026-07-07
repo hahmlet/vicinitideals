@@ -58,6 +58,59 @@ def _names_compatible(a_first: str | None, a_last: str | None,
     return af[:3] == bf[:3]
 
 
+def _split_full_name(full_name: str | None) -> tuple[str | None, str | None]:
+    """Split "Jane Q. Doe" into ("Jane", "Q. Doe"). Single token → first only."""
+    parts = (full_name or "").strip().split()
+    if not parts:
+        return None, None
+    if len(parts) == 1:
+        return parts[0], None
+    return parts[0], " ".join(parts[1:])
+
+
+async def find_or_create_broker_by_email(
+    session: AsyncSession,
+    email: str,
+    full_name: str | None = None,
+) -> Broker:
+    """Find a Broker by email (case-insensitive) or create a new one.
+
+    Email is the identity key for user- and LLM-sourced broker contacts
+    (no license number or scraper id available at that point). Brokers are a
+    global table (no org column) — same convention as the scraper-populated
+    rows. Name fields on an existing row are only filled when missing, never
+    overwritten (same philosophy as ``_copy_missing_fields``).
+
+    Raises ValueError when ``email`` is empty — a bare name is not a safe
+    dedupe key, so callers must not create brokers without an email here.
+    """
+    normalized = (email or "").strip().lower()
+    if not normalized:
+        raise ValueError("email is required to find-or-create a broker")
+
+    first_name, last_name = _split_full_name(full_name)
+
+    broker = (
+        (await session.execute(
+            select(Broker)
+            .where(func.lower(Broker.email) == normalized)
+            .order_by(Broker.id)
+            .limit(1)
+        )).scalars().first()
+    )
+    if broker is None:
+        broker = Broker(email=normalized, first_name=first_name, last_name=last_name)
+        session.add(broker)
+        await session.flush()
+        return broker
+
+    if first_name and not broker.first_name:
+        broker.first_name = first_name
+    if last_name and not broker.last_name:
+        broker.last_name = last_name
+    return broker
+
+
 @dataclass
 class MergeReport:
     license_groups: int = 0

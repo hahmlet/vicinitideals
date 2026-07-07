@@ -423,6 +423,38 @@ async def email_create_deals(
         except InvalidOperation:
             pass
 
+    # Broker suggestions: find-or-create a Broker and link it to each created
+    # Opportunity — unless the user explicitly rejected the suggestion
+    # (accepted=False). Like acquisition_cost above, an unreviewed suggestion
+    # (accepted=None) is still applied. Dedupe key is the email address
+    # (case-insensitive); a bare name is not safe to dedupe on, so without an
+    # email suggestion no Broker is created and the name only enriches.
+    from app.services.broker_dedup import find_or_create_broker_by_email
+
+    broker_sugg_result = await session.execute(
+        _select(EmailDealSuggestion)
+        .where(EmailDealSuggestion.inbound_email_id == inbound_email_id)
+        .where(EmailDealSuggestion.field_path.in_(["broker_name", "broker_email"]))
+    )
+    broker_suggs = {s.field_path: s for s in broker_sugg_result.scalars()}
+    broker_email_sugg = broker_suggs.get("broker_email")
+    broker_name_sugg = broker_suggs.get("broker_name")
+
+    broker = None
+    if (
+        broker_email_sugg is not None
+        and broker_email_sugg.accepted is not False
+        and (broker_email_sugg.suggested_value or "").strip()
+    ):
+        broker_full_name = None
+        if broker_name_sugg is not None and broker_name_sugg.accepted is not False:
+            broker_full_name = broker_name_sugg.suggested_value
+        broker = await find_or_create_broker_by_email(
+            session,
+            broker_email_sugg.suggested_value,
+            full_name=broker_full_name,
+        )
+
     org_id = user.org_id
     deal_type = ProjectType.value_add
     r = _redis.from_url(settings.redis_url, decode_responses=True)
@@ -438,6 +470,7 @@ async def email_create_deals(
             source_id=uuid.uuid4().hex,
             source_url="",
             created_by_user_id=user.id,
+            broker_id=broker.id if broker is not None else None,
         )
         session.add(opportunity)
         await session.flush()
