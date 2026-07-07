@@ -1,19 +1,28 @@
-"""Celery task: parse an inbound email and create a preliminary deal.
+"""Celery task: parse an inbound email into reviewable deal suggestions.
+
+The task creates NOTHING deal-side (post-migration 0084). It stages data and
+parks at ``pending_review``; Deal/Scenario/Project creation happens only when
+a user submits the review page (``POST /ui/deals/email/{id}/create-deals`` in
+``app/api/routers/email_ingest.py``).
 
 Flow
 ----
 1. Webhook handler creates InboundEmail row (status=pending) and queues this task.
-2. Task decodes raw MIME, extracts body_text and attachments, stores body_text in DB.
-3. LLM call extracts: address, asking_price, unit_count, property_type from subject+body.
-4. Creates Deal + Scenario + Project + OperationalInputs (preliminary=True).
+2. Task fetches raw MIME from the Resend API, extracts body_text and
+   attachments, stores body_text in DB.
+3. Stages each .xlsx/.xlsm/.xlsb/.pdf attachment in Redis for the later
+   proforma-parse flow (feature parity with manual upload).
+4. LLM call (local Ollama) extracts: address, asking_price, unit_count,
+   property_type, broker contact from subject+body.
 5. Creates EmailDealSuggestion rows for each extracted field.
-6. Queues parse_proforma for any .xlsx attachments.
-7. Updates status → opportunity_created (or failed on exception).
-8. Sends notification email to org members.
+6. Updates status → pending_review (or failed on exception).
+7. Sends review-link notification email to org members.
 
 Redis key schema
 ----------------
-No Redis used beyond Celery broker — all state is PostgreSQL.
+``proforma:{task_id}:file|filename|kind|file_hash|org_id`` — staged
+attachment bytes + metadata, 7-day TTL, consumed by the deal-setup wizard's
+proforma import after the user creates deals from the review page.
 """
 
 from __future__ import annotations

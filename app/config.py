@@ -146,6 +146,9 @@ class Settings(BaseSettings):
     # If unset, the webhook falls back to the single org in the DB and fails hard if
     # multiple orgs exist (prevents silent cross-tenant assignment).
     inbound_email_org_id: UUID | None = None
+    # Operator allowed to view/download the email-ingest AI debug log.
+    # Unset (default) disables the debug-log routes entirely.
+    email_ingest_debug_email: str = ""
 
     # -------------------------------------------------------------------------
     # Financial model defaults

@@ -22,9 +22,12 @@ from app.config import settings
 # Reject webhooks with timestamps more than 5 minutes off (Svix default)
 _WEBHOOK_TOLERANCE_SECONDS = 300
 
-# Debug-log download is gated to a single hardcoded operator email — feature only
-# meaningful for the person triaging AI extraction failures.
-_DEBUG_LOG_ALLOWED_EMAIL = "stephenjketch@gmail.com"
+def _can_view_debug_log(user_email: str | None) -> bool:
+    """Debug-log download is gated to the operator email configured via
+    EMAIL_INGEST_DEBUG_EMAIL — feature only meaningful for the person
+    triaging AI extraction failures. Unset ⇒ nobody."""
+    allowed = (settings.email_ingest_debug_email or "").strip().lower()
+    return bool(allowed) and (user_email or "").lower() == allowed
 
 # ---------------------------------------------------------------------------
 # Template setup (same dir as ui.py)
@@ -226,7 +229,7 @@ async def email_inbox(
     ctx = _base_ctx(user, dedup_count, "email_inbox", conflicts_count=conflicts_count)
     ctx.update({
         "emails": emails,
-        "can_view_debug_log": (user.email or "").lower() == _DEBUG_LOG_ALLOWED_EMAIL,
+        "can_view_debug_log": _can_view_debug_log(user.email),
     })
 
     return templates.TemplateResponse(request, "email_inbox.html", ctx)
@@ -271,7 +274,7 @@ async def email_deal_review(
         "email": email_row,
         "suggestions": suggestions,
         "staged_attachments": staged_attachments,
-        "can_view_debug_log": (user.email or "").lower() == _DEBUG_LOG_ALLOWED_EMAIL,
+        "can_view_debug_log": _can_view_debug_log(user.email),
     })
 
     return templates.TemplateResponse(request, "email_deal_review.html", ctx)
@@ -520,7 +523,7 @@ async def email_debug_log(
     from app.models.org import User
 
     user = await session.get(User, current_user_id)
-    if user is None or (user.email or "").lower() != _DEBUG_LOG_ALLOWED_EMAIL:
+    if user is None or not _can_view_debug_log(user.email):
         raise HTTPException(status_code=404, detail="Not found")
 
     email_row = await session.get(InboundEmail, inbound_email_id)

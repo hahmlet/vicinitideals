@@ -201,3 +201,76 @@ async def test_vehicle_type_error_names_all_canonical_types(
     assert resp.status_code == 400
     for vt in VehicleType:
         assert vt.value in resp.text, f"{vt.value} missing from error body: {resp.text}"
+
+
+# ---------------------------------------------------------------------------
+# Slice 2 — opportunity source default + email-ingest debug-log gate
+# ---------------------------------------------------------------------------
+
+
+async def test_create_project_defaults_source_manual(
+    client: AsyncClient,
+    session: AsyncSession,
+) -> None:
+    """API-created opportunities must carry the same 'manual' origin label as
+    the UI HTMX and email-ingest creation paths."""
+    from app.models.opportunity import Opportunity
+    from tests.conftest import seed_org
+
+    org, user = await seed_org(session)
+    await session.commit()
+
+    resp = await client.post(
+        "/api/projects",
+        json={"name": "Source Default Check", "org_id": str(org.id)},
+    )
+    assert resp.status_code == 201, resp.text
+
+    opp = await session.get(Opportunity, resp.json()["id"])
+    assert opp.source == "manual"
+
+
+async def test_email_debug_log_gate(
+    client: AsyncClient,
+    session: AsyncSession,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Debug-log route must 404 when EMAIL_INGEST_DEBUG_EMAIL is unset, and
+    open only for the configured operator email."""
+    import uuid as _uuid
+
+    from app.config import settings as app_settings
+    from app.models.email_ingest import InboundEmail, InboundEmailStatus
+    from tests.conftest import seed_org
+
+    org, user = await seed_org(session)
+    user.email = "operator@example.com"
+    session.add(user)
+    email_row = InboundEmail(
+        id=_uuid.uuid4(),
+        org_id=org.id,
+        sender_email="broker@example.com",
+        subject="Deal",
+        status=InboundEmailStatus.pending.value,
+        proforma_task_ids=[],
+        attachments_meta=[],
+        debug_log="extraction trace",
+    )
+    session.add(email_row)
+    await session.commit()
+
+    url = f"/ui/email-inbox/{email_row.id}/debug-log.txt"
+    headers = {"X-User-ID": str(user.id), "hx-request": "true"}
+
+    monkeypatch.setattr(app_settings, "email_ingest_debug_email", "")
+    resp = await client.get(url, headers=headers)
+    assert resp.status_code == 404, "unset config must disable the route"
+
+    monkeypatch.setattr(app_settings, "email_ingest_debug_email", user.email)
+    resp = await client.get(url, headers=headers)
+    assert resp.status_code == 200, resp.text
+    assert "extraction trace" in resp.text
+
+    monkeypatch.setattr(app_settings, "email_ingest_debug_email", "someone.else@example.com")
+    resp = await client.get(url, headers=headers)
+    assert resp.status_code == 404

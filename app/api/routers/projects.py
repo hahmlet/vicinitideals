@@ -160,7 +160,9 @@ async def create_project(payload: ProjectCreate, session: DBSession) -> Opportun
         raise HTTPException(status_code=404, detail="Organization not found")
 
     data = payload.model_dump()
-    data["source"] = data.get("source") or "user_generated"
+    # "manual" is the canonical origin label for hand-created opportunities —
+    # the UI HTMX path and email ingest use it too. Keep all three aligned.
+    data["source"] = data.get("source") or "manual"
     project = Opportunity(**data)
     session.add(project)
     await session.flush()
