@@ -1498,6 +1498,20 @@ def _parse_vehicle_carry_schedule(form) -> dict | None:
     return {"schedule": phases} if phases else None
 
 
+def _parse_vehicle_use_tags(form) -> list[str]:
+    """Parse the Use Category Eligibility checkboxes (`eligible_use_tags`).
+
+    Values are validated against the canonical USE_COST_CATEGORIES so a
+    hand-crafted POST cannot persist dead tags that never match any Use.
+    Empty list = permissive (preset may fund any Use category).
+    """
+    from app.models.deal import USE_COST_CATEGORIES as _UC
+    return [
+        t for t in ((s or "").strip() for s in form.getlist("eligible_use_tags"))
+        if t and t in _UC
+    ]
+
+
 def _parse_vehicle_fee_terms(form) -> dict:
     """Parse Developer Fee Rule fields from a vehicle settings form.
 
@@ -1586,6 +1600,7 @@ async def vehicle_settings_page(
         )
     ).scalars().all()
 
+    from app.models.deal import USE_CATEGORY_LABELS as _UC_LBL, USE_COST_CATEGORIES as _UC_CATS
     return templates.TemplateResponse(
         request,
         "settings_vehicles.html",
@@ -1593,6 +1608,8 @@ async def vehicle_settings_page(
             "org_vehicles": org_vehicles,
             "user_vehicles": user_vehicles,
             "vehicle_type_labels": _VEHICLE_TYPE_LABELS,
+            "use_cost_categories": _UC_CATS,
+            "use_category_labels": _UC_LBL,
             **_base_ctx(user, dedup_count, "", address_issues_count, conflicts_count=conflicts_count),
         },
     )
@@ -1621,10 +1638,16 @@ async def vehicle_edit_form(
     if vehicle is None:
         return HTMLResponse("Vehicle not found", status_code=404)
 
+    from app.models.deal import USE_CATEGORY_LABELS as _UC_LBL, USE_COST_CATEGORIES as _UC_CATS
     return templates.TemplateResponse(
         request,
         "partials/vehicle_form.html",
-        {"vehicle": vehicle, "vehicle_type_labels": _VEHICLE_TYPE_LABELS},
+        {
+            "vehicle": vehicle,
+            "vehicle_type_labels": _VEHICLE_TYPE_LABELS,
+            "use_cost_categories": _UC_CATS,
+            "use_category_labels": _UC_LBL,
+        },
     )
 
 
@@ -1673,6 +1696,7 @@ async def vehicle_create(
         pref_rate_pct=form.get("pref_rate_pct") or None,
         carry_config=_v_carry_config if _v_carry_config else None,
         fee_terms=_v_fee_terms,
+        eligible_use_tags=_parse_vehicle_use_tags(form),
         source_config=_build_deferred_source_config(form) if vehicle_type == "deferred_developer_fee" else None,
         created_by=user.id,
         updated_by=user.id,
@@ -1724,6 +1748,10 @@ async def vehicle_update(
     _new_carry_config = _parse_vehicle_carry_schedule(form)
     vehicle.carry_config = _new_carry_config if _new_carry_config else vehicle.carry_config
     vehicle.fee_terms = _parse_vehicle_fee_terms(form)
+    # Sentinel-guarded: only forms that render the tag editor may rewrite
+    # the whitelist (unchecking all = clear back to permissive).
+    if form.get("eligible_use_tags_section") == "1":
+        vehicle.eligible_use_tags = _parse_vehicle_use_tags(form)
     if vehicle.vehicle_type == "deferred_developer_fee":
         vehicle.source_config = _build_deferred_source_config(form)
     vehicle.updated_by = user.id

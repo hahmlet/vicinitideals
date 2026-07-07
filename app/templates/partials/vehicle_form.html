@@ -277,6 +277,29 @@
     <div></div>
   </div>
 
+  {# ── Use Category Eligibility (eligible_use_tags routing whitelist) ──
+     Restricts which Use cost categories Sources created from this preset
+     may fund (app/engines/source_routing.py). All unchecked = permissive.
+     Options come from the USE_COST_CATEGORIES context passed by the
+     vehicle settings routes — do not hardcode category values here. #}
+  {%- set _sv_tags = (vehicle.eligible_use_tags if _is_edit else []) or [] -%}
+  <div class="vf-elig-section" style="display:{{ 'none' if (_is_edit and vehicle.vehicle_type in ('deferred_developer_fee', 'float_earnings')) else '' }}">
+    <input type="hidden" name="eligible_use_tags_section" value="1">
+    <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:4px">
+      Use Category Eligibility
+      <span style="font-weight:400;margin-left:6px">— check cost categories this preset may fund; all unchecked = any</span>
+    </label>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:13px">
+      {% for _uc in use_cost_categories or [] %}
+      <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
+        <input type="checkbox" name="eligible_use_tags" value="{{ _uc }}"
+               {% if _uc in _sv_tags %}checked{% endif %}>
+        <span>{{ (use_category_labels or {}).get(_uc, _uc | title) }}</span>
+      </label>
+      {% endfor %}
+    </div>
+  </div>
+
   {# ── Developer Fee Rule ───────────────────────────────────────────── #}
   {%- set _ft = (vehicle.fee_terms if _is_edit else {}) or {} -%}
   {%- set _ft_excl = _ft.get('basis_exclusions') or [] -%}
@@ -390,6 +413,9 @@ function vfToggleFields(sel) {
     el.style.display = hideConfig ? 'none' : '';
   });
   form.querySelectorAll('.vf-fee-rule-section').forEach(function(el) {
+    el.style.display = hideConfig ? 'none' : '';
+  });
+  form.querySelectorAll('.vf-elig-section').forEach(function(el) {
     el.style.display = hideConfig ? 'none' : '';
   });
 }

@@ -7,9 +7,45 @@ from uuid import UUID
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.models.capital import CapitalModule
 from app.models.deal import UseLine
 from app.models.project import Project
 from app.utils.form_helpers import _fd, _fi
+
+
+async def _parse_eligible_module_ids(
+    session: AsyncSession, model_id: UUID, form
+) -> list[UUID] | None:
+    """Parse the use-side Source whitelist (`eligible_module_ids`) from the form.
+
+    Returns None when the form did not render the picker (hidden sentinel
+    `eligible_module_ids_section` absent) so callers leave the column
+    untouched. An empty list means the user unchecked everything —
+    permissive default (any Source may fund this Use).
+
+    Submitted IDs are validated against this scenario's CapitalModules so a
+    hand-crafted POST cannot attach foreign module UUIDs.
+    """
+    if form.get("eligible_module_ids_section") != "1":
+        return None
+    raw_ids: list[UUID] = []
+    for raw in form.getlist("eligible_module_ids"):
+        raw = (raw or "").strip()
+        if not raw:
+            continue
+        try:
+            raw_ids.append(UUID(raw))
+        except (ValueError, AttributeError):
+            continue
+    if not raw_ids:
+        return []
+    valid_ids = set((await session.execute(
+        select(CapitalModule.id).where(
+            CapitalModule.scenario_id == model_id,
+            CapitalModule.id.in_(raw_ids),
+        )
+    )).scalars())
+    return [x for x in raw_ids if x in valid_ids]
 
 
 async def save_use_line(
@@ -60,6 +96,9 @@ async def save_use_line(
         _mt_to = _map_aps_to_mt(_ms_key_to)
         if _mt_to is not None:
             _ms_id_to = await _find_ms_for_proj(session, project_id, _mt_to)
+    # Use-side Source whitelist. None = picker absent from form (leave column
+    # alone); [] = explicitly cleared; [ids] = whitelist these Sources only.
+    _eligible_module_ids = await _parse_eligible_module_ids(session, model_id, form)
     data: dict = {
         "label": form.get("label", ""),
         "phase": _phase,
@@ -71,6 +110,8 @@ async def save_use_line(
         "cost_category": _cost_cat,
         "notes": form.get("notes") or None,
     }
+    if _eligible_module_ids is not None:
+        data["eligible_module_ids"] = _eligible_module_ids
     if item_id:
         row = await session.get(UseLine, UUID(item_id))
         if row:
