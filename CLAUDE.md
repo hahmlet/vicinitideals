@@ -149,7 +149,7 @@ app/
   templates/           # Jinja2 HTML templates (HTMX partials in templates/partials/)
   config.py            # pydantic-settings (reads .env)
   scripts/             # CLI utilities (seed_e2e_user.py, check_promotion_gates.py)
-alembic/versions/      # 41 migrations (latest: 0041_user_email_verified)
+alembic/versions/      # Alembic migrations — check the directory for the current head (0123 as of 2026-07)
 tests/
   engines/             # Unit tests: cashflow, draw_schedule, underwriting, waterfall
   api/, models/, exporters/, scrapers/, tasks/, contract/

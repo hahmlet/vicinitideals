@@ -37,10 +37,10 @@ A listing flows into an Opportunity, which a Deal attaches to when the team deci
 |---|---|
 | **API** | FastAPI 0.110+ (async, Python 3.12+) |
 | **ORM / DB** | SQLAlchemy 2.0+ (async) + asyncpg + Alembic migrations |
-| **Task queue** | Celery 5.3+ (3 worker queues: default, scraping, analysis) |
+| **Task queue** | Celery 5.3+ (2 worker queues: default, analysis) |
 | **Templates** | Jinja2 3.1+ rendered server-side, progressive enhancement via HTMX |
 | **Financial math** | pyxirr (IRR/XIRR), custom engine modules |
-| **HTTP / scraping** | httpx, curl-cffi (TLS fingerprint spoofing), ProxyOn proxy pool |
+| **HTTP / scraping** | httpx, curl-cffi (TLS fingerprint spoofing) |
 | **Address parsing** | usaddress 0.5.10 |
 | **Excel I/O** | openpyxl 3.1 |
 | **Validation** | Pydantic v2 |
@@ -51,8 +51,7 @@ A listing flows into an Opportunity, which a Deal attaches to when the team deci
 
 | Source | Data |
 |---|---|
-| **Crexi** | Commercial listings (routed through ProxyOn residential proxy) — the one live scraper |
-| **ProxyOn** | Residential + datacenter proxy pool for scraping (used by Crexi) |
+| **Crexi** | Commercial listings — the one live scraper. Fetches `api.crexi.com` **directly** (no proxy) since 2026-06-14 (commit `c0648b1`); the legacy ProxyOn residential proxy expired and its dead config silently broke the nightly scrape May–Jun 2026. Proxy routing can be re-enabled via `crexi_use_proxy` if Crexi ever blocks the host IP. |
 
 > LoopNet, Portland Maps, Oregon City, Clackamas County, Gresham ArcGIS, Oregon Address Points, and REALie were **decommissioned** with the parcel subsystem — see Archive.
 
@@ -64,7 +63,7 @@ A listing flows into an Opportunity, which a Deal attaches to when the team deci
 
 The platform ingests **Crexi** commercial listings into an Opportunity inventory. Key subsystems:
 
-- **Crexi scraper** (`app/scrapers/crexi.py` + `app/tasks/scraper.py`) — normalizes raw responses into the shared Opportunity schema; daily Celery beat on the default queue.
+- **Crexi scraper** (`app/scrapers/crexi.py` + `app/tasks/scraper.py`) — fetches `api.crexi.com` directly (no proxy; direct is the default since 2026-06-14, commit `c0648b1`), normalizes raw responses into the shared Opportunity schema; daily Celery beat on the default queue.
 - **Deduplication engine** (`app/scrapers/dedup.py`) — fuzzy matching on address + unit count to flag near-duplicate Crexi listings for human review.
 - **KNN comps** (`app/engines/market.py`) — benchmarks an Opportunity against similar listings; see [MARKET_MODEL.md](MARKET_MODEL.md).
 
@@ -74,7 +73,7 @@ See: [docs/ops/](docs/ops/) for operational runbooks, [docs/verification/](docs/
 
 ### 3b. Financial Analysis Engines
 
-All computation is pure Python, no spreadsheet backend. Located in `vicinitideals/engines/`:
+All computation is pure Python, no spreadsheet backend. Located in `app/engines/`:
 
 | Engine | Purpose |
 |---|---|
@@ -90,7 +89,7 @@ See: [docs/testing-strategy.md](docs/testing-strategy.md) for engine test covera
 
 ### 3c. Deal & Scenario Data Model
 
-`vicinitideals/models/` — 34 Alembic migrations define the schema:
+`app/models/` — schema defined by Alembic migrations (see `alembic/versions/` for the current head):
 
 - **Deal** → Opportunity → Project → Milestones (timeline)
 - **Scenario** → UseLines, CapitalModules, IncomeStreams, ExpenseLines, DrawSources, WaterfallTiers
@@ -99,7 +98,7 @@ See: [docs/testing-strategy.md](docs/testing-strategy.md) for engine test covera
 
 ### 3d. Model Builder UI
 
-An HTMX-driven interface (`vicinitideals/templates/`) that lets a user build and run a full deal model without leaving the browser. Modules load progressively; each saves immediately via HTMX partial swaps.
+An HTMX-driven interface (`app/templates/`) that lets a user build and run a full deal model without leaving the browser. Modules load progressively; each saves immediately via HTMX partial swaps.
 
 | Module | What it does |
 |---|---|
@@ -122,13 +121,32 @@ Full-screen Opportunities table with filter sidebar (status, price, zoning, coun
 
 > The parcel browser, parcel detail drawer (ownership / assessment / geometry / map), and the Map (Leaflet / zone painter) were **decommissioned** — see Archive.
 
+### 3f. Email Ingest
+
+Inbound email → deal pipeline (`app/tasks/email_ingest.py`, `app/api/routers/email_ingest.py`). Brokers email deals to `deals@viciniti.deals`; a webhook creates an `InboundEmail` row and queues a Celery task that:
+
+1. Fetches the raw MIME from the Resend API, extracts body text + attachments.
+2. Stages `.xlsx`/`.xlsm`/`.xlsb`/`.pdf` attachments in **Redis** (7-day TTL) so the deal-setup wizard's pro forma import can consume them later without re-upload.
+3. Runs a **local LLM extraction** (Ollama, `qwen2.5:7b` by default via OpenAI-compatible endpoint) over subject + body to extract address, asking price, unit count, property type, and broker contact.
+4. Stages the extracted fields as `EmailDealSuggestion` rows and parks the email at `pending_review` — the task creates **nothing** deal-side.
+
+Deal/Scenario/Project creation happens only when a human submits the side-by-side review page; accepted broker name/email suggestions are resolved via `find_or_create_broker_by_email` and linked to the created Opportunity (`broker_id`).
+
+### 3g. Document Room
+
+Per-project file store (`documents` table + `app/storage/documents.py`). File **bytes live on disk** at `/app/data/doc_room/` (under the `./data:/app/data` bind mount) — **Postgres holds metadata only** (filename, sha256, storage key, task/stage labels). Includes per-task organization, Office→PDF previews, and revocable guest share links (`document_shares` per project, `deal_shares` deal-wide). This directory must be part of the backup routine; Postgres-only backups miss the file bytes.
+
+### 3h. Exports
+
+The **investor workbook** (`app/exporters/investor_export.py`, profile-selectable: `internal` / `lp` / `lender` / `proforma`) is the only Excel export — the legacy round-trip `excel_export.py` was deleted 2026-07. **JSON export/import** (`app/exporters/json_export.py` / `json_import.py`) is the canonical round-trip format.
+
 ---
 
 ## 4. Deployment
 
 ```
 git push origin main
-  └─► VM 114: /root/deploy-re-modeling.sh
+  └─► VM 114: /root/deploy-vicinitideals.sh
         git pull → docker build → alembic upgrade head → docker-compose up -d → health check
 ```
 

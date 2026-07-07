@@ -19,7 +19,7 @@ JSONB on `Project` (not a separate table) — field reference in FINANCIAL_MODEL
   module's Exit Vehicle on save.  Engine ignores the user-supplied value.
   Same rollback posture as above.
 
-**Last updated**: 2026-05-09
+**Last updated**: 2026-07-07
 
 ---
 
@@ -221,7 +221,7 @@ Physical attributes live on `Opportunity` own-columns (broker-reported or user-e
 | `id` | UUID | Auto-generated | Primary key |
 | `source` | String(100) | Ingest pipeline | `"crexi"`, `"loopnet"` |
 | `source_id` | String(255) | Listing source | Source-specific listing ID |
-| `source_url` | Text | Listing source | DB column name: `listing_url` |
+| `source_url` | Text | Listing source | DB column name: `listing_url`. Nullable since migration 0123 — user-generated (non-scraped) projects have no listing URL |
 | `raw_json` | JSON | Listing source | Complete raw payload |
 | `ingest_job_id` | UUID FK | Ingest pipeline | Links to IngestJob telemetry |
 
@@ -589,7 +589,7 @@ Unified table replacing the former `org_source_vehicles` + `user_source_vehicles
 | scope | str (10) | Yes | `org` or `user` — ownership level |
 | owner_id | UUID | Yes | FK to `organizations.id` or `users.id` depending on `scope` |
 | label | str (200) | Yes | Human name; unique per (scope, owner_id) |
-| vehicle_type | str (20) | Yes | `equity`, `debt`, `forgivable_loan`, `grant` |
+| vehicle_type | str (50) | Yes | Canonical 6-value vocabulary (`app/schemas/vocab.py::VEHICLE_TYPES`, derived from the `VehicleType` ORM enum): `equity`, `debt`, `forgivable_loan`, `grant`, `float_earnings`, `deferred_developer_fee`. VARCHAR widened 20→50 in migration 0122 |
 | equity_role | str (10) or None | No | `gp` or `lp` — only set when `vehicle_type = equity` |
 | eligible_use_tags | varchar[] | No | Whitelist of use `cost_category` tags; empty = permissive |
 | interest_rate_pct | Numeric or None | No | Annual rate for debt/forgivable_loan vehicles |
@@ -647,6 +647,34 @@ Audit trail of capital draws produced by each engine run (migration 0087). Prior
 | allocation_reason | str (40) | Yes | Default `period_funding` |
 | use_line_label | str (255) or None | No | Use line being funded, if applicable |
 | created_at | datetime | Yes | |
+
+---
+
+### 12.8 UseLineSourceFeeBasis (`use_line_source_fee_basis`)
+
+Join table recording per-`(UseLine × CapitalModule)` fee-basis inclusion decisions for **user-added custom Uses** (migration 0103, multi-source dev fee). Standard auto-generated cost categories (acquisition, hard_costs, soft_costs, financing_fees, interest_reserve, operating_reserves, developer_overhead, consulting_fees) are handled by the Source Vehicle's `basis_exclusions` flag list instead — no row here. If no row exists for a pair where the Vehicle has `fee_terms` set, the engine treats it as a *pending decision* and surfaces it in the explainer modal. ORM: `UseLineSourceFeeBasis` in `app/models/capital.py`.
+
+| Column | Type | Required | Notes |
+|---|---|---|---|
+| use_line_id | UUID FK to use_lines | Yes | Composite PK; ondelete=CASCADE |
+| capital_module_id | UUID FK to capital_modules | Yes | Composite PK; ondelete=CASCADE |
+| included_in_basis | bool | Yes | Default `false` — is this custom Use included in the module's fee basis |
+| set_at | datetime | Yes | Server default NOW() |
+
+---
+
+### 12.9 Gap Adjustment slider rows (no dedicated table)
+
+The Gap Adjustment slider feature stores **no table of its own** — it materializes reserved-label *phantom rows* in three existing tables when the user moves a slider (`POST /api/models/{id}/sliders`, `app/api/routers/models.py`). Reserved labels are the single source of truth in `app/schemas/gap_adjustment_names.py`; the API blocks users from creating/renaming lines into or out of these exact labels:
+
+| Reserved label | Phantom row lives in |
+|---|---|
+| `Gap Adjustment — Revenue` | `income_streams` |
+| `Gap Adjustment — OpEx` | `operating_expense_lines` |
+| `Gap Adjustment — Purchase Price` | `use_lines` (acquisition phase; negative amounts allowed) |
+| `Gap Adjustment — NOI` | `operating_expense_lines` (NOI income mode only) |
+
+Rows persist (potentially negative) so the adjusted state survives across sessions. Migration 0094 dedupes historical duplicate phantom rows and adds **partial unique indexes** enforcing one phantom row per `(project_id, label)` — concurrent slider POSTs previously raced the SELECT-then-INSERT upsert and produced `MultipleResultsFound`. Identification is exact string match on `label`; UI applies yellow highlighting and the "balanced with adjustments" pill from the same names. See `FINANCIAL_MODEL.md` Appendix E for slider math.
 
 ---
 
@@ -879,6 +907,76 @@ Revert (`POST /ui/models/{id}/history/{snapshot_id}/revert`) replaces all curren
 5. Redirect to model builder — user must re-run Compute to regenerate outputs
 
 Partial revert is not supported. `Scenario.version` is not decremented on revert; next Compute will increment to the next sequential version.
+
+---
+
+## 15. Email-to-Deal Pipeline (inbound_emails, email_deal_suggestions)
+
+Tables backing the email ingest feature (`app/models/email_ingest.py`; task in `app/tasks/email_ingest.py`, routes in `app/api/routers/email_ingest.py`). A webhook creates an `InboundEmail` row per email received at `deals@viciniti.deals`; a Celery task extracts fields (local Ollama LLM) into `EmailDealSuggestion` rows and parks at `pending_review` — the task creates **nothing** deal-side (post-migration 0084). Deal/Scenario/Project creation happens only when a user submits the review page. Proforma attachments are staged in **Redis** (`proforma:{task_id}:*` keys, 7-day TTL), not in these tables.
+
+### 15.1 inbound_emails
+
+| Column | Type | Required | Notes |
+|---|---|---|---|
+| id | UUID | Yes | PK |
+| org_id | UUID FK to organizations | Yes | ondelete=CASCADE |
+| received_at | timestamptz | Yes | Server default NOW() |
+| sender_email | Text | Yes | |
+| sender_name | Text or None | No | |
+| subject | Text or None | No | |
+| body_text | Text or None | No | Extracted plain-text body |
+| raw_mime_b64 | Text or None | No | Base64 raw MIME as fetched from the Resend API |
+| status | str (30) | Yes | `InboundEmailStatus`: `pending`, `processing`, `pending_review`, `opportunity_created`, `failed`, `spam` |
+| opportunity_id | UUID FK to opportunities or None | No | ondelete=SET NULL; set once deal creation runs |
+| proforma_task_ids | JSONB (list) | Yes | Task IDs of Redis-staged proforma attachments |
+| error_message | Text or None | No | |
+| debug_log | Text or None | No | Extraction trace; download gated to `EMAIL_INGEST_DEBUG_EMAIL` operator |
+| attachments_meta | JSONB (list) | Yes | Attachment metadata (bytes stripped — payload lives in Redis) |
+
+### 15.2 email_deal_suggestions
+
+One row per extracted field awaiting accept/reject on the review page. Accepted `broker_name` / `broker_email` suggestions resolve to a `Broker` via `find_or_create_broker_by_email` and link the created Opportunity (`broker_id`).
+
+| Column | Type | Required | Notes |
+|---|---|---|---|
+| id | UUID | Yes | PK |
+| inbound_email_id | UUID FK to inbound_emails | Yes | ondelete=CASCADE |
+| opportunity_id | UUID FK to opportunities or None | No | ondelete=CASCADE |
+| field_path | Text | Yes | Target field (e.g. `address`, `asking_price`, `unit_count`, `property_type`, `broker_name`, `broker_email`) |
+| suggested_value | Text or None | No | |
+| confidence | float or None | No | LLM extraction confidence |
+| source_type | str (40) | Yes | `SuggestionSourceType`: `email_body`, `proforma_xlsx`, `llm_extraction` |
+| accepted | bool or None | No | NULL = undecided, true/false = user decision |
+
+---
+
+## 16. Supporting Tables Index
+
+One-line reference for the remaining tables in `Base.metadata` not given a full section above (deal-side entities are detailed in `FINANCIAL_MODEL.md`; this index exists so every live table is discoverable from this doc). ORM module in parentheses.
+
+| Table | Purpose |
+|---|---|
+| `organizations`, `users` | Org + user auth entities (`org.py`); first registered user auto-creates "Default Organization" |
+| `org_invites` | Pending org membership invitations (`org.py`) |
+| `project_visibilities` | Per-user visibility grants; NOTE: its `project_id` column references `opportunities.id` — legacy naming from the projects→opportunities rename (`org.py`) |
+| `org_settings`, `user_settings` | Org/user field-default system: Type 1 org-set, Type 2 org-default, Type 3 user-override (`settings.py`; see `app/settings/defaults.py`) |
+| `org_deal_type_defaults`, `user_deal_type_defaults` | Per-deal-type default bundles at org / user scope (`settings.py`) |
+| `scenario_templates` | Reusable scenario templates managed in Settings (`scenario_template.py`) |
+| `source_vehicles` | See §12.6 |
+| `cash_flows`, `cash_flow_line_items`, `operational_outputs` | Engine outputs: per-period cashflow rows, line-item detail, and computed KPI blob per project — purged and re-written each compute (`cashflow.py`) |
+| `operating_expense_lines` | Project-scoped OpEx lines; field detail in `FINANCIAL_MODEL.md` §4 (`deal.py`) |
+| `sensitivities`, `sensitivity_results` | Sensitivity-sweep definitions + per-cell results; ORM classes `Sensitivity` / `SensitivityResult`, renamed from the old Scenario naming (`scenario.py`) |
+| `portfolios`, `portfolio_projects`, `gantt_entries` | Portfolio grouping of deals + junction + computed Gantt bars (`portfolio.py`) |
+| `permit_stubs` | Permit records attached to a Project (`project.py`) |
+| `brokerages`, `broker_disciplinary_actions` | Brokerage firms; per-case Oregon disciplinary records scraped onto brokers (`broker.py`) |
+| `saved_filters` | Per-user, per-page named query-string snapshots for filter bars (`saved_filter.py`) |
+| `saved_search_criteria` | Saved-search match criteria applied at ingest to flag matching listings (`ingestion.py`) |
+| `export_jobs` | Async investor-export job tracking: progress states + cached-build resend (`export_job.py`) |
+| `field_conflict_log` | Field-level disagreement log written during manual dedup merges (`field_conflict_log.py`) |
+| `realie_usage` | Realie.ai monthly API call budget tracking (`realie_usage.py`) |
+| `workflow_run_manifests` | Workflow run manifest persistence for agent/test runs (`manifest.py`) |
+
+Coverage is enforced by `tests/docs/test_data_model_coverage.py` — every table name in `Base.metadata.tables` must appear in this document.
 
 ---
 

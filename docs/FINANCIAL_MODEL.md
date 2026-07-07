@@ -829,6 +829,14 @@ By default every capital source (CapitalModule) may fund any use line — the en
 
 Both whitelists default to empty (permissive). The `app/engines/source_routing.py` module implements `eligible_sources_for_use()` and `route_use_to_sources()`. When no whitelist applies, the routing falls back to the legacy stack-position allocation unchanged.
 
+**Precedence** (per `eligible_sources_for_use()`):
+
+1. **Use-level wins outright.** If `use_lines.eligible_module_ids` is non-empty, only the listed module IDs are eligible for that use — the modules' `eligible_use_tags` are not consulted at all.
+2. **Module-level tags apply otherwise.** If the use has no ID whitelist and the module's `eligible_use_tags` is non-empty, the module is eligible only when the use's `cost_category` matches one of the tags. A use with no `cost_category` is treated permissively (all tagged modules eligible).
+3. **Both empty = permissive.** Every source may fund every use.
+
+Two guards: `float_earnings` modules are always excluded (they are side-effect outputs, never Use funders — see Appendix I), and the function never returns an empty list — if nothing matches, it falls back to the full module list. Routing order is `stack_position` ascending, module id as tiebreak (`route_use_to_sources()`).
+
 #### 2.11.1 Capped-consumption grants (May 2026)
 
 Grants and other fixed-amount sources (grant, forgivable_loan, tax_credit) behave as **capped consumption** when per-Use eligibility is configured:
@@ -2812,12 +2820,16 @@ _APS_TO_RANK = {
 }
 ```
 
-### A.3 `_loan_pre_op_months(module)` function
+### A.3 `_loan_pre_op_months(module, capital_modules, phases)` function
+
+Live code (`app/engines/cashflow_compile.py` — promoted from an inner function of `_auto_size_debt_modules` to a free function in the compile/evaluate split; `capital_modules` and `phases` are explicit parameters, formerly closure references):
 
 ```python
-def _loan_pre_op_months(module) -> int:
-    start_rank = _APS_TO_RANK.get(module.active_phase_start, 0)
-    end_rank   = _APS_TO_RANK.get(module.active_phase_end, 99)
+def _loan_pre_op_months(module: object, capital_modules: list, phases: list) -> int:
+    start = str(getattr(module, "active_phase_start", "") or "")
+    start_rank = _APS_TO_RANK.get(start, 0)
+    # End-exclusive: derived from Exit Vehicle (supersedes active_phase_end).
+    end_rank = _resolve_active_end_rank(module, capital_modules)
     return sum(
         p.months for p in phases
         if p.period_type in _CONSTRUCTION_PERIOD_TYPES
@@ -2825,7 +2837,15 @@ def _loan_pre_op_months(module) -> int:
     )
 ```
 
-**End-exclusive semantics.** `active_phase_end = "operation_stabilized"` (rank 5) means the loan is active for all phases with rank < 5. The loan is NOT active during stabilized itself — it is taken out at the START of stabilized. This matches CRE convention: a construction loan is retired when the project stabilizes.
+**End rank comes from the Exit Vehicle, not `active_phase_end`.** The user-editable `active_phase_end` field is deprecated (it duplicated the Exit Vehicle intent). `_resolve_active_end_rank(module, all_modules)` derives the end rank:
+
+- non-debt `vehicle_type` (equity, grants, etc.) → 99 (perpetuity; waterfall handles at exit)
+- `exit_terms.vehicle == "sale"` → 6 (exit/divestment rank)
+- `exit_terms.vehicle == "maturity"` or unset → 99 (balloon uses amort)
+- `exit_terms.vehicle == <uuid>` → the retiring module's start rank (handoff point)
+- dangling reference / no vehicle → legacy fallback to a stored `active_phase_end` if present, else 99
+
+**End-exclusive semantics.** An end rank of 5 (`operation_stabilized`) means the loan is active for all phases with rank < 5. The loan is NOT active during stabilized itself — it is taken out at the START of stabilized. This matches CRE convention: a construction loan is retired when the project stabilizes.
 
 **Example.** A construction loan with `active_phase_start = "pre_construction"` (rank 2) and `active_phase_end = "lease_up"` (rank 4):
 - Counts pre_construction (rank 2) + construction (rank 3) = both included
