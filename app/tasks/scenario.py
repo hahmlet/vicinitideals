@@ -19,7 +19,7 @@ from app.engines.cashflow import compute_cash_flows
 from app.models.cashflow import CashFlow, OperationalOutputs, PeriodType
 from app.models.deal import Scenario, OperationalInputs
 from app.models.project import Project
-from app.models.scenario import Scenario, SensitivityResult, ScenarioStatus
+from app.models.scenario import Sensitivity, SensitivityResult, SensitivityStatus
 from app.observability import begin_observation, elapsed_ms, log_observation
 from app.tasks.celery_app import celery_app
 
@@ -185,7 +185,7 @@ async def _run_scenario_async(
 
     await _set_scenario_status(
         scenario_uuid,
-        ScenarioStatus.complete,
+        SensitivityStatus.complete,
         task_id=task_id,
     )
     log_observation(
@@ -249,7 +249,7 @@ async def _dispatch_scenario_sweep(
 async def _prepare_scenario_run(
     scenario_id: UUID,
     task_id: str | None = None,
-) -> Scenario | None:
+) -> Sensitivity | None:
     async with AsyncSessionLocal() as session:
         scenario = await _load_scenario(session, scenario_id)
         if scenario is None:
@@ -263,7 +263,7 @@ async def _prepare_scenario_run(
         has_existing_results = result_check.first() is not None
         current_run_count = max(int(getattr(scenario, "run_count", 1) or 1), 1)
 
-        scenario.status = ScenarioStatus.running
+        scenario.status = SensitivityStatus.running
         if task_id:
             scenario.celery_task_id = task_id
         scenario.run_count = current_run_count + 1 if has_existing_results else current_run_count
@@ -273,7 +273,7 @@ async def _prepare_scenario_run(
         return scenario
 
 
-def _build_model_version_snapshot(scenario: Scenario) -> dict[str, Any]:
+def _build_model_version_snapshot(scenario: Sensitivity) -> dict[str, Any]:
     deal_model = scenario.scenario
     _default_proj = next((p for p in sorted(deal_model.projects, key=lambda p: p.created_at)), None) if deal_model and deal_model.projects else None
     inputs = _default_proj.operational_inputs if _default_proj else None
@@ -358,7 +358,7 @@ async def _persist_scenario_result(
     metrics: dict[str, Decimal | None],
 ) -> None:
     async with AsyncSessionLocal() as session:
-        scenario = await session.get(Scenario, scenario_id)
+        scenario = await session.get(Sensitivity, scenario_id)
         if scenario is None:
             raise ValueError(f"Scenario {scenario_id} was not found")
 
@@ -379,17 +379,17 @@ async def _persist_scenario_result(
 
 async def _finalize_scenario_async(scenario_id: str | UUID) -> str:
     scenario_uuid = UUID(str(scenario_id))
-    await _set_scenario_status(scenario_uuid, ScenarioStatus.complete)
+    await _set_scenario_status(scenario_uuid, SensitivityStatus.complete)
     return str(scenario_uuid)
 
 
 async def _set_scenario_status(
     scenario_id: UUID,
-    status: ScenarioStatus,
+    status: SensitivityStatus,
     task_id: str | None = None,
 ) -> None:
     async with AsyncSessionLocal() as session:
-        scenario = await session.get(Scenario, scenario_id)
+        scenario = await session.get(Sensitivity, scenario_id)
         if scenario is None:
             return
         scenario.status = status
@@ -402,7 +402,7 @@ async def _set_scenario_task_id(scenario_id: UUID, task_id: str | None) -> None:
     if not task_id:
         return
     async with AsyncSessionLocal() as session:
-        scenario = await session.get(Scenario, scenario_id)
+        scenario = await session.get(Sensitivity, scenario_id)
         if scenario is None:
             return
         scenario.celery_task_id = task_id
@@ -423,16 +423,18 @@ async def _mark_scenario_failed(
         error=reason,
     )
     logger.warning("Scenario %s failed: %s", scenario_id, reason)
-    await _set_scenario_status(scenario_id, ScenarioStatus.failed, task_id=task_id)
+    await _set_scenario_status(scenario_id, SensitivityStatus.failed, task_id=task_id)
 
 
-async def _load_scenario(session: AsyncSession, scenario_id: UUID) -> Scenario | None:
+async def _load_scenario(session: AsyncSession, scenario_id: UUID) -> Sensitivity | None:
     result = await session.execute(
-        select(Scenario)
+        select(Sensitivity)
         .options(
-            selectinload(Scenario.scenario).selectinload(Scenario.projects).selectinload(Project.operational_inputs)
+            selectinload(Sensitivity.scenario)
+            .selectinload(Scenario.projects)
+            .selectinload(Project.operational_inputs)
         )
-        .where(Scenario.id == scenario_id)
+        .where(Sensitivity.id == scenario_id)
     )
     return result.scalar_one_or_none()
 
@@ -472,7 +474,7 @@ async def _load_first_stabilized_year_noi(
     return _q(sum(values, ZERO))
 
 
-def _generate_sweep_values(scenario: Scenario) -> list[Decimal]:
+def _generate_sweep_values(scenario: Sensitivity) -> list[Decimal]:
     start = _to_decimal(scenario.range_min, ZERO) or ZERO
     end = _to_decimal(scenario.range_max, ZERO) or ZERO
     steps = max(int(scenario.range_steps), 1)

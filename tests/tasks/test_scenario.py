@@ -8,69 +8,32 @@ from typing import Any, cast
 from uuid import uuid4
 
 import pytest
+import pytest_asyncio
 from sqlalchemy import select
-from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
-from app.models.base import Base
-from app.models.cashflow import CashFlow, OperationalOutputs
-from app.models.deal import Deal, Scenario, DealOpportunity, OperationalInputs, ProjectType
-from app.models.manifest import WorkflowRunManifest
-from app.models.org import Organization, User
-from app.models.project import (
-    Opportunity,
-    OpportunityCategory,
-    OpportunitySource,
-    OpportunityStatus,
-    Project,
-    ProjectCategory,
-    ProjectSource,
-    ProjectStatus,
-)
-from app.models.scenario import Scenario, SensitivityResult, ScenarioStatus
+from app.models.deal import OperationalInputs, ProjectType
+from app.models.project import Project
+from app.models.scenario import Sensitivity, SensitivityResult, SensitivityStatus
 from app.tasks.scenario import run_scenario
+from tests.conftest import seed_deal_model, seed_opportunity, seed_org
 
 
-@pytest.fixture
-async def test_session_factory(tmp_path):
-    test_engine = create_async_engine(
-        f"sqlite+aiosqlite:///{tmp_path / 'stage1e_scenario.db'}",
-        future=True,
-    )
-    session_factory = async_sessionmaker(
-        bind=test_engine,
+@pytest_asyncio.fixture(loop_scope="session")
+async def test_session_factory(_test_engine, session):
+    """Session factory bound to the per-run Postgres test DB.
+
+    run_scenario opens its own sessions via app.db.AsyncSessionLocal, which
+    the autouse `_rebind_app_db` conftest fixture already points at the same
+    engine — no monkeypatching needed. Depending on the `session` fixture
+    ensures the conftest TRUNCATE-on-teardown cleans up rows committed here.
+    """
+    yield async_sessionmaker(
+        bind=_test_engine,
+        class_=AsyncSession,
         expire_on_commit=False,
         autoflush=False,
     )
-
-    async with test_engine.begin() as conn:
-        await conn.run_sync(
-            lambda sync_conn: Base.metadata.create_all(
-                sync_conn,
-                tables=cast(
-                    list,
-                    [
-                        Organization.__table__,
-                        User.__table__,
-                        Opportunity.__table__,
-                        Deal.__table__,
-                        DealOpportunity.__table__,
-                        Project.__table__,
-                        Scenario.__table__,
-                        OperationalInputs.__table__,
-                        CashFlow.__table__,
-                        OperationalOutputs.__table__,
-                        WorkflowRunManifest.__table__,
-                        Scenario.__table__,
-                        SensitivityResult.__table__,
-                    ],
-                ),
-            )
-        )
-
-    try:
-        yield session_factory
-    finally:
-        await test_engine.dispose()
 
 
 @pytest.mark.asyncio
@@ -81,11 +44,6 @@ async def test_run_scenario_writes_one_result_per_step(
 ) -> None:
     observed_values: list[Decimal] = []
     caplog.set_level(logging.INFO, logger="app.tasks.scenario")
-
-    monkeypatch.setattr(
-        "app.tasks.scenario.AsyncSessionLocal",
-        test_session_factory,
-    )
 
     async def fake_compute_cash_flows(deal_model_id, session):  # type: ignore[no-untyped-def]
         inputs = (
@@ -123,7 +81,7 @@ async def test_run_scenario_writes_one_result_per_step(
     await asyncio.to_thread(cast(Any, run_scenario), str(scenario_id))
 
     async with test_session_factory() as session:
-        scenario = await session.get(Scenario, scenario_id)
+        scenario = await session.get(Sensitivity, scenario_id)
         results = list(
             (
                 await session.execute(
@@ -135,7 +93,7 @@ async def test_run_scenario_writes_one_result_per_step(
         )
 
     assert scenario is not None
-    assert scenario.status == ScenarioStatus.complete
+    assert scenario.status == SensitivityStatus.complete
     assert len(results) == 4
     assert observed_values == [
         Decimal("4.500000"),
@@ -173,11 +131,6 @@ async def test_run_scenario_preserves_prior_results_with_incremented_run_number(
     monkeypatch: pytest.MonkeyPatch,
     test_session_factory,
 ) -> None:
-    monkeypatch.setattr(
-        "app.tasks.scenario.AsyncSessionLocal",
-        test_session_factory,
-    )
-
     async def fake_compute_cash_flows(*args, **kwargs):  # type: ignore[no-untyped-def]
         return {
             "project_irr_levered": Decimal("14.500000"),
@@ -206,7 +159,7 @@ async def test_run_scenario_preserves_prior_results_with_incremented_run_number(
     await asyncio.to_thread(cast(Any, run_scenario), str(scenario_id))
 
     async with test_session_factory() as session:
-        scenario = await session.get(Scenario, scenario_id)
+        scenario = await session.get(Sensitivity, scenario_id)
         assert scenario is not None
         assert scenario.run_count == 1
         first_run_results = list(
@@ -229,7 +182,7 @@ async def test_run_scenario_preserves_prior_results_with_incremented_run_number(
     await asyncio.to_thread(cast(Any, run_scenario), str(scenario_id))
 
     async with test_session_factory() as session:
-        scenario = await session.get(Scenario, scenario_id)
+        scenario = await session.get(Sensitivity, scenario_id)
         results = list(
             (
                 await session.execute(
@@ -267,11 +220,6 @@ async def test_run_scenario_marks_invalid_variable_failed(
 ) -> None:
     calls = 0
 
-    monkeypatch.setattr(
-        "app.tasks.scenario.AsyncSessionLocal",
-        test_session_factory,
-    )
-
     async def fake_compute_cash_flows(*args, **kwargs):  # type: ignore[no-untyped-def]
         nonlocal calls
         calls += 1
@@ -290,7 +238,7 @@ async def test_run_scenario_marks_invalid_variable_failed(
     await asyncio.to_thread(cast(Any, run_scenario), str(scenario_id))
 
     async with test_session_factory() as session:
-        scenario = await session.get(Scenario, scenario_id)
+        scenario = await session.get(Sensitivity, scenario_id)
         results = list(
             (
                 await session.execute(
@@ -300,47 +248,31 @@ async def test_run_scenario_marks_invalid_variable_failed(
         )
 
     assert scenario is not None
-    assert scenario.status == ScenarioStatus.failed
+    assert scenario.status == SensitivityStatus.failed
     assert calls == 0
     assert results == []
 
 
 async def _seed_scenario(test_session_factory, variable: str = "operational.exit_cap_rate_pct"):
     async with test_session_factory() as session:
-        org = Organization(id=uuid4(), name="Scenario Org", slug=f"scenario-{uuid4().hex[:8]}")
-        user = User(id=uuid4(), org_id=org.id, name="Scenario User", display_color="#00AAFF")
-        opportunity = Opportunity(
-            id=uuid4(),
-            org_id=org.id,
-            name="Scenario Opportunity",
-            status=OpportunityStatus.active,
-            project_category=OpportunityCategory.proposed,
-            source=OpportunitySource.manual,
-            created_by_user_id=user.id,
-        )
-        top_deal = Deal(
-            id=uuid4(),
-            org_id=org.id,
-            name="Scenario Deal",
-            created_by_user_id=user.id,
-        )
-        deal_opp = DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id)
-        deal = Scenario(
-            id=uuid4(),
-            deal_id=top_deal.id,
-            created_by_user_id=user.id,
+        org, user = await seed_org(session)
+        opportunity = await seed_opportunity(session, org, user, name="Scenario Opportunity")
+        deal_model = await seed_deal_model(
+            session,
+            opportunity,
+            user,
             name="Scenario Base Case",
-            version=1,
-            is_active=True,
             project_type=ProjectType.new_construction,
         )
         dev_project = Project(
             id=uuid4(),
-            scenario_id=deal.id,
+            scenario_id=deal_model.id,
             opportunity_id=opportunity.id,
             name="Scenario Project",
-            deal_type=ProjectType.new_construction.value,
         )
+        session.add(dev_project)
+        await session.flush()
+
         inputs = OperationalInputs(
             project_id=dev_project.id,
             unit_count_existing=4,
@@ -357,18 +289,18 @@ async def _seed_scenario(test_session_factory, variable: str = "operational.exit
             capex_reserve_per_unit_annual=Decimal("300.000000"),
             selling_costs_pct=Decimal("2.500000"),
         )
-        sensitivity = Scenario(
+        sensitivity = Sensitivity(
             id=uuid4(),
             opportunity_id=opportunity.id,
-            scenario_id=deal.id,
+            scenario_id=deal_model.id,
             created_by_user_id=user.id,
             variable=variable,
             range_min=Decimal("4.500000"),
             range_max=Decimal("6.000000"),
             range_steps=4,
-            status=ScenarioStatus.pending,
+            status=SensitivityStatus.pending,
         )
 
-        session.add_all([org, user, opportunity, top_deal, deal_opp, deal, dev_project, inputs, sensitivity])
+        session.add_all([inputs, sensitivity])
         await session.commit()
         return sensitivity.id

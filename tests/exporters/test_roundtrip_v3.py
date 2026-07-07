@@ -690,3 +690,24 @@ async def test_template_apply_maps_duplicate_module_labels_to_existing(
         )
     ).scalar_one()
     assert new_tier.capital_module_id == preloaded.id
+
+
+# ── Ported from tests/exporters/test_benchmark_fixtures.py (deleted) ─────────
+
+
+@pytest.mark.asyncio
+async def test_export_deal_model_json_includes_expense_line_notes(session: AsyncSession):
+    """Expense lines with `notes` must survive export_deal_model_json."""
+    org, user = await seed_org(session)
+    opp = await seed_opportunity(session, org, user)
+    scenario, _inputs, _income, opex = await seed_deal_model_with_financials(
+        session, opp, user
+    )
+    opex.notes = "Owner-paid utility"
+    await session.flush()
+
+    payload = await export_deal_model_json(session, scenario.id)
+
+    assert payload["expense_lines"][0]["label"] == "Property Management"
+    assert payload["expense_lines"][0]["notes"] == "Owner-paid utility"
+    assert payload["deal_model"]["expense_lines"][0]["notes"] == "Owner-paid utility"

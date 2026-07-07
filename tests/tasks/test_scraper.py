@@ -2,20 +2,19 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 from decimal import Decimal
-from typing import cast
 from unittest.mock import patch
 from uuid import UUID, uuid4
 
 import httpx
 import pytest
-from sqlalchemy import delete, select
-from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
+import pytest_asyncio
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
-from app.models.base import Base
 from app.models.broker import Broker, Brokerage
 from app.models.ingestion import DedupCandidate, DedupStatus, IngestJob, SavedSearchCriteria
 from app.models.org import Organization, User
-from app.models.project import Project, ScrapedListing
+from app.models.scraped_listing import ScrapedListing
 from app.schemas.broker import BrokerCreate
 from app.schemas.scraped_listing import ScrapedListingCreate
 from app.tasks.scraper import (
@@ -27,50 +26,43 @@ from app.tasks.scraper import (
 )
 
 
-@pytest.fixture
-async def test_session_factory(tmp_path):
-    test_engine = create_async_engine(
-        f"sqlite+aiosqlite:///{tmp_path / 'stage1c_scraper.db'}",
-        future=True,
-    )
-    session_factory = async_sessionmaker(
-        bind=test_engine,
+@pytest_asyncio.fixture(loop_scope="session")
+async def test_session_factory(_test_engine, session):
+    """Session factory bound to the per-run Postgres test DB, plus a seed org/user.
+
+    Task code (app.tasks.scraper) opens sessions via app.db.AsyncSessionLocal,
+    which the autouse `_rebind_app_db` conftest fixture already points at the
+    same engine — no monkeypatching needed. Depending on the `session` fixture
+    ensures the conftest TRUNCATE-on-teardown cleans up rows committed here.
+    """
+    factory = async_sessionmaker(
+        bind=_test_engine,
+        class_=AsyncSession,
         expire_on_commit=False,
         autoflush=False,
     )
-
-    async with test_engine.begin() as conn:
-        await conn.run_sync(
-            lambda sync_conn: Base.metadata.create_all(
-                sync_conn,
-                tables=cast(
-                    list,
-                    [
-                        Organization.__table__,
-                        User.__table__,
-                        Project.__table__,
-                        Brokerage.__table__,
-                        Broker.__table__,
-                        IngestJob.__table__,
-                        SavedSearchCriteria.__table__,
-                        ScrapedListing.__table__,
-                        DedupCandidate.__table__,
-                    ],
-                ),
-            )
-        )
-
-    async with session_factory() as session:
+    async with factory() as seed_session:
         org = Organization(name="Stage 1C Test Org", slug=f"stage1c-{uuid4().hex[:8]}")
-        session.add(org)
-        await session.flush()
-        session.add(User(org_id=org.id, name="Stage 1C Test User"))
-        await session.commit()
+        seed_session.add(org)
+        await seed_session.flush()
+        seed_session.add(User(org_id=org.id, name="Stage 1C Test User"))
+        await seed_session.commit()
 
-    try:
-        yield session_factory
-    finally:
-        await test_engine.dispose()
+    yield factory
+
+
+@pytest.fixture
+def _no_oregon_enrichment(monkeypatch: pytest.MonkeyPatch):
+    """Stub out the Celery hand-off upsert_brokers makes for never-enriched brokers.
+
+    Without this, upsert_brokers calls enrich_broker_oregon.delay(), which
+    needs a reachable Redis broker.
+    """
+    from app.tasks import oregon_elicense
+
+    monkeypatch.setattr(
+        oregon_elicense.enrich_broker_oregon, "delay", lambda *args, **kwargs: None
+    )
 
 
 @pytest.mark.asyncio
@@ -113,8 +105,6 @@ async def test_scrape_listings_proxy_routing_and_persistence(
         1111,
     )
 
-    monkeypatch.setattr("app.tasks.scraper.AsyncSessionLocal", test_session_factory)
-
     async def fake_post(self, url: str, *, json=None, **kwargs):  # type: ignore[no-untyped-def]
         captured["url"] = url
         captured["json"] = json
@@ -135,14 +125,14 @@ async def test_scrape_listings_proxy_routing_and_persistence(
     job_id: str | None = None
     with patch("httpx.AsyncClient.post", new=fake_post):
         job_id = await _scrape_listings(
-            source="loopnet",
+            source="crexi",
             search_params={"city": "Gresham"},
             triggered_by="pytest",
         )
 
     payload = captured["json"]
     assert isinstance(payload, dict)
-    assert payload["source"] == "loopnet"
+    assert payload["source"] == "crexi"
     assert payload["search_params"] == {"city": "Gresham"}
 
     if expect_proxy:
@@ -172,10 +162,6 @@ async def test_scrape_listings_proxy_routing_and_persistence(
         assert ingest_job.records_new == 1
         assert len(listings) == 1
         assert listings[0].listing_url == listing_url
-
-        await session.execute(delete(ScrapedListing).where(ScrapedListing.ingest_job_id == job_uuid))
-        await session.execute(delete(IngestJob).where(IngestJob.id == job_uuid))
-        await session.commit()
 
 
 def test_build_listing_values_maps_crexi_detail_payload_fields() -> None:
@@ -224,7 +210,8 @@ def test_build_listing_values_maps_crexi_detail_payload_fields() -> None:
 
     assert values["source"] == "crexi"
     assert values["source_id"] == "987654"
-    assert values["source_url"] == "https://www.crexi.com/properties/gresham-multifamily-opportunity"
+    # Canonical Crexi URL now includes the listing id: /properties/{id}/{slug}
+    assert values["source_url"] == "https://www.crexi.com/properties/987654/gresham-multifamily-opportunity"
     assert values["listing_name"] == "Gresham Multifamily Opportunity"
     assert values["street"] == "123 Main St"
     assert values["city"] == "Gresham"
@@ -245,6 +232,7 @@ def test_build_listing_values_maps_crexi_detail_payload_fields() -> None:
 
 
 @pytest.mark.asyncio
+@pytest.mark.usefixtures("_no_oregon_enrichment")
 async def test_upsert_brokers_and_scraped_listings_refresh_existing_crexi_rows(
     test_session_factory,
 ) -> None:
@@ -313,8 +301,8 @@ async def test_upsert_brokers_and_scraped_listings_refresh_existing_crexi_rows(
         assert stored.broker_id == broker_id_map[5001]
         assert stored.first_seen_at is not None
 
-        preserved_first_seen = datetime(2024, 1, 2, 9, 30)
-        old_last_seen = datetime(2024, 1, 2, 10, 0)
+        preserved_first_seen = datetime(2024, 1, 2, 9, 30, tzinfo=UTC)
+        old_last_seen = datetime(2024, 1, 2, 10, 0, tzinfo=UTC)
         stored.first_seen_at = preserved_first_seen
         stored.last_seen_at = old_last_seen
         await session.flush()
@@ -387,13 +375,14 @@ async def test_upsert_brokers_and_scraped_listings_refresh_existing_crexi_rows(
 
 
 @pytest.mark.asyncio
+@pytest.mark.usefixtures("_no_oregon_enrichment")
 async def test_scrape_crexi_returns_ingest_summary(
     monkeypatch: pytest.MonkeyPatch,
     test_session_factory,
 ) -> None:
-    monkeypatch.setattr("app.tasks.scraper.AsyncSessionLocal", test_session_factory)
-
-    async def fake_fetch_all(self) -> tuple[list[ScrapedListingCreate], list[BrokerCreate]]:
+    async def fake_fetch_all(
+        self, polygons=None
+    ) -> tuple[list[ScrapedListingCreate], list[BrokerCreate], int]:
         return (
             [
                 ScrapedListingCreate(
@@ -424,6 +413,7 @@ async def test_scrape_crexi_returns_ingest_summary(
                     number_of_assets=4,
                 )
             ],
+            1,
         )
 
     monkeypatch.setattr("app.tasks.scraper.CrxiScraper.fetch_all", fake_fetch_all)
@@ -455,7 +445,6 @@ async def test_scrape_listings_marks_matching_saved_search_criteria(
         "app.tasks.scraper.settings.lxc134_scrapling_url",
         "http://scrapling.test",
     )
-    monkeypatch.setattr("app.tasks.scraper.AsyncSessionLocal", test_session_factory)
 
     async with test_session_factory() as session:
         user = (await session.execute(select(User))).scalar_one()
@@ -467,7 +456,7 @@ async def test_scrape_listings_marks_matching_saved_search_criteria(
                 max_units=20,
                 max_price=Decimal("1500000"),
                 zip_codes=["97030"],
-                sources=["loopnet"],
+                sources=["crexi"],
                 active=True,
             )
         )
@@ -495,7 +484,7 @@ async def test_scrape_listings_marks_matching_saved_search_criteria(
 
     with patch("httpx.AsyncClient.post", new=fake_post):
         job_id = await _scrape_listings(
-            source="loopnet",
+            source="crexi",
             search_params={"city": "Gresham"},
             triggered_by="pytest",
         )
@@ -519,13 +508,15 @@ async def test_scrape_crexi_creates_pending_dedup_candidates_for_new_vs_existing
     monkeypatch: pytest.MonkeyPatch,
     test_session_factory,
 ) -> None:
-    monkeypatch.setattr("app.tasks.scraper.AsyncSessionLocal", test_session_factory)
-
     async with test_session_factory() as session:
         prior_job = IngestJob(source="loopnet", triggered_by="seed", status="completed")
         session.add(prior_job)
         await session.flush()
 
+        # unit_count matches the incoming Crexi listing (+0.15) on top of the
+        # fuzzy street-token overlap ({123, MAIN} vs {123, MAIN, GRESHAM, 97030}
+        # → 0.5 * 0.95 = 0.475) so the pair scores 0.625 — inside the
+        # pending-review band [0.60, 0.85).
         existing_listing = ScrapedListing(
             ingest_job_id=prior_job.id,
             source="loopnet",
@@ -533,13 +524,16 @@ async def test_scrape_crexi_creates_pending_dedup_candidates_for_new_vs_existing
             source_url="https://example.com/listings/existing-123",
             address_normalized="123 MAIN ST GRESHAM OR 97030",
             address_raw="123 Main St, Gresham, OR 97030",
+            unit_count=12,
             is_new=True,
             matches_saved_criteria=False,
         )
         session.add(existing_listing)
         await session.commit()
 
-    async def fake_fetch_all(self) -> tuple[list[ScrapedListingCreate], list[BrokerCreate]]:
+    async def fake_fetch_all(
+        self, polygons=None
+    ) -> tuple[list[ScrapedListingCreate], list[BrokerCreate], int]:
         return (
             [
                 ScrapedListingCreate(
@@ -560,6 +554,7 @@ async def test_scrape_crexi_creates_pending_dedup_candidates_for_new_vs_existing
                 )
             ],
             [],
+            1,
         )
 
     monkeypatch.setattr("app.tasks.scraper.CrxiScraper.fetch_all", fake_fetch_all)
