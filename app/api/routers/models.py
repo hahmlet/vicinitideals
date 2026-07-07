@@ -210,12 +210,14 @@ async def create_opportunity_model(
     scenario = Scenario(deal_id=deal.id, **payload.model_dump())
     session.add(scenario)
     await session.flush()
-    # Create the default Project for this Scenario
+    # Create the default Project for this Scenario. (Project carries no
+    # deal-type column — the type lives on Scenario.project_type. Passing
+    # deal_type here raised TypeError and 500'd this route; caught by the
+    # Slice 5 MCP-shaped flow test.)
     project = Project(
         scenario_id=scenario.id,
         opportunity_id=opportunity_id,
         name="Default Project",
-        deal_type=scenario.project_type,
     )
     session.add(project)
     await session.flush()
