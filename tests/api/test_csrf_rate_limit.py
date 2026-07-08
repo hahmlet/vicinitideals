@@ -74,15 +74,19 @@ async def test_csrf_get_passes_without_token(client: AsyncClient, session: Async
 
 
 async def test_csrf_post_without_token_blocked(client: AsyncClient, session: AsyncSession) -> None:
-    """Authenticated POST to a non-exempt path with no CSRF token → 403."""
+    """Authenticated HTMX POST to a non-exempt path with no CSRF token → 403.
+
+    CSRF validation is scoped to HTMX-initiated mutating requests
+    (hx-request: true); plain form POSTs rely on SameSite=Lax cookies.
+    """
     _, user = await seed_org(session)
     cookies = {COOKIE_NAME: create_session_token(user.id)}
-    # /api/deals is a real POST endpoint; we don't care about the payload —
-    # the CSRF check fires before route logic.
+    # The CSRF middleware fires before routing, so any non-exempt path works.
     resp = await client.post(
         "/api/deals",
         cookies=cookies,
         json={"name": "test"},
+        headers={"hx-request": "true"},
     )
     assert resp.status_code == 403
     body = resp.json()
@@ -131,7 +135,7 @@ async def test_csrf_post_unauthenticated_passes_to_downstream(client: AsyncClien
 
 
 async def test_csrf_wrong_token_blocked(client: AsyncClient, session: AsyncSession) -> None:
-    """Authenticated POST with a token forged for a different user → 403."""
+    """Authenticated HTMX POST with a token forged for a different user → 403."""
     _, user = await seed_org(session)
     cookies = {COOKIE_NAME: create_session_token(user.id)}
     wrong_token = make_csrf_token(str(uuid.uuid4()))  # different user
@@ -139,7 +143,7 @@ async def test_csrf_wrong_token_blocked(client: AsyncClient, session: AsyncSessi
         "/api/deals",
         cookies=cookies,
         json={"name": "test"},
-        headers={"X-CSRF-Token": wrong_token},
+        headers={"X-CSRF-Token": wrong_token, "hx-request": "true"},
     )
     assert resp.status_code == 403
 

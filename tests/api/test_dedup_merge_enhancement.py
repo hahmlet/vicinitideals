@@ -146,6 +146,13 @@ async def test_diff_fields_preview_matches_enhancement(session) -> None:
 
 @pytest.mark.asyncio
 async def test_merge_endpoint_emits_conflict_log_rows(session, client, auth_headers) -> None:
+    from tests.conftest import seed_org
+
+    # The merge route persists X-User-ID into
+    # field_conflict_log.resolved_by_user_id (FK to users) — it must be a
+    # real user, not the random UUID the auth_headers fixture generates.
+    _, user = await seed_org(session)
+
     canonical = await _mk_listing(
         session, source="crexi", source_id="c2",
         apn=None, description=None,
@@ -158,7 +165,10 @@ async def test_merge_endpoint_emits_conflict_log_rows(session, client, auth_head
     await session.commit()
 
     # Call the merge endpoint
-    response = await client.patch(f"/api/dedup/{cand.id}/merge", headers=auth_headers)
+    response = await client.patch(
+        f"/api/dedup/{cand.id}/merge",
+        headers={**auth_headers, "X-User-ID": str(user.id)},
+    )
     assert response.status_code == 200, response.text
 
     # The test 'session' fixture is rolled back, but the client uses the same session.

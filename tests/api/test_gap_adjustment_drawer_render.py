@@ -46,7 +46,42 @@ async def test_drawer_renders_on_sources_uses_panel(
     session: AsyncSession,
     auth_headers: dict[str, str],
 ) -> None:
-    model_id, _ = await _seeded_model(session)
+    model_id, project_id = await _seeded_model(session)
+
+    # The drawer only renders when there is a Sources/Uses gap (or a phantom
+    # adjustment row already exists), and the gap is only computed once BOTH
+    # totals exist — capital_total is None with no funded Sources. Seed a
+    # $100k Source (with its per-project junction amount) against a $250k
+    # Use so gap = $150k and the drawer shows.
+    from uuid import uuid4 as _uuid4
+    from app.models.capital import CapitalModule, CapitalModuleProject
+    mod = CapitalModule(
+        id=_uuid4(),
+        scenario_id=model_id,
+        label="Equity",
+        vehicle_type="equity",
+        stack_position=1,
+        source={"amount": 100000.0},
+        carry={},
+        exit_terms={},
+    )
+    session.add(mod)
+    await session.flush()
+    session.add_all([
+        CapitalModuleProject(
+            capital_module_id=mod.id,
+            project_id=project_id,
+            amount=Decimal("100000"),
+        ),
+        UseLine(
+            project_id=project_id,
+            label="Site Work",
+            phase=UseLinePhase.construction,
+            amount=Decimal("250000"),
+            timing_type="first_day",
+        ),
+    ])
+    await session.commit()
 
     resp = await client.get(
         f"/ui/panel/{model_id}?module=sources_uses",
@@ -68,7 +103,7 @@ async def test_drawer_renders_on_sources_uses_panel(
     assert "/api/models/" in html  # the fetch URL
     assert "/sliders" in html
     # Reset button present
-    assert "Reset all" in html
+    assert "Reset and Recalc" in html
 
 
 @pytest.mark.asyncio
@@ -114,9 +149,10 @@ async def test_drawer_prefills_from_existing_phantom_rows(
     assert resp.status_code == 200
     html = resp.text
 
-    # Slider value attributes must reflect the phantom row amounts.
+    # Slider value attributes must reflect the phantom row amounts. The
+    # revenue slider is denominated ANNUALLY (monthly phantom amount * 12).
     assert 'id="gap-slider-rev"' in html
-    assert 'value="1500"' in html
+    assert 'value="18000"' in html
     assert 'id="gap-slider-opex"' in html
     assert 'value="-8000"' in html
     assert 'id="gap-slider-pp"' in html

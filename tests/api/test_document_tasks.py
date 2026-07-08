@@ -76,15 +76,15 @@ async def test_status_filter(client: AsyncClient, session: AsyncSession):
     project, user, org = await _seed_project(session)
     await _auth(client, user.id)
     session.add_all([
-        DocumentTask(org_id=org.id, project_id=project.id, title="A", status=DocumentTaskStatus.pending),
-        DocumentTask(org_id=org.id, project_id=project.id, title="B", status=DocumentTaskStatus.complete),
+        DocumentTask(org_id=org.id, project_id=project.id, title="Alpha Survey", status=DocumentTaskStatus.pending),
+        DocumentTask(org_id=org.id, project_id=project.id, title="Bravo Leases", status=DocumentTaskStatus.complete),
     ])
     await session.commit()
 
     resp = await client.get(f"/ui/projects/{project.id}/tasks", params={"status": "complete"})
     assert resp.status_code == 200
-    assert "B" in resp.text
-    assert "A" not in resp.text
+    assert "Bravo Leases" in resp.text
+    assert "Alpha Survey" not in resp.text
 
 
 async def test_update_status_and_notes(client: AsyncClient, session: AsyncSession):
@@ -140,7 +140,9 @@ async def test_upload_to_task_assigns_task_id(client: AsyncClient, session: Asyn
         files={"files": ("lease1.pdf", b"%PDF lease", "application/pdf")},
     )
     assert resp.status_code == 200
-    assert "lease1.pdf" in resp.text
+    # Card shows the scheme-based display name; the label component is the
+    # original filename minus its extension.
+    assert "lease1" in resp.text
     doc = (
         await session.execute(select(Document).where(Document.project_id == project.id))
     ).scalar_one()
@@ -164,7 +166,12 @@ async def test_task_zip_has_notes_and_files(client: AsyncClient, session: AsyncS
     zf = zipfile.ZipFile(io.BytesIO(resp.content))
     names = zf.namelist()
     assert "notes.txt" in names
-    assert "a.pdf" in names
+    # File entries use the enforced naming scheme:
+    # "{Project} - {Task} - {Label} - {Stage} - {MM-DD-YYYY}.ext"
+    file_names = [n for n in names if n != "notes.txt"]
+    assert len(file_names) == 1
+    assert file_names[0].startswith("P1 - Diligence - a - Draft - ")
+    assert file_names[0].endswith(".pdf")
     assert b"grab all" in zf.read("notes.txt")
 
 
@@ -179,14 +186,22 @@ async def test_delete_task_detaches_documents(client: AsyncClient, session: Asyn
         files={"files": ("k.pdf", b"K", "application/pdf")},
     )
 
-    resp = await client.post(f"/ui/tasks/{task.id}/delete", data={"status": "all"})
+    task_id = task.id
+    project_id = project.id  # capture before expire_all
+    resp = await client.post(f"/ui/tasks/{task_id}/delete", data={"status": "all"})
     assert resp.status_code == 200
-    # Task gone, document kept but detached.
-    assert (await session.get(DocumentTask, task.id)) is None
+    session.expire_all()
+    # Task gone; document kept but re-filed into the catch-all "Misc." task
+    # (every document must live in a task).
+    assert (await session.get(DocumentTask, task_id)) is None
     doc = (
-        await session.execute(select(Document).where(Document.project_id == project.id))
+        await session.execute(select(Document).where(Document.project_id == project_id))
     ).scalar_one()
-    assert doc.task_id is None
+    assert doc.task_id is not None
+    assert doc.task_id != task_id
+    misc = await session.get(DocumentTask, doc.task_id)
+    assert misc is not None
+    assert misc.title == "Misc."
 
 
 async def test_cross_org_task_access_404(client: AsyncClient, session: AsyncSession):

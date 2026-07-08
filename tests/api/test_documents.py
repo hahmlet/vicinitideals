@@ -254,7 +254,14 @@ async def test_zip_download_contains_selected(client: AsyncClient, session: Asyn
     assert resp.status_code == 200
     assert resp.headers["content-type"] == "application/zip"
     zf = zipfile.ZipFile(io.BytesIO(resp.content))
-    assert sorted(zf.namelist()) == ["one.pdf", "two.pdf"]
+    # Zip entries use the enforced naming scheme:
+    # "{Project} - {Task} - {Label} - {Stage} - {MM-DD-YYYY}.ext"
+    names = sorted(zf.namelist())
+    assert len(names) == 2
+    assert names[0].startswith("Main Project - Misc - one - Draft - ")
+    assert names[0].endswith(".pdf")
+    assert names[1].startswith("Main Project - Misc - two - Draft - ")
+    assert names[1].endswith(".pdf")
 
 
 # ---------------------------------------------------------------------------

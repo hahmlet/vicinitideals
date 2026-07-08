@@ -57,10 +57,12 @@ async def test_user_edit_flips_auto_finance_cost_flag(
     )
     session.add(auto_row)
     await session.commit()
+    model_id = deal_model.id  # capture before expire_all (sync lazy-load raises on AsyncSession)
+    auto_row_id = auto_row.id
     await _auth(client, user.id)
 
     resp = await client.put(
-        f"/ui/forms/{deal_model.id}/use-lines/{auto_row.id}",
+        f"/ui/forms/{model_id}/use-lines/{auto_row_id}",
         data={
             "label": "Construction Loan — Total Finance Costs",
             "amount": "17500",  # user override
@@ -72,7 +74,7 @@ async def test_user_edit_flips_auto_finance_cost_flag(
     assert resp.status_code == 200, resp.text
 
     session.expire_all()
-    row = await session.get(UseLine, auto_row.id)
+    row = await session.get(UseLine, auto_row_id)
     assert row is not None
     assert row.is_auto_finance_cost is False, (
         "User edit on an auto finance cost row must flip the flag to False so "
@@ -113,11 +115,13 @@ async def test_auto_fc_row_form_drops_phase_change(
     )
     session.add(auto_row)
     await session.commit()
+    model_id = deal_model.id  # capture before expire_all (sync lazy-load raises on AsyncSession)
+    auto_row_id = auto_row.id
     await _auth(client, user.id)
 
     # Hand-crafted POST attempting to move Active From to "construction"
     resp = await client.put(
-        f"/ui/forms/{deal_model.id}/use-lines/{auto_row.id}",
+        f"/ui/forms/{model_id}/use-lines/{auto_row_id}",
         data={
             "label": "Assumable Debt — Total Finance Costs",
             "amount": "20000",
@@ -130,7 +134,7 @@ async def test_auto_fc_row_form_drops_phase_change(
     assert resp.status_code == 200, resp.text
 
     session.expire_all()
-    row = await session.get(UseLine, auto_row.id)
+    row = await session.get(UseLine, auto_row_id)
     assert row is not None
     # Server must NOT have persisted the phase change from milestone_key.
     assert str(row.phase or "").replace("UseLinePhase.", "") == "acquisition", (

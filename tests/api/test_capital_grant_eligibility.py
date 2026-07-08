@@ -21,6 +21,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.api.auth import COOKIE_NAME, create_session_token
 from app.models.capital import CapitalModule
 from app.models.deal import UseLine
+from app.models.project import Project
 
 
 pytestmark = pytest.mark.asyncio
@@ -29,6 +30,16 @@ pytestmark = pytest.mark.asyncio
 async def _auth(client: AsyncClient, user_id) -> None:
     from tests.conftest import set_client_auth
     set_client_auth(client, user_id)
+
+
+async def _project_for(session: AsyncSession, deal_model) -> Project:
+    """seed_deal_model_with_financials returns (model, inputs, income, opex) —
+    the Project must be looked up by scenario_id."""
+    return (
+        await session.execute(
+            select(Project).where(Project.scenario_id == deal_model.id)
+        )
+    ).scalar_one()
 
 
 async def test_save_grant_with_eligibility_persists_maximum(
@@ -40,7 +51,8 @@ async def test_save_grant_with_eligibility_persists_maximum(
 
     org, user = await seed_org(session)
     opp = await seed_opportunity(session, org, user)
-    deal_model, _, project, _ = await seed_deal_model_with_financials(session, opp, user)
+    deal_model, _, _, _ = await seed_deal_model_with_financials(session, opp, user)
+    project = await _project_for(session, deal_model)
 
     # Seed a Use line to point eligibility at
     use_line = UseLine(
@@ -56,23 +68,25 @@ async def test_save_grant_with_eligibility_persists_maximum(
     await _auth(client, user.id)
     resp = await client.post(
         f"/ui/forms/{deal_model.id}/capital-modules",
-        data=[
-            ("label", "OR-MEP"),
-            ("vehicle_type", "grant"),
-            ("source_maximum", "250000"),
-            ("stack_position", "3"),
-            ("eligible_use_ids", str(use_line.id)),
-            ("ds_active_from_milestone", ""),
-            ("ds_active_from_offset_days", "0"),
-            ("ds_draw_every_n_months", "1"),
-        ],
+        data={
+            "label": "OR-MEP",
+            "vehicle_type": "grant",
+            "source_maximum": "250000",
+            "stack_position": "3",
+            "eligible_use_ids": str(use_line.id),
+            "ds_active_from_milestone": "",
+            "ds_active_from_offset_days": "0",
+            "ds_draw_every_n_months": "1",
+        },
     )
     assert resp.status_code in (200, 204), resp.text
 
+    model_id = deal_model.id  # capture before expire_all
+    use_line_id = use_line.id
     session.expire_all()
     rows = (
         await session.execute(
-            select(CapitalModule).where(CapitalModule.scenario_id == deal_model.id)
+            select(CapitalModule).where(CapitalModule.scenario_id == model_id)
         )
     ).scalars().all()
     grant = next((m for m in rows if m.label == "OR-MEP"), None)
@@ -80,7 +94,7 @@ async def test_save_grant_with_eligibility_persists_maximum(
     assert Decimal(str(grant.source.get("maximum") or 0)) == Decimal("250000")
 
     # Use line should now reference the grant in eligible_module_ids
-    refreshed_use = await session.get(UseLine, use_line.id)
+    refreshed_use = await session.get(UseLine, use_line_id)
     assert refreshed_use is not None
     assert any(str(x) == str(grant.id) for x in (refreshed_use.eligible_module_ids or []))
 
@@ -121,7 +135,8 @@ async def test_save_rejects_eligibility_without_maximum(
 
     org, user = await seed_org(session)
     opp = await seed_opportunity(session, org, user)
-    deal_model, _, project, _ = await seed_deal_model_with_financials(session, opp, user)
+    deal_model, _, _, _ = await seed_deal_model_with_financials(session, opp, user)
+    project = await _project_for(session, deal_model)
 
     use_line = UseLine(
         project_id=project.id,
@@ -136,15 +151,15 @@ async def test_save_rejects_eligibility_without_maximum(
     await _auth(client, user.id)
     resp = await client.post(
         f"/ui/forms/{deal_model.id}/capital-modules",
-        data=[
-            ("label", "Bad Grant"),
-            ("vehicle_type", "grant"),
-            ("stack_position", "3"),
-            ("eligible_use_ids", str(use_line.id)),
-            ("ds_active_from_milestone", ""),
-            ("ds_active_from_offset_days", "0"),
-            ("ds_draw_every_n_months", "1"),
-        ],
+        data={
+            "label": "Bad Grant",
+            "vehicle_type": "grant",
+            "stack_position": "3",
+            "eligible_use_ids": str(use_line.id),
+            "ds_active_from_milestone": "",
+            "ds_active_from_offset_days": "0",
+            "ds_draw_every_n_months": "1",
+        },
     )
     assert resp.status_code == 422
 
@@ -158,7 +173,8 @@ async def test_clearing_eligibility_removes_back_reference(
 
     org, user = await seed_org(session)
     opp = await seed_opportunity(session, org, user)
-    deal_model, _, project, _ = await seed_deal_model_with_financials(session, opp, user)
+    deal_model, _, _, _ = await seed_deal_model_with_financials(session, opp, user)
+    project = await _project_for(session, deal_model)
 
     # Pre-existing grant linked to a Use
     use_line = UseLine(
@@ -202,10 +218,12 @@ async def test_clearing_eligibility_removes_back_reference(
     )
     assert resp.status_code in (200, 204), resp.text
 
+    use_line_id = use_line.id  # capture before expire_all
+    grant_id = grant.id
     session.expire_all()
-    refreshed = await session.get(UseLine, use_line.id)
+    refreshed = await session.get(UseLine, use_line_id)
     assert refreshed is not None
-    assert not any(str(x) == str(grant.id) for x in (refreshed.eligible_module_ids or []))
+    assert not any(str(x) == str(grant_id) for x in (refreshed.eligible_module_ids or []))
 
 
 # ---------------------------------------------------------------------------
@@ -229,7 +247,8 @@ async def test_line_form_eligibility_uses_excludes_gap_adjustment_and_zero(
 
     org, user = await seed_org(session)
     opp = await seed_opportunity(session, org, user)
-    deal_model, _, project, _ = await seed_deal_model_with_financials(session, opp, user)
+    deal_model, _, _, _ = await seed_deal_model_with_financials(session, opp, user)
+    project = await _project_for(session, deal_model)
 
     real_use = UseLine(
         project_id=project.id, label="Site Work", phase="construction",

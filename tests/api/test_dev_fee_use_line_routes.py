@@ -106,8 +106,8 @@ async def test_create_deal_seeds_auto_dev_fee_row(
 
 async def _seed_deal_with_auto_dev_fee(
     session: AsyncSession,
-) -> tuple[UUID, UUID, UUID]:
-    """Returns (model_id, project_id, auto_dev_fee_use_line_id)."""
+) -> tuple[UUID, UUID, UUID, UUID]:
+    """Returns (model_id, project_id, auto_dev_fee_use_line_id, user_id)."""
     from tests.conftest import seed_org, seed_opportunity, seed_deal_model_with_financials
 
     org, user = await seed_org(session)
@@ -135,14 +135,15 @@ async def _seed_deal_with_auto_dev_fee(
     session.add(auto_row)
     await session.flush()
     await session.commit()
-    return deal_model.id, project.id, auto_row.id
+    return deal_model.id, project.id, auto_row.id, user.id
 
 
 async def test_form_put_only_updates_pct_on_auto_row(
     client: AsyncClient,
     session: AsyncSession,
 ) -> None:
-    model_id, project_id, ul_id = await _seed_deal_with_auto_dev_fee(session)
+    model_id, project_id, ul_id, user_id = await _seed_deal_with_auto_dev_fee(session)
+    await _auth(client, user_id)
 
     # Caller tries to change everything — handler must ignore label/category/etc.
     resp = await client.put(
@@ -183,7 +184,8 @@ async def test_api_delete_returns_403_for_auto_dev_fee(
     client: AsyncClient,
     session: AsyncSession,
 ) -> None:
-    model_id, _project_id, ul_id = await _seed_deal_with_auto_dev_fee(session)
+    model_id, _project_id, ul_id, user_id = await _seed_deal_with_auto_dev_fee(session)
+    await _auth(client, user_id)
     resp = await client.delete(f"/api/models/{model_id}/use-lines/{ul_id}")
     assert resp.status_code == 403, resp.text
     assert "auto Developer Fee" in resp.text or "Developer Fee" in resp.text
@@ -193,7 +195,8 @@ async def test_form_delete_returns_403_for_auto_dev_fee(
     client: AsyncClient,
     session: AsyncSession,
 ) -> None:
-    model_id, _project_id, ul_id = await _seed_deal_with_auto_dev_fee(session)
+    model_id, _project_id, ul_id, user_id = await _seed_deal_with_auto_dev_fee(session)
+    await _auth(client, user_id)
     resp = await client.delete(f"/ui/forms/{model_id}/use-lines/{ul_id}")
     assert resp.status_code == 403, resp.text
     assert "Developer Fee" in resp.text
