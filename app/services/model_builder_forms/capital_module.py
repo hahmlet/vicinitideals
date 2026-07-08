@@ -414,7 +414,15 @@ async def save_capital_module(
         # Project-specific vehicle types get one junction row (primary project only).
         # Shared types (debt/equity/forgivable_loan) get a row per project so the
         # source appears in every project's coverage list.
-        _PROJECT_SPECIFIC_VT = {"deferred_developer_fee", "grant", "float_earnings"}
+        #
+        # deferred_developer_fee is intentionally NOT project-specific: its
+        # auto-sizer (`_auto_size_ddf_module`) fills each project's residual
+        # Sources = Uses gap independently, so in a multi-project rollup the
+        # module must be attached to every project or the sizer only ever sees
+        # the primary project's gap and the other projects' deferred fees drop
+        # to $0. Per-project amounts / manual overrides are managed via the
+        # Coverage editor's per-project auto_size toggle.
+        _PROJECT_SPECIFIC_VT = {"grant", "float_earnings"}
         _junc_projects = (
             [_p for _p in _all_projects if _p.id == _primary_pid]
             if _vehicle_type in _PROJECT_SPECIFIC_VT

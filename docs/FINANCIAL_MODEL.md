@@ -4216,7 +4216,7 @@ stale data clears, None when no relevant source/module exists.
 | Limitation | Resolution |
 |---|---|
 | Yield curve is a single user-entered annual % | Future: scheduled fetch of Treasury curve with per-month yield indexing |
-| Multi-project scenarios: DDF balance reads from the default-project OO row only (`Scenario.operational_outputs` is `uselist=False`); matches same limitation in `_apply_levered_metrics` | Phase 2f+ multi-project waterfall work |
+| Multi-project scenarios: the DDF *opening balance* now sizes per project and sums across the rollup (see I.8), but the period-by-period balance **series** is still persisted on the default-project OO row only (`Scenario.operational_outputs` is `uselist=False`); matches same limitation in `_apply_levered_metrics` | Phase 2f+ multi-project waterfall work |
 | Integration + E2E tests for the float-earnings Waterfall Milestone form field are still pending | Follow-up: API integration test for capital-module CRUD + E2E flow |
 | DDF opening balance is the DDF capital module amount, not the total deferred dev fee — if the developer deferred more than the gap-fill amount, the excess dev fee recovery is not modeled in the DDF balance schedule | Phase 2+ full dev-fee payout tracking |
 
@@ -4235,6 +4235,21 @@ dev_fee_total = Σ use_lines where is_auto_dev_fee or is_auto_acquisition_fee
 `other_sources_total` excludes `deferred_developer_fee` and `float_earnings` vehicle
 types. The DDF is intentionally last-resort: `_auto_size_ddf_module()` runs in
 `cashflow.py` after `_auto_size_debt_modules()` completes.
+
+**Multi-project (rollup) sizing.** `_auto_size_ddf_module()` runs inside the
+per-project loop against each project's own Uses and Sources, so every project's
+residual gap is filled independently and the per-project junction amounts are
+summed onto `module.source["amount"]` by `_reconcile_module_amounts_from_junctions()`
+— that sum is the DDF opening balance the waterfall reads. To make this work the
+DDF module must be attached to **every** project via the `capital_module_projects`
+junction; `_ensure_ddf_junctions_for_all_projects()` (called before the per-project
+loop) backfills any missing rows, so a DDF module created before this fix — which
+only had a junction to the primary project — is repaired on the next compute
+without a migration. A project can opt out of auto-sizing by flipping its junction
+`auto_size` off in the Coverage editor and entering a fixed amount; that project is
+then skipped by the sizer and its manual amount flows straight into the sum.
+Before this fix a rollup's DDF sized against the primary project only and the other
+projects' deferred fees dropped to $0.
 
 This means:
 - If debt auto-sizing already closes the gap, DDF amount → $0 (still in stack, just

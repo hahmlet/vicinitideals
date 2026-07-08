@@ -418,6 +418,13 @@ async def compute_cash_flows(
     if not projects:
         raise ValueError(f"Deal {deal_uuid} has no Project with OperationalInputs")
 
+    # Attach any deferred_developer_fee module to every project so the
+    # per-project DDF auto-sizer sees each project's Sources = Uses gap.
+    # Without this, a rollup's DDF only sizes against the primary project
+    # (the sole project the module was junctioned to at creation) and the
+    # other projects' deferred fees never reach the waterfall.
+    await _ensure_ddf_junctions_for_all_projects(session, deal_uuid, projects)
+
     last_summary: dict[str, Any] = {}
     for project in projects:
         last_summary = await _compute_project_cashflow(
@@ -1518,6 +1525,72 @@ async def _sync_junction_amounts_after_compute(
         )).scalar_one_or_none()
         if junction is not None:
             junction.amount = amt
+
+
+async def _ensure_ddf_junctions_for_all_projects(
+    session: AsyncSession,
+    scenario_id: UUID,
+    projects: list[Project],
+) -> None:
+    """Attach every ``deferred_developer_fee`` module to every project.
+
+    DDF modules were historically created project-specific — a single
+    junction row pointing at the primary project (see
+    ``model_builder_forms/capital_module.py``). In a multi-project rollup
+    that meant ``_auto_size_ddf_module`` only ever saw the primary project's
+    Sources = Uses gap, so the scenario's deferred fee sized against one
+    project and every other project's deferred fee silently dropped to $0.
+
+    Attaching the module to each project lets the per-project auto-sizer fill
+    each project's residual gap independently; the per-project junction
+    amounts are then summed back onto ``module.source["amount"]`` by
+    ``_reconcile_module_amounts_from_junctions`` — the value the waterfall
+    reads as the DDF opening balance.
+
+    Newly created junctions inherit the module's ``source.auto_size`` flag and
+    start at amount 0 (the auto-sizer overwrites it; a per-project manual
+    override is set by flipping that project's ``auto_size`` off in the
+    Coverage editor). Idempotent: only missing (module, project) pairs are
+    created. No-op for single-project scenarios.
+    """
+    if len(projects) <= 1:
+        return
+    all_modules = list((await session.execute(
+        select(CapitalModule).where(CapitalModule.scenario_id == scenario_id)
+    )).scalars())
+    ddf_modules = [
+        m for m in all_modules
+        if str(getattr(m, "vehicle_type", None) or "").replace("VehicleType.", "")
+        == "deferred_developer_fee"
+    ]
+    if not ddf_modules:
+        return
+
+    existing_pairs = set(
+        (await session.execute(
+            select(
+                CapitalModuleProject.capital_module_id,
+                CapitalModuleProject.project_id,
+            ).where(
+                CapitalModuleProject.capital_module_id.in_([m.id for m in ddf_modules])
+            )
+        )).all()
+    )
+    added = False
+    for module in ddf_modules:
+        auto = bool((module.source or {}).get("auto_size"))
+        for project in projects:
+            if (module.id, project.id) in existing_pairs:
+                continue
+            session.add(CapitalModuleProject(
+                capital_module_id=module.id,
+                project_id=project.id,
+                amount=Decimal("0"),
+                auto_size=auto,
+            ))
+            added = True
+    if added:
+        await session.flush()
 
 
 async def _reconcile_module_amounts_from_junctions(
