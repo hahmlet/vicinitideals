@@ -1508,43 +1508,59 @@ async def _copy_project_data(
                 new_ms_obj.trigger_milestone_id = ms_id_map[ms.trigger_milestone_id]
                 new_ms_obj.trigger_offset_days = ms.trigger_offset_days
 
-    # Copy Use lines
+    # Copy Use lines / Income streams / Expense lines column-driven: the old
+    # hand-picked kwarg lists rotted as columns were added — clones silently
+    # lost timing_type (changing draw timing), eligible_module_ids (source
+    # routing), dev-fee config, income bad-debt/concessions/renovation/
+    # catch-up fields, and opex lease-up scaling. Copy every column except
+    # identity/metadata, then remap milestone FKs onto the clone's milestones.
+    _copy_skip = {"id", "project_id", "updated_at"}
+    _ms_str_map = {str(k): str(v) for k, v in ms_id_map.items()}
+
     for u in (await session.execute(
         select(UseLine).where(UseLine.project_id == src_proj.id)
     )).scalars():
-        session.add(UseLine(
-            project_id=dst_proj.id,
-            label=u.label, phase=u.phase,
-            amount=u.amount, is_deferred=u.is_deferred, notes=u.notes,
-            cost_category=u.cost_category,
-            dev_fee_basis_bucket=u.dev_fee_basis_bucket,
-        ))
+        new_u = UseLine(project_id=dst_proj.id)
+        for col in UseLine.__table__.columns:
+            if col.name not in _copy_skip:
+                setattr(new_u, col.name, getattr(u, col.name, None))
+        for fk in ("active_from_milestone_id", "spread_to_milestone_id"):
+            old_fk = getattr(new_u, fk, None)
+            setattr(new_u, fk, ms_id_map.get(old_fk) if old_fk else None)
+        # dev_fee_release_schedule stores milestone ids inside JSONB —
+        # remap them too or the schedule points at the source project's
+        # milestones. Unknown ids are left as-is (engine ignores them).
+        sched = new_u.dev_fee_release_schedule or {}
+        if sched:
+            weights = [
+                {**w, "milestone_id": _ms_str_map.get(str(w.get("milestone_id")), w.get("milestone_id"))}
+                for w in sched.get("weights", [])
+            ]
+            fh = sched.get("final_holdback")
+            if isinstance(fh, dict) and fh.get("milestone_id"):
+                fh = {**fh, "milestone_id": _ms_str_map.get(str(fh["milestone_id"]), fh["milestone_id"])}
+            new_u.dev_fee_release_schedule = {**sched, "weights": weights} | (
+                {"final_holdback": fh} if fh else {}
+            )
+        session.add(new_u)
 
-    # Copy Income streams
     for s in (await session.execute(
         select(IncomeStream).where(IncomeStream.project_id == src_proj.id)
     )).scalars():
-        session.add(IncomeStream(
-            project_id=dst_proj.id,
-            stream_type=s.stream_type, label=s.label,
-            unit_count=s.unit_count,
-            amount_per_unit_monthly=s.amount_per_unit_monthly,
-            amount_fixed_monthly=s.amount_fixed_monthly,
-            stabilized_occupancy_pct=s.stabilized_occupancy_pct,
-            escalation_rate_pct_annual=s.escalation_rate_pct_annual,
-            active_in_phases=s.active_in_phases, notes=s.notes,
-        ))
+        new_s = IncomeStream(project_id=dst_proj.id)
+        for col in IncomeStream.__table__.columns:
+            if col.name not in _copy_skip:
+                setattr(new_s, col.name, getattr(s, col.name, None))
+        session.add(new_s)
 
-    # Copy Expense lines
     for e in (await session.execute(
         select(OperatingExpenseLine).where(OperatingExpenseLine.project_id == src_proj.id)
     )).scalars():
-        session.add(OperatingExpenseLine(
-            project_id=dst_proj.id,
-            label=e.label, annual_amount=e.annual_amount,
-            escalation_rate_pct_annual=e.escalation_rate_pct_annual,
-            active_in_phases=e.active_in_phases, notes=e.notes,
-        ))
+        new_e = OperatingExpenseLine(project_id=dst_proj.id)
+        for col in OperatingExpenseLine.__table__.columns:
+            if col.name not in _copy_skip:
+                setattr(new_e, col.name, getattr(e, col.name, None))
+        session.add(new_e)
 
     # Copy unit_mix JSONB
     if src_proj.unit_mix:

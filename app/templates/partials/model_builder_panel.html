@@ -2200,7 +2200,9 @@
       <select class="form-select" name="axis_y">
         <option value="exit_cap_rate_pct" {% if _sm and _sm.axis_y and _sm.axis_y.field == 'exit_cap_rate_pct' %}selected{% endif %}>Exit Cap Rate (%)</option>
         <option value="expense_growth_rate_pct_annual" {% if _sm and _sm.axis_y and _sm.axis_y.field == 'expense_growth_rate_pct_annual' %}selected{% endif %}>Expense Growth (%)</option>
-        <option value="hold_period_years" {% if _sm and _sm.axis_y and _sm.axis_y.field == 'hold_period_years' %}selected{% endif %}>Hold Period (yrs)</option>
+        {# hold_period_years removed: no AXIS_SPECS entry in
+           app/engines/sensitivity_matrix.py — selecting it silently no-oped.
+           Re-add the option together with the engine axis spec. #}
         <option value="noi_escalation_rate_pct" {% if _sm and _sm.axis_y and _sm.axis_y.field == 'noi_escalation_rate_pct' %}selected{% endif %}>NOI / Rent Growth (%)</option>
       </select>
     </div>
@@ -2210,7 +2212,6 @@
         <option value="noi_escalation_rate_pct" {% if not _sm or (_sm.axis_x and _sm.axis_x.field == 'noi_escalation_rate_pct') %}selected{% endif %}>NOI / Rent Growth (%)</option>
         <option value="exit_cap_rate_pct" {% if _sm and _sm.axis_x and _sm.axis_x.field == 'exit_cap_rate_pct' %}selected{% endif %}>Exit Cap Rate (%)</option>
         <option value="expense_growth_rate_pct_annual" {% if _sm and _sm.axis_x and _sm.axis_x.field == 'expense_growth_rate_pct_annual' %}selected{% endif %}>Expense Growth (%)</option>
-        <option value="hold_period_years" {% if _sm and _sm.axis_x and _sm.axis_x.field == 'hold_period_years' %}selected{% endif %}>Hold Period (yrs)</option>
       </select>
     </div>
     <button type="submit" class="btn btn-primary" id="sensitivity-run-btn">
@@ -2218,6 +2219,12 @@
       <span id="sensitivity-spinner" class="htmx-indicator" style="margin-left:6px">…</span>
     </button>
   </form>
+
+  {% if sensitivity_error %}
+  <div style="margin-top:8px;padding:8px 12px;border:1px solid var(--danger,#dc2626);border-radius:6px;color:var(--danger,#dc2626);font-size:13px" data-testid="sensitivity-error">
+    Sensitivity run failed: {{ sensitivity_error }}
+  </div>
+  {% endif %}
 
   {% if _sm and _sm['values'] %}
   {%- set _fmt_cell = {'pct': 1, 'multiple': 2, 'currency': 0, 'int': 0}.get(_sm.metric.format, 2) -%}

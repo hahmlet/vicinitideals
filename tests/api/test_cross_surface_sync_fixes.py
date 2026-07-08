@@ -125,22 +125,26 @@ async def test_put_income_stream_still_rejects_phantom(
 async def test_import_template_phase_dropdown_matches_enum(
     client: AsyncClient,
     session: AsyncSession,
-    auth_headers: dict[str, str],
 ) -> None:
     """Every phase offered by the template's dropdown must be a valid
     UseLinePhase value (the template used to offer ``pre_development``)."""
     import openpyxl
 
-    from tests.conftest import seed_org, seed_deal_model_with_financials, seed_opportunity
+    from tests.conftest import (
+        seed_org, seed_deal_model_with_financials, seed_opportunity, set_client_auth,
+    )
 
     org, user = await seed_org(session)
     opp = await seed_opportunity(session, org, user)
     deal_model, _, _, _ = await seed_deal_model_with_financials(session, opp, user)
     await session.commit()
+    # /ui routes need a session cookie — HTMX no longer bypasses auth
+    # (2026-07-08 fix); hx-request keeps the onboarding guard off the path.
+    set_client_auth(client, user.id)
 
     resp = await client.get(
         f"/ui/models/{deal_model.id}/import-template.xlsx",
-        headers={**auth_headers, "hx-request": "true"},
+        headers={"hx-request": "true"},
     )
     assert resp.status_code == 200, resp.text
 
@@ -261,6 +265,10 @@ async def test_email_debug_log_gate(
 
     url = f"/ui/email-inbox/{email_row.id}/debug-log.txt"
     headers = {"X-User-ID": str(user.id), "hx-request": "true"}
+    # Session cookie for the auth middleware (HTMX no longer bypasses it —
+    # 2026-07-08 fix); the route itself resolves the user via X-User-ID.
+    from tests.conftest import set_client_auth
+    set_client_auth(client, user.id)
 
     monkeypatch.setattr(app_settings, "email_ingest_debug_email", "")
     resp = await client.get(url, headers=headers)

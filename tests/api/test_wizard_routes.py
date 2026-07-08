@@ -51,6 +51,7 @@ from tests.conftest import (
     seed_deal_model_with_financials,
     seed_opportunity,
     seed_org,
+    set_client_auth,
 )
 
 pytestmark = pytest.mark.asyncio
@@ -65,11 +66,13 @@ ANCHOR_DATE = date(2026, 1, 1)
 
 @pytest.fixture
 def client(client: AsyncClient) -> AsyncClient:
-    """The /ui routes are auth-gated for full-page browser loads, but the
-    require_auth_for_ui middleware lets HTMX fragment requests through
-    (hx-request header). These wizard routes are HTMX fragments in prod,
-    so every test request carries the header — same pattern as
-    tests/api/test_milestones_api.py's wizard regression test."""
+    """These wizard routes are HTMX fragments in prod, so every test request
+    carries the hx-request header. Since 2026-07-08 the require_auth_for_ui
+    middleware no longer exempts HTMX requests (the header is
+    attacker-settable), so each test must ALSO authenticate via a session
+    cookie — ``_seed_setup_model`` / ``set_client_auth`` handle that.
+    The header additionally keeps the onboarding_guard middleware (which
+    opens its own prod-engine DB session) out of the request path."""
     client.headers["hx-request"] = "true"
     return client
 
@@ -79,21 +82,23 @@ def stub_redis_getdel(monkeypatch: pytest.MonkeyPatch) -> None:
     """Neutralize the synchronous Redis call in deal_setup_wizard_get.
 
     The GET /ui/models/{id}/setup handler does a blocking
-    ``redis.from_url(...).getdel(...)`` with NO error handling — with the
-    default ``redis://redis:6379/0`` URL (unresolvable outside the compose
-    network) the route would 500. Patch getdel so the tests exercise the
-    route's own logic rather than the test host's network topology.
-    (See "real bugs found" note: Redis unavailability hard-500s this route.)
+    ``redis.from_url(...).getdel(...)``. The route now degrades gracefully
+    when Redis is unreachable (try/except with 1s timeouts — no more 500),
+    but stubbing getdel keeps these tests hermetic and avoids paying the
+    connect-timeout on every request from outside the compose network.
     """
     import redis
 
     monkeypatch.setattr(redis.Redis, "getdel", lambda self, key: None)
 
 
-async def _seed_setup_model(session: AsyncSession) -> dict:
+async def _seed_setup_model(session: AsyncSession, client: AsyncClient) -> dict:
     """Org + user + opportunity + Scenario + default Project + inputs.
 
-    Returns plain ids only (safe across the route's session.expire_all()).
+    Authenticates *client* as the seeded user (session cookie + CSRF header)
+    so requests survive the require_auth_for_ui and csrf_protection
+    middlewares. Returns plain ids only (safe across the route's
+    session.expire_all()).
     """
     org, user = await seed_org(session)
     opp = await seed_opportunity(session, org, user)
@@ -105,6 +110,7 @@ async def _seed_setup_model(session: AsyncSession) -> dict:
             select(Project).where(Project.scenario_id == deal_model.id)
         )
     ).scalar_one()
+    set_client_auth(client, user.id)
     return {
         "org_id": org.id,
         "user_id": user.id,
@@ -139,7 +145,7 @@ async def _fresh_inputs(
 async def test_setup_get_renders_step1_by_default(
     client: AsyncClient, session: AsyncSession, stub_redis_getdel: None
 ) -> None:
-    ids = await _seed_setup_model(session)
+    ids = await _seed_setup_model(session, client)
 
     resp = await client.get(f"/ui/models/{ids['model_id']}/setup")
     assert resp.status_code == 200, resp.text
@@ -150,7 +156,7 @@ async def test_setup_get_renders_step1_by_default(
 async def test_setup_get_renders_requested_step(
     client: AsyncClient, session: AsyncSession, stub_redis_getdel: None
 ) -> None:
-    ids = await _seed_setup_model(session)
+    ids = await _seed_setup_model(session, client)
 
     resp = await client.get(f"/ui/models/{ids['model_id']}/setup", params={"step": 2})
     assert resp.status_code == 200, resp.text
@@ -158,9 +164,36 @@ async def test_setup_get_renders_requested_step(
     assert 'name="step" value="2"' in resp.text
 
 
-async def test_setup_get_unknown_model_404(client: AsyncClient) -> None:
+async def test_setup_get_unknown_model_404(
+    client: AsyncClient, session: AsyncSession
+) -> None:
+    _org, user = await seed_org(session)
+    set_client_auth(client, user.id)
     resp = await client.get(f"/ui/models/{uuid.uuid4()}/setup")
     assert resp.status_code == 404
+
+
+async def test_setup_routes_unauthenticated_htmx_401_with_hx_redirect(
+    client: AsyncClient, session: AsyncSession, stub_redis_getdel: None
+) -> None:
+    """The 2026-07-08 auth fix: unauthenticated HTMX requests no longer skip
+    the session check. They get 401 with an HX-Redirect header (full-page
+    login redirect) instead of a 303 (which would swap the login page into
+    a fragment)."""
+    ids = await _seed_setup_model(session, client)
+    client.cookies.clear()  # drop the session cookie set by the seed helper
+
+    resp = await client.get(f"/ui/models/{ids['model_id']}/setup")
+    assert resp.status_code == 401
+    assert resp.headers["hx-redirect"] == (
+        f"/login?next=/ui/models/{ids['model_id']}/setup"
+    )
+
+    post = await client.post(
+        f"/ui/models/{ids['model_id']}/setup/step", data={"step": "1"}
+    )
+    assert post.status_code == 401
+    assert post.headers["hx-redirect"].startswith("/login?next=")
 
 
 # ---------------------------------------------------------------------------
@@ -171,7 +204,7 @@ async def test_setup_get_unknown_model_404(client: AsyncClient) -> None:
 async def test_setup_step1_persists_income_and_sizing_mode(
     client: AsyncClient, session: AsyncSession
 ) -> None:
-    ids = await _seed_setup_model(session)
+    ids = await _seed_setup_model(session, client)
     model_id, inputs_id = ids["model_id"], ids["inputs_id"]
 
     resp = await client.post(
@@ -196,7 +229,7 @@ async def test_setup_step1_rejects_unknown_income_mode_with_fallback(
     client: AsyncClient, session: AsyncSession
 ) -> None:
     """Unknown income_mode values are coerced to 'revenue_opex', not persisted raw."""
-    ids = await _seed_setup_model(session)
+    ids = await _seed_setup_model(session, client)
 
     resp = await client.post(
         f"/ui/models/{ids['model_id']}/setup/step",
@@ -217,7 +250,7 @@ async def test_setup_step1_rejects_unknown_income_mode_with_fallback(
 async def test_setup_step2_persists_debt_types_filtering_unknown(
     client: AsyncClient, session: AsyncSession
 ) -> None:
-    ids = await _seed_setup_model(session)
+    ids = await _seed_setup_model(session, client)
 
     resp = await client.post(
         f"/ui/models/{ids['model_id']}/setup/step",
@@ -240,7 +273,7 @@ async def test_setup_step2_vehicle_pick_skips_to_review(
     """When every selected debt type has a Source Vehicle, steps 3-5 are
     skipped (vehicle carries milestones/terms/sizing) and the vehicle's
     rate/carry/amort are staged into debt_terms."""
-    ids = await _seed_setup_model(session)
+    ids = await _seed_setup_model(session, client)
 
     sv = SourceVehicle(
         id=uuid.uuid4(),
@@ -283,7 +316,7 @@ async def test_setup_step2_vehicle_pick_skips_to_review(
 async def test_setup_step3_persists_milestone_config(
     client: AsyncClient, session: AsyncSession
 ) -> None:
-    ids = await _seed_setup_model(session)
+    ids = await _seed_setup_model(session, client)
     await _set_debt_types(
         session, ids["inputs_id"], ["construction_loan", "permanent_debt"]
     )
@@ -317,7 +350,7 @@ async def test_setup_step3_persists_milestone_config(
 async def test_setup_step3_rejects_invalid_exit_vehicle(
     client: AsyncClient, session: AsyncSession
 ) -> None:
-    ids = await _seed_setup_model(session)
+    ids = await _seed_setup_model(session, client)
     await _set_debt_types(
         session, ids["inputs_id"], ["construction_loan", "permanent_debt"]
     )
@@ -358,7 +391,7 @@ async def test_setup_step3_rejects_invalid_exit_vehicle(
 async def test_setup_step4_persists_terms(
     client: AsyncClient, session: AsyncSession
 ) -> None:
-    ids = await _seed_setup_model(session)
+    ids = await _seed_setup_model(session, client)
     await _set_debt_types(session, ids["inputs_id"], ["permanent_debt"])
 
     resp = await client.post(
@@ -385,7 +418,7 @@ async def test_setup_step4_persists_terms(
 async def test_setup_step4_rejects_out_of_range_values(
     client: AsyncClient, session: AsyncSession
 ) -> None:
-    ids = await _seed_setup_model(session)
+    ids = await _seed_setup_model(session, client)
     await _set_debt_types(session, ids["inputs_id"], ["permanent_debt"])
 
     # Rate above the 0-30% band → field error, same step re-rendered.
@@ -425,7 +458,7 @@ async def test_setup_step4_rejects_out_of_range_values(
 async def test_setup_step5_persists_sizing_and_dscr_min(
     client: AsyncClient, session: AsyncSession
 ) -> None:
-    ids = await _seed_setup_model(session)
+    ids = await _seed_setup_model(session, client)
     await _set_debt_types(session, ids["inputs_id"], ["permanent_debt"])
 
     resp = await client.post(
@@ -469,7 +502,7 @@ async def test_setup_complete_full_flow_creates_wired_capital_stack(
       6. Operating Reserve UseLine + canonical OpEx seed lines created
       7. deal_setup_complete flag + debt_structure sync + health thresholds
     """
-    ids = await _seed_setup_model(session)
+    ids = await _seed_setup_model(session, client)
     model_id, project_id, inputs_id = (
         ids["model_id"], ids["project_id"], ids["inputs_id"],
     )
@@ -644,7 +677,7 @@ async def test_setup_complete_rerun_is_idempotent(
 ) -> None:
     """Re-running complete deletes and recreates the (auto) modules instead
     of stacking duplicates, and doesn't duplicate seeds."""
-    ids = await _seed_setup_model(session)
+    ids = await _seed_setup_model(session, client)
     model_id, project_id = ids["model_id"], ids["project_id"]
     await _set_debt_types(session, ids["inputs_id"], ["permanent_debt"])
 
@@ -682,6 +715,7 @@ async def test_setup_step_and_complete_without_project_400(
     opp = await seed_opportunity(session, org, user)
     deal_model = await seed_deal_model(session, opp, user)  # no Project row
     model_id = deal_model.id
+    set_client_auth(client, user.id)
 
     step = await client.post(
         f"/ui/models/{model_id}/setup/step", data={"step": "1"}
@@ -692,7 +726,11 @@ async def test_setup_step_and_complete_without_project_400(
     assert done.status_code == 400
 
 
-async def test_setup_step_unknown_model_404(client: AsyncClient) -> None:
+async def test_setup_step_unknown_model_404(
+    client: AsyncClient, session: AsyncSession
+) -> None:
+    _org, user = await seed_org(session)
+    set_client_auth(client, user.id)
     resp = await client.post(
         f"/ui/models/{uuid.uuid4()}/setup/step", data={"step": "1"}
     )
@@ -735,7 +773,7 @@ async def test_approve_timeline_sets_flag_with_resolving_chain(
     systems-logic part — every milestone still resolves a start date via the
     trigger-chain walk (the engine's alternative is the 1-month scalar
     fallback that collapsed carry math in prod bug 5d5caf4)."""
-    ids = await _seed_setup_model(session)
+    ids = await _seed_setup_model(session, client)
     model_id, project_id = ids["model_id"], ids["project_id"]
 
     await _build_timeline(client, project_id)
@@ -783,7 +821,7 @@ async def test_approve_timeline_sets_flag_with_resolving_chain(
 async def test_approve_timeline_unapprove_reopens(
     client: AsyncClient, session: AsyncSession
 ) -> None:
-    ids = await _seed_setup_model(session)
+    ids = await _seed_setup_model(session, client)
     model_id, project_id = ids["model_id"], ids["project_id"]
 
     approved = await client.post(
@@ -806,7 +844,11 @@ async def test_approve_timeline_unapprove_reopens(
     assert (await session.get(Project, project_id)).timeline_approved is False
 
 
-async def test_approve_timeline_unknown_project_404(client: AsyncClient) -> None:
+async def test_approve_timeline_unknown_project_404(
+    client: AsyncClient, session: AsyncSession
+) -> None:
+    _org, user = await seed_org(session)
+    set_client_auth(client, user.id)
     resp = await client.post(
         f"/ui/projects/{uuid.uuid4()}/approve-timeline", data={}
     )
@@ -824,7 +866,7 @@ async def test_timeline_wizard_renames_deal_and_sets_project_type(
     """The new-deal wizard's step 0 rides on the timeline-wizard POST:
     new_name renames the Deal AND the linked Opportunity; new_deal_type
     updates Scenario.project_type."""
-    ids = await _seed_setup_model(session)
+    ids = await _seed_setup_model(session, client)
     project_id = ids["project_id"]
 
     resp = await client.post(

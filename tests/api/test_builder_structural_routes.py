@@ -86,6 +86,7 @@ async def test_clone_from_replaces_target_with_source_copy(
     session.add(ms1)
     await session.flush()
     ms2 = Milestone(
+        id=uuid.uuid4(),
         project_id=a_id,
         milestone_type=MilestoneType.construction,
         duration_days=90,
@@ -93,18 +94,26 @@ async def test_clone_from_replaces_target_with_source_copy(
         trigger_milestone_id=ms1.id,
         trigger_offset_days=10,
     )
-    session.add_all(
-        [
-            ms2,
-            UseLine(
-                project_id=a_id,
-                label="Acquisition",
-                phase="acquisition",
-                amount=Decimal("750000"),
-                cost_category="hard",
-                timing_type="spread_across_range",
-            ),
-        ]
+    session.add(ms2)
+    # Flush milestones before the use line that FK-references them — the UOW
+    # has no relationship() between UseLine and Milestone, so it won't order
+    # the inserts on its own.
+    await session.flush()
+    whitelist_module_id = uuid.uuid4()
+    session.add(
+        UseLine(
+            project_id=a_id,
+            label="Acquisition",
+            phase="acquisition",
+            amount=Decimal("750000"),
+            cost_category="hard",
+            timing_type="spread_across_range",
+            # Milestone-anchored timing + source whitelist: the copy must
+            # carry these and REMAP the FKs onto the clone's milestones.
+            active_from_milestone_id=ms1.id,
+            spread_to_milestone_id=ms2.id,
+            eligible_module_ids=[whitelist_module_id],
+        )
     )
     # Target project B pre-loaded with junk that must be wiped.
     proj_b = Project(
@@ -152,12 +161,12 @@ async def test_clone_from_replaces_target_with_source_copy(
     assert Decimal(str(b_acq.amount)) == Decimal("750000")
     assert b_acq.phase == "acquisition"
     assert b_acq.cost_category == "hard"
-    # COPY-FIDELITY GAP (asserting current behavior): _copy_project_data does
-    # not carry timing_type (source was "spread_across_range"), nor
-    # eligible_module_ids / milestone-FK timing fields — the clone reverts to
-    # the column default, which changes engine draw timing. Flip this
-    # assertion if the copy is fixed to preserve timing_type.
-    assert b_acq.timing_type == "first_day"
+    # Full-fidelity copy (fixed 2026-07-08): _copy_project_data is now
+    # column-driven, so timing_type and the eligible_module_ids whitelist
+    # survive the clone instead of reverting to column defaults (which
+    # changed engine draw timing / source routing).
+    assert b_acq.timing_type == "spread_across_range"
+    assert b_acq.eligible_module_ids == [whitelist_module_id]
 
     # Income streams: junk stream replaced by the seeded "1BR Units" copy.
     b_streams = (
@@ -202,6 +211,11 @@ async def test_clone_from_replaces_target_with_source_copy(
     assert set(b_ms) == {MilestoneType.close, MilestoneType.construction}
     assert b_ms[MilestoneType.construction].trigger_milestone_id == b_ms[MilestoneType.close].id
     assert b_ms[MilestoneType.construction].trigger_offset_days == 10
+
+    # Use-line milestone FKs remapped onto B's NEW milestone rows (not left
+    # pointing at A's) — part of the 2026-07-08 column-driven copy fix.
+    assert b_acq.active_from_milestone_id == b_ms[MilestoneType.close].id
+    assert b_acq.spread_to_milestone_id == b_ms[MilestoneType.construction].id
 
     # Source project A untouched.
     a_uses = (

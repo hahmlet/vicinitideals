@@ -87,7 +87,13 @@ async def test_deprecated_ui_export_route_is_gone(
     client: AsyncClient,
     session: AsyncSession,
 ) -> None:
+    from tests.conftest import set_client_auth
+
     deal_model = await _seed_model(session)
+    # Authenticate so the check reaches routing: an unauthenticated request
+    # now gets 401 from the auth middleware (HTMX no longer bypasses it),
+    # which would vacuously pass a "route is gone" 404 assertion.
+    set_client_auth(client, deal_model.created_by_user_id)
 
     resp = await client.get(
         f"/ui/models/{deal_model.id}/export.xlsx",

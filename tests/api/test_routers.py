@@ -216,8 +216,13 @@ async def test_unhandled_exception_returns_structured_500_payload(
 
 async def test_missing_api_key_returns_403(client: AsyncClient) -> None:
     # Use a non-UI path so the API key middleware actually fires (all /api/* and
-    # /health are exempt). hx-request bypasses the UI login-redirect middleware
-    # so the request reaches the API-key gate instead of a 303 to /login.
+    # /health are exempt). A session cookie satisfies the UI login-redirect
+    # middleware (hx-request no longer bypasses it — 2026-07-08 fix) so the
+    # request reaches the API-key gate; hx-request keeps the onboarding guard
+    # (which opens a prod-engine DB session) out of the path.
+    from app.api.auth import COOKIE_NAME, create_session_token
+
+    client.cookies.set(COOKIE_NAME, create_session_token(uuid4()))
     response = await client.get(
         "/projects",
         headers={"X-User-ID": str(uuid4()), "hx-request": "true"},

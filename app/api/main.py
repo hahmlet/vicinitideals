@@ -312,8 +312,15 @@ def create_app() -> FastAPI:
 
         Exempts: auth pages, static assets, /health, /api/* (HTMX calls carry
         the session cookie from the browser context so they're fine).
-        HTMX fragment requests (hx-request header) are allowed through so
-        partial swaps don't redirect mid-page.
+
+        HTMX fragment requests are NOT exempt from the session check — the
+        hx-request header is attacker-settable, and a blanket bypass left
+        every /ui mutation route reachable unauthenticated (found 2026-07-08
+        by wizard-route tests). Unauthenticated HTMX requests get 401 with an
+        HX-Redirect header instead of a 303, so the client does a full-page
+        redirect to /login rather than swapping the login page into a
+        fragment. htmx processes HX-Redirect before status handling, so the
+        401 status is safe.
         """
         path = request.url.path
         is_exempt = any(path.startswith(p) for p in _AUTH_EXEMPT_PATHS) or path == "/"
@@ -326,7 +333,7 @@ def create_app() -> FastAPI:
             request.headers.get("X-API-Key", ""),
             settings.vicinitideals_api_key,
         )
-        if is_exempt or is_htmx or has_valid_api_key:
+        if is_exempt or has_valid_api_key:
             return await call_next(request)
 
         from app.api.auth import COOKIE_NAME, decode_session_email_verified, decode_session_token
@@ -347,6 +354,12 @@ def create_app() -> FastAPI:
                 if request.url.query:
                     requested_path = f"{requested_path}?{request.url.query}"
                 next_url = quote(requested_path, safe="")
+                if is_htmx:
+                    from fastapi.responses import Response as _Resp
+                    return _Resp(
+                        status_code=401,
+                        headers={"HX-Redirect": f"/verify-email-required?next={next_url}"},
+                    )
                 from fastapi.responses import RedirectResponse as _RR
                 return _RR(
                     url=f"/verify-email-required?next={next_url}",
@@ -356,6 +369,12 @@ def create_app() -> FastAPI:
         if request.cookies.get("vd_user_id"):
             return await call_next(request)
 
+        if is_htmx:
+            from fastapi.responses import Response as _Resp
+            return _Resp(
+                status_code=401,
+                headers={"HX-Redirect": f"/login?next={request.url.path}"},
+            )
         from fastapi.responses import RedirectResponse as _RR
         return _RR(url=f"/login?next={request.url.path}", status_code=303)
 

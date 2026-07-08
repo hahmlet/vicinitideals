@@ -111,15 +111,27 @@ def _patch_celery(monkeypatch):
 
 @pytest.fixture
 async def client() -> AsyncIterator[AsyncClient]:  # type: ignore[override]
+    from app.api.auth import COOKIE_NAME, create_session_token
+    from app.api.csrf import make_csrf_token
     from app.api.main import create_app
 
     app = create_app()
+    # HTMX requests no longer bypass require_auth_for_ui (2026-07-08 fix),
+    # so carry a signed session cookie. The middleware only decodes the
+    # token — no DB read on the HTMX path (onboarding_guard exempts HTMX) —
+    # so a random user id suffices for these DB-free routes. The CSRF
+    # middleware validates X-CSRF-Token on authenticated HTMX mutations,
+    # hence the matching token header.
+    user_id = str(uuid4())
     async with AsyncClient(
         transport=ASGITransport(app=app),
         base_url="http://test",
-        # hx-request: true exempts the auth-redirect middleware (HTMX
-        # fragment requests are allowed through so partial swaps work).
-        headers={"X-User-ID": str(uuid4()), "hx-request": "true"},
+        headers={
+            "X-User-ID": user_id,
+            "hx-request": "true",
+            "X-CSRF-Token": make_csrf_token(user_id),
+        },
+        cookies={COOKIE_NAME: create_session_token(user_id)},
     ) as c:
         yield c
 

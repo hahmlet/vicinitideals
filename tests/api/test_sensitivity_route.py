@@ -189,13 +189,12 @@ async def test_run_sensitivity_identical_axes_rejected_without_persisting(
     assert resp.status_code == 200, resp.text
     assert await _persisted_matrices(session, model_id) == []
 
-    # KNOWN GAP (asserting current behavior, not endorsing it): the handler
-    # passes extra_ctx={"sensitivity_error": str(e)} but NO template renders
-    # a `sensitivity_error` variable (grep app/templates/ — zero hits), so
-    # the engine's "axis_x and axis_y must differ" message is silently
-    # swallowed and the user just sees an unchanged panel. If a fix wires
-    # the error into the panel, flip this assertion.
-    assert "must differ" not in resp.text
+    # The panel now renders the handler's sensitivity_error context var in a
+    # dedicated error div (fixed 2026-07-08 — previously the engine's message
+    # was silently swallowed), so the user sees why the run did nothing.
+    assert 'data-testid="sensitivity-error"' in resp.text
+    assert "Sensitivity run failed:" in resp.text
+    assert "must differ" in resp.text
 
 
 async def test_run_sensitivity_unknown_metric_rejected_without_persisting(
@@ -217,20 +216,26 @@ async def test_run_sensitivity_unknown_metric_rejected_without_persisting(
     assert await _persisted_matrices(session, model_id) == []
 
 
-async def test_run_sensitivity_ui_offered_hold_period_axis_is_unsupported(
+async def test_run_sensitivity_hold_period_axis_removed_from_ui_and_rejected(
     client: AsyncClient, session: AsyncSession
 ) -> None:
-    """KNOWN MISMATCH (asserting current behavior): the Sensitivity panel
-    <select> offers value="hold_period_years" for both axes
-    (app/templates/partials/model_builder_panel.html ~line 2203/2213) but
-    AXIS_SPECS in app/engines/sensitivity_matrix.py has no such axis — the
-    engine raises "Unknown axis", the handler swallows it (see the
-    sensitivity_error gap above), and the user gets a silent no-op. Any
-    user picking "Hold Period (yrs)" in production hits this today.
+    """hold_period_years had no AXIS_SPECS entry in
+    app/engines/sensitivity_matrix.py, so picking it silently no-oped. Fixed
+    2026-07-08 by removing the option from BOTH axis selects in the panel
+    template (re-add it together with an engine axis spec). A forged POST
+    naming it must still be rejected without persisting — and the failure
+    is now surfaced in the error div instead of being swallowed.
     """
     user, deal_model, _project, _inputs = await _seed(session, rich=False)
     model_id = deal_model.id
     set_client_auth(client, user.id)
+
+    # The panel no longer offers the unsupported axis.
+    panel = await client.get(
+        f"/ui/panel/{model_id}", params={"module": "sensitivity"}
+    )
+    assert panel.status_code == 200, panel.text
+    assert 'value="hold_period_years"' not in panel.text
 
     resp = await client.post(
         f"/ui/models/{model_id}/sensitivity/run",
@@ -242,6 +247,7 @@ async def test_run_sensitivity_ui_offered_hold_period_axis_is_unsupported(
     )
     assert resp.status_code == 200, resp.text
     assert await _persisted_matrices(session, model_id) == []
+    assert 'data-testid="sensitivity-error"' in resp.text
 
 
 async def test_run_sensitivity_unknown_model_404(

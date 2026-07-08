@@ -338,7 +338,13 @@ async def test_timeline_wizard_still_creates_wired_chain(
     """POST the timeline wizard form and verify the two-pass creation still
     produces the same chain shape (anchor pinned, others trigger-wired,
     default/override/auto-cap durations applied)."""
-    _, _, _, deal_model = await _seed_model(session)
+    from tests.conftest import set_client_auth
+
+    _, user, _, deal_model = await _seed_model(session)
+    # /ui routes need a session cookie — HTMX requests no longer bypass the
+    # auth middleware (2026-07-08 fix). set_client_auth also supplies the
+    # CSRF header the csrf_protection middleware demands on HTMX POSTs.
+    set_client_auth(client, user.id)
     from app.models.project import Project
 
     project = (await session.execute(
