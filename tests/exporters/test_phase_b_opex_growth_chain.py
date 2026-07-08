@@ -1,16 +1,18 @@
-"""Phase B: Operating Expenses + CapEx Reserve grow via a chain formula
-that multiplies the prior year by ``(1 + s_opex_growth_rate)``. Y0 and
-Y1 stay engine-driven (the seed); Y2..Y_n become formulas so a single
-edit to the Assumptions ``OpEx Growth Rate (annual)`` cell ripples
-through every downstream year — and through NOI/Net Cash Flow because
-those are already derived formulas referencing OpEx.
+"""Phase B: Operating Expenses grow via a chain formula so a single edit
+to a growth input ripples through every downstream year — and through
+NOI/Net Cash Flow because those are derived formulas referencing OpEx.
 
-Guards two distinct codepaths:
+Layout notes (commit e7ba809):
 
   - ``_build_uw_proforma`` (internal/lp/lender profiles) — Underwriting
-    Pro Forma sheet
-  - ``_write_pf_table`` (proforma profile) — Pro Forma sheet shared by
-    ``_build_proforma_combined`` and ``_build_proforma_project_sheet``
+    Pro Forma sheet: the OpEx total row SUMs per-line bullet rows; the
+    growth chain lives on each bullet via ``s_opex_<slug>_escalation_pct``.
+  - ``_write_pf_table`` (proforma profile) — Pro Forma sheet keeps the
+    sheet-wide ``s_opex_growth_rate`` chain on the total row.
+  - CapEx Reserve was deliberately REMOVED from the growth chain on both
+    sheets: the engine already applies expense_growth per period, and
+    anchoring the chain at a construction-phase Y1=0 zeroed every year.
+    Y2+ CapEx cells must stay numeric engine values.
 """
 from __future__ import annotations
 
@@ -35,6 +37,7 @@ from tests.conftest import (
     seed_opportunity,
     seed_org,
 )
+from tests.exporters._parity_helpers import parse_sum_range, proforma_layout
 
 
 async def _seed(session: AsyncSession):
@@ -95,18 +98,19 @@ async def _seed(session: AsyncSession):
 
 
 def _find_row(ws, label_prefix: str) -> int | None:
+    label_col, _ = proforma_layout(ws)
     for r in range(1, ws.max_row + 1):
-        v = ws.cell(row=r, column=1).value
+        v = ws.cell(row=r, column=label_col).value
         if isinstance(v, str) and v.startswith(label_prefix):
             return r
     return None
 
 
 def _assert_growth_chain(ws, row: int, growth_name: str) -> None:
-    """Y2 onward must be ``=<prev_col><row>*(1+<growth_name>)``."""
-    # Y0 is column B (col 2), Y1 is C, Y2 is D, ...
+    """Y2 onward must be a formula referencing ``growth_name``."""
+    _, y0_col = proforma_layout(ws)
     chain_started = False
-    for c in range(4, ws.max_column + 1):  # start at Y2 (col D)
+    for c in range(y0_col + 2, ws.max_column + 1):  # start at Y2
         v = ws.cell(row=row, column=c).value
         if v is None:
             break
@@ -124,11 +128,36 @@ def _assert_growth_chain(ws, row: int, growth_name: str) -> None:
     )
 
 
+def _assert_engine_numeric_y2_plus(ws, row: int) -> None:
+    """Y2 onward must stay numeric engine values (no growth chain).
+
+    Guards the e7ba809 fix: chaining CapEx Reserve off a construction-
+    phase Y1=0 anchor zeroed every downstream year, so the exporter now
+    writes the engine's per-period expense-growth values directly.
+    """
+    _, y0_col = proforma_layout(ws)
+    seen = 0
+    for c in range(y0_col + 2, ws.max_column + 1):
+        v = ws.cell(row=row, column=c).value
+        if v is None:
+            break
+        assert not (isinstance(v, str) and v.startswith("=")), (
+            f"row {row} col {c}: CapEx Reserve must stay an engine value "
+            f"(growth chain deliberately removed — Y1=0 anchor bug); "
+            f"got formula {v!r}"
+        )
+        seen += 1
+    assert seen > 0, (
+        f"row {row} has no Y2+ cells — workbook has too few years"
+    )
+
+
 # ── Internal profile: Underwriting Pro Forma ─────────────────────────────────
 
 
 async def test_uw_proforma_opex_grows_via_chain(session: AsyncSession):
-    """Internal-profile Underwriting Pro Forma OpEx Y2+ = chain formula."""
+    """Internal-profile UW Pro Forma OpEx: total Y2+ SUMs the bullet
+    rows; each bullet Y2+ chains via its per-line escalation input."""
     scenario = await _seed(session)
     blob = await export_investor_workbook(scenario.id, session)
     wb = load_workbook(BytesIO(blob), data_only=False)
@@ -137,11 +166,30 @@ async def test_uw_proforma_opex_grows_via_chain(session: AsyncSession):
     opex_row = _find_row(ws, "Operating Expenses")
     assert opex_row is not None, "Operating Expenses row not found"
 
-    _assert_growth_chain(ws, opex_row, "s_opex_growth_rate")
+    _, y0_col = proforma_layout(ws)
+    y1_col = y0_col + 1
+    parsed = parse_sum_range(ws.cell(row=opex_row, column=y1_col).value)
+    assert parsed is not None, (
+        "OpEx total must SUM the per-line bullet rows; got "
+        f"{ws.cell(row=opex_row, column=y1_col).value!r}"
+    )
+    _, first, last = parsed
+    # Total row: every Y2+ column stays a SUM over the bullet column.
+    for c in range(y0_col + 2, ws.max_column + 1):
+        v = ws.cell(row=opex_row, column=c).value
+        if v is None:
+            break
+        assert parse_sum_range(v) is not None, (
+            f"OpEx total col {c} must SUM the bullet column; got {v!r}"
+        )
+    # Bullet rows carry the growth chain via per-line escalation.
+    for br in range(first, last + 1):
+        _assert_growth_chain(ws, br, "_escalation_pct")
 
 
 async def test_uw_proforma_capex_grows_via_chain(session: AsyncSession):
-    """Internal-profile UW Pro Forma CapEx Reserve Y2+ = chain formula."""
+    """Internal-profile UW Pro Forma CapEx Reserve Y2+ = engine values
+    (growth chain deliberately removed in e7ba809)."""
     scenario = await _seed(session)
     blob = await export_investor_workbook(scenario.id, session)
     wb = load_workbook(BytesIO(blob), data_only=False)
@@ -150,7 +198,7 @@ async def test_uw_proforma_capex_grows_via_chain(session: AsyncSession):
     capex_row = _find_row(ws, "CapEx Reserve")
     assert capex_row is not None, "CapEx Reserve row not found"
 
-    _assert_growth_chain(ws, capex_row, "s_opex_growth_rate")
+    _assert_engine_numeric_y2_plus(ws, capex_row)
 
 
 # ── Proforma profile: Pro Forma sheet ─────────────────────────────────────────
@@ -172,7 +220,8 @@ async def test_proforma_opex_grows_via_chain(session: AsyncSession):
 
 
 async def test_proforma_capex_grows_via_chain(session: AsyncSession):
-    """Proforma-profile Pro Forma CapEx Reserve Y2+ = chain formula."""
+    """Proforma-profile Pro Forma CapEx Reserve Y2+ = engine values
+    (excluded from the chain — see _write_pf_table's rationale)."""
     scenario = await _seed(session)
     blob = await export_investor_workbook(
         scenario.id, session, profile="proforma",
@@ -183,7 +232,7 @@ async def test_proforma_capex_grows_via_chain(session: AsyncSession):
     capex_row = _find_row(ws, "CapEx Reserve")
     assert capex_row is not None
 
-    _assert_growth_chain(ws, capex_row, "s_opex_growth_rate")
+    _assert_engine_numeric_y2_plus(ws, capex_row)
 
 
 # ── OER row picks up OpEx changes ────────────────────────────────────────────
@@ -199,8 +248,9 @@ async def test_uw_proforma_oer_is_formula(session: AsyncSession):
     oer_row = _find_row(ws, "OER (OpEx")
     assert oer_row is not None, "OER row not found"
 
+    _, y0_col = proforma_layout(ws)
     formula_count = 0
-    for c in range(2, ws.max_column + 1):
+    for c in range(y0_col, ws.max_column + 1):
         v = ws.cell(row=oer_row, column=c).value
         if v is None:
             break
@@ -224,8 +274,9 @@ async def test_proforma_oer_is_formula(session: AsyncSession):
     oer_row = _find_row(ws, "OER (OpEx")
     assert oer_row is not None
 
+    _, y0_col = proforma_layout(ws)
     formula_count = 0
-    for c in range(2, ws.max_column + 1):
+    for c in range(y0_col, ws.max_column + 1):
         v = ws.cell(row=oer_row, column=c).value
         if v is None:
             break

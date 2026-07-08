@@ -1,16 +1,21 @@
-"""Operating Reserve UseLine on the S&U sheet must become a formula:
-``=s_operating_reserve_months * s_y1_opex / 12``.
+"""Operating Reserve UseLine on the S&U sheet renders the engine's
+per-project static amount (``use_lines.amount``), NOT a scenario-level
+formula.
 
-Closes the user-reported gap where editing the Operating Reserve months
-input on Assumptions didn't ripple into the Sources & Uses page.
+History: the row briefly carried
+``=s_operating_reserve_months*MAX(s_y1_opex,s_pf_debt_service_y1)/12``,
+but those are scenario-level named cells, so every project's Operating
+Reserve row computed the same pool-wide value. Commit 6cec7f3 reverted
+to the engine-stored per-project amount.
 
 Guards three contracts:
 
-  1. The Operating Reserve cell is a formula, not a scalar
-  2. The Y1 OpEx defined name ``s_y1_opex`` is registered on every
-     profile that renders S&U (so the formula isn't dangling)
-  3. The formula references both ``s_operating_reserve_months`` and
-     ``s_y1_opex`` (catches regressions where one operand drops out)
+  1. The Operating Reserve cell is the per-project static amount (the
+     seeded UseLine amount), not a formula
+  2. It must NOT reference the scenario-level named cells (regression
+     guard against re-introducing the pool-wide-value bug)
+  3. ``s_y1_opex`` / ``s_operating_reserve_months`` stay registered on
+     every profile (other formulas still consume them)
 """
 from __future__ import annotations
 
@@ -68,10 +73,11 @@ def _find_op_reserve_cell(ws):
 
 
 @pytest.mark.parametrize("profile", ["internal", "lp", "lender", "proforma"])
-async def test_operating_reserve_is_formula(
+async def test_operating_reserve_is_static_per_project_amount(
     session: AsyncSession, profile: str
 ):
-    """Every profile that ships S&U renders Operating Reserve as a formula."""
+    """Every profile that ships S&U renders Operating Reserve as the
+    engine-stored per-project amount (commit 6cec7f3 revert)."""
     scenario = await _seed_with_op_reserve(session)
     blob = await export_investor_workbook(
         scenario.id, session, profile=profile,
@@ -87,11 +93,29 @@ async def test_operating_reserve_is_formula(
     assert su_sheet is not None, f"profile={profile} missing S&U sheet"
 
     value = _find_op_reserve_cell(su_sheet)
-    assert isinstance(value, str) and value.startswith("="), (
-        f"profile={profile}: Operating Reserve must be a formula; got {value!r}"
+    assert value is not None, (
+        f"profile={profile}: Operating Reserve row missing on S&U sheet"
     )
-    assert "s_operating_reserve_months" in value
-    assert "s_y1_opex" in value
+    if isinstance(value, str) and value.startswith("="):
+        # Regression guard: scenario-level formula gave every project the
+        # same pool-wide value — must not come back.
+        assert "s_operating_reserve_months" not in value, (
+            f"profile={profile}: Operating Reserve must not compute from "
+            f"scenario-level named cells; got {value!r}"
+        )
+        assert "s_y1_opex" not in value, (
+            f"profile={profile}: Operating Reserve must not compute from "
+            f"scenario-level named cells; got {value!r}"
+        )
+        pytest.fail(
+            f"profile={profile}: Operating Reserve must be the static "
+            f"per-project amount; got formula {value!r}"
+        )
+    # The seeded UseLine amount must round-trip to the cell.
+    assert abs(float(value) - 48000.0) < 0.01, (
+        f"profile={profile}: Operating Reserve must equal the per-project "
+        f"UseLine amount (48000); got {value!r}"
+    )
 
 
 @pytest.mark.parametrize("profile", ["internal", "lp", "lender", "proforma"])

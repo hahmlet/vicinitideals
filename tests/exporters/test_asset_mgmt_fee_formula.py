@@ -34,6 +34,7 @@ from tests.conftest import (
     seed_opportunity,
     seed_org,
 )
+from tests.exporters._parity_helpers import find_label_row, proforma_layout
 
 
 async def _seed(session: AsyncSession):
@@ -90,12 +91,8 @@ async def _seed(session: AsyncSession):
 
 
 def _find_row(ws, label_substr: str) -> int | None:
-    needle = label_substr.lower()
-    for r in range(1, ws.max_row + 1):
-        v = ws.cell(row=r, column=1).value
-        if isinstance(v, str) and needle in v.lower():
-            return r
-    return None
+    label_col, _ = proforma_layout(ws)
+    return find_label_row(ws, label_substr, col=label_col)
 
 
 def _find_pf_sheet(wb):
@@ -129,8 +126,9 @@ async def test_asset_mgmt_fee_row_is_formula(
     egi_row = _find_row(ws, "effective gross income")
     assert egi_row is not None
 
-    # Check Y0 + Y1 (cols B + C).
-    for col in (2, 3):
+    # Check Y0 + Y1 (layout-aware year columns).
+    _, y0_col = proforma_layout(ws)
+    for col in (y0_col, y0_col + 1):
         val = ws.cell(row=fee_row, column=col).value
         assert isinstance(val, str) and val.startswith("="), (
             f"profile={profile} col={col}: Asset Mgmt Fee must be formula; "

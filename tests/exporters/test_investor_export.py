@@ -32,13 +32,20 @@ from tests.conftest import (
 )
 
 
-def _commit_3_sheet_order(num_projects: int) -> tuple[str, ...]:
+def _commit_3_sheet_order(
+    num_projects: int, *, has_draw_sources: bool = False
+) -> tuple[str, ...]:
     """Sheet roster after commit 3 + Phase H2 Debt Schedule + Waterfall + Unit Mix.
 
     Order: Cover → UW Summary → UW Pro Forma → UW Cash Flow →
-    Sources & Uses → Sensitivity → Investor Returns → Waterfall → Unit Mix →
-    Debt Schedule → Assumptions → P{n} per-project sheets → Glossary.
-    Waterfall and Unit Mix were added in commits cbd2828/be7b361.
+    Sources & Uses → Investor Returns → Waterfall → Unit Mix →
+    Debt Schedule → [Draw Schedule] → Assumptions → P{n} per-project
+    sheets → Glossary. Waterfall and Unit Mix were added in commits
+    cbd2828/be7b361. Draw Schedule (ac8ae1c) renders only on the
+    internal/lender profiles AND when the scenario has draw sources —
+    the minimal smoke seed has none. The Sensitivity sheet was removed
+    in 3b4effe (25-cycle sensitivity run took ~18 min on the 8-project
+    pooled scenario) — see test_sensitivity_sheet_disabled below.
 
     Formula-conversion plan §5 (commit 8): single-project scenarios omit
     the P1 sheet because Underwriting Pro Forma / Cash Flow already show
@@ -51,11 +58,11 @@ def _commit_3_sheet_order(num_projects: int) -> tuple[str, ...]:
         "Underwriting Pro Forma",
         "Underwriting Cash Flow",
         "Sources & Uses",
-        "Sensitivity",
         "Investor Returns",
         "Waterfall",
         "Unit Mix",
         "Debt Schedule",
+        *(("Draw Schedule",) if has_draw_sources else ()),
         "Assumptions",
     )
     if num_projects == 1:
@@ -324,39 +331,33 @@ async def test_no_sheet_protection(session: AsyncSession):
         )
 
 
-async def test_sensitivity_sheet_renders_5x5_grid(session: AsyncSession):
-    """Sensitivity sheet should expose a 5x5 IRR grid with axis labels.
+async def test_sensitivity_sheet_disabled(session: AsyncSession):
+    """Sensitivity is deliberately disabled (commit 3b4effe): a 25-cycle
+    sensitivity run on the 8-project pooled scenario took ~18 minutes,
+    so ``_HAS_SENS`` was cleared for every profile.
 
-    Sheet is rendered live during export via compute_sensitivity_matrix
-    (Celery worker path; sync request-path callers may time out on
-    NGINX). Asserts:
-      - Sheet exists at the documented order position
-      - Title cell A1 reads "Two-Way Sensitivity"
-      - 5 x-axis values (rent growth) sit in row 4, cols B..F
-      - 5 y-axis values (exit cap) sit in column A, rows 5..9
-      - Defined name ``r_sensitivity_grid`` resolves to the 5x5 data range
-      - At least one IRR cell carries a numeric value (engine ran)
+    Until it's re-enabled, the workbook must be *cleanly* without it:
+      - no "Sensitivity" sheet in the roster
+      - no dangling ``r_sensitivity_grid`` defined name (a name pointing
+        at a missing sheet would #REF! in Excel)
+
+    When sensitivity comes back, restore the 5x5-grid assertions from
+    this test's git history (title, axes, grid values, defined name).
     """
     scenario = await _seed_minimal_scenario(session)
     blob = await export_investor_workbook(scenario.id, session)
     wb = load_workbook(BytesIO(blob), data_only=False)
 
-    assert "Sensitivity" in wb.sheetnames
-    ws = wb["Sensitivity"]
-    assert ws.cell(row=1, column=1).value == "Two-Way Sensitivity"
-
-    x_axis = [ws.cell(row=4, column=2 + i).value for i in range(5)]
-    y_axis = [ws.cell(row=5 + i, column=1).value for i in range(5)]
-    assert all(isinstance(v, (int, float)) for v in x_axis), x_axis
-    assert all(isinstance(v, (int, float)) for v in y_axis), y_axis
-
-    grid = [
-        [ws.cell(row=5 + r, column=2 + c).value for c in range(5)]
-        for r in range(5)
-    ]
-    flat = [v for row in grid for v in row]
-    assert any(isinstance(v, (int, float)) for v in flat), grid
-    assert "r_sensitivity_grid" in wb.defined_names
+    assert "Sensitivity" not in wb.sheetnames, (
+        "Sensitivity sheet re-appeared — if intentionally re-enabled, "
+        "restore the full 5x5-grid assertions in this test"
+    )
+    assert "r_sensitivity_grid" not in wb.defined_names, (
+        "r_sensitivity_grid must not dangle while the sheet is disabled"
+    )
+    assert "r_sensitivity_grid_em" not in wb.defined_names, (
+        "r_sensitivity_grid_em must not dangle while the sheet is disabled"
+    )
 
 
 async def test_glossary_sheet_has_investor_metrics(session: AsyncSession):

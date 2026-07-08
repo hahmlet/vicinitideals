@@ -35,6 +35,7 @@ from tests.conftest import (
     seed_opportunity,
     seed_org,
 )
+from tests.exporters._parity_helpers import find_label_row, proforma_layout
 
 
 async def _seed(session: AsyncSession):
@@ -91,12 +92,8 @@ async def _seed(session: AsyncSession):
 
 
 def _find_row(ws, label_substr: str) -> int | None:
-    needle = label_substr.lower()
-    for r in range(1, ws.max_row + 1):
-        v = ws.cell(row=r, column=1).value
-        if isinstance(v, str) and needle in v.lower():
-            return r
-    return None
+    label_col, _ = proforma_layout(ws)
+    return find_label_row(ws, label_substr, col=label_col)
 
 
 @pytest.mark.parametrize("profile", ["internal", "lender"])
@@ -122,9 +119,10 @@ async def test_debt_service_formula_gates_by_term_months(
     ds_row = _find_row(ws, "debt service")
     assert ds_row is not None, f"profile={profile}: debt service row missing"
 
-    # UW Pro Forma columns: col 2 = Y0 (engine value), col 3 = Y1
-    # (first formula, threshold=12), col 4 = Y2 (threshold=24), etc.
-    y1 = ws.cell(row=ds_row, column=3).value
+    # UW Pro Forma columns (layout-aware): Y0 = engine value, Y1 = first
+    # formula (threshold=12), Y2 threshold=24, Y3 threshold=36, etc.
+    _, y0_col = proforma_layout(ws)
+    y1 = ws.cell(row=ds_row, column=y0_col + 1).value
     assert isinstance(y1, str) and y1.startswith("="), (
         f"profile={profile}: Y1 DS not a formula; got {y1!r}"
     )
@@ -132,12 +130,12 @@ async def test_debt_service_formula_gates_by_term_months(
         f"profile={profile}: Y1 DS missing 12-month gate; got {y1!r}"
     )
 
-    y2 = ws.cell(row=ds_row, column=4).value
+    y2 = ws.cell(row=ds_row, column=y0_col + 2).value
     assert isinstance(y2, str) and "s_loan_1_term_months>=24" in y2, (
         f"profile={profile}: Y2 DS missing 24-month gate; got {y2!r}"
     )
 
-    y3 = ws.cell(row=ds_row, column=5).value
+    y3 = ws.cell(row=ds_row, column=y0_col + 3).value
     assert isinstance(y3, str) and "s_loan_1_term_months>=36" in y3, (
         f"profile={profile}: Y3 DS missing 36-month gate; got {y3!r}"
     )
@@ -153,7 +151,8 @@ async def test_debt_service_formula_wraps_each_loan_in_if(
     ws = wb["Underwriting Pro Forma"]
     ds_row = _find_row(ws, "debt service")
     assert ds_row is not None
-    y1 = ws.cell(row=ds_row, column=3).value
+    _, y0_col = proforma_layout(ws)
+    y1 = ws.cell(row=ds_row, column=y0_col + 1).value
     assert "IF(" in y1, f"profile={profile}: DS formula must use IF gates"
     assert "s_loan_1_annual_pi" in y1, (
         f"profile={profile}: DS formula must still reference loan P&I; got {y1!r}"

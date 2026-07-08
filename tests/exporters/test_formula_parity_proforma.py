@@ -22,6 +22,7 @@ The parity loop:
 """
 from __future__ import annotations
 
+import re
 from io import BytesIO
 from pathlib import Path
 
@@ -41,6 +42,8 @@ from tests.conftest import (
 )
 from tests.exporters._parity_helpers import (
     RecalcUnavailableError,
+    find_label_row,
+    proforma_layout,
     recalc_workbook,
 )
 
@@ -62,10 +65,11 @@ def _proforma_sheet(blob: bytes):
 
 
 def _find_row_by_label(ws, label: str) -> int | None:
-    for r in range(1, ws.max_row + 1):
-        if ws.cell(row=r, column=1).value == label:
-            return r
-    return None
+    label_col, _ = proforma_layout(ws)
+    return find_label_row(ws, label, col=label_col, exact=True)
+
+
+_CELL_REF_RE = re.compile(r"[A-Z]+\d+")
 
 
 async def test_egi_row_is_formula_each_year(session: AsyncSession):
@@ -77,18 +81,19 @@ async def test_egi_row_is_formula_each_year(session: AsyncSession):
     egi_row = _find_row_by_label(ws, "Effective Gross Income")
     assert egi_row is not None
 
-    # Walk columns starting at 2 (Y0); stop at the first empty cell.
+    _, y0_col = proforma_layout(ws)
+    # Walk year columns starting at Y0; stop at the first empty cell.
     formula_count = 0
-    for c in range(2, ws.max_column + 1):
+    for c in range(y0_col, ws.max_column + 1):
         v = ws.cell(row=egi_row, column=c).value
         if v is None:
             break
         assert isinstance(v, str) and v.startswith("="), (
-            f"EGI Y{c - 2} should be a formula; got {v!r}"
+            f"EGI Y{c - y0_col} should be a formula; got {v!r}"
         )
         # Must reference at least two cells (GrossRev + Vacancy) on this
-        # column. Cell references look like "B5", "B6", etc.
-        assert v.count("B") + v.count("C") + v.count("D") + v.count("E") >= 2, (
+        # column. Cell references look like "C5", "C6", etc.
+        assert len(_CELL_REF_RE.findall(v)) >= 2, (
             f"EGI formula should reference 2+ cells; got {v!r}"
         )
         formula_count += 1
@@ -104,13 +109,14 @@ async def test_noi_row_is_formula_each_year(session: AsyncSession):
     noi_row = _find_row_by_label(ws, "NOI")
     assert noi_row is not None
 
+    _, y0_col = proforma_layout(ws)
     formula_count = 0
-    for c in range(2, ws.max_column + 1):
+    for c in range(y0_col, ws.max_column + 1):
         v = ws.cell(row=noi_row, column=c).value
         if v is None:
             break
         assert isinstance(v, str) and v.startswith("="), (
-            f"NOI Y{c - 2} should be a formula; got {v!r}"
+            f"NOI Y{c - y0_col} should be a formula; got {v!r}"
         )
         # Should subtract (EGI - OpEx) so a minus must appear in the formula.
         assert "-" in v, f"NOI formula expected to contain '-'; got {v!r}"
@@ -143,9 +149,10 @@ async def test_egi_evaluates_to_engine_value(
     max_year = min(max(annual) if annual else 0, 10)
     year_cols = list(range(0, max(max_year, 1) + 1))
 
+    _, y0_col = proforma_layout(ws)
     for col_offset, year in enumerate(year_cols):
         engine_value = float(annual.get(year, {}).get("effective_gross_income", 0))
-        excel_value = ws.cell(row=egi_row, column=2 + col_offset).value
+        excel_value = ws.cell(row=egi_row, column=y0_col + col_offset).value
         if excel_value is None:
             excel_value = 0
         diff = abs(float(excel_value) - engine_value)
@@ -180,9 +187,10 @@ async def test_noi_evaluates_to_engine_value(
     max_year = min(max(annual) if annual else 0, 10)
     year_cols = list(range(0, max(max_year, 1) + 1))
 
+    _, y0_col = proforma_layout(ws)
     for col_offset, year in enumerate(year_cols):
         engine_value = float(annual.get(year, {}).get("noi", 0))
-        excel_value = ws.cell(row=noi_row, column=2 + col_offset).value
+        excel_value = ws.cell(row=noi_row, column=y0_col + col_offset).value
         if excel_value is None:
             excel_value = 0
         diff = abs(float(excel_value) - engine_value)
@@ -193,15 +201,22 @@ async def test_noi_evaluates_to_engine_value(
 
 
 async def test_egi_formula_subtracts_vacancy(session: AsyncSession):
-    """Each EGI cell must subtract Vacancy Loss, not add it.
+    """EGI must net out Vacancy Loss exactly once (no double-count).
 
-    Regression: prior to the vacancy-sign fix, EGI was emitted as
-    ``=GrossRev + Vacancy`` while the engine stored vacancy_loss as a
-    positive haircut and Pro Forma Gross Revenue was already net of
-    occupancy. The combined effect overstated NOI by the vacancy
-    amount. Fix flips the EGI sign to '-' and removes occupancy from
-    the rent_y1_monthly formula so Gross Revenue shows true GPR.
+    Sign convention (commit e7ba809): the Vacancy Loss row is written
+    as signed NEGATIVE numbers so the LP reads a negative line, and the
+    EGI formula ADDS the signed vacancy cell (``=GrossRev + Vacancy``).
+    Adding a subtraction on top of the negative values would flip back
+    to the original double-count bug, so this test pins both halves:
+
+      1. every EGI cell adds the vacancy cell (``+<vac_ref>``), and
+      2. every numeric Vacancy Loss cell is <= 0.
+
+    Gross Revenue stays true GPR (occupancy excluded from the
+    rent_y1_monthly formula — see test_rent_y1_monthly_excludes_occupancy).
     """
+    from openpyxl.utils import get_column_letter
+
     scenario = await _seed_scenario(session)
     blob = await export_investor_workbook(scenario.id, session)
     _wb, ws = _proforma_sheet(blob)
@@ -210,16 +225,27 @@ async def test_egi_formula_subtracts_vacancy(session: AsyncSession):
     vac_row = _find_row_by_label(ws, "Vacancy Loss")
     assert egi_row is not None and vac_row is not None
 
-    for c in range(2, ws.max_column + 1):
+    _, y0_col = proforma_layout(ws)
+    for c in range(y0_col, ws.max_column + 1):
         v = ws.cell(row=egi_row, column=c).value
         if v is None:
             break
         assert isinstance(v, str) and v.startswith("=")
-        vac_ref = f"{chr(ord('A') + c - 1)}{vac_row}"
-        assert f"-{vac_ref}" in v, (
-            f"EGI Y{c - 2} formula must subtract vacancy ({vac_ref}); "
-            f"got {v!r}"
+        vac_ref = f"{get_column_letter(c)}{vac_row}"
+        assert f"+{vac_ref}" in v, (
+            f"EGI Y{c - y0_col} formula must add the signed vacancy cell "
+            f"({vac_ref}); got {v!r}"
         )
+        assert f"-{vac_ref}" not in v, (
+            f"EGI Y{c - y0_col} must not subtract the already-negative "
+            f"vacancy cell (double-count); got {v!r}"
+        )
+        vac_val = ws.cell(row=vac_row, column=c).value
+        if isinstance(vac_val, (int, float)):
+            assert vac_val <= 0, (
+                f"Vacancy Loss Y{c - y0_col} must be written as a signed "
+                f"negative value; got {vac_val!r}"
+            )
 
 
 async def test_rent_y1_monthly_excludes_occupancy(session: AsyncSession):
