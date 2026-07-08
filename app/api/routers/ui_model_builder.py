@@ -1778,7 +1778,7 @@ async def create_deal_project(
     deal_id: UUID,
     session: DBSession,
 ) -> HTMLResponse:
-    """Add a new Project to an existing Scenario (max 5). Redirects to builder with timeline wizard."""
+    """Add a new Project to an existing Scenario (max 8). Redirects to builder with timeline wizard."""
     deal = await session.get(Scenario, deal_id)
     if deal is None:
         return HTMLResponse("<p class='text-muted'>Deal not found.</p>", status_code=404)

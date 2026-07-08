@@ -1164,7 +1164,7 @@ All projects, capital, and cash flows will be permanently removed.')">
             title="Click to rename">{{ p.name }}</span>{% else %}{{ p.name }}{% endif %}{% if _s.per_project.get(p.id) %}<span style="color:#f59e0b;font-size:10px;margin-left:6px" title="{{ p.name }} has edits since last compute">●</span>{% endif %}
     </a>
     {% endfor %}
-    {% if deal_projects | length < 5 %}
+    {% if deal_projects | length < 8 %}
     <button type="button" class="deal-tab deal-tab-add" onclick="openDrawer('add-project-drawer')">+ Add Project</button>
     {% endif %}
   </div>
@@ -1719,7 +1719,7 @@ document.addEventListener('keydown', function(e) {
     <div class="drawer-header">
       <div>
         <div class="drawer-title">Add Project</div>
-        <div class="text-small text-muted">Add a second development component to this deal (max 5)</div>
+        <div class="text-small text-muted">Add a second development component to this deal (max 8)</div>
       </div>
       <span class="drawer-close" onclick="closeDrawer('add-project-drawer')">×</span>
     </div>
