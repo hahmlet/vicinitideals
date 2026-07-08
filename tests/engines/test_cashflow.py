@@ -16,6 +16,7 @@ from app.models.deal import (
     OperatingExpenseLine,
     OperationalInputs,
     ProjectType,
+    UseLine,
 )
 from app.models.org import Organization, User
 from app.models.project import (
@@ -471,7 +472,24 @@ async def _seed_cashflow_deal(session: AsyncSession) -> UUID:
         active_in_phases=["hold", "lease_up", "stabilized", "exit"],
     )
 
-    session.add_all([inputs, rent, laundry])
+    # equity_required = max(0, Σ non-exit UseLine.amount − Σ debt principal)
+    # since commit 3f86400 ("equity_required uses Σ Uses; reconcile Sources
+    # Gap"). With no debt modules seeded, equity must cover all Uses — seed
+    # the S&U lines the panel would show so equity_required is non-zero.
+    purchase_use = UseLine(
+        project_id=project.id,
+        label="Purchase Price",
+        phase="acquisition",
+        amount=Decimal("1800000"),
+    )
+    reno_use = UseLine(
+        project_id=project.id,
+        label="Renovation Budget",
+        phase="renovation",
+        amount=Decimal("360000"),
+    )
+
+    session.add_all([inputs, rent, laundry, purchase_use, reno_use])
     await session.flush()
     return deal.id
 

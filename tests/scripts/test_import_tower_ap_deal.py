@@ -1,38 +1,23 @@
+"""Runs against the shared Postgres conftest (tests/conftest.py).
+
+Migrated off an inline in-memory SQLite engine (2026-07): SQLite create_all
+now fails on JSONB columns without a sqlite variant (e.g.
+scenario_templates.template_json), and the shared per-run Postgres DB matches
+the production schema anyway.
+"""
 from __future__ import annotations
 
 import json
-from collections.abc import AsyncGenerator
 from pathlib import Path
 
 import pytest
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
-from sqlalchemy.pool import StaticPool
-
-from app.models import Base  # imports all ORM models, enabling create_all
-
-
-@pytest.fixture
-async def session_factory() -> AsyncGenerator[async_sessionmaker[AsyncSession], None]:
-    engine = create_async_engine(
-        "sqlite+aiosqlite:///:memory:",
-        connect_args={"check_same_thread": False},
-        poolclass=StaticPool,
-    )
-    factory = async_sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False, autoflush=False)
-
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-
-    try:
-        yield factory
-    finally:
-        await engine.dispose()
+from sqlalchemy.ext.asyncio import AsyncSession
 
 
 @pytest.mark.asyncio
 async def test_import_tower_ap_deal_creates_two_projects_and_one_portfolio(
     tmp_path: Path,
-    session_factory: async_sessionmaker[AsyncSession],
+    session: AsyncSession,
 ) -> None:
     formulas = {
         "organization": {"name": "Import Test Org", "slug": "import-test-org"},
@@ -167,8 +152,7 @@ async def test_import_tower_ap_deal_creates_two_projects_and_one_portfolio(
 
     from app.scripts.import_tower_ap_deal import import_tower_ap_deal
 
-    async with session_factory() as session:
-        summary = await import_tower_ap_deal(formulas_path, session=session)
+    summary = await import_tower_ap_deal(formulas_path, session=session)
 
     assert summary["portfolio"]["name"] == "Tower + A&P Portfolio"
     assert {project["name"] for project in summary["projects"]} == {"Tower", "A&P"}

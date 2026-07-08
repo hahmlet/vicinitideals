@@ -23,7 +23,6 @@ from app.models.cashflow import CashFlow, CashFlowLineItem, OperationalOutputs
 from app.models.deal import (
     Deal,
     Scenario,
-    DealOpportunity,
     IncomeStream,
     IncomeStreamType,
     OperatingExpenseLine,
@@ -220,6 +219,13 @@ async def _import_bundle(
 
         cashflow_summary = await compute_cash_flows(deal_model.id, session)
         waterfall_summary = await compute_waterfall(deal_model.id, session)
+
+        # compute_cash_flows() calls session.expire_all(); re-load the ORM
+        # objects reused below / on the next loop iteration so attribute
+        # access doesn't trigger a sync lazy-load (MissingGreenlet under
+        # asyncpg).
+        for _obj in (organization, user, portfolio, project, deal_model):
+            await session.refresh(_obj)
 
         portfolio_project = await _upsert_portfolio_project(
             session,
@@ -742,22 +748,25 @@ async def _upsert_deal_model(
     user: User,
     payload: dict[str, Any],
 ) -> Scenario:
+    # Lineage post-1feaa89 (deal_opportunities table dropped): the Opportunity
+    # link lives on Project.opportunity_id, so existing scenarios are found
+    # via Scenario → Project → opportunity_id.
     deal_model = (
         await session.execute(
             select(Scenario)
-            .join(Deal, Deal.id == Scenario.deal_id)
-            .join(DealOpportunity, DealOpportunity.deal_id == Deal.id)
-            .where(DealOpportunity.opportunity_id == opportunity.id, Scenario.name == payload["name"])
+            .join(Project, Project.scenario_id == Scenario.id)
+            .where(Project.opportunity_id == opportunity.id, Scenario.name == payload["name"])
             .order_by(Scenario.version.desc())
         )
     ).scalars().first()
 
     if deal_model is None:
-        # New architecture: create top-level Deal + DealOpportunity + Scenario
+        # New architecture: create top-level Deal + Scenario (+ default Project)
         top_deal_result = await session.execute(
             select(Deal)
-            .join(DealOpportunity, DealOpportunity.deal_id == Deal.id)
-            .where(DealOpportunity.opportunity_id == opportunity.id)
+            .join(Scenario, Scenario.deal_id == Deal.id)
+            .join(Project, Project.scenario_id == Scenario.id)
+            .where(Project.opportunity_id == opportunity.id)
             .limit(1)
         )
         top_deal = top_deal_result.scalar_one_or_none()
@@ -768,8 +777,6 @@ async def _upsert_deal_model(
                 created_by_user_id=user.id,
             )
             session.add(top_deal)
-            await session.flush()
-            session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id))
             await session.flush()
 
         deal_model = Scenario(deal_id=top_deal.id, created_by_user_id=user.id, **payload)
@@ -782,11 +789,12 @@ async def _upsert_deal_model(
             )
         ).scalar_one_or_none()
         if existing_proj is None:
+            # Project.deal_type was dropped in 1feaa89; the engine reads the
+            # scenario-level project_type.
             session.add(Project(
                 scenario_id=deal_model.id,
                 opportunity_id=opportunity.id,
                 name="Default Project",
-                deal_type=deal_model.project_type,
             ))
     else:
         deal_model.created_by_user_id = user.id
