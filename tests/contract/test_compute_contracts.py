@@ -16,8 +16,10 @@ async def test_compute_endpoints_return_non_null_outputs_and_cashflows(
     from tests.api.test_routers import _seed_model_for_run_tests
 
     async with test_session_factory() as session:
-        model_id = await _seed_model_for_run_tests(session, include_capital=True)
+        model_id, user = await _seed_model_for_run_tests(session, include_capital=True)
         await session.commit()
+    # Org-scoped routes 404 on a random X-User-ID — use the seeded user.
+    auth_headers = {**auth_headers, "X-User-ID": str(user.id)}
 
     compute_response = await client.post(f"/api/models/{model_id}/compute", headers=auth_headers)
     assert compute_response.status_code == 200
@@ -49,8 +51,10 @@ async def test_waterfall_compute_endpoints_return_non_null_distribution_outputs(
     from tests.api.test_routers import _seed_model_for_run_tests
 
     async with test_session_factory() as session:
-        model_id = await _seed_model_for_run_tests(session, include_capital=True)
+        model_id, user = await _seed_model_for_run_tests(session, include_capital=True)
         await session.commit()
+    # Org-scoped routes 404 on a random X-User-ID — use the seeded user.
+    auth_headers = {**auth_headers, "X-User-ID": str(user.id)}
 
     cashflow_response = await client.post(f"/api/models/{model_id}/compute", headers=auth_headers)
     assert cashflow_response.status_code == 200
@@ -73,4 +77,9 @@ async def test_waterfall_compute_endpoints_return_non_null_distribution_outputs(
     outputs = outputs_response.json()
     assert outputs is not None
     assert outputs["project_irr_levered"] is not None
-    assert Decimal(str(outputs["dscr"])) > Decimal("0")
+    # The seed is all-equity (no debt module), so annual debt service is zero
+    # and the engine correctly reports DSCR = 0 (app/engines/cashflow.py sets
+    # dscr = ZERO when annual_operation_debt_service == 0). The contract here
+    # is non-null, not leverage-dependent magnitude.
+    assert outputs["dscr"] is not None
+    assert Decimal(str(outputs["dscr"])) >= Decimal("0")

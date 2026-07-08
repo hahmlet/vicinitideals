@@ -393,3 +393,67 @@ def read_formula_text(path: Path, name: str) -> str | None:
     if isinstance(raw, str) and raw.startswith("="):
         return raw
     return None
+
+
+# ── Pro Forma sheet layout helpers ────────────────────────────────────────────
+#
+# The multi-project consolidation (commit e7ba809, 2026-06-10) restructured
+# the "Underwriting Pro Forma" sheet: col A became a merged project-grouping
+# column, col B the line-item label column, and col C+ the year columns
+# (header row 2 = ["", "Line Item", "Y0", "Y1", ...]). The proforma-profile
+# "Pro Forma" sheet kept the older single-label-column layout (labels in
+# col A, years from col B). These helpers let tests address both layouts
+# without hardcoding column offsets.
+
+import re as _re  # noqa: E402 — grouped with the layout helpers below.
+
+
+def proforma_layout(ws) -> tuple[int, int]:
+    """Return ``(label_col, y0_col)`` for a Pro Forma-style sheet.
+
+    Detects the post-consolidation layout by the "Line Item" header in
+    row 2 col B; falls back to the legacy single-label-column layout
+    (labels in col A, Y0 in col B).
+    """
+    if ws.cell(row=2, column=2).value == "Line Item":
+        return 2, 3
+    return 1, 2
+
+
+def find_label_row(
+    ws, needle: str, *, col: int, exact: bool = False
+) -> int | None:
+    """Scan ``col`` top-to-bottom for a string cell matching ``needle``.
+
+    ``exact=True`` compares the stripped cell text; otherwise a
+    case-insensitive substring match is used.
+    """
+    want = needle.strip() if exact else needle.lower()
+    for r in range(1, ws.max_row + 1):
+        v = ws.cell(row=r, column=col).value
+        if not isinstance(v, str):
+            continue
+        if exact:
+            if v.strip() == want:
+                return r
+        elif want in v.lower():
+            return r
+    return None
+
+
+_SUM_RANGE_RE = _re.compile(r"^=SUM\(([A-Z]+)(\d+):([A-Z]+)(\d+)\)$")
+
+
+def parse_sum_range(formula: object) -> tuple[str, int, int] | None:
+    """Parse ``=SUM(D4:D7)`` into ``("D", 4, 7)``; None when not that shape.
+
+    The consolidated Pro Forma writes Gross Revenue / Operating Expenses
+    totals as a single-column SUM over the per-stream / per-line bullet
+    rows emitted directly above the total row.
+    """
+    if not isinstance(formula, str):
+        return None
+    m = _SUM_RANGE_RE.match(formula)
+    if m is None or m.group(1) != m.group(3):
+        return None
+    return m.group(1), int(m.group(2)), int(m.group(4))

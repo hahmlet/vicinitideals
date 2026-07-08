@@ -1,8 +1,9 @@
 """Validator tests for the Gap Adjustment reserved-label protection.
 
-Confirms the user-facing Create/Update Pydantic schemas reject the three
-reserved labels reserved for the slider feature, while still accepting any
-other label.
+Confirms the user-facing Create/Update Pydantic schemas reject the four
+reserved labels reserved for the slider feature (Revenue / OpEx / Purchase
+Price, plus the NOI-mode label added in commit c304450), while still
+accepting any other label.
 """
 
 from __future__ import annotations
@@ -22,6 +23,7 @@ from app.schemas.deal import (
     UseLineUpdate,
 )
 from app.schemas.gap_adjustment_names import (
+    NOI_ADJUSTMENT_LABEL,
     OPEX_ADJUSTMENT_LABEL,
     PURCHASE_PRICE_ADJUSTMENT_LABEL,
     REVENUE_ADJUSTMENT_LABEL,
@@ -43,6 +45,7 @@ _PROJECT_ID = uuid.UUID("11111111-1111-1111-1111-111111111111")
         (REVENUE_ADJUSTMENT_LABEL, True),
         (OPEX_ADJUSTMENT_LABEL, True),
         (PURCHASE_PRICE_ADJUSTMENT_LABEL, True),
+        (NOI_ADJUSTMENT_LABEL, True),
         ("Market Rent", False),
         ("Gap Adjustment", False),  # partial match doesn't collide
         ("gap adjustment — revenue", False),  # case-sensitive
@@ -56,8 +59,16 @@ def test_is_reserved_label(label: str | None, expected: bool) -> None:
     assert is_reserved_label(label) is expected
 
 
-def test_three_reserved_labels_total() -> None:
-    assert len(ALL_RESERVED_LABELS) == 3
+def test_four_reserved_labels_total() -> None:
+    # Revenue / OpEx / Purchase Price + the NOI-mode label (commit c304450).
+    assert ALL_RESERVED_LABELS == frozenset(
+        {
+            REVENUE_ADJUSTMENT_LABEL,
+            OPEX_ADJUSTMENT_LABEL,
+            PURCHASE_PRICE_ADJUSTMENT_LABEL,
+            NOI_ADJUSTMENT_LABEL,
+        }
+    )
 
 
 # ---------------------------------------------------------------------------

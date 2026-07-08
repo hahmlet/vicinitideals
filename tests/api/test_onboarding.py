@@ -3,7 +3,7 @@
 Covers:
   - POST /register (no org) → user created without org_id, redirects /onboarding
   - POST /register with ?org_slug= → pending user, redirects /pending-approval
-  - POST /register with invite token → pending user, invite accepted_at set
+  - POST /register with invite token → active user (immediate access), invite accepted_at set
   - POST /ui/onboarding/step with taken slug → error in response
   - POST /ui/onboarding/complete → org created, user.org_id set, HX-Redirect: /deals
   - POST /settings/organization/members/{id}/approve → membership_status becomes active
@@ -137,8 +137,10 @@ async def test_register_with_invite_token_marks_invite_accepted(
             follow_redirects=False,
         )
 
+    # Invited users get immediate access (b2c88f4: invite = admin already
+    # approved them) — ACTIVE membership, straight to /deals.
     assert resp.status_code == 303
-    assert resp.headers["location"] == "/pending-approval"
+    assert resp.headers["location"] == "/deals"
 
     await session.refresh(invite)
     assert invite.accepted_at is not None
@@ -147,7 +149,7 @@ async def test_register_with_invite_token_marks_invite_accepted(
         await session.execute(select(User).where(User.email == email))
     ).scalar_one_or_none()
     assert user is not None
-    assert user.membership_status == MembershipStatus.PENDING
+    assert user.membership_status == MembershipStatus.ACTIVE
 
 
 # ---------------------------------------------------------------------------

@@ -1,4 +1,10 @@
-"""Tests for the Deal → DealOpportunity → Scenario → Project FK chain."""
+"""Tests for the Deal → Scenario → Project FK chain.
+
+The `deal_opportunities` join table (and its DealOpportunity ORM class) was
+dropped in commit 1feaa89 (migration 0067_drop_building_entity, 2026-05-03).
+Lineage is now Deal → Scenario → Project → Opportunity, carried by
+`Project.opportunity_id` (ON DELETE SET NULL).
+"""
 from __future__ import annotations
 
 import uuid
@@ -7,7 +13,7 @@ import pytest
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 
-from app.models.deal import Deal, DealOpportunity, ProjectType, Scenario
+from app.models.deal import Deal, ProjectType, Scenario
 from app.models.project import Project
 from tests.conftest import seed_deal_model, seed_deal_model_with_financials, seed_opportunity, seed_org
 
@@ -41,56 +47,71 @@ async def test_deal_hierarchy_basic_creation_and_navigation(session):
 
 
 @pytest.mark.asyncio
-async def test_deal_opportunity_unique_constraint(session):
-    org, user = await seed_org(session)
-    opportunity = await seed_opportunity(session, org, user)
-
-    top_deal = Deal(
-        id=uuid.uuid4(),
-        org_id=org.id,
-        name="Constraint Test Deal",
-        created_by_user_id=user.id,
-    )
-    session.add(top_deal)
-    await session.flush()
-
-    session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id))
-    await session.flush()
-
-    with pytest.raises(Exception):
-        session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id))
-        await session.flush()
-
-
-@pytest.mark.asyncio
-async def test_deal_cascade_delete_removes_scenario_and_link(session):
+async def test_project_carries_the_opportunity_link(session):
+    """Post-1feaa89 the Deal↔Opportunity association lives on
+    Project.opportunity_id, not a join table."""
     org, user = await seed_org(session)
     opportunity = await seed_opportunity(session, org, user)
     scenario = await seed_deal_model(session, opportunity, user)
 
+    project = Project(
+        id=uuid.uuid4(),
+        scenario_id=scenario.id,
+        opportunity_id=opportunity.id,
+        name="Linkage Project",
+    )
+    session.add(project)
+    await session.flush()
+
+    linked = (
+        await session.execute(
+            select(Project).where(
+                Project.scenario_id == scenario.id,
+                Project.opportunity_id == opportunity.id,
+            )
+        )
+    ).scalar_one()
+    assert linked.id == project.id
+
+
+@pytest.mark.asyncio
+async def test_deal_cascade_delete_removes_scenario_and_project(session):
+    org, user = await seed_org(session)
+    opportunity = await seed_opportunity(session, org, user)
+    scenario = await seed_deal_model(session, opportunity, user)
+
+    project = Project(
+        id=uuid.uuid4(),
+        scenario_id=scenario.id,
+        opportunity_id=opportunity.id,
+        name="Cascade Project",
+    )
+    session.add(project)
+    await session.flush()
+
     deal_id = scenario.deal_id
     scenario_id = scenario.id
+    project_id = project.id
 
     top_deal = (await session.execute(select(Deal).where(Deal.id == deal_id))).scalar_one()
 
     await session.delete(top_deal)
     await session.flush()
+    session.expire_all()
 
     assert (
         await session.execute(select(Scenario).where(Scenario.id == scenario_id))
     ).scalar_one_or_none() is None
 
+    # Project rides the scenarios.id ON DELETE CASCADE
     assert (
-        await session.execute(
-            select(DealOpportunity).where(DealOpportunity.deal_id == deal_id)
-        )
+        await session.execute(select(Project).where(Project.id == project_id))
     ).scalar_one_or_none() is None
 
 
 @pytest.mark.asyncio
 async def test_deal_supports_multiple_scenarios(session):
     org, user = await seed_org(session)
-    opportunity = await seed_opportunity(session, org, user)
 
     top_deal = Deal(
         id=uuid.uuid4(),
@@ -100,8 +121,6 @@ async def test_deal_supports_multiple_scenarios(session):
     )
     session.add(top_deal)
     await session.flush()
-
-    session.add(DealOpportunity(deal_id=top_deal.id, opportunity_id=opportunity.id))
 
     for name in ("Base Case", "Conservative"):
         session.add(

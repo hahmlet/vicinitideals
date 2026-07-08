@@ -76,6 +76,13 @@ async def test_capital_module_form_persists_fee_terms_override(
     model_id, project_id, mod_id, user_id = await _seed_module(session)
     await _auth(client, user_id)
 
+    # The form posts basis INCLUSIONS (checkbox list, all-checked default);
+    # the handler persists the inverse `basis_exclusions`. Leave two buckets
+    # unchecked and assert they land in fee_terms.basis_exclusions.
+    from app.engines.dev_fee import BASIS_BUCKET_KEYS
+    excluded = {"acquisition", "operating_reserve"}
+    included = sorted(BASIS_BUCKET_KEYS - excluded)
+
     resp = await client.put(
         f"/ui/forms/{model_id}/capital-modules/{mod_id}",
         params={"project": str(project_id)},
@@ -92,7 +99,7 @@ async def test_capital_module_form_persists_fee_terms_override(
             "fee_terms_inherited": "off",  # any non-"on" value disables inheritance
             "fee_terms_max_pct": "15",
             "fee_terms_absolute_cap": "1500000",
-            "fee_terms_basis_exclusions[]": ["acquisition", "operating_reserves"],
+            "fee_terms_basis_inclusions[]": included,
             "fee_terms_notes": "LIHTC 15% cap incl. acq",
         },
     )
@@ -105,7 +112,7 @@ async def test_capital_module_form_persists_fee_terms_override(
     ft = row.fee_terms or {}
     assert float(ft["max_pct"]) == 15.0
     assert float(ft["absolute_cap"]) == 1_500_000.0
-    assert set(ft["basis_exclusions"]) == {"acquisition", "operating_reserves"}
+    assert set(ft["basis_exclusions"]) == excluded
     assert ft["notes"] == "LIHTC 15% cap incl. acq"
 
 
@@ -246,19 +253,18 @@ async def test_dev_fee_row_release_schedule_persists(
     model_id, project_id, ul_id, user_id = await _seed_auto_dev_fee(session)
     await _auth(client, user_id)
 
+    # httpx only urlencodes dict payloads; repeated fields go in as lists.
     resp = await client.put(
         f"/ui/forms/{model_id}/use-lines/{ul_id}",
-        data=[
-            ("dev_fee_pct", "12.0"),
-            ("dev_fee_basis", "tpc_excl_self"),
-            ("dev_fee_release_section", "1"),
-            ("release_milestone_key[]", "construction"),
-            ("release_weight_pct[]", "60"),
-            ("release_milestone_key[]", "operation_stabilized"),
-            ("release_weight_pct[]", "30"),
-            ("final_holdback_pct", "10"),
-            ("final_holdback_milestone_key", "operation_stabilized"),
-        ],
+        data={
+            "dev_fee_pct": "12.0",
+            "dev_fee_basis": "tpc_excl_self",
+            "dev_fee_release_section": "1",
+            "release_milestone_key[]": ["construction", "operation_stabilized"],
+            "release_weight_pct[]": ["60", "30"],
+            "final_holdback_pct": "10",
+            "final_holdback_milestone_key": "operation_stabilized",
+        },
     )
     assert resp.status_code == 200, resp.text
 
@@ -292,21 +298,20 @@ async def test_vehicle_preset_create_persists_fee_terms(
 
     resp = await client.post(
         "/settings/vehicles",
-        data=[
-            ("scope", "org"),
-            ("label", "LIHTC Bond"),
-            ("vehicle_type", "debt"),
-            ("equity_role", ""),
-            ("default_waterfall_position", "0"),
-            ("draw_cadence", "monthly"),
-            ("day_count_convention", "actual_360"),
-            ("fee_terms_max_pct", "15"),
-            ("fee_terms_absolute_cap", "2000000"),
-            ("fee_terms_basis_exclusions[]", "acquisition"),
-            ("fee_terms_basis_exclusions[]", "operating_reserves"),
-            ("fee_terms_regulated", "on"),
-            ("fee_terms_notes", "LIHTC bond cap"),
-        ],
+        data={
+            "scope": "org",
+            "label": "LIHTC Bond",
+            "vehicle_type": "debt",
+            "equity_role": "",
+            "default_waterfall_position": "0",
+            "draw_cadence": "monthly",
+            "day_count_convention": "actual_360",
+            "fee_terms_max_pct": "15",
+            "fee_terms_absolute_cap": "2000000",
+            "fee_terms_basis_exclusions[]": ["acquisition", "operating_reserve"],
+            "fee_terms_regulated": "on",
+            "fee_terms_notes": "LIHTC bond cap",
+        },
         follow_redirects=False,
     )
     assert resp.status_code == 303, resp.text
@@ -318,7 +323,7 @@ async def test_vehicle_preset_create_persists_fee_terms(
     ft = rows[0].fee_terms or {}
     assert float(ft["max_pct"]) == 15.0
     assert float(ft["absolute_cap"]) == 2000000.0
-    assert set(ft["basis_exclusions"]) == {"acquisition", "operating_reserves"}
+    assert set(ft["basis_exclusions"]) == {"acquisition", "operating_reserve"}
     assert ft.get("regulated") is True
     assert ft.get("notes") == "LIHTC bond cap"
 
@@ -350,22 +355,23 @@ async def test_vehicle_preset_update_replaces_fee_terms(
 
     resp = await client.post(
         f"/settings/vehicles/{vehicle.id}",
-        data=[
-            ("label", "Bridge Loan"),
-            ("vehicle_type", "debt"),
-            ("equity_role", ""),
-            ("default_waterfall_position", "0"),
-            ("draw_cadence", "monthly"),
-            ("day_count_convention", "actual_360"),
-            ("fee_terms_max_pct", "12"),
-            ("fee_terms_notes", "tightened cap"),
-        ],
+        data={
+            "label": "Bridge Loan",
+            "vehicle_type": "debt",
+            "equity_role": "",
+            "default_waterfall_position": "0",
+            "draw_cadence": "monthly",
+            "day_count_convention": "actual_360",
+            "fee_terms_max_pct": "12",
+            "fee_terms_notes": "tightened cap",
+        },
         follow_redirects=False,
     )
     assert resp.status_code == 303, resp.text
 
+    vehicle_id = vehicle.id  # capture before expire_all
     session.expire_all()
-    refreshed = await session.get(SourceVehicle, vehicle.id)
+    refreshed = await session.get(SourceVehicle, vehicle_id)
     ft = refreshed.fee_terms or {}
     assert float(ft["max_pct"]) == 12.0
     assert ft.get("notes") == "tightened cap"

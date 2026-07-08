@@ -100,16 +100,11 @@ jobs:
         run: uv run ruff check app/ tests/
 
       - name: Unit tests
-        # Legacy parcels/scraped-listings ingest tests (ScrapedListing /
-        # clip_to_polygon imports) are scope-cut per launch plan —
-        # ignored until that surface is rehabilitated or deleted.
-        run: |
-          uv run pytest tests/ -q -m "unit" --ignore=tests/e2e \
-            --ignore=tests/api/test_routers.py \
-            --ignore=tests/contract \
-            --ignore=tests/scrapers/test_dedup.py \
-            --ignore=tests/scrapers/test_loopnet.py \
-            --ignore=tests/tasks/test_scraper.py
+        # Markers are auto-assigned at collection (tests/conftest.py):
+        # DB-fixture tests -> integration, tests/e2e/ -> e2e, else unit.
+        # No per-file ignores — a test that can't run belongs deleted or
+        # fixed, not silently skipped (2026-07 suite rehab).
+        run: uv run pytest tests/ -q -m "unit" --ignore=tests/e2e
 
   # ---------------------------------------------------------------------------
   # Full gate — runs on PRs to main and pushes to main
@@ -192,23 +187,15 @@ jobs:
         run: uv run python -m app.scripts.check_promotion_gates --environment staging
 
       - name: Integration tests
-        # Runs the same suite as the light-gate Unit tests step but
-        # without the `-m unit` marker filter, picking up integration-
-        # marked tests that exercise the ASGI app against Postgres.
-        # --timeout=60 prevents any single hung test from monopolizing
-        # the job. Tests that depend on the compose-network `redis`
+        # Runs the ENTIRE non-E2E suite — no marker filter, no per-file
+        # ignores. The 2026-07 suite rehab brought every file to green;
+        # from here one red test = one real problem. --timeout=120
+        # prevents any single hung test from monopolizing the job
+        # (compute-heavy convergence tests can exceed 60s on cold
+        # runners). Tests that depend on the compose-network `redis`
         # hostname fail-open via the rate limiter, so they cost time
         # but don't break the gate.
-        run: |
-          uv run pytest tests/ -q --timeout=60 -m "unit or integration" --ignore=tests/e2e \
-            --ignore=tests/api/test_routers.py \
-            --ignore=tests/api/test_proforma_cache.py \
-            --ignore=tests/contract \
-            --ignore=tests/engines/test_cashflow.py \
-            --ignore=tests/engines/test_sensitivity_matrix.py \
-            --ignore=tests/scrapers/test_dedup.py \
-            --ignore=tests/scrapers/test_loopnet.py \
-            --ignore=tests/tasks/test_scraper.py
+        run: uv run pytest tests/ -q --timeout=120 --ignore=tests/e2e
 
       - name: Install Playwright browsers
         run: uv run playwright install chromium --with-deps

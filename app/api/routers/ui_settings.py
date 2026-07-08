@@ -776,13 +776,16 @@ async def settings_organization(
     address_issues_count = await _get_address_issues_count(session)
 
     org = await session.get(Organization, user.org_id)
-    org_users = list(
+    from app.models.org import MembershipStatus as _MS
+    _all_members = list(
         (
             await session.execute(
                 select(User).where(User.org_id == user.org_id).order_by(User.created_at)
             )
         ).scalars()
     )
+    org_users = [u for u in _all_members if u.membership_status != _MS.PENDING]
+    pending_members = [u for u in _all_members if u.membership_status == _MS.PENDING]
 
     from app.models.org import OrgInvite as _OrgInviteQ
     pending_invites = (
@@ -849,7 +852,9 @@ async def settings_organization(
         {
             "org": org,
             "org_users": org_users,
+            "pending_members": pending_members,
             "pending_invites": pending_invites,
+            "app_base_url": settings.app_base_url,
             "user": user,
             "resolved": resolved,
             "org_settings_map": org_settings_map,
@@ -889,6 +894,198 @@ async def settings_organization_post(
 
     # Redirect back to GET to show updated data
     return RedirectResponse(url="/settings/organization", status_code=303)
+
+
+# ---------------------------------------------------------------------------
+# Org invites + member approval / removal.
+#
+# Restored 2026-07-07: these routes shipped in a9ffca9/b2c88f4 but were
+# accidentally deleted by 71781d0 (a security fix committed from a stale
+# ui.py), leaving settings_organization.html buttons pointing at 404s.
+# ---------------------------------------------------------------------------
+
+_SETTINGS_INVITE_MAX = 10
+_SETTINGS_INVITE_WINDOW = 60 * 60  # 1 hour
+
+
+@router.post("/settings/organization/invite", response_class=HTMLResponse)
+async def settings_organization_invite(
+    request: Request,
+    session: DBSession,
+) -> Response:
+    from datetime import timedelta
+
+    from app.api.rate_limit import check_rate_limit
+    from app.emails import make_invite_token, send_invite_email
+    from app.models.org import OrgInvite
+
+    user = await _get_user(session, request)
+    if user is None:
+        return HTMLResponse("Not authenticated", status_code=401)
+    if not user.is_org_admin:
+        return HTMLResponse("Forbidden", status_code=403)
+
+    form = await request.form()
+    email = str(form.get("invite_email", "")).strip().lower()
+    if not email:
+        return HTMLResponse('<span style="color:var(--danger)">Email is required.</span>', status_code=400)
+
+    org = await session.get(Organization, user.org_id)
+    if org is None:
+        return HTMLResponse("Organization not found", status_code=404)
+
+    allowed = await check_rate_limit(
+        key=f"invite_org:{user.org_id}",
+        max_count=_SETTINGS_INVITE_MAX,
+        window_seconds=_SETTINGS_INVITE_WINDOW,
+    )
+    if not allowed:
+        return HTMLResponse('<span style="color:var(--danger)">Rate limit reached. Try again in an hour.</span>', status_code=429)
+
+    expires = datetime.now(UTC) + timedelta(seconds=settings.invite_token_max_age_seconds)
+    token = make_invite_token(org.id, email)
+    invite_rec = OrgInvite(
+        id=_uuid_mod.uuid4(),
+        org_id=org.id,
+        invited_by_id=user.id,
+        email=email,
+        token=token,
+        expires_at=expires,
+    )
+    session.add(invite_rec)
+    await session.commit()
+
+    invite_url = f"{settings.app_base_url}/register?invite={token}"
+    try:
+        await send_invite_email(
+            to=email,
+            inviter_name=user.name,
+            org_name=org.name,
+            invite_url=invite_url,
+        )
+    except Exception:
+        pass
+
+    return HTMLResponse(
+        f'<span style="color:var(--success,#16a34a);font-size:13px;">✓ Invite sent to {email}</span>'
+    )
+
+
+@router.post("/settings/organization/members/{member_id}/approve", response_class=HTMLResponse)
+async def settings_organization_member_approve(
+    member_id: UUID,
+    request: Request,
+    session: DBSession,
+) -> Response:
+    from app.models.org import MembershipStatus
+
+    user = await _get_user(session, request)
+    if user is None:
+        return HTMLResponse("Not authenticated", status_code=401)
+    if not user.is_org_admin:
+        return HTMLResponse("Forbidden", status_code=403)
+
+    member = await session.get(User, member_id)
+    if member is None or member.org_id != user.org_id:
+        return HTMLResponse("Not found", status_code=404)
+
+    member.membership_status = MembershipStatus.ACTIVE
+    await session.commit()
+
+    return HTMLResponse("")
+
+
+_RESEND_1MIN_MAX = 1
+_RESEND_1MIN_WINDOW = 60
+_RESEND_TOTAL_MAX = 3
+_RESEND_TOTAL_WINDOW = 60 * 60 * 24 * 7  # 7 days, matches token expiry
+
+
+@router.post("/settings/organization/invites/{invite_id}/resend", response_class=HTMLResponse)
+async def settings_organization_invite_resend(
+    invite_id: UUID,
+    request: Request,
+    session: DBSession,
+) -> Response:
+    from datetime import timedelta
+
+    from markupsafe import escape as _esc
+
+    from app.api.rate_limit import check_rate_limit
+    from app.emails import make_invite_token, send_invite_email
+    from app.models.org import OrgInvite
+
+    user = await _get_user(session, request)
+    if user is None:
+        return HTMLResponse("Not authenticated", status_code=401)
+    if not user.is_org_admin:
+        return HTMLResponse("Forbidden", status_code=403)
+
+    invite = await session.get(OrgInvite, invite_id)
+    if invite is None or invite.org_id != user.org_id:
+        return HTMLResponse("Not found", status_code=404)
+    if invite.accepted_at is not None:
+        return HTMLResponse('<span style="color:var(--danger)">Invite already accepted.</span>', status_code=400)
+
+    allowed_1min = await check_rate_limit(
+        key=f"invite_resend_1min:{invite_id}",
+        max_count=_RESEND_1MIN_MAX,
+        window_seconds=_RESEND_1MIN_WINDOW,
+    )
+    if not allowed_1min:
+        return HTMLResponse('<span style="color:var(--danger)">Wait 1 minute before resending.</span>', status_code=429)
+
+    allowed_total = await check_rate_limit(
+        key=f"invite_resend_total:{invite_id}",
+        max_count=_RESEND_TOTAL_MAX,
+        window_seconds=_RESEND_TOTAL_WINDOW,
+    )
+    if not allowed_total:
+        return HTMLResponse('<span style="color:var(--danger)">Maximum resends reached for this invite.</span>', status_code=429)
+
+    new_token = make_invite_token(invite.org_id, invite.email)
+    invite.token = new_token
+    invite.expires_at = datetime.now(UTC) + timedelta(seconds=settings.invite_token_max_age_seconds)
+    await session.commit()
+
+    org = await session.get(Organization, user.org_id)
+    invite_url = f"{settings.app_base_url}/register?invite={new_token}"
+    try:
+        await send_invite_email(
+            to=invite.email,
+            inviter_name=user.name,
+            org_name=org.name if org else "",
+            invite_url=invite_url,
+        )
+    except Exception:
+        pass
+
+    return HTMLResponse(f'<span style="color:var(--success,#16a34a);font-size:12px;">✓ Resent to {_esc(invite.email)}</span>')
+
+
+@router.post("/settings/organization/members/{member_id}/remove", response_class=HTMLResponse)
+async def settings_organization_member_remove(
+    member_id: UUID,
+    request: Request,
+    session: DBSession,
+) -> Response:
+    user = await _get_user(session, request)
+    if user is None:
+        return HTMLResponse("Not authenticated", status_code=401)
+    if not user.is_org_admin:
+        return HTMLResponse("Forbidden", status_code=403)
+    if member_id == user.id:
+        return HTMLResponse("Cannot remove yourself", status_code=400)
+
+    member = await session.get(User, member_id)
+    if member is None or member.org_id != user.org_id:
+        return HTMLResponse("Not found", status_code=404)
+
+    await session.delete(member)
+    await session.commit()
+
+    # Return empty string — HTMX outerHTML swap on the row removes it
+    return HTMLResponse("")
 
 
 # ---------------------------------------------------------------------------

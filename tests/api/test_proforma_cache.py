@@ -158,7 +158,7 @@ async def test_preflight_cache_miss_returns_sheet_picker(client):
     )
     assert resp.status_code == 200
     body = resp.text
-    assert "Which sheets?" in body
+    assert "Where is the Data?" in body
     assert "Use Cached Result" not in body
 
 
@@ -303,7 +303,7 @@ async def test_reanalyze_xlsx_returns_sheet_picker(client, redis_store):
         data={"task_id": task_id},
     )
     assert resp.status_code == 200
-    assert "Which sheets?" in resp.text
+    assert "Where is the Data?" in resp.text
 
 
 @pytest.mark.integration
@@ -356,7 +356,7 @@ async def test_purge_cache_deletes_keys_and_returns_picker(client, redis_store):
     assert f"proforma:filehash:{file_hash}:result" not in redis_store
     assert f"proforma:filehash:{file_hash}:parsed_at" not in redis_store
     # And the user is dropped back into the sheet picker for a fresh parse
-    assert "Which sheets?" in resp.text
+    assert "Where is the Data?" in resp.text
 
 
 @pytest.mark.integration

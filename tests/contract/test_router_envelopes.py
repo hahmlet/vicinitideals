@@ -44,7 +44,13 @@ async def test_healthcheck_uses_structured_contract_envelope(
     assert response.status_code == 200
     assert set(response.json()) == {"code", "message", "detail"}
     assert response.json()["code"] == "ok"
-    assert response.json()["detail"] == {"status": "ok"}
+    # detail carries status + uptime metadata (started_at/version have been in
+    # the payload since the vicinitideals migration, 13cb1b3; canonical shape
+    # asserted in tests/api/test_routers.py::test_health_returns_structured_ok_payload).
+    detail = response.json()["detail"]
+    assert detail["status"] == "ok"
+    assert detail["version"]
+    assert detail["started_at"] > 0
 
 
 @pytest.mark.asyncio

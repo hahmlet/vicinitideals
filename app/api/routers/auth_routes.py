@@ -842,3 +842,198 @@ async def reset_password_post(
         samesite="lax",
     )
     return resp
+
+
+# ===========================================================================
+# Onboarding wizard (create org + invite teammates)
+#
+# Restored 2026-07-07: these routes shipped in a9ffca9 but were accidentally
+# deleted by 71781d0 (a security fix committed from a stale ui.py), leaving
+# the /onboarding templates and the onboarding_guard middleware pointing at
+# 404s. Adapted from the pre-71781d0 ui.py to live with the other auth-flow
+# routes.
+# ===========================================================================
+
+def _slugify(text: str) -> str:
+    """Convert org name to URL-safe slug."""
+    import re
+    slug = text.lower().strip()
+    slug = re.sub(r"[^\w\s-]", "", slug)
+    slug = re.sub(r"[\s_]+", "-", slug)
+    slug = re.sub(r"-+", "-", slug).strip("-")
+    return slug[:100]
+
+
+@router.get("/onboarding", response_class=HTMLResponse)
+async def onboarding_get(request: Request, session: DBSession) -> Response:
+    """Entry point for new-user onboarding wizard (create org + invite)."""
+    user = await get_current_user(request, session)
+    if user is None:
+        return RedirectResponse(url="/login", status_code=303)
+    if user.org_id is not None:
+        return RedirectResponse(url="/deals", status_code=303)
+    return templates.TemplateResponse(
+        request,
+        "onboarding.html",
+        {"user": user, "_step": 1, "inputs": {}},
+    )
+
+
+@router.post("/ui/onboarding/step", response_class=HTMLResponse)
+async def onboarding_step_post(request: Request, session: DBSession) -> Response:
+    """HTMX step handler — returns next wizard step (outerHTML swap)."""
+    user = await get_current_user(request, session)
+    if user is None:
+        return RedirectResponse(url="/login", status_code=303)
+    if user.org_id is not None:
+        return RedirectResponse(url="/deals", status_code=303)
+
+    form = await request.form()
+    current_step = int(form.get("_step", "1"))
+    inputs: dict = {k: str(v) for k, v in form.items() if k != "_step"}
+
+    if current_step == 1:
+        org_name = inputs.get("org_name", "").strip()
+        org_slug = inputs.get("org_slug", "").strip()
+
+        if not org_name:
+            return templates.TemplateResponse(
+                request, "partials/onboarding_wizard.html",
+                {"user": user, "_step": 1, "inputs": inputs, "error": "Organization name is required."},
+            )
+        if not org_slug:
+            org_slug = _slugify(org_name)
+            inputs["org_slug"] = org_slug
+
+        # Validate slug uniqueness
+        taken = (
+            await session.execute(select(Organization).where(Organization.slug == org_slug))
+        ).scalar_one_or_none()
+        if taken is not None:
+            return templates.TemplateResponse(
+                request, "partials/onboarding_wizard.html",
+                {"user": user, "_step": 1, "inputs": inputs, "error": "That slug is already taken. Choose another."},
+            )
+        inputs["org_name"] = org_name
+        inputs["org_slug"] = org_slug
+        return templates.TemplateResponse(
+            request, "partials/onboarding_wizard.html",
+            {"user": user, "_step": 2, "inputs": inputs},
+        )
+
+    return templates.TemplateResponse(
+        request, "partials/onboarding_wizard.html",
+        {"user": user, "_step": current_step, "inputs": inputs},
+    )
+
+
+@router.get("/ui/onboarding/check-slug", response_class=HTMLResponse)
+async def onboarding_check_slug(
+    request: Request, session: DBSession, slug: str = Query(default="")
+) -> HTMLResponse:
+    """HTMX inline slug availability check. Returns a small indicator fragment."""
+    if not slug:
+        return HTMLResponse("")
+    normalized = _slugify(slug)
+    taken = (
+        await session.execute(select(Organization).where(Organization.slug == normalized))
+    ).scalar_one_or_none()
+    if taken:
+        return HTMLResponse(
+            '<span style="color:var(--danger);font-size:12px;">✗ Already taken</span>'
+        )
+    return HTMLResponse(
+        '<span style="color:var(--success,#16a34a);font-size:12px;">✓ Available</span>'
+    )
+
+
+_ONBOARDING_INVITE_MAX = 5
+_ONBOARDING_INVITE_WINDOW = 5 * 60  # 5 minutes
+
+
+@router.post("/ui/onboarding/complete", response_class=HTMLResponse)
+async def onboarding_complete_post(request: Request, session: DBSession) -> Response:
+    """Finalize onboarding: create org, assign to user, send invites."""
+    from datetime import timedelta
+
+    from app.api.rate_limit import check_rate_limit
+    from app.emails import make_invite_token, send_invite_email
+    from app.models.org import OrgInvite
+
+    user = await get_current_user(request, session)
+    if user is None:
+        return RedirectResponse(url="/login", status_code=303)
+    if user.org_id is not None:
+        return RedirectResponse(url="/deals", status_code=303)
+
+    form = await request.form()
+    org_name = str(form.get("org_name", "")).strip()
+    org_slug = str(form.get("org_slug", "")).strip()
+    invite_emails = [
+        str(form.get(f"invite_email_{i}", "")).strip().lower()
+        for i in range(1, 6)
+        if str(form.get(f"invite_email_{i}", "")).strip()
+    ]
+
+    if not org_name or not org_slug:
+        return templates.TemplateResponse(
+            request, "partials/onboarding_wizard.html",
+            {"user": user, "_step": 1, "inputs": dict(form), "error": "Organization name and slug are required."},
+        )
+
+    # Verify slug still unique at commit time
+    taken = (
+        await session.execute(select(Organization).where(Organization.slug == org_slug))
+    ).scalar_one_or_none()
+    if taken is not None:
+        return templates.TemplateResponse(
+            request, "partials/onboarding_wizard.html",
+            {"user": user, "_step": 1, "inputs": dict(form), "error": "That slug is already taken. Choose another."},
+        )
+
+    # Create org
+    org = Organization(id=uuid.uuid4(), name=org_name, slug=org_slug)
+    session.add(org)
+    await session.flush()
+
+    # Assign user to org as admin
+    user.org_id = org.id
+    user.is_org_admin = True
+    user.membership_status = MembershipStatus.ACTIVE
+    await session.commit()
+
+    # Send invites (rate-limited)
+    if invite_emails:
+        allowed = await check_rate_limit(
+            key=f"invite_send:{user.id}",
+            max_count=_ONBOARDING_INVITE_MAX,
+            window_seconds=_ONBOARDING_INVITE_WINDOW,
+        )
+        if allowed:
+            expires = datetime.now(UTC) + timedelta(seconds=settings.invite_token_max_age_seconds)
+            for email in invite_emails[:5]:
+                if not email:
+                    continue
+                token = make_invite_token(org.id, email)
+                invite_rec = OrgInvite(
+                    id=uuid.uuid4(),
+                    org_id=org.id,
+                    invited_by_id=user.id,
+                    email=email,
+                    token=token,
+                    expires_at=expires,
+                )
+                session.add(invite_rec)
+                invite_url = f"{settings.app_base_url}/register?invite={token}"
+                try:
+                    await send_invite_email(
+                        to=email,
+                        inviter_name=user.name,
+                        org_name=org.name,
+                        invite_url=invite_url,
+                    )
+                except Exception:  # pragma: no cover
+                    pass
+            await session.commit()
+
+    return HTMLResponse("", status_code=200, headers={"HX-Redirect": "/deals"})

@@ -38,10 +38,11 @@ async def test_create_fixed_amount_source_persists_source_amount(
     org, user = await seed_org(session)
     opp = await seed_opportunity(session, org, user)
     deal_model, _, _, _ = await seed_deal_model_with_financials(session, opp, user)
+    model_id = deal_model.id  # capture before expire_all (sync lazy-load raises on AsyncSession)
     await _auth(client, user.id)
 
     resp = await client.post(
-        f"/ui/forms/{deal_model.id}/capital-modules",
+        f"/ui/forms/{model_id}/capital-modules",
         data={
             "label": "Test Grant",
             "vehicle_type": vehicle_type,
@@ -57,7 +58,7 @@ async def test_create_fixed_amount_source_persists_source_amount(
     session.expire_all()
     rows = (
         await session.execute(
-            select(CapitalModule).where(CapitalModule.scenario_id == deal_model.id)
+            select(CapitalModule).where(CapitalModule.scenario_id == model_id)
         )
     ).scalars().all()
     new_mod = next((m for m in rows if m.label == "Test Grant"), None)
@@ -88,10 +89,11 @@ async def test_edit_grant_source_amount_updates_value(
     )
     session.add(existing)
     await session.commit()
+    existing_id = existing.id  # capture before expire_all (sync lazy-load raises on AsyncSession)
     await _auth(client, user.id)
 
     resp = await client.put(
-        f"/ui/forms/{deal_model.id}/capital-modules/{existing.id}",
+        f"/ui/forms/{deal_model.id}/capital-modules/{existing_id}",
         data={
             "label": "OR-MEP",
             "vehicle_type": "grant",
@@ -105,6 +107,6 @@ async def test_edit_grant_source_amount_updates_value(
     assert resp.status_code in (200, 204), resp.text
 
     session.expire_all()
-    row = await session.get(CapitalModule, existing.id)
+    row = await session.get(CapitalModule, existing_id)
     assert row is not None
     assert Decimal(str(row.source.get("amount") or 0)) == Decimal("175000")

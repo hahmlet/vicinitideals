@@ -48,6 +48,7 @@ from tests.conftest import (
     seed_opportunity,
     seed_org,
 )
+from tests.exporters._parity_helpers import find_label_row, proforma_layout
 
 
 pytestmark = pytest.mark.asyncio
@@ -130,11 +131,8 @@ async def _seed(session: AsyncSession, *, multi_project: bool):
 
 
 def _find_debt_service_row(ws) -> int | None:
-    for r in range(1, ws.max_row + 1):
-        v = ws.cell(row=r, column=1).value
-        if isinstance(v, str) and v.strip().lower() == "debt service":
-            return r
-    return None
+    label_col, _ = proforma_layout(ws)
+    return find_label_row(ws, "Debt Service", col=label_col, exact=True)
 
 
 async def test_multi_project_debt_service_gated_on_perm_origination(

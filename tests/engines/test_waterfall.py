@@ -66,6 +66,47 @@ async def test_compute_waterfall_persists_results_and_metrics(db_session: AsyncS
     db_session.add_all([senior_debt, lp_equity, gp_equity])
     await db_session.flush()
 
+    # Mirror the real pipeline: the cashflow engine owns the CashFlow rows
+    # (debt_service, net_cash_flow, cumulative) and the unlevered IRR on the
+    # default project's OperationalOutputs row BEFORE the waterfall runs.
+    # Since commit b2e6e31 the waterfall no longer overwrites those values —
+    # it only reads them (DSCR from row debt_service, levered IRR from NCF).
+    from app.models.capital import CapitalModuleProject as _CMP
+    from app.models.project import Project as _Project
+    _project = _Project(scenario_id=deal.id, name="Waterfall Default Project")
+    db_session.add(_project)
+    await db_session.flush()
+    db_session.add(
+        OperationalOutputs(
+            scenario_id=deal.id,
+            project_id=_project.id,
+            project_irr_unlevered=Decimal("5.000000"),
+        )
+    )
+    # Junction coverage: a project without an attached equity module makes
+    # the waterfall auto-create a synthetic "Owner Equity" module, which
+    # would bump capital_module_count.
+    db_session.add_all(
+        [
+            _CMP(
+                capital_module_id=lp_equity.id,
+                project_id=_project.id,
+                amount=Decimal("25000"),
+                active_from="acquisition",
+                active_to="exit",
+                auto_size=False,
+            ),
+            _CMP(
+                capital_module_id=gp_equity.id,
+                project_id=_project.id,
+                amount=Decimal("15000"),
+                active_from="acquisition",
+                active_to="exit",
+                auto_size=False,
+            ),
+        ]
+    )
+
     db_session.add_all(
         [
             WaterfallTier(
@@ -120,6 +161,7 @@ async def test_compute_waterfall_persists_results_and_metrics(db_session: AsyncS
         [
             CashFlow(
                 scenario_id=deal.id,
+                project_id=_project.id,
                 period=0,
                 period_type=PeriodType.acquisition.value,
                 gross_revenue=Decimal("0"),
@@ -132,8 +174,12 @@ async def test_compute_waterfall_persists_results_and_metrics(db_session: AsyncS
                 net_cash_flow=Decimal("-100000"),
                 cumulative_cash_flow=Decimal("-100000"),
             ),
+            # io_only PMT on the $60k senior loan: 60000 × 6% / 12 = $300/mo.
+            # The cashflow engine writes DS + post-DS NCF; the waterfall reads
+            # them as-is (b2e6e31 removed the in-place overwrite).
             CashFlow(
                 scenario_id=deal.id,
+                project_id=_project.id,
                 period=1,
                 period_type=PeriodType.stabilized.value,
                 gross_revenue=Decimal("0"),
@@ -142,12 +188,13 @@ async def test_compute_waterfall_persists_results_and_metrics(db_session: AsyncS
                 operating_expenses=Decimal("0"),
                 capex_reserve=Decimal("0"),
                 noi=Decimal("3500"),
-                debt_service=Decimal("0"),
-                net_cash_flow=Decimal("3500"),
-                cumulative_cash_flow=Decimal("-96500"),
+                debt_service=Decimal("300"),
+                net_cash_flow=Decimal("3200"),
+                cumulative_cash_flow=Decimal("-96800"),
             ),
             CashFlow(
                 scenario_id=deal.id,
+                project_id=_project.id,
                 period=2,
                 period_type=PeriodType.stabilized.value,
                 gross_revenue=Decimal("0"),
@@ -156,12 +203,13 @@ async def test_compute_waterfall_persists_results_and_metrics(db_session: AsyncS
                 operating_expenses=Decimal("0"),
                 capex_reserve=Decimal("0"),
                 noi=Decimal("4500"),
-                debt_service=Decimal("0"),
-                net_cash_flow=Decimal("4500"),
-                cumulative_cash_flow=Decimal("-92000"),
+                debt_service=Decimal("300"),
+                net_cash_flow=Decimal("4200"),
+                cumulative_cash_flow=Decimal("-92600"),
             ),
             CashFlow(
                 scenario_id=deal.id,
+                project_id=_project.id,
                 period=3,
                 period_type=PeriodType.exit.value,
                 gross_revenue=Decimal("0"),
@@ -172,7 +220,7 @@ async def test_compute_waterfall_persists_results_and_metrics(db_session: AsyncS
                 noi=Decimal("0"),
                 debt_service=Decimal("0"),
                 net_cash_flow=Decimal("180000"),
-                cumulative_cash_flow=Decimal("88000"),
+                cumulative_cash_flow=Decimal("87400"),
             ),
         ]
     )
@@ -238,11 +286,18 @@ async def test_compute_waterfall_persists_results_and_metrics(db_session: AsyncS
         "15000"
     )
     assert any(row.party_irr_pct is not None for row in exit_rows)
-    assert Decimal(str(updated_cash_flows[1].debt_service)) > Decimal("0")
-    assert Decimal(str(updated_cash_flows[2].debt_service)) > Decimal("0")
-    assert Decimal(str(updated_cash_flows[3].debt_service)) > Decimal("60000")
-    assert Decimal(str(updated_cash_flows[1].net_cash_flow)) < Decimal("3500")
-    assert Decimal(str(updated_cash_flows[2].net_cash_flow)) < Decimal("4500")
+    # Since commit b2e6e31 the cashflow engine is authoritative for
+    # debt_service / net_cash_flow / cumulative_cash_flow: the waterfall must
+    # NOT rewrite the rows it read (the old overwrite corrupted DSCR by
+    # replacing the PMT with the residual NCF allocation).
+    assert Decimal(str(updated_cash_flows[1].debt_service)) == Decimal("300")
+    assert Decimal(str(updated_cash_flows[2].debt_service)) == Decimal("300")
+    assert Decimal(str(updated_cash_flows[3].debt_service)) == Decimal("0")
+    assert Decimal(str(updated_cash_flows[1].net_cash_flow)) == Decimal("3200")
+    assert Decimal(str(updated_cash_flows[2].net_cash_flow)) == Decimal("4200")
+    # DSCR from the engine-authored rows: annualized median NOI (4000×12)
+    # over annualized median DS (300×12) = 13.333333.
+    assert Decimal(str(summary["dscr"])) == Decimal("13.333333")
 
 
 @pytest.mark.asyncio
@@ -510,10 +565,14 @@ async def _seed_project_with_auto_dev_fee(
     *,
     deferred: str,
 ) -> None:
-    """Attach a Project + auto-Dev-Fee UseLine to a scenario.
+    """Attach a Project + auto-Dev-Fee UseLine (+ DDF capital module) to a scenario.
 
     `deferred` is stored as a string on the auto Dev Fee row's
-    `dev_fee_binding_context`, matching engine-written shape.
+    `dev_fee_binding_context`, matching engine-written shape. Since commit
+    cf21d10 the waterfall reads the DDF opening balance from the
+    `deferred_developer_fee` capital module's source amount (what was actually
+    contributed as a source), NOT from the binding context — so when
+    `deferred` > 0 we also seed the DDF module the sizer would have written.
     """
     from app.models.deal import UseLine
     from app.models.project import Project
@@ -539,6 +598,20 @@ async def _seed_project_with_auto_dev_fee(
         },
     )
     session.add(auto_line)
+    if Decimal(deferred) > Decimal("0"):
+        session.add(
+            CapitalModule(
+                scenario_id=deal.id,
+                label="Deferred Developer Fee",
+                vehicle_type=VehicleType.deferred_developer_fee.value,
+                stack_position=99,
+                source={"amount": deferred},
+                carry={"carry_type": "none"},
+                exit_terms={"exit_type": "profit_share", "trigger": "ongoing"},
+                active_phase_start="acquisition",
+                active_phase_end="exit",
+            )
+        )
     await session.flush()
 
 

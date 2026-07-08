@@ -1,6 +1,6 @@
 """Reserved line-item labels for the Gap Adjustment slider feature.
 
-Three phantom line-item labels are protected by the API: users cannot create
+Four phantom line-item labels are protected by the API: users cannot create
 new lines with these labels, rename existing lines into these labels, or
 rename phantom lines out of them. The Gap Adjustment slider feature
 materializes these rows in IncomeStream / OperatingExpenseLine / UseLine
