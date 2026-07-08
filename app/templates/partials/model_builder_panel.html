@@ -2367,6 +2367,13 @@ var _editTitles = {
 };
 function openEditLine(table, id, modelId) {
   document.getElementById('line-item-drawer-title').textContent = _editTitles[table] || 'Edit Line';
+  // Clear any previously loaded form first: closeDrawer only hides the
+  // overlay, so a stale form with the same element IDs is still in the DOM
+  // while the incoming form's inline scripts run — getElementById binds
+  // their listeners to the stale nodes and the fresh form's controls
+  // (e.g. the grant eligibility checkboxes) end up inert on reopen.
+  var _body = document.getElementById('line-item-drawer-body');
+  if (_body) _body.innerHTML = '';
   htmx.ajax('GET', '/ui/models/' + modelId + '/line-form?type=' + table + '&id=' + id, {
     target: '#line-item-drawer-body', swap: 'innerHTML'
   });

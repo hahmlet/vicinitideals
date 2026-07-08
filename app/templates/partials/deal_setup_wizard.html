@@ -1255,8 +1255,13 @@ function onProformaFile(input) {
   if (input && input.files) {
     for (var i = 0; i < input.files.length; i++) { _pfDT.items.add(input.files[i]); }
   }
-  _pfRebuildPills();
+  // Reset the native selection BEFORE _pfRebuildPills re-assigns input.files
+  // from _pfDT. Once assigned, the input and _pfDT share ONE live FileList,
+  // so clearing input.value afterwards drained BOTH — the chosen file
+  // silently vanished from the multipart submit and Step 1 fell through to
+  // the "Skip Import" path. (Drag-and-drop was unaffected: no value reset.)
   if (input && 'value' in input) { try { input.value = ''; } catch(ex) {} }
+  _pfRebuildPills();
 }
 function removeProformaFile(e, idx) {
   e.preventDefault();

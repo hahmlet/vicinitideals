@@ -128,6 +128,17 @@ def _add_grant(page: Page, label: str, amount: str) -> None:
 
 
 def _open_grant_edit(page: Page, label: str) -> None:
+    # A previously opened edit form may still sit in the drawer body (closeDrawer
+    # hides the overlay without clearing it). Its element IDs collide with the
+    # incoming form's, so the fresh form's inline script binds its checkbox
+    # listeners to the STALE nodes and the visible checkboxes end up inert
+    # (uncheck flips the box but never reverts the Amount label). Clear the
+    # body first so the script binds to the form we actually interact with —
+    # same stale-DOM pattern as the _add_use sentinel above.
+    page.evaluate(
+        "() => { const b = document.getElementById('line-item-drawer-body');"
+        " if (b) b.innerHTML = ''; }"
+    )
     row = page.locator(f"tr:has(td:has-text('{label}'))").first
     row.click()
     page.wait_for_selector('#line-item-drawer', timeout=5_000)

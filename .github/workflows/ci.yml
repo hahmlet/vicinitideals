@@ -201,13 +201,9 @@ jobs:
         run: uv run playwright install chromium --with-deps
 
       - name: E2E tests
-        # Launch-prep scope-cut: pre-existing E2E failures unrelated to this
-        # CI gate sweep are deselected here so the gate can land green.
-        # Each entry is a known-broken test or whole-file that needs
-        # rehabilitation. See docs/feature-plans/launch-e2e-rehab.md.
-        run: |
-          uv run pytest tests/e2e/ -q -m e2e \
-            --ignore=tests/e2e/test_proforma_cache.py
+        # Full E2E suite — no per-file ignores (2026-07 suite rehab brought
+        # every file to green; one red test = one real problem).
+        run: uv run pytest tests/e2e/ -q -m e2e
         env:
           E2E_BASE_URL: http://localhost:8001
 
