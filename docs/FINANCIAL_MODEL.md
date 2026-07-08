@@ -565,6 +565,8 @@ The Operating Reserve write-back at `actual_reserve = max(opex_monthly, ds_month
 
 **Concrete example of the bug class (fixed May 2026).** Deal with `source.interest_rate_pct = 6.0` and `carry.schedule[PI].rate_pct = 5.5`, DSCR floor 1.15, dual-constraint mode. Pre-fix: sizer hit DSCR 1.15 at 6.0%, cashflow paid at 5.5% (~5.6% smaller payment), realised DSCR landed at `1.15 × pmt(6%)/pmt(5.5%) ≈ 1.214`. Post-fix: sizer uses 5.5% directly, realised DSCR ≈ 1.15.
 
+**Amort-term side of the same invariant (fixed July 2026).** `_period_ds_from_schedule_phase` — the function that charges month-over-month DS for schedule-format loans — resolves the PI amortization term with the same precedence: `phase.amort_term_years → source.amort_term_years → 30y`. The builder stores the loan-level amort term on `source`, and PI schedule phases typically carry no per-phase override. Pre-fix the schedule path skipped the `source` fallback and amortized every override-less PI phase over the 30y default while the sizer used the source term — a 35y/5.5% $52.075M bond was paid as 30y ($295,676/mo instead of $279,658/mo, ~$192k/yr overstated DS), reporting DSCR 1.14 instead of 1.22. Regression tests: `test_scheduled_pi_falls_back_to_source_amort_term`, `test_period_ds_schedule_phase_amort_overrides_source` (tests/engines/test_cashflow.py).
+
 ### 2.5 Closing costs (Phase B only)
 
 #### Defaults

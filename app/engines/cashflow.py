@@ -655,6 +655,7 @@ async def _compute_project_cashflow(
         _scm_schedule = _scm_carry.get("schedule", [])
         _scm_principal = Decimal(str((_scm.source or {}).get("amount") or 0))
         _scm_base_rate = (_scm.source or {}).get("interest_rate_pct")
+        _scm_base_amort = (_scm.source or {}).get("amort_term_years")
         _scm_start_abs = _loan_start_abs_month(_scm, phases)
         _scm_resolved = _resolve_carry_schedule(_scm_schedule, _milestone_month_map, _scm_start_abs)
         for _abs_m in range(_total_months):
@@ -662,7 +663,9 @@ async def _compute_project_cashflow(
             if _loan_m < 0:
                 continue
             _active_phase = _carry_for_loan_month(_scm_resolved, _loan_m)
-            _ds = _period_ds_from_schedule_phase(_active_phase, _scm_principal, _scm_base_rate)
+            _ds = _period_ds_from_schedule_phase(
+                _active_phase, _scm_principal, _scm_base_rate, _scm_base_amort
+            )
             if _ds:
                 _schedule_period_ds[_abs_m] = _schedule_period_ds.get(_abs_m, ZERO) + _ds
 
@@ -2432,6 +2435,7 @@ def _scheduled_operation_ds(
         if principal <= ZERO:
             continue
         base_rate = (module.source or {}).get("interest_rate_pct")
+        base_amort = (module.source or {}).get("amort_term_years")
         operation_phase: dict | None = None
         for phase in (carry.get("schedule") or []):
             ct = (phase.get("carry_type") or "").replace(
@@ -2441,7 +2445,7 @@ def _scheduled_operation_ds(
                 operation_phase = {**phase, "carry_type": ct}
         if operation_phase is not None:
             total += _period_ds_from_schedule_phase(
-                operation_phase, principal, base_rate
+                operation_phase, principal, base_rate, base_amort
             )
     return total
 
@@ -2450,8 +2454,16 @@ def _period_ds_from_schedule_phase(
     phase: dict,
     principal: Decimal,
     base_rate: float | None,
+    base_amort_years: int | None = None,
 ) -> Decimal:
-    """Monthly DS contribution for a single carry schedule phase."""
+    """Monthly DS contribution for a single carry schedule phase.
+
+    Amort term precedence mirrors _op_phase_rate_and_amort (the auto-sizer):
+    phase override → module source.amort_term_years → 30y default. The
+    builder stores the loan-level amort term on source, so a PI schedule
+    phase without its own override must fall back to it or sized DSCR
+    diverges from realised DSCR.
+    """
     ct = phase.get("carry_type", "none")
     if ct in ("interest_reserve", "capitalized_interest", "none"):
         return ZERO  # pre-funded or no DS
@@ -2461,7 +2473,7 @@ def _period_ds_from_schedule_phase(
     if ct == "io_only":
         return _monthly_io(principal, rate)
     if ct == "pi":
-        ay = int(phase.get("amort_term_years") or 30)
+        ay = int(phase.get("amort_term_years") or base_amort_years or 30)
         return _monthly_pmt(principal, rate, ay)
     return ZERO
 

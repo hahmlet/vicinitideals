@@ -35,6 +35,7 @@ from app.engines.cashflow import (
     _constr_phase_rate_pct,
     _ir_lease_up_pool,
     _op_phase_rate_and_amort,
+    _period_ds_from_schedule_phase,
     _resolve_horizon_months,
     _schedule_preop_months,
     _scheduled_operation_ds,
@@ -498,9 +499,12 @@ class _ScheduledCarryModule:
     """Lightweight stand-in for a debt CapitalModule with carry.schedule."""
 
     def __init__(self, *, schedule: list[dict], amount: str = "1500000",
-                 rate_pct: float | None = 6.0) -> None:
+                 rate_pct: float | None = 6.0,
+                 amort_term_years: int | None = None) -> None:
         self.id = uuid4()
         self.source = {"amount": amount, "interest_rate_pct": rate_pct}
+        if amort_term_years is not None:
+            self.source["amort_term_years"] = amort_term_years
         self.carry = {"schedule": schedule}
 
 
@@ -560,6 +564,56 @@ def test_scheduled_operation_ds_ignores_pure_ir_schedule() -> None:
     )
 
     assert _scheduled_operation_ds([ir_only], {ir_only.id}) == Decimal("0")
+
+
+@pytest.mark.unit
+def test_scheduled_pi_falls_back_to_source_amort_term() -> None:
+    """Regression: PI schedule phase without its own amort_term_years must
+    amortize over source.amort_term_years (where the builder stores the loan
+    term), not the 30y default. A 35y bond was silently paid as 30y,
+    overstating DS ~$192k/yr and dropping DSCR from 1.22 to 1.14."""
+    bond = _ScheduledCarryModule(
+        schedule=[
+            {"label": "IO", "carry_type": "io_only",
+             "duration": {"type": "months", "months": 12}},
+            {"label": "PI", "carry_type": "pi",
+             "duration": {"type": "remainder"}},
+        ],
+        amount="52075000",
+        rate_pct=5.5,
+        amort_term_years=35,
+    )
+
+    ds = _scheduled_operation_ds([bond], {bond.id})
+
+    # PMT(52.075M, 5.5%/yr, 35yr) ≈ $279,658/mo; the 30y default would be
+    # ≈ $295,676/mo — assert we're on the 35y payment.
+    assert Decimal("279000") < ds < Decimal("280500")
+
+
+@pytest.mark.unit
+def test_period_ds_schedule_phase_amort_overrides_source() -> None:
+    """Phase-level amort_term_years still wins over the source fallback."""
+    phase = {"carry_type": "pi", "amort_term_years": 30}
+    ds_phase_wins = _period_ds_from_schedule_phase(
+        phase, Decimal("52075000"), 5.5, base_amort_years=35
+    )
+    ds_source_fallback = _period_ds_from_schedule_phase(
+        {"carry_type": "pi"}, Decimal("52075000"), 5.5, base_amort_years=35
+    )
+    # 30y payment > 35y payment
+    assert ds_phase_wins > ds_source_fallback
+    assert Decimal("295000") < ds_phase_wins < Decimal("296500")
+    assert Decimal("279000") < ds_source_fallback < Decimal("280500")
+
+
+@pytest.mark.unit
+def test_period_ds_schedule_phase_defaults_to_30y_without_any_term() -> None:
+    """No phase term, no source term → legacy 30y default unchanged."""
+    ds = _period_ds_from_schedule_phase(
+        {"carry_type": "pi"}, Decimal("52075000"), 5.5
+    )
+    assert Decimal("295000") < ds < Decimal("296500")
 
 
 @pytest.mark.unit
