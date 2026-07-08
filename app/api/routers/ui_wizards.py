@@ -387,10 +387,18 @@ async def deal_setup_wizard_get(
 
     # Recover proforma_task_id stashed by create_deal when the deal originated
     # from an email attachment. The key is consumed (deleted) on first use so
-    # the auto-load banner only fires once.
-    import redis as _redis_sync  # type: ignore
-    _rw = _redis_sync.from_url(settings.redis_url, decode_responses=True)
-    _email_task_id = _rw.getdel(f"proforma:scenario:{model_id}:email_task_id") or ""
+    # the auto-load banner only fires once. Redis being down must not 500 the
+    # wizard entry page — the banner is a nice-to-have, degrade to none.
+    _email_task_id = ""
+    try:
+        import redis as _redis_sync  # type: ignore
+        _rw = _redis_sync.from_url(
+            settings.redis_url, decode_responses=True,
+            socket_connect_timeout=1, socket_timeout=1,
+        )
+        _email_task_id = _rw.getdel(f"proforma:scenario:{model_id}:email_task_id") or ""
+    except Exception:  # pragma: no cover — Redis unreachable
+        pass
 
     return templates.TemplateResponse(request, "partials/deal_setup_wizard.html", {
         "request": request, "model": model, "inputs": inputs, "step": step,

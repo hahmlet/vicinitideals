@@ -31,9 +31,13 @@ from app.schemas.gap_adjustment_names import (
 )
 
 
-async def _seeded_model(session: AsyncSession):
+async def _seeded_model(session: AsyncSession, client: AsyncClient):
+    """Seed org/user/scenario and authenticate *client* as the seeded user
+    (HTMX requests no longer bypass the session gate — 2026-07-08 fix)."""
     from sqlalchemy import select
-    from tests.conftest import seed_org, seed_deal_model_with_financials, seed_opportunity
+    from tests.conftest import (
+        seed_org, seed_deal_model_with_financials, seed_opportunity, set_client_auth,
+    )
     from app.models.project import Project as _Project
     org, user = await seed_org(session)
     opp = await seed_opportunity(session, org, user)
@@ -42,18 +46,17 @@ async def _seeded_model(session: AsyncSession):
         select(_Project).where(_Project.scenario_id == deal_model.id)
     )).scalar_one()
     await session.commit()
+    set_client_auth(client, user.id)
     return deal_model.id, project.id
 
 
-def _hx_headers(auth_headers: dict[str, str]) -> dict[str, str]:
-    return {**auth_headers, "hx-request": "true"}
+_HX_HEADERS = {"hx-request": "true"}
 
 
 @pytest.mark.asyncio
 async def test_pill_green_when_no_adjustments(
     client: AsyncClient,
     session: AsyncSession,
-    auth_headers: dict[str, str],
 ) -> None:
     """No phantom rows → pill renders normally (no yellow override).
 
@@ -61,11 +64,11 @@ async def test_pill_green_when_no_adjustments(
     the underlying pill is "warn" or "na" — the test checks specifically
     that the override label "Balanced w/ adjustments" is NOT present.
     """
-    model_id, _ = await _seeded_model(session)
+    model_id, _ = await _seeded_model(session, client)
 
     resp = await client.get(
         f"/ui/models/{model_id}/calc-status",
-        headers=_hx_headers(auth_headers),
+        headers=_HX_HEADERS,
     )
     assert resp.status_code == 200, resp.text
     assert "Balanced w/ adjustments" not in resp.text
@@ -75,10 +78,9 @@ async def test_pill_green_when_no_adjustments(
 async def test_pill_yellow_when_revenue_adjustment_nonzero(
     client: AsyncClient,
     session: AsyncSession,
-    auth_headers: dict[str, str],
 ) -> None:
     """A nonzero Revenue phantom row triggers the yellow override."""
-    model_id, project_id = await _seeded_model(session)
+    model_id, project_id = await _seeded_model(session, client)
 
     # Seed a nonzero revenue phantom and a Compute-clean state. To force
     # the underlying pill to "ok" we stub OperationalOutputs so DSCR/LTV
@@ -123,7 +125,7 @@ async def test_pill_yellow_when_pp_adjustment_nonzero(
     """A nonzero PP phantom row triggers has_any_gap_adjustment, even
     when Revenue and OpEx phantoms are absent."""
     from app.api.routers.ui_model_builder import _has_any_gap_adjustment
-    model_id, project_id = await _seeded_model(session)
+    model_id, project_id = await _seeded_model(session, client)
 
     session.add(UseLine(
         project_id=project_id,
@@ -147,7 +149,7 @@ async def test_pill_not_yellow_when_phantom_amount_is_zero(
     The row exists but represents no adjustment, so the pill should
     render normally."""
     from app.api.routers.ui_model_builder import _has_any_gap_adjustment
-    model_id, project_id = await _seeded_model(session)
+    model_id, project_id = await _seeded_model(session, client)
 
     session.add_all([
         IncomeStream(
@@ -208,12 +210,11 @@ async def test_real_failure_still_warns(
 async def test_phantom_row_yellow_highlight_in_panel(
     client: AsyncClient,
     session: AsyncSession,
-    auth_headers: dict[str, str],
 ) -> None:
     """A nonzero PP phantom row in the Uses table renders with yellow
     background; a zero phantom row renders gray (placeholder)."""
     from sqlalchemy import select
-    model_id, project_id = await _seeded_model(session)
+    model_id, project_id = await _seeded_model(session, client)
 
     # Nonzero phantom → yellow
     session.add(UseLine(
@@ -227,7 +228,7 @@ async def test_phantom_row_yellow_highlight_in_panel(
 
     resp = await client.get(
         f"/ui/panel/{model_id}?module=sources_uses",
-        headers=_hx_headers(auth_headers),
+        headers=_HX_HEADERS,
     )
     assert resp.status_code == 200
     # The yellow highlight uses background:#fef3c7 (Tailwind amber-100).
@@ -245,7 +246,7 @@ async def test_phantom_row_yellow_highlight_in_panel(
 
     resp = await client.get(
         f"/ui/panel/{model_id}?module=sources_uses",
-        headers=_hx_headers(auth_headers),
+        headers=_HX_HEADERS,
     )
     assert resp.status_code == 200
     assert "background:#f3f4f6" in resp.text  # gray placeholder

@@ -60,6 +60,28 @@ class _FakeRedis:
 # Helpers
 # ---------------------------------------------------------------------------
 
+def _auth_client_kwargs(user_id) -> dict:
+    """AsyncClient kwargs for an authenticated HTMX request.
+
+    HTMX requests no longer bypass require_auth_for_ui (2026-07-08 fix), so
+    carry a signed session cookie; authenticated HTMX mutations must also
+    present a matching CSRF token. X-User-ID stays for the route's own
+    user lookup.
+    """
+    from app.api.auth import COOKIE_NAME, create_session_token
+    from app.api.csrf import make_csrf_token
+
+    uid = str(user_id)
+    return {
+        "headers": {
+            "X-User-ID": uid,
+            "hx-request": "true",
+            "X-CSRF-Token": make_csrf_token(uid),
+        },
+        "cookies": {COOKIE_NAME: create_session_token(uid)},
+    }
+
+
 async def _seed_org_and_user(session):
     from app.models.org import Organization, User
     suffix = uuid.uuid4().hex[:8]
@@ -141,11 +163,11 @@ async def _post_create_deals(session, user, email_row, *, n_files: int = 1):
     try:
         with patch("redis.from_url", _fake_from_url):
             async with AsyncClient(
-                transport=ASGITransport(app=app), base_url="http://test"
+                transport=ASGITransport(app=app), base_url="http://test",
+                **_auth_client_kwargs(user.id),
             ) as client:
                 resp = await client.post(
                     f"/ui/deals/email/{email_row.id}/create-deals",
-                    headers={"X-User-ID": str(user.id), "hx-request": "true"},
                     data=data,
                     follow_redirects=False,
                 )

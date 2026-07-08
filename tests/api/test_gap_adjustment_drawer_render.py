@@ -26,8 +26,12 @@ from app.schemas.gap_adjustment_names import (
 )
 
 
-async def _seeded_model(session: AsyncSession):
-    from tests.conftest import seed_org, seed_deal_model_with_financials, seed_opportunity
+async def _seeded_model(session: AsyncSession, client: AsyncClient):
+    """Seed org/user/scenario and authenticate *client* as the seeded user
+    (HTMX requests no longer bypass the session gate — 2026-07-08 fix)."""
+    from tests.conftest import (
+        seed_org, seed_deal_model_with_financials, seed_opportunity, set_client_auth,
+    )
     from sqlalchemy import select
     from app.models.project import Project as _Project
     org, user = await seed_org(session)
@@ -37,6 +41,7 @@ async def _seeded_model(session: AsyncSession):
         select(_Project).where(_Project.scenario_id == deal_model.id)
     )).scalar_one()
     await session.commit()
+    set_client_auth(client, user.id)
     return deal_model.id, project.id
 
 
@@ -44,9 +49,8 @@ async def _seeded_model(session: AsyncSession):
 async def test_drawer_renders_on_sources_uses_panel(
     client: AsyncClient,
     session: AsyncSession,
-    auth_headers: dict[str, str],
 ) -> None:
-    model_id, project_id = await _seeded_model(session)
+    model_id, project_id = await _seeded_model(session, client)
 
     # The drawer only renders when there is a Sources/Uses gap (or a phantom
     # adjustment row already exists), and the gap is only computed once BOTH
@@ -85,7 +89,7 @@ async def test_drawer_renders_on_sources_uses_panel(
 
     resp = await client.get(
         f"/ui/panel/{model_id}?module=sources_uses",
-        headers={**auth_headers, "hx-request": "true"},
+        headers={"hx-request": "true"},
     )
     assert resp.status_code == 200, resp.text
     html = resp.text
@@ -110,12 +114,11 @@ async def test_drawer_renders_on_sources_uses_panel(
 async def test_drawer_prefills_from_existing_phantom_rows(
     client: AsyncClient,
     session: AsyncSession,
-    auth_headers: dict[str, str],
 ) -> None:
     """If phantom rows already exist (prior slider session), sliders must
     initialize to those amounts so the user picks up where they left off."""
     from sqlalchemy import select
-    model_id, project_id = await _seeded_model(session)
+    model_id, project_id = await _seeded_model(session, client)
 
     # Seed phantom rows directly via ORM (bypasses validators).
     session.add_all([
@@ -144,7 +147,7 @@ async def test_drawer_prefills_from_existing_phantom_rows(
 
     resp = await client.get(
         f"/ui/panel/{model_id}?module=sources_uses",
-        headers={**auth_headers, "hx-request": "true"},
+        headers={"hx-request": "true"},
     )
     assert resp.status_code == 200
     html = resp.text
@@ -163,16 +166,15 @@ async def test_drawer_prefills_from_existing_phantom_rows(
 async def test_drawer_omitted_on_other_modules(
     client: AsyncClient,
     session: AsyncSession,
-    auth_headers: dict[str, str],
 ) -> None:
     """The drawer only renders on sources_uses; opening other modules
     shouldn't show it."""
-    model_id, _ = await _seeded_model(session)
+    model_id, _ = await _seeded_model(session, client)
 
     for module in ("revenue", "opex", "uses"):
         resp = await client.get(
             f"/ui/panel/{model_id}?module={module}",
-            headers={**auth_headers, "hx-request": "true"},
+            headers={"hx-request": "true"},
         )
         if resp.status_code != 200:
             continue  # some modules may not exist

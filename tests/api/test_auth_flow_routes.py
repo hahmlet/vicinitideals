@@ -392,10 +392,16 @@ async def test_reset_password_post_mismatched_passwords_400(
 
 # ---------------------------------------------------------------------------
 # GET /ui/onboarding/check-slug
+#
+# HTMX requests no longer bypass the session gate (2026-07-08 fix), and the
+# slug checker is used mid-onboarding by users who already hold a session —
+# so each test authenticates with a seeded user's cookie.
 # ---------------------------------------------------------------------------
 
 
 async def test_check_slug_available(client: AsyncClient, session: AsyncSession) -> None:
+    _org, user = await seed_org(session)
+    client.cookies.set(COOKIE_NAME, create_session_token(user.id))
     resp = await client.get(
         "/ui/onboarding/check-slug",
         params={"slug": "totally-unused-slug"},
@@ -406,7 +412,8 @@ async def test_check_slug_available(client: AsyncClient, session: AsyncSession) 
 
 
 async def test_check_slug_taken(client: AsyncClient, session: AsyncSession) -> None:
-    org, _ = await seed_org(session)
+    org, user = await seed_org(session)
+    client.cookies.set(COOKIE_NAME, create_session_token(user.id))
     resp = await client.get(
         "/ui/onboarding/check-slug",
         params={"slug": org.slug},
@@ -416,7 +423,11 @@ async def test_check_slug_taken(client: AsyncClient, session: AsyncSession) -> N
     assert "Already taken" in resp.text
 
 
-async def test_check_slug_empty_returns_blank(client: AsyncClient) -> None:
+async def test_check_slug_empty_returns_blank(
+    client: AsyncClient, session: AsyncSession
+) -> None:
+    _org, user = await seed_org(session)
+    client.cookies.set(COOKIE_NAME, create_session_token(user.id))
     resp = await client.get(
         "/ui/onboarding/check-slug", headers={"hx-request": "true"}
     )
