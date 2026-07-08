@@ -169,7 +169,10 @@ def _export_listing(listing: Opportunity) -> dict[str, Any]:
 
 
 def _export_operational_inputs(oi: OperationalInputs) -> dict[str, Any]:
-    skip = {"id", "project_id"}
+    # updated_at/created_at are row metadata, not deal data — and the ISO
+    # string they serialize to crashes re-import (asyncpg rejects str for
+    # a TIMESTAMPTZ bind param, unhandled 500 on POST /api/deals/import/json).
+    skip = {"id", "project_id", "updated_at", "created_at"}
     return {
         col.key: _v(getattr(oi, col.key))
         for col in oi.__table__.columns
@@ -443,9 +446,13 @@ async def import_deal_json(
 
             oi_data = p_data.get("operational_inputs")
             if oi_data:
+                # Drop row-metadata timestamps too: payloads exported before
+                # the export-side skip carry them as ISO strings, which
+                # asyncpg rejects for TIMESTAMPTZ bind params.
+                _oi_skip = {"id", "project_id", "updated_at", "created_at"}
                 session.add(OperationalInputs(project_id=project.id, **{
                     k: v for k, v in oi_data.items()
-                    if hasattr(OperationalInputs, k) and v is not None
+                    if k not in _oi_skip and hasattr(OperationalInputs, k) and v is not None
                 }))
 
             for u_data in p_data.get("use_lines") or []:
