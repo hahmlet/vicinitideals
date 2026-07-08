@@ -1,5 +1,16 @@
 # Testing Strategy — re-modeling
 
+> **STALE — historical design doc.** Written when the suite ran on in-memory
+> SQLite with no CI. As of the 2026-07 suite rehab, current reality is:
+> per-run **Postgres 16** test database (VM 114 port 5433, provisioned/dropped
+> by `tests/conftest.py`, which also rebinds `app.db.AsyncSessionLocal` so
+> middleware/Celery code hits the test DB); markers **auto-assigned at
+> collection** (e2e by path, integration when DB fixtures present, else unit);
+> CI (`.github/workflows/ci.yml`) runs the entire suite with **no per-file
+> ignores** — light gate `-m unit`, full gate everything non-E2E plus the full
+> E2E suite. Suite size ~1,370 non-E2E + ~150 E2E tests, all green.
+> See CLAUDE.md "Testing" for the authoritative commands.
+
 ## What We Have Today
 
 - **18 test files**, ~100+ tests, ~7,400 lines of test code
