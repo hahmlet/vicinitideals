@@ -93,6 +93,167 @@ async def test_create_variant_deep_copies_scenario(
     assert new_projects[0].id != project_id
 
 
+async def test_create_variant_is_faithful_copy(
+    client: AsyncClient, session: AsyncSession
+) -> None:
+    """A variant must compute identically to its source until edited.
+
+    Regression for the 2026-07-08 'Remove Rochelle - Add Edgemont' incident:
+    the old clone (a) hand-picked UseLine kwargs, dropping
+    is_auto_finance_cost + source_capital_module_id (engine then regenerated
+    a second FC row → finance costs double-counted), and (b) re-applied
+    current org Type 1 defaults over the copied OperationalInputs, resetting
+    per-project debt_sizing_mode (gap_fill → dual_constraint zeroed two
+    net-negative projects' bond slices via the DSCR cap).
+    """
+    from app.models.capital import CapitalModule, CapitalModuleProject
+    from app.models.deal import OperationalInputs
+    from app.models.milestone import Milestone, MilestoneType
+
+    _org, user, _opp, deal_model, project = await _seed(session)
+    scenario_id, deal_id, project_id = deal_model.id, deal_model.deal_id, project.id
+
+    ms = Milestone(
+        project_id=project_id,
+        milestone_type=MilestoneType.close,
+        label="Close",
+        duration_days=30,
+        sequence_order=1,
+    )
+    session.add(ms)
+    await session.flush()
+
+    bond = CapitalModule(
+        scenario_id=scenario_id,
+        label="Test Bond",
+        vehicle_type="debt",
+        stack_position=0,
+        source={"amount": 1_000_000, "auto_size": True, "rate_pct": 5.5},
+        fee_terms={"origination_pct": 1.0},
+        active_from_milestone_id=ms.id,
+    )
+    session.add(bond)
+    await session.flush()
+    floatm = CapitalModule(
+        scenario_id=scenario_id,
+        label="Float",
+        vehicle_type="float_earnings",
+        stack_position=1,
+        source={
+            "parent_module_id": str(bond.id),
+            "waterfall_milestone_id": str(ms.id),
+        },
+    )
+    session.add(floatm)
+    session.add(CapitalModuleProject(
+        capital_module_id=bond.id,
+        project_id=project_id,
+        amount=Decimal("1000000"),
+        auto_size=True,
+        active_from_milestone_id=ms.id,
+    ))
+    fc_line = UseLine(
+        project_id=project_id,
+        label="Test Bond — Total Finance Costs",
+        amount=Decimal("20000"),
+        is_auto_finance_cost=True,
+        source_capital_module_id=bond.id,
+        active_from_milestone_id=ms.id,
+    )
+    whitelisted_line = UseLine(
+        project_id=project_id,
+        label="Bond-only Cost",
+        amount=Decimal("5000"),
+        eligible_module_ids=[bond.id],
+    )
+    session.add_all([fc_line, whitelisted_line])
+    # Per-project choices that differ from org Type 1 defaults — the old
+    # clone reset these to org policy.
+    inputs = (await session.execute(
+        select(OperationalInputs).where(OperationalInputs.project_id == project_id)
+    )).scalar_one()
+    inputs.debt_sizing_mode = "dual_constraint"
+    inputs.operation_reserve_months = 9
+    bond_id = bond.id
+    await session.commit()
+
+    set_client_auth(client, user.id)
+    resp = await client.post(
+        f"/ui/deals/{scenario_id}/variant",
+        data={"name": "Faithful"},
+        follow_redirects=False,
+    )
+    assert resp.status_code == 303, resp.text
+
+    session.expire_all()
+    new_scn = (await session.execute(
+        select(Scenario).where(Scenario.deal_id == deal_id, Scenario.name == "Faithful")
+    )).scalar_one()
+    new_proj = (await session.execute(
+        select(Project).where(Project.scenario_id == new_scn.id)
+    )).scalar_one()
+    new_ms = (await session.execute(
+        select(Milestone).where(Milestone.project_id == new_proj.id)
+    )).scalar_one()
+    new_bond = (await session.execute(
+        select(CapitalModule).where(
+            CapitalModule.scenario_id == new_scn.id, CapitalModule.label == "Test Bond"
+        )
+    )).scalar_one()
+    new_float = (await session.execute(
+        select(CapitalModule).where(
+            CapitalModule.scenario_id == new_scn.id, CapitalModule.label == "Float"
+        )
+    )).scalar_one()
+
+    # Module fidelity: fee_terms + milestone window survive, remapped.
+    assert new_bond.id != bond_id
+    assert new_bond.fee_terms == {"origination_pct": 1.0}
+    assert new_bond.active_from_milestone_id == new_ms.id
+
+    # Float JSONB cross-refs remapped onto the clone's rows.
+    assert new_float.source["parent_module_id"] == str(new_bond.id)
+    assert new_float.source["waterfall_milestone_id"] == str(new_ms.id)
+
+    # Junction remapped (module, project, milestone window).
+    new_junction = (await session.execute(
+        select(CapitalModuleProject).where(
+            CapitalModuleProject.capital_module_id == new_bond.id
+        )
+    )).scalar_one()
+    assert new_junction.project_id == new_proj.id
+    assert new_junction.auto_size is True
+    assert new_junction.active_from_milestone_id == new_ms.id
+
+    # Auto finance-cost line: flag survives, source module remapped — the
+    # engine must UPDATE this row on compute, not create a duplicate.
+    new_fc = (await session.execute(
+        select(UseLine).where(
+            UseLine.project_id == new_proj.id,
+            UseLine.label == "Test Bond — Total Finance Costs",
+        )
+    )).scalar_one()
+    assert new_fc.is_auto_finance_cost is True
+    assert new_fc.source_capital_module_id == new_bond.id
+    assert new_fc.active_from_milestone_id == new_ms.id
+
+    # Eligibility whitelist remapped onto the cloned module.
+    new_wl = (await session.execute(
+        select(UseLine).where(
+            UseLine.project_id == new_proj.id, UseLine.label == "Bond-only Cost"
+        )
+    )).scalar_one()
+    assert list(new_wl.eligible_module_ids) == [new_bond.id]
+
+    # OperationalInputs verbatim — org Type 1 defaults must NOT clobber
+    # per-project choices.
+    new_inputs = (await session.execute(
+        select(OperationalInputs).where(OperationalInputs.project_id == new_proj.id)
+    )).scalar_one()
+    assert new_inputs.debt_sizing_mode == "dual_constraint"
+    assert new_inputs.operation_reserve_months == 9
+
+
 # ---------------------------------------------------------------------------
 # POST /ui/deals/{id}/new-project
 # ---------------------------------------------------------------------------

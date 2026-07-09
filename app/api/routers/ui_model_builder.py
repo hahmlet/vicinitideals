@@ -1467,66 +1467,101 @@ async def run_sensitivity_analysis(
     return await _builder_panel_oob_response(request, model, "sensitivity", panel_data, None, session)
 
 
-async def _copy_project_data(
-    src_proj: Project,
-    dst_proj: Project,
-    session: AsyncSession,
-    *,
-    user_id: UUID | None = None,
-    org_id: UUID | None = None,
-) -> None:
-    """Copy milestones (with trigger remapping), use lines, income streams,
-    expense lines, and operational inputs from src_proj to dst_proj.
-    Caller is responsible for deleting dst_proj's existing data first.
+_CLONE_ROW_SKIP = {"id", "created_at", "updated_at"}
 
-    When ``user_id`` and ``org_id`` are provided, Type 1 (Org-Set) defaults
-    are re-applied to the copied OperationalInputs row so the clone picks up
-    current org policy instead of inheriting a stale baseline."""
-    # Copy milestones (preserve trigger chain with remapped IDs)
+
+def _clone_row(obj, **overrides):
+    """New ORM instance copying every column verbatim except the PK and
+    timestamps — introspection-based so new columns are never silently
+    dropped (the old hand-picked kwarg lists rotted as columns were added:
+    clones lost is_auto_finance_cost, source_capital_module_id, fee_terms,
+    module milestone windows, …). JSON/list values are deep-copied so later
+    remaps never mutate the source row. ``overrides`` replace specific
+    columns (FKs)."""
+    import copy as _copy
+    data = {}
+    for col in obj.__table__.columns:
+        key = col.key
+        if key in _CLONE_ROW_SKIP:
+            continue
+        val = getattr(obj, key)
+        if isinstance(val, (dict, list)):
+            val = _copy.deepcopy(val)
+        data[key] = val
+    data.update(overrides)
+    return type(obj)(**data)
+
+
+def _remap_id(value, id_map: dict):
+    """Map an id through id_map; pass through None and unknown ids unchanged."""
+    if value is None:
+        return None
+    return id_map.get(value, value)
+
+
+async def _copy_project_milestones(
+    src_proj: Project, dst_proj: Project, session: AsyncSession
+) -> dict:
+    """Clone src project's milestones onto dst (two-pass trigger-chain remap).
+    Returns the old→new milestone id map."""
     src_milestones = list((await session.execute(
         select(Milestone).where(Milestone.project_id == src_proj.id)
     )).scalars())
     ms_id_map: dict = {}
+    new_by_old: dict = {}
     for ms in src_milestones:
-        new_ms = Milestone(
-            project_id=dst_proj.id,
-            milestone_type=ms.milestone_type,
-            label=ms.label,
-            target_date=ms.target_date,
-            duration_days=ms.duration_days,
-            sequence_order=ms.sequence_order,
+        new_ms = _clone_row(
+            ms, project_id=dst_proj.id, opportunity_id=None,
+            trigger_milestone_id=None,
         )
         session.add(new_ms)
         await session.flush()
         ms_id_map[ms.id] = new_ms.id
+        new_by_old[ms.id] = new_ms
+    for ms in src_milestones:  # pass 2 — wire trigger ids
+        if ms.trigger_milestone_id is not None:
+            new_by_old[ms.id].trigger_milestone_id = ms_id_map.get(ms.trigger_milestone_id)
+    return ms_id_map
 
-    # Resolve trigger_milestone_id after all are created
-    for ms in src_milestones:
-        if ms.trigger_milestone_id and ms.trigger_milestone_id in ms_id_map:
-            new_ms_obj = await session.get(Milestone, ms_id_map[ms.id])
-            if new_ms_obj:
-                new_ms_obj.trigger_milestone_id = ms_id_map[ms.trigger_milestone_id]
-                new_ms_obj.trigger_offset_days = ms.trigger_offset_days
 
-    # Copy Use lines / Income streams / Expense lines column-driven: the old
-    # hand-picked kwarg lists rotted as columns were added — clones silently
-    # lost timing_type (changing draw timing), eligible_module_ids (source
-    # routing), dev-fee config, income bad-debt/concessions/renovation/
-    # catch-up fields, and opex lease-up scaling. Copy every column except
-    # identity/metadata, then remap milestone FKs onto the clone's milestones.
-    _copy_skip = {"id", "project_id", "updated_at"}
+async def _copy_project_lines(
+    src_proj: Project,
+    dst_proj: Project,
+    session: AsyncSession,
+    ms_id_map: dict,
+    module_id_map: dict | None = None,
+) -> dict:
+    """Copy use lines, income streams, expense lines, unit_mix, and
+    OperationalInputs from src_proj to dst_proj.
+
+    Milestone FKs remap through ``ms_id_map``. Capital-module FKs
+    (source_capital_module_id, eligible_module_ids) remap through
+    ``module_id_map`` when the caller cloned the scenario's modules too
+    (cross-scenario variant); same-scenario copies pass no map and module
+    ids stay valid as-is.
+
+    OperationalInputs copy is VERBATIM — a clone must compute identically
+    to its source. (An earlier version re-applied current org Type 1
+    defaults here, which silently clobbered per-project choices like
+    debt_sizing_mode and changed the clone's numbers.)
+
+    Returns the old→new use-line id map (for fee-basis row copies)."""
+    module_id_map = module_id_map or {}
     _ms_str_map = {str(k): str(v) for k, v in ms_id_map.items()}
 
+    ul_id_map: dict = {}
     for u in (await session.execute(
         select(UseLine).where(UseLine.project_id == src_proj.id)
     )).scalars():
-        new_u = UseLine(project_id=dst_proj.id)
-        for col in UseLine.__table__.columns:
-            if col.name not in _copy_skip:
-                setattr(new_u, col.name, getattr(u, col.name, None))
-        for fk in ("active_from_milestone_id", "spread_to_milestone_id"):
-            old_fk = getattr(new_u, fk, None)
-            setattr(new_u, fk, ms_id_map.get(old_fk) if old_fk else None)
+        new_u = _clone_row(
+            u,
+            project_id=dst_proj.id,
+            active_from_milestone_id=_remap_id(u.active_from_milestone_id, ms_id_map),
+            spread_to_milestone_id=_remap_id(u.spread_to_milestone_id, ms_id_map),
+            source_capital_module_id=_remap_id(u.source_capital_module_id, module_id_map),
+            eligible_module_ids=[_remap_id(m, module_id_map) for m in (u.eligible_module_ids or [])],
+            dev_fee_binding_context={},  # engine output — regenerated on compute
+        )
         # dev_fee_release_schedule stores milestone ids inside JSONB —
         # remap them too or the schedule points at the source project's
         # milestones. Unknown ids are left as-is (engine ignores them).
@@ -1543,54 +1578,45 @@ async def _copy_project_data(
                 {"final_holdback": fh} if fh else {}
             )
         session.add(new_u)
+        await session.flush()
+        ul_id_map[u.id] = new_u.id
 
     for s in (await session.execute(
         select(IncomeStream).where(IncomeStream.project_id == src_proj.id)
     )).scalars():
-        new_s = IncomeStream(project_id=dst_proj.id)
-        for col in IncomeStream.__table__.columns:
-            if col.name not in _copy_skip:
-                setattr(new_s, col.name, getattr(s, col.name, None))
-        session.add(new_s)
+        session.add(_clone_row(s, project_id=dst_proj.id))
 
     for e in (await session.execute(
         select(OperatingExpenseLine).where(OperatingExpenseLine.project_id == src_proj.id)
     )).scalars():
-        new_e = OperatingExpenseLine(project_id=dst_proj.id)
-        for col in OperatingExpenseLine.__table__.columns:
-            if col.name not in _copy_skip:
-                setattr(new_e, col.name, getattr(e, col.name, None))
-        session.add(new_e)
+        session.add(_clone_row(e, project_id=dst_proj.id))
 
     # Copy unit_mix JSONB
     if src_proj.unit_mix:
         dst_proj.unit_mix = list(src_proj.unit_mix)
         session.add(dst_proj)
 
-    # Copy OperationalInputs if any
+    # Copy OperationalInputs if any (verbatim — see docstring)
     src_inputs = (await session.execute(
         select(OperationalInputs).where(OperationalInputs.project_id == src_proj.id)
     )).scalar_one_or_none()
     if src_inputs:
-        new_inputs = OperationalInputs(project_id=dst_proj.id)
-        skip = {"id", "project_id"}
-        for col in OperationalInputs.__table__.columns:
-            if col.name not in skip:
-                setattr(new_inputs, col.name, getattr(src_inputs, col.name, None))
-        session.add(new_inputs)
-        # Clone path: re-apply Type 1 (Org-Set) defaults from current org so a
-        # cloned deal picks up the latest policy instead of stale source values.
-        # Type 2 inherits from source via the verbatim column copy above.
-        if user_id is not None and org_id is not None:
-            from app.services.scenario_factory import force_type1_on_existing
-            await session.flush()
-            await force_type1_on_existing(
-                session=session,
-                scenario=None,
-                inputs=new_inputs,
-                user_id=user_id,
-                org_id=org_id,
-            )
+        session.add(_clone_row(src_inputs, project_id=dst_proj.id))
+    return ul_id_map
+
+
+async def _copy_project_data(
+    src_proj: Project,
+    dst_proj: Project,
+    session: AsyncSession,
+) -> None:
+    """Copy milestones (with trigger remapping), use lines, income streams,
+    expense lines, and operational inputs between two projects in the SAME
+    scenario (clone-from). Capital-module FKs stay as-is — both projects see
+    the same scenario-level modules. Caller is responsible for deleting
+    dst_proj's existing data first."""
+    ms_id_map = await _copy_project_milestones(src_proj, dst_proj, session)
+    await _copy_project_lines(src_proj, dst_proj, session, ms_id_map)
 
 
 @router.post("/ui/deals/{deal_id}/variant", response_class=HTMLResponse)
@@ -1599,8 +1625,14 @@ async def create_deal_copy(
     deal_id: UUID,
     session: DBSession,
 ) -> HTMLResponse:
-    """Deep-copy a Scenario into a new Scenario with the same Projects, milestones, and line items."""
-    from decimal import Decimal as _Dec
+    """Deep-copy a Scenario into a new Scenario with the same Projects, milestones, and line items.
+
+    A variant is a FAITHFUL copy: it must compute identically to its source
+    until the user edits it. Every FK / embedded id that points at another
+    copied row (milestone trigger chains, module windows, junction windows,
+    use-line source module + eligibility whitelist, float-earnings parent +
+    routing milestones, fee-basis rows) is remapped onto the clone's rows."""
+    import copy as _copy
     source = await session.get(Scenario, deal_id)
     if source is None:
         return HTMLResponse("<p class='text-muted'>Deal not found.</p>", status_code=404)
@@ -1610,10 +1642,8 @@ async def create_deal_copy(
     variant_name = str(form.get("name", "")).strip() or f"{source.name} (Copy)"
     selected_project_ids = set(form.getlist("project_ids"))
 
-    # New Scenario under same top-level Deal. Use the factory in Scenario-only
-    # mode so org/user defaults (Type 1) get re-applied and the source's Type 2
-    # values overlay them, while leaving Project + OperationalInputs creation
-    # to the per-source-project clone logic below.
+    # New Scenario under same top-level Deal. Factory in Scenario-only mode;
+    # Project + OperationalInputs creation happens in the clone loop below.
     from app.services.scenario_factory import create_scenario as _create_scenario
     # Resolve org_id from the source Deal so defaults resolve against the
     # right organization even when source's creator is no longer the caller.
@@ -1632,150 +1662,165 @@ async def create_deal_copy(
         source_scenario=source,
     )
 
-    # Copy Projects (all if none selected, otherwise only checked ones)
+    # Faithful copy of scenario-level Type 1 columns. The factory re-resolved
+    # them from current org policy, but a variant must start as an exact copy
+    # of its source — a refreshed value (e.g. risk_free_rate_pct) silently
+    # changes every project's numbers on first compute.
+    from app.settings.defaults import DEFAULT_REGISTRY as _DEFAULTS
+    for _spec in _DEFAULTS.values():
+        if _spec.type == 1 and _spec.target == "scenario":
+            _src_val = getattr(source, _spec.column, None)
+            if _src_val is not None:
+                setattr(new_deal, _spec.column, _src_val)
+
+    # ── Pass 1: Projects + milestones. Milestones for ALL projects are cloned
+    # before any scenario-level rows, because modules/junctions can reference
+    # milestones in any project. ──
     source_projects = list((await session.execute(
         select(Project).where(Project.scenario_id == deal_id).order_by(Project.created_at.asc())
     )).scalars())
     if selected_project_ids:
         source_projects = [p for p in source_projects if str(p.id) in selected_project_ids]
 
-    # Track src_project_id → new_project_id so we can remap per-project FKs
-    # (CapitalModuleProject junction, ProjectAnchor, waterfall_tiers) onto
-    # the new projects below.
     project_id_map: dict = {}
-
+    new_proj_by_old: dict = {}
+    ms_id_map: dict = {}  # global (milestone ids are unique across projects)
     for src_proj in source_projects:
-        new_proj = Project(
-            scenario_id=new_deal.id,
-            opportunity_id=src_proj.opportunity_id,
-            name=src_proj.name,
-            timeline_approved=src_proj.timeline_approved,
-        )
+        new_proj = _clone_row(src_proj, scenario_id=new_deal.id)
         session.add(new_proj)
         await session.flush()
         project_id_map[src_proj.id] = new_proj.id
+        new_proj_by_old[src_proj.id] = new_proj
+        ms_id_map.update(await _copy_project_milestones(src_proj, new_proj, session))
 
-        await _copy_project_data(
-            src_proj, new_proj, session,
-            user_id=user.id if user else None,
-            org_id=_org_id,
-        )
-
-    # Copy Scenario-level Capital modules + rebuild their project junction rows.
+    # ── Pass 2: Scenario-level Capital modules (column-driven; milestone
+    # windows remapped). ──
     from app.models.capital import CapitalModuleProject as _CMP
+    from app.models.capital import UseLineSourceFeeBasis as _ULFB
     from app.models.project import ProjectAnchor as _PA
 
-    src_modules = list(
-        (
-            await session.execute(
-                select(CapitalModule).where(
-                    CapitalModule.scenario_id == deal_id
-                )
-            )
-        ).scalars()
-    )
-    # Map old module_id → new module instance so we can attach junction rows
-    # pointing at the copied Source.
+    src_modules = list((await session.execute(
+        select(CapitalModule).where(CapitalModule.scenario_id == deal_id)
+    )).scalars())
     module_id_map: dict = {}
+    new_mod_by_old: dict = {}
     for cm in src_modules:
-        new_cm = CapitalModule(
+        new_cm = _clone_row(
+            cm,
             scenario_id=new_deal.id,
-            label=cm.label,
-            vehicle_type=cm.vehicle_type,
-            equity_role=cm.equity_role,
-            stack_position=cm.stack_position,
-            source=cm.source,
-            carry=cm.carry,
-            exit_terms=cm.exit_terms,
-            active_phase_start=cm.active_phase_start,
-            active_phase_end=cm.active_phase_end,
+            active_from_milestone_id=_remap_id(cm.active_from_milestone_id, ms_id_map),
+            active_to_milestone_id=_remap_id(cm.active_to_milestone_id, ms_id_map),
         )
         session.add(new_cm)
         await session.flush()
         module_id_map[cm.id] = new_cm.id
+        new_mod_by_old[cm.id] = new_cm
+    # Float-earnings modules embed cross-references in their source JSON:
+    # parent_module_id (the bond whose balance earns) and waterfall/paydown
+    # milestone ids. Left unmapped they point at the SOURCE scenario and the
+    # clone's float silently zeroes.
+    for cm in src_modules:
+        new_cm = new_mod_by_old[cm.id]
+        src_json = new_cm.source or {}
+        if str(new_cm.vehicle_type or "") != "float_earnings" or not src_json:
+            continue
+        new_src = _copy.deepcopy(src_json)
+        if src_json.get("parent_module_id"):
+            try:
+                _old_pm = UUID(str(src_json["parent_module_id"]))
+                new_src["parent_module_id"] = str(_remap_id(_old_pm, module_id_map))
+            except ValueError:
+                pass
+        for _ms_key in ("waterfall_milestone_id", "paydown_milestone_id"):
+            _old_ms_raw = src_json.get(_ms_key)
+            if _old_ms_raw:
+                try:
+                    new_src[_ms_key] = str(_remap_id(UUID(str(_old_ms_raw)), ms_id_map))
+                except ValueError:
+                    pass
+        new_cm.source = new_src
 
-    # Phase 3e: copy capital_module_projects junction rows. Without this the
-    # copied Sources on the new Scenario are orphaned (no project links), and
-    # the per-project loader in cashflow.py returns an empty list → the
-    # engine silently skips sizing on every module.
-    src_junctions = list(
-        (
-            await session.execute(
-                select(_CMP).where(
-                    _CMP.capital_module_id.in_(list(module_id_map.keys()))
-                )
-            )
-        ).scalars()
-    )
+    # ── Pass 3: capital_module_projects junction rows. Without these the
+    # copied Sources are orphaned (no project links) and the engine silently
+    # skips sizing on every module. ──
+    src_junctions = list((await session.execute(
+        select(_CMP).where(_CMP.capital_module_id.in_(list(module_id_map.keys())))
+    )).scalars())
     for j in src_junctions:
         new_pid = project_id_map.get(j.project_id)
         if new_pid is None:
             continue  # project was excluded from copy; skip its junction
-        new_mid = module_id_map.get(j.capital_module_id)
-        if new_mid is None:
-            continue
-        session.add(
-            _CMP(
-                capital_module_id=new_mid,
-                project_id=new_pid,
-                amount=j.amount,
-                active_from=j.active_from,
-                active_to=j.active_to,
-                active_from_offset_days=j.active_from_offset_days,
-                active_to_offset_days=j.active_to_offset_days,
-                auto_size=j.auto_size,
-            )
-        )
+        session.add(_clone_row(
+            j,
+            capital_module_id=module_id_map[j.capital_module_id],
+            project_id=new_pid,
+            active_from_milestone_id=_remap_id(j.active_from_milestone_id, ms_id_map),
+            active_to_milestone_id=_remap_id(j.active_to_milestone_id, ms_id_map),
+        ))
 
-    # Copy ProjectAnchor rows — dormant in prod today (no rows exist), but
-    # defensive for the future when cross-project timeline coupling lands.
-    src_anchors = list(
-        (
-            await session.execute(
-                select(_PA).where(
-                    _PA.project_id.in_(list(project_id_map.keys()))
-                )
-            )
-        ).scalars()
-    )
+    # ── Pass 4: per-project financial rows (module FKs remapped onto the
+    # cloned modules). ──
+    ul_id_map: dict = {}
+    for src_proj in source_projects:
+        ul_id_map.update(await _copy_project_lines(
+            src_proj, new_proj_by_old[src_proj.id], session,
+            ms_id_map, module_id_map,
+        ))
+
+    # ── Pass 5: use-line ↔ source fee-basis rows ──
+    if ul_id_map:
+        for fb in (await session.execute(
+            select(_ULFB).where(_ULFB.use_line_id.in_(list(ul_id_map.keys())))
+        )).scalars():
+            new_mid = module_id_map.get(fb.capital_module_id)
+            if new_mid is None:
+                continue
+            session.add(_clone_row(
+                fb, use_line_id=ul_id_map[fb.use_line_id], capital_module_id=new_mid,
+            ))
+
+    # ── Pass 6: draw sources (scenario-scoped; milestone refs are string
+    # keys, not FKs — only project/module ids need remapping). ──
+    for ds in (await session.execute(
+        select(DrawSource).where(DrawSource.scenario_id == deal_id)
+    )).scalars():
+        if ds.project_id is not None and ds.project_id not in project_id_map:
+            continue  # its project was excluded from the copy
+        session.add(_clone_row(
+            ds,
+            scenario_id=new_deal.id,
+            project_id=_remap_id(ds.project_id, project_id_map),
+            capital_module_id=_remap_id(ds.capital_module_id, module_id_map),
+        ))
+
+    # ── Pass 7: ProjectAnchor rows (cross-project timeline coupling). ──
+    src_anchors = list((await session.execute(
+        select(_PA).where(_PA.project_id.in_(list(project_id_map.keys())))
+    )).scalars())
     for a in src_anchors:
         new_anchor_pid = project_id_map.get(a.project_id)
         new_parent_pid = project_id_map.get(a.anchor_project_id)
         if new_anchor_pid is None or new_parent_pid is None:
             continue  # drop dangling anchors when parent project wasn't copied
-        session.add(
-            _PA(
-                project_id=new_anchor_pid,
-                anchor_project_id=new_parent_pid,
-                anchor_milestone_id=None,  # milestone-id remap would need cross-walk; skip for v1
-                offset_months=a.offset_months,
-                offset_days=a.offset_days,
-            )
-        )
+        session.add(_clone_row(
+            a,
+            project_id=new_anchor_pid,
+            anchor_project_id=new_parent_pid,
+            # None when the anchor milestone's project wasn't copied.
+            anchor_milestone_id=ms_id_map.get(a.anchor_milestone_id),
+        ))
 
-    # Copy Scenario-level Waterfall tiers (project_id remapped to new projects)
+    # ── Pass 8: Scenario-level Waterfall tiers ──
     for t in (await session.execute(
         select(WaterfallTier).where(WaterfallTier.scenario_id == deal_id)
     )).scalars():
-        remapped_pid = project_id_map.get(t.project_id) if t.project_id else None
-        # If the tier's capital_module_id points at an old module, remap to
-        # the new one via module_id_map. Tiers with capital_module_id=None
-        # (e.g. a sponsor-level promote tier) are copied as-is.
-        remapped_mid = (
-            module_id_map.get(t.capital_module_id)
-            if t.capital_module_id
-            else None
-        )
-        session.add(WaterfallTier(
+        if t.project_id is not None and t.project_id not in project_id_map:
+            continue  # tier belongs to an excluded project
+        session.add(_clone_row(
+            t,
             scenario_id=new_deal.id,
-            project_id=remapped_pid,
-            capital_module_id=remapped_mid,
-            priority=t.priority, tier_type=t.tier_type,
-            irr_hurdle_pct=t.irr_hurdle_pct,
-            lp_split_pct=t.lp_split_pct, gp_split_pct=t.gp_split_pct,
-            description=t.description,
-            max_pct_of_distributable=t.max_pct_of_distributable,
-            interest_rate_pct=t.interest_rate_pct,
+            project_id=_remap_id(t.project_id, project_id_map),
+            capital_module_id=_remap_id(t.capital_module_id, module_id_map),
         ))
 
     await session.commit()
