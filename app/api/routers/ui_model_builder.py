@@ -2170,6 +2170,7 @@ async def delete_deal_project(
     from app.models.portfolio import GanttEntry
     from app.models.org import ProjectVisibility
     from app.models.project import PermitStub
+    from app.models.cashflow import CashFlowLineItem
 
     proj = await session.get(Project, project_id)
     if proj is None or proj.scenario_id != deal_id:
@@ -2185,8 +2186,10 @@ async def delete_deal_project(
 
     # Non-CASCADE child tables: delete explicitly. Most other children
     # (capital_modules, draw_sources, waterfall_tiers, cash_flows,
-    # cash_flow_line_items, operational_outputs) cascade from projects.id
-    # ondelete=CASCADE.
+    # operational_outputs) cascade from projects.id ondelete=CASCADE.
+    # cash_flow_line_items.income_stream_id has NO CASCADE, so it must be
+    # cleared before use_lines/income_streams are deleted.
+    await session.execute(sa_delete(CashFlowLineItem).where(CashFlowLineItem.project_id == project_id))
     await session.execute(sa_delete(UseLine).where(UseLine.project_id == project_id))
     await session.execute(sa_delete(IncomeStream).where(IncomeStream.project_id == project_id))
     await session.execute(sa_delete(OperatingExpenseLine).where(OperatingExpenseLine.project_id == project_id))

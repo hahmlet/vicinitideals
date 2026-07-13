@@ -21,7 +21,8 @@ from httpx import AsyncClient
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.deal import Deal, Scenario, UseLine
+from app.models.cashflow import CashFlowLineItem, LineItemCategory
+from app.models.deal import Deal, IncomeStream, IncomeStreamType, Scenario, UseLine
 from app.models.milestone import Milestone
 from app.models.project import Project
 
@@ -402,6 +403,84 @@ async def test_delete_project_removes_rows(
         )
     ).scalars().all()
     assert orphan_ms == []
+
+
+async def test_delete_project_with_computed_cashflow_rows(
+    client: AsyncClient, session: AsyncSession
+) -> None:
+    """Regression: cash_flow_line_items.income_stream_id has no CASCADE,
+    so income_streams must not be deleted before their line items.
+    Previously 500'd with a ForeignKeyViolationError.
+    """
+    _org, user, opp, deal_model, _project = await _seed(session)
+    scenario_id, opp_id = deal_model.id, opp.id
+    set_client_auth(client, user.id)
+
+    created = await client.post(
+        f"/ui/deals/{scenario_id}/new-project",
+        data={
+            "name": "Doomed",
+            "deal_type": "value_add",
+            "opportunity_id": str(opp_id),
+            "acquisition_cost": "500000",
+        },
+        follow_redirects=False,
+    )
+    assert created.status_code == 303, created.text
+
+    session.expire_all()
+    doomed = (
+        await session.execute(
+            select(Project).where(
+                Project.scenario_id == scenario_id, Project.name == "Doomed"
+            )
+        )
+    ).scalar_one()
+    doomed_id = doomed.id
+
+    stream = IncomeStream(
+        project_id=doomed_id,
+        stream_type=IncomeStreamType.residential_rent,
+        label="Base Rent",
+        unit_count=10,
+        amount_per_unit_monthly=Decimal("1000"),
+    )
+    session.add(stream)
+    await session.flush()
+    session.add(
+        CashFlowLineItem(
+            scenario_id=scenario_id,
+            project_id=doomed_id,
+            period=1,
+            income_stream_id=stream.id,
+            category=LineItemCategory.income,
+            label="Base Rent",
+            base_amount=Decimal("10000"),
+            net_amount=Decimal("10000"),
+        )
+    )
+    await session.commit()
+
+    resp = await client.post(
+        f"/ui/deals/{scenario_id}/project/{doomed_id}/delete",
+        follow_redirects=False,
+    )
+    assert resp.status_code == 303, resp.text
+
+    session.expire_all()
+    assert await session.get(Project, doomed_id) is None
+    orphan_streams = (
+        await session.execute(
+            select(IncomeStream).where(IncomeStream.project_id == doomed_id)
+        )
+    ).scalars().all()
+    assert orphan_streams == []
+    orphan_cf_lines = (
+        await session.execute(
+            select(CashFlowLineItem).where(CashFlowLineItem.project_id == doomed_id)
+        )
+    ).scalars().all()
+    assert orphan_cf_lines == []
 
 
 async def test_delete_last_project_is_refused(
