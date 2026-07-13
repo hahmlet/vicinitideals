@@ -13,6 +13,8 @@ import uuid
 from decimal import Decimal
 
 import pytest
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.engines.cashflow import DEFAULT_FINANCE_COST_PCT
 
@@ -173,3 +175,125 @@ def test_engine_auto_fc_writeback_copies_milestone_fk():
     assert "_cc_exist.active_from_milestone_id = _ccm_from_ms_id" in src, (
         "Engine must update active_from_milestone_id on existing auto-FC UseLine."
     )
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_compute_purges_orphaned_auto_fc_use_line(session: AsyncSession) -> None:
+    """An auto-FC row whose source_capital_module_id no longer matches any
+    live CapitalModule (e.g. left behind by a bond-consolidation one-shot
+    that replaced the module without updating the FK) must be deleted on
+    the next compute, not left as a duplicate Uses line alongside the fresh
+    row the engine writes for the surviving module.
+    """
+    from app.engines.cashflow import compute_cash_flows
+    from app.models.capital import CapitalModule, CapitalModuleProject, VehicleType
+    from app.models.deal import UseLine
+    from app.models.project import Project
+    from tests.conftest import seed_deal_model_with_financials, seed_opportunity, seed_org
+
+    org, user = await seed_org(session)
+    opp = await seed_opportunity(session, org, user, name="Orphan FC Purge")
+    deal_model, inputs, seeded_stream, seeded_opex = (
+        await seed_deal_model_with_financials(session, opp, user)
+    )
+    project = (
+        await session.execute(select(Project).where(Project.scenario_id == deal_model.id))
+    ).scalar_one()
+    inputs.debt_types = ["permanent_debt"]
+
+    debt = CapitalModule(
+        scenario_id=deal_model.id,
+        label="Senior PI Loan",
+        vehicle_type=VehicleType.debt.value,
+        stack_position=1,
+        source={
+            "amount": "2000000",
+            "interest_rate_pct": 6.0,
+            "amort_term_years": 30,
+            "hold_term_years": 30,
+            "auto_size": True,
+            "binding_constraint": "gap_fill",
+        },
+        carry={
+            "phases": [
+                {"name": "construction", "carry_type": "pi"},
+                {"name": "operation", "carry_type": "pi"},
+            ]
+        },
+        exit_terms={"exit_type": "full_payoff", "trigger": "sale"},
+        active_phase_start="acquisition",
+        active_phase_end="exit",
+    )
+    session.add(debt)
+    session.add(
+        UseLine(
+            project_id=project.id,
+            label="Land Acquisition",
+            amount=Decimal("2000000"),
+            phase="acquisition",
+            cost_category="hard",
+        )
+    )
+    await session.flush()
+    session.add(
+        CapitalModuleProject(
+            capital_module_id=debt.id,
+            project_id=project.id,
+            amount=Decimal("2000000"),
+        )
+    )
+
+    # Orphaned row: points at a module that still exists in the DB but is no
+    # longer associated with this project (simulates a consolidation script
+    # that repointed the project onto a new/shared module without cleaning
+    # up dependent UseLine FKs left over from the old one).
+    decoy = CapitalModule(
+        scenario_id=deal_model.id,
+        label="Old RJ Bond",
+        vehicle_type=VehicleType.debt.value,
+        stack_position=2,
+        source={"amount": "1500000", "interest_rate_pct": 6.0},
+        carry={},
+        exit_terms={},
+    )
+    session.add(decoy)
+    await session.flush()
+
+    orphan = UseLine(
+        id=uuid.uuid4(),
+        project_id=project.id,
+        source_capital_module_id=decoy.id,
+        label="Old RJ Bond (auto) — Total Finance Costs",
+        phase="acquisition",
+        cost_category="soft",
+        amount=Decimal("40000"),
+        timing_type="first_day",
+        is_auto_finance_cost=True,
+    )
+    session.add(orphan)
+    await session.flush()
+    orphan_id = orphan.id
+    debt_id = debt.id  # capture before expire_all (sync lazy-load raises on AsyncSession)
+    project_id = project.id
+
+    await compute_cash_flows(deal_model.id, session)
+    await session.commit()
+
+    session.expire_all()
+    assert await session.get(UseLine, orphan_id) is None, (
+        "Orphaned auto-FC row (stale source_capital_module_id) must be purged on compute."
+    )
+
+    fc_rows = (
+        await session.execute(
+            select(UseLine).where(
+                UseLine.project_id == project_id,
+                UseLine.is_auto_finance_cost == True,  # noqa: E712
+            )
+        )
+    ).scalars().all()
+    assert len(fc_rows) == 1, (
+        f"Expected exactly one auto-FC row after purge, found {len(fc_rows)}."
+    )
+    assert fc_rows[0].source_capital_module_id == debt_id

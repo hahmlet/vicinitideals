@@ -25,7 +25,7 @@ def _diag(msg: str) -> None:
     if _DIAG_ENABLED:
         print(f"[VD_DIAG] {msg}", flush=True)
 
-from sqlalchemy import delete, func, select
+from sqlalchemy import delete, func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
@@ -3949,6 +3949,25 @@ async def _auto_size_debt_modules(
     # module labeled "{module.label} — Total Finance Costs", carrying
     # is_auto_finance_cost=True so a later user edit (which flips the flag to
     # False via the form handler) is respected on the next compute.
+    # A prior compute's auto-FC row becomes orphaned when its parent CapitalModule
+    # is deleted/replaced (e.g. a bond-consolidation one-shot) without updating
+    # source_capital_module_id. The match-by-module-id lookup below can never
+    # find these, so the engine writes a fresh row for the surviving module and
+    # the orphan lingers forever as a duplicate Uses line. Purge them here so
+    # every compute self-heals regardless of what mutated the capital stack.
+    if project_id:
+        _live_cm_ids = [getattr(m, "id", None) for m in capital_modules if getattr(m, "id", None) is not None]
+        _orphan_fc_filter = UseLine.source_capital_module_id.is_(None)
+        if _live_cm_ids:
+            _orphan_fc_filter = or_(_orphan_fc_filter, UseLine.source_capital_module_id.notin_(_live_cm_ids))
+        await session.execute(
+            delete(UseLine).where(
+                UseLine.project_id == project_id,
+                UseLine.is_auto_finance_cost == True,  # noqa: E712
+                _orphan_fc_filter,
+            )
+        )
+
     _diag(f"CC-WRITEBACK guard: _cc_data={bool(_cc_data)} project_id={project_id} -> enter={bool(_cc_data and project_id)}")
     if _cc_data and project_id:
         for _cc_obj in _cc_data.values():
