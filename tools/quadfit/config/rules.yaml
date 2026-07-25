@@ -30,7 +30,7 @@ jurisdictions:
     eligible: true
     juris_city_codes: [PORTLAND]
     zoning_layer: zoning_portland
-    zone_field: null # set in Phase 1 after endpoint discovery
+    zone_field: ZONE
     strip_lowercase_suffix: true # R5a → R5 (overlay letters)
     orientation_constraint: entrance_only
     zones:
@@ -65,8 +65,8 @@ jurisdictions:
   gresham:
     eligible: true
     juris_city_codes: [GRESHAM]
-    zoning_layer: city_zoning
-    zone_field: null # set in Phase 1
+    zoning_layer: zoning_gresham
+    zone_field: ZONE
     orientation_constraint: entrance_only
     zones: [] # Phase 5: LDR districts per Gresham Development Code middle-housing ordinance
 
@@ -74,15 +74,15 @@ jurisdictions:
     eligible: true
     juris_city_codes: [TROUTDALE]
     zoning_layer: zoning_troutdale
-    zone_field: ZONE
+    zone_field: zonecode
     orientation_constraint: entrance_only
     zones: [] # Phase 5
 
   fairview:
     eligible: true
     juris_city_codes: [FAIRVIEW]
-    zoning_layer: zoning_fairview_metro # Metro regional zoning fallback (city is PDF-only)
-    zone_field: null # set in Phase 1
+    zoning_layer: zoning_metro # Metro regional zoning fallback (city is PDF-only)
+    zone_field: ZONE
     orientation_constraint: entrance_only
     zones: [] # Phase 5 — every row stays needs_verification (fallback zoning source)
 
@@ -98,9 +98,18 @@ jurisdictions:
     eligible: true
     reason: "Urban unincorporated inside Metro UGB must meet Large City standards"
     juris_city_codes: [UNINCORPORATED, ""]
-    zoning_layer: null # Phase 1: Multnomah County zoning layer discovery
-    zone_field: null
+    zoning_layer: zoning_metro # Metro regional zoning (compiled from county code)
+    zone_field: ZONE
     require_inside_ugb: true
+    orientation_constraint: entrance_only
+    zones: [] # Phase 5
+
+  lake_oswego:
+    eligible: true
+    reason: "North edge of Lake Oswego lies in Multnomah County (~1,450 lots)"
+    juris_city_codes: [LAKE OSWEGO]
+    zoning_layer: zoning_lake_oswego
+    zone_field: LAYER
     orientation_constraint: entrance_only
     zones: [] # Phase 5
 
