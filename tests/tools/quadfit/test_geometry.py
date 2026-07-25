@@ -209,6 +209,19 @@ def test_placement_inside_envelope():
 # ---------------------------------------------------------------------------
 
 
+def test_z_overlay_any_portion_but_not_boundary_touch():
+    """PCC 33.418: flag lots with ANY portion inside a z polygon; a shared
+    boundary with a neighboring z polygon must NOT count."""
+    from s2_assign import flag_z_overlay
+
+    z = Polygon([(50, -100), (200, -100), (200, 200), (50, 200)])
+    overlapping = Polygon([(0, 0), (100, 0), (100, 100), (0, 100)])  # 50 ft inside
+    adjacent = Polygon([(-100, 0), (50, 0), (50, 100), (-100, 100)])  # touches x=50
+    clear = Polygon([(-300, 0), (-200, 0), (-200, 100), (-300, 100)])
+    flags = flag_z_overlay([overlapping, adjacent, clear], [z])
+    assert flags.tolist() == [True, False, False]
+
+
 def test_majority_zone_split_lot():
     from s2_assign import assign_majority_zone
 

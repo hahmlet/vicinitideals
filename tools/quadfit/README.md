@@ -29,8 +29,8 @@ Stages cache intermediates in `data/quadfit/*.parquet` (WKB geometry columns);
 |---|---|---|
 | s0 | `s0_acquire.py` | Downloads: RLIS taxlots + streets (ZIP range-extraction via `tools/gis_cache/rlis_delta.py` helpers), per-city zoning layers (`tools/gis_cache/cache_layers.py`), UGB |
 | s1 | `s1_normalize.py` | Reproject to EPSG:2913 (ft), make_valid, condo-stack dedupe |
-| s2 | `s2_assign.py` | Jurisdiction tag (JURIS_CITY) + majority-area zone spatial join (STRtree) |
-| s3 | `s3_filter.py` | Eligibility funnel — every exclusion counted |
+| s2 | `s2_assign.py` | Jurisdiction tag (JURIS_CITY) + majority-area zone spatial join (STRtree) + Portland Constrained Sites "z" overlay flag (PCC 33.418) |
+| s3 | `s3_filter.py` | Eligibility funnel — every exclusion counted (incl. z-overlay voiding the fourplex allowance, per-zone quadplex minimum lot areas) |
 | s4 | `s4_edges.py` | Front/side/rear edge classification vs street centerlines; confidence tiers A/B/C/D |
 | s5 | `s5_envelope.py` | Setback envelope: lot − per-edge buffers (conservative) |
 | s6 | `s6_fit.py` | Rotate→rasterize→integral-image rectangle fit; max-depth-per-width frontier; constant-area sweeps; coverage cap |
@@ -53,6 +53,14 @@ D = landlocked/failed classification (excluded from headline numbers).
 ## Known blind spots (also restated in every summary.md)
 
 Private easements (title-report only), Portland tree preservation, environmental
-/historic/design overlays (phase 2), steep slopes, utility conflicts, driveway
-curb-cut feasibility, existing structures assumed demolished (building value +
-year built carried in output for later filtering).
+/historic overlays beyond the z gate (phase 2), steep slopes, utility conflicts,
+driveway curb-cut feasibility, existing structures assumed demolished (building
+value + year built carried in output for later filtering). Per-jurisdiction
+quirks not modeled: maximum front setbacks (Gresham DRL, Fairview base zones)
+which force the building toward the street; Gresham 15% private-open-space
+minimum; Wood Village 5/12 roof-pitch minimum; Lake Oswego front-porch
+requirement and Mountain Park HOA CC&Rs (pre-HB-2001 private covenants);
+Portland maintained-street-frontage + visitability gates; alley setback
+reductions. Substandard lots of record below a zone's quadplex minimum may
+still carry quadplex rights under OAR 660-046 — the funnel counts that drop
+separately (`lot_below_zone_min_area`).

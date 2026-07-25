@@ -268,24 +268,233 @@ jurisdictions:
     juris_city_codes: [TROUTDALE]
     zoning_layer: zoning_troutdale
     zone_field: zonecode
+    # TDC 8.120.C.2 binds entrance placement only (within 8 ft of longest
+    # street-facing wall, face street/<=45 deg) — no long-axis rule. Source:
+    # Municode current through Ord. 899 (6-24-2025); the city-hosted PDF is a
+    # superseded 2022 hearing draft.
     orientation_constraint: entrance_only
-    zones: [] # Phase 5 agent in flight — LDR-1, LDR-2, MDR, HDR observed in GIS
+    zones:
+      # TDC 8.120.B.1.b declares lot-coverage standards INVALID for tri/quad-
+      # plexes — no coverage caps. Min street frontage 20 ft everywhere.
+      # Street-side setback 10 ft (20 if street-side driveway — not modeled).
+      # Hard cap 4 units/lot INCLUDING ADUs (8.120.B.2).
+      - zone: LDR-1
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 10
+        setback_rear_ft: 10
+        setback_street_side_ft: 10
+        min_lot_sqft: 10000
+        min_frontage_ft: 20
+        source: "Troutdale Development Code 3.120, 3.130.B, 8.120 (Municode, through Ord. 899)"
+        source_url: "https://library.municode.com/or/troutdale/codes/development_code?nodeId=CH3ZODI"
+        confidence: verified
+        notes: "Quadplex-specific setbacks (SFD is 20 front / 15-20 rear). Min lot 10,000 sf, min width 70 ft. Height 35 ft."
+      - zone: LDR-2
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 7.5
+        setback_rear_ft: 10
+        setback_street_side_ft: 10
+        min_lot_sqft: 7000
+        min_frontage_ft: 20
+        source: "Troutdale Development Code 3.120, 3.130.B, 8.120 (Municode, through Ord. 899)"
+        source_url: "https://library.municode.com/or/troutdale/codes/development_code?nodeId=CH3ZODI"
+        confidence: verified
+        notes: "Min lot 7,000 sf, width 60 ft. Height 35 ft."
+      - zone: MDR
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 10
+        setback_street_side_ft: 10
+        min_lot_sqft: 5000
+        min_frontage_ft: 20
+        source: "Troutdale Development Code 3.120, 3.130.B, 8.120 (Municode, through Ord. 899)"
+        source_url: "https://library.municode.com/or/troutdale/codes/development_code?nodeId=CH3ZODI"
+        confidence: verified
+        notes: "ADOPTED min lot 5,000 sf / width 50 (2022 hearing-draft PDF says 4,000/40 — superseded). Town Center frontage 16 ft not split out."
+      - zone: HDR
+        quadplex_allowed: false
+        source: "Troutdale Development Code 3.120 (Quadplex = N in HDR)"
+        source_url: "https://library.municode.com/or/troutdale/codes/development_code?nodeId=CH3ZODI"
+        confidence: verified
+        notes: "Multifamily/townhouse zone — no detached SFD, no quadplex; OAR mandate does not attach. Inside the Town Center overlay quadplex IS permitted, but the GIS zonecode does not distinguish HDR-TC — treated as excluded (conservative; 369 lots)."
+      # UPAR-10 (1 lot): unincorporated UPA parcel, annexation required first —
+      # left absent (falls out as zone_not_in_rules).
 
   fairview:
     eligible: true
     juris_city_codes: [FAIRVIEW]
     zoning_layer: zoning_metro # Metro regional zoning fallback (city is PDF-only)
     zone_field: ZONE
+    # Entry-orientation model-code standard only; no long-axis rule. ALL
+    # Fairview base-zone rows are needs_verification: read from the city's PC
+    # Final Review Draft (Dec 2023, since adopted) because the live codified
+    # pages are Cloudflare-blocked. Also: MAXIMUM front setback 30 ft in
+    # R-6/R-7.5/R-10/RM (placement band not modeled — blind spot).
     orientation_constraint: entrance_only
-    zones: [] # Phase 5 agent in flight — R-6, R-7.5, R-10, R/SFLD, R/CSP observed
+    zones:
+      - zone: R-6
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 10
+        min_lot_sqft: 6000
+        max_coverage_pct: 50
+        source: "FMC 19.30.020 Table A / 19.30.030 Table A (2023-41-TA amendments, PC Final Review Draft 12-5-2023)"
+        source_url: "https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html"
+        confidence: needs_verification
+        notes: "Quadplex outright; min lot = SFD min 6,000 sf. Max FAR 0.7. Height 35 ft."
+      - zone: R-7.5
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 10
+        min_lot_sqft: 7500
+        max_coverage_pct: 50
+        source: "FMC 19.30.020/19.30.030 (2023-41-TA amendments)"
+        source_url: "https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html"
+        confidence: needs_verification
+        notes: "Quadplex min lot 7,500 sf."
+      - zone: R-10
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 10
+        min_lot_sqft: 10000
+        max_coverage_pct: 50
+        source: "FMC 19.30.020/19.30.030 (2023-41-TA amendments)"
+        source_url: "https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html"
+        confidence: needs_verification
+        notes: "Quadplex min lot 10,000 sf (= zone min)."
+      - zone: RM
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 10
+        min_lot_sqft: 10000
+        max_coverage_pct: 60
+        source: "FMC 19.30.010.D/.020/.030 (2023-41-TA amendments)"
+        source_url: "https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html"
+        confidence: needs_verification
+        notes: "Quadplex needs 2,500 sf/unit = 10,000 sf — standard 6-7.5k RM lots cannot hold a quad without assembly. Height 45 ft."
+      - zone: RM/TOZ
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 10
+        min_lot_sqft: 10000
+        max_coverage_pct: 60
+        source: "FMC 19.30.030 Table A (RM + Townhouse Overlay columns)"
+        source_url: "https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html"
+        confidence: needs_verification
+        notes: "Quadplex rides on the RM base (10,000 sf for 4 units); the TOZ overlay itself is townhouse-oriented — parcel-level overlay effect unconfirmed."
+      - zone: R/SFLD
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 10
+        min_lot_sqft: 10000
+        max_coverage_pct: 50
+        source: "Mapping inference: Metro 'R/SFLD' = old Lower Density Residential overlay -> current R-10; standards per amended 19.30.030"
+        source_url: "https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html"
+        confidence: needs_verification
+        notes: "Metro label predates the 2024 recodification; R-10 row applied by inference."
+      - zone: VSF
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 4.5
+        setback_rear_ft: 15
+        setback_street_side_ft: 10
+        min_lot_sqft: 4000
+        max_coverage_pct: 60
+        source: "FMC 19.115 Village Single-Family (.020 uses, .040 dimensional)"
+        source_url: "https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19115.html"
+        confidence: needs_verification
+        notes: "Code sides: 4 ft one / 5 ft opposite (combined 9) — modeled uniform 4.5 (exact max width). Front is 'either 10 or 15 ft'. Quadplex use flows in via amended 19.30.020 linkage (the needs_verification part). Village design standards apply."
+      - zone: VTH
+        quadplex_allowed: false
+        source: "FMC 19.120 Village Townhouse Residential"
+        source_url: "https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19120.html"
+        confidence: verified
+        notes: "Townhouse/duplex zone; new detached SFD not allowed — OAR mandate does not attach."
+      - zone: R/MH
+        quadplex_allowed: false
+        source: "FMC 19.30 Manufactured Home Park district standards"
+        source_url: "https://www.codepublishing.com/OR/Fairview/html/Fairview1930.html"
+        confidence: needs_verification
+        notes: "MH-park district; no detached SFD — no quadplex mandate (3 lots)."
+      # R/CSP (57 lots, civic/park overlay — no standards chapter located) and
+      # AH (3 lots, no such district in Title 19) left absent — they fall out
+      # as zone_not_in_rules.
 
   wood_village:
     eligible: true
     juris_city_codes: [WOOD VILLAGE]
     zoning_layer: zoning_wood_village
     zone_field: Labeling
+    # Entry orientation only; roof-pitch min 5/12 (flat roofs prohibited) is a
+    # massing constraint but not a long-axis rule. Source: adopted Ord. 2-2022
+    # HB 2001 exhibit (live municipal.codes Cloudflare-blocked; no later
+    # amendments found).
     orientation_constraint: entrance_only
-    zones: [] # Phase 5 agent in flight — 'LR 7.5', 'LR 12', 'MR 2', 'MR 4' observed
+    zones:
+      # Corner rear setback is 20 ft (vs 15 standard) in both LR zones — not
+      # separately modeled (single rear value); 5 ft delta on corners only.
+      - zone: "LR 7.5"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 10
+        min_lot_sqft: 7500
+        max_coverage_pct: 45
+        source: "WVDC 210.310 Tables 210-2/210-3, 210.375 (Ord. 2-2022)"
+        source_url: "https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf"
+        confidence: verified
+        notes: "Quadplex Y outright; zone min lot 7,500 sf (no quad-specific larger min). Garage face 22 ft. Height 35 ft."
+      - zone: "LR 12"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 10
+        setback_rear_ft: 15
+        setback_street_side_ft: 20
+        min_lot_sqft: 12000
+        max_coverage_pct: 45
+        source: "WVDC 210.310 Tables 210-2/210-3, 210.375 (Ord. 2-2022)"
+        source_url: "https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf"
+        confidence: verified
+        notes: "Corner STREET-SIDE 20 ft (vs 10 in LR 7.5). Zone min lot 12,000 sf."
+      - zone: "MR 2"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        min_lot_sqft: 8000
+        max_coverage_pct: 45
+        source: "WVDC 220.310 Tables 220-2/220-3, 220.355 (Ord. 2-2022)"
+        source_url: "https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf"
+        confidence: verified
+        notes: "Quadplex min lot 8,000 sf (SFD 7,500). MR tables have NO corner-lot street-side rows — genuinely unspecified in code text; no street-side elevation applied."
+      - zone: "MR 4"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        min_lot_sqft: 8000
+        max_coverage_pct: 45
+        source: "WVDC 220.310 Tables 220-2/220-3, 220.355 (Ord. 2-2022)"
+        source_url: "https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf"
+        confidence: verified
+        notes: "Identical to MR 2 for quads (combined table column)."
+      # TC (167 lots, town center) not covered — falls out as zone_not_in_rules.
 
   multnomah_unincorporated:
     eligible: true
@@ -294,8 +503,69 @@ jurisdictions:
     zoning_layer: zoning_metro # Metro regional zoning (compiled from county code)
     zone_field: ZONE
     require_inside_ugb: true
+    # Two regimes: west-county pockets (Dunthorpe-Riverdale, Sylvan) are
+    # administered by Portland under PCC 33 — Metro codes R10/R20/RF/R7 are
+    # Portland zones, and the 33.418 z-overlay gate applies (s3). County plan
+    # areas (Interlachen, Pleasant Valley) run MCC 39, which has no middle-
+    # housing code — the OAR 660-046 Large Cities Model Code applies directly.
     orientation_constraint: entrance_only
-    zones: [] # Phase 5 agent in flight — R20, R10, R7, R5, LR7, LR10 observed inside UGB
+    zones:
+      - zone: R10
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 10
+        setback_rear_ft: 10
+        min_lot_sqft: 6000
+        coverage_curve: [[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]
+        source: "Portland Zoning Code 33.110 Tables 110-2/110-4/110-5/110-7 (Portland-administered pockets); 33.418"
+        source_url: "https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf"
+        confidence: verified
+        notes: "z Constrained Sites overlay voids fourplex allowance — gated in s3. Wooded west-hills pockets have heavy z coverage."
+      - zone: R20
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 10
+        setback_rear_ft: 10
+        min_lot_sqft: 12000
+        coverage_curve: [[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]
+        source: "Portland Zoning Code 33.110 Tables 110-2/110-4/110-5/110-7 (Dunthorpe-Riverdale is largely R20); 33.418"
+        source_url: "https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf"
+        confidence: verified
+        notes: "Fourplex min lot 12,000 sf. z overlay gated in s3."
+      - zone: RF
+        quadplex_allowed: false
+        source: "Portland Zoning Code 33.110 Table 110-2 — fourplex prohibited in RF"
+        source_url: "https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf"
+        confidence: verified
+        notes: "House + ADU only. Whether the state Model Code could override RF in county pockets is unresolved — treated as no-quadplex."
+      - zone: R7
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 5
+        setback_rear_ft: 5
+        min_lot_sqft: 4200
+        coverage_curve: [[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]
+        source: "Portland Zoning Code 33.110 Tables 110-2/110-4/110-5/110-7"
+        source_url: "https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf"
+        confidence: needs_verification
+        notes: "Zone standards verified from code text, but R7 occurrence in the pockets unconfirmed (33 lots observed in Metro layer)."
+      - zone: LR7
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 10
+        setback_street_side_ft: 10
+        min_lot_sqft: 7000
+        source: "MCC 39.4848-.4862 (S-1 2023) + OAR 660-046 Exhibit B Large Cities Model Code §B; OAR 660-046-0010/-0020"
+        source_url: "https://multco.us/file/chapter_39_-_zoning_code/download"
+        confidence: needs_verification
+        notes: "County plan areas (Interlachen). MCC has no middle-housing code; the un-adopted state Model Code pre-empts: front/street-side capped at 10 ft, rear capped at 10 ft, SFD side 5 ft governs; MCC 40% coverage cap invalid for quadplexes (Model Code B.1.b). Confirm interpretation with county/DLCD before banking on it."
+      - zone: RR
+        quadplex_allowed: false
+        source: "MCC 39.4350-.4395 (Rural Residential)"
+        source_url: "https://multco.us/file/chapter_39_-_zoning_code/download"
+        confidence: verified
+        notes: "County RURAL zone — overwhelmingly outside the Metro UGB; no quadplex use in MCC 39. Any RR parcel inside the UGB needs individual review."
 
   lake_oswego:
     eligible: true
@@ -303,8 +573,69 @@ jurisdictions:
     juris_city_codes: [LAKE OSWEGO]
     zoning_layer: zoning_lake_oswego
     zone_field: LAYER
+    # LOC 50: quadplexes permitted in every residential zone, exempt from max
+    # density (Ord. 2892). No long-axis rule for existing lots; solar E-W rule
+    # applies only to creating new lots. NOTE: the MultCo slice is essentially
+    # the Mountain Park PUD — 1968 CC&Rs + HOA design review predate HB 2001
+    # and remain a real private gate (blind spot); plat-specific PD setbacks
+    # may supersede zone tables per lot. Front porch >=6 ft deep required
+    # (LOC 50.06.001.2) — not modeled.
     orientation_constraint: entrance_only
-    zones: [] # Phase 5 agent in flight — R-0, R-3, R-5, R-7.5, NC/R-0 observed
+    zones:
+      # accessory_allowance_sqft left 0: LO EXEMPTS up to 200 sf of garage
+      # from coverage (per-lot bonus, not a reservation) — omitting it is the
+      # conservative direction. FAR / floor-area caps (R-5/R-7.5 formulas,
+      # R-3 1:1, R-0 1.2:1) never bind a ~1,000 sf two-story quadplex.
+      - zone: R-0
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 10
+        setback_rear_ft: 10
+        setback_street_side_ft: 10
+        min_lot_sqft: 7000
+        max_coverage_pct: 55
+        source: "LOC 50.04.001.3 Table 50.04.001-11; LOC 50.03.002 Table 50.03.002-1"
+        source_url: "https://ecode360.com/43076426"
+        confidence: verified
+        notes: "Attached-dwelling setbacks (detached SFD is 20/5/20). Quadplex min lot 7,000 sf. R-0 carries site-specific limitations per LOC 50.02.002.2.c — per-parcel check flagged."
+      - zone: R-3
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 10
+        setback_rear_ft: 10
+        setback_street_side_ft: 10
+        min_lot_sqft: 7000
+        max_coverage_pct: 50
+        source: "LOC 50.04.001.3 Table 50.04.001-11; LOC 50.03.002 Table 50.03.002-1"
+        source_url: "https://ecode360.com/43076426"
+        confidence: verified
+        notes: "Steep-slope lots: front 18 ft. Height-based buffer where abutting R-6/7.5/10/15."
+      - zone: R-5
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 10
+        setback_rear_ft: 10
+        setback_street_side_ft: 10
+        min_lot_sqft: 7000
+        max_coverage_pct: 45
+        source: "LOC 50.04.001.2 Tables 50.04.001-3/-4/-7"
+        source_url: "https://ecode360.com/43076426"
+        confidence: verified
+        notes: "Coverage is height-tiered (45% at <=22 ft — applies to a 2-story quadplex). Floor-area formula cap noted, never binds ~1,000 sf building."
+      - zone: R-7.5
+        quadplex_allowed: true
+        setback_front_ft: 25
+        setback_side_ft: 7.5
+        setback_rear_ft: 30
+        setback_street_side_ft: 15
+        min_lot_sqft: 7500
+        max_coverage_pct: 35
+        source: "LOC 50.04.001.1 Tables 50.04.001-1/-2"
+        source_url: "https://ecode360.com/43076426"
+        confidence: verified
+        notes: "One envelope for all primary structures (same as detached SFD): 25 front / 30 rear. Code sides: 5 ft min one side, 15 ft TOTAL both — modeled as uniform 7.5/7.5, which gives the exact max buildable width (lot - 15). Street side 15 local / 20 arterial. Steep-slope front 18 ft."
+      # NC/R-0 (84 lots, split-zone per LOC 50.02.002.2.e), NC (4), PNA (5)
+      # left unresolved — they fall out as zone_not_in_rules.
 
   maywood_park:
     eligible: false

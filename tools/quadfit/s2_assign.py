@@ -54,6 +54,26 @@ def assign_majority_zone(lot_geoms: list, zone_geoms: list, zone_codes: list):
     return zone_out, frac_out
 
 
+def flag_z_overlay(lot_geoms: list, z_geoms: list, shrink_ft: float = 0.5):
+    """Boolean array: lot has ANY portion inside a Constrained Sites (z) polygon.
+
+    Lots are shrunk slightly first so a shared boundary with a neighboring z
+    polygon doesn't count as being inside it.
+    """
+    import numpy as np
+    import shapely
+    from shapely.strtree import STRtree
+
+    flag = np.zeros(len(lot_geoms), dtype=bool)
+    if not z_geoms:
+        return flag
+    tree = STRtree(np.array(z_geoms, dtype=object))
+    shrunk = shapely.buffer(np.array(lot_geoms, dtype=object), -shrink_ft)
+    li, _ = tree.query(shrunk, predicate="intersects")
+    flag[li] = True
+    return flag
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--report", action="store_true",
@@ -117,6 +137,28 @@ def main() -> None:
     inside = np.zeros(len(lots), dtype=bool)
     inside[li] = True
     lots["inside_ugb"] = inside
+
+    # Portland Constrained Sites overlay (PCC 33.418, map symbol "z"): the
+    # triplex/fourplex allowance (33.110.265.E) does not apply to lots where
+    # ANY portion is inside the overlay, in every R20-R2.5 zone. Flag here for
+    # the s3 funnel; the Portland layer also covers the Portland-administered
+    # unincorporated pockets (UNINC areas). OVRLY is comma-separated letters.
+    from common import DATA_DIR, features_to_geoms, load_geojson_features
+
+    z_flag = np.zeros(len(lots), dtype=bool)
+    raw_pdx = DATA_DIR / "raw" / "zoning_portland.geojson"
+    if raw_pdx.exists():
+        z_feats = [
+            f for f in load_geojson_features(raw_pdx)
+            if "z" in ((f.get("properties") or {}).get("OVRLY") or "")
+        ]
+        z_geoms = [
+            shapely.make_valid(g) for g in features_to_geoms(z_feats) if g is not None
+        ]
+        z_flag = flag_z_overlay(list(lots["geom"]), z_geoms)
+        print(f"z overlay: {int(z_flag.sum()):,} lots touch Constrained Sites "
+              f"({len(z_geoms):,} z polygons, PCC 33.418)")
+    lots["has_z_overlay"] = z_flag
 
     assigned = lots["zone_raw"].notna().sum()
     print(f"s2: {assigned:,}/{len(lots):,} lots have a zone; "

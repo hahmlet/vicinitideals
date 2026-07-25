@@ -9,7 +9,10 @@ Order matters — a lot is counted against the FIRST reason that removes it:
   4. no zone assigned (zoning layer gap)
   5. zone not present in rules table
   6. zone present but quadplex not allowed
-  7. sliver / degenerate: lot smaller than sliver_min_lot_sqft, or nowhere
+  7. Portland Constrained Sites overlay (PCC 33.418) voids the fourplex
+     allowance (any portion of lot in "z")
+  8. lot below the zone's quadplex minimum lot area (e.g. Portland Table 110-7)
+  9. sliver / degenerate: lot smaller than sliver_min_lot_sqft, or nowhere
      20 ft wide (negative 10 ft buffer collapses to empty)
 """
 
@@ -79,6 +82,16 @@ def main() -> None:
     drop(verdict == "absent", "zone_not_in_rules")
     verdict = verdict[verdict != "absent"]
     drop(verdict == "not_allowed", "zone_quadplex_not_allowed")
+
+    # Portland Constrained Sites overlay (PCC 33.418.040.B): fourplex allowance
+    # void where any portion of the lot is in the z overlay — applies to city
+    # lots and the Portland-administered unincorporated pockets.
+    if "has_z_overlay" in lots.columns:
+        drop(
+            lots["jurisdiction"].isin(["portland", "multnomah_unincorporated"])
+            & lots["has_z_overlay"],
+            "z_overlay_constrained_site",
+        )
 
     # Per-zone minimum lot area for a quadplex (e.g. Portland Table 110-7).
     def _min_lot(row):
