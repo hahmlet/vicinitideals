@@ -1,0 +1,22 @@
+# Candidate quadplex footprints + fit parameters.
+# width_ft = dimension parallel to the front lot line (before any 90° flip);
+# both orientations are tested unless the jurisdiction is axis_required.
+
+orientations: [width_facing, depth_facing]
+
+footprints:
+  - { name: "25x25", width_ft: 25, depth_ft: 25 }
+  - { name: "18x32", width_ft: 18, depth_ft: 32 }
+
+# Fixed-area aspect-ratio optimizer: footprint area held constant (identical
+# upper/lower floor plates), depth = area / width. Reports the unlock-% curve
+# across widths and the statistically optimal dimensions.
+constant_area_sweeps:
+  - { area_sqft: 500, width_min_ft: 14, width_max_ft: 35, step_ft: 0.5 }
+
+# Per-lot max-depth-per-width frontier (answers arbitrary WxD queries without
+# re-running the pipeline).
+frontier:
+  width_min_ft: 12
+  width_max_ft: 60
+  step_ft: 0.5

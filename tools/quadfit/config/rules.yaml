@@ -1,0 +1,110 @@
+# Quadfit rules table — per (jurisdiction, zone) middle-housing siting rules.
+#
+# Compiled from municipal codes; every numeric row carries a source citation and
+# a confidence flag. `needs_verification` rows are preliminary values from
+# domain knowledge and MUST be verified against the adopted code text before the
+# final run (Phase 5). Schema: tools/quadfit/common.py (RulesConfig).
+#
+# Legal frame: OAR 660-046-0205 — Large Cities (Portland, Gresham, Troutdale,
+# Fairview, Wood Village) and county urban unincorporated areas inside the Metro
+# UGB must allow quadplexes in residential zones that allow detached
+# single-family dwellings. OAR 660-046-0235 caps middle-housing siting standards
+# (incl. setbacks) at what applies to detached single-family in the same zone.
+# Maywood Park (pop <1,000) is below the Large City threshold. Rural
+# unincorporated land outside the UGB is exempt.
+
+meta:
+  compiled_at: null # set when Phase 5 verification completes
+  note: >
+    Preliminary skeleton. juris_city_codes are matched against the literal RLIS
+    JURIS_CITY values observed in s2 (verify with s2_assign.py --report).
+
+defaults:
+  street_threshold_ft: 50
+  sliver_min_lot_sqft: 1000
+  grid_resolution_ft: 0.5
+  simplify_tolerance_ft: 1.5
+
+jurisdictions:
+  portland:
+    eligible: true
+    juris_city_codes: [PORTLAND]
+    zoning_layer: zoning_portland
+    zone_field: null # set in Phase 1 after endpoint discovery
+    strip_lowercase_suffix: true # R5a → R5 (overlay letters)
+    orientation_constraint: entrance_only
+    zones:
+      - zone: R2.5
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 5
+        max_coverage_pct: null
+        source: "PCC 33.110 (Residential Infill Project amendments)"
+        source_url: "https://www.portland.gov/code/33/110"
+        confidence: needs_verification
+      - zone: R5
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 5
+        max_coverage_pct: null
+        source: "PCC 33.110 (Residential Infill Project amendments)"
+        source_url: "https://www.portland.gov/code/33/110"
+        confidence: needs_verification
+      - zone: R7
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 5
+        max_coverage_pct: null
+        source: "PCC 33.110 (Residential Infill Project amendments)"
+        source_url: "https://www.portland.gov/code/33/110"
+        confidence: needs_verification
+
+  gresham:
+    eligible: true
+    juris_city_codes: [GRESHAM]
+    zoning_layer: city_zoning
+    zone_field: null # set in Phase 1
+    orientation_constraint: entrance_only
+    zones: [] # Phase 5: LDR districts per Gresham Development Code middle-housing ordinance
+
+  troutdale:
+    eligible: true
+    juris_city_codes: [TROUTDALE]
+    zoning_layer: zoning_troutdale
+    zone_field: ZONE
+    orientation_constraint: entrance_only
+    zones: [] # Phase 5
+
+  fairview:
+    eligible: true
+    juris_city_codes: [FAIRVIEW]
+    zoning_layer: zoning_fairview_metro # Metro regional zoning fallback (city is PDF-only)
+    zone_field: null # set in Phase 1
+    orientation_constraint: entrance_only
+    zones: [] # Phase 5 — every row stays needs_verification (fallback zoning source)
+
+  wood_village:
+    eligible: true
+    juris_city_codes: [WOOD VILLAGE]
+    zoning_layer: zoning_wood_village
+    zone_field: Labeling
+    orientation_constraint: entrance_only
+    zones: [] # Phase 5
+
+  multnomah_unincorporated:
+    eligible: true
+    reason: "Urban unincorporated inside Metro UGB must meet Large City standards"
+    juris_city_codes: [UNINCORPORATED, ""]
+    zoning_layer: null # Phase 1: Multnomah County zoning layer discovery
+    zone_field: null
+    require_inside_ugb: true
+    orientation_constraint: entrance_only
+    zones: [] # Phase 5
+
+  maywood_park:
+    eligible: false
+    reason: "Population <1,000 — below OAR 660-046 Large City threshold inside Metro"
+    juris_city_codes: [MAYWOOD PARK]
