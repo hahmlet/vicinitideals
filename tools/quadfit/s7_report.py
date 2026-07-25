@@ -140,9 +140,15 @@ def main() -> None:
                 L.append(f"| {b} | {a} | {int((fb & ~fa).sum()):,} "
                          f"| {int((fa & ~fb).sum()):,} |")
 
+    head_gate = (
+        head["frontage_ok"].to_numpy()
+        if "frontage_ok" in head.columns
+        else np.ones(len(head), dtype=bool)
+    )
     for sweep in fps.constant_area_sweeps:
         L.append(f"\n## Fixed-area sweep — {sweep.area_sqft:.0f} sqft footprint\n")
         m = sweep_fit_matrix(head, widths_ft, head_frontier, res, sweep)
+        m &= head_gate[:, None]  # min-frontage rules gate sweeps too
         sw = sweep.widths()
         L.append("| width ft | depth ft | fit % (A+B) |")
         L.append("|---:|---:|---:|")
@@ -214,8 +220,8 @@ def _write_spot_check(lots, rules, fps, meta, n_sample: int) -> None:
     s3 = read_stage("s3_lots")[["TLID", "geom"]].rename(columns={"geom": "lot_geom"})
     s5 = read_stage("s5_lots")[["TLID", "geom"]].rename(columns={"geom": "env_geom"})
     sample = (
-        lots.groupby(["jurisdiction", "tier"], group_keys=False)
-        .apply(lambda g: g.head(2), include_groups=True)
+        lots.groupby(["jurisdiction", "tier"], group_keys=False, sort=False)
+        .head(2)
         .head(n_sample)
     )
     sample = sample.merge(s3, on="TLID").merge(s5, on="TLID")

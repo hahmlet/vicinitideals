@@ -80,6 +80,14 @@ def main() -> None:
     verdict = verdict[verdict != "absent"]
     drop(verdict == "not_allowed", "zone_quadplex_not_allowed")
 
+    # Per-zone minimum lot area for a quadplex (e.g. Portland Table 110-7).
+    def _min_lot(row):
+        rule = rules.jurisdictions[row["jurisdiction"]].rule_for(row["zone_raw"])
+        return rule.min_lot_sqft if rule and rule.min_lot_sqft else 0.0
+
+    min_lot = lots.apply(_min_lot, axis=1)
+    drop(lots["area_sqft"] < min_lot, "lot_below_zone_min_area")
+
     drop(lots["area_sqft"] < rules.defaults.sliver_min_lot_sqft, "sliver_area")
 
     shrunk = shapely.buffer(

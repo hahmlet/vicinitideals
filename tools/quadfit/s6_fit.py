@@ -218,10 +218,14 @@ def main() -> None:
 
     tasks = []
     for i, row in enumerate(lots.itertuples(index=False)):
-        allow_flip = (
-            rules.jurisdictions[row.jurisdiction].orientation_constraint
-            != "axis_required"
+        j = rules.jurisdictions[row.jurisdiction]
+        rule = j.rule_for(row.zone_raw)
+        constraint = (
+            rule.orientation_constraint
+            if rule is not None and rule.orientation_constraint
+            else j.orientation_constraint
         )
+        allow_flip = constraint != "axis_required"
         tasks.append((
             i,
             shapely.to_wkb(row.geom),
@@ -249,22 +253,43 @@ def main() -> None:
 
     lots = lots.drop(columns=["geom"])  # envelope not needed downstream
     lots["frontier_json"] = [json.dumps(r["frontier"]) for r in results]
+
+    # Per-row legal attribute gates (rule lookup once per lot, not per footprint).
+    cov_caps: list[float | None] = []
+    accessory: list[float] = []
+    frontage_ok = []
+    for row_area, row_frontage, jkey, zraw in zip(
+        lots["area_sqft"], lots["frontage_ft"], lots["jurisdiction"], lots["zone_raw"]
+    ):
+        rule = rules.jurisdictions[jkey].rule_for(zraw)
+        if rule is None:
+            cov_caps.append(None)
+            accessory.append(0.0)
+            frontage_ok.append(True)
+        else:
+            cov_caps.append(rule.coverage_cap_sqft(float(row_area)))
+            accessory.append(rule.accessory_allowance_sqft)
+            frontage_ok.append(
+                rule.min_frontage_ft is None
+                or float(row_frontage) >= rule.min_frontage_ft
+            )
+    frontage_ok = np.array(frontage_ok)
+    lots["frontage_ok"] = frontage_ok  # s7 applies this to the sweep matrix too
+    if not frontage_ok.all():
+        print(f"  {int((~frontage_ok).sum()):,} lots fail a min-frontage rule")
+
     for name, w_ft, d_ft in cfg["footprints"]:
-        wf = np.array([r["fits"][name][0] for r in results])
-        df = np.array([r["fits"][name][1] for r in results])
+        wf = np.array([r["fits"][name][0] for r in results]) & frontage_ok
+        df = np.array([r["fits"][name][1] for r in results]) & frontage_ok
         lots[f"fits_{name}_wf"] = wf
         lots[f"fits_{name}_df"] = df
         lots[f"fits_{name}"] = wf | df
         # Coverage cap check (attribute math).
-        cov_ok = []
-        for row_area, jkey, zraw in zip(lots["area_sqft"], lots["jurisdiction"], lots["zone_raw"]):
-            rule = rules.jurisdictions[jkey].rule_for(zraw)
-            if rule is None or rule.max_coverage_pct is None:
-                cov_ok.append(True)
-            else:
-                cap = rule.max_coverage_pct / 100.0 * float(row_area)
-                cov_ok.append(w_ft * d_ft + rule.accessory_allowance_sqft <= cap)
-        lots[f"fits_cov_{name}"] = lots[f"fits_{name}"] & np.array(cov_ok)
+        cov_ok = np.array([
+            cap is None or w_ft * d_ft + acc <= cap
+            for cap, acc in zip(cov_caps, accessory)
+        ])
+        lots[f"fits_cov_{name}"] = lots[f"fits_{name}"] & cov_ok
 
     meta = {
         "grid_resolution_ft": res,

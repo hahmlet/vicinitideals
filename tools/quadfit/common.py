@@ -40,6 +40,8 @@ CRS_WGS84 = "EPSG:4326"
 
 Confidence = Literal["verified", "needs_verification"]
 
+OrientationConstraint = Literal["none", "entrance_only", "axis_required"]
+
 
 class ZoneRule(BaseModel):
     zone: str
@@ -47,15 +49,33 @@ class ZoneRule(BaseModel):
     setback_front_ft: float | None = None
     setback_side_ft: float | None = None
     setback_rear_ft: float | None = None
+    # Corner-lot street-side setback when it exceeds the interior side setback
+    # (e.g. Gresham MDR 20 ft vs 10 ft interior). Applied to ALL street edges of
+    # tier-B lots via max(front, street_side) — conservative, since the true
+    # front edge legally takes only the front setback.
+    setback_street_side_ft: float | None = None
+    # Minimum lot area for a quadplex where the code sets one (e.g. Portland
+    # Table 110-7). Lots below this drop in the s3 funnel.
+    min_lot_sqft: float | None = None
+    # Minimum street frontage for residential use where the code sets one
+    # (e.g. Gresham CMF 100 ft). Gates fits in s6 (frontage known after s4).
+    min_frontage_ft: float | None = None
     max_coverage_pct: float | None = None  # building coverage cap, % of lot area
+    # Piecewise coverage formula rows [lot_area_break_sqft, base_sqft,
+    # marginal_pct_over_break] — e.g. Portland Table 110-5. Overrides
+    # max_coverage_pct when present.
+    coverage_curve: list[list[float]] | None = None
     accessory_allowance_sqft: float = 0  # reserved coverage for garage/shed assumption
+    # Per-zone override of the jurisdiction orientation_constraint (e.g.
+    # Gresham design districts force the long axis parallel to the street).
+    orientation_constraint: OrientationConstraint | None = None
     source: str = ""
     source_url: str = ""
     confidence: Confidence = "needs_verification"
     notes: str = ""
 
     @model_validator(mode="after")
-    def _setbacks_required_when_allowed(self) -> ZoneRule:
+    def _validate(self) -> ZoneRule:
         if self.quadplex_allowed:
             missing = [
                 n
@@ -66,10 +86,25 @@ class ZoneRule(BaseModel):
                 raise ValueError(
                     f"zone {self.zone}: quadplex_allowed=true requires {missing}"
                 )
+        if self.coverage_curve:
+            breaks = [row[0] for row in self.coverage_curve]
+            if any(len(row) != 3 for row in self.coverage_curve):
+                raise ValueError(f"zone {self.zone}: coverage_curve rows need 3 values")
+            if breaks != sorted(breaks):
+                raise ValueError(f"zone {self.zone}: coverage_curve breaks must ascend")
         return self
 
-
-OrientationConstraint = Literal["none", "entrance_only", "axis_required"]
+    def coverage_cap_sqft(self, lot_area_sqft: float) -> float | None:
+        """Max combined building coverage for a lot, or None if uncapped."""
+        if self.coverage_curve:
+            cap: float | None = None
+            for brk, base, marginal in self.coverage_curve:
+                if lot_area_sqft >= brk:
+                    cap = base + marginal / 100.0 * (lot_area_sqft - brk)
+            return cap
+        if self.max_coverage_pct is not None:
+            return self.max_coverage_pct / 100.0 * lot_area_sqft
+        return None
 
 
 class JurisdictionRules(BaseModel):

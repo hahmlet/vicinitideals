@@ -75,6 +75,11 @@ def main() -> None:
             "R": rule.setback_rear_ft,
             "S": rule.setback_side_ft,
         }
+        # Corner lots (tier B): we can't tell which street edge is the legal
+        # front, so every street edge takes max(front, street_side) —
+        # conservative when the street-side setback exceeds the front.
+        if row.tier == "B" and rule.setback_street_side_ft:
+            setbacks["F"] = max(setbacks["F"], rule.setback_street_side_ft)
         env = build_envelope(row.geom, json.loads(row.edges_json), setbacks, row.tier)
         envs.append(env)
         env_area.append(env.area)

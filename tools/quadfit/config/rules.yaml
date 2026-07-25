@@ -1,9 +1,9 @@
 # Quadfit rules table — per (jurisdiction, zone) middle-housing siting rules.
 #
 # Compiled from municipal codes; every numeric row carries a source citation and
-# a confidence flag. `needs_verification` rows are preliminary values from
-# domain knowledge and MUST be verified against the adopted code text before the
-# final run (Phase 5). Schema: tools/quadfit/common.py (RulesConfig).
+# a confidence flag. `needs_verification` rows are preliminary values and MUST
+# be verified against the adopted code text before the final run (Phase 5).
+# Schema: tools/quadfit/common.py (RulesConfig).
 #
 # Legal frame: OAR 660-046-0205 — Large Cities (Portland, Gresham, Troutdale,
 # Fairview, Wood Village) and county urban unincorporated areas inside the Metro
@@ -12,12 +12,20 @@
 # (incl. setbacks) at what applies to detached single-family in the same zone.
 # Maywood Park (pop <1,000) is below the Large City threshold. Rural
 # unincorporated land outside the UGB is exempt.
+#
+# min_lot_sqft caveat: values are the adopted code text. Substandard existing
+# lots of record may still carry quadplex rights under OAR 660-046-0205 (a lot
+# that allows a detached house must allow a quadplex); the funnel counts these
+# drops separately (lot_below_zone_min_area) so the effect is visible.
 
 meta:
-  compiled_at: null # set when Phase 5 verification completes
+  compiled_at: "2026-07-24"
   note: >
-    Preliminary skeleton. juris_city_codes are matched against the literal RLIS
-    JURIS_CITY values observed in s2 (verify with s2_assign.py --report).
+    Portland and Gresham rows verified against current code text by research
+    agents 2026-07-24. Multi-dwelling zones (Portland RM*, Gresham MDR-PV/
+    HDR-PV/VLDR-SW, etc.) are out of scope — the analysis covers the
+    single-dwelling zones subject to the OAR 660-046 quadplex mandate plus
+    zones where the code itself permits quadplexes outright.
 
 defaults:
   street_threshold_ft: 50
@@ -32,43 +40,228 @@ jurisdictions:
     zoning_layer: zoning_portland
     zone_field: ZONE
     strip_lowercase_suffix: true # R5a → R5 (overlay letters)
+    # PCC 33.110.230.C binds main-entrance placement only (face street or
+    # within 45°) — no long-axis constraint. Corner lots: the SHORTEST street
+    # line is the front; the longer street side takes only the ordinary side
+    # setback, so no street-side elevation needed.
     orientation_constraint: entrance_only
     zones:
-      - zone: R2.5
+      # Citywide building-coverage formula (Table 110-5), all residential
+      # zones: <3,000 sf lot -> 50%; 3,000-4,999 -> 1,500 + 37.5% over 3,000;
+      # 5,000-19,999 -> 2,250 + 15% over 5,000; >=20,000 -> 4,500 + 7.5% over.
+      - zone: RF
+        quadplex_allowed: false
+        source: "PCC 33.110.200 Table 110-2 — fourplex prohibited in RF (RIP2 extended middle housing to R10/R20 only)"
+        source_url: "https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf"
+        confidence: verified
+        notes: "Only house/ADU/manufactured home/houseboat/congregate allowed."
+      - zone: R20
         quadplex_allowed: true
-        setback_front_ft: 10
+        setback_front_ft: 20
+        setback_side_ft: 10
+        setback_rear_ft: 10
+        min_lot_sqft: 12000
+        coverage_curve: [[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]
+        source: "PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E"
+        source_url: "https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf"
+        confidence: verified
+        notes: "Fourplex min lot 12,000 sf (Table 110-7; -10% adjustment allowed until 2032). No FAR cap on conforming lots (FAR applies only <10,000 sf in R20). Height 30 ft."
+      - zone: R10
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 10
+        setback_rear_ft: 10
+        min_lot_sqft: 6000
+        coverage_curve: [[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]
+        source: "PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E"
+        source_url: "https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf"
+        confidence: verified
+        notes: "Fourplex min lot 6,000 sf. FAR 0.7 on lots 6,000-9,999 sf (never binds a 2-story 500 sf/floor plate). Height 30 ft."
+      - zone: R7
+        quadplex_allowed: true
+        setback_front_ft: 15
         setback_side_ft: 5
         setback_rear_ft: 5
-        max_coverage_pct: null
-        source: "PCC 33.110 (Residential Infill Project amendments)"
-        source_url: "https://www.portland.gov/code/33/110"
-        confidence: needs_verification
+        min_lot_sqft: 4200
+        coverage_curve: [[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]
+        source: "PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E"
+        source_url: "https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf"
+        confidence: verified
+        notes: "Fourplex min lot 4,200 sf. FAR 0.7 for 4+ units. Height 30 ft."
       - zone: R5
         quadplex_allowed: true
         setback_front_ft: 10
         setback_side_ft: 5
         setback_rear_ft: 5
-        max_coverage_pct: null
-        source: "PCC 33.110 (Residential Infill Project amendments)"
-        source_url: "https://www.portland.gov/code/33/110"
-        confidence: needs_verification
-      - zone: R7
+        min_lot_sqft: 3000
+        coverage_curve: [[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]
+        source: "PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E"
+        source_url: "https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf"
+        confidence: verified
+        notes: "Fourplex min lot 3,000 sf. FAR 0.8 for 4+ units. Height 30 ft."
+      - zone: R2.5
         quadplex_allowed: true
         setback_front_ft: 10
         setback_side_ft: 5
         setback_rear_ft: 5
-        max_coverage_pct: null
-        source: "PCC 33.110 (Residential Infill Project amendments)"
-        source_url: "https://www.portland.gov/code/33/110"
-        confidence: needs_verification
+        min_lot_sqft: 1500
+        coverage_curve: [[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]
+        source: "PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E"
+        source_url: "https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf"
+        confidence: verified
+        notes: "Fourplex min lot 1,500 sf. FAR 1.0 for 4+ units. Height 35 ft. Narrow-lot standards <32 ft wide."
 
   gresham:
     eligible: true
     juris_city_codes: [GRESHAM]
     zoning_layer: zoning_gresham
     zone_field: ZONE
+    # GDC 7.0420(A) binds entrance placement only; the E-W long-axis rule is an
+    # optional sustainable-design menu item. Design districts (DRL/CMF) carry a
+    # per-zone axis_required override via 7.0420(J) frontage-occupancy + max
+    # front setback.
     orientation_constraint: entrance_only
-    zones: [] # Phase 5: LDR districts per Gresham Development Code middle-housing ordinance
+    zones:
+      # No lot-coverage percentage caps on quadplexes anywhere in Gresham; the
+      # envelope controls are FAR (never binds a 1,000 sf building) and the 15%
+      # private-open-space minimum (7.0420(D)) — not modeled, noted as blind
+      # spot. min_lot values are the zone minimum lot size (same as SFD).
+      - zone: LDR-5
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 10
+        min_lot_sqft: 5000
+        source: "Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420"
+        source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf"
+        confidence: verified
+        notes: "Quadplex P outright. Rear w/ alley 8 ft (not modeled). FAR 1.0. Height 35 ft."
+      - zone: LDR-7
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 10
+        min_lot_sqft: 7000
+        source: "Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420"
+        source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf"
+        confidence: verified
+        notes: "Min lot 7,000 sf. FAR 0.7 (tightest in city; still >1,000 sf building on min lot)."
+      - zone: TLDR
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 10
+        source: "Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420"
+        source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf"
+        confidence: verified
+        notes: "NO minimum lot size, no FAR, no max density — most permissive LDR-family zone."
+      - zone: TR
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 10
+        min_lot_sqft: 4000
+        source: "Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420"
+        source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf"
+        confidence: verified
+        notes: "Min lot 4,000 sf. FAR 1.0."
+      - zone: LDR-PV
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 10
+        setback_street_side_ft: 10
+        min_lot_sqft: 5000
+        source: "Gresham Development Code Tables 4.1413/4.1415A/4.1415B (Pleasant Valley); 7.0420"
+        source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1400.pdf"
+        confidence: verified
+        notes: "Pleasant Valley plan district. Rear 10 ft (vs 15 in base LDR)."
+      - zone: LDR-SW
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 10
+        min_lot_sqft: 5000
+        source: "Gresham Development Code Tables 4.1507/4.1508 (Springwater); 7.0420"
+        source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1500.pdf"
+        confidence: verified
+        notes: "Springwater. Min lot width 45 ft, min depth 80 ft (not separately modeled — envelope test dominates)."
+      - zone: MDR-12
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 10
+        setback_rear_ft: 15
+        setback_street_side_ft: 20
+        min_lot_sqft: 3600
+        source: "Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420"
+        source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf"
+        confidence: verified
+        notes: "Interior side 10 ft; street-side wall 20 ft (corner lots modeled at max(F, street-side))."
+      - zone: MDR-24
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 10
+        setback_rear_ft: 15
+        setback_street_side_ft: 20
+        min_lot_sqft: 7200
+        source: "Gresham Development Code Tables 4.0120/4.0130 n.5/4.0131; Sec 3.0103"
+        source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf"
+        confidence: verified
+        notes: "SFD is NP — quadplex permitted natively. 11,000 sf site min waived for existing lots of record; but middle housing COUNTS toward max density here (24.2 u/ac): 4 units need ~7,200 sf net — encoded as min_lot_sqft (approximation, net≈gross for existing lots)."
+      - zone: DRL-1
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 10
+        setback_street_side_ft: 10
+        min_lot_sqft: 4000
+        orientation_constraint: axis_required
+        source: "Gresham Development Code Tables 4.1120/4.1130 (Downtown); 7.0420(J)"
+        source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf"
+        confidence: verified
+        notes: "Downtown. MAXIMUM front setback 15-20 ft + >=50% frontage occupancy (7.0420(J)) effectively force the long axis parallel to the street — axis_required. Max-front-setback placement band not modeled (blind spot)."
+      - zone: DRL-2
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 10
+        setback_street_side_ft: 10
+        min_lot_sqft: 4000
+        orientation_constraint: axis_required
+        source: "Gresham Development Code Tables 4.1120/4.1130 (Downtown); 7.0420(J)"
+        source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf"
+        confidence: verified
+        notes: "Same as DRL-1; height 50 ft."
+      - zone: CMF
+        quadplex_allowed: true
+        setback_front_ft: 5
+        setback_side_ft: 0
+        setback_rear_ft: 15
+        setback_street_side_ft: 5
+        min_lot_sqft: 10000
+        min_frontage_ft: 100
+        orientation_constraint: axis_required
+        source: "Gresham Development Code Tables 4.0420/4.0430 (Corridor); 7.0420(J)"
+        source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0400.pdf"
+        confidence: verified
+        notes: "Base CMF regime: residential needs 10,000 sf min AND 100 ft street frontage; max front setback 20 ft + frontage occupancy — axis_required. NE Glisan/162nd corridors follow TLDR standards instead (Table 4.0430 n.14) — NOT split out; base regime applied everywhere = conservative."
+      - zone: "LDR/GB"
+        quadplex_allowed: false
+        source: "Gresham Development Code 4.1310 (Gresham Butte)"
+        source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1300.pdf"
+        confidence: verified
+        notes: "Quadplexes explicitly prohibited in Gresham Butte overlay (hillside/fire risk); duplex max."
+      - zone: THR-SW
+        quadplex_allowed: false
+        source: "Gresham Development Code Table 4.1507 (Springwater)"
+        source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1500.pdf"
+        confidence: verified
+        notes: "Quadplex NP and detached SFD also NP — OAR mandate does not attach (townhouse/cottage-cluster zone)."
 
   troutdale:
     eligible: true
@@ -76,7 +269,7 @@ jurisdictions:
     zoning_layer: zoning_troutdale
     zone_field: zonecode
     orientation_constraint: entrance_only
-    zones: [] # Phase 5
+    zones: [] # Phase 5 agent in flight — LDR-1, LDR-2, MDR, HDR observed in GIS
 
   fairview:
     eligible: true
@@ -84,7 +277,7 @@ jurisdictions:
     zoning_layer: zoning_metro # Metro regional zoning fallback (city is PDF-only)
     zone_field: ZONE
     orientation_constraint: entrance_only
-    zones: [] # Phase 5 — every row stays needs_verification (fallback zoning source)
+    zones: [] # Phase 5 agent in flight — R-6, R-7.5, R-10, R/SFLD, R/CSP observed
 
   wood_village:
     eligible: true
@@ -92,7 +285,7 @@ jurisdictions:
     zoning_layer: zoning_wood_village
     zone_field: Labeling
     orientation_constraint: entrance_only
-    zones: [] # Phase 5
+    zones: [] # Phase 5 agent in flight — 'LR 7.5', 'LR 12', 'MR 2', 'MR 4' observed
 
   multnomah_unincorporated:
     eligible: true
@@ -102,7 +295,7 @@ jurisdictions:
     zone_field: ZONE
     require_inside_ugb: true
     orientation_constraint: entrance_only
-    zones: [] # Phase 5
+    zones: [] # Phase 5 agent in flight — R20, R10, R7, R5, LR7, LR10 observed inside UGB
 
   lake_oswego:
     eligible: true
@@ -111,7 +304,7 @@ jurisdictions:
     zoning_layer: zoning_lake_oswego
     zone_field: LAYER
     orientation_constraint: entrance_only
-    zones: [] # Phase 5
+    zones: [] # Phase 5 agent in flight — R-0, R-3, R-5, R-7.5, NC/R-0 observed
 
   maywood_park:
     eligible: false
