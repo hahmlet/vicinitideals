@@ -107,13 +107,39 @@ def test_footprints_yaml_validates():
 
     fp = load_footprints()
     names = {f.name for f in fp.footprints}
-    assert {"25x25", "18x32"} <= names
+    assert {"pod56x36", "pod80x25"} <= names
+    # Pods are 4 side-by-side ~500 sqft townhome footprints (~2000 sqft total).
+    for f in fp.footprints:
+        assert 1900 <= f.width_ft * f.depth_ft <= 2100
     sweep = fp.constant_area_sweeps[0]
+    assert sweep.area_sqft == 2000
     widths = sweep.widths()
-    assert widths[0] == 14.0
-    assert widths[-1] == 35.0
-    # Half-foot steps, inclusive endpoints.
+    assert widths[0] == 56.0
+    assert widths[-1] == 140.0
+    # 2 ft pod steps (0.5 ft per unit), inclusive endpoints.
     assert len(widths) == 43
     frontier_widths = fp.frontier.widths()
     assert frontier_widths[0] == 12.0
-    assert frontier_widths[-1] == 60.0
+    assert frontier_widths[-1] == 145.0  # must cover the widest pod
+
+
+def test_split_spec_math():
+    """Per carved lot: 2000 quad + 4 units x 1.5 slots x 162 sqft = 2972."""
+    from common import SplitSpec, load_footprints
+
+    split = load_footprints().split
+    assert split is not None
+    assert split.per_quad_lot_sqft() == pytest.approx(2972)
+    # Parking buffer knob changes the per-lot need without touching geometry.
+    assert SplitSpec(parking_slots_per_unit=2.0).per_quad_lot_sqft() == pytest.approx(
+        2000 + 4 * 2.0 * 162)
+    assert SplitSpec(parking_slots_per_unit=0).per_quad_lot_sqft() == pytest.approx(2000)
+
+
+def test_lake_oswego_policy_disabled_but_rules_retained():
+    """LO is gated at report time — geometry stays so re-enabling is s7-only."""
+    from common import load_rules
+
+    lo = load_rules().jurisdictions["lake_oswego"]
+    assert lo.eligible is False
+    assert lo.rule_for("R-7.5") is not None  # rules compiled, not deleted

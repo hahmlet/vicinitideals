@@ -28,7 +28,10 @@ STAGES: list[tuple[str, list[Path], list[Path]]] = [
     ("s4_edges.py", [stage_path("s3_lots"), stage_path("s1_streets")], [stage_path("s4_lots")]),
     ("s5_envelope.py", [stage_path("s4_lots"), RULES], [stage_path("s5_lots")]),
     ("s6_fit.py", [stage_path("s5_lots"), RULES, FOOTPRINTS], [stage_path("s6_lots")]),
-    ("s7_report.py", [stage_path("s6_lots")], [DATA_DIR / "summary.md"]),
+    # NOTE: rules/footprints edits make run_all re-run from s2/s6 (mtime cascade).
+    # For POLICY-only changes (jurisdiction toggle, thresholds, parking buffer),
+    # run s7 directly instead: uv run --extra gis python tools/quadfit/s7_report.py
+    ("s7_report.py", [stage_path("s6_lots"), RULES, FOOTPRINTS], [DATA_DIR / "summary.md"]),
 ]
 
 

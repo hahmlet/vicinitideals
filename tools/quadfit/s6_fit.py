@@ -10,13 +10,14 @@ image, then:
   deepest rectangle that fits. Computed with a monotone two-pointer walk
   (depth never increases as width grows), so the whole frontier costs ~one
   linear scan of window checks.
-- named footprints: direct window checks, both orientations (the 90° flip is
-  skipped when the jurisdiction is axis_required).
-- coverage: footprint area + accessory allowance vs max_coverage_pct of the
-  lot (attribute math, no geometry).
+- named footprints: direct window checks, BOTH orientations always — the
+  width-facing (wf) and flipped (df) results are stored separately so s7 can
+  apply orientation constraints (axis_required) at report time.
 
-The frontier answers ANY future WxD question and the constant-area sweeps in
-s7 without re-running this stage.
+This stage is PURE GEOMETRY: coverage caps, minimum frontage, orientation
+policy, and jurisdiction eligibility are all applied in s7, so config changes
+to any of those need only an s7 re-run. The frontier answers ANY future WxD
+question and the constant-area sweeps in s7 without re-running this stage.
 """
 
 from __future__ import annotations
@@ -218,19 +219,12 @@ def main() -> None:
 
     tasks = []
     for i, row in enumerate(lots.itertuples(index=False)):
-        j = rules.jurisdictions[row.jurisdiction]
-        rule = j.rule_for(row.zone_raw)
-        constraint = (
-            rule.orientation_constraint
-            if rule is not None and rule.orientation_constraint
-            else j.orientation_constraint
-        )
-        allow_flip = constraint != "axis_required"
+        # Both orientations always computed; s7 applies axis_required policy.
         tasks.append((
             i,
             shapely.to_wkb(row.geom),
             json.loads(row.front_bearings_json),
-            allow_flip,
+            True,
         ))
 
     chunk_size = 1000
@@ -254,42 +248,9 @@ def main() -> None:
     lots = lots.drop(columns=["geom"])  # envelope not needed downstream
     lots["frontier_json"] = [json.dumps(r["frontier"]) for r in results]
 
-    # Per-row legal attribute gates (rule lookup once per lot, not per footprint).
-    cov_caps: list[float | None] = []
-    accessory: list[float] = []
-    frontage_ok = []
-    for row_area, row_frontage, jkey, zraw in zip(
-        lots["area_sqft"], lots["frontage_ft"], lots["jurisdiction"], lots["zone_raw"]
-    ):
-        rule = rules.jurisdictions[jkey].rule_for(zraw)
-        if rule is None:
-            cov_caps.append(None)
-            accessory.append(0.0)
-            frontage_ok.append(True)
-        else:
-            cov_caps.append(rule.coverage_cap_sqft(float(row_area)))
-            accessory.append(rule.accessory_allowance_sqft)
-            frontage_ok.append(
-                rule.min_frontage_ft is None
-                or float(row_frontage) >= rule.min_frontage_ft
-            )
-    frontage_ok = np.array(frontage_ok)
-    lots["frontage_ok"] = frontage_ok  # s7 applies this to the sweep matrix too
-    if not frontage_ok.all():
-        print(f"  {int((~frontage_ok).sum()):,} lots fail a min-frontage rule")
-
-    for name, w_ft, d_ft in cfg["footprints"]:
-        wf = np.array([r["fits"][name][0] for r in results]) & frontage_ok
-        df = np.array([r["fits"][name][1] for r in results]) & frontage_ok
-        lots[f"fits_{name}_wf"] = wf
-        lots[f"fits_{name}_df"] = df
-        lots[f"fits_{name}"] = wf | df
-        # Coverage cap check (attribute math).
-        cov_ok = np.array([
-            cap is None or w_ft * d_ft + acc <= cap
-            for cap, acc in zip(cov_caps, accessory)
-        ])
-        lots[f"fits_cov_{name}"] = lots[f"fits_{name}"] & cov_ok
+    for name, _w_ft, _d_ft in cfg["footprints"]:
+        lots[f"fits_{name}_wf"] = np.array([r["fits"][name][0] for r in results])
+        lots[f"fits_{name}_df"] = np.array([r["fits"][name][1] for r in results])
 
     meta = {
         "grid_resolution_ft": res,
@@ -303,8 +264,8 @@ def main() -> None:
     (DATA_DIR / "s6_meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
     write_stage(lots, "s6_lots")
     for name, *_ in cfg["footprints"]:
-        print(f"  fits_{name}: {int(lots[f'fits_{name}'].sum()):,} lots "
-              f"(coverage-ok {int(lots[f'fits_cov_{name}'].sum()):,})")
+        n = int((lots[f"fits_{name}_wf"] | lots[f"fits_{name}_df"]).sum())
+        print(f"  fits_{name} (raw geometry, either orientation): {n:,} lots")
     print("s6 done.")
 
 

@@ -568,8 +568,12 @@ jurisdictions:
         notes: "County RURAL zone — overwhelmingly outside the Metro UGB; no quadplex use in MCC 39. Any RR parcel inside the UGB needs individual review."
 
   lake_oswego:
-    eligible: true
-    reason: "North edge of Lake Oswego lies in Multnomah County (~1,450 lots)"
+    eligible: false
+    reason: >
+      Excluded by owner decision 2026-07-24: zoning permits quadplexes, but the
+      Multnomah slice is the Mountain Park PUD — pre-HB-2001 HOA covenants +
+      design review + litigation risk make by-right practically unbankable.
+      Zone rows below retained for reference (verified vs LOC 50).
     juris_city_codes: [LAKE OSWEGO]
     zoning_layer: zoning_lake_oswego
     zone_field: LAYER

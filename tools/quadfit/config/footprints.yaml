@@ -1,22 +1,46 @@
-# Candidate quadplex footprints + fit parameters.
+# Candidate building footprints + fit parameters.
+#
+# PRODUCT (Steph, 2026-07-24): 1,000 sqft 2-story townhomes, ~500 sqft ground
+# footprint each, built as PODS OF 4 side-by-side — so the rectangle we must
+# fit is the WHOLE POD: (4 x unit width) wide x unit depth deep, ~2,000 sqft
+# ground coverage. A lone 500 sqft rectangle fitting proves nothing.
+#
 # width_ft = dimension parallel to the front lot line (before any 90° flip);
 # both orientations are tested unless the jurisdiction is axis_required.
 
 orientations: [width_facing, depth_facing]
 
 footprints:
-  - { name: "25x25", width_ft: 25, depth_ft: 25 }
-  - { name: "18x32", width_ft: 18, depth_ft: 32 }
+  # 4 x 14x36 units (504 sqft each) — skinny/deep pod
+  - { name: "pod56x36", width_ft: 56, depth_ft: 36 }
+  # 4 x 20x25 units (500 sqft each) — wide/shallow pod
+  - { name: "pod80x25", width_ft: 80, depth_ft: 25 }
 
-# Fixed-area aspect-ratio optimizer: footprint area held constant (identical
-# upper/lower floor plates), depth = area / width. Reports the unlock-% curve
-# across widths and the statistically optimal dimensions.
+# Fixed-area aspect-ratio optimizer: pod area held constant at 2,000 sqft
+# (4 x 500 sqft units, identical upper/lower floor plates), depth = area /
+# width. Pod width step 2 ft = unit width step 0.5 ft; unit width = pod / 4.
+# Reports the unlock-% curve and statistically optimal pod (and thus unit)
+# dimensions.
 constant_area_sweeps:
-  - { area_sqft: 500, width_min_ft: 14, width_max_ft: 35, step_ft: 0.5 }
+  - { area_sqft: 2000, width_min_ft: 56, width_max_ft: 140, step_ft: 2 }
 
 # Per-lot max-depth-per-width frontier (answers arbitrary WxD queries without
-# re-running the pipeline).
+# re-running the pipeline). Extends to 145 ft to cover the widest pod.
 frontier:
   width_min_ft: 12
-  width_max_ft: 60
+  width_max_ft: 145
   step_ft: 0.5
+
+# Large-lot subdivision screen (attribute math only — any change here needs
+# just an s7 re-run, seconds). Each carved pod lot must supply
+# quad_ground_sqft of buildable envelope (the 2,000 sqft pod) plus
+# units_per_quad * parking_slots_per_unit * parking_sqft_per_slot for parking
+# (stalls only, no travel lanes — stated approximation), and must satisfy the
+# zone's quadplex minimum lot area. Non-split (1 SFR -> pod-of-4 conversion)
+# lots carry NO parking requirement (street parking assumed to absorb).
+split:
+  quad_ground_sqft: 2000
+  parking_slots_per_unit: 1.5
+  parking_sqft_per_slot: 162 # 9x18 stall
+  units_per_quad: 4
+  min_quads: 2 # >= this many carved lots to count as a split candidate

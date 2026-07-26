@@ -230,6 +230,24 @@ class FrontierSpec(BaseModel):
         return out
 
 
+class SplitSpec(BaseModel):
+    """Large-lot subdivision screen — pure attribute math applied in s7, so
+    every knob here is adjustable with a report-only re-run."""
+
+    quad_ground_sqft: float = 2000.0
+    parking_slots_per_unit: float = 1.5
+    parking_sqft_per_slot: float = 162.0  # 9x18 stall, no travel lanes
+    units_per_quad: int = 4
+    min_quads: int = 2
+
+    def per_quad_lot_sqft(self) -> float:
+        """Buildable sqft one carved quadplex lot must supply."""
+        return (
+            self.quad_ground_sqft
+            + self.units_per_quad * self.parking_slots_per_unit * self.parking_sqft_per_slot
+        )
+
+
 class FootprintsConfig(BaseModel):
     orientations: list[Literal["width_facing", "depth_facing"]] = Field(
         default_factory=lambda: ["width_facing", "depth_facing"]
@@ -237,6 +255,7 @@ class FootprintsConfig(BaseModel):
     footprints: list[Footprint]
     constant_area_sweeps: list[ConstantAreaSweep] = Field(default_factory=list)
     frontier: FrontierSpec = Field(default_factory=FrontierSpec)
+    split: SplitSpec | None = None
 
 
 def load_rules(path: Path | None = None) -> RulesConfig:
