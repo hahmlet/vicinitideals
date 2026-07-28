@@ -47,7 +47,7 @@ def main() -> None:
 
     rules = load_rules()
     lots = read_stage("s2_lots")
-    funnel: list[dict] = [{"step": "all_multnomah_lots", "count": int(len(lots))}]
+    funnel: list[dict] = [{"step": "all_taxlots", "count": int(len(lots))}]
 
     def drop(mask, reason: str):
         nonlocal lots

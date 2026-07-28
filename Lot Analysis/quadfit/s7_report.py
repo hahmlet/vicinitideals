@@ -372,7 +372,7 @@ def main() -> None:
             viability=viability_tier(lpu, fps.screen))
 
     L: list[str] = []
-    L.append("# Quadfit — Multnomah County quadplex buildability\n")
+    L.append("# Quadfit — Multnomah + Clackamas County quadplex buildability\n")
     L.append(f"Grid resolution {res} ft · headline universe = tiers A+B "
              f"({len(head):,} of {len(elig):,} eligible lots; geometry universe "
              f"{len(lots):,}). Results are an **upper bound** — see Blind spots.\n")
