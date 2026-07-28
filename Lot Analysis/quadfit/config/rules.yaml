@@ -3,7 +3,7 @@
 # Compiled from municipal codes; every numeric row carries a source citation and
 # a confidence flag. `needs_verification` rows are preliminary values and MUST
 # be verified against the adopted code text before the final run (Phase 5).
-# Schema: tools/quadfit/common.py (RulesConfig).
+# Schema: Lot Analysis/quadfit/common.py (RulesConfig).
 #
 # Legal frame: OAR 660-046-0205 — Large Cities (Portland, Gresham, Troutdale,
 # Fairview, Wood Village) and county urban unincorporated areas inside the Metro

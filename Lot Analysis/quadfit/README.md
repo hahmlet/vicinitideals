@@ -17,8 +17,8 @@ travel lanes) via the `split:` block in `config/footprints.yaml`.
 
 ```bash
 uv sync --extra tools --extra gis
-uv run --extra tools --extra gis python tools/quadfit/run_all.py           # all stages
-uv run --extra tools --extra gis python tools/quadfit/run_all.py --stage s6 --force
+uv run --extra tools --extra gis python "Lot Analysis/quadfit/run_all.py"           # all stages
+uv run --extra tools --extra gis python "Lot Analysis/quadfit/run_all.py" --stage s6 --force
 ```
 
 Stages cache intermediates in `data/quadfit/*.parquet` (WKB geometry columns);
@@ -28,7 +28,7 @@ Stages cache intermediates in `data/quadfit/*.parquet` (WKB geometry columns);
 
 | Change | Re-run |
 |---|---|
-| Jurisdiction on/off (`eligible:`), min lot area, min frontage, orientation constraint, coverage cap, parking buffer / split thresholds, overlay kill↔flag reclassification, slope tier cutlines | `python tools/quadfit/s7_report.py` only (**seconds**) |
+| Jurisdiction on/off (`eligible:`), min lot area, min frontage, orientation constraint, coverage cap, parking buffer / split thresholds, overlay kill↔flag reclassification, slope tier cutlines | `python "Lot Analysis/quadfit/s7_report.py"` only (**seconds**) |
 | New footprint rectangle or sweep | s6–s7 (minutes) |
 | Overlay carve buffer_ft, new carve overlay layer | s5o–s7 (~40 min) |
 | Setback values, new zone rows | s5–s7 (run_all handles cascade) |

@@ -69,7 +69,7 @@ tools = [
     "httpx>=0.27",
     "pyshp>=2.3",
 ]
-# Offline geospatial analysis (tools/quadfit) — not used by the app runtime.
+# Offline geospatial analysis ("Lot Analysis/quadfit") — not used by the app runtime.
 gis = [
     "shapely>=2.0",
     "pyproj>=3.6",
@@ -124,7 +124,7 @@ packages = ["app"]
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "session"
 asyncio_default_test_loop_scope = "session"
-testpaths = ["tests"]
+testpaths = ["tests", "Lot Analysis/quadfit/tests"]
 markers = [
     "unit: pure logic tests — no DB, no network (fast, <5s total)",
     "integration: tests that use the in-memory DB or the ASGI app",

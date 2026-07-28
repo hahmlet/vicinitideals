@@ -544,8 +544,11 @@ def main() -> None:
 
     L.append("\n## Blind spots (results are a ceiling)\n")
     L.append("- Private easements (title reports only) are not modeled.")
-    L.append("- Portland tree preservation, environmental/historic/design overlays "
-             "beyond the z gate, steep slopes, floodplains: NOT applied (phase 2).")
+    L.append("- Portland tree preservation and historic/design review are NOT "
+             "modeled (cost/process, not mapped kills). Environmental overlays, "
+             "floodplain, and slope ARE applied per the overlay/slope sections "
+             "above — but only where source data exists (see coverage matrix; "
+             "slope 'unknown' lots have no DEM tile).")
     L.append("- Existing structures assumed demolished; building value & year built "
              "are carried per-lot for later filtering.")
     L.append("- Conversion lots: on-lot parking out of scope by design. Split lots: "

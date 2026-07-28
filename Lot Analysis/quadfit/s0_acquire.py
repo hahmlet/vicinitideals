@@ -28,7 +28,7 @@ from typing import Any
 
 TOOL_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(TOOL_DIR))
-sys.path.insert(0, str(TOOL_DIR.parents[0] / "gis_cache"))
+sys.path.insert(0, str(TOOL_DIR.parents[1] / "tools" / "gis_cache"))
 
 import httpx
 import shapefile  # pyshp
