@@ -45,14 +45,26 @@ split:
   units_per_quad: 4
   min_quads: 2 # >= this many carved lots to count as a split candidate
 
-# Current-use + assessed-value acquisition screen (s7-only, seconds to re-run).
+# Current-use + value + acquisition-economics screen (s7-only, seconds to re-run).
 # Current use tagged from assessor property class: existing multifamily and
 # commercial/industrial lots are excluded from the headline by default (team
-# won't replace those uses) — a counted, reversible funnel step. Assessed
-# values are Measure-50 compressed (well below purchase price), so value is a
-# reported finance_tier slice (vacant / teardown_candidate / improved), never
-# a hidden kill — filter the CSVs to your own price tolerance.
+# won't replace those uses) — a counted, reversible funnel step. TOTALVAL is
+# the county Real Market Value (land+building market estimate — NOT the
+# Measure-50 capped assessed value, which is ~45% of it and unused here), so
+# value is a reported finance_tier slice (vacant / teardown_candidate /
+# improved), never a hidden kill — filter the CSVs to your own price tolerance.
+#
+# Acquisition economics = land cost per door. Acquisition estimate is a
+# post-COVID arm's-length sale where recorded, else TOTALVAL (RMV).
+# land_cost_per_unit = acquisition / doors (doors = 4 for a 1-lot conversion,
+# 4 x carved pods for a split — split door counts are the theoretical maximum,
+# so per-door cost there is a floor). Preferred <= $30k, ceiling <= $45k. A
+# slice, not a gate — see viable_candidates.csv (cheapest dirt first).
 screen:
   exclude_current_use: [multifamily, commercial]
-  teardown_max_improvement_share: 0.5 # building <= 50% of total assessed value
+  teardown_max_improvement_share: 0.5 # building <= 50% of total market value
   vacant_max_improvement_value: 5000 # <= this improvement $ = virtually vacant
+  recent_sale_min_year: 2020    # sales this year or later are trusted; older -> RMV
+  recent_sale_min_price: 10000  # below this = nominal/intra-family transfer, ignore
+  preferred_land_cost_per_unit: 30000 # target dirt cost per door
+  max_land_cost_per_unit: 45000       # hard ceiling per door

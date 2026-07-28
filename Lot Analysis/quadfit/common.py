@@ -249,25 +249,40 @@ class SplitSpec(BaseModel):
 
 
 class ScreenSpec(BaseModel):
-    """Current-use + assessed-value acquisition screen (s7-only knobs).
+    """Current-use + value + acquisition-economics screen (s7-only knobs).
 
     Current use is tagged from the assessor property class (STATECLASS first
     digit; RLIS LANDUSE as fallback): lots whose category is listed in
     exclude_current_use become a counted policy-funnel step — the team won't
-    replace existing multifamily or valuable commercial. Assessed values are
-    Measure-50 compressed (categorically below purchase price), so the value
-    side is a reported finance_tier slice, never a silent kill:
+    replace existing multifamily or valuable commercial. TOTALVAL is the county
+    Real Market Value (RMV = LANDVAL + BLDGVAL, the assessor's annual market
+    estimate — NOT the Measure-50 capped ASSESSVAL, which is ~45% of it and is
+    unused here). RMV is reasonable in aggregate but wrong on any single lot, so
+    the value side is a reported slice, never a silent kill:
       vacant             — improvement value <= vacant_max_improvement_value
                            (a ~$5k shed is virtually vacant)
       teardown_candidate — building <= teardown_max_improvement_share of
-                           total assessed value (mostly-land lots)
+                           total value (mostly-land lots)
       improved           — building dominates value; costly to replace
+
+    Acquisition economics turns that into a land-cost-per-door slice. The
+    acquisition estimate is a post-cutoff arm's-length sale where recorded
+    (SALEPRICE >= recent_sale_min_price AND sale year >= recent_sale_min_year —
+    post-COVID prices are trusted; anything older or nominal falls back to RMV).
+    land_cost_per_unit = acquisition / doors, where doors = units_per_quad for a
+    1-lot conversion and units_per_quad x carved pods for a split. Tiers:
+    preferred (<= preferred_land_cost_per_unit) / viable (<= max) / over_budget.
     """
 
     exclude_current_use: list[str] = Field(
         default_factory=lambda: ["multifamily", "commercial"])
     teardown_max_improvement_share: float = 0.5
     vacant_max_improvement_value: float = 5000.0
+    # Acquisition economics (land cost per door). See docstring.
+    recent_sale_min_year: int = 2020       # sales this year+ trusted; older -> RMV
+    recent_sale_min_price: float = 10000.0  # below = nominal/family transfer, ignore
+    preferred_land_cost_per_unit: float = 30000.0
+    max_land_cost_per_unit: float = 45000.0
 
 
 class FootprintsConfig(BaseModel):

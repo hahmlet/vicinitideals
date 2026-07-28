@@ -211,3 +211,60 @@ def test_current_use_mapping():
         "BLDGVAL": [4_800, 5_200],
     })
     assert current_use_column(shed, vacant_max=5000) == ["vacant", "single_family"]
+
+
+def test_screen_spec_economics_knobs():
+    """Land-cost-per-door knobs ship with the post-COVID / $30k / $45k defaults."""
+    from common import ScreenSpec, load_footprints
+
+    s = ScreenSpec()
+    assert s.recent_sale_min_year == 2020
+    assert s.recent_sale_min_price == 10000.0
+    assert s.preferred_land_cost_per_unit == 30000.0
+    assert s.max_land_cost_per_unit == 45000.0
+    sc = load_footprints().screen
+    assert sc.recent_sale_min_year == 2020
+    assert sc.preferred_land_cost_per_unit == 30000
+    assert sc.max_land_cost_per_unit == 45000
+
+
+def test_acquisition_estimate_sale_vs_rmv():
+    """Post-cutoff arm's-length sale wins; older/nominal/missing fall to RMV."""
+    import pandas as pd
+
+    from common import ScreenSpec
+    from s7_report import acquisition_estimate
+
+    s = ScreenSpec()  # cutoff year 2020, min price $10k
+    lots = pd.DataFrame({
+        "SALEPRICE": [500_000, 250_000,       1,       0, 400_000],
+        "SALEDATE":  [202203,  201905,  202101,       0,  202512],  # YYYYMM
+        "TOTALVAL":  [600_000, 300_000, 350_000, 120_000, 900_000],
+    })
+    acq, uses = acquisition_estimate(lots, s)
+    # recent real sale (row 0, 4) -> sale; pre-2020 (1), nominal (2), none (3) -> RMV
+    assert list(uses) == [True, False, False, False, True]
+    assert list(acq) == [500_000, 300_000, 350_000, 120_000, 400_000]
+
+
+def test_land_cost_per_unit_and_viability():
+    """Doors divide acquisition; tiering matches the $30k / $45k cutlines."""
+    import numpy as np
+
+    from common import ScreenSpec
+    from s7_report import land_cost_per_unit, viability_tier
+
+    s = ScreenSpec()  # preferred $30k, ceiling $45k
+    #        conv 4-door    conv       conv      split 12-door   no value  no fit
+    acq =   [120_000,     180_000,   240_000,     360_000,          0,     100_000]
+    doors = [4,           4,         4,           12,               4,           0]
+    lpu = land_cost_per_unit(acq, doors)
+    assert lpu[0] == 30_000    # 120k / 4
+    assert lpu[1] == 45_000    # 180k / 4
+    assert lpu[2] == 60_000    # 240k / 4
+    assert lpu[3] == 30_000    # 360k / 12 -> split reaches target on price
+    assert np.isnan(lpu[4])    # zero acquisition -> unusable
+    assert np.isnan(lpu[5])    # zero doors (nothing fits) -> unusable
+    via = viability_tier(lpu, s)
+    assert list(via) == [
+        "preferred", "viable", "over_budget", "preferred", "unknown", "unknown"]

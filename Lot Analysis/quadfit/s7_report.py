@@ -20,7 +20,8 @@ holds max-depth-per-width in CELLS at s6_meta grid resolution.
 Outputs: summary.md · lots_results.csv (all geometry-universe lots, with
 policy_exclusion column) · conversion_candidates.csv (eligible, fits, NOT a
 split candidate) · split_candidates.csv (eligible, >= min_quads if split) ·
-spot_check.geojson.
+viable_candidates.csv (fitting lots clearing the per-door land-cost ceiling,
+cheapest first) · spot_check.geojson.
 """
 
 from __future__ import annotations
@@ -185,6 +186,55 @@ def quads_if_split(lots, gates, rules, split):
     return np.where(gates["eligible"].to_numpy(), out, 0)
 
 
+def acquisition_estimate(lots, screen):
+    """(acq $, uses_sale bool) per lot.
+
+    A post-cutoff arm's-length sale price where we have one — SALEPRICE >=
+    recent_sale_min_price AND sale year >= recent_sale_min_year (SALEDATE is
+    YYYYMM). Post-COVID prices are trusted; anything older or nominal falls back
+    to TOTALVAL, the county Real Market Value (land+building market estimate,
+    NOT the Measure-50 capped assessed value).
+    """
+    import numpy as np
+    import pandas as pd
+
+    price = pd.to_numeric(lots["SALEPRICE"], errors="coerce").fillna(0.0).to_numpy()
+    saledate = pd.to_numeric(lots["SALEDATE"], errors="coerce").fillna(0.0).to_numpy()
+    year = (saledate // 100).astype(int)  # YYYYMM -> YYYY
+    rmv = pd.to_numeric(lots["TOTALVAL"], errors="coerce").fillna(0.0).to_numpy()
+    uses_sale = (price >= screen.recent_sale_min_price) & (
+        year >= screen.recent_sale_min_year)
+    acq = np.where(uses_sale, price, rmv)
+    return acq, uses_sale
+
+
+def land_cost_per_unit(acq, doors):
+    """acq / doors, NaN where doors <= 0 or acq <= 0 (no usable value)."""
+    import numpy as np
+
+    acq = np.asarray(acq, dtype=float)
+    doors = np.asarray(doors, dtype=float)
+    out = np.full(acq.shape, np.nan)
+    ok = (doors > 0) & (acq > 0)
+    out[ok] = acq[ok] / doors[ok]
+    return out
+
+
+def viability_tier(lpu, screen):
+    """preferred (<= preferred_land_cost_per_unit) / viable (<= max) /
+    over_budget / unknown (no usable acquisition value)."""
+    import numpy as np
+
+    lpu = np.asarray(lpu, dtype=float)
+    return np.select(
+        [np.isnan(lpu),
+         lpu <= screen.preferred_land_cost_per_unit,
+         lpu <= screen.max_land_cost_per_unit],
+        ["unknown", "preferred", "viable"],
+        default="over_budget",
+    )
+
+
 def sweep_fit_matrix(df, widths_ft, frontier_cells, res, sweep, flip_allowed):
     """Boolean matrix lots x sweep-widths for a constant-area sweep.
 
@@ -242,8 +292,10 @@ def main() -> None:
     gates, pol_funnel = policy_gates(lots, rules, ocfg, fps.screen)
     lots = lots.join(gates)
 
-    # Finance tier: assessed values are Measure-50 compressed (below purchase
-    # price), so this slices — it never gates. Cutlines are s7-time knobs.
+    # Finance tier from Real Market Value (TOTALVAL = land+building market
+    # estimate; the Measure-50 capped ASSESSVAL is ~45% of it and unused here).
+    # RMV is reasonable in aggregate but wrong on any single lot, so this slices
+    # — it never gates. Cutlines are s7-time knobs.
     bldg = pd.to_numeric(lots["BLDGVAL"], errors="coerce").fillna(0.0).to_numpy()
     total = pd.to_numeric(lots["TOTALVAL"], errors="coerce").fillna(0.0).to_numpy()
     share = np.divide(bldg, total, out=np.zeros_like(bldg), where=total > 0)
@@ -252,6 +304,13 @@ def main() -> None:
         bldg <= fps.screen.vacant_max_improvement_value, "vacant",
         np.where(share <= fps.screen.teardown_max_improvement_share,
                  "teardown_candidate", "improved"))
+
+    # Acquisition estimate (post-COVID arm's-length sale where recorded, else
+    # RMV). Land-cost-per-door tiering needs door counts, so it lands in the
+    # split block below; the raw estimate is available to every lot here.
+    acq, uses_sale = acquisition_estimate(lots, fps.screen)
+    lots["acq_estimate"] = acq
+    lots["acq_basis"] = np.where(uses_sale, "recent_sale", "market_value")
 
     # Slope tier from the configured statistic (cutlines are s7-time knobs).
     stat_col = f"slope_{ocfg.slope.stat}_pct"
@@ -295,8 +354,22 @@ def main() -> None:
             elig_any |= elig[f"fits_{name}"].to_numpy()
         q = quads_if_split(elig, gates.loc[elig.index], rules, split)
         q = np.where(elig_any, q, 0)  # parent must host at least one quad shape
-        elig = elig.assign(quads_if_split=q,
-                           split_candidate=q >= split.min_quads)
+        split_candidate = q >= split.min_quads
+        # Acquisition economics: doors per lot, land cost per door, viability.
+        # Conversion = units_per_quad on the existing lot; split = that x carved
+        # pods (the theoretical max, so per-door cost is a floor). No fit -> 0.
+        doors = np.where(split_candidate, q * split.units_per_quad,
+                         split.units_per_quad).astype(float)
+        doors = np.where(elig_any, doors, 0.0)
+        lpu = land_cost_per_unit(elig["acq_estimate"].to_numpy(), doors)
+        elig = elig.assign(
+            quads_if_split=q,
+            split_candidate=split_candidate,
+            candidate_type=np.where(split_candidate, "split",
+                                    np.where(elig_any, "conversion", "no_fit")),
+            doors_planned=doors.astype(int),
+            land_cost_per_unit=lpu,
+            viability=viability_tier(lpu, fps.screen))
 
     L: list[str] = []
     L.append("# Quadfit — Multnomah County quadplex buildability\n")
@@ -333,18 +406,20 @@ def main() -> None:
         L.append(f"| {j} | {len(grp):,} | {t.get('A',0):,} | {t.get('B',0):,} "
                  f"| {t.get('C',0):,} | {t.get('D',0):,} |")
 
-    L.append("\n## Current use & acquisition screen\n")
+    L.append("\n## Current use & value screen\n")
     L.append("Existing " + " + ".join(fps.screen.exclude_current_use) +
              " excluded from the headline (counted in the funnel above; "
-             "reversible in footprints.yaml `screen:`). Assessed values are "
-             "Measure-50 compressed — categorically BELOW purchase price — so "
-             "finance tiers slice the results; they never gate. Vacant = "
+             "reversible in footprints.yaml `screen:`). TOTALVAL is the county "
+             "**Real Market Value** (land+building market estimate — NOT the "
+             "Measure-50 capped assessed value, which is ~45% of it and unused "
+             "here). RMV is reasonable in aggregate but wrong on any single lot, "
+             "so finance tiers slice the results; they never gate. Vacant = "
              f"improvement value ≤ ${fps.screen.vacant_max_improvement_value:,.0f} "
              "(a token shed is virtually vacant); teardown cutline: building ≤ "
-             f"{fps.screen.teardown_max_improvement_share:.0%} of total "
-             "assessed value.\n")
-    L.append("| finance tier | headline lots | any-pod fit % | median assessed "
-             "total | median assessed land |")
+             f"{fps.screen.teardown_max_improvement_share:.0%} of total market "
+             "value. Dollar viability is in Acquisition economics below.\n")
+    L.append("| finance tier | headline lots | any-pod fit % | median market "
+             "value | median land value |")
     L.append("|---|---:|---:|---:|---:|")
     htot = pd.to_numeric(head["TOTALVAL"], errors="coerce")
     hland = pd.to_numeric(head["LANDVAL"], errors="coerce")
@@ -355,9 +430,9 @@ def main() -> None:
         mt = htot[mask].median() if n else float("nan")
         ml = hland[mask].median() if n else float("nan")
         L.append(f"| {tier_name} | {n:,} | {fit} | ${mt:,.0f} | ${ml:,.0f} |")
-    L.append("\nPer-lot `current_use`, `finance_tier`, assessed values, and "
-             "last sale price/date are in every CSV — filter to your own "
-             "price tolerance.")
+    L.append("\nPer-lot `current_use`, `finance_tier`, market/land value, last "
+             "sale price/date, and the derived `acq_estimate` are in every CSV "
+             "— filter to your own price tolerance.")
 
     L.append("\n## Footprint fit rates (headline: tiers A+B)\n")
     L.append("| footprint | fits | fit % | +coverage ok | flip-only | tier C fits |")
@@ -455,6 +530,61 @@ def main() -> None:
             L.append(f"| {row.TLID} | {row.SITEADDR or '—'} | {row.jurisdiction} / "
                      f"{row.zone} | {row.area_sqft:,.0f} | {row.envelope_sqft:,.0f} "
                      f"| {row.quads_if_split} |")
+
+        # --- Acquisition economics: land cost per door --------------------
+        fits_any_e = np.logical_or.reduce(
+            [elig[f"fits_{n}"].to_numpy() for n in fp_names])
+        lpu = elig["land_cost_per_unit"].to_numpy()
+        via = elig["viability"].to_numpy()
+        used_sale = elig["acq_basis"].to_numpy() == "recent_sale"
+        viable_mask = np.isin(via, ("preferred", "viable"))
+        pref_mask = via == "preferred"
+        n_fit = int(fits_any_e.sum())
+        n_viable = int(viable_mask.sum())
+        n_pref = int(pref_mask.sum())
+        pref_k = fps.screen.preferred_land_cost_per_unit
+        max_k = fps.screen.max_land_cost_per_unit
+        L.append("\n## Acquisition economics — land cost per door\n")
+        L.append(
+            "Acquisition estimate = a post-"
+            f"{fps.screen.recent_sale_min_year} arm's-length sale where recorded "
+            f"({_pct(int((used_sale & fits_any_e).sum()), n_fit)} of fitting "
+            "lots), else TOTALVAL (RMV — reasonable in aggregate, wrong on any "
+            f"single lot). Land cost per door = acquisition ÷ doors, where doors "
+            f"= {split.units_per_quad} for a 1-lot conversion and "
+            f"{split.units_per_quad} × carved pods for a split (split door "
+            "counts are the theoretical maximum, so per-door cost there is a "
+            f"floor). Preferred ≤ ${pref_k:,.0f}, ceiling ≤ ${max_k:,.0f}. This "
+            "is a **slice, not a gate** — nothing above is dropped.\n")
+        L.append(
+            f"**Of {n_fit:,} fitting eligible lots, {n_viable:,} clear the "
+            f"${max_k:,.0f}/door ceiling ({_pct(n_viable, n_fit)}); {n_pref:,} "
+            f"clear the ${pref_k:,.0f}/door target ({_pct(n_pref, n_fit)}).** "
+            "Ranked cheapest-dirt-first in `viable_candidates.csv`.\n")
+        L.append(f"| candidate type | fitting lots | ≤ ${max_k:,.0f}/door "
+                 f"| ≤ ${pref_k:,.0f}/door | median $/door |")
+        L.append("|---|---:|---:|---:|---:|")
+        groups = [
+            ("1-for-1 conversion",
+             (~elig["split_candidate"].to_numpy()) & fits_any_e),
+            (f"split (≥{split.min_quads} quads)",
+             elig["split_candidate"].to_numpy()),
+            ("of which vacant land",
+             (elig["finance_tier"].to_numpy() == "vacant") & fits_any_e),
+            ("all fitting", fits_any_e),
+        ]
+        for label, gmask in groups:
+            n = int(gmask.sum())
+            v = int((gmask & viable_mask).sum())
+            p = int((gmask & pref_mask).sum())
+            grp_lpu = lpu[gmask]
+            has_val = n and bool(np.isfinite(grp_lpu).any())
+            med_s = f"${np.nanmedian(grp_lpu):,.0f}" if has_val else "n/a"
+            L.append(f"| {label} | {n:,} | {v:,} | {p:,} | {med_s} |")
+        L.append("\nDoors, `acq_estimate`, `acq_basis`, `land_cost_per_unit`, and "
+                 "`viability` are in the split/conversion CSVs; "
+                 "`viable_candidates.csv` is the union that clears the ceiling, "
+                 "cheapest first.")
 
     # --- Phase 2 sections: overlays / slope / sewer / data coverage --------
     flag_specs = [s for s in ocfg.overlays
@@ -569,7 +699,7 @@ def main() -> None:
         "slope_p85_pct", "slope_tier", "sewer_main_dist_ft",
         "envelope_setback_sqft") if c in lots.columns]
     screen_cols = ["current_use", "finance_tier", "improvement_share",
-                   "LANDVAL", "SALEPRICE", "SALEDATE"]
+                   "LANDVAL", "SALEPRICE", "SALEDATE", "acq_estimate", "acq_basis"]
     csv_cols = [
         "TLID", "SITEADDR", "jurisdiction", "zone", "tier", "area_sqft",
         "envelope_sqft", "frontage_ft", "YEARBUILT", "BLDGSQFT", "BLDGVAL",
@@ -581,20 +711,30 @@ def main() -> None:
     print(f"wrote {DATA_DIR / 'lots_results.csv'} ({len(lots):,} rows)")
 
     if split is not None:
+        # Per-door economics columns (elig-only — need door counts).
+        econ_cols = ["candidate_type", "doors_planned", "land_cost_per_unit",
+                     "viability"]
         sub_cols = [
             "TLID", "SITEADDR", "jurisdiction", "zone", "tier", "area_sqft",
             "envelope_sqft", "frontage_ft", "YEARBUILT", "BLDGSQFT", "BLDGVAL",
             "TOTALVAL",
         ] + screen_cols + phase2_cols
         sc = elig[elig["split_candidate"]].sort_values("quads_if_split", ascending=False)
-        sc[sub_cols + ["quads_if_split"]].to_csv(
+        sc[sub_cols + ["quads_if_split"] + econ_cols].to_csv(
             DATA_DIR / "split_candidates.csv", index=False)
         conv_mask = ~elig["split_candidate"] & np.logical_or.reduce(
             [elig[f"fits_{n}"].to_numpy() for n in fp_names])
-        elig[conv_mask][sub_cols + [f"fits_{n}" for n in fp_names]].to_csv(
+        elig[conv_mask][sub_cols + [f"fits_{n}" for n in fp_names] + econ_cols].to_csv(
             DATA_DIR / "conversion_candidates.csv", index=False)
+        # Viable list: every fitting lot clearing the per-door ceiling, cheapest
+        # dirt first — the practical target list.
+        viable = elig[elig["viability"].isin(("preferred", "viable"))].sort_values(
+            "land_cost_per_unit")
+        viable[sub_cols + ["quads_if_split"] + econ_cols].to_csv(
+            DATA_DIR / "viable_candidates.csv", index=False)
         print(f"wrote split_candidates.csv ({int(elig['split_candidate'].sum()):,}) "
-              f"+ conversion_candidates.csv ({int(conv_mask.sum()):,})")
+              f"+ conversion_candidates.csv ({int(conv_mask.sum()):,}) "
+              f"+ viable_candidates.csv ({len(viable):,})")
 
     _write_spot_check(elig, fps, meta, args.spot_check)
     print("s7 done.")

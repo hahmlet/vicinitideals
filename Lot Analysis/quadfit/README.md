@@ -84,7 +84,14 @@ policy-only edits invoke s7 directly as above.
 universe, `policy_exclusion` + `eligible` columns) · `conversion_candidates.csv`
 (eligible, a footprint fits, NOT split-worthy — the 1 SFR→4plex list) ·
 `split_candidates.csv` (eligible, carves ≥ min_quads quadplex lots, sorted by
-carve count) · `spot_check.geojson` (eyeball in geojson.io).
+carve count) · `viable_candidates.csv` (fitting lots that clear the per-door
+land-cost ceiling from `screen:`, cheapest dirt first — the practical target
+list) · `spot_check.geojson` (eyeball in geojson.io).
+
+Every candidate CSV carries the acquisition economics: `acq_estimate`
+(post-COVID arm's-length sale where recorded, else county Real Market Value),
+`acq_basis`, `doors_planned`, `land_cost_per_unit`, and `viability`
+(preferred ≤ $30k / viable ≤ $45k / over_budget / unknown).
 
 ## Confidence tiers
 
