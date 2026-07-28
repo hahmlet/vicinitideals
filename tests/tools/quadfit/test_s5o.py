@@ -103,3 +103,13 @@ def test_dem_stats_on_synthetic_ramp(tmp_path):
     # Polygon outside every tile -> NaNs, not a crash.
     far = box(7_100_000, 700_000, 7_100_010, 700_010)
     assert all(math.isnan(v) for v in dem.stats(far))
+
+    # Sliver narrower than one pixel rounds to a zero-size window —
+    # rasterio's Window.intersection raises on empty overlap; must be NaNs,
+    # not a WindowError (crashed the 2026-07-27 production run 60k lots in).
+    sliver = box(minx + 50.0, maxy - 50.2, minx + 50.1, maxy - 50.0)
+    assert all(math.isnan(v) for v in dem.stats(sliver))
+
+    # tile_of: inside -> 0, outside -> None (drives the tile-sorted loop).
+    assert dem.tile_of(poly) == 0
+    assert dem.tile_of(far) is None

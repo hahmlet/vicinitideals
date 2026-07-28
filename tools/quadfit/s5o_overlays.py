@@ -176,28 +176,41 @@ class DemIndex:
             self._slope_cache.pop(next(iter(self._slope_cache)))
         return slope
 
+    def tile_of(self, geom_2913) -> int | None:
+        """Index of the tile containing the geometry's centroid (None = off-DEM)."""
+        if not self.tiles or geom_2913 is None or geom_2913.is_empty:
+            return None
+        g = self._to_dem_crs(geom_2913)
+        cx, cy = g.centroid.x, g.centroid.y
+        return next((i for i, ds in enumerate(self.tiles)
+                     if ds.bounds.left <= cx <= ds.bounds.right
+                     and ds.bounds.bottom <= cy <= ds.bounds.top), None)
+
     def stats(self, geom_2913) -> tuple[float, float, float]:
         """(mean, p85, max) slope % over the polygon; NaNs if no coverage."""
         import numpy as np
+        from rasterio.errors import WindowError
         from rasterio.features import geometry_mask
         from rasterio.windows import from_bounds
 
         nan3 = (math.nan, math.nan, math.nan)
-        if not self.tiles or geom_2913 is None or geom_2913.is_empty:
-            return nan3
-        g = self._to_dem_crs(geom_2913)
-        cx, cy = g.centroid.x, g.centroid.y
-        ti = next((i for i, ds in enumerate(self.tiles)
-                   if ds.bounds.left <= cx <= ds.bounds.right
-                   and ds.bounds.bottom <= cy <= ds.bounds.top), None)
+        ti = self.tile_of(geom_2913)
         if ti is None:
             return nan3
+        g = self._to_dem_crs(geom_2913)
         ds = self.tiles[ti]
         b = g.bounds
         win = from_bounds(*b, transform=ds.transform).round_offsets().round_lengths()
-        win = win.intersection(
-            from_bounds(*ds.bounds, transform=ds.transform)
-            .round_offsets().round_lengths())
+        # Sliver/degenerate geometries can round to a zero-size window, and
+        # Window.intersection RAISES on empty overlap — guard both.
+        if win.width < 1 or win.height < 1:
+            return nan3
+        try:
+            win = win.intersection(
+                from_bounds(*ds.bounds, transform=ds.transform)
+                .round_offsets().round_lengths())
+        except WindowError:
+            return nan3
         if win.width < 1 or win.height < 1:
             return nan3
         slope = self._tile_slope(ti)
@@ -273,13 +286,18 @@ def main() -> None:
         else:
             print(f"  slope: {len(tifs)} DEM tiles")
             dem = DemIndex(dem_dir)
-            stats = []
-            for n, (env, lot_geom) in enumerate(zip(lots["geom"], lots["lot_geom"])):
-                target = env if env is not None and not env.is_empty else lot_geom
-                stats.append(dem.stats(target))
+            targets = [env if env is not None and not env.is_empty else lot_geom
+                       for env, lot_geom in zip(lots["geom"], lots["lot_geom"])]
+            # Tile-sorted order: each tile's gradient computed once instead of
+            # thrashing the 4-slot cache (arbitrary order = hours, sorted = min).
+            tile_ids = np.array([t if (t := dem.tile_of(g)) is not None else -1
+                                 for g in targets])
+            order = np.argsort(tile_ids, kind="stable")
+            arr = np.full((len(targets), 3), np.nan)
+            for n, i in enumerate(order):
+                arr[i] = dem.stats(targets[i])
                 if n and n % 20000 == 0:
                     print(f"    {n:,}/{len(lots):,}")
-            arr = np.array(stats)
             lots["slope_mean_pct"] = arr[:, 0]
             lots["slope_p85_pct"] = arr[:, 1]
             lots["slope_max_pct"] = arr[:, 2]
