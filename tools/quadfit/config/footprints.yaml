@@ -44,3 +44,15 @@ split:
   parking_sqft_per_slot: 162 # 9x18 stall
   units_per_quad: 4
   min_quads: 2 # >= this many carved lots to count as a split candidate
+
+# Current-use + assessed-value acquisition screen (s7-only, seconds to re-run).
+# Current use tagged from assessor property class: existing multifamily and
+# commercial/industrial lots are excluded from the headline by default (team
+# won't replace those uses) — a counted, reversible funnel step. Assessed
+# values are Measure-50 compressed (well below purchase price), so value is a
+# reported finance_tier slice (vacant / teardown_candidate / improved), never
+# a hidden kill — filter the CSVs to your own price tolerance.
+screen:
+  exclude_current_use: [multifamily, commercial]
+  teardown_max_improvement_share: 0.5 # building <= 50% of total assessed value
+  vacant_max_improvement_value: 5000 # <= this improvement $ = virtually vacant

@@ -1,0 +1,335 @@
+ 
+[5.0100]-1 
+City of Gresham Development Code  (06/26) 
+SECTION 5.0100 
+FLOODPLAIN OVERLAY DISTRICT 
+General 
+5.0101        Introductory Provisions 
+5.0102 Warning and Disclaimer of Liability 
+5.0103 Interpretation of FIRM Boundaries 
+5.0104 Applicability 
+Permitted Uses 
+5.0110 Permitted Land Uses 
+Development Standards 
+5.0120 Standards for Development in the Floodplain Overlay District 
+5.0121 Floodways 
+5.0122 Coordination with Other Regulatory Agencies 
+5.0123 Information to be Obtained and Maintained 
+5.0124 Alteration of Watercourses 
+5.0125 Flood Management Performance Standards 
+5.0126 Standards for Shallow Flooding Areas (AO Zones) 
+GENERAL  
+5.0101  INTRODUCTORY PROVISIONS    
+Provisions of this section apply to all areas within the Floodplain Overlay District as designated on the 
+Community Development Special Purpose District Map. This designation shall apply to all areas of special flood 
+hazard within the city. The areas of special flood hazard north of NE Halsey Street identified by the Federal 
+Insurance Administration in scientific and engineering reports entitled, “Flood Insurance Study, Multnomah 
+County, Oregon and Incorporated Areas”, December 18, 2009 with the accompanying maps entitled “Flood 
+Insurance Rate Map, Multnomah County, Oregon and Incorporated Areas”, December 18, 2009 and the areas 
+of special flood hazard south of NE Halsey identified by the Federal Insurance Administration in scientific and 
+engineering reports entitled “Flood Insurance Study, Multnomah County, Oregon and Incorporated Areas”, 
+February 1, 2019 with the accompanying maps entitled “Flood Insurance Rate Map, Multnomah County, 
+Oregon and Incorporated Areas”, February 1, 2019 are hereby adopted by reference and declared to be a part 
+of this code. When base flood elevation data has not been provided in these flood insurance studies and maps, 
+the Manager may obtain, review, and reasonably utilize any base flood elevation and floodway data available 
+from a federal, state, or other source in order to administer provisions applying to the Floodplain Overlay 
+District. 
+ 
+[5.0100]-2 
+City of Gresham Development Code  (06/26) 
+5.010 2 WARNING AND DISCLAIMER OF LIABILITY    
+The degree of flood protection required by this ordinance is considered reasonable for regulatory purposes 
+and is based on scientific and engineering considerations. Larger floods can and will occur on rare occasions. 
+Flood heights may be increased by man-made or natural causes. This code does not imply that land outside the 
+areas of special flood hazards or uses permitted within such areas will be free from flooding or flood damages. 
+This code shall not create liability on the part of the City, any officer or employee thereof, or the Federal 
+Insurance Administration, for any flood damages that result from reliance on this ordinance or any 
+administrative decision lawfully made hereunder. 
+5.0103  INTERPRETATION OF FIRM BOUNDARIES  
+The Manager shall determine the exact location of the boundaries of the areas of special flood hazards (for 
+example, where there appears to be a conflict between a mapped boundary and actual field conditions), based 
+on data referenced in Section 5.0101. Any person contesting the determination of the Manager may appeal 
+such determination as provided in Section 11.0302. 
+5.0104  APPLICABILITY  
+A. The Manager is hereby appointed to administer, implement and enforce this Section (Floodplain Overlay 
+District) by granting or denying development permits in accordance with its provisions. Permits shall be 
+required as provided in Section 11.0101 and Section 11.0204. Exemption from building permit does not 
+exempt a development from requiring a floodplain development permit. 
+1. An application for a floodplain development permit shall be reviewed by the Manager under the Type 
+II procedure unless otherwise specified. 
+2. Activities listed in Section 11.0102(D), (E) and (F) shall be reviewed by the Manager under the Type I 
+procedure. 
+B. Where applicants are proposing development within the Floodplain Overlay District, they must comply 
+with the Development Standards found in Section 5.0120. 
+C. Where applicants are proposing development within the Floodway, they must comply with the 
+Development Standards found in Section 5.0121. 
+D. In flood prone areas where elevation data is not available either through the Flood Elevation Study or 
+FIRM, applications for building permits shall be reviewed to assure that proposed construction will be 
+reasonably safe from flooding. The test of reasonableness is a local judgement and includes use of 
+historical data, high water marks, photographs of past flooding, where available. 
+E. Applications for development in the Floodplain Overlay District shall include: 
+1. Pre- and post-development plans showing the grades, and all structures, utilities, paving, fencing, and 
+use areas. 
+2. Elevation in relation to mean sea level, of the lowest floor (including basement) of all structures. 
+3. Elevation in relation to mean sea level of floodproofing in any structure. 
+ 
+ 
+ 
+[5.0100]-3 
+City of Gresham Development Code  (06/26) 
+4. Certification by a registered professional engineer or architect that the floodproofing methods for any 
+nonresidential structure meet the floodproofing criteria in Section 5.0120(E)(1), 5.0120(F)(1) and 
+5.0120(G)(1). 
+5. Description of the extent to which a watercourse will be altered or relocated as a result of proposed 
+development. 
+6. For repair or improvement of an existing structure, a cost estimate or itemized estimate including the 
+materials and labor for qualifying work. 
+7. A copy of any documents submitted to the state and federal government regarding the development 
+(including, but not limited to, CLOMR, LOMR, LOMA and Joint Removal/Fill Permit applications). 
+PERMITTED USES 
+5.0110  PERMITTED LAND USES  
+Uses permitted in the Floodplain Overlay District shall be those listed as permitted in the underlying district 
+designated for the site. Within areas of special flood hazard which are also designated as Hillside and Geologic 
+Risk Overlay, Natural Resources Overlay or Open Space (OS) Overlay Districts, development shall be permitted 
+only in accordance with provisions of those special purpose districts. Developments must comply with the 
+applicable adopted stormwater master plan. In addition, any proposal for development within the Floodplain 
+Overlay District shall be accompanied by documentation prepared by a registered civil engineer demonstrating 
+to the satisfaction of the Manager that the development: 
+A. Will not result in an increase in floodplain area on other properties, 
+B. Will not reduce natural flood storage volumes, and 
+C. Will not result in an increase in erosive velocity of the stream that may cause channel scouring or reduced 
+slope stability downstream of the development. Stream velocity following development shall not exceed 
+findings and recommendations of the applicable adopted stormwater master plan. 
+DEVELOPMENT STANDARDS  
+5.0120  STANDARDS FOR DEVELOPMENT IN THE FLOODPLAIN OVERLAY 
+DISTRICT   
+In addition to standards applying to development within the underlying Plan Map district, the following 
+standards shall apply to development proposed within the Floodplain Overlay District: 
+A. Anchoring 
+1. All new construction and substantial improvements shall be anchored to prevent flotation, collapse, or 
+lateral movement of the structure.  
+2. All manufactured homes must likewise be anchored to prevent flotation, collapse, or lateral 
+movement, and shall be installed using methods and practices that minimize flood damage. Anchoring 
+methods may include, but are not limited to, use of over-the-top or frame ties to ground anchors. 
+ 
+[5.0100]-4 
+City of Gresham Development Code  (06/26) 
+B. Construction Materials and Methods 
+1. All new construction and substantial improvements shall be constructed with materials and utility 
+equipment resistant to flood damage. 
+2. All new construction and substantial improvements shall be constructed using methods and practices 
+that minimize flood damage. 
+3. Electrical, heating, ventilation, plumbing, and air-conditioning equipment and other service facilities 
+shall be designed and/or otherwise elevated or located so as to prevent water from entering or 
+accumulating within the components during conditions of flooding. 
+C. Utilities 
+1. All new and replacement water supply infrastructure shall be designed to minimize or eliminate 
+infiltration of flood waters into the system. 
+2. New and replacement wastewater infrastructure shall be designed to minimize or eliminate infiltration 
+of flood waters into the systems and discharge from the systems into flood waters. 
+3. Private onsite wastewater treatment systems shall be located to avoid impairment to them or 
+contamination from them during flooding. 
+D. Subdivision Proposals 
+1. All subdivision proposals shall be consistent with the need to minimize flood damage. 
+2. All subdivision proposals shall have public utilities and facilities such as sewer, gas, electrical, and 
+water systems located and constructed to minimize flood damage. 
+3. All subdivision proposals shall have adequate drainage provided to reduce exposure to flood damage. 
+4. Where base flood elevation data has not been provided or is not available from another authoritative 
+source, it shall be generated for subdivision proposals and other proposed developments which 
+contain at least 50 lots or 5 acres, whichever is less. 
+E. Residential Construction 
+1. New construction and substantial improvement of any residential structure shall have the lowest floor, 
+including basement, elevated to or above base flood elevation plus one foot. 
+2. Fully enclosed areas below the lowest floor that are subject to flooding are prohibited or shall be 
+designed to automatically equalize hydrostatic flood forces on exterior walls by allowing for the entry 
+and exit of floodwaters. Designs for meeting this requirement must either be certified by a registered 
+professional engineer or architect or must meet or exceed the following minimum criteria: 
+a. A minimum of two openings having a total net area of not less than one square inch for every 
+square foot of enclosed area subject to flooding shall be provided. 
+b. The bottom of all openings shall be no higher than one foot above grade. 
+c. Openings may be equipped with screens, louvers, or other coverings or devices provided that they 
+permit the automatic entry and exit of floodwaters. 
+3. Below grade crawl spaces are allowed subject to the current Oregon Residential Specialty Code Section 
+R324. 
+4. Development in the AH zone shall provide drainage paths around structures on slopes to guide 
+floodwaters around and away from proposed structures. 
+ 
+[5.0100]-5 
+City of Gresham Development Code  (06/26) 
+F. Non-Residential Construction 
+1. New construction and substantial improvement of any commercial, industrial, institutional or other 
+non-residential structure shall either have the lowest floor, including basement, elevated to the level 
+of the base flood elevation plus one foot; or together with attendant utility and sanitary facilities, shall: 
+a. Be floodproofed so that below the base flood level the structure is watertight with walls 
+substantially impermeable to the passage of water, 
+b. Have structural components capable of resisting hydrostatic and hydrodynamic loads and effects 
+of buoyancy, 
+c. Be certified by a registered professional engineer or architect to have design and methods of 
+construction which are in accordance with accepted standards of practice for meeting the intent of 
+provisions of this subsection. 
+2. Non-residential structures that are elevated, not flood-proofed, must meet the same standards for 
+space below the lowest floor as described in Section 5.0120(E)(2). 
+3. Applicants floodproofing non-residential buildings shall be notified that flood insurance premiums will 
+be based on rates that are one foot below the floodproofed level (e.g., a building constructed to the 
+base flood level will be rated as one foot below that level). 
+4. Development in the AH zone shall provide drainage paths around structures on slopes to guide 
+floodwaters around and away from proposed structures. 
+G. Placement of Manufactured Dwellings 
+1. All manufactured dwellings to be placed or substantially improved within the Floodplain Overlay 
+District shall be elevated on a permanent foundation such that the bottom of the longitudinal chassis 
+frame beam is at or above BFE and be securely anchored to an adequately anchored foundation 
+system in accordance with the provisions of Section 5.0120(A)(2). 
+2. Manufactured dwellings supported on solid foundation walls shall be constructed with flood openings 
+that comply with Section 5.0120(E)(2). 
+3. Electrical crossover connections shall be a minimum of 12 inches above base flood elevation. 
+H. Recreational Vehicles. Recreational vehicles placed on sites are required to either: 
+1. Be on the site for fewer than 180 consecutive days; 
+2. Be fully licensed and ready for highway use, on its wheels or jacking system, is attached to the site only 
+by quick disconnect type utilities and security devices, and has no permanently attached additions; or 
+3. Meet the elevation requirements of Section 5.0120(G) and the anchoring requirements of Section 
+5.0120(A)(2). 
+5.0121  FLOODWAYS  
+Located within the Floodplain Overlay District (areas of special flood hazard) are areas designated as 
+floodways. The floodway is an extremely hazardous area due to the velocity of flood waters which carry debris, 
+potential projectiles, and erosion potential. Due to this fact, encroachments, including fill, new construction, 
+substantial improvements, retaining walls, and other development shall be prohibited. 
+ 
+ 
+[5.0100]-6 
+City of Gresham Development Code  (06/26) 
+A. New installations of manufactured dwellings in the floodway are prohibited (2002 Oregon Manufactured 
+Dwelling and Park Specialty Code). Manufactured dwellings may only be located in floodways according to 
+one of the following conditions: 
+1. If the manufactured dwelling already exists in the floodway, the placement was permitted at the time 
+of the original installation, and the continued use is not a threat to life, health, property, or the general 
+welfare of the public, or 
+2. A new manufactured dwelling is replacing an existing manufactured dwelling whose original placement 
+was permitted at the time of installation and the replacement home will not be a threat to life, health, 
+property, or the general welfare of the public and it meets the following criteria: 
+a. As required by 44 CFR Chapter 1, Subpart 60.3(d)(3), it must be demonstrated through hydrologic 
+and hydraulic analyses performed in accordance with standard engineering practices that the 
+manufactured dwelling and any accessory buildings, accessory structures, or any property 
+improvements (encroachments) will not result in any increase in flood levels during the occurrence 
+of the base flood discharge, 
+b. The replacement manufactured dwelling and any accessory buildings or accessory structures 
+(encroachments) shall have the finished floor elevated a minimum of 18 inches (46 cm) above the 
+BFE as identified on the Flood Insurance Rate Map, 
+c. The replacement manufactured dwelling is placed and secured to a foundation support system 
+designed by an Oregon professional engineer or architect and approved by the authority having 
+jurisdiction, 
+d. The replacement manufactured dwelling, its foundation supports, and any accessory buildings, 
+accessory structures, or property improvements (encroachments) do not displace water to the 
+degree that it causes a rise in the water level or diverts water in a manner that causes erosion or 
+damage to other properties, 
+e. The location of a replacement manufactured dwelling is allowed by the local planning 
+department’s ordinances, and 
+f. Any other requirements deemed necessary by the authority having jurisdiction. 
+B. Exceptions to this prohibition are fences (except walls or footings for a fence that change the shape of the 
+floodway), public bridges, outfall structures, and fire hydrants which are allowed subject to standards 
+established in the City Public Works Standards. 
+As required by 44 CFR Chapter 1, Subpart 60.3(d)(3), it must be demonstrated through hydrologic and 
+hydraulic analyses performed in accordance with standard engineering practices that the fences and public 
+bridges, and outfall structures will not result in any increase in flood levels during the occurrence of the 
+base flood discharge. 
+5.012 2 COORDINATION WITH OTHER REGULATORY AGENCIES   
+Prior to issuance of a development permit for development within the Floodplain Overlay District, an applicant 
+shall provide evidence to the Manager that all necessary permits have been obtained from other federal, state, 
+and local government agencies involved in regulating development activity within and adjacent to areas of 
+special flood hazard. 
+ 
+[5.0100]-7 
+City of Gresham Development Code  (06/26) 
+5.0123  INFORMATION TO BE OBTAINED AND MAINTAINED  
+A. Where base flood elevation data is provided as required in Section 5.0101, the Manager shall obtain and 
+record the actual elevation (in relation to mean sea level) of the lowest floor (including basement) of all 
+new or substantially improved structures, for which a development permit has been issued in the 
+Floodplain Overlay District. 
+B. For all new or substantially improved floodproofed structures, the Manager shall: 
+1. Verify and record the actual elevation (in relation to mean sea level), and 
+2. Maintain the certifications of registered engineers and architects required in conformance with these 
+provisions. 
+C. All records pertaining to development permits issued within the Floodplain Overlay District will be 
+maintained for public inspection. 
+D. The applicant shall provide new technical data: 
+1. When an applicant has obtained a Conditional Letter of Map Revision (CLOMR) from FEMA, or when 
+development altered a watercourse, modified floodplain boundaries, or modified Base Flood 
+Elevations, applicant shall provide evidence that they have notified FEMA within six months of project 
+completion. This notification shall be provided as a Letter of Map Revision (LOMR). 
+2. The applicant shall be responsible for preparing technical data to support the LOMR application and 
+paying any processing or application fees to FEMA. 
+3. The Manager shall be under no obligation to sign the Community Acknowledgement Form, which is 
+part of the CLOMR/LOMR application, until the applicant demonstrates that the project will or has met 
+the requirements of this code and all applicable State and Federal laws. 
+4. Notify the Federal Insurance Administrator (in writing) of any acquisition by means of annexation, 
+incorporation or otherwise, of additional areas of jurisdiction. 
+5.0124  ALTERATION OF WATERCOURSES   
+A. When development activity is proposed which would result in relocation or alteration of a watercourse 
+lying within a Floodplain Overlay District, the Manager shall cause notice of the proposed development to 
+be mailed to those jurisdictions through which the watercourse passes, to the Division of State Lands, and 
+to the State Department of Land Conservation and Development. 
+B. The Manager shall approve issuance of a development permit for proposed relocation or alteration of a 
+watercourse only when the following criteria are satisfied: 
+1. Satisfactory documentation, prepared by a registered professional engineer, shall be submitted 
+demonstrating that such development will not diminish the flood carrying capacity of the watercourse 
+within the altered or relocated portion of said watercourse. 
+2. A plan providing for on-going maintenance of the watercourse and adjacent land areas adequate to 
+maintain the flood carrying capacity of the watercourse shall be prepared and submitted. 
+ 
+ 
+ 
+[5.0100]-8 
+City of Gresham Development Code  (06/26) 
+5.0125  FLOOD MANAGEMENT PERFORMANCE STANDARDS  
+A. All development, excavation and fill in the Floodplain Overlay District shall conform to the following 
+performance standards. 
+1. Development, excavation and fill shall be performed in a manner to maintain or increase flood storage 
+and conveyance capacity and not increase design flood elevations. 
+2. All fill placed at or below the design flood elevation in the Floodplain Overlay District shall be balanced 
+with at least an equal amount of soil material removal. 
+3. Excavation shall not be counted as compensating for fill if such areas will be filled with water in non-
+storm winter conditions. 
+4. Temporary fills permitted during construction shall be removed. 
+5. Uncontained areas of hazardous materials as defined by DEQ in the Floodplain Overlay District shall be 
+prohibited. 
+6. Development, excavation and fill shall be performed in a manner to maintain or increase slope stability 
+and maintain or decrease erosive velocities. 
+B. The following uses and activities are not subject to the requirements of Subsection (A) above: 
+1. Excavation and fill necessary to plant new trees or vegetation. 
+2. Excavation and fill required for the construction of public detention facilities or structures, and other 
+facilities specifically designed to reduce or mitigate flood impacts. Such facilities shall not be used to 
+create new buildable lands. 
+3. New culverts, stream crossings, and transportation projects may be permitted only if designed as 
+balanced cut and fill projects or designed to not raise the design flood elevation. Such projects shall be 
+designed to minimize the area of fill in the Floodplain Overlay District and to minimize erosive 
+velocities. Stream crossing shall be as close to perpendicular to the stream as practicable. Bridges shall 
+be used instead of culverts wherever practicable. 
+5.0126  STANDARDS FOR SHALLOW FLOODING AREAS (AO ZONES)  
+Shallow flooding areas appear on the Flood Insurance Rate Maps (FIRM) as AO zones with depth designations. 
+The base flood depths in these zones range from 1 to 3 feet above ground where a clearly defined channel 
+does not exist, or where the path of flooding is unpredictable and where velocity flow may be evident. Such 
+flooding is usually characterized as sheet flow. In these areas, the following provisions apply: 
+A. New construction and substantial improvements of residential structures and manufactured homes within 
+AO zones shall have the lowest floor (including basement) elevated above the highest grade adjacent to 
+the building, a minimum of one foot above the depth number specified on the FIRM (at least two feet if no 
+depth number is specified). 
+B. New construction and substantial improvements of nonresidential structures within AO zones shall either: 
+1. Have the lowest floor (including basement) elevated above the highest adjacent grade of the building 
+site, one foot or more above the depth number specified on the FIRM (at least two feet if no depth 
+number is specified), or 
+ 
+ 
+[5.0100]-9 
+City of Gresham Development Code  (06/26) 
+2. Together with attendant utility and sanitary facilities, be completely flood proofed to or above that 
+level so that any space below that level is watertight with walls substantially impermeable to the 
+passage of water and with structural components having the capability of resisting hydrostatic and 
+hydrodynamic loads and effects of buoyancy. If this method is used, compliance shall be certified by a 
+registered professional engineer or architect as in Section 5.2-2(3). 
+C. Require adequate drainage paths around structures on slopes to guide floodwaters around and away from 
+proposed structures. 
+D. Recreational vehicles placed on sites within AO Zones on the community’s FIRM either: 
+1. Be on the site for fewer than 180 consecutive days, be fully licensed and ready for highway use, on its 
+wheels or jacking system, is attached to the site only by quick disconnect type utilities and security 
+devices, and has no permanently attached additions, or 
+2. Meet the requirements of above subsections A, B, and C and the elevation and anchoring 
+requirements for manufactured homes contained in Sections 5.0120(G) and 5.0120(A)(2). 

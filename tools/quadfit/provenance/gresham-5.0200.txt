@@ -1,0 +1,826 @@
+ 
+[5.0200]-1 
+City of Gresham Development Code  (06/26) 
+SECTION 5.0200 
+HILLSIDE AND GEOLOGIC RISK OVERLAY (HGRO) 
+General 
+5.0201 Purpose 
+5.0202 Coordination with Other Regulations 
+5.0203 Applicability 
+5.0204 Prohibitions 
+5.0205 Exempt Uses and Activities 
+5.0206 Permit Required 
+5.0207 HGRO Application Requirements  
+Standards 
+5.0208 Tree and Vegetation Standards within the Hillside and Geologic Risk Overlay (HGRO) 
+5.0209 General Standards for Development within the Hillside and Geologic Risk Overlay (HGRO) 
+5.0210 Standards for Specific Development Types within the Hillside and Geologic Risk Overlay (HGRO) 
+5.0211 Additional Development Standards for Highly Sloped Subareas (HSS) 
+Process 
+5.0212 Alternative Review 
+5.0213 Modification of HGRO Standards 
+5.0214 HGRO Mapping Protocols 
+5.0215 HGRO Map Administration and Correction 
+5.0216 Violations 
+GENERAL  
+5.0201  PURPOSE    
+The purpose of the Hillside and Geologic Risk Overlay (HGRO) is to ensure that development in or adjacent to 
+hillside areas occurs in such a manner as to: 
+A. Minimize the potential for earth movement and resultant hazards to life and property, 
+B. Minimize soil erosion and siltation, 
+C. Protect water quality, 
+D. Minimize vegetation removal in sloped areas, 
+E. Protect the aesthetic and scenic qualities of hillside areas, 
+F. Assure the compatibility of a new development with surrounding areas, 
+G. Encourage site and building design which is consistent with the natural topography; and 
+ 
+[5.0200]-2 
+City of Gresham Development Code  (06/26) 
+H. Minimize the cost of public infrastructure provision. 
+I. Provide for adequate access for emergency services. 
+5.0202  COORDINATION WITH OTHER REGULATIONS   
+A. Allowed Uses. Uses permitted in the Hillside and Geologic Risk Overlay shall be those listed as permitted in 
+the underlying district designated for the site unless conflicting standards apply. 
+B. Conflicting Standards. The requirements of this Hillside and Geologic Risk Overlay (HGRO) apply in addition 
+to other applicable local, state, regional, and federal development requirements. Conflicts between 
+standards for allowed and conflicting uses shall be resolved as follows: 
+1. Where there is a conflict between the standards of the underlying district or the Planned Development 
+standards and the standards of this HGRO, the standards of the HGRO shall apply. 
+2. Where there is a conflict between the standards of the HGRO and other overlay districts the most 
+restrictive will apply. 
+3. Street Trees, Parking Lot Trees, Buffer Trees and all trees within approved Permanent Disturbance 
+Areas are subject to the tree removal and mitigation requirements of Section 9.1000. All other trees 
+within the HGRO are subject to the tree removal, protection and mitigation requirements of the 
+HGRO. 
+4. In all other situations, the most stringent of the conflicting standards apply. 
+C. Gresham Environmental Technical Guidance Manual. Clarifications, commentary and examples are given in 
+the Gresham Environmental Technical Guidance Manual. Content of the Guidance Manual is to be used in 
+tandem with development code and does not substitute for amend or supersede development code. 
+D. For the purposes of Section 5.0200 “land division” does not include middle housing land divisions pursuant 
+to Section 6.0500 and “lot” does not include middle housing lots created by middle housing land divisions. 
+5.0203  APPLICABILITY   
+A. Unless exempt pursuant to Section 5.0205 the regulations of this chapter apply when the following 
+regulated activities are proposed within the boundaries of the Hillside and Geologic Risk Overlay (HGRO) 
+on the City’s Community Development Plan Map. 
+1. Development or redevelopment. 
+2. All land divisions or property line adjustments. 
+3. Removing, cutting, mowing, clearing, burning, or application or herbicides to vegetation. 
+4. Changing topography, grading, excavating, or filling. 
+5. Resource Enhancement. 
+6. Construction or expansions of right-of-way improvements. 
+7. Placement or stockpiling of woody debris. 
+B. Development within an HGRO in accordance with the provisions of this Overlay shall not result in a change 
+of the HGRO status of such developed areas on a property. In the case of a later development request 
+seeking to develop within previously undisturbed HGRO on a property where a prior development request 
+was subject to the provisions of this Overlay, the calculation of the maximum disturbance area allowed on 
+ 
+[5.0200]-3 
+City of Gresham Development Code  (06/26) 
+the property shall be based on the location of the HGRO (or predecessor) at the time the previous 
+development was approved. 
+C. For the purposes of this section “Lots created prior to January 15, 2021” means lots created through an 
+application for tentative land division made prior to January 15, 2021 which did not expire Development 
+Standards 
+5.0204  PROHIBITIONS   
+The following prohibitions apply within the HGRO. These prohibitions do not apply to the continuation, in the 
+same manner, of activities which were lawfully begun before the effective date of this ordinance, activities 
+approved pursuant to the provisions of this Overlay under Section 5.0208-5.0213, or activities which are 
+exempt in accordance with Section 5.0205. An activity continuing in the same manner means that there is no 
+expansion in the scope of that activity within the HGRO. 
+A. Stockpiling of woody debris is prohibited as follows: 
+1. On or within 30 feet of a mapped landslide deposit or associated head and flank scarps (per current 
+Department of Geology and Mineral Industries’ SLIDO database), 
+2. Within 30 feet of a stream, as measured in horizontal feet from stream centerline, or 
+3. Within the Highly Sloped Subarea (HSS). 
+B. Any new gardens, lawns, structures, or development other than those allowed outright (exempted) or that 
+is part of a regulated use that is approved by an HGRO permit. 
+C. The dumping of materials of any kind. 
+D. Grading, placement of fill, or the removal of native vegetation other than those allowed outright 
+(exempted) or that is part of a regulated use that is approved by an HGRO permit. 
+5.0205  EXEMPT USES AND ACTIVITIES   
+An exemption from obtaining a permit under this section does not exempt development from obtaining  
+permits required by other sections of the code. 
+A. Exemptions for HGRO Areas including HSS. Uses and activities meeting one or more of the following 
+descriptions are exempt from the permit requirements of the HGRO standards: 
+1. A building permit for a phased development project for which the Applicant has previously met the 
+application requirements, as long as the area of new construction was identified on the original permit 
+and no new portion of the HGRO will be disturbed. 
+2. Operation, maintenance or repair of existing improvements. 
+3. Alteration or replacement of existing structures that do not alter building footprint. 
+4. The trenchless subsurface installation of utilities (e.g., via boring, jacking, or microtunneling), provided 
+there is no vegetation removal beyond the limits of this section, no earth movement, and no impacts 
+to trees (e.g., damage to the root zone). 
+5. The planting of trees as designated and identified on the Gresham Native Plant List. 
+6. The planting, removal, or maintenance of Street, Parking Lot, or Buffer Trees as defined in Section 
+9.1014. 
+ 
+[5.0200]-4 
+City of Gresham Development Code  (06/26) 
+7. The planting and maintenance of landscaped areas within an approved permanent disturbance area, 
+including tree removal. 
+8. Pruning and maintenance of trees which adheres to ANSI pruning standards. 
+9. Restoration work including stand management-related removal of no more than three trees when 
+conducted as part of an annual restoration plan approved by the City. 
+10. Fencing, excluding construction of walls. 
+B. Additional Exemptions for HGRO Areas other than Highly Sloped Subarea (HSS). Except within the HSS, the 
+following uses and activities are exempt from the permit requirements of the HGRO standards provided 
+that in no case shall the activity result in the removal of any non-required trees over 6 inches DBH (see 
+definition of “Required Tree” in Section 3.0103) outside of a permanent disturbance area or leave more 
+than 500 square feet of ground exposed (devoid of stabilizing vegetation) between October 1 and May 1. 
+1. One time excavation or filling of land (including temporary stockpiles) not exceeding 10 cubic yards per 
+lot. 
+2. One time installation of impervious surface not exceeding 1,000 square feet per site. 
+3. Construction of retaining walls not exceeding 4 feet in height. 
+4. Construction of ponds and in ground swimming pools not exceeding 1.5 cubic yards. 
+5. Any development that does not require a building permit except for development activities which 
+exceed one or more of the thresholds in 1 through 4, above. 
+6. Outdoor bike and pedestrian recreation facilities for public use, limited to accessways, trails, picnic 
+areas, or interpretive and educational displays and overlooks that include benches and outdoor 
+furniture. 
+5.0206  PERMIT REQUIRED   
+Unless exempt pursuant to Section 5.0205, a Hillside and Geologic Risk Overlay (HGRO) permit is required for 
+all regulated activities within the HGRO as specified in Table 5.0206-1. 
+Table 5.0206-1: Permit Procedure and Applicable Standards for Development Within an HGRO  
+PROPOSED ACTIVITY OR REQUEST PERMIT PROCEDURE APPLICABLE STANDARDS 
+Hillside and Geologic Risk Overlay permits review 
+concurrent with land use application except as 
+specified below 
+Same as concurrent 
+land use application 
+Varies 
+Programmatic Permit Type II Section 5.0208(D) 
+Alternate Review Type II Section 5.0212 
+Modification of HGRO Standards Type II/III Section 5.0213 
+Verification of a Disturbance Area boundary on a 
+developed lot with no concurrent land use application 
+Type I Section 5.0207(E) 
+All other Hillside and Geologic Risk Overlay permits 
+with no concurrent land use application 
+Type I Varies 
+ 
+ 
+ 
+[5.0200]-5 
+City of Gresham Development Code  (06/26) 
+5.0207  HGRO APPLICATION REQUIREMENTS   
+Applications must include the items required for the applicable procedure type in accordance with Article 11, 
+other applicable sections of the code, Gresham Environmental Technical Guidance Manual, and the HGRO 
+application submittal requirements as specified in Table 5.0207-1. Applications for Alternative Review must 
+also include the submittal requirements specified in Section 5.0212. 
+Table 5.0207-1: HGRO Submittal Requirements  
+PROPOSED DEVELOPMENT ACTIVITY SUBMITTAL REQUIREMENTS IN 5.0207 
+Tree removal (non-exempt) (other than tree 
+removal pursuant to a programmatic permit 
+submitted in accordance with Section 
+5.0208(D)) 
+• Tree Removal/Protection/Revegetation Plan and 
+Documentation (Subsection (A)) 
+Tree removal pursuant to a programmatic 
+permit in accordance with Section 5.0208(D) 
+• Tree Removal/Protection/Revegetation Plan and 
+Documentation (Subsection (A)) 
+• Certification and Documentation (Subsection (C)) if 
+storage of woody debris exceeds dimensions 
+• Additional Plans and Narrative Subsection (D) 
+All other non-exempt development activities 
+(e.g., design review, special use review, 
+building permits, land divisions, etc.) 
+• Tree Removal/Protection/Revegetation Plan and 
+Documentation (Subsection (A)) 
+• Construction Management and Preliminary Grading Plan 
+(Subsection (B)) 
+• Certification and Documentation (Subsection (C)) 
+• Additional Plans and Narrative (Subsection (D)) 
+Verification or establishment of a 
+disturbance area boundary on a developed 
+lot with no concurrent land use application 
+• Disturbance Area Boundary Verification (Subsection (E)) 
+ 
+A. Tree Removal, Protection, and Revegetation Plan. A Tree Removal, Protection, and Revegetation Plan that 
+includes, at a minimum, the following: 
+1. Evidence regarding the credentials of the qualified professional (e.g., certified arborist, geotechnical 
+professional, or landscape architect) who made assessments or prepared the plan. 
+2. If Applicant is requesting tree removal on the basis that the tree(s) is on the City of Gresham Invasive 
+Plant List, the identity of the species including in-focus, high resolution photographs supporting 
+identification of species such as habitat, trunk, crown, flowers, fruits, branches, twigs, and leaves. 
+3. If Applicant is requesting tree removal on the basis that the tree(s) meets the definition of dangerous 
+tree, an International Society of Arboriculture (ISA) basic tree risk assessment prepared by a qualified 
+arborist is required. 
+4. If tree replacement is required but cannot be achieved onsite (per Section 5.0208(C)(6)), a statement 
+that the Applicant proposes to make a payment-in-lieu and documentation supporting this request. 
+5. A tree removal / revegetation map identifying the following: 
+ 
+ 
+[5.0200]-6 
+City of Gresham Development Code  (06/26) 
+a. The boundary of the entire project site and the boundary of the HGRO (and HSS, if applicable) on 
+the site, 
+b. The location on the site where tree removal is proposed, 
+c. The species, size, and location of individual trees over 6 inches DBH that are proposed for removal, 
+d. All trees 6 inches DBH or greater (numbered) within 50 feet of trees to be removed, 
+e. The methods used to protect all other trees over 6 inches DBH on the site, and 
+f. The species, size and location of mitigation trees (if proposed). 
+B. Construction Management and Preliminary Grading Plan. In addition to any other plan required by Section 
+9.0500, the application shall include a construction management and preliminary grading plan that 
+includes, at a minimum, the following: 
+1. Location of site access and egress that construction equipment will use. 
+2. Equipment and material staging and stockpile areas. 
+3. Erosion and sediment control measures in accordance with the City of Gresham “Erosion Prevention 
+and Sediment Control Manual” appendix of the Gresham Stormwater Management Manual. 
+4. Critical Root Zone of all trees to be preserved within the Disturbance Area and within 50 feet of the 
+Disturbance Area (measured in horizontal distance from the edge of Disturbance Area) and location 
+and type of tree protection (per Gresham Environmental Technical Guidance Manual). 
+5. Location and square footage of all disturbance areas to be cut, filled or cleared, including but not 
+limited to roads, sidewalks, utilities, yards and landscaping, building envelopes or pads (buildable 
+areas), driveways, and other accessways. The total square footage shall also be summed and 
+expressed as a percentage of the total area of the parcel. Grading area limitations are described in 
+Sections 5.0209, 5.0210 and 5.0211. 
+C. Certification. A certification form (provided by the City) must be prepared or reviewed and stamped by a 
+Certified Engineering Geologist or Geotechnical Engineer and submitted along with any documentation 
+and plans relied on in issuing the certification. The purpose of the Certification is to ensure that 
+development in or adjacent to hillside areas is evaluated by a Certified Engineering Geologist or 
+Geotechnical Engineer to ensure it is designed in a manner that provides for public health, safety, and 
+welfare. 
+1. Where certification is required for a permit, a permit shall only be issued if a Certified Engineering 
+Geologist or Geotechnical Engineer affirms and certifies the following based on their professional 
+opinion. A permit shall not be granted if a Certified Engineering Geologist or Geotechnical Engineer 
+does not affirm and certify the following based on their professional opinion: 
+a. Potential landslide hazards identified for this site and nearby and the DOGAMI Interpretive Map 
+Series 57 (IMS-57) Landslide hazard and risk study of central and western Multnomah County, 
+Oregon, by William J. Burns, Nancy C. Calhoun, Jon J. Franczyk, Kassandra O. Lindsey, and Lina Ma, 
+2018 (Report and Data) have been reviewed; 
+b. The proposed development activity was reviewed according to industry standards for geologic 
+engineering in Oregon; 
+ 
+ 
+ 
+[5.0200]-7 
+City of Gresham Development Code  (06/26) 
+c. Either: 
+i. That the proposed development activity will not be negatively impacted by, or cause negative 
+impacts to onsite and offsite engineering geological conditions, processes, and hazards, 
+including but not limited to, existing or post development soil stability or any of the following 
+site features: springs or seeps, depth of soil to bedrock, variations in soil types, or a 
+combination of these conditions; or 
+ii. If proposed development activity will be negatively impacted by or cause negative impacts to 
+onsite and offsite engineering geological conditions, processes, and hazards, including but not 
+limited to, any of the features listed in Subsection (C)(1)(c)(i) above, the plans incorporated 
+the methods for safely mitigating the impact(s).  
+d. Where applicable, attest to the following certification requirements stated in Subsections 
+5.0208(D), 5.0209(A), 5.0209(D), 5.0211(B), 5.0212(B), or 5.0212(C). 
+2. Certification that is submitted pursuant to Subsection (1) shall include the Applicant’s statement that 
+they will develop the site in accordance with the Certified Engineering Geologist’s or Geotechnical 
+Engineer’s certification and that they will schedule and perform the recommended geotechnical 
+engineer or certified engineering geologist site inspections. 
+3. In determining if the Certification satisfies the permit requirements, the City shall review the 
+Certification only to determine whether a Certified Engineering Geologist or Geotechnical Engineer has 
+affirmed and certified that the proposal meets the above listed requirements. The City shall not 
+substitute its judgement or discretion for the professional judgement of the Certified Engineering 
+Geologist or Geotechnical Engineer. 
+D. Additional Plans and Narrative. Additional plans and narrative necessary as determined by the City to 
+demonstrate compliance with the applicable standards of the HGRO. 
+E. Disturbance Area Boundary Verification. Owners of individual legal lots created and developed with a 
+single detached dwelling or middle housing prior to January 15, 2021 who wish to establish or verify an 
+approved permanent disturbance area boundary on that lot may submit a Disturbance Area Boundary 
+Verification request form (provided by the City). The form shall be accompanied by aerial photography or 
+other evidence that predates January 15, 2021 which identifies the location of all areas meeting the 
+definition of permanent disturbance area. The date of the evidence must be verifiable by the City. 
+STANDARDS  
+5.020 8 TREE AND VEGETATION STANDARDS WITHIN THE HILLSIDE AND 
+GEOLOGIC RISK OVERLAY (HGRO)    
+Trees and vegetation provide protection against soil erosion and earth movement as well as enhance the 
+aesthetic value of those hillside areas that may be highly visible to the surrounding community. 
+A. Trees and Vegetation Protection. Except as provided in Subsections (1) through (4) below, land within the 
+HGRO that is outside of a previously approved permanent disturbance area shall be retained in a natural 
+state. Lands to be retained in a natural state shall be protected from damage during construction. 
+Protection methods shall be in accordance with the Gresham Environmental Technical Guidance Manual. 
+ 
+[5.0200]-8 
+City of Gresham Development Code  (06/26) 
+All trees within approved Permanent Disturbance Areas are subject to the tree removal and mitigation 
+requirements of Section 9.1000. The following standards apply outside of an approved Permanent 
+Disturbance Area: 
+1. A tree over 6 inches DBH can be removed in the following circumstances if mitigation is provided in 
+accordance with Subsection (B): 
+a. The tree is identified as a species on Gresham Invasive Plant List by an arborist, professional 
+wetland scientist, or landscape architect. Applications must include in-focus, high resolution 
+photographs supporting identification to species such as habitat, trunk, crown, flowers, fruits, 
+branches, twigs, and leaves, 
+b. The tree is found to meet the definition of dangerous tree by a qualified arborist who has 
+completed a basic tree risk assessment. The risk assessment shall be included with application. 
+Conversion of a dangerous tree to a snag which involves the removal of part of the tree and 
+retention as a habitat tree may be allowed with the dangerous tree permit, or 
+c. The tree is within an approved temporary disturbance area and is less than 24 inches DBH. 
+2. Trees 6 inches DBH or less and other vegetation may be removed provided that the area is stabilized 
+with vegetation as follows: 
+a. No more than 500 square feet of ground shall be left exposed between October 1 and May 1 each 
+year, and 
+b. Disturbed soils shall be stabilized with new native vegetative cover prior to October 1 in any given 
+year. 
+3. Trees shall not be removed before public facility construction plans are approved, building permits are 
+issued, or relevant development permits are issued. When removing a tree, other trees on the site 
+shall be protected from damage during construction, and any disturbed soils shall be stabilized with 
+new vegetative cover by seeding. Protection methods shall be in accordance with the Gresham 
+Environmental Technical Guidance Manual. 
+4. All required revegetation shall be installed per Section 5.0208(C). 
+B. Tree Replacement Quantity. The number of replacement trees required for tree removal shall be as 
+specified below. Replacement trees shall be planted in accordance with Subsection (C). 
+1. Dangerous Tree Removal, including conversion to Habitat Tree (snag). For each dangerous tree 
+removed one replacement tree shall be planted. 
+2. Other tree replacement. Each tree removed for reasons other than dangerous tree replacement is 
+subject to the replacement rates in Table 5.0208-1. 
+Table 5.0208-1: Tree Replacement  
+DIAMETER OF REMOVED TREE 
+ (MEASURED 4.5 FEET ABOVE GROUND) 
+NUMBER OF REPLACEMENT TREES 
+REQUIRED 
+6 in. up to 24 in. DBH 2 trees 
+Above 24 in. up to 36 in. DBH 3 trees 
+Above 36 in. DBH 6 trees 
+ 
+ 
+ 
+[5.0200]-9 
+City of Gresham Development Code  (06/26) 
+C. Replacement Trees and Vegetation 
+1. Location. Replacement trees shall be located as follows: 
+a. Replacement of trees removed from the Highly Sloped Subarea (HSS) shall be located within the 
+HSS. 
+b. Replacement of trees removed from the HGRO outside the HSS shall be located within the HGRO 
+outside of the Permanent Disturbance Area. 
+2. Species. Replacement trees and vegetation shall be as specified in the Gresham Environmental 
+Technical Guidance Manual. 
+3. Size. Replacement Trees shall be one gallon, bareroot, plugs, or stakes as specified in the Gresham 
+Environmental Technical Guidance Manual or at the discretion of the Applicant, as specified by an 
+arborist. 
+4. Timing. Vegetation and trees required by Subsections (A) and (B) shall be installed prior to acceptance 
+of public facilities in the case of land division or approval of a final building inspection. Within the 
+temporary disturbance area ground cover shall be planted before the next wet-weather period and 
+trees shall be planted before the end of next wet-weather period (October 15 to March 15) or as 
+otherwise specified in the permit. In the case of dangerous tree removal replacement trees shall be 
+planted during the wet weather season following the removal. 
+5. Payment-in-lieu. The cost of payment-in-lieu of on-site tree replacement shall be determined by the 
+City Council based upon the area of canopy loss for the removed trees, less than any canopy gain from 
+the new plantings that were installed on site. Payment-in-lieu of replanting is only allowed if the City 
+determines: 
+a. There is insufficient area on the lot to meet the standard tree replacement standards in Section 
+5.0208(B), or 
+b. Tree replacement or management provided within public open space, public right-of-way or a 
+nearby Resource Area will be of greater benefit to area slope stability. 
+D. Programmatic Permit. Programmatic Permits may only be obtained by Public Agencies and Utilities with a 
+Gresham franchise license to allow for routine public facility or utility operation, repair and replacement, 
+and/or on-going maintenance or enhancement programs. The purpose of a Programmatic Permit is to 
+eliminate the need for individual tree removal permits for ongoing activities within the HGRO. 
+Programmatic permits do not cover tree protection, removal, planting, or mitigation associated with a 
+development permit. 
+1. Time Limits. The Manager may approve a Programmatic Permit for a period of up to two years. An 
+annual report from the Applicant on activity conducted under the permit is required to be submitted 
+to the Manager by June 30 each year. Failure to submit the annual report will result in  
+cancellation/suspension of the Programmatic Permit. 
+2. Work Standards. All work conducted under a programmatic permit must be conducted in accordance 
+with proper arboricultural practices as detailed in the most recent version of ANSI A300 standards. 
+3. Review Factors. The Manager may approve a Programmatic Permit for work in the HGRO and HSS 
+upon finding that the following review factors are met or will be met with conditions, according to the 
+Gresham Environmental Technical Guidance Manual: 
+ 
+ 
+[5.0200]-10 
+City of Gresham Development Code  (06/26) 
+a. Biodiversity: The activities will result in the same or better species diversity within each project 
+area treated under the programmatic permit. 
+b. Erosion Control: Activities will be planned to prevent exposed soil areas of greater than 500 square 
+feet during the wet weather window of October 1 to May 1. 
+c. Mitigation of Impacts: The activities will protect or improve project area conditions as they relate 
+to water quality, critical habitat protection, and forest health. 
+d. Risk reduction: 
+i. Ignition fuel reduction at the private-public property interface shall occur before any 
+additional coarse woody debris (CWD) is placed as part of stand management activities. 
+ii. CWD shall be placed in a manner not likely to increase wildfire, slope movement, or public 
+safety risks. 
+iii. Deciduous vegetation will be preferred for retention in defined firebreak areas. 
+iv. Coniferous vegetation will not be planted in defined firebreak areas. 
+v. Suspended branch material is addressed as part of site activities. 
+vi. Allowance for amount and location limitations for cut or chipped CWD are observed. 
+vii. Snags or habitat tree retention is incorporated into project areas where retention of such 
+features poses no risk to structures or active use areas. 
+viii. Within areas mapped as past landslides according to DOGAMI IMS-57, or mapped as HSS, a 
+Certified Engineering Geologist or Geotechnical Engineer must certify according to Section 
+5.0207(C) that vegetation removal, with the exception of dangerous tree removal, or 
+deposition of CWD will not increase geologic risk or otherwise cause negative impacts to 
+onsite and offsite geologic conditions or processes. 
+4. Application Requirements. The application requirements in Section 5.0207 do not apply. In addition to 
+the requirements for a Type II application, an application for a programmatic permit shall include: 
+a. A narrative description of proposed activities and locations. 
+b. A map of the areas in which work will occur, including generalized locations of each type of work. 
+c. Sufficient documentation to describe compliance with approval factors above. 
+5. Permit Specifications. Approved permits issued by the City shall include the following specifications. 
+The Manager may modify these specifications during the permit period in order to respond to public 
+safety concerns, changes in regulations, or previously unforeseen issues, provided the Applicant is 
+notified in writing and provided an opportunity to appeal the change: 
+a. Duration of permit. 
+b. Geographic area covered by the permit. 
+c. Permitted activities and any restrictions on the method, number, type, location or timing of 
+activities. 
+d. Procedures and thresholds for informing neighboring residents, businesses and the City of 
+upcoming permitted activities. 
+e. Monitoring, performance tracking and reporting requirements. The Manager may prescribe rules 
+or procedures that specify the manner in which such tracking and reporting occur. 
+ 
+[5.0200]-11 
+City of Gresham Development Code  (06/26) 
+6. Revocation. The Manager may revoke a Programmatic Permit upon finding the Applicant is not 
+adhering to the limitations imposed or is acting beyond the activities permitted by the Programmatic 
+Permit. Noncompliance with the Programmatic Permit may also be cause for any other enforcement 
+action as stated in Section 5.0216. 
+5.0209  GENERAL STANDARDS FOR DEVELOPMENT WITHIN THE HILLSIDE AND 
+GEOLOGIC RISK OVERLAY (HGRO)   
+In addition to other applicable standards in the code, the standards in this section apply to all regulated 
+development within the HGRO. Development within the HGRO is also subject to the applicable standards for 
+specific development types in Section 5.0210. In addition, development within the HSS is subject to the 
+standards in Section 5.0211: 
+A. Grading, Retaining Wall Design, Footings, Foundations, Changes to Site Drainage, Ponds, Pools, and Erosion 
+Control Plans. All grading, retaining wall design, footings, foundations, changes to site drainage, ponds, 
+pools, and erosion control plans for development within the HGRO shall be shown on site plan(s) and be 
+designed by a licensed design professional and must be certified according to Section 5.0207(C) to be in 
+accordance with the recommendations and guidelines provided by a Certified Engineering Geologist or 
+Geotechnical Engineer. 
+B. Clearing, Cuts, Grading, or Fills. Only land within an approved disturbance area shall be graded, cleared or 
+otherwise disturbed. All cuts, grading, or fills shall conform to the International Building Code and be 
+consistent with the provisions of this ordinance. Erosion control measures shall conform to the City of 
+Gresham Erosion Prevention and Sediment Control (EPSC) requirements as included in the City of 
+Gresham’s Stormwater Management Manual. Perimeter protection and protection of bare soils are 
+required for ground disturbance exceeding 500 square feet. 
+C. Trees and Vegetation. Tree and vegetation removal shall comply with the standards in Section 5.0208. 
+D. Surface and Groundwater Drainage. All facilities for the collection of stormwater runoff for any 
+development in the HGRO shall be required to be constructed on the site and in accordance with Section 
+9.0500 and the following requirements: 
+1. Stormwater systems which infiltrate shall not be utilized within the HGRO except as provided in 
+Subsection 2, below. 
+2. A Type II Alternate Review may be approved pursuant to Section 5.0213 if a Certified Engineering 
+Geologist or Geotechnical Engineer certifies according to Section 5.0207(C) that geologic conditions, 
+processes, and hazards onsite and offsite will not be negatively impacted by the proposed infiltration 
+of stormwater on the site. 
+5.0210  STANDARDS FOR SPECIFIC DEVELOPMENT TYPES WITHIN THE HILLSIDE 
+AND GEOLOGIC RISK OVERLAY (HGRO)   
+The addition to the general development standards in Section 5.0209, the standards in this section are 
+applicable to specified types of development. 
+ 
+ 
+ 
+[5.0200]-12 
+City of Gresham Development Code  (06/26) 
+A. Single detached dwellings and middle housing. The following standards apply to proposed single detached 
+dwellings and middle housing and to additions or alterations of existing single detached dwellings and 
+middle housing and related accessory structures on existing legal lots created prior to January 15, 2021 
+unless otherwise exempt under Section 5.0205.  
+The disturbance area allowed within the HGRO shall meet the following standards: 
+1. The maximum disturbance area allowed on a lot is determined by subtracting all portions of the lot 
+outside the HGRO from 6,000 square feet. If there is 6,000 square feet of contiguous land with a 
+minimum depth and width of at least 40 feet outside of the HGRO, all permanent and temporary 
+disturbance must occur outside the HGRO. If there is not a contiguous area of 6,000 square feet with a 
+depth and width of at least 40 feet outside the HGRO, encroachment into HGRO shall be limited to the 
+amount of area needed to make up for the deficit. 
+2. The disturbance area must be entirely outside the HSS except as provided in Section 5.0212. 
+3. Of the 6,000 square feet maximum disturbance area, no more than 4,000 square feet shall be 
+permanent disturbance area. 
+4. Trees may be removed within the permanent disturbance area. Only trees less than 24-inch DBH may 
+be removed in the temporary disturbance area. Replacement shall be in accordance with Section 
+5.0208. 
+5. Temporary disturbance areas shall be restored to pre-development grade. 
+6. On lots where existing developed areas meeting the definition of permanent disturbance area exceed 
+the standards of this subsection, such areas can be maintained or modified, but may not be expanded. 
+B. Land Divisions and Lot Line Adjustments. The following standards apply to all land divisions (including 
+Planned Developments) and Lot Line Adjustments. 
+1. No density credit is permitted for portions of the site that are within the HGRO, except through a 
+Planned Development, as provided by Section 6.0300. 
+2. On each proposed developable lot, Applicants shall identify a contiguous permanent disturbance area 
+of at least 2,000 square feet with a minimum depth and width of at least 40 feet. Larger permanent 
+and temporary disturbance areas may be shown on a lot, but all disturbance areas shall be included in 
+the calculation of maximum disturbance area in Subsection (3). 
+3. No more than 55 percent of the total HGRO area on the site shall be included within a disturbance 
+area (temporary and permanent). The disturbance area identified on each proposed developable lot 
+shall be included in the calculation of maximum disturbance area for the land division or Planned 
+Development. In order to meet this requirement, Applicants are encouraged to employ innovative site 
+design techniques such as: 
+• Limiting grading on building lots only to that area needed for driveways, walkways, building pads, 
+and necessary retaining walls, 
+• Limiting the total area of the site dedicated to roadways and paths while maintaining adequate 
+connectivity and providing for adequate emergency access consistent with the roadway standards, 
+• Locating roads and paths on less steeply sloped areas to minimize the width of graded areas 
+needed for roads, 
+ 
+ 
+[5.0200]-13 
+City of Gresham Development Code  (06/26) 
+• Designing and locating structures so that they fit into the contour of the hillside rather than 
+altering the hillside to fit the structure, 
+• Using retaining structures as an alternative to banks of cuts and fills, 
+• Building designs, which require less grading, such as split-level and stair-stepping foundations and 
+the use of piers, 
+• Placing structures as close as possible to the street so as to minimize driveway construction in the 
+sloped areas, and 
+• Focusing development on areas outside the HGRO. 
+4. All disturbance areas must be entirely outside the Highly Sloped Subarea (HSS) except as provided in 
+Section 5.0212. 
+5. Areas outside the permanent disturbance area shall be placed in an easement (public or private) or 
+tract. If preservation is proposed to be private, it can be either by tract or as a part of an individual lot 
+(with an easement). Public preservation shall be by tract only. Easement types shall be Natural 
+Resource and Watershed, Open Space, or Public Access, in accordance with Section 9.0300 provided 
+that the easement ensures that the land within the easement shall be left undisturbed and protected 
+from construction and post-development impacts. Acceptance of proposed dedication of an easement 
+or tract shall be at the City’s discretion. 
+C. Multi-Family, Commercial, Industrial, and Institutional Development. The following standards apply to all 
+Multi-Family, Commercial, Industrial, and Institutional development. 
+1. No more than 55 percent of the total HGRO area on the site shall be included within a disturbance 
+area (temporary and permanent). In order to meet this requirement, Applicants are encouraged to 
+employ innovative site design techniques such as: 
+• Limiting grading to that area needed for driveways, walkways, building pads, minimum parking, 
+solid waste collection facilities and necessary retaining walls. 
+• Limiting the total area of the site dedicated to roadways, paths, and internal driveways while 
+maintaining adequate connectivity and providing for adequate emergency access consistent with 
+the roadway and parking lot standards. 
+• Locating roads, paths, parking lots, and internal driveways on less steeply sloped areas to minimize 
+the width of graded areas needed for roads. 
+• Designing and locating structures so that they fit into the contour of the hillside rather than 
+altering the hillside to fit the structure. 
+• Using retaining structures as an alternative to banks of cuts and fills. 
+• Placing structures as close as possible to the street so as to minimize driveway construction in the 
+sloped areas. 
+• Focusing development on areas outside the HGRO. 
+2. All disturbance areas must be entirely outside the Highly Sloped Subarea (HSS) except as provided in 
+Section 5.0212. 
+ 
+ 
+[5.0200]-14 
+City of Gresham Development Code  (06/26) 
+5.0211  ADDITIONAL DEVELOPMENT STANDARDS FOR HIGHLY SLOPED 
+SUBAREAS (HSS)   
+The HSS is a subarea of the HGRO. In addition to the general development standards in Section 5.0210 and the 
+applicable development standards in Section 5.0211, the standards of this section apply to regulated 
+development within HSS. 
+A. Prohibited Uses. Triplex, Quadplex, Townhouses, and Cottage Clusters are prohibited in HSS. 
+B. Single detached and duplexes. The following standards apply to proposed single detached dwellings, 
+duplexes, and additions or alterations of existing single detached dwellings, duplexes, and related 
+accessory structures located in the HSS either on existing legal lots that were created prior to January 15, 
+2021 or which were created through a PD in accordance with Section (B). The disturbance area allowed 
+within the HSS shall meet the following standards. 
+1. The maximum disturbance area (permanent and temporary) allowed within the HSS is determined by 
+subtracting all portions of the lot outside the HSS from 2,000 square feet. If there is an area of 2,000 
+contiguous square feet at least 40 feet in width and depth outside of the HSS, all permanent and 
+temporary disturbance must occur outside the HSS. If there is not 2,000 square feet of land outside the 
+HSS, encroachment into HSS shall be limited to the amount of area needed to make up for the deficit. 
+2. On lots where existing developed areas meeting the definition of permanent disturbance area exceed 
+the standards of this subsection, such areas can be maintained and modified but may not be 
+expanded. 
+C. Land Divisions and Lot Line Adjustments. The following standards apply to all land divisions (including 
+Planned Developments) and Lot Line Adjustments. 
+1. No new lots which include HSS shall be created except through a Planned Development (PD). 
+2. The following standards apply to all Planned Developments that include HSS. 
+a. Permanent disturbance areas may include HSS only when the PD is 10 acres or more in size; 
+b. No more than 30 percent of the total HSS on the site may be included within permanent 
+disturbance; and 
+c. A Certified Engineering Geologist or Geotechnical Engineer must certify (according to Subsection 
+5.0207(C)) that disturbance area within the HSS are not susceptible to earth movement nor 
+landslide hazard; and the proposed construction and design techniques will minimize cuts, fills, 
+and potential adverse impacts to existing vegetation and have no adverse impacts to existing 
+drainage ways, water quality, and slope stability. 
+D. Open Space Improvements. Open spaces may be improved with private walking/hiking trails, or with 
+public paths or trails. Public paths or trails shall be limited to public open spaces, and private trails or paths 
+shall be limited to private open spaces. 
+E. Public Facilities and Utilities. Public facilities (including streets) and utilities are not allowed within the 
+Highly Sloped Subarea (HSS) except through the HGRO Alternative Review process as provided in Section 
+5.0212. 
+F. Technical Review. When a Geotechnical Report or Impact Evaluation and Alternatives Analysis is submitted 
+it shall be reviewed by a third-party reviewer. The Manager shall select and consult with a Geotechnical 
+Engineer and/or Certified Engineering Geologist to evaluate the methodology, conclusions, and 
+ 
+[5.0200]-15 
+City of Gresham Development Code  (06/26) 
+recommendations of the Applicant’s submittals regarding site conditions and potential geologic hazards. 
+The consultant for the City may conduct a site visit prior to submitting an evaluation to the City. The 
+written evaluation and recommendation from the City’s consultant shall include an evaluation regarding 
+the following: 
+• The acceptability of the observations, procedure, data, reports, methods, and assumptions relied 
+upon, and 
+• The support of the conclusions and recommendations by evidence provided. 
+If required, the written evaluation and recommendation from the City’s Consultant shall be received prior 
+to a recommendation for a Type III process, or before a decision for a Type II process. Costs for such 
+consultation shall be paid by the Applicant, in accordance with the City of Gresham’s Development Fee 
+Resolution. 
+PROCESS  
+5.0212  ALTERNATE REVIEW  
+Applicants who cannot or choose not to comply with the standards of Section 5.0209, 5.0210, or 5.0211, may 
+apply for Alternative Review in accordance with this Section. 
+A. Application Requirements. In addition to the items described in Section 5.0208 (further clarified in the 
+Gresham Environmental Technical Guidance Manual), the Applicant shall also provide information 
+described in Subsections (1) through (3) and any additional information needed to demonstrate 
+compliance with the approval criteria in Subsection B. For utility projects undertaken by public utilities 
+across property that is not owned by the utility, the utility is not required to map or provide any 
+information about the property except for the area within 100 feet of the location of the proposed 
+disturbance area of the utility’s project. 
+1. Impact Evaluation and Alternatives Analysis. An impact evaluation and alternatives analysis is required 
+to determine compliance with the approval criteria and to evaluate development alternatives for a 
+particular property. At a minimum, the analysis should evaluate three alternatives: 1) no project, 2) the 
+applicant’s preferred alternative, and 3) a second practicable alternative that proposes less 
+development within HGRO and HSS. The impact evaluation shall include all the following items: 
+a. Identification of on- and off-site engineering geological conditions, processes, and hazards. 
+b. An explanation of proposed unavoidable impacts to on and offsite engineering geological 
+conditions, processes, and hazards. 
+c. Evaluation of alternative locations, design modifications, or alternative methods of development 
+to determine which option best reduces the impacts on the HGRO provided on the property. 
+2. The Impact Evaluation and Alternatives Analysis shall be prepared and signed by a Geotechnical 
+Engineer and/or Certified Engineering Geologist and shall meet the current standard of practice.  
+B. Public Facilities and Utilities. 
+1. When the applicant demonstrates through the alternatives analysis that either (a) and/or (b) below 
+will reduce the amount of HGRO which will be disturbed. The City may approve an alternate that: 
+ 
+ 
+[5.0200]-16 
+City of Gresham Development Code  (06/26) 
+a. Adjusts the “minimum block spacing and maximum block perimeter standards for local queuing 
+and transitional street types in Section A5.501 by up to 50 percent. 
+b. Adjust the standard street cross section within the HSS to omit the median, parking lane, and 
+landscape strip, or combination thereof. 
+2. The City may approve public facilities not meeting the standards of Section 5.0211(E), if it determines 
+that the street location is necessary to provide street connectivity or for emergency vehicle access. 
+Public facilities (including streets) and utilities may be constructed if the following is certified according 
+to Section 5.0207(C) by a Certified Engineering Geologist or Geotechnical Engineer: 
+a. That these facilities can be constructed given the geologic and topographic conditions of the area 
+of development, and 
+b. That these facilities can be constructed in a manner that does not increase the risk of earth 
+movement or erosion. 
+C. All other development. The City may approve an application which does not comply with the clear and 
+objective standards of this code if the applicant shows through the Impact Evaluation and Alternatives 
+Analysis that the following conditions are met: 
+1. The applicant shows that the development has less detrimental impact to the slope than development 
+meeting the standards would. If there is HSS on a property then the Applicant shall first avoid the 
+intrusion of development into the HSS, to the extent practicable. 
+2. A Certified Engineering Geologist or Geotechnical Engineer certifies according to Section 5.0207(C) 
+that the proposed alternative (including consideration of any proposed mitigation) will not increase 
+the risk of earth movement or landslide hazard; and the proposed construction and design techniques 
+will minimize cuts, fills and potential adverse impacts to existing vegetation and have no adverse 
+impacts to existing drainage ways, water quality and slope stability. 
+D. Additional disturbance on flat land. When a land division is proposed which includes a contiguous area of 
+HGRO at least an acre in size located on a DOGAMI mapped landslide deposit and which is comprised of 
+slope less than 15 percent, such area can be exempted from of 5.0210(B)(3). Such an application is not 
+required to submit the Impact Evaluation and Alternatives Analysis of Section 5.0212(A) however, it shall 
+be accompanied by: 
+1. A slope analysis showing the area with slopes of less than 15 percent. Areas shall be identified using 
+raster analysis of the LiDAR-derived Bare-Earth DEM created as part of the Oregon LiDAR Consortium 
+Metro 2014 Project. The DEM is processed to reflect percent slope rise and then slope is averaged for 
+each cell across a 45-foot radius circle. Cells with an average surrounding slope of 15 percent or less 
+are included. 
+2. A soils and geology report of sufficient detail to describe the geologic conditions of the parcel and 
+immediate vicinity and evaluate the potential geologic hazards associated with the site and prepared 
+by Geotechnical Engineer and/or Certified Engineering Geologist. The report must meet current 
+standard of practice and contain: 
+• A review of the geologic history and history of prior excavation and fills 
+• Field reconnaissance of the site and its vicinity 
+ 
+ 
+ 
+[5.0200]-17 
+City of Gresham Development Code  (06/26) 
+• Scope of work done, investigative methods, sampling methods, logs of borings or test pits, 
+elevations of borings or test pits for reference of materials and samples to finished grade or 
+footing elevations, and the identification of the elevations 
+• Location of all samples taken, surface and subsurface 
+• Groundwater conditions and potential future natural and artificial seepage effects 
+• (USCM) Unified Soil Classifications of Materials 
+• Material competency and strength of the existing soils 
+• Pertinent engineering geologic attributes (clayey, weak, loose, alignments, fissility, planar 
+boundaries, pervious or water-bearing parts, susceptibility to mass wasting, erosion, piping or 
+compressibility) 
+• Bearing capacity and/or shear strength of sample areas 
+• Consolidation or settlement potential 
+• Expansion potential 
+5.0213  MODIFICATION OF HGRO STANDARDS  
+Where the compliance with the HGRO would cause unreasonable hardship, applicants may seek a Type II 
+Minor Variance or a Type III Major Variance pursuant to Section 10.1500. 
+5.0214  HGRO MAPPING PROTOCOLS  
+The boundaries of the Hillside and Geologic Risk Overlay (HGRO) and Highly Sloped Subarea (HSS) are based on 
+a GIS-supported application of the following mapping protocols. All buffer measurements are based on 
+horizontal distance rather than a slope distance. 
+A. The HGRO includes all lands with the following attributes: 
+1. The boundaries of the Hillside and Geologic Risk Overlay (HGRO) and Highly Sloped Subarea (HSS) are 
+based on a GIS-supported application of the following mapping protocols. All buffer measurements are 
+based on horizontal distance rather than a slope distance. 
+2. Deep Landslide Hazards – All lands identified in IMS-57 as having high or moderate susceptibility to 
+deep landslide hazards. 
+3. Shallow Landslide Hazards – Prioritized concentrations of lands identified an IMS-57 raster dataset as 
+having high susceptibility to shallow landslide hazards. Prioritized concentrations were determined 
+using further mapping protocols as follows: 
+a. Edit the hazard raster to remove the following lands: 
+i. Lands with prioritized hazard areas that represent temporary slope features that are not 
+longer present, such as stockpiles that have been removed. 
+ii. Areas of hazard inaccurately identified due to underlying LiDAR-derived Bare-Earth Digital 
+Elevation Model (DEM) (created as part of the 2014 Oregon LiDAR Consortium Metro 2014 
+Project) data quality issues, such as uncommonly low spots or “pits” caused by atmospheric 
+interference. Acceptable quality levels are established by the 2014 Oregon LiDAR Consortium 
+Metro 2014 Project. 
+ 
+[5.0200]-18 
+City of Gresham Development Code  (06/26) 
+iii. Existing stormwater ponds unless in, or within 100 feet of, the HSS. 
+iv. Concentrations of hazards on lands with an average slope less than 15 percent, except within 
+200 feet of a mapped stream. Average slope is calculated across a 120-foot radius circle for 
+each slope raster cell (using Focal Statistics). 
+b. Perform raster analysis to prioritize resultant hazard data where at least one-third of surrounding 
+cells within a 45-foot radius circle were also designated as high risk (using Focal Statistics). 
+c. Remove lands with prioritized hazard areas less than 6,000 square feet in area when located more 
+than 200 feet away from a mapped stream. 
+d. Buffer resultant prioritized concentrations by 30 feet. 
+4. Butte tops – All lands 700 feet above sea level or higher. 
+5. Gaps – Resultant gaps of less than 55,000 square feet after combining the above lands. 
+6. Excluded areas – The following lands were excluded: 
+a. Lands regulated by DOGAMI for surface mining. 
+b. Lands north of NE Glisan Street 
+B. Highly Sloped Subarea (HSS) includes all lands within the Hillside and Geologic Risk Overlay with the 
+following attributes: 
+1. Lands with concentrations of slopes of 35 percent or greater. Concentrations are identified using raster 
+analysis of the LiDAR-derived Bare-Earth DEM created as part of the Oregon LiDAR Consortium Metro 
+2014 Project. The DEM is processed into percent slope rise and then slope is averaged for each cell 
+across the surrounding cells within a 45-foot radius circle. Cells with an average surrounding slope of 
+35 percent or greater are included. Prior to analysis, the DEM is edited to remove the following lands: 
+a. Lands that represent temporary slope features that are no longer present. 
+b. Areas with underlying DEM data quality issues. 
+2. Lands within 5 feet of areas identified in accordance with Subsection (1). 
+5.0215  HGRO MAP ADMINISTRATION AND CORRECTION  
+A. Map Administration. The City shall incorporate all map updates associated with development permit 
+applications and corrections to the location of the HSS and HGRO, as necessary. This shall be processed 
+under a Type I procedure and is not considered a comprehensive plan map amendment. 
+B. Map Corrections. All Applicants who believe that the HGRO and/or HSS was mapped based upon incorrect 
+data may file a verification request consistent with this Subsection, and as described in the Gresham 
+Environmental Technical Guidance Manual. Verification requests will be processed under the Type I 
+development permit procedure. 
+1. HGRO Boundary. Applicants may request a site-specific correction of the HGRO boundary and the City 
+shall incorporate such corrections to the HGRO using the protocols in Section 5.0214 with 
+modifications to the input data allowed under the following scenarios: 
+a. DEM Data Issues: Data issues with the Oregon LiDAR Consortium Metro 2014 Project Bare-Earth 
+DEM used in the creation of DOGAMI IMS-57 Shallow Landslide Susceptibility Hazard raster may be 
+addressed where provided for here. Such issues must be delineated to within 3 feet of the data 
+ 
+[5.0200]-19 
+City of Gresham Development Code  (06/26) 
+issue(s) and submitted as an ESRI Shapefile (polygon) accompanied by two maps and a narrative. 
+The narrative must describe the data errors in detail and methods for mapping them. The two 
+maps must delineate the data issues at a scale of no less than 1-inch to 100 feet. One map must 
+show the data issue(s), current HGRO boundary, and the Oregon LiDAR Consortium Metro 2014 
+Project Bare-Earth DEM. A second map must show the data issue(s), current HGRO boundary, and 
+the DOGAMI IMS-57 Shallow Landslide Susceptibility High hazard data. The following DEM Data 
+Issues may be addressed: 
+i. Temporary Slope Features. Lands with prioritized hazard areas that represent temporary slope 
+features that are no longer present, such as stockpiles that have been removed, may be 
+extracted from the Shallow Landslide Hazard dataset. 
+ii. DEM Data Quality Issues: Areas of hazard inaccurately identified due to underlying LiDAR-
+derived Bare-Earth Digital Elevation Model (DEM) data quality issues related to structures may 
+be extracted from the Shallow Landslide Hazard Dataset. Acceptable data quality issues are 
+those defined in the “Oregon LiDAR Consortium Metro 2014 Lidar Project Quality Control 
+Report – November 30, 2016” and which are related to structures. The data issue narrative 
+must identify the specific data quality issue(s) for each polygon submitted. 
+b. Mapped Stream Changes: Mapped stream changes incorporated through Section 5.0715(C) (NRO 
+Map Corrections). 
+c. Newly mapped landslide(s): Newly mapped landslide deposit(s) and scarp flank(s) which have been 
+mapped by a Registered Geologist or Certified Engineering Geologist. 
+2. HSS Boundary. Applicants may request a site-specific correction of the HSS boundary by providing on-
+site slope survey data, new HSS boundary, and an HSS analysis map prepared in accordance with the 
+following: 
+a. On-site survey data: A survey shall be submitted of the natural/existing topography for the site of 
+the proposed area of correction and a 50-foot buffer around it, stamped by a registered Civil 
+Engineer or licensed Land Surveyor. If access in the 50-foot buffer cannot be acquired, data from 
+the Oregon LiDAR Consortium Metro 2014 Project Bare-Earth DEM may be substituted. Survey 
+data must be provided as bare-earth DEM raster as well as a percent slope raster calculated using 
+the bare-earth DEM. Survey data must meet or exceed standards set in “Oregon LiDAR Consortium 
+Metro 2014 Lidar Project Quality Control Report – November 30, 2016” including an absolute 
+vertical error of less than 0.20 meters. 
+b. New HSS boundary data: The new slope raster must be processed according to the mapping 
+protocol in Section 5.0214(B) and provided as a raster dataset. 
+c. HSS analysis map: A map shall be provided having a scale of not less than 1-inch to 100 feet and a 
+contour interval of not more than 10 feet with two-foot intermediates. The map shall also indicate 
+the datum, source, and scale of topographic data used in the slope analysis and shall attest to the 
+fact that the slope analysis has been accurately calculated. The map shall clearly delineate/identify 
+the slopes of 35 percent or greater and new HSS boundary. The map shall be prepared using CAD-
+based, GIS-based, or other type of software specifically designed for such purpose. 
+d. Raster data requirements: Raster datasets must be provided as outlined in the Gresham 
+Environmental Technical Guidance Manual. 
+ 
+[5.0200]-20 
+City of Gresham Development Code  (06/26) 
+5.0216  VIOLATIONS  
+A. Actions that violate the HGRO regulations are subject to the abatement and penalty provisions of Section 
+2.0008 of the Gresham Community Development Code. The following activities shall be considered 
+immediate hazards: 
+1. Unpermitted work in the HSS, 
+2. Dumping, 
+3. Depositing any material on public property, 
+4. Bare earth over 500 square feet during the wet weather period of October 1 to May 1, and 
+5. Other situations as determined by the Manager. 
+B. Unpermitted alterations will not be deemed valid buildable/developable area. 
+C. For correcting violations regarding unauthorized activity, the responsible party must submit and ensure 
+implementation of a remediation plan that meets all applicable standards of the HGRO. The plan must be 
+developed by an Oregon licensed Certified Engineering Geologist or Geotechnical Engineer. 
+D. For correcting violations regarding unauthorized activity, the responsible party shall submit an application 
+that meets all applicable standards of the HGRO including appropriate mitigation if applicable. 
+E. The plan must be developed by an Oregon licensed Certified Engineering Geologist or Geotechnical 
+Engineer. 
+ 

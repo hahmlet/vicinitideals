@@ -1,0 +1,1429 @@
+ 
+[5.0700]-1 
+City of Gresham Development Code  (07/26) 
+SECTION 5.0700 
+NATURAL RESOURCE OVERLAY 
+General 
+5.0701 Purpose 
+5.0702 Coordination with Other Regulations 
+5.0703 Applicability 
+5.0704 Prohibitions 
+5.0705 Exempt Uses and Activities 
+5.0706 Permit Required 
+5.0707 Application Requirements 
+Standards 
+5.0708 Tree Removal not Associated with Other Development 
+5.0709 General Development Standards 
+5.0710 Standards for Specific Development Types within a Resource Area 
+5.0711 Mitigation Requirements 
+Process 
+5.0712 Alternative Review 
+5.0713 Modification of NRO Standards 
+5.0714 Mapping Protocols 
+5.0715 Map Administration and Correction 
+5.0716 Violations 
+GENERAL  
+5.07 01  PURPOSE    
+The Natural Resource Overlay (NRO) regulations provides a framework for protection of Metro Titles and 13 
+lands, and Statewide Planning Goal 5 and 6 resources within the City of Gresham. The NRO contributes to the 
+following community objectives: 
+A. Protect and restore streams and riparian areas for their ecological functions and as an amenity for the 
+community and to recognize the unique natural resources attributes within the new communities of 
+Pleasant Valley, Springwater and Kelley Creek. 
+B. Protect floodplains and wetlands, and restore them for improved hydrology, flood protection, aquifer 
+recharge, and habitat functions. 
+C. Protect upland habitats and enhance connections between upland and riparian areas. 
+ 
+[5.0700]-2 
+City of Gresham Development Code  (07/26) 
+D. Maintain and enhance water quality and control erosion and sedimentation through the revegetation of 
+disturbed sites and by placing limits on construction, impervious surfaces, and pollutant discharge in 
+Resource Areas as defined in Section 5.0703(B)(1). 
+E. Conserve scenic, recreational, and educational values of significant natural resources. 
+F. Provide clear and objective standards and a discretionary review process, applicable to development in 
+Resource Areas, in accordance with Statewide Land Use Planning Goal 5. 
+G. Allow and encourage habitat-friendly development, while minimizing the impact on fish and wildlife 
+habitat functions and mitigating the loss of ecological functions and values. 
+5.0702  COORDINATION WITH OTHER REGULATIONS   
+A. The requirements of the NRO apply in addition to other applicable state, regional, and federal 
+development requirements. Where the NRO imposes restrictions that are more stringent than other 
+applicable state, regional and federal requirements, the provisions of the NRO shall govern. 
+B. Except as provided below, where the provisions of this overlay conflict with comparable provisions of the 
+Gresham Community Development Code, the more restrictive shall govern, provided that within the 
+boundaries of a Resource Area, the tree removal and mitigation requirements of this overlay shall 
+supersede those of Section 9.1000. 
+C. Proposed development located near streams with regulated floodplains or identified flood prone areas 
+shall also comply with the Floodplain Overlay District standards of Section 5.0100 of the Community 
+Development Code. Areas affected by this District are shown on the City’s Special Purpose Districts Map. 
+D. Proposed development located on or near sites with steeper slopes may also be affected by the Hillside 
+and Geologic Risk Overlay (HGRO) provisions of Section 5.0200 of the Community Development Code. This 
+Overlay may impose additional development requirements for sites with ravines and other sloped 
+topographic features. Areas affected by this Overlay are shown on the City’s Special Purpose Districts Map. 
+E. Development in or near wetlands and streams may require permits from the Oregon Department of State 
+Lands (DSL) and the U.S. Army Corps of Engineers. If a federal permit is required, a water quality 
+certification from the Oregon Department of Environmental Quality may also be required. The City 
+Manager shall notify the Department of State Lands and the Army Corps of Engineers when an application 
+for development within streams and wetlands is submitted. Because these agencies may have more 
+restrictive regulations than the City, Applicants are encouraged to contact them before they prepare their 
+development plans. 
+F. Environmental Technical Guidance Manual. Clarifications, commentary and examples are given in the 
+Gresham Environmental Technical Guidance Manual. Content of the guidance manual is to be used in 
+tandem with development code and does not substitute for, amend, or supersede development code. 
+G. For the purposes of this section “land division” does not include middle housing land divisions pursuant to 
+Section 6.0500 and “lot” does not include middle housing lots created by middle housing land divisions. 
+ 
+ 
+ 
+ 
+[5.0700]-3 
+City of Gresham Development Code  (07/26) 
+5.0703  APPLICABILITY   
+A. All Areas 
+1. Unless otherwise exempt, the Natural Resource Overlay and the regulations of this chapter apply to 
+properties containing mapped Resource Areas or Potential Resources Areas when any of the following 
+sues or activities are proposed: 
+a. Development or redevelopment. 
+b. All land divisions or property line adjustments. 
+c. Removing, cutting, mowing, clearing, burning, or applying herbicides to vegetation. 
+d. Changing topography, grading, excavating, stockpiling or filling. 
+e. Resource enhancement. 
+f. Construction or expansions of right-of-way improvements. 
+g. Placement or stockpiling of wood debris. 
+2. Mapped Resource Area (RA), High Value Resource Area (HVRA), and Potential Resource Area (PRA) 
+boundaries are based on a GIS-supported application of the mapping protocols in Section 5.0714. The 
+boundaries may be verified or amended in accordance with Section 5.0715. In general, these areas 
+include the following: 
+a. Resource Areas (RA) include regulated wetlands and their buffers, regulated streams and their 
+buffers, other regulated waters including lakes and ponds and their buffers, and designated upland 
+habitat. Within the RA are subareas of particularly high value. These subareas are designated as 
+High Value Resource Areas (HVRA). All references in this chapter to Resource Areas shall be 
+understood to include High Value Resource Areas.  
+b. Potential Resource Areas (PRA) include areas that were identified as “potential wetlands” in a 
+Local Wetland Inventory Survey and areas that have been identified as having a high probability of 
+potential regulated wetlands but have not been reviewed as part of a Local Wetland Inventory 
+Survey. 
+3. Development within an RA in accordance with the provisions of the NRO shall not result in a change of 
+the RA status of such developed areas on a property. 
+4. Properties containing Potential Resource Areas are subject to Section 5.0703(B). If no Resource Areas 
+are identified in the PRA review, then the requirements of NRO do not apply. 
+5. All development permit applications within the NRO which propose non-exempt activities within 50 
+feet of, but not within, a Resource Area, shall comply with Section 5.0706(A). 
+6. Jurisdictional wetlands and waters are those subject to local, state, and/or federal authority. A 
+jurisdictional wetland or stream identified during the course of a development permit review that 
+meets the mapping protocols in Section 5.0714 shall be subject to the NRO standards. Such wetlands 
+or streams shall be added to the NRO map by the Manager, after DSL and City concurrence. If a 
+wetland or stream is identified that does not meet Title 3 criteria, it is not subject to the standards of 
+this section but may still require a federal or state permit. 
+B. Potential Resource Area (PRA) Determination. These regulations are required to protect water quality 
+resources pursuant to Goal 6 and Metro Functional Plan Title 3. 
+ 
+[5.0700]-4 
+City of Gresham Development Code  (07/26) 
+1. Review. All applications for non-exempt uses and activities within areas designated as Potential 
+Resource Areas on the map are subject to a review to determine whether Resource Areas (specifically 
+wetlands) are present. 
+a. The review shall cover all proposed disturbance area(s) and all on-site land within 100 feet of the 
+disturbance area(s). 
+b. The review may be processed separately as a Type I review or concurrently with another 
+development permit. 
+c. All wetland determinations must be conducted in accordance with the 1987 U.S. Army Corps of 
+Engineers Wetlands Delineation Manual, including regional supplements and applicable guidance 
+and any supporting technical guidance documents, rules, and regulations issued by the State of 
+Oregon and the Oregon Department of State Lands. 
+2. Submittal Requirements. In order to determine if the standards of this chapter apply the applicant 
+shall submit a site assessment for review that includes a map of the proposed review area and 
+identifies any proposed disturbance area(s) and on-site land within 100 feet of the disturbance area(s) 
+as well as one of the following: 
+a. Documentation from Oregon Department of State Lands (DSL) that there is no wetland within the 
+review area. Such documentation may be: 
+i. A determination that a wetland is not present provided by DSL. 
+ii. A determination that a wetland is not present conducted by a private wetland professional 
+with DSL concurrence. 
+b. Documentation from the City’s Natural Resources Program that there is no wetland within the 
+review area. Such documentation may be: 
+i. A determination that a wetland is not present conducted by the City. 
+ii. Review and agreement with a determination that a wetland is not present that has been 
+conducted by a private wetland professional. 
+c. A wetland delineation with DSL concurrence or documentation from the City’s Natural Resources 
+Program that there is a wetland, and a determination regarding Title 3 Wetland status performed 
+by the City in accordance with the Department of Land Conservation and Development’s OAR 660-
+023, including the application of the Oregon Freshwater Wetland Assessment Methodology 
+(OFWAM) to the wetland. 
+3. Determination of Resource Status. 
+a. If no wetland is found the Resource Area standards of this Overlay shall not apply and the PRA 
+shall be corrected according to 5.0715(C). 
+b. If a wetland is found but is determined not to meet the City and Metro’s criteria for a regulated 
+Title 3 wetland, it is not subject to the standards of this Overlay, but it may still require a federal or 
+state permit. The PRA shall be corrected according to Section 5.0715(C). 
+c. If a wetland is found and is determined to meet the City and Metro’s criteria for a regulated Title 3 
+wetland, a buffer shall be applied, and the area shall be identified as Resource Area. Such Resource 
+Areas shall be added to the NRO map in accordance with Section 5.0715(B) and the PRA shall be 
+corrected according to Section 5.0715(C). 
+ 
+[5.0700]-5 
+City of Gresham Development Code  (07/26) 
+5.0704  PROHIBITIONS   
+The following prohibitions apply within Resource Areas and within Potential Resource Areas that have not had 
+a PRA review completed in accordance with Section 5.0703(B). These prohibitions do not apply to the 
+continuation, in the same manner, of activities that were lawfully begun before January 15, 2021, were 
+approved pursuant to this Overlay, or are exempt in accordance with Section 5.0705. An activity continuing in 
+the same manner means that there is no expansion in the scope of that activity within the RA or PRA. 
+A. Outside storage of materials and equipment. 
+B. Any new gardens, lawns, structures, or development other than those allowed outright (exempted) or that 
+is part of a regulated use that is approved with an NRO permit. 
+C. The dumping of materials of any kind. 
+D. Grading, placement of fill, or the removal of native vegetation other than those allowed outright 
+(exempted) or that is part of a regulated use that is approved with an NRO permit. 
+5.0705  EXEMPT USES AND ACTIVITIES   
+The permit requirements of the NRO do not apply to the uses and activities listed in Subsection (A). The 
+additional exemptions listed in Subsection (B) apply to all lands within the NRO except HVRAs. Where an 
+exemption specifies an allowance of area for disturbance area, impervious surface, or improvement, that area 
+represents the total cumulative amount allowed on a site pursuant to that exemption. The amount of 
+disturbance area, impervious surface, or improvement permitted by each exemption shall be calculated 
+independently. Nothing in this section shall allow activity prohibited in Section 5.0704. 
+A. Exempt Uses and Activities. The following uses and activities are exempt from the permit requirements of 
+the NRO: 
+1. Change of ownership. 
+2. The following activities within the PRA: 
+a. Activities that do not otherwise require a development permit (i.e. no development permit would 
+be required for the proposed activity outside of the NRO). 
+b. Development within the boundaries of a current PRA review prepared in accordance with Section 
+5.0703(B), where the assessment shows that no RA is present on the site. 
+c. Development within the boundaries of a current PRA review prepared in accordance with Section 
+5.0703(B), where the assessment shows that one or more RA are present on the site, but where 
+the proposed development meets one or more of the exemptions for uses or activities within or 
+near an RA. An NRO exemption form is required in accordance with Section 5.0705(C). 
+3. New site improvements, disturbance or structures or other development that are more than 50 feet 
+from an RA. An NRO exemption form is required in accordance with Section 5.0705(C). 
+4. The removal of vegetation, including trees, in any of the following situations: 
+a. When not within an RA. An NRO exemption form is required in accordance with Section 5.0705(C) 
+when trees 24-inch DBH or greater in size will be removed within 50 feet of an RA. 
+b. When removed in accordance with a City-approved mitigation or restoration plan. An NRO 
+exemption form is required in accordance with Section 5.0705(C). 
+ 
+[5.0700]-6 
+City of Gresham Development Code  (07/26) 
+c. When limited to the removal of invasive vegetation (as identified on the City of Gresham Invasive 
+Species List), and the removal of refuse or fill, provided that: 
+i. All work is done using hand-held equipment; 
+ii. No existing native vegetation is disturbed or removed. 
+iii. All work occurs outside of wetlands and the tops of banks or streams; 
+iv. No more than 200 square feet of area of ground is disturbed and the disturbed area is 
+stabilized with new native vegetative cover prior to October 1 in any given year; and 
+v. Up to 6 Invasive trees may be removed; however, if trees with the DBH of 6 inches or greater 
+are proposed to be removed, an NRO exemption form is required in accordance with Section 
+5.0705(C). 
+5. Previously approved development as follows: 
+a. A building permit for a phased development project for which the Applicant has previously met the 
+application requirements, so long as the area of new construction was identified on the original 
+permit and no new portion of the RA will be disturbed. 
+b. On the individual lots where the location of the proposed improvements (disturbance area) was 
+identified in the land division decision and the City’s mitigation requirements were completed as 
+part of the land division for the entirety of the proposed disturbance area. 
+6. Operation, maintenance, and repair of existing improvements when no additional incursion into the 
+RA is proposed, including: 
+a. Structures provided that the building footprint is not increased. 
+b. Gardens, pastures, lawns and landscape perimeters, including the installation of new irrigation 
+systems within existing gardens, pastures, lawns, and landscape perimeters, with the exception of 
+the planting of any invasive plants listed on the City of Gresham Invasive Plant List. 
+c. Streets and roads, railroads, bridge footings, easements, and access roads and above-ground 
+utilities. 
+d. Subsurface utilities provided there are no above ground impacts or impacts to trees (e.g., damage 
+to the root zone) within the RA. 
+e. Manmade water control facilities such as outfalls, culverts, irrigation and drainage ditches, 
+constructed ponds or lakes, wastewater facilities, and water quality facilities. 
+7. Alteration and replacement of existing improvements when no additional incursion into the RA is 
+proposed (including the uses and activities listed in Subsection (6)) provided an NRO exemption form 
+is completed in accordance with Section 5.0705(C). 
+8. The trenchless subsurface installation of new utilities (e.g., via microtunneling), provided there are no 
+above ground impacts or impacts to trees (e.g., damage to the root zone) within the RA. An NRO 
+exemption form is required in accordance with Section 5.0705(C). 
+9. Existing farming practices as defined in ORS 215.203 and farm uses, excluding construction or 
+expansion of buildings and structures. 
+10. The maintenance of existing water-dependent uses that can only be carried out on, in, or adjacent to 
+water because they require access to the water for waterborne transportation or recreation when no 
+additional incursion into the RA is proposed. 
+ 
+[5.0700]-7 
+City of Gresham Development Code  (07/26) 
+11. Projects with the sole purpose of restoring or enhancing wetlands, streams, or fish and wildlife habitat 
+areas, provided that the project is part of an approved local, state, or federal restoration or 
+enhancement plan. An NRO exemption form is required in accordance with Section 5.0705(C). 
+12. Planting of native vegetation. 
+13. Work undertaken by Multnomah County Drainage District or its successor agency pursuant to ORS 
+chapters 547 or 554 or Titles 33 or 44 of the Code of Federal Regulations. 
+14. Boundary and topographic surveys leaving no cut scars greater than three inches in diameter on trees. 
+15. Development within an RA that is completely separated by an improved right-of-way from the water 
+feature(s) which was the basis for the RA. This exemption only applies to RAs that are associated with 
+a water feature (i.e., stream, wetland or other waters). It does not apply to upland habitat areas. See 
+Section 5.0714, Mapping Protocols. An NRO exemption form is required in accordance with Section 
+5.0705(C). 
+16. Installation of fencing that meets the wildlife passage design standards in the Gresham Environmental 
+Technical Guidance Manual. 
+B. Additional Exemptions for All Areas except HVRAs. Except within mapped High Value Resource Areas, the 
+following uses and activities are exempt from the permit requirements of the NRO provided that an NRO 
+exemption form is completed in accordance with Section 5.0705(C): 
+1. The alteration, expansion, or replacement of existing structures, provided that: 
+a. The alteration, expansion, or replacement of a structure will not intrude more than 500 square 
+feet into a mapped RA or PRA in addition to the area defined as the building footprint as of 
+January 1, 2006. 
+b. Where the RA is mapped, the new intrusion into the RA is no closer to the HVRA than the 
+preexisting structure or improvement. 
+2. Minor encroachments into the RA or PRA not to exceed 120 square feet of impervious surface such as 
+accessory buildings, eave overhangs, exterior building improvements required to meet access and 
+exiting requirements, or other similar features. 
+3. Facilities that infiltrate stormwater onsite, including the associated piping, may be placed within the 
+RA or PRA so long as the forest canopy and the areas within the Critical Root Zones of the trees are not 
+disturbed. Such facilities may include, but are not limited to, vegetated swales, rain gardens, vegetated 
+filter strip, and vegetated infiltration basins. Only native vegetation may be planted in these facilities. 
+4. Temporary and minor clearing not to exceed 200 square feet for the purpose of site investigations and 
+pits for preparing soil profiles, provided that such areas are restored to their original condition when 
+the investigation is complete. 
+5. Low-impact outdoor recreation facilities for public use, including, but not limited to, multi-use paths, 
+access ways, trails, picnic areas, or interpretive and educational displays and overlooks that may 
+include benches and outdoor furniture, provided that the facility meets the following requirements: 
+a. It contains less than 500 square feet of new impervious surface. This area represents the total 
+cumulative amount of new impervious surfaces that shall be allowed on a site under this 
+exemption. 
+ 
+ 
+[5.0700]-8 
+City of Gresham Development Code  (07/26) 
+b. Any trails shall be constructed using non-hazardous, pervious materials, with a maximum width of 
+4 feet. 
+c. Trees 24-inch DBH or larger shall not be removed and their critical root zones shall be protected. 
+6. Using a single utility pole or where no more than 100 square feet of ground surface is disturbed above 
+the ordinary high water mark of water bodies and where the disturbed area is restored to the 
+preconstruction conditions. This area represents the total amount of disturbance area that shall be 
+allowed for a utility project under this exemption (regardless of the number of parcels). 
+C. NRO Exemption Form. When required by Subsection A or B, a written verification of exemption shall be 
+obtained from the City prior to conducting exempt uses or activities. A completed form with a site plan 
+showing location of work and location of RA(s) and/or PRA(s) on the site, a description of the work to be 
+done, methods of protection (if any), and anticipated schedule of the work shall be submitted to the City a 
+minimum of seven business days prior to the proposed activity. 
+5.0706  PERMIT REQUIRED   
+Unless exempt pursuant to Section 5.0705, a permit is required for all regulated activities within the NRO as 
+follows: 
+A. Proposed Uses and Activities within 50 feet of an RA. Applications for uses and activities that are proposed 
+within 50 feet of an RA, but are not within an RA, are required to submit a scale map, site plan, and 
+construction management plan in accordance with Section 5.0707(A) – (C). The construction management 
+plan shall be processed under the Type I procedure and shall be approved by the Manager if the 
+construction management plan provides measures to protect trees and other vegetation located within 
+the RA as specified in Section 5.0707(C). 
+B. Proposed Uses and Activities within an RA. The permit shall be processed under the development permit 
+procedure and subject to the applicable standards specified in Table 5.0706-1 and the general 
+requirements in Section 5.0709(A) and (B). All permit applications shall comply with the application 
+requirements in Section 5.0707. 
+C. Proposed Uses and Activities within a PRA. Applications for uses and activities that are proposed within a 
+PRA are subject to the PRA review requirements in Section 5.0703(B). If Title 3 Wetlands are identified 
+within the PRA, the permit requirements of Subsections (A) and (B) shall apply to such wetlands and 
+buffers established in accordance with Section 5.0715(B). 
+Table 5.0706- 1: Permit Procedure and Additional Applicable Standards for Development within 
+an RA 
+PROPOSED ACTIVITY OR REQUEST PERMIT PROCEDURE APPLICABLE STANDARDS 
+PRA Review Type I 5.0703(B) 
+Standards for Development in a RA 
+Development of a Single Detached Dwelling or Middle 
+Housing on a Lot of Record 
+Type I 5.0710(A) 
+Linear Utility Facilities Type I 5.0710(B) 
+Non-Linear Utility Facilities other than Public 
+Stormwater Facilities 
+Type I 5.0710(C) 
+ 
+[5.0700]-9 
+City of Gresham Development Code  (07/26) 
+PROPOSED ACTIVITY OR REQUEST PERMIT PROCEDURE APPLICABLE STANDARDS 
+Public Stormwater Facilities Type I 5.0710(D) 
+Rights of Ways and Public Access Easements Type I 5.0710(E) 
+Public Trails and Paths and Park Enhancements Type I 5.0710(F) 
+Dangerous Tree Removal Type I 5.0708(A) 
+Programmatic Tree Removal Type II 5.0708(B) 
+Municipal Utility Facilities Type II 5.0710(G) 
+Land Divisions Type II 5.0710(H)(1-8) 
+Property Line Adjustment Type I 5.0710(H)(9) 
+Other Development Activities in a RA (Other Than 
+Those Activities Listed Above) 
+Type I 5.0710(I) 
+Other Reviews 
+Request for Payment-in-Lieu of Mitigation Type II 5.0711(E) 
+Alternative Review Type II 5.0712 
+Map Correction Type I 5.0715(C) 
+5.0707  APPLICATION REQUIREMENTS   
+Except as specified in Section 5.0708, all applications shall include the items required for the applicable 
+procedure type in accordance with Article 11 and the items required by this section, and items specified in the 
+Gresham Environmental Technical Guidance Manual 
+A. Existing Conditions Map. For the entire subject property, Applicants shall submit a scaled map of the 
+property that includes: 
+1. Location of all Potential Resource Areas, Resource Areas and High Value Resource Areas on the 
+property. 
+2. Outline of any existing disturbance area, including the location of existing adjacent streets and paved 
+areas, utilities, culverts, stormwater management facilities, or bridges. 
+3. Location of any known wetlands, waterways, or other waters on the property. 
+4. Location of Floodplain Overlay and floodway boundary as defined by the Federal Emergency 
+Management Agency (FEMA). 
+5. Topography shown by contour lines. On properties that are two acres or larger, contours are only 
+required for the portion of the property to be developed. 
+6. If applicable, the boundaries of the Hillside and Geologic Risk Overlay. 
+B. Proposed Site Plan. Detailed site plan of proposed development outlining total permanent and temporary 
+disturbance area (including proposed building footprints, site property improvements, utilities, grading, 
+and landscaping) and existing and proposed lot lines. 
+C. Construction Management Plan (CMP). In order to ensure that trees and vegetation remain undisturbed 
+within RAs and are not damaged during construction, the application shall include a construction 
+management plan demonstrating either that all work impacts will take place outside of the RA or that 
+work impacts within the RA will be within a proposed disturbance area and the application is in compliance 
+with Section 5.0709(A). At a minimum, a construction management plan shall include the following 
+ 
+[5.0700]-10 
+City of Gresham Development Code  (07/26) 
+information: 
+1. Location of site access and egress that construction equipment will use. 
+2. Equipment and material staging and stockpile areas. 
+3. Erosion and sediment control measures in accordance with the City of Gresham “Erosion Prevention 
+and Sediment Control Manual” appendix of the Gresham Stormwater Management Manual. 
+4. Critical Root Zone of all trees to be preserved within 50 feet of the disturbance (per Gresham 
+Environmental Technical Guidance Manual). 
+5. Measures in accordance with the Gresham Environmental Technical Guidance Manual to protect trees 
+and other vegetation located within the RA, other than those within a proposed disturbance area. 
+6. A construction schedule that includes the timing of in-stream work (if applicable). In addition, the CMP 
+must include a copy of written notification of the ODFW and NFMS notification. 
+D. Additional Information Required. If any disturbance (permanent or temporary) is proposed within the RA, 
+the following additional information shall be provided: 
+1. Tree survey information: 
+a. Detailed tree survey information including the location, diameter at breast height (DBH) and 
+species of: 
+i. Any tree greater than six inches (DBH) located within the disturbance area. 
+ii. Any trees 24 inches or greater (DBH) located within 50 feet of the disturbance area. 
+b. When all trees within 50 feet of the disturbance area are below 24 inches DBH, generalized tree 
+survey Information including the approximate location and number of trees, their diameters and 
+the dominant species may be allowed. 
+c. If the Applicant is requesting tree removal on the basis that the tree(s) is on the City of Gresham 
+Invasive Plant List, the identity of the species including in-focus, high resolution photographs 
+supporting identification of species such as habitat, trunk, crown, flowers, fruits, branches, twigs, 
+and leaves is required. 
+d. If the Applicant is requesting tree removal on the basis that the tree(s) meets the definition of 
+Dangerous Tree, an International Society of Arboriculture (ISA) basic tree risk assessment prepared 
+by a qualified arborist is required. 
+2. A grading plan showing the proposed alteration of the ground. 
+3. An outline of the disturbance area that identifies the vegetation to be removed. 
+4. Narrative explanation and materials necessary to demonstrate compliance with the applicable 
+development standards of Section 5.0709 and 5.0710. 
+5. Mitigation plan showing plant location, spacing, species, and size at planting, maintenance plan and 
+schedule, and monitoring plan prepared in accordance with Section 5.0711, unless payment-in-lieu of 
+mitigation is proposed in accordance with Section 5.0711. 
+E. In addition to the requirements of this section, additional applications requirements may apply as specified 
+in the NRO (e.g., for Alternative Review). 
+ 
+ 
+[5.0700]-11 
+City of Gresham Development Code  (07/26) 
+STANDARDS  
+5.0708  TREE REMOVAL NOT ASSOCIATED WITH OTHER DEVELOPMENT   
+The following standards apply to the removal of Dangerous Trees or trees listed on the City of Gresham 
+Invasive Plant List within the RA that are not associated with other development or to programmatic permits 
+for tree removal. The general standards in Section 5.0709(A) do not apply to tree removal subject to this 
+section. Tree removal being proposed in conjunction with other development (e.g., a land division) shall be 
+subject to the NRO standards applicable to that development rather than this section. 
+A. Tree removal may be approved through the Type I process, when: 
+1. One of the following criteria is met: 
+a. The tree is identified as an invasive species and evidence regarding the species of the tree and the 
+credentials of who identified it are included as part of the application. Applicants shall submit the 
+information required by Section 5.0707(D)(1)(c). 
+b. The tree meets the definition of Dangerous Tree and its removal is recommended by a qualified 
+certified arborist who has-completed basic tree risk assessment for the tree. Applicants shall 
+submit the information required by Section 5.0707(D)(1)(d). 
+2. Proposals to remove a total of six of fewer trees (invasive species, and/or Dangerous Trees) are 
+exempt from the submittal requirements in Section 5.0707, except as specified in Subsection (a). For 
+all other proposals to remove such trees, other vegetation on the site must be protected in accordance 
+with an approved construction management plan prepared pursuant to Section 5.0707(C) and a plan 
+describing the methods of removal must be submitted. 
+B. Tree removal may be approved through a Type II Programmatic Permit. Type II Programmatic Permits may 
+only be obtained by Public Agencies and Utilities with a Gresham franchise license to allow for routine 
+public facility or utility operation, repair and replacement, and/or on-going maintenance or enhancement 
+programs. The purpose of a Programmatic Permit is to eliminate the need for individual tree removal 
+permits for ongoing activities within the RA or HVRA. Programmatic permits do not cover tree protection, 
+removal, planting, or mitigation associated with a development permit. 
+1. Time Limits. The Manager may approve a Programmatic Permit for a period of up to two years. An 
+annual report from the applicant on activity conducted under the permit is required to be submitted 
+to the Manager by June 30 each year. Failure to submit the annual report will result in 
+cancellation/suspension of the Programmatic Permit. 
+2. Work Standards. All work conducted under a programmatic permit must be conducted in accordance 
+with proper arboricultural practices as detailed in the most recent version of ANSI A300 standards. 
+3. Review Factors. The Manager may approve a Programmatic Permit for work in the RA and HVRA upon 
+finding that the following review factors are met or will be met with conditions: 
+a. Biodiversity: The activities will result in the same or better native species diversity within each 
+project area treated under the programmatic permit. 
+b. Erosion Control: Activities will be planned to prevent exposed soil areas of greater than 500 square 
+feet during the wet weather window of October 1 to May 1. 
+ 
+ 
+[5.0700]-12 
+City of Gresham Development Code  (07/26) 
+c. Mitigation of Impacts: The activities will protect or improve project area conditions as they relate 
+to water quality, critical habitat protection, and forest health. 
+d. Risk reduction: 
+• Ignition fuel reduction at the private-public property interface shall occur before any 
+additional coarse woody debris (CWD) is placed as part of stand management activities. 
+• CWD shall be placed in a manner not likely to increase wildfire, slope movement, or public 
+safety risks. 
+• Plants not designated as fire accelerants on the Gresham Native Plant List will be preferred for 
+retention in defined firebreak areas. 
+• Plants designated as fire accelerants on the Gresham Native Plant List will not be planted in 
+defined firebreak areas. 
+• Suspended branch material is addressed as part of site activities. 
+• Allowance for amount and location limitations for cut or chipped CWD are observed. 
+• Snags or habitat tree retention is incorporated into project areas where retention of such 
+features pose no risk to structures or active use areas. 
+• Within areas mapped as past landslides or associated scarp flanks according to DOGAMI IMS-
+57, a geotechnical review by a Certified Engineering Geologist or Geotechnical Engineer in 
+advance of vegetation removal or deposition of CWD demonstrates the development will not 
+cause negative impacts to on- and off-site geologic conditions, processes, or hazards. 
+4. Application Requirements. The application requirements in Section 5.0707 do not apply. In addition to 
+the requirements for a Type II application, an application for a programmatic permit shall include: 
+a. A narrative description of proposed activities and locations and how the activities comply with the 
+review factors above. 
+b. A map of the areas work will occur, including generalized locations of each type of work. 
+5. Permit Specifications. Approved permits issued by the City shall include the following specifications. 
+The Manager may modify these specifications during the permit period in order to respond to public 
+safety concerns, changes in regulations, or previously unforeseen issues, provided the applicant is 
+notified in writing and provided an opportunity to appeal the change: 
+a. Duration of permit. 
+b. Geographic area covered by the permit. 
+c. Permitted activities and any restrictions on the method, number, type, location or timing of 
+activities. 
+d. Procedures and thresholds for informing neighboring residents, businesses, and the City of 
+upcoming permitted activities. 
+e. Monitoring, performance tracking and reporting requirements. The Manager may prescribe rules 
+or procedures that specify the manner in which such tracking and reporting occur. 
+6. Revocation. The Manager may revoke a Programmatic Permit upon finding the applicant is not 
+adhering to the limitations imposed or is acting beyond the activities permitted by the Programmatic 
+Permit. Noncompliance with the Programmatic Permit may also be cause for any other enforcement 
+action as stated in Section 5.0716. 
+ 
+[5.0700]-13 
+City of Gresham Development Code  (07/26) 
+5.0709  GENERAL DEVELOPMENT STANDARDS   
+A. General Standards. The following standards apply to all regulated development within an RA. 
+1. Mitigation is required for the removal of trees and other vegetation in accordance with Section 
+5.0711. Trees listed on the City of Gresham Invasive Plant List are exempt from this mitigation 
+standard. Dangerous Trees are exempt from this mitigation standard but must be replaced at a ratio of 
+one tree planted on site for each tree removed. 
+2. All vegetation planted in an RA shall be native unless otherwise approved by the Manager based on 
+the Gresham Environmental Technical Guidance Manual. 
+3. Fences are allowed only within an approved disturbance area unless the fencing meets the wildlife 
+passage design in the Gresham Environmental Technical Guidance Manual. 
+4. Lighting within 50 feet of the RA shall be placed or shielded so it does not shine directly into the RA or 
+must be motion activated. 
+5. Temporary disturbance areas must be fully restored (see the Gresham Environmental Technical 
+Guidance Manual). 
+6. No fill or removal is allowed within a wetland, water body, or ordinary high water mark of a stream, 
+unless all required permits are obtained from the US Army Corp of Engineers, and/or the Oregon 
+Department of State Lands. 
+7. Stream crossings, bridges, new culverts, and culvert expansions shall be designed in accordance with 
+the Oregon Department of Fish and Wildlife (ODFW) fish passage criteria unless exempted or waived 
+by ODFW. 
+8. Any state or federally approved work that will take place in a regulated waterway shall be conducted 
+during the specified in-water work period as determined by Oregon Department of Fish and Wildlife 
+for each specific water body. 
+9. No parking beyond the minimum amount required in Sections 9.0850-9.0853 shall be allowed within 
+the RA. This standard does not apply to single detached dwelling and middle housing development. 
+10. During construction, the following standards apply: 
+a. Trees in the RA shall not be used as anchors for stabilizing construction equipment. 
+b. Erosion control measures shall be in place prior to and maintained throughout the construction. 
+c. No stockpiling of soil or debris is allowed in the RA, except within an approved permanent or 
+temporary disturbance area. 
+d. Prior to construction, the RA that is to remain undeveloped shall be flagged, fenced, or otherwise 
+marked and shall remain undisturbed. 
+e. All construction activity on the property shall conform to the construction management plan 
+described in Section 5.0707(C). 
+f. Tree protection shall either include all of the following protective measures or be designed by a 
+Certified Arborist: 
+i. No soil compaction or removal of vegetation or tree branches shall occur within the Critical 
+Root Zone. 
+ 
+ 
+[5.0700]-14 
+City of Gresham Development Code  (07/26) 
+ii. Prior to any grubbing, clearing, grading, parking, preparation or storage of materials or 
+machinery, or other construction activity on the site, all trees to be protected on the project 
+site and adjacent to the site shall be clearly identified and temporary fencing shall be installed 
+at the perimeter of the Critical Root Zone. Protective fencing shall be of a material that cannot 
+easily be moved, removed, or broken during construction activities. 
+iii. No machinery repair, cleaning or fueling shall be performed within the Critical Root Zone of 
+any trees identified for protection. 
+iv. Digging a trench for placement of public or private utilities or other structure within the 
+Critical Root Zone of a tree to be protected is prohibited. 
+g. For any construction or grading within the Critical Root Zone of a tree to be protected, a Certified 
+Arborist shall inspect tree protection measures before and after work is completed or be on site 
+during any construction or grading activities. 
+B. Methods for Avoiding Resource Areas. When development is proposed in the RA, an application may 
+include the following habitat-friendly development practices to minimize the impact on the RA. 
+1. When building on a lot containing RA, the minimum building setback of the base district may be 
+reduced to any distance between the base district minimum and three feet, unless this reduction 
+conflicts with applicable fire or life safety requirements or the requirements to maintain a clear vision 
+area in accordance with Section 9.0200. 
+2. The minimum percentage landscaping requirements, apart from those required for parking lots, street 
+trees, buffers (Section 9.0100) and required mitigation areas, may be met by preserving the RA. 
+3. Density Transfer. For the purposes of this section, development sites may include non-contiguous 
+properties provided all of the properties that form the development site are within the same Natural 
+Resource Overlay Subarea (i.e., Pleasant Valley, Springwater, Kelley Creek Headwaters, or all other 
+areas within the City of Gresham). See Map 5.0714-1. Development may be transferred to no more 
+than one non-contiguous property. On-site density transfer to avoid or minimize development shall be 
+allowed within RA as follows: 
+a. Single Detached Dwellings and Middle Housing Development Lot Transfer 
+i. The number of lots in areas receiving lot transfers shall not exceed 125 percent of the lots that 
+could be created for single detached dwellings at maximum density for the underlying zoning 
+district. 
+ii. A number of lots equal to no more than 50 percent of the minimum lots for single detached 
+dwellings permitted on the undisturbed RA portion of the site may be transferred onto the 
+non-RA portion of the development site. 
+iii. The actual number of lots transferred shall be the lesser of the number of lots in i or ii above. 
+iv. The transferred lots shall be in addition to the base number of dwelling units allowed in the 
+applicable zoning district. 
+b. Multi-family Development density transfer. 
+i. The density in areas receiving density transfers shall not exceed 125 percent of the density 
+allowed by the underlying subdistrict of the receiving area. 
+ 
+ 
+[5.0700]-15 
+City of Gresham Development Code  (07/26) 
+ii. A number of dwelling units equal to no more than 25 percent of the minimum density 
+permitted on the undisturbed RA portion of the site is permitted to be transferred onto the 
+non-RA portion of the development site. 
+c. Commercial, Industrial, and Institutional Development Floor Area Transfer 
+i. The floor area ratio in areas receiving FAR transfers shall not exceed 125 percent of the FAR for 
+the underlying sub-district of the receiving area. 
+ii. For density transfers in property developed as Commercial or Industrial, the transfer credit is 
+10,000 square feet floor area ratio (FAR) per acre of undisturbed land within the RA. For 
+developments that have no cap in FAR, the manager shall permit a reduction of the minimum 
+parking requirement of up to 25 percent of the standard minimum parking requirement. This 
+allowance is in addition to any other minimum parking reduction allowance provided in 
+Section 9.0800. 
+d. Within mixed-use developments the development transfer credit is factored using a combination 
+of Subsections (a), (b), and (c), above, which shall be pro-rated based on the percentages of gross 
+floor area (GFA) devoted to residential and non-residential uses. 
+e. To accommodate the transferred density, lot dimensional standards, lot sizes, and minimum 
+setbacks on the non-RA portion of the site may be reduced by no more than 20 percent. Applicants 
+may use the landscaping reductions in Subsection (B)(2). 
+f. All RA counted toward density transfer shall be permanently restricted from development and 
+maintained for habitat functions, such as by making a public dedication, creating a separate tract 
+and/or executing a restrictive easement. 
+5.0710  STANDARDS FOR SPECIFIC DEVELOPMENT TYPES WITHIN A RESOURCE 
+AREA   
+A. Single detached and middle housing. In addition to the general standards in Section 5.0709(A), the 
+following standards apply to the development of single detached dwellings and middle housing and 
+related accessory structures and dwellings on existing legal lots of record. Applicants who cannot or 
+choose not to comply with the standards of this section may apply for Alternative Review in accordance 
+with Section 5.0712. 
+1. The maximum disturbance area (permanent and temporary) allowed within the RA on a lot is 
+determined by subtracting all portions of the lot outside the RA from 6,000 square feet. If there is 
+6,000 square feet of contiguous land outside of the RA with a minimum dimension (at any point) of 40 
+feet in either width or depth, all permanent and temporary disturbance must occur outside the RA. If 
+there is not such a 6,000 square foot area outside the RA, encroachment into RA shall be limited to the 
+amount of area needed to make up for the deficit. 
+2. The entire disturbance area shall be entirely outside the HVRA. 
+3. Of the 6,000 square feet maximum disturbance area permitted within the RA, no more than 4,000 
+square feet shall be permanent disturbance area. The balance may be temporary disturbance area. 
+4. Trees may be removed within the permanent disturbance area. Within the temporary disturbance 
+area, no trees 24-inches DBH or larger shall be removed. If any part of the Critical Root Zone of a 24-
+inch DBH or larger tree is within a proposed permanent disturbance area, the entire Critical Root Zone 
+ 
+[5.0700]-16 
+City of Gresham Development Code  (07/26) 
+of the tree shall be included for the purposes of calculating the maximum permanent disturbance area. 
+Mitigation shall be in accordance with Section 5.0711(C). Dangerous Trees or trees listed on the City of 
+Gresham Invasive Plant List are exempt from this standard and may be removed. 
+5. A stormwater facility serving only a single residential lot is allowed to be located outside of the 
+disturbance area (temporary and permanent) but within the RA provided it is outside the HVRA, there 
+is no disturbance to existing tree canopy, and it is located outside the Critical Root Zone of existing 
+trees over 6 inches DBH. 
+B. Standards for Linear Utility Facilities. In addition to the general standards in Section 5.0709(A), the 
+following standards apply to new linear utility facilities (including private connections to existing or new 
+utility lines, and new utilities or upgrades of existing utility lines) that are proposed as a standalone 
+project. Linear utilities being proposed in conjunction with other development shall be subject to the NRO 
+standards applicable to that development rather than this section. Applicants who cannot or choose not to 
+comply with the standards of this section may apply for Alternative Review in accordance with Section 
+5.0712. 
+1. The maximum disturbance area in the RA shall be 1,200 square feet and the maximum width of the 
+disturbance area shall not exceed 12 feet at any point. 
+2. The disturbance area shall be fully restored with the exception of permanent access points along the 
+utility facility. Access points shall not exceed 144 square feet in size, shall be spaced no closer than one 
+every 200 feet of utility line, and shall not be located in an HVRA. 
+3. Linear utilities shall not run parallel to a stream within an RA for a continuous distance of longer than 
+600 feet. 
+4. Underground linear utilities that extend more than 50 feet into an RA or which cross a stream shall be 
+installed using bore, rather than trench, installation methods. 
+5. Trees under 24 inches DBH may be removed within the disturbance area. No trees 24-inch DBH or 
+larger shall be removed. If any part of the Critical Root Zone of a 24-inch DBH or larger tree is within a 
+proposed disturbance area, the entire tree shall be included for the purposes of calculating the 
+maximum disturbance area. Dangerous Trees or trees listed on the City of Gresham Invasive Plant List 
+are exempt from this standard and may be removed. 
+6. For utility projects undertaken by utilities across property that is not owned by the utility, the utility 
+shall not be required to map or provide any information about the property except for the area within 
+50 feet on either side of the proposed disturbance area of the utility’s project. 
+C. Standards for Non-Linear Utility Facilities other than Public Stormwater Facilities. These standards apply to 
+non-linear minor basic utilities such as diversion structures, lift stations, pump stations, wellheads, and 
+small water treatment facilities that serve more than one lot or development. In addition to the general 
+standards in Section 5.0709(A), the following standards apply to new facilities and upgrades of existing 
+facilities that are proposed as a standalone project. Non-linear utilities being proposed in conjunction with 
+other development (e.g., a land division) shall be subject to the NRO standards applicable to that 
+development rather than this section. Applicants who cannot or choose not to comply with the standards 
+of this section may apply using the Alternative Standards in Section 5.0712. 
+1. The maximum permanent disturbance area in the RA shall be 1,000 square feet. An additional 200 
+square feet of temporary disturbance area in the RA is permitted.  
+ 
+[5.0700]-17 
+City of Gresham Development Code  (07/26) 
+2. Disturbance areas shall not be allowed in the HVRA. 
+3. Trees under 24 inches DBH may be removed within the disturbance area. No trees 24-inch DBH or 
+larger shall be removed. If any part of the Critical Root Zone of a 24-inch DBH or larger tree is within a 
+proposed disturbance area, the entire tree shall be included for the purposes of calculating the 
+maximum disturbance area. Dangerous Trees or trees listed on the City of Gresham Invasive Plant List 
+are exempt from this standard and may be removed. 
+4. All trees required for mitigation shall be planted on site and outside of proposed utility access 
+easements. 
+D. Public Stormwater Facilities. These standards apply to publicly owned and maintained stormwater facilities 
+designed to manage water quality and/or water quantity and serve more than one lot or development. 
+The general standards in Section 5.0709(A) and 5.0711 apply, except as noted herein. These standards 
+apply to new facilities and upgrades of existing facilities that are proposed as a standalone project or in 
+conjunction with other development (e.g., a land division). Where applied in conjunction with other 
+development, all applicable standards of both sections will apply, except that allowances for disturbance 
+area and tree removal (including Section 5.0710(H)(4), 5.0710(I)(1) and 5.0710(I)(3)) shall not be 
+combined with the allowances of this section.  
+Applicants who cannot or choose not to comply with the standards of this section may choose to follow 
+Section 5.0710(H) or 5.0710(I) if applicable, without using the additional allowances of this section, or may 
+apply using the Alternative Standards in Section 5.0712. 
+1. Disturbance areas shall not be allowed in the HVRA and must be at least 50 feet from the outer 
+boundary of the HVRA.  
+2. The maximum disturbance area is limited to the footprint of the proposed stormwater facility, an 
+access route for maintenance, and necessary temporary disturbance to construct the facility such as 
+grading and construction access. Where the provisions of this section are applied, no additional 
+disturbance to the Resource Area is allowed, including allowances for disturbance otherwise permitted 
+under Section 5.0710(H)(4) and 5.0710(I)(1). 
+3. A maximum of six trees under 6 inches DBH may be removed within the disturbance area. No trees 6-
+inch DBH or larger shall be removed within the Resource Area. Dangerous Trees or trees listed on the 
+City of Gresham Invasive Plan List are exempt from this standard and may be removed.  
+4. Stormwater facilities must be vegetated according to the Gresham Stormwater Management Manual.  
+5. All permanent disturbance shall be mitigated following the standards of Section 5.0711. 
+6. No walls are allowed in conjunction with stormwater facilities within the Resource Area.  
+7. Where this provision is used in conjunction with a land division application, the requirements of 
+Section 5.0710(H)(5) or 5.0710(H)(6), as applicable, may be satisfied by putting 100 percent of the 
+Resource Area cumulatively within either a tract as described by that section or a public stormwater 
+tract.  
+E. Standards for Right-of-Ways and Public Access Easements. In addition to the general standards in Section 
+5.0709(A), the following standards apply to public rights-of-way (ROW) and Public Access Easements, 
+including roads and bridges (stream crossings). ROW and public access easements being proposed in 
+conjunction with other development (e.g., a land division) shall be subject to the standards of this section 
+in addition to the NRO standards applicable to that development. Applicants who cannot or choose not to 
+comply with the standards of this section may apply for Alternative Review in accordance with Section 
+ 
+[5.0700]-18 
+City of Gresham Development Code  (07/26) 
+5.0712. 
+1. For proposed improvements with ROWs and public access easements that include a stream crossing: 
+a. New stream crossings for motorized vehicles subject to this section are allowed only for street 
+classifications of collector or above shown on the Transportation System Plan, all other proposed 
+vehicle crossings require alternative review. 
+b. New stream crossings for bicycle and pedestrian traffic required by the Transportation System 
+Plan, Active Transportation Plan, and/or Appendix J of the Parks and Open Space Master Plan are 
+subject to this section, all other proposed pedestrian crossings require alternative review. 
+c. Within the RA, standard ROW cross section width dedication shall be required, although the width 
+of the street section improvements shall be reduced by eliminating medians, planter strips, and 
+parking lanes. 
+d. Stream crossings shall be designed by an Engineer. Stream crossings where no regulated floodplain 
+has been identified will be designed to pass a 100-year flood without any increase in the upstream 
+flood height elevation. 
+2. Trees under 24 inches DBH may be removed in the RA if the Critical Root Zone is within 10 feet of the 
+proposed improvements. No trees 24-inch DBH or larger shall be removed, except within the approved 
+permanent disturbance area established pursuant to Subsection (G), below. Dangerous Trees or trees 
+listed on the City of Gresham Invasive Plant List are exempt from this standard and may be removed. 
+3. Reduction of cross section for rights of way that lie entirely within the RA or HVRA may be allowed by 
+removing median, parking lane, planter strip, or combination thereof. Alleys may be utilized, including: 
+a. Dead-end alleys not exceeding a length of 150 feet that may be designed for two-way operation. 
+b. Alleys entirely within RA or HVRA are exempt from the alley design restriction of Appendix 
+5.501(G)(5). 
+F. Standards for Public Trails and Paths and Park Enhancements. In addition to the general standards in 
+Section 5.0709(A), the following standards apply to public trails, paths and related park enhancements, 
+except for bridges/stream crossings allowed in accordance with Section 5.0710(E). Applicants who cannot 
+or choose not to comply with the standards of this section may apply for Alternative Review in accordance 
+with Section 5.0712. 
+1. The maximum disturbance area within the RA shall be 500 square feet per acre of RA within the site. 
+2. All trails shall be outside the HVRA except as designated in Appendix J of the 2009 Gresham Parks and 
+Recreation, Trails and Natural Areas Master Plan (or its successor). 
+3. New trails or paths shall not result in disturbance of the Critical Root Zone of any tree 6-inch DBH or 
+greater in size whose trunk is located inside the HVRA. 
+4. Trees under 24 inches DBH may be removed within the disturbance area. No trees 24-inch DBH or 
+larger shall be removed. If any part of the Critical Root Zone of a 24-inch DBH or larger tree is within a 
+proposed disturbance area, the entire tree shall be included for the purposes of calculating the 
+maximum disturbance area. Dangerous Trees or trees listed on the City of Gresham Invasive Plant List 
+are exempt from this standard and may be removed. 
+5. All trees required for mitigation shall be planted outside of those areas that will be maintained to 
+provide trail access. 
+ 
+[5.0700]-19 
+City of Gresham Development Code  (07/26) 
+6. The proposed trail, path, or enhancement shall be associated with previously developed park 
+infrastructure, be connected to the existing park systems, implement master planned park facilities, or 
+be identified in Appendix J of the 2009 Gresham Parks and Recreation, Trails and Natural Areas Master 
+Plan (or its successor). 
+G. Standards for Municipal Utility Facilities. In addition to the general standards in Section 5.0709(A), the 
+following standards apply to municipal utility facilities associated solely with Capital Improvement Projects. 
+For the purposes of this section, municipal utility facilities include: municipal potable water, municipal 
+stormwater and municipal wastewater utility facilities including but not limited to water treatment plants, 
+wastewater treatment plants, raw water intakes, pump stations, transmission mains, conduits or service 
+lines, reservoirs, and outfall devices. These facilities may be built, expanded, repaired, maintained, 
+reconfigured, rehabilitated, replaced or upsized within an RA provided that the standards are met. 
+Applicants shall comply with the application requirements in Section 5.0712(A), except the only one 
+alternative (the preferred alternative) must be evaluated. The application shall demonstrate that the 
+following standards are met. 
+1. The project does not encroach closer to an HVRA than practicable; and 
+2. Best management practices will be employed that accomplish the following: 
+a. Account for watershed assessment information in project design. 
+b. Minimize trenching and tree removal within the RA through methods such as boring. 
+c. Obtain necessary local or state erosion control permit. Utilize and maintain erosion controls until 
+site stabilization measures are established. 
+d. Replant immediately after backfilling or as soon as weather conditions allow. 
+e. Retain topsoil (stockpiled outside of RA if feasible) and use for final cover. 
+f. Minimize the duration of the work within the RA. 
+g. Complete in-water construction during appropriate seasons, or as approved within requisite 
+Federal or State permits. 
+H. Standards for Land Divisions and Property Line Adjustments. Applicants who cannot or choose not to 
+comply with the standards of this section may apply for Alternative Review in accordance with Section 
+5.0712. 
+1. Land divisions for uses other than single detached dwelling or middle housing development. 
+a. Applicants who are dividing, but not further developing, shall comply with the standards in 
+Subsections (5) – (6) and shall: 
+i. Complete the mitigation requirements in accordance with Section 5.0711 and thereby exempt 
+all subsequent development on lots or parcels containing RA from further review under this 
+overlay.
+0F1 The City will verify that the mitigation requirements have been met when individual 
+lot building permit applications are processed; or 
+ii. Not complete the mitigation requirements, thus requiring that all subsequent development 
+ 
+1 This does not exempt any development from protecting resources present at the time of any future development 
+application. All future development must ensure compliance with state and federal resource protection rules related to 
+jurisdictional water resources. 
+ 
+[5.0700]-20 
+City of Gresham Development Code  (07/26) 
+within an RA be subject to further land use review for compliance with this overlay. 
+b. Applicants who are dividing and further developing shall comply with the standards in Subsections 
+(5) – (7), the general standards in Section 5.0709(A), and all of the requirements of the NRO 
+applicable to the development. Building permits may be issued once one or both of the following 
+has occurred: 
+i. When the City will be implementing the mitigation requirements, the Applicant has 
+transferred to the City all mitigation and maintenance funding required by the Conditions of 
+Approval; and/or 
+ii. When the Applicant is responsible for implementing the mitigation requirements, the 
+mitigation plan has been approved and a Guarantee of Completion equal to 110 percent of the 
+estimated cost of mitigation implementation and maintenance is filed with the City. The 
+Guarantee of Completion shall ensure site preparation and initial planting within one year of 
+final plat approval. 
+2. Land divisions for single detached dwelling or middle housing development. Applicants shall comply 
+with the standards in Subsections (3) – (8), the general standards in Section 5.0709(A), and all other 
+requirements of the NRO applicable to the development. Building permits may be issued once one or 
+both of the following has occurred: 
+a. When the City will be implementing the mitigation requirements, the Applicant has transferred to 
+the City all mitigation and maintenance funding required by the Conditions of Approval; and/or 
+b. When the Applicant is responsible for implementing the mitigation requirements, the mitigation 
+plan has been approved and a Guarantee of Completion equal to 110 percent of the estimated 
+cost of mitigation implementation and maintenance is filed with the City. The Guarantee of 
+Completion shall ensure site preparation and initial planting within one year of final plat approval. 
+ 
+3. Each lot or parcel created for single detached dwelling or middle housing development shall have a 
+developable area of no less than 2,000 square feet with a building envelope whose minimum width or 
+depth is at least 16 feet. The developable area on each lot shall be drawn, dimensioned, and noted on 
+the subdivision plat to demonstrate compliance with this standard. 
+4. The maximum amount of RA that may be disturbed within the subdivision or partition shall not exceed 
+10 percent of the total RA on the parent parcel. Trees and vegetation may be removed within the 
+disturbance area provided mitigation is provided in accordance with Section 5.0711. If any part of the 
+Critical Root Zone of a 24-inch DBH or larger tree is within a proposed disturbance area, the entire tree 
+shall be included for the purposes of calculating the maximum disturbance area. 
+5. Except as allowed pursuant to Subsection (6) below, when a property containing any RA is divided, 
+plats shall delineate and show the RA as a separate unbuildable tract according to the following 
+process: 
+a. The applicant must place at least 90 percent of the RA in a separate tract. In addition, where 
+mitigation is proposed at the time of land division, any RA that is proposed to be preserved, and 
+therefore is not mitigated, shall also be placed in a separate tract. The separate tract(s), which 
+shall not be a part of any lot used for construction of a dwelling unit or any other development, 
+shall be shown on the preliminary plat. 
+ 
+[5.0700]-21 
+City of Gresham Development Code  (07/26) 
+b. Prior to final plat approval, ownership of the RA tract shall be identified to distinguish it from lots 
+intended for sale. The tract may be identified as any one of the following: 
+i. Private natural area held by the owner or homeowners’ association by a restrictive covenant 
+conveying storm and surface water management rights to the City; or 
+ii. For residential subdivisions, private natural area subject to Natural Resource and Watershed 
+Easement established in accordance with Section 9.0303; or 
+iii. At the owner’s option and if accepted by the City, public natural area where the tract has been 
+dedicated to the City or Metro along with conveying stormwater and surface water 
+management rights to the City; 
+c. Any of the above documents in Subsection (b) shall be submitted to the City for review and after it 
+is approved as part of the final plat review process, be recorded with Multnomah County along 
+with the subdivision plat 
+6. If the parent parcel is less than 22,000 square feet, a separate tract is not required. However, the 
+Applicant shall place at least 70 percent of the RA in a Natural Resource and Watershed Easement 
+established in accordance with Section 9.0303. 
+7. The amount of impervious area shall be minimized within an RA as follows: 
+a. When driveways for multiple properties are proposed inside an RA, the driveways shall be shared 
+by at least two properties. 
+b. No access shall be granted through an RA if access can be achieved outside the RA. 
+8. Within the Pleasant Valley and Springwater subareas (shown on Map 5.0714-1), the rear property line 
+of a single detached dwelling or middle housing lot shall not abut an RA. The City may allow exceptions 
+to this standard due to topography, existing development, street layout, or other reasons that make 
+this requirement impractical. Land divisions which do not include new streets or roads are exempt 
+from this requirement. 
+9. Property Line Adjustments. The following standards apply to Type I Property Line Adjustments (PLAs). 
+The site of a Property Line Adjustment is the two properties affected by the relocation of the common 
+property line. The standards in Subsections (a) and (b), below, shall be met. 
+a. A Property Line Adjustment shall not result in any property being entirely in the RA, unless that 
+property is entirely in the RA before the PLA, or the property will be dedicated or limited by deed 
+restriction to open space use. 
+b. The amount of developable area on each property that is outside of the RA may not be reduced 
+below 2,000 square feet with a building envelope whose minimum dimension is at least 16-feet. 
+The Property Line Adjustment shall not cause a property that contains less than this amount of 
+developable area to move further out of conformance. 
+I. Other Development Activities subject to Maximum Disturbance Area Standard. In addition to the general 
+standards in Section 5.0709(A), the following maximum disturbance area standards apply to all regulated 
+development activities except for those uses and activities regulated by Subsections (C) through (F) or 
+Subsection (H) above. Applicants who cannot or choose not to comply with the standards of this section 
+may apply for Alternative Review in accordance with Section 5.0712. 
+1. The maximum permanent disturbance area allowed is 25 percent of the RA on the site. In addition, a 
+temporary disturbance area is allowed within 10 feet of the proposed improvements up to a maximum 
+ 
+[5.0700]-22 
+City of Gresham Development Code  (07/26) 
+of 5 percent of the RA on the site. 
+2. The disturbance area (temporary and permanent) shall be entirely outside the HVRA. 
+3. Trees may be removed within the permanent disturbance area. Within the temporary disturbance 
+area, no trees 24-inches DBH or larger shall be removed. If any part of the Critical Root Zone of a 24-
+inch DBH or larger tree is within a proposed disturbance area, the entire tree shall be included for the 
+purposes of calculating the maximum permanent disturbance area. Dangerous Trees or trees listed on 
+the City of Gresham Invasive Plant List are exempt from this standard and may be removed. 
+4. Non-residential applications that are otherwise subject to a discretionary review process shall provide 
+findings demonstrating that the proposal minimizes the number of trees 24-inch DBH or larger 
+proposed for removal. 
+5.0711  MITIGATION REQUIREMENTS   
+In order to achieve the goal of reestablishing the ecological values and functions provided by the Resource 
+Area, tree replacement and vegetation planting are required when development extends into an RA. The City 
+of Gresham mitigation requirements can be met by demonstrating compliance with the standards of this 
+section. Applicants who cannot or choose not to comply with the standards of this section may apply for 
+Alternative Review in accordance with Section 5.0712. 
+A. Exemptions. Removal of trees listed on the City of Gresham Invasive Plant List or Dangerous trees are 
+exempt from the mitigation standards of this section. Dangerous Trees shall be replaced at a ratio of one 
+tree planted on site for each tree removed. 
+B. Jurisdictional Wetlands. Wetland mitigation shall be conducted per the functional and area replacement 
+standards established by the Army Corps of Engineers and the Oregon Department of State Lands. The 
+NRO shall not impose additional mitigation requirements for wetlands that exceed the mitigation ratios or 
+functions required by federal and state law. Impacts to protected water features shall be mitigated within 
+the sub-watershed (6th Field Hydrologic Unit Code) where the property is located, and all mitigation shall 
+be done using native plants. Impacts to any RA that are not within the boundaries of the jurisdictional 
+wetland shall be mitigated pursuant to Subsections C or D, as applicable. 
+C. Mitigation Standards for Single Detached Dwellings or Middle Housing on existing legal lots of record. 
+Mitigation for single detached dwellings, middle housing, and related accessory structures and accessory 
+dwellings on existing legal lots of record shall be conducted off-site by the City of Gresham. Applicants are 
+required to pay for off-site mitigation -in-lieu of providing onsite mitigation otherwise required by the 
+NRO. The payment shall be based on a rate set by Council resolution. Payment is not required in the 
+following situations: 
+1. Mitigation has been or will be completed for a jurisdictional wetland in accordance with Subsection (B) 
+and no other mitigation is required. 
+2. Mitigation was completed in conjunction with the land division that created the lot in accordance with 
+Section 5.0710(H). 
+D. Mitigation Standards for All Other Uses and Activities. 
+1. Mitigation shall occur at a 2:1 ratio of mitigation area to proposed disturbance area. The target plant 
+density within mitigation areas is specified below. 
+ 
+ 
+[5.0700]-23 
+City of Gresham Development Code  (07/26) 
+PLANT TYPE TARGET PLANT DENSITY WITHIN MITIGATION AREA 
+Trees 436 Trees per Acre 
+Shrubs 2,178 Shrubs per Acre 
+Ground Cover 90% Coverage Within 3 Years, 100% Cover Within 5 Years 
+ 
+The total number of trees and shrubs required within a mitigation shall be calculated as follows: 
+ 
+PLANT TYPE FORMULA FOR CALCULATING REQUIRED MITIGATION PLANTING 
+Total Number of Trees Mitigation Area (sf) x 0.01 (trees/sf) 
+Total Number of Shrubs Mitigation Area (sf) x 0.05 (shrubs/sf) 
+Ground Cover Seed or Install Native Ground Cover Plants (Grasses or Forbs) to Achieve 
+Target Plant Density 
+NOTE: The number of trees to be planted may be reduced based on the existing canopy coverage of trees within the 
+mitigation area (Adjusted total number of trees = (Mitigation Area (sf) – Existing Canopy Coverage (sf)) x 0.01 trees/sf)). 
+Canopy coverage must be determined by an arborist. 
+The number of shrubs to be planted may be reduced based on the total area of continuous shrub coverage within the 
+mitigation area (Adjusted total number of shrubs = (Mitigation Area (sf) – Continuous Shrub Coverage (sf)) x 0.05 
+shrubs/sf)). Continuous shrub coverage must be identified by a qualified natural resource specialist and surveyed by a 
+professional land surveyor, with dominant species identified.  
+ 
+2. All vegetation shall be planted on the Applicant’s site within the RA or in an area contiguous to the RA; 
+provided, however, that if the vegetation is planted outside the RA, then the Applicant shall preserve 
+the contiguous area by executing a deed restriction, such as a restrictive covenant. Location of 
+mitigation areas shall be prioritized as specified below. 
+PRIORITY LOCATION 
+Riparian Priority 1 Within the HVRA, outside the Fire Defensible Spaces Zones 1 and 2 
+Riparian Priority 2 Within the RA, outside of Fire Defensible Spaces Zones 1 and 2 
+Riparian Priority 3 Within the HVRA or RA, within Fire Defensible Spaces Zone 2 
+NOTE:  
+Fire Defensible Spaces Zone 1 – Within 10 feet of a habitable structure 
+Fire Defensible Spaces Zone 2 – Within 30 feet of a habitable structure 
+No mitigation credit will be given for plantings proposed within a Fire Defensible Spaces Zone 1 (within 10 feet of a 
+habitable structure) 
+ 
+3. All mitigation plantings shall be native species appropriate for site soil types, hydrologic conditions, 
+aspect and existing vegetation coverage, topography, geologic hazard status, and fire safety. 
+a. Plantings shall consist of no more than 1 in 10 mitigation trees and no more than 1 in 10 mitigation 
+shrubs designated as belonging to one of the following groups. Numeric limitations apply per 
+group, rather than across all groups. 
+i. ‘Suspected Climate Stressed’ on the Gresham Native Plant List. 
+ 
+[5.0700]-24 
+City of Gresham Development Code  (07/26) 
+ii. ‘Very High Forest Pest Risk’ on the Gresham Native Plant List 
+b. If 20 or more mitigation trees are planted, no more than 1/3 shall be of the same species. 
+c. If fewer than 100 shrubs are planted at least three shrub species are required to be used. For more 
+than 100 shrubs at least six shrub species are required to be used. 
+4. All plants that are on the Gresham Invasive Plant List must be removed from the mitigation area prior 
+to mitigation plant installation. Invasive control methods prior to planting and after planting shall be 
+noted in the mitigation plan. 
+5. A mitigation maintenance plan shall be included and shall be sufficient to ensure the success of the 
+planting. Compliance with the plan shall be a condition of development approval. 
+6. The Applicant is responsible for monitoring the mitigation site for five years and submitting an annual 
+monitoring report to the City during that monitoring period demonstrating that the following 
+minimum success thresholds for mitigation plant survival and invasive species eradication on the site 
+are being met. If survival of trees or shrubs drops below 80 percent of the initial required planting 
+quantities within the first five years, replacement plants must be added to maintain 80 percent or 
+greater survival of plantings. Prior to re-planting, the cause of plant mortality must be determined and 
+documented with a description of how the problem will be corrected. 
+ 
+PLANT TYPE SUCCESS THRESHOLDS 
+Mitigation Trees 350 Trees per Acre (0.008 Trees per Square Foot) 
+Mitigation Shrubs 1,750 Shrubs per Acre (0.04 Shrubs per Square Foot) 
+Mitigation Ground Cover 90% Cover After 3 Years; 100% Cover After 5 Years 
+Invasive Plants Invasive Plant Coverage May Not Exceed 20% or 25 Square Feet of 
+Contiguous Area Within the Mitigation Area 
+ 
+a. Plant survival shall be demonstrated as follows: 
+i. For mitigation sites that are less than or equal to 0.25 acres in size: 
+• Complete census of installed tree and shrub plantings 
+• Visual estimate to provide cover and species diversity of herbaceous plants. 
+• Visual estimate of invasive plant coverage 
+ii. For mitigation sites that are greater than 0.25 acres in size: 
+• Vegetation sampling to provide annual estimates of cover, species diversity, and density of 
+woody vegetation. Depending on the Mitigation Plan, sampling may need to be conducted 
+within distinct planting zones (i.e., within Fire Defensible Spaces, within riparian forest, 
+within utility corridor, etc.). Annual monitoring shall include the following: 
+○ Use of permanent plots and visual estimates to sample tree, shrub, herbaceous, and 
+invasive species coverage. 
+○ Sampling shall be conducted during the same stage of the growing season each year, 
+which shall be a period when plants are easily identifiable. 
+○ A minimum of five sample plots for mitigation areas two acres or less. An additional 
+two sample plots for each acre of mitigation area thereafter. 
+ 
+[5.0700]-25 
+City of Gresham Development Code  (07/26) 
+○ Sample plots should cover at least 700 square feet. 
+• Additional vegetation monitoring details can be found in DSL’s Routine Monitoring 
+Guidance for Vegetation. 
+b. At a minimum, the annual monitoring report must contain the following: 
+• Photos from fixed locations 
+• Sampling data sheets 
+• Summarized sampling results 
+• Monitoring plan showing the location of sample plots and photo points. 
+7. Financial guarantee, in the form of an instrument approved by the City, shall be submitted to the City 
+before building permits are issued, or when no building permit is required before development within 
+the RA commences. It shall be in an amount adequate to cover 110 percent of the cost of performing 
+the mitigation. The City will release the guarantee at the end of the five-year monitoring period, or 
+before, if it determines that the trees and shrubs have been successfully established. 
+8. No Certificate of Occupancy will be issued until mitigation has been installed. 
+E. Requests to provide Payment-in-Lieu of Mitigation. An Applicant may request approval to provide 
+payment-in-lieu of mitigation for all or a portion of the required mitigation. The payment-in-lieu amount is 
+set by Council resolution and shall be used for natural resource projects within the city at large. 
+1. Type II review of a request to provide payment-in-lieu of mitigation is required for projects involving 
+Design Review (Types B, C, D, and E only), land division, or vegetation removal or disturbance areas 
+within the RA in excess of 10,000 square feet. 
+a. Application requirements. In addition to the application requirements in Section 5.0707, 
+applicants shall submit an Impact Evaluation and Alternatives Analysis prepared in accordance 
+with Section 5.0712(A)(1). 
+b. Approval criteria. The Applicant has demonstrated that it is not practicable to complete all or a 
+portion of the mitigation on-site due to insufficient land area suitable for mitigation. Land area 
+may be considered unsuitable for mitigation if it is developed or contaminated or has similar 
+constraints, or if it has existing high quality resources that would not benefit from mitigation. 
+2. For projects which do not meet the thresholds in Subsection (1), applicants may request that the City 
+accept payment-in-lieu of mitigation through a Type I review provided there are no impacts to the 
+HVRA. 
+3. If the Applicant chooses, the Applicant may offer to convey land to the City, for natural resource 
+purposes, to meet some or all of the payment-in-lieu. Determination of the land’s ecological value and 
+whether or not to accept the offer of conveyance is at the city’s sole discretion. 
+PROCESS  
+5.07 12 ALTERNATIVE REVIEW    
+Applicants who cannot or choose not to comply with the standards of Section 5.0709, 5.0710, or 5.0711, may 
+apply for Alternative Review in accordance with this Section. 
+ 
+[5.0700]-26 
+City of Gresham Development Code  (07/26) 
+A. Application Requirements. In addition to the items described in Section 5.07087 the Applicant shall also 
+provide information described in Subsections (1) through (3) and any additional information needed to 
+demonstrate compliance with the approval criteria in Subsection B. For utility projects undertaken by 
+public utilities across property that is not owned by the utility, the utility is not required to map or provide 
+any information about the property except for the area within 100 feet of the location of the proposed 
+disturbance area of the utility’s project. 
+1. Alternatives Analysis and Impact Evaluation. An alternatives analysis and impact evaluation are 
+required to determine compliance with the approval criteria and to evaluate development alternatives 
+for a particular property. 
+The alternatives analysis and impact evaluation shall include all the following items: 
+a. Identification and assessment of the ecological functions provided by the Resource Areas on the 
+project site, and if it is reasonably certain that there will be off-site impacts, the functions of the 
+RA and HVRA within the same sub-watershed (6th Field Hydrologic Unit Code), including: 
+• Hydrologic Function (water storage and delay) 
+• Water Quality Function (sediment stabilization and retention, phosphorous retention, nitrate 
+removal and retention) 
+• Aquatic Habitat Support Function (for anadromous and/or resident species) 
+• Terrestrial Habitat (for invertebrates, native plant diversity, pollinators, birds, reptiles, 
+amphibians, and mammals) 
+• Stream Temperature Moderation 
+b. Evaluation of alternative locations, design modifications, or alternative methods of development 
+to determine which option best reduces the impacts. At a minimum, the analysis should evaluate 
+three alternatives: 1) no project, 2) the preferred alternative, and 3) a second practicable 
+alternative that proposes less development within RAs. 
+The alternatives shall be evaluated on the basis of their unavoidable impacts on the RA, the 
+ecological functions provided by the RA on the property and off-site impacts within the sub-
+watershed (6th Field Hydrologic Unit Code). The applicant must provide adequate detail for the 
+evaluated alternatives so that the distinct locations, designs, and construction methods and their 
+unavoidable impacts can be compared. The applicant must clearly demonstrate that the preferred 
+alternative’s location, design, and construction methods represents the alternative with the least 
+unavoidable impact overall to the ecological functions provided by the project site. 
+c. For the selected alternative, an explanation of unavoidable impacts must be provided. The full 
+range of impacts must be detailed, including the precise impact areas (both temporary and 
+permanent) as well as impacts to ecological functions provided at the site and, if applicable, within 
+the same sub-watershed. 
+d. With the exception of the standard(s) subject to the alternative review, the applicant shall 
+document that all other applicable NRO standards are met. 
+2. Mitigation Plan for Alternative Review. The purpose of a mitigation plan is to compensate for 
+unavoidable impacts that result from the chosen development alternative as identified in the impact 
+evaluation. 
+a. An Applicant may choose to develop a mitigation plan consistent with the requirements of Section 
+ 
+[5.0700]-27 
+City of Gresham Development Code  (07/26) 
+5.0711. If an Applicant so chooses, then the Applicant shall submit a mitigation plan demonstrating 
+such compliance. 
+b. If an Applicant chooses to develop a mitigation plan that would not comply with the requirements 
+of Section 5.0711, then the Applicant shall submit a mitigation plan that includes all the following: 
+i. An explanation of how the proposed mitigation will adequately compensate for unavoidable 
+impacts described in the impact evaluation required by Subsection 5.0712(A)(1). The Applicant 
+may use the mitigation that would be required under Section 5.0711 as the baseline mitigation 
+required to compensate for unavoidable impacts to an RA that provides an average level of 
+ecological functions. 
+ii. Documentation of permits from Army Corps, DSL, MCDD and DEQ (if applicable). 
+iii. A list of all parties responsible for implementing and monitoring the mitigation plan and, if 
+mitigation will occur off-site, the names of the owners of property where mitigation plantings 
+will occur and documentation of a deed restriction. 
+iv. The Applicant’s mitigation site monitoring, success criteria, and reporting plan. 
+v. A complete list of proposed mitigation plantings. 
+vi. If offsite mitigation is proposed, a narrative description of why mitigation cannot be completed 
+on site. The following could be considered: 
+• Inadequate RA available 
+• Remaining RA already includes a documented mitigation area 
+• Remaining RA already provides a high level of functions 
+ 
+ 
+ 
+vii. If mitigation is proposed which is not within the same sub-watershed (6th Field Hydrologic 
+Unit Code) as the proposed impact, documentation that provides evidence that there are no 
+properties within the sub-watershed that are available for purchase and/or could provide the 
+opportunity to off-set the project’s unavoidable impacts. This could include documentation of 
+the following: 
+• Communication records with property owners that potential mitigation areas are not 
+available 
+• Records of a documented mitigation area for properties that would otherwise be 
+appropriate for RA mitigation 
+• Documentation or analysis results that indicate there are inadequate mitigation 
+opportunities on properties within the sub-watershed 
+viii. For a proposal that includes mitigation on a site within the same 5th Field Hydrologic Unit 
+Code, the applicant’s mitigation plan should include a narrative description of how the 
+proposal will adequately offset unavoidable impacts of the project to the functions of the RA. 
+ix. Mitigation shall not be allowed on sites that are outside of the same 5th Field Hydrologic Unit 
+Code excepting that wetland mitigation of 0.2 acres and less can be mitigated through state-
+approved PIL or bank opportunities if the applicant can demonstrate no feasible options exist 
+ 
+[5.0700]-28 
+City of Gresham Development Code  (07/26) 
+for mitigation within the 5th field HUC. 
+3. The Impact Evaluation and Alternatives Analysis shall be prepared and signed by a knowledgeable and 
+qualified natural resource professional, such as a wildlife biologist, wetland scientist, botanist, or other 
+appropriate and knowledgeable discipline. The application shall include a description of the 
+qualifications and experience of all persons that contributed to the Alternatives Analysis and Impact 
+Evaluation and to the Mitigation Plan, and, for each person that contributed, a description of the 
+elements of such reports to which the person contributed. 
+B. Approved Criteria. 
+1. Avoid intrusion. An Applicant shall first avoid the intrusion of development into the HVRA and RA to 
+the extent practicable. The development that is proposed shall have less overall unavoidable impact to 
+the HVRA or RA or ecological functions of the HVRA or RAs than other practicable alternative(s), 
+including a different practicable alternative(s) that proposes less development within RAs. If there is 
+HVRA on a property then the Applicant shall first avoid the intrusion of development into the HVRA, to 
+the extent practicable. Specifically, the alternatives analysis must demonstrate that there are no 
+practicable alternatives for the proposed use or activity to be located outside the RA or to be located 
+inside the RA and to be designed and constructed in a way that will meet all of the applicable NRO 
+development standards. Where the RA will be avoided, the construction management plan must 
+designate the RA to be left undisturbed and demonstrate that there will be no impacts to the RA or the 
+functions of the RA in the designated area(s). To avoid development in Ras and HVRAs, to the extent 
+practicable, Applications should consider the best management practices outlined in the Gresham 
+Environmental Technical Guidance Manual. 
+ 
+ 
+ 
+2. Minimize impacts. If the Applicant demonstrates that there is no practicable alternative that will avoid 
+disturbance of the RA or HVRA, then the development proposed by the Applicant within the RA or 
+HVRA shall minimize unavoidable impacts to the extent practicable. If there is HVRA on a property, 
+then the development within HVRA shall be considered more detrimental than development within 
+other parts of the RA. 
+a. The applicant’s Alternatives Analysis and Impact Evaluation must demonstrate that the proposed 
+development will minimize unavoidable impacts to ecological functions and loss of habitat 
+consistent with uses allowed by right under the base zone, to the extent practicable. 
+b. To the extent practicable within the RA, the proposed development shall be designed, located, and 
+constructed to minimize grading, removal of native vegetation, disturbance and removal of native 
+soils, adverse hydrological impacts on water resources , and impacts on wildlife corridors and fish 
+passage through the use of the best management practices and habitat-friendly development 
+practices. Examples of these are outlined in the City of Gresham Environmental Technical 
+Guidance Manual. 
+3. Mitigate impacts. If the Applicant demonstrates that there is no practicable alternative that will avoid 
+disturbance of the RA, then development shall mitigate for unavoidable impacts. The mitigation plan 
+must demonstrate how the functions listed in Section 5.0713A(1)a are maintained or enhanced. All 
+ 
+[5.0700]-29 
+City of Gresham Development Code  (07/26) 
+proposed mitigation plans shall meet the following standards: 
+a. The mitigation plan shall demonstrate that it compensates for unavoidable impacts after taking 
+into consideration the Applicant’s efforts to minimize such impacts through the use of the best 
+management practices outlined in the City of Gresham Environmental Technical Guidance Manual 
+and through any additional or innovative techniques. 
+b. Mitigation shall occur on the site of the disturbance, to the extent practicable. If onsite mitigation 
+is not practicable, the location of the proposed offsite mitigation must comply with 
+5.0712(A)(2)(vii)-(A)(2)(x). 
+c. All re-vegetation plantings shall be with native plants. listed in the City of Gresham Environmental 
+Technical Guidance Manual. 
+d. All in-stream work in fish-bearing streams shall be done in accordance with the Oregon 
+Department of Fish and Wildlife (ODFW) in-stream work timing schedule or approved in-water 
+work timing variance (approved by National Marine Fisheries Service (NMFS). 
+e. A mitigation maintenance plan shall be included and shall be sufficient to ensure the success of the 
+planting. Compliance with the plan shall be a condition of development approval. 
+f. Financial guarantee, in the form of an instrument approved by the City, shall be submitted to the 
+City before building permits are issued, or when no building permit is required before 
+development within the RA commences. It shall be in an amount adequate to cover 110 percent of 
+the cost of performing the mitigation. The City will release the guarantee at the end of the five-
+year monitoring period, or before, if it determines that the trees and shrubs have been 
+successfully established. 
+ 
+ 
+ 
+g. A mitigation plan that entails the amount of planting that would be required under Section 5.0711 
+based on the amount of proposed disturbance area within the RA, and that otherwise complies 
+with all of the mitigation requirements in Section 5.0711, shall be considered to have satisfied this 
+approval criterion. 
+5.0713  MODIFICATIONS OF NRO STANDARDS   
+Where the compliance with the NRO would cause unreasonable hardship, applicants may seek a Type II Minor 
+Variance or a Type III Major Variance pursuant to Section 10.1500. 
+5.0714  MAPPING PROTOCOLS   
+Mapped Resource Area (RA), High Value Resource Area (HVRA), and Potential Resource Area (PRA) boundaries 
+are based on a GIS-supported application of the following mapping protocols. RAs and HVRAs include water 
+features and buffers and upland habitat. All areas within the boundaries of the water features itself are 
+designated as HVRA. Areas within the boundaries of the buffer are designated as either RA or HVRA. All buffer 
+measurements are based on horizontal distance rather than a slope distance. The buffers recognize the unique 
+natural resource opportunities within the new communities of Pleasant Valley, Springwater and Kelley Creek. 
+ 
+[5.0700]-30 
+City of Gresham Development Code  (07/26) 
+The boundaries of these subareas are identified on Map 5.0714-1. 
+A. Resource Areas (RA) and High Value Resource Areas (HVRA). Resource Areas and High Value Resource 
+Areas include areas with the following attributes: 
+1. Regulated wetlands and associated RA and HVRA. 
+a. Water feature. Regulated wetlands are designated as HVRAs. Regulated wetlands include wetlands 
+shown on National Wetland Inventory (NWI) mapping, Local Wetland Inventory (LWI) mapping, 
+and protected wetlands identified in DSL concurred site-specific studies as well as other wetlands 
+associated with streams and other non-wetland waterways. See also Section 5.0715(B). 
+b. Buffer. The RA and HVRA associated with the regulated wetlands includes a buffer measured 50 
+feet from the edge of the wetland or from the delineated edge of the wetland, where the edge of 
+the wetland is delineated in accordance with methods required by the Department of State Lands 
+and the Corps of Engineers. The inner 35 feet of the buffer closest to the edge of the wetland is 
+designated as HVRA. 
+2. Regulated streams and associated RA and HVRA. 
+a. Water feature. Regulated streams are designated as HVRAs. Regulated streams include all streams 
+shown on the City’s GIS stream layer. The GIS stream layer was developed by modeling LiDAR 
+topography and ground-truthing streams identified in headwater situations. Streams are 
+continued through other waters and wetlands where applicable. 
+b. Buffer. The RA and HVRA associated with a regulated stream include a buffer on either side 
+measured from the centerline of the stream. The width of the RA and HVRA varies depending on 
+stream order as described in Table 5.0714-1. For the purposes of this chapter, “stream order” is 
+based on the "top down" Strahler system where rivers of the first order are the outermost 
+tributaries. If two streams of the same order merge, the resulting stream is given a number that is 
+one higher. If two streams with different stream orders merge, the resulting stream is given the 
+higher of the two numbers. 
+3. Other regulated waters and associated RA and HVRA. 
+a. Water feature. Other regulated (non-wetland) waters are designated as HVRAs. These include 
+ponds and lakes created in-line with a stream channel. 
+b. Buffer. The RA and HVRA associated with other regulated non-wetland waterbodies include a 
+buffer measured landward from the b Ordinary High Water Mark of the waterbody. The width of 
+the RA and HVRA associated with the waterbody corresponds to the RA and HVRA width 
+associated with the stream order of the stream that flows out of the waterbody, as described in 
+Table 5.0714-1. 
+4. Upland Habitat Areas. 
+a. Significant Upland Habitat Areas which were identified as discrete upland habitat of importance in 
+either the Pleasant Valley Master Plan or the Springwater Master Plan are designated as RA. 
+b. Publicly owned land acquired predominantly for protection of natural resources or open space 
+uses are designated as RA. 
+Table 5.0714- 1: Resource Area Buffer Width 
+ 
+[5.0700]-31 
+City of Gresham Development Code  (07/26) 
+REGULATED WATER FEATURE RESOURCE 
+AREAS TYPE 
+PLEASANT VALLEY PLAN 
+DISTRICT, SPRINGWATER 
+PLAN DISTRICT, KELLY 
+CREEK HEADWATERS 
+ALL OTHER 
+LOCATIONS 
+WITHIN THE CITY 
+OF GRESHAM 
+Streams 
+ 
+Streams Orders 1-5 
+(Measured from 
+Centerline of Stream) 
+1 RA 50 feet 50 feet 
+HVRA 35 feet 35 feet 
+2 RA 200 feet 100 feet 
+HVRA 50 feet 50 feet 
+3 RA 200 feet 100 feet 
+HVRA 50 feet 50 feet 
+4 RA 200 feet 100 feet 
+HVRA 50 feet 50 feet 
+5 RA 200 feet 125 feet 
+HVRA 50 feet 50 feet 
+Wetlands 
+(Measured from Delineated Edge) 
+RA 50 feet 50 feet 
+HVRA 35 feet 35 feet 
+Other Waters 
+(Measured from Ordinary high 
+Water Mark 
+RA 50 feet 50 feet 
+HVRA 35 feet 35 feet 
+ 
+ 
+ 
+ 
+ 
+ 
+Map 5.0714- 1: Natural Resource Overlay Subarea Boundaries  
+ 
+[5.0700]-32 
+City of Gresham Development Code  (07/26) 
+ 
+ 
+B. Potential Resource Area include the following lands that were not designated as RA, but which have a high 
+probability of including significant wetlands: 
+1. Those portions of the East Buttes toe of slope (as represented by the breakline contour) that have 
+hydric or partially hydric soils and have not been reviewed as part of a Local Wetland Inventory survey 
+or are not subject to a wetland determination, submitted to the City for review within the last 5 years. 
+These areas are indicated on Figure 5.0714-2. 
+2. Lots shown on a Local Wetland Inventory survey as “potential wetland.” 
+ 
+3. General areas identified by Natural Resources staff and City Consultants as potential wetlands based 
+
+ 
+[5.0700]-33 
+City of Gresham Development Code  (07/26) 
+on existing knowledge and remote sensing data. 
+Figure 5.0714- 2: East Buttes Potential Resources Area  
+ 
+5.0715  MAP ADMINISTRATION AND CORRECTION    
+A. Map Administration. The City shall incorporate all map updates associated with development permit 
+corrections to the location of the RA boundary after the land use decision is final. This shall not be 
+considered a comprehensive plan map amendment. In the case of purchase of upland acquired by a public 
+entity for parks or open space purposes, the map will be updated when change of ownership is provided to  
+ 
+ 
+the City unless the acquiring agency clearly identifies acquisition was to develop a parcel for active 
+
+ 
+[5.0700]-34 
+City of Gresham Development Code  (07/26) 
+recreational uses. In the case of newly updated information regarding “Potential Wetlands” under 
+5.0714.B.3, the map will be updated periodically. 
+B. Addition of regulated wetlands. As required by Metro Urban Growth Management Plan Section 3.07.340, 
+the City will amend the NRO map to add a wetland when the City or County receives significant evidence 
+that the wetland meets any one of the following criteria: 
+1. The wetland is fed by surface flows, sheet flows or precipitation, and has evidence of flooding during 
+the growing season, and has 60 percent or greater vegetated cover, and is over one-half acre in size; or 
+The wetland qualifies as having "intact water quality function" under the 1996 Oregon Freshwater 
+Wetland Assessment Methodology; or 
+2. The wetland is in the Flood Management Area, and has evidence of flooding during the growing 
+season, and is five acres or more in size, and has a restricted outlet or no outlet; or 
+The wetland qualifies as having "intact hydrologic control function" under the 1996 Oregon Freshwater 
+Wetland Assessment Methodology; or 
+3. The wetland or a portion of the wetland is within a horizontal distance of less than one-fourth mile 
+from a water body which meets the Department of Environmental Quality definition of "water quality 
+limited” water body in OAR Chapter 340, Division 41. 
+Examples of significant evidence that a wetland exists that may meet the criteria above are a wetland 
+assessment conducted using the 1996 Oregon Freshwater Wetland Assessment Methodology, or 
+correspondence from the Department of State Lands that a wetland determination or delineation has 
+been submitted or completed for property in the City or County. 
+Wetland data must be submitted according to the most recent version of the Oregon Wetland Mapping 
+Standard and OAR 141-090-0035 including a minimum required horizontal accuracy of 3 feet. 
+C. Map Corrections. All Applicants who believe that the NRO map is inaccurate may file a correction request 
+consistent with this subsection. Correction requests will be processed under the Type I development 
+permit procedure. The reasons for map corrections and correction criteria are specified in Table 5.0715-1. 
+Table 5.0715- 1: Map Correction Criteria  
+DISPUTED ISSUE CORRECTION CRITERIA 
+Wetland Location Incorrectly 
+Identified 
+An accurate wetland boundary has been delineated using methods 
+currently accepted by the Oregon Department of State Lands and the U.S. 
+Army Corps of Engineers, and concurrence has been received by 
+Department of State Lands. Wetland data must be submitted according to 
+the most recent version of the Oregon Wetland Mapping Standard and OAR 
+141-090-0035 including a minimum required horizontal accuracy of 3 feet. 
+Stream Location Incorrectly 
+Identified 
+An accurate location of the stream centerline based on the midpoint 
+between Ordinary High Water Marks has been identified and surveyed as 
+specified in the Gresham Environmental Technical Guidance Manual. 
+Removal/Fill of streams after January 15, 2021 will not alter established 
+stream orders. 
+  
+Other Regulated Waterbody An accurate location of the feature’s Ordinary High Water Mark as defined 
+ 
+[5.0700]-35 
+City of Gresham Development Code  (07/26) 
+DISPUTED ISSUE CORRECTION CRITERIA 
+Location Incorrectly Identified in Section 5.0714(A)(3) has been identified and surveyed as specified in the 
+Gresham Environmental Technical Guidance Manual. 
+Title 3 Wetland Completed OFWAM forms documenting the change in protected status and 
+qualifications of the person(s) completing the forms. 
+Public Purpose for Upland RA Documentation clearly showing the property was acquired for development 
+with active recreational uses. 
+PRA Requirements Satisfied Areas evaluated pursuant to Section 5.0703(B) may be removed from the 
+PRA in concert with any associated RA and HVRA updates. Where the 
+perimeter of such site evaluations do not coincide with a property line they 
+will be internally buffered by 50 feet and only the resulting areas will be 
+removed from the PRA. 
+5.0716  VIOLATIONS   
+Actions that violate the RA regulations, such as removing protected vegetation or impacting protected water 
+resources without having a required permit, are subject to the abatement and penalty provisions of Section 
+2.0008 of the Gresham Community Development Code. 
+A. For correcting violations regarding unauthorized removal of an RA, the property owner shall submit an 
+application that meets all applicable standards of the NRO including mitigation for all impacts, including 
+tree removal. 
+B. If one or more of the applicable standards of the NRO cannot be met, then the property owner shall 
+submit a remediation plan for Type II review that demonstrates that there will be: 
+1. No permanent loss of any type of resource of functional value; 
+2. A significant improvement of at least one functional value; and 
+3. There will be minimal loss of resources and functional values during the remediation action until it is 
+fully established. 
+C. The remediation plan shall be developed by a Professional Wetland Scientist or other knowledgeable and 
+qualified natural resource professional, such as a wildlife biologist, wetland, scientist, or botanist. 
+D. Best practices to accomplish the requirements of the remediation plan are outlined in the Gresham 
+Environmental Technical Guidance Manual. 

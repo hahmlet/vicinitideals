@@ -34,7 +34,7 @@ from pathlib import Path
 TOOL_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(TOOL_DIR))
 
-from common import DATA_DIR, load_footprints, load_rules, read_stage
+from common import DATA_DIR, load_footprints, load_overlays, load_rules, read_stage
 
 HEADLINE_TIERS = ("A", "B")
 Z_OVERLAY_JURISDICTIONS = ("portland", "multnomah_unincorporated")
@@ -44,11 +44,47 @@ def _pct(n: int, d: int) -> str:
     return f"{100.0 * n / d:.1f}%" if d else "n/a"
 
 
-def policy_gates(lots, rules):
-    """Per-lot policy columns from the CURRENT rules.yaml.
+# Oregon assessor property-class first digit -> broad current use. 4xx tract
+# land is residential in practice; 3xx industrial folded into commercial
+# (both are "valuable existing use we won't replace").
+_USE_BY_CLASS_DIGIT = {
+    "1": "single_family", "4": "single_family",
+    "2": "commercial", "3": "commercial", "7": "multifamily",
+}
+_USE_BY_LANDUSE = {
+    "SFR": "single_family", "MFR": "multifamily",
+    "COM": "commercial", "IND": "commercial", "VAC": "vacant",
+}
+
+
+def current_use_column(lots, vacant_max: float = 0.0) -> list[str]:
+    """Broad current-use tag per lot. STATECLASS is assessor-authoritative;
+    RLIS LANDUSE fills its blanks. Improvement value at or under vacant_max =
+    vacant regardless of class (nothing worth keeping to replace)."""
+    import pandas as pd
+
+    bldg = pd.to_numeric(lots["BLDGVAL"], errors="coerce").fillna(0.0)
+    out = []
+    for sc, lu, bv in zip(lots["STATECLASS"], lots["LANDUSE"], bldg):
+        if bv <= vacant_max:
+            out.append("vacant")
+            continue
+        sc = str(sc or "").strip()
+        use = _USE_BY_CLASS_DIGIT.get(sc[:1]) if sc else None
+        if use is None:
+            use = _USE_BY_LANDUSE.get(str(lu or "").strip().upper(), "other")
+        out.append(use)
+    return out
+
+
+def policy_gates(lots, rules, ocfg=None, screen=None):
+    """Per-lot policy columns from the CURRENT rules.yaml + overlays.yaml.
 
     Returns (gates DataFrame aligned to lots, policy funnel rows). The funnel
     counts first-hit exclusions in a fixed order over the geometry universe.
+    Overlay KILL layers (ovl_* columns written by s5o) append funnel steps,
+    then the current-use screen (existing multifamily/commercial) — last, so
+    legal exclusions win the first-hit label when both apply.
     """
     import numpy as np
     import pandas as pd
@@ -102,6 +138,14 @@ def policy_gates(lots, rules):
         ("lot_below_zone_min_area", ~gates["min_lot_ok"]),
         ("below_min_frontage", ~gates["frontage_ok"]),
     ]
+    if ocfg is not None:
+        for spec in ocfg.overlays:
+            col = f"ovl_{spec.key}"
+            if spec.action == "kill" and col in lots.columns:
+                steps.append((f"overlay_{spec.key}", lots[col].astype(bool)))
+    if screen is not None and "current_use" in lots.columns:
+        for cat in screen.exclude_current_use:
+            steps.append((f"existing_{cat}", lots["current_use"] == cat))
     exclusion = pd.Series("", index=lots.index)
     remaining = pd.Series(True, index=lots.index)
     funnel = []
@@ -179,6 +223,7 @@ def main() -> None:
     args = ap.parse_args()
 
     import numpy as np
+    import pandas as pd
 
     rules = load_rules()
     fps = load_footprints()
@@ -191,8 +236,32 @@ def main() -> None:
     lots = read_stage("s6_lots")
     struct_funnel = json.loads((DATA_DIR / "funnel.json").read_text(encoding="utf-8"))
 
-    gates, pol_funnel = policy_gates(lots, rules)
+    ocfg = load_overlays()
+    lots["current_use"] = current_use_column(
+        lots, fps.screen.vacant_max_improvement_value)
+    gates, pol_funnel = policy_gates(lots, rules, ocfg, fps.screen)
     lots = lots.join(gates)
+
+    # Finance tier: assessed values are Measure-50 compressed (below purchase
+    # price), so this slices — it never gates. Cutlines are s7-time knobs.
+    bldg = pd.to_numeric(lots["BLDGVAL"], errors="coerce").fillna(0.0).to_numpy()
+    total = pd.to_numeric(lots["TOTALVAL"], errors="coerce").fillna(0.0).to_numpy()
+    share = np.divide(bldg, total, out=np.zeros_like(bldg), where=total > 0)
+    lots["improvement_share"] = share
+    lots["finance_tier"] = np.where(
+        bldg <= fps.screen.vacant_max_improvement_value, "vacant",
+        np.where(share <= fps.screen.teardown_max_improvement_share,
+                 "teardown_candidate", "improved"))
+
+    # Slope tier from the configured statistic (cutlines are s7-time knobs).
+    stat_col = f"slope_{ocfg.slope.stat}_pct"
+    if stat_col in lots.columns:
+        vals = lots[stat_col].to_numpy()
+        lots["slope_tier"] = [
+            ocfg.slope.tier(float(v)) if np.isfinite(v) else "unknown"
+            for v in vals]
+    else:
+        lots["slope_tier"] = "unknown"
 
     # Orientation policy + coverage, from raw wf/df geometry results.
     for f in fps_meta:
@@ -263,6 +332,32 @@ def main() -> None:
         t = grp["tier"].value_counts()
         L.append(f"| {j} | {len(grp):,} | {t.get('A',0):,} | {t.get('B',0):,} "
                  f"| {t.get('C',0):,} | {t.get('D',0):,} |")
+
+    L.append("\n## Current use & acquisition screen\n")
+    L.append("Existing " + " + ".join(fps.screen.exclude_current_use) +
+             " excluded from the headline (counted in the funnel above; "
+             "reversible in footprints.yaml `screen:`). Assessed values are "
+             "Measure-50 compressed — categorically BELOW purchase price — so "
+             "finance tiers slice the results; they never gate. Vacant = "
+             f"improvement value ≤ ${fps.screen.vacant_max_improvement_value:,.0f} "
+             "(a token shed is virtually vacant); teardown cutline: building ≤ "
+             f"{fps.screen.teardown_max_improvement_share:.0%} of total "
+             "assessed value.\n")
+    L.append("| finance tier | headline lots | any-pod fit % | median assessed "
+             "total | median assessed land |")
+    L.append("|---|---:|---:|---:|---:|")
+    htot = pd.to_numeric(head["TOTALVAL"], errors="coerce")
+    hland = pd.to_numeric(head["LANDVAL"], errors="coerce")
+    for tier_name in ("vacant", "teardown_candidate", "improved"):
+        mask = (head["finance_tier"] == tier_name).to_numpy()
+        n = int(mask.sum())
+        fit = _pct(int(head["_any"].to_numpy()[mask].sum()), n) if n else "n/a"
+        mt = htot[mask].median() if n else float("nan")
+        ml = hland[mask].median() if n else float("nan")
+        L.append(f"| {tier_name} | {n:,} | {fit} | ${mt:,.0f} | ${ml:,.0f} |")
+    L.append("\nPer-lot `current_use`, `finance_tier`, assessed values, and "
+             "last sale price/date are in every CSV — filter to your own "
+             "price tolerance.")
 
     L.append("\n## Footprint fit rates (headline: tiers A+B)\n")
     L.append("| footprint | fits | fit % | +coverage ok | flip-only | tier C fits |")
@@ -361,6 +456,80 @@ def main() -> None:
                      f"{row.zone} | {row.area_sqft:,.0f} | {row.envelope_sqft:,.0f} "
                      f"| {row.quads_if_split} |")
 
+    # --- Phase 2 sections: overlays / slope / sewer / data coverage --------
+    flag_specs = [s for s in ocfg.overlays
+                  if s.action == "flag" and f"ovl_{s.key}" in elig.columns]
+    carve_specs = [s for s in ocfg.overlays
+                   if s.action == "carve" and f"ovl_{s.key}" in elig.columns]
+    if flag_specs or carve_specs:
+        L.append("\n## Overlay exposure on eligible lots\n")
+        L.append("Kill overlays already removed in the funnel above. Carve "
+                 "overlays are subtracted from buildable area before fitting "
+                 "(their effect is inside the fit numbers); flags add "
+                 "cost/process but do not block.\n")
+        L.append("| overlay | action | eligible lots touched | avg sqft where touched |")
+        L.append("|---|---|---:|---:|")
+        for s in carve_specs + flag_specs:
+            col = elig[f"ovl_{s.key}"]
+            n = int(col.sum())
+            avg = elig.loc[col, f"ovl_{s.key}_sqft"].mean() if n else 0.0
+            L.append(f"| {s.name} | {s.action} | {n:,} | {avg:,.0f} |")
+
+    if (lots["slope_tier"] != "unknown").any():
+        L.append(f"\n## Slope tiers (statistic: {ocfg.slope.stat}, cutlines "
+                 f"{ocfg.slope.ideal_max_pct:.0f}% / "
+                 f"{ocfg.slope.tolerable_max_pct:.0f}% — adjustable, s7-only)\n")
+        L.append("| tier | headline lots | share | any-pod fit % |")
+        L.append("|---|---:|---:|---:|")
+        head_any = head["_any"].to_numpy()
+        for tier in ("ideal", "tolerable", "cost_prohibitive", "unknown"):
+            mask = (head["slope_tier"] == tier).to_numpy()
+            n = int(mask.sum())
+            fit = _pct(int(head_any[mask].sum()), n)
+            L.append(f"| {tier} | {n:,} | {_pct(n, len(head))} | {fit} |")
+        L.append("\nSlope tiers do NOT gate the headline numbers — filter the "
+                 "CSVs on `slope_tier` to apply your cost tolerance.")
+
+    if "sewer_main_dist_ft" in elig.columns and split is not None:
+        sc_l = elig[elig["split_candidate"]]
+        if len(sc_l):
+            L.append("\n## Sewer main proximity — split candidates\n")
+            L.append("| distance to mapped main | split lots |")
+            L.append("|---|---:|")
+            d = sc_l["sewer_main_dist_ft"].to_numpy()
+            bins = [(0, 100, "in/adjacent street (<=100 ft)"),
+                    (100, 300, "close (100-300 ft)"),
+                    (300, 1000, "extension likely (300-1000 ft)"),
+                    (1000, float("inf"), "far / unserved (>1000 ft)")]
+            for lo, hi, label in bins:
+                n = int(((d >= lo) & (d < hi)).sum())
+                L.append(f"| {label} | {n:,} |")
+            L.append("\nConversion lots are assumed already served (existing "
+                     "home). Unincorporated pockets have no public sewer "
+                     "layer — distances there are to city mains, proxy only.")
+
+    themes = [(f"ovl:{s.key}", s.name, s.coverage) for s in ocfg.overlays]
+    themes += [("slope", "Slope/DEM", ocfg.slope_coverage),
+               ("sewer", "Sewer mains", ocfg.sewer_coverage)]
+    if any(cov for _, _, cov in themes):
+        L.append("\n## Data coverage by municipality (A parcel-grade / "
+                 "B regional fallback / C coarse-partial / X none)\n")
+        jlist = [j for j in sorted(rules.jurisdictions)
+                 if rules.jurisdictions[j].eligible or rules.jurisdictions[j].zones]
+        L.append("| theme | " + " | ".join(jlist) + " |")
+        L.append("|---|" + "---:|" * len(jlist))
+        for _, name, cov in themes:
+            if not cov:
+                continue
+            row = [cov[j].grade if j in cov else "–" for j in jlist]
+            L.append(f"| {name} | " + " | ".join(row) + " |")
+        notes = sorted({f"{j}: {c.note}" for _, _, cov in themes
+                        for j, c in cov.items() if c.grade in ("C", "X") and c.note})
+        if notes:
+            L.append("\nCoverage caveats:")
+            for note in notes:
+                L.append(f"- {note}")
+
     L.append("\n## Max-rectangle frontier distribution (tiers A+B)\n")
     L.append("| width ft | median max depth | 25th pct | 75th pct | % supporting ≥25 ft depth |")
     L.append("|---:|---:|---:|---:|---:|")
@@ -391,11 +560,20 @@ def main() -> None:
     print(f"wrote {DATA_DIR / 'summary.md'}")
 
     # Per-lot CSVs. Master = whole geometry universe with policy_exclusion.
+    phase2_cols = [c for c in lots.columns
+                   if c.startswith("ovl_") and not c.endswith("_sqft")]
+    phase2_cols += [c for c in (
+        "slope_p85_pct", "slope_tier", "sewer_main_dist_ft",
+        "envelope_setback_sqft") if c in lots.columns]
+    screen_cols = ["current_use", "finance_tier", "improvement_share",
+                   "LANDVAL", "SALEPRICE", "SALEDATE"]
     csv_cols = [
         "TLID", "SITEADDR", "jurisdiction", "zone", "tier", "area_sqft",
         "envelope_sqft", "frontage_ft", "YEARBUILT", "BLDGSQFT", "BLDGVAL",
         "TOTALVAL", "split_zone", "policy_exclusion", "eligible",
-    ] + [f"fits_{n}" for n in fp_names] + [f"fits_cov_{n}" for n in fp_names]
+    ] + screen_cols \
+      + [f"fits_{n}" for n in fp_names] + [f"fits_cov_{n}" for n in fp_names] \
+      + phase2_cols
     lots[csv_cols].to_csv(DATA_DIR / "lots_results.csv", index=False)
     print(f"wrote {DATA_DIR / 'lots_results.csv'} ({len(lots):,} rows)")
 
@@ -404,7 +582,7 @@ def main() -> None:
             "TLID", "SITEADDR", "jurisdiction", "zone", "tier", "area_sqft",
             "envelope_sqft", "frontage_ft", "YEARBUILT", "BLDGSQFT", "BLDGVAL",
             "TOTALVAL",
-        ]
+        ] + screen_cols + phase2_cols
         sc = elig[elig["split_candidate"]].sort_values("quads_if_split", ascending=False)
         sc[sub_cols + ["quads_if_split"]].to_csv(
             DATA_DIR / "split_candidates.csv", index=False)
@@ -427,7 +605,7 @@ def _write_spot_check(lots, fps, meta, n_sample: int) -> None:
     from common import CRS_WGS84, CRS_WORKING
 
     s3 = read_stage("s3_lots")[["TLID", "geom"]].rename(columns={"geom": "lot_geom"})
-    s5 = read_stage("s5_lots")[["TLID", "geom"]].rename(columns={"geom": "env_geom"})
+    s5 = read_stage("s5o_lots")[["TLID", "geom"]].rename(columns={"geom": "env_geom"})
     sample = (
         lots.groupby(["jurisdiction", "tier"], group_keys=False, sort=False)
         .head(2)

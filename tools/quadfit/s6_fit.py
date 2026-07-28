@@ -211,7 +211,8 @@ def main() -> None:
         "footprints": [(f.name, f.width_ft, f.depth_ft) for f in fps.footprints],
     }
 
-    lots = read_stage("s5_lots")
+    lots = read_stage("s5o_lots")  # carved envelopes (phase 2); s5o passes
+    # setback-only envelopes through unchanged when no carve overlays exist
     if args.limit:
         lots = lots.head(args.limit).copy()
     print(f"s6: fitting {len(lots):,} lots at {res} ft resolution, "

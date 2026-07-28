@@ -18,6 +18,7 @@ from common import CONFIG_DIR, DATA_DIR, stage_path
 RAW = DATA_DIR / "raw"
 RULES = CONFIG_DIR / "rules.yaml"
 FOOTPRINTS = CONFIG_DIR / "footprints.yaml"
+OVERLAYS = CONFIG_DIR / "overlays.yaml"
 
 # stage -> (script, inputs, outputs)
 STAGES: list[tuple[str, list[Path], list[Path]]] = [
@@ -27,7 +28,10 @@ STAGES: list[tuple[str, list[Path], list[Path]]] = [
     ("s3_filter.py", [stage_path("s2_lots"), RULES], [stage_path("s3_lots")]),
     ("s4_edges.py", [stage_path("s3_lots"), stage_path("s1_streets")], [stage_path("s4_lots")]),
     ("s5_envelope.py", [stage_path("s4_lots"), RULES], [stage_path("s5_lots")]),
-    ("s6_fit.py", [stage_path("s5_lots"), RULES, FOOTPRINTS], [stage_path("s6_lots")]),
+    # s5o: overlay carve + slope + sewer (phase 2). Carve-buffer changes need
+    # s5o+s6+s7; kill/flag/slope-tier changes need only s7.
+    ("s5o_overlays.py", [stage_path("s5_lots"), OVERLAYS], [stage_path("s5o_lots")]),
+    ("s6_fit.py", [stage_path("s5o_lots"), RULES, FOOTPRINTS], [stage_path("s6_lots")]),
     # NOTE: rules/footprints edits make run_all re-run from s2/s6 (mtime cascade).
     # For POLICY-only changes (jurisdiction toggle, thresholds, parking buffer),
     # run s7 directly instead: uv run --extra gis python tools/quadfit/s7_report.py

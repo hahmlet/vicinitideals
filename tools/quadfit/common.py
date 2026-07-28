@@ -248,6 +248,28 @@ class SplitSpec(BaseModel):
         )
 
 
+class ScreenSpec(BaseModel):
+    """Current-use + assessed-value acquisition screen (s7-only knobs).
+
+    Current use is tagged from the assessor property class (STATECLASS first
+    digit; RLIS LANDUSE as fallback): lots whose category is listed in
+    exclude_current_use become a counted policy-funnel step — the team won't
+    replace existing multifamily or valuable commercial. Assessed values are
+    Measure-50 compressed (categorically below purchase price), so the value
+    side is a reported finance_tier slice, never a silent kill:
+      vacant             — improvement value <= vacant_max_improvement_value
+                           (a ~$5k shed is virtually vacant)
+      teardown_candidate — building <= teardown_max_improvement_share of
+                           total assessed value (mostly-land lots)
+      improved           — building dominates value; costly to replace
+    """
+
+    exclude_current_use: list[str] = Field(
+        default_factory=lambda: ["multifamily", "commercial"])
+    teardown_max_improvement_share: float = 0.5
+    vacant_max_improvement_value: float = 5000.0
+
+
 class FootprintsConfig(BaseModel):
     orientations: list[Literal["width_facing", "depth_facing"]] = Field(
         default_factory=lambda: ["width_facing", "depth_facing"]
@@ -256,6 +278,84 @@ class FootprintsConfig(BaseModel):
     constant_area_sweeps: list[ConstantAreaSweep] = Field(default_factory=list)
     frontier: FrontierSpec = Field(default_factory=FrontierSpec)
     split: SplitSpec | None = None
+    screen: ScreenSpec = Field(default_factory=ScreenSpec)
+
+
+# --- Phase 2: overlay policy (environmental/hazard/slope/utility) -----------
+#
+# Each overlay layer gets exactly one legal action for by-right middle housing:
+#   kill  — any overlap voids the by-right allowance (or forces discretionary
+#           review, same thing for this analysis): lot excluded, like the
+#           Portland z overlay
+#   carve — development stays by-right but overlay area + buffer_ft is
+#           unbuildable: subtracted from the setback envelope, pod re-fit on
+#           the remainder
+#   flag  — no by-right or geometry effect, adds cost/process (e.g. flood
+#           elevation): reported as a per-lot column, never blocks
+#
+# `coverage` records per-jurisdiction DATA quality so the report can caveat
+# what each number is standing on:
+#   A — city-maintained, parcel-grade    B — regional/federal fallback, adequate
+#   C — coarse or partial                X — nothing usable (theme unmodeled)
+
+OverlayAction = Literal["kill", "carve", "flag"]
+CoverageGrade = Literal["A", "B", "C", "X"]
+
+
+class OverlayCoverage(BaseModel):
+    grade: CoverageGrade
+    note: str = ""
+
+
+class OverlaySpec(BaseModel):
+    key: str  # matches data/quadfit/raw/overlay_<key>.geojson
+    name: str
+    action: OverlayAction
+    buffer_ft: float = 0.0  # carve only: unbuildable halo around the feature
+    jurisdictions: list[str] | Literal["all"] = "all"  # where the RULE applies
+    citation: str = ""
+    confidence: Literal["verified", "needs_verification"] = "needs_verification"
+    coverage: dict[str, OverlayCoverage] = Field(default_factory=dict)
+
+    def applies_to(self, jurisdiction: str) -> bool:
+        return self.jurisdictions == "all" or jurisdiction in self.jurisdictions
+
+
+class SlopeTiers(BaseModel):
+    """Cutlines applied to a per-lot slope statistic at REPORT time (s7)."""
+
+    stat: Literal["mean", "p85", "max"] = "p85"
+    ideal_max_pct: float = 10.0
+    tolerable_max_pct: float = 20.0  # above this: cost_prohibitive
+
+    def tier(self, slope_pct: float) -> str:
+        if slope_pct <= self.ideal_max_pct:
+            return "ideal"
+        if slope_pct <= self.tolerable_max_pct:
+            return "tolerable"
+        return "cost_prohibitive"
+
+
+class OverlaysConfig(BaseModel):
+    slope: SlopeTiers = Field(default_factory=SlopeTiers)
+    overlays: list[OverlaySpec] = Field(default_factory=list)
+    # Per-jurisdiction DATA grades for the two non-overlay themes, so the
+    # report's coverage matrix covers every phase 2 input.
+    slope_coverage: dict[str, OverlayCoverage] = Field(default_factory=dict)
+    sewer_coverage: dict[str, OverlayCoverage] = Field(default_factory=dict)
+
+    def by_key(self, key: str) -> OverlaySpec | None:
+        return next((o for o in self.overlays if o.key == key), None)
+
+
+def load_overlays(path: Path | None = None) -> OverlaysConfig:
+    import yaml
+
+    p = path or CONFIG_DIR / "overlays.yaml"
+    if not p.exists():
+        return OverlaysConfig()
+    raw = yaml.safe_load(p.read_text(encoding="utf-8"))
+    return OverlaysConfig.model_validate(raw)
 
 
 def load_rules(path: Path | None = None) -> RulesConfig:

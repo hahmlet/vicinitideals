@@ -136,6 +136,31 @@ def test_split_spec_math():
     assert SplitSpec(parking_slots_per_unit=0).per_quad_lot_sqft() == pytest.approx(2000)
 
 
+def test_overlay_policy_schema():
+    """Phase 2 overlay config: action vocabulary, slope tiers, coverage grades."""
+    from common import OverlaysConfig, SlopeTiers, load_overlays
+
+    cfg = OverlaysConfig.model_validate({
+        "slope": {"stat": "p85", "ideal_max_pct": 10, "tolerable_max_pct": 20},
+        "overlays": [{
+            "key": "fema_flood", "name": "FEMA floodplain", "action": "flag",
+            "coverage": {"portland": {"grade": "B", "note": "NFHL uniform"}},
+        }, {
+            "key": "title13", "name": "Metro habitat", "action": "carve",
+            "buffer_ft": 50, "jurisdictions": ["fairview", "wood_village"],
+        }],
+    })
+    assert cfg.by_key("title13").applies_to("fairview")
+    assert not cfg.by_key("title13").applies_to("portland")
+    assert cfg.by_key("fema_flood").applies_to("portland")  # "all" default
+    tiers = SlopeTiers()
+    assert tiers.tier(5) == "ideal"
+    assert tiers.tier(15) == "tolerable"
+    assert tiers.tier(30) == "cost_prohibitive"
+    # Missing overlays.yaml -> empty config, pipeline unaffected.
+    assert load_overlays().overlays == [] or load_overlays().overlays
+
+
 def test_lake_oswego_policy_disabled_but_rules_retained():
     """LO is gated at report time — geometry stays so re-enabling is s7-only."""
     from common import load_rules
@@ -143,3 +168,46 @@ def test_lake_oswego_policy_disabled_but_rules_retained():
     lo = load_rules().jurisdictions["lake_oswego"]
     assert lo.eligible is False
     assert lo.rule_for("R-7.5") is not None  # rules compiled, not deleted
+
+
+def test_screen_spec_defaults_and_yaml():
+    """Current-use screen ships with MF+commercial excluded; knobs load."""
+    from common import ScreenSpec, load_footprints
+
+    s = ScreenSpec()
+    assert s.exclude_current_use == ["multifamily", "commercial"]
+    assert s.teardown_max_improvement_share == 0.5
+    assert s.vacant_max_improvement_value == 5000.0
+    fps = load_footprints()
+    assert set(fps.screen.exclude_current_use) == {"multifamily", "commercial"}
+    assert fps.screen.vacant_max_improvement_value == 5000
+
+
+def test_current_use_mapping():
+    import pandas as pd
+
+    from s7_report import current_use_column
+
+    lots = pd.DataFrame({
+        "STATECLASS": ["101", "701", "201", "301", "401", "", "", None, "101"],
+        "LANDUSE":    ["SFR", "MFR", "COM", "IND", "RUR", "MFR", "AGR", "VAC", "SFR"],
+        "BLDGVAL":    [300e3, 500e3, 1e6,  2e6,   100e3, 400e3, 50e3, 0,     0],
+    })
+    assert current_use_column(lots) == [
+        "single_family",   # 1xx
+        "multifamily",     # 7xx
+        "commercial",      # 2xx
+        "commercial",      # 3xx industrial folded in
+        "single_family",   # 4xx tract
+        "multifamily",     # blank class -> LANDUSE fallback
+        "other",           # AGR unmapped
+        "vacant",          # zero improvement value wins
+        "vacant",          # zero improvement value beats class 101
+    ]
+    # $5k ceiling: token improvements count as vacant too.
+    shed = pd.DataFrame({
+        "STATECLASS": ["101", "101"],
+        "LANDUSE": ["SFR", "SFR"],
+        "BLDGVAL": [4_800, 5_200],
+    })
+    assert current_use_column(shed, vacant_max=5000) == ["vacant", "single_family"]

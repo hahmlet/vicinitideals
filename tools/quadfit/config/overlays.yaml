@@ -1,0 +1,177 @@
+# Phase 2 overlay policy — legal verdicts researched 2026-07-27 from code text
+# (see git history / SOURCES_PHASE2.md for the endpoint audit).
+#
+# action: kill  = any overlap voids by-right middle housing (or forces
+#                 discretionary review — same thing here)
+#         carve = by-right survives; overlay area + buffer_ft is unbuildable,
+#                 subtracted from the envelope before fitting (s5o)
+#         flag  = cost/process only; reported, never blocks
+#
+# kill/flag reclassification = s7-only re-run. buffer_ft changes = s5o+s6+s7.
+#
+# NOTE Portland: the p / c / flood kills below are mostly REDUNDANT with the
+# z Constrained Sites gate (PCC 33.418.030 makes each of them a z trigger and
+# we gate on the mapped z letters since phase 1). They stay as independent
+# geometry-based kills so gaps between the z mapping and the source overlays
+# surface in the funnel instead of hiding.
+
+slope:
+  stat: p85               # per-lot statistic the tiers bin on
+  ideal_max_pct: 10       # <= : ideal (normal foundation)
+  tolerable_max_pct: 20   # <= : tolerable (stepped foundation / retaining)
+                          #  > : cost_prohibitive (also where hillside review
+                          #      regimes start breaking the by-right premise)
+
+slope_coverage:
+  portland: {grade: A, note: "USGS 3DEP 1 m lidar DEM, uniform"}
+  gresham: {grade: A, note: "1 m DEM; but Gresham HGRO hazard mapping is NOT derivable from slope — city layer used (carve), per GDC 5.0214"}
+  troutdale: {grade: A, note: "1 m DEM"}
+  fairview: {grade: A, note: "1 m DEM"}
+  wood_village: {grade: A, note: "1 m DEM"}
+  multnomah_unincorporated: {grade: A, note: "1 m DEM"}
+
+sewer_coverage:
+  portland: {grade: A, note: "BES mains, ownership+size"}
+  gresham: {grade: B, note: "mains geometry only — proximity yes, capacity no"}
+  troutdale: {grade: A, note: ""}
+  fairview: {grade: A, note: ""}
+  wood_village: {grade: A, note: ""}
+  multnomah_unincorporated: {grade: X, note: "no public sewer layer for unincorporated pockets — nearest-city-main distance is a proxy; septic parcels indistinguishable"}
+
+overlays:
+  # ---------------- Portland (all KILL via PCC 33.418 z triggers) ----------
+  - key: pdx_ezone_p
+    name: "Portland Environmental Protection (p)"
+    action: kill
+    jurisdictions: [portland]
+    citation: "PCC 33.418.030.A + .040.B/C; PCC 33.430"
+    confidence: verified
+    coverage:
+      portland: {grade: A, note: "BPS ezone geometry (2,458 polys)"}
+  - key: pdx_ezone_c
+    name: "Portland Environmental Conservation (c)"
+    action: kill
+    jurisdictions: [portland]
+    citation: "PCC 33.418.030.A + .040"
+    confidence: verified
+    coverage:
+      portland: {grade: A, note: "BPS ezone geometry (5,451 polys)"}
+  - key: pdx_ezone_v
+    name: "Portland Pleasant Valley NR overlay (v)"
+    action: kill
+    jurisdictions: [portland]
+    citation: "PCC 33.418.030 (z trigger)"
+    confidence: verified
+    coverage:
+      portland: {grade: A, note: ""}
+
+  # ---------------- Gresham (city-mapped carves, buffers pre-baked) --------
+  - key: gresham_hcra
+    name: "Gresham NRO Resource Area (streams/wetlands + mapped buffers)"
+    action: carve
+    buffer_ft: 0
+    jurisdictions: [gresham]
+    citation: "GDC 5.0710(A), Table 5.0714-1 (city mapping encodes 50-200 ft stream + 50 ft wetland buffers, incl. 200 ft Pleasant Valley/Springwater)"
+    confidence: verified
+    coverage:
+      gresham: {grade: A, note: "city NRO Resource Area polygon"}
+  - key: gresham_wetlands
+    name: "Gresham Title 3 wetlands"
+    action: carve
+    buffer_ft: 50
+    jurisdictions: [gresham]
+    citation: "GDC Table 5.0714-1 (50 ft from delineated edge); mostly within the NRO Resource Area carve"
+    confidence: verified
+    coverage:
+      gresham: {grade: A, note: "LWI-grade city inventory"}
+  - key: gresham_hillside
+    name: "Gresham Hillside/Geologic Risk Overlay (HGRO incl. HSS)"
+    action: carve
+    buffer_ft: 0
+    jurisdictions: [gresham]
+    citation: "GDC 5.0203-5.0211: HSS (>=35% subarea) prohibits quadplexes outright; HGRO treated as unbuildable where >=6,000 sf usable land exists outside it"
+    confidence: needs_verification
+    coverage:
+      gresham: {grade: A, note: "city layer; HGRO vs HSS subareas not yet split — whole overlay carved (conservative)"}
+
+  # ---------------- Troutdale ----------------------------------------------
+  - key: troutdale_veco
+    name: "Troutdale vegetated corridor + >=25% slope district (VECO)"
+    action: carve
+    buffer_ft: 0
+    jurisdictions: [troutdale]
+    citation: "TDC 4.312-4.316: structures/excavation prohibited; escape path is discretionary (not by-right). City mapping encodes 50/200 ft corridor widths and the >=25% slope district"
+    confidence: verified
+    coverage:
+      troutdale: {grade: B, note: "city-hosted RLIS Title 3 derivative — not an independent city inventory"}
+
+  # ---------------- Fairview ------------------------------------------------
+  - key: fairview_nrl
+    name: "Fairview natural resource corridors (polygons are the buffers)"
+    action: carve
+    buffer_ft: 0
+    jurisdictions: [fairview]
+    citation: "FMC 19.106: Fairview Creek 35 ft/side, Clear Creek 37.5 ft/side; layer TYPE field carries 35/40/55/80 ft corridor polygons"
+    confidence: needs_verification
+    coverage:
+      fairview: {grade: A, note: "city layer; code text partially unreachable (403) — widths from code-page snippets"}
+
+  # ---------------- Regional fallbacks --------------------------------------
+  - key: metro_title3
+    name: "Metro Title 3 water quality resource (regional fallback)"
+    action: carve
+    buffer_ft: 0
+    jurisdictions: [wood_village, multnomah_unincorporated]
+    citation: "Metro Code 3.07 Table 3.07-3 via WVDC 430 (Wood Village adopts by reference); MultCo proxy for unmapped SEC-w"
+    confidence: needs_verification
+    coverage:
+      wood_village: {grade: B, note: "no local env GIS at all — regional layer is the operative map"}
+      multnomah_unincorporated: {grade: C, note: "proxy: county SEC overlay maps not publicly downloadable"}
+  - key: metro_title13
+    name: "Metro Title 13 habitat (HCA)"
+    action: carve
+    buffer_ft: 0
+    jurisdictions: [wood_village]
+    citation: "WVDC 430 WQRA incorporates HCA; Troutdale 4.318 applies HCA only to public parks (no private-lot effect)"
+    confidence: needs_verification
+    coverage:
+      wood_village: {grade: C, note: "2005-era regional habitat model, coarse"}
+  - key: metro_wetlands
+    name: "Metro regional wetland inventory (awareness)"
+    action: flag
+    jurisdictions: [troutdale, wood_village, multnomah_unincorporated]
+    citation: "no local wetland inventory in these jurisdictions; DSL removal-fill applies to the wetland footprint itself (no universal upland buffer in Oregon)"
+    confidence: verified
+    coverage:
+      troutdale: {grade: B, note: "regional aggregate of LWIs"}
+      wood_village: {grade: B, note: ""}
+      multnomah_unincorporated: {grade: B, note: ""}
+
+  # ---------------- Flood (FEMA NFHL split by attribute in s0) --------------
+  - key: fema_floodway
+    name: "FEMA regulatory floodway"
+    action: carve
+    buffer_ft: 0
+    jurisdictions: all
+    citation: "GDC 5.0121 / TDC Ch 14 / FMC 19.105 / WVDC 425 / MCC 39.5035 — new construction prohibited; Portland floodway is a z trigger (already killed)"
+    confidence: verified
+    coverage:
+      portland: {grade: B, note: "NFHL 2009 FIRM"}
+      gresham: {grade: B, note: "NFHL 2009 FIRM"}
+      troutdale: {grade: C, note: "NFHL 2009 FIRM predates modern lidar — Sandy River edges low-confidence"}
+      fairview: {grade: B, note: "city flood services fragmented; NFHL used as source of record"}
+      wood_village: {grade: B, note: ""}
+      multnomah_unincorporated: {grade: B, note: ""}
+  - key: fema_sfha
+    name: "FEMA 100-yr flood fringe (SFHA excl. floodway)"
+    action: flag
+    jurisdictions: all
+    citation: "fringe development stays by-right with elevation/fill standards: Gresham BFE+1 (GDC 5.0120), Troutdale BFE+2 (TDC Ch 14), MultCo BFE+1 (MCC 39.5030), Portland PCC 24.50 PICM (cost)"
+    confidence: verified
+    coverage:
+      portland: {grade: B, note: ""}
+      gresham: {grade: B, note: ""}
+      troutdale: {grade: C, note: "2009 FIRM"}
+      fairview: {grade: B, note: "FMC 19.105 2025 amendments pending verification"}
+      wood_village: {grade: B, note: ""}
+      multnomah_unincorporated: {grade: B, note: ""}

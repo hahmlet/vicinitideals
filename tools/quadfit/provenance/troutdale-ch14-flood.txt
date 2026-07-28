@@ -1,0 +1,1556 @@
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-1 Effective Date: 17-Jan-19 
+Chapter 14 – Flood Management 
+ 
+14.005 Purpose.  Without establishing any priority, the purpose of this Chapter is to promote the 
+public health, safety, and general welfare, and to minimize public and private losses due to 
+flood conditions or degradation of water quality in specific areas by provisions designed to: 
+ 
+A. Protect human life, health, and property in areas subject to periodic flooding; 
+ 
+B. Implement the Floodplain requirements of Statewide Planning Goal 7 - which relates to 
+areas subject to natural disasters and hazards; 
+ 
+C. Through floodplain regulation, contribute to the properly functioning condition of 
+streams and rivers and address, in part, the water quality aspects of Statewide Planning 
+Goal 6; 
+ 
+D.  Implement requirements for the City's participation in the National Flood Insurance 
+Program, and voluntary participation in the Community Rating System; 
+ 
+E. Implement the actions derived from the Multnomah County Natural Hazard Mitigation 
+Plan to minimize the risk of natural hazards, such as flooding, to people and property; 
+ 
+F Ensure continuity of City services, access to City facilities, and minimal prolonged 
+business interruptions during times of flood; 
+ 
+G. Manage stormwater drainage in a manner that: 
+ 
+1. Maintains the properly functioning conditions of waterways; 
+ 
+2. Provides for the conveyance and temporary storage of floodwater; 
+ 
+3. Reduces floodwater velocity; 
+ 
+4. Facilitates sediment deposition in the floodplain; 
+ 
+5. Provides an opportunity for groundwater recharge; and 
+ 
+6. Promotes other stormwater and floodplain functions. 
+ 
+These provisions are also intended to minimize maintenance costs, eliminate potential 
+hazards before they occur, and protect properties and persons adjacent to drainageways 
+and to other natural hazard areas; 
+ 
+H. Minimize damage to public facilities and utilities, such as water purification and sewage 
+treatment plants, water and gas mains, electric, telephone and sewer lines, streets, and 
+bridges located in floodplains; 
+ 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-2 Effective Date: 17-Jan-19 
+I. Help maintain a stable tax base by providing for sound use and development; 
+ 
+J. Ensure that potential buyers are notified that property is in an area of special flood 
+hazard; 
+ 
+K. Compel those who occupy the areas of special flood hazard assume responsibility for 
+their actions; 
+ 
+L. Maintain and improve water quality; 
+ 
+M. Minimize erosion and loss of native vegetation; 
+ 
+N. Maintain wetlands, including swamps, marshes, bogs, and similar areas within the City, 
+because wetlands help to maintain water quality and flood storage capacities; 
+ 
+O. Avoid any increase in base flood elevations as a result of development; 
+ 
+P. Minimize expenditure of public money for costly flood control projects; 
+ 
+Q. Minimize the need for rescue and relief efforts associated with flooding and generally 
+undertaken at the expense of the general public;  
+ 
+R. Reduce flood losses and maintain water quality.  In order to accomplish its purpose, this 
+Chapter includes methods and provisions to: 
+ 
+1. Require that development that is vulnerable to floods, including buildings, 
+structures, and facilities necessary for the general health, safety and welfare of 
+citizens, be protected against flood damage at the time of initial construction; 
+ 
+2. Restrict or prohibit uses which are dangerous to health, safety and property due to 
+water or erosion hazards, or which increase flood heights, velocities, or erosion; 
+ 
+3. Control filling, grading, dredging and other development which may increase 
+flood damage or erosion; 
+ 
+4. Prevent or regulate the construction of flood barriers that will unnaturally divert 
+flood waters or that may increase flood hazards on other lands; 
+ 
+5. Preserve and restore natural floodplains, stream channels, and natural protective 
+barriers which carry and store flood waters, and; 
+ 
+6. Coordinate with and supplement provisions of Oregon Building Codes. 
+ 
+S. To advance these purposes, where not required, creation of open space tracts is 
+encouraged within areas designated as natural hazards on the Comprehensive Plan and 
+official zoning maps. 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-3 Effective Date: 17-Jan-19 
+ 
+14.010 Applicability. 
+ 
+A. These provisions shall apply to public and private properties in the one percent (1%) 
+annual chance of flood floodplain (100-year floodplain or Special Flood Hazard Area) as 
+mapped by the Federal Insurance Administrator of rivers and local streams within the 
+planning jurisdiction of the City of Troutdale, which includes land in unincorporated 
+Multnomah County within the City’s Urban Planning Area. 
+ 
+B. The areas of special flood hazard identified by the Federal Insurance Administrator in a 
+scientific and engineering report entitled “The Flood Insurance Study for Multnomah 
+County, Oregon and Incorporated Areas of Multnomah County”, with accompanying 
+Flood Insurance Rate Maps, are hereby adopted by reference and declared to be a part of 
+this ordinance. The Flood Insurance Study is on file at the Community Development 
+Department located at 2200 SW 18
+th Way, Troutdale, OR 97060 (storage location subject 
+to change, consult the Floodplain Manager for current file storage location). Metro, a 
+regional metropolitan planning agency representing portions of Clackamas, Multnomah, 
+and Washington Counties, mapped the flood hazard areas from areas inundated by 
+flooding in 1996 on the Title 3 map. The Title 3 maps are adopted for reference only. Not 
+every Special Flood Hazard Area has been mapped by the Federal Insurance Agency 
+through the Flood Insurance Study and Flood Insurance Rate Maps cited above. The 
+Floodplain Manager or designee is authorized through Sections 14.020 to obtain from 
+applicants the information necessary to determine the presence and extent of unmapped 
+Special Flood Hazard Areas as part of reviewing development proposals that affect the 
+floodplain. Once approved by the Floodplain Administrator or designee, such information 
+shall be incorporated into the Natural Hazards Map and used by the City of Troutdale to 
+supplement the Flood Insurance Study, Flood Insurance Rate Maps, and Digital Flood 
+Insurance Rate Maps cited above to ensure consistency with the floodplain regulations 
+contained in this Chapter. Contested base flood elevations are to be reviewed under the 
+provisions of Subsection 14.020.D of this Chapter. The City will keep a record of all 
+surveys, delineations, and any Letter of Map Change (LOMC) approved by the Federal 
+Emergency Management Agency, as revisions to the local copy of the Title 3 map. The 
+City will submit this information to Metro for future updates of the Title 3 map.  
+ 
+C. Warning and Disclaimer of Liability. The degree of flood protection required by this 
+Chapter is considered reasonable for regulatory purposes and is based on scientific and 
+engineering considerations. Larger floods can and will occur on rare occasions. Flood 
+heights may be increased by manmade or natural causes. This Code does not imply that 
+land or uses will be free from flooding or flood damage. This Code shall not create 
+liability on the part of the City, any officer or employee thereof, or the Federal Insurance 
+Administrator, for any damages that result from reliance on this Code or any 
+administrative decision lawfully made hereunder. 
+ 
+14.015 Severability. The standards of this Chapter are subject to the severability standards as 
+described in Section 17.100 of this Code. 
+ 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-4 Effective Date: 17-Jan-19 
+14.020 Administration and Interpretation of Flood Insurance Rate Map Boundaries and Flood 
+Management Area Standards. 
+ 
+A. The Community Development Director shall designate a Floodplain Manager to be the 
+Local Administrator of this Chapter. The Floodplain Manager shall implement the 
+provisions and standards of the National Flood Insurance Program, the standards of this 
+Chapter, and make interpretations, where needed, including determinations regarding the 
+exact location of the boundaries of the Special Flood Hazard Area (for example, where 
+there appears to be a conflict between a mapped boundary and actual field conditions) by 
+granting or denying Floodplain Development Permit applications in accordance with its 
+provisions.  In the interpretation and application of this Chapter, all provisions shall be: 
+ 
+1. Considered as minimum requirements; 
+ 
+2. Liberally construed in favor of the governing body; 
+ 
+3. Judged by established historical facts of flooding as known by, or made known to, 
+the governing body; 
+ 
+4. Deemed neither to limit nor repeal any other powers granted under State statutes; 
+and 
+ 
+5. Defined in Section 1.040 of this Code. 
+ 
+B. Duties and Responsibilities of the Floodplain Manager. Duties of the Floodplain Manager 
+shall include, but not be limited to: 
+ 
+1.  Review all Floodplain Development Permits to determine that the permit 
+requirements of this ordinance have been satisfied. 
+ 
+2. Review all Floodplain Development Permits to determine that all necessary 
+permits have been obtained from those Federal, State, or local governmental 
+agencies from which prior approval is required. 
+ 
+3. Review all Floodplain Development Permits to determine if the proposed 
+development is located in the floodway. If located in the floodway, assure that the 
+encroachment provisions of this Chapter are met. 
+ 
+4. When base flood elevation data has not been provided (A Zones) in accordance 
+with Section 14.010 of this Chapter, the Floodplain Manager shall obtain, review, 
+and reasonably utilize any base flood elevation and floodway data available from 
+a Federal, State or other source, in order to administer Section 14.040 of this 
+Chapter. 
+ 
+5. Where base flood elevation data is provided through the Flood Insurance Study, 
+FIRM, or required as in Section 14.020.C, obtain and record the actual elevation 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-5 Effective Date: 17-Jan-19 
+(in relation to mean sea level) of the lowest floor (including basements and 
+below-grade crawlspaces) of all new or substantially improved structures, and 
+whether or not the structure contains a basement. 
+ 
+6. For all new or substantially improved floodproofed structures where base flood 
+elevation data is provided through the Flood Insurance Study, FIRM, or as 
+required in Section 14.020.C, the Floodplain Manager shall: 
+ 
+a. Verify and record the actual elevation (in relation to mean sea 
+level), and 
+ 
+b. Maintain the floodproofing certifications required in Section 
+14.040 of this Chapter. 
+ 
+7. Maintain for public inspection all records pertaining to the provisions of this 
+ordinance. 
+ 
+8. Notify adjacent communities, the Oregon Department of Land Conservation and 
+Development, and other appropriate state and federal agencies, prior to any 
+alteration or relocation of a watercourse, and submit evidence of such notification 
+to the Federal Insurance Administrator. 
+ 
+9. Require that maintenance is provided within the altered or relocated portion of 
+said watercourse so that the flood carrying capacity is not diminished. 
+ 
+10. Notify FEMA within six (6) months of project completion when an applicant had 
+obtained a Conditional Letter of Map Change from FEMA, or when development 
+altered a watercourse, modified floodplain boundaries, or modified Base Flood 
+Elevations. This notification shall be provided as a Letter of Map Change. The 
+property owner shall be responsible for preparing technical data to support the 
+Letter of Map Change application and paying any processing or application fees 
+to FEMA. The Floodplain Manager shall be under no obligation to sign the 
+Community Acknowledgement Form, which is part of the Conditional Letter of 
+Map Change and Letter of Map Change application, until the applicant 
+demonstrates that the project will or has met the requirements of this Code and all 
+applicable State and Federal laws. 
+  
+11. Report to FEMA on each development permit issued in the SFHA, including: 
+ 
+a.  Amount of fill or structural displacement of flood storage, and the amount 
+(in volume and area) of compensatory storage provided; 
+ 
+b.  Amount of new impervious surface and types and amounts of 
+compensatory mitigation provided; 
+ 
+c.  The number of trees equal to or greater than six (6) inches in diameter at 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-6 Effective Date: 17-Jan-19 
+breast height removed, and the types and amounts of compensatory 
+mitigation provided; 
+ 
+d.  The area in which clearing and/or grading occurred;  
+ 
+e.  For any project that disconnects or reconnects land to the floodplain, the 
+type of project and amount of land disconnected or reconnected; and 
+ 
+f.  Location of the project and of the corresponding mitigation. 
+ 
+14. Make interpretations where needed, as to exact location of the boundaries of the 
+areas of special flood hazards (for example, where there appears to be a conflict 
+between a mapped boundary and actual field conditions). The person contesting 
+the location of the boundary shall be given a reasonable opportunity to appeal the 
+interpretation as provided in Section 14.055 of this Chapter. 
+ 
+C. Use of Other Base Flood Data for Permit Review. When base flood elevation data is not 
+available through the Flood Insurance Study, FIRM, or has not been provided in 
+accordance with Section 14.010 of this Chapter, the City may obtain, review, and utilize 
+any reasonable base flood elevation and floodway data available from a federal, state, or 
+other source, in order to assure that proposed development will be reasonably safe from 
+flooding. The test of reasonableness is a local judgment and includes use of historical 
+data, high water marks, photographs of past flooding, etc., where available. Failure to 
+elevate at least two (2) feet above grade in these zones may result in higher insurance 
+rates. 
+ 
+D. Contested Boundaries. A person contesting the location of the boundary has the 
+opportunity to submit a Letter of Map Change (LOMC) directly to the Federal 
+Emergency Management Agency to change the Flood Insurance Rate Map mapping of 
+their property. If a land use application is submitted before a LOMC is approved by the 
+Federal Emergency Management Agency, the application will be processed under the 
+standards of this Chapter. 
+ 
+E. Inspections. The Floodplain Manager shall inspect development that is subject to the 
+permit requirements of this Chapter, including buildings and structures exempt from the 
+Building Code. The Floodplain Manager shall inspect Special Flood Hazard Areas to 
+determine if development is being undertaken without the issuance of a permit. Annual 
+inspection logs shall be maintained by the Floodplain Manager. 
+ 
+14.025 Uses within the Floodplain but Outside the Floodway and Outside Wetlands. 
+ 
+A. Prohibited Uses. 
+ 
+1. Any prohibited use in the underlying zoning district. 
+ 
+2. Excavation, fill, or vegetation removal without an approved land use permit. 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-7 Effective Date: 17-Jan-19 
+ 
+3. Expansion of legal nonconforming uses. 
+ 
+4. Uncontained, outside storage areas of hazardous materials for hazardous materials 
+as defined by the State of Oregon Department of Environmental Quality. 
+ 
+5. No new land divisions will be approved for properties exclusively within the 
+floodplain or that propose to create a buildable lot that is exclusively within the 
+floodplain. 
+ 
+B. Permitted Uses. 
+ 
+1. Any use permitted in the underlying zoning district, subject to the standards for 
+development outlined in Section 14.040 of this Chapter, including stormwater 
+management facilities developed in accordance with the standards of Section 
+5.700 of this Code. 
+ 
+2. Open space, trails, walkways, and bike paths as designated by the Troutdale Parks 
+Plan, or as approved with a land use application and constructed in compliance 
+with Section 4.315.D. 
+ 
+3. Removal of unauthorized fill. 
+ 
+4. Removal of nuisance or invasive plant species, and/or the restoration of approved 
+plant species on the City of Portland Plant List as defined in Section 1.040 of this 
+Code. 
+ 
+5. Removal of dead or dying trees that are an imminent danger to public safety as 
+determined by a certified arborist or the equivalent. 
+ 
+6. Construction of new roadways and utilities necessary to support permitted 
+development within and outside the Flood Management Area, subject to the 
+standards of Section 14.040 of this Chapter and the Construction Standards on file 
+in the Public Works Department or the applicable jurisdiction of the roadway. 
+ 
+7. New culverts, stream crossings, and transportation projects may be permitted if 
+designed as balanced cut and fill projects, and in compliance with the standards of 
+Section 14.040 of this Chapter. Such projects shall be designed to minimize the 
+area of fill in Flood Management Areas and to minimize erosive velocities. 
+Stream crossings shall be as close to perpendicular to the stream as practicable. 
+Bridges shall be used instead of culverts wherever practicable. 
+ 
+8. Excavation and fill required for the construction of detention facilities or 
+structures, and other facilities such as levees specifically designed to reduce or 
+mitigate flood impacts. Levees shall not be used to create vacant buildable land. 
+ 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-8 Effective Date: 17-Jan-19 
+9. Emergency temporary bank stabilization necessitating immediate action during a 
+flood event to prevent the loss of an existing structure, or to repair a bank 
+damaged during a natural flooding event. 
+ 
+10. Routine repair and maintenance of existing structures (conforming and 
+nonconforming uses), streets, driveways, utilities, culverts, drainageways and 
+levees constructed for flood control, accessory uses, and other existing 
+development on the site (including landscaped yards, decks, patios, boat ramps, 
+etc.). 
+ 
+11. Rehabilitation or replacement of a structure that is damaged or destroyed to any 
+extent, whether it is partially or fully within the Flood Management Area, and in 
+compliance with Section 4.521 of this Chapter. Any structure or use deliberately 
+removed or demolished may not be restored, replaced, or rebuilt, except in 
+compliance with all applicable provisions of this Code, federal, state, and county 
+regulations. 
+ 
+12. Any development that must implement a Federal Aviation Administration (FAA) 
+compliant wildlife hazard management plan on property owned by the Port of 
+Portland or within ten thousand (10,000) feet of an Aircraft Operating Area, as 
+defined by the FAA, and removal of trees that interfere with the landing or takeoff 
+flight path of aircraft at the Troutdale Airport or otherwise interferes with the safe 
+operation of the airport as determined by the Port of Portland. The removal of 
+trees that interfere with the operation of the Troutdale Airport are permitted 
+outright. 
+ 
+13. Wildfire mitigation projects, such as fuels reduction or the creation of defensible 
+space. 
+ 
+14. Removal of waste as defined in the Troutdale Municipal Code Section 8.40.015. 
+ 
+14.030 Uses within the Floodway or within Wetlands. 
+ 
+A. Prohibited Uses within the Floodway or within Wetlands. Unless specifically permitted 
+under this Section, the following uses are prohibited within floodways and wetlands: 
+ 
+1. Manmade structures. 
+ 
+2. Vegetation removal, fill, or excavation. Vegetation removal in the floodway in 
+concert with an approved wildfire mitigation project may be permitted subject to 
+review under the standards for development of Section 14.040 of this Chapter. 
+ 
+3. Private road construction. 
+ 
+4. Alterations and relocations of the watercourses of Arata, Salmon, or Beaver 
+Creeks, the Sandy and Columbia Rivers, or the watercourse of any unnamed 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-9 Effective Date: 17-Jan-19 
+perennial or intermittent stream except as provided for in Subsection B(11) of this 
+Section and Section 14.040.O of this Chapter. 
+ 
+5. Fill of wetlands without both an approved land use application and an approved 
+Joint Fill Permit issued by the Oregon Department of State Lands and the U.S. 
+Army Corps of Engineers. 
+ 
+6. Uncontained, outside storage areas of hazardous materials for hazardous materials 
+as defined by the State of Oregon Department of Environmental Quality. 
+ 
+7. Expansion of nonconforming uses. 
+ 
+8. New installation of manufactured dwellings. 
+ 
+B. Permitted Uses within the Floodway or within Wetlands. The following uses are 
+permitted subject to review under the standards for development of Section 14.040 of this 
+Chapter: 
+ 
+1. Open space, trails, walkways, and bike paths, as designated by the Troutdale 
+Parks Plan, or as approved with a land use application. 
+ 
+2. Removal of unauthorized fill. 
+ 
+3. Removal of dead or dying trees that are an imminent danger to public safety as 
+determined by a certified arborist or the equivalent. 
+ 
+4. Routine repair and maintenance of existing structures (conforming and 
+nonconforming uses), streets, driveways, utilities, culverts, drainageways and 
+levees constructed for flood control by the Sandy Drainage Improvement 
+Company or its successor, accessory uses, and other existing development on the 
+site (including landscaped yards, decks, patios, boat ramps, and the operation, 
+maintenance, and repair of manmade water control facilities such as irrigation and 
+drainage ditches, constructed ponds or lakes, wastewater facilities, and 
+stormwater quality facilities, and similar development. 
+ 
+5. Construction, expansion, and/or maintenance of public roadways and public 
+utility facilities necessary to support permitted development. A “No-Rise” 
+Certification for construction or expansion of public roadways and public utilities 
+shall be required consistent with Section 14.040.G(4) for all approved projects. 
+ 
+6. Balanced excavation and fill required for the construction of detention facilities or 
+structures and other facilities such as levees specifically designed to reduce or 
+mitigate flood impacts. Levees shall not be used to create vacant buildable lands. 
+ 
+7. New culverts, stream crossings, and transportation projects necessary to 
+implement the City, County, or State Transportation System Plans or other 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-10 Effective Date: 17-Jan-19 
+development permitted under this Chapter, and as applicable, meets the 
+specifications of the Oregon Department of State Lands, Oregon Department of 
+Fish and Wildlife, and federal regulations. 
+ 
+8. Permanent bank stabilization necessary to preserve an existing structure provided 
+the balanced cut and fill standard is met if the work is in the floodplain or a “No-
+Rise” certification if the work is within the floodway. Exception: Bank 
+stabilization is not permitted for development on a vacant lot of record. 
+ 
+9. Emergency temporary bank stabilization necessitating immediate action during a 
+flood event to prevent the loss of an existing structure, or to repair a bank 
+damaged during a natural flooding event. 
+ 
+10. Fill of wetlands when there is no other practicable way to build on the site as 
+established through Section 14.040 of this Chapter, and provided fill of wetlands 
+within the floodplain is balanced with cut elsewhere within the floodplain, and a 
+Fill/Removal Permit is issued from the Oregon Department of State Lands (DSL) 
+and U.S. Army Corps of Engineers (Corps), as applicable. The application to DSL 
+and the Corps may be processed concurrently with a land use application for site 
+and design review, land division, a planned development application, or a 
+conditional use. A joint fill permit may be applied for prior to application for a 
+land use permit. However, if a joint fill permit is approved by the Oregon 
+Department of State Lands and the U.S. Army Corps of Engineers prior to 
+applying for the land use application, fill may not proceed until the final decision 
+for the land use application has been made by the City.  Mitigation for fill of 
+wetlands and the location of the mitigation shall be as prescribed by the 
+DSL/Corps permit. 
+ 
+11. New drainageways, levees, or alteration of watercourses to accommodate public 
+projects administered by the Sandy Drainage Improvement Company or its 
+successor, the City, Multnomah County, the state, or a federal agency, provided it 
+is in compliance with Sections 14.035(C), and 14.040(R) and (S) of this Chapter. 
+ 
+12. Any development that must implement a Federal Aviation Administration (FAA) 
+compliant wildlife hazard management plan on property owned by the Port of 
+Portland or within ten thousand (10,000) feet of an Aircraft Operating Area, as 
+defined by the FAA, and removal of trees that interfere with the landing or takeoff 
+flight path of aircraft at the Troutdale Airport or otherwise interferes with the safe 
+operation of the airport as determined by the Port of Portland.  The removal of 
+trees that interfere with the operation of the Troutdale Airport are permitted 
+outright. 
+ 
+13. Removal of waste as defined in the Troutdale Municipal Code Section 8.40.015. 
+ 
+  
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-11 Effective Date: 17-Jan-19 
+14.035 Floodplain Development Permit 
+ 
+A. Background. To participate in the National Flood Insurance Program (NFIP), a 
+community must adopt and enforce a floodplain management ordinance that regulates 
+development in the floodplain. This floodplain management ordinance is housed 
+primarily in Chapter 14 of this Code, but is in part addressed in other Chapters of this 
+Code. One of the basic Federal requirements for regulating Development in the 
+Floodplain is a requirement for a Floodplain Development Permit (locally, a Floodplain 
+Development Permit) before construction or other development begins within any Special 
+Flood Hazard Area. In this context, the term "development" is defined in Section 1.040. 
+This chapter contains provisions for the federally required Floodplain Development 
+Permit and is consistent with the National Flood Insurance Program (NFIP) regulations. 
+A Floodplain Development Permit is required for development within the Flood 
+Management Area except as noted in Section 14.035.C of this Chapter. 
+ 
+B. Applicability. Unless exempt per Section 14.035.C, below, approval of a Floodplain 
+Development Permit shall be obtained before construction or development begins within 
+any area of special flood hazard established in Section 14.010.B of this Chapter. The 
+permit shall be for all structures including manufactured dwellings, as set forth in the 
+Section 1.040 and for all development including fill and other activities, also as set forth 
+in the Section 1.040.  
+ 
+C. Exemptions. The following activities do not require a Floodplain Development Permit: 
+ 
+1. Removal of invasive, nuisance, or prohibited plant species that exposes the 
+ground, provided a revegetation plan approved or prepared by the City, state, a 
+federal agency, Metro, SOLV, the East Multnomah Soil & Water Conservation 
+District, or other similar organizations as determined by the Floodplain Manager, 
+is carried out to provide shade and habitat, prevent erosion of steep slopes and/or 
+sedimentation into the protected water feature. A copy of the plan shall be 
+provided to the Floodplain Manager prior to beginning the work. 
+ 
+2.  Placement of fill in residential zones, provided it is consistent with other 
+applicable provisions of this Code, and provided the fill is used solely for the 
+purpose of constructing a sandbox, a raised gardening bed, or other similar 
+landscape feature. 
+ 
+ 3.  Installation of three strand, on bendable pole, wire farm type fencing that is  
+constructed consistent with the provisions in Section 14.040 of this Chapter. 
+ 
+4. Landscape maintenance activities consistent with the standards identified in this 
+Section. 
+ 
+5. Wetlands not subject to flooding as described Section 14.010.B of this Chapter, nor 
+identified as designated habitat covered under the Endangered Species Act, and are 
+not exempt from review under Section 4.300 of this Code. 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-12 Effective Date: 17-Jan-19 
+D.  Submission Requirements.  An application for a Floodplain Development Permit within 
+the Flood Management Area shall include the following, and these requirements apply to 
+all applicants for development approval unless otherwise noted below: 
+ 
+ 1. A site plan showing the proposed development on the site, drawn to a standard 
+scale, and including an illustrated scale for use in reductions. A site plan shall also 
+consist of the following: 
+ 
+a.  SFHA boundaries, and the base  flood elevations based upon the North 
+American Vertical Datum of 1988 (NAVD 88); 
+ 
+b.  The 1996 flood boundaries established by Metro; 
+ 
+c.  Floodway boundaries as determined by datum available from the FIRM and 
+Flood Insurance Study;  
+    
+d.  The name, location, and dimensions of affected streams or rivers, and the 
+bankfull stage or the two-year storm level. 
+    
+e.  The area comprising the vegetation corridor as established by Sections 
+4.316 and 4.317 of this Code; 
+    
+f.   Wetlands that are determined significant by the Oregon Department of State 
+Lands or have  the following characteristics. All wetland determinations 
+made prior to development must be reviewed and acknowledged by the 
+Oregon Department of  State Lands prior to issuance of City permits. The 
+characteristics shall be determined by a qualified scientist. 
+ 
+i.  The wetland is fed by surface flows, sheet flows, or precipitation; 
+has evidence of flooding during the growing season; at least sixty 
+percent (60%) of the area is vegetation; and is over one-half acre in 
+size; or, the wetland qualifies as having “intact water quality 
+function” under the 1996 Oregon Freshwater Wetland Assessment 
+Methodology; or 
+ 
+ii.  The wetland is in the Flood Management A rea; has evidence of 
+flooding during the growing season; is five (5) acres or more in size; 
+and has a restricted outlet or no outlet; or, the wetland qualifies as 
+having “intact hydrologic control function” under the 1996 Oregon 
+Freshwater Wetland Assessment Methodology; or 
+ 
+iii.  The wetland, or a portion of the wetland, is within a horizontal 
+distance of less than one-fourth (1/4) mile from a water body which 
+meets the State of Oregon Department of Environmental Quality 
+definition of “water quality limited water body” in OAR Chapter 
+340, Division 41 (1996). 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-13 Effective Date: 17-Jan-19 
+ 
+2. Topographic survey. The survey shall show the floodway and floodplain. The 
+survey shall also show the location of existing and proposed improvements on the 
+site, trees or tree clusters (including those to be removed), existing roads, utilities, 
+and structures, buildings, structures, fencing, walls, landscaping, storage of 
+materials or equipment, drainage facilities, parking areas, and other impervious 
+surface areas. The survey shall be drawn to scale, with two (2) foot contours, and 
+shall note the distance from Top-of-bank to the improvements on the site; 
+ 
+3. Where base flood elevation data is provided through the City’s Flood Insurance 
+Study, or by other means as permitted in this Chapter, the developer shall obtain 
+and record the actual elevation of the lowest floor (including basement) of all new 
+or substantially improved structures, including the placement of a manufactured 
+dwelling, and whether or not the structure contains a basement. This information 
+shall be based upon NAVD 88 and provided on a City Floodplain Development 
+Permit form, and should include the following, as applicable:  
+ 
+a.  For all new or substantially improved, elevated, or floodproofed 
+structures, verify and record the actual elevation.  
+ 
+b.  Where development occurs within Zone A of the Flood Management Area 
+and the Base Flood Elevation (BFE) data is not available either through 
+the Flood Insurance Study or from another authoritative source as 
+authorized in Subsection 14.020(C) of this Chapter, the Floodplain 
+Development Permit shall be reviewed for compliance with FEMA 
+Publication 265 issued July 1995 “Managing Floodplain Development in 
+Approximate Zone A Areas”, adopted herein for reference, and applicable 
+State of Oregon Building Codes. 
+ 
+ 4. Hydrology and soils report. Where ground disturbance or vegetation removal is 
+proposed that exposes the soil, this report shall be required. This report shall 
+include information on the hydrological activities of the site, the effect of 
+hydrologic conditions on the proposed development, and any hydrological or 
+erosion hazards. This report shall also include characteristics of the soils on the 
+site, suitability for development, its carrying capacity, and erosion or slumping 
+characteristics that might present a hazard to life and property, or adversely affect 
+the function or stability of a public use or facility. This report shall also include 
+information on the nature, distribution, and strength of existing soils; the 
+adequacy of the site for development purposes; and an assessment of grading 
+procedures required to impose the minimum disturbance to the natural state. The 
+report shall be prepared by a professional engineer registered in Oregon. In 
+Oregon Department of Geology and Mineral Industries (DOGAMI) inventory of 
+landslide hazard areas, on hillsides where grading will lessen stability, or in areas 
+where historic or prehistoric mudflows have occurred, a soils engineer and/or 
+engineering geologist registered in Oregon shall certify the development will not 
+negatively impact public safety, adjacent properties, or water quality. 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-14 Effective Date: 17-Jan-19 
+ 
+5. Grading plan. If grading is to occur, a grading plan shall be required that shows 
+existing and finished contours (two-foot contour intervals), drainage, all cut and 
+fill slopes and proposed drainage channels, direction of drainage flow, location of 
+proposed structures and existing structures which may be affected by the 
+proposed grading operations, and water quality facilities.  
+ 
+6. Vegetation report. Where vegetation is to be removed or other impacts to the 
+onsite vegetation is to be expected as a result of development, this report shall be 
+required. This report shall consist of a survey of existing vegetation, whether it is 
+native or introduced, and how it will be altered by the proposed development. 
+Measures for enhancement of the site, including revegetation with approved plant 
+species, will be clearly stated, as well as methods for immediate and long-term 
+stabilization of slopes and control of soil erosion. The vegetation report shall be 
+prepared by a landscape architect, landscape designer, botanist, arborist, wetland 
+specialist, or other similar credentialed authority as determined by the Floodplain 
+Manager with specific knowledge of approved plant species, planting and 
+maintenance methods, survival rates, and their ability to control erosion and 
+sedimentation. The contractor for installation and maintenance will be responsible 
+for replacing any approved plant species that do not survive the first two (2) years 
+after planting.  
+ 
+7. A “No-Rise” certification and a Letter of Map Change (LOMC) shall be 
+submitted with the land use application for the following activities within the 
+floodway as mapped by FEMA: 
+ 
+a.  Permanent bank stabilization that occurs in the floodway. 
+ 
+b.  Development, alterations, or relocations of the floodway, including any 
+permanent fill within the floodway.  
+ 
+ 8.  Building and structure elevations. For all existing and proposed, relocated, or 
+expanded buildings and structures, elevation in relation to  the Highest Adjacent 
+Grade, the North American Vertical Datum 1988 (NAVD88), and the base flood 
+elevation as applicable, of the: 
+ 
+a.  Lowest enclosed area of all existing and proposed, relocated, or expanded 
+buildings and s tructures. This includes c rawlspaces, basement floors, and 
+attached garages, electrical equipment (except utility meters), heating and 
+ventilation equipment, plumbing, air conditioni ng equipment, and/or other 
+service facilities (including ductwork); top of proposed garage slabs; and  
+next highest floor situated above the items herein. 
+ 
+b.  Elevation to which any existing building or structure has been or is 
+proposed to be flood-proofed; and certification by a registered 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-15 Effective Date: 17-Jan-19 
+professional engineer that the flood-proofing methods for any 
+nonresidential structure meet the floodproofing criteria in this Chapter. 
+ 
+c.  The locations and sizes of all flood openings in any proposed buildings 
+and structures. 
+ 
+ 9.  Infrastructure. Location of all proposed infrastructure necessary to serve the 
+proposed development shall be required when such new development is proposed 
+by the applicant. Such infrastructure includes, but is not limited to, streets, 
+driveways, water, sanitary sewer, and storm drainage. 
+ 
+ 10.  Floodplain or watercourse alterations. Where floodplain or watercourse 
+alterations are proposed, a description of the extent to which any floodplain or 
+watercourse is proposed to be altered or affected as a result of proposed 
+development shall be required. 
+ 
+ 11. All federally-mandated or state-mandated permits issued by other governmental 
+agencies shall be obtained, or obtaining such permits shall be a Condition of 
+Approval to be satisfied prior to issuance of any construction permit. Such 
+permits include but are not limited to Section 404 of the Federal Water Pollution 
+Control Act Amendments of 1972, 33 U.S.C. 1334, 16 U.S.C. 1531-1544, and 
+State of Oregon Removal-Fill permits, as amended. 
+ 
+E. Application for Floodplain Development Permit. A Floodplain Development Permit shall 
+be obtained before construction or development begins within any area of special flood 
+hazard established in Section 14.010 of this Chapter. The permit shall be for all structures 
+including manufactured dwellings, as set forth in Section 1.040 and for all development 
+including fill and other activities, also as set forth in Section 1.040. Applications for a 
+Floodplain Development Permit shall be made on forms furnished by the Community 
+Development Department and may include, but not be limited to, plans drawn to scale 
+showing the nature, location, dimensions, elevations of the area in question, existing or 
+proposed structures, fill, storage of materials, drainage facilities, and the location of the 
+foregoing.  
+ 
+1.  A Type I Floodplain Development Permit is required for the following: 
+ 
+a.  Construction of a single-family dwelling, including the placement of a 
+manufactured dwelling or repair or alteration of existing single-family 
+dwellings and manufactured dwellings. Single-family dwellings and 
+manufactured dwellings shall be built in compliance with the applicable 
+development standards in Section 14.040 of this Chapter. 
+ 
+b.  Emergency bank stabilization necessary to preserve an existing structure 
+during a flood emergency. During the flood event the permit is not 
+required; however, within 90 days of the water receding a Floodplain 
+Development Permit shall be obtained that documents the bank 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-16 Effective Date: 17-Jan-19 
+stabilization measures taken during the emergency and the schedule and 
+procedure that will be used to remove any temporary fill, including sand 
+bags. If the stabilization measures will not be removed, a Type II 
+Floodplain Development Permit will be required as well as a “No-Rise” 
+certification and LOMC as applicable. 
+ 
+c.  Wildfire mitigation projects as identified in this Chapter. 
+ 
+2. A Type II Floodplain Development Permit is required for: 
+ 
+a.  Any use in the underlying zoning district requiring a Type II Site 
+Development review. 
+ 
+b. New or expanded streets or bridges. 
+ 
+c. New or expanded railroads or trestles. 
+ 
+d. Permanent bank stabilization or fill within the floodplain or floodway. 
+ 
+e. Balanced cut and fill activity within the floodplain, with a Letter of Map 
+Change, as required in this Code. 
+ 
+f. Fill of wetlands. If the wetland is outside of the floodplain and not 
+hydrologically connected, a Floodplain Development Permit is not 
+required, only the Site Development Review. 
+ 
+g. Other uses similar in nature to those listed above. 
+ 
+3. A Type III procedure and Floodplain Development Permit shall be processed for 
+uses requiring a Type III review in the underlying zoning district, for all special 
+variances requested from the standards of this Chapter, and for any proposed 
+alteration of a watercourse of any perennial or intermittent streams. 
+ 
+F.  Review Criteria - Requests for approval of a Floodplain Development Permit shall be 
+reviewed by the Floodplain Manager or designee to ensure: 
+ 
+1. Consistency with the standards from Sections 1.040, Chapter 2, and Section 
+14.040 of this Code, as applicable; 
+ 
+2. Consistency with other applicable standards of this Code and all other applicable 
+policies and standards adopted by the City. 
+ 
+G.  Mandatory Conditions of Approval - The following Conditions of Approval are 
+mandatory and shall be imposed on every approved Floodplain Development Permit: 
+ 
+1. Required During Construction Elevation Certificate. For all new construction, 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-17 Effective Date: 17-Jan-19 
+development, and substantial improvements, the permit holder shall provide to the 
+Floodplain Manager or designee an as-built certification of the floor elevation or 
+flood-proofing elevation immediately after the lowest floor or flood-proofing is 
+placed and prior to further vertical construction. Any deficiencies identified by the 
+Floodplain Administrator or designee shall be corrected by the permit holder 
+immediately and prior to work proceeding. Failure to submit certification or 
+failure to make the corrections shall be cause for the Floodplain Administrator or 
+designee or the Building Official to issue a stop-work order for the project. 
+  
+2. Required Documentation Prior to Issuance of Certificate of Occupancy 
+ 
+a.  In addition to the requirements of the Building Codes pertaining to 
+Certificate of Occupancy, prior to the final inspection the owner or 
+authorized agent shall submit the following documentation to the 
+Floodplain Manager or designee and the documentation shall be prepared 
+and sealed by a registered surveyor or engineer: 
+ 
+i.   For elevated buildings and structures in Special Flood Hazard 
+Areas, the as-built elevation of the lowest floor, including 
+basement, or where no base flood elevation is available the height 
+above highest adjacent grade of the lowest floor; 
+ 
+ii. For buildings and structures that have been floodproofed, the 
+elevation to which the building or structure was floodproofed. 
+ 
+b.  Failure to submit certification or failure to correct violations shall be cause 
+for the Floodplain Manager or designee or the Building Official to 
+withhold a Certificate of Occupancy until such deficiencies are corrected. 
+ 
+3. For applications for partitions and subdivisions, one of the following shall be 
+required: 
+ 
+a.  Protection of Flood Management Areas with a conservation easement; 
+ 
+b.  Platting Flood Management Areas as common open space; or 
+ 
+c.  Offer of sale or donation of Flood Management Area property to public 
+agencies or private non-profits for preservation where feasible. 
+ 
+14.040 Development Standards. The land use application shall establish through the use of narrative, 
+site plans, and professional reports, the following: 
+ 
+A. Type II or III approval for new development, including additions or alterations to existing 
+structures, except for single family dwellings, in the Flood Management Area may be 
+allowed, provided that: 
+ 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-18 Effective Date: 17-Jan-19 
+1. The applicant shall demonstrate that there is no reasonable nor practical 
+alternative design or method of development that would have a lesser impact on 
+the Flood Management Area than the one proposed. 
+ 
+2. If there is no reasonable nor practical alternative design or method of 
+development the project shall be designed in compliance with applicable parts of 
+Subsections (B) through (X) of this Section, so that the impacts on the Flood 
+Management Area are limited and the plans shall include restoration, replacement, 
+or rehabilitation of the vegetation within the Flood Management Area. 
+ 
+3. The applicant shall provide mitigation to ensure that impacts to the functions and 
+values of the vegetation corridor and integrity of the slope will be mitigated or 
+restored to the extent practicable. 
+ 
+B. A professional engineer registered in Oregon must certify that the development will not 
+result in any increase in flood levels throughout the SFHA during the occurrence of the 
+base flood discharge, and that water quality will not be adversely affected. 
+ 
+C. As applicable, the development must be authorized by the Oregon Department of State 
+Lands, U.S. Army Corps of Engineers, the Oregon Department of Fish and Wildlife, and 
+the Sandy Drainage Improvement Company. The applicant shall obtain and submit a 
+copy of all required state and federal permits for any proposed development in the Flood 
+Management Area, including Section 404 of the Federal Water Pollution Control Act 
+Amendments of 1972, 33 USC 1334. 
+ 
+D. Unless otherwise authorized under the provisions of this Chapter, the development shall 
+comply with the underlying zoning district dimensional standards and the minimum 
+vegetation corridor as established in Sections 4.316 and 4.317 of this Code. The applicant 
+shall submit an exhibit that shows the location and provides a description of all actions to 
+be provided to mitigate the impacts of permitted development as established in Section 
+4.314 of this Code. 
+ 
+E. Protect the water quality resource, and Flood Management Area functions and values 
+from uncontained areas of hazardous materials as defined by the State of Oregon 
+Department of Environmental Quality water quality standards. 
+ 
+F. Limit impervious surface areas in the Flood Management Area. 
+ 
+1. The impervious surface of the development may not exceed thirty percent (30%) 
+of the flood plain area, provided the standards of this Code are met. Exception: 
+Public roads necessary to serve the transportation needs of the City may exceed 
+thirty percent (30%) of the Flood Management Area provided all other applicable 
+standards of this Chapter have been met. 
+ 
+2. Clustering of houses and multiple-family units, zero lot line developments, and/or 
+modifications to setbacks may be approved under the Type II procedure in order 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-19 Effective Date: 17-Jan-19 
+to accommodate the density permitted within the underlying zoning district and 
+not exceed the impervious surface limitation of thirty percent (30%) of the Flood 
+Management Area on the site. 
+ 
+3. The Director, or their designee, may grant an administrative variance of up to fifty 
+percent (50%) of any dimensional standard in the underlying zoning district 
+where necessary to avoid development within the Flood Management Area. 
+ 
+G. Maintain flood storage capacity. The  developer  is  required  to  offset  new  fill  placed  
+in  the  floodplain  by excavating  an  additional  flood-able  area  to  replace  the  lost  
+flood  storage  area,  preferably  at hydrologically equivalent sites. All development 
+proposals in the SFHA shall provide compensatory mitigation for impacts to flood 
+storage, water infiltration, and riparian vegetation to ensure that new development does 
+not increase flood hazards on other properties. A mitigation plan shall be submitted with 
+the land use application. All required actions derived from that plan shall be completed 
+prior to issuance of a Certificate of Occupancy, a Certificate of Completion for a 
+subdivision, or the final building inspection, as applicable. Balanced cut and fill is 
+required for permitted development in the Flood Management Area. Excavation and fill 
+shall be performed in a manner to maintain or increase flood storage and conveyance 
+capacity and not increase design flood elevations. A professional engineer registered in 
+Oregon must certify that the development will not result in any increase in flood levels 
+throughout the SFHA during the occurrence of the base flood discharge.  
+ 
+1. All fill placed at or below the design flood elevation in the Flood Management 
+Area shall be balanced with at least an equal volume or amount of soil material 
+removal. The development shall be designed to minimize development within the 
+Flood Management Area and amount of fill necessary. Balanced cut and fill may 
+be used to elevate structures but shall not be used for density transfer. Residential 
+density must be calculated prior to changes to the floodplain as a result of 
+balanced cut and fill. 
+ 
+2. Excavation shall not be counted as compensating for fill if such areas will be 
+filled with water in non-storm winter conditions. 
+ 
+3. The cumulative effect of any proposed development shall not increase the water 
+surface elevation of the base flood. Onsite flood storage capacity shall not 
+decrease as a result of development, vegetation removal, or excavation. 
+ 
+4. A “No-Rise” certification is required for any fill or permitted development within 
+the floodway pursuant to Section 60.3(d)(3) of the National Flood Insurance 
+Program. 
+ 
+a.  The “No-Rise” supporting data and a copy of the engineering certification 
+must be submitted to, and reviewed by, the City prior to approval of 
+development, and the data shall be submitted with the Floodplain 
+Development Permit. 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-20 Effective Date: 17-Jan-19 
+ 
+b.  The “No-Rise” certification and supporting technical data must stipulate 
+no impact on the 100-year flood elevations, floodway elevations, or 
+floodway widths at the new cross-sections and at all existing cross-
+sections anywhere in the model. 
+ 
+c.  A sample “No-Rise” certification is available in the Community 
+Development Department. 
+ 
+5. All new buildings built on fill in the regulatory floodplain shall be constructed on 
+fill: 
+ 
+a.      Certified by a professional engineer registered in Oregon as suitably 
+designed and compacted for the development (e.g. fill that meets the 
+criteria of 1803.5.8 and Section 1804.4 of the International Building Code, 
+Section 2.4 of ASCE 24, or their equivalent); and 
+ 
+b.  Providing protection from erosion and scour. 
+ 
+6. When a project proposes development that will alter a watercourse, modify 
+floodplain boundaries, or modify Base Flood Elevations, the application shall 
+obtain a Conditional Letter of Map Change from FEMA prior to grading and 
+filling the site and then obtain and submit the final Letter of Map Change prior to 
+final inspections, or issuance of a certificate of completion, or issuance of the 
+certificate of occupancy as required under this Section. When a project applicant 
+has demonstrated through the Floodplain Development Permit that, in addition to 
+the standards listed for Section 14.040.G, the following standards have been 
+achieved, a Conditional Letter of Map Change/Letter of Map Change may not be 
+required: 
+ 
+a.  Fill is not proposed in the floodway for the site to be impacted through 
+development; 
+ 
+b.  The project site is not being elevated to or above the base flood elevation 
+(BFE); 
+ 
+c.  The project is proposing to remove unsuitable existing material (topsoil) 
+and backfilling with select structural material, not altering the existing 
+(natural grade) elevation of the site; 
+ 
+d.  The site to be impacted does not have US Fish and Wildlife Service 
+(USFWS) designations for critical habitat for Threatened or Endangered; 
+and 
+ 
+e.  In areas where a regulatory floodway has not been designated, the new 
+construction, substantial improvements, or other development (including 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-21 Effective Date: 17-Jan-19 
+fill) within A or AE Zones on the community’s FIRM, has demonstrated 
+that the cumulative effect of the proposed development, when combined 
+with all other existing and anticipated development, will not increase the 
+water surface elevation of the base flood at any point within the 
+community. 
+ 
+7. All proposals that include engineering analysis for maintenance of flood storage 
+capacity are subject to review by a qualified engineer licensed in the State of 
+Oregon. The applicant shall be responsible for the cost of this independent review 
+and will be advised at the time of application of this expectation. 
+ 
+H. Residential Development, including accessory structures as referenced in Section 5.010 
+of this Code and not constructed in accordance with Section 14.040.V. Note: if more than 
+fifty percent (50%) of the lot being developed is affected by the floodplain, then the 
+minimum density standard of this Code does not apply. 
+ 
+1. Elevate structures. The minimum finished floor elevation, including basement 
+floor, for all new or substantially improved residential structures in the Flood 
+Management Area shall be at least two (2) feet above the base flood elevation, as 
+established by Section 14.010.B in this Chapter, and as demonstrated through the 
+Elevation Certificate submittals as established in this Section. Elevation 
+Certificates shall be required for all residential development as required by the 
+Community Rating System. 
+ 
+a.  An Elevation Certificate shall be submitted with the construction plans. 
+The Elevation Certificate shall include the elevation of the lowest floor 
+(including basement). The Elevation Certificate shall be certified by a land 
+surveyor, engineer, or architect who is authorized by state or local law to 
+certify elevation information for construction within specific flood hazard 
+areas. 
+ 
+b.  A second certified Elevation Certificate shall be submitted to the City of 
+Troutdale prior to pouring the foundation. 
+ 
+c.  A third certified Elevation Certificate shall be submitted after the structure 
+is completed based upon finished construction. 
+ 
+d.  The City shall maintain the Elevation Certificates for public inspection. 
+ 
+2. Fully enclosed areas below the lowest floor that are subject to flooding are 
+prohibited, or shall be designed to automatically equalize hydrostatic flood forces 
+on exterior walls by allowing for the entry and exit of flood waters. Designs for 
+meeting this requirement must either be certified by a registered professional 
+engineer or architect, or must meet or exceed the following minimum criteria: 
+ 
+a.  A minimum of two (2) openings having a total net area of not less than 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-22 Effective Date: 17-Jan-19 
+one (1) square inch for every square foot of enclosed area subject to 
+flooding shall be provided. 
+ 
+b.  The bottom of all openings shall be no higher than one (1) foot above 
+grade. 
+ 
+c.  Openings may be equipped with screens, louvers, or other devices 
+provided that they permit the automatic entry and exit of floodwaters. 
+ 
+d.  Where possible, openings will be installed on at least two opposing sides 
+of the enclosed area. 
+ 
+3. Below-grade crawlspaces are allowed only when in compliance with the design 
+requirements of FEMA Technical Bulletin 11-01, “Crawlspace Construction for 
+Buildings Located in Special Flood Hazard Areas.” Buildings that have below-
+grade crawlspaces will have higher flood insurance premiums than buildings that 
+have the preferred crawlspace construction with an interior elevation at or above 
+the lowest adjacent exterior grade. 
+ 
+a.  The building must be designed and adequately anchored to resist flotation, 
+collapse, and lateral movement of the structure resulting from 
+hydrodynamic and hydrostatic loads, including the effects of buoyancy. 
+Hydrostatic loads and the effects of buoyancy can usually be addressed 
+through the required openings: 
+ 
+i. Openings that equalize hydrostatic pressures by allowing for the 
+automatic entry and existence of floodwaters is required. The 
+bottom of each flood vent opening can be no more than one (1) 
+foot above the lowest adjacent exterior grade. See FEMA 
+Technical Bulletin 1-93, Opening in Foundation Walls, for 
+guidance. 
+ 
+ii. All portions of the building below the base flood elevation must be 
+constructed with materials resistant to flood damage. This includes 
+not only the foundation walls of the crawlspace used to elevate the 
+building, but also any joists, insulation, or other materials that 
+extend below the BFE. The recommended construction practice is 
+to elevate the bottom of joists and all insulation above BFE. 
+Ductwork or other utility systems located below the insulation may 
+pull away from their supports. See page 8 of Technical Bulleting 1-
+93 and FEMA Technical Bulletin 2-93 Flood Resistant Materials 
+Requirements. 
+ 
+iii. Any building utility systems within the crawlspace must be 
+elevated above the base flood elevation or designed so that 
+floodwaters cannot enter or accumulate within the system 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-23 Effective Date: 17-Jan-19 
+components during flood conditions. Ductwork, in particular, must 
+either be placed above the BFE or sealed from floodwaters. For 
+further guidance, see FEMA 348, Protecting Building Utilities 
+from Flood Damage. 
+ 
+b.  The interior grade of a crawlspace below the base flood elevation must not 
+be more than two (2) feet below the lowest adjacent exterior grade. 
+ 
+c.  The height of the below-grade crawlspace, measured from the interior 
+grade of the crawlspace to the top of the crawlspace foundation wall must 
+not exceed four (4) feet at any point. The height limitation is the maximum 
+allowable unsupported wall height according to the engineering analyses 
+and building Code requirements for flood hazard areas. Crawlspaces may 
+not be converted to basements. 
+ 
+d.  There must be an adequate drainage system that removes floodwaters from 
+the interior area of the crawlspace. The enclosed area should be drained 
+within a reasonable time after a flood event. The type of drainage system 
+will vary because of the site gradient and other drainage characteristics, 
+such as soil types. Possible options include natural drainage through 
+porous, well-drained soils and drainage systems such as perforated pipes, 
+drainage tiles or gravel, or crushed stone drainage by gravity or 
+mechanical means. 
+ 
+e.  Crawlspace construction is not permitted in areas with flood velocities 
+greater than five (5) feet per second unless the design is reviewed by a 
+qualified design professional, such as a registered architect or professional 
+engineer. For velocities in excess of five (5) feet per second, other 
+foundation types should be used. 
+ 
+f.  The crawlspace is an enclosed area below the base flood elevation (BFE) 
+and, as such, must have openings that equalize hydrostatic pressures by 
+allowing the automatic entry and exit of floodwaters. The bottom of each 
+flood vent opening can be no more than one (1) foot above the lowest 
+immediate interior or exterior grade. 
+ 
+4. Substantial improvements will require elevation of any non-elevated structure to 
+two (2) feet above the base flood elevation in compliance with this Section and in 
+accordance with Section 1.040. Substantial improvement is considered to occur 
+when the first alteration of any wall, ceiling, floor, or other structural part of the 
+building commences, whether or not that alteration affects the external 
+dimensions of the structure. Substantial improvements include: 
+ 
+a.  Any repair, reconstruction, or improvement of a structure, the cost of 
+which exceeds forty-nine percent (49%) of the market value of the  
+ 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-24 Effective Date: 17-Jan-19 
+structure as established by the County appraiser or a licensed professional 
+appraiser. 
+ 
+b.  Reconstruction or repair of a structure that exceeds forty-nine percent 
+(49%) of the market value of the building before it was damaged. 
+ 
+c.  Additions to an existing structure when the addition increases the market 
+value of the structure by more than forty-nine percent (49%) or the floor 
+area by more than twenty percent (20%). 
+ 
+5. Comply with other standards of this Section, as applicable. 
+ 
+I. Manufactured dwellings within the Special Flood Hazard Area. 
+ 
+1. All manufactured dwellings to be placed or substantially improved on sites 
+outside of or within a new, existing, or expansion to an existing manufactured 
+dwelling park or subdivision shall be elevated so that the bottom of the 
+longitudinal chassis frame beam is at or above the base flood elevation and be 
+securely anchored to an adequately designed foundation system to resist flotation, 
+collapse, and lateral movement. 
+ 
+2. Anchoring shall be installed using methods and practices that minimize flood 
+damage. Anchoring methods may include, but are not limited to, use of over-the-
+top or frame ties to ground anchors (Reference FEMA’s “Manufactured Home 
+Installation in Flood Hazard Areas” guidebook for additional techniques). 
+ 
+3. Manufactured dwellings shall have all electrical crossover connections installed at 
+a minimum of twelve (12) inches above BFE. 
+ 
+4. Manufactured dwellings supported on solid foundation walls shall be constructed 
+with flood openings that comply with Section 14.040.H(2). 
+ 
+5. Comply with the other standards of this Section as applicable. 
+ 
+J. Recreational Vehicles (RV) within the Special Flood Hazard Area, whether in a park or 
+on private property outside of a park, are required to: 
+ 
+1. Be on the site for fewer than one hundred eighty (180) consecutive days, and 
+ 
+2. Be fully licensed and ready for highway use. Highway use means on its wheels or 
+jacking system, is attached to the site only by quick disconnect type utilities and 
+security devices, and has no permanently attached additions; or  
+ 
+3. Meet the permit requirements of Section 14.040.I and the requirements for 
+manufactured dwellings. 
+ 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-25 Effective Date: 17-Jan-19 
+4. The RV “pads” shall be paved with asphaltic concrete or comparable, and have a 
+special water quality facility for the collection of the stormwater from the site. 
+ 
+5. The RV “pads” shall be wide enough to accommodate a trailer parked next to the 
+towing vehicle or be long enough to accommodate both towing vehicle and 
+trailer. 
+ 
+K. Nonresidential Construction. New construction, development, and substantial 
+improvement of any commercial, industrial, or other nonresidential structure shall have 
+the lowest floor, including basement, elevated to no less than two (2) feet above the base 
+flood elevation; or, together with attendant utility and sanitary facilities, shall: 
+ 
+1. Be dry floodproofed so that below the base flood level the structure is watertight 
+with walls substantially impermeable to the passage of water. A dry floodproofing 
+certificate shall be filed with the City following the form and procedure 
+established by the Federal Emergency Management Agency. 
+ 
+2. Have structural components capable of resisting hydrostatic and hydrodynamic 
+loads and effects of buoyancy, in accordance with standards established by the 
+Federal Emergency Management Agency and the National Flood Insurance 
+Program. 
+ 
+3. Be certified by a registered professional engineer or architect that the design and 
+methods of development are in accordance with accepted standards of practice for 
+meeting provisions of National Flood Insurance Program regulations (CFR 
+60.3(c)(4) and (5)) based on their development and/or review of the structural 
+design, specifications, and plans. Such certifications shall be provided to the City. 
+ 
+4. Nonresidential structures that are elevated, not dry floodproofed, must meet the 
+same standards for space below the lowest floor as described in Section 14.040.H. 
+If elevated, an Elevation Certificate shall be submitted with the construction 
+plans, prior to pouring the foundation, and after construction.  
+ 
+5. Applicants dry floodproofing nonresidential buildings shall be notified that flood 
+insurance premiums will be based on rates that are one (1) foot below the 
+floodproofed level (e.g., a building floodproofed to the base flood elevation will 
+be rated as one (1)  foot below the base flood elevation). 
+ 
+6. Applicants that elect to utilize floodproofing instead of elevation shall supply a 
+comprehensive Maintenance Plan at the time of building plan review for the entire 
+structure to include but not limited to: exterior envelope of structure; all 
+penetrations to the exterior of the structure; all shields, gates, barriers, or 
+components designed to provide floodproofing protection to the structure; all 
+seals or gaskets for shields, gates, barriers, or components; and, the location of all 
+shields, gates, barriers, and components as well as all associated hardware, and 
+any materials or specialized tools necessary to seal the structure. 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-26 Effective Date: 17-Jan-19 
+ 
+7. Applicants may be required by the Floodplain Manager to supply an Emergency 
+Action Plan (EAP) for the installation and sealing of the structure prior to a 
+flooding event that clearly identifies what triggers the EAP and who is responsible 
+for enacting the EAP. 
+ 
+8.  Comply with other standards of this Section as applicable. 
+ 
+L. Remove temporary fills. Temporary fills permitted during construction or emergency 
+bank stabilization shall be removed if not in compliance with the balanced cut and fill 
+standard of this Code or prior to issuance of a Certificate of Occupancy or release of any 
+bond issued for the development. 
+ 
+M. Preserve and/or restore the vegetation corridor within the disturbed areas, and retain the 
+existing tree canopy as established in Sections 4.316, Width of Vegetation Corridor, and 
+4.317, Methods for Determining Vegetation Corridors Next to Primary Protected Water 
+Features, of this Chapter. An enhancement plan for disturbed areas shall be prepared and 
+implemented to stabilize slopes to prevent landslides on slopes and sedimentation of 
+water features. This plan shall provide for the replanting and maintenance of approved 
+plant species designed to achieve pre-disturbance conditions. 
+ 
+N. Maintain or reduce stream temperatures. 
+ 
+O. Minimize erosive velocities, nutrient, and pollutant loading into water. Use filtering, 
+infiltration, and natural water purification for stormwater runoff in compliance with the 
+Erosion Control and Water Quality Standards of Section 5.600 of this Code. The 
+applicant’s engineering plans shall certify that runoff and sedimentation from the site will 
+comply with the standards of Section 5.600 of this Code. 
+ 
+P. Anchoring. All new construction, development, and substantial improvements shall be 
+anchored to prevent flotation, collapse, or lateral movement of the structure. 
+ 
+Q. Construction Materials and Methods. All new construction, development, and substantial 
+improvements shall use flood-resistant materials in accordance with the requirements of 
+FEMA Technical Bulletin 2-93 “Flood Resistant Materials Requirements” and utilities 
+shall be designed and installed in accordance with FEMA Publication 348 “Protecting 
+Building Utilities from Flood Damage.” The following standards are only a summary of 
+those requirements: 
+ 
+1. All new construction, development, and substantial improvements shall be 
+constructed with materials and utility equipment resistant to flood damage. 
+ 
+2. All new construction, development, and substantial improvements shall be 
+constructed using methods and practices that minimize flood damage and 
+minimize impacts to natural floodplain functions, including flood storage, water 
+infiltration, and riparian vegetation. 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-27 Effective Date: 17-Jan-19 
+ 
+3. Electrical, heating, ventilation, plumbing, and air conditioning equipment, and 
+other service facilities shall be designed and/or otherwise elevated or located so as 
+to prevent water from entering or accumulating within the components during 
+conditions of flooding. 
+ 
+4. No construction materials or methods may be used within the floodplain that 
+would impair or damage water quality or native vegetation. 
+ 
+5. All development shall have adequate drainage provided to reduce exposure to 
+flood damage and maintain water quality. 
+ 
+R. Utilities and Roads. 
+ 
+1. Stream crossings shall be as close to perpendicular to the stream as practicable. 
+Bridges shall be used instead of culverts wherever practicable, and comply with 
+the Oregon Department of Fish and Wildlife construction standards. 
+ 
+2. All new and replacement water supply systems shall be designed to minimize or 
+eliminate infiltration of floodwaters into the system. 
+ 
+3. New and replacement sanitary sewage systems shall be designed to minimize or 
+eliminate infiltration of floodwaters into the systems and discharge from the 
+systems into floodwaters. 
+ 
+4. Onsite waste disposal systems shall be located to avoid impairment to them, or 
+contamination from them, during flooding consistent with the State of Oregon 
+Department of Environmental Quality. 
+ 
+5. Utility and road placement shall occur outside the floodway unless the utility or 
+road is necessary to serve permitted development, and there is no reasonable 
+alternative. Roads built in the floodplain shall be built at or above the base flood 
+elevation to provide access to emergency vehicles during a flood. 
+ 
+6. Stormwater management and water quality facilities shall comply with the siting 
+and construction standards of Section 5.700 of this Code. 
+ 
+S. For any alterations or relocations of a watercourse the developer shall be required to 
+notify the Oregon Department of State Lands, the Oregon Department of Land 
+Conservation and Development, and adjacent communities that will be impacted by the 
+alteration or relocation. The developer shall be responsible for obtaining and submitting 
+copies of any required project permits required by the Oregon Department of State Lands, 
+U.S. Army Corps of Engineers, Oregon Department of Fish and Wildlife Service, Federal 
+Emergency Management Agency, and other affected agencies, as applicable. The flood 
+carrying capacity of the altered or relocated watercourse shall not be diminished and shall 
+be maintained. Alterations will require a “No-Rise” certification for changes to the 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-28 Effective Date: 17-Jan-19 
+floodway, and changes that relocate the floodplain will require a Letter of Map Change 
+(LOMC) from FEMA or may require a revised Flood Insurance Study and Flood 
+Insurance Rate Map for the City. The burden for all engineering studies required to 
+process these forms is the applicant’s, not the City’s.  
+ 
+T. Subdivision Proposals. In addition to compliance with the underlying zoning district 
+standards of this Code and this Chapter, the development of the subdivision shall be 
+subject to the following additional criteria: 
+ 
+1. All subdivision proposals shall be consistent with the need to minimize flood 
+damage. 
+ 
+2. All subdivision proposals shall have public utilities and facilities such as sewer, 
+gas, electrical, and water systems located and constructed to minimize flood 
+damage. 
+ 
+3. All subdivision proposals shall have adequate drainage provided to reduce 
+exposure to flood damage. 
+ 
+4. Where the base flood elevation data has not been provided or is not available from 
+another authoritative source, it shall be generated for subdivision proposals and 
+other proposed developments which contain at least fifty (50) lots or five (5) 
+acres, whichever is less. 
+ 
+5. If more than fifty percent (50%) of the lot being partitioned or subdivided is 
+affected by the floodplain, then the minimum density standard of this Code does 
+not apply.  
+ 
+U. Critical Facilities. 
+ 
+1. Construction of new critical facilities shall be, to the extent possible, located 
+outside the limits of the Special Flood Hazard Area. 
+ 
+2. Construction of new critical facilities shall be permissible within the SFHA if no 
+feasible alternative site is available. 
+ 
+3. Critical facilities constructed within the SFHA shall have the lowest floor 
+elevated one foot above the height of the 500-year flood level. Submit Elevation 
+Certificates with the construction plans, prior to pouring the foundation, and upon 
+completion of the structure in accordance with Subsections H(1)(a - c) of this 
+Section. 
+ 
+4. Access to and from the critical facility shall also be protected to the height utilized 
+above. 
+ 
+5. Access routes elevated to or above the level of the base flood elevation shall be 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-29 Effective Date: 17-Jan-19 
+provided to all critical facilities to the extent possible. 
+ 
+6. Floodproofing and sealing measures must be taken to ensure that toxic substances 
+will not be displaced by or released into floodwaters. 
+ 
+7. Comply with the other standards of this Section as applicable.  
+ 
+V. Small Accessory Structure. Relief from elevation or floodproofing as required in this 
+Section may be granted for small accessory structures that meet the following standards. 
+The applicant shall be advised that this type of allowance will result in higher insurance 
+rates for these structures, as applicable. 
+ 
+1. Less than two hundred (200) square feet, less than $5,000 in valuation, and do not 
+exceed one story;  
+ 
+2. Not temperature controlled; 
+ 
+3. Not used for human habitation and are used solely for parking of vehicles or 
+storage of items having low damage potential when submerged; 
+ 
+4. Not used to store toxic material, oil or gasoline, or any priority persistent pollutant 
+identified by the State of Oregon Department of Environmental Quality unless 
+confined in a tank installed in compliance with this ordinance or stored at least 
+two feet above base flood elevation; 
+ 
+5. Located and constructed to have low damage potential;  
+ 
+6. Constructed with materials resistant to flood damage as described in this Section; 
+ 
+7. Anchored to prevent flotation, collapse, or lateral movement of the structure 
+resulting from hydrodynamic and hydrostatic loads, including the effects of 
+buoyancy, during conditions of the base flood; 
+ 
+8. Constructed to equalize hydrostatic flood forces on exterior walls by allowing for 
+the automatic entry and exit of floodwater. Designs for complying with this 
+requirement must be certified by a licensed professional engineer or architect or 
+designed in compliance with Section 14.040.H(2): 
+ 
+9. Constructed with electrical, and other service facilities located and installed so as 
+to prevent water from entering or accumulating within the components during 
+conditions of the base flood. 
+ 
+14.045 Floodways. Located within areas of special flood hazard established in Section 14.010.B of 
+this Chapter are areas designated as floodways. Since the floodway is an extremely hazardous 
+area due to the velocity of floodwaters which carry debris, potential projectiles, and erosion 
+potential, the following provisions apply: 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-30 Effective Date: 17-Jan-19 
+ 
+A. Except as provided in Section 14.045.C, encroachments, including fill, new construction, 
+development, substantial improvements, and other development are prohibited unless 
+certification by a registered professional civil engineer is provided demonstrating through 
+hydrologic and hydraulic analyses performed in accordance with standard engineering 
+practice that encroachments shall not result in any increase in flood levels during the 
+occurrence of the base flood discharge. 
+ 
+B. If Section 14.040.A is satisfied, all new construction, development, and substantial 
+improvements shall comply with all applicable flood hazard reduction provisions of 
+Section 14.040 of this Code. 
+ 
+C. Floodways and other high hazard zones are extremely hazardous areas due to 
+exceptionally high flood and erosion potential. In these areas, the development actions 
+permitted in high hazard zones shall be limited to water-dependent uses; bridges and 
+other location-dependent uses; habitat restoration activities consistent with Sections 
+14.035.C(2); low-intensity recreation; and bioengineered banks. 
+ 
+14.050 Before Regulatory Floodway. In areas where a regulatory floodway has not been designated, 
+no new construction, substantial improvements, or other development (including fill) shall be 
+permitted within Zones A1-30 and AE on the community’s FIRM, unless it is demonstrated 
+that the cumulative effect of the proposed development, when combined with all other 
+existing and anticipated development, will not increase the water surface elevation of the base 
+flood more than one foot at any point within the community. 
+ 
+14.055 Flood Management Area Variance Procedures. Variances from dimensional standards of the 
+underlying zoning district or other provisions of this Code not part of this Chapter shall be 
+processed in accordance with Section 6.800 of this Code. 
+ 
+A. Generally, the only condition under which a variance from the elevation standard may be 
+issued is for new construction, development, and substantial improvements to be erected 
+on a lot of one-half (1/2) acre or less in size contiguous to and surrounded by lots with 
+existing structures constructed below the base flood level, providing that the 
+considerations of Section 14.055.A(1 - 11) have been fully reviewed. As the lot size 
+increases the technical justification required for issuing the variance increases. 
+ 
+1. The danger that materials may be swept onto other lands to the injury of others; 
+ 
+2.  The danger to life and property due to flooding or erosion damage; 
+ 
+3. The susceptibility of the proposed facility and its contents to flood damage and 
+the effect of such damage on the individual owner; 
+ 
+4. The importance of the services provided by the proposed facility to the 
+community; 
+ 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-31 Effective Date: 17-Jan-19 
+5. The necessity to the facility of a waterfront location, where applicable; 
+ 
+6. The availability of alternative locations for the proposed use which are not subject 
+to flooding or erosion damage; 
+ 
+7. The compatibility of the proposed use with existing and anticipated development; 
+ 
+8. The relationship of the proposed use to the comprehensive plan and floodplain 
+management program for that area; 
+ 
+9. The safety of access to the property in times of flood for ordinary and emergency 
+vehicles; 
+ 
+10. The expected heights, velocity, duration, rate of rise, and sediment transport of the 
+flood waters and the effects of wave action, if applicable, expected at the site; 
+and, 
+ 
+11. The costs of providing governmental services during and after flood conditions, 
+including maintenance and repair of public utilities and facilities such as sewer, 
+gas, electrical, and water systems, and streets and bridges. 
+ 
+B. Variances may be issued for the reconstruction, rehabilitation, or restoration of structures 
+listed on the National Register of Historic Places or the Statewide Inventory of Historic 
+Properties, without regard to the procedures set forth in this Section. 
+ 
+1. Is the minimum necessary to preserve the historic character and design of the site, 
+building or structure; 
+ 
+2. Will not result in the site, building or structure losing its historic designation; and 
+ 
+3. Demonstrates consistency with all other local, state, or federal laws or ordinances, 
+including documentation of any necessary consultations with state or federal 
+agencies. 
+ 
+C. Variances shall not be issued within a designated floodway if any increase in flood levels 
+during the base flood discharge would result. 
+ 
+D. Variances shall only be issued upon a determination that the variance is the minimum 
+necessary, considering the flood hazard, to afford relief. 
+ 
+E. The Director, or their designee, may grant a Type II variance of up to fifty percent (50%) 
+of any dimensional standard in the underlying zoning district where necessary to avoid 
+construction or development within the Flood Management Area. The Director or 
+designee shall make a determination in accordance with the criteria established in Section 
+14.055.J of this Chapter. 
+ 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-32 Effective Date: 17-Jan-19 
+F. Applications for variances to dimensional standards in excess of that provided in Section 
+14.055.E shall be a Type III application. 
+ 
+G. The Planning Commission or Director, or their designee, may attach conditions to the 
+granting of variances as it deems necessary to further the purpose of this Chapter. 
+ 
+H. As a participant in the National Flood Insurance Program, the City is not authorized to 
+grant a variance from the requirement to elevate or floodproof structures in accordance 
+with state and federal regulations, whichever is most restrictive. Variances may be issued 
+for nonresidential buildings in very limited circumstances to allow a lesser degree of 
+floodproofing than watertight or dry-floodproofing, where it can be determined that such 
+action will have low damage potential, complies with all other variance criteria except 
+Section 14.055.A and otherwise complies with Sections 14.040.P - R of this Chapter. 
+ 
+I. The City cannot grant a variance from the special flood hazard designation assigned by 
+the Federal Insurance Administrator to a site. However, a property owner may request a 
+Letter of Map Change (LOMC) from the Federal Emergency Management Agency. 
+ 
+J. In reviewing a Type III Variance, the Planning Commission shall consider all technical 
+evaluations, relevant factors, and standards specified in other Sections of this Chapter and 
+other Chapters of this Code, and make affirmative findings, with or without conditions, 
+for each of the following criteria: 
+ 
+1. A showing of good and sufficient cause that the need for the variance is not of the 
+applicant’s making and will not result in a use of the site that is not otherwise 
+permitted in the underlying zoning district. 
+ 
+2. A determination that failure to grant the variance would result in exceptional 
+hardship to the applicant and is the minimum necessary to grant relief. 
+ 
+3. A determination that the granting of a variance will not result in increased flood 
+heights, additional threats to public safety, extraordinary public expense, create 
+nuisances, cause fraud on or victimization of the public as identified in Section 
+14.055.A(1) – (11) or conflict with existing local, state, or federal regulations. 
+ 
+4. The safety of access to the property in times of flood for ordinary and emergency 
+vehicles. 
+ 
+5. A determination that the development project cannot be located outside the 
+Special Flood Hazard Area and/or high hazard area and that impacts to flood 
+storage, water infiltration, and riparian vegetation have been minimized to the 
+extent practicable. 
+ 
+6. A demonstration of consistency with all other local, state, or federal laws or  
+ordinances, including documentation of any necessary consultations with state or 
+federal agencies. 
+Troutdale Development Code  Chapter 14 – Flood Management 
+As Established by Ord. 851 TDC 14-33 Effective Date: 17-Jan-19 
+14.060 Prescribed Conditions for the Rehabilitation or Replacement of Pre-Existing Structures. The 
+replacement of pre-existing structures or development damaged or destroyed accidentally is 
+subject to following standards: 
+ 
+A. The structure or development was in existence within the Flood Management Area prior 
+to February 1, 2019. 
+ 
+B. The use is allowed in the underlying zoning district at the time the application is made to 
+rehabilitate or replace the structure. 
+ 
+C. A Type I Floodplain Development Permit is approved prior to applying for building 
+permits. 
+ 
+D. The rehabilitation or replacement is rebuilt on the same footprint of the original structure 
+and does not increase the impervious area within the Special Flood Hazard Area. 
+ 
+E. The rehabilitated or replaced structure is elevated, if residential, or floodproofed or 
+elevated, if non-residential, in accordance with the applicable standards of this Chapter, 
+the definition found Section 1.040, and all additional relevant standards in this Code. 

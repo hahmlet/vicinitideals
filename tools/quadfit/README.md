@@ -28,8 +28,9 @@ Stages cache intermediates in `data/quadfit/*.parquet` (WKB geometry columns);
 
 | Change | Re-run |
 |---|---|
-| Jurisdiction on/off (`eligible:`), min lot area, min frontage, orientation constraint, coverage cap, parking buffer / split thresholds | `python tools/quadfit/s7_report.py` only (**seconds**) |
+| Jurisdiction on/off (`eligible:`), min lot area, min frontage, orientation constraint, coverage cap, parking buffer / split thresholds, overlay kill↔flag reclassification, slope tier cutlines | `python tools/quadfit/s7_report.py` only (**seconds**) |
 | New footprint rectangle or sweep | s6–s7 (minutes) |
+| Overlay carve buffer_ft, new carve overlay layer | s5o–s7 (~40 min) |
 | Setback values, new zone rows | s5–s7 (run_all handles cascade) |
 | New jurisdiction with no compiled rules yet | s3 onward |
 
@@ -51,7 +52,8 @@ policy-only edits invoke s7 directly as above.
 | s3 | `s3_filter.py` | STRUCTURAL funnel only — drops nothing a config toggle could revive; every drop counted |
 | s4 | `s4_edges.py` | Front/side/rear edge classification vs street centerlines; confidence tiers A/B/C/D |
 | s5 | `s5_envelope.py` | Setback envelope: lot − per-edge buffers (conservative) |
-| s6 | `s6_fit.py` | Rotate→rasterize→integral-image rectangle fit, BOTH orientations raw; max-depth-per-width frontier |
+| s5o | `s5o_overlays.py` | Phase 2: per-overlay any-touch flags + intersection sqft, CARVE overlays subtracted from the envelope, per-lot slope stats (USGS 3DEP 1 m DEM), sewer-main distance. Driven by `config/overlays.yaml`; missing layers degrade to caveats, never crashes |
+| s6 | `s6_fit.py` | Rotate→rasterize→integral-image rectangle fit against the CARVED envelope, BOTH orientations raw; max-depth-per-width frontier |
 | s7 | `s7_report.py` | POLICY gates (eligibility, z overlay, min lot/frontage, orientation, coverage) + split screen + `summary.md`, `lots_results.csv`, `conversion_candidates.csv`, `split_candidates.csv`, `spot_check.geojson` |
 
 ## Config
@@ -59,6 +61,11 @@ policy-only edits invoke s7 directly as above.
 - `config/rules.yaml` — per (jurisdiction, zone): quadplex_allowed, setbacks,
   coverage cap, source citation, confidence flag. `needs_verification` rows are
   preliminary; do not publish results until verified.
+- `config/overlays.yaml` — phase 2 policy: per-overlay kill/carve/flag verdict
+  with citation + per-jurisdiction data-coverage grades (A/B/C/X — feed the
+  report's coverage matrix + caveats), slope tier cutlines, sewer coverage
+  notes. Kill/flag/tier edits are s7-only re-runs; carve buffers are s5o+.
+  Legal code-text extracts backing the verdicts live in `provenance/`.
 - `config/footprints.yaml` — candidate rectangles, orientations, fixed-area
   aspect-ratio sweeps, frontier grid, and the `split:` block. **Product frame
   (2026-07-24): 1,000 sqft 2-story townhomes, ~500 sqft ground footprint,
@@ -87,9 +94,11 @@ D = landlocked/failed classification (excluded from headline numbers).
 
 ## Known blind spots (also restated in every summary.md)
 
-Private easements (title-report only), Portland tree preservation, environmental
-/historic overlays beyond the z gate (phase 2), steep slopes, utility conflicts,
-driveway curb-cut feasibility, existing structures assumed demolished (building
+Private easements (title-report only), Portland tree preservation, historic
+overlays, driveway curb-cut feasibility, sewer capacity (proximity only),
+unincorporated-county SEC overlays (unmapped publicly — Metro Title 3 used as
+proxy), Wood Village local environmental mapping (none exists — regional layers
+only), existing structures assumed demolished (building
 value + year built carried in output for later filtering). Per-jurisdiction
 quirks not modeled: maximum front setbacks (Gresham DRL, Fairview base zones)
 which force the building toward the street; Gresham 15% private-open-space

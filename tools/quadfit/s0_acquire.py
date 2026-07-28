@@ -22,6 +22,7 @@ import argparse
 import io
 import json
 import sys
+import time
 from pathlib import Path
 from typing import Any
 
@@ -81,6 +82,87 @@ ARCGIS_LAYERS: dict[str, tuple[str, list[str]]] = {
 }
 
 OUT_SR = 2913  # request server-side projection to the working CRS
+
+# --- Phase 2: overlay / utility layers (see SOURCES_PHASE2.md for the audit).
+# slug -> spec dict: url, fields, optional where, gtype ("polygon"|"polyline").
+# Slugs match OverlaySpec.key as overlay_<key> / utility layers as util_<key>.
+_PDX = "https://www.portlandmaps.com/arcgis/rest/services/Public"
+_GRE = "https://gis.greshamoregon.gov/ext/rest/services/GME"
+_TRO = "https://maps.troutdaleoregon.gov/server/rest/services/Public_Web"
+_FAI = "https://services5.arcgis.com/3DoY8p7EnUTzaIE7/arcgis/rest/services"
+_WV = "https://services7.arcgis.com/5Loh3xXKWLd2M7xA/arcgis/rest/services"
+_METRO = "https://services2.arcgis.com/McQ0OlIABe29rJJy/arcgis/rest/services"
+
+PHASE2_LAYERS: dict[str, dict[str, Any]] = {
+    # Portland environmental zone GEOMETRY (not the OVRLY letters on zoning)
+    "overlay_pdx_ezone_p": {
+        "url": f"{_PDX}/BPS_Zoning_Code_Layers/MapServer/117",
+        "fields": ["OVRLY", "ZONE", "PLDIST"]},
+    "overlay_pdx_ezone_c": {
+        "url": f"{_PDX}/BPS_Zoning_Code_Layers/MapServer/118",
+        "fields": ["OVRLY", "ZONE", "PLDIST"]},
+    "overlay_pdx_ezone_v": {
+        "url": f"{_PDX}/BPS_Zoning_Code_Layers/MapServer/116",
+        "fields": ["OVRLY", "ZONE", "PLDIST"]},
+    # Gresham natural resource / hazard overlays
+    "overlay_gresham_wetlands": {
+        "url": f"{_GRE}/Environmental/MapServer/15",
+        "fields": ["COWARDIN", "HGM", "WETLAND_TYPE"]},
+    "overlay_gresham_streams": {
+        "url": f"{_GRE}/Environmental/MapServer/0",
+        "fields": ["NAME"], "gtype": "polyline"},
+    "overlay_gresham_hcra": {
+        "url": f"{_GRE}/Environmental/MapServer/12",
+        "fields": ["OBJECTID"]},
+    "overlay_gresham_hillside": {
+        "url": f"{_GRE}/Environmental/MapServer/8",
+        "fields": ["OBJECTID"]},
+    # Troutdale Title 3 vegetated corridor (city-hosted RLIS derivative)
+    "overlay_troutdale_veco": {
+        "url": f"{_TRO}/City_GIS/MapServer/77",
+        "fields": ["flood96", "fema", "wetbuf", "riparian", "title3"]},
+    # Fairview natural resource layer (polygons ARE the buffered corridors)
+    "overlay_fairview_nrl": {
+        "url": f"{_FAI}/Natural_Resource_Layer/FeatureServer/0",
+        "fields": ["TYPE"]},
+    # Regional fallbacks (Wood Village, unincorporated, Troutdale wetlands)
+    "overlay_metro_title3": {
+        "url": f"{_METRO}/Title_3_Land/FeatureServer/0",
+        "fields": ["FLOOD96", "FEMA", "WETBUF", "RIPARIAN", "TITLE3"]},
+    "overlay_metro_title13": {
+        "url": f"{_METRO}/Title_13_Habitat_Conservation_Areas/FeatureServer/0",
+        "fields": ["HCA_VALUE"]},
+    "overlay_metro_wetlands": {
+        "url": f"{_METRO}/Wetlands/FeatureServer/0",
+        "fields": ["SOURCE"]},
+    # Flood: FEMA NFHL, single county-wide source of record
+    "overlay_fema_flood": {
+        "url": "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28",
+        "fields": ["FLD_ZONE", "ZONE_SUBTY", "SFHA_TF", "STATIC_BFE"],
+        # NFHL rejects the unquoted/spaceless form intermittently — keep quoted
+        "where": "\"DFIRM_ID\" = '41051C'"},
+    # Sewer mains (split-candidate proximity; water skipped — see caveats)
+    "util_sewer_portland": {
+        "url": f"{_PDX}/Utilities_Sewer/MapServer/3",
+        "fields": ["OWNRSHIP", "SERVSTAT", "PIPESIZE"], "gtype": "polyline"},
+    "util_sewer_gresham": {
+        "url": f"{_GRE}/Wastewater/MapServer/5",
+        "fields": ["gnownedby"], "gtype": "polyline"},
+    "util_sewer_troutdale": {
+        "url": f"{_TRO}/City_GIS/MapServer/11",
+        "fields": ["owner", "date_built"], "gtype": "polyline"},
+    "util_sewer_fairview": {
+        "url": f"{_FAI}/Sewer_Main_Public/FeatureServer/7",
+        "fields": ["DIA", "YEAR_CONST"], "gtype": "polyline"},
+    "util_sewer_wood_village": {
+        "url": f"{_WV}/Sanitary_Sewer_Main/FeatureServer/19",
+        "fields": ["DIAMETER", "MATERIAL"], "gtype": "polyline"},
+}
+
+# USGS 3DEP 1 m DEM tiles for per-lot slope (urban Multnomah bbox, WGS84).
+DEM_DIR_NAME = "dem"
+DEM_BBOX_4326 = (-122.87, 45.40, -122.24, 45.65)
+TNM_API = "https://tnmaccess.nationalmap.gov/api/v1/products"
 
 
 def raw_path(key: str) -> Path:
@@ -199,59 +281,204 @@ def esri_polygon_to_geojson(esri_geom: dict[str, Any] | None) -> dict[str, Any] 
     return {"type": "MultiPolygon", "coordinates": polys}
 
 
-def fetch_arcgis_layer(slug: str, url: str, out_fields: list[str], force: bool) -> None:
+def esri_polyline_to_geojson(esri_geom: dict[str, Any] | None) -> dict[str, Any] | None:
+    if not esri_geom or "paths" not in esri_geom:
+        return None
+    paths = [p for p in esri_geom["paths"] if len(p) >= 2]
+    if not paths:
+        return None
+    return {"type": "MultiLineString", "coordinates": paths}
+
+
+def fetch_arcgis_layer(slug: str, url: str, out_fields: list[str], force: bool,
+                       where: str = "1=1", gtype: str = "polygon") -> None:
     path = raw_path(slug)
     if path.exists() and not force:
         print(f"{slug}: cache present — skipping")
         return
     print(f"{slug}: {url}")
+    convert = esri_polygon_to_geojson if gtype == "polygon" else esri_polyline_to_geojson
     with httpx.Client(timeout=120, follow_redirects=True,
                       headers={"User-Agent": "quadfit/1.0"}) as client:
-        r = client.get(f"{url}/query", params={
-            "where": "1=1", "returnIdsOnly": "true", "f": "json"})
-        r.raise_for_status()
-        ids_doc = r.json()
+        # A wrong field name errors EVERY query — indistinguishable from a
+        # flaky host downstream, so validate the spec against the layer first.
+        meta = client.get(url, params={"f": "json"}).json()
+        have = {f["name"].lower() for f in meta.get("fields", [])}
+        if have:
+            bad = [f for f in out_fields if f.lower() not in have]
+            if bad:
+                raise RuntimeError(f"{slug}: fields {bad} not on layer "
+                                   f"(has: {sorted(have)})")
+        # Flaky hosts (FEMA especially) 400 the identical query intermittently.
+        ids_doc: dict[str, Any] = {}
+        for attempt in range(5):
+            if attempt:
+                time.sleep(10 * attempt)
+            r = client.get(f"{url}/query", params={
+                "where": where, "returnIdsOnly": "true", "f": "json"})
+            r.raise_for_status()
+            ids_doc = r.json()
+            if "error" not in ids_doc:
+                break
+            print(f"  id query error (attempt {attempt + 1}/5): "
+                  f"{ids_doc['error'].get('message')}")
+        if "error" in ids_doc:
+            raise RuntimeError(f"{slug}: id query failed: {ids_doc['error']}")
         oid_field = ids_doc.get("objectIdFieldName", "OBJECTID")
         oids = sorted(ids_doc.get("objectIds") or [])
+        if not oids:
+            raise RuntimeError(f"{slug}: id query returned 0 ids — refusing to "
+                               "write an empty layer (check the where clause)")
         print(f"  {len(oids):,} object ids ({oid_field})")
         features: list[dict[str, Any]] = []
-        chunk = 400
-        for i in range(0, len(oids), chunk):
-            batch = oids[i : i + chunk]
-            r = client.get(f"{url}/query", params={
+
+        def fetch_batch(batch: list[int], offset_ft: float = 0.0,
+                        retried: bool = False) -> None:
+            # POST: objectId lists overflow GET URL limits on AGOL hosts
+            params = {
                 "objectIds": ",".join(map(str, batch)),
                 "outFields": ",".join(out_fields),
                 "returnGeometry": "true",
                 "outSR": OUT_SR,
                 "f": "json",
-            })
+            }
+            if offset_ft:
+                params["maxAllowableOffset"] = offset_ft
+            r = client.post(f"{url}/query", data=params)
             r.raise_for_status()
             doc = r.json()
             if "error" in doc:
-                raise RuntimeError(f"{slug}: {doc['error']}")
+                # Transient server hiccups look identical to bad-geometry
+                # errors; without this backoff one blip cascades into a
+                # per-feature bisect storm that skips the whole layer.
+                if not retried:
+                    time.sleep(5)
+                    fetch_batch(batch, offset_ft, retried=True)
+                    return
+                if len(batch) > 1:  # bisect to isolate the failing features
+                    mid = len(batch) // 2
+                    fetch_batch(batch[:mid], offset_ft, retried=True)
+                    fetch_batch(batch[mid:], offset_ft, retried=True)
+                    return
+                if not offset_ft:  # giant geometry: retry with 1 ft simplify
+                    fetch_batch(batch, offset_ft=1.0, retried=True)
+                    return
+                print(f"  WARNING: oid {batch[0]} unfetchable — skipped")
+                return
             for feat in doc.get("features", []):
                 features.append({
                     "type": "Feature",
                     "properties": feat.get("attributes", {}),
-                    "geometry": esri_polygon_to_geojson(feat.get("geometry")),
+                    "geometry": convert(feat.get("geometry")),
                 })
+
+        chunk = 400
+        for i in range(0, len(oids), chunk):
+            fetch_batch(oids[i : i + chunk])
             if (i // chunk) % 10 == 0:
                 print(f"  {len(features):,}/{len(oids):,}")
     _write_geojson(path, features, slug)
 
 
+def derive_fema_split(force: bool) -> None:
+    """Split raw NFHL zones into floodway (carve) vs SFHA fringe (flag)."""
+    src = raw_path("overlay_fema_flood")
+    fw_path, fr_path = raw_path("overlay_fema_floodway"), raw_path("overlay_fema_sfha")
+    if not src.exists() or (fw_path.exists() and fr_path.exists() and not force):
+        return
+    doc = json.loads(src.read_text(encoding="utf-8"))
+    fw, fr = [], []
+    for f in doc["features"]:
+        p = f.get("properties") or {}
+        if "FLOODWAY" in str(p.get("ZONE_SUBTY") or "").upper():
+            fw.append(f)
+        elif str(p.get("SFHA_TF") or "").upper() == "T":
+            fr.append(f)
+    _write_geojson(fw_path, fw, "overlay_fema_floodway")
+    _write_geojson(fr_path, fr, "overlay_fema_sfha")
+
+
+def fetch_dem_tiles(force: bool) -> None:
+    """USGS 3DEP 1 m GeoTIFF tiles covering the urban-county bbox.
+
+    Prefers the newest lidar project per tile footprint. Idempotent by
+    filename; ~15-20 tiles, ~5-7 GB total, one-time.
+    """
+    dem_dir = RAW_DIR / DEM_DIR_NAME
+    dem_dir.mkdir(parents=True, exist_ok=True)
+    with httpx.Client(timeout=None, follow_redirects=True,
+                      headers={"User-Agent": "quadfit/1.0"}) as client:
+        items: list[dict[str, Any]] = []
+        offset = 0
+        while True:
+            r = client.get(TNM_API, params={
+                "datasets": "Digital Elevation Model (DEM) 1 meter",
+                "bbox": ",".join(map(str, DEM_BBOX_4326)),
+                "outputFormat": "JSON", "max": 100, "offset": offset,
+            })
+            r.raise_for_status()
+            doc = r.json()
+            items.extend(doc.get("items", []))
+            offset += 100
+            if offset >= int(doc.get("total", 0)):
+                break
+        # One product per tile cell: newest publication wins.
+        by_cell: dict[str, dict[str, Any]] = {}
+        for it in items:
+            url = it.get("downloadURL") or ""
+            if not url.endswith(".tif"):
+                continue
+            # cell id like "x50y503" is stable across project vintages
+            cell = next((p for p in url.split("_") if p.startswith("x")), url)
+            prev = by_cell.get(cell)
+            if prev is None or (it.get("publicationDate") or "") > (
+                    prev.get("publicationDate") or ""):
+                by_cell[cell] = it
+        print(f"dem: {len(by_cell)} tiles cover bbox {DEM_BBOX_4326}")
+        for cell, it in sorted(by_cell.items()):
+            url = it["downloadURL"]
+            dest = dem_dir / url.rsplit("/", 1)[-1]
+            if dest.exists() and not force:
+                print(f"  {dest.name}: present — skipping")
+                continue
+            print(f"  {dest.name}: downloading...")
+            with client.stream("GET", url) as resp:
+                resp.raise_for_status()
+                tmp = dest.with_suffix(".part")
+                with tmp.open("wb") as fh:
+                    for chunk in resp.iter_bytes(1 << 20):
+                        fh.write(chunk)
+                tmp.replace(dest)
+            print(f"  {dest.name}: {dest.stat().st_size/1e6:.0f} MB")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--force", action="store_true")
-    ap.add_argument("--only", nargs="*", help="subset of dataset keys")
+    ap.add_argument("--only", nargs="*", help="subset of dataset keys (or 'dem')")
     args = ap.parse_args()
 
-    keys = set(args.only or [*RLIS_MEMBERS, *ARCGIS_LAYERS])
+    keys = set(args.only or [*RLIS_MEMBERS, *ARCGIS_LAYERS, *PHASE2_LAYERS, "dem"])
     if keys & set(RLIS_MEMBERS):
         extract_rlis(args.force, keys)
     for slug, (url, fields) in ARCGIS_LAYERS.items():
         if slug in keys:
             fetch_arcgis_layer(slug, url, fields, args.force)
+    failed: list[str] = []
+    for slug, spec in PHASE2_LAYERS.items():
+        if slug in keys:
+            try:
+                fetch_arcgis_layer(slug, spec["url"], spec["fields"], args.force,
+                                   where=spec.get("where", "1=1"),
+                                   gtype=spec.get("gtype", "polygon"))
+            except Exception as exc:  # one dead host must not sink the rest
+                print(f"  FAILED {slug}: {exc}")
+                failed.append(slug)
+    derive_fema_split(args.force)
+    if "dem" in keys:
+        fetch_dem_tiles(args.force)
+    if failed:
+        raise SystemExit(f"s0 finished with failures: {failed}")
     print("s0 done.")
 
 
