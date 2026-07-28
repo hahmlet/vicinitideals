@@ -112,6 +112,10 @@ class JurisdictionRules(BaseModel):
     reason: str = ""
     # Literal values of the RLIS JURIS_CITY field that map to this jurisdiction.
     juris_city_codes: list[str] = Field(default_factory=list)
+    # RLIS COUNTY codes (M=Multnomah, C=Clackamas) this block applies to. Empty
+    # = any county (incorporated city names are unique). Set it to disambiguate
+    # the unincorporated blocks that share a blank JURIS_CITY across counties.
+    county_codes: list[str] = Field(default_factory=list)
     # Slug of the cached zoning layer (data/gis_cache/oregon/<slug>.geojson).
     zoning_layer: str | None = None
     zone_field: str | None = None
@@ -168,12 +172,21 @@ class RulesConfig(BaseModel):
     defaults: Defaults = Field(default_factory=Defaults)
     jurisdictions: dict[str, JurisdictionRules]
 
-    def jurisdiction_for_juris_city(self, juris_city: str | None) -> str | None:
-        """Map an RLIS JURIS_CITY literal to a jurisdiction key."""
+    def jurisdiction_for_juris_city(
+        self, juris_city: str | None, county: str | None = None
+    ) -> str | None:
+        """Map an RLIS JURIS_CITY literal (+ optional COUNTY code) to a
+        jurisdiction key. `county` disambiguates the unincorporated blocks that
+        share a blank JURIS_CITY across counties (COUNTY field: M=Multnomah,
+        C=Clackamas); it is ignored for blocks with no county_codes."""
         code = (juris_city or "").strip().upper()
+        cc = (county or "").strip().upper()
         for key, j in self.jurisdictions.items():
-            if code in {c.upper() for c in j.juris_city_codes}:
-                return key
+            if code not in {c.upper() for c in j.juris_city_codes}:
+                continue
+            if j.county_codes and cc and cc not in {c.upper() for c in j.county_codes}:
+                continue
+            return key
         return None
 
 

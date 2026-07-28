@@ -4,7 +4,7 @@ Two source families, both idempotent (skip files already on disk; --force):
 
 1. Metro RLIS quarterly ZIP (drcmetro ArcGIS item) — selective HTTP-Range
    member extraction reusing tools/gis_cache/rlis_delta.py helpers:
-   taxlots (Multnomah only), street centerlines, Metro regional zoning
+   taxlots (Multnomah + Clackamas), street centerlines, Metro regional zoning
    (covers PDF-only Fairview + unincorporated county), UGB.
    All native EPSG:2913. Geometry converted via pyshp __geo_interface__
    (correct hole handling — rlis_delta's own converter splits holes into
@@ -38,22 +38,27 @@ from common import DATA_DIR
 
 RAW_DIR = DATA_DIR / "raw"
 
-# member key → (shp member, dbf member, keep_fields or None=all, multnomah_only)
-RLIS_MEMBERS: dict[str, tuple[str, str, set[str] | None, bool]] = {
+# RLIS COUNTY field code: M = Multnomah, C = Clackamas, W = Washington.
+# The regional taxlot shapefile carries all three; keep only the two we cover.
+KEEP_COUNTIES = {"M", "C"}
+
+# member key → (shp member, dbf member, keep_fields or None=all,
+#               county_filter set or None=keep all counties)
+RLIS_MEMBERS: dict[str, tuple[str, str, set[str] | None, set[str] | None]] = {
     "taxlots": (
         "TAXLOTS/taxlots_public.shp",
         "TAXLOTS/taxlots_public.dbf",
         rd.TAXLOT_KEEP_FIELDS,
-        True,
+        KEEP_COUNTIES,
     ),
     "streets": (
         "STREETS/streets.shp",
         "STREETS/streets.dbf",
         {"LOCALID", "STREETNAME", "PREFIX", "FTYPE", "TYPE", "F_ZLEV", "T_ZLEV"},
-        False,
+        None,
     ),
-    "zoning_metro": ("LAND/zoning.shp", "LAND/zoning.dbf", None, False),
-    "ugb": ("BOUNDARY/ugb.shp", "BOUNDARY/ugb.dbf", None, False),
+    "zoning_metro": ("LAND/zoning.shp", "LAND/zoning.dbf", None, None),
+    "ugb": ("BOUNDARY/ugb.shp", "BOUNDARY/ugb.dbf", None, None),
 }
 
 # slug → (layer query url, outFields)
@@ -78,6 +83,42 @@ ARCGIS_LAYERS: dict[str, tuple[str, list[str]]] = {
     "zoning_lake_oswego": (
         "https://maps.ci.oswego.or.us/server/rest/services/Layers_Geocortex/MapServer/68",
         ["LAYER", "INFO", "LINK"],
+    ),
+    # --- Clackamas County cities inside the Metro UGB (HB 2001 quadplex
+    # mandate applies regardless of population). Field names verified by live
+    # REST queries 2026-07-28.
+    "zoning_happy_valley": (
+        "https://services5.arcgis.com/fuVQ9NIPGnPhCBXp/arcgis/rest/services/Zoning_public_view/FeatureServer/0",
+        ["ZONE", "ZOVER"],
+    ),
+    "zoning_milwaukie": (
+        "https://services6.arcgis.com/8e6aYcxt8yhvXvO9/ArcGIS/rest/services/COM_Zoning_SDE/FeatureServer/11",
+        ["ZONE"],
+    ),
+    "zoning_oregon_city": (
+        "https://maps.orcity.org/arcgis/rest/services/LandUseAndPlanning_PUBLIC/MapServer/62",
+        ["ZONE"],
+    ),
+    # Gladstone's service is countywide (has a CITY field); Gladstone lots pick
+    # their own polygons in the majority-area join since they sit in the city.
+    "zoning_gladstone": (
+        "https://maps.orcity.org/arcgis/rest/services/GLADSTONE/Gladstone_LandUseAndPlanning/MapServer/7",
+        ["ZONE"],
+    ),
+    # West Linn: DESIGNATION carries the canonical hyphenated code (R-5, R-10);
+    # the sibling ZONE field is a compressed alias.
+    "zoning_west_linn": (
+        "https://geo.westlinnoregon.gov/server/rest/services/Operational/ZoningComPlan/MapServer/8",
+        ["DESIGNATION"],
+    ),
+    # Tualatin: planning-district code is a joined-table qualified field name.
+    "zoning_tualatin": (
+        "https://tualgis.ci.tualatin.or.us/server/rest/services/LandusePlanningExplorer/MapServer/6",
+        ["PLANDIST.CZONE"],
+    ),
+    "zoning_wilsonville": (
+        "https://gis.wilsonvillemaps.com/server/rest/services/Map___WilsonvilleMaps_MIL1/FeatureServer/40",
+        ["ZONE_CODE"],
     ),
 }
 
@@ -185,7 +226,7 @@ def shp_to_features(
     shp_bytes: bytes,
     dbf_bytes: bytes,
     keep_fields: set[str] | None,
-    multnomah_only: bool,
+    county_filter: set[str] | None,
 ) -> list[dict[str, Any]]:
     sf = shapefile.Reader(shp=io.BytesIO(shp_bytes), dbf=io.BytesIO(dbf_bytes))
     field_names = [f[0] for f in sf.fields[1:]]
@@ -195,8 +236,8 @@ def shp_to_features(
     features: list[dict[str, Any]] = []
     for sr in sf.iterShapeRecords():
         rec = sr.record
-        if multnomah_only and county_idx is not None:
-            if str(rec[county_idx]).strip().upper() != "M":
+        if county_filter is not None and county_idx is not None:
+            if str(rec[county_idx]).strip().upper() not in county_filter:
                 continue
         props: dict[str, Any] = {}
         for i, fname in enumerate(field_names):
@@ -226,14 +267,14 @@ def extract_rlis(force: bool, keys: set[str] | None = None) -> None:
         url, total = rd.resolve_url(client, rd.DELTA_URL)
         print(f"RLIS: ZIP is {total/1e9:.2f} GB")
         entries = rd.parse_zip_central_directory(client, url, total)
-        for key, (shp_m, dbf_m, keep, m_only) in targets.items():
+        for key, (shp_m, dbf_m, keep, county_filter) in targets.items():
             print(f"RLIS: extracting {key} ({shp_m})")
             shp_entry, dbf_entry = entries.get(shp_m), entries.get(dbf_m)
             if not shp_entry or not dbf_entry:
                 raise RuntimeError(f"{shp_m} / {dbf_m} not found in RLIS ZIP")
             shp_bytes = rd.extract_member(client, url, shp_entry)
             dbf_bytes = rd.extract_member(client, url, dbf_entry)
-            feats = shp_to_features(shp_bytes, dbf_bytes, keep, m_only)
+            feats = shp_to_features(shp_bytes, dbf_bytes, keep, county_filter)
             _write_geojson(raw_path(key), feats, key)
 
 

@@ -268,3 +268,26 @@ def test_land_cost_per_unit_and_viability():
     via = viability_tier(lpu, s)
     assert list(via) == [
         "preferred", "viable", "over_budget", "preferred", "unknown", "unknown"]
+
+
+def test_county_aware_unincorporated_routing():
+    """Blank JURIS_CITY is shared by Mult + Clack unincorporated; COUNTY splits
+    them. Unique city names route regardless of county."""
+    from common import JurisdictionRules, RulesConfig
+
+    cfg = RulesConfig(jurisdictions={
+        "mult_uninc": JurisdictionRules(
+            eligible=True, juris_city_codes=["UNINCORPORATED", ""], county_codes=["M"]),
+        "clack_uninc": JurisdictionRules(
+            eligible=True, juris_city_codes=["UNINCORPORATED", ""], county_codes=["C"]),
+        "milwaukie": JurisdictionRules(eligible=True, juris_city_codes=["MILWAUKIE"]),
+    })
+    # blank city disambiguated by county code
+    assert cfg.jurisdiction_for_juris_city("", "M") == "mult_uninc"
+    assert cfg.jurisdiction_for_juris_city("", "C") == "clack_uninc"
+    assert cfg.jurisdiction_for_juris_city("UNINCORPORATED", "C") == "clack_uninc"
+    # unique incorporated city name → county is ignored
+    assert cfg.jurisdiction_for_juris_city("MILWAUKIE", "C") == "milwaukie"
+    assert cfg.jurisdiction_for_juris_city("MILWAUKIE", None) == "milwaukie"
+    # unmapped
+    assert cfg.jurisdiction_for_juris_city("NOWHERE", "C") is None

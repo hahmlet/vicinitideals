@@ -91,8 +91,13 @@ def main() -> None:
             print(f"  {code!r:30} {n:>8,}  -> {mapped}")
         return
 
+    counties = (
+        lots["COUNTY"] if "COUNTY" in lots.columns
+        else [None] * len(lots)
+    )
     lots["jurisdiction"] = [
-        rules.jurisdiction_for_juris_city(v) for v in lots["JURIS_CITY"]
+        rules.jurisdiction_for_juris_city(v, c)
+        for v, c in zip(lots["JURIS_CITY"], counties)
     ]
 
     # Zone join, one zoning layer at a time; a layer may serve several

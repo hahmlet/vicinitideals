@@ -5,13 +5,18 @@
 # be verified against the adopted code text before the final run (Phase 5).
 # Schema: Lot Analysis/quadfit/common.py (RulesConfig).
 #
-# Legal frame: OAR 660-046-0205 — Large Cities (Portland, Gresham, Troutdale,
-# Fairview, Wood Village) and county urban unincorporated areas inside the Metro
-# UGB must allow quadplexes in residential zones that allow detached
-# single-family dwellings. OAR 660-046-0235 caps middle-housing siting standards
-# (incl. setbacks) at what applies to detached single-family in the same zone.
-# Maywood Park (pop <1,000) is below the Large City threshold. Rural
-# unincorporated land outside the UGB is exempt.
+# Legal frame: OAR 660-046-0205 — Large Cities and county urban unincorporated
+# areas inside the Metro UGB must allow quadplexes in residential zones that
+# allow detached single-family dwellings. OAR 660-046-0235 caps middle-housing
+# siting standards (incl. setbacks) at what applies to detached single-family in
+# the same zone. Metro membership (any city over 1,000 pop inside Metro) is the
+# decisive hinge and overrides the 25k population threshold.
+#   Multnomah jurisdictions: Portland, Gresham, Troutdale, Fairview,
+#     Wood Village, + multnomah_unincorporated.
+#   Clackamas jurisdictions: Oregon City, Happy Valley, West Linn, Tualatin,
+#     Milwaukie, Gladstone, Wilsonville, + clackamas_unincorporated (ZDO-282).
+# Exempt (eligible:false): Maywood Park, Rivergrove, Johnson City (pop <=1,000);
+# Lake Oswego (owner decision). Rural land outside the UGB is exempt.
 #
 # min_lot_sqft caveat: values are the adopted code text. Substandard existing
 # lots of record may still carry quadplex rights under OAR 660-046-0205 (a lot
@@ -20,12 +25,18 @@
 
 meta:
   compiled_at: "2026-07-24"
+  clackamas_added: "2026-07-28"
   note: >
     Portland and Gresham rows verified against current code text by research
     agents 2026-07-24. Multi-dwelling zones (Portland RM*, Gresham MDR-PV/
     HDR-PV/VLDR-SW, etc.) are out of scope — the analysis covers the
     single-dwelling zones subject to the OAR 660-046 quadplex mandate plus
     zones where the code itself permits quadplexes outright.
+    Clackamas County jurisdictions added 2026-07-28 (7 eligible cities +
+    unincorporated county via ZDO-282). City zone tables verified from adopted
+    codes / city GIS; clackamas_unincorporated setbacks are conservative
+    placeholders (needs_verification) pending extraction of the ZDO Section 315
+    dimensional table (non-machine-readable PDF).
 
 defaults:
   street_threshold_ft: 50
@@ -500,6 +511,7 @@ jurisdictions:
     eligible: true
     reason: "Urban unincorporated inside Metro UGB must meet Large City standards"
     juris_city_codes: [UNINCORPORATED, ""]
+    county_codes: [M] # blank JURIS_CITY is shared with Clackamas unincorporated
     zoning_layer: zoning_metro # Metro regional zoning (compiled from county code)
     zone_field: ZONE
     require_inside_ugb: true
@@ -645,3 +657,713 @@ jurisdictions:
     eligible: false
     reason: "Population <1,000 — below OAR 660-046 Large City threshold inside Metro"
     juris_city_codes: [MAYWOOD PARK]
+
+  # ======================================================================
+  # Clackamas County jurisdictions (Metro UGB -> HB 2001 quadplex mandate)
+  # ----------------------------------------------------------------------
+  # ORS 197.758 / OAR 660-046: any city over 1,000 pop inside Metro is a
+  # "Large City" and must allow quadplexes in residential zones that allow
+  # detached single-family; the county owes the same for urban unincorporated
+  # land inside the Metro UGB (implemented via Ordinance ZDO-282, eff.
+  # 2022-07-01). Rivergrove and Johnson City (pop <1,000) are statutorily
+  # EXEMPT despite Metro membership (eligible:false). Lake Oswego's Clackamas
+  # land is out by owner decision (see the entry above). Environmental
+  # overlays (slope/flood/sewer) are Multnomah-only this phase; Clackamas lots
+  # get those fields blank. County-aware routing: blank/UNINCORPORATED
+  # JURIS_CITY collides with Multnomah's unincorporated bucket, so
+  # county_codes: [C] disambiguates it from county_codes: [M].
+  # ======================================================================
+
+  clackamas_unincorporated:
+    eligible: true
+    reason: "Urban unincorporated inside Metro UGB owes Large City standards (ZDO-282)"
+    juris_city_codes: [UNINCORPORATED, ""]
+    county_codes: [C]
+    zoning_layer: zoning_metro
+    zone_field: ZONE
+    require_inside_ugb: true
+    orientation_constraint: entrance_only
+    # Metro regional-zoning ZONE literals verified against the downloaded layer
+    # (CITY='Clackamas Co.'): R5 R7 R8.5 R10 R15 R20 R30 VR57 VR45 — the nine
+    # ZDO-282 quadplex-eligible urban residential districts. Multi-family
+    # (MR1/MR2/HDR) and rural/resource (RRFF5/EFU/FF10/FU10/AGF/RA1/RA2/RR/etc.)
+    # are out of scope by convention and by the UGB gate.
+    # SETBACKS BELOW ARE PLACEHOLDERS (needs_verification): the ZDO Section 315
+    # dimensional table is a non-machine-readable PDF. ZDO-282 waives minimum
+    # lot size for middle-housing land divisions and sets more-permissive
+    # middle-housing setbacks than SFD, so min_lot_sqft and max_coverage_pct are
+    # intentionally omitted (upper-bound screen). Values here are conservative
+    # SFD-scale setbacks pending extraction of the Section 315 figures.
+    zones:
+      - zone: R5
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 5
+        setback_rear_ft: 20
+        setback_street_side_ft: 10
+        source: "Clackamas ZDO-282 (quadplex by-right) + ZDO Section 315 (dimensional standards, unread PDF)"
+        source_url: "https://dochub.clackamas.us/documents/drupal/a7c6fa2c-d411-4418-91e0-3a73ef1e71ab"
+        confidence: needs_verification
+        notes: "Conservative SFD-scale placeholder; Section 315 table not yet extracted. ZDO-282 waives min lot size for middle-housing land divisions."
+      - zone: R7
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 5
+        setback_rear_ft: 20
+        setback_street_side_ft: 10
+        source: "Clackamas ZDO-282 (quadplex by-right) + ZDO Section 315 (dimensional standards, unread PDF)"
+        source_url: "https://dochub.clackamas.us/documents/drupal/a7c6fa2c-d411-4418-91e0-3a73ef1e71ab"
+        confidence: needs_verification
+        notes: "Conservative SFD-scale placeholder; Section 315 table not yet extracted."
+      - zone: R8.5
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 5
+        setback_rear_ft: 20
+        setback_street_side_ft: 10
+        source: "Clackamas ZDO-282 (quadplex by-right) + ZDO Section 315 (dimensional standards, unread PDF)"
+        source_url: "https://dochub.clackamas.us/documents/drupal/a7c6fa2c-d411-4418-91e0-3a73ef1e71ab"
+        confidence: needs_verification
+        notes: "Conservative SFD-scale placeholder; Section 315 table not yet extracted."
+      - zone: R10
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 5
+        setback_rear_ft: 20
+        setback_street_side_ft: 10
+        source: "Clackamas ZDO-282 (quadplex by-right) + ZDO Section 315 (dimensional standards, unread PDF)"
+        source_url: "https://dochub.clackamas.us/documents/drupal/a7c6fa2c-d411-4418-91e0-3a73ef1e71ab"
+        confidence: needs_verification
+        notes: "Conservative SFD-scale placeholder; Section 315 table not yet extracted."
+      - zone: R15
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 5
+        setback_rear_ft: 20
+        setback_street_side_ft: 10
+        source: "Clackamas ZDO-282 (quadplex by-right) + ZDO Section 315 (dimensional standards, unread PDF)"
+        source_url: "https://dochub.clackamas.us/documents/drupal/a7c6fa2c-d411-4418-91e0-3a73ef1e71ab"
+        confidence: needs_verification
+        notes: "Conservative SFD-scale placeholder; Section 315 table not yet extracted."
+      - zone: R20
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 5
+        setback_rear_ft: 20
+        setback_street_side_ft: 10
+        source: "Clackamas ZDO-282 (quadplex by-right) + ZDO Section 315 (dimensional standards, unread PDF)"
+        source_url: "https://dochub.clackamas.us/documents/drupal/a7c6fa2c-d411-4418-91e0-3a73ef1e71ab"
+        confidence: needs_verification
+        notes: "Conservative SFD-scale placeholder; Section 315 table not yet extracted."
+      - zone: R30
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 5
+        setback_rear_ft: 20
+        setback_street_side_ft: 10
+        source: "Clackamas ZDO-282 (quadplex by-right) + ZDO Section 315 (dimensional standards, unread PDF)"
+        source_url: "https://dochub.clackamas.us/documents/drupal/a7c6fa2c-d411-4418-91e0-3a73ef1e71ab"
+        confidence: needs_verification
+        notes: "Conservative SFD-scale placeholder; Section 315 table not yet extracted. Only 1 polygon in the layer."
+      - zone: VR57
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 10
+        source: "Clackamas ZDO-282 (quadplex by-right); Village Residential VR-5/7 + ZDO Section 315 (unread PDF)"
+        source_url: "https://dochub.clackamas.us/documents/drupal/a7c6fa2c-d411-4418-91e0-3a73ef1e71ab"
+        confidence: needs_verification
+        notes: "Village Residential (layer literal 'VR57' = ZDO 'VR-5/7'). Smaller village-scale front/rear placeholder; Section 315 table not yet extracted."
+      - zone: VR45
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 10
+        source: "Clackamas ZDO-282 (quadplex by-right); Village Residential VR-4/5 + ZDO Section 315 (unread PDF)"
+        source_url: "https://dochub.clackamas.us/documents/drupal/a7c6fa2c-d411-4418-91e0-3a73ef1e71ab"
+        confidence: needs_verification
+        notes: "Village Residential (layer literal 'VR45' = ZDO 'VR-4/5'). Smaller village-scale front/rear placeholder; Section 315 table not yet extracted."
+
+  happy_valley:
+    eligible: true
+    juris_city_codes: [HAPPY VALLEY]
+    zoning_layer: zoning_happy_valley
+    zone_field: ZONE
+    orientation_constraint: entrance_only
+    zones:
+      - zone: R40
+        quadplex_allowed: true
+        setback_front_ft: 22
+        setback_side_ft: 15
+        setback_rear_ft: 22
+        setback_street_side_ft: 15
+        min_lot_sqft: 40000
+        max_coverage_pct: 20
+        source: "HV LDC 16.22.020 Table 16.22.020-2 (Very Low Density)"
+        source_url: "https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf"
+        confidence: verified
+        notes: "Setbacks/coverage from City Model Home Application form (LDC eff 3/19/2024). Height 45 ft front elev / 49 ft side+rear. Covered porch >=20% of bldg line cuts front to 15 ft. Quadplex by-right per HV Middle Housing amendments. min_lot is the nominal density basis (verify Table 16.22.020-2)."
+      - zone: R20
+        quadplex_allowed: true
+        setback_front_ft: 22
+        setback_side_ft: 10
+        setback_rear_ft: 22
+        setback_street_side_ft: 15
+        min_lot_sqft: 20000
+        max_coverage_pct: 30
+        source: "HV LDC 16.22.020 Table 16.22.020-2"
+        source_url: "https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf"
+        confidence: verified
+        notes: "Height 45 ft front / 49 ft side+rear. Porch >=20% bldg line -> front 15 ft. min_lot nominal."
+      - zone: R15
+        quadplex_allowed: true
+        setback_front_ft: 22
+        setback_side_ft: 7
+        setback_rear_ft: 22
+        setback_street_side_ft: 15
+        min_lot_sqft: 15000
+        max_coverage_pct: 35
+        source: "HV LDC 16.22.020 Table 16.22.020-2"
+        source_url: "https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf"
+        confidence: verified
+        notes: "Height 45/49 ft. Porch >=20% bldg line -> front 15 ft. min_lot nominal."
+      - zone: R10
+        quadplex_allowed: true
+        setback_front_ft: 22
+        setback_side_ft: 7
+        setback_rear_ft: 22
+        setback_street_side_ft: 15
+        min_lot_sqft: 10000
+        max_coverage_pct: 40
+        source: "HV LDC 16.22.030 Table 16.22.030-2 (Low Density)"
+        source_url: "https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf"
+        confidence: verified
+        notes: "Height 45/49 ft. Porch >=20% bldg line -> front 15 ft. min_lot nominal."
+      - zone: R8.5
+        quadplex_allowed: true
+        setback_front_ft: 22
+        setback_side_ft: 5
+        setback_rear_ft: 22
+        setback_street_side_ft: 15
+        min_lot_sqft: 8500
+        max_coverage_pct: 45
+        source: "HV LDC 16.22.030 Table 16.22.030-2"
+        source_url: "https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf"
+        confidence: verified
+        notes: "Layer value is 'R8.5' (code text 'R-8.5'). Height 45/49 ft. Porch >=20% -> front 15 ft. min_lot nominal."
+      - zone: R7
+        quadplex_allowed: true
+        setback_front_ft: 22
+        setback_side_ft: 5
+        setback_rear_ft: 22
+        setback_street_side_ft: 15
+        min_lot_sqft: 7000
+        max_coverage_pct: 50
+        source: "HV LDC 16.22.030 Table 16.22.030-2"
+        source_url: "https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf"
+        confidence: verified
+        notes: "Height 45/49 ft. Porch >=20% -> front 15 ft. Coverage never binds a ~1,000 sf/unit fourplex footprint. min_lot nominal."
+      - zone: R5
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 5
+        setback_rear_ft: 20
+        setback_street_side_ft: 8
+        min_lot_sqft: 5000
+        max_coverage_pct: 50
+        source: "HV LDC 16.22.040 Table 16.22.040-2 (Medium Density)"
+        source_url: "https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf"
+        confidence: verified
+        notes: "Front 20 ft street-access / 10 ft alley-access. Height 45/49 ft. Densest std SF zone. min_lot nominal."
+      - zone: MURS
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 5
+        setback_rear_ft: 20
+        setback_street_side_ft: 8
+        source: "HV LDC 16.22.040 (MUR-S, Mixed Use Residential-Single-Family); allows detached SFD"
+        source_url: "https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf"
+        confidence: needs_verification
+        notes: "Layer value 'MURS' = code 'MUR-S'. Setbacks from Model Home form (verified); max_coverage not shown in form (verify Table 16.22.040-2). Front 20 street/10 alley. In HV middle-housing zone list."
+      # Deferred (attached/area-plan zones that allow quadplex but whose
+      # dimensional standards are not published in a usable table): SFA
+      # (Single-Family Attached), MUR-A (Mixed Use Residential-Attached), VTH
+      # (Village Townhouse). Lots in these fall out as zone_not_in_rules and are
+      # counted in the funnel — revisit if the standards are obtained.
+      - zone: R20CC
+        quadplex_allowed: true
+        setback_front_ft: 22
+        setback_side_ft: 10
+        setback_rear_ft: 22
+        setback_street_side_ft: 15
+        min_lot_sqft: 20000
+        max_coverage_pct: 30
+        source: "Assumed R-20 variant (unexplained 'CC' suffix in layer)"
+        source_url: "https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf"
+        confidence: needs_verification
+        notes: "Distinct layer value 'R20CC' — meaning of CC suffix unconfirmed; standards mirrored from R-20 pending verification."
+
+  milwaukie:
+    eligible: true
+    juris_city_codes: [MILWAUKIE]
+    zoning_layer: zoning_milwaukie
+    zone_field: ZONE
+    zones:
+      - zone: R-MD
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 5
+        setback_rear_ft: 20
+        setback_street_side_ft: 20
+        min_lot_sqft: 5000
+        max_coverage_pct: 30
+        source: "MMC 19.301 Moderate Density Residential, Table 19.301.4; use table 19.301.2"
+        source_url: "https://ecode360.com/43860500"
+        confidence: verified
+        notes: "Milwaukie consolidated former R-5/R-7/R-10 SF zones into R-MD; this is the by-right quadplex zone. Values are the lots>=7,000-sf tier (Table 19.301.4): side 5 ft + 10 ft (asymmetric), corner street-side 20 ft, height 35 ft, coverage 30%. Lots <7,000 sf use a smaller-setback tier (verify). Min lot 5,000 sf; middle housing allowed on any SFD lot (density cap waived)."
+      - zone: R-HD
+        quadplex_allowed: true
+        setback_front_ft: 5
+        setback_side_ft: 5
+        setback_rear_ft: 20
+        min_lot_sqft: 5000
+        max_coverage_pct: 50
+        source: "MMC 19.302 High Density Residential, Table 19.302.4"
+        source_url: "https://ecode360.com/43860500"
+        confidence: needs_verification
+        notes: "Multi-dwelling zone (min density 25 units/acre) — apartments allowed outright, so quadplex trivially permitted. Verified: side 5 ft (0 for townhouse common wall), coverage 50%, min lot 5,000 sf, height 45 ft. Front 5 ft applies only to properties mapped in Fig 19.302.4 — general front and rear setbacks NOT confirmed (rear assumed 20; verify)."
+
+  oregon_city:
+    eligible: true
+    juris_city_codes: [OREGON CITY]
+    zoning_layer: zoning_oregon_city
+    zone_field: ZONE
+    orientation_constraint: entrance_only
+    zones:
+      - zone: R-10
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 8
+        setback_rear_ft: 20
+        setback_street_side_ft: 10
+        min_lot_sqft: 10000
+        min_frontage_ft: 65
+        max_coverage_pct: 40
+        source: "OCMC 17.08.020 (quadplex a permitted use) & Table 17.08.040; middle housing 17.16.060"
+        source_url: "https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.08LODEREDI"
+        confidence: verified
+        notes: "Height 35 ft. Front 15 ft for a porch. Rear 10 ft for ADU/cottage cluster. No FAR. Quadplex uses base-zone dimensions per 17.16.060.A; >=1 street-facing main entrance req'd (17.16.060.C). Coverage 45% only with an ADU."
+      - zone: R-8
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 7
+        setback_rear_ft: 20
+        setback_street_side_ft: 10
+        min_lot_sqft: 8000
+        min_frontage_ft: 60
+        max_coverage_pct: 40
+        source: "OCMC 17.08.020 & Table 17.08.040; middle housing 17.16.060"
+        source_url: "https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.08LODEREDI"
+        confidence: verified
+        notes: "Height 35 ft. Front 10 ft for a porch. No FAR. One street-facing entrance per quadplex (17.16.060.C). Coverage 45% only with an ADU."
+      - zone: R-6
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 20
+        setback_street_side_ft: 10
+        min_lot_sqft: 7000
+        min_frontage_ft: 50
+        max_coverage_pct: 40
+        source: "OCMC 17.08.020 & Table 17.08.040; middle housing 17.16.060"
+        source_url: "https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.08LODEREDI"
+        confidence: verified
+        notes: "Height 35 ft. Front 5 ft for a porch. Quadplex min lot (7,000) exceeds detached-SFD min (6,000). No FAR. Coverage 45% only with an ADU."
+      - zone: R-5
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 20
+        setback_street_side_ft: 7
+        min_lot_sqft: 7000
+        min_frontage_ft: 35
+        max_coverage_pct: 50
+        source: "OCMC 17.10.020.E (quadplex permitted) & Table 17.10.040 (Medium Density Residential); middle housing 17.16.060"
+        source_url: "https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.10MEDEREDI"
+        confidence: verified
+        notes: "Height 35 ft. Ch 17.10 'Medium Density' but permits detached SFD (17.10.020.A) so HB 2001 attaches. Quadplex min lot 7,000 > detached 5,000. Coverage 50%."
+      - zone: R-3.5
+        quadplex_allowed: true
+        setback_front_ft: 5
+        setback_side_ft: 5
+        setback_rear_ft: 20
+        setback_street_side_ft: 7
+        min_lot_sqft: 7000
+        min_frontage_ft: 25
+        max_coverage_pct: 55
+        source: "OCMC 17.10.020.E (quadplex permitted) & Table 17.10.040 (Medium Density Residential); middle housing 17.16.060"
+        source_url: "https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.10MEDEREDI"
+        confidence: verified
+        notes: "Height 35 ft. Permits detached SFD (17.10.020.A). Quadplex min lot 7,000 >> detached 3,500. Coverage 55%. NOT the multi-family zone (that is R-2 / Ch 17.12, excluded)."
+
+  gladstone:
+    eligible: true
+    juris_city_codes: [GLADSTONE]
+    zoning_layer: zoning_gladstone
+    zone_field: ZONE
+    orientation_constraint: entrance_only
+    zones:
+      - zone: R7.2
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 20
+        min_lot_sqft: 7200
+        source: "Gladstone Municipal Code 17.10.020 (middle housing allowed outright) & 17.10.050 (dimensional standards)"
+        source_url: "https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1710.html"
+        confidence: needs_verification
+        notes: "GIS literal 'R7.2' (code writes 'R-7.2'). Height 35 ft. NO max lot coverage, NO min lot width in code. Middle housing (incl. quadplex) permitted outright. min_lot is the detached-SFD minimum. Street-side setback read via mirror; confirm 17.10.050."
+      - zone: R5
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 20
+        min_lot_sqft: 5000
+        source: "Gladstone Municipal Code 17.12.020 (middle housing allowed outright) & 17.12.050 (dimensional standards)"
+        source_url: "https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1712.html"
+        confidence: needs_verification
+        notes: "GIS literal 'R5' (code writes 'R-5'). Height 35 ft. NO max lot coverage, NO min lot width. Middle housing outright. Front drops to ~10-15 ft inside Gladstone Town Center overlay. min_lot is detached-SFD minimum. Street-side read via mirror; confirm 17.12.050."
+      - zone: R10
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 20
+        min_lot_sqft: 7200
+        source: "Gladstone MC Title 17 (no R-10 chapter; standards mirror R-7.2, the lowest-density defined SFD district)"
+        source_url: "https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone17.html"
+        confidence: needs_verification
+        notes: "DISCREPANCY: Gladstone's adopted code defines only R-7.2 and R-5 single-household districts — there is NO R-10 district in Title 17. Exactly one layer polygon carries ZONE='R10'. SFD zone, so HB 2001 attaches. Standards are placeholders copied from R-7.2 pending verification."
+
+  west_linn:
+    eligible: true
+    juris_city_codes: [WEST LINN]
+    zoning_layer: zoning_west_linn
+    zone_field: DESIGNATION
+    orientation_constraint: entrance_only
+    zones:
+      - zone: R-40
+        quadplex_allowed: true
+        setback_front_ft: 30
+        setback_side_ft: 10
+        setback_rear_ft: 30
+        setback_street_side_ft: 30
+        min_lot_sqft: 40000
+        min_frontage_ft: 150
+        max_coverage_pct: 25
+        source: "West Linn CDC 08.070 (R-40 lot/dimensional standards); quadplex permitted outright 08.030"
+        source_url: "https://www.zoneomics.com/code/west-linn-OR/chapter_4"
+        confidence: verified
+        notes: "Detached SFD + quadplex outright. Coverage 25% applies to quadplex (only cottage clusters exempt). Corner side-yard read as 30 ft."
+      - zone: R-20
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 7.5
+        setback_rear_ft: 20
+        setback_street_side_ft: 15
+        min_lot_sqft: 20000
+        min_frontage_ft: 100
+        max_coverage_pct: 25
+        source: "West Linn CDC 09.070 (R-20 lot/dimensional standards)"
+        source_url: "https://www.zoneomics.com/code/west-linn-OR/chapter_5"
+        confidence: verified
+        notes: "Detached SFD + quadplex outright. Coverage 25% applies to quadplex."
+      - zone: R-15
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 7.5
+        setback_rear_ft: 20
+        setback_street_side_ft: 15
+        min_lot_sqft: 15000
+        min_frontage_ft: 45
+        max_coverage_pct: 30
+        source: "West Linn CDC 10.070 (R-15 lot/dimensional standards); quadplex 10.030(5)"
+        source_url: "https://www.zoneomics.com/code/west-linn-OR/chapter_6"
+        confidence: verified
+        notes: "Width 45 ft at front line / 80 ft avg (frontage=45). Coverage 30% applies to quadplex."
+      - zone: R-10
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 7.5
+        setback_rear_ft: 20
+        setback_street_side_ft: 15
+        min_lot_sqft: 10000
+        min_frontage_ft: 35
+        max_coverage_pct: 35
+        source: "West Linn CDC 11.070 (R-10 lot/dimensional standards); quadplex 11.030(1)(c)"
+        source_url: "https://www.zoneomics.com/code/west-linn-OR/chapter_7"
+        confidence: verified
+        notes: "Width 35 ft at front line / 50 ft avg (frontage=35). Coverage 35% applies to quadplex."
+      - zone: R-7
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 7.5
+        setback_rear_ft: 20
+        setback_street_side_ft: 15
+        min_lot_sqft: 7000
+        min_frontage_ft: 35
+        max_coverage_pct: 35
+        source: "West Linn CDC 12.070 (R-7 lot/dimensional standards)"
+        source_url: "https://www.zoneomics.com/code/west-linn-OR/chapter_8"
+        confidence: verified
+        notes: "Detached SFD + quadplex outright. Coverage 35% applies to quadplex; max FAR 0.60 for duplex/triplex/quadplex."
+      - zone: R-5
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 5
+        setback_rear_ft: 20
+        setback_street_side_ft: 15
+        min_lot_sqft: 5000
+        min_frontage_ft: 35
+        source: "West Linn CDC 13.070 (R-5 lot/dimensional standards)"
+        source_url: "https://www.zoneomics.com/code/west-linn-OR/chapter_9"
+        confidence: verified
+        notes: "Max lot coverage does NOT apply to quadplexes (CDC 13.070) -> no coverage cap for a 4-plex; SFD base coverage 40%."
+      - zone: R-4.5
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 5
+        setback_rear_ft: 20
+        setback_street_side_ft: 15
+        min_lot_sqft: 4500
+        min_frontage_ft: 35
+        source: "West Linn CDC 14.070 (R-4.5 lot/dimensional standards)"
+        source_url: "https://www.zoneomics.com/code/west-linn-OR/chapter_10"
+        confidence: verified
+        notes: "Coverage max does NOT apply to quadplexes (CDC 14.070); SFD base 40%."
+      - zone: R-3
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 15
+        min_lot_sqft: 3000
+        min_frontage_ft: 35
+        source: "West Linn CDC 15.070 (R-3 lot/dimensional standards)"
+        source_url: "https://www.zoneomics.com/code/west-linn-OR/chapter_11"
+        confidence: verified
+        notes: "Coverage max does NOT apply to quadplexes (CDC 15.070); SFD base 50%. FAR 0.45 (n/a to middle housing)."
+      - zone: R-2.1
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 15
+        min_lot_sqft: 4000
+        min_frontage_ft: 35
+        source: "West Linn CDC 16.070 (R-2.1); attached quadplex outright 16.030; detached SFD/quadplex conditional 16.050(6)"
+        source_url: "https://www.zoneomics.com/code/west-linn-OR/chapter_12"
+        confidence: needs_verification
+        notes: "ATTACHED quadplex permitted OUTRIGHT. Detached SFD/detached quadplex are CONDITIONAL only (16.050(6)). Coverage max does not apply to quadplexes; SFD base 50%. Min lot 4,000 for detached SFD - verify."
+
+  tualatin:
+    eligible: true
+    juris_city_codes: [TUALATIN]
+    zoning_layer: zoning_tualatin
+    zone_field: PLANDIST.CZONE
+    orientation_constraint: entrance_only
+    zones:
+      - zone: RL
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        min_lot_sqft: 6500
+        min_frontage_ft: 50
+        max_coverage_pct: 60
+        source: "Tualatin Development Code Ch.40 (RL), Tables 40-2/40-3; detached SFD permitted P/L, quadplex permitted P"
+        source_url: "https://www.zoneomics.com/code/tualatin-OR/chapter_11"
+        confidence: verified
+        notes: "Detached SFD outright -> mandate attaches; quadplex outright. Coverage 60% for quadplex (SFD base 45%). Front 15 ft (12 ft to porch). Min lot 6,500 sf avg. Min width 50 ft (30 ft on cul-de-sac bulb). Corner/street-side is front-door-orientation based (garage ~20 / house ~12) - omitted as single value."
+      - zone: RML
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 10
+        setback_street_side_ft: 10
+        max_coverage_pct: 60
+        source: "Tualatin Development Code Ch.41 (RML), Tables 41-2/41-3; quadplex permitted P"
+        source_url: "https://www.zoneomics.com/code/tualatin-OR/chapter_12"
+        confidence: needs_verification
+        notes: "Quadplex permitted OUTRIGHT. Detached SFD NOT outright - only within a flexible-lot subdivision (TDC 36.410). Coverage: quadplex 60%. Min lot/width (3,000 sf / 26 ft) apply to flexible-lot subdivision only - verify base quadplex min lot before relying."
+
+  wilsonville:
+    eligible: true
+    juris_city_codes: [WILSONVILLE]
+    zoning_layer: zoning_wilsonville
+    zone_field: ZONE_CODE
+    orientation_constraint: entrance_only
+    zones:
+      - zone: R
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 10
+        min_lot_sqft: 7000
+        min_frontage_ft: 30
+        max_coverage_pct: 50
+        source: "Wilsonville Development Code 4.122 (R Zone) + 4.113(.02) setbacks; Ord. 841 (middle housing)"
+        source_url: "https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.122REZO"
+        confidence: verified
+        notes: "Permits Middle Housing outright. Setbacks per 4.113(.02): lots <=10,000sf get 15/5/15 (2-story side=7, rear=20); lots >10,000sf get 20/10/20. Quadplex min lot 7,000 (SFD/duplex/triplex 5,000)."
+      - zone: OTR
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 10
+        min_lot_sqft: 7000
+        min_frontage_ft: 35
+        source: "Wilsonville Development Code 4.123 (Old Town Residential OTR Zone); Ord. 841"
+        source_url: "https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.123OLTOREOTZO"
+        confidence: needs_verification
+        notes: "Zone code + quadplex use VERIFIED (Middle Housing permitted, 7,000sf min). Setbacks NOT verified: 4.123(.06) delegates to the 'Old Town Residential Design Standards Book'. Values shown are the 4.113(.02) underlying-zone default; confirm against the design book."
+      - zone: PDR1
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 10
+        setback_rear_ft: 20
+        setback_street_side_ft: 10
+        min_lot_sqft: 20000
+        min_frontage_ft: 80
+        max_coverage_pct: 20
+        source: "Wilsonville Development Code 4.124 (PDR Zones) Table 2 + 4.113(.02); Ord. 841"
+        source_url: "https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO"
+        confidence: verified
+        notes: "PDR-1 base min lot 20,000sf (>10,000 -> 20/10/20 setbacks). Depth 100ft, height 35ft. Permits duplex/triplex/quadplex outright."
+      - zone: PDR2
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 10
+        min_lot_sqft: 7000
+        min_frontage_ft: 30
+        max_coverage_pct: 45
+        source: "Wilsonville Development Code 4.124 Table 2 + 4.113(.02)"
+        source_url: "https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO"
+        confidence: verified
+        notes: "Base min lot 7,000sf. Depth 70ft, height 35ft. Coverage curve 45/40/25 as lot grows. 2-story: side 7/rear 20."
+      - zone: PDR3
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 10
+        min_lot_sqft: 7000
+        min_frontage_ft: 40
+        max_coverage_pct: 50
+        source: "Wilsonville Development Code 4.124 Table 2 note B + 4.113(.02)"
+        source_url: "https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO"
+        confidence: verified
+        notes: "Quadplex needs 7,000sf (note B, PDR-3..7; base lot min 4,500). Depth 60ft, height 35ft. 2-story: side 7/rear 20. 24 ft frontage on a cul-de-sac."
+      - zone: PDR4
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 10
+        min_lot_sqft: 7000
+        min_frontage_ft: 35
+        max_coverage_pct: 75
+        source: "Wilsonville Development Code 4.124 Table 2 note B + 4.113(.02)"
+        source_url: "https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO"
+        confidence: verified
+        notes: "Quadplex needs 7,000sf (base lot min 3,000). Depth 60ft, height 35ft. 2-story: side 7/rear 20."
+      - zone: PDR5
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 10
+        min_lot_sqft: 7000
+        min_frontage_ft: 30
+        max_coverage_pct: 75
+        source: "Wilsonville Development Code 4.124 Table 2 note B + 4.113(.02)"
+        source_url: "https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO"
+        confidence: verified
+        notes: "Quadplex needs 7,000sf (base lot min 2,000). Depth 60ft, height 35ft. 2-story: side 7/rear 20."
+      - zone: PDR6
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 10
+        min_lot_sqft: 7000
+        min_frontage_ft: 30
+        max_coverage_pct: 75
+        source: "Wilsonville Development Code 4.124 Table 2 note B + 4.113(.02)"
+        source_url: "https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO"
+        confidence: verified
+        notes: "Quadplex needs 7,000sf (no base lot minimum). Depth 60ft, height 35ft. 2-story: side 7/rear 20."
+      # Deferred: V (Village/Villebois) permits quadplex outright but setbacks
+      # vary by Villebois Sub-Area Plan (Table V-1) + garage loading — no single
+      # table. Villebois is largely built out (few splittable lots). Lots fall
+      # out as zone_not_in_rules; revisit if per-SAP standards are obtained.
+      - zone: RN
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 10
+        min_lot_sqft: 4000
+        min_frontage_ft: 35
+        max_coverage_pct: 60
+        source: "Wilsonville Development Code 4.127 (Residential Neighborhood RN Zone), Table 2 (Frog Pond West)"
+        source_url: "https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.127RENERNZO"
+        confidence: needs_verification
+        notes: "RN allows detached SFD so the HB 2001 mandate attaches BY STATE PREEMPTION, BUT the adopted Frog Pond West master plan caps attached units at 2 and bars multi-family — a 4-plex is likely NOT locally permitted. Kept true+needs_verification (preemption is a real legal argument); confirm before relying. Setbacks = FPW R-5 small-lot sub-district."
+
+  # --- Exempt Clackamas cities (pop <=1,000): NOT subject to HB 2001 despite
+  # Metro membership (ORS 197.758 Sec 4(a) exemption). Kept for reference only.
+  rivergrove:
+    eligible: false
+    reason: "Population ~545 <=1,000 — statutorily exempt from HB 2001 (Sec 4(a)); Metro membership does NOT override"
+    juris_city_codes: [RIVERGROVE]
+    county_codes: [C]
+    zoning_layer: zoning_metro
+    zone_field: ZONE
+    orientation_constraint: entrance_only
+    zones:
+      - zone: R10
+        quadplex_allowed: false
+        setback_front_ft: 25
+        setback_side_ft: 10
+        setback_rear_ft: 25
+        setback_street_side_ft: 15
+        min_lot_sqft: 10000
+        source: "Rivergrove Land Development Ordinance (RLDO, Ord. 54-89); Metro RLIS Zoning layer"
+        source_url: "https://www.cityofrivergrove.org/zoning"
+        confidence: needs_verification
+        notes: "NOT subject to HB 2001 — city pop <=1,000 exempt. Single SFR district; no middle-housing code. Metro ZONE 'R10' verified (ZONE_CLASS SFR1). ~half the city is floodplain (0.5 ac min there)."
+
+  johnson_city:
+    eligible: false
+    reason: "Population ~539 <=1,000 — statutorily exempt from HB 2001 (Sec 4(a))"
+    juris_city_codes: [JOHNSON CITY]
+    county_codes: [C]
+    zoning_layer: zoning_metro
+    zone_field: ZONE
+    orientation_constraint: entrance_only
+    zones:
+      - zone: MR1
+        quadplex_allowed: false
+        source: "Metro RLIS Zoning layer (no published municipal code found); HB 2001 Sec 4(a) exemption"
+        source_url: "https://www.clackamas.us/planning"
+        confidence: needs_verification
+        notes: "NOT subject to HB 2001 — pop <=1,000 exempt. City limits = the Johnson Mobile Estates manufactured-home park; ~0 splittable lots. No municipal code published. Metro ZONE 'MR1' (ZONE_CLASS MFR1 — multi-family, not SFR)."
