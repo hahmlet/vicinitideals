@@ -1,0 +1,127 @@
+"""Unit tests for s7's per-lot failure attribution + green/review/red triage
+(`attribute_and_triage`). Pure function over a lots DataFrame, so every
+binding-constraint branch and every review trigger is exercised directly with a
+hand-built frame — no pipeline run needed."""
+
+from __future__ import annotations
+
+import pytest
+
+pytest.importorskip("pandas")
+pytest.importorskip("numpy")
+
+import pandas as pd  # noqa: E402
+
+from s7_report import attribute_and_triage  # noqa: E402
+
+pytestmark = pytest.mark.unit
+
+
+class _Z:
+    def __init__(self, zone, confidence):
+        self.zone, self.confidence = zone, confidence
+
+
+class _J:
+    def __init__(self, eligible, zones):
+        self.eligible, self.zones = eligible, zones
+
+
+class _Rules:
+    """Minimal stand-in: gresham/UNVERIFIED is the only needs_verification zone."""
+    def __init__(self):
+        self.jurisdictions = {
+            "gresham": _J(True, [_Z("LDR-5", "verified"),
+                                 _Z("UNVERIFIED", "needs_verification")]),
+        }
+
+
+FP = ["pod"]
+
+
+def _base_row(**over):
+    """A clean, buildable, trustworthy lot; override fields per test case."""
+    r = {
+        "frontage_ft": 50.0, "area_sqft": 5000.0,
+        "fits_pod": True, "fits_cov_pod": True,
+        "eligible": True, "policy_exclusion": "", "tier": "A",
+        "jurisdiction": "gresham", "zone": "LDR-5",
+        "slope_tier": "ideal", "sewer_main_dist_ft": 80.0, "ovl_flag": False,
+        # site-plan columns (only read when has_siteplan=True)
+        "parking_tier": "not_evaluated", "site_plan_ok": True,
+        "stalls_provided": 8, "open_space_ok": True, "layout_method": "x",
+    }
+    r.update(over)
+    return r
+
+
+def _run(rows, has_siteplan=False, min_stalls=4):
+    lots = pd.DataFrame(rows)
+    attribute_and_triage(lots, FP, _Rules(), has_siteplan, ["ovl_flag"], min_stalls)
+    return lots
+
+
+def test_binding_constraint_first_hit_ladder():
+    rows = [
+        _base_row(eligible=False, policy_exclusion="lot_below_zone_min_area"),
+        _base_row(tier="D"),
+        _base_row(fits_pod=False, fits_cov_pod=False),
+        _base_row(fits_pod=True, fits_cov_pod=False),
+        _base_row(),  # clean -> buildable
+    ]
+    lots = _run(rows)
+    assert list(lots["binding_constraint"]) == [
+        "lot_below_zone_min_area", "no_buildable_envelope",
+        "pod_no_fit", "over_coverage", "",
+    ]
+    assert list(lots["triage"]) == ["red", "red", "red", "red", "green"]
+
+
+def test_review_triggers_each_route_to_review_not_green():
+    rows = [
+        _base_row(),                              # green
+        _base_row(frontage_ft=20.0, area_sqft=6000.0),  # flag_suspect neck
+        _base_row(tier="C"),                      # irregular geometry
+        _base_row(slope_tier="unknown"),          # no DEM
+        _base_row(slope_tier="cost_prohibitive"),  # steep
+        _base_row(sewer_main_dist_ft=500.0),      # far sewer
+        _base_row(sewer_main_dist_ft=float("nan")),  # unknown sewer
+        _base_row(zone="UNVERIFIED"),             # unverified zone rule
+        _base_row(ovl_flag=True),                 # flag overlay touched
+    ]
+    lots = _run(rows)
+    assert list(lots["triage"]) == ["green"] + ["review"] * 8
+    # a review lot still passes the hard tests (no binding constraint)
+    assert (lots["binding_constraint"] == "").all()
+    # the flag-pole false-green is specifically caught
+    assert bool(lots.loc[1, "flag_suspect"]) is True
+
+
+def test_carve_overlay_or_verified_zone_stays_green():
+    # a non-flag overlay column must NOT trip review (only flag_ovl_cols do)
+    rows = [_base_row(), _base_row()]
+    lots = pd.DataFrame(rows)
+    lots["ovl_carve"] = [True, True]  # present but not in flag_ovl_cols
+    attribute_and_triage(lots, FP, _Rules(), False, ["ovl_flag"], 0)
+    assert list(lots["triage"]) == ["green", "green"]
+
+
+def test_siteplan_subreasons_when_evaluated():
+    rows = [
+        _base_row(parking_tier="fail", site_plan_ok=False, layout_method="none"),
+        _base_row(parking_tier="fail", site_plan_ok=False, layout_method="x",
+                  open_space_ok=False),
+        _base_row(parking_tier="minimum", site_plan_ok=False, layout_method="x",
+                  open_space_ok=True, stalls_provided=2),
+        # evaluated + site_plan_ok True -> buildable (green)
+        _base_row(parking_tier="preferred", site_plan_ok=True),
+        # NOT evaluated -> site-plan never binds even if site_plan_ok is False
+        _base_row(parking_tier="not_evaluated", site_plan_ok=False,
+                  layout_method="none"),
+    ]
+    lots = _run(rows, has_siteplan=True, min_stalls=4)
+    assert list(lots["binding_constraint"]) == [
+        "siteplan_no_layout", "siteplan_open_space_short",
+        "siteplan_too_few_stalls", "", "",
+    ]
+    assert list(lots["triage"]) == ["red", "red", "red", "green", "green"]

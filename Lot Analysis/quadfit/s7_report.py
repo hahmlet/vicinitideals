@@ -163,6 +163,113 @@ def policy_gates(lots, rules, ocfg=None, screen=None):
     return gates, funnel
 
 
+# Triage tunables (narrow-neck flag-lot heuristic + utility-diligence cutline).
+FLAG_MAX_FRONTAGE_FT = 30.0   # a narrow street neck on ...
+FLAG_MIN_AREA_SQFT = 4000.0   # ... an otherwise large lot => likely flag-lot pole
+SEWER_REVIEW_FT = 300.0       # utility run beyond this => diligence flag
+
+
+def attribute_and_triage(lots, fp_names, rules, has_siteplan, flag_ovl_cols,
+                         min_stalls):
+    """Add per-lot `flag_suspect`, `binding_constraint`, and `triage` columns.
+
+    `binding_constraint` = the single first-hit reason a lot is NOT buildable
+    (policy -> no-envelope -> no-fit -> over-coverage -> site-plan sub-reason),
+    "" when the lot passes every test. This is the per-lot source for the
+    "which constraint binds most often" histogram (combined with the structural
+    funnel counts, which are aggregate-only because s3 deletes those rows).
+
+    `triage` buckets every surviving lot into:
+      - red    : a hard, trustworthy test fails (binding_constraint set)
+      - review : passes the hard tests but the geometry can't be fully trusted
+                 or a silent-killer layer is touched — a narrow flag-lot neck,
+                 an irregular (tier C) shape, steep/unknown slope, far/unknown
+                 sewer, an unverified zone rule, or a flag-action overlay
+      - green  : passes and is trustworthy
+    Review deliberately absorbs the wide-flag-pole false-green: a lot whose
+    frontage is a narrow neck is never hard-greened, even though the raster
+    fit (which can't see the access strip) said a pod fits.
+    """
+    import numpy as np
+    import pandas as pd
+
+    n = len(lots)
+    frontage = pd.to_numeric(lots["frontage_ft"], errors="coerce").to_numpy()
+    area = pd.to_numeric(lots["area_sqft"], errors="coerce").to_numpy()
+    flag_suspect = (frontage <= FLAG_MAX_FRONTAGE_FT) & (area >= FLAG_MIN_AREA_SQFT)
+    lots["flag_suspect"] = flag_suspect
+
+    fits_any = np.zeros(n, dtype=bool)
+    fits_cov_any = np.zeros(n, dtype=bool)
+    for name in fp_names:
+        fits_any |= lots[f"fits_{name}"].to_numpy()
+        fits_cov_any |= lots[f"fits_cov_{name}"].to_numpy()
+
+    eligible = lots["eligible"].to_numpy()
+    pol = lots["policy_exclusion"].astype(str).to_numpy()
+    tier = lots["tier"].astype(str).to_numpy()
+
+    if has_siteplan and "parking_tier" in lots.columns:
+        evaluated = lots["parking_tier"].to_numpy() != "not_evaluated"
+        site_ok = lots["site_plan_ok"].to_numpy()
+        stalls = pd.to_numeric(lots["stalls_provided"], errors="coerce").fillna(0).to_numpy()
+        open_ok = lots["open_space_ok"].to_numpy()
+        method = lots["layout_method"].astype(str).to_numpy()
+    else:
+        evaluated = np.zeros(n, dtype=bool)
+        site_ok = np.ones(n, dtype=bool)
+        stalls = np.zeros(n)
+        open_ok = np.ones(n, dtype=bool)
+        method = np.array([""] * n)
+
+    binding = np.empty(n, dtype=object)
+    binding[:] = ""
+    for i in range(n):
+        if not eligible[i]:
+            binding[i] = pol[i] or "policy_excluded"
+        elif tier[i] == "D":
+            binding[i] = "no_buildable_envelope"
+        elif not fits_any[i]:
+            binding[i] = "pod_no_fit"
+        elif not fits_cov_any[i]:
+            binding[i] = "over_coverage"
+        elif evaluated[i] and not site_ok[i]:
+            if method[i] == "none":
+                binding[i] = "siteplan_no_layout"
+            elif not open_ok[i]:
+                binding[i] = "siteplan_open_space_short"
+            elif stalls[i] < min_stalls:
+                binding[i] = "siteplan_too_few_stalls"
+            else:
+                binding[i] = "siteplan_fail"
+    lots["binding_constraint"] = binding
+
+    # Review triggers (only meaningful for lots that pass the hard tests).
+    unver = {(jk, z.zone) for jk, j in rules.jurisdictions.items() if j.eligible
+             for z in j.zones if z.confidence != "verified"}
+    juris = lots["jurisdiction"].astype(str).to_numpy()
+    zone = lots["zone"].astype(str).to_numpy()
+    unverified_zone = np.array([(juris[i], zone[i]) in unver for i in range(n)])
+    if "slope_tier" in lots.columns:
+        slope_bad = np.isin(lots["slope_tier"].astype(str).to_numpy(),
+                            ("cost_prohibitive", "unknown"))
+    else:
+        slope_bad = np.zeros(n, dtype=bool)
+    if "sewer_main_dist_ft" in lots.columns:
+        sew = pd.to_numeric(lots["sewer_main_dist_ft"], errors="coerce").to_numpy()
+        sewer_review = ~np.isfinite(sew) | (sew > SEWER_REVIEW_FT)
+    else:
+        sewer_review = np.zeros(n, dtype=bool)
+    overlay_flag = np.zeros(n, dtype=bool)
+    for c in flag_ovl_cols:
+        overlay_flag |= lots[c].to_numpy().astype(bool)
+
+    review = (flag_suspect | (tier == "C") | unverified_zone | slope_bad
+              | sewer_review | overlay_flag)
+    lots["triage"] = np.where(binding != "", "red",
+                              np.where(review, "review", "green"))
+
+
 def quads_if_split(lots, gates, rules, split):
     """Vector of carve-count estimates (0 where ineligible / nothing fits).
 
@@ -338,6 +445,13 @@ def main() -> None:
         cov_ok = np.isnan(cap) | (w_ft * d_ft + lots["accessory"].to_numpy() <= cap)
         lots[f"fits_cov_{name}"] = lots[f"fits_{name}"] & cov_ok
 
+    # Per-lot failure attribution + green/review/red triage (adds flag_suspect,
+    # binding_constraint, triage). Computed on the full universe so elig inherits.
+    flag_ovl_cols = [f"ovl_{s.key}" for s in ocfg.overlays
+                     if s.action == "flag" and f"ovl_{s.key}" in lots.columns]
+    min_stalls = fps.siteplan.min_stalls() if (has_siteplan and fps.siteplan) else 0
+    attribute_and_triage(lots, fp_names, rules, has_siteplan, flag_ovl_cols, min_stalls)
+
     elig = lots[lots["eligible"]]
     frontier_cells_e = np.array(
         [json.loads(s) for s in elig["frontier_json"]], dtype=np.int32
@@ -415,6 +529,40 @@ def main() -> None:
         L.append(f"| {row['step']} | {row['dropped']:,} | {row['remaining']:,} |")
     for row in pol_funnel:
         L.append(f"| {row['step']} (policy) | {row['dropped']:,} | {row['remaining']:,} |")
+
+    L.append("\n## Triage — green / needs-review / red\n")
+    L.append("Every lot in the geometry universe is bucketed. **green** = passes all "
+             "hard tests and the geometry is trustworthy — safe to pursue. **review** = "
+             "passes the hard tests but a silent-killer or low-trust signal needs a "
+             "human before diligence spend: a narrow flag-lot neck, an irregular shape, "
+             "steep/unknown slope, far/unknown sewer, an unverified zone rule, or a "
+             "flag overlay. **red** = a hard test fails (see binding constraint below). "
+             "The review tier is where a false green would otherwise cost acquisition "
+             "dollars — it is deliberately cautious.\n")
+    tri_all = lots["triage"].value_counts()
+    tri_head = head["triage"].value_counts()
+    L.append("| triage | geometry universe | headline (tiers A+B) |")
+    L.append("|---|---:|---:|")
+    for t in ("green", "review", "red"):
+        L.append(f"| {t} | {int(tri_all.get(t, 0)):,} | {int(tri_head.get(t, 0)):,} |")
+    L.append("\nThe human-review queue is `review_candidates.csv`.")
+
+    L.append("\n## Binding constraint — what stops each lot (first-hit)\n")
+    L.append("The single first reason each lot is not buildable. Structural drops are "
+             "aggregate counts (those rows are removed early in the pipeline); policy, "
+             "geometry, and site-plan reasons are per-lot. Sorted by how many lots each "
+             "stops — the top rows are where design or acquisition strategy pays off "
+             "most. Full table in `binding_constraints.csv`.\n")
+    bc_rows = [(r["step"], int(r["dropped"])) for r in struct_funnel[1:]]
+    bc = lots["binding_constraint"].value_counts()
+    bc_rows += [(k, int(v)) for k, v in bc.items() if k != ""]
+    bc_rows.sort(key=lambda kv: kv[1], reverse=True)
+    buildable = int((lots["binding_constraint"] == "").sum())
+    L.append("| binding constraint | lots |")
+    L.append("|---|---:|")
+    for step, cnt in bc_rows[:15]:
+        L.append(f"| {step} | {cnt:,} |")
+    L.append(f"| **(none — buildable)** | **{buildable:,}** |")
 
     L.append("\n## Eligible universe\n")
     L.append("| jurisdiction | lots | tier A | B | C | D |")
@@ -768,11 +916,26 @@ def main() -> None:
         "TLID", "SITEADDR", "jurisdiction", "zone", "tier", "area_sqft",
         "envelope_sqft", "frontage_ft", "YEARBUILT", "BLDGSQFT", "BLDGVAL",
         "TOTALVAL", "split_zone", "policy_exclusion", "eligible",
+        "flag_suspect", "binding_constraint", "triage",
     ] + screen_cols \
       + [f"fits_{n}" for n in fp_names] + [f"fits_cov_{n}" for n in fp_names] \
       + phase2_cols + siteplan_cols
     lots[csv_cols].to_csv(DATA_DIR / "lots_results.csv", index=False)
     print(f"wrote {DATA_DIR / 'lots_results.csv'} ({len(lots):,} rows)")
+
+    # Binding-constraint histogram (structural aggregate + per-lot first-hit) +
+    # the human-review queue (passes the hard tests but needs a look).
+    hist = [(r["step"], int(r["dropped"])) for r in struct_funnel[1:]]
+    hist += [(k, int(v)) for k, v in lots["binding_constraint"].value_counts().items()
+             if k != ""]
+    hist.sort(key=lambda kv: kv[1], reverse=True)
+    hist.append(("(none - buildable)", int((lots["binding_constraint"] == "").sum())))
+    pd.DataFrame(hist, columns=["binding_constraint", "lots"]).to_csv(
+        DATA_DIR / "binding_constraints.csv", index=False)
+    review = lots[lots["triage"] == "review"]
+    review[csv_cols].to_csv(DATA_DIR / "review_candidates.csv", index=False)
+    print(f"wrote binding_constraints.csv ({len(hist)} reasons) + "
+          f"review_candidates.csv ({len(review):,})")
 
     if split is not None:
         # Per-door economics columns (elig-only — need door counts).
