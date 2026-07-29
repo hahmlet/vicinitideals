@@ -934,7 +934,7 @@ def main() -> None:
     phase2_cols = [c for c in lots.columns
                    if c.startswith("ovl_") and not c.endswith("_sqft")]
     phase2_cols += [c for c in (
-        "slope_p85_pct", "slope_tier", "sewer_main_dist_ft",
+        "slope_p85_pct", "slope_tier", "sewer_main_dist_ft", "in_sewer_district",
         "envelope_setback_sqft") if c in lots.columns]
     siteplan_cols = [c for c in (
         "parking_tier", "stalls_provided", "layout_method", "site_plan_ok",
