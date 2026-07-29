@@ -90,37 +90,6 @@ def _largest_rect(ok):
     return best[1], best[2], best[3], best[4]
 
 
-def _pack_stalls(court_w_ft: float, court_d_ft: float, cfg: dict):
-    """Best (stalls, method, aisle_ft, stall_axis) for a free rectangle.
-
-    Tries both axis assignments and, where the enabled layout methods allow, a
-    double-loaded (central_lot, two-way aisle) and single-loaded
-    (driveway_frontage, one-way aisle) module. `stall_axis` is which rectangle
-    dimension the stall row is tiled along ("w" = court_w_ft, "d" = court_d_ft).
-    """
-    sw = cfg["stall_w"]
-    sd = cfg["stall_d"]
-    a2 = cfg["aisle_two"]
-    a1 = cfg["aisle_one"]
-    methods = cfg["methods"]
-
-    best = (0, "fail", 0.0, "w")  # (stalls, method, aisle_ft, stall_axis)
-    for span_a, span_b, axis in ((court_w_ft, court_d_ft, "w"),
-                                  (court_d_ft, court_w_ft, "d")):
-        per_row = int(span_a // sw)
-        if per_row <= 0:
-            continue
-        if "central_lot" in methods and span_b >= 2 * sd + a2:
-            stalls = 2 * per_row
-            if stalls > best[0]:
-                best = (stalls, "central_lot", a2, axis)
-        if "driveway_frontage" in methods and span_b >= sd + a1:
-            stalls = per_row
-            if stalls > best[0]:
-                best = (stalls, "driveway_frontage", a1, axis)
-    return best
-
-
 def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[float]],
                area_sqft: float, front_setback_ft: float) -> dict:
     """Lay out one lot's site plan. Runs in worker processes.
@@ -178,115 +147,134 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
         return box(minx + c0 * res, miny + r0 * res,
                    minx + (c0 + w) * res, miny + (r0 + h) * res)
 
-    # --- building: frontmost fitting pod (both orientations) ---------------
-    S = _integral(ok)
-    building = None  # (name, br, bc, bh, bw)  in cells
-    for name, w_ft, d_ft in pods:
-        for ww, dd in ((w_ft, d_ft), (d_ft, w_ft)):
-            w_c, d_c = math.ceil(ww / res), math.ceil(dd / res)
-            hit = _placement(S, d_c, w_c)  # (row, col): frontmost, then leftmost
-            if hit is not None:
-                br, bc = hit
-                building = (name, br, bc, d_c, w_c)
-                break
-        if building is not None:
-            break
-    if building is None:
-        return fail
-    bname, br, bc, bh, bw = building
-    building_area = (bw * res) * (bh * res)
-
-    # --- parking: largest free rectangle after removing the building -------
-    free = ok.copy()
-    free[br:br + bh, bc:bc + bw] = False
-    # A small gap band directly behind the building keeps stalls off the wall.
+    # Fixed-element cell dimensions.
+    stall_w, stall_d = _CFG["stall_w"], _CFG["stall_d"]
+    aisle_two, aisle_one = _CFG["aisle_two"], _CFG["aisle_one"]
+    sw_c = max(1, math.ceil(stall_w / res))
+    sd_c = max(1, math.ceil(stall_d / res))
+    drive_c = max(1, round(drive_w / res))
     gap_c = max(0, round(gap / res))
-    free[br + bh:br + bh + gap_c, bc:bc + bw] = False
-
-    rect = _largest_rect(free)
-    stalls = 0
-    method = "none"
-    parking_area = 0.0
+    cap = _CFG["preferred_stalls"]  # a 4-plex never needs more than 2/unit
+    methods = _CFG["methods"]
     geoms: dict = {}
-    court = None  # (r0, c0, h, w)
-    if rect is not None:
-        rr, cc, rh, rw = rect
-        court_w_ft, court_d_ft = rw * res, rh * res
-        stalls, method, aisle_ft, axis = _pack_stalls(court_w_ft, court_d_ft, _CFG)
-        if stalls > 0:
-            court = (rr, cc, rh, rw)
-            span_a = court_w_ft if axis == "w" else court_d_ft
-            parking_area = (stalls * _CFG["stall_w"] * _CFG["stall_d"]
-                            + aisle_ft * span_a)
 
-    # --- driveway: min-travel strip from the court out to the front line ----
-    driveway_len = 0.0
-    drive_reaches_front = False
-    if court is not None:
-        rr, cc, rh, rw = court
-        drive_c = max(1, round(drive_w / res))
-        # Place the drive at the court edge clear of the building footprint.
-        left_cols = range(cc, cc + drive_c)
-        right_cols = range(cc + rw - drive_c, cc + rw)
-        b_cols = set(range(bc, bc + bw))
-        drive_c0 = cc if not (set(left_cols) & b_cols) else cc + rw - drive_c
-        drive_c0 = max(0, min(drive_c0, C - drive_c))
-        # From the court's front row down through the front setback to the lot
-        # line (driveway parking is allowed in the front setback, §7.0420).
-        y_court_front = miny + rr * res
-        y_lot_line = miny - front_setback_ft
-        driveway_len = round(y_court_front - y_lot_line, 3)
-        drive_reaches_front = driveway_len > 0
-        drive_geom = box(minx + drive_c0 * res, y_lot_line,
-                         minx + (drive_c0 + drive_c) * res, y_court_front)
-        geoms["driveway"] = drive_geom
+    def place_building(min_row: int):
+        """Frontmost fitting pod with rows < min_row masked out; both
+        orientations. Returns (name, br, bc, bh, bw, area_sqft) or None."""
+        work = ok.copy()
+        if min_row > 0:
+            work[:min_row, :] = False
+        Sb = _integral(work)
+        for name, w_ft, d_ft in pods:
+            for ww, dd in ((w_ft, d_ft), (d_ft, w_ft)):
+                w_c2, d_c2 = math.ceil(ww / res), math.ceil(dd / res)
+                hit = _placement(Sb, d_c2, w_c2)
+                if hit is not None:
+                    r0, c0 = hit
+                    return name, r0, c0, d_c2, w_c2, ww * dd
+        return None
 
-    # --- open space: §7.0420(D) reservation of the gross lot ---------------
-    driveway_area = driveway_len * drive_w if court is not None else 0.0
+    candidates = []  # (stalls, method, plan)
+
+    # driveway_frontage (Gresham PRIMARY, §7.0420(B)(5)(c)): a single row of
+    # stalls across the front, backing directly onto the street apron; the pod
+    # sits behind them. Needs no side corridor — works on narrow lots.
+    if "driveway_frontage" in methods and ok.shape[0] >= sd_c:
+        band = _largest_rect(ok[0:sd_c + 2, :])
+        if band is not None and band[2] >= sd_c:
+            fr0, fc0, _fh, fw = band
+            n_front = min(cap, int((fw * res) // stall_w))
+            bld = place_building(sd_c + gap_c) if n_front > 0 else None
+            if n_front > 0 and bld is not None:
+                candidates.append((n_front, "driveway_frontage", {
+                    "rect": (fr0, fc0, sd_c, fw), "rows": 1,
+                    "aisle": drive_w, "span_ft": fw * res, "bld": bld,
+                    "driveway": None, "driveway_len": front_setback_ft,
+                    "reaches": True,
+                }))
+
+    # central_lot (fallback): pod at the front, a rear/side parking court
+    # reached by a driveway corridor clear of the building.
+    if "central_lot" in methods:
+        bld = place_building(0)
+        if bld is not None:
+            _n, br, bc, bh, bw, _a = bld
+            free = ok.copy()
+            free[br:br + bh, bc:bc + bw] = False
+            free[br + bh:br + bh + gap_c, bc:bc + bw] = False
+            rect = _largest_rect(free)
+            if rect is not None:
+                rr, cc, rh, rw = rect
+                cw_ft, cd_ft = rw * res, rh * res
+                rows = (2 if cd_ft >= 2 * stall_d + aisle_two
+                        else 1 if cd_ft >= stall_d + aisle_one else 0)
+                n_ct = min(cap, rows * int(cw_ft // stall_w))
+                if rr == 0:
+                    corridor_c0, reaches = cc, True
+                else:
+                    clear = free[0:rr, :].all(axis=0)
+                    corridor_c0, run = None, 0
+                    for c in range(C):
+                        run = run + 1 if clear[c] else 0
+                        if run >= drive_c:
+                            c0 = c - drive_c + 1
+                            corridor_c0 = c0 if corridor_c0 is None else corridor_c0
+                            if cc - drive_c <= c0 <= cc + rw:
+                                corridor_c0 = c0
+                                break
+                    reaches = corridor_c0 is not None
+                if n_ct > 0 and reaches:
+                    candidates.append((n_ct, "central_lot", {
+                        "rect": (rr, cc, rh, rw), "rows": rows,
+                        "aisle": aisle_two if rows == 2 else aisle_one,
+                        "span_ft": cw_ft, "bld": bld,
+                        "driveway": (0, corridor_c0, rr, drive_c) if rr > 0 else None,
+                        "driveway_len": rr * res + front_setback_ft, "reaches": True,
+                    }))
+
+    if not candidates:
+        return fail
+    stalls, method, plan = max(candidates, key=lambda t: t[0])
+
+    # --- realize the chosen plan into geometry (rotate back to CRS) --------
+    bname, br, bc, bh, bw, building_area = plan["bld"]
+    rr, cc, rh, rw = plan["rect"]
+    parking_area = stalls * stall_w * stall_d + plan["aisle"] * plan["span_ft"]
+    driveway_len = plan["driveway_len"]
+    # Central-lot corridor is separate pavement; the front apron is already in
+    # parking_area (as the aisle term), so it is not double-counted here.
+    driveway_area = plan["driveway"][2] * res * drive_w if plan["driveway"] else 0.0
     open_space = max(0.0, area_sqft - building_area - parking_area - driveway_area)
     open_space_ok = open_space >= (open_pct / 100.0) * area_sqft
 
-    # --- assemble geometry (rotate back to the working CRS) ----------------
     def emit(name: str, g):
         geoms[name] = affinity.rotate(g, rot, origin=origin)
 
-    building_geom_r = cell_box(br, bc, bh, bw)
-    # Utility stub: building front-center straight out to the front lot line.
+    emit("building", cell_box(br, bc, bh, bw))
+    emit("parking_court", cell_box(rr, cc, rh, rw))
+    if plan["driveway"] is not None:
+        dr0, dc0, dh, dwid = plan["driveway"]
+        emit("driveway", cell_box(dr0, dc0, dh, dwid))
     bx_center = minx + (bc + bw / 2.0) * res
-    by_front = miny + br * res
     from shapely.geometry import LineString
-    util_geom_r = LineString([(bx_center, by_front),
-                              (bx_center, miny - front_setback_ft)])
+    emit("utility", LineString([(bx_center, miny + br * res), (bx_center, miny)]))
 
-    if "driveway" in geoms:
-        geoms["driveway"] = affinity.rotate(geoms["driveway"], rot, origin=origin)
-    emit("building", building_geom_r)
-    emit("utility", util_geom_r)
-
-    if court is not None and stalls > 0:
-        rr, cc, rh, rw = court
-        emit("parking_court", cell_box(rr, cc, rh, rw))
-        # Individual stall rectangles (best-effort visual; count is authoritative).
-        sw_c = max(1, round(_CFG["stall_w"] / res))
-        sd_c = max(1, round(_CFG["stall_d"] / res))
-        placed = 0
-        rows = 2 if method == "central_lot" else 1
-        for band in range(rows):
-            y0 = rr + band * (rh - sd_c) if rows == 2 else rr
-            x = cc
-            while x + sw_c <= cc + rw and placed < stalls:
-                geoms[f"stall_{placed}"] = affinity.rotate(
-                    cell_box(int(y0), x, sd_c, sw_c), rot, origin=origin)
-                placed += 1
-                x += sw_c
+    placed = 0
+    for band_i in range(plan["rows"]):
+        y0 = rr + (band_i * (rh - sd_c) if plan["rows"] == 2 else 0)
+        x = cc
+        while x + sw_c <= cc + rw and placed < stalls:
+            emit(f"stall_{placed}", cell_box(int(y0), x, sd_c, sw_c))
+            placed += 1
+            x += sw_c
 
     return {
-        "site_plan_ok": bool(court is not None and stalls >= _CFG["min_stalls"]
-                             and drive_reaches_front and open_space_ok),
+        "site_plan_ok": bool(stalls >= _CFG["min_stalls"] and plan["reaches"]
+                             and open_space_ok),
         "stalls_provided": int(stalls),
         "layout_method": method,
         "building_name": bname,
-        "driveway_len_ft": float(driveway_len),
+        "driveway_len_ft": float(round(driveway_len, 3)),
         "parking_area_sqft": float(round(parking_area, 2)),
         "open_space_sqft": float(round(open_space, 2)),
         "open_space_ok": bool(open_space_ok),
@@ -363,6 +351,7 @@ def main() -> None:
         "res": res, "gap": sp.building_parking_gap_ft,
         "drive_travel": sp.driveway_min_travel_ft, "pods": pod_list,
         "open_space_pct": sp.private_open_space_pct, "min_stalls": sp.min_stalls(),
+        "preferred_stalls": sp.preferred_stalls(),
         "stall_w": sp.stall_width_ft, "stall_d": sp.stall_depth_ft,
         "aisle_two": sp.aisle_width_two_way_ft, "aisle_one": sp.aisle_width_one_way_ft,
         "methods": list(sp.layout_methods),

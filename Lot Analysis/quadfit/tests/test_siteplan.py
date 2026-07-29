@@ -29,7 +29,7 @@ def _sp_setup(res: float = 0.5):
     cfg = {
         "res": res, "gap": 5.0, "drive_travel": 12.0,
         "pods": [("pod56x36", 56.0, 36.0), ("pod80x25", 80.0, 25.0)],
-        "open_space_pct": 15.0, "min_stalls": 4,
+        "open_space_pct": 15.0, "min_stalls": 4, "preferred_stalls": 8,
         "stall_w": 8.5, "stall_d": 18.5, "aisle_two": 24.0, "aisle_one": 20.0,
         "methods": ["driveway_frontage", "central_lot"],
     }
@@ -90,12 +90,13 @@ def test_largest_rect_basics():
 
 
 def test_a_target_tier_full_plan():
-    """67x106 lot: pod at the front, ~6 stalls behind, a driveway to the
-    street, open space to spare -> site_plan_ok, target tier."""
+    """67x106 lot: 6 front stalls off the street apron, pod set back behind
+    them, open space to spare -> site_plan_ok, target tier, front typology."""
     s6s = _sp_setup()
     env, fe, area, lot = _rect_lot(67.0, 106.0)
     r = _run(s6s, env, fe, area)
     assert r["stalls_provided"] == 6
+    assert r["layout_method"] == "driveway_frontage"
     assert r["site_plan_ok"] is True
     assert r["driveway_len_ft"] > 0
     assert r["open_space_ok"] is True
@@ -105,9 +106,10 @@ def test_a_target_tier_full_plan():
 
 def test_b_tightening_pod_fits_no_parking_room():
     """Shallow lot: the pod rectangle fits (s6 would pass) but there is no
-    room for a full parking court -> site_plan_ok False (the tightening)."""
+    room for the pod AND parking either in front or behind -> site_plan_ok
+    False (the tightening)."""
     s6s = _sp_setup()
-    env, fe, area, lot = _rect_lot(67.0, 86.0)  # only ~20 ft behind the pod
+    env, fe, area, lot = _rect_lot(67.0, 70.0)  # envelope only 45 ft deep
     # sanity: the bare pod DOES fit the envelope (necessary-but-insufficient).
     import s6_fit
     s6_fit._init_worker({"res": 0.5,
@@ -121,15 +123,28 @@ def test_b_tightening_pod_fits_no_parking_room():
 
 
 def test_c_minimum_tier_narrow_lot():
-    """Narrow deep lot: pod stands on its 36 ft face, only 4 stalls fit
-    across the width -> minimum tier, still a valid plan."""
+    """Narrow deep lot: only 4 front stalls fit across the 37 ft width ->
+    minimum tier, still a valid plan (front typology, no side corridor
+    needed)."""
     s6s = _sp_setup()
     env, fe, area, lot = _rect_lot(47.0, 127.0)
     r = _run(s6s, env, fe, area)
     assert r["stalls_provided"] == 4
+    assert r["layout_method"] == "driveway_frontage"
     assert r["site_plan_ok"] is True
     from common import SiteplanSpec
     assert SiteplanSpec().tier_for(r["stalls_provided"]) == "minimum"
+
+
+def test_stalls_capped_at_preferred():
+    """A big lot never reports more than the preferred tier (2/unit = 8);
+    a 4-plex has no use for more parking than that."""
+    s6s = _sp_setup()
+    env, fe, area, lot = _rect_lot(140.0, 200.0)
+    r = _run(s6s, env, fe, area)
+    assert r["stalls_provided"] == 8  # capped at preferred (2/unit)
+    from common import SiteplanSpec
+    assert SiteplanSpec().tier_for(r["stalls_provided"]) == "preferred"
 
 
 def test_e_open_space_reservation_binds():
@@ -155,24 +170,25 @@ def test_d_geometry_invariants_and_rotation_invariance():
     env, fe, area, lot = _rect_lot(67.0, 106.0)
     r = _run(s6s, env, fe, area)
     g = r["geoms"]
-    assert "building" in g and "parking_court" in g and "driveway" in g
+    assert "building" in g and "parking_court" in g
 
     # building and parking do not overlap
     assert g["building"].intersection(g["parking_court"]).area < 1.0
 
-    # building + court + stalls stay inside the envelope (half-cell tolerance)
+    # building + court + stalls stay inside the envelope (half-cell tolerance),
+    # and NOTHING drawn ever leaves the lot (the earlier out-of-lot driveway bug)
     env_tol = env.buffer(0.6)
+    lot_tol = lot.buffer(0.6)
     assert g["building"].within(env_tol)
     assert g["parking_court"].within(env_tol)
     for role, geom in g.items():
-        if role.startswith("stall_"):
+        assert geom.within(lot_tol), f"{role} leaves the lot"
+        if role.startswith("stall_") or role == "parking_court":
             assert geom.within(env_tol)
 
-    # the driveway reaches the street: it touches the front lot edge and stays
-    # within the lot (it legally runs through the front setback)
-    front_line = LineString([(0.0, 0.0), (67.0, 0.0)])
-    assert g["driveway"].intersects(front_line.buffer(0.5))
-    assert g["driveway"].within(lot.buffer(0.6))
+    # the plan reaches the street (scalar) and parking sits against the front
+    assert r["driveway_len_ft"] > 0
+    assert g["parking_court"].bounds[1] <= 11.0  # court front at the envelope front
 
     # rotation invariance: rotate the whole lot 30deg, results must match
     theta = 30.0
