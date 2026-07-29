@@ -40,6 +40,9 @@ SHRINK_FT = 0.5  # any-touch test excludes pure boundary contact
 SEWER_LAYERS = [
     "util_sewer_portland", "util_sewer_gresham", "util_sewer_troutdale",
     "util_sewer_fairview", "util_sewer_wood_village",
+    # Clackamas (5 of 8 cities publish public mains; WES/CWS gaps stay NaN)
+    "util_sewer_oregon_city", "util_sewer_wilsonville", "util_sewer_west_linn",
+    "util_sewer_milwaukie", "util_sewer_gladstone",
 ]
 
 

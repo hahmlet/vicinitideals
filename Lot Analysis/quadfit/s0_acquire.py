@@ -198,11 +198,36 @@ PHASE2_LAYERS: dict[str, dict[str, Any]] = {
     "util_sewer_wood_village": {
         "url": f"{_WV}/Sanitary_Sewer_Main/FeatureServer/19",
         "fields": ["DIAMETER", "MATERIAL"], "gtype": "polyline"},
+    # Clackamas County sanitary mains — 5 of 8 target cities publish public
+    # linework (Happy Valley, unincorporated N. Clackamas, and Tualatin are
+    # WES/Clean-Water-Services-served with no public main layer → they stay a
+    # soft review signal, see sewer_coverage grades X/C in overlays.yaml).
+    # Each service is sanitary-only (a separate storm service on the same host),
+    # so no attribute filter is needed. All native EPSG:2913.
+    "util_sewer_oregon_city": {
+        "url": "https://maps.orcity.org/arcgis/rest/services/UtilitiesSewer_PUBLIC/MapServer/3",
+        "fields": ["NTG_DIA", "NTG_MAT_CD", "NTG_OWN_CD"], "gtype": "polyline"},
+    "util_sewer_wilsonville": {
+        "url": "https://gis.wilsonvillemaps.com/server/rest/services/SanitaryDataset/SAN_Mainlines_OMS/FeatureServer/0",
+        "fields": ["OWNER", "DIAMETER", "MATERIAL", "STATUS"], "gtype": "polyline"},
+    "util_sewer_west_linn": {
+        "url": "https://geo.westlinnoregon.gov/server/rest/services/PublicWorks/ss_system_public/MapServer/9",
+        "fields": ["OWNER", "DIAMETER", "MATERIAL", "STATUS"], "gtype": "polyline"},
+    "util_sewer_milwaukie": {
+        "url": "https://services6.arcgis.com/8e6aYcxt8yhvXvO9/arcgis/rest/services/Sewer_Mains/FeatureServer/6",
+        "fields": ["OWNEDBY", "DIAMETER", "MATERIAL", "STATUS"], "gtype": "polyline"},
+    "util_sewer_gladstone": {
+        "url": "https://maps.orcity.org/arcgis/rest/services/GLADSTONE/Gladstone_UtilitiesSewer/MapServer/6",
+        "fields": ["OWNER", "DIAMETER", "MATERIAL", "Status"], "gtype": "polyline"},
 }
 
-# USGS 3DEP 1 m DEM tiles for per-lot slope (urban Multnomah bbox, WGS84).
+# USGS 3DEP 1 m DEM tiles for per-lot slope (urban Multnomah + Clackamas bbox,
+# WGS84). Widened south/west 2026-07-28 to cover the 8 Clackamas urban cities
+# (Wilsonville/Tualatin reach ~45.27 N); the same two lidar projects already
+# wired (OR_OLCMetro_2019, OR_PortlandMetro) cover the extension, and the
+# "newest wins" per-cell tile logic handles the overlap.
 DEM_DIR_NAME = "dem"
-DEM_BBOX_4326 = (-122.87, 45.40, -122.24, 45.65)
+DEM_BBOX_4326 = (-122.90, 45.26, -122.24, 45.65)
 TNM_API = "https://tnmaccess.nationalmap.gov/api/v1/products"
 
 

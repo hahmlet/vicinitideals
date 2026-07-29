@@ -29,6 +29,14 @@ slope_coverage:
   fairview: {grade: A, note: "1 m DEM"}
   wood_village: {grade: A, note: "1 m DEM"}
   multnomah_unincorporated: {grade: A, note: "1 m DEM"}
+  oregon_city: {grade: A, note: "1 m DEM (OR_OLCMetro/PortlandMetro lidar)"}
+  gladstone: {grade: A, note: "1 m DEM"}
+  milwaukie: {grade: A, note: "1 m DEM"}
+  west_linn: {grade: A, note: "1 m DEM"}
+  wilsonville: {grade: A, note: "1 m DEM"}
+  happy_valley: {grade: A, note: "1 m DEM"}
+  tualatin: {grade: A, note: "1 m DEM"}
+  clackamas_unincorporated: {grade: A, note: "1 m DEM (urban Clackamas within widened bbox)"}
 
 sewer_coverage:
   portland: {grade: A, note: "BES mains, ownership+size"}
@@ -37,6 +45,14 @@ sewer_coverage:
   fairview: {grade: A, note: ""}
   wood_village: {grade: A, note: ""}
   multnomah_unincorporated: {grade: X, note: "no public sewer layer for unincorporated pockets — nearest-city-main distance is a proxy; septic parcels indistinguishable"}
+  oregon_city: {grade: A, note: "city sanitary mains (UtilitiesSewer_PUBLIC)"}
+  gladstone: {grade: A, note: "city sanitary mains"}
+  milwaukie: {grade: A, note: "city sanitary mains"}
+  west_linn: {grade: A, note: "city sanitary mains (ss_system_public)"}
+  wilsonville: {grade: A, note: "city sanitary mains (SAN_Mainlines_OMS)"}
+  happy_valley: {grade: X, note: "WES-served (Clackamas Water Environment Services) — no public main linework published; distance is a nearest-mapped-main proxy, keep as soft review signal, never a hard kill"}
+  clackamas_unincorporated: {grade: X, note: "WES/Oak Lodge-served — no public main linework for unincorporated Clackamas; nearest-city-main distance is a proxy; septic parcels indistinguishable"}
+  tualatin: {grade: X, note: "Clean Water Services-served — CWS main linework not publicly reachable; mostly Washington County anyway. Proxy only"}
 
 overlays:
   # ---------------- Portland (all KILL via PCC 33.418 z triggers) ----------
