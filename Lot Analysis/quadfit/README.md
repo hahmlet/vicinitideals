@@ -133,6 +133,10 @@ Every candidate CSV carries the acquisition economics: `acq_estimate`
 - `in_sewer_district` — lot falls inside a mapped Clackamas sanitary sewer
   district polygon (the basis for the sewer gate below).
 
+Locator columns on every result CSV: `TLID` (tax-lot ID), `SITEADDR` (address,
+often `NO SITUS` on vacant/unaddressed lots), and `lat` / `lng` (raw lot polygon
+centroid, WGS84) so the list maps and navigates without a GIS join.
+
 **Sewer gate.** A 4-plex ties into a main at the street, so "on sewer" means a
 mapped main within `SEWER_REVIEW_FT` = **50 ft** (`s7_report.py`) — a real
 nearby main always wins (green-eligible). Where no main is that close, the
