@@ -32,10 +32,15 @@ STAGES: list[tuple[str, list[Path], list[Path]]] = [
     # s5o+s6+s7; kill/flag/slope-tier changes need only s7.
     ("s5o_overlays.py", [stage_path("s5_lots"), OVERLAYS], [stage_path("s5o_lots")]),
     ("s6_fit.py", [stage_path("s5o_lots"), RULES, FOOTPRINTS], [stage_path("s6_lots")]),
+    # s6s: procedural site-plan generator (Gresham LDR-5 pilot). Reads s6_lots +
+    # re-reads the carved envelope from s5o_lots; adds site_plan_ok / parking_tier
+    # etc. `siteplan:` config edits need s6s+s7; drawings alone need only s7.
+    ("s6s_siteplan.py", [stage_path("s6_lots"), stage_path("s5o_lots"), FOOTPRINTS, RULES],
+     [stage_path("s6s_lots")]),
     # NOTE: rules/footprints edits make run_all re-run from s2/s6 (mtime cascade).
     # For POLICY-only changes (jurisdiction toggle, thresholds, parking buffer),
     # run s7 directly instead: uv run --extra gis python "Lot Analysis/quadfit/s7_report.py"
-    ("s7_report.py", [stage_path("s6_lots"), RULES, FOOTPRINTS], [DATA_DIR / "summary.md"]),
+    ("s7_report.py", [stage_path("s6s_lots"), RULES, FOOTPRINTS], [DATA_DIR / "summary.md"]),
 ]
 
 

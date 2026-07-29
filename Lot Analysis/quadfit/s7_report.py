@@ -35,7 +35,9 @@ from pathlib import Path
 TOOL_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(TOOL_DIR))
 
-from common import DATA_DIR, load_footprints, load_overlays, load_rules, read_stage
+from common import (
+    DATA_DIR, load_footprints, load_overlays, load_rules, read_stage, stage_path,
+)
 
 HEADLINE_TIERS = ("A", "B")
 Z_OVERLAY_JURISDICTIONS = ("portland", "multnomah_unincorporated")
@@ -283,7 +285,10 @@ def main() -> None:
     fps_meta = meta["footprints"]
     fp_names = [f["name"] for f in fps_meta]
 
-    lots = read_stage("s6_lots")
+    # Prefer the site-plan stage (superset of s6_lots) when it exists.
+    stage = "s6s_lots" if stage_path("s6s_lots").exists() else "s6_lots"
+    lots = read_stage(stage)
+    has_siteplan = "parking_tier" in lots.columns
     struct_funnel = json.loads((DATA_DIR / "funnel.json").read_text(encoding="utf-8"))
 
     ocfg = load_overlays()
@@ -355,18 +360,31 @@ def main() -> None:
         q = quads_if_split(elig, gates.loc[elig.index], rules, split)
         q = np.where(elig_any, q, 0)  # parent must host at least one quad shape
         split_candidate = q >= split.min_quads
+        # Site-plan tightening (pilot cell only): a 1-lot conversion counts only
+        # if a real plan lays out (building + parking + driveway + open space).
+        # Non-evaluated lots keep the bare-rectangle behavior. Split (multi-pod
+        # carve) geometric validation is deferred to phase 2, so it's untouched.
+        if has_siteplan:
+            evaluated_e = elig["parking_tier"].to_numpy() != "not_evaluated"
+            site_ok_e = np.where(evaluated_e, elig["site_plan_ok"].to_numpy(), True)
+        else:
+            evaluated_e = np.zeros(len(elig), dtype=bool)
+            site_ok_e = np.ones(len(elig), dtype=bool)
+        conv_ok = elig_any & ~split_candidate & site_ok_e
         # Acquisition economics: doors per lot, land cost per door, viability.
         # Conversion = units_per_quad on the existing lot; split = that x carved
-        # pods (the theoretical max, so per-door cost is a floor). No fit -> 0.
-        doors = np.where(split_candidate, q * split.units_per_quad,
-                         split.units_per_quad).astype(float)
-        doors = np.where(elig_any, doors, 0.0)
+        # pods (the theoretical max, so per-door cost is a floor). No fit / failed
+        # site plan -> 0 doors (drops out of the viable list).
+        doors = np.where(split_candidate, q * split.units_per_quad, 0.0)
+        doors = np.where(conv_ok, float(split.units_per_quad), doors)
         lpu = land_cost_per_unit(elig["acq_estimate"].to_numpy(), doors)
         elig = elig.assign(
             quads_if_split=q,
             split_candidate=split_candidate,
+            siteplan_evaluated=evaluated_e,
+            site_ok_effective=site_ok_e,
             candidate_type=np.where(split_candidate, "split",
-                                    np.where(elig_any, "conversion", "no_fit")),
+                                    np.where(conv_ok, "conversion", "no_fit")),
             doors_planned=doors.astype(int),
             land_cost_per_unit=lpu,
             viability=viability_tier(lpu, fps.screen))
@@ -503,9 +521,7 @@ def main() -> None:
 
     if split is not None:
         sc = elig[elig["split_candidate"]]
-        conv = elig[~elig["split_candidate"] & (
-            np.logical_or.reduce([elig[f"fits_{n}"].to_numpy() for n in fp_names])
-        )]
+        conv = elig[elig["candidate_type"] == "conversion"]
         L.append("\n## Large-lot subdivision screen\n")
         L.append(f"Per carved quadplex lot: {split.quad_ground_sqft:,.0f} sqft "
                  f"buildable + {split.units_per_quad} units × "
@@ -566,7 +582,7 @@ def main() -> None:
         L.append("|---|---:|---:|---:|---:|")
         groups = [
             ("1-for-1 conversion",
-             (~elig["split_candidate"].to_numpy()) & fits_any_e),
+             elig["candidate_type"].to_numpy() == "conversion"),
             (f"split (≥{split.min_quads} quads)",
              elig["split_candidate"].to_numpy()),
             ("of which vacant land",
@@ -585,6 +601,47 @@ def main() -> None:
                  "`viability` are in the split/conversion CSVs; "
                  "`viable_candidates.csv` is the union that clears the ceiling, "
                  "cheapest first.")
+
+    # --- Site-plan tightening (pilot cell) ---------------------------------
+    if has_siteplan and fps.siteplan is not None:
+        sp = fps.siteplan
+        pil = elig[elig["parking_tier"] != "not_evaluated"]
+        if len(pil):
+            geom_fit = np.logical_or.reduce(
+                [pil[f"fits_{n}"].to_numpy() for n in fp_names])
+            n_geom = int(geom_fit.sum())
+            n_site = int(pil["site_plan_ok"].to_numpy().sum())
+            L.append(f"\n## Site-plan tightening — {sp.pilot_jurisdiction} "
+                     f"{sp.pilot_zone} pilot\n")
+            L.append(
+                "A bare pod rectangle fitting the envelope (s6) is necessary but "
+                "not sufficient. This pilot lays out a full plan — pod + driveway "
+                "+ 90° parking + a 15% private open-space reservation (Gresham "
+                "§7.0420(D)) — and counts a lot as buildable only if the plan "
+                f"resolves. Parking tiers are the marketability target "
+                f"({sp.min_stalls()}/{sp.target_stalls()}/{sp.preferred_stalls()} "
+                "stalls = 1 / 1.5 / 2 per unit); Gresham LDR-5 legally requires "
+                "zero and caps at none, so every tier is legal.\n")
+            L.append(f"- Eligible {sp.pilot_jurisdiction}/{sp.pilot_zone} lots that "
+                     f"fit a bare pod: **{n_geom:,}**")
+            L.append(f"- …that also lay out a full site plan: **{n_site:,}** "
+                     f"({_pct(n_site, n_geom)}) — the rest fail on parking, "
+                     "driveway, or open space\n")
+            L.append("| parking tier | lots | share of pod-fitting |")
+            L.append("|---|---:|---:|")
+            for t in ("preferred", "target", "minimum", "fail"):
+                m = int((pil["parking_tier"] == t).to_numpy().sum())
+                L.append(f"| {t} | {m:,} | {_pct(m, n_geom)} |")
+            methods = [(meth, int((pil["layout_method"] == meth).to_numpy().sum()))
+                       for meth in ("driveway_frontage", "central_lot")]
+            method_str = ", ".join(f"{meth} {n:,}" for meth, n in methods if n)
+            ok_os = int(pil["open_space_ok"].to_numpy().sum())
+            L.append(f"\nLayout method used (best stall count wins): {method_str or 'none'}. "
+                     f"Open-space reservation satisfied on {ok_os:,} of {len(pil):,} "
+                     "evaluated lots. Sampled site-plan drawings are in "
+                     "`siteplans.geojson`; per-lot `parking_tier`, `stalls_provided`, "
+                     "`layout_method`, `driveway_len_ft`, and `open_space_ok` are in "
+                     "`conversion_candidates.csv`.")
 
     # --- Phase 2 sections: overlays / slope / sewer / data coverage --------
     flag_specs = [s for s in ocfg.overlays
@@ -681,8 +738,12 @@ def main() -> None:
              "slope 'unknown' lots have no DEM tile).")
     L.append("- Existing structures assumed demolished; building value & year built "
              "are carried per-lot for later filtering.")
-    L.append("- Conversion lots: on-lot parking out of scope by design. Split lots: "
-             "parking buffer is stalls-only (no travel lanes, no geometry check).")
+    L.append("- Conversion lots OUTSIDE the site-plan pilot cell: on-lot parking "
+             "out of scope (bare-rectangle fit only). Inside the pilot "
+             "(Gresham LDR-5): a full plan — building + driveway + 90° parking + "
+             "15% open space — is laid out and tightens the verdict (see Site-plan "
+             "tightening). Split lots: parking buffer is stalls-only (area "
+             "allowance, no geometry check) everywhere — deferred to phase 2.")
     L.append("- Split screen ignores subdivision road/utility/frontage requirements "
              "and new interior-lot-line setbacks — treat as a lead list, not a yield.")
     L.append("- Envelope + raster are conservative (~±" + str(res) + " ft), so the "
@@ -698,6 +759,9 @@ def main() -> None:
     phase2_cols += [c for c in (
         "slope_p85_pct", "slope_tier", "sewer_main_dist_ft",
         "envelope_setback_sqft") if c in lots.columns]
+    siteplan_cols = [c for c in (
+        "parking_tier", "stalls_provided", "layout_method", "site_plan_ok",
+        "driveway_len_ft", "open_space_ok", "utility_run_ft") if c in lots.columns]
     screen_cols = ["current_use", "finance_tier", "improvement_share",
                    "LANDVAL", "SALEPRICE", "SALEDATE", "acq_estimate", "acq_basis"]
     csv_cols = [
@@ -706,7 +770,7 @@ def main() -> None:
         "TOTALVAL", "split_zone", "policy_exclusion", "eligible",
     ] + screen_cols \
       + [f"fits_{n}" for n in fp_names] + [f"fits_cov_{n}" for n in fp_names] \
-      + phase2_cols
+      + phase2_cols + siteplan_cols
     lots[csv_cols].to_csv(DATA_DIR / "lots_results.csv", index=False)
     print(f"wrote {DATA_DIR / 'lots_results.csv'} ({len(lots):,} rows)")
 
@@ -722,9 +786,13 @@ def main() -> None:
         sc = elig[elig["split_candidate"]].sort_values("quads_if_split", ascending=False)
         sc[sub_cols + ["quads_if_split"] + econ_cols].to_csv(
             DATA_DIR / "split_candidates.csv", index=False)
-        conv_mask = ~elig["split_candidate"] & np.logical_or.reduce(
-            [elig[f"fits_{n}"].to_numpy() for n in fp_names])
-        elig[conv_mask][sub_cols + [f"fits_{n}" for n in fp_names] + econ_cols].to_csv(
+        conv_mask = elig["candidate_type"].to_numpy() == "conversion"
+        conv_extra = [c for c in ("parking_tier", "stalls_provided",
+                                  "layout_method", "driveway_len_ft",
+                                  "open_space_ok", "utility_run_ft")
+                      if c in elig.columns]
+        elig[conv_mask][sub_cols + [f"fits_{n}" for n in fp_names]
+                        + econ_cols + conv_extra].to_csv(
             DATA_DIR / "conversion_candidates.csv", index=False)
         # Viable list: every fitting lot clearing the per-door ceiling, cheapest
         # dirt first — the practical target list.
@@ -737,7 +805,66 @@ def main() -> None:
               f"+ viable_candidates.csv ({len(viable):,})")
 
     _write_spot_check(elig, fps, meta, args.spot_check)
+    if has_siteplan:
+        _write_siteplans(elig, args.spot_check)
     print("s7 done.")
+
+
+def _write_siteplans(lots, n_sample: int) -> None:
+    """Sampled per-lot site-plan drawings (building/driveway/stalls/utility)
+    from the s6s `siteplan_json` WKB-hex geometry, with lot + envelope context.
+    Reprojected to WGS84 for geojson.io. Pilot-cell, `site_plan_ok` lots only."""
+    import shapely
+    from pyproj import Transformer
+
+    from common import CRS_WGS84, CRS_WORKING
+
+    if "siteplan_json" not in lots.columns:
+        return
+    pil = lots[(lots["parking_tier"] != "not_evaluated")
+               & lots["site_plan_ok"].astype(bool)]
+    if not len(pil):
+        print("no site_plan_ok pilot lots — skipping siteplans.geojson")
+        return
+    sample = pil.head(n_sample)
+    s3 = read_stage("s3_lots")[["TLID", "geom"]].rename(columns={"geom": "lot_geom"})
+    s5 = read_stage("s5o_lots")[["TLID", "geom"]].rename(columns={"geom": "env_geom"})
+    sample = sample.merge(s3, on="TLID").merge(s5, on="TLID")
+
+    tr = Transformer.from_crs(CRS_WORKING, CRS_WGS84, always_xy=True)
+
+    def to4326(geom):
+        import numpy as np
+
+        def _fn(coords):
+            x, y = tr.transform(coords[:, 0], coords[:, 1])
+            return np.column_stack([x, y])
+
+        return shapely.transform(geom, _fn)
+
+    feats = []
+    for row in sample.itertuples(index=False):
+        props = {
+            "tlid": row.TLID, "addr": row.SITEADDR, "zone": row.zone,
+            "parking_tier": row.parking_tier, "stalls": int(row.stalls_provided),
+            "layout_method": row.layout_method,
+            "driveway_len_ft": round(float(row.driveway_len_ft), 1),
+        }
+        if row.lot_geom is not None and not row.lot_geom.is_empty:
+            feats.append({"type": "Feature", "properties": {**props, "role": "lot"},
+                          "geometry": json.loads(shapely.to_geojson(to4326(row.lot_geom)))})
+        if row.env_geom is not None and not row.env_geom.is_empty:
+            feats.append({"type": "Feature", "properties": {**props, "role": "envelope"},
+                          "geometry": json.loads(shapely.to_geojson(to4326(row.env_geom)))})
+        for role, hexwkb in json.loads(row.siteplan_json).items():
+            g = shapely.from_wkb(bytes.fromhex(hexwkb))
+            feats.append({"type": "Feature", "properties": {**props, "role": role},
+                          "geometry": json.loads(shapely.to_geojson(to4326(g)))})
+
+    doc = {"type": "FeatureCollection", "features": feats}
+    (DATA_DIR / "siteplans.geojson").write_text(json.dumps(doc), encoding="utf-8")
+    print(f"wrote {DATA_DIR / 'siteplans.geojson'} "
+          f"({len(sample)} lots, {len(feats)} features)")
 
 
 def _write_spot_check(lots, fps, meta, n_sample: int) -> None:

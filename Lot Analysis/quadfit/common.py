@@ -15,6 +15,7 @@ shapely/pyproj/pyarrow imports are deferred into the functions that need them.
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 from typing import Any, Literal
 
@@ -298,6 +299,74 @@ class ScreenSpec(BaseModel):
     max_land_cost_per_unit: float = 45000.0
 
 
+class SiteplanSpec(BaseModel):
+    """Procedural site-plan generator knobs (s6s stage — Gresham LDR-5 pilot).
+
+    Unlike SplitSpec (parking as a flat area allowance), this drives an actual
+    per-lot geometric layout: building placed at the front, a driveway to a
+    parking court, 90° stalls counted by real geometry, and a mandatory private
+    open-space reservation. All lengths in feet (CRS EPSG:2913). Every knob is
+    an s6s+s7 re-run; drawings alone are an s7 re-run.
+
+    Parking counts are Steph's marketability target, NOT a legal floor: Gresham
+    LDR-5 requires ZERO parking (CFEC citywide elimination, §9.0802(A)) and sets
+    NO maximum (Table 9.0851A), so all three tiers are legal. §7.0420(B)(5)(c)
+    lets up to 2 spaces/unit sit in the driveway/front setback, so driveway-
+    frontage parking is the primary typology; a central court is the fallback.
+    """
+
+    enabled: bool = True
+    # Scope: which single (jurisdiction, zone) cell the pilot lays out. Other
+    # lots pass through s6s untouched (parking_tier = "not_evaluated").
+    pilot_jurisdiction: str = "gresham"
+    pilot_zone: str = "LDR-5"
+
+    # Marketability tiers — spaces per townhome unit.
+    parking_per_unit_min: float = 1.0        # 4 / pod (tight-lot floor)
+    parking_per_unit_target: float = 1.5     # 6 / pod (design target)
+    parking_per_unit_preferred: float = 2.0  # 8 / pod (legal — no LDR-5 ceiling)
+    units_per_pod: int = 4
+
+    # Layout typologies tried; the best stall count wins.
+    layout_methods: list[Literal["driveway_frontage", "central_lot"]] = Field(
+        default_factory=lambda: ["driveway_frontage", "central_lot"]
+    )
+
+    # Stall + drive geometry (Gresham CDC 06/2026; see footprints.yaml notes).
+    stall_width_ft: float = 8.5
+    stall_depth_ft: float = 18.5
+    parallel_stall_ft: list[float] = Field(default_factory=lambda: [8.0, 24.0])
+    aisle_width_two_way_ft: float = 24.0
+    aisle_width_one_way_ft: float = 20.0
+    driveway_max_total_width_ft: float = 30.0
+    driveway_min_travel_ft: float = 12.0
+    driveway_throat_ft: float = 20.0  # DEFAULT — real value in PWS A5.000 (GAP #1)
+    building_parking_gap_ft: float = 5.0
+
+    # §7.0420(D): private open space, share of gross parent lot (a fourth
+    # claimant on the lot alongside building + parking + driveway).
+    private_open_space_pct: float = 15.0
+
+    def min_stalls(self) -> int:
+        return math.ceil(self.units_per_pod * self.parking_per_unit_min)
+
+    def target_stalls(self) -> int:
+        return math.ceil(self.units_per_pod * self.parking_per_unit_target)
+
+    def preferred_stalls(self) -> int:
+        return math.ceil(self.units_per_pod * self.parking_per_unit_preferred)
+
+    def tier_for(self, stalls: int) -> str:
+        """Best marketability tier a stall count achieves."""
+        if stalls >= self.preferred_stalls():
+            return "preferred"
+        if stalls >= self.target_stalls():
+            return "target"
+        if stalls >= self.min_stalls():
+            return "minimum"
+        return "fail"
+
+
 class FootprintsConfig(BaseModel):
     orientations: list[Literal["width_facing", "depth_facing"]] = Field(
         default_factory=lambda: ["width_facing", "depth_facing"]
@@ -307,6 +376,7 @@ class FootprintsConfig(BaseModel):
     frontier: FrontierSpec = Field(default_factory=FrontierSpec)
     split: SplitSpec | None = None
     screen: ScreenSpec = Field(default_factory=ScreenSpec)
+    siteplan: SiteplanSpec | None = None
 
 
 # --- Phase 2: overlay policy (environmental/hazard/slope/utility) -----------
