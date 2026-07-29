@@ -9,9 +9,14 @@ Troutdale, Fairview, Wood Village) + urban unincorporated Multnomah inside the
 Metro UGB must allow quadplexes in residential zones that allow detached
 single-family homes. Results are an **upper bound**: private easements, tree
 code, utilities, driveway access, and overlay zones (phase 2) are not modeled.
-On-lot parking is out of scope for 1-for-1 conversion lots (street parking
-assumed); split candidates budget a per-quad parking buffer (stalls only, no
-travel lanes) via the `split:` block in `config/footprints.yaml`.
+On-lot parking is a crude area budget in the base pipeline: out of scope for
+1-for-1 conversion lots (street parking assumed); split candidates budget a
+per-quad parking buffer (stalls only, no travel lanes) via the `split:` block
+in `config/footprints.yaml`. **Stage s6s (site-plan generator, Gresham LDR-5
+pilot)** replaces that crude budget with a real per-lot layout — building +
+driveway + 90° stalls + a 15% private open-space reservation — and tightens the
+conversion verdict to "a full site plan resolves", not just "a bare rectangle
+fits". Pilot-scoped; every other cell passes through untightened.
 
 ## Run
 
@@ -29,6 +34,8 @@ Stages cache intermediates in `data/quadfit/*.parquet` (WKB geometry columns);
 | Change | Re-run |
 |---|---|
 | Jurisdiction on/off (`eligible:`), min lot area, min frontage, orientation constraint, coverage cap, parking buffer / split thresholds, overlay kill↔flag reclassification, slope tier cutlines | `python "Lot Analysis/quadfit/s7_report.py"` only (**seconds**) |
+| Sampled site-plan drawings only (no counts change) | `python "Lot Analysis/quadfit/s7_report.py"` only (**seconds**) |
+| `siteplan:` block values (stall/aisle/driveway dims, parking tiers, open-space %, pilot cell) | s6s–s7 (minutes) |
 | New footprint rectangle or sweep | s6–s7 (minutes) |
 | Overlay carve buffer_ft, new carve overlay layer | s5o–s7 (~40 min) |
 | Setback values, new zone rows | s5–s7 (run_all handles cascade) |
@@ -54,7 +61,8 @@ policy-only edits invoke s7 directly as above.
 | s5 | `s5_envelope.py` | Setback envelope: lot − per-edge buffers (conservative) |
 | s5o | `s5o_overlays.py` | Phase 2: per-overlay any-touch flags + intersection sqft, CARVE overlays subtracted from the envelope, per-lot slope stats (USGS 3DEP 1 m DEM), sewer-main distance. Driven by `config/overlays.yaml`; missing layers degrade to caveats, never crashes |
 | s6 | `s6_fit.py` | Rotate→rasterize→integral-image rectangle fit against the CARVED envelope, BOTH orientations raw; max-depth-per-width frontier |
-| s7 | `s7_report.py` | POLICY gates (eligibility, z overlay, min lot/frontage, orientation, coverage) + split screen + `summary.md`, `lots_results.csv`, `conversion_candidates.csv`, `split_candidates.csv`, `spot_check.geojson` |
+| s6s | `s6s_siteplan.py` | Procedural site-plan generator (Gresham LDR-5 pilot). Re-reads the carved envelope from s5o and lays out building + driveway + 90° parking + 15% open-space reservation per lot; reports best parking tier + `site_plan_ok`. Two typologies (`driveway_frontage` primary, `central_lot` fallback), stall count capped at the preferred tier. Non-pilot lots pass through as `not_evaluated` |
+| s7 | `s7_report.py` | POLICY gates (eligibility, z overlay, min lot/frontage, orientation, coverage) + split screen + site-plan tightening of the pilot's conversion verdict + `summary.md`, `lots_results.csv`, `conversion_candidates.csv`, `split_candidates.csv`, `spot_check.geojson`, `siteplans.geojson` |
 
 ## Config
 
@@ -76,7 +84,13 @@ policy-only edits invoke s7 directly as above.
   units × slots/unit × sqft/slot parking, stalls only, plus the zone's quadplex
   minimum lot area; `min_quads` sets the split-candidate bar). Split math is
   pure attribute arithmetic — any knob change is an s7-only re-run. Conversion
-  (non-split) lots carry NO parking requirement by design.
+  (non-split) lots carry NO parking requirement in the base pipeline by design.
+  Also the `siteplan:` block (stage s6s, Gresham LDR-5 pilot): parking tiers
+  (min/target/preferred = 1 / 1.5 / 2 stalls per townhome unit — a
+  marketability target, NOT the legal floor, which is zero here), stall/aisle/
+  driveway dimensions, and the 15% private open-space reservation, all with
+  Gresham CDC citations. `enabled: false` turns the stage off (lots pass
+  through as `not_evaluated`). Value edits are s6s+s7 re-runs.
 
 ## Outputs
 
@@ -86,7 +100,14 @@ universe, `policy_exclusion` + `eligible` columns) · `conversion_candidates.csv
 `split_candidates.csv` (eligible, carves ≥ min_quads quadplex lots, sorted by
 carve count) · `viable_candidates.csv` (fitting lots that clear the per-door
 land-cost ceiling from `screen:`, cheapest dirt first — the practical target
-list) · `spot_check.geojson` (eyeball in geojson.io).
+list) · `spot_check.geojson` (eyeball in geojson.io) · `siteplans.geojson`
+(sampled Gresham LDR-5 site-plan drawings from s6s — one feature per role:
+`lot`, `envelope`, `building`, `parking_court`, `driveway`, `stall_<i>`,
+`utility`; drop into geojson.io).
+
+Pilot (Gresham LDR-5) conversion candidates additionally carry `site_plan_ok`,
+`parking_tier`, `stalls_provided`, `layout_method`, `driveway_len_ft`,
+`open_space_sqft`, and `open_space_ok` from s6s.
 
 Every candidate CSV carries the acquisition economics: `acq_estimate`
 (post-COVID arm's-length sale where recorded, else county Real Market Value),
@@ -115,3 +136,10 @@ Portland maintained-street-frontage + visitability gates; alley setback
 reductions. Substandard lots of record below a zone's quadplex minimum may
 still carry quadplex rights under OAR 660-046 — the funnel counts that drop
 separately (`lot_below_zone_min_area`).
+
+**Retired for the Gresham LDR-5 pilot (stage s6s):** on-lot parking geometry,
+driveway layout (curb-cut *throat length/spacing* still a documented gap — lives
+in Gresham PWS A5.000, not the CDC), and the Gresham 15% private-open-space
+minimum are now modeled per lot. Still pilot-scoped; the rest of the market
+retains the blind spots above until the engine is generalized (needs each
+cell's utility data + a slope DEM).
