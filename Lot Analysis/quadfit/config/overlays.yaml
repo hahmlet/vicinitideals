@@ -50,9 +50,14 @@ sewer_coverage:
   milwaukie: {grade: A, note: "city sanitary mains"}
   west_linn: {grade: A, note: "city sanitary mains (ss_system_public)"}
   wilsonville: {grade: A, note: "city sanitary mains (SAN_Mainlines_OMS)"}
-  happy_valley: {grade: C, note: "WES-served (CCSD#1) — no main linework, but inside the mapped WES sewer-DISTRICT polygon (Clackamas Sewer_Districts) => connectable; in_sewer_district clears the sewer review flag (s5o/s7). District boundary is coarser than pipes-at-street, hence grade C not A"}
-  clackamas_unincorporated: {grade: C, note: "WES CCSD#1 / Oak Lodge — no main linework; sewer-DISTRICT polygon membership is the signal. Inside a district => connectable (clears review); outside => genuine septic, stays review"}
-  tualatin: {grade: C, note: "Clean Water Services-served — no CWS main linework, but the CWS district polygon is in Clackamas Sewer_Districts; in_sewer_district clears review where inside"}
+  # Clackamas gap areas: no main linework, so the sanitary Sewer_Districts
+  # polygon is the sewer gate (s5o in_sewer_district; s7). "Main wins" — a
+  # mapped main within 300 ft still greens the lot. Otherwise: inside a district
+  # => review/yellow (connectable, unconfirmed); OUTSIDE every district => hard
+  # red (no_public_sewer, genuine septic). Applies only in Clackamas.
+  happy_valley: {grade: C, note: "WES-served (CCSD#1) — no main linework; inside WES district => yellow, outside => red"}
+  clackamas_unincorporated: {grade: C, note: "WES CCSD#1 / Oak Lodge — no main linework; district polygon is the gate: inside => yellow, outside => red (septic)"}
+  tualatin: {grade: C, note: "Clean Water Services-served — no CWS main linework; inside CWS district => yellow, outside => red"}
 
 overlays:
   # ---------------- Portland (all KILL via PCC 33.418 z triggers) ----------

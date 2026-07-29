@@ -98,30 +98,53 @@ def test_review_triggers_each_route_to_review_not_green():
     assert bool(lots.loc[1, "flag_suspect"]) is True
 
 
-def test_sewer_district_clears_sewer_review():
-    # Inside a mapped sanitary district clears the far/unknown-sewer review flag
-    # (WES/CWS Clackamas gaps); outside a district it still trips review.
+def test_sewer_district_gate_clackamas_main_wins():
+    # Clackamas, "main wins": a mapped main within reach stays green regardless
+    # of district. No main -> inside a district = yellow, outside = hard red.
     rows = [
-        _base_row(sewer_main_dist_ft=500.0, in_sewer_district=True),   # far but in district -> green
-        _base_row(sewer_main_dist_ft=float("nan"), in_sewer_district=True),  # unknown but in district -> green
-        _base_row(sewer_main_dist_ft=500.0, in_sewer_district=False),  # far, no district -> review
-        _base_row(sewer_main_dist_ft=80.0, in_sewer_district=True),    # near anyway -> green
+        # near a main -> green even though outside any district (main wins)
+        _base_row(jurisdiction="happy_valley", sewer_main_dist_ft=80.0,
+                  in_sewer_district=False),
+        # no main, inside a district -> review (yellow)
+        _base_row(jurisdiction="happy_valley", sewer_main_dist_ft=500.0,
+                  in_sewer_district=True),
+        _base_row(jurisdiction="clackamas_unincorporated",
+                  sewer_main_dist_ft=float("nan"), in_sewer_district=True),
+        # no main, outside every district -> red (no_public_sewer)
+        _base_row(jurisdiction="clackamas_unincorporated",
+                  sewer_main_dist_ft=500.0, in_sewer_district=False),
+        _base_row(jurisdiction="tualatin", sewer_main_dist_ft=float("nan"),
+                  in_sewer_district=False),
     ]
     lots = _run(rows)
-    assert list(lots["triage"]) == ["green", "green", "review", "green"]
-    # district membership only affects sewer — another trigger still routes review
-    steep = _run([_base_row(sewer_main_dist_ft=500.0, in_sewer_district=True,
-                            slope_tier="cost_prohibitive")])
-    assert steep.loc[0, "triage"] == "review"
+    assert list(lots["triage"]) == ["green", "review", "review", "red", "red"]
+    assert list(lots["binding_constraint"]) == [
+        "", "", "", "no_public_sewer", "no_public_sewer"]
+
+
+def test_multnomah_no_main_stays_review_never_red():
+    # No sewer-district map exists in Multnomah, so a no-main lot there stays
+    # yellow — it must never be forced red by the district gate.
+    rows = [
+        _base_row(jurisdiction="gresham", sewer_main_dist_ft=500.0,
+                  in_sewer_district=False),
+        _base_row(jurisdiction="multnomah_unincorporated",
+                  sewer_main_dist_ft=float("nan"), in_sewer_district=False),
+    ]
+    lots = _run(rows)
+    assert list(lots["triage"]) == ["review", "review"]
+    assert (lots["binding_constraint"] == "").all()
 
 
 def test_sewer_district_column_absent_is_backward_compatible():
-    # Pre-district parquet has no in_sewer_district column: far sewer must still
-    # trip review, and the function must not raise.
-    rows = [_base_row(sewer_main_dist_ft=500.0), _base_row(sewer_main_dist_ft=80.0)]
+    # Pre-district parquet has no in_sewer_district column: a far-sewer Clackamas
+    # lot must stay review (never red), and the function must not raise.
+    rows = [_base_row(jurisdiction="happy_valley", sewer_main_dist_ft=500.0),
+            _base_row(jurisdiction="happy_valley", sewer_main_dist_ft=80.0)]
     lots = pd.DataFrame(rows).drop(columns=["in_sewer_district"])
     attribute_and_triage(lots, FP, _Rules(), False, ["ovl_flag"], 0)
     assert list(lots["triage"]) == ["review", "green"]
+    assert (lots["binding_constraint"] == "").all()
 
 
 def test_carve_overlay_or_verified_zone_stays_green():

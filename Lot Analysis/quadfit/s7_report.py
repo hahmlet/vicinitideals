@@ -168,6 +168,14 @@ FLAG_MAX_FRONTAGE_FT = 30.0   # a narrow street neck on ...
 FLAG_MIN_AREA_SQFT = 4000.0   # ... an otherwise large lot => likely flag-lot pole
 SEWER_REVIEW_FT = 300.0       # utility run beyond this => diligence flag
 
+# Clackamas County jurisdictions — the coverage of the sanitary Sewer_Districts
+# polygon layer. Only here does "outside every district" mean "no public sewer"
+# (a hard red); Multnomah has no district map so its no-main lots stay review.
+CLACKAMAS_JURIS = (
+    "oregon_city", "gladstone", "milwaukie", "west_linn", "wilsonville",
+    "happy_valley", "tualatin", "clackamas_unincorporated",
+)
+
 
 def attribute_and_triage(lots, fp_names, rules, has_siteplan, flag_ovl_cols,
                          min_stalls):
@@ -257,16 +265,28 @@ def attribute_and_triage(lots, fp_names, rules, has_siteplan, flag_ovl_cols,
         slope_bad = np.zeros(n, dtype=bool)
     if "sewer_main_dist_ft" in lots.columns:
         sew = pd.to_numeric(lots["sewer_main_dist_ft"], errors="coerce").to_numpy()
-        sewer_review = ~np.isfinite(sew) | (sew > SEWER_REVIEW_FT)
+        near_main = np.isfinite(sew) & (sew <= SEWER_REVIEW_FT)
     else:
-        sewer_review = np.zeros(n, dtype=bool)
-    # A lot inside a mapped sanitary sewer district is connectable to public
-    # sewer even where no main linework is published (WES/CWS Clackamas gaps),
-    # so district membership clears the sewer review flag. Computed in s5o;
-    # absent on pre-district parquet -> no effect (backward compatible).
+        near_main = np.zeros(n, dtype=bool)
+    # No mapped main within reach => sewer not confirmed: review (yellow).
+    sewer_review = ~near_main
+    # Sanitary sewer DISTRICT gate. A real nearby main always wins (stays
+    # green). Where no main is mapped, district membership decides, but ONLY in
+    # Clackamas (the Sewer_Districts layer's coverage): inside a district =
+    # keep as review (connectable but unconfirmed, yellow); OUTSIDE every
+    # district = no public sewer path -> hard red (no_public_sewer). Multnomah
+    # has no district map, so its no-main lots stay review, never forced red.
+    # Computed in s5o; absent on pre-district parquet -> no district reds (a
+    # no-main lot just stays review, the old behavior).
     if "in_sewer_district" in lots.columns:
         in_dist = lots["in_sewer_district"].fillna(False).to_numpy().astype(bool)
-        sewer_review = sewer_review & ~in_dist
+        clackamas = np.isin(juris, CLACKAMAS_JURIS)
+        no_sewer_red = clackamas & ~near_main & ~in_dist
+        newly_red = (binding == "") & no_sewer_red
+        if newly_red.any():
+            binding = binding.copy()
+            binding[newly_red] = "no_public_sewer"
+            lots["binding_constraint"] = binding
     overlay_flag = np.zeros(n, dtype=bool)
     for c in flag_ovl_cols:
         overlay_flag |= lots[c].to_numpy().astype(bool)
