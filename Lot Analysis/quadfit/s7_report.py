@@ -633,10 +633,10 @@ def main() -> None:
                 m = int((pil["parking_tier"] == t).to_numpy().sum())
                 L.append(f"| {t} | {m:,} | {_pct(m, n_geom)} |")
             methods = [(meth, int((pil["layout_method"] == meth).to_numpy().sum()))
-                       for meth in ("driveway_frontage", "central_lot")]
+                       for meth in ("townhome_rear_court",)]
             method_str = ", ".join(f"{meth} {n:,}" for meth, n in methods if n)
             ok_os = int(pil["open_space_ok"].to_numpy().sum())
-            L.append(f"\nLayout method used (best stall count wins): {method_str or 'none'}. "
+            L.append(f"\nLayout method used: {method_str or 'none'}. "
                      f"Open-space reservation satisfied on {ok_os:,} of {len(pil):,} "
                      "evaluated lots. Sampled site-plan drawings are in "
                      "`siteplans.geojson`; per-lot `parking_tier`, `stalls_provided`, "

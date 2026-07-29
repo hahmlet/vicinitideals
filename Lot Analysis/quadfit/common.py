@@ -310,9 +310,16 @@ class SiteplanSpec(BaseModel):
 
     Parking counts are Steph's marketability target, NOT a legal floor: Gresham
     LDR-5 requires ZERO parking (CFEC citywide elimination, §9.0802(A)) and sets
-    NO maximum (Table 9.0851A), so all three tiers are legal. §7.0420(B)(5)(c)
-    lets up to 2 spaces/unit sit in the driveway/front setback, so driveway-
-    frontage parking is the primary typology; a central court is the fallback.
+    NO maximum (Table 9.0851A), so all three tiers are legal.
+
+    Product = attached townhomes (fee-simple lots, §7.0431), so parking follows
+    the townhouse standard, not the quadplex one: off-street parking is in the
+    REAR yard, reached by a single consolidated driveway down one SIDE (never
+    across the front — §7.0431(B)(3)(b)(iii)); the combined curb cut is capped at
+    18 ft or 34% of frontage, whichever is greater (§7.0431(B)(2)(b)). Cars enter
+    and leave forward, so nothing backs onto the street — which the code only
+    prohibits for arterials anyway (Appendix A5.404). One honest typology:
+    `townhome_rear_court`.
     """
 
     enabled: bool = True
@@ -327,23 +334,27 @@ class SiteplanSpec(BaseModel):
     parking_per_unit_preferred: float = 2.0  # 8 / pod (legal — no LDR-5 ceiling)
     units_per_pod: int = 4
 
-    # Layout typologies tried; the best stall count wins.
-    layout_methods: list[Literal["driveway_frontage", "central_lot"]] = Field(
-        default_factory=lambda: ["driveway_frontage", "central_lot"]
+    # Single honest typology (see class docstring). Kept as a list so a future
+    # cell can add typologies without a schema change.
+    layout_methods: list[Literal["townhome_rear_court"]] = Field(
+        default_factory=lambda: ["townhome_rear_court"]
     )
 
     # Stall + drive geometry (Gresham CDC 06/2026; see footprints.yaml notes).
     stall_width_ft: float = 8.5
-    stall_depth_ft: float = 18.5
+    stall_depth_ft: float = 18.0             # §7.0431(B)(5)(b): 8.5 x 18 (90°)
     parallel_stall_ft: list[float] = Field(default_factory=lambda: [8.0, 24.0])
     aisle_width_two_way_ft: float = 24.0
     aisle_width_one_way_ft: float = 20.0
-    driveway_max_total_width_ft: float = 30.0
-    driveway_min_travel_ft: float = 12.0
-    driveway_throat_ft: float = 20.0  # DEFAULT — real value in PWS A5.000 (GAP #1)
+    # Townhouse combined driveway approach (curb cut): max(18 ft, 34% frontage)
+    # per §7.0431(B)(2)(b). A single side lane is well under this, so it does not
+    # bind — retained for the report + future multi-cut layouts.
+    driveway_approach_min_ft: float = 18.0
+    driveway_approach_frontage_pct: float = 34.0
+    driveway_min_travel_ft: float = 12.0     # single side travel lane to the rear
     building_parking_gap_ft: float = 5.0
 
-    # §7.0420(D): private open space, share of gross parent lot (a fourth
+    # §7.0431(D)(1): private open space, share of gross parent lot (a fourth
     # claimant on the lot alongside building + parking + driveway).
     private_open_space_pct: float = 15.0
 

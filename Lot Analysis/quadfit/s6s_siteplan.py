@@ -14,15 +14,19 @@ footprints.yaml — Gresham LDR-5). Every other lot passes through untouched wit
 table. Generalizing to more cells is a post-pilot step (needs their utility
 data + slope DEM).
 
-Phase-1 layout is greedy + approximate (documented seams toward realism):
+Product = attached townhomes (fee-simple lots) → Gresham §7.0431 governs, one
+honest typology `townhome_rear_court`. Phase-1 layout is greedy + approximate
+(documented seams toward realism):
   - building: frontmost fitting pod placement (reuses s6's raster placement)
-  - parking: largest free rectangle after the building, tiled with 90° stalls
-    served by a two-way (double-loaded / `central_lot`) or one-way (single-
-    loaded / `driveway_frontage`) aisle; best stall count over both wins
-  - driveway: a min-travel-width strip from the parking court out to the front
-    lot line (through the front setback, where Gresham allows driveway parking)
-  - open space: §7.0420(D) requires 15% of the gross lot; modeled as a residual
-    area reservation competing with building + pavement
+  - driveway: a single consolidated lane down one SIDE of the pod (never across
+    the front, §7.0431(B)(3)(b)(iii)); its width is far under the combined curb-
+    cut cap of 18 ft or 34% of frontage (§7.0431(B)(2)(b))
+  - parking: a REAR-yard court (front/side-yard parking is barred for townhouses,
+    §7.0431(B)(3)(b)(i)) — the largest free rectangle behind the building, tiled
+    with 90° stalls served by a one-way or two-way aisle. Cars enter/leave
+    forward, so nothing backs onto the street (banned only on arterials, A5.404)
+  - open space: §7.0431(D)(1) requires 15% of the gross lot; modeled as a
+    residual area reservation competing with building + pavement
   - utility run: phase-1 reuses `sewer_main_dist_ft` (s5o); a routed connector
     polyline is a phase-2 seam
 
@@ -155,94 +159,86 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
     drive_c = max(1, round(drive_w / res))
     gap_c = max(0, round(gap / res))
     cap = _CFG["preferred_stalls"]  # a 4-plex never needs more than 2/unit
-    methods = _CFG["methods"]
     geoms: dict = {}
 
-    def place_building(min_row: int):
-        """Frontmost fitting pod with rows < min_row masked out; both
-        orientations. Returns (name, br, bc, bh, bw, area_sqft) or None."""
-        work = ok.copy()
-        if min_row > 0:
-            work[:min_row, :] = False
-        Sb = _integral(work)
-        for name, w_ft, d_ft in pods:
-            for ww, dd in ((w_ft, d_ft), (d_ft, w_ft)):
-                w_c2, d_c2 = math.ceil(ww / res), math.ceil(dd / res)
-                hit = _placement(Sb, d_c2, w_c2)
-                if hit is not None:
-                    r0, c0 = hit
-                    return name, r0, c0, d_c2, w_c2, ww * dd
-        return None
-
-    candidates = []  # (stalls, method, plan)
-
-    # driveway_frontage (Gresham PRIMARY, §7.0420(B)(5)(c)): a single row of
-    # stalls across the front, backing directly onto the street apron; the pod
-    # sits behind them. Needs no side corridor — works on narrow lots.
-    if "driveway_frontage" in methods and ok.shape[0] >= sd_c:
-        band = _largest_rect(ok[0:sd_c + 2, :])
-        if band is not None and band[2] >= sd_c:
-            fr0, fc0, _fh, fw = band
-            n_front = min(cap, int((fw * res) // stall_w))
-            bld = place_building(sd_c + gap_c) if n_front > 0 else None
-            if n_front > 0 and bld is not None:
-                candidates.append((n_front, "driveway_frontage", {
-                    "rect": (fr0, fc0, sd_c, fw), "rows": 1,
-                    "aisle": drive_w, "span_ft": fw * res, "bld": bld,
-                    "driveway": None, "driveway_len": front_setback_ft,
-                    "reaches": True,
-                }))
-
-    # central_lot (fallback): pod at the front, a rear/side parking court
-    # reached by a driveway corridor clear of the building.
-    if "central_lot" in methods:
-        bld = place_building(0)
-        if bld is not None:
-            _n, br, bc, bh, bw, _a = bld
+    # Attached-townhome layout (Gresham §7.0431): the pod sits across the front;
+    # a single consolidated driveway runs down one SIDE (never across the front,
+    # §7.0431(B)(3)(b)(iii)) to a REAR parking court. Front/side-yard parking is
+    # not allowed in the general townhouse case, so the court must sit BEHIND the
+    # building. Cars enter and leave forward — nothing backs onto the street (the
+    # code bans that only on arterials, Appendix A5.404) — so the plan is legal
+    # on any street class. A single ~12 ft side lane is well under the combined
+    # curb-cut cap (18 ft or 34% of frontage, §7.0431(B)(2)(b)), so it never
+    # binds and no per-lot frontage check is needed here.
+    #
+    # Try each pod size × orientation: place the pod frontmost, carve a rear
+    # court, and require a side lane that reaches it. A builder orients the pod
+    # to leave a driveway, so we keep the orientation with the MOST stalls rather
+    # than the first that fits (a full-width pod would otherwise block the lane).
+    Sok = _integral(ok)
+    plan = None
+    best_stalls = -1
+    for name, w_ft, d_ft in pods:
+        for ww, dd in ((w_ft, d_ft), (d_ft, w_ft)):
+            bw, bh = math.ceil(ww / res), math.ceil(dd / res)
+            hit = _placement(Sok, bh, bw)
+            if hit is None:
+                continue
+            br, bc = hit
+            court_r0 = br + bh + gap_c             # rear yard: behind pod + gap
+            if court_r0 >= R:
+                continue
+            rect = _largest_rect(ok[court_r0:, :])
+            if rect is None:
+                continue
+            cr, cc, rh, rw = rect
+            rr = court_r0 + cr                     # court top row in full grid
+            cw_ft, cd_ft = rw * res, rh * res
+            rows = (2 if cd_ft >= 2 * stall_d + aisle_two
+                    else 1 if cd_ft >= stall_d + aisle_one else 0)
+            n_ct = min(cap, rows * int(cw_ft // stall_w))
+            if n_ct <= 0:
+                continue
+            # Side driveway: first clear column run (in the envelope, clear of the
+            # building) at least drive_c wide, running alongside the building from
+            # its front row down to the court, whose columns overlap the court so
+            # cars can reach it. Scanning from `br` (not row 0) skips the border-
+            # False perimeter cells in the setback strip ahead of the pod, which
+            # are always open anyway — checking them would falsely reject every
+            # column since a conservative grid leaves the envelope edge unset.
             free = ok.copy()
             free[br:br + bh, bc:bc + bw] = False
-            free[br + bh:br + bh + gap_c, bc:bc + bw] = False
-            rect = _largest_rect(free)
-            if rect is not None:
-                rr, cc, rh, rw = rect
-                cw_ft, cd_ft = rw * res, rh * res
-                rows = (2 if cd_ft >= 2 * stall_d + aisle_two
-                        else 1 if cd_ft >= stall_d + aisle_one else 0)
-                n_ct = min(cap, rows * int(cw_ft // stall_w))
-                if rr == 0:
-                    corridor_c0, reaches = cc, True
-                else:
-                    clear = free[0:rr, :].all(axis=0)
-                    corridor_c0, run = None, 0
-                    for c in range(C):
-                        run = run + 1 if clear[c] else 0
-                        if run >= drive_c:
-                            c0 = c - drive_c + 1
-                            corridor_c0 = c0 if corridor_c0 is None else corridor_c0
-                            if cc - drive_c <= c0 <= cc + rw:
-                                corridor_c0 = c0
-                                break
-                    reaches = corridor_c0 is not None
-                if n_ct > 0 and reaches:
-                    candidates.append((n_ct, "central_lot", {
-                        "rect": (rr, cc, rh, rw), "rows": rows,
-                        "aisle": aisle_two if rows == 2 else aisle_one,
-                        "span_ft": cw_ft, "bld": bld,
-                        "driveway": (0, corridor_c0, rr, drive_c) if rr > 0 else None,
-                        "driveway_len": rr * res + front_setback_ft, "reaches": True,
-                    }))
+            clear = free[br:rr, :].all(axis=0)
+            corridor_c0, run = None, 0
+            for c in range(C):
+                run = run + 1 if clear[c] else 0
+                if run >= drive_c:
+                    c0 = c - drive_c + 1
+                    if c0 < cc + rw and c0 + drive_c > cc:  # lane meets the court
+                        corridor_c0 = c0
+                        break
+            if corridor_c0 is None or n_ct <= best_stalls:
+                continue
+            best_stalls = n_ct
+            plan = {
+                "rect": (rr, cc, rh, rw), "rows": rows, "stalls": n_ct,
+                "aisle": aisle_two if rows == 2 else aisle_one,
+                "span_ft": cw_ft, "bld": (name, br, bc, bh, bw, ww * dd),
+                "driveway": (0, corridor_c0, rr, drive_c),
+                "driveway_len": rr * res + front_setback_ft, "reaches": True,
+            }
 
-    if not candidates:
+    if plan is None:
         return fail
-    stalls, method, plan = max(candidates, key=lambda t: t[0])
+    stalls, method = plan["stalls"], "townhome_rear_court"
 
     # --- realize the chosen plan into geometry (rotate back to CRS) --------
     bname, br, bc, bh, bw, building_area = plan["bld"]
     rr, cc, rh, rw = plan["rect"]
     parking_area = stalls * stall_w * stall_d + plan["aisle"] * plan["span_ft"]
     driveway_len = plan["driveway_len"]
-    # Central-lot corridor is separate pavement; the front apron is already in
-    # parking_area (as the aisle term), so it is not double-counted here.
+    # The side driveway is separate pavement from the court aisle (counted in
+    # parking_area), so the two do not double-count.
     driveway_area = plan["driveway"][2] * res * drive_w if plan["driveway"] else 0.0
     open_space = max(0.0, area_sqft - building_area - parking_area - driveway_area)
     open_space_ok = open_space >= (open_pct / 100.0) * area_sqft
