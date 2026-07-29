@@ -324,18 +324,11 @@ uv run python scripts/test_phase_b_debt.py --base-url https://viciniti.deals --a
 
 ## Market Coverage Policy
 
-**Portland city proper NOT target acquisition market.** Team does not buy deals in Portland jurisdiction.
+**The entire state of Oregon is the target acquisition market (updated 2026-07-28).** The team buys deals anywhere in Oregon — no jurisdiction is excluded, Portland included. The prior "Portland is comp-only, no paid-data spend" rule is **RETIRED**.
 
-Portland listings retained for two purposes:
-1. **Market comp data** — Portland has densest financial data, essential for KNN comp recommendations in jurisdictions where local comp coverage sparse
-2. **Testing and development** — feature work, bug repros, UI testing where realistic data variety needed
-
-**Do not spend money on Portland data**:
-- No HelloData enrichment calls for Portland properties
-- No paid API calls for Portland addresses
-- No prioritization of Portland listings for manual data entry
-
-**Target acquisition jurisdictions**: Multnomah + Clackamas county cities *other than Portland* — Gresham, Fairview, Wood Village, Troutdale, Happy Valley, Milwaukie, Oregon City, Gladstone, Lake Oswego, West Linn, Tualatin, Wilsonville, unincorporated areas. These get spending priority for paid data enrichment.
+- **Paid data spend is allowed anywhere in Oregon** — HelloData, REALie, any API enrichment may be spent on any property, Portland included, when the deal justifies it. There is no longer an excluded jurisdiction.
+- **Portland's dense financial data remains valuable** for KNN comp matching in sparse-coverage areas — that use continues, now *alongside* Portland acquisition rather than instead of it.
+- **Policy ≠ current data coverage.** Statewide acquisition intent does not mean statewide parcel/analysis data exists yet. Quadfit and the parcel inventory currently cover **Multnomah + Clackamas counties**; extending to the rest of Oregon is a data-coverage task, not a policy blocker. Treat "we buy everywhere in Oregon" as the intent that justifies expanding coverage, not a claim that coverage already exists.
 
 ---
 
