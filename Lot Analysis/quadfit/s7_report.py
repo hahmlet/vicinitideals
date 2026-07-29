@@ -166,7 +166,9 @@ def policy_gates(lots, rules, ocfg=None, screen=None):
 # Triage tunables (narrow-neck flag-lot heuristic + utility-diligence cutline).
 FLAG_MAX_FRONTAGE_FT = 30.0   # a narrow street neck on ...
 FLAG_MIN_AREA_SQFT = 4000.0   # ... an otherwise large lot => likely flag-lot pole
-SEWER_REVIEW_FT = 300.0       # utility run beyond this => diligence flag
+SEWER_REVIEW_FT = 50.0        # a 4-plex ties into a main at the street; beyond
+                              # ~50 ft the main no longer fronts the lot =>
+                              # not "on sewer" (review, or red where no district)
 
 # Clackamas County jurisdictions — the coverage of the sanitary Sewer_Districts
 # polygon layer. Only here does "outside every district" mean "no public sewer"

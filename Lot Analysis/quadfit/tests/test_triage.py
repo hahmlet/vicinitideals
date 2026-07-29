@@ -46,7 +46,7 @@ def _base_row(**over):
         "fits_pod": True, "fits_cov_pod": True,
         "eligible": True, "policy_exclusion": "", "tier": "A",
         "jurisdiction": "gresham", "zone": "LDR-5",
-        "slope_tier": "ideal", "sewer_main_dist_ft": 80.0, "ovl_flag": False,
+        "slope_tier": "ideal", "sewer_main_dist_ft": 30.0, "ovl_flag": False,
         "in_sewer_district": False,
         # site-plan columns (only read when has_siteplan=True)
         "parking_tier": "not_evaluated", "site_plan_ok": True,
@@ -103,7 +103,7 @@ def test_sewer_district_gate_clackamas_main_wins():
     # of district. No main -> inside a district = yellow, outside = hard red.
     rows = [
         # near a main -> green even though outside any district (main wins)
-        _base_row(jurisdiction="happy_valley", sewer_main_dist_ft=80.0,
+        _base_row(jurisdiction="happy_valley", sewer_main_dist_ft=30.0,
                   in_sewer_district=False),
         # no main, inside a district -> review (yellow)
         _base_row(jurisdiction="happy_valley", sewer_main_dist_ft=500.0,
@@ -140,7 +140,7 @@ def test_sewer_district_column_absent_is_backward_compatible():
     # Pre-district parquet has no in_sewer_district column: a far-sewer Clackamas
     # lot must stay review (never red), and the function must not raise.
     rows = [_base_row(jurisdiction="happy_valley", sewer_main_dist_ft=500.0),
-            _base_row(jurisdiction="happy_valley", sewer_main_dist_ft=80.0)]
+            _base_row(jurisdiction="happy_valley", sewer_main_dist_ft=30.0)]
     lots = pd.DataFrame(rows).drop(columns=["in_sewer_district"])
     attribute_and_triage(lots, FP, _Rules(), False, ["ovl_flag"], 0)
     assert list(lots["triage"]) == ["review", "green"]
