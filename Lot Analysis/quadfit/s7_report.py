@@ -427,6 +427,20 @@ def main() -> None:
     has_siteplan = "parking_tier" in lots.columns
     struct_funnel = json.loads((DATA_DIR / "funnel.json").read_text(encoding="utf-8"))
 
+    # Lot centroid (lat/lng, WGS84) for mapping / field navigation. The polygon
+    # is dropped from s6 onward, so re-read the raw lot from s3 and project its
+    # centroid 2913 -> 4326. Merged here so every downstream CSV carries it.
+    import shapely
+    from pyproj import Transformer
+
+    from common import CRS_WGS84, CRS_WORKING
+    _s3c = read_stage("s3_lots")[["TLID", "geom"]]
+    _cent = shapely.centroid(np.array(_s3c["geom"].tolist(), dtype=object))
+    _lng, _lat = Transformer.from_crs(CRS_WORKING, CRS_WGS84, always_xy=True).transform(
+        shapely.get_x(_cent), shapely.get_y(_cent))
+    _s3c = _s3c.assign(lat=np.round(_lat, 6), lng=np.round(_lng, 6))
+    lots = lots.merge(_s3c[["TLID", "lat", "lng"]], on="TLID", how="left")
+
     ocfg = load_overlays()
     lots["current_use"] = current_use_column(
         lots, fps.screen.vacant_max_improvement_value)
@@ -942,9 +956,9 @@ def main() -> None:
     screen_cols = ["current_use", "finance_tier", "improvement_share",
                    "LANDVAL", "SALEPRICE", "SALEDATE", "acq_estimate", "acq_basis"]
     csv_cols = [
-        "TLID", "SITEADDR", "jurisdiction", "zone", "tier", "area_sqft",
-        "envelope_sqft", "frontage_ft", "YEARBUILT", "BLDGSQFT", "BLDGVAL",
-        "TOTALVAL", "split_zone", "policy_exclusion", "eligible",
+        "TLID", "SITEADDR", "lat", "lng", "jurisdiction", "zone", "tier",
+        "area_sqft", "envelope_sqft", "frontage_ft", "YEARBUILT", "BLDGSQFT",
+        "BLDGVAL", "TOTALVAL", "split_zone", "policy_exclusion", "eligible",
         "flag_suspect", "binding_constraint", "triage",
     ] + screen_cols \
       + [f"fits_{n}" for n in fp_names] + [f"fits_cov_{n}" for n in fp_names] \
@@ -971,9 +985,9 @@ def main() -> None:
         econ_cols = ["candidate_type", "doors_planned", "land_cost_per_unit",
                      "viability"]
         sub_cols = [
-            "TLID", "SITEADDR", "jurisdiction", "zone", "tier", "area_sqft",
-            "envelope_sqft", "frontage_ft", "YEARBUILT", "BLDGSQFT", "BLDGVAL",
-            "TOTALVAL",
+            "TLID", "SITEADDR", "lat", "lng", "jurisdiction", "zone", "tier",
+            "area_sqft", "envelope_sqft", "frontage_ft", "YEARBUILT", "BLDGSQFT",
+            "BLDGVAL", "TOTALVAL",
         ] + screen_cols + phase2_cols
         sc = elig[elig["split_candidate"]].sort_values("quads_if_split", ascending=False)
         sc[sub_cols + ["quads_if_split"] + econ_cols].to_csv(
