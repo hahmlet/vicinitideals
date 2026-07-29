@@ -260,6 +260,13 @@ def attribute_and_triage(lots, fp_names, rules, has_siteplan, flag_ovl_cols,
         sewer_review = ~np.isfinite(sew) | (sew > SEWER_REVIEW_FT)
     else:
         sewer_review = np.zeros(n, dtype=bool)
+    # A lot inside a mapped sanitary sewer district is connectable to public
+    # sewer even where no main linework is published (WES/CWS Clackamas gaps),
+    # so district membership clears the sewer review flag. Computed in s5o;
+    # absent on pre-district parquet -> no effect (backward compatible).
+    if "in_sewer_district" in lots.columns:
+        in_dist = lots["in_sewer_district"].fillna(False).to_numpy().astype(bool)
+        sewer_review = sewer_review & ~in_dist
     overlay_flag = np.zeros(n, dtype=bool)
     for c in flag_ovl_cols:
         overlay_flag |= lots[c].to_numpy().astype(bool)

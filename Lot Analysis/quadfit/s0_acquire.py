@@ -219,6 +219,17 @@ PHASE2_LAYERS: dict[str, dict[str, Any]] = {
     "util_sewer_gladstone": {
         "url": "https://maps.orcity.org/arcgis/rest/services/GLADSTONE/Gladstone_UtilitiesSewer/MapServer/6",
         "fields": ["OWNER", "DIAMETER", "MATERIAL", "Status"], "gtype": "polyline"},
+    # Clackamas County sanitary sewer DISTRICT boundaries (polygons, not mains).
+    # 8 districts (WES CCSD#1, WES Tri-City, Oak Lodge, Clean Water Services,
+    # Dunthorpe-Riverdale, Government Camp) covering the WES/CWS gap areas where
+    # no public main linework is published (Happy Valley, unincorporated N.
+    # Clackamas, the Tualatin Clackamas sliver). A lot inside a district is
+    # connectable even without a mapped main -> clears the sewer review flag in
+    # s7. Whole layer is sanitary (stormwater lives in a separate service), so
+    # no attribute filter. Native Web Mercator; reprojects to 2913 server-side.
+    "util_sewer_district_clackamas": {
+        "url": "https://services3.arcgis.com/I2eWXOndpF9m8oKC/ArcGIS/rest/services/Sewer_Districts/FeatureServer/0",
+        "fields": ["SEWER_DIST", "DISTRICT"], "gtype": "polygon"},
 }
 
 # USGS 3DEP 1 m DEM tiles for per-lot slope (urban Multnomah + Clackamas bbox,

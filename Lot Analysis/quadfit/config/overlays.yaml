@@ -50,9 +50,9 @@ sewer_coverage:
   milwaukie: {grade: A, note: "city sanitary mains"}
   west_linn: {grade: A, note: "city sanitary mains (ss_system_public)"}
   wilsonville: {grade: A, note: "city sanitary mains (SAN_Mainlines_OMS)"}
-  happy_valley: {grade: X, note: "WES-served (Clackamas Water Environment Services) — no public main linework published; distance is a nearest-mapped-main proxy, keep as soft review signal, never a hard kill"}
-  clackamas_unincorporated: {grade: X, note: "WES/Oak Lodge-served — no public main linework for unincorporated Clackamas; nearest-city-main distance is a proxy; septic parcels indistinguishable"}
-  tualatin: {grade: X, note: "Clean Water Services-served — CWS main linework not publicly reachable; mostly Washington County anyway. Proxy only"}
+  happy_valley: {grade: C, note: "WES-served (CCSD#1) — no main linework, but inside the mapped WES sewer-DISTRICT polygon (Clackamas Sewer_Districts) => connectable; in_sewer_district clears the sewer review flag (s5o/s7). District boundary is coarser than pipes-at-street, hence grade C not A"}
+  clackamas_unincorporated: {grade: C, note: "WES CCSD#1 / Oak Lodge — no main linework; sewer-DISTRICT polygon membership is the signal. Inside a district => connectable (clears review); outside => genuine septic, stays review"}
+  tualatin: {grade: C, note: "Clean Water Services-served — no CWS main linework, but the CWS district polygon is in Clackamas Sewer_Districts; in_sewer_district clears review where inside"}
 
 overlays:
   # ---------------- Portland (all KILL via PCC 33.418 z triggers) ----------

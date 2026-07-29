@@ -330,6 +330,27 @@ def main() -> None:
     else:
         lots["sewer_main_dist_ft"] = np.nan
 
+    # Sanitary sewer DISTRICT membership (Clackamas polygons). A lot inside a
+    # mapped district is connectable to public sewer even where no main
+    # linework is published (WES/CWS gaps) — s7 uses this to clear the sewer
+    # review flag. Only Clackamas districts are mapped, so lots elsewhere are
+    # simply False and fall back to the main-distance signal.
+    dist_geoms = _load_layer_geoms("util_sewer_district_clackamas")
+    if dist_geoms:
+        from shapely.strtree import STRtree
+
+        dtree = STRtree(dist_geoms)
+        lot_arr = np.array(lots["lot_geom"].tolist(), dtype=object)
+        hit = dtree.query(lot_arr, predicate="intersects")
+        in_dist = np.zeros(len(lots), dtype=bool)
+        in_dist[np.unique(hit[0])] = True
+        lots["in_sewer_district"] = in_dist
+        print(f"  sewer districts: {len(dist_geoms)} polys; "
+              f"{int(in_dist.sum()):,} lots inside a district")
+    else:
+        print("  sewer districts: layer missing — in_sewer_district all False")
+        lots["in_sewer_district"] = False
+
     lots = lots.drop(columns=["lot_geom"])
     write_stage(lots, "s5o_lots")
     print("s5o done.")
