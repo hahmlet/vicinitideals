@@ -33,7 +33,7 @@ Stages cache intermediates in `data/quadfit/*.parquet` (WKB geometry columns);
 
 | Change | Re-run |
 |---|---|
-| Jurisdiction on/off (`eligible:`), min lot area, min frontage, orientation constraint, coverage cap, parking buffer / split thresholds, overlay kill↔flag reclassification, slope tier cutlines | `python "Lot Analysis/quadfit/s7_report.py"` only (**seconds**) |
+| Jurisdiction on/off (`eligible:`), min lot area, min frontage, orientation constraint, coverage cap, parking buffer / split thresholds, overlay kill↔flag reclassification, slope tier cutlines, sewer cutoff (`SEWER_REVIEW_FT`) / district gate | `python "Lot Analysis/quadfit/s7_report.py"` only (**seconds**) |
 | Sampled site-plan drawings only (no counts change) | `python "Lot Analysis/quadfit/s7_report.py"` only (**seconds**) |
 | `siteplan:` block values (stall/aisle/driveway dims, parking tiers, open-space %, pilot cell) | s6s–s7 (minutes) |
 | New footprint rectangle or sweep | s6–s7 (minutes) |
@@ -59,7 +59,7 @@ policy-only edits invoke s7 directly as above.
 | s3 | `s3_filter.py` | STRUCTURAL funnel only — drops nothing a config toggle could revive; every drop counted |
 | s4 | `s4_edges.py` | Front/side/rear edge classification vs street centerlines; confidence tiers A/B/C/D |
 | s5 | `s5_envelope.py` | Setback envelope: lot − per-edge buffers (conservative) |
-| s5o | `s5o_overlays.py` | Phase 2: per-overlay any-touch flags + intersection sqft, CARVE overlays subtracted from the envelope, per-lot slope stats (USGS 3DEP 1 m DEM), sewer-main distance. Driven by `config/overlays.yaml`; missing layers degrade to caveats, never crashes |
+| s5o | `s5o_overlays.py` | Phase 2: per-overlay any-touch flags + intersection sqft, CARVE overlays subtracted from the envelope, per-lot slope stats (USGS 3DEP 1 m DEM), sewer-main distance, sanitary sewer-district membership (`in_sewer_district`, Clackamas `Sewer_Districts` polygons). Driven by `config/overlays.yaml`; missing layers degrade to caveats, never crashes |
 | s6 | `s6_fit.py` | Rotate→rasterize→integral-image rectangle fit against the CARVED envelope, BOTH orientations raw; max-depth-per-width frontier |
 | s6s | `s6s_siteplan.py` | Procedural site-plan generator (Gresham LDR-5 pilot). Re-reads the carved envelope from s5o and lays out an attached-townhome site plan per lot (Gresham §7.0431): pod at the front, one consolidated driveway down a SIDE to a REAR 90° parking court, forward access (nothing backs onto the street), plus a 15% private open-space reservation; reports best parking tier + `site_plan_ok`. One typology (`townhome_rear_court`); the layout tries every pod size × orientation and keeps the most stalls, capped at the preferred tier (8/pod). Non-pilot lots pass through as `not_evaluated` |
 | s7 | `s7_report.py` | POLICY gates (eligibility, z overlay, min lot/frontage, orientation, coverage) + split screen + site-plan tightening of the pilot's conversion verdict + **per-lot binding-constraint attribution and green/review/red triage** + `summary.md`, `lots_results.csv`, `conversion_candidates.csv`, `split_candidates.csv`, `binding_constraints.csv`, `review_candidates.csv`, `spot_check.geojson`, `siteplans.geojson` |
@@ -116,20 +116,31 @@ Every candidate CSV carries the acquisition economics: `acq_estimate`
 
 ### Triage & binding constraint (s7)
 
-`lots_results.csv` additionally carries three per-lot columns:
+`lots_results.csv` additionally carries these per-lot columns:
 
 - `triage` — **green** (passes every hard, trustworthy test — safe to pursue) ·
   **review** (passes the hard tests but a silent-killer or low-trust signal
   needs a human before diligence spend: a narrow flag-lot neck, an irregular
-  tier-C shape, steep/unknown slope, far/unknown sewer, an unverified zone
+  tier-C shape, steep/unknown slope, unconfirmed sewer, an unverified zone
   rule, or a flag-action overlay) · **red** (a hard test fails). Review
   deliberately absorbs the wide-flag-pole false-green — the raster fit can't
   see the access strip, so a suspect flag lot is never hard-greened.
 - `flag_suspect` — narrow street neck (frontage ≤ 30 ft) on an otherwise large
   lot (≥ 4,000 sqft): the flag-lot pole heuristic that routes to review.
 - `binding_constraint` — the single first-hit reason a lot is NOT buildable
-  (`policy → no-envelope → no-fit → over-coverage → site-plan sub-reason`), `""`
-  when buildable.
+  (`policy → no-envelope → no-fit → over-coverage → site-plan sub-reason →
+  no_public_sewer`), `""` when buildable.
+- `in_sewer_district` — lot falls inside a mapped Clackamas sanitary sewer
+  district polygon (the basis for the sewer gate below).
+
+**Sewer gate.** A 4-plex ties into a main at the street, so "on sewer" means a
+mapped main within `SEWER_REVIEW_FT` = **50 ft** (`s7_report.py`) — a real
+nearby main always wins (green-eligible). Where no main is that close, the
+Clackamas `Sewer_Districts` polygon layer decides, but only in Clackamas (its
+coverage): **inside a district → review** (connectable, unconfirmed — the WES /
+Clean Water Services gap areas with no published main linework); **outside every
+district → red** (`no_public_sewer` — genuine septic). Multnomah has no district
+map, so its no-main lots stay review, never forced red.
 
 Two derived files: `binding_constraints.csv` (the binding-constraint histogram —
 where design or acquisition strategy pays off most, structural-funnel counts
