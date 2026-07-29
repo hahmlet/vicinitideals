@@ -62,7 +62,7 @@ policy-only edits invoke s7 directly as above.
 | s5o | `s5o_overlays.py` | Phase 2: per-overlay any-touch flags + intersection sqft, CARVE overlays subtracted from the envelope, per-lot slope stats (USGS 3DEP 1 m DEM), sewer-main distance. Driven by `config/overlays.yaml`; missing layers degrade to caveats, never crashes |
 | s6 | `s6_fit.py` | Rotate→rasterize→integral-image rectangle fit against the CARVED envelope, BOTH orientations raw; max-depth-per-width frontier |
 | s6s | `s6s_siteplan.py` | Procedural site-plan generator (Gresham LDR-5 pilot). Re-reads the carved envelope from s5o and lays out an attached-townhome site plan per lot (Gresham §7.0431): pod at the front, one consolidated driveway down a SIDE to a REAR 90° parking court, forward access (nothing backs onto the street), plus a 15% private open-space reservation; reports best parking tier + `site_plan_ok`. One typology (`townhome_rear_court`); the layout tries every pod size × orientation and keeps the most stalls, capped at the preferred tier (8/pod). Non-pilot lots pass through as `not_evaluated` |
-| s7 | `s7_report.py` | POLICY gates (eligibility, z overlay, min lot/frontage, orientation, coverage) + split screen + site-plan tightening of the pilot's conversion verdict + `summary.md`, `lots_results.csv`, `conversion_candidates.csv`, `split_candidates.csv`, `spot_check.geojson`, `siteplans.geojson` |
+| s7 | `s7_report.py` | POLICY gates (eligibility, z overlay, min lot/frontage, orientation, coverage) + split screen + site-plan tightening of the pilot's conversion verdict + **per-lot binding-constraint attribution and green/review/red triage** + `summary.md`, `lots_results.csv`, `conversion_candidates.csv`, `split_candidates.csv`, `binding_constraints.csv`, `review_candidates.csv`, `spot_check.geojson`, `siteplans.geojson` |
 
 ## Config
 
@@ -113,6 +113,27 @@ Every candidate CSV carries the acquisition economics: `acq_estimate`
 (post-COVID arm's-length sale where recorded, else county Real Market Value),
 `acq_basis`, `doors_planned`, `land_cost_per_unit`, and `viability`
 (preferred ≤ $30k / viable ≤ $45k / over_budget / unknown).
+
+### Triage & binding constraint (s7)
+
+`lots_results.csv` additionally carries three per-lot columns:
+
+- `triage` — **green** (passes every hard, trustworthy test — safe to pursue) ·
+  **review** (passes the hard tests but a silent-killer or low-trust signal
+  needs a human before diligence spend: a narrow flag-lot neck, an irregular
+  tier-C shape, steep/unknown slope, far/unknown sewer, an unverified zone
+  rule, or a flag-action overlay) · **red** (a hard test fails). Review
+  deliberately absorbs the wide-flag-pole false-green — the raster fit can't
+  see the access strip, so a suspect flag lot is never hard-greened.
+- `flag_suspect` — narrow street neck (frontage ≤ 30 ft) on an otherwise large
+  lot (≥ 4,000 sqft): the flag-lot pole heuristic that routes to review.
+- `binding_constraint` — the single first-hit reason a lot is NOT buildable
+  (`policy → no-envelope → no-fit → over-coverage → site-plan sub-reason`), `""`
+  when buildable.
+
+Two derived files: `binding_constraints.csv` (the binding-constraint histogram —
+where design or acquisition strategy pays off most, structural-funnel counts
+folded in) and `review_candidates.csv` (the `triage == review` human queue).
 
 ## Confidence tiers
 
