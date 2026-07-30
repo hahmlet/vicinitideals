@@ -155,8 +155,7 @@ tests/
   api/, models/, exporters/, scrapers/, tasks/, contract/
   e2e/                 # Playwright E2E tests
   conftest.py          # Shared fixtures: per-run Postgres test DB, seed helpers
-scripts/
-  test_phase_b_debt.py # 8-test regression suite (Sources=Uses, DSCR parity, carry formulas)
+scripts/               # Ops/CLI utilities (post-deploy smoke, audits, backfills)
 docs/
   FINANCIAL_MODEL.md   # 846-line math reference
   PROJECT_OVERVIEW.md  # Architecture overview
@@ -264,10 +263,10 @@ Confirm they pass before stopping. If they fail, fix and re-run.
 
 The stop hook separately runs `pytest tests/ --ignore=tests/e2e` when `app/` changes are detected (up to 3 attempts, then escalates). Bypass mid-refactor: `New-Item .claude/state/skip_verify.json`.
 
-### Phase B Debt Regression (scripts/test_phase_b_debt.py)
-8 tests covering Sources=Uses parity, DSCR-capped gaps, carry-type formula round-trips. Runs against live instance:
-```bash
-uv run python scripts/test_phase_b_debt.py --base-url https://viciniti.deals --auth tests/e2e/auth-state.json
+### Phase B Debt Regression (tests/e2e/test_phase_b_debt.py)
+8 tests covering Sources=Uses parity, DSCR-capped gaps, carry-type formula round-trips. Playwright wizard flows + engine math verification against live instance:
+```powershell
+$env:E2E_BASE_URL="https://viciniti.deals"; uv run pytest tests/e2e/test_phase_b_debt.py -m e2e -v
 ```
 
 ### CI Pipeline (`.github/workflows/ci.yml`)

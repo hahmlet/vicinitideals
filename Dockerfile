@@ -5,11 +5,15 @@ WORKDIR /app
 # Install uv for fast dependency installs
 RUN pip install --no-cache-dir uv
 
-# Copy package definition first (layer-cache friendly)
-COPY pyproject.toml .
+# Copy package definition + lockfile first (layer-cache friendly)
+COPY pyproject.toml uv.lock ./
 
-# Install all api extras (superset of base deps)
-RUN uv pip install --system -e ".[api]"
+# Install the locked dependency set — the exact versions the test suite ran
+# against. Never fresh-resolve here: a rebuild once pulled a brand-new mcp 2.0
+# and crash-looped the API (fastapi-mcp 0.4.x incompatibility, 2026-07-29).
+RUN uv export --frozen --no-dev --no-emit-project --extra api -o /tmp/requirements-api.txt \
+    && uv pip install --system -r /tmp/requirements-api.txt \
+    && uv pip install --system --no-deps -e .
 
 # Copy application source
 COPY app/ app/
@@ -44,9 +48,10 @@ CMD ["uvicorn", "app.api.main:app", "--host", "0.0.0.0", "--port", "8000"]
 # -------------------------------------------------------------------------
 FROM base AS worker
 
-# Install worker extras on top of base (includes Playwright for ASP.NET
-# WebForms scrapers like Oregon eLicense)
-RUN uv pip install --system -e ".[worker]"
+# Install worker extras on top of base, locked versions only (includes
+# Playwright for ASP.NET WebForms scrapers like Oregon eLicense)
+RUN uv export --frozen --no-dev --no-emit-project --extra api --extra worker -o /tmp/requirements-worker.txt \
+    && uv pip install --system -r /tmp/requirements-worker.txt
 
 # Install Chromium + OS deps for Playwright. Adds ~250MB to the image but is
 # required for any scraper that needs JS execution (Oregon eLicense uses a
