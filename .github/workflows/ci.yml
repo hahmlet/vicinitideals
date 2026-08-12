@@ -83,6 +83,9 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          # Full history so the FLATS firewall can diff against the merge base.
+          fetch-depth: 0
 
       - name: Set up uv
         uses: astral-sh/setup-uv@v3
@@ -97,7 +100,19 @@ jobs:
         run: uv run python -m app.scripts.check_promotion_gates --environment dev
 
       - name: Ruff lint
-        run: uv run ruff check app/ tests/
+        run: uv run ruff check app/ tests/ flats/ scripts/
+
+      # FLATS screening and the financial engine share a repo and a database but
+      # must not share a blast radius. This fails a commit that edits both, and
+      # any import of app.engines from flats/. See scripts/check_flats_firewall.py.
+      - name: FLATS firewall
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE="${{ github.event.pull_request.base.sha }}"
+          else
+            BASE="${{ github.event.before }}"
+          fi
+          uv run python scripts/check_flats_firewall.py --base "$BASE"
 
       - name: Unit tests
         # Markers are auto-assigned at collection (tests/conftest.py):
@@ -105,6 +120,11 @@ jobs:
         # No per-file ignores — a test that can't run belongs deleted or
         # fixed, not silently skipped (2026-07 suite rehab).
         run: uv run pytest tests/ -q -m "unit" --ignore=tests/e2e
+
+      # FLATS carries its own suite. It has no DB fixtures, so it runs here in
+      # the light gate rather than waiting on the full gate.
+      - name: FLATS tests
+        run: uv run pytest flats/tests -q
 
   # ---------------------------------------------------------------------------
   # Full gate — runs on PRs to main and pushes to main

@@ -991,6 +991,14 @@ Coverage is enforced by `tests/docs/test_data_model_coverage.py` — every table
 > the Map, and parcel/building UI are deleted. The sections below are retained so old
 > behavior is recoverable, **not because any of it still runs.**
 >
+> **This archive is not FLATS.** The `flats.*` Postgres schema is a separate
+> product line — parcel screening for fitment, land, and tolerance — and it is
+> *not* a revival of the dropped `parcels` table. It does not share that
+> schema, its columns, or its ingest path, and nothing in this Archive
+> describes it. See [FLATS_PLAN.md](../Lot%20Analysis/FLATS_PLAN.md) for its
+> data model. Reading this section as FLATS documentation will be wrong in
+> every particular.
+>
 > **Still live (do not be misled by their appearance here):** **Crexi** listing ingest
 > (its source row survives in A1/§2.1 for completeness; the live pipeline is §5.1),
 > **KNN comps** (see `MARKET_MODEL.md`), `Opportunity.apn` / `apn_normalized` / `lat` /

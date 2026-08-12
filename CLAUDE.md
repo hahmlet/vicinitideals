@@ -2,10 +2,32 @@
 
 ## Product Overview
 
-Self-hosted real estate financial modeling + deal intelligence platform for Portland-area investment team. Two core functions:
+Self-hosted real estate platform for an Oregon investment and development team.
+**The repo holds two products.** They share infrastructure, a database, and auth;
+they do not share code. Know which one you are working on before you edit.
 
-1. **Parcel intelligence** — scrapes commercial listings (Crexi, LoopNet, REALie) + county GIS (Portland Maps, Clackamas, Oregon City, Gresham ArcGIS). Maintains living parcel inventory across Multnomah + Clackamas County, OR.
-2. **Deal underwriting** — full financial model builder: Uses, Sources, debt carry (4 types), operating cash flow, equity waterfall, draw schedule, sensitivity analysis, Excel export.
+1. **Deal underwriting** (`app/`) — full financial model builder: Uses, Sources,
+   debt carry (4 types), operating cash flow, equity waterfall, draw schedule,
+   sensitivity analysis, Excel export. Plus deal intelligence: Crexi/LoopNet
+   listing ingest, brokers, dedup, KNN comps.
+2. **FLATS** (`flats/`) — *Fitment, Land, and Tolerance Screening.* Answers one
+   question at county scale: can a fixed-dimension, factory-built 4-unit attached
+   townhome be legally and physically placed on this lot, with its parking and
+   vehicle access? Emits GREEN / REVIEW / RED with continuous slack and
+   binding-constraint attribution. See
+   [Lot Analysis/FLATS_PLAN.md](Lot%20Analysis/FLATS_PLAN.md).
+
+> **The financial engine is off limits to FLATS work.** A commit may not touch
+> `flats/` and `app/engines/` (or the capital/deal models, their schemas, their
+> routers, or `tests/engines/`) at the same time, and nothing under `flats/` may
+> import `app.engines`. `scripts/check_flats_firewall.py` enforces both and runs
+> in CI. The seam is one-directional: FLATS produces, finance consumes. If a
+> change seems to need both, it is two changes.
+
+> **FLATS is not the decommissioned parcel subsystem.** The old `parcels` table
+> was dropped in migration 0113 and is not coming back. FLATS uses its own
+> `flats.*` Postgres schema with a different data model, and the Archive section
+> of [docs/DATA_MODEL.md](docs/DATA_MODEL.md) does not describe it.
 
 **Live URL**: `https://viciniti.deals`
 **Domain**: Cloudflare DNS, Let's Encrypt wildcard cert on NGINX Proxy Manager (LXC 109)
@@ -156,6 +178,21 @@ tests/
   e2e/                 # Playwright E2E tests
   conftest.py          # Shared fixtures: per-run Postgres test DB, seed helpers
 scripts/               # Ops/CLI utilities (post-deploy smoke, audits, backfills)
+  check_flats_firewall.py  # Enforces the FLATS / financial-engine boundary (runs in CI)
+flats/                 # FLATS — parcel screening. Imports nothing from app/engines.
+  rules/
+    fields.py          # Field registry — the one place a zoning standard is named
+    model.py           # Provenance-bearing Value; draft -> verified -> stale lifecycle
+    loader.py          # jurisdiction YAML -> Layer objects, accumulating all errors
+    resolver.py        # state -> county -> city resolution, with `preempts` override
+    ledger.py          # Coverage ledger (missing zones) + clause ledger (missing rules)
+  normalize/condo.py   # Condo / air-parcel detector — recall-biased three verdicts
+  encode/              # port_quadfit.py (one-shot import), backlog.py (work queue)
+  config/jurisdictions/or/<county>/<city>.yaml   # The encoded rules
+  tests/               # Runs in the CI light gate; no DB fixtures
+Lot Analysis/
+  FLATS_PLAN.md        # FLATS architecture, encoding standard, build order
+  quadfit/             # FLATS' predecessor pipeline (s0-s7). Being replaced.
 docs/
   FINANCIAL_MODEL.md   # 846-line math reference
   PROJECT_OVERVIEW.md  # Architecture overview
@@ -232,6 +269,7 @@ when running tests from outside the LAN (e.g. CI).
 ### Running Tests
 ```bash
 uv run pytest tests/ -q -m "unit" --ignore=tests/e2e     # Unit tests only
+uv run pytest flats/tests -q                               # FLATS (no DB needed)
 uv run pytest tests/ -q --ignore=tests/e2e                # Unit + integration
 uv run pytest tests/e2e/ -q -m e2e                        # E2E (needs running app)
 uv run ruff check app/ tests/                              # Lint
