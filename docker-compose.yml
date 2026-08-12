@@ -106,7 +106,13 @@ services:
     restart: unless-stopped
 
   postgres:
-    image: postgres:16
+    # PostGIS built onto the same postgres:16 base prod already runs, rather
+    # than the postgis/postgis image — that one is Debian 11 (glibc 2.31) and
+    # this database's collation version is 2.41. See the Dockerfile.
+    build:
+      context: .
+      dockerfile: docker/postgres-postgis.Dockerfile
+    image: vicinitideals-postgres-postgis
     container_name: re-modeling-postgres
     environment:
       POSTGRES_DB: re_modeling

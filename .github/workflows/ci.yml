@@ -64,7 +64,11 @@ jobs:
     # server defaults all match prod behavior exactly.
     services:
       postgres-test:
-        image: postgres:16
+        # GitHub service containers cannot build, so CI takes the published
+        # PostGIS image. Safe here where the main stack's is not: this database
+        # is created empty each run, so there are no existing indexes to read
+        # under a different glibc collation.
+        image: postgis/postgis:16-3.5
         env:
           POSTGRES_DB: re_modeling_test
           POSTGRES_USER: test
@@ -138,7 +142,11 @@ jobs:
 
     services:
       postgres-test:
-        image: postgres:16
+        # GitHub service containers cannot build, so CI takes the published
+        # PostGIS image. Safe here where the main stack's is not: this database
+        # is created empty each run, so there are no existing indexes to read
+        # under a different glibc collation.
+        image: postgis/postgis:16-3.5
         env:
           POSTGRES_DB: re_modeling_test
           POSTGRES_USER: test

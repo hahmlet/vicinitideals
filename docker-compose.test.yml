@@ -7,7 +7,13 @@
 # Tmpfs data dir — wiped on every container restart, never holds real data.
 services:
   postgres-test:
-    image: postgres:16
+    # Same PostGIS build as the main stack so tests exercise the extension
+    # version production has. Build context is the repo checkout this file
+    # sits in (/root/stacks/vicinitideals on VM 114).
+    build:
+      context: .
+      dockerfile: docker/postgres-postgis.Dockerfile
+    image: vicinitideals-postgres-postgis
     container_name: re-modeling-postgres-test
     environment:
       POSTGRES_DB: re_modeling_test
