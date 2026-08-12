@@ -1,0 +1,21 @@
+# Oregon statewide preemption layer.
+#
+# Values here apply to every jurisdiction below unless a more specific layer
+# overrides them — except where marked `preempts: true`, which a local standard
+# may not exceed. Everything is `draft` until confirmed against the adopted rule
+# text; nothing in this file has been verified.
+label: Oregon
+kind: state
+notes: >-
+  HB 2001 / OAR 660-046 middle-housing mandate. ORS 197A.400 (renumbered from
+  ORS 197.307(4), operative 2025-07-01) requires local governments to apply only
+  clear and objective standards to housing development, which is what makes this
+  screen tractable at all.
+defaults:
+  parking_min_per_unit:
+    value: 1.0
+    preempts: true
+    cite: "OAR 660-046-0220"
+    url: "https://oregon.public.law/rules/oar_660-046-0220"
+    retrieved: 2026-08-12
+    status: draft

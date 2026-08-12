@@ -1,0 +1,178 @@
+label: Gresham
+kind: city
+eligible: true
+notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s verification was against a
+  coarser standard (one citation per row) and does not carry over. UNPORTED: orientation_constraint=''entrance_only''.
+  quadfit justified this in a YAML comment with no citation; it needs its own encoding rather than invented
+  provenance.'
+ingest:
+  geoid: null
+  juris_city_codes:
+  - GRESHAM
+  zoning_layer: zoning_gresham
+  zone_field: ZONE
+  strip_lowercase_suffix: false
+zones:
+  LDR-5:
+    cite_default:
+      cite: Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed: true
+    setback_front_ft: 10
+    setback_side_ft: 5
+    setback_rear_ft: 15
+    setback_street_side_ft: 10
+    min_lot_sqft: 5000
+    notes: 'quadfit confidence: verified | Quadplex P outright. Rear w/ alley 8 ft (not modeled). FAR
+      1.0. Height 35 ft.'
+  LDR-7:
+    cite_default:
+      cite: Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed: true
+    setback_front_ft: 10
+    setback_side_ft: 5
+    setback_rear_ft: 15
+    setback_street_side_ft: 10
+    min_lot_sqft: 7000
+    notes: 'quadfit confidence: verified | Min lot 7,000 sf. FAR 0.7 (tightest in city; still >1,000 sf
+      building on min lot).'
+  TLDR:
+    cite_default:
+      cite: Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed: true
+    setback_front_ft: 10
+    setback_side_ft: 5
+    setback_rear_ft: 15
+    setback_street_side_ft: 10
+    notes: 'quadfit confidence: verified | NO minimum lot size, no FAR, no max density — most permissive
+      LDR-family zone.'
+  TR:
+    cite_default:
+      cite: Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed: true
+    setback_front_ft: 10
+    setback_side_ft: 5
+    setback_rear_ft: 15
+    setback_street_side_ft: 10
+    min_lot_sqft: 4000
+    notes: 'quadfit confidence: verified | Min lot 4,000 sf. FAR 1.0.'
+  LDR-PV:
+    cite_default:
+      cite: Gresham Development Code Tables 4.1413/4.1415A/4.1415B (Pleasant Valley); 7.0420
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1400.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed: true
+    setback_front_ft: 10
+    setback_side_ft: 5
+    setback_rear_ft: 10
+    setback_street_side_ft: 10
+    min_lot_sqft: 5000
+    notes: 'quadfit confidence: verified | Pleasant Valley plan district. Rear 10 ft (vs 15 in base LDR).'
+  LDR-SW:
+    cite_default:
+      cite: Gresham Development Code Tables 4.1507/4.1508 (Springwater); 7.0420
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1500.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed: true
+    setback_front_ft: 10
+    setback_side_ft: 5
+    setback_rear_ft: 15
+    setback_street_side_ft: 10
+    min_lot_sqft: 5000
+    notes: 'quadfit confidence: verified | Springwater. Min lot width 45 ft, min depth 80 ft (not separately
+      modeled — envelope test dominates).'
+  MDR-12:
+    cite_default:
+      cite: Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed: true
+    setback_front_ft: 10
+    setback_side_ft: 10
+    setback_rear_ft: 15
+    setback_street_side_ft: 20
+    min_lot_sqft: 3600
+    notes: 'quadfit confidence: verified | Interior side 10 ft; street-side wall 20 ft (corner lots modeled
+      at max(F, street-side)).'
+  MDR-24:
+    cite_default:
+      cite: Gresham Development Code Tables 4.0120/4.0130 n.5/4.0131; Sec 3.0103
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed: true
+    setback_front_ft: 10
+    setback_side_ft: 10
+    setback_rear_ft: 15
+    setback_street_side_ft: 20
+    min_lot_sqft: 7200
+    notes: 'quadfit confidence: verified | SFD is NP — quadplex permitted natively. 11,000 sf site min
+      waived for existing lots of record; but middle housing COUNTS toward max density here (24.2 u/ac):
+      4 units need ~7,200 sf net — encoded as min_lot_sqft (approximation, net≈gross for existing lots).'
+  DRL-1:
+    cite_default:
+      cite: Gresham Development Code Tables 4.1120/4.1130 (Downtown); 7.0420(J)
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed: true
+    setback_front_ft: 10
+    setback_side_ft: 5
+    setback_rear_ft: 10
+    setback_street_side_ft: 10
+    min_lot_sqft: 4000
+    orientation_constraint: axis_required
+    notes: 'quadfit confidence: verified | Downtown. MAXIMUM front setback 15-20 ft + >=50% frontage occupancy
+      (7.0420(J)) effectively force the long axis parallel to the street — axis_required. Max-front-setback
+      placement band not modeled (blind spot).'
+  DRL-2:
+    cite_default:
+      cite: Gresham Development Code Tables 4.1120/4.1130 (Downtown); 7.0420(J)
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed: true
+    setback_front_ft: 10
+    setback_side_ft: 5
+    setback_rear_ft: 10
+    setback_street_side_ft: 10
+    min_lot_sqft: 4000
+    orientation_constraint: axis_required
+    notes: 'quadfit confidence: verified | Same as DRL-1; height 50 ft.'
+  CMF:
+    cite_default:
+      cite: Gresham Development Code Tables 4.0420/4.0430 (Corridor); 7.0420(J)
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0400.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed: true
+    setback_front_ft: 5
+    setback_side_ft: 0
+    setback_rear_ft: 15
+    setback_street_side_ft: 5
+    min_lot_sqft: 10000
+    min_frontage_ft: 100
+    orientation_constraint: axis_required
+    notes: 'quadfit confidence: verified | Base CMF regime: residential needs 10,000 sf min AND 100 ft
+      street frontage; max front setback 20 ft + frontage occupancy — axis_required. NE Glisan/162nd corridors
+      follow TLDR standards instead (Table 4.0430 n.14) — NOT split out; base regime applied everywhere
+      = conservative.'
+  LDR/GB:
+    cite_default:
+      cite: Gresham Development Code 4.1310 (Gresham Butte)
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1300.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed: false
+    notes: 'quadfit confidence: verified | Quadplexes explicitly prohibited in Gresham Butte overlay (hillside/fire
+      risk); duplex max.'
+  THR-SW:
+    cite_default:
+      cite: Gresham Development Code Table 4.1507 (Springwater)
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1500.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed: false
+    notes: 'quadfit confidence: verified | Quadplex NP and detached SFD also NP — OAR mandate does not
+      attach (townhouse/cottage-cluster zone).'

@@ -1,0 +1,142 @@
+label: Happy Valley
+kind: city
+eligible: true
+notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s verification was against a
+  coarser standard (one citation per row) and does not carry over. UNPORTED: orientation_constraint=''entrance_only''.
+  quadfit justified this in a YAML comment with no citation; it needs its own encoding rather than invented
+  provenance.'
+ingest:
+  geoid: null
+  juris_city_codes:
+  - HAPPY VALLEY
+  zoning_layer: zoning_happy_valley
+  zone_field: ZONE
+  strip_lowercase_suffix: false
+zones:
+  R40:
+    cite_default:
+      cite: HV LDC 16.22.020 Table 16.22.020-2 (Very Low Density)
+      url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
+      retrieved: '2026-07-28'
+    quadplex_allowed: true
+    setback_front_ft: 22
+    setback_side_ft: 15
+    setback_rear_ft: 22
+    setback_street_side_ft: 15
+    min_lot_sqft: 40000
+    max_coverage_pct: 20
+    notes: 'quadfit confidence: verified | Setbacks/coverage from City Model Home Application form (LDC
+      eff 3/19/2024). Height 45 ft front elev / 49 ft side+rear. Covered porch >=20% of bldg line cuts
+      front to 15 ft. Quadplex by-right per HV Middle Housing amendments. min_lot is the nominal density
+      basis (verify Table 16.22.020-2).'
+  R20:
+    cite_default:
+      cite: HV LDC 16.22.020 Table 16.22.020-2
+      url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
+      retrieved: '2026-07-28'
+    quadplex_allowed: true
+    setback_front_ft: 22
+    setback_side_ft: 10
+    setback_rear_ft: 22
+    setback_street_side_ft: 15
+    min_lot_sqft: 20000
+    max_coverage_pct: 30
+    notes: 'quadfit confidence: verified | Height 45 ft front / 49 ft side+rear. Porch >=20% bldg line
+      -> front 15 ft. min_lot nominal.'
+  R15:
+    cite_default:
+      cite: HV LDC 16.22.020 Table 16.22.020-2
+      url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
+      retrieved: '2026-07-28'
+    quadplex_allowed: true
+    setback_front_ft: 22
+    setback_side_ft: 7
+    setback_rear_ft: 22
+    setback_street_side_ft: 15
+    min_lot_sqft: 15000
+    max_coverage_pct: 35
+    notes: 'quadfit confidence: verified | Height 45/49 ft. Porch >=20% bldg line -> front 15 ft. min_lot
+      nominal.'
+  R10:
+    cite_default:
+      cite: HV LDC 16.22.030 Table 16.22.030-2 (Low Density)
+      url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
+      retrieved: '2026-07-28'
+    quadplex_allowed: true
+    setback_front_ft: 22
+    setback_side_ft: 7
+    setback_rear_ft: 22
+    setback_street_side_ft: 15
+    min_lot_sqft: 10000
+    max_coverage_pct: 40
+    notes: 'quadfit confidence: verified | Height 45/49 ft. Porch >=20% bldg line -> front 15 ft. min_lot
+      nominal.'
+  R8.5:
+    cite_default:
+      cite: HV LDC 16.22.030 Table 16.22.030-2
+      url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
+      retrieved: '2026-07-28'
+    quadplex_allowed: true
+    setback_front_ft: 22
+    setback_side_ft: 5
+    setback_rear_ft: 22
+    setback_street_side_ft: 15
+    min_lot_sqft: 8500
+    max_coverage_pct: 45
+    notes: 'quadfit confidence: verified | Layer value is ''R8.5'' (code text ''R-8.5''). Height 45/49
+      ft. Porch >=20% -> front 15 ft. min_lot nominal.'
+  R7:
+    cite_default:
+      cite: HV LDC 16.22.030 Table 16.22.030-2
+      url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
+      retrieved: '2026-07-28'
+    quadplex_allowed: true
+    setback_front_ft: 22
+    setback_side_ft: 5
+    setback_rear_ft: 22
+    setback_street_side_ft: 15
+    min_lot_sqft: 7000
+    max_coverage_pct: 50
+    notes: 'quadfit confidence: verified | Height 45/49 ft. Porch >=20% -> front 15 ft. Coverage never
+      binds a ~1,000 sf/unit fourplex footprint. min_lot nominal.'
+  R5:
+    cite_default:
+      cite: HV LDC 16.22.040 Table 16.22.040-2 (Medium Density)
+      url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
+      retrieved: '2026-07-28'
+    quadplex_allowed: true
+    setback_front_ft: 20
+    setback_side_ft: 5
+    setback_rear_ft: 20
+    setback_street_side_ft: 8
+    min_lot_sqft: 5000
+    max_coverage_pct: 50
+    notes: 'quadfit confidence: verified | Front 20 ft street-access / 10 ft alley-access. Height 45/49
+      ft. Densest std SF zone. min_lot nominal.'
+  MURS:
+    cite_default:
+      cite: HV LDC 16.22.040 (MUR-S, Mixed Use Residential-Single-Family); allows detached SFD
+      url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
+      retrieved: '2026-07-28'
+    quadplex_allowed: true
+    setback_front_ft: 20
+    setback_side_ft: 5
+    setback_rear_ft: 20
+    setback_street_side_ft: 8
+    notes: 'quadfit confidence: needs_verification | Layer value ''MURS'' = code ''MUR-S''. Setbacks from
+      Model Home form (verified); max_coverage not shown in form (verify Table 16.22.040-2). Front 20
+      street/10 alley. In HV middle-housing zone list.'
+  R20CC:
+    cite_default:
+      cite: Assumed R-20 variant (unexplained 'CC' suffix in layer)
+      url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
+      retrieved: '2026-07-28'
+    quadplex_allowed: true
+    setback_front_ft: 22
+    setback_side_ft: 10
+    setback_rear_ft: 22
+    setback_street_side_ft: 15
+    min_lot_sqft: 20000
+    max_coverage_pct: 30
+    notes: 'quadfit confidence: needs_verification | Distinct layer value ''R20CC'' — meaning of CC suffix
+      unconfirmed; standards mirrored from R-20 pending verification.'

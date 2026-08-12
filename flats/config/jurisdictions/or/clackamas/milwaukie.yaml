@@ -1,0 +1,45 @@
+label: Milwaukie
+kind: city
+eligible: true
+notes: Ported from quadfit rules.yaml. Every value is `draft` — quadfit's verification was against a coarser
+  standard (one citation per row) and does not carry over.
+ingest:
+  geoid: null
+  juris_city_codes:
+  - MILWAUKIE
+  zoning_layer: zoning_milwaukie
+  zone_field: ZONE
+  strip_lowercase_suffix: false
+zones:
+  R-MD:
+    cite_default:
+      cite: MMC 19.301 Moderate Density Residential, Table 19.301.4; use table 19.301.2
+      url: https://ecode360.com/43860500
+      retrieved: '2026-07-28'
+    quadplex_allowed: true
+    setback_front_ft: 20
+    setback_side_ft: 5
+    setback_rear_ft: 20
+    setback_street_side_ft: 20
+    min_lot_sqft: 5000
+    max_coverage_pct: 30
+    notes: 'quadfit confidence: verified | Milwaukie consolidated former R-5/R-7/R-10 SF zones into R-MD;
+      this is the by-right quadplex zone. Values are the lots>=7,000-sf tier (Table 19.301.4): side 5
+      ft + 10 ft (asymmetric), corner street-side 20 ft, height 35 ft, coverage 30%. Lots <7,000 sf use
+      a smaller-setback tier (verify). Min lot 5,000 sf; middle housing allowed on any SFD lot (density
+      cap waived).'
+  R-HD:
+    cite_default:
+      cite: MMC 19.302 High Density Residential, Table 19.302.4
+      url: https://ecode360.com/43860500
+      retrieved: '2026-07-28'
+    quadplex_allowed: true
+    setback_front_ft: 5
+    setback_side_ft: 5
+    setback_rear_ft: 20
+    min_lot_sqft: 5000
+    max_coverage_pct: 50
+    notes: 'quadfit confidence: needs_verification | Multi-dwelling zone (min density 25 units/acre) —
+      apartments allowed outright, so quadplex trivially permitted. Verified: side 5 ft (0 for townhouse
+      common wall), coverage 50%, min lot 5,000 sf, height 45 ft. Front 5 ft applies only to properties
+      mapped in Fig 19.302.4 — general front and rear setbacks NOT confirmed (rear assumed 20; verify).'

@@ -1,0 +1,24 @@
+label: Johnson City
+kind: city
+eligible: false
+notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s verification was against a
+  coarser standard (one citation per row) and does not carry over. UNPORTED: orientation_constraint=''entrance_only''.
+  quadfit justified this in a YAML comment with no citation; it needs its own encoding rather than invented
+  provenance.'
+ingest:
+  geoid: null
+  juris_city_codes:
+  - JOHNSON CITY
+  zoning_layer: zoning_metro
+  zone_field: ZONE
+  strip_lowercase_suffix: false
+zones:
+  MR1:
+    cite_default:
+      cite: Metro RLIS Zoning layer (no published municipal code found); HB 2001 Sec 4(a) exemption
+      url: https://www.clackamas.us/planning
+      retrieved: '2026-07-28'
+    quadplex_allowed: false
+    notes: 'quadfit confidence: needs_verification | NOT subject to HB 2001 — pop <=1,000 exempt. City
+      limits = the Johnson Mobile Estates manufactured-home park; ~0 splittable lots. No municipal code
+      published. Metro ZONE ''MR1'' (ZONE_CLASS MFR1 — multi-family, not SFR).'

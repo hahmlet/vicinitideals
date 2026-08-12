@@ -1,0 +1,29 @@
+label: Rivergrove
+kind: city
+eligible: false
+notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s verification was against a
+  coarser standard (one citation per row) and does not carry over. UNPORTED: orientation_constraint=''entrance_only''.
+  quadfit justified this in a YAML comment with no citation; it needs its own encoding rather than invented
+  provenance.'
+ingest:
+  geoid: null
+  juris_city_codes:
+  - RIVERGROVE
+  zoning_layer: zoning_metro
+  zone_field: ZONE
+  strip_lowercase_suffix: false
+zones:
+  R10:
+    cite_default:
+      cite: Rivergrove Land Development Ordinance (RLDO, Ord. 54-89); Metro RLIS Zoning layer
+      url: https://www.cityofrivergrove.org/zoning
+      retrieved: '2026-07-28'
+    quadplex_allowed: false
+    setback_front_ft: 25
+    setback_side_ft: 10
+    setback_rear_ft: 25
+    setback_street_side_ft: 15
+    min_lot_sqft: 10000
+    notes: 'quadfit confidence: needs_verification | NOT subject to HB 2001 — city pop <=1,000 exempt.
+      Single SFR district; no middle-housing code. Metro ZONE ''R10'' verified (ZONE_CLASS SFR1). ~half
+      the city is floodplain (0.5 ac min there).'

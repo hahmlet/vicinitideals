@@ -1,0 +1,147 @@
+label: West Linn
+kind: city
+eligible: true
+notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s verification was against a
+  coarser standard (one citation per row) and does not carry over. UNPORTED: orientation_constraint=''entrance_only''.
+  quadfit justified this in a YAML comment with no citation; it needs its own encoding rather than invented
+  provenance.'
+ingest:
+  geoid: null
+  juris_city_codes:
+  - WEST LINN
+  zoning_layer: zoning_west_linn
+  zone_field: DESIGNATION
+  strip_lowercase_suffix: false
+zones:
+  R-40:
+    cite_default:
+      cite: West Linn CDC 08.070 (R-40 lot/dimensional standards); quadplex permitted outright 08.030
+      url: https://www.zoneomics.com/code/west-linn-OR/chapter_4
+      retrieved: '2026-07-28'
+    quadplex_allowed: true
+    setback_front_ft: 30
+    setback_side_ft: 10
+    setback_rear_ft: 30
+    setback_street_side_ft: 30
+    min_lot_sqft: 40000
+    min_frontage_ft: 150
+    max_coverage_pct: 25
+    notes: 'quadfit confidence: verified | Detached SFD + quadplex outright. Coverage 25% applies to quadplex
+      (only cottage clusters exempt). Corner side-yard read as 30 ft.'
+  R-20:
+    cite_default:
+      cite: West Linn CDC 09.070 (R-20 lot/dimensional standards)
+      url: https://www.zoneomics.com/code/west-linn-OR/chapter_5
+      retrieved: '2026-07-28'
+    quadplex_allowed: true
+    setback_front_ft: 20
+    setback_side_ft: 7.5
+    setback_rear_ft: 20
+    setback_street_side_ft: 15
+    min_lot_sqft: 20000
+    min_frontage_ft: 100
+    max_coverage_pct: 25
+    notes: 'quadfit confidence: verified | Detached SFD + quadplex outright. Coverage 25% applies to quadplex.'
+  R-15:
+    cite_default:
+      cite: West Linn CDC 10.070 (R-15 lot/dimensional standards); quadplex 10.030(5)
+      url: https://www.zoneomics.com/code/west-linn-OR/chapter_6
+      retrieved: '2026-07-28'
+    quadplex_allowed: true
+    setback_front_ft: 20
+    setback_side_ft: 7.5
+    setback_rear_ft: 20
+    setback_street_side_ft: 15
+    min_lot_sqft: 15000
+    min_frontage_ft: 45
+    max_coverage_pct: 30
+    notes: 'quadfit confidence: verified | Width 45 ft at front line / 80 ft avg (frontage=45). Coverage
+      30% applies to quadplex.'
+  R-10:
+    cite_default:
+      cite: West Linn CDC 11.070 (R-10 lot/dimensional standards); quadplex 11.030(1)(c)
+      url: https://www.zoneomics.com/code/west-linn-OR/chapter_7
+      retrieved: '2026-07-28'
+    quadplex_allowed: true
+    setback_front_ft: 20
+    setback_side_ft: 7.5
+    setback_rear_ft: 20
+    setback_street_side_ft: 15
+    min_lot_sqft: 10000
+    min_frontage_ft: 35
+    max_coverage_pct: 35
+    notes: 'quadfit confidence: verified | Width 35 ft at front line / 50 ft avg (frontage=35). Coverage
+      35% applies to quadplex.'
+  R-7:
+    cite_default:
+      cite: West Linn CDC 12.070 (R-7 lot/dimensional standards)
+      url: https://www.zoneomics.com/code/west-linn-OR/chapter_8
+      retrieved: '2026-07-28'
+    quadplex_allowed: true
+    setback_front_ft: 20
+    setback_side_ft: 7.5
+    setback_rear_ft: 20
+    setback_street_side_ft: 15
+    min_lot_sqft: 7000
+    min_frontage_ft: 35
+    max_coverage_pct: 35
+    notes: 'quadfit confidence: verified | Detached SFD + quadplex outright. Coverage 35% applies to quadplex;
+      max FAR 0.60 for duplex/triplex/quadplex.'
+  R-5:
+    cite_default:
+      cite: West Linn CDC 13.070 (R-5 lot/dimensional standards)
+      url: https://www.zoneomics.com/code/west-linn-OR/chapter_9
+      retrieved: '2026-07-28'
+    quadplex_allowed: true
+    setback_front_ft: 20
+    setback_side_ft: 5
+    setback_rear_ft: 20
+    setback_street_side_ft: 15
+    min_lot_sqft: 5000
+    min_frontage_ft: 35
+    notes: 'quadfit confidence: verified | Max lot coverage does NOT apply to quadplexes (CDC 13.070)
+      -> no coverage cap for a 4-plex; SFD base coverage 40%.'
+  R-4.5:
+    cite_default:
+      cite: West Linn CDC 14.070 (R-4.5 lot/dimensional standards)
+      url: https://www.zoneomics.com/code/west-linn-OR/chapter_10
+      retrieved: '2026-07-28'
+    quadplex_allowed: true
+    setback_front_ft: 20
+    setback_side_ft: 5
+    setback_rear_ft: 20
+    setback_street_side_ft: 15
+    min_lot_sqft: 4500
+    min_frontage_ft: 35
+    notes: 'quadfit confidence: verified | Coverage max does NOT apply to quadplexes (CDC 14.070); SFD
+      base 40%.'
+  R-3:
+    cite_default:
+      cite: West Linn CDC 15.070 (R-3 lot/dimensional standards)
+      url: https://www.zoneomics.com/code/west-linn-OR/chapter_11
+      retrieved: '2026-07-28'
+    quadplex_allowed: true
+    setback_front_ft: 15
+    setback_side_ft: 5
+    setback_rear_ft: 15
+    setback_street_side_ft: 15
+    min_lot_sqft: 3000
+    min_frontage_ft: 35
+    notes: 'quadfit confidence: verified | Coverage max does NOT apply to quadplexes (CDC 15.070); SFD
+      base 50%. FAR 0.45 (n/a to middle housing).'
+  R-2.1:
+    cite_default:
+      cite: West Linn CDC 16.070 (R-2.1); attached quadplex outright 16.030; detached SFD/quadplex conditional
+        16.050(6)
+      url: https://www.zoneomics.com/code/west-linn-OR/chapter_12
+      retrieved: '2026-07-28'
+    quadplex_allowed: true
+    setback_front_ft: 15
+    setback_side_ft: 5
+    setback_rear_ft: 15
+    setback_street_side_ft: 15
+    min_lot_sqft: 4000
+    min_frontage_ft: 35
+    notes: 'quadfit confidence: needs_verification | ATTACHED quadplex permitted OUTRIGHT. Detached SFD/detached
+      quadplex are CONDITIONAL only (16.050(6)). Coverage max does not apply to quadplexes; SFD base 50%.
+      Min lot 4,000 for detached SFD - verify.'

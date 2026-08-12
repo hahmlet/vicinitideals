@@ -111,10 +111,10 @@ _F: tuple[FieldDef, ...] = (
     FieldDef(
         "orientation_constraint",
         "enum",
-        "How the code constrains building orientation.",
+        "How the code constrains building orientation. `entrance_only` binds the main entrance without fixing the long axis; `axis_required` forces the building to face the street, which halves the orientations the fit stage may try.",
         None,
         "building_orientation",
-        choices=("none", "entrance_only", "long_axis_parallel_front"),
+        choices=("none", "entrance_only", "axis_required"),
     ),
 )
 

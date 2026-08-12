@@ -1,0 +1,148 @@
+label: Portland
+kind: city
+eligible: true
+notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s verification was against a
+  coarser standard (one citation per row) and does not carry over. UNPORTED: orientation_constraint=''entrance_only''.
+  quadfit justified this in a YAML comment with no citation; it needs its own encoding rather than invented
+  provenance.'
+ingest:
+  geoid: null
+  juris_city_codes:
+  - PORTLAND
+  zoning_layer: zoning_portland
+  zone_field: ZONE
+  strip_lowercase_suffix: true
+zones:
+  RF:
+    cite_default:
+      cite: PCC 33.110.200 Table 110-2 — fourplex prohibited in RF (RIP2 extended middle housing to R10/R20
+        only)
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed: false
+    notes: 'quadfit confidence: verified | Only house/ADU/manufactured home/houseboat/congregate allowed.'
+  R20:
+    cite_default:
+      cite: PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed: true
+    setback_front_ft: 20
+    setback_side_ft: 10
+    setback_rear_ft: 10
+    min_lot_sqft: 12000
+    coverage_curve:
+    - - 0
+      - 0
+      - 50
+    - - 3000
+      - 1500
+      - 37.5
+    - - 5000
+      - 2250
+      - 15
+    - - 20000
+      - 4500
+      - 7.5
+    notes: 'quadfit confidence: verified | Fourplex min lot 12,000 sf (Table 110-7; -10% adjustment allowed
+      until 2032). No FAR cap on conforming lots (FAR applies only <10,000 sf in R20). Height 30 ft.'
+  R10:
+    cite_default:
+      cite: PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed: true
+    setback_front_ft: 20
+    setback_side_ft: 10
+    setback_rear_ft: 10
+    min_lot_sqft: 6000
+    coverage_curve:
+    - - 0
+      - 0
+      - 50
+    - - 3000
+      - 1500
+      - 37.5
+    - - 5000
+      - 2250
+      - 15
+    - - 20000
+      - 4500
+      - 7.5
+    notes: 'quadfit confidence: verified | Fourplex min lot 6,000 sf. FAR 0.7 on lots 6,000-9,999 sf (never
+      binds a 2-story 500 sf/floor plate). Height 30 ft.'
+  R7:
+    cite_default:
+      cite: PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed: true
+    setback_front_ft: 15
+    setback_side_ft: 5
+    setback_rear_ft: 5
+    min_lot_sqft: 4200
+    coverage_curve:
+    - - 0
+      - 0
+      - 50
+    - - 3000
+      - 1500
+      - 37.5
+    - - 5000
+      - 2250
+      - 15
+    - - 20000
+      - 4500
+      - 7.5
+    notes: 'quadfit confidence: verified | Fourplex min lot 4,200 sf. FAR 0.7 for 4+ units. Height 30
+      ft.'
+  R5:
+    cite_default:
+      cite: PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed: true
+    setback_front_ft: 10
+    setback_side_ft: 5
+    setback_rear_ft: 5
+    min_lot_sqft: 3000
+    coverage_curve:
+    - - 0
+      - 0
+      - 50
+    - - 3000
+      - 1500
+      - 37.5
+    - - 5000
+      - 2250
+      - 15
+    - - 20000
+      - 4500
+      - 7.5
+    notes: 'quadfit confidence: verified | Fourplex min lot 3,000 sf. FAR 0.8 for 4+ units. Height 30
+      ft.'
+  R2.5:
+    cite_default:
+      cite: PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed: true
+    setback_front_ft: 10
+    setback_side_ft: 5
+    setback_rear_ft: 5
+    min_lot_sqft: 1500
+    coverage_curve:
+    - - 0
+      - 0
+      - 50
+    - - 3000
+      - 1500
+      - 37.5
+    - - 5000
+      - 2250
+      - 15
+    - - 20000
+      - 4500
+      - 7.5
+    notes: 'quadfit confidence: verified | Fourplex min lot 1,500 sf. FAR 1.0 for 4+ units. Height 35
+      ft. Narrow-lot standards <32 ft wide.'

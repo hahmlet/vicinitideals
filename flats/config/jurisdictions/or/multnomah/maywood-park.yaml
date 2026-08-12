@@ -1,0 +1,13 @@
+label: Maywood Park
+kind: city
+eligible: false
+notes: Ported from quadfit rules.yaml. Every value is `draft` — quadfit's verification was against a coarser
+  standard (one citation per row) and does not carry over.
+ingest:
+  geoid: null
+  juris_city_codes:
+  - MAYWOOD PARK
+  zoning_layer: null
+  zone_field: null
+  strip_lowercase_suffix: false
+zones: {}

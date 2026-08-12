@@ -1,0 +1,68 @@
+label: Wood Village
+kind: city
+eligible: true
+notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s verification was against a
+  coarser standard (one citation per row) and does not carry over. UNPORTED: orientation_constraint=''entrance_only''.
+  quadfit justified this in a YAML comment with no citation; it needs its own encoding rather than invented
+  provenance.'
+ingest:
+  geoid: null
+  juris_city_codes:
+  - WOOD VILLAGE
+  zoning_layer: zoning_wood_village
+  zone_field: Labeling
+  strip_lowercase_suffix: false
+zones:
+  LR 7.5:
+    cite_default:
+      cite: WVDC 210.310 Tables 210-2/210-3, 210.375 (Ord. 2-2022)
+      url: https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed: true
+    setback_front_ft: 10
+    setback_side_ft: 5
+    setback_rear_ft: 15
+    setback_street_side_ft: 10
+    min_lot_sqft: 7500
+    max_coverage_pct: 45
+    notes: 'quadfit confidence: verified | Quadplex Y outright; zone min lot 7,500 sf (no quad-specific
+      larger min). Garage face 22 ft. Height 35 ft.'
+  LR 12:
+    cite_default:
+      cite: WVDC 210.310 Tables 210-2/210-3, 210.375 (Ord. 2-2022)
+      url: https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed: true
+    setback_front_ft: 10
+    setback_side_ft: 10
+    setback_rear_ft: 15
+    setback_street_side_ft: 20
+    min_lot_sqft: 12000
+    max_coverage_pct: 45
+    notes: 'quadfit confidence: verified | Corner STREET-SIDE 20 ft (vs 10 in LR 7.5). Zone min lot 12,000
+      sf.'
+  MR 2:
+    cite_default:
+      cite: WVDC 220.310 Tables 220-2/220-3, 220.355 (Ord. 2-2022)
+      url: https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed: true
+    setback_front_ft: 10
+    setback_side_ft: 5
+    setback_rear_ft: 15
+    min_lot_sqft: 8000
+    max_coverage_pct: 45
+    notes: 'quadfit confidence: verified | Quadplex min lot 8,000 sf (SFD 7,500). MR tables have NO corner-lot
+      street-side rows — genuinely unspecified in code text; no street-side elevation applied.'
+  MR 4:
+    cite_default:
+      cite: WVDC 220.310 Tables 220-2/220-3, 220.355 (Ord. 2-2022)
+      url: https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed: true
+    setback_front_ft: 10
+    setback_side_ft: 5
+    setback_rear_ft: 15
+    min_lot_sqft: 8000
+    max_coverage_pct: 45
+    notes: 'quadfit confidence: verified | Identical to MR 2 for quads (combined table column).'
