@@ -1,0 +1,5 @@
+# Stored source text is evidence, not source code. Git must not rewrite its
+# line endings on checkout: the SHA-256 in each .meta.json sidecar is what
+# proves an encoded number was read from these exact words, and a CRLF pass
+# would flag every document as tampered on a Windows working copy.
+flats/provenance/docs/** -text

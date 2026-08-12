@@ -1,0 +1,274 @@
+"""The provenance store — the code text every encoded number came from.
+
+A citation that is only a URL is not provenance. URLs rot, municipal codifiers
+renumber sections, and "PCC 33.110.220" meant something different two amendments
+ago. What makes an encoded number auditable is the *text* it was read from, kept
+verbatim, hashed, and quotable by line.
+
+So each cited source is fetched once, written under ``flats/provenance/`` as
+plain text beside a small sidecar recording its URL, retrieval date and SHA-256,
+and referenced from rule values as ``path#L42-L48``. Lot detail can then show
+the sentence behind a setback, and a reviewer can check the encoding against the
+words rather than against another database.
+
+**Staleness is derived, never stored.** When a re-fetch produces different text,
+every value citing that document becomes untrusted — but nothing rewrites the
+YAML to say so. The hash is compared at load time and the status is computed
+from it. Writing `stale` into the rule files would mean hand-authored files
+churning under a robot, comments lost to a YAML round-trip, and two sources of
+truth that can disagree. A derived answer cannot disagree with itself.
+
+Fetching is injected rather than imported, so the drift watch is testable
+without a network and the store has no opinion about HTTP.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import json
+import re
+from dataclasses import dataclass
+from datetime import date
+from pathlib import Path
+from typing import Callable, Iterable
+
+#: Documents live beside the code but in their own subtree. Thousands of code
+#: excerpts interleaved with modules would make the package unreadable, and
+#: keeping them apart means a stored document can never shadow a module.
+STORE_ROOT = Path(__file__).resolve().parent / "docs"
+
+#: ``or/multnomah/portland/33.110.txt#L42-L48`` — path, then an optional line span.
+_QUOTE_RE = re.compile(r"^(?P<path>[^#]+?)(?:#L(?P<start>\d+)(?:-L?(?P<end>\d+))?)?$")
+
+
+class ProvenanceError(Exception):
+    """A citation does not resolve to stored text."""
+
+
+@dataclass(frozen=True, slots=True)
+class QuoteRef:
+    """A parsed ``path#Lstart-Lend`` reference."""
+
+    path: str
+    start: int | None = None
+    end: int | None = None
+
+    @property
+    def whole_document(self) -> bool:
+        return self.start is None
+
+
+def parse_quote(quote: str) -> QuoteRef:
+    """Parse a quote reference, failing loudly on a malformed one.
+
+    A citation nobody can resolve is worse than no citation: it reads as
+    evidence while pointing at nothing.
+    """
+    m = _QUOTE_RE.match(quote.strip())
+    if not m or not m.group("path"):
+        raise ProvenanceError(f"malformed quote reference {quote!r} — expected 'path#L10-L14'")
+    start = int(m.group("start")) if m.group("start") else None
+    end = int(m.group("end")) if m.group("end") else start
+    if start is not None and start < 1:
+        raise ProvenanceError(f"{quote!r}: line numbers are 1-based")
+    if start is not None and end is not None and end < start:
+        raise ProvenanceError(f"{quote!r}: end line precedes start line")
+    return QuoteRef(path=m.group("path"), start=start, end=end)
+
+
+@dataclass(frozen=True, slots=True)
+class Document:
+    """One stored source document and the hash that detects it changing."""
+
+    path: str
+    url: str
+    retrieved: date
+    sha256: str
+    text: str
+
+    def lines(self, ref: QuoteRef) -> str:
+        """The quoted span, or the whole document when no span is given."""
+        if ref.whole_document:
+            return self.text
+        all_lines = self.text.splitlines()
+        if ref.end is not None and ref.end > len(all_lines):
+            raise ProvenanceError(
+                f"{self.path}: quote asks for line {ref.end}, document has {len(all_lines)}"
+            )
+        return "\n".join(all_lines[(ref.start or 1) - 1 : ref.end])
+
+
+def sha256(text: str) -> str:
+    """Hash of the normalized text.
+
+    Line endings are normalized first: a codifier serving CRLF one day and LF
+    the next would otherwise register as a substantive amendment and flip every
+    value on the page to stale for nothing.
+    """
+    return hashlib.sha256(text.replace("\r\n", "\n").encode("utf-8")).hexdigest()
+
+
+class ProvenanceStore:
+    """Documents on disk under a root, addressed by relative path."""
+
+    def __init__(self, root: Path | None = None) -> None:
+        self.root = root or STORE_ROOT
+
+    # --- paths -------------------------------------------------------
+
+    def text_path(self, path: str) -> Path:
+        return self.root / path
+
+    def meta_path(self, path: str) -> Path:
+        return self.root / f"{path}.meta.json"
+
+    def exists(self, path: str) -> bool:
+        return self.text_path(path).is_file() and self.meta_path(path).is_file()
+
+    def documents(self) -> list[str]:
+        """Every stored document path, sorted."""
+        return sorted(
+            str(p.relative_to(self.root)).replace("\\", "/")
+            for p in self.root.rglob("*")
+            if p.is_file() and not p.name.endswith(".meta.json") and p.suffix == ".txt"
+        )
+
+    # --- read / write ------------------------------------------------
+
+    def save(self, path: str, *, url: str, text: str, retrieved: date) -> Document:
+        """Write a document and its sidecar. Overwrites — re-fetching is normal."""
+        text_path = self.text_path(path)
+        text_path.parent.mkdir(parents=True, exist_ok=True)
+        normalized = text.replace("\r\n", "\n")
+        # newline="" suppresses the platform translation that would put CRLF back
+        # on Windows. A store written on one OS and read on another has to be
+        # byte-identical, or every hash comparison fails at once.
+        text_path.write_text(normalized, encoding="utf-8", newline="")
+
+        doc = Document(
+            path=path, url=url, retrieved=retrieved, sha256=sha256(normalized), text=normalized
+        )
+        self.meta_path(path).write_text(
+            json.dumps(
+                {"url": url, "retrieved": retrieved.isoformat(), "sha256": doc.sha256},
+                indent=2,
+            )
+            + "\n",
+            encoding="utf-8",
+            newline="",
+        )
+        return doc
+
+    def load(self, path: str) -> Document:
+        text_path, meta_path = self.text_path(path), self.meta_path(path)
+        if not text_path.is_file():
+            raise ProvenanceError(f"no stored text at {path!r} — fetch it before citing it")
+        if not meta_path.is_file():
+            raise ProvenanceError(f"{path!r} has text but no sidecar; its hash is unknown")
+
+        meta = json.loads(meta_path.read_text(encoding="utf-8"))
+        # Normalize on the way in too: a document that reached the store by some
+        # other route — a git checkout with autocrlf on — still has to hash to
+        # the same value as the one that was fetched.
+        text = text_path.read_text(encoding="utf-8").replace("\r\n", "\n")
+        return Document(
+            path=path,
+            url=meta["url"],
+            retrieved=date.fromisoformat(meta["retrieved"]),
+            sha256=meta["sha256"],
+            text=text,
+        )
+
+    def quote(self, quote: str) -> str:
+        """Resolve a ``path#L10-L14`` reference to the text it names."""
+        ref = parse_quote(quote)
+        return self.load(ref.path).lines(ref)
+
+    # --- integrity ---------------------------------------------------
+
+    def tampered(self) -> list[str]:
+        """Documents whose text no longer matches their recorded hash.
+
+        Not drift — drift is the source changing upstream. This is the local
+        copy changing, which means an edit to evidence. Either way the values
+        citing it can no longer be trusted, but the causes need different fixes.
+        """
+        bad: list[str] = []
+        for path in self.documents():
+            try:
+                doc = self.load(path)
+            except ProvenanceError:
+                bad.append(path)
+                continue
+            if sha256(doc.text) != doc.sha256:
+                bad.append(path)
+        return bad
+
+
+@dataclass(frozen=True, slots=True)
+class DriftResult:
+    """What a re-fetch found for one document."""
+
+    path: str
+    url: str
+    #: unchanged | changed | unreachable | missing
+    state: str
+    stored_sha: str | None = None
+    fetched_sha: str | None = None
+    detail: str = ""
+
+    @property
+    def invalidates(self) -> bool:
+        """True when values citing this document can no longer be trusted.
+
+        ``unreachable`` deliberately does not invalidate. A codifier's site
+        being down is not evidence the law changed, and demoting a county's
+        entire rule set because of a timeout would be a self-inflicted outage.
+        It is reported so the gap is visible, not silently treated as fine.
+        """
+        return self.state in ("changed", "missing")
+
+
+Fetcher = Callable[[str], str]
+
+
+def check_drift(
+    store: ProvenanceStore, fetch: Fetcher, *, paths: Iterable[str] | None = None
+) -> list[DriftResult]:
+    """Re-fetch each stored document and compare hashes.
+
+    ``fetch`` takes a URL and returns text; injected so this is testable without
+    a network and so the store stays out of the HTTP business.
+    """
+    results: list[DriftResult] = []
+    for path in sorted(paths) if paths is not None else store.documents():
+        try:
+            doc = store.load(path)
+        except ProvenanceError as exc:
+            results.append(DriftResult(path=path, url="", state="missing", detail=str(exc)))
+            continue
+
+        try:
+            fresh = sha256(fetch(doc.url))
+        except Exception as exc:  # any transport failure — treat alike
+            results.append(
+                DriftResult(
+                    path=path,
+                    url=doc.url,
+                    state="unreachable",
+                    stored_sha=doc.sha256,
+                    detail=f"{type(exc).__name__}: {exc}",
+                )
+            )
+            continue
+
+        results.append(
+            DriftResult(
+                path=path,
+                url=doc.url,
+                state="unchanged" if fresh == doc.sha256 else "changed",
+                stored_sha=doc.sha256,
+                fetched_sha=fresh,
+            )
+        )
+    return results
