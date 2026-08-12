@@ -125,7 +125,8 @@ packages = ["app"]
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "session"
 asyncio_default_test_loop_scope = "session"
-testpaths = ["tests", "Lot Analysis/quadfit/tests"]
+testpaths = ["tests", "Lot Analysis/quadfit/tests", "flats/tests"]
+pythonpath = ["."]
 markers = [
     "unit: pure logic tests — no DB, no network (fast, <5s total)",
     "integration: tests that use the in-memory DB or the ASGI app",
