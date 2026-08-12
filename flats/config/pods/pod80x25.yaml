@@ -1,0 +1,26 @@
+# Wide/shallow pod — 4 x 20 x 25 ft units, 500 sqft ground each.
+#
+# The other quadfit candidate. Same 2,000 sqft pod area as pod56x36 with the
+# aspect ratio inverted: it needs 24 more feet of frontage but only 25 feet of
+# depth, which is what unlocks shallow lots.
+version: 1
+label: "Pod 80 x 25 — 4 x 20 ft units"
+typology: townhome_rear_court
+footprint: {width_ft: 80, depth_ft: 25}
+units: 4
+stories: 2
+height_ft: 26
+parking:
+  stalls_per_unit: 1.5
+  config: rear_court
+delivery:
+  method: panelized
+notes: >-
+  Shallow depth leaves more rear yard for the parking court, so it tends to lay
+  out where pod56x36 fits the envelope but cannot seat its stalls. Its 80 ft
+  frontage is the binding constraint on most narrow city lots.
+assumptions:
+  - "height_ft 26: two storeys at typical townhome floor-to-floor. Not from a
+     drawing set — confirm before any height-binding result is trusted."
+  - "Delivery method is the product intent (factory-built); module dimensions
+     and crane needs are unspecified until the set-access stage (Phase 4)."

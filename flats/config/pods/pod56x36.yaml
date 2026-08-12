@@ -1,0 +1,30 @@
+# Skinny/deep pod — 4 x 14 x 36 ft units, 504 sqft ground each.
+#
+# Carried over from quadfit's footprints.yaml, where it was one of two named
+# candidates. The product is 1,000 sqft two-storey townhomes built as pods of
+# four side by side, so the rectangle that must fit is the WHOLE pod: a lone
+# 500 sqft unit fitting proves nothing.
+#
+# width_ft is the dimension parallel to the front lot line before rotation.
+version: 1
+label: "Pod 56 x 36 — 4 x 14 ft units"
+typology: townhome_rear_court
+footprint: {width_ft: 56, depth_ft: 36}
+units: 4
+stories: 2
+height_ft: 26
+parking:
+  # Marketability target, not a legal floor. Gresham LDR-5 requires zero stalls
+  # (CFEC citywide elimination, 9.0802(A)) and sets no maximum.
+  stalls_per_unit: 1.5
+  config: rear_court
+delivery:
+  method: panelized
+notes: >-
+  Narrower frontage than pod80x25, so it clears width-constrained lots the wide
+  pod misses, at the cost of needing 11 more feet of depth.
+assumptions:
+  - "height_ft 26: two storeys at typical townhome floor-to-floor. Not from a
+     drawing set — confirm before any height-binding result is trusted."
+  - "Delivery method is the product intent (factory-built); module dimensions
+     and crane needs are unspecified until the set-access stage (Phase 4)."
