@@ -73,6 +73,20 @@ class CheckResult:
         """How far under the standard, or 0.0 when it passes."""
         return max(0.0, -self.slack)
 
+    @property
+    def relative_shortfall(self) -> float:
+        """Shortfall as a fraction of the standard.
+
+        Feet, square feet and bare ratios cannot be compared as raw numbers —
+        being 1,000 sqft short of a lot-area minimum and 0.016 over an FAR cap
+        are not on the same scale, and ranking them by magnitude would always
+        put the FAR first. Dividing by the standard makes the comparison mean
+        something.
+        """
+        if self.threshold == 0:
+            return self.shortfall
+        return self.shortfall / abs(self.threshold)
+
 
 class SlackPolicy:
     """Tolerances, with per-jurisdiction overrides resolved most-specific-first."""
@@ -152,14 +166,29 @@ def binding(results: Iterable[CheckResult]) -> list[CheckResult]:
     """Blocking checks, tightest shortfall first.
 
     "Tightest first" is what makes the answer actionable — the check at the top
-    is the one to argue about, buy a variance for, or redesign around. It is
-    also what the binding-constraint histogram counts, which is how a rule that
-    is quietly costing thousands of lots becomes visible.
+    is the one to argue about, buy a variance for, or redesign around. It is a
+    work queue, ordered by what is nearly solved.
     """
     return sorted(
         (r for r in results if r.verdict.blocks),
         key=lambda r: (r.shortfall, r.check),
     )
+
+
+def dominant(results: Iterable[CheckResult]) -> CheckResult | None:
+    """The blocker that most explains the outcome, or None if nothing blocks.
+
+    A different question from :func:`binding`, and the difference matters. A lot
+    a third too small will also creep over an FAR cap by a hair; ordering by
+    what is nearly solved charges that lot to FAR, and a ledger built on it
+    would report FAR as the county's great obstacle. Attribution needs the
+    *largest* proportional shortfall — the constraint that would still be
+    fatal after the small ones were fixed.
+    """
+    blockers = [r for r in results if r.verdict.blocks]
+    if not blockers:
+        return None
+    return max(blockers, key=lambda r: (r.relative_shortfall, r.check))
 
 
 def load_policy(path: Path | None = None) -> SlackPolicy:

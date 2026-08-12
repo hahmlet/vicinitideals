@@ -16,6 +16,7 @@ from flats.score.slack import (
     SlackPolicy,
     Verdict,
     binding,
+    dominant,
     load_policy,
 )
 
@@ -160,6 +161,33 @@ def test_a_tolerated_check_still_counts_as_binding(policy: SlackPolicy) -> None:
 
 def test_nothing_binds_when_everything_passes(policy: SlackPolicy) -> None:
     assert binding([policy.evaluate("height_ft", 26.0, 30.0, is_maximum=True)]) == []
+
+
+# --- attribution -----------------------------------------------------
+
+
+def test_attribution_compares_proportions_not_raw_numbers(policy: SlackPolicy) -> None:
+    # 1,000 square feet short of a lot minimum and 0.02 over an FAR cap are not
+    # on the same scale. Ranked by magnitude the FAR would never win; ranked by
+    # proportion the answer means something.
+    area = policy.evaluate("min_lot_area_sqft", 2000, 3000, is_maximum=False)
+    far = policy.evaluate("far", 2.02, 2.0, is_maximum=True)
+
+    assert binding([area, far])[0].check == "far", "tightest first is the work queue"
+    worst = dominant([area, far])
+    assert worst is not None and worst.check == "min_lot_area_sqft"
+
+
+def test_nothing_is_charged_when_nothing_blocks(policy: SlackPolicy) -> None:
+    assert dominant([policy.evaluate("height_ft", 26.0, 30.0, is_maximum=True)]) is None
+
+
+def test_a_shortfall_against_a_zero_standard_stays_absolute(policy: SlackPolicy) -> None:
+    # Dividing by the standard is meaningless when the standard is zero, so the
+    # raw shortfall stands in rather than a division by zero.
+    r = policy.evaluate("setback_ft", -2.0, 0.0, is_maximum=False)
+
+    assert r.relative_shortfall == pytest.approx(2.0)
 
 
 # --- the shipped policy ----------------------------------------------
