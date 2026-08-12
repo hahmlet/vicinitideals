@@ -565,9 +565,12 @@ An earlier draft of this section said otherwise; §6 is the decision.
 | ✅ | Generated encoding backlog: 150 observed pairs, 236,558 lots, 100% blocked |
 | ✅ | Design catalog (§5) — versioned, immutable, two pods shipped |
 | ✅ | PostGIS (migration 0124, its own change) and the `flats.*` schema (0125) |
-| | Repackage the remaining quadfit stages into `flats/` |
-| | `provenance/` store — quoted code text, hashed |
-| | `config/slack.yaml` (§4) and `config/pipeline.yaml` |
+| ✅ | `provenance/` store — quoted code text, hashed; staleness derived, never stored |
+| ✅ | `config/slack.yaml` (§4) and the slack/tolerance policy |
+| ✅ | `geom/` — edge classification and the buildable envelope |
+| ✅ | `fit/` — 0–180° rotation sweep, rasterizer, fit-with-a-margin (Phase 2 pulled forward) |
+| ✅ | `score/screen.py` — GREEN/REVIEW/RED with split attribution (tightest vs dominant) |
+| | Ingest: `config/pipeline.yaml` (data sources per county) and the acquire/normalize/assign stages |
 
 **On "100% blocked".** That is the correct reading of the first ledger, not a
 regression. Every ported value is `draft` by design, so no zone can produce GREEN until
@@ -585,10 +588,14 @@ jurisdictions, then re-verify the 96 ported rows.
 *Exit: every residential zone in Multnomah County encoded and verified; zero missing
 residential rows; zero unresolved clauses in verified zones.*
 
-### Phase 2 — Geometry and scoring
-0–180° orientation sweep replacing the 2-orientation raster (interface designed so
-edge-aligned candidates and a vector inner-fit path drop in later). Slack on every check +
-configurable tolerance. Minimum density, height, FAR. Formal reason-code enum.
+### Phase 2 — Geometry and scoring — **landed early, in Phase 0**
+
+Built alongside the foundation rather than after it, because the encoding work in Phase 1
+needs something to feed. Shipped: the 0–180° sweep (folded from 360° — a rectangle is
+unchanged by a half turn), the conservative rasterizer, slack on every check with
+configurable tolerance, minimum density, height, FAR, coverage curves, parking, and reason
+codes. Still open: edge-aligned candidate angles and a vector inner-fit path as a faster
+alternative to rasterizing, plus the site-plan generator (parking, access) from quadfit s6s.
 
 ### Phase 3 — Web
 `vicinitideals-flats` container, PostGIS writer, map, filters, lot detail. Rule
