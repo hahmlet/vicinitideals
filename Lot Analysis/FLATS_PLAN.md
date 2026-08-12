@@ -226,21 +226,24 @@ rule-set change.
 ## 3. Municipal hierarchy
 
 ```
-config/jurisdictions/
+flats/config/jurisdictions/
   or/                                   # state — ORS/OAR preemption layer
     _state.yaml                         # OAR 660-046, ORS 197A.400 clear-and-objective
-    41051-multnomah/
+    multnomah/
       _county.yaml                      # applies to all cities in county
       _unincorporated.yaml              # county code — rural/unincorporated only
-      4159000-portland.yaml
-      4131250-gresham.yaml
+      portland.yaml
+      gresham.yaml
       ...
-    41005-clackamas/
+    clackamas/
       ...
 ```
 
-Directory names carry the Census GEOID prefix but the **authoritative GEOID is joined from
-the TIGER places layer at ingest, never hand-typed.** Filenames are for humans.
+**Plain slugs, no GEOID prefix.** An earlier draft prefixed directories with the Census
+GEOID (`41051-multnomah/`), which put an identifier in the one place nothing validates it
+— a typo there is invisible until a join silently returns nothing. The GEOID is joined
+from the TIGER places layer at ingest and stored in the layer's `ingest.geoid` field, where
+it can be checked. Paths are for humans; the layer id is the path (`or/multnomah/portland`).
 
 **Resolution order — most-specific-wins:**
 
@@ -274,7 +277,7 @@ already computes it. Feeds ranking and the design sweep.
 knob, not a measurement.
 
 ```yaml
-# config/slack.yaml
+# flats/config/slack.yaml
 report: always                # every check, every lot, pass or fail
 
 tolerance:                    # within this margin -> REVIEW, not RED
@@ -283,15 +286,20 @@ tolerance:                    # within this margin -> REVIEW, not RED
   coverage_pct:        0.0
   min_lot_area_sqft:   0
   min_frontage_ft:     0.0
-  slope_pct:           2.0
+  slope_pct:           2.0    # 3 ft DEM noise floor
 
 overrides:                    # per-jurisdiction, most-specific wins
-  or/41051-multnomah/4159000-portland:
+  or/multnomah/portland:
     fit_ft: 0.25
 ```
 
+**Tolerance never manufactures a GREEN.** A check inside tolerance moves RED → REVIEW,
+never → PASS. That is the recall bias the project runs on: a false red silently deletes an
+acquisition target and nobody learns it existed, while a false green costs one review.
+Exclusion has to be unambiguous; inclusion only has to be plausible.
+
 Both are report-time — seconds to re-run. Sweeping tolerance to find where lot counts move
-is a first-class operation, not a rebuild.
+is a first-class operation, not a rebuild. Implemented in `flats/score/slack.py`.
 
 ---
 
@@ -507,41 +515,63 @@ financial side consumes. Nothing in `flats/` imports from `app/engines/`.
 
 ## 9. Package layout
 
+No `src/` layer — the package is importable from the repo root (`pythonpath = ["."]`
+in pyproject), which keeps `python -m flats.encode.backlog` working without an install
+step. Directories marked ✅ exist.
+
 ```
 flats/                             # pipeline (offline, heavy GIS deps)
 ├── config/
 │   ├── pipeline.yaml              # data sources per county
 │   ├── slack.yaml                 # §4
-│   ├── pods/                      # pod design variants
-│   └── jurisdictions/or/...       # §3 hierarchy
+│   ├── pods/                   ✅ # design catalog — one YAML per pod
+│   └── jurisdictions/or/...    ✅ # §3 hierarchy, 19 layers / 96 zones
 ├── provenance/or/...              # quoted code text, hashed
-├── src/flats/
-│   ├── rules/                     # loader, resolver, schema.py, ozfs_map.yaml,
-│   │                              #   coverage ledger, clause ledger
-│   ├── encode/                    # RASE extraction, drift watch, verification CLI
-│   ├── ingest/  normalize/  frontage/  envelope/
-│   ├── fit/     scalar/     parking/   access/
-│   ├── propensity/  score/   sweep/
-│   └── io/                        # parquet cache + PostGIS writer
-└── tests/{golden,unit}/
+├── rules/                      ✅ # fields, model, loader, resolver, ledger
+├── designs/                    ✅ # catalog model + loader (§5)
+├── encode/                     ✅ # port_quadfit, backlog; RASE extraction and
+│                                  #   drift watch land in Phase 1
+├── normalize/                  ✅ # condo/air-parcel detector (§12)
+├── ingest/  frontage/  envelope/
+├── fit/     scalar/   parking/  access/
+├── propensity/  score/  sweep/
+├── io/                            # parquet cache + PostGIS writer
+└── tests/                      ✅ # 113 tests, runs in the CI light gate
 
 app/flats_web/                     # FastAPI routers + templates, own container
-app/models/flats.py                # flats_lots, flats_rules, flats_clauses,
-                                   #   flats_runs, flats_review_decisions
+app/models/flats.py             ✅ # flats.runs, flats.designs, flats.lots,
+                                   #   flats.lot_results, flats.rules,
+                                   #   flats.clauses, flats.review_decisions
+scripts/check_flats_firewall.py ✅ # §7, runs in CI
 ```
+
+**Table names are schema-qualified, not prefixed** — `flats.lots`, never `flats_lots`.
+An earlier draft of this section said otherwise; §6 is the decision.
 
 ---
 
 ## 10. Build order
 
 ### Phase 0 — Foundation
-Repackage quadfit into `flats/`. State→County→City config tree with GEOID keys. Rule
-schema v1 + JSON Schema validation + per-value provenance + clause ledger scaffolding.
-Coverage ledger. **Design catalog schema (§5)** — `flats.designs` + `(lot, design, run)`
-result keying, even while only one design exists. **Condo/air-parcel detector** (§12).
-Port all 96 existing zone rows — **all demoted to `draft`**, none inherit trust. Port
-tests. PostGIS migration (its own change). Firewall CI check. Naming guardrails + doc
-forward-pointers.
+
+| | |
+|---|---|
+| ✅ | Rule model with per-value provenance and a `draft → verified → stale` lifecycle |
+| ✅ | State→County→City config tree, loader, resolver with `preempts` |
+| ✅ | Coverage ledger + clause ledger (§2) |
+| ✅ | Condo / air-parcel detector (§12) |
+| ✅ | Firewall script + CI check (§7); naming guardrails and doc forward-pointers |
+| ✅ | Port of all 96 quadfit zone rows — **all demoted to `draft`**, none inherit trust |
+| ✅ | Generated encoding backlog: 150 observed pairs, 236,558 lots, 100% blocked |
+| ✅ | Design catalog (§5) — versioned, immutable, two pods shipped |
+| ✅ | PostGIS (migration 0124, its own change) and the `flats.*` schema (0125) |
+| | Repackage the remaining quadfit stages into `flats/` |
+| | `provenance/` store — quoted code text, hashed |
+| | `config/slack.yaml` (§4) and `config/pipeline.yaml` |
+
+**On "100% blocked".** That is the correct reading of the first ledger, not a
+regression. Every ported value is `draft` by design, so no zone can produce GREEN until
+verification runs — which is Phase 1, and is the point.
 
 *Exit: pipeline reproduces quadfit's numbers, everything in REVIEW pending verification,
 backlog visible, financial engine provably untouched.*

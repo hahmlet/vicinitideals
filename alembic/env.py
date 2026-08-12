@@ -24,6 +24,26 @@ if config.config_file_name is not None:
 # Metadata for autogenerate
 target_metadata = Base.metadata
 
+# ---------------------------------------------------------------------------
+# Schema filtering
+#
+# FLATS lives in the `flats` schema, so autogenerate has to look outside
+# `public` (include_schemas=True). That makes it see PostGIS's own objects too,
+# and since they are not in Base.metadata it would helpfully propose dropping
+# them — taking the extension's coordinate-system catalog with it. Filter them.
+# ---------------------------------------------------------------------------
+_POSTGIS_TABLES = {"spatial_ref_sys", "geometry_columns", "geography_columns"}
+_POSTGIS_SCHEMAS = {"tiger", "tiger_data", "topology"}
+
+
+def include_object(obj, name, type_, reflected, compare_to) -> bool:
+    if type_ == "table":
+        if name in _POSTGIS_TABLES:
+            return False
+        if getattr(obj, "schema", None) in _POSTGIS_SCHEMAS:
+            return False
+    return True
+
 # Override sqlalchemy.url from application settings
 config.set_main_option("sqlalchemy.url", settings.database_url)
 
@@ -38,6 +58,8 @@ def run_migrations_offline() -> None:
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
+        include_schemas=True,
+        include_object=include_object,
     )
     with context.begin_transaction():
         context.run_migrations()
@@ -47,7 +69,12 @@ def run_migrations_offline() -> None:
 # Online migrations (async)
 # ---------------------------------------------------------------------------
 def do_run_migrations(connection: Connection) -> None:
-    context.configure(connection=connection, target_metadata=target_metadata)
+    context.configure(
+        connection=connection,
+        target_metadata=target_metadata,
+        include_schemas=True,
+        include_object=include_object,
+    )
     with context.begin_transaction():
         context.run_migrations()
 

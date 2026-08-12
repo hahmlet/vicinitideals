@@ -12,6 +12,9 @@ dependencies = [
     "sqlalchemy[asyncio]>=2.0",
     "asyncpg>=0.29",
     "alembic>=1.13",
+    # PostGIS column types for the flats.* schema. Pure Python — the heavy GIS
+    # stack (shapely, rasterio, pyproj) stays in the `gis` extra.
+    "geoalchemy2>=0.15",
     # Config / validation
     "pydantic>=2.0",
     "pydantic-settings>=2.0",
@@ -34,6 +37,7 @@ api = [
     "sqlalchemy[asyncio]>=2.0",
     "asyncpg>=0.29",
     "alembic>=1.13",
+    "geoalchemy2>=0.15",
     "pydantic>=2.0",
     "pydantic-settings>=2.0",
     "pyxirr>=0.10",

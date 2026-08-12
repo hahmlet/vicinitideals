@@ -52,6 +52,44 @@ Physical attributes (units, gba_sqft, year_built, lot_sqft, property_type) live 
 | **DedupCandidate** | `dedup_candidates` | Potential duplicate listing pair pending review | `id` (UUID) |
 | **MapPolygon** | `map_polygons` | Named geographic polygon for listing filtering (zone painter) | `slug` (unique) |
 
+### 1.0b FLATS — the `flats` schema (migration 0125)
+
+A **second product in the same database**, in its own Postgres schema. Screening, not
+underwriting: can a fixed-dimension 4-unit attached townhome be legally and physically
+placed on a given lot? Nothing in `public` references it and nothing in it references
+`public` except `review_decisions` (org + reviewer). Architecture:
+[Lot Analysis/FLATS_PLAN.md](../Lot%20Analysis/FLATS_PLAN.md); ORM:
+[app/models/flats.py](../app/models/flats.py).
+
+**This is not a revival of `parcels`.** Different schema, different keying, different
+ingest. See the Archive note at the bottom of this document.
+
+| Entity | Table | Purpose | Key |
+|---|---|---|---|
+| **FlatsRun** | `flats.runs` | One pipeline execution; records code + rule versions, designs and counties in scope | `id` (bigint) |
+| **FlatsDesign** | `flats.designs` | Immutable snapshot of a catalog pod as a run used it | `key` = `id@version` |
+| **FlatsLot** | `flats.lots` | A taxlot and every **design-independent** fact about it (envelope, fit frontier, slope, sewer, economics — JSONB `facts`) | `(county, tlid)` unique |
+| **FlatsLotResult** | `flats.lot_results` | Verdict for one lot × one design × one run: tier, slack, binding constraints, site plan | `(lot_id, design_key, run_id)` |
+| **FlatsRule** | `flats.rules` | Per-run snapshot of a resolved zoning value + the citation behind it | `(run_id, jurisdiction, zone, field)` |
+| **FlatsClause** | `flats.clauses` | RASE-tagged sentence of code text; drives completeness and drift watch | `id` (clause slug) |
+| **FlatsReviewDecision** | `flats.review_decisions` | Durable human verdict, replayed into every later run | partial unique on `(county, tlid, design_key, check_code)` where not superseded |
+
+Three keying decisions, all expensive to retrofit and therefore made up front:
+
+- **`(lot, design, run)` results.** Design-independent work is computed once on
+  `flats.lots`; only the site plan and set-access checks fan out. Adding a tenth pod is a
+  re-run of two stages, not a migration.
+- **Runs are comparable.** Every result names its run, and every run names the code and
+  rule-config versions behind it, so "which lots changed tier and why" is a join.
+- **Decisions key on TLID, not on a row id.** The pipeline rebuilds `flats.lots` each run;
+  a decision keyed on `lots.id` would evaporate with it and the review queue would reset.
+
+Geometry: `SRID 2913` (NAD83(HARN) / Oregon North, **feet**) for working geometry, `4326`
+for the display centroid. Requires PostGIS (migration 0124) — the Postgres image is built
+from [docker/postgres-postgis.Dockerfile](../docker/postgres-postgis.Dockerfile), not the
+upstream `postgis/postgis` image, which would downgrade glibc and invalidate text-index
+collations.
+
 ### 1.1 Deal / Scenario / Project hierarchy (financial side)
 
 The listing/parcel half of the schema above feeds into the financial half below. The canonical entities:

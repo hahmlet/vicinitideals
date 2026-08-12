@@ -1,0 +1,43 @@
+# Slack and tolerance policy.
+#
+# Two different things, deliberately separate:
+#
+#   Report slack — the margin on every check, recorded whether it passes or
+#   fails. "Clears coverage by 340 sqft", "misses front setback by 1.4 ft".
+#   A measurement. Costs nothing, since every check computes it anyway, and it
+#   is what makes results rankable and the design sweep meaningful.
+#
+#   Tolerance — how much shortfall is forgiven before a check is treated as a
+#   hard failure. A policy knob, not a measurement.
+#
+# Tolerance never manufactures a GREEN. A check inside tolerance moves from RED
+# to REVIEW, which is the whole point: a false red silently deletes an
+# acquisition target, while a false green costs one review. Exclusion has to be
+# unambiguous; inclusion only has to be plausible.
+#
+# Both are applied at report time, so sweeping tolerance to see where lot counts
+# move is seconds, not a rebuild.
+
+report: always
+
+# Margin within which a failing check becomes REVIEW instead of RED. Units
+# follow the check name. Zero means the code number is taken literally.
+tolerance:
+  # Setbacks are stated to the tenth of a foot and surveyed; no slop.
+  setback_ft: 0.0
+  # The raster fit test is conservative to about one cell, so a rectangle
+  # missing by less than half a foot is a measurement artifact, not a verdict.
+  fit_ft: 0.5
+  coverage_pct: 0.0
+  min_lot_area_sqft: 0
+  min_frontage_ft: 0.0
+  height_ft: 0.0
+  far: 0.0
+  # Slope comes from a 3 ft DEM. Two points of grade is inside its noise floor.
+  slope_pct: 2.0
+  # Stall counts are integers; a fraction of a stall is a rounding artifact.
+  parking_stalls: 0.25
+
+# Per-jurisdiction overrides, most specific layer wins. Keys are rule-layer ids
+# — the same `or/<county>/<city>` path the jurisdiction files use.
+overrides: {}

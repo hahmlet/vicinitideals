@@ -116,6 +116,20 @@ from app.models.document import (  # noqa: F401
     DocumentTaskTemplate,
 )
 
+# 99. FLATS screening — lives in the `flats` Postgres schema, not `public`.
+#     A separate product sharing this database; see app/models/flats.py.
+#     Imported last: FlatsReviewDecision has FKs to organizations and users.
+from app.models.flats import (  # noqa: F401,E402
+    FlatsClause,
+    FlatsDesign,
+    FlatsLot,
+    FlatsLotResult,
+    FlatsReviewDecision,
+    FlatsRule,
+    FlatsRun,
+)
+
+
 __all__ = [
     "Base",
     # Org
@@ -201,4 +215,12 @@ __all__ = [
     "DealShare",
     "DocumentShare",
     "DocumentTaskTemplate",
+    # FLATS screening (flats.* schema — a separate product, see app/models/flats.py)
+    "FlatsRun",
+    "FlatsDesign",
+    "FlatsLot",
+    "FlatsLotResult",
+    "FlatsRule",
+    "FlatsClause",
+    "FlatsReviewDecision",
 ]

@@ -178,6 +178,15 @@ def _test_db_url() -> str:
 
     # Schema bootstrap also runs synchronously — no loop, no asyncpg.
     sync_engine = create_engine(_sync_url(run_url))
+    with sync_engine.connect() as conn:
+        # FLATS tables live in the `flats` schema and carry PostGIS geometry
+        # columns. create_all will not create the schema for them, and the
+        # geometry types do not exist until the extension does — so both have
+        # to be in place before the metadata is emitted, or every test in the
+        # suite fails at collection with an undefined-schema error.
+        conn.execute(text("CREATE EXTENSION IF NOT EXISTS postgis"))
+        conn.execute(text("CREATE SCHEMA IF NOT EXISTS flats"))
+        conn.commit()
     Base.metadata.create_all(sync_engine)
     sync_engine.dispose()
 
@@ -266,7 +275,12 @@ async def session(_test_engine, _rebind_app_db) -> AsyncGenerator[AsyncSession, 
             await sess.close()
 
     # Cleanup: wipe all rows so the next test starts from a clean slate.
-    table_names = ", ".join(f'"{t.name}"' for t in Base.metadata.sorted_tables)
+    # Schema-qualified: FLATS tables live in `flats`, and an unqualified name
+    # would be resolved against `public` and fail the whole teardown.
+    table_names = ", ".join(
+        f'"{t.schema}"."{t.name}"' if t.schema else f'"{t.name}"'
+        for t in Base.metadata.sorted_tables
+    )
     if table_names:
         async with _test_engine.begin() as conn:
             await conn.execute(text(f"TRUNCATE {table_names} RESTART IDENTITY CASCADE"))
