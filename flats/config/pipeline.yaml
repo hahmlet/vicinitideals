@@ -1,0 +1,464 @@
+# FLATS data sources — one declared dataset per thing we fetch.
+#
+# Every county GIS endpoint the screen depends on lives here rather than inside
+# a downloader, for three reasons. A URL that rots is a config edit, not a code
+# change. A jurisdiction can be switched off without touching anything that
+# runs. And the registry itself is auditable: it is possible to ask "what is
+# Gresham's zoning read from" and get an answer without reading Python.
+#
+# Every dataset arrives in the working CRS. Where a service publishes something
+# else, `native_srid` records that and the fetch reprojects server-side — a
+# silent CRS mismatch would put every lot in the wrong place with no error.
+#
+# Field lists are not decoration: a layer fetched without its attributes yields
+# geometry nobody can zone.
+
+version: 1
+
+#: NAD83(HARN) / Oregon North, in FEET. Everything the screen measures —
+#: setbacks, envelope, fit — is in feet, so the working CRS is a foot CRS and
+#: no unit conversion happens anywhere downstream.
+working_srid: 2913
+#: WGS84, for map display and the centroid stored on flats.lots.
+display_srid: 4326
+
+defaults:
+  #: Distance from a lot line to a street centerline that counts as frontage.
+  #: Taxlots exclude right-of-way, so this is about half a local ROW width.
+  street_threshold_ft: 40.0
+  #: Boundary simplification before edge classification — merges the collinear
+  #: vertex runs that survey data is full of.
+  simplify_tolerance_ft: 1.0
+  #: Raster cell for the fit stage. Matches the fit_ft tolerance in slack.yaml.
+  grid_resolution_ft: 0.5
+
+#: Jurisdictions the run covers. Setting one false stops it being fetched and
+#: scored without deleting its rules, its history, or anyone's review
+#: decisions — toggling a city back on re-runs only that city.
+jurisdictions:
+  or/multnomah/portland: true
+  or/multnomah/gresham: true
+  or/multnomah/troutdale: true
+  or/multnomah/fairview: true
+  or/multnomah/wood-village: true
+  or/multnomah/maywood-park: false      # no multi-dwelling zoning of interest
+  or/multnomah/_unincorporated: true
+  or/clackamas/happy-valley: true
+  or/clackamas/milwaukie: true
+  or/clackamas/oregon-city: true
+  or/clackamas/gladstone: true
+  or/clackamas/west-linn: true
+  or/clackamas/tualatin: true
+  or/clackamas/wilsonville: true
+  or/clackamas/lake-oswego: true        # north edge crosses into Multnomah
+  or/clackamas/johnson-city: false      # manufactured-home park, no fourplex land
+  or/clackamas/rivergrove: false        # ~500 people, no multi-dwelling zones
+  or/clackamas/_unincorporated: true
+
+datasets:
+
+  # --- regional base layers ------------------------------------------------
+
+  rlis_taxlots:
+    kind: rlis_zip
+    label: Metro RLIS regional taxlots
+    provides: lots
+    url: https://drcmetro.maps.arcgis.com/sharing/rest/content/items/3949bc39e980444384312a8c4d7bdb08/data
+    member: TAXLOTS/taxlots_public.shp
+    serves: [or/multnomah, or/clackamas]
+    filter: COUNTY in (M, C)
+    fields:
+      [TLID, SITEADDR, SITECITY, SITEZIP, JURIS_CITY, COUNTY, PROP_CODE,
+       STATECLASS, LANDUSE, YEARBUILT, BLDGSQFT, LANDVAL, BLDGVAL, TOTALVAL,
+       ASSESSVAL, SALEDATE, SALEPRICE]
+    notes: >-
+      The regional shapefile carries Washington County too; the filter keeps the
+      two counties FLATS covers. Holes must be read through pyshp's
+      __geo_interface__ — the delta helper's own converter splits interior rings
+      into separate polygons, which inflates lot areas.
+
+  rlis_streets:
+    kind: rlis_zip
+    label: Metro RLIS street centerlines
+    provides: streets
+    url: https://drcmetro.maps.arcgis.com/sharing/rest/content/items/3949bc39e980444384312a8c4d7bdb08/data
+    member: STREETS/streets.shp
+    geometry: polyline
+    serves: [or/multnomah, or/clackamas]
+    fields: [LOCALID, STREETNAME, PREFIX, FTYPE, TYPE, F_ZLEV, T_ZLEV]
+    notes: Frontage is inferred from distance to these lines. Without them every lot reads landlocked.
+
+  rlis_zoning_metro:
+    kind: rlis_zip
+    label: Metro regional zoning (fallback)
+    provides: zoning
+    url: https://drcmetro.maps.arcgis.com/sharing/rest/content/items/3949bc39e980444384312a8c4d7bdb08/data
+    member: LAND/zoning.shp
+    zone_field: ZONE
+    serves: [or/multnomah/_unincorporated, or/clackamas/_unincorporated, or/multnomah/fairview]
+    notes: >-
+      Covers the jurisdictions that publish no zoning service of their own —
+      Fairview's code is PDF-only, and neither county publishes unincorporated
+      zoning through ArcGIS.
+
+  rlis_ugb:
+    kind: rlis_zip
+    label: Urban growth boundary
+    provides: boundary
+    url: https://drcmetro.maps.arcgis.com/sharing/rest/content/items/3949bc39e980444384312a8c4d7bdb08/data
+    member: BOUNDARY/ugb.shp
+    serves: [or/multnomah, or/clackamas]
+    notes: HB 2001's fourplex mandate follows the UGB, not city population.
+
+  # --- authoritative city zoning -------------------------------------------
+
+  zoning_portland:
+    kind: arcgis
+    label: Portland Maps zoning
+    provides: zoning
+    url: https://www.portlandmaps.com/arcgis/rest/services/Public/Zoning/MapServer/0
+    zone_field: ZONE
+    fields: [ZONE, ZONE_DESC, OVRLY, MAPLABEL, UNINC]
+    serves: [or/multnomah/portland]
+    notes: OVRLY carries overlay letters as text; the environmental overlay geometry is a separate layer.
+
+  zoning_gresham:
+    kind: arcgis
+    label: Gresham planning zoning
+    provides: zoning
+    url: https://gis.greshamoregon.gov/ext/rest/services/GME/Planning/MapServer/4
+    zone_field: ZONE
+    fields: [ZONE, DISTRICT, DESCRIPT]
+    serves: [or/multnomah/gresham]
+
+  zoning_troutdale:
+    kind: arcgis
+    label: Troutdale zoning
+    provides: zoning
+    url: https://maps.troutdaleoregon.gov/server/rest/services/Public_Web/City_GIS/MapServer/74
+    zone_field: zonecode
+    fields: [zonecode, description]
+    serves: [or/multnomah/troutdale]
+
+  zoning_wood_village:
+    kind: arcgis
+    label: Wood Village zoning
+    provides: zoning
+    url: https://services7.arcgis.com/5Loh3xXKWLd2M7xA/arcgis/rest/services/Zoning/FeatureServer/9
+    zone_field: Labeling
+    fields: [Labeling, Name]
+    serves: [or/multnomah/wood-village]
+
+  zoning_lake_oswego:
+    kind: arcgis
+    label: Lake Oswego zoning
+    provides: zoning
+    url: https://maps.ci.oswego.or.us/server/rest/services/Layers_Geocortex/MapServer/68
+    zone_field: LAYER
+    fields: [LAYER, INFO, LINK]
+    serves: [or/clackamas/lake-oswego]
+    notes: The city's north edge crosses the county line into Multnomah — roughly 1,450 lots.
+
+  zoning_happy_valley:
+    kind: arcgis
+    label: Happy Valley zoning
+    provides: zoning
+    url: https://services5.arcgis.com/fuVQ9NIPGnPhCBXp/arcgis/rest/services/Zoning_public_view/FeatureServer/0
+    zone_field: ZONE
+    fields: [ZONE, ZOVER]
+    serves: [or/clackamas/happy-valley]
+
+  zoning_milwaukie:
+    kind: arcgis
+    label: Milwaukie zoning
+    provides: zoning
+    url: https://services6.arcgis.com/8e6aYcxt8yhvXvO9/ArcGIS/rest/services/COM_Zoning_SDE/FeatureServer/11
+    zone_field: ZONE
+    fields: [ZONE]
+    serves: [or/clackamas/milwaukie]
+
+  zoning_oregon_city:
+    kind: arcgis
+    label: Oregon City zoning
+    provides: zoning
+    url: https://maps.orcity.org/arcgis/rest/services/LandUseAndPlanning_PUBLIC/MapServer/62
+    zone_field: ZONE
+    fields: [ZONE]
+    serves: [or/clackamas/oregon-city]
+
+  zoning_gladstone:
+    kind: arcgis
+    label: Gladstone zoning
+    provides: zoning
+    url: https://maps.orcity.org/arcgis/rest/services/GLADSTONE/Gladstone_LandUseAndPlanning/MapServer/7
+    zone_field: ZONE
+    fields: [ZONE]
+    serves: [or/clackamas/gladstone]
+    notes: >-
+      Oregon City hosts this on Gladstone's behalf and the service is
+      countywide. Gladstone lots pick their own polygons in the majority-area
+      join because they sit inside the city.
+
+  zoning_west_linn:
+    kind: arcgis
+    label: West Linn zoning
+    provides: zoning
+    url: https://geo.westlinnoregon.gov/server/rest/services/Operational/ZoningComPlan/MapServer/8
+    zone_field: DESIGNATION
+    fields: [DESIGNATION]
+    serves: [or/clackamas/west-linn]
+    notes: DESIGNATION carries the canonical hyphenated code (R-5, R-10); the sibling ZONE field is a compressed alias.
+
+  zoning_tualatin:
+    kind: arcgis
+    label: Tualatin planning districts
+    provides: zoning
+    url: https://tualgis.ci.tualatin.or.us/server/rest/services/LandusePlanningExplorer/MapServer/6
+    zone_field: PLANDIST.CZONE
+    fields: [PLANDIST.CZONE]
+    serves: [or/clackamas/tualatin]
+    notes: The zone code is a joined-table qualified field name, dot and all.
+
+  zoning_wilsonville:
+    kind: arcgis
+    label: Wilsonville zoning
+    provides: zoning
+    url: https://gis.wilsonvillemaps.com/server/rest/services/Map___WilsonvilleMaps_MIL1/FeatureServer/40
+    zone_field: ZONE_CODE
+    fields: [ZONE_CODE]
+    serves: [or/clackamas/wilsonville]
+
+  # --- environmental overlays ----------------------------------------------
+
+  overlay_pdx_ezone_p:
+    kind: arcgis
+    label: Portland environmental protection zone
+    provides: overlay
+    url: https://www.portlandmaps.com/arcgis/rest/services/Public/BPS_Zoning_Code_Layers/MapServer/117
+    fields: [OVRLY, ZONE, PLDIST]
+    serves: [or/multnomah/portland]
+    notes: The overlay geometry, not the OVRLY letters printed on the base zoning layer.
+
+  overlay_pdx_ezone_c:
+    kind: arcgis
+    label: Portland environmental conservation zone
+    provides: overlay
+    url: https://www.portlandmaps.com/arcgis/rest/services/Public/BPS_Zoning_Code_Layers/MapServer/118
+    fields: [OVRLY, ZONE, PLDIST]
+    serves: [or/multnomah/portland]
+
+  overlay_pdx_ezone_v:
+    kind: arcgis
+    label: Portland river/greenway overlay
+    provides: overlay
+    url: https://www.portlandmaps.com/arcgis/rest/services/Public/BPS_Zoning_Code_Layers/MapServer/116
+    fields: [OVRLY, ZONE, PLDIST]
+    serves: [or/multnomah/portland]
+
+  overlay_gresham_wetlands:
+    kind: arcgis
+    label: Gresham wetlands
+    provides: overlay
+    url: https://gis.greshamoregon.gov/ext/rest/services/GME/Environmental/MapServer/15
+    fields: [COWARDIN, HGM, WETLAND_TYPE]
+    serves: [or/multnomah/gresham]
+
+  overlay_gresham_streams:
+    kind: arcgis
+    label: Gresham streams
+    provides: overlay
+    geometry: polyline
+    url: https://gis.greshamoregon.gov/ext/rest/services/GME/Environmental/MapServer/0
+    fields: [NAME]
+    serves: [or/multnomah/gresham]
+
+  overlay_gresham_hcra:
+    kind: arcgis
+    label: Gresham habitat conservation and restoration area
+    provides: overlay
+    url: https://gis.greshamoregon.gov/ext/rest/services/GME/Environmental/MapServer/12
+    fields: [OBJECTID]
+    serves: [or/multnomah/gresham]
+
+  overlay_gresham_hillside:
+    kind: arcgis
+    label: Gresham hillside
+    provides: overlay
+    url: https://gis.greshamoregon.gov/ext/rest/services/GME/Environmental/MapServer/8
+    fields: [OBJECTID]
+    serves: [or/multnomah/gresham]
+
+  overlay_troutdale_veco:
+    kind: arcgis
+    label: Troutdale Title 3 vegetated corridor
+    provides: overlay
+    url: https://maps.troutdaleoregon.gov/server/rest/services/Public_Web/City_GIS/MapServer/77
+    fields: [flood96, fema, wetbuf, riparian, title3]
+    serves: [or/multnomah/troutdale]
+
+  overlay_fairview_nrl:
+    kind: arcgis
+    label: Fairview natural resource layer
+    provides: overlay
+    url: https://services5.arcgis.com/3DoY8p7EnUTzaIE7/arcgis/rest/services/Natural_Resource_Layer/FeatureServer/0
+    fields: [TYPE]
+    serves: [or/multnomah/fairview]
+    notes: These polygons are already the buffered corridors, not the stream lines.
+
+  overlay_metro_title3:
+    kind: arcgis
+    label: Metro Title 3 water quality and flood management
+    provides: overlay
+    url: https://services2.arcgis.com/McQ0OlIABe29rJJy/arcgis/rest/services/Title_3_Land/FeatureServer/0
+    fields: [FLOOD96, FEMA, WETBUF, RIPARIAN, TITLE3]
+    serves: [or/multnomah, or/clackamas]
+    notes: Regional fallback for jurisdictions with no local corridor layer.
+
+  overlay_metro_title13:
+    kind: arcgis
+    label: Metro Title 13 habitat conservation areas
+    provides: overlay
+    url: https://services2.arcgis.com/McQ0OlIABe29rJJy/arcgis/rest/services/Title_13_Habitat_Conservation_Areas/FeatureServer/0
+    fields: [HCA_VALUE]
+    serves: [or/multnomah, or/clackamas]
+
+  overlay_metro_wetlands:
+    kind: arcgis
+    label: Metro wetlands
+    provides: overlay
+    url: https://services2.arcgis.com/McQ0OlIABe29rJJy/arcgis/rest/services/Wetlands/FeatureServer/0
+    fields: [SOURCE]
+    serves: [or/multnomah, or/clackamas]
+
+  overlay_fema_flood:
+    kind: arcgis
+    label: FEMA National Flood Hazard Layer
+    provides: overlay
+    url: https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28
+    fields: [FLD_ZONE, ZONE_SUBTY, SFHA_TF, STATIC_BFE]
+    where: '"DFIRM_ID" = ''41051C'''
+    serves: [or/multnomah, or/clackamas]
+    notes: NFHL rejects the unquoted form of the where clause intermittently — keep the quoting exactly as written.
+
+  # --- sanitary sewer ------------------------------------------------------
+
+  util_sewer_portland:
+    kind: arcgis
+    label: Portland sanitary mains
+    provides: utility
+    geometry: polyline
+    url: https://www.portlandmaps.com/arcgis/rest/services/Public/Utilities_Sewer/MapServer/3
+    fields: [OWNRSHIP, SERVSTAT, PIPESIZE]
+    serves: [or/multnomah/portland]
+
+  util_sewer_gresham:
+    kind: arcgis
+    label: Gresham sanitary mains
+    provides: utility
+    geometry: polyline
+    url: https://gis.greshamoregon.gov/ext/rest/services/GME/Wastewater/MapServer/5
+    fields: [gnownedby]
+    serves: [or/multnomah/gresham]
+
+  util_sewer_troutdale:
+    kind: arcgis
+    label: Troutdale sanitary mains
+    provides: utility
+    geometry: polyline
+    url: https://maps.troutdaleoregon.gov/server/rest/services/Public_Web/City_GIS/MapServer/11
+    fields: [owner, date_built]
+    serves: [or/multnomah/troutdale]
+
+  util_sewer_fairview:
+    kind: arcgis
+    label: Fairview sanitary mains
+    provides: utility
+    geometry: polyline
+    url: https://services5.arcgis.com/3DoY8p7EnUTzaIE7/arcgis/rest/services/Sewer_Main_Public/FeatureServer/7
+    fields: [DIA, YEAR_CONST]
+    serves: [or/multnomah/fairview]
+
+  util_sewer_wood_village:
+    kind: arcgis
+    label: Wood Village sanitary mains
+    provides: utility
+    geometry: polyline
+    url: https://services7.arcgis.com/5Loh3xXKWLd2M7xA/arcgis/rest/services/Sanitary_Sewer_Main/FeatureServer/19
+    fields: [DIAMETER, MATERIAL]
+    serves: [or/multnomah/wood-village]
+
+  util_sewer_oregon_city:
+    kind: arcgis
+    label: Oregon City sanitary mains
+    provides: utility
+    geometry: polyline
+    url: https://maps.orcity.org/arcgis/rest/services/UtilitiesSewer_PUBLIC/MapServer/3
+    fields: [NTG_DIA, NTG_MAT_CD, NTG_OWN_CD]
+    serves: [or/clackamas/oregon-city]
+
+  util_sewer_wilsonville:
+    kind: arcgis
+    label: Wilsonville sanitary mains
+    provides: utility
+    geometry: polyline
+    url: https://gis.wilsonvillemaps.com/server/rest/services/SanitaryDataset/SAN_Mainlines_OMS/FeatureServer/0
+    fields: [OWNER, DIAMETER, MATERIAL, STATUS]
+    serves: [or/clackamas/wilsonville]
+
+  util_sewer_west_linn:
+    kind: arcgis
+    label: West Linn sanitary mains
+    provides: utility
+    geometry: polyline
+    url: https://geo.westlinnoregon.gov/server/rest/services/PublicWorks/ss_system_public/MapServer/9
+    fields: [OWNER, DIAMETER, MATERIAL, STATUS]
+    serves: [or/clackamas/west-linn]
+
+  util_sewer_milwaukie:
+    kind: arcgis
+    label: Milwaukie sanitary mains
+    provides: utility
+    geometry: polyline
+    url: https://services6.arcgis.com/8e6aYcxt8yhvXvO9/arcgis/rest/services/Sewer_Mains/FeatureServer/6
+    fields: [OWNEDBY, DIAMETER, MATERIAL, STATUS]
+    serves: [or/clackamas/milwaukie]
+
+  util_sewer_gladstone:
+    kind: arcgis
+    label: Gladstone sanitary mains
+    provides: utility
+    geometry: polyline
+    url: https://maps.orcity.org/arcgis/rest/services/GLADSTONE/Gladstone_UtilitiesSewer/MapServer/6
+    fields: [OWNER, DIAMETER, MATERIAL, Status]
+    serves: [or/clackamas/gladstone]
+
+  util_sewer_district_clackamas:
+    kind: arcgis
+    label: Clackamas County sanitary sewer districts
+    provides: utility
+    url: https://services3.arcgis.com/I2eWXOndpF9m8oKC/ArcGIS/rest/services/Sewer_Districts/FeatureServer/0
+    fields: [SEWER_DIST, DISTRICT]
+    native_srid: 3857
+    serves: [or/clackamas]
+    notes: >-
+      District polygons, not mains. Happy Valley, unincorporated north
+      Clackamas and the Tualatin sliver are served by WES or Clean Water
+      Services, neither of which publishes public main linework — a lot inside
+      a district is connectable even with no mapped main, which is the
+      difference between a review flag and a hard exclusion.
+
+  # --- terrain -------------------------------------------------------------
+
+  dem_3dep:
+    kind: tnm_dem
+    label: USGS 3DEP 1 m DEM
+    provides: terrain
+    url: https://tnmaccess.nationalmap.gov/api/v1/products
+    native_srid: 4326
+    bbox_4326: [-122.90, 45.26, -122.24, 45.65]
+    serves: [or/multnomah, or/clackamas]
+    notes: >-
+      Per-lot slope. The bbox covers urban Multnomah plus the eight Clackamas
+      urban cities down to Wilsonville and Tualatin at about 45.27 N. Two lidar
+      projects overlap the area (OR_OLCMetro_2019, OR_PortlandMetro); newest
+      tile wins per cell.
