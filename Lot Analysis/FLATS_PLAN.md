@@ -1723,3 +1723,26 @@ townhouse row whose standard is *no minimum* cannot veto the default row
 beside it. The encoded file's plat-path choice is what makes that safe —
 Gresham's values model the quadplex path, for which the default row is the
 right one — and the reviewer, not the reader, owns that choice.
+
+### §26 addendum — table-level, same session
+
+Troutdale's grid-per-type family ("read the townhouse *table*") followed the
+row-level shape immediately. Two reader facts made it work: the heading that
+names who a grid is for — "C. Townhouse dwellings:" — is printed *above* the
+grid's header line, just outside its span, so the reader now looks back a few
+lines for a heading-shaped line naming a housing type and seeds the grid's
+`block` with it; and a wrapped "see note 1" cell that drifts off its column
+glues onto the row label, so "Front yard see note 1 see note 1" now still
+reads as the front yard row, with the refs conditioning every value in the
+row — the direction that refuses a quote rather than quoting a conditional
+number clean. Rows with no type of their own inherit the grid's.
+
+Result: Troutdale's three standing `differs` (front setbacks, file 10 vs
+doc "1, 2, 20" — shredded note prose outvoting nothing) resolved to `agrees`,
+and the layer went from 12 agrees / 3 differs to **18 agrees / 0 differs**,
+every value corroborated against the triplex/quadplex block's own rows.
+Nothing new attaches — the remaining unquoted values refuse by name
+(conditional see-notes, townhouse-vs-quadplex side setbacks that genuinely
+disagree) — but the review gate is clean. Still unclaimed: Wood Village's MR
+columns (column-level) and Gresham's Table 4.0131 (type blocks over
+zone-group rows under two-tier headers).

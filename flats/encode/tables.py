@@ -114,6 +114,11 @@ class Row:
     #: standard has an exit written under the table, and a screen that reads
     #: the 30 and drops the 3 applies a ceiling the code does not impose.
     marks: dict[str, tuple[int, ...]] = dc_field(default_factory=dict)
+    #: The housing-type context the row sits in — Troutdale prints one whole
+    #: grid per type under headings like "C. Townhouse dwellings:", so the
+    #: type lives two headings up from the row, not in its label. "+"-joined
+    #: canonical types, empty when no type heading is in scope.
+    block: str = ""
 
     def marks_for(self, zone: str) -> tuple[int, ...]:
         return self.marks.get(zone, ())
@@ -417,6 +422,24 @@ def _read_span(lines: Sequence[str], first: int, last: int, start_line: int) -> 
     cols: tuple[Column, ...] = ()
     slots: tuple[str | None, ...] = ()
     group = ""
+    block = ""
+    # The heading that names who a grid is for is printed *above* its header
+    # line — "C. Townhouse dwellings:" then the zone columns — which puts it
+    # just outside the span. Look back a few lines for a heading-shaped line
+    # that names a housing type; footnote sentences that mention a type
+    # ("Rear yard setbacks for duplexes are 15 feet unless...") are excluded
+    # by the same word cap that keeps them from being group headings.
+    for prev in reversed(lines[max(0, first - 6) : first]):
+        stripped_prev = prev.strip()
+        if not stripped_prev:
+            continue
+        if len(stripped_prev.split()) <= _GROUP_WORDS and (
+            stripped_prev.endswith(":") or _GROUP_HEAD.match(stripped_prev)
+        ):
+            found_type = _housing_type(stripped_prev)
+            if found_type:
+                block = found_type
+                break
     reach = _MIN_REACH
     rows: list[Row] = []
     down: dict[str, dict[str, tuple[str, int, tuple[int, ...]]]] = {}
@@ -528,14 +551,27 @@ def _read_span(lines: Sequence[str], first: int, last: int, start_line: int) -> 
             # housing-type row after it keeps the wrong group. The word cap and
             # the no-period rule keep footnote text out: "8. Abuts an alley:
             # 16 feet; ..." is a condition, not a heading.
-            group = joined
+            found_type = _housing_type(joined)
+            if found_type:
+                # "A. Single-family detached and duplex dwellings:" — the
+                # heading names who the whole grid below it is for, not a
+                # standard. Troutdale prints one grid per type this way. The
+                # stale group is cleared: whatever heading was open belonged
+                # to the previous type's grid.
+                block, group = found_type, ""
+            else:
+                group = joined
             continue
         if joined.endswith(":"):
             # "Setbacks (ft):" — a heading, not a row, whatever stray cells
             # sit beside it. It scopes every row after it (across page breaks,
             # which is why a header re-anchor does not clear it) until the
             # next heading takes over.
-            group = joined
+            found_type = _housing_type(joined)
+            if found_type:
+                block, group = found_type, ""
+            else:
+                group = joined
             continue
         if values:
             rows.append(
@@ -546,6 +582,7 @@ def _read_span(lines: Sequence[str], first: int, last: int, start_line: int) -> 
                     contested=frozenset(contested),
                     marks=marks,
                     group=group,
+                    block=block,
                 )
             )
         elif label_parts and rows:
@@ -559,6 +596,7 @@ def _read_span(lines: Sequence[str], first: int, last: int, start_line: int) -> 
                 lines=previous.lines,
                 marks=previous.marks,
                 group=previous.group,
+                block=previous.block,
             )
 
     for label, per_zone in down.items():
@@ -692,6 +730,15 @@ _HOUSING_TYPES: tuple[tuple[re.Pattern[str], str], ...] = (
 )
 
 _EXCEPT = re.compile(r"\bexcept\b", re.I)
+
+#: A note reference that lost its cell: "Front yard see note 1 see note 1" is
+#: a row label with two columns' worth of note pointers glued on, because the
+#: wrapped "see note 1" lines under specific columns drifted off their offsets
+#: and were read as label continuations. The refs cannot be re-attributed to
+#: their columns, so they condition the whole row instead — the conservative
+#: direction: a value that was unconditional gains a note and attach refuses
+#: it, rather than a conditional one being quoted clean.
+_SEE_NOTE = re.compile(r"\bsee note (\d+)\b", re.I)
 
 
 def _housing_type(label: str) -> str | None:
@@ -1029,8 +1076,11 @@ def candidates_for(table: Table | Iterable[Row], zone: str, *, path: str) -> lis
         name = _subject(row.label)
         if name is None and "setback" in row.group.lower():
             # "Front yard" under "Setbacks (ft.):" — the group heading, not
-            # the row label, is what says these are setbacks at all.
-            name = _GROUPED_SUBJECTS.get(row.label.strip(" .").lower())
+            # the row label, is what says these are setbacks at all. Glued
+            # note refs are stripped before the exact match: "Front yard see
+            # note 1 see note 1" is still the front yard row.
+            clean = " ".join(_SEE_NOTE.sub("", row.label).split())
+            name = _GROUPED_SUBJECTS.get(clean.strip(" .").lower())
         if name is None:
             # "Townhouse" under "B. Minimum Lot Size2" — the row names who the
             # standard is for and the group heading names the standard. The
@@ -1049,6 +1099,12 @@ def candidates_for(table: Table | Iterable[Row], zone: str, *, path: str) -> lis
             # at home; everything else is a variant that would sit beside the
             # interior value as a bogus second reading.
             continue
+        if not htype:
+            # A row with no type of its own inherits its grid's: Troutdale's
+            # "Front yard" under "Setbacks (ft):" inside "C. Townhouse
+            # dwellings:" is the townhouse front setback, and reading it
+            # untyped would let it corroborate every other type's.
+            htype = row.block
         parsed = measure(row.value_for(zone)) or _measure_bare(
             row.value_for(zone), row.label, row.group
         )
@@ -1058,6 +1114,8 @@ def candidates_for(table: Table | Iterable[Row], zone: str, *, path: str) -> lis
         if FIELDS[name].kind != kind:
             continue
         value = int(number) if number.is_integer() else number
+        refs = tuple(dict.fromkeys(_SEE_NOTE.findall(row.label)))
+        glued = tuple(f"see note {n} (text not captured)" for n in refs)
         out.append(
             Candidate(
                 field=name,
@@ -1066,7 +1124,7 @@ def candidates_for(table: Table | Iterable[Row], zone: str, *, path: str) -> lis
                 text=f"{row.label}: {row.value_for(zone)} ({zone})",
                 quote=f"{path}#L{row.line_for(zone)}",
                 source="table",
-                notes=table.notes_for(row, zone),
+                notes=table.notes_for(row, zone) + glued,
                 housing_type=htype,
             )
         )

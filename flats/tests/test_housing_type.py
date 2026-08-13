@@ -197,3 +197,80 @@ def test_rows_for_other_types_alone_are_no_evidence() -> None:
     )
 
     assert {f.field: f.verdict for f in found}["min_lot_sqft"] is Verdict.unsupported
+
+
+# --- table-level: one grid per type (Troutdale's family) ---------------
+
+
+def _tline(label: str, cells: Sequence[str] = (), at: Sequence[int] = (38, 50)) -> str:
+    out = label
+    for text, col in zip(cells, at):
+        out += " " * (col - len(out)) + text
+    return out
+
+
+TROUTDALE_BLOCKS = "\n".join(
+    [
+        _tline("       A.     Single-family detached and duplex dwellings:"),
+        _tline(""),
+        _tline("Dimensional Standard", ("R-5", "R-7")),
+        _tline("Setbacks (ft):"),
+        _tline("   Front yard", ("20", "20")),
+        _tline("   Side yard", ("10", "7.5")),
+        _tline(""),
+        _tline("       C.     Townhouse dwellings:"),
+        _tline(""),
+        _tline("Dimensional Standard", ("R-5", "R-7")),
+        _tline("Setbacks (ft):"),
+        _tline("   Front yard see note 1", ("10", "10")),
+        _tline("   Side yard", ("5", "5")),
+    ]
+)
+
+
+def test_the_grid_inherits_the_type_heading_above_its_header() -> None:
+    # "C. Townhouse dwellings:" is printed above the header line — outside
+    # the table's own span. Every row of the grid below it is a townhouse row.
+    tables = read_tables(TROUTDALE_BLOCKS)
+    typed = {
+        c.housing_type
+        for t in tables
+        for c in candidates_for(t, "R-5", path="doc.txt")
+    }
+
+    assert "single_detached+duplex" in typed
+    assert "townhouse" in typed
+    assert "" not in typed
+
+
+def test_a_glued_note_ref_conditions_the_row_it_lost_its_cell_in() -> None:
+    # "Front yard see note 1" is a label wearing another column's note
+    # pointer. The row still reads as the front setback, and every value in
+    # it carries the ref as a condition — the direction that refuses a quote
+    # rather than quoting a conditional number clean.
+    tables = read_tables(TROUTDALE_BLOCKS)
+    fronts = [
+        c
+        for t in tables
+        for c in candidates_for(t, "R-5", path="doc.txt")
+        if c.field == "setback_front_ft" and c.housing_type == "townhouse"
+    ]
+
+    assert [c.value for c in fronts] == [10]
+    assert fronts[0].notes == ("see note 1 (text not captured)",)
+
+
+def test_selection_reads_the_townhouse_grid_not_the_detached_one() -> None:
+    # The detached/duplex grid says 5 or 10; the townhouse grid says 5. The
+    # encoded 5 corroborates against the pod's own grid only.
+    found = check_zone(
+        TROUTDALE_BLOCKS,
+        layer="or/multnomah/troutdale",
+        zone="R-5",
+        values={"setback_side_ft": value(5, "setback_side_ft")},
+        path="doc.txt",
+    )
+    side = {f.field: f for f in found}["setback_side_ft"]
+
+    assert side.verdict is Verdict.agrees
+    assert side.found == (5,)
