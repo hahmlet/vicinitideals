@@ -871,3 +871,71 @@ policy knob, `posture` in `flats/config/relief.yaml`, exactly parallel to tolera
 It filters the buy list; it never changes a colour. Re-running the county at
 "as-of-right only" versus "we will file for adjustments" is a report-time sweep, seconds,
 not a rebuild.
+
+---
+
+## 15. The source layer — what a breadth probe found
+
+*Added 2026-08-12. Six real fetches across five codifiers, run to discover what the
+framework must support rather than to encode anything. The result changed the
+provenance layer.*
+
+### One in six
+
+| Jurisdiction | Platform | Plain HTTP result |
+|---|---|---|
+| Gresham | own PDF | 114 KB of code text |
+| Portland (33.805) | portland.gov HTML | 3.5 KB of nav bar and footer, no code |
+| Troutdale | Municode | **empty** — renders in JavaScript |
+| West Linn | Zoneomics | table of contents, and a third-party restatement |
+| Fairview | Code Publishing | 403 |
+| Milwaukie | eCode360 | 403 |
+
+**The provenance store accepted all six.** The subsystem whose entire purpose is
+making evidence checkable would have let a reviewer sign over an empty file. That is
+the worst failure mode available to this project, because it does not look like a
+failure — it looks like coverage.
+
+### Three requirements, now built
+
+**A strategy ladder, not a single client.** Browser impersonation recovers both 403s;
+Code Publishing accepts `chrome124` and refuses `chrome131`, which is not something
+anyone could have reasoned out. Treating a blocked host as an unavailable one would
+have restricted the project to jurisdictions with friendly web servers and made it
+look like a data gap. `flats/provenance/sources.py`.
+
+**A plausibility guard.** A document is refused unless it reads like regulation —
+measured as lines carrying a section number or a dimensioned standard, by count and
+by share. Validated against all six samples: it refuses the empty file and the nav
+bar, accepts both real chapters. The character floor is deliberately low, because
+single sections are genuinely short and a floor high enough to catch a nav bar would
+teach everyone to pass `--allow-thin`.
+
+**Source authority.** A city's own site and its contracted codifier publish the
+ordinance. An aggregator publishes *its reading* of the ordinance. Both are storable;
+only the first may back a verified value. Quadfit cited an aggregator for West Linn.
+
+### Still open
+
+**Municode is JavaScript-only.** It serves a large share of Oregon cities and no
+amount of impersonation helps — it needs the underlying API or a rendered fetch. Until
+then those jurisdictions fail loudly instead of silently, which is the improvement;
+the coverage gap itself remains.
+
+**Landing pages are not documents.** Portland's HTML route for a chapter is furniture;
+the PDF is the artifact. Which URL holds the real text is per-jurisdiction knowledge
+and belongs in the layer's `ingest` block rather than in whoever is running the
+command.
+
+### A structural gap the reading surfaced
+
+Fairview's VSF zone does not state its own dimensional standards. It says the R-6
+standards apply, in a different chapter, *and* carries a conflict clause naming which
+chapter wins where they disagree. The rule model has state → county → city layering
+with `preempts`, and nothing for **zone-to-zone incorporation inside one
+jurisdiction**. Encoding VSF by copying R-6's numbers into it would produce values
+that silently stop tracking their source the first time R-6 is amended.
+
+This is the next model change, and it is exactly the kind the encoding UI depends on:
+a reviewer must be able to see that VSF's front setback *is* R-6's, not a duplicate
+of it.

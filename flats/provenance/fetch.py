@@ -34,6 +34,12 @@ from pathlib import Path
 from typing import Callable, Sequence
 
 from flats.encode.verify import LOG_PATH, Verification, VerificationLog
+from flats.provenance.sources import (
+    Authority,
+    FetchFailed,
+    authority_for,
+    fetch as fetch_source,
+)
 from flats.provenance.store import Document, ProvenanceError, ProvenanceStore, sha256
 from flats.rules.loader import CONFIG_ROOT, load_rules
 from flats.rules.model import Layer
@@ -44,6 +50,28 @@ EXTRACTOR = "flats-html-text/1"
 #: A slice shorter than this is reported. Legitimate one-line sections exist;
 #: a marker that hit the table of contents is far more common.
 SHORT_SLICE = 3
+
+#: A floor for truncated and error responses only. Deliberately low: single
+#: sections are genuinely short — Fairview's whole VSF chapter is about 4 KB —
+#: and a floor high enough to catch a nav bar would refuse real ones, which
+#: teaches everybody to pass --allow-thin and kills the guard. The count and
+#: ratio below are what actually separate a chapter from a web page.
+MIN_CHARS = 600
+#: Lines that read like regulation — a section number or a dimensioned
+#: standard. Absolute count and share are both checked: a long page of site
+#: chrome clears the first, a three-line fragment clears the second.
+MIN_CODE_LINES = 10
+MIN_CODE_RATIO = 0.05
+
+#: `33.110.220`, `4.0100`, `19.115.030` — a numbered provision.
+_SECTION_NO = re.compile(r"\b\d{1,3}\.\d{2,4}(?:\.\d+)?\b")
+#: `20 ft.`, `1,500 square feet`, `45 percent`, `4 units` — a standard with a
+#: number on it, which is what this project is here to read.
+_STANDARD = re.compile(
+    r"\b\d[\d,]*(?:\.\d+)?\s*"
+    r"(?:ft\.?|feet|foot|sq\.?\s*ft|square feet|percent|%|acres?|units?|stories|dwelling)\b",
+    re.I,
+)
 
 #: Elements whose contents are never prose.
 _DROP = frozenset({"script", "style", "noscript", "svg", "head", "template", "iframe"})
@@ -177,6 +205,35 @@ def _to_text(raw: bytes | str) -> str:
     return html_to_text(raw) if "<" in raw[:2048] else raw.replace("\r\n", "\n")
 
 
+def implausible(text: str) -> str | None:
+    """Why this text cannot be code, or None if it might be.
+
+    The provenance store exists to make evidence checkable, and it will hold
+    whatever it is handed. Six real fetches across five codifiers produced one
+    document of code text, three of site furniture, and one empty file — and
+    every one of them was stored as evidence a value could cite. A signature
+    over a nav bar is worse than no signature, because it looks like diligence.
+
+    Deliberately coarse. This is not a judgement about whether the right
+    chapter was fetched; it is the difference between a document and a web
+    page, and it only has to catch what a person would catch at a glance.
+    """
+    stripped = text.strip()
+    if not stripped:
+        return "the response was empty"
+    if len(stripped) < MIN_CHARS:
+        return f"only {len(stripped)} characters — a landing page, not a chapter"
+    lines = stripped.splitlines()
+    coded = sum(1 for line in lines if _SECTION_NO.search(line) or _STANDARD.search(line))
+    ratio = coded / len(lines)
+    if coded < MIN_CODE_LINES or ratio < MIN_CODE_RATIO:
+        return (
+            f"no regulatory text found — {coded} of {len(lines)} lines carry a "
+            f"section number or a dimensioned standard"
+        )
+    return None
+
+
 def fetch_text(
     url: str,
     *,
@@ -270,14 +327,52 @@ def main(argv: Sequence[str] | None = None, *, get: Callable[[str], bytes | str]
         help="accept changed text, withdrawing the reviews that relied on the old words",
     )
     parser.add_argument("--retrieved", default="", help="ISO date, defaults to today")
+    parser.add_argument(
+        "--allow-thin",
+        action="store_true",
+        help="store a document that does not read like code — for the rare "
+        "genuinely short section, never to silence a bad URL",
+    )
     args = parser.parse_args(argv)
 
     store = ProvenanceStore(args.docs)
+    strategy = ""
+    if get is None:
+        try:
+            got = fetch_source(args.url)
+        except FetchFailed as exc:
+            print(f"{args.path}: {exc}", file=sys.stderr)
+            return 1
+        strategy = got.strategy
+
+        def get(_url: str, _content: bytes = got.content) -> bytes:
+            return _content
+
     try:
         text = fetch_text(args.url, get=get, start=args.start, end=args.end, nth=args.nth)
     except ProvenanceError as exc:
         print(f"{args.path}: {exc}", file=sys.stderr)
         return 1
+
+    problem = implausible(text)
+    if problem and not args.allow_thin:
+        # Refusing costs one re-run with a better URL. Storing costs a reviewer
+        # signing a nav bar, and nothing downstream would ever notice.
+        print(f"{args.path}: refused — {problem}", file=sys.stderr)
+        print("  Nothing was stored. Check that the URL serves the chapter text", file=sys.stderr)
+        print("  itself rather than a landing page; --allow-thin overrides this,", file=sys.stderr)
+        print("  but only after somebody has read the document.", file=sys.stderr)
+        return 1
+
+    authority = authority_for(args.url)
+    if authority is not Authority.official:
+        print(
+            f"note: {authority.value} source — a lead, not evidence. No value citing "
+            f"this may be verified.",
+            file=sys.stderr,
+        )
+    if strategy and strategy != "plain":
+        print(f"note: needed browser impersonation ({strategy})", file=sys.stderr)
 
     retrieved = date.fromisoformat(args.retrieved) if args.retrieved else date.today()
     lines = len(text.splitlines())

@@ -17,6 +17,7 @@ from flats.provenance.fetch import (
     citing,
     fetch_text,
     html_to_text,
+    implausible,
     main,
     slice_between,
 )
@@ -29,6 +30,9 @@ PORTLAND = "or/multnomah/portland"
 DOC = "or/multnomah/portland/33.110.txt"
 URL = "https://www.portland.gov/code/33/100s/110"
 
+#: Long enough to read like an actual chapter. That matters now: a document
+#: this thin used to be storable, and the whole point of the plausibility guard
+#: is that a page of site furniture can no longer stand behind a citation.
 PAGE = """<!doctype html>
 <html><head><title>Chapter 33.110</title><style>.x{color:red}</style></head>
 <body>
@@ -37,6 +41,20 @@ PAGE = """<!doctype html>
 <p>33.110.220 Development Standards</p>
 <ul><li>Front setback: 10&nbsp;feet.</li><li>Side setback: 5 feet.</li></ul>
 <p>33.110.230 Other</p>
+<p>33.110.240 Maximum building coverage is 45 percent of the site area.</p>
+<p>33.110.245 Maximum height is 30 feet in the R5 zone.</p>
+<p>33.110.250 Minimum lot area is 3,000 square feet per dwelling.</p>
+<p>33.110.255 Minimum lot width is 25 feet and minimum depth is 60 feet.</p>
+<p>33.110.260 Minimum street frontage is 25 feet.</p>
+<p>33.110.265 Additional floor area may be allowed for 4 units.</p>
+<p>33.110.270 Garage entrances are set back 18 feet from the property line.</p>
+<p>33.110.275 Minimum outdoor area is 250 square feet per unit.</p>
+<p>33.110.280 Maximum floor area ratio is 0.5 in the R7 zone.</p>
+<p>33.110.285 Parking is 1 space per dwelling, or 2 spaces on lots over
+5,000 square feet.</p>
+<p>33.110.290 Buildings may not exceed 2 stories within 12 feet of a
+side lot line abutting an alley.</p>
+<p>33.110.295 A minimum of 20 percent of the site is landscaped.</p>
 <script>analytics()</script>
 <footer>Portland.gov</footer>
 </body></html>
@@ -239,3 +257,56 @@ def test_citing_finds_the_values_that_point_at_a_document(bench: dict) -> None:
 
     assert citing(layers, DOC) == [(PORTLAND, "R5", "setback_front_ft")]
     assert citing(layers, "or/multnomah/portland/33.120.txt") == []
+
+
+# --- what is not a document -------------------------------------------
+
+
+def test_an_empty_response_is_not_stored(bench: dict, capsys) -> None:
+    # Municode answers 200 with an empty shell and renders in JavaScript. That
+    # empty file was stored as "the code" and would have backed citations.
+    assert run(bench, get=lambda _u: "") == 1
+
+    assert "empty" in capsys.readouterr().err
+    assert not (bench["docs"] / DOC).exists()
+
+
+def test_a_page_of_site_furniture_is_not_stored(bench: dict, capsys) -> None:
+    # Portland's HTML route for chapter 33.805 returns 3.5 KB of nav bar and
+    # footer with one number in it. A signature over that looks like diligence.
+    chrome = (
+        "<html><body>"
+        + "".join(f"<p>Menu item and some navigation text here</p>" for _ in range(60))
+        + "<p>Contact us for information</p></body></html>"
+    )
+
+    assert run(bench, get=lambda _u: chrome) == 1
+    assert "no regulatory text" in capsys.readouterr().err
+
+
+def test_a_refusal_leaves_an_existing_document_alone(bench: dict, capsys) -> None:
+    run(bench)
+    capsys.readouterr()
+    before = ProvenanceStore(bench["docs"]).load(DOC).sha256
+
+    assert run(bench, get=lambda _u: "") == 1
+    assert ProvenanceStore(bench["docs"]).load(DOC).sha256 == before
+
+
+def test_allow_thin_is_available_for_a_genuinely_short_section(bench: dict) -> None:
+    # Real sections are sometimes two paragraphs. The override exists so those
+    # can be stored deliberately, by somebody who has read them.
+    short = "<html><body><p>19.115.040 Setbacks are 5 feet.</p></body></html>"
+
+    assert run(bench, "--allow-thin", get=lambda _u: short) == 0
+
+
+def test_the_guard_accepts_an_ordinary_chapter(bench: dict, capsys) -> None:
+    assert run(bench) == 0
+    assert "stored" in capsys.readouterr().out
+
+
+def test_implausible_names_its_reason() -> None:
+    assert implausible("") == "the response was empty"
+    assert "characters" in (implausible("33.110.220 Setbacks are 5 feet.") or "")
+    assert implausible(html_to_text(PAGE)) is None
