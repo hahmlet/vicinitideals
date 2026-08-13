@@ -460,6 +460,13 @@ class CodeDocument(BaseModel):
     #: Which occurrence of ``start`` opens the slice. A chapter PDF lists every
     #: section in its contents before printing any of them, so this is often 2.
     nth: int = Field(default=1, ge=1)
+    #: How a PDF's text is pulled out. ``layout`` keeps horizontal geometry,
+    #: which is what lets a table cell stay under its zone's column — the
+    #: default because losing that silently mis-attributes numbers. ``plain``
+    #: is for the PDFs where layout mode fuses words together
+    #: ("areasintheCity..."), which blinds every subject phrase; declared by
+    #: whoever measured the document, like everything else in this block.
+    extraction: str = Field(default="layout", pattern="^(layout|plain)$")
     #: Set only for a genuinely short section, and only by somebody who has read
     #: it. Never to silence a URL that is serving the wrong thing.
     allow_thin: bool = False

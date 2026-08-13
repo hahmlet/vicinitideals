@@ -329,3 +329,31 @@ def test_a_pdf_page_with_no_content_stream_is_a_blank_page_not_a_broken_document
     writer.write(buf)
 
     assert pdf_to_text(buf.getvalue()).strip() == ""
+
+
+def test_a_fused_extraction_is_measured_not_mistaken_for_an_empty_code() -> None:
+    # Tualatin's layout-mode text reads "areasintheCitythatareappropriate..."
+    # — section numbers survive, so scope works and candidates simply never
+    # appear, which reads as "the code states nothing" when the truth is
+    # "nothing could read it".
+    from flats.provenance.fetch import fused
+
+    fused_text = "thepurposeoftheLowDensityResidentialzoneistoprovide " * 50
+    clean = "the purpose of the Low Density Residential zone is to provide " * 50
+
+    assert fused(fused_text)
+    assert not fused(clean)
+
+
+def test_extraction_mode_is_declared_per_document_and_validated() -> None:
+    import pytest as _pytest
+    from pydantic import ValidationError
+
+    from flats.rules.model import CodeDocument
+
+    doc = CodeDocument(id="40-41", url="https://x.gov/code", extraction="plain")
+
+    assert doc.extraction == "plain"
+    assert CodeDocument(id="a", url="https://x.gov/c").extraction == "layout"
+    with _pytest.raises(ValidationError):
+        CodeDocument(id="a", url="https://x.gov/c", extraction="ocr")

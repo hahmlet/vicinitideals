@@ -1,683 +1,646 @@
-TDC 40.100.    Purpose.
-TDC 40.200.    UseCategories.
-TDC 40.210.    AdditionalLimitationsonUses.
-TDC 40.220.    HousingTypes.
-TDC 40.300.    DevelopmentStandards.
-TDC 40.310.    ProjectionsIntoRequiredYards.
-TDC 40.320.    AdditionalDevelopmentStandards.
-
 TDC 40.100. Purpose.
-
-     The purpose of the Low Density Residential (RL) zone is to provide low density residential
-areasintheCitythatareappropriatefordwellingsonindividuallots,aswellasothermiscellaneous
-landusescompatiblewithalowdensityresidentialenvironment.
-
-TDC 40.200. UseCategories.
-
-(1)   Use Categories. Table 40-1 lists use categories Permitted Outright (P) or Conditionally
-Permitted(C)intheRLzone.UsecategoriesmayalsobedesignatedasLimited(L)andsubjectto
-thelimitationslistedinTable40-1andrestrictionsidentifiedinTDC40.210.Limitationsmayrestrict
-thespecifictypeofuse,location,size,orothercharacteristicsoftheusecategory.Usecategories
+TDC 40.200. Use Categories.
+TDC 40.210. Additional Limitations on Uses.
+TDC 40.220. Housing Types.
+TDC 40.300. Development Standards.
+TDC 40.310. Projections Into Required Yards.
+TDC 40.320. Additional Development Standards.
+TDC 40.100. Purpose.
+The purpose of the Low Density Residential (RL) zone is to provide low density residential
+areas in the City that are appropriate for dwellings on individual lots, as well as other miscellaneous
+land uses compatible with a low density residential environment.
+TDC 40.200. Use Categories.
+(1) Use Categories. T able 40-1 lists use categories Permitted Outright (P) or Conditionally
+Permitted (C) in the RL zone. Use categories may also be designated as Limited (L) and subject to
+the limitations listed in T able 40-1 and restrictions identified in TDC 40.210. Limitations may restrict
+the specific type of use, location, size, or other characteristics of the use category. Use categories
 which are not listed are prohibited within the zone, except for uses which are found by the City
-Managerorappointeetobeofasimilarcharacterandtomeetthepurposeofthiszone,asprovided
-inTDC31.070.
+Manager or appointee to be of a similar character and to meet the purpose of this zone, as provided
+in TDC 31.070.
+(2) Overlay Zones. Additional uses may be allowed in a particular overlay zone. See the overlay
+zone Chapters for additional uses.
+Table 40-1
+Use Categories in the RL Zone
+USE CATEGORY STATUS
+LIMITATIONS AND
+CODE REFERENCES
+RESIDENTIAL USE CATEGORIES
+Household Living P/C Permitted housing types subject to TDC
+40.220.
+Residential Accessory Uses P (L) Home Occupations permitted subject
+to TDC 34.010 to 34.030.
+Family Child Care Home permitted.
+Subject to ORS 329A.440.
+TDC40:1
+USE CATEGORY STATUS
+LIMITATIONS AND
+CODE REFERENCES
+Group Living P/C (L) Permitted uses limited to Residential
+Facility.
+Conditional uses limited to Congre-
+gate Care Facility subject to TDC
+34.400.
+COMMERCIAL USE CATEGORIES
+Agriculture P/C (L) Subject to TDC 40.210(1).
+Durable Goods Sales C (L) Conditional uses limited to nurseries.
+Retail Sales and Service C (L) Conditional uses limited to Child Day
+Care Center.
+INSTITUTIONAL USE CATEGORIES
+Assembly Facilities C (L) Conditional uses limited to places of
+religious worship. See TDC 34.800 Re-
+ligious uses and ORS 227.500 pertain-
+ing to activities customarily associated
+with practices of religious activity.
+Community Services C
+Medical Center C (L) Conditional uses limited to a hospital.
+Schools C —
+INFRASTRUCTURE AND UTILITIES USE CATEGORIES
+Basic Utilities P/C (L) Permitted uses limited to water or sew-
+age pump stations and pressure read-
+ing stations.
+Conditional uses limited to water res-
+ervoirs, with a maximum height of 75
+feet.
+Greenways and Natural Areas P —
+Parks and Open Areas P/C (L) Permitted uses limited to public park or
+playground.
+Conditional uses limited to golf course
+or country club with golf course.
+Public Safety Facilities C (L) Conditional uses limited to fire sta-
+tions.
+Transportation Facilities P —
+TDC 40.200 TUALATIN DEVELOPMENT CODE
+TDC40:2
+USE CATEGORY STATUS
+LIMITATIONS AND
+CODE REFERENCES
+Wireless Communication Facilities P (L) Permitted uses limited to a Wireless
+Communication Facility Attached, pro-
+vided it is not mounted to a single-
+family dwelling or its accessory struc-
+tures.
 
-(2)   OverlayZones.Additionalusesmaybeallowedinaparticularoverlayzone.Seetheoverlay
-zoneChaptersforadditionaluses.
-
-                                               Table40-1
-                                   UseCategoriesintheRLZone
-
-                                                                           LIMITATIONSAND
-USECATEGORY                                      STATUS                  CODEREFERENCES
-RESIDENTIALUSECATEGORIES
-HouseholdLiving                                          P/C            PermittedhousingtypessubjecttoTDC
-                                                                 40.220.
-ResidentialAccessoryUses                          P(L)           Home Occupations permitted subject
-                                                                 toTDC34.010to34.030.
-                                                                 Family Child Care Home permitted.
-                                                                 SubjecttoORS329A.440.
-
-                                                TDC40:1
-TDC 40.200                          TUALATINDEVELOPMENTCODE
-
-                                                                                        LIMITATIONSAND
-USECATEGORY                                      STATUS                               CODEREFERENCES
-GroupLiving                                              P/C(L)          Permitted uses limited to Residential
-                                                                            Facility.
-
-                                                                            Conditional uses limited to Congre-
-                                                                            gate  Care  Facility  subject  to TDC
-                                                                            34.400.
-COMMERCIALUSECATEGORIES
-Agriculture                                                 P/C(L)          SubjecttoTDC40.210(1).
-DurableGoodsSales                                   C(L)           Conditionaluseslimitedtonurseries.
-RetailSalesandService                               C(L)           Conditional uses limited to Child Day
-                                                                            CareCenter.
-INSTITUTIONALUSECATEGORIES
-AssemblyFacilities                                       C(L)           Conditional uses limited to places of
-                                                                            religiousworship.SeeTDC34.800Re-
-                                                                            ligioususesandORS227.500pertain-
-                                                                            ingtoactivitiescustomarilyassociated
-                                                                            withpracticesofreligiousactivity.
-CommunityServices                                       C
-MedicalCenter                                             C(L)           Conditionaluseslimitedtoahospital.
-Schools                                                          C                                        —
-INFRASTRUCTUREANDUTILITIESUSECATEGORIES
-BasicUtilities                                              P/C(L)          Permitteduseslimitedtowaterorsew-
-                                                                            agepumpstationsandpressureread-
-                                                                            ingstations.
-
-                                                                            Conditional uses limited to water res-
-                                                                            ervoirs, with a maximum height of 75
-                                                                            feet.
-GreenwaysandNaturalAreas                         P                                        —
-ParksandOpenAreas                                P/C(L)          Permitteduseslimitedtopublicparkor
-                                                                            playground.
-
-                                                                            Conditionaluseslimitedtogolfcourse
-                                                                            orcountryclubwithgolfcourse.
-PublicSafetyFacilities                                  C(L)           Conditional uses limited to fire sta-
-                                                                            tions.
-TransportationFacilities                                  P                                        —
-
-                                                         TDC40:2
-                                   LOW DENSITY RESIDENTIAL ZONE (RL)                                          TDC 40.220
-
-                                                                                         LIMITATIONS AND
-USE CATEGORY                                         STATUS                            CODE REFERENCES
-Wireless Communication Facilities                  P (L)            Permitted uses limited to a Wireless
-                                                                             Communication Facility Attached, pro-
-                                                                             vided it is not mounted to a single-
-                                                                             family dwelling or its accessory struc-
-                                                                             tures.
-
-                                                                             Maximum  height  and  minimum  set-
-                                                                             backs subject to TDC Chapter 73F.
-
+Maximum height and minimum set-
+backs subject to TDC Chapter 73F.
 TDC 40.210.  Additional Limitations on Uses.
-
-(1)    Agricultural Uses. Agricultural uses may be permitted uses or conditional uses depending on
+(1)  Agricultural Uses. Agricultural uses may be permitted uses or conditional uses depending on
 the nature of the use.
-       (a)    Permitted Uses. The following uses are permitted outright:
-              (i)    Agricultural uses of land such as gardening and horticulture.
-              (ii)    Raising of domestic fowl as allowed by the Tualatin Municipal Code.
-       (b)    Conditional Uses. The following uses are conditional uses within areas designated on
-       Comprehensive Plan Map 10-6:
-              (i)    Conditional Use of Agricultural Animals. Raising of agricultural animals, limited to
-              cattle, horses and sheep. The City Council may limit the number of animals to be allowed
-              on a specific parcel of property.
-              (ii)    Agricultural structures such as barns, stables, sheds, but excluding feed lots. Feed
-              lots are prohibited.
+(a)  Permitted Uses. The following uses are permitted outright:
+(i)  Agricultural uses of land such as gardening and horticulture.
+(ii)  Raising of domestic fowl as allowed by the Tualatin Municipal Code.
+(b)  Conditional Uses. The following uses are conditional uses within areas designated on
+Comprehensive Plan Map 10-6:
+(i)  Conditional Use of Agricultural Animals. Raising of agricultural animals, limited to
+cattle, horses and sheep. The City Council may limit the number of animals to be allowed
+on a specific parcel of property.
+(ii)  Agricultural structures such as barns, stables, sheds, but excluding feed lots. Feed
+lots are prohibited.
 (Ord. No. 1450-20, § 14, 12-14-20; Ord. No. 1454-26, § 1(Exhs. 2, 3), 3-23-26)
-
 TDC 40.220.  Housing Types.
-
 Table 40-2 lists housing types permitted in the RL zone. Housing types may be Permitted Outright
 (P), Conditionally Permitted (C), or Not Permitted (N).
+Table 40-2
+Housing Types in the RL Zone
 
-                                                        Table 40-2
-                                          Housing Types in the RL Zone
-
-                                                                                        LIMITATIONS AND CODE
-HOUSING TYPE                                          STATUS                                   REFERENCES
-Single-Family Dwelling                                     P/L                       Single-family dwellings in a small
-                                                                                     lot subdivision permitted, sub-
-                                                                                     ject to TDC 36.410
-Accessory Dwelling Unit                                     P                         Subject to TDC 73A.170.
-Duplex                                                                P                         See TDC definition in 31.060
-Townhouse                                                         P                         See TDC definition in 31.060
-
-Supp. No. 12                                             TDC40:3
-TDC 40.220                            TUALATIN DEVELOPMENT CODE
-
-                                                                                              LIMITATIONS AND CODE
-HOUSING TYPE                                          STATUS                                         REFERENCES
-Triplex                                                                P                         See TDC definition in 31.060
-Quadplex                                                            P                         See TDC definition in 31.060
-Cottage Cluster                                                  P                         See TDC definition in 31.060
-Multi-Family Structure                                        C                         See TDC definition in 31.060
-Manufactured Dwelling                                       P                         Subject to TDC 40.300(4)
-Manufactured Dwelling Park                              N
-Retirement Housing Facility                               C                         Subject to TDC 34.400
-Residential Home                                               P                         See TDC definition in 31.060
+HOUSING TYPE STATUS
+LIMITATIONS AND CODE
+REFERENCES
+Single-Family Dwelling P/L Single-family dwellings in a small
+lot subdivision permitted, sub-
+ject to TDC 36.410
+Accessory Dwelling Unit P Subject to TDC 73A.170.
+Duplex P See TDC definition in 31.060
+Townhouse P See TDC definition in 31.060
+ TDC 40.220LOW DENSITY RESIDENTIAL ZONE (RL)
+TDC40:3Supp. No. 12
+HOUSING TYPE STATUS
+LIMITATIONS AND CODE
+REFERENCES
+Triplex P See TDC definition in 31.060
+Quadplex P See TDC definition in 31.060
+Cottage Cluster P See TDC definition in 31.060
+Multi-Family Structure C See TDC definition in 31.060
+Manufactured Dwelling P Subject to TDC 40.300(4)
+Manufactured Dwelling Park N
+Retirement Housing Facility C Subject to TDC 34.400
+Residential Home P See TDC definition in 31.060
 (Ord. No. 1463-21, § 14, 12-13-21)
-
 TDC 40.300.  Development Standards.
-
-(1)    Development standards in the RL zone are listed in Table 40-3. Additional standards may apply
+(1)  Development standards in the RL zone are listed in Table 40-3. Additional standards may apply
 to some uses and situations, see TDC 40.310. The standards in Table 40-3 may be modified for
 flexible lot subdivisions as provided in TDC 36.410 and for greenway and natural area dedications
 as provided in TDC 36.420.
-
-(2)    Exceptions. Existing nonconforming situations may be developed according to the provisions
+(2)  Exceptions. Existing nonconforming situations may be developed according to the provisions
 of TDC Chapter 35.
+Table 40-3
+Development Standards in the RL Zone
 
-                                                            Table 40-3
-                                      Development Standards in the RL Zone
-
-STANDARD                               REQUIREMENT                         LIMITATIONS AND CODE REFERENCES
-
+STANDARD REQUIREMENT LIMITATIONS AND CODE
+REFERENCES
 MAXIMUM DENSITY
-
-Single-Family Dwelling               Maximum: 6.4 units per acreMinimum: 1 unit per acre
-
-Duplex                                        None
-Townhouse                                 25 units per acre
-Triplex                                         None
-Quadplex                                    None
-
-Cottage Cluster                          None                                           Minimum density of 4 units per acre.
-
+Single-Family Dwelling Maximum: 6.4 units per acre
+Minimum: 1 unit per acre
+Duplex None
+Townhouse 25 units per acre
+Triplex None
+Quadplex None
+Cottage Cluster None Minimum density of 4 units per
+acre.
 Retirement Housing or
-Congregate Care Facility           10 units per acre
-
-Supp. No. 12                                                 TDC40:4
-                               LOWDENSITYRESIDENTIALZONE(RL)                                      TDC 40.300
-
-STANDARD                             REQUIREMENT                       LIMITATIONSANDCODEREFERENCES
-
-MINIMUMLOTSIZE
-                                                                           MaybereducedforFlexible
-                                                                           LotSubdivisions,subjectto
-Single-FamilyDwelling              Averageof6,500squarefeet                TDC36.410,orGreenwayand
-                                                                           NaturalAreadedications,sub-
-                                                                           jecttoTDC36.420.
-                                                                           MaybereducedforFlexible
-Duplex                                     6,500squarefeet                 LotSubdivisions,subjectto
-                                                                           TDC36.410.
-Townhouse                               1,400squarefeet
-                                                                           MaybereducedforFlexible
-Triplex                                      6,500squarefeet               LotSubdivisions,subjectto
-                                                                           TDC36.410.
-                                                                           MaybereducedforFlexible
-Quadplex                                 6,500squarefeet                   LotSubdivisions,subjectto
-                                                                           TDC36.410.
-                                                                           MaybereducedforFlexible
-CottageCluster                        6,500squarefeet                      LotSubdivisions,subjectto
-                                                                           TDC36.410.
-ConditionalUses                      6,000squarefeet
-                                                                           Asdeterminedthroughthe
-InfrastructureandUtilitiesUses —                                           Subdivision,Partition,orLot
-                                                                           LineAdjustmentprocess.
-MINIMUMLOTWIDTH
-                                                                           Maybereducedto30feetifon
-                                                                           acul-de-sac.
-Single-FamilyDwelling              50feet
-                                                                           Averageminimumlotwidthis
-                                                                           30feet.
-                                                                           Maybereducedto30feetifon
-Duplex,Triplex,Quadplex,and                                                acul-de-sac.
-CottageClusters                       50feet                               Averageminimumlotwidthis
-                                                                           30feet.
-Townhouse                               None
-                                                                           Maybereducedto30feetifon
-                                                                           acul-de-sac.
-ConditionalUses                      50feet
-                                                                           Averageminimumlotwidthis
-                                                                           30feet.
-
-Supp.No.6                                          TDC40:5
-TDC 40.300                          TUALATINDEVELOPMENTCODE
-
-STANDARD                             REQUIREMENT                       LIMITATIONSANDCODEREFERENCES
-
-                                                                               Mustbesufficienttocomply
-FlagLots                                  —                                    withminimumaccessrequire-
-                                                                               mentsofTDC73C.
-MINIMUMSETBACKS
-
-Front                                        15feet                                     Maybereducedto12feetiftoanunenclosedporch.
-
-                                                                               Thesecondaryfrontageisde-
-SecondaryFrontageonCorner                                                      terminedbytheorientationof
-Lot                                           10feet                           thestructure,basedonthelo-
-                                                                               cationofthefrontdoor.
-GarageDoor                            20feet
-                                                                               Zero-footsidesetbackspermit-
-Side                                         5feet                             tedforlotorparcellineswhere
-                                                                               Townhouseunitsareattached.
-Rear                                        15feet
-                                                                               AsdeterminedthroughArchi-
-                                                                               tecturalReviewprocess.No
-                                                                               minimumsetbackmustbe
-ConditionalUses                      —                                         greaterthan50feet.Parking
-                                                                               andvehicularcirculationareas
-                                                                               mustbesetbackaminimumof
-                                                                               tenfeetfromanypublicright-
-                                                                               of-wayorpropertyline.
-AnyYardAreaAdjacentto
-BasaltCreekParkway               50feet
-MAXIMUMSTRUCTUREHEIGHT
-                                                                               Maybeincreasedtoamaxi-
-                                                                               mumof50feetthroughTypeII
-AllUses                                   35feet                               ArchitecturalReviewifallset-
-                                                                               backsarenotlessthan1½
-                                                                               timestheheightofthebuilding.
-MAXIMUMLOTCOVERAGE
-SingleFamilyDwelling              45%
-Duplex                                     45%
-Townhouse                               75%
-Triplex                                      60%
-Quadplex                                 60%
-CottageCluster                        75%
-ConditionalUses                      40%
-
-Supp.No.6                                            TDC40:6
-                                 LOW DENSITY RESIDENTIAL ZONE (RL)                                      TDC 40.320
-
-STANDARD                               REQUIREMENT                         LIMITATIONS AND CODE REFERENCES
-
+Congregate Care Facility 10 units per acre
+TDC 40.220 TUALATIN DEVELOPMENT CODE
+TDC40:4Supp. No. 12
+STANDARD REQUIREMENT LIMITATIONS AND CODE
+REFERENCES
+MINIMUM LOT SIZE
+Single-Family Dwelling Average of 6,500 square feet
+May be reduced for Flexible
+Lot Subdivisions, subject to
+TDC 36.410, or Greenway and
+Natural Area dedications, sub-
+ject to TDC 36.420.
+Duplex 6,500 square feet
+May be reduced for Flexible
+Lot Subdivisions, subject to
+TDC 36.410.
+T ownhouse 1,400 square feet
+Triplex 6,500 square feet
+May be reduced for Flexible
+Lot Subdivisions, subject to
+TDC 36.410.
+Quadplex 6,500 square feet
+May be reduced for Flexible
+Lot Subdivisions, subject to
+TDC 36.410.
+Cottage Cluster 6,500 square feet
+May be reduced for Flexible
+Lot Subdivisions, subject to
+TDC 36.410.
+Conditional Uses 6,000 square feet
+Infrastructure and Utilities Uses —
+As determined through the
+Subdivision, Partition, or Lot
+Line Adjustment process.
+MINIMUM LOT WIDTH
+Single-Family Dwelling 50 feet
+May be reduced to 30 feet if on
+a cul-de-sac.
+Average minimum lot width is
+30 feet.
+Duplex, Triplex, Quadplex, and
+Cottage Clusters 50 feet
+May be reduced to 30 feet if on
+a cul-de-sac.
+Average minimum lot width is
+30 feet.
+T ownhouse None
+Conditional Uses 50 feet
+May be reduced to 30 feet if on
+a cul-de-sac.
+Average minimum lot width is
+30 feet.
+TDC 40.300LOW DENSITY RESIDENTIAL ZONE (RL)
+TDC40:5Supp. No. 6
+STANDARD REQUIREMENT LIMITATIONS AND CODE
+REFERENCES
+Flag Lots —
+Must be sufficient to comply
+with minimum access require-
+ments of TDC 73C.
+MINIMUM SETBACKS
+Front 15 feet May be reduced to 12 feet if to
+an unenclosed porch.
+Secondary Frontage on Corner
+Lot 10 feet
+The secondary frontage is de-
+termined by the orientation of
+the structure, based on the lo-
+cation of the front door.
+Garage Door 20 feet
+Side 5 feet
+Zero-foot side setbacks permit-
+ted for lot or parcel lines where
+T ownhouse units are attached.
+Rear 15 feet
+Conditional Uses —
+As determined through Archi-
+tectural Review process. No
+minimum setback must be
+greater than 50 feet. Parking
+and vehicular circulation areas
+must be set back a minimum of
+ten feet from any public right-
+of-way or property line.
+Any Yard Area Adjacent to
+Basalt Creek Parkway 50 feet
+MAXIMUM STRUCTURE HEIGHT
+All Uses 35 feet
+May be increased to a maxi-
+mum of 50 feet through Type II
+Architectural Review if all set-
+backs are not less than 1½
+times the height of the building.
+MAXIMUM LOT COVERAGE
+Single Family Dwelling 45%
+Duplex 45%
+T ownhouse 75%
+Triplex 60%
+Quadplex 60%
+Cottage Cluster 75%
+Conditional Uses 40%
+TDC 40.300 TUALATIN DEVELOPMENT CODE
+TDC40:6Supp. No. 6
+STANDARD REQUIREMENT LIMITATIONS AND CODE
+REFERENCES
 MAXIMUM FLOOR AREA RATION (FAR)
-Single Family Dwelling, Du-                                                     FAR does not apply to Cottage
-plex, Townhouse, Triplex,                                                       Clusters.
+Single Family Dwelling, Du-
+plex, Townhouse, Triplex,
 Quadplex
-Lot size                                Maximum FAR
-3,000 sf or less                        1.4 to 1
-3,001 to 5,000 sf                       1.1 to 1
-5,001 to 10,000 sf                      0.7 to 1
-10,001 to 19,999 sf                     0.6 to 1
-20,000 sf or more                       0.4 to 1
+FAR does not apply to Cottage
+Clusters.
+Lot size
+3,000 sf or less
+3,001 to 5,000 sf
+5,001 to 10,000 sf
+10,001 to 19,999 sf
+20,000 sf or more
+Maximum FAR
+1.4 to 1
+1.1 to 1
+0.7 to 1
+0.6 to 1
+0.4 to 1
+
 (Ord. No. 1450-20, § 15, 12-14-20; Ord. No. 1463-21, § 15, 12-13-21)
-
 TDC 40.310.  Projections Into Required Yards.
-
 The following architectural features may project into a required front or rear yard setback area not
 more than three feet, and into a required side yard not more than two feet: cornices, eaves, canopies,
 decks, sun-shades, gutters, chimneys, flues, belt courses, leaders, sills, pilasters, lintels, ornamen-
 tal features, and other similar architectural features.
-
 TDC 40.320.  Additional Development Standards.
-(1)    Flexible Lot Subdivisions. The minimum lot size and other development standards for single-
+(1)  Flexible Lot Subdivisions. The minimum lot size and other development standards for single-
 family dwellings in the RL zone may be reduced or modified for lots included as part of a flexible lot
 subdivision. See TDC 36.410.
-(2)    Greenway and Natural Area Dedications. The minimum lot size and other development
+(2)  Greenway and Natural Area Dedications. The minimum lot size and other development
 standards for single-family dwellings in the RL zone may be reduced or modified if land is dedicated
 for a Greenway or Natural Area. See TDC 36.420.
-
-(3)    Manufactured Homes. Except for manufactured homes placed in manufactured dwelling parks,
+(3)  Manufactured Homes. Except for manufactured homes placed in manufactured dwelling parks,
 manufactured homes must meet the following standards:
-      (a)    Minimum Size. The manufactured home must be multi-sectional and enclose a space of
-      not less than 1,000 square feet. A manufactured home is not considered multi-sectional by
-      having a tip-out section.
-      (b)    Foundation Requirements. The manufactured home must be placed on an excavated and
-      back-filled foundation and enclosed at the perimeter such that the manufactured home is
-      located not less than 1 foot above grade. However, a structural concrete foundation (such as
-      that for a single-family dwelling) is not required.
-      (c)    Roof Form and Materials. The manufactured home must have a pitched roof with a
-      minimum slope of one foot in height for each four feet of width. The roof must be comprised of
-      shingles, wood shakes, tiles, or other materials which create a similar appearance. Exposed
-      flat, corrugated or ribbed sheet metal, fiberglass, or other materials similar in form or appear-
-      ance cannot be used as roofing material but may be used for corner and edge flashing.
-
-Supp. No. 9                                           TDC40:7
-TDC 40.320                            TUALATIN DEVELOPMENT CODE
-
-      (d)    Insulation Requirements. The manufactured home must be certified by the manufacturer
-      to have exterior thermal envelope meeting performance standards which reduce heat loss to
-      levels equivalent to the performance standards required of single family dwellings constructed
-      under the State Building Code.
+(a)  Minimum Size. The manufactured home must be multi-sectional and enclose a space of
+not less than 1,000 square feet. A manufactured home is not considered multi-sectional by
+having a tip-out section.
+(b)  Foundation Requirements. The manufactured home must be placed on an excavated and
+back-filled foundation and enclosed at the perimeter such that the manufactured home is
+located not less than 1 foot above grade. However, a structural concrete foundation (such as
+that for a single-family dwelling) is not required.
+(c)  Roof Form and Materials. The manufactured home must have a pitched roof with a
+minimum slope of one foot in height for each four feet of width. The roof must be comprised of
+shingles, wood shakes, tiles, or other materials which create a similar appearance. Exposed
+flat, corrugated or ribbed sheet metal, fiberglass, or other materials similar in form or appear-
+ance cannot be used as roofing material but may be used for corner and edge flashing.
+ TDC 40.320LOW DENSITY RESIDENTIAL ZONE (RL)
+TDC40:7Supp. No. 9
+(d)  Insulation Requirements. The manufactured home must be certified by the manufacturer
+to have exterior thermal envelope meeting performance standards which reduce heat loss to
+levels equivalent to the performance standards required of single family dwellings constructed
+under the State Building Code.
 (Ord. No. 1463-21, § 16, 12-13-21; Ord. No. 1486-24, § 6, 6-10-24)
-
-Supp. No. 9                                           TDC40:8
-                                              CHAPTER41
-
-                       MEDIUMLOWDENSITYRESIDENTIALZONE(RML)
-
+TDC 40.320 TUALATIN DEVELOPMENT CODE
+TDC40:8Supp. No. 9
+CHAPTER 41
+MEDIUM LOW DENSITY RESIDENTIAL ZONE (RML)
 Sections:
-TDC 41.100.    Purpose.
-TDC 41.200.    UseCategories.
-TDC 41.210.    AdditionalLimitationsonUses.
-TDC 41.220.    HousingTypes.
-TDC 41.300.    DevelopmentStandards.
-TDC 41.310.    ProjectionsIntoRequiredYards.
-TDC 41.320.    DensityBonusorSetbackReductionforDevelopmentsAdjacenttoGreenways
-                  andNaturalAreas.
-TDC 41.330.    Reserved.
-
 TDC 41.100. Purpose.
-
+TDC 41.200. Use Categories.
+TDC 41.210. Additional Limitations on Uses.
+TDC 41.220. Housing Types.
+TDC 41.300. Development Standards.
+TDC 41.310. Projections Into Required Yards.
+TDC 41.320. Density Bonus or Setback Reduction for Developments Adja cent to Greenways
+and Natural Areas.
+TDC 41.330. Reserved.
+TDC 41.100. Purpose.
 The purpose of this zone is to provide household living uses with a variety of housing types at
 moderately low densities. This district is primarily oriented toward middle housing types including
-attacheddwellings,multi-familydevelopment,andmanufactureddwellingparks.
-(Ord.No.1463-21,§17,12-13-21)
-
-TDC 41.200. UseCategories.
-
-(1)   Use Categories. Table 41-1 lists use categories Permitted Outright (P) or Conditionally
-Permitted(C)intheRMLzone.UsecategoriesmayalsobedesignatedasLimited(L)andsubject
-to the limitations listed in Table 41-1 and restrictions identified in TDC 41.210. Limitations may
+attached dwellings, multi-family development, and manufactured dwelling parks.
+(Ord. No. 1463-21, § 17, 12-13-21)
+TDC 41.200. Use Categories.
+(1) Use Categories. T able 41-1 lists use categories Permitted Outright (P) or Conditionally
+Permitted (C) in the RML zone. Use categories may also be designated as Limited (L) and subject
+to the limitations listed in T able 41-1 and restrictions identified in TDC 41.210. Limitations may
 restrict the specific type of use, location, size, or other characteristics of the use category. Use
-categorieswhicharenotlistedareprohibitedwithinthezone,exceptforuseswhicharefoundbythe
+categories which are not listed are prohibited within the zone, except for uses which are found by the
 City Manager or appointee to be of a similar character and to meet the purpose of this zone, as
-providedinTDC31.070.
-
-(2)   OverlayZones.Additionalusesmaybeallowedinaparticularoverlayzone.Seetheoverlay
-zoneChaptersforadditionaluses.
-
-                                                Table41-1
-                                   UseCategoriesintheRMLZone
-
-USECATEGORY                     STATUS           LIMITATIONSANDCODEREFERENCES
-RESIDENTIALUSECATEGORIES
-HouseholdLiving                      P/C                   PermittedhousingtypessubjecttoTDC
-                                                       41.220.
-ResidentialAccessoryUses      P(L)                 PermitteduseslimitedtoFamilyChildCare
-                                                       HomesubjecttoORS329A.440.
-
-Supp.No.6                                        TDC41:1
-TDC 41.200                          TUALATINDEVELOPMENTCODE
-
-USECATEGORY                     STATUS           LIMITATIONSANDCODEREFERENCES
-GroupLiving                             P/C(L)              Permitteduseslimitedto
-                                                             • ResidentialFacility;and,
-                                                             • NursingFacility.
-
-                                                           ConditionaluseslimitedtoCongregateCare
-                                                           FacilitysubjecttoTDC34.020andTDC
-                                                           34.030.
-COMMERCIALUSECATEGORIES
-Agriculture                                C(L)                 SubjecttoTDC41.210(1).
-DurableGoodsSales                C(L)                 Conditionaluseslimitedtonurseries.
-RetailSalesandService           C(L)                 ConditionaluseslimitedtoChildDayCare
-                                                           Center.
-INSTITUTIONALUSECATEGORIES
-AssemblyFacilities                   C(L)                 Conditionaluseslimitedtoplacesofreligious
-                                                           worship.SeeTDC34.800Religioususesand
-                                                           ORS227.500pertainingtoactivitiescustomar-
-                                                           ilyassociatedwiththepracticesofreligious
-                                                           activity.
-CommunityServices                 C
-MedicalCenter                         C(L)                 Conditionaluseslimitedtoahospital.
-Schools                                    C                      —
-INFRASTRUCTUREANDUTILITIESUSECATEGORIES
-BasicUtilities                            P/C(L)              Permitteduseslimitedtowaterorsewage
-                                                           pumpstationsandpressurereadingstations.
-
-                                                           Conditionaluseslimitedtowaterreservoirs,
-                                                           withamaximumheightof75feet.
-GreenwaysandNaturalAreas   P                      —
-ParksandOpenAreas              P/C(L)              Permitteduseslimitedtopublicparkorplay-
-                                                           ground.
-
-                                                           Conditionaluseslimitedtogolfcourseorcoun-
-                                                           tryclubwithgolfcourse.
-PublicSafetyFacilities              C(L)                 Conditionaluseslimitedtofirestations
-TransportationFacilities            P                      —
-WirelessCommunicationFacil-            P/C(L)              SubjecttoTDC41.210(2).
-ities                                                      Maximumheightandminimumsetbackssub-
-                                                           jecttoTDCChapter73F.
-
-Supp.No.6                                           TDC41:2
-                         MEDIUMLOWDENSITYRESIDENTIALZONE(RML)                                        TDC 41.220
-
-TDC 41.210. AdditionalLimitationsonUses.
-
-(1)   Agricultural Uses. The following agricultural uses are allowed with a conditional use permit
-withinareasdesignatedonComprehensivePlanMap10-6:
-
-      (a)   ConditionalUseofAgriculturalAnimals.Raisingofagriculturalanimals,limitedtocattle,
-      horsesandsheep.TheCityCouncilmaylimitthenumberofanimalstobeallowedonaspecific
-      parcelofproperty;and
-
-      (b)   Agricultural structures such as barns, stables, sheds, but excluding feed lots. Feed lots
-      areprohibited.
-
-(2)   WirelessCommunicationFacilities.WirelessCommunicationFacilitiesmaybepermitteduses
-orconditionaluses,dependingonthenatureoftheuse.
-
-      (a)   PermittedUses.Thefollowingusesarepermittedoutright:
-
-            (i)   WirelessCommunicationFacilityAttached,providedthefacilityisnotmountedona
-            single-familydwellingoritsaccessorystructures;and
-            (ii)   Wireless Communication Facility, provided the facility is located within 300 feet of
-            thecenterlineofInterstate5.
-
-      (b)   Conditional Uses.All other detached wireless communication facilities may be allowed
-      with a conditional use permit. The facility must not be located within an approved small lot
-      subdivision.
-(Ord.No.1450-20,§16,12-14-20)
-
-TDC 41.220. HousingTypes.
-
-Table41-2listsHousingTypespermittedintheRMLzone.HousingtypesmaybePermittedOutright
-(P),ConditionallyPermitted(C),orNotPermitted(N)intheRMLzone.
-
-                                                   Table41-2
-                                     HousingTypesintheRMLZone
-
-HOUSINGTYPE                      STATUS           LIMITATIONSANDCODEREFERENCES
-Single-FamilyDwelling              P                      Limitedtosingle-familydwellingsinaflexible
-                                                           lotsubdivisionsubjecttoTDC36.410.
-AccessoryDwellingUnit            P                      SubjecttoTDC73A.170.
-Duplex                                     P                      SeeTDCdefinitionin31.060.
-Townhouse                               P                      SeeTDCdefinitionin31.060.
-Triplex                                      P                      SeeTDCdefinitionin31.060.
-Quadplex                                 P                      SeeTDCdefinitionin31.060.
-CottageCluster                        P                      SeeTDCdefinitionin31.060.
-Multi-FamilyStructure(5or              P                      SeeTDCdefinitionin31.060.
-moreunits)
-ManufacturingDwelling             N                      SeeTDCdefinitionin31.060.
-
-Supp.No.6                                           TDC41:3
-TDC 41.220                          TUALATINDEVELOPMENTCODE
-
-HOUSINGTYPE                      STATUS           LIMITATIONSANDCODEREFERENCES
-ManufacturedDwellingPark      P                      LimitedtolocationsdesignatedbytheTualatin
-                                                         CommunityPlanMapandsubjecttoTDC
-                                                         34.190.
-RetirementHousingFacility       C                      SubjecttoTDC34.400.
-ResidentialHome                     P                      SeeTDCdefinitionin31.060.
-(Ord.No.1444-20,§1,10-12-20;Ord.No.1463-21,§18,12-13-21)
-
-TDC 41.300. DevelopmentStandards.
-
-(1)   Development standards in the RML zone are listed in Table 41-3.Additional standards may
-applytosomeusesandsituations,seeTDC41.310andTDC41.330.ThestandardsinTable41-3
-may be modified for greenway and natural area dedications as provided in TDC 36.420. The
-standardsforlotsize,lotwidth,buildingcoverage,andsetbacksthatapplytosingle-familydwellings
-insmalllotsubdivisionsareprovidedinTDC36.410(2)(b).
-
-(2)   Exceptions.Existingnon-conformingsituationsmaybedevelopedaccordingtotheprovisions
-ofTDCChapter35.
-
-                                                  Table41-3
-                              DevelopmentStandardsintheRMLZone
-
-                                                                    LIMITATIONSANDCODE
-STANDARD                        REQUIREMENT                         REFERENCES
-MAXIMUMDENSITY
-SingleFamilyDwellings        10unitsperacre
-Duplex                                None
-Townhouse                          25unitsperacre
-Triplex                                 None
-Quadplex                             None
-CottageCluster                    None                                   Minimumdensityof4unitsperacre.
-Multi-Family(5ormore              10unitsperacre
-units)
-ManufacturedDwelling              12unitsperacre                  Limitedtosingle-widedwellingparks
-Parks                                                               oranypartofasingle-widedwelling
-                                                                    park.
-RetirementHousingFacility,        15unitsperacre
-orCongregateCareFacility
-NursingFacility                    15unitsperacre
-GroupLivingUses               15unitsperacre
-MINIMUMLOTSIZE
-SingleFamilyDwelling         3,000squarefeet                 OnlyinaFlexibleLotSubdivisions,
-                                                                    subjecttoTDC36.410
-
-Supp.No.6                                          TDC41:4
-                            MEDIUM LOW DENSITY RESIDENTIAL ZONE (RML)                                             TDC 41.300
-
-                                                                               LIMITATIONS AND CODE
-STANDARD                          REQUIREMENT                                  REFERENCES
-Duplex                                   4,500 square feet                  May be reduced for Flexible Lot
-                                                                               Subdivisions, subject to TDC 36.410.
-Townhouse                            1,400 square feet
-Triplex                                    4,500 square feet                  May be reduced for Flexible Lot
-                                                                               Subdivisions, subject to TDC 36.410.
-Quadplex                               4,500 square feet                  May be reduced for Flexible Lot
-                                                                               Subdivisions, subject to TDC 36.410.
-Cottage Cluster                     4,500 square feet                  May be reduced for Flexible Lot
-                                                                               Subdivisions, subject to TDC 36.410.
-Multi-Family Structure (5 or            20,000 square feet
+provided in TDC 31.070.
+(2) Overlay Zones. Additional uses may be allowed in a particular overlay zone. See the overlay
+zone Chapters for additional uses.
+Table 41-1
+Use Categories in the RML Zone
+USE CATEGORY STATUS LIMITATIONS AND CODE REFERENCES
+RESIDENTIAL USE CATEGORIES
+Household Living P/C Permitted housing types subject to TDC
+41.220.
+Residential Accessory Uses P (L) Permitted uses limited to Family Child Care
+Home subject to ORS 329A.440.
+TDC41:1Supp. No. 6
+USE CATEGORY STATUS LIMITATIONS AND CODE REFERENCES
+Group Living P/C (L) Permitted uses limited to
+• Residential Facility; and,
+• Nursing Facility.
+Conditional uses limited to Congregate Care
+Facility subject to TDC 34.020 and TDC
+34.030.
+COMMERCIAL USE CATEGORIES
+Agriculture C (L) Subject to TDC 41.210(1).
+Durable Goods Sales C (L) Conditional uses limited to nurseries.
+Retail Sales and Service C (L) Conditional uses limited to Child Day Care
+Center.
+INSTITUTIONAL USE CATEGORIES
+Assembly Facilities C (L) Conditional uses limited to places of religious
+worship. See TDC 34.800 Religious uses and
+ORS 227.500 pertaining to activities customar-
+ily associated with the practices of religious
+activity.
+Community Services C
+Medical Center C (L) Conditional uses limited to a hospital.
+Schools C —
+INFRASTRUCTURE AND UTILITIES USE CATEGORIES
+Basic Utilities P/C (L) Permitted uses limited to water or sewage
+pump stations and pressure reading stations.
+Conditional uses limited to water reservoirs,
+with a maximum height of 75 feet.
+Greenways and Natural Areas P —
+Parks and Open Areas P/C (L) Permitted uses limited to public park or play-
+ground.
+Conditional uses limited to golf course or coun-
+try club with golf course.
+Public Safety Facilities C (L) Conditional uses limited to fire stations
+Transportation Facilities P —
+Wireless Communication Facil-
+ities
+P/C (L) Subject to TDC 41.210(2).
+Maximum height and minimum setbacks sub-
+ject to TDC Chapter 73F .
+TDC 41.200 TUALATIN DEVELOPMENT CODE
+TDC41:2Supp. No. 6
+TDC 41.210. Additional Limitations on Uses.
+(1) Agricultural Uses. The following agricultural uses are allowed with a conditional use permit
+within areas designated on Comprehensive Plan Map 10-6:
+(a) Conditional Use of Agricultural Animals. Raising of agricultural animals, limited to cattle,
+horses and sheep. The City Council may limit the number of animals to be allowed on a specific
+parcel of property; and
+(b) Agricultural structures such as barns, stables, sheds, but excluding feed lots. Feed lots
+are prohibited.
+(2) Wireless Communication Facilities. Wireless Communication Facilities may be permitted uses
+or conditional uses, depending on the nature of the use.
+(a) Permitted Uses. The following uses are permitted outright:
+(i) Wireless Communication Facility Attached, provided the facility is not mounted on a
+single-family dwelling or its accessory structures; and
+(ii) Wireless Communication Facility, provided the facility is located within 300 feet of
+the centerline of Interstate 5.
+(b) Conditional Uses. All other detached wireless communication facilities may be allowed
+with a conditional use permit. The facility must not be located within an approved small lot
+subdivision.
+(Ord. No. 1450-20, § 16, 12-14-20)
+TDC 41.220. Housing Types.
+T able 41-2 lists Housing Types permitted in the RML zone. Housing types may be Permitted Outright
+(P), Conditionally Permitted (C), or Not Permitted (N) in the RML zone.
+Table 41-2
+Housing Types in the RML Zone
+HOUSING TYPE STATUS LIMITATIONS AND CODE REFERENCES
+Single-Family Dwelling P Limited to single-family dwellings in a flexible
+lot subdivision subject to TDC 36.410.
+Accessory Dwelling Unit P Subject to TDC 73A.170.
+Duplex P See TDC definition in 31.060.
+T ownhouse P See TDC definition in 31.060.
+Triplex P See TDC definition in 31.060.
+Quadplex P See TDC definition in 31.060.
+Cottage Cluster P See TDC definition in 31.060.
+Multi-Family Structure (5 or
 more units)
-Multi-Family Structure                  20,000 square feet                Limited to the primary condominium
-under Condominium                                                              lot.
+P See TDC definition in 31.060.
+Manufacturing Dwelling N See TDC definition in 31.060.
+TDC 41.220MEDIUM LOW DENSITY RESIDENTIAL ZONE (RML)
+TDC41:3Supp. No. 6
+HOUSING TYPE STATUS LIMITATIONS AND CODE REFERENCES
+Manufactured Dwelling Park P Limited to locations designated by the Tualatin
+Community Plan Map and subject to TDC
+34.190.
+Retirement Housing Facility C Subject to TDC 34.400.
+Residential Home P See TDC definition in 31.060.
+(Ord. No. 1444-20, § 1, 10-12-20; Ord. No. 1463-21, § 18, 12-13-21)
+TDC 41.300. Development Standards.
+(1) Development standards in the RML zone are listed in T able 41-3. Additional standards may
+apply to some uses and situations, see TDC 41.310 and TDC 41.330. The standards in T able 41-3
+may be modified for greenway and natural area dedications as provided in TDC 36.420. The
+standards for lot size, lot width, building coverage, and setbacks that apply to single-family dwellings
+in small lot subdivisions are provided in TDC 36.410(2)(b).
+(2) Exceptions. Existing non-conforming situations may be developed according to the provisions
+of TDC Chapter 35.
+Table 41-3
+Development Standards in the RML Zone
+STANDARD REQUIREMENT
+LIMITATIONS AND CODE
+REFERENCES
+MAXIMUM DENSITY
+Single Family Dwellings 10 units per acre
+Duplex None
+T ownhouse 25 units per acre
+Triplex None
+Quadplex None
+Cottage Cluster None Minimum density of 4 units per acre.
+Multi-Family (5 or more
+units)
+10 units per acre
+Manufactured Dwelling
+Parks
+12 units per acre Limited to single-wide dwelling parks
+or any part of a single-wide dwelling
+park.
+Retirement Housing Facility,
+or Congregate Care Facility
+15 units per acre
+Nursing Facility 15 units per acre
+Group Living Uses 15 units per acre
+MINIMUM LOT SIZE
+Single Family Dwelling 3,000 square feet Only in a Flexible Lot Subdivisions,
+subject to TDC 36.410
+TDC 41.220 TUALATIN DEVELOPMENT CODE
+TDC41:4Supp. No. 6
+STANDARD REQUIREMENT
+LIMITATIONS AND CODE
+REFERENCES
+Duplex 4,500 square feet May be reduced for Flexible Lot
+Subdivisions, subject to TDC 36.410.
+Townhouse 1,400 square feet
+Triplex 4,500 square feet May be reduced for Flexible Lot
+Subdivisions, subject to TDC 36.410.
+Quadplex 4,500 square feet May be reduced for Flexible Lot
+Subdivisions, subject to TDC 36.410.
+Cottage Cluster 4,500 square feet May be reduced for Flexible Lot
+Subdivisions, subject to TDC 36.410.
+Multi-Family Structure (5 or
+more units)
+20,000 square feet
+Multi-Family Structure
+under Condominium
 Ownership
-All Other Permitted Uses       10,000 square feet
-Conditional Uses                   20,000 square feet
-Infrastructure and Utilities            —                                           As determined through the
-Uses                                                                           Subdivision, Partition, or Lot Line
-                                                                               Adjustment process
+20,000 square feet Limited to the primary condominium
+lot.
+All Other Permitted Uses 10,000 square feet
+Conditional Uses 20,000 square feet
+Infrastructure and Utilities
+Uses
+— As determined through the
+Subdivision, Partition, or Lot Line
+Adjustment process
 MINIMUM AVERAGE LOT WIDTH
-Single Family Detached        25 feet                                   Only allowed for Flexible Lot
-                                                                               Subdivisions, subject to TDC 36.410.
-Townhouse                            14 feet
-Duplex, Triplex, Quadplex,              50 feet                                   May be reduced to 30 feet if on a
-and Cottage Clusters                                                           cul-de-sac. May be reduced to 26
-                                                                               feet for Flexible Lot Subdivisions,
-                                                                               subject to TDC 36.410.
-Multi-Family Structure           75 feet                                   May be 40 feet on a cul-de-sac
-                                                                               street.
-Multi-Family Structure                  100 feet                                 Limited to the primary condominium
-under Condominium                                                              lot. Minimum lot width at street is 40
-Ownership                                                                      feet.
-All Other Permitted Uses       75 feet
-Conditional Uses                   100 feet                                 Minimum lot width at street is 40 feet.
-Flag Lots                               —                                           Must be sufficient to comply with
-                                                                               minimum access requirements of
-                                                                               TDC 73C.
+Single Family Detached 25 feet Only allowed for Flexible Lot
+Subdivisions, subject to TDC 36.410.
+Townhouse 14 feet
+Duplex, Triplex, Quadplex,
+and Cottage Clusters
+50 feet May be reduced to 30 feet if on a
+cul-de-sac. May be reduced to 26
+feet for Flexible Lot Subdivisions,
+subject to TDC 36.410.
+Multi-Family Structure 75 feet May be 40 feet on a cul-de-sac
+street.
+Multi-Family Structure
+under Condominium
+Ownership
+100 feet Limited to the primary condominium
+lot. Minimum lot width at street is 40
+feet.
+All Other Permitted Uses 75 feet
+Conditional Uses 100 feet Minimum lot width at street is 40 feet.
+Flag Lots — Must be sufficient to comply with
+minimum access requirements of
+TDC 73C.
 MINIMUM SETBACKS
-
-Supp. No. 12                                               TDC41:5
-TDC 41.300                             TUALATIN DEVELOPMENT CODE
-
-                                                                                LIMITATIONS AND CODE
-STANDARD                          REQUIREMENT                                   REFERENCES
-Single Family Detached,                                                         Single Family Detached only in
-Duplex, Townhouse, Triplex,                                                     Flexible Lot Subdivisions, subject to
-or Quadplex                                                                     TDC 36.410.
-Front                                      10 feet
-Garage Door                         20 feet
-Side                                       5 feet                                     Zero-foot side setbacks permitted for
-                                                                                lot or parcel lines where Townhouse
-                                                                                units are attached.
-Rear                                      10 feet
+ TDC 41.300MEDIUM LOW DENSITY RESIDENTIAL ZONE (RML)
+TDC41:5Supp. No. 12
+STANDARD REQUIREMENT
+LIMITATIONS AND CODE
+REFERENCES
+Single Family Detached,
+Duplex, Townhouse, Triplex,
+or Quadplex
+Single Family Detached only in
+Flexible Lot Subdivisions, subject to
+TDC 36.410.
+Front 10 feet
+Garage Door 20 feet
+Side 5 feet Zero-foot side setbacks permitted for
+lot or parcel lines where Townhouse
+units are attached.
+Rear 10 feet
 Multi-family (5 or more
 units), Conditional Uses,
 and Other Permitted Uses
 Not Listed
 Front
 (based on structure height)
-<25 feet                                 10 feet
-25—<30 feet                          15 feet
-30+ feet                                 20 feet
-Side                                       5 feet
-Corner Lots                           —                                           On corner lots, the setback is the
-                                                                                same as the front yard setback on
-                                                                                any side facing a street other than an
-                                                                                alley except for duplexes, triplexes,
-                                                                                and quadplexes where the setback is
-                                                                                10 feet.
+<25 feet 10 feet
+25—<30 feet 15 feet
+30+ feet 20 feet
+Side 5 feet
+Corner Lots — On corner lots, the setback is the
+same as the front yard setback on
+any side facing a street other than an
+alley except for duplexes, triplexes,
+and quadplexes where the setback is
+10 feet.
 Other Development Types
-Cottage Cluster                     10 feet on all sides                Minimum distance of 10 feet between
-                                                                                units in a cottage cluster.
-Minimum Distance Between                10 feet
+Cottage Cluster 10 feet on all sides Minimum distance of 10 feet between
+units in a cottage cluster.
+Minimum Distance Between
 Buildings within One
 Development
-Parking and Vehicle                     10 feet                                   For Townhouses, determined through
-Circulation Areas                                                               the Architectural Review process
-Conditional Uses                   —                                           As determined through Architectural
-                                                                                Review process, no greater than 50
-                                                                                feet
-Any Yard Area Adjacent to               50 feet
+10 feet
+Parking and Vehicle
+Circulation Areas
+10 feet For Townhouses, determined through
+the Architectural Review process
+Conditional Uses — As determined through Architectural
+Review process, no greater than 50
+feet
+Any Yard Area Adjacent to
 Basalt Creek Parkway
+50 feet
 MAXIMUM STRUCTURE HEIGHT
-
-Supp. No. 12                                               TDC41:6
-                           MEDIUM LOW DENSITY RESIDENTIAL ZONE (RML)                                        TDC 41.320
-
-                                                                           LIMITATIONS AND CODE
-STANDARD                          REQUIREMENT                              REFERENCES
-All Uses                                 35 feet                                   If all setbacks are equal to or greater
-                                                                           than 1½ times the height of the
-                                                                           building, the height may be increased
-                                                                           to a maximum of 50 feet with a
-                                                                           conditional use permit.
+TDC 41.300 TUALATIN DEVELOPMENT CODE
+TDC41:6Supp. No. 12
+STANDARD REQUIREMENT
+LIMITATIONS AND CODE
+REFERENCES
+All Uses 35 feet If all setbacks are equal to or greater
+than 1½ times the height of the
+building, the height may be increased
+to a maximum of 50 feet with a
+conditional use permit.
 MAXIMUM LOT COVERAGE
-Duplex                                   60%
-Townhouse                            75%
-Triplex                                    60%
-Quadplex                               60%
-Cottage Cluster                     75%
-All Other Permitted Uses       40%
-Conditional Uses                   45%
+Duplex 60%
+Townhouse 75%
+Triplex 60%
+Quadplex 60%
+Cottage Cluster 75%
+All Other Permitted Uses 40%
+Conditional Uses 45%
 (Ord. No. 1444-20, § 2, 10-12-20; Ord. No. 1450-20, § 17, 12-14-20; Ord. No. 1463-21, § 19,
 12-13-21; Ord. No. 1454-25, § 1(Exhs. 2, 3), 11-24-25)
-
 TDC 41.310.  Projections Into Required Yards.
 The following architectural features may project into a required front or rear yard setback area not
 more than three feet, and into a required side yard not more than two feet: cornices, eaves, canopies,
 decks, sun-shades, gutters, chimneys, flues, belt courses, leaders, sills, pilasters, lintels, ornamen-
 tal features, and other similar architectural features.
-
 TDC 41.320.  Density Bonus or Setback Reduction for Developments Adjacent to Greenways
-                  and Natural Areas.
+and Natural Areas.
 To preserve natural areas and habitat for fish and wildlife, the decision-making authority may provide
 a density bonus or setback reduction for developments that are adjacent to Greenways or Natural
 Areas that dedicate land for conservation or public recreational purposes, in accordance with the
 following standards:
-
-(1)    Density Bonus. The lot(s) may be developed to the same number of dwelling units that would
+(1)  Density Bonus. The lot(s) may be developed to the same number of dwelling units that would
 be permitted in the RML zone if none of the land area in the Greenway or Natural Area lots were in
 a conservation or protection area.
-(2)    Setback Reduction. All permitted uses may be allowed a reduction of up to 35 percent of the
+(2)  Setback Reduction. All permitted uses may be allowed a reduction of up to 35 percent of the
 front, side or rear yard setbacks, as determined through the Architectural Review process, if as a
 result the buildings are farther away from fish and wildlife habitat areas. Single-Family Dwellings in
 Small Lot Subdivisions and setback areas that abut property lines in the RL zone are not eligible for
 the setback reduction.
-(3)    Location of Greenway or Natural Area Lot. A portion of the parcel must be located in one of the
+(3)  Location of Greenway or Natural Area Lot. A portion of the parcel must be located in one of the
 following conservation or protection areas:
-      (a)    Natural Resource Protection Overlay (NRPO) District (TDC Chapter 72); or
-
-Supp. No. 12                                            TDC41:7
-TDC 41.320                            TUALATIN DEVELOPMENT CODE
-
-      (b)    Clean Water Services Vegetated Corridor.
-
-(4)    Ownership of Greenway or Natural Area Lot. The ownership of each Greenway or Natural Area
+(a)  Natural Resource Protection Overlay (NRPO) District (TDC Chapter 72); or
+ TDC 41.320MEDIUM LOW DENSITY RESIDENTIAL ZONE (RML)
+TDC41:7Supp. No. 12
+(b)  Clean Water Services Vegetated Corridor.
+(4)  Ownership of Greenway or Natural Area Lot. The ownership of each Greenway or Natural Area
 Lot must be one of the following:
-      (a)    Dedicated to the City at the City's option;
-      (b)    Dedicated in a manner approved by the City to a non-profit conservation organization; or
-      (c)    Retained in private ownership.
-
-(5)    Ownership Considerations. The decision-making authority must consider, but not limited to, the
+(a)  Dedicated to the City at the City's option;
+(b)  Dedicated in a manner approved by the City to a non-profit conservation organization; or
+(c)  Retained in private ownership.
+(5)  Ownership Considerations. The decision-making authority must consider, but not limited to, the
 following factors when determining the appropriate ownership of the Greenway or Natural Area Lot:
-      (a)    Does the Park and Recreation Master Plan designate the lot for a greenway, pedestrian
-      or bike path, public park, recreation, overlook or interpretive facility, or other public facility;
-      (b)    Does the lot include one or more designated Heritage Trees, or one or more significant
-      trees;
-      (c)    Does the lot provide a significant view or esthetic element, or does it include a unique or
-      intrinsically valuable element;
-      (d)    Does the lot connect publicly owned or publicly accessible properties;
-      (e)    Does the lot abut an existing park, greenway, natural area or other public facility;
-      (f)    Does the lot provide a public benefit or serve a public need;
-      (g)    Does the lot contain environmental hazards;
-      (h)    Geologic stability of the lot; and
-      (i)    Future maintenance costs for the lot.
+(a)  Does the Park and Recreation Master Plan designate the lot for a greenway, pedestrian
+or bike path, public park, recreation, overlook or interpretive facility, or other public facility;
+(b)  Does the lot include one or more designated Heritage Trees, or one or more significant
+trees;
+(c)  Does the lot provide a significant view or esthetic element, or does it include a unique or
+intrinsically valuable element;
+(d)  Does the lot connect publicly owned or publicly accessible properties;
+(e)  Does the lot abut an existing park, greenway, natural area or other public facility;
+(f)  Does the lot provide a public benefit or serve a public need;
+(g)  Does the lot contain environmental hazards;
+(h)  Geologic stability of the lot; and
+(i)  Future maintenance costs for the lot.
 (Ord. 1414-18, 12-10-18; Ord. 1427-19, § 19, 11-25-19)
-
 TDC 41.330.  Reserved.
-
-Editor’s note—Ord. No. 1463, § 20, adopted December 13, 2021, repealed § 41.330. Former
+Editor’s note— Ord. No. 1463, § 20, adopted December 13, 2021, repealed § 41.330. Former
 § 41.330 pertained to Development Standards for Single-Family Dwellings in a Small Lot Subdivi-
 sion for Certain Basalt Creek Area Properties and derived from Ord. No. 1444-20, § 3, adopted
 October 12, 2020.
-
-Supp. No. 12                                            TDC41:8
-                                              CHAPTER42
-
-                       MEDIUMHIGHDENSITYRESIDENTIALZONE(RMH)
-
+TDC 41.320 TUALATIN DEVELOPMENT CODE
+TDC41:8Supp. No. 12
+CHAPTER 42
+MEDIUM HIGH DENSITY RESIDENTIAL ZONE (RMH)
 Sections:

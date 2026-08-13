@@ -174,18 +174,24 @@ def slice_between(text: str, start: str = "", end: str = "", *, nth: int = 1) ->
     return out.strip() + "\n"
 
 
-def pdf_to_text(data: bytes) -> str:
+def pdf_to_text(data: bytes, *, extraction: str = "layout") -> str:
     """Text out of a PDF, in reading order, one page after another.
 
     Oregon codifiers publish chapters as PDF — Portland's Title 33 among them —
     so this is not an edge case but the main path for the biggest jurisdiction
     in the state. Page furniture is left in: the running header carries the
     revision date, which is exactly the kind of change a hash should catch.
+
+    ``extraction`` is declared per document (see CodeDocument): ``layout``
+    keeps the horizontal geometry tables need; ``plain`` is for the PDFs whose
+    font metrics make layout mode fuse words together — Tualatin's whole code
+    reads "areasintheCity..." in layout mode and cleanly in plain.
     """
     from io import BytesIO
 
     from pypdf import PdfReader
 
+    mode = {} if extraction == "plain" else {"extraction_mode": "layout"}
     reader = PdfReader(BytesIO(data))
     pages = []
     for page in reader.pages:
@@ -197,7 +203,7 @@ def pdf_to_text(data: bytes) -> str:
             # any other extraction failure still fails loud.
             pages.append("")
             continue
-        pages.append((page.extract_text(extraction_mode="layout") or "").replace("\r\n", "\n"))
+        pages.append((page.extract_text(**mode) or "").replace("\r\n", "\n"))
     # Internal spacing is kept, unlike the HTML path. Portland states its
     # standards in a grid with one column per zone, and the gaps between
     # columns are the only thing that says which number belongs to which zone.
@@ -214,11 +220,11 @@ def _http_get(url: str) -> bytes:
     return response.content
 
 
-def _to_text(raw: bytes | str) -> str:
+def _to_text(raw: bytes | str, *, extraction: str = "layout") -> str:
     """Whatever came back, reduced to the stored form."""
     if isinstance(raw, bytes):
         if raw[:5] == b"%PDF-":
-            return pdf_to_text(raw)
+            return pdf_to_text(raw, extraction=extraction)
         raw = raw.decode("utf-8", errors="replace")
     return html_to_text(raw) if "<" in raw[:2048] else raw.replace("\r\n", "\n")
 
@@ -259,9 +265,12 @@ def fetch_text(
     start: str = "",
     end: str = "",
     nth: int = 1,
+    extraction: str = "layout",
 ) -> str:
     """Fetch a URL and reduce it to the stored form."""
-    return slice_between(_to_text((get or _http_get)(url)), start, end, nth=nth)
+    return slice_between(
+        _to_text((get or _http_get)(url), extraction=extraction), start, end, nth=nth
+    )
 
 
 def citing(layers: dict[str, Layer], doc_path: str) -> list[VerKey]:
@@ -338,6 +347,7 @@ def fetch_one(
     start: str = "",
     end: str = "",
     nth: int = 1,
+    extraction: str = "layout",
     refresh: bool = False,
     check: bool = False,
     allow_thin: bool = False,
@@ -365,7 +375,7 @@ def fetch_one(
             return _content
 
     try:
-        text = fetch_text(url, get=get, start=start, end=end, nth=nth)
+        text = fetch_text(url, get=get, start=start, end=end, nth=nth, extraction=extraction)
     except ProvenanceError as exc:
         print(f"{path}: {exc}", file=sys.stderr)
         return 1
@@ -401,6 +411,15 @@ def fetch_one(
     bulky = _bulky(text, start, end)
     if bulky:
         print(f"note: {path} — {bulky}", file=sys.stderr)
+
+    if extraction == "layout" and fused(text):
+        print(
+            f"note: {path} — extraction looks fused (words run together, "
+            '"areasintheCity..."). No subject phrase can match fused text, so this '
+            "document will corroborate nothing. Declare `extraction: plain` on the "
+            "`code:` entry unless the chapter's tables matter more than its prose.",
+            file=sys.stderr,
+        )
 
     if not store.exists(path):
         if check:
@@ -445,6 +464,29 @@ def fetch_one(
 #: repository that quietly grows by several megabytes per jurisdiction and a
 #: reviewer scrolling a thousand pages to check one setback.
 BULKY_CHARS = 400_000
+
+
+#: Alpha runs this long are almost never words; they are words fused together
+#: by a layout-mode extraction that lost its spaces. Measured across the
+#: corpus: clean documents sit at or under 0.003% of words, damaged ones at
+#: 2.2% (Wilsonville) and 6.5% (Tualatin). The threshold splits that gap.
+FUSED_RUN = 18
+FUSED_RATIO = 0.005
+
+
+def fused(text: str) -> bool:
+    """Whether this extraction fused words together.
+
+    The failure this catches is silent in the worst way: a fused document
+    still carries its section numbers, so scope works, candidates simply never
+    appear — which reads as "the code states nothing here" when the truth is
+    "nothing could read it". Opposite conclusions, §15's distinction again.
+    """
+    words = re.findall(r"[A-Za-z]+", text)
+    if not words:
+        return False
+    runs = sum(1 for w in words if len(w) >= FUSED_RUN)
+    return runs / len(words) >= FUSED_RATIO
 
 
 def _bulky(text: str, start: str, end: str) -> str:
@@ -581,6 +623,13 @@ def main(argv: Sequence[str] | None = None, *, get: Callable[[str], bytes | str]
         help="which occurrence of --start begins the slice; a chapter PDF lists "
         "every section in its contents before the standards, so this is often 2",
     )
+    parser.add_argument(
+        "--extraction",
+        choices=("layout", "plain"),
+        default="layout",
+        help="layout keeps table geometry; plain is for PDFs whose layout "
+        "extraction fuses words together",
+    )
     parser.add_argument("--docs", type=Path, default=None, help="provenance store root")
     parser.add_argument("--rules", type=Path, default=CONFIG_ROOT)
     parser.add_argument("--log", type=Path, default=LOG_PATH)
@@ -620,6 +669,7 @@ def main(argv: Sequence[str] | None = None, *, get: Callable[[str], bytes | str]
         start=args.start,
         end=args.end,
         nth=args.nth,
+        extraction=args.extraction,
         refresh=args.refresh,
         check=args.check,
         allow_thin=args.allow_thin,
@@ -653,6 +703,7 @@ def _fetch_declared(args, *, store: ProvenanceStore, retrieved: date, get) -> in
             start=doc.start,
             end=doc.end,
             nth=doc.nth,
+            extraction=doc.extraction,
             refresh=args.refresh,
             check=args.check,
             allow_thin=doc.allow_thin or args.allow_thin,

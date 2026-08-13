@@ -22,6 +22,9 @@ code:
     title: "Chapter 4 — Planning and Land Development"
     start: "PLANNING AND LAND DEVELOPMENT"
     end: "Chapter 5"
+    # Layout-mode extraction fuses 2.2% of this PDF's words, silently hiding
+    # standards from every subject phrase; plain mode reads them.
+    extraction: plain
 zones:
   R:
     section: ["4.122", "4.113"]

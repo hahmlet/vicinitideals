@@ -22,6 +22,10 @@ code:
     title: "Chapters 40-41 - Low and Medium Low Density Residential (RL, RML)"
     start: "TDC 40.100."
     end: "TDC 42.100."
+    # Layout-mode extraction fuses this PDF's words ("areasintheCity...");
+    # plain mode reads it cleanly. Tables 40-1/40-2 lose their geometry, which
+    # is the declared trade until the grid matters more than the prose.
+    extraction: plain
 zones:
   RL:
     section: ["40."]
