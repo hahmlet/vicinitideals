@@ -57,7 +57,7 @@ _SUBJECTS: tuple[tuple[str, str], ...] = (
     (r"(?:street )?frontage", "min_frontage_ft"),
     (r"(?:building )?height", "max_height_ft"),
     (r"floor area ratio|\bFAR\b", "max_far"),
-    (r"(?:building|lot) coverage", "max_coverage_pct"),
+    (r"(?:building|lot|site) coverage", "max_coverage_pct"),
     (r"outdoor area|open space", "open_space_min_pct"),
     (r"parking spaces?|off-street parking", "parking_min_per_unit"),
     (r"dwelling units?|units", "max_units"),
@@ -396,7 +396,14 @@ def extract(
     """
     # Imported here because the table reader is built on this module's subject
     # matching: prose and grid ask the same question of a label.
-    from flats.encode.tables import blank_tables, candidates_for, read_pairs, read_tables
+    from flats.encode.tables import (
+        blank_tables,
+        candidates_for,
+        read_pairs,
+        read_stacked_grids,
+        read_tables,
+        stacked_candidates_for,
+    )
 
     clauses: list[Clause] = []
     proposed: list[Candidate] = []
@@ -443,6 +450,7 @@ def extract(
     if zone:
         for table in read_tables(text):
             proposed.extend(candidates_for(table, zone, path=path))
+        proposed.extend(stacked_candidates_for(read_stacked_grids(text, path=path), zone))
 
     # Stacked label/value pairs — a table that lost its geometry to HTML
     # linearisation. Zone-blind like prose, so they carry their section and

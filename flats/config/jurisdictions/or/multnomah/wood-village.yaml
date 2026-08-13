@@ -53,11 +53,21 @@ zones:
     setback_front_ft:
       value: 10
       quote: "or/multnomah/wood-village/210.320.txt#L136"
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    setback_street_side_ft: 10
-    min_lot_sqft: 7500
-    max_coverage_pct: 45
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/wood-village/210.320.txt#L124"
+    setback_rear_ft:
+      value: 15
+      quote: "or/multnomah/wood-village/210.320.txt#L130"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/multnomah/wood-village/210.320.txt#L144"
+    min_lot_sqft:
+      value: 7500
+      quote: "or/multnomah/wood-village/210.320.txt#L76"
+    max_coverage_pct:
+      value: 45
+      quote: "or/multnomah/wood-village/210.320.txt#L166"
     notes: 'quadfit confidence: verified | Quadplex Y outright; zone min lot 7,500 sf (no quad-specific
       larger min). Garage face 22 ft. Height 35 ft.'
   LR 12:
@@ -70,11 +80,21 @@ zones:
     setback_front_ft:
       value: 10
       quote: "or/multnomah/wood-village/210.320.txt#L136"
-    setback_side_ft: 10
-    setback_rear_ft: 15
-    setback_street_side_ft: 20
-    min_lot_sqft: 12000
-    max_coverage_pct: 45
+    setback_side_ft:
+      value: 10
+      quote: "or/multnomah/wood-village/210.320.txt#L122"
+    setback_rear_ft:
+      value: 15
+      quote: "or/multnomah/wood-village/210.320.txt#L128"
+    setback_street_side_ft:
+      value: 20
+      quote: "or/multnomah/wood-village/210.320.txt#L142"
+    min_lot_sqft:
+      value: 12000
+      quote: "or/multnomah/wood-village/210.320.txt#L74"
+    max_coverage_pct:
+      value: 45
+      quote: "or/multnomah/wood-village/210.320.txt#L164"
     notes: 'quadfit confidence: verified | Corner STREET-SIDE 20 ft (vs 10 in LR 7.5). Zone min lot 12,000
       sf.'
   MR 2:

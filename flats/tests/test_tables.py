@@ -718,3 +718,188 @@ def test_a_pair_quotes_the_line_the_number_is_on() -> None:
 
     assert front.quote == f"doc.txt#L{front.line}"
     assert GLADSTONE_PAIRS.splitlines()[front.line - 1].strip() == "20 ft"
+
+
+# --- the fifth shape: stacked grids ------------------------------------------
+
+# WVDC Table 210-3 as municipal.codes linearises it: a header block of zone
+# codes, then each row as its label followed by one value line per zone.
+# Carries every hazard the reader must survive: paren footnotes on labels and
+# values, "(See ...)" comment cells between label and values, a Corner Lots
+# block whose setbacks are variants, and a coverage row after that block.
+WOOD_VILLAGE_GRID = """
+210.320 Lot Size and Dimensional Standards.
+
+Table 210-3. Development Standards in Light Residential Zones
+
+Standard
+
+LR12
+
+LR7.5
+
+Minimum Lot Size
+
+- Min. lot area(2)
+
+12,000 sq ft
+
+7,500 sq ft
+
+Minimum Setbacks
+
+- Front setback
+
+10 ft(1)
+
+10 ft(1)
+
+- Side setback(2)
+
+10 ft
+
+5 ft
+
+Corner Lots
+
+- Front setback
+
+10 ft
+
+10 ft
+
+- Street side setback(3)
+
+20 ft
+
+10 ft
+
+- Side setback(2)
+
+10 ft
+
+10 ft
+
+Maximum Site Coverage
+
+(See 210.350 and (2), (3) below)
+
+45%
+
+45%
+"""
+
+# Milwaukie's Table 19.301.4: one zone, columns are lot-size tiers. Reading
+# n positional values under a single zone code is exactly what a tier row
+# looks like, so a one-zone header is never read.
+MILWAUKIE_TIERS = """
+Table 19.301.4
+
+Standard
+
+R-MD
+
+1. Minimum lot width (ft)
+
+20
+
+30
+
+50
+
+60
+"""
+
+
+def _grid(text: str):
+    from flats.encode.tables import read_stacked_grids
+
+    return read_stacked_grids(text, path="doc.txt")
+
+
+def test_each_zone_gets_the_value_in_its_column_position() -> None:
+    grids = _grid(WOOD_VILLAGE_GRID)
+    lr12 = {c.field: c.value for c in grids["LR12"]}
+    lr75 = {c.field: c.value for c in grids["LR7.5"]}
+
+    assert lr12["min_lot_sqft"] == 12000
+    assert lr75["min_lot_sqft"] == 7500
+    assert lr12["setback_side_ft"] == 10
+    assert lr75["setback_side_ft"] == 5
+
+
+def test_a_paren_footnote_travels_with_the_value_as_a_note() -> None:
+    grids = _grid(WOOD_VILLAGE_GRID)
+    front = next(c for c in grids["LR7.5"] if c.field == "setback_front_ft")
+
+    assert front.value == 10
+    assert front.conditional
+
+
+def test_a_corner_block_yields_only_the_street_side_setback() -> None:
+    # Corner-lot side setbacks are variants of the base standard above them;
+    # the street side is the one field whose natural home is the corner block.
+    grids = _grid(WOOD_VILLAGE_GRID)
+    fields = [c.field for c in grids["LR7.5"]]
+
+    assert fields.count("setback_side_ft") == 1
+    assert next(c for c in grids["LR7.5"] if c.field == "setback_street_side_ft").value == 10
+    assert next(c for c in grids["LR12"] if c.field == "setback_street_side_ft").value == 20
+
+
+def test_a_row_after_the_corner_block_is_a_sibling_not_a_member() -> None:
+    grids = _grid(WOOD_VILLAGE_GRID)
+
+    assert next(c for c in grids["LR7.5"] if c.field == "max_coverage_pct").value == 45
+
+
+def test_a_comment_cell_between_label_and_values_is_stepped_over() -> None:
+    # "(See 210.350 ...)" sits where a value would; the 45% pair behind it is
+    # still positional.
+    grids = _grid(WOOD_VILLAGE_GRID)
+
+    assert next(c for c in grids["LR12"] if c.field == "max_coverage_pct").value == 45
+
+
+def test_a_single_zone_header_is_never_read() -> None:
+    # Four tier values under one zone code: claiming any of them for R-MD
+    # would encode the smallest lot tier as the zone standard.
+    assert _grid(MILWAUKIE_TIERS) == {}
+
+
+def test_more_values_than_zones_refuses_the_row() -> None:
+    text = """
+Standard
+
+LR12
+
+LR7.5
+
+- Front setback
+
+10 ft
+
+15 ft
+
+20 ft
+"""
+    assert _grid(text) == {}
+
+
+def test_a_grid_quote_points_at_the_zone_s_own_value_line() -> None:
+    grids = _grid(WOOD_VILLAGE_GRID)
+    lr75_lot = next(c for c in grids["LR7.5"] if c.field == "min_lot_sqft")
+
+    assert WOOD_VILLAGE_GRID.splitlines()[lr75_lot.line - 1].strip() == "7,500 sq ft"
+    assert lr75_lot.quote == f"doc.txt#L{lr75_lot.line}"
+
+
+def test_zone_spelling_matches_across_space_and_hyphen() -> None:
+    # The GIS layer writes "LR 7.5"; the table header prints "LR7.5".
+    from flats.encode.tables import stacked_candidates_for
+
+    grids = _grid(WOOD_VILLAGE_GRID)
+
+    assert stacked_candidates_for(grids, "LR 7.5")
+    assert stacked_candidates_for(grids, "lr12")
+    assert stacked_candidates_for(grids, "R-5") == []

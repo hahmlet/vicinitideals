@@ -1577,3 +1577,94 @@ nothing in it. Municode product choice also matters and is now measured: a clien
 can publish several products, and two of these three keep zoning in a
 separately-published Development Code the "first listed" heuristic passed over.
 `publication()` prefers a development/zoning product and says what it passed over.
+
+## 25. The shapes HTML codifiers linearise to
+
+### Where this came from
+
+Declaring the five platform-lead cities (Gladstone, West Linn, Lake Oswego,
+Milwaukie, Wood Village) put the first *HTML-native* documents in the store —
+Code Publishing per-chapter pages, eCode360 `/print/<code>?guid=` output,
+municipal.codes leaf sections. None of them contain a spatial grid: the codifier
+renders the dimensional table as an HTML `<table>`, and `html_to_text`
+linearises it one cell per line. Two new shapes, two new readers, and the same
+lesson as §24 — each shape is a property of the platform, so one reader pays
+for itself across every city that platform hosts.
+
+### The fourth shape: stacked pairs (`read_pairs`)
+
+A per-zone chapter (Code Publishing gives every West Linn zone its own chapter)
+prints its table as label-line over value-line:
+
+    Front yard
+    20 ft
+    Except for steeply sloped lots ...
+
+The prose reader cannot see this — `paragraphs()` joins the stack into one
+clause, where the note's "Except" tags the standard an exception (Gladstone's
+20 ft front vanished exactly this way) or a run of cells reads as one sentence
+stating five side setbacks. The pair reader works on the *unjoined* lines: a
+line that is exactly a label over a line that is exactly one measurement.
+Grouped labels ("Front yard" under a setbacks heading) resolve the way §24's
+grouped rows do. Two hazards earned their guards: a value line is consumed
+whole or not at all ("7.5 ft or 5 ft due to irregular shaped lots" is a
+two-tier standard, not a 7.5), and repeated value lines are exempt from
+furniture detection — in a linearised grid the repetition *is* the data, and
+frequency-based furniture removal ate West Linn's whole setback block before
+the exemption.
+
+A pair is **near-cell** evidence: nothing in the stack names a zone, so it
+counts only under a declared section or a single-zone document — but it
+outranks prose there. The hierarchy in `check_zone` is now
+**table > pair > prose**: Gladstone's cottage-cluster sentences no longer
+outvote the base-zone row they are the exception to.
+
+### The fifth shape: stacked grids (`read_stacked_grids`)
+
+A multi-zone table linearises to a header block of zone codes, then each row
+as its label followed by one value line per zone, in header order:
+
+    Standard
+    LR12
+    LR7.5
+    - Min. lot area(2)
+    12,000 sq ft
+    7,500 sq ft
+
+Position in the run says whose column a value is, so — unlike a pair — what
+reads here is real cell evidence. Three refusals keep the positional claim
+honest, each earned on a live document:
+
+1. **A one-zone header is never read.** Milwaukie prints lot-size *tiers*
+   under a single zone code (R-MD), and n positional values under one zone is
+   exactly what a tier row looks like. Reading them would encode the smallest
+   lot's standards as the zone's.
+2. **A row is all-or-nothing.** Every one of its n lines must be a
+   measurement, a dash, or a footnoted measurement; one prose cell refuses the
+   whole row rather than shifting the columns.
+3. **More values than zones refuses the row** — the geometry is not what the
+   reader assumed, and nothing positional survives that.
+
+Wood Village's Table 210-3 also carries a **Corner Lots** block — the street
+side setback's natural home (the standard only exists on corners) whose other
+rows are corner *variants* of the base standards above. Where the block ends
+is not printed, so the guard is scoped by field: inside a corner block only
+`setback_street_side_ft` is read, and a coverage row after the corner rows is
+recognised as a sibling because coverage has no corner variant.
+
+### What refused, and what it names
+
+Lake Oswego's Table 50.04.001-1 nests three levels — Primary Structure /
+Accessory Structure blocks repeating identical row labels, street side split
+Arterial vs Local — and its labels ("Front (ft.)") deliberately match no
+subject, so the whole table refuses rather than risk an accessory setback
+wearing the zone's citation. Milwaukie's tiers and Wood Village's MR table
+(columns are housing types under a combined "MR4 and MR2" header) refuse the
+same way. All three land in the same two named dimensions this plan already
+carries: the **housing-type dimension** (§24) and the **lot-size/context tier**
+(Wilsonville §4.113's variant pair). The readers' job was never to interpret
+those — it is to make the refusal name the row it could not claim.
+
+Net effect of the two readers: 66 quotes attached in one session — Gladstone
+12, West Linn 40, Wood Village 14 — every one pointing at the line its number
+is printed on.

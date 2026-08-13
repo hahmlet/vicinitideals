@@ -716,6 +716,196 @@ def read_pairs(text: str, *, path: str) -> list[Candidate]:
     return out
 
 
+#: A footnote as Wood Village prints one — "10 ft(1)" — rather than the
+#: bracketed form. Digits only: "(See 210.320)" is a cross-reference cell.
+_PAREN_NOTE = re.compile(r"\((?P<n>\d{1,2})\)")
+#: A line that is only a cross-reference or comment cell — "(See 210.340)".
+_PAREN_LINE = re.compile(r"^\(.*\)$")
+#: A cell stating the standard does not apply in this column.
+_DASH = re.compile(r"^[—–-]$")
+#: A row label may open with a list dash: "– Min. lot area(2)".
+_LABEL_DASH = re.compile(r"^[—–-]\s+")
+#: A block of rows scoped to corner lots. The street-side setback's natural
+#: home — the standard only exists on a corner — but every other field there
+#: is a corner *variant* of the base standard above it, and reading one as
+#: the base is how 5 ft becomes 10.
+_CORNER_BLOCK = re.compile(r"\bcorner\b", re.I)
+
+
+def _grid_value(line: str, label: str) -> tuple[float, str, tuple[str, ...]] | None:
+    """One stacked-grid cell as (number, kind, notes), or None.
+
+    Whole-line like a pair's value, after setting aside paren footnotes —
+    which are kept: "10 ft(1)" is a base case with an exit, and the marker is
+    what says so.
+    """
+    marks = tuple(f"footnote ({m.group('n')})" for m in _PAREN_NOTE.finditer(line))
+    cell = _PAREN_NOTE.sub("", line).strip()
+    parsed = _measure_line(cell) or _measure_bare(cell, label, "")
+    if parsed is None:
+        return None
+    number, kind = parsed
+    return number, kind, marks
+
+
+def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
+    """Zone-keyed values from a stacked grid, the fifth table shape.
+
+    eCode360 and municipal.codes render the dimensional table as an HTML
+    grid, and ``html_to_text`` linearises it column-run by column-run: a
+    header block of one zone code per line, then each row as its label
+    followed by one value line per zone, in header order —
+
+        Standard
+        LR12
+        LR7.5
+        – Min. lot area(2)
+        12,000 sq ft
+        7,500 sq ft
+
+    Unlike a pair, these ARE written for a zone — the position in the run
+    says whose column it is — so what reads here is cell evidence.
+
+    Three refusals keep the positional claim honest. A header of one zone is
+    not read at all: Milwaukie prints lot-size *tiers* under a single zone
+    code, and n positional values under 1 zone is exactly what a tier row
+    looks like. A row is read only when every one of its n lines is a
+    measurement, a dash, or a footnoted measurement — one prose cell and the
+    whole row is refused rather than shifted. And after the n values the next
+    line must not be another measurement: more values than columns means the
+    geometry is not what this reader assumes, and nothing positional survives
+    that.
+
+    Labels must name their standard outright ("– Front setback"). Grouped
+    and nested labels — Lake Oswego's "Front (ft.)" under "Primary
+    Structure" under "YARD SETBACKS", printed again under "Accessory
+    Structure" — are deliberately unread: position inside a nested block is
+    a context this reader does not track, and an accessory-structure setback
+    wearing the zone's citation is the expensive kind of wrong.
+    """
+    lines = text.splitlines()
+    junk = {
+        j
+        for j in _furniture([line.strip() for line in lines])
+        if _measure_line(j) is None and _subject(j) is None and not _ZONE.match(j)
+    }
+    live = [
+        (n, line.strip())
+        for n, line in enumerate(lines, start=1)
+        if line.strip() and line.strip() not in junk and not _PAGE_NUMBER.match(line.strip())
+    ]
+
+    out: dict[str, list[Candidate]] = {}
+    zones: tuple[str, ...] = ()
+    section = ""
+    block = ""
+    i = 0
+    while i < len(live):
+        n, stripped = live[i]
+        found = _SECTION.match(stripped)
+        if found:
+            section = found.group("sec")
+            zones = ()
+            block = ""
+            i += 1
+            continue
+        run = []
+        while i + len(run) < len(live) and _ZONE.match(live[i + len(run)][1]):
+            run.append(live[i + len(run)][1])
+        if len(run) >= 2:
+            zones = tuple(run)
+            block = ""
+            i += len(run)
+            continue
+        label = _LABEL_DASH.sub("", _PAREN_NOTE.sub("", stripped)).strip()
+        name = _subject(label)
+        if (
+            zones
+            and name is None
+            and not any(ch.isdigit() for ch in label)
+            and len(label.split()) <= 4
+            and not _PAREN_LINE.match(stripped)
+            and _measure_line(stripped) is None
+        ):
+            # "Minimum Setbacks", "Corner Lots" — a heading scoping the rows
+            # under it, until the next heading or header.
+            block = label
+        if zones and name is not None and not any(ch.isdigit() for ch in label):
+            if (
+                _CORNER_BLOCK.search(block)
+                and name.startswith("setback_")
+                and name != "setback_street_side_ft"
+            ):
+                # Where the block ends is not printed, so the guard is scoped
+                # by field instead: only setbacks have corner variants, and a
+                # coverage row after the corner rows is a sibling, not a member.
+                i += 1
+                continue
+            cells: list[tuple[int, tuple[float, str, tuple[str, ...]]] | None] = []
+            j = i + 1
+            # A comment cell may sit between label and values or after them;
+            # only fully parenthesised lines are stepped over.
+            while j < len(live) and len(cells) < len(zones):
+                cell_no, cell_line = live[j]
+                if _PAREN_LINE.match(cell_line):
+                    j += 1
+                    continue
+                if _DASH.match(cell_line):
+                    cells.append(None)
+                    j += 1
+                    continue
+                parsed = _grid_value(cell_line, label)
+                if parsed is None:
+                    break
+                cells.append((cell_no, parsed))
+                j += 1
+            overrun = (
+                j < len(live)
+                and not _PAREN_LINE.match(live[j][1])
+                and _grid_value(live[j][1], label) is not None
+            )
+            if len(cells) == len(zones) and not overrun:
+                for zone, cell in zip(zones, cells):
+                    if cell is None:
+                        continue
+                    cell_no, (number, kind, marks) = cell
+                    if FIELDS[name].kind != kind:
+                        continue
+                    value = int(number) if number.is_integer() else number
+                    out.setdefault(zone, []).append(
+                        Candidate(
+                            field=name,
+                            value=value,
+                            line=cell_no,
+                            text=f"{stripped} ({zone})",
+                            quote=f"{path}#L{cell_no}",
+                            source="table",
+                            notes=marks,
+                            section=section,
+                        )
+                    )
+                i = j
+                continue
+        i += 1
+    return out
+
+
+def stacked_candidates_for(
+    grids: dict[str, list[Candidate]], zone: str
+) -> list[Candidate]:
+    """One zone's candidates from a stacked grid, matched loosely on spelling.
+
+    The GIS layer writes "LR 7.5" and the table header prints "LR7.5"; the
+    code writes "R-7.2" where the layer says "R7.2". Spacing and hyphens are
+    typography, not identity — everything else has to match exactly.
+    """
+
+    def norm(z: str) -> str:
+        return z.replace(" ", "").replace("-", "").lower()
+
+    return [c for header, cs in grids.items() if norm(header) == norm(zone) for c in cs]
+
+
 def candidates_for(table: Table | Iterable[Row], zone: str, *, path: str) -> list[Candidate]:
     """Values this table states for one zone.
 
