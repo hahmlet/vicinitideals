@@ -13,6 +13,26 @@ ingest:
   zoning_layer: zoning_metro
   zone_field: ZONE
   strip_lowercase_suffix: false
+code:
+# R10/R20/RF/R7 are Portland-administered pockets: the standards live in
+# PCC 33.110, the same chapter PDF the Portland layer declares. LR7 (MCC
+# S-1) and RR (MCC 39.4350) cite the Multnomah County Code, which still
+# needs its own declared source.
+- id: "33.110"
+  url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+  title: Chapter 33.110 Single-Dwelling Zones (Portland-administered pockets)
+# The county serves MCC Chapter 39 as one 476-page PDF; the slice keeps the
+# LR-7 article (39.4848-39.4862, dimensional requirements at 39.4862). LR7's
+# encoded values remain Model-Code-derived (OAR 660-046 preemption, see the
+# zone notes) — this is the MCC text a reviewer weighs them against.
+- id: "39.lr-7"
+  url: https://multco.us/file/chapter_39_-_zoning_code/download
+  title: MCC 39.4848-39.4862 Low Density Residential LR-7 (formerly S-1)
+  # Two-column PDF: layout mode interleaves the columns; plain mode reads
+  # them in order. The double-spaced heading skips the TOC's "39.4848-".
+  start: "39.4848  PURPOSE"
+  end: "39.4868"
+  extraction: plain
 zones:
   R10:
     cite_default:
@@ -21,10 +41,18 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-07-24'
     quadplex_allowed: true
-    setback_front_ft: 20
-    setback_side_ft: 10
-    setback_rear_ft: 10
-    min_lot_sqft: 6000
+    setback_front_ft:
+      value: 20
+      quote: "or/multnomah/_unincorporated/33.110.txt#L458"
+    setback_side_ft:
+      value: 10
+      quote: "or/multnomah/_unincorporated/33.110.txt#L460"
+    setback_rear_ft:
+      value: 10
+      quote: "or/multnomah/_unincorporated/33.110.txt#L462"
+    min_lot_sqft:
+      value: 6000
+      quote: "or/multnomah/_unincorporated/33.110.txt#L1551"
     coverage_curve:
     - - 0
       - 0
@@ -47,10 +75,18 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-07-24'
     quadplex_allowed: true
-    setback_front_ft: 20
-    setback_side_ft: 10
-    setback_rear_ft: 10
-    min_lot_sqft: 12000
+    setback_front_ft:
+      value: 20
+      quote: "or/multnomah/_unincorporated/33.110.txt#L458"
+    setback_side_ft:
+      value: 10
+      quote: "or/multnomah/_unincorporated/33.110.txt#L460"
+    setback_rear_ft:
+      value: 10
+      quote: "or/multnomah/_unincorporated/33.110.txt#L462"
+    min_lot_sqft:
+      value: 12000
+      quote: "or/multnomah/_unincorporated/33.110.txt#L1550"
     coverage_curve:
     - - 0
       - 0
@@ -79,10 +115,18 @@ zones:
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-07-24'
     quadplex_allowed: true
-    setback_front_ft: 15
-    setback_side_ft: 5
-    setback_rear_ft: 5
-    min_lot_sqft: 4200
+    setback_front_ft:
+      value: 15
+      quote: "or/multnomah/_unincorporated/33.110.txt#L458"
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/_unincorporated/33.110.txt#L460"
+    setback_rear_ft:
+      value: 5
+      quote: "or/multnomah/_unincorporated/33.110.txt#L462"
+    min_lot_sqft:
+      value: 4200
+      quote: "or/multnomah/_unincorporated/33.110.txt#L1552"
     coverage_curve:
     - - 0
       - 0
