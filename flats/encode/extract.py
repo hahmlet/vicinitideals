@@ -1,0 +1,338 @@
+"""Reading a stored ordinance into clauses and candidate values.
+
+Extraction proposes; a human disposes. Nothing here can produce a trusted
+number — every candidate lands as ``draft`` with a quote pointing at the line
+it came from, and a reviewer either signs it or does not. That division is the
+whole reason this file is allowed to use heuristics at all.
+
+Two outputs, because they answer different questions.
+
+*Clauses* answer "have we read all of it?" Every line of the section is tagged
+RASE — applicability, selection, requirement, exception, non-normative — and a
+section is complete when nothing is untagged and every requirement resolved to
+a value. An exception nobody noticed is the failure mode that produces a
+confident wrong answer, so an untagged sentence is a gap, not a shrug.
+
+*Candidates* answer "what number does it say?" A phrase like "the minimum front
+building setback is 10 feet" becomes ``setback_front_ft: 10`` with its line
+quoted. When a section states two different numbers for the same field —
+common, because codes qualify by lot size or corner status — both are emitted
+and marked in conflict. Picking one silently is how a screen ends up confidently
+wrong across a whole zone, so the tool refuses to pick.
+
+Run::
+
+    python -m flats.encode.extract or/multnomah/portland/33.110.txt --zone R5
+"""
+
+from __future__ import annotations
+
+import argparse
+import re
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Iterable, Sequence
+
+from flats.provenance.store import ProvenanceStore
+from flats.rules.fields import FIELDS, field
+from flats.rules.ledger import Clause, Rase
+
+#: Bumped when the patterns change — extraction output is reproducible, and a
+#: candidate set that moved because the harness changed is not new evidence.
+EXTRACTOR = "flats-rase/1"
+
+_NUM = r"(?P<n>\d{1,3}(?:,\d{3})+|\d+(?:\.\d+)?)"
+
+#: Phrase → field. Ordered: the first match on a line wins, so the more
+#: specific phrasings are listed before the ones that would swallow them.
+_SUBJECTS: tuple[tuple[str, str], ...] = (
+    (r"street[ -]side (?:building )?setback", "setback_street_side_ft"),
+    (r"(?:maximum|max\.?) front (?:building )?setback", "setback_front_max_ft"),
+    (r"garage (?:entrance|door)", "setback_garage_entrance_ft"),
+    (r"front (?:building |yard )?setback", "setback_front_ft"),
+    (r"(?:interior )?side (?:building |yard )?setback", "setback_side_ft"),
+    (r"rear (?:building |yard )?setback", "setback_rear_ft"),
+    (r"lot (?:area|size)", "min_lot_sqft"),
+    (r"lot width", "min_lot_width_ft"),
+    (r"(?:street )?frontage", "min_frontage_ft"),
+    (r"(?:building )?height", "max_height_ft"),
+    (r"floor area ratio|\bFAR\b", "max_far"),
+    (r"(?:building|lot) coverage", "max_coverage_pct"),
+    (r"outdoor area|open space", "open_space_min_pct"),
+    (r"parking spaces?|off-street parking", "parking_min_per_unit"),
+    (r"dwelling units?|units", "max_units"),
+)
+
+#: Unit → the field kinds a number in those units can legitimately fill.
+_UNITS: tuple[tuple[str, tuple[str, ...]], ...] = (
+    (r"square feet|sq\.? ?ft\.?", ("area_sqft",)),
+    (r"percent|%", ("percent",)),
+    (r"feet|foot|ft\.?", ("length_ft",)),
+    (r"spaces? per (?:dwelling )?unit|per unit", ("ratio",)),
+    (r"units", ("count",)),
+)
+
+_EXCEPTION = re.compile(
+    r"\b(except|unless|notwithstanding|does not apply|shall not apply|exempt)\b", re.I
+)
+_REQUIREMENT = re.compile(
+    r"\b(shall|must|may not|no .{0,40} shall|required|minimum|maximum|at least|no more than)\b",
+    re.I,
+)
+_SELECTION = re.compile(r"\b(corner lot|through lot|flag lot|abutting|adjacent to|where the)\b", re.I)
+_APPLICABILITY = re.compile(
+    r"\b(this (?:section|chapter) applies|applies to|in the .{1,30} zones?|are the standards)\b",
+    re.I,
+)
+_DEFINITION = re.compile(r"\b(means|is defined as|for the purposes of|see (?:section|chapter))\b", re.I)
+_SECTION = re.compile(r"^(?P<sec>\d{1,3}\.\d{2,3}(?:\.\d{1,4})?)\b")
+
+
+@dataclass(frozen=True, slots=True)
+class Candidate:
+    """One proposed value, and exactly where it was read."""
+
+    field: str
+    value: float | int
+    line: int
+    text: str
+    #: ``path#L12`` — what a reviewer will be shown beside the number.
+    quote: str
+    #: Another candidate proposes a different value for the same field.
+    conflict: bool = False
+
+    @property
+    def kind(self) -> str:
+        return field(self.field).kind
+
+
+@dataclass(frozen=True, slots=True)
+class Extraction:
+    """Everything read out of one document."""
+
+    path: str
+    clauses: tuple[Clause, ...] = ()
+    candidates: tuple[Candidate, ...] = ()
+
+    @property
+    def untagged(self) -> tuple[Clause, ...]:
+        return tuple(c for c in self.clauses if c.tag is None)
+
+    @property
+    def conflicted(self) -> tuple[str, ...]:
+        return tuple(sorted({c.field for c in self.candidates if c.conflict}))
+
+    def unresolved(self) -> tuple[Clause, ...]:
+        """Requirement clauses that produced no candidate value.
+
+        Each is a rule the code states and the screen would otherwise ignore —
+        the quiet failure that makes a lot look buildable when it is not.
+        """
+        lines = {c.line for c in self.candidates}
+        return tuple(
+            c
+            for c in self.clauses
+            if c.tag in (Rase.requirement, Rase.exception) and _line_of(c.quote) not in lines
+        )
+
+    def for_field(self, name: str) -> tuple[Candidate, ...]:
+        return tuple(c for c in self.candidates if c.field == name)
+
+
+def _line_of(quote: str) -> int:
+    _, _, frag = quote.partition("#L")
+    return int(frag.split("-")[0]) if frag else 0
+
+
+def tag_of(text: str) -> Rase | None:
+    """Best-effort RASE tag, or None when the sentence is unclear.
+
+    None is a legitimate and frequent answer. A wrong tag hides a clause inside
+    a category nobody re-reads; an absent one puts it on the queue.
+    """
+    if _EXCEPTION.search(text):
+        return Rase.exception
+    if _DEFINITION.search(text):
+        return Rase.non_normative
+    if _REQUIREMENT.search(text):
+        return Rase.requirement
+    if _APPLICABILITY.search(text):
+        return Rase.applicability
+    if _SELECTION.search(text):
+        return Rase.selection
+    return None
+
+
+def _subject(text: str) -> str | None:
+    lowered = text.lower()
+    best: tuple[int, str] | None = None
+    for pattern, name in _SUBJECTS:
+        m = re.search(pattern, lowered)
+        if m and (best is None or m.start() < best[0]):
+            best = (m.start(), name)
+    return best[1] if best else None
+
+
+def _units_allow(text: str, kind: str) -> bool:
+    lowered = text.lower()
+    for pattern, kinds in _UNITS:
+        if re.search(pattern, lowered):
+            return kind in kinds
+    return False
+
+
+def _numbers(text: str) -> list[float]:
+    return [float(m.group("n").replace(",", "")) for m in re.finditer(_NUM, text)]
+
+
+def candidates_in(text: str, line: int, path: str) -> list[Candidate]:
+    """Proposed values from one line of code text.
+
+    Deliberately conservative: a number is only proposed when the line names a
+    subject this system has a field for *and* carries units that field could be
+    measured in. "10 feet" beside "front setback" is a candidate; "10" beside
+    "Table 110-4" is not.
+    """
+    name = _subject(text)
+    if name is None:
+        return []
+    definition = FIELDS[name]
+    if not _units_allow(text, definition.kind):
+        return []
+
+    out: list[Candidate] = []
+    for number in _numbers(text):
+        value = int(number) if number.is_integer() else number
+        out.append(
+            Candidate(
+                field=name, value=value, line=line, text=text.strip(), quote=f"{path}#L{line}"
+            )
+        )
+    return out
+
+
+def extract(text: str, *, path: str, jurisdiction: str = "", section: str = "") -> Extraction:
+    """Read a stored document into tagged clauses and candidate values."""
+    clauses: list[Clause] = []
+    proposed: list[Candidate] = []
+    current = section
+
+    for n, line in enumerate(text.splitlines(), start=1):
+        stripped = line.strip()
+        if not stripped:
+            continue
+        found = _SECTION.match(stripped)
+        if found:
+            current = found.group("sec")
+        tag = tag_of(stripped)
+        if tag is None and found and len(stripped.split()) <= 8:
+            # A section heading states no rule. Leaving it untagged would put
+            # every heading in the document on the review queue, which is the
+            # fastest way to teach a reviewer to ignore the queue.
+            tag = Rase.non_normative
+        clauses.append(
+            Clause(
+                id=f"{path}#L{n}",
+                jurisdiction=jurisdiction,
+                section=current,
+                quote=f"{path}#L{n}",
+                text=stripped,
+                tag=tag,
+            )
+        )
+        proposed.extend(candidates_in(stripped, n, path))
+
+    return Extraction(path=path, clauses=tuple(clauses), candidates=tuple(_mark(proposed)))
+
+
+def _mark(candidates: Iterable[Candidate]) -> list[Candidate]:
+    """Flag every field where the section states more than one distinct value."""
+    values: dict[str, set[float]] = {}
+    listed = list(candidates)
+    for c in listed:
+        values.setdefault(c.field, set()).add(float(c.value))
+    return [
+        Candidate(c.field, c.value, c.line, c.text, c.quote, conflict=len(values[c.field]) > 1)
+        for c in listed
+    ]
+
+
+def to_yaml(extraction: Extraction, *, zone: str, cite: str, url: str, retrieved: str) -> str:
+    """Draft YAML for the zone — every value draft, every value quoted.
+
+    Paste-ready but not paste-and-forget: conflicts are left in as comments
+    rather than resolved, because which number applies is a reading question
+    and this file has not read anything.
+    """
+    lines = [
+        f"# {extraction.path} — extracted by {EXTRACTOR}, all values draft.",
+        "# Each number below still has to be read against its quote and signed.",
+        "cite_default:",
+        f'  cite: "{cite}"',
+        f'  url: "{url}"',
+        f"  retrieved: {retrieved}",
+        "zones:",
+        f"  {zone}:",
+    ]
+
+    seen: set[str] = set()
+    for c in sorted(extraction.candidates, key=lambda c: (c.field, c.line)):
+        if c.conflict:
+            lines.append(f"    # CONFLICT {c.field}: {c.value} — {c.text[:70]}")
+            continue
+        if c.field in seen:
+            continue
+        seen.add(c.field)
+        lines.append(f"    {c.field}:")
+        lines.append(f"      value: {c.value}")
+        lines.append(f'      quote: "{c.quote}"')
+
+    for clause in extraction.unresolved():
+        lines.append(f"    # UNRESOLVED {clause.tag.name}: {clause.text[:70]}")
+    for clause in extraction.untagged:
+        lines.append(f"    # UNTAGGED: {clause.text[:70]}")
+    return "\n".join(lines) + "\n"
+
+
+def main(argv: Sequence[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(
+        prog="flats-extract", description="Read a stored ordinance into draft values."
+    )
+    parser.add_argument("path", help="store path, e.g. or/multnomah/portland/33.110.txt")
+    parser.add_argument("--zone", required=True)
+    parser.add_argument("--jurisdiction", default="")
+    parser.add_argument("--docs", type=Path, default=None)
+    parser.add_argument("--cite", default="")
+    parser.add_argument("--yaml", action="store_true", help="emit a draft zone block")
+    args = parser.parse_args(argv)
+
+    doc = ProvenanceStore(args.docs).load(args.path)
+    extraction = extract(doc.text, path=args.path, jurisdiction=args.jurisdiction)
+
+    if args.yaml:
+        print(
+            to_yaml(
+                extraction,
+                zone=args.zone,
+                cite=args.cite or args.path,
+                url=doc.url,
+                retrieved=doc.retrieved.isoformat(),
+            )
+        )
+        return 0
+
+    print(f"{args.path}: {len(extraction.clauses)} clause(s), {len(extraction.candidates)} candidate(s)")
+    for c in sorted(extraction.candidates, key=lambda c: (c.field, c.line)):
+        mark = " CONFLICT" if c.conflict else ""
+        print(f"  {c.field} = {c.value}{mark}  [{c.quote}] {c.text[:60]}")
+    for clause in extraction.unresolved():
+        print(f"  UNRESOLVED {clause.tag.name} [{clause.quote}] {clause.text[:60]}")
+    for clause in extraction.untagged:
+        print(f"  UNTAGGED [{clause.quote}] {clause.text[:60]}")
+    # Untagged and unresolved clauses are work, not failure — but they are the
+    # difference between "we read the section" and "we read some of it".
+    return 1 if (extraction.untagged or extraction.unresolved() or extraction.conflicted) else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
