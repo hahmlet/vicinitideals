@@ -1,0 +1,263 @@
+"""Getting the code text into the store, deterministically.
+
+Nothing can be verified until the words a value claims to come from are on
+disk, so this is the first step of every encoding pass::
+
+    python -m flats.provenance.fetch or/multnomah/portland/33.110.txt \\
+        https://www.portland.gov/code/33/100s/110 --start "33.110.220"
+
+Two things make this harder than downloading a page.
+
+*The text has to be stable.* Everything downstream compares hashes, so the
+same page fetched twice must produce identical bytes or every value on it flips
+to stale for nothing. The extractor is therefore dumb on purpose — tags out,
+whitespace collapsed, entities resolved, one line per block — and versioned, so
+a change to the algorithm is visible rather than looking like an amendment.
+
+*Refreshing evidence is not free.* A codifier's boilerplate churns constantly;
+the ordinance text rarely does. ``--start``/``--end`` slice the stored document
+down to the section that was actually read, which is both what a reviewer
+looked at and the smallest thing that can drift. And when a refresh does change
+the text, the verifications that relied on the old words are withdrawn in the
+same command — otherwise a re-fetch would quietly repair the hash and leave
+signatures standing over sentences nobody has read.
+"""
+
+from __future__ import annotations
+
+import argparse
+import html.parser
+import re
+import sys
+from datetime import date
+from pathlib import Path
+from typing import Callable, Sequence
+
+from flats.encode.verify import LOG_PATH, Verification, VerificationLog
+from flats.provenance.store import Document, ProvenanceError, ProvenanceStore, sha256
+from flats.rules.loader import CONFIG_ROOT, load_rules
+from flats.rules.model import Layer
+
+#: Bumped when the extraction algorithm changes. A hash that moves because the
+#: extractor changed is not an amendment, and the two must be tellable apart.
+EXTRACTOR = "flats-html-text/1"
+
+#: Elements whose contents are never prose.
+_DROP = frozenset({"script", "style", "noscript", "svg", "head", "template", "iframe"})
+#: Elements that end a line.
+_BLOCK = frozenset(
+    {
+        "p", "div", "section", "article", "header", "footer", "nav", "main", "aside",
+        "h1", "h2", "h3", "h4", "h5", "h6", "li", "ul", "ol", "dl", "dt", "dd",
+        "table", "thead", "tbody", "tr", "th", "td", "br", "hr", "blockquote", "pre",
+    }
+)
+
+_SPACES = re.compile(r"[ \t   ]+")
+_BLANKS = re.compile(r"\n{3,}")
+
+
+class _Extractor(html.parser.HTMLParser):
+    """Tags out, text kept, block elements broken onto their own lines."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.parts: list[str] = []
+        self._skip = 0
+
+    def handle_starttag(self, tag: str, attrs) -> None:
+        if tag in _DROP:
+            self._skip += 1
+        elif tag in _BLOCK:
+            self.parts.append("\n")
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag in _DROP:
+            self._skip = max(0, self._skip - 1)
+        elif tag in _BLOCK:
+            self.parts.append("\n")
+
+    def handle_data(self, data: str) -> None:
+        if not self._skip:
+            # Newlines inside a block are HTML formatting, not text. Keeping
+            # them would let a reflow of the markup renumber every quote line
+            # in the document without a word of the law changing.
+            self.parts.append(data.replace("\r", " ").replace("\n", " "))
+
+
+def html_to_text(source: str) -> str:
+    """Deterministic plain text from an HTML page.
+
+    Not a renderer. The goal is a stable byte sequence a person can read and a
+    hash can watch, which means no cleverness that could produce a different
+    result on the same input tomorrow.
+    """
+    parser = _Extractor()
+    parser.feed(source)
+    parser.close()
+    text = "".join(parser.parts).replace("\r\n", "\n").replace("\r", "\n")
+    lines = [_SPACES.sub(" ", line).strip() for line in text.split("\n")]
+    return _BLANKS.sub("\n\n", "\n".join(lines)).strip() + "\n"
+
+
+def slice_between(text: str, start: str = "", end: str = "") -> str:
+    """The span between two literal markers, inclusive of ``start``.
+
+    Markers are literal text a reviewer can see on the page — a section number
+    is the usual choice. Failing loudly when one is absent matters: silently
+    storing the whole page instead would put a reviewer's quote line numbers
+    somewhere else entirely.
+    """
+    out = text
+    if start:
+        i = out.find(start)
+        if i < 0:
+            raise ProvenanceError(f"start marker {start!r} not found in the fetched text")
+        out = out[i:]
+    if end:
+        j = out.find(end, len(start) if start else 0)
+        if j < 0:
+            raise ProvenanceError(f"end marker {end!r} not found after the start marker")
+        out = out[:j]
+    return out.strip() + "\n"
+
+
+def _http_get(url: str) -> str:
+    import httpx
+
+    response = httpx.get(url, follow_redirects=True, timeout=30.0)
+    response.raise_for_status()
+    return response.text
+
+
+def fetch_text(
+    url: str, *, get: Callable[[str], str] | None = None, start: str = "", end: str = ""
+) -> str:
+    """Fetch a URL and reduce it to the stored form."""
+    raw = (get or _http_get)(url)
+    text = html_to_text(raw) if "<" in raw[:2048] else raw.replace("\r\n", "\n")
+    return slice_between(text, start, end)
+
+
+def citing(layers: dict[str, Layer], doc_path: str) -> list[tuple[str, str, str]]:
+    """Every (layer, zone, field) whose quote points into this document."""
+    found: list[tuple[str, str, str]] = []
+    for layer_id, layer in layers.items():
+        blocks = [("defaults", layer.defaults)]
+        blocks += [(code, zone.values) for code, zone in layer.zones.items()]
+        for zone_name, values in blocks:
+            for name, value in values.items():
+                quote = value.prov.quote or ""
+                if quote.split("#", 1)[0] == doc_path:
+                    found.append((layer_id, zone_name, name))
+    return sorted(found)
+
+
+def withdraw_reviews(
+    doc_path: str, *, layers: dict[str, Layer], log_path: Path, note: str
+) -> list[Verification]:
+    """Withdraw every verification standing on this document's old text.
+
+    Called when a refresh changes the words. A re-fetch repairs the stored hash,
+    which would otherwise leave signatures in place over sentences that have
+    since been amended — the exact silent-false-certification this system is
+    built to make impossible.
+    """
+    log = VerificationLog.load(log_path)
+    active = log.active()
+    withdrawn: list[Verification] = []
+    for key in citing(layers, doc_path):
+        prior = active.get(key)
+        if prior is None:
+            continue
+        entry = Verification(
+            layer=key[0],
+            zone=key[1],
+            field=key[2],
+            fingerprint=prior.fingerprint,
+            reviewer=prior.reviewer,
+            reviewed=prior.reviewed,
+            note=note,
+            revoked=True,
+        )
+        log.append(entry, log_path)
+        withdrawn.append(entry)
+    return withdrawn
+
+
+def store_document(
+    store: ProvenanceStore,
+    path: str,
+    url: str,
+    text: str,
+    *,
+    retrieved: date | None = None,
+) -> Document:
+    return store.save(path, url=url, text=text, retrieved=retrieved or date.today())
+
+
+def main(argv: Sequence[str] | None = None, *, get: Callable[[str], str] | None = None) -> int:
+    parser = argparse.ArgumentParser(
+        prog="flats-fetch", description="Store the code text a rule value will cite."
+    )
+    parser.add_argument("path", help="store path, e.g. or/multnomah/portland/33.110.txt")
+    parser.add_argument("url")
+    parser.add_argument("--start", default="", help="literal marker where the stored text begins")
+    parser.add_argument("--end", default="", help="literal marker where it ends")
+    parser.add_argument("--docs", type=Path, default=None, help="provenance store root")
+    parser.add_argument("--rules", type=Path, default=CONFIG_ROOT)
+    parser.add_argument("--log", type=Path, default=LOG_PATH)
+    parser.add_argument(
+        "--refresh",
+        action="store_true",
+        help="accept changed text, withdrawing the reviews that relied on the old words",
+    )
+    parser.add_argument("--retrieved", default="", help="ISO date, defaults to today")
+    args = parser.parse_args(argv)
+
+    store = ProvenanceStore(args.docs)
+    try:
+        text = fetch_text(args.url, get=get, start=args.start, end=args.end)
+    except ProvenanceError as exc:
+        print(f"{args.path}: {exc}", file=sys.stderr)
+        return 1
+
+    retrieved = date.fromisoformat(args.retrieved) if args.retrieved else date.today()
+    lines = len(text.splitlines())
+
+    if not store.exists(args.path):
+        store_document(store, args.path, args.url, text, retrieved=retrieved)
+        print(f"stored {args.path} ({lines} lines, {EXTRACTOR})")
+        return 0
+
+    if sha256(text) == store.load(args.path).sha256:
+        print(f"unchanged {args.path} ({lines} lines)")
+        return 0
+
+    if not args.refresh:
+        print(
+            f"CHANGED {args.path} — the source no longer matches what is stored.\n"
+            f"  Re-run with --refresh to accept it. Doing so withdraws the reviews\n"
+            f"  that were made against the old text.",
+            file=sys.stderr,
+        )
+        return 1
+
+    layers = load_rules(args.rules, strict=False)
+    withdrawn = withdraw_reviews(
+        args.path,
+        layers=layers,
+        log_path=args.log,
+        note=f"source text refreshed {retrieved.isoformat()}",
+    )
+    store_document(store, args.path, args.url, text, retrieved=retrieved)
+    print(f"refreshed {args.path} ({lines} lines)")
+    for entry in withdrawn:
+        print(f"  withdrew {entry.layer} {entry.zone} {entry.field} (was {entry.reviewer})")
+    if withdrawn:
+        print(f"  {len(withdrawn)} value(s) need re-reading against the new text")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
