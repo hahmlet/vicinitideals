@@ -12,49 +12,87 @@ ingest:
   zoning_layer: zoning_gladstone
   zone_field: ZONE
   strip_lowercase_suffix: false
+code:
+  # Code Publishing serves each chapter as its own server-rendered HTML page;
+  # no slicing needed. The host refuses newer Chrome fingerprints — fetch
+  # escalates to chrome124 automatically. R-10 has no chapter of its own
+  # (Title 17 defines only R-7.2 and R-5); its standards mirror 17.10.
+  - id: "17.10.r-7.2"
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1710.html
+    title: "Chapter 17.10 - Low Density Residential District (R-7.2)"
+  - id: "17.12.r-5"
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1712.html
+    title: "Chapter 17.12 - Medium Density Residential District (R-5)"
 zones:
   R7.2:
+    section: ["17.10."]
     cite_default:
       cite: Gladstone Municipal Code 17.10.020 (middle housing allowed outright) & 17.10.050 (dimensional
         standards)
       url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1710.html
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 20
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    setback_street_side_ft: 20
+    setback_front_ft:
+      value: 20
+      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L181"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L203"
+    setback_rear_ft:
+      value: 15
+      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L207"
+    setback_street_side_ft:
+      value: 20
+      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L199"
     min_lot_sqft: 7200
     notes: 'quadfit confidence: needs_verification | GIS literal ''R7.2'' (code writes ''R-7.2''). Height
       35 ft. NO max lot coverage, NO min lot width in code. Middle housing (incl. quadplex) permitted
       outright. min_lot is the detached-SFD minimum. Street-side setback read via mirror; confirm 17.10.050.'
   R5:
+    section: ["17.12."]
     cite_default:
       cite: Gladstone Municipal Code 17.12.020 (middle housing allowed outright) & 17.12.050 (dimensional
         standards)
       url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1712.html
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 20
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    setback_street_side_ft: 20
+    setback_front_ft:
+      value: 20
+      quote: "or/clackamas/gladstone/17.12.r-5.txt#L203"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/gladstone/17.12.r-5.txt#L219"
+    setback_rear_ft:
+      value: 15
+      quote: "or/clackamas/gladstone/17.12.r-5.txt#L229"
+    setback_street_side_ft:
+      value: 20
+      quote: "or/clackamas/gladstone/17.12.r-5.txt#L223"
     min_lot_sqft: 5000
     notes: 'quadfit confidence: needs_verification | GIS literal ''R5'' (code writes ''R-5''). Height
       35 ft. NO max lot coverage, NO min lot width. Middle housing outright. Front drops to ~10-15 ft
       inside Gladstone Town Center overlay. min_lot is detached-SFD minimum. Street-side read via mirror;
       confirm 17.12.050.'
   R10:
+    section: ["17.10."]
     cite_default:
       cite: Gladstone MC Title 17 (no R-10 chapter; standards mirror R-7.2, the lowest-density defined
         SFD district)
       url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone17.html
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 20
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    setback_street_side_ft: 20
+    setback_front_ft:
+      value: 20
+      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L181"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L203"
+    setback_rear_ft:
+      value: 15
+      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L207"
+    setback_street_side_ft:
+      value: 20
+      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L199"
     min_lot_sqft: 7200
     notes: 'quadfit confidence: needs_verification | DISCREPANCY: Gladstone''s adopted code defines only
       R-7.2 and R-5 single-household districts — there is NO R-10 district in Title 17. Exactly one layer

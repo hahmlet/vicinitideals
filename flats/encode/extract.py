@@ -133,9 +133,11 @@ class Candidate:
     quote: str
     #: Another candidate proposes a different value for the same field.
     conflict: bool = False
-    #: Where it was read: ``"prose"`` or ``"table"``. Load-bearing, not a
-    #: label — a table cell is written for one zone and a sentence is not, so
-    #: only a table reading can confirm or contradict a zone's encoded value.
+    #: Where it was read: ``"prose"``, ``"table"``, or ``"pair"`` — a stacked
+    #: label/value line pair, a table row that lost its geometry to HTML
+    #: linearisation. Load-bearing, not a label: a table cell is written for
+    #: one zone; a pair or a sentence is not, and counts only where a document
+    #: or declared section binds it to one.
     source: str = "prose"
     #: Footnotes qualifying this number. A candidate with notes states a base
     #: case with an exit attached, not a standard, and must not be encoded as
@@ -394,7 +396,7 @@ def extract(
     """
     # Imported here because the table reader is built on this module's subject
     # matching: prose and grid ask the same question of a label.
-    from flats.encode.tables import blank_tables, candidates_for, read_tables
+    from flats.encode.tables import blank_tables, candidates_for, read_pairs, read_tables
 
     clauses: list[Clause] = []
     proposed: list[Candidate] = []
@@ -441,6 +443,11 @@ def extract(
     if zone:
         for table in read_tables(text):
             proposed.extend(candidates_for(table, zone, path=path))
+
+    # Stacked label/value pairs — a table that lost its geometry to HTML
+    # linearisation. Zone-blind like prose, so they carry their section and
+    # count only where a declared section or a single-zone document binds them.
+    proposed.extend(read_pairs(blank_tables(text), path=path))
 
     return Extraction(path=path, clauses=tuple(clauses), candidates=tuple(_mark(proposed)))
 

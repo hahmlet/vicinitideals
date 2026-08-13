@@ -96,6 +96,11 @@ OFFICIAL: frozenset[str] = frozenset(
         "qcode.us",
         "sterlingcodifiers.com",
         "generalcode.com",
+        # The .codes-TLD codifier platform (woodvillage.municipal.codes et al.)
+        # — the city's contracted publisher, found via the redirect notice on
+        # its old codepublishing.com index. Distinct from municipalcodes.com,
+        # the aggregator below.
+        "municipal.codes",
     }
 )
 

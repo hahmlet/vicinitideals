@@ -1,0 +1,2055 @@
+Close
+Print
+Resize:
+
+City of Lake Oswego, OR
+
+Thursday, August 13, 2026
+
+Chapter 50. Community Development Code
+
+LOC 50.03. Use Regulations and Conditions
+
+§ 50.03.002. Use Table.
+
+1.
+
+How to Use.
+
+[Ord. No. 2579, Repealed and Replaced, 3-20-2012; Ord. No. 2723, Amended, 10-18-2016]
+
+a.
+
+Permitted Uses.
+
+A "P" in a cell of a use table indicates that the land use is allowed by right in that base or overlay zone, subject to compliance with the use-specific standards referenced in the final column of the use table. Permitted uses are subject to all other applicable requirements of this Code, including those set forth in LOC § 50.06, Development Standards. Uses accessory to a permitted use are allowed regardless of whether they are listed separately in the use table.
+
+b.
+
+Conditional Uses.
+
+A "C" in a cell of a use table indicates that the land use is allowed in that base or overlay zone only upon approval of a conditional use permit as described in LOC § 50.07.005, Conditional Use Permits, including the specific conditions listed in LOC § 50.07.005.3, and compliance with any usespecific standards referenced in the use table. Uses subject to a conditional use permit are subject to all other applicable requirements of this Code, including those set forth in LOC § 50.06, Development Standards. Uses accessory to a conditional use are allowed regardless of whether they are listed separately in the use table.
+
+c.
+
+Accessory Uses.
+
+An "A" in a cell of a use table indicates that the land use is expressly allowed in that base or overlay zone as an accessory use to a permitted use or an approved conditional use. In addition to those expressly listed, all uses that are secondary and subordinate to a permitted or approved conditional use, and are frequently found in connection with that permitted or approved conditional use, are allowed as accessory uses. A use is "accessory," when the use is (i) generally accepted as accessory to a primary use based on state of the industry, (ii) the accessory use is secondary to the primary use, (iii) the impacts of the accessory use do not significantly alter the impacts of the primary use (e.g., traffic volume), and (iv) the accessory use is not the same size or scale as would be found for a primary use elsewhere.
+
+d.
+
+Prohibited Uses.
+
+A blank cell in a use table indicates that the land use is prohibited in that base or overlay zone district.
+
+e.
+
+Overlay Districts Provisions Govern.
+
+When a property is located within the boundaries of an overlay district, the use table provisions for that overlay district prevail over those in the base zone district. For example, if a use is prohibited in the base zone district where the property is located, but is a permitted use in an overlay district applicable to the same property, then the use is allowed on that property. On the other hand, if a use is listed as a permitted use in the base zone district but is listed as a conditional use in an overlay zone district applicable to the same property, then the use is a conditional use for that property. Where a property is located in more than one overlay district, then the most restrictive use provision in those overlay zone districts shall apply to the property.
+
+f.
+
+Use-Specific Standards and Table Notes.
+
+There may be additional standards that apply to specific permitted or conditional uses. Those additional standards are either identified in a note at the end of the table or cross-referenced under the “use specific standards” column in the use table. The cross-referenced standards appear in LOC § 50.03.003, Use-Specific Standards, immediately following the use table.
+
+g.
+
+Authorization for Similar Uses.
+
+The City Manager may authorize that a use not specifically named in the permitted, conditional or prohibited uses of a district be included among the allowed uses, if the use 1) is similar to and of the same general type as the uses specifically allowed; 2) is consistent with the Comprehensive Plan; and 3) has similar intensity, density, off-site impacts and impacts on community facilities as uses permitted in the zone. However, the City Manager may not authorize a use already specifically permitted in any other zoning district. A person disagreeing with the City Manager’s decision may appeal that decision to the Planning Commission pursuant to LOC § 50.07.003.7.b, Appeal of Minor Development Decision.
+
+2.
+
+Residential Use Table.
+
+[Ord. No. 2579, Repealed and Replaced, 3-20-2012; Ord. No. 2526, Amended, 12-18-2012; Ord. No. 2643, Amended, 11-4-2014; Ord. No. 2667, Amended, 10-20-2015; Ord. No. 2668, Amended, 12-1-2015; Ord. No. 2723, Amended, 10-18-2016; Ord. No. 2784, Amended, 7-3-2018; Ord. No. 2815, Amended, 7-16-2019; Ord. No. 2892, Amended, 6-7-2022; Ord. No. 2909, Amended, 2-7-2023; Amended, 2-17-2026 by Ord. No. 2964]
+
+TABLE 50.03.002-1: RESIDENTIAL DISTRICTS USE TABLE
+
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+
+[x] Table notes located at the end of the table
+
+Use Category
+
+Use Type
+
+Residential
+
+Use-Specific Standards
+
+R-15
+
+R-10
+
+R-7.5
+
+R-6
+
+R-5
+
+R-DD
+
+R-W
+
+R-3 [3]
+
+R-2
+
+R-0 [3] [4]
+
+RESIDENTIAL USES
+
+Household Living
+
+Dwelling, single-family detached dwelling (one per lot)
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P [1]
+
+P
+
+P
+
+P
+
+Dwelling, duplex (one per lot)
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+Townhouse project
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+§ 50.03.003.1.e
+
+Cottage cluster (one per lot)
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+§ 50.03.003.1.d
+
+Dwelling, multi-family
+
+P
+
+P
+
+P
+
+P
+
+Dwelling, quadplex
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+Dwelling, triplex
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+Manufactured home (one per lot)
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+§ 50.03.003.1.b
+
+Manufactured home park or subdivision
+
+P
+
+P
+
+P
+
+§ 50.03.003.1.c
+
+Group and Institutional Housing
+
+Congregate housing
+
+C
+
+C
+
+C
+
+P
+
+P
+
+P
+
+P
+
+§ 50.03.003.4.a and b; R-2 zone: § 50.03.003.3
+
+Group care home
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+Residential care housing
+
+C
+
+C
+
+C
+
+P
+
+P
+
+P
+
+P
+
+§ 50.03.003.4.a and b; R-2 zone: § 50.03.003.3
+
+Skilled nursing facility
+
+C
+
+C
+
+C
+
+C
+
+C
+
+§ 50.03.003.4.c; R-2 zone: § 50.03.003.3
+
+PUBLIC, INSTITUTIONAL, AND CIVIC USES
+
+§ 50.03.003.5
+
+Day Care
+
+Certified or registered family child care home
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+Day care center
+
+C
+
+C
+
+C
+
+C
+
+C
+
+C
+
+C
+
+C
+
+C
+
+§ 50.03.003.5
+
+Institutional Uses
+
+Institutional use
+
+C
+
+C
+
+C
+
+C
+
+C
+
+C
+
+C
+
+C
+
+C
+
+§ 50.03.003.5; R-2 and R-6 zones: § 50.03.003.3
+
+Education
+
+Educational institutions, private
+
+C
+
+C
+
+C
+
+C
+
+C
+
+C
+
+C
+
+C
+
+C
+
+§ 50.03.003.5
+
+Public Facility/Utility
+
+Major
+
+C
+
+C
+
+C
+
+C
+
+C
+
+C
+
+C
+
+C
+
+C
+
+§ 50.03.003.5.c; R-2 and R-6 zones: § 50.03.003.3
+
+Minor
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+§ 50.03.003.5.b
+
+Telecommunications facilities, new
+
+C
+
+C
+
+C
+
+C
+
+C
+
+C
+
+C
+
+C
+
+C
+
+§ 50.03.003.5.g; R-2 and R-6 zones: § 50.03.003.3
+
+Telecommunications facility, collocated
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+§ 50.03.003.5.g
+
+NONRESIDENTIAL USES
+
+Agricultural
+
+Community garden
+
+P/C
+
+P/C
+
+P/C
+
+P/C
+
+P/C
+
+P/C
+
+§ 50.03.003.6.j; R-6 zone: § 50.03.003.3
+
+Office Uses
+
+Office, business, or professional
+
+C
+
+C
+
+C
+
+C
+
+C
+
+C
+
+C
+
+C
+
+C
+
+§ 50.03.003.6.p; R-2 and R-6 zones: § 50.03.003.3
+
+Recreation and Entertainment
+
+Golf course, hunt club, or similar open land private recreational uses
+
+C
+
+C
+
+C
+
+C
+
+R-6 zone: § 50.03.003.3
+
+Social, recreational, or cultural facilities, nonprofit
+
+P/C
+
+P/C
+
+P/C
+
+P/C
+
+§ 50.03.003.6.y; R-2 zone: § 50.03.003.3
+
+ACCESSORY USES
+
+Accessory Uses
+
+Community garden
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+§ 50.03.003.6.j
+
+Urban agriculture
+
+C
+
+C
+
+§ 50.03.004.1.b.vii
+
+Home occupation
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+§ 50.03.004.1.b.ii
+
+Short-term rental lodging
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+§ 50.03.004.1.b.ii
+
+Large animals kept for owner’s personal use
+
+A
+
+A
+
+§ 50.03.004.1.b.iii
+
+Small animals kept for owner’s personal use [2]
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+Accessory dwelling unit
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+§ 50.03.004.1.b.vi
+
+Notes:
+
+[1]
+
+Erected on pilings over the water of Oswego Lake.
+
+[2]
+
+No commercial activity allowed.
+
+[3]
+
+If lot has multiple zones, e.g., R-0/EC, see LOC § 50.02.002.2.e.
+
+[4]
+
+Site-specific use limitations, see LOC § 50.02.002.2.c.
+
+3.
+
+Commercial, Mixed Use, Industrial, and Special Purpose Districts Use Table.
+
+[Ord. No. 2579, Repealed and Replaced, 3-20-2012; Ord. No. 2583, Amended, 6-19-2012; Ord. No. 2526, Amended, 12-18-2012; Ord. No. 2599, Amended, 12-18-2012; Ord. No. 2611, Amended, 4-16-2013; Ord. No. 2612-A, Amended, 5-21-2013; Ord. No. 2612-B, Amended, 8-13-2013; Ord. No. 2639, Amended, 6-3-2014; Ord. No. 2643, Amended, 11-4-2014; Ord. No. 2668, Amended, 12-1-2015; Ord. No. 2707, Amended, 5-17-2016; Ord. No. 2723, Amended, 10-18-2016; Ord. No. 2736, Amended, 3-7-2017; Ord. No. 2783, Amended, 6-19-2018; Ord. No. 2853, Amended, 11-3-2020; Ord. No. 2855, Amended, 12-15-2020; Ord. No. 2872, Amended, 10-5-2021; Ord. No. 2909, Amended, 2-7-2023, Amended 12-5-2023 by Ord. No. 2928; Amended by memo 1-24-2025; Amended 4-15-2025 by Ord. No. 2959]
+
+TABLE 50.03.002-2: COMMERCIAL, MIXED USE, INDUSTRIAL AND SPECIAL PURPOSE DISTRICTS USE TABLE
+
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+
+[x] Table notes located at the end of the table
+
+Use Category
+
+Use Type
+
+Commercial, Mixed Use, Industrial
+
+Special Purpose
+
+Use-Specific Standards
+
+NC [8], [9]
+
+GC
+
+HC [9]
+
+OC [8]
+
+EC [8]
+
+CR&D
+
+MC
+
+WLG [4]
+
+FMU [4], [7]
+
+I
+
+IP [5]
+
+CI
+
+PF [3]
+
+PNA
+
+OC
+
+RMU
+
+R-2.5
+
+RESIDENTIAL USES
+
+Household Living
+
+Residential use at R-5 density or greater
+
+P
+
+P [10]
+
+P
+
+P
+
+P
+
+P
+
+P [11]
+
+P [1]
+
+P [2]
+
+P
+
+P
+
+WLG zones: § 50.03.003.1.a; NC, GC, EC and CI zones: § 50.03.003.2
+
+Dwelling, live-work
+
+P
+
+P [10]
+
+P
+
+P
+
+P
+
+P
+
+P
+
+Group and Institutional Housing
+
+Congregate housing
+
+C
+
+C [10]
+
+C
+
+P
+
+P
+
+§ 50.03.003.4.a
+
+Continuing care retirement community (CCRC)
+
+P
+
+Group care home
+
+P
+
+P
+
+Residential care housing
+
+C
+
+C [10]
+
+C
+
+P
+
+P
+
+P
+
+§ 50.03.003.4.a
+
+Skilled nursing facility
+
+P
+
+P
+
+PUBLIC, INSTITUTIONAL, AND CIVIC USES
+
+§ 50.03.003.5
+
+Community and Cultural Facility
+
+Cemetery
+
+C
+
+Community garden
+
+P/C
+
+P/C [10]
+
+§ 50.03.003.6.j
+
+Institutional Use
+
+P [10]
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+[5]
+
+P
+
+§ 50.03.003.5.a
+
+Day Care
+
+Day care centers
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+§ 50.03.003.5.f
+
+Certified or registered family child care home
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+Education
+
+Educational institutions, private
+
+C
+
+P
+
+P
+
+P
+
+P
+
+P
+
+§ 50.03.003.5.f
+
+Health Care Facilities
+
+Ambulance services
+
+P
+
+P
+
+P
+
+P
+
+P
+
+Hospitals
+
+P [10]
+
+P
+
+Medical and dental clinic or laboratory
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+§ 50.03.003.6.n
+
+Public Facilities/Utilities
+
+Major
+
+C
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+C
+
+C
+
+C
+
+P
+
+P
+
+P
+
+C
+
+C
+
+P/C
+
+§ 50.03.003.5.c, § 50.03.003.5.d
+
+Minor
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+§ 50.03.003.5.b, § 50.03.003.5.d
+
+Telecommunications facilities, new
+
+C
+
+C
+
+C
+
+C
+
+C
+
+§ 50.03.003.5.g
+
+Telecommunications facilities, collocated
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+§ 50.03.003.5.g
+
+COMMERCIAL USES
+
+[6]
+
+§ 50.03.003.6
+
+Agricultural
+
+Agriculture
+
+P
+
+P
+
+§ 50.03.003.6.b
+
+Farm stand
+
+P
+
+P
+
+P
+
+§ 50.03.004.1.b.i
+
+Animal and Related Services
+
+Equestrian facility
+
+C
+
+Kennel
+
+C
+
+C
+
+Pet day care
+
+C
+
+P/C
+
+P/C
+
+C
+
+P/C
+
+C
+
+C
+
+P/C
+
+P/C
+
+P/C [5]
+
+§ 50.03.003.6.s
+
+Veterinary clinic
+
+P/C
+
+P/C
+
+P/C
+
+P/C
+
+P/C
+
+§ 50.03.003.6.z
+
+Food and Beverage Services
+
+Bakery
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+§ 50.03.003.6.g
+
+Bar
+
+P [10]
+
+P
+
+P
+
+P
+
+P
+
+§ 50.03.003.6.h
+
+Food markets < 25,000 sq. ft. gross floor area
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+Food markets 25,000 sq. ft. gross floor area or more
+
+P/C
+
+P
+
+P
+
+P
+
+P/C
+
+§ 50.03.003.6.l
+
+Restaurant
+
+P
+
+P/C [10]
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+§ 50.03.003.6.u
+
+Lodging Facilities
+
+Hotels or motels
+
+P [10]
+
+P
+
+P
+
+P
+
+P
+
+Business or Professional Services
+
+Office, business or professional
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+§ 50.03.003.6.p
+
+Psilocybin Service Center12
+
+C
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+C
+
+C
+
+P
+
+P
+
+P
+
+§ 50.03.003.6.t12
+
+Research and development laboratories
+
+P
+
+P
+
+Commercial Services
+
+Commercial education
+
+C
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+§ 50.03.003.5.f
+
+Crematorium
+
+P
+
+P
+
+Mortuary
+
+P/C [10]
+
+P/C
+
+§ 50.03.003.6.o
+
+Personal services
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+[5]
+
+P
+
+WLG OC and CI zones: § 50.03.003.6.r
+
+Repair, rental, and service
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+§ 50.03.003.6.u
+
+Recreation and Entertainment
+
+Arcade gaming
+
+P/C
+
+P
+
+P
+
+P
+
+§ 50.03.003.6.c
+
+Commercial recreational facility < 5,000 sq. ft. gross floor area
+
+P [10]
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+C [5]
+
+Commercial recreational facility ≥ 5,000 sq. ft. and < 20,000 sq. ft. gross floor area
+
+P [10]
+
+C
+
+P
+
+C
+
+C
+
+C
+
+P
+
+C
+
+Commercial recreational facility ≥ 20,000 sq. ft. gross floor area
+
+P [10]
+
+C
+
+Fitness and exercise facilities, > 5,000 sq. ft. gross floor area
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+Fitness and exercise facilities, ≥ 5,000 sq. ft. and < 20,000 sq. ft. gross floor area
+
+C
+
+P
+
+C
+
+C
+
+C
+
+P
+
+P
+
+C
+
+P
+
+Fitness and exercise facilities, ≥ 20,000 sq. ft. gross floor area
+
+P
+
+C
+
+C
+
+C
+
+P
+
+C
+
+Theaters, indoor
+
+P [10]
+
+P
+
+P
+
+P
+
+P
+
+Retail Sales
+
+Retail < 10,000 sq. ft. gross floor area
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P/C [5]
+
+§ 50.03.003.6.w
+
+Retail ≥ 10,000 and < 20,000 sq. ft. gross floor area
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P/C [5]
+
+§ 50.03.003.6.x
+
+Retail ≥ 20,000 sq. ft. gross floor area
+
+P/C
+
+P
+
+P
+
+P
+
+P [5]
+
+§ 50.03.003.6.y
+
+Vehicle and Equipment Sales and Services
+
+Auto and light vehicle rental
+
+P [10]
+
+P
+
+P
+
+P
+
+P
+
+P
+
+P
+
+§ 50.03.003.6.d
+
+Auto and light vehicle sales
+
+P [10]
+
+P
+
+P
+
+P
+
+§ 50.03.003.6.e
+
+Auto service station and light vehicle repair
+
+C
+
+P/C [10]
+
+P
+
+P
+
+P
+
+P
+
+§ 50.03.003.6.f
+
+Boat sales and boat repair
+
+P
+
+P
+
+Car wash
+
+C [10]
+
+P
+
+C
+
+P
+
+§ 50.03.003.6.i
+
+Heavy vehicle repair
+
+P
+
+§ 50.03.003.6.m
+
+Parking facilities, off-street
+
+C
+
+P [10]
+
+P
+
+P
+
+P
+
+P
+
+§ 50.03.003.6.q
+
+Towing service and tow yard
+
+P
+
+Truck and trailer rental and sales of accessories
+
+P
+
+P
+
+INDUSTRIAL/MANUFACTURING USES
+
+§ 50.03.003.7
+
+Industrial Service and Storage
+
+Dry cleaning or laundry plant
+
+P
+
+P
+
+§ 50.03.003.7.b
+
+General storage
+
+P
+
+P
+
+Lumber yards
+
+P
+
+Nursery stock production and wholesale
+
+P
+
+Wholesale distribution
+
+P
+
+P
+
+Manufacturing
+
+Light manufacturing
+
+C
+
+C
+
+P
+
+C
+
+P
+
+P
+
+§ 50.03.003.7.a
+
+Heavy manufacturing
+
+P
+
+§ 50.03.003.7.a
+
+Psilocybin production12
+
+P
+
+P
+
+§ 50.03.003.7.c12
+
+Storage
+
+Self-storage facility
+
+P
+
+Transportation
+
+Railroad facilities
+
+P
+
+Transportation depot
+
+P
+
+C
+
+ACCESSORY USES
+
+General standards: § 50.03.004.1.a
+
+Accessory Uses
+
+Community garden
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+§ 50.03.003.6.j
+
+Dwelling, caretaker or watchperson
+
+A
+
+A
+
+Farm stand
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+§ 50.03.004.1.b.i
+
+Food services concessions
+
+A
+
+Minor park improvements
+
+A
+
+Retail
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+A
+
+§ 50.03.004.1.b.v
+
+Restaurant
+
+A
+
+§ 50.03.004.1.b.iv
+
+TEMPORARY USES
+
+Temporary Uses
+
+Temporary private uses of public properties
+
+C
+
+Notes:
+
+[1]
+
+At a net site density of 2,500 sq. ft./lot area per unit area allowed in conjunction with office uses in the same building.
+
+[2]
+
+Attached townhomes only.
+
+[3]
+
+Wholly conducted within an enclosed structure.
+
+[4]
+
+No drive-through businesses are allowed in the West Lake Grove Design District or FMU zone.
+
+[5]
+
+In the portion of the IP zone depicted on Figure 50.03.003-B, additional permitted uses are: institutional use, personal services, commercial recreational facility < 5,000 sq. ft. gross floor area, and retail ≤ 35,000 sq. ft. gross floor area subject to use-specific limitations in LOC § 50.03.003.6. Additional conditional uses are: pet day care partially conducted outside during daytime hours.
+
+[6]
+
+Outright permitted use if the gross floor area and exterior display area are 5,000 sq. ft. or less; conditional use if the gross floor area and exterior display are more than 5,000 sq. ft.
+
+[7]
+
+FMU uses allowed only if the primary building on site was constructed after January 17, 2013.
+
+[8]
+
+If lot has multiple zones, e.g., R-0/EC, see LOC § 50.02.002.2.e.
+
+[9]
+
+Site-specific use limitations, see LOC § 50.02.002.2.c.
+
+[10]
+
+In the GC-zoned area in the vicinity of Jean Way and Boones Ferry Road, as depicted on Figure 50.03.003-C, the following uses are not permitted: residential, congregate housing, community institution, residential care housing, community garden, hospitals, mortuaries, bars, drive-through restaurants, hotels, commercial recreational facilities, theaters, auto and light vehicle rental and sales, auto service station, car wash, and parking facilities (primary use).
+
+Editor’s note: Italicized text is added for reader’s convenience. It will be proposed for adoption in a future code update.
+
+[11]
+
+Limited to multifamily residences in the vicinity of Boones Ferry Road and West Sunset Drive, as depicted on Figure 50.03.003-A.1.
+
+[12]
+
+Editor’s Note: Ord. 2903 bans all psilocybin service centers and production in the City, and the voters approved continuation of the ban on Nov. 5, 2024.

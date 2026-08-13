@@ -374,3 +374,32 @@ def test_a_sentence_starting_with_a_short_word_is_not_a_heading() -> None:
 
     assert _SECTION.match("The 10.25 acre site") is None
     assert _SECTION.match("and 40.100 is referenced") is None
+
+
+def test_a_pair_outranks_the_prose_beside_it() -> None:
+    # Gladstone 17.10.050: the base-zone row is a stacked pair reading 20 ft,
+    # and the cottage-cluster subsection two paragraphs later states 10 ft in
+    # a sentence. Both live under the declared section; the pair is the cell
+    # that lost its geometry, and it wins — before the hierarchy learned
+    # about pairs, the exception outvoted the standard it qualifies.
+    text = """17.10.050 Dimensional standards.
+
+Front setback
+
+20 ft
+
+The minimum front yard setback for a cottage cluster is 10 feet.
+"""
+    values = {"setback_front_ft": value(20)}
+    found = check_zone(
+        text,
+        layer="l",
+        zone="R7.2",
+        values=values,
+        path="doc.txt",
+        sections=["17.10."],
+    )
+    front = next(f for f in found if f.field == "setback_front_ft")
+
+    assert front.verdict is Verdict.agrees
+    assert front.found == (20,)

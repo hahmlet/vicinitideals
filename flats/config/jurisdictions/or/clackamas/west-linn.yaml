@@ -12,134 +12,256 @@ ingest:
   zoning_layer: zoning_west_linn
   zone_field: DESIGNATION
   strip_lowercase_suffix: false
+code:
+  # The CDC gives every residential zone its own chapter, and Code
+  # Publishing serves each chapter as one server-rendered HTML page —
+  # nine small documents instead of one code-sized one. Section numbers
+  # inside chapter NN are NN.xxx, so each zone declares its chapter as
+  # its section prefix. Host takes chrome124, refuses newer Chrome.
+  - id: "08.r-40"
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC08.html
+    title: "CDC Chapter 08 - Low Density Residential R-40"
+  - id: "09.r-20"
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC09.html
+    title: "CDC Chapter 09 - Low Density Residential R-20"
+  - id: "10.r-15"
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC10.html
+    title: "CDC Chapter 10 - Low Density Residential R-15"
+  - id: "11.r-10"
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC11.html
+    title: "CDC Chapter 11 - Low Density Residential R-10"
+  - id: "12.r-7"
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC12.html
+    title: "CDC Chapter 12 - Low Density Residential R-7"
+  - id: "13.r-5"
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC13.html
+    title: "CDC Chapter 13 - Medium Density Residential R-5"
+  - id: "14.r-4.5"
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC14.html
+    title: "CDC Chapter 14 - Medium Density Residential R-4.5"
+  - id: "15.r-3"
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC15.html
+    title: "CDC Chapter 15 - Medium High Density Residential R-3"
+  - id: "16.r-2.1"
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC16.html
+    title: "CDC Chapter 16 - Medium High Density Residential R-2.1"
 zones:
   R-40:
+    section: ["08."]
     cite_default:
       cite: West Linn CDC 08.070 (R-40 lot/dimensional standards); quadplex permitted outright 08.030
       url: https://www.zoneomics.com/code/west-linn-OR/chapter_4
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 30
-    setback_side_ft: 10
-    setback_rear_ft: 30
+    setback_front_ft:
+      value: 30
+      quote: "or/clackamas/west-linn/08.r-40.txt#L161"
+    setback_side_ft:
+      value: 10
+      quote: "or/clackamas/west-linn/08.r-40.txt#L167"
+    setback_rear_ft:
+      value: 30
+      quote: "or/clackamas/west-linn/08.r-40.txt#L181"
     setback_street_side_ft: 30
     min_lot_sqft: 40000
     min_frontage_ft: 150
-    max_coverage_pct: 25
+    max_coverage_pct:
+      value: 25
+      quote: "or/clackamas/west-linn/08.r-40.txt#L191"
     notes: 'quadfit confidence: verified | Detached SFD + quadplex outright. Coverage 25% applies to quadplex
       (only cottage clusters exempt). Corner side-yard read as 30 ft.'
   R-20:
+    section: ["09."]
     cite_default:
       cite: West Linn CDC 09.070 (R-20 lot/dimensional standards)
       url: https://www.zoneomics.com/code/west-linn-OR/chapter_5
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 20
-    setback_side_ft: 7.5
-    setback_rear_ft: 20
-    setback_street_side_ft: 15
+    setback_front_ft:
+      value: 20
+      quote: "or/clackamas/west-linn/09.r-20.txt#L165"
+    setback_side_ft:
+      value: 7.5
+      quote: "or/clackamas/west-linn/09.r-20.txt#L171"
+    setback_rear_ft:
+      value: 20
+      quote: "or/clackamas/west-linn/09.r-20.txt#L181"
+    setback_street_side_ft:
+      value: 15
+      quote: "or/clackamas/west-linn/09.r-20.txt#L177"
     min_lot_sqft: 20000
     min_frontage_ft: 100
-    max_coverage_pct: 25
+    max_coverage_pct:
+      value: 25
+      quote: "or/clackamas/west-linn/09.r-20.txt#L191"
     notes: 'quadfit confidence: verified | Detached SFD + quadplex outright. Coverage 25% applies to quadplex.'
   R-15:
+    section: ["10."]
     cite_default:
       cite: West Linn CDC 10.070 (R-15 lot/dimensional standards); quadplex 10.030(5)
       url: https://www.zoneomics.com/code/west-linn-OR/chapter_6
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 20
-    setback_side_ft: 7.5
-    setback_rear_ft: 20
-    setback_street_side_ft: 15
+    setback_front_ft:
+      value: 20
+      quote: "or/clackamas/west-linn/10.r-15.txt#L161"
+    setback_side_ft:
+      value: 7.5
+      quote: "or/clackamas/west-linn/10.r-15.txt#L167"
+    setback_rear_ft:
+      value: 20
+      quote: "or/clackamas/west-linn/10.r-15.txt#L177"
+    setback_street_side_ft:
+      value: 15
+      quote: "or/clackamas/west-linn/10.r-15.txt#L173"
     min_lot_sqft: 15000
     min_frontage_ft: 45
-    max_coverage_pct: 30
+    max_coverage_pct:
+      value: 30
+      quote: "or/clackamas/west-linn/10.r-15.txt#L187"
     notes: 'quadfit confidence: verified | Width 45 ft at front line / 80 ft avg (frontage=45). Coverage
       30% applies to quadplex.'
   R-10:
+    section: ["11."]
     cite_default:
       cite: West Linn CDC 11.070 (R-10 lot/dimensional standards); quadplex 11.030(1)(c)
       url: https://www.zoneomics.com/code/west-linn-OR/chapter_7
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 20
-    setback_side_ft: 7.5
-    setback_rear_ft: 20
-    setback_street_side_ft: 15
+    setback_front_ft:
+      value: 20
+      quote: "or/clackamas/west-linn/11.r-10.txt#L169"
+    setback_side_ft:
+      value: 7.5
+      quote: "or/clackamas/west-linn/11.r-10.txt#L175"
+    setback_rear_ft:
+      value: 20
+      quote: "or/clackamas/west-linn/11.r-10.txt#L185"
+    setback_street_side_ft:
+      value: 15
+      quote: "or/clackamas/west-linn/11.r-10.txt#L181"
     min_lot_sqft: 10000
     min_frontage_ft: 35
-    max_coverage_pct: 35
+    max_coverage_pct:
+      value: 35
+      quote: "or/clackamas/west-linn/11.r-10.txt#L195"
     notes: 'quadfit confidence: verified | Width 35 ft at front line / 50 ft avg (frontage=35). Coverage
       35% applies to quadplex.'
   R-7:
+    section: ["12."]
     cite_default:
       cite: West Linn CDC 12.070 (R-7 lot/dimensional standards)
       url: https://www.zoneomics.com/code/west-linn-OR/chapter_8
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 20
-    setback_side_ft: 7.5
-    setback_rear_ft: 20
-    setback_street_side_ft: 15
+    setback_front_ft:
+      value: 20
+      quote: "or/clackamas/west-linn/12.r-7.txt#L171"
+    setback_side_ft:
+      value: 7.5
+      quote: "or/clackamas/west-linn/12.r-7.txt#L177"
+    setback_rear_ft:
+      value: 20
+      quote: "or/clackamas/west-linn/12.r-7.txt#L187"
+    setback_street_side_ft:
+      value: 15
+      quote: "or/clackamas/west-linn/12.r-7.txt#L183"
     min_lot_sqft: 7000
     min_frontage_ft: 35
-    max_coverage_pct: 35
+    max_coverage_pct:
+      value: 35
+      quote: "or/clackamas/west-linn/12.r-7.txt#L197"
     notes: 'quadfit confidence: verified | Detached SFD + quadplex outright. Coverage 35% applies to quadplex;
       max FAR 0.60 for duplex/triplex/quadplex.'
   R-5:
+    section: ["13."]
     cite_default:
       cite: West Linn CDC 13.070 (R-5 lot/dimensional standards)
       url: https://www.zoneomics.com/code/west-linn-OR/chapter_9
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 20
-    setback_side_ft: 5
-    setback_rear_ft: 20
-    setback_street_side_ft: 15
+    setback_front_ft:
+      value: 20
+      quote: "or/clackamas/west-linn/13.r-5.txt#L177"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/west-linn/13.r-5.txt#L183"
+    setback_rear_ft:
+      value: 20
+      quote: "or/clackamas/west-linn/13.r-5.txt#L193"
+    setback_street_side_ft:
+      value: 15
+      quote: "or/clackamas/west-linn/13.r-5.txt#L189"
     min_lot_sqft: 5000
     min_frontage_ft: 35
     notes: 'quadfit confidence: verified | Max lot coverage does NOT apply to quadplexes (CDC 13.070)
       -> no coverage cap for a 4-plex; SFD base coverage 40%.'
   R-4.5:
+    section: ["14."]
     cite_default:
       cite: West Linn CDC 14.070 (R-4.5 lot/dimensional standards)
       url: https://www.zoneomics.com/code/west-linn-OR/chapter_10
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 20
-    setback_side_ft: 5
-    setback_rear_ft: 20
-    setback_street_side_ft: 15
+    setback_front_ft:
+      value: 20
+      quote: "or/clackamas/west-linn/14.r-4.5.txt#L201"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/west-linn/14.r-4.5.txt#L207"
+    setback_rear_ft:
+      value: 20
+      quote: "or/clackamas/west-linn/14.r-4.5.txt#L217"
+    setback_street_side_ft:
+      value: 15
+      quote: "or/clackamas/west-linn/14.r-4.5.txt#L213"
     min_lot_sqft: 4500
     min_frontage_ft: 35
     notes: 'quadfit confidence: verified | Coverage max does NOT apply to quadplexes (CDC 14.070); SFD
       base 40%.'
   R-3:
+    section: ["15."]
     cite_default:
       cite: West Linn CDC 15.070 (R-3 lot/dimensional standards)
       url: https://www.zoneomics.com/code/west-linn-OR/chapter_11
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 15
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    setback_street_side_ft: 15
+    setback_front_ft:
+      value: 15
+      quote: "or/clackamas/west-linn/15.r-3.txt#L195"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/west-linn/15.r-3.txt#L205"
+    setback_rear_ft:
+      value: 15
+      quote: "or/clackamas/west-linn/15.r-3.txt#L215"
+    setback_street_side_ft:
+      value: 15
+      quote: "or/clackamas/west-linn/15.r-3.txt#L211"
     min_lot_sqft: 3000
     min_frontage_ft: 35
     notes: 'quadfit confidence: verified | Coverage max does NOT apply to quadplexes (CDC 15.070); SFD
       base 50%. FAR 0.45 (n/a to middle housing).'
   R-2.1:
+    section: ["16."]
     cite_default:
       cite: West Linn CDC 16.070 (R-2.1); attached quadplex outright 16.030; detached SFD/quadplex conditional
         16.050(6)
       url: https://www.zoneomics.com/code/west-linn-OR/chapter_12
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 15
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    setback_street_side_ft: 15
+    setback_front_ft:
+      value: 15
+      quote: "or/clackamas/west-linn/16.r-2.1.txt#L221"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/west-linn/16.r-2.1.txt#L227"
+    setback_rear_ft:
+      value: 15
+      quote: "or/clackamas/west-linn/16.r-2.1.txt#L237"
+    setback_street_side_ft:
+      value: 15
+      quote: "or/clackamas/west-linn/16.r-2.1.txt#L233"
     min_lot_sqft: 4000
     min_frontage_ft: 35
     notes: 'quadfit confidence: needs_verification | ATTACHED quadplex permitted OUTRIGHT. Detached SFD/detached

@@ -1,10 +1,10 @@
 jurisdiction,zone,lots,acres,status,verified_fields,total_fields,missing_required,untrusted_fields,blocking
-or/multnomah/portland,R5,73690,15663.8,partial,0,7,max_height_ft,coverage_curve;min_lot_sqft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_rear_ft;setback_side_ft,73690
-or/multnomah/portland,R7,32341,9667.61,partial,0,7,max_height_ft,coverage_curve;min_lot_sqft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_rear_ft;setback_side_ft,32341
-or/multnomah/portland,R2.5,26785,4602.52,partial,0,7,max_height_ft,coverage_curve;min_lot_sqft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_rear_ft;setback_side_ft,26785
+or/multnomah/portland,R5,73690,15663.8,partial,0,8,max_height_ft,coverage_curve;min_lot_sqft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_garage_entrance_ft;setback_rear_ft;setback_side_ft,73690
+or/multnomah/portland,R7,32341,9667.61,partial,0,8,max_height_ft,coverage_curve;min_lot_sqft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_garage_entrance_ft;setback_rear_ft;setback_side_ft,32341
+or/multnomah/portland,R2.5,26785,4602.52,partial,0,9,,coverage_curve;max_height_ft;min_lot_sqft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_garage_entrance_ft;setback_rear_ft;setback_side_ft,26785
 or/multnomah/portland,RM1,14426,3735.83,zone_missing,0,0,,,14426
 or/multnomah/gresham,LDR-5,12854,5257.12,partial,0,7,max_height_ft,min_lot_sqft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_rear_ft;setback_side_ft;setback_street_side_ft,12854
-or/multnomah/portland,R10,12349,5259.77,partial,0,7,max_height_ft,coverage_curve;min_lot_sqft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_rear_ft;setback_side_ft,12349
+or/multnomah/portland,R10,12349,5259.77,partial,0,8,max_height_ft,coverage_curve;min_lot_sqft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_garage_entrance_ft;setback_rear_ft;setback_side_ft,12349
 or/multnomah/gresham,LDR-7,8650,2902.69,partial,0,7,max_height_ft,min_lot_sqft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_rear_ft;setback_side_ft;setback_street_side_ft,8650
 or/multnomah/portland,RM2,8235,1941.85,zone_missing,0,0,,,8235
 or/multnomah/portland,CM2,6727,2045.07,zone_missing,0,0,,,6727
@@ -15,7 +15,7 @@ or/multnomah/portland,CX,1790,1624.72,zone_missing,0,0,,,1790
 or/multnomah/portland,CM3,1655,751.97,zone_missing,0,0,,,1655
 or/multnomah/portland,CM1,1614,386.85,zone_missing,0,0,,,1614
 or/multnomah/portland,RM3,1443,426.66,zone_missing,0,0,,,1443
-or/multnomah/portland,R20,1442,1364.4,partial,0,7,max_height_ft,coverage_curve;min_lot_sqft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_rear_ft;setback_side_ft,1442
+or/multnomah/portland,R20,1442,1364.4,partial,0,8,max_height_ft,coverage_curve;min_lot_sqft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_garage_entrance_ft;setback_rear_ft;setback_side_ft,1442
 or/multnomah/portland,CE,1439,1261.32,zone_missing,0,0,,,1439
 or/multnomah/portland,IH,1385,7841.44,zone_missing,0,0,,,1385
 or/multnomah/portland,IG1,1293,965.99,zone_missing,0,0,,,1293
@@ -28,7 +28,7 @@ or/multnomah/gresham,LDR-PV,694,397.61,partial,0,7,max_height_ft,min_lot_sqft;pa
 or/multnomah/portland,EG2,691,1466.21,zone_missing,0,0,,,691
 or/multnomah/gresham,CMF,665,614.16,partial,0,9,max_height_ft,min_frontage_ft;min_lot_sqft;orientation_constraint;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_rear_ft;setback_side_ft;setback_street_side_ft,665
 or/multnomah/gresham,TR,613,131.04,partial,0,7,max_height_ft,min_lot_sqft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_rear_ft;setback_side_ft;setback_street_side_ft,613
-or/multnomah/portland,RF,585,1258.46,partial,0,2,max_height_ft;min_lot_sqft;setback_front_ft;setback_rear_ft;setback_side_ft,parking_min_per_unit;quadplex_allowed,585
+or/multnomah/portland,RF,585,1258.46,partial,0,7,min_lot_sqft,max_height_ft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_garage_entrance_ft;setback_rear_ft;setback_side_ft,585
 or/multnomah/fairview,R-6,580,198.55,partial,0,8,max_height_ft,max_coverage_pct;min_lot_sqft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_rear_ft;setback_side_ft;setback_street_side_ft,580
 or/multnomah/portland,EG1,580,207.61,zone_missing,0,0,,,580
 or/multnomah/_unincorporated,R10,564,551.3,partial,0,7,max_height_ft,coverage_curve;min_lot_sqft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_rear_ft;setback_side_ft,564

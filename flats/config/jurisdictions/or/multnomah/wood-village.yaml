@@ -12,14 +12,47 @@ ingest:
   zoning_layer: zoning_wood_village
   zone_field: Labeling
   strip_lowercase_suffix: false
+code:
+  # The city moved to municipal.codes (woodvillage.municipal.codes), which
+  # serves one leaf section per page, server-rendered; article pages are
+  # tables of contents only. The cite basis for every zone is WVDC 210/220:
+  # .310 housing types allowed, .320 development standards (Tables 210-3 /
+  # 220-3/-4), .375/.355 middle-housing design standards. The housing-type
+  # and design sections are prose and Y/N tables — number-sparse, so the
+  # plausibility gate reads them as thin; read 2026-08-13, they are real.
+  - id: "210.310"
+    url: https://woodvillage.municipal.codes/WVDC/210.310
+    title: "WVDC 210.310 - Housing Types Allowed (LR)"
+    allow_thin: true
+  - id: "210.320"
+    url: https://woodvillage.municipal.codes/WVDC/210.320
+    title: "WVDC 210.320 - Development Standards (LR)"
+  - id: "210.375"
+    url: https://woodvillage.municipal.codes/WVDC/210.375
+    title: "WVDC 210.375 - Middle Housing Design Standards (LR)"
+    allow_thin: true
+  - id: "220.310"
+    url: https://woodvillage.municipal.codes/WVDC/220.310
+    title: "WVDC 220.310 - Housing Types Allowed (MR)"
+    allow_thin: true
+  - id: "220.320"
+    url: https://woodvillage.municipal.codes/WVDC/220.320
+    title: "WVDC 220.320 - Development Standards (MR)"
+  - id: "220.355"
+    url: https://woodvillage.municipal.codes/WVDC/220.355
+    title: "WVDC 220.355 - Middle Housing Design Standards (MR)"
+    allow_thin: true
 zones:
   LR 7.5:
+    section: ["210."]
     cite_default:
       cite: WVDC 210.310 Tables 210-2/210-3, 210.375 (Ord. 2-2022)
       url: https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf
       retrieved: '2026-07-24'
     quadplex_allowed: true
-    setback_front_ft: 10
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/wood-village/210.320.txt#L136"
     setback_side_ft: 5
     setback_rear_ft: 15
     setback_street_side_ft: 10
@@ -28,12 +61,15 @@ zones:
     notes: 'quadfit confidence: verified | Quadplex Y outright; zone min lot 7,500 sf (no quad-specific
       larger min). Garage face 22 ft. Height 35 ft.'
   LR 12:
+    section: ["210."]
     cite_default:
       cite: WVDC 210.310 Tables 210-2/210-3, 210.375 (Ord. 2-2022)
       url: https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf
       retrieved: '2026-07-24'
     quadplex_allowed: true
-    setback_front_ft: 10
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/wood-village/210.320.txt#L136"
     setback_side_ft: 10
     setback_rear_ft: 15
     setback_street_side_ft: 20
@@ -42,12 +78,15 @@ zones:
     notes: 'quadfit confidence: verified | Corner STREET-SIDE 20 ft (vs 10 in LR 7.5). Zone min lot 12,000
       sf.'
   MR 2:
+    section: ["220."]
     cite_default:
       cite: WVDC 220.310 Tables 220-2/220-3, 220.355 (Ord. 2-2022)
       url: https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf
       retrieved: '2026-07-24'
     quadplex_allowed: true
-    setback_front_ft: 10
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/wood-village/220.320.txt#L124"
     setback_side_ft: 5
     setback_rear_ft: 15
     min_lot_sqft: 8000
@@ -55,12 +94,15 @@ zones:
     notes: 'quadfit confidence: verified | Quadplex min lot 8,000 sf (SFD 7,500). MR tables have NO corner-lot
       street-side rows — genuinely unspecified in code text; no street-side elevation applied.'
   MR 4:
+    section: ["220."]
     cite_default:
       cite: WVDC 220.310 Tables 220-2/220-3, 220.355 (Ord. 2-2022)
       url: https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf
       retrieved: '2026-07-24'
     quadplex_allowed: true
-    setback_front_ft: 10
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/wood-village/220.320.txt#L124"
     setback_side_ft: 5
     setback_rear_ft: 15
     min_lot_sqft: 8000

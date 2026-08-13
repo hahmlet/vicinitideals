@@ -569,3 +569,152 @@ def test_a_sub_column_s_number_is_not_claimed_for_the_zone_beside_it() -> None:
 
     assert table.rows[0].value_for("HDR") == "N/A"
     assert table.rows[0].value_for("MDR") == "5,000"
+
+
+# --- the fourth shape: stacked label/value pairs -----------------------------
+
+# A Code Publishing HTML chapter linearised by html_to_text: one table cell
+# per line. Direct-subject labels (Gladstone), grouped labels under a setback
+# heading (West Linn), a note line after a value, a two-tier value line, and
+# a sub-labelled lot-area stack that must produce nothing.
+GLADSTONE_PAIRS = '''
+17.10.050 Dimensional standards.
+
+Minimum Lot Area
+
+Detached single household
+
+7,200 sf
+
+Minimum Setbacks
+
+Front setback
+
+20 ft
+
+Except that a front porch may project a maximum of five feet into it.
+
+Side setback
+
+7.5 ft or 5 ft due to irregular shaped lots
+
+Interior side setback
+
+5 ft
+
+Rear setback
+
+15 ft
+
+Maximum Building Height
+
+35 ft
+'''
+
+WEST_LINN_PAIRS = '''
+12.070 DIMENSIONAL REQUIREMENTS
+
+Minimum yard dimensions or minimum building setbacks
+
+Front yard
+
+20 ft
+
+Except for steeply sloped lots where the provisions of CDC 41.010 shall apply
+
+Interior side yard
+
+7.5 ft
+
+Street side yard
+
+15 ft
+
+Rear yard
+
+20 ft
+
+Maximum building height
+
+35 ft
+
+Maximum lot coverage
+
+35%
+'''
+
+
+def _pairs(text: str) -> dict[str, float]:
+    from flats.encode.tables import read_pairs
+
+    return {c.field: c.value for c in read_pairs(text, path="doc.txt")}
+
+
+def test_a_direct_subject_label_pairs_with_the_measure_below_it() -> None:
+    found = _pairs(GLADSTONE_PAIRS)
+
+    assert found["setback_front_ft"] == 20
+    assert found["setback_rear_ft"] == 15
+    assert found["max_height_ft"] == 35
+
+
+def test_a_note_line_after_the_value_does_not_poison_the_pair() -> None:
+    # Joined into one clause, "Except that a front porch..." tags the whole
+    # stack an exception and the 20 ft base disappears. The pair reader works
+    # on the unjoined lines, where the note is just the next cell.
+    assert _pairs(GLADSTONE_PAIRS)["setback_front_ft"] == 20
+
+
+def test_a_two_tier_value_line_is_refused_whole() -> None:
+    # "7.5 ft or 5 ft due to irregular shaped lots" starts with a measurement
+    # and does not state one. measure() would read the prefix; the pair
+    # reader must consume the whole line or nothing — the interior-side row
+    # below it is what fills the field.
+    assert _pairs(GLADSTONE_PAIRS)["setback_side_ft"] == 5
+
+
+def test_a_sub_labelled_stack_produces_nothing() -> None:
+    # "Minimum Lot Area" over "Detached single household" over "7,200 sf" is
+    # a housing-type row. The line under the label is not a measurement, and
+    # whose 7,200 it is is not this reader's call.
+    assert "min_lot_sqft" not in _pairs(GLADSTONE_PAIRS)
+
+
+def test_a_grouped_label_reads_through_the_setback_heading() -> None:
+    found = _pairs(WEST_LINN_PAIRS)
+
+    assert found["setback_front_ft"] == 20
+    assert found["setback_side_ft"] == 7.5
+    assert found["setback_street_side_ft"] == 15
+    assert found["setback_rear_ft"] == 20
+    assert found["max_coverage_pct"] == 35
+
+
+def test_a_repeated_value_line_is_not_page_furniture() -> None:
+    # "20 ft" prints once per row it governs and "35 ft" once per standard.
+    # Frequency-based furniture detection would eat them — West Linn's whole
+    # setback block vanished before values were exempted.
+    found = _pairs(WEST_LINN_PAIRS)
+
+    assert found["setback_front_ft"] == 20
+    assert found["setback_rear_ft"] == 20
+    assert found["max_height_ft"] == 35
+
+
+def test_a_pair_carries_the_section_it_was_read_under() -> None:
+    from flats.encode.tables import read_pairs
+
+    sections = {c.field: c.section for c in read_pairs(WEST_LINN_PAIRS, path="doc.txt")}
+
+    assert sections["setback_front_ft"] == "12.070"
+
+
+def test_a_pair_quotes_the_line_the_number_is_on() -> None:
+    from flats.encode.tables import read_pairs
+
+    front = next(
+        c for c in read_pairs(GLADSTONE_PAIRS, path="doc.txt") if c.field == "setback_front_ft"
+    )
+
+    assert front.quote == f"doc.txt#L{front.line}"
+    assert GLADSTONE_PAIRS.splitlines()[front.line - 1].strip() == "20 ft"

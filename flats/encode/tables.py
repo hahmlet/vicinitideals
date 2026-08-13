@@ -29,7 +29,7 @@ from dataclasses import dataclass
 from dataclasses import field as dc_field
 from typing import Iterable, Sequence
 
-from flats.encode.extract import _PAGE_NUMBER, Candidate, _furniture, _subject
+from flats.encode.extract import _PAGE_NUMBER, _SECTION, Candidate, _furniture, _subject
 from flats.rules.fields import FIELDS
 
 #: Bumped when the reader changes.
@@ -570,6 +570,7 @@ def measure(raw: str) -> tuple[float, str] | None:
 _GROUPED_SUBJECTS = {
     "front yard": "setback_front_ft",
     "side yard": "setback_side_ft",
+    "interior side yard": "setback_side_ft",
     "street side yard": "setback_street_side_ft",
     "rear yard": "setback_rear_ft",
 }
@@ -596,6 +597,123 @@ def _measure_bare(cell: str, label: str, group: str) -> tuple[float, str] | None
     u = unit.group("u").lower().replace(" ", "").rstrip(".")
     kind = "sqft" if u.startswith("sq") else "pct" if u in ("%", "percent") else "ft"
     return float(m.group("n").replace(",", "")), _UNIT_KIND[kind]
+
+
+#: A pair group heading mentions setbacks and carries no number of its own —
+#: "Minimum Setbacks", "Minimum yard dimensions or minimum building setbacks".
+_PAIR_GROUP = re.compile(r"\bsetbacks?\b", re.I)
+#: Longest a label or group line may run. A sentence is not a label.
+_PAIR_WORDS = 8
+
+
+def _measure_line(line: str) -> tuple[float, str] | None:
+    """A line that is one measurement and nothing else.
+
+    ``measure()`` reads a prefix, which is right for a table cell and wrong
+    here: "7.5 ft or 5 ft due to irregular shaped lots" starts with a
+    measurement and does not state one. A pair's value line must be consumed
+    whole — that refusal is what keeps a two-tier standard out of the file.
+    """
+    cell = _FOOTNOTE.sub("", line).strip()
+    if not cell or _NOT_A_NUMBER.match(cell):
+        return None
+    m = _MEASURE.match(cell)
+    if not m or m.end() != len(cell):
+        return None
+    return measure(cell)
+
+
+def read_pairs(text: str, *, path: str) -> list[Candidate]:
+    """Values stated as stacked label/value line pairs.
+
+    The fourth table shape, and the one every Code Publishing HTML chapter is
+    written in: the codifier renders the dimensional grid as an HTML table,
+    and ``html_to_text`` linearises it one cell per line —
+
+        Front yard
+
+        20 ft
+
+        Except for steeply sloped lots ...
+
+    The prose reader cannot see this. ``paragraphs()`` joins the stack into
+    one clause, where the note's "Except" tags the whole thing an exception
+    (Gladstone) or the run of cells reads as one sentence stating five side
+    setbacks (the L193 glue). The pair reader works on the unjoined lines: a
+    line that is exactly a standard's label, whose next non-blank line is
+    exactly one measurement, is a table row that lost its geometry.
+
+    A label with no direct subject match may still read through a group
+    heading — "Front yard" under "Minimum Setbacks" — mirroring the grouped
+    rows of the spatial reader. Sub-labelled stacks ("Minimum Lot Area" over
+    "Detached single household" over "7,200 sf") produce nothing: the value
+    line under the label is not a measurement, and the housing-type row it
+    belongs to is a dimension this reader does not decide.
+
+    Pairs are near-cell evidence, not cell evidence: nothing in the stack
+    names a zone, so a pair counts only where the document or a declared
+    section binds it to one — the same rule prose lives under.
+    """
+    lines = text.splitlines()
+    # Frequency-based furniture detection assumes a repeated line is a page
+    # header. In a linearised grid the repetition IS the data: "35 ft" prints
+    # once per row it governs and "Front yard" once per sibling table, so a
+    # line that reads as a measurement or a label is never furniture here.
+    junk = {
+        j
+        for j in _furniture([line.strip() for line in lines])
+        if _measure_line(j) is None
+        and _subject(j) is None
+        and j.strip(" .:").lower() not in _GROUPED_SUBJECTS
+    }
+    out: list[Candidate] = []
+    section = ""
+    group = ""
+    label: str | None = None
+
+    for n, raw in enumerate(lines, start=1):
+        stripped = raw.strip()
+        if not stripped or stripped in junk or _PAGE_NUMBER.match(stripped):
+            continue
+        found = _SECTION.match(stripped)
+        if found:
+            section = found.group("sec")
+            group = ""
+            label = None
+            continue
+        if label is not None:
+            parsed = _measure_line(stripped)
+            if parsed is not None:
+                number, kind = parsed
+                name = _subject(label)
+                if name is None and group:
+                    name = _GROUPED_SUBJECTS.get(label.strip(" .:").lower())
+                if name is not None and FIELDS[name].kind == kind:
+                    value = int(number) if number.is_integer() else number
+                    out.append(
+                        Candidate(
+                            field=name,
+                            value=value,
+                            line=n,
+                            text=f"{label}: {stripped}",
+                            quote=f"{path}#L{n}",
+                            source="pair",
+                            section=section,
+                        )
+                    )
+                label = None
+                continue
+            label = None
+        has_digit = any(ch.isdigit() for ch in stripped)
+        words = len(stripped.split())
+        if not has_digit and words <= _PAIR_WORDS and not stripped.endswith("."):
+            if _subject(stripped) or (
+                group and stripped.strip(" .:").lower() in _GROUPED_SUBJECTS
+            ):
+                label = stripped
+        if not has_digit and words <= _PAIR_WORDS + 2 and _PAIR_GROUP.search(stripped):
+            group = stripped
+    return out
 
 
 def candidates_for(table: Table | Iterable[Row], zone: str, *, path: str) -> list[Candidate]:

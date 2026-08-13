@@ -1,0 +1,5507 @@
+Close
+Print
+Resize:
+
+City of Milwaukie, OR
+
+Thursday, August 13, 2026
+
+Title 19. Zoning
+
+Chapter 19.300. BASE ZONES
+
+§ 19.301. Moderate Density Residential Zones
+
+The moderate density residential zone is Residential Zone R-MD. This zone implements the Moderate Density residential land use designation in the Milwaukie Comprehensive Plan.
+
+(Ord. 2051 § 2, 2012; Ord. 2110 § 2 (Exh. G), 2015; Ord. 2120 § 2, 2016; Ord. 2134 § 2, 2016; Ord. 2168 § 2, 2019; Ord. 2218 § 2 (Exh. B), 2022; Ord. 2224 § 2, 2022; Ord. 2229 § 2, 2023; Ord. 2236 § 2, 2023; Ord. 2245, 8/6/2024; Ord. 2260, 1/20/2026)
+
+§ 19.301.1. Purpose.
+
+The moderate density residential zone is intended to create, maintain, and promote neighborhoods and allow a broad range of housing types. Some non-residential uses are allowed, but overall the character is one of residential neighborhoods.
+
+§ 19.301.2. Allowed Uses in Moderate Density Residential Zones.
+
+Uses allowed, either allowed by right or conditionally, in the moderate density residential zones are listed in Table 19.301.2 below. Similar uses not listed in the table may be allowed through a Director's determination pursuant to Section 19.903. Notes and/or cross references to other applicable code sections are listed in the "Standards/Additional Provisions" column.
+
+See Section 19.201 Definitions for specific descriptions of the uses listed in the table.
+
+Table 19.301.2
+
+Moderate Density Residential Uses Allowed
+
+Use
+
+R-MD
+
+Standards/Additional Provisions
+
+Residential Uses
+
+Single detached dwelling
+
+P
+
+Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+
+Duplex
+
+P
+
+Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+
+Triplex
+
+P
+
+Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+
+Quadplex
+
+P
+
+Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+
+Townhouse
+
+P
+
+Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+
+Subsection 19.505.5 Standards for Town-houses
+
+Cottage Cluster
+
+P
+
+Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+
+Subsection 19.505.4 Cottage Cluster Housing
+
+Adult foster/care home
+
+P
+
+Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+
+Accessory dwelling unit
+
+P
+
+Subsection 19.910.1 Accessory Dwelling Units
+
+Manufactured dwelling park
+
+III
+
+Subsection 19.910.3 Manufactured dwelling parks
+
+Residential care facility Examples include: assisted living, nursing facilities, and memory care communities
+
+CSU
+
+Subsection 19.904.8 Specific Standards for Residential Care Facilities
+
+Commercial Uses
+
+Bed and breakfast or Vacation rental
+
+CU
+
+Section 19.905 Conditional Uses
+
+Accessory and Other Uses
+
+Accessory use
+
+P
+
+Section 19.503 Accessory Uses
+
+Agricultural or horticultural use
+
+P
+
+Subsection 19.301.3 Use Limitations and Restrictions
+
+Community service use
+
+CSU
+
+Section 19.904 Community Service Uses
+
+Home occupation
+
+P
+
+Section 19.507 Home Occupation Standards
+
+Short-term rental
+
+P
+
+Section 19.507 Home Occupation Standards
+
+Notes:
+
+P
+
+=
+
+Permitted/allowed by right
+
+N
+
+=
+
+Not permitted.
+
+CSU
+
+=
+
+Permitted with Community Service Use approval subject to provisions of Section 19.904. Type III review required to establish a new CSU or for major modification of an existing CSU. Type I review required for a minor modification of an existing CSU.
+
+CU
+
+=
+
+Permitted with conditional use approval subject to the provisions of Section 19.905. Type III review required to establish a new CU or for major modification of an existing CU. Type I review required for a minor modification of an existing CU.
+
+III
+
+=
+
+Type III review required.
+
+§ 19.301.3. Use Limitations and Restrictions.
+
+A.
+
+Agricultural or horticultural uses are permitted, provided that the following conditions are met.
+
+1.
+
+Retail or wholesale sales associated with an agricultural or horticultural use are limited to the allowances for a home occupation per Section 19.507.
+
+2.
+
+Livestock, other than usual household pets, are not housed or kept within 100 ft of any dwelling not on the same lot, nor on a lot less than one acre, nor having less than 10,000 sq ft per head of livestock.
+
+3.
+
+Poultry kept for the production of meat or for commercial sale of eggs are not housed or kept within 100 ft of any dwelling not on the same lot, nor on a lot less than one acre. Poultry kept for other purposes are not subject to these limitations and are allowed per Subsection 19.503.1.C.
+
+B.
+
+Marijuana production is not permitted in moderate density residential zones except as follows:
+
+1.
+
+State-licensed production for medical marijuana patients is permitted provided the operation is entirely indoors and meets the security and odor control standards set forth in Subsection 19.509.2.
+
+2.
+
+Growing marijuana indoors or outdoors for personal use is permitted consistent with state laws.
+
+§ 19.301.4. Development Standards.
+
+In the moderate density residential zone, the development standards in Table 19.301.4 apply. Notes and/or cross references to other applicable code sections are listed in the "standards/Additional Provisions" column. Additional standards are provided in Subsection 19.301.5.
+
+See Sections 19.201 Definitions and 19.202 Measurements for specific descriptions of standards and measurements listed in the table.
+
+Table 19.301.4
+
+Moderate Density Residential Development Standards
+
+Standard
+
+R-MD
+
+Standards/ Additional Provisions
+
+Lot size (square feet)
+
+1,500 – 2,999
+
+3,000–4,999
+
+5,000-6,9992
+
+7,000 and up
+
+A. Permitted Dwelling Type
+
+Townhouse1
+
+Duplex, Triplex, Quadplex
+
+Single Detached Dwelling, Single Detached Dwelling, with up to 2 ADUs, Duplex, Triplex, Quadplex
+
+Single Detached Dwelling, Single Detached Dwelling, with 2 ADUs, Duplex, Triplex, Quadplex, Cottage Cluster
+
+Subsection 19.501.1 Lot Size Exceptions
+
+B. Lot Standards
+
+1. Minimum lot width (ft)
+
+20
+
+30
+
+50
+
+60
+
+2. Minimum lot depth (ft)
+
+70
+
+80
+
+80
+
+80
+
+3. Minimum street frontage requirements (ft)
+
+a. Townhouse
+
+20
+
+b. Standard lot
+
+35
+
+30
+
+35
+
+35
+
+c. Flag lot
+
+NA3
+
+25
+
+25
+
+25
+
+Subsection 19.504.6 Flag Lot and Back Lot Design and Development Standards
+
+d. Double flag lot
+
+NA3
+
+25
+
+25
+
+25
+
+C. Development Standards
+
+1. Minimum yard requirements for primary structures (ft)
+
+Subsection 19.301.5.A Yards
+
+Subsection 19.501.2 Yard Exceptions
+
+Subsection 19.504.6 Flag Lot and Back Lot Design and Development Standards
+
+Subsection 19.505.4 Cottage Cluster Housing
+
+Subsection 19.505.5 Townhouses
+
+a. Front yard
+
+20
+
+20
+
+20
+
+20
+
+b. Side yard
+
+5
+
+5
+
+5
+
+5/10
+
+c. Street side yard
+
+5
+
+15
+
+15
+
+20
+
+d. Rear yard
+
+15
+
+20
+
+20
+
+20
+
+2. Maximum building height for primary structures
+
+35 ft
+
+Subsection 19.501.3 Building Height and Side Yard Height Plane Exceptions
+
+3. Side yard height plane limit
+
+Subsection 19.501.3 Building Height and Side Yard Height Plane Exceptions
+
+a. Height above ground at minimum required side yard depth (ft)
+
+20
+
+b. Slope of plane (degrees)
+
+45
+
+4. Maximum lot coverage (percent of total lot area)
+
+45%
+
+35%
+
+35%
+
+30%
+
+Section 19.201 "Lot coverage" definition
+
+Subsection 19.301.5.B Lot Coverage
+
+5. Minimum vegetation (percent of total lot area)
+
+15%
+
+25%
+
+25%
+
+30%
+
+Subsection 19.301.5.C Front Yard Minimum Vegetation
+
+Subsection 19.504.5 Minimum Vegetation
+
+D. Other Standards
+
+1. Density requirements (dwelling units per acre)
+
+Subsection 19.301.5.D Residential Densities
+
+Subsection 19.501.4 Density Exceptions For Cottage Clusters and Townhouse Density Exceptions, see 19.501.4
+
+a. Minimum
+
+25
+
+7.0
+
+7.0
+
+5.0
+
+b. Maximum4
+
+25
+
+8.7
+
+8.7
+
+6.2
+
+Notes:
+
+1
+
+A townhouse is permitted on a corner lot up to 3,500 sq ft in area.
+
+2
+
+Minimum lot size for single detached dwelling applies to lots created on or after June 3, 2022, the effective date of Ordinance #2218.
+
+3
+
+Townhouses are not permitted on flag lots.
+
+4
+
+Townhouses are allowed at 4 times the maximum density allowed for single detached dwellings in the same zone or 25 dwelling units per acre, whichever is less. Duplexes, triplexes, quadplexes, and cottage clusters are exempt from density maximums.
+
+§ 19.301.5. Additional Development Standards.
+
+A.
+
+Yards
+
+On lots greater than 7,000 sq ft in the R-MD Zone, one side yard shall be at least 5 ft and one side yard shall be at least 10 ft, except on a corner lot the street side yard shall be 20 ft.
+
+B.
+
+Lot Coverage
+
+The lot coverage standards in Subsection 19.301.4.C.4 are modified for specific Uses and lot sizes as described below. The reductions and increases are combined for properties that are described by more than one of the situations below.
+
+1.
+
+Increased Lot Coverage for Single Detached and Middle Housing Dwellings
+
+a.
+
+The maximum lot coverage percentage in Subsection 19.301.4.C.4 is increased by 10 percentage points for development of a single detached dwelling, an addition to an existing single detached dwelling, or an Accessory structure, provided that the portions of any structure(s) on the site that are in excess of 20 ft high are limited to the lot coverage standard listed in Subsection 19.301.4.C.4. Only portions of the structure(s) that are 20 ft high or less are allowed to exceed the listed lot coverage standard. See Figure 19.301.5.B.2 for an illustration of this allowance.
+
+b.
+
+The maximum lot coverage percentage in Subsection 19.301.4.C.4 is increased by 10 percentage points for development of a middle housing dwelling (except for townhouses and cottage clusters), an addition to an existing middle housing dwelling (except for townhouses and cottage clusters), r an accessory structure, provided that the portions of any structure(s) on the site that are in excess of 20 ft high are limited to the lot coverage standard listed in Subsection 19.301.4.C.4. Only portions of the structure(s) that are 20 ft high or less are allowed to exceed the listed lot coverage standard. See Figure 19.301.5.B.2 for an illustration of this allowance.
+
+A Type II variance per Subsection 19.911.4.A, to further increase this lot coverage allowance, is prohibited.
+
+Figure 19.301.5.B.2 Increased Lot Coverage for Single Detached Dwellings and Middle Housing
+
+Figure 19.301.5.B.2 illustrates an example of increased lot coverage for lots in Residential Zone R-MD.
+
+2.
+
+Increased Lot Coverage for Accessory Dwelling Units
+
+The maximum lot coverage percentage in Subsection 19.301.4.C.4 is increased by a total of 5 percentage points for the development of new detached or attached accessory dwelling units. This allowance applies only to the accessory dwelling units and does not allow for the primary structure or other accessory structures to exceed lot coverage standards.
+
+C.
+
+Front Yard Minimum Vegetation
+
+At least 40% of the front yard shall be vegetated. The front yard vegetation area required by this subsection counts toward the minimum required vegetation for the lot. A property may provide less than the 40% of the front yard vegetation requirement if it is necessary to provide a turnaround area so that vehicles can enter a collector or arterial street in a forward motion.
+
+Figure 19.301.5.C Front Yard Minimum Vegetation
+
+D.
+
+Residential Densities
+
+The minimum development densities in Subsection 19.301.4.C.1 are applicable for land divisions and replats that change the number of lots. Maximum densities apply to single detached dwellings; middle housing is exempt from maximum density, except for townhouses.
+
+If a proposal for a replat or land division is not able to meet the minimum density requirement—due to the dimensional requirements for lot width, lot depth, or lot frontage—the minimum density requirement shall instead be equal to the maximum number of lots that can be obtained from the site given its dimensional constraints. The inability of new lot lines to meet required yard dimensions from existing structures shall not be considered as a basis for automatically lowering the minimum density requirement.
+
+E.
+
+Accessory Structure Standards
+
+Standards specific to accessory structures are contained in Section 19.502.
+
+F.
+
+Off-Street Parking and Loading
+
+Off-street parking and loading is required as specified in Chapter 19.600.
+
+G.
+
+Public Facility Improvements
+
+Transportation requirements and public facility improvements are required as specified in Chapter 19.700.
+
+H.
+
+Additional Standards
+
+Depending upon the type of use and development proposed, the following sections of Chapter 19.500 Supplementary Development Regulations may apply. These Sections are referenced for convenience, and do not limit or determine the applicability of other sections within the Milwaukie Municipal Code.
+
+1.
+
+Subsection 19.504.4 Buildings on the Same Lot
+
+2.
+
+Subsection 19.504.6 Flag Lot and Back Lot Design and Development Standards
+
+3.
+
+Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+
+4.
+
+Subsection 19.505.2 Garages and Carports
+
+5.
+
+Subsection 19.506.4 Manufactured Dwelling Siting and Design Standards, Siting standards
+
+§ 19.302. High Density Residential Zones
+
+The high density residential zone is Residential Zone R-HD. This zone implements the high density residential land use designation in the Milwaukie Comprehensive Plan.
+
+(Ord. 2051 § 2, 2012; Ord. 2110 § 2 (Exh. G), 2015; Ord. 2120 § 2, 2016; Ord. 2134 § 2, 2016; Ord. 2168 § 2, 2019; Ord. 2218 § 2 (Exh. B), 2022; Ord. 2224 § 2, 2022; Ord. 2229 § 2, 2023; Ord. 2236 § 2, 2023; Ord. 2260, 1/20/2026)
+
+§ 19.302.1. Purpose.
+
+The high density residential zone is intended to create and maintain higher density residential neighborhoods that blend a range of housing types with a limited mix of neighborhood-scale commercial, office, and institutional uses.
+
+§ 19.302.2. Allowed Uses in the High Density Residential Zone.
+
+Uses allowed, either allowed by right or conditionally, in the high density residential zone are listed in Table 19.302.2 below. Similar uses not listed in the table may be allowed through a Director's Determination pursuant to Section 19.903. Notes and/or cross references to other applicable code sections are listed in the "Standards/Additional provisions" column.
+
+See Section 19.201 Definitions for specific descriptions of the uses listed in the table.
+
+Table 19.302.2
+
+High Density Residential Uses Allowed
+
+Use
+
+R-HD
+
+Standards/ Additional Provisions
+
+Residential Uses
+
+Single detached dwelling
+
+P
+
+Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+
+Duplex
+
+P
+
+Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+
+Triplex
+
+P
+
+Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+
+Quadplex
+
+P
+
+Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+
+Adult foster/care home
+
+P
+
+Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+
+Accessory dwelling unit
+
+P
+
+Subsection 19.910.1 Accessory Dwelling Units
+
+Manufactured dwelling park
+
+III
+
+Subsection 19.910.3 Manufactured Dwelling Parks
+
+Townhouse
+
+P
+
+Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+
+Subsection 19.505.5 Standards for Townhouses
+
+Cottage cluster
+
+P
+
+Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+
+Subsection 19.505.4 Cottage Cluster Housing
+
+Mixed use
+
+P
+
+Subsection 19.505.7 Nonresidential Development
+
+Multi-unit housing
+
+P
+
+Subsection 19.505.3 Multi-Unit Housing
+
+Subsection 19.302.5.F Residential Densities
+
+Subsection 19.302.5.H Building Limitations
+
+Single room occupancy Housing
+
+P
+
+Subsection 19.505.3 Multi-Unit Housing
+
+Subsection 19.302.5.F Residential Densities
+
+Subsection 19.302.5.H Building Limitations
+
+Residential care facility Examples include: assisted living, nursing facilities, and memory care communities
+
+P
+
+Subsection 19.505.3 Multi-Unit Housing
+
+Subsection 19.302.5.F Residential Densities
+
+Subsection 19.302.5.H Building Limitations
+
+Office:
+
+Production-related office and Professional and Administrative office
+
+P
+
+Subsection 19.302.3 Use Limitations and Restrictions
+
+Subsection 19.505.7 Nonresidential Development
+
+Personal/business services
+
+P
+
+Subsection 19.302.3 Use Limitations and Restrictions
+
+Subsection 19.505.7 Nonresidential Development
+
+Hotel or motel
+
+CU
+
+Section 19.905 Conditional Uses
+
+Bed and breakfast or vacation rental
+
+CU
+
+Section 19.905 Conditional Uses
+
+Accessory use
+
+P
+
+Section 19.503 Accessory Uses
+
+Agricultural or horticultural use
+
+P
+
+Subsection 19.302.3 Use Limitations and Restrictions
+
+Community service use
+
+CSU
+
+Section 19.904 Community Service Uses
+
+Home occupation
+
+P
+
+Section 19.507 Home Occupation Standards
+
+Short-term rental
+
+P
+
+Section 19.507 Home Occupation Standards
+
+Notes:
+
+P
+
+=
+
+Permitted.
+
+N
+
+=
+
+Not permitted.
+
+CSU
+
+=
+
+Permitted with Community Service Use approval subject to provisions of Section 19.904. Type III review required to establish a new CSU or for major modification of an existing CSU. Type I review required for a minor modification of an existing CSU.
+
+CU
+
+=
+
+Permitted with conditional use approval subject to the provisions of Section 19.905. Type III review required to establish a new CU or for major modification of an existing CU. Type I review required for a minor modification of an existing CU.
+
+III
+
+=
+
+Type III review required.
+
+§ 19.302.3. Use Limitations and Restrictions.
+
+A.
+
+Agricultural or horticultural uses are permitted, provided that the following conditions are met.
+
+1.
+
+Retail or wholesale sales associated with an agricultural or horticultural use are limited to the allowances for a home occupation per Section 19.507.
+
+2.
+
+Livestock, other than usual household pets, are not housed or kept within 100 ft of any dwelling not on the same lot, nor on a lot less than one acre, nor having less than 10,000 sq ft per head of livestock.
+
+3.
+
+Poultry kept for the production of meat or for commercial sale of eggs are not housed or kept within 100 ft of any dwelling not on the same lot, nor on a lot less than one acre. Poultry kept for other purposes are not subject to these limitations and are allowed per Subsection 19.503.1.C.
+
+B.
+
+Office uses allowed in the high density zone are offices, studios, clinics, and other similar professional offices. Corporate offices for marijuana businesses are permitted provided that no marijuana or marijuana products associated with the business are on site. Marijuana testing labs and research facilities are not permitted office uses in this zone.
+
+C.
+
+Marijuana production is not permitted in high density residential zones except as follows:
+
+1.
+
+State-licensed production for medical marijuana patients is permitted provided the operation is entirely indoors and meets the security and odor control standards set forth in Subsection 19.509.2.
+
+2.
+
+Growing marijuana indoors or outdoors for personal use is permitted consistent with state laws.
+
+§ 19.302.4. Development Standards.
+
+In the high density residential zone, the development standards in Table 19.302.4 apply. Notes and/or cross references to other applicable code sections are listed in the "standards/Additional Provisions" column. Additional standards are provided in Section 19.302.5.
+
+The standards in Subsection 19.302.4 are not applicable to cottage cluster development except where specifically referenced by Subsection 19.505.4.
+
+See Sections 19.201 Definitions and 19.202 Measurements for specific descriptions of standards and measurements listed in the table.
+
+In the high density residential zone the following housing types are permitted on lot sizes as follows:
+
+Between 1,500 to 2,999 sq ft: Townhouse; a townhouse is permitted on a corner lot up to 3,500 sq ft in area.
+
+Between 3,000 to 4,999 sq ft: Duplex, Triplex, and Quadplex.
+
+Between 5,000 to 6,999 sq ft: Single Detached Dwelling, Single Detached Dwelling with up to 2 ADUs, Duplex, Triplex, and Quadplex.1
+
+7,000 sq ft and up: Single Detached Dwelling, Single Detached Dwelling with up to 2 ADUs, Duplex, Triplex, Quadplex, Cottage Cluster, Multi-Unit Housing
+
+All other uses require a minimum lot size of 5,000 sq ft.
+
+Table 19.302.4
+
+High Density Residential Development Standards
+
+Standard
+
+R-HD
+
+Standards/Additional Provisions
+
+A. Lot Standards
+
+Minimum lot size (sq ft)
+
+1,500
+
+Subsection 19.501.1 Lot Size Exceptions
+
+Subsection 19.505.4 Cottage Cluster Housing
+
+Subsection 19.505.5 Townhouses
+
+Minimum lot width (ft)
+
+20
+
+Minimum lot depth (ft)
+
+70
+
+Minimum street frontage requirements (ft)
+
+Subsection 19.504.6 Flag Lots
+
+Townhouse
+
+20
+
+Standard lot
+
+35
+
+Flag lot
+
+25
+
+Double flag lot
+
+25
+
+B. Development Standards
+
+Minimum yard requirements for primary structures (ft)
+
+-
+
+Subsection 19.504.5 Transition Area Measures
+
+Front yard
+
+20
+
+Side yard
+
+See Subsection 19.302.5.A
+
+Street side yard
+
+154
+
+Rear yard
+
+15
+
+Maximum building height for primary structures
+
+45 ft
+
+Subsection 19.302.5.E Height Exceptions
+
+Subsection 19.501.3 Building Height and Side Yard Height Plane Exceptions
+
+Subsection 19.505.7 Nonresidential Development
+
+Side yard height plane limit
+
+Subsection 19.501.3 Building Height and Side Yard Height Plane Exceptions
+
+Height above ground at minimum required side yard depth (ft)
+
+25
+
+Slope of plane (degrees)
+
+45
+
+Maximum lot coverage (percent of total lot area)
+
+50%
+
+Section 19.201 "Lot coverage" definition
+
+Minimum vegetation (percent of total lot area)
+
+15%
+
+Subsection 19.504.5 Minimum Vegetation
+
+Subsection 19.302.5.C Minimum Vegetation
+
+Subsection 19.302.5.D Front Yard Minimum Vegetation
+
+Density requirements (Dwelling units per acre)
+
+-
+
+Subsection 19.202.4 Density Calculations
+
+Minimum
+
+25.0
+
+Subsection 19.302.5.F Residential Densities
+
+Maximum2, 3
+
+32.0
+
+Subsection 19.501.4 Density Exceptions
+
+1
+
+Minimum lot size for single detached dwelling applies to lots created on or after June 3, 2022, the effective date of Ordinance #2218.
+
+2
+
+Townhouses are allowed at 4 times the maximum density allowed for single detached dwellings in the same zone or 25 dwelling units per acre, whichever is less. Duplexes, triplexes, quadplexes, and cottage clusters are exempt from density maximums.
+
+3
+
+The density for single room occupancy (SRO) developments is calculated as follows: four SRO rooms equal one dwelling unit.
+
+4
+
+The street side yard setback for townhouses is 5 ft.
+
+Table 19.302.4 is supplemented by Figure 19.302.4. For those properties identified in Figure 19.302.4, the minimum front yard setback is 5 ft.
+
+§ 19.302.5. Additional Development Standards.
+
+A.
+
+Side Yards
+
+In the high density zones, the required side yard is determined as described below. These measurements apply only to required side yards and do not apply to required street side yards.
+
+1.
+
+The side yard for development other than a townhouse shall be at least 5 ft.
+
+2.
+
+There is no required side yard for townhouses that share 2 common walls. The required side yard for an exterior townhouse that has only one common wall is zero ft for the common wall and 5 ft for the opposite side yard. An exterior townhouse on a corner lot shall meet the required street side yard setback in Subsection 19.302.4.B.1.b.
+
+B.
+
+Lot Coverage
+
+The lot coverage standards in Subsection 19.302.4.B.4 are modified for specific uses and lot sizes as described below. The reductions and increases are additive for lots that are described by one or more of the situations below.
+
+1.
+
+Increased Lot Coverage for Single Detached Dwellings and Middle Housing
+
+a.
+
+The maximum lot coverage percentage in Subsection 19.302.4 is increased by 10 percentage points for development of an addition to an existing single detached dwelling or an accessory structure, provided that the portions of any structure(s) on the site that are in excess of 20 ft high, or in excess of one story, are limited to the lot coverage standard listed in Subsection 19.302.4.B.4. Only portions of the structure(s) that are 20 ft high or less, and no taller than one story, are allowed to exceed the listed lot coverage standard. See Figure 19.302.5.B.1 for an illustration of this allowance.
+
+b.
+
+The maximum lot coverage percentage in Subsection 19.302.4 is increased by 10 percentage points for development of a middle housing dwelling (except for townhouses and cottage clusters), an addition to an existing middle housing dwelling (except for townhouses and cottage clusters), or an accessory structure, provided that the portions of any structure(s) on the site that are in excess of 20 ft high are limited to the lot coverage standard listed in Subsection 19.302.4.B.4. Only portions of the structure(s) that are 20 ft high or less are allowed to exceed the listed lot coverage standard. See Figure 19.302.5.B.1 for an illustration of this allowance.
+
+A Type II variance per Subsection 19.911.4.A, to further increase this lot coverage allowance, is prohibited.
+
+Figure 19.302.5.B.1 Increased Lot Coverage for Single Detached Dwellings
+
+Figure 19.302.5.B.1 illustrates an example of increased lot coverage for lots in the high density zones based on 5,000-sq-ft lot area.
+
+2.
+
+Increased Lot Coverage for Accessory Dwelling Units
+
+The maximum lot coverage percentage in Subsection 19.302.4.B.4 is increased by a total of 5 percentage points for the development of new detached or attached accessory dwelling units. This allowance applies only to the detached accessory dwelling units and does not allow for the primary structure or other accessory structures to exceed lot coverage standards.
+
+C.
+
+Minimum Vegetation
+
+At least half of the minimum required vegetation area must be suitable for outdoor recreation by residents, and not have extreme topography or dense vegetation that precludes access.
+
+D.
+
+Front Yard Minimum Vegetation
+
+At least 40% of the front yard shall be vegetated. The front yard vegetation area required by this subsection counts toward the minimum required vegetation for the lot. A property may provide less than the 40% of the front yard vegetation requirement if it is necessary to provide a turnaround area so that vehicles can enter a collector or arterial street in a forward motion.
+
+Figure 19.302.5.D Front Yard Minimum Vegetation
+
+E.
+
+Height Exceptions
+
+An additional 10 ft of building height may be permitted in excess of the required maximum standard. For the additional 10 ft in building height, an additional 10% of site area beyond the minimum is required to be retained in vegetation.
+
+F.
+
+Residential Densities
+
+The minimum and maximum development densities in Subsection 19.302.4.C.1 are applicable for land divisions, replats that change the number of lots, and any Development that would change the number of dwelling units on a lot. Development of a single detached dwelling or accessory dwelling units are exempt from the minimum and maximum density requirements. Middle housing, except for townhouses, is exempt from maximum density requirements.
+
+If a proposal for a replat or land division is not able to meet the minimum density requirement—due to the dimensional requirements for lot width, lot depth, or lot frontage—the minimum density requirement shall instead be equal to the maximum number of lots that can be obtained from the site given its dimensional constraints. The inability of new lot lines to meet required yard dimensions from existing structures shall not be considered as a basis for automatically lowering the minimum density requirement.
+
+G.
+
+Accessory Structure Standards
+
+Standards specific to accessory structures are contained in Section 19.502.
+
+H.
+
+Building Limitations
+
+Multi-unit buildings shall not have an overall horizontal distance exceeding 150 linear ft as measured from end wall to end wall.
+
+I.
+
+Off-Street Parking and Loading
+
+Off-street parking and loading is required as specified in Chapter 19.600.
+
+J.
+
+Public Facility Improvements
+
+Transportation requirements and public facility improvements are required as specified in Chapter 19.700.
+
+K.
+
+Additional Standards
+
+Depending upon the type of use and development proposed, the following sections of Chapter 19.500 Supplementary Development Regulations may apply. These Sections are referenced for convenience, and do not limit or determine the applicability of other sections within the Milwaukie Municipal Code.
+
+1.
+
+Subsection 19.504.4 Buildings on the Same Lot
+
+2.
+
+Subsection 19.504.6 Flag Lot and Back Lot Design and Development Standards
+
+3.
+
+Subsection 19.504.7 On-Site walkways and Circulation
+
+4.
+
+Subsection 19.504.8 Setbacks Adjacent to Transit
+
+5.
+
+Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+
+6.
+
+Subsection 19.505.2 Garages and Carports
+
+7.
+
+Subsection 19.505.3 Multi-Unit Housing
+
+8.
+
+Subsection 19.505.4 Cottage Cluster Housing
+
+9.
+
+Subsection 19.505.5 Townhouses
+
+10.
+
+Subsection 19.505.8 Building Orientation to Transit
+
+11.
+
+Subsection 19.506.4 Manufactured Dwelling Siting and Design Standards, Siting standards
+
+§ 19.303. Commercial Mixed-Use Zones
+
+(Ord. 2025 § 2, 2011; Ord. 2051 § 2, 2012; Ord. 2094 § 2, 2015; Ord. 2110 § 2 (Exh. G), 2015; Ord. 2112 § 2 (Exh. B), 2015; Ord. 2120 § 2, 2016; Ord. 2134 § 2, 2016; Ord. 2140 § 2, 2017; Ord. 2168 § 2, 2019; Ord. 2170 § 2, 2019; Ord. 2218 § 2 (Exh. B), 2022; Ord. 2224 § 2, 2022; Ord. 2229 § 2, 2023; Ord. 2243, 5/21/2024; Ord. 2245, 8/6/2024; Ord. 2262, 3/3/2026)
+
+§ 19.303.1. Purpose.
+
+A.
+
+The General Mixed Use Zone is intended to recognize the importance of central Milwaukie as a primary commercial center and promote a mix of uses that will support a lively and economically robust district. It is also intended to ensure high-quality urban development that is pedestrian-friendly and complementary to the surrounding area.
+
+B.
+
+The Neighborhood Mixed Use Zone is intended to recognize certain established areas as neighborhood commercial centers. This zone allows for a mix of small-scale retail and services, along with residential uses, that meet the needs of nearby residents and contribute to a vibrant, local economy. It is also intended to provide a safe and pleasant pedestrian environment while maintaining a neighborhood-scale identity.
+
+C.
+
+The Small-Scale Mixed Use Zone is intended to allow for a mix of small-scale retail and services, along with residential uses, that meet the needs of nearby residents and contribute to a vibrant, local economy. It is also intended to provide a safe and pleasant pedestrian environment while maintaining a neighborhood-scale identity. This zone supports neighborhood hubs, which are gathering places where residents have easy access to goods and services close to their homes. They are places where neighbors create meaningful relationships with each other.
+
+§ 19.303.2. Uses.
+
+A.
+
+Permitted Uses. Uses allowed outright in the commercial mixed-use zones are listed in Table 19.303.2 with a "P." These uses are allowed if they comply with the development and design standards and other regulations of this title.
+
+B.
+
+Conditional Uses. Uses listed in Table 19.303.2 as "CU" are permitted only as conditional uses in conformance with Section 19.905.
+
+C.
+
+Nonconforming Uses, Structures, and Development. Existing structures and uses that do not meet the standards for the commercial mixed-use zones may continue in existence. Alteration or expansion of a nonconforming use, structure, or development that brings the use, structure, or development closer to compliance may be allowed through development review pursuant to Section 19.906. Alteration or expansion of a nonconforming use or structure that does not bring the use or structure closer to compliance may be allowed through a Type III variance pursuant to Section 19.911. Except where otherwise stated in this section, the provisions of Chapter 19.800 Nonconforming Uses and Development apply.
+
+D.
+
+Prohibited Uses. Uses not listed in Table 19.303.2, and not considered accessory or similar pursuant to Subsections 19.303.2.E and G below, are prohibited. Uses listed with an "N" in Table 19.303.2 are also prohibited.
+
+E.
+
+Accessory Uses. Uses that are accessory to a primary use are allowed if they comply with all development standards.
+
+F.
+
+Drive-Through Uses. For the purpose of this section, drive-through uses are not considered accessory uses and must be approved through a conditional use review in the NMU Zone in conformance with Section 19.905. Drive-through facilities must also conform to Section 19.606.3.
+
+G.
+
+Similar Uses. The Planning Manager through a Type I review, may determine that a use that is not listed is considered similar to an example use listed in Table 19.303.2. The unlisted use shall be subject to the standards applicable to the similar example use.
+
+Table 19.303.2
+
+Uses Allowed in Commercial Mixed-Use Zones
+
+Uses and Use Categories
+
+GMU
+
+NMU
+
+SMU
+
+Standards/Additional Provisions
+
+Residential
+
+Single detached dwelling
+
+N
+
+CU
+
+CU
+
+Subsection 19.505.1 One- to Four-Unit Residential Development
+
+Section 19.905 Conditional Uses
+
+Townhouses1
+
+P
+
+CU
+
+CU
+
+Subsection 19.505.5 Townhouses
+
+Duplex, Triplex, Quadplex
+
+CU
+
+CU
+
+CU
+
+Section 19.905 Conditional Uses
+
+Multi-unit housing
+
+P
+
+CU
+
+CU
+
+Subsection 19.505.3 Multi-Unit Housing
+
+Cottage cluster housing
+
+P
+
+CU
+
+CU
+
+Subsection 19.505.4 Cottage Cluster Housing
+
+Mixed use2
+
+P
+
+P
+
+P
+
+Subsection 19.505.7 Nonresidential Development
+
+Live/work units
+
+P
+
+P
+
+P
+
+Subsection 19.505.6 Live/Work Units
+
+Accessory dwelling units
+
+N
+
+CU
+
+CU
+
+Section 19.905 Conditional Uses
+
+Subsection 19.910.1 Accessory Dwelling Units
+
+Boarding house
+
+CU
+
+CU
+
+CU
+
+Section 19.905 Conditional Uses
+
+Commercial3, 4
+
+Production-related office
+
+Professional and administrative office
+
+P
+
+P
+
+P
+
+Subsection 19.303.6.C Marijuana testing and research facilities
+
+Drinking establishments
+
+Drinking establishments primarily involve the sale of alcoholic beverages for on-site consumption.
+
+Examples include taverns, bars, or cocktail lounges.
+
+P
+
+P
+
+CU
+
+Section 19.905 Conditional Uses
+
+Eating establishments
+
+Eating establishments primarily involve the sale of prepared food and beverages for on-site consumption or takeout. Eating establishments may include incidental sales of alcoholic beverages.
+
+Examples include restaurants, delicatessens, retail bakeries, coffee shops, concession stands, and espresso bars.
+
+P
+
+P
+
+P
+
+Mobile food trucks and food carts on private property
+
+P
+
+P
+
+P
+
+Indoor recreation
+
+Indoor recreation consists of facilities providing active recreational uses of a primarily indoor nature.
+
+Examples include gyms; dance studios; tennis, racquetball, and soccer centers; recreational centers; skating rinks; bowling alleys; arcades; shooting ranges, movie theaters, live theaters, and playhouses.
+
+P
+
+P
+
+P
+
+Retail-oriented sales
+
+Sales-oriented retail firms are involved in the sale, leasing, and rental of new or used products to the general public.
+
+Examples include stores selling, leasing, or renting consumer, home, and business goods including art, art supplies, bicycles, clothing, dry goods, electronics, fabric, gifts, groceries, hardware, household products, jewelry, pets and pet products, pharmaceuticals, plants, printed materials, stationery, and printed and electronic media.
+
+P
+
+P
+
+P
+
+Marijuana retailer
+
+Marijuana retailer means a state-licensed business that sells or distributes marijuana and marijuana-derived products to consumers. A marijuana retailer may sell or distribute recreational or medical marijuana.
+
+P
+
+P
+
+N
+
+Subsection 19.303.6.A Marijuana retailers
+
+Vehicle sales and rentals5
+
+Vehicle sales and rentals means a business that sells or leases consumer vehicles, including passenger vehicles, motorcycles, light and medium trucks, boats, and other recreational vehicles.
+
+P
+
+N
+
+N
+
+Personal/business services
+
+Personal/business services are involved in providing consumer services.
+
+Examples include hair, tanning, and spa services; pet grooming; photo and laundry drop-off; dry cleaners; and quick printing
+
+P
+
+P
+
+P
+
+Repair-oriented
+
+Repair-oriented uses are establishments providing product repair of consumer and business goods.
+
+Examples include repair of televisions and radios, bicycles, clocks, jewelry, guns, small appliances, and office equipment; tailors and seamstresses; shoe repair; locksmiths; and upholsterers.
+
+P
+
+P
+
+P
+
+Vehicle repair and service6
+
+Firms servicing passenger vehicles; light and medium trucks; and other consumer motor vehicles such as motorcycles, boats and recreational vehicles. Also includes quick-servicing activities, where the driver generally waits in the car before and while the service is performed.
+
+Examples include gas stations, quick oil change shops, car washes, vehicle repair, transmission or muffler shops, auto body shops, alignment shops, auto upholstery shop, auto detailing, and tire sales and mounting.
+
+P
+
+CU
+
+N
+
+Section 19.905 Conditional Uses
+
+Day care7
+
+Day care is the provision of regular child care, with or without compensation, to 4 or more children by a person or person(s) who are not the child's parent, guardian, or person acting in place of the parent, in a facility meeting all State requirements.
+
+Examples include nursery schools, before- and after-school care facilities, and child development centers.
+
+P
+
+P
+
+P
+
+Commercial lodging
+
+Commercial lodging includes for-profit residential facilities where tenancy is typically less than one month.
+
+Examples include hotels, motels, vacation rentals, and bed-and-breakfast establishments.
+
+P
+
+P
+
+CU
+
+Automobile parking facility
+
+Parking facilities provide automobile parking that is not accessory to a specific use. A fee may or may not be charged. A facility that provides both accessory parking for a specific use and regular fee parking for people not connected to the use is also classified as a commercial parking facility.
+
+Examples include structured parking, short- and long-term fee parking facilities, commercial district shared parking lots, and commercial shuttle parking.
+
+N
+
+CU
+
+N
+
+Section 19.611 Parking Structures
+
+Manufacturing and Production
+
+Manufacturing and production8
+
+Manufacturing and production uses are involved in the manufacturing, processing, fabrication, packaging, or assembly of goods. Natural, man-made, raw, secondary, or partially completed materials may be used.
+
+Examples include processing of food and related products; catering establishments; breweries, distilleries, and wineries; marijuana processors; weaving or production of textiles or apparel; wood/working, including cabinet makers; manufacture or assembly of machinery, equipment, instruments, including musical instruments, vehicles, appliances, precision items, and other electrical items; and production of artwork and toys. Marijuana production is prohibited.
+
+Within the SMU, the following manufacturing and production uses are also prohibited: marijuana processing, automotive manufacture and assembly, and auto-repair shops.
+
+P
+
+P
+
+P
+
+Subsection 19.509.2 Security and odor control for certain marijuana businesses
+
+Institutional
+
+Community service uses
+
+CSU
+
+CSU
+
+CSU
+
+Section 19.904 Community Service Uses
+
+Accessory and Other
+
+Accessory use
+
+P
+
+P
+
+P
+
+Section 19.503 Accessory Uses
+
+Home occupation
+
+P
+
+P
+
+P
+
+Section 19.507 Home Occupation Standards
+
+Short-term rentals
+
+P
+
+P
+
+P
+
+Section 19.507 Home Occupation Standards
+
+Notes:
+
+P = Permitted.
+
+N = Not permitted.
+
+CSU = Permitted with community service use approval subject to provisions of Section 19.904. Type III review required to establish a new CSU or for major modification of an existing CSU. Type I review required for a minor modification of an existing CSU.
+
+CU = Permitted with conditional use approval subject to the provisions of Section 19.905. Type III review required to establish a new CU or for major modification of an existing CU. Type I review required for a minor modification of an existing CU.
+
+1.
+
+The limit of 4 consecutive townhouses established in 19.505.5 does not apply in the GMU Zone. In the GMU Zone, there is no limit on the number of consecutive rowhouses.
+
+2.
+
+Residential uses built as part of a vertical mixed-use building are not subject to conditional use review in the NMU Zone.
+
+3.
+
+In the NMU Zone, unless otherwise specified in this section, all nonresidential uses listed in Table 19.303.2 shall be no greater than 10,000 sq ft in area per use. A nonresidential use greater than 10,000 sq ft in area may be approved through a conditional use review pursuant to Section 19.905.
+
+4.
+
+The 10,000 sq ft size limitation in Footnote 3 of Table 19.303.2 does not apply to "retail-oriented sales" uses established within the existing lot and building situated at 4320 SE King Rd, within the lot's boundaries that exist on February 13, 2016, the effective date of Ordinance #2112. Redevelopment of the site is subject to all standards of Table 19.303.2.
+
+5.
+
+Vehicle retail sales are permitted in the GMU Zone only when conducted within a completely enclosed building (including inventory display and storage).
+
+6.
+
+Vehicle repair and service uses are permitted in the commercial mixed-use zones only when conducted within a completely enclosed building.
+
+7.
+
+Day care and child care uses are limited to 5,000 sq ft.
+
+8.
+
+Manufacturing and production uses are limited to 5,000 sq ft in floor area per use on the ground floor and are only permitted when associated with, and accessory to, a related retail-oriented sales or eating/drinking establishment use. For purposes of this subsection, manufacturing and production involve goods that are sold or distributed beyond or outside of the associated on-site eating or drinking establishment or retail trade use. For example, a brewing facility that distributes or sells its products elsewhere would be considered a manufacturing and production use, while a restaurant kitchen that prepares food that is purchased on the site would not be considered manufacturing or production.
+
+§ 19.303.3. Development Standards.
+
+These development standards are intended to ensure that new development in the commercial mixed-use zones is appropriate for a mixed-use district in terms of building mass and scale, how the building addresses the street, and where buildings are located on a site.
+
+Table 19.303.3 summarizes some of the development standards that apply in the commercial mixed-use zones. Development standards are presented in detail in Subsection 19.303.4.
+
+Table 19.303.3
+
+Commercial Mixed Use Zones—Summary of Development Standards
+
+Standard
+
+GMU
+
+NMU
+
+SMU
+
+Standards/Additional Provisions
+
+A. Lot Standards
+
+1. Minimum lot size (sq ft)
+
+1,500
+
+1,500
+
+1,500
+
+2. Minimum street frontage (ft)
+
+25
+
+25
+
+25
+
+B. Development Standards
+
+1. Minimum floor area ratio
+
+0.5:1
+
+0.5:1
+
+0.5:1
+
+Subsection 19.303.4.A Floor Area Ratio
+
+2. Building height (ft)
+
+Subsection 19.303.4.B Building Height
+
+a. Base maximum
+
+45
+
+45
+
+35
+
+Section 19.510 Green Building Standards
+
+b. Maximum with height bonus
+
+57—69
+
+Height bonus not available
+
+Height bonus not available
+
+Subsection 19.911.7 Building Height Variance in the General Mixed Use Zone
+
+3. Street setbacks (ft)
+
+Subsection 19.303.4.C Street Setbacks
+
+a. Minimum street setback
+
+0—151
+
+None
+
+10
+
+b. Maximum street setback
+
+10—202
+
+10
+
+15
+
+Section 19.501.2 Yard Exceptions
+
+c. Side and rear setbacks
+
+None
+
+None
+
+5/10
+
+4. Frontage occupancy
+
+50%
+
+None
+
+None
+
+Subsection 19.303.4.D Frontage Occupancy Requirements
+
+Figure 19.303.4.D Frontage Occupancy Requirements
+
+5. Maximum lot coverage
+
+85%
+
+85%
+
+85%
+
+6. Minimum vegetation
+
+15%
+
+15%
+
+15%
+
+Subsection 19.504.6 Minimum Vegetation
+
+7. Primary building entrances
+
+Yes
+
+Yes
+
+Yes
+
+Subsection 19.303.4.E Primary Building Entrances
+
+8. Off-street parking standards
+
+Yes
+
+Yes
+
+Yes
+
+Chapter 19.600 Off-Street Parking and Loading
+
+9. Transit street
+
+Yes
+
+Yes
+
+Yes
+
+Subsection 19.505.8 Building Orientation to Transit
+
+10. Transition measures
+
+Yes
+
+Yes
+
+Yes
+
+Subsection 19.504.5 Transition Area Measures
+
+C. Other Standards
+
+1. Residential density requirements (dwelling units per acre)
+
+Subsection 19.202.4 Density Calculations
+
+a. Stand-alone residential
+
+(1) Minimum
+
+25
+
+11.6
+
+7.0
+
+Subsection 19.303.4.F Residential Density
+
+(2) Maximum
+
+50
+
+14.5
+
+b. Mixed-use buildings
+
+None
+
+None
+
+Subsection 19.501.4 Density Exceptions
+
+2. Signs
+
+Yes
+
+Yes
+
+Yes
+
+Subsection 14.16.040 Commercial Zones
+
+Notes:
+
+1.
+
+Residential edge treatments apply to properties as shown in Figure 19.303.5.
+
+2.
+
+Commercial edge treatments apply to properties as shown in Figure 19.303.4.C.2.b.
+
+§ 19.303.4. Detailed Development Standards.
+
+The following detailed development standards describe additional allowances, restrictions, and exemptions related to the development standards of Table 19.303.3.
+
+A.
+
+Floor Area Ratio.
+
+1.
+
+Intent. The floor area ratio (FAR) is a tool for regulating the intensity of development. Minimum FARs help to ensure that the intensity of development is controlled. In some cases, FAR densities are provided for provision of a public benefit or amenity to the community.
+
+2.
+
+Standards.
+
+a.
+
+The minimum FAR in Table 19.303.3 applies to all nonresidential building development.
+
+b.
+
+Required minimum FAR shall be calculated on a project-by-project basis and may include multiple contiguous parcels. In mixed-use developments, residential floor space will be included in the calculations of FAR to determine conformance with minimum FAR.
+
+c.
+
+If a project is to be developed in phases, the required FAR must be met for the land area in the completed phase(s), without consideration of the land area devoted to future phases.
+
+3.
+
+Exemptions. The following are exempt from the minimum FAR requirement:
+
+a.
+
+Parking facilities.
+
+b.
+
+Public parks and plazas.
+
+B.
+
+Building Height.
+
+1.
+
+Intent. Maximum building height standards promote a compatible building scale and relationship of one structure to another.
+
+2.
+
+Standards.
+
+a.
+
+The base maximum building height in the GMU Zone is 45 ft. Height bonuses are available for buildings that meet the standards of Subsection 19.303.4.B.3.
+
+b.
+
+Buildings in the GMU Zone shall provide a step back of at least 15 ft for any street-facing portion of the building above the base maximum height as shown in Figure 19.303.4.B.2.b.
+
+c.
+
+The maximum building height in the NMU Zone is 45 ft. No building height bonuses are available in the NMU Zone.
+
+d.
+
+The maximum building height in the SMU Zone is 35 ft. No building height bonuses are available in the SMU Zone.
+
+3.
+
+Height Bonuses
+
+To incentivize the provision of additional public amenities or benefits beyond those required by the baseline standards, height bonuses are available for buildings that include desired public amenities or components, increase area vibrancy, and/or help meet sustainability goals.
+
+A building in the GMU Zone can utilize up to 2 of the development incentive bonuses in Subsection 19.303.4.B.3.a. and Section 19.510, for a total of 2 stories or 24 ft of additional height, whichever is less. Buildings that elect to use both height bonuses for a 5-story building are subject to Type III review per Subsection 19.911.7 Building Height Variance in the General Mixed Use Zone.
+
+a.
+
+Residential
+
+New buildings that devote at least one story or 25% of the gross floor area to residential uses are permitted 1 additional story or an additional 12 ft of building height, whichever is less.
+
+b.
+
+Green Building
+
+Project proposals that receive approvals and certification as identified in Section 19.510 are permitted 1 additional story or an additional 12 ft of building height, whichever is less.
+
+c.
+
+Building Height Variance
+
+Additional building height may be approved through Type Ill variance review, per Subsection 19.911.7 Building Height Variance in the General Mixed Use Zone.
+
+C.
+
+Street Setbacks
+
+1.
+
+Intent
+
+Buildings are allowed and encouraged to build up to the street right-of-way in the commercial mixed-use zones. This ensures that buildings engage the street right-of-way.
+
+2.
+
+Standards
+
+a.
+
+No minimum street setbacks are required, except for residential street edges per Subsection 19.303.5.
+
+b.
+
+In the GMU Zone, maximum street setback is 20 ft. For properties shown as having a commercial edge on Figure 19.303.4.C.2.b, the following standards apply:
+
+(1)
+
+No minimum street setback is required. Maximum street setback is 10 ft.
+
+(2)
+
+The area within the street setback, if provided, shall be landscaped.
+
+c.
+
+In the NMU Zone, the maximum street setback is 10 ft unless the yard exception standards of Subsection 19.501.2 apply.
+
+d.
+
+The setback area may include usable open space such as plazas, courtyards, terraces, and small parks.
+
+e.
+
+Usable open space may be counted toward the minimum vegetation requirement in Subsection 19.303.3.B.6.
+
+f.
+
+No vehicle parking is permitted between the building and the street. Vehicle parking must be located behind and/or to the side of buildings, except in cases of a through-lot or lots which front on 3 or more streets, in which case this standard applies to 2 streets.
+
+D.
+
+Frontage Occupancy Requirements
+
+1.
+
+Intent
+
+The intent of this standard is to establish a consistent street wall along key streets. Minimum frontage occupancy requirements are established for block faces identified on Figure 19.303.4.D.
+
+2.
+
+Standards
+
+a.
+
+For block faces identified in Figure 19.303.4.D, 50% of the site frontage must be occupied by a building or buildings.
+
+b.
+
+If the development site has frontage on more than one street, the frontage occupancy requirement must be met on one street only.
+
+E.
+
+Primary Building Entrances
+
+1.
+
+Intent
+
+To promote pedestrian-friendly development by providing building entrances that are oriented to the sidewalk or other public space and connected with clearly marked pedestrian walkways.
+
+2.
+
+Standards
+
+a.
+
+All new buildings must have at least one (1) primary entrance facing an abutting public street (i.e., within 45 degrees of the street property line); or, if the building entrance must be turned more than 45 degrees from the public street (i.e., front door is on a side or rear elevation) due to the configuration of the site or similar constraints, a pedestrian walkway must connect the primary entrance to the sidewalk. Primary building entrances must not face an off-street parking area that is located on the same lot or parcel.
+
+b.
+
+Where a development contains multiple buildings and there is insufficient public street frontage to meet the above building orientation standards for all buildings on the subject site, a building's primary entrance may orient to a plaza, courtyard, or similar pedestrian space containing pedestrian amenities. When oriented this way, the primary entrance(s), plaza, or courtyard shall be connected to the street by a pedestrian walkway.
+
+c.
+
+If a development is on a corner in the GMU Zone, the primary building entrance may be oriented toward either street.
+
+d.
+
+If a development is on the corner of 32nd Ave or 42nd Ave and another street in the NMU Zone, the primary building entrance must be oriented toward 32nd Ave or 42nd Ave.
+
+F.
+
+Residential Density
+
+1.
+
+Intent
+
+Minimum densities are applied to residential development in the commercial mixed-use zones to assure efficient use of land at densities that support transit use and nearby businesses.
+
+2.
+
+Standards
+
+a.
+
+Minimum density for stand-alone residential development in the GMU Zone is 25 units per acre, and maximum density is 50 units per acre.
+
+b.
+
+Minimum density for stand-alone residential development in the NMU Zone is 11.6 units per acre, and maximum density is 14.5 units per acre.
+
+3.
+
+Exemptions
+
+There are no minimum or maximum density requirements when residential units are developed as part of a mixed-use building. Maximum residential densities for mixed-use buildings are controlled by height limits.
+
+§ 19.303.5. Standards for Residential Street Edges.
+
+For properties shown as having a residential edge on Figure 19.303.5, and for development that occurs adjacent to or abutting residential zone, the following standards apply:
+
+A.
+
+A minimum setback of 15 ft shall apply.
+
+B.
+
+Along the property line adjacent to the residential zone, buildings within 50 ft of 37th Avenue and Monroe Street shall provide a step back of at least 15 ft for any portion of the building above 35 ft.
+
+C.
+
+An additional minimum 8-ft-wide densely planted buffer is required along property lines where flex space development abuts a residential zone.
+
+§ 19.303.6. Additional Provisions.
+
+Depending upon the type of use and development proposed, the following sections of the Milwaukie Municipal Code may apply. These sections are referenced for convenience, and do not limit or determine the applicability of other sections within the Milwaukie Municipal Code.
+
+A.
+
+Section 19.500 Supplementary Development Regulations
+
+This section contains standards for site and building design that will apply to most new types of development, including residential and commercial. Relevant sections include:
+
+1.
+
+19.501 General Exceptions
+
+2.
+
+19.502 Accessory Structures
+
+3.
+
+19.503 Accessory Uses
+
+4.
+
+19.504 Site Design Standards
+
+5.
+
+19.505 Building Design Standards
+
+B.
+
+Section 19.600 Off-Street Parking and Loading
+
+Contains standards for vehicle and bicycle parking, including maximum number of spaces and design standards for parking and loading areas where provided.
+
+C.
+
+Section 19.700 Public Facility Improvements
+
+Contains standards for transportation, utility, and other public facility improvements that may be required as part of development.
+
+(Ord. 2243, 5/21/2024)
+
+§ 19.304. Downtown Zones
+
+(Ord. 2025 § 2, 2011; Ord. 2051 § 2, 2012; Ord. 2059 § 2, 2013; Ord. 2094 § 2, 2015; Ord. 2106 § 2 (Exh. F), 2015; Ord. 2110 § 2 (Exh. G), 2015; Ord. 2120 § 2, 2016; Ord. 2134 § 2, 2016; Ord. 2168 § 2, 2019; Ord. 2170 § 2, 2019; Ord. 2218 § 2 (Exh. B), 2022; Ord. 2224 § 2, 2022; Ord. 2226 § 2, 2023; Ord. 2243, 5/21/2024)
+
+§ 19.304.1. Purpose.
+
+The downtown zones are Downtown Mixed Use Zone DMU and Open Space Zone OS. The zones are shown on Figure 19.304-1. These zones implement the Town Center and Public land use designations in the Milwaukie Comprehensive Plan. The downtown zones implement the Downtown and Riverfront Land Use Framework Plan and Milwaukie Comprehensive Plan.
+
+The downtown and riverfront area is envisioned as the focus of the community. Two zones are designated to distinguish between areas intended for public open space and those intended for downtown development. Specific use, development, and design standards are adopted for the downtown zones to assure an active, attractive, and accessible environment for shoppers, employees, and residents.
+
+A.
+
+Downtown Mixed Use (DMU)
+
+The Downtown Mixed Use Zone provides for a wide range of uses—including retail, office, commercial, and residential—that will bring visitors to the downtown to live, work, shop, dine, and recreate. The desired character for this zone is a pedestrianfriendly and vibrant urban center, with a prominent main street and connections to the riverfront, and which includes buildings that are built to the right-of-way and oriented toward the pedestrian, with primary entries located along streets rather than parking lots.
+
+B.
+
+Open Space (OS)
+
+The Open Space Zone provides a specific zone to accommodate open space, park, and riverfront uses. The Open Space Zone is generally applied to lands that are in public ownership along the Willamette River, Kellogg Creek, Spring Creek, and Johnson Creek in the downtown area. The desired character for the Open Space Zone includes parkland, open space, and riverfront amenities.
+
+Figure 19.304-1 Downtown Zoning
+
+§ 19.304.2. Uses.
+
+A.
+
+Permitted Uses
+
+Uses allowed in the downtown zones are listed in Table 19.304.2 with a "P." These uses are allowed if they comply with the development and design standards, any applicable design guidelines, and other regulations of this title.
+
+B.
+
+Conditional Uses
+
+Uses listed in Table 19.304.2 as "CU" are permitted only as conditional uses in conformance with Section 19.905. Type III review is required to establish a new CU or for major modification of an existing CU. Type I review is required for a minor modification of an existing CU.
+
+C.
+
+Nonconforming Uses, Structures, and Development
+
+Existing structures and uses that do not meet the standards for the downtown zones may continue in existence. Alteration or expansion of a nonconforming use, structure, or development that brings the use, structure, or development closer to compliance may be allowed through a Type II downtown design review pursuant to Section 19.907. Alteration or expansion of a nonconforming use or structure that does not bring the use or structure closer to compliance may be allowed through a Type III Variance pursuant to Section 19.911. Except where otherwise stated in this Section, the provisions of Chapter 19.800 Nonconforming Uses and Development apply.
+
+D.
+
+Prohibited Uses
+
+Uses listed in Table 19.304.2 with an "N," or uses not listed below, are prohibited as new uses. In addition, drive-through facilities are prohibited in the downtown zones.
+
+E.
+
+Accessory Uses
+
+Uses that are accessory to a primary use are allowed if they comply with all Development standards. Accessory uses include but are not limited to restrooms in City parks and refreshment stands at the library.
+
+F.
+
+Similar Uses
+
+Similar uses not listed in Table 19.304.2 may be allowed through a Director determination pursuant to Section 19.903.
+
+Table 19.304.2
+
+Uses Allowed in Downtown Zones
+
+Uses and Use Categories
+
+DMU
+
+OS
+
+Standards/ Additional Provisions
+
+Residential
+
+Boarding house
+
+CU
+
+N
+
+Section 19.905 Conditional Uses
+
+Townhouse
+
+P
+
+N
+
+Subsection 19.304.3.A.1 Downtown residential use limitations
+
+Figure 19.304-2 Downtown Residential Use Limitations
+
+Subsection 19.505.5 Townhouses
+
+Multifamily
+
+P
+
+N
+
+Figure 19.304-2 Downtown Residential Use Limitations
+
+Subsection 19.304.3.A.1 Downtown residential use limitations
+
+Live/work units
+
+P
+
+N
+
+Subsection 19.304.3.A.1 Downtown residential use limitations
+
+Subsection 19.505.6 Live/Work Units
+
+Second-story housing
+
+P
+
+N
+
+Section 19.508 Downtown Site and Building Design Standards
+
+Senior and retirement housing
+
+P
+
+N
+
+Subsection 19.304.3.A.1 Downtown residential use limitations
+
+Commercial
+
+Traditional office
+
+Traditional office uses are characterized by activities that generally focus on business, government, professional, medical, or financial services. These office uses generally involve a high level of face-to-face customer contact and are typically expected to generate foot traffic.
+
+Examples include: professional services such as lawyers, architects, or accountants; financial businesses such as lenders, brokerage houses, bank headquarters, or real estate agents; sales offices; government offices and public utility offices; and medical and dental clinics.
+
+P/CU
+
+N
+
+Subsection 19.304.3.A.3 Commercial use limitations
+
+Section 19.905 Conditional Uses
+
+Production-related office
+
+Production-related office uses are characterized by activities that, while conducted in an office-like setting, involve less face-to-face customer contact and do not tend to generate foot traffic. Their operations are less service-oriented than traditional office uses and focus on the development, testing, research, production, processing, packaging, or assembly of goods and products.
+
+Examples include: software and internet content development and publishing; telecommunication service providers; data processing; television, video, radio, and internet studios and broadcasting; scientific and technical services; call centers, marijuana testing and research facilities, and medical and dental labs.
+
+P/CU
+
+N
+
+Subsection 19.304.3.A.2 Main Street limitations
+
+Subsection 19.304.3.A.3 Commercial use limitations
+
+Subsection 19.509.2 Security and odor control for certain marijuana business
+
+Section 19.905 Conditional Uses
+
+Note: Production, processing, packaging, and assembly uses must meet the standards listed below under Manufacturing.
+
+Eating and drinking establishment
+
+Eating and drinking establishments primarily involve the sale of prepared food and beverages for on-site consumption or takeaway.
+
+Examples include restaurants, delicatessens, retail bakeries, taverns, brewpubs, coffee shops, concession stands, wine bars, and espresso bars.
+
+P/CU
+
+CU
+
+Subsection 19.304.3.A.3 Commercial use limitations
+
+Section 19.905 Conditional Uses
+
+Indoor recreation
+
+Indoor recreation consists of facilities providing active recreational uses of a primarily indoor nature.
+
+Examples include gyms; dance studios; tennis, racquetball, and soccer centers; recreational centers; skating rinks; bowling alleys; arcades; shooting ranges; and movie theaters.
+
+P/CU
+
+N
+
+Subsection 19.304.3.A.3 Commercial use limitations
+
+Section 19.905 Conditional Uses
+
+Retail-oriented sales
+
+Sales-oriented retail firms are involved in the sale, leasing, and rental of new or used products to the general public.
+
+Examples include stores selling, leasing, or renting consumer, home, and business goods including art, art supplies, bicycles, clothing, dry goods, electronics, fabric, gifts, groceries, hardware, household products, jewelry, pets and pet products, pharmaceuticals, plants, printed materials, stationery, and printed and electronic media.
+
+P/CU
+
+P/CU
+
+Subsection 19.304.3.A.3 Commercial use limitations
+
+Section 19.905 Conditional Uses
+
+Personal/business services
+
+Personal/business services are involved in providing consumer services.
+
+Examples include hair, tanning, and spa services; pet grooming; photo and laundry drop-off; dry cleaners; and quick printing.
+
+P/CU
+
+N
+
+Subsection 19.304.3.A.3 Commercial use limitations
+
+Section 19.905 Conditional Uses
+
+Repair-oriented
+
+Repair-oriented uses are establishments providing product repair of consumer and business goods.
+
+Examples include repair of televisions and radios, bicycles, clocks, jewelry, guns, small appliances, office equipment, tailors and seamstresses, shoe repair, locksmiths, upholsterers, and some automobile service and repair.
+
+P/CU
+
+N
+
+Subsection 19.304.3.A.3 Commercial use limitations
+
+Section 19.905 Conditional Uses
+
+Day care
+
+Day care is the provision of regular child care, with or without compensation, to 4 or more children by a person or person(s) who are not the child's parent, guardian, or person acting in place of the parent, in a facility meeting all State requirements.
+
+Examples include nursery schools, beforeand after-school care facilities, and child development centers.
+
+P
+
+N
+
+Subsection 19.304.3.A.5 Day care limitation
+
+Commercial lodging
+
+Commercial lodging includes for-profit residential facilities where tenancy is typically less than 1 month.
+
+Examples include hotels, motels, vacation rentals, and bed-and-breakfast establishments. Does not include senior and retirement housing.
+
+P/CU
+
+N
+
+Section 19.905 Conditional Uses (for vacation rentals only)
+
+Parking facility
+
+Parking facilities provide parking that is not accessory to a specific use. A fee may or may not be charged. A facility that provides both accessory parking for a specific use and regular fee parking for people not connected to the use is also classified as a parking facility.
+
+Examples include shortand longterm fee parking facilities, commercial district shared parking lots, and commercial shuttle parking.
+
+CU
+
+P
+
+Subsection 19.304.3.A.6 OS Zone parking limitations
+
+Section 19.905 Conditional Uses
+
+Chapter 19.600 Off-Street Parking and Loading
+
+Marijuana retailer
+
+Marijuana retailer means a statelicensed business that sells or distributes marijuana and marijuanaderived products to consumers. A marijuana retailer may sell or distribute recreational or medical marijuana.
+
+P/CU
+
+N
+
+Subsection 19.509.1 Standards for Marijuana Retailers
+
+Manufacturing
+
+Manufacturing and production
+
+Uses are involved in the manufacturing, processing, fabrication, packaging, or assembly of goods. Natural, man-made, raw, secondary, or partially completed materials may be used.
+
+Examples include processing of food and related products; catering establishments; breweries, distilleries, and wineries; marijuana processors; weaving or production of textiles or apparel; woodworking, including cabinet makers; manufacture or assembly of machinery, equipment, instruments (including musical instruments), vehicles, appliances, precision items, and other electrical items; and production of artwork and toys.
+
+P
+
+N
+
+Subsection 19.304.3.A.8 Manufacturing and production limitations
+
+Subsection 19.509.2 Security and odor control for certain marijuana businesses
+
+Institutional
+
+Parks and open space
+
+Parks and open space uses are lands focusing on natural areas, large areas consisting mostly of vegetative landscaping or outdoor recreation, community gardens, or public squares. Lands tend to have few buildings.
+
+Examples include parks, public squares, plazas, recreational trails, botanical gardens, farmers markets, boat launching areas, nature preserves, and community gardens.
+
+P
+
+P
+
+Community service uses
+
+CSU
+
+CSU
+
+Section 19.904 Community Service Uses
+
+Accessory and Other
+
+Accessory use
+
+P
+
+P
+
+Subsection 19.304.2.E Accessory Uses
+
+Section 19.503 Accessory Uses
+
+Home occupation
+
+P
+
+N
+
+Section 19.507 Home Occupation Standards
+
+Short-term rentals
+
+P
+
+P
+
+Section 19.507 Home Occupation Standards
+
+Notes:
+
+P
+
+=
+
+Permitted.
+
+N
+
+=
+
+Not permitted.
+
+CSU
+
+=
+
+Permitted with community service use approval subject to provisions of Section 19.904. Type III review required to establish a new CSU or for major modification of an existing CSU. Type I review required for a minor modification of an existing CSU.
+
+CU
+
+=
+
+Permitted with conditional use approval subject to the provisions of Section 19.905. Type III review required to establish a new CU or for major modification of an existing CU. Type I review required for a minor modification of an existing CU.
+
+§ 19.304.3. Use Limitations, Restrictions, and Provisions.
+
+A.
+
+Use Limitations and Restrictions
+
+The following provisions describe the limitations for uses listed in Table 19.304.2.
+
+1.
+
+Residential uses are permitted throughout downtown Milwaukie, subject to the following limitations and as shown in Figure 19.304-2.
+
+a.
+
+Along Main Street south of the intersection with Scott Street, residential dwellings are only allowed on the second floor or above; they are not permitted on the ground floor. Lobbies for upper-level dwellings are allowed on the ground floor only if a commercial use is located along a majority of the property's street frontage.
+
+b.
+
+Along Main Street north of the intersection with Scott Street and on all other streets, residential dwellings and/or lobbies are permitted anywhere on the ground floor along Main Street.
+
+c.
+
+Live/work units and townhouses are not permitted on Main Street.
+
+2.
+
+Production-related office uses are not permitted on the ground floor along Main Street.
+
+3.
+
+Commercial uses are permitted throughout downtown, subject to the following limitations:
+
+a.
+
+In the DMU Zone, the following uses are limited to 20,000 sq ft in floor area per use on the ground floor.
+
+(1)
+
+Traditional office
+
+(2)
+
+Eating/drinking establishments
+
+(3)
+
+Indoor recreation
+
+(4)
+
+Retail-oriented sales
+
+(5)
+
+Personal-service-oriented
+
+(6)
+
+Repair-oriented
+
+(7)
+
+Day care and child care
+
+b.
+
+In the OS Zone, retail-oriented sales are limited to 20,000 sq ft in floor area per use on the ground floor.
+
+c.
+
+Uses listed in Subsections 19.304.3.A.3.a-b that are larger than 20,000 sq ft in floor area on the ground floor may be approved through a conditional use review pursuant to Section 19.905.
+
+d.
+
+In the DMU Zone, production-related office uses are limited to 20,000 sq ft in total area.
+
+e.
+
+Uses listed in Subsection 19.304.3.A.3.d that are larger than 20,000 sq ft in total area may be approved through conditional use review pursuant to Section 19.905.
+
+4.
+
+Automobile/motor vehicle repair (excluding body and fender repair and painting) is permitted in the DMU Zone only when conducted within a completely enclosed building.
+
+5.
+
+Parking facilities in the OS Zone are limited to surface lots that are intended primarily for the users of the related park or open space.
+
+6.
+
+Manufacturing and production uses are limited to 5,000 sq ft in floor area per use on the ground floor and are only permitted when associated with, and accessory to, a related retail-oriented sales or eating/drinking establishment use. For purposes of this subSection, manufacturing and production involve goods that are sold or distributed beyond or outside of the associated on-site eating or drinking establishment or retail trade use. For example, a brewing facility that distributes or sells its products elsewhere would be considered a manufacturing and production use, while a restaurant kitchen that prepares food that is purchased on-site would not be considered manufacturing or production. Marijuana production is prohibited.
+
+B.
+
+Use Provisions
+
+1.
+
+The limit of 4 consecutive townhouses established in Subsection 19.505.5.D does not apply in the DMU Zone. In the DMU Zone, there is no limit on the number of consecutive townhouses.
+
+Figure 19.304-2 Downtown Residential Use Limitations-
+
+§ 19.304.4. Development Standards.
+
+In the downtown zones, the development standards in Table 19.304.4 apply. Notes and/or cross references to other applicable code sections are listed in the "standards/Additional Provisions" column. Additional standards are provided in Subsection 19.304.5.
+
+See Sections 19.201 Definitions and 19.202 Measurements for specific descriptions of standards and measurements listed in the table.
+
+The development standards address several issues of particular importance to maintaining the appropriate character for the downtown. Table 19.304.4 summarizes some of the development standards that apply downtown. Development standards are presented in full in Subsection 19.304.5.
+
+Table 19.304.4
+
+Downtown Zones—Summary of Development Standards
+
+Standard
+
+DMU
+
+OS
+
+Standards/Additional Provisions
+
+A. Lot Standards
+
+1. Minimum lot size (sq ft)
+
+750
+
+None
+
+2. Minimum street frontage (ft)
+
+15
+
+None
+
+Section 19.201 Definitions
+
+B. Development Standards
+
+1. Floor area ratio
+
+Section 19.201 Definitions
+
+Subsection 19.304.5.A Floor Area Ratios
+
+Figure 19.304-3 Minimum Floor Area Ratios
+
+Subsection 19.611.4 incentives for Provision of Structured Parking
+
+a. Minimum
+
+0.5:1–1:1
+
+None
+
+b. Maximum
+
+6:1 (FAR bonus available)
+
+None
+
+2. Building height (ft)
+
+Subsection 19.304.5.B Building Height
+
+Figure 19.304-4 Base Maximum Building Heights
+
+Subsection 19.304.5.B.3 Height Bonuses
+
+Section 19.510 Green Building Standards
+
+Subsection 19.911.6 Building Height Variance in the Downtown Mixed Use Zone
+
+a. Minimum
+
+25
+
+None
+
+b. Maximum
+
+45–55 (height bonus available)
+
+15
+
+3. Street setbacks (ft)
+
+Subsection 19.304.5.C Street Setbacks
+
+Subsection 19.501.2 Yard Exceptions
+
+a. Minimum street setback
+
+0
+
+0
+
+b. Side and rear setbacks
+
+None
+
+None
+
+4. Off-street parking standards
+
+Yes, where applicable
+
+Yes, where applicable
+
+Subsection 19.304.5.D Off-Street Parking
+
+Chapter 19.600 Off-Street Parking and Loading
+
+C. Other Standards
+
+1. Residential density requirements (dwelling units per acre)
+
+Subsection 19.202.4 Density Calculations
+
+Subsection 19.304.5.E Residential Density
+
+a. Townhouses and live/work units
+
+(1) Minimum
+
+25
+
+n/a
+
+Subsection 19.501.4 Density Exceptions
+
+(2) Maximum
+
+None
+
+n/a
+
+b. Stand-alone multifamily
+
+(1) Minimum
+
+30
+
+n/a
+
+(2) Maximum
+
+None
+
+n/a
+
+c. Mixed-use buildings
+
+None
+
+n/a
+
+2. Signs
+
+Yes
+
+Yes
+
+Section 14.16.060 Downtown Zones
+
+Figure 19.304-3 Minimum Floor Area Ratios
+
+Figure 19.304-4 Base Maximum Building Heights
+
+§ 19.304.5. Detailed Development Standards.
+
+The following detailed development standards describe additional allowances, Restrictions, and exemptions related to the development standards of Table 19.304.4.
+
+A.
+
+Floor Area Ratios
+
+1.
+
+Intent
+
+The floor area ratio (FAR) is a tool for regulating the intensity of development. Minimum floor area ratios help to ensure that the intensity of development is controlled and that more intense forms are confined to appropriate areas of the downtown. In some cases, FAR densities are provided for provision of a public benefit or amenity to the community.
+
+2.
+
+Standards
+
+a.
+
+The minimum floor area ratios in Subsection 19.304.4.B.1 apply to all nonresidential building development. Stand-alone residential densities are controlled by minimum density requirements.
+
+b.
+
+Required minimum floor area ratios are calculated on a project-by-project basis and may include multiple contiguous parcels. In mixed-use developments, residential floor space will be included in the calculations of floor area ratio to determine conformance with minimum FARs.
+
+c.
+
+If a project is to be developed in phases, the required FAR must be met for the land area in the completed phase(s), without consideration of the land area devoted to future phases.
+
+d.
+
+FAR bonuses are available for provision of structured parking per SubSection 19.611.4.
+
+3.
+
+Exemptions
+
+The following are exempt from the minimum floor area ratio requirement.
+
+a.
+
+Parking facilities.
+
+b.
+
+Public parks and plazas.
+
+B.
+
+Building Height
+
+1.
+
+Intent
+
+Minimum and maximum building height standards serve several purposes. They promote a compatible building scale and relationship of one structure to another. A minimum Building height is established to ensure that the traditional building scale for the downtown area is maintained.
+
+2.
+
+Standards
+
+a.
+
+The minimum building height standards apply to new commercial, office, residential, and mixed-use buildings.
+
+b.
+
+Minimum building heights are specified in Table 19.304.4. The minimum building height of 25 ft must be met along all street frontages for a depth of at least 25 ft from the front of the building.
+
+c.
+
+Base maximum building heights are specified in Figure 19.304-4. Height bonuses are available for buildings that meet the standards of Subsection 19.304.5.B.3.
+
+3.
+
+Height Bonuses
+
+To incentivize the provision of additional public amenities or benefits beyond those required by the baseline standards, height bonuses are available for buildings that include desired public amenities or components; increase downtown vibrancy; and/or help meet sustainability goals.
+
+A building can utilize up to 2 of the development incentive bonuses of this subsection, for a total of 24 ft of additional height above the height maximum specified in Figure 19.304-4.
+
+Height bonuses cannot be applied within 50 ft of the moderate density residential (R-MD) zone.
+
+a.
+
+Residential
+
+New buildings that devote at least one story or 25% of the gross floor area to residential uses are permitted an additional 12 ft of building height. The residential height bonus cannot be used in combination with the lodging height bonus.
+
+b.
+
+Lodging
+
+New buildings that devote at least one story or 25% of the gross floor area to lodging uses are permitted an additional 12 ft of building height. The lodging height bonus cannot be used in combination with the residential height bonus.
+
+c.
+
+Green Building
+
+Project proposals that receive approvals and certification as identified in Section 19.510 are permitted an additional 12 ft of building height.
+
+d.
+
+Building Height Variance
+
+Additional building height may be approved through Type III variance review, per Subsection 19.911.6 Building Height Variance.
+
+4.
+
+Exemptions
+
+The following are exempt from the minimum building height standards.
+
+a.
+
+Additions to existing buildings.
+
+b.
+
+Accessory structures.
+
+c.
+
+Buildings with less than 1,000 sq ft of floor area.
+
+C.
+
+Street Setbacks
+
+1.
+
+Intent
+
+Buildings are allowed and encouraged to build up to the street right-of-way in the DMU Zone to ensure that the ground floors of buildings engage the street right-of-way.
+
+2.
+
+Standards
+
+a.
+
+No minimum street setbacks are required.
+
+b.
+
+Minimum setbacks are used in combination with the Site Frontage design element in Subsection 19.508.4.A.
+
+3.
+
+Exemption
+
+The DMU Zone is exempt from the clear vision area requirements of Chapter 12.24 of the Milwaukie Municipal Code, with the exception of driveway and street intersections with McLoughlin Boulevard.
+
+D.
+
+Off-Street Parking
+
+1.
+
+Intent
+
+The desired character for the DMU Zone, particularly along Main Street, is defined by a continuous façade of buildings close to the street, with adjacent on-street parking.
+
+2.
+
+Standards
+
+a.
+
+If off-street parking is provided for residential or nonresidential uses, the parking maximums in Table 19.605.1 will apply. All other applicable standards of Chapter 19.600 will also apply.
+
+b.
+
+Off-street surface parking lots (including curb cuts) must not be located within 50 ft of the Main Street right-of-way. Off-street surface parking lots approved prior to October 31, 2015, the effective date of Ordinance #2106, are exempt from this prohibition. This exemption applies only to the property owner on file with the Clackamas County Assessor as of October 31, 2015, the effective date of Ordinance #2106, and is dissolved upon transfer of ownership.
+
+The Planning Commission may permit off-street parking lots and curb cuts within 50 ft of the Main Street right-of-way only upon finding, through Type III Variance review pursuant to Section 19.911, that:
+
+(1)
+
+The overall project meets the intent of providing a continuous façade of buildings close to Main Street.
+
+(2)
+
+The off-street parking area or curb cut is visually screened from view from Main Street.
+
+(3)
+
+The community need for the off-street parking area or curb cut within 50 ft of Main Street outweighs the need to provide a continuous façade of buildings in that area.
+
+c.
+
+Off-street parking must not be located between a building and the street-facing lot line.
+
+Figure 19.304.5.D.2 Off-Street Parking Standards
+
+E.
+
+Residential Density
+
+1.
+
+Intent
+
+There is a minimal amount of land available for new housing development within the downtown zones. Minimum densities are applied to residential development in the DMU Zone to assure efficient use of land at densities that support transit use and nearby Downtown businesses.
+
+2.
+
+Standards
+
+a.
+
+Minimum densities for townhouses and live/work units are 25 units per acre. There is no maximum residential density for townhouses or live/work units.
+
+b.
+
+Minimum densities for stand-alone multifamily dwellings and senior/retirement housing in the DMU Zone are 30 units per acre. Maximum residential densities are effectively controlled by height limits.
+
+3.
+
+Exemption
+
+There are no minimum density requirements when residential units are developed as part of a mixed-use building.
+
+§ 19.304.6. Public Area Requirements.
+
+A.
+
+Purpose
+
+The Public Area Requirements (PAR) implement the Downtown and Riverfront Land Use Framework Plan. The purpose of the PAR is to ensure that, as revitalization occurs in downtown, there will be a consistent and high-quality public right-of-way that establishes a safe, comfortable, contiguous pedestrian-oriented environment. Public area requirements are defined as improvements within the public right-of-way and include, but are not limited to, sidewalks, bicycle lanes, on-street parking, curb extensions, lighting, street furniture, and landscaping. The PAR is implemented through Chapter 19.700 and the Milwaukie Public Works Standards.
+
+B.
+
+Applicability, Review Process, and Standards
+
+Development in downtown zones is subject to the review process and standards of Chapter 19.700 as specified in the chapter's applicability provisions. Required public improvements along rights-of-way included in the PAR must be consistent with the PAR as implemented in the Milwaukie Public Works Standards.
+
+§ 19.304.7. Additional Standards.
+
+Depending upon the type of use and development proposed, the following sections of Chapter 19.500 Supplementary Development Regulations may apply. These sections are referenced for convenience and do not limit or determine the applicability of other sections within the Milwaukie Municipal Code.
+
+A.
+
+Section 19.504 Site Design Standards
+
+B.
+
+Section 19.505 Building Design Standards
+
+C.
+
+Section 19.508 Downtown Site and Building Design Standards and Guidelines
+
+§ 19.304.8. Variances.
+
+The Planning Manager or Planning Commission may authorize variances to the Development standards under Subsection 19.304.4 in accordance with procedures of Section 19.911.
+
+§ 19.305. (Reserved)
+
+(Repealed by Ord. 2245, 8/6/2024)
+
+§ 19.306. (Reserved)
+
+(Repealed by Ord. 2245, 8/6/2024)
+
+§ 19.307. General Commercial Zone C-G
+
+In a C-G Zone the following regulations shall apply:
+
+(Ord. 2025 § 2, 2011; Ord. 2051 § 2, 2012; Ord. 2094 § 2, 2015; Ord. 2120 § 2, 2016; Ord. 2134 § 2, 2016; Ord. 2161 § 2, 2018; Ord. 2168 § 2, 2019; Ord. 2224 § 2, 2022; Ord. 2229 § 2, 2023; ; Ord. 2262, 3/3/2026)
+
+§ 19.307.1. Uses Permitted Outright.
+
+In a C-G Zone the following uses and their accessory uses are permitted outright:
+
+A.
+
+Production-related office;
+
+B.
+
+Professional and administrative office;
+
+C.
+
+Retail trade establishment such as a food store, drugstore, gift shop, hardware store, selling primarily from a shelf-goods inventory;
+
+D.
+
+Personal/business services such as a barber shop, tailor shop or laundry, and dry cleaning pickup station;
+
+E.
+
+A use permitted outright in this zone with drive-in service facilities;
+
+F.
+
+Funeral home;
+
+G.
+
+Eating establishment;
+
+H.
+
+Marina;
+
+I.
+
+Parking facility;
+
+J.
+
+Repair, maintenance, or service of the type of goods to be found in any permitted retail trade establishment;
+
+K.
+
+Financial institution;
+
+L.
+
+Trade or commercial school;
+
+M.
+
+Department or furniture store;
+
+N.
+
+Automobile, boat, trailer, or other vehicle or equipment sales and service;
+
+O.
+
+Car wash;
+
+P.
+
+Carpenter or cabinet shop;
+
+Q.
+
+Furniture upholstering;
+
+R.
+
+Building materials supply;
+
+S.
+
+Plumbing, heating, ventilation, or electrical shop;
+
+T.
+
+Printing plant;
+
+U.
+
+Repair garage;
+
+V.
+
+Automobile service station;
+
+W.
+
+Sign painting shop;
+
+X.
+
+Tire shop;
+
+Y.
+
+Marijuana retailer subject to the standards of Subsection 19.509.1;
+
+Z.
+
+Hotels, motels, vacation rentals, and bed and breakfasts;
+
+AA.
+
+Short-term rentals when associated with a legally permitted dwelling unit; AB. Indoor recreation;
+
+AC.
+
+Any other use similar to the above and not listed elsewhere.
+
+§ 19.307.2. Conditional Uses Permitted.
+
+In a C-G Zone the following conditional uses and their accessory uses are permitted subject to the provisions of Section 19.905:
+
+A.
+
+Animal hospital or boarding kennel;
+
+B.
+
+Auditorium or stadium;
+
+C.
+
+Contractor's storage yard;
+
+D.
+
+Sheet metal shop;
+
+E.
+
+Agricultural or horticultural use, provided that poultry or livestock other than usual household pets are not housed or kept within 100 ft of any dwelling not on the same lot, nor on a lot less than 1 acre, nor having less than 10,000 sq ft per head of livestock. Marijuana production is not permitted as an agricultural use;
+
+F.
+
+Drinking establishment;
+
+G.
+
+High-impact commercial businesses, except adult entertainment businesses. Hotels and motels are permitted uses (see Subsection 19.307.1.Z);
+
+H.
+
+Any other use similar to the above and not listed elsewhere.
+
+§ 19.307.3. Standards.
+
+In a C-G Zone the following standards shall apply:
+
+A.
+
+Lot size. None. Lot width shall be at least 50 ft. Average lot depth shall be at least 80 ft.
+
+B.
+
+Front yard. None, except as provided in Subsections 19.307.3.E and 19.501.2.A.
+
+C.
+
+Side yard. None, except as provided in Subsections 19.307.3.E and 19.501.2.A.
+
+D.
+
+Rear yard. None, except as provided in Subsections 19.307.3.E and 19.501.2.A.
+
+E.
+
+Transition area. A transition area shall be maintained according to Subsection 19.504.6.
+
+F.
+
+Frontage requirements. Every lot shall abut a public street other than an alley for at least 35 ft.
+
+G.
+
+Off-street parking and loading. No vehicle parking is permitted between the building and the street. Vehicle parking must be located behind and/or to the side of buildings, except in cases of a through-lot or lots which front on three (3) or more streets, in which case this standard applies to two (2) streets. All other parking standards must follow the requirements as specified in Chapter 19.600.
+
+H.
+
+Height restriction. Maximum height of a structure shall be 3 stories or 45 ft, whichever is less.
+
+I.
+
+Lot coverage. Maximum area that may be covered by buildings and structures shall not exceed 85% of the total area of the lot.
+
+J.
+
+Open use. A use not contained within an enclosed building, such as open storage, abutting or facing a residential zone, or which would be visible from a public street, shall be screened with a sight-obscuring fence not less than 6 ft high.
+
+Except for open storage, the following uses shall be conducted within an enclosed building:
+
+1.
+
+Carpenter or cabinet shop;
+
+2.
+
+Furniture upholstering;
+
+3.
+
+Plumbing shop;
+
+4.
+
+Repair garage;
+
+5.
+
+Sign painting shop;
+
+6.
+
+Tire shop;
+
+7.
+
+Heating or ventilation shop.
+
+K.
+
+Minimum vegetation. Minimum area that must be left or planted in trees, grass, shrubs, bark dust for planting beds, etc., shall be 15% of the total area of the lot.
+
+L.
+
+Transportation requirements and standards. As specified in Chapter 19.700.
+
+M.
+
+Offices for marijuana research or testing shall be subject to the security and odor control standards of Subsection 19.509.2.
+
+N.
+
+Primary building entrances. All new buildings must have at least 1 primary entrance facing an abutting public street (i.e., within 45 degrees of the street property line); or, if the building entrance must be turned more than 45 degrees from the public street (i.e., front door is on a side or rear elevation) due to the configuration of the site or similar constraints, a pedestrian walkway must connect the primary entrance to the sidewalk. Primary building entrances must not face an off-street parking area that is located on the same lot or parcel.
+
+§ 19.307.4. Prohibited Uses.
+
+The following uses and their accessory uses are prohibited:
+
+A.
+
+Adult entertainment business.
+
+§ 19.308. Community Shopping Commercial Zone C-CS
+
+In a C-CS Zone the following regulations shall apply:
+
+(Ord. 2025 § 2, 2011; Ord. 2051 § 2, 2012; Ord. 2094 § 2, 2015; Ord. 2134 § 2, 2016; Ord. 2168 § 2, 2019; Ord. 2262, 3/3/2026)
+
+§ 19.308.1. Uses.
+
+Development shall be a community-scale shopping center.
+
+A.
+
+Such center shall include at least 3 out of the 4 following uses:
+
+1.
+
+Department store uses;
+
+2.
+
+Drug and/or variety store uses;
+
+3.
+
+Food supermarket;
+
+4.
+
+Retail specialty shops.
+
+B.
+
+Such center may include the following additional uses:
+
+1.
+
+Eating and drinking establishment;
+
+2.
+
+Financial institution;
+
+3.
+
+Entertainment use (theater, etc.);
+
+4.
+
+Personal/business services;
+
+5.
+
+Repair, service or maintenance of goods authorized in this district;
+
+6.
+
+Offices, clinics, or trade schools, provided no more than 15% of the total floor space of the center is devoted to such uses;
+
+7.
+
+Marijuana retailer subject to the standards of Subsection 19.509.1;
+
+8.
+
+Indoor recreation;
+
+9.
+
+Any other uses determined by the Planning Commission to be similar and compatible to the above-listed uses.
+
+C.
+
+Uses prohibited shall be: industrial, warehousing, vehicular sales or service, motels, adult entertainment business, machinery sales or repair, contractor's office, and similar uses as determined by the Planning Commission.
+
+§ 19.308.2. Scale.
+
+The minimum size of the community-scale shopping center shall be 200,000 gross leasable sq ft. Construction of the center may be phased, however, and the first phase must be at least 140,000 sq ft. If construction is phased, all phases must be completed in 3 years.
+
+§ 19.308.3. Application Review; Minimum Requirements.
+
+A.
+
+Site development plan showing site and adjacent streets, access, parking, circulation, landscaped areas, location of buildings, location of pedestrian walkways, location of utilities, service areas, loading areas, lighting, utilities and public facilities;
+
+B.
+
+Landscaping plan showing size, species and location of plant materials, irrigation system, site contouring;
+
+C.
+
+Preliminary architectural plans indicating floor plans, elevations, building orientation and signing;
+
+D.
+
+Phasing plan, if proposed;
+
+E.
+
+Detailed traffic report, analyzing existing traffic, traffic generation, turning movements, and impact on adjacent streets. Report shall recommend roadway improvements needed to mitigate impacts as specified in Chapter 19.700. The application shall be reviewed under Type III review procedures as provided in Section 19.1006;
+
+F.
+
+Proposed on and off-site improvements to the remaining public facilities (water, sanitary sewer and storm sewer).
+
+§ 19.308.4. Criteria for Approval.
+
+An application for development will be approved if it meets the following criteria:
+
+A.
+
+It complies with the application requirements under Subsection 19.308.3 above;
+
+B.
+
+It meets the scale requirements of Subsection 19.308.2 above;
+
+C.
+
+It meets the use requirements of Subsection 19.308.1 above;
+
+D.
+
+It meets the development standards of Subsection 19.308.5 below;
+
+E.
+
+The site plan and building orientation/design shall address the following guidelines:
+
+1.
+
+Create an aesthetically pleasing development by the use of quality materials and the arrangement of buildings, landscaping and parking,
+
+2.
+
+Relate functionally to the site, surroundings and internally,
+
+3.
+
+Be designed to maximize safety and convenience, for the motorist and pedestrian,
+
+4.
+
+Be designed to consider crime prevention techniques,
+
+5.
+
+Signs shall be integrated into the design of the center.
+
+§ 19.308.5. Development Standards.
+
+A.
+
+Setbacks (Minimum) from Property Line
+
+1.
+
+Along Hwy. 224: 30 ft
+
+2.
+
+Along Oak Street: 40 ft
+
+3.
+
+Along 37th Street: 20 ft
+
+4.
+
+From other property lines: 5 ft
+
+B.
+
+Heights (maximum)
+
+3 stories or 45 ft, whichever is less.
+
+C.
+
+Access
+
+1.
+
+Maximum of 2 curb cuts along Oak St. frontage.
+
+2.
+
+Maximum of 3 curb cuts along 37th St. frontage.
+
+3.
+
+Location of access points to be approved by the Public Works Director, after consultation with the State Highway Division.
+
+D.
+
+Landscaping
+
+1.
+
+A minimum of 20% of the net site area shall be landscaped. Net site area is gross site area minus right-of-way (ROW) dedications.
+
+2.
+
+All setback areas to be landscaped.
+
+3.
+
+A landscaped berm on the Hwy. 224 and Oak St. frontages shall be installed. The berm shall be designed to provide visual relief from the parking and activity areas of the center. The berm may be "tapered" down on either side of access drives.
+
+4.
+
+An irrigation system shall be installed for the landscaped areas.
+
+5.
+
+Trees (minimum 6 ft high at time of planting) shall be planted, at least 1 every 50 ft, along the bermed landscaped areas adjacent to streets.
+
+6.
+
+"Landscaped" means a combination of ground cover, shrubbery, and trees installed to form a unified landscape.
+
+7.
+
+A bond or financial guarantee of performance will be required.
+
+E.
+
+Utilities
+
+All utilities (electric, gas, telephone) shall be installed underground.
+
+F.
+
+Transit
+
+Reserve areas for transit facilities (bus turnout, shelter, benches, station, etc.) for the use of mass transit if requested by TriMet in their review of the project as specified in Chapter 19.700.
+
+G.
+
+Public Facilities
+
+All necessary public facilities (water, sanitary sewer, storm sewer, streets) must be improved to meet City and State standards.
+
+H.
+
+Parking Requirements of Chapter 19.600
+
+No vehicle parking is permitted between the building and the street. Vehicle parking must be located behind and/or to the side of buildings, except in cases of a through-lot or lots which front on three (3) or more streets, in which case this standard applies to two (2) streets. All other parking standards must follow the requirements as specified in Chapter 19.600.
+
+I.
+
+Design Standards
+
+1.
+
+Roof-mounted mechanical equipment shall be screened from view.
+
+2.
+
+Loading and delivery areas should be separated from parking and pedestrian areas.
+
+3.
+
+A minimum of 80% of the floor space shall be designed as an enclosed mall (where access from one store to another is possible without walking outside). Alternatively, a pedestrian walkway covering is permitted, if designed to shelter pedestrians from inclement weather.
+
+4.
+
+Outdoor trash or delivery areas are screened from the public's view.
+
+J.
+
+Transportation Requirements and Standards
+
+As specified in Chapter 19.700.
+
+K.
+
+Primary Building Entrances
+
+All new buildings must have at least 1 primary entrance facing an abutting public street (i.e., within 45 degrees of the street property line); or, if the building entrance must be turned more than 45 degrees from the public street (i.e., front door is on a side or rear elevation) due to the configuration of the site or similar constraints, a pedestrian walkway must connect the primary entrance to the sidewalk. Primary building entrances must not face an off-street parking area that is located on the same lot or parcel.
+
+§ 19.309. Manufacturing Zone M
+
+(Ord. 2025 § 2, 2011; Ord. 2051 § 2, 2012; Ord. 2071 § 5, 2013; Ord. 2094 § 2, 2015; Ord. 2134 § 2, 2016; Ord. 2168 § 2, 2019; Ord. 2234 § 2, 2023)
+
+§ 19.309.1. Purpose.
+
+The M Zone is intended to promote clean, employee-intensive industries which may also include related accessory uses, such as commercial and office uses, which serve the industrial area.
+
+§ 19.309.2. Permitted Uses.
+
+Permitted uses are limited to industrial uses meeting the following criteria:
+
+A.
+
+Any combination of manufacturing, office, and/or commercial uses are allowed when at least 25% of the total project involves an industrial use as described under Subsection 19.309.2.B.
+
+B.
+
+A use which involves the collection and assembly of durable goods, warehousing of goods, transshipment of goods from other sources, and/or the assembly of goods from products which have been processed elsewhere, general manufacturing, and production.
+
+C.
+
+Commercial and office uses which are accessory to the industrial use(s). Such uses may include gymnasium, health club, secretarial services, sandwich deli, small restaurant, and retail/wholesale commercial use and showroom.
+
+D.
+
+May produce small amounts of noise, dust, vibration, or glare, but may not produce off-site impacts that create a nuisance, as defined by DEQ or the City Noise Ordinance.
+
+E.
+
+A permitted use may require outside storage areas. These storage areas shall be screened with a sight-obscuring fence or dense plantings from any adjoining residential uses or public streets.
+
+F.
+
+Warehouse use which is accessory to an industrial use.
+
+G.
+
+Marijuana retailers are allowed as a commercial use under Subsection 19.309.2.A. and subject to the special development standards set forth in Subsection 19.509.1.
+
+H.
+
+The following uses are allowed outright and do not need to be part of a project involving an industrial use as described under Subsection 19.309.2.B.
+
+1.
+
+Construction: Contractors and Related Businesses
+
+This category comprises businesses whose primary activity is performing specific building or other construction-related work, on-or off-site. Examples include: residential and nonresidential building construction, utility/civil engineering construction, specialty trade contractors, and moving companies. Any associated on-site office use must be accessory to the primary construction business.
+
+2.
+
+Repair and Service
+
+This category comprises firms involved in repair and servicing of industrial, business, or consumer electronic equipment, machinery, and related equipment, products, or byproducts. Examples include: welding shops; machine shops; tool, electric motor, and Industrial instrument repair; sales, repair, or storage of heavy machinery, metal, and Building materials; heavy truck servicing and repair; tire retreading or recapping; exterminators, including chemical mixing or storage and fleet storage and maintenance; janitorial and building maintenance services that include storage of materials and fleet storage and maintenance; fuel oil distributors; solid fuel yards; and large-scale laundry, dry-cleaning, and carpet cleaning plants. Auto service and repair shops for personal vehicles are allowed in the M Zone.
+
+3.
+
+Trade Schools
+
+This category comprises establishments whose primary purpose is to provide training for industrial needs and job-specific certification. Examples include: electronic equipment repair training, truck-driving school, welding school, training for repair of industrial machinery, and other industrial skills training.
+
+I.
+
+Marijuana and psilocybin production and cultivation facilities are subject to the regulations in Section 19.509.
+
+§ 19.309.3. Preexisting Uses and Developments.
+
+Notwithstanding the provisions of Chapter 19.800 Nonconforming Uses and Development, prohibited uses and structures located in any mapped "employment" or "industrial" area, as shown on the Milwaukie Comprehensive Plan Title 4 Lands Map, that were lawfully in existence prior to May 6, 1999, and would be impacted by amendments prohibiting retail uses in excess of 60,000 sq ft, are considered to be approved uses and structures for the purposes of this section. If such a preexisting use or development is damaged or destroyed by fire, earthquake, or other natural force, then the use will retain its preexisting status under this provision, so long as it is substantially reestablished within 3 years of the date of the loss.
+
+Notwithstanding the provisions of Chapter 19.800 Nonconforming Uses and Development, prohibited uses and structures located in any mapped "industrial" area, as shown on the Milwaukie Comprehensive Plan Title 4 Lands Map, that were lawfully in existence prior to March 17, 2009, may continue and expand to add up to 20% more floor area and 10% more land area than exists on the above-stated date. This expansion requires a conditional use review.
+
+§ 19.309.4. Specific Prohibited Uses.
+
+A.
+
+Any use which has a primary function of storing, utilizing, or manufacturing explosive materials or other hazardous material as defined by the Oregon Fire Code, Chapter 27.
+
+B.
+
+New residential, religious institutions, or public schools.
+
+C.
+
+Retail uses greater than 60,000 sq ft gross floor area per building or business are prohibited on all lots included in mapped "Employment" or "Industrial" areas as shown on Milwaukie Comprehensive Plan Title 4 Lands Map, April 6, 1999.
+
+D.
+
+All lots included in mapped "Industrial" areas, as shown on Milwaukie Comprehensive Plan Title 4 Lands Map, April 6, 1999, carry the following additional restrictions:
+
+1.
+
+Individual retail trade uses greater than 5,000 sq ft gross floor area per building or business are prohibited.
+
+2.
+
+Multiple retail trade uses that occupy more than 20,000 sq ft gross floor area are prohibited, whether in a single building or in multiple buildings within the same project.
+
+3.
+
+Facilities whose primary purpose is to provide training to meet industrial needs are exempted from this prohibition.
+
+§ 19.309.5. Standards for Conditional Uses.
+
+A.
+
+Natural Resource Extraction
+
+1.
+
+Open pit and gravel excavating or processing shall not be permitted nearer than 50 ft to the boundary of an adjoining property line, unless written consent of the owner of such property is first obtained. Excavating or processing shall not be permitted closer than 30 ft to the right-of-way line of an existing platted street or an existing public utility right-of-Way.
+
+2.
+
+An open pit or sand and gravel operation shall be enclosed by a fence suitable to prevent unauthorized access.
+
+3.
+
+A rock crusher, washer, or sorter shall not be located nearer than 500 ft to a residential or commercial zone. Surface mining equipment and necessary access roads shall be constructed, maintained, and operated in such a manner as to eliminate, as far as is practicable, noise, vibration, or dust which is injurious or substantially annoying to persons living in the vicinity.
+
+B.
+
+High-Impact Commercial Uses
+
+When considering a high-impact commercial use, the Commission shall consider the following:
+
+1.
+
+Nearness to dwellings, churches, hospitals, or other uses which require a quiet environment.
+
+2.
+
+Building entrances, lighting, exterior signs, and other features which could generate or be conducive to noise or other disturbance for adjoining uses.
+
+3.
+
+Parking vehicles and pedestrian access and circulation could contribute to noise or attract habitual assembly or unruly persons.
+
+4.
+
+Hours of operation.
+
+5.
+
+In addition to consideration of the above with respect to building and site design, the Planning Commission may attach conditions or standards of performance and impact, and methods for monitoring and evaluating these, to ensure that such establishments do not become unduly or unnecessarily disruptive.
+
+6.
+
+In addition, when considering an adult entertainment business, the following criteria shall be used:
+
+a.
+
+The proposed location of an adult entertainment business shall not be within 500 ft of an existing or previously approved adult entertainment business or within 500 ft of either a public park, a church, a day-care center, a primary, elementary, junior high, or high school, or any residentially zoned property.
+
+b.
+
+Distances shall be measured in a straight line, without regard to intervening structures, between the closest structural wall of the adult entertainment business and either the closest property line of the applicable property or the closest structural wall of any preexisting or previously approved adult entertainment business.
+
+§ 19.309.6. Development Standards for All Uses.
+
+The following development standards apply to all uses in the M Zone.
+
+A.
+
+Setbacks (Minimum)
+
+Front: 20 ft Side: None*
+
+Corner side yard: 10 ft Rear: None*
+
+* Except when abutting a residential district, in which case the setback shall match the abutting property.
+
+B.
+
+Height (Maximum)
+
+45 ft
+
+C.
+
+Parking and Loading
+
+See Chapter 19.600.
+
+D.
+
+Landscaping
+
+15% landscaping of the site is required. A variety of trees, shrubbery, and ground cover is encouraged. Street trees are required along street frontages and within parking lots to help delineate entrances, provide shade, and permeable areas for storm water runoff. A bond or a financial guarantee of performance will be required.
+
+E.
+
+Site Access
+
+1 curb cut (45 ft maximum) per 150 ft of street frontage.
+
+F.
+
+Transition Area
+
+Industrial development adjacent to and within 120 ft of areas zoned for residential uses is subject to Type I or II review per Section 19.906 Development Review. The following characteristics will be considered:
+
+1.
+
+Noise
+
+2.
+
+Lighting
+
+3.
+
+Hours of operation
+
+4.
+
+Delivery and shipping
+
+5.
+
+Height of structure
+
+6.
+
+Distance to residential zone boundary
+
+The review authority may attach conditions to reduce any potentially adverse impacts to residential properties.
+
+G.
+
+Public Facility Improvements
+
+As specified in Chapter 19.700.
+
+H.
+
+Additional Standards
+
+Chapter 19.500 Supplementary Development Regulations contains additional standards that may apply.
+
+§ 19.309.7. Special Development Standards.
+
+The following development standards apply to specified uses in the M Zone.
+
+A.
+
+Marijuana Businesses
+
+1.
+
+Marijuana retailers shall be subject to the standards of Subsection 19.509.1.
+
+2.
+
+Marijuana production, processing, testing, research, and warehousing shall be subject to the security and odor control standards of Subsection 19.509.2.
+
+3.
+
+Marijuana production facilities located in the M-Manufacturing zone shall be subject to the Marijuana Production Limitations set forth in Subsection 19.509.3.
+
+§ 19.310. Business Industrial Zone BI
+
+(Ord. 2025 § 2, 2011; Ord. 2051 § 2, 2012; Ord. 2134 § 2, 2016; Ord. 2140 § 2, 2017; Ord. 2168 § 2, 2019; Ord. 2243, 5/21/2024)
+
+§ 19.310.1. Purpose.
+
+This section is adopted to implement the policies of the Comprehensive Plan for industrial land uses providing a mix of clean, employee-intensive, industrial and office uses, with associated services, in locations supportive of mass transit and the regional transportation network.
+
+§ 19.310.2. Uses Permitted Outright.
+
+A.
+
+The following business and industrial uses are allowed outright, subject to the standards of Subsection 19.310.6.
+
+1.
+
+Experimental, research, film, or testing laboratories, provided no operation shall be conducted or equipment used which would create hazards and/or nuisances off the site (marijuana testing or research shall also be subject to the security and odor control standards of Subsection 19.509.2);
+
+2.
+
+Manufacturing, processing, fabrication, packaging, or assembly of products from previously prepared materials;
+
+3.
+
+Printing, publishing, bookbinding, graphic or photographic reproduction, blueprinting or photo processing;
+
+4.
+
+Trade schools primarily serving the business community within the area.
+
+B.
+
+Business and professional offices, including product design, sales, service, packaging; corporate headquarters or regional offices.
+
+C.
+
+Warehousing and distribution (marijuana warehousing shall be subject to the security and odor control standards of Subsection 19.509.2).
+
+D.
+
+Contractors and Related Businesses. Businesses whose primary activity is performing specific building or other construction-related work, on-or off-site. Examples include: residential and nonresidential building construction, utility/civil engineering construction, specialty trade contractors, and moving companies.
+
+E.
+
+Any other use similar to the above uses but not listed elsewhere.
+
+§ 19.310.3. Accessory Uses.
+
+Uses accessory to and in conjunction with uses permitted outright may include the following:
+
+A.
+
+Employee lounges and dining rooms, employee day-care facilities, conference rooms for tenant use, newsstands, central mail room and self-service postal and banking facilities, and product information and display areas;
+
+B.
+
+Executive, administrative, design, or product showroom offices provided in conjunction with uses listed under Subsection 19.310.2 of this section;
+
+C.
+
+Indoor and outdoor recreational facilities, such as swimming pools, saunas, game and craft rooms, exercise and dance studios, community meeting rooms, lounges, playgrounds, tennis and other courts, bike and walking trails, and pedestrian plazas and courts, which are provided in association with uses listed in Subsection 19.310.2 of this section;
+
+D.
+
+Rental and development information offices, handyman and maintenance services, and other business offices and services in association with allowed uses in the development;
+
+E.
+
+Recycling center, provided that any storage of materials shall be adequately screened;
+
+F.
+
+Accessory uses and structures not otherwise prohibited which are customarily accessory and incidental to any use permitted outright or limited use;
+
+G.
+
+Temporary buildings for uses incidental to construction work, which buildings shall be removed upon the completion or abandonment of the construction work;
+
+H.
+
+Retail outlets associated with manufacturing uses as outlined in Subsection 19.310.2.A.2 of this section. Products sold at the accessory retail outlet shall be primarily those assembled or manufactured onsite. The accessory retail outlet shall be located within the associated Manufacturing building and occupy up to a maximum of 25% of the floor area of the associated manufacturing building or 4,000 sq ft, whichever is less.
+
+§ 19.310.4. Limited Uses.
+
+A.
+
+Limited retail or service uses may be allowed that primarily service the needs of BI Zone clients, employees, and businesses, as opposed to the general public. These uses, subject to the provisions of Subsection 19.310.4.B below, shall include:
+
+1.
+
+A restaurant or deli, offering at least breakfast and/or lunch items, without a drive-in or drive-through service;
+
+2.
+
+Office supply and equipment, sales, or service;
+
+3.
+
+Personal/business services such as a barber, beauty parlor, tailor, dressmaking, shoe repair shop, self-service laundry, dry cleaning, photographer, instruction studios, or similar uses;
+
+4.
+
+A bank or other financial institution;
+
+5.
+
+A computer or other similar small electronic office machines store, sales and service; and
+
+6.
+
+Any other use similar and compatible to the above-listed uses.
+
+B.
+
+Limitations and conditions on the development of the limited uses itemized above shall be as follows:
+
+1.
+
+All limited uses shall be located, arranged, and integrated within the district to serve primarily the shopping and service needs of clients, businesses, and employees of the district;
+
+2.
+
+Limited uses may occupy up to a maximum of 25% of the square footage of a building. A limited use that is to be located in a building and exceeds 25% of the building's square footage shall be reviewed as a conditional use;
+
+3.
+
+Maximum floor area for a limited use shall be 4,000 sq ft;
+
+4.
+
+All limited uses shall comply with the standards under Subsection 19.310.6.
+
+§ 19.310.5. Conditional Uses.
+
+A.
+
+Conditional uses may be established in a business industrial district subject to review and action on the specific proposal, pursuant to Section 19.905 Conditional Uses. Approval shall not be granted unless the proposal satisfies the criteria in Section 19.905; and in addition, the proposed use:
+
+1.
+
+Will have minimal adverse impact on the appropriate development of uses permitted outright on abutting properties and the surrounding area considering location, size, design, and operating characteristics of the use;
+
+2.
+
+Is compatible with the character and scale of uses allowed within the district and on a site no larger than necessary for the use and operational requirements of the use;
+
+3.
+
+Will provide vehicular and pedestrian access, circulation, and loading areas which are compatible with uses on the same site or adjacent sites; and
+
+4.
+
+Is a needed service/product in the district, considering the mix of potential clientele and the need to maintain high-quality development in a highly visible area.
+
+B.
+
+Uses allowed subject to the above conditions are:
+
+1.
+
+Public and private community buildings, indoor and outdoor recreational facilities, such as swimming pools, racquetball clubs, athletic clubs, health and exercise spas, gymnasiums, tennis courts, playground, and other similar uses, developed to serve primarily the recreational needs of clients and employees of the district;
+
+2.
+
+Mini-warehousing, mini-storage, public storage, and similar commercial facilities that lease storage space to the general public;
+
+3.
+
+A limited use or uses that exceed 25% of the building's square footage as per SubSection 19.310.4.B.2 above.
+
+4.
+
+Marijuana producers and processors. Marijuana producers and processors shall be subject to the security and odor control standards of Section 19.509.
+
+§ 19.310.6. Standards.
+
+In the BI district, the following standards shall apply to all uses:
+
+A.
+
+Lot size. None, except that lots created shall be of a size sufficient to fulfill the applicable standards of this district.
+
+B.
+
+Front yard. A front yard shall be at least 20 ft unless additional setback is required in SubSection 19.501.2.A.
+
+C.
+
+Side yard. No side yard shall be required except on corner lots where a side yard shall be at least 10 ft on the side abutting the street, unless additional setback is required in Subsection 19.501.2.A.
+
+D.
+
+Rear yard. No rear yard shall be required except as provided in Subsection 19.501.2.A.
+
+E.
+
+Off-street parking and loading. As specified in Chapter 19.600.
+
+F.
+
+Site Access
+
+One curb cut (45 ft maximum) per 150 ft of street frontage, or fraction thereof, for Industrial uses; and 1 curb cut per 100 ft of street frontage or fraction thereof, for business park, limited or conditional uses.
+
+G.
+
+Height restriction. Maximum height of a structure shall be 3 stories or 45 ft, whichever is less.
+
+H.
+
+Landscaping
+
+15% of the site must be landscaped, except for sites adjacent to Hwy. 224, which shall provide landscaping to 20% of the site. This should consist of a variety of lawn, trees, shrubbery, and ground cover. Street trees must be provided along street frontages and within off-street parking lots to help delineate entrances, provide shade, and permeable areas for stormwater runoff. A bond or financial guarantee for landscape completion shall be required.
+
+I.
+
+Screening and Outside Storage
+
+Outside storage adjacent to International Way, Freeman Way, 37th Ave., Lake Road, or Hwy. 224 is prohibited. Outside storage in side or rear yards is allowed, provided it is enclosed by a sight-obscuring fence or vegetative screen.
+
+J.
+
+Building Siting and Design
+
+Buildings and sites shall be designed using the following principles:
+
+1.
+
+Sites shall be developed to the maximum extent practicable, so that buildings have solar access and utilize other natural features in their design.
+
+2.
+
+Assure that building placement and orientation and landscaping allow ease of security surveillance.
+
+3.
+
+Design buildings with shapes, colors, materials, textures, lines, and other architectural design features which enhance the character of the district and complement the surrounding area and development, considering, but not limited to, the following techniques:
+
+a.
+
+Use color, materials, and architectural design to visually reduce the scale and impact of large buildings;
+
+b.
+
+Use building materials and features that are durable and consistent with the proposed use of the building, level of exposure to public view, and exposure to natural elements.
+
+4.
+
+To the extent possible, screen or mask roof-mounted mechanical equipment, except solar collection apparatus, from view.
+
+5.
+
+Orient major service activity areas (e.g., loading, delivery, and garbage collection, etc.) of the development away from major streets.
+
+6.
+
+Arrange use and buildings to maximize opportunities for shared circulation, access, parking, loading, pedestrian walkways and plazas, recreation areas, and transit-related facilities.
+
+7.
+
+Provisions for bus shelters, bike racks, street furniture, kiosks, drinking fountains, art sculptures, and/or other pedestrian and transit amenities as required by Chapter 19.700.
+
+K.
+
+Nuisances
+
+The use shall not be of a type or intensity which produces dust, odor, smoke, fumes, noise, glare, heat, or vibrations which are incompatible with other uses allowed in this zone; and the use does not produce off-site impacts that create nuisance as defined by the Oregon D.E.Q. and the City Noise Ordinance.
+
+§ 19.310.7. Validity of Uses.
+
+In the BI Zone, uses that are subject to the provisions of this zone and were legally established/occupied on or prior to the effective date of the zone, shall be considered as legally Approved permitted, limited, or conditional uses as described by the BI Zone.
+
+§ 19.311. Planned Development Zone PD
+
+In a Planned Development Zone the following regulations shall apply:
+
+(Ord. 2025 § 2, 2011; Ord. 2051 § 2, 2012; Ord. 2175 § 2, 2019)
+
+§ 19.311.1. Purpose.
+
+The purpose of a PD Planned Development Zone is:
+
+A.
+
+To provide a more desirable environment than is possible through the strict application of Zoning Ordinance requirements;
+
+B.
+
+To encourage greater flexibility of design and the application of new techniques in land Development;
+
+C.
+
+To provide a more efficient, aesthetic, and desirable use of public and private common open space;
+
+D.
+
+To promote variety in the physical development pattern of the City;
+
+E.
+
+To encourage a mix of housing types and to allow a mix of residential and other land uses; and
+
+F.
+
+To provide an alternative discretionary review process for projects requiring more flexibility than what would be provided through the standard clear and objective development review or land division process.
+
+§ 19.311.2. Use.
+
+A planned development approved by the City Council and based on a final development plan and program shall constitute the Planned Development Zone. The PD Zone is a superimposed zone applied in combination with regular existing zones. A PD Zone shall be comprised of such combinations of types of dwellings and other structures and uses as shall be authorized by the City Council, but the City Council shall authorize only those types of dwellings and other structures and uses as will:
+
+A.
+
+Conform to the City's Comprehensive Plan;
+
+B.
+
+Form a compatible and harmonious group;
+
+C.
+
+Be suited to the capacity of existing and proposed community utilities and facilities;
+
+D.
+
+Be cohesively designed and consistent with the protection of public health, safety, and welfare in general; and
+
+E.
+
+Afford reasonable protection to the permissible uses of properties surrounding the site. In addition to residences and their accessory uses, the City Council may authorize commercial and nonresidential uses which it finds to be:
+
+1.
+
+Designed to serve primarily the residents of the planned development or surrounding areas, and
+
+2.
+
+Fully compatible with, and incorporated into, the design of the planned development.
+
+§ 19.311.3. Development Standards.
+
+All standards and requirements of this chapter and other City ordinances shall apply in a PD Zone unless adjusted through the PD process. Approval of a PD Zone establishes a modified set of development standards specific to the development.
+
+A.
+
+Minimum Size of a PD Zone
+
+A PD Zone may be established only on land which is suitable for the proposed Development and of sufficient size to be planned and developed in a manner consistent with the purposes of this zone.
+
+B.
+
+Special Improvements
+
+In its approval of the final plan or land division plat within a PD Zone, the City may require the developer to provide special or oversize sewer lines, water lines, roads and streets, or other service facilities. Such approval shall not obligate the City to expend funds for additional construction equipment or for special road, sewer, lighting, water, fire, or police service.
+
+C.
+
+Density Increase and Control
+
+The City Council may permit residential densities which exceed those of the underlying zone, if it determines that the planned development is outstanding in planned land use and design and provides exceptional advantages in living conditions and amenities not found in similar developments constructed under regular zoning. In no case shall such density increase be more than 20% greater than the density range prescribed for the primary land use designation indicated in the Comprehensive Plan.
+
+D.
+
+Peripheral Yards
+
+Along the periphery of any PD Zone, additional yard depth, buffering, or screening may be required. Peripheral yards shall be at least as deep as that required by the front yard regulations of underlying zones. Open space may serve as peripheral yard and/or buffer strips to separate one planned area from another, if such dual use of the land is deemed to comply with this section.
+
+E.
+
+Open Space
+
+Open space means the land area to be set aside and used for scenic, landscaping, or open recreational purposes within the development. Open space may also include areas which, because of topographic or other conditions, are deemed by the City Council to be suitable for leaving in a natural condition. Open space shall be adequate for the recreational and leisure needs of the occupants of the Development, and shall include the preservation of areas designated by the City for open space or scenic preservation in the Comprehensive Plan or other plans adopted by the City.
+
+The development plan and program shall provide for the landscaping and/or preservation of the natural features of the land. To ensure that open space will be permanent, deeds or dedication of easements of development rights to the City may be required. Instruments and documents guaranteeing the maintenance of open space shall be approved as to form by the City Attorney. Failure to maintain open space or any other property in a manner specified in the development plan and program shall empower the City to enter said property in order to bring it up to specified standards. In order to recover such maintenance costs, the City may, at its option, assess the real property and improvements within the planned development.
+
+All planned unit developments will have at least one-third of the gross site area devoted to open space and/or outdoor recreational areas. At least half of the required open space and/or recreational areas will be of the same general character as the area containing dwelling units. Open space and/or recreational areas do not include public or private streets.
+
+§ 19.311.4. Subject to Design Review.
+
+Any development within a PD Zone shall be subject to the provisions of design review as outlined in a separate ordinance.
+
+§ 19.311.5. Preliminary Development Plan and Program.
+
+A.
+
+Applicant
+
+For the purpose of this section, "owner" or "owner-applicant" means and includes any individual(s), partnership(s), corporation(s), public body(ies), legal entity(ies), or holder(s) of a written option to purchase said property. An owner of land located outside, but contiguous to, the City may submit a preliminary development plan for consideration by the City providing that an application for annexation to the City has been filed.
+
+B.
+
+Preliminary Development Plan
+
+A preliminary development plan and program must be submitted by the applicant with the information on the forms and checklists as required and shall include a phasing plan if applicable. If the proposed project is to be constructed in phases, the project as a whole must be portrayed in the application materials and shall require preliminary approval.
+
+§ 19.311.6. Planning Commission Review of Preliminary Development Plan and Program.
+
+A.
+
+Conditional approval by Planning Commission
+
+Following the meeting, or any continuance thereof, the Planning Commission shall notify the applicant whether, in its opinion, the provisions of this chapter have been satisfied, or advise of any deficiencies.
+
+B.
+
+Upon approval in principle of the preliminary development plan and program by the Planning Commission, with or without modifications, the owner-applicant must, within 18 months, file with the City a final development plan and program, including a phasing plan if applicable, which serves as an application for a PD Zone change.
+
+§ 19.311.7. Final Development Plan and Program.
+
+The final development plan and program and applicable phasing plan must contain the information on the forms and checklists as required.
+
+§ 19.311.8. Land Division.
+
+If the planned development will involve the division of land as defined in City land division regulations, then the review process is as follows:
+
+A.
+
+The owner-applicant may prepare and submit a preliminary plat to be considered at the same time as the final development plan. The final plat must be submitted within 1 year subsequent to approval of the preliminary plat.
+
+B.
+
+For phased development, the owner-applicant may prepare and submit a preliminary plat for the initial phase only to be considered at the same time as the final development plan. The final plat for the initial phase must be submitted within 1 year subsequent to approval of the preliminary plat. For subsequent phases, preliminary and final plat approval is required for each separate phase, in accordance with Subsection 19.311.17.
+
+C.
+
+For land divisions, final plat approval for the last phase must be obtained within 7 years of the date of approval of the final development plan. For all other projects, in no case will the total time period of construction of all phases exceed 7 years, as measured from the date of approval of the final development plan until the date that building permit(s) for the last phase is(are) obtained.
+
+§ 19.311.9. Approval Criteria.
+
+The approval authority(ies) may approve, approve with conditions, or deny the PD Zone based on the following approval criteria:
+
+A.
+
+Substantial consistency with the proposal approved with Subsection 19.311.6;
+
+B.
+
+Compliance with Subsections 19.311.1, 19.311.2, and 19.311.3;
+
+C.
+
+The proposed amendment is compatible with the surrounding area based on the following factors:
+
+1.
+
+Site location and character of the area.
+
+2.
+
+Predominant land use pattern and density of the area.
+
+3.
+
+Expected changes in the development pattern for the area.
+
+D.
+
+The need is demonstrated for uses allowed by the proposed amendment;
+
+E.
+
+The subject property and adjacent properties presently have adequate public transportation facilities, public utilities, and services to support the use(s) allowed by the proposed amendment, or such facilities, utilities, and services are proposed or required as a condition of approval for the proposed amendment;
+
+F.
+
+The proposal is consistent with the functional classification, capacity, and level of service of the transportation system. A transportation impact study may be required subject to the provisions of Chapter 19.700;
+
+G.
+
+Compliance with all applicable standards in Title 17 Land Division;
+
+H.
+
+Compliance with all applicable development standards and requirements; and
+
+I.
+
+The proposal demonstrates that it addresses a public purpose and provides public benefits and/or amenities beyond those permitted in the base zone.
+
+§ 19.311.10. Planning Commission Action on Final Development Plan and Program.
+
+A.
+
+Upon receipt of the final development plan and program, phasing plan, and preliminary plat, where applicable, notice shall be given and the Planning Commission shall hold a public hearing per Section 19.1007. If the final development plan and program is found to be consistent with previous approval and with the intent and requirements of this title, it shall recommend the same, together with appropriate documents and conditions, to the City Council for adoption.
+
+B.
+
+It shall at the same time recommend the change to PD Zone in accordance with the provisions of Section 19.902. The approved final development plan and program shall be the basis upon which the change in zone is made. It shall at the same time approve the preliminary plat in accordance with the Milwaukie land division regulations unless the proposal is a phased Development in accordance with the provisions of Subsection 19.311.17.
+
+C.
+
+If the land upon which the change to PD Zone is sought is not within the boundaries of the City, the Planning Commission may approve the zone change and recommend it to the City Council to become effective when the land becomes annexed to the City; or continue the Public hearing for the purpose of suitably amending the proposal; or disapprove the proposed Developments and abandon hearings and proceedings thereon.
+
+§ 19.311.11. City Council Action on Final Development Plan and Program.
+
+A.
+
+Upon receipt of Planning Commission recommendations as set forth above, the final Development plan and program and applicable phasing plan shall be considered by the City Council per Section 19.1007.
+
+B.
+
+Following the review and finding of compliance with the approval criteria in Subsection 19.311.9, the City Council may adopt an ordinance applying the PD Zone to the subject property and, in so doing, shall adopt the approved final development plan and program as the standards and requirements for said zone. The City Council, by said ordinance, shall also accept or reject all or part of the dedications of public facilities, land, and open space consistent with the approved phasing plan.
+
+C.
+
+If the proposed PD Zone is contiguous to, but not within, the City boundaries, the City Council shall delay final action until the land is officially annexed to the City.
+
+D.
+
+The City Council may also continue consideration and refer the matter back to the Planning Commission with recommendations for amendment thereof, or reject the proposals and abandon further hearings and proceedings thereon.
+
+§ 19.311.12. Filing of Approved Final Plan and Program.
+
+Following action to amend the Zoning Map and prior to its effective date, the ownerapplicant shall file with the City a conformed and approved final development plan and program, together with all pertinent documents approved as to form by the City Attorney.
+
+§ 19.311.13. Recording of Notice of Final Development Plan.
+
+Each owner of property so rezoned shall execute a notice prepared by the City which acknowledges that the final development plan and program approved by the City Council constitutes zoning for the property. Such notice shall contain a legal description of the property and reference to the certified copy of the final development plan and program filed in the office of the City Recorder. Said notices shall be recorded in the office of the County Recorder of Clackamas County.
+
+§ 19.311.14. Development Improvement Prohibited Pending Compliance.
+
+No excavation, grading, construction, improvement, or building shall begin, and no permits therefor shall be issued, within the PD Zone until all provisions of this article including execution and filing of required documents, all requirements of the City Land Division Ordinance and Building Code, and all requirements of the final development plan and program have been complied with, unless approved by the Planning Commission.
+
+§ 19.311.15. Variations from Final Development Plan and Program.
+
+A.
+
+The City Manager or designee will determine whether the modified proposal substantially conforms to the plans and/or other development documents upon which the original proposal was evaluated and approved. This determination is not a land use decision and is not subject to appeal.
+
+B.
+
+If the City Manager or designee determines that a modified proposal no longer substantially conforms to the original approval, the City Manager or designee will determine whether the modification is major or minor in nature. This determination is not a land use decision and is not subject to appeal.
+
+1.
+
+Major modifications are modifications that alter a condition of approval, have different or more impacts than the original proposal, and/or require substantial changes to the findings from the original approval.
+
+2.
+
+Minor modifications are all modifications not otherwise identified as major modifications.
+
+C.
+
+Minor modifications will be evaluated through either a Type I or Type II review per Section 19.1004 or 19.1005. The City Manager or designee will determine the review type after considering the nature and scope of the modification. The City Manager or designee's determination shall favor the review type that provides the most appropriate public notice and opportunity for public comment. This determination is not a land use decision and is not subject to Appeal. Major modifications will be evaluated through a Type III review per Section 19.1006.
+
+§ 19.311.16. Expiration of Planned Development Zone.
+
+If, within12 months of its effective date, substantial construction or development in the PD Zone has not commenced in compliance with the approved final development plan and program and schedule for stage completion, the Planning Commission may initiate a review of the PD Zone and hold a public hearing to determine whether its continuation in whole or in part is in the public interest. Notification and hearing shall be in accordance with Section 19.1007. If found not to be, the Planning Commission shall recommend to the City Council that the PD Zone be removed by appropriate amendment to the Zoning Map and property changed back to original zoning.
+
+In the case of phased development, as governed by Subsection 19.311.17, this provision applies to the first phase of the development.
+
+§ 19.311.17. Phased Development.
+
+A.
+
+The Planning Commission may approve a time schedule for developing a site in phases as follows:
+
+1.
+
+For land divisions, final plat approval for the last phase must be obtained within 7 years of the date of approval of the final development plan.
+
+2.
+
+For all other projects, in no case will the total time period of construction of all phases exceed 7 years, as measured from the date of approval of the final development plan until the date that building permit(s) for the last phase is(are) obtained.
+
+B.
+
+The criteria for approving a phased detail development plan proposal are that:
+
+1.
+
+The public infrastructure must be constructed in conjunction with or prior to each phase; and
+
+2.
+
+The development and occupancy of any phase is dependent on the use of public facilities constructed to the applicable City or special district standards.
+
+C.
+
+If the planned development will involve the division of land as defined in City land division regulations, the owner-applicant may prepare and submit a preliminary plat with each separate phase. The final plat must be submitted within 1 year subsequent to approval of the preliminary plat.
+
+D.
+
+Extensions to the approved time schedule are permitted subject to Subsection 19.908.
+
+§ 19.312. North Milwaukie Innovation Area
+
+(Ord. 2071 § 5, 2013; Ord. 2094 § 2, 2015; Ord. 2134 § 2, 2016; Ord. 2163 § 2, 2018; Ord. 2234 § 2, 2023; Ord. 2236 § 2, 2023; Ord. 2243, 5/21/2024; Ord. 2262, 3/3/2026)
+
+§ 19.312.1. Purpose.
+
+A.
+
+The Tacoma Station Area Mixed Use Zone (MUTSA) is intended to support the goals and policies of the North Milwaukie Innovation Area (NMIA) Plan. The MUTSA district is intended to take advantage of its unique location near the Tacoma light rail station and provide opportunities for a wide range of uses. The primary uses in this zone include housing, limited commercial and service-related office use, high intensity office employment, and light industrial uses including uses involved in production, manufacturing and processing, of goods. The intent of light industrial uses in the MUTSA is to provide an area to serve a wide variety of manufacturing and other industrial activities with controlled external impacts. These types of industries are often involved in the secondary processing of materials into components, the assembly of components into finished products, food and beverage processing, warehousing, and wholesaling. The external impact from these uses is generally less than heavy industrial uses and activities are generally located indoors.
+
+B.
+
+The North Milwaukie Employment Zone (NME) Zone is intended to support the goals and policies of the NMIA Plan and retain the area as a viable industrial and employment zone. The primary uses in the zone are intended to be uses involved in production, manufacturing, processing, and transportation of goods, as well as uses providing opportunities for higher intensity employment such as production-related office, laboratories, and research and Development uses. Limited specific uses not involving the production and transportation of goods, which are appropriate for industrial areas due to their use characteristics, are also allowed. Service-related office and commercial uses are intended to be incidental uses that are minor in relation to the industrial uses on a site and should be subordinate and accessory to the Industrial uses in the zone.
+
+§ 19.312.2. Uses.
+
+A.
+
+Permitted Uses
+
+Uses allowed outright in the NMIA zones are listed in Table 19.312.2 with a "P." These uses are allowed if they comply with the development and design standards and other regulations of this title.
+
+B.
+
+Community Service Uses
+
+Uses listed in Table 19.312.2 as "CSU" are permitted only as community service uses in conformance with Section 19.904.
+
+C.
+
+Conditional Uses
+
+Uses listed in Table 19.312.2 as "CU" are permitted only as conditional uses in conformance with Section 19.905.
+
+D.
+
+Nonconforming Uses, Structures, and Development
+
+Existing structures and uses that do not meet the standards for the NMIA zones may continue in existence. Alteration or expansion of a nonconforming use, structure, or development that brings the use, structure, or development closer to compliance may be allowed through development review pursuant to Section 19.906. alteration or expansion of a nonconforming use or structure that does not bring the use or structure closer to compliance may be allowed through a Type III variance pursuant to Section 19.911. Except where otherwise stated in this section, the Provisions of Chapter 19.800 Nonconforming Uses and Development apply.
+
+E.
+
+Prohibited Uses
+
+Uses not listed in Table 19.312.2, and not considered accessory or similar pursuant to Subsections 19.312.2.F and G below, are prohibited. Uses listed with an "N" in Table 19.312.2 are also prohibited.
+
+F.
+
+Limited Uses
+
+Uses listed in Table 19.312.2 as "L" are permitted only as limited uses in conformance with Section 19.312.4.
+
+G.
+
+Accessory Uses
+
+Uses that are accessory to a primary use are allowed if they comply with all Development standards.
+
+H.
+
+Similar Uses
+
+The Planning Director, through a Type I review, may determine that a use that is not listed is considered similar to an example use listed in Table 19.312.2. The unlisted use shall be subject to the standards applicable to the similar example use.
+
+Table 19.312.2
+
+Uses Allowed in the North Milwaukie Innovation Area
+
+Uses and Use Categories
+
+NME
+
+MUTSA
+
+Standards/Additional provisions
+
+Residential1
+
+Multifamily
+
+N
+
+P
+
+Subsection 19.312.6 Detailed Development Standards
+
+Subsection 19.505.3 Multifamily Housing
+
+Mixed use residential
+
+N
+
+P
+
+Subsection 19.312.6 Detailed Development Standards
+
+Live/work units
+
+N
+
+P
+
+Subsection 19.312.6 Detailed Development Standards
+
+Subsection 19.505.6 Live/Work Units
+
+Commercial
+
+Office
+
+P
+
+P
+
+1. Production-related office
+
+2. Professional and administrative office
+
+L
+
+L
+
+Subsection 19.312.4.A standards for Limited Uses
+
+Drinking establishments
+
+Drinking establishments primarily involve the sale of alcoholic beverages for on-site consumption.
+
+Examples include taverns, bars, or cocktail lounges.
+
+L
+
+L/CU
+
+Subsection 19.312.4.A standards for Limited Uses
+
+Eating establishments
+
+Eating establishments primarily involve the sale of prepared food and beverages for on-site consumption or takeout. Eating establishments may include incidental sales of alcoholic beverages.
+
+Examples include restaurants, delicatessens, retail bakeries, coffee shops, concession stands, and espresso bars.
+
+L
+
+L/CU
+
+Subsection 19.312.4.A standards for Limited Uses
+
+Retail-oriented sales
+
+Sales-oriented retail firms are involved in the sale, leasing, and rental of new or used products to the general public.
+
+Examples include stores selling, leasing, or renting consumer, home, and business goods including art, art supplies, bicycles, clothing, dry goods, electronics, fabric, gifts, groceries, hardware, household products, jewelry, pets and pet products, pharmaceuticals, plants, printed materials, stationery, and printed and electronic media.
+
+L
+
+L
+
+Subsection 19.312.4.A standards for Limited Uses
+
+Personal service
+
+Personal service firms are involved in providing consumer services.
+
+Examples include hair, tanning, and spa services; pet grooming; photo and laundry drop-off; dry cleaners; and quick printing.
+
+L
+
+L
+
+Subsection 19.312.4.A standards for Limited Uses
+
+Day care
+
+Day care is the provision of regular childcare, with or without compensation, to 4 or more children by a person or person(s) who are not the child's parent, guardian, or person acting in place of the parent, in a facility meeting all State requirements.
+
+Examples include nursery schools, beforeand after-school care facilities, and child development centers.
+
+L
+
+L
+
+Subsection 19.312.4.B.2 Standards for Limited Uses
+
+Hotel/motel
+
+N
+
+CU
+
+Subsection 19.905 Conditional Uses
+
+Adult entertainment businesses2
+
+N
+
+CU
+
+Subsection 19.905 Conditional Uses
+
+Industrial, Manufacturing and Production
+
+Manufacturing and production
+
+This category comprises establishments engaged in the mechanical, physical, or chemical transformation of materials, substances, or components into new products, including the assembly of component parts.
+
+P
+
+L
+
+Subsection 19.312.4.B.1 Standards for Limited Uses
+
+Examples include: alternative energy development; biosciences; food and beverage processing; software and electronics production; printing; fabrication of metal products; products made from manufactured glass; products made from rubber, plastic, or resin; converted paper and cardboard products; and microchip fabrication. Manufacturing may also include high-tech and research and development companies.
+
+Construction: contractors and related businesses
+
+This category comprises businesses whose primary activity is performing specific building or other constructionrelated work, on-or off-site.
+
+Examples include: residential and nonresidential building construction; utility/civil engineering construction; specialty trade contractors; and moving companies.
+
+P
+
+P
+
+Wholesale trade, warehousing, distribution
+
+This category comprises establishments engaged in selling and/or distributing merchandise to retailers; to industrial, commercial, or professional business users; or to other wholesalers, generally without transformation, and rendering services incidental to the sale of merchandise. Wholesalers sell or distribute merchandise exclusively to other businesses, not the general public, and normally operate from a warehouse or office and are not intended for walk-in traffic.
+
+Examples include: operating wareHousing and storage facilities for general merchandise, refrigerated goods, and other products and materials that have been manufactured and are generally being stored in anticipation of delivery to final customer. Includes fleet parking.
+
+Ministorage facilities (generally used by many individual customers to store personal property) are not considered Industrial warehousing and storage and are not permitted.
+
+P
+
+P
+
+Repair and service
+
+This category comprises firms involved in repair and servicing of industrial, business, or consumer electronic equipment, machinery, and related equipment, products, or by-products. Few customers come to the site, particularly not general public daily customers. Auto service and repair shops for personal vehicles are not included in this category and are not permitted.
+
+Examples include: welding shops; machine shops; tool, electric motor, and industrial instrument repair; sales, repair, or storage of heavy machinery, metal, and building materials; heavy truck servicing and repair; tire retreading or recapping; exterminators, including chemical mixing or storage and fleet storage and maintenance; janitorial and building maintenance services that include storage of materials and fleet storage and maintenance; fuel oil distributors; solid fuel yards; and largescale laundry, dry-cleaning, and carpet cleaning plants.
+
+P
+
+L
+
+Subsection 19.312.4.B.1 Standards for Limited Uses
+
+Trade schools and training facilities3
+
+This category comprises establishments whose primary purpose is to provide training for industrial needs and jobspecific certification.
+
+Examples include: electronic equipment repair training; truck-driving school; welding school; training for repair of industrial machinery; job skills training classrooms; and other industrial/employment skills training.
+
+P
+
+P
+
+Repair and service
+
+This category comprises firms involved in repair and servicing of industrial, business, or consumer electronic equipment, machinery, and related equipment, products, or by-products. Few customers come to the site, particularly not general public daily customers. Auto service and repair shops for personal vehicles are not included in this category and are not permitted.
+
+Examples include: welding shops; machine shops; tool, electric motor, and industrial instrument repair; sales, repair, or storage of heavy machinery, metal, and building materials; heavy truck servicing and repair; tire retreading or recapping; exterminators, including chemical mixing or storage and fleet storage and maintenance; janitorial and building maintenance services that include storage of materials and fleet storage and maintenance; fuel oil distributors; solid fuel yards; and largescale laundry, dry-cleaning, and carpet cleaning plants.
+
+P
+
+L
+
+Subsection 19.312.4.B.1 Standards for Limited Uses
+
+Trade schools and training facilities3
+
+This category comprises establishments whose primary purpose is to provide training for industrial needs and jobspecific certification.
+
+Examples include: electronic equipment repair training; truck-driving school; welding school; training for repair of industrial machinery; job skills training classrooms; and other industrial/employment skills training.
+
+P
+
+P
+
+Creative space
+
+Industrial/manufacturing space specifically for artist-type uses.
+
+Examples include: artist manufacturing studios (welding, pottery, ceramics, painting, glass, etc.); sound stage and/or film production; set design and production; music studio/production.
+
+P
+
+P
+
+Waste management4
+
+This category comprises businesses that provide garbage and recycling hauling, including fleet parking and maintenance. Storage of waste or recycling materials collected by a waste management business for any period of time is not permitted.
+
+CUP
+
+P
+
+Community Service Use
+
+Only the following community service uses are included in this district:
+
+Section 19.904 Community Service Uses
+
+1.
+
+Institutions
+
+a. Government offices
+
+P
+
+P
+
+b. Public transit facilities or passenger terminal
+
+CSU
+
+CSU
+
+c. Schools (public or private)
+
+CSU
+
+CSU
+
+d. Recreation facilities (public or private)
+
+CSU P
+
+CSU P
+
+e. Parks and open space
+
+CSU
+
+CSU
+
+f. Transitional or correctional facilities (public or private)
+
+See Trade Schools and Training Facilities
+
+g. Hospitals
+
+CSU
+
+CSU
+
+2.
+
+Infrastructure
+
+a. Utilities (water, sewer, and storm sewer facilities, including, but not limited to, sewage pumping stations, water wells, pump stations, sewer mining)
+
+P
+
+P
+
+b. Communication facilities (includes WCF)
+
+P
+
+P
+
+c. Electrical power substations; solar facilities
+
+P
+
+P
+
+Marijuana and Psilocybin Businesses
+
+1.
+
+Marijuana retailers subject to the standards of Subsections 19.312.4 and 19.509.1.
+
+N
+
+CU
+
+Subsection 19.509.2 Security and Odor Control for Certain Marijuana Businesses
+
+Subsection 19.312.4.A.5 Standards for Limited Uses
+
+2.
+
+Marijuana processing, testing, research, and warehousing subject to the standards of Subsection 19.509.2.
+
+P
+
+P
+
+Subsection 19.509.2 Security and Odor Control for Certain Marijuana Businesses
+
+3.
+
+Marijuana production subject to the conditional use process and the standards of Subsections 19.509.2 and 19.509.3.
+
+CU
+
+CU
+
+Subsection 19.509.2 Security and Odor Control for Certain Marijuana Businesses
+
+Subsection 19.509.3 Marijuana Production Limitations
+
+Section 19.905 Conditional Uses
+
+4.
+
+Psilocybin cultivation only, as defined in ORS 475A, including planting, growing, harvesting, and propagation.
+
+CU
+
+CU
+
+Subsection 19.509.4 Psilocybin Cultivation Limitations
+
+Section 19.905 Conditional Uses
+
+Notes:
+
+P
+
+=
+
+Permitted.
+
+N
+
+=
+
+Not permitted.
+
+L
+
+=
+
+Limited.
+
+CSU
+
+=
+
+Permitted with community service use approval subject to provisions of Section 19.904. Type III review required to establish a new CSU or for major modification of an existing CSU. Type I review required for a minor modification of an existing CSU.
+
+CU
+
+=
+
+Permitted with conditional use approval subject to the provisions of Section 19.905. Type III review required to establish a new CU or for major modification of an existing CU. Type I review required for a minor modification of an existing CU.
+
+1.
+
+Multifamily residential is permitted outright in a stand-alone building or in stories above a groundfloor commercial or office use. Deed restrictions will apply to residential development in order to reduce potential conflicts between residential uses and surrounding manufacturing uses, which will serve as actual and constructive notice to potential purchasers and tenants of the owner's property that the residential use is located within a zone that permits and encourages industrial uses.
+
+2.
+
+When considering an adult entertainment business, the following criteria shall be used:
+
+a.
+
+The proposed location of an adult entertainment business shall not be within 500 ft of an existing or previously approved adult entertainment business or within 500 ft of either a public park, a church, a day-care center, a primary, elementary, junior high, or high school, or any residentially zoned property.
+
+b.
+
+Distances shall be measured in a straight line, without regard to intervening structures, between the closest structural wall of the adult entertainment business and either the closest property line of the applicable property or the closest structural wall of any preexisting or previously approved adult entertainment business.
+
+3.
+
+All activities related to trade schools must be conducted inside an enclosed building.
+
+4.
+
+Waste Management uses in existence prior to December 31, 2017 are Permitted; uses proposed after that date are permitted as a Conditional Use.
+
+§ 19.312.3. Specific Prohibited Uses.
+
+Any use which has a primary function of storing or manufacturing explosive materials or other hazardous material as defined by the Oregon Fire Code, Chapter 27.
+
+§ 19.312.4. Standards for Limited Uses.
+
+The following standards apply to those uses listed as limited (L) in Table 19.312.2.
+
+A.
+
+Retail, Service-Related Office, Eating and Drinking Establishments, and Personal Service Uses
+
+To ensure that these uses are limited in size and scale and do not dominate land intended for manufacturing and higher intensity employment uses, the following standards apply. See Figure 19.312.4.A for an illustration of the size limitations.
+
+1.
+
+In the NME, the total gross leasable square footage of an individual retail, service-related office, eating and drinking establishment, and personal service use shall not exceed 5,000 sq ft or 40% of the floor area of an individual building, whichever is less. The total cumulative gross leasable square footage of these uses in a development project shall not exceed 20,000 sq ft or 40% of the floor area. In the NME, retail, service-related office, eating and drinking establishments, and personal service uses are not permitted in a stand-alone building. They must be included within a building whose primary purpose is for an allowed industrial, manufacturing and production, or production-office use. The retail, service-related office, eating and drinking establishment, and personal service use is not required to be related to the primary manufacturing use. Nonconforming retail textile sales uses in existence at the time of adoption of this code provision may be replaced but shall not be more out of conformance with the land use or development regulations than the original use or development.
+
+2.
+
+Food carts or a food cart pod are permitted. A food cart pod is limited to 5,000 sq ft or 40% of the floor area of the building on site and must be included on a site with an allowed industrial, manufacturing and production, or production-office use.
+
+3.
+
+In the MUTSA, retail, service-related office, eating and drinking establishments, and personal service uses are permitted in a stand-alone building, or within a building with another permitted use, but shall not exceed a cumulative total of 20,000 gross sq ft per building or property.
+
+4.
+
+In the MUTSA, eating and drinking establishments that exceed the above standards are subject to a conditional use review pursuant to Section 19.905.
+
+5.
+
+Marijuana retail uses shall have a gross square footage of no more than 5,000 sq ft and are subject to a conditional use review pursuant to Section 19.905.
+
+B.
+
+Other Uses
+
+1.
+
+In the MUTSA, the following uses, or similar, are not permitted: sales, repair, or storage of heavy machinery; heavy truck servicing and repair; tire retreading or recapping; fleet storage and maintenance; fuel oil distributors; solid fuel yards; and manufacturing or production of: chemicals, synthetic rubber, pesticides, fertilizers, paints, adhesives, explosives, plastics, tires, cement, concrete, steel, ferroalloy, aluminum, nonferrous metal, and ammunition.
+
+2.
+
+Day care uses must be part of a larger building and shall not be permitted in standalone buildings.
+
+Figure 19.312.4.A Size Limitations for Retail, Service-Related Office, Eating and Drinking Establishments, and Personal Service Uses (Illustrative Example)
+
+§ 19.312.5. Development Standards.
+
+These development standards are intended to ensure that new development is appropriate in terms of building mass and scale, how the building addresses the street, and where buildings are located on a site.
+
+Table 19.312.5 summarizes some of the development standards that apply in the NMIA. Development standards are presented in detail in Subsection 19.312.6.
+
+Table 19.312.5
+
+North Milwaukie Innovation Area — Summary of Development Standards
+
+Standard
+
+NME
+
+MUTSA
+
+Standards/Additional Provisions
+
+A. Lot Standards
+
+1. Minimum lot size (sq ft)
+
+None
+
+None
+
+2. Minimum street frontage (ft)
+
+None
+
+None
+
+B. Development Standards
+
+1. Floor area ratio (min/max)
+
+0.5:1/3:1
+
+0.5:1/3:1
+
+2. Building height (ft)
+
+a. Minimum
+
+25
+
+25
+
+b. Maximum (Height bonus available)
+
+45-90
+
+45-90
+
+Subsection 19.312.6.A Building height bonus
+
+Subsection 19.510 Green Building Standards
+
+3. Setbacks (ft)
+
+Subsection 19.501.2 Yard exceptions
+
+a. Minimum front yard setback
+
+None
+
+None
+
+b. Maximum front yard setback
+
+10-301
+
+10-301
+
+c. Side and rear setbacks
+
+None2
+
+None2
+
+4. Maximum lot coverage
+
+85%
+
+85%
+
+5. Minimum landscaping
+
+15%
+
+15%
+
+Subsection 19.312.6.G Landscaping
+
+6. Flexible ground-floor space
+
+Yes, where applicable
+
+Yes, where applicable
+
+Subsection 19.312.7.A.6 Flexible ground-floor space
+
+7. Off-street parking standards
+
+Yes
+
+Yes
+
+Subsection 19.312.6.C Loading and Unloading Areas
+
+Subsection 19.312.7.C Parking, Loading and Unloading Areas
+
+Chapter 19.600 Off-Street Parking and Loading
+
+8. Frontage occupancy
+
+50%
+
+50%
+
+Subsection 19.312.7.A.7 Frontage occupancy
+
+C. Other Standards
+
+1. Residential density requirements (dwelling units per acre)
+
+Subsection 19.202.4 Density Calculations
+
+a. Stand-alone residential
+
+(1) Minimum
+
+N/A
+
+None
+
+(2) Maximum
+
+N/A
+
+None
+
+b. Mixed-use buildings
+
+N/A
+
+None
+
+2. Signs
+
+Yes
+
+Yes
+
+Subsection 14.16.050 Commercial Zone
+
+Subsection 19.312.6.F Signage for Non-manufacturing Uses
+
+3. Design Standards
+
+Yes
+
+Yes
+
+Subsection 19.312.7.A Design Standards for All New Construction and Major Exterior Alterations
+
+1.
+
+Properties in the MUTSA have a maximum front yard setback of 10 ft. Properties on key streets in the NME have a maximum front yard setback of 30 ft. Refer to 19.312.7 for key streets.
+
+2.
+
+Side and rear lot lines abutting a residential zone have a minimum 10-ft setback. Side and rear lot lines not abutting a residential zone have no required setback.
+
+§ 19.312.6. Detailed Development Standards.
+
+The following detailed development standards describe additional allowances, Restrictions, and exemptions related to the development standards of Table 19.312.5.
+
+The following development standards apply to all uses in the NMIA.
+
+A.
+
+Height Bonuses
+
+To incentivize the provision of additional public amenities or benefits beyond those required by the baseline standards, height bonuses are available for buildings that help meet sustainability goals.
+
+Project proposals that receive green building approvals and certification as identified in Section 19.510 are permitted a total of 45 ft of additional height above the 45-ft base height maximum.
+
+B.
+
+Screening of Outdoor Uses
+
+Outdoor uses shall be screened as follows:
+
+1.
+
+All outdoor storage areas shall be screened from adjacent properties by a 6-ft-high sightobscuring fence or wall or by the use of vegetation. Vegetation used to screen outdoor storage areas shall be of such species, number, and spacing to provide the required screening within 1 year after planting.
+
+2.
+
+All screened or walled outdoor use and storage areas which abut a public street shall be set back a minimum of 25 ft from the property line(s). Within that setback area, trees and evergreen shrubs shall be planted. The plants shall be of such a variety and arranged to allow only minimum gaps between foliage of mature trees and plants within 4 years of planting.
+
+3.
+
+All plantings used to screen outdoor uses shall be maintained on an ongoing basis and shall be replaced if vegetation is diseased, dying, or dead.
+
+C.
+
+Loading and Unloading Areas
+
+In the NMIA, no loading or unloading facilities shall be located adjacent to lands designated for residential uses, or residential community services, if there are alternative locations of adequate size on the subject site.
+
+D.
+
+External Effects
+
+1.
+
+The potential external effects of industrial, manufacturing, and production uses shall be minimized in the NME as follows:
+
+a.
+
+Except for exterior lighting, operations producing heat or glare shall be conducted entirely within an enclosed building.
+
+b.
+
+Potential nuisances such as noise, odor, electrical disturbances, and other public health nuisances are subject to MMC Title 8 Health and Safety.
+
+c.
+
+Roof-mounted mechanical equipment, such as ventilators and ducts, for buildings located adjacent to residential districts, arterial streets, or transit streets, shall be contained within a completely enclosed structure that may include louvers, latticework, or other similar features. This screening requirement does not apply to roof-mounted solar energy systems or wind energy systems.
+
+2.
+
+In order to ensure greater compatibility between industrial, manufacturing, and production uses and other uses in the Tacoma station area, the following off-site impact standards apply in the MUTSA:
+
+a.
+
+Applicability
+
+The off-site impact standards in this section apply to all new machinery, equipment, and facilities associated with manufacturing uses. Machinery, equipment, or facilities that were at the site and in compliance with existing regulations as of August 1, 2013, the effective date of Ordinance #2071, are not subject to these off-site impact standards.
+
+b.
+
+Noise
+
+The City's noise control standards and requirements in Chapter 8.08 apply.
+
+c.
+
+Vibration
+
+Continuous, frequent, or repetitive vibrations that exceed 0.002g peak are prohibited. Generally, this means that a person of normal sensitivities should not be able to feel any vibrations.
+
+(1)
+
+Temporary vibrations from construction activities or vehicles leaving the site are exempt.
+
+(2)
+
+Vibrations lasting less than 5 minutes per day are exempt.
+
+(3)
+
+Seismic or electronic measuring equipment may be used when there are doubts about the level of vibrations.
+
+d.
+
+Odor
+
+Continuous, frequent, or repetitive odors are prohibited. The odor threshold is the point at which an odor may just be detected. An odor detected for less than 15 minutes per day is exempt.
+
+e.
+
+Illumination
+
+Machinery, equipment, and facilities may not directly or indirectly cause illumination on other properties in excess of 0.5 footcandles of light.
+
+f.
+
+Measurements
+
+Measurements for compliance with these standards may be made from the property line or within the property of the affected site. Measurements may be made at ground level or at habitable levels of buildings.
+
+g.
+
+Documentation
+
+An applicant must provide documentation certified by a registered engineer or architect, as appropriate, to ensure that the proposed activity can achieve compliance with these standards.
+
+E.
+
+Additional Standards
+
+When new residential development is proposed adjacent to existing industrial, manufacturing, and production uses, visual screening, which may include walls, fences, horizontal separation or plantings, shall be provided for those areas adjacent to loading docks, truck or other delivery vehicle ingress or egress areas, dumpsters or other recycling vessels, and outdoor storage areas.
+
+Chapter 19.500 Supplementary Development Regulations contains additional standards that may apply.
+
+F.
+
+Signage for Non-manufacturing Uses
+
+In addition to signage permitted in Title 14 Signs, 1 pedestrian-oriented sign per business may be provided along the building façade that faces the street. Pedestrian-oriented signs may be attached to the building, an awning, a kiosk, hanging, projecting, or otherwise so long as they are displayed no higher than 10 ft above the sidewalk and face the street and have a maximum area of 4 sq ft per sign face. All signs must comply with Title 14 Signs.
+
+G.
+
+Landscaping
+
+A minimum of 15% landscaping of the site is required. The required landscape area shall comply with the following:
+
+1.
+
+Permitted landscape materials include trees, shrubs, ground cover plants, non-plant ground covers, and outdoor hardscape features.
+
+2.
+
+No more than 20% of the required landscape area shall be covered in mulch or barkdust. Mulch or barkdust under the canopy of trees or shrubs is excluded from this limit.
+
+3.
+
+Trees shall have a minimum 2-in caliper at time of planting, measured at 4 ft above grade.
+
+4.
+
+Shrubs shall be planted from 5-gallon containers or larger.
+
+5.
+
+All plantings shall be maintained on an ongoing basis and shall be replaced if vegetation is diseased, dying, or dead.
+
+6.
+
+A green roof and/or green/living wall may be used as a substitute for this landscaping requirement.
+
+§ 19.312.7. Design Standards for All Uses in the MUTSA and on NME Key Streets.
+
+The following design standards apply to all uses in the MUTSA Zone and in the NME Zone on properties located on the following key streets and key corners: McBrod Avenue, Main Street, 17th Avenue, and Ochoco Street. (See Figure 312.7.1)
+
+Figure 19.312.7.1 Key Streets
+
+A.
+
+Design Standards for All New Construction and Major Exterior Alterations
+
+The design standards contained in this section are intended to encourage building design and construction with durable, high-quality materials. The design standards in this section apply to the street-facing façades of new, and major alterations to, commercial, institutional, manufacturing, and mixed-use buildings when the closest wall of the street-facing façade is within 50 ft of a front or street-side lot line. Exterior maintenance and repair and minor exterior alterations are not subject to these standards. Subsection 19.312.7.B below defines exterior maintenance and repair and major/minor exterior and interior alterations.
+
+1.
+
+Ground-Floor and Street-facing Windows and Doors
+
+Long expanses of blank walls facing the street or other public area have negative impacts on the streetscape and the pedestrian environment.
+
+The ground-floor street wall area is defined as the area up to the finished ceiling height of the space fronting the street or 15 ft above finished grade, whichever is less.
+
+a.
+
+For nonresidential and mixed-use buildings:
+
+(1)
+
+A minimum of 30% of the ground-floor street wall area must consist of openings; i.e., windows or glazed doors; or
+
+(2)
+
+A combination of a minimum of 20% of the ground-floor street wall area must consist of openings; i.e., windows or glazed doors in addition to a living wall/green wall or art mural for the remaining area to equal the minimum 30%. A living wall or green wall is a self-sufficient vertical garden that is attached to the exterior or interior of a building.
+
+b.
+
+Ground-floor windows shall be distributed along the wall area such that there are no lengths of windowless wall greater than 20 ft.
+
+c.
+
+Clear glazing is required for ground-floor windows. Reflective, tinted, or opaque glazing is not permitted for windows facing streets or courtyards.
+
+d.
+
+Ground-floor windows shall allow views into storefronts, working areas, or lobbies. No more than 50% of the window area may be covered by interior furnishings including, but not limited to, curtains, shades, signs, or shelves. Signs are limited to a maximum coverage of 50% of the window area.
+
+2.
+
+Building Orientation
+
+All buildings must have at least one primary building entrance (e.g., dwelling entrance, customer entrance, tenant entrance, lobby entrance, or breezeway/courtyard entrance) facing an adjoining street (i.e., within 45 degrees of the street property line). If the building entrance is turned more than 45 degrees from the street (e.g., front door is on a side wall), the primary entrance must not be more than 40 ft from a street sidewalk, except to provide pedestrian amenities. In all cases, a walkway must connect the primary entrance to the sidewalk. Primary building entrances must not face an off-street parking area that is located on the same lot or parcel. See Figure 19.312.7.A.2 for illustration.
+
+Figure 19.312.7.A.2 Building Entrances
+
+3.
+
+Weather Protection
+
+All building entrances shall include an awning, canopy, recess, or some other form of shelter to provide weather protection and shade for users.
+
+4.
+
+Design Standards for Walls
+
+The following standards are applicable to the exterior walls of buildings facing streets, courtyards, and/or public squares.
+
+a.
+
+Exterior wall-mounted mechanical equipment is prohibited.
+
+b.
+
+The following standards are applicable to the exterior walls of new Buildings facing streets, courtyards, and/or public squares. Table 19.312.7.A.4 specifies the primary, secondary, and prohibited material types referenced in this standard.
+
+(1)
+
+Buildings shall utilize primary materials for at least 60% of the applicable building façades.
+
+(2)
+
+Secondary materials are permitted on no greater than 40% of each applicable building façade.
+
+(3)
+
+Accent materials are permitted on no greater than 10% of each applicable building façade as trims or accents (e.g. flashing, projecting features, ornamentation, etc.)
+
+(4)
+
+Buildings shall not utilize materials listed as (N) prohibited material.
+
+(5)
+
+For existing development, façade modifications that affect more than 50% of the façade shall comply with standards in this subsection. The Planning Director may waive this requirement if application of the standards would create an incongruous appearance of existing and new materials.
+
+Table 19.312.7.A.4
+
+Commercial Exterior Building Materials
+
+Material Type
+
+Nonresidential and Mixed-Use
+
+Brick
+
+P
+
+Stone/masonry
+
+P
+
+Stucco, when installed over concrete
+
+P
+
+Glass (transparent, spandrel)
+
+P
+
+Concrete (poured in place or precast)
+
+P
+
+Finished wood, wood veneers, and wood siding
+
+P
+
+Finished metal panels—such as anodized aluminum, stainless steel, or copper—featuring polished, brushed, or patina finish
+
+S
+
+Concrete blocks with integral color (ground, polished, or split-face finish)
+
+S
+
+Fiber-reinforced cement siding and panels
+
+S
+
+Ceramic tile
+
+S
+
+Concrete blocks with integral color (glazed finish)
+
+A
+
+Standing seam and corrugated metal
+
+A
+
+Glass block
+
+A
+
+Vegetated wall panels or trellises
+
+A
+
+Vinyl siding
+
+N
+
+Exterior insulation finishing system (EIFS)
+
+N
+
+Plywood paneling
+
+N
+
+P
+
+=
+
+Primary material
+
+S
+
+=
+
+Secondary material
+
+A
+
+=
+
+Accent material
+
+N
+
+=
+
+Prohibited material
+
+5.
+
+Design Standards for Roofs
+
+The following standards are applicable to building roofs.
+
+a.
+
+Flat roofs shall include a cornice with no less than 6 in depth (relief) and a height of no less than 12 in.
+
+b.
+
+Mansard or decorative roofs on buildings less than 3 stories are prohibited.
+
+6.
+
+Flexible Ground-Floor Space
+
+For newly constructed non-residential and mixed-use buildings, a minimum of 75% of the ground-floor space in a new building must meet the following requirements.
+
+a.
+
+The ground-floor height must be at least 14 ft, as measured from the finished floor to the ceiling, or from the finished floor to the bottom of the structure above (as in a multistory building). The bottom of the structure above is the lowest portion of the structure and includes supporting beams, and any heating, ventilation, and/or fire suppression sprinkler systems.
+
+b.
+
+The interior floor area adjacent to the key street must be at least 20 ft deep, as measured from the inside building wall or windows facing the key street.
+
+7.
+
+Frontage Occupancy Requirements
+
+For block faces on key streets, 50% of the site frontage must be occupied by a building or buildings. If the development site has frontage on more than 1 street, the frontage occupancy requirement must be met on 1 street only.
+
+B.
+
+Applicability of Design Standards
+
+Pre-existing buildings that do not meet the site or building design standards may continue and be modified subject to the standards below. Applicable standards only apply to the proposed modification and not to the nonmodified portion of the existing building unless the modification is a major exterior or interior alteration as defined below.
+
+1.
+
+The design standards in Subsection 19.312.7.A above are applicable to major exterior and interior alterations as follows:
+
+a.
+
+Major exterior alterations involving a wall(s) shall comply with the design standards for walls and the design standards for windows for that wall(s). A wall is considered the entire wall plane if the change in wall plane is less than 24 in.
+
+b.
+
+Major exterior alterations involving a roof shall comply with the design standards for roofs.
+
+c.
+
+Major interior alterations require compliance with Subsection 19.312.7.A for applicable frontages.
+
+2.
+
+Major exterior alterations include any of the following:
+
+a.
+
+Alterations that do not fall within the definitions of "exterior maintenance and repair" or "minor exterior alterations."
+
+b.
+
+Demolition or replacement of more than 50% of the surface area of any exterior wall or roof. A wall is considered the entire wall plane if the change in wall plane is less than 24 in.
+
+c.
+
+In the MUTSA, floor area additions that exceed 50% of the existing floor area or demolition or replacement of 50% or more of the existing floor area.
+
+d.
+
+In the NME, floor area additions that exceed 75% of the existing floor area or demolition or replacement of 50% or more of the existing floor area.
+
+3.
+
+Major interior alterations include any of the following:
+
+a.
+
+In the MUTSA, interior floor area additions that exceed 50% of the existing floor area.
+
+b.
+
+In the NME, interior floor area additions that exceed 75% of the existing floor area.
+
+4.
+
+Exterior maintenance and repair includes refurbishing, painting, and weatherproofing of deteriorated materials, as well as in-kind restoration or replacement of damaged materials. Exterior maintenance and repair does not include replacement of materials due to obsolescence or when associated with minor or major exterior renovation, as defined below. Exterior maintenance and repair does not include the placement of signs.
+
+5.
+
+Minor exterior alterations include the exterior alterations of any portion of a structure that do not fall within the definitions of "exterior maintenance and repair" or "major exterior alterations." Minor exterior alterations include, but are not limited to, the application or installation of finish building treatments, including windows and other glazing, doors, lintels, copings, vertical and horizontal projections (including awnings), and exterior sheathing and wall materials. Minor exterior alteration does not include the placement of signs.
+
+6.
+
+Additions may be considered minor exterior alterations only when the additional floor area is designed and used solely for utility, HVAC, other mechanical equipment, ADA upgrades, or egress required by applicable fire safety or building codes.
+
+C.
+
+Parking, Loading, and Unloading Areas
+
+In the MUTSA and on NME key streets, parking, loading, and unloading areas shall be located as follows:
+
+1.
+
+Parking areas shall not be located in more than 50% of the front yard.
+
+2.
+
+No loading or unloading facilities shall be located adjacent to lands designated for residential uses, or residential community services, if there are alternative locations of adequate size on the subject site. No loading area shall be located between the front of a building and a front lot line, regardless of required setbacks.

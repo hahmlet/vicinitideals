@@ -10,8 +10,16 @@ ingest:
   zoning_layer: zoning_milwaukie
   zone_field: ZONE
   strip_lowercase_suffix: false
+code:
+  # eCode360 (code MI4969); /print/<code>?guid=<node> returns server-rendered
+  # HTML. guid 43860500 is Chapter 19.300 Base Zones — both residential zones
+  # (19.301 R-MD, 19.302 R-HD) in one document.
+  - id: "19.300.base-zones"
+    url: https://ecode360.com/print/MI4969?guid=43860500
+    title: "MMC Chapter 19.300 - Base Zones"
 zones:
   R-MD:
+    section: ["19.301"]
     cite_default:
       cite: MMC 19.301 Moderate Density Residential, Table 19.301.4; use table 19.301.2
       url: https://ecode360.com/43860500
@@ -29,6 +37,7 @@ zones:
       a smaller-setback tier (verify). Min lot 5,000 sf; middle housing allowed on any SFD lot (density
       cap waived).'
   R-HD:
+    section: ["19.302"]
     cite_default:
       cite: MMC 19.302 High Density Residential, Table 19.302.4
       url: https://ecode360.com/43860500

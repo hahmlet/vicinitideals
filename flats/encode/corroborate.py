@@ -132,14 +132,18 @@ def check_zone(
             by_field.setdefault(candidate.field, []).append(candidate)
     for name, candidates in by_field.items():
         # Evidence has a hierarchy. A table cell was *written for* this zone;
-        # a sentence under the declared section is merely near it. When both
-        # speak to one field the cell wins outright — Troutdale's declared
-        # 3.130 also contains a density/lot-size grid whose every number the
-        # prose reader files under lot size, drowning the one cell that
-        # actually answers.
-        cells = [c for c in candidates if c.source == "table"]
-        if cells:
-            by_field[name] = cells
+        # a stacked pair is a cell that lost its geometry, one rung below;
+        # a sentence under the declared section is merely near either. When
+        # more than one speaks to a field the highest rung wins outright —
+        # Troutdale's declared 3.130 also contains a density/lot-size grid
+        # whose every number the prose reader files under lot size, and
+        # Gladstone's cottage-cluster sentences would otherwise outvote the
+        # base-zone row they are the exception to.
+        for rung in ("table", "pair"):
+            best = [c for c in candidates if c.source == rung]
+            if best:
+                by_field[name] = best
+                break
 
     out: list[Finding] = []
     for name, value in sorted(values.items()):
