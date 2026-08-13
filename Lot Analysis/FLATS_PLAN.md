@@ -936,9 +936,9 @@ with `preempts`, and nothing for **zone-to-zone incorporation inside one
 jurisdiction**. Encoding VSF by copying R-6's numbers into it would produce values
 that silently stop tracking their source the first time R-6 is amended.
 
-This is the next model change, and it is exactly the kind the encoding UI depends on:
-a reviewer must be able to see that VSF's front setback *is* R-6's, not a duplicate
-of it.
+This is exactly the kind of change the encoding UI depends on: a reviewer must be
+able to see that VSF's front setback *is* R-6's, not a duplicate of it. **Built — see
+§17.**
 
 
 ---
@@ -1025,8 +1025,83 @@ never needs maintaining separately.
 
 ### What this does not do
 
-It does not handle **zone-to-zone incorporation** — the Fairview shape in §15, where
-one zone adopts another's standards by reference with a conflict clause. That is the
-next model change. A variant is one field with several numbers; incorporation is one
-zone with another zone's fields, and copying numbers across to fake it produces
-values that stop tracking their source the first time the referenced zone is amended.
+It does not handle **zone-to-zone incorporation** — one zone adopting another's
+standards by reference. A variant is one field with several numbers; incorporation is
+one zone with another zone's fields. That is §17.
+
+---
+
+## 17. A zone with no standards of its own
+
+Fairview's VSF zone states no dimensional standards. It says the R-6 standards apply,
+in a different chapter, *and* carries a conflict clause naming which text governs
+where the two disagree. §15 flagged this as a structural gap; it is now encodable.
+
+### Why copying is the wrong fix
+
+Pasting R-6's numbers into VSF produces an encoding that is correct exactly once. The
+copies carry R-6's citation but not its identity, so the first time R-6 is amended the
+fetch layer flags R-6's document as changed, withdraws the signatures on *R-6's*
+values, and leaves VSF sitting there verified against a sentence that no longer says
+what it did. Nothing in the system can notice, and nobody reviewing VSF has any reason
+to look at R-6 at all.
+
+The reference has to *be* the encoding.
+
+```yaml
+zones:
+  R-6:
+    setback_front_ft: 20
+    min_lot_sqft: 6000
+
+  VSF:
+    like: R-6                      # shorthand: inherits the zone's cite_default
+    setback_front_ft: 10           # what VSF states for itself
+
+  MUR:
+    like:
+      zone: R-6
+      wins: referenced             # the adopted chapter governs on conflict
+      cite: "FMC 19.117.020(C)"    # where the incorporation itself is stated
+```
+
+### How it resolves
+
+The reference is followed, not flattened. Zone blocks apply least-authoritative
+first — the referenced zone, then the borrowing one, reversed when `wins:
+referenced` — and each resolved value keeps the provenance of the block it was
+actually read from. So VSF's `min_lot_sqft` cites *FMC 19.105.040 Table 1*, and
+`Resolved.via` says `R-6`. The detail page can state the thing that is true: VSF's
+lot minimum **is** R-6's.
+
+Chains are followed to the end (`VSF → R-7 → R-6`), and the zone code is looked up
+in the layer and then up the hierarchy, so a city adopting a county zone is the same
+shape as adopting one of its own.
+
+Two ways it can fail, both ours and both on the backlog rather than in a colour:
+
+| | reason code | what it means |
+|---|---|---|
+| referenced zone not encoded | `ZONE_REFERENCE_MISSING` | coverage gap — encode R-6 |
+| zones adopt each other | `ZONE_REFERENCE_CYCLE` | encoding bug — no standards exist to resolve |
+
+### The claim to borrow is itself a rule
+
+`like:` is a sentence somebody read, and an unread one can point at the wrong zone —
+which hands an entire zone the wrong numbers, with every individual value verified
+and nothing on screen to suggest a problem. So it is signed like any other rule,
+under the pseudo-field `like`:
+
+```
+flats-review show or/…/fairview VSF like     # prints the clause and its evidence
+flats-review sign or/…/fairview VSF like --reviewer sjk
+```
+
+It queues while unread, it blocks the zone from being trusted, and its fingerprint
+covers both the zone code *and* the conflict rule — flipping `wins` changes exactly
+which numbers govern wherever the two texts disagree, and is far easier to edit
+unnoticed than the zone code is.
+
+Asking to review a borrowed field where it is not printed is refused with a pointer
+rather than a "no such field", because the number is not missing; it is somewhere
+else, and reviewing it here would mean reviewing a copy.

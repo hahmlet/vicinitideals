@@ -59,7 +59,7 @@ class Status(str, enum.Enum):
 
 
 #: Meta keys permitted alongside field names inside a zone block.
-ZONE_META = frozenset({"zone", "cite_default", "notes", "clauses"})
+ZONE_META = frozenset({"zone", "cite_default", "notes", "clauses", "like"})
 #: Meta keys permitted at the top level of a jurisdiction/layer file.
 LAYER_META = frozenset(
     {
@@ -336,6 +336,51 @@ def _validate_curve(name: str, v: Any) -> None:
         last_floor = float(floor)
 
 
+#: The pseudo-field an incorporation clause is signed under. It shares the
+#: verification key space with real standards, because it is the same kind of
+#: claim: somebody read a sentence and says this is what it means.
+LIKE = "like"
+
+
+class Incorporation(BaseModel):
+    """This zone's standards are another zone's, by reference.
+
+    Fairview's VSF zone states no dimensional standards at all. It says the R-6
+    standards apply — in a different chapter — and carries a conflict clause
+    naming which text governs where the two disagree. That is a common shape and
+    it cannot be encoded by copying R-6's numbers across: the copies would stop
+    tracking their source the first time R-6 is amended, silently, and no
+    reviewer looking at VSF would have any way to notice.
+
+    So the reference is the encoding. VSF holds a pointer and whatever it states
+    for itself; resolution reads R-6 through it and every resolved value still
+    cites the R-6 section it was actually read from.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    #: The zone code adopted. Looked up in this layer, then up the hierarchy —
+    #: a city adopting a county zone is the same shape as adopting its own.
+    zone: str = Field(min_length=1)
+    #: Which text governs where both state the same standard. Codes write it
+    #: both ways, so it is read from the conflict clause rather than assumed.
+    wins: str = Field(default="local", pattern="^(local|referenced)$")
+    prov: Provenance
+    status: Status = Status.draft
+    reviewer: str | None = None
+    reviewed: date | None = None
+
+    @property
+    def trusted(self) -> bool:
+        return self.status.trusted
+
+    @model_validator(mode="after")
+    def _verified_needs_a_reviewer(self) -> Incorporation:
+        if self.status is Status.verified and not (self.reviewer and self.reviewed):
+            raise ValueError("a verified incorporation requires both 'reviewer' and 'reviewed'")
+        return self
+
+
 class Zone(BaseModel):
     """One base zone within one jurisdiction layer."""
 
@@ -347,6 +392,8 @@ class Zone(BaseModel):
     #: Clause-ledger ids asserted to cover this zone's code section. Populated
     #: by the RASE extraction pass; completeness is checked in `ledger.py`.
     clauses: tuple[str, ...] = ()
+    #: Another zone whose standards this one adopts. See :class:`Incorporation`.
+    like: Incorporation | None = None
 
     @property
     def trusted(self) -> bool:
@@ -354,11 +401,22 @@ class Zone(BaseModel):
 
         One draft or stale value poisons the zone: the screen cannot tell which
         answer the untrusted number changed, so the whole zone routes to REVIEW.
+
+        A zone that borrows is judged on what it holds locally; whether the
+        borrowed half is trusted is a question about the zone it borrowed from,
+        and the resolver answers it there. What is required here is that the
+        *claim* to borrow has been read — an unverified reference could be
+        pointing at the wrong zone entirely.
         """
+        if self.like is not None:
+            return self.like.trusted and all(v.trusted for v in self.values.values())
         return bool(self.values) and all(v.trusted for v in self.values.values())
 
     def untrusted_fields(self) -> tuple[str, ...]:
-        return tuple(sorted(n for n, v in self.values.items() if not v.trusted))
+        out = sorted(n for n, v in self.values.items() if not v.trusted)
+        if self.like is not None and not self.like.trusted:
+            out.append(LIKE)
+        return tuple(out)
 
 
 class Layer(BaseModel):

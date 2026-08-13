@@ -12,6 +12,12 @@ Every resolved value remembers the layer and code section it came from, so the
 UI can show *"front setback 10 ft — Portland 33.110 Table 110-4"* beside
 *"parking 1/unit — OAR 660-046-0220 (state, preempts city 2/unit)"*.
 
+A zone may also adopt another zone's standards wholesale (``like:``), which
+some codes do instead of restating a table. The reference is followed, not
+flattened: a value borrowed from R-6 still cites the R-6 section it was read
+from, so amending R-6 moves every zone that adopted it and a reviewer can see
+that it did.
+
 Standards that carry exceptions ("5 ft., or 10 ft. where the development is
 affordable") are resolved against the conditions passed in, so the number that
 comes out is the one that applies to *this* lot with *these* elections — and
@@ -29,7 +35,7 @@ from dataclasses import dataclass, field as _dc_field
 from typing import Any, Collection
 
 from flats.rules.fields import REQUIRED_FIELDS
-from flats.rules.model import Layer, Provenance, Status, Value
+from flats.rules.model import LIKE, Layer, Provenance, Status, Value, Zone
 
 
 class Verdict(str, enum.Enum):
@@ -45,6 +51,12 @@ class Verdict(str, enum.Enum):
     ambiguous = "ambiguous"
     #: Jurisdiction is encoded, this zone is not. Routes to REVIEW, lands on the backlog.
     zone_not_encoded = "zone_not_encoded"
+    #: This zone adopts another zone's standards and that zone is not encoded.
+    #: A coverage gap, not an error: encode the referenced zone.
+    zone_reference_missing = "zone_reference_missing"
+    #: Two zones adopt each other. An encoding bug — no set of standards exists
+    #: to resolve, and following it would not terminate.
+    zone_reference_cycle = "zone_reference_cycle"
     #: No layer for this jurisdiction at all. Routes to REVIEW.
     jurisdiction_not_encoded = "jurisdiction_not_encoded"
 
@@ -54,6 +66,8 @@ REASON_FOR_VERDICT: dict[Verdict, str] = {
     Verdict.unverified: "RULE_UNVERIFIED",
     Verdict.ambiguous: "RULE_AMBIGUOUS",
     Verdict.zone_not_encoded: "ZONE_NOT_ENCODED",
+    Verdict.zone_reference_missing: "ZONE_REFERENCE_MISSING",
+    Verdict.zone_reference_cycle: "ZONE_REFERENCE_CYCLE",
     Verdict.jurisdiction_not_encoded: "JURISDICTION_NOT_ENCODED",
 }
 
@@ -73,6 +87,10 @@ class Resolved:
     preempted: bool = False
     #: The value this one displaced, if any — kept so the UI can explain itself.
     shadowed: Any = None
+    #: The zone this value was read from, when it is not the lot's own — a
+    #: borrowed standard still cites the section it actually lives in, and the
+    #: detail page has to be able to say "VSF's front setback *is* R-6's".
+    via: str | None = None
     #: Conditions that selected this number. Empty means the base standard.
     when: tuple[str, ...] = ()
     #: Every condition that would move this standard, whether or not it is
@@ -108,6 +126,9 @@ class ZoneResolution:
     conditions: tuple[str, ...] = ()
     #: Fields where two exceptions tied. Encoding work, not review work.
     ambiguous: tuple[str, ...] = ()
+    #: Zone codes whose standards this resolution read through a reference,
+    #: least authoritative first.
+    borrowed_from: tuple[str, ...] = ()
 
     @property
     def trusted(self) -> bool:
@@ -149,6 +170,62 @@ class RuleSet:
         ids = ["/".join(parts[: i + 1]) for i in range(len(parts))]
         return [self.layers[i] for i in ids if i in self.layers]
 
+    def find_zone(self, layer_id: str, zone: str) -> tuple[Layer, Zone] | None:
+        """A zone code, looked up in this layer and then up the hierarchy.
+
+        A city adopting a county zone is the same shape as adopting one of its
+        own, so the search walks the same chain resolution already walks.
+        """
+        for candidate in reversed(self.chain_for(layer_id)):
+            block = candidate.zones.get(zone)
+            if block is not None:
+                return candidate, block
+        return None
+
+    def zone_chain(self, layer_id: str, zone: str) -> tuple[list[tuple[Layer, Zone]], str | None]:
+        """Zone blocks to apply in order, least authoritative first.
+
+        Following the reference rather than flattening it is the whole point:
+        a value borrowed from R-6 keeps R-6's citation, so amending R-6 moves
+        every zone that adopted it and a reviewer can see that it did.
+
+        Returns the blocks and, if the chain could not be built, a reason code.
+        """
+        found = self.find_zone(layer_id, zone)
+        if found is None:
+            return [], Verdict.zone_not_encoded.value
+
+        blocks: list[tuple[Layer, Zone]] = []
+        seen: set[tuple[str, str]] = set()
+
+        def walk(layer: Layer, block: Zone) -> str | None:
+            mark = (layer.layer, block.zone)
+            if mark in seen:
+                return Verdict.zone_reference_cycle.value
+            seen.add(mark)
+
+            if block.like is None:
+                blocks.append((layer, block))
+                return None
+
+            parent = self.find_zone(layer.layer, block.like.zone)
+            if parent is None:
+                return Verdict.zone_reference_missing.value
+
+            if block.like.wins == "referenced":
+                # The code says the adopted chapter governs on disagreement, so
+                # it is applied last and overwrites what this zone states.
+                blocks.append((layer, block))
+                return walk(*parent)
+            problem = walk(*parent)
+            if problem:
+                return problem
+            blocks.append((layer, block))
+            return None
+
+        problem = walk(*found)
+        return blocks, problem
+
     def eligible(self, layer_id: str) -> bool:
         """Jurisdiction toggle. Report-time policy — never a structural drop."""
         layer = self.layers.get(layer_id)
@@ -176,16 +253,18 @@ class RuleSet:
                 layer_id, zone, Verdict.jurisdiction_not_encoded, chain=chain_ids, conditions=held
             )
 
-        zone_block = target.zones.get(zone)
-        if zone_block is None:
+        blocks, problem = self.zone_chain(layer_id, zone)
+        if problem:
             return ZoneResolution(
-                layer_id, zone, Verdict.zone_not_encoded, chain=chain_ids, conditions=held
+                layer_id, zone, Verdict(problem), chain=chain_ids, conditions=held
             )
 
         resolved: dict[str, Resolved] = {}
         locked: set[str] = set()
 
-        def apply(values: dict[str, Value], layer: str, origin: str) -> None:
+        def apply(
+            values: dict[str, Value], layer: str, origin: str, via: str | None = None
+        ) -> None:
             for name, val in values.items():
                 eff = val.under(held)
                 if name in locked:
@@ -194,7 +273,7 @@ class RuleSet:
                     prev = resolved[name]
                     resolved[name] = Resolved(
                         prev.name, prev.value, prev.status, prev.prov, prev.layer,
-                        prev.origin, preempted=True, shadowed=eff.value,
+                        prev.origin, preempted=True, shadowed=eff.value, via=prev.via,
                         when=prev.when, levers=prev.levers, ambiguous=prev.ambiguous,
                     )
                     continue
@@ -205,6 +284,7 @@ class RuleSet:
                     eff.prov,
                     layer,
                     origin,
+                    via=via,
                     when=eff.when,
                     levers=val.levers,
                     ambiguous=eff.ambiguous,
@@ -215,17 +295,26 @@ class RuleSet:
         # Least specific first so later layers override — except where locked.
         for layer in chain:
             apply(layer.defaults, layer.layer, "defaults")
-        apply(zone_block.values, target.layer, "zone")
+        for owner, block in blocks:
+            borrowed = None if (owner.layer == layer_id and block.zone == zone) else block.zone
+            apply(block.values, owner.layer, "zone", via=borrowed)
 
         untrusted = tuple(sorted(n for n, r in resolved.items() if not r.trusted))
         missing = tuple(sorted(REQUIRED_FIELDS - set(resolved)))
         ambiguous = tuple(sorted(n for n, r in resolved.items() if r.ambiguous))
+        borrowed_from = tuple(b.zone for _, b in blocks if b.zone != zone)
+        # The claim to borrow is a rule somebody read, and an unread one could
+        # be pointing at the wrong zone entirely — which would hand a whole
+        # zone the wrong numbers with nothing on screen to suggest it.
+        unread = tuple(
+            f"{b.zone}.{LIKE}" for _, b in blocks if b.like is not None and not b.like.trusted
+        )
         if ambiguous:
             # Reported ahead of unverified because it is a different kind of
             # problem with a different fix: signing more numbers will not
             # resolve it, someone has to say which exception governs.
             verdict = Verdict.ambiguous
-        elif untrusted or missing:
+        elif untrusted or missing or unread:
             verdict = Verdict.unverified
         else:
             verdict = Verdict.trusted
@@ -235,9 +324,10 @@ class RuleSet:
             zone=zone,
             verdict=verdict,
             values=resolved,
-            untrusted=untrusted,
+            untrusted=tuple(sorted(untrusted + unread)),
             missing_required=missing,
             chain=chain_ids,
             conditions=held,
             ambiguous=ambiguous,
+            borrowed_from=borrowed_from,
         )

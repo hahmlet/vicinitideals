@@ -29,6 +29,7 @@ from flats.rules.fields import field
 from flats.rules.model import (
     LAYER_META,
     ZONE_META,
+    Incorporation,
     Layer,
     Provenance,
     Status,
@@ -206,6 +207,71 @@ def _parse_variants(
     return tuple(out)
 
 
+def _parse_like(
+    raw: Any,
+    cite_default: dict[str, Any] | None,
+    where: str,
+    problems: list[str],
+) -> Incorporation | None:
+    """Parse a zone's claim to adopt another zone's standards.
+
+    Shorthand is a bare zone code, which inherits the zone's ``cite_default``
+    and takes the common conflict rule (the zone's own statement wins). The
+    full form is for when the incorporation is stated somewhere other than the
+    zone's own section, or when the code's conflict clause runs the other way —
+    both of which are things a reviewer has to be sent to the text for.
+    """
+    if raw is None:
+        return None
+    if isinstance(raw, str):
+        raw = {"zone": raw}
+    if not isinstance(raw, dict):
+        problems.append(f"{where}.like: expected a zone code or a mapping")
+        return None
+
+    body = dict(raw)
+    zone = body.pop("zone", None)
+    wins = body.pop("wins", "local")
+    unknown = set(body) - set(_PROV_KEYS) - set(_REVIEW_KEYS) - {"preempts"}
+    if unknown:
+        problems.append(f"{where}.like: unknown key(s) {sorted(unknown)}")
+    if not zone:
+        problems.append(f"{where}.like: name the zone whose standards this one adopts")
+        return None
+
+    prov_src: dict[str, Any] = dict(cite_default or {})
+    prov_src.update({k: body[k] for k in _PROV_KEYS if k in body})
+    missing = [k for k in ("cite", "url", "retrieved") if not prov_src.get(k)]
+    if missing:
+        # Adopting another zone's standards is itself a rule somebody read.
+        # Unsourced, it is a guess about which numbers govern a whole zone.
+        problems.append(
+            f"{where}.like: missing provenance {missing} — an incorporation is a rule too"
+        )
+        return None
+
+    declared = str(body.get("status", "draft"))
+    if declared in (Status.verified.value, Status.stale.value):
+        problems.append(
+            f"{where}.like: a file may not declare status {declared!r} — "
+            f"verify it with a signature, and leave stale to be derived"
+        )
+        return None
+
+    try:
+        return Incorporation(
+            zone=str(zone),
+            wins=str(wins),
+            prov=Provenance(**{k: prov_src.get(k) for k in _PROV_KEYS}),
+            status=Status(declared),
+            reviewer=body.get("reviewer"),
+            reviewed=body.get("reviewed"),
+        )
+    except Exception as exc:
+        problems.append(f"{where}.like: {_terse(exc)}")
+        return None
+
+
 def _terse(exc: Exception) -> str:
     """Pydantic errors are verbose; keep the message a reviewer can scan."""
     msg = str(exc).replace("\n", " ")
@@ -245,6 +311,7 @@ def load_layer(path: Path, root: Path, problems: list[str]) -> Layer | None:
             values=values,
             notes=zraw.get("notes"),
             clauses=tuple(zraw.get("clauses") or ()),
+            like=_parse_like(zraw.get("like"), zone_cite, f"{where}.zones.{zname}", problems),
         )
 
     try:

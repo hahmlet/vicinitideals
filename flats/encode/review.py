@@ -39,11 +39,12 @@ from flats.encode.verify import (
     VerificationError,
     VerificationLog,
     sign,
+    sign_like,
     variant_for,
 )
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.loader import CONFIG_ROOT, load_rules
-from flats.rules.model import Layer, Status, Value, Variant
+from flats.rules.model import LIKE, Incorporation, Layer, Status, Value, Variant
 
 #: Values in these states are what the queue is for.
 PENDING = (Status.draft, Status.encoded, Status.stale)
@@ -56,14 +57,27 @@ def _block(layer: Layer, zone: str) -> dict[str, Value]:
     return dict(z.values) if z else {}
 
 
-def _find(layers: dict[str, Layer], layer_id: str, zone: str, field: str) -> Value:
+def _find(layers: dict[str, Layer], layer_id: str, zone: str, field: str) -> Value | Incorporation:
     layer = layers.get(layer_id)
     if layer is None:
         raise SystemExit(f"no such jurisdiction: {layer_id}")
+    if field == LIKE:
+        block = layer.zones.get(zone)
+        if block is None or block.like is None:
+            raise SystemExit(f"{layer_id} {zone}: adopts no other zone's standards")
+        return block.like
+    block = layer.zones.get(zone)
     values = _block(layer, zone)
-    if not values:
+    if not values and block is None:
         raise SystemExit(f"{layer_id}: no zone {zone!r}")
     if field not in values:
+        if block is not None and block.like is not None:
+            # Not missing — borrowed. Sending the reviewer to the zone the
+            # sentence actually lives in is the whole point of not copying it.
+            raise SystemExit(
+                f"{layer_id} {zone}: {field!r} comes from {block.like.zone} — "
+                f"review it there, or run 'show {layer_id} {zone} {LIKE}'"
+            )
         raise SystemExit(f"{layer_id} {zone}: no field {field!r}")
     return values[field]
 
@@ -79,7 +93,14 @@ def _walk(layers: dict[str, Layer]):
                 yield layer_id, zone_code, name, value
 
 
-def _evidence(store: ProvenanceStore, part: Value | Variant) -> tuple[str, str]:
+def _zones(layers: dict[str, Layer]):
+    """Every (layer, zone code, zone) in the hierarchy, in reading order."""
+    for layer_id in sorted(layers):
+        for zone_code in sorted(layers[layer_id].zones):
+            yield layer_id, zone_code, layers[layer_id].zones[zone_code]
+
+
+def _evidence(store: ProvenanceStore, part) -> tuple[str, str]:
     """The stored text a value cites, or the reason there is none.
 
     Takes a variant as readily as a base value, because an exception usually
@@ -94,8 +115,12 @@ def _evidence(store: ProvenanceStore, part: Value | Variant) -> tuple[str, str]:
         return "", str(exc)
 
 
-def _part(value: Value, when: Sequence[str]) -> Value | Variant:
+def _part(value, when: Sequence[str]):
     """The base value, or the one exception named on the command line."""
+    if isinstance(value, Incorporation):
+        if when:
+            raise SystemExit("an incorporation clause has no exceptions to sign")
+        return value
     if not when:
         return value
     try:
@@ -137,6 +162,22 @@ def cmd_queue(args: argparse.Namespace) -> int:
         strict=False,
     )
     shown = 0
+    for layer_id, zone_code, zone in _zones(trusted.layers):
+        if args.layer and not layer_id.startswith(args.layer):
+            continue
+        if args.zone and zone_code != args.zone:
+            continue
+        # A zone that borrows its standards has one line of work before any of
+        # them can be trusted: has anybody read the sentence that says it does?
+        if zone.like is not None and zone.like.status in PENDING:
+            print(
+                f"{zone.like.status.value:8} {layer_id} {zone_code} {LIKE}"
+                f" = {zone.like.zone}  [{zone.like.prov.cite}]"
+            )
+            shown += 1
+            if args.limit and shown >= args.limit:
+                return 0
+
     for layer_id, zone, field, value in _walk(trusted.layers):
         if args.layer and not layer_id.startswith(args.layer):
             continue
@@ -162,31 +203,8 @@ def cmd_queue(args: argparse.Namespace) -> int:
     return 0
 
 
-def cmd_show(args: argparse.Namespace) -> int:
-    value = _find(load_rules(args.root), args.layer, args.zone, args.field)
-    part = _part(value, args.when)
-    store = ProvenanceStore(args.docs)
-
-    print(f"{args.layer} {args.zone} {_label(args.field, args.when)}")
-    print(f"  value     {part.value}")
-    print(f"  status    {part.status.value}")
-    print(f"  cite      {part.prov.cite}")
-    print(f"  url       {part.prov.url}")
-    print(f"  retrieved {part.prov.retrieved}")
-    print(f"  quote     {part.prov.quote or '(none)'}")
-    if value.preempts:
-        print("  preempts  yes — a more specific layer cannot override this")
-    if not args.when and value.variants:
-        # Reviewing the base without being told the exceptions exist is how a
-        # signature ends up standing for more than the reviewer read.
-        print("  exceptions:")
-        for other in value.variants:
-            print(
-                f"    {other.value} when {'+'.join(sorted(other.when))}"
-                f"  ({other.status.value}) — sign with --when {' '.join(sorted(other.when))}"
-            )
+def _print_evidence(store: ProvenanceStore, part) -> int:
     print()
-
     text, err = _evidence(store, part)
     if err:
         print(f"  NO EVIDENCE: {err}")
@@ -195,6 +213,39 @@ def cmd_show(args: argparse.Namespace) -> int:
     for line in text.splitlines():
         print(f"  | {line}")
     return 0
+
+
+def cmd_show(args: argparse.Namespace) -> int:
+    layers = load_rules(args.root)
+    value = _find(layers, args.layer, args.zone, args.field)
+    part = _part(value, args.when)
+    store = ProvenanceStore(args.docs)
+
+    print(f"{args.layer} {args.zone} {_label(args.field, args.when)}")
+    if isinstance(value, Incorporation):
+        governs = "this zone's own text" if value.wins == "local" else f"the {value.zone} chapter"
+        print(f"  adopts    {value.zone}")
+        print(f"  conflict  {governs} governs where the two disagree")
+    else:
+        print(f"  value     {part.value}")
+    print(f"  status    {part.status.value}")
+    print(f"  cite      {part.prov.cite}")
+    print(f"  url       {part.prov.url}")
+    print(f"  retrieved {part.prov.retrieved}")
+    print(f"  quote     {part.prov.quote or '(none)'}")
+    if isinstance(value, Value):
+        if value.preempts:
+            print("  preempts  yes — a more specific layer cannot override this")
+        if not args.when and value.variants:
+            # Reviewing the base without being told the exceptions exist is how
+            # a signature ends up standing for more than the reviewer read.
+            print("  exceptions:")
+            for other in value.variants:
+                print(
+                    f"    {other.value} when {'+'.join(sorted(other.when))}"
+                    f"  ({other.status.value}) — sign with --when {' '.join(sorted(other.when))}"
+                )
+    return _print_evidence(store, part)
 
 
 def cmd_sign(args: argparse.Namespace) -> int:
@@ -217,30 +268,18 @@ def cmd_sign(args: argparse.Namespace) -> int:
             return 1
         # Whether this is already verified is a question for the log, not for
         # the file — the file always loads draft, by design.
+        entry = (
+            sign_like(args.layer, args.zone, part, reviewer=args.reviewer, reviewed=reviewed,
+                      note=args.note)
+            if isinstance(part, Incorporation)
+            else sign(args.layer, args.zone, field, value, reviewer=args.reviewer,
+                      reviewed=reviewed, note=args.note, when=when)
+        )
         prior = active.get((args.layer, args.zone, field, when))
-        if prior is not None and prior.fingerprint == sign(
-            args.layer,
-            args.zone,
-            field,
-            value,
-            reviewer=args.reviewer,
-            reviewed=reviewed,
-            when=when,
-        ).fingerprint:
+        if prior is not None and prior.fingerprint == entry.fingerprint:
             print(f"{_label(field, when)}: already verified by {prior.reviewer}, nothing to sign")
             continue
-        entries.append(
-            sign(
-                args.layer,
-                args.zone,
-                field,
-                value,
-                reviewer=args.reviewer,
-                reviewed=reviewed,
-                note=args.note,
-                when=when,
-            )
-        )
+        entries.append(entry)
 
     for entry in entries:
         log.append(entry, args.log)

@@ -15,7 +15,7 @@ from __future__ import annotations
 
 from datetime import date
 
-from flats.encode.verify import VerificationLog, apply_verifications, sign
+from flats.encode.verify import VerificationLog, apply_verifications, sign, sign_like
 from flats.rules.model import Layer, Status
 
 REVIEWER = "sjk"
@@ -48,5 +48,10 @@ def sign_encoded(
                                 when=getattr(part, "when", ()),
                             )
                         )
+        for zone_code, zone in layer.zones.items():
+            if zone.like is not None and zone.like.status is Status.encoded:
+                entries.append(
+                    sign_like(layer_id, zone_code, zone.like, reviewer=reviewer, reviewed=reviewed)
+                )
     promoted, _ = apply_verifications(layers, VerificationLog(entries))
     return promoted

@@ -10,6 +10,7 @@ from flats.encode.verify import (
     VerificationLog,
     apply_verifications,
     fingerprint,
+    sign_like,
     sign,
 )
 
@@ -23,5 +24,6 @@ __all__ = [
     "VerificationLog",
     "apply_verifications",
     "fingerprint",
+    "sign_like",
     "sign",
 ]

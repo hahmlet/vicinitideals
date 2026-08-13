@@ -369,3 +369,81 @@ def test_revoking_the_base_leaves_the_exception_signed(footnoted: dict) -> None:
     run(footnoted, "revoke", PORTLAND, "R5", "setback_front_ft", "--reviewer", "sjk")
 
     assert [k[3] for k in log(footnoted).active()] == [("affordable",)]
+
+
+# --- a zone that borrows ----------------------------------------------
+
+#: R-6 states the standards; VSF adopts them and says so.
+BORROWS = (
+    "label: Portland\n"
+    + CITE
+    + "zones:\n"
+    "  R-6:\n"
+    "    setback_front_ft: 10\n"
+    "  VSF:\n"
+    "    like: R-6\n"
+)
+
+
+@pytest.fixture()
+def borrowing(bench: dict) -> dict:
+    bench["rules"].write_text(BORROWS, encoding="utf-8")
+    return bench
+
+
+def test_show_reads_the_reference_as_a_rule(borrowing: dict, capsys) -> None:
+    assert run(borrowing, "show", PORTLAND, "VSF", "like") == 0
+
+    out = capsys.readouterr().out
+    assert "adopts    R-6" in out
+    assert "this zone's own text governs" in out
+    assert "| The minimum front building setback is 10 feet." in out, "the evidence is shown"
+
+
+def test_a_borrowed_field_sends_the_reviewer_to_where_it_lives(borrowing: dict) -> None:
+    # Not "no such field". The number exists; it is printed in another chapter,
+    # and reviewing it here would mean reviewing a copy.
+    with pytest.raises(SystemExit, match="comes from R-6"):
+        run(borrowing, "show", PORTLAND, "VSF", "setback_front_ft")
+
+
+def test_the_reference_signs_like_anything_else(borrowing: dict) -> None:
+    assert run(borrowing, "sign", PORTLAND, "VSF", "like", "--reviewer", "sjk") == 0
+
+    entries = list(log(borrowing))
+    assert [(e.zone, e.field) for e in entries] == [("VSF", "like")]
+
+
+def test_signing_the_reference_twice_is_a_no_op(borrowing: dict, capsys) -> None:
+    run(borrowing, "sign", PORTLAND, "VSF", "like", "--reviewer", "sjk")
+    capsys.readouterr()
+
+    assert run(borrowing, "sign", PORTLAND, "VSF", "like", "--reviewer", "sjk") == 0
+    assert "nothing to sign" in capsys.readouterr().out
+    assert len(log(borrowing)) == 1
+
+
+def test_an_unread_reference_is_queued(borrowing: dict, capsys) -> None:
+    assert run(borrowing, "queue") == 0
+
+    out = capsys.readouterr().out
+    assert "VSF like = R-6" in out
+
+
+def test_a_signed_reference_leaves_the_queue(borrowing: dict, capsys) -> None:
+    run(borrowing, "sign", PORTLAND, "VSF", "like", "--reviewer", "sjk")
+    capsys.readouterr()
+
+    run(borrowing, "queue")
+
+    assert "VSF like" not in capsys.readouterr().out
+
+
+def test_a_zone_that_borrows_nothing_has_no_reference_to_show(bench: dict) -> None:
+    with pytest.raises(SystemExit, match="adopts no other zone"):
+        run(bench, "show", PORTLAND, "R5", "like")
+
+
+def test_a_reference_has_no_exceptions_to_sign(borrowing: dict) -> None:
+    with pytest.raises(SystemExit, match="no exceptions"):
+        run(borrowing, "sign", PORTLAND, "VSF", "like", "--reviewer", "sjk", "--when", "affordable")

@@ -37,7 +37,7 @@ from datetime import date
 from pathlib import Path
 from typing import Any, Iterable, Iterator, Mapping, Sequence
 
-from flats.rules.model import Layer, Status, Value, Variant
+from flats.rules.model import LIKE, Incorporation, Layer, Status, Value, Variant
 
 LOG_PATH = Path(__file__).resolve().parents[1] / "config" / "verifications.jsonl"
 
@@ -209,6 +209,39 @@ class VerificationLog:
         return cls(entries)
 
 
+def like_payload(like: Incorporation) -> str:
+    """What a reviewer is agreeing to when they sign an incorporation.
+
+    Both halves matter. Pointing at a different zone obviously changes what the
+    numbers are; flipping which text governs on conflict changes it just as much
+    and is far easier to edit without anyone noticing.
+    """
+    return f"{like.zone}|{like.wins}"
+
+
+def sign_like(
+    layer: str,
+    zone: str,
+    like: Incorporation,
+    *,
+    reviewer: str,
+    reviewed: date,
+    note: str = "",
+) -> Verification:
+    """Build a verification for a zone's claim to adopt another zone."""
+    return Verification(
+        layer=layer,
+        zone=zone,
+        field=LIKE,
+        fingerprint=fingerprint(
+            layer, zone, LIKE, like_payload(like), cite=like.prov.cite, quote=like.prov.quote
+        ),
+        reviewer=reviewer,
+        reviewed=reviewed,
+        note=note,
+    )
+
+
 def variant_for(value: Value, when: Sequence[str]) -> Variant:
     """The exception this reviewer means, found by its exact condition set.
 
@@ -374,13 +407,44 @@ def apply_verifications(
                     updated[name] = value
             return updated
 
+        def promote_like(zone_code: str, zone):
+            """The reference itself, promoted on its own signature."""
+            nonlocal changed
+            if zone.like is None:
+                return None
+            v = active.get((layer_id, zone_code, LIKE, ()))
+            if v is None:
+                return None
+            expected = fingerprint(
+                layer_id,
+                zone_code,
+                LIKE,
+                like_payload(zone.like),
+                cite=zone.like.prov.cite,
+                quote=zone.like.prov.quote,
+            )
+            if expected != v.fingerprint:
+                # Repointed at a different zone, or the conflict rule flipped.
+                return None
+            used.add(v.key)
+            if zone.like.status is Status.verified:
+                return None
+            changed = True
+            return zone.like.model_copy(
+                update={"status": Status.verified, "reviewer": v.reviewer, "reviewed": v.reviewed}
+            )
+
         defaults = promote_block("defaults", dict(layer.defaults))
         zones = {}
         for zone_code, zone in layer.zones.items():
             values = promote_block(zone_code, dict(zone.values))
-            zones[zone_code] = (
-                zone.model_copy(update={"values": values}) if values != zone.values else zone
-            )
+            edits = {}
+            if values != zone.values:
+                edits["values"] = values
+            promoted_like = promote_like(zone_code, zone)
+            if promoted_like is not None:
+                edits["like"] = promoted_like
+            zones[zone_code] = zone.model_copy(update=edits) if edits else zone
         out[layer_id] = (
             layer.model_copy(update={"defaults": defaults, "zones": zones}) if changed else layer
         )
@@ -396,13 +460,17 @@ def apply_verifications(
             block = layer.defaults if zone_name == "defaults" else (
                 layer.zones[zone_name].values if zone_name in layer.zones else {}
             )
-            value = block.get(field)
-            # A variant whose conditions were rewritten is gone in the sense
-            # that matters: there is no longer any sentence this signature could
-            # be standing over, so it reads the same as a deleted field.
-            present = value is not None and (
-                not when or any(frozenset(x.when) == frozenset(when) for x in value.variants)
-            )
+            if field == LIKE:
+                zone_block = layer.zones.get(zone_name) if zone_name != "defaults" else None
+                present = zone_block is not None and zone_block.like is not None
+            else:
+                value = block.get(field)
+                # A variant whose conditions were rewritten is gone in the sense
+                # that matters: there is no longer any sentence this signature
+                # could stand over, so it reads the same as a deleted field.
+                present = value is not None and (
+                    not when or any(frozenset(x.when) == frozenset(when) for x in value.variants)
+                )
         orphans.append(
             Orphan(
                 layer=layer_id,
