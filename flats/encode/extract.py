@@ -354,15 +354,27 @@ def paragraphs(text: str) -> list[tuple[int, int, str]]:
     return out
 
 
-def extract(text: str, *, path: str, jurisdiction: str = "", section: str = "") -> Extraction:
-    """Read a stored document into tagged clauses and candidate values."""
+def extract(
+    text: str, *, path: str, jurisdiction: str = "", section: str = "", zone: str = ""
+) -> Extraction:
+    """Read a stored document into tagged clauses and candidate values.
+
+    ``zone`` also reads the standards tables, which is where a code like
+    Portland's states almost everything the prose defers to. It is a zone
+    argument because a table row holds one value per zone and only the column
+    written for this zone may be read.
+    """
+    # Imported here because the table reader is built on this module's subject
+    # matching: prose and grid ask the same question of a label.
+    from flats.encode.tables import blank_tables, candidates_for, read_tables
+
     clauses: list[Clause] = []
     proposed: list[Candidate] = []
     current = section
 
     in_exceptions = False
 
-    for first, last, stripped in paragraphs(text):
+    for first, last, stripped in paragraphs(blank_tables(text)):
         n = first
         quote = f"{path}#L{first}" if first == last else f"{path}#L{first}-L{last}"
         found = _SECTION.match(stripped)
@@ -394,6 +406,10 @@ def extract(text: str, *, path: str, jurisdiction: str = "", section: str = "") 
         )
         if tag is not Rase.exception:
             proposed.extend(candidates_in(stripped, n, path, quote=quote))
+
+    if zone:
+        for rows in read_tables(text):
+            proposed.extend(candidates_for(rows, zone, path=path))
 
     return Extraction(path=path, clauses=tuple(clauses), candidates=tuple(_mark(proposed)))
 
@@ -460,7 +476,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     doc = ProvenanceStore(args.docs).load(args.path)
-    extraction = extract(doc.text, path=args.path, jurisdiction=args.jurisdiction)
+    extraction = extract(
+        doc.text, path=args.path, jurisdiction=args.jurisdiction, zone=args.zone
+    )
 
     if args.yaml:
         print(
@@ -482,6 +500,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         print(f"  UNRESOLVED {clause.tag.name} [{clause.quote}] {clause.text[:60]}")
     for clause in extraction.untagged:
         print(f"  UNTAGGED [{clause.quote}] {clause.text[:60]}")
+    if extraction.tables:
+        # Which grids the prose sent its numbers to. Some were read; a table
+        # this reader could not parse leaves the standard unencoded, and the
+        # only way that shows up is here.
+        print(f"  tables referenced: {', '.join(extraction.tables)}")
     # Untagged and unresolved clauses are work, not failure — but they are the
     # difference between "we read the section" and "we read some of it".
     return 1 if (extraction.untagged or extraction.unresolved() or extraction.conflicted) else 0

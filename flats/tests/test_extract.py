@@ -290,6 +290,62 @@ def test_relief_provisions_are_exceptions_by_scope() -> None:
     assert any(c.tag is Rase.exception for c in result.clauses if "reduced to 10" in c.text)
 
 
+# --- the table the prose defers to ------------------------------------
+
+WITH_TABLE = """33.110.220 Setbacks
+B. Required setbacks. The required setbacks for buildings are
+stated in Table 110-4.
+Table 110-4
+Standard                      RF          R5          R2.5
+- Front building              20 ft.      10 ft.      10 ft.
+ setback
+Maximum Height                30 ft.      30 ft.      35 ft.
+"""
+
+
+def test_a_zone_reads_its_own_column_of_the_table() -> None:
+    result = extract(WITH_TABLE, path=DOC, zone="R5")
+    got = {c.field: c.value for c in result.candidates}
+
+    assert got["setback_front_ft"] == 10
+    assert got["max_height_ft"] == 30
+
+
+def test_another_zone_reads_a_different_column_of_the_same_table() -> None:
+    got = {c.field: c.value for c in extract(WITH_TABLE, path=DOC, zone="R2.5").candidates}
+
+    assert got["max_height_ft"] == 35
+
+
+def test_without_a_zone_the_table_is_left_unread() -> None:
+    # A grid holds one value per zone. With no zone named there is no column
+    # to read, and reading any of them would be picking one at random.
+    assert extract(WITH_TABLE, path=DOC).candidates == ()
+
+
+def test_prose_and_table_agreeing_is_not_a_conflict() -> None:
+    text = WITH_TABLE + "The minimum front building setback is 10 feet.\n"
+
+    assert extract(text, path=DOC, zone="R5").conflicted == ()
+
+
+def test_prose_and_table_disagreeing_goes_to_a_person() -> None:
+    # Which one governs is a reading question — often the prose is an exception
+    # the table does not show. Both survive, flagged, and neither is encoded.
+    text = WITH_TABLE + "The minimum front building setback is 15 feet.\n"
+    result = extract(text, path=DOC, zone="R5")
+
+    assert result.conflicted == ("setback_front_ft",)
+    assert sorted(c.value for c in result.for_field("setback_front_ft")) == [10, 15]
+
+
+def test_a_table_value_quotes_the_row_it_was_read_from() -> None:
+    result = extract(WITH_TABLE, path=DOC, zone="R5")
+    line = int(next(c for c in result.candidates if c.field == "max_height_ft").quote.rsplit("#L", 1)[1])
+
+    assert "30 ft." in WITH_TABLE.splitlines()[line - 1]
+
+
 def test_a_table_the_prose_defers_to_is_named() -> None:
     # The honest output for Portland: the setbacks are real, they are in Table
     # 110-4, and this harness cannot read a grid with one column per zone.

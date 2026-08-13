@@ -143,12 +143,20 @@ def pdf_to_text(data: bytes) -> str:
     in the state. Page furniture is left in: the running header carries the
     revision date, which is exactly the kind of change a hash should catch.
     """
-    from pypdf import PdfReader
     from io import BytesIO
 
+    from pypdf import PdfReader
+
     reader = PdfReader(BytesIO(data))
-    pages = [(page.extract_text() or "").replace("\r\n", "\n") for page in reader.pages]
-    lines = [_SPACES.sub(" ", line).strip() for line in "\n".join(pages).split("\n")]
+    pages = [
+        (page.extract_text(extraction_mode="layout") or "").replace("\r\n", "\n")
+        for page in reader.pages
+    ]
+    # Internal spacing is kept, unlike the HTML path. Portland states its
+    # standards in a grid with one column per zone, and the gaps between
+    # columns are the only thing that says which number belongs to which zone.
+    # Collapsing them would make R5's 10 ft indistinguishable from RF's 20 ft.
+    lines = [line.rstrip() for line in "\n".join(pages).split("\n")]
     return _BLANKS.sub("\n\n", "\n".join(lines)).strip() + "\n"
 
 
