@@ -35,9 +35,11 @@ Run::
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path
 from typing import Sequence
 
@@ -50,10 +52,18 @@ from flats.rules.loader import CONFIG_ROOT, load_rules
 #: bad guess.
 PLATFORMS: tuple[tuple[str, str, str], ...] = (
     ("codepublishing", "https://www.codepublishing.com/OR/{camel}/", "camel"),
-    ("municode", "https://library.municode.com/or/{snake}/codes/code_of_ordinances", "snake"),
     ("amlegal", "https://codelibrary.amlegal.com/codes/{lower}/latest/overview", "lower"),
     ("qcode", "https://qcode.us/codes/{lower}/", "lower"),
 )
+
+#: Municode is asked a different question, and the reason is a measurement.
+#: `library.municode.com/or/<anything>/codes/code_of_ordinances` returns the same
+#: 6,095-byte frame whether the city is a client or not — the "not found" is
+#: rendered in JavaScript. Probing the URL therefore reports a lead for every
+#: city on earth. Its client registry is a plain JSON list and answers the
+#: question the URL cannot: is this jurisdiction actually on this platform?
+MUNICODE_CLIENTS = "https://api.municode.com/Clients/stateAbbr?stateAbbr={state}"
+MUNICODE_LIBRARY = "https://library.municode.com/{state_lower}/{snake}/codes/code_of_ordinances"
 
 #: Words a municipal code index has and a 404 page does not. Deliberately dull:
 #: anything cleverer starts making judgements about content, and this is only
@@ -82,16 +92,17 @@ class Candidate:
     strategy: str = ""
     authority: Authority = Authority.unknown
     size: int = 0
+    #: Anything the reader needs that the URL does not carry — a client id, the
+    #: fact that the content still needs a rendered fetch.
+    note: str = ""
 
     @property
     def worth_following(self) -> bool:
         return self.verdict in ("index", "shell")
 
     def line(self) -> str:
-        return (
-            f"  {self.verdict:8} {self.platform:15} {self.url}"
-            + (f"  [{self.strategy}, {self.size:,}b]" if self.strategy else "")
-        )
+        detail = self.note or (f"{self.strategy}, {self.size:,}b" if self.strategy else "")
+        return f"  {self.verdict:8} {self.platform:15} {self.url}" + (f"  [{detail}]" if detail else "")
 
 
 def name_forms(label: str) -> dict[str, str]:
@@ -156,10 +167,71 @@ def probe(layer: str, platform: str, url: str) -> Candidate:
     )
 
 
+@lru_cache(maxsize=8)
+def municode_clients(state: str = "OR") -> tuple[tuple[str, int], ...] | None:
+    """Every jurisdiction Municode publishes in one state, from its own registry.
+
+    Cached because a sweep asks once per city and the answer is one list.
+    ``None`` means the registry could not be read — distinct from an empty list,
+    which would mean the platform publishes nobody here. Those are opposite
+    conclusions and the second must never stand in for the first.
+    """
+    try:
+        got = fetch(MUNICODE_CLIENTS.format(state=state.upper()), strategies=("plain",))
+        listed = json.loads(got.content)
+    except (FetchFailed, ValueError):
+        return None
+    return tuple(
+        (str(entry.get("ClientName", "")), int(entry.get("ClientID", 0)))
+        for entry in listed
+        if entry.get("ClientName")
+    )
+
+
+def _key(name: str) -> str:
+    return _PUNCT.sub("", name.lower())
+
+
+def municode(layer: str, label: str, *, state: str = "OR") -> Candidate:
+    """Ask Municode's registry whether it publishes this jurisdiction."""
+    clients = municode_clients(state)
+    url = MUNICODE_LIBRARY.format(state_lower=state.lower(), **name_forms(label))
+    if clients is None:
+        return Candidate(layer, "municode", url, "blocked", authority=authority_for(url))
+    wanted = {_key(label)} | {_key(alias) for alias in aliases(label)}
+    for name, client_id in clients:
+        if _key(name) in wanted:
+            return Candidate(
+                layer,
+                "municode",
+                MUNICODE_LIBRARY.format(state_lower=state.lower(), **name_forms(name)),
+                "index",
+                status=200,
+                strategy="registry",
+                authority=authority_for(url),
+                note=f"client {client_id}; content renders in JavaScript",
+            )
+    return Candidate(layer, "municode", url, "missing", authority=authority_for(url))
+
+
+def aliases(label: str) -> tuple[str, ...]:
+    """Other names a codifier might file this jurisdiction under.
+
+    Unincorporated county land is encoded as its own jurisdiction because that
+    is how the zoning works, but a codifier files it under the county's name.
+    """
+    lowered = label.lower()
+    if "unincorporated" in lowered:
+        county = lowered.replace("unincorporated", "").strip()
+        return (f"{county} county", county)
+    return ()
+
+
 def discover(layer: str, label: str) -> list[Candidate]:
     """Every platform's answer, most useful first."""
     order = {"index": 0, "shell": 1, "blocked": 2, "missing": 3}
     out = [probe(layer, platform, url) for platform, url in urls_for(label)]
+    out.append(municode(layer, label))
     out.sort(key=lambda c: (order[c.verdict], c.platform))
     return out
 
@@ -212,7 +284,11 @@ def main(argv: Sequence[str] | None = None) -> int:
 
 
 __all__ = [
+    "MUNICODE_CLIENTS",
     "PLATFORMS",
+    "aliases",
+    "municode",
+    "municode_clients",
     "Candidate",
     "classify",
     "discover",

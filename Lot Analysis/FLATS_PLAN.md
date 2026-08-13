@@ -1342,18 +1342,46 @@ carries what each strategy got, so the caller can tell.
 chapters?" *before* asking "is this a JavaScript shell?" calls the frame a code
 index — a lead that is not there, which costs more than no lead.
 
+### Municode is asked, not probed
+
+The first sweep reported a Municode lead for all ten remaining cities, and it was
+wrong. `library.municode.com/or/<anything>/codes/code_of_ordinances` returns the
+same 6,095-byte frame whether the city is a client or not — the "not found" renders
+in JavaScript. Every byte-identical response was being read as a hit.
+
+That is the project's own failure mode wearing different clothes: a confident
+answer produced by a tool that could not see. So Municode is asked a question its
+URL cannot answer — **its client registry**, a plain JSON list of every jurisdiction
+it publishes in a state:
+
+```
+https://api.municode.com/Clients/stateAbbr?stateAbbr=OR   → 55 Oregon clients
+```
+
+Gresham is not among them. Six of the ten "Municode leads" did not exist.
+
+The registry distinguishes three states where the URL distinguished none: on the
+list (a real lead, with its client id), not on the list (definitively elsewhere),
+and *list unreadable* — which is a fetching failure and must never be reported as
+"this platform publishes nobody here".
+
 ### What the sweep found
 
-**15 of 15 have a lead. Five are directly fetchable; ten are Municode.**
+**9 of 15 have a lead. Six have none.**
 
 ```
 index   codepublishing   Gladstone, Lake Oswego, West Linn, Wood Village
 index   qcode            Milwaukie
-shell   municode         Gresham, Troutdale, Wilsonville, Happy Valley, Oregon City,
-                         Tualatin, Rivergrove, Johnson City, and both unincorporated areas
+index   municode         Oregon City, Troutdale, Tualatin, Wilsonville   (registry-confirmed)
+—       no lead          Gresham, Happy Valley, Rivergrove, Johnson City,
+                         Multnomah unincorporated, Clackamas unincorporated
 ```
 
-That quantifies the platform gap §15 left open: **Municode is not one city's problem,
-it is two thirds of the remaining corpus.** A rendered fetch or that platform's API
-is now the single highest-leverage piece of coverage work in the project — worth
-more than any individual city's encoding.
+The six with no lead are the ones publishing on their own municipal sites, which no
+URL template reaches — Gresham's Community Development Code and Happy Valley's are
+each a one-off. That is hand work, and now it is *six* pieces of hand work with
+names on them rather than sixteen of unknown shape.
+
+The four Municode cities still need a rendered fetch or that platform's content API
+to read; being on the registry proves the code is there, not that a fetcher can see
+it. That remains the largest single piece of coverage work.

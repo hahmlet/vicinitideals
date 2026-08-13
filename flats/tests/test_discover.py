@@ -13,6 +13,7 @@ test that depends on a codifier being up tests the codifier.
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import pytest
@@ -94,7 +95,7 @@ def _fails(*attempts) -> FetchFailed:
 
 
 def test_a_404_means_the_guess_was_wrong_not_that_we_are_blocked(monkeypatch) -> None:
-    monkeypatch.setattr(mod, "fetch", lambda url: (_ for _ in ()).throw(_fails(("plain", 404))))
+    monkeypatch.setattr(mod, "fetch", lambda url, **kw: (_ for _ in ()).throw(_fails(("plain", 404))))
 
     assert probe("l", "qcode", "https://qcode.us/codes/gresham/").verdict == "missing"
 
@@ -106,7 +107,7 @@ def test_a_403_everywhere_means_the_fetcher_is_the_problem(monkeypatch) -> None:
     monkeypatch.setattr(
         mod,
         "fetch",
-        lambda url: (_ for _ in ()).throw(_fails(("plain", 403), ("chrome124", 403))),
+        lambda url, **kw: (_ for _ in ()).throw(_fails(("plain", 403), ("chrome124", 403))),
     )
 
     assert probe("l", "codepublishing", "https://x.gov/").verdict == "blocked"
@@ -114,7 +115,7 @@ def test_a_403_everywhere_means_the_fetcher_is_the_problem(monkeypatch) -> None:
 
 def test_a_transport_error_with_no_status_is_blocked_not_missing(monkeypatch) -> None:
     monkeypatch.setattr(
-        mod, "fetch", lambda url: (_ for _ in ()).throw(_fails(("plain", "ConnectTimeout")))
+        mod, "fetch", lambda url, **kw: (_ for _ in ()).throw(_fails(("plain", "ConnectTimeout")))
     )
 
     assert probe("l", "amlegal", "https://x.gov/").verdict == "blocked"
@@ -122,7 +123,7 @@ def test_a_transport_error_with_no_status_is_blocked_not_missing(monkeypatch) ->
 
 def test_a_probe_records_what_it_took_to_get_the_page(monkeypatch) -> None:
     monkeypatch.setattr(
-        mod, "fetch", lambda url: Fetched(INDEX, "chrome124", 200, Authority.official)
+        mod, "fetch", lambda url, **kw: Fetched(INDEX, "chrome124", 200, Authority.official)
     )
 
     got = probe("l", "codepublishing", "https://www.codepublishing.com/OR/Fairview/")
@@ -135,7 +136,7 @@ def test_a_probe_records_what_it_took_to_get_the_page(monkeypatch) -> None:
 def test_a_probe_never_raises(monkeypatch) -> None:
     # A sweep across sixteen cities that dies on the first blocked host reports
     # one city instead of sixteen.
-    monkeypatch.setattr(mod, "fetch", lambda url: (_ for _ in ()).throw(_fails()))
+    monkeypatch.setattr(mod, "fetch", lambda url, **kw: (_ for _ in ()).throw(_fails()))
 
     assert probe("l", "qcode", "https://x.gov/").verdict == "blocked"
 
@@ -146,12 +147,12 @@ def test_a_probe_never_raises(monkeypatch) -> None:
 def test_leads_sort_ahead_of_dead_ends(monkeypatch) -> None:
     answers = {
         "codepublishing": _fails(("plain", 404)),
-        "municode": Fetched(SHELL, "plain", 200, Authority.official),
+        "api.municode.com": Fetched(b"[]", "plain", 200, Authority.official),
         "amlegal": _fails(("plain", 403)),
         "qcode": Fetched(INDEX, "plain", 200, Authority.official),
     }
 
-    def fake(url: str):
+    def fake(url: str, **kw):
         for platform, answer in answers.items():
             if platform in url:
                 if isinstance(answer, FetchFailed):
@@ -161,10 +162,11 @@ def test_leads_sort_ahead_of_dead_ends(monkeypatch) -> None:
 
     monkeypatch.setattr(mod, "fetch", fake)
 
+    # An empty registry is a real answer: Municode does not publish this city.
     assert [c.verdict for c in mod.discover("l", "Gresham")] == [
         "index",
-        "shell",
         "blocked",
+        "missing",
         "missing",
     ]
 
@@ -208,7 +210,9 @@ def test_a_jurisdiction_with_no_zones_is_not_hunted_for_either(rules: Path) -> N
 
 
 def test_the_sweep_says_how_many_have_a_lead(rules: Path, monkeypatch, capsys) -> None:
-    monkeypatch.setattr(mod, "fetch", lambda url: Fetched(INDEX, "plain", 200, Authority.official))
+    monkeypatch.setattr(
+        mod, "fetch", lambda url, **kw: Fetched(INDEX, "plain", 200, Authority.official)
+    )
 
     assert main(["--all", "--rules", str(rules)]) == 0
     assert "1/1 jurisdiction(s) have a lead to follow" in capsys.readouterr().out
@@ -217,7 +221,9 @@ def test_the_sweep_says_how_many_have_a_lead(rules: Path, monkeypatch, capsys) -
 def test_the_sweep_says_a_lead_is_not_a_citation(rules: Path, monkeypatch, capsys) -> None:
     # An index URL in a `code:` block would fetch the front door of the code and
     # quote lines from a table of contents.
-    monkeypatch.setattr(mod, "fetch", lambda url: Fetched(INDEX, "plain", 200, Authority.official))
+    monkeypatch.setattr(
+        mod, "fetch", lambda url, **kw: Fetched(INDEX, "plain", 200, Authority.official)
+    )
     main(["--all", "--rules", str(rules)])
 
     assert "pick the zoning chapter" in capsys.readouterr().out
@@ -225,3 +231,94 @@ def test_the_sweep_says_a_lead_is_not_a_citation(rules: Path, monkeypatch, capsy
 
 def test_nothing_to_discover_is_an_error_not_a_silent_zero(rules: Path) -> None:
     assert main(["--layer", "or/multnomah/portland", "--rules", str(rules)]) == 1
+
+
+# --- Municode is asked, not probed -------------------------------------
+
+
+CLIENTS = json.dumps(
+    [
+        {"ClientName": "Wilsonville", "ClientID": 4976},
+        {"ClientName": "Washington County", "ClientID": 4800},
+    ]
+).encode()
+
+
+@pytest.fixture(autouse=True)
+def _no_cached_registry():
+    mod.municode_clients.cache_clear()
+    yield
+    mod.municode_clients.cache_clear()
+
+
+def _registry(monkeypatch, body: bytes | None) -> None:
+    def fake(url: str, **kw):
+        if "api.municode.com" in url:
+            if body is None:
+                raise FetchFailed("nope", (("plain", 503),))
+            return Fetched(body, "plain", 200, Authority.official)
+        raise FetchFailed("nope", (("plain", 404),))
+
+    monkeypatch.setattr(mod, "fetch", fake)
+
+
+def test_a_city_on_the_registry_is_a_real_lead(monkeypatch) -> None:
+    _registry(monkeypatch, CLIENTS)
+
+    got = mod.municode("l", "Wilsonville")
+
+    assert got.verdict == "index"
+    assert "4976" in got.note
+
+
+def test_a_city_not_on_the_registry_is_missing_not_a_shell(monkeypatch) -> None:
+    # The measurement this defends: library.municode.com returns the same 6KB
+    # frame for every path, client or not — the "not found" renders in
+    # JavaScript. Probing the URL reported a Municode lead for Gresham, which
+    # is not a Municode client at all.
+    _registry(monkeypatch, CLIENTS)
+
+    assert mod.municode("l", "Gresham").verdict == "missing"
+
+
+def test_an_empty_registry_is_an_answer_not_a_failure(monkeypatch) -> None:
+    # "Municode publishes nobody in this state" and "we could not read the
+    # list" are opposite conclusions that an empty tuple would collapse.
+    _registry(monkeypatch, b"[]")
+
+    assert mod.municode("l", "Wilsonville").verdict == "missing"
+
+
+def test_an_unreadable_registry_is_blocked_not_an_empty_platform(monkeypatch) -> None:
+    # "No city is a Municode client" and "we could not read the client list"
+    # are opposite conclusions, and the second one must never be reported as
+    # the first.
+    _registry(monkeypatch, None)
+
+    assert mod.municode("l", "Wilsonville").verdict == "blocked"
+
+
+def test_unincorporated_county_land_is_filed_under_the_county(monkeypatch) -> None:
+    # It is its own jurisdiction because that is how the zoning works. A
+    # codifier files it under the county's name.
+    _registry(monkeypatch, CLIENTS)
+
+    assert mod.municode("l", "Washington Unincorporated").verdict == "index"
+
+
+def test_the_registry_is_read_once_per_sweep(monkeypatch) -> None:
+    calls: list[str] = []
+
+    def counting(url: str, **kw):
+        calls.append(url)
+        if "api.municode.com" in url:
+            return Fetched(CLIENTS, "plain", 200, Authority.official)
+        raise FetchFailed("nope", (("plain", 404),))
+
+    monkeypatch.setattr(mod, "fetch", counting)
+    mod.municode("l", "Wilsonville")
+    mod.municode("l", "Gresham")
+
+    assert [u for u in calls if "api.municode.com" in u] == [
+        mod.MUNICODE_CLIENTS.format(state="OR")
+    ]
