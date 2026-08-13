@@ -37,8 +37,12 @@ READER = "flats-table/1"
 
 #: Two or more spaces separate cells; one space is inside a phrase.
 _GAP = re.compile(r"\s{2,}")
-#: A zone code as it appears in a header: R5, R2.5, RM1, RF, MDR-PV.
-_ZONE = re.compile(r"^[A-Z]{1,4}[0-9]{0,2}(?:\.[0-9])?(?:-[A-Z]{1,3})?$")
+#: A zone code as it appears in a header: R5, R2.5, RM1, RF, MDR-PV — and the
+#: hyphen-digit shape, R-10, R-3.5, LDR-1, which is how Oregon City and
+#: Troutdale write theirs. Before the second alternative, every column in
+#: Troutdale's dimensional-standards table failed to read as a zone and the
+#: whole grid was invisible to this reader.
+_ZONE = re.compile(r"^[A-Z]{1,4}[0-9]{0,2}(?:\.[0-9])?(?:-(?:[A-Z]{1,3}|[0-9]{1,2}(?:\.[0-9])?))?$")
 #: A row's label column has to name a standard before anything is read from it.
 _HEADER_HINT = re.compile(r"\bstandard\b|\bzone\b", re.I)
 #: Values that are not measurements. Each means something a number cannot say.
@@ -101,6 +105,11 @@ class Row:
     cells: dict[str, str]
     contested: frozenset[str] = frozenset()
     lines: dict[str, int] = dc_field(default_factory=dict)
+    #: The heading this row sits under — "Setbacks (ft):". Load-bearing twice:
+    #: Troutdale's rows are labelled "Front yard" with no setback word in
+    #: sight, and the unit its bare-digit cells are measured in is printed
+    #: here rather than beside the numbers.
+    group: str = ""
     #: Footnote numbers on each zone's cell. "30 ft. [3]" means this zone's
     #: standard has an exit written under the table, and a screen that reads
     #: the 30 and drops the 3 applies a ceiling the code does not impose.
@@ -142,9 +151,16 @@ class Table:
 
 
 def _cells(line: str) -> list[tuple[int, str]]:
-    """Split a layout line into (offset, text), one per gap-separated cell."""
+    """Split a layout line into (offset, text), one per gap-separated cell.
+
+    The middle group is lazy at both levels (``??``), and that is the fix for
+    a real bug: with a greedy ``?`` a single-character cell reached across its
+    own gap and glued itself to the next cell, so Troutdale's grid of bare
+    digits ("5      5      5") read as pairs. Portland never showed it because
+    its cells carry units — "20 ft." stops at its own word end either way.
+    """
     out: list[tuple[int, str]] = []
-    for m in re.finditer(r"\S(?:.*?\S)?(?=\s{2,}|$)", line):
+    for m in re.finditer(r"\S(?:.*?\S)??(?=\s{2,}|$)", line):
         text = m.group(0).strip()
         if text:
             out.append((m.start(), text))
@@ -155,6 +171,18 @@ def columns(line: str) -> tuple[Column, ...]:
     """Zone columns from a header line, or empty when this is not one."""
     head = header(line)
     return head[1] if head and head[0] == ZONES_ACROSS else ()
+
+
+def _slots(line: str) -> tuple[str | None, ...]:
+    """Every header cell after the label — zone code or None — in print order.
+
+    The None entries are real columns. Troutdale prints "(TC)" town-center
+    sub-columns between its zones, and counting those cells is what lets a
+    data row be read by *position* when its numbers drift off the header
+    offsets — without them the fifth cell looks like the fifth zone.
+    """
+    found = _cells(line)
+    return tuple(text if _ZONE.match(text) else None for _, text in found[1:])
 
 
 def header(line: str) -> tuple[str, tuple[Column, ...]] | None:
@@ -360,6 +388,8 @@ def _read_span(lines: Sequence[str], first: int, last: int, start_line: int) -> 
     junk = _furniture_outside(lines, first, last)
     kind = ""
     cols: tuple[Column, ...] = ()
+    slots: tuple[str | None, ...] = ()
+    group = ""
     reach = _MIN_REACH
     rows: list[Row] = []
     down: dict[str, dict[str, tuple[str, int, tuple[int, ...]]]] = {}
@@ -368,7 +398,14 @@ def _read_span(lines: Sequence[str], first: int, last: int, start_line: int) -> 
 
     for n, line in enumerate(lines[first:last], start=start_line + first):
         stripped = line.strip()
-        if not stripped or stripped in junk or _PAGE_NUMBER.match(stripped):
+        if stripped.endswith(":"):
+            # Exempt from the furniture check below: "Setbacks (ft):" repeats
+            # in every housing-type table of the chapter, which reads as page
+            # decoration by frequency — but it is the heading that says the
+            # rows under it are setbacks at all. Running headers and revision
+            # stamps do not end with a colon.
+            pass
+        elif not stripped or stripped in junk or _PAGE_NUMBER.match(stripped):
             # Page furniture interrupts a table without ending it: a chapter
             # PDF stamps its title and revision date between the last row of
             # one page and the first row of the next.
@@ -384,6 +421,7 @@ def _read_span(lines: Sequence[str], first: int, last: int, start_line: int) -> 
             # Re-anchored on every header: a table continued onto a new page
             # is the same table, but its columns rarely land on the same offsets.
             kind, cols = head[0], head[1]
+            slots = _slots(line) if kind == ZONES_ACROSS else ()
             reach = _pitch(cols)
             continue
         if not cols:
@@ -423,11 +461,23 @@ def _read_span(lines: Sequence[str], first: int, last: int, start_line: int) -> 
         values: dict[str, str] = {}
         marks: dict[str, tuple[int, ...]] = {}
         contested: set[str] = set()
-        for offset, cell in found:
-            zone = _column_for(offset, cols, reach)
-            if zone is None:
-                label_parts.append(cell)
-                continue
+        if slots and len(found) == len(slots) + 1:
+            # One cell per header slot plus the label: the row is structurally
+            # complete, so position places every cell. Offsets cannot — this
+            # grid right-aligns each number to its own width, drifting further
+            # than the column pitch, which is how LDR-1's 70 was read as
+            # LDR-2's and the neighbouring zone's number wore its citation.
+            label_parts.append(found[0][1])
+            placed = [(z, c) for (_, c), z in zip(found[1:], slots) if z is not None]
+        else:
+            placed = []
+            for offset, cell in found:
+                zone = _column_for(offset, cols, reach)
+                if zone is None:
+                    label_parts.append(cell)
+                    continue
+                placed.append((zone, cell))
+        for zone, cell in placed:
             value = _FOOTNOTE.sub("", cell)
             if _marks(cell):
                 marks[zone] = _marks(cell)
@@ -438,14 +488,23 @@ def _read_span(lines: Sequence[str], first: int, last: int, start_line: int) -> 
                 contested.add(zone)
             values[zone] = value
 
+        joined = " ".join(label_parts).strip()
+        if joined.endswith(":"):
+            # "Setbacks (ft):" — a heading, not a row, whatever stray cells
+            # sit beside it. It scopes every row after it (across page breaks,
+            # which is why a header re-anchor does not clear it) until the
+            # next heading takes over.
+            group = joined
+            continue
         if values:
             rows.append(
                 Row(
-                    label=" ".join(label_parts).strip(),
+                    label=joined,
                     line=n,
                     cells=values,
                     contested=frozenset(contested),
                     marks=marks,
+                    group=group,
                 )
             )
         elif label_parts and rows:
@@ -458,6 +517,7 @@ def _read_span(lines: Sequence[str], first: int, last: int, start_line: int) -> 
                 contested=previous.contested,
                 lines=previous.lines,
                 marks=previous.marks,
+                group=previous.group,
             )
 
     for label, per_zone in down.items():
@@ -504,6 +564,40 @@ def measure(raw: str) -> tuple[float, str] | None:
     return float(m.group("n").replace(",", "")), _UNIT_KIND[kind]
 
 
+#: Row labels as a setbacks group prints them, exact after normalisation.
+#: Exact on purpose: "Building side" is the attached party wall, which has no
+#: field here, and a fuzzy match would hand its zero to one of these.
+_GROUPED_SUBJECTS = {
+    "front yard": "setback_front_ft",
+    "side yard": "setback_side_ft",
+    "street side yard": "setback_street_side_ft",
+    "rear yard": "setback_rear_ft",
+}
+#: The unit when it is printed in the label — "Minimum lot width (ft.)" over
+#: cells that are bare digits — rather than beside each number.
+_LABEL_UNIT = re.compile(r"\((?P<u>sq\.?\s*ft\.?|square feet|ft\.?|feet|%|percent)\.?\)", re.I)
+_BARE_NUMBER = re.compile(r"^(?P<n>\d{1,3}(?:,\d{3})+|\d+(?:\.\d+)?)$")
+
+
+def _measure_bare(cell: str, label: str, group: str) -> tuple[float, str] | None:
+    """A bare-digit cell, measured in the unit its label or group declares.
+
+    Troutdale's grid prints "70" under "Minimum lot width (ft.)" and "5" under
+    "Setbacks (ft.):" — the unit is stated once, in the heading. A bare number
+    with no declared unit anywhere still produces nothing: guessing feet is
+    how an acreage becomes a setback.
+    """
+    m = _BARE_NUMBER.match(cell.strip())
+    if not m:
+        return None
+    unit = _LABEL_UNIT.search(label) or _LABEL_UNIT.search(group)
+    if not unit:
+        return None
+    u = unit.group("u").lower().replace(" ", "").rstrip(".")
+    kind = "sqft" if u.startswith("sq") else "pct" if u in ("%", "percent") else "ft"
+    return float(m.group("n").replace(",", "")), _UNIT_KIND[kind]
+
+
 def candidates_for(table: Table | Iterable[Row], zone: str, *, path: str) -> list[Candidate]:
     """Values this table states for one zone.
 
@@ -521,9 +615,15 @@ def candidates_for(table: Table | Iterable[Row], zone: str, *, path: str) -> lis
     out: list[Candidate] = []
     for row in table.rows:
         name = _subject(row.label)
+        if name is None and "setback" in row.group.lower():
+            # "Front yard" under "Setbacks (ft.):" — the group heading, not
+            # the row label, is what says these are setbacks at all.
+            name = _GROUPED_SUBJECTS.get(row.label.strip(" .").lower())
         if name is None:
             continue
-        parsed = measure(row.value_for(zone))
+        parsed = measure(row.value_for(zone)) or _measure_bare(
+            row.value_for(zone), row.label, row.group
+        )
         if parsed is None:
             continue
         number, kind = parsed

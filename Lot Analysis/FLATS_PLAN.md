@@ -1509,3 +1509,71 @@ That is the next reader problem, and it is a reader problem rather than a scopin
 one: binding a number to a *subject* ("front yard setback shall be 20 feet") inside
 a section that also discusses lot widths, heights and driveway aprons. Section scope
 was the prerequisite — without it the numbers were not even in the room.
+
+## 24. The grid most of the corpus is written in
+
+### Where this came from
+
+The three Municode declarations (§22's chain, now run for Oregon City, Tualatin and
+Troutdale) put Troutdale's Chapter 3 in the store, and its dimensional standards
+turned out to be the table family most small Oregon cities use: one grid per
+**housing type** — detached, attached single-family, townhouse, cottage cluster —
+each with zones across the top and standards down the side. Table C, "Townhouse
+dwellings," is the pod's own typology. The reader saw none of it, for four separate
+reasons, each of which is a property of the family rather than of Troutdale:
+
+1. **The zone-code shape.** `_ZONE` accepted `R5`, `R2.5`, `MDR-PV` — and not the
+   hyphen-digit shape, `LDR-1`, `R-10`, `R-3.5`, which is how Oregon City and
+   Troutdale write every zone they have. Every column header failed to read as a
+   zone, so the grid was invisible.
+2. **A real splitter bug, live since Portland.** The cell splitter's middle group
+   was greedy, so a *single-character* cell reached across its own gap and glued
+   itself to the next cell: "5  5  5" read as pairs. Portland never surfaced it
+   because its cells carry units — "20 ft." stops at its own word end either way.
+   Troutdale prints bare digits.
+3. **Alignment drift beats offsets.** Each row right-aligns its numbers to their own
+   width, drifting further than the column pitch, so nearest-offset placement read
+   LDR-1's 70 as LDR-2's — the neighbouring zone's number wearing this zone's
+   citation, the exact error the table reader exists to prevent. The fix reads a
+   structurally complete row (one cell per header slot, counting the "(TC)"
+   sub-columns that are real columns but not zones) by *position*; offset matching
+   remains only the fallback for ragged rows.
+4. **The unit and the subject live in the headings.** Cells are bare digits; the
+   unit is printed once in the row label ("Minimum lot width **(ft.)**") or the
+   group heading ("Setbacks **(ft.)**:"), and the rows under that heading are
+   labelled only "Front yard", "Side yard". The reader now carries the group on
+   each row, resolves those labels through it, and measures bare digits in the
+   declared unit. A bare number with no declared unit anywhere still produces
+   nothing — guessing feet is how an acreage becomes a setback.
+
+### Evidence has a hierarchy
+
+With the grid readable, one more thing was needed: Troutdale's declared `3.130`
+also contains a density/lot-size grid whose every number the prose reader files
+under lot size — 25 values for one field, drowning the one cell that answers. The
+rule that resolves it was already written in the Candidate docstring: a table cell
+is *written for* a zone; a sentence under the declared section is merely near it.
+`check_zone` now lets cells win outright when both speak to one field.
+
+Troutdale went from 0 quotable to **10 applied**: lot sizes, frontages, and the
+setbacks the tables state unambiguously. What still refuses is refusing correctly —
+`setback_side_ft` "states more than one value (5, 10)" is the detached table and
+the townhouse table disagreeing, which is not noise but the **housing-type
+dimension**: one zone, one standard, a different number per building form. The pod
+is a townhouse; the encoding should one day say "read the townhouse column of the
+right grid." That is the named next problem for this family, alongside §23's
+subject binding for prose.
+
+### What the other two cities measured
+
+Oregon City and Tualatin also moved to `unquoted` and still attach zero, and each
+names its own blocker honestly. Tualatin's PDF extraction **fuses words**
+("areasintheCitythatareappropriatefordwellings") — section headings survive, so
+scope works, but no subject phrase can match. Oregon City's extraction pads and
+breaks words ("authori z ed") — a different pathology, same effect. Both are
+*extraction* problems, not scoping ones: the fetch layer needs a readability
+measurement so a document that cannot be read stops looking like a document with
+nothing in it. Municode product choice also matters and is now measured: a client
+can publish several products, and two of these three keep zoning in a
+separately-published Development Code the "first listed" heuristic passed over.
+`publication()` prefers a development/zoning product and says what it passed over.

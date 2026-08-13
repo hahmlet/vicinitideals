@@ -349,3 +349,28 @@ def test_a_heading_printed_with_the_word_section_is_still_a_heading() -> None:
     read = extract(PROSE, path="doc.txt", jurisdiction="l", zone="R")
 
     assert {c.section for c in read.candidates} == {"4.122", "4.123"}
+
+
+def test_a_heading_prefixed_with_the_code_s_own_initials_is_still_a_heading() -> None:
+    # Tualatin prints "TDC 40.100. Purpose." — the code's initials in front of
+    # every heading. A third shape, same failure as the other two if unread.
+    from flats.encode.extract import extract
+
+    text = (
+        "TDC 40.300. DevelopmentStandards.\n"
+        "The minimum front yard setback shall be 20 feet.\n"
+    )
+    read = extract(text, path="doc.txt", jurisdiction="l", zone="RL")
+
+    assert {c.section for c in read.candidates} == {"40.300"}
+
+
+def test_a_sentence_starting_with_a_short_word_is_not_a_heading() -> None:
+    # The initials form is case-sensitive inside an otherwise case-insensitive
+    # pattern: "The 10.25 acre site" and "and 40.100" must not read as
+    # headings, or every number after them lands in a section that does not
+    # exist.
+    from flats.encode.extract import _SECTION
+
+    assert _SECTION.match("The 10.25 acre site") is None
+    assert _SECTION.match("and 40.100 is referenced") is None

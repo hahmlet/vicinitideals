@@ -519,3 +519,53 @@ def test_the_footnote_block_still_ends_the_rows() -> None:
 
     assert not any("congregate" in label for label in labels)
     assert not any("floor area ratio" in label for label in labels)
+
+
+# --- the Troutdale grid: bare digits, drifting alignment, sub-columns --
+
+
+def test_a_grid_of_bare_digits_splits_into_cells_not_pairs() -> None:
+    # The real bug: with a greedy quantifier, a one-character cell reached
+    # across its own gap and glued itself to the next cell, so "5    5    5"
+    # read as two cells. Portland never showed it — "20 ft." stops at its own
+    # word end either way.
+    from flats.encode.tables import _cells
+
+    found = _cells("   Side yard        5               5               5")
+
+    assert [text for _, text in found] == ["Side yard", "5", "5", "5"]
+
+
+TROUTDALE = "\n".join(
+    [
+        # The header carries "(TC)" sub-columns between zones, and each data
+        # row right-aligns its numbers to their own width — drifting further
+        # than the column pitch, so nearest-offset reads 70 as LDR-2's.
+        "Dimensional Standard              LDR-1       LDR-2        MDR         (TC)          HDR",
+        "Minimum lot size (sq. ft.)              10,000       7,000        5,000        5,000         N/A",
+        "Minimum lot width (ft.)                  70             60             50             50            N/A",
+    ]
+)
+
+
+def test_a_structurally_complete_row_is_placed_by_position_not_offset() -> None:
+    from flats.encode.tables import read_tables
+
+    table = read_tables(TROUTDALE)[0]
+    width = table.rows[1]
+
+    assert width.value_for("LDR-1") == "70"
+    assert width.value_for("LDR-2") == "60"
+    assert width.value_for("MDR") == "50"
+
+
+def test_a_sub_column_s_number_is_not_claimed_for_the_zone_beside_it() -> None:
+    # "(TC)" is a real column that is not a zone. Dropping it from the count
+    # makes the fifth cell look like the fifth zone, and the town-center
+    # variant's number ends up wearing the base zone's citation.
+    from flats.encode.tables import read_tables
+
+    table = read_tables(TROUTDALE)[0]
+
+    assert table.rows[0].value_for("HDR") == "N/A"
+    assert table.rows[0].value_for("MDR") == "5,000"

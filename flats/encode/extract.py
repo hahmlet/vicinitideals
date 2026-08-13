@@ -95,13 +95,19 @@ _APPLICABILITY = re.compile(
     re.I,
 )
 _DEFINITION = re.compile(r"\b(means|is defined as|for the purposes of|see (?:section|chapter))\b", re.I)
-#: A section heading. The optional "Section"/"Sec." prefix is not cosmetic:
-#: Portland prints "33.110.220 Development Standards" and Wilsonville prints
-#: "Section  4.122.  Residential Zone". Without the prefix every heading in the
-#: second kind of code goes unrecognised, which leaves every paragraph in it
-#: attributed to whatever section was last seen — and section is what binds a
-#: prose standard to a zone.
-_SECTION = re.compile(r"^(?:Sec(?:tion|\.)?\s+)?(?P<sec>\d{1,3}\.\d{2,3}(?:\.\d{1,4})?)\b", re.I)
+#: A section heading. The optional prefix is not cosmetic: Portland prints
+#: "33.110.220 Development Standards", Wilsonville prints "Section  4.122.
+#: Residential Zone", and Tualatin prints "TDC 40.100. Purpose" — the code's
+#: own initials in front of every heading. Without the prefix every heading in
+#: the second and third kinds of code goes unrecognised, which leaves every
+#: paragraph attributed to whatever section was last seen — and section is
+#: what binds a prose standard to a zone. The initials form is confined to
+#: 2–4 capitals — case-sensitively, inside a pattern that is otherwise
+#: case-insensitive — so a sentence starting "The 10.25 acre site" or
+#: "and 40.100" never reads as a heading.
+_SECTION = re.compile(
+    r"^(?:(?:Sec(?:tion|\.)?|(?-i:[A-Z]{2,4}))\s+)?(?P<sec>\d{1,3}\.\d{2,3}(?:\.\d{1,4})?)\b", re.I
+)
 #: Cross-references, table and figure names. Their digits are addresses, not
 #: sizes — "See Figures 110-2 and 110-3" contains no standard whatsoever.
 _CITATION = re.compile(

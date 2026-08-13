@@ -130,6 +130,16 @@ def check_zone(
         )
         if candidate.source == "table" or zoned or in_section:
             by_field.setdefault(candidate.field, []).append(candidate)
+    for name, candidates in by_field.items():
+        # Evidence has a hierarchy. A table cell was *written for* this zone;
+        # a sentence under the declared section is merely near it. When both
+        # speak to one field the cell wins outright — Troutdale's declared
+        # 3.130 also contains a density/lot-size grid whose every number the
+        # prose reader files under lot size, drowning the one cell that
+        # actually answers.
+        cells = [c for c in candidates if c.source == "table"]
+        if cells:
+            by_field[name] = cells
 
     out: list[Finding] = []
     for name, value in sorted(values.items()):

@@ -24,6 +24,7 @@ code:
     end: "TDC 42.100."
 zones:
   RL:
+    section: ["40."]
     cite_default:
       cite: Tualatin Development Code Ch.40 (RL), Tables 40-2/40-3; detached SFD permitted P/L, quadplex
         permitted P
@@ -41,6 +42,7 @@ zones:
       width 50 ft (30 ft on cul-de-sac bulb). Corner/street-side is front-door-orientation based (garage
       ~20 / house ~12) - omitted as single value.'
   RML:
+    section: ["41."]
     cite_default:
       cite: Tualatin Development Code Ch.41 (RML), Tables 41-2/41-3; quadplex permitted P
       url: https://www.zoneomics.com/code/tualatin-OR/chapter_12
