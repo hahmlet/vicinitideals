@@ -681,3 +681,95 @@ They inflate every count in those zones. Needs a different detector (`PROP_CODE`
 3. Panelized vs volumetric prefab — locks the transport envelope and the pod width ceiling.
 4. Which funding sources are BOLI prevailing-wage-exemption safe? Sets the cost target,
    which sets the viable pod design.
+
+---
+
+## 13. Conditional verdicts — configurations, not answers
+
+*Added 2026-08-12, after the first real chapter was read. It corrects §4 and §5: the
+screen does not emit a verdict per lot. It emits which **configurations** clear, and
+under what conditions.*
+
+### There is no unconditional GREEN
+
+Portland's Table 110-4 states `30 ft. [3]`, and footnote 3 says additional height may be
+allowed. Table 110-7's lot-area gate has its own footnotes. Almost every number in a real
+code is a base case with exits attached. A screen that reads only the base case is not
+conservative — it is wrong in both directions at once: too strict where a footnote loosens
+the standard, too generous where one tightens it.
+
+So a result reads *"GREEN under affordable"*, *"GREEN under 2 stories"*, *"GREEN with
+design variant 2"*. Never bare GREEN.
+
+A **configuration** is three things at once:
+
+| Part | Example | Who decides |
+|---|---|---|
+| Building variant | pod design 2 of 10 | the catalog (§5) |
+| Elective conditions | affordable at 60% AMI, mixed use, bonus program | the developer |
+| Assumed site facts | corner lot, abuts alley, on sewer, slope band | our data — **overridable** |
+
+**Site facts are not deterministic from the UI's point of view.** On a single lot the user
+may override any of them, because they have been there and we have not. At two or more
+lots the screen uses our best understanding, because there is nothing to override against.
+
+### What the three colours mean now
+
+**RED — no configuration in the catalog produces a legal fit.** That is the only honest
+red, and it is deliberately hard to earn. Anything that clears *somehow* is not red.
+
+**GREEN — at least one configuration clears, and everything under it is solid:** signed
+rules, confirmed site facts, conditions the developer controls.
+
+**REVIEW — a configuration clears but something under it is not solid:** an unsigned rule,
+a site fact we are guessing at, a condition we cannot confirm from data, or a check inside
+tolerance (§4). Tolerance still never manufactures a GREEN.
+
+This preserves the recall bias at a larger scale than §4 stated it. A lot buildable only
+under an affordability program *has a legal path*, and burying it in RED deletes exactly
+the deal the screen exists to find.
+
+### Ranking, when several configurations clear
+
+Fewest concessions first, then most units. A configuration that needs nothing from the
+developer beats one that needs an affordability covenant, even if the second yields more
+doors — the first is the one that can close without a program. The ranking is a policy
+knob like tolerance, not a constant.
+
+### The search, not the sweep
+
+Ten designs × a handful of binary conditions × 400k lots is hundreds of millions of
+evaluations. It is also almost entirely wasted, because the screen already reports **which
+constraint is binding**.
+
+    1. Evaluate the baseline configuration.
+    2. Read the binding constraint.
+    3. Explore only conditions that move that number.
+    4. Repeat until the lot clears or the catalog is exhausted.
+
+A lot blocked by minimum lot area never explores the height toggles. Typical lots resolve
+in one or two evaluations. This is what makes single-lot override instant — the same
+search on different inputs — and what makes county scale affordable at all.
+
+### Surfacing levers for a batch
+
+A lever is worth showing when flipping it would change a verdict **for at least one lot in
+the selection**. That falls out of binding-constraint attribution: collect the binding
+constraints across the batch, map them back to the conditions that move them, and offer
+only those. Selecting 400 R5 lots offers "affordable?" only if affordability touches a rule
+that actually binds one of them.
+
+### What this changes in the encoding
+
+1. **Footnotes are evidence, not decoration.** The marker on a cell and the text of the
+   note are captured together and attached to the value they modify.
+2. **Conditions are named once**, in a registry with the same discipline as
+   `flats/rules/fields.py` — a condition is elective or a site fact, and nothing else may
+   invent one inline.
+3. **A value carries variants.** `5 ft., or 10 ft. when affordable`, each variant with its
+   own citation and its own signature. A variant nobody read is untrusted exactly like a
+   base value nobody read (§2).
+4. **The screen takes a configuration** and returns slack and binding constraints for it.
+5. **Storage is per lot per qualifying configuration**, not one row per lot.
+
+Items 1–3 are foundation and do not depend on the web app existing.

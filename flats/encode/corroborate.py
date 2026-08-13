@@ -68,13 +68,21 @@ class Finding:
     encoded: float | int | None = None
     found: tuple[float | int, ...] = ()
     quote: str = ""
+    #: Footnotes qualifying what the document states. A number with one of
+    #: these is a base case with an exit, not a standard.
+    notes: tuple[str, ...] = ()
+
+    @property
+    def conditional(self) -> bool:
+        return bool(self.notes)
 
     def __str__(self) -> str:
         found = ", ".join(str(v) for v in self.found) or "-"
+        mark = "  [conditional]" if self.conditional else ""
         return (
             f"{self.verdict.value:11} {self.zone:6} {self.field:28} "
             f"file={self.encoded if self.encoded is not None else '-':>8} "
-            f"doc={found:>8}  {self.quote}"
+            f"doc={found:>8}  {self.quote}{mark}"
         )
 
 
@@ -133,6 +141,7 @@ def check_zone(
                 encoded,
                 numbers,
                 match.quote,
+                _notes(candidates),
             )
         )
 
@@ -141,9 +150,27 @@ def check_zone(
             continue
         numbers = tuple(sorted({c.value for c in candidates}))
         out.append(
-            Finding(layer, zone, name, Verdict.unencoded, None, numbers, candidates[0].quote)
+            Finding(
+                layer,
+                zone,
+                name,
+                Verdict.unencoded,
+                None,
+                numbers,
+                candidates[0].quote,
+                _notes(candidates),
+            )
         )
     return out
+
+
+def _notes(candidates: Sequence) -> tuple[str, ...]:
+    seen: list[str] = []
+    for candidate in candidates:
+        for note in candidate.notes:
+            if note not in seen:
+                seen.append(note)
+    return tuple(seen)
 
 
 def check_layer(

@@ -65,7 +65,7 @@ TABLE = "\n".join(
 
 
 def rows_of(text: str = TABLE, **kw) -> tuple[Row, ...]:
-    return read_table(text, **kw)
+    return read_table(text, **kw).rows
 
 
 def row_named(part: str, text: str = TABLE) -> Row:
@@ -89,7 +89,7 @@ def test_a_header_naming_one_zone_is_not_a_table() -> None:
 
 
 def test_text_with_no_header_has_no_rows() -> None:
-    assert read_table("The minimum front setback is 10 feet.\n") == ()
+    assert read_table("The minimum front setback is 10 feet.\n").rows == ()
 
 
 # --- putting a cell in the right column --------------------------------
@@ -424,7 +424,7 @@ def test_a_heading_naming_no_field_is_not_a_table() -> None:
     # reading its second column as values invents numbers from prose.
     listing = "Zone            Comment\nR5              See the map.\n"
 
-    assert read_table(listing) == ()
+    assert read_table(listing).rows == ()
 
 
 def test_a_zone_row_that_is_not_a_zone_is_skipped() -> None:
@@ -443,3 +443,79 @@ def test_both_layouts_in_one_document_are_both_read() -> None:
 
     assert found["setback_front_ft"] == 10
     assert found["min_lot_sqft"] == 3000
+
+
+# --- footnotes: the other half of the standard -------------------------
+#
+# Portland's Table 110-4 states "30 ft. [3]" and prints "[3] Additional FAR and
+# height may be allowed" beneath it. Reading the 30 and dropping the 3 encodes a
+# ceiling the code does not impose — and being wrong in that direction turns a
+# buildable lot RED, where nobody ever looks at it again.
+
+FOOTNOTED = "\n".join(
+    [
+        HEADER,
+        line("Maximum height", ("30 ft.", "30 ft.", "30 ft.", "30 ft. [3]", "30 ft. [3]",
+                               "35 ft.")),
+        line("- Front building", ("20 ft.", "20 ft.", "20 ft.", "15 ft.", "10 ft.", "10 ft.")),
+        " setback",
+        "[1] Including any site with a congregate housing facility.",
+        "[3] Additional FAR and height may be allowed. See 33.110.265.F.",
+        "33.110.210 Floor Area Ratios",
+        "The maximum floor area ratio is stated in Table 110-4.",
+    ]
+)
+
+
+def test_the_footnote_block_is_read_with_the_table() -> None:
+    table = read_table(FOOTNOTED)
+
+    assert table.notes[3] == "Additional FAR and height may be allowed. See 33.110.265.F."
+    assert set(table.notes) == {1, 3}
+
+
+def test_a_footnote_is_quotable_like_a_value() -> None:
+    # A condition has to be readable by whoever signs it, same as a number.
+    table = read_table(FOOTNOTED)
+
+    assert "[3]" in FOOTNOTED.splitlines()[table.note_lines[3] - 1]
+
+
+def test_a_marker_does_not_become_part_of_the_number() -> None:
+    table = read_table(FOOTNOTED)
+    row = next(r for r in table.rows if "height" in r.label)
+
+    assert row.value_for("R5") == "30 ft."
+    assert measure(row.value_for("R5")) == (30.0, "length_ft")
+
+
+def test_a_marker_is_kept_against_the_zone_that_carries_it() -> None:
+    row = next(r for r in read_table(FOOTNOTED).rows if "height" in r.label)
+
+    assert row.marks_for("R5") == (3,)
+    assert row.marks_for("R2.5") == (), "R2.5 states 35 ft. with no exit"
+
+
+def test_a_footnoted_value_is_proposed_as_conditional() -> None:
+    table = read_table(FOOTNOTED)
+    height = next(c for c in candidates_for(table, "R5", path=DOC) if c.field == "max_height_ft")
+
+    assert height.value == 30
+    assert height.conditional
+    assert height.notes == ("Additional FAR and height may be allowed. See 33.110.265.F.",)
+
+
+def test_an_unfootnoted_value_stays_unconditional() -> None:
+    table = read_table(FOOTNOTED)
+    front = next(c for c in candidates_for(table, "R5", path=DOC) if c.field == "setback_front_ft")
+
+    assert not front.conditional
+
+
+def test_the_footnote_block_still_ends_the_rows() -> None:
+    # Notes are part of the table and are not rows of it. A note read as a row
+    # puts its sentence in a label and its numbers in a column.
+    labels = [r.label for r in read_table(FOOTNOTED).rows]
+
+    assert not any("congregate" in label for label in labels)
+    assert not any("floor area ratio" in label for label in labels)

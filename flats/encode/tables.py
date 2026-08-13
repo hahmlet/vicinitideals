@@ -51,8 +51,13 @@ _MEASURE = re.compile(
     r"(?P<unit>sq\.?\s*ft\.?|square feet|ft\.?|feet|foot|percent|%)(?![A-Za-z0-9])",
     re.I,
 )
-#: Footnote markers travel with the value and are not part of it.
-_FOOTNOTE = re.compile(r"\s*\[\d+\]\s*$")
+#: Footnote markers travel with the value. They are not part of the number and
+#: they are not noise either: "30 ft. [3]" and "[3] Additional height may be
+#: allowed" together say the standard has an exit. Reading the number and
+#: dropping the marker encodes a ceiling the code does not actually impose.
+_FOOTNOTE = re.compile(r"\s*\[(?P<n>\d+)\]\s*$")
+#: "[3] Additional FAR and height may be allowed. See 33.110.265.F."
+_NOTE = re.compile(r"^\[(?P<n>\d+)\]\s+(?P<text>.+)$")
 #: What follows the last row: the footnote block, or the next section heading.
 #: A section *number* is not enough — rows carry wrapped cross-references like
 #: "33.110.265)", and treating one as the end truncates the table mid-grid.
@@ -96,6 +101,13 @@ class Row:
     cells: dict[str, str]
     contested: frozenset[str] = frozenset()
     lines: dict[str, int] = dc_field(default_factory=dict)
+    #: Footnote numbers on each zone's cell. "30 ft. [3]" means this zone's
+    #: standard has an exit written under the table, and a screen that reads
+    #: the 30 and drops the 3 applies a ceiling the code does not impose.
+    marks: dict[str, tuple[int, ...]] = dc_field(default_factory=dict)
+
+    def marks_for(self, zone: str) -> tuple[int, ...]:
+        return self.marks.get(zone, ())
 
     def value_for(self, zone: str) -> str:
         if zone in self.contested:
@@ -104,6 +116,29 @@ class Row:
 
     def line_for(self, zone: str) -> int:
         return self.lines.get(zone, self.line)
+
+
+@dataclass(frozen=True, slots=True)
+class Table:
+    """The rows of one table and the footnotes printed beneath it."""
+
+    rows: tuple[Row, ...] = ()
+    notes: dict[int, str] = dc_field(default_factory=dict)
+    #: Line each note was read from, so a condition can be quoted like a value.
+    note_lines: dict[int, int] = dc_field(default_factory=dict)
+
+    def notes_for(self, row: Row, zone: str) -> tuple[str, ...]:
+        """The footnote texts attached to one zone's cell in one row."""
+        return tuple(self.notes[n] for n in row.marks_for(zone) if n in self.notes)
+
+    def __iter__(self):
+        return iter(self.rows)
+
+    def __len__(self) -> int:
+        return len(self.rows)
+
+    def __getitem__(self, i):
+        return self.rows[i]
 
 
 def _cells(line: str) -> list[tuple[int, str]]:
@@ -205,8 +240,28 @@ def _span(lines: Sequence[str], start: int = 0) -> tuple[int | None, int]:
                 return first, i
             continue
         if first is not None and _ends_table(line.strip()):
+            if _NOTE.match(line.strip()):
+                # The footnote block belongs to the table. It ends the rows and
+                # begins the conditions attached to them, which are the half of
+                # the standard a reader that stops here never sees.
+                return first, _end_of_notes(lines, i)
             return first, i
     return first, len(lines)
+
+
+def _end_of_notes(lines: Sequence[str], start: int) -> int:
+    """Index just past the run of footnote definitions beginning at ``start``."""
+    last = start
+    for i, line in enumerate(lines[start:], start=start):
+        stripped = line.strip()
+        if not stripped:
+            continue
+        if _NOTE.match(stripped):
+            last = i
+            continue
+        if i > last:
+            break
+    return last + 1
 
 
 def _ends_table(stripped: str) -> bool:
@@ -244,8 +299,8 @@ def _furniture_outside(lines: Sequence[str], first: int, last: int) -> set[str]:
     return _furniture(outside)
 
 
-def read_table(text: str, *, start_line: int = 1) -> tuple[Row, ...]:
-    """Rows of the first standards table in this text.
+def read_table(text: str, *, start_line: int = 1) -> Table:
+    """The first standards table in this text, with its footnotes.
 
     Label continuation lines ("- Front building" then " setback") are folded
     into the row they belong to, because the label is what names the field and
@@ -254,11 +309,11 @@ def read_table(text: str, *, start_line: int = 1) -> tuple[Row, ...]:
     lines = text.splitlines()
     first, last = _span(lines)
     if first is None:
-        return ()
+        return Table()
     return _read_span(lines, first, last, start_line)
 
 
-def read_tables(text: str, *, start_line: int = 1) -> tuple[tuple[Row, ...], ...]:
+def read_tables(text: str, *, start_line: int = 1) -> tuple[Table, ...]:
     """Every zone table in the document, in the order they appear.
 
     A chapter states its standards in more than one grid, and which grid holds
@@ -267,15 +322,15 @@ def read_tables(text: str, *, start_line: int = 1) -> tuple[tuple[Row, ...], ...
     entirely. Reading only the first would drop the rest without saying so.
     """
     lines = text.splitlines()
-    out: list[tuple[Row, ...]] = []
+    out: list[Table] = []
     at = 0
     while at < len(lines):
         first, last = _span(lines, at)
         if first is None:
             break
-        rows = _read_span(lines, first, last, start_line)
-        if rows:
-            out.append(rows)
+        table = _read_span(lines, first, last, start_line)
+        if table.rows:
+            out.append(table)
         at = max(last, first + 1)
     return tuple(out)
 
@@ -301,15 +356,15 @@ def blank_tables(text: str) -> str:
     return "\n".join(kept) + ("\n" if text.endswith("\n") else "")
 
 
-def _read_span(
-    lines: Sequence[str], first: int, last: int, start_line: int
-) -> tuple[Row, ...]:
+def _read_span(lines: Sequence[str], first: int, last: int, start_line: int) -> Table:
     junk = _furniture_outside(lines, first, last)
     kind = ""
     cols: tuple[Column, ...] = ()
     reach = _MIN_REACH
     rows: list[Row] = []
-    down: dict[str, dict[str, tuple[str, int]]] = {}
+    down: dict[str, dict[str, tuple[str, int, tuple[int, ...]]]] = {}
+    notes: dict[int, str] = {}
+    note_lines: dict[int, int] = {}
 
     for n, line in enumerate(lines[first:last], start=start_line + first):
         stripped = line.strip()
@@ -333,11 +388,18 @@ def _read_span(
             continue
         if not cols:
             continue
+        found_note = _NOTE.match(stripped)
+        if found_note:
+            num = int(found_note.group("n"))
+            notes[num] = found_note.group("text").strip()
+            note_lines[num] = n
+            continue
         if _ENDS_TABLE.match(stripped):
-            # Footnotes and the next section number are outside the grid.
-            # Without this the reader runs to the end of the chapter and reads
-            # ordinary prose as rows.
+            # The next section number is outside the grid. Without this the
+            # reader runs to the end of the chapter and reads prose as rows.
             break
+        if notes:
+            break  # past the footnote block, whatever this is
 
         found = _cells(line)
         if kind == ZONES_DOWN:
@@ -350,11 +412,16 @@ def _read_span(
                 label = _column_for(offset, cols, reach)
                 if label is None:
                     continue
-                down.setdefault(label, {})[zone_code] = (_FOOTNOTE.sub("", cell), n)
+                down.setdefault(label, {})[zone_code] = (
+                    _FOOTNOTE.sub("", cell),
+                    n,
+                    _marks(cell),
+                )
             continue
 
         label_parts: list[str] = []
         values: dict[str, str] = {}
+        marks: dict[str, tuple[int, ...]] = {}
         contested: set[str] = set()
         for offset, cell in found:
             zone = _column_for(offset, cols, reach)
@@ -362,6 +429,8 @@ def _read_span(
                 label_parts.append(cell)
                 continue
             value = _FOOTNOTE.sub("", cell)
+            if _marks(cell):
+                marks[zone] = _marks(cell)
             if zone in values and values[zone] != value:
                 # Two cells, one column. The layout cannot say which is this
                 # zone's standard, and picking either is how a number ends up
@@ -376,6 +445,7 @@ def _read_span(
                     line=n,
                     cells=values,
                     contested=frozenset(contested),
+                    marks=marks,
                 )
             )
         elif label_parts and rows:
@@ -386,18 +456,26 @@ def _read_span(
                 line=previous.line,
                 cells=previous.cells,
                 contested=previous.contested,
+                lines=previous.lines,
+                marks=previous.marks,
             )
 
     for label, per_zone in down.items():
         rows.append(
             Row(
                 label=label,
-                line=min(line for _, line in per_zone.values()),
-                cells={zone: text for zone, (text, _) in per_zone.items()},
-                lines={zone: line for zone, (_, line) in per_zone.items()},
+                line=min(line for _, line, _ in per_zone.values()),
+                cells={zone: text for zone, (text, _, _) in per_zone.items()},
+                lines={zone: line for zone, (_, line, _) in per_zone.items()},
+                marks={zone: seen for zone, (_, _, seen) in per_zone.items() if seen},
             )
         )
-    return tuple(rows)
+    return Table(rows=tuple(rows), notes=notes, note_lines=note_lines)
+
+
+def _marks(cell: str) -> tuple[int, ...]:
+    """Footnote numbers on a cell, in the order they appear."""
+    return tuple(int(m.group("n")) for m in _FOOTNOTE.finditer(cell))
 
 
 def measure(raw: str) -> tuple[float, str] | None:
@@ -426,18 +504,22 @@ def measure(raw: str) -> tuple[float, str] | None:
     return float(m.group("n").replace(",", "")), _UNIT_KIND[kind]
 
 
-def candidates_for(
-    rows: Iterable[Row], zone: str, *, path: str
-) -> list[Candidate]:
+def candidates_for(table: Table | Iterable[Row], zone: str, *, path: str) -> list[Candidate]:
     """Values this table states for one zone.
 
     A row is only read when its label names a standard this system has a field
     for and the units in the cell match that field's kind. Everything else —
     FAR bonus tiers, outdoor-area dimensions, coverage curves — is left alone
     rather than forced into the nearest field.
+
+    A cell carrying a footnote marker produces a *conditional* candidate: the
+    number, plus the note that qualifies it. "30 ft. [3]" with "[3] Additional
+    height may be allowed" is not a 30 ft. ceiling, and encoding it as one
+    turns a lot that could be built taller into a red that nobody revisits.
     """
+    table = table if isinstance(table, Table) else Table(rows=tuple(table))
     out: list[Candidate] = []
-    for row in rows:
+    for row in table.rows:
         name = _subject(row.label)
         if name is None:
             continue
@@ -456,6 +538,7 @@ def candidates_for(
                 text=f"{row.label}: {row.value_for(zone)} ({zone})",
                 quote=f"{path}#L{row.line_for(zone)}",
                 source="table",
+                notes=table.notes_for(row, zone),
             )
         )
     return out

@@ -125,6 +125,14 @@ class Candidate:
     #: label — a table cell is written for one zone and a sentence is not, so
     #: only a table reading can confirm or contradict a zone's encoded value.
     source: str = "prose"
+    #: Footnotes qualifying this number. A candidate with notes states a base
+    #: case with an exit attached, not a standard, and must not be encoded as
+    #: an unconditional value.
+    notes: tuple[str, ...] = ()
+
+    @property
+    def conditional(self) -> bool:
+        return bool(self.notes)
 
     @property
     def kind(self) -> str:
@@ -412,8 +420,8 @@ def extract(
             proposed.extend(candidates_in(stripped, n, path, quote=quote))
 
     if zone:
-        for rows in read_tables(text):
-            proposed.extend(candidates_for(rows, zone, path=path))
+        for table in read_tables(text):
+            proposed.extend(candidates_for(table, zone, path=path))
 
     return Extraction(path=path, clauses=tuple(clauses), candidates=tuple(_mark(proposed)))
 
@@ -433,6 +441,7 @@ def _mark(candidates: Iterable[Candidate]) -> list[Candidate]:
             c.quote,
             conflict=len(values[c.field]) > 1,
             source=c.source,
+            notes=c.notes,
         )
         for c in listed
     ]
