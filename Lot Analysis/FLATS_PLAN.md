@@ -1146,9 +1146,9 @@ quote written by hand and a document fetched by the registry land in the same pl
 without anybody coordinating.
 
 ```
-flats-fetch --layer or/multnomah          # a county brings its cities
-flats-fetch --all --check                 # the corpus watch: report drift, store nothing
-flats-fetch --audit                       # reconcile without fetching
+python -m flats.provenance.fetch --layer or/multnomah          # a county brings its cities
+python -m flats.provenance.fetch --all --check                 # the corpus watch: report drift, store nothing
+python -m flats.provenance.fetch --audit                       # reconcile without fetching
 ```
 
 A sweep does not stop on a bad document. The point of a corpus watch is the report at
@@ -1168,3 +1168,69 @@ eighty.
 
 Only the first two fail the audit. Fetching ahead of encoding is the normal order of
 work.
+
+---
+
+## 19. What blocks a jurisdiction, and what unblocks it
+
+The encoding surface is 603 values across 19 jurisdictions, and the only status
+line over it read **`0.0% verified`**. True, and useless. It cannot tell apart:
+
+* a city nobody has found a code URL for — hours of hunting, no reviewing possible;
+* a city where every number is written, quoted and waiting on a signature — one sitting.
+
+A queue that cannot distinguish those sends work to people who cannot do it. So
+readiness is a **ladder**, and a jurisdiction sits on the *first rung it fails*:
+
+| rung | means | who owns it |
+|---|---|---|
+| `no_zones` | nothing encoded here at all | encoder |
+| `no_source` | zones written, no document declared to read them from | whoever hunts URLs |
+| `unfetched` | documents declared, not in the store | one command |
+| `unquoted` | values pointing at no text — unreviewable as written | encoder |
+| `no_evidence` | quotes that do not resolve to stored text | fetch, or a moved line range |
+| `unsigned` | everything present; waiting on somebody to read it | **reviewer** |
+| `stale` | read, but the source has moved since | reviewer, re-read |
+| `ready` | every value verified against text that still says it | nobody |
+
+**Ordered by what blocks what, not by severity.** Signing a value whose evidence
+was never fetched is not possible, so `unfetched` outranks `unsigned` however few
+documents are missing. That ordering is the whole product: it turns "603 drafts"
+into one sentence per jurisdiction naming the next command.
+
+```
+python -m flats.encode.review plan                       # the whole queue, worst first
+python -m flats.encode.review plan --layer or/multnomah --verbose
+```
+
+Real output, unedited:
+
+```
+19 jurisdiction(s): no_zones=1, no_source=16, unquoted=2
+
+no_zones     or/multnomah/maywood-park    0/0    verified  -> encode this jurisdiction's zones: nothing is written yet
+no_source    or/clackamas/happy-valley    0/61   verified  -> find the URL that serves the ordinance text, and declare it under `code:`
+unquoted     or/multnomah/portland        0/42   verified  -> add quotes: a value pointing at no text cannot be reviewed
+```
+
+That is the finding, and it is not the one the percentage implied. The corpus is
+not *under-reviewed* — **16 of 19 jurisdictions have no declared source at all.**
+No amount of reviewing moves them. §18's `code:` block is the unblocking work,
+and it is a different job than reading numbers.
+
+### Two things the counts refuse to hide
+
+**Exceptions and borrowings count as values.** A footnote (§16) and an
+incorporation clause (§17) are each a number somebody has to read. Counting only
+base values would report a jurisdiction finished with unread rules inside it — the
+exact failure the variant work existed to prevent, reintroduced at the status
+layer.
+
+**Ties break on how much is already verified, descending.** Among cities on the
+same rung the one closest to done comes first, because a half-encoded city screens
+no lots at all: finishing one jurisdiction is worth more than advancing three.
+
+This is the surface the two remaining consumers read. A review UI renders the
+ladder as its landing page; an agent picking up encoding work asks it what to do
+next. Neither has to be told the order of operations, because the order is in the
+data.

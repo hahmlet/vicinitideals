@@ -5,8 +5,12 @@ trustworthy. This is the part a person actually uses, and it is deliberately
 small: show a value next to the exact source text it claims to come from, and
 let the reviewer put their name on it or not::
 
+    python -m flats.encode.review plan
     python -m flats.encode.review show or/multnomah/portland R5 setback_front_ft
     python -m flats.encode.review sign or/multnomah/portland R5 setback_front_ft --reviewer sjk
+
+``plan`` is where a session starts: one line per jurisdiction naming what blocks
+it and the command that unblocks it, worst first.
 
 Three rules the tool enforces, because they are the ones that fail quietly.
 
@@ -33,6 +37,7 @@ from pathlib import Path
 from typing import Sequence
 
 from flats.encode.load import load_trusted
+from flats.encode.readiness import by_stage, readiness
 from flats.encode.verify import (
     LOG_PATH,
     Verification,
@@ -152,6 +157,44 @@ def cmd_status(args: argparse.Namespace) -> int:
     for problem in trusted.problems:
         print(f"  PROBLEM {problem}")
     return 0 if trusted.clean else 1
+
+
+def cmd_plan(args: argparse.Namespace) -> int:
+    """One line per jurisdiction: where it is stuck and what unsticks it."""
+    store = ProvenanceStore(args.docs)
+    trusted = load_trusted(args.root, log=VerificationLog.load(args.log), store=store, strict=False)
+    reports = [
+        r for r in readiness(trusted, store)
+        if not args.layer or r.layer.startswith(args.layer)
+    ]
+    if not reports:
+        print(f"no jurisdiction matching {args.layer!r}", file=sys.stderr)
+        return 1
+
+    counts = by_stage(reports)
+    print(f"{len(reports)} jurisdiction(s): " + ", ".join(f"{k}={v}" for k, v in counts.items()))
+    print()
+    for r in reports:
+        if args.ready or not r.ready:
+            print(r.line())
+    if not args.verbose:
+        return 0
+
+    # The detail is what an agent or a reviewer acts on; the summary above is
+    # what a person scans. Both from one pass so they cannot disagree.
+    for r in reports:
+        detail = (
+            [f"    unfetched  {p}" for p in r.unfetched]
+            + [f"    unquoted   {z} {f}" for z, f in r.unquoted]
+            + [f"    no text    {z} {f}" for z, f in r.no_evidence]
+        )
+        if detail:
+            print(f"\n  {r.layer}")
+            for line in detail[: args.limit or None]:
+                print(line)
+            if args.limit and len(detail) > args.limit:
+                print(f"    ... {len(detail) - args.limit} more")
+    return 0
 
 
 def cmd_queue(args: argparse.Namespace) -> int:
@@ -331,6 +374,13 @@ def build_parser() -> argparse.ArgumentParser:
 
     status = sub.add_parser("status", help="trust across the hierarchy, and what blocks it")
     status.set_defaults(func=cmd_status)
+
+    plan = sub.add_parser("plan", help="per jurisdiction: what blocks it, and the next command")
+    plan.add_argument("--layer", default="", help="jurisdiction prefix filter")
+    plan.add_argument("--ready", action="store_true", help="include jurisdictions with nothing left")
+    plan.add_argument("--verbose", action="store_true", help="list what is blocking, item by item")
+    plan.add_argument("--limit", type=int, default=10, help="detail lines per jurisdiction")
+    plan.set_defaults(func=cmd_plan)
 
     queue = sub.add_parser("queue", help="values awaiting review")
     queue.add_argument("--layer", default="", help="jurisdiction prefix filter")
